@@ -11,8 +11,7 @@ test: runtime-test
 	./runtime-test
 
 clean:
-	rm -rf *.c
-	rm -rf *.h
+	rm -rf *.c *.h *.scn *.idx *.log *.loc *.tex *.dvi *.pdf *.toc
 
 .w.pdf:
 	cweave $<
