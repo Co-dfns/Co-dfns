@@ -161,7 +161,7 @@ first occurance of an error.  By default, we continue going through our
 tests even if we encounter a failure.
 
 @<Test harness globals@>=
-bool exit_on_fail = 0;
+bool exit_on_fail = false;
 
 @ When writing tests, most tests will take the form of some random 
 computation, ending in a |test_assert|, which checks to see that you 
@@ -177,7 +177,7 @@ test_assert(const char *name, Array *expected, Array *actual)
 		test_succeed(name); 
 	} else {
 		test_fail(name, expected, actual);
-		if (exit_on_fail) {
+		if (true == exit_on_fail) {
 			test_results();
 			exit(1);
 		}
@@ -196,7 +196,7 @@ specifically for the output.
 @<Test harness globals@>=
 int tests_passed = 0;
 int tests_failed = 0;
-bool print_results = 0;
+bool print_results = false;
 
 @ @<Testing functions@>=
 void 
@@ -209,8 +209,8 @@ void
 test_fail(const char *name, Array *exp, Array *act)
 {
 	tests_failed++;
-	printf("Failed: %s\n", name);
-	if (print_results) {
+	printf("\n******* Failed: %s\n", name);
+	if (true == print_results) {
 		printf("Expected:\n");
 		apl_print(exp);
 		printf("\nActual:\n");
@@ -254,7 +254,7 @@ apl_print(Array *arr)
 		scalar_print(&arr->data[i]);
 		printf(" ");
 	}
-	printf("\n");
+	printf("\n\n");
 }
 
 @ @<Function declarations@>=
@@ -271,8 +271,8 @@ the results.
 int
 main(int argc, char *argv[]) 
 {
-	exit_on_fail = 0;
-	print_results = 0;
+	exit_on_fail = false;
+	print_results = true;
 
 	@<Run test suite@>@;
 
@@ -387,22 +387,22 @@ pluss(Scalar *res, Scalar *l, Scalar *r)
 	res->t = (l->t == stf || r->t == stf) ? stf : sti;
 	
 	switch (c) {
-	case 0: res->v.i = l->v.b + r->v.b;
-	case 1: res->v.i = l->v.b + r->v.c;
-	case 2: res->v.i = l->v.b + r->v.i;
-	case 3: res->v.f = l->v.b + r->v.f;
-	case 4: res->v.i = l->v.c + r->v.b;
-	case 5: res->v.i = l->v.c + r->v.c;
-	case 6: res->v.i = l->v.c + r->v.i;
-	case 7: res->v.f = l->v.c + r->v.f;
-	case 8: res->v.i = l->v.i + r->v.b;
-	case 9: res->v.i = l->v.i + r->v.c;
-	case 10: res->v.i = l->v.i + r->v.i;
-	case 11: res->v.f = l->v.i + r->v.f;
-	case 12: res->v.f = l->v.f + r->v.b;
-	case 13: res->v.f = l->v.f + r->v.c;
-	case 14: res->v.f = l->v.f + r->v.i;
-	case 15: res->v.f = l->v.f + r->v.f;
+	case 0: res->v.i = l->v.b + r->v.b; break;
+	case 1: res->v.i = l->v.b + r->v.c; break;
+	case 2: res->v.i = l->v.b + r->v.i; break;
+	case 3: res->v.f = l->v.b + r->v.f; break;
+	case 4: res->v.i = l->v.c + r->v.b; break;
+	case 5: res->v.i = l->v.c + r->v.c; break;
+	case 6: res->v.i = l->v.c + r->v.i; break;
+	case 7: res->v.f = l->v.c + r->v.f; break;
+	case 8: res->v.i = l->v.i + r->v.b; break;
+	case 9: res->v.i = l->v.i + r->v.c; break;
+	case 10: res->v.i = l->v.i + r->v.i; break;
+	case 11: res->v.f = l->v.i + r->v.f; break;
+	case 12: res->v.f = l->v.f + r->v.b; break;
+	case 13: res->v.f = l->v.f + r->v.c; break;
+	case 14: res->v.f = l->v.f + r->v.i; break;
+	case 15: res->v.f = l->v.f + r->v.f; break;
 	}
 }
 
@@ -450,10 +450,13 @@ and the expected result is |sa|.  We test both the monadic and dyadic
 plus. 
 
 @<Run scalar tests@>=
-Scalar x = {sti, 3};
-Scalar y = {sti, 7};
-Scalar z = {sti, 0};
-Scalar u = {sti, 3};
+Scalar x, y, z, u;
+
+x.t = y.t = u.t = sti;
+x.v.i = u.v.i = 3;
+y.v.i = 7;
+z.v.i = 0; z.t = 0; 
+
 init_array(&s1, 0, 0, NULL, 1, 1, &x);
 init_array(&s2, 0, 0, NULL, 1, 1, &y);
 init_array(&s3, 0, 0, NULL, 1, 1, &z);
