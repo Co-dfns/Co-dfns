@@ -2,9 +2,10 @@ CFLAGS=-g -L. -I. -std=c99
 
 .SUFFIXES: .w .c .pdf .o .so
 
-runtime: runtime.pdf runtime.so runtime-test
+runtime: runtime.pdf runtime.so 
+	cp runtime.so libruntime.so.1.0
 
-runtime-test: runtime.so
+runtime-test: runtime
 	cc ${CFLAGS} -o runtime-test runtime-test.c -lruntime
 
 test: runtime-test
@@ -20,8 +21,6 @@ clean:
 .w.c:
 	ctangle $<
 
-.c.o:
-	cc ${CFLAGS} -o $@ $<
-	
-.o.so:
+.c.so:
 	cc ${CFLAGS} -fPIC -shared -o $@ $<
+	
