@@ -9,7 +9,7 @@ runtime-test: runtime
 	cc ${CFLAGS} -o runtime-test runtime-test.c -lruntime
 
 test: runtime-test
-	./runtime-test
+	LD_LIBRARY_PATH=. ./runtime-test
 
 clean:
 	rm -rf *.c *.h *.scn *.idx *.log *.loc *.tex *.dvi *.pdf *.toc *.so
