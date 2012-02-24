@@ -138,17 +138,38 @@ bool scalar_equal(Scalar *, Scalar *);
 @* Testing Harness.  At this point, we begin our treatment of the actual 
 functions and other procedures in the runtime library.  This requires a 
 good testing harness for reliable operation and regression testing.  We 
-define these harness here, before we get into the meat of our presentation. 
+define this harness here, before we get into the meat of our presentation. 
+The main file has the following layout.
 
 @(runtime-test.c@>=
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include "runtime.h"
 
+@<Test harness globals@>@;
+@<Testing function declarations@>@;
+@<Testing functions@>@;
+@<Runtime tests@>@;
+@<Main test entry point@>@;
+
+@ There are some global variables that track our state and also represent 
+some settings that are used throughout the program. The first indicates 
+whether we should continue testing throughout the program or quit at the 
+first occurance of an error.  By default, we continue going through our 
+tests even if we encounter a failure.
+
+@<Test harness globals@>=
 bool exit_on_fail = 0;
 
-@ @<Testing functions@>=
+@ When writing tests, most tests will take the form of some random 
+computation, ending in a |test_assert|, which checks to see that you 
+got the expected value from your computation.  The programmer can provide 
+a message naming the test or describing things.  Normally, this message 
+is not printed unless there is a problem. 
+
+@<Testing functions@>=
 void
 test_assert(const char *name, Array *expected, Array *actual)
 {
@@ -163,13 +184,16 @@ test_assert(const char *name, Array *expected, Array *actual)
 	}
 }
 
+@ @<Testing function declarations@>=
+void test_assert(const char *, Array *, Array *);
+
 @ Our testing harness keeps track of the number of successful tests, as 
 well as the number of failed tests.  We don't need to print anything out 
 if a test succeeds, but we do need to print something out if a test fails. 
 We don't need to print the expected values out unless we have asked 
 specifically for the output.
 
-@(runtime-test.c@>=
+@<Test harness globals@>=
 int tests_passed = 0;
 int tests_failed = 0;
 bool print_results = 0;
@@ -194,14 +218,56 @@ test_fail(const char *name, Array *exp, Array *act)
 	}
 }
 
+@ @<Testing function declarations@>=
+void test_succeed(const char *);
+void test_fail(const char *, Array *, Array *);
+
+@ We need to have a nice little utility for printing arrays. This will print 
+out in grid format, but without much else in the way of formatting at the 
+moment.  Right now I want to be really lazy about this, so I am going to 
+just print out the elements in an array all in a row, and print out some 
+meta data explicitly.
+
+@<Utility functions@>=
+void
+scalar_print(Scalar *s)
+{
+	switch (s->t) {
+	case stb: printf("%d", s->v.b);
+	case stc: printf("%lc", s->v.c);
+	case sti: printf("%ld", s->v.i);
+	case stf: printf("%Lf", s->v.f);
+	default: printf("N/A");
+	}
+}
+
+void
+apl_print(Array *arr)
+{
+	printf("\nMeta (rank/ssize/dlen/dsize): %d/%d/%d/%d\n",
+	    arr->rank, arr->ssize, arr->dlen, arr->dsize);
+	printf("Shape: ");
+	for (int i = 0; i < arr->rank; i++)
+		printf("%d ", arr->shape[i]);
+	printf("\nData: ");
+	for (int i = 0; i < arr->dlen; i++) {
+		scalar_print(&arr->data[i]);
+		printf(" ");
+	}
+	printf("\n");
+}
+
+@ @<Function declarations@>=
+void apl_print(Array *);
+
+@ @<Header includes@>=
+#include <stdio.h>
+
 @ We assume that we have a specific section name for storing all of our 
 tests. We wrap this around our main function to do the tests and print 
 the results.
 
-@(runtime-test.c@>=
-@<Testing functions@>@;
-@<Runtime tests@>@;
-
+@<Main test entry point@>=
 int
 main(int argc, char *argv[]) 
 {
@@ -229,6 +295,9 @@ test_results(void)
 	printf("Failed %d tests.\n", tests_failed);
 	printf("Total tests: %d\n", tests_failed+tests_passed);
 }
+
+@ @<Testing function declarations@>=
+void test_results(void);
 
 @** Runtime Primitives.  This section details the actual ``language'' that 
 the runtime provides, in some sense.  The runtime is designed not to be a 
@@ -381,15 +450,19 @@ and the expected result is |sa|.  We test both the monadic and dyadic
 plus. 
 
 @<Run scalar tests@>=
-init_array(&s1, 0, 0, NULL, 1, 1, {sti, 3});
-init_array(&s2, 0, 0, NULL, 1, 1, {sti, 7});
-init_array(&s3, 0, 0, NULL, 1, 1, {sti, 0});
-init_array(&sa, 0, 0, NULL, 1, 1, {sti, 3});
+Scalar x = {sti, 3};
+Scalar y = {sti, 7};
+Scalar z = {sti, 0};
+Scalar u = {sti, 3};
+init_array(&s1, 0, 0, NULL, 1, 1, &x);
+init_array(&s2, 0, 0, NULL, 1, 1, &y);
+init_array(&s3, 0, 0, NULL, 1, 1, &z);
+init_array(&sa, 0, 0, NULL, 1, 1, &u);
 
 plusm(&s3, &s1);
 test_assert("Plus Monadic", &sa, &s3);
 
-sa.data = {10};
+sa.data[0].v.i = 10;
 plusd(&s3, &s1, &s2);
 test_assert("Plus Dyadic", &sa, &s3);
 
@@ -410,10 +483,14 @@ init_array(Array *a, int r, int ss, int *sp,
 	a->data = d;
 }
 
+@ @<Function declarations@>=
+void init_array(Array *, int, int, int *, size_t, size_t, Scalar *);
+
 @* Utility function summary.  This section summarizes the utility functions 
 that we have introduced throughout the text. 
 
 \medskip{\narrower\parindent = 0in
+|void apl_print(Array *arr);|\hfill\break
 |bool array_equal(Array *a, Array *a);|\hfill\break
 |void init_array(Array *a, int r, int ss, int *sp,
     size_t dl, size_t ds, Scalar *d);|\hfill\break
