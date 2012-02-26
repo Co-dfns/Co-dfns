@@ -1,11 +1,9 @@
 ﻿:Namespace Tests
 ⍝ === VARIABLES ===
 
-Count←0
-
 Valid←,⊂,'5'
 
-ValidExp←,⊂1 2⍴1 5
+ValidExp←,⊂1 3⍴0 1 5
 
 ValidSkip←,0
 
