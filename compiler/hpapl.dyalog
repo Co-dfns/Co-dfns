@@ -28,8 +28,25 @@
  R←EmitUPC R
 ∇
 
+∇ CompileFile FN;T;R;O;H
+ T←FN ⎕NTIE 0 0
+ R←⎕NREAD T,80,2↑⎕NSIZE T
+ R←'UTF-8'⎕UCS ⎕UCS R
+ ⎕NUNTIE T
+ R←Compile R
+ O←(((1⌈+/H)≠+\H←'.'=FN)/FN),'.upc'
+ :Trap 22
+     T←O ⎕NCREATE 0
+ :Else
+     O ⎕NERASE O ⎕NTIE 0 1
+     T←O ⎕NCREATE 0
+ :EndTrap
+ (⎕UCS'UTF-8'⎕UCS R)⎕NAPPEND T
+ ⎕NUNTIE T
+∇
+
 ∇ R←EmitUPC In;NL;X
- NL←⎕UCS 133
+ NL←⎕UCS 10
  R←⍬
  R,←'#include <stdio.h>',NL
  R,←'#include "hpapl.h"',NL
