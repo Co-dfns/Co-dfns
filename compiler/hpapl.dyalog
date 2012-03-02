@@ -1,30 +1,11 @@
 ﻿:Namespace HPAPL
 ⎕IO ⎕ML ⎕WX←0 0 3
 
-∇ R←AssignConst(NM VL)
- R←0 4⍴⍬
- R⍪←'alloc'NM'0,0,1,1'⍬
- R⍪←'assign'NM'0'(⍕VL)
-∇
-
-∇ R←BuildConst In;I;T;C;Z;X;Y
- R←0 4⍴⍬
- :For I :In ⍳⊃⍴In
-     (C Z X Y)←In[I;]
-     :Select C
-     :Case '←'
-         R⍪←AssignConst Z X
-     :Else
-         R⍪←C Z X Y
-     :EndSelect
- :EndFor
-∇
-
 ∇ R←Compile V
- R←Tokenizer V
- R←Parser R
- R←LiftConst R
- R←BuildConst R
+      ⍝R←Tokenizer V
+      ⍝R←Parser R
+ R←V
+ R←FlattenFunctions R
  R←EmitUPC R
 ∇
 
@@ -45,25 +26,59 @@
  ⎕NUNTIE T
 ∇
 
-∇ R←EmitUPC In;NL;X
- NL←⎕UCS 10
+∇ R←EmitUPC In;NL;X;Commafy
+ NL←⎕UCS 133
  R←⍬
  R,←'#include <stdio.h>',NL
  R,←'#include "hpapl.h"',NL
  R,←NL
- R,←'int main(int argc, char *argv[]) {',NL
- X←↑{⍺≡⍬:⍵ ⋄ ⍵≡⍬:⍺ ⋄ ⍺,',',⍵}/In[;1 2 3]
- X←'(',X,((⊃⍴In)3)⍴');',NL
- R,←,(↑In[;0]),X
- R,←'apl_print(res);',NL
- R,←'return 0;',NL
- R,←'}',NL
+ Commafy←{⍺≡⍬:⍵ ⋄ ⍵≡⍬:⍺ ⋄ ⍺,',',⍵}
+ :For X :In ⊂[1]In
+     R,←⊃0⌷X
+     R,←'('
+     R,←(⊃Commafy/⊃1⌷X)
+     R,←');',NL
+ :EndFor
 ∇
 
-∇ R←LiftConst In;I;Nms;D;T;V
- R←0 4⍴⍬ ⋄ Nms←⍬
- R⍪←'decl' 'res'⍬ ⍬
- R⍪←'←' 'res'(⊃In[0;2])⍬
+∇ R←FlattenFunctions In;L;Intl;Prims;PrimFns;Return;Last
+ R←1 2⍴'init'(⊂⍬)
+ Intl←'alloc' 'setarr'
+ Prims←1⍴'!'
+ PrimFns←1 2⍴'bangm' 'bangd'
+ Last←0
+ :For L :In ⊂[1]In
+     :Select 2↑L
+     :Case 0 'Function'
+         :If Last=1
+             R⍪←'endfun'(⊂⍬)
+             Last←0
+         :EndIf
+         R⍪←'begfun'((2⌷L),¯1↓⊃3⌷L)
+         R⍪←↑(⊂⊂'decl'),∘⊂¨⊃¯1↑⊃3⌷L
+     :Case 0 'Program'
+         :If Last=1
+             R⍪←'endfun'(⊂⍬)
+             Last←0
+         :EndIf
+         R⍪←'begprog'(⊂⍬)
+         Return←((⊃3⌷L),⊂⍬)[0]
+         R⍪←↑(⊂⊂'decl'),∘⊂¨3⌷L
+     :Case 1 'Statement'
+         Last←1
+         :Select 2⌷L
+         :CaseList Prims
+             R⍪←PrimFns[Prims⍳2⌷L;¯2+⍴⊃3⌷L],3⌷L
+         :CaseList ⍳⍴Intl
+             R⍪←Intl[2⌷L],3⌷L
+         :Else
+             R⍪←2↓L
+         :EndSelect
+     :Else
+         'Invalid program'⎕SIGNAL 2
+     :EndSelect
+ :EndFor
+ R⍪←'endprog'Return
 ∇
 
 ∇ R←Parser Tokens;Ttype;Tval;I
@@ -75,13 +90,6 @@
          R⍪←0 1 Tval
      :EndSelect
  :EndFor
-∇
-
-∇ R←ProcToken(Type Val)
- :Select Type
- :Case 1
-     R←Type(⍎Val)
- :EndSelect
 ∇
 
 ∇ R←Tokenizer V;C;Line;Col;Type;Val;NL
