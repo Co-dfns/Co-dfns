@@ -1,0 +1,72 @@
+NAS Parallel Benchmarks 3.3 - Serial version (NPB3.3-SER)
+---------------------------------------------------------
+
+   NAS Parallel Benchmarks Team
+   npb@nas.nasa.gov
+
+
+This directory contains the serial implementation of the NAS
+Parallel Benchmarks, Version 3.3 (NPB3.3-SER).  A brief
+summary of the new features introduced in this version is
+given below.
+
+For changes from different versions, see the Changes.log file
+included in the upper directory of this distribution.
+
+For explanation of compilation and running of the benchmarks,
+please refer to README.install.
+
+
+This version (3.3) introduces a new problem size (class E) to seven 
+of the benchmarks (BT, SP, LU, CG, MG, FT, and EP). The version 
+also includes the class D problem size for the IS benchmark.
+
+The release is merged with the vector codes for the BT and
+LU benchmarks, which can be selected with the VERSION=VEC option 
+during compilation.  However, successful vectorization highly 
+depends on the compiler used.  Some changes to compiler directives 
+for vectorization in the current codes (see *_vec.f files)
+may be required.
+
+
+Main changes in NPB3.3-SER:
+
+   - Introduction of the Class E problem size (except for IS, UA, DC)
+
+   - Include the Class D problem size for the IS benchmark.
+     The "Bucket" option is now the default.
+
+   - Merged with the vector codes for the BT and LU benchmarks.
+
+   - LU-HP is no longer included in the distribution.
+
+Main changes in NPB3.2-SER:
+
+   - Convert C++ version of DC to plain C.
+
+Main changes in NPB3.1-SER:
+
+   - Include the Class D problem size in all benchmarks except for
+     the IS benchmark.
+
+   - Redefine the Class W problem size for MG to avoid too fast
+     convergence.  The new size is 128x128x128, 4 iterations.
+
+   - Use relative errors for verification in MG and CG, which is
+     consistent with other benchmarks.
+
+   - Include one SSOR iteration before the time step loop in both
+     LU and LU-HP to touch all pages.
+
+   - Include the UA benchmark
+
+   - Include the DC benchmark
+
+The serial version of NPB3.0 (NPB3.0-SER) is based on NPB2.3-serial
+with the following improvements:
+
+   - memory optimization for BT and SP
+
+   - two implementations included for LU
+
+   - restructured FT

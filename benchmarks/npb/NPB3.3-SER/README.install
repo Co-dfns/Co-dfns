@@ -1,0 +1,203 @@
+Some explanations on NAS Parallel Benchmarks 3.3 - Serial version
+-----------------------------------------------------------------
+
+The serial version of NPB3.x (NPB3.x-SER) is based on NPB2.3-serial
+with a number of improvements (see Section 3 below) and added with
+two new benchmarks (UA and DC).
+
+For problem reports and suggestions on the implementation, please contact
+
+   NAS Parallel Benchmarks Team
+   npb@nas.nasa.gov
+
+
+1. Compilation
+
+   NPB3.3-SER uses the same directory tree as NPB2.3.
+   Before compilation, one needs to check the configuration file
+   'make.def' in the config directory and modify the file as necessary.  
+   If it does not (yet) exist, copy 'make.def.template' or one of the
+   sample files in the NAS.samples subdirectory to 'make.def' and 
+   edit the content for site- and machine-specific data.  Then
+
+      make <benchmark> CLASS=<class> [VERSION=VEC]
+
+   <benchmark> is one of (BT, SP, LU, FT, CG, MG, EP, IS, UA, DC) and 
+   <class> is one of (S, W, A, B, C).  Although Classes D and E are also 
+   defined for a number of benchmarks, the memory requirement and 
+   execution time likely exceed what most of the single processor 
+   systems can support.
+
+   Classes C, D and E are not defined for DC.
+   Class E is not defined for IS and UA.
+
+   The "VERSION=VEC" option is used for selecting the vectorized 
+   versions of BT and LU.
+
+   Class D for IS (Integer Sort) requires a compiler/system that 
+   supports the "long" type in C to be 64-bit.  As examples, the SGI 
+   MIPS compiler for the SGI Origin using the "-64" compilation flag and
+   the Intel compiler for IA64 are known to work.
+
+   In order to build the class E version of CG, the integer type
+   needs to be promoted to 64-bit, which is usually done through 
+   compilation flag (such as "-i8" for FFLAGS in config/make.def).
+
+   To build a suite of benchmarks, one can create the file 
+   "config/suite.def", which contains a list of executables to build.
+   Each line in the file contains the name of a benchmark and the class,
+   separated by spaces or tabs (see suite.def.template for an example).
+   Then
+
+      make suite
+
+
+   ================================
+   
+   The "RAND" variable in make.def
+   --------------------------------
+   
+   Most of the NPBs use a random number generator. In two of the NPBs (FT
+   and EP) the computation of random numbers is included in the timed
+   part of the calculation, and it is important that the random number
+   generator be efficient.  The default random number generator package
+   provided is called "randi8" and should be used where possible. It has 
+   the following requirements:
+   
+   randi8:
+     1. Uses integer*8 arithmetic. Compiler must support integer*8
+     2. Uses the Fortran 90 IAND intrinsic. Compiler must support IAND.
+     3. Assumes overflow bits are discarded by the hardware. In particular, 
+        that the lowest 46 bits of a*b are always correct, even if the 
+        result a*b is larger than 2^64. 
+   
+   Since randi8 may not work on all machines, we supply the following
+   alternatives:
+   
+   randi8_safe
+     1. Uses integer*8 arithmetic
+     2. Uses the Fortran 90 IBITS intrinsic. 
+     3. Does not make any assumptions about overflow. Should always
+        work correctly if compiler supports integer*8 and IBITS. 
+   
+   randdp
+     1. Uses double precision arithmetic (to simulate integer*8 operations). 
+        Should work with any system with support for 64-bit floating
+        point arithmetic.      
+   
+   randdpvec
+     1. Similar to randdp but written to be easier to vectorize. 
+
+
+2. Execution
+
+   The executable is named <benchmark-name>.<class>.x and is placed
+   in the bin subdirectory (or in the directory BINDIR specified in
+   make.def, if you've defined it).  NPB3.3-SER can be run as regular 
+   executables without additional settings.  For example:
+
+      bin/bt.A.x > BT.A_out
+
+   It runs BT Class A problem and the output is stored to BT.A_out.
+
+   Each benchmark includes a set of additional timers for profiling purpose
+   (reporting timing for selected code blocks).  By default, these timers
+   are disabled.  To enable the timers, create a dummy file 'timer.flag' 
+   in the current working directory (not necessarily where the executable 
+   is located) before running a benchmark.
+
+
+3. Notes on the implementation (NPB3.0-SER)
+
+3.1 BT
+
+This version is optimized for memory performance.  It uses much less
+memory than the original version due to the size reduction of working 
+arrays.
+
+Serial performance in comparison with the original NPB2.3-serial.
+----------------------------------------------------------------------
+Machine	(Speed) 	Class	NPB2.3-serial	NPB3.0-SER
+Origin2000 (250MHz)	A	2162.4(77.82)	1075.2(156.51)	50.3%
+T3E (300MHz)    	W	218.1(35.39)	117.0(65.95)	46.4%
+                	A	~5285.5(31.84)	2836.5(59.33)
+SGI R5000 (150MHz)	W	549.8(14.04)	265.0(29.13)	51.8%
+PPro (200MHz)		W	316.8(24.36)	121.2(63.69)	61.7%
+----------------------------------------------------------------------
+-- memory usage (Class A):
+      	 NPB2.3 - 323MB, PBN - 46MB
+----------------------------------------------------------------------
+
+3.2 SP
+
+This version is optimized for memory performance.  The smaller dimension
+in U and RHS was moved to the inner-most, which gives better cache
+performance.  However, the code is not as friendly to vector machines as
+the original version.
+
+Serial performance in comparison with the original NPB2.3-serial.
+----------------------------------------------------------------------
+Machine	(Speed) 	Class	NPB2.3-serial	NPB3.0-SERerial
+Origin2000 (250MHz)	A	1478.3(57.51)	971.4(87.52)	34.3%
+T3E (300MHz)    	A	3194.3(26.61)	1708.3(49.76)	46.5%
+SGI R5000 (150MHz)	W	1324.2(10.70)	774.1(18.31)	41.5%
+PPro (200MHz)		W	758.9(18.68)	449.0(31.57)	40.8%
+----------------------------------------------------------------------
+-- memory usage (Class A):
+      	 NPB2.3 - 82MB, PBN - 48MB
+----------------------------------------------------------------------
+
+3.3 LU and LU-hp
+
+LU is essentially the same as the original NPB2.3-serial.
+It is a good starting point for a pipeline implementation.
+
+LU-hp contains a hyper-plane implementation of the SSOR algorithm.
+The default version is 3-D hyper-plane and has worse cache performance
+than LU.  Six relevant routines for a 2-D hyper-plane (wave-front)
+implementation are included in the subdirectory 'ver2'.
+
+Some of the timings on a single processor:
+----------------------------------------------------------------------
+Class A                	LU      	LU-hp-3D	LU-hp-2D
+Origin2000 (250MHz)	1389.4(85.87)	1605.1(74.32)	1325.1(90.03)
+----------------------------------------------------------------------
+
+3.4 FT
+
+Summary of changes from NPB2.3-serial
+
+- Reduce the use of memory for big arrays by 1/3
+- Random number generator is made parallelizable
+
+3.5 CG, MG
+
+Except for removal of some working buffers (used in the MPI
+program), the implementation has the same structure as the
+NPB2.3-serial.
+
+3.6 EP
+
+It has the same implementation as in the original NPB2.3-serial.
+
+3.7 IS
+
+An extra array copy in the iteration loop was eliminated in the new
+version.  This improved performance by about 35% on a CLASS A problem
+on Origin2000 (195MHz).
+
+Old version (NPB2.3-serial)-
+ Time in seconds =                     9.06
+ Mop/s total     =                     9.25
+
+New version (NPB3.0-SER)-
+ Time in seconds =                     5.89
+ Mop/s total     =                    14.23
+
+
+3.8 Timers
+
+NPB3.x-SER includes additional timers in the seven Fortran
+benchmarks.  To activate these timers, create a dummy file
+'timer.flag' in the directory where the program is to run.
+
