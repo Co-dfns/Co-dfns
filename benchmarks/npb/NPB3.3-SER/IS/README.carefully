@@ -1,0 +1,39 @@
+Please note:  The IS code in this directory known as is.c is the most
+compact serial version of the NPB2.3 parallel IS that it is possible
+to devise.  As such, it is completely unnecessary to have any notion 
+of buckets at all in order to correctly solve the specified NPB1 IS 
+benchmark problem.  
+
+Nevertheless, it is possible to turn on bucketing via #ifdef'ed code.
+Then, the sort first rearranges the keys into buckets by range (the
+bucket's ranges evenly subdivide the total key range), and then
+ranks the contents of each bucket.  This results in key transfers
+first into contiguous elements of buckets.  This is relatively
+cache efficient, since there are a relatively small number of buckets.
+Then the key counting that occurs accesses contiguous array elements.
+Once again, accesses reuse cache lines efficiently.  Finally, the 
+accumulation of key multiplicities (the key count) which gives the key
+ranks also reuses cache line efficiently.
+
+But using the buckets more than doubles the amount of computational
+work that must be performed.  On machines with very large caches, the 
+aforementioned benefits may not exist, and the extra processing looks
+expensive. These examples apply to both CLASS A and B problems:
+
+    SP2-66MhzWN:  50% speedup with buckets                          
+    SGI Indy5000: 50% slowdown with buckets             
+    SGI O2000:   400% slowdown with buckets (Wow!)                
+
+
+Default setting is 
+
+    #define USE_BUCKETS
+
+i.e., buckets turned on!  To switch the setting off, simply comment
+out this line.
+
+It is a conjecture that cache access is the underlying mechanism 
+causing these variations.
+
+Note: If reporting timing results, either of these modes may be used 
+      without penalty.

@@ -1,0 +1,122 @@
+This file gives explaination of some terms used in the commments of the code. 
+
+1. Face Index:
+defined on an element.
+range: 1,2,...,6
+order:(when facing an element)its right, left,back,front,top and bottom.
+
+2. Local Edge Index:  
+defined on a face. 
+range: 1,2,3,4 
+order: bottom, right, top and left edge (of a face).
+
+3. Global Edge Index: 
+defined on an element. 
+range: 1,2,3,...,11,12.
+Order: 
+1,2,3,4:  local edge 1,2,3,4 on face 1
+5,6,7,8:  local edge 1,2,3,4 on face 2
+9,10   :  local edge 1,3, on face 3
+11,12  :  local edge 1,3 on face 4
+
+4.Local Corner Index
+defined on a face
+range : 1,2,3,4
+order : left_bottom, right_bottom,left_top,right_top
+
+5. Vertex Index
+defined on an element
+range: 1,2,...,7,8
+order: 
+1,2,3,4: local corner 1~4 on face 6
+5,6,7,8: local corner 5~8 on face 5
+
+6. Face type
+defined on an element
+range: 0,1,2,3
+type 0: domain boundary( no neighbor element)
+type 1: neighbor element is larger in size
+type 2: neighbor element is of the same size
+type 3: neighbor element is smaller in size
+
+7. Nonconforming face
+defined on an element
+face of type 3
+
+8. Conforming face
+defined on an element
+face of type 0,1,or 2
+
+9.Nonconforming edge
+defined on an element
+The whole edge is shared by a face (of any element) of type 3. 
+
+10.conforming edge
+defined on an element
+All elements sharing this edge are of the same or larger size. 
+ 
+11.mortar location
+defined on each face
+range (1,1) (1,2) (2,1) (2,2)
+order:
+Each face has either 1 or 4 pieces (2 by 2 in each direction) of mortar. 
+If it has one piece of mortar, the mortar location is (1,1).
+If a face has four pieces of mortar, (1,1) refers to the left_bottom,
+(1,2) refers to right_bottom, (2,1) refers to left_top, (2,2) refers to
+right_top.
+
+
+13. For situations that nonconforming edges exist on a conforming face,ii and
+jj used in idmo(i,j,ii,jj,face,iel) for the nonconforming edge is the same 
+as the face is nonconforming. e.g. if local edge 2 is nonconforming, 
+mortar indices on this edge are idmo(i,j,1,2,face,iel) (1<j<5,i=lx1) and 
+idmo(i,j,2,2,face,iel) (1<j<5, i=lx1) although for i <> lx1, idmo(i,j,1,2,face,iel) and idmo(i,j,2,2,face,iel) =0 (not exist)
+
+14. edge mortar index for nonconforming edge.
+defined on edge
+range 1,2
+order:
+local edge 1 and 3:  left , right
+local edge 2 and 4: bottom, top 
+Note, for conforming edge it is always 1
+
+
+some important array:
+1. mortar index
+idmo(i,j,ii,jj,face,iel) gives the mortar index number. iel is element index,
+face if face index, (ii,jj) is mortar location, (i,j) is collocation point location on that piece of mortar. There 5  by 5 collocation point on each piece of 
+mortar. 
+
+Note, indices refers to local corners on each face are fixed no matter how many
+pieces mortar are there on each face. 
+for local corner 1, its mortar number is idmo(1  ,  1,1,1,face,iel)
+for local corner 2, its mortar number is idmo(LX1,  1,1,2,face,iel)
+for local corner 3, its mortar number is idmo(1  ,LX1,2,1,face,iel)
+for local corner 4, its mortar number is idmo(LX1,LX1,2,2,face,iel)
+
+2. sje(ii,jj,face,iel)
+records the neighor element index of iel, neighbored by face "face"
+ii,jj are defined the same as in  idmo()
+sje()=0 refers to no neighbor
+for conforming face, only when ii=1 and jj=1, sje() <>0
+
+3.ijel(n,face,iel)
+if iel's neighbor on face "face" is jel, face "face" on jel is jface, 
+then sje(ii,jj,jface,jel)=iel,
+then ijel(1,face,iel)=ii and ijel(2,face,iel)=jj
+
+4 Tree(iel) records the refinement history to get iel. When iel gets refined,
+its either children has the tree(children 1)=tree()+000, 
+tree(children 2)=tree()+001, 
+tree(children 3)=tree()+010, 
+tree(children 4)=tree()+011, 
+tree(children 5)=tree()+100, 
+tree(children 6)=tree()+101, 
+tree(children 7)=tree()+110, 
+tree(children 8)=tree()+111
+
+5. xc(i,iel) records the x coordinates of the i'th vertex of element iel
+   xc(i,iel) records the y coordinates of the i'th vertex of element iel
+   xc(i,iel) records the z coordinates of the i'th vertex of element iel
+
+6.cbc(i,iel) records the type of face i of element iel

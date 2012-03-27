@@ -1,0 +1,25 @@
+Note on the parallelization of transfer.f
+-----------------------------------------
+
+The file contains three major loops that update sparsely overlapped
+mortar points.  Parallelization of these loops requires atomic update
+of memory references by mortar points.  The first implementation
+uses the ATOMIC directive to perform the job.  However, in some systems
+where atomic update of memory references is not available, the ATOMIC
+directive could be implemented as a critical section, which would be 
+very expensive.  An alternative approach is to use locks to guard
+atomic updates.  The second implementation scales reasonably well.
+However, the overhead associated with calling lock routines deep 
+inside loop nests could be large.
+
+Two implementations:
+   - transfer_au.f: use ATOMIC directive for atomic updates
+   - transfer.f: use locks for atomic updates, as the default
+
+To use the first approach, one can either rename 'transfer_au.f'
+to 'transfer.f' before compilation or use the suboption "UPDATE"
+in make:
+
+   % make CLASS=<class> UPDATE=au
+
+where <class> is one of [S,W,A,B,C,D].
