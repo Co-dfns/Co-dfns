@@ -1,0 +1,696 @@
+\font\rm = "XITS" at 10pt
+\font\tt = "APL385 Unicode" at 10pt
+\font\bf = "XITS/B" at 10pt
+\font\it = "XITS/I" at 10pt
+\font\titlefont = "XITS" at 17pt
+
+
+\def\title{HPAPL (VERSION 0.1)}
+\def\topofcontents{\null\vfill
+  \centerline{\titlefont HPAPL Compiler}
+  \vskip 15pt
+  \centerline{(Version 0.1)}
+  \vfill}
+\def\botofcontents{\vfill
+\noindent
+Copyright $\copyright$ 2012 Aaron W. Hsu {\tt <arcfide@@sacrideo.us>}
+\smallskip\noindent
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+\smallskip\noindent
+THE SOFTWARE IS PROVIDED ``AS IS'' AND THE AUTHOR DISCLAIMS ALL
+WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+}
+
+@* Introduction. This is the first prototype of the HPAPL compiler.  
+HPAPL stands for ``High performance $\{$A,Axiomatic$\}$ 
+$\{$Parallel,Programming$\}$ Language.'' This first draft is designed to 
+allow me to quickly prototype and test the core of the language.
+
+The compiler is layed out in the following main sections:
+
+@p
+@<Define program AST constructor and modules@>
+;@<Core code renderer@>
+;@<Rewriting system@>
+;@<Default rewrite rules@>
+
+@* Syntax. The way HPAPL works is a little strange, as there is no 
+parser.  Instead, users are expected to use a structured editor to 
+directly construct an AST.  There is a way to serialize and to pretty 
+print the AST.  Here is a basic outline of the AST structure:
+
+$$\eqalign{
+  Essay       &:= (Code \mid Prose)*\cr
+  Prose       &:= \hbox{string}\cr
+  Code        &:= Section \mid Function \mid Program\cr
+  Section     &:= Name_{str}\ Body_{blk}\cr
+  Function    &:= Return_{var}\ Left_{var}\ Right_{var}\ Local_{var}*\ Body_{blk}\cr
+  Program     &:= Body_{blk}\cr
+  Block       &:= Statement*\cr
+  Statement   &:= Assignment \mid If \mid While\cr
+  If          &:= Test_{exp}\ Consequent_{blk}\ Alternative_{blk}\cr
+  While       &:= Test_{exp}\ Body_{blk}\cr
+  Assignment  &:= Target_{var}\ Value_{exp}\cr
+  Expression  &:= Array \mid Application\cr
+  Array       &:= NumArray \mid CharArray \mid MixArray\cr
+  NumArray    &:= \hbox{number}*\cr
+  CharArray   &:= \hbox{character}*\cr
+  MixArray    &:= (\hbox{number} \mid \hbox{character})*\cr
+  Application &:= Niladic \mid Monadic \mid Dyadic\cr
+  Niladic     &:= Name_{var}\cr
+  Monadic     &:= Name_{var}\ Right_{exp}\cr
+  Dyadic      &:= Name_{var}\ Left_{exp}\ Right_{exp}\cr
+  Variable    &:= \hbox{restricted string}\cr
+}$$
+
+\noindent Each of these productions corresponds to a type of node in 
+our syntax tree.  For each of these nodes, we will have the main 
+procedural data type, but we will also define a syntactic construct that
+allows one to construct the AST as if it were an S-expression.
+
+@ We will proceed from the bottom up to define each of 
+these, starting with what a variable is.  In our case, we allow only 
+alphanumeric characters in variable names, except for the |∆|
+character.
+
+@c () => (<variable> make-variable variable? variable-string)
+@<Syntax AST Definitions@>=
+(define (valid-variable? str)
+  (for-all (lambda (c) (or (char-alphanumeric? c) (char=? #\∆ c)))
+           (string->list str)))
+(define-record-type (<variable> make-variable variable?)
+  (fields (immutable string variable-string))
+  (protocol
+    (lambda (n)
+      (lambda (str)
+        (unless (valid-variable? str)
+          (error #f "invalid variable name" str))
+        (n str)))))
+
+@ The syntax of the |Variable| form should take a single string or 
+symbol.
+
+@c () => (variable)
+@<Syntax AST Definitions@>=
+(define-syntax variable
+  (syntax-rules ()
+    [(_ sym) (symbol? (syntax->datum #'sym))
+     (make-variable (symbol->string sym))]
+    [(_ str) (string? (syntax->datum #'str))
+     (make-variable str)]))
+
+@ The next few productions, $Array$ and $Application$ are a part of 
+the $Expression$ production, so we will just go quickly here to define 
+a parent |<expression>| type for both.  There is no constructor syntax
+for expressions directly, though, and instead, one should use 
+the definitions for the $Array$ and $Application$ productions below.
+
+@c () => (<expression> expression?)
+@<Syntax AST Definitions@>=
+(define-record-type (<expression> make-expression expression?))
+
+@ Next we will take on the $Array$ production.  In this case, we have 
+three subarrays:
+
+$$\eqalign{
+  Array       &:= NumArray \mid CharArray \mid MixArray\cr
+  NumArray    &:= \hbox{number}*\cr
+  CharArray   &:= \hbox{character}*\cr
+  MixArray    &:= (\hbox{number} \mid \hbox{character})*\cr
+}$$
+
+\noindent In each of the child cases, only the contents of the list 
+are different.  This means that we will define the field in the 
+$Array$ type, and just twiddle with the protocol in the children.
+We will define the syntax for arrays after we have designed the 
+child constructors.
+
+@c () => (make-array array? <array> array-elements)
+@<Syntax AST Definitions@>=
+(define-record-type (<array> make-array array?)
+  (parent <expression>)
+  (fields (immutable elements array-elements))
+  (protocol
+    (lambda (p)
+      (lambda (lst)
+        (unless (list? lst)
+          (error #f "invalid set of array elements" lst))
+        ((p) lst)))))
+
+@ The first and easiest $Array$ child is the $NumArray$ production. 
+This will accept either flonums or fixnums as valid numbers.
+
+@c () => (num-array? make-num-array <num-array>)
+@<Syntax AST Definitions@>=
+(define (valid-num-array? lst)
+  (for-all (lambda (e) (or (fixnum? e) (flonum? e))) lst))
+(define-record-type (<num-array> make-num-array num-array?)
+  (parent <array>)
+  (protocol
+    (lambda (p)
+      (lambda (lst)
+        (unless (valid-num-array? lst)
+          (error #f "invalid number array" lst))
+        ((p lst))))))
+
+@ The character array type is a bit more complex, because we want to 
+accept either a string or a list of characters as valid input. 
+
+@c () => (<char-array> char-array? make-char-array)
+@<Syntax AST Definitions@>=
+(define (valid-char-array? lst-or-str)
+  (or (string? lst-or-str)
+      (and (list? lst-or-str)
+           (for-all char? lst-or-str))))
+(define-record-type (<char-array> make-char-array char-array?)
+  (parent <array>)
+  (protocol
+    (lambda (p)
+      (define (normalize lst-or-str)
+        (if (string? lst-or-str)
+            (string->list lst-or-str)
+            lst-or-str))
+      (lambda (lst-or-str)
+        (unless (valid-char-array? lst-or-str)
+          (error #f "invalid character array" lst-or-str))
+        ((p (normalize lst-or-str)))))))
+        
+@ For a mixed array, we want to accept a list of character, fixnums,
+flonums, or strings, and any combination of those.  We will normalize 
+things out so that the strings are just spliced in as lists of characters.
+This assures us that we still avoid nested arrays in our implementation
+of HPAPL at the moment.
+
+@c () => (<mixed-array> make-mixed-array mixed-array?)
+@<Syntax AST Definitions@>=
+(define (valid-mixed-array? lst)
+  (for-all 
+    (lambda (e) (or (fixnum? e) (flonum? e) (char? e) (string? e)))
+    lst))
+(define-record-type (<mixed-array> make-mixed-array mixed-array?)
+  (parent <array>)
+  (protocol
+    (lambda (p)
+      (define (normalize lst)
+        (fold-right
+          (lambda (e s)
+            (if (string? e)
+                (append (string->list e) s)
+                (cons e s)))
+          '() lst))
+      (lambda (lst)
+        (unless (valid-mixed-array? lst)
+          (error #f "invalid mixed array" lst))
+        ((p (normalize lst)))))))
+        
+@ We now have constructor for each of the child types of the $Array$ 
+production.  However, it is inconvenient to have to use these 
+constructors instead of just saying, ``Give me a new array, figure out 
+the sub-type for me.''  To make this possible, and because this is 
+the only use case that seems desirable, we define a single |array| 
+syntax for constructing arrays of any subtype.
+
+@c () => (array)
+@<Syntax AST Definitions@>=
+(define (array-type lst)
+  (define (loop lst type)
+    (cond
+      [(null? lst) type]
+      [(or (fixnum? (car lst)) (flonum? (car lst))) 
+       (if (or (not type) (eq? 'numeric type))
+           (loop (cdr lst) 'numeric)
+           'mixed)]
+      [(or (char? (car lst)) (string? (car lst)))
+       (if (or (not type) (eq? 'character type))
+           (loop (cdr lst) 'character)
+           'mixed)]
+      [else #f]))
+  (if (null? lst) 'numeric (loop lst #f)))
+(define-syntax array
+  (syntax-rules ()
+    [(_ elem) (string? (syntax->datum #'elem))
+     (make-char-array elem)]
+    [(_ elem ...)
+     (let ([tmp (list 'elem ...)])
+       (case (array-type tmp)
+         [(numeric) (make-num-array tmp)]
+         [(character) (make-char-array tmp)]
+         [(mixed) (make-mixed-array tmp)]
+         [else (error #f "invalid array" (list 'elem ...))]))]))
+
+@ With the $Array$ type finished, let's define the type for the 
+$Application$ production.  An application has the following rules:
+
+$$\eqalign{
+  Application &:= Niladic \mid Monadic \mid Dyadic\cr
+  Niladic     &:= Name_{var}\cr
+  Monadic     &:= Name_{var}\ Right_{exp}\cr
+  Dyadic      &:= Name_{var}\ Left_{exp}\ Right_{exp}\cr
+}$$
+
+\noindent In these rules, we can tell which of the child application 
+types that we have by the count of the fields.  We will define 
+the main application type first.
+
+@c () => (<application> make-application application? application-name)
+@<Syntax AST Definitions@>=
+(define-record-type (<application> make-application application?)
+  (parent <expression>)
+  (fields (immutable name application-name))
+  (protocol
+    (lambda (p)
+      (lambda (name)
+        (unless (variable? name)
+          (error #f "invalid application name" name))
+        ((p) name)))))
+
+@ The niladic form is just another name for an application.  Since we 
+do not see these form nearly as often, we will not define this type 
+explicitly, instead, an application is niladic if the following 
+predicate holds.
+
+@c () => (niladic?)
+@<Syntax AST Definitions@>=
+(define (niladic? app)
+  (and (application? app) (not (monadic? app)) (not (dyadic? app))))
+
+@ The monadic form has a single argument expression, which is always 
+the right argument. This right argument is an expression.
+
+@c () => (<monadic> make-monadic monadic? monadic-right)
+@<Syntax AST Definitions@>=
+(define-record-type (<monadic> make-monadic monadic?)
+  (parent <application>)
+  (fields (immutable right monadic-right))
+  (protocol
+    (lambda (p)
+      (lambda (name right)
+        (unless (and (variable? name) (expression? right))
+          (error #f "invalid monadic application" name right))
+        ((p name) right)))))
+
+@ The dyadic form has two argument expressions, a right and a left 
+form.
+
+@c () => (<dyadic> make-dyadic dyadic? dyadic-left dyadic-right)
+@<Syntax AST Definitions@>=
+(define-record-type (<dyadic> make-dyadic dyadic?)
+  (parent <application>)
+  (fields (immutable left dyadic-left) (immutable right dyadic-right))
+  (protocol
+    (lambda (p)
+      (lambda (name left right)
+        (unless (and (variable? name) (expression? left) (expression? right))
+          (error #f "invalid dyadic application" name left right))
+        ((p name) left right)))))
+
+@ Like the array, we want a general application constructor rather than 
+being required to use a different constructor for each individual application 
+sub-type.  To this end we define the |application| syntax to have three 
+forms corresponding to the three possible application types.
+
+@c () => (application)
+@<Syntax AST Definitions@>=
+(define-syntax application
+  (syntax-rules ()
+    [(_ name) (make-application (variable name))]
+    [(_ name right) (make-monadic (variable name) right)]
+    [(_ name left right) (make-dyadic (variable name) left right)]))
+
+@ With the $Expression$ production and all of its sub-productions out 
+of the way, that leaves the $Statement$ production as the next major 
+container type.
+
+@c () => (<statement> make-statement statement?)
+@<Syntax AST Definitions@>=
+(define-record-type (<statement> make-statement statement?))
+
+@ The simplest possible statement is the assignment statement.
+
+$$Assignment  := Target_{var}\ Value_{exp}$$
+
+\noindent We have already defined the types for $Target$ and $Value$
+so we have little more to do.  
+
+@c () => (<assignment> make-assignment assignment?
+          assignment-target assignment-value)
+@<Syntax AST Definitions@>=
+(define-record-type (<assignment> make-assignment assignment?)
+  (parent <statement>)
+  (fields (immutable target assignment-target) 
+          (immutable value assignment-value))
+  (protocol
+    (lambda (p)
+      (lambda (target value)
+        (unless (and (variable? target) (expression? value))
+          (error #f "invalid assignment" target value))
+        ((p) target value)))))
+
+@ Assignment gets its own |assignment| syntax for creating nodes of 
+this type.
+
+@c () => (assignment)
+@<Syntax AST Definitions@>=
+(define-syntax assignment
+  (syntax-rules ()
+    [(_ target value) (make-assignment (variable target) value)]))
+
+@ The $If$ and $While$ statements both use the $Block$ production, 
+which is just a list of $Statement$s.
+
+$$Block       := Statement*$$
+
+\noindent Let's go ahead and define the $Block$ production here to 
+make things clear for the $If$ and $While$ productions.
+
+@c () => (<block> make-block block? block-statements)
+@<Syntax AST Definitions@>=
+(define-record-type (<block> make-block block?)
+  (fields (immutable statements block-statements))
+  (protocol
+    (lambda (n)
+      (lambda (stmts)
+        (unless (for-all statement? stmts)
+          (error #f "invalid statement block" stmts))
+        (n stmts)))))
+
+@ To make creating blocks easier, we have the following |block| syntax
+which does not exactly mirror the signature of the |make-block| 
+procedure.
+
+@c () => (block)
+@<Syntax AST Definitions@>=
+(define-syntax block
+  (syntax-rules ()
+    [(_ stmt ...) (make-block (list stmt ...))]))
+
+@ With $Block$ now clearly defined, let's revisit the $If$ production.
+
+$$If  := Test_{exp}\ Consequent_{blk}\ Alternative_{blk}$$
+
+\noindent It should be noted that we represent a one armed if with a 
+alternative field that is |(block)|. 
+
+@c () => (<if> make-if if? if-test if-consequent if-alternative)
+@<Syntax AST Definitions@>=
+(define-record-type (<if> make-if if?)
+  (parent <statement>)
+  (fields (immutable test if-test) 
+          (immutable consequent if-consequent) 
+          (immutable alternative if-alternative))
+  (protocol
+    (lambda (p)
+      (lambda (test consequent alternative)
+        (unless (and (expression? test) 
+                     (block? consequent) (block? alternative))
+          (error #f "invalid if statement" test consequent alternative))))))
+
+@ The |if| constructor overloads the normal |if| syntax, so we give 
+this one a slightly different name, trusting that we will be able to 
+rename it when we need to do so.
+
+@c () => (if-ast)
+@<Syntax AST Definitions@>=
+(define-syntax if-ast
+  (syntax-rules ()
+    [(_ test consequent) (make-if test consequent (block))]
+    [(_ test consequent alternative)
+     (make-if test consequent alternative)]))
+
+@ That leaves only the $While$ production waiting to complete the 
+$Statement$ production sub-types.
+
+$$While := Test_{exp} Body_{blk}$$
+
+\noindent This one is straightforward.
+
+@c () => (<while> make-while while? while-test while-body)
+@<Syntax AST Definitions@>=
+(define-record-type (<while> make-while while?)
+  (parent <statement>)
+  (fields (immutable test while-test) (immutable body while-body))
+  (protocol
+    (lambda (p)
+      (lambda (test body)
+        (unless (and (expression? test) (block? body))
+          (error #f "invalid while loop" test body))
+        ((p) test body)))))
+
+@ We implicitly wrap the body in a |block| form in our |while| syntax 
+so that we do not have to type it in so many times.
+
+@c () => (while)
+@<Syntax AST Definitions@>=
+(define-syntax while
+  (syntax-rules ()
+    [(_ test stmts ...) (make-while test (block stmts ...))]))
+
+@ All that is left are the top level syntaxes.  We will handle 
+the $Code$ production next.
+
+$$\eqalign{
+  Code        &:= Section \mid Function \mid Program\cr
+  Section     &:= Name_{str}\ Body_{blk}\cr
+  Function    &:= Return_{var}\ Left_{var}\ Right_{var}\ Local_{var}*\ Body_{blk}\cr
+  Program     &:= Body_{blk}\cr
+}$$
+
+\noindent None of these share any common fields, so we use an empty 
+parent type |<code>|.
+
+@c () => (<code> make-code code?)
+@<Syntax AST Definitions@>=
+(define-record-type (<code> make-code code?))
+
+@ The simplest code sub-type is
+$Program$ so we will do that here.  It has only a single code body.
+
+@c () => (<program> make-program program? program-body)
+@<Syntax AST Definitions@>=
+(define-record-type (<program> make-program program?)
+  (parent <code>)
+  (fields (immutable body program-body))
+  (protocol
+    (lambda (p)
+      (lambda (body)
+        (unless (block? body)
+          (error #f "invalid program body" body))
+        ((p) body)))))
+
+@ The |program| syntax implicitly wraps its given forms in a |block| 
+form, so there should be no need to do this explicitly when creating 
+|program| elements.
+
+@c () => (program)
+@<Syntax AST Definitions@>=
+(define-syntax program
+  (syntax-rules ()
+    [(_ stmt ...) (make-program (block stmt ...))]))
+
+@ Sections are just blocks of code with names attached to them.  Names 
+are just strings.
+
+@c () => (<section> make-section section? section-name section-body)
+@<Syntax AST Definitions@>=
+(define-record-type (<section> make-section section?)
+  (parent <code>)
+  (fields (immutable name section-name) (immutable body section-body))
+  (protocol
+    (lambda (p)
+      (lambda (name body)
+        (unless (and (string? name) (block? body))
+          (error #f "invalid section" name body))
+        ((p) name body)))))
+
+@ Our |section| syntax is pretty straightforward. 
+
+@c () => (section)
+@<Syntax AST Definitions@>=
+(define-syntax section
+  (syntax-rules ()
+    [(_ name body ...) (string? (syntax->datum #'name))
+     (make-section name (block body ...))]))
+
+@ The $Function$ production is the most complicated form, because 
+we need to keep track of the type of function definition. We use |#f|
+in either the $Left$, $Right$, or $Return$ fields to indicate an absence 
+of variable there. 
+
+@c () => (<function> make-function function?
+          function-return function-left function-right function-locals
+          function-body)
+@<Syntax AST Definitions@>=
+(define (valid-function? ret lft rgt lcls code)
+  (and (or (not ret) (variable? ret))
+       (or (not lft) (variable? lft))
+       (or (not rgt) (variable? rgt))
+       (for-all variable? lcls)
+       (block? code)))
+(define-record-type (<function> make-function function?)
+  (parent <code>)
+  (fields (immutable return function-return) 
+          (immutable left function-left) 
+          (immutable right function-right)
+          (immutable locals function-locals)
+          (immutable body function-body))
+  (protocol
+    (lambda (p)
+      (lambda (r a b l c)
+        (unless (valid-function? r a b l c)
+          (error #f "invalid function definition" r a b l c))
+        ((p) r a b l c)))))
+
+@ Our syntax for |function| creation allows us to avoid explicitly 
+using the |#f| atoms in our written out syntax trees.
+
+$$(function\ ([result]\ ([left]\ [right]))\ (locals\ \ldots)\ body\ \ldots)$$
+
+\noindent The brackets above indicate an optional form.  In this case 
+we implicitly create the variables, assuming that the $result$, $left$, 
+and $right$ forms are symbols.
+
+@c () => (function)
+@<Syntax AST Definitions@>=
+(define %%)
+(meta define (symbols? syms) (for-all symbol? (map syntax->datum syms)))
+(define-syntax function
+  (syntax-rules (%%)
+    [(_ (()) (locals ...) body ...) (symbols? #'(locals ...))
+     (function %% #f #f #f (locals ...) body ...)]
+    [(_ ((b)) (locals ...) body ...) (symbols? #'(b locals ...))
+     (function %% #f #f b (locals ...) body ...)]
+    [(_ ((a b)) (locals ...) body ...) (symbols? #'(a b locals ...))
+     (function %% #f a b (locals ...) body ...)]
+    [(_ (r ()) (locals ...) body ...) (symbols? #'(r locals ...))
+     (function %% r #f #f (locals ...) body ...)]
+    [(_ (r (b)) (locals ...) body ...) (symbols? #'(r b locals ...))
+     (function %% r #f b (locals ...) body ...)]
+    [(_ (r (a b)) (locals ...) body ...) (symbols? #'(r a b locals ...))
+     (function %% r a b (locals ...) body ...)]
+    [(_ %% r a b (locals ...) body ...)
+     (make-function 
+       (and r (variable r))
+       (and a (variable a))
+       (and b (variable b))
+       (list (variable locals) ...)
+       (block body ...))]))
+
+@ The last remaining element before we get to $Essay$ is the $Prose$ 
+type, which is trivial.  We will still use the syntax |prose| to 
+enforce a string literal rather than an expression when creating prose 
+nodes.
+
+@c () => (<prose> make-prose prose? prose prose-text)
+@<Syntax AST Definitions@>=
+(define-record-type (<prose> make-prose prose?)
+  (fields (immutable text prose-text))
+  (protocol
+    (lambda (n)
+      (lambda (str)
+        (unless (string? str)
+          (error #f "invalid prose block" str))
+        (n str)))))
+(define-syntax prose
+  (syntax-rules ()
+    [(_ str) (string? (syntax->datum #'str)) (make-prose str)]))
+
+@ Our top-level production is the $Essay$ production. This just 
+encapsulates a list of $Prose$ and $Code$ objects.
+
+@c () => (<essay> make-essay essay? essay-sections)
+@<Syntax AST Definitions@>=
+(define-record-type (<essay> make-essay essay?)
+  (fields (immutable sections essay-sections))
+  (protocol
+    (lambda (n)
+      (lambda (sects)
+        (unless (for-all (lambda (e) (or (prose? e) (code? e))) sects)
+          (error #f "invalid essay" sects))
+        (n sects)))))
+
+@ The |essay| syntax accepts strings in the prose blocks for convenience
+but is otherwise much like the |make-essay| function.
+
+@c () => (essay)
+@<Syntax AST Definitions@>=
+(define-syntax essay
+  (syntax-rules (%%)
+    [(_ sects ...) (essay %% () (sects ...))]
+    [(_ %% (done ...) ()) (make-essay (list done ...))]
+    [(_ %% (done ...) (e rest ...)) (string? (syntax->datum #'e))
+     (essay %% (done ... (prose e)) (rest ...))]
+    [(_ %% (done ...) (e rest ...)) 
+     (essay %% (done ... e) (rest ...))]))
+
+@ Now that we have a way to construct all of these, we want to have a 
+way to hide away all of these constructors so that they are only used 
+when we want them to be used. In reality, we want things to work just 
+like they would have if we had imported them directly into our environment.
+We should be able to say something like this and get an AST:
+
+\medskip\verbatim
+(essay (program (assignment X (array 5 4 3))))
+!endverbatim\medskip
+
+\noindent However, we do not want to be able to state anything but 
+whole programs.  Moreover, we want our $If$ production to be constructed
+using |if| rather than |if-ast|.  This means that we have to have some 
+sort of environment for creating these ASTs, rather than just having 
+them directly in our main programming environment.  To do this, we 
+encapsulate all of our AST constructors into a module that we use 
+when creating a new |essay| form that will make sure that its code 
+gets into the right scope.
+
+@c () => (essay ast-env)
+@<Define program AST constructor and modules@>=
+(module ast-env 
+  (essay essay? essay-sections
+   prose prose? prose-text
+   code? 
+   section section? section-name section-body 
+   function function? function-return function-left function-right 
+     function-locals function-body 
+   program program? program-body 
+   block block-statements 
+   statement?
+   if? if if-test if-consequent if-alternative
+   while while? while-test while-body
+   assignment assignment? assignment-target assignment-value
+   expression?
+   array array? array-elements
+   num-array? char-array? mixed-array?
+   application application? application-name
+   niladic?
+   monadic? monadic-right
+   dyadic? dyadic-left dyadic-right
+   variable? variable-string)
+  @<Syntax AST Definitions@>
+  (alias if if-ast))
+(module ast-constructors
+  (essay prose section function program block if while assignment 
+   array application)
+  (import-only ast-env))
+(define-syntax (essay x)
+  (syntax-case x ()
+    [(_ sects ...)
+     (datum->syntax #'here
+       `(let () (import-only ast-constructors)
+          (essay ,@@(syntax->datum #'(sects ...)))))]))
+
+@* Rendering the code to C.
+
+@* Compilation cycle.
+
+@* Defining rewrites.
+
+@* Default compiler rewrites.
+
+@* Index.
