@@ -37,7 +37,8 @@ allow me to quickly prototype and test the core of the language.
 The compiler is layed out in the following main sections:
 
 @p
-@<Define program AST constructor and modules@>
+;@<Define program AST constructor and modules@>
+@<Syntax AST Definitions@>
 ;@<Core code renderer@>
 ;@<Rewriting system@>
 ;@<Default rewrite rules@>
@@ -83,6 +84,8 @@ character.
 
 @c () => (<variable> make-variable variable? variable-string)
 @<Syntax AST Definitions@>=
+(define (char-alphanumeric? c)
+  (or (char-alphabetic? c) (char-numeric? c)))
 (define (valid-variable? str)
   (for-all (lambda (c) (or (char-alphanumeric? c) (char=? #\∆ c)))
            (string->list str)))
@@ -103,7 +106,7 @@ symbol.
 (define-syntax variable
   (syntax-rules ()
     [(_ sym) (symbol? (syntax->datum #'sym))
-     (make-variable (symbol->string sym))]
+     (make-variable (symbol->string 'sym))]
     [(_ str) (string? (syntax->datum #'str))
      (make-variable str)]))
 
@@ -234,6 +237,7 @@ syntax for constructing arrays of any subtype.
            'mixed)]
       [else #f]))
   (if (null? lst) 'numeric (loop lst #f)))
+(implicit-exports #t)
 (define-syntax array
   (syntax-rules ()
     [(_ elem) (string? (syntax->datum #'elem))
@@ -623,12 +627,12 @@ but is otherwise much like the |make-essay| function.
 @<Syntax AST Definitions@>=
 (define-syntax essay
   (syntax-rules (%%)
-    [(_ sects ...) (essay %% () (sects ...))]
     [(_ %% (done ...) ()) (make-essay (list done ...))]
     [(_ %% (done ...) (e rest ...)) (string? (syntax->datum #'e))
      (essay %% (done ... (prose e)) (rest ...))]
     [(_ %% (done ...) (e rest ...)) 
-     (essay %% (done ... e) (rest ...))]))
+     (essay %% (done ... e) (rest ...))]
+    [(_ sects ...) (essay %% () (sects ...))]))
 
 @ Now that we have a way to construct all of these, we want to have a 
 way to hide away all of these constructors so that they are only used 
@@ -678,12 +682,11 @@ gets into the right scope.
   (essay prose section function program block if while assignment 
    array application)
   (import-only ast-env))
-(define-syntax (essay x)
-  (syntax-case x ()
-    [(_ sects ...)
-     (datum->syntax #'here
-       `(let () (import-only ast-constructors)
-          (essay ,@@(syntax->datum #'(sects ...)))))]))
+(define-syntax essay
+  (syntax-rules ()
+    [(_ stmts ...)
+     (let () (import-only ast-env)
+       (essay stmts ...))]))
 
 @* Rendering the code to C.
 
