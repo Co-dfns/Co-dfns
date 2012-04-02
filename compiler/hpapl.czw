@@ -1106,20 +1106,16 @@ expression to be one that is either an array or a niladic application.
 to produce a program that, ostensibly, prints the prime numbers up to 
 some value.  The output of the pretty printer should be thus:
 
-\medskip\verbatim
-:Essay
-
+\medskip{\obeylines\obeyspaces\tt
+:Essay\medskip
 ∇R←PRIMES X
-  R←(2=+⌿0=(⍳X)∘.|⍳X)/⍳X
-∇
-
+  R←(2=+⌿0=(⍳X)∘.\vrt{}⍳X)/⍳X
+∇\medskip
 :Program
   N←⎕
   ⎕←PRIMES N
-:EndProgram
-
-:EndEssay
-!endverbatim\medskip
+:EndProgram\medskip
+:EndEssay\par}\medskip
 
 \noindent And here is the constructor syntax that should produce that 
 pretty printed output.
