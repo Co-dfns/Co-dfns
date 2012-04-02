@@ -38,7 +38,9 @@ The compiler is layed out in the following main sections:
 
 @p
 ;@<Define program AST constructor and modules@>
+@<Helper Utilities@>
 @<Syntax AST Definitions@>
+@<AST Pretty Printer@>
 ;@<Core code renderer@>
 ;@<Rewriting system@>
 ;@<Default rewrite rules@>
@@ -78,23 +80,19 @@ procedural data type, but we will also define a syntactic construct that
 allows one to construct the AST as if it were an S-expression.
 
 @ We will proceed from the bottom up to define each of 
-these, starting with what a variable is.  In our case, we allow only 
-alphanumeric characters in variable names, except for the |∆|
-character.
+these, starting with what a variable is. In particular, we use the 
+term variable to represent any reference to some sort of slot, including 
+our primitive forms. This means that we allow arbitrary strings in the 
+variables. 
 
 @c () => (<variable> make-variable variable? variable-string)
 @<Syntax AST Definitions@>=
-(define (char-alphanumeric? c)
-  (or (char-alphabetic? c) (char-numeric? c)))
-(define (valid-variable? str)
-  (for-all (lambda (c) (or (char-alphanumeric? c) (char=? #\∆ c)))
-           (string->list str)))
 (define-record-type (<variable> make-variable variable?)
   (fields (immutable string variable-string))
   (protocol
     (lambda (n)
       (lambda (str)
-        (unless (valid-variable? str)
+        (unless (string? str)
           (error #f "invalid variable name" str))
         (n str)))))
 
@@ -107,8 +105,43 @@ symbol.
   (syntax-rules ()
     [(_ sym) (symbol? (syntax->datum #'sym))
      (make-variable (symbol->string 'sym))]
-    [(_ str) (string? (syntax->datum #'str))
-     (make-variable str)]))
+    [(_ str)
+     (make-variable 'str)]))
+
+@ User variables are the class of variables normally allowed in a Scheme
+program. In our case, we allow only alphanumeric characters in user
+variable names, except for the |∆| character.
+
+@c () => (<user-variable> make-user-variable user-variable?)
+@<Syntax AST Definitions@>=
+(define (valid-variable? str)
+  (for-all (lambda (c) (or (char-alphanumeric? c) (char=? #\∆ c)))
+           (string->list str)))
+(define-record-type (<user-variable> make-user-variable user-variable?)
+  (parent <variable>)
+  (protocol
+    (lambda (p)
+      (lambda (str) 
+        (unless (valid-variable? str)
+          (error #f "invalid user variable" str))
+        ((p str))))))
+
+@ @c () => (char-alphanumeric?)
+@<Helper Utilities@>=
+(define (char-alphanumeric? c)
+  (or (char-alphabetic? c) (char-numeric? c)))
+
+@ The |user-variable| syntax is the same as |variable| with a different 
+constructor.
+
+@c () => (user-variable)
+@<Syntax AST Definitions@>=
+(define-syntax user-variable
+  (syntax-rules ()
+    [(_ sym) (symbol? (syntax->datum #'sym))
+     (make-user-variable (symbol->string 'sym))]
+    [(_ str)
+     (make-user-variable 'str)]))
 
 @ The next few productions, $Array$ and $Application$ are a part of 
 the $Expression$ production, so we will just go quickly here to define 
@@ -327,7 +360,7 @@ forms corresponding to the three possible application types.
   (syntax-rules ()
     [(_ name) (make-application (variable name))]
     [(_ name right) (make-monadic (variable name) right)]
-    [(_ name left right) (make-dyadic (variable name) left right)]))
+    [(_ left name right) (make-dyadic (variable name) left right)]))
 
 @ With the $Expression$ production and all of its sub-productions out 
 of the way, that leaves the $Statement$ production as the next major 
@@ -530,32 +563,35 @@ of variable there.
 
 @c () => (<function> make-function function?
           function-return function-left function-right function-locals
-          function-body)
+          function-body function-name)
 @<Syntax AST Definitions@>=
-(define (valid-function? ret lft rgt lcls code)
-  (and (or (not ret) (variable? ret))
-       (or (not lft) (variable? lft))
-       (or (not rgt) (variable? rgt))
-       (for-all variable? lcls)
+(define (valid-function? ret lft nam rgt lcls code)
+  (and (or (not ret) (user-variable? ret))
+       (or (not lft) (user-variable? lft))
+       (user-variable? nam)
+       (or (not rgt) (user-variable? rgt))
+       (for-all user-variable? lcls)
        (block? code)))
 (define-record-type (<function> make-function function?)
   (parent <code>)
   (fields (immutable return function-return) 
-          (immutable left function-left) 
+          (immutable left function-left)
+          (immutable name function-name)
           (immutable right function-right)
           (immutable locals function-locals)
           (immutable body function-body))
   (protocol
     (lambda (p)
-      (lambda (r a b l c)
-        (unless (valid-function? r a b l c)
-          (error #f "invalid function definition" r a b l c))
-        ((p) r a b l c)))))
+      (lambda (r a n b l c)
+        (unless (valid-function? r a n b l c)
+          (error #f "invalid function definition" r a n b l c))
+        ((p) r a n b l c)))))
 
 @ Our syntax for |function| creation allows us to avoid explicitly 
 using the |#f| atoms in our written out syntax trees.
 
-$$(function\ ([result]\ ([left]\ [right]))\ (locals\ \ldots)\ body\ \ldots)$$
+$$(function\ ([result]\ ([left]\ name\ [right]))\ 
+  (locals\ \ldots)\ body\ \ldots)$$
 
 \noindent The brackets above indicate an optional form.  In this case 
 we implicitly create the variables, assuming that the $result$, $left$, 
@@ -567,24 +603,25 @@ and $right$ forms are symbols.
 (meta define (symbols? syms) (for-all symbol? (map syntax->datum syms)))
 (define-syntax function
   (syntax-rules (%%)
-    [(_ (()) (locals ...) body ...) (symbols? #'(locals ...))
-     (function %% #f #f #f (locals ...) body ...)]
-    [(_ ((b)) (locals ...) body ...) (symbols? #'(b locals ...))
+    [(_ ((n)) (locals ...) body ...) (symbols? #'(locals ...))
+     (function %% n #f #f #f (locals ...) body ...)]
+    [(_ ((n b)) (locals ...) body ...) (symbols? #'(b locals ...))
      (function %% #f #f b (locals ...) body ...)]
-    [(_ ((a b)) (locals ...) body ...) (symbols? #'(a b locals ...))
-     (function %% #f a b (locals ...) body ...)]
-    [(_ (r ()) (locals ...) body ...) (symbols? #'(r locals ...))
-     (function %% r #f #f (locals ...) body ...)]
-    [(_ (r (b)) (locals ...) body ...) (symbols? #'(r b locals ...))
-     (function %% r #f b (locals ...) body ...)]
-    [(_ (r (a b)) (locals ...) body ...) (symbols? #'(r a b locals ...))
-     (function %% r a b (locals ...) body ...)]
-    [(_ %% r a b (locals ...) body ...)
+    [(_ ((a n b)) (locals ...) body ...) (symbols? #'(a b locals ...))
+     (function %% n #f a b (locals ...) body ...)]
+    [(_ (r (n)) (locals ...) body ...) (symbols? #'(r locals ...))
+     (function %% n r #f #f (locals ...) body ...)]
+    [(_ (r (n b)) (locals ...) body ...) (symbols? #'(r b locals ...))
+     (function %% n r #f b (locals ...) body ...)]
+    [(_ (r (a n b)) (locals ...) body ...) (symbols? #'(r a b locals ...))
+     (function %% n r a b (locals ...) body ...)]
+    [(_ %% n r a b (locals ...) body ...)
      (make-function 
-       (and r (variable r))
-       (and a (variable a))
-       (and b (variable b))
-       (list (variable locals) ...)
+       (and 'r (user-variable r))
+       (and 'a (user-variable a))
+       (user-variable n)
+       (and 'b (user-variable b))
+       (list (user-variable locals) ...)
        (block body ...))]))
 
 @ The last remaining element before we get to $Essay$ is the $Prose$ 
@@ -687,6 +724,424 @@ gets into the right scope.
     [(_ stmts ...)
      (let () (import-only ast-env)
        (essay stmts ...))]))
+
+@* 2 Pretty printing the AST. While the AST makes for a reasonable way 
+of constructing programs, it is not nice to look at the output.  We 
+want to have a way of pretty printing the AST.  I would almost want 
+this to be the serializable version of the code too, but right now 
+there is no parser, so we use the default Chez Scheme serialization, 
+since we can still read things back in.  We do not have a way of 
+reading in a pretty printed piece of code, yet.  We will proceed from 
+the top down to create the pretty printer.  Every $Essay$ will be 
+printed in this form:
+
+\medskip\verbatim
+:Essay
+
+<section>
+
+<section>
+
+...
+
+:EndEssay
+!endverbatim\medskip
+
+@c () => (pretty-print-ast)
+@<AST Pretty Printer@>=
+(define (pretty-print-ast ast)
+  (assert (essay? ast))
+  (println/indent ":Essay~n")
+  (for-each
+    (lambda (e)
+      (cond
+        [(code? e) (pretty-print-code e)]
+        [(prose? e)   (pretty-print-prose e)]
+        [else (error 'pretty-print-ast "unknown essay section" e)])
+      (newline))
+    (essay-sections ast))
+  (println/indent ":EndEssay"))
+
+@ We need to have some way of controlling the indent level, 
+so we will use the |pp-ast-indent| parameter to define the indent
+level. We also define a simple procedure to generate the right number 
+of indent spaces based on the indent level.
+
+@c () => (pp-ast-indent)
+@<AST Pretty Printer@>=
+(define pp-ast-indent 
+  (make-parameter 0
+    (lambda (x)
+      (unless (and (number? x) (exact? x) (or (zero? x) (positive? x)))
+        (error #f "invalid indent" x))
+      x)))
+(define (println/indent fmt . args)
+  (printf "~a~?~n"
+    (make-string (* 2 (pp-ast-indent)) #\space)
+    fmt args))
+  
+@ Next we need to define a pretty printer for prose.  This is actually, 
+quite easy, because it it just the prose string with each line indented.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-prose prose)
+  (define (line) (get-line (current-input-port)))
+  (assert (prose? prose))
+  (with-input-from-string (prose-text prose)
+    (lambda ()
+      (let loop ()
+        (let ([line (line)])
+          (unless (eof-object? line)
+            (println/indent "~a" line)
+            (loop)))))))
+
+@ When printing code, we have three different specialized printers 
+for the three different cases.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-code code)
+  (assert (code? code))
+  (cond
+    [(section? code) (pretty-print-section code)]
+    [(function? code) (pretty-print-function code)]
+    [(program? code) (pretty-print-program code)]
+    [else (error 'pretty-print-code "unknown code type" code)]))
+
+@ Printing a program is probably the easiest, as it is just a block 
+of code with some surrounding elements.
+
+\medskip\verbatim
+:Program
+  <block>
+:EndProgram
+!endverbatim\medskip
+
+\noindent We will indent one level when we print the block.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-program prog)
+  (assert (program? prog))
+  (let ([body (program-body prog)])
+    (println/indent ":Program")
+    (indented (pretty-print-block body))
+    (println/indent ":EndProgram")))
+
+@ In the above code, we use the |indented| form, which is a wrapper 
+to make it easier for me to specify a single increased indentation 
+level.  We define that here.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define-syntax indented
+  (syntax-rules ()
+    [(_ exp ...) 
+     (parameterize ([pp-ast-indent (+ 1 (pp-ast-indent))])
+       exp ...)]))
+
+@ The $Section$ type of code is the next easiest to pretty print, as it is 
+just a name and a block of code following this pattern:
+
+\medskip\verbatim
+:Section <Section name>
+  <block>
+:EndSection
+!endverbatim\medskip
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-section sect)
+  (assert (section? sect))
+  (println/indent ":Section ~a" (section-name sect))
+  (indented (pretty-print-block (section-body sect)))
+  (println/indent ":EndSection"))
+
+@ Printing the $Function$s is a little more difficult.  We follow something 
+of this pattern:
+
+\medskip\verbatim
+∇R←L F R;<local>;...
+  <block>
+∇
+!endverbatim\medskip
+
+\noindent In particular, we only print the return variable and assignment 
+arrow if we have a return value, and likewise for the left and right arguments.
+We also only print the locals if we have some.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-function funct)
+  (define (str get) (cond [(get funct) => variable-string] [else #f]))
+  (assert (function? funct))
+  (println/indent "∇~@[~a←~]~@[~a ~]~a~@[ ~a~]~{;~a~}"
+    (str function-return)
+    (str function-left)
+    (variable-string (function-name funct))
+    (str function-right)
+    (function-locals funct))
+  (indented (pretty-print-block (function-body funct)))
+  (println/indent "∇"))
+
+@ Each of these depends on printing out blocks, which we handle here.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-block blk)
+  (assert (block? blk))
+  (for-each pretty-print-statement
+            (block-statements blk)))
+
+@ There are three different forms of statements that we may have,
+$Assignment$, $If$, and $While$ statements. There are all encapsulated
+in the statement printer.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-statement stmt)
+  (assert (statement? stmt))
+  (cond
+    [(assignment? stmt) (pretty-print-assignment stmt)]
+    [(if? stmt) (pretty-print-if stmt)]
+    [(while? stmt) (pretty-print-while stmt)]
+    [else (error 'pretty-print-statement "unknown statement type" stmt)]))
+
+@ The $Assignment$ statement type is a nice, simple, one line statement.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-assignment asgn)
+  (assert (assignment? asgn))
+  (println/indent "~a←~a"
+    (variable-string (assignment-target asgn))
+    (expression->string (assignment-value asgn))))
+
+@ The $While$ statement is the next simplest to do, and it has the following
+template:
+
+\medskip\verbatim
+:While <test>
+  <block>
+:EndWhile
+!endverbatim\medskip
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (pretty-print-while while)
+  (assert (while? while))
+  (println ":While ~a" (expression->string (while-test while)))
+  (indented (pretty-print-block (while-body while)))
+  (println ":EndWhile"))
+
+@ The $If$ statement is one of the harder ones to pretty print.  The reason 
+is that we want to capture the situation where we have an Else-If construct.
+In order to do this, we have to check the alternative field.  We consider 
+an $If$ construct to be an Else-If situation if there is only one 
+statement in the alternative block and that statement is an $If$. In order 
+to handle the Else If situation, we have an optional flag that tells us whether
+or not we are printing an Else-If clause or a normal $If$ statement.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (alt-is-else-if? alt)
+  (and (= 1 (length (block-statements)))
+       (if? (car (block-statements)))))
+(define pretty-print-if
+  (case-lambda
+    [(if-ast) (%pretty-print-if if-ast #f)]
+    [(if-ast else-if?) (%pretty-print-if if-ast else-if?)]))
+(define (%pretty-print-if if-ast else-if?)
+  (assert (if? if-ast))
+  (println/indent "~a ~a" 
+    (if else-if? ":ElseIf" ":If")
+    (expression-string (if-test if-ast)))
+  (indented (pretty-print-block (if-consequent if-ast)))
+  (if (alt-is-else-if? (if-alternative if-ast))
+      (pretty-print-if (car (block-statements (if-alternative if-ast))) #t)
+      (begin
+        (println/indent ":Else")
+        (indented (pretty-print-block (if-alternative if-ast)))
+        (println/indent ":EndIf"))))
+
+@ With all of the statement and block level operations done, we now turn to 
+consider the sorts of pretty printing that does not imply a newline in the 
+printing. This means expressions.  We have a different name for the pretty 
+printer of expressions to distinguish it from the normal pretty printing 
+functions, namely, |expression->string|.  For starters, we can split the 
+printing into the $Array$ and $Application$ sub-types.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (expression->string exp)
+  (assert (expression? exp))
+  (cond
+    [(array? exp) (array->string exp)]
+    [(application? exp) (application->string exp)]
+    [else (error 'expression->string "unknown expression type" exp)]))
+
+@ Likewise, we will separate the $Array$ case into three cases, one for 
+each of the pure arrays and one for the mixed character and numeric arrays.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (array->string arr)
+  (assert (array? arr))
+  (cond
+    [(num-array? arr) (num-array->string arr)]
+    [(char-array? arr) (char-array->string arr)]
+    [(mixed-array? arr) (mixed-array->string arr)]
+    [else (error 'array->string "unknown array type" arr)]))
+
+@ The pure arrays are simple to print because they have a single character 
+type to deal with.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (num-array->string arr)
+  (assert (num-array? arr)) 
+  (format "~{~a~^ ~}" (array-elements arr)))
+(define (char-array->string arr) 
+  (assert (char-array? arr))
+  (format "'~{~a~}'" (array-elements arr)))
+
+@ The mixed array needs to print the numbers as normal but it needs to print 
+the character parts in quotes.  To do this we will have two mutually recursive
+procedures, the first for printing numbers and the second for printing characters.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (mixed-array->string arr)
+  (define (numbers lst)
+    (cond
+      [(null? lst) '()]
+      [(number? (car lst))
+       (cons (number->string (car lst))
+             (numbers (cdr lst)))]
+      [(char? (car lst)) (characters '() lst)]
+      [else (error 'mixed-array->string "unknown element type" (car lst))]))
+  (define (conv res) (format "'~{~a~}'" (reverse res)))
+  (define (characters res lst)
+    (cond
+      [(null? lst) (if (pair? res) (list (conv res)) '())]
+      [(char? (car lst)) (characters (cons (car lst) res) (cdr lst))]
+      [(number? (car lst)) (cons (conv res) (numbers lst))]
+      [else (error 'mixed-array->string "unknown element type" (car lst))]))
+  (assert (mixed-array? arr))
+  (format "~{~a~^ ~}" (numbers (array-elements arr))))
+
+@ We will divide up the task of pretty printing applications the same 
+way that we do the arrays. Specifically, there are three classes of 
+applications, the niladic, monadic, and dyadic forms. 
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (application->string app)
+  (assert (application? app))
+  (cond
+    [(niladic? app) (niladic->string app)]
+    [(monadic? app) (monadic->string app)]
+    [(dyadic? app) (dyadic->string app)]
+    [eles (error 'application->string "unknown application type" app)]))
+
+@ A niladic application is basically just a variable reference, which 
+requires nothing more than rendering the variable.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (niladic->string nil) 
+  (assert (niladic? nil)) 
+  (variable-string (application-name nil)))
+
+@ A monadic application has one additional consideration.  It must make sure 
+not to put two identifiers together when they might be confused with one. 
+To do this we implement a simple function to ask whether two strings can 
+go right next to one another.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (needs-space? s1 s2)
+  (and (< 0 (string-length s1)) (< 0 (string-length s2))
+       (char-alphanumeric? (string-ref s1 (- (string-length s1) 1)))
+       (char-alphanumeric? (string-ref s2 0))))
+
+@ After this the monadic case becomes a simple matter of tacking on the name 
+of the procedure to the single argument.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (monadic->string mon) 
+  (assert (monadic? mon))
+  (let ([vs (variable-string (application-name mon))]
+        [es (expression->string (monadic-right mon))]) 
+    (format "~a~a~a" vs (if (needs-space? vs es) " " "") es)))
+
+@ The dyadic situation has the same considerations of the monadic pretty printer 
+in addition to the consideration of order of evaluation.  That is, if we have a 
+simple expression we do not need to wrap the left hand side in parentheses, but 
+if we do not have a simple expression, the left hand side should be wrapped in 
+parentheses to preserve the described order of evaluation.  We have a simple 
+helper |simple-expression?| to help us out with this.  We consider a simple 
+expression to be one that is either an array or a niladic application.
+
+@c () => ()
+@<AST Pretty Printer@>=
+(define (simple-expression? exp) (or (array? exp) (niladic? exp)))
+(define (dyadic->string dya) 
+  (assert (dyadic? dya)) 
+  (let ([ls (expression->string (dyadic-left dya))]
+        [vs (variable-string (application-name dya))]
+        [rs (expression->string (dyadic-right dya))])
+    (format "~a~a~a~a~a"
+      (if (simple-expression? (dyadic-left dya))
+          ls
+          (format "(~a)" ls))
+      (if (needs-space? ls vs) " " "")
+      vs
+      (if (needs-space? vs rs) " " "")
+      rs)))
+
+@* 2 Example.  Here is a basic example of the constructor syntax used 
+to produce a program that, ostensibly, prints the prime numbers up to 
+some value.  The output of the pretty printer should be thus:
+
+\medskip\verbatim
+:Essay
+
+∇R←PRIMES X
+  R←(2=+⌿0=(⍳X)∘.|⍳X)/⍳X
+∇
+
+:Program
+  N←⎕
+  ⎕←PRIMES N
+:EndProgram
+
+:EndEssay
+!endverbatim\medskip
+
+\noindent And here is the constructor syntax that should produce that 
+pretty printed output.
+
+\medskip\verbatim
+(essay
+  (function (R (PRIMES X)) () 
+    (assignment R
+      (application
+        (application (array 2) = 
+          (application +⌿
+            (application (array 0) = 
+              (application 
+                (application ⍳ (application X))
+                ∘.\x7C;
+                (application ⍳ (application X))))))
+        /
+        (application ⍳ (application X)))))
+  (program
+    (assignment N (application ⎕))
+    (assignment ⎕ (application PRIMES (application N)))))
+!endverbatim\medskip
 
 @* Rendering the code to C.
 
