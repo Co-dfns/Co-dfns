@@ -145,9 +145,9 @@ constructor.
 
 @ The next few productions, $Array$ and $Application$ are a part of 
 the $Expression$ production, so we will just go quickly here to define 
-a parent |<expression>| type for both.  There is no constructor syntax
-for expressions directly, though, and instead, one should use 
-the definitions for the $Array$ and $Application$ productions below.
+a parent |<expression>| type for both.  There is a constructor syntax
+for expressions but to understand how they work, let's just go through 
+the two cases first before defining the expression syntax.
 
 @c () => (<expression> expression?)
 @<Syntax AST Definitions@>=
@@ -361,6 +361,47 @@ forms corresponding to the three possible application types.
     [(_ name) (make-application (variable name))]
     [(_ name right) (make-monadic (variable name) right)]
     [(_ left name right) (make-dyadic (variable name) left right)]))
+
+@ Now that the reader has a firm grasp of how the $Array$ and $Application$ 
+sub-types of expressions work, we can start to consider what a syntactic 
+constructor for expressions should look like.  Specifically, it should 
+hideaway the unnecessary detail of wrapping everything in application 
+and array forms.  This leads us to a few basic s-expression based 
+forms that could appear for an expression:
+
+\medskip\verbatim
+<int_char_str> <int_char_str> ...
+(<int_char_str> ...)
+<symbol>
+(<symbol> <expr>)
+(<expr> <symbol> <expr>)
+!endverbatim\medskip
+
+\noindent The first two forms represent the three types of arrays, which 
+are all flat and which can be dispatched off to the |array| syntactic
+constructor.  The other three represent the three forms of the 
+|application| that we might encounter.  Using this s-expression based 
+representation makes it much easier to construct the AST.
+
+@c () => (expression)
+@<Syntax AST Definitions@>=
+(meta define (int-char-str? stx)
+  (let ([dat (syntax->datum stx)])
+    (or (fixnum? dat) (flonum? dat) 
+        (char? dat) (string? dat))))
+(define-syntax expression
+  (syntax-rules ()
+    [(_ ()) (array)]
+    [(_ (elem ...)) (expression elem ...)]
+    [(_ ics ...) (for-all int-char-str? #'(ics ...)) (array ics ...)]
+    [(_ f) (symbol? (syntax->datum #'f)) (application f)]
+    [(_ l f r ...) (symbol? (syntax->datum #'f)) 
+     (application (expression l) f (expression r ...))]
+    [(_ f r ...) (symbol? (syntax->datum #'f))
+     (application f (expression r ...))]
+    [(_ ics rest ...) (int-char-str? #'ics) (expression (ics) rest ...)]
+    [(_ (ics* ...) ics rest ...) (for-all int-char-str? #'(ics ics* ...))
+     (expression (ics* ... ics) rest ...)]))
 
 @ With the $Expression$ production and all of its sub-productions out 
 of the way, that leaves the $Statement$ production as the next major 
@@ -1121,6 +1162,13 @@ some value.  The output of the pretty printer should be thus:
 pretty printed output.
 
 \medskip\verbatim
+(essay
+  (function (R (PRIMES X)) ()
+    (assignment R
+      (expression (2 = +⌿ 0 (⍳ X) ∘.\x7C; ⍳ X) / ⍳ X)))
+  (program
+    (assignment N (expression ⎕))
+    (assignment ⎕ (expression PRIMES N))))
 (essay
   (function (R (PRIMES X)) () 
     (assignment R
