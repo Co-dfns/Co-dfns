@@ -433,13 +433,16 @@ so we have little more to do.
         ((p) target value)))))
 
 @ Assignment gets its own |assignment| syntax for creating nodes of 
-this type.
+this type. We will also give this a nice short name |←| to map easily 
+to the APL syntax.
 
-@c () => (assignment)
+@c () => (assignment ←)
 @<Syntax AST Definitions@>=
 (define-syntax assignment
   (syntax-rules ()
-    [(_ target value) (make-assignment (variable target) value)]))
+    [(_ target expr ...) 
+     (make-assignment (variable target) (expression expr ...))]))
+(alias ← assignment)
 
 @ The $If$ and $While$ statements both use the $Block$ production, 
 which is just a list of $Statement$s.
