@@ -389,6 +389,7 @@ representation makes it much easier to construct the AST.
   (let ([dat (syntax->datum stx)])
     (or (fixnum? dat) (flonum? dat) 
         (char? dat) (string? dat))))
+(define ⟨) (define ⟩)
 (define-syntax expression
   (syntax-rules ()
     [(_ ()) (array)]
@@ -587,18 +588,23 @@ are just strings.
   (protocol
     (lambda (p)
       (lambda (name body)
-        (unless (and (string? name) (block? body))
+        (unless (and (string? name) (or (block? body) (expression? body)))
           (error #f "invalid section" name body))
         ((p) name body)))))
 
-@ Our |section| syntax is pretty straightforward. 
+@ Our |section| syntax is pretty straightforward. We have two versions, 
+one for statements and one for holding an expression.
 
-@c () => (:Section)
+@c () => (:Section :SectionExp)
 @<Syntax AST Definitions@>=
 (define-syntax :Section
   (syntax-rules ()
     [(_ name body ...) (string? (syntax->datum #'name))
      (make-section name (block body ...))]))
+(define-syntax :SectionExp
+  (syntax-rules ()
+    [(_ name body ...) (string? (syntax->datum #'name))
+     (make-section name (expression body ...))]))
 
 @ The $Function$ production is the most complicated form, because 
 we need to keep track of the type of function definition. We use |#f|
@@ -696,16 +702,20 @@ nodes.
 @ Our top-level production is the $Essay$ production. This just 
 encapsulates a list of $Prose$ and $Code$ objects.
 
-@c () => (<essay> make-essay essay? essay-sections)
+@c () => (<essay> make-essay essay? essay-sections essay-title)
 @<Syntax AST Definitions@>=
 (define-record-type (<essay> make-essay essay?)
-  (fields (immutable sections essay-sections))
+  (fields
+    (immutable title essay-title) 
+    (immutable sections essay-sections))
   (protocol
     (lambda (n)
-      (lambda (sects)
+      (lambda (title sects)
         (unless (for-all (lambda (e) (or (prose? e) (code? e))) sects)
-          (error #f "invalid essay" sects))
-        (n sects)))))
+          (error #f "invalid essay sections" sects))
+        (unless (string? title)
+          (error #f "invalid essay title" title))
+        (n title sects)))))
 
 @ The |essay| syntax accepts strings in the prose blocks for convenience
 but is otherwise much like the |make-essay| function.
@@ -714,12 +724,13 @@ but is otherwise much like the |make-essay| function.
 @<Syntax AST Definitions@>=
 (define-syntax :Essay
   (syntax-rules (%%)
-    [(_ %% (done ...) ()) (make-essay (list done ...))]
-    [(_ %% (done ...) (e rest ...)) (string? (syntax->datum #'e))
-     (:Essay %% (done ... (prose e)) (rest ...))]
-    [(_ %% (done ...) (e rest ...)) 
-     (:Essay %% (done ... e) (rest ...))]
-    [(_ sects ...) (:Essay %% () (sects ...))]))
+    [(_ %% title (done ...) ()) (make-essay title (list done ...))]
+    [(_ %% title (done ...) (e rest ...)) (string? (syntax->datum #'e))
+     (:Essay %% title (done ... (prose e)) (rest ...))]
+    [(_ %% title (done ...) (e rest ...)) 
+     (:Essay %% title (done ... e) (rest ...))]
+    [(_ title sects ...) (string? (syntax->datum #'title))
+     (:Essay %% title () (sects ...))]))
 
 
 @* 2 Pretty printing the AST. While the AST makes for a reasonable way 
@@ -733,22 +744,24 @@ the top down to create the pretty printer.  Every $Essay$ will be
 printed in this form:
 
 \medskip\verbatim
-:Essay
+┌───────┐
+│<Title>│
+└───────┘
 
 <section>
 
 <section>
 
 ...
-
-:EndEssay
 !endverbatim\medskip
 
 @c () => (pretty-print-ast)
 @<AST Pretty Printer@>=
 (define (pretty-print-ast ast)
   (assert (essay? ast))
-  (println/indent ":Essay~n")
+  (let ([title (essay-title ast)])
+    (let ([line (make-string (string-length title) #\─)])
+      (printf "┌~a┐~n│~a│~n└~a┘~n~n" line title line)))
   (for-each
     (lambda (e)
       (cond
@@ -756,8 +769,7 @@ printed in this form:
         [(prose? e)   (pretty-print-prose e)]
         [else (error 'pretty-print-ast "unknown essay section" e)])
       (newline))
-    (essay-sections ast))
-  (println/indent ":EndEssay"))
+    (essay-sections ast)))
 
 @ We need to have some way of controlling the indent level, 
 so we will use the |pp-ast-indent| parameter to define the indent
@@ -842,18 +854,21 @@ level.  We define that here.
 just a name and a block of code following this pattern:
 
 \medskip\verbatim
-:Section <Section name>
+⟨<Section name>⟩≡
   <block>
-:EndSection
+∎
 !endverbatim\medskip
 
 @c () => ()
 @<AST Pretty Printer@>=
 (define (pretty-print-section sect)
   (assert (section? sect))
-  (println/indent ":Section ~a" (section-name sect))
-  (indented (pretty-print-block (section-body sect)))
-  (println/indent ":EndSection"))
+  (println/indent "⟨~a⟩≡" (section-name sect))
+  (indented 
+    (if (block? (section-body sect))
+        (pretty-print-block (section-body sect))
+        (println/indent (expression->string (section-body sect)))))
+  (println/indent "∎"))
 
 @ Printing the $Function$s is a little more difficult.  We follow something 
 of this pattern:
