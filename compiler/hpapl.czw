@@ -498,9 +498,9 @@ alternative field that is |(block)|.
 this one a slightly different name, trusting that we will be able to 
 rename it when we need to do so.
 
-@c () => (if-ast)
+@c () => (:If)
 @<Syntax AST Definitions@>=
-(define-syntax if-ast
+(define-syntax :If
   (syntax-rules ()
     [(_ test consequent) (make-if test consequent (block))]
     [(_ test consequent alternative)
@@ -528,9 +528,9 @@ $$While := Test_{exp} Body_{blk}$$
 @ We implicitly wrap the body in a |block| form in our |while| syntax 
 so that we do not have to type it in so many times.
 
-@c () => (while)
+@c () => (:While)
 @<Syntax AST Definitions@>=
-(define-syntax while
+(define-syntax :While
   (syntax-rules ()
     [(_ test stmts ...) (make-while test (block stmts ...))]))
 
@@ -570,9 +570,9 @@ $Program$ so we will do that here.  It has only a single code body.
 form, so there should be no need to do this explicitly when creating 
 |program| elements.
 
-@c () => (program)
+@c () => (:Program)
 @<Syntax AST Definitions@>=
-(define-syntax program
+(define-syntax :Program
   (syntax-rules ()
     [(_ stmt ...) (make-program (block stmt ...))]))
 
@@ -593,9 +593,9 @@ are just strings.
 
 @ Our |section| syntax is pretty straightforward. 
 
-@c () => (section)
+@c () => (:Section)
 @<Syntax AST Definitions@>=
-(define-syntax section
+(define-syntax :Section
   (syntax-rules ()
     [(_ name body ...) (string? (syntax->datum #'name))
      (make-section name (block body ...))]))
@@ -639,25 +639,30 @@ $$(function\ ([result]\ ([left]\ name\ [right]))\
 
 \noindent The brackets above indicate an optional form.  In this case 
 we implicitly create the variables, assuming that the $result$, $left$, 
-and $right$ forms are symbols.
+and $right$ forms are symbols. We alias |∇| to |function| to make things 
+easier to write.
 
-@c () => (function)
+@c () => (function ∇)
 @<Syntax AST Definitions@>=
 (define %%)
-(meta define (symbols? syms) (for-all symbol? (map syntax->datum syms)))
+(meta define (symbols? syms)
+  (define (char-alphanumeric? x) (or (char-alphabetic? x) (char-numeric? x)))
+  (define (valid? x) (for-all char-alphanumeric? (string->list x))) 
+  (for-all (lambda (d) (and (symbol? d) (valid? (symbol->string d)))) 
+    (map syntax->datum syms)))
 (define-syntax function
-  (syntax-rules (%%)
-    [(_ ((n)) (locals ...) body ...) (symbols? #'(locals ...))
+  (syntax-rules (%% ←)
+    [(_ (n) (locals ...) body ...) (symbols? #'(n locals ...))
      (function %% n #f #f #f (locals ...) body ...)]
-    [(_ ((n b)) (locals ...) body ...) (symbols? #'(b locals ...))
+    [(_ (n b) (locals ...) body ...) (symbols? #'(n b locals ...))
      (function %% #f #f b (locals ...) body ...)]
-    [(_ ((a n b)) (locals ...) body ...) (symbols? #'(a b locals ...))
+    [(_ (a n b) (locals ...) body ...) (symbols? #'(a n b locals ...))
      (function %% n #f a b (locals ...) body ...)]
-    [(_ (r (n)) (locals ...) body ...) (symbols? #'(r locals ...))
+    [(_ (r ← n) (locals ...) body ...) (symbols? #'(r n locals ...))
      (function %% n r #f #f (locals ...) body ...)]
-    [(_ (r (n b)) (locals ...) body ...) (symbols? #'(r b locals ...))
+    [(_ (r ← n b) (locals ...) body ...) (symbols? #'(r n b locals ...))
      (function %% n r #f b (locals ...) body ...)]
-    [(_ (r (a n b)) (locals ...) body ...) (symbols? #'(r a b locals ...))
+    [(_ (r ← a n b) (locals ...) body ...) (symbols? #'(r a n b locals ...))
      (function %% n r a b (locals ...) body ...)]
     [(_ %% n r a b (locals ...) body ...)
      (make-function 
@@ -667,6 +672,7 @@ and $right$ forms are symbols.
        (and 'b (user-variable b))
        (list (user-variable locals) ...)
        (block body ...))]))
+(alias ∇ function)
 
 @ The last remaining element before we get to $Essay$ is the $Prose$ 
 type, which is trivial.  We will still use the syntax |prose| to 
@@ -704,70 +710,17 @@ encapsulates a list of $Prose$ and $Code$ objects.
 @ The |essay| syntax accepts strings in the prose blocks for convenience
 but is otherwise much like the |make-essay| function.
 
-@c () => (essay)
+@c () => (:Essay)
 @<Syntax AST Definitions@>=
-(define-syntax essay
+(define-syntax :Essay
   (syntax-rules (%%)
     [(_ %% (done ...) ()) (make-essay (list done ...))]
     [(_ %% (done ...) (e rest ...)) (string? (syntax->datum #'e))
-     (essay %% (done ... (prose e)) (rest ...))]
+     (:Essay %% (done ... (prose e)) (rest ...))]
     [(_ %% (done ...) (e rest ...)) 
-     (essay %% (done ... e) (rest ...))]
-    [(_ sects ...) (essay %% () (sects ...))]))
+     (:Essay %% (done ... e) (rest ...))]
+    [(_ sects ...) (:Essay %% () (sects ...))]))
 
-@ Now that we have a way to construct all of these, we want to have a 
-way to hide away all of these constructors so that they are only used 
-when we want them to be used. In reality, we want things to work just 
-like they would have if we had imported them directly into our environment.
-We should be able to say something like this and get an AST:
-
-\medskip\verbatim
-(essay (program (assignment X (array 5 4 3))))
-!endverbatim\medskip
-
-\noindent However, we do not want to be able to state anything but 
-whole programs.  Moreover, we want our $If$ production to be constructed
-using |if| rather than |if-ast|.  This means that we have to have some 
-sort of environment for creating these ASTs, rather than just having 
-them directly in our main programming environment.  To do this, we 
-encapsulate all of our AST constructors into a module that we use 
-when creating a new |essay| form that will make sure that its code 
-gets into the right scope.
-
-@c () => (essay ast-env)
-@<Define program AST constructor and modules@>=
-(module ast-env 
-  (essay essay? essay-sections
-   prose prose? prose-text
-   code? 
-   section section? section-name section-body 
-   function function? function-return function-left function-right 
-     function-locals function-body 
-   program program? program-body 
-   block block-statements 
-   statement?
-   if? if if-test if-consequent if-alternative
-   while while? while-test while-body
-   assignment assignment? assignment-target assignment-value
-   expression?
-   array array? array-elements
-   num-array? char-array? mixed-array?
-   application application? application-name
-   niladic?
-   monadic? monadic-right
-   dyadic? dyadic-left dyadic-right
-   variable? variable-string)
-  @<Syntax AST Definitions@>
-  (alias if if-ast))
-(module ast-constructors
-  (essay prose section function program block if while assignment 
-   array application)
-  (import-only ast-env))
-(define-syntax essay
-  (syntax-rules ()
-    [(_ stmts ...)
-     (let () (import-only ast-env)
-       (essay stmts ...))]))
 
 @* 2 Pretty printing the AST. While the AST makes for a reasonable way 
 of constructing programs, it is not nice to look at the output.  We 
