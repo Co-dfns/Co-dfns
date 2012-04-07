@@ -51,10 +51,10 @@ directly construct an AST.  There is a way to serialize and to pretty
 print the AST.  Here is a basic outline of the AST structure:
 
 $$\eqalign{
-  Essay       &:= (Code \mid Prose)*\cr
+  Essay       &:= Title_{str}\ (Code \mid Prose)*\cr
   Prose       &:= \hbox{string}\cr
   Code        &:= Section \mid Function \mid Program\cr
-  Section     &:= Name_{str}\ Body_{blk}\cr
+  Section     &:= Name_{str}\ Body_{blk\mid{}exp}\cr
   Function    &:= Return_{var}\ Left_{var}\ Right_{var}\ Local_{var}*\ Body_{blk}\cr
   Program     &:= Body_{blk}\cr
   Block       &:= Statement*\cr
@@ -371,17 +371,19 @@ forms that could appear for an expression:
 
 \medskip\verbatim
 <int_char_str> <int_char_str> ...
-(<int_char_str> ...)
+(<expr>)
 <symbol>
-(<symbol> <expr>)
-(<expr> <symbol> <expr>)
+<symbol> <expr>
+<expr> <symbol> <expr>
 !endverbatim\medskip
 
-\noindent The first two forms represent the three types of arrays, which 
+\noindent The first form represents the three types of arrays, which 
 are all flat and which can be dispatched off to the |array| syntactic
 constructor.  The other three represent the three forms of the 
-|application| that we might encounter.  Using this s-expression based 
-representation makes it much easier to construct the AST.
+|application| that we might encounter.  The parenthesized one represents 
+the means by which we can specify order of evaluation other than the 
+default. Using this s-expression based representation makes it much 
+easier to construct the AST.
 
 @c () => (expression)
 @<Syntax AST Definitions@>=
@@ -495,9 +497,7 @@ alternative field that is |(block)|.
                      (block? consequent) (block? alternative))
           (error #f "invalid if statement" test consequent alternative))))))
 
-@ The |if| constructor overloads the normal |if| syntax, so we give 
-this one a slightly different name, trusting that we will be able to 
-rename it when we need to do so.
+@ We define |:If| as our syntax for |make-if|. 
 
 @c () => (:If)
 @<Syntax AST Definitions@>=
@@ -526,7 +526,7 @@ $$While := Test_{exp} Body_{blk}$$
           (error #f "invalid while loop" test body))
         ((p) test body)))))
 
-@ We implicitly wrap the body in a |block| form in our |while| syntax 
+@ We implicitly wrap the body in a |block| form in our |:While| syntax 
 so that we do not have to type it in so many times.
 
 @c () => (:While)
@@ -567,9 +567,9 @@ $Program$ so we will do that here.  It has only a single code body.
           (error #f "invalid program body" body))
         ((p) body)))))
 
-@ The |program| syntax implicitly wraps its given forms in a |block| 
+@ The |:Program| syntax implicitly wraps its given forms in a |block| 
 form, so there should be no need to do this explicitly when creating 
-|program| elements.
+|:Program| elements.
 
 @c () => (:Program)
 @<Syntax AST Definitions@>=
@@ -577,8 +577,8 @@ form, so there should be no need to do this explicitly when creating
   (syntax-rules ()
     [(_ stmt ...) (make-program (block stmt ...))]))
 
-@ Sections are just blocks of code with names attached to them.  Names 
-are just strings.
+@ Sections are just blocks of code or expressions with names attached 
+to them.  Names are just strings.
 
 @c () => (<section> make-section section? section-name section-body)
 @<Syntax AST Definitions@>=
@@ -592,7 +592,7 @@ are just strings.
           (error #f "invalid section" name body))
         ((p) name body)))))
 
-@ Our |section| syntax is pretty straightforward. We have two versions, 
+@ Our |:Section| syntax is pretty straightforward. We have two versions, 
 one for statements and one for holding an expression.
 
 @c () => (:Section :SectionExp)
@@ -640,13 +640,14 @@ of variable there.
 @ Our syntax for |function| creation allows us to avoid explicitly 
 using the |#f| atoms in our written out syntax trees.
 
-$$(function\ ([result]\ ([left]\ name\ [right]))\ 
+$$(function\ ([result \gets]\ [left]\ name\ [right])\ 
   (locals\ \ldots)\ body\ \ldots)$$
 
 \noindent The brackets above indicate an optional form.  In this case 
 we implicitly create the variables, assuming that the $result$, $left$, 
 and $right$ forms are symbols. We alias |∇| to |function| to make things 
-easier to write.
+easier to write.  We do not export the |←| identifier here as it is used 
+by the assignment function elsewhere, and we export it there instead.
 
 @c () => (function ∇)
 @<Syntax AST Definitions@>=
@@ -700,7 +701,8 @@ nodes.
     [(_ str) (string? (syntax->datum #'str)) (make-prose str)]))
 
 @ Our top-level production is the $Essay$ production. This just 
-encapsulates a list of $Prose$ and $Code$ objects.
+encapsulates a list of $Prose$ and $Code$ objects together with a 
+title, which is just a string.
 
 @c () => (<essay> make-essay essay? essay-sections essay-title)
 @<Syntax AST Definitions@>=
@@ -717,7 +719,7 @@ encapsulates a list of $Prose$ and $Code$ objects.
           (error #f "invalid essay title" title))
         (n title sects)))))
 
-@ The |essay| syntax accepts strings in the prose blocks for convenience
+@ The |:Essay| syntax accepts strings in the prose blocks for convenience
 but is otherwise much like the |make-essay| function.
 
 @c () => (:Essay)
@@ -1116,46 +1118,33 @@ expression to be one that is either an array or a niladic application.
 
 @* 2 Example.  Here is a basic example of the constructor syntax used 
 to produce a program that, ostensibly, prints the prime numbers up to 
-some value.  The output of the pretty printer should be thus:
-
-\medskip{\obeylines\obeyspaces\tt
-:Essay\medskip
-∇R←PRIMES X
-  R←(2=+⌿0=(⍳X)∘.\vrt{}⍳X)/⍳X
-∇\medskip
-:Program
-  N←⎕
-  ⎕←PRIMES N
-:EndProgram\medskip
-:EndEssay\par}\medskip
-
-\noindent And here is the constructor syntax that should produce that 
-pretty printed output.
+some value.  One can use |pretty-print-ast| to pretty print this.
 
 \medskip\verbatim
-(essay
-  (function (R (PRIMES X)) ()
-    (assignment R
-      (expression (2 = +⌿ 0 (⍳ X) ∘.\x7C; ⍳ X) / ⍳ X)))
-  (program
-    (assignment N (expression ⎕))
-    (assignment ⎕ (expression PRIMES N))))
-(essay
-  (function (R (PRIMES X)) () 
-    (assignment R
-      (application
-        (application (array 2) = 
-          (application +⌿
-            (application (array 0) = 
-              (application 
-                (application ⍳ (application X))
-                ∘.\x7C;
-                (application ⍳ (application X))))))
-        /
-        (application ⍳ (application X)))))
-  (program
-    (assignment N (application ⎕))
-    (assignment ⎕ (application PRIMES (application N)))))
+(:Essay "Compute Primes Using Outer Product"
+  
+"This program computes the primes of numbers up to a given number 
+using the outer product.  This results in a quadratic time and space 
+algorithm.  This program is designed to be an example HPAPL program, 
+so we go a little overboard with some things since we want to show off 
+most of the features.  Here is the actual computation."
+
+(:SectionExp "Compute the primes up to X"
+  (2 = +⌿ 0 = (⍳ X) ∘.\x7C; ⍳ X) / ⍳ X)
+  
+"We define a function PRIMES that will actually do the computation, 
+even though it just calls out to the section."
+
+(∇ (R ← PRIMES X) ()
+  (← R (2 = +⌿ 0 = (⍳ X) ∘.\x7C; ⍳ X) / ⍳ X))
+
+"Now we actually get the X that we are going to use from the user 
+and we print back out the primes."
+
+(:Program
+  (← N ⎕)
+  (← ⎕ PRIMES N))
+)
 !endverbatim\medskip
 
 @* Rendering the code to C.
