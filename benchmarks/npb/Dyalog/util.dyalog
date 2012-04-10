@@ -1,18 +1,12 @@
 ﻿:Namespace UTIL
-⍝ === VARIABLES ===
-
-Seed←314159265
-
-
-⍝ === End of variables definition ===
-
 ⎕IO ⎕ML ⎕WX ⎕RL ⎕PP←0 0 3 2147334206 20
 
  RandI←{
-     ⍺←⊢ ⋄ V←2*23 ⋄ R←⍬
-     Next←{⊢R,←V⊥(V|⍺+.×SV),⍺[0]×1⌷SV←V V⊤⍵}
-     Seed←(⌽V V⊤5*13)(Next⍣⍵)⊃⍺ Seed
-     R×2*¯46
+     Mul←{(2*46)|V⊥(V|A+.×B),[¯0.5](0⌷A←⌽V V⊤⍺)×1⌷B←V V⊤⍵}
+     ⍺←⊢ ⋄ V←2*24 ⋄ R←⊃⍺ Seed
+     R←1↓R⊣({⍵ Mul ⍵⊣R,←⍵ Mul R}⍣(⌈2⍟⍵))5*13
+     R←⍵↑R⊣R,←(5*13)Mul⊢/R
+     (⊢/R),⊂R×2*¯46
  }
 
 :EndNamespace 
