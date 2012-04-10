@@ -1,21 +1,18 @@
 ﻿:Namespace UTIL
 ⍝ === VARIABLES ===
 
-A←1220703125
-
-NE←1.4210854715202004E¯14
-
-PE←70368744177664
-
-S←30478732099584
+Seed←314159265
 
 
 ⍝ === End of variables definition ===
 
-⎕IO ⎕ML ⎕WX ⎕RL←1 0 3 2147334206
+⎕IO ⎕ML ⎕WX ⎕RL ⎕PP←0 0 3 2147334206 20
 
-∇ R←Rand
- R←NE×S←PE|A×S
-∇
+ RandI←{
+     ⍺←⊢ ⋄ V←2*23 ⋄ R←⍬
+     Next←{⊢R,←V⊥(V|⍺+.×SV),⍺[0]×1⌷SV←V V⊤⍵}
+     Seed←(⌽V V⊤5*13)(Next⍣⍵)⊃⍺ Seed
+     R×2*¯46
+ }
 
 :EndNamespace 
