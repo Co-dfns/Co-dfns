@@ -1,4 +1,10 @@
 ﻿:Namespace IS
+⍝ === VARIABLES ===
+
+ClassA←(2*23) (2*19) 314159265 10
+⍝ === End of variables definition ===
+
+
     ⎕IO ⎕ML ⎕WX ⎕RL←1 0 3 62669991
 
 
