@@ -1,4 +1,5 @@
-﻿ IS class;N;Bmax;startSeed;Imax;keys;Seed;Ts;i;R;Te;partialKeyIndex;partialKeyRank;j
+<<<<<<< HEAD
+ IS class;N;Bmax;startSeed;Imax;keys;Seed;Ts;i;R;Te;partialKeyIndex;partialKeyRank;j
  N←class[1]                                                 ⍝ Parameter values as specified in Figure
  Bmax←class[2]                                              ⍝ 2.9 of the NPB benchmark documentation.
  startSeed←class[3]
@@ -31,3 +32,5 @@
  :Else
      ⎕←'Full verification failed.'
  :EndIf
+:EndNamespace 
+>>>>>>> 0c1afedea51f0f9629f0fe71d02d222c603cb484
