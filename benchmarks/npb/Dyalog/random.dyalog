@@ -1,4 +1,4 @@
-:Class Util
+:Class Random
    ⎕IO ⎕ML←0 0
    Seed A V←0 0,2*24
    
@@ -23,10 +23,6 @@
 	0 0⍴({⍵ Mul ⍵⊣R,←⍵ Mul R}⍣(⌈2⍟N))A
 	Seed←⊢/R←N↑R⊣R,←A Mul⊢/R←1↓R
 	R←R×2*¯46
-   ∇
-   
-   ∇S TimerSecs E
-	(÷1000)×-/24 60 60 1000∘{⍺⊥3↓⍵}¨E S
    ∇
    
 :EndClass
