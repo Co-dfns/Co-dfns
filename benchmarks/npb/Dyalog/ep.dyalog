@@ -6,17 +6,11 @@
     DoBlock←{
         n←⍵
         r←Gen.RandI 2×n
-        ⍝ ⎕←'Randoms done.'
         x y←⊂[2]¯1+2×r[¯1 0+[1]2 n⍴2×⍳n]
-        ⍝ ⎕←'Split done.'
         tf←1≥t←⊃+/x y*2
-        ⍝ ⎕←'Test and filter done.'
         x y t←(⊂tf)/¨x y t
-        ⍝ ⎕←'Shrinking x and y done.'
         X Y←x y×⊂((¯2×⍟t)÷t)*÷2
-        ⍝ ⎕←'Computing X Y done.'
-        Q←+/(l∘.≤M)×(l+1)∘.>M←(|X)⌈|Y⊣l←¯1+⍳10
-        ⍝ ⎕←'Computing Q done.'
+        Q←+/(l∘.≤M)∧(l+1)∘.>M←(|X)⌈|Y⊣l←¯1+⍳10
         (+/¨X Y),Q
     }
     
