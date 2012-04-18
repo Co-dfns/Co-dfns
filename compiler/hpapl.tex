@@ -34,36 +34,6 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 This is a first simple attempt to get a small piece of each element of 
 the HPAPL compiler working and running.
 
-\defchunk{HPAPL Class}
-:Class HPAPL
-⎕IO ⎕ML←0 0
-
-/BTEX\chunk{Utility Classes}/ETEX
-/BTEX\chunk{Token Hierarchy}/ETEX
-/BTEX\chunk{Tokenizer}/ETEX
-/BTEX\chunk{AST Hierarchy}/ETEX
-/BTEX\chunk{Factory Hierarchy}/ETEX
-/BTEX\chunk{Code Visitors}/ETEX
-:EndClass
-\stopchunk
-
-To bootstrap this all into a workspace:
-
-\defchunk{Bootstrap}
-Bootstrap;N
-#.⎕SE.SALT.Load './ConTeXtLP'
-TangleLoad←{_←⍺ ConTeXtLP.Tangle './hpapl.tex' ('./',⍵,'.dyalog')
-    N←#.⎕SE.SALT.Load './',⍵,' -Target=#'
-    ⎕←'Loaded ',⍕N
-}
-'Bootstrap' TangleLoad 'bootstrap'
-/BTEX\chunk{Load Interfaces}/ETEX
-'HPAPL Class'ConTeXtLP.Tangle'./hpapl.tex' './hpapl.dyalog'
-N←#.⎕SE.SALT.Load './hpapl -Target=#'
-⎕←'Loaded ',⍕N
-\stopchunk
-
-
 \chapter{Parsing and Pretty Printing}
 
 This chapter focuses on getting the HPAPL program from strings into 
@@ -71,7 +41,11 @@ a reasonable representation, and getting back into a string again. Here
 is the grammar of our language:\index{Language Grammar}
 
 \startformula
-Number \Rightarrow number
+\eqalign{
+  Assignment &\Rightarrow Variable\ \hbox{\tt ←}\ Number\cr
+  Variable   &\Rightarrow \hbox{\tt variable}\cr
+  Number     &\Rightarrow \hbox{\tt number}\cr
+}
 \stopformula   
 
 We are going to try to create a very flexible grammar using the 
@@ -85,21 +59,28 @@ tokens. Every token has a lexeme value. \index{Design Patterns}
 \index{Tokens} Every token also should have some means of executing 
 a visitor for that token.  We call this method \cid{Exec}. 
 
-\defchunk{Token Hierarchy}
+\defchunk{Token Class}
 :Class Token
     :Access Public
+    ⎕IO←0
     
     :Field Public Instance lexeme
+    :Field Private Instance parser←#.TokParser
+    /BTEX\chunk{Token Registry}/ETEX
     
-    ∇ Make value
+    ∇ Make(value vis)
       :Access Public
       :Implements Constructor
-      lexeme←value
+      lexeme parser←value vis
     ∇
     
-    ∇ R←Exec(algo param)
-      :Access Public 
-      'METHOD NOT OVERIDDEN'⎕SIGNAL 11
+    ∇ R←Parse algo
+      :Access Public
+      :If parser∊⊃⎕CLASS algo
+          (parser ⎕CLASS algo).Parse ⎕THIS
+      :Else
+          (#.TokParser ⎕CLASS algo).Parse ⎕THIS
+      :EndIf 
     ∇
 :EndClass
 \stopchunk
@@ -107,20 +88,50 @@ a visitor for that token.  We call this method \cid{Exec}.
 We also have a basic visitors interface for all tokens, which 
 specifies the method \cid{DefaultCase}.
 
-\defchunk{TokVisitor Interface}
-:Interface TokVisitor
-    ∇ R←DefaultCase(host param)
+\defchunk{TokParser Interface}
+:Interface TokParser
+    ∇ R←Parse host
     ∇
 :EndInterface
 \stopchunk
 
-\defchunk{Load Interfaces}
-'TokVisitor Interface'TangleLoad'tokvisitor'
+For each given token, we have a name for that token, as well as a 
+regular expression that allows us to recognize those tokens uniquely 
+in a document. We want to associate these things together with the 
+token class into a registry that allows easy querying about the 
+tokens and their properties.  This will be especially useful when 
+we want to write a tokenizer.  Thus, in the \cid{Token} class we 
+expose an interface for registering tokens and asking questions about 
+them.
+
+\defchunk{Token Registry}
+:Field Private Shared TokenNames←⍬
+:Field Private Shared TokenPats←⍬
+:Field Private Shared TokenClasses←⍬
+
+∇ R←Register(class name pat)
+  :Access Public Shared
+  TokenNames,←⊂name
+  TokenPats,←⊂pat
+  TokenClasses,←class
+  R←0 0⍴⍬
+∇
+
+∇ C←ClassByPatNum PN;I
+  :Access Public Shared
+  C←TokenClasses[PN]
+∇
+
+∇ R←Patterns
+  :Access Public Shared
+  R←TokenPats
+∇
 \stopchunk
 
+\subsection{Number Token}
 
-Now we want to define a class for each of our token types.  In this
-case we haven only one, which is a $Number$.  Each token class knows how 
+Now we want to define a class for each of our token types.  Let's start 
+with the \cid{number} token.  Each token class knows how 
 to do a few things: it knows how to execute a given visitor to produce 
 an AST; it defines an interface for defining visitors for that token 
 class; and, it usually will provide a starter base class implementing 
@@ -131,86 +142,101 @@ For more information on Visitors as a design pattern, see
 Let's look at how to define \cid{NumberToken}.  Here's a basic skeleton
 that does not do the chaining. XXX
 
-\defchunk{Token Hierarchy}
-:Class NumberToken: Token
+\defchunk{NumToken Class}
+:Class NumToken: Token
     :Access Public
     
     ∇ Make value
       :Access Public
-      :Implements Constructor :Base (value)
+      :Implements Constructor :Base (value #.NumTokParser)
     ∇
     
-    ∇ R←Exec(algo param)
-      :Access Public
-      R←{NumTokVis∊⊃⎕CLASS ⍵: ⍵.NumCase ⎕THIS param
-         ⍵.DefaultCase ⎕THIS param
-      }algo
-    ∇
-    
+    #.Token.Register ⎕THIS 'number' '[0-9]+'
 :EndClass
 \stopchunk
 
-And here is the interface that goes with this token.
-
-\defchunk{NumTokVis Interface}
-:Interface NumTokVis
-    ∇ R←NumCase(host param)
+\defchunk{NumTokParser Interface}
+:Interface NumTokParser
+    ∇ R←Parse host
     ∇
 :EndInterface
 \stopchunk
 
-\defchunk{Load Interfaces}
-'NumTokVis Interface'TangleLoad'numtokvis'
+\subsection{Variable Tokens}
+
+\defchunk{VarToken Class}
+:Class VarToken: Token
+    :Access Public
+    
+    ∇ Make value
+      :Access Public
+      :Implements Constructor :Base (value #.VarTokParser)
+    ∇
+    
+    #.Token.Register ⎕THIS 'variable' '[a-zA-Z][a-zA-Z0-9]*'
+:EndClass
 \stopchunk
 
-The following setup the necessary meta information for our tokenizer 
-that we setup below.  For every new token that we create, we need to 
-define the name of the token type, the pattern that matches it, 
-and finally, how to construct it when you do have a match.
-
-\defchunk{Token Types}
-,(⊂'number')\stopchunk
-
-\defchunk{Token Patterns}
-,(⊂'[0-9]+')\stopchunk
-
-\defchunk{Token Maker Cases}
-:Case F'number'
-    R←⎕NEW NumberToken(M.Block[(⊃M.Offsets)+⍳⊃M.Lengths])
+\defchunk{VarTokParser Interface}
+:Interface VarTokParser
+    ∇ R←Parse host
+    ∇
+:EndInterface
 \stopchunk
+
+\subsection{AssignmentToken}
+
+The assignment token is specific to the \cid{←} token. Let's see what 
+this one looks like.
+
+\defchunk{AssgnToken Class}
+:Class AssgnToken: Token
+    :Access Public
+    
+    ∇ Make value
+      :Access Public
+      :Implements Constructor :Base ('←' #.AssgnTokParser)
+    ∇
+    
+    #.Token.Register ⎕THIS 'assignment' '←'
+:EndClass
+\stopchunk
+
+\defchunk{AssgnTokParser Interface}
+:Interface AssgnTokParser
+    ∇ R←Parse host
+    ∇
+:EndInterface
+\stopchunk
+
+\subsection{Tokenizer}
 
 Now that we have all of our tokens defined, let's move on to defining a 
 tokenizer to make use of it.  This is the basic OOP Tokenizer interface, 
 though we use PCRE under the hood to do the actual tokenization.
 
-\defchunk{Tokenizer}
+\defchunk{Tokenizer Class}
 :Class Tokenizer
     :Access Public
 
     :Field Private tokens
     :Field Private lasttok←⍬
-    :Field Public types← /BTEX\chunk{Token Types}/ETEX
-    :Field Private tokpats← /BTEX\chunk{Token Patterns}/ETEX
     
     /BTEX\chunk{Token List Manipulators}/ETEX
     
-    ∇ R←MakeToken M;F
-      F←(types∘⍳)∘⊂
-      :Select M.PatternNum
-      /BTEX\chunk{Token Maker Cases}/ETEX
-      :Else 
-          'UNKNOWN TOKEN TYPE'⎕SIGNAL 11
-      :EndSelect
+    ∇ R←MakeToken M;T;L
+      T←#.Token.ClassByPatNum M.PatternNum
+      F←M.Block[(⊃M.Offsets)+⍳⊃M.Lengths]
+      R←⎕NEW T F
     ∇
     
     ∇ Make file;tie
       :Access Public
       :Implements Constructor
       tie←file ⎕NTIE 0
-      tokens←(tokpats⎕S MakeToken ⍠ 'Mode' 'D') tie
+      tokens←(#.Token.Patterns⎕S MakeToken ⍠ 'Mode' 'D') tie
       ⎕NUNTIE tie
     ∇
-    
 :EndClass
 \stopchunk
 
@@ -254,7 +280,7 @@ first kind.  These have no descendants, though they may have a parent
 In our grammar, we have only one production, $Number$ which has only 
 a single token in it.
 
-\defchunk{AST Hierarchy}
+\defchunk{ASTNumber Class}
 :Class ASTNumber: ASTNode
     :Access Public
     
@@ -278,7 +304,7 @@ Factory design pattern can be found \in{Appendix}[factorypattern].
 
 All factories inherit from the {\tt ASTFactory} class.
 
-\defchunk{Factory Hierarchy}
+\defchunk{ASTFactory Class}
 :Class ASTFactory
     :Access Public
     
@@ -313,18 +339,13 @@ standard protocol for producing visitors.
 :EndInterface
 \stopchunk
 
-\defchunk{Load Interfaces}
-'FactProto Interface'TangleLoad'factproto'
-\stopchunk
-
-
 Let's talk about the Factories for the simple non-terminals with only 
 a single terminal sequence as their target.  This is our only grammar 
 production at the moment called $Number$.  It has only a single way 
 to progress, and it should implement the {\tt NumTokVisitor} 
 interface.  This visitor class looks like this.
 
-\defchunk{Factory Hierarchy}
+\defchunk{NumFact Class}
 :Class NumFact: ASTFactory,#.FactProto
     :Access Public
     
@@ -333,16 +354,16 @@ interface.  This visitor class looks like this.
       :Implements Constructor :Base tkz
     ∇
     
-    :Class NumVis: ,#.NumTokVis,#.TokVisitor
+    :Class NumVis: ,#.NumTokParser,#.TokParser
         :Access Public
         
-        ∇ R←NumCase(host param)
-          :Implements Method #.NumTokVis.NumCase
-          R←⎕NEW HPAPL.ASTNumber host
+        ∇ R←NumCase numtok
+          :Implements Method #.NumTokParser.Parse
+          R←⎕NEW HPAPL.ASTNumber numtok
         ∇
         
-        ∇ R←DefaultCase(host param)
-          :Implements Method #.TokVisitor.DefaultCase
+        ∇ R←DefaultCase host
+          :Implements Method #.TokParser.Parse
           'UNEXPECTED TOKEN'⎕SIGNAL 2
         ∇
     :EndClass
@@ -361,7 +382,7 @@ prints out constants.  To support a number of traversals, I have
 encoded a simple Visitor pattern\index{Design Patterns+Visitors}
 into the AST Nodes. 
 
-\defchunk{AST Hierarchy}
+\defchunk{ASTNode Class}
 :Class ASTNode
     :Access Public
     :Field Private visitor
@@ -393,21 +414,16 @@ dispatch, since we are in an untyped system.
 :EndInterface
 \stopchunk
 
-\defchunk{NumberVis Interface}
+\defchunk{ASTNumVis Interface}
 :Interface ASTNumVis
     ∇R←Visit host
     ∇
 :EndInterface
 \stopchunk
 
-\defchunk{Load Interfaces}
-'ASTVis Interface' TangleLoad 'astvis'
-'NumberVis Interface' TangleLoad 'numbervis'
-\stopchunk
-
 This allows us to implement the following visitor that renders C output.
 
-\defchunk{Code Visitors}
+\defchunk{OutCVisitor Class}
 :Class OutCVisitor: ,#.ASTVis,#.ASTNumVis
     :Access Public
     :Field Private Instance out
@@ -446,7 +462,7 @@ This allows us to implement the following visitor that renders C output.
 Here are some of the utilities used throughout the rest of the text 
 to make our lives easier.
 
-\defchunk{Utility Classes}
+\defchunk{FileOutput Class}
 :Class FileOutput
     :Access Public
     :Field Private tie

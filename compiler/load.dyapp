@@ -1,0 +1,3 @@
+Load ./ConTeXtLP
+Load ./load
+Run Load.All
