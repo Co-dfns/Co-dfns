@@ -4,7 +4,6 @@
 \font\it = "XITS/I" at 10pt
 \font\titlefont = "XITS" at 17pt
 
-
 \def\title{HPAPL (VERSION 0.1)}
 \def\topofcontents{\null\vfill
   \centerline{\titlefont HPAPL Compiler}
@@ -19,7 +18,7 @@ Permission to use, copy, modify, and distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
 copyright notice and this permission notice appear in all copies.
 \smallskip\noindent
-THE SOFTWARE IS PROVIDED ``AS IS'' AND THE AUTHOR DISCLAIMS ALL
+THE SOFTWARE IS PROVIDED “AS IS” AND THE AUTHOR DISCLAIMS ALL
 WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
 WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
 AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
@@ -41,7 +40,7 @@ The compiler is layed out in the following main sections:
 @<Helper Utilities@>
 @<Syntax AST Definitions@>
 @<AST Pretty Printer@>
-;@<Core code renderer@>
+@<Core code renderer@>
 ;@<Rewriting system@>
 ;@<Default rewrite rules@>
 
@@ -55,14 +54,15 @@ $$\eqalign{
   Prose       &:= \hbox{string}\cr
   Code        &:= Section \mid Function \mid Program\cr
   Section     &:= Name_{str}\ Body_{blk\mid{}exp}\cr
-  Function    &:= Return_{var}\ Left_{var}\ Right_{var}\ Local_{var}*\ Body_{blk}\cr
+  Function    &:= Name_{var} Return_{var}\ Left_{var}\ Right_{var}\ 
+                  Local_{var}*\ Body_{blk}\cr
   Program     &:= Body_{blk}\cr
   Block       &:= Statement*\cr
   Statement   &:= Assignment \mid If \mid While\cr
   If          &:= Test_{exp}\ Consequent_{blk}\ Alternative_{blk}\cr
   While       &:= Test_{exp}\ Body_{blk}\cr
   Assignment  &:= Target_{var}\ Value_{exp}\cr
-  Expression  &:= Array \mid Application\cr
+  Expression  &:= Array \mid Application \mid Reference_{var}\cr
   Array       &:= NumArray \mid CharArray \mid MixArray\cr
   NumArray    &:= \hbox{number}*\cr
   CharArray   &:= \hbox{character}*\cr
@@ -142,6 +142,13 @@ constructor.
      (make-user-variable (symbol->string 'sym))]
     [(_ str)
      (make-user-variable 'str)]))
+     
+@ We would like to be able to compare variables.
+
+@c () => (variable=?)
+@<Syntax AST Definitions@>=
+(define (variable=? v1 v2)
+  (string=? (variable-string v1) (variable-string v2)))
 
 @ The next few productions, $Array$ and $Application$ are a part of 
 the $Expression$ production, so we will just go quickly here to define 
@@ -152,6 +159,24 @@ the two cases first before defining the expression syntax.
 @c () => (<expression> expression?)
 @<Syntax AST Definitions@>=
 (define-record-type (<expression> make-expression expression?))
+
+@ Let's take care of the $Reference$ production. This is just a 
+container for a variable.
+
+@c () => (<reference> reference? reference-variable reference)
+@<Syntax AST Definitions@>=>
+(define-record-type (<reference> make-reference reference?)
+  (parent <expression>)
+  (fields (immutable variable reference-variable))
+  (protocol
+    (lambda (p)
+      (lambda (var)
+        (unless (variable? var) 
+          (error #f "invalid reference" var))
+        ((p) var)))))
+(define-syntax reference
+  (syntax-rules ()
+    [(_ var) (make-reference (variable var))]))
 
 @ Next we will take on the $Array$ production.  In this case, we have 
 three subarrays:
@@ -379,8 +404,11 @@ forms that could appear for an expression:
 
 \noindent The first form represents the three types of arrays, which 
 are all flat and which can be dispatched off to the |array| syntactic
-constructor.  The other three represent the three forms of the 
-|application| that we might encounter.  The parenthesized one represents 
+constructor.  The other recursive forms represent dyadic and monadic 
+application.  We have a choice about how we want to consider the 
+single |<symbol>| case.  We could have it represent a niladic application, 
+but this is likely to be less useful.  Instead, this represents a 
+variable reference. The parenthesized one represents 
 the means by which we can specify order of evaluation other than the 
 default. Using this s-expression based representation makes it much 
 easier to construct the AST.
@@ -392,12 +420,14 @@ easier to construct the AST.
     (or (fixnum? dat) (flonum? dat) 
         (char? dat) (string? dat))))
 (define ⟨) (define ⟩)
-(define-syntax expression
+(trace-define-syntax expression
   (syntax-rules ()
     [(_ ()) (array)]
     [(_ (elem ...)) (expression elem ...)]
     [(_ ics ...) (for-all int-char-str? #'(ics ...)) (array ics ...)]
-    [(_ f) (symbol? (syntax->datum #'f)) (application f)]
+    [(_ f) (symbol? (syntax->datum #'f)) (reference f)]
+    [(_ f r) (symbol? (syntax->datum #'f))
+     (application f (expression r))]
     [(_ l f r ...) (symbol? (syntax->datum #'f)) 
      (application (expression l) f (expression r ...))]
     [(_ f r ...) (symbol? (syntax->datum #'f))
@@ -993,6 +1023,7 @@ printing into the $Array$ and $Application$ sub-types.
   (cond
     [(array? exp) (array->string exp)]
     [(application? exp) (application->string exp)]
+    [(reference? exp) (variable-string (reference-variable exp))]
     [else (error 'expression->string "unknown expression type" exp)]))
 
 @ Likewise, we will separate the $Array$ case into three cases, one for 
@@ -1147,7 +1178,173 @@ and we print back out the primes."
 )
 !endverbatim\medskip
 
-@* Rendering the code to C.
+@* Rendering the code to C.  Now that the syntax and visualization 
+of the program has been fully defined in the previous sections, it 
+comes time to talk about how we actually convert this syntax into 
+something that can be executed on a machine.  In our case, we are not 
+going to compile directly to the machine language.  Instead, we will 
+rely on another compiler, namely, the C compiler on the system, to do 
+this work for us.  Moreover, to handle the parallel work, we will be 
+assuming that our C compiler is actually a UPC compiler.  
+
+The overall goal of the compiler is to work towards transforming an 
+HPAPL program into one that is semantically close enought to a C 
+program that we can easily do a syntactic transformation on it to get a 
+C program out of it. To do this, we need to know what constitutes a 
+proper subset of our syntax that can be translated into C.
+
+@ We say that an HPAPL program is C-compatible if the following 
+conditions hold:
+
+\item{1)} There are no sections and no prose components;
+\item{2)} There is only a single $Program$ section;
+\item{3)} All expressions are of the form of scalar functions applied
+  to scalar variables; or,
+\item{4)} Any application of an user-defined function appears as a 
+  single expression on the right hand side of an assignment;
+\item{5)} All assignments are either of the form of \#4, or an assignment 
+  to a scalar variable; or,
+\item{6)} The assignment is of the shape |(I⌷X)←E| where |I| is a 
+  scalar numeric variable expected to be a natural number, 
+  |X| is some array, and |E| is an expression of the form of \#3;
+\item{7)} There should be literal arrays in any user-defined functions, 
+  except for scalars that appear as part of expressions in \#3 or 
+  as the |I| value in \#6;
+\item{8)} All literal arrays must appear as the sole expression of 
+  an assignment to a single variable in the $Program$ part of the 
+  code;
+\item{9)} 
+
+@ Assuming that we have the above guarantees, it is fairly straightforward 
+to take that syntax tree and convert it to a C syntax.  This will be 
+done in a few stages, which are themselves like effectful passes that 
+do not change the AST any. 
+
+@c () => (render-c/compat-ast)
+@<Core code renderer@>=
+(define (render-c/compat-ast ofile ast)
+  (define op (open-input-file ofile 'replace))
+  (format op "#include \"hpapl.h\"~n~n")
+  @<Declare global variables@>
+  @<Render the functions@>
+  @<Render the $Program$@>
+  (close-port op))
+
+@ The first step in writing out the C file after the header elements 
+are taken care of is the need to define all of the global variables 
+globally in such a way that all of the functions will see it.  
+These will all be arrays and they will be taken from the $Program$ 
+part of the code, where the set of variables that are assigned at the 
+top-level forms the set of globals.
+
+@c (op ast)
+@<Declare global variables@>=
+(define prog (program-body (car (filter program? (essay-sections ast)))))
+(define globals 
+  (let get-globals ([stmts (block-statements prog)])
+    (cond
+      [(null? stmts) '()]
+      [(assignment? (car stmts)) 
+       (set-cons variable=? 
+         (assignment-target (car stmts))
+         (get-globals (cdr stmts)))]
+      [(if? (car stmts)) 
+       (get-globals
+         (append (block-statements (if-consequent (car stmts)))
+                 (block-statements (if-alternative (car stmts)))
+                 (cdr stmts)))]
+      [(while? (car stmts)) 
+       (get-globals (append (while-body (car stmts)) (cdr stmts)))]
+      [else (error #f "unknown statement type" (car stmts))])))
+(format op "Array ~{*~a~^, ~};~n" (map variable-string globals))
+
+@ In the above code, and elsewhere, it is useful to be able to talk 
+about sets of objects.  We define a constructor for sets here.
+
+@c () => (set-cons)
+@<Helper Utilities@>=
+(define set-cons
+  (case-lambda
+    [(eq? e set)
+     (if (memp (lambda (x) (eq? e x)) set)
+         set
+         (cons e set))]
+    [(e set) (if (memq e set) set (cons e set))]))
+
+@ We will now consider rendering the main program entry point, which 
+is a little simpler than rendering an arbitrary function. In the main 
+program we have only a block of code to render.
+
+@c (op ast)
+@<Render the $Program$@>=
+(define prog (program-body (car (filter program? (essay-sections ast)))))
+(format op "int~nmain(int argc, char *argv[])~n{~n")
+(render-block op prog)
+(format op "\treturn 0;~n}~n")
+
+@ Rendering the functions is just a matter of doing something similar 
+to the above for each of the functions.
+
+@c (op ast)
+@<Render the functions@>=
+(for-each
+  (lambda (func)
+    @<Render the signature of function |func|@>
+    @<Render the locals of function |func|@>
+    (render-block op (function-body func))
+    (format op "}~n~n"))
+  (filter function? (essay-sections ast)))
+
+@ Rendering a function signature should give us one of these 
+cases:
+
+\medskip\verbatim
+void funct(void);
+void funct(Array *right);
+void funct(Array *left, Array *right);
+Array *funct(void);
+Array *funct(Array *right);
+Array *funct(Array *left, Array *right);
+!endverbatim\medskip
+
+@c (op func)
+@<Render the signature of function |func|@>=
+(define-values (name ret lft rgt)
+  (values (variable-string (function-name func))
+    (function-return func) (function-left func) (function-right func)))
+(format op "~a" (if ret "Array *" "void "))
+(format op "~a(" name) ;)
+(if rgt
+    (if lft ;((
+        (format op "Array *~a, Array *~a) {~n"
+                (variable-string lft) (variable-string rgt))
+        (format op "Array *~a) {~n" (variable-string rgt))) ;(
+    (format op "void) {~n"))))
+
+@ When we render the locals of a function, we might usually assume 
+that they are all arrays, but this is not necessarily the case if we 
+have added new scalar variables through one of our passes.  If the 
+variables are not scalar, then we want to declare them as arrays, 
+and otherwise we declare them as |Scalar| types. 
+
+@c (op func)
+@<Render the locals of function |func|@>=
+(define-values (scalar array) (split scalar? (function-locals func)))
+(format op "Scalar ~{~a~^, ~};~n" (map variable-string scalar))
+(format op "Array *~{~a~^, ~};~n" (map variable-string array)) 
+
+@ The |split| function above is one of our utilities.
+
+@c () => (split)
+@<Helper Utilities@>=
+(define (split pred? lst)
+  (let-loop ([yes '()] [no '()] [lst lst])
+    (cond
+      [(null? lst) (values (reverse yes) (reverse no))]
+      [(pred? (car lst)) (loop (cons (car lst) yes) no (cdr lst))]
+      [else (loop yes (cons (car lst) no) (cdr lst))])))
+
+
 
 @* Compilation cycle.
 
