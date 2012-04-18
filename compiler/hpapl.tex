@@ -1,0 +1,497 @@
+\input ConTeXtLPMacros
+
+\definefontsynonym[APL][Apl385]
+\setupbodyfont[xits]
+\definefont[tt][APL sa 1]
+
+\setuppapersize[letter][letter]
+\setupwhitespace[medium]
+
+\starttext
+\startfrontmatter
+\title{HPAPL: The Compiler}
+
+\completecontent
+\vfill
+Copyright $\copyright$ 2012 Aaron W. Hsu $⟨${\tt arcfide@sacrideo.us}$⟩$
+
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+\stopfrontmatter
+
+\startbodymatter
+\chapter{Introduction}
+
+This is a first simple attempt to get a small piece of each element of 
+the HPAPL compiler working and running.
+
+\defchunk{HPAPL Class}
+:Class HPAPL
+⎕IO ⎕ML←0 0
+
+/BTEX\chunk{Utility Classes}/ETEX
+/BTEX\chunk{Token Hierarchy}/ETEX
+/BTEX\chunk{Tokenizer}/ETEX
+/BTEX\chunk{AST Hierarchy}/ETEX
+/BTEX\chunk{Factory Hierarchy}/ETEX
+/BTEX\chunk{Code Visitors}/ETEX
+:EndClass
+\stopchunk
+
+To bootstrap this all into a workspace:
+
+\defchunk{Bootstrap}
+Bootstrap;N
+#.⎕SE.SALT.Load './ConTeXtLP'
+TangleLoad←{_←⍺ ConTeXtLP.Tangle './hpapl.tex' ('./',⍵,'.dyalog')
+    N←#.⎕SE.SALT.Load './',⍵,' -Target=#'
+    ⎕←'Loaded ',⍕N
+}
+'Bootstrap' TangleLoad 'bootstrap'
+/BTEX\chunk{Load Interfaces}/ETEX
+'HPAPL Class'ConTeXtLP.Tangle'./hpapl.tex' './hpapl.dyalog'
+N←#.⎕SE.SALT.Load './hpapl -Target=#'
+⎕←'Loaded ',⍕N
+\stopchunk
+
+
+\chapter{Parsing and Pretty Printing}
+
+This chapter focuses on getting the HPAPL program from strings into 
+a reasonable representation, and getting back into a string again. Here 
+is the grammar of our language:\index{Language Grammar}
+
+\startformula
+Number \Rightarrow number
+\stopformula   
+
+We are going to try to create a very flexible grammar using the 
+paper “Design Patterns for Parsing” by Dung Nguyen, et al. for the 
+SIGCSE'05 conference.  
+
+\section{Token Class Hierarchy}
+
+We start with a parent class for talking about 
+tokens. Every token has a lexeme value. \index{Design Patterns}
+\index{Tokens} Every token also should have some means of executing 
+a visitor for that token.  We call this method \cid{Exec}. 
+
+\defchunk{Token Hierarchy}
+:Class Token
+    :Access Public
+    
+    :Field Public Instance lexeme
+    
+    ∇ Make value
+      :Access Public
+      :Implements Constructor
+      lexeme←value
+    ∇
+    
+    ∇ R←Exec(algo param)
+      :Access Public 
+      'METHOD NOT OVERIDDEN'⎕SIGNAL 11
+    ∇
+:EndClass
+\stopchunk
+
+We also have a basic visitors interface for all tokens, which 
+specifies the method \cid{DefaultCase}.
+
+\defchunk{TokVisitor Interface}
+:Interface TokVisitor
+    ∇ R←DefaultCase(host param)
+    ∇
+:EndInterface
+\stopchunk
+
+\defchunk{Load Interfaces}
+'TokVisitor Interface'TangleLoad'tokvisitor'
+\stopchunk
+
+
+Now we want to define a class for each of our token types.  In this
+case we haven only one, which is a $Number$.  Each token class knows how 
+to do a few things: it knows how to execute a given visitor to produce 
+an AST; it defines an interface for defining visitors for that token 
+class; and, it usually will provide a starter base class implementing 
+the default methods for chaining visitors.
+For more information on Visitors as a design pattern, see 
+\in{Appendix}[designpatterns]. \index{Design Patterns+Visitors}
+
+Let's look at how to define \cid{NumberToken}.  Here's a basic skeleton
+that does not do the chaining. XXX
+
+\defchunk{Token Hierarchy}
+:Class NumberToken: Token
+    :Access Public
+    
+    ∇ Make value
+      :Access Public
+      :Implements Constructor :Base (value)
+    ∇
+    
+    ∇ R←Exec(algo param)
+      :Access Public
+      R←{NumTokVis∊⊃⎕CLASS ⍵: ⍵.NumCase ⎕THIS param
+         ⍵.DefaultCase ⎕THIS param
+      }algo
+    ∇
+    
+:EndClass
+\stopchunk
+
+And here is the interface that goes with this token.
+
+\defchunk{NumTokVis Interface}
+:Interface NumTokVis
+    ∇ R←NumCase(host param)
+    ∇
+:EndInterface
+\stopchunk
+
+\defchunk{Load Interfaces}
+'NumTokVis Interface'TangleLoad'numtokvis'
+\stopchunk
+
+The following setup the necessary meta information for our tokenizer 
+that we setup below.  For every new token that we create, we need to 
+define the name of the token type, the pattern that matches it, 
+and finally, how to construct it when you do have a match.
+
+\defchunk{Token Types}
+,(⊂'number')\stopchunk
+
+\defchunk{Token Patterns}
+,(⊂'[0-9]+')\stopchunk
+
+\defchunk{Token Maker Cases}
+:Case F'number'
+    R←⎕NEW NumberToken(M.Block[(⊃M.Offsets)+⍳⊃M.Lengths])
+\stopchunk
+
+Now that we have all of our tokens defined, let's move on to defining a 
+tokenizer to make use of it.  This is the basic OOP Tokenizer interface, 
+though we use PCRE under the hood to do the actual tokenization.
+
+\defchunk{Tokenizer}
+:Class Tokenizer
+    :Access Public
+
+    :Field Private tokens
+    :Field Private lasttok←⍬
+    :Field Public types← /BTEX\chunk{Token Types}/ETEX
+    :Field Private tokpats← /BTEX\chunk{Token Patterns}/ETEX
+    
+    /BTEX\chunk{Token List Manipulators}/ETEX
+    
+    ∇ R←MakeToken M;F
+      F←(types∘⍳)∘⊂
+      :Select M.PatternNum
+      /BTEX\chunk{Token Maker Cases}/ETEX
+      :Else 
+          'UNKNOWN TOKEN TYPE'⎕SIGNAL 11
+      :EndSelect
+    ∇
+    
+    ∇ Make file;tie
+      :Access Public
+      :Implements Constructor
+      tie←file ⎕NTIE 0
+      tokens←(tokpats⎕S MakeToken ⍠ 'Mode' 'D') tie
+      ⎕NUNTIE tie
+    ∇
+    
+:EndClass
+\stopchunk
+
+A tokenizer provides two public methods, {\tt NextToken} and 
+{\tt PutBackToken}, which allow you to get tokens in and out of 
+the tokenizer in order.
+
+\defchunk{Token List Manipulators}
+∇ R←NextToken
+  :Access Public
+
+  :If 0<⍴tokens
+      R←lasttok←⊃tokens
+      tokens←1↓tokens
+  :Else
+      R←⍬
+  :EndIf
+∇
+
+∇ PutBackToken
+  :Access Public
+  tokens←lasttok,tokens
+∇
+\stopchunk
+
+\section{Non-terminals, Parse Trees, and their Objects}
+
+With the tokens finished, we can move to the definition of an object 
+hierarchy that accurately models the syntax tree that we want to 
+define.  We have defined our grammar specifically so that each 
+production is in one of the following forms:
+
+1) It is a production with a single terminal token at the end;
+2) It is a production of a sequence of terminals and non-terminals; or,
+3) It is a production consisting of a set of non-terminals.
+
+The simplest productions to model in our object hierarchy are the 
+first kind.  These have no descendants, though they may have a parent 
+(“is-a” relationship) or be composed together (“has-a” relationship).
+
+In our grammar, we have only one production, $Number$ which has only 
+a single token in it.
+
+\defchunk{AST Hierarchy}
+:Class ASTNumber: ASTNode
+    :Access Public
+    
+    :Field Public numtok  ⍝ NumberToken
+    
+    ∇ Make num
+      :Access Public
+      :Implements Constructor :Base #.ASTNumVis
+      ⎕SIGNAL(~NumberToken∊⊃⎕CLASS num)/11
+      numtok←num
+    ∇
+:EndClass
+\stopchunk
+
+\section{Visitor Factories for Parsing}
+
+Rather than defining the visitors explicitly, we use a 
+Factory\index{Design Patterns+Factories} for each of the non-terminals, 
+which are in charge of producing visitors. More information about the 
+Factory design pattern can be found \in{Appendix}[factorypattern]. 
+
+All factories inherit from the {\tt ASTFactory} class.
+
+\defchunk{Factory Hierarchy}
+:Class ASTFactory
+    :Access Public
+    
+    :Field Private tokenizer
+    
+    ∇ Make tkz
+      :Access Public
+      :Implements Constructor
+      ⎕SIGNAL(~Tokenizer∊⊃⎕CLASS tkz)/11 ⍝ tkz is a Tokenizer
+      tokenizer←tkz
+    ∇
+    
+    ∇ R←NextToken
+      :Access Public
+      R←tokenizer.NextToken
+    ∇
+    
+    ∇ PutBackToken
+      :Access Public
+      tokenizer.PutBackToken
+    ∇
+:EndClass
+\stopchunk
+
+In addition, all factories obey the following interface, which is the 
+standard protocol for producing visitors.
+
+\defchunk{FactProto Interface}
+:Interface FactProto
+    ∇ R←MakeVisitor
+    ∇
+:EndInterface
+\stopchunk
+
+\defchunk{Load Interfaces}
+'FactProto Interface'TangleLoad'factproto'
+\stopchunk
+
+
+Let's talk about the Factories for the simple non-terminals with only 
+a single terminal sequence as their target.  This is our only grammar 
+production at the moment called $Number$.  It has only a single way 
+to progress, and it should implement the {\tt NumTokVisitor} 
+interface.  This visitor class looks like this.
+
+\defchunk{Factory Hierarchy}
+:Class NumFact: ASTFactory,#.FactProto
+    :Access Public
+    
+    ∇ Make tkz
+      :Access Public
+      :Implements Constructor :Base tkz
+    ∇
+    
+    :Class NumVis: ,#.NumTokVis,#.TokVisitor
+        :Access Public
+        
+        ∇ R←NumCase(host param)
+          :Implements Method #.NumTokVis.NumCase
+          R←⎕NEW HPAPL.ASTNumber host
+        ∇
+        
+        ∇ R←DefaultCase(host param)
+          :Implements Method #.TokVisitor.DefaultCase
+          'UNEXPECTED TOKEN'⎕SIGNAL 2
+        ∇
+    :EndClass
+    
+    ∇ R←MakeVisitor
+      :Implements Method #.FactProto.MakeVisitor
+      R←⎕NEW NumVis
+    ∇
+:EndClass
+\stopchunk
+
+\chapter{Outputting C Code}
+
+With the basic syntax above, we can create a simple C program that 
+prints out constants.  To support a number of traversals, I have 
+encoded a simple Visitor pattern\index{Design Patterns+Visitors}
+into the AST Nodes. 
+
+\defchunk{AST Hierarchy}
+:Class ASTNode
+    :Access Public
+    :Field Private visitor
+    
+    ∇ Make vis
+      :Access Public
+      :Implements Constructor
+      visitor←vis
+    ∇
+    
+    ∇ R←Accept host
+      :Access Public
+      :If visitor∊⊃⎕CLASS host
+          R←(visitor ⎕CLASS host).Visit ⎕THIS
+      :Else
+          R←(#.ASTVis ⎕CLASS host).Visit ⎕THIS
+      :EndIf
+    ∇
+:EndClass
+\stopchunk
+
+I also provide Interfaces for each of the AST Production types for 
+dispatch, since we are in an untyped system.
+
+\defchunk{ASTVis Interface}
+:Interface ASTVis
+    ∇R←Visit host
+    ∇
+:EndInterface
+\stopchunk
+
+\defchunk{NumberVis Interface}
+:Interface ASTNumVis
+    ∇R←Visit host
+    ∇
+:EndInterface
+\stopchunk
+
+\defchunk{Load Interfaces}
+'ASTVis Interface' TangleLoad 'astvis'
+'NumberVis Interface' TangleLoad 'numbervis'
+\stopchunk
+
+This allows us to implement the following visitor that renders C output.
+
+\defchunk{Code Visitors}
+:Class OutCVisitor: ,#.ASTVis,#.ASTNumVis
+    :Access Public
+    :Field Private Instance out
+
+    ∇ Make fout
+      :Access Public
+      :Implements Constructor
+      out←fout
+    ∇
+    
+    ∇ R←NumVisit host
+      :Implements Method #.ASTNumVis.Visit
+      out.println '#include <stdio.h>'
+      out.println '#include <stdlib.h>'
+      out.println ''
+      out.println 'int main(int argc, char *argv[])'
+      out.println '{'
+      out.println '  int64_t x;'
+      out.println '  x = ',host.numtok.lexeme,';'
+      out.println '  printf("%d\n", x);'
+      out.println '  return 0;'
+      out.println '}'
+      R←0 0⍴⍬
+    ∇
+    
+    ∇ R←Visit host
+      :Implements Method #.ASTVis.Visit
+      'UNKNOWN AST NODE'⎕SIGNAL 11
+      R←0 0⍴⍬
+    ∇
+:EndClass
+\stopchunk
+
+\chapter{Utilities}
+
+Here are some of the utilities used throughout the rest of the text 
+to make our lives easier.
+
+\defchunk{Utility Classes}
+:Class FileOutput
+    :Access Public
+    :Field Private tie
+    
+    ∇ Make fname
+      :Access Public
+      :Implements Constructor
+      :Trap 22
+          tie←fname ⎕NCREATE 0
+      :Else
+          tie←fname ⎕NTIE 0
+          fname ⎕NERASE tie
+          tie←fname ⎕NCREATE 0
+      :EndTrap
+    ∇
+    
+    ∇ Close
+      :Access Public
+      ⎕NUNTIE tie
+    ∇
+    
+    ∇ println data
+      :Access Public
+      (⎕UCS 'UTF-8' ⎕UCS data) ⎕NAPPEND tie,80
+      (⎕UCS 10) ⎕NAPPEND tie,80
+    ∇
+    
+:EndClass
+\stopchunk
+
+
+\stopbodymatter
+
+\startappendices
+
+\chapter[designpatterns]{Design Patterns}
+
+\section[visitorpattern]{Visitor Pattern}
+
+\section[factorypattern]{Factory Pattern}
+
+\stopappendices
+
+\startbackmatter
+\completeindex
+\stopbackmatter
+
+\stoptext
