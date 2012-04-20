@@ -1,10 +1,10 @@
 :Namespace Load
     Interfaces←'TokParser' 'NumTokParser' 'VarTokParser' 'AssgnTokParser'
-    Interfaces,←'FactProto' 'ASTVis' 'ASTNumVis'
+    Interfaces,←'FactProto' 'ASTVis' 'ASTNumVis' 'ASTVarVis' 'ASTAssgnVis'
     Classes←1⍴⊂'FileOutput'
     Classes,←'Token' 'NumToken' 'VarToken' 'AssgnToken' 'Tokenizer'
-    Classes,←'ASTNode' 'ASTNumber'
-    Classes,←'ASTFactory' 'NumFact'
+    Classes,←'ASTNode' 'ASTNumber' 'ASTVar' 'ASTAssgn'
+    Classes,←'ASTFactory' 'NumFact' 'VarFact' 'AssgnFact'
     Classes,←⊂'OutCVisitor'
     
     ∇ TangleLoad CN;N
