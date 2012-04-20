@@ -44,7 +44,8 @@ is the grammar of our language:\index{Language Grammar}
 
 \startformula
 \eqalign{
-  Assignment &\Rightarrow Variable\ \term{←}\ Number\cr
+  Assignment &\Rightarrow Variable\ \term{←}\ VarOrNum\cr
+  VarOrNum   &\Rightarrow Variable\ |\ Number\cr
   Variable   &\Rightarrow \hbox{\tt variable}\cr
   Number     &\Rightarrow \hbox{\tt number}\cr
 }
@@ -85,6 +86,27 @@ a visitor for that token.  We call this method \cid{Exec}.
     ∇
 :EndClass
 \stopchunk
+
+To support choices in chaining, we define a default chaining 
+visitor class from which other chained visitors may be constructed.
+
+\defchunk{ChainTokParser Class}
+:Class ChainTokParser: ,#.TokParser
+    :Field Private Instance successor
+    
+    ∇ Make succ
+      :Access Public
+      :Implements Constructor
+      successor←succ
+    ∇
+    
+    ∇ R←defCase host
+      :Implements Method #.TokParser.Parse
+      R←host.Parse successor
+    ∇
+:EndClass
+\stopchunk
+
 
 We also have a basic visitors interface for all tokens, which 
 specifies the method \cid{DefaultCase}.
@@ -305,14 +327,14 @@ and a \cid{ASTVar} for variables.
 \defchunk{ASTAssgn Class}
 :Class ASTAssgn: ASTNode
     :Field Public Variable ⍝ ASTVar
-    :Field Public Number ⍝ ASTNumber
+    :Field Public Expression ⍝ ASTNumber
     
     ∇ Make(var num)
       :Access Public
       :Implements Constructor :Base #.ASTAssgnVis
       ⎕SIGNAL(~#.ASTVar∊⊃⎕CLASS var)/11
-      ⎕SIGNAL(~#.ASTNumber∊⊃⎕CLASS num)/11
-      Variable Number←var num
+      ⎕SIGNAL(~∨/#.ASTNumber #.ASTVar∊⊃⎕CLASS num)/11
+      Variable Expression←var num
     ∇
 :EndClass
 \stopchunk
@@ -357,6 +379,9 @@ standard protocol for producing visitors.
 :Interface FactProto
     ∇ R←MakeVisitor
     ∇
+    
+    ∇ R←MakeChainedVisitor succ
+    ∇
 :EndInterface
 \stopchunk
 
@@ -374,8 +399,6 @@ interface.  This visitor class looks like this.
     ∇
     
     :Class NumVis: ,#.NumTokParser,#.TokParser
-        :Access Public
-        
         ∇ R←NumCase numtok
           :Implements Method #.NumTokParser.Parse
           R←⎕NEW #.ASTNumber numtok
@@ -387,9 +410,26 @@ interface.  This visitor class looks like this.
         ∇
     :EndClass
     
+    :Class ChainNumVis: #.ChainTokParser,#.NumTokParser
+        ∇ Make succ
+          :Access Public
+          :Implements Constructor :Base succ
+        ∇
+        
+        ∇ R←NumCase numtok
+          :Implements Method #.NumTokParser.Parse
+          R←⎕NEW #.ASTNumber numtok
+        ∇
+    :EndClass
+    
     ∇ R←MakeVisitor
       :Implements Method #.FactProto.MakeVisitor
       R←⎕NEW NumVis
+    ∇
+    
+    ∇ R←MakeChainedVisitor succ
+      :Implements Method #.FactProto.MakeChainedVisitor
+      R←⎕NEW ChainNumVis succ
     ∇
 :EndClass
 \stopchunk
@@ -404,8 +444,6 @@ We can do something similar for the variable case.
     ∇
     
     :Class VarVis: ,#.VarTokParser,#.TokParser
-        :Access Public
-        
         ∇ R←VarCase vartok
           :Implements Method #.VarTokParser.Parse
           R←⎕NEW #.ASTVar vartok
@@ -417,9 +455,26 @@ We can do something similar for the variable case.
         ∇
     :EndClass
     
+    :Class ChainVarVis: #.ChainTokParser,#.VarTokParser
+        ∇ Make succ
+          :Access Public
+          :Implements Constructor :Base succ
+        ∇
+        
+        ∇ R←VarCase vartok
+          :Implements Method #.VarTokParser.Parse
+          R←⎕NEW #.ASTVar vartok
+        ∇
+    :EndClass
+    
     ∇ R←MakeVisitor
       :Implements Method #.FactProto.MakeVisitor
       R←⎕NEW VarVis
+    ∇
+    
+    ∇ R←MakeChainedVisitor succ
+      :Implements Method #.FactProto.MakeChainedVisitor
+      R←⎕NEW ChainVarVis succ
     ∇
 :EndClass
 \stopchunk
@@ -430,15 +485,15 @@ factory.  In this case, we need to parse a sequence of three nodes.
 \defchunk{AssgnFact Class}
 :Class AssgnFact: ASTFactory,#.FactProto
     :Field Private Instance varfact
-    :Field Private Instance numfact
+    :Field Private Instance varnumfact
     :Field Public Instance varvis←⍬
-    :Field Public Instance numvis←⍬
+    :Field Public Instance varnumvis←⍬
 
     ∇ Make tkz
       :Access Public
       :Implements Constructor :Base tkz
       varfact←⎕NEW #.VarFact tkz
-      numfact←⎕NEW #.NumFact tkz
+      varnumfact←⎕NEW #.VarOrNumFact tkz
     ∇
     
     :Class AssgnVis: ,#.VarTokParser, #.TokParser
@@ -450,12 +505,12 @@ factory.  In this case, we need to parse a sequence of three nodes.
           fac←facinst
         ∇
         
-        ∇ R←AssgnCase tok;var;num
+        ∇ R←AssgnCase tok;var;varnum
           :Implements Method #.VarTokParser.Parse
           var←tok.Parse fac.varvis
           :If #.AssgnToken∊⊃⎕CLASS fac.NextToken
-              num←fac.NextToken.Parse fac.numvis
-              R←⎕NEW #.ASTAssgn(var num)
+              varnum←fac.NextToken.Parse fac.varnumvis
+              R←⎕NEW #.ASTAssgn(var varnum)
           :Else
               'UNEXPECTED TOKEN'⎕SIGNAL 2
           :EndIf
@@ -467,11 +522,69 @@ factory.  In this case, we need to parse a sequence of three nodes.
         ∇
     :EndClass
     
+    :Class ChainAssgnVis: #.ChainTokParser,#.VarTokParser
+        :Field fac
+        
+        ∇ Make(inst succ)
+          :Access Public
+          :Implements Constructor :Base succ
+          fac←inst
+        ∇
+        
+        ∇ R←AssgnCase tok;var;varnum
+          :Implements Method #.VarTokParser.Parse
+          var←tok.Parse fac.varvis
+          :If #.AssgnToken∊⊃⎕CLASS fac.NextToken
+              varnum←fac.NextToken.Parse fac.varnumvis
+              R←⎕NEW #.ASTAssgn(var varnum)
+          :Else
+              'UNEXPECTED TOKEN'⎕SIGNAL 2
+          :EndIf
+        ∇
+    :EndClass
+    
+    ∇ Init
+      :If ⍬≡varvis ⋄ varvis←varfact.MakeVisitor ⋄ :EndIf
+      :If ⍬≡varnumvis ⋄ varnumvis←varnumfact.MakeVisitor ⋄ :EndIf
+    ∇
+        
     ∇ R←MakeVisitor
       :Implements Method #.FactProto.MakeVisitor
-      :If ⍬≡varvis ⋄ varvis←varfact.MakeVisitor ⋄ :EndIf
-      :If ⍬≡numvis ⋄ numvis←numfact.MakeVisitor ⋄ :EndIf
+      Init
       R←⎕NEW AssgnVis ⎕THIS
+    ∇
+    
+    ∇ R←MakeChainedVisitor succ
+      :Implements Method #.FactProto.MakeChainedVisitor
+      Init
+      R←⎕NEW ChainAssgnVis ⎕THIS succ
+    ∇      
+:EndClass
+\stopchunk
+
+We have a factory for producing branched visitors as well.  In this 
+case the choice of a number or a variable.
+
+\defchunk{VarOrNumFact Class}
+:Class VarOrNumFact: ASTFactory,#.FactProto
+    :Field Public numfac
+    :Field Public varfac
+    
+    ∇ Make tkz
+      :Access Public
+      :Implements Constructor :Base tkz
+      numfac←⎕NEW #.NumFact tkz
+      varfac←⎕NEW #.VarFact tkz
+    ∇
+    
+    ∇ R←MakeVisitor
+      :Implements Method #.FactProto.MakeVisitor
+      R←varfac.MakeChainedVisitor numfac.MakeVisitor
+    ∇
+    
+    ∇ R←MakeChainedVisitor succ
+      :Implements Method #.FactProto.MakeChainedVisitor
+      R←varfac.MakeChainedVisitor numfac.MakeChainedVisitor succ 
     ∇
 :EndClass
 \stopchunk
@@ -561,7 +674,7 @@ This allows us to implement the following visitor that renders C output.
       out.print '  '
       host.Variable.Accept ⎕THIS
       out.print ' = '
-      host.Number.Accept ⎕THIS
+      host.Expression.Accept ⎕THIS
       out.println ';'
       out.print '  printf("%d\n", '
       host.Variable.Accept ⎕THIS
