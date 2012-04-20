@@ -40,9 +40,11 @@ This chapter focuses on getting the HPAPL program from strings into
 a reasonable representation, and getting back into a string again. Here 
 is the grammar of our language:\index{Language Grammar}
 
+\define[1]\term{\hbox{\tt #1}}
+
 \startformula
 \eqalign{
-  Assignment &\Rightarrow Variable\ \hbox{\tt ←}\ Number\cr
+  Assignment &\Rightarrow Variable\ \term{←}\ Number\cr
   Variable   &\Rightarrow \hbox{\tt variable}\cr
   Number     &\Rightarrow \hbox{\tt number}\cr
 }
@@ -61,7 +63,6 @@ a visitor for that token.  We call this method \cid{Exec}.
 
 \defchunk{Token Class}
 :Class Token
-    :Access Public
     ⎕IO←0
     
     :Field Public Instance lexeme
@@ -77,9 +78,9 @@ a visitor for that token.  We call this method \cid{Exec}.
     ∇ R←Parse algo
       :Access Public
       :If parser∊⊃⎕CLASS algo
-          (parser ⎕CLASS algo).Parse ⎕THIS
+          R←(parser ⎕CLASS algo).Parse ⎕THIS
       :Else
-          (#.TokParser ⎕CLASS algo).Parse ⎕THIS
+          R←(#.TokParser ⎕CLASS algo).Parse ⎕THIS
       :EndIf 
     ∇
 :EndClass
@@ -144,8 +145,6 @@ that does not do the chaining. XXX
 
 \defchunk{NumToken Class}
 :Class NumToken: Token
-    :Access Public
-    
     ∇ Make value
       :Access Public
       :Implements Constructor :Base (value #.NumTokParser)
@@ -166,8 +165,6 @@ that does not do the chaining. XXX
 
 \defchunk{VarToken Class}
 :Class VarToken: Token
-    :Access Public
-    
     ∇ Make value
       :Access Public
       :Implements Constructor :Base (value #.VarTokParser)
@@ -191,8 +188,6 @@ this one looks like.
 
 \defchunk{AssgnToken Class}
 :Class AssgnToken: Token
-    :Access Public
-    
     ∇ Make value
       :Access Public
       :Implements Constructor :Base ('←' #.AssgnTokParser)
@@ -217,8 +212,6 @@ though we use PCRE under the hood to do the actual tokenization.
 
 \defchunk{Tokenizer Class}
 :Class Tokenizer
-    :Access Public
-
     :Field Private tokens
     :Field Private lasttok←⍬
     
@@ -282,18 +275,48 @@ a single token in it.
 
 \defchunk{ASTNumber Class}
 :Class ASTNumber: ASTNode
-    :Access Public
-    
     :Field Public numtok  ⍝ NumberToken
     
     ∇ Make num
       :Access Public
       :Implements Constructor :Base #.ASTNumVis
-      ⎕SIGNAL(~NumberToken∊⊃⎕CLASS num)/11
+      ⎕SIGNAL(~#.NumToken∊⊃⎕CLASS num)/11
       numtok←num
     ∇
 :EndClass
 \stopchunk
+
+We also want to have a class \cid{ASTAssgn} for the assignments, 
+and a \cid{ASTVar} for variables.
+
+\defchunk{ASTVar Class}
+:Class ASTVar: ASTNode
+    :Field Public vartok ⍝ VarToken
+    
+    ∇ Make var
+      :Access Public
+      :Implements Constructor :Base #.ASTVarVis
+      ⎕SIGNAL(~#.VarToken∊⊃⎕CLASS var)/11
+      vartok←var
+    ∇
+:EndClass
+\stopchunk
+
+\defchunk{ASTAssgn Class}
+:Class ASTAssgn: ASTNode
+    :Field Public Variable ⍝ ASTVar
+    :Field Public Number ⍝ ASTNumber
+    
+    ∇ Make(var num)
+      :Access Public
+      :Implements Constructor :Base #.ASTAssgnVis
+      ⎕SIGNAL(~#.ASTVar∊⊃⎕CLASS var)/11
+      ⎕SIGNAL(~#.ASTNumber∊⊃⎕CLASS num)/11
+      Variable Number←var num
+    ∇
+:EndClass
+\stopchunk
+
 
 \section{Visitor Factories for Parsing}
 
@@ -306,14 +329,12 @@ All factories inherit from the {\tt ASTFactory} class.
 
 \defchunk{ASTFactory Class}
 :Class ASTFactory
-    :Access Public
-    
     :Field Private tokenizer
     
     ∇ Make tkz
       :Access Public
       :Implements Constructor
-      ⎕SIGNAL(~Tokenizer∊⊃⎕CLASS tkz)/11 ⍝ tkz is a Tokenizer
+      ⎕SIGNAL(~#.Tokenizer∊⊃⎕CLASS tkz)/11 ⍝ tkz is a Tokenizer
       tokenizer←tkz
     ∇
     
@@ -347,8 +368,6 @@ interface.  This visitor class looks like this.
 
 \defchunk{NumFact Class}
 :Class NumFact: ASTFactory,#.FactProto
-    :Access Public
-    
     ∇ Make tkz
       :Access Public
       :Implements Constructor :Base tkz
@@ -359,7 +378,7 @@ interface.  This visitor class looks like this.
         
         ∇ R←NumCase numtok
           :Implements Method #.NumTokParser.Parse
-          R←⎕NEW HPAPL.ASTNumber numtok
+          R←⎕NEW #.ASTNumber numtok
         ∇
         
         ∇ R←DefaultCase host
@@ -375,6 +394,89 @@ interface.  This visitor class looks like this.
 :EndClass
 \stopchunk
 
+We can do something similar for the variable case.
+
+\defchunk{VarFact Class}
+:Class VarFact: ASTFactory,#.FactProto
+    ∇ Make tkz
+      :Access Public
+      :Implements Constructor :Base tkz
+    ∇
+    
+    :Class VarVis: ,#.VarTokParser,#.TokParser
+        :Access Public
+        
+        ∇ R←VarCase vartok
+          :Implements Method #.VarTokParser.Parse
+          R←⎕NEW #.ASTVar vartok
+        ∇
+        
+        ∇ R←DefaultCase host
+          :Implements Method #.TokParser.Parse
+          'UNEXPECTED TOKEN'⎕SIGNAL 2
+        ∇
+    :EndClass
+    
+    ∇ R←MakeVisitor
+      :Implements Method #.FactProto.MakeVisitor
+      R←⎕NEW VarVis
+    ∇
+:EndClass
+\stopchunk
+
+We have to do something a litte more complicated for the assignment 
+factory.  In this case, we need to parse a sequence of three nodes.
+
+\defchunk{AssgnFact Class}
+:Class AssgnFact: ASTFactory,#.FactProto
+    :Field Private Instance varfact
+    :Field Private Instance numfact
+    :Field Public Instance varvis←⍬
+    :Field Public Instance numvis←⍬
+
+    ∇ Make tkz
+      :Access Public
+      :Implements Constructor :Base tkz
+      varfact←⎕NEW #.VarFact tkz
+      numfact←⎕NEW #.NumFact tkz
+    ∇
+    
+    :Class AssgnVis: ,#.VarTokParser, #.TokParser
+        :Field fac
+        
+        ∇ Make facinst
+          :Access Public
+          :Implements Constructor
+          fac←facinst
+        ∇
+        
+        ∇ R←AssgnCase tok;var;num
+          :Implements Method #.VarTokParser.Parse
+          var←tok.Parse fac.varvis
+          :If #.AssgnToken∊⊃⎕CLASS fac.NextToken
+              num←fac.NextToken.Parse fac.numvis
+              R←⎕NEW #.ASTAssgn(var num)
+          :Else
+              'UNEXPECTED TOKEN'⎕SIGNAL 2
+          :EndIf
+        ∇
+        
+        ∇ R←DefCase tok
+          :Implements Method #.TokParser.Parse
+          'UNEXPECTED TOKEN'⎕SIGNAL 2
+        ∇
+    :EndClass
+    
+    ∇ R←MakeVisitor
+      :Implements Method #.FactProto.MakeVisitor
+      :If ⍬≡varvis ⋄ varvis←varfact.MakeVisitor ⋄ :EndIf
+      :If ⍬≡numvis ⋄ numvis←numfact.MakeVisitor ⋄ :EndIf
+      R←⎕NEW AssgnVis ⎕THIS
+    ∇
+:EndClass
+\stopchunk
+
+
 \chapter{Outputting C Code}
 
 With the basic syntax above, we can create a simple C program that 
@@ -384,7 +486,6 @@ into the AST Nodes.
 
 \defchunk{ASTNode Class}
 :Class ASTNode
-    :Access Public
     :Field Private visitor
     
     ∇ Make vis
@@ -421,11 +522,24 @@ dispatch, since we are in an untyped system.
 :EndInterface
 \stopchunk
 
+\defchunk{ASTVarVis Interface}
+:Interface ASTVarVis
+    ∇R←Visit host
+    ∇
+:EndInterface
+\stopchunk
+
+\defchunk{ASTAssgnVis Interface}
+:Interface ASTAssgnVis
+    ∇R←Visit host
+    ∇
+:EndInterface
+\stopchunk
+
 This allows us to implement the following visitor that renders C output.
 
 \defchunk{OutCVisitor Class}
-:Class OutCVisitor: ,#.ASTVis,#.ASTNumVis
-    :Access Public
+:Class OutCVisitor: ,#.ASTVis,#.ASTNumVis,#.ASTVarVis,#.ASTAssgnVis
     :Field Private Instance out
 
     ∇ Make fout
@@ -434,18 +548,38 @@ This allows us to implement the following visitor that renders C output.
       out←fout
     ∇
     
-    ∇ R←NumVisit host
-      :Implements Method #.ASTNumVis.Visit
+    ∇ R←AssgnVisit host
+      :Implements Method #.ASTAssgnVis.Visit
       out.println '#include <stdio.h>'
       out.println '#include <stdlib.h>'
       out.println ''
       out.println 'int main(int argc, char *argv[])'
       out.println '{'
-      out.println '  int64_t x;'
-      out.println '  x = ',host.numtok.lexeme,';'
-      out.println '  printf("%d\n", x);'
+      out.print   '  int64_t '
+      host.Variable.Accept ⎕THIS
+      out.println ';'
+      out.print '  '
+      host.Variable.Accept ⎕THIS
+      out.print ' = '
+      host.Number.Accept ⎕THIS
+      out.println ';'
+      out.print '  printf("%d\n", '
+      host.Variable.Accept ⎕THIS
+      out.println ');'
       out.println '  return 0;'
       out.println '}'
+      R←0 0⍴⍬
+    ∇
+    
+    ∇ R←VarVisit host
+      :Implements Method #.ASTVarVis.Visit
+      out.print host.vartok.lexeme
+      R←0 0⍴⍬
+    ∇
+    
+    ∇ R←NumVisit host
+      :Implements Method #.ASTNumVis.Visit
+      out.print host.numtok.lexeme
       R←0 0⍴⍬
     ∇
     
@@ -464,7 +598,6 @@ to make our lives easier.
 
 \defchunk{FileOutput Class}
 :Class FileOutput
-    :Access Public
     :Field Private tie
     
     ∇ Make fname
@@ -486,8 +619,13 @@ to make our lives easier.
     
     ∇ println data
       :Access Public
-      (⎕UCS 'UTF-8' ⎕UCS data) ⎕NAPPEND tie,80
+      print data
       (⎕UCS 10) ⎕NAPPEND tie,80
+    ∇
+    
+    ∇ print data
+      :Access Public
+      (⎕UCS 'UTF-8' ⎕UCS data) ⎕NAPPEND tie,80
     ∇
     
 :EndClass
