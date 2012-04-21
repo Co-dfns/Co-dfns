@@ -34,6 +34,19 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 This is a first simple attempt to get a small piece of each element of 
 the HPAPL compiler working and running.
 
+\defchunk{HPAPL Namespace}
+:Namespace HPAPL
+  ⎕IO ⎕ML←0 0
+  /BTEX\chunk{HPAPL Code}/ETEX
+  ∇ Reload;N
+    'HPAPL Namespace' #.ConTeXtLP.Tangle './hpapl.tex' './hpapl.dyalog'
+    N←#.⎕SE.SALT.Load './hpapl -Target=#'
+    ⎕←'Loaded: ',⍕N
+  ∇
+:EndNamespace
+\stopchunk
+
+
 \chapter{Parsing and Pretty Printing}
 
 This chapter focuses on getting the HPAPL program from strings into 
@@ -44,704 +57,158 @@ is the grammar of our language:\index{Language Grammar}
 
 \startformula
 \eqalign{
+  Statements &\Rightarrow Assignment Statements\ |\ \epsilon
   Assignment &\Rightarrow Variable\ \term{←}\ VarOrNum\cr
   VarOrNum   &\Rightarrow Variable\ |\ Number\cr
   Variable   &\Rightarrow \hbox{\tt variable}\cr
   Number     &\Rightarrow \hbox{\tt number}\cr
 }
-\stopformula   
+\stopformula
 
-We are going to try to create a very flexible grammar using the 
-paper “Design Patterns for Parsing” by Dung Nguyen, et al. for the 
-SIGCSE'05 conference.  
+Let's start with a tokenizer.
 
-\section{Token Class Hierarchy}
-
-We start with a parent class for talking about 
-tokens. Every token has a lexeme value. \index{Design Patterns}
-\index{Tokens} Every token also should have some means of executing 
-a visitor for that token.  We call this method \cid{Exec}. 
-
-\defchunk{Token Class}
-:Class Token
-    ⎕IO←0
-    
-    :Field Public Instance lexeme
-    :Field Private Instance parser←#.TokParser
-    /BTEX\chunk{Token Registry}/ETEX
-    
-    ∇ Make(value vis)
-      :Access Public
-      :Implements Constructor
-      lexeme parser←value vis
-    ∇
-    
-    ∇ R←Parse algo
-      :Access Public
-      :If parser∊⊃⎕CLASS algo
-          R←(parser ⎕CLASS algo).Parse ⎕THIS
-      :Else
-          R←(#.TokParser ⎕CLASS algo).Parse ⎕THIS
-      :EndIf 
-    ∇
-:EndClass
+\defchunk{HPAPL Code}
+TokPats←'[0-9]+' '[a-zA-Z][a-zA-Z0-9]*' '←'
+TokTypes←'Number' 'Variable' 'Assignment'
+Tokenize←{
+  tie←⍵ ⎕NTIE 0
+  MakeTok←{⍵.PatternNum,⊂⍵.Block[(⊃⍵.Offsets)+⍳⊃⍵.Lengths]}
+  (⎕NUNTIE tie)⊢(TokPats⎕S MakeTok) tie
+}
 \stopchunk
 
-To support choices in chaining, we define a default chaining 
-visitor class from which other chained visitors may be constructed.
+Now let's move to parsing.  We use a parser combinator style of parser. 
+In the first place, we need to have a simple way to parse a specific 
+token and create an entry in our syntax tree when we 
+parse.  Our syntax tree is a three-column matrix where the first 
+column is the nesting level, the second column is the node name or type, 
+and the third is a vector of values or fields for that node.
 
-\defchunk{ChainTokParser Class}
-:Class ChainTokParser: ,#.TokParser
-    :Field Private Instance successor
-    
-    ∇ Make succ
-      :Access Public
-      :Implements Constructor
-      successor←succ
-    ∇
-    
-    ∇ R←defCase host
-      :Implements Method #.TokParser.Parse
-      R←host.Parse successor
-    ∇
-:EndClass
+\defchunk{HPAPL Code}
+ParseTok←{
+  ⍵⍵=⊃⊃⍵: (⊂1 3⍴⍺,(⊂⍺⍺),⊂1⊃⊃⍵),⊂1↓⍵
+  ⎕SIGNAL 2
+}
+ParseNum←('Number' ParseTok 0)
+ParseVar←('Variable' ParseTok 1)
+ParseAssgnTok←('AssignTok' ParseTok 2)
 \stopchunk
 
+Now that we have basic parsers for the tokens to normal AST nodes, 
+it's important to be able to parse a sequence of these.
 
-We also have a basic visitors interface for all tokens, which 
-specifies the method \cid{DefaultCase}.
-
-\defchunk{TokParser Interface}
-:Interface TokParser
-    ∇ R←Parse host
-    ∇
-:EndInterface
+\defchunk{HPAPL Code}
+ParseSeq←{
+  ⎕←'Parsing sequence'
+  n1 r1←⍺ ⍺⍺ ⍵
+  ⎕←'First'
+  ⎕←n1
+  n2 r2←⍺ ⍵⍵ r1
+  ⎕←'Second'
+  ⎕←n2
+  (⊂n1⍪n2),⊂r2
+}
+ParseAssgn←{
+  n r←(1+⍺)(ParseVar ParseSeq ParseAssgnTok ParseSeq ParseVarOrNum) ⍵
+  (⊂(⍺,(⊂'Assignment'),⊂⍬)⍪n[0 2;]),⊂r
+}
 \stopchunk
 
-For each given token, we have a name for that token, as well as a 
-regular expression that allows us to recognize those tokens uniquely 
-in a document. We want to associate these things together with the 
-token class into a registry that allows easy querying about the 
-tokens and their properties.  This will be especially useful when 
-we want to write a tokenizer.  Thus, in the \cid{Token} class we 
-expose an interface for registering tokens and asking questions about 
-them.
+The \cid{ParseVarOrNum} parser deals with a choice, which we write down 
+here.
 
-\defchunk{Token Registry}
-:Field Private Shared TokenNames←⍬
-:Field Private Shared TokenPats←⍬
-:Field Private Shared TokenClasses←⍬
-
-∇ R←Register(class name pat)
-  :Access Public Shared
-  TokenNames,←⊂name
-  TokenPats,←⊂pat
-  TokenClasses,←class
-  R←0 0⍴⍬
-∇
-
-∇ C←ClassByPatNum PN;I
-  :Access Public Shared
-  C←TokenClasses[PN]
-∇
-
-∇ R←Patterns
-  :Access Public Shared
-  R←TokenPats
-∇
+\defchunk{HPAPL Code}
+ParseChoice←{
+  2:: ⍺ ⍵⍵ ⍵
+  ⍺ ⍺⍺ ⍵
+}
+ParseVarOrNum←(ParseVar ParseChoice ParseNum)
 \stopchunk
 
-\subsection{Number Token}
+To extend this out to handle a series of assignment statements, let's 
+add the ability to parse $\epsilon$. 
 
-Now we want to define a class for each of our token types.  Let's start 
-with the \cid{number} token.  Each token class knows how 
-to do a few things: it knows how to execute a given visitor to produce 
-an AST; it defines an interface for defining visitors for that token 
-class; and, it usually will provide a starter base class implementing 
-the default methods for chaining visitors.
-For more information on Visitors as a design pattern, see 
-\in{Appendix}[designpatterns]. \index{Design Patterns+Visitors}
-
-Let's look at how to define \cid{NumberToken}.  Here's a basic skeleton
-that does not do the chaining. XXX
-
-\defchunk{NumToken Class}
-:Class NumToken: Token
-    ∇ Make value
-      :Access Public
-      :Implements Constructor :Base (value #.NumTokParser)
-    ∇
-    
-    #.Token.Register ⎕THIS 'number' '[0-9]+'
-:EndClass
+\defchunk{HPAPL Code}
+ParseEmpty←{
+  0=⍴⍵: 0 3⍴⍬
+  ⎕SIGNAL 2
+}
 \stopchunk
 
-\defchunk{NumTokParser Interface}
-:Interface NumTokParser
-    ∇ R←Parse host
-    ∇
-:EndInterface
-\stopchunk
+And now let's define our statments non-terminal.
 
-\subsection{Variable Tokens}
-
-\defchunk{VarToken Class}
-:Class VarToken: Token
-    ∇ Make value
-      :Access Public
-      :Implements Constructor :Base (value #.VarTokParser)
-    ∇
-    
-    #.Token.Register ⎕THIS 'variable' '[a-zA-Z][a-zA-Z0-9]*'
-:EndClass
-\stopchunk
-
-\defchunk{VarTokParser Interface}
-:Interface VarTokParser
-    ∇ R←Parse host
-    ∇
-:EndInterface
-\stopchunk
-
-\subsection{AssignmentToken}
-
-The assignment token is specific to the \cid{←} token. Let's see what 
-this one looks like.
-
-\defchunk{AssgnToken Class}
-:Class AssgnToken: Token
-    ∇ Make value
-      :Access Public
-      :Implements Constructor :Base ('←' #.AssgnTokParser)
-    ∇
-    
-    #.Token.Register ⎕THIS 'assignment' '←'
-:EndClass
-\stopchunk
-
-\defchunk{AssgnTokParser Interface}
-:Interface AssgnTokParser
-    ∇ R←Parse host
-    ∇
-:EndInterface
-\stopchunk
-
-\subsection{Tokenizer}
-
-Now that we have all of our tokens defined, let's move on to defining a 
-tokenizer to make use of it.  This is the basic OOP Tokenizer interface, 
-though we use PCRE under the hood to do the actual tokenization.
-
-\defchunk{Tokenizer Class}
-:Class Tokenizer
-    :Field Private tokens
-    :Field Private lasttok←⍬
-    
-    /BTEX\chunk{Token List Manipulators}/ETEX
-    
-    ∇ R←MakeToken M;T;L
-      T←#.Token.ClassByPatNum M.PatternNum
-      F←M.Block[(⊃M.Offsets)+⍳⊃M.Lengths]
-      R←⎕NEW T F
-    ∇
-    
-    ∇ Make file;tie
-      :Access Public
-      :Implements Constructor
-      tie←file ⎕NTIE 0
-      tokens←(#.Token.Patterns⎕S MakeToken ⍠ 'Mode' 'D') tie
-      ⎕NUNTIE tie
-    ∇
-:EndClass
-\stopchunk
-
-A tokenizer provides two public methods, {\tt NextToken} and 
-{\tt PutBackToken}, which allow you to get tokens in and out of 
-the tokenizer in order.
-
-\defchunk{Token List Manipulators}
-∇ R←NextToken
-  :Access Public
-
-  :If 0<⍴tokens
-      R←lasttok←⊃tokens
-      tokens←1↓tokens
-  :Else
-      R←⍬
-  :EndIf
-∇
-
-∇ PutBackToken
-  :Access Public
-  tokens←lasttok,tokens
-∇
-\stopchunk
-
-\section{Non-terminals, Parse Trees, and their Objects}
-
-With the tokens finished, we can move to the definition of an object 
-hierarchy that accurately models the syntax tree that we want to 
-define.  We have defined our grammar specifically so that each 
-production is in one of the following forms:
-
-1) It is a production with a single terminal token at the end;
-2) It is a production of a sequence of terminals and non-terminals; or,
-3) It is a production consisting of a set of non-terminals.
-
-The simplest productions to model in our object hierarchy are the 
-first kind.  These have no descendants, though they may have a parent 
-(“is-a” relationship) or be composed together (“has-a” relationship).
-
-In our grammar, we have only one production, $Number$ which has only 
-a single token in it.
-
-\defchunk{ASTNumber Class}
-:Class ASTNumber: ASTNode
-    :Field Public numtok  ⍝ NumberToken
-    
-    ∇ Make num
-      :Access Public
-      :Implements Constructor :Base #.ASTNumVis
-      ⎕SIGNAL(~#.NumToken∊⊃⎕CLASS num)/11
-      numtok←num
-    ∇
-:EndClass
-\stopchunk
-
-We also want to have a class \cid{ASTAssgn} for the assignments, 
-and a \cid{ASTVar} for variables.
-
-\defchunk{ASTVar Class}
-:Class ASTVar: ASTNode
-    :Field Public vartok ⍝ VarToken
-    
-    ∇ Make var
-      :Access Public
-      :Implements Constructor :Base #.ASTVarVis
-      ⎕SIGNAL(~#.VarToken∊⊃⎕CLASS var)/11
-      vartok←var
-    ∇
-:EndClass
-\stopchunk
-
-\defchunk{ASTAssgn Class}
-:Class ASTAssgn: ASTNode
-    :Field Public Variable ⍝ ASTVar
-    :Field Public Expression ⍝ ASTNumber
-    
-    ∇ Make(var num)
-      :Access Public
-      :Implements Constructor :Base #.ASTAssgnVis
-      ⎕SIGNAL(~#.ASTVar∊⊃⎕CLASS var)/11
-      ⎕SIGNAL(~∨/#.ASTNumber #.ASTVar∊⊃⎕CLASS num)/11
-      Variable Expression←var num
-    ∇
-:EndClass
-\stopchunk
-
-
-\section{Visitor Factories for Parsing}
-
-Rather than defining the visitors explicitly, we use a 
-Factory\index{Design Patterns+Factories} for each of the non-terminals, 
-which are in charge of producing visitors. More information about the 
-Factory design pattern can be found \in{Appendix}[factorypattern]. 
-
-All factories inherit from the {\tt ASTFactory} class.
-
-\defchunk{ASTFactory Class}
-:Class ASTFactory
-    :Field Private tokenizer
-    
-    ∇ Make tkz
-      :Access Public
-      :Implements Constructor
-      ⎕SIGNAL(~#.Tokenizer∊⊃⎕CLASS tkz)/11 ⍝ tkz is a Tokenizer
-      tokenizer←tkz
-    ∇
-    
-    ∇ R←NextToken
-      :Access Public
-      R←tokenizer.NextToken
-    ∇
-    
-    ∇ PutBackToken
-      :Access Public
-      tokenizer.PutBackToken
-    ∇
-:EndClass
-\stopchunk
-
-In addition, all factories obey the following interface, which is the 
-standard protocol for producing visitors.
-
-\defchunk{FactProto Interface}
-:Interface FactProto
-    ∇ R←MakeVisitor
-    ∇
-    
-    ∇ R←MakeChainedVisitor succ
-    ∇
-:EndInterface
-\stopchunk
-
-Let's talk about the Factories for the simple non-terminals with only 
-a single terminal sequence as their target.  This is our only grammar 
-production at the moment called $Number$.  It has only a single way 
-to progress, and it should implement the {\tt NumTokVisitor} 
-interface.  This visitor class looks like this.
-
-\defchunk{NumFact Class}
-:Class NumFact: ASTFactory,#.FactProto
-    ∇ Make tkz
-      :Access Public
-      :Implements Constructor :Base tkz
-    ∇
-    
-    :Class NumVis: ,#.NumTokParser,#.TokParser
-        ∇ R←NumCase numtok
-          :Implements Method #.NumTokParser.Parse
-          R←⎕NEW #.ASTNumber numtok
-        ∇
-        
-        ∇ R←DefaultCase host
-          :Implements Method #.TokParser.Parse
-          'UNEXPECTED TOKEN'⎕SIGNAL 2
-        ∇
-    :EndClass
-    
-    :Class ChainNumVis: #.ChainTokParser,#.NumTokParser
-        ∇ Make succ
-          :Access Public
-          :Implements Constructor :Base succ
-        ∇
-        
-        ∇ R←NumCase numtok
-          :Implements Method #.NumTokParser.Parse
-          R←⎕NEW #.ASTNumber numtok
-        ∇
-    :EndClass
-    
-    ∇ R←MakeVisitor
-      :Implements Method #.FactProto.MakeVisitor
-      R←⎕NEW NumVis
-    ∇
-    
-    ∇ R←MakeChainedVisitor succ
-      :Implements Method #.FactProto.MakeChainedVisitor
-      R←⎕NEW ChainNumVis succ
-    ∇
-:EndClass
-\stopchunk
-
-We can do something similar for the variable case.
-
-\defchunk{VarFact Class}
-:Class VarFact: ASTFactory,#.FactProto
-    ∇ Make tkz
-      :Access Public
-      :Implements Constructor :Base tkz
-    ∇
-    
-    :Class VarVis: ,#.VarTokParser,#.TokParser
-        ∇ R←VarCase vartok
-          :Implements Method #.VarTokParser.Parse
-          R←⎕NEW #.ASTVar vartok
-        ∇
-        
-        ∇ R←DefaultCase host
-          :Implements Method #.TokParser.Parse
-          'UNEXPECTED TOKEN'⎕SIGNAL 2
-        ∇
-    :EndClass
-    
-    :Class ChainVarVis: #.ChainTokParser,#.VarTokParser
-        ∇ Make succ
-          :Access Public
-          :Implements Constructor :Base succ
-        ∇
-        
-        ∇ R←VarCase vartok
-          :Implements Method #.VarTokParser.Parse
-          R←⎕NEW #.ASTVar vartok
-        ∇
-    :EndClass
-    
-    ∇ R←MakeVisitor
-      :Implements Method #.FactProto.MakeVisitor
-      R←⎕NEW VarVis
-    ∇
-    
-    ∇ R←MakeChainedVisitor succ
-      :Implements Method #.FactProto.MakeChainedVisitor
-      R←⎕NEW ChainVarVis succ
-    ∇
-:EndClass
-\stopchunk
-
-We have to do something a litte more complicated for the assignment 
-factory.  In this case, we need to parse a sequence of three nodes.
-
-\defchunk{AssgnFact Class}
-:Class AssgnFact: ASTFactory,#.FactProto
-    :Field Private Instance varfact
-    :Field Private Instance varnumfact
-    :Field Public Instance varvis←⍬
-    :Field Public Instance varnumvis←⍬
-
-    ∇ Make tkz
-      :Access Public
-      :Implements Constructor :Base tkz
-      varfact←⎕NEW #.VarFact tkz
-      varnumfact←⎕NEW #.VarOrNumFact tkz
-    ∇
-    
-    :Class AssgnVis: ,#.VarTokParser, #.TokParser
-        :Field fac
-        
-        ∇ Make facinst
-          :Access Public
-          :Implements Constructor
-          fac←facinst
-        ∇
-        
-        ∇ R←AssgnCase tok;var;varnum
-          :Implements Method #.VarTokParser.Parse
-          var←tok.Parse fac.varvis
-          :If #.AssgnToken∊⊃⎕CLASS fac.NextToken
-              varnum←fac.NextToken.Parse fac.varnumvis
-              R←⎕NEW #.ASTAssgn(var varnum)
-          :Else
-              'UNEXPECTED TOKEN'⎕SIGNAL 2
-          :EndIf
-        ∇
-        
-        ∇ R←DefCase tok
-          :Implements Method #.TokParser.Parse
-          'UNEXPECTED TOKEN'⎕SIGNAL 2
-        ∇
-    :EndClass
-    
-    :Class ChainAssgnVis: #.ChainTokParser,#.VarTokParser
-        :Field fac
-        
-        ∇ Make(inst succ)
-          :Access Public
-          :Implements Constructor :Base succ
-          fac←inst
-        ∇
-        
-        ∇ R←AssgnCase tok;var;varnum
-          :Implements Method #.VarTokParser.Parse
-          var←tok.Parse fac.varvis
-          :If #.AssgnToken∊⊃⎕CLASS fac.NextToken
-              varnum←fac.NextToken.Parse fac.varnumvis
-              R←⎕NEW #.ASTAssgn(var varnum)
-          :Else
-              'UNEXPECTED TOKEN'⎕SIGNAL 2
-          :EndIf
-        ∇
-    :EndClass
-    
-    ∇ Init
-      :If ⍬≡varvis ⋄ varvis←varfact.MakeVisitor ⋄ :EndIf
-      :If ⍬≡varnumvis ⋄ varnumvis←varnumfact.MakeVisitor ⋄ :EndIf
-    ∇
-        
-    ∇ R←MakeVisitor
-      :Implements Method #.FactProto.MakeVisitor
-      Init
-      R←⎕NEW AssgnVis ⎕THIS
-    ∇
-    
-    ∇ R←MakeChainedVisitor succ
-      :Implements Method #.FactProto.MakeChainedVisitor
-      Init
-      R←⎕NEW ChainAssgnVis ⎕THIS succ
-    ∇      
-:EndClass
-\stopchunk
-
-We have a factory for producing branched visitors as well.  In this 
-case the choice of a number or a variable.
-
-\defchunk{VarOrNumFact Class}
-:Class VarOrNumFact: ASTFactory,#.FactProto
-    :Field Public numfac
-    :Field Public varfac
-    
-    ∇ Make tkz
-      :Access Public
-      :Implements Constructor :Base tkz
-      numfac←⎕NEW #.NumFact tkz
-      varfac←⎕NEW #.VarFact tkz
-    ∇
-    
-    ∇ R←MakeVisitor
-      :Implements Method #.FactProto.MakeVisitor
-      R←varfac.MakeChainedVisitor numfac.MakeVisitor
-    ∇
-    
-    ∇ R←MakeChainedVisitor succ
-      :Implements Method #.FactProto.MakeChainedVisitor
-      R←varfac.MakeChainedVisitor numfac.MakeChainedVisitor succ 
-    ∇
-:EndClass
+\defchunk{HPAPL Code}
+ParseStmts←{⍺ (ParseAssgn ParseSeq ParseStmts ParseChoice ParseEmpty) ⍵}
 \stopchunk
 
 
 \chapter{Outputting C Code}
 
-With the basic syntax above, we can create a simple C program that 
-prints out constants.  To support a number of traversals, I have 
-encoded a simple Visitor pattern\index{Design Patterns+Visitors}
-into the AST Nodes. 
+Let's take our basic syntax tree and print out a C version of the 
+program.
 
-\defchunk{ASTNode Class}
-:Class ASTNode
-    :Field Private visitor
-    
-    ∇ Make vis
-      :Access Public
-      :Implements Constructor
-      visitor←vis
-    ∇
-    
-    ∇ R←Accept host
-      :Access Public
-      :If visitor∊⊃⎕CLASS host
-          R←(visitor ⎕CLASS host).Visit ⎕THIS
-      :Else
-          R←(#.ASTVis ⎕CLASS host).Visit ⎕THIS
-      :EndIf
-    ∇
-:EndClass
+\defchunk{HPAPL Code}
+∇ FN OutputC AST;tie
+  tie←OpenFile FN
+  tie println '#include <stdio.h>'
+  tie println '#include <stdlib.h>'
+  tie println ''
+  tie println 'int main(int argc, char *argv[])'
+  tie println '{'
+  tie print   '  '
+  tie OutputCAssgn AST
+  tie println '  return 0;'
+  tie println '}'
+  ⎕NUNTIE tie
+∇
+∇ TIE OutputCAssgn AST
+  TIE OutputCVar AST ChildFields 'Variable'
+  TIE print ' = '
+  TIE OutputCNum AST ChildFields 'Number'
+  TIE println ';'
+∇
+OutputCNum←{⍺ print 2⊃⍵}
+OutputCVar←{⍺ print 2⊃⍵}
 \stopchunk
 
-I also provide Interfaces for each of the AST Production types for 
-dispatch, since we are in an untyped system.
+We get the child fields of the current head of the tree using the following.
 
-\defchunk{ASTVis Interface}
-:Interface ASTVis
-    ∇R←Visit host
-    ∇
-:EndInterface
+\defchunk{HPAPL Code}
+ChildFields←{
+  cur←⊃0⌷⍺
+  bv←0,~∨\cur=1↓0⌷[1]⍺
+  kids←bv⌿⍺
+  ((1⌷[1]kids)⍳⊂⍵)⌷kids
+}
 \stopchunk
 
-\defchunk{ASTNumVis Interface}
-:Interface ASTNumVis
-    ∇R←Visit host
-    ∇
-:EndInterface
+
+We use the following utilities for the above.
+
+\defchunk{HPAPL Code}
+OpenFile←{
+  22:: ⍵ ⎕NCREATE 0
+  tie←⍵ ⎕NTIE 0
+  _←⍵ ⎕NERASE tie
+  ⍵ ⎕NCREATE 0
+}
+∇ TIE println DATA
+  TIE print DATA
+  (⎕UCS 10)⎕NAPPEND TIE,80
+∇
+print←{(⎕UCS 'UTF-8' ⎕UCS ⍵)⎕NAPPEND ⍺,80}
 \stopchunk
 
-\defchunk{ASTVarVis Interface}
-:Interface ASTVarVis
-    ∇R←Visit host
-    ∇
-:EndInterface
-\stopchunk
+\chapter{Compiler}
 
-\defchunk{ASTAssgnVis Interface}
-:Interface ASTAssgnVis
-    ∇R←Visit host
-    ∇
-:EndInterface
-\stopchunk
+Let's use the following procedure to do the basic compilation.
 
-This allows us to implement the following visitor that renders C output.
-
-\defchunk{OutCVisitor Class}
-:Class OutCVisitor: ,#.ASTVis,#.ASTNumVis,#.ASTVarVis,#.ASTAssgnVis
-    :Field Private Instance out
-
-    ∇ Make fout
-      :Access Public
-      :Implements Constructor
-      out←fout
-    ∇
-    
-    ∇ R←AssgnVisit host
-      :Implements Method #.ASTAssgnVis.Visit
-      out.println '#include <stdio.h>'
-      out.println '#include <stdlib.h>'
-      out.println ''
-      out.println 'int main(int argc, char *argv[])'
-      out.println '{'
-      out.print   '  int64_t '
-      host.Variable.Accept ⎕THIS
-      out.println ';'
-      out.print '  '
-      host.Variable.Accept ⎕THIS
-      out.print ' = '
-      host.Expression.Accept ⎕THIS
-      out.println ';'
-      out.print '  printf("%d\n", '
-      host.Variable.Accept ⎕THIS
-      out.println ');'
-      out.println '  return 0;'
-      out.println '}'
-      R←0 0⍴⍬
-    ∇
-    
-    ∇ R←VarVisit host
-      :Implements Method #.ASTVarVis.Visit
-      out.print host.vartok.lexeme
-      R←0 0⍴⍬
-    ∇
-    
-    ∇ R←NumVisit host
-      :Implements Method #.ASTNumVis.Visit
-      out.print host.numtok.lexeme
-      R←0 0⍴⍬
-    ∇
-    
-    ∇ R←Visit host
-      :Implements Method #.ASTVis.Visit
-      'UNKNOWN AST NODE'⎕SIGNAL 11
-      R←0 0⍴⍬
-    ∇
-:EndClass
-\stopchunk
-
-\chapter{Utilities}
-
-Here are some of the utilities used throughout the rest of the text 
-to make our lives easier.
-
-\defchunk{FileOutput Class}
-:Class FileOutput
-    :Field Private tie
-    
-    ∇ Make fname
-      :Access Public
-      :Implements Constructor
-      :Trap 22
-          tie←fname ⎕NCREATE 0
-      :Else
-          tie←fname ⎕NTIE 0
-          fname ⎕NERASE tie
-          tie←fname ⎕NCREATE 0
-      :EndTrap
-    ∇
-    
-    ∇ Close
-      :Access Public
-      ⎕NUNTIE tie
-    ∇
-    
-    ∇ println data
-      :Access Public
-      print data
-      (⎕UCS 10) ⎕NAPPEND tie,80
-    ∇
-    
-    ∇ print data
-      :Access Public
-      (⎕UCS 'UTF-8' ⎕UCS data) ⎕NAPPEND tie,80
-    ∇
-    
-:EndClass
+\defchunk{HPAPL Code}
+Compile←{
+  toks←Tokenize ⍺
+  ast rest←0 ParseAssgn toks
+  ⍵ OutputC ast
+}
 \stopchunk
 
 
