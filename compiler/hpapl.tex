@@ -47,8 +47,9 @@ the HPAPL compiler working and running.
     ⎕←'Loaded: ',⍕N
   ∇
   Compile←{
-    toks←Tokenize ⍺
+    ⎕←toks←Tokenize ⍺
     ast rest←0 ParseStmts toks
+    ⎕←ast
     ⍵ OutputC ast
   }
 :EndNamespace
@@ -67,13 +68,24 @@ column 3 is any data that is stored in that field, in the form of a
 vector of fields.
 
 \defchunk{Parsing Utilities}
-ParseTok←{⍵⍵=⊃⊃⍵: (⊂1 3⍴⍺,(⊂⍺⍺),⊂1⊃⊃⍵),⊂1↓⍵ ⋄ ⎕SIGNAL 2}
-ParseSeq←{2:: ⎕SIGNAL 2 ⋄ n1 r1←⍺ ⍺⍺ ⍵ ⋄ n2 r2←⍺ ⍵⍵ r1 ⋄ (⊂n1⍪n2),⊂r2}
-ParseChoice←{2:: ⍺ ⍵⍵ ⍵ ⋄ ⍺ ⍺⍺ ⍵}
-ParseStar←{2:: ⎕SIGNAL 2
+ParseErr←{(⊂⍬),⊂⍵}
+ParseTok←{⍵⍵=⊃⊃⍵: (⊂1 3⍴⍺,(⊂⍺⍺),⊂1⊃⊃⍵),⊂1↓⍵ ⋄ ParseErr ⍵}
+ParseSeq←{
+  n1 r1←⍺ ⍺⍺ ⍵
+  n1≡⍬: ParseErr ⍵
+  n2 r2←⍺ ⍵⍵ r1
+  n2≡⍬: ParseErr ⍵
+  (⊂n1⍪n2),⊂r2
+}
+ParseChoice←{
+  n r←⍺ ⍺⍺ ⍵
+  n≡⍬: ⍺ ⍵⍵ ⍵
+  n r
+}
+ParseStar←{
   0=⍴⍵: (⊂0 3⍴⍬),⊂⍵
-  2:: (⊂0 3⍴⍬),⊂⍵
   ast rst←⍺ ⍺⍺ ⍵
+  ast≡⍬: (⊂0 3⍴⍬),⊂⍵
   nxt nst←⍺ (⍺⍺ ParseStar) rst
   (⊂ast⍪nxt),⊂nst
 }
@@ -117,8 +129,8 @@ Let's start with a tokenizer.
 \stopformula
 
 \defchunk{HPAPL Code}
-TokPats←'[0-9]+' '[a-zA-Z][a-zA-Z0-9]*' '←' '⎕'
-TokTypes←'Number' 'Variable' 'Assignment' 'Quad'
+TokPats←'[0-9]+' '[a-zA-Z][a-zA-Z0-9]*' '←' '⎕[a-zA-Z]+' '⎕' '\(' '\)' '⌷'
+TokTypes←'Number' 'Variable' 'Assignment' 'System' 'Quad' 'LeftParen' 'RightParen' 'Index'
 Tokenize←{
   MakeTok←{⍵.PatternNum,⊂⍵.Block[(⊃⍵.Offsets)+⍳⊃⍵.Lengths]}
   (⎕NUNTIE tie)⊢(TokPats⎕S MakeTok) tie←⍵ ⎕NTIE 0
@@ -132,45 +144,94 @@ is the grammar of our language:\index{Language Grammar}
 
 \startformula
 \eqalign{
-  Statements  &\Rightarrow Assignment*
-  Assignment  &\Rightarrow PrintAssign\ |\ VarAssign
-  PrintAssign &\Rightarrow \term{⎕}\term{←}\ Expression\cr
+  Statements  &\Rightarrow Assignment*\cr
+  Assignment  &\Rightarrow PrintAssign\ |\ VarAssign\ |\ SelAssgn\cr
+  PrintAssign &\Rightarrow \term{⎕}\term{←}\ Variable\cr
   VarAssign   &\Rightarrow Variable\ \term{←}\ Expression\cr
-  Expression  &\Rightarrow Variable\ |\ Number\cr
+  SelAssgn    &\Rightarrow \term{(}Number\term{⎕}Variable\term{)}
+               \term{←}\ Number\cr
+  Expression  &\Rightarrow Variable\ |\ Number*\ |\ Application\cr
+  Application &\Rightarrow Monadic\cr
+  Monadic     &\Rightarrow SysMonadic\cr
+  SysMonadic  &\Rightarrow SysVar NumOrVar\cr
+  NumOrVar    &\Rightarrow Number\ |\ Variable\cr 
   Variable    &\Rightarrow \term{variable}\cr
   Number      &\Rightarrow \term{number}\cr
 }
 \stopformula
 
-We can stranslate the above syntax tree into a set of parsers using 
+We can translate the above syntax tree into a set of parsers using 
 parser combinators pretty easily.  The goal here is to ensure an LL(1) 
 grammar so this task will always be easy.  Here is the encoding 
 using out parsing combinators.
 
 \defchunk{HPAPL Code}
-Choose←{2:: ⍵⍵ ⍵ ⋄ ⍺⍺ ⍵}
-Both←{2:: ⎕SIGNAL 2 ⋄ ⍵⍵ ⍺⍺ ⍵}
-Inc←{1+⍵}
-Bad←{⎕SIGNAL 2}
-IncInc←{Bad Both Inc Both Inc ⍵}
-Test←{IncInc Choose Inc ⍵}
-
 ParseNum←('Number' ParseTok 0)
 ParseVar←('Variable' ParseTok 1)
 ParseAssgnTok←('AssignTok' ParseTok 2)
-ParseQuadTok←('Quad' ParseTok 3)
-ParseExp←(ParseVar ParseChoice ParseNum)
-ParseVarAssgn←{2:: ⎕SIGNAL 2
-  n r←(1+⍺)(ParseVar ParseSeq ParseAssgnTok ParseSeq ParseExp) ⍵
-  (⊂(⍺,(⊂'VarAssign'),⊂⍬)⍪n[0 2;]),⊂r
+ParseSysTok←('System' ParseTok 3)
+ParseQuadTok←('Quad' ParseTok 4)
+ParseLeftParenTok←('RightParen' ParseTok 5)
+ParseRightParenTok←('LeftParen' ParseTok 6)
+ParseIndexTok←('Index' ParseTok 7)
+ParseNumOrVar←(ParseNum ParseChoice ParseVar)
+ParseNumStar←{
+  ast rst←⍺ (ParseNum ParseSeq (ParseNum ParseStar)) ⍵
+  ast≡⍬: ParseErr ⍵
+  (⊂⍺,(⊂'Number*'),⊂2⌷[1]ast),⊂rst
 }
-ParsePrintAssgn←{2:: ⎕SIGNAL 2
-  n r←(1+⍺)(ParseQuadTok ParseSeq ParseAssgnTok ParseSeq ParseExp) ⍵
-  (⊂(⍺,(⊂'PrintAssign'),⊂⍬)⍪1 3⍴2⌷n),⊂r
+ParseSysMonadic←(ParseSysTok ParseSeq ParseNumOrVar)
+ParseMonadic←ParseSysMonadic
+ParseApplication←{
+  n r←(1+⍺)ParseMonadic ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂(⍺,(⊂'Application'),⊂⍬)⍪n),⊂r
 }
-ParseAssgn←(ParseVarAssgn ParseChoice ParsePrintAssgn)
+ParseExp←(ParseVar ParseChoice ParseNumStar ParseChoice ParseApplication)
+ParseSelLhs←{
+  n r←⍺ (ParseNum ParseSeq ParseIndexTok ParseSeq ParseVar) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂n[0 2;]),⊂r
+}
+ParseAssgnRhs←{
+  n r←⍺ (ParseAssgnTok ParseSeq ParseExp) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂n[1+⍳¯1+⊃⍴n;]),⊂r
+}
+ParseVarAssgn←{
+  n r←(1+⍺)(ParseVar ParseSeq ParseAssgnRhs) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂(⍺,(⊂'VarAssign'),⊂⍬)⍪n),⊂r
+}
+ParsePrintAssgnRhs←{
+  n r←⍺ (ParseAssgnTok ParseSeq ParseVar) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂1⌷n),⊂r
+}
+ParsePrintAssgn←{
+  n r←(1+⍺)(ParseQuadTok ParseSeq ParsePrintAssgnRhs) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂(⍺,(⊂'PrintAssign'),⊂⍬)⍪n[1+⍳¯1+⊃⍴n;]),⊂r
+}
+ParseParens←{
+  n r←(1+⍺)(ParseLeftParenTok ParseSeq ⍺⍺ ParseSeq ParseRightParenTok) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂(⍺,(⊂'Nested'),⊂⍬)⍪n[1+⍳¯2+⊃⍴n;]),⊂r
+}
+ParseSelAssgnRhs←{
+  n r←⍺ (ParseAssgnTok ParseSeq ParseNum) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂1⌷n),⊂r
+}
+ParseSelAssgn←{
+  n r←(1+⍺)(ParseSelLhs ParseParens ParseSeq ParseSelAssgnRhs) ⍵
+  n≡⍬: ParseErr ⍵
+  (⊂(⍺,(⊂'SelAssign'),⊂⍬)⍪n),⊂r
+}
+ParseAssgn←(ParseVarAssgn ParseChoice ParsePrintAssgn ParseChoice ParseSelAssgn)
 ParseStmts←{
   ast rst←(1+⍺)(ParseAssgn ParseStar) ⍵
+  ast≡⍬: ⎕SIGNAL 2
   (⊂(⍺,(⊂'Statements'),⊂⍬)⍪ast),⊂rst
 }
 \stopchunk
@@ -188,9 +249,8 @@ program.
   tie println ''
   tie println 'int main(int argc, char *argv[])'
   tie println '{'
-  tie print   '  '
   tie OutputCStmts ast
-  tie println '  return 0;'
+  tie println 'return 0;'
   tie println '}'
   ⎕NUNTIE tie
 ∇
@@ -200,34 +260,59 @@ OutputCAssgn←{
   type←⊃1⌷0⌷⍵
   type≡'VarAssign': ⍺ OutputCVarAssgn ⍵
   type≡'PrintAssign': ⍺ OutputCPrintAssgn ⍵
+  type≡'SelAssign': ⍺ OutputCSelAssgn ⍵
 }
-∇ tie OutputCVarAssgn ast
+∇ tie OutputCVarAssgn ast;var;exp
   var exp←Children ast
   tie OutputCVar var
   tie print ' = '
   tie OutputCExp exp
   tie println ';'
 ∇
-∇ tie OutputCPrintAssgn ast
+∇ tie OutputCSelAssgn ast;tgt;exp;idx;var
+  tgt exp←Children ast
+  idx var←Children tgt
+  tie OutputCVar var
+  tie print '['
+  tie OutputCExp idx
+  tie print '] = '
+  tie OutputCExp exp
+  tie println ';'
+∇
+
+∇ tie OutputCPrintAssgn ast;exp
   exp←⊃Children ast
-  tie print 'printf("%d\n", '
+  tie print 'apl_print('
   tie OutputCExp exp
   tie println ');'
 ∇
-
-OutputCExp←{⍺ print ⊃0 2⌷⍵}
+OutputCExp←{
+  type←⊃1⌷0⌷⍵
+  type≡'Variable': ⍺ OutputCVar ⍵
+  type≡'Number': ⍺ OutputCNum ⍵
+  type≡'Application': ⍺ OutputCApp ⍵
+}
+OutputCNum←{⍺ print ⊃0 2⌷⍵}
 OutputCVar←{⍺ print ⊃0 2⌷⍵}
+∇ tie OutputCApp ast;fn;va
+  fn va←Children ast
+  tie OutputCSys fn
+  tie print '('
+  tie OutputCNum va
+  tie print ')'
+∇
+SysNames←1⍴⊂'⎕ALLOC'
+SysCNames←1⍴⊂'apl_alloc'
+∇ tie OutputCSys ast;nm;cn
+  nm←⊃0 2⌷ast
+  cn←⊃(SysNames⍳⊂nm)⌷SysCNames
+  tie print cn
+∇
 \stopchunk
 
 \stopbodymatter
 
 \startappendices
-
-\chapter[designpatterns]{Design Patterns}
-
-\section[visitorpattern]{Visitor Pattern}
-
-\section[factorypattern]{Factory Pattern}
 
 \stopappendices
 
