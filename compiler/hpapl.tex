@@ -278,6 +278,24 @@ MakeNumStarAssgns←{
 Let's take our basic syntax tree and print out a C version of the 
 program.
 
+\startformula
+\eqalign{
+  Statements  &\Rightarrow Assignment*\cr
+  Assignment  &\Rightarrow PrintAssign\ |\ VarAssign\ |\ SelAssgn\cr
+  PrintAssign &\Rightarrow \term{⎕}\term{←}\ Variable\cr
+  VarAssign   &\Rightarrow Variable\ \term{←}\ Expression\cr
+  SelAssgn    &\Rightarrow \term{(}Number\term{⎕}Variable\term{)}
+               \term{←}\ Number\cr
+  Expression  &\Rightarrow Variable\ |\ Application\cr
+  Application &\Rightarrow Monadic\cr
+  Monadic     &\Rightarrow SysMonadic\cr
+  SysMonadic  &\Rightarrow SysVar NumOrVar\cr
+  NumOrVar    &\Rightarrow Number\ |\ Variable\cr 
+  Variable    &\Rightarrow \term{variable}\cr
+  Number      &\Rightarrow \term{number}\cr
+}
+\stopformula
+
 \defchunk{HPAPL Code}
 ∇ fn OutputC ast;tie
   tie←OpenFile fn
@@ -299,52 +317,55 @@ OutputCAssgn←{
   type≡'PrintAssign': ⍺ OutputCPrintAssgn ⍵
   type≡'SelAssign': ⍺ OutputCSelAssgn ⍵
 }
-∇ tie OutputCVarAssgn ast;var;exp
-  var exp←Children ast
-  tie OutputCVar var
-  tie print ' = '
-  tie OutputCExp exp
-  tie println ';'
+OutputCVarAssgn←{
+  var exp←Children ⍵
+  exptype←⊃0 1⌷exp
+  'Variable'≡exptype: ⍺ OutputCVarVarAssgn var exp
+  'Application'≡exptype: ⍺ OutputCVarAppAssgn var exp
+}
+
+∇ tie OutputCVarVarAssgn(v1 v2)
+  tie print 'apl_varassign('
+  tie OutputCVar v1
+  tie print ','
+  tie OutputCVar v2
+  tie println ');'
 ∇
+
+SysNames←1⍴⊂'⎕ALLOC'
+SysCNames←1⍴⊂'apl_alloc'
+∇ tie OutputCVarAppAssgn(v1 app)
+  fn vl←Children app
+  fnnm←⊃0 2⌷fn
+  fncn←⊃(SysNames⍳⊂fnnm)⌷SysCNames
+  tie print fncn
+  tie print '('
+  tie OutputCVar v1
+  tie print ','
+  tie OutputCVar vl
+  tie println ');'
+∇
+
 ∇ tie OutputCSelAssgn ast;tgt;exp;idx;var
   tgt exp←Children ast
   idx var←Children tgt
+  tie print 'apl_selassign('
   tie OutputCVar var
-  tie print '['
-  tie OutputCExp idx
-  tie print '] = '
-  tie OutputCExp exp
-  tie println ';'
+  tie print ','
+  tie OutputCNum idx
+  tie print ','
+  tie OutputCNum exp
+  tie println ');'
 ∇
 
 ∇ tie OutputCPrintAssgn ast;exp
   exp←⊃Children ast
   tie print 'apl_print('
-  tie OutputCExp exp
+  tie OutputCVar exp
   tie println ');'
 ∇
-OutputCExp←{
-  type←⊃1⌷0⌷⍵
-  type≡'Variable': ⍺ OutputCVar ⍵
-  type≡'Number': ⍺ OutputCNum ⍵
-  type≡'Application': ⍺ OutputCApp ⍵
-}
 OutputCNum←{⍺ print ⊃0 2⌷⍵}
 OutputCVar←{⍺ print ⊃0 2⌷⍵}
-∇ tie OutputCApp ast;fn;va
-  fn va←Children ast
-  tie OutputCSys fn
-  tie print '('
-  tie OutputCNum va
-  tie print ')'
-∇
-SysNames←1⍴⊂'⎕ALLOC'
-SysCNames←1⍴⊂'apl_alloc'
-∇ tie OutputCSys ast;nm;cn
-  nm←⊃0 2⌷ast
-  cn←⊃(SysNames⍳⊂nm)⌷SysCNames
-  tie print cn
-∇
 \stopchunk
 
 \stopbodymatter
