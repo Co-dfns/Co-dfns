@@ -49,6 +49,7 @@ the HPAPL compiler working and running.
   Compile←{
     ⎕←toks←Tokenize ⍺
     ast rest←0 ParseStmts toks
+    ast←ExpandNumberStar ast
     ⎕←ast
     ⍵ OutputC ast
   }
@@ -235,6 +236,42 @@ ParseStmts←{
   (⊂(⍺,(⊂'Statements'),⊂⍬)⍪ast),⊂rst
 }
 \stopchunk
+
+\chapter{Compiler Passes}
+
+This compiler pass removes the occurrences of numbered array literals 
+by converting them into the necessary selective assignments and 
+allocations.
+
+\defchunk{HPAPL Code}
+ExpandNumberStar←{(0⌷⍵)⍪⊃⍪/ExpandNumStarAssgn¨Children ⍵}
+ExpandNumStarAssgn←{
+  IsNumStarAssgn ⍵: (MakeNumStarAlloc ⍵)⍪MakeNumStarAssgns ⍵
+  ⍵
+}
+IsNumStarAssgn←{
+  'VarAssign'≡⊃0 1⌷⍵: 'Number*'≡⊃0 1⌷⊃1⌷Children ⍵
+  0
+}
+MakeNumStarAlloc←{
+  res←2↑⍵
+  res⍪←2 3⍴(1+⊃⍵) 'Application' ⍬ (2+⊃⍵) 'System' '⎕ALLOC'
+  res⍪1 3⍴(2+⊃⍵) 'Number' (⍕⍴⊃2 2⌷⍵) 
+}
+SelAssgnTempl←0 'SelAssign' ⍬ 1 'Nested' ⍬ 2 'Number' '0'
+SelAssgnTempl,←2 'Variable' 'X' 1 'Number' '0'
+SelAssgnTempl←5 3⍴SelAssgnTempl  
+MakeNumStarAssgns←{
+  nums←⊃2 2⌷⍵
+  res←((5×⍴nums),3)⍴SelAssgnTempl
+  res[4+5×⍳⍴nums;2]←nums
+  res[3+5×⍳⍴nums;2]←1 2⌷⍵
+  res[2+5×⍳⍴nums;2]←⍕¨⍳⍴nums
+  res[;0]+←⊃⍵
+  res
+}
+\stopchunk
+
 
 \chapter{Outputting C Code}
 
