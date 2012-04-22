@@ -1,2 +1,3 @@
 TESTME←42
 X←TESTME
+⎕←X
