@@ -49,8 +49,8 @@ the HPAPL compiler working and running.
   Compile←{
     ⎕←toks←Tokenize ⍺
     ast rest←0 ParseStmts toks
+    ast←FindFreeVars ast
     ast←ExpandNumberStar ast
-    ⎕←ast
     ⍵ OutputC ast
   }
 :EndNamespace
@@ -239,6 +239,21 @@ ParseStmts←{
 
 \chapter{Compiler Passes}
 
+We need to know about the free variables that occur inside of a program 
+body.  To do this, we consider only the values that have been assigned.
+We store this information as the field data of the top-level 
+\term{Program} node.
+
+\defchunk{HPAPL Code}
+FindFreeVars←{
+  vars←(¯1⌽(1⌷[1]⍵)∊⊂'VarAssign')/2⌷[1]⍵
+  res←⍵
+  (0 2⌷res)←⊂vars
+  res
+}
+\stopchunk
+
+
 This compiler pass removes the occurrences of numbered array literals 
 by converting them into the necessary selective assignments and 
 allocations.
@@ -304,10 +319,18 @@ program.
   tie println ''
   tie println 'int main(int argc, char *argv[])'
   tie println '{'
+  tie OutputCFreeVars ast
   tie OutputCStmts ast
   tie println 'return 0;'
   tie println '}'
   ⎕NUNTIE tie
+∇
+
+∇ tie OutputCFreeVars ast
+  tie print 'Array '
+  vars←⊃0 2⌷ast
+  tie print ⊃{⍺,',',⍵}/vars
+  tie println ';'
 ∇
 
 OutputCStmts←{⍺∘OutputCAssgn¨Children ⍵}
