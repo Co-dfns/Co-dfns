@@ -47,7 +47,7 @@ the HPAPL compiler working and running.
     ⎕←'Loaded: ',⍕N
   ∇
   Compile←{
-    ⎕←toks←Tokenize ⍺
+    toks←Tokenize ⍺
     ast rest←0 ParseStmts toks
     ast←FindFreeVars ast
     ast←ExpandNumberStar ast
@@ -130,8 +130,8 @@ Let's start with a tokenizer.
 \stopformula
 
 \defchunk{HPAPL Code}
-TokPats←'[0-9]+' '[a-zA-Z][a-zA-Z0-9]*' '←' '⎕[a-zA-Z]+' '⎕' '\(' '\)' '⌷'
-TokTypes←'Number' 'Variable' 'Assignment' 'System' 'Quad' 'LeftParen' 'RightParen' 'Index'
+TokPats←'[0-9]+' '[a-zA-Z][a-zA-Z0-9]*' '←' '⎕[a-zA-Z]+' '⎕' '\(' '\)' '⌷' '⍴|⍳|\+|-|×|÷'
+TokTypes←'Number' 'Variable' 'Assignment' 'System' 'Quad' 'LeftParen' 'RightParen' 'Index' 'Primitive'
 Tokenize←{
   MakeTok←{⍵.PatternNum,⊂⍵.Block[(⊃⍵.Offsets)+⍳⊃⍵.Lengths]}
   (⎕NUNTIE tie)⊢(TokPats⎕S MakeTok) tie←⍵ ⎕NTIE 0
@@ -152,10 +152,10 @@ is the grammar of our language:\index{Language Grammar}
   SelAssgn    &\Rightarrow \term{(}Number\term{⎕}Variable\term{)}
                \term{←}\ Number\cr
   Expression  &\Rightarrow Variable\ |\ Number*\ |\ Application\cr
-  Application &\Rightarrow Monadic\cr
-  Monadic     &\Rightarrow SysMonadic\cr
-  SysMonadic  &\Rightarrow SysVar NumOrVar\cr
-  NumOrVar    &\Rightarrow Number\ |\ Variable\cr 
+  Application &\Rightarrow Monadic\ |\ Dyadic\cr
+  Dyadic      &\Rightarrow Variable\ SysOrPrim\ Variable\cr
+  Monadic     &\Rightarrow SysOrPrim\ Variable\cr
+  SysOrPrim   &\Rightarrow SysVar\ |\ Primitive\cr
   Variable    &\Rightarrow \term{variable}\cr
   Number      &\Rightarrow \term{number}\cr
 }
@@ -175,20 +175,25 @@ ParseQuadTok←('Quad' ParseTok 4)
 ParseLeftParenTok←('RightParen' ParseTok 5)
 ParseRightParenTok←('LeftParen' ParseTok 6)
 ParseIndexTok←('Index' ParseTok 7)
-ParseNumOrVar←(ParseNum ParseChoice ParseVar)
+ParsePrimTok←('Primitive' ParseTok 8)
+ParseSysOrPrim←(ParseSysTok ParseChoice ParsePrimTok)
 ParseNumStar←{
   ast rst←⍺ (ParseNum ParseSeq (ParseNum ParseStar)) ⍵
   ast≡⍬: ParseErr ⍵
   (⊂⍺,(⊂'Number*'),⊂2⌷[1]ast),⊂rst
 }
-ParseSysMonadic←(ParseSysTok ParseSeq ParseNumOrVar)
-ParseMonadic←ParseSysMonadic
-ParseApplication←{
-  n r←(1+⍺)ParseMonadic ⍵
+ParseMonadic←{
+  n r←(1+⍺)(ParseSysOrPrim ParseSeq ParseVar)⍵
   n≡⍬: ParseErr ⍵
-  (⊂(⍺,(⊂'Application'),⊂⍬)⍪n),⊂r
+  (⊂(⍺,(⊂'Monadic'),⊂⍬)⍪n),⊂r
 }
-ParseExp←(ParseVar ParseChoice ParseNumStar ParseChoice ParseApplication)
+ParseDyadic←{
+  n r←(1+⍺)(ParseVar ParseSeq ParseSysOrPrim ParseSeq ParseVar)⍵
+  n≡⍬: ParseErr ⍵
+  (⊂(⍺,(⊂'Dyadic'),⊂⍬)⍪n),⊂r
+}
+ParseApplication←(ParseMonadic ParseChoice ParseDyadic)
+ParseExp←(ParseApplication ParseChoice ParseNumStar ParseChoice ParseVar)
 ParseSelLhs←{
   n r←⍺ (ParseNum ParseSeq ParseIndexTok ParseSeq ParseVar) ⍵
   n≡⍬: ParseErr ⍵
@@ -246,13 +251,12 @@ We store this information as the field data of the top-level
 
 \defchunk{HPAPL Code}
 FindFreeVars←{
-  vars←(¯1⌽(1⌷[1]⍵)∊⊂'VarAssign')/2⌷[1]⍵
+  vars←∪(¯1⌽(1⌷[1]⍵)∊⊂'VarAssign')/2⌷[1]⍵
   res←⍵
   (0 2⌷res)←⊂vars
   res
 }
 \stopchunk
-
 
 This compiler pass removes the occurrences of numbered array literals 
 by converting them into the necessary selective assignments and 
@@ -270,7 +274,7 @@ IsNumStarAssgn←{
 }
 MakeNumStarAlloc←{
   res←2↑⍵
-  res⍪←2 3⍴(1+⊃⍵) 'Application' ⍬ (2+⊃⍵) 'System' '⎕ALLOC'
+  res⍪←2 3⍴(1+⊃⍵) 'Monadic' ⍬ (2+⊃⍵) 'System' '⎕ALLOC'
   res⍪1 3⍴(2+⊃⍵) 'Number' (⍕⍴⊃2 2⌷⍵) 
 }
 SelAssgnTempl←0 'SelAssign' ⍬ 1 'Nested' ⍬ 2 'Number' '0'
@@ -302,9 +306,10 @@ program.
   SelAssgn    &\Rightarrow \term{(}Number\term{⎕}Variable\term{)}
                \term{←}\ Number\cr
   Expression  &\Rightarrow Variable\ |\ Application\cr
-  Application &\Rightarrow Monadic\cr
-  Monadic     &\Rightarrow SysMonadic\cr
-  SysMonadic  &\Rightarrow SysVar NumOrVar\cr
+  Application &\Rightarrow Monadic\ |\ Dyadic\cr
+  Dyadic      &\Rightarrow NumOrVar SysOrPrim NumOrVar\cr
+  Monadic     &\Rightarrow SysOrPrim NumOrVar\cr
+  SysOrPrim   &\Rightarrow SysVar\ |\ Primitive\cr
   NumOrVar    &\Rightarrow Number\ |\ Variable\cr 
   Variable    &\Rightarrow \term{variable}\cr
   Number      &\Rightarrow \term{number}\cr
@@ -344,7 +349,8 @@ OutputCVarAssgn←{
   var exp←Children ⍵
   exptype←⊃0 1⌷exp
   'Variable'≡exptype: ⍺ OutputCVarVarAssgn var exp
-  'Application'≡exptype: ⍺ OutputCVarAppAssgn var exp
+  'Monadic'≡exptype: ⍺ OutputCVarMonAssgn var exp
+  'Dyadic'≡exptype: ⍺ OutputCVarDyaAssgn var exp
 }
 
 ∇ tie OutputCVarVarAssgn(v1 v2)
@@ -355,17 +361,31 @@ OutputCVarAssgn←{
   tie println ');'
 ∇
 
-SysNames←1⍴⊂'⎕ALLOC'
-SysCNames←1⍴⊂'apl_alloc'
-∇ tie OutputCVarAppAssgn(v1 app)
+SysNamesMon←'⎕ALLOC' (1⍴'⍳')
+SysCNamesMon←'apl_alloc' 'apl_iotam'
+∇ tie OutputCVarMonAssgn(v1 app);fncn
   fn vl←Children app
-  fnnm←⊃0 2⌷fn
-  fncn←⊃(SysNames⍳⊂fnnm)⌷SysCNames
+  fncn←⊃(SysNamesMon⍳0 2⌷fn)⌷SysCNamesMon
   tie print fncn
   tie print '('
   tie OutputCVar v1
   tie print ','
   tie OutputCVar vl
+  tie println ');'
+∇
+
+SysNamesDya←1⍴⊂1⍴'+'
+SysCNamesDya←1⍴⊂'apl_add'
+∇ tie OutputCVarDyaAssgn(v1 app)
+  lft fn rgt←Children app
+  fncn←⊃(SysNamesDya⍳0 2⌷fn)⌷SysCNamesDya
+  tie print fncn
+  tie print '('
+  tie OutputCVar v1
+  tie print ','
+  tie OutputCVar lft
+  tie print ','
+  tie OutputCVar rgt
   tie println ');'
 ∇
 
