@@ -1,3 +1,4 @@
-TESTME←42 3 7
-X←TESTME
+Y←5
+X←⍳Y
+X←Y+X
 ⎕←X
