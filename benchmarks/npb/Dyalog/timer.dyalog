@@ -28,5 +28,4 @@
       :Access Public
       R←end-start
     ∇
-    
 :EndClass

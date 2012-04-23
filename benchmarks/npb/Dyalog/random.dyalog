@@ -24,5 +24,4 @@
 	Seed←⊢/R←N↑R⊣R,←A Mul⊢/R←1↓R
 	R←R×2*¯46
    ∇
-   
 :EndClass
