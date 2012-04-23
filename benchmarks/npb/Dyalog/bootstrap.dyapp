@@ -1,0 +1,3 @@
+Load ./ConTeXtLP
+Run 'Loader Namespace' #.ConTeXtLP.Tangle './dyalog_npb.tex' './loader.dyalog'
+Load ./loader
