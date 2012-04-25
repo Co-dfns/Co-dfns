@@ -49,6 +49,7 @@ the HPAPL compiler working and running.
   Compile←{
     toks←Tokenize ⍺
     ast rest←0 ParseStmts toks
+    ast
     ast←FlattenExps ast
     ast←FindFreeVars ast
     ast←ExpandNumberStar ast
@@ -152,10 +153,12 @@ is the grammar of our language:\index{Language Grammar}
   VarAssign   &\Rightarrow Variable\ \term{←}\ Expression\cr
   SelAssgn    &\Rightarrow \term{(}Number\term{⎕}Variable\term{)}
                \term{←}\ Number\cr
-  Expression  &\Rightarrow Variable\ |\ Number*\ |\ Application\cr
+  Expression  &\Rightarrow Variable\ |\ Number*\ |\ Application\ |\ NestedExp\cr
+  NestedExp   &\Rightarrow \term{(}Expression\term{)}\cr
   Application &\Rightarrow Monadic\ |\ Dyadic\cr
-  Dyadic      &\Rightarrow Variable\ SysOrPrim\ Expression\cr
+  Dyadic      &\Rightarrow VarOrNumOrNest\ SysOrPrim\ Expression\cr
   Monadic     &\Rightarrow SysOrPrim\ Expression\cr
+  VarOrNumOrNest &\Rigtharrow Variable\ |\ Number*\ |\ NestedExp\cr
   SysOrPrim   &\Rightarrow SysVar\ |\ Primitive\cr
   Variable    &\Rightarrow \term{variable}\cr
   Number      &\Rightarrow \term{number}\cr
@@ -189,12 +192,14 @@ ParseMonadic←{
   (⊂(⍺,(⊂'Monadic'),⊂⍬)⍪n),⊂r
 }
 ParseDyadic←{
-  n r←(1+⍺)(ParseVar ParseSeq ParseSysOrPrim ParseSeq ParseExp)⍵
+  n r←(1+⍺)(ParseNumOrVarOrNest ParseSeq ParseSysOrPrim ParseSeq ParseExp)⍵
   n≡⍬: ParseErr ⍵
   (⊂(⍺,(⊂'Dyadic'),⊂⍬)⍪n),⊂r
 }
 ParseApplication←(ParseMonadic ParseChoice ParseDyadic)
-ParseExp←(ParseApplication ParseChoice ParseNumStar ParseChoice ParseVar)
+ParseNestExp←{⍺ (ParseExp ParseParens) ⍵}
+ParseNumOrVarOrNest←(ParseVar ParseChoice ParseNumStar ParseChoice ParseNestExp)
+ParseExp←(ParseApplication ParseChoice ParseNestExp ParseChoice ParseNumStar ParseChoice ParseVar)
 ParseSelLhs←{
   n r←⍺ (ParseNum ParseSeq ParseIndexTok ParseSeq ParseVar) ⍵
   n≡⍬: ParseErr ⍵
@@ -381,6 +386,9 @@ program.
   vars←⊃0 2⌷ast
   tie print ⊃{⍺,',',⍵}/vars
   tie println ';'
+  :For v :In vars
+    tie println 'apl_arrayinit(&',v,');'
+  :EndFor
 ∇
 
 OutputCStmts←{⍺∘OutputCAssgn¨Children ⍵}
@@ -455,6 +463,127 @@ SysCNamesDya←1⍴⊂'apl_add'
 OutputCNum←{⍺ print ⊃0 2⌷⍵}
 OutputCVar←{⍺ print ⊃0 2⌷⍵}
 \stopchunk
+
+\chapter{HPAPL Runtime}
+
+We need to provide some level of runtime support for the code that we 
+compile.  More particularly, these are the things that we link against 
+when building the generated C code. We have the following structure.
+To start with, we need a geneal abstraction for arrays, which goes in 
+a separate header file.
+
+\defchunk{HPAPL Runtime Header}
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct apl_array_t {
+  size_t        rank;
+  unsigned int  *shape;
+  size_t        length;
+  int64_t       *elems;
+} ArrayStruct;
+typedef *ArrayStruct Array;
+\stopchunk
+
+We also implement some basic functions for allocating arrays.
+
+\defchunk{HPAPL Runtime Code}
+#include "hpapl.h"
+
+void
+apl_arrayinit(Array *a)
+{
+        int *tshp;
+        Array tmp;
+        
+        tmp = malloc(sizeof(struct apl_array_t));
+        if (NULL == tmp) {
+                perror("init failure");
+                exit(1);
+        }
+        
+        tshp = malloc(sizeof(int));
+        if (NULL == tshp) {
+                perror("init failure");
+                exit(1);
+        }
+        
+        tmp->rank = 1;
+        tshp[0] = 0;
+        tmp->shape = tshp;
+        tmp->length = 0;
+        tmp->elems = NULL;
+        *a = tmp;
+}
+
+void
+apl_alloc(Array a, size_t len)
+{
+        int64_t *tmp;
+        tmp = realloc(a->elems, len);
+        if (NULL == tmp) {
+                perror("allocation failure");
+                exit(1);
+        }
+        a->length = len;
+        a->elems = tmp;
+}
+\stopchunk
+
+Now we can implement the rest of our runtime.
+
+\defchunk{HPAPL Runtime Code}
+void
+apl_selassign(Array x, size_t i, int64_t v)
+{
+        x->elems[i] = v;
+}
+
+void
+apl_iotam(Array a, Array b)
+{
+        unsigned int i;
+        size_t tl;
+        int64_t n, *t;
+        
+        tl = a->length;
+        t = a->elems;
+        n = b->elems[0];
+        
+        if (tl < n) t = realloc(t, n*sizeof(int64_t));
+        if (NULL == t) {
+                perror("iota alloc error");
+                exit(1);
+        }
+        
+        a->elems = t;
+        a->length = tl > n ? tl : n;
+        a->shape[0] = n;
+        
+        for (i = 0; i < n; i++) *(t++) = i;
+}
+\stopchunk
+
+We also define something for printing.
+
+\defchunk{HPAPL Runtime Code}
+void
+apl_print(Array a)
+{
+        size_t  i, len;
+        int64_t *t;
+        
+        len = a->length;
+        t   = a->elems;
+        
+        for (i = 0; i < len; i++) 
+                printf("%d ", *(t++));
+        
+        printf("\n");
+}
+\stopchunk
+
 
 \stopbodymatter
 
