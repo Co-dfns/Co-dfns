@@ -38,9 +38,18 @@ conditions:
 \item An array must map any valid index in range of the shape of the array to a valid value.
 \item An array must have a finite shape.
 \stopitemize
+
+We begin this treatment with a definition of a skeleton array that is a @{term datatype} that 
+will hold the basic structure and underlying information.
 *}
 
 datatype 'a skelarray = SkelArray "nat list" "(nat list) \<rightharpoonup> 'a"
+
+text {*
+Next we need some formal sense of what it is to be correct as an array.  We do this by relating 
+the two elements of a @{typ "'a skelarray"} using the following definition. We also take this 
+opportunity to prove a few trivial theorems about @{term validsv}.
+*}
 
 definition validsv :: "nat list \<Rightarrow> (nat list \<rightharpoonup> 'a) \<Rightarrow> bool"
 where "validsv s v \<equiv> dom v = {x::(nat list). list_all2 op < x s}"
@@ -51,15 +60,26 @@ by (auto simp: validsv_def list_all2_Cons2)
 theorem validsvnil [simp]: "validsv [] v \<longleftrightarrow> dom v = {[]}"
 by (auto simp: validsv_def)
 
+text {*
+Now we can use this to define a predicate @{term validarr} for checking whether a given 
+@{typ "'a skelarray"} is a valid array.
+*}
+
 definition validarr :: "'a skelarray \<Rightarrow> bool" 
 where "validarr A \<equiv> case A of (SkelArray s v) \<Rightarrow> validsv s v"
 
 theorem validarrempty [simp]: "validarr (SkelArray [0] Map.empty)"
 by (simp add: validarr_def)
 
+text {*
+Next, we define our primary type as a subset of values of type @{typ "'a skelarray"} which are 
+valid according to @{term validarr}. We also provide a constructor for these arrays. All 
+invalid arrays are mapped to an empty array.
+*}
+
 typedef (open) 'a array = "{a::('a skelarray). validarr a}"
 proof
-  show "SkelArray [0] Map.empty \<in> {a::('a skelarray). validarr a}" by (simp add: validarrempty)
+  show "SkelArray [0] Map.empty \<in> {a::('a skelarray). validarr a}" by simp
 qed
 
 definition Array :: "nat list \<Rightarrow> ((nat list) \<rightharpoonup> 'a) \<Rightarrow> 'a array" 
@@ -71,16 +91,20 @@ where "Array s v \<equiv>
 lemma rep_arrays_valid [simp]: "validarr (Rep_array A)" 
 by (rule Abs_array_induct) (simp add: Abs_array_inverse Array_def)
 
+text {* 
+Our task now is to lift out our definition and axiomatize it such that we need not concern
+ourselves with the underlying representation. We do this by defining accessors on arrays that 
+we can then define theorems about which allow us to extract the elements of an array, shape 
+and mapping, without needing to know anything about the underlying representation.
+
+The first is an accessor for the shape of an array.
+*}
+
 definition shapelst :: "'a array \<Rightarrow> nat list"
 where "shapelst a \<equiv> case Rep_array a of (SkelArray s v) \<Rightarrow> s"
 
-lemma validsv_in_array: "validsv s v \<Longrightarrow> (SkelArray s v)\<in>{a::'a skelarray. validarr a}"
-proof -
-  fix s :: "nat list" and v :: "nat list \<rightharpoonup> 'a"
-  assume "validsv s v"
-  thus "(SkelArray s v)\<in>{x::'a skelarray. validarr x}" 
-    by (auto simp: validsv_def validarr_def)
-qed
+lemma validsv_in_array: "validsv s v \<longleftrightarrow> (SkelArray s v)\<in>{a::'a skelarray. validarr a}"
+by (auto simp: validsv_def validarr_def)
 
 theorem access_shapelst_array [simp]: "validsv s v \<Longrightarrow> shapelst (Array s v) = s"
 proof -
@@ -94,6 +118,10 @@ proof -
     by (simp add: Abs_array_inverse)
   finally show "shapelst (Array s v) = s" by simp
 qed
+
+text {* 
+Second, we define an accessor that gives us the mapping of the array indexes to values. 
+*}
 
 definition arrvmap :: "'a array \<Rightarrow> (nat list \<rightharpoonup> 'a)"
 where "arrvmap a \<equiv> case Rep_array a of (SkelArray s v) \<Rightarrow> v"
@@ -111,13 +139,32 @@ proof -
   finally show "arrvmap (Array s v) = v" by simp
 qed
 
-theorem validsv_from_mem [simp]: "(SkelArray s v)\<in>{x::('a skelarray). validarr x} \<Longrightarrow> validsv s v"
-by (auto simp: validsv_def validarr_def)
+text {*
+We want to say something about the validity of all arrays.  This allows us to actually use 
+the above accessors.
+*}
+
+theorem validsv_array [simp]: "validsv (shapelst a) (arrvmap a)" by sorry
+
+text {* 
+Now it is time to start talking about the basic functions that we use to talk about arrays. In 
+this case, it is rank and shape, which provides us ways of stating properties about arrays in 
+most cases, and gives us a way to axiomatize most operations nicely. We are following roughly 
+the treatment found in the dissertation by Lenore Mullin entitled, “Mathematics of Arrays.”
+*}
 
 definition rank :: "'a array \<Rightarrow> nat" where "rank a \<equiv> length (shapelst a)"
 
-theorem rank_length [simp]: "validsv s v \<longrightarrow> rank (Array s v) = length s"
+theorem rank_length [simp]: "validsv s v \<Longrightarrow> rank (Array s v) = length s"
 by (simp add: rank_def)
+
+text {* 
+In the case of shape, which is an actual HPAPL primitive, we need to have a way of converting 
+a @{typ "nat list"} into a vector array. This function we give the name @{term list2arr} and 
+we define a set of theorems about its range that allow us to extract out the relevant elements 
+of the returned array without needing to delve further into the internal representation of 
+arrays. 
+*}
 
 definition list2arr :: "'a list \<Rightarrow> 'a array"
 where "list2arr lst \<equiv> Array [length lst] [map (\<lambda>x. [x]) [0..<length lst] [\<mapsto>] lst]"
@@ -134,6 +181,35 @@ by (simp add: list2arr_def)
 theorem list_array_map [simp]:
   "arrvmap (list2arr lst) = (Map.empty([[x]. x \<leftarrow> [0..<length lst]] [\<mapsto>] lst))"
 by (auto simp: list2arr_def)
+
+text {* 
+Many operations in APL are considered Scalar.  This means that they operate element-wise over an 
+array or two arrays. Examples would be adding the elements of two arrays together.  Scalar 
+operations share a number of properties, so we abstract out the creation of scalar functions 
+here, and state some properties about them.
+*}
+
+definition monmap :: "('a \<Rightarrow> 'a) \<Rightarrow> (nat list \<rightharpoonup> 'a) \<Rightarrow> (nat list \<rightharpoonup> 'a)"
+where "monmap fn v i \<equiv> Option.map fn (v i)"
+
+lemma monmap_dom [simp]: "dom (monmap fn v) = dom v"
+by (auto simp: monmap_def dom_option_map)
+
+definition apl_msaa_fun :: "('a \<Rightarrow> 'a) \<Rightarrow> 'a array \<Rightarrow> 'a array"
+where "apl_msaa_fun fn a \<equiv> Array (shapelst a) (monmap fn (arrvmap a))"
+
+lemma msaa_validsv [simp]: "validsv (shapelst a) (monmap fn (arrvmap a))"
+proof (simp add: validsv_def)
+  have "(dom (arrvmap a) = {x. list_all2 op < x (shapelst a)}) 
+        = validsv (shapelst a) (arrvmap a)" by (simp add: validsv_def)
+  thus "dom (arrvmap a) = {x. list_all2 op < x (shapelst a)}" by simp
+qed
+
+theorem msaa_shape [simp]: "shapelst (apl_msaa_fun fn a) = shapelst a"
+by (auto simp: apl_msaa_fun_def)
+
+theorem msaa_rank [simp]: "rank (apl_msaa_fun fn a) = rank a"
+by (auto simp: apl_msaa_fun_def rank_def)
 
 (***********************
  * Real APL primitives *
