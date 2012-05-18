@@ -1,0 +1,75 @@
+:Program              ⍝ This is the main program that someone would write
+
+∇ R←T BLUR D          ⍝ A CnC Step
+  R←(+/D)÷⍴D          ⍝ Mean blur
+∇
+
+∇ R←TIDX XY;RS        ⍝ This is the same in OUT and IN
+  R←⍳TS               ⍝ Indexes for the size of tile we have
+  R←XY+[⍴TS]R         ⍝ Shift to point to the current tile position
+  RS←(×/XY),⍴S        ⍝ A shape to force BLUR to get a vector
+  R←RS⍴R              ⍝ Reshape the result before returning
+∇
+
+∇ R←IN T              ⍝ Generates incoming indexes 
+  R←(⊃T),TIDX 1↓T     ⍝ Takes slice and adds the iteration to it
+∇
+
+∇ R←OUT T             ⍝ Generates outgoing indexes
+  R←(1+⊃T),TIDX 1↓T   ⍝ Adds the current iteration plus one.
+∇
+
+S↤100 100             ⍝ Size/Shape of the Image
+TS↤10 10              ⍝ Tile Size
+I↤10                  ⍝ Number of iterations
+M↤S⍴?(×/S)⍴2*8        ⍝ Image is a random set of grayscale values
+
+(0⌷D)↤M                  ⍝ Seed the initial data
+(OUT⌷D)↤(BLUR∥(IN⌷D))⍳I,TS ⍝ Tag Blur for each tile
+⎕↤I⌷D                    ⍝ Print the last iteration
+
+:EndProgram
+
+────────────────────────────────────────────────────────────────────────
+
+:Program              ⍝ We want to get to this program, which is space efficient
+
+...
+
+
+∇ R←COMP I
+  R←(2|1⌷I)⍪1↓I
+∇
+
+(0⌷D)←M 
+(COMP∘OUT⌷D)←(BLUR∥(COMP∘IN⌷D))⍳I,TS 
+⎕←(2|I)⌷D
+
+...
+
+:EndProgram
+
+────────────────────────────────────────────────────────────────────────
+
+As a sample rule for streaming, I am thinking of something like this:
+
+{P} (O⌷D)(F∥)(I⌷D) TST {Q}
+P → (I (⍋TST)⌷TST) < O (⍋TST)⌷TST
+P → ~(0⌷D)∊⍬
+P → (N>0) → (N⌷D)∊⍬
+Q → (N>2) → (2⌷D) ∊ ⍬
+──────────────────────────
+{P} 
+∇ (O COMP) T
+  R←O T
+  R←(2|1⌷R)⍪1↓R
+∇
+
+∇ DO T;OI;II
+  IO←(2|1⌷IO)⍪1↓OI←O T
+  II←(2|1⌷II)⍪1↓II←I T
+  (OI⌷D)←()
+  (((2|1⌷OI)⍪1↓IO)⌷D)←F ()⌷D
+
+((O COMP)⌷D)←((I COMP)⌷D∥F) TST {Q ∧ (N<2) → (N⌷D)∊⍬}
+
