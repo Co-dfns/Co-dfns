@@ -1,0 +1,104 @@
+:Essay Tiled Game of Life in HPAPL
+
+This is a demonstration of the HPAPL system on a common stenciling problem, 
+often used to show off the power of APL.  In this case, we are going to take 
+the existing APL approach and modify it to do a distributed Game of Life 
+that works over an arbitrary number of processors and runs for a fixed number 
+of generations.
+
+This is the game of life function as you might recall from other APL 
+demonstrations.  There are a few things you might find interesting here, 
+though.  Firstly, notice that we choose the global array from which we 
+get our data, and we choose the location where we send the result of our 
+computation.  These two "In" and "Out" expressions are what allow us to use 
+this otherwise normal APL function as a global Step.  This makes it possible 
+to prescribe this as a CnC Step.  Whenever we prescribe this step, we will 
+receive as arguments a Tag from the prescription and the Data from the In 
+expression as the right argument.  Otherwise, this is an entirely normal 
+APL Function.
+
+We have modified the way that we compute the Game of Life slightly, because 
+we are assuming that we are working a tile.  This means that we actually need 
+to grab slightly more (one element) on each side of our tile size in order 
+to do the game of life on a torus.  The last line of the function handles 
+the shifting and dropping to get the right output without the extra ghost 
+cells. 
+
+∇R←T Life D;S
+ :In Data[g T] :Out Data[p T]
+ S←1 0 ¯1
+ R←⊃1 D∨.∧3 4=+/,S∘.⊖S⌽¨⊂D
+ R←¯1 ¯1↓1⊖1⌽R
+∇
+
+This life program forms the core step of our computation.  The CnC graph 
+that we use looks like this:
+
+      →[Data]→
+    ↓    ↑↓
+   < > (Life)
+    ↓    ↑
+  (Gen)→< >
+
+The "Life" step will be prescribed on each of the tiles of the Data 
+with the prescription functions "g" and "p" controlling the input and 
+output.  "Gen" is the step in charge of doing those prescriptions based on 
+the initial incoming tag. 
+
+The above graph can be translated easily into the following top-level program:
+
+:Program
+ Procs Gen Rows Cols←⎕TAG
+ Data←Gen Rows Cols↑⎕IN
+ Data[Gen-1;;]→⎕OUT
+ ⟨Function to calculate size of a slice⟩
+ ⟨Tag Functions⟩
+ Gen∥⎕TAG
+:EndProgram
+
+Discussing what this all means, you can see that we have three system 
+functions or variables.  The "⎕TAG" variable is bound to the tag that 
+prescribed the entire graph (got it all running in the first place), while 
+the "⎕IN" variable is bound to the incoming data.  The "→" function registers 
+one of the outgoing elements, in this case the only outgoing element, of the
+computation as beign the last generation of the "Data" array.  We reference 
+a different section in "⟨Tag Functions⟩" that will presumably define the 
+tag functions used by the "Life" step.  Finally, we launch the entire 
+computation by prescribing the "Gen" step with the incoming "⎕TAG" data. 
+
+Now let's talk about the tag functions "g" and "p".  These have the specific 
+purpose of generating the indexes that will tell us what data from the "Data"
+array that we want, and where to the store the results once we have them.
+In this case, we are computing on a torus.  Their right argument "⍵" is the 
+tag that we received from the "Life" step, in this case.
+
+:Section Tag Functions
+ g←{MS G←2↑⍵ ⋄ L←2↓⍵ ⋄ M←2↓⎕TAG
+    S←MS⌊M-L
+    G,¨(⊂M)|(⊂L-1)+⍳2+S}
+ f←{MS G←2↑⍵ ⋄ L←2↓⍵ ⋄ M←2↓⎕TAG
+    S←MS⌊M-L
+    G,¨(⊂L)+⍳S}
+:EndSection
+
+The last thing that we need is a step to handle prescribing all the 
+appropriate instances of the "Life" step.  This we call "Gen".
+
+∇T Gen D
+ :In ⍬ :Out 
+ P G R C←T
+ S←P SliceSize R C
+ Life∥¨,(⍳G)∘.,(⊂S)×⍳⌈R C÷S
+∇
+
+We try to get our slice size down to about as many slices as their are 
+processors, dividing the longest axis in half each time.
+
+:Section Function to calculate size of a slice
+ SliceSize←{S←⍵
+  ~⌊P÷2: S
+  S[S⍳⌈/S]←⌈∘÷←2
+  (P÷2)∇S} 
+:EndSection
+
+:EndEssay
