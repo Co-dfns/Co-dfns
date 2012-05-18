@@ -1,0 +1,16 @@
+# This is for the SGI PowerChallenge Array at NASA Ames. mrf77 and 
+# mrcc are local scripts that invoke the proper MPI library.
+MPIF77 = mrf77
+FLINK  = mrf77
+FFLAGS = -O3 -OPT:fold_arith_limit=1204
+
+MPICC  = mrcc
+CLINK  = mrcc
+CFLAGS = -O3 -OPT:fold_arith_limit=1204
+
+CC     = cc -g
+BINDIR = ../bin
+
+RAND   = randi8
+
+

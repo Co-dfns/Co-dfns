@@ -1,0 +1,30 @@
+#    This is for a Sun SparcCenter or UltraEnterprise machine 
+MPIF77     = f77
+FLINK      = f77
+FMPI_LIB   = -L<your mpich installation tree>/lib/solaris/ch_lfshmem -lmpi
+FMPI_INC   = -I<your mpich installation tree>/include
+#    sparc10,20 SparcCenter{1,2}000 (uname -m returns sun4m)
+#    and f77 -V returns 4.0 or greater
+# FFLAGS   = -fast -xtarget=super -xO4 -depend
+#    Ultra1,2, UltraEnterprise servers (uname -m returns sun4u)
+FFLAGS     = -fast -xtarget=ultra -xarch=v8plus -xO4 -depend
+FLINKFLAGS = -lmopt -lcopt -lsunmath
+
+MPICC      = cc
+CLINK      = cc
+CMPI_LIB   = -L<your mpich installation tree>/lib/solaris/ch_lfshmem -lmpi
+CMPI_INC   = -I<your mpich installation tree>/include
+#    sparc10,20 SparcCenter{1,2}000 (uname -m returns sun4m)
+#    and cc -V returns 4.0 or greater
+#CFLAGS	   =  -fast -xtarget=super -xO4 -xdepend
+#    Ultra1,2, UltraEnterprise servers (uname -m returns sun4u)
+CFLAGS     =  -fast -xtarget=ultra -xarch=v8plus -xO4 -xdepend
+CLINKFLAGS = -fast
+
+CC         = cc -g
+
+BINDIR     = ../bin
+
+#    Cannot use randi8 or randi8-safe on a 32-but machine. Use double precision
+RAND       = randdp
+

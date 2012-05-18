@@ -1,0 +1,17 @@
+#This is for the IBM SP2 at Ames; mrf77 and mrcc are local scripts
+MPIF77     = mrf77
+FLINK      = mrf77
+FFLAGS     = -O3 
+FLINKFLAGS = -bmaxdata:0x60000000
+
+MPICC      = mrcc
+CLINK      = mrcc
+CFLAGS     = -O3 
+CLINKFLAGS = -bmaxdata:0x60000000
+
+CC         = cc -g
+
+BINDIR     = ../bin
+
+RAND       = randi8
+

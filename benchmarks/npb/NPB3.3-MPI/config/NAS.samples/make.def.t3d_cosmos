@@ -1,0 +1,25 @@
+#This is for the Cray T3D at the Jet Propulsion Laboratory
+MPIF77     = cf77
+FLINK      = cf77
+FMPI_LIB   = -L/usr/local/mpp/lib -lmpi
+FMPI_INC   = -I/usr/local/mpp/lib/include/mpp
+FFLAGS     = -dp -Wf-onoieeedivide -C cray-t3d 
+#The following flags provide more effective optimization, but may
+#cause the random number generator randi8(_safe) to break in EP
+#FFLAGS    = -dp -Wf-oaggress -Wf-onoieeedivide -C cray-t3d 
+FLINKFLAGS = -Wl-Drdahead=on -C cray-t3d
+
+MPICC      = cc
+CLINK	   = cc
+CMPI_LIB   = -L/usr/local/mpp/lib -lmpi
+CMPI_INC   = -I/usr/local/mpp/lib/include/mpp
+CFLAGS	   = -O3 -Tcray-t3d
+CLINKFLAGS = -Tcray-t3d
+
+CC	   = cc -g -Tcray-ymp
+BINDIR	   = ../bin
+
+CONVERTFLAG= -DCONVERTDOUBLE
+
+RAND       = randi8
+

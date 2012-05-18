@@ -1,0 +1,16 @@
+#This is for a generic single-processor SGI workstation
+MPIF77 = f77
+FLINK	= f77
+FFLAGS	= -O3
+
+MPICC = cc
+CLINK	= cc
+CFLAGS	= -O3 
+
+include ../config/make.dummy
+
+CC	= cc -g
+BINDIR	= ../bin
+
+RAND   = randi8
+
