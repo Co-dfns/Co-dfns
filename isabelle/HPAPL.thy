@@ -89,7 +89,7 @@ where "Array s v \<equiv>
   else Abs_array (SkelArray [0] Map.empty)"
 
 lemma rep_arrays_valid [simp]: "validarr (Rep_array A)" 
-by (rule Abs_array_induct) (simp add: Abs_array_inverse Array_def)
+by (rule Abs_array_induct) (simp add: Abs_array_inverse)
 
 text {* 
 Our task now is to lift out our definition and axiomatize it such that we need not concern
@@ -144,7 +144,17 @@ We want to say something about the validity of all arrays.  This allows us to ac
 the above accessors.
 *}
 
-theorem validsv_array [simp]: "validsv (shapelst a) (arrvmap a)" by sorry
+theorem arr_validsv [simp]: "validsv (shapelst a) (arrvmap a)"
+proof -
+  have "validsv (shapelst a) (arrvmap a)
+        = validsv (case Rep_array a of SkelArray s v \<Rightarrow> s)
+                  (case Rep_array a of SkelArray s v \<Rightarrow> v)" 
+    by (simp add: shapelst_def arrvmap_def)
+  also have "... = (case Rep_array a of SkelArray s v \<Rightarrow> validsv s v)" by sorry
+  also have "... = validarr (Rep_array a)" by (simp add: validarr_def)
+  finally have "validsv (shapelst a) (arrvmap a) = validarr (Rep_array a)" by simp
+  thus ?thesis by simp
+qed
 
 text {* 
 Now it is time to start talking about the basic functions that we use to talk about arrays. In 
@@ -195,21 +205,28 @@ where "monmap fn v i \<equiv> Option.map fn (v i)"
 lemma monmap_dom [simp]: "dom (monmap fn v) = dom v"
 by (auto simp: monmap_def dom_option_map)
 
-definition apl_msaa_fun :: "('a \<Rightarrow> 'a) \<Rightarrow> 'a array \<Rightarrow> 'a array"
-where "apl_msaa_fun fn a \<equiv> Array (shapelst a) (monmap fn (arrvmap a))"
+definition apl_msfun :: "('a \<Rightarrow> 'a) \<Rightarrow> 'a array \<Rightarrow> 'a array"
+where "apl_msfun fn a \<equiv> Array (shapelst a) (monmap fn (arrvmap a))"
 
-lemma msaa_validsv [simp]: "validsv (shapelst a) (monmap fn (arrvmap a))"
+lemma ms_validsv [simp]: "validsv (shapelst a) (monmap fn (arrvmap a))"
 proof (simp add: validsv_def)
   have "(dom (arrvmap a) = {x. list_all2 op < x (shapelst a)}) 
         = validsv (shapelst a) (arrvmap a)" by (simp add: validsv_def)
   thus "dom (arrvmap a) = {x. list_all2 op < x (shapelst a)}" by simp
 qed
 
-theorem msaa_shape [simp]: "shapelst (apl_msaa_fun fn a) = shapelst a"
-by (auto simp: apl_msaa_fun_def)
+theorem ms_shape [simp]: "shapelst (apl_msfun fn a) = shapelst a"
+by (auto simp: apl_msfun_def)
 
-theorem msaa_rank [simp]: "rank (apl_msaa_fun fn a) = rank a"
-by (auto simp: apl_msaa_fun_def rank_def)
+theorem ms_rank [simp]: "rank (apl_msfun fn a) = rank a"
+by (auto simp: apl_msfun_def rank_def)
+
+definition apl_dsfun :: "('a \<Rightarrow> 'a \<Rightarrow> 'a) \<Rightarrow> 'a array \<Rightarrow> 'a array \<Rightarrow> 'a array"
+where "apl_dsfun fn a b \<equiv> 
+  if shapelst a = shapelst b then Array (shapelst a) (dyamap fn (arrvmap a) (arrvmap b))
+  else if is_scalar a then Array (shapelst b) (dyamapsa fn (scalar_val a) (arrvmap b))
+  else if is_scalar b then Array (shapelst a) (dyamapas fn (arrvmap a) (scalar_val b))
+  else Array [0] Map.empty"
 
 (***********************
  * Real APL primitives *
@@ -218,6 +235,9 @@ definition Empty :: "'a array" where "Empty \<equiv> Array [0] Map.empty"
 
 definition shape :: "'a array \<Rightarrow> nat array" 
 where "shape a \<equiv> list2arr (shapelst a)"
+
+definition arrplus :: "int array \<Rightarrow> int array"
+where "arrplus a b \<equiv> apl_msaa_fun
 
 (************************
  * Theorems about HPAPL *

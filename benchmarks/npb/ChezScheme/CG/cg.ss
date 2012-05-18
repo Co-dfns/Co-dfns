@@ -33,9 +33,9 @@
 (define zeta-init (randlc))
 
 (define (print-header)
-  (printf "it\t∥R∥\tZeta~n"))
+  (printf "it\t∥R∥\t\t\t\tZeta~n"))
 (define (print-iteration it rnorm zeta)
-  (printf "~a\t~a\t~a~n" it rnorm zeta))
+  (printf "~a\t~a\t\t~a~n" it rnorm zeta))
 
 (define last-first+1 (fx+ 0 (fx- lastcol firstcol)))
 (define lastr-firstr+1 (fx+ 0 (fx- lastrow firstrow)))
@@ -83,7 +83,7 @@
   (void))
   
 (define (conj-grad colidx rowstr x z a p q r)
-  (define cgitmax 2)
+  (define cgitmax 25)
   (define (r-ref i) (flvector-ref r i))
   (define (x-ref i) (flvector-ref x i))
   (define (z-ref i) (flvector-ref z i))
@@ -105,17 +105,16 @@
   (do ([j 0 (fx+ j 1)]) [(fx= j n)]
     (q-set! j 0.0) (z-set! j 0.0)
     (r-set! j (x-ref j)) (p-set! j (r-ref j)))
-  (printf "r(0): ~a~n" (r-ref 0))
   (let loop ([cgit 0] [rho (get-rho)])
     (define (compute-alpha)
       (do ([j 0 (fx+ j 1)]
            [d 0.0 (fl+ d (fl* (p-ref j) (q-ref j)))])
-          [(fx= j last-first+1) 
+          [(fx= j last-first+1)
            (fl/ rho d)]))
     (when (fx< cgit cgitmax)
-      (do ([j 0 (fx+ j 1)]) [(fx= last-first+1)]
+      (do ([j 0 (fx+ j 1)]) [(fx= j last-first+1)]
         (do ([k (rowstr-ref j) (fx+ k 1)]
-             [sum 0.0 (fl+ sum (fl* a-ref k) (p-ref (colidx-ref k)))]) 
+             [sum 0.0 (fl+ sum (fl* (a-ref k) (p-ref (colidx-ref k))))]) 
             [(fx= k (rowstr-ref (fx+ j 1)))
              (q-set! j sum)]))
       (let ([alpha (compute-alpha)] [rho0 rho])
