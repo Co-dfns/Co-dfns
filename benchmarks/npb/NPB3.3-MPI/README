@@ -1,0 +1,46 @@
+The MPI implementation of NPB 3.3 (NPB3.3-MPI)
+--------------------------------------------------
+
+For problem reports and suggestions on the implementation, 
+please contact:
+
+   NAS Parallel Benchmark Team
+   npb@nas.nasa.gov
+
+   http://www.nas.nasa.gov/Software/NPB
+
+
+This directory contains the MPI implementation of the NAS
+Parallel Benchmarks, Version 3.3 (NPB3.3-MPI).  A brief
+summary of the new features introduced in this version is
+given below.
+
+For changes from different versions, see the Changes.log file
+included in the upper directory of this distribution.
+
+For explanation of compilation and running of the benchmarks,
+please refer to README.install.  For a special note on DT, please
+see the README file in the DT subdirectory.
+This version includes additional timers in several benchmarks.
+
+
+New features in NPB3.3-MPI:
+  * NPB3.3-MPI introduces a new problem size (class E) to seven of  
+    the benchmarks (BT, SP, LU, CG, MG, FT, and EP).  The version 
+    also includes a new problem size (class D) for the IS benchmark, 
+    which was not present in the previous releases.
+
+  * The release is merged with the vector codes for the BT and LU
+    benchmarks, which can be selected with the VERSION=VEC option
+    during compilation.  However, it should be noted that successful
+    vectorization highly depends on the compiler used.  Some changes
+    to compiler directives for vectorization in the current codes
+    (see *_vec.f files) may be required.
+
+  * New improvements to BTIO (BT with IO subtypes):
+    - added I/O stats (I/O timing, data size written, I/O data rate)
+    - added an option for interleaving reads between writes through
+      the inputbt.data file.  Although the data file size would be
+      smaller as a result, the total amount of data written is still
+      the same.
+
