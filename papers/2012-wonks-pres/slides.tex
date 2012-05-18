@@ -1,0 +1,193 @@
+\def\majorstop#1{\null\vfill \centerline{\subtitlef #1}\par\vfill}
+\def\newslide{\par\vfill\break}
+\def\heading#1{\centerline{\headingf #1}\smallskip\hrule\medskip}
+
+\font\titlef = "APL385 Unicode" at 36pt
+\font\subtitlef = "APL385 Unicode" at 24pt
+\font\authorf = "APL385 Unicode" at 18pt
+\font\emailf = "APL385 Unicode" at 16pt
+\font\datef = "APL385 Unicode" at 16pt
+\font\headingf = "APL385 Unicode" at 24pt
+\font\rm = "APL385 Unicode" at 16pt
+
+\hoffset = -0.5in
+\voffset = -0.5in
+\hsize = 7in
+\vsize = 5in
+\parindent = 0in
+\parskip = 0.5in
+
+\null\rm\newslide
+
+\null\vfill
+\centerline{\titlef Enhancing CnC}
+\centerline{\subtitlef Or, an introduction that makes sense.}
+\bigskip
+\centerline{\authorf Aaron W. Hsu}
+\smallskip
+\centerline{\emailf awhsu@indiana.edu}
+\bigskip\bigskip
+\centerline{\datef 2 March 2012}
+
+\newslide
+
+\heading{Goals of the Talk}
+
+Understand CnC
+
+Prompt feedback on my language
+
+%%%  C. My Research
+
+\newslide
+
+\heading{Current Research}
+
+Implementing CnC extensions
+
+Enriching the language
+
+Combining APL and CnC
+
+Bulding formalism around CnC
+
+Streaming Optimizations
+
+\newslide
+
+\heading{Key ideas and motivations}
+
+What is "My" programming language?
+
+Emphasize the key ideas
+
+{\parindent = 0.33in
+Rigorously expressed
+
+Given first priority\par}
+
+Leveraging effective implicit parallelism
+
+Avoid making parallelism the main thing
+
+\newslide
+
+\majorstop{CnC by Example: The Game of Life}
+
+\newslide
+
+\majorstop{Classic APL Example}
+
+\newslide
+
+\heading{Parallelizing}
+
+Game of Life is basically a stencil
+
+Should not need to know stencil optmization
+
+Slicing/Data parallelism
+
+\newslide
+
+\heading{Using CnC to parallelize}
+
+Very simple, but practical
+
+Creation should be independent of tuning
+
+CnC should orchestrate, not dominate
+
+\newslide
+
+\heading{Composing via a CnC Graph}
+
+Let's draw the CnC Graph....
+
+\newslide
+\majorstop{Combining CnC with APL}
+\newslide
+
+\heading{Motivation}
+
+CnC needed a more expressive graph
+
+APL is great for concisely expressing indexing patterns
+
+Inspired by the 3 layer cake
+
+I wanted to push APL further
+
+\newslide
+
+\heading{Revisiting the Game of Life}
+
+Graph is not just a pretty picture
+
+What does the code look like?
+
+\newslide
+
+\heading{Pushing it further}
+
+User extensions of analysis
+
+Fully formalizing the language
+
+\newslide
+\majorstop{Conclusions and Future Work}
+\newslide
+
+\heading{Current Work}
+
+Compiler in APL (Dyalog)
+
+Runtime in UPC (Unified Parallel C)
+
+Managing analysis of streaming
+
+Talking with Dyalog to fund summer research
+
+\newslide
+
+\heading{Interesting questions}
+
+How formal can we go?
+
+How fast can it go?
+
+Modularity/Hierarchy
+
+User language extensions
+
+User compiler extensions
+
+\newslide
+
+\heading{Other optimizations}
+
+Locality of Data on nodes
+
+Vectorization at the node level
+
+Scheduling of Steps
+
+Interlanguage overhead
+
+Optimization by proof
+
+\newslide
+
+\heading{Conclusions}
+
+CnC is actually easy to understand!
+
+CnC and APL compose well to form a nice language
+
+Interesting opportunities in a language that I like to use
+
+\newslide
+
+\majorstop{Thank you.}
+
+\bye

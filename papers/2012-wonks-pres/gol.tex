@@ -1,0 +1,48 @@
+\font\rm = "APL385 Unicode" at 10pt
+
+\rm\parindent = 0in
+
+:Essay Tiled Game of Life in HPAPL
+\medskip
+:Program\par
+(Procs Gens Rows Cols)←⎕TAG\par
+Data←Gens Rows Cols↑⎕IN\par
+Data$[$Gens;;$]$→⎕OUT\par
+$\langle$Compute Slice Size$\rangle$\par
+$\langle$Define Tag Functions$\rangle$\par
+Gen$\|$1↓⎕TAG\par
+:EndProgram\par
+\medskip\par
+∇R←T Life D\par
+:Out Data$[$p T$]$ :In Data$[$g T$]$\par
+NC←+/,1 0 ¯1∘.⊖1 0 ¯1⌽¨⊂D\par
+R←⊃1 D∨.∧3 4=NC\par
+R←¯1 ¯1↓1⊖1⌽R\par
+∇\par
+\medskip
+:Section Define Tag Functions\par
+g←$\{$(G R C)←⍵\par
+  S←SliceSize R C\par
+  G,¨Rows Cols|(⊂R C-1)+⍳2+S\par
+$\}$\par
+p←$\{$(G R C)←⍵\par
+  S←SliceSize R C\par
+  (G+1),¨(⊂R C)+⍳S\par
+$\}$\par
+:EndSection\par
+\medskip
+∇T Gen MaxSlice\par
+:In MaxSlice :NoOut\par
+(Gens Rows Cols)←T\par
+Life$\|$¨(⍳Gens-1)∘.,⍳⌈Rows Cols÷MaxSlice\par
+∇\par
+\medskip
+:Section Compute Slice Size\par
+MaxSlice←Procs$\{$0=⌊⍺÷2:⍵\par
+               (⌊⍺÷2)∇⌈⍵÷(1 2)$[$(⍵⍳⌈/⍵)=⍳⍴⍵$]$$\}$Rows Cols\par
+SliceSize←$\{$MaxSlice⌊Rows Cols-⍵$\}$\par
+:EndSection\par
+\medskip
+:EndEssay\par
+
+\bye
