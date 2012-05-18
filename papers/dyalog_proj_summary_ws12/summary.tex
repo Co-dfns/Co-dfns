@@ -1,0 +1,89 @@
+\setuppapersize[letter]
+\setupbodyfont[xits,12pt]
+\setupindenting[yes,medium,first]
+\setupwhitespace[small]
+\definefont [tt] [Apl385]
+
+\starttext
+\title{Summary of the HPAPL Project}
+
+Aaron W. Hsu {\tt <awhsu@indiana.edu>}
+
+\subject{Introduction}
+
+This summary provides a brief, concise overview of the HPAPL project 
+and its status both as it currently stands and its planned future 
+direction.  It particularly details the plans for this summer under the 
+research grant provided by Dyalog.  HPAPL stands for “High Performance 
+\{A,Axiomatic\} \{Parallel,Programming\} Language.”  It is an implementation 
+of APL that has the twin goals of mathematical rigor and high 
+performance on parallel architectures.  It is meant to facilitate the 
+rapid development of high performance parallel programs.  Preliminary 
+language design and compiler development should be complete this 
+semester.  This includes preliminary formalisms and an infrastructure 
+for defining unchecked compiler optimizations.  The Summer research 
+goals encompass the necessay targets to move the existing prototype to 
+producing high performance code in both parallel and serial contexts. 
+The intended end result is a high speed, formal language lacking only a 
+proper set of end-user and development tools.
+
+\subject{Project Status and Pre-Summer Goals/Results}
+
+This semester’s work has been driven by three primary goals.  Firstly,
+we strove to explore the possibilities of such a system as HPAPL, 
+including how it might be designed and implemented.  Secondly, we wanted 
+a software artifact with basic functionality by the end and not just a 
+semantics.  We did not intend to be feature complete, but we did want 
+an adequate proof of concept.  With these goals in mind, we are in the 
+process of designing a prototype compiler and a draft paper semantics 
+that are capable of compiling and describing a set of parallel benchmarks. 
+These are the NAS benchmarks commonly used in HPC comparisons.  We have 
+settled on a design for the naïve compiler and are in the process of 
+implementing it.  Little forward progress has been made on the paper 
+semantics, but this is likely to change as we move forward on the 
+primary compiler.  A start on the benchmarks is progressing by 
+implementing the benchmarks first in Dyalog APL.
+
+Based on our current progress, we anticipate having the naïve compiler 
+core finished and a basic set of formal semantics complete.  We also 
+expect to have several, but not all, of the NAS benchmarks complete.
+
+\subject{Project Over the Summer}
+
+At the conclusion of the current semester, our compiler will lack a 
+number of important features.  First among these are the optimization
+passes of the compiler.  It will also lack the complete set of APL 
+functions and operators, and it will lack any sort of development tools. 
+The paper semantics, meant to drive the optimizations, will not yet have been 
+encoded into the compiler proper.
+
+The above list of shortcomings cannot be addressed adequately in one 
+summer.  Instead, the primary focus of the Summer research will be to 
+make the prototype compiler produce the fastest code possible. 
+We will leave the completeness of other features to a later date. 
+
+\subject{Benefits of Working with Dyalog}
+
+Current plans account for two months time in the UK over the Summer 
+to enable more direct feedback from the Dyalog team.  The primary benefit 
+of this is to leverage knowledge of the existing Dyalog code base 
+and developer wisdom to expedite the optimization of serial elements 
+of the HPAPL language.  This avoids wasting time on strategies that are 
+slower than existing practices.  We would like to maximize our use of 
+prior art to give HPAPL the best chance of succeeding.  It is also 
+likely that discoveries in our compiler can lead to improvements in 
+Dyalog's current products.
+
+\subject{Delivery Goals and Conclusion}
+
+By Summer's end, the goal is to have a compiler for HPAPL that generates 
+fast code, whose optimizations are driven by proofs and proof obligations. 
+The proofs are based on a formal axiomatic semantics of the language. 
+Beyond the compiler, a set of well respected benchmarks should be 
+encoded into HPAPL as a testament to the strengths and weaknesses of the 
+then current version of the compiler.  We intend that this system will 
+have several aspects that can be converted into papers and published 
+in academic circles. 
+
+
+\stoptext
