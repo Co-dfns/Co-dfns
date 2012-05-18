@@ -1,0 +1,67 @@
+I. Introduction
+  A. Title
+  B. Goals of the Talk
+    1. Understand CnC
+    2. Prompt feedback on my language
+  C. My Research
+    1. Current Research
+      a. Implementing CnC extensions
+      b. Enriching the language
+      c. Combining APL and CnC
+      d. Bulding formalism around CnC
+      e. Streaming Optimizations
+    2. Key ideas and motivations
+      a. What is "My" programming language?
+      b. Emphasize the key ideas
+        i. rigorously expressed
+        ii. Given first priority
+      c. Leveraging effective implicit parallelism
+      d. Avoid making parallelism the main thing
+II. CnC by Example
+  A. The Game of Life
+    1. Classic APL Example (WB)
+    2. How it works
+  B. Parallelizing
+    1. Game of Life is basically a stencil
+    2. Should not need to know stencil optmization
+    3. Slicing/Data parallelism
+  C. Using CnC to parallelize
+    1. Very simple, but practical
+    2. Creation should be independent of tuning
+    3. CnC should orchestrate, not dominate
+  D. Composing via a CnC Graph (WB)
+III. Combining CnC with APL
+  A. Motivation
+    1. CnC needed a more expressive graph
+    2. APL is great for concisely expressing indexing patterns
+    3. Inspired by the 3 layer cake
+    4. I wanted to push APL further
+  B. Revisiting the Game of Life
+    1. Graph is not just a pretty picture
+    2. What does the code look like?
+    3. WB Time
+  C. Pushing it further
+    1. User extensions of analysis
+    2. Fully formalizing the language
+IV. Conclusions and Future Work
+  A. Current Work
+    1. Compiler in APL (Dyalog)
+    2. Runtime in UPC (Unified Parallel C)
+    3. Managing analysis of streaming
+    4. Talking with Dyalog to fund summer research
+  B. Interesting questions
+    1. How formal can we go?
+    2. How fast can it go?
+    3. Modularity/Hierarchy
+    4. User language extensions
+    5. User compiler extensions
+  C. Other optimizations
+    1. Locality of Data on nodes
+    2. Vectorization at the node level
+    3. Scheduling of Steps
+    4. Interlanguage overhead
+    5. Optimization by proof
+  D. Conclusions
+    1. CnC is actually easy to understand!
+    2. CnC and APL compose well to form a nice language
+    3. Interesting opportunities in a language that I like to use
