@@ -1,0 +1,103 @@
+* HPAPL
+
+** CnC Keyword
+
+An HPAPL program is semantically equivalent to a single APL function to the 
+outside world. Such a program is defined using the :CnC ... :EndCnC keyword 
+pair. The syntax of this keyword is as follows:
+
+	:CnC <APL Function Signature>
+	  <APL Function Body>
+	:EndCnC
+
+The semantics of the body of this function are the same as a regular APL
+function body with the following differences:
+
+	1) All variables are single assignment variables;
+	2) All arrays are single assignment variables; and finally,
+	3) The use of Step functions ({{...}}) are permitted.
+
+CnC functions or HPAPL programs (these are synonyms) occupy a completely 
+isolated and independent process space from othe APL functions, and may not 
+interact or side-effect the state of any other process space, including the 
+process space of the Dyalog interpreter.
+	
+The treatment of Single-assignment arrays alters the behavior of some APL 
+functions which will be discussed below. We describe the definitions of 
+single assignment variables first.
+
+** Single-assignment Property
+
+*** Single-assignment variables
+
+Variables that are single assignment occupy the normal lexical space of an 
+APL function, but they may not be mutated.  That is, they may not be assigned 
+more than once.  This does not mean or imply that the arrays that are assigned 
+to these values may not be mutated, but that the actual location associated to 
+a variable may not be assigned more than once.
+
+A program or process (see below) that attempts to reference a single assignment 
+variable will either receive the value associated with that variable if the 
+variable has been assigned, or it will block until the variable is assigned.
+
+*** Single-assignment arrays
+
+Single-assignment arrays are exactly the same as normal APL arrays with the 
+additional note that their fill element is a single-assignment cell. A process
+may not assign a non-fill element of a Single-assignment Array.  A process may 
+assign an element that is a fill element. When a slot of an array that was 
+previously valued as an empty single-assignment cell, that is, an unassigned 
+cell, is assigned, that cell changes to the value to which it is assigned and 
+may not be assigned again by any other process.  Attempting to assign to an
+already assigned slot of a single-assignment array should signal an error.
+
+A process that attempts to reference the value of a SAA cell that is already 
+assigned will receive the value assigned to that cell.  If the cell is in an 
+unassigned or empty state, then the process will block until it that cell 
+has been assigned, at which point it will receive the value assigned to that 
+cell and will unblock, being available again to continue its execution.
+
+** Altered behavior of APL functions
+
+APL functions which do not rely on examining the value contents of their 
+arguments may return immediately their results even if the contents of an 
+array may not be fully assigned. The resulting array must reflect the values 
+that may eventually be assigned to the corresponding cells of the function's 
+arguments that produced the resulting array.
+
+All other APL functions that rely on the content of their array arguments to 
+compute an answer will block until the necessary cells necessary to compute 
+the answer are made available in the argument arrays.
+
+** Step Functions
+
+A step function is defined using the following syntax:
+
+	{{<Dfn body>}}
+
+The semantics and syntax of a step function are exactly the same as a normal 
+D-fns with the exception that the function returns immediately upon application 
+with a promise value that will contain the result of applying the function. 
+The equivalent D-fns will be enqueued in the process space as a new process 
+instance to compute the result, which will be stored in the returned promise.
+
+Attempting to access the promise value will block until the value is at least 
+partially assigned or its shape is known, at which point the SAA will be the 
+value of the promise. 
+
+Operators that are given Step functions return step functions that return 
+SAA arrays of the cells corresponding to the promises associated with the 
+semantically implied applications of the given Step function.
+
+** Processes and Threads
+
+A process in the above description is only a single, serially executed program
+or function that can be queued to execute, possibly in parallel, with other 
+processes.  It may be stopped and resumed at any arbitrary point in its 
+computation.
+
+** Atomicity
+
+We need to talk about what operations are atomic?
+
+** Optimization opportunities
