@@ -1,0 +1,28 @@
+:CnC
+
+:EndCnC
+
+
+:CnC Z←(F SCAN) R
+  Z←(⍴R)⍴⍬
+  Z[0]←⊃R
+  Z[1↓⍳⍴R]←(1↓⍳⍴R){{Z[⍺-1] F ⍵}}¨1↓R
+:EndCnC
+
+:CnC A←(F REDUCE) R;Z
+
+  ⍝ Basic Start
+  Z←(⍴R)⍴⍬
+  Z[0]←⊃R
+  
+  ⍝ Another Version
+  Z←(⊃R),(¯1+⍴R)⍴⍬
+  
+  (1↓Z)←(¯1↓Z){{⍺ F ⍵}}¨1↓R
+
+  ⍝ Yet another version
+  Z←(⍳⍴R){{0=⍺: ⊃R ⋄ Z[⍺-1] F ⍵}}¨R
+  
+  A←⊃⌽Z
+:EndCnC
+
