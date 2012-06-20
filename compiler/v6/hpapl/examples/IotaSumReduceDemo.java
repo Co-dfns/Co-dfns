@@ -5,7 +5,7 @@ import hpapl.AplArray.*;
 
 public class IotaSumReduceDemo {
 	
-	private class Anon extends AplFunction {
+	private static class Anon extends AplFunction {
 		public void apply(AplArray out, AplArray rgt) {
 			AplArray res = new AplArray();
 			AplFunction plus = new AplArray.PlusFunction();
@@ -22,13 +22,14 @@ public class IotaSumReduceDemo {
 	}
 	
 	/* ⎕←{+/⍳⍵}¨⍳300000 */
-	public void main(String[] args) {
+	public static void main(String[] args) {
 		AplArray res;
 		AplFunction fun;
 		
 		fun = new Anon();
+		res = new AplArray();
 		
-		res.iota(300000);
+		res.iota(50);
 		res.each(fun, res);
 		
 		res.print();
