@@ -275,10 +275,19 @@ public class AplArrayTest {
 	
 	@Test public void testReduceSelfReference() {
 		AplArray tmp = new AplArray(iota_scalar_res);
-		
 		tmp.reduce(plus, tmp);
-		
 		assertEquals(reduce_arr, tmp);
 	}
 	
+	@Test public void testReduceIota() {
+		AplArray res = new AplArray();
+		res.reduceIota(plus, iota_scalar_in);
+		assertEquals(reduce_arr, res);
+	}
+	
+	@Test public void testReduceIotaPrimitiv() {
+		AplArray res = new AplArray();
+		res.reduceIota((AplFunctionPrimitive) plus, iota_scalar_in);
+		assertEquals(reduce_arr, res);
+	}
 }

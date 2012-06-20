@@ -2,17 +2,16 @@ package hpapl.examples;
 
 import hpapl.*;
 import hpapl.AplArray.*;
+import java.io.*;
 
 public class IotaSumReduceDemo {
 	
 	private static class Anon extends AplFunction {
 		public void apply(AplArray out, AplArray rgt) {
 			AplArray res = new AplArray();
-			AplFunction plus = new AplArray.PlusFunction();
+			AplFunctionPrimitive plus = new AplArray.PlusFunction();
 			
-			res.iota(rgt);
-			res.reduce(plus, res);
-			
+			res.reduceIota(plus, rgt);
 			out.setFrom(0, res, 0);
 		}
 		
@@ -21,17 +20,22 @@ public class IotaSumReduceDemo {
 		}
 	}
 	
-	/* ⎕←{+/⍳⍵}¨⍳300000 */
-	public static void main(String[] args) {
+	/* ⎕←⊃⌽{+/⍳⍵}¨⍳count */
+	public static void main(String[] args) 
+	throws InterruptedException {
 		AplArray res;
 		AplFunction fun;
+		
+		// Thread.sleep(5000);
+		
+		int count = 100000;
 		
 		fun = new Anon();
 		res = new AplArray();
 		
-		res.iota(50);
+		res.iota(count);
 		res.each(fun, res);
 		
-		res.print();
+		System.out.println(res.getInt(count - 1));
 	}
 }
