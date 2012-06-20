@@ -661,13 +661,17 @@ public class AplArray extends AplOperand {
 		throw new AplNonceException();	
 	}
 	
-	public static class PlusFunction extends AplFunctionScalar {
+	public static class PlusFunction extends AplFunctionScalar
+	implements AplFunctionPrimitive {
 		public void apply(AplArray out, AplArray lft, AplArray rgt) {
 			out.plus(lft, rgt);
 		}
 		public void apply(AplArray out, AplArray rgt) {
 			throw new AplNonceException();
-		}		
+		}
+		public void apply(AplArray out, int idx, int lft, int rgt) {
+			out.set(idx, lft + rgt);
+		}
 	}
 	
 	public void print() {
@@ -816,5 +820,53 @@ public class AplArray extends AplOperand {
 			fun.apply(this, in, this);
 		}
 	}
-			
+	
+	public void reduceIota(AplFunction fun, int cnt) {		
+		int[] shp = {};
+		AplArray in = new AplArray(0);
+		int[] dat;
+		
+		setShape(shp);
+		clearState();
+		ensureType(INTEGER);
+		in.ensureType(INTEGER);
+		
+		dat = in.getIntData();
+		data_int[0] = cnt - 1;
+		
+		for (int i = cnt - 2; i >= 0; i--) {
+			dat[0] = i;
+			fun.apply(this, in, this);
+		}
+	}
+	
+	public void reduceIota(AplFunctionPrimitive fun, int cnt) {
+		int[] shp = {};
+		
+		setShape(shp);
+		clearState();
+		ensureType(INTEGER);
+		
+		data_int[0] = cnt - 1;
+		
+		for (int i = cnt - 2; i >= 0; i--) {
+			fun.apply(this, 0, i, data_int[0]);
+		}
+	}
+	
+	public void reduceIota(AplFunction fun, AplArray rgt) {
+		if (rgt.isScalar()) {
+			reduceIota(fun, rgt.getInt(0));
+		} else if (rgt.isVector() && 1 == rgt.getSize()) {
+			reduceIota(fun, rgt.getInt(0));
+		}
+	}
+	
+	public void reduceIota(AplFunctionPrimitive fun, AplArray rgt) {
+		if (rgt.isScalar()) {
+			reduceIota(fun, rgt.getInt(0));
+		} else if (rgt.isVector() && 1 == rgt.getSize()) {
+			reduceIota(fun, rgt.getInt(0));
+		}
+	}	
 }
