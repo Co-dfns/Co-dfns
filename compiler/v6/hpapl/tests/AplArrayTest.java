@@ -18,8 +18,12 @@ public class AplArrayTest {
 	AplArray plus_scalar;
 	AplArray each_id;
 	AplArray each_id_scalar;
+	AplArray reduce_arr;
+	
 	AplFunction id_fun;
 	AplFunctionScalar id_fun_scalar;
+	AplFunction plus;
+	
 	int iota_scalar_in = 49;
 	int[] scalar_shape = {};
 	int scalar_value = 7;
@@ -67,6 +71,10 @@ public class AplArrayTest {
 		each_id.each(id_fun, plus_scalar);
 		id_fun_scalar = new IdFunctionScalar();
 		each_id_scalar.each(id_fun_scalar, plus_scalar); 
+		
+		reduce_arr = new AplArray();
+		plus = new AplArray.PlusFunction();
+		reduce_arr.reduce(plus, iota_scalar_res);
 	}
 	
 	@Test public void allEmpty() {
@@ -249,6 +257,28 @@ public class AplArrayTest {
 		AplArray test = new AplArray(plus_scalar);
 		test.each(id_fun_scalar, test);
 		assertEquals(plus_scalar, test);
+	}
+	
+	@Test public void testReduce() {
+		int exp = 0;
+		
+		for (int i = 0; i < iota_scalar_in; i++) {
+			exp += i;
+		}
+		
+		assertEquals(exp, reduce_arr.getInt(0));
+	}
+	
+	@Test public void testReduceIsScalar() {
+		assertTrue(reduce_arr.isScalar());
+	}
+	
+	@Test public void testReduceSelfReference() {
+		AplArray tmp = new AplArray(iota_scalar_res);
+		
+		tmp.reduce(plus, tmp);
+		
+		assertEquals(reduce_arr, tmp);
 	}
 	
 }

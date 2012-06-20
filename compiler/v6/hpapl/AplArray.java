@@ -727,4 +727,94 @@ public class AplArray extends AplOperand {
 		return true;
 	}
 	
+	public void reduce(AplFunction fun, AplArray arr) {
+		if (!arr.isVector()) {
+			throw new AplNonceException();
+		} else {
+			int[] shp = {};
+			
+			setShape(shp);
+			
+			switch (arr.getType()) {
+			case INTEGER: reduce(fun, arr.getIntData()); break;
+			case LONG: reduce(fun, arr.getLongData()); break;
+			case DOUBLE: reduce(fun, arr.getDoubleData()); break;
+			case CHAR: reduce(fun, arr.getCharData()); break;
+			default: throw new AplTypeException();
+			}
+		}
+	}
+	
+	public void reduce(AplFunction fun, int[] data) {
+		AplArray in = new AplArray(0);
+		
+		clearState();
+		
+		if (0 == data.length) {
+			set(0, 0);
+			return;
+		} else {
+			set(0, data[data.length - 1]);
+		}
+		
+		for (int i = data.length - 2; i >= 0; i--) {
+			in.set(0, data[i]);
+			fun.apply(this, in, this);
+		}
+	}
+	
+	public void reduce(AplFunction fun, long[] data) {
+		AplArray in = new AplArray(0);
+		
+		clearState();
+		
+		if (0 == data.length) {
+			set(0, 0);
+			return;
+		} else {
+			set(0, data[data.length - 1]);
+		}
+		
+		for (int i = data.length - 2; i >= 0; i--) {
+			in.set(0, data[i]);
+			fun.apply(this, in, this);
+		}
+	}
+	
+	public void reduce(AplFunction fun, double[] data) {
+		AplArray in = new AplArray(0);
+		
+		clearState();
+		
+		if (0 == data.length) {
+			set(0, 0);
+			return;
+		} else {
+			set(0, data[data.length - 1]);
+		}
+		
+		for (int i = data.length - 2; i >= 0; i--) {
+			in.set(0, data[i]);
+			fun.apply(this, in, this);
+		}
+	}
+	
+	public void reduce(AplFunction fun, char[] data) {
+		AplArray in = new AplArray(0);
+		
+		clearState();
+		
+		if (0 == data.length) {
+			set(0, ' ');
+			return;
+		} else {
+			set(0, data[data.length - 1]);
+		}
+		
+		for (int i = data.length - 2; i >= 0; i--) {
+			in.set(0, data[i]);
+			fun.apply(this, in, this);
+		}
+	}
+			
 }
