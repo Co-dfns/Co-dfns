@@ -182,6 +182,13 @@ typedef wchar_t AplChar;
 @ There are a few very useful functions relating to arrays that 
 we should talk about. The first is a way to get the size based on 
 the contents of the |shape| array.
+The size can be expressed as follows:
+
+$$\prod_{i=0}^{r}s_i$$
+
+\noindent Where $r$ is the |rank| of the array, and $s$ is the 
+shape array. Specifically, it is the product of the dimensions 
+of the array.
 
 @<Internal utility functions@>=
 int size(AplArray *array) 
@@ -202,6 +209,9 @@ int size(AplArray *array)
 
 @ Next, we very often want to talk about the rank of an array, so 
 we encapsulate that up into a function.
+Specifically, if we define 
+$s = \{x\in \hbox{|array->shape|} \mid x\neq |SHAPE_END|\}$, 
+then |rank| should be the size or cardinality of $s$.
 
 @<Internal utility functions@>=
 short rank(AplArray *array) 
@@ -225,6 +235,12 @@ product of an integer array's ravel. Basically, we often want to
 compute the product when we are using the array as a reshape value 
 for another array or the like. For this we assume that the array 
 that we are given is an integer array, and then we get to work.
+If $a$ is the ravel of |array| and $a_i$ is the $i$th element in 
+that ravel, then |product| should compute the following:
+
+$$\prod_{i=0}^{size(array)}a_i$$
+
+\noindent That is, the product of all the elements in the array.
 
 @<Internal utility functions@>=
 unsigned int product(AplArray *array)
@@ -349,6 +365,19 @@ union apl_operand {
 	AplFunction function;
 };
 typedef union apl_operand AplOperand;
+
+@ We are about done with the work on the primary data structures, 
+so we should take some time to get all of the other basic array 
+utilities out of the way. Let's focus specifically on those that 
+we might find generally useful, but that do not deal with 
+any allocation explicitly. To start us off, we'll deal with 
+shapes.  We may want to know whether a given array is scalar, 
+vector, matrix, or noble. These macros can help with that.
+
+@d is_scalar(array) (0 == rank(array))
+@d is_vector(array) (1 == rank(array))
+@d is_matrix(array) (2 == rank(array))
+@d is_noble(array)  (2 < rank(array))
 
 
 @* Index.
