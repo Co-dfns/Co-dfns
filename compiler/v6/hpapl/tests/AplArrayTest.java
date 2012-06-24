@@ -57,6 +57,7 @@ public class AplArrayTest {
 		iota_scalar_res.iota(iota_scalar_in);
 		
 		scalar = new AplArray(scalar_shape);
+		scalar.setType(AplArray.INTEGER);
 		scalar.set(0, scalar_value);
 		
 		plus_iota = new AplArray();
