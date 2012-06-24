@@ -312,13 +312,16 @@ we will often pass around only an |AplFunction| value, and
 not the actual |AplCodePtr| value.  This means that we need to 
 have a pointer to the code that expects the closure as well.
 
+@s AplOperand int
+@s AplOperand int
+
 @<Define |AplFunction| type@>=
 struct apl_function {
 	void (*code)(AplArray **, AplArray *, AplArray *,
 	    struct apl_function *);
-	AplArray *lop;
-	AplArray *rop;
-	AplArray *env;
+	union apl_operand *lop; /* The $\alpha\alpha$ variable */
+	union apl_operand *rop; /* The $\omega\omega$ variable */
+	AplArray *env; /* All other free variables */
 };
 typedef struct apl_function AplFunction;
 
@@ -328,6 +331,25 @@ The arguments are all expected to be pointers to their appropriate
 data types.
 
 @d apply(fun, res, lft, rgt) ((fun)->code)(&res, lft, rgt, fun)
+
+@ We have not yet explained why we use |AplOperand| for the |lop| 
+and |rop| variables, which correspond to $\alpha\alpha$ and 
+$\omega\omega$ variables in a function. In APL, an operators 
+left and right operands can be either functions or arrays. We may 
+need to allow both even in the same operator, so we have a type 
+which can be either the one or the other. We implement this with 
+a union, because in practice, we will know at the time that we 
+use an operand, how it is to be used: either as a function or as 
+an array. This means that we do not need to have a type tag as 
+we do with the |AplArray| type.
+
+@<Primary data structures@>=
+union apl_operand {
+	AplArray array;
+	AplFunction function;
+};
+typedef union apl_operand AplOperand;
+
 
 @* Index.
 
