@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -pedantic -ansi
+CFLAGS=-g -Wall -pedantic -ansi -fPIC
 CC=gcc
 
 .SUFFIXES: .pdf .dvi .tex .w
