@@ -52,7 +52,7 @@ public class AplArray extends AplOperand {
 		}
 	}
 	
-	public void initializeState(AplType type) {
+	public void setType(AplType type) {
 		int size = 1;
 		
 		for (int e : shape) size *= e;
@@ -92,14 +92,6 @@ public class AplArray extends AplOperand {
 			data_double = null;
 			break;
 		default: throw new AplTypeException();
-		}
-	}
-	
-	private void ensureType(AplType type) {
-		if (this.type == UNSET) {
-			initializeState(type);
-		} else {
-			verifyType(type);
 		}
 	}
 	
@@ -199,75 +191,51 @@ public class AplArray extends AplOperand {
 	}		
 	
 	public int getInt(int idx) {
-		verifyType(INTEGER);
 		return data_int[idx];
 	}
 	
 	public long getLong(int idx) {
-		verifyType(LONG);
 		return data_long[idx];
 	}
 		
 	public double getDouble(int idx) {
-		verifyType(DOUBLE);
 		return data_double[idx];
 	}
 		
 	public char getChar(int idx) {
-		verifyType(CHAR);
 		return data_char[idx];
 	}
 		
 	public int[] getIntData() {
-		verifyType(INTEGER);
 		return data_int;
 	}
 	
 	public long[] getLongData() {
-		verifyType(LONG);
 		return data_long;
 	}
 	
 	public double[] getDoubleData() {
-		verifyType(DOUBLE);
 		return data_double;
 	}
 	
 	public char[] getCharData() {
-		verifyType(CHAR);
 		return data_char;
 	}
 	
 	public void set(int idx, int val) {
-		ensureType(INTEGER);
 		data_int[idx] = val;
 	}
 	
 	public void set(int idx, long val) {
-		ensureType(LONG);
 		data_long[idx] = val;
 	}
 	
 	public void set(int idx, double val) {
-		ensureType(DOUBLE);
 		data_double[idx] = val;
 	}
 	
 	public void set(int idx, char val) {
-		ensureType(CHAR);
 		data_char[idx] = val;
-	}
-	
-	public void setFrom(int idx, AplArray in, int inidx) {
-		ensureType(in.getType());
-		
-		switch(type) {
-		case INTEGER: set(idx, in.getInt(inidx)); break;
-		case LONG: set(idx, in.getLong(inidx)); break;
-		case DOUBLE: set(idx, in.getDouble(inidx)); break; 
-		case CHAR: set(idx, in.getChar(inidx)); break; 
-		default: throw new AplTypeException();
-		}
 	}
 	
 	public boolean isEmpty() {
@@ -298,19 +266,11 @@ public class AplArray extends AplOperand {
 		int[] shp = {cnt};
 		
 		setShape(shp);
-		clearState();
-		
-		if (data != null && data.length == cnt) {
-			data_int = data;
-		} else {
-			data_int = new int[cnt];
-		}
+		setType(INTEGER);
 		
 		for (int i = 0; i < cnt; i++) {
 			data_int[i] = i;
 		}
-		
-		type = INTEGER;
 	}
 	
 	public void iota(AplArray shp) {
@@ -344,54 +304,190 @@ public class AplArray extends AplOperand {
 	}
 			
 	private void each(AplFunction fun, int[] rgtd) {
+		if (0 == rgtd.length) {
+			setType(INTEGER);
+			return;
+		}
+		
 		AplArray in = new AplArray(0);
 		AplArray out = new AplArray(0);
 		
-		clearState();
+		in.setType(INTEGER);
+		in.set(0, rgtd[0]);
+		fun.apply(out, in);
+		setType(out.getType());
 		
-		for (int i = 0; i < rgtd.length; i++) {
-			in.set(0, rgtd[i]);
-			fun.apply(out, in);
-			setFrom(i, out, 0);
+		switch (getType()) {
+		case INTEGER:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getInt(0));
+			}
+			break;
+		case LONG:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getLong(0));
+			}
+			break;
+		case DOUBLE:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getDouble(0));
+			}
+			break;
+		case CHAR:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getChar(0));
+			}
+			break;
+		default: throw new AplTypeException();
 		}
 	}
 	
 	private void each(AplFunction fun, long[] rgtd) {
+		if (0 == rgtd.length) {
+			setType(LONG);
+			return;
+		}
+		
 		AplArray in = new AplArray(0);
 		AplArray out = new AplArray(0);
 		
-		clearState();
+		in.setType(LONG);
+		in.set(0, rgtd[0]);
+		fun.apply(out, in);
+		setType(out.getType());
 		
-		for (int i = 0; i < rgtd.length; i++) {
-			in.set(0, rgtd[i]);
-			fun.apply(out, in);
-			setFrom(i, out, 0);
+		switch (getType()) {
+		case INTEGER:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getInt(0));
+			}
+			break;
+		case LONG:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getLong(0));
+			}
+			break;
+		case DOUBLE:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getDouble(0));
+			}
+			break;
+		case CHAR:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getChar(0));
+			}
+			break;
+		default: throw new AplTypeException();
 		}
 	}
 	
 	private void each(AplFunction fun, double[] rgtd) {
+		if (0 == rgtd.length) {
+			setType(DOUBLE);
+			return;
+		}
+		
 		AplArray in = new AplArray(0);
 		AplArray out = new AplArray(0);
 		
-		clearState();
+		in.setType(DOUBLE);
+		in.set(0, rgtd[0]);
+		fun.apply(out, in);
+		setType(out.getType());
 		
-		for (int i = 0; i < rgtd.length; i++) {
-			in.set(0, rgtd[i]);
-			fun.apply(out, in);
-			setFrom(i, out, 0);
+		switch (getType()) {
+		case INTEGER:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getInt(0));
+			}
+			break;
+		case LONG:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getLong(0));
+			}
+			break;
+		case DOUBLE:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getDouble(0));
+			}
+			break;
+		case CHAR:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getChar(0));
+			}
+			break;
+		default: throw new AplTypeException();
 		}
 	}
 	
 	private void each(AplFunction fun, char[] rgtd) {
+		if (0 == rgtd.length) {
+			setType(CHAR);
+			return;
+		}
+		
 		AplArray in = new AplArray(0);
 		AplArray out = new AplArray(0);
 		
-		clearState();
+		in.setType(CHAR);
+		in.set(0, rgtd[0]);
+		fun.apply(out, in);
+		setType(out.getType());
 		
-		for (int i = 0; i < rgtd.length; i++) {
-			in.set(0, rgtd[i]);
-			fun.apply(out, in);
-			setFrom(i, out, 0);
+		switch (getType()) {
+		case INTEGER:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getInt(0));
+			}
+			break;
+		case LONG:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getLong(0));
+			}
+			break;
+		case DOUBLE:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getDouble(0));
+			}
+			break;
+		case CHAR:
+			for (int i = 1; i < rgtd.length; i++) {
+				in.set(0, rgtd[i]);
+				fun.apply(out, in);
+				set(i, out.getChar(0));
+			}
+			break;
+		default: throw new AplTypeException();
 		}
 	}
 	
@@ -411,10 +507,9 @@ public class AplArray extends AplOperand {
 		if (this == arr) return;
 		
 		setShape(arr.getShape());
-		clearState();
-		ensureType(arr.getType());
+		setType(arr.getType());
 		
-		switch(arr.getType()) {
+		switch(type) {
 		case INTEGER:
 			System.arraycopy(arr.getIntData(), 0, data_int, 0, getSize());
 			break;
@@ -444,126 +539,126 @@ public class AplArray extends AplOperand {
 	}
 	
 	private void plus(int[] ld, int[] rd) {
-		initializeState(INTEGER);
+		setType(INTEGER);
 		for (int i = 0; i < data_int.length; i++) {
 			data_int[i] = ld[i] + rd[i];
 		}
 	} 
 	
 	private void plus(int[] ld, long[] rd) {
-		initializeState(LONG);
+		setType(LONG);
 		for (int i = 0; i < data_int.length; i++) {
 			data_long[i] = ld[i] + rd[i];
 		}
 	} 
 
 	private void plus(int[] ld, double[] rd) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = ld[i] + rd[i];
 		}
 	} 
 
 	private void plus(long[] ld, int[] rd) {
-		initializeState(LONG);
+		setType(LONG);
 		for (int i = 0; i < data_int.length; i++) {
 			data_long[i] = ld[i] + rd[i];
 		}
 	} 
 
 	private void plus(long[] ld, long[] rd) {
-		initializeState(LONG);
+		setType(LONG);
 		for (int i = 0; i < data_int.length; i++) {
 			data_long[i] = ld[i] + rd[i];
 		}
 	} 
 
 	private void plus(long[] ld, double[] rd) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = ld[i] + rd[i];
 		}
 	} 
 
 	private void plus(double[] ld, int[] rd) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = ld[i] + rd[i];
 		}
 	} 
 
 	private void plus(double[] ld, long[] rd) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = ld[i] + rd[i];
 		}
 	} 
 	
 	private void plus(double[] ld, double[] rd) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = ld[i] + rd[i];
 		}
 	} 
 	
 	private void plus_scalar(int s, int[] a) {
-		initializeState(INTEGER);
+		setType(INTEGER);
 		for (int i = 0; i < data_int.length; i++) {
 			data_int[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(int s, long[] a) {
-		initializeState(LONG);
+		setType(LONG);
 		for (int i = 0; i < data_int.length; i++) {
 			data_long[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(int s, double[] a) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(long s, int[] a) {
-		initializeState(LONG);
+		setType(LONG);
 		for (int i = 0; i < data_int.length; i++) {
 			data_long[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(long s, long[] a) {
-		initializeState(LONG);
+		setType(LONG);
 		for (int i = 0; i < data_int.length; i++) {
 			data_long[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(long s, double[] a) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(double s, int[] a) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(double s, long[] a) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = s + a[i];
 		}
 	}
 	
 	private void plus_scalar(double s, double[] a) {
-		initializeState(DOUBLE);
+		setType(DOUBLE);
 		for (int i = 0; i < data_int.length; i++) {
 			data_double[i] = s + a[i];
 		}
@@ -670,6 +765,7 @@ public class AplArray extends AplOperand {
 			throw new AplNonceException();
 		}
 		public void apply(AplArray out, int idx, int lft, int rgt) {
+			out.setType(INTEGER);
 			out.set(idx, lft + rgt);
 		}
 	}
@@ -752,7 +848,8 @@ public class AplArray extends AplOperand {
 	public void reduce(AplFunction fun, int[] data) {
 		AplArray in = new AplArray(0);
 		
-		clearState();
+		setType(INTEGER);
+		in.setType(INTEGER);
 		
 		if (0 == data.length) {
 			set(0, 0);
@@ -770,7 +867,8 @@ public class AplArray extends AplOperand {
 	public void reduce(AplFunction fun, long[] data) {
 		AplArray in = new AplArray(0);
 		
-		clearState();
+		setType(LONG);
+		in.setType(LONG);
 		
 		if (0 == data.length) {
 			set(0, 0);
@@ -788,7 +886,8 @@ public class AplArray extends AplOperand {
 	public void reduce(AplFunction fun, double[] data) {
 		AplArray in = new AplArray(0);
 		
-		clearState();
+		setType(DOUBLE);
+		in.setType(DOUBLE);
 		
 		if (0 == data.length) {
 			set(0, 0);
@@ -806,7 +905,8 @@ public class AplArray extends AplOperand {
 	public void reduce(AplFunction fun, char[] data) {
 		AplArray in = new AplArray(0);
 		
-		clearState();
+		setType(CHAR);
+		in.setType(CHAR);
 		
 		if (0 == data.length) {
 			set(0, ' ');
@@ -827,9 +927,8 @@ public class AplArray extends AplOperand {
 		int[] dat;
 		
 		setShape(shp);
-		clearState();
-		ensureType(INTEGER);
-		in.ensureType(INTEGER);
+		setType(INTEGER);
+		in.setType(INTEGER);
 		
 		dat = in.getIntData();
 		data_int[0] = cnt - 1;
@@ -844,8 +943,7 @@ public class AplArray extends AplOperand {
 		int[] shp = {};
 		
 		setShape(shp);
-		clearState();
-		ensureType(INTEGER);
+		setType(INTEGER);
 		
 		data_int[0] = cnt - 1;
 		
