@@ -37,17 +37,19 @@ into the following sections:
 
 @p
 #include <limits.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 @h
 
+@<Runtime error reporting@>@;
 @<Primary data structures@>@;
-@<Internal utility functions@>@;
-/*Memory management functions*/@;
-/*Scalar APL functions*/@;
-/*Non-scalar APL functions*/@;
-/*APL Operators*/@;
+@<Utility functions@>@;
+@<Memory management functions@>@;
+@<APL Scalar Functions@>@;
+/*Non-scalar APL functions*/@/
+/*APL Operators*/@/
 
 @ The HPAPL at its core has two data types, functions and arrays. 
 Functions as implemented in the runtime are first-class objects, but 
@@ -190,7 +192,7 @@ $$\prod_{i=0}^{r}s_i$$
 shape array. Specifically, it is the product of the dimensions 
 of the array.
 
-@<Internal utility functions@>=
+@<Utility functions@>=
 int size(AplArray *array) 
 {
 	int i, res;
@@ -213,7 +215,7 @@ Specifically, if we define
 $s = \{x\in \hbox{|array->shape|} \mid x\neq |SHAPE_END|\}$, 
 then |rank| should be the size or cardinality of $s$.
 
-@<Internal utility functions@>=
+@<Utility functions@>=
 short rank(AplArray *array) 
 {
 	short i, rnk;
@@ -242,7 +244,7 @@ $$\prod_{i=0}^{size(array)}a_i$$
 
 \noindent That is, the product of all the elements in the array.
 
-@<Internal utility functions@>=
+@<Utility functions@>=
 unsigned int product(AplArray *array)
 {
 	int i, len;
@@ -274,25 +276,8 @@ have the same signature as their C function elements.
 
 @<Primary data structures@>=
 @<Define |AplFunction| type@>@;
-typedef void (*AplCodePtr)(AplArray **res_ptr,
+typedef void (*AplCodePtr)(AplArray *res,
     AplArray *, AplArray *, AplFunction *);
-
-@ Each APL function should place its result into the array that is 
-pointed to in |res_ptr| unless that pointer is NULL, in which case 
-it should store into |res_ptr| the pointer to a newly allocated 
-array. We use the convention that |res| always contains the 
-result array, so we can encapsulate this main logic here.
-
-@<Setup return array |res|@>=
-if (NULL == *res_ptr) {
-	res = malloc(sizeof(AplArray));
-	if (NULL == res) apl_error(APLERROR_MALLOC);
-	*res_ptr = res;
-} else {
-	res = *res_ptr;
-}
-
-init_array(res);
 
 @ Initializing an array is just a matter of setting up all the 
 values to suitable defaults before we do any allocations. This 
@@ -301,7 +286,7 @@ This function does not do any allocation, but simply sets some
 fields.  See the section further down on memory management 
 for functions that allocate space for arrays and the like.
 
-@<Internal utility functions@>=
+@<Utility functions@>=
 void init_array(AplArray *array)
 {
 	int i;
@@ -333,11 +318,11 @@ have a pointer to the code that expects the closure as well.
 
 @<Define |AplFunction| type@>=
 struct apl_function {
-	void (*code)(AplArray **, AplArray *, AplArray *,
+	void (*code)(AplArray *, AplArray *, AplArray *,
 	    struct apl_function *);
 	union apl_operand *lop; /* The $\alpha\alpha$ variable */
 	union apl_operand *rop; /* The $\omega\omega$ variable */
-	AplArray *env; /* All other free variables */
+	union apl_operand *env; /* All other free variables */
 };
 typedef struct apl_function AplFunction;
 
@@ -378,6 +363,545 @@ vector, matrix, or noble. These macros can help with that.
 @d is_vector(array) (1 == rank(array))
 @d is_matrix(array) (2 == rank(array))
 @d is_noble(array)  (2 < rank(array))
+
+@ It is also useful to be able to grab the shape from one array 
+and put it into another. This is the main header information that 
+does not involve allocation. 
+
+@<Utility functions@>=
+void copy_shape(AplArray *dst, AplArray *src) 
+{
+	short i;
+	unsigned int *dstshp, *srcshp;
+	dstshp = dst->shape;
+	srcshp = src->shape;
+	for (i = 0; i < MAXRANK; i++) *dstshp++ = *srcshp++;
+}
+
+@ Note, we could also talk about the |type| field, which is another 
+field that does not relate directly to the heap-allocated regions 
+of the array, but in this case, it's no good, because |type| is 
+actually indirectly responsible, and there are not many useful 
+functions that we would want to use |type| in that did not 
+also involve allocation.
+
+@ Finally, before we proceed to the section on memory management, we 
+should talk about initializing closures.  In this case, a closure 
+will normally be something that we know the size of statically, 
+since we will know how many variables are free in the function. We 
+want to make it convenient to setup all those values based on local
+elements, so we have a choice of either accepting those values 
+directly with a variable length argument list, or forcing the user 
+of the runtime (the compiler) to give us an array.  In this case, 
+because the number of free variables is expected to be small most of 
+the time, I think it is safe to use variable length argument lists 
+for convenience instead of forcing the pollution of the namespace 
+with an explicit environment list. We assume that we have an 
+|AplFunction| structure pointer that is already allocated for the 
+correct number of free variables that we have.
+
+@<Utility functions@>=
+void init_function(AplFunction *fun, AplCodePtr code, 
+    AplOperand *lop, AplOperand *rop, ...)
+{
+	va_list ap;
+	AplOperand *env, *var;
+	fun->code = code;
+	fun->lop = lop;
+	fun->rop = rop;
+	env = fun->env;
+	va_start(ap, rop);
+	while (NULL != (var = va_arg(ap, AplOperand *))) {
+		env = var; env++;
+	}
+	va_end(ap);
+}
+
+@* Memory management functions. This section is meant to deal 
+specifically with controlling and allocating space for arrays and 
+other sorts of things that can be grouped under the ``memory 
+management'' moniker. Mostly, this means allocating and freeing 
+arrays and function closures in useful, easy ways. Function closures 
+are the easiest, but I want to take a moment to discuss the general 
+idea behind the |AplArray| structure and how it should be used.
+
+In general, I expect that most allocations of |AplArray| objects 
+should be automatic.  That is, most of the time, you know that you 
+need one, and you will allocate it locally using stack allocations 
+or some other form that allows for automatic memory management. 
+This leaves only the |array->data| field as something that needs 
+to be managed entirely and almost always on the heap. I imagine 
+that if you have a small function with a small array you could 
+get by with allocating the |data| element on the stack or 
+automatically as well, but this would likely create problems 
+unless you are absolutely sure of the lifetime of the array. 
+In the future, we might also want to enable some sort of sharing 
+of array data structures, to enable access of multiple array 
+headers into the same region for shared access to elements. 
+This involves a sort of copy on write semantics. If an array 
+|data| region is not heap-allocated, we could have real problems 
+if a region is shared with an array that will outlive the local 
+scope of the allocation. In short, always use the memory 
+allocation functions here for allocating and resizing arrays 
+|data| regions, though it is okay and preferred to stack 
+allocate |AplArray| structures unless you explicitely want 
+to avoid that for some reason.
+
+With that out of the way, let's talk a bit more about closures, 
+which are the easier thing to work with.  When we allocate 
+a closure, we need to provide values for the $\alpha\alpha$ 
+and $\omega\omega$ variables, and potentially also for the 
+rest of the free variables. However, we normally know exactly 
+how many free variables a function's code body is going to need 
+at compile time, and so we can statically allocate those.  
+Moreover, it is never possible for a function to be returned 
+from another function, just allocated, and this means that we 
+can rely on no functions above the current call stack needing 
+access to the free variables or the like. Indeed, closures, 
+in most cases, should be able to be allocated almost entirely 
+statically or automatically.
+
+@ The most common situation that we encounter that requires good 
+memory management abstraction is the handling of the |array->data| 
+field. Normally, we have an array that has been automatically 
+allocated for which we now need to make enough space to store
+elements of a particular type. Assuming that we already know how 
+the shape of the array looks, we know how many array elements that 
+we ultimately need. All we need explicitely is the type of the 
+elements that are going to be stored there. Ideally speaking, 
+we want to reuse space that has already been allocated to the array 
+if there is enough room to store the elements that we need. 
+We provide two different allocators, the first, |alloc_array| for 
+when we do not care to keep the old contents of the array.
+
+@<Memory management functions@>=
+void alloc_array(AplArray *array, AplType type)
+{
+	size_t dsize;
+	void *data;
+	data = array->data;
+	dsize = type_size(type) * size(array);
+	if (NULL == data || dsize > array->size) {
+		free(data);
+		data = malloc(dsize);
+		@<Verify that |data| allocation succeeded@>@;
+	}
+	array->data = data;
+	array->size = dsize;
+}
+
+@ There are times when we may want to preserve the contenst of an 
+array as we resize it to hold more elements or the like. To handle 
+these situations, we provide the |realloc_array| function that is 
+basically the same as the |alloc_array| function except that it 
+guarantees that the contents of the array will be the same up 
+to the |size(array)| of the |array|. 
+
+@<Memory management functions@>=
+void realloc_array(AplArray *array, AplType type)
+{
+	size_t dsize;
+	void *data;
+	data = array->data;
+	dsize = type_size(type) * size(array);
+	if (NULL == data || dsize > array->size) {
+		data = realloc(data, dsize);
+		@<Verify that |data| alloc...@>@;
+	}
+	array->data = data;
+	array->size = dsize;
+}
+
+@ In both of the above functions we want to check that the allocation
+succeeds or that we trigger an error if it does not. We encapsulate 
+that into a single place here.
+
+@<Verify that |data| allocation succeeded@>=
+if (NULL == data) {
+	perror("array_[re]alloc()");
+	apl_error(APLERR_MALLOC);
+	exit(APLERR_MALLOC);
+}
+
+@ We also have a little helper utility that we use in both of the 
+above functions to determin the size of a given type.
+
+@<Utility functions@>=
+size_t type_size(AplType type) 
+{
+	switch(type) {
+	case INT: return sizeof(AplInt);
+	case REAL: return sizeof(AplReal);
+	case CHAR: return sizeof(AplChar);
+	default: return 0;
+	}
+}
+
+@* Primitive scalar function. Now we come to the fun part, where we 
+actually start implementing some real APL functions. The first and 
+most obvious one to implement is the |plus| function, and it will 
+show how we implement most functions.  We try to follow the same 
+patter of coding throughout to maximize the amount of code that we 
+can reuse. Basically, all scalar functions have an operation 
+that they perform over all elements. Given a range, an operation, 
+and the data, we can abstract over the basic scalar process. 
+We use macros so that we are not sensitive to the types, and we 
+define two macros, one for the monadic operations, and one for 
+the dyadic operations.
+
+@d SCAMONLP(op, restyp, type, next) {
+	unsigned int i, rng;
+	restype *resd; type *data;
+	rng = size(res);
+	resd = (restype) res->data;
+	data = (type) rgt->data;
+	for (i = 0; i < rng; i++, resd++, next(data))
+		*resd = op(*data);
+}
+@d SCADYALP(op, restyp, lfttyp, rgttyp, lftnxt, rgtnxt) {
+	unsigned int i, rng;
+	restyp *resd; lfttyp *lftd; rgttyp *rgtd;
+	resd = res->data;
+	lftd = lft->data;
+	rgtd = rgt->data;
+	rng = size(res);
+	for (i = 0; i < rng; i++, resd++, lftnxt(lftd), rgtnxt(rgtd))
+		*resd = op(*lftd, *rgtd);
+}
+
+@ As you can see, a scalar function could receive scalar arguments 
+on either side that must be distributed to the other array if 
+that array is of a non-scalar shape. This is why we have the 
+|next|, |lftnxt|, and |rgtnxt| operations in our macros, as they 
+abstract the operations necessary to iterate down the buffer.
+In our case, we need only two to represent all of the types of 
+iteration that we may do with scalar functions. One of them 
+is a no-op for iterating over a single scalar, and the other 
+iterates down the array elements one at a time.
+
+@d scalar_next(array) array
+@d array_next(array) array++
+
+@ Before we can get to the specifics of implementing the main 
+scalar functions, there is still one more abstraction with macros 
+that I want to make. Specifically, we need to be careful about 
+scalar functions that operate on themselves. 
+In principle, we can do in-place updates when we have sharing. 
+Because all scalar functions have the same basic set of operations, 
+we can abstract away the main elements outside of their main 
+function that they compute to handle the grunge work for all 
+scalar functions in one place. We divide the possible sharing 
+cases thusly:
+
+\medskip
+\item{1)} {\it All arguments the same.} In this case, all 
+of the arguments are the same. We know that the input types 
+are the same and that the input arrays are of the exact same 
+shape. We cannot in general guarantee that the type of the 
+output array is going to be the same as the input array, 
+however, which means that we may potentially have to 
+store contents into a temporary array and then replace the 
+old contents with the new when we are done with the work.
+If we can assert that the output type uses less than or equal 
+space to the space conumed by the input type, then we can do 
+an in-place update.
+\item{2)} {\it All inputs are the same.} In this case, 
+all the inputs are the same, but the output is a different 
+array. This is the general case when we are dealing with 
+monadic functions, but when we are dealing with dyadic 
+function, we have to be careful: we are in danger of iterating 
+too fast over an array if we na\"ively use the iterators 
+without first making sure that they are not the same object. 
+See the way that the |SCADYALP| macro works to see this. 
+The solution is to use a no-op scalar iterator for one of 
+the arguments instead. We may also need to do subtle things 
+with the shape and allocation operations, which we discuss 
+more in the implementation of |SCALAR_PRIM_CASE2|. 
+\item{3)} {\it Left or right argument is the same as 
+the result.} In this case, which is the same as case 1 
+in the monadic case, we have one or the other of the 
+inputs, but not both, equal to the result array in the 
+sense that they are the same object in memory. 
+This is probably among the most interesting and subtle of the 
+cases when it comes to allocation. We have to handle both the 
+shared object relationship and ensuring that overwrites will not 
+occur when we do not want them, but also with the potential for 
+scalar distribution, because the two arguments are different. 
+We discuss this in more detail when we implement it further on.
+\item{4)} Finally, then general case is the one where we have 
+none of the inputs as equal to one another. In this case, 
+we must do all the checking and allocating for the result 
+array, but we do not need to do any modification of the 
+inputs. The result array will be the larger of the shapes, 
+assuming that one of them is a scalar and the other is not.
+Otherwise the shape of the result array will be the same 
+as the shape of the inputs, which must be the same. 
+\medskip
+
+\noindent
+The job of each case is to make sure that the output 
+array is allocated correctly, and that anything that needs to be 
+done on that front is done. 
+
+@d SCAPRIMDYA(op, ztv, zt, lt, rt)
+	if (lft == rgt) {
+		if (res == lft) {
+			SCALAR_PRIM_CASE1(op, ztv, zt, lt, rt)@;
+		} else {
+			SCALAR_PRIM_CASE2(op, ztv, zt, lt, rt)@;
+		}
+	} else if (res == lft) {
+		SCALAR_PRIM_CASE3A(op, ztv, zt, lt, rt)@;
+	} else if (res == rgt) {
+		SCALAR_PRIM_CASE3B(op, ztv, zt, lt, rt)@;
+	} else {
+		SCALAR_PRIM_CASE4(op, ztv, zt, lt, rt)@;
+	}
+
+@ In the first case, where all of the inputs and the return array 
+are the same object, we know the shape and sizes of everything will 
+be the same, so we do not have to check for that. However, we do 
+need to deal with the situation where we may a different output 
+type than the input types. In this case, if the output type is 
+of a size larger than the input type, it is not safe to do an 
+inplace computation, since the larger values will overwrite the 
+contents of the next element in the computation. This does not 
+occur with the output type is smaller in size than the input 
+type, so we can get away with doing an in-place update then. 
+When the output type is larger, and it is not safe to do 
+the in-place update, we will leave the main buffers alone, 
+as they already have good input values, and we will allocate 
+a new result array of the right size and shape. We can then 
+store the outputs into that, finally replacing the contents 
+of the old array and freeing the old buffers when we are done.
+
+@d SCALAR_PRIM_CASE1(op, ztv, zt, lt, rt)
+if (sizeof (zt) > sizeof (lt)) {
+	AplArray tmp;
+	init_array(&tmp);
+	copy_shape(&tmp, rgt);
+	alloc_array(&tmp, ztv);
+	res = &tmp;
+	SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+	free(rgt->data);
+	rgt->size = res->size;
+	rgt->data = res->data;
+} else {
+	SCADYALP(op, zt, lt, rt, scalar_next, scalar_next)@;
+}
+
+@ In the second case, we have the inputs being the same, but the 
+output being an entirely different beast. This gives us the same 
+guarantees that allow us to avoid checking on the input shapes 
+for scalar distribution, but it also means that we need to always 
+do an allocation for the result array, as well as always copying 
+the shape into the result array, which will be the shape of either 
+of the input arguments, since they are the same. 
+
+@d SCALAR_PRIM_CASE2(op, ztv, zt, lt, rt)
+copy_shape(res, rgt);
+alloc_array(res, ztv);
+SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+
+@ In the third case, either the left or the right inputs, but not 
+both is equal to the result array. The process for handling the one 
+is the exact same as handling the other case, just with some arguments 
+swapped around. In both of these cases, we need to check the shapes 
+of the two inputs to see if they are the same or if they are different. 
+If they are different, then we need to check whether the input 
+equal to the result is the scalar case. If that is true, then the 
+result array will not be sufficient to hold the contents, and we need 
+to separate out the scalar input from the result. In the other case, 
+we still must check to make sure that the output type is not bigger 
+than the input types, and if it is, we need to make accomodations 
+for that, by scaling up the output array. Thus, there are two cases 
+where we need to allocate a temporary output array, the one when 
+we have a scalar result and a non-scalar input, and the other 
+when we have a result type that consumes more space than the input 
+type.
+
+The first sub-case $a$ is the case when |res == lft|. 
+
+@d TEMPRES(array, ztv)
+	AplArray tmp;
+	init_array(&tmp);
+	copy_array(&tmp, array);
+	alloc_array(&tmp, ztv);
+	res = &tmp;
+@d REPLACEDATA(dst, src)
+	free(dst->data);
+	dst->size = src->size;
+	dst->data = src->data;
+
+@d SCALAR_PRIM_CASE3A(op, ztv, zt, lt, rt)
+short lftrnk, rgtrnk;
+lftrnk = rank(lft); rgtrnk = rank(rgt);
+if (lftrnk != rgtrnk) {
+	if (0 == lftrnk) {
+		TEMPRES(rgt, ztv)@;
+		SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
+		REPLACEDATA(lft, res)@;
+	} else if (sizeof (zt) > sizeof (lt)) {
+		TEMPRES(lft, ztv)@;
+		SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+		REPLACEDATA(lft, res)@;
+	} else {
+		SCADYALP(op, zt, lt, rt, scalar_next, scalar_next)@;
+	}
+} else {
+	if (sizeof (zt) > sizeof (lt)) {
+		TEMPRES(lft, ztv)@;
+		SCADYALP(op, zt, lt, rt, array_next, array_next)@;
+		REPLACEDATA(lft, res)@;
+	} else {
+		SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
+	}
+}
+
+@ The second sub-case of case 3, $b$, is the same as sub-case $a$ 
+but with |res == rgt| instead.
+
+@d SCALAR_PRIM_CASE3B(op, ztv, zt, lt, rt)
+short lftrnk, rgtrnk;
+lftrnk = rank(lft); rgtrnk = rank(rgt);
+if (lftrnk != rgtrnk) {
+	if (0 == rgtrnk) {
+		TEMPRES(lft, ztv)@;
+		SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+		REPLACEDATA(rgt, res)@;
+	} else if (sizeof (zt) > sizeof (rt)) {
+		TEMPRES(rgt, ztv)@;
+		SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
+		REPLACEDATA(rgt, res)@;
+	} else {
+		SCADYALP(op, zt, lt, rt, scalar_next, scalar_next)@;
+	}
+} else {
+	if (sizeof (zt) > sizeof (rt)) {
+		TEMPRES(rgt, ztv)@;
+		SCADYALP(op, zt, lt, rt, array_next, array_next)@;
+		REPLACEDATA(rgt, res)@;
+	} else {
+		SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+	}
+}
+
+@ The fourth and most general case is when none of the inputs are 
+the same. In this case, we need to check on the shapes of the 
+inputs because we do not know if any of them is the same, and we 
+also need to do all of the general allocation for the result array
+once we have the right shape. In some ways this is the most simple 
+case because we do not have to consider the effects of overlapping 
+reads and writes to the buffers.
+
+@d SCALAR_PRIM_CASE4(op, ztv, zt, lt, rt)
+short lftrnk, rgtrnk;
+lftrnk = rank(lft); rgtrnk = rank(rgt);
+if (lftrnk == rgtrnk) {
+	copy_shape(res, rgt);
+	alloc_array(res, ztv);
+	SCADYALP(op, zt, lt, rt, array_next, array_next)@;
+} else if (0 == lftrnk) {
+	copy_shape(res, rgt);
+	alloc_array(res, ztv);
+	SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
+} else if (0 == rgtrnk) {
+	copy_shape(res, lft);
+	alloc_array(res, ztv);
+	SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+}
+
+@ That's about the main major elements, so let's take a whack at 
+trying to implement the more specific functions, namely, the |plus| 
+function. We need to define a few things. Firstly, we need to know 
+the domain on which |plus| operates. In this case, it is a dyadic 
+function which works only in |INT| and |REAL| types. The resulting 
+type of the computation should be determined by the largest 
+input type, which means that two |INT| types are |INT| results, 
+but everything else is a |REAL|. So, firstly, we need the plus
+macro for our operation, and then we can define the main 
+|plus| function.
+
+@d plus_op(l, r) (l + r)
+
+@<APL Scalar Functions@>=
+void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
+{
+	AplType lfttyp, rgttyp;
+	lfttyp = lft->type; rgttyp = rgt->type;
+	if (INT == lfttyp) {
+		if (INT == rgttyp) {
+			SCAPRIMDYA(plus_op, INT, AplInt, AplInt, AplInt)
+		} else if (REAL == rgttyp) {
+			SCAPRIMDYA(plus_op, REAL, AplReal, AplInt, AplReal)
+		} else {
+			apl_error(APLERR_DOMAIN);
+			exit(APLERR_DOMAIN);
+		}
+	} else if (REAL == lfttyp) {
+		if (INT == rgttyp) {
+			SCAPRIMDYA(plus_op, REAL, AplReal, AplReal, AplInt)
+		} else if (REAL == rgttyp) {
+			SCAPRIMDYA(plus_op, REAL, AplReal, AplReal, AplReal)
+		} else {
+			apl_error(APLERR_DOMAIN);
+			exit(APLERR_DOMAIN);
+		}
+	} else {
+		apl_error(APLERR_DOMAIN);
+		exit(APLERR_DOMAIN);
+	}
+}
+
+
+@* Reporting runtime errors. Much as I would like to think that my 
+compiler and that my coding are perfect, it turns out that this is 
+not going to happen. Imagine that. Instead, I want to have a good 
+backup plan: error reports that make sense.  In general, this 
+means that when I hit a major error, I report the error with a 
+specific error code (macros starting with |APLERR_|) or report it 
+as a warning (macros starting with |APLWARN_|), after I have 
+reported the system error, if relevant. I leave it up to the 
+call site whether or not to continue working or not.
+What follows are the error message code that I use and their 
+plain text descriptions in a static array.
+
+@d APLERR_MALLOC 1
+@d APLERR_SHAPEMISMATCH 2
+@d APLERR_DOMAIN 3
+
+@<Runtime error reporting@>=
+char *error_messages[] = 
+	{  @/
+	  "Success", @/
+	  "Allocation failure", /* |APLERR_MALLOC| */
+	  "Shape mismatch", /* |APLERR_SHAPEMISMATCH| */
+	  "Invalid domain" /* |APLERR_DOMAIN| */
+	};
+char *warning_messages[] =
+	{  @/
+	  "Success" @/
+	};
+
+@ The |apl_error| function is meant for reporting serious errors 
+that are not part of the normal operation of the system.
+The |apl_warning| function is for printing out non-critical 
+warnings about things that are probably important, but that are 
+not complete or partial show-stoppers. They should generally 
+always be recoverable and should not halt the execution of the 
+runtime.
+
+@<Runtime error reporting@>=
+void apl_error(int code)
+{
+	fprintf(stderr, "APL Error (%d): %s\n", code, 
+	    error_messages[code]);
+}
+void apl_warning(int code)
+{
+	fprintf(stderr, "APL Warning (%d): %s\n",
+	    code, warning_messages[code]);
+}
 
 
 @* Index.
