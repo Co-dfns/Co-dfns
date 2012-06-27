@@ -811,7 +811,9 @@ if (lftrnk == rgtrnk) {
 	SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
 }
 
-@ That's about the main major elements, so let's take a whack at 
+@*1 Implementing Plus and Identity.
+Now that we have covered the basic 
+scalar abstractions, let's take a whack at
 trying to implement the more specific functions, namely, the |plus| 
 function. We need to define a few things. Firstly, we need to know 
 the domain on which |plus| operates. In this case, it is a dyadic 
@@ -852,6 +854,117 @@ void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 		exit(APLERR_DOMAIN);
 	}
 }
+
+@ The |identity| function is the monadic form of the $+$ function 
+in APL. In this case, since we know that it is the identity function, 
+we can avoid a number of the overheads of the generic looping 
+constructs in the case when we know the relationship between the 
+single argument and its result array. Otherwise, a simple 
+|memcpy()| suffices instead of a loop.
+
+@<Scalar APL Functions@>=
+void identity(AplArray *res, AplArray *rgt, AplFunction *env)
+{
+	if (res == rgt) return;
+	else copy_array(res, rgt);
+}
+
+@* Non-scalar primitive function. In this section we will deal with 
+the class of functions that are non-scalar. These do not have the 
+nice, neat, and regular properties that the scalar functions have, 
+and so we cannot abstract away all of those operations into a common 
+set of macros. Fortunately, there are not quite so many of these 
+functions, and they are quite fun and interesting, so let's look 
+at them.
+
+@*1 The Iota function. This is the classic $\iota$ function that 
+is so fundamental to APL. However, we are going to implement this a 
+bit more like the way that iota is treated in ``A Mathematics of 
+Arrays.'' We do not have nested arrays in HPAPL, which is different 
+than some other APL systems, like APL2, Dyalog, or APLX, which 
+all have nested arrays. This is a philosophical consideration 
+as much as anything, but it leads to interesting things when 
+we call Iota with non-scalar vectors whose size is greater than 
+one. Fortunately, the basic iota is still relatively straight 
+forward, so we will begin there and discuss the details of the 
+more complicated setup next.
+
+@<Non-scalar APL functions@>=
+void index(AplArray *res, AplArray *rgt, AplFunction *env)
+{
+	short rnk;
+	unsigned int size;
+	if (INT != rgt->type) {
+		apl_error(APLERR_DOMAIN);
+		exit(APLERR_DOMAIN);
+	}
+	rnk = rank(rgt);
+	size = size(rgt);
+	if (0 == rnk || (1 == rnk && 1 == size)) {
+		int i;
+		AplInt *data;
+		res->shape[0] = *((AplInt)rgt->data);
+		alloc_array(res, INT);
+		for (i = 0, data = res->data; i < a; i++, data++)
+			*data = i;
+	} else {
+		@<Compute indexes of non-scalar vector@>@;
+	}
+}
+
+@ Now let's consider the main case of the Iota (properly, then |index|) 
+function.  In this case, we have a vector $v$ of some $n$ elements 
+where we want to return a matrix where each row is a valid index into 
+an array of shape $v$. These indexes should be in row-major order.
+Now, the way that we compute this set is to progress in order down 
+the data array and compute the function directly. We have one 
+helper array $p$ where, if $r$ is the size of the incoming vector, 
+$p_r=1$ and $p_i = \prod_{j=i+1}^{r}v_j$ where $v_j$ is the $j$th 
+element of the incoming input array |rgt|. Thus, $p$ is the 
+``places'' array. For example, in an array of three 10's, the 
+vector $p$ would be $\{100, 10, 1\}$. We use this to then compute 
+the value of each cell in the matrix according to the following 
+formula:
+
+$$a_{i,j} = floor(i/p_{j})\bmod v_j$$
+
+\noindent To make this more clear, we can think about our result 
+array as being a matrix of numbers from $0$ to the |product(rgt)| 
+where each number is represented from lowest to highest, one 
+per row. Each column is one digit of the number represented in 
+a base |rgt|, that is, a base where each place is one of the 
+dimensions of the array we are indexing into. The function above 
+computes one of these digits. In our implementation, we use 
+a doubly nested loop to give us the $i$ and $j$ elements.
+
+@<Compute indexes of non-scalar vector@>=
+unsigned int *p, prod;
+int i, j;
+AplInt *v, *a;
+
+@<Compute |p| vector@>@;
+prod = product(rgt);
+v = rgt->data;
+a = res->data;
+for (i = 0; i < prod; i++)
+	for (j = 0; j < size; j++)
+		*a++ = (i / p[j]) % v[j];
+free(p);
+
+@ Computing the product vector means that we compute the product 
+of the elements in |rgt| after the current index that we are 
+considering. The easiest way to do this is to start at the end 
+and move towards the front.
+
+@<Compute |p| vector@>=
+p = malloc(size * sizeof(AplInt));
+if (NULL == p) {
+	apl_error(APLERR_MALLOC);
+	exit(APLERR_MALLOC);
+}
+p[size - 1] = 1;
+for (i = size - 1; i > 0; i--)
+	p[i-1] = p[i] * v[i];
 
 
 @* Reporting runtime errors. Much as I would like to think that my 
