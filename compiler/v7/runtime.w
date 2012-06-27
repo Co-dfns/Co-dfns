@@ -40,6 +40,7 @@ into the following sections:
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 @h
 
@@ -47,8 +48,8 @@ into the following sections:
 @<Primary data structures@>@;
 @<Utility functions@>@;
 @<Memory management functions@>@;
-@<APL Scalar Functions@>@;
-/*Non-scalar APL functions*/@/
+@<Scalar APL functions@>@;
+@<Non-scalar APL functions@>@;
 /*APL Operators*/@/
 
 @ The HPAPL at its core has two data types, functions and arrays. 
@@ -537,6 +538,26 @@ size_t type_size(AplType type)
 	}
 }
 
+@ It is extremely useful to be able to copy the contents of one 
+array into another. This is a simple function, and we do some 
+allocation on the destination to ensure that we have enough space, 
+but otherwise, it is a straightforward function.
+It is an interesting note that we do not copy the entire |src->data| 
+to the destination array. Instead, we copy only what is needed to 
+store |size(dst)| elements worth of the data, because that is all 
+that is needed by the destination array.  It is presumed that the 
+data beyond this point is probably junk.
+
+@<Memory management functions@>=
+void copy_array(AplArray *dst, AplArray *src) 
+{
+	if (dst == src) return;
+
+	copy_shape(dst, src);
+	alloc_array(dst, src->type);
+	memcpy(dst->data, src->data, dst->size);
+}
+
 @* Primitive scalar function. Now we come to the fun part, where we 
 actually start implementing some real APL functions. The first and 
 most obvious one to implement is the |plus| function, and it will 
@@ -826,7 +847,7 @@ macro for our operation, and then we can define the main
 
 @d plus_op(l, r) (l + r)
 
-@<APL Scalar Functions@>=
+@<Scalar APL functions@>=
 void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
 	AplType lfttyp, rgttyp;
@@ -862,7 +883,7 @@ constructs in the case when we know the relationship between the
 single argument and its result array. Otherwise, a simple 
 |memcpy()| suffices instead of a loop.
 
-@<Scalar APL Functions@>=
+@<Scalar APL functions@>=
 void identity(AplArray *res, AplArray *rgt, AplFunction *env)
 {
 	if (res == rgt) return;
@@ -893,20 +914,20 @@ more complicated setup next.
 void index(AplArray *res, AplArray *rgt, AplFunction *env)
 {
 	short rnk;
-	unsigned int size;
+	unsigned int siz;
 	if (INT != rgt->type) {
 		apl_error(APLERR_DOMAIN);
 		exit(APLERR_DOMAIN);
 	}
 	rnk = rank(rgt);
-	size = size(rgt);
-	if (0 == rnk || (1 == rnk && 1 == size)) {
+	siz = size(rgt);
+	if (0 == rnk || (1 == rnk && 1 == siz)) {
 		int i;
 		AplInt *data;
-		res->shape[0] = *((AplInt)rgt->data);
+		res->shape[0] = *((AplInt *)rgt->data);
 		alloc_array(res, INT);
-		for (i = 0, data = res->data; i < a; i++, data++)
-			*data = i;
+		for (i = 0, data = res->data; i < res->shape[0]; i++)
+			*data++ = i;
 	} else {
 		@<Compute indexes of non-scalar vector@>@;
 	}
@@ -942,12 +963,12 @@ unsigned int *p, prod;
 int i, j;
 AplInt *v, *a;
 
-@<Compute |p| vector@>@;
-prod = product(rgt);
 v = rgt->data;
 a = res->data;
+prod = product(rgt);
+@<Compute |p| vector@>@;
 for (i = 0; i < prod; i++)
-	for (j = 0; j < size; j++)
+	for (j = 0; j < siz; j++)
 		*a++ = (i / p[j]) % v[j];
 free(p);
 
@@ -957,13 +978,13 @@ considering. The easiest way to do this is to start at the end
 and move towards the front.
 
 @<Compute |p| vector@>=
-p = malloc(size * sizeof(AplInt));
+p = malloc(siz * sizeof(AplInt));
 if (NULL == p) {
 	apl_error(APLERR_MALLOC);
 	exit(APLERR_MALLOC);
 }
-p[size - 1] = 1;
-for (i = size - 1; i > 0; i--)
+p[siz - 1] = 1;
+for (i = siz - 1; i > 0; i--)
 	p[i-1] = p[i] * v[i];
 
 
