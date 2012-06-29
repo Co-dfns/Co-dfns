@@ -272,12 +272,10 @@ closure allocated for them. This closure is what is passed
 around to primitive operators and the like. Thus, all functions 
 have the same signature as their C function elements.
 
-@s AplCodePtr int
-@s AplFunction int
-
 @<Primary data structures@>=
-@<Define |AplFunction| type@>@;
-typedef void (*AplCodePtr)(AplArray *res,
+typedef struct apl_function AplFunction;
+typedef void (*AplMonadic)(AplArray *res, AplArray *, AplFunction *);
+typedef void (*AplDyadic)(AplArray *res,
     AplArray *, AplArray *, AplFunction *);
 
 @ Initializing an array is just a matter of setting up all the 
@@ -314,43 +312,22 @@ we will often pass around only an |AplFunction| value, and
 not the actual |AplCodePtr| value.  This means that we need to 
 have a pointer to the code that expects the closure as well.
 
-@s AplOperand int
-@s AplOperand int
-
-@<Define |AplFunction| type@>=
+@<Primary data structures@>=
 struct apl_function {
-	void (*code)(AplArray *, AplArray *, AplArray *,
-	    struct apl_function *);
-	union apl_operand *lop; /* The $\alpha\alpha$ variable */
-	union apl_operand *rop; /* The $\omega\omega$ variable */
-	union apl_operand *env; /* All other free variables */
+	AplMonadic monadic;
+	AplDyadic dyadic;
+	void *lop; /* The $\alpha\alpha$ variable */
+	void *rop; /* The $\omega\omega$ variable */
+	void **env; /* All other free variables */
 };
-typedef struct apl_function AplFunction;
 
 @ To actually use a closure we need to be able to apply it to 
 arguments. This is done through a simple macro.
 The arguments are all expected to be pointers to their appropriate
 data types.
 
-@d apply(fun, res, lft, rgt) ((fun)->code)(&res, lft, rgt, fun)
-
-@ We have not yet explained why we use |AplOperand| for the |lop| 
-and |rop| variables, which correspond to $\alpha\alpha$ and 
-$\omega\omega$ variables in a function. In APL, an operators 
-left and right operands can be either functions or arrays. We may 
-need to allow both even in the same operator, so we have a type 
-which can be either the one or the other. We implement this with 
-a union, because in practice, we will know at the time that we 
-use an operand, how it is to be used: either as a function or as 
-an array. This means that we do not need to have a type tag as 
-we do with the |AplArray| type.
-
-@<Primary data structures@>=
-union apl_operand {
-	AplArray array;
-	AplFunction function;
-};
-typedef union apl_operand AplOperand;
+@d applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
+@d applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
 
 @ We are about done with the work on the primary data structures, 
 so we should take some time to get all of the other basic array 
@@ -402,18 +379,19 @@ with an explicit environment list. We assume that we have an
 correct number of free variables that we have.
 
 @<Utility functions@>=
-void init_function(AplFunction *fun, AplCodePtr code, 
-    AplOperand *lop, AplOperand *rop, ...)
+void init_function(AplFunction *fun, AplMonadic mon, AplDyadic dya,
+    void *lop, void *rop, ...)
 {
 	va_list ap;
-	AplOperand *env, *var;
-	fun->code = code;
+	void **env, *var;
+	fun->monadic = mon;
+	fun->dyadic = dya;
 	fun->lop = lop;
 	fun->rop = rop;
 	env = fun->env;
 	va_start(ap, rop);
-	while (NULL != (var = va_arg(ap, AplOperand *))) {
-		env = var; env++;
+	while (NULL != (var = va_arg(ap, void *))) {
+		*env++ = var;
 	}
 	va_end(ap);
 }
@@ -1006,9 +984,9 @@ AplArray z, a;
 alloc_array(&a, INT);
 a.data[0] = 100;
 index(&a, &a, NULL);
-init_function(&myplus, plus, NULL, NULL, NULL);
-init_function(&myeach, each, (AplOperand *) &myplus, NULL, NULL);
-apply(&myeach, &z, &a, &a);
+init_function(&myplus, identity, plus, NULL, NULL, NULL);
+init_function(&myeach, eachm, eachd, &myplus, NULL, NULL);
+applyd(&myeach, &z, &a, &a);
 
 @ As you can see in the above example, we must create a closure 
 for every function that we intend to pass to an operator, and 
@@ -1048,9 +1026,10 @@ void eachm(AplArray *res, AplArray *rgt, AplFunction *env)
 {
 	AplArray z, r; /* Scalar temporaries for the loop */
 	AplArray tmp; /* Temporary array if necessary */
-	AplArray *orig;
-	AplType type;
-	unsigned int siz; /* Elements to traverse */
+	AplArray *orig; /* Original array in case of a copy in |res| */
+	AplType type; /* The output type of the function */
+	AplFunction *func; /* The function to apply */
+	unsigned int i, siz; /* Elements to traverse */
 	short rnk; /* Rank of |rgt| */
 	short clean; /* Flag, indicates need to clean */
 	@<Initialize variables for |eachm|@>@;
@@ -1070,9 +1049,10 @@ void eachd(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 { 
 	AplArray z, l, r; /* Scalar temporaries for the loop */
 	AplArray tmp; /* Temporary for use during allocation */
-	AplArray *shp, *orig;
-	AplType type;
-	unsigned int siz; /* Number of elements to iterate */
+	AplArray *shp, *orig; /* The shape of result and the original |res| if copied */
+	AplType type; /* Type of return array */
+	AplFunction *func;
+	unsigned int i, siz; /* Number of elements to iterate */
 	short lftrnk, rgtrnk; /* Ranks of |lft| and |rgt| */
 	short clean; /* Indicates cleanup is necessary */
 	@<Initialize variables for |eachd|@>@;
@@ -1095,6 +1075,7 @@ init_array(&z);
 init_array(&r);
 init_array(&tmp);
 rnk = rank(rgt);
+func = (AplFunction *) env->lop;
 
 @ @<Initialize variables for |eachd|@>=
 init_array(&z);
@@ -1103,6 +1084,7 @@ init_array(&r);
 init_array(&tmp);
 lftrnk = rank(lft);
 rgtrnk = rank(rgt);
+func = (AplFunction *) env->lop;
 
 @ Both the monadic and dyadic forms of |each| have simple cases 
 where we can avoid most of the other work. In both forms, if we are 
@@ -1114,7 +1096,7 @@ save that for use later.
 
 @<Deal with the simple cases of |eachm|@>=
 if (0 == rnk) {
-	apply(env->lop.function, res, rgt);
+	applym(func, res, rgt);
 	return;
 } else siz = size(rgt);
 if (0 == siz) {
@@ -1131,7 +1113,7 @@ used later on to determine the shape of the result array.
 @<Deal with the simple cases of |eachd|@>=
 if (0 == lftrnk) {
 	if (0 == rgtrnk) {
-		applyd(env->function, res, lft, rgt);
+		applyd(func, res, lft, rgt);
 	} else {
 		siz = size(rgt);
 		shp = rgt;
@@ -1160,7 +1142,7 @@ of the other elements.
 r.type = rgt->type;
 r.size = type_size(r.type);
 r.data = rgt->data;
-applym(env->lop.function, &z, &r);
+applym(func, &z, &r);
 type = z.type;
 
 @ The dyadic case for determing the type of the return is the same 
@@ -1173,7 +1155,7 @@ l.data = lft->data;
 r.type = rgt->type;
 r.size = type_size(r.type);
 r.data = rgt->data;
-apply(env->lop.function, &z, &l, &r);
+applyd(func, &z, &l, &r);
 type = z.type;
 
 @ After we know that we are dealing with the general case, and 
@@ -1207,7 +1189,7 @@ allocated.
 
 @<Allocate |res| in |eachm|@>=
 if (res == rgt) {
-	if (type_size(type) > type_size(rgt)) {
+	if (type_size(type) > type_size(rgt->type)) {
 		copy_shape(&tmp, rgt);
 		alloc_array(&tmp, type);
 		orig = res;
@@ -1303,14 +1285,13 @@ the larger data fields of the main inputs and outputs.
 @<Apply $\alpha\alpha$ monadically on each element@>=
 z.size = type_size(type);
 z.data = res->data;
-z.type = res->type;
 r.type = rgt->type;
 r.size = type_size(rgt->type);
 r.data = rgt->data;
 for (i = 0; i < siz; i++) {
-	apply(env->lop.function, &z, &r);
-	z.data += z.size;
-	r.data += r.size;
+	applym(func, &z, &r);
+	z.data = (char *)z.data + z.size;
+	r.data = (char *)r.data + r.size;
 }
 
 @ The dyadic case is virtually unchanged from this but for the 
@@ -1321,10 +1302,10 @@ z.size = type_size(type); l.size = lft->size; r.size = rgt->size;
 z.type = type; l.type = lft->type; r.type = rgt->type;
 z.data = res->data; l.data = lft->data; r.data = rgt->data;
 for (i = 0; i < siz; i++) {
-	applyd(env->lop.function, &z, &l, &r); 
-	z.data += z.size;
-	l.data += l.size;
-	r.data += r.size;
+	applyd(func, &z, &l, &r); 
+	z.data = (char *) z.data + z.size;
+	l.data = (char *) l.data + l.size;
+	r.data = (char *) r.data + r.size;
 }
 
 
