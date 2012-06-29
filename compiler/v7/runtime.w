@@ -50,7 +50,7 @@ into the following sections:
 @<Memory management functions@>@;
 @<Scalar APL functions@>@;
 @<Non-scalar APL functions@>@;
-/*APL Operators*/@/
+@<APL Operators@>@;
 
 @ The HPAPL at its core has two data types, functions and arrays. 
 Functions as implemented in the runtime are first-class objects, but 
@@ -947,7 +947,7 @@ vector $p$ would be $\{100, 10, 1\}$. We use this to then compute
 the value of each cell in the matrix according to the following 
 formula:
 
-$$a_{i,j} = floor(i/p_{j})\bmod v_j$$
+$$a_{i,j} = \lfloor i/p_{j}\rfloor\bmod v_j$$
 
 \noindent To make this more clear, we can think about our result 
 array as being a matrix of numbers from $0$ to the |product(rgt)| 
@@ -986,6 +986,346 @@ if (NULL == p) {
 p[siz - 1] = 1;
 for (i = siz - 1; i > 0; i--)
 	p[i-1] = p[i] * v[i];
+
+@* APL Operators and their implementation.
+APL operators are functions that return other functions. In the 
+end, there is always some specific function that they compute, but 
+that computation is parameterized by one or two input functions, 
+or possibly a combination of functions and arrays. It is helpful to 
+imagine first how an operator might be used in a piece of code.
+In the code below, we implement the equivalent to the following 
+APL program:
+
+$$X+\ddot{ }\ X\gets\iota 100$$
+
+Here is an example:
+
+@<Example use of an APL operator@>=
+AplFunction myeach, myplus;
+AplArray z, a;
+alloc_array(&a, INT);
+a.data[0] = 100;
+index(&a, &a, NULL);
+init_function(&myplus, plus, NULL, NULL, NULL);
+init_function(&myeach, each, (AplOperand *) &myplus, NULL, NULL);
+apply(&myeach, &z, &a, &a);
+
+@ As you can see in the above example, we must create a closure 
+for every function that we intend to pass to an operator, and 
+we create a closure for each operator whose function instance we 
+want to use. This means that we need to use apply with those
+functions that we create.  We could probably have gotten away 
+with just using the |each| call directly here, because the each 
+operator is a primitive, and sometimes that will be preferrable. 
+Thus, we could have eliminated the indirection of the application 
+by calling |each| directly. You can see this here below.
+
+@<Trading out the application@>=
+each(&z, &a, &a, &myeach);
+
+@ Like the non-scalar APL functions, each APL operator is slightly 
+unique, and requires its own implementation. This means that there 
+is no special abstraction to use in each operator to share the 
+work. We must implement each one directly. Let's proceed with each 
+operator in turn through the rest of this section.
+
+@*1 The Each operator. The each operator (represented as $\ddot{ }$ 
+in APL) is the operator that will be most familiar to you if you 
+have read the preceding sections. It takes in any function and 
+returns a scalar function that applies that given function to each 
+of the scalars in turn just as a scalar function would. This 
+implies that the functions given to the each operator should make 
+sure to support scalar arrays. Our general implementation has 
+a few responsibilities. We must make sure that there is enough 
+space to store the result, and we must present the given 
+function with something that looks like a scalar array. 
+In the case where we receive empty arrays as the inputs, then we 
+should give back an empty array. To handle all of this complexity, 
+we divide the main task into the following sections:
+
+@<APL Operators@>=
+void eachm(AplArray *res, AplArray *rgt, AplFunction *env) 
+{
+	AplArray z, r; /* Scalar temporaries for the loop */
+	AplArray tmp; /* Temporary array if necessary */
+	AplArray *orig;
+	AplType type;
+	unsigned int siz; /* Elements to traverse */
+	short rnk; /* Rank of |rgt| */
+	short clean; /* Flag, indicates need to clean */
+	@<Initialize variables for |eachm|@>@;
+	@<Deal with the simple cases of |eachm|@>@;
+	@<Determine the type of the result in |eachm|@>@;
+	@<Allocate |res| in |eachm|@>@;
+	@<Apply $\alpha\alpha$ monadically on each element@>@;
+	@<Do any cleanup necessary in |each|@>@;
+}
+
+@ The dyadic version of each is much the same in outline. We need 
+a few more variables to handle some of the complication that comes 
+with dyadic functions, but the basic outline remains the same.
+
+@<APL Operators@>=
+void eachd(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
+{ 
+	AplArray z, l, r; /* Scalar temporaries for the loop */
+	AplArray tmp; /* Temporary for use during allocation */
+	AplArray *shp, *orig;
+	AplType type;
+	unsigned int siz; /* Number of elements to iterate */
+	short lftrnk, rgtrnk; /* Ranks of |lft| and |rgt| */
+	short clean; /* Indicates cleanup is necessary */
+	@<Initialize variables for |eachd|@>@;
+	@<Deal with the simple cases of |eachd|@>@;
+	@<Determine the type of the result in |eachd|@>@;
+	@<Allocate |res| in |eachd|@>@;
+	@<Apply $\alpha\alpha$ dyadically on each element@>@;
+	@<Do any cleanup necessary in |each|@>@;
+}
+
+@ Let's do the initialization first. We want to initialize all the 
+variables that we can ahead of time, but there are some variables, 
+like |clean| and |size| that we cannot do until we know more 
+about the relationship between all of the arguments. Otherwise, 
+we need to make sure that all of our arrays are initialized and 
+that we have the rank of the input array(s).
+
+@<Initialize variables for |eachm|@>=
+init_array(&z);
+init_array(&r);
+init_array(&tmp);
+rnk = rank(rgt);
+
+@ @<Initialize variables for |eachd|@>=
+init_array(&z);
+init_array(&l);
+init_array(&r);
+init_array(&tmp);
+lftrnk = rank(lft);
+rgtrnk = rank(rgt);
+
+@ Both the monadic and dyadic forms of |each| have simple cases 
+where we can avoid most of the other work. In both forms, if we are 
+dealing with scalar inputs, then we can avoid most of the overhead 
+entirely. If we are dealing with scalar vectors, we can achieve 
+basically the same effect. If neither of these are the case, 
+then we know a little something about the arrays, and we should 
+save that for use later. 
+
+@<Deal with the simple cases of |eachm|@>=
+if (0 == rnk) {
+	apply(env->lop.function, res, rgt);
+	return;
+} else siz = size(rgt);
+if (0 == siz) {
+	copy_array(res, rgt);
+	return;
+}
+
+@ The dyadic case is a bit more complicated because we want to deal 
+with scalar distribution as well as just the scalar inputs. This 
+means that we will save a pointer to the array that guides the 
+shape of the main function into the |shp| variable. This will be 
+used later on to determine the shape of the result array. 
+
+@<Deal with the simple cases of |eachd|@>=
+if (0 == lftrnk) {
+	if (0 == rgtrnk) {
+		applyd(env->function, res, lft, rgt);
+	} else {
+		siz = size(rgt);
+		shp = rgt;
+	}
+} else if (0 == rgtrnk) {
+	siz = size(lft);
+	shp = lft;
+} else {
+	siz = size(rgt);
+	shp = rgt;
+}
+if (0 == siz) {
+	copy_array(res, shp);
+	return;
+}
+
+@ After we have determined that we are not dealing with a trivial 
+case, and that we have at least one element to be considering, we 
+must do some work to figure out what the resulting type of the 
+computation will be. We do this by applying our function on the 
+first element in the array, and then checking what that type is. 
+We assume that the function will give us the same type for all 
+of the other elements. 
+
+@<Determine the type of the result in |eachm|@>=
+r.type = rgt->type;
+r.size = type_size(r.type);
+r.data = rgt->data;
+applym(env->lop.function, &z, &r);
+type = z.type;
+
+@ The dyadic case for determing the type of the return is the same 
+as the monadic one, but we have one more scalar argument.
+
+@<Determine the type of the result in |eachd|@>=
+l.type = lft->type;
+l.size = type_size(l.type);
+l.data = lft->data;
+r.type = rgt->type;
+r.size = type_size(r.type);
+r.data = rgt->data;
+apply(env->lop.function, &z, &l, &r);
+type = z.type;
+
+@ After we know that we are dealing with the general case, and 
+after we know the type of the result array, we are free to begin 
+allocating the space for the result array. 
+It is not as simple as just setting the shape and allocating an 
+array, though. Here is where we must deal with the possibility 
+that the input array is the same as the output array. This 
+may require some temporary copying and the like. In the 
+end, if we do need to create a temporary result array, then 
+we will set |clean| to make sure that we know to clean it 
+up at the end. At the end of this computation, the main 
+invariant that we want to preserve is that |res| must point 
+to an array that is safe to over-write element wise, and 
+that is allocated and is the correct output shape. We do 
+not guarantee after this that |res| is different than either 
+of its inputs, in the case when it is possible to do an 
+inplace update and that the type of the input array that 
+might be the same as |res| is the same as the output type 
+of the array |res|. Later on, we can check the |clean| 
+variable to determine what case we are dealing with. If 
+clean is set to |EACH_COPY|, then we know that we created 
+a whole new copy to use, if it is |EACH_SAME| we know that 
+one of the arrays is the same and that we should set the 
+output type as part of our cleanup. Otherwise, when |clean| 
+is |0|, there is no sharing and |res| is not temporarily 
+allocated. 
+
+@d EACH_COPY 1
+@d EACH_SAME 2
+
+@<Allocate |res| in |eachm|@>=
+if (res == rgt) {
+	if (type_size(type) > type_size(rgt)) {
+		copy_shape(&tmp, rgt);
+		alloc_array(&tmp, type);
+		orig = res;
+		res = &tmp;
+		clean = EACH_COPY;
+	} else {
+		clean = EACH_SAME;
+	}
+} else {
+	copy_shape(res, rgt);
+	alloc_array(res, type);
+	clean = 0;
+}
+
+@ The dyadic case is much the same as the monadic case, except 
+that we do not know whether |lft| or |rgt| is the correct array 
+on which to base the shape, so we instead rely on |shp| being set 
+early on in the computation to the right array on which we can 
+base our shape. The same guarantees and invariants mentioned in 
+the previous section apply here.
+
+@<Allocate |res| in |eachd|@>=
+if (res == rgt || res == lft) {
+	if ((res == shp || lftrnk == rgtrnk)
+	    && type_size(type) <= type_size(res->type)) {
+		clean = EACH_SAME;
+	} else {
+		copy_shape(&tmp, shp);
+		alloc_array(&tmp, type);
+		orig = res;
+		res = &tmp;
+		clean = EACH_COPY;
+	}
+} else {
+	copy_shape(res, shp);
+	alloc_array(res, type);
+	clean = 0;
+}
+
+@ While we are still on the subject, let's make sure that we take 
+care of the cleanup that we have done with these allocation 
+functions. We do this now while the invariants are still fresh 
+in our head. After this, all that is left to complete the 
+implementation of |each|, both dyadically and monadically, is 
+the main loop of the two functions |eachm| and |eachd|. 
+We have three cases to deal with when we perform cleanup, 
+two of which actually require any work. These cases are given by 
+the |EACH_COPY| and the |EACH_SAME| constants. The no-op case is 
+given when |clean == 0|. Otherwise, |clean| will be set to one of 
+the aforementioned constants, and we need to do different clean 
+up on each. 
+
+\medskip
+\item{|EACH_SAME|} In this case, we have not allocated a temporary 
+array, instead reusing an input array. This also means that we 
+did not set the |type| field of the result array so as to not 
+mess with the integrity of the input array until after we had 
+done all of the overwriting. We need to rectify this, but 
+there are no other buffers or other things that need to be taken 
+care of.
+\item{|EACH_COPY|} Here, we have actually allocated temporary 
+space for the resultant array so that we do not invalidate our 
+input arrays with the output of the function. This means that 
+we need to put the important data buffers into the correct output 
+array, which we keep in the |orig| variable. 
+\medskip
+
+\noindent After we do this cleanup, the assumption is that we can 
+safely return from the function.
+
+@<Do any cleanup necessary in |each|@>=
+switch (clean) {
+case EACH_SAME: 
+	res->type = type;
+	break;
+case EACH_COPY:
+	free(orig->data);
+	orig->size = tmp.size;
+	orig->data = tmp.data;
+	orig->type = tmp.type;
+	copy_shape(orig, &tmp);
+	break;
+}
+
+@ With all that preparation and setup complete, we are now ready to 
+get down to the main event. This is the main loop that will actually 
+do the iteration over the elements and apply the given function to 
+each of them in turn. We try to do this efficiently by moving only 
+over the data fields in each of the scalars. That is, we slide 
+the data fields of the |z|, |l|, and |r| scalar temporaries along 
+the larger data fields of the main inputs and outputs. 
+
+@<Apply $\alpha\alpha$ monadically on each element@>=
+z.size = type_size(type);
+z.data = res->data;
+z.type = res->type;
+r.type = rgt->type;
+r.size = type_size(rgt->type);
+r.data = rgt->data;
+for (i = 0; i < siz; i++) {
+	apply(env->lop.function, &z, &r);
+	z.data += z.size;
+	r.data += r.size;
+}
+
+@ The dyadic case is virtually unchanged from this but for the 
+extra argument.
+
+@<Apply $\alpha\alpha$ dyadically on each element@>=
+z.size = type_size(type); l.size = lft->size; r.size = rgt->size;
+z.type = type; l.type = lft->type; r.type = rgt->type;
+z.data = res->data; l.data = lft->data; r.data = rgt->data;
+for (i = 0; i < siz; i++) {
+	applyd(env->lop.function, &z, &l, &r); 
+	z.data += z.size;
+	l.data += l.size;
+	r.data += r.size;
+}
 
 
 @* Reporting runtime errors. Much as I would like to think that my 
