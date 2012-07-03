@@ -889,7 +889,7 @@ forward, so we will begin there and discuss the details of the
 more complicated setup next.
 
 @<Non-scalar APL functions@>=
-void index(AplArray *res, AplArray *rgt, AplFunction *env)
+void index_gen(AplArray *res, AplArray *rgt, AplFunction *env)
 {
 	short rnk;
 	unsigned int siz;
@@ -964,6 +964,84 @@ if (NULL == p) {
 p[siz - 1] = 1;
 for (i = siz - 1; i > 0; i--)
 	p[i-1] = p[i] * v[i];
+
+@*1 The Indexing function. 
+One of the most important functions in APL is the indexing 
+function. This lets you get at subarrays of a given array, including 
+scalar elements, by passing in another array. In particular, 
+given an array $A$ whose shape is represented by array $S$, the 
+result array |R| and an vector |I| of integers whose length
+$\rho I$ is less than or equal to the length of |S|, the 
+indexing function |index(R, I, A, NULL)| stores into |R| the 
+subarray of |A| whose shape is $(\rho I)\downarrow S$. 
+That is, the subarray selected by $A[I_0;\ldots;I_n;\ldots]$ where 
+|n == size(I)|, or $n = \rho I$ in APL notation. 
+If $(\rho I)\equiv\rho S$ then |R| is a scalar and $\rho R$ is the 
+empty array. For more information about this function, see the Dyalog 
+Language Reference or another book on APL, such as The Mathematics 
+of Arrays, which has a similar indexing function. 
+
+We implement the array storage in row-major formate, which enables 
+a fairly straightforward extraction of the sub-array. We know that 
+the sub-array will already be a contiguous region somewhere along 
+the data region of |A|. Thus, we need only to compute the starting 
+location of the region, the resultant size of the region, and 
+then copy that data into the result array. This leads us to the 
+following outline for the |index()| function. 
+
+@<Non-scalar APL functions@>=
+void index(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
+{
+        int i;
+        char *src, *dst;
+        unsigned int *shpi, *shpo;
+        AplInt *idx;
+        size_t rng, esiz, cnt;
+        cnt = size(lft);
+        @<Compute the shape and allocate |res|@>@;
+        @<Copy data into result array@>@;
+}
+
+@ We compute the result shape by grabbing the shape from the end of
+|rgt->shape|. That is, since the shape of the result is 
+$(\rho I)\downarrow\rho S$, we perform the drop directly on |rgt->shape| by
+copying the elements of |rgt->shape| from the |size(lft)| element to
+the shape terminator |SHAPE_END|. We can then allocate the array by
+using the type from |rgt|, but we must be careful to use
+|realloc_array| when |res == rgt|, since we must preserve the elements
+in the buffer in that case. 
+
+@<Compute the shape and allocate |res|@>=
+shpo = res->shape;
+shpi = res->shape + cnt;
+while (*shpi != SHAPE_END) *shpo++ = *shpi++;
+*shpo = SHAPE_END;
+if (res == rgt) realloc_array(res, rgt->type);
+else alloc_array(res, rgt->type);
+
+@ Copying the data elements is somewhat obvious. We do need to do some
+work at the beginning to set the |src| pointer to where our subarray
+starts first. When doing this we use |rng| to mean the range from the
+start, |rgt->data|, to the place where we want to begin copying, using
+elements as the unit. After this, we can get the range |rng| of the
+elements in the result array using the size of |res|. The only other
+important consideration is to ensure that we use |memmove| when 
+|res == rgt| to deal with potentially overlapping regions.
+
+@<Copy data into result array@>=
+dst = res->data;
+src = rgt->data;
+shpi = rgt->shape;
+idx = lft->data;
+esiz = type_size(rgt->type);
+for (rng = 0, i = 1; i < cnt; i++) {
+        rng += *idx++;
+        rng *= *++shpi;
+}
+src += rng * esiz;
+rng = size(res) * esiz;
+if (res == rgt) memmove(dst, src, rng);
+else memcpy(dst, src, rng);
 
 @* APL Operators and their implementation.
 APL operators are functions that return other functions. In the 
