@@ -21,6 +21,11 @@ PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 }
+\def\idxbox{\mathrel{\lower0.3em\vbox{
+  \hrule
+  \hbox{\strut\vrule\thinspace\vrule}
+  \hrule
+}}}
 
 @* Introduction. You are reading the source code that implements 
 the runtime environment for HPAPL. This code deals especially with 
@@ -42,10 +47,12 @@ into the following sections:
 #include <stdlib.h>
 #include <string.h>
 
+#include "hpapl.h"
+
 @h
 
 @<Runtime error reporting@>@;
-@<Primary data structures@>@;
+@qPrimary data structures@>@;
 @<Utility functions@>@;
 @<Memory management functions@>@;
 @<Scalar APL functions@>@;
@@ -82,6 +89,19 @@ print_version(void)
 
 @ This concludes the main introductions, we can now proceed to the 
 details of implementing the runtime.
+
+@* Things to do.
+The following is a list of things that I have noted need to be changed 
+but that I have not yet done.
+
+\item{1)} The implementation of shapes is mismatched right now. 
+Rather than having a |MAXRANK| with a fixed size array, I would 
+prefer to have an implicitely fixed size array that always is terminated 
+by a |SHAPE_END| object. This prevents the need for a temporary |i| 
+to track |MAXRANK| all the time.
+\item{2)} There are bugs in the way that the scalar function macros 
+are implemented, and some buffers will not be progressed forward like 
+they should. 
 
 @* Data structures.  We must implement two main data structures: 
 arrays and functions.  Arrays are the most used, and we have a few 
@@ -271,6 +291,9 @@ optimized away, all functions have an explicit, possibly empty
 closure allocated for them. This closure is what is passed 
 around to primitive operators and the like. Thus, all functions 
 have the same signature as their C function elements.
+
+@s AplDyadic int
+@s AplMonadic int
 
 @<Primary data structures@>=
 typedef struct apl_function AplFunction;
@@ -534,6 +557,24 @@ void copy_array(AplArray *dst, AplArray *src)
 	copy_shape(dst, src);
 	alloc_array(dst, src->type);
 	memcpy(dst->data, src->data, dst->size);
+}
+
+@ Naturally, we also want to be able to free those things that we 
+have allocated. Normally, since we expect that most allocations of 
+|AplArray| objects will be automatic, we concern ourselves here with 
+freeing memory allocated for the data of the array. The system can 
+use |free_data| when we want to clear the data that was allocated 
+for an |AplArray| object, but it will not free the |AplArray| object 
+which was holding the data. It will initialize the fields back to 
+something sane, however.
+
+@<Memory management functions@>=
+void free_data(AplArray *arr)
+{
+	free(arr->data);
+	arr->data = NULL;
+	arr->size = 0;
+	arr->type = UNSET;
 }
 
 @* Primitive scalar function. Now we come to the fun part, where we 
@@ -1386,6 +1427,201 @@ for (i = 0; i < siz; i++) {
 	r.data = (char *) r.data + r.size;
 }
 
+@*1 The Reduce Operator.
+The reduction operator takes scalar functions and produces a monadic
+function in return. It expects its incoming functions to be scalar 
+dyadic. Ther reult of applying a reduction function to an array of 
+shape $\mathrel{\bar{ }}1\downarrow\rho A$ where $A$ is the input array. 
+That is, we reduce an array along its last axis. The elements in each 
+slot of the resulting array is the result of distributing the 
+operand along the elements of the vector $I\idxbox A$, where $I$ is a 
+valid index to the element in question. Assuming we have Dyalog 
+APL, then we can express general reduction in terms of reduction over 
+vectors using this equality:
+
+$$(f/A)\equiv(\iota\mathrel{\bar{ }}1\downarrow\rho A)\{f/\alpha\idxbox\omega\}
+\mathrel{\ddot{ }}\thinspace\subset A$$
+
+\noindent Distribution over a vector happens according to APL's rules 
+of association, meaning that everything associates right to left. We 
+might be tempted to implement reduction over vectors first, 
+and then scale the process up to arrays of greater dimensions; instead
+of dealing with the expensive copying that might result from that, 
+we will implement this in-place, handling any dimension from the start. 
+
+@<APL Operators@>=
+void reduce(AplArray *res, AplArray *rgt, AplFunction *env)
+{
+	unsigned int step, *shpo, *shpi;
+	AplFunction *fun;
+	fun = env->lop;
+	shpi = rgt->shape;
+	shpo = res->shape;
+	@<Set |res->shape| and determine |step| size@>@;
+	@<Reduce elements along last axis@>@;
+}
+
+@ We can know the shape of our output without running 
+our function. We do not set the shape of the output first because we 
+may have |res == rgt| and we do not want to break the shape information
+of |rgt| too early. We must retain the last dimension of our input array 
+as it reperesents our |step| amount. Once we have this information, we can 
+feel free to overwrite the input shape. We do not want to allocate the 
+|res| array here because we have not yet dealt with special cases in 
+the input which might change our perspective.
+
+@<Set |res->shape| and determine |step| size@>=
+if (*shpi == SHAPE_END) {
+	step = 1;
+	copy_shape(res, rgt);
+} else if (res == rgt) {
+	while (*shpi != SHAPE_END) shpi++;
+	step = shpi[-1];
+	shpi[-1] = SHAPE_END;
+} else {
+	while (*shpi != SHAPE_END) *shpo++ = *shpi++;
+	step = shpo[-1];
+	shpo[-1] = SHAPE_END;
+}
+
+@ After determining the shape of |res|, |step| contains the
+number of elements per individual reduction. We can use this value to
+catch some special cases. When |step == 1|, we know that we are
+dealing either with a scalar input or an array whose last dimension is
+|1|. In either case, we know that we will not run |fun| on any of our
+inputs. In the scalar case, we are basically the identity function, and
+in the singular final dimension case we are the identity function with
+a small reshape that has zero effect on |size(res)|. This translates
+into a straight copy of the data in the case when |res != rgt|, and a
+no-op when they are the same object. Otherwise, we are dealing with 
+the cases where |step == 0| or |step > 1|, which both require a bit 
+more work, so we dedicate separate sections to handling them.
+
+@<Reduce elements along last axis@>=
+if (0 == step) {
+	@<Fill |res| with identity of |fun|@>@;
+} else if (1 == step) {
+	if (res != rgt) {
+		alloc_array(res, rgt->type);
+		memcpy(res->data, rgt->data, type_size(rgt->type) * size(res));
+	}
+} else {
+	@<Reduce over array whose |step >= 2|@>@;
+}
+
+@ When |step == 0| we are dealing 
+with a case where we need to fill in the result with the identity 
+of the function, not apply the identity function over |rgt->data|.
+We can only do this when the function that we have been given is a 
+function that we know about, and that we have an identity for.
+Otherwise we need to signal an error. 
+
+@<Fill |res| with identity of |fun|@>=
+char *out, *fill, *end;
+int i;
+AplArray z;
+init_array(&z);
+if (function_identity(&z, fun)) {
+	apl_error(APLERR_NOIDENTITY);
+	exit(APLERR_NOIDENTITY);
+}
+alloc_array(res, z.type);
+out = res->data;
+end = out + (type_size(z.type) * size(res));
+fill = z.data;
+for (i = 0; out != end; i = (i + 1) % z.size)
+	*out++ = fill[i];
+free_data(&z);
+
+@ The |function_identity| function is used to fill its first argument,
+which is of type |AplArray *|, with a scalar array whose value is 
+the identity of the |AplFunction *| that is passed as the second argument. 
+On return, |function_identity| should return either |0| on success or 
+a non-zero value on error. A common error that might occur is if there 
+is no identity function corresponding to the function given.
+
+@<Utility functions@>=
+int function_identity(AplArray *res, AplFunction *fun)
+{
+	unsigned int *shp;
+	int code;
+	AplDyadic codeptr;
+	
+	shp = res->shape;
+	while (*shp != SHAPE_END) *shp++ = SHAPE_END;
+	code = 0;
+	codeptr = fun->dyadic;
+	
+	if (codeptr == plus) {
+		alloc_array(res, INT);
+		((AplInt *) res->data)[0] = 0;
+	} else {
+		code = 1;
+	}
+	
+	return code;
+}
+
+@ Finally, in the general case we must allocate |res| after we have
+determined the type of the output. We can only do this when our
+reduction size, indicated by |step|, is at least 2. In order to
+allocate our array, we must know the type of the output. We can do this
+only by running the function on some of its elements. We also assume
+that all functions must return elements of the same type at this time. 
+We then need to perform an iteration over each of the ranges that we will 
+reduce to a single scalar. To do this, we use pointers to the start and 
+end of the ranges, so that we can jump to the next range when we are ready, 
+and so that we know when we have reached the end of one reduction, since 
+we go backwards (right to left) instead of from start to end. We use 
+a |limit| pointer to tell us when we have reached the end of the computation 
+entirely. Thus, the main loop is an iteration where we jump the 
+|start|, |end|, and |next| pointers to the beginning and end of a 
+region, starting at the first region and moving forward, until we have 
+processed each of the ranges in turn. Each time that we do this iteration, 
+we have stored a single scalar value into the result array. We track the 
+location where we stored this value using the |resd| pointer. Each time 
+during the iteration, we need to slide this pointer over by one element. 
+This corresponds to the reduction of a range, indicated by |start| and 
+|next|, down to a single scalar element.
+
+@<Reduce over array whose |step >= 2|@>=
+char *start, *limit, *end, *resd, *next; 
+size_t esiz, rsiz;
+AplArray r, l;
+@<Determine type of result and allocate |res|@>@;
+resd = res->data;
+rsiz = type_size(r.type);
+limit = (char *) rgt->data + (esiz * size(rgt));
+for (start = rgt->data; start != limit; start = next) {
+	next = start + (esiz * step);
+	r.data = (end = next - esiz);
+	while (end != start) {
+		l.data = (end -= esiz);
+		applyd(fun, &r, &l, &r);
+	}
+	memcpy(resd, r.data, rsiz);
+	resd += rsiz;
+}
+free_data(&l);
+free_data(&r);
+
+@ To keep things as accurate as possible, we run the function on the first 
+two elements of the computation and allocate |res| based on the results. 
+We will also setup our temporary input scalars here and basically get 
+everything set up.
+
+@<Determine type of result and allocate |res|@>=
+esiz = type_size(rgt->type);
+start = (char *) rgt->data + (esiz * (step - 2));
+end = start + esiz;
+init_array(&l);
+init_array(&r);
+alloc_array(&l, rgt->type);
+alloc_array(&r, rgt->type);
+l.data = start;
+r.data = end;
+applyd(fun, &r, &l, &r);
+alloc_array(res, r.type);
 
 @* Reporting runtime errors. Much as I would like to think that my 
 compiler and that my coding are perfect, it turns out that this is 
@@ -1402,6 +1638,7 @@ plain text descriptions in a static array.
 @d APLERR_MALLOC 1
 @d APLERR_SHAPEMISMATCH 2
 @d APLERR_DOMAIN 3
+@d APLERR_NOIDENTITY 4
 
 @<Runtime error reporting@>=
 char *error_messages[] = 
@@ -1409,7 +1646,8 @@ char *error_messages[] =
 	  "Success", @/
 	  "Allocation failure", /* |APLERR_MALLOC| */
 	  "Shape mismatch", /* |APLERR_SHAPEMISMATCH| */
-	  "Invalid domain" /* |APLERR_DOMAIN| */
+	  "Invalid domain", /* |APLERR_DOMAIN| */
+	  "No identity is defined for this function" /* |APLERR_NOIDENTITY| */
 	};
 char *warning_messages[] =
 	{  @/
@@ -1436,6 +1674,14 @@ void apl_warning(int code)
 	    code, warning_messages[code]);
 }
 
+@* Header Definition. There are some pieces that we want to expose 
+to the rest of the world. We do so using the ``hpapl.h'' header file. 
+
+@(hpapl.h@>=
+#define MAXRANK 32
+@<Primary data structures@>@;
+void alloc_array(AplArray *, AplType);
+void plus(AplArray *, AplArray *, AplArray *, AplFunction *);
 
 @* Index.
 
