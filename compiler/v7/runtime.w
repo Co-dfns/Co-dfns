@@ -52,7 +52,6 @@ into the following sections:
 @h
 
 @<Runtime error reporting@>@;
-@qPrimary data structures@>@;
 @<Utility functions@>@;
 @<Memory management functions@>@;
 @<Scalar APL functions@>@;
@@ -581,7 +580,7 @@ void free_data(AplArray *arr)
 actually start implementing some real APL functions. The first and 
 most obvious one to implement is the |plus| function, and it will 
 show how we implement most functions.  We try to follow the same 
-patter of coding throughout to maximize the amount of code that we 
+pattern of coding throughout to maximize the amount of code that we 
 can reuse. Basically, all scalar functions have an operation 
 that they perform over all elements. Given a range, an operation, 
 and the data, we can abstract over the basic scalar process. 
