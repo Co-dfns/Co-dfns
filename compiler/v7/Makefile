@@ -8,6 +8,7 @@ CC=gcc
 
 .tex.pdf:
 	pdftex $<
+	rm -f $*.{idx,log,out,scn,toc}
 
 .w.c:
 	${CTANGLE} $*
