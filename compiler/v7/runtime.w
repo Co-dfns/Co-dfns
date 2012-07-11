@@ -150,17 +150,18 @@ size of the data regions like this though, and we use an
 appropriate |size_t| variable to hold the size of the data 
 region. This gives us the following fields for our arrays:
 
-\medskip
-\itemitem{|shape|} A static array of length |MAXRANK+1| whose 
+\medskip{\parindent=0.5in
+\item{|shape|} A static array of length |MAXRANK+1| whose 
 elements are all |unsigned int| values;
-\itemitem{|size|} The number of bytes allocated for the region 
+\item{|size|} The number of bytes allocated for the region 
 pointed to by |data|;
-\itemitem{|data|} A pointer to a region of memory containing 
+\item{|data|} A pointer to a region of memory containing 
 the elements in row-major order; and finally,
-\itemitem{|type|} An enumeration indicating the type of elements
+\item{|type|} An enumeration indicating the type of elements
 in the array.
+\par}\medskip
 
-\medskip\noindent This leads us to the following |typedef| 
+\noindent This leads us to the following |typedef| 
 and definitions. We have a maximum array rank of |MAXRANK|. 
 
 @d MAXRANK 31
@@ -1428,7 +1429,7 @@ given when |clean == 0|. Otherwise, |clean| will be set to one of
 the aforementioned constants, and we need to do different clean 
 up on each. 
 
-\medskip
+\medskip{\parindent=1in
 \item{|EACH_SAME|} In this case, we have not allocated a temporary 
 array, instead reusing an input array. This also means that we 
 did not set the |type| field of the result array so as to not 
@@ -1441,7 +1442,7 @@ space for the resultant array so that we do not invalidate our
 input arrays with the output of the function. This means that 
 we need to put the important data buffers into the correct output 
 array, which we keep in the |orig| variable. 
-\medskip
+\par}\medskip
 
 \noindent After we do this cleanup, the assumption is that we can 
 safely return from the function.
