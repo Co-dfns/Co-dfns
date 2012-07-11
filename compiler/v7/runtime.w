@@ -47,11 +47,11 @@ into the following sections:
 #include <stdlib.h>
 #include <string.h>
 
-#include "hpapl.h"
-
 @h
 
 @<Runtime error reporting@>@;
+@<Primary data structures@>@;
+@<Public function declarations@>@;
 @<Utility functions@>@;
 @<Memory management functions@>@;
 @<Scalar APL functions@>@;
@@ -86,21 +86,17 @@ print_version(void)
 	printf("Copyright (c) 2012 Aaron W. Hsu\n");
 }
 
-@ This concludes the main introductions, we can now proceed to the 
-details of implementing the runtime.
-
 @* Things to do.
 The following is a list of things that I have noted need to be changed 
 but that I have not yet done.
 
-\item{1)} The implementation of shapes is mismatched right now. 
-Rather than having a |MAXRANK| with a fixed size array, I would 
-prefer to have an implicitely fixed size array that always is terminated 
-by a |SHAPE_END| object. This prevents the need for a temporary |i| 
-to track |MAXRANK| all the time.
-\item{2)} There are bugs in the way that the scalar function macros 
-are implemented, and some buffers will not be progressed forward like 
-they should. 
+\medskip{\parindent=0.3in
+\item{1.} We need to get an implementation of step functions into the 
+system soon.
+\item{2.} As a runtiem we need to find a good balance between safety and 
+performance. I am considering a flag which indicates whether we use the 
+safe library or the unsafe code.
+\par}\medskip
 
 @* Data structures.  We must implement two main data structures: 
 arrays and functions.  Arrays are the most used, and we have a few 
@@ -141,13 +137,12 @@ dimensions |unsigned int| in size. We use the unsigned feature
 because we do not have negative shapes. This gives us all the 
 range of |unsigned int| save one, so we have a maximum number 
 of elements for an array fixed at |UINT_MAX - 1|, where 
-|UINT_MAX| is used to indicate that a particular dimension is not
-in use. For future ease of transition to larger sizes we make sure 
+|UINT_MAX| is used as a terminator. 
+For future ease of transition to larger sizes we make sure 
 to define |SHAPE_END| for use instead of |UINT_MAX|. The shape 
-of an array is then the non-negative elements of the shape 
-field up to but not including the first element whose value is 
-|SHAPE_END|. We expect all the other values to be |SHAPE_END| 
-after that. While using |unsigned int| is relatively small for the
+of an array is then the non-negative elements of the |shape|
+field up to but not including the terminating element whose value is 
+|SHAPE_END|. While using |unsigned int| is relatively small for the
 number of elements that we can potentially access on a 64-bit 
 machine, it is big enough at the moment, and we can scale this 
 up without cause for alarm in the future. We do not limit the 
@@ -156,7 +151,7 @@ appropriate |size_t| variable to hold the size of the data
 region. This gives us the following fields for our arrays:
 
 \medskip
-\itemitem{|shape|} A static array of length |MAXRANK| whose 
+\itemitem{|shape|} A static array of length |MAXRANK+1| whose 
 elements are all |unsigned int| values;
 \itemitem{|size|} The number of bytes allocated for the region 
 pointed to by |data|;
@@ -166,21 +161,29 @@ the elements in row-major order; and finally,
 in the array.
 
 \medskip\noindent This leads us to the following |typedef| 
-and definitions. We have a maximum array rank of 32. 
+and definitions. We have a maximum array rank of |MAXRANK|. 
 
-@d MAXRANK 32
+@d MAXRANK 31
 @d SHAPE_END UINT_MAX
 @s AplType int
 
 @<Primary data structures@>=
 @<Define AplType@>@;
 struct apl_array {
-	unsigned int shape[MAXRANK];
+	unsigned int shape[MAXRANK+1];
 	AplType type;
 	size_t size;
 	void *data;
 };
 typedef struct apl_array AplArray;
+
+@ Since |MAXRANK| and |SHAPE_END| are useful to the outside, we duplicate 
+these definitions for our public interface that we define at the end of 
+this document.
+
+@<Public macro definitions@>=
+#define MAXRANK 31
+#define SHAPE_END UINT_MAX
 
 @ We have three main types of values that we can have, and to indicate 
 which one that we use, we setup an enumeration. We have one other 
@@ -213,18 +216,15 @@ shape array. Specifically, it is the product of the dimensions
 of the array.
 
 @<Utility functions@>=
-int size(AplArray *array) 
+size_t size(AplArray *array) 
 {
-	int i, res;
+	size_t res;
 	unsigned int *shp;
 
 	res = 1;
 	shp = array->shape;
-
-	for (i = 0; i < MAXRANK; i++, shp++) {
-		if (SHAPE_END == *shp) break;
-		else res *= *shp;
-	}
+	
+	while (*shp != SHAPE_END) res *= *shp++;
 	
 	return res;
 }
@@ -238,17 +238,14 @@ then |rank| should be the size or cardinality of $s$.
 @<Utility functions@>=
 short rank(AplArray *array) 
 {
-	short i, rnk;
+	short rnk;
 	unsigned int *shp;
 
 	rnk = 0;
 	shp = array->shape;
-
-	for(i = 0; i < MAXRANK; i++) {
-		if (SHAPE_END == *shp++) break;
-		else rnk++;
-	}
-
+	
+	while (*shp++ != SHAPE_END) rnk++;
+	
 	return rnk;
 }
 
@@ -310,15 +307,14 @@ for functions that allocate space for arrays and the like.
 @<Utility functions@>=
 void init_array(AplArray *array)
 {
-	int i;
 	unsigned int *shp;
 
 	shp = array->shape;
 	array->type = UNSET;
 	array->size = 0;
 	array->data = NULL;
-
-	for (i = 0; i < MAXRANK; i++) *shp++ = SHAPE_END;
+	
+	while (*shp != SHAPE_END) *shp++ = SHAPE_END;
 }
 
 @ So, what is an |AplFunction| anyways. It is a structure to 
@@ -371,11 +367,10 @@ does not involve allocation.
 @<Utility functions@>=
 void copy_shape(AplArray *dst, AplArray *src) 
 {
-	short i;
 	unsigned int *dstshp, *srcshp;
 	dstshp = dst->shape;
 	srcshp = src->shape;
-	for (i = 0; i < MAXRANK; i++) *dstshp++ = *srcshp++;
+	while (*srcshp != SHAPE_END) *dstshp++ = *srcshp++;
 }
 
 @ Note, we could also talk about the |type| field, which is another 
@@ -869,7 +864,7 @@ if (lftrnk != rgtrnk) { /* We must have a scalar */
 	}
 } else { 
 	if (resesiz > rgtesiz) {
-		TEMPRES(lft)@;
+		TEMPRES(rgt)@;
 	}
 	lftstp = lftesiz;
 	rgtstp = rgtesiz;
@@ -1616,22 +1611,22 @@ is no identity function corresponding to the function given.
 int function_identity(AplArray *res, AplFunction *fun)
 {
 	unsigned int *shp;
-	int code;
+	int ret;
 	AplDyadic codeptr;
 	
 	shp = res->shape;
 	while (*shp != SHAPE_END) *shp++ = SHAPE_END;
-	code = 0;
+	ret = 0;
 	codeptr = fun->dyadic;
 	
 	if (codeptr == plus) {
 		alloc_array(res, INT);
 		((AplInt *) res->data)[0] = 0;
 	} else {
-		code = 1;
+		ret = 1;
 	}
 	
-	return code;
+	return ret;
 }
 
 @ Finally, in the general case we must allocate |res| after we have
@@ -1746,14 +1741,37 @@ void apl_warning(int code)
 	    code, warning_messages[code]);
 }
 
-@* Header Definition. There are some pieces that we want to expose 
-to the rest of the world. We do so using the ``hpapl.h'' header file. 
+@* Public Header Definition.
+We define a header ``hpapl.h'' that contains the public interface to 
+this code.
 
 @(hpapl.h@>=
-#define MAXRANK 32
+@<Public macro ...@>@;
 @<Primary data structures@>@;
+@<Public function ...@>@;
+
+@ It is helpful to have the set of all of our functions that we use 
+that should be publicly available in a single section. This allows us to 
+declare the functions at the top of our code body and get some more 
+flexibility in laying out our code.
+
+@<Public function declarations@>=
+void init_array(AplArray *);
+void init_function(AplFunction *, AplMonadic, AplDyadic, void *, void *, ...);
 void alloc_array(AplArray *, AplType);
-void plus(AplArray *, AplArray *, AplArray *, AplFunction *);
+void realloc_array(AplArray *, AplType);
+void copy_array(AplArray *, AplArray *);
+void free_data(AplArray *);@#
+
+void identity(AplArray *, AplArray *, AplFunction *);
+void plus(AplArray *, AplArray *, AplArray *, AplFunction *);@#
+
+void index_gen(AplArray *, AplArray *, AplFunction *);
+void index(AplArray *, AplArray *, AplArray *, AplFunction *);@#
+
+void eachm(AplArray *, AplArray *, AplFunction *);
+void eachd(AplArray *, AplArray *, AplArray *, AplFunction *);
+void reduce(AplArray *, AplArray *, AplFunction *);
 
 @* Index.
 
