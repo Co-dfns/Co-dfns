@@ -43,6 +43,7 @@ into the following sections:
 @p
 #include <limits.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1752,6 +1753,8 @@ We define a header ``hpapl.h'' that contains the public interface to
 this code.
 
 @(hpapl.h@>=
+#include <stddef.h>
+
 @<Public macro ...@>@;
 @<Primary data structures@>@;
 @<Public function ...@>@;
