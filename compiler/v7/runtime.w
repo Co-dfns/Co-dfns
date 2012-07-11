@@ -96,6 +96,11 @@ system soon.
 \item{2.} As a runtiem we need to find a good balance between safety and 
 performance. I am considering a flag which indicates whether we use the 
 safe library or the unsafe code.
+\item{3.} We can improve the way we handle |function_identity| by running 
+it at the time that we create function closures rather than running it 
+when we do a reduction. This should save time if we add a field to the 
+function closure structure that let's us know ahead of time the identity 
+of the function.
 \par}\medskip
 
 @* Data structures.  We must implement two main data structures: 
