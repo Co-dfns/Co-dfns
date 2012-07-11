@@ -14,3 +14,6 @@ CC=gcc
 
 runtime: runtime.o
 	${CC} ${CFLAGS} -fPIC -shared -o libhpapl.so runtime.o
+	
+examples: runtime examples.o
+	${CC} ${CFLAGS} -L. -o examples examples.o -lhpapl
