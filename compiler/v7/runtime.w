@@ -576,63 +576,125 @@ void free_data(AplArray *arr)
 	arr->type = UNSET;
 }
 
-@* Primitive scalar function. Now we come to the fun part, where we 
+@* Primitive scalar functions. Now we come to the fun part, where we 
 actually start implementing some real APL functions. The first and 
 most obvious one to implement is the |plus| function, and it will 
 show how we implement most functions.  We try to follow the same 
 pattern of coding throughout to maximize the amount of code that we 
 can reuse. Basically, all scalar functions have an operation 
-that they perform over all elements. Given a range, an operation, 
-and the data, we can abstract over the basic scalar process. 
-We use macros so that we are not sensitive to the types, and we 
-define two macros, one for the monadic operations, and one for 
-the dyadic operations.
+that they perform over all elements. This operation should be 
+encapsulated into a function that we call |op| with the following 
+signature that we |typedef| to |AplScalarMonadic| and |AplScalarDyadic|.
+The first argument is meant to be where the result goes, and the other 
+arguments the arguments to the function.
 
-@d SCAMONLP(op, restyp, type, next) {
-	unsigned int i, rng;
-	restype *resd; type *data;
-	rng = size(res);
-	resd = (restype) res->data;
-	data = (type) rgt->data;
-	for (i = 0; i < rng; i++, resd++, next(data))
-		*resd = op(*data);
+@s AplScalarMonadic int
+@s AplScalarDyadic int
+
+@<Primary data structures@>=
+typedef void (*AplScalarMonadic)(void *, void *);
+typedef void (*AplScalarDyadic)(void *, void *, void *);
+
+@ All dyadic scalar functions using the following pattern of code retain
+the same  basic function body:@^Scalar functions, design pattern@>
+
+\medskip{\parindent=0.3in
+\item{1:} Declare variables used among the sections;
+\item{2:} Set the |op| variable;
+\item{3:} Set |res->type|, |resesiz|, |lftesiz|, and |rgtesiz| variables;
+\item{4:} Use the allocation section to allocate |res|;
+\item{5:} Use the application section to compute the function; 
+\item{6:} Finally, clean-up if necessary.
+}\medskip
+
+\noindent Step 2 is specific to the function that you are writing, 
+but all of the other sections are the same for each scalar function. 
+
+@<Compute dyadic scalar function |op|@>=
+orig = NULL;
+@<Allocate |res|, dealing with shared inputs and output structures@>@;
+@<Dyadically apply |op| over |rgt| and |lft| by |rgtstp| and |lftstp|@>@;
+@<Clean-up after scalar function@>@;
+
+@ @<Declare dyadic scalar function variables@>=
+short lftrnk, rgtrnk; /* Used in allocation cases 3 and 4 */
+size_t resesiz, lftesiz, rgtesiz; /* Number of bytes per element */
+size_t rgtstp, lftstp; /* For scalar distribution iteration */
+AplScalarDyadic op; /* Function pointer to scalar function */
+AplArray *orig; /* Points to original array in case of temporary allocation */
+
+@ We need to have a few things in order to process or apply the 
+scalar |op| function over a given array |rgt|, which we will by 
+convention store into |res|. Firstly, |res| should be fully allocated 
+and its shape should be accurately in place, since we rely on getting 
+a valid |size(res)| result to indicate how many elements we should 
+process. Unlike with the dyadic case, we do not have to worry about 
+scalar distribution of arguments, which means that we always know that 
+the shape of |res| is the same as the shape of |rgt|, which means that 
+we know that the elements will be traversed in lock-step, as opposed 
+to only one argument being traversed, as happens in some cases of 
+dyadic scalar functions. We will talk more about this in the dyadic 
+case, but for now, it suffices to know that we will never have a 
+case where we do not want to move the result data array and the 
+input data array in lock-step, a single element at a time; and, that
+we will do this exactly |size(res)| times, which should be equivalent 
+to |size(rgt)|.
+
+@<Apply |op| monadically into |res| over |rgt|@>=
+{
+	size_t count;
+	char *resd, *rgtd;
+
+	resd = res->data;
+	rgtd = rgt->data;
+	count = size(res);
+
+	while (count--) { 
+		op(resd, rgtd);
+		resd += resesiz;
+		rgtd += rgtesiz;
+	}
 }
-@d SCADYALP(op, restyp, lfttyp, rgttyp, lftnxt, rgtnxt) {
-	unsigned int i, rng;
-	restyp *resd; lfttyp *lftd; rgttyp *rgtd;
+
+@ The dyadic case becomes a bit more complex, because, while we must 
+assume that |res| is already an allocated array, and we know the 
+|size(res)| will tell us how many elements we are iterating, we also 
+have the situation where we may have a scalar argument that we distribute 
+over a non-scalar array. To handle this, we assume that |rgtstp| and 
+|lftstp| are variables assigned to the step amounts for the |rgt| and |lft|
+arguments respectively. That is, these indicate the number of bytes that 
+we should increment the data arrays in order to move to the next element.
+In the case of a scalar in one of the arguments that will be distributed 
+over another array, this step count will be zero. 
+
+@<Dyadically apply |op| over |rgt| and |lft| by |rgtstp| and |lftstp|@>=
+{
+	size_t count;
+	char *resd, *lftd, *rgtd;
+
 	resd = res->data;
 	lftd = lft->data;
 	rgtd = rgt->data;
-	rng = size(res);
-	for (i = 0; i < rng; i++, resd++, lftnxt(lftd), rgtnxt(rgtd))
-		*resd = op(*lftd, *rgtd);
+	count = size(res);
+
+	while (count--) {
+		op(resd, lftd, rgtd);
+		resd += resesiz;
+		lftd += lftstp;
+		rgtd += rgtstp;
+	}
 }
 
-@ As you can see, a scalar function could receive scalar arguments 
-on either side that must be distributed to the other array if 
-that array is of a non-scalar shape. This is why we have the 
-|next|, |lftnxt|, and |rgtnxt| operations in our macros, as they 
-abstract the operations necessary to iterate down the buffer.
-In our case, we need only two to represent all of the types of 
-iteration that we may do with scalar functions. One of them 
-is a no-op for iterating over a single scalar, and the other 
-iterates down the array elements one at a time.
-
-@d scalar_next(array) array
-@d array_next(array) array++
-
-@ Before we can get to the specifics of implementing the main 
-scalar functions, there is still one more abstraction with macros 
+@ Before we can get to the specifics of implementing a real
+scalar function, there is still one more abstraction  
 that I want to make. Specifically, we need to be careful about 
 scalar functions that operate on themselves. 
 In principle, we can do in-place updates when we have sharing. 
 Because all scalar functions have the same basic set of operations, 
-we can abstract away the main elements outside of their main 
-function that they compute to handle the grunge work for all 
-scalar functions in one place. We divide the possible sharing 
-cases thusly:
+we can abstract away the main elements common to all scalar functions
+in one place. We divide the possible sharing cases thusly:
 
-\medskip
+\medskip{\parindent=0.3in
 \item{1)} {\it All arguments the same.} In this case, all 
 of the arguments are the same. We know that the input types 
 are the same and that the input arrays are of the exact same 
@@ -647,15 +709,7 @@ an in-place update.
 \item{2)} {\it All inputs are the same.} In this case, 
 all the inputs are the same, but the output is a different 
 array. This is the general case when we are dealing with 
-monadic functions, but when we are dealing with dyadic 
-function, we have to be careful: we are in danger of iterating 
-too fast over an array if we na\"ively use the iterators 
-without first making sure that they are not the same object. 
-See the way that the |SCADYALP| macro works to see this. 
-The solution is to use a no-op scalar iterator for one of 
-the arguments instead. We may also need to do subtle things 
-with the shape and allocation operations, which we discuss 
-more in the implementation of |SCALAR_PRIM_CASE2|. 
+monadic functions. 
 \item{3)} {\it Left or right argument is the same as 
 the result.} In this case, which is the same as case 1 
 in the monadic case, we have one or the other of the 
@@ -675,27 +729,29 @@ inputs. The result array will be the larger of the shapes,
 assuming that one of them is a scalar and the other is not.
 Otherwise the shape of the result array will be the same 
 as the shape of the inputs, which must be the same. 
-\medskip
+\par}\medskip
 
 \noindent
 The job of each case is to make sure that the output 
 array is allocated correctly, and that anything that needs to be 
-done on that front is done. 
+done on that front is done. We make sure that |lftstp| and |rgtstp| 
+are set correctly, since this is the time when we know what their values 
+should be.
 
-@d SCAPRIMDYA(op, ztv, zt, lt, rt)
-	if (lft == rgt) {
-		if (res == lft) {
-			SCALAR_PRIM_CASE1(op, ztv, zt, lt, rt)@;
-		} else {
-			SCALAR_PRIM_CASE2(op, ztv, zt, lt, rt)@;
-		}
-	} else if (res == lft) {
-		SCALAR_PRIM_CASE3A(op, ztv, zt, lt, rt)@;
-	} else if (res == rgt) {
-		SCALAR_PRIM_CASE3B(op, ztv, zt, lt, rt)@;
+@<Allocate |res|, dealing with shared inputs and output structures@>=
+if (lft == rgt) {
+	if (res == lft) {
+		@<Allocate |res| for dyadic scalar case 1@>@;
 	} else {
-		SCALAR_PRIM_CASE4(op, ztv, zt, lt, rt)@;
+		@<Allocate |res| for dyadic scalar case 2@>@;
 	}
+} else if (res == lft) {
+	@<Allocate |res| for dyadic scalar case 3a@>@;
+} else if (res == rgt) {
+	@<Allocate |res| for dyadic scalar case 3b@>@;
+} else {
+	@<Allocate |res| for dyadic scalar case 4@>@;
+}
 
 @ In the first case, where all of the inputs and the return array 
 are the same object, we know the shape and sizes of everything will 
@@ -714,19 +770,30 @@ a new result array of the right size and shape. We can then
 store the outputs into that, finally replacing the contents 
 of the old array and freeing the old buffers when we are done.
 
-@d SCALAR_PRIM_CASE1(op, ztv, zt, lt, rt)
-if (sizeof (zt) > sizeof (lt)) {
+@d TEMPRES(array) @/
 	AplArray tmp;
 	init_array(&tmp);
-	copy_shape(&tmp, rgt);
-	alloc_array(&tmp, ztv);
+	copy_array(&tmp, array);
+	alloc_array(&tmp, res->type);
+	orig = res;
 	res = &tmp;
-	SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
-	free(rgt->data);
-	rgt->size = res->size;
-	rgt->data = res->data;
-} else {
-	SCADYALP(op, zt, lt, rt, scalar_next, scalar_next)@;
+
+@<Allocate |res| for dyadic scalar case 1@>=
+lftstp = rgtstp = rgtesiz;
+if (resesiz > lftesiz) {
+	TEMPRES(rgt)@;
+}
+
+@ We have allocated a temporary array here, and we need to make sure that 
+we clean up after we are done processing everything. Our |TEMPRES| macro 
+makes sure to save the original destination array in |orig|, so we must 
+put that data into the right place in the case that |orig != NULL|.
+
+@<Clean-up after scalar function@>=
+if (NULL != orig) {
+	free(orig->data);
+	orig->size = res->size;
+	orig->data = res->data;
 }
 
 @ In the second case, we have the inputs being the same, but the 
@@ -737,13 +804,13 @@ do an allocation for the result array, as well as always copying
 the shape into the result array, which will be the shape of either 
 of the input arguments, since they are the same. 
 
-@d SCALAR_PRIM_CASE2(op, ztv, zt, lt, rt)
+@<Allocate |res| for dyadic scalar case 2@>=
 copy_shape(res, rgt);
-alloc_array(res, ztv);
-SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+alloc_array(res, res->type);
+lftstp = rgtstp = rgtesiz;
 
 @ In the third case, either the left or the right inputs, but not 
-both is equal to the result array. The process for handling the one 
+both, is equal to the result array. The process for handling the one 
 is the exact same as handling the other case, just with some arguments 
 swapped around. In both of these cases, we need to check the shapes 
 of the two inputs to see if they are the same or if they are different. 
@@ -761,68 +828,51 @@ type.
 
 The first sub-case $a$ is the case when |res == lft|. 
 
-@d TEMPRES(array, ztv)
-	AplArray tmp;
-	init_array(&tmp);
-	copy_array(&tmp, array);
-	alloc_array(&tmp, ztv);
-	res = &tmp;
-@d REPLACEDATA(dst, src)
-	free(dst->data);
-	dst->size = src->size;
-	dst->data = src->data;
-
-@d SCALAR_PRIM_CASE3A(op, ztv, zt, lt, rt)
-short lftrnk, rgtrnk;
+@<Allocate |res| for dyadic scalar case 3a@>=
 lftrnk = rank(lft); rgtrnk = rank(rgt);
-if (lftrnk != rgtrnk) {
-	if (0 == lftrnk) {
-		TEMPRES(rgt, ztv)@;
-		SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
-		REPLACEDATA(lft, res)@;
-	} else if (sizeof (zt) > sizeof (lt)) {
-		TEMPRES(lft, ztv)@;
-		SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
-		REPLACEDATA(lft, res)@;
-	} else {
-		SCADYALP(op, zt, lt, rt, scalar_next, scalar_next)@;
+if (lftrnk != rgtrnk) { /* We must have a scalar */
+	if (0 == lftrnk) { /* |lft| is our scalar */
+		TEMPRES(rgt)@;
+		lftstp = 0;
+		rgtstp = rgtesiz;
+	} else { /* |rgt| is our scalar */
+		lftstp = lftesiz;
+		rgtstp = 0;
+		if (resesiz > lftesiz) {
+			TEMPRES(lft)@;
+		}
 	}
 } else {
-	if (sizeof (zt) > sizeof (lt)) {
-		TEMPRES(lft, ztv)@;
-		SCADYALP(op, zt, lt, rt, array_next, array_next)@;
-		REPLACEDATA(lft, res)@;
-	} else {
-		SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
+	if (resesiz > lftesiz) {
+		TEMPRES(lft)@;
 	}
+	lftstp = lftesiz;
+	rgtstp = rgtesiz;
 }
 
 @ The second sub-case of case 3, $b$, is the same as sub-case $a$ 
 but with |res == rgt| instead.
 
-@d SCALAR_PRIM_CASE3B(op, ztv, zt, lt, rt)
-short lftrnk, rgtrnk;
+@<Allocate |res| for dyadic scalar case 3b@>=
 lftrnk = rank(lft); rgtrnk = rank(rgt);
-if (lftrnk != rgtrnk) {
-	if (0 == rgtrnk) {
-		TEMPRES(lft, ztv)@;
-		SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
-		REPLACEDATA(rgt, res)@;
-	} else if (sizeof (zt) > sizeof (rt)) {
-		TEMPRES(rgt, ztv)@;
-		SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
-		REPLACEDATA(rgt, res)@;
-	} else {
-		SCADYALP(op, zt, lt, rt, scalar_next, scalar_next)@;
+if (lftrnk != rgtrnk) { /* We must have a scalar */
+	if (0 == rgtrnk) { /* |rgt| is our scalar */
+		TEMPRES(lft)@;
+		lftstp = lftesiz;
+		rgtstp = 0;
+	} else { /* |lft| is our scalar */
+		if (resesiz > rgtesiz) {
+			TEMPRES(rgt)@;
+		}
+		lftstp = 0;
+		rgtstp = rgtesiz;
 	}
-} else {
-	if (sizeof (zt) > sizeof (rt)) {
-		TEMPRES(rgt, ztv)@;
-		SCADYALP(op, zt, lt, rt, array_next, array_next)@;
-		REPLACEDATA(rgt, res)@;
-	} else {
-		SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+} else { 
+	if (resesiz > rgtesiz) {
+		TEMPRES(lft)@;
 	}
+	lftstp = lftesiz;
+	rgtstp = rgtesiz;
 }
 
 @ The fourth and most general case is when none of the inputs are 
@@ -833,21 +883,23 @@ once we have the right shape. In some ways this is the most simple
 case because we do not have to consider the effects of overlapping 
 reads and writes to the buffers.
 
-@d SCALAR_PRIM_CASE4(op, ztv, zt, lt, rt)
-short lftrnk, rgtrnk;
+@<Allocate |res| for dyadic scalar case 4@>=
 lftrnk = rank(lft); rgtrnk = rank(rgt);
 if (lftrnk == rgtrnk) {
 	copy_shape(res, rgt);
-	alloc_array(res, ztv);
-	SCADYALP(op, zt, lt, rt, array_next, array_next)@;
+	alloc_array(res, res->type);
+	lftstp = lftesiz;
+	rgtstp = rgtesiz;
 } else if (0 == lftrnk) {
 	copy_shape(res, rgt);
-	alloc_array(res, ztv);
-	SCADYALP(op, zt, lt, rt, scalar_next, array_next)@;
+	alloc_array(res, res->type);
+	lftstp = 0;
+	rgtstp = rgtesiz;
 } else if (0 == rgtrnk) {
 	copy_shape(res, lft);
-	alloc_array(res, ztv);
-	SCADYALP(op, zt, lt, rt, array_next, scalar_next)@;
+	alloc_array(res, res->type);
+	lftstp = lftesiz;
+	rgtstp = 0;
 }
 
 @*1 Implementing Plus and Identity.
@@ -863,36 +915,57 @@ but everything else is a |REAL|. So, firstly, we need the plus
 macro for our operation, and then we can define the main 
 |plus| function.
 
-@d plus_op(l, r) (l + r)
-
 @<Scalar APL functions@>=
 void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
-	AplType lfttyp, rgttyp;
-	lfttyp = lft->type; rgttyp = rgt->type;
-	if (INT == lfttyp) {
-		if (INT == rgttyp) {
-			SCAPRIMDYA(plus_op, INT, AplInt, AplInt, AplInt)
-		} else if (REAL == rgttyp) {
-			SCAPRIMDYA(plus_op, REAL, AplReal, AplInt, AplReal)
-		} else {
-			apl_error(APLERR_DOMAIN);
-			exit(APLERR_DOMAIN);
-		}
-	} else if (REAL == lfttyp) {
-		if (INT == rgttyp) {
-			SCAPRIMDYA(plus_op, REAL, AplReal, AplReal, AplInt)
-		} else if (REAL == rgttyp) {
-			SCAPRIMDYA(plus_op, REAL, AplReal, AplReal, AplReal)
-		} else {
-			apl_error(APLERR_DOMAIN);
-			exit(APLERR_DOMAIN);
-		}
-	} else {
-		apl_error(APLERR_DOMAIN);
-		exit(APLERR_DOMAIN);
-	}
+	@<Declare dyadic scalar function variables@>@;@#
+	
+	if (INT == lft->type) {
+		if (INT == rgt->type) {
+			op = plus_int_int;
+			res->type = INT;
+		} else if (REAL == rgt->type) {
+			op = plus_int_real;
+			res->type = REAL;
+		} else goto err;
+	} else if (REAL == lft->type) {
+		if (INT == rgt->type) {
+			op = plus_real_int;
+			res->type = REAL;
+		} else if (REAL == rgt->type) {
+			op = plus_real_real;
+			res->type = REAL;
+		} else goto err;
+	} else goto err;
+	@#
+	resesiz = type_size(res->type);
+	lftesiz = type_size(lft->type);
+	rgtesiz = type_size(rgt->type);
+	@#
+	@<Compute dyadic scalar function |op|@>@;
+	return;
+	@#
+err:
+	apl_error(APLERR_DOMAIN);
+	exit(APLERR_DOMAIN);
+	
 }
+
+@ We have four cases of addition that we need to handle. Each of them 
+can be expressed with the C |+| operation, so a macro suffices to 
+help us define each function.
+
+@d PLUSFUNC(nm, zt, lt, rt)@/
+void nm(void *res, void *lft, void *rgt)@/
+{
+	*((zt *) res) = *((lt *) lft) + *((rt *) rgt);
+}
+
+@<Utility functions@>=
+PLUSFUNC(plus_int_int, AplInt, AplInt, AplInt)@;
+PLUSFUNC(plus_int_real, AplReal, AplInt, AplReal)@;
+PLUSFUNC(plus_real_int, AplReal, AplReal, AplInt)@;
+PLUSFUNC(plus_real_real, AplReal, AplReal, AplReal)@;
 
 @ The |identity| function is the monadic form of the $+$ function 
 in APL. In this case, since we know that it is the identity function, 
@@ -908,7 +981,7 @@ void identity(AplArray *res, AplArray *rgt, AplFunction *env)
 	else copy_array(res, rgt);
 }
 
-@* Non-scalar primitive function. In this section we will deal with 
+@* Non-scalar primitive functions. In this section we will deal with 
 the class of functions that are non-scalar. These do not have the 
 nice, neat, and regular properties that the scalar functions have, 
 and so we cannot abstract away all of those operations into a common 
