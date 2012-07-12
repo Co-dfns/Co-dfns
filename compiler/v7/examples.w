@@ -92,6 +92,8 @@ void ex1(void)
 	*((AplInt *) x.data) = (AplInt) 5;
 	plus(&z, &x, &x, NULL);
 	printf("%ld\n", *((AplInt *) z.data));
+	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
+	    size(&z), rank(&z), z.size);
 	free_data(&z);
 	free_data(&x);
 }
