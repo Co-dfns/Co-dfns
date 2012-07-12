@@ -102,6 +102,9 @@ it at the time that we create function closures rather than running it
 when we do a reduction. This should save time if we add a field to the 
 function closure structure that let's us know ahead of time the identity 
 of the function.
+\item{4.} We currently use |alloc_array| assuming that it will set the 
+|type| field. Is it possible that we could do better by not setting the 
+|type| in |alloc_array| or |realloc_array|?
 \par}\medskip
 
 @* Data structures.  We must implement two main data structures: 
@@ -314,14 +317,14 @@ for functions that allocate space for arrays and the like.
 @<Utility functions@>=
 void init_array(AplArray *array)
 {
+	short i;
 	unsigned int *shp;
 
 	shp = array->shape;
 	array->type = UNSET;
 	array->size = 0;
 	array->data = NULL;
-	
-	while (*shp != SHAPE_END) *shp++ = SHAPE_END;
+	for (i = 0; i < MAXRANK; i++) *shp++ = SHAPE_END;
 }
 
 @ So, what is an |AplFunction| anyways. It is a structure to 
@@ -491,6 +494,7 @@ void alloc_array(AplArray *array, AplType type)
 	}
 	array->data = data;
 	array->size = dsize;
+	array->type = type;
 }
 
 @ There are times when we may want to preserve the contenst of an 
@@ -513,6 +517,7 @@ void realloc_array(AplArray *array, AplType type)
 	}
 	array->data = data;
 	array->size = dsize;
+	array->type = type;
 }
 
 @ In both of the above functions we want to check that the allocation
@@ -776,7 +781,6 @@ of the old array and freeing the old buffers when we are done.
 	AplArray tmp;
 	init_array(&tmp);
 	copy_array(&tmp, array);
-	alloc_array(&tmp, res->type);
 	orig = res;
 	res = &tmp;
 
