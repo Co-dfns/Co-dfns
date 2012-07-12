@@ -1774,7 +1774,9 @@ void init_function(AplFunction *, AplMonadic, AplDyadic, void *, void *, ...);
 void alloc_array(AplArray *, AplType);
 void realloc_array(AplArray *, AplType);
 void copy_array(AplArray *, AplArray *);
-void free_data(AplArray *);@#
+void free_data(AplArray *);
+size_t size(AplArray *);
+short rank(AplArray *);@#
 
 void identity(AplArray *, AplArray *, AplFunction *);
 void plus(AplArray *, AplArray *, AplArray *, AplFunction *);@#
