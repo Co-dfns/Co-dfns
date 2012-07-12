@@ -68,9 +68,9 @@ int main(int argc, char *argv[])
 		return 2;
 	}@#
 	
-	printf("Running %s\n", msg);
+	printf("Running %s\n\n", msg);
 	example();
-	printf("Finished running the example, goodbye!\n\n");@#
+	printf("\nFinished running the example, goodbye!\n\n");@#
 	
 	return 0;
 }
@@ -92,6 +92,8 @@ void ex1(void)
 	*((AplInt *) x.data) = (AplInt) 5;
 	plus(&z, &x, &x, NULL);
 	printf("%ld\n", *((AplInt *) z.data));
+	free_data(&z);
+	free_data(&x);
 }
 
 @* Index.
