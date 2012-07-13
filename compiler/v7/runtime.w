@@ -105,6 +105,10 @@ of the function.
 \item{4.} We currently use |alloc_array| assuming that it will set the 
 |type| field. Is it possible that we could do better by not setting the 
 |type| in |alloc_array| or |realloc_array|?
+\item{5.} We need to audit the code for missing frees. I believe that 
+there are a number of memory leaks in the system, so we need to audit our 
+uses of |alloc_array| and |realloc_array| to make sure that they are 
+freed afterwards using |free_data|.
 \par}\medskip
 
 @* Data structures.  We must implement two main data structures: 
