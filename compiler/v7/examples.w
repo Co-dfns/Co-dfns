@@ -50,6 +50,7 @@ By computing $5+5$.
 @#
 @<Ex 1. Compute $5+5$@>@;
 @<Ex 2. ...@>@;
+@<Ex 3. ...@>@;
 
 int main(int argc, char *argv[])
 {
@@ -67,6 +68,9 @@ int main(int argc, char *argv[])
 	} else if (!strcmp(argv[1], "ex2")) {
 		msg = "Ex 2: Computing iota 10";
 		example = ex2;	
+	} else if (!strcmp(argv[1], "ex3")) {
+		msg = "Ex 3: Computing (iota 10) + iota 10";
+		example = ex3;
 	} else {
 		printf("Unknown example, please enter a valid example.\n");
 		return 2;
@@ -121,6 +125,28 @@ void ex2(void)
 	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
 	    size(&z), rank(&z), z.size);
 	free_data(&x);
+	free_data(&z);
+}
+
+@* Example 3. In this example, we will combine the first two examples to 
+show how we can share data structures. In other words, we will only 
+double a single array to compute $(\iota 10)+\iota 10$. 
+
+@<Ex 3. Compute $(\iota 10)+\iota 10$@>=
+void ex3() 
+{
+	short i;
+	AplArray z;
+	init_array(&z);
+	alloc_array(&z, INT);
+	*((AplInt *) z.data) = 10;
+	index_gen(&z, &z, NULL);
+	plus(&z, &z, &z, NULL);
+	for (i = 0; i < 10; i++)
+		printf("%ld ", ((AplInt *) z.data)[i]);
+	printf("\n");
+	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
+	    size(&z), rank(&z), z.size);
 	free_data(&z);
 }
 
