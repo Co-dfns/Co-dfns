@@ -13,10 +13,13 @@ CC=gcc
 .w.c:
 	${CTANGLE} $*
 	
-runtime: libhpapl.so
-
+all: runtime.pdf examples.pdf libhpapl.so examples
+	
 examples: libhpapl.so examples.o
 	${CC} ${CFLAGS} -L. -o examples examples.o -lhpapl
 
 libhpapl.so: runtime.o
-	${CC} ${CFLAGS} -fPIC -shared -o libhpapl.so runtime.o
+	${CC} ${CFLAGS} -shared -o libhpapl.so runtime.o
+
+clean: 
+	rm -f *.o hpapl.h libhpapl.so runtime.pdf examples.pdf examples
