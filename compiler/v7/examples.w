@@ -49,6 +49,7 @@ By computing $5+5$.
 #include "hpapl.h"
 @#
 @<Ex 1. Compute $5+5$@>@;
+@<Ex 2. ...@>@;
 
 int main(int argc, char *argv[])
 {
@@ -63,6 +64,9 @@ int main(int argc, char *argv[])
 	if (!strcmp(argv[1], "ex1")) {
 		msg = "Ex 1: Computing 5 + 5";
 		example = ex1;
+	} else if (!strcmp(argv[1], "ex2")) {
+		msg = "Ex 2: Computing iota 10";
+		example = ex2;	
 	} else {
 		printf("Unknown example, please enter a valid example.\n");
 		return 2;
@@ -89,13 +93,35 @@ void ex1(void)
 	init_array(&x);
 	alloc_array(&z, INT);
 	alloc_array(&x, INT);
-	*((AplInt *) x.data) = (AplInt) 5;
+	*((AplInt *) x.data) = 5;
 	plus(&z, &x, &x, NULL);
 	printf("%ld\n", *((AplInt *) z.data));
-	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
+	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
 	    size(&z), rank(&z), z.size);
 	free_data(&z);
 	free_data(&x);
+}
+
+@* Example 2. This example demonstrates the use of the iota index 
+generation function. It should produce a set of numbers between $[0,10)$.
+
+@<Ex 2. Compute $\iota 10$@>=
+void ex2(void)
+{
+	short i;
+	AplArray z, x;
+	init_array(&z);
+	init_array(&x);
+	alloc_array(&x, INT);
+	*((AplInt *) x.data) = 10;
+	index_gen(&z, &x, NULL);
+	for (i = 0; i < 10; i++)
+		printf("%ld ", ((AplInt *) z.data)[i]);
+	printf("\n");
+	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
+	    size(&z), rank(&z), z.size);
+	free_data(&x);
+	free_data(&z);
 }
 
 @* Index.
