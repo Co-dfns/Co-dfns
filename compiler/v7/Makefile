@@ -1,5 +1,6 @@
 CFLAGS=-g -Wall -pedantic -ansi -fPIC
 CC=gcc
+EX=4
 
 .SUFFIXES: .pdf .dvi .tex .w
 
@@ -14,6 +15,12 @@ CC=gcc
 	${CTANGLE} $*
 	
 all: runtime.pdf examples.pdf libhpapl.so examples
+
+run: examples
+	LD_LIBRARY_PATH=. ./examples ex${EX}
+
+debug: examples
+	LD_LIBRARY_PATH=. gdb examples
 	
 examples: libhpapl.so examples.o
 	${CC} ${CFLAGS} -L. -o examples examples.o -lhpapl
