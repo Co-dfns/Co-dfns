@@ -361,6 +361,10 @@ data types.
 @d applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
 @d applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
 
+@<Public macro ...@>=
+#define applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
+#define applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
+
 @ We are about done with the work on the primary data structures, 
 so we should take some time to get all of the other basic array 
 utilities out of the way. Let's focus specifically on those that 
@@ -1512,12 +1516,12 @@ for (i = 0; i < siz; i++) {
 @*1 The Reduce Operator.
 The reduction operator takes scalar functions and produces a monadic
 function in return. It expects its incoming functions to be scalar 
-dyadic. Ther reult of applying a reduction function to an array of 
-shape $\mathrel{\bar{ }}1\downarrow\rho A$ where $A$ is the input array. 
+dyadic. The result of applying a reduction function to an array $A$ is an 
+array of 
+shape $\mathrel{\bar{ }}1\downarrow\rho A$. 
 That is, we reduce an array along its last axis. The elements in each 
-slot of the resulting array is the result of distributing the 
-operand along the elements of the vector $I\idxbox A$, where $I$ is a 
-valid index to the element in question. Assuming we have Dyalog 
+index $I$ of the resulting array is the result of distributing the 
+operand along the elements of the vector $I\idxbox A$. Assuming we have Dyalog 
 APL, then we can express general reduction in terms of reduction over 
 vectors using this equality:
 
@@ -1531,16 +1535,56 @@ and then scale the process up to arrays of greater dimensions; instead
 of dealing with the expensive copying that might result from that, 
 we will implement this in-place, handling any dimension from the start. 
 
+We are going to be a little picky here. Namely, we are going to assume 
+that the domain or type of the output array is the same as the input array. 
+This simplifies some of our work, but makes the reduction operator less 
+general. This will work for now. We do not need to allocate the array if 
+|res == rgt| because we know that there is enough space in that case. 
+
+
+
 @<APL Operators@>=
 void reduce(AplArray *res, AplArray *rgt, AplFunction *env)
 {
-	unsigned int step, *shpo, *shpi;
+	unsigned int step, *shpo, *shpi, cleanup;
 	AplFunction *fun;
+	AplArray tmp; 
 	fun = env->lop;
 	shpi = rgt->shape;
 	shpo = res->shape;
+	@<Check for |res == rgt| and use |tmp| if so@>@;
 	@<Set |res->shape| and determine |step| size@>@;
-	@<Reduce elements along last axis@>@;
+	alloc_array(res, rgt->type);
+	@<Reduce over last axis@>@;
+	@<Cleanup if necessary@>@;
+}
+
+@ Unlike some other functions, doing an in-place update is harder than 
+it sounds, and so at the moment we will always create a fresh copy 
+for the result. This means that we need to sometime allocate a temporary 
+array to hold the results and then mark a |cleanup| bit to let us put 
+the data where it belongs at the end of the computation.
+
+@<Check for |res == rgt| and use |tmp| if so@>=
+if (res == rgt) {
+	init_array(&tmp);
+	res = &tmp;
+	cleanup = 1;
+} else {
+	cleanup = 0;
+}
+
+@ At the end we check the value of |cleanup| and replace the old data 
+in |rgt| if necessary. This happens only when |rgt == res|, and we 
+do this to make sure that the intended output array contains the results 
+that we want. 
+
+@<Cleanup if necessary@>=
+if (cleanup) {
+	free_data(rgt);
+	rgt->data = res->data;
+	rgt->size = res->size;
+	rgt->type = res->type;
 }
 
 @ We can know the shape of our output without running 
@@ -1579,14 +1623,11 @@ no-op when they are the same object. Otherwise, we are dealing with
 the cases where |step == 0| or |step > 1|, which both require a bit 
 more work, so we dedicate separate sections to handling them.
 
-@<Reduce elements along last axis@>=
-if (0 == step) {
+@<Reduce over last axis@>=
+if (0 == step) { 
 	@<Fill |res| with identity of |fun|@>@;
-} else if (1 == step) {
-	if (res != rgt) {
-		alloc_array(res, rgt->type);
-		memcpy(res->data, rgt->data, type_size(rgt->type) * size(res));
-	}
+} else if (1 == step && res != rgt) { 
+	memcpy(res->data, rgt->data, res->size); 
 } else {
 	@<Reduce over array whose |step >= 2|@>@;
 }
@@ -1599,7 +1640,7 @@ function that we know about, and that we have an identity for.
 Otherwise we need to signal an error. 
 
 @<Fill |res| with identity of |fun|@>=
-char *out, *fill, *end;
+char *fill, *end, *out;
 int i;
 AplArray z;
 init_array(&z);
@@ -1607,9 +1648,12 @@ if (function_identity(&z, fun)) {
 	apl_error(APLERR_NOIDENTITY);
 	exit(APLERR_NOIDENTITY);
 }
-alloc_array(res, z.type);
+if (z.type != res->type) {
+	apl_error(APLERR_DOMAIN);
+	exit(APLERR_DOMAIN);
+}
 out = res->data;
-end = out + (type_size(z.type) * size(res));
+end = out + res->size;
 fill = z.data;
 for (i = 0; out != end; i = (i + 1) % z.size)
 	*out++ = fill[i];
@@ -1644,66 +1688,40 @@ int function_identity(AplArray *res, AplFunction *fun)
 	return ret;
 }
 
-@ Finally, in the general case we must allocate |res| after we have
-determined the type of the output. We can only do this when our
-reduction size, indicated by |step|, is at least 2. In order to
-allocate our array, we must know the type of the output. We can do this
-only by running the function on some of its elements. We also assume
-that all functions must return elements of the same type at this time. 
-We then need to perform an iteration over each of the ranges that we will 
-reduce to a single scalar. To do this, we use pointers to the start and 
-end of the ranges, so that we can jump to the next range when we are ready, 
-and so that we know when we have reached the end of one reduction, since 
-we go backwards (right to left) instead of from start to end. We use 
-a |limit| pointer to tell us when we have reached the end of the computation 
-entirely. Thus, the main loop is an iteration where we jump the 
-|start|, |end|, and |next| pointers to the beginning and end of a 
-region, starting at the first region and moving forward, until we have 
-processed each of the ranges in turn. Each time that we do this iteration, 
-we have stored a single scalar value into the result array. We track the 
-location where we stored this value using the |resd| pointer. Each time 
-during the iteration, we need to slide this pointer over by one element. 
-This corresponds to the reduction of a range, indicated by |start| and 
-|next|, down to a single scalar element.
+@ We now arrive at the general case when |step >= 2|. To reduce in this 
+case, we conceptually divide our original array into segments of vectors. 
+Note that because of the row-major order of our arrays, and because we are 
+reducing over the last axis, these vector segments correspond directly to 
+the contiguous block of memory in our array region, in order, each of 
+the size of the vector whose shape is the last dimension of the input 
+array. Each of these regions will be reduced to a single scalar value.
+These are in the same order in the output array |res| as the vector 
+segments appear in the input array |rgt|. Since we reduce in right to 
+left order, we simply start at the end of one segment, reducing it down 
+until we hit the beginning, and then hop to the next segment to begin 
+the same process again. 
 
 @<Reduce over array whose |step >= 2|@>=
-char *start, *limit, *end, *resd, *next; 
-size_t esiz, rsiz;
+char *start, *end, *next;
 AplArray r, l;
-@<Determine type of result and allocate |res|@>@;
-resd = res->data;
-rsiz = type_size(r.type);
-limit = (char *) rgt->data + (esiz * size(rgt));
-for (start = rgt->data; start != limit; start = next) {
-	next = start + (esiz * step);
-	r.data = (end = next - esiz);
-	while (end != start) {
-		l.data = (end -= esiz);
-		applyd(fun, &r, &l, &r);
-	}
-	memcpy(resd, r.data, rsiz);
-	resd += rsiz;
-}
-free_data(&l);
-free_data(&r);
-
-@ To keep things as accurate as possible, we run the function on the first 
-two elements of the computation and allocate |res| based on the results. 
-We will also setup our temporary input scalars here and basically get 
-everything set up.
-
-@<Determine type of result and allocate |res|@>=
-esiz = type_size(rgt->type);
-start = (char *) rgt->data + (esiz * (step - 2));
-end = start + esiz;
-init_array(&l);
 init_array(&r);
-alloc_array(&l, rgt->type);
-alloc_array(&r, rgt->type);
-l.data = start;
-r.data = end;
-applyd(fun, &r, &l, &r);
-alloc_array(res, r.type);
+init_array(&l);
+r.type = l.type = rgt->type;
+r.size = l.size = type_size(rgt->type);
+start = rgt->data;
+end = start + l.size * size(rgt) * step;
+r.data = res->data;
+while (start != end) {
+	next = start + step * l.size;
+	l.data = next - l.size;
+	memcpy(r.data, l.data, l.size);
+	do {
+		l.data = (char *) l.data - l.size;
+		applyd(fun, &r, &l, &r);
+	} while (l.data != start);
+	start = next;
+	r.data = (char *) r.data + l.size;
+}
 
 @* Reporting runtime errors. Much as I would like to think that my 
 compiler and that my coding are perfect, it turns out that this is 

@@ -51,6 +51,7 @@ By computing $5+5$.
 @<Ex 1. Compute $5+5$@>@;
 @<Ex 2. ...@>@;
 @<Ex 3. ...@>@;
+@<Ex 4. ...@>@;
 
 int main(int argc, char *argv[])
 {
@@ -71,6 +72,9 @@ int main(int argc, char *argv[])
 	} else if (!strcmp(argv[1], "ex3")) {
 		msg = "Ex 3: Computing (iota 10) + iota 10";
 		example = ex3;
+	} else if (!strcmp(argv[1], "ex4")) {
+		msg = "Ex 4: Computing + / iota 10";
+		example = ex4;
 	} else {
 		printf("Unknown example, please enter a valid example.\n");
 		return 2;
@@ -149,5 +153,29 @@ void ex3()
 	    size(&z), rank(&z), z.size);
 	free_data(&z);
 }
+
+@* Example 4. Let's show how we might use a reduction operator. This one 
+uses the reduction operator $/$. We will compute $+/\iota 10$ which is 
+the sum of the integers on the range $[0,10)$. 
+
+@<Ex 4. Compute $+/\iota 10$@>=
+void ex4()
+{
+	AplArray z;
+	AplFunction add;
+	AplFunction red;
+	init_array(&z);
+	alloc_array(&z, INT);
+	*((AplInt *) z.data) = 10;
+	index_gen(&z, &z, NULL);
+	init_function(&add, NULL, plus, NULL, NULL, NULL);
+	init_function(&red, reduce, NULL, &add, NULL, NULL);
+	applym(&red, &z, &z);
+	printf("%ld\n", *((AplInt *) z.data));
+	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
+	    size(&z), rank(&z), z.size);
+	free_data(&z);
+}
+	
 
 @* Index.
