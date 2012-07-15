@@ -365,6 +365,12 @@ data types.
 #define applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
 #define applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
 
+@ {\it Note:} it is important that |AplFunction| code functions do not 
+actually overwrite the contents of their input arrays. It is assumed that 
+they will not touch their input array contents, but that they will fill 
+in and possibly reallocate or allocate fresh space in the result array.
+@^Functions, restrictions@>
+
 @ We are about done with the work on the primary data structures, 
 so we should take some time to get all of the other basic array 
 utilities out of the way. Let's focus specifically on those that 
@@ -1232,9 +1238,10 @@ void eachm(AplArray *res, AplArray *rgt, AplFunction *env)
 	AplArray z, r; /* Scalar temporaries for the loop */
 	AplArray tmp; /* Temporary array if necessary */
 	AplArray *orig; /* Original array in case of a copy in |res| */
-	AplType type; /* The output type of the function */
+	size_t esiz; /* Element size of the function */
 	AplFunction *func; /* The function to apply */
-	unsigned int i, siz; /* Elements to traverse */
+	unsigned int siz; /* Elements to traverse */
+	char *resd; /* Buffer pointing somewhere in |res->data| */
 	short rnk; /* Rank of |rgt| */
 	short clean; /* Flag, indicates need to clean */
 	@<Initialize variables for |eachm|@>@;
@@ -1255,9 +1262,10 @@ void eachd(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 	AplArray z, l, r; /* Scalar temporaries for the loop */
 	AplArray tmp; /* Temporary for use during allocation */
 	AplArray *shp, *orig; /* The shape of result and the original |res| if copied */
-	AplType type; /* Type of return array */
 	AplFunction *func;
-	unsigned int i, siz; /* Number of elements to iterate */
+	size_t esiz; /* Element size of return array */
+	unsigned int siz; /* Number of elements to iterate */
+	char *resd; /* Result buffer pointing somewhere in |res->data| */
 	short lftrnk, rgtrnk; /* Ranks of |lft| and |rgt| */
 	short clean; /* Indicates cleanup is necessary */
 	@<Initialize variables for |eachd|@>@;
@@ -1341,14 +1349,16 @@ must do some work to figure out what the resulting type of the
 computation will be. We do this by applying our function on the 
 first element in the array, and then checking what that type is. 
 We assume that the function will give us the same type for all 
-of the other elements. 
+of the other elements. It is safe (in some sense) to do the data 
+aliasing that we do here, because we assume that all functions will 
+not write into their input arguments. 
 
 @<Determine the type of the result in |eachm|@>=
 r.type = rgt->type;
 r.size = type_size(r.type);
 r.data = rgt->data;
 applym(func, &z, &r);
-type = z.type;
+esiz = type_size(z.type);
 
 @ The dyadic case for determing the type of the return is the same 
 as the monadic one, but we have one more scalar argument.
@@ -1361,7 +1371,7 @@ r.type = rgt->type;
 r.size = type_size(r.type);
 r.data = rgt->data;
 applyd(func, &z, &l, &r);
-type = z.type;
+esiz = type_size(z.type);
 
 @ After we know that we are dealing with the general case, and 
 after we know the type of the result array, we are free to begin 
@@ -1394,9 +1404,9 @@ allocated.
 
 @<Allocate |res| in |eachm|@>=
 if (res == rgt) {
-	if (type_size(type) > type_size(rgt->type)) {
+	if (esiz > type_size(rgt->type)) {
 		copy_shape(&tmp, rgt);
-		alloc_array(&tmp, type);
+		alloc_array(&tmp, z.type);
 		orig = res;
 		res = &tmp;
 		clean = EACH_COPY;
@@ -1405,7 +1415,7 @@ if (res == rgt) {
 	}
 } else {
 	copy_shape(res, rgt);
-	alloc_array(res, type);
+	alloc_array(res, z.type);
 	clean = 0;
 }
 
@@ -1419,18 +1429,18 @@ the previous section apply here.
 @<Allocate |res| in |eachd|@>=
 if (res == rgt || res == lft) {
 	if ((res == shp || lftrnk == rgtrnk)
-	    && type_size(type) <= type_size(res->type)) {
+	    && esiz <= type_size(res->type)) {
 		clean = EACH_SAME;
 	} else {
 		copy_shape(&tmp, shp);
-		alloc_array(&tmp, type);
+		alloc_array(&tmp, z.type);
 		orig = res;
 		res = &tmp;
 		clean = EACH_COPY;
 	}
 } else {
 	copy_shape(res, shp);
-	alloc_array(res, type);
+	alloc_array(res, z.type);
 	clean = 0;
 }
 
@@ -1468,7 +1478,7 @@ safely return from the function.
 @<Do any cleanup necessary in |each|@>=
 switch (clean) {
 case EACH_SAME: 
-	res->type = type;
+	res->type = z.type;
 	break;
 case EACH_COPY:
 	free(orig->data);
@@ -1488,14 +1498,14 @@ the data fields of the |z|, |l|, and |r| scalar temporaries along
 the larger data fields of the main inputs and outputs. 
 
 @<Apply $\alpha\alpha$ monadically on each element@>=
-z.size = type_size(type);
-z.data = res->data;
+resd = res->data;
 r.type = rgt->type;
 r.size = type_size(rgt->type);
 r.data = rgt->data;
-for (i = 0; i < siz; i++) {
+while (siz--) {
 	applym(func, &z, &r);
-	z.data = (char *)z.data + z.size;
+	memcpy(resd, z.data, esiz);
+	resd += esiz;
 	r.data = (char *)r.data + r.size;
 }
 
@@ -1503,15 +1513,28 @@ for (i = 0; i < siz; i++) {
 extra argument.
 
 @<Apply $\alpha\alpha$ dyadically on each element@>=
-z.size = type_size(type); l.size = lft->size; r.size = rgt->size;
-z.type = type; l.type = lft->type; r.type = rgt->type;
-z.data = res->data; l.data = lft->data; r.data = rgt->data;
-for (i = 0; i < siz; i++) {
+l.size = lft->size; r.size = rgt->size;
+l.type = lft->type; r.type = rgt->type;
+l.data = lft->data; r.data = rgt->data;
+resd = res->data;
+while (siz--) {
 	applyd(func, &z, &l, &r); 
-	z.data = (char *) z.data + z.size;
+	memcpy(resd, z.data, esiz);
+	resd += esiz;
 	l.data = (char *) l.data + l.size;
 	r.data = (char *) r.data + r.size;
 }
+
+@ The only temporary array that we allocate is |z|, implicitly by 
+doing an application with |z| as the result array. Recall before that 
+an APL function is expected to write into its result array argument, 
+but that is should not write into its input array arguments. 
+@^Functions, restrictions@>
+Once we are done with the main each loops in both cases, we can safely
+free the |z| array's data.
+
+@<Do any cleanup necessary in |each|@>=
+free_data(&z);
 
 @*1 The Reduce Operator.
 The reduction operator takes scalar functions and produces a monadic
