@@ -202,7 +202,7 @@ void ex5()
 	AplArray x;
 	init_array(&x);
 	alloc_array(&x, INT);
-	*((AplInt *) x.data) = 30;
+	*((AplInt *) x.data) = 10000;
 	index_gen(&x, &x, NULL);
 	init_function(&fun, ex5_help, NULL, NULL, NULL, NULL);
 	init_function(&eac, eachm, eachd, &fun, NULL, NULL);

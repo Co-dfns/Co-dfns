@@ -109,6 +109,9 @@ of the function.
 there are a number of memory leaks in the system, so we need to audit our 
 uses of |alloc_array| and |realloc_array| to make sure that they are 
 freed afterwards using |free_data|.
+\item{6.} I think we can improve the behavior of iota by doing something 
+a little lazy, and having some sort of explicit iota array object, this 
+could really improve our performance in certain cases.
 \par}\medskip
 
 @* Data structures.  We must implement two main data structures: 
@@ -920,6 +923,9 @@ if (lftrnk == rgtrnk) {
 	alloc_array(res, res->type);
 	lftstp = lftesiz;
 	rgtstp = 0;
+} else {
+	apl_error(APLERR_SHAPEMISMATCH);
+	exit(APLERR_SHAPEMISMATCH);
 }
 
 @*1 Implementing Plus and Identity.
