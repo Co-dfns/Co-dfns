@@ -41,6 +41,7 @@ detail of implementation. The program can be divided up mostly
 into the following sections:
 
 @p
+#include <assert.h>
 #include <limits.h>
 #include <stdarg.h>
 #include <stddef.h>
@@ -382,10 +383,10 @@ any allocation explicitly. To start us off, we'll deal with
 shapes.  We may want to know whether a given array is scalar, 
 vector, matrix, or noble. These macros can help with that.
 
-@d is_scalar(array) (0 == rank(array))
-@d is_vector(array) (1 == rank(array))
-@d is_matrix(array) (2 == rank(array))
-@d is_noble(array)  (2 < rank(array))
+@d is_scalar(array) (rank((array)) == 0)
+@d is_vector(array) (rank((array)) == 1)
+@d is_matrix(array) (rank((array)) == 2)
+@d is_noble(array)  (rank((array)) > 2)
 
 @ It is also useful to be able to grab the shape from one array 
 and put it into another. This is the main header information that 
@@ -504,7 +505,7 @@ void alloc_array(AplArray *array, AplType type)
 	void *data;
 	data = array->data;
 	dsize = type_size(type) * size(array);
-	if (NULL == data || dsize > array->size) {
+	if (data == NULL || dsize > array->size) {
 		free(data);
 		data = malloc(dsize);
 		@<Verify that |data| allocation succeeded@>@;
@@ -528,7 +529,7 @@ void realloc_array(AplArray *array, AplType type)
 	void *data;
 	data = array->data;
 	dsize = type_size(type) * size(array);
-	if (NULL == data || dsize > array->size) {
+	if (data == NULL || dsize > array->size) {
 		data = realloc(data, dsize);
 		@<Verify that |data| alloc...@>@;
 	}
@@ -542,7 +543,7 @@ succeeds or that we trigger an error if it does not. We encapsulate
 that into a single place here.
 
 @<Verify that |data| allocation succeeded@>=
-if (NULL == data) {
+if (data == NULL) {
 	perror("array_[re]alloc()");
 	apl_error(APLERR_MALLOC);
 	exit(APLERR_MALLOC);
@@ -854,7 +855,7 @@ The first sub-case $a$ is the case when |res == lft|.
 @<Allocate |res| for dyadic scalar case 3a@>=
 lftrnk = rank(lft); rgtrnk = rank(rgt);
 if (lftrnk != rgtrnk) { /* We must have a scalar */
-	if (0 == lftrnk) { /* |lft| is our scalar */
+	if (lftrnk == 0) { /* |lft| is our scalar */
 		TEMPRES(rgt)@;
 		lftstp = 0;
 		rgtstp = rgtesiz;
@@ -879,7 +880,7 @@ but with |res == rgt| instead.
 @<Allocate |res| for dyadic scalar case 3b@>=
 lftrnk = rank(lft); rgtrnk = rank(rgt);
 if (lftrnk != rgtrnk) { /* We must have a scalar */
-	if (0 == rgtrnk) { /* |rgt| is our scalar */
+	if (rgtrnk == 0) { /* |rgt| is our scalar */
 		TEMPRES(lft)@;
 		lftstp = lftesiz;
 		rgtstp = 0;
@@ -913,12 +914,12 @@ if (lftrnk == rgtrnk) {
 	alloc_array(res, res->type);
 	lftstp = lftesiz;
 	rgtstp = rgtesiz;
-} else if (0 == lftrnk) {
+} else if (lftrnk == 0) {
 	copy_shape(res, rgt);
 	alloc_array(res, res->type);
 	lftstp = 0;
 	rgtstp = rgtesiz;
-} else if (0 == rgtrnk) {
+} else if (rgtrnk == 0) {
 	copy_shape(res, lft);
 	alloc_array(res, res->type);
 	lftstp = lftesiz;
@@ -946,19 +947,19 @@ void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
 	@<Declare dyadic scalar function variables@>@;@#
 	
-	if (INT == lft->type) {
-		if (INT == rgt->type) {
+	if (lft->type == INT) {
+		if (rgt->type == INT) {
 			op = plus_int_int;
 			res->type = INT;
-		} else if (REAL == rgt->type) {
+		} else if (rgt->type == REAL) {
 			op = plus_int_real;
 			res->type = REAL;
 		} else goto err;
-	} else if (REAL == lft->type) {
-		if (INT == rgt->type) {
+	} else if (lft->type == REAL) {
+		if (rgt->type == INT) {
 			op = plus_real_int;
 			res->type = REAL;
-		} else if (REAL == rgt->type) {
+		} else if (rgt->type == REAL) {
 			op = plus_real_real;
 			res->type = REAL;
 		} else goto err;
@@ -1038,7 +1039,7 @@ void index_gen(AplArray *res, AplArray *rgt, AplFunction *env)
 	}
 	rnk = rank(rgt);
 	siz = size(rgt);
-	if (0 == rnk || (1 == rnk && 1 == siz)) {
+	if (rnk == 0 || (rnk == 1 && siz == 1)) {
 		int i;
 		AplInt *data;
 		res->shape[0] = *((AplInt *)rgt->data);
@@ -1096,7 +1097,7 @@ and move towards the front.
 
 @<Compute |p| vector@>=
 p = malloc(siz * sizeof(AplInt));
-if (NULL == p) {
+if (p == NULL) {
 	apl_error(APLERR_MALLOC);
 	exit(APLERR_MALLOC);
 }
@@ -1295,6 +1296,7 @@ init_array(&r);
 init_array(&tmp);
 rnk = rank(rgt);
 func = (AplFunction *) env->lop;
+orig = NULL;
 
 @ @<Initialize variables for |eachd|@>=
 init_array(&z);
@@ -1304,6 +1306,7 @@ init_array(&tmp);
 lftrnk = rank(lft);
 rgtrnk = rank(rgt);
 func = (AplFunction *) env->lop;
+orig = NULL;
 
 @ Both the monadic and dyadic forms of |each| have simple cases 
 where we can avoid most of the other work. In both forms, if we are 
@@ -1314,11 +1317,10 @@ then we know a little something about the arrays, and we should
 save that for use later. 
 
 @<Deal with the simple cases of |eachm|@>=
-if (0 == rnk) {
+if (rnk == 0) {
 	applym(func, res, rgt);
 	return;
-} else siz = size(rgt);
-if (0 == siz) {
+} else if ((siz = size(rgt)) == 0) {
 	copy_array(res, rgt);
 	return;
 }
@@ -1330,21 +1332,22 @@ shape of the main function into the |shp| variable. This will be
 used later on to determine the shape of the result array. 
 
 @<Deal with the simple cases of |eachd|@>=
-if (0 == lftrnk) {
-	if (0 == rgtrnk) {
+if (lftrnk == 0) {
+	if (rgtrnk == 0) {
 		applyd(func, res, lft, rgt);
+		return;
 	} else {
 		siz = size(rgt);
 		shp = rgt;
 	}
-} else if (0 == rgtrnk) {
+} else if (rgtrnk == 0) {
 	siz = size(lft);
 	shp = lft;
 } else {
 	siz = size(rgt);
 	shp = rgt;
 }
-if (0 == siz) {
+if (siz == 0) {
 	copy_array(res, shp);
 	return;
 }
@@ -1493,6 +1496,8 @@ case EACH_COPY:
 	orig->type = tmp.type;
 	copy_shape(orig, &tmp);
 	break;
+default:
+	assert(0);
 }
 
 @ With all that preparation and setup complete, we are now ready to 
@@ -1653,9 +1658,9 @@ the cases where |step == 0| or |step > 1|, which both require a bit
 more work, so we dedicate separate sections to handling them.
 
 @<Reduce over last axis@>=
-if (0 == step) { 
+if (step == 0) { 
 	@<Fill |res| with identity of |fun|@>@;
-} else if (1 == step && res != rgt) { 
+} else if (step == 1 && res != rgt) { 
 	memcpy(res->data, rgt->data, res->size); 
 } else {
 	@<Reduce over array whose |step >= 2|@>@;
