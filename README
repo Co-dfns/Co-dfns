@@ -44,7 +44,7 @@ attic
 		feel for what HPAPL might feel like.
 
 doc
-		Volatile documentation or other non-source entities go 
+		Documentation or other non-source entities go 
 		in here. It is expected that user documentation, guides, 
 		tutorials, ideas, and other forms of documentation that 
 		are not part of the source code proper will be in here.
@@ -54,6 +54,12 @@ doc
 		This director contains miscellanous elements, mostly in 
 		the form of book keeping or the like. There are some ideas
 		that came from my work with Dyalog in here as well.
+		
++-papers
+		Any static, unchanging, published or released papers are 
+		put here. These documents are expected to be either archival 
+		or unchanging in form, and are here for reference
+		or documentation.
 		
 ide
 		These are design thoughts that I write down whenever I start 
@@ -73,12 +79,6 @@ lib
 +-upc
 		This directory contains all things about the UPC libraries 
 		and the compiler.
-		
-papers
-		Any static, unchanging, published or released papers are 
-		put here. These documents are expected to be either archival 
-		or unchanging in form, and are here for reference
-		or documentation.
 		
 research
 		This directory contains papers and bibliographies 
