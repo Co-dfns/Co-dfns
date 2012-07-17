@@ -6,13 +6,17 @@ expirements, sketches, ideas, as well as the core HPAPL elements.
 
 Here is an overview of the directory structure:
 
-benchmarks
+attic
+		These are older elements that may not be relevant anymore, 
+		but will still have historic value.
+		
++-benchmarks
 		This contains well known benchmarks implemented in various 
 		languages, used to evaluate issues and problems in existing 
 		systems, as well as compare HPAPL and related technologies 
 		against well known metrics.
 		
-+-npb
++-+-npb
 		These are the famous, straightforward NAS Parallel Benchmarks.
 		We have implemented them partially in Chez Scheme, Dyalog, 
 		and have versions that were written elsewhere for Matlab, 
@@ -20,6 +24,14 @@ benchmarks
 		Stubs for various HPAPL elements to hash out ideas are also 
 		in here.
 
++-runtime
+		This was an early draft of a potential runtime, to flesh 
+		out ideas.
+		
++-tests
+		This is where some tests were placed early on to get a 
+		feel for what HPAPL might feel like.
+		
 compiler
 		This directory contains many sketches and approaches to a
 		compiler for HPAPL. Some of these contail runtimes, and 
@@ -45,30 +57,25 @@ isabelle
 		This is the directory containing the work on a mechanization 
 		of HPAPL.
 		
+lib
+		Third-party libraries that may or may not be of interest.
+		
++-qthread
+		An import of the qthread library for lightweight threading.
+		
++-upc
+		This directory contains all things about the UPC libraries 
+		and the compiler.
+		
 papers
 		Any static, unchanging, published or released papers are 
 		put here. These documents are expected to be either archival 
 		or unchanging in form, and are here for reference
 		or documentation.
 		
-qthread
-		An import of the qthread library for lightweight threading.
-		
 research
 		This directory contains papers and bibliographies 
 		of interest. They may include potentiall tangential papers 
 		or other notes, but they came up at some point in the 
 		design of HPAPL.
-		
-runtime
-		This was an early draft of a potential runtime, to flesh 
-		out ideas.
-		
-tests
-		This is where some tests were placed early on to get a 
-		feel for what HPAPL might feel like.
-		
-upc
-		This directory contains all things about the UPC libraries 
-		and the compiler.
 		
