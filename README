@@ -1,0 +1,74 @@
+HPAPL Research Repository
+=========================
+
+This is the research repository for HPAPL. It contains source code 
+expirements, sketches, ideas, as well as the core HPAPL elements.
+
+Here is an overview of the directory structure:
+
+benchmarks
+		This contains well known benchmarks implemented in various 
+		languages, used to evaluate issues and problems in existing 
+		systems, as well as compare HPAPL and related technologies 
+		against well known metrics.
+		
++-npb
+  		These are the famous, straightforward NAS Parallel Benchmarks.
+		We have implemented them partially in Chez Scheme, Dyalog, 
+		and have versions that were written elsewhere for Matlab, 
+		and the reference implementation of the benchmarks.
+		Stubs for various HPAPL elements to hash out ideas are also 
+		in here.
+
+compiler
+		This directory contains many sketches and approaches to a
+		compiler for HPAPL. Some of these contail runtimes, and 
+		others contain just compilers. They use various implementation
+		techniques and most of them must be considered forays 
+		into possible approaches, rather than complete compilers.
+		
++-vN
+		Each of these directories represents a progression of 
+		ideas in the design of the system.
+		
+extra
+		This director contains miscellanous elements, mostly in 
+		the form of book keeping or the like. There are some ideas
+		that came from my work with Dyalog in here as well.
+		
+ide
+		These are design thoughts that I write down whenever I start 
+		thinking about what an user interface to this language 
+		might look like.
+		
+isabelle
+		This is the directory containing the work on a mechanization 
+		of HPAPL.
+		
+papers
+		Any static, unchanging, published or released papers are 
+		put here. These documents are expected to be either archival 
+		or unchanging in form, and are here for reference
+		or documentation.
+		
+qthread
+		An import of the qthread library for lightweight threading.
+		
+research
+		This directory contains papers and bibliographies 
+		of interest. They may include potentiall tangential papers 
+		or other notes, but they came up at some point in the 
+		design of HPAPL.
+		
+runtime
+		This was an early draft of a potential runtime, to flesh 
+		out ideas.
+		
+tests
+		This is where some tests were placed early on to get a 
+		feel for what HPAPL might feel like.
+		
+upc
+		This directory contains all things about the UPC libraries 
+		and the compiler.
+		
