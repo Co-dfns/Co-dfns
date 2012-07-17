@@ -13,7 +13,7 @@ benchmarks
 		against well known metrics.
 		
 +-npb
-  		These are the famous, straightforward NAS Parallel Benchmarks.
+		These are the famous, straightforward NAS Parallel Benchmarks.
 		We have implemented them partially in Chez Scheme, Dyalog, 
 		and have versions that were written elsewhere for Matlab, 
 		and the reference implementation of the benchmarks.
