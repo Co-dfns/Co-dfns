@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -pedantic -ansi -fPIC
+CFLAGS=-g  -fPIC
 CC=gcc
 EX=4
 
@@ -13,6 +13,9 @@ EX=4
 
 .w.c:
 	${CTANGLE} $*
+	
+.c.o:
+	${CC} ${CFLAGS} -c -o $* $< -lqthread
 	
 all: runtime.pdf examples.pdf libhpapl.so examples
 
