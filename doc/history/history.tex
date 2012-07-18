@@ -1,0 +1,271 @@
+\font\titlefont = cmr17
+\font\bigrm = cmr12
+\font\bigbf = cmb12
+\font\smallrm = cmr9
+
+\def\heading#1{\noindent{\bigbf #1}\bigskip}
+\def\smhead#1{\medskip\noindent{\bf #1.}}
+\def\ithead#1{\smallskip\noindent{\it #1.}}
+
+\centerline{\titlefont History of HPAPL}
+\medskip
+\centerline{Aaron W. Hsu}
+\bigskip
+\centerline{Last Updated: 17 July 2012}
+\bigskip\bigskip
+
+\heading{Early Research: Spring 2012}
+
+\noindent The early ideas working on HPAPL came from working with 
+Profs. Ryan Newton and Andrew Lumsdaine. Taking Ryan Newton's class 
+on domain specific languages for parallel programming inspired the main 
+interest in creating a really usable CnC implementation. At the time, I 
+was already working with APL and was really becoming interested in the 
+language and its future. The idea of coupling APL with CnC came together 
+around this time. I picked up a research assistantship with Prof. Lumsdaine 
+to work on Kanor, and spent time discussing with him the various merits 
+of arrays. These discussions led me to systems like ZPL and Lenore Mullin's 
+``Mathematics of Arrays.'' I spent quite a number hours pouring over 
+the various research materials, and most of my independent research time 
+was spent learning about the prior art in this area: 
+
+\medskip
+\item{$\bullet$} Five or so papers on CnC from various authors, ranging 
+from CnC overviews to proofs ot determinism to how to implement CnC 
+efficiently on multi-core or for streaming applications.
+\item{$\bullet$} Chamberlain's thesis on region based parallel languages, 
+which I studied parts of to understand how arrays and parallelism worked 
+together.
+\item{$\bullet$} Chen and Ching's APL based language ELI, which 
+emphasizes parallel programming for APL constructs. There are a few 
+papers that I went over which detailed automatic parallelization of 
+APL code. 
+\item{$\bullet$} Parts of ZPL were very interesting, but I was unable to 
+get through both dissertations related to the language, though I was able 
+to browse through relevant parts. 
+\item{$\bullet$} I studied Sparse matric algorithms for APL that were 
+used to benchmark existing APL implementations against C and Fortran.
+\item{$\bullet$} I examined HPF and its interesting contributions to arrays.
+\medskip
+
+\noindent During my readings I becaming increasingly interested in the 
+formalization of APL and parallel constructs related to it. 
+
+\smhead{The syntax of HPAPL} 
+A big interest of mine is in the syntax 
+of languages and how a language ``feels'' to use. Naturally, I spent some 
+time toying with the syntax of APL, trying to figure out how to map 
+the simple syntax of APL into something that was also simple to do with 
+task parallelism. I had some prior art to work from, but not a lot. 
+One of the things that makes APL so nice is its implicitness. The semantics 
+are very straightforward and reliable, and the syntax reflects that 
+simplistic semantics. Additionally, the use of pictures or symbols to 
+represent what I wanted to do, as well as the history of APL as a 
+mathematical notation pushed me to consider how to best encode task 
+parallelism in such a mathematical framework.
+
+In the end, by the time the semester ended, I was neither satisfied nor 
+finished with my pursuit of the syntax. I had developed three or four 
+different syntaxes, some of which are documented in the examples and notes 
+throughout the historical sections of the repository, but none of these 
+was concise, and they all reinvented notations for concepts that already 
+existed in APL. Moreover, most people had trouble figuring out how it 
+was used, including APLers, which meant that my design was bad. 
+
+The designs were good enough to allow me to work with the various semantics 
+of the system though, and figure out some of the places where I wanted 
+to draw lines in the sand, and I will talk about those later.
+
+\smhead{Runtimes and Compilers}
+I implemented four or five different versions of the compiler and/or 
+runtime during this semester, for a few reasons. I was attempting to 
+explore the design space for which I could design the compiler. I was 
+aware of the work that it would take to implement a complete compiler 
+from the ground up, and I was not willing to invest that amount of time 
+early on without having some proof of concept that demonstrated effective 
+techniques. So, I began examining potential languages as intermediate 
+targets, including APL, Scheme, C, UPC, LLVM, and Java. 
+I also began examining 
+the methods and abstraction levels that would be necessary to encode 
+the information that I wanted in the compiler, while leaving as much 
+as I could to compilers that were already written. 
+
+This turned out to be a bigger undertaking than I had at first thought.
+There were a number of issues with each of the approaches that I began 
+to take, and none of them really clicked into place. I initially discounted 
+Java and C, hoping to find something a little more useful. I also 
+discounted ARBB from the beginning, having spent some time examining it 
+before this. LLVM also came in at a very low-level, and it was not 
+clear how easily I could tie in existing parallel frameworks with it to 
+make use of already existing parallel programming libraries. Scheme 
+was promising, but issues of integration and performance during benchmarking 
+led me to consider other options. APL suffered a similar fate in that it 
+was simply too high-level for me to do what I wanted in it.
+
+This really left me with C, and UPC. I began to play with these and 
+implement runtimes and the like, trying to see how I would connect in 
+UPC's nice programming model into my system.
+
+\smhead{Choice of implementation}
+The tentative choice to begin using C and UPC led me to play around with 
+mostly my runtime and the choice of how to implement some of the semantics 
+that I was looking for. Unfortunately, UPC was a bit of a challenge to 
+understand in terms of its memory consistency model, and it was difficult 
+to find an efficient means of mapping single-assignment arrays onto UPC
+without excessive synchronization. I read over a number of UPC papers 
+which reported on their findings, both good and ill concerning UPc.
+Later on, I would discover that Java actually did quite well compared to 
+UPC in a number of aspects. I would also discover a threading library 
+for SMP communication that mapped directly to what I wanted.
+During this time though I mostly focused on experimenting with what 
+SA arrays should look like under the hood and how UPC or C could help make 
+my compilation life easier. This is reflected in a number of abortive 
+implementations.
+
+\smhead{Benchmarking}
+Another major effort of my research during this stage was to see how existing 
+systems compared against each other in this realm. I took the NPB benchmarks 
+and began implementing them on various platforms, in hopes of understanding 
+or finding a suitable base for my own research that would minimize my need 
+to reinvent the wheel. The reference code was written in Fortran and C, 
+which meant that I had to learn how to read Fortran, as the benchmark 
+descriptions were not enough to understand what the code was doing. However, 
+I was able to benchmark Dyalog APL and Chez Scheme in a number of important 
+metrics. Unfortunately, both of these systems were an order of magnitude 
+slower for different reasons. Dyalog APL had issues with not being able 
+to optimize its cache properly, whereas Chez Scheme's boxed floats simply 
+slowed the system down too much. It took a while to work through various 
+approaches, and eventually I learnd that I could push Dyalog APL to be 
+nearly or as fast as C in some cases, but that in others, there was simply 
+no hope to do so with the way that Dyalog APL was architected. 
+
+This was one of the contributing factors for me deciding to start with 
+C based alternatives, rather than going for something higher level, as I 
+had seen the unstable compilation effects of languages like Haskell.
+
+\smhead{Formalization}
+One of the major desires of the HPAPL project was to develop the ability 
+to analyze APL code, and especially, task parallel extensions to APL.
+I did not want to start from the bottom up, implementing a system like 
+ACL2 for APL. While this could definitely be done, it would constitute 
+a very large project over the coures of years, and that did not interest 
+me. Moreover, it would be difficult to use it in an existing ecosystem.
+
+Instead, I was hoping that I could find a degree of existing automated 
+tools that would allow me to encode my problem into their domain space.
+This really came down to existing compiler frameworks, such as the Rose 
+compiler, along with a set of existing algorithms such as CFA based 
+algorithms, against formal methods oriented tools. My experience with 
+the compiler frameworks were that they would require a good deal of 
+work, the end result of which would be a single compiler that could 
+provide interesting analyses of APL code, but that would also exist in
+a relatively isolated form. Another point against the compilers was 
+that I had only tangentially seen others struggling to make the 
+sophisticated systems apply or fit within their work.
+
+I began to examine the formal methods tools that existed in hopes of 
+finding something better. My previous experience was with ACL2 and 
+PVS. I knew that PVS was not where I wanted to go, because of its 
+excessively manual nature. However, I have always been impressed with 
+the ACL2 system and its automation. Unfortunately, ACL2's domain is 
+strictly with Lists, and while I could encode Arrays into this framework, 
+I was not confident in producing code from it that would perform well 
+for this problem space, as ACL2 relies on the List compiler over which 
+it is implemented to compile ACL2 programs directly.
+
+I then moved to examining the family of tools known as Automated Theorem
+Provers. These are usually first order systems that allow one to put 
+in a theorem and let the system determine whether it is a theorem in 
+the logic or not. They are fully automated, and usually they are not 
+extremely expressive. Some of the most interesting and promising systems 
+were Vampire and E. Some of these systems do have some sort of means 
+of talking about arrays, but usually only in a way that is very low level, 
+and after considering the potential limitations of the systems expressiveness, 
+they were not really suitable for encoding an entire programming language 
+directly into them.
+
+After speaking with some people on this issue, I realized that what I 
+wanted was a system that could both provide a high degree of automation 
+together with a relatively rich programming language to go with it. Even 
+better if I could lift this work out into something that produced 
+executable code. I began to expand my search to also include semi automated 
+theorem provers, including Coq, ACL2, Twelf, Agda, Isabelle, PVS, and 
+HOL. I researched these systems and compared them for suitability for my 
+particular problem. PVS and Twelf were dismissed as requiring too much 
+manual input, and not having enough of a relationship to programming 
+code directly. 
+
+Agda was an interesting case, as it seems to be more of a programming 
+language than a proof assistant. It was also firmly in the camp of highly 
+typed languages, and HPAPL is, at best, type inferenced, rather than 
+having any form of explicit typing.
+
+I have already talked about ACL2, and why I decided to dismiss it, 
+despite my earlier familiarity with the system. Isabelle and Coq were 
+then left as my main contenders. Isabelle, in the end, won out for a 
+number of reasons, firstly based on superior automation, in the form of 
+many more tools for dischargin proof obligations directly, not the least
+of which is Sledgehammer, which is a tool that allows proof obligations 
+to be sent off to automated theorem provers like E and Vampire from within 
+the Isabelle prover itself. Moreover, it seemed to provide a degree of 
+automation that was similar to ACL2, though I have not made any rigorous 
+attempts to determine which has more automation, as this seems like a moot 
+point. Isabelle is also designed to support a number of different core 
+theories, and it provides, for example, core theories for HOL (the main 
+theory used as the main base for most other theories), ZF Set theory, 
+and others. I was also able to find a rich library and good documentation, 
+including some lightweight examples of doing arrays in Isabelle. While 
+these systems were too limited or specialized to use directly as a base 
+for HPAPL, they did serve as an excellent launch point. 
+
+Thus, I began to implement a core formalization of the array type and 
+abstraction of APL in Isabelle. I encountered some issues when dealing 
+with the typed theory of Isabelle/HOL, but I was able to overcome those 
+and discharge some important basic proofs fairly easily. Unfortunately, 
+during this time I was not able to make more progress, but the ease with 
+which some of the proofs were able to go through is a good sign for 
+future work.
+
+\smhead{Design decisions}
+All of this work also has an effect on the designs of HPAPL. In 
+particular, there are a few noteworthy design decisions that have 
+come about as a result of working through the above problems.
+
+\ithead{The HPAPL Compiler should be small}
+The vast amount of interesting work on compiling HPAPL comes at the 
+high-level, nearly at the level of a theorem prover, including proving 
+code equivalences and the like. Most of the important properties that 
+we want to use in compilation concern source to source relationships. 
+This means that a rich runtime with a very high-level compiler that 
+focuses only on these elements is better than a rich compiler that has 
+a lot of comparisons and passes through all of the compilation process.
+In essence, the compiler is closer to a macro preprocessor than a traditional 
+compiler.
+
+\ithead{HPAPL should be zero-based and feature slim}
+Traditional APL's have a lot of flexibility in terms of things like 
+array index origin, floating point comparision tolerances, and the like.
+HPAPL should focus on array manipulation and performance at the beginning, 
+rather than implementing a full APL.
+
+\ithead{HPAPL should not have nested vectors}
+While nested vectors are a really nice thing to have, they also have 
+horrible performance overheads in most cases, and in reality, the work 
+that you can do with nested vectors is as easily achieved through 
+richer operators, such as those provided in MoA or J. Nested vectors, 
+therefore, serve little purpose in HPAPL.
+
+\ithead{HPAPL should provide rich underlying array storage types}
+HPAPL can greatly benefit from having things like sparse matrix or range 
+array types, and these are not the traditional areas of most APL 
+implementations. We should provide these.
+
+\ithead{HPAPL should be as formal as possible}
+In practice, APL is already a very mathematical language, and moving it 
+into a more formal space will make analysis not only easier, but also 
+accessible to more than just conservative, automated passes of a compiler. 
+This is a good thing, as certain, important equivalences are non-trivial 
+to an automated system, but a human can leverage them.
+
+\bye
+
