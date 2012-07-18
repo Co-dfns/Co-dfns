@@ -381,17 +381,60 @@ it needs to be more than just the environment. In most cases,
 we will often pass around only an |AplFunction| value, and 
 not the actual |AplCodePtr| value.  This means that we need to 
 have a pointer to the code that expects the closure as well.
+Finally, some HPAPL functions are step functions, which run in 
+parallel, and so we store a flag that indicates this.
 
 @<Primary data structures@>=
 struct apl_function {
 	AplMonadic monadic;
 	AplDyadic dyadic;
+	int step;  /* |0| if regular, |1| if step function */
 	void *lop; /* The $\alpha\alpha$ variable */
 	void *rop; /* The $\omega\omega$ variable */
 	void **env; /* All other free variables */
 };
 
-@ To actually use a closure we need to be able to apply it to 
+@ {\it Note:} it is important that |AplFunction| code functions do not 
+actually overwrite the contents of their input arrays. It is assumed that 
+they will not touch their input array contents, but that they will fill 
+in and possibly reallocate or allocate fresh space in the result array.
+@^Functions, restrictions@>
+
+@ Finally, we  should talk about initializing closures.  In this
+case, a closure  will normally be something that we know the size of
+statically,  since we will know how many variables are free in the
+function. We  want to make it convenient to setup all those values
+based on local elements, so we have a choice of either accepting
+those values  directly with a variable length argument list, or
+forcing the user  of the runtime (the compiler) to give us an array. 
+In this case,  because the number of free variables is expected to be
+small most of  the time, I think it is safe to use variable length
+argument lists  for convenience instead of forcing the pollution of
+the namespace  with an explicit environment list. We assume that we
+have an  |AplFunction| structure pointer that is already allocated
+for the  correct number of free variables that we have.
+
+@<Utility functions@>=
+void init_function(AplFunction *fun, AplMonadic mon, AplDyadic dya,
+    int step, void *lop, void *rop, ...)
+{
+	va_list ap;
+	void **env, *var;
+	fun->monadic = mon;
+	fun->dyadic = dya;
+	fun->step = step;
+	fun->lop = lop;
+	fun->rop = rop;
+	env = fun->env;
+	va_start(ap, rop);
+	while (NULL != (var = va_arg(ap, void *))) {
+		*env++ = var;
+	}
+	va_end(ap);
+}
+
+@*1 Function application.
+To actually use a closure we need to be able to apply it to 
 arguments. This is done through a simple macro.
 The arguments are all expected to be pointers to their appropriate
 data types.
@@ -402,45 +445,6 @@ data types.
 @<Public macro ...@>=
 #define applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
 #define applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
-
-@ {\it Note:} it is important that |AplFunction| code functions do not 
-actually overwrite the contents of their input arrays. It is assumed that 
-they will not touch their input array contents, but that they will fill 
-in and possibly reallocate or allocate fresh space in the result array.
-@^Functions, restrictions@>
-
-@ Finally, before we proceed to the section on memory management, we 
-should talk about initializing closures.  In this case, a closure 
-will normally be something that we know the size of statically, 
-since we will know how many variables are free in the function. We 
-want to make it convenient to setup all those values based on local
-elements, so we have a choice of either accepting those values 
-directly with a variable length argument list, or forcing the user 
-of the runtime (the compiler) to give us an array.  In this case, 
-because the number of free variables is expected to be small most of 
-the time, I think it is safe to use variable length argument lists 
-for convenience instead of forcing the pollution of the namespace 
-with an explicit environment list. We assume that we have an 
-|AplFunction| structure pointer that is already allocated for the 
-correct number of free variables that we have.
-
-@<Utility functions@>=
-void init_function(AplFunction *fun, AplMonadic mon, AplDyadic dya,
-    void *lop, void *rop, ...)
-{
-	va_list ap;
-	void **env, *var;
-	fun->monadic = mon;
-	fun->dyadic = dya;
-	fun->lop = lop;
-	fun->rop = rop;
-	env = fun->env;
-	va_start(ap, rop);
-	while (NULL != (var = va_arg(ap, void *))) {
-		*env++ = var;
-	}
-	va_end(ap);
-}
 
 @* Memory management functions. This section is meant to deal 
 specifically with controlling and allocating space for arrays and 
@@ -1827,7 +1831,8 @@ flexibility in laying out our code.
 
 @<Public function declarations@>=
 void init_array(AplArray *);
-void init_function(AplFunction *, AplMonadic, AplDyadic, void *, void *, ...);
+void init_function(AplFunction *, AplMonadic, AplDyadic, 
+    int, void *, void *, ...);
 void alloc_array(AplArray *, AplType);
 void realloc_array(AplArray *, AplType);
 void copy_array(AplArray *, AplArray *);
