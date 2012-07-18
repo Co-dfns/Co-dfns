@@ -172,8 +172,8 @@ void ex4()
 	alloc_array(&z, INT);
 	*((AplInt *) z.data) = 10;
 	index_gen(&z, &z, NULL);
-	init_function(&add, NULL, plus, NULL, NULL, NULL);
-	init_function(&red, reduce, NULL, &add, NULL, NULL);
+	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
+	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	applym(&red, &z, &z);
 	printf("%ld\n", *((AplInt *) z.data));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
@@ -190,8 +190,8 @@ void ex5_help(AplArray *res, AplArray *rgt, AplFunction *fun)
 {
 	AplFunction add;
 	AplFunction red;
-	init_function(&add, NULL, plus, NULL, NULL, NULL);
-	init_function(&red, reduce, NULL, &add, NULL, NULL);
+	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
+	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	index_gen(res, rgt, NULL);
 	applym(&red, res, res);
 }
@@ -204,11 +204,11 @@ void ex5()
 	alloc_array(&x, INT);
 	*((AplInt *) x.data) = 10000;
 	index_gen(&x, &x, NULL);
-	init_function(&fun, ex5_help, NULL, NULL, NULL, NULL);
-	init_function(&eac, eachm, eachd, &fun, NULL, NULL);
+	init_function(&fun, ex5_help, NULL, 0, NULL, NULL, NULL);
+	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
 	applym(&eac, &x, &x);
-	init_function(&add, NULL, plus, NULL, NULL, NULL);
-	init_function(&red, reduce, NULL, &add, NULL, NULL);
+	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
+	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	applym(&red, &x, &x);
 	printf("%ld\n", *((AplInt *) x.data));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
