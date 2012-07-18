@@ -115,8 +115,8 @@ a little lazy, and having some sort of explicit iota array object, this
 could really improve our performance in certain cases.
 \par}\medskip
 
-@* Data structures.  We must implement two main data structures: 
-arrays and functions.  Arrays are the most used, and we have a few 
+@* Array Structure.  We must implement two main data structures: 
+arrays and functions.  Arrays are the core, and we have a few 
 requirements that drive our design. First, we want them to be as fast as 
 possible, but we also want to be able to decouple the core array 
 structure from the data areas where we store the elements. This 
@@ -295,26 +295,6 @@ unsigned int product(AplArray *array)
 	return prod;
 }
 
-@ Let's proceed to functions. In HPAPL, a function is either an 
-operator or a normal function.  At the higher level language, 
-we can distinguish these by asking whether a function has 
-$\alpha\alpha$ or $\omega\omega$ as a free variable or not. 
-We make no distinction between functions which take functions 
-and normal functions at the runtime level. Instead, unless 
-optimized away, all functions have an explicit, possibly empty 
-closure allocated for them. This closure is what is passed 
-around to primitive operators and the like. Thus, all functions 
-have the same signature as their C function elements.
-
-@s AplDyadic int
-@s AplMonadic int
-
-@<Primary data structures@>=
-typedef struct apl_function AplFunction;
-typedef void (*AplMonadic)(AplArray *res, AplArray *, AplFunction *);
-typedef void (*AplDyadic)(AplArray *res,
-    AplArray *, AplArray *, AplFunction *);
-
 @ Initializing an array is just a matter of setting up all the 
 values to suitable defaults before we do any allocations. This 
 should be done to ensure that everything is nice and clean. 
@@ -335,7 +315,61 @@ void init_array(AplArray *array)
 	for (i = 0; i < MAXRANK; i++) *shp++ = SHAPE_END;
 }
 
-@ So, what is an |AplFunction| anyways. It is a structure to 
+@ We are about done with the work on the array data structure, 
+so we should take some time to get all of the other basic array 
+utilities out of the way. Let's focus specifically on those that 
+we might find generally useful, but that do not deal with 
+any allocation explicitly. To start us off, we'll deal with 
+shapes.  We may want to know whether a given array is scalar, 
+vector, matrix, or noble. These macros can help with that.
+
+@d is_scalar(array) (rank((array)) == 0)
+@d is_vector(array) (rank((array)) == 1)
+@d is_matrix(array) (rank((array)) == 2)
+@d is_noble(array)  (rank((array)) > 2)
+
+@ It is also useful to be able to grab the shape from one array 
+and put it into another. This is the main header information that 
+does not involve allocation. 
+
+@<Utility functions@>=
+void copy_shape(AplArray *dst, AplArray *src) 
+{
+	unsigned int *dstshp, *srcshp;
+	dstshp = dst->shape;
+	srcshp = src->shape;
+	while (*srcshp != SHAPE_END) *dstshp++ = *srcshp++;
+}
+
+@ Note, we could also talk about the |type| field, which is another 
+field that does not relate directly to the heap-allocated regions 
+of the array, but in this case, it's no good, because |type| is 
+actually indirectly responsible, and there are not many useful 
+functions that we would want to use |type| in that did not 
+also involve allocation.
+
+@* Function Structure.
+Let's proceed to functions. In HPAPL, a function is either an 
+operator or a normal function.  At the higher level language, 
+we can distinguish these by asking whether a function has 
+$\alpha\alpha$ or $\omega\omega$ as a free variable or not. 
+We make no distinction between functions which take functions 
+and normal functions at the runtime level. Instead, unless 
+optimized away, all functions have an explicit, possibly empty 
+closure allocated for them. This closure is what is passed 
+around to primitive operators and the like. Thus, all functions 
+have the same signature as their C function elements.
+
+@s AplDyadic int
+@s AplMonadic int
+
+@<Primary data structures@>=
+typedef struct apl_function AplFunction;
+typedef void (*AplMonadic)(AplArray *res, AplArray *, AplFunction *);
+typedef void (*AplDyadic)(AplArray *res,
+    AplArray *, AplArray *, AplFunction *);
+
+@ So, what is an |AplFunction| anyways? It is a structure to 
 contain all of the free variables in an APL function that might 
 come in other than what the actual arguments to an APL function 
 would be. This includes the functions that an operator might 
@@ -374,39 +408,6 @@ actually overwrite the contents of their input arrays. It is assumed that
 they will not touch their input array contents, but that they will fill 
 in and possibly reallocate or allocate fresh space in the result array.
 @^Functions, restrictions@>
-
-@ We are about done with the work on the primary data structures, 
-so we should take some time to get all of the other basic array 
-utilities out of the way. Let's focus specifically on those that 
-we might find generally useful, but that do not deal with 
-any allocation explicitly. To start us off, we'll deal with 
-shapes.  We may want to know whether a given array is scalar, 
-vector, matrix, or noble. These macros can help with that.
-
-@d is_scalar(array) (rank((array)) == 0)
-@d is_vector(array) (rank((array)) == 1)
-@d is_matrix(array) (rank((array)) == 2)
-@d is_noble(array)  (rank((array)) > 2)
-
-@ It is also useful to be able to grab the shape from one array 
-and put it into another. This is the main header information that 
-does not involve allocation. 
-
-@<Utility functions@>=
-void copy_shape(AplArray *dst, AplArray *src) 
-{
-	unsigned int *dstshp, *srcshp;
-	dstshp = dst->shape;
-	srcshp = src->shape;
-	while (*srcshp != SHAPE_END) *dstshp++ = *srcshp++;
-}
-
-@ Note, we could also talk about the |type| field, which is another 
-field that does not relate directly to the heap-allocated regions 
-of the array, but in this case, it's no good, because |type| is 
-actually indirectly responsible, and there are not many useful 
-functions that we would want to use |type| in that did not 
-also involve allocation.
 
 @ Finally, before we proceed to the section on memory management, we 
 should talk about initializing closures.  In this case, a closure 
