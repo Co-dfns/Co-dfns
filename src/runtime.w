@@ -186,14 +186,14 @@ and definitions. We have a maximum array rank of |MAXRANK|.
 @s AplType int
 
 @<Primary data structures@>=
-@<Define AplType@>@;
+typedef struct apl_array AplArray;
+@<Define |AplType|@>@;
 struct apl_array {
 	unsigned int shape[MAXRANK+1];
 	AplType type;
 	size_t size;
 	void *data;
 };
-typedef struct apl_array AplArray;
 
 @ Since |MAXRANK| and |SHAPE_END| are useful to the outside, we duplicate 
 these definitions for our public interface that we define at the end of 
@@ -215,12 +215,20 @@ my single floating point type as I can.  Finally, I have |CHAR| set
 to |wchar_t| since we are dealing with wide characters throughout;
 this is APL afterall.
 
-@<Define AplType@>=
-enum apl_type { INT, REAL, CHAR, UNSET };
+The |FUTR| type is actually an internal one that we use to indicate 
+that the values of the array are dependent on the parallel execution 
+of step functions. In other words, we are waiting to receive their 
+data. It may have already arrived, but the the contents of the array 
+may not be fully populated. The contents of a Future array are 
+pointers to the arrays containing the results of the future values.
+
+@<Define |AplType|@>=
+enum apl_type { INT, REAL, CHAR, FUTR, UNSET };
 typedef enum apl_type AplType;
 typedef long AplInt;
 typedef double AplReal;
 typedef wchar_t AplChar;
+typedef AplArray *AplFutr;
 
 @ There are a few very useful functions relating to arrays that 
 we should talk about. The first is a way to get the size based on 
