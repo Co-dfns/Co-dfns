@@ -48,6 +48,7 @@ into the following sections:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <qthread.h>
 
 @h
 
@@ -441,18 +442,136 @@ void init_function(AplFunction *fun, AplMonadic mon, AplDyadic dya,
 	va_end(ap);
 }
 
-@*1 Function application.
-To actually use a closure we need to be able to apply it to 
-arguments. This is done through a simple macro.
+@*1 Function application. Assuming that we have a simple function and 
+not a step function, applying is very simple.  The function body itself 
+must take care not to break the assumptions on the immutablity of the 
+input arguments, so this makes life easy on the caller end.
+We call a function using simple macros. 
 The arguments are all expected to be pointers to their appropriate
 data types.
 
 @d applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
 @d applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
 
-@<Public macro ...@>=
-#define applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
-#define applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
+@ Things are more complicated, unfortunately, by step functions. If we 
+have a step function, we need to do some special things. Namely, we 
+use the |qthread_fork| call to fork off a new thread. The signature of 
+this function is something like this:
+
+\medskip\centerline{%
+|int qthread_fork(qthread_f f, const void *arg, aligned_t *ret);|}
+\medskip
+
+\noindent In this case the |qthread_f| argument is a function pointer of 
+the following type:
+
+\medskip\centerline{|aligned_t (*qthread_f)(void *arg);|}\medskip
+
+\noindent Basically, the function |f| will be called with |arg| and 
+its return value will be stored in |ret| using |qthread_writeF|, which 
+marks this data as being full on the return. Readers who wish to know 
+more about this interface should read the qthread documentation, such 
+as it is. The long and short of it is that |qthread_fork| takes care 
+of setting the return full/empty bits correctly.
+
+This interface drives the design of a function |applystep| which 
+will receive all the information in a structure, and then do the application 
+on a freshly allocated array that we will then return as the result.
+The structure needs to contain the arguments to the function and 
+the function itself. We do not need to accept the return array because 
+we will allocate our own array for this.
+
+@f qthread_f int
+@f aligned_t int
+
+@<Utility functions@>=
+struct apl_thread_arg {
+	AplFunction *fun;
+	AplArray *left;
+	AplArray *right;
+};
+
+aligned_t applystep(void *arg)
+{
+	struct apl_thread_arg *appinfo;
+	AplFutr res;
+	
+	appinfo = arg;
+	@<Apply threaded function@>@;
+	free(arg);
+	return (aligned_t) res;
+}
+
+@ We must allocate our return array on the stack because it will live 
+past the execution of this function. We also leave allocation of the 
+data in the function up to the function that receives it.
+
+@<Apply threaded function@>=
+if ((res = malloc(sizeof(AplArray))) == NULL) {
+	apl_error(APLERR_MALLOC);
+	exit(APLERR_MALLOC);
+}
+init_array(res);
+
+@ Next we need to know whether we need to apply the function dyadically
+or monadically. In this case, we just check whether |appinfo->left == NULL| 
+and if it is, we know that we have the monadic case. At that point we can 
+make use of our simplistic application macros.
+
+@<Apply threaded function@>=
+if (appinfo->left == NULL)
+	applym(appinfo->fun, res, appinfo->right);
+else
+	applyd(appinfo->fun, res, appinfo->left, appinfo->right);
+
+@ Of course, things are not quite so simple when we want to deal with 
+step functions. Actually applying a step function requires that we setup 
+the return array appropriately, and that we make sure that the return 
+address and such is linked up correctly. This code looks like this. 
+We assume that |rgt| and |lft| are set to appropriate values.
+
+@<Apply step function on |res|@>=
+struct apl_thread_arg *appinfo;
+unsigned int *shp;
+
+if ((appinfo = malloc(sizeof(struct apl_thread_arg))) == NULL) {
+	apl_error(APLERR_MALLOC);
+	exit(APLERR_MALLOC);
+}
+
+appinfo->fun = fun;
+appinfo->left = lft;
+appinfo->right = rgt;
+
+for (shp = res->shape; *shp != SHAPE_END; *shp++ = SHAPE_END);
+alloc_array(res, FUTR);
+qthread_fork(applystep, appinfo, res->data);
+
+@ We now have two concepts of function application, simple ones for functions
+not involved in threading, and those which are, called step functions.
+We want to encapsulate this into two functions for handling dyadic and
+monadic application. Basically, we just check the |step| flag in the 
+function and dispatch accordingly.
+
+@<Utility functions@>=
+void applymonadic(AplFunction *fun, AplArray *res, AplArray *rgt)
+{
+	AplArray *lft;
+	lft = NULL;
+	if (fun->step == 1) {
+		@<Apply step function on |res|@>@;
+	} else {
+		applym(fun, res, rgt);
+	}
+}
+void applydyadic(AplFunction *fun, AplArray *res, AplArray *lft, AplArray *rgt)
+{
+	if (fun->step == 1) {
+		@<Apply step function on |res|@>@;
+	} else {
+		applyd(fun, res, lft, rgt);
+	}
+}
 
 @* Memory management functions. This section is meant to deal 
 specifically with controlling and allocating space for arrays and 
