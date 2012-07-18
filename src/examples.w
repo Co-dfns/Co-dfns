@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 		msg = "Ex 4: Computing + / iota 10";
 		example = ex4;
 	} else if (!strcmp(argv[1], "ex5")) {
-		msg = "Ex 5: Computing + / {+ / iota omega} each iota 10";
+		msg = "Ex 5: Computing + / {+ / iota omega} each iota 100";
 		example = ex5;
 	} else {
 		printf("Unknown example, please enter a valid example.\n");
@@ -183,7 +183,7 @@ void ex4()
 
 @* Example 5. Let's try making use of the each operator together with 
 some functions to get some interesting results. We will 
-compute $\{+/\iota\omega\}\eachop\ \iota 10000$.
+compute $\{+/\iota\omega\}\eachop\ \iota 100$.
 
 @<Ex 5. Compute $+/\{+/\iota\omega\}\eachop\ \iota 10000$@>=
 void ex5_help(AplArray *res, AplArray *rgt, AplFunction *fun)
@@ -202,7 +202,7 @@ void ex5()
 	AplArray x;
 	init_array(&x);
 	alloc_array(&x, INT);
-	*((AplInt *) x.data) = 10000;
+	*((AplInt *) x.data) = 100;
 	index_gen(&x, &x, NULL);
 	init_function(&fun, ex5_help, NULL, 0, NULL, NULL, NULL);
 	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
