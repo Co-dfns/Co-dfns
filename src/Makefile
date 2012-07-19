@@ -14,9 +14,6 @@ EX=4
 .w.c:
 	${CTANGLE} $*
 	
-.c.o:
-	${CC} ${CFLAGS} -c -o $* $< -lqthread
-	
 all: runtime.pdf examples.pdf libhpapl.so examples
 
 run: examples
@@ -29,7 +26,7 @@ examples: libhpapl.so examples.o
 	${CC} ${CFLAGS} -L. -o examples examples.o -lhpapl
 
 libhpapl.so: runtime.o
-	${CC} ${CFLAGS} -shared -o libhpapl.so runtime.o
+	${CC} ${CFLAGS} -shared -o libhpapl.so runtime.o -lqthread
 
 clean: 
 	rm -f *.o hpapl.h libhpapl.so runtime.pdf examples.pdf examples
