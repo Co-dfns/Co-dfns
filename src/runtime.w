@@ -40,6 +40,8 @@ primitive APL functions, memory management, and most every other
 detail of implementation. The program can be divided up mostly 
 into the following sections:
 
+@d inline __inline__ /* Address issue with qthread and C90 */
+
 @p
 #include <assert.h>
 #include <limits.h>
@@ -48,9 +50,10 @@ into the following sections:
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <qthread.h>
 
 @h
+
+#include <qthread.h>
 
 @<Runtime error reporting@>@;
 @<Primary data structures@>@;
