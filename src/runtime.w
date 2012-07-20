@@ -97,9 +97,10 @@ The following is a list of things that I have noted need to be changed
 but that I have not yet done.
 
 \medskip{\parindent=0.3in
-\item{1.} We need to get an implementation of step functions into the 
-system soon.
-\item{2.} As a runtiem we need to find a good balance between safety and 
+\item{1.} We have some support for step functions, but we do not have a 
+function that will convert a FUTR array into a normal one, as a blocking
+operation, that should be next.
+\item{2.} As a runtime we need to find a good balance between safety and 
 performance. I am considering a flag which indicates whether we use the 
 safe library or the unsafe code.
 \item{3.} We can improve the way we handle |function_identity| by running 
