@@ -1963,6 +1963,8 @@ flexibility in laying out our code.
 void init_array(AplArray *);
 void init_function(AplFunction *, AplMonadic, AplDyadic, 
     int, void *, void *, ...);
+void applymonadic(AplFunction *, AplArray *, AplArray *);
+void applydyadic(AplFunction *, AplArray *, AplArray *, AplArray *);
 void alloc_array(AplArray *, AplType);
 void realloc_array(AplArray *, AplType);
 void copy_array(AplArray *, AplArray *);
