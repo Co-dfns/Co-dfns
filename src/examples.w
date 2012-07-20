@@ -64,22 +64,8 @@ int main(int argc, char *argv[])
 		return 1;
 	}@#
 	
-	if (!strcmp(argv[1], "ex1")) {
-		msg = "Ex 1: Computing 5 + 5";
-		example = ex1;
-	} else if (!strcmp(argv[1], "ex2")) {
-		msg = "Ex 2: Computing iota 10";
-		example = ex2;	
-	} else if (!strcmp(argv[1], "ex3")) {
-		msg = "Ex 3: Computing (iota 10) + iota 10";
-		example = ex3;
-	} else if (!strcmp(argv[1], "ex4")) {
-		msg = "Ex 4: Computing + / iota 10";
-		example = ex4;
-	} else if (!strcmp(argv[1], "ex5")) {
-		msg = "Ex 5: Computing + / {+ / iota omega} each iota 100";
-		example = ex5;
-	} else {
+	@<Dispatch example based on |argv[1]|@>@;
+	else {
 		printf("Unknown example, please enter a valid example.\n");
 		return 2;
 	}@#
@@ -114,6 +100,12 @@ void ex1(void)
 	free_data(&x);
 }
 
+@ @<Dispatch example based on |argv[1]|@>=
+if (!strcmp(argv[1], "ex1")) {
+	msg = "Ex 1: Computing 5 + 5";
+	example = ex1;
+}
+
 @* Example 2. This example demonstrates the use of the iota index 
 generation function. It should produce a set of numbers between $[0,10)$.
 
@@ -135,6 +127,12 @@ void ex2(void)
 	free_data(&x);
 	free_data(&z);
 }
+
+@ @<Dispatch example based on |argv[1]|@>=
+else if (!strcmp(argv[1], "ex2")) {
+	msg = "Ex 2: Computing iota 10";
+	example = ex2;	
+} 
 
 @* Example 3. In this example, we will combine the first two examples to 
 show how we can share data structures. In other words, we will only 
@@ -158,6 +156,12 @@ void ex3()
 	free_data(&z);
 }
 
+@ @<Dispatch example based on |argv[1]|@>=
+else if (!strcmp(argv[1], "ex3")) {
+	msg = "Ex 3: Computing (iota 10) + iota 10";
+	example = ex3;
+} 
+
 @* Example 4. Let's show how we might use a reduction operator. This one 
 uses the reduction operator $/$. We will compute $+/\iota 10$ which is 
 the sum of the integers on the range $[0,10)$. 
@@ -174,12 +178,18 @@ void ex4()
 	index_gen(&z, &z, NULL);
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
-	applym(&red, &z, &z);
+	applymonadic(&red, &z, &z);
 	printf("%ld\n", *((AplInt *) z.data));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
 	    size(&z), rank(&z), z.size);
 	free_data(&z);
 }
+
+@ @<Dispatch example based on |argv[1]|@>=
+else if (!strcmp(argv[1], "ex4")) {
+	msg = "Ex 4: Computing + / iota 10";
+	example = ex4;
+} 
 
 @* Example 5. Let's try making use of the each operator together with 
 some functions to get some interesting results. We will 
@@ -193,7 +203,7 @@ void ex5_help(AplArray *res, AplArray *rgt, AplFunction *fun)
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	index_gen(res, rgt, NULL);
-	applym(&red, res, res);
+	applymonadic(&red, res, res);
 }
 
 void ex5()
@@ -206,13 +216,19 @@ void ex5()
 	index_gen(&x, &x, NULL);
 	init_function(&fun, ex5_help, NULL, 0, NULL, NULL, NULL);
 	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
-	applym(&eac, &x, &x);
+	applymonadic(&eac, &x, &x);
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
-	applym(&red, &x, &x);
+	applymonadic(&red, &x, &x);
 	printf("%ld\n", *((AplInt *) x.data));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
 	    size(&x), rank(&x), x.size);
 }
+
+@ @<Dispatch example based on |argv[1]|@>=
+else if (!strcmp(argv[1], "ex5")) {
+	msg = "Ex 5: Computing + / {+ / iota omega} each iota 100";
+	example = ex5;
+} 
 
 @* Index.

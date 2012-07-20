@@ -1339,7 +1339,7 @@ a.data[0] = 100;
 index(&a, &a, NULL);
 init_function(&myplus, identity, plus, NULL, NULL, NULL);
 init_function(&myeach, eachm, eachd, &myplus, NULL, NULL);
-applyd(&myeach, &z, &a, &a);
+applydyadic(&myeach, &z, &a, &a);
 
 @ As you can see in the above example, we must create a closure 
 for every function that we intend to pass to an operator, and 
@@ -1453,7 +1453,7 @@ save that for use later.
 
 @<Deal with the simple cases of |eachm|@>=
 if (rnk == 0) {
-	applym(func, res, rgt);
+	applymonadic(func, res, rgt);
 	return;
 } else if ((siz = size(rgt)) == 0) {
 	copy_array(res, rgt);
@@ -1469,7 +1469,7 @@ used later on to determine the shape of the result array.
 @<Deal with the simple cases of |eachd|@>=
 if (lftrnk == 0) {
 	if (rgtrnk == 0) {
-		applyd(func, res, lft, rgt);
+		applydyadic(func, res, lft, rgt);
 		return;
 	} else {
 		siz = size(rgt);
@@ -1501,7 +1501,7 @@ not write into their input arguments.
 r.type = rgt->type;
 r.size = type_size(r.type);
 r.data = rgt->data;
-applym(func, &z, &r);
+applymonadic(func, &z, &r);
 esiz = type_size(z.type);
 
 @ The dyadic case for determing the type of the return is the same 
@@ -1514,7 +1514,7 @@ l.data = lft->data;
 r.type = rgt->type;
 r.size = type_size(r.type);
 r.data = rgt->data;
-applyd(func, &z, &l, &r);
+applydyadic(func, &z, &l, &r);
 esiz = type_size(z.type);
 
 @ After we know that we are dealing with the general case, and 
@@ -1649,7 +1649,7 @@ r.type = rgt->type;
 r.size = type_size(rgt->type);
 r.data = rgt->data;
 while (siz--) {
-	applym(func, &z, &r);
+	applymonadic(func, &z, &r);
 	memcpy(resd, z.data, esiz);
 	resd += esiz;
 	r.data = (char *)r.data + r.size;
@@ -1664,7 +1664,7 @@ l.type = lft->type; r.type = rgt->type;
 l.data = lft->data; r.data = rgt->data;
 resd = res->data;
 while (siz--) {
-	applyd(func, &z, &l, &r); 
+	applydyadic(func, &z, &l, &r); 
 	memcpy(resd, z.data, esiz);
 	resd += esiz;
 	l.data = (char *) l.data + l.size;
@@ -1886,7 +1886,7 @@ while (start != end) {
 	memcpy(r.data, l.data, l.size);
 	do {
 		l.data = (char *) l.data - l.size;
-		applyd(fun, &r, &l, &r);
+		applydyadic(fun, &r, &l, &r);
 	} while (l.data != start);
 	start = next;
 	r.data = (char *) r.data + l.size;
