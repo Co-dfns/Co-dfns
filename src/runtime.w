@@ -100,22 +100,24 @@ but that I have not yet done.
 \item{1.} We have some support for step functions, but we do not have a 
 function that will convert a FUTR array into a normal one, as a blocking
 operation, that should be next.
-\item{2.} As a runtime we need to find a good balance between safety and 
+\item{2.} We should have a separate document that has a set of benchmarks 
+that we can work with.
+\item{3.} As a runtime we need to find a good balance between safety and 
 performance. I am considering a flag which indicates whether we use the 
 safe library or the unsafe code.
-\item{3.} We can improve the way we handle |function_identity| by running 
+\item{4.} We can improve the way we handle |function_identity| by running 
 it at the time that we create function closures rather than running it 
 when we do a reduction. This should save time if we add a field to the 
 function closure structure that let's us know ahead of time the identity 
 of the function.
-\item{4.} We currently use |alloc_array| assuming that it will set the 
+\item{5.} We currently use |alloc_array| assuming that it will set the 
 |type| field. Is it possible that we could do better by not setting the 
 |type| in |alloc_array| or |realloc_array|?
-\item{5.} We need to audit the code for missing frees. I believe that 
+\item{6.} We need to audit the code for missing frees. I believe that 
 there are a number of memory leaks in the system, so we need to audit our 
 uses of |alloc_array| and |realloc_array| to make sure that they are 
 freed afterwards using |free_data|.
-\item{6.} I think we can improve the behavior of iota by doing something 
+\item{7.} I think we can improve the behavior of iota by doing something 
 a little lazy, and having some sort of explicit iota array object, this 
 could really improve our performance in certain cases.
 \par}\medskip
