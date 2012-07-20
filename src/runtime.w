@@ -537,7 +537,7 @@ address and such is linked up correctly. This code looks like this.
 We assume that |rgt| and |lft| are set to appropriate values.
 
 @<Apply step function on |res|@>=
-struct apl_thread_arg *appinfo;
+{ struct apl_thread_arg *appinfo;
 unsigned int *shp;
 
 if ((appinfo = malloc(sizeof(struct apl_thread_arg))) == NULL) {
@@ -551,7 +551,7 @@ appinfo->right = rgt;
 
 for (shp = res->shape; *shp != SHAPE_END; *shp++ = SHAPE_END);
 alloc_array(res, FUTR);
-qthread_fork(applystep, appinfo, res->data);
+qthread_fork(applystep, appinfo, res->data); }
 
 @ We now have two concepts of function application, simple ones for functions
 not involved in threading, and those which are, called step functions.
@@ -564,19 +564,13 @@ void applymonadic(AplFunction *fun, AplArray *res, AplArray *rgt)
 {
 	AplArray *lft;
 	lft = NULL;
-	if (fun->step == 1) {
-		@<Apply step function on |res|@>@;
-	} else {
-		applym(fun, res, rgt);
-	}
+	if (fun->step == 1) @<Apply step function on |res|@>@;
+	else applym(fun, res, rgt);
 }
 void applydyadic(AplFunction *fun, AplArray *res, AplArray *lft, AplArray *rgt)
 {
-	if (fun->step == 1) {
-		@<Apply step function on |res|@>@;
-	} else {
-		applyd(fun, res, lft, rgt);
-	}
+	if (fun->step == 1) @<Apply step function on |res|@>@;
+	else applyd(fun, res, lft, rgt);
 }
 
 @* Memory management functions. This section is meant to deal 
@@ -640,20 +634,35 @@ when we do not care to keep the old contents of the array.
 void alloc_array(AplArray *array, AplType type)
 {
 	size_t dsize;
-	void *data;
-	data = array->data;
 	dsize = type_size(type) * size(array);
-	if (data == NULL || dsize > array->size) {
-		free(data);
-		data = malloc(dsize);
-		@<Verify that |data| allocation succeeded@>@;
-	}
-	array->data = data;
-	array->size = dsize;
+	if (array->data == NULL || dsize > array->size)
+		@<Set |array->data| to region of |dsize| bytes@>@;
 	array->type = type;
 }
 
-@ There are times when we may want to preserve the contenst of an 
+@ When we know that we need to allocate new memory, we have the option 
+to use |realloc| to do this, but instead, for this particular semantics, 
+we will make sure to free any old memory that we have, and then to 
+|malloc| a new region entirely, since we do not care about the contents 
+of the old memory. In case of an error, we will print both the 
+malloc error that we receive, as well as exit with an |APLERR_MALLOC|
+code, printing the appropriate error message. 
+
+@<Set |array->data| to region of |dsize| bytes@>=
+{
+	void *data;
+	data = array->data;
+	free(data);
+	if ((data = malloc(dsize)) == NULL) {
+		perror("alloc_array()");
+		apl_error(APLERR_MALLOC);
+		exit(APLERR_MALLOC);
+	}
+	array->data = data;
+	array->size = dsize;
+}
+
+@ There are times when we may want to preserve the contents of an 
 array as we resize it to hold more elements or the like. To handle 
 these situations, we provide the |realloc_array| function that is 
 basically the same as the |alloc_array| function except that it 
@@ -664,28 +673,30 @@ to the |size(array)| of the |array|.
 void realloc_array(AplArray *array, AplType type)
 {
 	size_t dsize;
-	void *data;
-	data = array->data;
 	dsize = type_size(type) * size(array);
-	if (data == NULL || dsize > array->size) {
-		data = realloc(data, dsize);
-		@<Verify that |data| alloc...@>@;
-	}
-	array->data = data;
-	array->size = dsize;
+	if (array->data == NULL || dsize > array->size) 
+		@<Reallocate |array->data| to at least |dsize| bytes@>@;
 	array->type = type;
 }
 
-@ In both of the above functions we want to check that the allocation
-succeeds or that we trigger an error if it does not. We encapsulate 
-that into a single place here.
+@ In this case, we will work like we did with the previous 
+case using |malloc|, but using |realloc| instead of |malloc| to 
+do the allocation. We will also return the same error message in case 
+of a failure.
 
-@<Verify that |data| allocation succeeded@>=
-if (data == NULL) {
-	perror("array_[re]alloc()");
-	apl_error(APLERR_MALLOC);
-	exit(APLERR_MALLOC);
+@<Reallocate |array->data| to at least |dsize| bytes@>=
+{
+	void *data;
+	data = array->data;
+	if ((data = realloc(data, dsize)) == NULL) {
+		perror("realloc_array()");
+		apl_error(APLERR_MALLOC);
+		exit(APLERR_MALLOC);
+	}
+	array->data = data;
+	array->size = dsize;
 }
+
 
 @ We also have a little helper utility that we use in both of the 
 above functions to determin the size of a given type.
@@ -780,7 +791,6 @@ orig = NULL;
 @<Clean-up after scalar function@>@;
 
 @ @<Declare dyadic scalar function variables@>=
-short lftrnk, rgtrnk; /* Used in allocation cases 3 and 4 */
 size_t resesiz, lftesiz, rgtesiz; /* Number of bytes per element */
 size_t rgtstp, lftstp; /* For scalar distribution iteration */
 AplScalarDyadic op; /* Function pointer to scalar function */
@@ -903,18 +913,11 @@ should be.
 
 @<Allocate |res|, dealing with shared inputs and output structures@>=
 if (lft == rgt) {
-	if (res == lft) {
-		@<Allocate |res| for dyadic scalar case 1@>@;
-	} else {
-		@<Allocate |res| for dyadic scalar case 2@>@;
-	}
-} else if (res == lft) {
-	@<Allocate |res| for dyadic scalar case 3a@>@;
-} else if (res == rgt) {
-	@<Allocate |res| for dyadic scalar case 3b@>@;
-} else {
-	@<Allocate |res| for dyadic scalar case 4@>@;
-}
+	if (res == lft) @<Allocate |res| for dyadic scalar case 1@>@;
+	else @<Allocate |res| for dyadic scalar case 2@>@;
+} else if (res == lft) @<Allocate |res| for dyadic scalar case 3a@>@;
+else if (res == rgt) @<Allocate |res| for dyadic scalar case 3b@>@;
+else @<Allocate |res| for dyadic scalar case 4@>@;
 
 @ In the first case, where all of the inputs and the return array 
 are the same object, we know the shape and sizes of everything will 
@@ -941,9 +944,11 @@ of the old array and freeing the old buffers when we are done.
 	res = &tmp;
 
 @<Allocate |res| for dyadic scalar case 1@>=
-lftstp = rgtstp = rgtesiz;
-if (resesiz > lftesiz) {
-	TEMPRES(rgt)@;
+{
+	lftstp = rgtstp = rgtesiz;
+	if (resesiz > lftesiz) {
+		TEMPRES(rgt)@;
+	}
 }
 
 @ We have allocated a temporary array here, and we need to make sure that 
@@ -967,9 +972,11 @@ the shape into the result array, which will be the shape of either
 of the input arguments, since they are the same. 
 
 @<Allocate |res| for dyadic scalar case 2@>=
-copy_shape(res, rgt);
-alloc_array(res, res->type);
-lftstp = rgtstp = rgtesiz;
+{
+	copy_shape(res, rgt);
+	alloc_array(res, res->type);
+	lftstp = rgtstp = rgtesiz;
+}
 
 @ In the third case, either the left or the right inputs, but not 
 both, is equal to the result array. The process for handling the one 
@@ -991,50 +998,56 @@ type.
 The first sub-case $a$ is the case when |res == lft|. 
 
 @<Allocate |res| for dyadic scalar case 3a@>=
-lftrnk = rank(lft); rgtrnk = rank(rgt);
-if (lftrnk != rgtrnk) { /* We must have a scalar */
-	if (lftrnk == 0) { /* |lft| is our scalar */
-		TEMPRES(rgt)@;
-		lftstp = 0;
-		rgtstp = rgtesiz;
-	} else { /* |rgt| is our scalar */
-		lftstp = lftesiz;
-		rgtstp = 0;
+{
+	short lftrnk, rgtrnk;
+	lftrnk = rank(lft); rgtrnk = rank(rgt);
+	if (lftrnk != rgtrnk) { /* We must have a scalar */
+		if (lftrnk == 0) { /* |lft| is our scalar */
+			TEMPRES(rgt)@;
+			lftstp = 0;
+			rgtstp = rgtesiz;
+		} else { /* |rgt| is our scalar */
+			lftstp = lftesiz;
+			rgtstp = 0;
+			if (resesiz > lftesiz) {
+				TEMPRES(lft)@;
+			}
+		}
+	} else {
 		if (resesiz > lftesiz) {
 			TEMPRES(lft)@;
 		}
+		lftstp = lftesiz;
+		rgtstp = rgtesiz;
 	}
-} else {
-	if (resesiz > lftesiz) {
-		TEMPRES(lft)@;
-	}
-	lftstp = lftesiz;
-	rgtstp = rgtesiz;
 }
 
 @ The second sub-case of case 3, $b$, is the same as sub-case $a$ 
 but with |res == rgt| instead.
 
 @<Allocate |res| for dyadic scalar case 3b@>=
-lftrnk = rank(lft); rgtrnk = rank(rgt);
-if (lftrnk != rgtrnk) { /* We must have a scalar */
-	if (rgtrnk == 0) { /* |rgt| is our scalar */
-		TEMPRES(lft)@;
-		lftstp = lftesiz;
-		rgtstp = 0;
-	} else { /* |lft| is our scalar */
+{
+	short lftrnk, rgtrnk;
+	lftrnk = rank(lft); rgtrnk = rank(rgt);
+	if (lftrnk != rgtrnk) { /* We must have a scalar */
+		if (rgtrnk == 0) { /* |rgt| is our scalar */
+			TEMPRES(lft)@;
+			lftstp = lftesiz;
+			rgtstp = 0;
+		} else { /* |lft| is our scalar */
+			if (resesiz > rgtesiz) {
+				TEMPRES(rgt)@;
+			}
+			lftstp = 0;
+			rgtstp = rgtesiz;
+		}
+	} else { 
 		if (resesiz > rgtesiz) {
 			TEMPRES(rgt)@;
 		}
-		lftstp = 0;
+		lftstp = lftesiz;
 		rgtstp = rgtesiz;
 	}
-} else { 
-	if (resesiz > rgtesiz) {
-		TEMPRES(rgt)@;
-	}
-	lftstp = lftesiz;
-	rgtstp = rgtesiz;
 }
 
 @ The fourth and most general case is when none of the inputs are 
@@ -1046,26 +1059,46 @@ case because we do not have to consider the effects of overlapping
 reads and writes to the buffers.
 
 @<Allocate |res| for dyadic scalar case 4@>=
-lftrnk = rank(lft); rgtrnk = rank(rgt);
+{
+	short lftrnk, rgtrnk;
+	lftrnk = rank(lft); rgtrnk = rank(rgt);
+	@<Process dyadic scalar case 4 if $(\rho\alpha)\equiv(\rho\omega)$@>@;
+	@<Process dyadic scalar case 4 if we have scalar distribution@>@;
+	else {
+		apl_error(APLERR_SHAPEMISMATCH);
+		exit(APLERR_SHAPEMISMATCH);
+	}
+	alloc_array(res, res->type);
+}
+
+@ In case 4, when the left and the right arguments are the same 
+shape, we do not care what shape we use as the base for the |res| shape, 
+and we need to ensure that we iterate the left and right arrays 
+together, which means their step sizes both need to be nonzero.
+
+@<Process dyadic scalar case 4 if $(\rho\alpha)\equiv(\rho\omega)$@>=
 if (lftrnk == rgtrnk) {
 	copy_shape(res, rgt);
-	alloc_array(res, res->type);
 	lftstp = lftesiz;
 	rgtstp = rgtesiz;
-} else if (lftrnk == 0) {
+}
+
+@ In the other valid, non-error cases, we know that one of the arrays
+is a scalar, and so we use the other one for the shape of |res|, making 
+sure to zero the step size of the scalar array, since we do not want to 
+iterate over the array, but use the same scalar value distributed over 
+every element of the other.
+
+@<Process dyadic scalar case 4 if we have scalar distribution@>=
+else if (lftrnk == 0) {
 	copy_shape(res, rgt);
-	alloc_array(res, res->type);
 	lftstp = 0;
 	rgtstp = rgtesiz;
 } else if (rgtrnk == 0) {
 	copy_shape(res, lft);
-	alloc_array(res, res->type);
 	lftstp = lftesiz;
 	rgtstp = 0;
-} else {
-	apl_error(APLERR_SHAPEMISMATCH);
-	exit(APLERR_SHAPEMISMATCH);
-}
+} 
 
 @*1 Implementing Plus and Identity.
 Now that we have covered the basic 
