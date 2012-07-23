@@ -120,6 +120,8 @@ freed afterwards using |free_data|.
 \item{7.} I think we can improve the behavior of iota by doing something 
 a little lazy, and having some sort of explicit iota array object, this 
 could really improve our performance in certain cases.
+\item{8.} The current |iota| function computes indexes in a very slow 
+fashion. There is a more appropriate approach.
 \par}\medskip
 
 @* Array Structure.  We must implement two main data structures: 
@@ -1096,9 +1098,7 @@ void index_gen(AplArray *res, AplArray *rgt, AplFunction *env)
 		alloc_array(res, INT);
 		for (i = 0, data = res->data; i < res->shape[0]; i++)
 			*data++ = i;
-	} else {
-		@<Compute indexes of non-scalar vector@>@;
-	}
+	} else @<Compute indexes of non-scalar vector@>@;
 }
 
 @ Now let's consider the main case of the Iota (properly, then |index|) 
@@ -1127,18 +1127,20 @@ computes one of these digits. In our implementation, we use
 a doubly nested loop to give us the $i$ and $j$ elements.
 
 @<Compute indexes of non-scalar vector@>=
-unsigned int *p, prod;
-int i, j;
-AplInt *v, *a;
+{
+	unsigned int *p, prod;
+	int i, j;
+	AplInt *v, *a;
 
-v = rgt->data;
-a = res->data;
-prod = product(rgt);
-@<Compute |p| vector@>@;
-for (i = 0; i < prod; i++)
-	for (j = 0; j < siz; j++)
-		*a++ = (i / p[j]) % v[j];
-free(p);
+	v = rgt->data;
+	a = res->data;
+	prod = product(rgt);
+	@<Compute |p| vector@>@;
+	for (i = 0; i < prod; i++)
+		for (j = 0; j < siz; j++)
+			*a++ = (i / p[j]) % v[j];
+	free(p);
+}
 
 @ Computing the product vector means that we compute the product 
 of the elements in |rgt| after the current index that we are 
@@ -1244,7 +1246,7 @@ APL program:
 
 $$X+\ddot{ }\ X\gets\iota 100$$
 
-Here is an example:
+\noindent Here is an example:
 
 @<Example use of an APL operator@>=
 AplFunction myeach, myplus;
@@ -1516,7 +1518,7 @@ given when |clean == 0|. Otherwise, |clean| will be set to one of
 the aforementioned constants, and we need to do different clean 
 up on each. 
 
-\medskip{\parindent=1in
+\medskip{\parindent=.75in
 \item{|EACH_SAME|} In this case, we have not allocated a temporary 
 array, instead reusing an input array. This also means that we 
 did not set the |type| field of the result array so as to not 
@@ -1712,9 +1714,7 @@ if (step == 0) {
 	@<Fill |res| with identity of |fun|@>@;
 } else if (step == 1 && res != rgt) { 
 	memcpy(res->data, rgt->data, res->size); 
-} else {
-	@<Reduce over array whose |step >= 2|@>@;
-}
+} else @<Reduce over array whose |step >= 2|@>@;
 
 @ When |step == 0| we are dealing 
 with a case where we need to fill in the result with the identity 
@@ -1786,25 +1786,27 @@ until we hit the beginning, and then hop to the next segment to begin
 the same process again. 
 
 @<Reduce over array whose |step >= 2|@>=
-char *start, *end, *next;
-AplArray r, l;
-init_array(&r);
-init_array(&l);
-r.type = l.type = rgt->type;
-r.size = l.size = type_size(rgt->type);
-start = rgt->data;
-end = start + l.size * size(rgt) * step;
-r.data = res->data;
-while (start != end) {
-	next = start + step * l.size;
-	l.data = next - l.size;
-	memcpy(r.data, l.data, l.size);
-	do {
-		l.data = (char *) l.data - l.size;
-		applydyadic(fun, &r, &l, &r);
-	} while (l.data != start);
-	start = next;
-	r.data = (char *) r.data + l.size;
+{
+	char *start, *end, *next;
+	AplArray r, l;
+	init_array(&r);
+	init_array(&l);
+	r.type = l.type = rgt->type;
+	r.size = l.size = type_size(rgt->type);
+	start = rgt->data;
+	end = start + l.size * size(rgt) * step;
+	r.data = res->data;
+	while (start != end) {
+		next = start + step * l.size;
+		l.data = next - l.size;
+		memcpy(r.data, l.data, l.size);
+		do {
+			l.data = (char *) l.data - l.size;
+			applydyadic(fun, &r, &l, &r);
+		} while (l.data != start);
+		start = next;
+		r.data = (char *) r.data + l.size;
+	}
 }
 
 @* Reporting runtime errors. Much as I would like to think that my 
