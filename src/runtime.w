@@ -356,6 +356,25 @@ void copy_shape(AplArray *dst, AplArray *src)
 	while (*srcshp != SHAPE_END) *dstshp++ = *srcshp++;
 }
 
+@ We're talking a lot about shapes now, and for good reason. Many 
+important things about arrays can be learned by looking at their shapes.
+We often want to know whether two arrays have the same shape. We 
+can do this with the following function |shpeq|. It returns |0| 
+if the arrays do not have the same shape, and |1| if they do.
+
+@<Utility functions@>=
+int shpeq(AplArray *a, AplArray *b) 
+{
+	unsigned int *sa, *sb;
+	sa = a->shape;
+	sb = b->shape;
+	while (*sa != SHAPE_END)
+		if (*sb == SHAPE_END || *sa++ != *sb++) 
+			return 0;
+	if (*sb != SHAPE_END) return 0;
+	else return 1;
+}
+
 @ Note, we could also talk about the |type| field, which is another 
 field that does not relate directly to the heap-allocated regions 
 of the array, but in this case, it's no good, because |type| is 
@@ -773,19 +792,22 @@ typedef void (*AplScalarDyadic)(void *, void *, void *);
 the same  basic function body:@^Scalar functions, design pattern@>
 
 \medskip{\parindent=0.3in
-\item{1:} Declare variables used among the sections;
+\item{1:} Declare common variables;
 \item{2:} Set the |op| variable;
-\item{3:} Set |res->type|, |resesiz|, |lftesiz|, and |rgtesiz| variables;
-\item{4:} Use the allocation section to allocate |res|;
-\item{5:} Use the application section to compute the function; 
-\item{6:} Finally, clean-up if necessary.
+\item{3:} Set |restype|, |resesiz|, |lftesiz|, and |rgtesiz| variables;
+\item{4:} Set |rgtstp| and |lftstp| variables;
+\item{5:} Allocate |res| without corrupting |lft| or |rgt|;
+\item{6:} Compute the function based on |op|; 
+\item{7:} Finally, clean-up if necessary.
 }\medskip
 
-\noindent Step 2 is specific to the function that you are writing, 
+\noindent Steps $2-3$ are specific to the function that you are writing, 
 but all of the other sections are the same for each scalar function. 
 
 @<Compute dyadic scalar function |op|@>=
 orig = NULL;
+lftstp = is_scalar(lft) ? 0 : lftesiz;
+rgtstp = is_scalar(rgt) ? 0 : rgtesiz;
 @<Allocate |res|, dealing with shared inputs and output structures@>@;
 @<Dyadically apply |op| over |rgt| and |lft| by |rgtstp| and |lftstp|@>@;
 @<Clean-up after scalar function@>@;
@@ -793,8 +815,8 @@ orig = NULL;
 @ @<Declare dyadic scalar function variables@>=
 size_t resesiz, lftesiz, rgtesiz; /* Number of bytes per element */
 size_t rgtstp, lftstp; /* For scalar distribution iteration */
+AplType restype; /* Type of the result array after computation */
 AplScalarDyadic op; /* Function pointer to scalar function */
-AplArray *orig; /* Points to original array in case of temporary allocation */
 
 @ We need to have a few things in order to process or apply the 
 scalar |op| function over a given array |rgt|, which we will by 
@@ -858,18 +880,17 @@ over another array, this step count will be zero.
 	}
 }
 
-@ Before we can get to the specifics of implementing a real
-scalar function, there is still one more abstraction  
-that I want to make. Specifically, we need to be careful about 
-scalar functions that operate on themselves. 
-In principle, we can do in-place updates when we have sharing. 
-Because all scalar functions have the same basic set of operations, 
-we can abstract away the main elements common to all scalar functions
-in one place. We divide the possible sharing cases thusly:
+@ Now we need to talk about how we allocate the result array |res|. 
+We want to have the guarantee that working on |res| and changing values 
+during the course of our scalar computation will not mess with any 
+future values that we need for the rest of the scalar computation.
+In some cases we can do an in-place computation, even if |res == lft| 
+or |res == rgt|. In other cases this is not possible, and a fresh 
+allocation must be done. We divide the possible sharing cases thus:
 
 \medskip{\parindent=0.3in
-\item{1)} {\it All arguments the same.} In this case, all 
-of the arguments are the same. We know that the input types 
+\item{1)} {\it All arguments the same.} In this case, 
+|res == lft == rgt|. We know that the input types 
 are the same and that the input arrays are of the exact same 
 shape. We cannot in general guarantee that the type of the 
 output array is going to be the same as the input array, 
@@ -881,11 +902,11 @@ space to the space conumed by the input type, then we can do
 an in-place update.
 \item{2)} {\it All inputs are the same.} In this case, 
 all the inputs are the same, but the output is a different 
-array. This is the general case when we are dealing with 
-monadic functions. 
+array. We should always do the allocation in this case, as well 
+as copying the shape from either of the inputs, which have 
+the same shape.
 \item{3)} {\it Left or right argument is the same as 
-the result.} In this case, which is the same as case 1 
-in the monadic case, we have one or the other of the 
+the result.} In this case, we have one or the other of the 
 inputs, but not both, equal to the result array in the 
 sense that they are the same object in memory. 
 This is probably among the most interesting and subtle of the 
@@ -893,65 +914,60 @@ cases when it comes to allocation. We have to handle both the
 shared object relationship and ensuring that overwrites will not 
 occur when we do not want them, but also with the potential for 
 scalar distribution, because the two arguments are different. 
-We discuss this in more detail when we implement it further on.
+When |res| is 
+the scalar in a scalar distribution, we cannot safely use it as a 
+target, since we might overwrite the input array before it is safe to 
+do so. When |res| is too small to hold the result, we may have to 
+allocate more space to hold it. In both of these cases, it is not 
+enough to just reallocate the array, but we must actually construct 
+a temporary array if we want to be correct. In all 
+other cases it is okay to leave |res| as is.
 \item{4)} Finally, then general case is the one where we have 
-none of the inputs as equal to one another. In this case, 
-we must do all the checking and allocating for the result 
-array, but we do not need to do any modification of the 
-inputs. The result array will be the larger of the shapes, 
-assuming that one of them is a scalar and the other is not.
-Otherwise the shape of the result array will be the same 
-as the shape of the inputs, which must be the same. 
+none of the inputs as equal to one another. This is almost as 
+easy as case 2, but we need to figure out where to copy the shape 
+for |res| from in the case of a scalar distribution. Otherwise, 
+this is a straightforward copy and allocate.
 \par}\medskip
-
-\noindent
-The job of each case is to make sure that the output 
-array is allocated correctly, and that anything that needs to be 
-done on that front is done. We make sure that |lftstp| and |rgtstp| 
-are set correctly, since this is the time when we know what their values 
-should be.
 
 @<Allocate |res|, dealing with shared inputs and output structures@>=
 if (lft == rgt) {
-	if (res == lft) @<Allocate |res| for dyadic scalar case 1@>@;
-	else @<Allocate |res| for dyadic scalar case 2@>@;
-} else if (res == lft) @<Allocate |res| for dyadic scalar case 3a@>@;
-else if (res == rgt) @<Allocate |res| for dyadic scalar case 3b@>@;
-else @<Allocate |res| for dyadic scalar case 4@>@;
+	if (res == lft && resesiz > lftesiz) TEMPRES(rgt)@;
+	else {
+		copy_shape(res, rgt);
+		alloc_array(res, restype);
+	}
+} else if (res == lft) {
+	if (!shpeq(lft, rgt) && is_scalar(lft)) TEMPRES(rgt)@;
+	else if (resesiz > lftesiz) TEMPRES(lft)@;
+} else if (res == rgt) {
+	if (!shpeq(lft, rgt) && is_scalar(rgt)) TEMPRES(lft)@;
+	else if (resesiz > rgtesiz) TEMPRES(rgt)@;
+} else {
+	if (shpeq(lft, rgt) || is_scalar(lft)) copy_shape(res, rgt);
+	else if (is_scalar(rgt)) copy_shape(res, lft);
+	alloc_array(res, restype);
+} 
 
-@ In the first case, where all of the inputs and the return array 
-are the same object, we know the shape and sizes of everything will 
-be the same, so we do not have to check for that. However, we do 
-need to deal with the situation where we may a different output 
-type than the input types. In this case, if the output type is 
-of a size larger than the input type, it is not safe to do an 
-inplace computation, since the larger values will overwrite the 
-contents of the next element in the computation. This does not 
-occur with the output type is smaller in size than the input 
-type, so we can get away with doing an in-place update then. 
-When the output type is larger, and it is not safe to do 
-the in-place update, we will leave the main buffers alone, 
-as they already have good input values, and we will allocate 
-a new result array of the right size and shape. We can then 
-store the outputs into that, finally replacing the contents 
-of the old array and freeing the old buffers when we are done.
+@ The above code assumes a macro |TEMPRES| that will handle the allocation 
+of a temporary value for us. This macro allocates a temporary array and 
+replaces the original |res| with this temporary array so that it is 
+safe to write to |res| without worrying about overlap. It stores the original 
+array in the |orig| variable.
 
 @d TEMPRES(array) @/
+{@/
 	AplArray tmp;
 	init_array(&tmp);
-	copy_array(&tmp, array);
+	copy_shape(&tmp, array);
+	alloc_array(&tmp, restype);
 	orig = res;
 	res = &tmp;
-
-@<Allocate |res| for dyadic scalar case 1@>=
-{
-	lftstp = rgtstp = rgtesiz;
-	if (resesiz > lftesiz) {
-		TEMPRES(rgt)@;
-	}
 }
 
-@ We have allocated a temporary array here, and we need to make sure that 
+@<Declare dyadic scalar function variables@>=
+AplArray *orig;
+
+@ We need to ensure that 
 we clean up after we are done processing everything. Our |TEMPRES| macro 
 makes sure to save the original destination array in |orig|, so we must 
 put that data into the right place in the case that |orig != NULL|.
@@ -962,143 +978,6 @@ if (NULL != orig) {
 	orig->size = res->size;
 	orig->data = res->data;
 }
-
-@ In the second case, we have the inputs being the same, but the 
-output being an entirely different beast. This gives us the same 
-guarantees that allow us to avoid checking on the input shapes 
-for scalar distribution, but it also means that we need to always 
-do an allocation for the result array, as well as always copying 
-the shape into the result array, which will be the shape of either 
-of the input arguments, since they are the same. 
-
-@<Allocate |res| for dyadic scalar case 2@>=
-{
-	copy_shape(res, rgt);
-	alloc_array(res, res->type);
-	lftstp = rgtstp = rgtesiz;
-}
-
-@ In the third case, either the left or the right inputs, but not 
-both, is equal to the result array. The process for handling the one 
-is the exact same as handling the other case, just with some arguments 
-swapped around. In both of these cases, we need to check the shapes 
-of the two inputs to see if they are the same or if they are different. 
-If they are different, then we need to check whether the input 
-equal to the result is the scalar case. If that is true, then the 
-result array will not be sufficient to hold the contents, and we need 
-to separate out the scalar input from the result. In the other case, 
-we still must check to make sure that the output type is not bigger 
-than the input types, and if it is, we need to make accomodations 
-for that, by scaling up the output array. Thus, there are two cases 
-where we need to allocate a temporary output array, the one when 
-we have a scalar result and a non-scalar input, and the other 
-when we have a result type that consumes more space than the input 
-type.
-
-The first sub-case $a$ is the case when |res == lft|. 
-
-@<Allocate |res| for dyadic scalar case 3a@>=
-{
-	short lftrnk, rgtrnk;
-	lftrnk = rank(lft); rgtrnk = rank(rgt);
-	if (lftrnk != rgtrnk) { /* We must have a scalar */
-		if (lftrnk == 0) { /* |lft| is our scalar */
-			TEMPRES(rgt)@;
-			lftstp = 0;
-			rgtstp = rgtesiz;
-		} else { /* |rgt| is our scalar */
-			lftstp = lftesiz;
-			rgtstp = 0;
-			if (resesiz > lftesiz) {
-				TEMPRES(lft)@;
-			}
-		}
-	} else {
-		if (resesiz > lftesiz) {
-			TEMPRES(lft)@;
-		}
-		lftstp = lftesiz;
-		rgtstp = rgtesiz;
-	}
-}
-
-@ The second sub-case of case 3, $b$, is the same as sub-case $a$ 
-but with |res == rgt| instead.
-
-@<Allocate |res| for dyadic scalar case 3b@>=
-{
-	short lftrnk, rgtrnk;
-	lftrnk = rank(lft); rgtrnk = rank(rgt);
-	if (lftrnk != rgtrnk) { /* We must have a scalar */
-		if (rgtrnk == 0) { /* |rgt| is our scalar */
-			TEMPRES(lft)@;
-			lftstp = lftesiz;
-			rgtstp = 0;
-		} else { /* |lft| is our scalar */
-			if (resesiz > rgtesiz) {
-				TEMPRES(rgt)@;
-			}
-			lftstp = 0;
-			rgtstp = rgtesiz;
-		}
-	} else { 
-		if (resesiz > rgtesiz) {
-			TEMPRES(rgt)@;
-		}
-		lftstp = lftesiz;
-		rgtstp = rgtesiz;
-	}
-}
-
-@ The fourth and most general case is when none of the inputs are 
-the same. In this case, we need to check on the shapes of the 
-inputs because we do not know if any of them is the same, and we 
-also need to do all of the general allocation for the result array
-once we have the right shape. In some ways this is the most simple 
-case because we do not have to consider the effects of overlapping 
-reads and writes to the buffers.
-
-@<Allocate |res| for dyadic scalar case 4@>=
-{
-	short lftrnk, rgtrnk;
-	lftrnk = rank(lft); rgtrnk = rank(rgt);
-	@<Process dyadic scalar case 4 if $(\rho\alpha)\equiv(\rho\omega)$@>@;
-	@<Process dyadic scalar case 4 if we have scalar distribution@>@;
-	else {
-		apl_error(APLERR_SHAPEMISMATCH);
-		exit(APLERR_SHAPEMISMATCH);
-	}
-	alloc_array(res, res->type);
-}
-
-@ In case 4, when the left and the right arguments are the same 
-shape, we do not care what shape we use as the base for the |res| shape, 
-and we need to ensure that we iterate the left and right arrays 
-together, which means their step sizes both need to be nonzero.
-
-@<Process dyadic scalar case 4 if $(\rho\alpha)\equiv(\rho\omega)$@>=
-if (lftrnk == rgtrnk) {
-	copy_shape(res, rgt);
-	lftstp = lftesiz;
-	rgtstp = rgtesiz;
-}
-
-@ In the other valid, non-error cases, we know that one of the arrays
-is a scalar, and so we use the other one for the shape of |res|, making 
-sure to zero the step size of the scalar array, since we do not want to 
-iterate over the array, but use the same scalar value distributed over 
-every element of the other.
-
-@<Process dyadic scalar case 4 if we have scalar distribution@>=
-else if (lftrnk == 0) {
-	copy_shape(res, rgt);
-	lftstp = 0;
-	rgtstp = rgtesiz;
-} else if (rgtrnk == 0) {
-	copy_shape(res, lft);
-	lftstp = lftesiz;
-	rgtstp = 0;
-} 
 
 @*1 Implementing Plus and Identity.
 Now that we have covered the basic 
@@ -1116,27 +995,27 @@ macro for our operation, and then we can define the main
 @<Scalar APL functions@>=
 void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
-	@<Declare dyadic scalar function variables@>@;@#
+	@<Declare dyadic scalar function variables@>@;
 	
 	if (lft->type == INT) {
 		if (rgt->type == INT) {
 			op = plus_int_int;
-			res->type = INT;
+			restype = INT;
 		} else if (rgt->type == REAL) {
 			op = plus_int_real;
-			res->type = REAL;
+			restype = REAL;
 		} else goto err;
 	} else if (lft->type == REAL) {
 		if (rgt->type == INT) {
 			op = plus_real_int;
-			res->type = REAL;
+			restype = REAL;
 		} else if (rgt->type == REAL) {
 			op = plus_real_real;
-			res->type = REAL;
+			restype = REAL;
 		} else goto err;
 	} else goto err;
 	@#
-	resesiz = type_size(res->type);
+	resesiz = type_size(restype);
 	lftesiz = type_size(lft->type);
 	rgtesiz = type_size(rgt->type);
 	@#
