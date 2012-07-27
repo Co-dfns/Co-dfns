@@ -191,6 +191,7 @@ and definitions. We have a maximum array rank of |MAXRANK|.
 @d MAXRANK 31
 @d SHAPE_END UINT_MAX
 @s AplType int
+@s AplScalar int
 
 @<Primary data structures@>=
 typedef struct apl_array AplArray;
@@ -199,7 +200,7 @@ struct apl_array {
 	unsigned int shape[MAXRANK+1];
 	AplType type;
 	size_t size;
-	void *data;
+	AplScalar *data;
 };
 
 @ Since |MAXRANK| and |SHAPE_END| are useful to the outside, we duplicate 
@@ -313,14 +314,14 @@ $$\prod_{i=0}^{size(array)}a_i$$
 unsigned int product(AplArray *array)
 {
 	int i, len;
-	int *data;
+	AplScalar *data;
 	unsigned int prod;
 
 	prod = 1;
 	len = size(array);
 	data = array->data;
 
-	for (i = 0; i < len; i++) prod *= *data++;
+	for (i = 0; i < len; i++) prod *= (data++)->intv;
 
 	return prod;
 }
@@ -585,7 +586,7 @@ appinfo->right = rgt;
 
 for (shp = res->shape; *shp != SHAPE_END; *shp++ = SHAPE_END);
 alloc_array(res, FUTR);
-qthread_fork(applystep, appinfo, res->data); }
+qthread_fork(applystep, appinfo, (aligned_t *) res->data); }
 
 @ We now have two concepts of function application, simple ones for functions
 not involved in threading, and those which are, called step functions.
@@ -657,8 +658,7 @@ field. Normally, we have an array that has been automatically
 allocated for which we now need to make enough space to store
 elements of a particular type. Assuming that we already know how 
 the shape of the array looks, we know how many array elements that 
-we ultimately need. All we need explicitely is the type of the 
-elements that are going to be stored there. Ideally speaking, 
+we ultimately need. Ideally speaking, 
 we want to reuse space that has already been allocated to the array 
 if there is enough room to store the elements that we need. 
 We provide two different allocators, the first, |alloc_array| for 
@@ -668,7 +668,7 @@ when we do not care to keep the old contents of the array.
 void alloc_array(AplArray *array, AplType type)
 {
 	size_t dsize;
-	dsize = type_size(type) * size(array);
+	dsize = sizeof(AplScalar) * size(array);
 	if (array->data == NULL || dsize > array->size)
 		@<Set |array->data| to region of |dsize| bytes@>@;
 	array->type = type;
@@ -707,7 +707,7 @@ to the |size(array)| of the |array|.
 void realloc_array(AplArray *array, AplType type)
 {
 	size_t dsize;
-	dsize = type_size(type) * size(array);
+	dsize = sizeof(AplScalar) * size(array);
 	if (array->data == NULL || dsize > array->size) 
 		@<Reallocate |array->data| to at least |dsize| bytes@>@;
 	array->type = type;
@@ -733,7 +733,8 @@ of a failure.
 
 
 @ We also have a little helper utility that we use in both of the 
-above functions to determin the size of a given type.
+above functions to determin the size of a given type. XXX: I do not 
+think that we need this any longer.
 
 @<Utility functions@>=
 size_t type_size(AplType type) 
@@ -800,35 +801,33 @@ arguments the arguments to the function.
 @s AplScalarDyadic int
 
 @<Primary data structures@>=
-typedef void (*AplScalarMonadic)(void *, void *);
-typedef void (*AplScalarDyadic)(void *, void *, void *);
+typedef void (*AplScalarMonadic)(AplScalar *, AplScalar *);
+typedef void (*AplScalarDyadic)(AplScalar *, AplScalar *, AplScalar *);
 
 @ All dyadic scalar functions using the following pattern of code retain
 the same  basic function body:@^Scalar functions, design pattern@>
 
 \medskip{\parindent=0.3in
 \item{1:} Declare common variables;
-\item{2:} Set the |op| variable;
-\item{3:} Set |restype|, |resesiz|, |lftesiz|, and |rgtesiz| variables;
-\item{4:} Set |rgtstp| and |lftstp| variables;
-\item{5:} Allocate |res| without corrupting |lft| or |rgt|;
-\item{6:} Compute the function based on |op|; 
-\item{7:} Finally, clean-up if necessary.
+\item{2:} Set the |op| and |restype| variables;
+\item{3:} Set |rgtstp| and |lftstp| variables;
+\item{4:} Allocate |res| without corrupting |lft| or |rgt|;
+\item{5:} Compute the function based on |op|; 
+\item{6:} Finally, clean-up if necessary.
 }\medskip
 
-\noindent Steps $2-3$ are specific to the function that you are writing, 
+\noindent Step $2$ is specific to the function that you are writing, 
 but all of the other sections are the same for each scalar function. 
 
 @<Compute dyadic scalar function |op|@>=
 orig = NULL;
-lftstp = is_scalar(lft) ? 0 : lftesiz;
-rgtstp = is_scalar(rgt) ? 0 : rgtesiz;
+lftstp = is_scalar(lft) ? 0 : 1;
+rgtstp = is_scalar(rgt) ? 0 : 1;
 @<Allocate |res|, dealing with shared inputs and output structures@>@;
 @<Dyadically apply |op| over |rgt| and |lft| by |rgtstp| and |lftstp|@>@;
 @<Clean-up after scalar function@>@;
 
 @ @<Declare dyadic scalar function variables@>=
-size_t resesiz, lftesiz, rgtesiz; /* Number of bytes per element */
 size_t rgtstp, lftstp; /* For scalar distribution iteration */
 AplType restype; /* Type of the result array after computation */
 AplScalarDyadic op; /* Function pointer to scalar function */
@@ -845,7 +844,7 @@ we know that the elements will be traversed in lock-step, as opposed
 to only one argument being traversed, as happens in some cases of 
 dyadic scalar functions. We will talk more about this in the dyadic 
 case, but for now, it suffices to know that we will never have a 
-case where we do not want to move the result data array and the 
+case where we do not want to traverse the result data array and the 
 input data array in lock-step, a single element at a time; and, that
 we will do this exactly |size(res)| times, which should be equivalent 
 to |size(rgt)|.
@@ -853,17 +852,12 @@ to |size(rgt)|.
 @<Apply |op| monadically into |res| over |rgt|@>=
 {
 	size_t count;
-	char *resd, *rgtd;
+	AplScalar *resd, *rgtd;
 
 	resd = res->data;
 	rgtd = rgt->data;
-	count = size(res);
 
-	while (count--) { 
-		op(resd, rgtd);
-		resd += resesiz;
-		rgtd += rgtesiz;
-	}
+	for (count = size(res); count--; resd++, rgtd++) op(resd, rgtd);
 }
 
 @ The dyadic case becomes a bit more complex, because, while we must 
@@ -872,27 +866,22 @@ assume that |res| is already an allocated array, and we know the
 have the situation where we may have a scalar argument that we distribute 
 over a non-scalar array. To handle this, we assume that |rgtstp| and 
 |lftstp| are variables assigned to the step amounts for the |rgt| and |lft|
-arguments respectively. That is, these indicate the number of bytes that 
-we should increment the data arrays in order to move to the next element.
+arguments respectively. That is, these indicate the number of elements that 
+we should increment.
 In the case of a scalar in one of the arguments that will be distributed 
 over another array, this step count will be zero. 
 
 @<Dyadically apply |op| over |rgt| and |lft| by |rgtstp| and |lftstp|@>=
 {
 	size_t count;
-	char *resd, *lftd, *rgtd;
+	AplScalar *resd, *lftd, *rgtd;
 
 	resd = res->data;
 	lftd = lft->data;
 	rgtd = rgt->data;
-	count = size(res);
 
-	while (count--) {
+	for (count = size(res); count--; resd++, lftd+=lftstp, rgtd+=rgtstp)
 		op(resd, lftd, rgtd);
-		resd += resesiz;
-		lftd += lftstp;
-		rgtd += rgtstp;
-	}
 }
 
 @ Now we need to talk about how we allocate the result array |res|. 
@@ -907,14 +896,8 @@ allocation must be done. We divide the possible sharing cases thus:
 \item{1)} {\it All arguments the same.} In this case, 
 |res == lft == rgt|. We know that the input types 
 are the same and that the input arrays are of the exact same 
-shape. We cannot in general guarantee that the type of the 
-output array is going to be the same as the input array, 
-however, which means that we may potentially have to 
-store contents into a temporary array and then replace the 
-old contents with the new when we are done with the work.
-If we can assert that the output type uses less than or equal 
-space to the space conumed by the input type, then we can do 
-an in-place update.
+shape. We can always do an in-place update because the output array 
+is the same size as the input array.
 \item{2)} {\it All inputs are the same.} In this case, 
 all the inputs are the same, but the output is a different 
 array. We should always do the allocation in this case, as well 
@@ -924,19 +907,14 @@ the same shape.
 the result.} In this case, we have one or the other of the 
 inputs, but not both, equal to the result array in the 
 sense that they are the same object in memory. 
-This is probably among the most interesting and subtle of the 
-cases when it comes to allocation. We have to handle both the 
-shared object relationship and ensuring that overwrites will not 
-occur when we do not want them, but also with the potential for 
-scalar distribution, because the two arguments are different. 
 When |res| is 
 the scalar in a scalar distribution, we cannot safely use it as a 
 target, since we might overwrite the input array before it is safe to 
-do so. When |res| is too small to hold the result, we may have to 
-allocate more space to hold it. In both of these cases, it is not 
+do so. It is not 
 enough to just reallocate the array, but we must actually construct 
-a temporary array if we want to be correct. In all 
-other cases it is okay to leave |res| as is.
+a temporary array if we want to be correct. The other possibility is that 
+|res| is not the scalar, or we do not have a scalar distribution,
+in which case it is okay to leave |res| as is; the in-place update is safe.
 \item{4)} Finally, then general case is the one where we have 
 none of the inputs as equal to one another. This is almost as 
 easy as case 2, but we need to figure out where to copy the shape 
@@ -946,20 +924,17 @@ this is a straightforward copy and allocate.
 
 @<Allocate |res|, dealing with shared inputs and output structures@>=
 if (lft == rgt) {
-	if (res == lft && resesiz > lftesiz) TEMPRES(rgt)@;
-	else {
+	if (res != lft) {
 		copy_shape(res, rgt);
 		alloc_array(res, restype);
 	}
 } else if (res == lft) {
 	if (!shpeq(lft, rgt) && is_scalar(lft)) TEMPRES(rgt)@;
-	else if (resesiz > lftesiz) TEMPRES(lft)@;
 } else if (res == rgt) {
 	if (!shpeq(lft, rgt) && is_scalar(rgt)) TEMPRES(lft)@;
-	else if (resesiz > rgtesiz) TEMPRES(rgt)@;
 } else {
 	if (shpeq(lft, rgt) || is_scalar(lft)) copy_shape(res, rgt);
-	else if (is_scalar(rgt)) copy_shape(res, lft);
+	else copy_shape(res, lft);
 	alloc_array(res, restype);
 } 
 
@@ -1003,9 +978,8 @@ the domain on which |plus| operates. In this case, it is a dyadic
 function which works only in |INT| and |REAL| types. The resulting 
 type of the computation should be determined by the largest 
 input type, which means that two |INT| types are |INT| results, 
-but everything else is a |REAL|. So, firstly, we need the plus
-macro for our operation, and then we can define the main 
-|plus| function.
+but everything else is a |REAL|. We can define the main 
+|plus| function as follows.
 
 @<Scalar APL functions@>=
 void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
@@ -1030,10 +1004,6 @@ void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 		} else goto err;
 	} else goto err;
 	@#
-	resesiz = type_size(restype);
-	lftesiz = type_size(lft->type);
-	rgtesiz = type_size(rgt->type);
-	@#
 	@<Compute dyadic scalar function |op|@>@;
 	return;
 	@#
@@ -1043,21 +1013,22 @@ err:
 	
 }
 
-@ We have four cases of addition that we need to handle. Each of them 
+@ Now we must define the various |op| functions that we used above.
+We have four cases of addition that we need to handle. Each of them 
 can be expressed with the C |+| operation, so a macro suffices to 
 help us define each function.
 
 @d PLUSFUNC(nm, zt, lt, rt)@/
-void nm(void *res, void *lft, void *rgt)@/
+void nm(AplScalar *res, AplScalar *lft, AplScalar *rgt)@/
 {
-	*((zt *) res) = *((lt *) lft) + *((rt *) rgt);
+	res->zt = lft->lt + rgt->rt;
 }
 
 @<Utility functions@>=
-PLUSFUNC(plus_int_int, AplInt, AplInt, AplInt)@;
-PLUSFUNC(plus_int_real, AplReal, AplInt, AplReal)@;
-PLUSFUNC(plus_real_int, AplReal, AplReal, AplInt)@;
-PLUSFUNC(plus_real_real, AplReal, AplReal, AplReal)@;
+PLUSFUNC(plus_int_int, intv, intv, intv)@;
+PLUSFUNC(plus_int_real, real, intv, real)@;
+PLUSFUNC(plus_real_int, real, real, intv)@;
+PLUSFUNC(plus_real_real, real, real, real)@;
 
 @ The |identity| function is the monadic form of the $+$ function 
 in APL. In this case, since we know that it is the identity function, 
@@ -1106,11 +1077,11 @@ void index_gen(AplArray *res, AplArray *rgt, AplFunction *env)
 	siz = size(rgt);
 	if (rnk == 0 || (rnk == 1 && siz == 1)) {
 		int i;
-		AplInt *data;
-		res->shape[0] = *((AplInt *)rgt->data);
+		AplScalar *data;
+		res->shape[0] = rgt->data->intv;
 		alloc_array(res, INT);
-		for (i = 0, data = res->data; i < res->shape[0]; i++)
-			*data++ = i;
+		for (i = 0, data = res->data; i < res->shape[0];)
+			(data++)->intv = i++;
 	} else @<Compute indexes of non-scalar vector@>@;
 }
 
@@ -1143,7 +1114,7 @@ a doubly nested loop to give us the $i$ and $j$ elements.
 {
 	unsigned int *p, prod;
 	int i, j;
-	AplInt *v, *a;
+	AplScalar *v, *a;
 
 	v = rgt->data;
 	a = res->data;
@@ -1151,7 +1122,7 @@ a doubly nested loop to give us the $i$ and $j$ elements.
 	@<Compute |p| vector@>@;
 	for (i = 0; i < prod; i++)
 		for (j = 0; j < siz; j++)
-			*a++ = (i / p[j]) % v[j];
+			(a++)->intv = (i / p[j]) % v[j].intv;
 	free(p);
 }
 
@@ -1161,14 +1132,14 @@ considering. The easiest way to do this is to start at the end
 and move towards the front.
 
 @<Compute |p| vector@>=
-p = malloc(siz * sizeof(AplInt));
+p = malloc(siz * sizeof(unsigned int));
 if (p == NULL) {
 	apl_error(APLERR_MALLOC);
 	exit(APLERR_MALLOC);
 }
 p[siz - 1] = 1;
 for (i = siz - 1; i > 0; i--)
-	p[i-1] = p[i] * v[i];
+	p[i-1] = p[i] * v[i].intv;
 
 @*1 The Indexing function. 
 One of the most important functions in APL is the indexing 
@@ -1198,10 +1169,10 @@ following outline for the |index()| function.
 void index(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
         int i;
-        char *src, *dst;
+        AplScalar *src, *dst;
         unsigned int *shpi, *shpo;
-        AplInt *idx;
-        size_t rng, esiz, cnt;
+        AplScalar *idx;
+        size_t rng, cnt;
         cnt = size(lft);
         @<Compute the shape and allocate |res|@>@;
         @<Copy data into result array@>@;
@@ -1238,13 +1209,12 @@ dst = res->data;
 src = rgt->data;
 shpi = rgt->shape;
 idx = lft->data;
-esiz = type_size(rgt->type);
 for (rng = 0, i = 1; i < cnt; i++) {
-        rng += *idx++;
+        rng += (idx++)->intv;
         rng *= *++shpi;
 }
-src += rng * esiz;
-rng = size(res) * esiz;
+src += rng;
+rng = size(res) * sizeof(AplScalar);
 if (res == rgt) memmove(dst, src, rng);
 else memcpy(dst, src, rng);
 
@@ -1310,10 +1280,9 @@ void eachm(AplArray *res, AplArray *rgt, AplFunction *env)
 	AplArray z, r; /* Scalar temporaries for the loop */
 	AplArray tmp; /* Temporary array if necessary */
 	AplArray *orig; /* Original array in case of a copy in |res| */
-	size_t esiz; /* Element size of the function */
 	AplFunction *func; /* The function to apply */
 	unsigned int siz; /* Elements to traverse */
-	char *resd; /* Buffer pointing somewhere in |res->data| */
+	AplScalar *resd; /* Buffer pointing somewhere in |res->data| */
 	short rnk; /* Rank of |rgt| */
 	short clean; /* Flag, indicates need to clean */
 	@<Initialize variables for |eachm|@>@;
@@ -1335,9 +1304,8 @@ void eachd(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 	AplArray tmp; /* Temporary for use during allocation */
 	AplArray *shp, *orig; /* The shape of result and the original |res| if copied */
 	AplFunction *func;
-	size_t esiz; /* Element size of return array */
 	unsigned int siz; /* Number of elements to iterate */
-	char *resd; /* Result buffer pointing somewhere in |res->data| */
+	AplScalar *resd; /* Result buffer pointing somewhere in |res->data| */
 	short lftrnk, rgtrnk; /* Ranks of |lft| and |rgt| */
 	short clean; /* Indicates cleanup is necessary */
 	@<Initialize variables for |eachd|@>@;
@@ -1397,14 +1365,9 @@ shape of the main function into the |shp| variable. This will be
 used later on to determine the shape of the result array. 
 
 @<Deal with the simple cases of |eachd|@>=
-if (lftrnk == 0) {
-	if (rgtrnk == 0) {
-		applydyadic(func, res, lft, rgt);
-		return;
-	} else {
-		siz = size(rgt);
-		shp = rgt;
-	}
+if (lftrnk == 0 && rgtrnk == 0) {
+	applydyadic(func, res, lft, rgt);
+	return;
 } else if (rgtrnk == 0) {
 	siz = size(lft);
 	shp = lft;
@@ -1429,69 +1392,43 @@ not write into their input arguments.
 
 @<Determine the type of the result in |eachm|@>=
 r.type = rgt->type;
-r.size = type_size(r.type);
+r.size = sizeof(AplScalar);
 r.data = rgt->data;
 applymonadic(func, &z, &r);
-esiz = type_size(z.type);
 
 @ The dyadic case for determing the type of the return is the same 
 as the monadic one, but we have one more scalar argument.
 
 @<Determine the type of the result in |eachd|@>=
 l.type = lft->type;
-l.size = type_size(l.type);
+l.size = sizeof(AplScalar);
 l.data = lft->data;
 r.type = rgt->type;
-r.size = type_size(r.type);
+r.size = sizeof(AplScalar);
 r.data = rgt->data;
 applydyadic(func, &z, &l, &r);
-esiz = type_size(z.type);
 
 @ After we know that we are dealing with the general case, and 
 after we know the type of the result array, we are free to begin 
 allocating the space for the result array. 
 It is not as simple as just setting the shape and allocating an 
 array, though. Here is where we must deal with the possibility 
-that the input array is the same as the output array. This 
-may require some temporary copying and the like. In the 
-end, if we do need to create a temporary result array, then 
-we will set |clean| to make sure that we know to clean it 
-up at the end. At the end of this computation, the main 
+that the input array is the same as the output array.
+At the end of this computation, the main 
 invariant that we want to preserve is that |res| must point 
 to an array that is safe to over-write element wise, and 
 that is allocated and is the correct output shape. We do 
 not guarantee after this that |res| is different than either 
 of its inputs, in the case when it is possible to do an 
-inplace update and that the type of the input array that 
-might be the same as |res| is the same as the output type 
-of the array |res|. Later on, we can check the |clean| 
-variable to determine what case we are dealing with. If 
-clean is set to |EACH_COPY|, then we know that we created 
-a whole new copy to use, if it is |EACH_SAME| we know that 
-one of the arrays is the same and that we should set the 
-output type as part of our cleanup. Otherwise, when |clean| 
-is |0|, there is no sharing and |res| is not temporarily 
-allocated. 
-
-@d EACH_COPY 1
-@d EACH_SAME 2
+in-place update. We set the |clean| to indicate what case
+we encounter. 
 
 @<Allocate |res| in |eachm|@>=
-if (res == rgt) {
-	if (esiz > type_size(rgt->type)) {
-		copy_shape(&tmp, rgt);
-		alloc_array(&tmp, z.type);
-		orig = res;
-		res = &tmp;
-		clean = EACH_COPY;
-	} else {
-		clean = EACH_SAME;
-	}
-} else {
+if (res != rgt) {
 	copy_shape(res, rgt);
 	alloc_array(res, z.type);
 	clean = 0;
-}
+} else clean = EACH_SAME;
 
 @ The dyadic case is much the same as the monadic case, except 
 that we do not know whether |lft| or |rgt| is the correct array 
@@ -1502,8 +1439,7 @@ the previous section apply here.
 
 @<Allocate |res| in |eachd|@>=
 if (res == rgt || res == lft) {
-	if ((res == shp || lftrnk == rgtrnk)
-	    && esiz <= type_size(res->type)) {
+	if (res == shp || lftrnk == rgtrnk) { /* XXX WRONG */
 		clean = EACH_SAME;
 	} else {
 		copy_shape(&tmp, shp);
@@ -1549,6 +1485,9 @@ array, which we keep in the |orig| variable.
 \noindent After we do this cleanup, the assumption is that we can 
 safely return from the function.
 
+@d EACH_COPY 1
+@d EACH_SAME 2
+
 @<Do any cleanup necessary in |each|@>=
 switch (clean) {
 case EACH_SAME: 
@@ -1576,29 +1515,25 @@ the larger data fields of the main inputs and outputs.
 @<Apply $\alpha\alpha$ monadically on each element@>=
 resd = res->data;
 r.type = rgt->type;
-r.size = type_size(rgt->type);
+r.size = sizeof(AplScalar);
 r.data = rgt->data;
-while (siz--) {
+for (r.data = rgt->data; siz--; r.data++) {
 	applymonadic(func, &z, &r);
-	memcpy(resd, z.data, esiz);
-	resd += esiz;
-	r.data = (char *)r.data + r.size;
+	*resd++ = *z.data;
 }
 
 @ The dyadic case is virtually unchanged from this but for the 
 extra argument.
 
 @<Apply $\alpha\alpha$ dyadically on each element@>=
-l.size = lft->size; r.size = rgt->size;
+l.size = r.size = sizeof(AplScalar);
 l.type = lft->type; r.type = rgt->type;
 l.data = lft->data; r.data = rgt->data;
 resd = res->data;
 while (siz--) {
 	applydyadic(func, &z, &l, &r); 
-	memcpy(resd, z.data, esiz);
-	resd += esiz;
-	l.data = (char *) l.data + l.size;
-	r.data = (char *) r.data + r.size;
+	*resd++ = *z.data;
+	l.data++; r.data++;
 }
 
 @ The only temporary array that we allocate is |z|, implicitly by 
@@ -1737,10 +1672,12 @@ function that we know about, and that we have an identity for.
 Otherwise we need to signal an error. 
 
 @<Fill |res| with identity of |fun|@>=
-char *fill, *end, *out;
-int i;
+int cnt;
+AplScalar *out;
 AplArray z;
+
 init_array(&z);
+
 if (function_identity(&z, fun)) {
 	apl_error(APLERR_NOIDENTITY);
 	exit(APLERR_NOIDENTITY);
@@ -1749,11 +1686,9 @@ if (z.type != res->type) {
 	apl_error(APLERR_DOMAIN);
 	exit(APLERR_DOMAIN);
 }
+
 out = res->data;
-end = out + res->size;
-fill = z.data;
-for (i = 0; out != end; i = (i + 1) % z.size)
-	*out++ = fill[i];
+for (cnt = size(res); cnt--;) *out++ = *z.data;
 free_data(&z);
 
 @ The |function_identity| function is used to fill its first argument,
@@ -1777,7 +1712,7 @@ int function_identity(AplArray *res, AplFunction *fun)
 	
 	if (codeptr == plus) {
 		alloc_array(res, INT);
-		((AplInt *) res->data)[0] = 0;
+		res->data->intv = 0;
 	} else {
 		ret = 1;
 	}
@@ -1800,25 +1735,22 @@ the same process again.
 
 @<Reduce over array whose |step >= 2|@>=
 {
-	char *start, *end, *next;
+	AplScalar *start, *end, *next;
 	AplArray r, l;
 	init_array(&r);
 	init_array(&l);
 	r.type = l.type = rgt->type;
-	r.size = l.size = type_size(rgt->type);
+	r.size = l.size = sizeof(AplScalar);
 	start = rgt->data;
-	end = start + l.size * size(rgt) * step;
+	end = start + size(rgt) * step;
 	r.data = res->data;
-	while (start != end) {
-		next = start + step * l.size;
-		l.data = next - l.size;
-		memcpy(r.data, l.data, l.size);
+	for (r.data = res->data; start != end; start = next, r.data++) {
+		next = start + step;
+		*r.data = *(l.data = next -1);
 		do {
-			l.data = (char *) l.data - l.size;
+			l.data--;
 			applydyadic(fun, &r, &l, &r);
 		} while (l.data != start);
-		start = next;
-		r.data = (char *) r.data + l.size;
 	}
 }
 
