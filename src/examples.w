@@ -93,7 +93,7 @@ void ex1(void)
 	alloc_array(&x, INT);
 	*((AplInt *) x.data) = 5;
 	plus(&z, &x, &x, NULL);
-	printf("%ld\n", *((AplInt *) z.data));
+	printf("%d\n", *((AplInt *) z.data));
 	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
 	    size(&z), rank(&z), z.size);
 	free_data(&z);
@@ -120,7 +120,7 @@ void ex2(void)
 	*((AplInt *) x.data) = 10;
 	index_gen(&z, &x, NULL);
 	for (i = 0; i < 10; i++)
-		printf("%ld ", ((AplInt *) z.data)[i]);
+		printf("%d ", ((AplInt *) z.data)[i]);
 	printf("\n");
 	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
 	    size(&z), rank(&z), z.size);
@@ -149,7 +149,7 @@ void ex3()
 	index_gen(&z, &z, NULL);
 	plus(&z, &z, &z, NULL);
 	for (i = 0; i < 10; i++)
-		printf("%ld ", ((AplInt *) z.data)[i]);
+		printf("%d ", ((AplInt *) z.data)[i]);
 	printf("\n");
 	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
 	    size(&z), rank(&z), z.size);
@@ -179,7 +179,7 @@ void ex4()
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	applymonadic(&red, &z, &z);
-	printf("%ld\n", *((AplInt *) z.data));
+	printf("%d\n", *((AplInt *) z.data));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
 	    size(&z), rank(&z), z.size);
 	free_data(&z);
@@ -220,7 +220,7 @@ void ex5()
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	applymonadic(&red, &x, &x);
-	printf("%ld\n", *((AplInt *) x.data));
+	printf("%d\n", *((AplInt *) x.data));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
 	    size(&x), rank(&x), x.size);
 }

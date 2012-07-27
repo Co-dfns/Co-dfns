@@ -40,8 +40,6 @@ primitive APL functions, memory management, and most every other
 detail of implementation. The program can be divided up mostly 
 into the following sections:
 
-@d inline __inline__ /* Address issue with qthread and C90 */
-
 @p
 #include <assert.h>
 #include <limits.h>
@@ -215,10 +213,9 @@ this document.
 @ We have three main types of values that we can have, and to indicate 
 which one that we use, we setup an enumeration. We have one other 
 value |UNSET| that indicates that nothing has been done with the array 
-yet. Our |INT| type is the largest integer type that we have in C89
-which happens to be |long|. On my system this is a 64-bit integer, 
-but this is only required to be a 32-bit integer. I think this is a 
-reasonable choice to get decent performance on most systems. The 
+yet. Our |INT| type is a C |int|eger, since I am assuming 
+that HPAPL will run on systems with at least 64-bit processors. 
+I think this is a reasonable choice, and should be big enough. The 
 |REAL| type is a |double|, since I want to have as much precision in 
 my single floating point type as I can.  Finally, I have |CHAR| set 
 to |wchar_t| since we are dealing with wide characters throughout;
@@ -231,13 +228,29 @@ data. It may have already arrived, but the the contents of the array
 may not be fully populated. The contents of a Future array are 
 pointers to the arrays containing the results of the future values.
 
+We define an |AplScalar| union of these types and use it above to 
+define the |data| field of arrays. This makes life easy because we 
+do not have to worry as much about the allocation needs of each 
+individual type, and it makes iteration over the data array easier.
+Most of our types are likely to be 64-bits on current systems, 
+excepting characters, and this is the normal case we expect. The extra
+complexity of working with the multiple datatype sizes to keep things 
+as packed as possible is just not worth it.
+
 @<Define |AplType|@>=
 enum apl_type { INT, REAL, CHAR, FUTR, UNSET };
 typedef enum apl_type AplType;
-typedef long AplInt;
+typedef int AplInt;
 typedef double AplReal;
 typedef wchar_t AplChar;
 typedef AplArray *AplFutr;
+union apl_scalar {
+	AplInt intv;
+	AplReal real;
+	AplFutr futr;
+	AplChar chrv;
+};
+typedef union apl_scalar AplScalar;
 
 @ There are a few very useful functions relating to arrays that 
 we should talk about. The first is a way to get the size based on 
