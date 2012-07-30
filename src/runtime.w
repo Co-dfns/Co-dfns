@@ -1277,17 +1277,9 @@ we divide the main task into the following sections:
 @<APL Operators@>=
 void eachm(AplArray *res, AplArray *rgt, AplFunction *env) 
 {
-	AplArray z, r; /* Scalar temporaries for the loop */
-	AplArray tmp; /* Temporary array if necessary */
-	AplArray *orig; /* Original array in case of a copy in |res| */
-	AplFunction *func; /* The function to apply */
-	unsigned int siz; /* Elements to traverse */
-	AplScalar *resd; /* Buffer pointing somewhere in |res->data| */
-	short rnk; /* Rank of |rgt| */
-	short clean; /* Flag, indicates need to clean */
+	@<Declare common |each| variables@>@;@#
 	@<Initialize variables for |eachm|@>@;
 	@<Deal with the simple cases of |eachm|@>@;
-	@<Determine the type of the result in |eachm|@>@;
 	@<Allocate |res| in |eachm|@>@;
 	@<Apply $\alpha\alpha$ monadically on each element@>@;
 	@<Do any cleanup necessary in |each|@>@;
@@ -1300,21 +1292,28 @@ with dyadic functions, but the basic outline remains the same.
 @<APL Operators@>=
 void eachd(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 { 
-	AplArray z, l, r; /* Scalar temporaries for the loop */
-	AplArray tmp; /* Temporary for use during allocation */
-	AplArray *shp, *orig; /* The shape of result and the original |res| if copied */
-	AplFunction *func;
-	unsigned int siz; /* Number of elements to iterate */
-	AplScalar *resd; /* Result buffer pointing somewhere in |res->data| */
-	short lftrnk, rgtrnk; /* Ranks of |lft| and |rgt| */
-	short clean; /* Indicates cleanup is necessary */
+	@<Declare common |each| variables@>@;
+	AplArray *shp, l; /* Shape template for result and extra temporary */
+	short lftrnk; /* Ranks of |lft| */
 	@<Initialize variables for |eachd|@>@;
 	@<Deal with the simple cases of |eachd|@>@;
-	@<Determine the type of the result in |eachd|@>@;
 	@<Allocate |res| in |eachd|@>@;
 	@<Apply $\alpha\alpha$ dyadically on each element@>@;
 	@<Do any cleanup necessary in |each|@>@;
 }
+
+@ The two functions |eachm| and |eachd| both share a common set of 
+variables, which we declare here.
+
+@<Declare common |each| variables@>=
+AplArray z, r; /* Scalar temporaries for the loop */
+AplArray tmp; /* Temporary array in case it is needed */
+AplArray *orig; /* Original array in case of a copy in |res| */
+AplFunction *func; /* Function to apply */
+unsigned int cnt; /* Number of elements to iterate */
+AplScalar *resd; /* Result buffer pointing somewhere in |res->data| */
+short rgtrnk; /* Rank of the |rgt| array */
+short clean; /* Indicates whether cleanup is necessary */
 
 @ Let's do the initialization first. We want to initialize all the 
 variables that we can ahead of time, but there are some variables, 
@@ -1327,19 +1326,15 @@ that we have the rank of the input array(s).
 init_array(&z);
 init_array(&r);
 init_array(&tmp);
-rnk = rank(rgt);
+rgtrnk = rank(rgt);
 func = (AplFunction *) env->lop;
 orig = NULL;
 
 @ @<Initialize variables for |eachd|@>=
-init_array(&z);
+@<Initialize variables for |eachm|@>@;
 init_array(&l);
-init_array(&r);
 init_array(&tmp);
 lftrnk = rank(lft);
-rgtrnk = rank(rgt);
-func = (AplFunction *) env->lop;
-orig = NULL;
 
 @ Both the monadic and dyadic forms of |each| have simple cases 
 where we can avoid most of the other work. In both forms, if we are 
@@ -1350,10 +1345,10 @@ then we know a little something about the arrays, and we should
 save that for use later. 
 
 @<Deal with the simple cases of |eachm|@>=
-if (rnk == 0) {
+if (rgtrnk == 0) {
 	applymonadic(func, res, rgt);
 	return;
-} else if ((siz = size(rgt)) == 0) {
+} else if ((cnt = size(rgt)) == 0) {
 	copy_array(res, rgt);
 	return;
 }
@@ -1369,66 +1364,35 @@ if (lftrnk == 0 && rgtrnk == 0) {
 	applydyadic(func, res, lft, rgt);
 	return;
 } else if (rgtrnk == 0) {
-	siz = size(lft);
+	cnt = size(lft);
 	shp = lft;
 } else {
-	siz = size(rgt);
+	cnt = size(rgt);
 	shp = rgt;
 }
-if (siz == 0) {
+if (cnt == 0) {
 	copy_array(res, shp);
 	return;
 }
 
-@ After we have determined that we are not dealing with a trivial 
-case, and that we have at least one element to be considering, we 
-must do some work to figure out what the resulting type of the 
-computation will be. We do this by applying our function on the 
-first element in the array, and then checking what that type is. 
-We assume that the function will give us the same type for all 
-of the other elements. It is safe (in some sense) to do the data 
-aliasing that we do here, because we assume that all functions will 
-not write into their input arguments. 
-
-@<Determine the type of the result in |eachm|@>=
-r.type = rgt->type;
-r.size = sizeof(AplScalar);
-r.data = rgt->data;
-applymonadic(func, &z, &r);
-
-@ The dyadic case for determing the type of the return is the same 
-as the monadic one, but we have one more scalar argument.
-
-@<Determine the type of the result in |eachd|@>=
-l.type = lft->type;
-l.size = sizeof(AplScalar);
-l.data = lft->data;
-r.type = rgt->type;
-r.size = sizeof(AplScalar);
-r.data = rgt->data;
-applydyadic(func, &z, &l, &r);
-
-@ After we know that we are dealing with the general case, and 
-after we know the type of the result array, we are free to begin 
-allocating the space for the result array. 
-It is not as simple as just setting the shape and allocating an 
-array, though. Here is where we must deal with the possibility 
-that the input array is the same as the output array.
-At the end of this computation, the main 
-invariant that we want to preserve is that |res| must point 
-to an array that is safe to over-write element wise, and 
-that is allocated and is the correct output shape. We do 
-not guarantee after this that |res| is different than either 
-of its inputs, in the case when it is possible to do an 
-in-place update. We set the |clean| to indicate what case
-we encounter. 
+@ After we know that we are dealing with the general case,  we are free
+to begin  allocating the space for the result array.  It is not as
+simple as just setting the shape and allocating an  array, though. Here
+is where we must deal with the possibility  that the input array is the
+same as the output array. At the end of this computation, the main 
+invariant that we want to preserve is that |res| must point  to an
+array that is safe to over-write element wise, and  that is allocated
+and is the correct output shape. We do  not guarantee after this that
+|res| is different than either  of its inputs, in the case when it is
+possible to do an  in-place update. We set the |clean| to indicate what
+case we encounter.
 
 @<Allocate |res| in |eachm|@>=
 if (res != rgt) {
 	copy_shape(res, rgt);
-	alloc_array(res, z.type);
+	alloc_array(res, UNSET);
 	clean = 0;
-} else clean = EACH_SAME;
+} else clean = 0;
 
 @ The dyadic case is much the same as the monadic case, except 
 that we do not know whether |lft| or |rgt| is the correct array 
@@ -1440,17 +1404,17 @@ the previous section apply here.
 @<Allocate |res| in |eachd|@>=
 if (res == rgt || res == lft) {
 	if (res == shp || lftrnk == rgtrnk) { /* XXX WRONG */
-		clean = EACH_SAME;
+		clean = 0;
 	} else {
 		copy_shape(&tmp, shp);
-		alloc_array(&tmp, z.type);
+		alloc_array(&tmp, UNSET);
 		orig = res;
 		res = &tmp;
 		clean = EACH_COPY;
 	}
 } else {
 	copy_shape(res, shp);
-	alloc_array(res, z.type);
+	alloc_array(res, UNSET);
 	clean = 0;
 }
 
@@ -1461,20 +1425,12 @@ in our head. After this, all that is left to complete the
 implementation of |each|, both dyadically and monadically, is 
 the main loop of the two functions |eachm| and |eachd|. 
 We have three cases to deal with when we perform cleanup, 
-two of which actually require any work. These cases are given by 
-the |EACH_COPY| and the |EACH_SAME| constants. The no-op case is 
-given when |clean == 0|. Otherwise, |clean| will be set to one of 
-the aforementioned constants, and we need to do different clean 
-up on each. 
+one of which actually requires work. This case is given by 
+the |EACH_COPY| constant. The no-op case is 
+given when |clean == 0|. Otherwise, |clean| will be set to |EACH_COPY|, 
+and we need to clean. 
 
 \medskip{\parindent=.75in
-\item{|EACH_SAME|} In this case, we have not allocated a temporary 
-array, instead reusing an input array. This also means that we 
-did not set the |type| field of the result array so as to not 
-mess with the integrity of the input array until after we had 
-done all of the overwriting. We need to rectify this, but 
-there are no other buffers or other things that need to be taken 
-care of.
 \item{|EACH_COPY|} Here, we have actually allocated temporary 
 space for the resultant array so that we do not invalidate our 
 input arrays with the output of the function. This means that 
@@ -1486,13 +1442,9 @@ array, which we keep in the |orig| variable.
 safely return from the function.
 
 @d EACH_COPY 1
-@d EACH_SAME 2
 
 @<Do any cleanup necessary in |each|@>=
 switch (clean) {
-case EACH_SAME: 
-	res->type = z.type;
-	break;
 case EACH_COPY:
 	free(orig->data);
 	orig->size = tmp.size;
@@ -1500,8 +1452,6 @@ case EACH_COPY:
 	orig->type = tmp.type;
 	copy_shape(orig, &tmp);
 	break;
-default:
-	assert(0);
 }
 
 @ With all that preparation and setup complete, we are now ready to 
@@ -1517,10 +1467,11 @@ resd = res->data;
 r.type = rgt->type;
 r.size = sizeof(AplScalar);
 r.data = rgt->data;
-for (r.data = rgt->data; siz--; r.data++) {
+for (r.data = rgt->data; cnt--; r.data++) {
 	applymonadic(func, &z, &r);
 	*resd++ = *z.data;
 }
+res->type = z.type;
 
 @ The dyadic case is virtually unchanged from this but for the 
 extra argument.
@@ -1530,11 +1481,12 @@ l.size = r.size = sizeof(AplScalar);
 l.type = lft->type; r.type = rgt->type;
 l.data = lft->data; r.data = rgt->data;
 resd = res->data;
-while (siz--) {
+while (cnt--) {
 	applydyadic(func, &z, &l, &r); 
 	*resd++ = *z.data;
 	l.data++; r.data++;
 }
+res->type = z.type;
 
 @ The only temporary array that we allocate is |z|, implicitly by 
 doing an application with |z| as the result array. Recall before that 
