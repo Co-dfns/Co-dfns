@@ -122,42 +122,28 @@ could really improve our performance in certain cases.
 fashion. There is a more appropriate approach.
 \par}\medskip
 
-@* Array Structure.  We must implement two main data structures: 
+@* Array Structure. 
+We must implement two main data structures: 
 arrays and functions.  Arrays are the core, and we have a few 
 requirements that drive our design. First, we want them to be as fast as 
 possible, but we also want to be able to decouple the core array 
 structure from the data areas where we store the elements. This 
 frees us to potentially make use of faster memory allocation 
 functions, segmented heaps, as well as shared data regions between 
-multiple arrays. In the end, it is a more flexible solution. 
+multiple arrays.
 We expect that most of the array headers will be stack allocated 
 and that their allocations will be automatic. We use a static 
 shape array to store the shape information so that we do not 
 have to worry about managing that. In practice, noble arrays are 
 rare, and we can do with having only a reasonably large number of 
-them. There is some question as to the size that we allocate for 
-each dimension. Specifically, the number of elements that are 
-needed for any given array of shape $s$ whose rank is $r$ and 
-where $s_i$ is the dimension length of the $i$th dimension of 
-the array, the number of elements that we need is thus:
+them. We must also consider the integer type that we use for each 
+shape. This should match our integer type that is native in our 
+scalar types. We will assume an arbitrary limit that we may have 
+no more elements in an array than can be accessed by a single 
+dimension integer. 
 
-$$\prod_{i=0}^{r}s_i$$
-
-\noindent Of course, we have a theoretical limit on the 
-number of elements that we can have and reference, and we 
-would want a vector (rank 1 array) to be able to have that many 
-elements as well as arrays of other rank. This implies that our 
-space that we allocate for a single dimension must be capable 
-of addressing our theoretical limit on our elements, but this 
-also means that we could create an invalid array that references 
-more elements than we have space to store. However, we can 
-actually have valid arrays like this that we can implement if 
-they have patterns that allow us to compress their element 
-representations, such as repeating arrays or arrays whose 
-elements are all the same.
-
-Because of the above considerations, we make the arrays 
-dimensions |unsigned int| in size. We use the unsigned feature 
+Thus, we store shapes as arrays of 
+|unsigned int|. We use the unsigned feature 
 because we do not have negative shapes. This gives us all the 
 range of |unsigned int| save one, so we have a maximum number 
 of elements for an array fixed at |UINT_MAX - 1|, where 
@@ -172,7 +158,14 @@ machine, it is big enough at the moment, and we can scale this
 up without cause for alarm in the future. We do not limit the 
 size of the data regions like this though, and we use an 
 appropriate |size_t| variable to hold the size of the data 
-region. This gives us the following fields for our arrays:
+region. 
+
+We also have a concept of arrays that will be filled in the future. 
+These future arrays need to be marked specially, so that we know that 
+the data is not yet available to be used. We use the |futr| flag 
+to indicate an array's ``future'' status.
+
+This gives us the following fields for our arrays:
 
 \medskip{\parindent=0.5in
 \item{|shape|} A static array of length |MAXRANK+1| whose 
@@ -183,6 +176,10 @@ pointed to by |data|;
 the elements in row-major order; and finally,
 \item{|type|} An enumeration indicating the type of elements
 in the array.
+\item{|futr|} A flag indicating whether an array is a 
+future or not. We use a |1| to indicate that the whole array is a 
+single future, and a |2| to indicate that each element is a distinct 
+future.
 \par}\medskip
 
 \noindent This leads us to the following |typedef| 
@@ -199,6 +196,7 @@ typedef struct apl_array AplArray;
 struct apl_array {
 	unsigned int shape[MAXRANK+1];
 	AplType type;
+	int futr;
 	size_t size;
 	AplScalar *data;
 };
@@ -222,13 +220,6 @@ my single floating point type as I can.  Finally, I have |CHAR| set
 to |wchar_t| since we are dealing with wide characters throughout;
 this is APL afterall.
 
-The |FUTR| type is actually an internal one that we use to indicate 
-that the values of the array are dependent on the parallel execution 
-of step functions. In other words, we are waiting to receive their 
-data. It may have already arrived, but the the contents of the array 
-may not be fully populated. The contents of a Future array are 
-pointers to the arrays containing the results of the future values.
-
 We define an |AplScalar| union of these types and use it above to 
 define the |data| field of arrays. This makes life easy because we 
 do not have to worry as much about the allocation needs of each 
@@ -238,8 +229,13 @@ excepting characters, and this is the normal case we expect. The extra
 complexity of working with the multiple datatype sizes to keep things 
 as packed as possible is just not worth it.
 
+We also have an internal union field |futr| when we want to store a 
+pointer to the future AplArray that will be computed. This is not exposed 
+to the world as a type, as no one should actually need to know about 
+it outside of the runtime.
+
 @<Define |AplType|@>=
-enum apl_type { INT, REAL, CHAR, FUTR, UNSET };
+enum apl_type { INT, REAL, CHAR, UNSET };
 typedef enum apl_type AplType;
 typedef int AplInt;
 typedef double AplReal;
@@ -248,8 +244,8 @@ typedef AplArray *AplFutr;
 union apl_scalar {
 	AplInt intv;
 	AplReal real;
-	AplFutr futr;
 	AplChar chrv;
+	AplFutr futr;
 };
 typedef union apl_scalar AplScalar;
 
@@ -494,19 +490,23 @@ data types.
 @d applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
 @d applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
 
-@ Things are more complicated, unfortunately, by step functions. If we 
-have a step function, we need to do some special things. Namely, we 
-use the |qthread_fork| call to fork off a new thread. The signature of 
-this function is something like this:
+@ Things are more complicated, unfortunately, by step functions. 
+Step functions create future arrays, whose values are filled in at 
+a later point in time. They are implemented using threads, by forking 
+a thread to do the main computation, and then filling in the array with 
+the relavant details after the computation is done. A step function 
+does not wait for the computation to complete before returning the 
+array. The function |qthread_fork| spawns a new thread, and has a 
+signature like this:
 
-\medskip\centerline{%
-|int qthread_fork(qthread_f f, const void *arg, aligned_t *ret);|}
+\medskip
+|int qthread_fork(qthread_f f, const void *arg, aligned_t *ret);|
 \medskip
 
 \noindent In this case the |qthread_f| argument is a function pointer of 
 the following type:
 
-\medskip\centerline{|aligned_t (*qthread_f)(void *arg);|}\medskip
+\medskip|aligned_t (*qthread_f)(void *arg);|\medskip
 
 \noindent Basically, the function |f| will be called with |arg| and 
 its return value will be stored in |ret| using |qthread_writeF|, which 
@@ -585,7 +585,7 @@ appinfo->left = lft;
 appinfo->right = rgt;
 
 for (shp = res->shape; *shp != SHAPE_END; *shp++ = SHAPE_END);
-alloc_array(res, FUTR);
+alloc_array(res, UNSET);
 qthread_fork(applystep, appinfo, (aligned_t *) res->data); }
 
 @ We now have two concepts of function application, simple ones for functions
