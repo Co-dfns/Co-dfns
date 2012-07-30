@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -std=c99 -fPIC
+CFLAGS=-g -Wall -pedantic -std=c99 -fPIC
 CC=gcc
 EX=4
 
