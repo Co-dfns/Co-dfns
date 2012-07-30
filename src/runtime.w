@@ -1479,12 +1479,10 @@ extra argument.
 @<Apply $\alpha\alpha$ dyadically on each element@>=
 l.size = r.size = sizeof(AplScalar);
 l.type = lft->type; r.type = rgt->type;
-l.data = lft->data; r.data = rgt->data;
 resd = res->data;
-while (cnt--) {
+for (l.data = lft->data, r.data = rgt->data; cnt--; l.data++, r.data++) {
 	applydyadic(func, &z, &l, &r); 
 	*resd++ = *z.data;
-	l.data++; r.data++;
 }
 res->type = z.type;
 
