@@ -1467,11 +1467,14 @@ resd = res->data;
 r.type = rgt->type;
 r.size = sizeof(AplScalar);
 r.data = rgt->data;
-for (r.data = rgt->data; cnt--; r.data++) {
-	applymonadic(func, &z, &r);
-	*resd++ = *z.data;
+if (func->step) @<Apply step monadically on each element@>@;
+else {
+	for (r.data = rgt->data; cnt--; r.data++) {
+		applymonadic(func, &z, &r);
+		*resd++ = *z.data;
+	}
+	res->type = z.type;
 }
-res->type = z.type;
 
 @ The dyadic case is virtually unchanged from this but for the 
 extra argument.
@@ -1480,11 +1483,14 @@ extra argument.
 l.size = r.size = sizeof(AplScalar);
 l.type = lft->type; r.type = rgt->type;
 resd = res->data;
-for (l.data = lft->data, r.data = rgt->data; cnt--; l.data++, r.data++) {
-	applydyadic(func, &z, &l, &r); 
-	*resd++ = *z.data;
+if (func->step) @<Apply step dyadically on each element@>@;
+else {
+	for (l.data = lft->data, r.data = rgt->data; cnt--; l.data++, r.data++) {
+		applydyadic(func, &z, &l, &r); 
+		*resd++ = *z.data;
+	}
+	res->type = z.type;
 }
-res->type = z.type;
 
 @ The only temporary array that we allocate is |z|, implicitly by 
 doing an application with |z| as the result array. Recall before that 
@@ -1496,6 +1502,119 @@ free the |z| array's data.
 
 @<Do any cleanup necessary in |each|@>=
 free_data(&z);
+
+@*2 Processing step functions in |each|. Very little actually changes in 
+the code of |each| when we deal with a step function. A thread is spawned 
+for each element, and each element corresponds to an FEB (full-empty bit) 
+that can be queried. It will be empty before the value has been filled 
+in by the thread, and full afterwards. We deal with step functions specially 
+in |each| because we do not want to incure the overhead involved with 
+creatind |AplFutr| objects for each element, and then converting out. Instead, 
+the result of |each| will be an array that has a |type| which is |UNSET| 
+but marked as being a future array of type |2|, meaning that each element 
+corresponds to an individual future, rather than the array being a single, 
+large future. Functions that operate only on certain elements may then 
+block only on those elements, or they may choose to wait for the entire 
+future to realize itself using the |defutr| function. 
+
+In the normal loop, we set the type from last element that we compute. In 
+this case, we will be a little lazy for the moment and set the type with 
+each element that we get. This is safe at the moment because we assume 
+that each element must be of the same type. 
+
+@<Apply step monadically on each element@>=
+{
+	for (r.data = rgt->data; cnt--; r.data++) {
+		struct each_step_arg *appinfo;
+		appinfo = new_each_arg(func, NULL, &r, &res->type);
+		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
+	}
+	res->futr = 2;
+}
+	
+@ @<Apply step dyadically on each element@>=
+{
+	for (l.data = lft->data, r.data = rgt->data; cnt--; l.data++, r.data++) {
+		struct each_step_arg *appinfo;
+		appinfo = new_each_arg(func, &l, &r, &res->type);
+		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
+	}
+	res->futr = 2;
+}
+
+@ The argument to |each_step|, which we call |appinfo|, is a bit like 
+the |struct apl_thread_arg| that we used in general step function application, 
+but it needs to carry a full copy of the input arrays, since we may change 
+the values in |l| and |r| before the step function has finished its work 
+with them. To that end, we have something like this. Since we are being 
+lazy, we also have a field that points to the type field of the eventual 
+output array.
+
+@<Utility functions@>=
+struct each_step_arg {
+	AplFunction *func;
+	AplArray lft;
+	AplArray rgt;
+	AplType *type;
+};
+
+@ We use the |new_each_arg| function to allocate a new |struct each_step_arg|
+object for us. It handles both the dyadic and monadic cases. In the case 
+of a monadic, the |lft| field is filled only with the initial state.
+
+@<Utility functions@>=
+struct each_step_arg *
+new_each_arg(AplFunction *func, AplArray *lft, AplArray *rgt, AplType *type)
+{
+	struct each_step_arg *res;
+	
+	if ((res = malloc(sizeof(struct each_step_arg))) == NULL) {
+		perror("new_each_arg");
+		apl_error(APLERR_MALLOC);
+		exit(APLERR_MALLOC);
+	}
+	
+	res->func = func;
+	res->type = type;
+	init_array(&res->lft);
+	init_array(&res->rgt);
+	if (lft != NULL) copy_array(&res->lft, lft);
+	copy_array(&res->rgt, rgt);
+	
+	return res;
+}
+
+@ Now we should talk about the actual |each_step| function. The job of 
+this function is to apply the |func| that we are given to the arguments 
+that we are given, and then extract the scalar value from the |data| 
+field and return it. We are expecting that the result is a scalar, but 
+we do not do any checking to ensure that this is the case. Additionally,
+since we are being lazy, we also set the type of our output array in 
+each case. We specifically bypass the usual checking that is done by the 
+|applymonadic| and |applydyadic| functions, and go directly to the 
+|applym| and |applyd| macros that are meant specifically for applying 
+normal functions. This is because we do not want to treat these functions 
+as step functions, since we have already spawned the requisite thread for 
+the computation.
+
+@<Utility functions@>=
+aligned_t each_step(void *arg) 
+{
+	struct each_step_arg *appinfo;
+	AplArray z;
+	
+	appinfo = arg;
+	init_array(&z);
+	
+	if (appinfo->lft.data == NULL)
+		applym(appinfo->func, &z, &appinfo->rgt);
+	else 
+		applyd(appinfo->func, &z, &appinfo->lft, &appinfo->rgt);
+	
+	*appinfo->type = z.type;
+	
+	return *((aligned_t *) z.data);
+}
 
 @*1 The Reduce Operator.
 The reduction operator takes scalar functions and produces a monadic
