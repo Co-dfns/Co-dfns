@@ -43,6 +43,7 @@ By computing $5+5$.
 \par}\medskip
 
 @p
+#include <qthread.h>
 #include <stdio.h>
 #include <string.h>
 @#
@@ -53,6 +54,7 @@ By computing $5+5$.
 @<Ex 3. ...@>@;
 @<Ex 4. ...@>@;
 @<Ex 5. ...@>@;
+@<Ex 6. ...@>@;
 
 int main(int argc, char *argv[])
 {
@@ -195,7 +197,7 @@ else if (!strcmp(argv[1], "ex4")) {
 some functions to get some interesting results. We will 
 compute $+/\{+/\iota\omega\}\eachop\iota 100$.
 
-@<Ex 5. Compute $+/\{+/\iota\omega\}\eachop\iota 10000$@>=
+@<Ex 5. Compute $+/\{+/\iota\omega\}\eachop\iota 100$@>=
 void ex5_help(AplArray *res, AplArray *rgt, AplFunction *fun)
 {
 	AplFunction add;
@@ -212,7 +214,7 @@ void ex5()
 	AplArray x;
 	init_array(&x);
 	alloc_array(&x, INT);
-	x.data->intv = 100;
+	x.data->intv = 50000;
 	index_gen(&x, &x, NULL);
 	init_function(&fun, ex5_help, NULL, 0, NULL, NULL, NULL);
 	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
@@ -229,6 +231,49 @@ void ex5()
 else if (!strcmp(argv[1], "ex5")) {
 	msg = "Ex 5: Computing + / {+ / iota omega} each iota 100";
 	example = ex5;
+} 
+
+@* Example 6. This next example is the same as example 5, but we 
+will use a slightly larger number, and we will use step functions 
+to do the computation instead of normal functions. We will 
+compute $+/\{\{+/\iota\omega\}\}\eachop\iota 10000$.
+
+@<Ex 6. Compute $+/\{+/\iota\omega\}\eachop\iota 10000$@>=
+void ex6_help(AplArray *res, AplArray *rgt, AplFunction *fun)
+{
+	AplFunction add;
+	AplFunction red;
+	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
+	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
+	index_gen(res, rgt, NULL);
+	applymonadic(&red, res, res);
+}
+
+void ex6()
+{
+	AplFunction eac, fun, red, add;
+	AplArray x;
+	qthread_initialize();
+	init_array(&x);
+	alloc_array(&x, INT);
+	x.data->intv = 50000;
+	index_gen(&x, &x, NULL);
+	init_function(&fun, ex5_help, NULL, 1, NULL, NULL, NULL);
+	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
+	applymonadic(&eac, &x, &x);
+	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
+	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
+	applymonadic(&red, &x, &x);
+	printf("%d\n", x.data->intv);
+	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
+	    size(&x), rank(&x), x.size);
+	qthread_finalize();
+}
+
+@ @<Dispatch example based on |argv[1]|@>=
+else if (!strcmp(argv[1], "ex6")) {
+	msg = "Ex 6: Computing + / {{+ / iota omega}} each iota 10000";
+	example = ex6;
 } 
 
 @* Index.
