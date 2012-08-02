@@ -434,7 +434,7 @@ copying over the shape information.
 @<Defuture standard future array@>=
 {
 	AplArray *tmp;
-	if (qthread_readFF((aligned_t *) arr->data, (aligned_t *) &tmp)) {
+	if (qthread_readFF((aligned_t *) &tmp, (aligned_t *) arr->data)) {
 		apl_error(APLERR_QTHREAD);
 		exit(APLERR_QTHREAD);
 	}
@@ -460,7 +460,7 @@ elements, and then mark the future array as a regular array.
 	size_t cnt;
 	data = arr->data;
 	cnt = size(arr);
-	while (cnt--) qthread_readFF((aligned_t *) data++, NULL);
+	while (cnt--) qthread_readFF(NULL, (aligned_t *) data++);
 	arr->futr = 0;
 }
 
@@ -642,21 +642,26 @@ address and such is linked up correctly. This code looks like this.
 We assume that |rgt| and |lft| are set to appropriate values.
 
 @<Apply step function on |res|@>=
-{ struct apl_thread_arg *appinfo;
-unsigned int *shp;
+{
+	struct apl_thread_arg *appinfo;
+	unsigned int *shp;
 
-if ((appinfo = malloc(sizeof(struct apl_thread_arg))) == NULL) {
-	apl_error(APLERR_MALLOC);
-	exit(APLERR_MALLOC);
+	if ((appinfo = malloc(sizeof(struct apl_thread_arg))) == NULL) {
+		apl_error(APLERR_MALLOC);
+		exit(APLERR_MALLOC);
+	}
+
+	appinfo->fun = fun;
+	appinfo->left = lft;
+	appinfo->right = rgt;
+
+	for (shp = res->shape; *shp != SHAPE_END; *shp++ = SHAPE_END);
+	alloc_array(res, UNSET);
+	if (qthread_fork(applystep, appinfo, (aligned_t *) res->data)) {
+		apl_error(APLERR_QTHREAD);
+		exit(APLERR_QTHREAD);
+	}
 }
-
-appinfo->fun = fun;
-appinfo->left = lft;
-appinfo->right = rgt;
-
-for (shp = res->shape; *shp != SHAPE_END; *shp++ = SHAPE_END);
-alloc_array(res, UNSET);
-qthread_fork(applystep, appinfo, (aligned_t *) res->data); }
 
 @ We now have two concepts of function application, simple ones for functions
 not involved in threading, and those which are, called step functions.
@@ -1600,6 +1605,7 @@ that each element must be of the same type.
 		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
 	}
 	res->futr = 2;
+	defutr(res);
 }
 	
 @ @<Apply step dyadically on each element@>=
@@ -1610,6 +1616,7 @@ that each element must be of the same type.
 		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
 	}
 	res->futr = 2;
+	defutr(res);
 }
 
 @ The argument to |each_step|, which we call |appinfo|, is a bit like 
