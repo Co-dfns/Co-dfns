@@ -193,9 +193,9 @@ else if (!strcmp(argv[1], "ex4")) {
 
 @* Example 5. Let's try making use of the each operator together with 
 some functions to get some interesting results. We will 
-compute $+/\{+/\iota\omega\}\eachop\ \iota 100$.
+compute $+/\{+/\iota\omega\}\eachop\iota 100$.
 
-@<Ex 5. Compute $+/\{+/\iota\omega\}\eachop\ \iota 10000$@>=
+@<Ex 5. Compute $+/\{+/\iota\omega\}\eachop\iota 10000$@>=
 void ex5_help(AplArray *res, AplArray *rgt, AplFunction *fun)
 {
 	AplFunction add;
