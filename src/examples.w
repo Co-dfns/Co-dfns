@@ -254,6 +254,7 @@ void ex6()
 	AplFunction eac, fun, red, add;
 	AplArray x;
 	qthread_initialize();
+	printf("Using %d shepherds\n", qthread_num_shepherds());
 	init_array(&x);
 	alloc_array(&x, INT);
 	x.data->intv = 50000;

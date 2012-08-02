@@ -23,7 +23,7 @@ debug: examples
 	LD_LIBRARY_PATH=. gdb examples
 	
 examples: libhpapl.so examples.o
-	${CC} ${CFLAGS} -L. -o examples examples.o -lhpapl
+	${CC} ${CFLAGS} -L. -o examples examples.o -lhpapl -lqthread
 
 libhpapl.so: runtime.o
 	${CC} ${CFLAGS} -shared -o libhpapl.so runtime.o -lqthread
