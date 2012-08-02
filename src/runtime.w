@@ -387,6 +387,17 @@ int shpeq(AplArray *a, AplArray *b)
 	else return 1;
 }
 
+@ We may also want to use arrays as if they were booleans. In this case, 
+we want to consider an array as a valid boolean only if it is a scalar
+and if it is in the range $[0,1]$. We should also like to know whether 
+a boolean is true or not.
+
+@d is_boolean(a) (is_scalar(a) && (a)->type == INT && 
+    ((a)->data->intv == 0 || (a)->data->intv == 1))
+
+@d is_true(a) ((a)->data->intv == 1)
+@d is_false(a) ((a)->data->intv == 0)
+
 @ Note, we could also talk about the |type| field, which is another 
 field that does not relate directly to the heap-allocated regions 
 of the array, but in this case, it's no good, because |type| is 
@@ -1093,17 +1104,17 @@ We have four cases of addition that we need to handle. Each of them
 can be expressed with the C |+| operation, so a macro suffices to 
 help us define each function.
 
-@d PLUSFUNC(nm, zt, lt, rt)@/
+@d COPFUNC(nm, op, zt, lt, rt)@/
 void nm(AplScalar *res, AplScalar *lft, AplScalar *rgt)@/
 {
-	res->zt = lft->lt + rgt->rt;
+	res->zt = (lft->lt) op (rgt->rt);
 }
 
 @<Utility functions@>=
-PLUSFUNC(plus_int_int, intv, intv, intv)@;
-PLUSFUNC(plus_int_real, real, intv, real)@;
-PLUSFUNC(plus_real_int, real, real, intv)@;
-PLUSFUNC(plus_real_real, real, real, real)@;
+COPFUNC(plus_int_int, +, intv, intv, intv)@;
+COPFUNC(plus_int_real, +, real, intv, real)@;
+COPFUNC(plus_real_int, +, real, real, intv)@;
+COPFUNC(plus_real_real, +, real, real, real)@;
 
 @ The |identity| function is the monadic form of the $+$ function 
 in APL. In this case, since we know that it is the identity function, 
@@ -1118,6 +1129,51 @@ void identity(AplArray *res, AplArray *rgt, AplFunction *env)
 	if (res == rgt) return;
 	else copy_array(res, rgt);
 }
+
+@*1 The Subtraction and Negation functions.
+The subtraction function |minus| works just like the plus, and has the 
+same domain constraints. Thus, our implementation is basically the same, 
+but with different operators.
+
+@<Scalar APL functions@>=
+void minus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *fun)
+{
+	@<Declare dyadic scalar function variables@>@;
+	
+	if (lft->type == INT) {
+		if (rgt->type == INT) {
+			op = minus_int_int;
+			restype = INT;
+		} else if (rgt->type == REAL) {
+			op = minus_int_real;
+			restype = REAL;
+		} else goto err;
+	} else if (lft->type == REAL) {
+		if (rgt->type == INT) {
+			op = minus_real_int;
+			restype = REAL;
+		} else if (rgt->type == REAL) {
+			op = minus_real_real;
+			restype = REAL;
+		} else goto err;
+	} else goto err;
+	@#
+	@<Compute dyadic scalar function |op|@>@;
+	return;
+	@#
+err:
+	apl_error(APLERR_DOMAIN);
+	exit(APLERR_DOMAIN);
+}
+
+@ Our operators are also nearly the same as the plus case, but with 
+a different C operator.
+
+@<Utility functions@>=
+COPFUNC(minus_int_int, -, intv, intv, intv)@;
+COPFUNC(minus_int_real, -, real, intv, real)@;
+COPFUNC(minus_real_int, -, real, real, intv)@;
+COPFUNC(minus_real_real, -, real, real, real)@;
 
 @* Non-scalar primitive functions. In this section we will deal with 
 the class of functions that are non-scalar. These do not have the 
