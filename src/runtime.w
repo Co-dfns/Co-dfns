@@ -394,6 +394,76 @@ actually indirectly responsible, and there are not many useful
 functions that we would want to use |type| in that did not 
 also involve allocation.
 
+@* Defuturing Arrays. Future arrays are those arrays whose elements are 
+not yet calculated, or are being calculated concurrently or in parallel 
+to the rest of the system. We may not want to deal with the complications 
+array futures in all our functions. In some cases, it simply would not 
+net any benefit. This may be true if we already know we must 
+touch each array before moving on, 
+and there are surely other cases, such as just plain laziness. 
+The act of defuturing an array is thus the act of converting a future 
+array into a normal array with all values filled in. This is a blocking 
+operation performed by the |defutr| function. It is a no-op if the array 
+it is given is not a future array. This function serves as a synchronizing
+function for threads, as all threads that are involved in computing the 
+given array's element values must complete before |defutr| will return.
+We implement the |defutr| function by using |qthread_readFF| on our 
+|data| region, utilizing the FEB semantics of |qthread_fork| as discussed 
+elsewhere. 
+
+We have two distinct cases of futures, depending on the value of the 
+|futr| field. We consider each case individually.
+
+@<Utility functions@>=
+void defutr(AplArray *arr)
+{
+	switch (arr->futr) {
+	case 1: @<Defuture standard future array@>@; break;
+	case 2: @<Defuture multi-element future array@>@; break;
+	}
+}
+
+@ In the standard case (case 1), we expect a single array pointer 
+in the |data| field; that is, |data| should point to a single |AplFutr| 
+value. We thus have two arrays, the computed array pointed to by |data| 
+and the given array |arr|. We want to move the important data from the 
+|data| array to the |arr| array. Instead of doing a data copy, we can 
+just replace the |arr->data| field with the |(*data)->data| field, while 
+copying over the shape information.
+
+@<Defuture standard future array@>=
+{
+	AplArray *tmp;
+	if (qthread_readFF((aligned_t *) arr->data, (aligned_t *) &tmp)) {
+		apl_error(APLERR_QTHREAD);
+		exit(APLERR_QTHREAD);
+	}
+	free_data(arr);
+	copy_shape(arr, tmp);
+	arr->type = tmp->type;
+	arr->futr = 0;
+	arr->data = tmp->data;
+	arr->size = tmp->size;
+	free(tmp);
+}
+
+@ In the case of a per element future array, the shape information and 
+type of the array are presumably already set, or will be set by 
+some other means. The |data| field is also allocated to the correct size 
+already, and will already contain the elements. We simply need to 
+wait for all the threads to finish calculating their corresponding
+elements, and then mark the future array as a regular array.
+
+@<Defuture multi-element future array@>=
+{
+	AplScalar *data;
+	size_t cnt;
+	data = arr->data;
+	cnt = size(arr);
+	while (cnt--) qthread_readFF((aligned_t *) data++, NULL);
+	arr->futr = 0;
+}
+
 @* Function Structure.
 Let's proceed to functions. In HPAPL, a function is either an 
 operator or a normal function.  At the higher level language, 
@@ -1839,6 +1909,7 @@ plain text descriptions in a static array.
 @d APLERR_SHAPEMISMATCH 2
 @d APLERR_DOMAIN 3
 @d APLERR_NOIDENTITY 4
+@d APLERR_QTHREAD 5
 
 @<Runtime error reporting@>=
 char *error_messages[] = 
@@ -1847,7 +1918,8 @@ char *error_messages[] =
 	  "Allocation failure", /* |APLERR_MALLOC| */
 	  "Shape mismatch", /* |APLERR_SHAPEMISMATCH| */
 	  "Invalid domain", /* |APLERR_DOMAIN| */
-	  "No identity is defined for this function" /* |APLERR_NOIDENTITY| */
+	  "No identity is defined for this function", /* |APLERR_NOIDENTITY| */
+	  "Error with qthread function" /* |APLERR_QTHREAD| */
 	};
 char *warning_messages[] =
 	{  @/
