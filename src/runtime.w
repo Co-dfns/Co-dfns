@@ -55,6 +55,7 @@ into the following sections:
 
 @<Runtime error reporting@>@;
 @<Primary data structures@>@;
+@<Internal data structures@>@;
 @<Public function declarations@>@;
 @<Utility functions@>@;
 @<Memory management functions@>@;
@@ -95,30 +96,28 @@ The following is a list of things that I have noted need to be changed
 but that I have not yet done.
 
 \medskip{\parindent=0.3in
-\item{1.} We have some support for step functions, but we do not have a 
-function that will convert a FUTR array into a normal one, as a blocking
-operation, that should be next.
-\item{2.} We should have a separate document that has a set of benchmarks 
+\item{1.} We should have a separate document that has a set of benchmarks 
 that we can work with.
-\item{3.} As a runtime we need to find a good balance between safety and 
+\item{2.} As a runtime we need to find a good balance between safety and 
 performance. I am considering a flag which indicates whether we use the 
 safe library or the unsafe code.
-\item{4.} We can improve the way we handle |function_identity| by running 
+\item{3.} We can improve the way we handle |function_identity| by running 
 it at the time that we create function closures rather than running it 
 when we do a reduction. This should save time if we add a field to the 
 function closure structure that let's us know ahead of time the identity 
-of the function.
-\item{5.} We currently use |alloc_array| assuming that it will set the 
+of the function. On the other hand, |function_identity| is probably not 
+needed very often.
+\item{4.} We currently use |alloc_array| assuming that it will set the 
 |type| field. Is it possible that we could do better by not setting the 
 |type| in |alloc_array| or |realloc_array|?
-\item{6.} We need to audit the code for missing frees. I believe that 
+\item{5.} We need to audit the code for missing frees. I believe that 
 there are a number of memory leaks in the system, so we need to audit our 
 uses of |alloc_array| and |realloc_array| to make sure that they are 
 freed afterwards using |free_data|.
-\item{7.} I think we can improve the behavior of iota by doing something 
+\item{6.} I think we can improve the behavior of iota by doing something 
 a little lazy, and having some sort of explicit iota array object, this 
 could really improve our performance in certain cases.
-\item{8.} The current |iota| function computes indexes in a very slow 
+\item{7.} The current |iota| function computes indexes in a very slow 
 fashion. There is a more appropriate approach.
 \par}\medskip
 
@@ -609,13 +608,14 @@ we will allocate our own array for this.
 @f qthread_f int
 @f aligned_t int
 
-@<Utility functions@>=
+@<Internal data structures@>=
 struct apl_thread_arg {
 	AplFunction *fun;
 	AplArray *left;
 	AplArray *right;
 };
 
+@ @<Utility functions@>=
 aligned_t applystep(void *arg)
 {
 	struct apl_thread_arg *appinfo;
@@ -1677,7 +1677,7 @@ with them. To that end, we have something like this. Since we are being
 lazy, we also have a field that points to the type field of the eventual 
 output array.
 
-@<Utility functions@>=
+@<Internal data structures@>=
 struct each_step_arg {
 	AplFunction *func;
 	AplArray lft;
@@ -1777,7 +1777,7 @@ general. This will work for now. We do not need to allocate the array if
 void reduce(AplArray *res, AplArray *rgt, AplFunction *env)
 {
 	AplInt step;
-	AplFunction tf;
+	AplScalarFunction tf;
 	AplFunction *fun;
 	AplScalarDyadic op;
 	@<Determine |fun|@>@;
@@ -1794,8 +1794,8 @@ otherwise, we will just use the left operand as is.
 if ((op = known_scalard(plus, TYPE(rgt), TYPE(rgt))) == NULL) {
 	fun = LOP(env);
 } else {
-	init_function(&tf, NULL, scalard, 0, op, NULL, NULL);
-	fun = &tf;
+	init_sfunc(&tf, NULL, op);
+	fun = (AplFunction *) &tf;
 }
 
 @ We can know the shape of our output without running 
@@ -1959,15 +1959,49 @@ application that expects a known scalar function as its left operand.
 You can then use these when creating function closures.
 
 @<Utility functions@>=
-void scalard(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *fun)
+void 
+scalard(AplArray *res, AplArray *lft, AplArray *rgt, AplScalarFunction *fun)
 {
-	AplScalarDyadic op = LOP(fun);
+	AplScalarDyadic op = fun->sd;
 	op(DATA(res), DATA(lft), DATA(rgt));
 }
-void scalarm(AplArray *res, AplArray *rgt, AplFunction *fun)
+void scalarm(AplArray *res, AplArray *rgt, AplScalarFunction *fun)
 {
-	AplScalarMonadic op = LOP(fun);
+	AplScalarMonadic op = fun->sm;
 	op(DATA(res), DATA(rgt));
+}
+
+@ To make creating scalar functions easier, we have |init_sfunc| 
+that initializes an |AplScalarFunction| with the appropriate 
+dyadic and monadic elements. The |AplScalarFunction| structure is the 
+same as an |AplFunction| but with the left and right operand fields 
+changed to use |AplScalarMonadic| and |AplScalarDyadic| pointers instead.
+This structure has just enough fields the same to enable it to be 
+used in place of an |AplFunction| structure. 
+
+@<Internal data structures@>=
+typedef struct apl_scalar_function AplScalarFunction;
+struct apl_scalar_function {
+	void@,(*monadic)(AplArray *, AplArray *, AplScalarFunction *);
+	void@,(*dyadic)(AplArray *, AplArray *, AplArray *, 
+	    AplScalarFunction *);
+	int step;
+	AplScalarMonadic sm;
+	AplScalarDyadic sd;
+};
+
+@ The |init_sfunc| need only to take the scalar functions, as 
+all the other fields will always be the same, including the |step| 
+field, which will always be 0.
+
+@<Utility functions@>=
+void init_sfunc(AplScalarFunction *f, AplScalarMonadic mf, AplScalarDyadic df)
+{
+	f->monadic = scalarm;
+	f->dyadic = scalard;
+	f->step = 0;
+	f->sm = mf;
+	f->sd = df;
 }
 
 @* Reporting runtime errors. Much as I would like to think that my 
