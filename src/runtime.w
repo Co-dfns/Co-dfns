@@ -350,10 +350,10 @@ any allocation explicitly. To start us off, we'll deal with
 shapes.  We may want to know whether a given array is scalar, 
 vector, matrix, or noble. These macros can help with that.
 
-@d is_scalar(array) (rank((array)) == 0)
-@d is_vector(array) (rank((array)) == 1)
-@d is_matrix(array) (rank((array)) == 2)
-@d is_noble(array)  (rank((array)) > 2)
+@d is_scalar(array) (rank(array) == 0)
+@d is_vector(array) (rank(array) == 1)
+@d is_matrix(array) (rank(array) == 2)
+@d is_noble(array)  (rank(array) > 2)
 
 @ It is also useful to be able to grab the shape from one array 
 and put it into another. This is the main header information that 
