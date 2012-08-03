@@ -142,23 +142,13 @@ scalar types. We will assume an arbitrary limit that we may have
 no more elements in an array than can be accessed by a single 
 dimension integer. 
 
-Thus, we store shapes as arrays of 
-|unsigned int|. We use the unsigned feature 
-because we do not have negative shapes. This gives us all the 
-range of |unsigned int| save one, so we have a maximum number 
-of elements for an array fixed at |UINT_MAX - 1|, where 
-|UINT_MAX| is used as a terminator. 
-For future ease of transition to larger sizes we make sure 
-to define |SHAPE_END| for use instead of |UINT_MAX|. The shape 
-of an array is then the non-negative elements of the |shape|
-field up to but not including the terminating element whose value is 
-|SHAPE_END|. While using |unsigned int| is relatively small for the
-number of elements that we can potentially access on a 64-bit 
-machine, it is big enough at the moment, and we can scale this 
-up without cause for alarm in the future. We do not limit the 
-size of the data regions like this though, and we use an 
-appropriate |size_t| variable to hold the size of the data 
-region. 
+Assuming that the limit to accessing our arrays is the our native 
+|AplInt| type, then we assume that the shape is an array of |AplInt| 
+values. We use |MAXRANK| to indicate the size of the static buffer 
+that holds the shape of an array. The |rnk| field indicates the 
+actual rank of the array, and thus, the number of valid elements of 
+the |shp[MAXRANK]| field. Shapes must be nonnegative. The |SHPMAX| 
+constant indicates the maximum value of any single shape dimension.
 
 We also have a concept of arrays that will be filled in the future. 
 These future arrays need to be marked specially, so that we know that 
@@ -168,55 +158,72 @@ to indicate an array's ``future'' status.
 This gives us the following fields for our arrays:
 
 \medskip{\parindent=0.5in
-\item{|shape|} A static array of length |MAXRANK+1| whose 
-elements are all |unsigned int| values;
-\item{|size|} The number of bytes allocated for the region 
+\item{|rnk|} The rank of the array;
+\item{|shp|} A static array of length |MAXRANK| whose 
+elements are all |AplInt| values;
+\item{|siz|} The number of bytes allocated for the region 
 pointed to by |data|;
-\item{|data|} A pointer to a region of memory containing 
+\item{|dat|} A pointer to a region of memory containing 
 the elements in row-major order; and finally,
-\item{|type|} An enumeration indicating the type of elements
+\item{|typ|} An enumeration indicating the type of elements
 in the array.
-\item{|futr|} A flag indicating whether an array is a 
+\item{|fut|} A flag indicating whether an array is a 
 future or not. We use a |1| to indicate that the whole array is a 
 single future, and a |2| to indicate that each element is a distinct 
 future.
 \par}\medskip
 
 \noindent This leads us to the following |typedef| 
-and definitions. We have a maximum array rank of |MAXRANK|. 
+and definitions. We have a maximum array rank of |MAXRANK|. We use 
+the macros |RANK|, |SHAPE|, |DATA|, |TYPE|, |FUTR|, and |SIZE| as
+field accessors for arrays.
 
-@d MAXRANK 31
-@d SHAPE_END UINT_MAX
+@d MAXRANK 32
+@d SHPMAX SINT_MAX
+@d RANK(a) ((a)->rnk)
+@d SHAPE(a) ((a)->shp)
+@d DATA(a) ((a)->dat)
+@d TYPE(a) ((a)->typ)
+@d FUTR(a) ((a)->fut)
+@d SIZE(a) ((a)->siz)
 @s AplType int
 @s AplScalar int
+@s AplInt int
 
 @<Primary data structures@>=
 typedef struct apl_array AplArray;
 @<Define |AplType|@>@;
 struct apl_array {
-	unsigned int shape[MAXRANK+1];
-	AplType type;
-	int futr;
-	size_t size;
-	AplScalar *data;
+	short rnk;
+	AplInt shp[MAXRANK];
+	AplType typ;
+	int fut;
+	size_t siz;
+	AplScalar *dat;
 };
 
-@ Since |MAXRANK| and |SHAPE_END| are useful to the outside, we duplicate 
+@ Since the macros we define above are useful to the outside, we duplicate 
 these definitions for our public interface that we define at the end of 
 this document.
 
 @<Public macro definitions@>=
-#define MAXRANK 31
-#define SHAPE_END UINT_MAX
+#define MAXRANK 32
+#define SHPMAX SINT_MAX
+#define RANK(a) (a)->rnk
+#define SHAPE(a) (a)->shp
+#define DATA(a) (a)->dat
+#define TYPE(a) (a)->typ
+#define FUTR(a) (a)->fut
+#define SIZE(a) (a)->siz
 
 @ We have three main types of values that we can have, and to indicate 
 which one that we use, we setup an enumeration. We have one other 
 value |UNSET| that indicates that nothing has been done with the array 
-yet. Our |INT| type is a C |int|eger, since I am assuming 
+yet. Our |APLINT| type is a C |int|eger, since I am assuming 
 that HPAPL will run on systems with at least 64-bit processors. 
 I think this is a reasonable choice, and should be big enough. The 
-|REAL| type is a |double|, since I want to have as much precision in 
-my single floating point type as I can.  Finally, I have |CHAR| set 
+|APLREAL| type is a |double|, since I want to have as much precision in 
+my single floating point type as I can.  Finally, I have |APLCHAR| set 
 to |wchar_t| since we are dealing with wide characters throughout;
 this is APL afterall.
 
@@ -232,10 +239,15 @@ as packed as possible is just not worth it.
 We also have an internal union field |futr| when we want to store a 
 pointer to the future AplArray that will be computed. This is not exposed 
 to the world as a type, as no one should actually need to know about 
-it outside of the runtime.
+it outside of the runtime. We use the macros |APLINT|, |APLREAL|, |APLCHAR|, and 
+|FUTR| as accessors to the union fields.
+
+@d INT(e) ((e)->intv)
+@d REAL(e) ((e)->real)
+@d CHAR(e) ((e)->chrv)
 
 @<Define |AplType|@>=
-enum apl_type { INT, REAL, CHAR, UNSET };
+enum apl_type { APLINT, APLREAL, APLCHAR, UNSET };
 typedef enum apl_type AplType;
 typedef int AplInt;
 typedef double AplReal;
@@ -249,77 +261,50 @@ union apl_scalar {
 };
 typedef union apl_scalar AplScalar;
 
+@ These macros that we define above are also needed for the public, 
+so we put these in the public header.
+
+@<Public macro definitions@>=
+#define INT(e) ((e)->intv)
+#define REAL(e) ((e)->real)
+#define CHAR(e) ((e)->chrv)
+
+
 @ There are a few very useful functions relating to arrays that 
-we should talk about. The first is a way to get the size based on 
-the contents of the |shape| array.
-The size can be expressed as follows:
-
-$$\prod_{i=0}^{r}s_i$$
-
-\noindent Where $r$ is the |rank| of the array, and $s$ is the 
-shape array. Specifically, it is the product of the dimensions 
-of the array.
+we should talk about. The first is a way to get the number of 
+elements in an array based on the array's shape. This is just 
+the product of the dimensions of the shape of the array. This 
+is $\times/\rho A$ in APL.
 
 @<Utility functions@>=
-size_t size(AplArray *array) 
+size_t count(AplArray *a) 
 {
-	size_t res;
-	unsigned int *shp;
+	short r;
+	size_t c;
+	AplInt *s;
 
-	res = 1;
-	shp = array->shape;
+	for (c = 1, r = RANK(a), s = SHAPE(a); r--; c *= *s++);
 	
-	while (*shp != SHAPE_END) res *= *shp++;
-	
-	return res;
+	return c;
 }
 
-@ Next, we very often want to talk about the rank of an array, so 
-we encapsulate that up into a function.
-Specifically, if we define 
-$s = \{x\in \hbox{|array->shape|} \mid x\neq |SHAPE_END|\}$, 
-then |rank| should be the size or cardinality of $s$.
-
-@<Utility functions@>=
-short rank(AplArray *array) 
-{
-	short rnk;
-	unsigned int *shp;
-
-	rnk = 0;
-	shp = array->shape;
-	
-	while (*shp++ != SHAPE_END) rnk++;
-	
-	return rnk;
-}
-
-@ Finally, it's very helpful at times to be able to talk about the 
+@ It's very helpful at times to be able to talk about the 
 product of an integer array's ravel. Basically, we often want to 
 compute the product when we are using the array as a reshape value 
 for another array or the like. For this we assume that the array 
 that we are given is an integer array, and then we get to work.
-If $a$ is the ravel of |array| and $a_i$ is the $i$th element in 
-that ravel, then |product| should compute the following:
-
-$$\prod_{i=0}^{size(array)}a_i$$
-
-\noindent That is, the product of all the elements in the array.
+The APL expression we are computing here is $\times/,A$.
 
 @<Utility functions@>=
-unsigned int product(AplArray *array)
+AplInt product(AplArray *a)
 {
-	int i, len;
-	AplScalar *data;
-	unsigned int prod;
+	size_t c;
+	AplScalar *d;
+	AplInt p;
 
-	prod = 1;
-	len = size(array);
-	data = array->data;
+	for (c = count(a), p = 1, d = DATA(a); c--; p *= INT(d++));
 
-	for (i = 0; i < len; i++) prod *= (data++)->intv;
-
-	return prod;
+	return p;
 }
 
 @ Initializing an array is just a matter of setting up all the 
@@ -330,16 +315,13 @@ fields.  See the section further down on memory management
 for functions that allocate space for arrays and the like.
 
 @<Utility functions@>=
-void init_array(AplArray *array)
+void init_array(AplArray *a)
 {
-	short i;
-	unsigned int *shp;
-
-	shp = array->shape;
-	array->type = UNSET;
-	array->size = 0;
-	array->data = NULL;
-	for (i = 0; i < MAXRANK; i++) *shp++ = SHAPE_END;
+	RANK(a) = 0;
+	TYPE(a) = UNSET;
+	SIZE(a) = 0;
+	DATA(a) = NULL;
+	FUTR(a) = 0;
 }
 
 @ We are about done with the work on the array data structure, 
@@ -350,10 +332,10 @@ any allocation explicitly. To start us off, we'll deal with
 shapes.  We may want to know whether a given array is scalar, 
 vector, matrix, or noble. These macros can help with that.
 
-@d is_scalar(array) (rank(array) == 0)
-@d is_vector(array) (rank(array) == 1)
-@d is_matrix(array) (rank(array) == 2)
-@d is_noble(array)  (rank(array) > 2)
+@d SCALAR(a) (RANK(a) == 0)
+@d VECTOR(a) (RANK(a) == 1)
+@d MATRIX(a) (RANK(a) == 2)
+@d NOBLE(a)  (RANK(a) > 2)
 
 @ It is also useful to be able to grab the shape from one array 
 and put it into another. This is the main header information that 
@@ -362,10 +344,12 @@ does not involve allocation.
 @<Utility functions@>=
 void copy_shape(AplArray *dst, AplArray *src) 
 {
-	unsigned int *dstshp, *srcshp;
-	dstshp = dst->shape;
-	srcshp = src->shape;
-	while (*srcshp != SHAPE_END) *dstshp++ = *srcshp++;
+	short r;
+	AplInt *d, *s;
+	d = SHAPE(dst);
+	s = SHAPE(src);
+	RANK(dst) = RANK(src);
+	for (r = RANK(dst); r--; *d++ = *s++);
 }
 
 @ We're talking a lot about shapes now, and for good reason. Many 
@@ -377,14 +361,15 @@ if the arrays do not have the same shape, and |1| if they do.
 @<Utility functions@>=
 int shpeq(AplArray *a, AplArray *b) 
 {
-	unsigned int *sa, *sb;
-	sa = a->shape;
-	sb = b->shape;
-	while (*sa != SHAPE_END)
-		if (*sb == SHAPE_END || *sa++ != *sb++) 
-			return 0;
-	if (*sb != SHAPE_END) return 0;
-	else return 1;
+	AplInt *sa, *sb;
+	short r;
+	
+	if (RANK(a) != RANK(b)) return 0;
+	
+	for (sa = SHAPE(a), sb = SHAPE(b), r = RANK(a); r--; sa++, sb++)
+		if (*sa != *sb) return 0;
+	
+	return 1;
 }
 
 @ We may also want to use arrays as if they were booleans. In this case, 
@@ -392,11 +377,10 @@ we want to consider an array as a valid boolean only if it is a scalar
 and if it is in the range $[0,1]$. We should also like to know whether 
 a boolean is true or not.
 
-@d is_boolean(a) (is_scalar(a) && (a)->type == INT && 
-    ((a)->data->intv == 0 || (a)->data->intv == 1))
-
-@d is_true(a) ((a)->data->intv == 1)
-@d is_false(a) ((a)->data->intv == 0)
+@d BOOLEAN(a) (SCALAR(a) && TYPE(a) == APLINT && 
+    (INT(DATA(a)) == 0 || INT(DATA(a)) == 1)
+@d TRUE(a) (INT(DATA(a)) == 1)
+@d FALSE(a) (INT(DATA(a)) == 0)
 
 @ Note, we could also talk about the |type| field, which is another 
 field that does not relate directly to the heap-allocated regions 
@@ -426,53 +410,52 @@ We have two distinct cases of futures, depending on the value of the
 |futr| field. We consider each case individually.
 
 @<Utility functions@>=
-void defutr(AplArray *arr)
+void defutr(AplArray *a)
 {
-	switch (arr->futr) {
+	switch (FUTR(a)) {
 	case 1: @<Defuture standard future array@>@; break;
 	case 2: @<Defuture multi-element future array@>@; break;
 	}
 }
 
 @ In the standard case (case 1), we expect a single array pointer 
-in the |data| field; that is, |data| should point to a single |AplFutr| 
-value. We thus have two arrays, the computed array pointed to by |data| 
-and the given array |arr|. We want to move the important data from the 
-|data| array to the |arr| array. Instead of doing a data copy, we can 
-just replace the |arr->data| field with the |(*data)->data| field, while 
+in the |DATA(a)| field; that is, |DATA(a)| should point to a single |AplFutr| 
+value. We thus have two arrays, the computed array pointed to by |DATA(a)| 
+and the given array |a|. We want to move the important data from the 
+|DATA(a)| array to the |a| array. Instead of doing a data copy, we can 
+just replace the |data(a)| field with the |DATA(*DATA(a))| field, while 
 copying over the shape information.
 
 @<Defuture standard future array@>=
 {
-	AplArray *tmp;
-	if (qthread_readFF((aligned_t *) &tmp, (aligned_t *) arr->data)) {
+	AplArray *t;
+	if (qthread_readFF((aligned_t *) &t, (aligned_t *) DATA(a))) {
 		apl_error(APLERR_QTHREAD);
 		exit(APLERR_QTHREAD);
 	}
-	free_data(arr);
-	copy_shape(arr, tmp);
-	arr->type = tmp->type;
-	arr->futr = 0;
-	arr->data = tmp->data;
-	arr->size = tmp->size;
-	free(tmp);
+	free_data(a);
+	copy_shape(a, t);
+	TYPE(a) = TYPE(t);
+	FUTR(a) = 0;
+	DATA(a) = DATA(t);
+	SIZE(a) = SIZE(t);
+	free(t);
 }
 
 @ In the case of a per element future array, the shape information and 
 type of the array are presumably already set, or will be set by 
-some other means. The |data| field is also allocated to the correct size 
+some other means. The |DATA(a)| field is also allocated to the correct size 
 already, and will already contain the elements. We simply need to 
 wait for all the threads to finish calculating their corresponding
 elements, and then mark the future array as a regular array.
 
 @<Defuture multi-element future array@>=
 {
-	AplScalar *data;
-	size_t cnt;
-	data = arr->data;
-	cnt = size(arr);
-	while (cnt--) qthread_readFF(NULL, (aligned_t *) data++);
-	arr->futr = 0;
+	AplScalar *d;
+	size_t c;
+	for (d = DATA(a), c = count(a); c--; d++)
+		qthread_readFF(NULL, (aligned_t *) d);
+	FUTR(a) = 0;
 }
 
 @* Function Structure.
@@ -511,6 +494,16 @@ have a pointer to the code that expects the closure as well.
 Finally, some HPAPL functions are step functions, which run in 
 parallel, and so we store a flag that indicates this.
 
+We will use the macros |MONADIC|, |DYADIC|, |STEP|, |LOP|, |ROP|, 
+and |ENV| to talk about the fields.
+
+@d MONADIC(f) ((f)->monadic)
+@d DYADIC(f) ((f)->dyadic)
+@d STEP(f) ((f)->step)
+@d LOP(f) ((f)->lop)
+@d ROP(f) ((f)->rop)
+@d ENV(f) ((f)->env)
+
 @<Primary data structures@>=
 struct apl_function {
 	AplMonadic monadic;
@@ -527,6 +520,17 @@ they will not touch their input array contents, but that they will fill
 in and possibly reallocate or allocate fresh space in the result array.
 @^Functions, restrictions@>
 
+@ The macros defined above are useful to the public, so let's define 
+them in the public header.
+
+@<Public macro definitions@>=
+#define MONADIC(f) ((f)->monadic)
+#define DYADIC(f) ((f)->dyadic)
+#define STEP(f) ((f)->step)
+#define LOP(f) ((f)->lop)
+#define ROP(f) ((f)->rop)
+#define ENV(f) ((f)->env)
+
 @ Finally, we  should talk about initializing closures.  In this
 case, a closure  will normally be something that we know the size of
 statically,  since we will know how many variables are free in the
@@ -542,34 +546,33 @@ have an  |AplFunction| structure pointer that is already allocated
 for the  correct number of free variables that we have.
 
 @<Utility functions@>=
-void init_function(AplFunction *fun, AplMonadic mon, AplDyadic dya,
-    int step, void *lop, void *rop, ...)
+void init_function(AplFunction *f, AplMonadic m, AplDyadic d,
+    int s, void *l, void *r, ...)
 {
 	va_list ap;
-	void **env, *var;
-	fun->monadic = mon;
-	fun->dyadic = dya;
-	fun->step = step;
-	fun->lop = lop;
-	fun->rop = rop;
-	env = fun->env;
-	va_start(ap, rop);
-	while (NULL != (var = va_arg(ap, void *))) {
-		*env++ = var;
-	}
+	void **e, *v;
+	MONADIC(f) = m;
+	DYADIC(f) = d;
+	STEP(f) = s;
+	LOP(f) = l;
+	ROP(f) = r;
+	e = ENV(f);
+	for (va_start(ap, r); (v = va_arg(ap, void *)) != NULL; *e++ = v);
 	va_end(ap);
 }
 
 @*1 Function application. Assuming that we have a simple function and 
 not a step function, applying is very simple.  The function body itself 
 must take care not to break the assumptions on the immutablity of the 
-input arguments, so this makes life easy on the caller end.
-We call a function using simple macros. 
+input arguments, so this makes life easy on the caller end. It's easy 
+to apply a function as a regular function, but we use additional 
+``application'' macros to ensure that the function calling conventions
+of passing the function closure as the last argument are preserved.
 The arguments are all expected to be pointers to their appropriate
 data types.
 
-@d applym(fun, res, rgt) ((fun)->monadic)((res), (rgt), (fun))
-@d applyd(fun, res, lft, rgt) ((fun)->dyadic)((res), (lft), (rgt), (fun))
+@d APPLYM(f, z, r) MONADIC(f)((z), (r), (f))
+@d APPLYD(f, z, l, r) DYADIC(f)((z), (l), (r), (f))
 
 @ Things are more complicated, unfortunately, by step functions. 
 Step functions create future arrays, whose values are filled in at 
@@ -587,7 +590,7 @@ signature like this:
 \noindent In this case the |qthread_f| argument is a function pointer of 
 the following type:
 
-\medskip|aligned_t (*qthread_f)(void *arg);|\medskip
+\medskip|aligned_t@/(*qthread_f)(void *arg);|\medskip
 
 \noindent Basically, the function |f| will be called with |arg| and 
 its return value will be stored in |ret| using |qthread_writeF|, which 
@@ -642,9 +645,9 @@ make use of our simplistic application macros.
 
 @<Apply threaded function@>=
 if (appinfo->left == NULL)
-	applym(appinfo->fun, res, appinfo->right);
+	APPLYM(appinfo->fun, res, appinfo->right);
 else
-	applyd(appinfo->fun, res, appinfo->left, appinfo->right);
+	APPLYD(appinfo->fun, res, appinfo->left, appinfo->right);
 
 @ Of course, things are not quite so simple when we want to deal with 
 step functions. Actually applying a step function requires that we setup 
@@ -655,7 +658,6 @@ We assume that |rgt| and |lft| are set to appropriate values.
 @<Apply step function on |res|@>=
 {
 	struct apl_thread_arg *appinfo;
-	unsigned int *shp;
 
 	if ((appinfo = malloc(sizeof(struct apl_thread_arg))) == NULL) {
 		apl_error(APLERR_MALLOC);
@@ -666,9 +668,9 @@ We assume that |rgt| and |lft| are set to appropriate values.
 	appinfo->left = lft;
 	appinfo->right = rgt;
 
-	for (shp = res->shape; *shp != SHAPE_END; *shp++ = SHAPE_END);
+	RANK(res) = 0;
 	alloc_array(res, UNSET);
-	if (qthread_fork(applystep, appinfo, (aligned_t *) res->data)) {
+	if (qthread_fork(applystep, appinfo, (aligned_t *) DATA(res))) {
 		apl_error(APLERR_QTHREAD);
 		exit(APLERR_QTHREAD);
 	}
@@ -677,7 +679,7 @@ We assume that |rgt| and |lft| are set to appropriate values.
 @ We now have two concepts of function application, simple ones for functions
 not involved in threading, and those which are, called step functions.
 We want to encapsulate this into two functions for handling dyadic and
-monadic application. Basically, we just check the |step| flag in the 
+monadic application. Basically, we just check the |STEP(f)| flag in the 
 function and dispatch accordingly.
 
 @<Utility functions@>=
@@ -685,13 +687,13 @@ void applymonadic(AplFunction *fun, AplArray *res, AplArray *rgt)
 {
 	AplArray *lft;
 	lft = NULL;
-	if (fun->step == 1) @<Apply step function on |res|@>@;
-	else applym(fun, res, rgt);
+	if (STEP(fun) == 1) @<Apply step function on |res|@>@;
+	else APPLYM(fun, res, rgt);
 }
 void applydyadic(AplFunction *fun, AplArray *res, AplArray *lft, AplArray *rgt)
 {
-	if (fun->step == 1) @<Apply step function on |res|@>@;
-	else applyd(fun, res, lft, rgt);
+	if (STEP(fun) == 1) @<Apply step function on |res|@>@;
+	else APPLYD(fun, res, lft, rgt);
 }
 
 @* Memory management functions. This section is meant to deal 
@@ -706,7 +708,7 @@ In general, I expect that most allocations of |AplArray| objects
 should be automatic.  That is, most of the time, you know that you 
 need one, and you will allocate it locally using stack allocations 
 or some other form that allows for automatic memory management. 
-This leaves only the |array->data| field as something that needs 
+This leaves only the |DATA(a)| field as something that needs 
 to be managed entirely and almost always on the heap. I imagine 
 that if you have a small function with a small array you could 
 get by with allocating the |data| element on the stack or 
@@ -716,11 +718,11 @@ In the future, we might also want to enable some sort of sharing
 of array data structures, to enable access of multiple array 
 headers into the same region for shared access to elements. 
 This involves a sort of copy on write semantics. If an array 
-|data| region is not heap-allocated, we could have real problems 
+|DATA(a)| region is not heap-allocated, we could have real problems 
 if a region is shared with an array that will outlive the local 
 scope of the allocation. In short, always use the memory 
 allocation functions here for allocating and resizing arrays 
-|data| regions, though it is okay and preferred to stack 
+|DATA(a)| regions, though it is okay and preferred to stack 
 allocate |AplArray| structures unless you explicitely want 
 to avoid that for some reason.
 
@@ -739,7 +741,7 @@ in most cases, should be able to be allocated almost entirely
 statically or automatically.
 
 @ The most common situation that we encounter that requires good 
-memory management abstraction is the handling of the |array->data| 
+memory management abstraction is the handling of the |DATA(a)| 
 field. Normally, we have an array that has been automatically 
 allocated for which we now need to make enough space to store
 elements of a particular type. Assuming that we already know how 
@@ -751,13 +753,13 @@ We provide two different allocators, the first, |alloc_array| for
 when we do not care to keep the old contents of the array.
 
 @<Memory management functions@>=
-void alloc_array(AplArray *array, AplType type)
+void alloc_array(AplArray *a, AplType t)
 {
-	size_t dsize;
-	dsize = sizeof(AplScalar) * size(array);
-	if (array->data == NULL || dsize > array->size)
-		@<Set |array->data| to region of |dsize| bytes@>@;
-	array->type = type;
+	size_t s;
+	s = sizeof(AplScalar) * count(a);
+	if (DATA(a) == NULL || s > SIZE(a))
+		@<Set |DATA(a)| to region of |s| bytes@>@;
+	TYPE(a) = t;
 }
 
 @ When we know that we need to allocate new memory, we have the option 
@@ -768,18 +770,17 @@ of the old memory. In case of an error, we will print both the
 malloc error that we receive, as well as exit with an |APLERR_MALLOC|
 code, printing the appropriate error message. 
 
-@<Set |array->data| to region of |dsize| bytes@>=
+@<Set |DATA(a)| to region of |s| bytes@>=
 {
-	void *data;
-	data = array->data;
-	free(data);
-	if ((data = malloc(dsize)) == NULL) {
+	AplScalar *d;
+	free(DATA(a));
+	if ((d = malloc(s)) == NULL) {
 		perror("alloc_array()");
 		apl_error(APLERR_MALLOC);
 		exit(APLERR_MALLOC);
 	}
-	array->data = data;
-	array->size = dsize;
+	DATA(a) = d;
+	SIZE(a) = s;
 }
 
 @ There are times when we may want to preserve the contents of an 
@@ -787,16 +788,16 @@ array as we resize it to hold more elements or the like. To handle
 these situations, we provide the |realloc_array| function that is 
 basically the same as the |alloc_array| function except that it 
 guarantees that the contents of the array will be the same up 
-to the |size(array)| of the |array|. 
+to the |count(array)| of the |array|. 
 
 @<Memory management functions@>=
-void realloc_array(AplArray *array, AplType type)
+void realloc_array(AplArray *a, AplType t)
 {
-	size_t dsize;
-	dsize = sizeof(AplScalar) * size(array);
-	if (array->data == NULL || dsize > array->size) 
-		@<Reallocate |array->data| to at least |dsize| bytes@>@;
-	array->type = type;
+	size_t s;
+	s = sizeof(AplScalar) * count(a);
+	if (DATA(a) == NULL || s > SIZE(a)) 
+		@<Reallocate |DATA(a)| to at least |s| bytes@>@;
+	TYPE(a) = t;
 }
 
 @ In this case, we will work like we did with the previous 
@@ -804,53 +805,41 @@ case using |malloc|, but using |realloc| instead of |malloc| to
 do the allocation. We will also return the same error message in case 
 of a failure.
 
-@<Reallocate |array->data| to at least |dsize| bytes@>=
+@<Reallocate |DATA(a)| to at least |s| bytes@>=
 {
-	void *data;
-	data = array->data;
-	if ((data = realloc(data, dsize)) == NULL) {
+	AplScalar *d;
+	if ((d = realloc(DATA(a), s)) == NULL) {
 		perror("realloc_array()");
 		apl_error(APLERR_MALLOC);
 		exit(APLERR_MALLOC);
 	}
-	array->data = data;
-	array->size = dsize;
+	DATA(a) = d;
+	SIZE(a) = s;
 }
 
-
-@ We also have a little helper utility that we use in both of the 
-above functions to determin the size of a given type. XXX: I do not 
-think that we need this any longer.
-
-@<Utility functions@>=
-size_t type_size(AplType type) 
-{
-	switch(type) {
-	case INT: return sizeof(AplInt);
-	case REAL: return sizeof(AplReal);
-	case CHAR: return sizeof(AplChar);
-	default: return 0;
-	}
-}
 
 @ It is extremely useful to be able to copy the contents of one 
 array into another. This is a simple function, and we do some 
 allocation on the destination to ensure that we have enough space, 
 but otherwise, it is a straightforward function.
-It is an interesting note that we do not copy the entire |src->data| 
+It is an interesting note that we do not copy the entire |DATA(src)| 
 to the destination array. Instead, we copy only what is needed to 
-store |size(dst)| elements worth of the data, because that is all 
+store |count(dst)| elements worth of the data, because that is all 
 that is needed by the destination array.  It is presumed that the 
-data beyond this point is probably junk.
+data beyond this point is probably junk. We can also only copy the 
+array after it has been fully computed, so future arrays are defutured 
+before being copied.
 
 @<Memory management functions@>=
 void copy_array(AplArray *dst, AplArray *src) 
 {
 	if (dst == src) return;
-
+	
+	defutr(src);
 	copy_shape(dst, src);
-	alloc_array(dst, src->type);
-	memcpy(dst->data, src->data, dst->size);
+	alloc_array(dst, TYPE(src));
+	FUTR(dst) = 0;
+	memcpy(DATA(dst), DATA(src), SIZE(dst));
 }
 
 @ Naturally, we also want to be able to free those things that we 
@@ -863,12 +852,13 @@ which was holding the data. It will initialize the fields back to
 something sane, however.
 
 @<Memory management functions@>=
-void free_data(AplArray *arr)
+void free_data(AplArray *a)
 {
-	free(arr->data);
-	arr->data = NULL;
-	arr->size = 0;
-	arr->type = UNSET;
+	free(DATA(a));
+	DATA(a) = NULL;
+	SIZE(a) = 0;
+	TYPE(a) = UNSET;
+	FUTR(a) = 0;
 }
 
 @* Primitive scalar functions. Now we come to the fun part, where we 
@@ -907,8 +897,8 @@ but all of the other sections are the same for each scalar function.
 
 @<Compute dyadic scalar function |op|@>=
 orig = NULL;
-lftstp = is_scalar(lft) ? 0 : 1;
-rgtstp = is_scalar(rgt) ? 0 : 1;
+lftstp = SCALAR(lft) ? 0 : 1;
+rgtstp = SCALAR(rgt) ? 0 : 1;
 @<Allocate |res|, dealing with shared inputs and output structures@>@;
 @<Dyadically apply |op| over |rgt| and |lft| by |rgtstp| and |lftstp|@>@;
 @<Clean-up after scalar function@>@;
@@ -932,23 +922,23 @@ dyadic scalar functions. We will talk more about this in the dyadic
 case, but for now, it suffices to know that we will never have a 
 case where we do not want to traverse the result data array and the 
 input data array in lock-step, a single element at a time; and, that
-we will do this exactly |size(res)| times, which should be equivalent 
-to |size(rgt)|.
+we will do this exactly |count(res)| times, which should be equivalent 
+to |count(rgt)|.
 
 @<Apply |op| monadically into |res| over |rgt|@>=
 {
-	size_t count;
-	AplScalar *resd, *rgtd;
+	size_t c;
+	AplScalar *zd, *rd;
 
-	resd = res->data;
-	rgtd = rgt->data;
+	zd = DATA(res);
+	rd = DATA(rgt);
 
-	for (count = size(res); count--; resd++, rgtd++) op(resd, rgtd);
+	for (c = count(res); c--; zd++, rd++) op(zd, rd);
 }
 
 @ The dyadic case becomes a bit more complex, because, while we must 
 assume that |res| is already an allocated array, and we know the 
-|size(res)| will tell us how many elements we are iterating, we also 
+|count(res)| will tell us how many elements we are iterating, we also 
 have the situation where we may have a scalar argument that we distribute 
 over a non-scalar array. To handle this, we assume that |rgtstp| and 
 |lftstp| are variables assigned to the step amounts for the |rgt| and |lft|
@@ -959,15 +949,15 @@ over another array, this step count will be zero.
 
 @<Dyadically apply |op| over |rgt| and |lft| by |rgtstp| and |lftstp|@>=
 {
-	size_t count;
-	AplScalar *resd, *lftd, *rgtd;
+	size_t c;
+	AplScalar *zd, *ld, *rd;
 
-	resd = res->data;
-	lftd = lft->data;
-	rgtd = rgt->data;
+	zd = DATA(res);
+	ld = DATA(lft);
+	rd = DATA(rgt);
 
-	for (count = size(res); count--; resd++, lftd+=lftstp, rgtd+=rgtstp)
-		op(resd, lftd, rgtd);
+	for (c = count(res); c--; zd++, ld+=lftstp, rd+=rgtstp)
+		op(zd, ld, rd);
 }
 
 @ Now we need to talk about how we allocate the result array |res|. 
@@ -1015,11 +1005,11 @@ if (lft == rgt) {
 		alloc_array(res, restype);
 	}
 } else if (res == lft) {
-	if (!shpeq(lft, rgt) && is_scalar(lft)) TEMPRES(rgt)@;
+	if (!shpeq(lft, rgt) && SCALAR(lft)) TEMPRES(rgt)@;
 } else if (res == rgt) {
-	if (!shpeq(lft, rgt) && is_scalar(rgt)) TEMPRES(lft)@;
+	if (!shpeq(lft, rgt) && SCALAR(rgt)) TEMPRES(lft)@;
 } else {
-	if (shpeq(lft, rgt) || is_scalar(lft)) copy_shape(res, rgt);
+	if (shpeq(lft, rgt) || SCALAR(lft)) copy_shape(res, rgt);
 	else copy_shape(res, lft);
 	alloc_array(res, restype);
 } 
@@ -1050,9 +1040,9 @@ put that data into the right place in the case that |orig != NULL|.
 
 @<Clean-up after scalar function@>=
 if (NULL != orig) {
-	free(orig->data);
-	orig->size = res->size;
-	orig->data = res->data;
+	free(DATA(orig));
+	SIZE(orig) = SIZE(res);
+	DATA(orig) = DATA(res);
 }
 
 @*1 Implementing Plus and Identity.
@@ -1061,10 +1051,10 @@ scalar abstractions, let's take a whack at
 trying to implement the more specific functions, namely, the |plus| 
 function. We need to define a few things. Firstly, we need to know 
 the domain on which |plus| operates. In this case, it is a dyadic 
-function which works only in |INT| and |REAL| types. The resulting 
+function which works only in |APLINT| and |APLREAL| types. The resulting 
 type of the computation should be determined by the largest 
-input type, which means that two |INT| types are |INT| results, 
-but everything else is a |REAL|. We can define the main 
+input type, which means that two |APLINT| types are |APLINT| results, 
+but everything else is a |APLREAL|. We can define the main 
 |plus| function as follows.
 
 @<Scalar APL functions@>=
@@ -1072,21 +1062,21 @@ void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
 	@<Declare dyadic scalar function variables@>@;
 	
-	if (lft->type == INT) {
-		if (rgt->type == INT) {
+	if (TYPE(lft) == APLINT) {
+		if (TYPE(rgt) == APLINT) {
 			op = plus_int_int;
-			restype = INT;
-		} else if (rgt->type == REAL) {
+			restype = APLINT;
+		} else if (TYPE(rgt) == APLREAL) {
 			op = plus_int_real;
-			restype = REAL;
+			restype = APLREAL;
 		} else goto err;
-	} else if (lft->type == REAL) {
-		if (rgt->type == INT) {
+	} else if (TYPE(lft) == APLREAL) {
+		if (TYPE(rgt) == APLINT) {
 			op = plus_real_int;
-			restype = REAL;
-		} else if (rgt->type == REAL) {
+			restype = APLREAL;
+		} else if (TYPE(rgt) == APLREAL) {
 			op = plus_real_real;
-			restype = REAL;
+			restype = APLREAL;
 		} else goto err;
 	} else goto err;
 	@#
@@ -1104,17 +1094,17 @@ We have four cases of addition that we need to handle. Each of them
 can be expressed with the C |+| operation, so a macro suffices to 
 help us define each function.
 
-@d COPFUNC(nm, op, zt, lt, rt)@/
+@d COPFUNC(nm, op, ZT, LT, RT)@/
 void nm(AplScalar *res, AplScalar *lft, AplScalar *rgt)@/
 {
-	res->zt = (lft->lt) op (rgt->rt);
+	ZT(res) = LT(lft)@,op@,RT(rgt);
 }
 
 @<Utility functions@>=
-COPFUNC(plus_int_int, +, intv, intv, intv)@;
-COPFUNC(plus_int_real, +, real, intv, real)@;
-COPFUNC(plus_real_int, +, real, real, intv)@;
-COPFUNC(plus_real_real, +, real, real, real)@;
+COPFUNC(plus_int_int, +, INT, INT, INT)@;
+COPFUNC(plus_int_real, +, REAL, INT, REAL)@;
+COPFUNC(plus_real_int, +, REAL, REAL, INT)@;
+COPFUNC(plus_real_real, +, REAL, REAL, REAL)@;
 
 @ The |identity| function is the monadic form of the $+$ function 
 in APL. In this case, since we know that it is the identity function, 
@@ -1140,21 +1130,21 @@ void minus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *fun)
 {
 	@<Declare dyadic scalar function variables@>@;
 	
-	if (lft->type == INT) {
-		if (rgt->type == INT) {
+	if (TYPE(lft) == APLINT) {
+		if (TYPE(rgt) == APLINT) {
 			op = minus_int_int;
-			restype = INT;
-		} else if (rgt->type == REAL) {
+			restype = APLINT;
+		} else if (TYPE(rgt) == APLREAL) {
 			op = minus_int_real;
-			restype = REAL;
+			restype = APLREAL;
 		} else goto err;
-	} else if (lft->type == REAL) {
-		if (rgt->type == INT) {
+	} else if (TYPE(lft) == APLREAL) {
+		if (TYPE(rgt) == APLINT) {
 			op = minus_real_int;
-			restype = REAL;
-		} else if (rgt->type == REAL) {
+			restype = APLREAL;
+		} else if (TYPE(rgt) == APLREAL) {
 			op = minus_real_real;
-			restype = REAL;
+			restype = APLREAL;
 		} else goto err;
 	} else goto err;
 	@#
@@ -1170,10 +1160,10 @@ err:
 a different C operator.
 
 @<Utility functions@>=
-COPFUNC(minus_int_int, -, intv, intv, intv)@;
-COPFUNC(minus_int_real, -, real, intv, real)@;
-COPFUNC(minus_real_int, -, real, real, intv)@;
-COPFUNC(minus_real_real, -, real, real, real)@;
+COPFUNC(minus_int_int, -, INT, INT, INT)@;
+COPFUNC(minus_int_real, -, REAL, INT, REAL)@;
+COPFUNC(minus_real_int, -, REAL, REAL, INT)@;
+COPFUNC(minus_real_real, -, REAL, REAL, REAL)@;
 
 @* Non-scalar primitive functions. In this section we will deal with 
 the class of functions that are non-scalar. These do not have the 
@@ -1198,22 +1188,29 @@ more complicated setup next.
 @<Non-scalar APL functions@>=
 void index_gen(AplArray *res, AplArray *rgt, AplFunction *env)
 {
-	short rnk;
-	unsigned int siz;
-	if (INT != rgt->type) {
+	size_t cnt;
+	if (APLINT != TYPE(rgt)) {
 		apl_error(APLERR_DOMAIN);
 		exit(APLERR_DOMAIN);
 	}
-	rnk = rank(rgt);
-	siz = size(rgt);
-	if (rnk == 0 || (rnk == 1 && siz == 1)) {
-		int i;
-		AplScalar *data;
-		res->shape[0] = rgt->data->intv;
-		alloc_array(res, INT);
-		for (i = 0, data = res->data; i < res->shape[0];)
-			(data++)->intv = i++;
-	} else @<Compute indexes of non-scalar vector@>@;
+	cnt = count(rgt);
+	if (RANK(rgt) == 0 || (RANK(rgt) == 1 && cnt == 1)) 
+		@<Compute indexes of scalar or one-element vector@>@;
+	else @<Compute indexes of non-scalar vector@>@;
+}
+
+@ In the special case where we have a single scalar argument or a 
+one-element vector, it's easy to calculate the result explicitly, without 
+needing to use more expensive indexing functions.
+
+@<Compute indexes of scalar or one-element vector@>=
+{
+	AplInt i;
+	AplScalar *d;
+	RANK(res) = 1;
+	*SHAPE(res) = INT(DATA(rgt));
+	alloc_array(res, APLINT);
+	for (i = 0, d = DATA(res); i < *SHAPE(res); INT(d++) = i++);
 }
 
 @ Now let's consider the main case of the Iota (properly, then |index|) 
@@ -1243,17 +1240,17 @@ a doubly nested loop to give us the $i$ and $j$ elements.
 
 @<Compute indexes of non-scalar vector@>=
 {
-	unsigned int *p, prod;
+	size_t *p, prod;
 	int i, j;
 	AplScalar *v, *a;
 
-	v = rgt->data;
-	a = res->data;
+	v = DATA(rgt);
+	a = DATA(res);
 	prod = product(rgt);
 	@<Compute |p| vector@>@;
 	for (i = 0; i < prod; i++)
-		for (j = 0; j < siz; j++)
-			(a++)->intv = (i / p[j]) % v[j].intv;
+		for (j = 0; j < cnt; j++)
+			INT(a++) = (i / p[j]) % INT(v+j);
 	free(p);
 }
 
@@ -1263,14 +1260,14 @@ considering. The easiest way to do this is to start at the end
 and move towards the front.
 
 @<Compute |p| vector@>=
-p = malloc(siz * sizeof(unsigned int));
+p = malloc(cnt * sizeof(size_t));
 if (p == NULL) {
 	apl_error(APLERR_MALLOC);
 	exit(APLERR_MALLOC);
 }
-p[siz - 1] = 1;
-for (i = siz - 1; i > 0; i--)
-	p[i-1] = p[i] * v[i].intv;
+p[cnt - 1] = 1;
+for (i = cnt - 1; i > 0; i--)
+	p[i-1] = p[i] * INT(v+i);
 
 @*1 The Indexing function. 
 One of the most important functions in APL is the indexing 
@@ -1282,7 +1279,7 @@ $\rho I$ is less than or equal to the length of |S|, the
 indexing function |index(R, I, A, NULL)| stores into |R| the 
 subarray of |A| whose shape is $(\rho I)\downarrow S$. 
 That is, the subarray selected by $A[I_0;\ldots;I_n;\ldots]$ where 
-|n == size(I)|, or $n = \rho I$ in APL notation. 
+|n == count(I)|, or $n = \rho I$ in APL notation. 
 If $(\rho I)\equiv\rho S$ then |R| is a scalar and $\rho R$ is the 
 empty array. For more information about this function, see the Dyalog 
 Language Reference or another book on APL, such as The Mathematics 
@@ -1300,52 +1297,49 @@ following outline for the |index()| function.
 void index(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
         int i;
-        AplScalar *src, *dst;
-        unsigned int *shpi, *shpo;
-        AplScalar *idx;
+        AplScalar *src, *dst, *idx;
+        AplInt *shpi;
         size_t rng, cnt;
-        cnt = size(lft);
         @<Compute the shape and allocate |res|@>@;
         @<Copy data into result array@>@;
 }
 
 @ We compute the result shape by grabbing the shape from the end of
-|rgt->shape|. That is, since the shape of the result is 
-$(\rho I)\downarrow\rho S$, we perform the drop directly on |rgt->shape| by
-copying the elements of |rgt->shape| from the |size(lft)| element to
-the shape terminator |SHAPE_END|. We can then allocate the array by
+|SHAPE(rgt)|. That is, since the shape of the result is 
+$(\rho I)\downarrow\rho S$, we perform the drop directly on |SHAPE(rgt)| by
+copying the elements of |SHAPE(rgt)| from the |count(lft)| element to the end.
+We can then allocate the array by
 using the type from |rgt|, but we must be careful to use
 |realloc_array| when |res == rgt|, since we must preserve the elements
 in the buffer in that case. 
 
 @<Compute the shape and allocate |res|@>=
-shpo = res->shape;
-shpi = res->shape + cnt;
-while (*shpi != SHAPE_END) *shpo++ = *shpi++;
-*shpo = SHAPE_END;
-if (res == rgt) realloc_array(res, rgt->type);
-else alloc_array(res, rgt->type);
+cnt = count(lft);
+RANK(res) = RANK(rgt) - cnt;
+memcpy(SHAPE(res), SHAPE(rgt) + cnt, sizeof(AplScalar) * RANK(res));
+if (res == rgt) realloc_array(res, TYPE(rgt));
+else alloc_array(res, TYPE(rgt));
 
 @ Copying the data elements is somewhat obvious. We do need to do some
 work at the beginning to set the |src| pointer to where our subarray
 starts first. When doing this we use |rng| to mean the range from the
-start, |rgt->data|, to the place where we want to begin copying, using
+start, |DATA(rgt)|, to the place where we want to begin copying, using
 elements as the unit. After this, we can get the range |rng| of the
-elements in the result array using the size of |res|. The only other
+elements in the result array using the count of |res|. The only other
 important consideration is to ensure that we use |memmove| when 
 |res == rgt| to deal with potentially overlapping regions.
 
 @<Copy data into result array@>=
-dst = res->data;
-src = rgt->data;
-shpi = rgt->shape;
-idx = lft->data;
+dst = DATA(res);
+src = DATA(rgt);
+shpi = SHAPE(rgt);
+idx = DATA(lft);
 for (rng = 0, i = 1; i < cnt; i++) {
-        rng += (idx++)->intv;
+        rng += INT(idx++);
         rng *= *++shpi;
 }
 src += rng;
-rng = size(res) * sizeof(AplScalar);
+rng = count(res) * sizeof(AplScalar);
 if (res == rgt) memmove(dst, src, rng);
 else memcpy(dst, src, rng);
 
@@ -1365,11 +1359,11 @@ $$X+\ddot{ }\ X\gets\iota 100$$
 @<Example use of an APL operator@>=
 AplFunction myeach, myplus;
 AplArray z, a;
-alloc_array(&a, INT);
-a.data[0] = 100;
+alloc_array(&a, APLINT);
+INT(a.data) = 100;
 index(&a, &a, NULL);
-init_function(&myplus, identity, plus, NULL, NULL, NULL);
-init_function(&myeach, eachm, eachd, &myplus, NULL, NULL);
+init_function(&myplus, identity, plus, 0, NULL, NULL, NULL);
+init_function(&myeach, eachm, eachd, 0, &myplus, NULL, NULL);
 applydyadic(&myeach, &z, &a, &a);
 
 @ As you can see in the above example, we must create a closure 
@@ -1383,7 +1377,7 @@ Thus, we could have eliminated the indirection of the application
 by calling |each| directly. You can see this here below.
 
 @<Trading out the application@>=
-each(&z, &a, &a, &myeach);
+eachd(&z, &a, &a, &myeach);
 
 @ Like the non-scalar APL functions, each APL operator is slightly 
 unique, and requires its own implementation. This means that there 
@@ -1425,7 +1419,6 @@ void eachd(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 { 
 	@<Declare common |each| variables@>@;
 	AplArray *shp, l; /* Shape template for result and extra temporary */
-	short lftrnk; /* Ranks of |lft| */
 	@<Initialize variables for |eachd|@>@;
 	@<Deal with the simple cases of |eachd|@>@;
 	@<Allocate |res| in |eachd|@>@;
@@ -1441,14 +1434,13 @@ AplArray z, r; /* Scalar temporaries for the loop */
 AplArray tmp; /* Temporary array in case it is needed */
 AplArray *orig; /* Original array in case of a copy in |res| */
 AplFunction *func; /* Function to apply */
-unsigned int cnt; /* Number of elements to iterate */
+size_t cnt; /* Number of elements to iterate */
 AplScalar *resd; /* Result buffer pointing somewhere in |res->data| */
-short rgtrnk; /* Rank of the |rgt| array */
 short clean; /* Indicates whether cleanup is necessary */
 
 @ Let's do the initialization first. We want to initialize all the 
 variables that we can ahead of time, but there are some variables, 
-like |clean| and |size| that we cannot do until we know more 
+like |clean| and |cnt| that we cannot do until we know more 
 about the relationship between all of the arguments. Otherwise, 
 we need to make sure that all of our arrays are initialized and 
 that we have the rank of the input array(s).
@@ -1457,15 +1449,13 @@ that we have the rank of the input array(s).
 init_array(&z);
 init_array(&r);
 init_array(&tmp);
-rgtrnk = rank(rgt);
-func = (AplFunction *) env->lop;
+func = LOP(env);
 orig = NULL;
 
 @ @<Initialize variables for |eachd|@>=
 @<Initialize variables for |eachm|@>@;
 init_array(&l);
 init_array(&tmp);
-lftrnk = rank(lft);
 
 @ Both the monadic and dyadic forms of |each| have simple cases 
 where we can avoid most of the other work. In both forms, if we are 
@@ -1476,10 +1466,10 @@ then we know a little something about the arrays, and we should
 save that for use later. 
 
 @<Deal with the simple cases of |eachm|@>=
-if (rgtrnk == 0) {
+if (RANK(rgt) == 0) {
 	applymonadic(func, res, rgt);
 	return;
-} else if ((cnt = size(rgt)) == 0) {
+} else if ((cnt = count(rgt)) == 0) {
 	copy_array(res, rgt);
 	return;
 }
@@ -1491,14 +1481,14 @@ shape of the main function into the |shp| variable. This will be
 used later on to determine the shape of the result array. 
 
 @<Deal with the simple cases of |eachd|@>=
-if (lftrnk == 0 && rgtrnk == 0) {
+if (RANK(lft) == 0 && RANK(rgt) == 0) {
 	applydyadic(func, res, lft, rgt);
 	return;
-} else if (rgtrnk == 0) {
-	cnt = size(lft);
+} else if (RANK(rgt) == 0) {
+	cnt = count(lft);
 	shp = lft;
 } else {
-	cnt = size(rgt);
+	cnt = count(rgt);
 	shp = rgt;
 }
 if (cnt == 0) {
@@ -1534,7 +1524,7 @@ the previous section apply here.
 
 @<Allocate |res| in |eachd|@>=
 if (res == rgt || res == lft) {
-	if (res == shp || lftrnk == rgtrnk) { /* XXX WRONG */
+	if (res == shp || RANK(lft) == RANK(rgt)) { /* XXX WRONG */
 		clean = 0;
 	} else {
 		copy_shape(&tmp, shp);
@@ -1577,10 +1567,11 @@ safely return from the function.
 @<Do any cleanup necessary in |each|@>=
 switch (clean) {
 case EACH_COPY:
-	free(orig->data);
-	orig->size = tmp.size;
-	orig->data = tmp.data;
-	orig->type = tmp.type;
+	free(DATA(orig));
+	SIZE(orig) = SIZE(&tmp);
+	DATA(orig) = DATA(&tmp);
+	TYPE(orig) = TYPE(&tmp);
+	FUTR(orig) = FUTR(&tmp);
 	copy_shape(orig, &tmp);
 	break;
 }
@@ -1594,33 +1585,35 @@ the data fields of the |z|, |l|, and |r| scalar temporaries along
 the larger data fields of the main inputs and outputs. 
 
 @<Apply $\alpha\alpha$ monadically on each element@>=
-resd = res->data;
-r.type = rgt->type;
-r.size = sizeof(AplScalar);
-r.data = rgt->data;
-if (func->step) @<Apply step monadically on each element@>@;
+resd = DATA(res);
+TYPE(&r) = TYPE(rgt);
+SIZE(&r) = sizeof(AplScalar);
+DATA(&r) = DATA(rgt);
+if (STEP(func)) @<Apply step monadically on each element@>@;
 else {
-	for (r.data = rgt->data; cnt--; r.data++) {
+	for (DATA(&r) = DATA(rgt); cnt--; DATA(&r)++) {
 		applymonadic(func, &z, &r);
-		*resd++ = *z.data;
+		*resd++ = *DATA(&z);
 	}
-	res->type = z.type;
+	TYPE(res) = TYPE(&z);
+	FUTR(res) = 0;
 }
 
 @ The dyadic case is virtually unchanged from this but for the 
 extra argument.
 
 @<Apply $\alpha\alpha$ dyadically on each element@>=
-l.size = r.size = sizeof(AplScalar);
-l.type = lft->type; r.type = rgt->type;
-resd = res->data;
-if (func->step) @<Apply step dyadically on each element@>@;
+SIZE(&l) = SIZE(&r) = sizeof(AplScalar);
+TYPE(&l) = TYPE(lft); TYPE(&r) = TYPE(rgt);
+resd = DATA(res);
+if (STEP(func)) @<Apply step dyadically on each element@>@;
 else {
-	for (l.data = lft->data, r.data = rgt->data; cnt--; l.data++, r.data++) {
+	for (DATA(&l) = DATA(lft), DATA(&r) = DATA(rgt); 
+	    cnt--; DATA(&l)++, DATA(&r)++) {
 		applydyadic(func, &z, &l, &r); 
-		*resd++ = *z.data;
+		*resd++ = *DATA(&z);
 	}
-	res->type = z.type;
+	TYPE(res) = TYPE(&z);
 }
 
 @ The only temporary array that we allocate is |z|, implicitly by 
@@ -1641,7 +1634,7 @@ that can be queried. It will be empty before the value has been filled
 in by the thread, and full afterwards. We deal with step functions specially 
 in |each| because we do not want to incure the overhead involved with 
 creatind |AplFutr| objects for each element, and then converting out. Instead, 
-the result of |each| will be an array that has a |type| which is |UNSET| 
+the result of |each| will be an array that has a |TYPE| which is |UNSET| 
 but marked as being a future array of type |2|, meaning that each element 
 corresponds to an individual future, rather than the array being a single, 
 large future. Functions that operate only on certain elements may then 
@@ -1655,23 +1648,24 @@ that each element must be of the same type.
 
 @<Apply step monadically on each element@>=
 {
-	for (r.data = rgt->data; cnt--; r.data++) {
+	for (DATA(&r) = DATA(rgt); cnt--; DATA(&r)++) {
 		struct each_step_arg *appinfo;
-		appinfo = new_each_arg(func, NULL, &r, &res->type);
+		appinfo = new_each_arg(func, NULL, &r, &TYPE(res));
 		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
 	}
-	res->futr = 2;
+	FUTR(res) = 2;
 	defutr(res);
 }
 	
 @ @<Apply step dyadically on each element@>=
 {
-	for (l.data = lft->data, r.data = rgt->data; cnt--; l.data++, r.data++) {
+	for (DATA(&l) = DATA(lft), DATA(&r) = DATA(rgt); cnt--; 
+	    DATA(&l)++, DATA(&r)++) {
 		struct each_step_arg *appinfo;
-		appinfo = new_each_arg(func, &l, &r, &res->type);
+		appinfo = new_each_arg(func, &l, &r, &TYPE(res));
 		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
 	}
-	res->futr = 2;
+	FUTR(res) = 2;
 	defutr(res);
 }
 
@@ -1719,13 +1713,13 @@ new_each_arg(AplFunction *func, AplArray *lft, AplArray *rgt, AplType *type)
 
 @ Now we should talk about the actual |each_step| function. The job of 
 this function is to apply the |func| that we are given to the arguments 
-that we are given, and then extract the scalar value from the |data| 
+that we are given, and then extract the scalar value from the |DATA| 
 field and return it. We are expecting that the result is a scalar, but 
 we do not do any checking to ensure that this is the case. Additionally,
 since we are being lazy, we also set the type of our output array in 
 each case. We specifically bypass the usual checking that is done by the 
 |applymonadic| and |applydyadic| functions, and go directly to the 
-|applym| and |applyd| macros that are meant specifically for applying 
+|APPLYM| and |APPLYD| macros that are meant specifically for applying 
 normal functions. This is because we do not want to treat these functions 
 as step functions, since we have already spawned the requisite thread for 
 the computation.
@@ -1739,14 +1733,14 @@ aligned_t each_step(void *arg)
 	appinfo = arg;
 	init_array(&z);
 	
-	if (appinfo->lft.data == NULL)
-		applym(appinfo->func, &z, &appinfo->rgt);
+	if (DATA(&appinfo->lft) == NULL)
+		APPLYM(appinfo->func, &z, &appinfo->rgt);
 	else 
-		applyd(appinfo->func, &z, &appinfo->lft, &appinfo->rgt);
+		APPLYD(appinfo->func, &z, &appinfo->lft, &appinfo->rgt);
 	
-	*appinfo->type = z.type;
+	*appinfo->type = TYPE(&z);
 	
-	return *((aligned_t *) z.data);
+	return *((aligned_t *) DATA(&z));
 }
 
 @*1 The Reduce Operator.
@@ -1782,68 +1776,31 @@ general. This will work for now. We do not need to allocate the array if
 @<APL Operators@>=
 void reduce(AplArray *res, AplArray *rgt, AplFunction *env)
 {
-	unsigned int step, *shpo, *shpi, cleanup;
+	AplInt step;
 	AplFunction *fun;
-	AplArray tmp; 
-	fun = env->lop;
-	shpi = rgt->shape;
-	shpo = res->shape;
-	@<Check for |res == rgt| and use |tmp| if so@>@;
-	@<Set |res->shape| and determine |step| size@>@;
-	alloc_array(res, rgt->type);
+	fun = LOP(env);
+	@<Set |SHAPE(res)| and determine |step| size@>@;
+	if (res != rgt) alloc_array(res, TYPE(rgt));
 	@<Reduce over last axis@>@;
-	@<Cleanup if necessary@>@;
-}
-
-@ Unlike some other functions, doing an in-place update is harder than 
-it sounds, and so at the moment we will always create a fresh copy 
-for the result. This means that we need to sometime allocate a temporary 
-array to hold the results and then mark a |cleanup| bit to let us put 
-the data where it belongs at the end of the computation.
-
-@<Check for |res == rgt| and use |tmp| if so@>=
-if (res == rgt) {
-	init_array(&tmp);
-	res = &tmp;
-	cleanup = 1;
-} else {
-	cleanup = 0;
-}
-
-@ At the end we check the value of |cleanup| and replace the old data 
-in |rgt| if necessary. This happens only when |rgt == res|, and we 
-do this to make sure that the intended output array contains the results 
-that we want. 
-
-@<Cleanup if necessary@>=
-if (cleanup) {
-	free_data(rgt);
-	rgt->data = res->data;
-	rgt->size = res->size;
-	rgt->type = res->type;
 }
 
 @ We can know the shape of our output without running 
-our function. We do not set the shape of the output first because we 
-may have |res == rgt| and we do not want to break the shape information
-of |rgt| too early. We must retain the last dimension of our input array 
-as it reperesents our |step| amount. Once we have this information, we can 
-feel free to overwrite the input shape. We do not want to allocate the 
+our function. We avoid copying the shape information when |res == rgt|.
+The last dimension of our input array is the |step| size unless the 
+rank of the input array is 0, in which case our |step| size is 1.
+We do not want to allocate the 
 |res| array here because we have not yet dealt with special cases in 
 the input which might change our perspective.
 
-@<Set |res->shape| and determine |step| size@>=
-if (*shpi == SHAPE_END) {
+@<Set |SHAPE(res)| and determine |step| size@>=
+if (RANK(rgt) == 0) {
 	step = 1;
-	copy_shape(res, rgt);
-} else if (res == rgt) {
-	while (*shpi != SHAPE_END) shpi++;
-	step = shpi[-1];
-	shpi[-1] = SHAPE_END;
+	RANK(res) = 0;
 } else {
-	while (*shpi != SHAPE_END) *shpo++ = *shpi++;
-	step = shpo[-1];
-	shpo[-1] = SHAPE_END;
+	RANK(res) = RANK(rgt) - 1;
+	step = SHAPE(rgt)[RANK(res)];
+	if (res != rgt)
+		memcpy(SHAPE(res), SHAPE(rgt), sizeof(AplScalar) * RANK(res));
 }
 
 @ After determining the shape of |res|, |step| contains the
@@ -1853,18 +1810,24 @@ dealing either with a scalar input or an array whose last dimension is
 |1|. In either case, we know that we will not run |fun| on any of our
 inputs. In the scalar case, we are basically the identity function, and
 in the singular final dimension case we are the identity function with
-a small reshape that has zero effect on |size(res)|. This translates
+a small reshape that has zero effect on |count(res)|. This translates
 into a straight copy of the data in the case when |res != rgt|, and a
 no-op when they are the same object. Otherwise, we are dealing with 
 the cases where |step == 0| or |step > 1|, which both require a bit 
 more work, so we dedicate separate sections to handling them.
 
 @<Reduce over last axis@>=
-if (step == 0) { 
-	@<Fill |res| with identity of |fun|@>@;
-} else if (step == 1 && res != rgt) { 
-	memcpy(res->data, rgt->data, res->size); 
-} else @<Reduce over array whose |step >= 2|@>@;
+switch (step) {
+case 0: 
+	@<Fill |res| with identity of |fun|@>@;	
+	break;
+case 1: 
+	if (res != rgt) 
+		memcpy(DATA(res), DATA(rgt), sizeof(AplScalar) * count(res)); 
+	break;
+default: 
+	@<Reduce over array whose |step >= 2|@>@;
+}
 
 @ When |step == 0| we are dealing 
 with a case where we need to fill in the result with the identity 
@@ -1874,24 +1837,24 @@ function that we know about, and that we have an identity for.
 Otherwise we need to signal an error. 
 
 @<Fill |res| with identity of |fun|@>=
-int cnt;
-AplScalar *out;
-AplArray z;
+{
+	int c;
+	AplScalar *o;
+	AplArray z;
 
-init_array(&z);
-
-if (function_identity(&z, fun)) {
-	apl_error(APLERR_NOIDENTITY);
-	exit(APLERR_NOIDENTITY);
+	init_array(&z);
+	if (function_identity(&z, fun)) {
+		apl_error(APLERR_NOIDENTITY);
+		exit(APLERR_NOIDENTITY);
+	}
+	if (TYPE(&z) != TYPE(res)) {
+		apl_error(APLERR_DOMAIN);
+		exit(APLERR_DOMAIN);
+	}
+	o = DATA(res);
+	for (c = count(res); c--;) *o++ = *DATA(&z);
+	free_data(&z);
 }
-if (z.type != res->type) {
-	apl_error(APLERR_DOMAIN);
-	exit(APLERR_DOMAIN);
-}
-
-out = res->data;
-for (cnt = size(res); cnt--;) *out++ = *z.data;
-free_data(&z);
 
 @ The |function_identity| function is used to fill its first argument,
 which is of type |AplArray *|, with a scalar array whose value is 
@@ -1903,18 +1866,16 @@ is no identity function corresponding to the function given.
 @<Utility functions@>=
 int function_identity(AplArray *res, AplFunction *fun)
 {
-	unsigned int *shp;
 	int ret;
-	AplDyadic codeptr;
+	AplDyadic ptr;
 	
-	shp = res->shape;
-	while (*shp != SHAPE_END) *shp++ = SHAPE_END;
+	RANK(res) = 0;
 	ret = 0;
-	codeptr = fun->dyadic;
+	ptr = DYADIC(fun);
 	
-	if (codeptr == plus) {
-		alloc_array(res, INT);
-		res->data->intv = 0;
+	if (ptr == plus) {
+		alloc_array(res, APLINT);
+		INT(DATA(res)) = 0;
 	} else {
 		ret = 1;
 	}
@@ -1930,30 +1891,28 @@ the contiguous block of memory in our array region, in order, each of
 the size of the vector whose shape is the last dimension of the input 
 array. Each of these regions will be reduced to a single scalar value.
 These are in the same order in the output array |res| as the vector 
-segments appear in the input array |rgt|. Since we reduce in right to 
-left order, we simply start at the end of one segment, reducing it down 
-until we hit the beginning, and then hop to the next segment to begin 
-the same process again. 
+segments appear in the input array |rgt|. Thus, we compute each element 
+of the |res| array in turn, letting |p| point to the start of the next 
+segment.
 
 @<Reduce over array whose |step >= 2|@>=
 {
-	AplScalar *start, *end, *next;
-	AplArray r, l;
-	init_array(&r);
+	size_t c, s;
+	AplScalar *p, *d;
+	AplArray z, l;
+	init_array(&z);
 	init_array(&l);
-	r.type = l.type = rgt->type;
-	r.size = l.size = sizeof(AplScalar);
-	start = rgt->data;
-	end = start + size(rgt) * step;
-	r.data = res->data;
-	for (r.data = res->data; start != end; start = next, r.data++) {
-		next = start + step;
-		*r.data = *(l.data = next -1);
-		do {
-			l.data--;
-			applydyadic(fun, &r, &l, &r);
-		} while (l.data != start);
+	TYPE(&l) = TYPE(rgt);
+	SIZE(&l) = sizeof(AplScalar);
+	alloc_array(&z, TYPE(rgt));
+	d = DATA(res);
+	for (c = count(res), p = DATA(rgt) + step; c--; p+=step) {
+		*DATA(&z) = p[-1];
+		DATA(&l) = p - 2;
+		for (s = step - 1; s--; DATA(&l)--) APPLYD(fun, &z, &l, &z);
+		*d++ = *DATA(&z);
 	}
+	free_data(&z);
 }
 
 @* Reporting runtime errors. Much as I would like to think that my 
@@ -2035,8 +1994,7 @@ void alloc_array(AplArray *, AplType);
 void realloc_array(AplArray *, AplType);
 void copy_array(AplArray *, AplArray *);
 void free_data(AplArray *);
-size_t size(AplArray *);
-short rank(AplArray *);@#
+size_t count(AplArray *);@#
 
 void identity(AplArray *, AplArray *, AplFunction *);
 void plus(AplArray *, AplArray *, AplArray *, AplFunction *);@#
