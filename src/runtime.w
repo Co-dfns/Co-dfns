@@ -843,7 +843,8 @@ void copy_array(AplArray *dst, AplArray *src)
 	copy_shape(dst, src);
 	alloc_array(dst, TYPE(src));
 	FUTR(dst) = 0;
-	memcpy(DATA(dst), DATA(src), SIZE(dst));
+	memcpy(DATA(dst), DATA(src), 
+	    SIZE(src) < SIZE(dst) ? SIZE(src) : SIZE(dst));
 }
 
 @ Naturally, we also want to be able to free those things that we 
