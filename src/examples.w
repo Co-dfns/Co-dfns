@@ -121,6 +121,7 @@ void ex2(void)
 	alloc_array(&x, APLINT);
 	INT(DATA(&x)) = 10;
 	index_gen(&z, &x, NULL);
+	actualize_idx(&z);
 	for (i = 0; i < 10; i++)
 		printf("%d ", INT(DATA(&z)+i));
 	printf("\n");
