@@ -760,7 +760,7 @@ when we do not care to keep the old contents of the array.
 void alloc_array(AplArray *a, AplType t)
 {
 	size_t s;
-	s = sizeof(AplScalar) * count(a);
+	s = (t == APLIOTA ? 2 : sizeof(AplScalar) * count(a));
 	if (DATA(a) == NULL || s > SIZE(a))
 		@<Set |DATA(a)| to region of |s| bytes@>@;
 	TYPE(a) = t;
@@ -798,7 +798,7 @@ to the |count(array)| of the |array|.
 void realloc_array(AplArray *a, AplType t)
 {
 	size_t s;
-	s = sizeof(AplScalar) * count(a);
+	s = (t == APLIOTA ? 2 : sizeof(AplScalar) * count(a));
 	if (DATA(a) == NULL || s > SIZE(a)) 
 		@<Reallocate |DATA(a)| to at least |s| bytes@>@;
 	TYPE(a) = t;
