@@ -91,13 +91,13 @@ void ex1(void)
 	AplArray z, x;
 	init_array(&z);
 	init_array(&x);
-	alloc_array(&z, INT);
-	alloc_array(&x, INT);
-	x.data->intv = 5;
+	alloc_array(&z, APLINT);
+	alloc_array(&x, APLINT);
+	INT(DATA(&x)) = 5;
 	plus(&z, &x, &x, NULL);
-	printf("%d\n", z.data->intv);
+	printf("%d\n", INT(DATA(&z)));
 	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
-	    size(&z), rank(&z), z.size);
+	    count(&z), RANK(&z), count(&z));
 	free_data(&z);
 	free_data(&x);
 }
@@ -118,14 +118,14 @@ void ex2(void)
 	AplArray z, x;
 	init_array(&z);
 	init_array(&x);
-	alloc_array(&x, INT);
-	x.data->intv = 10;
+	alloc_array(&x, APLINT);
+	INT(DATA(&x)) = 10;
 	index_gen(&z, &x, NULL);
 	for (i = 0; i < 10; i++)
-		printf("%d ", z.data[i].intv);
+		printf("%d ", INT(DATA(&z)+i));
 	printf("\n");
 	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
-	    size(&z), rank(&z), z.size);
+	    count(&z), RANK(&z), SIZE(&z));
 	free_data(&x);
 	free_data(&z);
 }
@@ -146,15 +146,15 @@ void ex3()
 	short i;
 	AplArray z;
 	init_array(&z);
-	alloc_array(&z, INT);
-	z.data->intv = 10;
+	alloc_array(&z, APLINT);
+	INT(DATA(&z)) = 10;
 	index_gen(&z, &z, NULL);
 	plus(&z, &z, &z, NULL);
 	for (i = 0; i < 10; i++)
-		printf("%d ", z.data[i].intv);
+		printf("%d ", INT(DATA(&z)+i));
 	printf("\n");
 	printf("Size: %lu\tRank: %d\t\tAllocated: %lu\n", 
-	    size(&z), rank(&z), z.size);
+	    count(&z), RANK(&z), SIZE(&z));
 	free_data(&z);
 }
 
@@ -175,15 +175,15 @@ void ex4()
 	AplFunction add;
 	AplFunction red;
 	init_array(&z);
-	alloc_array(&z, INT);
-	z.data->intv = 10;
+	alloc_array(&z, APLINT);
+	INT(DATA(&z)) = 10;
 	index_gen(&z, &z, NULL);
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	applymonadic(&red, &z, &z);
-	printf("%d\n", z.data->intv);
+	printf("%d\n", INT(DATA(&z)));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
-	    size(&z), rank(&z), z.size);
+	    count(&z), RANK(&z), SIZE(&z));
 	free_data(&z);
 }
 
@@ -195,9 +195,9 @@ else if (!strcmp(argv[1], "ex4")) {
 
 @* Example 5. Let's try making use of the each operator together with 
 some functions to get some interesting results. We will 
-compute $+/\{+/\iota\omega\}\eachop\iota 100$.
+compute $+/\{+/\iota\omega\}\eachop\iota 50000$.
 
-@<Ex 5. Compute $+/\{+/\iota\omega\}\eachop\iota 100$@>=
+@<Ex 5. Compute $+/\{+/\iota\omega\}\eachop\iota 50000$@>=
 void ex5_help(AplArray *res, AplArray *rgt, AplFunction *fun)
 {
 	AplFunction add;
@@ -213,8 +213,8 @@ void ex5()
 	AplFunction eac, fun, red, add;
 	AplArray x;
 	init_array(&x);
-	alloc_array(&x, INT);
-	x.data->intv = 50000;
+	alloc_array(&x, APLINT);
+	INT(DATA(&x)) = 50000;
 	index_gen(&x, &x, NULL);
 	init_function(&fun, ex5_help, NULL, 0, NULL, NULL, NULL);
 	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
@@ -222,23 +222,24 @@ void ex5()
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	applymonadic(&red, &x, &x);
-	printf("%d\n", x.data->intv);
+	printf("%d\n", INT(DATA(&x)));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
-	    size(&x), rank(&x), x.size);
+	    count(&x), RANK(&x), SIZE(&x));
+	free_data(&x);
 }
 
 @ @<Dispatch example based on |argv[1]|@>=
 else if (!strcmp(argv[1], "ex5")) {
-	msg = "Ex 5: Computing + / {+ / iota omega} each iota 100";
+	msg = "Ex 5: Computing + / {+ / iota omega} each iota 50000";
 	example = ex5;
 } 
 
 @* Example 6. This next example is the same as example 5, but we 
 will use a slightly larger number, and we will use step functions 
 to do the computation instead of normal functions. We will 
-compute $+/\{\{+/\iota\omega\}\}\eachop\iota 10000$.
+compute $+/\{\{+/\iota\omega\}\}\eachop\iota 50000$.
 
-@<Ex 6. Compute $+/\{+/\iota\omega\}\eachop\iota 10000$@>=
+@<Ex 6. Compute $+/\{+/\iota\omega\}\eachop\iota 50000$@>=
 void ex6_help(AplArray *res, AplArray *rgt, AplFunction *fun)
 {
 	AplFunction add;
@@ -256,8 +257,8 @@ void ex6()
 	qthread_initialize();
 	printf("Using %d shepherds\n", qthread_num_shepherds());
 	init_array(&x);
-	alloc_array(&x, INT);
-	x.data->intv = 50000;
+	alloc_array(&x, APLINT);
+	INT(DATA(&x)) = 50000;
 	index_gen(&x, &x, NULL);
 	init_function(&fun, ex5_help, NULL, 1, NULL, NULL, NULL);
 	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
@@ -265,16 +266,29 @@ void ex6()
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
 	init_function(&red, reduce, NULL, 0, &add, NULL, NULL);
 	applymonadic(&red, &x, &x);
-	printf("%d\n", x.data->intv);
+	printf("%d\n", INT(DATA(&x)));
 	printf("Size: %lu\tRank: %d\tAllocated: %lu\n", 
-	    size(&x), rank(&x), x.size);
+	    count(&x), RANK(&x), SIZE(&x));
 	qthread_finalize();
 }
 
 @ @<Dispatch example based on |argv[1]|@>=
 else if (!strcmp(argv[1], "ex6")) {
-	msg = "Ex 6: Computing + / {{+ / iota omega}} each iota 10000";
+	msg = "Ex 6: Computing + / {{+ / iota omega}} each iota 50000";
 	example = ex6;
 } 
+
+@* Example 7. Our next two examples will be to implement the famous 
+fibonacci. This first one demonstrates how you would do this normally, 
+without using any step functions. The APL for this looks like:
+
+$$fib\gets\{\lor/\omega=0\ 1: 1\mathrel\diamondsuit
++/fib\eachop\omega -1\ 2\}$$
+
+@<Ex 7. Compute $fib 30$@>=
+void fib(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *fun)
+{
+	
+}
 
 @* Index.
