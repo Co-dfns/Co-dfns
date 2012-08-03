@@ -1,6 +1,9 @@
-CFLAGS=-g -Wall -pedantic -std=c99 -fPIC
+CFLAGS=-g -O3 -Wall -pedantic -std=c99 -fPIC
 CC=gcc
 EX=4
+VALGOPTS="--tool=memcheck"
+PROCS=1
+ENV=QTHREAD_NUM_SHEPHERDS=${PROCS} LD_LIBRARY_PATH=.
 
 .SUFFIXES: .pdf .dvi .tex .w
 
@@ -17,10 +20,13 @@ EX=4
 all: runtime.pdf examples.pdf libhpapl.so examples
 
 run: examples
-	LD_LIBRARY_PATH=. ./examples ex${EX}
+	${ENV} ./examples ex${EX}
 
 debug: examples
-	LD_LIBRARY_PATH=. gdb examples
+	${ENV} gdb examples
+
+check:
+	${ENV} valgrind ${VALGOPTS} ./examples ex${EX}
 	
 examples: libhpapl.so examples.o
 	${CC} ${CFLAGS} -L. -o examples examples.o -lhpapl -lqthread
