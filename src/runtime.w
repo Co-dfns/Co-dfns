@@ -1777,11 +1777,25 @@ general. This will work for now. We do not need to allocate the array if
 void reduce(AplArray *res, AplArray *rgt, AplFunction *env)
 {
 	AplInt step;
+	AplFunction tf;
 	AplFunction *fun;
-	fun = LOP(env);
+	AplScalarDyadic op;
+	@<Determine |fun|@>@;
 	@<Set |SHAPE(res)| and determine |step| size@>@;
 	if (res != rgt) alloc_array(res, TYPE(rgt));
 	@<Reduce over last axis@>@;
+}
+
+@ The function that we use depends on whether we can find a known 
+scalar functions for the |LOP(env)|. If we can, then we will use that, 
+otherwise, we will just use the left operand as is.
+
+@<Determine |fun|@>=
+if ((op = known_scalard(plus, TYPE(rgt), TYPE(rgt))) == NULL) {
+	fun = LOP(env);
+} else {
+	init_function(&tf, NULL, scalard, 0, op, NULL, NULL);
+	fun = &tf;
 }
 
 @ We can know the shape of our output without running 
@@ -1843,7 +1857,7 @@ Otherwise we need to signal an error.
 	AplArray z;
 
 	init_array(&z);
-	if (function_identity(&z, fun)) {
+	if (function_identity(&z, LOP(env))) {
 		apl_error(APLERR_NOIDENTITY);
 		exit(APLERR_NOIDENTITY);
 	}
@@ -1913,6 +1927,47 @@ segment.
 		*d++ = *DATA(&z);
 	}
 	free_data(&z);
+}
+
+@* Improving performance. We would like to improve performance in functions 
+where we can. However, sometimes we need to establish special paths in order 
+to get the performance that we want. As a simple point, let's consider 
+operations that take functions which operate over scalars. In this case, 
+it is helpful, since we know the shapes ahead of time, if we can bypass 
+the shape checks and the like of the more general functions. We cannot 
+do this if we do not know what the function is, but if we do know what 
+the function is, then we can use the scalar functions instead.
+
+@<Utility functions@>=
+AplScalarDyadic known_scalard(AplDyadic fn, AplType ld, AplType rd)
+{
+	if (plus == fn) 
+		if (APLINT == ld) 
+			if (APLINT == rd) return plus_int_int;
+			else if (APLREAL == rd) return plus_int_real;
+			else return NULL;
+		else if (APLREAL == ld)
+			if (APLINT == rd) return plus_real_int;
+			else if (APLREAL == rd) return plus_real_real;
+			else return NULL;
+		else return NULL;
+	else return NULL;
+}
+
+@ We can enable easy use of this by creating a scalar function for 
+application that expects a known scalar function as its left operand.
+You can then use these when creating function closures.
+
+@<Utility functions@>=
+void scalard(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *fun)
+{
+	AplScalarDyadic op = LOP(fun);
+	op(DATA(res), DATA(lft), DATA(rgt));
+}
+void scalarm(AplArray *res, AplArray *rgt, AplFunction *fun)
+{
+	AplScalarMonadic op = LOP(fun);
+	op(DATA(res), DATA(rgt));
 }
 
 @* Reporting runtime errors. Much as I would like to think that my 
