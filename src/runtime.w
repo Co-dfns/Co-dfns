@@ -241,12 +241,16 @@ to the world as a type, as no one should actually need to know about
 it outside of the runtime. We use the macros |APLINT|, |APLREAL|, |APLCHAR|, and 
 |FUTR| as accessors to the union fields.
 
+The |APLIOTA| type is special in that it is a compressed representation 
+for arrays that are returned by certain invokations of the |index_gen| 
+function, or derivations from them. We discuss this in more detail later.
+
 @d INT(e) ((e)->intv)
 @d REAL(e) ((e)->real)
 @d CHAR(e) ((e)->chrv)
 
 @<Define |AplType|@>=
-enum apl_type { APLINT, APLREAL, APLCHAR, UNSET };
+enum apl_type { APLINT, APLREAL, APLCHAR, APLIOTA, UNSET };
 typedef enum apl_type AplType;
 typedef int AplInt;
 typedef double AplReal;
@@ -1965,7 +1969,8 @@ scalard(AplArray *res, AplArray *lft, AplArray *rgt, AplScalarFunction *fun)
 	AplScalarDyadic op = fun->sd;
 	op(DATA(res), DATA(lft), DATA(rgt));
 }
-void scalarm(AplArray *res, AplArray *rgt, AplScalarFunction *fun)
+void 
+scalarm(AplArray *res, AplArray *rgt, AplScalarFunction *fun)
 {
 	AplScalarMonadic op = fun->sm;
 	op(DATA(res), DATA(rgt));
