@@ -1078,6 +1078,7 @@ but everything else is a |APLREAL|. We can define the main
 void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
 	@<Declare dyadic scalar function variables@>@;
+	@<Actualize |APLIOTA| arrays@>@;
 	
 	if (TYPE(lft) == APLINT) {
 		if (TYPE(rgt) == APLINT) {
@@ -1146,6 +1147,7 @@ but with different operators.
 void minus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *fun)
 {
 	@<Declare dyadic scalar function variables@>@;
+	@<Actualize |APLIOTA| arrays@>@;
 	
 	if (TYPE(lft) == APLINT) {
 		if (TYPE(rgt) == APLINT) {
@@ -1212,22 +1214,46 @@ void index_gen(AplArray *res, AplArray *rgt, AplFunction *env)
 	}
 	cnt = count(rgt);
 	if (RANK(rgt) == 0 || (RANK(rgt) == 1 && cnt == 1)) 
-		@<Compute indexes of scalar or one-element vector@>@;
+		@<Create |APLIOTA| array@>@;
 	else @<Compute indexes of non-scalar vector@>@;
+}
+
+@ Most of the time, we want the index generation to happen 
+much more quickly than computing all the elements explicitly, 
+to enable operators and other functions to 
+take advantage of a more compact representation. This is the |APLIOTA| 
+array. It is a non future array of the same shape as the regular 
+arrays generated above, but the data fields number only two, with the 
+first being an |AplInt| pointing to the lower bound, and the second 
+pointing to the upper bound of the iota range. At this point, it will 
+always be in the range $[0, X)$ where $X$ is the scalar value of the
+input array.
+
+@<Create |APLIOTA| array@>=
+{
+	RANK(res) = 1;
+	*SHAPE(res) = INT(DATA(rgt));
+	alloc_array(res, APLIOTA);
+	INT(DATA(res)) = 0;
+	INT(DATA(res) + 1) = *SHAPE(res);
 }
 
 @ In the special case where we have a single scalar argument or a 
 one-element vector, it's easy to calculate the result explicitly, without 
-needing to use more expensive indexing functions.
+needing to use more expensive indexing functions. We can do this with 
+the |actualize_idx| function, which will take an |APLIOTA| array and 
+convert it to a regular |APLINT| array.
 
-@<Compute indexes of scalar or one-element vector@>=
+@<Utility functions@>=
+void actualize_idx(AplArray *res)
 {
-	AplInt i;
+	AplInt i, e;
 	AplScalar *d;
-	RANK(res) = 1;
-	*SHAPE(res) = INT(DATA(rgt));
+	i = 0;
+	e = INT(DATA(res) + 1);
 	alloc_array(res, APLINT);
-	for (i = 0, d = DATA(res); i < *SHAPE(res); INT(d++) = i++);
+	d = DATA(res);
+	for (i = 0, d = DATA(res); i < e; INT(d++) = i++);
 }
 
 @ Now let's consider the main case of the Iota (properly, then |index|) 
@@ -1317,6 +1343,7 @@ void index(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
         AplScalar *src, *dst, *idx;
         AplInt *shpi;
         size_t rng, cnt;
+	@<Actualize |APLIOTA| arrays@>@;
         @<Compute the shape and allocate |res|@>@;
         @<Copy data into result array@>@;
 }
@@ -1422,6 +1449,7 @@ void eachm(AplArray *res, AplArray *rgt, AplFunction *env)
 	@<Declare common |each| variables@>@;@#
 	@<Initialize variables for |eachm|@>@;
 	@<Deal with the simple cases of |eachm|@>@;
+	if (TYPE(rgt) == APLIOTA) actualize_idx(rgt);
 	@<Allocate |res| in |eachm|@>@;
 	@<Apply $\alpha\alpha$ monadically on each element@>@;
 	@<Do any cleanup necessary in |each|@>@;
@@ -1438,6 +1466,7 @@ void eachd(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 	AplArray *shp, l; /* Shape template for result and extra temporary */
 	@<Initialize variables for |eachd|@>@;
 	@<Deal with the simple cases of |eachd|@>@;
+	@<Actualize |APLIOTA| arrays@>@;
 	@<Allocate |res| in |eachd|@>@;
 	@<Apply $\alpha\alpha$ dyadically on each element@>@;
 	@<Do any cleanup necessary in |each|@>@;
@@ -1797,6 +1826,7 @@ void reduce(AplArray *res, AplArray *rgt, AplFunction *env)
 	AplScalarFunction tf;
 	AplFunction *fun;
 	AplScalarDyadic op;
+	if (TYPE(rgt) == APLIOTA) actualize_idx(rgt);
 	@<Determine |fun|@>@;
 	@<Set |SHAPE(res)| and determine |step| size@>@;
 	if (res != rgt) alloc_array(res, TYPE(rgt));
@@ -2103,7 +2133,8 @@ void alloc_array(AplArray *, AplType);
 void realloc_array(AplArray *, AplType);
 void copy_array(AplArray *, AplArray *);
 void free_data(AplArray *);
-size_t count(AplArray *);@#
+size_t count(AplArray *);
+void actualize_idx(AplArray *);@#
 
 void identity(AplArray *, AplArray *, AplFunction *);
 void plus(AplArray *, AplArray *, AplArray *, AplFunction *);@#
