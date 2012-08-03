@@ -474,8 +474,8 @@ have the same signature as their C function elements.
 
 @<Primary data structures@>=
 typedef struct apl_function AplFunction;
-typedef void (*AplMonadic)(AplArray *res, AplArray *, AplFunction *);
-typedef void (*AplDyadic)(AplArray *res,
+typedef void@,(*AplMonadic)(AplArray *res, AplArray *, AplFunction *);
+typedef void@,(*AplDyadic)(AplArray *res,
     AplArray *, AplArray *, AplFunction *);
 
 @ So, what is an |AplFunction| anyways? It is a structure to 
@@ -589,7 +589,7 @@ signature like this:
 \noindent In this case the |qthread_f| argument is a function pointer of 
 the following type:
 
-\medskip|aligned_t@/(*qthread_f)(void *arg);|\medskip
+\medskip|aligned_t@,(*qthread_f)(void *arg);|\medskip
 
 \noindent Basically, the function |f| will be called with |arg| and 
 its return value will be stored in |ret| using |qthread_writeF|, which 
@@ -877,8 +877,8 @@ arguments the arguments to the function.
 @s AplScalarDyadic int
 
 @<Primary data structures@>=
-typedef void (*AplScalarMonadic)(AplScalar *, AplScalar *);
-typedef void (*AplScalarDyadic)(AplScalar *, AplScalar *, AplScalar *);
+typedef void@,(*AplScalarMonadic)(AplScalar *, AplScalar *);
+typedef void@,(*AplScalarDyadic)(AplScalar *, AplScalar *, AplScalar *);
 
 @ All dyadic scalar functions using the following pattern of code retain
 the same  basic function body:@^Scalar functions, design pattern@>
@@ -1101,9 +1101,9 @@ void nm(AplScalar *res, AplScalar *lft, AplScalar *rgt)@/
 }
 
 @<Utility functions@>=
-COPFUNC(plus_int_int, +, INT, INT, INT)@;
-COPFUNC(plus_int_real, +, REAL, INT, REAL)@;
-COPFUNC(plus_real_int, +, REAL, REAL, INT)@;
+COPFUNC(plus_int_int, +, INT, INT, INT)@;@/
+COPFUNC(plus_int_real, +, REAL, INT, REAL)@;@/
+COPFUNC(plus_real_int, +, REAL, REAL, INT)@;@/
 COPFUNC(plus_real_real, +, REAL, REAL, REAL)@;
 
 @ The |identity| function is the monadic form of the $+$ function 
@@ -1160,9 +1160,9 @@ err:
 a different C operator.
 
 @<Utility functions@>=
-COPFUNC(minus_int_int, -, INT, INT, INT)@;
-COPFUNC(minus_int_real, -, REAL, INT, REAL)@;
-COPFUNC(minus_real_int, -, REAL, REAL, INT)@;
+COPFUNC(minus_int_int, -, INT, INT, INT)@;@/
+COPFUNC(minus_int_real, -, REAL, INT, REAL)@;@/
+COPFUNC(minus_real_int, -, REAL, REAL, INT)@;@/
 COPFUNC(minus_real_real, -, REAL, REAL, REAL)@;
 
 @* Non-scalar primitive functions. In this section we will deal with 
@@ -1978,6 +1978,8 @@ same as an |AplFunction| but with the left and right operand fields
 changed to use |AplScalarMonadic| and |AplScalarDyadic| pointers instead.
 This structure has just enough fields the same to enable it to be 
 used in place of an |AplFunction| structure. 
+
+@s AplScalarFunction int
 
 @<Internal data structures@>=
 typedef struct apl_scalar_function AplScalarFunction;
