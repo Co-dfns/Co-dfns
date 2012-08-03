@@ -890,15 +890,18 @@ the same  basic function body:@^Scalar functions, design pattern@>
 
 \medskip{\parindent=0.3in
 \item{1:} Declare common variables;
-\item{2:} Set the |op| and |restype| variables;
-\item{3:} Set |rgtstp| and |lftstp| variables;
-\item{4:} Allocate |res| without corrupting |lft| or |rgt|;
-\item{5:} Compute the function based on |op|; 
-\item{6:} Finally, clean-up if necessary.
+\item{2:} Actualize |APLIOTA| arrays if needed;
+\item{3:} Set the |op| and |restype| variables;
+\item{4:} Set |rgtstp| and |lftstp| variables;
+\item{5:} Allocate |res| without corrupting |lft| or |rgt|;
+\item{6:} Compute the function based on |op|; 
+\item{7:} Finally, clean-up if necessary.
 }\medskip
 
-\noindent Step $2$ is specific to the function that you are writing, 
+\noindent Step $3$ is specific to the function that you are writing, 
 but all of the other sections are the same for each scalar function. 
+In step $2$, if a function can work directly with |APLIOTA| arrays, 
+then that's fine, but normally they cannot.
 
 @<Compute dyadic scalar function |op|@>=
 orig = NULL;
@@ -1049,6 +1052,15 @@ if (NULL != orig) {
 	SIZE(orig) = SIZE(res);
 	DATA(orig) = DATA(res);
 }
+
+@ The special arrays return by the |index_gen| function can sometimes be 
+extended by certain functions, but this is far from true when it comes to 
+all scalar functions, and thus, in the normal case, we will actualize the 
+index array fully before doing anything with scalars. 
+
+@<Actualize |APLIOTA| arrays@>=
+if (TYPE(lft) == APLIOTA) actualize_idx(lft);
+if (TYPE(rgt) == APLIOTA) actualize_idx(rgt);
 
 @*1 Implementing Plus and Identity.
 Now that we have covered the basic 
