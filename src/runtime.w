@@ -1267,18 +1267,19 @@ input array.
 one-element vector, it's easy to calculate the result explicitly, without 
 needing to use more expensive indexing functions. We can do this with 
 the |actualize_idx| function, which will take an |APLIOTA| array and 
-convert it to a regular |APLINT| array.
+convert it to a regular |APLINT| array. We make sure to grab the values
+from the array before we allocate it.
 
 @<Utility functions@>=
 void actualize_idx(AplArray *res)
 {
 	AplInt i, e;
 	AplScalar *d;
-	i = 0;
+	i = INT(DATA(res));
 	e = INT(DATA(res) + 1);
 	alloc_array(res, APLINT);
 	d = DATA(res);
-	for (i = 0, d = DATA(res); i < e; INT(d++) = i++);
+	for (d = DATA(res); i < e; INT(d++) = i++);
 }
 
 @ Now let's consider the main case of the Iota (properly, then |index|) 
@@ -1842,32 +1843,37 @@ This simplifies some of our work, but makes the reduction operator less
 general. This will work for now. We do not need to allocate the array if 
 |res == rgt| because we know that there is enough space in that case. 
 
-
-
 @<APL Operators@>=
 void reduce(AplArray *res, AplArray *rgt, AplFunction *env)
 {
 	AplInt step;
+	AplType t;
 	AplScalarFunction tf;
 	AplFunction *fun;
 	AplScalarDyadic op;
-	if (TYPE(rgt) == APLIOTA) actualize_idx(rgt);
+	t = (TYPE(rgt) == APLIOTA ? APLINT : TYPE(rgt));
 	@<Determine |fun|@>@;
 	@<Set |SHAPE(res)| and determine |step| size@>@;
-	if (res != rgt) alloc_array(res, TYPE(rgt));
+	if (res != rgt) alloc_array(res, t);
 	@<Reduce over last axis@>@;
+	TYPE(res) = t;
 }
 
 @ The function that we use depends on whether we can find a known 
 scalar functions for the |LOP(env)|. If we can, then we will use that, 
-otherwise, we will just use the left operand as is.
+otherwise, we will just use the left operand as is. We say that the 
+type of the array is |APLINT| when we have an |APLIOTA| array in this 
+case as this is the equivalent type that the scalar function will 
+see when we do the reduction.
 
 @<Determine |fun|@>=
-if ((op = known_scalard(plus, TYPE(rgt), TYPE(rgt))) == NULL) {
-	fun = LOP(env);
-} else {
-	init_sfunc(&tf, NULL, op);
-	fun = (AplFunction *) &tf;
+{
+	if ((op = known_scalard(plus, t, t)) == NULL) {
+		fun = LOP(env);
+	} else {
+		init_sfunc(&tf, NULL, op);
+		fun = (AplFunction *) &tf;
+	}
 }
 
 @ We can know the shape of our output without running 
@@ -1902,7 +1908,11 @@ no-op when they are the same object. Otherwise, we are dealing with
 the cases where |step == 0| or |step > 1|, which both require a bit 
 more work, so we dedicate separate sections to handling them.
 
+We actualize the array when the step is 0 or 1 because there is no real use 
+in having it in the APLIOTA form.
+
 @<Reduce over last axis@>=
+if ((step == 0 || step == 1) && TYPE(rgt) == APLIOTA) actualize_idx(rgt);
 switch (step) {
 case 0: 
 	@<Fill |res| with identity of |fun|@>@;	
@@ -1969,25 +1979,61 @@ int function_identity(AplArray *res, AplFunction *fun)
 	return ret;
 }
 
-@ We now arrive at the general case when |step >= 2|. To reduce in this 
-case, we conceptually divide our original array into segments of vectors. 
-Note that because of the row-major order of our arrays, and because we are 
-reducing over the last axis, these vector segments correspond directly to 
-the contiguous block of memory in our array region, in order, each of 
-the size of the vector whose shape is the last dimension of the input 
-array. Each of these regions will be reduced to a single scalar value.
-These are in the same order in the output array |res| as the vector 
-segments appear in the input array |rgt|. Thus, we compute each element 
-of the |res| array in turn, letting |p| point to the start of the next 
-segment.
+@ In case where we have a |step >= 2|, we have either an |APLIOTA| 
+array or a normal array. We can do some special things with the |APLIOTA| 
+array, so we will do that. Otherwise, they are both going to need a 
+temporary array |l| as the element array, so we will declare and 
+initialize that here.
 
 @<Reduce over array whose |step >= 2|@>=
 {
+	AplArray l;
+	init_array(&l);
+	if (TYPE(rgt) == APLIOTA)
+		@<Compute range reduction using |rgt|@>@;
+	else 
+		@<Reduce over general array when |step >= 2|@>@;
+}
+
+@ When we have an |APLIOTA| array, we know that the result is going to 
+be a single scalar, and we also know how we are going to reduce. This 
+allows us to do some special stuff. For one thing, this allows us to 
+use only a single additional array |l| for our reduction, and we can 
+use the final |res| array for our accumulator. Additionally, we do not 
+have to traverse a region in memory, and we can instead just work 
+directly over a static range.
+
+@<Compute range reduction using |rgt|@>=
+{
+	AplInt e, s;
+	s = INT(DATA(rgt));
+	e = INT(DATA(rgt) + 1) - 1;
+	alloc_array(&l, APLINT);
+	INT(DATA(res)) = e;
+	for (INT(DATA(&l)) = e - 1; INT(DATA(&l)) >= s; INT(DATA(&l))--) 
+		APPLYD(fun, res, &l, res);
+	free_data(&l);
+}
+
+@ In the normal case, we conceptually divide our original array into
+segments of vectors.  Note that because of the row-major order of our
+arrays, and because we are  reducing over the last axis, these vector
+segments correspond directly to  the contiguous block of memory in our
+array region, in order, each of  the size of the vector whose shape is
+the last dimension of the input  array. Each of these regions will be
+reduced to a single scalar value. These are in the same order in the
+output array |res| as the vector  segments appear in the input array
+|rgt|. Thus, we compute each element  of the |res| array in turn,
+letting |p| point to the start of the next  segment. We use |z| as an
+accumulation array and |l| as the element array that is always used 
+as the left argument in our allocation.
+
+@<Reduce over general array when |step >= 2|@>=
+{
 	size_t c, s;
 	AplScalar *p, *d;
-	AplArray z, l;
+	AplArray z;
 	init_array(&z);
-	init_array(&l);
 	TYPE(&l) = TYPE(rgt);
 	SIZE(&l) = sizeof(AplScalar);
 	alloc_array(&z, TYPE(rgt));
@@ -1999,7 +2045,7 @@ segment.
 		*d++ = *DATA(&z);
 	}
 	free_data(&z);
-}
+}	
 
 @* Improving performance. We would like to improve performance in functions 
 where we can. However, sometimes we need to establish special paths in order 
