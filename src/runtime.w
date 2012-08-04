@@ -1078,7 +1078,8 @@ but everything else is a |APLREAL|. We can define the main
 void plus(AplArray *res, AplArray *lft, AplArray *rgt, AplFunction *env)
 {
 	@<Declare dyadic scalar function variables@>@;
-	@<Actualize |APLIOTA| arrays@>@;
+	
+	@<Shift |APLIOTA| ranges if possible, otherwise actualize@>@;
 	
 	if (TYPE(lft) == APLINT) {
 		if (TYPE(rgt) == APLINT) {
@@ -1123,6 +1124,30 @@ COPFUNC(plus_int_int, +, INT, INT, INT)@;@/
 COPFUNC(plus_int_real, +, REAL, INT, REAL)@;@/
 COPFUNC(plus_real_int, +, REAL, REAL, INT)@;@/
 COPFUNC(plus_real_real, +, REAL, REAL, REAL)@;
+
+@ Addition can be done directly on |APLIOTA| arrays without requiring 
+any actualization of those arrays if one of the arrays is a scalar 
+and the other is an |APLIOTA| array. We cannot actually do this if 
+we have two |APLIOTA| arrays, since this would mean having some concept 
+of a step amount in the ranges, which we do not yet have. In that 
+case we just actualize the arrays.
+
+@d PLUSIOTA(scl, arr) {
+	AplInt s;
+	s = INT(DATA(scl));
+	if (res != arr) {
+		copy_array(res, arr);
+	} 
+	INT(DATA(res)) += s;
+	INT(DATA(res)+1) += s;
+}		
+
+@<Shift |APLIOTA| ranges if possible, otherwise actualize@>=
+if (SCALAR(lft) && TYPE(lft) == APLINT && TYPE(rgt) == APLIOTA)
+	PLUSIOTA(lft, rgt)@;
+else if (SCALAR(rgt) && TYPE(rgt) == APLINT && TYPE(lft) == APLIOTA)
+	PLUSIOTA(rgt, lft)@;
+else @<Actualize |APLIOTA| arrays@>@;
 
 @ The |identity| function is the monadic form of the $+$ function 
 in APL. In this case, since we know that it is the identity function, 
