@@ -114,10 +114,7 @@ needed very often.
 there are a number of memory leaks in the system, so we need to audit our 
 uses of |alloc_array| and |realloc_array| to make sure that they are 
 freed afterwards using |free_data|.
-\item{6.} I think we can improve the behavior of iota by doing something 
-a little lazy, and having some sort of explicit iota array object, this 
-could really improve our performance in certain cases.
-\item{7.} The current |iota| function computes indexes in a very slow 
+\item{6.} The current |iota| function computes indexes in a very slow 
 fashion. There is a more appropriate approach.
 \par}\medskip
 
