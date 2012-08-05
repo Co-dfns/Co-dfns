@@ -1475,7 +1475,6 @@ void eachm(AplArray *res, AplArray *rgt, AplFunction *env)
 	@<Declare common |each| variables@>@;@#
 	@<Initialize variables for |eachm|@>@;
 	@<Deal with the simple cases of |eachm|@>@;
-	if (TYPE(rgt) == APLIOTA) actualize_idx(rgt);
 	@<Allocate |res| in |eachm|@>@;
 	@<Apply $\alpha\alpha$ monadically on each element@>@;
 	@<Do any cleanup necessary in |each|@>@;
@@ -1585,6 +1584,9 @@ if (res != rgt) {
 	copy_shape(res, rgt);
 	alloc_array(res, UNSET);
 	clean = 0;
+} if (TYPE(rgt) == APLIOTA) {
+	realloc_array(rgt, APLINT);
+	TYPE(rgt) = APLIOTA;
 } else clean = 0;
 
 @ The dyadic case is much the same as the monadic case, except 
@@ -1652,21 +1654,14 @@ case EACH_COPY:
 get down to the main event. This is the main loop that will actually 
 do the iteration over the elements and apply the given function to 
 each of them in turn. We try to do this efficiently by moving only 
-over the data fields in each of the scalars. That is, we slide 
-the data fields of the |z|, |l|, and |r| scalar temporaries along 
-the larger data fields of the main inputs and outputs. 
+over the data fields in each of the scalars.  
 
 @<Apply $\alpha\alpha$ monadically on each element@>=
 resd = DATA(res);
-TYPE(&r) = TYPE(rgt);
-SIZE(&r) = sizeof(AplScalar);
-DATA(&r) = DATA(rgt);
 if (STEP(func)) @<Apply step monadically on each element@>@;
 else {
-	for (DATA(&r) = DATA(rgt); cnt--; DATA(&r)++) {
-		applymonadic(func, &z, &r);
-		*resd++ = *DATA(&z);
-	}
+	if (TYPE(rgt) == APLIOTA) @<Apply |func| monadically over range@>@;
+	else @<Apply |func| monadically over |rgt| array@>@;
 	TYPE(res) = TYPE(&z);
 	FUTR(res) = 0;
 }
@@ -1699,6 +1694,36 @@ free the |z| array's data.
 @<Do any cleanup necessary in |each|@>=
 free_data(&z);
 
+@ When we process a normal array, we slide the |DATA(&r)| pointer 
+over the data and apply each function to it. 
+
+@<Apply |func| monadically over |rgt| array@>=
+{
+	TYPE(&r) = TYPE(rgt);
+	SIZE(&r) = sizeof(AplScalar);
+	DATA(&r) = DATA(rgt);
+	for (DATA(&r) = DATA(rgt); cnt--; DATA(&r)++) {
+		applymonadic(func, &z, &r);
+		*resd++ = *DATA(&z);
+	}
+}
+
+@ Processing |APLIOTA| ranges is pretty straightforward given our current 
+layout, using a counter instead of sliding the range around. 
+
+@<Apply |func| monadically over range@>=
+{
+	AplInt s, e;
+	s = INT(DATA(rgt));
+	e = INT(DATA(rgt) + 1);
+	alloc_array(&r, APLINT);
+	for (INT(DATA(&r)) = s; INT(DATA(&r)) < e; INT(DATA(&r))++) {
+		applymonadic(func, &z, &r);
+		*resd++ = *DATA(&z);
+	}
+	free_data(&r);
+}
+
 @*2 Processing step functions in |each|. Very little actually changes in 
 the code of |each| when we deal with a step function. A thread is spawned 
 for each element, and each element corresponds to an FEB (full-empty bit) 
@@ -1720,6 +1745,9 @@ that each element must be of the same type.
 
 @<Apply step monadically on each element@>=
 {
+	TYPE(&r) = TYPE(rgt);
+	SIZE(&r) = sizeof(AplScalar);
+	DATA(&r) = DATA(rgt);
 	for (DATA(&r) = DATA(rgt); cnt--; DATA(&r)++) {
 		struct each_step_arg *appinfo;
 		appinfo = new_each_arg(func, NULL, &r, &TYPE(res));
