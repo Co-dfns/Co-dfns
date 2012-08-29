@@ -261,7 +261,7 @@ void ex6()
 	alloc_array(&x, APLINT);
 	INT(DATA(&x)) = 50000;
 	index_gen(&x, &x, NULL);
-	init_function(&fun, ex5_help, NULL, 1, NULL, NULL, NULL);
+	init_function(&fun, ex6_help, NULL, 1, NULL, NULL, NULL);
 	init_function(&eac, eachm, eachd, 0, &fun, NULL, NULL);
 	applymonadic(&eac, &x, &x);
 	init_function(&add, NULL, plus, 0, NULL, NULL, NULL);
