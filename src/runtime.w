@@ -2035,7 +2035,7 @@ directly over a static range.
 	e = INT(DATA(rgt) + 1) - 1;
 	alloc_array(&l, APLINT);
 	INT(DATA(res)) = e;
-	for (INT(DATA(&l)) = e - 1; INT(DATA(&l)) >= s; INT(DATA(&l))--) 
+	for (INT(DATA(&l)) = e - 1; INT(DATA(&l)) >= s; INT(DATA(&l))--)
 		APPLYD(fun, res, &l, res);
 	free_data(&l);
 }
