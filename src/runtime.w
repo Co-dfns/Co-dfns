@@ -1658,7 +1658,7 @@ over the data fields in each of the scalars.
 
 @<Apply $\alpha\alpha$ monadically on each element@>=
 resd = DATA(res);
-if (STEP(func)) @<Apply step monadically on each element@>@;
+if (STEP(func)) @<Apply step monadically on |rgt|@>@;
 else {
 	if (TYPE(rgt) == APLIOTA) @<Apply |func| monadically over range@>@;
 	else @<Apply |func| monadically over |rgt| array@>@;
@@ -1743,21 +1743,54 @@ this case, we will be a little lazy for the moment and set the type with
 each element that we get. This is safe at the moment because we assume 
 that each element must be of the same type. 
 
+@<Apply step monadically on |rgt|@>=
+{
+	SIZE(&r) = sizeof(AplScalar);
+	if (TYPE(rgt) == APLIOTA)
+		@<Apply step monadically over range@>@;
+	else
+		@<Apply step monadically on each element@>@;
+	FUTR(res) = 2;
+	defutr(res);
+}
+
+@ When we are dealing with a normal array, then we can have |r| slide 
+along the |DATA(rgt)| array. This is the normal way that applying 
+the step would work. 
+
 @<Apply step monadically on each element@>=
 {
 	TYPE(&r) = TYPE(rgt);
-	SIZE(&r) = sizeof(AplScalar);
 	DATA(&r) = DATA(rgt);
 	for (DATA(&r) = DATA(rgt); cnt--; DATA(&r)++) {
 		struct each_step_arg *appinfo;
 		appinfo = new_each_arg(func, NULL, &r, &TYPE(res));
 		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
 	}
-	FUTR(res) = 2;
-	defutr(res);
+}
+
+@ If we instead are dealing with an |APLIOTA| array |rgt|, then we need 
+to change the way that we handle the |r| array.
+
+@<Apply step monadically over range@>=
+{
+	AplInt s, e;
+	s = INT(DATA(rgt));
+	e = INT(DATA(rgt)+1);
+	alloc_array(&r, APLINT);
+	for (INT(DATA(&r)) = s; INT(DATA(&r)) < e; INT(DATA(&r))++) {
+		struct each_step_arg *appinfo;
+		appinfo = new_each_arg(func, NULL, &r, &TYPE(res));
+		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
+	}
 }
 	
-@ @<Apply step dyadically on each element@>=
+@ Now let's deal with the dyadic cases. These follow the same basic 
+line as the monadic ones, except that we have an extra argument. 
+At the moment, since we actualize the input array, we do not have to 
+deal with the |APLIOTA| arrays like we do with the monadic case.
+
+@<Apply step dyadically on each element@>=
 {
 	for (DATA(&l) = DATA(lft), DATA(&r) = DATA(rgt); cnt--; 
 	    DATA(&l)++, DATA(&r)++) {
