@@ -1780,6 +1780,7 @@ to change the way that we handle the |r| array.
 		appinfo = new_each_arg(func, NULL, &r, &TYPE(res));
 		qthread_fork(each_step, appinfo, (aligned_t *) resd++);
 	}
+	free_data(&r);
 }
 	
 @ Now let's deal with the dyadic cases. These follow the same basic 
