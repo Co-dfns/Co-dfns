@@ -18,125 +18,146 @@ theory HPAPL
 imports Main
 begin
 
-definition validsv :: "nat list \<Rightarrow> (nat list \<rightharpoonup> 'a) \<Rightarrow> bool"
-where "validsv s v \<equiv> dom v = {x::(nat list). list_all2 op < x s}"
+datatype scalar = AplInt int | AplNat nat
+datatype scalar_list = NatList "nat list" | IntList "int list"
+datatype array = Array "nat list" "scalar_list"
 
-typedef (open) 'a array = 
-  "{e::(nat list \<times> (nat list \<rightharpoonup> 'a)). validsv (fst e) (snd e)}"
-proof
-  show "([0], Map.empty) \<in> {e. validsv (fst e) (snd e)}"
-    by (simp add: validsv_def list_all2_Cons2)
-qed
+definition Empty :: array where "Empty \<equiv> Array [0] (NatList [])"
 
-definition Empty :: "'a array" where "Empty \<equiv> Abs_array ([0], Map.empty)"
+definition shapelst :: "array \<Rightarrow> nat list"
+where "shapelst a \<equiv> case a of Array s v \<Rightarrow> s"
 
-lemma Empty_validsv [simp]: "validsv [0] Map.empty"
-by (simp add: validsv_def list_all2_Cons2)
+definition listprod :: "nat list \<Rightarrow> nat"
+where "listprod x = foldr times x 1"
 
-definition Array :: "nat list \<Rightarrow> (nat list \<rightharpoonup> 'a) \<Rightarrow> 'a array"
-where "Array s v \<equiv> if validsv s v then Abs_array (s, v) else Empty"
+fun sv2vlnat :: "nat \<Rightarrow> nat list \<Rightarrow> nat list \<Rightarrow> nat list"
+where
+    "sv2vlnat 0 orig lst = []"
+  | "sv2vlnat cnt [] lst = (replicate cnt (0::nat))"
+  | "sv2vlnat (Suc cnt) (oel # ors) [] = (oel # (sv2vlnat cnt (oel # ors) ors))"
+  | "sv2vlnat (Suc cnt) orig (elm # rst) = (elm # (sv2vlnat cnt orig rst))"
 
-find_theorems "Rep_array (Abs_array _)"
+fun sv2vlint :: "nat \<Rightarrow> int list \<Rightarrow> int list \<Rightarrow> int list"
+where
+    "sv2vlint 0 orig lst = []"
+  | "sv2vlint cnt [] lst = (replicate cnt (0::int))"
+  | "sv2vlint (Suc cnt) (oel # ors) [] = (oel # (sv2vlint cnt (oel # ors) ors))"
+  | "sv2vlint (Suc cnt) orig (elm # rst) = (elm # (sv2vlint cnt orig rst))"
 
-lemma Array_validsv [simp]: "case Rep_array (Array s v) of (s, v) \<Rightarrow> validsv s v"
-by (simp add: Array_def Abs_array_inverse Empty_def)
+definition sv2vl :: "nat \<Rightarrow> scalar_list \<Rightarrow> scalar_list"
+where
+  "sv2vl n lst \<equiv>
+     case lst of
+       (NatList l) \<Rightarrow> NatList (sv2vlnat n l l) |
+       (IntList l) \<Rightarrow> IntList (sv2vlint n l l)"
 
-definition shapelst :: "'a array \<Rightarrow> nat list"
-where "shapelst a \<equiv> case Rep_array a of (s, v) \<Rightarrow> s"
+definition valuelst :: "array \<Rightarrow> scalar_list" 
+where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (listprod s) v"
 
-lemma Array_shapelst [simp]: "validsv s v \<Longrightarrow> shapelst (Array s v) = s"
-by (simp add: shapelst_def Array_def Abs_array_inverse)
+definition Scalar :: "scalar \<Rightarrow> array" where
+  "Scalar s \<equiv>
+     case s of
+       AplNat x \<Rightarrow> Array [] (NatList [x]) |
+       AplInt x \<Rightarrow> Array [] (IntList [x])"
 
-definition arrvmap :: "'a array \<Rightarrow> nat list \<rightharpoonup> 'a"
-where "arrvmap a \<equiv> case Rep_array a of (s, v) \<Rightarrow> v"
+definition Vector :: "scalar_list => array" where 
+  "Vector lst \<equiv> 
+     case lst of
+       NatList l \<Rightarrow> Array [length l] lst |
+       IntList l \<Rightarrow> Array [length l] lst"
 
-lemma Array_arrvmap [simp]: "validsv s v \<Longrightarrow> arrvmap (Array s v) = v"
-by (simp add: arrvmap_def Array_def Abs_array_inverse)
+definition natrank :: "array \<Rightarrow> nat"
+where "natrank a \<equiv> length (shapelst a)"
 
-definition Scalar :: "'a \<Rightarrow> 'a array" 
-where "Scalar x \<equiv> Array [] [[] \<mapsto> x]"
+lemma natrank_Empty [simp]: "natrank Empty = 1"
+by (simp add: Empty_def natrank_def shapelst_def)
 
-lemma Scalar_validsv [simp]: "validsv [] [[] \<mapsto> x]"
-by (simp add: validsv_def list_all2_Cons2)
+lemma natrank_Scalar [simp]: "natrank (Scalar x) = 0"
+by (simp add: natrank_def Scalar_def shapelst_def) (split scalar.split, simp)
 
-definition Vector :: "'a list \<Rightarrow> 'a array"
-where "Vector lst \<equiv> 
-Array [length lst] [map (\<lambda>x. [x]) [0..<length lst] [\<mapsto>] lst]"
+definition vec2lst :: "array \<Rightarrow> scalar_list"
+where "vec2lst vec \<equiv> case vec of Array s v \<Rightarrow> v"
 
-lemma Vector_validsv [simp]: 
-  "validsv [length lst] [map (\<lambda>x. [x]) [0..<length lst] [\<mapsto>] lst]"
-by (auto simp: validsv_def list_all2_Cons2)
+theorem vector_shape [simp]: "shapelst (Vector (NatList s)) = [length s]"
+by (simp add: Vector_def shapelst_def)
 
-definition rank :: "'a array \<Rightarrow> nat" where "rank a \<equiv> length (shapelst a)"
+theorem vector_shape2 [simp]: "shapelst (Vector (IntList s)) = [length s]"
+by (simp add: Vector_def shapelst_def)
 
-theorem rank_length [simp]: "validsv s v \<Longrightarrow> rank (Array s v) = length s"
-by (simp add: rank_def)
-
-lemma rank_Empty [simp]: "rank Empty = 1"
-by (simp add: Empty_def rank_def shapelst_def Abs_array_inverse)
-
-lemma rank_Scalar [simp]: "rank (Scalar x) = 0"
-by (auto simp: Scalar_def)
-
-definition vec2lst :: "'a array \<Rightarrow> 'a list"
-where "vec2lst vec \<equiv> 
-[(the ((arrvmap vec) e)). e \<leftarrow> [[i]. i \<leftarrow> [0..<hd (shapelst vec)]]]"
-
-theorem vector_shape [simp]: "shapelst (Vector s) = [length s]"
-by (auto simp: Vector_def)
-
-theorem vector_rank [simp]: "rank (Vector s) = 1"
-by (simp add: Vector_def)
-
-theorem vector_map [simp]:
-  "arrvmap (Vector lst) = (Map.empty([[x]. x \<leftarrow> [0..<length lst]] [\<mapsto>] lst))"
-by (auto simp: Vector_def)
+theorem vector_rank [simp]: "natrank (Vector s) = 1"
+by (simp add: Vector_def natrank_def shapelst_def) 
+   (split scalar_list.split, simp)
 
 theorem vector_inverse [simp]: "vec2lst (Vector lst) = lst"
-by sorry
+by (simp add: Vector_def vec2lst_def, split scalar_list.split, simp)
 
-theorem vector_empty: "Vector [] = Empty"
-by (simp add: Vector_def Empty_def Array_def)
+theorem vector_empty: "Vector (NatList []) = Empty"
+by (simp add: Vector_def Empty_def)
 
-theorem vec2lst_empty [simp]: "vec2lst Empty = []"
-proof -
-  have "vec2lst Empty = vec2lst (Vector [])" by (simp only: vector_empty)
-  also have "... = []" by simp 
-  finally show ?thesis.
-qed
+theorem vec2lst_empty [simp]: "vec2lst Empty = (NatList [])"
+by (simp add: Empty_def vec2lst_def)
 
-definition shape :: "'a array \<Rightarrow> nat array" 
-where "shape a \<equiv> Vector (shapelst a)"
+definition shape :: "array \<Rightarrow> array" 
+where "shape a \<equiv> Vector (NatList (shapelst a))"
 
-theorem shape_Empty [simp]: "shape Empty = Vector [0]"
-by (simp add: shape_def Empty_def shapelst_def Abs_array_inverse)
+theorem shape_Empty [simp]: "shape Empty = Vector (NatList [0])"
+by (simp add: shape_def Empty_def shapelst_def)
 
-theorem rank_shape_one [simp]: "rank (shape a) = 1" 
+theorem rank_shape_one [simp]: "natrank (shape a) = 1" 
 by (auto simp: shape_def)
 
-theorem shape2_rank [simp]: "shape (shape a) = Vector [rank a]"
-by (auto simp: shape_def rank_def)
+theorem shape2_rank [simp]: "shape (shape a) = Vector (NatList [natrank a])"
+by (auto simp: shape_def natrank_def)
 
-theorem shape3_is_one [simp]: "shape (shape (shape a)) = Vector [1]"
+theorem shape3_is_one [simp]: "shape (shape (shape a)) = Vector (NatList [1])"
 by (auto simp: shape_def)
 
 theorem shape_scalar [simp]: "shape (Scalar x) = Empty"
-by (simp add: shape_def Scalar_def vector_empty)
+by (simp add: shape_def Empty_def Vector_def Scalar_def shapelst_def)
+   (split scalar.split, simp)
 
-definition index :: "nat array \<Rightarrow> 'a array \<Rightarrow> 'a"
-where "index i a \<equiv> the ((arrvmap a) (vec2lst i))"
+definition slget :: "scalar_list \<Rightarrow> nat \<Rightarrow> scalar" where
+  "slget l i \<equiv>
+     case l of
+         NatList v \<Rightarrow> AplNat (v ! i)
+       | IntList v \<Rightarrow> AplInt (v ! i)"
 
-theorem index_scalar [simp]: "index Empty (Scalar x) = x"
-by (simp add: index_def Scalar_def)
+definition index_unraveled :: "nat list \<Rightarrow> nat list \<Rightarrow> nat"
+where "index_unraveled s i \<equiv> 0"
 
-definition valididx :: "nat array \<Rightarrow> 'a array \<Rightarrow> bool"
-where "valididx i a \<equiv> list_all2 op < (vec2lst i) (shapelst a)"
+definition indexer :: "nat list \<Rightarrow> nat list \<Rightarrow> scalar_list \<rightharpoonup> scalar" where
+  "indexer i s d \<equiv> 
+     if (list_all2 op < i s)
+     then Some (slget d (index_unraveled s i))
+     else None"
 
-definition releach :: "('a \<Rightarrow> 'b \<Rightarrow> bool) \<Rightarrow> 'a array \<Rightarrow> 'b array \<Rightarrow> bool"
+definition indexerint :: "int list \<Rightarrow> nat list \<Rightarrow> scalar_list \<rightharpoonup> scalar" where
+  "indexerint i s d \<equiv> 
+     if (list_all2 op > i (replicate (length i) 0))
+     then indexer (map nat i) s d
+     else None"
+
+definition index :: "array \<Rightarrow> array \<rightharpoonup> scalar" where 
+  "index i a \<equiv> 
+     case (i, a) of
+         (Array [n] (NatList v), (Array s d)) \<Rightarrow> indexer v s d
+       | (Array [n] (IntList v), (Array s d)) \<Rightarrow> indexerint v s d
+       | other \<Rightarrow> None"
+
+theorem index_scalar [simp]: "index Empty (Scalar x) = Some x"
+by sorry
+
+definition releach :: "(scalar \<Rightarrow> scalar \<Rightarrow> bool) \<Rightarrow> array \<Rightarrow> array \<Rightarrow> bool"
 where "releach f a b \<equiv> 
-  (shape a = (shape b) \<and> (\<forall>i. valididx i a \<longrightarrow> (f (index i a) (index i b))))
-   \<or> (rank a = 0 \<and> (\<forall>i. valididx i b \<longrightarrow> f (index Empty a) (index i b))) 
-   \<or> (rank b = 0 \<and> (\<forall>i. valididx i a \<longrightarrow> f (index i a) (index Empty b)))"
+  (shapelst a = (shapelst b) \<and> (list_all2 f (valuelst a) (valuelst b)))
+   \<or> (natrank a = 0 
+      \<and> (list_all2 f 
+          (sv2vl (listprod (shapelst b)) (valuelst a)) 
+          (valuelst b)))
+   \<or> (natrank b = 0 
+      \<and> (list_all2 f 
+          (valuelst a) 
+          (sv2vl (listprod (shapelst a)) (valuelst b))))"
 
 definition monmap :: "('a \<Rightarrow> 'b) \<Rightarrow> (nat list \<rightharpoonup> 'a) \<Rightarrow> (nat list \<rightharpoonup> 'b)"
 where "monmap fn v i \<equiv> Option.map fn (v i)"
