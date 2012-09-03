@@ -121,4 +121,10 @@ theorem index_vector [simp]:
 by (simp add: index_def Vector_def valuelst_def shapelst_def listprod_def
                  index_unraveled_def)
 
+definition reshape :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a array"
+where "reshape ns a \<equiv> Array (valuelst ns) (valuelst a)"
+
+definition index_gen :: "nat array \<Rightarrow> nat array"
+where "index_gen a \<equiv> Array [] [0]"
+
 end
