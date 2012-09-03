@@ -98,14 +98,19 @@ by (auto simp: shape_def)
 theorem shape_scalar [simp]: "shape (Scalar x) = Empty"
 by (simp add: shape_def Empty_def Vector_def Scalar_def shapelst_def)
 
-definition index_unraveled :: "nat list \<Rightarrow> nat list \<Rightarrow> nat"
-where "index_unraveled s i \<equiv> 0"
+fun comp_idx :: "nat \<Rightarrow> nat list \<Rightarrow> nat list \<Rightarrow> nat" where
+    "comp_idx n [] i = n"
+  | "comp_idx n s [] = n"
+  | "comp_idx n (se # sr) (ie # ir) = comp_idx (ie + se * n) sr ir"
+
+definition index_unraveled :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" 
+where "index_unraveled s i \<equiv> comp_idx 0 s i"
 
 definition index :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a" where
 "index i a \<equiv> (valuelst a) ! index_unraveled (shapelst a) (valuelst i)"
 
 theorem index_scalar [simp]: "index Empty (Scalar x) = x"
-by (simp add: Scalar_def Empty_def index_def index_unraveled_def 
-              valuelst_def listprod_def)
+by (simp add: Empty_def Scalar_def index_def valuelst_def shapelst_def
+              listprod_def index_unraveled_def)
 
 end
