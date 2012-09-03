@@ -40,9 +40,12 @@ where "listprod x = foldr times x 1"
 
 fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list" where
     "sv2vl 0 orig lst = []"
-  | "sv2vl cnt [] lst = (replicate cnt fill)"
+  | "sv2vl cnt [] [] = (replicate cnt fill)"
   | "sv2vl (Suc cnt) (oel # ors) [] = (oel # (sv2vl cnt (oel # ors) ors))"
   | "sv2vl (Suc cnt) orig (elm # rst) = (elm # (sv2vl cnt orig rst))"
+
+lemma sv2vl_id [simp]: "sv2vl (length l) orig l = l"
+by (induct l) simp_all
 
 definition valuelst :: "'a::scalar array \<Rightarrow> 'a::scalar list" 
 where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (listprod s) v v"
@@ -112,5 +115,10 @@ definition index :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a" 
 theorem index_scalar [simp]: "index Empty (Scalar x) = x"
 by (simp add: Empty_def Scalar_def index_def valuelst_def shapelst_def
               listprod_def index_unraveled_def)
+
+theorem index_vector [simp]: 
+  "i < length l \<Longrightarrow> index (Vector [i]) (Vector l) = l ! i"
+by (simp add: index_def Vector_def valuelst_def shapelst_def listprod_def
+                 index_unraveled_def)
 
 end
