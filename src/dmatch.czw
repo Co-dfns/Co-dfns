@@ -1,0 +1,244 @@
+\def\title{DMATCH (Version 2.0)}
+\def\topofcontents{\null\vfill
+  \centerline{\titlefont Dijkstra Match (DMATCH)}
+  \vskip 15pt
+  \centerline{Aug 2012 (Version 2.0)}
+  \vfill}
+\def\botofcontents{\vfill
+\noindent
+Copyright $\copyright$ 2012 
+Will Byrd, Dan Friedman, Jason Hemann, Aaron W. Hsu, and Oleg Kiselyov.
+\smallskip\noindent
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+\smallskip\noindent
+THE SOFTWARE IS PROVIDED ``AS IS'' AND THE AUTHOR DISCLAIMS ALL
+WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+}
+
+@* Introduction.
+This is a new version of |pmatch|, called |dmatch|.
+It is named for Dijkstra's Guarded Commands.  How |dmatch| differs
+from |pmatch| is with more emphasis on error reporting and a simpler
+specification of patterns.  This version of the matcher will show all
+clauses where the pattern matches and the guards succeed if there are
+two or more such clauses.  We allow for a name to be given to
+dmatch if an error ensues.  Also, a line from the specification has
+been removed. (see below).  Without that line removed, it was
+impossible for a pattern to be |(quote ,x)|, which might be worth
+having especially when one writes an interpreter for Scheme, which
+includes quote as a language form.
+
+The original code was written by Oleg Kiselyov (http://pobox.com/~oleg/ftp/)
+and this source is based off the code from leanTAP.scm found here:
+
+$$
+\.{http://kanren.cvs.sourceforge.net/kanren/kanren/mini/leanTAP.scm?view=log}
+$$
+
+\noindent 
+This is a simple, linear pattern matcher. It is efficient (generates 
+code at macro-expansion time) and should work on any R5RS (and R6RS) 
+Scheme system. The overall syntax looks like this:
+
+$$\eqalign{%
+\\{match} :=\ &(\&{dmatch}\ \.{exp}\ \\{clause}\ldots)\cr
+           \vert\ &(\&{dmatch}\ \.{exp}\ \.{name}\ \\{clause}\ldots)\cr
+\\{clause} :=\ &(\\{pattern}\ \\{guard}\ \.{exp}\ldots)\cr
+\\{guard} :=\ &(\&{guard}\ \.{boolean-expression}\ldots)\ \vert\ \epsilon\cr
+\\{pattern} :=\ &,\.{var}\cr
+	    \vert\ &\.{exp}\cr
+	    \vert\ &(\\{pattern}_1\ \\{pattern}_2\ldots)\cr
+	    \vert\ &(\\{pattern}_1\ .\ \\{pattern}_2)\cr
+}$$
+
+@ We encapsulate our main code into a module 
+form that hides the implementation details from the rest of the 
+world. However, we use an anonymous module to ensure that loading 
+of the ``dmatch.ss'' file works without needing to have any 
+special import forms. This makes it as simple to use as any of 
+the other normal Scheme files which have their definitions at 
+the top level, but avoids polluting the namespace. 
+
+@p
+(module (dmatch guard unquote)
+  (import (chezscheme))
+  (implicit-exports #t)
+  @<Package procedures@>
+  @<Error handling procedures@>
+  @<Helper procedures@>
+  @<Helper macros@>
+  @<Main |dmatch| rules@>)
+
+@* Implementation.
+The main |dmatch| macro simply handles the optional name that 
+we can provide, and passes off control to the auxiliary helpers 
+which do most of the extra work. Our auxiliary macros will give us 
+a package list which is then processed by the |run-a-thunk| 
+procedure.
+
+@c (run-a-thunk) => (dmatch)
+@<Main |dmatch| rules@>=
+(define-syntax dmatch
+  (syntax-rules ()
+    [(_ v (e ...) ...)
+     (let ([pkg* (dmatch-remexp v (e ...) ...)])
+       (run-a-thunk 'v v #f pkg*))]
+    [(_ v name (e ...) ...)
+     (let ([pkg* (dmatch-remexp v (e ...) ...)])
+       (run-a-thunk 'v v 'name pkg*))]))
+
+@ In our case we want to represent a package as a pair of a 
+representation of the pattern and a thunk that will execute 
+the code for that pattern. A package is just the information 
+necessary to run a pattern. In this case, we use the 
+following for our pattern abstraction.
+
+@c () => (pkg pkg-thunk pkg-clause)
+@<Package procedures@>=
+(define (pkg cls thk) (cons cls thk))
+(define (pkg-clause pkg) (car pkg))
+(define (pkg-thunk pkg) (cdr pkg))
+
+@ The first step in processing a |dmatch| syntax is to ensure that 
+we only evaluate the input expression once, which is what the 
+|dmatch-remexp| ensures. We use a |let| to ensure that we pass only 
+an identifier to the |dmatch-aux| macro that does the work of 
+constructing the package list.
+
+@c () => ()
+@<Main |dmatch| rules@>=
+(implicit-exports #t)
+(define-syntax dmatch-remexp
+  (syntax-rules ()
+    [(_ (rator rand ...) cls ...)
+     (let ([v (rator rand ...)])
+       (dmatch-aux v cls ...))]
+    [(_ v cls ...) (dmatch-aux v cls ...)]))
+
+@ At each expansion of the |dmatch-aux| macro, we want to create a 
+package list of some type. We have three cases which form two 
+recursive cases and a single base case for our macro rules. The 
+base case is when we have no clauses to match, in which case we 
+can just expand to an empty package list. We then have the normal
+pattern without a guard; if that pattern matches, we want to add 
+that clause body to the package list as one of the matching clauses.
+In the case where we have a guard, we want to conditionally add the 
+clause to the package list only if the guard also succeeds. 
+
+To do the heavy lifting, we will abstract the actual pattern matching 
+out into another helper macro |ppat| that does the check on the 
+pattern and then expands into one of two forms. This is a sort of 
+patterned |if|. The consequent expression will be the result of the 
+expansion of |ppat| if the pattern was a match, and the alternate 
+expression if it was not. In all cases, the alternate will just 
+be another |dmatch-aux| macro that drops the first pattern and 
+continues the recursive expansion. In the cases when we have 
+a match, we want to either |cons| on the package blindly, or 
+check first for the guarded condition.
+
+To encode the alternative case we use a procedure to avoid needing 
+to do the expansions multiple times, which will make our macro 
+a bit faster.
+
+@c (ppat pkg) => ()
+@<Main |dmatch| rules@>=
+(define-syntax dmatch-aux
+  (syntax-rules (guard)
+    [(_ v) '()]
+    [(_ v (pat (guard g ...) e0 e ...) cs ...)
+     (let ([fk (lambda () (dmatch-aux v cs ...))])
+       (ppat v pat
+         (if (not (and g ...))
+             (fk)
+             (cons (pkg '(pat (guard g ...) e0 e ...) (lambda () e0 e ...)) 
+		   (fk)))
+         (fk)))]
+    [(_ v (pat e0 e ...) cs ...)
+     (let ([fk (lambda () (dmatch-aux v cs ...))])
+       (ppat v pat
+         (cons (pkg '(pat e0 e ...) (lambda () e0 e ...)) 
+	       (fk))
+         (fk)))]))
+
+@ Now we can consider how to do the actual matching of patterns against 
+values. The |ppat| will do this for us, and we leverage the 
+|syntax-rules| pattern matcher to do most of the work. We have a case 
+for each of the types we may encounter, and then handle them as
+appropriate. We need to do a bit of tree recursion on our expansion 
+in the pair cases to match the |car| and |cdr| cases.
+
+The use of |equal?| for comparisons of things that are not pairs 
+or variables is important, since we may have vectors or other syntaxes 
+sitting around in there that we want to handle, and these should
+be compared with |equal?| instead of |eq?|.
+
+@c () => (ppat)
+@<Helper macros@>=
+(define-syntax ppat
+  (syntax-rules (unquote)
+    [(_ v (unquote var) kt kf) (let ([var v]) kt)]
+    [(_ v (x . y) kt kf)
+     (if (pair? v)
+	 (let ([vx (car v)] [vy (cdr v)])
+	   (ppat vx x (ppat vy y kt kf) kf))
+	 kf)]
+    [(_ v lit kt kf) (if (equal? v (quote lit)) kt kf)]))
+
+@ That completes the work we have to do on the macro side. Now the 
+question becomes, what do we do with all of these package lists? Why 
+do we want them? We want them for two reasons. Firstly, they provide 
+more information about the errors of multiple matches than we might 
+have otherwise. We will deal with how we report this in the next 
+section. Right now, we want to know what to do when we have a package 
+list. In this case, we have only one good cases, which is that we 
+have a package list of a single package, meaning that we have only 
+a single match clause that matched our input. In this case, we should 
+just run the package thunk to evaluate the expression. 
+
+We then have two error cases. if the package list is empty, that 
+means we have found no matches, and if the package list has more 
+than one package in it, that means that we have more than one match, 
+which means that our match clauses are ambiguous.
+
+@c (no-matching-pattern ambiguous-pattern/guard pkg-thunk) => (run-a-thunk)
+@<Helper procedures@>=
+(define (run-a-thunk v-expr v name pkg*)
+  (cond
+    [(null? pkg*) (no-matching-pattern name v-expr v)]
+    [(null? (cdr pkg*)) ((pkg-thunk (car pkg*)))]
+    [else (ambiguous-pattern/guard name v-expr v pkg*)]))
+
+@* Dealing with errors. We have two error cases to deal with. 
+The first is the simplest, when we have not found a match at all.
+In this case, the match has failed and we can just report the 
+failure.
+
+@c () => (no-matching-pattern) 
+@<Error handling procedures@>=
+(define (no-matching-pattern name v-expr v)
+  (printf "dmatch ~@[~d~] failed~n~d ~d~n" name v-expr v)
+  (error 'dmatch "match failed"))
+
+@ The other case is when we have an ambiguous pattern set that 
+has lead to some problems. In this case, we report the problem 
+and then we want to print out all of the clauses that matched 
+to aid the user in finding the one to fix.
+
+@c (pkg-clause) => (ambiguous-pattern/guard)
+@<Error handling procedures@>=
+(define (ambiguous-pattern/guard name v-expr v pkg*)
+  (printf "dmatch ~@[~d~] ambiguous matching clauses~n" name)
+  (printf "with ~d evaluating to ~d~n" v-expr v)
+  (printf "────────────────────────────────────~n")
+  (printf "~{~d~n~}" (map pkg-clause pkg*)))
+
+@* Index.
+
