@@ -35,6 +35,9 @@ definition Empty :: "'a::scalar array" where "Empty \<equiv> Array [0] []"
 definition shapelst :: "'a::scalar array \<Rightarrow> nat list"
 where "shapelst a \<equiv> case a of Array s v \<Rightarrow> s"
 
+lemma shapelst_array [simp]: "shapelst (Array s v) = s"
+by (simp add: shapelst_def)
+
 definition listprod :: "nat list \<Rightarrow> nat"
 where "listprod x = foldr times x 1"
 
@@ -47,6 +50,9 @@ fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list \<
 lemma sv2vl_id [simp]: "sv2vl (length l) orig l = l"
 by (induct l) simp_all
 
+lemma sv2vl_len [simp]: "length (sv2vl x y z) = x"
+by (induct x y z rule: sv2vl.induct) (auto)
+
 definition valuelst :: "'a::scalar array \<Rightarrow> 'a::scalar list" 
 where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (listprod s) v v"
 
@@ -55,6 +61,12 @@ where "Scalar s \<equiv> Array [] [s]"
 
 definition Vector :: "'a::scalar list => 'a::scalar array" 
 where "Vector lst \<equiv> Array [length lst] lst"
+
+lemma vector_valuelst [simp]: "valuelst (Vector a) = a"
+by (simp add: Vector_def valuelst_def listprod_def)
+
+lemma valuelst_length [simp]: "listprod (shapelst a) = (length (valuelst a))"
+by (simp add: valuelst_def shapelst_def) (cases a, auto)
 
 definition natrank :: "'a::scalar array \<Rightarrow> nat"
 where "natrank a \<equiv> length (shapelst a)"
@@ -121,8 +133,14 @@ theorem index_vector [simp]:
 by (simp add: index_def Vector_def valuelst_def shapelst_def listprod_def
                  index_unraveled_def)
 
+definition arrequal :: "'a::scalar array \<Rightarrow> 'a array \<Rightarrow> bool" where 
+  "arrequal a b \<equiv> (shapelst a) = (shapelst b) \<and> (valuelst a) = (valuelst b)"
+
 definition reshape :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a array"
 where "reshape ns a \<equiv> Array (valuelst ns) (valuelst a)"
+
+theorem shape_preserved [simp]: "arrequal a (reshape (shape a) a)"
+by (simp add: arrequal_def reshape_def shape_def) (simp add: valuelst_def)
 
 definition index_gen :: "nat array \<Rightarrow> nat array"
 where "index_gen a \<equiv> Array [] [0]"
