@@ -5,10 +5,16 @@ VALGOPTS="--tool=memcheck"
 PROCS=1
 ENV=QTHREAD_NUM_SHEPHERDS=${PROCS} LD_LIBRARY_PATH=.
 
-.SUFFIXES: .pdf .dvi .tex .w
+.SUFFIXES: .pdf .dvi .tex .w .czw .ss
 
 .w.tex:
 	${CWEAVE} $*
+
+.czw.tex:
+	chezweave $<
+
+.czw.ss:
+	cheztangle $<
 
 .tex.pdf:
 	pdftex $<
