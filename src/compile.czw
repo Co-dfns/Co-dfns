@@ -1,0 +1,98 @@
+\def\title{COMPILE (Version 1.0)}
+\def\topofcontents{\null\vfill
+  \centerline{\titlefont HPAPL Compiler}
+  \vskip 15pt
+  \centerline{(Version 1.0)}
+  \vfill}
+\def\botofcontents{\vfill
+\noindent
+Copyright $\copyright$ 2012 Aaron W. Hsu $\.{arcfide@@sacrideo.us}$
+\smallskip\noindent
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+\smallskip\noindent
+THE SOFTWARE IS PROVIDED ``AS IS'' AND THE AUTHOR DISCLAIMS ALL
+WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+}
+
+@* Introduction. This is the HPAPL research compiler, which is design 
+to quickly implement and test a compiler from HPAPL ASTs to code 
+that the Chez Scheme compiler can compile. 
+
+@p
+(include "dmatch.ss")
+@<Compiler pass definitions@>
+
+@* Compiler Interface. The main compiler interface just chains 
+together the passes one after another.
+
+@p
+(define passes
+  (list convert-literals
+	convert-prims
+	top-level-wrap))
+(define (hpapl-compile prog)
+  (fold-left (lambda (s p) (p s)) prog passes))
+
+@* Passes. Firstly, all the code that we produce will 
+be wrapped in a module that exports a single HPAPL function.
+
+@c () => (top-level-wrap)
+@<Compiler pass definitions@>=
+(define (top-level-wrap prog)
+  (dmatch prog top-level-wrap
+    [(program (,name) . ,body)
+     `(module (,name) (define (,name) . ,body))]))
+
+@ Next, let's get the ability to compile some simple programs. We 
+will go through the program body and convert all the literal expressions 
+into array forms. In the scalar case we use the |make-scalar-array| 
+function, and in the vector case we use the |make-vector-array|. 
+
+@c () => (convert-literals)
+@<Compiler pass definitions@>=
+(define (convert-exp exp)
+  (dmatch exp convert-literals/exp
+    [,a (guard (fixnum? a)) `(make-scalar-array ,a)]
+    [,a (guard (not (fixnum? a)) (atom? a)) a]
+    [(,f ,a) (guard (not (eq? 'quote f)))
+     (list (convert-exp f) (convert-exp a))]
+    [(quote ,a) (guard (list? a)) `(make-vector-array ',a)]))
+
+(define (convert-literals prog)
+  (dmatch prog convert-literals
+    [(program (,name) . ,body)
+     `(program (,name) . ,(map convert-exp body))]))
+
+@ We also want to convert the literals into the right elements.
+
+@c () => (convert-prims)
+@<Compiler pass definitions@>=
+(module (convert-prims)
+(define (convert-prims prog)
+  (dmatch prog convert-prims
+    [(program (,name) . ,body)
+     `(program (,name) . ,(map convert-exp body))]))
+
+(define (convert-exp exp)
+  (dmatch exp convert-prims/exp
+    [(,p ,a) (guard (memq p prim-list))
+     `(,(cdr (assq p prim-alist-monadic)) ,(convert-exp a))]
+    [(,p ,a) (guard (not (memq p prim-list)) (not (eq? 'quote p)))
+     `(,(convert-exp p) ,(convert-exp a))]
+    [(quote ,a) `(quote ,a)]
+    [,a (guard (atom? a)) a]))
+
+(define prim-list '(⍳))
+(define prim-names-monadic '(array-iota))
+(define prim-alist-monadic (map cons prim-list prim-names-monadic))
+)
+
+@* Index. 
