@@ -142,7 +142,29 @@ where "reshape ns a \<equiv> Array (valuelst ns) (valuelst a)"
 theorem shape_preserved [simp]: "arrequal a (reshape (shape a) a)"
 by (simp add: arrequal_def reshape_def shape_def) (simp add: valuelst_def)
 
-definition index_gen :: "nat array \<Rightarrow> nat array"
-where "index_gen a \<equiv> Array [] [0]"
+definition index_gen :: "nat array \<Rightarrow> nat array" where 
+  "index_gen a \<equiv>
+     case a of
+         Array [] x \<Rightarrow> Array [hd (valuelst a)] (upt 0 (hd (valuelst a)))
+       | Array [n] x \<Rightarrow> Empty"
+
+theorem index_gen_scl_len [simp]: 
+  "length (valuelst (index_gen (Scalar n))) = n"
+by (simp add: index_gen_def Scalar_def valuelst_def listprod_def)
+
+lemma sv2vl_lst [simp]: "sv2vl n x [0..<n] = [0..<n]"
+proof -
+  have "sv2vl n x [0..<n] = (sv2vl (length [0..<n]) x [0..<n])" by simp
+  also have "... = [0..<n]" unfolding sv2vl_id ..
+  finally show "sv2vl n x [0..<n] = ([0..<n])" .
+qed
+
+theorem index_gen_scl_vl [simp]:
+  "(valuelst (index_gen (Scalar n))) = (upt 0 n)"
+by (simp add: index_gen_def Scalar_def valuelst_def listprod_def)
+
+theorem index_gen_scl_shp [simp]:
+  "(shapelst (index_gen (Scalar n))) = [n]"
+by (simp add: index_gen_def Scalar_def valuelst_def listprod_def)
 
 end
