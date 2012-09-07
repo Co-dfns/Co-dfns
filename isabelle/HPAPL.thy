@@ -167,26 +167,62 @@ theorem index_gen_scl_shp [simp]:
   "(shapelst (index_gen (Scalar n))) = [n]"
 by (simp add: index_gen_def Scalar_def valuelst_def listprod_def)
 
-definition monscalop :: "('a::scalar \<Rightarrow> 'b::scalar) \<Rightarrow> 'a array \<Rightarrow> 'b array" 
-where "monscalop f a \<equiv> Array (shapelst a) (map f (valuelst a))"
+definition msop :: "('a::scalar \<Rightarrow> 'b::scalar) \<Rightarrow> 'a array \<Rightarrow> 'b array" 
+where "msop f a \<equiv> Array (shapelst a) (map f (valuelst a))"
 
-fun dyascalop :: "('a::scalar \<Rightarrow> 'b::scalar \<Rightarrow> 'c::scalar)
+fun dsop :: "('a::scalar \<Rightarrow> 'b::scalar \<Rightarrow> 'c::scalar)
                          \<Rightarrow> 'a array \<Rightarrow> 'b array \<Rightarrow> 'c array"
 where 
-    "dyascalop f (Array [] a) (Array [] b) =
+    "dsop f (Array [] a) (Array [] b) =
       (Array [] 
         [f av bv. 
          av \<leftarrow> (valuelst (Array [] a)), bv \<leftarrow> (valuelst (Array [] b))])"
-  | "dyascalop f (Array (x # xs) a) (Array [] b) =
+  | "dsop f (Array (x # xs) a) (Array [] b) =
       (Array (x # xs) 
         [f av bv. 
          av \<leftarrow> (valuelst (Array (x # xs) a)),
          bv \<leftarrow> (valuelst (Array (x # xs) (valuelst (Array [] b))))])"
-  | "dyascalop f (Array [] a) (Array (x # xs) b) =
+  | "dsop f (Array [] a) (Array (x # xs) b) =
       (Array (x # xs)
         [f av bv.
          av \<leftarrow> (valuelst (Array (x # xs) (valuelst (Array [] a)))),
          bv \<leftarrow> (valuelst (Array (x # xs) b))])"
-  | "dyascalop f a b = 
+  | "dsop f a b = 
       (Array (shapelst a) [f av bv. av \<leftarrow> (valuelst a), bv \<leftarrow> (valuelst b)])"
+
+definition firstval :: "'a::scalar array \<Rightarrow> 'a"
+where "firstval a \<equiv> hd (valuelst a)"
+
+definition first :: "'a::scalar array \<Rightarrow> 'a array" 
+where "first a \<equiv> Array [] [firstval a]"
+
+definition msafun :: "('a::scalar array \<Rightarrow> 'b::scalar array) 
+                      \<Rightarrow> 'a \<Rightarrow> 'b"
+where "msafun f x \<equiv> firstval (f (Array [] [x]))"
+
+definition dsafun :: "('a::scalar array \<Rightarrow> 'b::scalar array \<Rightarrow> 'c::scalar array)
+                      \<Rightarrow> 'a \<Rightarrow> 'b \<Rightarrow> 'c"
+where "dsafun f x y \<equiv> firstval (f (Array [] [x]) (Array [] [y]))"
+
+definition eachm :: "('a::scalar array \<Rightarrow> 'b::scalar array)
+                     \<Rightarrow> 'a array \<Rightarrow> 'b array"
+where "eachm f a \<equiv> msop (msafun f) a"
+
+definition eachd :: "('a::scalar array \<Rightarrow> 'b::scalar array \<Rightarrow> 'c::scalar array)
+                     \<Rightarrow> 'a array \<Rightarrow> 'b array \<Rightarrow> 'c array"
+where
+  "eachd f a b \<equiv> dsop (dsafun f) a b"
+
+primrec listscan :: "('a \<Rightarrow> 'a \<Rightarrow> 'a) \<Rightarrow> 'a list \<Rightarrow> 'a list \<Rightarrow> 'a list" where 
+    "listscan f s [] = []"
+  | "listscan f s (x # xs) = [foldr f s x] @ listscan f (s @ [x]) xs"
+
+definition scan :: "('a::scalar array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a::scalar array) 
+                    \<Rightarrow> 'a array \<Rightarrow> 'a array"
+where "scan f a \<equiv> Array (shapelst a) (listscan (dsafun f) [] (valuelst a))"
+
+definition reduce :: "('a::scalar array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a::scalar array)
+                      \<Rightarrow> 'a array \<Rightarrow> 'a array"
+where "reduce f a \<equiv> Array [] [last (valuelst (scan f a))]"
+
 end
