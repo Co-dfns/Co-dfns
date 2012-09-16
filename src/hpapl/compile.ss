@@ -96,7 +96,7 @@
 (define-syntax aplproc
   (syntax-rules (})
     [(_ args id (body ...) } rest ...)
-     (let ([id (proc-body body ...)])
+     (letrec ([id (proc-body body ...)])
        (aplbody args rest ...))]
     [(_ args id (body ...) e rest ...)
      (aplproc args id (body ... e) rest ...)]))
