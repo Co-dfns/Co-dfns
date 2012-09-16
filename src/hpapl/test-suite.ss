@@ -32,4 +32,4 @@
 (test apl F ← { ⍺ + ⍵ } ⋄ 10 ≡ F / ⍳ 5)
 (test apl ⋄ 1)
 (test apl F ← { + / ⍳ ⍵ } ⋄ 10 ≡ + / F ¨ ⍳ 5)
-(test apl F ← { ⍵ ≤ 1: 1 ⋄ ⍵ × F ⍵ - 1 } ⋄ 120 ≡ F 5)
+(test apl F ← { ⍵ ≤ 1 : 1 ⋄ ⍵ × F ⍵ - 1 } ⋄ 120 ≡ F 5)
