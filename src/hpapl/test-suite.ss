@@ -35,3 +35,4 @@
 (test apl F ← { ⍵ : 3 ⋄ 4 } ⋄ 4 3 ≡ F ¨ 0 1)
 (test apl F ← { ⍵ ≤ 1 : 1 ⋄ ⍵ × F ⍵ - 1 } ⋄ 120 ≡ F 5)
 (test apl 120 ≡ ! 5)
+(test apl F ← { ⍵ ≤ 1 : 1 ⋄ ⍵ × G ⍵ - 1 } ⋄ G ← F ∥ ⋄ 120 ≡ G 5)

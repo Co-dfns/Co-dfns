@@ -30,7 +30,7 @@
          (syntax-violation #f "invalid aux keyword" x))
        ...)]))
 
-(def-aux-keywords ⍳ ⍵ ⍺ ⋄ ← ⍴ ≡ ¨ { } : × ≤ !)
+(def-aux-keywords ⍳ ⍵ ⍺ ⋄ ← ⍴ ≡ ¨ { } : × ≤ ! ⍬)
 
 (meta define (literal? stx)
   (or (number? (syntax->datum stx))))
