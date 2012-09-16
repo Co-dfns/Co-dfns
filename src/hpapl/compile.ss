@@ -126,7 +126,7 @@
      (aplproc args id (body ... e) rest ...)]))
 
 (define-syntax aplbody
-  (syntax-rules (% ⋄ ← {)
+  (syntax-rules (% ⋄ ← { :)
     [(_ args id ← { rest ...) (variable? #'id)
      (aplproc args id () rest ...)]
     [(_ args id ← exp ...) (variable? #'id) 
@@ -138,6 +138,14 @@
      (let ([id (aplexp/optimize exp ...)]) (void))]
     [(_ args (← id exp ...) e rest ...)
      (aplbody args (← id exp ... e) rest ...)]
+    [(_ args (: (t ...) (c ...)) ⋄ rest ...)
+     (aplif (aplexp/optimize args t ...)
+            (aplbody args c ...)
+            (aplbody args rest ...))]
+    [(_ args (: t (c ...)) e rest ...)
+     (aplbody args (: t (c ... e)) rest ...)]
+    [(_ args (% exp ...) : rest ...)
+     (aplbody args (: (exp ...) ()) rest ...)]
     [(_ args (% exp ...) ⋄ rest ...)
      (aplexp/optimize args exp ...)]
     [(_ args (% exp ...))
