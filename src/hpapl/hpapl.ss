@@ -1,3 +1,4 @@
+#!chezscheme
 (library (hpapl)
   (export apl array->boolean / + ⍳ ⍵ ⍺ ⍴ ≡ ← ⋄ ¨ { })
   (import (chezscheme))

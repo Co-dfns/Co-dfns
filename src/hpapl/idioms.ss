@@ -3,8 +3,7 @@
       (let ([x (scalar-value x)])
         (unless (and (integer? x) (nonnegative? x))
           (error #f "DOMAIN ERROR"))
-        (do ([i 0 (fx+ i 1)] [r 0 (fx+ r i)])
-            [(= i x) (make-scalar-array r)]))
+        (make-scalar-array (* x (/ (- x 1) 2))))
       ((reduce plus) (array-iota x))))
 
 (define (each-iota f x)
@@ -17,7 +16,7 @@
             (let ([res (make-vector x)])
               (do ([i 0 (+ i 1)])
                   [(= i x) (make-vector-array res)]
-                (vector-set! res i (f (make-scalar-array i)))))))
+                (vector-set! res i (scalar-value (f (make-scalar-array i))))))))
       ((each f) x)))
 
 (define (plus-reduce a)
@@ -48,10 +47,9 @@
      [(fxvector? v)
       (inner fxvector-ref fxvector-set! (fxvector-length v) make-fxvector)]
      [else (error 'reduce "domain error")]))  
-  (lambda (a)
-    (cond
-     [(scalar-array? a) a]
-     [(empty-array? a) (make-scalar-array 0)]
-     [(fx= 1 (last-axis a)) (make-array (drop-last-axis a) (array-values a))]
-     [else (make-array (drop-last-axis a) (values-reduce (array-values a)))])))
+  (cond
+   [(scalar-array? a) a]
+   [(empty-array? a) (make-scalar-array 0)]
+   [(fx= 1 (last-axis a)) (make-array (drop-last-axis a) (array-values a))]
+   [else (make-array (drop-last-axis a) (values-reduce (array-values a)))]))
 
