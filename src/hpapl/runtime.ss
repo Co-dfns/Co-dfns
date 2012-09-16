@@ -277,3 +277,17 @@
   (case-lambda
     [(a b) (array-equal a b)]))
 
+(define (boolean-array? a)
+  (and (scalar-array? a)
+       (or (= 0 (scalar-value a))
+           (= 1 (scalar-value a)))))
+
+(define-syntax aplif
+  (syntax-rules ()
+    [(_ be c a)
+     (let ([res be])
+       (if (boolean-array? res)
+           (if (zero? (scalar-value res))
+               a
+               c)
+           (error #f "DOMAIN ERROR")))]))
