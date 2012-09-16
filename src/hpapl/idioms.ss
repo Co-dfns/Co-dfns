@@ -4,7 +4,7 @@
         (unless (and (integer? x) (nonnegative? x))
           (error #f "DOMAIN ERROR"))
         (make-scalar-array (* x (/ (- x 1) 2))))
-      ((reduce plus) (array-iota x))))
+      (plus-reduce (array-iota x))))
 
 (define (each-iota f x)
   (if (scalar-array? x)
