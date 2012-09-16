@@ -1,0 +1,13 @@
+#! /usr/bin/env scheme-script
+(import (chezscheme) (hpapl) (srfi-64))
+
+(include "test-runner.ss")
+
+(test-runner-factory hpapl-test-runner)
+
+(test-begin "HPAPL Test Suite")
+(include "test-suite.ss")
+(test-end "HPAPL Test Suite")
+
+(exit 0)
+
