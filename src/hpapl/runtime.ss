@@ -126,39 +126,32 @@
        [else (error #f "unknown value type" b)])]
      [else (error #f "unknown value type" a)])]))
 
-(define (plus a b)
-  (cond
-   [(equal? (array-shape a) (array-shape b))
-    (make-array (array-shape a)
-		(values-map + (array-values a) (array-values b)))]
-   [(scalar-array? a)
-    (make-array (array-shape b)
-		(values-map (let ([x (scalar-value a)])
-			      (lambda (y) (+ x y)))
-			    (array-values b)))]
-   [(scalar-array? b)
-    (make-array (array-shape a)
-		(values-map (let ([x (scalar-value b)])
-			      (lambda (y) (+ y x)))
-			    (array-values a)))]
-   [else (error 'plus "Shape mismatch" a b)]))
-
-(define (subtract a b)
-  (cond
-   [(equal? (array-shape a) (array-shape b))
-    (make-array (array-shape a)
-		(values-map - (array-values a) (array-values b)))]
-   [(scalar-array? a)
-    (make-array (array-shape b)
-		(values-map (let ([x (scalar-value a)])
-			      (lambda (y) (- x y)))
-			    (array-values b)))]
-   [(scalar-array? b)
-    (make-array (array-shape a)
-		(values-map (let ([x (scalar-value b)])
-			      (lambda (y) (- y x)))
-			    (array-values a)))]
-   [else (error 'plus "Shape mismatch" a b)]))
+(define-syntax scalar-dyadic-function
+  (syntax-rules ()
+    [(_ operation)
+     (lambda (a b)
+       (cond
+         [(equal? (array-shape a) (array-shape b))
+          (make-array (array-shape a)
+            (values-map operation (array-values a) (array-values b)))]
+         [(scalar-array? a)
+          (make-array (array-shape b)
+                      (values-map (let ([x (scalar-value a)])
+                                    (lambda (y) (operation x y)))
+                                  (array-values b)))]
+         [(scalar-array? b)
+          (make-array (array-shape a)
+                      (values-map (let ([x (scalar-value b)])
+                                    (lambda (y) (operation y x)))
+                                  (array-values a)))]
+         [else (error #f "LENGTH ERROR")]))]))
+     
+(define plus (scalar-dyadic-function +))
+(define subtract (scalar-dyadic-function -))
+(define times (scalar-dyadic-function *))
+(define less-than-equal 
+  (scalar-dyadic-function 
+    (lambda (x y) (if (<= x y) 1 0))))
 
 (define (shape a)
   (make-array (fxvector (rank a)) (array-shape a)))

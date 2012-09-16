@@ -1,5 +1,7 @@
+(meta define prim-fns '(⍳ ⍴ ≡ ¨ × + - ≤))
+
 (meta define (prim-function? stx)
-  (and (memq (syntax->datum stx) '(⍳ + ⍴ ≡)) #t))
+  (and (memq (syntax->datum stx) prim-fns) #t))
 
 (meta define (prim-operator? stx)
   (and (memq (syntax->datum stx) '(/ ¨)) #t))
@@ -14,10 +16,12 @@
     [(x rest ...) (synmem? id #'(rest ...))]))
 
 (meta define (function? id funs)
-  (or (prim-function? id) (synmem? id funs)))
+  (and (identifier? id)
+       (or (prim-function? id) (synmem? id funs))))
 
 (meta define (operator? id oprs)
-  (or (prim-operator? id) (synmem? id oprs)))
+  (and (identifier? id)
+       (or (prim-operator? id) (synmem? id oprs))))
 
 (meta define (variable? stx)
   (define (char-aplvar? x)
@@ -37,18 +41,33 @@
 (define {)
 (define })
 (define :)
+(define ×)
+(define ≤)
 
-(define-syntax prim-name
-  (syntax-rules (⍳ + ⍴ ≡)
+(define-syntax prim-fn-name
+  (syntax-rules (⍳ + ⍴ ≡ × - ≤)
     [(_ ⍳) array-iota]
     [(_ +) plus]
     [(_ ⍴) rho]
-    [(_ ≡) equiv]))
+    [(_ ≡) equiv]
+    [(_ ×) times]
+    [(_ -) subtract]
+    [(_ ≤) less-than-equal]))
 
-(define-syntax op-name
+(define-syntax prim-op-name
   (syntax-rules (/ ¨)
     [(_ /) reduce]
     [(_ ¨) each]))
+
+(define-syntax fn-name
+  (syntax-rules ()
+    [(_ id) (prim-function? #'id) (prim-fn-name id)]
+    [(_ id) id]))
+
+(define-syntax op-name
+  (syntax-rules ()
+    [(_ id) (prim-operator? #'id) (prim-op-name id)]
+    [(_ id) id]))
 
 (define-syntax apllit
   (syntax-rules ()
@@ -66,32 +85,33 @@
      id]
     [(_ args (% exp)) 
      exp]
-    [(_ (l . o) ⍺ rest ...) 
-     (aplexp/optimize (l . o) (% l) rest ...)]
-    [(_ (l r . o) ⍵ rest ...) 
-     (aplexp/optimize (l r . o) (% r) rest ...)]
+    [(_ ((l . o) . rst) ⍺ rest ...) 
+     (aplexp/optimize ((l . o) . rst) (% l) rest ...)]
+    [(_ ((l r . o) . rst) ⍵ rest ...) 
+     (aplexp/optimize ((l r . o) . rst) (% r) rest ...)]
     [(_ args ⍬ rest ...) 
      (aplexp/optimize args (% empty-array) rest ...)] 
-    [(_ args prim oper rest ...) 
-     (and (function? #'prim #'()) (operator? #'oper #'()))
-     (((op-name oper) (prim-name prim)) (aplexp/optimize args rest ...))]
-    [(_ args prim rest ...) 
-     (function? #'prim #'()) 
-     ((prim-name prim) (aplexp/optimize args rest ...))]
-    [(_ args (% exp) prim oper rest ...) 
-     (and (function? #'prim #'()) (operator? #'oper #'()))
-     (((op-name oper) (prim-name prim)) exp (aplexp/optimize args rest ...))]
-    [(_ args (% exp) prim rest ...) 
-     (function? #'prim #'())
-     ((prim-name prim) exp (aplexp/optimize args rest ...))]
-    [(_ args (tks ...) rest ...)
-     (aplexp/optimize args (% (aplexp args tks ...)) rest ...)]
-    [(_ args id prim rest ...) 
-     (and (variable? #'id) (function? #'prim #'()))
-     ((prim-name prim) id (aplexp/optimize args rest ...))]
-    [(_ args id oper rest ...) 
-     (and (variable? #'id) (operator? #'oper #'()))
-     (((op-name oper) id) (aplexp/optimize args rest ...))]
+    [(_ (p f o) fn op rest ...) 
+     (and (function? #'fn #'f) (operator? #'op #'o))
+     (((op-name op) (fn-name fn)) (aplexp/optimize (p f o) rest ...))]
+    [(_ (p f o) fn rest ...) 
+     (function? #'fn #'f) 
+     ((fn-name fn) (aplexp/optimize (p f o) rest ...))]
+    [(_ (p f o) (% exp) fn oper rest ...) 
+     (and (function? #'fn #'f) (operator? #'oper #'o))
+     (((op-name oper) (fn-name fn)) exp (aplexp/optimize (p f o) rest ...))]
+    [(_ (p f o) (% exp) fn rest ...) 
+     (function? #'fn #'f)
+     ((fn-name fn) exp (aplexp/optimize (p f o) rest ...))]
+    [(_ args (tk tks ...) rest ...) 
+     (not (and (identifier? #'tk) (free-identifier=? #'tk #'%)))
+     (aplexp/optimize args (% (aplexp args tk tks ...)) rest ...)]
+    [(_ (p f o) id fn rest ...) 
+     (and (variable? #'id) (function? #'fn #'f))
+     ((fn-name fn) id (aplexp/optimize (p f o) rest ...))]
+    [(_ (p f o) id op rest ...) 
+     (and (variable? #'id) (operator? #'op #'o))
+     (((op-name op) id) (aplexp/optimize (p f o) rest ...))]
     [(_ args lit r ...) (literal? #'lit)
      (apllit args (lit) r ...)]))
 
@@ -108,20 +128,20 @@
 
 (define-syntax (proc-body x)
   (syntax-case x ()
-    [(_ body ...)
+    [(_ (p f o) body ...)
       #'(case-lambda 
-          [(rgt) (aplbody (bad rgt bad bad) body ...)] 
-          [(lft rgt) (aplbody (lft rgt bad bad) body ...)] 
-          [(lop rop lft rgt) (aplbody (lft rgt lop rop) body ...)])]))
+          [(rgt) (aplbody ((bad rgt bad bad) f o) body ...)] 
+          [(lft rgt) (aplbody ((lft rgt bad bad) f o) body ...)] 
+          [(lop rop lft rgt) (aplbody ((lft rgt lop rop) f o) body ...)])]))
 
 (define-syntax bad 
   (identifier-syntax (syntax-violation #f "unbound variable" #'bad)))
 
 (define-syntax aplproc
   (syntax-rules (})
-    [(_ args id (body ...) } rest ...)
-     (letrec ([id (proc-body body ...)])
-       (aplbody args rest ...))]
+    [(_ (p (f ...) o) id (body ...) } rest ...)
+     (letrec ([id (proc-body (p (id f ...) o) body ...)])
+       (aplbody (p (id f ...) o) rest ...))]
     [(_ args id (body ...) e rest ...)
      (aplproc args id (body ... e) rest ...)]))
 
@@ -159,4 +179,4 @@
 
 (define-syntax apl
   (syntax-rules ()
-    [(_ exp ...) (aplbody (bad bad bad bad) exp ...)]))
+    [(_ exp ...) (aplbody ((bad bad bad bad) () ()) exp ...)]))
