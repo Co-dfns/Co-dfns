@@ -36,7 +36,7 @@
 (define (array-scalar-value a)
   (make-scalar-array (scalar-value a)))
 
-(define empty-array (make-array '(0) '#()))
+(define empty-array (make-vector-array '#()))
 
 (define (fxvector-map-monadic f v)
   (let* ([vl (fxvector-length v)]
@@ -78,6 +78,14 @@
       (cond
        [(fx= i len) #t]
        [(pred? (vector-ref v i)) (loop (fx+ i 1))]
+       [else #f]))))
+
+(define (fxvector-forall pred? v)
+  (let ([len (fxvector-length v)])
+    (let loop ([i 0])
+      (cond
+       [(fx= i len) #t]
+       [(pred? (fxvector-ref v i)) (loop (fx+ i 1))]
        [else #f]))))
 
 (define (fxvector-exists pred? v)
@@ -125,12 +133,12 @@
 		(values-map + (array-values a) (array-values b)))]
    [(scalar-array? a)
     (make-array (array-shape b)
-		(values-map (let ([x (array-scalar-value a)])
+		(values-map (let ([x (scalar-value a)])
 			      (lambda (y) (+ x y)))
 			    (array-values b)))]
    [(scalar-array? b)
     (make-array (array-shape a)
-		(values-map (let ([x (array-scalar-value b)])
+		(values-map (let ([x (scalar-value b)])
 			      (lambda (y) (+ y x)))
 			    (array-values a)))]
    [else (error 'plus "Shape mismatch" a b)]))
@@ -142,12 +150,12 @@
 		(values-map - (array-values a) (array-values b)))]
    [(scalar-array? a)
     (make-array (array-shape b)
-		(values-map (let ([x (array-scalar-value a)])
+		(values-map (let ([x (scalar-value a)])
 			      (lambda (y) (- x y)))
 			    (array-values b)))]
    [(scalar-array? b)
     (make-array (array-shape a)
-		(values-map (let ([x (array-scalar-value b)])
+		(values-map (let ([x (scalar-value b)])
 			      (lambda (y) (- y x)))
 			    (array-values a)))]
    [else (error 'plus "Shape mismatch" a b)]))
@@ -157,6 +165,11 @@
 
 (define (reshape s a)
   (make-array (array-values s) (array-values a)))
+
+(define rho
+  (case-lambda
+    [(a) (shape a)]
+    [(a b) (reshape a b)]))
 
 (define (scalar-iota n)
   (let ([v (make-fxvector n)])
@@ -249,4 +262,18 @@
    [(fxvector? v)
     (reduce fxvector-ref fxvector-set! (fxvector-length v) make-fxvector)]
    [else (error 'reduce "domain error")]))
+
+(define (array-equal a b)
+  (define (same?)
+    (and (equal? (array-shape a) (array-shape b))
+      (let ([av (array-values a)] [bv (array-values b)])
+        (vector-forall (lambda (x) x)
+          (vector-map equal?
+            (if (fxvector? av) (fxvector->vector av) av)
+            (if (fxvector? bv) (fxvector->vector bv) bv))))))
+  (make-scalar-array (if (same?) 1 0)))
+
+(define equiv
+  (case-lambda
+    [(a b) (array-equal a b)]))
 

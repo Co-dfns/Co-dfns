@@ -39,7 +39,10 @@
     (format port "\tExpression: ~{~a ~}~n" 
       (test-result-apl-expression (test-result-ref runner 'source-form)))
     (display #\tab port)
-    (display-condition (test-result-ref runner 'actual-error) port)
+    (let ([err (test-result-ref runner 'actual-error)])
+      (if (condition? err)
+          (display-condition (test-result-ref runner 'actual-error) port)
+          (format port "Expression evaluated to 0")))
     (newline port)))
 
 (define (test-result-apl-expression form)
