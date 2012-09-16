@@ -1,11 +1,23 @@
-(meta define (primitive? stx)
+(meta define (prim-function? stx)
   (and (memq (syntax->datum stx) '(⍳ + ⍴ ≡)) #t))
 
-(meta define (operator? stx)
+(meta define (prim-operator? stx)
   (and (memq (syntax->datum stx) '(/ ¨)) #t))
 
 (meta define (literal? stx)
   (or (number? (syntax->datum stx))))
+
+(meta define (synmem? id stx)
+  (syntax-case stx ()
+    [(x rest ...) (free-identifier=? #'x id) #t]
+    [() #f]
+    [(x rest ...) (synmem? id #'(rest ...))]))
+
+(meta define (function? id funs)
+  (or (prim-function? id) (synmem? id funs)))
+
+(meta define (operator? id oprs)
+  (or (prim-operator? id) (synmem? id oprs)))
 
 (meta define (variable? stx)
   (define (char-aplvar? x)
@@ -24,6 +36,7 @@
 (define ¨)
 (define {)
 (define })
+(define :)
 
 (define-syntax prim-name
   (syntax-rules (⍳ + ⍴ ≡)
@@ -48,25 +61,36 @@
 
 (define-syntax aplexp
   (syntax-rules (% ⍬ ⍺ ⍵)
-    [(_ args id) (variable? #'id) id]
-    [(_ args (% exp)) exp]
-    [(_ (l . o) ⍺ rest ...) (aplexp/optimize (l . o) (% l) rest ...)]
-    [(_ (l r . o) ⍵ rest ...) (aplexp/optimize (l r . o) (% r) rest ...)]
-    [(_ args ⍬ rest ...) (aplexp/optimize args (% empty-array) rest ...)] 
-    [(_ args prim oper rest ...) (and (primitive? #'prim) (operator? #'oper))
+    [(_ args id) 
+     (variable? #'id) 
+     id]
+    [(_ args (% exp)) 
+     exp]
+    [(_ (l . o) ⍺ rest ...) 
+     (aplexp/optimize (l . o) (% l) rest ...)]
+    [(_ (l r . o) ⍵ rest ...) 
+     (aplexp/optimize (l r . o) (% r) rest ...)]
+    [(_ args ⍬ rest ...) 
+     (aplexp/optimize args (% empty-array) rest ...)] 
+    [(_ args prim oper rest ...) 
+     (and (function? #'prim #'()) (operator? #'oper #'()))
      (((op-name oper) (prim-name prim)) (aplexp/optimize args rest ...))]
-    [(_ args prim rest ...) (primitive? #'prim) 
+    [(_ args prim rest ...) 
+     (function? #'prim #'()) 
      ((prim-name prim) (aplexp/optimize args rest ...))]
     [(_ args (% exp) prim oper rest ...) 
-     (and (primitive? #'prim) (operator? #'oper))
+     (and (function? #'prim #'()) (operator? #'oper #'()))
      (((op-name oper) (prim-name prim)) exp (aplexp/optimize args rest ...))]
-    [(_ args (% exp) prim rest ...) (primitive? #'prim)
+    [(_ args (% exp) prim rest ...) 
+     (function? #'prim #'())
      ((prim-name prim) exp (aplexp/optimize args rest ...))]
     [(_ args (tks ...) rest ...)
      (aplexp/optimize args (% (aplexp args tks ...)) rest ...)]
-    [(_ args id prim rest ...) (and (variable? #'id) (primitive? #'prim))
+    [(_ args id prim rest ...) 
+     (and (variable? #'id) (function? #'prim #'()))
      ((prim-name prim) id (aplexp/optimize args rest ...))]
-    [(_ args id oper rest ...) (and (variable? #'id) (operator? #'oper))
+    [(_ args id oper rest ...) 
+     (and (variable? #'id) (operator? #'oper #'()))
      (((op-name oper) id) (aplexp/optimize args rest ...))]
     [(_ args lit r ...) (literal? #'lit)
      (apllit args (lit) r ...)]))

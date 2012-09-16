@@ -1,6 +1,6 @@
 #!chezscheme
 (library (hpapl)
-  (export apl array->boolean / + ⍳ ⍵ ⍺ ⍴ ≡ ← ⋄ ¨ { })
+  (export apl array->boolean / + ⍳ ⍵ ⍺ ⍴ ≡ ← ⋄ ¨ { } :)
   (import (chezscheme))
 
 (include "runtime.ss")
