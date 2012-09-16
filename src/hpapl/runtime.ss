@@ -126,32 +126,45 @@
        [else (error #f "unknown value type" b)])]
      [else (error #f "unknown value type" a)])]))
 
-(define-syntax scalar-dyadic-function
+(define-syntax scalar-function
   (syntax-rules ()
-    [(_ operation)
-     (lambda (a b)
-       (cond
-         [(equal? (array-shape a) (array-shape b))
-          (make-array (array-shape a)
-            (values-map operation (array-values a) (array-values b)))]
-         [(scalar-array? a)
-          (make-array (array-shape b)
-                      (values-map (let ([x (scalar-value a)])
-                                    (lambda (y) (operation x y)))
-                                  (array-values b)))]
-         [(scalar-array? b)
-          (make-array (array-shape a)
-                      (values-map (let ([x (scalar-value b)])
-                                    (lambda (y) (operation y x)))
-                                  (array-values a)))]
-         [else (error #f "LENGTH ERROR")]))]))
+    [(_ monf dyaf)
+     (case-lambda
+       [(a)
+        (make-array (array-shape a) (values-map monf (array-values a)))]
+       [(a b)
+        (cond
+          [(equal? (array-shape a) (array-shape b))
+           (make-array (array-shape a)
+             (values-map dyaf (array-values a) (array-values b)))]
+          [(scalar-array? a)
+           (make-array (array-shape b)
+             (values-map (let ([x (scalar-value a)])
+                           (lambda (y) (dyaf x y)))
+               (array-values b)))]
+          [(scalar-array? b)
+           (make-array (array-shape a)
+             (values-map (let ([x (scalar-value b)])
+                           (lambda (y) (dyaf y x)))
+               (array-values a)))]
+          [else (error #f "LENGTH ERROR")])])]))
      
-(define plus (scalar-dyadic-function +))
-(define subtract (scalar-dyadic-function -))
-(define times (scalar-dyadic-function *))
+(define plus (scalar-function + +))
+(define subtract (scalar-function - -))
+(define times (scalar-function * *))
 (define less-than-equal 
-  (scalar-dyadic-function 
+  (scalar-function
+    (lambda (x) (error '≤ "Requires left argument"))
     (lambda (x y) (if (<= x y) 1 0))))
+
+(define (fact n)
+  (if (zero? n)
+      1
+      (* n (fact (- n 1)))))
+
+(define nonce (lambda args (error #f "NONCE ERROR")))
+
+(define bang (scalar-function fact nonce))
 
 (define (shape a)
   (make-array (fxvector (rank a)) (array-shape a)))
