@@ -1,10 +1,36 @@
-(meta define prim-fns '(⍳ ⍴ ≡ ¨ × + - ≤))
+(define-syntax def-prims
+  (syntax-rules ()
+    [(_ name pred? (p n) ...)
+     (begin 
+       (meta define (pred? stx)
+         (and (memq (syntax->datum stx) '(p ...)) #t))
+       (define-syntax name
+         (syntax-rules (p ...)
+           [(_ p) n] ...)))]))
 
-(meta define (prim-function? stx)
-  (and (memq (syntax->datum stx) prim-fns) #t))
+(def-prims prim-fn-name prim-function? 
+  (⍳ array-iota)
+  (⍴ rho)
+  (≡ equiv)
+  (× times)
+  (+ plus)
+  (- subtract)
+  (≤ less-than-equal)
+  (! bang))
 
-(meta define (prim-operator? stx)
-  (and (memq (syntax->datum stx) '(/ ¨)) #t))
+(def-prims prim-op-name prim-operator?
+  (/ reduce)
+  (¨ each))
+
+(define-syntax def-aux-keywords
+  (syntax-rules ()
+    [(_ k ...)
+     (begin
+       (define-syntax (k x)
+         (syntax-violation #f "invalid aux keyword" x))
+       ...)]))
+
+(def-aux-keywords ⍳ ⍵ ⍺ ⋄ ← ⍴ ≡ ¨ { } : × ≤ !)
 
 (meta define (literal? stx)
   (or (number? (syntax->datum stx))))
@@ -29,35 +55,6 @@
   (let ([val (syntax->datum stx)])
     (and (symbol? val)
          (for-all char-aplvar? (string->list (symbol->string val))))))
-
-(define ⍳)
-(define ⍵)
-(define ⍺)
-(define ⋄)
-(define ←)
-(define ⍴)
-(define ≡)
-(define ¨)
-(define {)
-(define })
-(define :)
-(define ×)
-(define ≤)
-
-(define-syntax prim-fn-name
-  (syntax-rules (⍳ + ⍴ ≡ × - ≤)
-    [(_ ⍳) array-iota]
-    [(_ +) plus]
-    [(_ ⍴) rho]
-    [(_ ≡) equiv]
-    [(_ ×) times]
-    [(_ -) subtract]
-    [(_ ≤) less-than-equal]))
-
-(define-syntax prim-op-name
-  (syntax-rules (/ ¨)
-    [(_ /) reduce]
-    [(_ ¨) each]))
 
 (define-syntax fn-name
   (syntax-rules ()
