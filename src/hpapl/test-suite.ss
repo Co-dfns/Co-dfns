@@ -36,3 +36,4 @@
 (test apl F ← { ⍵ ≤ 1 : 1 ⋄ ⍵ × F ⍵ - 1 } ⋄ 120 ≡ F 5)
 (test apl 120 ≡ ! 5)
 (test apl F ← { ⍵ ≤ 1 : 1 ⋄ ⍵ × G ⍵ - 1 } ⋄ G ← F ∥ ⋄ 120 ≡ G 5)
+(test apl fib ← { ⍵ ≤ 1 : 1 ⋄ (fib ⍵ - 1) + fib ⍵ - 2 } ⋄ 1346269 ≡ fib 30)
