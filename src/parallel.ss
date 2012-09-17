@@ -21,6 +21,37 @@
 (define (entry-next e) (cdr e))
 (define (set-entry-next! e nxt) (set-cdr! e nxt))
 
+#|
+(define enqueue-count 0)
+(define enqueue-time 0)
+(define (average-enqueue-time) (inexact (/ enqueue-time enqueue-count)))
+
+(define dequeue-count 0)
+(define dequeue-time 0)
+(define (average-dequeue-time) (inexact (/ dequeue-time dequeue-count)))
+
+(define (enqueue! q v)
+  (let ([start (real-time)])
+    (with-mutex (queue-mutex q)
+      (let ([e (make-queue-entry v)])
+        (if (queue-empty? q)
+            (begin (set-queue-head! q e) (set-queue-tail! q e))
+            (begin (set-entry-next! (queue-tail q) e) (set-queue-tail! q e))))
+      (condition-signal (queue-condition q)))
+    (set! enqueue-time (+ enqueue-time (- (real-time) start)))
+    (set! enqueue-count (+ enqueue-count 1))))
+
+(define (dequeue q)
+  (let ([start (real-time)])
+    (with-mutex (queue-mutex q)
+      (when (queue-empty? q) (condition-wait (queue-condition q) (queue-mutex q)))
+      (let ([e (queue-head q)])
+        (set-queue-head! q (entry-next e))
+        (set! dequeue-time (+ dequeue-time (- (real-time) start)))
+        (set! dequeue-count (+ dequeue-count 1))
+        (entry-value e)))))
+|#
+
 (define (enqueue! q v)
   (with-mutex (queue-mutex q)
     (let ([e (make-queue-entry v)])
@@ -29,7 +60,7 @@
           (begin (set-entry-next! (queue-tail q) e) (set-queue-tail! q e))))
     (condition-signal (queue-condition q))))
 
-(define (dequeue! q)
+(define (dequeue q)
   (with-mutex (queue-mutex q)
     (when (queue-empty? q) (condition-wait (queue-condition q) (queue-mutex q)))
     (let ([e (queue-head q)])
@@ -46,7 +77,7 @@
 (define (shepherd)
   (call-with-current-continuation
     (lambda (k)
-      (let ([thk (dequeue! work-queue)])
+      (let ([thk (dequeue work-queue)])
         (when thk
           (parameterize ([exit-continuation k])
             (thk))))))
