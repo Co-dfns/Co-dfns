@@ -53,7 +53,13 @@
   (shepherd))
 
 (define (initialize-shepherds!)
-  (for-each (lambda (x) (fork-thread shepherd)) (iota (shepherd-count)))
+  (for-each 
+    (lambda (x) 
+      (fork-thread 
+        (lambda () 
+          (thread-affinity-set! x)
+          (shepherd)))) 
+    (iota (shepherd-count)))
   (void))
 
 (define (halt-shepherds!)
@@ -108,3 +114,16 @@
           (with-mutex m (condition-signal c))))
       (condition-wait c m)
       res)))
+
+(define dummy (load-shared-object "libhpapl.so"))
+
+(define $thread-affinity-set
+  (foreign-procedure "thread_affinity_set" (int) scheme-object))
+
+(define (thread-affinity-set! cpu)
+  (let ([res ($thread-affinity-set cpu)])
+    (case res
+      [(OKAY) (void)]
+      [else (error 'thread-affinity-set "~a" res)])))
+
+
