@@ -1,11 +1,3 @@
-(library (arcfide hpapl runtime)
-   (export make-scalar-array 
-	   array-iota
-	   each
-	   reduce
-	   plus)
-   (import (chezscheme))
-
 (define (hpapl-version) '(1 0))
 (define (hpapl-version-string)
   "HPAPL Runtime Version (1.0)\nCopyright (c) 2012 Aaron W. Hsu")
@@ -21,6 +13,11 @@
   (cond
    [(vector? v) (make-array (fxvector (vector-length v)) v)]
    [(fxvector? v) (make-array (fxvector (fxvector-length v)) v)]
+   [(list? v) 
+    (make-array (fxvector (length v))
+		(if (for-all fixnum? v) 
+		    (list->fxvector v)
+		    (list->vector v)))]
    [else (error 'make-vector-array "domain error" v)]))
 
 (define (rank a) (fxvector-length (array-shape a)))
@@ -39,7 +36,7 @@
 (define (array-scalar-value a)
   (make-scalar-array (scalar-value a)))
 
-(define empty-array (make-array '(0) '#()))
+(define empty-array (make-vector-array '#()))
 
 (define (fxvector-map-monadic f v)
   (let* ([vl (fxvector-length v)]
@@ -83,6 +80,14 @@
        [(pred? (vector-ref v i)) (loop (fx+ i 1))]
        [else #f]))))
 
+(define (fxvector-forall pred? v)
+  (let ([len (fxvector-length v)])
+    (let loop ([i 0])
+      (cond
+       [(fx= i len) #t]
+       [(pred? (fxvector-ref v i)) (loop (fx+ i 1))]
+       [else #f]))))
+
 (define (fxvector-exists pred? v)
   (let ([len (fxvector-length v)])
     (let loop ([i 0])
@@ -121,45 +126,58 @@
        [else (error #f "unknown value type" b)])]
      [else (error #f "unknown value type" a)])]))
 
-(define (plus a b)
-  (cond
-   [(equal? (array-shape a) (array-shape b))
-    (make-array (array-shape a)
-		(values-map + (array-values a) (array-values b)))]
-   [(scalar-array? a)
-    (make-array (array-shape b)
-		(values-map (let ([x (array-scalar-value a)])
-			      (lambda (y) (+ x y)))
-			    (array-values b)))]
-   [(scalar-array? b)
-    (make-array (array-shape a)
-		(values-map (let ([x (array-scalar-value b)])
-			      (lambda (y) (+ y x)))
-			    (array-values a)))]
-   [else (error 'plus "Shape mismatch" a b)]))
+(define-syntax scalar-function
+  (syntax-rules ()
+    [(_ monf dyaf)
+     (case-lambda
+       [(a)
+        (let ([a (defuture a)])
+          (make-array (array-shape a) (values-map monf (array-values a))))]
+       [(a b)
+        (let ([a (defuture a)] [b (defuture b)])
+          (cond
+            [(equal? (array-shape a) (array-shape b))
+             (make-array (array-shape a)
+               (values-map dyaf (array-values a) (array-values b)))]
+            [(scalar-array? a)
+             (make-array (array-shape b)
+               (values-map (let ([x (scalar-value a)])
+                             (lambda (y) (dyaf x y)))
+                 (array-values b)))]
+            [(scalar-array? b)
+             (make-array (array-shape a)
+               (values-map (let ([x (scalar-value b)])
+                             (lambda (y) (dyaf y x)))
+                 (array-values a)))]
+            [else (error #f "LENGTH ERROR")]))])]))
+     
+(define plus (scalar-function + +))
+(define subtract (scalar-function - -))
+(define times (scalar-function * *))
+(define less-than-equal 
+  (scalar-function
+    (lambda (x) (error '≤ "Requires left argument"))
+    (lambda (x y) (if (<= x y) 1 0))))
 
-(define (subtract a b)
-  (cond
-   [(equal? (array-shape a) (array-shape b))
-    (make-array (array-shape a)
-		(values-map - (array-values a) (array-values b)))]
-   [(scalar-array? a)
-    (make-array (array-shape b)
-		(values-map (let ([x (array-scalar-value a)])
-			      (lambda (y) (- x y)))
-			    (array-values b)))]
-   [(scalar-array? b)
-    (make-array (array-shape a)
-		(values-map (let ([x (array-scalar-value b)])
-			      (lambda (y) (- y x)))
-			    (array-values a)))]
-   [else (error 'plus "Shape mismatch" a b)]))
+(define (fact n)
+  (if (zero? n)
+      1
+      (* n (fact (- n 1)))))
+
+(define nonce (lambda args (error #f "NONCE ERROR")))
+
+(define bang (scalar-function fact nonce))
 
 (define (shape a)
   (make-array (fxvector (rank a)) (array-shape a)))
 
 (define (reshape s a)
   (make-array (array-values s) (array-values a)))
+
+(define rho
+  (case-lambda
+    [(a) (shape a)]
+    [(a b) (reshape a b)]))
 
 (define (scalar-iota n)
   (let ([v (make-fxvector n)])
@@ -190,30 +208,7 @@
    [else (error 'array-iota "domain error" a)]))
 
 (define (each f)
-  (case-lambda
-   [(a) 
-    (make-array (array-shape a) 
-		(values-map (scalar-proc-monadic f) (array-values a)))]
-   [(a b)
-    (cond
-     [(equal? (array-shape a) (array-shape b))
-      (make-array (array-shape a)
-		  (values-map (scalar-proc-dyadic f)
-			      (array-values a) 
-			      (array-values b)))]
-     [(scalar-array? a)
-      (make-array (array-shape b)
-		  (values-map (let ([v (scalar-value a)]
-				    [f (scalar-proc-dyadic f)])
-				(lambda (x) (f v x)))
-			      (array-values b)))]
-     [(scalar-array? b)
-      (make-array (array-shape a)
-		  (values-map (let ([v (scalar-value b)]
-				    [f (scalar-proc-dyadic f)])
-				(lambda (x) (f x v)))
-			      (array-values a)))]
-     [else (error 'each "shape mismatch" a b)])]))
+  (scalar-function (scalar-proc-monadic f) (scalar-proc-dyadic f)))
 
 (define (reduce f)
   (define (last-axis a)
@@ -253,4 +248,32 @@
     (reduce fxvector-ref fxvector-set! (fxvector-length v) make-fxvector)]
    [else (error 'reduce "domain error")]))
 
-)
+(define (array-equal a b)
+  (define (same?)
+    (and (equal? (array-shape a) (array-shape b))
+      (let ([av (array-values a)] [bv (array-values b)])
+        (vector-forall (lambda (x) x)
+          (vector-map equal?
+            (if (fxvector? av) (fxvector->vector av) av)
+            (if (fxvector? bv) (fxvector->vector bv) bv))))))
+  (make-scalar-array (if (same?) 1 0)))
+
+(define equiv
+  (case-lambda
+    [(a b) (let ([a (defuture a)] [b (defuture b)]) (array-equal a b))]))
+
+(define (boolean-array? a)
+  (and (scalar-array? a)
+       (or (= 0 (scalar-value a))
+           (= 1 (scalar-value a)))))
+
+(define-syntax aplif
+  (syntax-rules ()
+    [(_ be c a)
+     (let ([res be])
+       (if (boolean-array? res)
+           (if (zero? (scalar-value res))
+               a
+               c)
+           (error #f "DOMAIN ERROR")))]))
+

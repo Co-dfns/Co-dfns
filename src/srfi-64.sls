@@ -749,11 +749,16 @@
   (lambda (runner)
     (equal? name (test-runner-test-name runner))))
 
-(define (test-read-eval-string string)
+(define test-read-eval-string
+  (case-lambda
+    [(x) (%test-read-eval-string x (interaction-environment))]
+    [(x e) (%test-read-eval-string x e)]))
+    
+(define (%test-read-eval-string string env)
   (let* ([port (open-input-string string)]
 	 [form (read port)])
     (if (eof-object? (read-char port))
-	(eval form)
+	(eval form env)
 	(error #f "(not at EOF)"))))
 
 )
