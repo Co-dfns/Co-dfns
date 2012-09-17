@@ -13,6 +13,7 @@
          (test-read-eval-string (->string '(apl tks ...))
            (environment '(hpapl)))))]))
 
+(initialize-shepherds!)
 
 (test apl (1 ⍴ 0) ≡ ⍴ ⍴ 5)
 (test apl (1 ⍴ 1) ≡ ⍴ ⍴ 0 1 2)
@@ -41,3 +42,5 @@
   fib ← { ⍵ ≤ 1 : 1 ⋄ (fib ⍵ - 1) + fib ⍵ - 2 } ⋄
   pfib ← { ⍵ ≤ 25 : fib ⍵ ⋄ (pfib ∥ ⍵ - 1) + pfib ∥ ⍵ - 2 } ⋄
   1346269 ≡ fib 30)
+
+(halt-shepherds!)

@@ -34,44 +34,72 @@
       (set-queue-head! q (entry-next e))
       (entry-value e))))
 
-(define queue (make-queue))
+(define work-queue (make-queue))
+
+(define exit-continuation
+  (make-thread-parameter #f))
+
+(define (release-thread) ((exit-continuation)))
 
 (define (shepherd)
-  (let ([thk (dequeue! queue)])
-    (and thk (thk) (shepherd))))
+  (let ([thk (dequeue! work-queue)])
+    (when thk
+      (call-with-current-continuation
+        (lambda (k)
+          (parameterize ([exit-continuation k])
+            (thk))))
+      (shepherd))))
 
-(define (initialize-shepherds! count)
-  (for-each (lambda (x) (fork-thread shepherd)) (iota count))
+(define (initialize-shepherds!)
+  (for-each (lambda (x) (fork-thread shepherd)) (iota (shepherd-count)))
   (void))
 
-(define (halt-shepherds! count)
-  (for-each (lambda (x) (enqueue! queue #f)) (iota count))
+(define (halt-shepherds!)
+  (for-each (lambda (x) (enqueue! work-queue #f)) (iota (shepherd-count)))
   (void))
 
-(define-record-type future (fields (mutable value) condition mutex)
+(define-record-type future (fields (mutable value))
   (protocol
     (lambda (n)
       (lambda (thk)
-        (let ([c (make-condition)])
-          (let ([res (n #f c (make-mutex))])
-            (define (run)
-              (future-value-set! res (thk))
-              (condition-broadcast c))
-            (enqueue! queue run)
-            res))))))
+        (let ([res (n #f)])
+          (enqueue! work-queue 
+            (lambda () (future-value-set! res (thk))))
+          res)))))
 
 (define-syntax spawn
   (syntax-rules ()
     [(_ exp) (make-future (lambda () exp))]))
 
 (define (parallel f)
-  (case-lambda
+  (case-lambda 
     [(a) (spawn (f a))]
     [(a b) (spawn (f a b))]))
 
 (define (future->array ftr)
-  (unless (future-value ftr)
-    (with-mutex (future-mutex ftr)
-      (condition-wait (future-condition ftr) (future-mutex ftr))))
-  (future-value ftr))
+  (if (future-value ftr)
+      (future-value ftr)
+      (call-with-current-continuation
+        (lambda (k)
+          (enqueue! work-queue
+            (rec retry
+              (lambda ()
+                (if (future-value ftr)
+                    (k (future-value ftr))
+                    (enqueue! work-queue retry)))))
+          (release-thread)))))
 
+(define (defuture a)
+  (if (future? a) (future->array a) a))
+
+(define shepherd-count (make-parameter 8))
+
+(define (apl-run thk)
+  (let ([m (make-mutex)] [c (make-condition)] [res #f])
+    (with-mutex m
+      (enqueue! work-queue
+        (lambda ()
+          (set! res (thk))
+          (with-mutex m (condition-signal c))))
+      (condition-wait c m)
+      res)))

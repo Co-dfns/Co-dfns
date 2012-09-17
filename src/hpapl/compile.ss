@@ -192,4 +192,5 @@
 
 (define-syntax apl
   (syntax-rules ()
-    [(_ exp ...) (aplbody (bad bad bad bad) () exp ...)]))
+    [(_ exp ...) 
+     (apl-run (lambda () (aplbody (bad bad bad bad) () exp ...)))]))
