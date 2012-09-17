@@ -19,6 +19,7 @@
   (! bang))
 
 (def-prims prim-op-name prim-operator?
+  (∥ parallel)
   (/ reduce)
   (¨ each))
 
@@ -30,7 +31,7 @@
          (syntax-violation #f "invalid aux keyword" x))
        ...)]))
 
-(def-aux-keywords ⍳ ⍵ ⍺ ⋄ ← ⍴ ≡ ¨ { } : × ≤ ! ⍬)
+(def-aux-keywords ⍳ ⍵ ⍺ ⋄ ← ⍴ ≡ ¨ { } : × ≤ ! ⍬ ∥)
 
 (meta define (literal? stx)
   (or (number? (syntax->datum stx))))
@@ -55,6 +56,13 @@
   (let ([val (syntax->datum stx)])
     (and (symbol? val)
          (for-all char-aplvar? (string->list (symbol->string val))))))
+
+(meta define (data? stx)
+  (or (and (identifier? stx)
+           (or (free-identifier=? #'⍺ stx) 
+               (free-identifier=? #'⍵ stx)
+               (free-identifier=? #'⍬ stx)))
+      (literal? stx)))
 
 (define-syntax fn-name
   (syntax-rules ()
@@ -82,33 +90,39 @@
      id]
     [(_ args (% exp)) 
      exp]
-    [(_ ((l . o) . rst) ⍺ rest ...) 
-     (aplexp/optimize ((l . o) . rst) (% l) rest ...)]
-    [(_ ((l r . o) . rst) ⍵ rest ...) 
-     (aplexp/optimize ((l r . o) . rst) (% r) rest ...)]
+    [(_ (l . o) ⍺ rest ...) 
+     (aplexp/optimize (l . o) (% l) rest ...)]
+    [(_ (l r . o) ⍵ rest ...) 
+     (aplexp/optimize (l r . o) (% r) rest ...)]
     [(_ args ⍬ rest ...) 
-     (aplexp/optimize args (% empty-array) rest ...)] 
-    [(_ (p f o) fn op rest ...) 
-     (and (function? #'fn #'f) (operator? #'op #'o))
-     (((op-name op) (fn-name fn)) (aplexp/optimize (p f o) rest ...))]
-    [(_ (p f o) fn rest ...) 
-     (function? #'fn #'f) 
-     ((fn-name fn) (aplexp/optimize (p f o) rest ...))]
-    [(_ (p f o) (% exp) fn oper rest ...) 
-     (and (function? #'fn #'f) (operator? #'oper #'o))
-     (((op-name oper) (fn-name fn)) exp (aplexp/optimize (p f o) rest ...))]
-    [(_ (p f o) (% exp) fn rest ...) 
-     (function? #'fn #'f)
-     ((fn-name fn) exp (aplexp/optimize (p f o) rest ...))]
+     (aplexp/optimize args (% empty-array) rest ...)]
+    [(_ args fn op)
+     (prim-operator? #'op)
+     ((op-name op) (fn-name fn))]
+    [(_ args fn op rest ...) 
+     (prim-operator? #'op)
+     (((op-name op) (fn-name fn)) (aplexp/optimize args rest ...))]
+    [(_ args fn rest ...) 
+     (prim-function? #'fn) 
+     ((fn-name fn) (aplexp/optimize args rest ...))]
+    [(_ args (% exp) fn oper rest ...) 
+     (prim-operator? #'oper)
+     (((op-name oper) (fn-name fn)) exp (aplexp/optimize args rest ...))]
+    [(_ args (% exp) fn rest ...) 
+     (prim-function? #'fn)
+     ((fn-name fn) exp (aplexp/optimize args rest ...))]
     [(_ args (tk tks ...) rest ...) 
      (not (and (identifier? #'tk) (free-identifier=? #'tk #'%)))
-     (aplexp/optimize args (% (aplexp args tk tks ...)) rest ...)]
-    [(_ (p f o) id fn rest ...) 
-     (and (variable? #'id) (function? #'fn #'f))
+     (aplexp/optimize args (% (aplexp/optimize args tk tks ...)) rest ...)]
+    [(_ args id fn rest ...) 
+     (and (variable? #'id) (prim-function? #'fn))
      ((fn-name fn) id (aplexp/optimize (p f o) rest ...))]
-    [(_ (p f o) id op rest ...) 
-     (and (variable? #'id) (operator? #'op #'o))
-     (((op-name op) id) (aplexp/optimize (p f o) rest ...))]
+    [(_ args id op rest ...) 
+     (and (variable? #'id) (prim-operator? #'op))
+     (((op-name op) id) (aplexp/optimize args rest ...))]
+    [(_ args id dat rest ...)
+     (and (variable? #'id) (data? #'dat))
+     (id (aplexp/optimize args dat rest ...))]
     [(_ args lit r ...) (literal? #'lit)
      (apllit args (lit) r ...)]))
 
@@ -125,55 +139,57 @@
 
 (define-syntax (proc-body x)
   (syntax-case x ()
-    [(_ (p f o) body ...)
+    [(_ body ...)
       #'(case-lambda 
-          [(rgt) (aplbody ((bad rgt bad bad) f o) body ...)] 
-          [(lft rgt) (aplbody ((lft rgt bad bad) f o) body ...)] 
-          [(lop rop lft rgt) (aplbody ((lft rgt lop rop) f o) body ...)])]))
+          [(rgt) (aplbody (bad rgt bad bad) () body ...)] 
+          [(lft rgt) (aplbody (lft rgt bad bad) () body ...)] 
+          [(lop rop lft rgt) (aplbody (lft rgt lop rop) () body ...)])]))
 
 (define-syntax bad 
   (identifier-syntax (syntax-violation #f "unbound variable" #'bad)))
 
 (define-syntax aplproc
   (syntax-rules (})
-    [(_ (p (f ...) o) id (body ...) } rest ...)
-     (letrec ([id (proc-body (p (id f ...) o) body ...)])
-       (aplbody (p (id f ...) o) rest ...))]
-    [(_ args id (body ...) e rest ...)
-     (aplproc args id (body ... e) rest ...)]))
+    [(_ args (bds ...) id (body ...) } rest ...)
+     (aplbody args (bds ... (id (proc-body body ...))) rest ...)]
+    [(_ args bds id (body ...) e rest ...)
+     (aplproc args bds id (body ... e) rest ...)]))
 
 (define-syntax aplbody
   (syntax-rules (% ⋄ ← { :)
-    [(_ args id ← { rest ...) (variable? #'id)
-     (aplproc args id () rest ...)]
-    [(_ args id ← exp ...) (variable? #'id) 
-     (aplbody args (← id) exp ...)]
-    [(_ args (← id exp ...) ⋄ rest ...)
-     (let ([id (aplexp/optimize args exp ...)])
-       (aplbody args rest ...))]
-    [(_ args (← id exp ...))
-     (let ([id (aplexp/optimize exp ...)]) (void))]
-    [(_ args (← id exp ...) e rest ...)
-     (aplbody args (← id exp ... e) rest ...)]
-    [(_ args (: (t ...) (c ...)) ⋄ rest ...)
-     (aplif (aplexp/optimize args t ...)
-            (aplbody args c ...)
-            (aplbody args rest ...))]
-    [(_ args (: t (c ...)) e rest ...)
-     (aplbody args (: t (c ... e)) rest ...)]
-    [(_ args (% exp ...) : rest ...)
-     (aplbody args (: (exp ...) ()) rest ...)]
-    [(_ args (% exp ...) ⋄ rest ...)
-     (aplexp/optimize args exp ...)]
-    [(_ args (% exp ...))
-     (aplexp/optimize args exp ...)]
-    [(_ args (% exp ...) e rest ...)
-     (aplbody args (% exp ... e) rest ...)]
-    [(_ args ⋄ exp ...)
-     (aplbody args exp ...)]
-    [(_ args e exp ...)
-     (aplbody args (% e) exp ...)]))
+    [(_ args bds id ← { rest ...) (variable? #'id)
+     (aplproc args bds id () rest ...)]
+    [(_ args bds id ← exp ...) (variable? #'id) 
+     (aplbody args bds (← id) exp ...)]
+    [(_ args (b ...) (← id exp ...) ⋄ rest ...)
+     (aplbody args (b ... (id (aplexp/optimize args exp ...))) rest ...)]
+    [(_ args (b ...) (← id exp ...))
+     (letrec* (b ... [id (aplexp/optimize exp ...)]) (void))]
+    [(_ args (b ...) (← id) fn op ⋄ rest ...)
+     (prim-operator? #'op)
+     (aplbody args (b ... [id (aplexp/optimize args fn op)]) rest ...)]
+    [(_ args bds (← id exp ...) e rest ...)
+     (aplbody args bds (← id exp ... e) rest ...)]
+    [(_ args (b ...) (: (t ...) (c ...)) ⋄ rest ...)
+     (letrec* (b ...)
+       (aplif (aplexp/optimize args t ...)
+              (aplbody args () c ...)
+              (aplbody args () rest ...)))]
+    [(_ args bds (: t (c ...)) e rest ...)
+     (aplbody args bds (: t (c ... e)) rest ...)]
+    [(_ args bds (% exp ...) : rest ...)
+     (aplbody args bds (: (exp ...) ()) rest ...)]
+    [(_ args (b ...) (% exp ...) ⋄ rest ...)
+     (letrec* (b ...) (aplexp/optimize args exp ...))]
+    [(_ args (b ...) (% exp ...))
+     (letrec* (b ...) (aplexp/optimize args exp ...))]
+    [(_ args bds (% exp ...) e rest ...)
+     (aplbody args bds (% exp ... e) rest ...)]
+    [(_ args bds ⋄ exp ...)
+     (aplbody args bds exp ...)]
+    [(_ args bds e exp ...)
+     (aplbody args bds (% e) exp ...)]))
 
 (define-syntax apl
   (syntax-rules ()
-    [(_ exp ...) (aplbody ((bad bad bad bad) () ()) exp ...)]))
+    [(_ exp ...) (aplbody (bad bad bad bad) () exp ...)]))

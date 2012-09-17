@@ -297,3 +297,9 @@
                a
                c)
            (error #f "DOMAIN ERROR")))]))
+
+(define (parallel f)
+  (case-lambda
+    [(a) (f a)]
+    [(a b) (f a b)]))
+
