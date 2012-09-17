@@ -131,23 +131,25 @@
     [(_ monf dyaf)
      (case-lambda
        [(a)
-        (make-array (array-shape a) (values-map monf (array-values a)))]
+        (let ([a (defuture a)])
+          (make-array (array-shape a) (values-map monf (array-values a))))]
        [(a b)
-        (cond
-          [(equal? (array-shape a) (array-shape b))
-           (make-array (array-shape a)
-             (values-map dyaf (array-values a) (array-values b)))]
-          [(scalar-array? a)
-           (make-array (array-shape b)
-             (values-map (let ([x (scalar-value a)])
-                           (lambda (y) (dyaf x y)))
-               (array-values b)))]
-          [(scalar-array? b)
-           (make-array (array-shape a)
-             (values-map (let ([x (scalar-value b)])
-                           (lambda (y) (dyaf y x)))
-               (array-values a)))]
-          [else (error #f "LENGTH ERROR")])])]))
+        (let ([a (defuture a)] [b (defuture b)])
+          (cond
+            [(equal? (array-shape a) (array-shape b))
+             (make-array (array-shape a)
+               (values-map dyaf (array-values a) (array-values b)))]
+            [(scalar-array? a)
+             (make-array (array-shape b)
+               (values-map (let ([x (scalar-value a)])
+                             (lambda (y) (dyaf x y)))
+                 (array-values b)))]
+            [(scalar-array? b)
+             (make-array (array-shape a)
+               (values-map (let ([x (scalar-value b)])
+                             (lambda (y) (dyaf y x)))
+                 (array-values a)))]
+            [else (error #f "LENGTH ERROR")]))])]))
      
 (define plus (scalar-function + +))
 (define subtract (scalar-function - -))
@@ -206,30 +208,7 @@
    [else (error 'array-iota "domain error" a)]))
 
 (define (each f)
-  (case-lambda
-   [(a) 
-    (make-array (array-shape a) 
-		(values-map (scalar-proc-monadic f) (array-values a)))]
-   [(a b)
-    (cond
-     [(equal? (array-shape a) (array-shape b))
-      (make-array (array-shape a)
-		  (values-map (scalar-proc-dyadic f)
-			      (array-values a) 
-			      (array-values b)))]
-     [(scalar-array? a)
-      (make-array (array-shape b)
-		  (values-map (let ([v (scalar-value a)]
-				    [f (scalar-proc-dyadic f)])
-				(lambda (x) (f v x)))
-			      (array-values b)))]
-     [(scalar-array? b)
-      (make-array (array-shape a)
-		  (values-map (let ([v (scalar-value b)]
-				    [f (scalar-proc-dyadic f)])
-				(lambda (x) (f x v)))
-			      (array-values a)))]
-     [else (error 'each "shape mismatch" a b)])]))
+  (scalar-function (scalar-proc-monadic f) (scalar-proc-dyadic f)))
 
 (define (reduce f)
   (define (last-axis a)
@@ -281,7 +260,7 @@
 
 (define equiv
   (case-lambda
-    [(a b) (array-equal a b)]))
+    [(a b) (let ([a (defuture a)] [b (defuture b)]) (array-equal a b))]))
 
 (define (boolean-array? a)
   (and (scalar-array? a)
@@ -297,9 +276,4 @@
                a
                c)
            (error #f "DOMAIN ERROR")))]))
-
-(define (parallel f)
-  (case-lambda
-    [(a) (f a)]
-    [(a b) (f a b)]))
 
