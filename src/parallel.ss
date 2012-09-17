@@ -7,6 +7,8 @@
            (make-mutex))))))
 
 (define (queue-empty? q) (null? (queue-head q)))
+(define (queue-empty/lock? q)
+  (with-mutex (queue-mutex q) (null? (queue-head q))))
 
 (define (queue-tail q) (cdr (queue-head.tail q)))
 (define (queue-head q) (car (queue-head.tail q)))
@@ -42,11 +44,13 @@
 (define (release-thread) ((exit-continuation)))
 
 (define (shepherd)
-  (define (loop)
-    (let ([thk (dequeue! work-queue)])
-      (when thk (thk) (loop))))
-  (parameterize ([exit-continuation loop])
-    (loop)))
+  (call-with-current-continuation
+    (lambda (k)
+      (let ([thk (dequeue! work-queue)])
+        (when thk
+          (parameterize ([exit-continuation k])
+            (thk))))))
+  (shepherd))
 
 (define (initialize-shepherds!)
   (for-each (lambda (x) (fork-thread shepherd)) (iota (shepherd-count)))
