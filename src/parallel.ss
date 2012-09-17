@@ -58,13 +58,18 @@
   (for-each (lambda (x) (enqueue! work-queue #f)) (iota (shepherd-count)))
   (void))
 
-(define-record-type future (fields (mutable value))
+(define-record-type future 
+  (fields (mutable value) (mutable waiters) mutex)
   (protocol
     (lambda (n)
       (lambda (thk)
-        (let ([res (n #f)])
-          (enqueue! work-queue 
-            (lambda () (future-value-set! res (thk))))
+        (let ([res (n #f '() (make-mutex))])
+          (enqueue! work-queue
+            (lambda () 
+              (future-value-set! res (thk))
+              (with-mutex (future-mutex res)
+                (for-each (lambda (thk) (enqueue! work-queue thk))
+                  (future-waiters res)))))
           res)))))
 
 (define-syntax spawn
@@ -81,12 +86,10 @@
       (future-value ftr)
       (call-with-current-continuation
         (lambda (k)
-          (enqueue! work-queue
-            (rec retry
-              (lambda ()
-                (if (future-value ftr)
-                    (k (future-value ftr))
-                    (enqueue! work-queue retry)))))
+          (with-mutex (future-mutex ftr)
+            (future-waiters-set! ftr 
+              (cons (lambda () (k (future-value ftr)))
+                    (future-waiters ftr))))
           (release-thread)))))
 
 (define (defuture a)
