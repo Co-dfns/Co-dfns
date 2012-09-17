@@ -42,13 +42,11 @@
 (define (release-thread) ((exit-continuation)))
 
 (define (shepherd)
-  (let ([thk (dequeue! work-queue)])
-    (when thk
-      (call-with-current-continuation
-        (lambda (k)
-          (parameterize ([exit-continuation k])
-            (thk))))
-      (shepherd))))
+  (define (loop)
+    (let ([thk (dequeue! work-queue)])
+      (when thk (thk) (loop))))
+  (parameterize ([exit-continuation loop])
+    (loop)))
 
 (define (initialize-shepherds!)
   (for-each (lambda (x) (fork-thread shepherd)) (iota (shepherd-count)))
