@@ -44,5 +44,7 @@
   fib ← { ⍵ ≤ 1 : 1 ⋄ (fib ⍵ - 1) + fib ⍵ - 2 } ⋄
   pfib ← { ⍵ ≤ 25 : fib ⍵ ⋄ (pfib ∥ ⍵ - 1) + pfib ∥ ⍵ - 2 } ⋄
   1346269 ≡ pfib 30)
+(test apl 
+  c ← { 5 } ⋄ (10 ⍴ 5) ≡ ! ¨ ⍳ 10)
 
 (halt-shepherds!)
