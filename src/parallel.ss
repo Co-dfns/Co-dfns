@@ -64,6 +64,8 @@
   (with-mutex (queue-mutex q)
     (when (queue-empty? q) (condition-wait (queue-condition q) (queue-mutex q)))
     (let ([e (queue-head q)])
+      (when (eq? e (queue-tail q))
+        (set-queue-tail! q '()))
       (set-queue-head! q (entry-next e))
       (entry-value e))))
 
@@ -104,7 +106,7 @@
       (lambda (thk)
         (let ([res (n #f '() (make-mutex))])
           (enqueue! work-queue
-            (lambda () 
+            (lambda ()
               (future-value-set! res (thk))
               (with-mutex (future-mutex res)
                 (for-each (lambda (thk) (enqueue! work-queue thk))
@@ -131,8 +133,18 @@
                     (future-waiters ftr))))
           (release-thread)))))
 
+(define (scalar-defuture s)
+  (if (future? s)
+      (scalar-value (future->array s))
+      s))
+
 (define (defuture a)
-  (if (future? a) (future->array a) a))
+  (cond 
+    [(future? a) (future->array a)]
+    [(vector? (array-values a))
+     (make-array (array-shape a)
+       (vector-map scalar-defuture (array-values a)))]
+    [else a]))
 
 (define shepherd-count (make-parameter 8))
 
@@ -141,7 +153,7 @@
     (with-mutex m
       (enqueue! work-queue
         (lambda ()
-          (set! res (thk))
+          (set! res (defuture (thk)))
           (with-mutex m (condition-signal c))))
       (condition-wait c m)
       res)))
@@ -156,5 +168,4 @@
     (case res
       [(OKAY) (void)]
       [else (error 'thread-affinity-set "~a" res)])))
-
 
