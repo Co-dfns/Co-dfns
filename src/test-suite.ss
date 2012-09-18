@@ -44,7 +44,16 @@
   fib ← { ⍵ ≤ 1 : 1 ⋄ (fib ⍵ - 1) + fib ⍵ - 2 } ⋄
   pfib ← { ⍵ ≤ 25 : fib ⍵ ⋄ (pfib ∥ ⍵ - 1) + pfib ∥ ⍵ - 2 } ⋄
   1346269 ≡ pfib 30)
-(test apl 
-  c ← { 5 } ⋄ (10 ⍴ 5) ≡ ! ¨ ⍳ 10)
+(test apl (10 ⍴ 5) ≡ + ¨ 10 ⍴ 5)
+(test apl id ← { 5 } ⋄ 1)
+(test apl id ← { 5 } ⋄ 1 ≡ 1)
+(test apl 5 5 5 5 5 ≡ 5 5 5 5 5)
+(test apl (1 ⍴ 1) ≡ 1 ⍴ 1)
+(test apl (0 ⍴ 1) ≡ 0 ⍴ 1)
+(test apl (2 ⍴ 1) ≡ 2 ⍴ 1)
+(test apl 1 1 ≡ 2 ⍴ 1)
+(test apl 0 ≡ (4 ⍴ 5) ≡ 3 ⍴ 5)
+(test apl (5 ⍴ 5) ≡ 5 5 5 5 5)
+(test apl id ← { 5 } ⋄ (5 ⍴ 5) ≡ id ¨ ⍳ 5)
 
 (halt-shepherds!)

@@ -104,6 +104,11 @@
 	(fxvector-set! nv i (fxvector-ref v i))))
     nv))
 
+(define (fxvector-product v)
+  (let ([len (fxvector-length v)])
+    (do ([i 0 (fx+ i 1)] [r 1 (fx* r (fxvector-ref v i))])
+        [(= i len) r])))
+
 (define values-map
   (case-lambda
    [(f a)
@@ -171,8 +176,31 @@
 (define (shape a)
   (make-array (fxvector (rank a)) (array-shape a)))
 
+(define (values-length v)
+  (cond
+    [(vector? v) (vector-length v)]
+    [(fxvector? v) (fxvector-length v)]
+    [else (error 'values-length "invalid values type" v)]))
+
+(define (values-extend v len)
+  (define (extend vget vset! vlen vmk)
+    (let ([nv (vmk len)] [vl (vlen v)])
+      (do ([i 0 (fx+ i 1)])
+          [(fx= i len) nv]
+        (vset! nv i (vget v (fxmod i vl))))))
+  (cond
+    [(vector? v) 
+     (extend vector-ref vector-set! vector-length make-vector)]
+    [(fxvector? v) 
+     (extend fxvector-ref fxvector-set! fxvector-length make-fxvector)]
+    [else (error 'values-extend "invalid values type" v)]))
+
 (define (reshape s a)
-  (make-array (array-values s) (array-values a)))
+  (make-array (array-values s)
+    (let ([sp (fxvector-product (array-values s))])
+      (if (= sp (values-length (array-values a)))
+          (array-values a)
+          (values-extend (array-values a) sp)))))
 
 (define rho
   (case-lambda

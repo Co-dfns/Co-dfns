@@ -3,6 +3,7 @@
     (test-runner-reset runner)
     (test-runner-on-test-begin! runner test-on-test-begin-hpapl)
     (test-runner-on-test-end! runner test-on-test-end-hpapl)
+    (test-runner-on-final! runner test-on-final-hpapl)
     runner))
 
 (define (test-on-test-begin-hpapl runner)
@@ -48,3 +49,30 @@
 
 (define (test-result-apl-expression form)
   (cdr (cadr (cadr (cadr (cadr (list-ref form 2)))))))
+
+(define (%test-final-report1 value label port)
+  (if (> value 0)
+      (begin
+	(display label port)
+	(display value port)
+	(newline port))))
+
+(define (%test-final-report-hpapl runner port)
+  (newline port)
+  (%test-final-report1 (test-runner-pass-count runner)
+		      "# of expected passes      " port)
+  (%test-final-report1 (test-runner-xfail-count runner)
+		      "# of expected failures    " port)
+  (%test-final-report1 (test-runner-xpass-count runner)
+		      "# of unexpected successes " port)
+  (%test-final-report1 (test-runner-fail-count runner)
+		      "# of unexpected failures  " port)
+  (%test-final-report1 (test-runner-skip-count runner)
+		      "# of skipped tests        " port))
+
+(define (test-on-final-hpapl runner)
+  (%test-final-report-hpapl runner (current-output-port))
+  (let ((log (test-runner-aux-value runner)))
+    (if (output-port? log)
+	(%test-final-report-hpapl runner log))))
+
