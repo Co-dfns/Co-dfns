@@ -140,7 +140,7 @@
 (define-syntax (proc-body x)
   (syntax-case x ()
     [(_ body ...)
-      #'(case-lambda 
+      #'(case-lambda  
           [(rgt) (aplbody (bad rgt bad bad) () body ...)] 
           [(lft rgt) (aplbody (lft rgt bad bad) () body ...)] 
           [(lop rop lft rgt) (aplbody (lft rgt lop rop) () body ...)])]))
