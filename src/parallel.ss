@@ -91,7 +91,7 @@
       (fork-thread 
         (lambda () 
           (thread-affinity-set! x)
-          (shepherd)))) 
+          (shepherd))))
     (iota (shepherd-count)))
   (void))
 
