@@ -6,13 +6,14 @@
     runner))
 
 (define (test-on-test-begin-hpapl runner)
-  (void))
+  (printf "∘")
+  (flush-output-port (current-output-port)))
       
 (define (test-on-test-end-hpapl runner)
   (let ([log (test-runner-aux-value runner)]
 	[kind (test-result-kind runner)])
     (when (memq kind '(fail xpass))
-      (printf "Test ~a~@[ ~a~]: ~a~n"
+      (printf "~nTest ~a~@[ ~a~]: ~a~n"
         (test-runner-test-number runner)
         (test-result-ref runner 'test-name)
         (case kind [(fail) "Failed"] [(xpass) "Unexpected pass"])))
