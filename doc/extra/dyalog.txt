@@ -1,0 +1,68 @@
+HPAPL: Coupling APL and CNC for Parallel Programming
+
+	Aaron W. Hsu <awhsu@indiana.edu>
+	Indiana University
+	
+Introduction 
+
+Part 1: My Vision 
+
+Cnc: Deterministic, Dataflow oriented
+
+Execution is deterministic
+
+Importance of Education
+
+Role of Formal Methods
+
+Part 2: Current Work
+
+HPAPL: High-performance {A, Axiomatic} {Programming, Parallel} Language
+
+Lenore Mullin, "A Mathematics of Arrays."
+
+∇R←A PROC B;X;Y
+  A←3 3⍴⍳9
+  B←3 3⍴∅
+  F←{⍵}
+  F↤⊢ A
+  F↦⊢ B
+  F∥ ,⍳⍴A   ⍝ B[⊢¨,⍳⍴A]←F¨A[⊢¨,⍳⍴A]
+∇
+
+∇OUT←SUM IN;P;D
+ D←(⍴IN)⍴∅
+ (0⌷D)←0⌷IN
+ P←{+/⍵}     ⍝ R←TAG P (EIN ED)
+ P↤⊢ IN
+ P↤(¯1∘+) D
+ P↦⊢ D
+ P∥ 1↓⍳⍴D
+ OUT←¯1↑D
+∇
+
+Part 3: Summer Plans
+
+1. Finish formalization
+2. Develop compiler passes
+  a. CnC SA Folding
+  b. Eliminate Non-deterministic Garbage Collection
+  c. Eliminate unnecessary runtime checks for SA
+3. Prototype implementation
+
+
+∇R←S LIFE G;L;I;O
+ L←{C←+⌿¯1 0 1∘.⊖¯1 0 1⌽(3,⍴⍵)⍴⍵
+    1 1↓¯1 ¯1↓1 ⍵∨.∧3 4=(2,⍴C)⍴C}
+ I←{⍵+[0](⍴G)|¯1+⍳2+S⌊(⍴G)-⍵}
+ O←{⍵+[0]⍳S⌊(⍴G)-⍵}
+ ⍝ (O⌷R)↤(I⌷G∥L) ⍳⌈(⍴G)÷S
+ (L↦O R←(⍴G)⍴∅)↤I G
+ L∥F∥G ⍳⌈(⍴G)÷S
+∇
+
+Problems:
+
+Taking over the use of ⍺
+
+
