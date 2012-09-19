@@ -10,5 +10,4 @@
         pfib ← { ⍵ ≤ 30 : fib ⍵ ⋄ (pfib ∥ ⍵ - 1) + pfib ∥ ⍵ - 2 } ⋄
         pfib 40)))
   (newline)
-  (halt-shepherds!)
   (exit 0))
