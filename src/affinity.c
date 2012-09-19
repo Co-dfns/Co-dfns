@@ -28,6 +28,8 @@ ptr thread_affinity_set(int cpu)
 	default: return Sstring_to_symbol("OKAY");
 	}
 	
+	free(cpuset);
+	
 	return Sstring_to_symbol("OKAY");
 }
 	
