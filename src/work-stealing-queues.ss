@@ -9,7 +9,6 @@
     (mutable top)
     (mutable tub)
     (mutable bottom)
-    (mutable grabbed)
     (mutable active-vector))
   (protocol
     (lambda (n)
@@ -17,18 +16,18 @@
         (let ([lock (make-ftype-pointer ftype-lock
                       (foreign-alloc (ftype-sizeof ftype-lock)))])
           (initialize-lock lock)
-          (n lock 0 0 0 '() (make-circular-vector ws-queue/initial-log-size)))))))
+          (n lock 0 0 0 (make-circular-vector ws-queue/initial-log-size)))))))
 
 (define (destroy-queue! wsq)
   (foreign-free (ftype-pointer-address (ws-queue-lock wsq))))
 
 (define (ws-queue-cas-top wsq old new)
-  (or (acquire-lock (ws-queue-lock wsq))
-      (let ([res (and (= (ws-queue-top wsq) old) 
-                      (ws-queue-top-set! wsq new) 
-                      #t)])
-        (release-lock (ws-queue-lock wsq))
-        res)))
+  (and (acquire-lock (ws-queue-lock wsq))
+       (let ([res (and (= (ws-queue-top wsq) old) 
+                       (ws-queue-top-set! wsq new) 
+                       #t)])
+         (release-lock (ws-queue-lock wsq))
+         res)))
 
 (define (ws-queue-push-bottom! wsq v)
   (define (grow/maybe b t cv)
@@ -82,7 +81,7 @@
   (let loop ([lst work-queues] [slp 1000])
     (if (null? lst)
         (begin
-          (sleep (make-time 'time-duration slp 0))
+          #;(sleep (make-time 'time-duration slp 0))
           (loop work-queues slp))
         (let ([res (ws-queue-steal (car lst))])
           (cond
@@ -91,22 +90,8 @@
             [else res])))))
 
 (define (get-work wsq)
-  (define (track! x)
-    (ws-queue-grabbed-set! wsq (cons x (ws-queue-grabbed wsq)))
-    x)
   (let ([thk (ws-queue-pop-bottom wsq)])
     (if (eq? thk ws-queue/empty)
-        (track! (steal-from-queues))
-        (track! thk))))
+        (steal-from-queues)
+        thk)))
 
-(define (get-grabbed)
-  (apply append (map ws-queue-grabbed work-queues)))
-
-(define (is-unique? lst)
-  (let ([table (make-eq-hashtable (length lst))])
-    (call-with-current-continuation
-      (lambda (k)
-        (for-each
-          (lambda (e)
-            (hashtable-update! table e (lambda (x) (if x (k #f) #t)) #f))
-          lst)))))
