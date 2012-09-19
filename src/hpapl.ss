@@ -8,9 +8,9 @@
 (include "compile.ss")
 (include "convert.ss")
 (include "idioms.ss")
-(include "parallel.ss")
 (include "circular-vectors.ss")
 (include "work-stealing-queues.ss")
 ;(include "lock-queues.ss")
+(include "parallel.ss")
 
 )
