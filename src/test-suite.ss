@@ -13,7 +13,7 @@
          (test-read-eval-string (->string '(apl tks ...))
            (environment '(hpapl)))))]))
 
-(shepherd-count 4)
+(shepherd-count 8)
 
 (initialize-shepherds!)
 
