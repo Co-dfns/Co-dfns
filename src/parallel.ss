@@ -72,9 +72,16 @@
 (define work-queue (make-queue))
 
 (define exit-continuation
-  (make-thread-parameter #f))
+  (make-thread-parameter
+    (lambda args
+      (error 'exit-continuation "no exit continuation defined"))))
+(define global-continuation
+  (make-parameter
+    (lambda args
+      (error 'global-continuation "no global continuation defined"))))
 
 (define (release-thread) ((exit-continuation)))
+(define (apl-return-result x) ((global-continuation) x))
 
 (define (shepherd)
   (call-with-current-continuation
@@ -82,7 +89,9 @@
       (let ([thk (dequeue work-queue)])
         (when thk
           (parameterize ([exit-continuation k])
-            (thk))))))
+            (with-exception-handler
+              (lambda (c) (apl-return-result c) (k))
+              thk))))))
   (shepherd))
 
 (define (initialize-shepherds!)
@@ -150,13 +159,16 @@
 
 (define (apl-run thk)
   (let ([m (make-mutex)] [c (make-condition)] [res #f])
-    (with-mutex m
-      (enqueue! work-queue
-        (lambda ()
-          (set! res (defuture (thk)))
-          (with-mutex m (condition-signal c))))
-      (condition-wait c m)
-      res)))
+    (define (set-result x)
+      (set! res x)
+      (with-mutex m (condition-signal c)))
+    (parameterize ([global-continuation set-result])
+      (with-mutex m
+        (enqueue! work-queue (lambda () (set-result (defuture (thk)))))
+        (condition-wait c m)
+        (if (condition? res)
+            (raise res)
+            res)))))
 
 (define dummy (load-shared-object "libhpapl.so"))
 
