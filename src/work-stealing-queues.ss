@@ -77,17 +77,28 @@
       (error 'enqueue! "calling enqueue! from outside a thread"))
     (ws-queue-push-bottom! queue thk)))
 
-(define (steal-from-queues)
-  (let loop ([lst work-queues] [slp 1000])
-    (if (null? lst)
-        (begin
-          #;(sleep (make-time 'time-duration slp 0))
-          (loop work-queues slp))
+(define (try-steal)
+  (let loop ([lst work-queues])
+    (if (null? lst) 
+        ws-queue/empty
         (let ([res (ws-queue-steal (car lst))])
           (cond
-            [(eq? res ws-queue/empty) (loop (cdr lst) slp)]
-            [(eq? res ws-queue/abort) (loop lst slp)]
+            [(eq? res ws-queue/empty) (loop (cdr lst))]
+            [(eq? res ws-queue/abort) (loop lst)]
             [else res])))))
+
+(define (steal-from-queues)
+  (let loop ([slp 1000])
+    (let ([res (try-steal)])
+      (if (eq? ws-queue/empty res)
+          (loop slp)
+          res))))
+
+(define (get-work/try wsq)
+  (let ([thk (ws-queue-pop-bottom wsq)])
+    (if (eq? thk ws-queue/empty)
+        (try-steal)
+        thk)))
 
 (define (get-work wsq)
   (let ([thk (ws-queue-pop-bottom wsq)])
