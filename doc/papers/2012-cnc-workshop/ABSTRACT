@@ -1,0 +1,9 @@
+Title: Provably Correct Space-folding of CnC Programs
+
+We present a formally define dlanguage based on the Mathematics of
+Arrays and an axiomatic semantics fully mechanized in the Isabelle 
+proof assistant. CnC programs are then described using this language
+and a space folded, multiple assignment variant is derived rigorously 
+using the semantics. We show that this derivation preserves the 
+correctness of the program. 
+
