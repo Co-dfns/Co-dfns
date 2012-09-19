@@ -1,8 +1,7 @@
 #!chezscheme
 (library (hpapl)
   (export apl array->boolean / + ⍳ ⍵ ⍺ ⍴ ≡ ← ⋄ ¨ { } : × - ≤ ! ⍬ ∥
-    initialize-shepherds! #;halt-shepherds! 
-    shepherd-count get-grabbed is-unique?)
+    initialize-shepherds! shepherd-count)
   (import (chezscheme))
 
 (include "runtime.ss")
