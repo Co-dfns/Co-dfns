@@ -109,27 +109,50 @@
     (do ([i 0 (fx+ i 1)] [r 1 (fx* r (fxvector-ref v i))])
         [(= i len) r])))
 
+(define (vector->fxvector v)
+  (let ([len (vector-length v)])
+    (let ([fv (make-fxvector len)])
+      (do ([i 0 (fx+ i 1)])
+          [(fx= i len) fv]
+        (fxvector-set! fv i (vector-ref v i))))))
+
 (define values-map
-  (case-lambda
-   [(f a)
-    (cond
-     [(vector? a) (vector-map f a)]
-     [(fxvector? a) (fxvector-map f a)]
-     [else (error #f "unknown value type" a)])]
-   [(f a b)
-    (cond
-     [(vector? a)
-      (vector-map f a 
-		  (cond 
-		   [(vector? b) b]
-		   [(fxvector? b) (fxvector->vector b)]
-		   [else (error #f "unknown value type"  b)]))]
-     [(fxvector? a)
-      (cond
-       [(fxvector? b) (fxvector-map f a b)]
-       [(vector? b) (vector-map f (fxvector->vector a) b)]
-       [else (error #f "unknown value type" b)])]
-     [else (error #f "unknown value type" a)])]))
+  (let ()
+    (define (iterate n get)
+      (let ([nv (make-vector n)])
+        (do ([i 0 (fx+ i 1)])
+            [(fx= i n) (convert nv)]
+          (vector-set! nv i (get i)))))
+    (define (convert v) v)
+    (case-lambda
+      [(f a)
+       (cond
+         [(vector? a)
+          (iterate (vector-length a) (lambda (i) (f (vector-ref a i))))]
+         [(fxvector? a)
+          (iterate (fxvector-length a) (lambda (i) (f (fxvector-ref a i))))]
+         [else (error #f "unknown value type" a)])]
+      [(f a b)
+       (cond
+         [(vector? a)
+          (cond
+            [(vector? b)
+             (iterate (vector-length a)
+               (lambda (i) (f (vector-ref a i) (vector-ref b i))))]
+            [(fxvector? b)
+             (iterate (vector-length a)
+               (lambda (i) (f (vector-ref a i) (fxvector-ref b i))))]
+            [else (error #f "unknown value type" b)])]
+         [(fxvector? a)
+          (cond
+            [(vector? b)
+             (iterate (fxvector-length a)
+               (lambda (i) (f (fxvector-ref a i) (vector-ref b i))))]
+            [(fxvector? a)
+             (iterate (fxvector-length a)
+               (lambda (i) (f (fxvector-ref a i) (fxvector-ref b i))))]
+            [else (error #f "unknown value type" b)])]
+         [else (error #f "unknown value type" a)])])))
 
 (define-syntax scalar-function
   (syntax-rules ()
@@ -236,7 +259,35 @@
    [else (error 'array-iota "domain error" a)]))
 
 (define (each f)
-  (scalar-function (scalar-proc-monadic f) (scalar-proc-dyadic f)))
+  (define sf
+    (case-lambda
+      [(a) (f (make-scalar-array a))]
+      [(a b) (f (make-scalar-array a) (make-scalar-array b))]))
+  (case-lambda
+    [(a)
+     (let ([a (defuture a)])
+       (make-array (array-shape a) 
+         (scalar-vector-defuture (values-map sf (array-values a)))))]
+    [(a b)
+     (let ([a (defuture a)] [b (defuture b)])
+       (cond
+         [(equal? (array-shape a) (array-shape b))
+          (make-array (array-shape a)
+            (scalar-vector-defuture 
+              (values-map sf (array-values a) (array-values b))))]
+         [(scalar-array? a)
+          (make-array (array-shape b)
+            (scalar-vector-defuture
+              (values-map (let ([x (scalar-value a)])
+                            (lambda (y) (sf x y)))
+                (array-values b))))]
+         [(scalar-array? b)
+          (make-array (array-shape a)
+            (scalar-vector-defuture
+              (values-map (let ([x (scalar-value b)])
+                            (lambda (y) (sf y x)))
+                (array-values a))))]
+         [else (error #f "LENGTH ERROR")]))]))
 
 (define (reduce f)
   (define (last-axis a)

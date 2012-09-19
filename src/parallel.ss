@@ -142,18 +142,20 @@
                     (future-waiters ftr))))
           (release-thread)))))
 
-(define (scalar-defuture s)
-  (if (future? s)
-      (scalar-value (future->array s))
-      s))
+(define (scalar-defuture x)
+  (cond
+    [(future? x) (defuture (scalar-value (defuture x)))]
+    [(array? x) (defuture (scalar-value x))]
+    [else x]))
+
+(define (scalar-vector-defuture v)
+  (vector-map scalar-defuture v))
+
+(define (defuture-vector v)
+  (vector-map defuture v))
 
 (define (defuture a)
-  (cond 
-    [(future? a) (future->array a)]
-    [(vector? (array-values a))
-     (make-array (array-shape a)
-       (vector-map scalar-defuture (array-values a)))]
-    [else a]))
+  (if (future? a) (future->array a) a))
 
 (define shepherd-count (make-parameter 8))
 
