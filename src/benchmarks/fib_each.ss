@@ -1,7 +1,7 @@
 (library-group
   (include "hpapl.ss")
   (import (hpapl) (chezscheme))
-  (shepherd-count 8)
+  (shepherd-count 1)
   (initialize-shepherds!)
   (display 
     (time 
@@ -10,5 +10,4 @@
         pfib ← fib ∥ ⋄ 
         pfib ¨ 8 ⍴ 35)))
   (newline)
-  (halt-shepherds!)
   (exit 0))

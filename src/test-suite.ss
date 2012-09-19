@@ -56,4 +56,3 @@
 (test apl (5 ⍴ 5) ≡ 5 5 5 5 5)
 (test apl id ← { 5 } ⋄ (5 ⍴ 5) ≡ id ¨ ⍳ 5)
 
-(halt-shepherds!)
