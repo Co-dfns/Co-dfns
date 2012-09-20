@@ -1,7 +1,7 @@
 (define ws-queue/empty (cons 'empty '()))
 (define ws-queue/abort (cons 'abort '()))
 
-(define ws-queue/initial-log-size 9)
+(define ws-queue/initial-log-size 6)
 
 (define-record-type ws-queue
   (fields
@@ -91,7 +91,7 @@
   (let loop ([slp 1000])
     (let ([res (try-steal)])
       (if (eq? ws-queue/empty res)
-          (loop slp)
+          (begin (sleep (make-time 'time-duration slp 0)) (loop slp))
           res))))
 
 (define (get-work/try wsq)
@@ -100,9 +100,10 @@
         (try-steal)
         thk)))
 
-(define (get-work wsq)
-  (let ([thk (ws-queue-pop-bottom wsq)])
-    (if (eq? thk ws-queue/empty)
-        (steal-from-queues)
-        thk)))
+(define (get-work)
+  (let ([wsq (thread-queue)])
+    (let ([thk (ws-queue-pop-bottom wsq)])
+      (if (eq? thk ws-queue/empty)
+          (steal-from-queues)
+          thk))))
 

@@ -1,7 +1,7 @@
 (library-group
   (include "hpapl.ss")
   (import (hpapl) (chezscheme))
-  (shepherd-count 8)
+  (shepherd-count 4)
   (initialize-shepherds!)
   (display 
     (time 
