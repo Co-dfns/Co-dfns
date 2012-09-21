@@ -1,0 +1,31 @@
+
+## targets
+
+default: HPAPL
+images: 
+test: HPAPL
+
+all: images test
+
+
+## global settings
+
+SRC = $(ISABELLE_HOME)/src
+OUT = $(ISABELLE_OUTPUT)
+LOG = $(OUT)/log
+
+USEDIR = $(ISABELLE_TOOL) usedir -v true -i true -d pdf  ## -D generated
+
+
+## HPAPL
+
+HPAPL: $(LOG)/HOL-HPAPL.gz
+
+$(LOG)/HOL-HPAPL.gz: ## HPAPL/ROOT.ML HPAPL/document/root.tex HPAPL/*.thy
+	@$(USEDIR) HOL HPAPL
+
+
+## clean
+
+clean:
+	@rm -f $(LOG)/HOL-HPAPL.gz
