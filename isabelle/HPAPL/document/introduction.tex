@@ -10,4 +10,54 @@ combinatorial algorithms, as well as numerical analysis, a traditional
 strong suit that has made APL popular in the actuarial and financial 
 sectors. Traditional APL applies most neatly to problems whose solutions 
 find elegant expression in terms of aggregate, data parallel operations. 
-These solutions are often disarmingly concise.
+These solutions are often disarmingly concise. These programs can be 
+compiled efficiently, and maintained easily due to their directness 
+to the problem domain; often a single APL programmer can support a 
+number of domain experts, where the domain experts are actually writing 
+APL programs directly. 
+
+The APL language has been previously formalized on paper, providing an 
+axiomatic foundation for reasoning rigorously about programs written in 
+APL. This formalization can be used to optimize and improve the behavior 
+of algorithms written in APL, but unfortunately, modern interactive 
+theorem provers do not currently have readily or easily used theories 
+encapsulating the full range of the mathematics of arrays, or of any of 
+the extensions to these mathematics that have arisen as a result of 
+improvements and innovations to APL over the past years. 
+
+Indeed, while the notation of APL has progressed and evolved 
+over the years, it has not previously seen innovations in describing 
+problems who are most useful described efficiently using task parallelism, 
+as opposed to data parallelism. Indeed, traditional threading and 
+multi-programming features in most APL systems resembles that of 
+other mainstream and academic languages. Thus, APL presents a less
+compelling target for solving problems that involved heavy uses of 
+task parallel algorithms.
+
+High-performance APL is a set of simple, clean extensions to the 
+lexically scoped dialect of Dyalog APL known as Direct functions (Dfns),
+implementing a convenient notation for describing both traditional 
+non-deterministic parallel programs and deterministic by construction 
+parallel programs. The notation preserves the concise, neat form of 
+traditional APL programs, enabling parallel algorithms to be described 
+clearly and directly in APL. This has applications in high-performance 
+computing both as a direct programming language and as a coordination 
+language for orchestrating the parallel execution of serial kernels written in 
+other programming languages.
+
+This document fully describes a formal mechanization of the original 
+mathematics of arrays, enabling its use directly in the Isabelle 
+theorem prover. Following this, we extend this formalization to encompass
+the larger language of Dfns, including all operators and most of the 
+functions provided by the Dyalog APL system. This enables proofs of 
+correctness and properties of many Dyalog APL programs. Furthermore, 
+this formalism is combined with a Hoare-logic, also mechanized fully 
+in Isabelle, for the formal verification of the parallel extensions 
+of Dfns implemented by HPAPL. The Hoare-logic simplifies proofs about 
+non-determinism by providing inference rules enabling the derivation 
+of correct, multiple assignment programs from deterministic by construction 
+single assignment programs.
+
+
+
+
