@@ -1,4 +1,4 @@
-header {* A formal theory of APL *}
+header {* A Formal Theory of APL *}
 
 (*
 Copyright (c) 2012 Aaron W. Hsu <arcfide@sacrideo.us>
@@ -19,8 +19,45 @@ theory HPAPL
 imports Main
 begin
 
-class scalar =
-  fixes fill :: 'a
+text {* 
+The first step to a formalization for HPAPL and parallel programs is an 
+appropriate theory of arrays that sufficiently encompasses the serial,
+implicitly parallel language of Dfns, which will be used to drive 
+both the language of specification and the core language for parallel 
+programming in HPAPL. In truth, the constructs described here may 
+actually be compiled to parallel constructs, but differ from the 
+HPAPL extensions in that they are not described as having an explicit 
+concurrency in their use. Indeed, some of the constructs are implicitly 
+ordered, a feature that we rely in sometimes.
+
+The language that we formalize in the HPAPL theory is the side-effect 
+free language of APL expressions, beginning with the mathematics of arrays.
+The development in this document follows the treatment of the same subjects 
+in roughly the same order and manner as the original dissertation defining 
+the mathematics of arrays.
+*}
+
+subsection {* Defining arrays in Isabelle *}
+
+text {* 
+To make life easier in Isabelle, the HPAPL theory deviates from 
+the axiomatic basis of the mathematics of array slightly be starting with 
+an operation definition of arrays and the primitives over arrays, before 
+moving to proof theorems about these definitions that are equivalent in 
+usefulness and meaning to the theorems of the mathematics of arrays.
+This allows a slightly more flexible approach, since both the axioms of 
+the mathematics and the operation definitions may be used when proving 
+richer theorems in the document.
+
+To begin with the concept of a scalar must be defined. All arrays are 
+composed of Scalar elements, and the @{term "class scalar"} defines 
+the important properties of scalars. Namely, all scalars must be associated 
+with a ``fill'' element, which is used when extending arrays of that 
+scalar type. For integers and natural numbers, this fill element is 
+zero. For characters it is the space character.
+*}
+
+class scalar = fixes fill :: 'a
 
 instantiation int and nat :: scalar
 begin
@@ -29,15 +66,123 @@ begin
   instance by default
 end
 
+text {*
+Arrays themselves have two important parts. Firstly, they have a shape, 
+which describes their form, their dimensionality, and the sizes of 
+the various dimensions of an array. Secondly, they have elements which 
+correspond to indices in the range of the shape of the array. Arrays, 
+then are composed of a shape which is a @{typ "nat list"} and a 
+set of values, which is a @{typ "'a::scalar list"}. A scalar array is 
+an array whose dimensionality is the zero, that is, the empty list.
+A vector is a 1-dimensional array, and a matrix a 2-dimensional array.
+Arrays greater than 2 dimensions are considered noble arrays.
+*}
+
 datatype 'a::scalar array = Array "nat list" "'a::scalar list"
 
-definition Empty :: "'a::scalar array" where "Empty \<equiv> Array [0] []"
+text {*
+The following to procedures map the common interfaces of creating 
+scalars and vectors to the notion of an array. They are also useful in 
+that they map to the two forms of constructors that would be used when 
+parsing the syntax of APL, as the APL syntax provides only a means of 
+entering vectors and scalars directly. 
+*}
+
+definition Scalar :: "'a::scalar \<Rightarrow> 'a array" 
+where "Scalar s \<equiv> Array [] [s]"
+
+definition Vector :: "'a::scalar list => 'a::scalar array" 
+where "Vector lst \<equiv> Array [length lst] lst"
+
+text {*
+The @{term shapelst} is a simple field accessor for the @{typ "'a array"} 
+type. 
+*}
 
 definition shapelst :: "'a::scalar array \<Rightarrow> nat list"
 where "shapelst a \<equiv> case a of Array s v \<Rightarrow> s"
 
+text {* The following trivial lemma helps to simplify proofs involving the 
+shape field of an array. *}
+
 lemma shapelst_array [simp]: "shapelst (Array s v) = s"
 by (simp add: shapelst_def)
+
+text {*
+An array's dimensionality is also called its rank, and the following 
+function is used to compute the natural number corresponding 
+to the rank of an array. This is used to implement the APL notion of 
+rank below, in terms of the @{term shape} function.
+*}
+
+definition natrank :: "'a::scalar array \<Rightarrow> nat"
+where "natrank a \<equiv> length (shapelst a)"
+
+text {*
+The following theorems describe
+the relationship between the functions @{term "Scalar"} and @{term "Vector"}
+and the ranks of their results.
+*}
+
+lemma natrank_Scalar [simp]: "natrank (Scalar x) = 0"
+by (simp add: natrank_def Scalar_def shapelst_def)
+
+lemma natrank_Vector [simp]: "natrank (Vector s) = 1"
+by (simp add: Vector_def natrank_def shapelst_def)
+
+text {*
+The @{term natrank} function is not a normal APL function, and is generally 
+used only for the definition of the primary APL functions that describe the 
+structure of an array. Foremost of these primary functions is the shape 
+function, which describes the shape of an array. Namely, the shape of 
+an array is the vector whose length is the rank of the array and whose 
+values correspond to the size of the dimensions of the array.
+*}
+
+definition shape :: "'a::scalar array \<Rightarrow> nat array" 
+where "shape a \<equiv> Vector (shapelst a)"
+
+text {* The empty vector, or empty array shows up so often that it has 
+its own binding *}
+
+definition Empty :: "'a::scalar array" where "Empty \<equiv> Vector []"
+
+text {*
+The following lemmas describe the shapes of vectors and scalars.
+*}
+
+lemma shape_Empty [simp]: "shape Empty = Vector [0]"
+by (simp add: shape_def Empty_def Vector_def)
+
+lemma shape_Scalar [simp]: "shape (Scalar s) = Vector []"
+by (simp add: shape_def Scalar_def Vector_def)
+
+lemma shape_Vector [simp]: "shape (Vector v) = Vector [length v]"
+by (simp add: shape_def Vector_def)
+
+text {*
+The rank of an array can be described using two applications of the shape 
+function, as demonstrated below. Furthermore, we can provide statements 
+about the rank of the empty array and scalars, as well as the constancy 
+of three applications of shape.
+*}
+
+lemma shape_rank [simp]: "shape (shape a) = Vector [natrank a]"
+by (simp add: shape_def Vector_def natrank_def)
+
+lemma shape_rank_Empty [simp]: "shape (shape Empty) = Vector [1]"
+by simp
+
+lemma shape_rank_Vector [simp]: "shape (shape (Vector a)) = Vector [1]"
+by simp
+
+lemma shape_rank_Scalar [simp]: "shape (shape (Scalar a)) = Vector [0]"
+by simp
+
+lemma shape3_const [simp]: "shape (shape (shape a)) = Vector [1]"
+by simp
+
+(*
 
 definition listprod :: "nat list \<Rightarrow> nat"
 where "listprod x = foldr times x 1"
@@ -57,35 +202,20 @@ by (induct x y z rule: sv2vl.induct) (auto)
 definition valuelst :: "'a::scalar array \<Rightarrow> 'a::scalar list" 
 where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (listprod s) v v"
 
-definition Scalar :: "'a::scalar \<Rightarrow> 'a array" 
-where "Scalar s \<equiv> Array [] [s]"
-
-definition Vector :: "'a::scalar list => 'a::scalar array" 
-where "Vector lst \<equiv> Array [length lst] lst"
-
 lemma vector_valuelst [simp]: "valuelst (Vector a) = a"
 by (simp add: Vector_def valuelst_def listprod_def)
 
 lemma valuelst_length [simp]: "listprod (shapelst a) = (length (valuelst a))"
 by (simp add: valuelst_def shapelst_def) (cases a, auto)
 
-definition natrank :: "'a::scalar array \<Rightarrow> nat"
-where "natrank a \<equiv> length (shapelst a)"
-
 lemma natrank_Empty [simp]: "natrank Empty = 1"
 by (simp add: Empty_def natrank_def shapelst_def)
-
-lemma natrank_Scalar [simp]: "natrank (Scalar x) = 0"
-by (simp add: natrank_def Scalar_def shapelst_def)
 
 definition vec2lst :: "'a::scalar array \<Rightarrow> 'a::scalar list"
 where "vec2lst vec \<equiv> case vec of Array s v \<Rightarrow> v"
 
 theorem vector_shape [simp]: "shapelst (Vector s) = [length s]"
 by (simp add: Vector_def shapelst_def)
-
-theorem vector_rank [simp]: "natrank (Vector s) = 1"
-by (simp add: Vector_def natrank_def shapelst_def)
 
 theorem vector_inverse [simp]: "vec2lst (Vector lst) = lst"
 by (simp add: Vector_def vec2lst_def)
@@ -95,12 +225,6 @@ by (simp add: Vector_def Empty_def)
 
 theorem vec2lst_empty [simp]: "vec2lst Empty = []"
 by (simp add: Empty_def vec2lst_def)
-
-definition shape :: "'a::scalar array \<Rightarrow> nat array" 
-where "shape a \<equiv> Vector (shapelst a)"
-
-theorem shape_Empty [simp]: "shape Empty = Vector [0]"
-by (simp add: shape_def Empty_def shapelst_def)
 
 theorem rank_shape_one [simp]: "natrank (shape a) = 1" 
 by (auto simp: shape_def)
@@ -230,7 +354,7 @@ where "scan f a \<equiv> Array (shapelst a) (listscan (dsafun f) [] (valuelst a)
 definition reduce :: "('a::scalar array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a::scalar array)
                       \<Rightarrow> 'a array \<Rightarrow> 'a array"
 where "reduce f a \<equiv> Array [] [last (valuelst (scan f a))]"
-
+*)
 (* datatype prog = Prog sig "stmt list"
       and sig = Mon string string "string list"
               | Dya string string string "string list"
