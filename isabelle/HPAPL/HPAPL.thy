@@ -1,18 +1,19 @@
-(* Formal theory of HPAPL 
- * 
- * Copyright (c) 2012 Aaron W. Hsu <arcfide@sacrideo.us>
- *
- * Permission to use, copy, modify, and distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice appear in all copies.
- *
- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. *)
+header {* A formal theory of APL *}
+
+(*
+Copyright (c) 2012 Aaron W. Hsu <arcfide@sacrideo.us>
+
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. *)
 
 theory HPAPL 
 imports Main
@@ -147,6 +148,11 @@ definition index_gen :: "nat array \<Rightarrow> nat array" where
      case a of
          Array [] x \<Rightarrow> Array [hd (valuelst a)] (upt 0 (hd (valuelst a)))
        | Array [n] x \<Rightarrow> Empty"
+(*
+       | Array [n] x \<Rightarrow> Array [(listprod (valuelst a)), n] 
+                         (flatten (map (idx_lst (valuelst a)) 
+                                       [0..<listprod (valuelst a)]))"
+*)
 
 theorem index_gen_scl_len [simp]: 
   "length (valuelst (index_gen (Scalar n))) = n"
@@ -225,7 +231,7 @@ definition reduce :: "('a::scalar array \<Rightarrow> 'a::scalar array \<Rightar
                       \<Rightarrow> 'a array \<Rightarrow> 'a array"
 where "reduce f a \<equiv> Array [] [last (valuelst (scan f a))]"
 
-datatype prog = Prog sig "stmt list"
+(* datatype prog = Prog sig "stmt list"
       and sig = Mon string string "string list"
               | Dya string string string "string list"
               | MonMonOp string string string "string list"
@@ -253,5 +259,6 @@ datatype prog = Prog sig "stmt list"
               | Or | Power | Replicate | Rot | Transp
     and primo = Each | Reduce | Scan | Axis | Commute | Compose | InProd
               | OutProd | PowerOp | Spawn | Parallel
+*)
 
 end
