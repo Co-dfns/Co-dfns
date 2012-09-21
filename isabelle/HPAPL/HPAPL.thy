@@ -182,10 +182,32 @@ by simp
 lemma shape3_const [simp]: "shape (shape (shape a)) = Vector [1]"
 by simp
 
-(*
+subsection {* Accessing elements of an array *}
 
-definition listprod :: "nat list \<Rightarrow> nat"
-where "listprod x = foldr times x 1"
+text {*
+Accessing the elements of an array is slightly more complicated than 
+talking about the structure of an array, that is, its shape and rank. 
+Conceptually, APL arrays are accessed in row-major order, and the 
+definitions here assume that the values list of an @{typ "'a array"} 
+corresponds to a row-major unraveling of values. More importantly, 
+however, an array created using @{term Array} may not actually be given 
+a list of values that is equal in length to the number of elements that 
+would be expected given the shape of the array. That is, a vector of 
+shape 4 might be given only a single element in its values list. 
+
+The above situation does not result in an invalid array being constructed.
+Instead, these arrays are still considered valid, but the values list is 
+treated as though it were extended to the appropriate size. This is done 
+by a progressive repeating of the same values list over and over again until 
+a values list of the right size is given. This is done implicitly in 
+APL, but described explicitly here by the @{term sv2vl} function. Given 
+an intended size of the eventual list, the original list, and 
+the actual list being processed (the original list and actual list should 
+be the same list when the function is called first, and the actual list 
+should only be different from the original list when recuring), the 
+function will return the appropriately sized list that corresponds to the 
+logical values list of the array.
+*}
 
 fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list" where
     "sv2vl 0 orig lst = []"
@@ -193,17 +215,131 @@ fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list \<
   | "sv2vl (Suc cnt) (oel # ors) [] = (oel # (sv2vl cnt (oel # ors) ors))"
   | "sv2vl (Suc cnt) orig (elm # rst) = (elm # (sv2vl cnt orig rst))"
 
+text {*
+The complexity of the above function naturally leads to wanting some 
+convenient theorems for working with it. The following two are of 
+particular interest in a number of proofs that will follow.
+*}
+
 lemma sv2vl_id [simp]: "sv2vl (length l) orig l = l"
 by (induct l) simp_all
 
 lemma sv2vl_len [simp]: "length (sv2vl x y z) = x"
 by (induct x y z rule: sv2vl.induct) (auto)
 
-definition valuelst :: "'a::scalar array \<Rightarrow> 'a::scalar list" 
-where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (listprod s) v v"
+text {*
+Given @{term sv2vl}, the logical values list of an array may be obtained 
+fairly directly from the literal values list stored in the actual array 
+data structure.
+*}
 
-lemma vector_valuelst [simp]: "valuelst (Vector a) = a"
-by (simp add: Vector_def valuelst_def listprod_def)
+definition valuelst :: "'a::scalar array \<Rightarrow> 'a::scalar list" 
+where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (foldr times s 1) v v"
+
+text {*
+When constructed with the @{term Scalar} or @{term Vector} functions, 
+the values lists of the resulting arrays is simple and direct.
+*}
+
+lemma valuelst_Scalar [simp]: "valuelst (Scalar s) = [s]"
+by (simp add: valuelst_def Scalar_def)
+
+lemma valuelst_Vector [simp]: "valuelst (Vector v) = v"
+by (simp add: Vector_def valuelst_def)
+
+text {*
+Before moving on to the description of how one accesses individual 
+elements, the relationship between an array and its ``ravel'' should 
+happen. Particularly, a ravel of an array is a vector whose elements 
+correspond to the row-major selection of that array's elements. This 
+is exactly the vector whose values list is the @{term valuelst} of the 
+array.
+*}
+
+definition ravel :: "'a::scalar array \<Rightarrow> 'a::scalar array"
+where "ravel a \<equiv> Vector (valuelst a)"
+
+text {*
+When the array in question is a scalar, then its ravel is just the 
+vector containing that single element.
+*}
+
+lemma ravel_Scalar [simp]: "ravel (Scalar s) = Vector [s]"
+by (simp add: ravel_def)
+
+text {*
+When raveling a vector, there is nothing to do, so the ravel is 
+essentially a no-op.
+*}
+
+lemma ravel_Vector [simp]: "ravel (Vector v) = (Vector v)"
+by (simp add: ravel_def)
+
+lemma ravel_Empty [simp]: "ravel Empty = Empty"
+by (simp add: Empty_def)
+
+text {*
+The definition of a values list and of ravel leads to the following 
+interesting equality between the shape of a raveled array and the shape 
+of the unraveled array
+*}
+
+lemma ravel_shape [simp]: "shape (ravel a) = Vector [foldr times (shapelst a) 1]"
+by (simp add: ravel_def valuelst_def shapelst_def) (cases a, auto)
+
+text {*
+The mathematics of arrays defines two helper functions to describe relations 
+between array functions. These are the @{term prod} and @{term total} 
+functions, which receive arrays, but return natural numbers.
+The @{term prod} function computes the product of a vectors elements.
+The @{term total} function computes the total number of elements in an 
+array.
+*}
+
+definition prod :: "nat array \<Rightarrow> nat"
+where "prod a \<equiv> (foldr times (valuelst a) 1)"
+
+definition total :: "'a::scalar array \<Rightarrow> nat"
+where "total a \<equiv> prod (shape a)"
+
+text {*
+The following lemma then follows easily.
+*}
+
+lemma prod_total_rav [simp]: "shape (ravel a) = Vector [(total a)]"
+proof -
+  have "shapelst a = (valuelst (shape a))" by (simp add: shape_def)
+  thus ?thesis by (simp add: total_def prod_def)
+qed
+
+text {*
+Now, to precisely talk about the elements of an array and how they relate 
+to indices, the following @{term gamma} function can is used. It is the 
+usual function used to map multi-dimensional arrays onto a single vector.
+*}
+
+fun lstgamma :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" where 
+    "lstgamma [] [] = 0"
+  | "lstgamma [a] [b] = a"
+  | "lstgamma a b = (last a) + (last b * (lstgamma (butlast a) (butlast b)))"
+
+definition gamma :: "nat array \<Rightarrow> nat array \<Rightarrow> nat"
+where "gamma a b \<equiv> lstgamma (valuelst a) (valuelst b)"
+
+text {* 
+With the definition of @{term gamma}, a precise definition can be written 
+that allows one to extract a single element from an array. This function 
+is called @{term array_get} and expects a single vector array index 
+and an array, and returns the element at that index.
+*}
+
+definition array_get :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a"
+where "array_get i a \<equiv> (valuelst a) ! (gamma i (shape a))"
+
+(*
+
+definition listprod :: "nat list \<Rightarrow> nat"
+where "listprod x = foldr times x 1"
 
 lemma valuelst_length [simp]: "listprod (shapelst a) = (length (valuelst a))"
 by (simp add: valuelst_def shapelst_def) (cases a, auto)
