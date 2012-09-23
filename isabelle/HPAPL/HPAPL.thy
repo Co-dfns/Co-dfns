@@ -91,8 +91,10 @@ entering vectors and scalars directly.
 definition Scalar :: "'a::scalar \<Rightarrow> 'a array" 
 where "Scalar s \<equiv> Array [] [s]"
 
-definition Vector :: "'a::scalar list => 'a::scalar array" 
+definition Vector :: "'a::scalar list \<Rightarrow> 'a::scalar array" 
 where "Vector lst \<equiv> Array [length lst] lst"
+
+subsection {* The shapes of arrays *}
 
 text {*
 The @{term shapelst} is a simple field accessor for the @{typ "'a array"} 
@@ -182,10 +184,10 @@ by simp
 lemma shape3_const [simp]: "shape (shape (shape a)) = Vector [1]"
 by simp
 
-subsection {* Accessing elements of an array *}
+subsection {* Describing the elements of an array *}
 
 text {*
-Accessing the elements of an array is slightly more complicated than 
+Describing the elements of an array is slightly more complicated than 
 talking about the structure of an array, that is, its shape and rank. 
 Conceptually, APL arrays are accessed in row-major order, and the 
 definitions here assume that the values list of an @{typ "'a array"} 
@@ -246,6 +248,21 @@ by (simp add: valuelst_def Scalar_def)
 
 lemma valuelst_Vector [simp]: "valuelst (Vector v) = v"
 by (simp add: Vector_def valuelst_def)
+
+subsection {* Equivalence of Arrays *}
+
+text {*
+It is now possible to describe the equivalence between two arrays.
+Particularly, two arrays are considered @{term array_equiv} equivalent 
+if and only if they have the same shape and their elements are the same.
+This leads to the following definition of the @{term array_equiv} 
+function.
+*}
+
+definition array_equiv :: "'a::scalar array \<Rightarrow> 'a array \<Rightarrow> bool" where 
+  "array_equiv a b \<equiv> (shapelst a = (shapelst b)) \<and> (valuelst a = (valuelst b))"
+
+subsection {* Accessing individual array elements *}
 
 text {*
 Before moving on to the description of how one accesses individual 
@@ -314,7 +331,7 @@ qed
 
 text {*
 Now, to precisely talk about the elements of an array and how they relate 
-to indices, the following @{term gamma} function can is used. It is the 
+to indices, the following @{term gamma} function is used. It is the 
 usual function used to map multi-dimensional arrays onto a single vector.
 *}
 
@@ -336,6 +353,84 @@ and an array, and returns the element at that index.
 definition array_get :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a"
 where "array_get i a \<equiv> (valuelst a) ! (gamma i (shape a))"
 
+text {*
+The @{term gammainv} function defines the inverse of the @{term gamma}
+function.
+*}
+
+fun lstgammainv :: "nat \<Rightarrow> nat \<Rightarrow> nat list \<Rightarrow> nat list" where
+    "lstgammainv d n [] = []"
+  | "lstgammainv d n [x] = [n]"
+  | "lstgammainv d n ls = (lstgammainv d (n div d) (butlast ls) @ [n mod d])"
+
+definition gammainv :: "nat \<Rightarrow> nat array \<Rightarrow> nat array"
+where "gammainv n x = Vector (lstgammainv (prod x) n (valuelst x))"
+
+(* Need a proof of inverseness here!
+
+lemma gammainv_inverse [simp]: "gamma (gammainv n x) x = n"
+sorry
+
+lemma gamma_inverse [simp]: "gammainv (gamma i x) x = i"
+sorry
+
+*)
+
+subsection {* Constructing arrays *}
+
+text {*
+Most arrays in APL are created through means other than @{term Scalar}
+or @{term Vector}. In particular, generally, arrays of higher dimensionality 
+than 1 generally must be created---or should be created---by taking a 
+vector or scalar array and reshaping it using the @{term reshap} function.
+This function takes a new shape described by a @{typ "nat array"} and 
+the old array, and returns the new array with the new shape.
+*}
+
+definition reshape :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a array"
+where "reshape s a \<equiv> Array (valuelst s) (valuelst a)"
+
+text {*
+We want a lemma that describes the shape of a reshaped array 
+simply, but we only care to state this about valid shapes, which are 
+@{typ "nat array"} values of rank 1. 
+*}
+
+lemma reshape_shape [simp]: "shape (reshape (Vector s) a) = Vector s"
+by (simp add: reshape_def shape_def)
+
+text {*
+It also does not matter whether an array is raveled before being 
+reshaped, as the resulting array is the same.
+*}
+
+lemma reshape_ravel [simp]: 
+  "reshape (Vector s) (ravel a) = (reshape (Vector s) a)"
+by (simp add: reshape_def ravel_def)
+
+text {*
+Empty arrays of different dimensions are created by giving a shape 
+to @{term reshape} that contains a zero in it somewhere. The result 
+is an array with an empty value list.
+*}
+
+lemma reshape_emptyshp [simp]: 
+  "prod s = 0 \<Longrightarrow> (valuelst (reshape s x)) = []"
+by (simp add: reshape_def valuelst_def prod_def)
+
+text {*
+Scalar arrays are created using reshape by reshaping an array by 
+@{term Empty}. This leads to the following lemma. The precondition 
+on the statement is necessary, as we must have a non-empty array 
+for this to hold.
+*}
+(*
+lemma reshape_scalar [simp]: 
+  "(prod (shape a) \<noteq> 0) \<Longrightarrow>
+     ((reshape Empty a) = (Scalar (array_get (Vector [0]) (ravel a))))"
+apply (simp add: ravel_def array_get_def gamma_def)
+apply (simp add: Scalar_def)
+*)
 (*
 
 definition listprod :: "nat list \<Rightarrow> nat"
