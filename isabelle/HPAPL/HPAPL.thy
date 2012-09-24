@@ -411,12 +411,20 @@ by (simp add: reshape_def ravel_def)
 text {*
 Empty arrays of different dimensions are created by giving a shape 
 to @{term reshape} that contains a zero in it somewhere. The result 
-is an array with an empty value list.
+is an array with an empty value list. These should really be equalities 
+rather than implications, but that's for another day. In particular, these 
+establish the basic property of what it means to be an empty array. The 
+value list of an empty array is the nil list, and the shape of an empty 
+array always has a zero in it somewhere. 
 *}
 
 lemma reshape_emptyshp [simp]: 
-  "prod s = 0 \<Longrightarrow> (valuelst (reshape s x)) = []"
-by (simp add: reshape_def valuelst_def prod_def)
+  "(prod s = 0) \<Longrightarrow> ((valuelst (reshape s x)) = [])"
+by (simp add: prod_def valuelst_def reshape_def)
+
+lemma emptyshape_emptyvl [simp]:
+  "prod (Vector s) = 0 \<Longrightarrow> (valuelst (Array s x)) = []"
+by (simp add: prod_def valuelst_def Vector_def)
 
 text {*
 Scalar arrays are created using reshape by reshaping an array by 
@@ -424,13 +432,35 @@ Scalar arrays are created using reshape by reshaping an array by
 on the statement is necessary, as we must have a non-empty array 
 for this to hold.
 *}
-(*
+
+lemma valuelst_scalar [simp]: "a \<noteq> [] \<Longrightarrow> valuelst (Array [] a) = [a ! 0]"
+by (induct a) (simp_all add: valuelst_def)
+
 lemma reshape_scalar [simp]: 
-  "(prod (shape a) \<noteq> 0) \<Longrightarrow>
-     ((reshape Empty a) = (Scalar (array_get (Vector [0]) (ravel a))))"
-apply (simp add: ravel_def array_get_def gamma_def)
-apply (simp add: Scalar_def)
-*)
+  "valuelst a \<noteq> [] \<Longrightarrow>
+     (array_equiv 
+       (reshape Empty a) 
+       (Scalar (array_get (Vector [0]) (ravel a))))"
+by (simp add: ravel_def array_get_def gamma_def Scalar_def reshape_def
+                 Empty_def array_equiv_def)
+
+text {*
+The above split definitions on the various special cases found the following 
+statement which says that for all arrays, reshaping the ravel of that array 
+with the shape of the array is the same as reshaping the array with its 
+own shape. Both of these lemmas require proof of the following lemma.
+*}
+
+lemma valuelst_equiv [simp]: 
+  "valuelst (Array (shapelst a) (valuelst a)) = valuelst a"
+sorry
+
+lemma reshape_equiv [simp]: "array_equiv a (reshape (shape a) a)"
+by (simp add: reshape_def array_equiv_def shape_def)
+
+lemma reshape_ravel_equiv [simp]: "array_equiv a (reshape (shape a) (ravel a))"
+by (simp add: reshape_def array_equiv_def shape_def ravel_def)
+
 (*
 
 definition listprod :: "nat list \<Rightarrow> nat"
