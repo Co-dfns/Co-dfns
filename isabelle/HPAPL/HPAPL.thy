@@ -575,6 +575,23 @@ by (simp add: catvec_def)
 
 subsection {* Scalar functions over arrays *}
 
+subsection {* Constructing vectors of integers *}
+
+subsection {* Take and Drop on Arrays *}
+
+subsection {* Subarray indexing *}
+
+subsection {* Reduce and Scan *}
+
+subsection {* Catenation of Arrays of higher dimensionality *}
+
+subsection {* Extending scan *}
+
+subsection {* Properties for indexing operations and catenation *}
+
+subsection {* Extending Iota for vectors *}
+
+subsection {* Compress and Expand *}
 
 
 end
