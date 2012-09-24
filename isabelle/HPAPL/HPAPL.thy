@@ -184,6 +184,20 @@ by simp
 lemma shape3_const [simp]: "shape (shape (shape a)) = Vector [1]"
 by simp
 
+text {*
+The following lemmas are not part of the original specification of 
+the mathematics of arrays, but they are useful enough in the current 
+presentation to make them worth having. The @{term shape_vec} lemma 
+conflicts with the @{term shape_derived} lemma, so only the 
+@{term shape_derived} lemma is added to the simplifier.
+*}
+
+lemma shape_derived [simp]: "shape (Array (shapelst s) v) = shape s"
+by (simp add: shape_def)
+
+lemma shape_vec: "shape (Array s v) = Vector s"
+by (simp add: shape_def)
+
 subsection {* Describing the elements of an array *}
 
 text {*
@@ -261,6 +275,13 @@ function.
 
 definition array_equiv :: "'a::scalar array \<Rightarrow> 'a array \<Rightarrow> bool" where 
   "array_equiv a b \<equiv> (shapelst a = (shapelst b)) \<and> (valuelst a = (valuelst b))"
+
+text {*
+And some simple, obvious properties ought to exist for this definition.
+*}
+
+lemma array_equiv_reflex [simp]: "array_equiv a a"
+by (simp add: array_equiv_def)
 
 subsection {* Accessing individual array elements *}
 
@@ -366,6 +387,11 @@ fun lstgammainv :: "nat \<Rightarrow> nat \<Rightarrow> nat list \<Rightarrow> n
 definition gammainv :: "nat \<Rightarrow> nat array \<Rightarrow> nat array"
 where "gammainv n x = Vector (lstgammainv (prod x) n (valuelst x))"
 
+text {*
+(Ed: We are missing some proofs of the inverseness of the 
+@{term gammainv} function, but those should arrive at some point.)
+*}
+
 (* Need a proof of inverseness here!
 
 lemma gammainv_inverse [simp]: "gamma (gammainv n x) x = n"
@@ -399,7 +425,7 @@ simply, but we only care to state this about valid shapes, which are
 *}
 
 lemma reshape_shape [simp]: "shape (reshape (Vector s) a) = Vector s"
-by (simp add: reshape_def shape_def)
+by (simp add: reshape_def shape_vec)
 
 text {*
 It also does not matter whether an array is raveled before being 
@@ -574,6 +600,67 @@ lemma catvec_scalar3 [simp]:
 by (simp add: catvec_def)
 
 subsection {* Scalar functions over arrays *}
+
+text {*
+Scalar functions are those functions which operate on scalar elements 
+inside of an array. To be able to take any function over 
+scalar values and create a scalar apl function which is a point-wise 
+and scalar extension of the original function, the following defines 
+a higher-order operations @{term sclfunmon} and @{term sclfundya}
+that create scalar apl functions 
+given a normal scalar element function. They assume that the given 
+arrays are of the same shape.
+*}
+
+definition sclfunmon :: "('a::scalar \<Rightarrow> 'b::scalar) \<Rightarrow> 'a array \<Rightarrow> 'b array"
+where "sclfunmon f a \<equiv> Array (shapelst a) [f e. e \<leftarrow> valuelst a]"
+
+definition sclfundya :: 
+  "('a::scalar \<Rightarrow> 'b::scalar \<Rightarrow> 'c::scalar) \<Rightarrow> 'a array \<Rightarrow> 'b array \<Rightarrow> 'c array"
+where 
+  "sclfundya f a b \<equiv> Array (shapelst a) [f x y. x \<leftarrow> valuelst a, y \<leftarrow> valuelst b]"
+
+text {*
+The above definitions sufficiently implement the following specification, 
+which captures the main intent behind scalar functions. Specifically, 
+there are two primary lemmas which state the shape of the result of 
+apply a scalar function and how indexing operations are affected.
+Dealing with shapes first, a monadic function preserves the shape of 
+its input in the output. A dyadic function preserves the shape 
+of its inputs if they have the same shape.
+*}
+
+lemma sclfunmon_shape [simp]: "(array_equiv (shape a) (shape (sclfunmon f a)))"
+by (simp add: sclfunmon_def del: shape_vec)
+
+lemma sclfundya_shape [simp]:
+  "(array_equiv (shape a) (shape b)) \<Longrightarrow> 
+     (array_equiv (shape a) (shape (sclfundya f a b)))"
+by (simp add: sclfundya_def)
+
+text {* 
+Proving statements about the indexing of the scalar operations is a little 
+more tricky, so this is left until later. (Ed: See the comments in the 
+source file, as it contains the import elements and what I have managed 
+to put together so far. Basically, I need some statements about valid 
+indices before I can make things happen.)
+*}
+
+(*
+lemma valuelst_map [simp]: 
+  "valuelst (Array (shapelst a) (map f (valuelst a)))
+     = (map f (valuelst a))"
+sorry
+
+lemma array_get_map [simp]:
+  "array_get i (Array (shapelst a) (map f (valuelst a)))
+     = f (array_get i a)"
+apply (simp add: array_get_def)
+find_theorems "map _ _ ! _" 
+
+lemma sclfunmon_index [simp]: "array_get i (sclfunmon f a) = f (array_get i a)"
+by (simp add: sclfunmon_def)
+*)
 
 subsection {* Constructing vectors of integers *}
 
