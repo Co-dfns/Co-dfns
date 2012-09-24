@@ -445,15 +445,31 @@ by (simp add: ravel_def array_get_def gamma_def Scalar_def reshape_def
                  Empty_def array_equiv_def)
 
 text {*
-The above split definitions on the various special cases found the following 
-statement which says that for all arrays, reshaping the ravel of that array 
-with the shape of the array is the same as reshaping the array with its 
-own shape. Both of these lemmas require proof of the following lemma.
+The above lemmas serve to prompt a more general equivalence between an 
+array and the reshapes of that array which use the same shape as the original 
+array. Namely, reshaping an array with its own shape 
+leads to an equivalent array, and reshaping an array's ravel with the 
+shape of the array will also lead to an array that is equivalent to the 
+original array. In order to prove these things, it is very helpful
+to have a few lemmas that discuss the properties of some of the underlying 
+functions that drive the definitions of @{term valuelst}. Namely, 
+the composition or nesting of @{term sv2vl} calls does not affect the 
+result, and constructing an array from the value list of another array 
+will lead to equivalent value lists.
 *}
+
+lemma sv2vl_idempotent [simp]: 
+  "sv2vl l (sv2vl l a b) (sv2vl l a b) = sv2vl l a b"
+by (metis sv2vl_id sv2vl_len)
 
 lemma valuelst_equiv [simp]: 
   "valuelst (Array (shapelst a) (valuelst a)) = valuelst a"
-sorry
+by (cases a) (auto simp: valuelst_def)
+
+text {*
+With these helper lemmas out of the way, the equivalency of reshapes 
+using an array's original shape can now be stated directly.
+*}
 
 lemma reshape_equiv [simp]: "array_equiv a (reshape (shape a) a)"
 by (simp add: reshape_def array_equiv_def shape_def)
