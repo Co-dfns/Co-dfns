@@ -593,5 +593,22 @@ subsection {* Extending Iota for vectors *}
 
 subsection {* Compress and Expand *}
 
+subsection {* Reverse and rotate *}
+
+subsection {* Take and Drop with Non-scalar left arguments *}
+
+subsection {* Rotation of non-scalar left arguments *}
+
+subsection {* Transposition *}
+
+subsection {* Important lemmas for take, drop, rotate and catenate *}
+
+subsection {* Higher-order Operations *}
+
+subsubsection {* Omega Operator *}
+
+subsubsection {* Outer and Inner Product *}
+
+subsubsection {* Application to subarrays *}
 
 end
