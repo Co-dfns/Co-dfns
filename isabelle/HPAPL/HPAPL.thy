@@ -378,6 +378,8 @@ sorry
 
 subsection {* Constructing arrays *}
 
+subsubsection {* Reshaping arrays *}
+
 text {*
 Most arrays in APL are created through means other than @{term Scalar}
 or @{term Vector}. In particular, generally, arrays of higher dimensionality 
@@ -477,10 +479,22 @@ by (simp add: reshape_def array_equiv_def shape_def)
 lemma reshape_ravel_equiv [simp]: "array_equiv a (reshape (shape a) (ravel a))"
 by (simp add: reshape_def array_equiv_def shape_def ravel_def)
 
-(*
+text {*
+Finally, before moving on, the results of indexing into a reshaped vector
+can be state fairly easily. (Ed: Unfortunately, it takes a bit more thought to 
+actually prove the thing, so I am leaving this until later.)
+*}
 
-definition listprod :: "nat list \<Rightarrow> nat"
-where "listprod x = foldr times x 1"
+(*
+lemma reshape_index_vec [simp]:
+  "array_get i (reshape s (Vector v)) = v ! (gamma i s) mod (total (Vector v))"
+*)
+
+subsubsection {* Catenating arrays *}
+
+
+
+(*
 
 lemma valuelst_length [simp]: "listprod (shapelst a) = (length (valuelst a))"
 by (simp add: valuelst_def shapelst_def) (cases a, auto)
