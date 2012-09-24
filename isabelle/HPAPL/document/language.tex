@@ -1,0 +1,148 @@
+\section{The HPAPL Language}
+
+This section provides an informal but thorough introduction into the HPAPL 
+language, it's behavior, and the core vocabulary available to the HPAPL 
+programmer. The basic syntax and language of HPAPL is very simple, easy 
+to pick up, and should be obvious once reviewed. It is designed to be a 
+regular, predictable mathematical notation, and this drives much of the 
+design. On top of this basic syntax lies the syntax for functions and 
+operators specified by the user. Finally, part of the power of APL comes 
+from the rich set of primitives available, which are described last.
+
+\subsection{Basic APL syntax}
+
+\subsubsection{Literals}
+
+The most basic form in APL is the expression. The simplest form of an 
+expression is the literal, which is a number or a series of numbers 
+separated by a space. Characters are also possible, and character strings 
+are delimited by quote marks. Character strings are just arrays of characters.
+A single number of character by itself is considered a scalar literal, 
+while a series of them is considered a vector. The following are some 
+examples of literals.
+
+\begin{verbatim}
+1   
+'a'
+1 0 1 3 5
+1.0 2.0
+'abcde'
+\end{verbatim}
+
+\subsubsection{Variables}
+
+Variables are bound by the $\gets$ symbol, which takes a variable on 
+the left side (usually) and an expression on the right side, and assigns 
+the value of the expression to the variable on the left side. The left 
+side may also be a selective selection, which is discussed elsewhere.
+
+Variable bindings are not aliasing. That is, conceptually, when you assign 
+a variable to another variable, they do not share the same value, but 
+the variable being assigned receives a copy of the array bound to the 
+variable that was referenced. 
+
+In HPAPL, all assignments work much like a `let' binding does in Scheme, 
+shadowing previous bindings to the same name. Thus, variable bindings inside 
+of a function are not visible outside of a function. This does not however, 
+mean that functions are side-effect free. Selective assignments can 
+create side-effects inside of functions.
+
+The value of an assignment expression is the expression that was bound to 
+the variable.
+
+Here are some assignment examples:
+
+\begin{align}
+&X\gets 5\ 4\ 3\\
+&Y\gets X
+\end{align}
+
+\subsubsection{Functions and Operators}
+
+Normally you do not just bind literals to variables. You want to do something 
+to them. This is achieved in APL by the use of functions and operators.
+Functions are either monadic, meaning that they receive a single right 
+argument, or dyadic, meaning that they receive a right and a left argument. 
+All functions are infix in APL, meaning that the function appears 
+between the values upon which it is being applied. Monadic functions always 
+have their values to the right of the function, and dyadic functions have 
+expressions to their right and to their left. All function applications 
+evaluate from right to left, without exception. This means that 
+and expression like $5\times 4 + 3$ evaluates to $35$ and not to $23$.
+This is done to ensure regularity in the sheer number of functions that 
+might appear in an APL program. Parentheses may be used in the normal 
+manner to control evaluation order where the standard order is not desired.
+Here are some example of function application.
+
+\begin{align}
+&5 + 3\\
+&5\ 5 + 3\\
+&\rho\iota 5 \\
+&5\ F\ \rho 3
+\end{align}
+
+Functions are either scalar functions or non-scalar functions. Scalar 
+functions are defined by an operation that they perform on a single scalar 
+value (such as adding two numbers), and their functions are extended to 
+encompass arrays in the following manner. Monadic scalar functions 
+apply their scalar operation to each element of their right argument.
+Dyadic scalar functions that receive right and left arguments of the same 
+shape do a point-wise application of their operation on each of the elements. 
+As an example $5\ 5 + 3\ 4$ is $8\ 9$, as $+$ is a scalar dyadic function.
+Functions that recieve a scalar on one side and an array of a different shape 
+on the other return an array of the different shape than the scalar, with 
+each element being the computation between the scalar and one of the elements 
+in the other array. So, the above expression could have been written 
+$5+3\ 4$ instead, since the $5$ was duplicated. Built-in and primitive 
+functions both share this syntax. Non-scalar functions have their own 
+behaviors unique to them, and so they have no regular rules about the shapes 
+or results of their application.
+
+Operators are APL higher-order combinators that take functions, either 
+user defined or primitve, and return functions that are either dyadic or 
+monadic or both. Operators may receive the results of other operators
+as their inputs. A common example is the reduction operator.
+Computing the sum of a series of numbers can be accomplished with 
+the combination of the reduction operator and the plus function. 
+So, a vector $X$ can be summed by saying $+/X$. We could have used 
+an user defined function there instead of $+$ and that functio would have 
+been used for the reduction.
+
+To sum up, the expression $(+/X)\div\rho X$ computes the average of 
+the numbers in a vector $X$.
+
+\subsubsection{Selective Assignment}
+
+Instead of putting a single variable on the left hand side of an assignment, 
+it is also possible to put another expression, enclosed in parentheses, 
+that can be used to ``select'' a region inside of an array to be used for 
+an assignment. The value of the right hand side expression is then assigned 
+into the region of the array, overwriting what was there before. The 
+array that is assigned and the region to which we are assigning should be 
+the same shape, except when the expression is a scalar, in which case the 
+scalar will be reshaped to fill the whole region before assignment, 
+though this only happens conceptually, as an implementation may do something
+else to avoid the explicit allocation costs of reshaping.
+
+The most common selection is the indexed selection, in which an 
+expression of the form $(I[]A)\gets E$. Here, the sub-array selected 
+by index vector $I$ is used as the region to store the result of $E$ 
+into the array $A$. For example, to set the 3rd element of a vector, 
+one might write $(3[]V)\gets 5$. 
+
+Selective assignment is important because it is the only means of creating 
+side-effects inside of function bodies to the outside world or of changing 
+any value inside of an array. All other forms of assignment do not affect 
+the array value that was previously stored into the array, but selective 
+assignment does, and as such constitutes the main side-effecting operation 
+in HPAPL.
+
+\subsection{Extending with D-fns}
+
+\subsection{Primtive APL Functions}
+
+\subsection{Primtive APL Operators}
+
+\subsection{Primitives and Operators for Parallel Programming}
+
+
