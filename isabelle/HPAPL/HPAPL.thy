@@ -341,6 +341,16 @@ definition total :: "'a::scalar array \<Rightarrow> nat"
 where "total a \<equiv> prod (shape a)"
 
 text {*
+The values of @{term total} for some specific arrays can be simplified.
+*}
+
+lemma total_scalar [simp]: "total (Scalar s) = 1"
+by (simp add: total_def Scalar_def shape_vec prod_def)
+
+lemma total_vector [simp]: "total (Vector v) = length v"
+by (simp add: total_def prod_def)
+
+text {*
 The following lemma then follows easily.
 *}
 
@@ -373,6 +383,33 @@ and an array, and returns the element at that index.
 
 definition array_get :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a"
 where "array_get i a \<equiv> (valuelst a) ! (gamma i (shape a))"
+
+text {*
+Accessing the @{term i}th element of the array @{term a} is only valid 
+if the index vector @{term i} is in range of the shape @{term s} of 
+@{term a}. This is expressed by the following definition of 
+@{term in_range}.
+*}
+
+definition in_range :: "nat array \<Rightarrow> nat array \<Rightarrow> bool"
+where "in_range i s \<equiv> (list_all2 op < (valuelst i) (valuelst s))"
+
+text {*
+A particular lemma that falls out of the concept of being in range 
+relates to empty arrays. This is not including explicitly in the 
+mathematics of arrays, but it makes a nice addition here to the set of 
+lemmas to be used for proofs. In particular, if an index is in range, 
+this implies that the shape vector has no zeros in it.
+*}
+
+lemma foldr_imp: "0 \<notin> set b \<Longrightarrow> 0 < foldr op * b (Suc 0)" 
+by (induct b) (auto)
+
+lemma listall_imp: "list_all2 op < a (b::nat list) \<Longrightarrow> 0 \<notin> set b"
+  by (induct b arbitrary: a) (auto simp: list_all2_Cons2)
+
+lemma in_range_nonzero [simp]: "in_range i s \<Longrightarrow> prod s \<noteq> 0"
+by (simp add: in_range_def prod_def listall_imp foldr_imp)
 
 text {*
 The @{term gammainv} function defines the inverse of the @{term gamma}
@@ -446,6 +483,8 @@ value list of an empty array is the nil list, and the shape of an empty
 array always has a zero in it somewhere. 
 *}
 
+(* XXX These should be stronger, using equality *)
+
 lemma reshape_emptyshp [simp]: 
   "(prod s = 0) \<Longrightarrow> ((valuelst (reshape s x)) = [])"
 by (simp add: prod_def valuelst_def reshape_def)
@@ -511,10 +550,23 @@ can be state fairly easily. (Ed: Unfortunately, it takes a bit more thought to
 actually prove the thing, so I am leaving this until later.)
 *}
 
-(*
+lemma sv2vl_mod [simp]: 
+  "n \<noteq> 0 \<and> org \<noteq> [] \<Longrightarrow> sv2vl n org ls ! i = org ! i mod (length org)"
+sorry
+
+lemma valuelst_mod [simp]:
+  "v \<noteq> [] \<and> prod (Vector s) \<noteq> 0 
+   \<Longrightarrow> valuelst (Array s v) ! i = v ! i mod length v"
+by (simp add: valuelst_def prod_def Vector_def)
+
+lemma vector_notempty_len [simp]: "(Empty \<noteq> Vector v) = (v \<noteq> [])"
+by (simp add: Empty_def Vector_def)
+
 lemma reshape_index_vec [simp]:
-  "array_get i (reshape s (Vector v)) = v ! (gamma i s) mod (total (Vector v))"
-*)
+  "Empty \<noteq> (Vector v) \<and> Empty \<noteq> (Vector s) \<and> in_range i (Vector s)
+     \<Longrightarrow> (array_get i (reshape (Vector s) (Vector v)) 
+           = v ! (gamma i (Vector s)) mod (total (Vector v)))"
+by (auto simp: array_get_def reshape_def shape_def)
 
 subsubsection {* Catenating Vectors *}
 
