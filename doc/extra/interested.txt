@@ -1,0 +1,7 @@
+Parties interested in Scheme APL
+================================
+
+Michal D. <michal.dobrogost@gmail.com>
+Jason Hemann <jhemann@umail.iu.edu>
+Morten Kromberg <mkrom@dyalog.com>
+Jay Foad <jay@dyalog.com>
