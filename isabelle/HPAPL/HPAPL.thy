@@ -217,31 +217,97 @@ treated as though it were extended to the appropriate size. This is done
 by a progressive repeating of the same values list over and over again until 
 a values list of the right size is given. This is done implicitly in 
 APL, but described explicitly here by the @{term sv2vl} function. Given 
-an intended size of the eventual list, the original list, and 
-the actual list being processed (the original list and actual list should 
-be the same list when the function is called first, and the actual list 
-should only be different from the original list when recuring), the 
+an intended size of the eventual list and the original list, the 
 function will return the appropriately sized list that corresponds to the 
 logical values list of the array.
 *}
 
+fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a list" where
+    "sv2vl 0 ls = []"
+  | "sv2vl n [] = replicate n fill"
+  | "sv2vl n ls = take (min n (length ls)) ls @ sv2vl (n - length ls) ls"
+
+(*
+definition sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a list" where 
+  "sv2vl n ls \<equiv> 
+     if ls = []
+     then (replicate n fill)
+     else take n (concat (replicate (1 + n div length ls) ls))"
+*)
+
+(*
 fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list" where
     "sv2vl 0 orig lst = []"
   | "sv2vl cnt [] [] = (replicate cnt fill)"
   | "sv2vl (Suc cnt) (oel # ors) [] = (oel # (sv2vl cnt (oel # ors) ors))"
   | "sv2vl (Suc cnt) orig (elm # rst) = (elm # (sv2vl cnt orig rst))"
+*)
 
 text {*
 The complexity of the above function naturally leads to wanting some 
 convenient theorems for working with it. The following two are of 
-particular interest in a number of proofs that will follow.
+particular interest in a number of proofs that will follow. The first 
+provides a simple means of eliminating @{term sv2vl} from an equation. The 
+second allows for the removal of some of the more complicated parts of 
+the definition.
 *}
 
-lemma sv2vl_id [simp]: "sv2vl (length l) orig l = l"
-by (induct l) simp_all
+lemma sv2vl_id [simp]: "sv2vl (length l) l = l"
+by (induct "length l" l rule: sv2vl.induct) auto
 
-lemma sv2vl_len [simp]: "length (sv2vl x y z) = x"
-by (induct x y z rule: sv2vl.induct) (auto)
+lemma sv2vl_sub [simp]: "n < length l \<Longrightarrow> sv2vl n l = take n l"
+by (induct n l rule: sv2vl.induct) 
+   (auto, metis min_max.inf_absorb1 order_less_imp_le) 
+
+text {*
+To talk about the length of @{term sv2vl} in general takes more work. 
+In particular, the length of any list returned by @{term sv2vl} should 
+be the same as the first argument passed to @{term sv2vl}. 
+Here's a general proof of this statement.
+*}
+
+(*
+lemma listsum_replicate [simp]: "listsum (replicate n x) = n * x"
+by (induct n) (auto)
+
+lemma nat_div_times: "(n::nat) div x * x = n - n mod x"
+by (metis div_mod_equality')
+
+lemma minus_rel: "x \<le> y \<and> y < (n::nat) \<Longrightarrow> n - x \<ge> n - y"
+by (auto)
+
+lemma mod_equiv: "0 < x \<and> x < (n::nat) \<Longrightarrow> (n - n mod x) \<ge> (n - x)"
+by (auto simp: minus_rel)
+
+lemma min_obvious: "(x::nat) \<ge> y \<Longrightarrow> min x y = y"
+by auto
+
+lemma min_why:  "0 < x \<and> x < (n::nat) \<Longrightarrow> min (n - n mod x) (n - x) = n - x"
+by (auto simp: min_obvious mod_equiv)
+
+lemma min_plus: "(0::nat) < x \<Longrightarrow> min x n + min (n - n mod x) (n - x) = n"
+proof (cases "x < n")
+  fix x::nat and n::nat 
+  assume "0 < x" and "\<not> x < n"
+  thus "min x n + min (n - n mod x) (n - x) = n" by auto
+next
+  fix x::nat and n::nat 
+  assume a: "0 < x" and b: "x < n"
+  thus "min x n + min (n - n mod x) (n - x) = n" by (auto simp: min_why)
+qed
+*) 
+
+lemma sv2vl_len [simp]: "length (sv2vl n ls) = n"
+by (induct n ls rule: sv2vl.induct) auto
+
+text {*
+Finally, a simple case shows up sometimes when dealing with empty 
+vectors, so it just makes life easier if this is put into a simplification 
+rule.
+*}
+
+lemma sv2vl_zero [simp]: "sv2vl 0 x = []"
+by (simp)
 
 text {*
 Given @{term sv2vl}, the logical values list of an array may be obtained 
@@ -250,7 +316,7 @@ data structure.
 *}
 
 definition valuelst :: "'a::scalar array \<Rightarrow> 'a::scalar list" 
-where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (foldr times s 1) v v"
+where "valuelst a \<equiv> case a of Array s v \<Rightarrow> sv2vl (foldr times s 1) v"
 
 text {*
 When constructed with the @{term Scalar} or @{term Vector} functions, 
@@ -258,7 +324,7 @@ the values lists of the resulting arrays is simple and direct.
 *}
 
 lemma valuelst_Scalar [simp]: "valuelst (Scalar s) = [s]"
-by (simp add: valuelst_def Scalar_def)
+by (auto simp: valuelst_def Scalar_def)
 
 lemma valuelst_Vector [simp]: "valuelst (Vector v) = v"
 by (simp add: Vector_def valuelst_def)
@@ -368,11 +434,13 @@ usual function used to map multi-dimensional arrays onto a single vector.
 
 fun lstgamma :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" where 
     "lstgamma [] [] = 0"
+  | "lstgamma [] a = 0"
+  | "lstgamma a [] = 0"
   | "lstgamma [a] [b] = a"
-  | "lstgamma a b = (last a) + (last b * (lstgamma (butlast a) (butlast b)))"
+  | "lstgamma (ha # ta) (hb # tb) = ha + (hb * (lstgamma ta tb))"
 
 definition gamma :: "nat array \<Rightarrow> nat array \<Rightarrow> nat"
-where "gamma a b \<equiv> lstgamma (valuelst a) (valuelst b)"
+where "gamma a b \<equiv> lstgamma (rev (valuelst a)) (rev (valuelst b))"
 
 text {* 
 With the definition of @{term gamma}, a precise definition can be written 
@@ -501,7 +569,7 @@ for this to hold.
 *}
 
 lemma valuelst_scalar [simp]: "a \<noteq> [] \<Longrightarrow> valuelst (Array [] a) = [a ! 0]"
-by (induct a) (simp_all add: valuelst_def)
+by (induct a) (auto simp: valuelst_def)
 
 lemma reshape_scalar [simp]: 
   "valuelst a \<noteq> [] \<Longrightarrow>
@@ -521,12 +589,11 @@ original array. In order to prove these things, it is very helpful
 to have a few lemmas that discuss the properties of some of the underlying 
 functions that drive the definitions of @{term valuelst}. Namely, 
 the composition or nesting of @{term sv2vl} calls does not affect the 
-result, and constructing an array from the value list of another array 
+result, and constructing an array frxom the value list of another array 
 will lead to equivalent value lists.
 *}
 
-lemma sv2vl_idempotent [simp]: 
-  "sv2vl l (sv2vl l a b) (sv2vl l a b) = sv2vl l a b"
+lemma sv2vl_idempotent [simp]: "sv2vl l (sv2vl l a) = sv2vl l a"
 by (metis sv2vl_id sv2vl_len)
 
 lemma valuelst_equiv [simp]: 
@@ -550,23 +617,82 @@ can be state fairly easily. (Ed: Unfortunately, it takes a bit more thought to
 actually prove the thing, so I am leaving this until later.)
 *}
 
-lemma sv2vl_mod [simp]: 
-  "n \<noteq> 0 \<and> org \<noteq> [] \<Longrightarrow> sv2vl n org ls ! i = org ! i mod (length org)"
-sorry
-
-lemma valuelst_mod [simp]:
-  "v \<noteq> [] \<and> prod (Vector s) \<noteq> 0 
-   \<Longrightarrow> valuelst (Array s v) ! i = v ! i mod length v"
-by (simp add: valuelst_def prod_def Vector_def)
+instantiation nat :: semiring_div begin end
 
 lemma vector_notempty_len [simp]: "(Empty \<noteq> Vector v) = (v \<noteq> [])"
 by (simp add: Empty_def Vector_def)
 
+(*
+lemma sv2vl_replicate [simp]: "sv2vl n [x] = (replicate n x)"
+by (induct n) (auto)
+
+lemma sv2vl_0th [simp]: "0 < n \<Longrightarrow> sv2vl n (h # t) ! 0 = h"
+by (induct n "h # t" rule: sv2vl.induct) (auto)
+*)
+
+lemma sv2vl_mod [simp]:
+  "i < n \<and> ls \<noteq> [] \<Longrightarrow> sv2vl n ls ! i = ls ! (i mod length ls)"
+proof (induct n ls arbitrary: i rule: sv2vl.induct, auto)
+  fix n h t i
+  assume a: "i < Suc n"
+    and b: "\<And>i. i < n - length t \<Longrightarrow>
+            sv2vl (n - length t) (h # t) ! i =
+            (h # t) ! (i mod Suc (length t))"
+  thus "(h #
+        take (min n (length t)) t @ sv2vl (n - length t) (h # t)) !
+       i =
+       (h # t) ! (i mod Suc (length t))"
+  proof (cases "i < Suc (length t)")
+    case True note c = this
+    with a have d: "\<forall>x. (h # t @ x) ! i = (h # t) ! i"
+      by (metis append_Cons length_Suc_conv nth_append)
+    from a c
+    have "(h # t) ! (i mod Suc (length t)) = (h # t) ! i" by auto
+    also with a c have "... = (h # take (min n (length t)) t) ! i"
+      by (metis nth_take order_refl take_Suc_Cons take_all take_take)
+    also with a c d
+    have "... = (h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i"
+      by (metis append_Nil2 diff_is_0_eq nat_le_linear sv2vl.simps(1) take_all take_take) 
+    finally show ?thesis by simp
+  next 
+    case False note c = this 
+    have d: "\<And>h i x ls. (\<not> i < Suc (length ls) 
+             \<Longrightarrow> (h # ls @ x) ! i = x ! (i - Suc (length ls)))"
+      by (metis Cons_eq_appendI Suc_length_conv nth_append)
+    from a c have e: "i - Suc (length t) < n - length t" by auto
+    from a c
+    have "(h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i
+          = (h # t @ sv2vl (n - length t) (h # t)) ! i"
+      by auto
+    also with c d
+    have "... = sv2vl (n - length t) (h # t) ! (i - Suc (length t))"
+      by metis 
+    also with b e
+    have "... = (h # t) ! ((i - Suc (length t)) mod Suc (length t))"
+      by metis
+    also have "... = (h # t) ! (i mod Suc (length t))" 
+      by (metis False mod_geq) 
+    finally show ?thesis by auto
+  qed
+qed
+
+lemma valuelst_mod [simp]:
+  "v \<noteq> [] \<and> prod (Vector s) \<noteq> 0 \<and> in_range (Vector [i]) (Vector s)
+   \<Longrightarrow> valuelst (Array s v) ! i = v ! (i mod length v)"
+by (auto simp: prod_def valuelst_def Vector_def in_range_def list_all2_Cons1)
+
+(*
+lemma in_range_gamma [simp]:
+  "in_range (Vector i) (Vector s) 
+   \<Longrightarrow> gamma (Vector i) (Vector s) < (foldr times s 1)"
+sorry
+
 lemma reshape_index_vec [simp]:
-  "Empty \<noteq> (Vector v) \<and> Empty \<noteq> (Vector s) \<and> in_range i (Vector s)
-     \<Longrightarrow> (array_get i (reshape (Vector s) (Vector v)) 
-           = v ! (gamma i (Vector s)) mod (total (Vector v)))"
-by (auto simp: array_get_def reshape_def shape_def)
+  "Empty \<noteq> (Vector v) \<and> Empty \<noteq> (Vector s) \<and> in_range (Vector i) (Vector s)
+     \<Longrightarrow> (array_get (Vector i) (reshape (Vector s) (Vector v)) 
+           = v ! (gamma (Vector i) (Vector s)) mod (total (Vector v)))"
+by auto
+*)
 
 subsubsection {* Catenating Vectors *}
 
