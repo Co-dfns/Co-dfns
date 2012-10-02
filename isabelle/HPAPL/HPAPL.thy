@@ -266,48 +266,84 @@ be the same as the first argument passed to @{term sv2vl}.
 Here's a general proof of this statement.
 *}
 
-(*
-lemma listsum_replicate [simp]: "listsum (replicate n x) = n * x"
-by (induct n) (auto)
-
-lemma nat_div_times: "(n::nat) div x * x = n - n mod x"
-by (metis div_mod_equality')
-
-lemma minus_rel: "x \<le> y \<and> y < (n::nat) \<Longrightarrow> n - x \<ge> n - y"
-by (auto)
-
-lemma mod_equiv: "0 < x \<and> x < (n::nat) \<Longrightarrow> (n - n mod x) \<ge> (n - x)"
-by (auto simp: minus_rel)
-
-lemma min_obvious: "(x::nat) \<ge> y \<Longrightarrow> min x y = y"
-by auto
-
-lemma min_why:  "0 < x \<and> x < (n::nat) \<Longrightarrow> min (n - n mod x) (n - x) = n - x"
-by (auto simp: min_obvious mod_equiv)
-
-lemma min_plus: "(0::nat) < x \<Longrightarrow> min x n + min (n - n mod x) (n - x) = n"
-proof (cases "x < n")
-  fix x::nat and n::nat 
-  assume "0 < x" and "\<not> x < n"
-  thus "min x n + min (n - n mod x) (n - x) = n" by auto
-next
-  fix x::nat and n::nat 
-  assume a: "0 < x" and b: "x < n"
-  thus "min x n + min (n - n mod x) (n - x) = n" by (auto simp: min_why)
-qed
-*) 
-
 lemma sv2vl_len [simp]: "length (sv2vl n ls) = n"
 by (induct n ls rule: sv2vl.induct) auto
 
 text {*
-Finally, a simple case shows up sometimes when dealing with empty 
+A simple case shows up sometimes when dealing with empty 
 vectors, so it just makes life easier if this is put into a simplification 
 rule.
 *}
 
 lemma sv2vl_zero [simp]: "sv2vl 0 x = []"
 by (simp)
+
+text {*
+The @{term sv2vl} function is used throughout when talking about how 
+value of arrays are stored. A thoroughly useful lemma follows, and its 
+proof currently boggles the aesthetic sympathies of the author. However, 
+its existance trumps a non-existent, but more elegant proof, and therefore, 
+it is presented here. The core assertion here is to relate the elements 
+of the result returned by @{term sv2vl} to the original list. In this 
+case, if the original list was non-empty, then the $i$th element of 
+resulting list is the same as the @{term "i mod length ls"} element of 
+the original list @{term ls}.
+*}
+
+lemma sv2vl_mod [simp]:
+  "i < n \<and> ls \<noteq> [] \<Longrightarrow> sv2vl n ls ! i = ls ! (i mod length ls)"
+proof (induct n ls arbitrary: i rule: sv2vl.induct, auto)
+  fix n h t i
+  assume a: "i < Suc n"
+    and b: "\<And>i. i < n - length t \<Longrightarrow>
+            sv2vl (n - length t) (h # t) ! i =
+            (h # t) ! (i mod Suc (length t))"
+  thus "(h #
+        take (min n (length t)) t @ sv2vl (n - length t) (h # t)) !
+       i =
+       (h # t) ! (i mod Suc (length t))"
+  proof (cases "i < Suc (length t)")
+    case True note c = this
+    with a have d: "\<forall>x. (h # t @ x) ! i = (h # t) ! i"
+      by (metis append_Cons length_Suc_conv nth_append)
+    from a c
+    have "(h # t) ! (i mod Suc (length t)) = (h # t) ! i" by auto
+    also with a c have "... = (h # take (min n (length t)) t) ! i"
+      by (metis nth_take order_refl take_Suc_Cons take_all take_take)
+    also with a c d
+    have "... = (h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i"
+      by (metis append_Nil2 diff_is_0_eq nat_le_linear sv2vl.simps(1) take_all take_take) 
+    finally show ?thesis by simp
+  next 
+    case False note c = this 
+    have d: "\<And>h i x ls. (\<not> i < Suc (length ls) 
+             \<Longrightarrow> (h # ls @ x) ! i = x ! (i - Suc (length ls)))"
+      by (metis Cons_eq_appendI Suc_length_conv nth_append)
+    from a c have e: "i - Suc (length t) < n - length t" by auto
+    from a c
+    have "(h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i
+          = (h # t @ sv2vl (n - length t) (h # t)) ! i"
+      by auto
+    also with c d
+    have "... = sv2vl (n - length t) (h # t) ! (i - Suc (length t))"
+      by metis 
+    also with b e
+    have "... = (h # t) ! ((i - Suc (length t)) mod Suc (length t))"
+      by metis
+    also have "... = (h # t) ! (i mod Suc (length t))" 
+      by (metis False mod_geq) 
+    finally show ?thesis by auto
+  qed
+qed
+
+text {*
+Compositions of @{term sv2vl} may appear, and it is noted here that 
+such compositions, provided that they do not change the intended length 
+of the resulting list, do not affect the results.
+*}
+
+lemma sv2vl_idempotent [simp]: "sv2vl l (sv2vl l a) = sv2vl l a"
+by (metis sv2vl_id sv2vl_len)
 
 text {*
 Given @{term sv2vl}, the logical values list of an array may be obtained 
@@ -593,9 +629,6 @@ result, and constructing an array frxom the value list of another array
 will lead to equivalent value lists.
 *}
 
-lemma sv2vl_idempotent [simp]: "sv2vl l (sv2vl l a) = sv2vl l a"
-by (metis sv2vl_id sv2vl_len)
-
 lemma valuelst_equiv [simp]: 
   "valuelst (Array (shapelst a) (valuelst a)) = valuelst a"
 by (cases a) (auto simp: valuelst_def)
@@ -629,52 +662,6 @@ by (induct n) (auto)
 lemma sv2vl_0th [simp]: "0 < n \<Longrightarrow> sv2vl n (h # t) ! 0 = h"
 by (induct n "h # t" rule: sv2vl.induct) (auto)
 *)
-
-lemma sv2vl_mod [simp]:
-  "i < n \<and> ls \<noteq> [] \<Longrightarrow> sv2vl n ls ! i = ls ! (i mod length ls)"
-proof (induct n ls arbitrary: i rule: sv2vl.induct, auto)
-  fix n h t i
-  assume a: "i < Suc n"
-    and b: "\<And>i. i < n - length t \<Longrightarrow>
-            sv2vl (n - length t) (h # t) ! i =
-            (h # t) ! (i mod Suc (length t))"
-  thus "(h #
-        take (min n (length t)) t @ sv2vl (n - length t) (h # t)) !
-       i =
-       (h # t) ! (i mod Suc (length t))"
-  proof (cases "i < Suc (length t)")
-    case True note c = this
-    with a have d: "\<forall>x. (h # t @ x) ! i = (h # t) ! i"
-      by (metis append_Cons length_Suc_conv nth_append)
-    from a c
-    have "(h # t) ! (i mod Suc (length t)) = (h # t) ! i" by auto
-    also with a c have "... = (h # take (min n (length t)) t) ! i"
-      by (metis nth_take order_refl take_Suc_Cons take_all take_take)
-    also with a c d
-    have "... = (h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i"
-      by (metis append_Nil2 diff_is_0_eq nat_le_linear sv2vl.simps(1) take_all take_take) 
-    finally show ?thesis by simp
-  next 
-    case False note c = this 
-    have d: "\<And>h i x ls. (\<not> i < Suc (length ls) 
-             \<Longrightarrow> (h # ls @ x) ! i = x ! (i - Suc (length ls)))"
-      by (metis Cons_eq_appendI Suc_length_conv nth_append)
-    from a c have e: "i - Suc (length t) < n - length t" by auto
-    from a c
-    have "(h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i
-          = (h # t @ sv2vl (n - length t) (h # t)) ! i"
-      by auto
-    also with c d
-    have "... = sv2vl (n - length t) (h # t) ! (i - Suc (length t))"
-      by metis 
-    also with b e
-    have "... = (h # t) ! ((i - Suc (length t)) mod Suc (length t))"
-      by metis
-    also have "... = (h # t) ! (i mod Suc (length t))" 
-      by (metis False mod_geq) 
-    finally show ?thesis by auto
-  qed
-qed
 
 lemma valuelst_mod [simp]:
   "v \<noteq> [] \<and> prod (Vector s) \<noteq> 0 \<and> in_range (Vector [i]) (Vector s)
