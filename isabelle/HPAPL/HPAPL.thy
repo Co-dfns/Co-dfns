@@ -162,6 +162,9 @@ by (simp add: shape_def Scalar_def Vector_def)
 lemma shape_Vector [simp]: "shape (Vector v) = Vector [length v]"
 by (simp add: shape_def Vector_def)
 
+lemma shape_Array [simp]: "shape (Array s v) = Vector s"
+by (auto simp: shape_def)
+
 text {*
 The rank of an array can be described using two applications of the shape 
 function, as demonstrated below. Furthermore, we can provide statements 
@@ -222,18 +225,18 @@ function will return the appropriately sized list that corresponds to the
 logical values list of the array.
 *}
 
+(*
 fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a list" where
     "sv2vl 0 ls = []"
   | "sv2vl n [] = replicate n fill"
   | "sv2vl n ls = take (min n (length ls)) ls @ sv2vl (n - length ls) ls"
+*)
 
-(*
 definition sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a list" where 
   "sv2vl n ls \<equiv> 
      if ls = []
      then (replicate n fill)
-     else take n (concat (replicate (1 + n div length ls) ls))"
-*)
+     else take n (concat (replicate n ls))"
 
 (*
 fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list" where
@@ -253,11 +256,10 @@ the definition.
 *}
 
 lemma sv2vl_id [simp]: "sv2vl (length l) l = l"
-by (induct "length l" l rule: sv2vl.induct) auto
+by (induct l) (auto simp: sv2vl_def)
 
-lemma sv2vl_sub [simp]: "n < length l \<Longrightarrow> sv2vl n l = take n l"
-by (induct n l rule: sv2vl.induct) 
-   (auto, metis min_max.inf_absorb1 order_less_imp_le) 
+lemma sv2vl_sub [simp]: "n \<le> length l \<Longrightarrow> sv2vl n l = take n l"
+by (induct n) (auto simp: sv2vl_def)
 
 text {*
 To talk about the length of @{term sv2vl} in general takes more work. 
@@ -266,8 +268,11 @@ be the same as the first argument passed to @{term sv2vl}.
 Here's a general proof of this statement.
 *}
 
-lemma sv2vl_len [simp]: "length (sv2vl n ls) = n"
-by (induct n ls rule: sv2vl.induct) auto
+lemma replicate_times [simp]: "listsum (replicate n (x::nat)) = (n * x)"
+by (induct n) (auto)
+
+lemma sv2vl_len [simp]: "length (sv2vl n ls) = n" 
+by (induct ls) (auto simp: sv2vl_def length_concat)
 
 text {*
 A simple case shows up sometimes when dealing with empty 
@@ -276,65 +281,27 @@ rule.
 *}
 
 lemma sv2vl_zero [simp]: "sv2vl 0 x = []"
-by (simp)
+by (simp add: sv2vl_def)
 
 text {*
 The @{term sv2vl} function is used throughout when talking about how 
-value of arrays are stored. A thoroughly useful lemma follows, and its 
-proof currently boggles the aesthetic sympathies of the author. However, 
-its existance trumps a non-existent, but more elegant proof, and therefore, 
-it is presented here. The core assertion here is to relate the elements 
+value of arrays are stored. A thoroughly useful lemma follows, and credit
+for the proof as presented here belongs to Andreas Lochbihler. 
+The core assertion here is to relate the elements 
 of the result returned by @{term sv2vl} to the original list. In this 
 case, if the original list was non-empty, then the $i$th element of 
 resulting list is the same as the @{term "i mod length ls"} element of 
 the original list @{term ls}.
 *}
 
+lemma nth_concat_replicate:
+  "i < n * length xs
+  ==> concat (replicate n xs) ! i = xs ! (i mod length xs)"
+by (induct n arbitrary: i) (auto simp add: nth_append mod_geq)
+
 lemma sv2vl_mod [simp]:
   "i < n \<and> ls \<noteq> [] \<Longrightarrow> sv2vl n ls ! i = ls ! (i mod length ls)"
-proof (induct n ls arbitrary: i rule: sv2vl.induct, auto)
-  fix n h t i
-  assume a: "i < Suc n"
-    and b: "\<And>i. i < n - length t \<Longrightarrow>
-            sv2vl (n - length t) (h # t) ! i =
-            (h # t) ! (i mod Suc (length t))"
-  thus "(h #
-        take (min n (length t)) t @ sv2vl (n - length t) (h # t)) !
-       i =
-       (h # t) ! (i mod Suc (length t))"
-  proof (cases "i < Suc (length t)")
-    case True note c = this
-    with a have d: "\<forall>x. (h # t @ x) ! i = (h # t) ! i"
-      by (metis append_Cons length_Suc_conv nth_append)
-    from a c
-    have "(h # t) ! (i mod Suc (length t)) = (h # t) ! i" by auto
-    also with a c have "... = (h # take (min n (length t)) t) ! i"
-      by (metis nth_take order_refl take_Suc_Cons take_all take_take)
-    also with a c d
-    have "... = (h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i"
-      by (metis append_Nil2 diff_is_0_eq nat_le_linear sv2vl.simps(1) take_all take_take) 
-    finally show ?thesis by simp
-  next 
-    case False note c = this 
-    have d: "\<And>h i x ls. (\<not> i < Suc (length ls) 
-             \<Longrightarrow> (h # ls @ x) ! i = x ! (i - Suc (length ls)))"
-      by (metis Cons_eq_appendI Suc_length_conv nth_append)
-    from a c have e: "i - Suc (length t) < n - length t" by auto
-    from a c
-    have "(h # take (min n (length t)) t @ sv2vl (n - length t) (h # t)) ! i
-          = (h # t @ sv2vl (n - length t) (h # t)) ! i"
-      by auto
-    also with c d
-    have "... = sv2vl (n - length t) (h # t) ! (i - Suc (length t))"
-      by metis 
-    also with b e
-    have "... = (h # t) ! ((i - Suc (length t)) mod Suc (length t))"
-      by metis
-    also have "... = (h # t) ! (i mod Suc (length t))" 
-      by (metis False mod_geq) 
-    finally show ?thesis by auto
-  qed
-qed
+by (auto simp add: sv2vl_def neq_Nil_conv nth_concat_replicate)
 
 text {*
 Compositions of @{term sv2vl} may appear, and it is noted here that 
@@ -360,7 +327,7 @@ the values lists of the resulting arrays is simple and direct.
 *}
 
 lemma valuelst_Scalar [simp]: "valuelst (Scalar s) = [s]"
-by (auto simp: valuelst_def Scalar_def)
+by (auto simp: valuelst_def Scalar_def sv2vl_def)
 
 lemma valuelst_Vector [simp]: "valuelst (Vector v) = v"
 by (simp add: Vector_def valuelst_def)
@@ -470,8 +437,6 @@ usual function used to map multi-dimensional arrays onto a single vector.
 
 fun lstgamma :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" where 
     "lstgamma [] [] = 0"
-  | "lstgamma [] a = 0"
-  | "lstgamma a [] = 0"
   | "lstgamma [a] [b] = a"
   | "lstgamma (ha # ta) (hb # tb) = ha + (hb * (lstgamma ta tb))"
 
@@ -514,6 +479,13 @@ lemma listall_imp: "list_all2 op < a (b::nat list) \<Longrightarrow> 0 \<notin> 
 
 lemma in_range_nonzero [simp]: "in_range i s \<Longrightarrow> prod s \<noteq> 0"
 by (simp add: in_range_def prod_def listall_imp foldr_imp)
+
+text {*
+Defining ranges over vectors also makes proofs easier.
+*}
+
+lemma in_range_Vector [simp]: "in_range (Vector i) (Vector s) = list_all2 op < i s"
+by (auto simp: in_range_def)
 
 text {*
 The @{term gammainv} function defines the inverse of the @{term gamma}
@@ -605,7 +577,7 @@ for this to hold.
 *}
 
 lemma valuelst_scalar [simp]: "a \<noteq> [] \<Longrightarrow> valuelst (Array [] a) = [a ! 0]"
-by (induct a) (auto simp: valuelst_def)
+by (induct a) (auto simp: valuelst_def sv2vl_def)
 
 lemma reshape_scalar [simp]: 
   "valuelst a \<noteq> [] \<Longrightarrow>
@@ -645,6 +617,14 @@ lemma reshape_ravel_equiv [simp]: "array_equiv a (reshape (shape a) (ravel a))"
 by (simp add: reshape_def array_equiv_def shape_def ravel_def)
 
 text {*
+Proofs involving reshaping of vectors can be simplified using the following
+lemma.
+*}
+
+lemma reshape_Vec [simp]: "reshape (Vector s) (Vector v) = (Array s v)"
+by (auto simp: reshape_def)
+
+text {*
 Finally, before moving on, the results of indexing into a reshaped vector
 can be state fairly easily. (Ed: Unfortunately, it takes a bit more thought to 
 actually prove the thing, so I am leaving this until later.)
@@ -655,30 +635,37 @@ instantiation nat :: semiring_div begin end
 lemma vector_notempty_len [simp]: "(Empty \<noteq> Vector v) = (v \<noteq> [])"
 by (simp add: Empty_def Vector_def)
 
-(*
-lemma sv2vl_replicate [simp]: "sv2vl n [x] = (replicate n x)"
-by (induct n) (auto)
-
-lemma sv2vl_0th [simp]: "0 < n \<Longrightarrow> sv2vl n (h # t) ! 0 = h"
-by (induct n "h # t" rule: sv2vl.induct) (auto)
-*)
-
-lemma valuelst_mod [simp]:
-  "v \<noteq> [] \<and> prod (Vector s) \<noteq> 0 \<and> in_range (Vector [i]) (Vector s)
+lemma valuelst_mod:
+  "v \<noteq> [] \<and> in_range (Vector [i]) (Vector s)
    \<Longrightarrow> valuelst (Array s v) ! i = v ! (i mod length v)"
-by (auto simp: prod_def valuelst_def Vector_def in_range_def list_all2_Cons1)
+by (auto simp: valuelst_def list_all2_Cons1)
 
 (*
-lemma in_range_gamma [simp]:
+lemma gamma_in_range [simp]: 
   "in_range (Vector i) (Vector s) 
-   \<Longrightarrow> gamma (Vector i) (Vector s) < (foldr times s 1)"
+   \<Longrightarrow> in_range (Vector [gamma (Vector i) (Vector s)]) < foldr op * s 1"
 sorry
 
 lemma reshape_index_vec [simp]:
   "Empty \<noteq> (Vector v) \<and> Empty \<noteq> (Vector s) \<and> in_range (Vector i) (Vector s)
      \<Longrightarrow> (array_get (Vector i) (reshape (Vector s) (Vector v)) 
-           = v ! (gamma (Vector i) (Vector s)) mod (total (Vector v)))"
-by auto
+           = v ! (gamma (Vector i) (Vector s) mod (total (Vector v))))"
+apply (auto simp: array_get_def)
+proof (auto simp: array_get_def reshape_def shape_def)
+  assume a: "v \<noteq> []" and b: "s \<noteq> []" and c: "in_range (Vector i) (Vector s)"
+  from c have d: "gamma (Vector i) (Vector s) < foldr op * s 1"
+    by (simp only: gamma_in_range)
+  have "valuelst (Array s v) ! gamma (Vector i) (Vector s)
+         = sv2vl (foldr op * s 1) v ! gamma (Vector i) (Vector s)"
+    by (auto simp: valuelst_def)
+  also with a d have "... = v ! (gamma (Vector i) (Vector s) mod length v)"
+    by auto
+  finally show "valuelst (Array s v) ! gamma (Vector i) (Vector s) 
+                = v ! (gamma (Vector i) (Vector s) mod length v)" 
+    by simp
+qed
+
+find_theorems "sv2vl"
 *)
 
 subsubsection {* Catenating Vectors *}
@@ -742,8 +729,7 @@ by (simp add: Empty_def catvec_def Vector_def valuelst_def)
 lemma catvec_commute [simp]:
   "catvec (Vector x) (catvec (Vector y) (Vector z))
      = catvec (catvec (Vector x) (Vector y)) (Vector z)"
-by (auto simp: catvec_def valuelst_def Vector_def)
-   (metis append_assoc length_append sv2vl_id)
+by (auto simp: catvec_def valuelst_def)
 
 text {*
 The above definition of vector catenation is nice because it also allows 
@@ -801,7 +787,7 @@ by (simp add: sclfunmon_def del: shape_vec)
 lemma sclfundya_shape [simp]:
   "(array_equiv (shape a) (shape b)) \<Longrightarrow> 
      (array_equiv (shape a) (shape (sclfundya f a b)))"
-by (simp add: sclfundya_def)
+by (auto simp: sclfundya_def shape_def)
 
 text {* 
 Proving statements about the indexing of the scalar operations is a little 
