@@ -413,7 +413,7 @@ The values of @{term total} for some specific arrays can be simplified.
 *}
 
 lemma total_scalar [simp]: "total (Scalar s) = 1"
-by (simp add: total_def Scalar_def shape_vec prod_def)
+by (simp add: total_def Scalar_def prod_def)
 
 lemma total_vector [simp]: "total (Vector v) = length v"
 by (simp add: total_def prod_def)
@@ -592,7 +592,7 @@ simply, but we only care to state this about valid shapes, which are
 *}
 
 lemma reshape_shape [simp]: "shape (reshape (Vector s) a) = Vector s"
-by (simp add: reshape_def shape_vec)
+by (simp add: reshape_def)
 
 text {*
 It also does not matter whether an array is raveled before being 
@@ -709,19 +709,17 @@ definition catvec :: "'a::scalar array \<Rightarrow> 'a array \<Rightarrow> 'a a
 
 text {*
 The following lemmas describe how indexing behaves on catenated vectors.
-(Ed: These indexing ones are a little tricky, as above, so I am not going 
-to prove this one right now.)
 *}
 
-lemma catvec_index_first:
-  "0 \<le> i \<and> i < (total (Vector x)) 
+lemma catvec_index_first [simp]:
+  "i < (total (Vector x)) 
    \<and> in_range (Vector [i]) (shape (catvec (Vector x) (Vector y)))
    \<Longrightarrow> array_get (Vector [i]) (catvec (Vector x) (Vector y))
        = array_get (Vector [i]) (Vector x)"
 by (auto simp: array_get_def catvec_def)
    (metis (lifting) length_append nth_append valuelst_known)
 
-lemma catvec_index_second:
+lemma catvec_index_second [simp]:
   "total (Vector x) \<le> i \<Longrightarrow> 
    array_get (Vector [i]) (catvec (Vector x) (Vector y))
    = array_get (Vector [i - (total (Vector x))]) (Vector y)"
@@ -827,21 +825,20 @@ to put together so far. Basically, I need some statements about valid
 indices before I can make things happen.)
 *}
 
-(*
 lemma valuelst_map [simp]: 
   "valuelst (Array (shapelst a) (map f (valuelst a)))
      = (map f (valuelst a))"
-sorry
+by (cases a) (auto simp: valuelst_def)
 
-lemma array_get_map [simp]:
-  "array_get i (Array (shapelst a) (map f (valuelst a)))
-     = f (array_get i a)"
-apply (simp add: array_get_def)
-find_theorems "map _ _ ! _" 
+lemma in_range_valuelst_length [simp]:
+  "in_range (Vector i) (shape a) 
+   \<Longrightarrow> gamma (Vector i) (Vector (shapelst a)) < length (valuelst a)"
+by (cases a) (auto simp: valuelst_def)
 
-lemma sclfunmon_index [simp]: "array_get i (sclfunmon f a) = f (array_get i a)"
-by (simp add: sclfunmon_def)
-*)
+lemma sclfunmon_index [simp]: 
+  "in_range (Vector i) (shape a) 
+   \<Longrightarrow> array_get (Vector i) (sclfunmon f a) = f (array_get (Vector i) a)"
+by (auto simp: sclfunmon_def array_get_def shape_def)
 
 subsection {* Constructing vectors of integers *}
 
