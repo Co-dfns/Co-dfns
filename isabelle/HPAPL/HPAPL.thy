@@ -708,18 +708,25 @@ definition catvec :: "'a::scalar array \<Rightarrow> 'a array \<Rightarrow> 'a a
            (valuelst a @ valuelst b))"
 
 text {*
-The following lemma describes how indexing behaves on catenated vectors.
+The following lemmas describe how indexing behaves on catenated vectors.
 (Ed: These indexing ones are a little tricky, as above, so I am not going 
 to prove this one right now.)
 *}
 
-(*
-lemma catvec_index:
-  "array_get (Vector [i]) (catvec (Vector x) (Vector y))
-     = (if (0 \<le> i \<and> i < (total (Vector x)))
-       then array_get (Vector [i]) (Vector x)
-       else array_get (Vector [i - (total (Vector x))]) (Vector y))"
-*)
+lemma catvec_index_first:
+  "0 \<le> i \<and> i < (total (Vector x)) 
+   \<and> in_range (Vector [i]) (shape (catvec (Vector x) (Vector y)))
+   \<Longrightarrow> array_get (Vector [i]) (catvec (Vector x) (Vector y))
+       = array_get (Vector [i]) (Vector x)"
+by (auto simp: array_get_def catvec_def)
+   (metis (lifting) length_append nth_append valuelst_known)
+
+lemma catvec_index_second:
+  "total (Vector x) \<le> i \<Longrightarrow> 
+   array_get (Vector [i]) (catvec (Vector x) (Vector y))
+   = array_get (Vector [i - (total (Vector x))]) (Vector y)"
+by (auto simp: catvec_def array_get_def)
+   (metis leD length_append nth_append valuelst_known)
 
 text {*
 The number of elements in a catenated array is a function of the 
