@@ -225,26 +225,11 @@ function will return the appropriately sized list that corresponds to the
 logical values list of the array.
 *}
 
-(*
-fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a list" where
-    "sv2vl 0 ls = []"
-  | "sv2vl n [] = replicate n fill"
-  | "sv2vl n ls = take (min n (length ls)) ls @ sv2vl (n - length ls) ls"
-*)
-
 definition sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a list" where 
   "sv2vl n ls \<equiv> 
      if ls = []
      then (replicate n fill)
      else take n (concat (replicate n ls))"
-
-(*
-fun sv2vl :: "nat \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list \<Rightarrow> 'a::scalar list" where
-    "sv2vl 0 orig lst = []"
-  | "sv2vl cnt [] [] = (replicate cnt fill)"
-  | "sv2vl (Suc cnt) (oel # ors) [] = (oel # (sv2vl cnt (oel # ors) ors))"
-  | "sv2vl (Suc cnt) orig (elm # rst) = (elm # (sv2vl cnt orig rst))"
-*)
 
 text {*
 The complexity of the above function naturally leads to wanting some 
@@ -329,8 +314,22 @@ the values lists of the resulting arrays is simple and direct.
 lemma valuelst_Scalar [simp]: "valuelst (Scalar s) = [s]"
 by (auto simp: valuelst_def Scalar_def sv2vl_def)
 
+lemma valuelst_Scalar2 [simp]: "a \<noteq> [] \<Longrightarrow> valuelst (Array [] a) = [a ! 0]"
+by (induct a) (auto simp: valuelst_def sv2vl_def)
+
 lemma valuelst_Vector [simp]: "valuelst (Vector v) = v"
 by (simp add: Vector_def valuelst_def)
+
+lemma valuelst_Empty [simp]: "valuelst Empty = []"
+by (auto simp:  Empty_def)
+
+text {*
+There are times when @{term valuelst} can be removed entirely from an 
+equation without needing to do further work.
+*}
+
+lemma valuelst_known [simp]: "valuelst (Array [length ls] ls) = ls"
+by (auto simp: valuelst_def)
 
 subsection {* Equivalence of Arrays *}
 
@@ -435,13 +434,31 @@ to indices, the following @{term gamma} function is used. It is the
 usual function used to map multi-dimensional arrays onto a single vector.
 *}
 
-fun lstgamma :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" where 
-    "lstgamma [] [] = 0"
-  | "lstgamma [a] [b] = a"
-  | "lstgamma (ha # ta) (hb # tb) = ha + (hb * (lstgamma ta tb))"
+fun lstgamma :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" where
+    "lstgamma i [] = 0"
+  | "lstgamma [] s = 0"
+  | "lstgamma [i] [s] = i"
+  | "lstgamma (i # it) (s # st) = (foldr op * st i + lstgamma it st)"
 
 definition gamma :: "nat array \<Rightarrow> nat array \<Rightarrow> nat"
-where "gamma a b \<equiv> lstgamma (rev (valuelst a)) (rev (valuelst b))"
+where "gamma i s \<equiv> lstgamma (valuelst i) (valuelst s)"
+
+text {*
+The following lemmas make it easier to prove things about @{term gamma}.
+*}
+
+lemma gamma_Empty [simp]: 
+  "gamma Empty Empty = 0"
+by (auto simp: gamma_def Empty_def)
+
+lemma gamma_Vector_Empty [simp]:
+  "gamma (Vector []) (Vector []) = 0"
+by (auto simp: gamma_def)
+
+lemma gamma_Vector [simp]: 
+  "gamma (Vector (i # it)) (Vector (s # st)) 
+   = (foldr op * st i + gamma (Vector it) (Vector st))"
+by (induct "(i # it) " "s # st" rule: lstgamma.induct) (auto simp: gamma_def)
 
 text {* 
 With the definition of @{term gamma}, a precise definition can be written 
@@ -488,6 +505,43 @@ lemma in_range_Vector [simp]: "in_range (Vector i) (Vector s) = list_all2 op < i
 by (auto simp: in_range_def)
 
 text {*
+When reasoning about the indexes of operations, it's important to be able 
+to talk about the range of an index vector in relation to the range of 
+the @{term gamma} function. The following range lemma relates the two.
+*}
+
+lemma irg_help: "foldr op * s x = x * foldr op * s (Suc 0)"
+by (induct s) (auto)
+
+lemma irg_help2 [simp]: 
+  "(y::nat) < (x::nat) \<Longrightarrow> (i::nat) < (s::nat) \<Longrightarrow> i * x + y < s * x"
+proof - 
+  assume a: "i < s" and b: "y < x"
+  from b have "(i * x) + y < (i * x) + x" by simp 
+  moreover from a have "(i * x) + x \<le> s * x" by (induct s) (auto)
+  ultimately show "i * x + y < s * x" by auto
+qed
+
+lemma in_range_gamma [simp]: 
+  "in_range (Vector i) (Vector s) 
+   \<Longrightarrow> gamma (Vector i) (Vector s) < foldr op * s (Suc 0)"
+by (induct i s rule: lstgamma.induct, auto)
+   (metis irg_help irg_help2,
+    metis (full_types) irg_help irg_help2 nat_mult_assoc nat_mult_commute)
+
+text {*
+With the @{term in_range_gamma} it is now possible to state an useful 
+theorem about the relationship between nth element of an original list 
+and the result of @{term valuelst}.
+*}
+
+lemma valuelst_mod [simp]:
+  "v \<noteq> [] \<and> in_range (Vector i) (Vector s)
+   \<Longrightarrow> valuelst (Array s v) ! (gamma (Vector i) (Vector s))
+       = v ! (gamma (Vector i) (Vector s) mod length v)"
+by (auto simp: valuelst_def)
+
+text {*
 The @{term gammainv} function defines the inverse of the @{term gamma}
 function.
 *}
@@ -523,7 +577,7 @@ text {*
 Most arrays in APL are created through means other than @{term Scalar}
 or @{term Vector}. In particular, generally, arrays of higher dimensionality 
 than 1 generally must be created---or should be created---by taking a 
-vector or scalar array and reshaping it using the @{term reshap} function.
+vector or scalar array and reshaping it using the @{term reshape} function.
 This function takes a new shape described by a @{typ "nat array"} and 
 the old array, and returns the new array with the new shape.
 *}
@@ -576,16 +630,12 @@ on the statement is necessary, as we must have a non-empty array
 for this to hold.
 *}
 
-lemma valuelst_scalar [simp]: "a \<noteq> [] \<Longrightarrow> valuelst (Array [] a) = [a ! 0]"
-by (induct a) (auto simp: valuelst_def sv2vl_def)
-
 lemma reshape_scalar [simp]: 
   "valuelst a \<noteq> [] \<Longrightarrow>
      (array_equiv 
        (reshape Empty a) 
        (Scalar (array_get (Vector [0]) (ravel a))))"
-by (simp add: ravel_def array_get_def gamma_def Scalar_def reshape_def
-                 Empty_def array_equiv_def)
+by (auto simp: array_equiv_def array_get_def reshape_def Scalar_def ravel_def)
 
 text {*
 The above lemmas serve to prompt a more general equivalence between an 
@@ -626,8 +676,8 @@ by (auto simp: reshape_def)
 
 text {*
 Finally, before moving on, the results of indexing into a reshaped vector
-can be state fairly easily. (Ed: Unfortunately, it takes a bit more thought to 
-actually prove the thing, so I am leaving this until later.)
+can be state fairly easily. The proof here relies heavily on previous 
+theorems @{term in_range_gamma} and @{term valuelst_mod}.
 *}
 
 instantiation nat :: semiring_div begin end
@@ -635,38 +685,11 @@ instantiation nat :: semiring_div begin end
 lemma vector_notempty_len [simp]: "(Empty \<noteq> Vector v) = (v \<noteq> [])"
 by (simp add: Empty_def Vector_def)
 
-lemma valuelst_mod:
-  "v \<noteq> [] \<and> in_range (Vector [i]) (Vector s)
-   \<Longrightarrow> valuelst (Array s v) ! i = v ! (i mod length v)"
-by (auto simp: valuelst_def list_all2_Cons1)
-
-(*
-lemma gamma_in_range [simp]: 
-  "in_range (Vector i) (Vector s) 
-   \<Longrightarrow> in_range (Vector [gamma (Vector i) (Vector s)]) < foldr op * s 1"
-sorry
-
 lemma reshape_index_vec [simp]:
   "Empty \<noteq> (Vector v) \<and> Empty \<noteq> (Vector s) \<and> in_range (Vector i) (Vector s)
      \<Longrightarrow> (array_get (Vector i) (reshape (Vector s) (Vector v)) 
            = v ! (gamma (Vector i) (Vector s) mod (total (Vector v))))"
-apply (auto simp: array_get_def)
-proof (auto simp: array_get_def reshape_def shape_def)
-  assume a: "v \<noteq> []" and b: "s \<noteq> []" and c: "in_range (Vector i) (Vector s)"
-  from c have d: "gamma (Vector i) (Vector s) < foldr op * s 1"
-    by (simp only: gamma_in_range)
-  have "valuelst (Array s v) ! gamma (Vector i) (Vector s)
-         = sv2vl (foldr op * s 1) v ! gamma (Vector i) (Vector s)"
-    by (auto simp: valuelst_def)
-  also with a d have "... = v ! (gamma (Vector i) (Vector s) mod length v)"
-    by auto
-  finally show "valuelst (Array s v) ! gamma (Vector i) (Vector s) 
-                = v ! (gamma (Vector i) (Vector s) mod length v)" 
-    by simp
-qed
-
-find_theorems "sv2vl"
-*)
+by (auto simp: array_get_def)
 
 subsubsection {* Catenating Vectors *}
 
