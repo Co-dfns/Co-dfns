@@ -437,7 +437,6 @@ usual function used to map multi-dimensional arrays onto a single vector.
 fun lstgamma :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" where
     "lstgamma i [] = 0"
   | "lstgamma [] s = 0"
-  | "lstgamma [i] [s] = i"
   | "lstgamma (i # it) (s # st) = (foldr op * st i + lstgamma it st)"
 
 definition gamma :: "nat array \<Rightarrow> nat array \<Rightarrow> nat"
@@ -525,9 +524,7 @@ qed
 lemma in_range_gamma [simp]: 
   "in_range (Vector i) (Vector s) 
    \<Longrightarrow> gamma (Vector i) (Vector s) < foldr op * s (Suc 0)"
-by (induct i s rule: lstgamma.induct, auto)
-   (metis irg_help irg_help2,
-    metis (full_types) irg_help irg_help2 nat_mult_assoc nat_mult_commute)
+by (induct i s rule: lstgamma.induct, auto) (metis irg_help irg_help2)
 
 text {*
 With the @{term in_range_gamma} it is now possible to state an useful 
@@ -546,28 +543,24 @@ The @{term gammainv} function defines the inverse of the @{term gamma}
 function.
 *}
 
-fun lstgammainv :: "nat \<Rightarrow> nat \<Rightarrow> nat list \<Rightarrow> nat list" where
-    "lstgammainv d n [] = []"
-  | "lstgammainv d n [x] = [n]"
-  | "lstgammainv d n ls = (lstgammainv d (n div d) (butlast ls) @ [n mod d])"
+primrec lstgammainv :: "nat \<Rightarrow> nat list \<Rightarrow> nat list" where
+    "lstgammainv n [] = []"
+  | "lstgammainv n (h # t)
+     = (n div (foldr op * t 1) # lstgammainv (n mod (foldr op * t 1)) t)"
 
 definition gammainv :: "nat \<Rightarrow> nat array \<Rightarrow> nat array"
-where "gammainv n x = Vector (lstgammainv (prod x) n (valuelst x))"
+where "gammainv n x = Vector (lstgammainv n (valuelst x))"
 
 text {*
 (Ed: We are missing some proofs of the inverseness of the 
 @{term gammainv} function, but those should arrive at some point.)
 *}
 
-(* Need a proof of inverseness here!
-
 lemma gammainv_inverse [simp]: "gamma (gammainv n x) x = n"
 sorry
 
 lemma gamma_inverse [simp]: "gammainv (gamma i x) x = i"
 sorry
-
-*)
 
 subsection {* Constructing arrays *}
 
