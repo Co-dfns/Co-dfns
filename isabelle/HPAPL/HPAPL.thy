@@ -285,7 +285,7 @@ lemma nth_concat_replicate:
 by (induct n arbitrary: i) (auto simp add: nth_append mod_geq)
 
 lemma sv2vl_mod [simp]:
-  "i < n \<and> ls \<noteq> [] \<Longrightarrow> sv2vl n ls ! i = ls ! (i mod length ls)"
+  "ls \<noteq> [] \<Longrightarrow> i < n \<Longrightarrow> sv2vl n ls ! i = ls ! (i mod length ls)"
 by (auto simp add: sv2vl_def neq_Nil_conv nth_concat_replicate)
 
 text {*
@@ -435,29 +435,46 @@ usual function used to map multi-dimensional arrays onto a single vector.
 *}
 
 fun lstgamma :: "nat list \<Rightarrow> nat list \<Rightarrow> nat" where
-    "lstgamma i [] = 0"
-  | "lstgamma [] s = 0"
-  | "lstgamma (i # it) (s # st) = (foldr op * st i + lstgamma it st)"
+    "lstgamma s [] = 0" | "lstgamma [] i = 0"
+  | "lstgamma s i = (last i) + (last s) * (lstgamma (butlast s) (butlast i))"
 
 definition gamma :: "nat array \<Rightarrow> nat array \<Rightarrow> nat"
-where "gamma i s \<equiv> lstgamma (valuelst i) (valuelst s)"
+where "gamma s i \<equiv> lstgamma (valuelst s) (valuelst i)"
 
 text {*
 The following lemmas make it easier to prove things about @{term gamma}.
 *}
 
-lemma gamma_Empty [simp]: 
-  "gamma Empty Empty = 0"
-by (auto simp: gamma_def Empty_def)
+lemma gamma_Vector_Nil1 [simp]: "gamma (Vector []) i = 0"
+by (cases "valuelst i") (auto simp: gamma_def)
 
-lemma gamma_Vector_Empty [simp]:
-  "gamma (Vector []) (Vector []) = 0"
-by (auto simp: gamma_def)
+lemma gamma_Vector_Nil2 [simp]: "gamma s (Vector []) = 0"
+by (cases "valuelst s") (auto simp: gamma_def)
 
-lemma gamma_Vector [simp]: 
-  "gamma (Vector (i # it)) (Vector (s # st)) 
-   = (foldr op * st i + gamma (Vector it) (Vector st))"
-by (induct "(i # it) " "s # st" rule: lstgamma.induct) (auto simp: gamma_def)
+lemma gamma_Empty [simp]: "gamma Empty Empty = 0" 
+by (auto simp: Empty_def)
+
+lemma gamma_Cons_Append: 
+  "\<exists>sbl sl ibl il. (sh # st) = (sbl @ [sl]) \<and> (ih # it) = (ibl @ [il]) \<and>
+   (gamma (Vector (sh # st)) (Vector (ih # it)) 
+   = gamma (Vector (sbl @ [sl])) (Vector (ibl @ [il])))"
+by (metis neq_Nil_conv rev_cases)
+
+lemma gamma_Vector_Pair: 
+  "s \<noteq> [] \<and> i \<noteq> [] \<Longrightarrow> gamma (Vector s) (Vector i)
+   = (last i) + (last s) * (gamma (Vector (butlast s)) (Vector (butlast i)))"
+by (induct s i rule: lstgamma.induct) (auto simp: gamma_def)
+
+lemma gamma_Vector_Append [simp]: 
+  "gamma (Vector (sbl @ [sl])) (Vector (ibl @ [il]))
+    = il + sl * (gamma (Vector sbl) (Vector ibl))"
+by (auto simp: gamma_Vector_Pair)
+
+lemma gamma_Vector_Cons:
+  "gamma (Vector (sh # st)) (Vector (ih # it))
+   = (last (ih # it)) + (last (sh # st))
+     * gamma (Vector (butlast (sh # st))) (Vector (butlast (ih #it)))"
+by (auto simp: gamma_Vector_Pair)
 
 text {* 
 With the definition of @{term gamma}, a precise definition can be written 
@@ -467,7 +484,7 @@ and an array, and returns the element at that index.
 *}
 
 definition array_get :: "nat array \<Rightarrow> 'a::scalar array \<Rightarrow> 'a"
-where "array_get i a \<equiv> (valuelst a) ! (gamma i (shape a))"
+where "array_get i a \<equiv> (valuelst a) ! (gamma (shape a) i)"
 
 text {*
 Accessing the @{term i}th element of the array @{term a} is only valid 
@@ -512,19 +529,62 @@ the @{term gamma} function. The following range lemma relates the two.
 lemma irg_help: "foldr op * s x = x * foldr op * s (Suc 0)"
 by (induct s) (auto)
 
-lemma irg_help2 [simp]: 
-  "(y::nat) < (x::nat) \<Longrightarrow> (i::nat) < (s::nat) \<Longrightarrow> i * x + y < s * x"
-proof - 
-  assume a: "i < s" and b: "y < x"
-  from b have "(i * x) + y < (i * x) + x" by simp 
-  moreover from a have "(i * x) + x \<le> s * x" by (induct s) (auto)
-  ultimately show "i * x + y < s * x" by auto
+lemma irg_help2: "a < b \<Longrightarrow> c < d \<Longrightarrow> a + b * c < b * (d::nat)"
+proof -
+  assume a: "a < b" and b: "c < d"
+  hence "b \<le> b * (d - c)" by auto
+  with a have "a < b * (d - c)" by (metis order_less_le_trans)
+  with b have c: "b * d = b * (d - c) + b * c" 
+    by (metis add_mult_distrib2 le_add_diff_inverse2 nat_less_le)
+  with a and b and c show "a + b * c < b * d"
+    by (metis `a < b * (d - c)` diff_mult_distrib2 less_diff_conv)
 qed
+
+lemma foldr_last:
+  "l \<noteq> [] \<Longrightarrow> foldr op * l (n::nat) = (last l) * foldr op * (butlast l) n"
+by (induct l) (auto)
+
+lemma in_range_last [simp]: "i \<noteq> [] \<Longrightarrow> s \<noteq> [] \<Longrightarrow> in_range (Vector i) (Vector s) \<Longrightarrow>
+       (last i) < (last s)"
+by (induct s arbitrary: i) (auto simp: list_all2_Cons2)
+
+lemma in_range_Vector_Cons [simp]:
+  "i \<noteq> [] \<Longrightarrow> s \<noteq> [] \<Longrightarrow> in_range (Vector i) (Vector s)
+   \<Longrightarrow> in_range (Vector (butlast i)) (Vector (butlast s))"
+by (induct s arbitrary: i) (auto simp: list_all2_Cons2)
 
 lemma in_range_gamma [simp]: 
   "in_range (Vector i) (Vector s) 
-   \<Longrightarrow> gamma (Vector i) (Vector s) < foldr op * s (Suc 0)"
-by (induct i s rule: lstgamma.induct, auto) (metis irg_help irg_help2)
+   \<Longrightarrow> gamma (Vector s) (Vector i) < foldr op * s (Suc 0)"
+proof (induct s i rule: lstgamma.induct)
+  case 1 thus ?case by auto
+next
+  case 2 thus ?case by auto
+next
+  fix ih it sh st
+  assume prem: "in_range (Vector (ih # it)) (Vector (sh # st))"
+    and hyp: "in_range (Vector (butlast (ih # it))) 
+                       (Vector (butlast (sh # st)))
+              \<Longrightarrow> gamma (Vector (butlast (sh # st))) 
+                        (Vector (butlast (ih # it)))
+                  < foldr op * (butlast (sh # st)) (Suc 0)"
+  hence a: "(last (ih # it)) < (last (sh # st))" by auto
+  from prem and hyp have
+    b: "gamma (Vector (butlast (sh # st))) (Vector (butlast (ih # it)))
+        < foldr op * (butlast (sh # st)) (Suc 0)"
+    by (metis in_range_Vector_Cons list.simps(2))
+  have c: "sh # st \<noteq> []" by auto
+  hence
+    "(gamma (Vector (sh # st)) (Vector (ih # it)) 
+     < foldr op * (sh # st) (Suc 0))
+     = ((last (ih # it)) + (last (sh # st)) *
+       gamma (Vector (butlast (sh # st))) (Vector (butlast (ih # it)))
+       < (last (sh # st)) * foldr op * (butlast (sh # st)) (Suc 0))"
+    by (simp only: gamma_Vector_Cons) (simp add: foldr_last del: foldr_Cons)
+  with a and b show 
+    "gamma (Vector (sh # st)) (Vector (ih # it)) < foldr op * (sh # st) (Suc 0)"
+    by (auto simp: irg_help2)
+qed
 
 text {*
 With the @{term in_range_gamma} it is now possible to state an useful 
@@ -533,9 +593,9 @@ and the result of @{term valuelst}.
 *}
 
 lemma valuelst_mod [simp]:
-  "v \<noteq> [] \<and> in_range (Vector i) (Vector s)
-   \<Longrightarrow> valuelst (Array s v) ! (gamma (Vector i) (Vector s))
-       = v ! (gamma (Vector i) (Vector s) mod length v)"
+  "v \<noteq> [] \<Longrightarrow> in_range (Vector i) (Vector s)
+   \<Longrightarrow> valuelst (Array s v) ! (gamma (Vector s) (Vector i))
+       = v ! (gamma (Vector s) (Vector i) mod length v)"
 by (auto simp: valuelst_def)
 
 text {*
@@ -543,25 +603,129 @@ The @{term gammainv} function defines the inverse of the @{term gamma}
 function.
 *}
 
-primrec lstgammainv :: "nat \<Rightarrow> nat list \<Rightarrow> nat list" where
-    "lstgammainv n [] = []"
-  | "lstgammainv n (h # t)
-     = (n div (foldr op * t 1) # lstgammainv (n mod (foldr op * t 1)) t)"
+fun lstgammainv :: "nat list \<Rightarrow> nat \<Rightarrow> nat list" where
+    "lstgammainv [] n = []"
+  | "lstgammainv s n
+     = (lstgammainv (butlast s) (n div (last s)) @ [n mod (last s)])"
 
-definition gammainv :: "nat \<Rightarrow> nat array \<Rightarrow> nat array"
-where "gammainv n x = Vector (lstgammainv n (valuelst x))"
+definition gammainv :: "nat array \<Rightarrow> nat \<Rightarrow> nat array"
+where "gammainv x n = Vector (lstgammainv (valuelst x) n)"
 
 text {*
-(Ed: We are missing some proofs of the inverseness of the 
-@{term gammainv} function, but those should arrive at some point.)
+The following helps to abstract away the definition of @{term gammainv}
+from the list based definition.
 *}
 
-lemma gammainv_inverse [simp]: "gamma (gammainv n x) x = n"
-sorry
+lemma gammainv_Vector_Empty [simp]: "gammainv (Vector []) n = (Vector [])"
+by (auto simp: gammainv_def)
 
-lemma gamma_inverse [simp]: "gammainv (gamma i x) x = i"
-sorry
+lemma gammainv_Empty [simp]: "gammainv Empty n = Empty"
+by (auto simp: Empty_def)
 
+text {*
+The final lemma that helps with the definition of @{term gammainv} 
+so that one can use it without needing to use its definition relies on 
+the ability to catenate vectors together, so this final lemma is delayed 
+until the next sections are complete. However, before that, the following 
+is a proof of the inversity of these functions.
+*}
+
+lemma foldr_nz_last [simp]: 
+  "l \<noteq> [] \<Longrightarrow> n < foldr op * l (1::nat) \<Longrightarrow> 0 < (last l)"
+by (metis foldr_last gr0I less_zeroE mult_is_0)
+
+lemma foldr_div_lt_last [simp]:
+  "l \<noteq> [] \<Longrightarrow> n < foldr op * l (1::nat) 
+   \<Longrightarrow> (n div (last l)) < foldr op * (butlast l) 1"
+proof -
+  fix n::nat and l::"nat list"
+  have p: "(last l) * (n div (last l)) \<le> n"
+    by (metis le0 mult_is_0 neq0_conv split_div_lemma)
+  assume a: "l \<noteq> []" and b: "n < foldr op * l (1::nat)"
+  hence "n div (last l) < foldr op * (butlast l) 1
+         = ((last l) * (n div (last l)) < (last l) * foldr op * (butlast l) 1)"
+    by auto
+  with p a b show "n div (last l) < foldr op * (butlast l) 1"
+    by (metis foldr_last order_le_less_trans)
+qed
+
+lemma lstgamma_inverse [simp]: 
+  "n < foldr op * s 1 \<Longrightarrow> lstgamma s (lstgammainv s n) = n"
+proof (induct s n rule: lstgammainv.induct)
+  case 1 thus ?case by auto
+next
+  case (2 h t n)
+  let ?ht = "h # t"
+  let ?blht = "butlast ?ht"
+  let ?lht = "last ?ht"
+  let ?lgi = "lstgammainv ?ht n"
+  have "lstgamma ?ht ?lgi = (last ?lgi) + ?lht * (lstgamma ?blht (butlast ?lgi))"
+    by (metis append_is_Nil_conv gamma_Vector_Pair gamma_def 
+              list.simps(2) lstgammainv.simps(2) valuelst_Vector)
+  also have "... = 
+      (n mod ?lht) + ?lht * lstgamma ?blht (lstgammainv ?blht (n div ?lht))"
+    by (metis butlast_snoc last_snoc lstgammainv.simps(2))
+  also have "... = n"
+    by (metis "2.hyps" "2.prems" foldr_div_lt_last list.simps(3) 
+              nat_mult_commute semiring_div_class.mod_div_equality')
+  finally show ?case by auto
+qed
+
+text {*
+The above then allows us to easily state the inversity of @{term gamma}.
+*}
+
+lemma gamma_gammainv_inverse [simp]:
+  "n < prod s \<Longrightarrow> gamma s (gammainv s n) = n"
+by (auto simp: gamma_def gammainv_def prod_def)
+
+text {*
+Now the other direction should be shown.
+*}
+
+lemma lgi_help [simp]: "(a::nat) < b \<Longrightarrow> (a + b * c) div b = c"
+by auto
+
+lemma lgi_help2 [simp]: "i \<noteq> [] \<Longrightarrow> s \<noteq> [] \<Longrightarrow> 
+                        list_all2 op < i s \<Longrightarrow> (last i) < (last s)"
+by (induct s arbitrary: i) (auto simp: list_all2_Cons2)
+
+lemma lgi_help3 [simp]: "a < b \<Longrightarrow> (a + b * c) mod b = (a::nat)"
+by (auto)
+
+lemma lgi_help4 [simp]: 
+  "list_all2 op < i s \<Longrightarrow> (list_all2 op < (butlast i) (butlast s))"
+by (induct s arbitrary: i) (auto simp: list_all2_Cons2)
+
+lemma lstgammainv_inverse [simp]: 
+  "list_all2 op < i s \<Longrightarrow> lstgammainv s (lstgamma s i) = i"
+proof (induct s i rule: lstgamma.induct)
+  case 1 thus ?case by auto
+next
+  case 2 thus ?case by auto
+next
+  case (3 sh st ih it)
+  let ?s = "sh # st" and ?i = "ih # it"
+  let ?bls = "butlast ?s" and ?bli = "butlast ?i"
+  let ?ls = "last ?s" and ?li = "last ?i"
+  let ?gbl = "lstgamma ?bls ?bli"
+  let ?gex = "?li + ?ls * ?gbl"
+  from 3 have p: "(last ?i) < (last ?s)" by auto
+  from 3 have q: "(list_all2 op < (butlast ?i) (butlast ?s))" by auto
+  have "lstgammainv ?s (lstgamma ?s ?i)
+        = ((lstgammainv ?bls (?gex div ?ls)) @ [?gex mod ?ls])"
+    by (metis lstgamma.simps(3) lstgammainv.simps(2)) 
+  also with 3 and p have "... = ((lstgammainv ?bls ?gbl) @ [?li])"
+    by (simp only: lgi_help lgi_help3)
+  also with 3 and q have "... = ?i"
+    by (metis append_butlast_last_id list.simps(3)) 
+  finally show "lstgammainv ?s (lstgamma ?s ?i) = ?i" .
+qed
+
+lemma gammainv_gamma_inverse [simp]: 
+  "in_range (Vector i) s \<Longrightarrow> gammainv s (gamma s (Vector i)) = (Vector i)"
+by (simp add: gammainv_def gamma_def in_range_def)    
+ 
 subsection {* Constructing arrays *}
 
 subsubsection {* Reshaping arrays *}
@@ -628,7 +792,8 @@ lemma reshape_scalar [simp]:
      (array_equiv 
        (reshape Empty a) 
        (Scalar (array_get (Vector [0]) (ravel a))))"
-by (auto simp: array_equiv_def array_get_def reshape_def Scalar_def ravel_def)
+by (auto simp: array_get_def reshape_def Scalar_def array_equiv_def)
+   (auto simp: gamma_Vector_Cons ravel_def)
 
 text {*
 The above lemmas serve to prompt a more general equivalence between an 
@@ -681,7 +846,7 @@ by (simp add: Empty_def Vector_def)
 lemma reshape_index_vec [simp]:
   "Empty \<noteq> (Vector v) \<and> Empty \<noteq> (Vector s) \<and> in_range (Vector i) (Vector s)
      \<Longrightarrow> (array_get (Vector i) (reshape (Vector s) (Vector v)) 
-           = v ! (gamma (Vector i) (Vector s) mod (total (Vector v))))"
+           = v ! (gamma (Vector s) (Vector i) mod (total (Vector v))))"
 by (auto simp: array_get_def)
 
 subsubsection {* Catenating Vectors *}
@@ -709,14 +874,14 @@ lemma catvec_index_first [simp]:
    \<and> in_range (Vector [i]) (shape (catvec (Vector x) (Vector y)))
    \<Longrightarrow> array_get (Vector [i]) (catvec (Vector x) (Vector y))
        = array_get (Vector [i]) (Vector x)"
-by (auto simp: array_get_def catvec_def)
+by (auto simp: array_get_def catvec_def gamma_Vector_Cons)
    (metis (lifting) length_append nth_append valuelst_known)
 
 lemma catvec_index_second [simp]:
   "total (Vector x) \<le> i \<Longrightarrow> 
    array_get (Vector [i]) (catvec (Vector x) (Vector y))
    = array_get (Vector [i - (total (Vector x))]) (Vector y)"
-by (auto simp: catvec_def array_get_def)
+by (auto simp: catvec_def array_get_def gamma_Vector_Cons)
    (metis leD length_append nth_append valuelst_known)
 
 text {*
@@ -770,6 +935,17 @@ by (simp add: catvec_def)
 lemma catvec_scalar3 [simp]:
   "catvec (Scalar s) (Scalar t) = catvec (Vector [s]) (Vector [t])"
 by (simp add: catvec_def)
+
+text {*
+Proofs about the catenation of vectors can be smoothed out with the 
+following lemmas.
+*}
+
+lemma catvec_Cons [simp]: "catvec (Vector [h]) (Vector t) = (Vector (h # t))"
+by (auto simp: catvec_def Vector_def valuelst_def)
+
+lemma catvec_append [simp]: "catvec (Vector a) (Vector b) = (Vector (a @ b))"
+by (auto simp: Vector_def catvec_def valuelst_def)
 
 subsection {* Scalar functions over arrays *}
 
@@ -825,7 +1001,7 @@ by (cases a) (auto simp: valuelst_def)
 
 lemma in_range_valuelst_length [simp]:
   "in_range (Vector i) (shape a) 
-   \<Longrightarrow> gamma (Vector i) (Vector (shapelst a)) < length (valuelst a)"
+   \<Longrightarrow> gamma (Vector (shapelst a)) (Vector i) < length (valuelst a)"
 by (cases a) (auto simp: valuelst_def)
 
 lemma sclfunmon_index [simp]: 
