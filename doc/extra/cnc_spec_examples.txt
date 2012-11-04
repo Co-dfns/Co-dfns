@@ -7,13 +7,13 @@
 
 item A, X;
 
+extern myfunc(int A, int B); 
+
 step mystep(idx) {
 	A[idx] = myfunc(A[idx - 1], X[idx]);
 }
 
 step reduce(env) {
-	extern myfunc(int A, int B); 
-
 	X = env;
 	A = reshape(shape(X), EMPTY);
 
