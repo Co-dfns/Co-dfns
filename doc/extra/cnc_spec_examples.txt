@@ -1,0 +1,34 @@
+/*******************************************************************************************
+ * The following are examples of CnC programs written in the C-like CnC Specification      *
+ * language and the corresponding Osmium program.                                          *
+ *******************************************************************************************/
+
+/* This first is the simple example of the CnC Reduction */
+
+item A, X;
+
+step mystep(idx) {
+	A[idx] = myfunc(A[idx - 1], X[idx]);
+}
+
+step reduce(env) {
+	extern myfunc(int A, int B); 
+
+	X = env;
+	A = reshape(shape(X), EMPTY);
+
+	A[first(index(shape(A)))] = first(X);
+	each(mystep, drop(1, ravel(index(shape(A)))));
+
+	return first(reverse(A));
+}
+
+/* The Osmium program for this reduction */
+
+∇R←reduce X;A;F
+ 'F' ⎕NA 'myfunc I I'
+ A←(⍴X)⍴⍠
+ A[⊃⍳⍴A]←⊃X
+ {A[⍵]←F A[⍵-1] X[⍵]}∥¨1↓,⍳⍴A
+ R←⊃⌽A
+∇
