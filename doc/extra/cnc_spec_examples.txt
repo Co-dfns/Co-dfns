@@ -7,7 +7,7 @@
 
 item A, X;
 
-extern myfunc(int A, int B); 
+extern myfunc(A, B); 
 
 step mystep(idx) {
 	A[idx] = myfunc(A[idx - 1], X[idx]);
@@ -26,9 +26,9 @@ step reduce(env) {
 /* The Osmium program for this reduction */
 
 ∇R←reduce X;A;F
- 'F' ⎕NA 'myfunc I I'
+ 'F' ⎕NA 'myfunc' 2
  A←(⍴X)⍴⍠
  A[⊃⍳⍴A]←⊃X
- {A[⍵]←F A[⍵-1] X[⍵]}∥¨1↓,⍳⍴A
+ {A[⍵]←A[⍵-1] F X[⍵]}∥¨1↓,⍳⍴A
  R←⊃⌽A
 ∇
