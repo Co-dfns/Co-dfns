@@ -1,9 +1,9 @@
 
 ## targets
 
-default: HPAPL
+default: Osmium
 images: 
-test: HPAPL
+test: Osmium
 
 all: images test
 
@@ -17,15 +17,15 @@ LOG = $(OUT)/log
 USEDIR = $(ISABELLE_TOOL) usedir -v true -i true -d pdf  ## -D generated
 
 
-## HPAPL
+## Osmium
 
-HPAPL: $(LOG)/HOL-HPAPL.gz
+Osmium: $(LOG)/HOL-Osmium.gz
 
-$(LOG)/HOL-HPAPL.gz: ## HPAPL/ROOT.ML HPAPL/document/root.tex HPAPL/*.thy
-	@$(USEDIR) HOL HPAPL
+$(LOG)/HOL-Osmium.gz: ## Osmium/ROOT.ML Osmium/document/root.tex Osmium/*.thy
+	@$(USEDIR) HOL Osmium
 
 
 ## clean
 
 clean:
-	@rm -f $(LOG)/HOL-HPAPL.gz
+	@rm -f $(LOG)/HOL-Osmium.gz
