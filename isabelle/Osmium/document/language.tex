@@ -1,8 +1,8 @@
-\section{The HPAPL Language}
+\section{The Osmium Language}
 
-This section provides an informal but thorough introduction into the HPAPL 
-language, it's behavior, and the core vocabulary available to the HPAPL 
-programmer. The basic syntax and language of HPAPL is very simple, easy 
+This section provides an informal but thorough introduction into the Osmium 
+language, it's behavior, and the core vocabulary available to the Osmium 
+programmer. The basic syntax and language of Osmium is very simple, easy 
 to pick up, and should be obvious once reviewed. It is designed to be a 
 regular, predictable mathematical notation, and this drives much of the 
 design. On top of this basic syntax lies the syntax for functions and 
@@ -41,7 +41,7 @@ a variable to another variable, they do not share the same value, but
 the variable being assigned receives a copy of the array bound to the 
 variable that was referenced. 
 
-In HPAPL, all assignments work much like a `let' binding does in Scheme, 
+In Osmium, all assignments work much like a `let' binding does in Scheme, 
 shadowing previous bindings to the same name. Thus, variable bindings inside 
 of a function are not visible outside of a function. This does not however, 
 mean that functions are side-effect free. Selective assignments can 
@@ -135,7 +135,7 @@ side-effects inside of function bodies to the outside world or of changing
 any value inside of an array. All other forms of assignment do not affect 
 the array value that was previously stored into the array, but selective 
 assignment does, and as such constitutes the main side-effecting operation 
-in HPAPL.
+in Osmium.
 
 \subsection{Extending with D-fns}
 
@@ -145,4 +145,22 @@ in HPAPL.
 
 \subsection{Primitives and Operators for Parallel Programming}
 
+\subsection{Formal Syntax}
+
+% builtins = var pop pfn num
+% els := exp ⋄ els | exp
+% exp := lit | var | app | set | ( exp )
+% lit := num+ | ⍬ | ⍠
+% app := fun exp | unv fun exp
+% set := var ← exp | var [ bls ] ← exp | ( exp ⌷ var ) ← exp 
+% fun := pfn | var | ofn | { ils }
+% unv := lit | var | ( exp )
+% bls := exp | scl
+% ofn := unf opr | opr unf | unf opr unf 
+% ils := ife | ife ⋄ ils
+% scl := mee ; scl | mee
+% unf := fun | unv
+% opr := pop | var | { ils }
+% ife := exp : exp | exp
+% mee := exp | ∊
 

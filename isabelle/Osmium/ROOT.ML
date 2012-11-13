@@ -3,4 +3,4 @@
   use_thys ["That_Theory1", "That_Theory2", "That_Theory3"];
 *)
 
-use_thys ["HPAPL"]; (* , "AxSem"]; *)
+use_thys ["Osmium"]; (* , "OsmHoare"]; *)

@@ -1,12 +1,12 @@
 header {* Axiomatic Semantics *}
 
-theory AxSem
+theory OsmHoare
 imports Main
 begin
 
 text {*
 This section describes the intial elements that are sketchy and rough, 
-but that will eventually become the axiomatic semantics of the HPAPL language.
+but that will eventually become the axiomatic semantics of the Osmium language.
 
 First up is a rough datatype of the language syntax of APL.
 *}
