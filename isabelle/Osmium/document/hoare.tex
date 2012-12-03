@@ -1,11 +1,10 @@
 \section{Hoare Logic for Osmium}
 
-These rules assume an implicit return value v for all expressions.
-In the notation, a Hoare triple is encoded as ⟪P⟫ B ⟪Q⟫ which says 
-in an operational sense that we can say Q given P after executing B.
-We use P[x←a:y←b:z←c] to represent assertion P with x, y, and z 
-substituted by a, b, and c, respectively. See elsewhere for the 
-language of programs.
+These rules assume an implicit return value v for all expressions.  In the
+notation, a Hoare triple is encoded as ⟪P⟫ B ⟪Q⟫ which says in
+an operational sense that we can say Q given P after executing B.  We use
+P[x←a:y←b:z←c] to represent assertion P with x, y, and z substituted
+by a, b, and c, respectively. See elsewhere for the language of programs.
 
 Literal values are the simplest
 
@@ -35,12 +34,12 @@ dya-prim: ───────────────────────�
           
 Reading the value out of an array is much like the monadic 
 primitive rule, but the order of evaluation is different because 
-of the difference in the positioning of the arguments in the form.
+of the difference in the positioning of the arguments in the form. Note that
+this form works both for mutable and for single assignment arrays.
 
-         ⟪P⟫ idx ⟪Q[v←v⌷V]⟫
-         P ⇒ ⎕SA 'V'
-sa-read: ─────────────────────────
-         ⟪P⟫ V[idx] ⟪Q⟫
+            ⟪P⟫ idx ⟪Q[v←v⌷V]⟫
+array-read: ─────────────────────────
+            ⟪P⟫ V[idx] ⟪Q⟫
 
 The result of an assignment is whatever was assigned to the variable, 
 and this is expressed by the following rule for assignment.
@@ -50,11 +49,11 @@ assgn: ──────────────────
        ⟪P⟫ var←exp ⟪Q⟫
 
 Assignment to arrays is quite different than assignment to variables.
-We require that arrays be single assignment, which requires more 
-statements about the state of the program before we can actually 
-assert some assignment into a variable. However, because of the 
-way that the languagge is written, this is the only way to share 
-data between multiple threads of execution in a write/read fashion.
+We require that arrays be single assignment, which requires more statements
+about the state of the program before we can actually assert some assignment
+into a variable. However, because of the way that the languagge is written,
+this is the only way to share data between multiple threads of execution in
+a write/read fashion.
 
                 ⟪P⟫ exp ⟪R⟫
                 ⟪R[v←t⟫ idx ⟪S⟫
@@ -64,6 +63,17 @@ data between multiple threads of execution in a write/read fashion.
 sa-array-assgn: ─────────────────────────────
                 ⟪P⟫ V[idx] ← exp ⟪Q⟫
 
+Assuming that you can prove that you have a multiple assignment array rather
+than a single assignment one, you can do the normal array writing and you don't
+need to prove that the full-empty bits are empty first.
+
+                ⟪P⟫ exp ⟪R⟫
+                ⟪R[v←t⟫ idx ⟪S⟫
+                S ⇒ ~⎕SA 'V'
+                S ⇒ Q[v←t : V←(V; v→t)]
+                S ⇒ (⍴v)≡⍴t
+sa-array-assgn: ─────────────────────────────
+                ⟪P⟫ V[idx] ← exp ⟪Q⟫
 
 The rules for application of functions is pretty straightforward.
 There is one rule for monadic application and one for dyadic 
@@ -83,59 +93,23 @@ dya-app: ───────────────────────�
 Parallel application is much like normal function application, 
 and in particular, since we have a deterministic by construction
 language, we treat parallel application just like regular function
-application.
+application. The only requirement that we make is that you cannot have a free
+variable reference to a mutable array, as this could introduce non-determinism.
 
              ⟪P⟫ fun exp ⟪Q⟫
+             ∧/⎕SA ⎕WRITES 'fun'
 mon-par-app: ─────────────────
              ⟪P⟫ fun∥ exp ⟪Q⟫
 
              ⟪P⟫ lft fun rgt ⟪Q⟫
+             ∧/⎕SA ⎕WRITES 'fun'
 dya-par-app: ─────────────────────
              ⟪P⟫ lft fun∥ rgt ⟪Q⟫
 
 \subsection{Converting to multiple assignment}
 
-The following rules allow us to convert a deterministic 
-single-assignment array language into one that also allows 
-multiple assignment variables in a controlled fashion.
-
-There are two important features of the single assignment 
-arrays that we need to deal with. The easiest feature to 
-address is the blocking read. Whenever we read an array 
-that is single assignment that has not yet received a value 
-in one of the cells that we wish to read, the thread that 
-is asking to receive the value of this cell blocks until 
-some other thread writes into the desired cell. This is 
-the only synchronization mechanism in our language. 
-When moving to a multiple assignment variable, this 
-blocking behavior no longer exists and we can read the values any 
-time that we want. The first rule we create then, is one 
-that allows us to read from a multiple assignment array. 
-
-Remember that all of these rules in this section intend 
-to maintain the determinacy of a program, and in particular, 
-If we have a single assignment program, we want it to be 
-easy to get a multiple assignment program. 
-
-In order to read from a multiple assignment variable, we 
-require that we can prove that a value has already been written to the 
-cell before reading. With just this rule, we can only introduce a 
-multiple assignment array if we can demonstrate that we do not rely on the 
-blocking behavior of the single-assignment equivalent to ensure the behavior 
-of the program. In other words, to get to a multiple-assignment variant of 
-a single assignment program, we must first determine an ordering for 
-parts of the program that determines the correct order of writes into 
-the multiple assignment array, rather than relying on the blocking nature 
-of single-assignment arrays to do that job for us. Put another way, 
-we selectively give up concurrency for deterministic ordering. I say that 
-we give this up, but in truth we only change the way in which the ordering is 
-enforced. In the single-assignment case this order is controlled by the 
-blocking behavior, whereas in the multiple assignment case this is controlled 
-by the program text and the order of evaluation.
-
-         ⟪P⟫ idx ⟪R⟫
-         R ⇒ ∧/,v⌷⎕FEB 'V'
-         R ⇒ Q[v←v⌷V]
-sa-read: ─────────────────────────
-         ⟪P⟫ V[idx] ⟪Q⟫
-
+The above rules allow the use of multiple assignment arrays only in a single
+thread of control, which prevents the possible introduction of non-determinism
+due to their use. However, even this limited use of multiple assignment arrays
+is enough to permit, for example, the use of multiple assignment arrays to fold
+arrays down for streaming applications and the like. 
