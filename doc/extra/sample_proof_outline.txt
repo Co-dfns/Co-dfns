@@ -1,0 +1,108 @@
+The following is a sample proof in Osmium. Consider the following program:
+
+A←(⍴X)⍴⍠		⍝ Let A be a single-assignment array, same shape asX
+A[0]←⊃X		⍝ First element of A is the first element of X
+{A[⍵}←A[⍵-1] F X[⍵]}∥¨1↓⍳⍴X	⍝ All other elements are computed in "parallel"
+R←⊃⌽A		⍝ The result R is the last element of A
+
+This is a standard forward fold over X using A as the accumulator.
+Importantly, the use of a single assignment array A allows for the
+synchronization necessary to ensure that all the parallel steps occur in the
+sequential order that is necessary for this code to work. Also note that A
+holds the same result as the scan of F over X, or F\X.
+
+Assuming that the above program is given the name S, then the resulting
+assertion should hold in our logic:
+
+        ⟪(∧/0<⍴X) ∧ ((X F Y) F Z)≡X F Y F Z⟫
+        S
+        ⟪R≡F/X⟫
+
+That is, assuming that F is associative and that the shape of X shows that
+X is not empty, the result of this program should be the same as F/X, or
+reducing X using F.
+
+The following is a basic sketch of a proof outline for this.
+
+1. Using basic Hoare assignment axioms of side-effect free functions:
+
+        ⟪P: (∧/0<⍴X) ∧ ((X F Y) F Z)≡X F Y F Z⟫
+        A←(⍴X)⍴⍠
+        ⟪P ∧ A≡(⍴X)⍴⍠⟫
+
+2. Using value rule:
+
+        ⟪P ∧ (A≡(⍴X)⍴⍠)⟫ ⊃X ⟪P ∧ (A≡(⍴X)⍴⍠) ∧ ⎕≡⊃X⟫
+        ⟪P ∧ (A≡(⍴X)⍴⍠) ∧ T≡⊃X⟫ 0 ⟪P1: P ∧ (A≡(⍴X)⍴⍠) ∧ T≡⊃X ∧ ⎕≡0⟫
+
+3. Using Array Logic:
+
+        P1 ⇒ 0=(⎕FEB 'A')[0]
+        P1 ⇒ P ∧ ((⍴A)≡⍴X) 
+		∧ ((A; 0 → ⊃X)[0]≡⊃X) ∧ (A; 0 → ⊃X)[1↓⍳⍴X]≡((⍴X)⍴⍠)[1↓⍳⍴X]
+
+4. Using single-assignment rule by #2 and #3:
+
+        ⟪P ∧ A≡(⍴X)⍴⍠⟫
+        A[0]←⊃X
+        ⟪P2: P ∧ ((⍴A)≡⍴X) ∧ (A[0]≡⊃X) ∧ A[1↓⍳⍴X]≡((⍴X)⍴⍠)[1↓⍳⍴X]⟫
+
+5. Using value rule:
+
+        ⟪P2⟫ 1↓⍳⍴X ⟪P2 ∧ ⎕≡1↓⍳⍴X⟫
+        ⟪???⟫ A[⍵-1] F X[⍵] ⟪??? ∧ ⎕≡A[⍵-1] F X[⍵]⟫
+        ⟪??? ∧ (T≡A[⍵-1] F X[⍵])⟫ ⍵ ⟪P3: ??? ∧ (T≡A[⍵-1] F X[⍵]) ∧ ⎕≡⍵⟫
+
+6. Using array logic:
+
+        P3 ⇒ 0=(⎕FEB 'A')[⍵]
+        P3 ⇒ A[0]≡⊃X
+          ∧ (∀I : ((⍴A)⊥I)<(⍴A)⊥⍵ : A[I]≡A[I-1] F X[I])
+          ∧ (∀I : ((⍴A)⊥I)≥(⍴A)⊥⍵ : ⎕FEB 'A'[I]=0)
+
+7. Using single-assignment rule by #5 and #6:
+
+        ⟪???⟫
+        A[⍵]←A[⍵-1] F X[⍵]
+        ⟪P4: A[0]≡⊃X
+          ∧ (∀I : ((⍴A)⊥I)<(⍴A)⊥⍵ : A[I]≡A[I-1] F X[I])
+          ∧ (∀I : ((⍴A)⊥I)≥(⍴A)⊥⍵ : ⎕FEB 'A'[I]=0)⟫
+
+8. Using monadic function rule:
+
+        ⟪???⟫ {A[⍵]←A[⍵-1] F X[⍵]} ??? ⟪???⟫
+
+9. Using Par application rule:
+
+        ⟪???⟫ {A[⍵]←A[⍵-1] F X[⍵]}∥ E ⟪??? ⇒ P5⟫
+
+10. Using Each rule by #5-9:
+
+        ⟪P2⟫
+        {A[⍵]←A[⍵] F X[⍵]}∥¨1↓⍳⍴X
+        ⟪P5: ((⍴A)≡⍴X) ∧ (A[0]≡⊃X) ∧ ∀I: I∊1↓⍳⍴X: A[I]≡A[I-1] F X[I]⟫
+
+11. Using Assignment rule:
+
+        ⟪P5⟫
+        R←⊃⌽A
+        ⟪P6: P5 ∧ R≡⊃⌽A⟫
+
+12. Using array logic:
+
+        P6 ⇒ R≡F/X
+
+13. Using rule of consequence:
+
+        ⟪P5⟫
+        R←⊃⌽A
+        ⟪R≡F/X⟫
+
+14. Using rule of juxtaposition:
+
+        ⟪(∧/0<⍴X) ∧ ((X F Y) F Z)≡X F Y F Z⟫
+        A←(⍴X)⍴⍠
+        A[0]←⊃X
+        {A[⍵}←A[⍵-1] F X[⍵]}∥¨1↓⍳⍴X
+        R←⊃⌽A
+        ⟪R≡F/X⟫
