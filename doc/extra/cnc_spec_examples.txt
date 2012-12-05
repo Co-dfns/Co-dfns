@@ -5,30 +5,31 @@
 
 /* This first is the simple example of the CnC Reduction */
 
-item A, X;
-
-extern myfunc(A, B); 
-
-step mystep(idx) {
-	A[idx] = myfunc(A[idx - 1], X[idx]);
-}
-
-step reduce(env) {
-	X = env;
-	A = reshape(shape(X), EMPTY);
+step reduce_all<f>(X) {
+	item A = reshape(shape(X), EMPTY_SA);
+	step setter(idx) { A[idx] = f(A[idx - 1], X[idx]); }
 
 	A[first(index(shape(A)))] = first(X);
-	each(mystep, drop(1, ravel(index(shape(A)))));
+	each(setter, drop(1, ravel(index(shape(A)))));
 
 	return first(reverse(A));
 }
 
 /* The Osmium program for this reduction */
 
-∇R←reduce X;A;F
+∇R←reduce_all X;A;F
  'F' ⎕NA 'myfunc' 2
  A←(⍴X)⍴⍠
  A[⊃⍳⍴A]←⊃X
  {A[⍵]←A[⍵-1] F X[⍵]}∥¨1↓,⍳⍴A
  R←⊃⌽A
+∇
+
+Let's have a single dimension reduction now. A reduction that reduces over the
+last dimension. 
+
+∇R←reduce X;F
+'F' ⎕NA 'myfunc' 2
+R←(¯1↓⍴X)⍴⍠
+{R[⊂⍵]←F/⍵⌷X}∥¨⍳⍴R
 ∇
