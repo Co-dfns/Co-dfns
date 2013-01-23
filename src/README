@@ -1,0 +1,10 @@
+Co-Dfns: High Performance APL Compiler for Parallel Programs
+────────────────────────────────────────────────────────────
+
+Copyright (c) 2013 Aaron W. Hsu <arcfide@sacrideo.us>. 
+All rights reserved.
+
+Introduction
+────────────
+
+This is the main compiler for the Co-Dfns project.
