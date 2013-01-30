@@ -3,7 +3,11 @@
 # parsing. It is designed to take into account the inherent 
 # ambiguities in the APL language.
 
-Start <- OWS <Value> OWS !. { printf("%s\n", yytext); }
+Start <- OWS <Statements> OWS !. { printf("%s\n", yytext); }
+
+Statements <-
+	Value (OWS "⋄" OWS Value)+
+	/ Value
 
 Value <-
 	Application
