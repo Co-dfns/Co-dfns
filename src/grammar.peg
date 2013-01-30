@@ -3,13 +3,13 @@
 # parsing. It is designed to take into account the inherent 
 # ambiguities in the APL language.
 
-Start <- <OWS Statements OWS> !. { printf("%s\n", yytext); }
+Start <- <OWSNL Statements OWSNL> !. { printf("%s\n", yytext); }
 
 Statements <- CondStmt (Separator CondStmt)*
 
 CondStmt <- (Value OWS ":" OWS)? Value
 
-Separator <-  (" " / "\t")* "\n" OWS / OWS "⋄" OWS
+Separator <-  (OWS) "\n" OWSNL / OWS "⋄" OWS
 
 Value <-
 	Application
@@ -18,8 +18,10 @@ Value <-
 
 SingleValue <-
 	Array
-	/ Variable
-	/ "(" Value ")"
+	/ Variable OWS Index ?
+	/ "(" OWS Value OWS ")" OWS Index ?
+
+Index <- "[" OWS Value (OWS ";" OWS Value)* OWS "]"
 		
 Assignment <-
 	Variable OWS "←" OWS Function
@@ -39,7 +41,7 @@ MonFunc <- Operator / MonPrim / GenFunc
 
 DyaFunc <- Operator / DyaPrim / GenFunc
 
-GenFunc <- "{" OWS Statements OWS "}" / "{}"
+GenFunc <- "{" OWSNL Statements OWSNL "}" / "{}"
 
 Operator <- DyaOper / MonOper
 
@@ -103,5 +105,7 @@ Integer <- '¯'? [0-9]+
 Float <- '¯'? [0-9]+ '.' [0-9]+
 
 OWS <- WS ?
+OWSNL <- WSNL ?
 
-WS <- (" " / "\t" / "\n" / "\r")+
+WS <- (" " / "\t" )+
+WSNL <- (" " / "\t" / "\r" / "\n")+
