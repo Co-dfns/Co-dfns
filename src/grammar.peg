@@ -3,11 +3,11 @@
 # parsing. It is designed to take into account the inherent 
 # ambiguities in the APL language.
 
-Start <- OWS Primitive OWS !.
+Start <- OWS Value OWS !. 
 
 Value <-
-	SingleValue
-	/ Application
+	Application
+	/ SingleValue
 
 SingleValue <-
 	Array
@@ -27,7 +27,14 @@ MonadicApp <- Primitive OWS Value
 
 DyadicApp <- SingleValue OWS Primitive OWS Value
 
-Primitive <- [+-¯<≤=≥>≠∨∧×÷?∊⍴~↑↓⍳○*⌈⌊⍎⍕⊢⊂⊃∩∪⊥⊤|⍒⍋⌽⍉⊖⍟⍱⍲!⌹⍷⍨⍸⍥⌷≡≢⊣⍪]
+Primitive <- 
+	"-" / "+" / "¯" / "<" / "≤" / "=" / "≥" / ">" / "≠" 
+	/ "∨" / "∧" / "×" / "÷" / "?" / "∊" / "⍴" / "~" / "↑" 
+	/ "↓" / "⍳" / "○" / "*" / "⌈" / "⌊" / "∇" / "⍎" / "⍕" 
+	/ "⊢" / "⊂" / "⊃" / "∩" / "∪" / "⊥" / "⊤" / "|" / "⍀" 
+	/ "⌿" / "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍱" / "⍲" 
+	/ "!" / "⌹" / "⍷" / "⍸" / "⌷" / "≡" / "≢" / "⍪" / "/" 
+	/ "." / "\\"
 
 Variable <- [a-zA-Z_∆] [a-zA-Z0-9_∆]*
 
