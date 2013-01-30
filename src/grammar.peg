@@ -1,0 +1,71 @@
+# PEG grammar for Co-Dfns language
+# This grammar handles the process of tokenization as well as that of 
+# parsing. It is designed to take into account the inherent 
+# ambiguities in the APL language.
+
+Start <- OWS Primitive OWS !.
+
+Value <-
+	SingleValue
+	/ Application
+
+SingleValue <-
+	Array
+		{ printf("Array\n"); }
+	/ Variable
+		{ printf("Variable\n"); }
+	/ "(" Value ")"
+		{ printf("Parenthesized value\n"); }
+
+Application <-
+	MonadicApp
+		{ printf("Monadic\n"); }
+	/ DyadicApp
+		{ printf("Dyadic\n"); }
+
+MonadicApp <- Primitive OWS Value
+
+DyadicApp <- SingleValue OWS Primitive OWS Value
+
+Primitive <- 
+	"¯" / "<" / "≤" / "=" / "≥" / ">" / "≠" 
+	/ "∨" / "∧" / "×" / "÷" / "?" / "∊" 
+	/ "⍴" / "~" / "↑" / "↓" / "⍳" / "○" 
+	/ "*" / "⌈" / "⌊" / "⍎" / "⍕" / "⊢" 
+	/ "⊂" / "⊃" / "∩" / "∪" / "⊥" / "⊤" 
+	/ "|" / "⍒" / "⍋" / "⌽" / "⍉" / "⊖" 
+	/ "⍟" / "⍱" / "⍲" / "!" / "⌹" / "⍷" 
+	/ "⍨" / "⍸" / "⍥" / "⌷" / "≡" / "≢" 
+	/ "⊣" / "⍪" 
+
+Variable <- [a-zA-Z_∆] [a-zA-Z0-9_∆]*
+
+Array <-
+	"⍬"
+	/ MixedArray
+	/ NumberArray
+	/ CharArray
+
+MixedArray <-
+	(Number WS)+ CharArray (WS (Number / CharArray))*
+	/ (CharArray WS)+ Number (WS (Number / CharArray))*
+
+CharArray <- 
+	Character
+	/ "''" 
+	/ "'" ("''" / [^'])+ "'"
+
+NumberArray <- 
+	Number
+	/ ( Number WS )+ Number
+
+Character <- "'" [^'] "'" 
+
+Number <- Float / Integer
+
+Integer <- '-'? [0-9]+ 
+
+Float <- '-'? [0-9]+ '.' [0-9]+
+
+OWS <- WS ?
+WS <- [ \n\r\t]+
