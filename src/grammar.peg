@@ -49,7 +49,7 @@ MonOper <-
 	
 DyaOper <-
 	(MonPrim / DyaPrim / GenFunc) Operator
-	/ DyaPrimOp
+	/ DyaPrimOp Function
 
 MonPrimOpL <-
 	"⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
