@@ -5,9 +5,11 @@
 
 Start <- <OWS Statements OWS> !. { printf("%s\n", yytext); }
 
-Statements <-
-	Value (OWS "⋄" OWS Value)+
-	/ Value
+Statements <- CondStmt (Separator CondStmt)*
+
+CondStmt <- (Value OWS ":" OWS)? Value
+
+Separator <- OWS "⋄" OWS
 
 Value <-
 	Application
@@ -39,9 +41,7 @@ Primitive <-
 	/ "!" / "⌹" / "⍷" / "⍸" / "⌷" / "≡" / "≢" / "⍪" / "/" 
 	/ "." / "\\"
 
-VariableList <-
-	Variable (WS Variable)+
-	/ Variable
+VariableList <- Variable (WS Variable)*
 
 Variable <- [a-zA-Z_] [a-zA-Z0-9_]*
 
@@ -60,9 +60,7 @@ CharArray <-
 	/ "''" 
 	/ "'" ("''" / [^'])+ "'"
 
-NumberArray <- 
-	Number (WS Number)+
-	/ Number
+NumberArray <- Number (WS Number)*
 
 Character <- "'" [^'] "'" 
 
@@ -73,4 +71,5 @@ Integer <- '¯'? [0-9]+
 Float <- '¯'? [0-9]+ '.' [0-9]+
 
 OWS <- WS ?
+
 WS <- (" " / "\t" / "\n" / "\r")+
