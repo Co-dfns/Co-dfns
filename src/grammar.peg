@@ -26,8 +26,8 @@ Assignment <-
 	/ Variable OWS "←" OWS Function
 
 Application <-
-	MonadicApp 
-	/ DyadicApp
+	DyadicApp
+	/ MonadicApp 
 
 MonadicApp <- MonFunc OWS Value
 
@@ -35,16 +35,26 @@ DyadicApp <- SingleValue OWS DyaFunc OWS Value
 
 Function <- MonFunc / DyaFunc
 
-MonFunc <- MonPrim / GenFunc
+MonFunc <- MonPrim / GenFunc / Operator
 
-DyaFunc <- DyaPrim / GenFunc
+DyaFunc <- DyaPrim / GenFunc / Operator
 
 GenFunc <- "{" OWS Statements OWS "}" / "{}"
 
-MonOper <-
-	"∘." / "⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
+Operator <- DyaOper / MonOper
 
-DyaOper <- 
+MonOper <-
+	(MonPrim / DyaPrim / GenFunc) Operator
+	/ MonPrimOpL
+	
+DyaOper <-
+	(MonPrim / DyaPrim / GenFunc) Operator
+	/ DyaPrimOp
+
+MonPrimOpL <-
+	"⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
+
+DyaPrimOp <- 
 	"∘" / "." / "⍣"
 
 MonPrim <- 
