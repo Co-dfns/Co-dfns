@@ -9,7 +9,7 @@ Statements <- CondStmt (Separator CondStmt)*
 
 CondStmt <- (Value OWS ":" OWS)? Value
 
-Separator <- OWS "⋄" OWS
+Separator <-  (" " / "\t")* "\n" OWS / OWS "⋄" OWS
 
 Value <-
 	Application
@@ -22,8 +22,8 @@ SingleValue <-
 	/ "(" Value ")"
 		
 Assignment <-
-	VariableList OWS "←" OWS Value
-	/ Variable OWS "←" OWS Function
+	Variable OWS "←" OWS Function
+	/ VariableList OWS "←" OWS Value
 
 Application <-
 	DyadicApp
@@ -35,20 +35,20 @@ DyadicApp <- SingleValue OWS DyaFunc OWS Value
 
 Function <- MonFunc / DyaFunc
 
-MonFunc <- MonPrim / GenFunc / Operator
+MonFunc <- Operator / MonPrim / GenFunc
 
-DyaFunc <- DyaPrim / GenFunc / Operator
+DyaFunc <- Operator / DyaPrim / GenFunc
 
 GenFunc <- "{" OWS Statements OWS "}" / "{}"
 
 Operator <- DyaOper / MonOper
 
 MonOper <-
-	(MonPrim / DyaPrim / GenFunc) Operator
+	(MonPrim / DyaPrim / GenFunc / SingleValue) Operator
 	/ MonPrimOpL
 	
 DyaOper <-
-	(MonPrim / DyaPrim / GenFunc) Operator
+	(MonPrim / DyaPrim / GenFunc / SingleValue) Operator
 	/ DyaPrimOp Function
 
 MonPrimOpL <-
@@ -70,7 +70,7 @@ DyaPrim <-
 	/ "⊢" / "⊂" / "⊃" / "∩" / "∪" / "⊥" / "⊤" / "|" / "⍀" 
 	/ "⌿" / "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍱" / "⍲" 
 	/ "!" / "⌹" / "⍷" / "⍸" / "⌷" / "≡" / "≢" / "⍪" / "/" 
-	/ "," / "\\"
+	/ "," / "\\" / "⌷"
 
 
 VariableList <- Variable (WS Variable)*
