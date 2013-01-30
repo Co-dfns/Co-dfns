@@ -26,19 +26,34 @@ Assignment <-
 	/ Variable OWS "←" OWS Function
 
 Application <-
-	MonadicApp
+	MonadicApp 
 	/ DyadicApp
 
-MonadicApp <- Function OWS Value
+MonadicApp <- MonFunc OWS Value
 
-DyadicApp <- SingleValue OWS Function OWS Value
+DyadicApp <- SingleValue OWS DyaFunc OWS Value
 
-Function <-
-	Primitive
-	/ "{" OWS Statements OWS "}"
-	/ "{}"
+Function <- MonFunc / DyaFunc
 
-Primitive <- 
+MonFunc <- MonPrim / GenFunc
+
+DyaFunc <- DyaPrim / GenFunc
+
+GenFunc <- "{" OWS Statements OWS "}" / "{}"
+
+MonOper <-
+	"∘." / "⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
+
+DyaOper <- 
+	"∘" / "." / "⍣"
+
+MonPrim <- 
+	"-" / "+" / "×" / "÷" / "?" / "∊" / "⍴" / "~" / "↑" 
+	/ "↓" / "⍳" / "○" / "*" / "⌈" / "⌊" / "∇" / "⍎" / "⍕" 
+	/ "⊣" / "⊢" / "⊂" / "⊃" / "∩" / "|" / "!" / "⌹" / "≡"
+	/ "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍪" / ","
+
+DyaPrim <-
 	"-" / "+" / "¯" / "<" / "≤" / "=" / "≥" / ">" / "≠" 
 	/ "∨" / "∧" / "×" / "÷" / "?" / "∊" / "⍴" / "~" / "↑" 
 	/ "↓" / "⍳" / "○" / "*" / "⌈" / "⌊" / "∇" / "⍎" / "⍕" 
@@ -46,6 +61,7 @@ Primitive <-
 	/ "⌿" / "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍱" / "⍲" 
 	/ "!" / "⌹" / "⍷" / "⍸" / "⌷" / "≡" / "≢" / "⍪" / "/" 
 	/ "," / "\\"
+
 
 VariableList <- Variable (WS Variable)*
 
