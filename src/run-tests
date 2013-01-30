@@ -3,7 +3,7 @@
 cd tests
 
 for fn in $(ls *.test); do
-  if [ "$(cat $fn)" = "$(cat $fn | ../dfns)" ]; then
+  if [ "$(cat $fn)" = "$(../dfns "$fn")" ]; then
     echo "${fn%.test} passed."
   else
     echo "${fn%.test} failed!"
