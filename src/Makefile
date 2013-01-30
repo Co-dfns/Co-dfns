@@ -6,6 +6,9 @@ all: dfns
 
 dfns: ${OBJS}
 	${CC} -o dfns ${CFLAGS} ${OBJS}
+	
+test: dfns
+	run-tests
 
 parse.o: grammar.c parse.c
 	${CC} -o $@ -c ${CFLAGS} parse.c

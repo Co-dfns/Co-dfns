@@ -3,7 +3,7 @@
 # parsing. It is designed to take into account the inherent 
 # ambiguities in the APL language.
 
-Start <- OWS <Statements> OWS !. { printf("%s\n", yytext); }
+Start <- <OWS Statements OWS> !. { printf("%s\n", yytext); }
 
 Statements <-
 	Value (OWS "⋄" OWS Value)+
@@ -16,21 +16,15 @@ Value <-
 
 SingleValue <-
 	Array
-		{ printf("Array\n"); }
 	/ Variable
-		{ printf("Variable\n"); }
 	/ "(" Value ")"
-		{ printf("Parenthesized value\n"); }
 		
 Assignment <-
 	VariableList OWS "←" OWS Value
-		{ printf("Assignment\n"); }
 
 Application <-
 	MonadicApp
-		{ printf("Monadic\n"); }
 	/ DyadicApp
-		{ printf("Dyadic\n"); }
 
 MonadicApp <- Primitive OWS Value
 
@@ -67,16 +61,16 @@ CharArray <-
 	/ "'" ("''" / [^'])+ "'"
 
 NumberArray <- 
-	( Number WS )+ Number
+	Number (WS Number)+
 	/ Number
 
 Character <- "'" [^'] "'" 
 
 Number <- Float / Integer
 
-Integer <- '-'? [0-9]+ 
+Integer <- '¯'? [0-9]+ 
 
-Float <- '-'? [0-9]+ '.' [0-9]+
+Float <- '¯'? [0-9]+ '.' [0-9]+
 
 OWS <- WS ?
 WS <- (" " / "\t" / "\n" / "\r")+
