@@ -21,7 +21,7 @@ SingleValue <-
 	/ Variable OWS Index ?
 	/ "(" OWS Value OWS ")" OWS Index ?
 
-Index <- "[]" / "[" OWS Value (OWS ";" OWS Value)* OWS "]"
+Index <- ("[]" / "[" OWS Value (OWS ";" OWS Value)* OWS "]")+
 		
 Assignment <-
 	Variable OWS "←" OWS Function
