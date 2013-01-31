@@ -1,0 +1,9 @@
+box←{                          
+    vrt hrz←(¯1+⍴⍵)⍴¨(⊂vt),⊂hz     
+    top←(hz,'⊖→')[¯1↑⍺],hrz    
+    bot←(⊃⍺),hrz               
+    rgt←tr,vt,vrt,br           
+    lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt
+    lft←⍉tl,(↑lax),bl          
+    lft,(top⍪⍵⍪bot),rgt        
+}
