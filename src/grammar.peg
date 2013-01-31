@@ -3,7 +3,7 @@
 # parsing. It is designed to take into account the inherent 
 # ambiguities in the APL language.
 
-Start <- <OWSNL Statements OWSNL> !. { printf("%s\n", yytext); }
+Start <- <OWSNL Statements OWSNL>  { printf("%s\n", yytext); }
 
 Statements <- CondStmt (Separator CondStmt)*
 
@@ -11,10 +11,7 @@ CondStmt <- (Value OWS ":" OWS)? Value
 
 Separator <-  (OWS) "\n" OWSNL / OWS "⋄" OWS
 
-Value <-
-	Application
-	/ Assignment
-	/ SingleValue
+Value <- Application / Assignment / SingleValue
 
 SingleValue <-
 	Array
@@ -27,37 +24,30 @@ Assignment <-
 	Variable OWS "←" OWS Function & Separator
 	/ VariableList OWS "←" OWS Value
 
-Application <-
-	DyadicApp
-	/ MonadicApp 
+Function <- Operator / BaseFun
 
-MonadicApp <- MonFunc OWS Value
+BaseFun <- MonPrim / DyaPrim / GenFunc
 
-DyadicApp <- SingleValue OWS DyaFunc OWS Value
-
-Function <- MonFunc / DyaFunc
-
-MonFunc <- Operator / MonPrim / GenFunc
-
-DyaFunc <- Operator / DyaPrim / GenFunc
+Application <- 
+	MonPrim OWS Value 
+	/ SingleValue OWS DyaPrim OWS Value
+	/ SingleValue OWS (Operator / GenFunc) OWS Value
+	/ (Operator / GenFunc) OWS Value
 
 GenFunc <- "{" OWSNL Statements OWSNL "}" / "{}"
 
-Operator <- DyaOper / MonOper
+Operator <- 
+	BaseFun OWS Operator OWS Function
+	/ BaseFun OWS Operator 
+	/ "∘" OWS "." Function  
+	/ BaseFun OWS DyaPrimOp OWS Function
+	/ BaseFun OWS MonPrimOp
+	/ SingleValue OWS "∘" OWS Function
+	/ BaseFun OWS ("∘" / "⍣") OWS SingleValue
 
-MonOper <-
-	(MonPrim / DyaPrim / GenFunc / SingleValue) Operator
-	/ MonPrimOpL
-	
-DyaOper <-
-	(MonPrim / DyaPrim / GenFunc / SingleValue) Operator
-	/ DyaPrimOp Function
+MonPrimOp <- "⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
 
-MonPrimOpL <-
-	"⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
-
-DyaPrimOp <- 
-	"∘" / "." / "⍣"
+DyaPrimOp <- "∘" / "⍣" / "." 
 
 MonPrim <- 
 	"-" / "+" / "×" / "÷" / "?" / "∊" / "⍴" / "~" / "↑" 
