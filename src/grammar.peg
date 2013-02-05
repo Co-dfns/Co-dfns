@@ -22,6 +22,7 @@ Index <- ("[]" / "[" OWS Value (OWS ";" OWS Value)* OWS "]")+
 		
 Assignment <-
 	Variable OWS "←" OWS Function & Separator
+	/ Variable OWS "←" OWS GenOper & Separator
 	/ VariableList OWS "←" OWS Value
 
 Function <- Operator / BaseFun 
@@ -29,7 +30,9 @@ BaseFun <- MonPrim / DyaPrim / GenFunc / "(" OWS Function OWS ")"
 MonFun <- Operator / MonPrim / GenFunc / "(" OWS MonFun OWS ")"
 DyaFun <- Operator / DyaPrim / GenFunc / "(" OWS DyaFun OWS ")"
 
-GenFunc <- "{" OWSNL Statements OWSNL "}" / "{}"
+FuncSyntax <- "{" &{ ENTER_UD() } OWSNL Statements OWSNL "}"
+
+GenFunc <- FuncSyntax &{ is_ud_func(ctx) } / "{}"
 
 Application <- MonFun OWS Value / SingleValue OWS DyaFun OWS Value
 
@@ -41,6 +44,12 @@ Operator <-
 	/ BaseFun OWS MonPrimOp
 	/ SingleValue OWS "∘" OWS Function
 	/ BaseFun OWS ("∘" / "⍣") OWS SingleValue
+	/ (BaseFun / SingleValue) OWS DyaGenOper OWS (BaseFun / SingleValue)
+	/ (BaseFun / SingleValue) OWS MonGenOper
+
+GenOper <- MonGenOper / DyaGenOper
+MonGenOper <- FuncSyntax &{ is_ud_mona(ctx) }
+DyaGenOper <- FuncSyntax &{ is_ud_dyad(ctx) }
 
 MonPrimOp <- "⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
 
@@ -50,7 +59,7 @@ MonPrim <-
 	"-" / "+" / "×" / "÷" / "?" / "∊" / "⍴" / "~" / "↑" 
 	/ "↓" / "⍳" / "○" / "*" / "⌈" / "⌊" / "∇" / "⍎" / "⍕" 
 	/ "⊣" / "⊢" / "⊂" / "⊃" / "∪" / "|" / "!" / "⌹" / "≡"
-	/ "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍪" / ","
+	/ "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍪" / "," 
 
 DyaPrim <-
 	"-" / "+" / "<" / "≤" / "=" / "≥" / ">" / "≠" 
@@ -59,12 +68,15 @@ DyaPrim <-
 	/ "⊢" / "⊂" / "⊃" / "∩" / "∪" / "⊥" / "⊤" / "|" / "⍀" 
 	/ "⌿" / "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍱" / "⍲" 
 	/ "!" / "⌹" / "⍷" / "⍸" / "⌷" / "≡" / "≢" / "⍪" / "/" 
-	/ "," / "\\" / "⊣"
+	/ "," / "\\" / "⊣" 
 
 
 VariableList <- Variable (WS Variable)*
 
-Variable <- "⍺" / "⍵" / [a-zA-Z_] [a-zA-Z0-9_]*
+Variable <- [a-zA-Z_] [a-zA-Z0-9_]* 
+	/ "⍺⍺" &{ !seen_mona_var(ctx) }
+	/ "⍵⍵" &{ !seen_dyad_var(ctx) }
+	/ "⍺" / "⍵"
 
 Array <-
 	"⍬"
