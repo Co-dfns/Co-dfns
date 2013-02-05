@@ -81,9 +81,14 @@ Variable <- [a-zA-Z_] [a-zA-Z0-9_]*
 
 Array <-
 	"⍬"
+	/ StrandArray
 	/ MixedArray
 	/ NumberArray
 	/ CharArray
+
+StrandArray <-
+	(MixedArray / CharArray / NumberArray) ? 
+	    OWS "(" OWS Array OWS ")" OWS Array ?
 
 MixedArray <-
 	(Number WS)+ CharArray (WS (Number / CharArray))*
