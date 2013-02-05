@@ -71,7 +71,8 @@ DyaPrim <-
 	/ "," / "\\" / "⊣" 
 
 
-VariableList <- Variable (WS Variable)*
+VariableList <- Variable (WS VariableList)*
+	/ "(" OWS VariableList OWS ")"
 
 Variable <- [a-zA-Z_] [a-zA-Z0-9_]* 
 	/ "⍺⍺" &{ !seen_mona_var(ctx) }
