@@ -15,10 +15,10 @@ Value <- Application / Assignment / SingleValue
 
 SingleValue <-
 	Array
-	/ Variable OWS Index ?
+	/ Variable OWS Index ? # XXX This is wrong.
 	/ "(" OWS Value OWS ")" OWS Index ?
 
-Index <- ("[]" / "[" OWS Value (OWS ";" OWS Value)* OWS "]")+
+Index <- ("[" OWS "]" / "[" OWS Value (OWS ";" OWS Value)* OWS "]")+
 		
 Assignment <-
 	Variable OWS "←" OWS Function & Separator
@@ -32,7 +32,7 @@ DyaFun <- Operator / DyaPrim / GenFunc / "(" OWS DyaFun OWS ")"
 
 FuncSyntax <- "{" &{ ENTER_UD() } OWSNL Statements OWSNL "}"
 
-GenFunc <- FuncSyntax &{ is_ud_func(ctx) } / "{}"
+GenFunc <- FuncSyntax &{ is_ud_func(ctx) } / "{" OWS "}"
 
 Application <- MonFun OWS Value / SingleValue OWS DyaFun OWS Value
 
