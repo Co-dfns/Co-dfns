@@ -89,6 +89,7 @@ Array <-
 StrandArray <-
 	(MixedArray / CharArray / NumberArray) ? 
 	    OWS "(" OWS Array OWS ")" OWS Array ?
+	/ (MixedArray / CharArray / NumberArray) ? OWS VariableList OWS Array ?
 
 MixedArray <-
 	(Number WS)+ CharArray (WS (Number / CharArray))*
