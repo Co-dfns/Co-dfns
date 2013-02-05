@@ -14,8 +14,7 @@ Separator <-  (OWS) "\n" OWSNL / OWS "⋄" OWS
 Value <- Application / Assignment / SingleValue
 
 SingleValue <-
-	Array
-	/ Variable OWS Index ? # XXX This is wrong.
+	Array OWS Index ?
 	/ "(" OWS Value OWS ")" OWS Index ?
 
 Index <- ("[" OWS "]" / "[" OWS Value (OWS ";" OWS Value)* OWS "]")+
