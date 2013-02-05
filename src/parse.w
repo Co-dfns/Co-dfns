@@ -172,15 +172,13 @@ int name(void *ctxp)
 	void *val;
 	yycontext *ctx = ctxp;
 	
-	if (peek(&ctx->op_seen, &val)) {
+	if (pop(&ctx->op_seen, &val)) {
 		fprintf(stderr, "%s: unexpected empty stack\n", errstr);
 		exit(EXIT_FAILURE);
 	}
 	
 	if (val != (void *) type) return 0;
-
-	pop(&ctx->op_seen, &val);
-	return 1;
+	else return 1;
 }
 
 @<Define parsing functions@>=
