@@ -96,8 +96,7 @@ MixedArray <-
 
 CharArray <- 
 	Character
-	/ "''" 
-	/ "'" ("''" / [^'])+ "'"
+	/ "'" ("''" / [^'])* "'"
 
 NumberArray <- Number (WS Number)*
 
