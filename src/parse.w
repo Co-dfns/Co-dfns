@@ -262,7 +262,7 @@ function ``frame.'' When we enter a new function, we enter a new
 scope, and when we leave that function, all of the variables that were 
 in that scope are no longer visible. In order to make it easy to get 
 rid of all of those variables introduced in that scope, entering a 
-new function is marked by pushing a VT_FRM value onto the stack.
+new function is marked by pushing a |VT_FRM| value onto the stack.
 We also include a type of |VT_UND| which can be used to indicate that 
 a given variable is undefined. However, we do not expect any variables 
 pushed onto an environment to have this value. This is something that 
@@ -297,7 +297,7 @@ To do this, we will use the |push_var| function, which takes a character
 string of the variable name and the type of variable and pushes onto 
 the stack. When we enter a function, we need to push a frame separator onto 
 the stack, which is done in the same way that we push a normal variable 
-onto the stack, except that we give the |VT_FRM| value and |""|| to 
+onto the stack, except that we give the |VT_FRM| value and |""| to 
 the variable name.
 
 @<Define parsing functions@>=
