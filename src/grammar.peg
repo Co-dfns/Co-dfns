@@ -5,7 +5,7 @@
 
 Start <- <OWSNL Statements OWSNL> !. { printf("%s\n", yytext); }
 
-Statements <- CondStmt (Separator CondStmt)*
+Statements <- CondStmt (Separator+ CondStmt)*
 
 CondStmt <- (Value OWS ":" OWS)? Value
 
