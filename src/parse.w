@@ -153,12 +153,26 @@ whether we have a function or an operator.
 @d UD_MONA 1
 @d UD_DYAD 2
 
-@ To support this approach to parsing, we define |ENTER_UD()| that is to be 
+@ To support this approach to parsing, we define |enter_ud| that is to be 
 called on each entrance to an user-defined function or operator. This will 
 do all of the initialization and make sure that things are pushed onto the
-stack as appropriate.
+stack as appropriate. It takes the |yycontext *| pointer.
 
-@d ENTER_UD() (!push(&ctx->op_seen, (void *) UD_FUNC))
+@<Define parsing functions@>=
+int
+enter_ud(void *ctxp)
+{
+	int val;
+	yycontext *ctx;
+	
+	val = 0;
+	ctx = ctxp;
+	
+	return !PUSH(&ctx->op_seen, &val, int);
+}
+
+@ @<Declare prototypes...@>=
+int enter_ud(void *);
 
 @ When we have seen what might be a closing brace to a function or an 
 operator, then we need to check whether it is an operator or what. We also 
@@ -169,16 +183,15 @@ only pop the stack if we encounter what we expect and return true.
 @d UD_PRED(name, errstr, type)
 int name(void *ctxp)
 {
-	void *val;
+	int val;
 	yycontext *ctx = ctxp;
 	
-	if (pop(&ctx->op_seen, &val)) {
+	if (POP(&ctx->op_seen, &val, int)) {
 		fprintf(stderr, "%s: unexpected empty stack\n", errstr);
 		exit(EXIT_FAILURE);
 	}
 	
-	if (val != (void *) type) return 0;
-	else return 1;
+	return (val == type);
 }
 
 @<Define parsing functions@>=
@@ -202,15 +215,17 @@ value and the value of the operator that we have seen.
 @d SEEN_OP_VAR(name, errstr, type)
 int name(void *ctxp)
 {
-	void *val;
+	int val;
 	yycontext *ctx = ctxp;
 	
-	if(pop(&ctx->op_seen, &val)) {
+	if(POP(&ctx->op_seen, &val, int)) {
 		fprintf(stderr, "%s: unexpected empty stack\n", errstr);
 		exit(EXIT_FAILURE);
 	}
 	
-	push(&ctx->op_seen, val < (void *)type ? (void *) type : val);
+	val = val < type ? type : val;
+	PUSH(&ctx->op_seen, &val, int);
+	
 	return 0;
 }
 
@@ -256,123 +271,152 @@ struct vt_pair {
 
 @* Stacks. We make use of a number of stacks when parsing. All of these
 operate over data, so we have a |struct stack| structure that allows us to 
-work with them in a single interface. 
+work with them in a single interface. The stack is a block of memeory 
+that is allocated and filled from the lower address to the higher. 
+The |start| field points to the beginning of the stack and the |end| 
+field to the ending edge of the block of memory. The |current| field points 
+to the next unused place in the stack.
 
 @<Declare internal structures@>=
 struct stack {
-	void **end;
-	void **current;
-	void **start;
+	void *end;
+	void *current;
+	void *start;
 };
 
 @ Before a stack is used, it must be initialized. The |init_stack()| function
 initializes a given stack pointer to the appropriate values and allocates 
-enough space to hold a stack of |count| elements. It returns 0 on success, 
-and a non-zero integer on failure.
+enough space to hold a stack of elements |size| bytes in size. 
+It returns 0 on success, and a non-zero integer on failure.
 
 @<Define internal functions@>=
 int
-init_stack(struct stack *stk, int count)
+init_stack(struct stack *stk, size_t size)
 {
-	void **buf;
+	char *buf;
 	
-	if ((buf = malloc(count * sizeof(void *))) == NULL) {
+	if ((buf = malloc(size)) == NULL) {
 		perror("init_stack");
 		return 1;
 	}
 	
-	stk->end = buf + count;
+	stk->end = buf + size;
 	stk->current = buf;
 	stk->start = buf;
 	
 	return 0;
 }
 
-@ The function |resize_stack()| takes a stack and a new count and resizes it to 
-the appropriate count. It returns zero on success and a non-zero value on failure.
+@ The function |resize_stack()| takes a stack and a new size and resizes it to 
+the new size. It returns zero on success and a non-zero value on failure.
 
 @<Define internal functions@>=
 int
-resize_stack(struct stack *stk, int count)
+resize_stack(struct stack *stk, size_t size)
 {
-	void **buf;
+	char *buf;
 	
 	buf = stk->start;
 	
-	if ((buf = realloc(buf, count * sizeof(void *))) == NULL) {
+	if ((buf = realloc(buf, size)) == NULL) {
 		perror("resize_stack");
 		return 1;
 	}
 	
-	stk->end = buf + count;
-	stk->current = buf + (stk->current - stk->start);
+	stk->end = buf + size;
+	stk->current = buf + ((char *) stk->current - (char *) stk->start);
 	stk->start = buf;
 	
 	return 0;
 }
 
-@ We can ask the size of a given stack using the |STACK_SIZE| macro.
+@ We can ask the size of a given stack using the |STACK_SIZE| macro. We also 
+allow one to ask what the free space is for a given stack.
 
-@d STACK_SIZE(stk) ((stk)->end - (stk)->start)
+@d STACK_SIZE(stk) ((char *)(stk)->end - (char *)(stk)->start)
+@d STACK_FREE(stk) ((char *)(stk)->end - (char *)(stk)->current)
 
-@ We use the |push()| procedure to push an element onto the stack. 
-This may trigger a resize of the stack if there is no enough space 
-to hold the new element. It returns zero if the push succeeds, 
-and non-zero if the push fails.
+@ A number of times we will want to do arithmetic against the fields in 
+a stack, and that's more convenient if we can wrap up the casts that 
+need to happen.
+
+@d CURRENT(stk) ((char *)stk->current)
+
+@ When pushing to the stack we need to have the size of the object that 
+we are pushing, as well as the object itself. We also need to resize the 
+stack if the object we want to push on the stack is bigger than the 
+free space that we have left on the stack. To facilitate the convenient 
+specification of the size of the object, we define a macro 
+|PUSH(stack, object, type)| that will take the type of the object that we 
+are pushing and use that to calculate the size, rather than requiring 
+the programmer to specify this themselves. We return zero if the push
+suceeds and non-zero if the push fails.
+
+@d PUSH(stk, obj, typ) push_stack((stk), (obj), sizeof(typ))
 
 @<Define internal functions@>=
 int
-push(struct stack *stk, void *elm)
+push_stack(struct stack *stk, void *elm, size_t siz)
 {
-	if (stk->end == stk->current)
+	while (siz > STACK_FREE(stk)) {
 		if (resize_stack(stk, STACK_SIZE(stk) * 1.5)) {
 			fprintf(stderr, "push: Failed to resize stack\n");
 			return 1;
 		}
+	}
 	
-	*(stk->current++) = elm;
+	memcpy(stk->current, elm, siz);
+	stk->current = CURRENT(stk) + siz;
 	
 	return 0;
 }
 
-@ We use the |pop()| macro to get an element off of the stack with a 
-given type. We return a zero if the pop suceeds and a non-zero value 
+@ The |POP(stk, dst, typ)| does the same thing as a push but in reverse, 
+copying data out of a stack and decrementing the stack pointer. 
+We return a zero if the pop suceeds and a non-zero value 
 if the pop fails. The resulting element is stored in the space provided.
+
+@d POP(stk, dst, typ) pop_stack((stk), (dst), sizeof(typ))
 
 @<Define internal functions@>=
 int
-pop(struct stack *stk, void **val)
+pop_stack(struct stack *stk, void *dst, size_t siz)
 {
 	if (stk->start == stk->current)
 	    return 1;
 	
-	*val = *(--stk->current);
+	stk->current = CURRENT(stk) - siz;
+	memcpy(dst, stk->current, siz);
 
 	return 0;
 }
 
-@ We can |peek()| at a stack to get its value without actually decrementing 
+@ We can |PEEK| at a stack to get its value without actually decrementing 
 the stack. We return zero if there is an element that can be peeked, and 
 non-zero if there was no element to peek. If there was no element to peek, 
-then the value of |val| is no modified.
+then the value of |dst| is not modified. This is the same as POP except 
+without the decrement.
+
+@d PEEK(stk, dst, typ) peek_stack((stk), (dst), sizeof(typ))
 
 @<Define internal functions@>=
 int
-peek(struct stack *stk, void **val)
+peek_stack(struct stack *stk, void *dst, size_t siz)
 {
 	if (stk->start == stk->current)
 		return 1;
-	
-	*val = *(stk->current - 1);
+
+	memcpy(dst, CURRENT(stk) - siz, siz);
+
 	return 0;
 }
 
 @ Finally we put these all into the prototypes list.
 
 @<Declare prototypes...@>=
-int push(struct stack *, void *);
-int pop(struct stack *, void **);
-int peek(struct stack *, void **);
+int push_stack(struct stack *, void *, size_t);
+int pop_stack(struct stack *, void *, size_t);
+int peek_stack(struct stack *, void *, size_t);
 
 
 @* Index.

@@ -29,7 +29,7 @@ BaseFun <- MonPrim / DyaPrim / GenFunc / "(" OWS Function OWS ")"
 MonFun <- Operator / MonPrim / GenFunc / "(" OWS MonFun OWS ")"
 DyaFun <- Operator / DyaPrim / GenFunc / "(" OWS DyaFun OWS ")"
 
-FuncSyntax <- "{" &{ ENTER_UD() } OWSNL Statements OWSNL "}"
+FuncSyntax <- "{" &{ enter_ud(ctx) } OWSNL Statements OWSNL "}"
 
 GenFunc <- FuncSyntax &{ is_ud_func(ctx) } / "{" OWS "}"
 
