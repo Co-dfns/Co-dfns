@@ -9,7 +9,7 @@ Statements <- CondStmt (Separator CondStmt)*
 
 CondStmt <- (Value OWS ":" OWS)? Value
 
-Separator <-  (OWS) "\n" OWSNL / OWS "⋄" OWS
+Separator <-  (OWS) "\n" OWSNL / OWS "⋄" OWSNL
 
 Value <- Application / Assignment / SingleValue
 
