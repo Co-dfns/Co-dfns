@@ -224,6 +224,36 @@ SEEN_OP_VAR(seen_dyad_var, "seen_dyad_var", UD_DYAD)@;
 int seen_mona_var(void *);
 int seen_dyad_var(void *);
 
+@* Dealing with function variables and application. 
+The most annoying thing about parsing APL is the ambiguity that you get 
+when dealing with variables that are bound to functions. Consider the 
+following program fragment:
+
+\medskip{\tt A B C}\medskip
+
+\noindent In the above, the parsing of this depends on the values of 
+the various variables. If they are all values, then this is an array 
+or value. If C is a function then if this were considered as a single 
+statement, we would have an error on our hands. If on the other 
+hand C is a value, then we have many possible parsings that we 
+could encounter depending on whether B is a function, value, or 
+operator, and whether A is a value or function. 
+
+In order to deal with this, we actually have to track the value 
+versus function versus operator status of the various variables 
+for each user-defined function. We will achieve this by using a variable
+environment that tracks the types of the variable. For this we need 
+a variable/type pair structure. The type variables will be one 
+of |VT_VAL|, |VT_FUN|, or |VT_OPR|. These names have their obvious 
+meaning.
+
+@<Declare internal structures@>=
+enum var_type { VT_VAL, VT_FUN, VT_OPR };
+struct vt_pair {
+	enum var_type type;
+	const char var_name[];
+};
+
 @* Stacks. We make use of a number of stacks when parsing. All of these
 operate over data, so we have a |struct stack| structure that allows us to 
 work with them in a single interface. 
