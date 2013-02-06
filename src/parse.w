@@ -98,7 +98,10 @@ of the local context that we setup above.
 @d YY_CTX_MEMBERS 
 	FILE *infile; /* The input file from which we are reading */
 	struct stack op_seen; /* Track whether we have seen operator variables */
-
+	struct vt_env vtenv; /* Track variable function, operator, or value status */
+@d OPSEEN_PTR(ctx) (&ctx->op_seen)
+@d VTENV_PTR(ctx) (&ctx->vtenv)
+	
 @ The default parser uses |YY_INPUT(buf, result, max_size)| to read
 input in, but this reads from standard input by default, and we would
 like to control the input form of the compiler. To do this, we redefine 
@@ -160,19 +163,15 @@ stack as appropriate. It takes the |yycontext *| pointer.
 
 @<Define parsing functions@>=
 int
-enter_ud(void *ctxp)
+enter_ud(struct stack *stk)
 {
-	int val;
-	yycontext *ctx;
+	int val = 0;
 	
-	val = 0;
-	ctx = ctxp;
-	
-	return !PUSH(&ctx->op_seen, &val, int);
+	return !PUSH(stk, &val, int);
 }
 
 @ @<Declare prototypes...@>=
-int enter_ud(void *);
+int enter_ud(struct stack *);
 
 @ When we have seen what might be a closing brace to a function or an 
 operator, then we need to check whether it is an operator or what. We also 
@@ -181,12 +180,11 @@ three predicates that will return true or false. For each predicate, we will
 only pop the stack if we encounter what we expect and return true.
 
 @d UD_PRED(name, errstr, type)
-int name(void *ctxp)
+int name(struct stack *stk)
 {
 	int val;
-	yycontext *ctx = ctxp;
 	
-	if (POP(&ctx->op_seen, &val, int)) {
+	if (POP(stk, &val, int)) {
 		fprintf(stderr, "%s: unexpected empty stack\n", errstr);
 		exit(EXIT_FAILURE);
 	}
@@ -203,9 +201,9 @@ UD_PRED(is_ud_dyad, "is_ud_dyad", UD_DYAD)@;
 are used as a part of the PEG grammar.
 
 @<Declare prototypes used in the grammar@>=
-int is_ud_func(void *);
-int is_ud_mona(void *);
-int is_ud_dyad(void *);
+int is_ud_func(struct stack *);
+int is_ud_mona(struct stack *);
+int is_ud_dyad(struct stack *);
 
 @ When we encounter an operator variable ($\aa$ or $\ww$) then we need 
 to set the stack variable appropriately. We do this by popping the current
@@ -213,18 +211,17 @@ one and putting the right one back in. The right one is the max of the current
 value and the value of the operator that we have seen.
 
 @d SEEN_OP_VAR(name, errstr, type)
-int name(void *ctxp)
+int name(struct stack *stk)
 {
 	int val;
-	yycontext *ctx = ctxp;
 	
-	if(POP(&ctx->op_seen, &val, int)) {
+	if(POP(stk, &val, int)) {
 		fprintf(stderr, "%s: unexpected empty stack\n", errstr);
 		exit(EXIT_FAILURE);
 	}
 	
 	val = val < type ? type : val;
-	PUSH(&ctx->op_seen, &val, int);
+	PUSH(stk, &val, int);
 	
 	return 0;
 }
@@ -236,8 +233,8 @@ SEEN_OP_VAR(seen_dyad_var, "seen_dyad_var", UD_DYAD)@;
 @ And of course, things need to go into the prototype.
 
 @<Declare prototypes...@>=
-int seen_mona_var(void *);
-int seen_dyad_var(void *);
+int seen_mona_var(struct stack *);
+int seen_dyad_var(struct stack *);
 
 @* Dealing with function variables and application. 
 The most annoying thing about parsing APL is the ambiguity that you get 
@@ -260,14 +257,191 @@ for each user-defined function. We will achieve this by using a variable
 environment that tracks the types of the variable. For this we need 
 a variable/type pair structure. The type variables will be one 
 of |VT_VAL|, |VT_FUN|, or |VT_OPR|. These names have their obvious 
-meaning.
+meaning. There is one additional value |VT_FRM| that represents a 
+function ``frame.'' When we enter a new function, we enter a new 
+scope, and when we leave that function, all of the variables that were 
+in that scope are no longer visible. In order to make it easy to get 
+rid of all of those variables introduced in that scope, entering a 
+new function is marked by pushing a VT_FRM value onto the stack.
+We also include a type of |VT_UND| which can be used to indicate that 
+a given variable is undefined. However, we do not expect any variables 
+pushed onto an environment to have this value. This is something that 
+some procedures may return to help analysis, but one should not push 
+the |VT_UND| value onto an environment.
 
 @<Declare internal structures@>=
-enum var_type { VT_VAL, VT_FUN, VT_OPR };
+enum var_type { VT_FRM, VT_UND, VT_VAL, VT_FUN, VT_OPR };
 struct vt_pair {
 	enum var_type type;
-	const char var_name[];
+	char var_name[];
 };
+
+@ The structure that we use to support the vt pairs is called a 
+|struct vt_env| and it basically is a |struct stack|. However, we attach a 
+few more fields to track a second memory pool which stores our 
+|struct vt_pair| objects. 
+
+@<Declare internal structures@>=
+struct vt_env {
+	void *end;
+	void *current;
+	void *start;
+	void *pstart;
+	void *pend;
+	void *curvtp;
+};
+
+@ During parsing, when we encounter a definition or variable binding, 
+we will push the type of that binding onto the variable environment. 
+To do this, we will use the |push_var| function, which takes a character 
+string of the variable name and the type of variable and pushes onto 
+the stack. When we enter a function, we need to push a frame separator onto 
+the stack, which is done in the same way that we push a normal variable 
+onto the stack, except that we give the |VT_FRM| value and |""|| to 
+the variable name.
+
+@<Define parsing functions@>=
+int 
+push_var(struct vt_env *env, char *var, enum var_type typ)
+{
+	size_t siz;
+	struct vt_pair *vp;
+	
+	siz = sizeof(struct vt_pair) + strlen(var) + 1;
+	
+	while (siz > VTENV_FREE(env)) {
+		if (resize_vtenv(env, VTENV_SIZE(env) * 1.5)) {
+			fprintf(stderr, "failed to resize vt_env\n");
+			exit(EXIT_FAILURE);
+		}
+	}
+	
+	vp = env->curvtp;
+	vp->type = typ;
+	strcpy(vp->var_name, var);
+	env->curvtp = ((char *)env->curvtp) + siz;
+	return PUSH((struct stack *)env, &vp, struct vt_pair *);
+}
+
+@ The |VTENV_FREE| AND |VTENV_SIZE| macros work very similarly 
+to the equivalent macros for stacks, except that they work on the 
+fields of the environment and set of |struct vt_pair| objects rather 
+than the stack itself.
+
+@d VTENV_FREE(env) ((char *)(env)->pend - (char *)(env)->curvtp)
+@d VTENV_SIZE(env) ((char *)(env)->pend - (char *)(env)->pstart)
+
+@ We have an equivalent |resize_vtenv| function to handle allocating 
+more memory for the |struct vt_pair| objects if we need to.
+
+@<Define internal functions@>=
+int
+resize_vtenv(struct vt_env *env, size_t size)
+{
+	size_t off;
+	char *buf;
+	
+	buf = env->pstart;
+	off = (char *) env->curvtp - (char *) env->pstart;
+
+	if (off > size) {
+		fprintf(stderr, "attempting to resize below current stack pointer\n");
+		return 1;
+	}
+	
+	if ((buf = realloc(buf, size)) == NULL) {
+		perror("resize_vtenv");
+		return 1;
+	}
+	
+	env->pend = buf + size;
+	env->curvtp = buf + off;
+	env->pstart = buf;
+	
+	return 0;
+}
+
+@ When finishing parsing a function, it is important to pop off all of the 
+values that the function may have introduced into the environment, as 
+those variables will no longer be in scope after parsing of that function 
+is done. The function |clear_frame| takes an environment and will clear 
+from the environment all of the variables up to and including the first 
+frame separator that was encountered. This function should be called 
+whenever the end of a function is being parsed.
+
+@<Define parsing functions@>=
+void
+clear_frame(struct vt_env *env)
+{
+	enum var_type type;
+	char *name;
+	
+	while (!pop_var(env, &name, &type) && type != VT_FRM);
+}
+
+@ The whole reason for having the environment around when parsing is
+so that we can ask whether a given variable is bound to a function, 
+variable, or operator. To do this, use the |lookup_var| function provided 
+here, which will take an environment and a character string of the variable 
+name to examine. The function will return an |enum var_type| indicating 
+the type of the variable if it is found, or |VT_UND| if the variable is 
+not found in the environment. This function uses the |pop_var| on a temporary
+stack that shares the same memory pool as the stack we are given. 
+This allows us to use the destructive |pop_var| operation without having 
+to worry about messing up the pointers in the original environment. 
+This works because popping does not need to reallocate or change the 
+memory pool at all, and simply needs to adjust some pointers in the 
+main |struct vt_env| structure.
+
+@<Define parsing functions@>=
+enum var_type
+lookup_var(struct vt_env *env, const char *name)
+{
+	enum var_type type;
+	char *env_name;
+	struct vt_env tmp;
+	
+	memcpy(&tmp, env, sizeof(struct vt_env));
+	
+	while (!pop_var(&tmp, &env_name, &type))
+		if (!strcmp(name, env_name))
+			return type;
+	
+	return VT_UND;
+}
+
+@ Popping values from the environment list must be treated as a lower 
+level operating than just working with a normal stack, where it is one 
+of the fundamental operations. We have a primitive for popping the stack 
+specifically to allow for getting at a variable and its type, but we do 
+not expect these things to persist. That is because the higher level 
+operations we describe above which are based on popping represent the 
+main interface to an environment. As can be divined from above, the 
+|pop_var(env, name_dst, type_dst)| takes an environment along with two 
+placeholders for the name and type of the value popped. It will return 
+zero on success and a non-zero value if there are no variables to pop.
+
+@<Define internal functions@>=
+int
+pop_var(struct vt_env *env, char **name, enum var_type *type)
+{
+	struct vt_pair *vtp;
+	
+	if (POP((struct stack *)env, &vtp, struct vt_pair *)) {
+		fprintf(stderr, "pop_var: failed to pop stack\n");
+		return 1;
+	}
+	
+	env->curvtp = vtp;
+	*name = vtp->var_name;
+	*type = vtp->type;
+	
+	return 0;
+}
+
+@ When we encounter the end of a function definition we want to clear off 
+the variables that were defined in the local scope of the function, which we 
+call a frame. To do this we repeatedly pop the values off of the 
 
 @* Stacks. We make use of a number of stacks when parsing. All of these
 operate over data, so we have a |struct stack| structure that allows us to 
@@ -314,9 +488,16 @@ the new size. It returns zero on success and a non-zero value on failure.
 int
 resize_stack(struct stack *stk, size_t size)
 {
+	size_t off;
 	char *buf;
 	
 	buf = stk->start;
+	off = (char *) stk->current - (char *) stk->start;
+	
+	if (off > size) {
+		fprintf(stderr, "attempting to resize below current stack pointer\n");
+		return 1;
+	}
 	
 	if ((buf = realloc(buf, size)) == NULL) {
 		perror("resize_stack");
@@ -324,7 +505,7 @@ resize_stack(struct stack *stk, size_t size)
 	}
 	
 	stk->end = buf + size;
-	stk->current = buf + ((char *) stk->current - (char *) stk->start);
+	stk->current = buf + off;
 	stk->start = buf;
 	
 	return 0;
