@@ -58,7 +58,6 @@ main(int argc, char *argv[])
 	
 	memset(&ctx, 0, sizeof(yycontext));
 	init_stack(&ctx.op_seen, 50);
-	init_vtenv(&ctx.vtenv, 50);
 	
 	switch(argc) {
 	case 1: 
@@ -100,9 +99,7 @@ of the local context that we setup above.
 @d YY_CTX_MEMBERS 
 	FILE *infile; /* The input file from which we are reading */
 	struct stack op_seen; /* Track whether we have seen operator variables */
-	struct vt_env vtenv; /* Track variable function, operator, or value status */
 @d OPSEEN_PTR(ctx) (&ctx->op_seen)
-@d VTENV_PTR(ctx) (&ctx->vtenv)
 	
 @ The default parser uses |YY_INPUT(buf, result, max_size)| to read
 input in, but this reads from standard input by default, and we would
@@ -161,25 +158,22 @@ whether we have a function or an operator.
 @ To support this approach to parsing, we define |enter_ud| that is to be 
 called on each entrance to an user-defined function or operator. This will 
 do all of the initialization and make sure that things are pushed onto the
-stacks as appropriate. It takes the operator status stack and the 
-variable environment stack pointer as inputs. As will be seen later, 
-we also use this function when dealing with variable bindings.
+stack as appropriate. It takes the operator status stack as input.
 
 @<Define parsing functions@>=
 int
-enter_ud(struct stack *stk, struct vt_env *env)
+enter_ud(struct stack *stk)
 {
 	int val = 0;
 	int stkr, envr;
 	
 	stkr = PUSH(stk, &val, int);
-	@<Push a new function frame to |env| and set |envr|@>@;
 	
 	return !(stkr || envr);
 }
 
 @ @<Declare prototypes...@>=
-int enter_ud(struct stack *, struct vt_env *);
+int enter_ud(struct stack *);
 
 @ When we have seen what might be a closing brace to a function or an 
 operator, then we need to check whether it is an operator or what. We also 
@@ -402,13 +396,6 @@ resize_vtenv(struct vt_env *env, size_t size)
 	
 	return 0;
 }
-
-@ We use the |push_var| function on entry to a function by pushing an 
-empty string and the |VT_FRM| value onto the stack. This occurs 
-during the |enter_ud| function call.
-
-@<Push a new function frame to |env| and set |envr|@>=
-envr = push_var(env, "", VT_FRM);
 
 @ When finishing parsing a function, it is important to pop off all of the 
 values that the function may have introduced into the environment, as 
