@@ -30,9 +30,9 @@ MonFun <- Operator / MonPrim / GenFunc / "(" OWS MonFun OWS ")"
 DyaFun <- Operator / DyaPrim / GenFunc / "(" OWS DyaFun OWS ")"
 
 FuncSyntax <- 
-	"{" &{ enter_ud(OPSEEN_PTR(ctx), VTENV_PTR(ctx)) } 
+	"{" &{ enter_ud(OPSEEN_PTR(ctx)) } 
 	    OWSNL Statements OWSNL 
-	    "}" &{ !clear_frame(VTENV_PTR(ctx)) }
+	    "}" 
 
 GenFunc <- FuncSyntax &{ is_ud_func(OPSEEN_PTR(ctx)) } / "{" OWS "}"
 
@@ -76,7 +76,7 @@ DyaPrim <-
 VariableList <- Variable (WS VariableList)*
 	/ "(" OWS VariableList OWS ")"
 
-Variable <- [a-zA-Z_] [a-zA-Z0-9_]* 
+Variable <- [a-zA-Z_] [a-zA-Z0-9_]*
 	/ "⍺⍺" &{ !seen_mona_var(OPSEEN_PTR(ctx)) }
 	/ "⍵⍵" &{ !seen_dyad_var(OPSEEN_PTR(ctx)) }
 	/ "⍺" / "⍵"
