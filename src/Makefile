@@ -8,7 +8,7 @@ all: dfns
 
 dfns: ${OBJS}
 	${CC} -o dfns ${CFLAGS} ${OBJS}
-	
+
 test: dfns
 	run-tests
 
@@ -21,6 +21,6 @@ grammar.c: grammar.peg
 ${DOCS}: %.pdf: %.w
 	cweave $*
 	pdftex $*
-	
+
 ${CFILES}: %.c: %.w
 	ctangle $*
