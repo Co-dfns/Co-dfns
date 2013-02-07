@@ -39,6 +39,7 @@ line until no more content is parsable, and then exits.
 
 #include "grammar.c"
 
+@<Define stack functions@>@;
 @<Define internal functions@>@;
 @<Define parsing functions@>@;
 
@@ -57,6 +58,7 @@ main(int argc, char *argv[])
 	
 	memset(&ctx, 0, sizeof(yycontext));
 	init_stack(&ctx.op_seen, 50);
+	init_vtenv(&ctx.vtenv, 50);
 	
 	switch(argc) {
 	case 1: 
@@ -159,19 +161,25 @@ whether we have a function or an operator.
 @ To support this approach to parsing, we define |enter_ud| that is to be 
 called on each entrance to an user-defined function or operator. This will 
 do all of the initialization and make sure that things are pushed onto the
-stack as appropriate. It takes the |yycontext *| pointer.
+stacks as appropriate. It takes the operator status stack and the 
+variable environment stack pointer as inputs. As will be seen later, 
+we also use this function when dealing with variable bindings.
 
 @<Define parsing functions@>=
 int
-enter_ud(struct stack *stk)
+enter_ud(struct stack *stk, struct vt_env *env)
 {
 	int val = 0;
+	int stkr, envr;
 	
-	return !PUSH(stk, &val, int);
+	stkr = PUSH(stk, &val, int);
+	@<Push a new function frame to |env| and set |envr|@>@;
+	
+	return !(stkr || envr);
 }
 
 @ @<Declare prototypes...@>=
-int enter_ud(struct stack *);
+int enter_ud(struct stack *, struct vt_env *);
 
 @ When we have seen what might be a closing brace to a function or an 
 operator, then we need to check whether it is an operator or what. We also 
@@ -286,10 +294,41 @@ struct vt_env {
 	void *end;
 	void *current;
 	void *start;
-	void *pstart;
 	void *pend;
 	void *curvtp;
+	void *pstart;
 };
+
+@ We have to do a similar sort of initialization as with |struct stack| 
+objects. The initialization uses |init_stack| but it needs to do some 
+book-keeping of its own. In particular, we pass in the rough number of 
+variables that we want to support instead of the number of bytes to 
+allocate. To make our life easier, we take advantage of the fact that 
+we have laid out our structures in the exact same way as two 
+stacks, and that we initialize the pair stack in the same way that 
+we initialize a normal stack.
+
+@<Define internal functions@>=
+int 
+init_vtenv(struct vt_env *env, int count)
+{
+	size_t vtpsize, stksize;
+	
+	vtpsize = (sizeof(struct vt_pair) + 12) * count;
+	stksize = sizeof(struct vt_pair *) * count;
+	
+	if (init_stack((struct stack *)env, stksize)) {
+		fprintf(stderr, "init_vtenv: bad stack init\n");
+		return 1;
+	}
+	
+	if (init_stack((struct stack *)&env->pend, vtpsize)) {
+		fprintf(stderr, "init_vtenv: bad pair stack init\n");
+		return 1;
+	}
+	
+	return 0;
+}
 
 @ During parsing, when we encounter a definition or variable binding, 
 we will push the type of that binding onto the variable environment. 
@@ -322,6 +361,9 @@ push_var(struct vt_env *env, char *var, enum var_type typ)
 	env->curvtp = ((char *)env->curvtp) + siz;
 	return PUSH((struct stack *)env, &vp, struct vt_pair *);
 }
+
+@ @<Declare prototypes...@>=
+int push_var(struct vt_env *, char *, enum var_type);
 
 @ The |VTENV_FREE| AND |VTENV_SIZE| macros work very similarly 
 to the equivalent macros for stacks, except that they work on the 
@@ -361,23 +403,36 @@ resize_vtenv(struct vt_env *env, size_t size)
 	return 0;
 }
 
+@ We use the |push_var| function on entry to a function by pushing an 
+empty string and the |VT_FRM| value onto the stack. This occurs 
+during the |enter_ud| function call.
+
+@<Push a new function frame to |env| and set |envr|@>=
+envr = push_var(env, "", VT_FRM);
+
 @ When finishing parsing a function, it is important to pop off all of the 
 values that the function may have introduced into the environment, as 
 those variables will no longer be in scope after parsing of that function 
 is done. The function |clear_frame| takes an environment and will clear 
 from the environment all of the variables up to and including the first 
 frame separator that was encountered. This function should be called 
-whenever the end of a function is being parsed.
+whenever the end of a function is being parsed. Since |clear_frame| 
+may be called in an expression context, we return zero from this 
+function.
 
 @<Define parsing functions@>=
-void
+int
 clear_frame(struct vt_env *env)
 {
 	enum var_type type;
 	char *name;
 	
 	while (!pop_var(env, &name, &type) && type != VT_FRM);
+	return 0;
 }
+
+@ @<Declare prototypes...@>=
+int clear_frame(struct vt_env *);
 
 @ The whole reason for having the environment around when parsing is
 so that we can ask whether a given variable is bound to a function, 
@@ -439,10 +494,6 @@ pop_var(struct vt_env *env, char **name, enum var_type *type)
 	return 0;
 }
 
-@ When we encounter the end of a function definition we want to clear off 
-the variables that were defined in the local scope of the function, which we 
-call a frame. To do this we repeatedly pop the values off of the 
-
 @* Stacks. We make use of a number of stacks when parsing. All of these
 operate over data, so we have a |struct stack| structure that allows us to 
 work with them in a single interface. The stack is a block of memeory 
@@ -463,7 +514,7 @@ initializes a given stack pointer to the appropriate values and allocates
 enough space to hold a stack of elements |size| bytes in size. 
 It returns 0 on success, and a non-zero integer on failure.
 
-@<Define internal functions@>=
+@<Define stack functions@>=
 int
 init_stack(struct stack *stk, size_t size)
 {
@@ -484,7 +535,7 @@ init_stack(struct stack *stk, size_t size)
 @ The function |resize_stack()| takes a stack and a new size and resizes it to 
 the new size. It returns zero on success and a non-zero value on failure.
 
-@<Define internal functions@>=
+@<Define stack functions@>=
 int
 resize_stack(struct stack *stk, size_t size)
 {
@@ -535,7 +586,7 @@ suceeds and non-zero if the push fails.
 
 @d PUSH(stk, obj, typ) push_stack((stk), (obj), sizeof(typ))
 
-@<Define internal functions@>=
+@<Define stack functions@>=
 int
 push_stack(struct stack *stk, void *elm, size_t siz)
 {
@@ -559,7 +610,7 @@ if the pop fails. The resulting element is stored in the space provided.
 
 @d POP(stk, dst, typ) pop_stack((stk), (dst), sizeof(typ))
 
-@<Define internal functions@>=
+@<Define stack functions@>=
 int
 pop_stack(struct stack *stk, void *dst, size_t siz)
 {
@@ -580,7 +631,7 @@ without the decrement.
 
 @d PEEK(stk, dst, typ) peek_stack((stk), (dst), sizeof(typ))
 
-@<Define internal functions@>=
+@<Define stack functions@>=
 int
 peek_stack(struct stack *stk, void *dst, size_t siz)
 {
