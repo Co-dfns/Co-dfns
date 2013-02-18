@@ -1,0 +1,4 @@
+This directory is for holding third-party software that the Co-Dfns
+compiler depends on. Each file may have its own copyright and
+licensing information, so please read carefully. No original file
+should be created here.
