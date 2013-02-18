@@ -1,13 +1,14 @@
 CC = clang
-CFLAGS ?= -g
-CFILES = parse.c
-OBJS = parse.o
-DOCS = parse.pdf
+CPP = clang++
+CFLAGS = -g `llvm-config --cflags`
+CFILES = parse.c generate_llvm.c
+OBJS = parse.o generate_llvm.o
+DOCS = parse.pdf generate_llvm.pdf
 
 all: dfns
 
 dfns: ${OBJS}
-	${CC} -o dfns ${CFLAGS} ${OBJS}
+	${CPP} ${OBJS} `llvm-config --libs --cflags --ldflags` -o dfns
 	
 test: dfns
 	run-tests
