@@ -9,7 +9,7 @@ all: dfns
 
 dfns: ${OBJS}
 	${CPP} ${OBJS} `llvm-config --libs --cflags --ldflags` -o dfns
-	
+
 test: dfns
 	run-tests
 
@@ -22,6 +22,6 @@ grammar.c: grammar.peg
 ${DOCS}: %.pdf: %.w
 	cweave $*
 	pdftex $*
-	
+
 ${CFILES}: %.c: %.w
 	ctangle $*

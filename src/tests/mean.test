@@ -1,0 +1,5 @@
+mean←{      ⍝ Arithmetic mean.
+    sum←+/⍵
+    num←⍴⍵
+    sum÷num
+}
