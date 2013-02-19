@@ -74,10 +74,22 @@
 
     packrat-port-results
     packrat-string-results
-    packrat-list-results)
+    packrat-list-results
+
+    <- @ ! / quote)
   (import (except (chezscheme) define-record-type open-input-string)
     (only (srfi srfi-1) lset-union append-map fold)
     (srfi srfi-9) (srfi srfi-6))
+
+  (define-syntax (<- x)
+    (syntax-violation #f "misplaced aux keyword" x))
+
+  (define-syntax (@ x)
+    (syntax-violation #f "misplaced aux keyword" x))
+
+  (define-syntax (! x)
+    (syntax-violation #f "misplaced aux keyword" x))
+  
   (include "packrat/portable-packrat.scm"))
 
 

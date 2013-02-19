@@ -10,13 +10,11 @@
 
 (define variable? symbol?)
 
-(define type/function
-  (llvm-function-type (llvm-int64-type) 0 0 #f))
-
 (define-language lang/generate-llvm
   (terminals
     (variable (var))
     (number (num))
+    (vector (vec))
     (string (name str)))
   (Module (mod)
     (Module name global* ...))
@@ -29,6 +27,11 @@
     (Return num)))
 
 (define-pass generate-llvm : lang/generate-llvm (ir) -> * ()
+  (definitions
+    (define type/function
+      (llvm-function-type (llvm-int64-type) 0 0 #f))
+    
+    )
   (Module : Module (ir) -> * ()
     [(Module ,name ,global* ...)
      (let ([mod (llvm-module-create-with-name name)])
