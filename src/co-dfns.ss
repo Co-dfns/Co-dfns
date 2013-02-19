@@ -8,12 +8,19 @@
 ;;; See LICENSING file for more information about the license
 ;;; associated with this document.
 
-(source-directories (append (source-directories) (list "lib")))
+(source-directories (list "." "lib" "lib/srfi"))
 
 (include "lib/nanopass.ss")
 
-(import (nanopass))
+(include "lib/srfi/srfi-1.sls")
+(include "lib/srfi/srfi-6.sls")
+(include "lib/srfi/srfi-9.sls")
+(include "lib/packrat.ss")
 
+(import (nanopass))
+(import (packrat))
+
+(include "parser.ss")
 (include "ffi-libs.ss")
 (include "llvm-ffi.ss")
 (include "generate-llvm.ss")
