@@ -59,13 +59,19 @@
   (packrat-parser
     (begin Module)
     (Module
-      [(glob <- Global) `(Module "codfns" ,glob)])
+      [(glob <- Global) `(Module _ ,glob)])
     (Global
       [(var <- Variable 'gets fun <- Function) `(Function ,var ,fun)])
     (Function
-      [('lbrace val <- Integer 'rbrace) `(Block _ (Return ,val))])
+      [('lbrace val <- Value 'rbrace) `(Block _ (Return ,val))])
+    (Value
+      [(val <- Variable) `(Variable ,val)]
+      [(val <- Integers) `(Integers ,@val)])
     (Variable
       [(val <- Characters) (string->symbol (list->string val))])
+    (Integers
+      [(val <- Integer White rest <- Integers) (cons val rest)]
+      [(val <- Integer) (list val)])
     (Integer
       [(val <- Digits) (string->number (list->string val))]
       [('neg val <- Digits) (string->number (list->string (cons #\- val)))])
@@ -74,4 +80,7 @@
       [(val <- 'alpha) (list val)])
     (Digits
       [(val <- 'numeric rest <- Digits) (cons val rest)]
-      [(val <- 'numeric) (list val)])))
+      [(val <- 'numeric) (list val)])
+    (White
+      [('white White) (void)]
+      [('white) (void)])))
