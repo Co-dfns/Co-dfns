@@ -63,10 +63,10 @@
     (Global
       [(var <- Variable 'gets fun <- Function) `(Function ,var ,fun)])
     (Function
-      [('lbrace val <- Value 'rbrace) `(Block _ (Return ,val))])
+      [('lbrace val <- Value 'rbrace) `(Block _ (Return ,@val))])
     (Value
-      [(val <- Variable) `(Variable ,val)]
-      [(val <- Integers) `(Integers ,@val)])
+      [(val <- Variable) (list val)]
+      [(val <- Integers) val])
     (Variable
       [(val <- Characters) (string->symbol (list->string val))])
     (Integers
