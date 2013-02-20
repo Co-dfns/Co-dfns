@@ -28,8 +28,9 @@
   (let ([$memcpy (foreign-procedure "memcpy" (uptr uptr int) string)])
     (lambda (str-ptr) ($memcpy str-ptr 0 0))))
 
-(define llvm-module-create-with-name
-  (foreign-procedure "LLVMModuleCreateWithName" (string) (* llvm-module)))
+(define (llvm-module-create-with-name name)
+  ((foreign-procedure "LLVMModuleCreateWithName" (string) (* llvm-module))
+   (symbol->string name)))
 
 (define llvm-dispose-module
   (foreign-procedure "LLVMDisposeModule" ((* llvm-module)) void))
@@ -109,6 +110,10 @@
   (foreign-procedure "LLVMGenericValueToInt" ((* llvm-generic-value) boolean)
     unsigned-long-long))
 
+(define llvm-generic-value-to-pointer
+  (foreign-procedure "LLVMGenericValueToPointer" ((* llvm-generic-value))
+    void*))
+
 (define llvm-dispose-generic-value
   (foreign-procedure "LLVMDisposeGenericValue" ((* llvm-generic-value)) void))
 
@@ -124,3 +129,46 @@
   (foreign-procedure "LLVMDisposeBuilder"
     ((* llvm-builder))
     void))
+
+(define llvm-const-vector
+  (foreign-procedure "LLVMConstVector"
+    ((* llvm-value-ref) unsigned-int)
+    (* llvm-value)))
+
+(define llvm-const-array
+  (foreign-procedure "LLVMConstArray"
+    ((* llvm-type) (* llvm-value-ref) unsigned)
+    (* llvm-value)))
+
+(define llvm-int-64-type
+  (foreign-procedure "LLVMInt64Type" () (* llvm-type)))
+
+(define llvm-vector-type
+  (foreign-procedure "LLVMVectorType" ((* llvm-type) unsigned) (* llvm-type)))
+
+(define llvm-array-type
+  (foreign-procedure "LLVMArrayType" ((* llvm-type) unsigned) (* llvm-type)))
+
+(define llvm-pointer-type
+  (foreign-procedure "LLVMPointerType" ((* llvm-type) unsigned) (* llvm-type)))
+
+(define llvm-build-pointer-cast
+  (foreign-procedure "LLVMBuildPointerCast"
+    ((* llvm-builder) (* llvm-value) (* llvm-type) string)
+    (* llvm-value)))
+
+(define llvm-get-pointer-to-global
+  (foreign-procedure "LLVMGetPointerToGlobal"
+    ((* llvm-execution-engine) (* llvm-value))
+    void*))
+
+(define llvm-get-named-global
+  (foreign-procedure "LLVMGetNamedGlobal"
+    ((* llvm-module) string)
+    (* llvm-value)))
+
+(define llvm-get-data-layout
+  (foreign-procedure "LLVMGetDataLayout" ((* llvm-module)) string))
+
+(define llvm-set-data-layout
+  (foreign-procedure "LLVMSetDataLayout" ((* llvm-module) string) void))

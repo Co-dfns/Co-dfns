@@ -8,12 +8,21 @@
 ;;; See LICENSING file for more information about the license
 ;;; associated with this document.
 
+(define-parser list->ast lang/lift-constants)
+
 (define-record-type execution-unit
   (fields engine module)
   (protocol
     (lambda (n)
       (lambda (mod)
         (n (make-execution-engine mod) mod)))))
+
+(define-ftype array-ftype
+  (struct
+    [type unsigned-16]
+    [rank unsigned-16]
+    [data uptr]
+    [shape (array 65536 unsigned-32)]))
 
 (define (dispose-execution-unit unit)
   ;; The following, for some reason, causes an invalid memory reference
@@ -36,10 +45,9 @@
 (define (co-dfns-apply mod fn . args)
   (apply (get-function mod fn) args))
 
-(define list->ast parse-generate-llvm)
-
 (define (run-passes code)
-  (generate-llvm code))
+  (let* ([code (lift-constants code)])
+    (generate-llvm code)))
 
 (define (get-function mod name)
   (let ([eng (execution-unit-engine mod)]
@@ -51,9 +59,9 @@
         (foreign-free (ftype-pointer-address fn-cell))
         (lambda ()
           (let ([val (llvm-run-function eng fn 0 0)])
-            (let ([int (llvm-generic-value-to-int val #t)])
+            (let ([ptr (llvm-generic-value-to-pointer val)])
               (llvm-dispose-generic-value val)
-              int)))))))
+              ptr)))))))
 
 (define (make-execution-engine mod)
   (let ([err-cell (foreign-alloc (foreign-sizeof 'uptr))]

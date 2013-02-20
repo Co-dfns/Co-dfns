@@ -23,5 +23,6 @@
 (include "parser.ss")
 (include "ffi-libs.ss")
 (include "llvm-ffi.ss")
-(include "generate-llvm.ss")
+(include "languages.ss")
+(include "passes.ss")
 (include "compile.ss")
