@@ -9,11 +9,20 @@
 ;;; associated with this document.
 
 (define-record-type execution-unit
-  (fields engine pointer)
+  (fields engine module)
   (protocol
     (lambda (n)
       (lambda (mod)
         (n (make-execution-engine mod) mod)))))
+
+(define (dispose-execution-unit unit)
+  ;; The following, for some reason, causes an invalid memory reference
+  ;; when called at the same time that we dispose of the module.
+  ;; Basically, combining either of these two calls together will cause
+  ;; an invalid memory reference on the second one, but not the first,
+  ;; no matter what order they are in.
+  ; (llvm-dispose-execution-engine (execution-unit-engine unit))
+  (llvm-dispose-module (execution-unit-module unit)))
 
 (define (co-dfns-compile-file fname)
   (co-dfns-compile (list->ast (parse-file fname))))
@@ -42,7 +51,9 @@
         (foreign-free (ftype-pointer-address fn-cell))
         (lambda ()
           (let ([val (llvm-run-function eng fn 0 0)])
-            (llvm-generic-value-to-int val #t)))))))
+            (let ([int (llvm-generic-value-to-int val #t)])
+              (llvm-dispose-generic-value val)
+              int)))))))
 
 (define (make-execution-engine mod)
   (let ([err-cell (foreign-alloc (foreign-sizeof 'uptr))]

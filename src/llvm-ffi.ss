@@ -108,3 +108,19 @@
 (define llvm-generic-value-to-int
   (foreign-procedure "LLVMGenericValueToInt" ((* llvm-generic-value) boolean)
     unsigned-long-long))
+
+(define llvm-dispose-generic-value
+  (foreign-procedure "LLVMDisposeGenericValue" ((* llvm-generic-value)) void))
+
+(define llvm-dispose-module
+  (foreign-procedure "LLVMDisposeModule" ((* llvm-module)) void))
+
+(define llvm-dispose-execution-engine
+  (foreign-procedure "LLVMDisposeExecutionEngine"
+    ((* llvm-execution-engine))
+    void))
+
+(define llvm-dispose-builder
+  (foreign-procedure "LLVMDisposeBuilder"
+    ((* llvm-builder))
+    void))

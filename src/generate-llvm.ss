@@ -52,7 +52,9 @@
      (let ([bldr (llvm-create-builder)]
            [blk (llvm-append-basic-block fn var)])
        (llvm-position-builder-at-end bldr blk)
-       (Statement stmt bldr))])
+       (let ([stmt (Statement stmt bldr)])
+         (llvm-dispose-builder bldr)
+         stmt))])
   (Statement : Statement (stmt bldr) -> * ()
     [(Return ,num)
      (llvm-build-ret bldr (llvm-const-int (llvm-int64-type) num #f))])
