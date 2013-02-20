@@ -52,10 +52,9 @@
             [eng (ftype-ref llvm-execution-engine-ref () eng-cell)])
         (foreign-free err-cell)
         (foreign-free (ftype-pointer-address eng-cell))
-        (if res
-            (let ([msg (foreign-string->scheme-string err-str)])
-              (llvm-dispose-message err-str)
-              (errorf 'co-dfns-compile
-                "failed to create execution engine (~a)" msg))
-            (llvm-dispose-message err-str))
+        (when res
+          (let ([msg (foreign-string->scheme-string err-str)])
+            (llvm-dispose-message err-str)
+            (errorf 'co-dfns-compile
+              "failed to create execution engine (~a)" msg)))
         eng))))
