@@ -1,17 +1,19 @@
 CC = clang
 CPP = clang++
-CFLAGS = -g `llvm-config --cflags`
-CFILES = parse.c generate_llvm.c
-OBJS = parse.o generate_llvm.o
-DOCS = parse.pdf generate_llvm.pdf
+CFLAGS = -g `llvm-config --cflags` -pedantic -Wall -std=c11
+CPPFLAGS = `llvm-config --libs --cflags --ldflags`
+CFILES = co-dfns.c
 
-all: dfns
+all: co-dfns co-dfns.pdf
 
 dfns: ${OBJS}
-	${CPP} ${OBJS} `llvm-config --libs --cflags --ldflags` -o dfns
+	${CPP} ${OBJS} ${CPPFLAGS} -o co-dfns
 
-test: dfns
+test: co-dfns
 	run-tests
+
+co-dfns.o: co-dfns.c grammar.c
+	${CC} -o $@ -c ${CFLAGS} co-dfns.c
 
 parse.o: grammar.c parse.c
 	${CC} -o $@ -c ${CFLAGS} parse.c
@@ -19,9 +21,9 @@ parse.o: grammar.c parse.c
 grammar.c: grammar.peg
 	peg -o $@ $<
 
-${DOCS}: %.pdf: %.w
-	cweave $*
-	pdftex $*
+co-dfns.pdf: co-dfns.w grammar.peg
+	cweave co-dfns
+	pdftex co-dfns
 
 ${CFILES}: %.c: %.w
 	ctangle $*
