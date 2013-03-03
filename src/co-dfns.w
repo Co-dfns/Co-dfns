@@ -106,7 +106,6 @@ do that for us later on.
 
 @<Open input file for parsing@>=
 char *ifname = argv[1];
-char *ofname = argv[2];
 
 ctx.ifile = fopen(ifname, "r");
 
@@ -402,6 +401,7 @@ parse_module(struct parse_data *pd)
 
 	c = STACK_COUNT(pd->ast);
 	mod = new_module(pd->pool, c);
+	mod->count = c;
 
 	for (i = 0; i < c; i++) {
 		mod->globals[i] = pop(pd->ast);
@@ -484,6 +484,18 @@ new_stack_barrier(Stack *s)
 	}
 
 	return n;
+}
+
+@ The dual of the |new_stack_barrier| function is the |parse_barrier| 
+function that we use to push the initial barrier onto the given 
+stack during parsing. This function is quite simple, and merely 
+pushes a single |NULL| onto the stack when called.
+
+@<Parser functions...@>=
+void
+parse_barrier(struct parse_data *pd)
+{
+	push(pd->ast, NULL);
 }
 
 @ I find it ironic that it has taken so long to make it here. 
@@ -798,7 +810,7 @@ stack_resize(Stack *s, int count)
 @ Now that the book keeping is out of the way, let's proceed to 
 the main even, pushing and popping. 
 
-@d pop(s) (*((s)->cur--))
+@d pop(s) (*(--(s)->cur))
 
 @<Stack functions...@>=
 int
