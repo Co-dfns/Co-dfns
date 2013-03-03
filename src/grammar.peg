@@ -6,9 +6,10 @@ Function     <- "{" OWS IntegerArray OWS "}"
                 { parse_function(&ctx->pd, FUNCTION_LIT); }
 Variable     <- <[a-zA-Z_] [a-zA-Z0-9_]*> 
 	     	{ parse_variable(&ctx->pd, yytext, yyleng); }
-IntegerArray <- <Integer (WS Integer)*> 
+IntegerArray <- { parse_barrier(&ctx->pd); }
+                Integer (WS Integer)* 
 	     	{ parse_intarray(&ctx->pd); }
-Integer      <- [0-9]+ { parse_int(&ctx->pd, yytext, yyleng); }
+Integer      <- <[0-9]+> { parse_int(&ctx->pd, yytext, yyleng); }
 OWS          <- WS ?
 OWSNL        <- WSNL ?
 WS           <- (" " / "\t" )+
