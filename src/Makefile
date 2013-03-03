@@ -1,12 +1,13 @@
 CC = clang
 CPP = clang++
-CFLAGS = -g `llvm-config --cflags` -pedantic -Wall -std=c11
-CPPFLAGS = `llvm-config --libs --cflags --ldflags`
+CFLAGS = -g -O0 `llvm-config --cflags` -pedantic -Wall -std=c11
+CPPFLAGS = -O0 -g `llvm-config --libs --cflags --ldflags`
 CFILES = co-dfns.c
+OBJS = co-dfns.o
 
 all: co-dfns co-dfns.pdf
 
-dfns: ${OBJS}
+co-dfns: ${OBJS}
 	${CPP} ${OBJS} ${CPPFLAGS} -o co-dfns
 
 test: co-dfns
