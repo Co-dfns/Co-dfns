@@ -445,6 +445,7 @@ parse_intarray(struct parse_data *pd)
 		a->elems[i] = n->value;
 	}
 
+	a->count = c;
 	push(pd->ast, a);
 	stack_dispose(s);
 }
