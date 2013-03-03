@@ -126,13 +126,15 @@ Before considering the questions of how to parse and how to compile
 the syntax tree, it must first be defined.  The following description
 gives a rough estimation of what the whole abstract syntax looks like.
 
-\def\var#1{\hbox{\it #1}}
+\def\var#1{\ \hbox{\it #1}\ }
+\def\term#1{\ \hbox{#1}\ }
+\def\choice{\vert}
 $$\eqalign{%
-  \var{Module}\to&\var{Global}*\cr
-  \var{Global}\to&\var{Variable}(\var{Constant}\vert\var{Function})\cr
-  \var{Constant}\to&\hbox{integer}*\cr
-  \var{Function}\to&\var{Constant}\vert\var{Variable}\cr
-  \var{Variable}\to&\hbox{string}\cr
+  \var{Module}:=&\var{Global}*\cr
+  \var{Global}:=&\var{Variable}(\var{Constant}\choice\var{Function})\cr
+  \var{Constant}:=&\term{integer}*\cr
+  \var{Function}:=&\var{Constant}\choice\var{Variable}\cr
+  \var{Variable}:=&\term{string}\cr
 }$$
 
 \noindent
@@ -933,6 +935,133 @@ new_int(Pool *p, long long v)
 	res->value = v;
 
 	return res;
+}
+
+@ Creating new nodes is enough for parsing, but it does not really 
+work for the other passes, where we have to create and copy nodes 
+from one memory pool to the other. To support these operations 
+efficiently and conveniently, the following set of deep copy 
+operations are defined over the AST nodes, so that the work of 
+copying does not have to be done manually. Each of these functions 
+takes the memory pool that is the {\it target} for the copy operation. 
+That is, the memory pool given to each copy function will be used 
+in creating the copy, and as such, it is generally expected to 
+point to a pool that is not the same as the pool originally used 
+to create the node that is passed to the operation. This is 
+the list of the operations.
+
+@<AST const...@>=
+Module *copy_module(Pool *, Module *);
+Global *copy_global(Pool *, Global *);
+Constant *copy_constant(Pool *, Constant *);
+Function *copy_function(Pool *, Function *);
+Variable *copy_variable(Pool *, Variable *);
+Integer *copy_int(Pool *, Integer *);
+
+@ This is the definition of the |copy_module| function.
+
+@<AST const...@>=
+Module *
+copy_module(Pool *p, Module *m)
+{
+	int i, c;
+	Module *res;
+
+	c = m->count;
+	res = new_module(p, c);
+
+	for (i = 0; i < c; i++) {
+		res->globals[i] = copy_global(p, m->globals[i]);
+	}
+
+	res->count = c;
+
+	return res;
+}
+
+@ This is the implementation for copying a |Global *|.
+
+@<AST const...@>=
+Global *
+copy_global(Pool *p, Global *g)
+{
+	Variable *v;
+	enum global_type t;
+	void *val;
+
+	v = copy_variable(p, g->var);
+	t = g->type;
+	switch (t) {
+		case GLOBAL_FUNC:
+			val = copy_function(p, g->value);
+			break;
+		case GLOBAL_CONST:
+			val = copy_constant(p, g->value);
+			break;
+	}
+
+	return new_global(p, v, t, val);
+}
+
+@ Here is the definition for copying a |Constant *|.
+
+@<AST const...@>=
+Constant *
+copy_constant(Pool *p, Constant *cnst)
+{
+	int i, c;
+	Constant *res;
+
+	c = cnst->count;
+	res = new_constant(p, c);
+
+	for (i = 0; i < c; i++)
+		res->elems[i] = cnst->elems[i];
+
+	res->count = c;
+
+	return res;
+}
+
+@ Here is the definition for copying a |Function *|.
+
+@<AST const...@>=
+Function *
+copy_function(Pool *p, Function *fn)
+{
+	enum function_type t;
+	void *body;
+
+	t = fn->type;
+
+	switch (t) {
+		case FUNCTION_LIT:
+			body = copy_constant(p, fn->body);
+			break;
+		case FUNCTION_VAR:
+			body = copy_variable(p, fn->body);
+			break;
+	}
+
+	return new_function(p, t, body);
+}
+
+@ Here is the definition for copying a |Variable *|.
+
+@<AST const...@>=
+Variable *
+copy_variable(Pool *p, Variable *var)
+{
+	return new_variable(p, var->name, strlen(var->name));
+}
+
+@ Here is the definition for copying an |Integer *|.
+
+@<AST const...@>=
+Integer *
+copy_int(Pool *p, Integer *n)
+{
+	return new_int(p, n->value);
 }
 
 
