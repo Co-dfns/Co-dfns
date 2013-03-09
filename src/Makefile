@@ -1,8 +1,7 @@
 CC = clang
 CPP = clang++
 CFLAGS = -g -pedantic -Wall -ansi -fno-color-diagnostics
-CFILES = ast.c co-dfns.c
-OBJS = pool.o stack.o ast.o parser.o co-dfns.o
+OBJS = pool.o stack.o ast.o parser.o codfns.o
 
 all: codfns
 
