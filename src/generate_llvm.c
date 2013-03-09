@@ -10,7 +10,7 @@ generate_llvm(Module *m, Pool *mp)
 
 	pool_dispose(mp);
 
-	vm = LLVMModuleCreateWithName("Sample Module");
+	vm = LLVMModuleCreateWithName("Co-Dfns Module");
 
 	return vm;
 }
