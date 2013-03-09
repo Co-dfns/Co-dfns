@@ -4,6 +4,7 @@
 #include "pool.h"
 #include "ast.h"
 #include "parser.h"
+#include "lift_constants.h"
 
 #define INIT_POOL_SIZE 1024
 
@@ -22,6 +23,9 @@ print_usage(char *progname)
 void
 run_passes(Module **ast, Pool **p)
 {
+	print_module (*ast);
+	lift_constants(ast, p);
+
 	return;
 }
 
