@@ -1,30 +1,19 @@
 CC = clang
 CPP = clang++
-CFLAGS = -g -O0 `llvm-config --cflags` -pedantic -Wall -std=c11
-CPPFLAGS = -O0 -g `llvm-config --libs --cflags --ldflags`
-CFILES = co-dfns.c
-OBJS = co-dfns.o
+CFLAGS = -g -pedantic -Wall -ansi -fno-color-diagnostics
+CFILES = ast.c co-dfns.c
+OBJS = pool.o stack.o ast.o parser.o co-dfns.o
 
-all: co-dfns co-dfns.pdf
+all: codfns
 
-co-dfns: ${OBJS}
-	${CPP} ${OBJS} ${CPPFLAGS} -o co-dfns
+codfns: ${OBJS}
+	${CPP} ${OBJS} ${CPPFLAGS} -o codfns
 
-test: co-dfns
-	run-tests
-
-co-dfns.o: co-dfns.c grammar.c
-	${CC} -o $@ -c ${CFLAGS} co-dfns.c
-
-parse.o: grammar.c parse.c
-	${CC} -o $@ -c ${CFLAGS} parse.c
+parser.o: grammar.c parser.c
+	${CC} -o $@ -c ${CFLAGS} parser.c
 
 grammar.c: grammar.peg
 	peg -o $@ $<
 
-co-dfns.pdf: co-dfns.w grammar.peg
-	cweave co-dfns
-	pdftex co-dfns
-
-${CFILES}: %.c: %.w
-	ctangle $*
+clean:
+	rm -f ${OBJS}
