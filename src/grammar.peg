@@ -1,15 +1,15 @@
 Module       <- OWSNL Global+ OWSNL 
-                { parse_module(&ctx->pd); }
+                { parse_module(ctx->pool, ctx->stack); }
 Global       <- Variable "←" Function 
-                { parse_global(&ctx->pd, GLOBAL_FUNC); }
+                { parse_global(ctx->pool, ctx->stack, GLOBAL_FUNC); }
 Function     <- "{" OWS IntegerArray OWS "}"
-                { parse_function(&ctx->pd, FUNCTION_LIT); }
+                { parse_function(ctx->pool, ctx->stack, FUNCTION_LIT); }
 Variable     <- <[a-zA-Z_] [a-zA-Z0-9_]*> 
-	     	{ parse_variable(&ctx->pd, yytext, yyleng); }
-IntegerArray <- { parse_barrier(&ctx->pd); }
+	     	{ parse_variable(ctx->pool, ctx->stack, yytext, yyleng); }
+IntegerArray <- { parse_barrier(ctx->pool, ctx->stack); }
                 Integer (WS Integer)* 
-	     	{ parse_intarray(&ctx->pd); }
-Integer      <- <[0-9]+> { parse_int(&ctx->pd, yytext, yyleng); }
+	     	{ parse_intarray(ctx->pool, ctx->stack); }
+Integer      <- <[0-9]+> { parse_int(ctx->pool, ctx->stack, yytext, yyleng); }
 OWS          <- WS ?
 OWSNL        <- WSNL ?
 WS           <- (" " / "\t" )+
