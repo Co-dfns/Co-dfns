@@ -1,12 +1,12 @@
 CC = clang
 CPP = clang++
-CFLAGS = -g -pedantic -Wall -ansi -fno-color-diagnostics
-OBJS = util.o pool.o stack.o ast.o parser.o lift_constants.o codfns.o
+CFLAGS = -g -pedantic -Wall -ansi -fno-color-diagnostics `llvm-config --cflags`
+OBJS = util.o pool.o stack.o ast.o parser.o lift_constants.o generate_llvm.o codfns.o
 
 all: codfns
 
 codfns: ${OBJS}
-	${CPP} ${OBJS} ${CPPFLAGS} -o codfns
+	${CPP} ${OBJS} `llvm-config --ldflags --libs` -o codfns
 
 parser.o: grammar.c parser.c
 	${CC} -o $@ -c ${CFLAGS} parser.c
