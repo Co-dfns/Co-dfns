@@ -1064,5 +1064,184 @@ copy_int(Pool *p, Integer *n)
 	return new_int(p, n->value);
 }
 
+@** The Compiler Passes. This section details the main elements 
+of the compiler, including the main passes and the code to 
+invoke them. Here is a summary of the passes defined in this 
+section. 
+
+{\parskip=0.5in
+\item{|lift_constants|} Takes all the constants in a program and 
+lifts them into top-level globals.
+\item{|generate_llvm|} Returns an |LLVMModuleRef| as its return value. 
+It is the last pass to run before compiler output. 
+\par}
+
+\noindent The structure of each main pass is the same to make it 
+easier to manage. The |generate_llvm| pass represents the only 
+exception to this general rule. Each pass accepts two arguments, 
+a |Module **| and a |Pool **|. The module is excpected to have 
+been allocated from the pool that is given. Each pass is expected 
+to replace the old module with the new module and the old pool 
+with a new pool. A pass should generally clean-up its input as 
+well, meaning that it will free the pool of memory that was used 
+to allocate the incoming module. 
+
+@<Primary compiler interface@>=
+@<Helpers for the compiler passes@>@;
+@<Define |lift_constants| pass@>@;
+
+@ The compiler passes are run one after another in the following 
+manner. We seed the compiler with the AST that comes from the parser, 
+and then start in on the main compiler passes. 
+
+@<Run compiler passes@>=
+LLVMModuleRef mod;
+
+print_module(ast);
+lift_constants(&ast, &ast_pool);
+print_module(ast);
+mod = generate_llvm(&ast, &ast_pool);
+LLVMDumpModule(mod);
+
+@* Generating unique variable names.
+We use the following scheme to generate unique variable names 
+for most passes. It may not be the most reliable, but it works 
+pretty well in most cases. A simple global counter is maintained 
+and incremented each time |unique_name| is called. 
+
+@<Helpers for...@>=
+unsigned short var_counter = 0;
+
+char *
+unique_name(Pool *mp, char *prefix)
+{
+	char *buf;
+	size_t siz;
+	siz = 5 + strlen(prefix); /* Length, not including |'\0'| */
+	buf = NEW_NODE(mp, char, siz);
+	sprintf(buf, "%s%d\n", prefix, var_counter);
+	var_counter = (var_counter + 1) % 65536;
+	return buf;
+}
+
+@* Lifting Constants.
+This pass takes the AST and lifts all the constants it finds 
+to the top-level, giving them names. It replaces the constants 
+with variables that refer to the global lifted constants. 
+
+@<Define |lift_constants|...@>=
+void
+lift_constants(Module **astp, Pool **mpp)
+{
+	Module *om;
+	Pool *mp;
+	Stack *ngs;
+
+	mp = new_pool(POOL_SIZE(*mpp));
+	ngs = new_stack(64);
+
+	@<Lift constants in each global, pushing to |ngs|@>@;
+	@<Build outgoing module |om|@>@;
+
+	*astp = om;
+	pool_dispose(*mpp);
+	*mpp = mp;
+}
+
+@ For each of the constants that we encounter in the module, 
+we want to lift any constants that we find inside of them. 
+Right now, there are two types of globals, functions and constants. 
+Global constants are simple, and thus, require no recursion; we 
+copy these directly as they are into our output. On the other 
+hand, the functions require that we recure down into them an 
+lift out any constants that we find. In either case, the new 
+globals that we generate from this need to be pushed onto the 
+|ngs| stack, which holds the intermediate results until we are 
+done with them and ready to build the final outgoing module.
+
+@<Lift constants in each...@>=
+int c = (*astp)->count;
+Global **gs = (*astp)->globals;
+for (int i = 0; i < c; i++) {
+	Global *g, *t;
+	*g = *gs++;
+	switch (g->type) {
+	case GLOBAL_CONST:
+		t = copy_global(mp, g);
+		push(ngs, t);
+		break;
+	case GLOBAL_FUNC:
+		@<Lift constants in global function |g|@>@;
+		break;
+	}
+}
+
+@ After we have gone through all the globals, the new globals 
+for the new module will be on the stack with the lowest global 
+at the top of the stack. We create a new module to hold these 
+globals and then go through the stack and fill up the module |om| 
+from the bottom to the top. We reuse the variables |c| and |gs| 
+that were declared in the previous section. Additionally, 
+we remember to clean up our stack and set final count of globals 
+in the module before we are done. 
+
+@<Build outgoing module |om|@>=
+c = STACK_COUNT(ngs);
+om = new_module(mp, c);
+gs = om->globals + c;
+for (i = 0; i < c; i++)
+	*(--gs) = pop(ngs);
+stack_dispose(ngs);
+om->count = c;
+
+@ Now we only have to worry about what we do when we find a 
+global function definition. The body of a function right now can 
+have either a variable or a constant in it. If we have a variable, 
+then we need do nothing, but if we have a constant, then we 
+need to do some work.
+We continue to use the |Global *t| variable declared above.
+
+@<Lift constants in global function |g|@>=
+{
+	Function *fn = g->value;
+	switch (fn->type) {
+	case FUNC_VAR:
+		t = copy_global(mp, g);
+		push(ngs, t);
+		break;
+	case FUNC_LIT:
+		@<Lift literal from function |fn|@>@;
+		break;
+	}
+}
+
+@ When we do encounter a literal in a function body, we take 
+care of it in two steps. Firstly, we take the literal and 
+give it its own unique name and push it to the top-level. 
+Secondly, we replace the function that we have with a new 
+function were the literal body is replace with a variable 
+body whose variable is the same as the unique variable that 
+we used to lift the constant in the first step. We push 
+the global constant on first so that it will end up above 
+the function definition when we finally build the outgoing 
+module. 
+
+@<Lift literal from function |fn|@>=
+{
+	char *uv;
+	Variable *tv;
+	Constant *tc;
+
+	uv = unique_name(mp, "gv");
+	tv = new_variable(mp, uv, strlen(uv));
+	tc = copy_constant(mp, fn->body);
+	t = new_global(mp, tv, GLOBAL_CONST, tc);
+	push(ngs, t);
+
+	fn = new_function(mp, FUNC_VAR, tv);
+	tv = copy_variable(mp, g->var);
+	t = new_global(mp, tv, GLOBAL_FUNC, fn);
+	push(ngs, t);
+}
 
 @** Index.
