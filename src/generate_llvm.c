@@ -3,29 +3,59 @@
 #include "pool.h"
 #include "ast.h"
 
+#define INIT_POOL_SIZE 1024
+
 LLVMTypeRef 
+long_type(void)
+{
+	return LLVMIntType(sizeof(long)*8);
+}
+
+LLVMTypeRef
+int_type(void)
+{
+	return LLVMIntType(sizeof(int)*8);
+}
+
+LLVMTypeRef
 constant_type(void)
 {
-	return LLVMInt64Type();
+	LLVMTypeRef t[2];
+
+	t[0] = int_type();
+	t[1] = LLVMPointerType(long_type(), 0);
+	
+	return LLVMStructType(t, 2, 0);
 }
 
 LLVMTypeRef
 function_type(void)
 {
-	LLVMTypeRef rt;
+	LLVMTypeRef p;
 
-	rt = LLVMInt64Type();
-	return LLVMFunctionType(rt, NULL, 0, 0);
+	p = LLVMPointerType(constant_type(), 0);
+
+	return LLVMFunctionType(p, NULL, 0, 0);
 }
 
 LLVMValueRef
-gl_constant(Constant *v)
+gl_constant(Pool *p, Constant *v)
 {
+	int i, c;
 	long *n;
+	LLVMValueRef *ln, *lni, r[2];
 
+	c = v->count;
 	n = v->elems;
+	lni = ln = pool_alloc(p, c * sizeof(LLVMValueRef));
 
-	return LLVMConstInt(constant_type(), *n, 0);
+	for (i = 0; i < c; i++)
+		*lni++ = LLVMConstInt(long_type(), *n++, 0);
+
+	r[0] = LLVMConstInt(int_type(), c, 0);
+	r[1] = LLVMConstArray(long_type(), ln, c);
+
+	return LLVMConstStruct(r, 2, 0);
 }
 
 void
@@ -47,7 +77,7 @@ gl_function(LLVMModuleRef m, LLVMValueRef lf, Function *fn)
 }
 
 void
-gl_global(LLVMModuleRef m, Global *g)
+gl_global(Pool *p, LLVMModuleRef m, Global *g)
 {
 	char *vn;
 	LLVMValueRef v, gv;
@@ -58,7 +88,7 @@ gl_global(LLVMModuleRef m, Global *g)
 	switch (g->type) {
 	case GLOBAL_CONST:
 		t = constant_type();
-		v = gl_constant(g->value);
+		v = gl_constant(p, g->value);
 		gv = LLVMAddGlobal(m, t, vn);
 		LLVMSetInitializer(gv, v);
 		break;
@@ -76,15 +106,18 @@ generate_llvm(Module *m, Pool *mp)
 	int i, c;
 	Global **gs;
 	LLVMModuleRef vm;
+	Pool *p;
 
+	p = new_pool(INIT_POOL_SIZE);
 	vm = LLVMModuleCreateWithName("Co-Dfns Module");
 	c = m->count;
 	gs = m->globals;
 	
 	for (i = 0; i < c; i++)
-		gl_global(vm, *gs++);
+		gl_global(p, vm, *gs++);
 
 	pool_dispose(mp);
+	pool_dispose(p);
 
 	return vm;
 }
