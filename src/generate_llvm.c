@@ -39,11 +39,12 @@ function_type(void)
 }
 
 LLVMValueRef
-gl_constant(Pool *p, Constant *v)
+gl_constant(Pool *p, LLVMModuleRef m, Constant *v)
 {
 	int i, c;
 	long *n;
-	LLVMValueRef *ln, *lni, r[2];
+	LLVMValueRef g, *ln, *lni, r[2];
+	LLVMTypeRef t;
 
 	c = v->count;
 	n = v->elems;
@@ -52,8 +53,11 @@ gl_constant(Pool *p, Constant *v)
 	for (i = 0; i < c; i++)
 		*lni++ = LLVMConstInt(long_type(), *n++, 0);
 
+	t = LLVMArrayType(long_type(), c);
+	g = LLVMAddGlobal(m, t, "");
 	r[0] = LLVMConstInt(int_type(), c, 0);
-	r[1] = LLVMConstArray(long_type(), ln, c);
+	r[1] = LLVMConstPointerCast(g, LLVMPointerType(long_type(), 0));
+	LLVMSetInitializer(g, LLVMConstArray(long_type(), ln, c));
 
 	return LLVMConstStruct(r, 2, 0);
 }
@@ -88,7 +92,7 @@ gl_global(Pool *p, LLVMModuleRef m, Global *g)
 	switch (g->type) {
 	case GLOBAL_CONST:
 		t = constant_type();
-		v = gl_constant(p, g->value);
+		v = gl_constant(p, m, g->value);
 		gv = LLVMAddGlobal(m, t, vn);
 		LLVMSetInitializer(gv, v);
 		break;
