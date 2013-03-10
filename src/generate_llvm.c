@@ -20,12 +20,14 @@ int_type(void)
 LLVMTypeRef
 constant_type(void)
 {
-	LLVMTypeRef t[2];
+	LLVMTypeRef t[4];
 
 	t[0] = int_type();
-	t[1] = LLVMPointerType(long_type(), 0);
+	t[1] = int_type();
+	t[2] = LLVMPointerType(long_type(), 0);
+	t[3] = LLVMPointerType(long_type(), 0);
 	
-	return LLVMStructType(t, 2, 0);
+	return LLVMStructType(t, 4, 0);
 }
 
 LLVMTypeRef
@@ -43,8 +45,8 @@ gl_constant(Pool *p, LLVMModuleRef m, Constant *v)
 {
 	int i, c;
 	long *n;
-	LLVMValueRef g, *ln, *lni, r[2];
-	LLVMTypeRef t;
+	LLVMValueRef k, g, s, *ln, *lni, r[4];
+	LLVMTypeRef t, ts, pt;
 
 	c = v->count;
 	n = v->elems;
@@ -54,12 +56,19 @@ gl_constant(Pool *p, LLVMModuleRef m, Constant *v)
 		*lni++ = LLVMConstInt(long_type(), *n++, 0);
 
 	t = LLVMArrayType(long_type(), c);
+	ts = LLVMArrayType(long_type(), 1);
+	pt = LLVMPointerType(long_type(), 0);
 	g = LLVMAddGlobal(m, t, "");
+	s = LLVMAddGlobal(m, ts, "");
 	r[0] = LLVMConstInt(int_type(), c, 0);
-	r[1] = LLVMConstPointerCast(g, LLVMPointerType(long_type(), 0));
+	r[1] = LLVMConstInt(int_type(), 1, 0);
+	r[2] = LLVMConstPointerCast(s, pt);
+	r[3] = LLVMConstPointerCast(g, pt);
+	k = LLVMConstInt(long_type(), c, 0);
 	LLVMSetInitializer(g, LLVMConstArray(long_type(), ln, c));
+	LLVMSetInitializer(s, LLVMConstArray(long_type(), &k, 1));
 
-	return LLVMConstStruct(r, 2, 0);
+	return LLVMConstStruct(r, 4, 0);
 }
 
 void
