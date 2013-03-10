@@ -29,6 +29,24 @@ gl_constant(Constant *v)
 }
 
 void
+gl_function(LLVMModuleRef m, LLVMValueRef lf, Function *fn)
+{
+	char *vn;
+	LLVMBasicBlockRef bb;
+	LLVMBuilderRef bldr;
+	LLVMValueRef g;
+	
+	bldr = LLVMCreateBuilder();
+	bb = LLVMAppendBasicBlock(lf, "_");
+	vn = ((Variable *) fn->body)->name;
+	g = LLVMGetNamedGlobal(m, vn);
+	
+	LLVMPositionBuilderAtEnd(bldr, bb);
+	LLVMBuildRet(bldr, g);
+	LLVMDisposeBuilder(bldr);
+}
+
+void
 gl_global(LLVMModuleRef m, Global *g)
 {
 	char *vn;
@@ -44,7 +62,10 @@ gl_global(LLVMModuleRef m, Global *g)
 		gv = LLVMAddGlobal(m, t, vn);
 		LLVMSetInitializer(gv, v);
 		break;
-	default:
+	case GLOBAL_FUNC:
+		t = function_type();
+		gv = LLVMAddFunction(m, vn, t);
+		gl_function(m, gv, g->value);
 		break;
 	}
 }
