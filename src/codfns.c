@@ -69,5 +69,8 @@ main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	printf("generate_llvm:\n");
+	LLVMDumpModule(vm);
+
 	return 0;
 }
