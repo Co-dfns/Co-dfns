@@ -28,6 +28,7 @@ run_passes(Module **ast, Pool **p)
 {
 	print_module (*ast);
 	lift_constants(ast, p);
+	printf("lift_constants:\n");
 	print_module(*ast);
 	return generate_llvm(*ast, *p);
 }
