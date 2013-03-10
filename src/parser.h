@@ -1,1 +1,1 @@
-Module *parse_file(Pool *, FILE *);
+Module *parse_file(Pool *, char *);

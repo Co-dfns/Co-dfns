@@ -117,14 +117,20 @@ parse_function(Pool *p, Stack *s, enum function_type t)
 #include "grammar.c"
 
 Module *
-parse_file(Pool* p, FILE *ifile)
+parse_file(Pool* p, char *fnam)
 {
 	yycontext ctx;
 	Module *res;
+	FILE *fil;
+
+	if ((fil = fopen(fnam, "r")) == NULL) {
+		perror("parse_file");
+		return NULL;
+	}
 	
 	memset(&ctx, 0, sizeof(yycontext));
 	ctx.pool = p;
-	ctx.ifile = ifile;
+	ctx.ifile = fil;
 
 	if ((ctx.stack = new_stack(INIT_STACK_SIZE)) == NULL) {
 		fprintf(stderr, "parse_file: failed to allocate stack");
@@ -132,6 +138,12 @@ parse_file(Pool* p, FILE *ifile)
 	}
 
 	while (parse_codfns(&ctx));
+
+	if (STACK_COUNT(ctx.stack) == 0) {
+		stack_dispose(ctx.stack);
+		return NULL;
+	}
+
 	res = pop(ctx.stack);
 	stack_dispose(ctx.stack);
 	return res;

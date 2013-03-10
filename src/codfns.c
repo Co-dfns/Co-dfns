@@ -36,27 +36,22 @@ run_passes(Module **ast, Pool **p)
 int
 main(int argc, char *argv[])
 {
-	char *emsg, *ofn;
-	FILE *ifile;
+	char *emsg, *ofn, *ifn;
 	Module *m;
 	Pool *p;
 	LLVMModuleRef vm;
 
 	if (argc != 3) print_usage(*argv);
 
+	ifn = argv[1];
 	ofn = argv[2];
-
-	if ((ifile = fopen(argv[1], "r")) == NULL) {
-		perror(*argv);
-		exit(EXIT_FAILURE);
-	}
 
 	if ((p = new_pool(INIT_POOL_SIZE)) == NULL) {
 		fprintf(stderr, "%s: failed to create memory pool for parsing\n", *argv);
 		exit(EXIT_FAILURE);
 	}
 
-	if ((m = parse_file(p, ifile)) == NULL) {
+	if ((m = parse_file(p, ifn)) == NULL) {
 		fprintf(stderr, "%s: failed to parse %s\n", *argv, argv[1]);
 		exit(EXIT_FAILURE);
 	}
