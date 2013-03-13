@@ -9,53 +9,103 @@
 
 #define INIT_POOL_SIZE 64
 
-void fail_exit(char *msg, Pool *mp)
+void 
+fail_exit(char *msg, Pool *mp)
 {
 	fprintf(stderr, "lift_constants: %s\n", msg);
 	pool_dispose(mp);
 	exit(EXIT_FAILURE);
 }
 
-Function *lc_function(Pool *mp, Stack *s, Function *fn)
+Variable *
+lift(Pool *mp, Stack *s, Constant *a)
 {
 	char *u;
 	Variable *v;
 	Constant *c;
 	Global *g;
-
+	
 	u = unique_name(mp, "gvar");
 	v = new_variable(mp, u, strlen(u));
-	c = copy_constant(mp, fn->body);
+	c = copy_constant(mp, a);
 	g = new_global(mp, v, GLOBAL_CONST, c);
 	push(s, g);
 
-	fn = new_function(mp, FUNCTION_VAR, v);
-
-	return fn;
+	return v;
 }
 
-Global *lc_global(Pool *mp, Stack *s, Global *g)
+Application *lc_application(Pool *, Stack *, Application *);
+
+Expression *
+lc_expression(Pool *mp, Stack *s, Expression *oe)
+{
+	Expression *e;
+	Variable *v, *tgt;
+	Application *app;
+
+	switch (oe->type) {
+	case EXPR_VAR:
+		e = copy_expression(mp, oe);
+		break;
+	case EXPR_LIT:
+		v = lift(mp, s, oe->value);
+		tgt = oe->tgt == NULL ? NULL : copy_variable(mp, oe->tgt);
+		e = new_expression(mp, EXPR_VAR, tgt, v);
+		break;
+	case EXPR_APP:
+		app = lc_application(mp, s, oe->value);
+		tgt = oe->tgt == NULL? NULL : copy_variable(mp, oe->tgt);
+		e = new_expression(mp, EXPR_APP, tgt, app);
+		break;
+	}
+
+	return e;
+}
+
+Application *
+lc_application(Pool *mp, Stack *s, Application *oa)
+{
+	Application *app;
+	Variable *v;
+	Expression *lft, *rgt;
+
+	lft = oa->lft == NULL ? NULL : lc_expression(mp, s, oa->lft);
+	rgt = lc_expression(mp, s, oa->rgt);
+	v = copy_variable(mp, oa->fn);
+	app = new_application(mp, v, lft, rgt);
+
+	return app;
+}
+
+Function *
+lc_function(Pool *mp, Stack *s, Function *ofn)
+{
+	int i, c;
+	Expression **es, **esi, **oes;
+
+	c = ofn->count;
+	oes = ofn->stmts;
+	esi = es = pool_alloc(mp, c * sizeof(Expression *));
+
+	for (i = 0; i < c; i++)
+		*esi++ = lc_expression(mp, s, *oes++);
+
+	return new_function(mp, es, c);
+}
+
+Global *
+lc_global(Pool *mp, Stack *s, Global *g)
 {
 	Function *fn;
 	Variable *v;
 
-	fn = g->value;
-
-	switch (fn->type) {
-	case FUNCTION_VAR:
-		g = copy_global(mp, g);
-		break;
-	case FUNCTION_LIT:
-		fn = lc_function(mp, s, fn);
-		v = copy_variable(mp, g->var);
-		g = new_global(mp, v, GLOBAL_FUNC, fn);
-		break;
-	}
-
-	return g;
+	fn = lc_function(mp, s, g->value);
+	v = copy_variable(mp, g->var);
+	return new_global(mp, v, GLOBAL_FUNC, fn);
 }
 
-void lift_constants(Module **astp, Pool **mpp)
+void 
+lift_constants(Module **astp, Pool **mpp)
 {
 	int i, c;
 	Global *g, **gs;

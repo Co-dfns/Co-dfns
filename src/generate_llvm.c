@@ -87,7 +87,9 @@ gl_function(LLVMModuleRef m, LLVMValueRef lf, Function *fn)
 	
 	bldr = LLVMCreateBuilder();
 	bb = LLVMAppendBasicBlock(lf, "_");
-	vn = ((Variable *) fn->body)->name;
+
+	/* For now we assume that we have one variable expression */
+	vn = ((Variable *) fn->stmts[0]->value)->name;
 	g = LLVMGetNamedGlobal(m, vn);
 	
 	LLVMPositionBuilderAtEnd(bldr, bb);
