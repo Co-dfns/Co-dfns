@@ -102,14 +102,17 @@ parse_int(Pool *p, Stack *s, char *ns, int l)
 }
 
 void
-parse_function(Pool *p, Stack *s, enum function_type t)
+parse_function(Pool *p, Stack *s)
 {
 	Function *fn;
+	Expression **es, *e;
+	void *val;
 
-	fn = NEW_NODE(p, Function, 0);
-
-	fn->body = pop(s);
-	fn->type = t;
+	val = pop(s);
+	e = new_expression(p, EXPR_LIT, NULL, val);
+	es = pool_alloc(p, sizeof(Expression *));
+	*es = e;
+	fn = new_function(p, es, 1);
 
 	push(s, fn);
 }

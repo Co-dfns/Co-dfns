@@ -26,20 +26,72 @@ print_variable(Variable *var)
 void
 print_function(Function *func)
 {
-        printf("{\n");
+	int i, c;
+	Expression **es;
 
-	switch (func->type) {
-		case FUNCTION_VAR:
-			print_variable(func->body);
-			break;
-		case FUNCTION_LIT:
-			print_constant(func->body);
-			break;
+	printf("{\n");
+
+	c = func->count;
+	es = func->stmts;
+
+	for (i = 0; i < c; i++) {
+		print_expression(*es++);
+		printf("\n");
 	}
 
-        printf("\n}\n");
+	printf("\n}\n");
 
-        return;
+	return;
+}
+
+void 
+print_expression(Expression *exp) 
+{
+	if (exp->tgt != NULL) {
+		print_variable(exp->tgt);
+		printf("←");
+	}
+
+	switch (exp->type) {
+	case EXPR_LIT: 
+		print_constant(exp->value); 
+		break;
+	case EXPR_VAR: 
+		print_variable(exp->value); 
+		break;
+	case EXPR_APP:
+		print_application(exp->value);
+		break;
+	}
+}
+
+void
+print_application(Application *app)
+{
+	Expression *lft;
+
+	lft = app->lft;
+
+	if (lft != NULL) {
+		switch (lft->type) {
+		case EXPR_LIT:
+			print_constant(lft->value);
+			break;
+		case EXPR_VAR:
+			print_variable(lft->value);
+			break;
+		case EXPR_APP:
+			printf("(");
+			print_application(lft->value);
+			printf(")");
+			break;
+		}
+	}
+	
+	printf(" ");
+	print_variable(app->fn);
+	printf(" ");
+	print_expression(app->rgt);
 }
 
 void
@@ -99,7 +151,7 @@ new_global(Pool *p, Variable *v, enum global_type t, void *val)
 {
 	Global *res;
 
-	res = NEW_NODE(p, Global, 0);
+	res = NEW_NODE(p, Global);
 
 	res->var = v;
 	res->type = t;
@@ -130,16 +182,44 @@ new_constant(Pool *p, int count)
 }
 
 Function *
-new_function(Pool *p, enum function_type t, void *body)
+new_function(Pool *p, Expression **es, int c)
 {
 	Function *res;
 
-	res = NEW_NODE(p, Function, 0);
+	res = NEW_NODE(p, Function);
 
-	res->type = t;
-	res->body = body;
+	res->count = c;
+	res->stmts = es;
 	
 	return res;
+}
+
+Expression *
+new_expression(Pool *p, enum expr_type t, Variable *nam, void *val) 
+{
+	Expression *exp;
+
+	exp = NEW_NODE(p, Expression);
+
+	exp->type = t;
+	exp->tgt = nam;
+	exp->value = val;
+
+	return exp;
+}
+
+Application *
+new_application(Pool *p, Variable *fn, Expression *lft, Expression *rgt)
+{
+	Application *app;
+
+	app = NEW_NODE(p, Application);
+
+	app->fn = fn;
+	app->lft = lft;
+	app->rgt = rgt;
+
+	return app;
 }
 
 Variable *
@@ -148,8 +228,8 @@ new_variable(Pool *p, char *n, int l)
 	char *str;
 	Variable *res;
 
-	res = NEW_NODE(p, Variable, 0);
-	str = NEW_NODE(p, char, l);
+	res = NEW_NODE(p, Variable);
+	str = pool_alloc(p, sizeof(char) * (l + 1));
 
 	strncpy(str, n, l);
 	res->name = str;
@@ -162,7 +242,7 @@ new_int(Pool *p, long v)
 {
 	Integer *res;
 
-	res = NEW_NODE(p, Integer, 0);
+	res = NEW_NODE(p, Integer);
 
 	res->value = v;
 
@@ -229,23 +309,64 @@ copy_constant(Pool *p, Constant *cnst)
 }
 
 Function *
-copy_function(Pool *p, Function *fn)
+copy_function(Pool *p, Function *ofn)
 {
-	enum function_type t;
-	void *body;
+	int i, c;
+	Expression **es, **esi, **stmts;
+	Function *fn;
+	
+	c = ofn->count;
+	stmts = ofn->stmts;
+	esi = es = pool_alloc(p, c * sizeof(Expression *));
+	
+	for (i = 0; i < c; i++)
+		*esi++ = copy_expression(p, *stmts++);
 
-	t = fn->type;
+	fn = NEW_NODE(p, Function);
 
-	switch (t) {
-		case FUNCTION_LIT:
-			body = copy_constant(p, fn->body);
-			break;
-		case FUNCTION_VAR:
-			body = copy_variable(p, fn->body);
-			break;
+	fn->count = c;
+	fn->stmts = es;
+	
+	return fn;
+}
+
+Expression *
+copy_expression(Pool *p, Expression *oe)
+{
+	Expression *exp;
+
+	exp = NEW_NODE(p, Expression);
+
+	exp->type = oe->type;
+	exp->tgt = oe->tgt == NULL ? NULL : copy_variable(p, oe->tgt);
+	
+	switch (exp->type) {
+	case EXPR_LIT:
+		exp->value = copy_constant(p, exp->value);
+		break;
+	case EXPR_VAR:
+		exp->value = copy_variable(p, exp->value);
+		break;
+	case EXPR_APP:
+		exp->value = copy_application(p, exp->value);
+		break;
 	}
 
-	return new_function(p, t, body);
+	return exp;
+}
+
+Application *
+copy_application(Pool *p, Application *oa)
+{
+	Application *app;
+
+	app = NEW_NODE(p, Application);
+
+	app->fn = copy_variable(p, oa->fn);
+	app->lft = oa->lft == NULL ? NULL : copy_expression(p, oa->lft);
+	app->rgt = copy_expression(p, oa->rgt);
+
+	return app;
 }
 
 Variable *
