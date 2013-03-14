@@ -66,13 +66,13 @@ Application *
 lc_application(Pool *mp, Stack *s, Application *oa)
 {
 	Application *app;
-	Variable *v;
+	enum primitive fn;
 	Expression *lft, *rgt;
 
 	lft = oa->lft == NULL ? NULL : lc_expression(mp, s, oa->lft);
 	rgt = lc_expression(mp, s, oa->rgt);
-	v = copy_variable(mp, oa->fn);
-	app = new_application(mp, v, lft, rgt);
+	fn = oa->fn;
+	app = new_application(mp, fn, lft, rgt);
 
 	return app;
 }

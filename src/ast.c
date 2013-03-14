@@ -89,15 +89,134 @@ print_application(Application *app)
 	}
 	
 	printf(" ");
-	print_variable(app->fn);
+	print_primitive(app->fn);
 	printf(" ");
 	print_expression(app->rgt);
 }
 
 void
+print_primitive(enum primitive fn)
+{
+	char *s;
+
+	switch (fn) {
+	case PRM_MINUS:
+		s = "-"; break;
+	case PRM_PLUS:
+		s = "+"; break;
+	case PRM_LT:
+		s = "<"; break;
+	case PRM_LTE:
+		s = "≤"; break;
+	case PRM_EQ:
+		s = "="; break;
+	case PRM_GTE:
+		s = "≥"; break;
+	case PRM_GT:
+		s = ">"; break;
+	case PRM_NEQ:
+		s = "≠"; break;
+	case PRM_AND:
+		s = "∧"; break;
+	case PRM_OR:
+		s = "∨"; break;
+	case PRM_TIMES:
+		s = "×"; break;
+	case PRM_DIV:
+		s = "÷"; break;
+	case PRM_HOOK:
+		s = "?"; break;
+	case PRM_MEM:
+		s = "∊"; break;
+	case PRM_RHO:
+		s = "⍴"; break;
+	case PRM_NOT:
+		s = "~"; break;
+	case PRM_TAKE:
+		s = "↑"; break;
+	case PRM_DROP:
+		s = "↓"; break;
+	case PRM_IOTA:
+		s = "⍳"; break;
+	case PRM_CIRC:
+		s = "○"; break;
+	case PRM_POW:
+		s = "*"; break;
+	case PRM_CEIL:
+		s = "⌈"; break;
+	case PRM_FLOOR:
+		s = "⌊"; break;
+	case PRM_DEL:
+		s = "∇"; break;
+	case PRM_RGT:
+		s = "⊢"; break;
+	case PRM_LFT:
+		s = "⊣"; break;
+	case PRM_ENCL:
+		s = "⊂"; break;
+	case PRM_DIS:
+		s = "⊃"; break;
+	case PRM_INTER:
+		s = "∩"; break;
+	case PRM_UNION:
+		s = "∪"; break;
+	case PRM_ENC:
+		s = "⊤"; break;
+	case PRM_DEC:
+		s = "⊥"; break;
+	case PRM_ABS:
+		s = "|"; break;
+	case PRM_EXPNF:
+		s = "⍀"; break;
+	case PRM_FILF:
+		s = "⌿"; break;
+	case PRM_GRDD:
+		s = "⍒"; break;
+	case PRM_GRDU:
+		s = "⍋"; break;
+	case PRM_ROT:
+		s = "⌽"; break;
+	case PRM_TRANS:
+		s = "⍉"; break;
+	case PRM_ROTF:
+		s = "⊖"; break;
+	case PRM_LOG:
+		s = "⍟"; break;
+	case PRM_NAND:
+		s = "⍲"; break;
+	case PRM_NOR:
+		s = "⍱"; break;
+	case PRM_BANG:
+		s = "!"; break;
+	case PRM_MDIV:
+		s = "⌹"; break;
+	case PRM_FIND:
+		s = "⍸"; break;
+	case PRM_SQUAD:
+		s = "⌷"; break;
+	case PRM_EQV:
+		s = "≡"; break;
+	case PRM_NEQV:
+		s = "≢"; break;
+	case PRM_CATF:
+		s = "⍪"; break;
+	case PRM_FIL:
+		s = "/"; break;
+	case PRM_EXPND:
+		s = "\\"; break;
+	case PRM_CAT:
+		s = ","; break;
+	case PRM_HAT:
+		s = "^"; break;
+	}
+
+	printf("%s", s);
+}
+
+void
 print_global(Global *global)
 {
-        printf("%s←", global->var->name);
+	printf("%s←", global->var->name);
 
 	switch (global->type) {
 		case GLOBAL_CONST:
@@ -109,20 +228,20 @@ print_global(Global *global)
 	}
 
 
-        return;
+	return;
 }
 
 void
 print_module(Module *module)
 {
-        int i;
+	int i;
 
-        for (i=0; i < module->count; i++) {
-                print_global(module->globals[i]);
-                printf("\n");
-        }
+	for (i=0; i < module->count; i++) {
+		print_global(module->globals[i]);
+		printf("\n");
+	}
 
-        return;
+	return;
 }
 
 Module *
@@ -209,7 +328,7 @@ new_expression(Pool *p, enum expr_type t, Variable *nam, void *val)
 }
 
 Application *
-new_application(Pool *p, Variable *fn, Expression *lft, Expression *rgt)
+new_application(Pool *p, enum primitive fn, Expression *lft, Expression *rgt)
 {
 	Application *app;
 
@@ -247,6 +366,17 @@ new_int(Pool *p, long v)
 	res->value = v;
 
 	return res;
+}
+
+Primitive *
+new_primitive(Pool *p, enum primitive fn)
+{
+	Primitive *prm;
+
+	prm = NEW_NODE(p, Primitive);
+	prm->value = fn;
+
+	return prm;
 }
 
 Module *
@@ -362,7 +492,7 @@ copy_application(Pool *p, Application *oa)
 
 	app = NEW_NODE(p, Application);
 
-	app->fn = copy_variable(p, oa->fn);
+	app->fn = oa->fn;
 	app->lft = oa->lft == NULL ? NULL : copy_expression(p, oa->lft);
 	app->rgt = copy_expression(p, oa->rgt);
 
@@ -381,3 +511,8 @@ copy_int(Pool *p, Integer *n)
 	return new_int(p, n->value);
 }
 
+Primitive *
+copy_primitive(Pool *p, Primitive *prm)
+{
+	return new_primitive(p, prm->value);
+}

@@ -12,7 +12,7 @@
 	result = (EOF == yyc) ? 0 : (*(buf) = yyc, 1); \
 }
 
-#define YY_CTX_MEMBERS Stack * stack; Pool *pool; FILE *ifile;
+#define YY_CTX_MEMBERS Stack *stack; Pool *pool; FILE *ifile;
 
 #include "pool.h"
 #include "stack.h"
@@ -106,15 +106,114 @@ parse_function(Pool *p, Stack *s)
 {
 	Function *fn;
 	Expression **es, *e;
-	void *val;
 
-	val = pop(s);
-	e = new_expression(p, EXPR_LIT, NULL, val);
+	e = pop(s);
 	es = pool_alloc(p, sizeof(Expression *));
 	*es = e;
 	fn = new_function(p, es, 1);
 
 	push(s, fn);
+}
+
+void
+parse_expression(Pool *p, Stack *s, enum expr_type t)
+{
+	Expression *e;
+	void *val;
+	
+	val = pop(s);
+	e = new_expression(p, t, NULL, val);
+
+	push(s, e);
+}
+
+void
+parse_application(Pool *p, Stack *s)
+{
+	Constant *lft, *rgt;
+	Primitive *prm;
+	Expression *elft, *ergt;
+	Application *app;
+
+	rgt = pop(s);
+	prm = pop(s);
+	lft = pop(s);
+	elft = new_expression(p, EXPR_LIT, NULL, lft);
+	ergt = new_expression(p, EXPR_LIT, NULL, rgt);
+	app = new_application(p, prm->value, elft, ergt);
+	
+	push(s, app);
+}
+
+void
+parse_primitive(Pool *p, Stack *s, char *txt, int len)
+{
+	enum primitive fn;
+	Primitive *prm;
+
+	if (!strncmp(txt, "-", len)) fn = PRM_MINUS;
+	else if (!strncmp(txt, "+", len)) fn = PRM_PLUS;
+	else if (!strncmp(txt, "<", len)) fn = PRM_LT;
+	else if (!strncmp(txt, "≤", len)) fn = PRM_LTE;
+	else if (!strncmp(txt, "=", len)) fn = PRM_EQ;
+	else if (!strncmp(txt, "≥", len)) fn = PRM_GTE;
+	else if (!strncmp(txt, ">", len)) fn = PRM_GT;
+	else if (!strncmp(txt, "≠", len)) fn = PRM_NEQ;
+	else if (!strncmp(txt, "∧", len)) fn = PRM_AND;
+	else if (!strncmp(txt, "∨", len)) fn = PRM_OR;
+	else if (!strncmp(txt, "×", len)) fn = PRM_TIMES;
+	else if (!strncmp(txt, "÷", len)) fn = PRM_DIV;
+	else if (!strncmp(txt, "?", len)) fn = PRM_HOOK;
+	else if (!strncmp(txt, "∊", len)) fn = PRM_MEM;
+	else if (!strncmp(txt, "⍴", len)) fn = PRM_RHO;
+	else if (!strncmp(txt, "~", len)) fn = PRM_NOT;
+	else if (!strncmp(txt, "↑", len)) fn = PRM_TAKE;
+	else if (!strncmp(txt, "↓", len)) fn = PRM_DROP;
+	else if (!strncmp(txt, "⍳", len)) fn = PRM_IOTA;
+	else if (!strncmp(txt, "○", len)) fn = PRM_CIRC;
+	else if (!strncmp(txt, "*", len)) fn = PRM_POW;
+	else if (!strncmp(txt, "⌈", len)) fn = PRM_CEIL;
+	else if (!strncmp(txt, "⌊", len)) fn = PRM_FLOOR;
+	else if (!strncmp(txt, "∇", len)) fn = PRM_DEL;
+	else if (!strncmp(txt, "⊢", len)) fn = PRM_RGT;
+	else if (!strncmp(txt, "⊣", len)) fn = PRM_LFT;
+	else if (!strncmp(txt, "⊂", len)) fn = PRM_ENCL;
+	else if (!strncmp(txt, "⊃", len)) fn = PRM_DIS;
+	else if (!strncmp(txt, "∩", len)) fn = PRM_INTER;
+	else if (!strncmp(txt, "∪", len)) fn = PRM_UNION;
+	else if (!strncmp(txt, "⊤", len)) fn = PRM_ENC;
+	else if (!strncmp(txt, "⊥", len)) fn = PRM_DEC;
+	else if (!strncmp(txt, "|", len)) fn = PRM_ABS;
+	else if (!strncmp(txt, "⍀", len)) fn = PRM_EXPNF;
+	else if (!strncmp(txt, "⌿", len)) fn = PRM_FILF;
+	else if (!strncmp(txt, "⍒", len)) fn = PRM_GRDD;
+	else if (!strncmp(txt, "⍋", len)) fn = PRM_GRDU;
+	else if (!strncmp(txt, "⌽", len)) fn = PRM_ROT;
+	else if (!strncmp(txt, "⍉", len)) fn = PRM_TRANS;
+	else if (!strncmp(txt, "⊖", len)) fn = PRM_ROTF;
+	else if (!strncmp(txt, "⍟", len)) fn = PRM_LOG;
+	else if (!strncmp(txt, "⍲", len)) fn = PRM_NAND;
+	else if (!strncmp(txt, "⍱", len)) fn = PRM_NOR;
+	else if (!strncmp(txt, "!", len)) fn = PRM_BANG;
+	else if (!strncmp(txt, "⌹", len)) fn = PRM_MDIV;
+	else if (!strncmp(txt, "⍸", len)) fn = PRM_FIND;
+	else if (!strncmp(txt, "⌷", len)) fn = PRM_SQUAD;
+	else if (!strncmp(txt, "≡", len)) fn = PRM_EQV;
+	else if (!strncmp(txt, "≢", len)) fn = PRM_NEQV;
+	else if (!strncmp(txt, "⍪", len)) fn = PRM_CATF;
+	else if (!strncmp(txt, "/", len)) fn = PRM_FIL;
+	else if (!strncmp(txt, "\\", len)) fn = PRM_EXPND;
+	else if (!strncmp(txt, ",", len)) fn = PRM_CAT;
+	else if (!strncmp(txt, "^", len)) fn = PRM_HAT;
+	else {
+		fprintf(stderr, "unknown primitive %s\n", txt);
+		stack_dispose(s);
+		pool_dispose(p);
+		exit(EXIT_FAILURE);
+	}
+
+	prm = new_primitive(p, fn);
+	push(s, prm);
 }
 
 #include "grammar.c"
