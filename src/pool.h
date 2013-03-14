@@ -4,8 +4,8 @@ typedef struct pool {
 	void *cur;
 } Pool;
 
-#define POOL_SIZE(p) ((char *)(p)->end - (char *)(p)->start)
-#define POOL_AVAIL(p) ((char *)(p)->end - (char *)(p)->cur)
+#define POOL_SIZE(p) ((size_t)((char *)(p)->end - (char *)(p)->start))
+#define POOL_AVAIL(p) ((size_t)((char *)(p)->end - (char *)(p)->cur))
 
 #define NEW_NODE(p, t) ((t*)pool_alloc((p), sizeof(t)))
 

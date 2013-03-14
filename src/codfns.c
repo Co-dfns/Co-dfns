@@ -11,7 +11,7 @@
 
 #define INIT_POOL_SIZE 1024
 
-char *usage = {
+const char *usage = {
 	"Invalid options. Command line summary:\n"
 	"\t%s :: inputfile outputfile\n"
 };
