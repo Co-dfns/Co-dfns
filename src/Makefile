@@ -1,18 +1,26 @@
 CC = clang
 CPP = clang++
-CFLAGS = -O0 -g -pedantic -Wall -ansi -fno-color-diagnostics `llvm-config --cflags`
-OBJS = util.o pool.o stack.o ast.o parser.o lift_constants.o generate_llvm.o codfns.o
+CFLAGS = -g -pedantic -Wall -ansi -fno-color-diagnostics `llvm-config --cflags`
+
+SRC := util.c pool.c stack.c ast.c parser.c lift_constants.c generate_llvm.c codfns.c
+OBJ := $(SRC:.c=.o)
+PEG := $(wildcard *.peg)
 
 all: codfns
 
-codfns: ${OBJS}
-	${CPP} ${OBJS} `llvm-config --ldflags --libs` -o codfns
+codfns: $(OBJ)
+	$(CPP) $(OBJ) `llvm-config --ldflags --libs` -o $@
 
-parser.o: grammar.c parser.c
-	${CC} -o $@ -c ${CFLAGS} parser.c
+include $(OBJ:.o=.d)
 
-grammar.c: grammar.peg
+%.d: %.c
+	$(CC) -MM -MG $(CFLAGS) $*.c > $@
+
+%.c: %.peg
 	peg -o $@ $<
 
 clean:
-	rm -f ${OBJS} grammar.c
+	rm -f $(OBJ) 
+	rm -f $(OBJ:.o=.d)
+	rm -f $(PEG:.peg=.c)
+	rm -f codfns
