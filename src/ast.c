@@ -97,7 +97,7 @@ print_application(Application *app)
 void
 print_primitive(enum primitive fn)
 {
-	char *s;
+	const char *s;
 
 	switch (fn) {
 	case PRM_MINUS:

@@ -10,7 +10,7 @@
 #define INIT_POOL_SIZE 64
 
 void 
-fail_exit(char *msg, Pool *mp)
+fail_exit(const char *msg, Pool *mp)
 {
 	fprintf(stderr, "lift_constants: %s\n", msg);
 	pool_dispose(mp);

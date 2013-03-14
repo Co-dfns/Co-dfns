@@ -6,7 +6,7 @@
 unsigned short var_counter = 0;
 
 char *
-unique_name(Pool *mp, char *prefix)
+unique_name(Pool *mp, const char *prefix)
 {
 	char *buf;
 	size_t siz;
