@@ -1,16 +1,20 @@
 CC = clang
 CPP = clang++
-CFLAGS = -g -pedantic -Wall -ansi -fno-color-diagnostics `llvm-config --cflags`
+CFLAGS = -g -pedantic -Wall -ansi -fno-color-diagnostics `llvm-config --cflags` -I.
 
 SRC := util.c pool.c stack.c ast.c parser.c lift_constants.c generate_llvm.c codfns.c
 OBJ := $(SRC:.c=.o)
 PEG := $(wildcard *.peg)
+
+CLEANERS = 
 
 all: codfns
 
 codfns: $(OBJ)
 	$(CPP) $(OBJ) `llvm-config --ldflags --libs` -o $@
 
+
+include tests/Makefile
 include $(OBJ:.o=.d)
 
 %.d: %.c
@@ -19,7 +23,7 @@ include $(OBJ:.o=.d)
 %.c: %.peg
 	peg -o $@ $<
 
-clean:
+clean: $(CLEANERS)
 	rm -f $(OBJ) 
 	rm -f $(OBJ:.o=.d)
 	rm -f $(PEG:.peg=.c)
