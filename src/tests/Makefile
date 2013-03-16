@@ -6,6 +6,7 @@ TEST := $(wildcard tests/*.dfn)
 TESTSRC := $(TEST:.dfn=.ll) $(TEST:.dfn=_r.c)
 TESTOBJ := $(TEST:.dfn=.o) $(TEST:.dfn=_r.o)
 TESTRUNS := $(patsubst tests/%.dfn,run_%,$(TEST))
+LLFLAGS = -g -fno-color-diagnostics
 
 CLEANERS += clean-tests
 
@@ -18,14 +19,14 @@ include tests/driver.d
 $(TESTRUNS): run_%: tests/%
 	$<
 
-$(TEST:.dfn=): %: %.o %_r.o tests/driver.o runtime.o
-	$(CC) -o $@ $*.o $*_r.o tests/driver.o runtime.o
+$(TEST:.dfn=): %: %.o %_r.o tests/driver.o runtime.o pool.o
+	$(CC) -o $@ $*.o $*_r.o tests/driver.o runtime.o pool.o
 
 %.ll: %.dfn codfns
 	./codfns $< $@
 
-%.s: %.ll
-	llc $<
+%.o: %.ll
+	$(CC)  -c $(LLFLAGS) -o $*.o $<
 
 clean-tests:
 	rm -f $(TESTOBJ)

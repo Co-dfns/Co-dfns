@@ -36,13 +36,14 @@ constant_type(void)
 LLVMTypeRef
 function_type(void)
 {
-	LLVMTypeRef p, pts[2];
+	LLVMTypeRef p, pts[3];
 
+	pts[0] = LLVMPointerType(LLVMInt8Type(), 0);
 	p = LLVMPointerType(constant_type(), 0);
-	pts[0] = p;
 	pts[1] = p;
+	pts[2] = p;
 
-	return LLVMFunctionType(p, pts, 2, 0);
+	return LLVMFunctionType(p, pts, 3, 0);
 }
 
 LLVMValueRef
@@ -148,35 +149,36 @@ gl_constant(Pool *p, LLVMModuleRef m, Constant *v)
 }
 
 LLVMValueRef
-gl_application(LLVMModuleRef m, LLVMBuilderRef bldr, Application *a)
+gl_application(LLVMModuleRef m, LLVMBuilderRef bldr, LLVMValueRef lf, Application *a)
 {
 	Expression *el, *er;
 	char *lft, *rgt;
 	enum primitive prm;
-	LLVMValueRef args[2], fn, call;
+	LLVMValueRef args[3], fn, call;
 
 	prm = a->fn;
 	el = a->lft;
 	er = a->rgt;
 	
+	args[0] = LLVMGetParam(lf, 0);
 	lft = el == NULL ? NULL : ((Variable *) el->value)->name;
-	rgt = ((Variable *) el->value)->name;
+	rgt = ((Variable *) er->value)->name;
 
 	if (lft == NULL) {
-		args[0] = LLVMConstPointerNull(constant_type());
+		args[1] = LLVMConstPointerNull(constant_type());
 	} else {
-		args[0] = LLVMGetNamedGlobal(m, lft);
+		args[1] = LLVMGetNamedGlobal(m, lft);
 	}
 
-	args[1] = LLVMGetNamedGlobal(m, rgt);
+	args[2] = LLVMGetNamedGlobal(m, rgt);
 	fn = primitive_function(m, prm);
-	call = LLVMBuildCall(bldr, fn, args, 2, "");
+	call = LLVMBuildCall(bldr, fn, args, 3, "");
 	
 	return call;
 }
 
 void
-gl_expression(LLVMModuleRef m, LLVMBuilderRef bldr, Expression *e)
+gl_expression(LLVMModuleRef m, LLVMBuilderRef bldr, LLVMValueRef lf, Expression *e)
 {
 	char *vn;
 	LLVMValueRef res;
@@ -187,7 +189,7 @@ gl_expression(LLVMModuleRef m, LLVMBuilderRef bldr, Expression *e)
 		res = LLVMGetNamedGlobal(m, vn);
 		break;
 	case EXPR_APP:
-		res = gl_application(m, bldr, e->value);
+		res = gl_application(m, bldr, lf, e->value);
 		break;
 	case EXPR_LIT:	
 		fprintf(stderr, "EXPR_LIT in gl_function; this should never happen\n");
@@ -210,7 +212,7 @@ gl_function(LLVMModuleRef m, LLVMValueRef lf, Function *fn)
 
 	/* For now we assume that we have one variable expression */
 	e = fn->stmts[0];
-	gl_expression(m, bldr, e);
+	gl_expression(m, bldr, lf, e);
 
 	LLVMDisposeBuilder(bldr);
 }
@@ -254,6 +256,8 @@ generate_llvm(Module *m, Pool *mp)
 	
 	for (i = 0; i < c; i++)
 		gl_global(p, vm, *gs++);
+
+	LLVMSetTarget(vm, "x86_64-slackware-linux-gnu");
 
 	pool_dispose(mp);
 	pool_dispose(p);
