@@ -4,3 +4,5 @@ typedef struct array {
 	long *shape;
 	long *elems;
 } Array;
+
+Array *codfns_plus(Pool *, Array *, Array *);
