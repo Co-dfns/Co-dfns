@@ -49,66 +49,75 @@ function_type(void)
 LLVMValueRef
 primitive_function(LLVMModuleRef m, enum primitive fn)
 {
+	const char *nm;
 	LLVMTypeRef t;
+	LLVMValueRef v;
 
 	t = function_type();
 
 	switch (fn) {
-	case PRM_MINUS: return LLVMAddFunction(m, "codfns_minus", t);
-	case PRM_PLUS: return LLVMAddFunction(m, "codfns_plus", t);
-	case PRM_LT: return LLVMAddFunction(m, "codfns_lt", t);
-	case PRM_LTE: return LLVMAddFunction(m, "codfns_lte", t);
-	case PRM_EQ: return LLVMAddFunction(m, "codfns_eq", t);
-	case PRM_GTE: return LLVMAddFunction(m, "codfns_gte", t);
-	case PRM_GT: return LLVMAddFunction(m, "codfns_gt", t);
-	case PRM_NEQ: return LLVMAddFunction(m, "codfns_neq", t);
-	case PRM_AND: return LLVMAddFunction(m, "codfns_and", t);
-	case PRM_OR: return LLVMAddFunction(m, "codfns_or", t);
-	case PRM_TIMES: return LLVMAddFunction(m, "codfns_times", t);
-	case PRM_DIV: return LLVMAddFunction(m, "codfns_div", t);
-	case PRM_HOOK: return LLVMAddFunction(m, "codfns_hook", t);
-	case PRM_MEM: return LLVMAddFunction(m, "codfns_mem", t);
-	case PRM_RHO: return LLVMAddFunction(m, "codfns_rho", t);
-	case PRM_NOT: return LLVMAddFunction(m, "codfns_not", t);
-	case PRM_TAKE: return LLVMAddFunction(m, "codfns_take", t);
-	case PRM_DROP: return LLVMAddFunction(m, "codfns_drop", t);
-	case PRM_IOTA: return LLVMAddFunction(m, "codfns_iota", t);
-	case PRM_CIRC: return LLVMAddFunction(m, "codfns_circ", t);
-	case PRM_POW: return LLVMAddFunction(m, "codfns_pow", t);
-	case PRM_CEIL: return LLVMAddFunction(m, "codfns_ceil", t);
-	case PRM_FLOOR: return LLVMAddFunction(m, "codfns_floor", t);
-	case PRM_DEL: return LLVMAddFunction(m, "codfns_del", t);
-	case PRM_RGT: return LLVMAddFunction(m, "codfns_rgt", t);
-	case PRM_LFT: return LLVMAddFunction(m, "codfns_lft", t);
-	case PRM_ENCL: return LLVMAddFunction(m, "codfns_encl", t);
-	case PRM_DIS: return LLVMAddFunction(m, "codfns_dis", t);
-	case PRM_INTER: return LLVMAddFunction(m, "codfns_inter", t);
-	case PRM_UNION: return LLVMAddFunction(m, "codfns_union", t);
-	case PRM_ENC: return LLVMAddFunction(m, "codfns_enc", t);
-	case PRM_DEC: return LLVMAddFunction(m, "codfns_dec", t);
-	case PRM_ABS: return LLVMAddFunction(m, "codfns_abs", t);
-	case PRM_EXPNF: return LLVMAddFunction(m, "codfns_expnf", t);
-	case PRM_FILF: return LLVMAddFunction(m, "codfns_filf", t);
-	case PRM_GRDD: return LLVMAddFunction(m, "codfns_grdd", t);
-	case PRM_GRDU: return LLVMAddFunction(m, "codfns_grdu", t);
-	case PRM_ROT: return LLVMAddFunction(m, "codfns_rot", t);
-	case PRM_TRANS: return LLVMAddFunction(m, "codfns_trans", t);
-	case PRM_ROTF: return LLVMAddFunction(m, "codfns_rotf", t);
-	case PRM_LOG: return LLVMAddFunction(m, "codfns_log", t);
-	case PRM_NAND: return LLVMAddFunction(m, "codfns_nand", t);
-	case PRM_NOR: return LLVMAddFunction(m, "codfns_nor", t);
-	case PRM_BANG: return LLVMAddFunction(m, "codfns_bang", t);
-	case PRM_MDIV: return LLVMAddFunction(m, "codfns_mdiv", t);
-	case PRM_FIND: return LLVMAddFunction(m, "codfns_find", t);
-	case PRM_SQUAD: return LLVMAddFunction(m, "codfns_squad", t);
-	case PRM_EQV: return LLVMAddFunction(m, "codfns_eqv", t);
-	case PRM_NEQV: return LLVMAddFunction(m, "codfns_neqv", t);
-	case PRM_CATF: return LLVMAddFunction(m, "codfns_catf", t);
-	case PRM_FIL: return LLVMAddFunction(m, "codfns_fil", t);
-	case PRM_EXPND: return LLVMAddFunction(m, "codfns_expnd", t);
-	case PRM_CAT: return LLVMAddFunction(m, "codfns_cat", t);
-	case PRM_HAT: return LLVMAddFunction(m, "codfns_hat", t);
+	case PRM_MINUS: nm = "codfns_minus"; break;
+	case PRM_PLUS: nm = "codfns_plus"; break;
+	case PRM_LT: nm = "codfns_lt"; break;
+	case PRM_LTE: nm = "codfns_lte"; break;
+	case PRM_EQ: nm = "codfns_eq"; break;
+	case PRM_GTE: nm = "codfns_gte"; break;
+	case PRM_GT: nm = "codfns_gt"; break;
+	case PRM_NEQ: nm = "codfns_neq"; break;
+	case PRM_AND: nm = "codfns_and"; break;
+	case PRM_OR: nm = "codfns_or"; break;
+	case PRM_TIMES: nm = "codfns_times"; break;
+	case PRM_DIV: nm = "codfns_div"; break;
+	case PRM_HOOK: nm = "codfns_hook"; break;
+	case PRM_MEM: nm = "codfns_mem"; break;
+	case PRM_RHO: nm = "codfns_rho"; break;
+	case PRM_NOT: nm = "codfns_not"; break;
+	case PRM_TAKE: nm = "codfns_take"; break;
+	case PRM_DROP: nm = "codfns_drop"; break;
+	case PRM_IOTA: nm = "codfns_iota"; break;
+	case PRM_CIRC: nm = "codfns_circ"; break;
+	case PRM_POW: nm = "codfns_pow"; break;
+	case PRM_CEIL: nm = "codfns_ceil"; break;
+	case PRM_FLOOR: nm = "codfns_floor"; break;
+	case PRM_DEL: nm = "codfns_del"; break;
+	case PRM_RGT: nm = "codfns_rgt"; break;
+	case PRM_LFT: nm = "codfns_lft"; break;
+	case PRM_ENCL: nm = "codfns_encl"; break;
+	case PRM_DIS: nm = "codfns_dis"; break;
+	case PRM_INTER: nm = "codfns_inter"; break;
+	case PRM_UNION: nm = "codfns_union"; break;
+	case PRM_ENC: nm = "codfns_enc"; break;
+	case PRM_DEC: nm = "codfns_dec"; break;
+	case PRM_ABS: nm = "codfns_abs"; break;
+	case PRM_EXPNF: nm = "codfns_expnf"; break;
+	case PRM_FILF: nm = "codfns_filf"; break;
+	case PRM_GRDD: nm = "codfns_grdd"; break;
+	case PRM_GRDU: nm = "codfns_grdu"; break;
+	case PRM_ROT: nm = "codfns_rot"; break;
+	case PRM_TRANS: nm = "codfns_trans"; break;
+	case PRM_ROTF: nm = "codfns_rotf"; break;
+	case PRM_LOG: nm = "codfns_log"; break;
+	case PRM_NAND: nm = "codfns_nand"; break;
+	case PRM_NOR: nm = "codfns_nor"; break;
+	case PRM_BANG: nm = "codfns_bang"; break;
+	case PRM_MDIV: nm = "codfns_mdiv"; break;
+	case PRM_FIND: nm = "codfns_find"; break;
+	case PRM_SQUAD: nm = "codfns_squad"; break;
+	case PRM_EQV: nm = "codfns_eqv"; break;
+	case PRM_NEQV: nm = "codfns_neqv"; break;
+	case PRM_CATF: nm = "codfns_catf"; break;
+	case PRM_FIL: nm = "codfns_fil"; break;
+	case PRM_EXPND: nm = "codfns_expnd"; break;
+	case PRM_CAT: nm = "codfns_cat"; break;
+	case PRM_HAT: nm = "codfns_hat"; break;
 	}
+
+	v = LLVMGetNamedFunction(m, nm);
+
+	if (v == NULL)
+		v = LLVMAddFunction(m, nm, t);
+
+	return v;
 }
 
 LLVMValueRef

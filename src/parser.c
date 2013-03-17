@@ -130,17 +130,16 @@ parse_expression(Pool *p, Stack *s, enum expr_type t)
 void
 parse_application(Pool *p, Stack *s)
 {
-	Constant *lft, *rgt;
+	Constant *lft;
 	Primitive *prm;
-	Expression *elft, *ergt;
+	Expression *elft, *rgt;
 	Application *app;
 
 	rgt = pop(s);
 	prm = pop(s);
 	lft = pop(s);
 	elft = new_expression(p, EXPR_LIT, NULL, lft);
-	ergt = new_expression(p, EXPR_LIT, NULL, rgt);
-	app = new_application(p, prm->value, elft, ergt);
+	app = new_application(p, prm->value, elft, rgt);
 	
 	push(s, app);
 }

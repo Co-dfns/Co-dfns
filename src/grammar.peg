@@ -15,7 +15,7 @@ Expression <- Application
 	/ IntegerArray
 	{ parse_expression(ctx->pool, ctx->stack, EXPR_LIT); }
 
-Application <- IntegerArray OWS Primitive OWS IntegerArray
+Application <- IntegerArray OWS Primitive OWS Expression
 	{ parse_application(ctx->pool, ctx->stack); }
 
 Primitive <-
