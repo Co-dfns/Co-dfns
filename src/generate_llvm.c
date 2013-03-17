@@ -148,36 +148,29 @@ gl_constant(Pool *p, LLVMModuleRef m, Constant *v)
 	return LLVMConstStruct(r, 4, 0);
 }
 
+LLVMValueRef gl_expression(LLVMModuleRef, LLVMBuilderRef, LLVMValueRef, Expression *);
+
 LLVMValueRef
 gl_application(LLVMModuleRef m, LLVMBuilderRef bldr, LLVMValueRef lf, Application *a)
 {
-	Expression *el, *er;
-	char *lft, *rgt;
-	enum primitive prm;
 	LLVMValueRef args[3], fn, call;
-
-	prm = a->fn;
-	el = a->lft;
-	er = a->rgt;
 	
 	args[0] = LLVMGetParam(lf, 0);
-	lft = el == NULL ? NULL : ((Variable *) el->value)->name;
-	rgt = ((Variable *) er->value)->name;
 
-	if (lft == NULL) {
+	if (a->lft == NULL) 
 		args[1] = LLVMConstPointerNull(constant_type());
-	} else {
-		args[1] = LLVMGetNamedGlobal(m, lft);
-	}
+	else
+		args[1] = gl_expression(m, bldr, lf, a->lft);
 
-	args[2] = LLVMGetNamedGlobal(m, rgt);
-	fn = primitive_function(m, prm);
+	args[2] = gl_expression(m, bldr, lf, a->rgt);
+
+	fn = primitive_function(m, a->fn);
 	call = LLVMBuildCall(bldr, fn, args, 3, "");
 	
 	return call;
 }
 
-void
+LLVMValueRef
 gl_expression(LLVMModuleRef m, LLVMBuilderRef bldr, LLVMValueRef lf, Expression *e)
 {
 	char *vn;
@@ -196,7 +189,7 @@ gl_expression(LLVMModuleRef m, LLVMBuilderRef bldr, LLVMValueRef lf, Expression 
 		exit(EXIT_FAILURE);
 	}
 	
-	LLVMBuildRet(bldr, res);
+	return res;
 }
 
 void
@@ -205,6 +198,7 @@ gl_function(LLVMModuleRef m, LLVMValueRef lf, Function *fn)
 	Expression *e;
 	LLVMBasicBlockRef bb;
 	LLVMBuilderRef bldr;
+	LLVMValueRef rv;
 	
 	bldr = LLVMCreateBuilder();
 	bb = LLVMAppendBasicBlock(lf, "_");
@@ -212,8 +206,9 @@ gl_function(LLVMModuleRef m, LLVMValueRef lf, Function *fn)
 
 	/* For now we assume that we have one variable expression */
 	e = fn->stmts[0];
-	gl_expression(m, bldr, lf, e);
+	rv = gl_expression(m, bldr, lf, e);
 
+	LLVMBuildRet(bldr, rv);
 	LLVMDisposeBuilder(bldr);
 }
 
