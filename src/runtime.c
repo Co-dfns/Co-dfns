@@ -56,7 +56,7 @@ codfns_plus(Pool *p, Array *lft, Array *rgt)
 	if (same_shape(lft, rgt)) {
 		c = res->size = lft->size;
 		res->rank = lft->rank;
-		res->shape = pool_alloc(p, lft->rank * sizeof(long));
+		res->shape = SCALAR(lft) ? NULL : pool_alloc(p, lft->rank * sizeof(long));
 		memcpy(res->shape, lft->shape, res->rank);
 		lv = lft->elems;
 		rv = rgt->elems;
@@ -65,7 +65,7 @@ codfns_plus(Pool *p, Array *lft, Array *rgt)
 	} else if (SCALAR(lft)) {
 		c = res->size = rgt->size;
 		res->rank = rgt->rank;
-		res->shape = pool_alloc(p, rgt->rank * sizeof(long));
+		res->shape = SCALAR(rgt) ? NULL : pool_alloc(p, rgt->rank * sizeof(long));
 		memcpy(res->shape, rgt->shape, res->rank);
 		s = *lft->elems;
 		rv = rgt->elems;
@@ -74,7 +74,7 @@ codfns_plus(Pool *p, Array *lft, Array *rgt)
 	} else if (SCALAR(rgt)) {
 		c = res->size = lft->size;
 		res->rank = lft->rank;
-		res->shape = pool_alloc(p, lft->rank * sizeof(long));
+		res->shape = SCALAR(lft) ? NULL : pool_alloc(p, lft->rank * sizeof(long));
 		memcpy(res->shape, lft->shape, res->rank);
 		s = *rgt->elems;
 		lv = lft->elems;
