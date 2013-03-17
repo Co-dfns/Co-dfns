@@ -45,11 +45,7 @@ main(int argc, char *argv[])
 
 	ifn = argv[1];
 	ofn = argv[2];
-
-	if ((p = new_pool(INIT_POOL_SIZE)) == NULL) {
-		fprintf(stderr, "%s: failed to create memory pool for parsing\n", *argv);
-		exit(EXIT_FAILURE);
-	}
+	p = new_pool(INIT_POOL_SIZE);
 
 	if ((m = parse_file(p, ifn)) == NULL) {
 		fprintf(stderr, "%s: failed to parse %s\n", *argv, argv[1]);

@@ -232,11 +232,7 @@ parse_file(Pool* p, char *fnam)
 	memset(&ctx, 0, sizeof(yycontext));
 	ctx.pool = p;
 	ctx.ifile = fil;
-
-	if ((ctx.stack = new_stack(INIT_STACK_SIZE)) == NULL) {
-		fprintf(stderr, "parse_file: failed to allocate stack");
-		return NULL;
-	}
+	ctx.stack = new_stack(INIT_STACK_SIZE);
 
 	while (parse_codfns(&ctx));
 

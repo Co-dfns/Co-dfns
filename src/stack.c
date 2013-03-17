@@ -32,7 +32,7 @@ new_stack(int count)
 
 	if (buf == NULL) {
 		perror("new_stack");
-		return NULL;
+		exit(EXIT_FAILURE);
 	}
 
 	res = malloc(sizeof(Stack));
@@ -40,7 +40,7 @@ new_stack(int count)
 	if (res == NULL) {
 		perror("new_stack");
 		free(buf);
-		return NULL;
+		exit(EXIT_FAILURE);
 	}
 
 	res->start = buf;
@@ -57,7 +57,7 @@ stack_dispose(Stack *s)
 	free(s);
 }
 
-int
+void
 stack_resize(Stack *s, int count)
 {
 	int o;
@@ -68,25 +68,19 @@ stack_resize(Stack *s, int count)
 
 	if (buf == NULL) {
 		perror("stack_resize");
-		return 1;
+		exit(EXIT_FAILURE);
 	}
 
 	s->start = buf;
 	s->end = buf + count;
 	s->cur = buf + o;
-
-	return 0;
 }
 
 int
 push(Stack *s, void *e)
 {
-	if (!STACK_AVAIL(s)) {
-		if (stack_resize(s, 1.5 * STACK_SIZE(s) + 1)) {
-			perror("push");
-			return 1;
-		}
-	}
+	if (!STACK_AVAIL(s))
+		stack_resize(s, 1.5 * STACK_SIZE(s));
 
 	*(s->cur++) = e;
 	return 0;
