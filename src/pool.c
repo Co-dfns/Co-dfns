@@ -35,10 +35,10 @@ int
 pool_resize(Pool *p, size_t s)
 {
 	char *buf;
-	int o;
+	size_t o;
 
 	buf = p->start;
-	o = (char *)p->cur - buf;
+	o = POOL_USED(p);
 	buf = realloc(buf, s);
 
 	if (buf == NULL) {
@@ -66,7 +66,7 @@ pool_alloc(Pool *p, size_t s)
 	void *res;
 
 	while (s > POOL_AVAIL(p)) {
-		if (pool_resize(p, 1.5 * POOL_SIZE(p) + 1))
+		if (pool_resize(p, 1.5 * POOL_SIZE(p)))
 			return NULL;
 	}
 
@@ -75,4 +75,3 @@ pool_alloc(Pool *p, size_t s)
 
 	return res;
 }
-
