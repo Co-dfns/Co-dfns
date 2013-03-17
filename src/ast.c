@@ -252,12 +252,7 @@ new_module(Pool *p, int count)
 	Global **buf;
 
 	s = sizeof(Module) + count * sizeof(Global *);
-	
-	if ((buf = pool_alloc(p, s)) == NULL) {
-		fprintf(stderr, "new_module: failed to create node");
-		return NULL;
-	}
-	
+	buf = pool_alloc(p, s);
 	res = (Module *) (buf + count);
 	res->count = count;
 	res->globals = buf;
@@ -287,12 +282,7 @@ new_constant(Pool *p, int count)
 	long *buf;
 
 	s = sizeof(Constant) + count * sizeof(long);
-
-	if ((buf = pool_alloc(p, s)) == NULL) {
-		fprintf(stderr, "new_constant: failed to create node");
-		return NULL;
-	}
-
+	buf = pool_alloc(p, s);
 	res = (Constant *) (buf + count);
 	res->count = count;
 	res->elems = buf;

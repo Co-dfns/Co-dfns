@@ -113,12 +113,8 @@ lift_constants(Module **astp, Pool **mpp)
 	Pool *mp;
 	Stack *ngs;
 
-	if ((mp = new_pool(POOL_SIZE(*mpp))) == NULL) 
-		fail_exit("failed to create pool", *mpp);
-
-	if ((ngs = new_stack(INIT_POOL_SIZE)) == NULL) 
-		fail_exit("failed to create stack", *mpp);
-
+	mp = new_pool(POOL_SIZE(*mpp));
+	ngs = new_stack(INIT_POOL_SIZE);
 	c = (*astp)->count;
 	gs = (*astp)->globals;
 
@@ -137,10 +133,7 @@ lift_constants(Module **astp, Pool **mpp)
 
 	pool_dispose(*mpp);
 	c = STACK_COUNT(ngs);
-	
-	if ((om = new_module(mp, c)) == NULL)
-		fail_exit("failed to create outgoing module", mp);
-
+	om = new_module(mp, c);
 	gs = om->globals + c;
 
 	for (i = 0; i < c; i++) 

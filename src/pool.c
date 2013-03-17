@@ -13,7 +13,7 @@ new_pool(size_t s)
 
 	if (buf == NULL) {
 		perror("new_pool");
-		return NULL;
+		exit(EXIT_FAILURE);
 	}
 
 	res = malloc(sizeof(Pool));
@@ -21,7 +21,7 @@ new_pool(size_t s)
 	if (res == NULL) {
 		perror("new_pool");
 		free(buf);
-		return NULL;
+		exit(EXIT_FAILURE);
 	}
 
 	res->start = buf;
@@ -31,6 +31,7 @@ new_pool(size_t s)
 	return res;
 }
 
+/* This is not used right now because Pools cannot be resized. */
 int
 pool_resize(Pool *p, size_t s)
 {
@@ -65,9 +66,9 @@ pool_alloc(Pool *p, size_t s)
 {
 	void *res;
 
-	while (s > POOL_AVAIL(p)) {
-		if (pool_resize(p, 1.5 * POOL_SIZE(p)))
-			return NULL;
+	if (s > POOL_AVAIL(p)) {
+		fprintf(stderr, "No more memory in pool\n");
+		exit(EXIT_FAILURE);
 	}
 
 	res = p->cur;
