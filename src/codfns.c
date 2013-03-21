@@ -26,13 +26,19 @@ print_usage(char *progname)
 LLVMModuleRef
 run_passes(Module **ast, Pool **p)
 {
+	LLVMModuleRef res;
+
 	print_module (stderr, *ast);
-	lift_constants(ast, p);
 
 	fprintf(stderr, "lift_constants:\n");
+	lift_constants(ast, p);
 	print_module(stderr, *ast);
 
-	return generate_llvm(*ast, *p);
+	fprintf(stderr, "generate_llvm:\n");
+	res = generate_llvm(*ast, *p);
+	LLVMDumpModule(res);
+
+	return res;
 }
 
 int
@@ -61,9 +67,6 @@ main(int argc, char *argv[])
 		LLVMDisposeMessage(emsg);
 		exit(EXIT_FAILURE);
 	}
-
-	fprintf(stderr, "generate_llvm:\n");
-	LLVMDumpModule(vm);
 
 	return 0;
 }
