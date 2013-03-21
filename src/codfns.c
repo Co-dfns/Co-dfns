@@ -9,7 +9,7 @@
 #include "lift_constants.h"
 #include "generate_llvm.h"
 
-#define INIT_POOL_SIZE 1024
+#define INIT_POOL_SIZE 2048
 
 const char *usage = {
 	"Invalid options. Command line summary:\n"
