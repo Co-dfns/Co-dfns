@@ -462,13 +462,13 @@ copy_expression(Pool *p, Expression *oe)
 	
 	switch (exp->type) {
 	case EXPR_LIT:
-		exp->value = copy_constant(p, exp->value);
+		exp->value = copy_constant(p, oe->value);
 		break;
 	case EXPR_VAR:
-		exp->value = copy_variable(p, exp->value);
+		exp->value = copy_variable(p, oe->value);
 		break;
 	case EXPR_APP:
-		exp->value = copy_application(p, exp->value);
+		exp->value = copy_application(p, oe->value);
 		break;
 	}
 
