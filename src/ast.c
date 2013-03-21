@@ -5,7 +5,7 @@
 #include "ast.h"
 
 void
-print_constant(Constant *con)
+print_constant(FILE *fd, Constant *con)
 {
 	int i, c;
 	long *n;
@@ -14,59 +14,59 @@ print_constant(Constant *con)
 	n = con->elems;
 
 	for (i = 0; i < c; i++)
-		printf("%ld ", *n++);
+		fprintf(fd, "%ld ", *n++);
 }
 
 void
-print_variable(Variable *var)
+print_variable(FILE *fd, Variable *var)
 {
-	printf("%s", var->name);
+	fprintf(fd, "%s", var->name);
 }
 
 void
-print_function(Function *func)
+print_function(FILE *fd, Function *func)
 {
 	int i, c;
 	Expression **es;
 
-	printf("{\n");
+	fprintf(fd, "{\n");
 
 	c = func->count;
 	es = func->stmts;
 
 	for (i = 0; i < c; i++) {
-		print_expression(*es++);
-		printf("\n");
+		print_expression(fd, *es++);
+		fprintf(fd, "\n");
 	}
 
-	printf("\n}\n");
+	fprintf(fd, "\n}\n");
 
 	return;
 }
 
 void 
-print_expression(Expression *exp) 
+print_expression(FILE *fd, Expression *exp) 
 {
 	if (exp->tgt != NULL) {
-		print_variable(exp->tgt);
-		printf("←");
+		print_variable(fd, exp->tgt);
+		fprintf(fd, "←");
 	}
 
 	switch (exp->type) {
 	case EXPR_LIT: 
-		print_constant(exp->value); 
+		print_constant(fd, exp->value); 
 		break;
 	case EXPR_VAR: 
-		print_variable(exp->value); 
+		print_variable(fd, exp->value); 
 		break;
 	case EXPR_APP:
-		print_application(exp->value);
+		print_application(fd, exp->value);
 		break;
 	}
 }
 
 void
-print_application(Application *app)
+print_application(FILE *fd, Application *app)
 {
 	Expression *lft;
 
@@ -75,27 +75,27 @@ print_application(Application *app)
 	if (lft != NULL) {
 		switch (lft->type) {
 		case EXPR_LIT:
-			print_constant(lft->value);
+			print_constant(fd, lft->value);
 			break;
 		case EXPR_VAR:
-			print_variable(lft->value);
+			print_variable(fd, lft->value);
 			break;
 		case EXPR_APP:
-			printf("(");
-			print_application(lft->value);
-			printf(")");
+			fprintf(fd, "(");
+			print_application(fd, lft->value);
+			fprintf(fd, ")");
 			break;
 		}
 	}
 	
-	printf(" ");
-	print_primitive(app->fn);
-	printf(" ");
-	print_expression(app->rgt);
+	fprintf(fd, " ");
+	print_primitive(fd, app->fn);
+	fprintf(fd, " ");
+	print_expression(fd, app->rgt);
 }
 
 void
-print_primitive(enum primitive fn)
+print_primitive(FILE *fd, enum primitive fn)
 {
 	const char *s;
 
@@ -210,20 +210,20 @@ print_primitive(enum primitive fn)
 		s = "^"; break;
 	}
 
-	printf("%s", s);
+	fprintf(fd, "%s", s);
 }
 
 void
-print_global(Global *global)
+print_global(FILE *fd, Global *global)
 {
-	printf("%s←", global->var->name);
+	fprintf(fd, "%s←", global->var->name);
 
 	switch (global->type) {
 		case GLOBAL_CONST:
-			print_constant(global->value);
+			print_constant(fd, global->value);
 			break;
 		case GLOBAL_FUNC:
-			print_function(global->value);
+			print_function(fd, global->value);
 			break;
 	}
 
@@ -232,13 +232,13 @@ print_global(Global *global)
 }
 
 void
-print_module(Module *module)
+print_module(FILE *fd, Module *module)
 {
 	int i;
 
 	for (i=0; i < module->count; i++) {
-		print_global(module->globals[i]);
-		printf("\n");
+		print_global(fd, module->globals[i]);
+		fprintf(fd, "\n");
 	}
 
 	return;

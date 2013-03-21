@@ -108,14 +108,14 @@ typedef struct ast_integer {
 	long value;
 } Integer;
 
-void print_module(Module *);
-void print_global(Global *);
-void print_function(Function *);
-void print_expression(Expression *);
-void print_application(Application *);
-void print_constant(Constant *);
-void print_variable(Variable *);
-void print_primitive(enum primitive);
+void print_module(FILE *, Module *);
+void print_global(FILE *, Global *);
+void print_function(FILE *, Function *);
+void print_expression(FILE *, Expression *);
+void print_application(FILE *, Application *);
+void print_constant(FILE *, Constant *);
+void print_variable(FILE *, Variable *);
+void print_primitive(FILE *, enum primitive);
 
 Module *new_module(Pool *, int);
 Global *new_global(Pool *, Variable *, enum global_type, void *);
