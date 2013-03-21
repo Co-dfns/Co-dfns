@@ -213,6 +213,20 @@ parse_primitive(Pool *p, Stack *s, char *txt, int len)
 	push(s, prm);
 }
 
+void
+parse_assignment(Pool *p, Stack *s)
+{
+	Expression *e;
+	Variable *v;
+
+	e = pop(s);
+	v = pop(s);
+
+	e->tgt = v;
+
+	push(s, e);
+}
+
 #include "grammar.c"
 
 Module *

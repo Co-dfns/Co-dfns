@@ -3,10 +3,19 @@
 
 #include <llvm-c/Core.h>
 
+#include "env.h"
 #include "pool.h"
 #include "ast.h"
 
 #define INIT_POOL_SIZE 1024
+#define INIT_ENV_SIZE 64
+
+struct state {
+	LLVMModuleRef module;
+	LLVMBuilderRef builder;
+	Pool *pool;
+	Environment *env;
+};
 
 LLVMTypeRef 
 long_type(void)
@@ -47,7 +56,7 @@ function_type(void)
 }
 
 LLVMValueRef
-primitive_function(LLVMModuleRef m, enum primitive fn)
+primitive_function(struct state *s, enum primitive fn)
 {
 	const char *nm;
 	LLVMTypeRef t;
@@ -112,32 +121,32 @@ primitive_function(LLVMModuleRef m, enum primitive fn)
 	case PRM_HAT: nm = "codfns_hat"; break;
 	}
 
-	v = LLVMGetNamedFunction(m, nm);
+	v = LLVMGetNamedFunction(s->module, nm);
 
 	if (v == NULL)
-		v = LLVMAddFunction(m, nm, t);
+		v = LLVMAddFunction(s->module, nm, t);
 
 	return v;
 }
 
 LLVMValueRef
-gl_constant(Pool *p, LLVMModuleRef m, Constant *v)
+gl_constant(struct state *s, Constant *v)
 {
 	int i, c;
 	long *n;
-	LLVMValueRef k, g, s, *ln, *lni, r[4];
-	LLVMTypeRef t, ts, pt;
+	LLVMValueRef k, g, sh, *ln, *lni, r[4];
+	LLVMTypeRef t, tsh, pt;
 
 	c = v->count;
 	n = v->elems;
-	lni = ln = pool_alloc(p, c * sizeof(LLVMValueRef));
+	lni = ln = pool_alloc(s->pool, c * sizeof(LLVMValueRef));
 
 	for (i = 0; i < c; i++)
 		*lni++ = LLVMConstInt(long_type(), *n++, 0);
 
 	t = LLVMArrayType(long_type(), c);
 	pt = LLVMPointerType(long_type(), 0);
-	g = LLVMAddGlobal(m, t, "");
+	g = LLVMAddGlobal(s->module, t, "");
 	r[0] = LLVMConstInt(int_type(), c, 0);
 	r[3] = LLVMConstPointerCast(g, pt);
 	LLVMSetInitializer(g, LLVMConstArray(long_type(), ln, c));
@@ -146,83 +155,107 @@ gl_constant(Pool *p, LLVMModuleRef m, Constant *v)
 		r[1] = LLVMConstInt(int_type(), 0, 0);
 		r[2] = LLVMConstPointerNull(pt);
 	} else {
-		ts = LLVMArrayType(long_type(), 1);
-		s = LLVMAddGlobal(m, ts, "");
+		tsh = LLVMArrayType(long_type(), 1);
+		sh = LLVMAddGlobal(s->module, tsh, "");
 		k = LLVMConstInt(long_type(), c, 0);
 		r[1] = LLVMConstInt(int_type(), 1, 0);
-		r[2] = LLVMConstPointerCast(s, pt);
-		LLVMSetInitializer(s, LLVMConstArray(long_type(), &k, 1));
+		r[2] = LLVMConstPointerCast(sh, pt);
+		LLVMSetInitializer(sh, LLVMConstArray(long_type(), &k, 1));
 	}
 
 	return LLVMConstStruct(r, 4, 0);
 }
 
-LLVMValueRef gl_expression(LLVMModuleRef, LLVMBuilderRef, LLVMValueRef, Expression *);
+LLVMValueRef gl_expression(struct state *, LLVMValueRef, Expression *);
 
 LLVMValueRef
-gl_application(LLVMModuleRef m, LLVMBuilderRef bldr, LLVMValueRef lf, Application *a)
+gl_application(struct state *s, LLVMValueRef lf, Application *a)
 {
 	LLVMValueRef args[3], fn, call;
-	
+
 	args[0] = LLVMGetParam(lf, 0);
+
+	/* Process right argument first to match order of execution (side-effects) */
+	args[2] = gl_expression(s, lf, a->rgt);
 
 	if (a->lft == NULL) 
 		args[1] = LLVMConstPointerNull(constant_type());
 	else
-		args[1] = gl_expression(m, bldr, lf, a->lft);
+		args[1] = gl_expression(s, lf, a->lft);
 
-	args[2] = gl_expression(m, bldr, lf, a->rgt);
-
-	fn = primitive_function(m, a->fn);
-	call = LLVMBuildCall(bldr, fn, args, 3, "");
+	fn = primitive_function(s, a->fn);
+	call = LLVMBuildCall(s->builder, fn, args, 3, "");
 	
 	return call;
 }
 
 LLVMValueRef
-gl_expression(LLVMModuleRef m, LLVMBuilderRef bldr, LLVMValueRef lf, Expression *e)
+gl_variable(struct state *s, Variable *var)
 {
-	char *vn;
+	enum env_type t;
+	void *v;
+	
+	if (env_lookup(s->env, var->name, &t, &v))
+		return v;
+	else
+		v = LLVMGetNamedGlobal(s->module, var->name);
+
+	if (v == NULL) {
+		fprintf(stderr, "Unknown variable %s\n", var->name);
+		exit(EXIT_FAILURE);
+	}
+
+	return v;
+}
+
+LLVMValueRef
+gl_expression(struct state *s, LLVMValueRef lf, Expression *e)
+{
+	const char *nm;
 	LLVMValueRef res;
 	
 	switch (e->type) {
 	case EXPR_VAR:
-		vn = ((Variable *) e->value)->name;
-		res = LLVMGetNamedGlobal(m, vn);
+		res = gl_variable(s, e->value);
 		break;
 	case EXPR_APP:
-		res = gl_application(m, bldr, lf, e->value);
+		res = gl_application(s, lf, e->value);
 		break;
 	case EXPR_LIT:	
 		fprintf(stderr, "EXPR_LIT in gl_function; this should never happen\n");
 		exit(EXIT_FAILURE);
 	}
-	
+
+	if (e->tgt != NULL) {
+		nm = e->tgt->name;
+		env_insert(s->env, nm, ENV_VALUE, res);
+		LLVMSetValueName(res, nm); 
+	}
+
 	return res;
 }
 
 void
-gl_function(LLVMModuleRef m, LLVMValueRef lf, Function *fn)
+gl_function(struct state *s, LLVMValueRef lf, Function *fn)
 {
 	Expression *e;
 	LLVMBasicBlockRef bb;
-	LLVMBuilderRef bldr;
 	LLVMValueRef rv;
 	
-	bldr = LLVMCreateBuilder();
 	bb = LLVMAppendBasicBlock(lf, "_");
-	LLVMPositionBuilderAtEnd(bldr, bb);
+	LLVMPositionBuilderAtEnd(s->builder, bb);
 
 	/* For now we assume that we have one variable expression */
+	env_insert_frame(s->env);
 	e = fn->stmts[0];
-	rv = gl_expression(m, bldr, lf, e);
+	rv = gl_expression(s, lf, e);
+	env_clear_frame(s->env);
 
-	LLVMBuildRet(bldr, rv);
-	LLVMDisposeBuilder(bldr);
+	LLVMBuildRet(s->builder, rv);
 }
 
 void
-gl_global(Pool *p, LLVMModuleRef m, Global *g)
+gl_global(struct state *s, Global *g)
 {
 	char *vn;
 	LLVMValueRef v, gv;
@@ -233,14 +266,14 @@ gl_global(Pool *p, LLVMModuleRef m, Global *g)
 	switch (g->type) {
 	case GLOBAL_CONST:
 		t = constant_type();
-		v = gl_constant(p, m, g->value);
-		gv = LLVMAddGlobal(m, t, vn);
+		v = gl_constant(s, g->value);
+		gv = LLVMAddGlobal(s->module, t, vn);
 		LLVMSetInitializer(gv, v);
 		break;
 	case GLOBAL_FUNC:
 		t = function_type();
-		gv = LLVMAddFunction(m, vn, t);
-		gl_function(m, gv, g->value);
+		gv = LLVMAddFunction(s->module, vn, t);
+		gl_function(s, gv, g->value);
 		break;
 	}
 }
@@ -250,21 +283,24 @@ generate_llvm(Module *m, Pool *mp)
 {
 	int i, c;
 	Global **gs;
-	LLVMModuleRef vm;
-	Pool *p;
+	struct state s;
 
-	p = new_pool(INIT_POOL_SIZE);
-	vm = LLVMModuleCreateWithName("Co-Dfns Module");
+	s.pool = new_pool(INIT_POOL_SIZE);
+	s.module = LLVMModuleCreateWithName("Co-Dfns Module");
+	s.builder = LLVMCreateBuilder();
+	s.env = new_env(INIT_ENV_SIZE);
 	c = m->count;
 	gs = m->globals;
 	
 	for (i = 0; i < c; i++)
-		gl_global(p, vm, *gs++);
+		gl_global(&s, *gs++);
 
-	LLVMSetTarget(vm, "x86_64-slackware-linux-gnu");
+	LLVMSetTarget(s.module, "x86_64-slackware-linux-gnu");
 
 	pool_dispose(mp);
-	pool_dispose(p);
+	pool_dispose(s.pool);
+	env_dispose(s.env);
+	LLVMDisposeBuilder(s.builder);
 
-	return vm;
+	return s.module;
 }
