@@ -43,7 +43,7 @@ env_lookup(Environment *env, const char *s, enum env_type *t, void **v)
 	int i, c;
 	struct env_entry *es;
 
-	es = env->end;
+	es = env->cur;
 	c = ENV_COUNT(env);
 
 	for (i = 0; i < c; i++) {
@@ -70,7 +70,7 @@ env_clear_frame(Environment *env)
 	int i, c;
 	struct env_entry *es;
 
-	es = env->end;
+	es = env->cur;
 	c = ENV_COUNT(env);
 
 	for (i = 0; i < c; i++) {
