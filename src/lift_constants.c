@@ -20,13 +20,11 @@ fail_exit(const char *msg, Pool *mp)
 Variable *
 lift(Pool *mp, Stack *s, Constant *a)
 {
-	char *u;
 	Variable *v;
 	Constant *c;
 	Global *g;
 	
-	u = unique_name(mp, "gvar");
-	v = new_variable(mp, u, strlen(u));
+	v = unique_variable(mp, "gvar");
 	c = copy_constant(mp, a);
 	g = new_global(mp, v, GLOBAL_CONST, c);
 	push(s, g);
