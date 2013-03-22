@@ -93,10 +93,8 @@ parse_int(Pool *p, Stack *s, char *ns, int l)
 {
 	long v;
 	Integer *n;
-	char b[64];
 
-	strncpy(b, ns, l);
-	v = strtol(b, NULL, 10);
+	v = strtol(ns, NULL, 10);
 	n = new_int(p, v);
 	push(s, n);
 }
