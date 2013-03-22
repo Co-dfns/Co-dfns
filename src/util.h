@@ -1,1 +1,1 @@
-char *unique_name(Pool *, const char *);
+Variable *unique_variable(Pool *, const char *);

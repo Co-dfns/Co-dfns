@@ -2,19 +2,29 @@
 #include <string.h>
 
 #include "pool.h"
+#include "ast.h"
 
 unsigned short var_counter = 0;
 
-char *
-unique_name(Pool *mp, const char *prefix)
+#define COUNTER_MAX 65536
+#define COUNTER_DIGITS 5
+
+Variable *
+unique_variable(Pool *mp, const char *prefix)
 {
-	char *buf;
-	size_t siz;
-	siz = 5 + strlen(prefix); /* Length, not including |'\0'| */
-	buf = pool_alloc(mp, sizeof(char) * (siz + 1));
-	sprintf(buf, "%s%d", prefix, var_counter);
-	buf[siz] = '\0';
-	var_counter = (var_counter + 1) % 65536;
-	return buf;
+	char *b;
+	size_t l;
+	Variable *v;
+
+	l = strlen(prefix);
+	v = NEW_NODE(mp, Variable);
+	b = pool_alloc(mp, l + COUNTER_DIGITS + 1);
+	v->name = b;
+	strcpy(b, prefix);
+	b += l;
+	sprintf(b, "%hd", var_counter);
+	var_counter = (var_counter +1) % COUNTER_MAX;
+
+	return v;
 }
 
