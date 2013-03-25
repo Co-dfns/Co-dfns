@@ -100,17 +100,23 @@ parse_int(Pool *p, Stack *s, char *ns, int l)
 }
 
 void
-parse_function(Pool *p, Stack *s)
+parse_function(Pool *p, Stack *os)
 {
+	int i, c;
+	Stack *s;
 	Function *fn;
-	Expression **es, *e;
+	Expression **es;
 
-	e = pop(s);
-	es = pool_alloc(p, sizeof(Expression *));
-	*es = e;
-	fn = new_function(p, es, 1);
+	s = new_stack_barrier(os);
+	c = STACK_COUNT(s);
+	es = pool_alloc(p, c * sizeof(Expression *));
+	fn = new_function(p, es, c);
 
-	push(s, fn);
+	for (i = 0; i < c; i++)
+		*es++ = pop(s);
+
+	push(os, fn);
+	stack_dispose(s);
 }
 
 void
