@@ -1,7 +1,7 @@
-Module <- OWSNL Global+ OWSNL 
+Module <- OWSONL Global+ OWSONL 
 	{ parse_module(ctx->pool, ctx->stack); }
 
-Global <- Variable "←" Function 
+Global <- Variable OWS "←" OWS Function 
 	{ parse_global(ctx->pool, ctx->stack, GLOBAL_FUNC); }
 
 Function <- "{" OWS Expression OWS "}"
@@ -46,5 +46,7 @@ Integer <- <[0-9]+> { parse_int(ctx->pool, ctx->stack, yytext, yyleng); }
 
 OWS <- WS ?
 OWSNL <- WSNL ?
+OWSONL <- (WS / NL)*
 WS <- (" " / "\t" )+
-WSNL <- (" " / "\t" / "\r" / "\n" / "⍝" [^\n]* "\n")+
+NL <- "\r" ? "\n"
+WSNL <- (OWS NL)+
