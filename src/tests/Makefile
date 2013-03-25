@@ -32,3 +32,4 @@ clean-tests:
 	rm -f $(TESTOBJ)
 	rm -f $(TESTOBJ:.o=.d) tests/driver.d
 	rm -f $(TEST:.dfn=)
+	rm -f $(TEST:.dfn=.ll)
