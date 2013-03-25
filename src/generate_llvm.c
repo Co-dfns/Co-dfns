@@ -238,19 +238,21 @@ gl_expression(struct state *s, LLVMValueRef lf, Expression *e)
 void
 gl_function(struct state *s, LLVMValueRef lf, Function *fn)
 {
-	Expression *e;
+	int i, c;
+	Expression **e;
 	LLVMBasicBlockRef bb;
 	LLVMValueRef rv;
 	
 	bb = LLVMAppendBasicBlock(lf, "_");
 	LLVMPositionBuilderAtEnd(s->builder, bb);
-
-	/* For now we assume that we have one variable expression */
 	env_insert_frame(s->env);
-	e = fn->stmts[0];
-	rv = gl_expression(s, lf, e);
-	env_clear_frame(s->env);
+	c = fn->count;
+	e = fn->stmts;
 
+	for (i = 0; i < c; i++)
+		rv = gl_expression(s, lf, *e++);
+
+	env_clear_frame(s->env);
 	LLVMBuildRet(s->builder, rv);
 }
 
