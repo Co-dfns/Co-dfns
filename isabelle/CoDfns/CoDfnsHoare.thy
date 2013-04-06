@@ -1,6 +1,6 @@
 header {* Axiomatic Semantics *}
 
-theory OsmHoare
+theory CoDfnsHoare
 imports Main
 begin
 

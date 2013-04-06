@@ -1,9 +1,9 @@
 
 ## targets
 
-default: Osmium
+default: CoDfns
 images: 
-test: Osmium
+test: CoDfns
 
 all: images test
 
@@ -17,15 +17,15 @@ LOG = $(OUT)/log
 USEDIR = $(ISABELLE_TOOL) usedir -v true -i true -d pdf  ## -D generated
 
 
-## Osmium
+## CoDfns
 
-Osmium: $(LOG)/HOL-Osmium.gz
+CoDfns: $(LOG)/HOL-CoDfns.gz
 
-$(LOG)/HOL-Osmium.gz: ## Osmium/ROOT.ML Osmium/document/root.tex Osmium/*.thy
-	@$(USEDIR) HOL Osmium
+$(LOG)/HOL-CoDfns.gz: ## CoDfns/ROOT.ML CoDfns/document/root.tex CoDfns/*.thy
+	@$(USEDIR) HOL CoDfns
 
 
 ## clean
 
 clean:
-	@rm -f $(LOG)/HOL-Osmium.gz
+	@rm -f $(LOG)/HOL-CoDfns.gz
