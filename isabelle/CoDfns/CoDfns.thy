@@ -1,4 +1,4 @@
-header {* A Formal Theory of APL *}
+header {* A Formal Theory of Co-Dfns *}
 
 (*
 Copyright (c) 2012 Aaron W. Hsu <arcfide@sacrideo.us>
@@ -15,22 +15,22 @@ WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE. *)
 
-theory Osmium 
+theory CoDfns 
 imports Main
 begin
 
 text {* 
-The first step to a formalization for Osmium and parallel programs is an 
+The first step to a formalization for CoDfns and parallel programs is an 
 appropriate theory of arrays that sufficiently encompasses the serial,
 implicitly parallel language of Dfns, which will be used to drive 
 both the language of specification and the core language for parallel 
-programming in Osmium. In truth, the constructs described here may 
+programming in CoDfns. In truth, the constructs described here may 
 actually be compiled to parallel constructs, but differ from the 
-Osmium extensions in that they are not described as having an explicit 
+CoDfns extensions in that they are not described as having an explicit 
 concurrency in their use. Indeed, some of the constructs are implicitly 
 ordered, a feature that we rely in sometimes.
 
-The language that we formalize in the Osmium theory is the side-effect 
+The language that we formalize in the CoDfns theory is the side-effect 
 free language of APL expressions, beginning with the mathematics of arrays.
 The development in this document follows the treatment of the same subjects 
 in roughly the same order and manner as the original dissertation defining 
@@ -40,7 +40,7 @@ the mathematics of arrays.
 subsection {* Defining arrays in Isabelle *}
 
 text {* 
-To make life easier in Isabelle, the Osmium theory deviates from 
+To make life easier in Isabelle, the CoDfns theory deviates from 
 the axiomatic basis of the mathematics of array slightly be starting with 
 an operation definition of arrays and the primitives over arrays, before 
 moving to proof theorems about these definitions that are equivalent in 
