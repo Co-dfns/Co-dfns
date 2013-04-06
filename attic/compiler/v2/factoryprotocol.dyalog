@@ -1,4 +1,0 @@
-:Interface FactoryProtocol
-    ∇ MakeVisitor
-    ∇
-:EndInterface

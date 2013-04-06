@@ -1,3 +1,0 @@
-Load ./ConTeXtLP
-Run 'HPAPL Namespace' ConTeXtLP.Tangle './hpapl.tex' './hpapl.dyalog'
-Load ./hpapl
