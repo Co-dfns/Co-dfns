@@ -33,3 +33,13 @@ last dimension.
 R←(¯1↓⍴X)⍴⍠
 {R[⊂⍵]←F/⍵⌷X}∥¨⍳⍴R
 ∇
+
+step reduce<f>(X) {
+	item R = reshape(drop(-1, shape(X)), EMPTY_SA);
+	step setter(idx) { 
+		R[idx] = reduce_all<f>(subarray(idx, X));
+	}
+	
+	each(setter, index(shape(R)));
+	return R;
+}
