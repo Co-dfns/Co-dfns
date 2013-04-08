@@ -15,20 +15,18 @@ productivity, as well as in the general reliability of the code itself.
 The following is an overview of each of the top-level directories in the 
 project. 
 
+```
 src/
-
 	Contains the primary sources and tests for the compiler and runtime.
 
 isabelle/
-
 	Contains the formal treatment of the Co-Dfns compiler and the environments 
 	necessary for doing formal reasoning about Co-Dfns programs.
 
 research/
-
 	Contains copies of research papers and documents related to the 
 	development of Co-Dfns
 
 doc/
-
 	Contains the project documentation in various forms.
+```
