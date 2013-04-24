@@ -60,7 +60,9 @@ enum FnPrimitive {
 	PRIM_FN_ENCLOSE,
 	PRIM_FN_EQUAL,
 	PRIM_FN_COMMA,
-	PRIM_FN_IOTA
+	PRIM_FN_IOTA,
+	PRIM_FN_NABLA,
+	PRIM_FN_MINUS
 };
 
 struct MonadicApp;

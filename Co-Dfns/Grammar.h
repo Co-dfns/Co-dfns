@@ -8,11 +8,9 @@
 
 namespace qi = boost::spirit::qi;
 
-using qi::standard_wide::blank_type;
 using qi::standard_wide::alpha;
 using qi::standard_wide::alnum;
 using qi::standard_wide::digit;
-using qi::lit;
 using qi::standard_wide::char_;
 using qi::uint_;
 using qi::double_;
@@ -24,11 +22,26 @@ using qi::labels::_3;
 using qi::labels::_4;
 using qi::labels::_a;
 using qi::eps;
+using qi::lit;
+using qi::eol;
 using boost::phoenix::val;
 using boost::phoenix::construct;
+using qi::standard_wide::blank_type;
+using qi::standard_wide::blank;
 
 template <typename Iterator>
-struct Grammar : qi::grammar<Iterator, Module(), blank_type>
+struct Comment : qi::grammar<Iterator>
+{
+	Comment() : Comment::base_type(start) 
+	{
+		start = blank | (L'⍝' >> *(char_ - eol));
+	}
+
+	qi::rule<Iterator> start;
+};
+
+template <typename Iterator>
+struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 {
 	Grammar() : Grammar::base_type(module, "Module") 
 	{
@@ -88,6 +101,8 @@ struct Grammar : qi::grammar<Iterator, Module(), blank_type>
 			(L"=", PRIM_FN_EQUAL)
 			(L",", PRIM_FN_COMMA)
 			(L"⍳", PRIM_FN_IOTA)
+			(L"∇", PRIM_FN_NABLA)
+			(L"-", PRIM_FN_MINUS)
 			;
 
 		module.name("Module");
@@ -134,43 +149,43 @@ struct Grammar : qi::grammar<Iterator, Module(), blank_type>
 
 	}
 
-	qi::rule<Iterator, Module(), blank_type> module;
-	qi::rule<Iterator, std::vector<Assignment>(), blank_type> definitions;
-	qi::rule<Iterator, Assignment(), blank_type> assignment;
-	qi::rule<Iterator, VarAssignment(), blank_type> var_assign;
-	qi::rule<Iterator, FnAssignment(), blank_type> fn_assign;
-	qi::rule<Iterator, StrandAssignment(), blank_type> strnd_assgn;
-	qi::rule<Iterator, std::vector<VariableStrand>(), blank_type> var_strand;
-	qi::rule<Iterator, VariableStrand(), blank_type> par_strand;
-	qi::rule<Iterator, FnDef(), blank_type> function;
-	qi::rule<Iterator, std::vector<Statement>(), blank_type> statements;
-	qi::rule<Iterator, CondStatement(), blank_type> cond_stmt;
-	qi::rule<Iterator, Expression(), blank_type> expression;
-	qi::rule<Iterator, Expression(), blank_type> indexed;
-	qi::rule<Iterator, std::vector<IndexExpression>(), blank_type> bracket;
-	qi::rule<Iterator, IndexExpression(), blank_type> idxexp;
-	qi::rule<Iterator, Expression(), blank_type> nonindexed;
-	qi::rule<Iterator, MonadicApp(), blank_type> monadicapp;
-	qi::rule<Iterator, DyadicApp(), blank_type> dyadicapp;
-	qi::rule<Iterator, FnValue(), blank_type> fnval;
-	qi::rule<Iterator, Expression(), blank_type> singlevalue;
-	qi::rule<Iterator, Literal(), blank_type> literal;
-	qi::rule<Iterator, Value(), blank_type> array;
-	qi::rule<Iterator, std::vector<Value>(), blank_type> array_strnd;
-	qi::rule<Iterator, Value(), blank_type> array_par;
-	qi::rule<Iterator, std::vector<Value>(), blank_type> array_mixed;
-	qi::rule<Iterator, std::wstring(), blank_type> array_char;
-	qi::rule<Iterator, std::vector<Value>(), blank_type> array_num;
-	qi::rule<Iterator, std::vector<Value>(), blank_type> empty;
-	qi::rule<Iterator, Variable(), blank_type> variable;
-	qi::rule<Iterator, std::wstring(), blank_type> varstring;
-	qi::rule<Iterator, std::wstring(), blank_type> alpha;
-	qi::rule<Iterator, std::wstring(), blank_type> omega;
-	qi::rule<Iterator, Value(), blank_type> number;
-	qi::rule<Iterator, long(), blank_type> integer;
-	qi::rule<Iterator, double(), blank_type> floating;
-	qi::rule<Iterator, std::wstring(), blank_type> dblstr;
-	qi::rule<Iterator, blank_type> splitters;
-	qi::rule<Iterator, blank_type> newline;
+	qi::rule<Iterator, Module(), Comment<Iterator>> module;
+	qi::rule<Iterator, std::vector<Assignment>(), Comment<Iterator>> definitions;
+	qi::rule<Iterator, Assignment(), Comment<Iterator>> assignment;
+	qi::rule<Iterator, VarAssignment(), Comment<Iterator>> var_assign;
+	qi::rule<Iterator, FnAssignment(), Comment<Iterator>> fn_assign;
+	qi::rule<Iterator, StrandAssignment(), Comment<Iterator>> strnd_assgn;
+	qi::rule<Iterator, std::vector<VariableStrand>(), Comment<Iterator>> var_strand;
+	qi::rule<Iterator, VariableStrand(), Comment<Iterator>> par_strand;
+	qi::rule<Iterator, FnDef(), Comment<Iterator>> function;
+	qi::rule<Iterator, std::vector<Statement>(), Comment<Iterator>> statements;
+	qi::rule<Iterator, CondStatement(), Comment<Iterator>> cond_stmt;
+	qi::rule<Iterator, Expression(), Comment<Iterator>> expression;
+	qi::rule<Iterator, Expression(), Comment<Iterator>> indexed;
+	qi::rule<Iterator, std::vector<IndexExpression>(), Comment<Iterator>> bracket;
+	qi::rule<Iterator, IndexExpression(), Comment<Iterator>> idxexp;
+	qi::rule<Iterator, Expression(), Comment<Iterator>> nonindexed;
+	qi::rule<Iterator, MonadicApp(), Comment<Iterator>> monadicapp;
+	qi::rule<Iterator, DyadicApp(), Comment<Iterator>> dyadicapp;
+	qi::rule<Iterator, FnValue(), Comment<Iterator>> fnval;
+	qi::rule<Iterator, Expression(), Comment<Iterator>> singlevalue;
+	qi::rule<Iterator, Literal(), Comment<Iterator>> literal;
+	qi::rule<Iterator, Value(), Comment<Iterator>> array;
+	qi::rule<Iterator, std::vector<Value>(), Comment<Iterator>> array_strnd;
+	qi::rule<Iterator, Value(), Comment<Iterator>> array_par;
+	qi::rule<Iterator, std::vector<Value>(), Comment<Iterator>> array_mixed;
+	qi::rule<Iterator, std::wstring(), Comment<Iterator>> array_char;
+	qi::rule<Iterator, std::vector<Value>(), Comment<Iterator>> array_num;
+	qi::rule<Iterator, std::vector<Value>(), Comment<Iterator>> empty;
+	qi::rule<Iterator, Variable(), Comment<Iterator>> variable;
+	qi::rule<Iterator, std::wstring(), Comment<Iterator>> varstring;
+	qi::rule<Iterator, std::wstring(), Comment<Iterator>> alpha;
+	qi::rule<Iterator, std::wstring(), Comment<Iterator>> omega;
+	qi::rule<Iterator, Value(), Comment<Iterator>> number;
+	qi::rule<Iterator, long(), Comment<Iterator>> integer;
+	qi::rule<Iterator, double(), Comment<Iterator>> floating;
+	qi::rule<Iterator, std::wstring(), Comment<Iterator>> dblstr;
+	qi::rule<Iterator, Comment<Iterator>> splitters;
+	qi::rule<Iterator, Comment<Iterator>> newline;
 	qi::symbols<wchar_t, FnPrimitive> fnprim;
 };

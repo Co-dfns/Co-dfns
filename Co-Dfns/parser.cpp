@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/include/phoenix.hpp>
@@ -6,16 +6,15 @@
 #include "Parser.h"
 #include "Grammar.h"
 
-using boost::spirit::qi::standard_wide::blank;
-
 Module Parser::parse()
 {
 	Module m;
 	Grammar<std::wstring::const_iterator> grammar;
+	Comment<std::wstring::const_iterator> comment;
 	auto iter = input.begin();
 	auto end = input.end();
 	
-	bool res = phrase_parse(iter, end, grammar, blank, m);
+	bool res = phrase_parse(iter, end, grammar, comment, m);
 
 	if (res && iter == end)
 		return m;
