@@ -1312,11 +1312,22 @@ namespace Tests
 				L"	⍝ Line with a comment on it.\n"
 				L"	⍵ × ∇ ⍵-1\n"
 				L"}\n\n"
-				L"V←fact 5\n";
+				L"⍝ V←fact 5\n";
 			Parser p(code);
 			Module res = p.parse();
 
-			Module exp;
+			std::vector<Statement> fnb;
+			DyadicApp t1(Literal(0L), PRIM_FN_EQUAL, Variable(L"⍵"));
+			CondStatement s1(t1, Literal(1L));
+			DyadicApp sub(Variable(L"⍵"), PRIM_FN_MINUS, Literal(1L));
+			MonadicApp rec(PRIM_FN_NABLA, sub);
+			DyadicApp times(Variable(L"⍵"), PRIM_FN_TIMES, rec);
+
+			fnb.push_back(s1);
+			fnb.push_back(times);
+
+			FnAssignment a(Variable(L"fact"), FnDef(fnb));
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -1326,12 +1337,19 @@ namespace Tests
 			std::wstring code =
 				L"F←{ X←5 ⋄\n"
 				L"	X\n"
-				L"}\n\n"
-				L"V←F 5\n";
+				L"}\n\n";
+
 			Parser p(code);
 			Module res = p.parse();
 
-			Module exp;
+			Variable x(L"X");
+			std::vector<Statement> fnb;
+
+			fnb.push_back(VarAssignment(x, Literal(5L)));
+			fnb.push_back(x);
+
+			FnAssignment a(Variable(L"F"), fnb);
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -1361,7 +1379,12 @@ namespace Tests
 			Parser p(code);
 			Module res = p.parse();
 
-			Module exp;
+			std::vector<Assignment> defs;
+
+			defs.push_back(VarAssignment(Variable(L"X"), Literal(1L)));
+			defs.push_back(VarAssignment(Variable(L"V"), Literal(2L)));
+
+			Module exp(defs);
 
 			Assert::IsTrue(exp == res);
 		}
@@ -1371,7 +1394,8 @@ namespace Tests
 			Parser p(L"V←1 ⍝ one");
 			Module res = p.parse();
 
-			Module exp;
+			VarAssignment a(Variable(L"V"), Literal(1L));
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
