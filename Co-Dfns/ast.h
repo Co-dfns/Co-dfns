@@ -5,13 +5,16 @@
 #include <boost/variant.hpp>
 
 using boost::variant;
+using boost::make_recursive_variant;
+using boost::recursive_variant_;
+using boost::recursive_wrapper;
 
 typedef
-	boost::make_recursive_variant<
+	make_recursive_variant<
 		long,
 		double,
 		std::wstring,
-		std::vector<boost::recursive_variant_>
+		std::vector<recursive_variant_>
 	>::type
 Value;
 
@@ -45,9 +48,9 @@ BOOST_FUSION_ADAPT_STRUCT (
 )
 
 typedef 
-	boost::make_recursive_variant<
+	make_recursive_variant<
 		Variable,
-		std::vector<boost::recursive_variant_>
+		std::vector<recursive_variant_>
 	>::type
 VariableStrand;
 
@@ -58,11 +61,23 @@ enum FnPrimitive {
 	PRIM_FN_DIVIDE,
 	PRIM_FN_RHO,
 	PRIM_FN_ENCLOSE,
+	PRIM_FN_DISCLOSE,
 	PRIM_FN_EQUAL,
 	PRIM_FN_COMMA,
 	PRIM_FN_IOTA,
 	PRIM_FN_NABLA,
-	PRIM_FN_MINUS
+	PRIM_FN_MINUS,
+	PRIM_FN_HOOK
+};
+
+enum OpPrimitive {
+	PRIM_OP_INNER,
+	PRIM_OP_OUTER,
+	PRIM_OP_COMPOSE,
+	PRIM_OP_COMMUTE,
+	PRIM_OP_EACH, 
+	PRIM_OP_POWER,
+	PRIM_OP_REDUCE
 };
 
 struct MonadicApp;
@@ -74,23 +89,26 @@ struct FnAssignment;
 struct CondStatement;
 struct IndexRef;
 struct EmptyIndex;
+struct MonadicOper;
+struct DyadicOper;
 
 typedef
-	variant<
+	make_recursive_variant<
 		Literal,
 		Variable,
-		boost::recursive_wrapper<VarAssignment>,
-		boost::recursive_wrapper<StrandAssignment>,
-		boost::recursive_wrapper<MonadicApp>,
-		boost::recursive_wrapper<DyadicApp>,
-		boost::recursive_wrapper<IndexRef>
-	>
+		recursive_wrapper<VarAssignment>,
+		recursive_wrapper<StrandAssignment>,
+		recursive_wrapper<MonadicApp>,
+		recursive_wrapper<DyadicApp>,
+		recursive_wrapper<IndexRef>,
+		std::vector<recursive_variant_>
+	>::type
 Expression;
 
 typedef
 	variant<
 		Expression,
-		boost::recursive_wrapper<EmptyIndex>
+		recursive_wrapper<EmptyIndex>
 	>
 IndexExpression;
 
@@ -98,23 +116,35 @@ typedef
 	variant<
 		Variable,
 		FnPrimitive,
-		boost::recursive_wrapper<FnDef>
+		recursive_wrapper<MonadicOper>,
+		recursive_wrapper<DyadicOper>,
+		recursive_wrapper<FnDef>
 	>
 FnValue;
 
 typedef
 	variant<
 		Expression,
-		boost::recursive_wrapper<FnAssignment>,
-		boost::recursive_wrapper<CondStatement>
+		FnPrimitive,
+		recursive_wrapper<MonadicOper>,
+		recursive_wrapper<DyadicOper>,
+		recursive_wrapper<FnDef>
+	>
+FnOrValue;
+
+typedef
+	variant<
+		Expression,
+		recursive_wrapper<FnAssignment>,
+		recursive_wrapper<CondStatement>
 	>
 Statement;
 
 typedef
 	variant<
-		boost::recursive_wrapper<VarAssignment>,
-		boost::recursive_wrapper<FnAssignment>,
-		boost::recursive_wrapper<StrandAssignment>
+		recursive_wrapper<VarAssignment>,
+		recursive_wrapper<FnAssignment>,
+		recursive_wrapper<StrandAssignment>
 	>
 Assignment;
 
@@ -137,6 +167,38 @@ BOOST_FUSION_ADAPT_STRUCT (
 	CondStatement,
 	(Expression, test)
 	(Statement, statement)
+)
+
+struct MonadicOper {
+	FnValue left;
+	OpPrimitive oper;
+	MonadicOper(FnValue lft, OpPrimitive op) : left(lft), oper(op) {} ;
+	MonadicOper() : left(FnValue()), oper(OpPrimitive()) {} ;
+};
+
+bool operator==(const MonadicOper&, const MonadicOper&);
+
+BOOST_FUSION_ADAPT_STRUCT (
+	MonadicOper,
+	(FnValue, left)
+	(OpPrimitive, oper)
+)
+
+struct DyadicOper {
+	FnOrValue left;
+	FnOrValue right;
+	OpPrimitive oper;
+	DyadicOper(FnOrValue lft, OpPrimitive op, FnOrValue rgt) : left(lft), oper(op), right(rgt) {} ;
+	DyadicOper() : left(FnValue()), oper(OpPrimitive()), right(FnValue()) {} ;
+};
+
+bool operator==(const DyadicOper&, const DyadicOper&);
+
+BOOST_FUSION_ADAPT_STRUCT (
+	DyadicOper,
+	(FnOrValue, left)
+	(OpPrimitive, oper)
+	(FnOrValue, right)
 )
 
 struct FnDef {

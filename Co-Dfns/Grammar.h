@@ -24,6 +24,7 @@ using qi::labels::_a;
 using qi::eps;
 using qi::lit;
 using qi::eol;
+using qi::eoi;
 using boost::phoenix::val;
 using boost::phoenix::construct;
 using qi::standard_wide::blank_type;
@@ -47,23 +48,30 @@ struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 	{
 		module      %= -splitters >> definitions >> -splitters;
 		definitions %= assignment % splitters;
-		assignment  %= var_assign | fn_assign | strnd_assgn;
-		fn_assign   %= variable >> L'←' >> function;
+		assignment  %= fn_assign | var_assign | strnd_assgn;
+		fn_assign   %= variable >> L'←' >> fnval >> &splitters;
 		function    %= L'{' >> -splitters >> -statements >> -splitters >> L'}';
 		statements  %= (cond_stmt | fn_assign | expression) % splitters;
-		cond_stmt   %= expression >> L':' >> (var_assign | fn_assign | expression);
+		cond_stmt   %= expression >> L':' > (fn_assign | expression);
 
 		expression  %= dyadicapp | monadicapp | var_assign | strnd_assgn | singlevalue;
 		strnd_assgn %= ((L'(' >> var_strand >> L')') | var_strand) >> L'←' >> expression;
 		var_assign  %= variable >> L'←' >> expression;
 		dyadicapp   %= singlevalue >> fnval >> expression;
 		monadicapp  %= fnval >> expression;
-		fnval       %= fnprim | function | L'(' >> fnval >> L')';
+		fnval       %= oper | fnbase;
+		fnbase      %= fnprim | function | L'(' >> fnval >> L')';
+		oper        %= outeroper | dyaoper | monoper;
+		outeroper    = (outer > fnbase) [_val = construct<MonadicOper>(_2, _1)];
+		dyaoper     %= fnbase >> (inner | jot | power) >> fnbase
+			| singlevalue >> jot >> fnbase
+			| fnbase >> (jot | power) >> singlevalue;
+		monoper     %= fnbase >> monopprim;
 
 		singlevalue %= indexed | nonindexed; 
 		nonindexed  %= literal | variable | L'(' >> expression >> L')';
 		indexed      = nonindexed [_val = _1] >> +bracket [_val = construct<IndexRef>(_val, _1)];
-		bracket     %= L'[' >> (idxexp % L';') >> L']';
+		bracket     %= L'[' > (idxexp % L';') > L']';
 		idxexp       = expression [_val = _1] | eps [_val = EmptyIndex()];
 		literal     %= array;
 		var_strand  %= +(variable | par_strand);
@@ -79,6 +87,10 @@ struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 		array_char  %= lexeme[L'\'' >> *~char_(L'\'') >> L'\''];
 		array_num   %= +number;
 
+		inner        = lit(L'.') [_val = PRIM_OP_INNER];
+		outer        = (lit(L'∘') >> L'.') [_val = PRIM_OP_OUTER];
+		jot          = lit(L'∘') [_val = PRIM_OP_COMPOSE];
+		power        = lit(L'⍣') [_val = PRIM_OP_POWER];
 		empty        = lit(L'⍬') [_val = std::vector<Value>()];
 		variable    %= varstring | alpha | omega;
 		varstring   %= lexeme[char_("a-zA-Z_") >> *char_("a-zA-Z_0-9")];
@@ -98,11 +110,19 @@ struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 			(L"÷", PRIM_FN_DIVIDE)
 			(L"⍴", PRIM_FN_RHO)
 			(L"⊂", PRIM_FN_ENCLOSE)
+			(L"⊃", PRIM_FN_DISCLOSE)
 			(L"=", PRIM_FN_EQUAL)
 			(L",", PRIM_FN_COMMA)
 			(L"⍳", PRIM_FN_IOTA)
 			(L"∇", PRIM_FN_NABLA)
 			(L"-", PRIM_FN_MINUS)
+			(L"?", PRIM_FN_HOOK)
+			;
+
+		monopprim.add
+			(L"⍨", PRIM_OP_COMMUTE)
+			(L"¨", PRIM_OP_EACH)
+			(L"/", PRIM_OP_REDUCE)
 			;
 
 		module.name("Module");
@@ -168,6 +188,11 @@ struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 	qi::rule<Iterator, MonadicApp(), Comment<Iterator>> monadicapp;
 	qi::rule<Iterator, DyadicApp(), Comment<Iterator>> dyadicapp;
 	qi::rule<Iterator, FnValue(), Comment<Iterator>> fnval;
+	qi::rule<Iterator, FnValue(), Comment<Iterator>> fnbase;
+	qi::rule<Iterator, FnValue(), Comment<Iterator>> oper;
+	qi::rule<Iterator, MonadicOper(), Comment<Iterator>> outeroper;
+	qi::rule<Iterator, DyadicOper(), Comment<Iterator>> dyaoper;
+	qi::rule<Iterator, MonadicOper(), Comment<Iterator>> monoper;
 	qi::rule<Iterator, Expression(), Comment<Iterator>> singlevalue;
 	qi::rule<Iterator, Literal(), Comment<Iterator>> literal;
 	qi::rule<Iterator, Value(), Comment<Iterator>> array;
@@ -185,7 +210,12 @@ struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 	qi::rule<Iterator, long(), Comment<Iterator>> integer;
 	qi::rule<Iterator, double(), Comment<Iterator>> floating;
 	qi::rule<Iterator, std::wstring(), Comment<Iterator>> dblstr;
+	qi::rule<Iterator, OpPrimitive(), Comment<Iterator>> jot;
+	qi::rule<Iterator, OpPrimitive(), Comment<Iterator>> inner;
+	qi::rule<Iterator, OpPrimitive(), Comment<Iterator>> power;
+	qi::rule<Iterator, OpPrimitive(), Comment<Iterator>> outer;
 	qi::rule<Iterator, Comment<Iterator>> splitters;
 	qi::rule<Iterator, Comment<Iterator>> newline;
 	qi::symbols<wchar_t, FnPrimitive> fnprim;
+	qi::symbols<wchar_t, OpPrimitive> monopprim;
 };

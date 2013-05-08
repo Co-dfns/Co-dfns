@@ -24,7 +24,10 @@ Module Parser::parse()
 
 Parser::Parser(std::wstring str)
 {
-	input = str;
+	if (str.back() != L'\n')
+		str.push_back(L'\n');
+
+	input = str;		
 }
 
 SyntaxError::SyntaxError(std::string msg, std::wstring::const_iterator dat)

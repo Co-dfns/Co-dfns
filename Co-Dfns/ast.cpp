@@ -74,3 +74,18 @@ bool operator==(const EmptyIndex& a, const EmptyIndex& b)
 {
 	return true;
 }
+
+bool operator==(const MonadicOper& a, const MonadicOper& b)
+{
+	bool left = a.left == b.left;
+	bool oper = a.oper == b.oper;
+	return left && oper;
+}
+
+bool operator==(const DyadicOper& a, const DyadicOper& b)
+{
+	bool left = a.left == b.left;
+	bool right = a.right == b.right;
+	bool oper = a.oper == b.oper;
+	return left && right && oper;
+}
