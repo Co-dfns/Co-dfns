@@ -816,7 +816,11 @@ namespace Tests
 			Parser p(L"V←52∘.+52");
 			Module res = p.parse();
 
-			Module exp;
+			MonadicOper op(PRIM_FN_PLUS, PRIM_OP_OUTER);
+			DyadicApp app(Literal(52L), op, Literal(52L));
+			VarAssignment a(Variable(L"V"), app);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -825,8 +829,18 @@ namespace Tests
 		{
 			Parser p(L"V←+∘× 3 2");
 			Module res = p.parse();
+			
+			std::vector<Value> vals;
 
-			Module exp;
+			vals.push_back(3L);
+			vals.push_back(2L);
+
+			Literal lit(vals);
+			DyadicOper op(PRIM_FN_PLUS, PRIM_OP_COMPOSE, PRIM_FN_TIMES);
+			MonadicApp app(op, lit);
+			VarAssignment a(Variable(L"V"), app);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -836,7 +850,11 @@ namespace Tests
 			Parser p(L"V←7 +.× 5");
 			Module res = p.parse();
 
-			Module exp;
+			DyadicOper op(PRIM_FN_PLUS, PRIM_OP_INNER, PRIM_FN_TIMES);
+			DyadicApp app(Literal(7L), op, Literal(5L));
+			VarAssignment a(Variable(L"V"), app);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -846,7 +864,16 @@ namespace Tests
 			Parser p(L"V←÷⍨ 3 2");
 			Module res = p.parse();
 
-			Module exp;
+			std::vector<Value> vals;
+
+			vals.push_back(3L);
+			vals.push_back(2L);
+
+			MonadicOper op(PRIM_FN_DIVIDE, PRIM_OP_COMMUTE);
+			MonadicApp app(op, Literal(vals));
+			VarAssignment a(Variable(L"V"), app);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -856,7 +883,21 @@ namespace Tests
 			Parser p(L"V←+¨3 4⍴⊂5 3");
 			Module res = p.parse();
 
-			Module exp;
+			std::vector<Value> five_three;
+			std::vector<Value> three_four;
+
+			five_three.push_back(5L);
+			five_three.push_back(3L);
+			three_four.push_back(3L);
+			three_four.push_back(4L);
+
+			MonadicApp app1(PRIM_FN_ENCLOSE, Literal(five_three));
+			DyadicApp app2(Literal(three_four), PRIM_FN_RHO, app1);
+			MonadicOper op(PRIM_FN_PLUS, PRIM_OP_EACH);
+			MonadicApp app3(op, app2);
+			VarAssignment a(Variable(L"V"), app3);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -866,7 +907,14 @@ namespace Tests
 			Parser p(L"V←(?5⍴5)+¨5⍴5");
 			Module res = p.parse();
 
-			Module exp;
+			Literal five(5L);
+			DyadicApp app1(five, PRIM_FN_RHO, five);
+			MonadicApp app2(PRIM_FN_HOOK, app1);
+			MonadicOper op(PRIM_FN_PLUS, PRIM_OP_EACH);
+			DyadicApp app3(app2, op, app1);
+			VarAssignment a(Variable(L"V"), app3);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -876,7 +924,12 @@ namespace Tests
 			Parser p(L"V←+/⍳10");
 			Module res = p.parse();
 
-			Module exp;
+			MonadicApp app1(PRIM_FN_IOTA, Literal(10L));
+			MonadicOper op(PRIM_FN_PLUS, PRIM_OP_REDUCE);
+			MonadicApp app2(op, app1);
+			VarAssignment a(Variable(L"V"), app2);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -886,7 +939,21 @@ namespace Tests
 			Parser p(L"V←{(+/⍵)÷⊃⍴⍵} ⍳50");
 			Module res = p.parse();
 
-			Module exp;
+			MonadicApp app1(PRIM_FN_IOTA, Literal(50L));
+			Variable w(L"⍵");
+			MonadicApp app2(PRIM_FN_RHO, w);
+			MonadicApp app3(PRIM_FN_DISCLOSE, app2);
+			MonadicOper op(PRIM_FN_PLUS, PRIM_OP_REDUCE);
+			MonadicApp app4(op, w);
+			DyadicApp app5(app4, PRIM_FN_DIVIDE, app3);
+			std::vector<Statement> defs;
+
+			defs.push_back(app5);
+
+			MonadicApp app6(FnDef(defs), app1);
+			VarAssignment a(Variable(L"V"), app6);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -896,7 +963,18 @@ namespace Tests
 			Parser p(L"V←53 {⍺+⍵}.{⍺×⍵} 53");
 			Module res = p.parse();
 
-			Module exp;
+			Variable a(L"⍺");
+			Variable w(L"⍵");
+			DyadicApp app1(a, PRIM_FN_PLUS, w);
+			FnDef fn1(std::vector<Statement>(1, app1));
+			DyadicApp app2(a, PRIM_FN_TIMES, w);
+			FnDef fn2(std::vector<Statement>(1, app2));
+			DyadicOper op(fn1, PRIM_OP_INNER, fn2);
+			Literal ft(53L);
+			DyadicApp app(ft, op, ft);
+			VarAssignment ass(Variable(L"V"), app);
+
+			Module exp(std::vector<Assignment>(1, ass));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -906,7 +984,10 @@ namespace Tests
 			Parser p(L"X←5∘⍳");
 			Module res = p.parse();
 
-			Module exp;
+			DyadicOper op(Literal(5L), PRIM_OP_COMPOSE, PRIM_FN_IOTA);
+			FnAssignment a(Variable(L"X"), op);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -991,7 +1072,7 @@ namespace Tests
 				L"	Y←7\n\n"
 				L"	X,Y\n"
 				L"}\n\n"
-				L"V←F ⍬\n";
+				L"V←⍳ ⍬\n";
 
 			Parser p(code);
 			Module res = p.parse();
@@ -1005,7 +1086,7 @@ namespace Tests
 			fnb.push_back(DyadicApp(x, PRIM_FN_COMMA, y));
 
 			FnAssignment s1(Variable(L"F"), FnDef(fnb));
-			MonadicApp a(Variable(L"F"), Literal());
+			MonadicApp a(PRIM_FN_IOTA, Literal());
 			VarAssignment s2(Variable(L"V"), a);
 			std::vector<Assignment> defs;
 
@@ -1153,6 +1234,21 @@ namespace Tests
 			Assert::IsTrue(exp == res);
 		}
 
+		TEST_METHOD(ParseOpers15)
+		{
+			Parser p(L"X←5∘+⍳10");
+			Module res = p.parse();
+
+			MonadicApp app1(PRIM_FN_IOTA, Literal(10L));
+			DyadicOper op(Literal(5L), PRIM_OP_COMPOSE, PRIM_FN_PLUS);
+			MonadicApp app2(op, app1);
+			VarAssignment a(Variable(L"X"), app2);
+
+			Module exp(std::vector<Assignment>(1, a));
+
+			Assert::IsTrue(exp == res);
+		}
+
 		TEST_METHOD(ParseUserOps1)
 		{
 			Parser p(L"F←{⍺⍺,⍵}");
@@ -1295,10 +1391,27 @@ namespace Tests
 
 		TEST_METHOD(ParseStrand6)
 		{
-			Parser p(L"V←5 4 V X 8 2");
+			Parser p(L"V←5 4 (V X←8 2)");
 			Module res = p.parse();
 
-			Module exp;
+			Variable v(L"V");
+			std::vector<VariableStrand> tgt;
+			std::vector<Value> eight_two;
+			std::vector<Expression> five_four_nest;
+
+			tgt.push_back(v);
+			tgt.push_back(Variable(L"X"));
+			eight_two.push_back(8L);
+			eight_two.push_back(2L);
+			five_four_nest.push_back(Literal(5L));
+			five_four_nest.push_back(Literal(4L));
+
+			StrandAssignment a(tgt, Literal(eight_two));
+
+			five_four_nest.push_back(a);
+
+			VarAssignment b(v, five_four_nest);
+			Module exp(std::vector<Assignment>(1, b));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -1348,7 +1461,7 @@ namespace Tests
 			fnb.push_back(VarAssignment(x, Literal(5L)));
 			fnb.push_back(x);
 
-			FnAssignment a(Variable(L"F"), fnb);
+			FnAssignment a(Variable(L"F"), FnDef(fnb));
 			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
@@ -1446,7 +1559,7 @@ namespace Tests
 		TEST_METHOD(ParseBig4)
 		{
 			std::wstring code =
-				L"queens←{							⍝ The N-queens problem.\n\n"
+				L"queens←{                          ⍝ The N-queens problem.\n\n"
 				L"	search←{                        ⍝ Search for all solutions.\n"
 				L"		(⊂⍬)∊⍵:0⍴⊂⍬                 ⍝ stitched: abandon this branch.\n"
 				L"		0=⍴⍵:rmdups ⍺               ⍝ all done: solution!\n"
@@ -1458,8 +1571,8 @@ namespace Tests
 				L"	cvex←(1+⍳⍵)×⊂¯1 0 1             ⍝ Checking vectors.\n\n"
 				L"	free←{⍵~¨⍺+(⍴⍵)↑cvex}           ⍝ Unchecked squares.\n\n"
 				L"	rmdups←{                        ⍝ Ignore duplicate solution.\n"
-				L"		rots←{{⍒⍵}\\4/⊂⍵}            ⍝ 4 rotations.\n"
-				L"		refs←{{⍋⍵}\\2/⊂⍵}            ⍝ 2 reflections.\n"
+				L"		rots←{{⍒⍵}\\4/⊂⍵}           ⍝ 4 rotations.\n"
+				L"		refs←{{⍋⍵}\\2/⊂⍵}           ⍝ 2 reflections.\n"
 				L"		best←{(⊃⍋↑⍵)⊃⍵}             ⍝ best (=lowest) solution.\n"
 				L"		all8←,↑refs¨rots ⍵          ⍝ all 8 orientations.\n"
 				L"		(⍵≡best all8)⊃⍬(,⊂⍵)        ⍝ ignore if not best.\n"
@@ -1467,7 +1580,7 @@ namespace Tests
 				L"	fmt←{                           ⍝ Format solution.\n"
 				L"		chars←'·⍟'[(↑⍵)∘.=⍳⍺]       ⍝ char array of placed queens.\n"
 				L"		expd←1↓,↑⍺⍴⊂0 1             ⍝ expansion mask.\n"
-				L"		↑¨↓↓expd\\chars              ⍝ vector of char matrices.\n"
+				L"		↑¨↓↓expd\\chars             ⍝ vector of char matrices.\n"
 				L"	}\n\n"
 				L"	squares←(⊂⍳⌈⍵÷2),1↓⍵⍴⊂⍳⍵        ⍝ initial squares\n\n"
 				L"	⍵ fmt ⍬ search squares          ⍝ all distinct solutions.\n\n"
@@ -1480,5 +1593,6 @@ namespace Tests
 
 			Assert::IsTrue(exp == res);
 		}
+
 	};
 }
