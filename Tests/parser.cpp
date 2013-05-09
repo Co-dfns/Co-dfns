@@ -997,7 +997,11 @@ namespace Tests
 			Parser p(L"X←5∘⍳∘⊂");
 			Module res = p.parse();
 
-			Module exp;
+			DyadicOper op1(Literal(5L), PRIM_OP_COMPOSE, PRIM_FN_IOTA);
+			DyadicOper op2(op1, PRIM_OP_COMPOSE, PRIM_FN_ENCLOSE);
+			FnAssignment a(Variable(L"X"), op2);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -1007,7 +1011,12 @@ namespace Tests
 			Parser p(L"X←5∘⍳5");
 			Module res = p.parse();
 
-			Module exp;
+			Literal five(5L);
+			DyadicOper op(five, PRIM_OP_COMPOSE, PRIM_FN_IOTA);
+			MonadicApp app(op, five);
+			VarAssignment a(Variable(L"X"), app);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -1219,7 +1228,12 @@ namespace Tests
 			Parser p(L"V←5 (!⍣5) 5");
 			Module res = p.parse();
 
-			Module exp;
+			Literal five(5L);
+			DyadicOper op(PRIM_FN_BANG, PRIM_OP_POWER, five);
+			DyadicApp app(five, op, five);
+			VarAssignment a(Variable(L"V"), app);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}
@@ -1229,7 +1243,10 @@ namespace Tests
 			Parser p(L"X←!⍣5");
 			Module res = p.parse();
 
-			Module exp;
+			DyadicOper op(PRIM_FN_BANG, PRIM_OP_POWER, Literal(5L));
+			FnAssignment a(Variable(L"X"), op);
+
+			Module exp(std::vector<Assignment>(1, a));
 
 			Assert::IsTrue(exp == res);
 		}

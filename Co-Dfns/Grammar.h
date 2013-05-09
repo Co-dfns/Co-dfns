@@ -15,16 +15,20 @@ using qi::standard_wide::char_;
 using qi::uint_;
 using qi::double_;
 using qi::lexeme;
-using qi::labels::_val;
-using qi::labels::_1;
-using qi::labels::_2;
-using qi::labels::_3;
-using qi::labels::_4;
-using qi::labels::_a;
+using qi::_val;
+using qi::_1;
+using qi::_2;
+using qi::_3;
+using qi::_4;
+using qi::_a;
+using qi::_b;
+using qi::_c;
+using qi::_r1;
 using qi::eps;
 using qi::lit;
 using qi::eol;
 using qi::eoi;
+using qi::omit;
 using boost::phoenix::val;
 using boost::phoenix::construct;
 using qi::standard_wide::blank_type;
@@ -52,21 +56,28 @@ struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 		fn_assign   %= variable >> L'←' >> fnval >> &splitters;
 		function    %= L'{' >> -splitters >> -statements >> -splitters >> L'}';
 		statements  %= (cond_stmt | fn_assign | expression) % splitters;
-		cond_stmt   %= expression >> L':' > (fn_assign | expression);
+		cond_stmt   %= expression >> L':' >> (fn_assign | expression);
 
 		expression  %= dyadicapp | monadicapp | var_assign | strnd_assgn | singlevalue;
 		strnd_assgn %= ((L'(' >> var_strand >> L')') | var_strand) >> L'←' >> expression;
 		var_assign  %= variable >> L'←' >> expression;
 		dyadicapp   %= singlevalue >> fnval >> expression;
 		monadicapp  %= fnval >> expression;
-		fnval       %= oper | fnbase;
 		fnbase      %= fnprim | function | L'(' >> fnval >> L')';
-		oper        %= outeroper | dyaoper | monoper;
-		outeroper    = (outer > fnbase) [_val = construct<MonadicOper>(_2, _1)];
-		dyaoper     %= fnbase >> (inner | jot | power) >> fnbase
-			| singlevalue >> jot >> fnbase
-			| fnbase >> (jot | power) >> singlevalue;
-		monoper     %= fnbase >> monopprim;
+		fnval       %= fncase | outcase | valcase;
+		fncase      %= omit[fnbase [_a = _1]] >> optail(_a);
+		outcase     %= omit[outer [_b = _1] >> fnbase [_a = _1]] 
+			>> optail(construct<MonadicOper>(_a, _b));
+		valcase     %= omit[singlevalue [_a = _1] >> jot [_b = _1] >> fnbase [_c = _1]] 
+			>> optail(construct<DyadicOper>(_a, _b, _c));
+		optail      %= dyaopfn(_r1) | dyaopval(_r1) | monop(_r1) | nooper(_r1);
+		dyaopfn     %= omit[(inner | jot | power) [_a = _1] >> fnbase [_b = _1]]
+			>> optail(construct<DyadicOper>(_r1, _a, _b));
+		dyaopval    %= omit[(jot | power) [_a = _1] >> singlevalue [_b = _1]]
+			>> optail(construct<DyadicOper>(_r1, _a, _b));
+		monop       %= omit[monopprim [_a = _1]] 
+			>> optail(construct<MonadicOper>(_r1, _a));
+		nooper       = eps [_val = _r1];
 
 		singlevalue %= indexed | nonindexed; 
 		nonindexed  %= literal | variable | L'(' >> expression >> L')';
@@ -189,10 +200,14 @@ struct Grammar : qi::grammar<Iterator, Module(), Comment<Iterator>>
 	qi::rule<Iterator, DyadicApp(), Comment<Iterator>> dyadicapp;
 	qi::rule<Iterator, FnValue(), Comment<Iterator>> fnval;
 	qi::rule<Iterator, FnValue(), Comment<Iterator>> fnbase;
-	qi::rule<Iterator, FnValue(), Comment<Iterator>> oper;
-	qi::rule<Iterator, MonadicOper(), Comment<Iterator>> outeroper;
-	qi::rule<Iterator, DyadicOper(), Comment<Iterator>> dyaoper;
-	qi::rule<Iterator, MonadicOper(), Comment<Iterator>> monoper;
+	qi::rule<Iterator, FnValue(), qi::locals<FnValue>, Comment<Iterator>> fncase;
+	qi::rule<Iterator, FnValue(), qi::locals<FnValue, OpPrimitive>, Comment<Iterator>> outcase;
+	qi::rule<Iterator, FnValue(), qi::locals<Expression, OpPrimitive, FnValue>, Comment<Iterator>> valcase;
+	qi::rule<Iterator, FnValue(FnValue), qi::locals<OpPrimitive, FnValue>, Comment<Iterator>> dyaopfn;
+	qi::rule<Iterator, FnValue(FnValue), qi::locals<OpPrimitive, Expression>, Comment<Iterator>> dyaopval;
+	qi::rule<Iterator, FnValue(FnValue), qi::locals<OpPrimitive>, Comment<Iterator>> monop;
+	qi::rule<Iterator, FnValue(FnValue), Comment<Iterator>> nooper;
+	qi::rule<Iterator, FnValue(FnValue), Comment<Iterator>> optail;
 	qi::rule<Iterator, Expression(), Comment<Iterator>> singlevalue;
 	qi::rule<Iterator, Literal(), Comment<Iterator>> literal;
 	qi::rule<Iterator, Value(), Comment<Iterator>> array;
