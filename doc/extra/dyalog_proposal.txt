@@ -1,0 +1,213 @@
+= Beyond Data Parallelism =
+
+The following document describes and justifies a proposal for Dyalog APL to 
+extend the APL language beyond the data parallelism for which it is known.
+
+== Executive Summary ==
+
+Guiding Principles: The following principles drive the development of these 
+extensions.
+
+  1. APL's strength is the implicitness and conciseness of its notation;
+  2. ...
+  
+Proposed Extensions: These are the extensions proposed to the language.
+
+  1. Parallel (||) operator which spawns asynchronous tasks, analogous to the 
+     current & operator;
+  2. A concept of single-assignment arrays, created via a new [.] empty array;
+  3. Isolates for the creation of distinct namespaces;
+  4. Communication primitives for sending messages and calling operators and 
+     functions from other isolates.
+     
+Implementation Strategy: Given that the existing Dyalog implementation is as 
+old and as difficult to modify as it is, a new implementation should be 
+built that leverages the highest performance, but most productive environments 
+today. Focusing on the core benefits provided by APL and relying on others to 
+provide the implementation of more mundane elements will allow for a complete 
+implementation in a short, quick timeframe. The estimation for this work is 
+less than a year for a two man team of qualified programmers. 
+
+Differences from existing proposals: This proposal is different in that it 
+tries to eliminate explicit constructs that are deemed unnecessary from the 
+language. This includes removing the concept of explicit futures and unifying 
+the parallel operators into a single core primitive that subsumes the others.
+     
+== Definitions of the Operators and Concepts ==
+
+=== Parallel Operator ===
+
+The parallel operator, represented by the mathematical parallel symbol (||) is 
+analogous to the spawn & operator that already exists in Dyalog. It creates an 
+asynchronous task that will execute on a thread pool. This thread pool may 
+extend beyond a single machine to multiple, distributed machines, or it may 
+be a pool of threads that operate on a single, multi-core machine. 
+This operator returns, conceptually, an array that contains the result of the 
+computation. Importantly however, the function will return immediately, rather 
+than waiting for the computation to complete. Reads of the data in the returned 
+array may block until the computation has completed the relevant data requested 
+however. 
+
+This operation scales well with its interactions of existing dyalog operators. 
+For example, a fork-join parallel computation where the results are all reduced 
+to a single value is easily expressed as the following:
+
+      F/G Par¨Data
+      
+Note here that there is no concept of explicit futures and that all 
+synchronization of the computation is implicit.
+
+=== Single-assignment Arrays ===
+
+Single assignment arrays are arrays whose cells may be given a real value only 
+once. The system begins with only one single assignment array, the empty 
+single assignment vector. This could be represented by the [.] (a box with a 
+dot in it) or some other suitable symbol. All other single assignment 
+arrays derive from this array. Observationally, all single assignment 
+arrays work exactly like normal arrays. Cells may be assigned a value only 
+if they have not previously held a value. Attempting to read from a cell 
+that has not been given a value yet will result in blocking until that cell 
+does receive a value.
+
+Single assignment arrays serve as the only means of synchronization in 
+this system. All other synchronization must be done by explicit ordering 
+of computations.
+
+The combination of the parallel operator and single assignment array 
+as defined above results in a system that is provably, statically deterministic 
+by construction if no mutable arrays are affected during parallel execution.
+That is, no mutable arrays are assigned free variables of any function which 
+might be used with the Parallel operator.
+
+=== Isolates ===
+
+Isolates serve to provide a means of interprocess communication between 
+multiple instances of APL processes. In this way, they can be thought of as 
+Kahn process networks. Specifically, one should be able to create isolates, 
+and get as a result a handle to the isolate. This handle should allow you to 
+send data by means of one or more message channels, and to use functions 
+that are visible in the namespace of the isolate. A similar structure exists 
+in the APLX interpreter. Of particular interest is the result of calling 
+an operator in an isolate with a function that is defined in another isolate. 
+I believe that this is important to allow, because it enables a form of 
+active messages, where code can be passed from one isolate to another for 
+execution. Doing so might be slightly tricky, but it can be done and this 
+technique has seen active use in the HPC/C++ community as a means of making 
+certain computations clearer. At the very least, it is important to allow 
+both data and code to flow between isolates, and not just data.
+
+== Implementation ==
+
+According to my existing work with Dyalog, it appears that the interpreter 
+used right now is too difficult to change into a system that supports these 
+operations in a fast manner, but that also leave the non-parallel code 
+running fast. In order to achieve an implementation where the non-parallel 
+code runs quickly and the parallel code is safe and efficient, a new 
+implementation of APL needs to be written. 
+
+This might traditionally have seemed to be an insurmountable expense. However, 
+I believe that this is not so if we choose the right technologies on which to 
+build. In particular, starting with C or C++ and reconstructing all of Dyalog 
+APL is likely to be prohibitively expensive due to the number of core constructs 
+that need to be created. However, there are existing high performance languages 
+which make an excellent base for building up an APL. In particular, Chez Scheme 
+features an efficient garbage collector, high-performance compiler that is 
+fast enough to compile code on the fly during execution, removing the need to 
+distinguish between compiler and interperter for most cases. The language itself 
+is highly productive and is especially good for implementing new language 
+constructs and compilers. It also has a good, sophisticated FFI which will enable 
+working with and incorporating a number of other technologies from other 
+languages as that becomes important. It supports efficient parallel execution 
+and has the primitives necessary to implement efficient versions of the above 
+operators and features. Chez Scheme is also a commercial system with good 
+support options. It is a very high-quality product and is a very good target 
+for high-performance language implementation.
+
+Another excellent option is the OpenJDK project which provides for an 
+FOSS Java implementation. Java has come a long way and is quite fast, but 
+the language is less suitable for new language creation than Scheme. I suspect 
+that it would take a longer time to get a Java implementation up and running 
+than it would to get a fully working Scheme implementation up and running, but 
+I expect the performance of the two to be competitive.
+
+Another option is SAC, which has the promise of high performance, but SAC appears 
+to be somewhat restricted in its commercial applicability. On the other hand, 
+SAC is really only suitable as a target language for complication, not as an 
+implementation language for the interpreter or compiler. Indeed, a compiler 
+written in another language should easily be retargetable to SAC if Dyalog
+obtains the right to use SAC commercially. 
+
+This leads to two main components that must be developed. The first is a 
+simple compiler that will do basic optimizations and the normal things that 
+Dyalog's interpreter does. These are extremely easy to do for modern 
+multi-pass compiler designs. The second is a runtime that is the target 
+language of the compiler. This can be easily retargeted to handle different 
+architectures and runtimes, including Java, SAC, Scheme, and, perhaps, Harlan, 
+a GPU programming language that also presents an appealing target for APL.
+
+Assuming that we start with the goal of a high-performance Chez Scheme 
+implementation of the runtime and the compiler, targeting the lexically scoped 
+Dfns subset of Dyalog APL with all functions and operators and the task parallel 
+extensions described above, with the intention of performing at the current 
+level of Dyalog APL, I believe that this target can be confidently reached by 
+two active programmers in comfortably less than one year. 
+
+== Justification and Rationale ==
+
+The first change recommended from this proposal are the creation of a single 
+parallel operator for the spawning of asynchronous tasks that create implicit 
+future behavior. The key to the effectiveness of this operation is the implicit 
+nature of the futures. This allows a programmer to use the parallel operator 
+without ever having to consider the explicit dereferencing of a future. This 
+enables the use of parallelism with minimal impact on the core algorithm, which 
+aids in correctness and clarity. Performance is not affected, and may
+potentially improve as forcing behavior may now be controlled by the compiler or
+dynamically at run-time in a lazy fashion.
+
+Other proposals have suggested that a special syntax be created for parallel 
+implementations of existing common operators or combinations of operations. 
+This would be something like (+.×)Par, which would then recognize the pattern 
+function it was given and do something special with it. This works in the short 
+case, but ends up removing a convenient symbol from the set of useful, general 
+tools, and makes it a special cased construct. It is also of limited
+applicability and does not aid in the construction of task parallel programs, 
+but only in the use of existing parallel implementations of well known 
+functions. Instead, it is better to use the Par symbol for general task 
+parallelism, by which a parallel +.× may be implemented efficiently, and given 
+an useful name, perhaps + PIP × or the like. If Unicode is permitted to be used 
+in variable names, then the names may be given meaningful symbols, but this 
+document does not care to discuss that.
+
+It is not clear that isolates are really a necessary element, and indeed, 
+it can be shown that without isolates, one can still gain the benefits of 
+isolates at some level with lexical scope and single assignment arrays, which 
+serve as communication channels. However, isolates provide a different but 
+useful programming paradigm that is the agent based paradigm of agents 
+communicating in clear ways. They are not the sole means by which distributed 
+computation can be achieved, as this should be possible with both the parallel 
+operator and the isolates. It might be nicer to say that the isolate system is 
+effecient and clean enough to be used as the underlying construct to implement 
+distributed parallel operations, but I have my doubts about this to start 
+with. At the very least, isolates provide a means of isolating various
+computational engines which might differen significantly from one another, but 
+which nonetheless require communication and coordination to achieve their ends.
+
+In general, the above system leads to a parallel programming paradigm that is 
+synchronized by data dependencies, rather than with explicit locks. This leads 
+to excellent parallelism and asynchronicity, while ensuring deterministic 
+behavior. Restricting ourselves to the Dfns subset of Dyalog APL will allow 
+for the majority of computationally intensive programs to be written, while 
+keeping the language clean enough to integrate nicely into the existing 
+Dyalog APL interpreter for use as a kernel in more sophisticated applications. 
+
+The use of a high-level, but high-performance dynamic language such as Scheme 
+as the core compiler and runtime leads to a good performing system that allows 
+us to work on the things that really set the language apart, and deligate the 
+less important elements to the efforts of other programmers. Additionally, 
+the Scheme language has a number of features which make implementation of 
+features like lightweight threads and isolated namespaces significantly easier 
+than it would be in a number of other languages. The dynamic nature of the 
+language means that the system will map more nicely to the dynamic nature of 
+APL, rather than forcing a number of complications in the type systems, which 
+happens, for example, when trying to write efficient Java code. 
+
