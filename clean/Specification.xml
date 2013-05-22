@@ -22,15 +22,14 @@ of any objects created as a side effect of its use. </para>
 <para>We define the <function>Fix</function> function in terms of 
 functional equivalence with the Dyalog function <function>⎕FIX</function>. 
 It behaves the same for a subset of valid inputs to 
-<function>⎕FIX</function>.</para>
+<function>⎕FIX</function>. We consider only the monadic invocation 
+of <function>⎕FIX</function> here since, as we see below, we care only 
+about anonymous namespaces.</para>
 
 <programlisting>⟨Valid R⟩
 X←Fix R
 ⟨(Valid R) ∧ X Equiv ⎕FIX R⟩</programlisting>
 
-<programlisting>⟨(Valid R) ∧ L≡A⟩
-X←L Fix R
-⟨(Valid R) ∧ (L≡A) ∧ X Equiv L ⎕FIX R⟩</programlisting>
 
 <para>We define valid as the set of all valid namespace inputs 
 to <function>⎕FIX</function> minus those for which any of 
@@ -71,6 +70,5 @@ NS←Fix R
 <para>Errors must also match the Dyalog behavior when given input invalid for 
 <function>⎕FIX</function>. A nonce error is signalled when an unsupported 
 Dyalog function is given to <function>Fix</function>.</para>
-
 
 </article>
