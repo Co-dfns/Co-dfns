@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+
+<info>
+  <title>Co-Dfns Version 1 Specifications</title>
+  <author>Aaron W. Hsu</author>
+  <date>May 13th, 2013</date>
+</info> 
+
+<para>The primary external artifact is a <classname>CoDfns</classname>
+ namespace which implements a single function <function>Fix</function>.
+</para>
+
+<programlisting>9≡⎕NC 'CoDfns'
+3≡⎕NC 'CoDfns.Fix'</programlisting>
+
+<para>The following describes in detail the behavior of the
+<function>Fix</function> function as well as the effects and behaviour
+of any objects created as a side effect of its use. </para>
+
+<para>We define the <function>Fix</function> function in terms of 
+functional equivalence with the Dyalog function <function>⎕FIX</function>. 
+It behaves the same for a subset of valid inputs to 
+<function>⎕FIX</function>.</para>
+
+<programlisting>⟨Valid R⟩
+X←Fix R
+⟨(Valid R) ∧ X Equiv ⎕FIX R⟩</programlisting>
+
+<programlisting>⟨(Valid R) ∧ L≡A⟩
+X←L Fix R
+⟨(Valid R) ∧ (L≡A) ∧ X Equiv L ⎕FIX R⟩</programlisting>
+
+<para>We define valid as the set of all valid namespace inputs 
+to <function>⎕FIX</function> minus those for which any of 
+the following are true:</para>
+
+<programlisting>⍬≢Fix R    ⍝ R has free variables
+⍬≢DQuads R ⍝ R has Dyalog Quad values in it
+⍬≢Guards R ⍝ R uses the guard syntax
+⍬≢Execs R  ⍝ R uses the execute (⍎) function</programlisting>
+
+<para>Fixing a namespace may mutate its environment to install 
+the new namespace reference or it may simply return the reference.</para>
+
+<programlisting>⟨(''≡Name R) ∧ L≡(⎕NL-⍳10)~⊂'NS'⟩
+NS←Fix R
+⟨(Anon R) ∧ (L≡(⎕NL-⍳10)~⊂'NS') ∧ 9≡⎕NC 'NS'⟩</programlisting>
+
+<programlisting>⟨''≢Name R ∧ L≡(⎕NL-⍳10)~(Name R)'NS'⟩
+NS←Fix R
+⟨(''≢Name R) ∧ (L≡(⎕NL-⍳10)~(Name R)'NS') 
+ ∧ (9≡⎕NC 'NS') ∧ 9≡⎕NC Name R⟩</programlisting>
+
+<para>An anonymous namespace script gives only a namespace reference
+while a named namespace gives a reference and binds the name of 
+the namespace to that reference.</para>
+
+<para>We say that the namespace fixed by the <function>Fix</function>
+function is functionally equivalent to the same namespace fixed using 
+<function>⎕FIX</function>. We mean that it has the same number 
+of bindings, that the set of bound names is the same, and that 
+each named binding behaves the same when compared to the binding 
+of the same name in the Dyalog fixed namespace over equivalent 
+invocation histories. </para>
+
+<programlisting>⟨Valid R⟩
+DS←⎕FIX R
+NS←Fix R
+⟨(valid R) ∧ ((NS.⎕NL ⍳10)≡(DS.⎕NL ⍳10)) 
+ ∧ ∀f. (f NS)≡f DS⟩</programlisting>
+
+<para>Errors must also match the Dyalog behavior when given input invalid for 
+<function>⎕FIX</function>. A nonce error is signalled when an unsupported 
+Dyalog function is given to <function>Fix</function>.</para>
+
+
+</article>
