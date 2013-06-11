@@ -17,7 +17,9 @@
 ⍝ Mona   ← Var Var Expr
 ⍝ Dyad   ← Var Var Expr Expr 
 ⍝ Var    ← string
-⍝ Const  ← integer | float
+⍝ Const  ← integer | float | char
+
+⍝ Supported Scalar Datatypes: Integer, Float, character
 
 ⍝ Helper Predicates
 ⍝ 
@@ -63,6 +65,35 @@
     ⍝ ⟨V2P ⍵⟩ Const ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsConst 1⊃𝜏)⟩
     
       Const←{}
+      
+    ⍝ Parse an Expression
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Expr ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsExpr 1⊃𝜏)⟩
+    
+      Expr←{}
+      
+    ⍝ Parse a Conditional Statement
+    ⍝ 
+    ⍝ ⟨V2P ⍵⟩ Cond ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsCond 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ 
+    ⍝   {MkCond 0 2⊃¨⊂⍵}WRP(Expr SEQ (':'LIT) SEC Expr) ⍵
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsCond 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ 
+    ⍝   Expr SEQ (':'LIT) SEC Expr ⍵ 
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧((,3)≡⍴𝜏)∧(∧/IsExpr¨1(0 2)⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩
+    ⍝   Expr SEQ (':' LIT) ⍵
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧((,2)≡⍴𝜏)∧(IsExpr 1 0⊃𝜏)∧(':'≡1 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ ':' LIT ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(':'≡1⊃𝜏)⟩
+    ⍝ ⟨((,3)≡⍴⍵)∧(∧/IsExpr¨(⊂0 2)⊃⍵)⟩ 
+    ⍝   {MkCond 0 2⊃¨⊂⍵} ⍵ 
+    ⍝ ⟨IsCond 𝜏⟩
+    ⍝ ⟨((,3)≡⍴⍵)∧(∧/IsExpr¨(⊂0 2)⊃⍵)⟩ MkCond 0 2⊃¨⊂⍵ ⟨IsCond 𝜏⟩
+    ⍝ ⟨((,3)≡⍴⍵)∧(∧/IsExpr¨(⊂0 2)⊃⍵)⟩ 
+    ⍝   0 2⊃¨⊂⍵ 
+    ⍝ ⟨((,2)≡⍴𝜏)∧(∧/IsExpr¨𝜏)⟩
+    
+      Cond←{MkCond 0 2⊃¨⊂⍵}WRP(Expr SEQ (':'LIT) SEC Expr)
       
     ⍝ Parse a Global Constant
     ⍝
@@ -210,3 +241,12 @@
   ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsStmt¨⍵)⟩ MkFunc ⍵ ⟨IsFunc 𝜏⟩
   
   MkFunc←{}
+  
+  ⍝ Make a conditional statement
+  ⍝
+  ⍝ ⟨((,2)≡⍴⍵)∧(∧/IsExpr¨⍵)⟩ MkCond ⍵ ⟨IsCond 𝜏⟩
+  
+  MkCond←{}
+  
+:EndNamespace
+
