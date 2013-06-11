@@ -48,9 +48,37 @@
   ⍝ ⟨Valid ⍵⟩ Z←Parse ⍵ ⟨IsModule Z⟩
 
   Parse←{
+    ⍝ Parse a Global Constant
+    ⍝
+    ⍝ ⟨V2P⟩ Global ⍵ ⟨(pr 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsGlobal 1⊃𝜏⟩
+    
+      
+    
+    ⍝ Parse a Function Definition
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Func ⍵ ⟨(pr 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsFunc 1⊃𝜏)⟩
+    
+      
+    
+    ⍝ Parse a Definition
+    ⍝ 
+    ⍝ (IsDef ⍵)≡(IsGlobal ⍵)∨(IsFunc ⍵)
+    ⍝ ⟨V2P ⍵⟩ Def ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsDef 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ Global OR Func ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsGlobal 1⊃𝜏)∨(IsFunc 1⊃𝜏)⟩
+
+      Def←Global OR Func
+
+    ⍝ Parse a Module from input
+    ⍝
+    ⍝ ⟨Valid ⍵⟩ Module ⍵ ⟨(0≠0⊃𝜏) ∨ (0=0⊃𝜏) ∧ IsModule 1⊃𝜏⟩
+    ⍝ ⟨Valid ⍵⟩ MkModule WRP (ParseDef ANY) ⍵ ⟨(0≠0⊃𝜏) ∨ (0=0⊃𝜏) ∧ IsModule 1⊃𝜏⟩
+    ⍝ ⟨V2P ⍵⟩ ParseDef ANY ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(∧/IsDef¨1⊃𝜏)⟩
+
+      Module←MkModule WRP (Def ANY)
+
     ⍝ ⟨Valid ⍵⟩
     ⍝
-      z o t←ParseModule ⍵
+      z o t←Module ⍵
     ⍝
     ⍝ ⟨(0≠z) ∨ (0=z) ∧ IsModule o⟩
     ⍝
@@ -63,20 +91,6 @@
     ⍝ ⟨0⟩
   }
 
-  ⍝ Parse a Module from input
-  ⍝
-  ⍝ ⟨Valid ⍵⟩ ParseModule ⍵ ⟨(0≠0⊃𝜏) ∨ (0=0⊃𝜏) ∧ IsModule 1⊃𝜏⟩
-  ⍝ ⟨Valid ⍵⟩ MkModule WRP (ParseDef ANY) ⍵ ⟨(0≠0⊃𝜏) ∨ (0=0⊃𝜏) ∧ IsModule 1⊃𝜏⟩
-  ⍝ ⟨V2P ⍵⟩ ParseDef ANY ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(∧/IsDef¨1⊃𝜏)⟩
-  
-  ParseModule←MkModule WRP (ParseDef ANY)
-
-  ⍝ Parse a Definition
-  ⍝ 
-  ⍝ ⟨V2P ⍵⟩ ParseDef ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsDef 1⊃𝜏)⟩
-
-  ParseDef←{}
-
 ⍝ Parsing Combinators
 
   ⍝ Parse zero or more items
@@ -86,6 +100,15 @@
   ⍝ ⟨P ⍵⟩ F ANY ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(∧/Q¨1⊃𝜏)⟩
 
   ANY←{}
+  
+  ⍝ Parse one item or the other
+  ⍝
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧Q ⍵⟩
+  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧R ⍵⟩
+  ⍝ →
+  ⍝ ⟨P ⍵⟩ F OR G ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(Q ⍵)∨(R ⍵)⟩
+  
+  OR←{}
 
   ⍝ Wrap the returned object of a parser
   ⍝ 
