@@ -19,6 +19,10 @@
 ⍝ Var    ← string
 ⍝ Const  ← integer | float
 
+⍝ Helper Predicates
+⍝ 
+⍝ PR←{((,2)≡⍴⍵)∧(⍬≡⍴0⊃⍵)∧(0≡∊0⊃⍵)∧(¯1≤0⊃⍵)}
+
   ⍝ Primary External Export Specification
   ⍝ 
   ⍝ ⟨(Valid ⍵) ∧ DS≡⎕FIX ⍵⟩
@@ -48,31 +52,66 @@
   ⍝ ⟨Valid ⍵⟩ Z←Parse ⍵ ⟨IsModule Z⟩
 
   Parse←{
+    ⍝ Parse a Variable
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Var ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsVar 1⊃𝜏)⟩
+    
+      Var←{}
+      
+    ⍝ Parse a Constant
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Const ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsConst 1⊃𝜏)⟩
+    
+      Const←{}
+      
     ⍝ Parse a Global Constant
     ⍝
-    ⍝ ⟨V2P⟩ Global ⍵ ⟨(pr 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsGlobal 1⊃𝜏⟩
+    ⍝ ⟨V2P ⍵⟩ Global ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsGlobal 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ 
+    ⍝   {MkGlobal 0 2⊃¨⊂⍵}WRP(Var SEQ ('←' LIT) SEC Const) ⍵
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsGlobal 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ 
+    ⍝   Var SEQ ('←' LIT) SEC Const ⍵ 
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧((,3)≡⍴𝜏)∧(IsVar 1 0⊃𝜏)∧(IsConst 1 2⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩
+    ⍝   Var SEQ ('←' LIT) ⍵
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧((,2)≡⍴𝜏)∧(IsVar 1 0⊃𝜏)∧('←'≡1 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ '←' LIT ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧('←'≡1⊃𝜏)⟩
+    ⍝ ⟨((,3)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsConst 2⊃⍵)⟩ 
+    ⍝   {MkGlobal 0 2⊃¨⊂⍵} ⍵ 
+    ⍝ ⟨IsGlobal 𝜏⟩
+    ⍝ ⟨((,3)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsConst 2⊃⍵)⟩ MkGlobal 0 2⊃¨⊂⍵ ⟨IsGlobal 𝜏⟩
+    ⍝ ⟨((,3)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsConst 2⊃⍵)⟩ 
+    ⍝   0 2⊃¨⊂⍵ 
+    ⍝ ⟨((,2)≡⍴𝜏)∧(IsVar 0⊃𝜏)∧(IsConst 1⊃𝜏)⟩
     
-      
+      Global←{MkGlobal 0 2⊃¨⊂⍵}WRP(Var SEQ ('←' LIT) SEC Const)
     
     ⍝ Parse a Function Definition
     ⍝
-    ⍝ ⟨V2P ⍵⟩ Func ⍵ ⟨(pr 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsFunc 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ Func ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsFunc 1⊃𝜏)⟩
     
-      
+      Func←{}
     
     ⍝ Parse a Definition
     ⍝ 
     ⍝ (IsDef ⍵)≡(IsGlobal ⍵)∨(IsFunc ⍵)
-    ⍝ ⟨V2P ⍵⟩ Def ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsDef 1⊃𝜏)⟩
-    ⍝ ⟨V2P ⍵⟩ Global OR Func ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(IsGlobal 1⊃𝜏)∨(IsFunc 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ Def ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsDef 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ 
+    ⍝   Global OR Func ⍵ 
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsGlobal 1⊃𝜏)∨(IsFunc 1⊃𝜏)⟩
 
       Def←Global OR Func
 
     ⍝ Parse a Module from input
     ⍝
-    ⍝ ⟨Valid ⍵⟩ Module ⍵ ⟨(0≠0⊃𝜏) ∨ (0=0⊃𝜏) ∧ IsModule 1⊃𝜏⟩
-    ⍝ ⟨Valid ⍵⟩ MkModule WRP (ParseDef ANY) ⍵ ⟨(0≠0⊃𝜏) ∨ (0=0⊃𝜏) ∧ IsModule 1⊃𝜏⟩
-    ⍝ ⟨V2P ⍵⟩ ParseDef ANY ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(∧/IsDef¨1⊃𝜏)⟩
+    ⍝ ⟨Valid ⍵⟩ Module ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧IsModule 1⊃𝜏⟩
+    ⍝ ⟨Valid ⍵⟩
+    ⍝   MkModule WRP (ParseDef ANY) ⍵ 
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧IsModule 1⊃𝜏⟩
+    ⍝ ⟨V2P ⍵⟩ 
+    ⍝   ParseDef ANY ⍵ 
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(∧/IsDef¨1⊃𝜏)⟩
 
       Module←MkModule WRP (Def ANY)
 
@@ -95,28 +134,50 @@
 
   ⍝ Parse zero or more items
   ⍝
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(Q 1⊃𝜏)⟩
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(Q 1⊃𝜏)⟩
   ⍝ → 
-  ⍝ ⟨P ⍵⟩ F ANY ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(∧/Q¨1⊃𝜏)⟩
+  ⍝ ⟨P ⍵⟩ F ANY ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(∧/Q¨1⊃𝜏)⟩
 
   ANY←{}
   
   ⍝ Parse one item or the other
   ⍝
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧Q ⍵⟩
-  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧R ⍵⟩
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧Q ⍵⟩
+  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧R ⍵⟩
   ⍝ →
-  ⍝ ⟨P ⍵⟩ F OR G ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(Q ⍵)∨(R ⍵)⟩
+  ⍝ ⟨P ⍵⟩ F OR G ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(Q ⍵)∨(R ⍵)⟩
   
   OR←{}
 
   ⍝ Wrap the returned object of a parser
   ⍝ 
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(Q 1⊃𝜏)⟩
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(Q 1⊃𝜏)⟩
   ⍝ ∧ ⟨Q ⍵⟩ C ⍵ ⟨Q1 𝜏⟩
-  ⍝ → ⟨P ⍵⟩ C WRP F ⟨(PR 𝜏)∧(0≠0⊃𝜏)∨(0=0⊃𝜏)∧(Q1 𝜏)⟩
+  ⍝ → ⟨P ⍵⟩ C WRP F ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(Q1 𝜏)⟩
 
   WRP←{}
+  
+  ⍝ Sequencing
+  ⍝ 
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(Q 1⊃𝜏)⟩
+  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(R 1⊃𝜏)⟩
+  ⍝ → 
+  ⍝ ⟨P ⍵⟩ 
+  ⍝   F SEQ G ⍵ 
+  ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧((,2)≡⍴1⊃𝜏)∧(Q 1 0⊃𝜏)∧(R 1 1⊃𝜏)⟩
+  
+  SEQ←{}
+  
+  ⍝ Sequencing with Catenation
+  ⍝ 
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(Q 1⊃𝜏)⟩
+  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(R 1⊃𝜏)⟩
+  ⍝ →
+  ⍝ ⟨P ⍵⟩
+  ⍝   F SEC G ⍵
+  ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(1=⍴⍴1⊃𝜏)∧(Q ¯1↓1⊃𝜏)∧(R ⊃¯1↑1⊃𝜏)⟩
+  
+  SEC←{}
 
 ⍝ AST Constructors and Predicates
 
@@ -125,3 +186,9 @@
   ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsDef¨⍵)⟩ MkModule ⍵ ⟨IsModule 𝜏⟩
 
   MkModule←{}
+  
+  ⍝ Make a global
+  ⍝ 
+  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsConst 1⊃⍵)⟩ MkGlobal ⍵ ⟨IsGlobal 𝜏⟩
+  
+  MkGlobal←{}
