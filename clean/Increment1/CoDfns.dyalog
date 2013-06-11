@@ -86,12 +86,24 @@
     ⍝ ⟨((,2)≡⍴𝜏)∧(IsVar 0⊃𝜏)∧(IsConst 1⊃𝜏)⟩
     
       Global←{MkGlobal 0 2⊃¨⊂⍵}WRP(Var SEQ ('←' LIT) SEC Const)
+      
+    ⍝ Parse a Statement
+    ⍝
+    ⍝ IsStmt←{(IsCond ⍵)∨(IsExpr ⍵)}
+    ⍝ ⟨V2P ⍵⟩ Stmt ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsStmt 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ 
+    ⍝   Cond OR Expr ⍵ 
+    ⍝ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsCond 1⊃𝜏)∨(IsExpr 1⊃𝜏)⟩
+    
+      Stmt←Cond OR Expr
     
     ⍝ Parse a Function Definition
     ⍝
     ⍝ ⟨V2P ⍵⟩ Func ⍵ ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsFunc 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ MkFunc WRP Stmt ANY ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(IsFunc 1⊃𝜏)⟩
+    ⍝ ⟨V2P ⍵⟩ Stmt ANY ⟨(PR 𝜏)∧(¯1=0⊃𝜏)∨(¯1≠0⊃𝜏)∧(∧/IsStmt¨1⊃𝜏)⟩
     
-      Func←{}
+      Func←MkFunc WRP (Stmt ANY)
     
     ⍝ Parse a Definition
     ⍝ 
@@ -192,3 +204,9 @@
   ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsConst 1⊃⍵)⟩ MkGlobal ⍵ ⟨IsGlobal 𝜏⟩
   
   MkGlobal←{}
+  
+  ⍝ Make a Function
+  ⍝ 
+  ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsStmt¨⍵)⟩ MkFunc ⍵ ⟨IsFunc 𝜏⟩
+  
+  MkFunc←{}
