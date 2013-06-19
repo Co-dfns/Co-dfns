@@ -75,20 +75,32 @@
     ⍝ ⟨V2P ⍵⟩ Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMon 1⊃τ)⟩
     
       Mon←{}
+    
+    ⍝ Parse a Parenthesized Expression
+    ⍝ 
+    ⍝ ⟨V2P ⍵⟩ PExpr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ {1∘⊃WRP'('LIT SEQ Expr SEC (')'LIT) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ 1∘⊃WRP'('LIT SEQ Expr SEC (')'LIT) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ '('LIT SEQ Expr SEC (')'LIT) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1 1⊃τ)∧('('≡1 0⊃τ)∧(')'≡1 2⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ '('LIT SEQ Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1 1⊃τ)∧('('≡1 0⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ '('LIT ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧('('≡0⊃τ)⟩
+    ⍝ ⟨(IsExpr 1⊃⍵)∧('('≡0⊃⍵)∧(')'≡2⊃⍵)⟩ 1∘⊃ ⍵ ⟨IsExpr τ⟩
+ 
+      PExpr←{1∘⊃WRP'('LIT SEQ Expr SEC (')'LIT) ⍵}
       
     ⍝ Parse an Expression
     ⍝
     ⍝ IsExpr←{(IsDya ⍵)∨(IsMon ⍵)∨(IsVar ⍵)∨(IsConst ⍵)}
     ⍝ ⟨V2P ⍵⟩ Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Dya OR Mon OR Var OR Const ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Dya OR Mon OR Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Dya OR Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ PExpr OR Dya OR Mon OR Var OR Const ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ PExpr OR Dya OR Mon OR Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ PExpr OR Dya OR Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Dya ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Const ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    
-      Expr←Dya OR Mon OR Var OR Const
+     
+      Expr←PExpr OR Dya OR Mon OR Var OR Const
       
     ⍝ Parse a Conditional Statement
     ⍝ 
