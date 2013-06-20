@@ -10,7 +10,7 @@
 ⍝ Module ← Def *
 ⍝ Def    ← Global | Func
 ⍝ Global ← Var Const
-⍝ Func   ← Stmt *
+⍝ Func   ← Var Stmt *
 ⍝ Stmt   ← Cond | Expr
 ⍝ Cond   ← Expr Expr
 ⍝ Expr   ← Mona | Dyad | Var | Const
@@ -63,7 +63,7 @@
 
   ⍝ Make a Function
   ⍝
-  ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsStmt¨⍵)⟩ MkFunc ⍵ ⟨IsFunc τ⟩
+  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(1=⊃⍴⍴1⊃⍵)∧(∧/IsStmt¨1⊃⍵)⟩ MkFunc ⍵ ⟨IsFunc τ⟩
 
   MkFunc←{}
 
@@ -285,15 +285,26 @@
     ⍝ ⟨V2P ⍵⟩ Stmt ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsStmt 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Cond OR Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsCond 1⊃τ)∨(IsExpr 1⊃τ)⟩
 
-      Stmt←Cond OR Expr
+      Stmt←Cond OR Expr DLM WSNL
 
     ⍝ Parse a Function Definition
     ⍝
     ⍝ ⟨V2P ⍵⟩ Func ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsFunc 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ MkFunc WRP Stmt ANY ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsFunc 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Stmt ANY ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(∧/IsStmt¨1⊃τ)⟩
-
-      Func←MkFunc WRP(Stmt ANY)
+    ⍝ ⟨V2P ⍵⟩ {MkFunc ⍵[0 3]}WRP(Var SEQ ('←'LIT) SEC ('{'LIT) SEC (Stmt ANY) SEC ('}'LIT)) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsFunc 1⊃τ)⟩
+    ⍝ Q←{((,5)≡⍴⍵)∧(IsVar 0⊃⍵)∧('←'≡1⊃⍵)∧('{'≡2⊃⍵)∧(1=⊃⍴⍴3⊃⍵)∧(∧/IsStmt¨3⊃⍵)∧('}'≡4⊃⍵)}
+    ⍝ ⟨V2P ⍵⟩ Var SEQ ('←'LIT) SEC ('{'LIT) SEC (Stmt ANY) SEC ('}'LIT) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q 1⊃τ)⟩
+    ⍝ Q1←{((,4)≡⍴⍵)∧(IsVar 0⊃⍵)∧('←'≡1⊃⍵)∧('{'≡2⊃⍵)∧(1=⊃⍴⍴3⊃⍵)∧(∧/IsStmt¨3⊃⍵)}
+    ⍝ ⟨V2P ⍵⟩ Var SEQ ('←'LIT) SEC ('{'LIT) SEC (Stmt ANY) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q1 1⊃τ)⟩
+    ⍝ Q2←{((,3)≡⍴⍵)∧(IsVar 0⊃⍵)∧('←'≡1⊃⍵)∧('{'≡2⊃⍵)}
+    ⍝ ⟨V2P ⍵⟩ Var SEQ ('←'LIT) SEC ('{'LIT) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q2 1⊃τ)⟩
+    ⍝ Q3←{((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧('←'≡1⊃⍵)}
+    ⍝ ⟨V2P ⍵⟩ Var SEQ ('←'LIT) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q3 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Stmt ANY ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⊃⍴⍴1⊃τ)∧(∧/IsStmt¨1⊃τ)⟩
+    ⍝ ⟨Q ⍵⟩ {MkFunc ⍵[0 3]} ⍵ ⟨IsFunc τ⟩
+    ⍝ ⟨Q ⍵⟩ MkFunc ⍵[0 3] ⟨IsFunc τ⟩
+    ⍝ ⟨Q ⍵⟩ ⍵[0 3] ⟨((,2)≡⍴τ)∧(IsVar 0⊃τ)∧(1=⊃⍴⍴1⊃τ)∧(∧/IsStmt¨1⊃τ)⟩
+ 
+      Func←{MkFunc ⍵[0 3]}WRP(Var SEQ ('←'LIT) SEC ('{'LIT) SEC (Stmt ANY) SEC ('}'LIT))
 
     ⍝ Parse a Definition
     ⍝
