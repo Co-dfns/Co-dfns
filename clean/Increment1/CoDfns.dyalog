@@ -84,6 +84,12 @@
   ⍝ ⟨((,4)≡⍴⍵)∧((⍬≡0⊃⍵)∨IsVar 0⊃⍵)∧(IsExpr 1⊃⍵)∧(IsVar 2⊃⍵)∧(IsExpr 3⊃⍵)⟩ MkDyad ⍵ ⟨IsDyad τ⟩
 
   MkDyad←{}
+  
+  ⍝ Make a Variable
+  ⍝
+  ⍝ ⟨((,1)≡⍴⍴1⊃τ)∧(∧/' '=∊1⊃τ)⟩ MkVar ⍵ ⟨IsVar ⍵⟩
+  
+  MkVar←{}
 
 ⍝ Parsing Combinators
 
@@ -139,6 +145,11 @@
   ⍝ ⟨P ⍵⟩ F OPT ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(⍬≡1⊃τ)∨(Q 1⊃τ)⟩
 
   OPT←{}
+ 
+⍝ Parsing Classes
+
+  ALPHA←{}
+  ALNUM←{}
 
 ⍝ Parsing Interface
 ⍝
@@ -148,14 +159,33 @@
     ⍝ Parse a Variable
     ⍝
     ⍝ ⟨V2P ⍵⟩ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsVar 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ MkVar WRP (ALPHA SEC (ALNUM ANY)) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsVar 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ ALPHA SEC (ALNUM ANY) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,1)≡⍴⍴1⊃τ)∧(∧/' '=∊1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ ALNUM ANY ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,1)≡⍴⍴1⊃τ)∧(∧/' '=∊1⊃τ)∨(⍬≡1⊃τ)⟩
 
-      Var←{}
+      Var←MkVar WRP (ALPHA SEC (ALNUM ANY))
+      
+    ⍝ Parse an Integer
+    ⍝ 
+    ⍝ ⟨V2P ⍵⟩ Int ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(83=⎕DR 1⊃τ)⟩
+    
+      Int←{}
+    
+    ⍝ Parse a Float
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Float ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(645=⎕DR 1⊃τ)⟩
+    
+      Float←{}
 
     ⍝ Parse a Constant
     ⍝
+    ⍝ IsConst←{(IsInt ⍵)∨(IsFloat ⍵)}
     ⍝ ⟨V2P ⍵⟩ Const ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsConst 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Int OR Float ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsConst 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Int ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsConst 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Float ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsConst 1⊃τ)⟩
 
-      Const←{}
+      Const←Int OR Float
 
     ⍝ Parse a Parenthesized Expression
     ⍝
