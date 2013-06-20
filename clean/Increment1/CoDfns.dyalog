@@ -79,6 +79,12 @@
   
   MkMon←{}
   
+  ⍝ Make a Dyadic Expression
+  ⍝
+  ⍝ ⟨((,3)≡⍴1⊃τ)∧(IsAtom 0⊃⍵)∧(IsVar 1⊃⍵)∧(IsExpr 2⊃⍵)⟩ MkDya ⍵ ⟨IsDya τ⟩
+  
+  MkDya←{}
+  
 ⍝ Parsing Combinators
 
   ⍝ Parse zero or more items
@@ -143,11 +149,21 @@
     
       Const←{}
       
+    ⍝ Parse an Atom Expression
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Atom ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsAtom 1⊃τ)⟩
+    
+      Atom←{}
+      
     ⍝ Parse a Dyadic Expression
     ⍝
     ⍝ ⟨V2P ⍵⟩ Dya ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDya 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ {MkDya WRP (Atom SEQ Var SEC Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDya 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ MkDya WRP (Atom SEQ Var SEC Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDya 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var SEC Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,3)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)∧(IsExpr 1 2⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)⟩
     
-      Dya←{}
+      Dya←{MkDya WRP (Atom SEQ Var SEC Expr) ⍵}
       
     ⍝ Parse a Monadic Expression
     ⍝
