@@ -145,6 +145,16 @@
   ⍝ ⟨P ⍵⟩ F OPT ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(⍬≡1⊃τ)∨(Q 1⊃τ)⟩
 
   OPT←{}
+  
+  ⍝ Delimiter Parsing
+  ⍝ 
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q 1⊃τ)⟩
+  ⍝ →
+  ⍝ ⟨P ⍵⟩ F DLM G ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q 1⊃τ)⟩
+  ⍝ 
+  ⍝ Should parse the same as F except with any G in front or behind.
+  
+  DLM←{}
  
 ⍝ Parsing Classes
 
@@ -283,6 +293,8 @@
     ⍝
     ⍝ IsStmt←{(IsCond ⍵)∨(IsExpr ⍵)}
     ⍝ ⟨V2P ⍵⟩ Stmt ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsStmt 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Cond OR Expr DLM WSNL ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsStmt 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Cond OR Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsStmt 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Cond OR Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsCond 1⊃τ)∨(IsExpr 1⊃τ)⟩
 
       Stmt←Cond OR Expr DLM WSNL
