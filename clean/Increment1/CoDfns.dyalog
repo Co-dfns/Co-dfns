@@ -25,11 +25,11 @@
 ⍝ 
 ⍝ PR←{((,2)≡⍴⍵)∧(⍬≡⍴0⊃⍵)∧(0≡∊0⊃⍵)∧(¯1≤0⊃⍵)}
 
-  ⍝ Primary External Export Specification
-  ⍝ 
-  ⍝ ⟨(Valid ⍵) ∧ DS≡⎕FIX ⍵⟩
-  ⍝ Fix ⍵
-  ⍝ ⟨(9=⎕NC 'τ') ∧ (DS≡⎕FIX ⍵) ∧ (∀f. (f τ)≡f DS)⟩
+⍝ Primary External Export Specification
+⍝ 
+⍝ ⟨(Valid ⍵) ∧ DS≡⎕FIX ⍵⟩
+⍝ Fix ⍵
+⍝ ⟨(9=⎕NC 'τ') ∧ (DS≡⎕FIX ⍵) ∧ (∀f. (f τ)≡f DS)⟩
 
   Fix←{
     ⍝ ⟨(Valid ⍵) ∧ DS≡⎕FIX ⍵⟩
@@ -47,9 +47,88 @@
     ⍝ ⟨(9=⎕NC 'τ' ∧ (DS≡⎕FIX ⍵) ∧ (∀f. (f τ)≡f DS)⟩
   }
 
-  ⍝ Parsing Interface
+⍝ AST Constructors and Predicates
+
+  ⍝ Make a module
   ⍝ 
-  ⍝ ⟨Valid ⍵⟩ Z←Parse ⍵ ⟨IsModule Z⟩
+  ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsDef¨⍵)⟩ MkModule ⍵ ⟨IsModule τ⟩
+
+  MkModule←{}
+  
+  ⍝ Make a global
+  ⍝ 
+  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsConst 1⊃⍵)⟩ MkGlobal ⍵ ⟨IsGlobal τ⟩
+  
+  MkGlobal←{}
+  
+  ⍝ Make a Function
+  ⍝ 
+  ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsStmt¨⍵)⟩ MkFunc ⍵ ⟨IsFunc τ⟩
+  
+  MkFunc←{}
+  
+  ⍝ Make a conditional statement
+  ⍝
+  ⍝ ⟨((,2)≡⍴⍵)∧(∧/IsExpr¨⍵)⟩ MkCond ⍵ ⟨IsCond τ⟩
+  
+  MkCond←{}
+  
+  ⍝ Make a Monadic Expression
+  ⍝
+  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsExpr 1⊃⍵)⟩ MkMon ⍵ ⟨IsMon τ⟩
+  
+  MkMon←{}
+  
+⍝ Parsing Combinators
+
+  ⍝ Parse zero or more items
+  ⍝
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q 1⊃τ)⟩
+  ⍝ → 
+  ⍝ ⟨P ⍵⟩ F ANY ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(∧/Q¨1⊃τ)⟩
+
+  ANY←{}
+  
+  ⍝ Parse one item or the other
+  ⍝
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧Q ⍵⟩
+  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧R ⍵⟩
+  ⍝ →
+  ⍝ ⟨P ⍵⟩ F OR G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q ⍵)∨(R ⍵)⟩
+  
+  OR←{}
+
+  ⍝ Wrap the returned object of a parser
+  ⍝ 
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q 1⊃τ)⟩
+  ⍝ ∧ ⟨Q ⍵⟩ C ⍵ ⟨Q1 τ⟩
+  ⍝ → ⟨P ⍵⟩ C WRP F ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q1 τ)⟩
+
+  WRP←{}
+  
+  ⍝ Sequencing
+  ⍝ 
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q 1⊃τ)⟩
+  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(R 1⊃τ)⟩
+  ⍝ → 
+  ⍝ ⟨P ⍵⟩ 
+  ⍝   F SEQ G ⍵ 
+  ⍝ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(Q 1 0⊃τ)∧(R 1 1⊃τ)⟩
+  
+  SEQ←{}
+  
+  ⍝ Sequencing with Catenation
+  ⍝ 
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q 1⊃τ)⟩
+  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(R 1⊃τ)⟩
+  ⍝ →
+  ⍝ ⟨P ⍵⟩ F SEC G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q ¯1↓1⊃τ)∧(R ⊃¯1↑1⊃τ)⟩
+  
+  SEC←{}
+
+⍝ Parsing Interface
+⍝ 
+⍝ ⟨Valid ⍵⟩ Z←Parse ⍵ ⟨IsModule Z⟩
 
   Parse←{
     ⍝ Parse a Variable
@@ -73,8 +152,11 @@
     ⍝ Parse a Monadic Expression
     ⍝
     ⍝ ⟨V2P ⍵⟩ Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMon 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ {MkMon WRP (Var SEQ Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMon 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ MkMon WRP (Var SEQ Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMon 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Var SEQ Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsVar 1 0⊃τ)∧(IsExpr 1 1⊃τ)⟩
     
-      Mon←{}
+      Mon←{MkMon WRP (Var SEQ Expr) ⍵}
     
     ⍝ Parse a Parenthesized Expression
     ⍝ 
@@ -175,78 +257,5 @@
     ⍝ ⟨0⟩
   }
 
-⍝ Parsing Combinators
-
-  ⍝ Parse zero or more items
-  ⍝
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q 1⊃τ)⟩
-  ⍝ → 
-  ⍝ ⟨P ⍵⟩ F ANY ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(∧/Q¨1⊃τ)⟩
-
-  ANY←{}
-  
-  ⍝ Parse one item or the other
-  ⍝
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧Q ⍵⟩
-  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧R ⍵⟩
-  ⍝ →
-  ⍝ ⟨P ⍵⟩ F OR G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q ⍵)∨(R ⍵)⟩
-  
-  OR←{}
-
-  ⍝ Wrap the returned object of a parser
-  ⍝ 
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q 1⊃τ)⟩
-  ⍝ ∧ ⟨Q ⍵⟩ C ⍵ ⟨Q1 τ⟩
-  ⍝ → ⟨P ⍵⟩ C WRP F ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q1 τ)⟩
-
-  WRP←{}
-  
-  ⍝ Sequencing
-  ⍝ 
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(Q 1⊃τ)⟩
-  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(R 1⊃τ)⟩
-  ⍝ → 
-  ⍝ ⟨P ⍵⟩ 
-  ⍝   F SEQ G ⍵ 
-  ⍝ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(Q 1 0⊃τ)∧(R 1 1⊃τ)⟩
-  
-  SEQ←{}
-  
-  ⍝ Sequencing with Catenation
-  ⍝ 
-  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q 1⊃τ)⟩
-  ⍝ ⟨P ⍵⟩ G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(R 1⊃τ)⟩
-  ⍝ →
-  ⍝ ⟨P ⍵⟩ F SEC G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q ¯1↓1⊃τ)∧(R ⊃¯1↑1⊃τ)⟩
-  
-  SEC←{}
-
-⍝ AST Constructors and Predicates
-
-  ⍝ Make a module
-  ⍝ 
-  ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsDef¨⍵)⟩ MkModule ⍵ ⟨IsModule τ⟩
-
-  MkModule←{}
-  
-  ⍝ Make a global
-  ⍝ 
-  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsConst 1⊃⍵)⟩ MkGlobal ⍵ ⟨IsGlobal τ⟩
-  
-  MkGlobal←{}
-  
-  ⍝ Make a Function
-  ⍝ 
-  ⍝ ⟨(1=⍴⍴⍵)∧(∧/IsStmt¨⍵)⟩ MkFunc ⍵ ⟨IsFunc τ⟩
-  
-  MkFunc←{}
-  
-  ⍝ Make a conditional statement
-  ⍝
-  ⍝ ⟨((,2)≡⍴⍵)∧(∧/IsExpr¨⍵)⟩ MkCond ⍵ ⟨IsCond τ⟩
-  
-  MkCond←{}
-  
 :EndNamespace
 
