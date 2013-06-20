@@ -178,8 +178,11 @@
     ⍝ Parse an Assignment Prefix
     ⍝
     ⍝ ⟨V2P ⍵⟩ Assgn ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsVar 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ 0∘⊃WRP (Var SEQ ('←'LIT)) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsVar 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Var SEQ ('←'LIT) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsVar 1 0⊃τ)∧('←'≡1 1⊃τ)⟩
+    ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧('←'≡1⊃⍵)⟩ 0∘⊃ ⍵ ⟨IsVar τ⟩
     
-      Assgn←{}
+      Assgn←0∘⊃WRP (Var SEQ ('←'LIT))
       
     ⍝ Parse a Dyadic Expression
     ⍝
