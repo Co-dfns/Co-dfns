@@ -75,13 +75,13 @@
   
   ⍝ Make a Monadic Expression
   ⍝
-  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsExpr 1⊃⍵)⟩ MkMona ⍵ ⟨IsMona τ⟩
+  ⍝ ⟨((,3)≡⍴⍵)∧((⍬≡0⊃⍵)∨IsVar 0⊃⍵)∧(IsVar 1⊃⍵)∧(IsExpr 2⊃⍵)⟩ MkMona ⍵ ⟨IsMona τ⟩
   
   MkMona←{}
   
   ⍝ Make a Dyadic Expression
   ⍝
-  ⍝ ⟨((,3)≡⍴1⊃τ)∧(IsAtom 0⊃⍵)∧(IsVar 1⊃⍵)∧(IsExpr 2⊃⍵)⟩ MkDyad ⍵ ⟨IsDyad τ⟩
+  ⍝ ⟨((,4)≡⍴⍵)∧((⍬≡0⊃⍵)∨IsVar 0⊃⍵)∧(IsExpr 1⊃⍵)∧(IsVar 2⊃⍵)∧(IsExpr 3⊃⍵)⟩ MkDyad ⍵ ⟨IsDyad τ⟩
   
   MkDyad←{}
   
@@ -131,6 +131,14 @@
   ⍝ ⟨P ⍵⟩ F SEC G ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q ¯1↓1⊃τ)∧(R ⊃¯1↑1⊃τ)⟩
   
   SEC←{}
+  
+  ⍝ Optional Parsing
+  ⍝
+  ⍝ ⟨P ⍵⟩ F ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(Q 1⊃τ)⟩
+  ⍝ →
+  ⍝ ⟨P ⍵⟩ F OPT ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(1=⍴⍴1⊃τ)∧(⍬≡1⊃τ)∨(Q 1⊃τ)⟩
+  
+  OPT←{}
 
 ⍝ Parsing Interface
 ⍝ 
@@ -167,24 +175,34 @@
     
       Atom←{}
       
+    ⍝ Parse an Assignment Prefix
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Assgn ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsVar 1⊃τ)⟩
+    
+      Assgn←{}
+      
     ⍝ Parse a Dyadic Expression
     ⍝
     ⍝ ⟨V2P ⍵⟩ Dyad ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ {MkDyad WRP (Atom SEQ Var SEC Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ MkDyad WRP (Atom SEQ Var SEC Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var SEC Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,3)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)∧(IsExpr 1 2⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ {MkDyad WRP (Assgn OPT SEQ Atom SEC Var SEC Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ MkDyad WRP (Assgn OPT SEQ Atom SEC Var SEC Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Assgn OPT SEQ Atom SEC Var SEC Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,4)≡⍴1⊃τ)∧((⍬≡1 0⊃τ)∨IsVar 1 0⊃τ)∧(IsExpr 1 1⊃τ)∧(IsVar 1 2⊃τ)∧(IsExpr 1 3⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Assgn OPT SEQ Atom SEC Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,4)≡⍴1⊃τ)∧((⍬≡1 0⊃τ)∨IsVar 1 0⊃τ)∧(IsExpr 1 1⊃τ)∧(IsVar 1 2⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Assgn OPT SEQ Atom ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,4)≡⍴1⊃τ)∧((⍬≡1 0⊃τ)∨IsVar 1 0⊃τ)∧(IsExpr 1 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Assgn OPT ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,4)≡⍴1⊃τ)∧(⍬≡1 0⊃τ)∨(IsVar 1 0⊃τ)⟩
     
-      Dyad←{MkDyad WRP (Atom SEQ Var SEC Expr) ⍵}
+      Dyad←{MkDyad WRP (Assgn OPT SEQ Atom SEC Var SEC Expr) ⍵}
       
     ⍝ Parse a Monadic Expression
     ⍝
     ⍝ ⟨V2P ⍵⟩ Mona ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ {MkMona WRP (Var SEQ Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ MkMona WRP (Var SEQ Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Var SEQ Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsVar 1 0⊃τ)∧(IsExpr 1 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ {MkMona WRP (Assgn OPT SEQ Var SEC Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ MkMona WRP (Assgn OPT SEQ Var SEC Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Assgn OPT SEQ Var SEC Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,3)≡⍴1⊃τ)∧((⍬≡1 0⊃τ)∨IsVar 1 0⊃τ)∧(IsVar 1 1⊃τ)∧(IsExpr 1 2⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Assgn OPT SEQ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧((⍬≡1 0⊃τ)∨IsVar 1 0⊃τ)∧(IsVar 1 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Assgn OPT ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((⍬≡1 0⊃τ)∨IsVar 1 0⊃τ)⟩
     
-      Mona←{MkMona WRP (Var SEQ Expr) ⍵}
+      Mona←{MkMona WRP (Assgn OPT SEQ Var SEC Expr) ⍵}
     
     ⍝ Parse an Expression
     ⍝
