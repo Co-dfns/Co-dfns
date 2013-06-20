@@ -100,7 +100,7 @@
     ⍝ ⟨V2P ⍵⟩ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Const ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
      
-      Expr←PExpr OR Dya OR Mon OR Var OR Const
+      Expr←Dya OR Mon PExpr OR OR Var OR Const
       
     ⍝ Parse a Conditional Statement
     ⍝ 
