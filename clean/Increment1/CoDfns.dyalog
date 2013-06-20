@@ -13,7 +13,7 @@
 ⍝ Func   ← Stmt * 
 ⍝ Stmt   ← Cond | Expr
 ⍝ Cond   ← Expr Expr
-⍝ Expr   ← Mona | Dyad | Var | Const
+⍝ Expr   ← Mona | Dyad | Var | Const 
 ⍝ Mona   ← Var Var Expr
 ⍝ Dyad   ← Var Var Expr Expr 
 ⍝ Var    ← string
@@ -75,15 +75,15 @@
   
   ⍝ Make a Monadic Expression
   ⍝
-  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsExpr 1⊃⍵)⟩ MkMon ⍵ ⟨IsMon τ⟩
+  ⍝ ⟨((,2)≡⍴⍵)∧(IsVar 0⊃⍵)∧(IsExpr 1⊃⍵)⟩ MkMona ⍵ ⟨IsMona τ⟩
   
-  MkMon←{}
+  MkMona←{}
   
   ⍝ Make a Dyadic Expression
   ⍝
-  ⍝ ⟨((,3)≡⍴1⊃τ)∧(IsAtom 0⊃⍵)∧(IsVar 1⊃⍵)∧(IsExpr 2⊃⍵)⟩ MkDya ⍵ ⟨IsDya τ⟩
+  ⍝ ⟨((,3)≡⍴1⊃τ)∧(IsAtom 0⊃⍵)∧(IsVar 1⊃⍵)∧(IsExpr 2⊃⍵)⟩ MkDyad ⍵ ⟨IsDyad τ⟩
   
-  MkDya←{}
+  MkDyad←{}
   
 ⍝ Parsing Combinators
 
@@ -149,31 +149,6 @@
     
       Const←{}
       
-    ⍝ Parse an Atom Expression
-    ⍝
-    ⍝ ⟨V2P ⍵⟩ Atom ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsAtom 1⊃τ)⟩
-    
-      Atom←{}
-      
-    ⍝ Parse a Dyadic Expression
-    ⍝
-    ⍝ ⟨V2P ⍵⟩ Dya ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDya 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ {MkDya WRP (Atom SEQ Var SEC Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDya 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ MkDya WRP (Atom SEQ Var SEC Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDya 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var SEC Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,3)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)∧(IsExpr 1 2⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)⟩
-    
-      Dya←{MkDya WRP (Atom SEQ Var SEC Expr) ⍵}
-      
-    ⍝ Parse a Monadic Expression
-    ⍝
-    ⍝ ⟨V2P ⍵⟩ Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMon 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ {MkMon WRP (Var SEQ Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMon 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ MkMon WRP (Var SEQ Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMon 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Var SEQ Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsVar 1 0⊃τ)∧(IsExpr 1 1⊃τ)⟩
-    
-      Mon←{MkMon WRP (Var SEQ Expr) ⍵}
-    
     ⍝ Parse a Parenthesized Expression
     ⍝ 
     ⍝ ⟨V2P ⍵⟩ PExpr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
@@ -185,20 +160,44 @@
     ⍝ ⟨(IsExpr 1⊃⍵)∧('('≡0⊃⍵)∧(')'≡2⊃⍵)⟩ 1∘⊃ ⍵ ⟨IsExpr τ⟩
  
       PExpr←{1∘⊃WRP'('LIT SEQ Expr SEC (')'LIT) ⍵}
+    
+    ⍝ Parse an Atom Expression
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Atom ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    
+      Atom←{}
       
+    ⍝ Parse a Dyadic Expression
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Dyad ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ {MkDyad WRP (Atom SEQ Var SEC Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ MkDyad WRP (Atom SEQ Var SEC Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsDyad 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var SEC Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,3)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)∧(IsExpr 1 2⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Atom SEQ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsAtom 1 0⊃τ)∧(IsVar 1 1⊃τ)⟩
+    
+      Dyad←{MkDyad WRP (Atom SEQ Var SEC Expr) ⍵}
+      
+    ⍝ Parse a Monadic Expression
+    ⍝
+    ⍝ ⟨V2P ⍵⟩ Mona ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ {MkMona WRP (Var SEQ Expr) ⍵} ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ MkMona WRP (Var SEQ Expr) ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsMona 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Var SEQ Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧((,2)≡⍴1⊃τ)∧(IsVar 1 0⊃τ)∧(IsExpr 1 1⊃τ)⟩
+    
+      Mona←{MkMona WRP (Var SEQ Expr) ⍵}
+    
     ⍝ Parse an Expression
     ⍝
-    ⍝ IsExpr←{(IsDya ⍵)∨(IsMon ⍵)∨(IsVar ⍵)∨(IsConst ⍵)}
+    ⍝ IsExpr←{(IsDyad ⍵)∨(IsMona ⍵)∨(IsVar ⍵)∨(IsConst ⍵)}
     ⍝ ⟨V2P ⍵⟩ Expr ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ PExpr OR Dya OR Mon OR Var OR Const ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ PExpr OR Dya OR Mon OR Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ PExpr OR Dya OR Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Dya ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
-    ⍝ ⟨V2P ⍵⟩ Mon ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Dyad OR Mona OR Atom ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Dyad OR Mona ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Dyad ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
+    ⍝ ⟨V2P ⍵⟩ Mona ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
     ⍝ ⟨V2P ⍵⟩ Const ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsExpr 1⊃τ)⟩
      
-      Expr←Dya OR Mon PExpr OR OR Var OR Const
+      Expr←Dyad OR Mona OR Atom
       
     ⍝ Parse a Conditional Statement
     ⍝ 
