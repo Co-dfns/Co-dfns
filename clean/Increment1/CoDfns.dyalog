@@ -167,6 +167,16 @@
 ⍝ ⟨Valid ⍵⟩ Z←Parse ⍵ ⟨IsModule Z⟩
 
   Parse←{
+    ⍝ Infer function names
+    ⍝ 
+    ⍝ ⟨V2P ⍵⟩ Infer ⍵ ⟨((,1)≡⍴⍴τ)∧(∧/IsStr¨τ)⟩
+    ⍝ 
+    ⍝ Infer the function names, which appear only at the top level. 
+    ⍝ Return a vector of the variables bound to functions. 
+    
+      Infer←{}
+      FnVars←Infer ⍵
+    
     ⍝ Parse a Variable
     ⍝
     ⍝ ⟨V2P ⍵⟩ Var ⍵ ⟨(PR τ)∧(¯1=0⊃τ)∨(¯1≠0⊃τ)∧(IsVar 1⊃τ)⟩
