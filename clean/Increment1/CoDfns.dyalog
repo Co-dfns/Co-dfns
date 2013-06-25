@@ -24,6 +24,7 @@
 ⍝ Helper Predicates
 ⍝
 ⍝ PR←{((,2)≡⍴⍵)∧(⍬≡⍴0⊃⍵)∧(0≡∊0⊃⍵)∧(¯1≤0⊃⍵)}
+⍝ IsStr←{((,1)≡⍴⍴⍵)∧(∧/' '=∊⍵)}
 
 ⍝ Primary External Export Specification
 ⍝
@@ -36,13 +37,13 @@
     ⍝
       ast←Parse ⍵
     ⍝
-    ⍝ ⟨(DS≡⎕FIX ⍵) ∧ IsModule ast⟩
+    ⍝ ⟨(DS≡⎕FIX ⍵)∧(IsModule ast)∧(ast≡Parse ⍵)⟩
     ⍝
       exp mod←GenerateLlvm ast
     ⍝
-    ⍝ ⟨(DS≡⎕FIX ⍵) ∧ (∧/3=DS.⎕NC exp) ∧ (IsLlvmModule mod) ∧ (∀x,y: ∀f∊exp: ((DS.f X)≡LlvmExec mod f X) ∧ (Y DS.f X)≡LlvmExec mod f Y X)⟩
+    ⍝ ⟨(DS≡⎕FIX ⍵)∧(∧/IsStr¨exp)∧(IsLlvmModule mod)∧(∧/3=DS.⎕NC exp)∧(∀x,y:∀f∊exp:((DS.f x)≡LlvmExec mod f x)∧(y DS.f x)≡LlvmExec mod f x y)⟩
     ⍝
-      MakeNs mod
+      exp MakeNs mod
     ⍝
     ⍝ ⟨(9=⎕NC 'τ' ∧ (DS≡⎕FIX ⍵) ∧ (∀f. (f τ)≡f DS)⟩
   }
@@ -498,6 +499,14 @@
   LLVMValueRef  LLVMBuildPtrDiff (LLVMBuilderRef, LLVMValueRef LHS, LLVMValueRef RHS, const char *Name) 
 
 ⍝ Generate LLVM Module
+⍝ 
+⍝ ⟨(DS≡⎕FIX C)∧(IsModule ⍵)∧(⍵≡Parse C)⟩
+⍝   GenerateLlvm ⍵
+⍝ ⟨(DS≡⎕FIX C)∧((,2)≡⍴τ)∧(∧/IsStr¨0⊃τ)∧(IsLlvmModule 1⊃τ)∧(∧/3=DS.⎕NC 0⊃τ)∧(∀x,y:∀f∊0⊃τ:((DS.f x)≡LlvmExec(1⊃τ)f x)∧(y DS.f x)≡LlvmExec(1⊃τ)f x y)⟩
+⍝ 
+⍝ In the above specifications I have taken liberties with Namespace syntax. 
+⍝ Given a namespace X, and string Y, X.Y is the variable or function 
+⍝ named Y in X. 
 
   GenerateLlvm←{}
 
