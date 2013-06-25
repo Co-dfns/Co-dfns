@@ -41,7 +41,7 @@
     ⍝
       exp mod←GenerateLlvm ast
     ⍝
-    ⍝ ⟨(DS≡⎕FIX ⍵)∧(∧/IsStr¨exp)∧(IsLlvmModule mod)∧(∧/3=DS.⎕NC exp)∧(∀x,y:∀f∊exp:((DS.f x)≡LlvmExec mod f x)∧(y DS.f x)≡LlvmExec mod f x y)⟩
+    ⍝ ⟨(DS≡⎕FIX ⍵)∧((,1)≡⍴⍴exp)∧(∧/IsStr¨exp)∧(IsLlvmModule mod)∧(∧/3=DS.⎕NC exp)∧(∀x,y:∀f∊exp:((DS.f x)≡LlvmExec mod f x)∧(y DS.f x)≡LlvmExec mod f x y)⟩
     ⍝
       exp MakeNs mod
     ⍝
@@ -512,13 +512,33 @@
 ⍝ 
 ⍝ ⟨(DS≡⎕FIX C)∧(IsModule ⍵)∧(⍵≡Parse C)⟩
 ⍝   GenerateLlvm ⍵
-⍝ ⟨(DS≡⎕FIX C)∧((,2)≡⍴τ)∧(∧/IsStr¨0⊃τ)∧(IsLlvmModule 1⊃τ)∧(∧/3=DS.⎕NC 0⊃τ)∧(∀x,y:∀f∊0⊃τ:((DS.f x)≡LlvmExec(1⊃τ)f x)∧(y DS.f x)≡LlvmExec(1⊃τ)f x y)⟩
+⍝ ⟨(DS≡⎕FIX C)∧((,2)≡⍴τ)∧((,1)≡⍴⍴0⊃τ)∧(∧/IsStr¨0⊃τ)∧(IsLlvmModule 1⊃τ)∧(∧/3=DS.⎕NC 0⊃τ)∧(∀x,y:∀f∊0⊃τ:((DS.f x)≡LlvmExec(1⊃τ)f x)∧(y DS.f x)≡LlvmExec(1⊃τ)f x y)⟩
 ⍝ 
 ⍝ In the above specifications I have taken liberties with Namespace syntax. 
 ⍝ Given a namespace X, and string Y, X.Y is the variable or function 
 ⍝ named Y in X. 
 
-  GenerateLlvm←{}
+  GenerateLlvm←{
+    ⍝ ⟨(DS≡⎕FIX C)∧(IsModule ⍵)∧(⍵≡Parse C)⟩
+    ⍝ 
+      mod←LlvmModuleCreateWithName 'Co-Dfns Namespace'
+    ⍝
+    ⍝ ⟨(DS≡⎕FIX C)∧(IsLlvmModule mod)∧(IsModule ⍵)⟩
+    ⍝ 
+      types←mod Def¨Children ⍵
+    ⍝ 
+    ⍝ Fns←{(1=⊃¨types)/1⊃¨types}
+    ⍝ ⟨(DS≡⎕FIX C)∧(IsLlvmModule mod)∧((,1)≡⍴⍴types)∧(∧/(⊂,2)≡¨⍴¨types)∧(∧/0=∊¨⊃¨types)∧(∧/IsStr¨1⊃¨types)∧(∧/3=DS.⎕NC Fns types)
+    ⍝  ∧(∀x,y:∀f∊Fns types:((DS.f x)≡LlvmExec mod f x)∧((y DS.f x)≡LlvmExec mod f x y))⟩
+    ⍝
+      exp←(1=⊃¨types)/1⊃¨types
+    ⍝ 
+    ⍝ ⟨(DS≡⎕FIX C)∧((,1)≡⍴⍴exp)∧(∧/IsStr¨exp)∧(IsLlvmModule mod)∧(∧/3=DS.⎕NC exp)∧(∀x,y:∀f∊exp:((DS.f x)≡LlvmExec mod f x)∧((y DS.f x)≡LlvmExec mod f x y))⟩
+    ⍝ 
+    exp mod
+    ⍝ 
+    ⍝ ⟨(DS≡⎕FIX C)∧((,2)≡⍴τ)∧((,1)≡⍴⍴0⊃τ)∧(∧/IsStr¨0⊃τ)∧(IsLlvmModule 1⊃τ)∧(∧/3=DS.⎕NC 0⊃τ)∧(∀x,y:∀f∊0⊃τ:((DS.f x)≡LlvmExec(1⊃τ)f x)∧(y DS.f x)≡LlvmExec(1⊃τ)f x y)⟩
+  }
 
 ⍝ Make a Namespace
 
