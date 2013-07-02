@@ -5,5 +5,6 @@
 <xsl:param name="body.font.master" select="12" />
 <xsl:param name="body.font.family" select="'Candara'" />
 <xsl:param name="title.font.family" select="'Candara'" />
-<xsl:param name="monospace.font.family" select="'APL385 Unicode'" />
+<xsl:param name="monospace.font.family" select="'FreeMono for APL'" />
+<xsl:param name="generate.toc" select="'article nop'" />
 </xsl:stylesheet>
