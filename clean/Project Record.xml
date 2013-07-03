@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Tuesday, July 2nd, 2013</date>
+  </info>
+  <section>
+    <title>Co-Dfns Project Record</title>
+    <section>
+      <title>Chronological Journal</title>
+      <simpara>
+        <emphasis>Monday, July 1, 2013</emphasis>: 
+        Statement of Work created; entering Requirements Analysis
+      </simpara>
+      <simpara>
+        <emphasis>Tuesday, July 2, 2013</emphasis>
+        Software Requirements created; entering Project Planning
+      </simpara>
+    </section>
+  </section>
+</article>
