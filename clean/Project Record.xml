@@ -9,14 +9,28 @@
     <title>Co-Dfns Project Record</title>
     <section>
       <title>Chronological Journal</title>
-      <simpara>
-        <emphasis>Monday, July 1, 2013</emphasis>: 
-        Statement of Work created; entering Requirements Analysis
-      </simpara>
-      <simpara>
-        <emphasis>Tuesday, July 2, 2013</emphasis>
-        Software Requirements created; entering Project Planning
-      </simpara>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Work Log</th>
+          </tr>       
+        </thead>
+        <tbody>
+          <tr>
+            <td>Monday, July 1, 2013</td>
+            <td>Created <citetitle>Statement of Work</citetitle>; entering Requirements Analysis</td>
+          </tr>
+          <tr>
+            <td>Tuesday, July 2, 2013</td>
+            <td>Created <citetitle>Software Requirements</citetitle>; entering Project Planning</td>
+          </tr>
+          <tr>
+            <td>Wednesday, July 3, 2013</td>
+            <td>Created <citetitle>Cleanroom Engineering Guide</citetitle></td>
+          </tr>
+        </tbody>
+      </informaltable>
     </section>
   </section>
 </article>
