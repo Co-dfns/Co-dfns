@@ -189,6 +189,13 @@
           terms of space and time.
         </simpara>
       </listitem>
+      <listitem>
+        <simpara>
+          The executable result of the compiler should be a single workspace 
+          that can be distributed. Minimal shared objects may be used if 
+          necessary.
+        </simpara>
+      </listitem>
     </orderedlist>
   </section>
 </article>
