@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Tuesday, July 4th, 2013</date>
+  </info>
+  <section>
+    <title>Co-Dfns Software Development Plan</title>
+    <section>
+      <title>Mission</title>
+      <simpara>
+        This project has two main goals. The first is to produce a workable 
+        compiler that can be demonstrated to Dyalog customers later this year. 
+        The second is to prepare a framework for future compiler development and 
+        research.        
+      </simpara>
+    </section>
+    <section>
+      <title>Work Products</title>
+      <simpara>
+        The following work products will be created during the course of this 
+        project. Some of them will be useful to the end-user, and others are 
+        only of interest for continued maintenance and development of the 
+        system.
+      </simpara>
+      <glosslist>
+        <title>End-user Consumable Work Products</title>
+        <glossentry>
+          <glossterm>Executable System</glossterm>
+          <glossdef>
+            <simpara>
+              Each increment is turned into an executable form during 
+              certification and testing. The final increment forms the 
+              completed software system in executable form for the end-user. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Reference Manual</glossterm>
+          <glossdef>
+            <simpara>
+              Not part of the development cycle, at the completion of the 
+              final certification phase, the development work products are 
+              accumulated into an useful reference manual for the user of 
+              the <citetitle>executable system</citetitle>. This may be 
+              maintained as a part of the 
+              <citetitle>Executable System</citetitle>.
+            </simpara>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+      <glosslist>
+        <title>Development and Technical Work Products</title>
+        <glossentry>
+          <glossterm>Cleanroom Engineering Guide</glossterm>
+          <glossdef>
+            <simpara>
+              Defines the adaptation and refinement of the Cleanroom processes 
+              to meet project specific requirements. It represents the 
+              normative operating procedure for development.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Engineering Change Log</glossterm>
+          <glossdef>
+            <simpara>
+              Record of all engineering changes, evaluations, impacts, and 
+              statuses. This records the changes initiated in one process that 
+              begins another process to address the intended change.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Function Specification</glossterm>
+          <glossdef>
+            <simpara>
+              Documents software boundaries and interfaces, together with 
+              the external view if a system. It is a precise statement of the 
+              <citetitle>Software Requirements</citetitle> and is the 
+              definitive statement on the black box behavior of the system.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Increment Certification Report</glossterm>
+          <glossdef>
+            <simpara>
+              Contains the values for measures of the statistical goals and 
+              measures of process control. It is the means by which development 
+              either progresses or enters into engineering change, depending 
+              on the quality results reported by this report.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Increment Construction Plan</glossterm>
+          <glossdef>
+            <simpara>
+              Specifies the number of increments into which the project will 
+              be divided, the functions that will be implemented in each 
+              increment, and the schedule for each increment. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Increment Design</glossterm>
+          <glossdef>
+            <simpara>
+              The box structure implementation of a set of functions named in 
+              the <citetitle>Increment Construction Plan</citetitle> and 
+              defined in the <citetitle>Function Specification</citetitle>. 
+              Increment designs are cumulative from one increment to the other. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Increment Test Plan</glossterm>
+          <glossdef>
+            <simpara>
+              Contains all the information needed for statistical certification 
+              and testing.               
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Increment Verification Report</glossterm>
+          <glossdef>
+            <simpara>
+              The record of experience during correctness verification. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Project Record</glossterm>
+          <glossdef>
+            <simpara>
+              Contains a journal and record of all proceedings throughout the 
+              project together with any additional documents that need to be 
+              kept around.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Reengineering Plan</glossterm>
+          <glossdef>
+            <simpara>
+              Contains the information and plans necessary to prepare existing 
+              software for reuse in this project.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Reengineered Software</glossterm>
+          <glossdef>
+            <simpara>
+              Consists of the specifications, designs, code, usage models, 
+              and/or testing artifacts produced during the reengineering of 
+              reused components.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Software Architecture</glossterm>
+          <glossdef>
+            <simpara>
+              Identifies the conceptual architecture, expressed in terms of 
+              principal software components and their relationships; the 
+              module architecture, expressed in terms of layers of functional 
+              decomposition; and the execution architecture, expressed in 
+              terms of dynamic software operation. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Software Development Plan</glossterm>
+          <glossdef>
+            <simpara>
+              A composite plan for project management. Consists of the 
+              following sub-plans:
+            </simpara>
+            <simpara>
+              The <citetitle>Project Goals</citetitle>, which establish the 
+              intended results of the project.
+            </simpara>
+            <simpara>
+              The <citetitle>Work Product Plan</citetitle> defines the 
+              Cleanroom work products to be produced by the project. 
+            </simpara>
+            <simpara>
+              The <citetitle>Schedule Plan</citetitle> defines estimates for 
+              overall tasks, schedules, and milestones. 
+            </simpara>
+            <simpara>
+              The <citetitle>Measurement Plan</citetitle> defines product and 
+              process measurements, standards, and goals for managing the 
+              project, including those for Cleanroom software certification 
+              and statistical process control.
+            </simpara>
+            <simpara>
+              The <citetitle>Reuse Plan</citetitle> identifies sources of 
+              reusable assets, and asset acquisition and evaluation tasks. 
+              It also identifies oppurtunities to reuse domain models, 
+              reference architectures, software specifications, designs, 
+              code, and usage models.
+            </simpara>
+            <simpara>
+              The <citetitle>Configuration Management Plan</citetitle> 
+              defines requirements for change control of designated work 
+              products. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Software Requirements</glossterm>
+          <glossdef>
+            <simpara>
+              Defines the functional, usage, performance, and environmental 
+              requirements for the system. Included among these requirements 
+              are operational constraints such as dependencies on other 
+              systems, capacity requirements, and reliability requirements. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Statement of Work</glossterm>
+          <glossdef>
+            <simpara>
+              Initial seed for all other work to begin.
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Statistical Test Cases</glossterm>
+          <glossdef>
+            <simpara>
+              Generated randomly from a usage model for use in statistical 
+              testing of an increment. Once generated, test cases may undergo 
+              postprocessing to add information for human testers or for an 
+              automated test tool. Each test case is a complete usage scenario 
+              given as a sequence of user inputs. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Statistical Testing Report</glossterm>
+          <glossdef>
+            <simpara>
+              The record of experience in testing, and includes number of 
+              compilation sessions, faults found duing compilation, 
+              number of testing sessions, number of test cases executed 
+              during each session, failures observed during test case 
+              executions, faults found during investigation of failures, time 
+              required to correct each fault, and any other information 
+              relevant to assessment of the correctness of the executing 
+              software. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Usage Models</glossterm>
+          <glossdef>
+            <simpara>
+              A formal representation of software use. Defines usage states 
+              and the probabilities of transitions betreen usage states. 
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Usage Specification</glossterm>
+          <glossdef>
+            <simpara>
+              Description of the expected users, usage scenarios, and usage 
+              environments of the software. It contains definitions of 
+              high-level usage models that record this information, as well 
+              as the results of model analysis.
+            </simpara>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+    </section>
+    <section>
+      <title>Schedule</title>
+      <section>
+        <title>Milestones</title>
+        <simpara>
+          The following milestones represent the high-level organizational 
+          milestones.
+        </simpara>
+        <informaltable frame="void" rules="rows">
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th colspan="5">Description</th>
+              <th colspan="2">Due Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td colspan="5">Planning and Specification</td>
+              <td colspan="2">July 10th, 2013</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td colspan="5">Architecture Specification</td>
+              <td colspan="2">July 17th, 2013</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td colspan="5">Increment, Usage Model, and Test Planning</td>
+              <td colspan="2">July 24th, 2013</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td colspan="5">Increment Design</td>
+              <td colspan="2">October 1st, 2013</td>
+            </tr>
+          </tbody>
+        </informaltable>
+      </section>
+    </section>
+  </section>
+</article>
