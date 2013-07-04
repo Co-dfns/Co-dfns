@@ -6,7 +6,7 @@
     <date>Wednesday, July 3rd, 2013</date>
   </info>
   <section>
-    <title>Cleanroom Engineering Guide</title>
+    <title>Co-Dfns Cleanroom Engineering Guide</title>
     <simpara>
       This document describes the tailored Cleanroom process to be used in the 
       development of the Co-Dfns compiler. The process described here is 
