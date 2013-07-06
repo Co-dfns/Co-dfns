@@ -283,10 +283,34 @@
     <section>
       <title>Schedule</title>
       <section>
+        <title>Overview</title>
+        <simpara>
+          The main deadline in this project is the October conference. To meet 
+          this deadline, the final product needs to be completed by the 1st of 
+          the same month. A good deal of existing code and research is 
+          already in place, but these will be reused as part of the 
+          reengineering effort. The key component is the architecture 
+          specification, which will need more time than normal, and more 
+          rigorous specification as prototypes indicate that the main details 
+          of program behavior are contained in the pass decomposition. As the 
+          external behavior is less complicated, more resources must be 
+          allocated to a clear architecture to decompose the problem further. 
+        </simpara>
+        <simpara>
+          There is a planned productivity hit during the weeks of July 15th 
+          to the 26th, to account for an educational program. This is the 
+          time for allocating the least intensive pieces, where increment 
+          planning, and other high-level specifications can happen, since 
+          some of that burden is off-loaded onto the Architecture 
+          Specification. 
+        </simpara>
+      </section>
+      <section>
         <title>Milestones</title>
         <simpara>
           The following milestones represent the high-level organizational 
-          milestones.
+          milestones. Milestone 4 will be refined into Increments with their 
+          own due dates during Increment Planning.
         </simpara>
         <informaltable frame="void" rules="rows">
           <thead>
@@ -319,6 +343,181 @@
             </tr>
           </tbody>
         </informaltable>
+      </section>
+    </section>
+    <section>
+      <title>Measurement Plan</title>
+      <simpara>
+        The following sections define a plan for statistical quality control 
+        and measures of product readiness. They include the goals for 
+        software certification together with the defined metrics for measuring 
+        product and process quality. They define the process requirements to 
+        assure that the certification process accurately certifies the quality 
+        of the software and that the process can be evaluated for quality 
+        assessment.
+      </simpara>
+      <section>
+        <title>Certification Goals</title>
+        <simpara>
+          The following goals drive the certification effort and therefore 
+          encapsulate the core of the measurement requirements for the 
+          project. 
+        </simpara>
+        <simpara>
+          The project itself is considered a demonstration vehicle and initial 
+          product to move forward. As such, the software is not considered 
+          mission critical or sensitive to failures. It should, however, be 
+          adequately reliable for use in small scale industrial applications, 
+          meaning that failures, if they occur at all, should be immediate and 
+          obvious. 
+        </simpara>
+        <orderedlist>
+          <listitem>
+            <simpara>
+              The system should be semantically complete, and testing of all 
+              primitives and language features should succeed to a reasonable 
+              metric. No feature should be unimplemented to at least a basic 
+              degree.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Testing need not cover performance metrics, though testing and 
+              verification of optimizations should be conducted.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              System should test every requirement.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Testing should cover both compilation and execution of compiled 
+              code, and should cover both error conditions in compilation as 
+              well as error conditions in the executed code. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Certify the correctness and reliability of the compiled code to 
+              99% reliability at 95% confidence. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Certify the reliability of executing the compiler to 90% at 95% 
+              confidence.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              There should be no known faults in the generated code.
+            </simpara>
+          </listitem>
+        </orderedlist>
+      </section>
+      <section>
+        <title>Statistical Measures of Software Quality</title>
+        <simpara>
+          Two primary metrics will be used to certify software quality, the 
+          Mean Time To Failure and Reliability. The MTTF and Reliability will 
+          be calculated per increment on the basis of whole system sampling 
+          using the sampling model for statistical benchmarks. Both will be 
+          expressed in terms of individual test case executions, as opposed to 
+          some metric of time. 
+        </simpara>
+        <simpara>
+          The MTTF and Reliability are connected to one another, with the 
+          MTTF expressed in terms of reliability by the following expression:
+        </simpara>
+        <programlisting>÷1-Reliability</programlisting>
+        <simpara>
+          We will use a zero-failures metric for certification. This means 
+          that an increment will be certified only after it has been 
+          shown to have zero failures in a statistically representative 
+          testing session. The method for calculating the statistical 
+          significance is the sampling method, which has the benefits of being 
+          a conservatice measure that is simple to calculate. Given a desired 
+          reliability and confidence, we can determine the number of test 
+          cases that must run without failure using the following calculation:
+        </simpara>
+        <programlisting>⌈(10⍟1-C)÷10⍟R</programlisting>
+        <simpara>
+          Here, <varname>C</varname> is the desired confidence and 
+          <varname>R</varname> is the desired reliability. 
+        </simpara>
+        <simpara>
+          In our requirements, we have two different reliability metrics, 
+          since we separate compiler reliability into the reliability of the 
+          generated code and the reliability of the compiler itself. The 
+          following table gives the number of test cases with zero failures 
+          that must run in order to certify a version of the compiler 
+          component at the desired reliability and confidence, as determined 
+          by the certification goals listed above.
+        </simpara>
+        <informaltable frame="void" rules="rows">
+          <thead>
+            <tr>
+              <th>Component</th>
+              <th>Reliability</th>
+              <th>Confidence</th>
+              <th>Test Cases</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Compiler</td>
+              <td>0.90</td>
+              <td>0.95</td>
+              <td>29</td>
+            </tr>
+            <tr>
+              <td>Generated Code</td>
+              <td>0.99</td>
+              <td>0.95</td>
+              <td>299</td>
+            </tr>
+          </tbody>
+        </informaltable>
+      </section>
+      <section>
+        <title>Testing Process Measures and Control</title>
+        <simpara>
+          In addition to the certification record, the testing process must 
+          record the iterations between testing, the changes in system 
+          reliability and MTTF, and the relative improvement of each version 
+          of the software both from increment to increment as well as between 
+          engineering changes within the increment. The number of faults 
+          discovered during the process should be tracked and monitered for 
+          signs that the development process is not producing software of 
+          the appropriate quality.
+        </simpara>
+        <simpara>
+          Development should not progress to the next increment until the 
+          current increment under testing is certified to appropriate levels. 
+          Moreover, of testing encounters a failure it should immediately 
+          initiate an engineering change and the fault should be addressed. 
+          Once the fault has been confirmed to be removed, the entire 
+          expirement must be run from the beginning on the new version of 
+          the software. 
+        </simpara>
+      </section>
+      <section>
+        <title>Usage Model Evolution</title>
+        <simpara>
+          Current statistical data on real input distributions is 
+          non-existent, so estimated models will have to be used for the 
+          majority of the project. However, the final increment, after 
+          certification on the existing estimated model, will contain the 
+          necessary code for calculating the actual input distributions based 
+          on the real-life, public code libraries that exist. After the 
+          standard certification is complete, a usage model derived from 
+          the code libraries available publically and uniquely for this 
+          project should be created and used to calculate a final 
+          certification test. This final certification should serve as the 
+          public quality assurance. 
+        </simpara>
       </section>
     </section>
   </section>
