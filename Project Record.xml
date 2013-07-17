@@ -76,6 +76,16 @@
               </simplelist>
             </td>
           </tr>
+          <tr>
+            <td>Wednesday, July 17th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>
+                  Added Configuration Management Plan to <citetitle>Software Development Plan</citetitle>
+                </member>
+              </simplelist>
+            </td>
+          </tr>
         </tbody>
       </informaltable>
     </section>

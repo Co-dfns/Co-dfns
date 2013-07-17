@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<article xmlns="http://docbook.org/ns/docbook" 
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         version="5.0">
   <info>
     <author>Aaron W. Hsu</author>
     <date>Tuesday, July 4th, 2013</date>
@@ -525,6 +527,43 @@
     </section>
     <section>
       <title>Configuration Management</title>
+      <simpara>
+        Initial prototypes were completed in the GitHub domain. These have been 
+        switched to the use of Fossil, and the Fossil SCM will be used for the 
+        duration of the development. Each increment should receive its own tag 
+        on trunk. 
+        Primary development will occur on the Trunk of the system. Commits should 
+        maintain code correctness, but there are expected to be more commits than 
+        just a single commit per increment. All source and work products will be 
+        kept under configuration management through Fossil. Commits to the 
+        trunk should be small and obviously correct.
+      </simpara>
+      <simpara>
+        Documentation will be maintained in the source tree through the use of 
+        DocBook files. Their configurations and stylesheets should also be kept 
+        in source if they differ from the standard, openly available stylesheets.
+        The built-in Wiki of Fossil will not be used for programmer level 
+        documentation, but will be used as the website and front facing content 
+        delivery platform. Likewise, the ticket system should be used as a 
+        customer interaction vehicle, and not as a means of tracking errors 
+        uncovered during the development of the software. These other errors will 
+        be kept in the appropriate journals and work products specified in the 
+        <citetitle>Cleanroom Engineering Guide</citetitle>. 
+      </simpara>
+      <simpara>
+        The central server for hosting will be located at the 
+        <link xlink:href="http://chiselapp.com">Chisel App</link> hosting 
+        until such a time as this becomes impractical, at which point a self-hosted 
+        option will be pursued. This is not likely to be necessary until after the 
+        completion of the first version of the software, and thus deemed mostly 
+        irrelevant for the scope of this development plan. 
+      </simpara>
+      <simpara>
+        Events should be used to report publicly facing announcements, while the 
+        <citetitle>Project Journal</citetitle> should be used to track changes 
+        in the project state and work products that are important to the development 
+        team. 
+      </simpara>
     </section>
   </section>
 </article>
