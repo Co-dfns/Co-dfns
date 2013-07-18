@@ -326,22 +326,22 @@
             <tr>
               <td>1</td>
               <td colspan="5">Planning and Specification</td>
-              <td colspan="2">July 10th, 2013</td>
+              <td colspan="2">July 31st, 2013</td>
             </tr>
             <tr>
               <td>2</td>
               <td colspan="5">Architecture Specification</td>
-              <td colspan="2">July 17th, 2013</td>
+              <td colspan="2">August 9th, 2013</td>
             </tr>
             <tr>
               <td>3</td>
               <td colspan="5">Increment, Usage Model, and Test Planning</td>
-              <td colspan="2">July 24th, 2013</td>
+              <td colspan="2">August 18th, 2013</td>
             </tr>
             <tr>
               <td>4</td>
               <td colspan="5">Increment Design</td>
-              <td colspan="2">October 1st, 2013</td>
+              <td colspan="2">October 19th, 2013</td>
             </tr>
           </tbody>
         </informaltable>
@@ -524,6 +524,71 @@
     </section>
     <section>
       <title>Reuse Analysis</title>
+      <simpara>
+        In general, there are a number of opportunities for code reuse that we 
+        should leverage for this compiler. The first and most obvious is the 
+        explicit targeting of the LLVM virtual machine as the target language 
+        of the compiler. We will assume a metric of 100% reliability for this 
+        end target, and this will not factor into the calculations of the 
+        code reliability. Additionally, a number of existing prototypes have 
+        been created for this compiler, that should inform the design, 
+        system architecture, and overall structure of the compiler. A number of 
+        specific technologies have proven to be extremely useful in the creation 
+        of compilers in the past, and especially for generating type inferences, 
+        and we should use those if we can, perhaps with reimplementations to 
+        meet reliability and deployment requirements. 
+      </simpara>
+      <table rules="rows" frame="void">
+        <title>Specific Opportunities for Reuse</title>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type of Reusability</th>
+            <th colspan="2">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>LLVM</td>
+            <td>Direct Target</td>
+            <td colspan="2">
+              We can directly target our compiler for the LLVM suite.
+            </td>
+          </tr>
+          <tr>
+            <td>MiniKanren</td>
+            <td>Type Inference</td>
+            <td colspan="2">
+              A reimplementation of MiniKanren will facilitate type inference 
+              and statistical testing.
+            </td>
+          </tr>
+          <tr>
+            <td>NanoPass</td>
+            <td>System Architecture</td>
+            <td colspan="2">
+              The NanoPass framework informs the designs and structure of the 
+              compiler, as well as the overall structure of compiler passes.
+            </td>
+          </tr>
+          <tr>
+            <td>C/C++ Prototypes</td>
+            <td>Parser</td>
+            <td colspan="2">
+              The parser will be a reimplementation of the existing partial 
+              parsers available in the C/C++ prototypes.
+            </td>
+          </tr>
+          <tr>
+            <td>Dyalog Sketch</td>
+            <td>Parser</td>
+            <td colspan="2">
+              An initial sketch of the parser generators written for D-fns
+              will be verified and certified as a base for the current parser.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
     <section>
       <title>Configuration Management</title>
