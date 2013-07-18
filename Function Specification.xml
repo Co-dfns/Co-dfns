@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Friday, July 5th, 2013</date>
+  </info>
+  <section>
+    <title>Function Specification</title>
+    <section>
+      <title>Overview</title>
+      
+    </section>
+    <section>
+      <title>Software Boundaries</title>
+      
+    </section>
+    <section>
+      <title>Stimuli and Responses</title>
+      
+    </section>
+    <section>
+      <title>Sequence Enumeration</title>
+      
+    </section>
+    <section>
+      <title>Derived Requirements</title>
+      
+    </section>
+    <section>
+      <title>Canonical Sequence Analysis</title>
+      
+    </section>
+    <section>
+      <title>Specification Functions</title>
+      
+    </section>
+    <section>
+      <title>Black Box Definitions</title>
+      
+    </section>
+  </section>
+</article>
