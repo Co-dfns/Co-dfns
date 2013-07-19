@@ -138,7 +138,7 @@
             <td>LLVM</td>
             <td colspan="2">
               External software used to build the module, consumer of 
-              inputs fromt he compiler and producer of compiled modules.
+              inputs from the compiler and producer of compiled modules.
             </td>
           </tr>
         </tbody>
