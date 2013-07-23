@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Saturday, July 20th, 2013</date>
+  </info>
+  <section>
+    <title>Engineering Change Log</title>
+    <simpara>
+      This document records and tracks all proposed engineering changes that 
+      occur during development. An engineering change is a change proposed 
+      or identified as desirable during one process that affects other work 
+      products not part of the delivery of the current process. This document 
+      tracks these proposed changes, their evaluation, analysis, and the 
+      eventual resolution of these changes. 
+    </simpara>
+    <table frame="void" rules="rows">
+      <title>Summary of Changes</title>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th colspan="2">Date</th>
+          <th colspan="5">Summary</th>
+          <th colspan="2">Resolution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td colspan="2">2013-07-21</td>
+          <td colspan="5">Update <function>Obj</function> and <function>Fix</function> Requirements</td>
+          <td colspan="2">Pending</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td colspan="2">2013-07-23</td>
+          <td colspan="5">Update class of valid input programs</td>
+          <td colspan="2">Pending</td>
+        </tr>
+      </tbody>
+    </table>
+    <orderedlist>
+      <title>Change Description and Analysis</title>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            During Functional Specification, the <function>Obj</function> and <function>Fix</function>
+            functions were discovered to have a number of missing or undesirable requirement 
+            implications. The following changes are suggested:
+          </para>
+        </formalpara>
+        <orderedlist>
+          <listitem>
+            <simpara>
+              Amend Requirement 16 to require only implementing the monadic interface of 
+              the <function>⎕FIX</function> function.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              An additional requirement should state that the <function>Obj</function> function 
+              will produce a shared object in the given file name that has the same semantics 
+              and function bindings as defined in the namespace.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Requirements should be added to clarify the error reporting in the case of files 
+              that already exist when handling <function>Obj</function> output.
+            </simpara>
+          </listitem>
+        </orderedlist>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The above requirements do not change the semantics of the requirements, 
+            and only refine them. They meet the intention of the project and should 
+            be implemented. 
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            Functional specification revealed a possible ambiguity in the description of 
+            requirement 21. Recommend that this requirement be changed to clearly 
+            indicate that only fully closed namespaces. Additionally, a new requirement 
+            prohibiting the use of the <literal>⌶</literal>-beam should be included.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            No semantic change is introduced based on the intention of the design, and 
+            are at an early enough stage so as to not affect more than the functional 
+            specification, so this should be implemented.
+          </para>
+        </formalpara>
+      </listitem>
+    </orderedlist>
+  </section>
+</article>
