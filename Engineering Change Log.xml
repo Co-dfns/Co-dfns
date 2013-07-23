@@ -127,6 +127,12 @@
               be added and fully defined.
             </simpara>
           </listitem>
+          <listitem>
+            <simpara>
+              It should be remarked that no assignment which changes the overall 
+              nameclass of a variable is allowed. 
+            </simpara>
+          </listitem>
         </orderedlist>
         <formalpara>
           <title>Analysis</title>
