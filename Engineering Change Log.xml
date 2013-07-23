@@ -38,6 +38,12 @@
           <td colspan="5">Update class of valid input programs</td>
           <td colspan="2">Pending</td>
         </tr>
+        <tr>
+          <td>3</td>
+          <td colspan="2">2013-07-23</td>
+          <td colspan="5">Add Dyalog Reference to Reuse Analysis</td>
+          <td colspan="2">Pending</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -86,17 +92,66 @@
           <title>Description</title>
           <para>
             Functional specification revealed a possible ambiguity in the description of 
-            requirement 21. Recommend that this requirement be changed to clearly 
-            indicate that only fully closed namespaces. Additionally, a new requirement 
-            prohibiting the use of the <literal>⌶</literal>-beam should be included.
+            requirement 21. Recommend the following:
           </para>
         </formalpara>
+        <orderedlist>
+          <listitem>
+            <simpara>
+              That requirement 21 be changed to clearly indicate that only fully 
+              closed namespaces are accepted; that is, only accept namespaces with 
+              no free variable references.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Additionally, a new requirement 
+              prohibiting the use of the <literal>⌶</literal>-beam should be included.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              A new requirement prohibiting the use of the <function>⍎</function>
+              function should be added. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Requirement 4 should be amended to specify D-fns, rather than Co-Dfns 
+              programs.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              The new additions to the D-fns languages introduced by Co-Dfns should 
+              be added and fully defined.
+            </simpara>
+          </listitem>
+        </orderedlist>
         <formalpara>
           <title>Analysis</title>
           <para>
             No semantic change is introduced based on the intention of the design, and 
             are at an early enough stage so as to not affect more than the functional 
             specification, so this should be implemented.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The primary specification for the D-fns language appears in the Dyalog
+            <citetitle>Programmer's Guide and Language Reference</citetitle>. This 
+            should be explicitly marked as the reference document for the semantics of 
+            the D-fns language.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            This clarifies a number of implied assumptions on the part of the specifications 
+            and development plans, and should be included.
           </para>
         </formalpara>
       </listitem>
