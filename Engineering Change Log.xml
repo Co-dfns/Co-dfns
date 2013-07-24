@@ -133,6 +133,13 @@
               nameclass of a variable is allowed. 
             </simpara>
           </listitem>
+          <listitem>
+            <simpara>
+              A requirement detailing the unsupported operators should be added. 
+              These operators include the <function>&amp;</function> operator as well as 
+              the <function>⍠</function> operator.
+            </simpara>
+          </listitem>
         </orderedlist>
         <formalpara>
           <title>Analysis</title>
