@@ -34,7 +34,7 @@
         <emphasis>not</emphasis> correct, then these states represent 
         the set of possible error responses and the types of reporting that 
         will be given in the cases where the system does not receive the 
-        intended input. Thus, these states can be considered No-op responses 
+        intended input. Thus, these states can be considered null responses 
         unless errors need to be considered or handled. Indeed, the majority 
         of user visible responses in the compiler take the form of error 
         handling responses, and the compiler is at its most quiet when 
@@ -44,7 +44,7 @@
         The approach to black box specification here will take this form 
         and the nature of the visible interface of a compiler into account. 
         We encode the input of the system at an abstraction level that lets 
-        use encode the appropriate error responses of the system and all 
+        us encode the appropriate error responses of the system and all 
         <emphasis>potential</emphasis> user visible behavior of the system 
         in response to any user alterable or user derived input, even though 
         the majority of the time, the compiler might be quite silent. This 
@@ -127,7 +127,7 @@
             </td>
           </tr>
           <tr>
-            <td>Invocations of Compiled Module</td>
+            <td>Compiled Module</td>
             <td colspan="2">
               Behavior is determined completely by the input source code, 
               and cannot be readily specified outside of a specific input
@@ -146,7 +146,400 @@
     </section>
     <section>
       <title>Stimuli and Responses</title>
-      
+      <simpara>
+        We divide the set of stimuli and responses into two sets, 
+        corresponding to the source code and the module. We will not 
+        consider the specification of the LLVM interactions, as these are 
+        internal to the system and should not be user visible. Many of these 
+        stimuli are abstract stimuli based on multiple real stimuli. Others, 
+        such as those in the module set, are abstract because we cannot 
+        encode a specific stimuli set absent a specific source input. 
+      </simpara>
+      <simpara>
+        The stimuli for the Source Input correspond very closely to those 
+        that might be used for the tokenization of program inputs. 
+        We abstractly consider the input history for source input as first 
+        and indication of which external function was called. Then the stream 
+        of argument values must be considered. This is to encode the two main 
+        ways of compiling code, using either the <function>Fix</function>
+        function or the <function>Obj</function> function. These have 
+        nearly identical interfaces, in that they both take the source input 
+        as the right argument. The <function>Obj</function> function 
+        additionally takes a left argument that is the filename of the shared 
+        object that should be output. 
+      </simpara>
+      <simpara>
+        We choose to keep the filename argument as a single unit, but the 
+        source input should be separated into its various token elements 
+        corresponding to the incoming token stream that the parser will have 
+        to deal with, at least, conceptually. In particular, we are abstracting 
+        the consuming of whitespace that might appear throughout the source input.
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Stimuli for Source Input</title>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th colspan="2">Name</th>
+            <th colspan="3">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fix</td>
+            <td colspan="2">Call <function>Fix</function></td>
+            <td colspan="3">
+              A call to the <function>Fix</function> function, arguments 
+              to follow.
+            </td>
+          </tr>
+          <tr>
+            <td>Obj</td>
+            <td colspan="2">Call <function>Obj</function></td>
+            <td colspan="3">
+              A call to the <function>Obj</function> function, 
+              arguments to follow.
+            </td>
+          </tr>
+          <tr>
+            <td>Fnb</td>
+            <td colspan="2">Bad Filename</td>
+            <td colspan="3">
+              A pathname that is somehow an invalid syntax or 
+              otherwise invalid to be used as a pathname.
+            </td>
+          </tr>
+          <tr>
+            <td>Fne</td>
+            <td colspan="2">Empty Filename</td>
+            <td colspan="3">
+              A filename/pathname that specifies a file that does 
+              not yet exist.
+            </td>
+          </tr>
+          <tr>
+            <td>Fnf</td>
+            <td colspan="2">Found Filename</td>
+            <td colspan="3">
+              A filename that specifies a file that already 
+              exists in the filesystem.
+            </td>
+          </tr>
+          <tr>
+            <td>Nss</td>
+            <td colspan="2">Namespace Start</td>
+            <td colspan="3">
+              The starting token for a namespace script, 
+              usually <literal>:Namespace</literal>.
+            </td>
+          </tr>
+          <tr>
+            <td>Nse</td>
+            <td colspan="2">Namespace End</td>
+            <td colspan="3">
+              The ending token for a namespace script,
+              usually <literal>:EndNamespace</literal>.
+            </td>
+          </tr>
+          <tr>
+            <td>N</td>
+            <td colspan="2">Literal Number</td>
+            <td colspan="3">
+              A valid, literal number
+            </td>
+          </tr>
+          <tr>
+            <td>S</td>
+            <td colspan="2">String</td>
+            <td colspan="3">
+              A literal character array string
+            </td>
+          </tr>
+          <tr>
+            <td>Vu</td>
+            <td colspan="2">Unbound Variable</td>
+            <td colspan="3">A variable that has not been bound</td>
+          </tr>
+          <tr>
+            <td>Va</td>
+            <td colspan="2">Array Variable</td>
+            <td colspan="3">A variable bound to an array</td>
+          </tr>
+          <tr>
+            <td>Vf</td>
+            <td colspan="2">Function Variable</td>
+            <td colspan="3">A variable bound to a function</td>
+          </tr>
+          <tr>
+            <td>Vo</td>
+            <td colspan="2">Operator Variable</td>
+            <td colspan="3">A variable bound to an operator</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td colspan="2">Dyadic Primitive</td>
+            <td colspan="3">
+              A primitive function that can be called dyadically.
+            </td>
+          </tr>
+          <tr>
+            <td>M</td>
+            <td colspan="2">Monadic Primitive</td>
+            <td colspan="3">
+              A primtive function that can be called monadically.
+            </td>
+          </tr>
+          <tr>
+            <td>Om</td>
+            <td colspan="2">Monadic Operator</td>
+            <td colspan="3">An operator that takes a single functional argument</td>
+          </tr>
+          <tr>
+            <td>Od</td>
+            <td colspan="2">Dyadic Operator</td>
+            <td colspan="3">An operator that takes two functional arguments</td>
+          </tr>
+          <tr>
+            <td><literal>⍣</literal></td>
+            <td colspan="2">Power Operator</td>
+            <td colspan="3">The Power Operator</td>
+          </tr>
+          <tr>
+            <td><literal>←</literal></td>
+            <td colspan="2">Assignment</td>
+            <td colspan="3">An assignment token</td>
+          </tr>
+          <tr>
+            <td><literal>⋄</literal></td>
+            <td colspan="2">Statement Separator</td>
+            <td colspan="3">Statement separtor token</td>
+          </tr>
+          <tr>
+            <td>Nl</td>
+            <td colspan="2">Newline</td>
+            <td colspan="3">A newline character of some sort</td>
+          </tr>
+          <tr>
+            <td>{</td>
+            <td colspan="2">Left Brace</td>
+            <td colspan="3">A left brace token</td>
+          </tr>
+          <tr>
+            <td>}</td>
+            <td colspan="2">Unbalanced Right Brace</td>
+            <td colspan="3">A right brace token</td>
+          </tr>
+          <tr>
+            <td>[</td>
+            <td colspan="2">Left Bracket</td>
+            <td colspan="3">A left bracket token</td>
+          </tr>
+          <tr>
+            <td>]</td>
+            <td colspan="2">Right Bracket</td>
+            <td colspan="3">A right bracket token</td>
+          </tr>
+          <tr>
+            <td>(</td>
+            <td colspan="2">Left Parenthesis</td>
+            <td colspan="3">A left parenthesis token</td>
+          </tr>
+          <tr>
+            <td>)</td>
+            <td colspan="2">Right Parenthesis</td>
+            <td colspan="3">A right parenthesis token</td>
+          </tr>
+          <tr>
+            <td>Eot</td>
+            <td colspan="2">End of Transmission</td>
+            <td colspan="3">The end of the input to the compiler</td>
+          </tr>
+          <tr>
+            <td>:</td>
+            <td colspan="2">Conditional</td>
+            <td colspan="3">The conditional token</td>
+          </tr>
+          <tr>
+            <td>::</td>
+            <td colspan="2">Error Guard</td>
+            <td colspan="3">The error guard token</td>
+          </tr>
+          <tr>
+            <td>;</td>
+            <td colspan="2">Index Separator</td>
+            <td colspan="3">The index separator for bracket indexing</td>
+          </tr>
+          <tr>
+            <td><literal>∇</literal></td>
+            <td colspan="2">Self Reference</td>
+            <td colspan="3">The implicit self reference function</td>
+          </tr>
+          <tr>
+            <td>Break</td>
+            <td colspan="2">Interrupt/Break</td>
+            <td colspan="3">
+              An interrupt or break signalled by the system; indicates a 
+              request for immediate termination
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        We have chosen to encode our compiler responses based primarily on 
+        the class of the response. In cases of success, we have a single 
+        response; all our other responses classify various types of error 
+        cases. We choose to go no further than is necessary to distinguish 
+        user visible errors types. We do not include source input location 
+        in our error responses, but it is assumed to exist in the output 
+        if reasonably feasible. We further assume that all intermediate 
+        internal states not producing user visible output will 
+        have no explicit output responses, despite representing the majority 
+        of states in the system. Each error state corresponds to a specific error code 
+        reported by the Dyalog interpreter. We 
+        include only the error codes produced by the compiler and not errors 
+        occuring only at runtime.
+      </simpara>
+     <table frame="void" rules="rows">
+        <title>Responses for Source Input</title>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th colspan="2">Name</th>
+            <th colspan="4">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>11</td>
+            <td colspan="2">Domain Error</td>
+            <td colspan="4">
+              Indicates compiler detected domain error
+            </td>
+          </tr>
+          <tr>
+            <td>21</td>
+            <td colspan="2">File Full</td>
+            <td colspan="4">
+              May occur if there is a space limitation preventing 
+              saving or writing the shared object
+            </td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td colspan="2">File Name Error</td>
+            <td colspan="4">
+              When a file matching the pathname for the 
+              shared object exists already
+            </td>
+          </tr>
+          <tr>
+            <td>34</td>
+            <td colspan="2">File System No Space</td>
+            <td colspan="4">
+              Attempting a file operation failed because of 
+              insufficient space
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colspan="2">Index Error</td>
+            <td colspan="4">
+              Compiler detected an out of bounds index operation
+            </td>
+          </tr>
+          <tr>
+            <td>99</td>
+            <td colspan="2">Internal Error</td>
+            <td colspan="4">
+              Internal system error; should never occur in usage
+            </td>
+          </tr>
+          <tr>
+            <td>1003</td>
+            <td colspan="2">Interrupt</td>
+            <td colspan="4">
+              Received a system interrupt indicating an 
+              immediate exit
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td colspan="2">Length Error</td>
+            <td colspan="4">
+              Compiler has detected a shape mismatch but not a rank 
+              error
+            </td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td colspan="2">Limit Error</td>
+            <td colspan="4">
+              A system limitation has been encountered
+            </td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td colspan="2">Nonce Error</td>
+            <td colspan="4">
+              Unimplemented feature reserved for future use
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td colspan="2">Rank Error</td>
+            <td colspan="4">
+              Compiler has detected a rank error of an argument
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td colspan="2">Syntax Error</td>
+            <td colspan="4">
+              Compiler has encountered a line that is not a meaningful statement
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td colspan="2">Value Error</td>
+            <td colspan="4">
+              The compiler has found a reference to an unbound 
+              variable or a function call returning no result where one 
+              was expected
+            </td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td colspan="2">Ws Full</td>
+            <td colspan="4">
+              The compiler has run out of memory
+            </td>
+          </tr>
+          <tr>
+            <td>N/A</td>
+            <td colspan="2">Namespace</td>
+            <td colspan="4">
+              Indicates a successful execution of the 
+              compiler and the return of a semantically equivalent
+              namespace
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="2"></td>
+            <td colspan="4">
+              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- <table frame="void" rules="rows">
+        <title>Stimuli for Module Invocation</title>
+        
+      </table>
+      <table frame="void" rules="rows">
+        <title>Responses for Module Invocation</title>
+        
+      </table> -->
     </section>
     <section>
       <title>Sequence Enumeration</title>
