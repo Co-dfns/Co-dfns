@@ -44,6 +44,12 @@
           <td colspan="5">Add Dyalog Reference to Reuse Analysis</td>
           <td colspan="2">Pending</td>
         </tr>
+        <tr>
+          <td>4</td>
+          <td colspan="2">2013-07-29</td>
+          <td colspan="5">Clarify exported bindings</td>
+          <td colspan="2">Pending</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -165,6 +171,28 @@
           <para>
             This clarifies a number of implied assumptions on the part of the specifications 
             and development plans, and should be included.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            Clarify the exported functions that are produced by the compiler in the exported 
+            namespace to indicate that currently, only global array variables and 
+            functions will be exported. Operators and other such things will not. This 
+            should be entered into the requirements document.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            This is a semantic change from the existing requirements, but does not affect 
+            anything more than the functional specification, which has been amended to 
+            include these adjustments anyways. Additionally, it does not add any 
+            complexity, but simplifies the technical implemenation burden. The only visible 
+            change to the user is the removal of operators from the public interface, which 
+            is acceptable. 
           </para>
         </formalpara>
       </listitem>
