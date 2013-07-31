@@ -121,7 +121,8 @@
       <listitem>
         <simpara>
           The function <function>CoDfns.Fix</function> should implement the 
-          same interface as the <function>⎕FIX</function> system function. 
+          same interface as the monadic version of the
+          <function>⎕FIX</function> system function. 
         </simpara>
       </listitem>
       <listitem>
@@ -194,6 +195,40 @@
           The executable result of the compiler should be a single workspace 
           that can be distributed. Minimal shared objects may be used if 
           necessary.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The function <function>CoDfns.Obj</function> should produce a shared 
+          object to the filename given as its left argument that is semantically 
+          equivalent in exports and functionality as the namespace returned by 
+          the function.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          If the filename given as the left argument to the function 
+          <function>CoDfns.Obj</function> already exists, a 
+          <literal>FILE NAME ERROR</literal> with code 22 should be 
+          signalled, and no data should be written and no module created.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          If the file system referenced by the left argument to the 
+          function <function>CoDfns.Obj</function> does not have the
+          space to allow the shared object to be created, then the 
+          <function>CoDfns.Obj</function> function should signal a 
+          <literal>FILE SYSTEM NO SPACE</literal> error and no 
+          shared object or data should be written and no module created.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          If there is not enough space on the disk to write the 
+          data to the file specified by the call to the <function>CoDfns.Obj</function>
+          function, then the function should signal a <literal>FILE FULL</literal>
+          error and should leave the shared object file in its current state.
         </simpara>
       </listitem>
     </orderedlist>
