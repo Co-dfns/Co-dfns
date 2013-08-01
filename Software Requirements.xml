@@ -304,6 +304,13 @@
           of the element in the same manner as a mutable array.
         </simpara>
       </listitem>
+      <listitem>
+        <simpara>
+          In the namespace returned by the compiler, either through the <function>Obj</function> or the 
+          <function>Fix</function> interface, it is acceptable to make visible only global arrays and 
+          functions, without providing operators as an external interface in the namespace. 
+        </simpara>
+      </listitem>
     </orderedlist>
   </section>
 </article>
