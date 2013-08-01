@@ -76,6 +76,16 @@
         semantics that far exceeds the desired scope of the compiler 
         project. 
       </simpara>
+      <simpara>
+        All behavior here is dictated by the <citetitle>Software Requirements</citetitle>
+        which in turn have the <citetitle>Programmer's Guide and Language Reference</citetitle>
+        for Dyalog APL as an implicit dependency. Likewise, this specification 
+        assumes and relies on the language reference as an implicit part of 
+        this specification and will clarify behaviors not given complete 
+        treatment here. Complete treatment may not be granted here in the 
+        case that the behavior is adequately documented in the language 
+        reference.
+      </simpara>
     </section>
     <section>
       <title>Software Boundaries</title>

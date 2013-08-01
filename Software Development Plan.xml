@@ -587,6 +587,16 @@
               will be verified and certified as a base for the current parser.
             </td>
           </tr>
+          <tr>
+            <td>Dyalog References</td>
+            <td>Specification</td>
+            <td colspan="2">
+              The Dyalog Language Reference can be used as an auxilary 
+              specification document to augment the <citetitle>Function Specification</citetitle>. 
+              It additionally augments the <citetitle>Software Requirements</citetitle>.
+              It can be used without modification.
+            </td>
+          </tr>
         </tbody>
       </table>
     </section>
