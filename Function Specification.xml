@@ -169,21 +169,86 @@
         The stimuli for the Source Input correspond very closely to those 
         that might be used for the tokenization of program inputs. 
         We abstractly consider the input history for source input as first 
-        and indication of which external function was called. Then the stream 
-        of argument values must be considered. This is to encode the two main 
-        ways of compiling code, using either the <function>Fix</function>
-        function or the <function>Obj</function> function. These have 
-        nearly identical interfaces, in that they both take the source input 
-        as the right argument. The <function>Obj</function> function 
-        additionally takes a left argument that is the filename of the shared 
-        object that should be output. 
-      </simpara>
-      <simpara>
+        an indication of which external function was called. Then the stream 
+        of argument values must be considered. This encodes the arguments 
+        received by the <function>CoDfns.Fix</function> function. 
         We choose to keep the filename argument as a single unit, but the 
         source input should be separated into its various token elements 
         corresponding to the incoming token stream that the parser will have 
         to deal with, at least, conceptually. In particular, we are abstracting 
         the consuming of whitespace that might appear throughout the source input.
+      </simpara>
+      <simpara>
+        In addition to the raw token stimuli, the processing of source code is 
+        an inherently recursive process, and thus we have a set of 
+        <firstterm>recursive stimuli</firstterm> which represent terms which we 
+        will define by enumeration, but that themselves are used within enumerations, 
+        possibly within itself. This allows us to encode recursive properties without 
+        bringing the recursive problems into the enumerations themselves.
+      </simpara>
+      <simpara>
+        Each recursive stimuli and the top-level source input have a subset of the 
+        total possible stimuli to accept as valid stimuli. All other stimuli are 
+        implicitly illegal. 
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Recursive Stimuli for Source Input</title>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th colspan="2">Name</th>
+            <th colspan="3">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>E</td>
+            <td colspan="2">Expression</td>
+            <td colspan="3">Any expression that evaluates to an array value</td>
+          </tr>
+          <tr>
+            <td>Fn</td>
+            <td colspan="2">Ambivelant Function</td>
+            <td colspan="3">An ambivelant user-defined function</td>
+          </tr>
+          <tr>
+            <td>Fnm</td>
+            <td colspan="2">Monadic User Operator</td>
+            <td colspan="3">An user-defined monadic operator</td>
+          </tr>
+          <tr>
+            <td>Fnd</td>
+            <td colspan="2">Dyadic User Operator</td>
+            <td colspan="3">An user-defined dyadic operator</td>
+          </tr>
+          <tr>
+            <td>Fe</td>
+            <td colspan="2">Function Expression</td>
+            <td colspan="3">An expression evaluating to a function value</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        All of the function stimuli may be enumerated as one, since they have the same syntax 
+        at this abstract level. When enumerating a recursive stimuli, we allow potentially 
+        any error response, as well as <symbol>illegla</symbol>, <symbol>wait</symbol>, and 
+        <symbol>okay</symbol>. The <symbol>wait</symbol> response indicates the sequence 
+        as yet is not a valid stimuli, but that it may yet become a valid sequence. The 
+        <symbol>okay</symbol> response indicates that the sequence as is constitutes a 
+        valid sequence, but need not be final or unextendable. 
+      </simpara>
+      <simpara>
+        As a rule, during enumeration, one should consider the use of a recursive stimuli 
+        illegal unless it is used to capture some nested property, or when it is used at the 
+        top-level, where no opportunity for non-termination exists. When it is used, one must 
+        carefully mark any sequence at the same level that may be a prefix of the enumeration 
+        of the recursive stimuli as subsumed by said stimuli. A prefix must have the same 
+        response to be a prefix. If a stimuli might pair up with another token, they cannot 
+        cross enumeration depths or levels, but much pair against one another in the same 
+        level. That is, a top-level ( may not be closed in a recursive stimuli. The 
+        intent is to make each enumeration as self-contained as possible, and to make sure that 
+        nested recursion other than tail recursion is marked by the use of recursive stimuli, 
+        rather than trying to handle that recursion through enumeration.
       </simpara>
       <table frame="void" rules="rows">
         <title>Stimuli for Source Input</title>
@@ -195,140 +260,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Fix</td>
-            <td colspan="2">Call <function>Fix</function></td>
-            <td colspan="3">
-              A call to the <function>Fix</function> function, arguments 
-              to follow.
-            </td>
-          </tr>
-          <tr>
-            <td>Obj</td>
-            <td colspan="2">Call <function>Obj</function></td>
-            <td colspan="3">
-              A call to the <function>Obj</function> function, 
-              arguments to follow.
-            </td>
-          </tr>
-          <tr>
-            <td>Fnb</td>
-            <td colspan="2">Bad Filename</td>
-            <td colspan="3">
-              A pathname that is somehow an invalid syntax or 
-              otherwise invalid to be used as a pathname.
-            </td>
-          </tr>
-          <tr>
-            <td>Fne</td>
-            <td colspan="2">Empty Filename</td>
-            <td colspan="3">
-              A filename/pathname that specifies a file that does 
-              not yet exist.
-            </td>
-          </tr>
-          <tr>
-            <td>Fnf</td>
-            <td colspan="2">Found Filename</td>
-            <td colspan="3">
-              A filename that specifies a file that already 
-              exists in the filesystem.
-            </td>
-          </tr>
-          <tr>
-            <td>Nss</td>
-            <td colspan="2">Namespace Start</td>
-            <td colspan="3">
-              The starting token for a namespace script, 
-              usually <literal>:Namespace</literal>.
-            </td>
-          </tr>
-          <tr>
-            <td>Nse</td>
-            <td colspan="2">Namespace End</td>
-            <td colspan="3">
-              The ending token for a namespace script,
-              usually <literal>:EndNamespace</literal>.
-            </td>
-          </tr>
-          <tr>
-            <td>N</td>
-            <td colspan="2">Literal Number</td>
-            <td colspan="3">
-              A valid, literal number
-            </td>
-          </tr>
-          <tr>
-            <td>S</td>
-            <td colspan="2">String</td>
-            <td colspan="3">
-              A literal character array string
-            </td>
-          </tr>
-          <tr>
-            <td>Vu</td>
-            <td colspan="2">Unbound Variable</td>
-            <td colspan="3">A variable that has not been bound</td>
-          </tr>
-          <tr>
-            <td>Va</td>
-            <td colspan="2">Array Variable</td>
-            <td colspan="3">A variable bound to an array</td>
-          </tr>
-          <tr>
-            <td>Vf</td>
-            <td colspan="2">Function Variable</td>
-            <td colspan="3">A variable bound to a function</td>
-          </tr>
-          <tr>
-            <td>Vo</td>
-            <td colspan="2">Operator Variable</td>
-            <td colspan="3">A variable bound to an operator</td>
-          </tr>
-          <tr>
-            <td>D</td>
-            <td colspan="2">Dyadic Primitive</td>
-            <td colspan="3">
-              A primitive function that can be called dyadically.
-            </td>
-          </tr>
-          <tr>
-            <td>M</td>
-            <td colspan="2">Monadic Primitive</td>
-            <td colspan="3">
-              A primtive function that can be called monadically.
-            </td>
-          </tr>
-          <tr>
-            <td>Om</td>
-            <td colspan="2">Monadic Operator</td>
-            <td colspan="3">An operator that takes a single functional argument</td>
-          </tr>
-          <tr>
-            <td>Od</td>
-            <td colspan="2">Dyadic Operator</td>
-            <td colspan="3">An operator that takes two functional arguments</td>
-          </tr>
-          <tr>
-            <td><literal>⍣</literal></td>
-            <td colspan="2">Power Operator</td>
-            <td colspan="3">The Power Operator</td>
-          </tr>
-          <tr>
-            <td><literal>←</literal></td>
-            <td colspan="2">Assignment</td>
-            <td colspan="3">An assignment token</td>
-          </tr>
-          <tr>
-            <td><literal>⋄</literal></td>
-            <td colspan="2">Statement Separator</td>
-            <td colspan="3">Statement separtor token</td>
-          </tr>
-          <tr>
-            <td>Nl</td>
-            <td colspan="2">Newline</td>
-            <td colspan="3">A newline character of some sort</td>
-          </tr>
           <tr>
             <td>{</td>
             <td colspan="2">Left Brace</td>
@@ -360,9 +291,9 @@
             <td colspan="3">A right parenthesis token</td>
           </tr>
           <tr>
-            <td>Eot</td>
-            <td colspan="2">End of Transmission</td>
-            <td colspan="3">The end of the input to the compiler</td>
+            <td>;</td>
+            <td colspan="2">Index Separator</td>
+            <td colspan="3">The index separator for bracket indexing</td>
           </tr>
           <tr>
             <td>:</td>
@@ -375,22 +306,198 @@
             <td colspan="3">The error guard token</td>
           </tr>
           <tr>
-            <td>;</td>
-            <td colspan="2">Index Separator</td>
-            <td colspan="3">The index separator for bracket indexing</td>
+            <td><literal>⋄</literal></td>
+            <td colspan="2">Statement Separator</td>
+            <td colspan="3">Statement separtor token</td>
           </tr>
           <tr>
-            <td><literal>∇</literal></td>
-            <td colspan="2">Self Reference</td>
-            <td colspan="3">The implicit self reference function</td>
+            <td><literal>←</literal></td>
+            <td colspan="2">Assignment</td>
+            <td colspan="3">An assignment token</td>
+          </tr>
+          <tr>
+            <td><literal>⍣</literal></td>
+            <td colspan="2">Power Operator</td>
+            <td colspan="3">The Power Operator</td>
           </tr>
           <tr>
             <td>Break</td>
             <td colspan="2">Interrupt/Break</td>
+            <td colspan="3">User signalled interrupt</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td colspan="2">Dyadic Primitive</td>
             <td colspan="3">
-              An interrupt or break signalled by the system; indicates a 
-              request for immediate termination
+              A primitive function that can be called dyadically.
             </td>
+          </tr>
+          <tr>
+            <td>Eot</td>
+            <td colspan="2">End of Transmission</td>
+            <td colspan="3">The end of the input to the compiler</td>
+          </tr>
+          <tr>
+            <td>Fix</td>
+            <td colspan="2">Call <function>Fix</function></td>
+            <td colspan="3">
+              A call to the <function>Fix</function> function, arguments 
+              to follow.
+            </td>
+          </tr>
+          <tr>
+            <td>Fnb</td>
+            <td colspan="2">Bad Filename</td>
+            <td colspan="3">
+              A pathname that is somehow an invalid syntax or 
+              otherwise invalid to be used as a pathname.
+            </td>
+          </tr>
+          <tr>
+            <td>Fne</td>
+            <td colspan="2">Empty Filename</td>
+            <td colspan="3">
+              A filename/pathname that specifies a file that does 
+              not yet exist.
+            </td>
+          </tr>
+          <tr>
+            <td>Fnf</td>
+            <td colspan="2">Found Filename</td>
+            <td colspan="3">
+              A filename that specifies a file that already 
+              exists in the filesystem.
+            </td>
+          </tr>
+          <tr>
+            <td>Lle</td>
+            <td colspan="2">LLVM Error</td>
+            <td colspan="3">
+              Any LLVM derived error
+            </td>
+          </tr>
+          <tr>
+            <td>Lls</td>
+            <td colspan="2">LLVM Success</td>
+            <td colspan="3">
+              Any LLVM derived success
+            </td>
+          </tr>
+          <tr>
+            <td>M</td>
+            <td colspan="2">Monadic Primitive</td>
+            <td colspan="3">
+              A primtive function that can be called monadically.
+            </td>
+          </tr>
+          <tr>
+            <td>N</td>
+            <td colspan="2">Literal Number</td>
+            <td colspan="3">
+              A valid, literal number
+            </td>
+          </tr>
+          <tr>
+            <td>Nl</td>
+            <td colspan="2">Newline</td>
+            <td colspan="3">A newline character of some sort</td>
+          </tr>
+          <tr>
+            <td>Nse</td>
+            <td colspan="2">Namespace End</td>
+            <td colspan="3">
+              The ending token for a namespace script,
+              usually <literal>:EndNamespace</literal>.
+            </td>
+          </tr>
+          <tr>
+            <td>Nss</td>
+            <td colspan="2">Namespace Start</td>
+            <td colspan="3">
+              The starting token for a namespace script, 
+              usually <literal>:Namespace</literal>.
+            </td>
+          </tr>
+          <tr>
+            <td>Om</td>
+            <td colspan="2">Monadic Operator</td>
+            <td colspan="3">An operator that takes a single functional argument</td>
+          </tr>
+          <tr>
+            <td>Od</td>
+            <td colspan="2">Dyadic Operator</td>
+            <td colspan="3">An operator that takes two functional arguments</td>
+          </tr>
+          <tr>
+            <td>S</td>
+            <td colspan="2">String</td>
+            <td colspan="3">
+              A literal character array string
+            </td>
+          </tr>
+          <tr>
+            <td>Va</td>
+            <td colspan="2">Array Variable</td>
+            <td colspan="3">A variable bound to an array</td>
+          </tr>
+          <tr>
+            <td>Vi</td>
+            <td colspan="2">Illegal Variable</td>
+            <td colspan="3">A variable occurring in an illegal context</td>
+          </tr>
+          <tr>
+            <td>Vf</td>
+            <td colspan="2">Function Variable</td>
+            <td colspan="3">A variable bound to a function</td>
+          </tr>
+          <tr>
+            <td>Vom</td>
+            <td colspan="2">Monadic Operator Variable</td>
+            <td colspan="3">A variable bound to a monadic operator</td>
+          </tr>
+          <tr>
+            <td>Vod</td>
+            <td colspan="2">Dyadic Operator Variable</td>
+            <td colspan="3">A variable bound to a dyadic operator</td>
+          </tr>
+          <tr>
+            <td>Vu</td>
+            <td colspan="2">Unbound Variable</td>
+            <td colspan="3">A variable that has not been bound</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        Each of the enumeration targets has a set of stimuli that are 
+        valid. Alll other stimuli are illegal. These are chosen because 
+        any possible occurance of another stimuli in the enumeration ought 
+        to be subsumed by one of the other recursive stimuli. This helps 
+        to quell any complexity that may occur in enumerating everything out 
+        long hand. 
+      </simpara>
+      <table frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th>Enumeration</th>
+            <th colspan="4">Stimuli Set</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Top-level</td>
+            <td colspan="4"><literal>⋄</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl E Fe Fnm Fnd Nse Nss</td>
+          </tr>
+          <tr>
+            <td>Expressions</td>
+            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Va Vi Vu E Fe</td>
+          </tr>
+          <tr>
+            <td>Functions</td>
+            <td colspan="4">{ } : :: <literal>⋄</literal> <literal>←</literal> Break Nl Va Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
+          </tr>
+          <tr>
+            <td>Func. Expr.</td>
+            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu E Fe Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
@@ -427,14 +534,6 @@
             </td>
           </tr>
           <tr>
-            <td>21</td>
-            <td colspan="2">File Full</td>
-            <td colspan="4">
-              May occur if there is a space limitation preventing 
-              saving or writing the shared object
-            </td>
-          </tr>
-          <tr>
             <td>22</td>
             <td colspan="2">File Name Error</td>
             <td colspan="4">
@@ -461,7 +560,7 @@
             <td>99</td>
             <td colspan="2">Internal Error</td>
             <td colspan="4">
-              Internal system error; should never occur in usage
+              Internal system error; may indicate LLVM error
             </td>
           </tr>
           <tr>
