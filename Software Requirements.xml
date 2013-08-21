@@ -85,7 +85,7 @@
       </listitem>
       <listitem>
         <simpara>
-          It should be possible to produce a shared object from a valid 
+          It should be possible to produce an object from a valid 
           namespace for use by other languages.
         </simpara>
       </listitem>
@@ -128,35 +128,31 @@
       </listitem>
       <listitem>
         <simpara>
-          The function <function>CoDfns.Fix</function> should implement the 
+          The monadic <function>CoDfns.Fix</function> should implement the 
           same interface as the monadic version of the
           <function>⎕FIX</function> system function. 
         </simpara>
       </listitem>
       <listitem>
         <simpara>
-          The function <function>CoDfns.Obj</function> should implement the 
-          shared object functionality of the compiler.
+          The dyadic <function>CoDfns.Fix</function> should implement the 
+          object functionality of the compiler.
         </simpara>
       </listitem>
       <listitem>
         <simpara>
-          The function <function>CoDfns.Obj</function> should take the name of 
-          the shared object to create as its left argument.
+          The dyadic <function>CoDfns.fix</function> should take the name of 
+          the object to create as its left argument.
         </simpara>
       </listitem>
       <listitem>
         <simpara>
-          The function <function>CoDfns.Obj</function> should take as its 
-          right argument the same values as the <function>⎕FIX</function> 
-          system function.
+          [Removed as per Engineering Change #5.]
         </simpara>
       </listitem>
       <listitem>
         <simpara>
-          The function <function>CoDfns.Obj</function> should return a 
-          reference to the namespace in the same manner as the 
-          <function>CoDfns.Fix</function> function. 
+          [Removed as per Engineering Change #5.]
         </simpara>
       </listitem>
       <listitem>
@@ -209,7 +205,7 @@
       </listitem>
       <listitem>
         <simpara>
-          The function <function>CoDfns.Obj</function> should produce a shared 
+          The function <function>CoDfns.Fix</function> should produce an 
           object to the filename given as its left argument that is semantically 
           equivalent in exports and functionality as the namespace returned by 
           the function.
@@ -218,7 +214,7 @@
       <listitem>
         <simpara>
           If the filename given as the left argument to the function 
-          <function>CoDfns.Obj</function> already exists, a 
+          <function>CoDfns.Fix</function> already exists, a 
           <literal>FILE NAME ERROR</literal> with code 22 should be 
           signalled, and no data should be written and no module created.
         </simpara>
@@ -226,19 +222,16 @@
       <listitem>
         <simpara>
           If the file system referenced by the left argument to the 
-          function <function>CoDfns.Obj</function> does not have the
+          function <function>CoDfns.Fix</function> does not have the
           space to allow the shared object to be created, then the 
-          <function>CoDfns.Obj</function> function should signal a 
+          <function>CoDfns.Fix</function> function should signal a 
           <literal>FILE SYSTEM NO SPACE</literal> error and no 
           shared object or data should be written and no module created.
         </simpara>
       </listitem>
       <listitem>
         <simpara>
-          If there is not enough space on the disk to write the 
-          data to the file specified by the call to the <function>CoDfns.Obj</function>
-          function, then the function should signal a <literal>FILE FULL</literal>
-          error and should leave the shared object file in its current state.
+          [Removed as per Engineering Change #5.]
         </simpara>
       </listitem>
       <listitem>
@@ -306,9 +299,13 @@
       </listitem>
       <listitem>
         <simpara>
-          In the namespace returned by the compiler, either through the <function>Obj</function> or the 
-          <function>Fix</function> interface, it is acceptable to make visible only global arrays and 
+          In the namespace returned by the compiler, it is acceptable to make visible only global arrays and 
           functions, without providing operators as an external interface in the namespace. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          When an error occurs in the LLVM subsystem, an <literal>INTERNAL ERROR</literal> shall be signalled. 
         </simpara>
       </listitem>
     </orderedlist>

@@ -50,6 +50,12 @@
           <td colspan="5">Clarify exported bindings</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>5</td>
+          <td colspan="2">2013-08-21</td>
+          <td colspan="5">Cleanup System Requirements</td>
+          <td colspan="2">Applied</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -193,6 +199,44 @@
             complexity, but simplifies the technical implemenation burden. The only visible 
             change to the user is the removal of operators from the public interface, which 
             is acceptable. 
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            Changes in the interface design are suggested by function specification. 
+            It is unnecessary to have the object functionality separate from the fix 
+            function. Additionally, analysis of the way that LLVM works indicates that 
+            requirement #32 is not feasible, and will not be adequately implemented.
+            A new requirement is suggested to indicate failures that may originate from 
+            the LLVM Subsystem.
+            This requires the following changes:
+          </para>
+        </formalpara>
+        <orderedlist>
+          <listitem>
+            <simpara>
+              Change requirements 9, 16, 17, 18, 29, 30, 31, and 42 accordingly.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Eliminate requirements 19, 20, and 32.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Add a new requirement that states an LLVM error will signal an <literal>INTERNAL ERROR</literal>.
+            </simpara>
+          </listitem>
+        </orderedlist>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The change does not alter the functionality or intention of the compiler, but it 
+            does create a simplified interface and is worth doing. It reduces workload later on.
           </para>
         </formalpara>
       </listitem>
