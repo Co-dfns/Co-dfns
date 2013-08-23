@@ -10,115 +10,118 @@
     <section>
       <title>Overview</title>
       <simpara>
-        The complete functional specification of the Co-Dfns compiler can be 
-        found in this document. The compiler is designed and specified using 
-        a black-box method, specifying the behavior in terms of input 
-        and stimulus histories and responses. Because we are writing a 
-        compiler and not some other system, the actual user facing toggles 
-        on the system are surprisingly small, despite the large potential 
-        for behavior. This is because the majority of input comes in the 
-        forms of programs. Therefore, in specification, it is critical to 
-        specify not only the normal user behaviors, but also the behaviors 
-        on critical abstractions of program input and form. 
+        The complete functional specification of the Co-Dfns compiler can be
+        found in this document. The compiler is designed and specified using
+        a black-box method, specifying the behavior in terms of input
+        and stimulus histories and responses. Because we are writing a
+        compiler and not some other system, the actual user facing toggles
+        on the system are surprisingly small, despite the large potential
+        for behavior. This is because the majority of input comes in the
+        forms of programs. Therefore, in specification, it is critical to
+        specify not only the normal user behaviors, but also the behaviors
+        on critical abstractions of program input and form.
       </simpara>
       <simpara>
-        The compiler itself also has a tendency towards sparse responses. 
-        In traditional program design, the responses of the system would 
-        come in the form of textual, GUI, or hardware responses that had a 
-        very user visible form. In contrast, the majority of software <quote>states</quote> 
-        that the user can consider, when correct input is entered, should 
-        respond with no output and no response. These states are there 
-        conceptually or abstractly, rather than displaying specific 
-        outputs whenever they are entered. They cannot be elided from the 
-        function specification, however, because when input is 
-        <emphasis>not</emphasis> correct, then these states represent 
-        the set of possible error responses and the types of reporting that 
-        will be given in the cases where the system does not receive the 
-        intended input. Thus, these states can be considered null responses 
-        unless errors need to be considered or handled. Indeed, the majority 
-        of user visible responses in the compiler take the form of error 
-        handling responses, and the compiler is at its most quiet when 
+        The compiler itself also has a tendency towards sparse responses.
+        In traditional program design, the responses of the system would
+        come in the form of textual, GUI, or hardware responses that had a
+        very user visible form. In contrast, the majority of software
+        <quote>states</quote>
+        that the user can consider, when correct input is entered, should
+        respond with no output and no response. These states are there
+        conceptually or abstractly, rather than displaying specific
+        outputs whenever they are entered. They cannot be elided from the
+        function specification, however, because when input is
+        <emphasis>not</emphasis> correct, then these states represent
+        the set of possible error responses and the types of reporting that
+        will be given in the cases where the system does not receive the
+        intended input. Thus, these states can be considered null responses
+        unless errors need to be considered or handled. Indeed, the majority
+        of user visible responses in the compiler take the form of error
+        handling responses, and the compiler is at its most quiet when
         all things are going as planned.
       </simpara>
       <simpara>
-        The approach to black box specification here will take this form 
-        and the nature of the visible interface of a compiler into account. 
-        We encode the input of the system at an abstraction level that lets 
-        us encode the appropriate error responses of the system and all 
-        <emphasis>potential</emphasis> user visible behavior of the system 
-        in response to any user alterable or user derived input, even though 
-        the majority of the time, the compiler might be quite silent. This 
-        requires an abstraction level that allows us to talk about the 
-        structure and form of the programs that are given as input into the 
-        program, but because of the nature of program text, we have chosen 
-        an abstraction level only deep enough to accurately reflect all of 
-        the possible compiler responses, and no deeper. Entering in any 
-        more precisely would defeat the purpose of the black box abstraction 
-        and would complicate the specification process beyond feasibility. 
+        The approach to black box specification here will take this form
+        and the nature of the visible interface of a compiler into account.
+        We encode the input of the system at an abstraction level that lets
+        us encode the appropriate error responses of the system and all
+        <emphasis>potential</emphasis> user visible behavior of the system
+        in response to any user alterable or user derived input, even though
+        the majority of the time, the compiler might be quite silent. This
+        requires an abstraction level that allows us to talk about the
+        structure and form of the programs that are given as input into the
+        program, but because of the nature of program text, we have chosen
+        an abstraction level only deep enough to accurately reflect all of
+        the possible compiler responses, and no deeper. Entering in any
+        more precisely would defeat the purpose of the black box abstraction
+        and would complicate the specification process beyond feasibility.
       </simpara>
       <simpara>
-        In this same vein, the abstraction of the compiler responses goes 
-        only so far as to accurately reflect the paths that may lead to 
-        semantically valuable user visible changes in response to new 
-        inputs. Responses, therefore, are equally abstract, and represent 
-        only the sufficiently clear class of errors and conceptual states 
-        that reflect the useful and meaningful external behavior of the 
-        system. 
+        In this same vein, the abstraction of the compiler responses goes
+        only so far as to accurately reflect the paths that may lead to
+        semantically valuable user visible changes in response to new
+        inputs. Responses, therefore, are equally abstract, and represent
+        only the sufficiently clear class of errors and conceptual states
+        that reflect the useful and meaningful external behavior of the
+        system.
       </simpara>
       <simpara>
-        Despite the relative abstractness of this specification, however, 
-        normal, standard black box abstraction techniques and specification 
-        methods provide the same level of rigor and usefulness to the 
-        task. The methods and approaches themselves are as little refined 
-        or modified as possible, in order to make these specifications as 
-        easy to understand and as rigorous as possible, without requiring 
-        a significant programmer overhead for developing a mathematical 
-        semantics that far exceeds the desired scope of the compiler 
-        project. 
+        Despite the relative abstractness of this specification, however,
+        normal, standard black box abstraction techniques and specification
+        methods provide the same level of rigor and usefulness to the
+        task. The methods and approaches themselves are as little refined
+        or modified as possible, in order to make these specifications as
+        easy to understand and as rigorous as possible, without requiring
+        a significant programmer overhead for developing a mathematical
+        semantics that far exceeds the desired scope of the compiler
+        project.
       </simpara>
       <simpara>
-        All behavior here is dictated by the <citetitle>Software Requirements</citetitle>
-        which in turn have the <citetitle>Programmer's Guide and Language Reference</citetitle>
-        for Dyalog APL as an implicit dependency. Likewise, this specification 
-        assumes and relies on the language reference as an implicit part of 
-        this specification and will clarify behaviors not given complete 
-        treatment here. Complete treatment may not be granted here in the 
-        case that the behavior is adequately documented in the language 
+        All behavior here is dictated by the
+        <citetitle>Software Requirements</citetitle>
+        which in turn have the
+        <citetitle>Programmer's Guide and Language Reference</citetitle>
+        for Dyalog APL as an implicit dependency. Likewise, this specification
+        assumes and relies on the language reference as an implicit part of
+        this specification and will clarify behaviors not given complete
+        treatment here. Complete treatment may not be granted here in the
+        case that the behavior is adequately documented in the language
         reference.
       </simpara>
     </section>
     <section>
       <title>Software Boundaries</title>
       <simpara>
-        There are two primary sources of user input. The user will first 
-        call the compiler with a given program to compile, which represents 
-        the first external input. Secondly, the compiled namespace that is 
-        created as a result will be called repeatedly and used as its own 
-        thing. This represents the second potential input to the system. 
-        These are distinct because the input given to the second, and the 
-        behavior that is appropriate to it is entirely dependent on the 
-        input that is given as the program input. Thus, it is impossible to 
-        speak directly about the kinds of inputs and their responses for the 
-        second types of input, except very broadly. Instead, the semantics 
-        are encoded in the first input, and as long as the semantics are 
-        preserved in the compiler, then it will work as intended. 
+        There are two primary sources of user input. The user will first
+        call the compiler with a given program to compile, which represents
+        the first external input. Secondly, the compiled namespace that is
+        created as a result will be called repeatedly and used as its own
+        thing. This represents the second potential input to the system.
+        These are distinct because the input given to the second, and the
+        behavior that is appropriate to it is entirely dependent on the
+        input that is given as the program input. Thus, it is impossible to
+        speak directly about the kinds of inputs and their responses for the
+        second types of input, except very broadly. Instead, the semantics
+        are encoded in the first input, and as long as the semantics are
+        preserved in the compiler, then it will work as intended.
       </simpara>
       <simpara>
-        Thus, the main sources of input that will be considered are the 
-        programs that are given, rather than on the inputs that will be 
-        given to the programs described or compiled. This may or may not 
-        accurately reflect how the code is used in practice. Indeed, we 
-        normally expected to compile a program once and then run it 
-        multiple times. However, most of the more useful information comes 
-        from the program input, rather than the input to the compiled 
+        Thus, the main sources of input that will be considered are the
+        programs that are given, rather than on the inputs that will be
+        given to the programs described or compiled. This may or may not
+        accurately reflect how the code is used in practice. Indeed, we
+        normally expected to compile a program once and then run it
+        multiple times. However, most of the more useful information comes
+        from the program input, rather than the input to the compiled
         program.
       </simpara>
       <simpara>
-        As a final note, we have chosen to view the LLVM as an external 
-        software artifact over which we have no control. Thus, it should 
-        be considered an external artifact. It will receive inputs from the 
-        compiler and return resulting responses that we will use to create 
-        the final compiled object. 
+        As a final note, we have chosen to view the LLVM as an external
+        software artifact over which we have no control. Thus, it should
+        be considered an external artifact. It will receive inputs from the
+        compiler and return resulting responses that we will use to create
+        the final compiled object.
       </simpara>
       <table frame="void" rules="rows">
         <title>Summary of External Entities</title>
@@ -132,14 +135,14 @@
           <tr>
             <td>Source Code</td>
             <td colspan="2">
-              Primary input source from the user; specifies semantics and 
+              Primary input source from the user; specifies semantics and
               intended behavior of module behavior.
             </td>
           </tr>
           <tr>
             <td>Compiled Module</td>
             <td colspan="2">
-              Behavior is determined completely by the input source code, 
+              Behavior is determined completely by the input source code,
               and cannot be readily specified outside of a specific input
               beyond summary behavior.
             </td>
@@ -147,7 +150,7 @@
           <tr>
             <td>LLVM</td>
             <td colspan="2">
-              External software used to build the module, consumer of 
+              External software used to build the module, consumer of
               inputs from the compiler and producer of compiled modules.
             </td>
           </tr>
@@ -157,39 +160,40 @@
     <section>
       <title>Stimuli and Responses</title>
       <simpara>
-        We divide the set of stimuli and responses into two sets, 
-        corresponding to the source code and the module. We will not 
-        consider the specification of the LLVM interactions, as these are 
-        internal to the system and should not be user visible. Many of these 
-        stimuli are abstract stimuli based on multiple real stimuli. Others, 
-        such as those in the module set, are abstract because we cannot 
-        encode a specific stimuli set absent a specific source input. 
+        We divide the set of stimuli and responses into two sets,
+        corresponding to the source code and the module. We will not
+        consider the specification of the LLVM interactions, as these are
+        internal to the system and should not be user visible. Many of these
+        stimuli are abstract stimuli based on multiple real stimuli. Others,
+        such as those in the module set, are abstract because we cannot
+        encode a specific stimuli set absent a specific source input.
       </simpara>
       <simpara>
-        The stimuli for the Source Input correspond very closely to those 
-        that might be used for the tokenization of program inputs. 
-        We abstractly consider the input history for source input as first 
-        an indication of which external function was called. Then the stream 
-        of argument values must be considered. This encodes the arguments 
-        received by the <function>CoDfns.Fix</function> function. 
-        We choose to keep the filename argument as a single unit, but the 
-        source input should be separated into its various token elements 
-        corresponding to the incoming token stream that the parser will have 
-        to deal with, at least, conceptually. In particular, we are abstracting 
+        The stimuli for the Source Input correspond very closely to those
+        that might be used for the tokenization of program inputs.
+        We abstractly consider the input history for source input as first
+        an indication of which external function was called. Then the stream
+        of argument values must be considered. This encodes the arguments
+        received by the
+        <function>CoDfns.Fix</function> function.
+        We choose to keep the filename argument as a single unit, but the
+        source input should be separated into its various token elements
+        corresponding to the incoming token stream that the parser will have
+        to deal with, at least, conceptually. In particular, we are abstracting
         the consuming of whitespace that might appear throughout the source input.
       </simpara>
       <simpara>
-        In addition to the raw token stimuli, the processing of source code is 
-        an inherently recursive process, and thus we have a set of 
-        <firstterm>recursive stimuli</firstterm> which represent terms which we 
-        will define by enumeration, but that themselves are used within enumerations, 
-        possibly within itself. This allows us to encode recursive properties without 
+        In addition to the raw token stimuli, the processing of source code is
+        an inherently recursive process, and thus we have a set of
+        <firstterm>recursive stimuli</firstterm> which represent terms which we
+        will define by enumeration, but that themselves are used within enumerations,
+        possibly within itself. This allows us to encode recursive properties without
         bringing the recursive problems into the enumerations themselves.
       </simpara>
       <simpara>
-        Each recursive stimuli and the top-level source input have a subset of the 
-        total possible stimuli to accept as valid stimuli. All other stimuli are 
-        implicitly illegal. 
+        Each recursive stimuli and the top-level source input have a subset of the
+        total possible stimuli to accept as valid stimuli. All other stimuli are
+        implicitly illegal.
       </simpara>
       <table frame="void" rules="rows">
         <title>Recursive Stimuli for Source Input</title>
@@ -229,25 +233,28 @@
         </tbody>
       </table>
       <simpara>
-        All of the function stimuli may be enumerated as one, since they have the same syntax 
-        at this abstract level. When enumerating a recursive stimuli, we allow potentially 
-        any error response, as well as <symbol>illegla</symbol>, <symbol>wait</symbol>, and 
-        <symbol>okay</symbol>. The <symbol>wait</symbol> response indicates the sequence 
-        as yet is not a valid stimuli, but that it may yet become a valid sequence. The 
-        <symbol>okay</symbol> response indicates that the sequence as is constitutes a 
-        valid sequence, but need not be final or unextendable. 
+        All of the function stimuli may be enumerated as one, since they have the same syntax
+        at this abstract level. When enumerating a recursive stimuli, we allow potentially
+        any error response, as well as
+        <symbol>illegla</symbol>,
+        <symbol>wait</symbol>, and
+        <symbol>okay</symbol>. The
+        <symbol>wait</symbol> response indicates the sequence
+        as yet is not a valid stimuli, but that it may yet become a valid sequence. The
+        <symbol>okay</symbol> response indicates that the sequence as is constitutes a
+        valid sequence, but need not be final or unextendable.
       </simpara>
       <simpara>
-        As a rule, during enumeration, one should consider the use of a recursive stimuli 
-        illegal unless it is used to capture some nested property, or when it is used at the 
-        top-level, where no opportunity for non-termination exists. When it is used, one must 
-        carefully mark any sequence at the same level that may be a prefix of the enumeration 
-        of the recursive stimuli as subsumed by said stimuli. A prefix must have the same 
-        response to be a prefix. If a stimuli might pair up with another token, they cannot 
-        cross enumeration depths or levels, but much pair against one another in the same 
-        level. That is, a top-level ( may not be closed in a recursive stimuli. The 
-        intent is to make each enumeration as self-contained as possible, and to make sure that 
-        nested recursion other than tail recursion is marked by the use of recursive stimuli, 
+        As a rule, during enumeration, one should consider the use of a recursive stimuli
+        illegal unless it is used to capture some nested property, or when it is used at the
+        top-level, where no opportunity for non-termination exists. When it is used, one must
+        carefully mark any sequence at the same level that may be a prefix of the enumeration
+        of the recursive stimuli as subsumed by said stimuli. A prefix must have the same
+        response to be a prefix. If a stimuli might pair up with another token, they cannot
+        cross enumeration depths or levels, but much pair against one another in the same
+        level. That is, a top-level ( may not be closed in a recursive stimuli. The
+        intent is to make each enumeration as self-contained as possible, and to make sure that
+        nested recursion other than tail recursion is marked by the use of recursive stimuli,
         rather than trying to handle that recursion through enumeration.
       </simpara>
       <table frame="void" rules="rows">
@@ -306,17 +313,23 @@
             <td colspan="3">The error guard token</td>
           </tr>
           <tr>
-            <td><literal>⋄</literal></td>
+            <td>
+              <literal>⋄</literal>
+            </td>
             <td colspan="2">Statement Separator</td>
             <td colspan="3">Statement separtor token</td>
           </tr>
           <tr>
-            <td><literal>←</literal></td>
+            <td>
+              <literal>←</literal>
+            </td>
             <td colspan="2">Assignment</td>
             <td colspan="3">An assignment token</td>
           </tr>
           <tr>
-            <td><literal>⍣</literal></td>
+            <td>
+              <literal>⍣</literal>
+            </td>
             <td colspan="2">Power Operator</td>
             <td colspan="3">The Power Operator</td>
           </tr>
@@ -339,9 +352,12 @@
           </tr>
           <tr>
             <td>Fix</td>
-            <td colspan="2">Call <function>Fix</function></td>
+            <td colspan="2">Call
+              <function>Fix</function>
+            </td>
             <td colspan="3">
-              A call to the <function>Fix</function> function, arguments 
+              A call to the
+              <function>Fix</function> function, arguments
               to follow.
             </td>
           </tr>
@@ -349,7 +365,7 @@
             <td>Fnb</td>
             <td colspan="2">Bad Filename</td>
             <td colspan="3">
-              A pathname that is somehow an invalid syntax or 
+              A pathname that is somehow an invalid syntax or
               otherwise invalid to be used as a pathname.
             </td>
           </tr>
@@ -357,7 +373,7 @@
             <td>Fne</td>
             <td colspan="2">Empty Filename</td>
             <td colspan="3">
-              A filename/pathname that specifies a file that does 
+              A filename/pathname that specifies a file that does
               not yet exist.
             </td>
           </tr>
@@ -365,7 +381,7 @@
             <td>Fnf</td>
             <td colspan="2">Found Filename</td>
             <td colspan="3">
-              A filename that specifies a file that already 
+              A filename that specifies a file that already
               exists in the filesystem.
             </td>
           </tr>
@@ -407,15 +423,17 @@
             <td colspan="2">Namespace End</td>
             <td colspan="3">
               The ending token for a namespace script,
-              usually <literal>:EndNamespace</literal>.
+              usually
+              <literal>:EndNamespace</literal>.
             </td>
           </tr>
           <tr>
             <td>Nss</td>
             <td colspan="2">Namespace Start</td>
             <td colspan="3">
-              The starting token for a namespace script, 
-              usually <literal>:Namespace</literal>.
+              The starting token for a namespace script,
+              usually
+              <literal>:Namespace</literal>.
             </td>
           </tr>
           <tr>
@@ -468,12 +486,12 @@
         </tbody>
       </table>
       <simpara>
-        Each of the enumeration targets has a set of stimuli that are 
-        valid. Alll other stimuli are illegal. These are chosen because 
-        any possible occurance of another stimuli in the enumeration ought 
-        to be subsumed by one of the other recursive stimuli. This helps 
-        to quell any complexity that may occur in enumerating everything out 
-        long hand. 
+        Each of the enumeration targets has a set of stimuli that are
+        valid. Alll other stimuli are illegal. These are chosen because
+        any possible occurance of another stimuli in the enumeration ought
+        to be subsumed by one of the other recursive stimuli. This helps
+        to quell any complexity that may occur in enumerating everything out
+        long hand.
       </simpara>
       <table frame="void" rules="rows">
         <thead>
@@ -485,38 +503,49 @@
         <tbody>
           <tr>
             <td>Top-level</td>
-            <td colspan="4"><literal>⋄</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl E Fe Fnm Fnd Nse Nss</td>
+            <td colspan="4">
+              <literal>⋄</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl E Fe Fnm Fnd Nse Nss
+            </td>
           </tr>
           <tr>
             <td>Expressions</td>
-            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Va Vi Vu E Fe</td>
+            <td colspan="4">[ ] ( ) ;
+              <literal>←</literal>
+              <literal>⍣</literal> Break N S Va Vi Vu E Fe
+            </td>
           </tr>
           <tr>
             <td>Functions</td>
-            <td colspan="4">{ } : :: <literal>⋄</literal> <literal>←</literal> Break Nl Va Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
+            <td colspan="4">{ } : ::
+              <literal>⋄</literal>
+              <literal>←</literal> Break Nl Va Vi Vf Vom Vod Vu E Fe Fnm Fnd
+            </td>
           </tr>
           <tr>
             <td>Func. Expr.</td>
-            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu E Fe Fn Fnm Fnd</td>
+            <td colspan="4">( )
+              <literal>←</literal>
+              <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu E Fe Fn Fnm Fnd
+            </td>
           </tr>
         </tbody>
       </table>
       <simpara>
-        We have chosen to encode our compiler responses based primarily on 
-        the class of the response. In cases of success, we have a single 
-        response; all our other responses classify various types of error 
-        cases. We choose to go no further than is necessary to distinguish 
-        user visible errors types. We do not include source input location 
-        in our error responses, but it is assumed to exist in the output 
-        if reasonably feasible. We further assume that all intermediate 
-        internal states not producing user visible output will 
-        have no explicit output responses, despite representing the majority 
-        of states in the system. Each error state corresponds to a specific error code 
-        reported by the Dyalog interpreter. We 
-        include only the error codes produced by the compiler and not errors 
+        We have chosen to encode our compiler responses based primarily on
+        the class of the response. In cases of success, we have a single
+        response; all our other responses classify various types of error
+        cases. We choose to go no further than is necessary to distinguish
+        user visible errors types. We do not include source input location
+        in our error responses, but it is assumed to exist in the output
+        if reasonably feasible. We further assume that all intermediate
+        internal states not producing user visible output will
+        have no explicit output responses, despite representing the majority
+        of states in the system. Each error state corresponds to a specific error code
+        reported by the Dyalog interpreter. We
+        include only the error codes produced by the compiler and not errors
         occuring only at runtime.
       </simpara>
-     <table frame="void" rules="rows">
+      <table frame="void" rules="rows">
         <title>Responses for Source Input</title>
         <thead>
           <tr>
@@ -537,7 +566,7 @@
             <td>22</td>
             <td colspan="2">File Name Error</td>
             <td colspan="4">
-              When a file matching the pathname for the 
+              When a file matching the pathname for the
               shared object exists already
             </td>
           </tr>
@@ -545,7 +574,7 @@
             <td>34</td>
             <td colspan="2">File System No Space</td>
             <td colspan="4">
-              Attempting a file operation failed because of 
+              Attempting a file operation failed because of
               insufficient space
             </td>
           </tr>
@@ -567,7 +596,7 @@
             <td>1003</td>
             <td colspan="2">Interrupt</td>
             <td colspan="4">
-              Received a system interrupt indicating an 
+              Received a system interrupt indicating an
               immediate exit
             </td>
           </tr>
@@ -575,7 +604,7 @@
             <td>5</td>
             <td colspan="2">Length Error</td>
             <td colspan="4">
-              Compiler has detected a shape mismatch but not a rank 
+              Compiler has detected a shape mismatch but not a rank
               error
             </td>
           </tr>
@@ -611,8 +640,8 @@
             <td>6</td>
             <td colspan="2">Value Error</td>
             <td colspan="4">
-              The compiler has found a reference to an unbound 
-              variable or a function call returning no result where one 
+              The compiler has found a reference to an unbound
+              variable or a function call returning no result where one
               was expected
             </td>
           </tr>
@@ -627,7 +656,7 @@
             <td>N/A</td>
             <td colspan="2">Namespace</td>
             <td colspan="4">
-              Indicates a successful execution of the 
+              Indicates a successful execution of the
               compiler and the return of a semantically equivalent
               namespace
             </td>
@@ -635,22 +664,22 @@
         </tbody>
       </table>
       <simpara>
-        After a module is compiled, it is usually 
+        After a module is compiled, it is usually
         invoked and executed in various ways.
         We separate compilation from invocation
         so that we may enumerate their sequence
         histories separately, but also because
         the stimuli are encoded so differently.
-        Most Source Input stimuli are rather 
-        close to some specific concrete token 
+        Most Source Input stimuli are rather
+        close to some specific concrete token
         that is not defined in terms of anything
         else, but the corresponding concrete stimuli
-        for a Module Invocation stimulus is always 
+        for a Module Invocation stimulus is always
         dependent on a specific module. Very
         few, if any, stimuli will be very concrete.
-        Each stimulus history should have few 
+        Each stimulus history should have few
         tokens, as we are representing function calls.
-        We note that all functions are ambivalent 
+        We note that all functions are ambivalent
         when written in Co-Dfns.
       </simpara>
       <table frame="void" rules="rows">
@@ -702,7 +731,7 @@
         particularly so for the error responses.
         This is necessary simply because we cannot
         know ahead of time what inputs will
-        generate what errors. Instead, we make 
+        generate what errors. Instead, we make
         our responses very abstract. We assume that
         when actually programmed, the runtime
         errors will correspond to the appropriate
@@ -739,7 +768,7 @@
             <td>Error</td>
             <td colspan="4">
               Any runtime error signalled by erroneous input to a module
-              invocation. Must be the same error as would be signalled by 
+              invocation. Must be the same error as would be signalled by
               an equivalent interpreted module invocation.
             </td>
           </tr>
@@ -748,23 +777,1724 @@
     </section>
     <section>
       <title>Sequence Enumeration</title>
-      
+      <simpara>
+        The following tables provide a complete sequence enumeration of the
+        compiler. We begin at the top-level enumeration and work our way down throughout
+        each of the recursive stimuli. Recall that we do not need to enumerate each of
+        the function stimuli separately, as they all have the same syntax at this level of
+        abstraction. In particular, the Vi stimuli encodes whether or not the various
+        <literal>⍺⍺</literal> or
+        <literal>⍵⍵</literal> variables are visible at any given
+        time.
+      </simpara>
+      <section>
+        <title>Source Input Enumeration</title>
+        <simpara>
+          The enumeration of the source input boundary (the main compiler interface) is
+          divided into the enumeration of the top-level, the function enumeration,
+          the expressions, and function expressions.
+        </simpara>
+        <section>
+          <title>Top-level Enumeration</title>
+          <simpara>
+            The following tables enumerate the behavior of the compiler along the source
+            input boundary starting at the top-level; that is, it enumerates them at the
+            highest level, and does not enumerate or specify the behavior of any of the
+            recursive stimuli, except implicitly through subsumptions.
+          </simpara>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>E</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Fe</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Fnd</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Fnm</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>
+                  <literal>⋄</literal>
+                </td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Break</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Eot</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Fix</td>
+                <td>null</td>
+                <td></td>
+                <td>4, 15, D1</td>
+              </tr>
+              <tr>
+                <td>Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Nl</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Nse</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Nss</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix E</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fe</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fnd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fnm</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix
+                  <literal>⋄</literal>
+                </td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Eot</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Fnb</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>D2</td>
+              </tr>
+              <tr>
+                <td>Fix Fne</td>
+                <td>null</td>
+                <td></td>
+                <td>17, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fnf</td>
+                <td>File Name Error</td>
+                <td>empty</td>
+                <td>30</td>
+              </tr>
+              <tr>
+                <td>Fix Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nl</td>
+                <td>null</td>
+                <td>Fix Fne</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nse</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss</td>
+                <td>null</td>
+                <td></td>
+                <td>4, 16, 21</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Fne</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix Fne E</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Fe</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Fnd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Fnm</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne
+                  <literal>⋄</literal>
+                </td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Eot</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Fne Fnb</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>D2</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Fne Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Fne Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Fne Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Fne Nl</td>
+                <td>null</td>
+                <td>Fix Fne</td>
+                <td>4, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Nse</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Fne Nss</td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 17, 18, 21</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Nss</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix Nss E</td>
+                <td>null</td>
+                <td></td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe</td>
+                <td>null</td>
+                <td></td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fnd</td>
+                <td>null</td>
+                <td>Fix Nss Fe</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fnm</td>
+                <td>null</td>
+                <td>Fix Nss Fe</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss
+                  <literal>⋄</literal>
+                </td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Eot</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nl</td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse</td>
+                <td>null</td>
+                <td></td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nss</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Nss E</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix Nss E E</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Fe</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Fnd</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Fnm</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E
+                  <literal>⋄</literal>
+                </td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Eot</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Nl</td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Nse</td>
+                <td>null</td>
+                <td>Fix Nss Nse</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Nss</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Nss Fe</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix Nss Fe E</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fe</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnd</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnm</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe
+                  <literal>⋄</literal>
+                </td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Eot</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nl</td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nse</td>
+                <td>null</td>
+                <td>Fix Nss Nse</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nss</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Nss Nse</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix Nss Nse E</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Fe</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Fnd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Fnm</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse
+                  <literal>⋄</literal>
+                </td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Eot</td>
+                <td>null</td>
+                <td></td>
+                <td>4, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Nl</td>
+                <td>null</td>
+                <td>Fix Nss Nse</td>
+                <td>4, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Nse</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Nse Nss</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Nss Nse Eot</title>
+            <thead>
+              <tr>
+                <th colspan="2">Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Fe</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Fnd</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Fnm</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot
+                  <literal>⋄</literal>
+                </td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Eot</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Lle</td>
+                <td>Internal Error</td>
+                <td>empty</td>
+                <td>D4</td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Lls</td>
+                <td>Namespace</td>
+                <td>empty</td>
+                <td>4, 16, 21</td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Nl</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Nse</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Nss</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section>
+          <title>Function Enumeration</title>
+          <simpara>
+            The recursive function stimuli are abstract stimuli that represent the 
+            user-defined functions and the syntax for user defined functions, 
+            including dyadic and monadic operators. Since they share the same 
+            syntax at a high-level, we can describe them through a single enumeration, 
+            relying on the Vi stimuli to encapsulate the differences between them 
+            and hide that away.
+          </simpara>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fe</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fnd</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fnm</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>}</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>:</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>::</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>⋄</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Nl</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Va</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vi</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td>wait</td>
+                <td>Vf</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td>wait</td>
+                <td>Vf</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td>wait</td>
+                <td>Vf</td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, {</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Fe</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Fnd</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Fnm</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ {</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ }</td>
+                <td>okay</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ :</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ ::</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ <literal>⋄</literal></td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ Nl</td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Va</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vi</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vod</td>
+                <td>wait</td>
+                <td>{ Vf</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vom</td>
+                <td>wait</td>
+                <td>{ Vf</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, Vf</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Vf E</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Fe</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Fnd</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Fnm</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf {</td>
+                <td>subsumed</td>
+                <td>Vf Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf }</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vf :</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vf ::</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vf <literal>⋄</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vf <literal>←</literal></td>
+                <td>wait</td>
+                <td>empty</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Vf Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Vf Nl</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vf Va</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Vf</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Vi</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Vod</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Vom</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf Vu</td>
+                <td>subsumed</td>
+                <td>E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, { E</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ E E</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Fe</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Fnd</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Fnm</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E {</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E }</td>
+                <td>okay</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E :</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E ::</td>
+                <td>wait</td>
+                <td>{ E :</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E <literal>⋄</literal></td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ E Nl</td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E Va</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Vf</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Vi</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Vod</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Vom</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E Vu</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, { Vf</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ Vf E</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Fe</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Fnd</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Fnm</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf {</td>
+                <td>subsumed</td>
+                <td>{ Vu Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf }</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf :</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf ::</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>⋄</literal></td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal></td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vf Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ Vf Nl</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf Va</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Vf</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Vi</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Vod</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Vom</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf Vu</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, { Vu</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ Vu E</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Fe</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Fnd</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Fnm</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu {</td>
+                <td>subsumed</td>
+                <td>{ Vu Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu }</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu :</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu ::</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>⋄</literal></td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal></td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ Vu Nl</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu Va</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Vf</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Vi</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Vod</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Vom</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu Vu</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+        <section>
+          <title>Expression Enumeration</title>
+          <simpara>
+            The expression stimulus captures a single line of Co-Dfns code, which is 
+            an expression. This is an expression which will give a value as a result, 
+            not a function or some other thing. It may be a named value, or it may be 
+            something that is unnamed. 
+          </simpara>
+        </section>
+        <section>
+          <title>Function Expressions Enumeration</title>
+          <simpara>
+            Function expression stimuli capture the correct behavior when dealing with 
+            expressions that are meant to describe some sort of function. The result of
+            evaluating any of these expressions could be a named or an unamed function 
+            value. 
+          </simpara>
+        </section>
+      </section>
     </section>
     <section>
       <title>Derived Requirements</title>
-      
+      <simpara>
+        The following are the requirements that were derived from the sequence
+        enumeration. They will be merged into the
+        <citetitle>Software Requirements</citetitle>
+        at the end of specification.
+      </simpara>
+      <orderedlist>
+        <listitem>
+          <simpara>
+            Only a single documented function is exposed from the compiler namespace.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            When given a pathname that is an invalid pathname, a
+            <literal>DOMAIN ERROR</literal> should be signalled.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            An interrupt or break signal shall cause an immediate termination of the compiler
+            with a signal
+            <literal>INTERRUPT</literal>. Any resources in use at the time, including files, shall be
+            released as is.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            An error in the LLVM system shall signal an
+            <literal>INTERNAL ERROR</literal>.
+          </simpara>
+        </listitem>
+      </orderedlist>
     </section>
     <section>
       <title>Canonical Sequence Analysis</title>
-      
+
     </section>
     <section>
       <title>Specification Functions</title>
-      
+
     </section>
     <section>
       <title>Black Box Definitions</title>
-      
+
     </section>
   </section>
 </article>
