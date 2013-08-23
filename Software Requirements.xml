@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Tuesday, July 4th, 2013</date>
+  </info>
+  <section>
+    <title>Co-Dfns Software Requirements</title>
+    <para>
+      This document clarifies in English the expected behavior of the Co-Dfns 
+      compiler. It is intended to be complete, consistent, and clear as 
+      regards the external, visible behavior of the system. It also may state 
+      requirements on the quality of the generated code and the performance 
+      of the compiler itself. That is, it describes all intended behavior, 
+      and not just the requirements for correct semantics preservation of the 
+      compiled code. To support tracing of future efforts to these 
+      requirements, all requirements are segmented into single units and 
+      enumerated. Future documents should refer to these requirements by 
+      number, so it is important that the numbers remain as stable as 
+      possible.
+    </para>
+    <simpara>
+      This requirements document also assumes that the reader has access to and 
+      will refer to the <citetitle>Dyalog Programmer's Guide and Language Reference</citetitle>
+      for the definition of various functions and other behaviors that are mentioned 
+      here. The reference is considered to be an implicit part of this document, 
+      and this document is defined in terms of the specification given in the 
+      language reference.
+    </simpara>
+    <orderedlist>
+      <title>Enumerated Software Requirements</title>
+      <listitem>
+        <simpara>
+          The entire system should be implemented insofaras it be technically 
+          feasible in the Co-Dfns language itself.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The system should integrate with the Dyalog APL interpreter 
+          seamlessly.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler shall target the LLVM.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should provide a fix function that behaves functionally 
+          equivalent to the <function>⎕FIX</function> function on all valid 
+          D-fns programs. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          All valid D-fns programs should be valid Co-Dfns programs unless 
+          they have a programming error that the compiler can catch that the 
+          interpreter cannot catch until runtime. In other words, a valid 
+          D-fns program is one that runs without unintended error as well as 
+          just parsing correctly.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should catch errors wherein the type class of a 
+          variable changes from code to function to operator or any 
+          combination of the above. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should catch errors that are clearly a type error 
+          through some sort of type inference. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should support type inference up to the point that it 
+          is able to disambiguate all expressions up to the amount possible 
+          given the information available.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          It should be possible to produce an object from a valid 
+          namespace for use by other languages.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          When given erroneous input that would also be caught by the 
+          <function>⎕FIX</function> function, the compiler should 
+          produce the same error message.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The same error messages should be given when compiling to shared 
+          object as are given when fixing a namespace.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          There should be no limit to the number of namespaces that may be 
+          compiled and used at any one time outside of environment limitations 
+          such as RAM.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should have minimal impact on anyone using it.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should take the form of a single public interface 
+          <classname>CoDfns</classname> that implements all public services. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The function <function>CoDfns.Fix</function> should implement the 
+          fixing function for the compiler.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The monadic <function>CoDfns.Fix</function> should implement the 
+          same interface as the monadic version of the
+          <function>⎕FIX</function> system function. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The dyadic <function>CoDfns.Fix</function> should implement the 
+          object functionality of the compiler.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The dyadic <function>CoDfns.fix</function> should take the name of 
+          the object to create as its left argument.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          [Removed as per Engineering Change #5.]
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          [Removed as per Engineering Change #5.]
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should only compile complete, closed namespace scripts,
+          which is to say, they should have no free variable references that 
+          escape outside the scope of the namespace.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler will not support any Dyalog system functions.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The Co-Dfns language and the compiler may introduce system functions 
+          for its own use provided that they do not conflict with system 
+          functions already in use by the interpreter.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should support vectorized coding for scalar primitives. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should perform fusion of scalar functions.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The Co-Dfns language should be written to obviate the need for 
+          garbage collection.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should produce code with predictable performance in 
+          terms of space and time.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The executable result of the compiler should be a single workspace 
+          that can be distributed. Minimal shared objects may be used if 
+          necessary.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The function <function>CoDfns.Fix</function> should produce an 
+          object to the filename given as its left argument that is semantically 
+          equivalent in exports and functionality as the namespace returned by 
+          the function.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          If the filename given as the left argument to the function 
+          <function>CoDfns.Fix</function> already exists, a 
+          <literal>FILE NAME ERROR</literal> with code 22 should be 
+          signalled, and no data should be written and no module created.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          If the file system referenced by the left argument to the 
+          function <function>CoDfns.Fix</function> does not have the
+          space to allow the shared object to be created, then the 
+          <function>CoDfns.Fix</function> function should signal a 
+          <literal>FILE SYSTEM NO SPACE</literal> error and no 
+          shared object or data should be written and no module created.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          [Removed as per Engineering Change #5.]
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should not support the use of the <function>⌶</function>-beam 
+          functionality.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should not support the use of the <function>⍎</function>
+          function.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Any assignment that changes the nameclass of a variable in the same scope
+          should be signalled as a <literal>SYNTAX ERROR</literal>. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should not support the <function>⍠</function> or the <function>&amp;</function>
+          operators.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The compiler should support as valid source input a new monadic operator <function>∥</function> 
+          that is called the <firstterm>Par</firstterm> operator. This operator expects to receive a 
+          function as its left argument and returns a function which behaves in the exact same was as 
+          the function given by the left argument except that the value returned is a single-assignment 
+          array instead of a normal mutable array. The returned function will return immediately, 
+          queuing the left argument function to run concurrently. The single assignment array returned 
+          is assumed to be equivalent in the sense of <function>≡</function> to the value returned 
+          by the left argument when applied with the same arguments. The single assignment array will 
+          be considered to have a pending write operation queued based on the concurrently executing 
+          left argument. When the queued left argument application finishes executing, then at some 
+          point after this the data of that argument will be available as the single-assignment array. 
+          Until then the single-assignment array will be considered unassigned.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          The constant <literal>⌾</literal> single-assignment empty array returns an empty vector whose 
+          fill element is a single, un-assigned cell. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Any element in a single-assignment array may be assigned once and only once. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Any attempt to read an un-assigned element of a single-assignment array will block, waiting for 
+          the array to be assigned; when assigned, the value assigned to the element will be returned.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Any attempt to read an assigned element of a single-assignment array will return the value 
+          of the element in the same manner as a mutable array.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          In the namespace returned by the compiler, it is acceptable to make visible only global arrays and 
+          functions, without providing operators as an external interface in the namespace. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          When an error occurs in the LLVM subsystem, an <literal>INTERNAL ERROR</literal> shall be signalled. 
+        </simpara>
+      </listitem>
+    </orderedlist>
+  </section>
+</article>

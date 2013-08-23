@@ -1,0 +1,91 @@
+.TH CODFNS_INTRO 3
+.SH NAME
+codfns_intro \- introduction to the Co-Dfns compiler.
+.SH DESCRIPTION
+This manual gives an overview of the Co-Dfns compiler documentation
+for programmers. This documentation is meant to be browsed by hackers
+working on the Co-Dfns compiler itself and are not intended to be a
+part of the normal documentation for the user side of the compiler. The
+Co-Dfns compiler is conceptually composed of a series of passes over
+ASTs, a parser, and a final pass that generates LLVM IR code. That
+code is output to the final output file. See
+.IR codfns (1)
+for more information about the usage of the primary executable. 
+.SH COMPILER PHASES
+The compiler itself operates in three phases. The first phase is to 
+parse the input file and generate an AST. The second phase, the primary 
+phase, takes that AST and progressively transforms it through a series 
+of compiler passes until it is suitable and ready for the final generation. 
+At this point, the LLVM IR module is generated, and the third phase consists 
+of taking and sending this LLVM module to the output file appropriately.
+In the future, this third phase may include things like linking the module into 
+the JIT engine and providing an entry point into the system, and so forth, 
+but this is not yet supported.
+.SH CONTENTS
+The documentation is divided into a series of man pages corresponding
+to the module they describe. This roughly corresponds to a single
+C module (a source and header file pair). This section provides an
+overview of these sections for developers not yet familiar with the
+modules and their purposes.
+.SS COMPILER PASSES
+The majority of the compiler modules correspond to compiler passes. The
+following are these passes listed roughly in their order of execution
+after parsing.
+.TP
+.B lift_constants 
+converts embedded literal arrays in the source to top level definitions
+.TP
+.B generate_llvm
+converts the AST of the compiler into an 
+.I LLVMModuleRef
+value for final output; this is the final pass of the compiler.
+.SS RUNTIME AND PARSING
+There are two modules dedicated directly to parsing and runtime needs. 
+.TP
+.B runtime
+This contains the functions that might be called by the code output
+by the compiler; it includes fairly general APL functions, as well
+as other special cases.
+.TP
+.B parser
+contains the code used to generate the AST from strings and files.
+.SS UTILITIES
+There are a number of modules that are used throughout the compiler 
+and therefore receive their own modules.
+.TP
+.B ast
+all the code related to creating, copying, and using ASTs.
+.TP
+.B env
+code supporting variable environments.
+.TP
+.B pool
+code that allows for easy memory management through memory pools.
+.TP
+.B stack
+an implementation of stacks of pointers for dynamically collecting data.
+.TP
+.B util
+miscellaneous functions that are of general use, but which don't fit elsewhere.
+.SH FILES
+.TP
+.B /src
+main directory for the Co-Dfns compiler source and programmer documentation.
+.TP
+.B /src/man
+contains all of the programmer documentation in the source forms as man pages.
+.TP
+.B /src/tests
+the testing suite.
+.SH "SEE ALSO"
+.IR codfns (1),
+.IR codfns_ast (3), 
+.IR codfns_env (3),
+.IR codfns_generate_llvm (3),
+.IR codfns_lift_constants (3),
+.IR codfns_parser (3),
+.IR codfns_pool (3),
+.IR codfns_runtime (3),
+.IR codfns_stack (3),
+.IR codfns_tests (3),
+.IR codfns_util (3).

@@ -1,0 +1,118 @@
+# PEG grammar for Co-Dfns language
+# This grammar handles the process of tokenization as well as that of 
+# parsing. It is designed to take into account the inherent 
+# ambiguities in the APL language.
+
+Start <- <OWSNL Statements OWSNL> !. { printf("%s\n", yytext); }
+
+Statements <- CondStmt (Separator+ CondStmt)*
+
+CondStmt <- (Value OWS ":" OWS)? Value
+
+Separator <-  (OWS) "\n" OWSNL / OWS "⋄" OWSNL
+
+Value <- Application / Assignment / SingleValue
+
+SingleValue <-
+	Array OWS Index ?
+	/ "(" OWS Value OWS ")" OWS Index ?
+
+Index <- ("[" OWS "]" / "[" OWS Value (OWS ";" OWS Value)* OWS "]")+
+		
+Assignment <-
+	Variable OWS "←" OWS Function & Separator
+	/ Variable OWS "←" OWS GenOper & Separator
+	/ VariableList OWS "←" OWS Value
+
+Function <- Operator / BaseFun 
+BaseFun <- MonPrim / DyaPrim / GenFunc / "(" OWS Function OWS ")"
+MonFun <- Operator / MonPrim / GenFunc / "(" OWS MonFun OWS ")"
+DyaFun <- Operator / DyaPrim / GenFunc / "(" OWS DyaFun OWS ")"
+
+FuncSyntax <- 
+	"{" &{ enter_ud(OPSEEN_PTR(ctx)) } 
+	    OWSNL Statements OWSNL 
+	    "}" 
+
+GenFunc <- FuncSyntax &{ is_ud_func(OPSEEN_PTR(ctx)) } / "{" OWS "}"
+
+Application <- MonFun OWS Value / SingleValue OWS DyaFun OWS Value
+
+Operator <- 
+	BaseFun OWS Operator OWS Function
+	/ BaseFun OWS Operator 
+	/ "∘" OWS "." Function  
+	/ BaseFun OWS DyaPrimOp OWS Function
+	/ BaseFun OWS MonPrimOp
+	/ SingleValue OWS "∘" OWS Function
+	/ BaseFun OWS ("∘" / "⍣") OWS SingleValue
+	/ (BaseFun / SingleValue) OWS DyaGenOper OWS (BaseFun / SingleValue)
+	/ (BaseFun / SingleValue) OWS MonGenOper
+
+GenOper <- MonGenOper / DyaGenOper
+MonGenOper <- FuncSyntax &{ is_ud_mona(OPSEEN_PTR(ctx)) }
+DyaGenOper <- FuncSyntax &{ is_ud_dyad(OPSEEN_PTR(ctx)) }
+
+MonPrimOp <- "⍨" / "¨" / "/" / "⌿" / "\\" / "⍀" 
+
+DyaPrimOp <- "∘" / "⍣" / "." 
+
+MonPrim <- 
+	"-" / "+" / "×" / "÷" / "?" / "∊" / "⍴" / "~" / "↑" 
+	/ "↓" / "⍳" / "○" / "*" / "⌈" / "⌊" / "∇" / "⍎" / "⍕" 
+	/ "⊣" / "⊢" / "⊂" / "⊃" / "∪" / "|" / "!" / "⌹" / "≡"
+	/ "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍪" / "," 
+
+DyaPrim <-
+	"-" / "+" / "<" / "≤" / "=" / "≥" / ">" / "≠" 
+	/ "∨" / "∧" / "×" / "÷" / "?" / "∊" / "⍴" / "~" / "↑" 
+	/ "↓" / "⍳" / "○" / "*" / "⌈" / "⌊" / "∇" / "⍎" / "⍕" 
+	/ "⊢" / "⊂" / "⊃" / "∩" / "∪" / "⊥" / "⊤" / "|" / "⍀" 
+	/ "⌿" / "⍒" / "⍋" / "⌽" / "⍉" / "⊖" / "⍟" / "⍱" / "⍲" 
+	/ "!" / "⌹" / "⍷" / "⍸" / "⌷" / "≡" / "≢" / "⍪" / "/" 
+	/ "," / "\\" / "⊣" / "^" 
+
+
+VariableList <- Variable (WS VariableList)*
+	/ "(" OWS VariableList OWS ")"
+
+Variable <- [a-zA-Z_] [a-zA-Z0-9_]*
+	/ "⍺⍺" &{ !seen_mona_var(OPSEEN_PTR(ctx)) }
+	/ "⍵⍵" &{ !seen_dyad_var(OPSEEN_PTR(ctx)) }
+	/ "⍺" / "⍵"
+
+Array <-
+	"⍬"
+	/ StrandArray
+	/ MixedArray
+	/ NumberArray
+	/ CharArray
+
+StrandArray <-
+	(MixedArray / CharArray / NumberArray) ? 
+	    OWS "(" OWS Array OWS ")" OWS Array ?
+	/ (MixedArray / CharArray / NumberArray) ? OWS VariableList OWS Array ?
+
+MixedArray <-
+	(Number WS)+ CharArray (WS (Number / CharArray))*
+	/ (CharArray WS)+ Number (WS (Number / CharArray))*
+
+CharArray <- 
+	Character
+	/ "'" ("''" / [^'])* "'"
+
+NumberArray <- Number (WS Number)*
+
+Character <- "'" [^'] "'" 
+
+Number <- Float / Integer
+
+Integer <- '¯'? [0-9]+ 
+
+Float <- '¯'? [0-9]+ '.' [0-9]+
+
+OWS <- WS ?
+OWSNL <- WSNL ?
+
+WS <- (" " / "\t" )+
+WSNL <- (" " / "\t" / "\r" / "\n" / "⍝" [^\n]* "\n")+

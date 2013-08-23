@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Saturday, July 20th, 2013</date>
+  </info>
+  <section>
+    <title>Engineering Change Log</title>
+    <simpara>
+      This document records and tracks all proposed engineering changes that 
+      occur during development. An engineering change is a change proposed 
+      or identified as desirable during one process that affects other work 
+      products not part of the delivery of the current process. This document 
+      tracks these proposed changes, their evaluation, analysis, and the 
+      eventual resolution of these changes. 
+    </simpara>
+    <table frame="void" rules="rows">
+      <title>Summary of Changes</title>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th colspan="2">Date</th>
+          <th colspan="5">Summary</th>
+          <th colspan="2">Resolution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td colspan="2">2013-07-21</td>
+          <td colspan="5">Update <function>Obj</function> and <function>Fix</function> Requirements</td>
+          <td colspan="2">Applied</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td colspan="2">2013-07-23</td>
+          <td colspan="5">Update class of valid input programs</td>
+          <td colspan="2">Applied</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td colspan="2">2013-07-23</td>
+          <td colspan="5">Add Dyalog Reference to Reuse Analysis</td>
+          <td colspan="2">Applied</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td colspan="2">2013-07-29</td>
+          <td colspan="5">Clarify exported bindings</td>
+          <td colspan="2">Applied</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td colspan="2">2013-08-21</td>
+          <td colspan="5">Cleanup System Requirements</td>
+          <td colspan="2">Applied</td>
+        </tr>
+      </tbody>
+    </table>
+    <orderedlist>
+      <title>Change Description and Analysis</title>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            During Functional Specification, the <function>Obj</function> and <function>Fix</function>
+            functions were discovered to have a number of missing or undesirable requirement 
+            implications. The following changes are suggested:
+          </para>
+        </formalpara>
+        <orderedlist>
+          <listitem>
+            <simpara>
+              Amend Requirement 16 to require only implementing the monadic interface of 
+              the <function>⎕FIX</function> function.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              An additional requirement should state that the <function>Obj</function> function 
+              will produce a shared object in the given file name that has the same semantics 
+              and function bindings as defined in the namespace.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Requirements should be added to clarify the error reporting in the case of files 
+              that already exist when handling <function>Obj</function> output.
+            </simpara>
+          </listitem>
+        </orderedlist>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The above requirements do not change the semantics of the requirements, 
+            and only refine them. They meet the intention of the project and should 
+            be implemented. 
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            Functional specification revealed a possible ambiguity in the description of 
+            requirement 21. Recommend the following:
+          </para>
+        </formalpara>
+        <orderedlist>
+          <listitem>
+            <simpara>
+              That requirement 21 be changed to clearly indicate that only fully 
+              closed namespaces are accepted; that is, only accept namespaces with 
+              no free variable references.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Additionally, a new requirement 
+              prohibiting the use of the <literal>⌶</literal>-beam should be included.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              A new requirement prohibiting the use of the <function>⍎</function>
+              function should be added. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Requirement 4 should be amended to specify D-fns, rather than Co-Dfns 
+              programs.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              The new additions to the D-fns languages introduced by Co-Dfns should 
+              be added and fully defined.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              It should be remarked that no assignment which changes the overall 
+              nameclass of a variable is allowed. 
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              A requirement detailing the unsupported operators should be added. 
+              These operators include the <function>&amp;</function> operator as well as 
+              the <function>⍠</function> operator.
+            </simpara>
+          </listitem>
+        </orderedlist>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            No semantic change is introduced based on the intention of the design, and 
+            are at an early enough stage so as to not affect more than the functional 
+            specification, so this should be implemented.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The primary specification for the D-fns language appears in the Dyalog
+            <citetitle>Programmer's Guide and Language Reference</citetitle>. This 
+            should be explicitly marked as the reference document for the semantics of 
+            the D-fns language.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            This clarifies a number of implied assumptions on the part of the specifications 
+            and development plans, and should be included.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            Clarify the exported functions that are produced by the compiler in the exported 
+            namespace to indicate that currently, only global array variables and 
+            functions will be exported. Operators and other such things will not. This 
+            should be entered into the requirements document.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            This is a semantic change from the existing requirements, but does not affect 
+            anything more than the functional specification, which has been amended to 
+            include these adjustments anyways. Additionally, it does not add any 
+            complexity, but simplifies the technical implemenation burden. The only visible 
+            change to the user is the removal of operators from the public interface, which 
+            is acceptable. 
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            Changes in the interface design are suggested by function specification. 
+            It is unnecessary to have the object functionality separate from the fix 
+            function. Additionally, analysis of the way that LLVM works indicates that 
+            requirement #32 is not feasible, and will not be adequately implemented.
+            A new requirement is suggested to indicate failures that may originate from 
+            the LLVM Subsystem.
+            This requires the following changes:
+          </para>
+        </formalpara>
+        <orderedlist>
+          <listitem>
+            <simpara>
+              Change requirements 9, 16, 17, 18, 29, 30, 31, and 42 accordingly.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Eliminate requirements 19, 20, and 32.
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Add a new requirement that states an LLVM error will signal an <literal>INTERNAL ERROR</literal>.
+            </simpara>
+          </listitem>
+        </orderedlist>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The change does not alter the functionality or intention of the compiler, but it 
+            does create a simplified interface and is worth doing. It reduces workload later on.
+          </para>
+        </formalpara>
+      </listitem>
+    </orderedlist>
+  </section>
+</article>

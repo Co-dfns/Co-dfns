@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Thursday, July 18th, 2013</date>
+  </info>
+  <section>
+    <title>Function Specification</title>
+    <section>
+      <title>Overview</title>
+      <simpara>
+        The complete functional specification of the Co-Dfns compiler can be 
+        found in this document. The compiler is designed and specified using 
+        a black-box method, specifying the behavior in terms of input 
+        and stimulus histories and responses. Because we are writing a 
+        compiler and not some other system, the actual user facing toggles 
+        on the system are surprisingly small, despite the large potential 
+        for behavior. This is because the majority of input comes in the 
+        forms of programs. Therefore, in specification, it is critical to 
+        specify not only the normal user behaviors, but also the behaviors 
+        on critical abstractions of program input and form. 
+      </simpara>
+      <simpara>
+        The compiler itself also has a tendency towards sparse responses. 
+        In traditional program design, the responses of the system would 
+        come in the form of textual, GUI, or hardware responses that had a 
+        very user visible form. In contrast, the majority of software <quote>states</quote> 
+        that the user can consider, when correct input is entered, should 
+        respond with no output and no response. These states are there 
+        conceptually or abstractly, rather than displaying specific 
+        outputs whenever they are entered. They cannot be elided from the 
+        function specification, however, because when input is 
+        <emphasis>not</emphasis> correct, then these states represent 
+        the set of possible error responses and the types of reporting that 
+        will be given in the cases where the system does not receive the 
+        intended input. Thus, these states can be considered null responses 
+        unless errors need to be considered or handled. Indeed, the majority 
+        of user visible responses in the compiler take the form of error 
+        handling responses, and the compiler is at its most quiet when 
+        all things are going as planned.
+      </simpara>
+      <simpara>
+        The approach to black box specification here will take this form 
+        and the nature of the visible interface of a compiler into account. 
+        We encode the input of the system at an abstraction level that lets 
+        us encode the appropriate error responses of the system and all 
+        <emphasis>potential</emphasis> user visible behavior of the system 
+        in response to any user alterable or user derived input, even though 
+        the majority of the time, the compiler might be quite silent. This 
+        requires an abstraction level that allows us to talk about the 
+        structure and form of the programs that are given as input into the 
+        program, but because of the nature of program text, we have chosen 
+        an abstraction level only deep enough to accurately reflect all of 
+        the possible compiler responses, and no deeper. Entering in any 
+        more precisely would defeat the purpose of the black box abstraction 
+        and would complicate the specification process beyond feasibility. 
+      </simpara>
+      <simpara>
+        In this same vein, the abstraction of the compiler responses goes 
+        only so far as to accurately reflect the paths that may lead to 
+        semantically valuable user visible changes in response to new 
+        inputs. Responses, therefore, are equally abstract, and represent 
+        only the sufficiently clear class of errors and conceptual states 
+        that reflect the useful and meaningful external behavior of the 
+        system. 
+      </simpara>
+      <simpara>
+        Despite the relative abstractness of this specification, however, 
+        normal, standard black box abstraction techniques and specification 
+        methods provide the same level of rigor and usefulness to the 
+        task. The methods and approaches themselves are as little refined 
+        or modified as possible, in order to make these specifications as 
+        easy to understand and as rigorous as possible, without requiring 
+        a significant programmer overhead for developing a mathematical 
+        semantics that far exceeds the desired scope of the compiler 
+        project. 
+      </simpara>
+      <simpara>
+        All behavior here is dictated by the <citetitle>Software Requirements</citetitle>
+        which in turn have the <citetitle>Programmer's Guide and Language Reference</citetitle>
+        for Dyalog APL as an implicit dependency. Likewise, this specification 
+        assumes and relies on the language reference as an implicit part of 
+        this specification and will clarify behaviors not given complete 
+        treatment here. Complete treatment may not be granted here in the 
+        case that the behavior is adequately documented in the language 
+        reference.
+      </simpara>
+    </section>
+    <section>
+      <title>Software Boundaries</title>
+      <simpara>
+        There are two primary sources of user input. The user will first 
+        call the compiler with a given program to compile, which represents 
+        the first external input. Secondly, the compiled namespace that is 
+        created as a result will be called repeatedly and used as its own 
+        thing. This represents the second potential input to the system. 
+        These are distinct because the input given to the second, and the 
+        behavior that is appropriate to it is entirely dependent on the 
+        input that is given as the program input. Thus, it is impossible to 
+        speak directly about the kinds of inputs and their responses for the 
+        second types of input, except very broadly. Instead, the semantics 
+        are encoded in the first input, and as long as the semantics are 
+        preserved in the compiler, then it will work as intended. 
+      </simpara>
+      <simpara>
+        Thus, the main sources of input that will be considered are the 
+        programs that are given, rather than on the inputs that will be 
+        given to the programs described or compiled. This may or may not 
+        accurately reflect how the code is used in practice. Indeed, we 
+        normally expected to compile a program once and then run it 
+        multiple times. However, most of the more useful information comes 
+        from the program input, rather than the input to the compiled 
+        program.
+      </simpara>
+      <simpara>
+        As a final note, we have chosen to view the LLVM as an external 
+        software artifact over which we have no control. Thus, it should 
+        be considered an external artifact. It will receive inputs from the 
+        compiler and return resulting responses that we will use to create 
+        the final compiled object. 
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Summary of External Entities</title>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th colspan="2">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Source Code</td>
+            <td colspan="2">
+              Primary input source from the user; specifies semantics and 
+              intended behavior of module behavior.
+            </td>
+          </tr>
+          <tr>
+            <td>Compiled Module</td>
+            <td colspan="2">
+              Behavior is determined completely by the input source code, 
+              and cannot be readily specified outside of a specific input
+              beyond summary behavior.
+            </td>
+          </tr>
+          <tr>
+            <td>LLVM</td>
+            <td colspan="2">
+              External software used to build the module, consumer of 
+              inputs from the compiler and producer of compiled modules.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>Stimuli and Responses</title>
+      <simpara>
+        We divide the set of stimuli and responses into two sets, 
+        corresponding to the source code and the module. We will not 
+        consider the specification of the LLVM interactions, as these are 
+        internal to the system and should not be user visible. Many of these 
+        stimuli are abstract stimuli based on multiple real stimuli. Others, 
+        such as those in the module set, are abstract because we cannot 
+        encode a specific stimuli set absent a specific source input. 
+      </simpara>
+      <simpara>
+        The stimuli for the Source Input correspond very closely to those 
+        that might be used for the tokenization of program inputs. 
+        We abstractly consider the input history for source input as first 
+        an indication of which external function was called. Then the stream 
+        of argument values must be considered. This encodes the arguments 
+        received by the <function>CoDfns.Fix</function> function. 
+        We choose to keep the filename argument as a single unit, but the 
+        source input should be separated into its various token elements 
+        corresponding to the incoming token stream that the parser will have 
+        to deal with, at least, conceptually. In particular, we are abstracting 
+        the consuming of whitespace that might appear throughout the source input.
+      </simpara>
+      <simpara>
+        In addition to the raw token stimuli, the processing of source code is 
+        an inherently recursive process, and thus we have a set of 
+        <firstterm>recursive stimuli</firstterm> which represent terms which we 
+        will define by enumeration, but that themselves are used within enumerations, 
+        possibly within itself. This allows us to encode recursive properties without 
+        bringing the recursive problems into the enumerations themselves.
+      </simpara>
+      <simpara>
+        Each recursive stimuli and the top-level source input have a subset of the 
+        total possible stimuli to accept as valid stimuli. All other stimuli are 
+        implicitly illegal. 
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Recursive Stimuli for Source Input</title>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th colspan="2">Name</th>
+            <th colspan="3">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>E</td>
+            <td colspan="2">Expression</td>
+            <td colspan="3">Any expression that evaluates to an array value</td>
+          </tr>
+          <tr>
+            <td>Fn</td>
+            <td colspan="2">Ambivelant Function</td>
+            <td colspan="3">An ambivelant user-defined function</td>
+          </tr>
+          <tr>
+            <td>Fnm</td>
+            <td colspan="2">Monadic User Operator</td>
+            <td colspan="3">An user-defined monadic operator</td>
+          </tr>
+          <tr>
+            <td>Fnd</td>
+            <td colspan="2">Dyadic User Operator</td>
+            <td colspan="3">An user-defined dyadic operator</td>
+          </tr>
+          <tr>
+            <td>Fe</td>
+            <td colspan="2">Function Expression</td>
+            <td colspan="3">An expression evaluating to a function value</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        All of the function stimuli may be enumerated as one, since they have the same syntax 
+        at this abstract level. When enumerating a recursive stimuli, we allow potentially 
+        any error response, as well as <symbol>illegla</symbol>, <symbol>wait</symbol>, and 
+        <symbol>okay</symbol>. The <symbol>wait</symbol> response indicates the sequence 
+        as yet is not a valid stimuli, but that it may yet become a valid sequence. The 
+        <symbol>okay</symbol> response indicates that the sequence as is constitutes a 
+        valid sequence, but need not be final or unextendable. 
+      </simpara>
+      <simpara>
+        As a rule, during enumeration, one should consider the use of a recursive stimuli 
+        illegal unless it is used to capture some nested property, or when it is used at the 
+        top-level, where no opportunity for non-termination exists. When it is used, one must 
+        carefully mark any sequence at the same level that may be a prefix of the enumeration 
+        of the recursive stimuli as subsumed by said stimuli. A prefix must have the same 
+        response to be a prefix. If a stimuli might pair up with another token, they cannot 
+        cross enumeration depths or levels, but much pair against one another in the same 
+        level. That is, a top-level ( may not be closed in a recursive stimuli. The 
+        intent is to make each enumeration as self-contained as possible, and to make sure that 
+        nested recursion other than tail recursion is marked by the use of recursive stimuli, 
+        rather than trying to handle that recursion through enumeration.
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Stimuli for Source Input</title>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th colspan="2">Name</th>
+            <th colspan="3">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{</td>
+            <td colspan="2">Left Brace</td>
+            <td colspan="3">A left brace token</td>
+          </tr>
+          <tr>
+            <td>}</td>
+            <td colspan="2">Unbalanced Right Brace</td>
+            <td colspan="3">A right brace token</td>
+          </tr>
+          <tr>
+            <td>[</td>
+            <td colspan="2">Left Bracket</td>
+            <td colspan="3">A left bracket token</td>
+          </tr>
+          <tr>
+            <td>]</td>
+            <td colspan="2">Right Bracket</td>
+            <td colspan="3">A right bracket token</td>
+          </tr>
+          <tr>
+            <td>(</td>
+            <td colspan="2">Left Parenthesis</td>
+            <td colspan="3">A left parenthesis token</td>
+          </tr>
+          <tr>
+            <td>)</td>
+            <td colspan="2">Right Parenthesis</td>
+            <td colspan="3">A right parenthesis token</td>
+          </tr>
+          <tr>
+            <td>;</td>
+            <td colspan="2">Index Separator</td>
+            <td colspan="3">The index separator for bracket indexing</td>
+          </tr>
+          <tr>
+            <td>:</td>
+            <td colspan="2">Conditional</td>
+            <td colspan="3">The conditional token</td>
+          </tr>
+          <tr>
+            <td>::</td>
+            <td colspan="2">Error Guard</td>
+            <td colspan="3">The error guard token</td>
+          </tr>
+          <tr>
+            <td><literal>⋄</literal></td>
+            <td colspan="2">Statement Separator</td>
+            <td colspan="3">Statement separtor token</td>
+          </tr>
+          <tr>
+            <td><literal>←</literal></td>
+            <td colspan="2">Assignment</td>
+            <td colspan="3">An assignment token</td>
+          </tr>
+          <tr>
+            <td><literal>⍣</literal></td>
+            <td colspan="2">Power Operator</td>
+            <td colspan="3">The Power Operator</td>
+          </tr>
+          <tr>
+            <td>Break</td>
+            <td colspan="2">Interrupt/Break</td>
+            <td colspan="3">User signalled interrupt</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td colspan="2">Dyadic Primitive</td>
+            <td colspan="3">
+              A primitive function that can be called dyadically.
+            </td>
+          </tr>
+          <tr>
+            <td>Eot</td>
+            <td colspan="2">End of Transmission</td>
+            <td colspan="3">The end of the input to the compiler</td>
+          </tr>
+          <tr>
+            <td>Fix</td>
+            <td colspan="2">Call <function>Fix</function></td>
+            <td colspan="3">
+              A call to the <function>Fix</function> function, arguments 
+              to follow.
+            </td>
+          </tr>
+          <tr>
+            <td>Fnb</td>
+            <td colspan="2">Bad Filename</td>
+            <td colspan="3">
+              A pathname that is somehow an invalid syntax or 
+              otherwise invalid to be used as a pathname.
+            </td>
+          </tr>
+          <tr>
+            <td>Fne</td>
+            <td colspan="2">Empty Filename</td>
+            <td colspan="3">
+              A filename/pathname that specifies a file that does 
+              not yet exist.
+            </td>
+          </tr>
+          <tr>
+            <td>Fnf</td>
+            <td colspan="2">Found Filename</td>
+            <td colspan="3">
+              A filename that specifies a file that already 
+              exists in the filesystem.
+            </td>
+          </tr>
+          <tr>
+            <td>Lle</td>
+            <td colspan="2">LLVM Error</td>
+            <td colspan="3">
+              Any LLVM derived error
+            </td>
+          </tr>
+          <tr>
+            <td>Lls</td>
+            <td colspan="2">LLVM Success</td>
+            <td colspan="3">
+              Any LLVM derived success
+            </td>
+          </tr>
+          <tr>
+            <td>M</td>
+            <td colspan="2">Monadic Primitive</td>
+            <td colspan="3">
+              A primtive function that can be called monadically.
+            </td>
+          </tr>
+          <tr>
+            <td>N</td>
+            <td colspan="2">Literal Number</td>
+            <td colspan="3">
+              A valid, literal number
+            </td>
+          </tr>
+          <tr>
+            <td>Nl</td>
+            <td colspan="2">Newline</td>
+            <td colspan="3">A newline character of some sort</td>
+          </tr>
+          <tr>
+            <td>Nse</td>
+            <td colspan="2">Namespace End</td>
+            <td colspan="3">
+              The ending token for a namespace script,
+              usually <literal>:EndNamespace</literal>.
+            </td>
+          </tr>
+          <tr>
+            <td>Nss</td>
+            <td colspan="2">Namespace Start</td>
+            <td colspan="3">
+              The starting token for a namespace script, 
+              usually <literal>:Namespace</literal>.
+            </td>
+          </tr>
+          <tr>
+            <td>Om</td>
+            <td colspan="2">Monadic Operator</td>
+            <td colspan="3">An operator that takes a single functional argument</td>
+          </tr>
+          <tr>
+            <td>Od</td>
+            <td colspan="2">Dyadic Operator</td>
+            <td colspan="3">An operator that takes two functional arguments</td>
+          </tr>
+          <tr>
+            <td>S</td>
+            <td colspan="2">String</td>
+            <td colspan="3">
+              A literal character array string
+            </td>
+          </tr>
+          <tr>
+            <td>Va</td>
+            <td colspan="2">Array Variable</td>
+            <td colspan="3">A variable bound to an array</td>
+          </tr>
+          <tr>
+            <td>Vi</td>
+            <td colspan="2">Illegal Variable</td>
+            <td colspan="3">A variable occurring in an illegal context</td>
+          </tr>
+          <tr>
+            <td>Vf</td>
+            <td colspan="2">Function Variable</td>
+            <td colspan="3">A variable bound to a function</td>
+          </tr>
+          <tr>
+            <td>Vom</td>
+            <td colspan="2">Monadic Operator Variable</td>
+            <td colspan="3">A variable bound to a monadic operator</td>
+          </tr>
+          <tr>
+            <td>Vod</td>
+            <td colspan="2">Dyadic Operator Variable</td>
+            <td colspan="3">A variable bound to a dyadic operator</td>
+          </tr>
+          <tr>
+            <td>Vu</td>
+            <td colspan="2">Unbound Variable</td>
+            <td colspan="3">A variable that has not been bound</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        Each of the enumeration targets has a set of stimuli that are 
+        valid. Alll other stimuli are illegal. These are chosen because 
+        any possible occurance of another stimuli in the enumeration ought 
+        to be subsumed by one of the other recursive stimuli. This helps 
+        to quell any complexity that may occur in enumerating everything out 
+        long hand. 
+      </simpara>
+      <table frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th>Enumeration</th>
+            <th colspan="4">Stimuli Set</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Top-level</td>
+            <td colspan="4"><literal>⋄</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl E Fe Fnm Fnd Nse Nss</td>
+          </tr>
+          <tr>
+            <td>Expressions</td>
+            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Va Vi Vu E Fe</td>
+          </tr>
+          <tr>
+            <td>Functions</td>
+            <td colspan="4">{ } : :: <literal>⋄</literal> <literal>←</literal> Break Nl Va Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
+          </tr>
+          <tr>
+            <td>Func. Expr.</td>
+            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu E Fe Fn Fnm Fnd</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        We have chosen to encode our compiler responses based primarily on 
+        the class of the response. In cases of success, we have a single 
+        response; all our other responses classify various types of error 
+        cases. We choose to go no further than is necessary to distinguish 
+        user visible errors types. We do not include source input location 
+        in our error responses, but it is assumed to exist in the output 
+        if reasonably feasible. We further assume that all intermediate 
+        internal states not producing user visible output will 
+        have no explicit output responses, despite representing the majority 
+        of states in the system. Each error state corresponds to a specific error code 
+        reported by the Dyalog interpreter. We 
+        include only the error codes produced by the compiler and not errors 
+        occuring only at runtime.
+      </simpara>
+     <table frame="void" rules="rows">
+        <title>Responses for Source Input</title>
+        <thead>
+          <tr>
+            <th>Code</th>
+            <th colspan="2">Name</th>
+            <th colspan="4">Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>11</td>
+            <td colspan="2">Domain Error</td>
+            <td colspan="4">
+              Indicates compiler detected domain error
+            </td>
+          </tr>
+          <tr>
+            <td>22</td>
+            <td colspan="2">File Name Error</td>
+            <td colspan="4">
+              When a file matching the pathname for the 
+              shared object exists already
+            </td>
+          </tr>
+          <tr>
+            <td>34</td>
+            <td colspan="2">File System No Space</td>
+            <td colspan="4">
+              Attempting a file operation failed because of 
+              insufficient space
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colspan="2">Index Error</td>
+            <td colspan="4">
+              Compiler detected an out of bounds index operation
+            </td>
+          </tr>
+          <tr>
+            <td>99</td>
+            <td colspan="2">Internal Error</td>
+            <td colspan="4">
+              Internal system error; may indicate LLVM error
+            </td>
+          </tr>
+          <tr>
+            <td>1003</td>
+            <td colspan="2">Interrupt</td>
+            <td colspan="4">
+              Received a system interrupt indicating an 
+              immediate exit
+            </td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td colspan="2">Length Error</td>
+            <td colspan="4">
+              Compiler has detected a shape mismatch but not a rank 
+              error
+            </td>
+          </tr>
+          <tr>
+            <td>10</td>
+            <td colspan="2">Limit Error</td>
+            <td colspan="4">
+              A system limitation has been encountered
+            </td>
+          </tr>
+          <tr>
+            <td>16</td>
+            <td colspan="2">Nonce Error</td>
+            <td colspan="4">
+              Unimplemented feature reserved for future use
+            </td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td colspan="2">Rank Error</td>
+            <td colspan="4">
+              Compiler has detected a rank error of an argument
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td colspan="2">Syntax Error</td>
+            <td colspan="4">
+              Compiler has encountered a line that is not a meaningful statement
+            </td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td colspan="2">Value Error</td>
+            <td colspan="4">
+              The compiler has found a reference to an unbound 
+              variable or a function call returning no result where one 
+              was expected
+            </td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td colspan="2">Ws Full</td>
+            <td colspan="4">
+              The compiler has run out of memory
+            </td>
+          </tr>
+          <tr>
+            <td>N/A</td>
+            <td colspan="2">Namespace</td>
+            <td colspan="4">
+              Indicates a successful execution of the 
+              compiler and the return of a semantically equivalent
+              namespace
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        After a module is compiled, it is usually 
+        invoked and executed in various ways.
+        We separate compilation from invocation
+        so that we may enumerate their sequence
+        histories separately, but also because
+        the stimuli are encoded so differently.
+        Most Source Input stimuli are rather 
+        close to some specific concrete token 
+        that is not defined in terms of anything
+        else, but the corresponding concrete stimuli
+        for a Module Invocation stimulus is always 
+        dependent on a specific module. Very
+        few, if any, stimuli will be very concrete.
+        Each stimulus history should have few 
+        tokens, as we are representing function calls.
+        We note that all functions are ambivalent 
+        when written in Co-Dfns.
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Stimuli for Module Invocation</title>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th colspan="2">Name</th>
+            <th colspan="4">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fv</td>
+            <td colspan="2">Valid Function</td>
+            <td colspan="4">A valid reference to a function in the module</td>
+          </tr>
+          <tr>
+            <td>Var</td>
+            <td colspan="2">Bound Variable</td>
+            <td colspan="4">A valid reference to an array in the module</td>
+          </tr>
+          <tr>
+            <td>Ub</td>
+            <td colspan="2">Unbound reference</td>
+            <td colspan="4">A reference to an unbound variable in the module</td>
+          </tr>
+          <tr>
+            <td>In</td>
+            <td colspan="2">Valid input</td>
+            <td colspan="4">Input to a function that will not lead to a runtime error</td>
+          </tr>
+          <tr>
+            <td>Err</td>
+            <td colspan="2">Erroneous input</td>
+            <td colspan="4">Input to a function that will lead to an unguarded runtime error</td>
+          </tr>
+          <tr>
+            <td>Call</td>
+            <td colspan="2">Function call</td>
+            <td colspan="4">Either a monadic or dyadic call to a module function</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        Our responses when calling or referencing
+        into a compiled module are much more
+        abstract than our responses for the compiler,
+        particularly so for the error responses.
+        This is necessary simply because we cannot
+        know ahead of time what inputs will
+        generate what errors. Instead, we make 
+        our responses very abstract. We assume that
+        when actually programmed, the runtime
+        errors will correspond to the appropriate
+        code and signal. The same goes for correct,
+        or valid, input. We must abstract away until
+        we can only say that the output is equivalent
+        to the result of the same function interpreted
+        instead of a fixed or actual value.
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Responses for Module Invocation</title>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th colspan="4">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Value</td>
+            <td colspan="4">
+              A value returned by module that is equivalent ot the value returned
+              by an equivalent interpreted module invocation
+            </td>
+          </tr>
+          <tr>
+            <td>Value Error</td>
+            <td colspan="4">
+              An error signalled when a reference to an unbound
+              variable occurs.
+            </td>
+          </tr>
+          <tr>
+            <td>Error</td>
+            <td colspan="4">
+              Any runtime error signalled by erroneous input to a module
+              invocation. Must be the same error as would be signalled by 
+              an equivalent interpreted module invocation.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <title>Sequence Enumeration</title>
+      
+    </section>
+    <section>
+      <title>Derived Requirements</title>
+      
+    </section>
+    <section>
+      <title>Canonical Sequence Analysis</title>
+      
+    </section>
+    <section>
+      <title>Specification Functions</title>
+      
+    </section>
+    <section>
+      <title>Black Box Definitions</title>
+      
+    </section>
+  </section>
+</article>

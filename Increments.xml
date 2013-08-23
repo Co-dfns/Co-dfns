@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+
+<info>
+  <title>CleanRoom Increments Plan for Co-Dfns</title>
+  <author>Aaron W. Hsu</author>
+  <date>May 13th, 2013</date>
+</info> 
+
+<para>The following increments represent the division of labor for the 
+Co-Dfns version 1 compiler. They are each estimated to take about a 
+week of solid work. </para>
+
+<variablelist>
+  <varlistentry>
+    <term>Increment 1</term>
+    <listitem>
+      <simplelist>
+        <member>Top-level Scalar Globals</member>
+        <member>Top-level Functions</member>
+        <member>Scalar Expressions with LLVM Scalar Primitives</member>
+        <member>Conditional Expressions</member>
+        <member>No Runtime</member>
+        <member>No non-LLVM features</member>
+      </simplelist>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Increment 2</term>
+    <listitem>
+      <simplelist>
+        <member>All Scalar Primitives Implemented</member>
+        <member>Depth 1 Arrays with Primitive Array Operations 
+          <function>⍴</function> and <function>⌷</function>.
+        </member>
+        <member>Internal function that have no free variables</member>
+        <member>Open-coding of Scalar Primitives</member>
+      </simplelist>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Increment 3</term>
+    <listitem>
+      <simplelist>
+        <member>User Functions with free variables</member>
+        <member>User operators</member>
+        <member>Primitive Operators</member>
+        <member>No visible use of operators outside namespace</member>
+      </simplelist>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Increment 4</term>
+    <listitem>
+      <simplelist>
+        <member>Non-scalar Primitives</member>
+        <member>Nested Arrays</member>
+      </simplelist>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Increment 5</term>
+    <listitem>
+      <simplelist>
+        <member>Single Assignment Arrays</member>
+        <member>Parallel Operator</member>
+      </simplelist>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Increment 6</term>
+    <listitem>
+      <simplelist>
+        <member>Support fusion of scalar primitives</member>
+        <member>Function inlining</member>
+      </simplelist>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Increment 7</term>
+    <listitem>
+      <simplelist>
+        <member>Vectorized Scalar Primitives</member>
+        <member>Call operators from outside namespace</member>
+      </simplelist>
+    </listitem>
+  </varlistentry>
+</variablelist>
+
+</article>

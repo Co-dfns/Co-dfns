@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Wednesday, July 3rd, 2013</date>
+  </info>
+  <section>
+    <title>Co-Dfns Cleanroom Engineering Guide</title>
+    <simpara>
+      This document describes the tailored Cleanroom process to be used in the 
+      development of the Co-Dfns compiler. The process described here is 
+      driven primarily by a need to adapt the Cleanroom Process to the use of 
+      a single member team with only minimal support from a few other assets. 
+      This requires that a number of processes are scaled down and that 
+      certain other measures are in place to assure a high degree of 
+      performance. 
+    </simpara>
+    <simpara>
+      Normally this document would also include specific details about 
+      environment and tools in use, but this is not necessary for the team 
+      size.
+    </simpara>
+    <simpara>
+      The descriptions, enumerations, and organization of these processes is 
+      taken directly from <citetitle>The Cleanroom Reference Model</citetitle> 
+      as found in <citetitle>Cleanroom Software Engineering</citetitle> by 
+      Prowell, et al. but have been adapted to fit this project. For 
+      definitions of work products and the entry exit expectations of 
+      processes, as well as other normal operating procedures, the above 
+      references constitute the norm. On occassion, some work products may 
+      not contain all standard content, as this content is not relevant to 
+      this project. Most, if not all, of these omissions are on the basis 
+      of minimal management processes, accounting for a single developer 
+      environment. 
+    </simpara>
+    <section>
+      <title>Cleanroom Processes</title>
+      <simpara>
+        The following is an overview of all the Cleanroom Processes used in 
+        this project, including a short summary of their function and the work 
+        products that they produce.
+      </simpara>
+      <glosslist>
+        <title>Cleanroom Management Processes</title>
+        <glossentry>
+          <glossterm>Project Planning</glossterm>
+          <glossdef>
+            <simpara>
+              Define and document plans for a Cleanroom Project, and revise as 
+              necessary to accomodate changes. 
+            </simpara>
+            <simpara>
+              Work Products: 
+              <citetitle>Cleanroom Engineering Guide</citetitle>, 
+              <citetitle>Software Development Plan</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Engineering Change</glossterm>
+          <glossdef>
+            <simpara>
+              Correct and change the evolving software system and associated 
+              work products using a protocol that preserves correctness and 
+              integrity. Implement engineering change control for all changes. 
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Engineering Change Log</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+      <glosslist>
+        <title>Cleanroom Specification Processes</title>
+        <glossentry>
+          <glossterm>Requirements Analysis</glossterm>
+          <glossdef>
+            <simpara>
+              Analyze and define initial requirements for the software system, 
+              as well as requirements changes arising from assessment of 
+              evolving increments. Express requirements in user terms.
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Software Requirements</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Function Specification</glossterm>
+          <glossdef>
+            <simpara>
+              Define the required external behavior of a software system in 
+              all possible circumstances of use based on the 
+              <citetitle>Software Requirements</citetitle>. Express the 
+              specification in box structured form. Create complete, 
+              consistent, and correct specifications.
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Function Specification</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Usage Specification</glossterm>
+          <glossdef>
+            <simpara>
+              Define all classes of users, major patterns of usage, and usage 
+              environments for software product based on the 
+              <citetitle>Software Requirements</citetitle>. Create complete, 
+              consistent, and correct usage specifications.              
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Usage Specification</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Architecture Specification</glossterm>
+          <glossdef>
+            <simpara>
+              Analyze architectural assets and define the architectural 
+              strategy for the software product, including major components, 
+              high-level structure, and software design strategies and 
+              conventions.
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Software Architecture</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Increment Planning</glossterm>
+          <glossdef>
+            <simpara>
+              Create an incremental development and certification plan for the 
+              software product such that the increments implement user 
+              function, accumulate into the final system, execute in the 
+              system environment, and permit systematic feedback on process 
+              control and product function and quality. Maintain referential 
+              tranparency between increment specifications and their design 
+              decompositions. 
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Increment Construction Plan</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+      <glosslist>
+        <title>Cleanroom Development Processes</title>
+        <glossentry>
+          <glossterm>Software Reengineering</glossterm>
+          <glossdef>
+            <simpara>
+              Prepare reused software for incorporation into a software 
+              product. Restructure and document the functional semantics of 
+              the reused software as necessary. Determine the fitness for use 
+              of reused software as necessary through statistical testing to 
+              achieve project certification goals. 
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Reengineering Plan</citetitle>,
+              <citetitle>Reengineered Software</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Increment Design</glossterm>
+          <glossdef>
+            <simpara>
+              Design and code the increments for a software product through 
+              stepwise decomposition of box structures. Prepare designs for 
+              correctness verification by embedding intended function 
+              definitions that specify the effect on data of corresponding 
+              control structure decompositions. 
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Increment Design</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Correctness Verification</glossterm>
+          <glossdef>
+            <simpara>
+              Carry out function-theoretic correctness verification of 
+              designs to identify and correct software faults prior to first 
+              execution. Document all faults found and rereview their 
+              corrections. 
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Increment Verification Report</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+      <glosslist>
+        <title>Cleanroom Certification Processes</title>
+        <glossentry>
+          <glossterm>Usage Modeling and Test Planning</glossterm>
+          <glossdef>
+            <simpara>
+              Create the usage models to be used for software testing and 
+              certification. Express the model in terms of the probabilities
+              of inputs. Develop the models to satisfy objectives such as 
+              certification for expected operational use or certification of 
+              infrequently used functions with high consequences of failure. 
+              Employ usage model statistics to provide insight into system 
+              complexity and the testing effort required to meet quality 
+              objectives. Develop a statistical test plan, prepare the test 
+              environment, and generate the statistical test cases. 
+            </simpara>
+            <simpara>
+              Work Products: 
+              <citetitle>Usage Models</citetitle>,
+              <citetitle>Increment Test Plan</citetitle>,
+              <citetitle>Statistical Test Cases</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+        <glossentry>
+          <glossterm>Statistical Testing and Certification</glossterm>
+          <glossdef>
+            <simpara>
+              Demonstrate the fitness for use of the software in a formal 
+              statistical expirement. Execute statistical test cases under 
+              expiremental controf, evaluate results, and initiate 
+              engineering change activity if failures are encountered. 
+              Compare the values of certification measures obtained in 
+              statistical testing with certification goals to assess the 
+              software's fitness for use. Compare measures of testing 
+              progress to process control standards to assess the 
+              likelihood of reaching certification goals with planned 
+              schedules and resources.
+            </simpara>
+            <simpara>
+              Work Products:
+              <citetitle>Executable System</citetitle>,
+              <citetitle>Statistical Testing Report</citetitle>,
+              <citetitle>Increment Certification Report</citetitle>
+            </simpara>
+          </glossdef>
+        </glossentry>
+      </glosslist>
+      <section>
+        <title>Omitted Processes and Alternative Implementations</title>
+        <simpara>
+          No specification, development, or certification processes were 
+          omitted from the above list as these are judged to be critical 
+          steps in the quality control of the development cycle. However, 
+          a number of management processes were eliminated as being too heavy 
+          for a single man development team. 
+        </simpara>
+        <simpara>
+          The performance improvement process is eliminated in favor of ad 
+          hoc improvement throughout the process, which is judged more 
+          efficient than a complete process for the same. The Project 
+          Management process is not entirely eliminated, but is reduced to 
+          a single step occuring at process transitions to update and maintain 
+          the <citetitle>Project Record</citetitle>. 
+        </simpara>
+      </section>
+    </section>
+    <section>
+      <title>Linearization of Process</title>
+      <simpara>
+        Due to the limitations of a single developer for most of the process, 
+        the Cleanroom cycle must be linearized, as only a single process will 
+        be active at any given time. This is the following linearization, 
+        indicating the progression of processes:
+      </simpara>
+      <orderedlist spacing="compact">
+        <title>Standard Cycle</title>
+        <listitem><simpara>Requirements Analysis</simpara></listitem>
+        <listitem><simpara>Project Planning</simpara></listitem>
+        <listitem><simpara>Function Specification</simpara></listitem>
+        <listitem><simpara>Usage Specification</simpara></listitem>
+        <listitem><simpara>Architecture Specification</simpara></listitem>
+        <listitem><simpara>Increment Planning</simpara></listitem>
+        <listitem><simpara>Usage Modeling and Test Planning</simpara></listitem>
+        <listitem>
+          <simpara>Increment Development Cycle</simpara>
+          <orderedlist spacing="compact">
+            <listitem><simpara>Increment Design</simpara></listitem>
+            <listitem><simpara>Correctness Verification</simpara></listitem>
+            <listitem><simpara>Statistical Testing and Certification</simpara></listitem>
+          </orderedlist>
+        </listitem>
+      </orderedlist>
+      <itemizedlist spacing="compact">
+        <title>Auxiliary Processes</title>
+        <simpara>
+          These are processes that are not normally part of the cycle, but are
+          entered on demand when necessary. They usually lead to an entry into 
+          another process in the course of fulfilling the requirements of the 
+          auxiliary process.
+        </simpara>
+        <listitem><simpara>Software Reengineering</simpara></listitem>
+        <listitem><simpara>Engineering Change</simpara></listitem>
+      </itemizedlist>
+    </section>
+  </section>
+</article>

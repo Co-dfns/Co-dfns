@@ -1,0 +1,115 @@
+\section{Hoare Logic for Osmium}
+
+These rules assume an implicit return value v for all expressions.  In the
+notation, a Hoare triple is encoded as ⟪P⟫ B ⟪Q⟫ which says in
+an operational sense that we can say Q given P after executing B.  We use
+P[x←a:y←b:z←c] to represent assertion P with x, y, and z substituted
+by a, b, and c, respectively. See elsewhere for the language of programs.
+
+Literal values are the simplest
+
+lit: ──────────────────
+     ⟪P[v←lit]⟫ lit ⟪P⟫
+
+Variables operate in a similar manner:
+
+var: ──────────────────
+     ⟪P[v←var]⟫ var ⟪P⟫
+
+Primitive monadic functions are always side-effect free, so we can 
+encode those directly.
+
+          ⟪P⟫ exp ⟪Q[v←prim exp]⟫
+mon-prim: ───────────────────────
+          ⟪P⟫ prim exp ⟪Q⟫
+
+The same goes for dyadic primitive functions, except that we want 
+to consider the order of evaluation to ensure that everything is 
+right to left.
+
+          ⟪P⟫ rgt ⟪R⟫
+          ⟪R[v←t]⟫ lft ⟪Q[v←v prim t]⟫
+dya-prim: ────────────────────────────
+          ⟪P⟫ lft prim rgt ⟪Q⟫
+          
+Reading the value out of an array is much like the monadic 
+primitive rule, but the order of evaluation is different because 
+of the difference in the positioning of the arguments in the form. Note that
+this form works both for mutable and for single assignment arrays.
+
+            ⟪P⟫ idx ⟪Q[v←v⌷V]⟫
+array-read: ─────────────────────────
+            ⟪P⟫ V[idx] ⟪Q⟫
+
+The result of an assignment is whatever was assigned to the variable, 
+and this is expressed by the following rule for assignment.
+
+       ⟪P⟫ exp ⟪Q[var←v]⟫
+assgn: ──────────────────
+       ⟪P⟫ var←exp ⟪Q⟫
+
+Assignment to arrays is quite different than assignment to variables.
+We require that arrays be single assignment, which requires more statements
+about the state of the program before we can actually assert some assignment
+into a variable. However, because of the way that the languagge is written,
+this is the only way to share data between multiple threads of execution in
+a write/read fashion.
+
+                ⟪P⟫ exp ⟪R⟫
+                ⟪R[v←t⟫ idx ⟪S⟫
+                S ⇒ ~∨/,v⌷(⎕FEB 'V')
+                S ⇒ Q[v←t : V←(V; v→t)]
+                S ⇒ (⍴v)≡⍴t
+sa-array-assgn: ─────────────────────────────
+                ⟪P⟫ V[idx] ← exp ⟪Q⟫
+
+Assuming that you can prove that you have a multiple assignment array rather
+than a single assignment one, you can do the normal array writing and you don't
+need to prove that the full-empty bits are empty first.
+
+                ⟪P⟫ exp ⟪R⟫
+                ⟪R[v←t⟫ idx ⟪S⟫
+                S ⇒ ~⎕SA 'V'
+                S ⇒ Q[v←t : V←(V; v→t)]
+                S ⇒ (⍴v)≡⍴t
+ma-array-assgn: ─────────────────────────────
+                ⟪P⟫ V[idx] ← exp ⟪Q⟫
+
+The rules for application of functions is pretty straightforward.
+There is one rule for monadic application and one for dyadic 
+application.
+
+         ⟪P⟫ exp ⟪R⟫
+         ⟪R[v←⍵]⟫ body ⟪Q⟫
+mon-app: ────────────────────
+         ⟪P⟫ { body } exp ⟪Q⟫
+
+         ⟪P⟫ rgt ⟪R⟫
+         ⟪R[v←t]⟫ lft ⟪S⟫
+         ⟪S[v←⍺ : t←⍵]⟫ body ⟪Q⟫
+dya-app: ────────────────────────
+         ⟪P⟫ lft {body} rgt ⟪Q⟫
+
+Parallel application is much like normal function application, 
+and in particular, since we have a deterministic by construction
+language, we treat parallel application just like regular function
+application. The only requirement that we make is that you cannot have a free
+variable reference to a mutable array, as this could introduce non-determinism.
+
+             ⟪P⟫ fun exp ⟪Q⟫
+             ∧/⎕SA ⎕WRITES 'fun'
+mon-par-app: ─────────────────
+             ⟪P⟫ fun∥ exp ⟪Q⟫
+
+             ⟪P⟫ lft fun rgt ⟪Q⟫
+             ∧/⎕SA ⎕WRITES 'fun'
+dya-par-app: ─────────────────────
+             ⟪P⟫ lft fun∥ rgt ⟪Q⟫
+
+\subsection{Converting to multiple assignment}
+
+The above rules allow the use of multiple assignment arrays only in a single
+thread of control, which prevents the possible introduction of non-determinism
+due to their use. However, even this limited use of multiple assignment arrays
+is enough to permit, for example, the use of multiple assignment arrays to fold
+arrays down for streaming applications and the like. 

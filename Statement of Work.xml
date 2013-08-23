@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Tuesday, July 2nd, 2013</date>
+  </info>
+  <section>
+    <title>Co-Dfns Statement of Work</title>
+    <para>
+      Implement, document, and publish an industrial-strength compiler for the 
+      Co-Dfns language. This includes the publication of new research into 
+      compiler technologies and formal software design. The intention of this 
+      effort is to have a complete and solid foundation upon which to build 
+      both a successful commercial enterprise and a solid and productive 
+      research agenda. 
+    </para>
+    <para>
+      The Co-Dfns language is a simple extension of the D-fns language. It 
+      implements two concepts on top of the existing language: parallel, 
+      concurrent execution using the monadic operator <function>∥</function>, 
+      which executes its argument concurrently and in parallel with the 
+      code following it; and, the constant <constant>⌾</constant>, which 
+      is an empty, single-assignment array. The fill element of a single 
+      assignment array is a cell that blocks on all attempts to read from 
+      it until there is a write to it. Only a single write is permitted 
+      to a given cell. 
+    </para>
+    <para>
+      The completion of this project at the beginning of October is the 
+      first version, implementing only the semantics and making only such 
+      optimizations as are expedient. A future version is intended to 
+      address the issues of performance to a greater degree.
+    </para>
+  </section>
+</article>
