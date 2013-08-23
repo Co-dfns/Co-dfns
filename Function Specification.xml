@@ -2011,7 +2011,7 @@
               <tr>
                 <td>Vf <literal>←</literal></td>
                 <td>wait</td>
-                <td></td>
+                <td>empty</td>
                 <td>4</td>
               </tr>
               <tr>
