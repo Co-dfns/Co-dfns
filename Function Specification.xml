@@ -2427,6 +2427,127 @@
               </tr>
             </tbody>
           </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, { E :</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ E : E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E : Fe</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : Fnd</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : Fnm</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : {</td>
+                <td>subsumed</td>
+                <td>{ E : Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : }</td>
+                <td>okay</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E : :</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ E : ::</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ E : <literal>⋄</literal></td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E : <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ E : Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ E : Nl</td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ E : Va</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : Vf</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : Vi</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : Vod</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : Vom</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ E : Vu</td>
+                <td>subsumed</td>
+                <td>{ E : E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
         </section>
         <section>
           <title>Expression Enumeration</title>
