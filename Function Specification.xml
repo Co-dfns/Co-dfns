@@ -2669,6 +2669,127 @@
               </tr>
             </tbody>
           </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, { Vu <literal>←</literal></title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ Vu <literal>←</literal> E</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Fe</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Fnd</td>
+                <td>wait</td>
+                <td>{ Vu <literal>←</literal> Fe</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Fnm</td>
+                <td>wait</td>
+                <td>{ Vu <literal>←</literal> Fe</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> {</td>
+                <td>subsumed</td>
+                <td>{ Vu <literal>←</literal> Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> }</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> :</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> ::</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> <literal>⋄</literal></td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Nl</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Va</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Vf</td>
+                <td>wait</td>
+                <td>{ Vu <literal>←</literal> Fe</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Vi</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Vod</td>
+                <td>wait</td>
+                <td>{ Vu <literal>←</literal> Vf</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Vom</td>
+                <td>wait</td>
+                <td>{ Vu <literal>←</literal> Vf</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vu <literal>←</literal> Vu</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
         </section>
         <section>
           <title>Expression Enumeration</title>
