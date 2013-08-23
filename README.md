@@ -10,23 +10,10 @@ and determinism. The language is designed to enable rigorous formal
 analysis of programs to aid in compiler optimization and programmer 
 productivity, as well as in the general reliability of the code itself.
 
-## Overview of Directories
+## Documentation
 
-The following is an overview of each of the top-level directories in the 
-project. 
+The primary documentation right now is a set of development documents used to develop the compiler. If you want to use these documents, they are in DocBook format and must be compiled. A sample fop.xconf and fo.xsl extension have been included in the source as an aid to generating the documents. They require that you have the right fonts and a proper DocBook v5 installation. I use Apache FOP to generate the documentation, and use the following command:
 
-```
-src/
-	Contains the primary sources and tests for the compiler and runtime.
+    fop -c fop.xconf -xsl fo.xsl -xml <filename>.xml -pdf <filename>.pdf
 
-isabelle/
-	Contains the formal treatment of the Co-Dfns compiler and the environments 
-	necessary for doing formal reasoning about Co-Dfns programs.
-
-research/
-	Contains copies of research papers and documents related to the 
-	development of Co-Dfns
-
-doc/
-	Contains the project documentation in various forms.
-```
+You can track the development of the project and the compiler through the *Project Record* which will detail the status and various stages of development under which the compiler exists. You can read through the other documents to get an idea of how the development will progress and how to keep track of things.
