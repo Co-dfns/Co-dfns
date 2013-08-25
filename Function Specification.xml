@@ -3253,7 +3253,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Fe *</title>
+            <title>Source Input Enumeration: Expressions, Fe</title>
             <thead>
               <th>Sequence</th>
               <th>Response</th>
@@ -3262,93 +3262,93 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>E</td>
+                <td>Fe E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe</td>
+                <td>Fe Fe</td>
                 <td>wait</td>
-                <td></td>
+                <td>Fe</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>[</td>
+                <td>Fe [</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>]</td>
+                <td>Fe ]</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
+                <td>Fe (</td>
+                <td>wait</td>
                 <td>(</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe <literal>⍣</literal></td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>)</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td><literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td><literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Break</td>
+                <td>Fe Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>N</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>S</td>
-                <td>wait</td>
+                <td>Fe N</td>
+                <td>okay</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Fe S</td>
+                <td>okay</td>
+                <td>Fe N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe Va</td>
+                <td>okay</td>
                 <td>Va</td>
-                <td>wait</td>
-                <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Vi</td>
+                <td>Fe Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Vu</td>
+                <td>Fe Vu</td>
                 <td>wait</td>
-                <td></td>
+                <td>Vu</td>
                 <td>4</td>
               </tr>
             </tbody>
@@ -3753,6 +3753,107 @@
                 <td>Vu</td>
                 <td>wait</td>
                 <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fe <literal>⍣</literal> *</title>
+            <thead>
+              <th>Sequence</th>
+              <th>Response</th>
+              <th>Equivalent</th>
+              <th>Trace</th>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fe E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fe Fe</td>
+                <td>wait</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe [</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fe ]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe (</td>
+                <td>wait</td>
+                <td>(</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe <literal>⍣</literal></td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fe N</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe S</td>
+                <td>okay</td>
+                <td>Fe N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe Va</td>
+                <td>okay</td>
+                <td>Va</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fe Vu</td>
+                <td>wait</td>
+                <td>Vu</td>
                 <td>4</td>
               </tr>
             </tbody>
