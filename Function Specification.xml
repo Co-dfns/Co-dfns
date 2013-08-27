@@ -456,7 +456,7 @@
           <tr>
             <td>Va</td>
             <td colspan="2">Array Variable</td>
-            <td colspan="3">A variable bound to an array</td>
+            <td colspan="3">A variable expression bound to an array</td>
           </tr>
           <tr>
             <td>Vi</td>
@@ -479,6 +479,11 @@
             <td colspan="3">A variable bound to a dyadic operator</td>
           </tr>
           <tr>
+            <td>Vnu</td>
+            <td colspan="2">Unbound Nested Variable</td>
+            <td colspan="3">A nested variable expression that has some unbound variables</td>
+          </tr>
+          <tr>
             <td>Vu</td>
             <td colspan="2">Unbound Variable</td>
             <td colspan="3">A variable that has not been bound</td>
@@ -494,6 +499,7 @@
         long hand.
       </simpara>
       <table frame="void" rules="rows">
+        <title>Enumeration Stimuli Sets for Recursive Stimuli</title>
         <thead>
           <tr>
             <th>Enumeration</th>
@@ -511,7 +517,7 @@
           </tr>
           <tr>
             <td>Functions</td>
-            <td colspan="4">{ } : :: <literal>⋄</literal> <literal>←</literal> Break Nl Va Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
+            <td colspan="4">{ } : :: <literal>⋄</literal> <literal>←</literal> Break Nl Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
           </tr>
           <tr>
             <td>Func. Expr.</td>
@@ -1774,12 +1780,6 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Va</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
                 <td>Vi</td>
                 <td>Value Error</td>
                 <td>empty</td>
@@ -1893,12 +1893,6 @@
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
-              </tr>
-              <tr>
-                <td>{ Va</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
               </tr>
               <tr>
                 <td>{ Vf</td>
@@ -2016,12 +2010,6 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vf Va</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>Vf Vf</td>
                 <td>subsumed</td>
                 <td>E</td>
@@ -2135,12 +2123,6 @@
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
-              </tr>
-              <tr>
-                <td>{ E Va</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
               </tr>
               <tr>
                 <td>{ E Vf</td>
@@ -2258,12 +2240,6 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf Va</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vf Vf</td>
                 <td>subsumed</td>
                 <td>{ E</td>
@@ -2377,12 +2353,6 @@
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>{ Vu Va</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
               </tr>
               <tr>
                 <td>{ Vu Vf</td>
@@ -2500,12 +2470,6 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ E : Va</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ E : Vf</td>
                 <td>subsumed</td>
                 <td>{ E : E</td>
@@ -2619,12 +2583,6 @@
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Va</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
               </tr>
               <tr>
                 <td>{ Vf <literal>←</literal> Vf</td>
@@ -2742,12 +2700,6 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vu <literal>←</literal> Va</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vu <literal>←</literal> Vf</td>
                 <td>wait</td>
                 <td>{ Vu <literal>←</literal> Fe</td>
@@ -2861,12 +2813,6 @@
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
-              </tr>
-              <tr>
-                <td>{ E : E Va</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
               </tr>
               <tr>
                 <td>{ E : E Vf</td>
@@ -2984,12 +2930,6 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Va</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vf <literal>←</literal> Fe Vf</td>
                 <td>subsumed</td>
                 <td>{ Vf <literal>←</literal> E</td>
@@ -3103,12 +3043,6 @@
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
-              </tr>
-              <tr>
-                <td>{ Vu <literal>←</literal> Fe Va</td>
-                <td>subsumed</td>
-                <td>{ Vu <literal>←</literal> E</td>
-                <td></td>
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Fe Vf</td>
@@ -3464,91 +3398,91 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>E</td>
+                <td>N E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe</td>
+                <td>N Fe</td>
                 <td>wait</td>
-                <td></td>
+                <td>Fe</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>[</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>N [</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
               </tr>
               <tr>
-                <td>]</td>
+                <td>N ]</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>(</td>
+                <td>N (</td>
                 <td>wait</td>
-                <td></td>
+                <td>(</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>)</td>
+                <td>N )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>;</td>
+                <td>N ;</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td><literal>←</literal></td>
+                <td>N <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td><literal>⍣</literal></td>
+                <td>N <literal>⍣</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Break</td>
+                <td>N Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>N</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>S</td>
-                <td>wait</td>
+                <td>N N</td>
+                <td>okay</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
+                <td>N S</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Va</td>
+                <td>okay</td>
                 <td>Va</td>
-                <td>wait</td>
-                <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Vi</td>
+                <td>N Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Vu</td>
+                <td>N Vu</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
