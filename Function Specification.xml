@@ -3354,7 +3354,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, ( *</title>
+            <title>Source Input Enumeration: Expressions, (</title>
             <thead>
               <th>Sequence</th>
               <th>Response</th>
@@ -3363,94 +3363,94 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>E</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fe</td>
+                <td>( E</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>[</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>( Fe</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( [</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
               </tr>
               <tr>
-                <td>]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>(</td>
-                <td>wait</td>
+                <td>( ]</td>
+                <td>subsumed</td>
+                <td>( E</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr> 
-                <td>)</td>
+                <td>( (</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>( ;</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
               </tr>
               <tr> 
-                <td><literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
               </tr>
               <tr> 
-                <td><literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
               </tr>
               <tr> 
-                <td>Break</td>
-                <td>Interrupt</td>
-                <td>empty, top-level</td>
-                <td>D3</td>
+                <td>( Break</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
               </tr>
               <tr>
-                <td>N</td>
-                <td>wait</td>
+                <td>( N</td>
+                <td>subsumed</td>
+                <td>( E</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr> 
-                <td>S</td>
-                <td>wait</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Va</td>
-                <td>wait</td>
+                <td>( S</td>
+                <td>subsumed</td>
+                <td>( E</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr> 
-                <td>Vi</td>
-                <td>Value Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Vu</td>
-                <td>wait</td>
+                <td>( Va</td>
+                <td>subsumed</td>
+                <td>( E</td>
                 <td></td>
-                <td>4</td>
+              </tr>
+              <tr> 
+                <td>( Vi</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Vu</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
@@ -3855,6 +3855,107 @@
                 <td>wait</td>
                 <td>Vu</td>
                 <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, ( E *</title>
+            <thead>
+              <th>Sequence</th>
+              <th>Response</th>
+              <th>Equivalent</th>
+              <th>Trace</th>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>( E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>( Fe</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( [</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( ]</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( (</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>( ;</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Break</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( N</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( S</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Va</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Vi</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Vu</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
