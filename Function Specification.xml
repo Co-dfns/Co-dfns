@@ -233,7 +233,17 @@
           <tr>
             <td>Fe</td>
             <td colspan="2">Function Expression</td>
-            <td colspan="3">An expression evaluating to a function value</td>
+            <td colspan="3">An expression evaluating to any function value</td>
+          </tr>
+          <tr>
+            <td>Fea</td>
+            <td colspan="2">Function Expression</td>
+            <td colspan="3">An expression evaluating to an ambivalent function value</td>
+          </tr>
+          <tr>
+            <td>Fed</td>
+            <td colspan="2">Function Expression</td>
+            <td colspan="3">An expression evaluating to a dyadic function value</td>
           </tr>
         </tbody>
       </table>
@@ -532,7 +542,7 @@
           </tr>
           <tr>
             <td>Expressions</td>
-            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Sm Sd Va Vi Vnu E Es Fe</td>
+            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Sm Sd Va Vi Vnu E Es Fea Fed</td>
           </tr>
           <tr>
             <td>Functions</td>
@@ -540,7 +550,7 @@
           </tr>
           <tr>
             <td>Func. Expr.</td>
-            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu E Fe Fn Fnm Fnd</td>
+            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu E Fea Fed Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
@@ -3106,7 +3116,7 @@
             complex enumerations, because there is so much that can happen. In particular, 
             we need a way to capture and handle the following important semantics:
           </simpara>
-          <orderedlist>
+          <orderedlist spacing="compact">
             <listitem>
               <simpara>Vector Notation (Strand Syntax)</simpara>
             </listitem>
@@ -3119,7 +3129,7 @@
           </orderedlist>
           <simpara>
             In order to handle all of these, we actually have a bit more stimuli than we 
-            have in the other sets, and we include an additiona meta-response to handle things.
+            have in the other sets, and we include an additional meta-response to handle things.
             In particular, we use the E stimuli within the expression itself in order to do 
             a recursive reference for handling the nested vector notations. We do not want to 
             deal with yet another recursive stimuli just for handling the vector notation, 
@@ -3163,10 +3173,16 @@
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe</td>
+                <td>Fea</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr> 
                 <td>[</td>
@@ -3261,7 +3277,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Fe</title>
+            <title>Source Input Enumeration: Expressions, Fea</title>
             <thead>
               <th>Sequence</th>
               <th>Response</th>
@@ -3270,109 +3286,115 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>Fe E</td>
+                <td>Fea E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe Es</td>
+                <td>Fea Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe Fe</td>
+                <td>Fea Fea</td>
                 <td>wait</td>
-                <td>Fe</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe [</td>
+                <td>Fea Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea [</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fe ]</td>
+                <td>Fea ]</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe (</td>
+                <td>Fea (</td>
                 <td>wait</td>
                 <td>(</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe )</td>
+                <td>Fea )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe ;</td>
+                <td>Fea ;</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe <literal>←</literal></td>
+                <td>Fea <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe <literal>⍣</literal></td>
+                <td>Fea <literal>⍣</literal></td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Break</td>
+                <td>Fea Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fe N</td>
+                <td>Fea N</td>
                 <td>okay</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe S</td>
+                <td>Fea S</td>
                 <td>okay</td>
-                <td>Fe N</td>
+                <td>Fea N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Sm</td>
-                <td>okay</td>
-                <td>Fe</td>
+                <td>Fea Sm</td>
+                <td>wait</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Sd</td>
+                <td>Fea Sd</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe Va</td>
+                <td>Fea Va</td>
                 <td>okay</td>
                 <td>Va</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Vi</td>
+                <td>Fea Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe Vnu</td>
+                <td>Fea Vnu</td>
                 <td>wait</td>
                 <td>Vnu</td>
                 <td>4</td>
@@ -3401,7 +3423,13 @@
                 <td>4</td>
               </tr>
               <tr> 
-                <td>( Fe</td>
+                <td>( Fea</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Fed</td>
                 <td>subsumed</td>
                 <td>( E</td>
                 <td></td>
@@ -3520,7 +3548,13 @@
                 <td></td>
               </tr>
               <tr> 
-                <td>N Fe</td>
+                <td>N Fea</td>
+                <td>wait</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Fed</td>
                 <td>wait</td>
                 <td>Fe</td>
                 <td>4</td>
@@ -3639,7 +3673,13 @@
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe</td>
+                <td>Fea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fed</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3758,7 +3798,13 @@
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe</td>
+                <td>Fea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fed</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3856,7 +3902,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Fe <literal>⍣</literal> *</title>
+            <title>Source Input Enumeration: Expressions, Fea <literal>⍣</literal> *</title>
             <thead>
               <th>Sequence</th>
               <th>Response</th>
@@ -3865,109 +3911,115 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>Fe E</td>
+                <td>Fea E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe Es</td>
+                <td>Fea Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe Fe</td>
+                <td>Fea Fea</td>
                 <td>wait</td>
                 <td>Fe</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe [</td>
+                <td>Fea Fed</td>
+                <td>wait</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea [</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fe ]</td>
+                <td>Fea ]</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe (</td>
+                <td>Fea (</td>
                 <td>wait</td>
                 <td>(</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe )</td>
+                <td>Fea )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe ;</td>
+                <td>Fea ;</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe <literal>←</literal></td>
+                <td>Fea <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe <literal>⍣</literal></td>
+                <td>Fea <literal>⍣</literal></td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Break</td>
+                <td>Fea Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fe N</td>
+                <td>Fea N</td>
                 <td>okay</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe S</td>
+                <td>Fea S</td>
                 <td>okay</td>
                 <td>Fe N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Sm</td>
+                <td>Fea Sm</td>
                 <td>okay</td>
                 <td>Fe N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Sd</td>
+                <td>Fea Sd</td>
                 <td>okay</td>
                 <td>Fe N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Va</td>
+                <td>Fea Va</td>
                 <td>okay</td>
                 <td>Va</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Fe Vi</td>
+                <td>Fea Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe Vnu</td>
+                <td>Fea Vnu</td>
                 <td>wait</td>
                 <td>Vu</td>
                 <td>4</td>
@@ -3996,7 +4048,13 @@
                 <td>4</td>
               </tr>
               <tr> 
-                <td>( Fe</td>
+                <td>( Fea</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Fed</td>
                 <td>subsumed</td>
                 <td>( E</td>
                 <td></td>
