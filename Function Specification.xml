@@ -211,6 +211,11 @@
             <td colspan="3">Any expression that evaluates to an array value</td>
           </tr>
           <tr>
+            <td>Es</td>
+            <td colspan="2">Selective Expression</td>
+            <td colspan="3">Any valid selective assignment Expression</td>
+          </tr>
+          <tr>
             <td>Fn</td>
             <td colspan="2">Ambivelant Function</td>
             <td colspan="3">An ambivelant user-defined function</td>
@@ -236,7 +241,7 @@
         All of the function stimuli may be enumerated as one, since they have the same syntax
         at this abstract level. When enumerating a recursive stimuli, we allow potentially
         any error response, as well as
-        <symbol>illegla</symbol>,
+        <symbol>illegal</symbol>,
         <symbol>wait</symbol>, and
         <symbol>okay</symbol>. The
         <symbol>wait</symbol> response indicates the sequence
@@ -454,6 +459,20 @@
             </td>
           </tr>
           <tr>
+            <td>Sm</td>
+            <td colspan="2">Monadic Selector</td>
+            <td colspan="3">
+              A monadic primitive suitable for selective assignment
+            </td>
+          </tr>
+          <tr>
+            <td>Sd</td>
+            <td colspan="2">Dyadic Selector</td>
+            <td colspan="3">
+              A dyadic primitive suitable for selective assignment
+            </td>
+          </tr>
+          <tr>
             <td>Va</td>
             <td colspan="2">Array Variable</td>
             <td colspan="3">A variable expression bound to an array</td>
@@ -513,7 +532,7 @@
           </tr>
           <tr>
             <td>Expressions</td>
-            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Va Vi Vu E Fe</td>
+            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Sm Sd Va Vi Vnu E Es Fe</td>
           </tr>
           <tr>
             <td>Functions</td>
@@ -3083,7 +3102,44 @@
             The expression stimulus captures a single line of Co-Dfns code, which is 
             an expression. This is an expression which will give a value as a result, 
             not a function or some other thing. It may be a named value, or it may be 
-            something that is unnamed. 
+            something that is unnamed. The expression enumeration may be one of the more 
+            complex enumerations, because there is so much that can happen. In particular, 
+            we need a way to capture and handle the following important semantics:
+          </simpara>
+          <orderedlist>
+            <listitem>
+              <simpara>Vector Notation (Strand Syntax)</simpara>
+            </listitem>
+            <listitem>
+              <simpara>Vector Notation Assignment</simpara>
+            </listitem>
+            <listitem>
+              <simpara>Selective Assignment</simpara>
+            </listitem>
+          </orderedlist>
+          <simpara>
+            In order to handle all of these, we actually have a bit more stimuli than we 
+            have in the other sets, and we include an additiona meta-response to handle things.
+            In particular, we use the E stimuli within the expression itself in order to do 
+            a recursive reference for handling the nested vector notations. We do not want to 
+            deal with yet another recursive stimuli just for handling the vector notation, 
+            since it is mostly subsumed inside of the E stimuli anyways. However, a special case 
+            is when we have a vector notation (also called strand notation) that has only variables 
+            in it. In this case, we are dealing with something that could potentially be a value, 
+            if all of the variables are bound, or it could also be a valid assignment target. 
+            We use the Va and Vnu stimuli to encapsulate this behavior, so that we do not need 
+            to enumerate this recursion. Finally, to handle selective assignment, we allow for 
+            another meta-response <firstterm>selective</firstterm> which is the same thing as 
+            the <glossterm>okay</glossterm> response, but that indicates it is also a valid 
+            selective expression. These expressions that have the <glossterm>selective</glossterm>
+            response are what is captured by the Es stimuli, which is the set of all 
+            selective assignment expressions. Anything else is subsumed by the E stimuli.
+            The Es stimuli is only a legal stimuli when we are encountering a good situation for 
+            a selective assignment. In all other cases, it is just redundant.
+            In order to be able to capture the selective assignment we have to additional 
+            stimuli that would usually be subsumed by the Fe stimuli, which are Sm and Sd. 
+            These are the valid dyadic and monadic selective functions, or a combination of them 
+            and one of the valid operators, such as each.
           </simpara>
           <table frame="void" rules="rows">
             <title>Source Input Enumeration: Expressions</title>
@@ -3096,6 +3152,12 @@
             <tbody> 
               <tr> 
                 <td>E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -3167,6 +3229,18 @@
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Sm</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
                 <td>Va</td>
                 <td>okay</td>
                 <td></td>
@@ -3179,7 +3253,7 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Vu</td>
+                <td>Vnu</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3197,6 +3271,12 @@
             <tbody> 
               <tr> 
                 <td>Fe E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fe Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -3268,6 +3348,18 @@
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Fe Sm</td>
+                <td>okay</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe Sd</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
                 <td>Fe Va</td>
                 <td>okay</td>
                 <td>Va</td>
@@ -3280,9 +3372,9 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe Vu</td>
+                <td>Fe Vnu</td>
                 <td>wait</td>
-                <td>Vu</td>
+                <td>Vnu</td>
                 <td>4</td>
               </tr>
             </tbody>
@@ -3298,6 +3390,12 @@
             <tbody> 
               <tr> 
                 <td>( E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>( Es</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3369,6 +3467,18 @@
                 <td></td>
               </tr>
               <tr> 
+                <td>( Sm</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Sd</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
                 <td>( Va</td>
                 <td>subsumed</td>
                 <td>( E</td>
@@ -3381,9 +3491,9 @@
                 <td></td>
               </tr>
               <tr> 
-                <td>( Vu</td>
+                <td>( Vnu</td>
                 <td>subsumed</td>
-                <td>( E</td>
+                <td>Vnu</td>
                 <td></td>
               </tr>
             </tbody>
@@ -3399,6 +3509,12 @@
             <tbody> 
               <tr> 
                 <td>N E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -3470,6 +3586,18 @@
                 <td>4</td>
               </tr>
               <tr> 
+                <td>N Sm</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
                 <td>N Va</td>
                 <td>okay</td>
                 <td>Va</td>
@@ -3482,7 +3610,7 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N Vu</td>
+                <td>N Vnu</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3505,102 +3633,7 @@
                 <td></td>
               </tr>
               <tr> 
-                <td>Fe</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>[</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>(</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>)</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td><literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td><literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Break</td>
-                <td>Interrupt</td>
-                <td>empty, top-level</td>
-                <td>D3</td>
-              </tr>
-              <tr>
-                <td>N</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>S</td>
-                <td>wait</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Va</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vi</td>
-                <td>Value Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Vu</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-            </tbody>
-          </table>
-          <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Vu *</title>
-            <thead>
-              <th>Sequence</th>
-              <th>Response</th>
-              <th>Equivalent</th>
-              <th>Trace</th>
-            </thead>
-            <tbody> 
-              <tr> 
-                <td>E</td>
+                <td>Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -3672,6 +3705,18 @@
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Sm</td>
+                <td>wait</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sd</td>
+                <td>wait</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
                 <td>Va</td>
                 <td>wait</td>
                 <td></td>
@@ -3684,7 +3729,126 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Vu</td>
+                <td>Vnu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Vu *</title>
+            <thead>
+              <th>Sequence</th>
+              <th>Response</th>
+              <th>Equivalent</th>
+              <th>Trace</th>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fe</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>[</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>(</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>)</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td><literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td><literal>⍣</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>N</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>S</td>
+                <td>wait</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sm</td>
+                <td>wait</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sd</td>
+                <td>wait</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Va</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3702,6 +3866,12 @@
             <tbody> 
               <tr> 
                 <td>Fe E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fe Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -3773,6 +3943,18 @@
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Fe Sm</td>
+                <td>okay</td>
+                <td>Fe N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fe Sd</td>
+                <td>okay</td>
+                <td>Fe N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
                 <td>Fe Va</td>
                 <td>okay</td>
                 <td>Va</td>
@@ -3785,7 +3967,7 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fe Vu</td>
+                <td>Fe Vnu</td>
                 <td>wait</td>
                 <td>Vu</td>
                 <td>4</td>
@@ -3803,6 +3985,12 @@
             <tbody> 
               <tr> 
                 <td>( E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>( Es</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3874,6 +4062,18 @@
                 <td></td>
               </tr>
               <tr> 
+                <td>( Sm</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Sd</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
                 <td>( Va</td>
                 <td>subsumed</td>
                 <td>( E</td>
@@ -3886,7 +4086,7 @@
                 <td></td>
               </tr>
               <tr> 
-                <td>( Vu</td>
+                <td>( Vnu</td>
                 <td>subsumed</td>
                 <td>( E</td>
                 <td></td>
