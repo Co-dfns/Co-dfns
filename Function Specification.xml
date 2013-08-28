@@ -3509,7 +3509,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, N *</title>
+            <title>Source Input Enumeration: Expressions, N</title>
             <thead>
               <th>Sequence</th>
               <th>Response</th>
@@ -3532,13 +3532,13 @@
               <tr> 
                 <td>N Fea</td>
                 <td>wait</td>
-                <td>Fe</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>N Fed</td>
                 <td>wait</td>
-                <td>Fe</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3556,7 +3556,7 @@
               <tr> 
                 <td>N (</td>
                 <td>wait</td>
-                <td>(</td>
+                <td></td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3597,20 +3597,20 @@
               </tr>
               <tr> 
                 <td>N Sm</td>
-                <td>okay</td>
-                <td>N</td>
+                <td>wait</td>
+                <td>N Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>N Sd</td>
-                <td>okay</td>
-                <td>N</td>
+                <td>wait</td>
+                <td></td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>N Va</td>
                 <td>okay</td>
-                <td>Va</td>
+                <td></td>
                 <td>4</td>
               </tr>
               <tr> 
