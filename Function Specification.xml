@@ -542,7 +542,7 @@
           </tr>
           <tr>
             <td>Expressions</td>
-            <td colspan="4">[ ] ( ) ; <literal>←</literal> <literal>⍣</literal> Break N S Sm Sd Va Vi Vnu E Es Fea Fed</td>
+            <td colspan="4">[ ] ( ) ; <literal>←</literal> Break N S Sm Sd Va Vi Vnu E Es Fea Fed</td>
           </tr>
           <tr>
             <td>Functions</td>
@@ -3221,12 +3221,6 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td><literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
                 <td>Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
@@ -3346,12 +3340,6 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Fea <literal>⍣</literal></td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
                 <td>Fea Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
@@ -3466,12 +3454,6 @@
               </tr>
               <tr> 
                 <td>( <literal>←</literal></td>
-                <td>subsumed</td>
-                <td>( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>( <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>( E</td>
                 <td></td>
@@ -3596,12 +3578,6 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N <literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
                 <td>N Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
@@ -3716,12 +3692,6 @@
               </tr>
               <tr> 
                 <td><literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td><literal>⍣</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
@@ -3846,12 +3816,6 @@
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td><literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
                 <td>Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
@@ -3897,131 +3861,6 @@
                 <td>Vnu</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
-              </tr>
-            </tbody>
-          </table>
-          <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Fea <literal>⍣</literal> *</title>
-            <thead>
-              <th>Sequence</th>
-              <th>Response</th>
-              <th>Equivalent</th>
-              <th>Trace</th>
-            </thead>
-            <tbody> 
-              <tr> 
-                <td>Fea E</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Es</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Fea</td>
-                <td>wait</td>
-                <td>Fe</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea Fed</td>
-                <td>wait</td>
-                <td>Fe</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea [</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fea ]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Fea (</td>
-                <td>wait</td>
-                <td>(</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Fea ;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Fea <literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Fea <literal>⍣</literal></td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea Break</td>
-                <td>Interrupt</td>
-                <td>empty, top-level</td>
-                <td>D3</td>
-              </tr>
-              <tr>
-                <td>Fea N</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea S</td>
-                <td>okay</td>
-                <td>Fe N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea Sm</td>
-                <td>okay</td>
-                <td>Fe N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea Sd</td>
-                <td>okay</td>
-                <td>Fe N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea Va</td>
-                <td>okay</td>
-                <td>Va</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fea Vi</td>
-                <td>Value Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Fea Vnu</td>
-                <td>wait</td>
-                <td>Vu</td>
                 <td>4</td>
               </tr>
             </tbody>
@@ -4091,12 +3930,6 @@
               </tr>
               <tr> 
                 <td>( <literal>←</literal></td>
-                <td>subsumed</td>
-                <td>( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>( <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>( E</td>
                 <td></td>
