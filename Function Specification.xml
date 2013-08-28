@@ -3532,6 +3532,131 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Sm *</title>
+            <thead>
+              <th>Sequence</th>
+              <th>Response</th>
+              <th>Equivalent</th>
+              <th>Trace</th>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea</td>
+                <td>wait</td>
+                <td>empty</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>[</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>(</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>)</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td><literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>N</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>S</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sm</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Va</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Vna</td>
+                <td>okay</td>
+                <td>Va</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
             <title>Source Input Enumeration: Expressions, Va</title>
             <thead>
               <th>Sequence</th>
@@ -3653,6 +3778,131 @@
                 <td>illegal</td>
                 <td></td>
                 <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Vnu *</title>
+            <thead>
+              <th>Sequence</th>
+              <th>Response</th>
+              <th>Equivalent</th>
+              <th>Trace</th>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea</td>
+                <td>wait</td>
+                <td>empty</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>[</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>(</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>)</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td><literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>N</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>S</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sm</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Va</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Vna</td>
+                <td>okay</td>
+                <td>Va</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
               </tr>
             </tbody>
           </table>
