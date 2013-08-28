@@ -485,7 +485,12 @@
           <tr>
             <td>Va</td>
             <td colspan="2">Array Variable</td>
-            <td colspan="3">A variable expression bound to an array</td>
+            <td colspan="3">A variable bound to an array</td>
+          </tr>
+          <tr>
+            <td>Vna</td>
+            <td colspan="2">Array Variable</td>
+            <td colspan="3">A nested array variable expression with no unbound variables</td>
           </tr>
           <tr>
             <td>Vi</td>
@@ -542,7 +547,7 @@
           </tr>
           <tr>
             <td>Expressions</td>
-            <td colspan="4">[ ] ( ) ; <literal>←</literal> Break N S Sm Sd Va Vi Vnu E Es Fea Fed</td>
+            <td colspan="4">[ ] ( ) ; <literal>←</literal> Break N S Sm Sd Va Vna Vi Vnu E Es Fea Fed</td>
           </tr>
           <tr>
             <td>Functions</td>
@@ -3257,6 +3262,12 @@
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Vna</td>
+                <td>okay</td>
+                <td>Va</td>
+                <td>4</td>
+              </tr>
+              <tr> 
                 <td>Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
@@ -3371,6 +3382,12 @@
               </tr>
               <tr> 
                 <td>( Va</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Vna</td>
                 <td>subsumed</td>
                 <td>( E</td>
                 <td></td>
@@ -3491,7 +3508,13 @@
               <tr> 
                 <td>N Va</td>
                 <td>okay</td>
-                <td></td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Vna</td>
+                <td>okay</td>
+                <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3609,6 +3632,12 @@
               </tr>
               <tr> 
                 <td>Va</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Vna</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3733,6 +3762,12 @@
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Vna</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
                 <td>Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
@@ -3847,6 +3882,12 @@
               </tr>
               <tr> 
                 <td>( Va</td>
+                <td>subsumed</td>
+                <td>( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>( Vna</td>
                 <td>subsumed</td>
                 <td>( E</td>
                 <td></td>
