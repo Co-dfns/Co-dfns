@@ -3792,7 +3792,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Vnu *</title>
+            <title>Source Input Enumeration: Expressions, Vnu</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -3803,118 +3803,118 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>E</td>
+                <td>Vnu E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Es</td>
+                <td>Vnu Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Fea</td>
-                <td>wait</td>
-                <td>empty</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Fed</td>
-                <td>Syntax Error</td>
+                <td>Vnu Fea</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>[</td>
-                <td>Syntax Error</td>
+                <td>Vnu Fed</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu [</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>]</td>
+                <td>Vnu ]</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>(</td>
+                <td>Vnu (</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu <literal>←</literal></td>
                 <td>wait</td>
-                <td></td>
+                <td>empty</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>)</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td><literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Break</td>
+                <td>Vnu Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>N</td>
-                <td>okay</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>S</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sm</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sd</td>
-                <td>Syntax Error</td>
+                <td>Vnu N</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Va</td>
-                <td>okay</td>
+                <td>Vnu S</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu Sm</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu Sd</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Vnu Va</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
               </tr>
               <tr> 
-                <td>Vna</td>
-                <td>okay</td>
-                <td>Va</td>
-                <td>4</td>
+                <td>Vnu Vna</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr> 
-                <td>Vi</td>
+                <td>Vnu Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>Vnu</td>
-                <td>wait</td>
+                <td>Vnu Vnu</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
