@@ -5189,7 +5189,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Vna Va *</title>
+            <title>Source Input Enumeration: Expressions, Vna Va</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -5200,115 +5200,115 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>Vna E</td>
+                <td>Vna Va E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Es</td>
+                <td>Vna Va Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Fea</td>
-                <td>wait</td>
-                <td>empty</td>
-                <td>4</td>
+                <td>Vna Va Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr> 
-                <td>Vna Fed</td>
-                <td>wait</td>
-                <td>empty</td>
-                <td>4</td>
+                <td>Vna Va Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr> 
-                <td>Vna [</td>
+                <td>Vna Va [</td>
                 <td>wait</td>
-                <td>N [</td>
+                <td>Va [</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Vna ]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Vna (</td>
-                <td>wait</td>
-                <td>Va (</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vna )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Vna ;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Vna <literal>←</literal></td>
-                <td>wait</td>
-                <td>empty</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vna Break</td>
-                <td>Interrupt</td>
-                <td>empty, top-level</td>
-                <td>D3</td>
-              </tr>
-              <tr>
-                <td>Vna N</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vna S</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vna Sm</td>
-                <td>wait</td>
-                <td>empty</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vna Sd</td>
-                <td>wait</td>
-                <td>N Sd</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vna Va</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Vna Vna</td>
+                <td>Vna Va ]</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Vi</td>
-                <td>Value Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
+                <td>Vna Va (</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr> 
-                <td>Vna Vnu</td>
+                <td>Vna Va )</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va ;</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va <literal>←</literal></td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va Break</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vna Va N</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va S</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va Sm</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va Sd</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va Va</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va Vna</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va Vi</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Vna Va Vnu</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
