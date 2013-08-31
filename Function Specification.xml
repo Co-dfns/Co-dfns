@@ -5443,7 +5443,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Sm Va [ *</title>
+            <title>Source Input Enumeration: Expressions, Sm Va [</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -5454,117 +5454,117 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>Sm Va E</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Sm Va Es</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Sm Va Fea</td>
+                <td>Sm Va [ E</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>Sm Va Fed</td>
-                <td>wait</td>
-                <td>empty</td>
+                <td>Sm Va [ Es</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ Fea</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ Fed</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ [</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Sm Va [ ]</td>
+                <td>selective</td>
+                <td>Va [ ]</td>
                 <td>4</td>
               </tr>
               <tr> 
+                <td>Sm Va [ (</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ )</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ ;</td>
+                <td>wait</td>
                 <td>Sm Va [</td>
-                <td>wait</td>
-                <td></td>
                 <td>4</td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ Break</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
               </tr>
               <tr>
-                <td>Sm Va ]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Sm Va (</td>
-                <td>wait</td>
-                <td>Fea Va (</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sm Va )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Sm Va ;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>Sm Va <literal>←</literal></td>
-                <td>wait</td>
-                <td>empty</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sm Va Break</td>
-                <td>Interrupt</td>
-                <td>empty, top-level</td>
-                <td>D3</td>
-              </tr>
-              <tr>
-                <td>Sm Va N</td>
-                <td>okay</td>
-                <td>Fea N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sm Va S</td>
-                <td>okay</td>
-                <td>Fea S</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sm Va Sm</td>
-                <td>wait</td>
-                <td>Fea</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sm Va Sd</td>
-                <td>wait</td>
-                <td>N Sd</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>Sm Va Va</td>
-                <td>illegal</td>
-                <td></td>
+                <td>Sm Va [ N</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Sm Va Vna</td>
-                <td>illegal</td>
-                <td></td>
+                <td>Sm Va [ S</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Sm Va Vi</td>
-                <td>Value Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
+                <td>Sm Va [ Sm</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
               </tr>
               <tr> 
-                <td>Sm Va Vnu</td>
-                <td>illegal</td>
+                <td>Sm Va [ Sd</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
                 <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ Va</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ Vna</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ Vi</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Sm Va [ Vnu</td>
+                <td>subsumed</td>
+                <td>Sm Va [ E</td>
                 <td></td>
               </tr>
             </tbody>
