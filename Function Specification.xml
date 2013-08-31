@@ -5570,7 +5570,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Va [ E *</title>
+            <title>Source Input Enumeration: Expressions, Va [ E</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -5582,9 +5582,9 @@
             <tbody> 
               <tr> 
                 <td>Va [ E E</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>Va [ E</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr> 
                 <td>Va [ E Es</td>
@@ -5613,7 +5613,7 @@
               <tr>
                 <td>Va [ E ]</td>
                 <td>okay</td>
-                <td></td>
+                <td>Va [ ]</td>
                 <td>4</td>
               </tr>
               <tr> 
