@@ -4300,7 +4300,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, N ( *</title>
+            <title>Source Input Enumeration: Expressions, N (</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -4311,123 +4311,123 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>N E</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N Es</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N Fea</td>
-                <td>wait</td>
-                <td>Fea</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N Fed</td>
-                <td>wait</td>
-                <td>Fea</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N [</td>
+                <td>N ( E</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
+              </tr>
+              <tr> 
+                <td>N ( Es</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Fea</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Fed</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( [</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
               </tr>
               <tr>
-                <td>N ]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>N (</td>
-                <td>wait</td>
+                <td>N ( ]</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr> 
-                <td>N )</td>
+                <td>N ( (</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N ;</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>N ( ;</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
               </tr>
               <tr> 
-                <td>N <literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>N ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
               </tr>
               <tr> 
-                <td>N Break</td>
-                <td>Interrupt</td>
-                <td>empty, top-level</td>
-                <td>D3</td>
+                <td>N ( Break</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
               </tr>
               <tr>
-                <td>N N</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N S</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N Sm</td>
-                <td>wait</td>
-                <td>N Fea</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N Sd</td>
-                <td>wait</td>
+                <td>N ( N</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr> 
-                <td>N Va</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N Vna</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N Vi</td>
-                <td>Value Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>N Vnu</td>
-                <td>wait</td>
+                <td>N ( S</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
                 <td></td>
-                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N ( Sm</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Sd</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Va</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Vna</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Vi</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Vnu</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, N Sd *</title>
+            <title>Source Input Enumeration: Expressions, N Sd</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -4438,117 +4438,117 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>N E</td>
+                <td>N Sd E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>N Es</td>
+                <td>N Sd Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>N Fea</td>
+                <td>N Sd Fea</td>
                 <td>wait</td>
                 <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>N Fed</td>
-                <td>wait</td>
-                <td>Fea</td>
-                <td>4</td>
+                <td>N Sd Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N [</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
+                <td>N Sd [</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>N ]</td>
+                <td>N Sd ]</td>
                 <td>Syntax Error</td>
-                <td>empty</td>
+                <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N (</td>
+                <td>N Sd (</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>N )</td>
+                <td>N Sd )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N ;</td>
+                <td>N Sd ;</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N <literal>←</literal></td>
+                <td>N Sd <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N Break</td>
+                <td>N Sd Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>N N</td>
+                <td>N Sd N</td>
                 <td>okay</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>N S</td>
+                <td>N Sd S</td>
                 <td>okay</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>N Sm</td>
+                <td>N Sd Sm</td>
                 <td>wait</td>
-                <td>N Fea</td>
+                <td>Sm</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>N Sd</td>
-                <td>wait</td>
-                <td></td>
+                <td>N Sd Sd</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd Va</td>
+                <td>selective</td>
+                <td>Sm Va</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>N Va</td>
+                <td>N Sd Vna</td>
                 <td>okay</td>
-                <td>N</td>
+                <td>Vna</td>
                 <td>4</td>
               </tr>
               <tr> 
-                <td>N Vna</td>
-                <td>okay</td>
-                <td>N</td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N Vi</td>
+                <td>N Sd Vi</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr> 
-                <td>N Vnu</td>
+                <td>N Sd Vnu</td>
                 <td>wait</td>
-                <td></td>
+                <td>Vnu</td>
                 <td>4</td>
               </tr>
             </tbody>
@@ -5058,6 +5058,260 @@
                 <td>subsumed</td>
                 <td>N [ E</td>
                 <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, N ( E *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>N ( E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N ( Es</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Fea</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Fed</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( [</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>N ( ]</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( (</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N ( ;</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Break</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>N ( N</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( S</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Sm</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Sd</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Va</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Vna</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Vi</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N ( Vnu</td>
+                <td>subsumed</td>
+                <td>N ( E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, N Sd ( *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>N Sd E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N Sd Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>N Sd Fea</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd [</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>N Sd ]</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>N Sd N</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd S</td>
+                <td>okay</td>
+                <td>N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd Sm</td>
+                <td>wait</td>
+                <td>Sm</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd Sd</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd Va</td>
+                <td>selective</td>
+                <td>Sm Va</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd Vna</td>
+                <td>okay</td>
+                <td>Vna</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>N Sd Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>N Sd Vnu</td>
+                <td>wait</td>
+                <td>Vnu</td>
+                <td>4</td>
               </tr>
             </tbody>
           </table>
