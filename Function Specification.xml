@@ -4313,7 +4313,7 @@
               <tr> 
                 <td>N ( E</td>
                 <td>wait</td>
-                <td></td>
+                <td>( E</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -5057,133 +5057,6 @@
                 <td>N [ Vnu</td>
                 <td>subsumed</td>
                 <td>N [ E</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, N ( E *</title>
-            <thead>
-              <tr>
-                <th>Sequence</th>
-                <th>Response</th>
-                <th>Equivalent</th>
-                <th>Trace</th>
-              </tr>
-            </thead>
-            <tbody> 
-              <tr> 
-                <td>N ( E</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr> 
-                <td>N ( Es</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Fea</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Fed</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( [</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>N ( ]</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( (</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr> 
-                <td>N ( ;</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( <literal>←</literal></td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Break</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>N ( N</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( S</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Sm</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Sd</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Va</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Vna</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Vi</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>N ( Vnu</td>
-                <td>subsumed</td>
-                <td>N ( E</td>
                 <td></td>
               </tr>
             </tbody>
