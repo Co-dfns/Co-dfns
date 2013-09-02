@@ -3136,6 +3136,9 @@
             <listitem>
               <simpara>Selective Assignment</simpara>
             </listitem>
+            <listitem>
+              <simpara>Atomic Expressions</simpara>
+            </listitem>
           </orderedlist>
           <simpara>
             In order to handle all of these, we actually have a bit more stimuli than we 
@@ -3160,6 +3163,18 @@
             stimuli that would usually be subsumed by the Fe stimuli, which are Sm and Sd. 
             These are the valid dyadic and monadic selective functions, or a combination of them 
             and one of the valid operators, such as each.
+          </simpara>
+          <simpara>
+            Finally, it is helpful to understand which expressions may be considered atomic, 
+            that is, whether or not they could be treated as a single object, rather than a 
+            complete expression. This includes things like variable references, variable 
+            indexing, strand notation, and so forth. We use the response <firstterm>atomic</firstterm>
+            to indicate that a given sequence is to be considerd a valid atomic expression, 
+            which implies the okay response. The main place that this becomes important is 
+            in dealing with operators which take arrays as their right arguments. In these 
+            cases we may have an expression on the right, but the operator <quote>slurps</quote>
+            the first atomic expression that it can find to use as the right argument to the 
+            operator, but no more. 
           </simpara>
           <table frame="void" rules="rows">
             <title>Source Input Enumeration: Expressions</title>
