@@ -211,6 +211,11 @@
             <td colspan="3">Any expression that evaluates to an array value</td>
           </tr>
           <tr>
+            <td>Ea</td>
+            <td colspan="2">Atomic Expression</td>
+            <td colspan="3">Any single, atomic Expression</td>
+          </tr>
+          <tr>
             <td>Es</td>
             <td colspan="2">Selective Expression</td>
             <td colspan="3">Any valid selective assignment Expression</td>
@@ -555,7 +560,7 @@
           </tr>
           <tr>
             <td>Func. Expr.</td>
-            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu E Fea Fed Fn Fnm Fnd</td>
+            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu Ea Fea Fed Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
@@ -5959,6 +5964,139 @@
             evaluating any of these expressions could be a named or an unamed function 
             value. 
           </simpara>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ea</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fed</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fnm</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fnd</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>(</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><literal>←</literal></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><literal>⍣</literal></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Break</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>D</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Om</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Od</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
         </section>
       </section>
     </section>
