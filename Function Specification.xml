@@ -3202,7 +3202,7 @@
               <tr> 
                 <td>Fea</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td></td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3255,13 +3255,13 @@
               </tr>
               <tr>
                 <td>N</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>S</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
@@ -3279,13 +3279,13 @@
               </tr>
               <tr> 
                 <td>Va</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Vna</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td></td>
                 <td>4</td>
               </tr>
@@ -3299,6 +3299,133 @@
                 <td>Vnu</td>
                 <td>wait</td>
                 <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="Cvoid" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Fea</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea [</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fea ]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fea N</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea S</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Sm</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Sd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Vnu</td>
+                <td>wait</td>
+                <td>Vnu</td>
                 <td>4</td>
               </tr>
             </tbody>
@@ -3425,7 +3552,7 @@
               <tr> 
                 <td>( Vnu</td>
                 <td>subsumed</td>
-                <td>Vnu</td>
+                <td>( E</td>
                 <td></td>
               </tr>
             </tbody>
@@ -3509,13 +3636,13 @@
               </tr>
               <tr>
                 <td>N N</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>N S</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
@@ -3533,13 +3660,13 @@
               </tr>
               <tr> 
                 <td>N Va</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>N Vna</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
@@ -3583,7 +3710,7 @@
               <tr> 
                 <td>Sm Fea</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3710,13 +3837,13 @@
               <tr> 
                 <td>Va Fea</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Va Fed</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3752,7 +3879,7 @@
               <tr> 
                 <td>Va <literal>←</literal></td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3763,20 +3890,20 @@
               </tr>
               <tr>
                 <td>Va N</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Va S</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Va Sm</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3787,9 +3914,9 @@
               </tr>
               <tr> 
                 <td>Va Va</td>
-                <td>illegal</td>
+                <td>atomic</td>
                 <td></td>
-                <td></td>
+                <td>4</td>
               </tr>
               <tr> 
                 <td>Va Vna</td>
@@ -3837,13 +3964,13 @@
               <tr> 
                 <td>Vna Fea</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Vna Fed</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3879,7 +4006,7 @@
               <tr> 
                 <td>Vna <literal>←</literal></td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3890,20 +4017,20 @@
               </tr>
               <tr>
                 <td>Vna N</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Vna S</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Vna Sm</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -3915,7 +4042,7 @@
               <tr> 
                 <td>Vna Va</td>
                 <td>wait</td>
-                <td></td>
+                <td>Va Va</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -4006,7 +4133,7 @@
               <tr> 
                 <td>Vnu <literal>←</literal></td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -4059,6 +4186,514 @@
               </tr>
               <tr> 
                 <td>Vnu Vnu</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea (</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea ( E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea ( Fea</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Fed</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( [</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea ( ]</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( (</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea ( ;</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Break</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea ( N</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( S</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Sm</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Sd</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Va</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Vna</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Vi</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Vnu</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea N</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea N E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N Fea</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N Fed</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N [</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Fea N ]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea N (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea N ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea N <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea N Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fea N N</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N S</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N Sm</td>
+                <td>wait</td>
+                <td>N Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N Sd</td>
+                <td>wait</td>
+                <td>N Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N Va</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N Vna</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea N Vnu</td>
+                <td>wait</td>
+                <td>N Vnu</td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea Va</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea Va E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Fea</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va Fed</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Fea Va ]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va <literal>←</literal></td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fea Va N</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va S</td>
+                <td>okay</td>
+                <td>Fea S</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va Sm</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va Sd</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va Vna</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va Vnu</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea Vna</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea Vna E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Fea</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Fed</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna [</td>
+                <td>wait</td>
+                <td>Fea N [</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Fea Vna ]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna (</td>
+                <td>wait</td>
+                <td>Fea Va (</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna <literal>←</literal></td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fea Vna N</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna S</td>
+                <td>okay</td>
+                <td>Fea S</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Sm</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Sd</td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Va</td>
+                <td>wait</td>
+                <td>Fea Va Va</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Vna</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Vi</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Vna Vnu</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -4120,7 +4755,7 @@
               </tr>
               <tr> 
                 <td>( E )</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
@@ -4247,7 +4882,7 @@
               </tr>
               <tr> 
                 <td>( Es )</td>
-                <td>selective</td>
+                <td>selective, atomic</td>
                 <td>Va</td>
                 <td>4</td>
               </tr>
@@ -4362,7 +4997,7 @@
               </tr>
               <tr>
                 <td>N [ ]</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
@@ -4853,13 +5488,13 @@
               <tr> 
                 <td>Sm Va Fea</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Sm Va Fed</td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -4895,7 +5530,7 @@
               <tr> 
                 <td>Sm Va <literal>←</literal></td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -4997,7 +5632,7 @@
               </tr>
               <tr>
                 <td>Va [ ]</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td></td>
                 <td>4</td>
               </tr>
@@ -5209,7 +5844,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Vna Va</title>
+            <title>Source Input Enumeration: Expressions, Va Va</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -5220,115 +5855,1004 @@
             </thead>
             <tbody> 
               <tr> 
-                <td>Vna Va E</td>
+                <td>Va Va E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Es</td>
+                <td>Va Va Es</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Fea</td>
+                <td>Va Va Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Fed</td>
+                <td>Va Va Fed</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va [</td>
+                <td>Va Va [</td>
                 <td>wait</td>
                 <td>Va [</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Vna Va ]</td>
+                <td>Va Va ]</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va (</td>
+                <td>Va Va (</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va )</td>
+                <td>Va Va )</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va ;</td>
+                <td>Va Va ;</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va <literal>←</literal></td>
+                <td>Va Va <literal>←</literal></td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Break</td>
+                <td>Va Va Break</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Vna Va N</td>
+                <td>Va Va N</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va S</td>
+                <td>Va Va S</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Sm</td>
+                <td>Va Va Sm</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Sd</td>
+                <td>Va Va Sd</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Va</td>
+                <td>Va Va Va</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Vna</td>
+                <td>Va Va Vna</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Vi</td>
+                <td>Va Va Vi</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr> 
-                <td>Vna Va Vnu</td>
+                <td>Va Va Vnu</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea ( E</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea ( E E</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Es</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Fea</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Fed</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E [</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea ( E ]</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E (</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E )</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea ( E ;</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Break</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea ( E N</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E S</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Sm</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Sd</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Va</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Vna</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Vi</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( E Vnu</td>
+                <td>subsumed</td>
+                <td>Fea ( E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea ( Es</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea ( Es E</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Es</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Fea</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Fed</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es [</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea ( Es ]</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es (</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es )</td>
+                <td>okay</td>
+                <td>Fea Va</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es ;</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Break</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea ( Es N</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es S</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Sm</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Sd</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Va</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Vna</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Vi</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea ( Es Vnu</td>
+                <td>subsumed</td>
+                <td>Fea ( Es</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea N [</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea N [ E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Es</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Fea</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Fed</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ [</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea N [ ]</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N [ (</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ )</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ ;</td>
+                <td>wait</td>
+                <td>Fea N [</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N [ <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Break</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea N [ N</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ S</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Sm</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Sd</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Va</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Vna</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Vi</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ Vnu</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea N (</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea N ( E</td>
+                <td>wait</td>
+                <td>Fea ( E</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Es</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Fea</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Fed</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( [</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea N ( ]</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( (</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea N ( ;</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Break</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea N ( N</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( S</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Sm</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Sd</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Va</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Vna</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Vi</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N ( Vnu</td>
+                <td>subsumed</td>
+                <td>Fea N ( E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>Fea 
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea Va [</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea Va [ E</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Es</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Fea</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Fed</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ [</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea Va [ ]</td>
+                <td>okay</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ (</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ )</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ;</td>
+                <td>wait</td>
+                <td>Fea Va [</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Break</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea Va [ N</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ S</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Sm</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Sd</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Va</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Vna</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Vi</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ Vnu</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea Va (</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea Va ( E</td>
+                <td>wait</td>
+                <td>Fea ( E</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Es</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Fea</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Fed</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( [</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea Va ( ]</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( (</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( ;</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Break</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea Va ( N</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( S</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Sm</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Sd</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Va</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Vna</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Vi</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va ( Vnu</td>
+                <td>subsumed</td>
+                <td>Fea Va ( E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea Va Va</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea Va Va E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va [</td>
+                <td>wait</td>
+                <td>Fea Va [</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Fea Va Va ]</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va (</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va )</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va ;</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va <literal>←</literal></td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Break</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea Va Va N</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va S</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Sm</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Sd</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Va</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Vna</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Vi</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va Va Vnu</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -5378,7 +6902,7 @@
               </tr>
               <tr>
                 <td>N [ E ]</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
@@ -5632,7 +7156,7 @@
               </tr>
               <tr>
                 <td>Va [ E ]</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>Va [ ]</td>
                 <td>4</td>
               </tr>
@@ -5784,7 +7308,7 @@
               <tr> 
                 <td>Va [ ] <literal>←</literal></td>
                 <td>wait</td>
-                <td>empty</td>
+                <td>Fea</td>
                 <td>4</td>
               </tr>
               <tr> 
@@ -5795,13 +7319,13 @@
               </tr>
               <tr>
                 <td>Va [ ] N</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>N</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Va [ ] S</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>S</td>
                 <td>4</td>
               </tr>
@@ -5819,13 +7343,13 @@
               </tr>
               <tr> 
                 <td>Va [ ] Va</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>Vna</td>
                 <td>4</td>
               </tr>
               <tr> 
                 <td>Va [ ] Vna</td>
-                <td>okay</td>
+                <td>atomic</td>
                 <td>Vna</td>
                 <td>4</td>
               </tr>
@@ -5839,6 +7363,387 @@
                 <td>Va [ ] Vnu</td>
                 <td>wait</td>
                 <td>Vnu</td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea N [ E</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea N [ E E</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Es</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Fea</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Fed</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E [</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea N [ E ]</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E (</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E )</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E ;</td>
+                <td>wait</td>
+                <td>Fea N [</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Break</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea N [ E N</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E S</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Sm</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Sd</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Va</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Vna</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Vi</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea N [ E Vnu</td>
+                <td>subsumed</td>
+                <td>Fea N [ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea Va [ E</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea Va [ E E</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Es</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Fea</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Fed</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E [</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea Va [ E ]</td>
+                <td>okay</td>
+                <td>Fea Va [ ]</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E (</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E )</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E ;</td>
+                <td>wait</td>
+                <td>Fea Va [</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Break</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fea Va [ E N</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E S</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Sm</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Sd</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Va</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Vna</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Vi</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ E Vnu</td>
+                <td>subsumed</td>
+                <td>Fea Va [ E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Expressions, Fea Va [ ]</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody> 
+              <tr> 
+                <td>Fea Va [ ] E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Es</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Fea</td>
+                <td>wait</td>
+                <td>Fea Va Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Fed</td>
+                <td>wait</td>
+                <td>Fea Va Fed</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] [</td>
+                <td>wait</td>
+                <td>Fea Va [</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Fea Va [ ] ]</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] (</td>
+                <td>wait</td>
+                <td>Fea Va (</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] ;</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] <literal>←</literal></td>
+                <td>wait</td>
+                <td>Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fea Va [ ] N</td>
+                <td>okay</td>
+                <td>Fea N</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] S</td>
+                <td>okay</td>
+                <td>Fea S</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Sm</td>
+                <td>wait</td>
+                <td>Fea Va [ ] Fea</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Sd</td>
+                <td>wait</td>
+                <td>Fea N Sd</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Va</td>
+                <td>okay</td>
+                <td>Fea Vna</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Vna</td>
+                <td>okay</td>
+                <td>Fea Vna</td>
+                <td>4</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Vi</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr> 
+                <td>Fea Va [ ] Vnu</td>
+                <td>wait</td>
+                <td>Fea Vnu</td>
                 <td>4</td>
               </tr>
             </tbody>
