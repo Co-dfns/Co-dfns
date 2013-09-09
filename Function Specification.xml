@@ -1826,27 +1826,27 @@
               </tr>
               <tr>
                 <td>Vf</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Vod</td>
-                <td>wait</td>
-                <td>Vf</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Vom</td>
-                <td>wait</td>
-                <td>Vf</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Vu</td>
-                <td>wait</td>
-                <td>Vf</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
             </tbody>
           </table>
@@ -1962,121 +1962,6 @@
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
-              </tr>
-            </tbody>
-          </table>
-          <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Functions, Vf</title>
-            <thead>
-              <tr>
-                <th>Sequence</th>
-                <th>Response</th>
-                <th>Equivalent</th>
-                <th>Trace</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Vf E</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf Fe</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf Fnd</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf Fnm</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf {</td>
-                <td>subsumed</td>
-                <td>Vf Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf }</td>
-                <td>Syntax Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vf :</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vf ::</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vf <literal>⋄</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vf <literal>←</literal></td>
-                <td>wait</td>
-                <td>empty</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Vf Break</td>
-                <td>Interrupt</td>
-                <td>empty, top-level</td>
-                <td>D3</td>
-              </tr>
-              <tr>
-                <td>Vf Nl</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vf Vf</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf Vi</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf Vod</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf Vom</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf Vu</td>
-                <td>subsumed</td>
-                <td>E</td>
-                <td></td>
               </tr>
             </tbody>
           </table>
@@ -2233,7 +2118,7 @@
               <tr>
                 <td>{ Vf {</td>
                 <td>subsumed</td>
-                <td>{ Vu Fe</td>
+                <td>{ Vf Fe</td>
                 <td></td>
               </tr>
               <tr>
@@ -2626,7 +2511,7 @@
               <tr>
                 <td>{ Vf <literal>←</literal> Vf</td>
                 <td>wait</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td></td>
                 <td>4</td>
               </tr>
               <tr>
@@ -2649,8 +2534,8 @@
               </tr>
               <tr>
                 <td>{ Vf <literal>←</literal> Vu</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>wait</td>
+                <td></td>
                 <td></td>
               </tr>
             </tbody>
@@ -2668,9 +2553,9 @@
             <tbody>
               <tr>
                 <td>{ Vu <literal>←</literal> E</td>
-                <td>Syntax Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>{ E</td>
+                <td></td>
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Fe</td>
@@ -2741,7 +2626,7 @@
               <tr>
                 <td>{ Vu <literal>←</literal> Vf</td>
                 <td>wait</td>
-                <td>{ Vu <literal>←</literal> Fe</td>
+                <td>{ Vf <literal>←</literal> Vf</td>
                 <td>4</td>
               </tr>
               <tr>
@@ -2904,9 +2789,9 @@
               </tr>
               <tr>
                 <td>{ Vf <literal>←</literal> Fe Fe</td>
-                <td>Syntax Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
               </tr>
               <tr>
                 <td>{ Vf <literal>←</literal> Fe Fnd</td>
@@ -3001,6 +2886,236 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, { Vf <literal>←</literal> Vf</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf E</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Fe</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Fnd</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Fnm</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf {</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> Fe Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf }</td>
+                <td>okay</td>
+                <td>Fe</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf :</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf ::</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf <literal>⋄</literal></td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf <literal>←</literal></td>
+                <td>wait</td>
+                <td>{ Vf <literal>←</literal></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Nl</td>
+                <td>wait</td>
+                <td>{</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Vf</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Vi</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Vod</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Vom</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vf Vu</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Functions, { Vf <literal>←</literal> Vu</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu E</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Fe</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Fnd</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Fnm</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu {</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> Fe Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu }</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu :</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu ::</td>
+                <td>Syntax Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu <literal>⋄</literal></td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu <literal>←</literal></td>
+                <td>wait</td>
+                <td>{ Vf <literal>←</literal></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Nl</td>
+                <td>Value Error</td>
+                <td>empty, top-level</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Vf</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Vi</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Vod</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Vom</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>{ Vf <literal>←</literal> Vu Vu</td>
+                <td>subsumed</td>
+                <td>{ Vf <literal>←</literal> E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
             <title>Source Input Enumeration: Functions, { Vu <literal>←</literal> Fe</title>
             <thead>
               <tr>
@@ -3019,9 +3134,9 @@
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Fe Fe</td>
-                <td>Syntax Error</td>
-                <td>empty, top-level</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>{ Vu <literal>←</literal> E</td>
+                <td></td>
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Fe Fnd</td>
