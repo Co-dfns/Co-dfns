@@ -3914,9 +3914,9 @@
               </tr>
               <tr> 
                 <td>Va Va</td>
-                <td>atomic</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
               </tr>
               <tr> 
                 <td>Va Vna</td>
@@ -4041,9 +4041,9 @@
               </tr>
               <tr> 
                 <td>Vna Va</td>
-                <td>wait</td>
-                <td>Va Va</td>
-                <td>4</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr> 
                 <td>Vna Vna</td>
@@ -4549,9 +4549,9 @@
               </tr>
               <tr> 
                 <td>Fea Va Va</td>
-                <td>okay</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
               </tr>
               <tr> 
                 <td>Fea Va Vna</td>
@@ -4676,9 +4676,9 @@
               </tr>
               <tr> 
                 <td>Fea Vna Va</td>
-                <td>wait</td>
-                <td>Fea Va Va</td>
-                <td>4</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr> 
                 <td>Fea Vna Vna</td>
@@ -5844,133 +5844,6 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Va Va</title>
-            <thead>
-              <tr>
-                <th>Sequence</th>
-                <th>Response</th>
-                <th>Equivalent</th>
-                <th>Trace</th>
-              </tr>
-            </thead>
-            <tbody> 
-              <tr> 
-                <td>Va Va E</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Es</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Fea</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Fed</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va [</td>
-                <td>wait</td>
-                <td>Va [</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Va Va ]</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va (</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va )</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va ;</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va <literal>←</literal></td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Break</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Va Va N</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va S</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Sm</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Sd</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Va</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Vna</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Vi</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Va Va Vnu</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <table frame="void" rules="rows">
             <title>Source Input Enumeration: Expressions, Fea ( E</title>
             <thead>
               <tr>
@@ -6728,133 +6601,6 @@
                 <td>Fea Va ( Vnu</td>
                 <td>subsumed</td>
                 <td>Fea Va ( E</td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-          <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Expressions, Fea Va Va</title>
-            <thead>
-              <tr>
-                <th>Sequence</th>
-                <th>Response</th>
-                <th>Equivalent</th>
-                <th>Trace</th>
-              </tr>
-            </thead>
-            <tbody> 
-              <tr> 
-                <td>Fea Va Va E</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Es</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Fea</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Fed</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va [</td>
-                <td>wait</td>
-                <td>Fea Va [</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fea Va Va ]</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va (</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va )</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va ;</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va <literal>←</literal></td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Break</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fea Va Va N</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va S</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Sm</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Sd</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Va</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Vna</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Vi</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr> 
-                <td>Fea Va Va Vnu</td>
-                <td>illegal</td>
-                <td></td>
                 <td></td>
               </tr>
             </tbody>
