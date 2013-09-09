@@ -66,7 +66,7 @@
       <listitem>
         <simpara>
           The compiler should catch errors wherein the type class of a 
-          variable changes from code to function to operator or any 
+          variable changes from array to function to operator or any 
           combination of the above. 
         </simpara>
       </listitem>
@@ -262,15 +262,15 @@
         <simpara>
           The compiler should support as valid source input a new monadic operator <function>∥</function> 
           that is called the <firstterm>Par</firstterm> operator. This operator expects to receive a 
-          function as its left argument and returns a function which behaves in the exact same was as 
-          the function given by the left argument except that the value returned is a single-assignment 
+          function as its left operand and returns a function which behaves in the exact same was as 
+          the function given by the left operand except that the value returned is a single-assignment 
           array instead of a normal mutable array. The returned function will return immediately, 
-          queuing the left argument function to run concurrently. The single assignment array returned 
+          queuing the left operand function to run concurrently. The single assignment array returned 
           is assumed to be equivalent in the sense of <function>≡</function> to the value returned 
-          by the left argument when applied with the same arguments. The single assignment array will 
+          by the left operand when applied with the same arguments. The single assignment array will 
           be considered to have a pending write operation queued based on the concurrently executing 
-          left argument. When the queued left argument application finishes executing, then at some 
-          point after this the data of that argument will be available as the single-assignment array. 
+          left operand. When the queued left operand application finishes executing, then at some 
+          point after this the data of that operand will be available as the single-assignment array. 
           Until then the single-assignment array will be considered unassigned.
         </simpara>
       </listitem>
