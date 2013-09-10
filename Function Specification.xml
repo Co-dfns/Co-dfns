@@ -978,7 +978,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix *</title>
+            <title>Source Input Enumeration: Top-level, Fix</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1087,39 +1087,39 @@
                 <td>4, 16, 21</td>
               </tr>
               <tr>
-                <td>Vi</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Vi</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vf</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Vf</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vom</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Vom</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vod</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Vod</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vu</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Vu</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Fne *</title>
+            <title>Source Input Enumeration: Top-level, Fix Fne</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1228,39 +1228,39 @@
                 <td>4, 17, 18, 21</td>
               </tr>
               <tr>
-                <td>Vi</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Fne Vi</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
               </tr>
               <tr>
-                <td>Vf</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Fne Vf</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
               </tr>
               <tr>
-                <td>Vom</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Fne Vom</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
               </tr>
               <tr>
-                <td>Vod</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Fne Vod</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
               </tr>
               <tr>
-                <td>Vu</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Fne Vu</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 17, 18, 21</td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss *</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1369,39 +1369,39 @@
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vi</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Vi</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vf</td>
+                <td>Fix Nss Vf</td>
+                <td>null</td>
                 <td></td>
-                <td></td>
-                <td></td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vom</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Vom</td>
+                <td>null</td>
+                <td>Fix Nss Vf</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vod</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Vod</td>
+                <td>null</td>
+                <td>Fix Nss Vf</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vu</td>
+                <td>Fix Nss Vu</td>
+                <td>null</td>
                 <td></td>
-                <td></td>
-                <td></td>
+                <td>4, 10</td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss E *</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss E</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1510,39 +1510,180 @@
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vi</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf</td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss E Vi</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Vom</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vod</td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss E Vf</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Vu</td>
+                <td>Fix Nss E Vom</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Vod</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss E Vu</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
                 <td></td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Fe *</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Fe</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix Nss Fe E</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fe</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnd</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnm</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe
+                  <literal>⋄</literal>
+                </td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Eot</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nl</td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nse</td>
+                <td>null</td>
+                <td>Fix Nss Nse</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nss</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Vi</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Vf</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Vom</td>
+                <td>subsumed</td>
+                <td>Fix Nss Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Vod</td>
+                <td>subsumed</td>
+                <td>Fix Nss Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Vu</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Nss Vf *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1683,7 +1824,148 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Nse *</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Vu *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fix Nss Fe E</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fe</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnd</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnm</td>
+                <td>subsumed</td>
+                <td>Fix Nss E</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe
+                  <literal>⋄</literal>
+                </td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Break</td>
+                <td>Interrupt</td>
+                <td>empty</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Eot</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fix</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnb</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fne</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Fnf</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Lle</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Lls</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nl</td>
+                <td>null</td>
+                <td>Fix Nss</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nse</td>
+                <td>null</td>
+                <td>Fix Nss Nse</td>
+                <td>4, 16</td>
+              </tr>
+              <tr>
+                <td>Fix Nss Fe Nss</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
+              </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Top-level, Fix Nss Nse</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1792,39 +2074,39 @@
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vi</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Nse Vi</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vf</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Nse Vf</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vom</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Nse Vom</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vod</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Nse Vod</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Vu</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>Fix Nss Nse Vu</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10, 16, 21</td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Nse Eot *</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Nse Eot</title>
             <thead>
               <tr>
                 <th colspan="2">Sequence</th>
@@ -1933,32 +2215,32 @@
                 <td></td>
               </tr>
               <tr>
-                <td>Vi</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vf</td>
-                <td></td>
+                <td colspan="2">Fix Nss Nse Eot Vi</td>
+                <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Vom</td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Vod</td>
-                <td></td>
+                <td colspan="2">Fix Nss Nse Eot Vf</td>
+                <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Vu</td>
+                <td colspan="2">Fix Nss Nse Eot Vom</td>
+                <td>illegal</td>
                 <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Vod</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="2">Fix Nss Nse Eot Vu</td>
+                <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
