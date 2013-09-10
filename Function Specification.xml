@@ -7981,9 +7981,21 @@
           <title>Function Expressions Enumeration</title>
           <simpara>
             Function expression stimuli capture the correct behavior when dealing with 
-            expressions that are meant to describe some sort of function. The result of
-            evaluating any of these expressions could be a named or an unamed function 
-            value. 
+            expressions that are meant to describe some sort of function.
+            The result of evaluating any of these expressions is an unamed
+            function value. Notice that unlike the Expression enumeration,
+            we do not allow for naming here. The reason is simple, while we
+            can have a function value with a name, if we then try to use it
+            atomically, the name may no longer refer to the function value,
+            but will instead refer to the expression value, perhaps. This
+            leads to ambiguity in our enumeration. Instead, we expect that
+            the result of a function expression should be something atomic,
+            something that we can treat as a single unit for syntactic
+            purposes. This does allow for us to embed a named function value
+            inside of parentheses, for instance, but it does not allow us to
+            just take on a name assignment to the left side of a function
+            expression. This has to be handled explicitly in the other
+            enumerations, rather than here.
           </simpara>
           <table frame="void" rules="rows">
             <title>Source Input Enumeration: Function Expressions</title>
