@@ -548,7 +548,7 @@
         <tbody>
           <tr>
             <td>Top-level</td>
-            <td colspan="4"><literal>⋄</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl E Fe Fnm Fnd Nse Nss</td>
+            <td colspan="4"><literal>⋄</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl Nse Nss Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
           </tr>
           <tr>
             <td>Expressions</td>
@@ -945,10 +945,40 @@
                 <td></td>
                 <td>D1</td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td>illegal</td>
+                <td></td>
+                <td>D1</td>
+              </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix</title>
+            <title>Source Input Enumeration: Top-level, Fix *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1056,10 +1086,39 @@
                 <td></td>
                 <td>4, 16, 21</td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Fne</title>
+            <title>Source Input Enumeration: Top-level, Fix Fne *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1167,10 +1226,39 @@
                 <td>Fix Nss</td>
                 <td>4, 17, 18, 21</td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1278,10 +1366,39 @@
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss E</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss E *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1389,10 +1506,39 @@
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Fe</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Fe *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1500,10 +1646,39 @@
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Nse</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Nse *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1611,10 +1786,39 @@
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Nse Eot</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Nse Eot *</title>
             <thead>
               <tr>
                 <th colspan="2">Sequence</th>
@@ -1722,6 +1926,35 @@
                 <td></td>
                 <td></td>
               </tr>
+              <tr>
+                <td>Vi</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Vu</td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tbody>
           </table>
         </section>
