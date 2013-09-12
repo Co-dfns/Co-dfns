@@ -9230,7 +9230,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Ea *</title>
+            <title>Source Input Enumeration: Function Expressions, Ea</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -9241,124 +9241,124 @@
             </thead>
             <tbody>
               <tr>
-                <td>Ea</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fea</td>
+                <td>Ea Ea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fed</td>
+                <td>Ea Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn</td>
+                <td>Ea Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fn</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Fnm</td>
                 <td>ambivalent</td>
-                <td></td>
+                <td>Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fnm</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fnd</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>(</td>
+                <td>Ea Fnd</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>)</td>
+                <td>Ea (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>←</literal></td>
+                <td>Ea <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>⍣</literal></td>
-                <td>Syntax Error</td>
+                <td>Ea <literal>⍣</literal></td>
+                <td>Domain Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Break</td>
+                <td>Ea Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>D</td>
-                <td>dyadic</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>Ea D</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>M</td>
+                <td>Ea M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Om</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Od</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Vi</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Vf</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Vom</td>
                 <td>ambivalent</td>
-                <td>Fn</td>
+                <td>Ea Fnm</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Om</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Od</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vi</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vf</td>
-                <td>ambivalent</td>
-                <td>Fn</td>
+                <td>Ea Vod</td>
+                <td>wait</td>
+                <td>Ea Fnd</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Vom</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vod</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vu</td>
-                <td>Value Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>Ea Vu</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
             </tbody>
           </table>
@@ -9374,121 +9374,121 @@
             </thead>
             <tbody>
               <tr>
-                <td>Ea</td>
+                <td>Fn Ea</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fea</td>
+                <td>Fn Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fed</td>
+                <td>Fn Fed</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn</td>
+                <td>Fn Fn</td>
                 <td>ambivalent</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fnm</td>
+                <td>Fn Fnm</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fnd</td>
+                <td>Fn Fnd</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>(</td>
+                <td>Fn (</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>)</td>
+                <td>Fn )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>←</literal></td>
+                <td>Fn <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>⍣</literal></td>
+                <td>Fn <literal>⍣</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Break</td>
+                <td>Fn Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>D</td>
+                <td>Fn D</td>
                 <td>dyadic</td>
                 <td>Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>M</td>
+                <td>Fn M</td>
                 <td>ambivalent</td>
                 <td>Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Om</td>
+                <td>Fn Om</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Od</td>
+                <td>Fn Od</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vi</td>
+                <td>Fn Vi</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vf</td>
+                <td>Fn Vf</td>
                 <td>ambivalent</td>
                 <td>Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Vom</td>
+                <td>Fn Vom</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vod</td>
+                <td>Fn Vod</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vu</td>
+                <td>Fn Vu</td>
                 <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
@@ -9507,124 +9507,390 @@
             </thead>
             <tbody>
               <tr>
-                <td>Ea</td>
+                <td>( Ea</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fea</td>
+                <td>( Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fed</td>
+                <td>( Fed</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn</td>
+                <td>( Fn</td>
                 <td>ambivalent</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fnm</td>
+                <td>( Fnm</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fnd</td>
+                <td>( Fnd</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>(</td>
+                <td>( (</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>)</td>
+                <td>( )</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>←</literal></td>
+                <td>( <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>⍣</literal></td>
+                <td>( <literal>⍣</literal></td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Break</td>
+                <td>( Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>D</td>
+                <td>( D</td>
                 <td>dyadic</td>
                 <td>Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>M</td>
+                <td>( M</td>
                 <td>ambivalent</td>
                 <td>Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Om</td>
+                <td>( Om</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Od</td>
+                <td>( Od</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vi</td>
+                <td>( Vi</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vf</td>
+                <td>( Vf</td>
                 <td>ambivalent</td>
                 <td>Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Vom</td>
+                <td>( Vom</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vod</td>
+                <td>( Vod</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vu</td>
+                <td>( Vu</td>
                 <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Ea Fnd *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ea Ea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fn</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Fnm</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea Fnd</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>⍣</literal></td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Ea D</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Om</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Od</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Vi</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Vf</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Vom</td>
+                <td>ambivalent</td>
+                <td>Ea Fnm</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea Vod</td>
+                <td>wait</td>
+                <td>Ea Fnd</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea Vu</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Ea ( *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ea Ea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fn</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Fnm</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea Fnd</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>⍣</literal></td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Ea D</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Om</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Od</td>
+                <td>Domain Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Vi</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Vf</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Vom</td>
+                <td>ambivalent</td>
+                <td>Ea Fnm</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea Vod</td>
+                <td>wait</td>
+                <td>Ea Fnd</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea Vu</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
             </tbody>
           </table>
