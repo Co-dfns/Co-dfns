@@ -348,10 +348,66 @@
           </tr>
           <tr>
             <td>
+              <literal>⍨</literal>
+            </td>
+            <td colspan="2">Commute Operator</td>
+            <td colspan="3">The Commute Operator</td>
+          </tr>
+          <tr>
+            <td>
+              <literal>∘</literal>
+            </td>
+            <td colspan="2">Compose Operator</td>
+            <td colspan="3">The Compose Operator</td>
+          </tr>
+          <tr>
+            <td>
+              <literal>¨</literal>
+            </td>
+            <td colspan="2">Each Operator</td>
+            <td colspan="3">The Each Operator</td>
+          </tr>
+          <tr>
+            <td>
+              <literal>.</literal>
+            </td>
+            <td colspan="2">Product Operator</td>
+            <td colspan="3">The Product Operator</td>
+          </tr>
+          <tr>
+            <td>
               <literal>⍣</literal>
             </td>
             <td colspan="2">Power Operator</td>
             <td colspan="3">The Power Operator</td>
+          </tr>
+          <tr>
+            <td>
+              <literal>/</literal>
+            </td>
+            <td colspan="2">Reduce Operator</td>
+            <td colspan="3">The Reduce Operator</td>
+          </tr>
+          <tr>
+            <td>
+              <literal>⌿</literal>
+            </td>
+            <td colspan="2">First Reduce Operator</td>
+            <td colspan="3">The First-axis Reduce Operator</td>
+          </tr>
+          <tr>
+            <td>
+              <literal>\</literal>
+            </td>
+            <td colspan="2">Scan Operator</td>
+            <td colspan="3">The Scan Operator</td>
+          </tr>
+          <tr>
+            <td>
+              <literal>⍀</literal>
+            </td>
+            <td colspan="2">First Scan Operator</td>
+            <td colspan="3">The First-axis Scan Operator</td>
           </tr>
           <tr>
             <td>Break</td>
@@ -457,16 +513,6 @@
             </td>
           </tr>
           <tr>
-            <td>Om</td>
-            <td colspan="2">Monadic Operator</td>
-            <td colspan="3">An operator that takes a single functional argument</td>
-          </tr>
-          <tr>
-            <td>Od</td>
-            <td colspan="2">Dyadic Operator</td>
-            <td colspan="3">An operator that takes two functional arguments</td>
-          </tr>
-          <tr>
             <td>S</td>
             <td colspan="2">String</td>
             <td colspan="3">
@@ -560,7 +606,10 @@
           </tr>
           <tr>
             <td>Func. Expr.</td>
-            <td colspan="4">( ) <literal>←</literal> <literal>⍣</literal> Break D M Om Od Vi Vf Vom Vod Vu Ea Fea Fed Fn Fnm Fnd</td>
+            <td colspan="4">
+              [ ] ( ) <literal>←</literal> <literal>⍨</literal> <literal>∘</literal> <literal>¨</literal> 
+              <literal>.</literal> <literal>⍣</literal> / <literal>⌿</literal> \ <literal>⍀</literal> 
+              Break D M Vi Vf Vom Vod Vu E Ea Fea Fed Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
@@ -9375,9 +9424,9 @@
             <tbody>
               <tr>
                 <td>Fn Ea</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Fn Fea</td>
@@ -9393,26 +9442,26 @@
               </tr>
               <tr>
                 <td>Fn Fn</td>
-                <td>ambivalent</td>
-                <td></td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Fn Fnm</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Fn Fnd</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td>Ea Fnd</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Fn (</td>
                 <td>wait</td>
-                <td></td>
+                <td>Ea (</td>
                 <td>4</td>
               </tr>
               <tr>
@@ -9429,9 +9478,9 @@
               </tr>
               <tr>
                 <td>Fn <literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Fn Break</td>
@@ -9441,19 +9490,19 @@
               </tr>
               <tr>
                 <td>Fn D</td>
-                <td>dyadic</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Fn M</td>
-                <td>ambivalent</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Fn Om</td>
-                <td>Syntax Error</td>
+                <td>ambivalent</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
