@@ -9311,7 +9311,19 @@
                 <td>4</td>
               </tr>
               <tr>
+                <td>Da</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
                 <td>M</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ma</td>
                 <td>ambivalent</td>
                 <td>Fn</td>
                 <td>4</td>
@@ -9498,7 +9510,19 @@
                 <td>4, 10</td>
               </tr>
               <tr>
+                <td>Ea Da</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
                 <td>Ea M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Ma</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
@@ -9685,7 +9709,19 @@
                 <td>4, 10</td>
               </tr>
               <tr>
+                <td>Fn Da</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
                 <td>Fn M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fn Ma</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
@@ -9872,7 +9908,19 @@
                 <td>4</td>
               </tr>
               <tr>
+                <td>( Da</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
                 <td>( M</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Ma</td>
                 <td>ambivalent</td>
                 <td>Fn</td>
                 <td>4</td>
@@ -10059,7 +10107,19 @@
                 <td>4, 10</td>
               </tr>
               <tr>
+                <td>Ea Fnd Da</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
                 <td>Ea Fnd M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea Fnd Ma</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
@@ -10246,7 +10306,19 @@
                 <td>4, 10</td>
               </tr>
               <tr>
+                <td>Ea ( Da</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
                 <td>Ea ( M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea ( Ma</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
@@ -10433,7 +10505,19 @@
                 <td>4, 10</td>
               </tr>
               <tr>
+                <td>Ea <literal>∘</literal> Da</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
                 <td>Ea <literal>∘</literal> M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Ma</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
