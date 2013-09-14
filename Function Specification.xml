@@ -418,7 +418,15 @@
             <td>D</td>
             <td colspan="2">Dyadic Primitive</td>
             <td colspan="3">
-              A primitive function that can be called dyadically.
+              A primitive function that can only be called dyadically.
+            </td>
+          </tr>
+          <tr>
+            <td>Da</td>
+            <td colspan="2">Dyadic Axis Primitive</td>
+            <td colspan="3">
+              A primitive function that can only be called dyadically.
+              Valid with the Axis Operator.
             </td>
           </tr>
           <tr>
@@ -480,6 +488,14 @@
             <td colspan="2">Monadic Primitive</td>
             <td colspan="3">
               A primtive function that can be called monadically.
+            </td>
+          </tr>
+          <tr>
+            <td>Ma</td>
+            <td colspan="2">Monadic Axis Primitive</td>
+            <td colspan="3">
+              A primtive function that can be called monadically.
+              Valid with Axis Operator.
             </td>
           </tr>
           <tr>
@@ -609,7 +625,7 @@
             <td colspan="4">
               [ ] ( ) <literal>←</literal> <literal>⍨</literal> <literal>∘</literal> <literal>¨</literal> 
               <literal>.</literal> <literal>⍣</literal> / <literal>⌿</literal> \ <literal>⍀</literal> 
-              Break D M Vi Vf Vom Vod Vu E Ea Fea Fed Fn Fnm Fnd</td>
+              Break D Da M Ma Vi Vf Vom Vod Vu E Ea Fea Fed Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
