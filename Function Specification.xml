@@ -9276,27 +9276,27 @@
               </tr>
               <tr>
                 <td><literal>/</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td><literal>⌿</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td><literal>\</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td><literal>⍀</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Break</td>
@@ -9427,9 +9427,9 @@
               </tr>
               <tr>
                 <td>Ea (</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Ea )</td>
