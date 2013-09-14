@@ -9154,10 +9154,11 @@
             enumerations, rather than here.
           </simpara>
           <simpara>
-            We use two different responses special to this enumeration to 
+            We use three different responses special to this enumeration to 
             indicate whether the given function expression is dyadic or 
-            ambivalent. These are <firstterm>dyadic</firstterm> and 
-            <firstterm>ambivalent</firstterm> respectively. These are the 
+            ambivalent or monadic. These are <firstterm>dyadic</firstterm>,  
+            <firstterm>ambivalent</firstterm>, and <firstterm>monadic</firstterm>
+            respectively. These are the 
             same as the <glossterm>okay</glossterm> response, but they 
             indicate additionally the arity of the functions.
           </simpara>
@@ -9427,9 +9428,9 @@
               </tr>
               <tr>
                 <td>Ea (</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea )</td>
