@@ -9313,7 +9313,7 @@
               <tr>
                 <td>Da</td>
                 <td>dyadic</td>
-                <td>Fn</td>
+                <td></td>
                 <td>4</td>
               </tr>
               <tr>
@@ -9325,7 +9325,7 @@
               <tr>
                 <td>Ma</td>
                 <td>ambivalent</td>
-                <td>Fn</td>
+                <td>Da</td>
                 <td>4</td>
               </tr>
               <tr>
@@ -9951,6 +9951,205 @@
               </tr>
               <tr>
                 <td>( Vu</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn</td>
+                <td>ambivalent</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Fnm</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>[</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>(</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>)</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>⍨</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>¨</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>.</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>⍣</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>/</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>⌿</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>\</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>⍀</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>D</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da</td>
+                <td>dyadic</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>M</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ma</td>
+                <td>ambivalent</td>
+                <td>Da</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Vi</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vf</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Vom</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vod</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Vu</td>
                 <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
