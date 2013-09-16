@@ -238,7 +238,7 @@
           <tr>
             <td>Fe</td>
             <td colspan="2">Function Expression</td>
-            <td colspan="3">An expression evaluating to any function value</td>
+            <td colspan="3">An expression evaluating to any function value, including operators</td>
           </tr>
           <tr>
             <td>Fea</td>
@@ -254,6 +254,11 @@
             <td>Fem</td>
             <td colspan="2">Monadic Function Expression</td>
             <td colspan="3">An expression evaluating to an monadic-only function value</td>
+          </tr>
+          <tr>
+            <td>Feo</td>
+            <td colspan="2">Operator Function Expression</td>
+            <td colspan="3">An expression evaluating to an operator  value</td>
           </tr>
         </tbody>
       </table>
@@ -630,7 +635,7 @@
             <td colspan="4">
               [ ] ( ) <literal>←</literal> <literal>⍨</literal> <literal>∘</literal> <literal>¨</literal> 
               <literal>.</literal> <literal>⍣</literal> / <literal>⌿</literal> \ <literal>⍀</literal> 
-              Break D Da M Ma Vi Vf Vom Vod Vu E Ea Fea Fed Fem Fn Fnm Fnd</td>
+              Break D Da M Ma Vi Vf Vom Vod Vu E Ea Fea Fed Fem Feo Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
@@ -9375,7 +9380,59 @@
             <firstterm>ambivalent</firstterm>, and <firstterm>monadic</firstterm>
             respectively. These are the 
             same as the <glossterm>okay</glossterm> response, but they 
-            indicate additionally the arity of the functions.
+            indicate additionally the arity of the functions. Finally, 
+            there is the <firstterm>doper</firstterm> and <firstterm>moper</firsterm>
+            responses which are described in more detail below, which are used to 
+            map to the Feo stimuli.
+          </simpara>
+          <simpara>
+            There are five recursive stimuli that are enumerated here by these 
+            tables: Fe, Fea, Fed, Fem, and Feo. That's a lot, but this is partly 
+            because of the interesting complexity involved in function handling. 
+            Each of these responses is designed for specific purposes and for 
+            specific contexts, and one should not feel that these can be used 
+            interchangeably. 
+          </simpara>
+          <simpara>
+            The Fe stimuli is the all encompassing stimuli. It's purpose is to 
+            capture any single <quote>function</quote> unit. It really has only one 
+            specific reason for existance, binding. Function values can be bound, 
+            or given names. This can occur in either the top-level context, which also 
+            accepts any function value on a line by itself, or inside of a function 
+            definition. In these cases, we expect the Expression stimuli to subsume 
+            all other uses of function values, and so we need not have any precision in 
+            the detail of the kind of function being bound. Put another way, the Fe 
+            stimuli is there only to serve as a catch-all for when we want to give some 
+            function value a name. In all other cases, one of the more specific stimuli 
+            should be used. 
+          </simpara>
+          <simpara>
+            The Fea, Fem, and Fed stimuli map to the normal function values, and should 
+            be used whenever we care only about function values, and not about operators. 
+            This basically means inside of expression contexts. They encapsulate all 
+            valid uses of operators inside of them, and so it is not necessary to 
+            expose Feo stimuli at the same level as Fea, Fem, and Fed when we might use 
+            these values to apply functions. This is for the expression case, where it 
+            makes a difference whether a function value is monadic, ambivalent, or 
+            dyadic. Fem and Fea could be confused, but they are in fact completely disjoint 
+            mappings. Fem are all those valid function expressions which are monadic 
+            <emphasis>only</emphasis>, which is to say, cannot accept a left argument. 
+            Ambivalent functions are captured by Fea, which may accept a left argument, 
+            but do not need one syntactically. The Fed stimuli captures the cases where 
+            there is no valid monadic form, and the function expression requires a left 
+            argument. 
+          </simpara>
+          <simpara>
+            Finally, we have the odd one out, Feo. This is a special enumeration that is 
+            only required inside of the function expression enumeration. Everywhere else it 
+            suffices to use the Fe stimuli or the set of function stimuli Fea, Fem, and Fed 
+            to capture the desired behavior. Feo needs to exist inside of the Function 
+            Expressions in order to capture the concept of parenthesized operators, which is 
+            a forward-looking extension of the Dyalog APL system (part of which is already 
+            implemented in version 14.0 of the interpreter, but not all). By enabling this 
+            separate element, we allow for operators to receive bindings through the Fe 
+            stimuli, as well as using operators that are inside of parentheses when doing the
+            normal enumeration. 
           </simpara>
           <table frame="void" rules="rows">
             <title>Source Input Enumeration: Function Expressions</title>
@@ -9408,6 +9465,18 @@
               </tr>
               <tr>
                 <td>Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -9612,6 +9681,18 @@
                 <td></td>
               </tr>
               <tr>
+                <td>Ea Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td>Ea Fn</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
@@ -9806,6 +9887,18 @@
               </tr>
               <tr>
                 <td>Fn Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -10010,6 +10103,18 @@
                 <td></td>
               </tr>
               <tr>
+                <td>( Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td>( Fn</td>
                 <td>ambivalent</td>
                 <td></td>
@@ -10204,6 +10309,18 @@
               </tr>
               <tr>
                 <td>Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -10408,6 +10525,18 @@
                 <td></td>
               </tr>
               <tr>
+                <td>Ea Fnd Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td>Ea Fnd Fn</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
@@ -10602,6 +10731,18 @@
               </tr>
               <tr>
                 <td>Ea ( Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -10806,6 +10947,18 @@
                 <td></td>
               </tr>
               <tr>
+                <td>Ea <literal>∘</literal> Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td>Ea <literal>∘</literal> Fn</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
@@ -11000,6 +11153,18 @@
               </tr>
               <tr>
                 <td>Fn Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -11204,6 +11369,18 @@
                 <td></td>
               </tr>
               <tr>
+                <td>Fn Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
                 <td>Fn Fn</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
@@ -11402,6 +11579,11 @@
           <simpara>
             An error in the LLVM system shall signal an
             <literal>INTERNAL ERROR</literal>.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Allow for any operator to be named or parenthesized.
           </simpara>
         </listitem>
       </orderedlist>
