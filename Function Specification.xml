@@ -9381,7 +9381,7 @@
             respectively. These are the 
             same as the <glossterm>okay</glossterm> response, but they 
             indicate additionally the arity of the functions. Finally, 
-            there is the <firstterm>doper</firstterm> and <firstterm>moper</firsterm>
+            there is the <firstterm>doper</firstterm> and <firstterm>moper</firstterm>
             responses which are described in more detail below, which are used to 
             map to the Feo stimuli.
           </simpara>
