@@ -256,9 +256,9 @@
             <td colspan="3">An expression evaluating to an monadic-only function value</td>
           </tr>
           <tr>
-            <td>Feo</td>
+            <td>Feo[op1 op2 ...]</td>
             <td colspan="2">Operator Function Expression</td>
-            <td colspan="3">An expression evaluating to an operator  value</td>
+            <td colspan="3">An expression evaluating to an operator equivalent to op1 or op2, and so forth</td>
           </tr>
         </tbody>
       </table>
@@ -9381,7 +9381,7 @@
             respectively. These are the 
             same as the <glossterm>okay</glossterm> response, but they 
             indicate additionally the arity of the functions. Finally, 
-            there is the <firstterm>doper</firstterm> and <firstterm>moper</firstterm>
+            there is the <firstterm>oper[op]</firstterm>
             responses which are described in more detail below, which are used to 
             map to the Feo stimuli.
           </simpara>
@@ -9433,6 +9433,22 @@
             separate element, we allow for operators to receive bindings through the Fe 
             stimuli, as well as using operators that are inside of parentheses when doing the
             normal enumeration. 
+          </simpara>
+          <simpara>
+            The Feo stimuli will normally be listed just as Feo, because in most cases it 
+            is illegal. However, you will not in the list of the recursive stimuli that 
+            Feo takes a parameter [op1 op2 ...]. This indicates that we can provide a 
+            paramter to Feo, which corresponds to the parameter that we give in the 
+            <glossterm>oper</glossterm> response. This allows us to know what the equivalent 
+            operator is. This is just a slightly more manageable way of enumerating the operators 
+            while not requiring that enumeration until we need to use it. That is, if we know that 
+            any Feo is going to be illegal, we need only list Feo and mark it as such. If we know 
+            that the operators are going to be useful, then we can enumerate them all explicitly. 
+            Again, this basically only affects the function enumeration. It is a simple, convenient 
+            syntactic abstraction and nothing more. We use the list notation for this because it allows 
+            us to list a number of common operators together without requiring a separate line 
+            for their enumeration. We do not use the list notation in the <glossterm>oper[op]</glossterm> 
+            response.
           </simpara>
           <table frame="void" rules="rows">
             <title>Source Input Enumeration: Function Expressions</title>
