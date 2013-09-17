@@ -580,14 +580,14 @@
             <td colspan="3">A variable bound to a function</td>
           </tr>
           <tr>
-            <td>Vom</td>
-            <td colspan="2">Monadic Operator Variable</td>
-            <td colspan="3">A variable bound to a monadic operator</td>
+            <td>Vfo</td>
+            <td colspan="2">Function/Operator Variable</td>
+            <td colspan="3">A variable bound to a function or operator</td>
           </tr>
           <tr>
-            <td>Vod</td>
-            <td colspan="2">Dyadic Operator Variable</td>
-            <td colspan="3">A variable bound to a dyadic operator</td>
+            <td>Vo[op]</td>
+            <td colspan="2">Operator Variable</td>
+            <td colspan="3">A variable bound to an operator equivalent to <varname>op</varname></td>
           </tr>
           <tr>
             <td>Vnu</td>
@@ -620,7 +620,7 @@
         <tbody>
           <tr>
             <td>Top-level</td>
-            <td colspan="4"><literal>⋄</literal> <literal>←</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl Nse Nss Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
+            <td colspan="4"><literal>⋄</literal> <literal>←</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl Nse Nss Vi Vfo Vu E Fe Fnm Fnd</td>
           </tr>
           <tr>
             <td>Expressions</td>
@@ -628,14 +628,14 @@
           </tr>
           <tr>
             <td>Functions</td>
-            <td colspan="4">{ } : :: <literal>⋄</literal> <literal>←</literal> Break Nl Vi Vf Vom Vod Vu E Fe Fnm Fnd</td>
+            <td colspan="4">{ } : :: <literal>⋄</literal> <literal>←</literal> Break Nl Vi Vfo Vu E Fe Fnm Fnd</td>
           </tr>
           <tr>
             <td>Func. Expr.</td>
             <td colspan="4">
               [ ] ( ) <literal>←</literal> <literal>⍨</literal> <literal>∘</literal> <literal>¨</literal> 
               <literal>.</literal> <literal>⍣</literal> / <literal>⌿</literal> \ <literal>⍀</literal> 
-              Break D Da M Ma Vi Vf Vom Vod Vu E Ea Fea Fed Fem Feo Fn Fnm Fnd</td>
+              Break D Da M Ma Vi Vf Vo Vu E Ea Fea Fed Fem Feo Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
@@ -1035,19 +1035,7 @@
                 <td>D1</td>
               </tr>
               <tr>
-                <td>Vf</td>
-                <td>illegal</td>
-                <td></td>
-                <td>D1</td>
-              </tr>
-              <tr>
-                <td>Vom</td>
-                <td>illegal</td>
-                <td></td>
-                <td>D1</td>
-              </tr>
-              <tr>
-                <td>Vod</td>
+                <td>Vfo</td>
                 <td>illegal</td>
                 <td></td>
                 <td>D1</td>
@@ -1184,19 +1172,7 @@
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Vf</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10, 16, 21</td>
-              </tr>
-              <tr>
-                <td>Fix Vom</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10, 16, 21</td>
-              </tr>
-              <tr>
-                <td>Fix Vod</td>
+                <td>Fix Vfo</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
@@ -1333,19 +1309,7 @@
                 <td>4, 10, 17, 18, 21</td>
               </tr>
               <tr>
-                <td>Fix Fne Vf</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10, 17, 18, 21</td>
-              </tr>
-              <tr>
-                <td>Fix Fne Vom</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10, 17, 18, 21</td>
-              </tr>
-              <tr>
-                <td>Fix Fne Vod</td>
+                <td>Fix Fne Vfo</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 17, 18, 21</td>
@@ -1482,21 +1446,9 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf</td>
+                <td>Fix Nss Vfo</td>
                 <td>null</td>
                 <td></td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vom</td>
-                <td>null</td>
-                <td>Fix Nss Vf</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vod</td>
-                <td>null</td>
-                <td>Fix Nss Vf</td>
                 <td>4, 10</td>
               </tr>
               <tr>
@@ -1631,19 +1583,7 @@
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss E Vf</td>
-                <td>subsumed</td>
-                <td>Fix Nss E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss E Vom</td>
-                <td>subsumed</td>
-                <td>Fix Nss E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss E Vod</td>
+                <td>Fix Nss E Vfo</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
                 <td></td>
@@ -1780,21 +1720,9 @@
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Fe Vf</td>
+                <td>Fix Nss Fe Vfo</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss Fe Vom</td>
-                <td>subsumed</td>
-                <td>Fix Nss Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss Fe Vod</td>
-                <td>subsumed</td>
-                <td>Fix Nss Fe</td>
                 <td></td>
               </tr>
               <tr>
@@ -1806,7 +1734,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Vf</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Vfo</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -1817,31 +1745,31 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fix Nss Vf E</td>
+                <td>Fix Nss Vfo E</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Fe</td>
+                <td>Fix Nss Vfo Fe</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Fnd</td>
+                <td>Fix Nss Vfo Fnd</td>
                 <td>subsumed</td>
                 <td>Fix Nss Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Fnm</td>
+                <td>Fix Nss Vfo Fnm</td>
                 <td>subsumed</td>
                 <td>Fix Nss Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf
+                <td>Fix Nss Vfo
                   <literal>⋄</literal>
                 </td>
                 <td>null</td>
@@ -1849,7 +1777,7 @@
                 <td>4, 16</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf
+                <td>Fix Nss Vfo
                   <literal>←</literal>
                 </td>
                 <td>null</td>
@@ -1857,97 +1785,85 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Break</td>
+                <td>Fix Nss Vfo Break</td>
                 <td>Interrupt</td>
                 <td>empty</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Eot</td>
+                <td>Fix Nss Vfo Eot</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Fix</td>
+                <td>Fix Nss Vfo Fix</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Fnb</td>
+                <td>Fix Nss Vfo Fnb</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Fne</td>
+                <td>Fix Nss Vfo Fne</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Fnf</td>
+                <td>Fix Nss Vfo Fnf</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Lle</td>
+                <td>Fix Nss Vfo Lle</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Lls</td>
+                <td>Fix Nss Vfo Lls</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Nl</td>
+                <td>Fix Nss Vfo Nl</td>
                 <td>null</td>
                 <td>Fix Nss</td>
                 <td>4, 16</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Nse</td>
+                <td>Fix Nss Vfo Nse</td>
                 <td>null</td>
                 <td>Fix Nss Nse</td>
                 <td>4, 16</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Nss</td>
+                <td>Fix Nss Vfo Nss</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Vi</td>
+                <td>Fix Nss Vfo Vi</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Vf</td>
+                <td>Fix Nss Vfo Vfo</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf Vom</td>
-                <td>subsumed</td>
-                <td>Fix Nss E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vf Vod</td>
-                <td>subsumed</td>
-                <td>Fix Nss E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vf Vu</td>
+                <td>Fix Nss Vfo Vu</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
                 <td></td>
@@ -2078,13 +1994,7 @@
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vu Vf</td>
-                <td>subsumed</td>
-                <td>Fix Nss E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vu Vom</td>
+                <td>Fix Nss Vu Vfo</td>
                 <td>subsumed</td>
                 <td>Fix Nss E</td>
                 <td></td>
@@ -2227,19 +2137,7 @@
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Nse Vf</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10, 16, 21</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Nse Vom</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10, 16, 21</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Nse Vod</td>
+                <td>Fix Nss Nse Vfo</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
@@ -2376,19 +2274,7 @@
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Nse Eot Vf</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td colspan="2">Fix Nss Nse Eot Vom</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td colspan="2">Fix Nss Nse Eot Vod</td>
+                <td colspan="2">Fix Nss Nse Eot Vfo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
@@ -2402,7 +2288,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Vf <literal>←</literal></title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Vfo <literal>←</literal></title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -2413,31 +2299,31 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 35</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fe</td>
                 <td>null</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fnd</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fnd</td>
                 <td>null</td>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fe</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fnm</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fnm</td>
                 <td>null</td>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fe</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> 
+                <td>Fix Nss Vfo <literal>←</literal> 
                   <literal>⋄</literal>
                 </td>
                 <td>Syntax Error</td>
@@ -2445,7 +2331,7 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> 
+                <td>Fix Nss Vfo <literal>←</literal> 
                   <literal>←</literal>
                 </td>
                 <td>Syntax Error</td>
@@ -2453,97 +2339,85 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Break</td>
+                <td>Fix Nss Vfo <literal>←</literal> Break</td>
                 <td>Interrupt</td>
                 <td>empty</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Eot</td>
+                <td>Fix Nss Vfo <literal>←</literal> Eot</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fix</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fix</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fnb</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fnb</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fne</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fne</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fnf</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fnf</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Lle</td>
+                <td>Fix Nss Vfo <literal>←</literal> Lle</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Lls</td>
+                <td>Fix Nss Vfo <literal>←</literal> Lls</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Nl</td>
+                <td>Fix Nss Vfo <literal>←</literal> Nl</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Nse</td>
+                <td>Fix Nss Vfo <literal>←</literal> Nse</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Nss</td>
+                <td>Fix Nss Vfo <literal>←</literal> Nss</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Vi</td>
+                <td>Fix Nss Vfo <literal>←</literal> Vi</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Vf</td>
+                <td>Fix Nss Vfo <literal>←</literal> Vfo</td>
                 <td>null</td>
-                <td>Fix Nss Vf</td>
+                <td>Fix Nss Vfo</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Vom</td>
-                <td>null</td>
-                <td>Fix Nss Vom</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vf <literal>←</literal> Vod</td>
-                <td>null</td>
-                <td>Fix Nss Vod</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vf <literal>←</literal> Vu</td>
+                <td>Fix Nss Vfo <literal>←</literal> Vu</td>
                 <td>null</td>
                 <td></td>
                 <td>4</td>
@@ -2670,21 +2544,9 @@
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vu <literal>←</literal> Vf</td>
+                <td>Fix Nss Vu <literal>←</literal> Vfo</td>
                 <td>null</td>
-                <td>Fix Nss Vf</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vu <literal>←</literal> Vom</td>
-                <td>null</td>
-                <td>Fix Nss Vom</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vu <literal>←</literal> Vod</td>
-                <td>null</td>
-                <td>Fix Nss Vod</td>
+                <td>Fix Nss Vfo</td>
                 <td>4</td>
               </tr>
               <tr>
@@ -2696,10 +2558,10 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Vf <literal>←</literal> Fe</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Vfo <literal>←</literal> Fe</title>
             <thead>
               <tr>
-                <th>Sequence</th>
+                <th colspan="2">Sequence</th>
                 <th>Response</th>
                 <th>Equivalent</th>
                 <th>Trace</th>
@@ -2707,144 +2569,132 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe E</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe E</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Fe</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fe</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Fnd</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fnd</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Fnm</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fnm</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe <literal>⋄</literal></td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe <literal>⋄</literal></td>
                 <td>null</td>
                 <td>Fix Nss</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe <literal>←</literal></td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe <literal>←</literal></td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
+                <td>Fix Nss Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Break</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Break</td>
                 <td>Interrupt</td>
                 <td>empty</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Eot</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Eot</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Fix</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fix</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Fnb</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fnb</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Fne</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fne</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Fnf</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fnf</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Lle</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Lle</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Lls</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Lls</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Nl</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Nl</td>
                 <td>null</td>
                 <td>Fix Nss</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Nse</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Nse</td>
                 <td>null</td>
                 <td>Fix Nss Nse</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Nss</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Nss</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Vi</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Vi</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Vf</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Vfo</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Vom</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Vu</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Vod</td>
-                <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fix Nss Vf <literal>←</literal> Fe Vu</td>
-                <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Top-level, Fix Nss Vf <literal>←</literal> Vu</title>
+            <title>Source Input Enumeration: Top-level, Fix Nss Vfo <literal>←</literal> Vu</title>
             <thead>
               <tr>
-                <th>Sequence</th>
+                <th colspan="2">Sequence</th>
                 <th>Response</th>
                 <th>Equivalent</th>
                 <th>Trace</th>
@@ -2852,135 +2702,123 @@
             </thead>
             <tbody>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu E</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu E</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Fe</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fe</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Fnd</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fnd</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Fnm</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fnm</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu <literal>⋄</literal></td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu <literal>⋄</literal></td>
                 <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu <literal>←</literal></td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu <literal>←</literal></td>
                 <td>null</td>
-                <td>Fix Nss Vf <literal>←</literal></td>
+                <td>Fix Nss Vfo <literal>←</literal></td>
                 <td>4, 10, 35</td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Break</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Break</td>
                 <td>Interrupt</td>
                 <td>empty</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Eot</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Eot</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Fix</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fix</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Fnb</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fnb</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Fne</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fne</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Fnf</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fnf</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Lle</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Lle</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Lls</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Lls</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Nl</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Nl</td>
                 <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Nse</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Nse</td>
                 <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Nss</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Nss</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10, 16, 21</td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Vi</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Vi</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Vf</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Vfo</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Vom</td>
+                <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Vu</td>
                 <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Vod</td>
-                <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td colspan="2">Fix Nss Vf <literal>←</literal> Vu Vu</td>
-                <td>subsumed</td>
-                <td>Fix Nss Vf <literal>←</literal> E</td>
+                <td>Fix Nss Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
             </tbody>
@@ -3105,15 +2943,9 @@
                 <td></td>
               </tr>
               <tr>
-                <td colspan="2">Fix Nss Vu <literal>←</literal> Fe Vf</td>
+                <td colspan="2">Fix Nss Vu <literal>←</literal> Fe Vfo</td>
                 <td>subsumed</td>
                 <td>Fix Nss Vu <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td colspan="2">Fix Nss Vu <literal>←</literal> Fe Vom</td>
-                <td>subsumed</td>
-                <td>Fix Nss Vu <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
@@ -3231,19 +3063,7 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vf</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vod</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Vom</td>
+                <td>Vfo</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
@@ -3340,7 +3160,7 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf</td>
+                <td>{ Vfo</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -3350,18 +3170,6 @@
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
-              </tr>
-              <tr>
-                <td>{ Vod</td>
-                <td>wait</td>
-                <td>{ Vf</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>{ Vom</td>
-                <td>wait</td>
-                <td>{ Vf</td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>{ Vu</td>
@@ -3455,25 +3263,13 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ E Vf</td>
+                <td>{ E Vfo</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
                 <td>{ E Vi</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E Vod</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E Vom</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
@@ -3487,7 +3283,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Functions, { Vf</title>
+            <title>Source Input Enumeration: Functions, { Vfo</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -3498,103 +3294,91 @@
             </thead>
             <tbody>
               <tr>
-                <td>{ Vf E</td>
+                <td>{ Vfo E</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf Fe</td>
+                <td>{ Vfo Fe</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf Fnd</td>
+                <td>{ Vfo Fnd</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf Fnm</td>
+                <td>{ Vfo Fnm</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf {</td>
+                <td>{ Vfo {</td>
                 <td>subsumed</td>
-                <td>{ Vf Fe</td>
+                <td>{ Vfo Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf }</td>
+                <td>{ Vfo }</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf :</td>
+                <td>{ Vfo :</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf ::</td>
+                <td>{ Vfo ::</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>⋄</literal></td>
+                <td>{ Vfo <literal>⋄</literal></td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal></td>
+                <td>{ Vfo <literal>←</literal></td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf Break</td>
+                <td>{ Vfo Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>{ Vf Nl</td>
+                <td>{ Vfo Nl</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf Vf</td>
+                <td>{ Vfo Vfo</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf Vi</td>
+                <td>{ Vfo Vi</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf Vod</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf Vom</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf Vu</td>
+                <td>{ Vfo Vu</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
@@ -3685,25 +3469,13 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vu Vf</td>
+                <td>{ Vu Vfo</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
               </tr>
               <tr>
                 <td>{ Vu Vi</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vu Vod</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vu Vom</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
@@ -3800,25 +3572,13 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ E : Vf</td>
+                <td>{ E : Vfo</td>
                 <td>subsumed</td>
                 <td>{ E : E</td>
                 <td></td>
               </tr>
               <tr>
                 <td>{ E : Vi</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E : Vod</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E : Vom</td>
                 <td>subsumed</td>
                 <td>{ E : E</td>
                 <td></td>
@@ -3832,7 +3592,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Functions, { Vf <literal>←</literal></title>
+            <title>Source Input Enumeration: Functions, { Vfo <literal>←</literal></title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -3843,103 +3603,91 @@
             </thead>
             <tbody>
               <tr>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fnd</td>
+                <td>{ Vfo <literal>←</literal> Fnd</td>
                 <td>wait</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fnm</td>
+                <td>{ Vfo <literal>←</literal> Fnm</td>
                 <td>wait</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> {</td>
+                <td>{ Vfo <literal>←</literal> {</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> }</td>
+                <td>{ Vfo <literal>←</literal> }</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> :</td>
+                <td>{ Vfo <literal>←</literal> :</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> ::</td>
+                <td>{ Vfo <literal>←</literal> ::</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> <literal>⋄</literal></td>
+                <td>{ Vfo <literal>←</literal> <literal>⋄</literal></td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> <literal>←</literal></td>
+                <td>{ Vfo <literal>←</literal> <literal>←</literal></td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Break</td>
+                <td>{ Vfo <literal>←</literal> Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Nl</td>
+                <td>{ Vfo <literal>←</literal> Nl</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf</td>
+                <td>{ Vfo <literal>←</literal> Vfo</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vi</td>
+                <td>{ Vfo <literal>←</literal> Vi</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vod</td>
-                <td>wait</td>
-                <td>{ Vf <literal>←</literal> Vf</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Vom</td>
-                <td>wait</td>
-                <td>{ Vf <literal>←</literal> Vf</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Vu</td>
+                <td>{ Vfo <literal>←</literal> Vu</td>
                 <td>wait</td>
                 <td></td>
                 <td></td>
@@ -4030,9 +3778,9 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vu <literal>←</literal> Vf</td>
+                <td>{ Vu <literal>←</literal> Vfo</td>
                 <td>wait</td>
-                <td>{ Vf <literal>←</literal> Vf</td>
+                <td>{ Vfo <literal>←</literal> Vfo</td>
                 <td>4</td>
               </tr>
               <tr>
@@ -4040,18 +3788,6 @@
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
-              </tr>
-              <tr>
-                <td>{ Vu <literal>←</literal> Vod</td>
-                <td>wait</td>
-                <td>{ Vu <literal>←</literal> Vf</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>{ Vu <literal>←</literal> Vom</td>
-                <td>wait</td>
-                <td>{ Vu <literal>←</literal> Vf</td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Vu</td>
@@ -4145,25 +3881,13 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ E : E Vf</td>
+                <td>{ E : E Vfo</td>
                 <td>subsumed</td>
                 <td>{ E : E</td>
                 <td></td>
               </tr>
               <tr>
                 <td>{ E : E Vi</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E : E Vod</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E : E Vom</td>
                 <td>subsumed</td>
                 <td>{ E : E</td>
                 <td></td>
@@ -4177,7 +3901,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Functions, { Vf <literal>←</literal> Fe</title>
+            <title>Source Input Enumeration: Functions, { Vfo <literal>←</literal> Fe</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -4188,111 +3912,99 @@
             </thead>
             <tbody>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe E</td>
+                <td>{ Vfo <literal>←</literal> Fe E</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe Fe</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Fnd</td>
+                <td>{ Vfo <literal>←</literal> Fe Fnd</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Fnm</td>
+                <td>{ Vfo <literal>←</literal> Fe Fnm</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe {</td>
+                <td>{ Vfo <literal>←</literal> Fe {</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe }</td>
+                <td>{ Vfo <literal>←</literal> Fe }</td>
                 <td>okay</td>
                 <td>Fe</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe :</td>
+                <td>{ Vfo <literal>←</literal> Fe :</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe ::</td>
+                <td>{ Vfo <literal>←</literal> Fe ::</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe <literal>⋄</literal></td>
+                <td>{ Vfo <literal>←</literal> Fe <literal>⋄</literal></td>
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe <literal>←</literal></td>
+                <td>{ Vfo <literal>←</literal> Fe <literal>←</literal></td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Break</td>
+                <td>{ Vfo <literal>←</literal> Fe Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Nl</td>
+                <td>{ Vfo <literal>←</literal> Fe Nl</td>
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Vf</td>
+                <td>{ Vfo <literal>←</literal> Fe Vfo</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Vi</td>
+                <td>{ Vfo <literal>←</literal> Fe Vi</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Fe Vod</td>
+                <td>{ Vfo <literal>←</literal> Fe Vu</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Fe Vom</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Fe Vu</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Functions, { Vf <literal>←</literal> Vf</title>
+            <title>Source Input Enumeration: Functions, { Vfo <literal>←</literal> Vfo</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -4303,111 +4015,99 @@
             </thead>
             <tbody>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf E</td>
+                <td>{ Vfo <literal>←</literal> Vfo E</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Fe</td>
+                <td>{ Vfo <literal>←</literal> Vfo Fe</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Fnd</td>
+                <td>{ Vfo <literal>←</literal> Vfo Fnd</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Fnm</td>
+                <td>{ Vfo <literal>←</literal> Vfo Fnm</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf {</td>
+                <td>{ Vfo <literal>←</literal> Vfo {</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf }</td>
+                <td>{ Vfo <literal>←</literal> Vfo }</td>
                 <td>okay</td>
                 <td>Fe</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf :</td>
+                <td>{ Vfo <literal>←</literal> Vfo :</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf ::</td>
+                <td>{ Vfo <literal>←</literal> Vfo ::</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf <literal>⋄</literal></td>
+                <td>{ Vfo <literal>←</literal> Vfo <literal>⋄</literal></td>
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf <literal>←</literal></td>
+                <td>{ Vfo <literal>←</literal> Vfo <literal>←</literal></td>
                 <td>wait</td>
-                <td>{ Vf <literal>←</literal></td>
+                <td>{ Vfo <literal>←</literal></td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Break</td>
+                <td>{ Vfo <literal>←</literal> Vfo Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Nl</td>
+                <td>{ Vfo <literal>←</literal> Vfo Nl</td>
                 <td>wait</td>
                 <td>{</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Vf</td>
+                <td>{ Vfo <literal>←</literal> Vfo Vfo</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Vi</td>
+                <td>{ Vfo <literal>←</literal> Vfo Vi</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vf Vod</td>
+                <td>{ Vfo <literal>←</literal> Vfo Vu</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Vf Vom</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Vf Vu</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Functions, { Vf <literal>←</literal> Vu</title>
+            <title>Source Input Enumeration: Functions, { Vfo <literal>←</literal> Vu</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -4418,105 +4118,93 @@
             </thead>
             <tbody>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu E</td>
+                <td>{ Vfo <literal>←</literal> Vu E</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Fe</td>
+                <td>{ Vfo <literal>←</literal> Vu Fe</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Fnd</td>
+                <td>{ Vfo <literal>←</literal> Vu Fnd</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Fnm</td>
+                <td>{ Vfo <literal>←</literal> Vu Fnm</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu {</td>
+                <td>{ Vfo <literal>←</literal> Vu {</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> Fe Fe</td>
+                <td>{ Vfo <literal>←</literal> Fe Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu }</td>
+                <td>{ Vfo <literal>←</literal> Vu }</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu :</td>
+                <td>{ Vfo <literal>←</literal> Vu :</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu ::</td>
+                <td>{ Vfo <literal>←</literal> Vu ::</td>
                 <td>Syntax Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu <literal>⋄</literal></td>
+                <td>{ Vfo <literal>←</literal> Vu <literal>⋄</literal></td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu <literal>←</literal></td>
+                <td>{ Vfo <literal>←</literal> Vu <literal>←</literal></td>
                 <td>wait</td>
-                <td>{ Vf <literal>←</literal></td>
+                <td>{ Vfo <literal>←</literal></td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Break</td>
+                <td>{ Vfo <literal>←</literal> Vu Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Nl</td>
+                <td>{ Vfo <literal>←</literal> Vu Nl</td>
                 <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Vf</td>
+                <td>{ Vfo <literal>←</literal> Vu Vfo</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Vi</td>
+                <td>{ Vfo <literal>←</literal> Vu Vi</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vf <literal>←</literal> Vu Vod</td>
+                <td>{ Vfo <literal>←</literal> Vu Vu</td>
                 <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Vu Vom</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vf <literal>←</literal> Vu Vu</td>
-                <td>subsumed</td>
-                <td>{ Vf <literal>←</literal> E</td>
+                <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
               </tr>
             </tbody>
@@ -4605,25 +4293,13 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vu <literal>←</literal> Fe Vf</td>
+                <td>{ Vu <literal>←</literal> Fe Vfo</td>
                 <td>subsumed</td>
                 <td>{ Vu <literal>←</literal> E</td>
                 <td></td>
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Fe Vi</td>
-                <td>subsumed</td>
-                <td>{ Vu <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vu <literal>←</literal> Fe Vod</td>
-                <td>subsumed</td>
-                <td>{ Vu <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vu <literal>←</literal> Fe Vom</td>
                 <td>subsumed</td>
                 <td>{ Vu <literal>←</literal> E</td>
                 <td></td>
@@ -4830,7 +4506,7 @@
               </tr>
             </tbody>
           </table>
-          <table frame="Cvoid" rules="rows">
+          <table frame="void" rules="rows">
             <title>Source Input Enumeration: Expressions, Fea</title>
             <thead>
               <tr>
