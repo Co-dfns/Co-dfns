@@ -10193,21 +10193,21 @@
               </tr>
               <tr>
                 <td>( Vf</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
+                <td>wait</td>
                 <td></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Vo</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>wait</td>
+                <td>( Vf</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
+                <td>wait</td>
                 <td></td>
+                <td>4</td>
               </tr>
             </tbody>
           </table>
