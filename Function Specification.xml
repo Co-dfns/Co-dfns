@@ -9254,25 +9254,25 @@
               <tr>
                 <td><literal>/</literal></td>
                 <td>dyadic, oper[<literal>/</literal>]</td>
-                <td>Fn</td>
+                <td>Da</td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td><literal>⌿</literal></td>
                 <td>dyadic, oper[<literal>⌿</literal>]</td>
-                <td>Fn</td>
+                <td>Da</td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td><literal>\</literal></td>
                 <td>dyadic, oper[<literal>\</literal>]</td>
-                <td>Fn</td>
+                <td>Da</td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td><literal>⍀</literal></td>
                 <td>dyadic, oper[<literal>⍀</literal>]</td>
-                <td>Fn</td>
+                <td>Da</td>
                 <td>4, D5</td>
               </tr>
               <tr>
