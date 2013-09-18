@@ -9307,7 +9307,7 @@
               </tr>
               <tr>
                 <td>Vi</td>
-                <td>Syntax Error</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
@@ -9735,7 +9735,7 @@
               </tr>
               <tr>
                 <td>Fn Vi</td>
-                <td>Syntax Error</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
@@ -9982,7 +9982,7 @@
               </tr>
               <tr>
                 <td>Fnm Vi</td>
-                <td>Syntax Error</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
@@ -10392,7 +10392,7 @@
               </tr>
               <tr>
                 <td>Da Vi</td>
-                <td>Syntax Error</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
