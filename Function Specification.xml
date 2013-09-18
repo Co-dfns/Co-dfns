@@ -10007,7 +10007,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( *</title>
+            <title>Source Input Enumeration: Function Expressions, (</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -10025,135 +10025,135 @@
               </tr>
               <tr>
                 <td>( Ea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>( Fed</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>( Fem</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>( Feo</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>( Fn</td>
-                <td>ambivalent</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>( Fnm</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>( Fnd</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>( [</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>( ]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>( (</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
               </tr>
               <tr>
+                <td>( Fed</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fem</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>( Fn</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fnm</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fnd</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( [</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( ]</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( (</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
                 <td>( )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>←</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>⍨</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>∘</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>¨</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>.</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>/</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>⌿</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>\</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( <literal>⍀</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Break</td>
@@ -10163,51 +10163,51 @@
               </tr>
               <tr>
                 <td>( D</td>
-                <td>dyadic</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Da</td>
-                <td>dyadic</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( M</td>
-                <td>ambivalent</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Ma</td>
-                <td>ambivalent</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Vi</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Vf</td>
-                <td>ambivalent</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Vo</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Vu</td>
-                <td>Value Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
@@ -11438,6 +11438,826 @@
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, ( Fea *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>( Fea E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Ea</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Fea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fea Fed</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fea Fem</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fea Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fea Fn</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Fnm</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Fnd</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea [</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea ]</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea (</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea )</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>( Fea D</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Da</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea M</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Ma</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Vi</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Vf</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Vo</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fea Vu</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, ( Fed *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>( Fed E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Ea</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Fea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fed Fed</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fed Fem</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fed Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fed Fn</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Fnm</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Fnd</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed [</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed ]</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed (</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed )</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>( Fed D</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Da</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed M</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Ma</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Vi</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Vf</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Vo</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fed Vu</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, ( Fem *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>( Fem E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Ea</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Fea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fem Fed</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fem Fem</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fem Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Fem Fn</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Fnm</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Fnd</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem [</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem ]</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem (</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem )</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>( Fem D</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Da</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem M</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Ma</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Vi</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Vf</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Vo</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Fem Vu</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, ( Feo[op] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>( Feo[op] E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Ea</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Fea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Fed</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Fem</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Fn</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Fnm</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Fnd</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] [</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] ]</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] (</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] )</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>( Feo[op] D</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Da</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] M</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Ma</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Vi</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Vf</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Vo</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>( Feo[op] Vu</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
