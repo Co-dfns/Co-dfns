@@ -10091,9 +10091,9 @@
               </tr>
               <tr>
                 <td>( )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>( <literal>←</literal></td>
