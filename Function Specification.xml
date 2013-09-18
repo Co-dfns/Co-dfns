@@ -9802,7 +9802,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Fnm *</title>
+            <title>Source Input Enumeration: Function Expressions, Fnm</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -9813,194 +9813,194 @@
             </thead>
             <tbody>
               <tr>
-                <td>E</td>
+                <td>Fnm E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fea</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fed</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fem</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Feo</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn</td>
-                <td>ambivalent</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fnm</td>
-                <td>oper[Fnm]</td>
-                <td></td>
-                <td>4, D5</td>
-              </tr>
-              <tr>
-                <td>Fnd</td>
-                <td>oper[Fnd]</td>
-                <td>Fnm</td>
-                <td>4, D5</td>
-              </tr>
-              <tr>
-                <td>[</td>
+                <td>Fnm Ea</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>(</td>
-                <td>wait</td>
+                <td>Fnm Fea</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
               </tr>
               <tr>
-                <td>)</td>
+                <td>Fnm Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fnm Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fnm Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fnm Fn</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>←</literal></td>
+                <td>Fnm Fnm</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>⍨</literal></td>
-                <td>oper[<literal>⍨</literal>]</td>
-                <td>Fnm</td>
-                <td>4, D5</td>
+                <td>Fnm Fnd</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>∘</literal></td>
-                <td>oper[<literal>∘</literal>]</td>
-                <td>Fnm</td>
-                <td>4, D5</td>
+                <td>Fnm [</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>¨</literal></td>
-                <td>oper[<literal>¨</literal>]</td>
-                <td>Fnm</td>
-                <td>4, D5</td>
+                <td>Fnm ]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>.</literal></td>
-                <td>oper[<literal>.</literal>]</td>
-                <td>Fnm</td>
-                <td>4, D5</td>
+                <td>Fnm (</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>⍣</literal></td>
-                <td>oper[<literal>⍣</literal>]</td>
-                <td>Fnm</td>
-                <td>4, D5</td>
+                <td>Fnm )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>/</literal></td>
-                <td>dyadic, oper[<literal>/</literal>]</td>
-                <td>Fn</td>
-                <td>4, D5</td>
+                <td>Fnm <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>⌿</literal></td>
-                <td>dyadic, oper[<literal>⌿</literal>]</td>
-                <td>Fn</td>
-                <td>4, D5</td>
+                <td>Fnm <literal>⍨</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>\</literal></td>
-                <td>dyadic, oper[<literal>\</literal>]</td>
-                <td>Fn</td>
-                <td>4, D5</td>
+                <td>Fnm <literal>∘</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td><literal>⍀</literal></td>
-                <td>dyadic, oper[<literal>⍀</literal>]</td>
-                <td>Fn</td>
-                <td>4, D5</td>
+                <td>Fnm <literal>¨</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>Break</td>
+                <td>Fnm <literal>.</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm <literal>⍣</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm <literal>/</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm <literal>⌿</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm <literal>\</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm <literal>⍀</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>D</td>
-                <td>dyadic</td>
-                <td>Fn</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Da</td>
-                <td>dyadic</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>M</td>
-                <td>ambivalent</td>
-                <td>Fn</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ma</td>
-                <td>ambivalent</td>
-                <td>Da</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Vi</td>
+                <td>Fnm D</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vf</td>
-                <td>ambivalent</td>
-                <td>Fn</td>
-                <td>4</td>
+                <td>Fnm Da</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vo[op]</td>
-                <td>oper[op]</td>
-                <td>Fnm</td>
-                <td>4, D5</td>
+                <td>Fnm M</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vu</td>
-                <td>Value Error</td>
+                <td>Fnm Ma</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm Vi</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm Vf</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm Vo</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Fnm Vu</td>
+                <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
