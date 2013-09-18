@@ -9230,7 +9230,7 @@
               <tr>
                 <td><literal>∘</literal></td>
                 <td>oper[<literal>∘</literal>]</td>
-                <td>Fnm</td>
+                <td></td>
                 <td>4, D5</td>
               </tr>
               <tr>
@@ -10208,6 +10208,211 @@
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, <literal>∘</literal> *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><literal>∘</literal> E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Ea</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Fn</td>
+                <td>ambivalent</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Fnm</td>
+                <td>oper[Fnm]</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Fnd</td>
+                <td>oper[Fnd]</td>
+                <td>Fnm</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> [</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> ]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> (</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>←</literal></td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>⍨</literal></td>
+                <td>oper[<literal>⍨</literal>]</td>
+                <td>Fnm</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>∘</literal></td>
+                <td>oper[<literal>∘</literal>]</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>¨</literal></td>
+                <td>oper[<literal>¨</literal>]</td>
+                <td>Fnm</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>.</literal></td>
+                <td>oper[<literal>.</literal>]</td>
+                <td>Fnm</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>⍣</literal></td>
+                <td>oper[<literal>⍣</literal>]</td>
+                <td>Fnm</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>/</literal></td>
+                <td>dyadic, oper[<literal>/</literal>]</td>
+                <td>Da</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>⌿</literal></td>
+                <td>dyadic, oper[<literal>⌿</literal>]</td>
+                <td>Da</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>\</literal></td>
+                <td>dyadic, oper[<literal>\</literal>]</td>
+                <td>Da</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> <literal>⍀</literal></td>
+                <td>dyadic, oper[<literal>⍀</literal>]</td>
+                <td>Da</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> D</td>
+                <td>dyadic</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Da</td>
+                <td>dyadic</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> M</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Ma</td>
+                <td>ambivalent</td>
+                <td>Da</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Vi</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Vf</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Vo[op]</td>
+                <td>oper[op]</td>
+                <td>Fnm</td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td><literal>∘</literal> Vu</td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
             </tbody>
           </table>
