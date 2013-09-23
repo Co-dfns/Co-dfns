@@ -9289,25 +9289,25 @@
               </tr>
               <tr>
                 <td><literal>/</literal></td>
-                <td>dyadic, oper[<literal>/</literal>]</td>
+                <td>dyadic axis, oper[<literal>/</literal>]</td>
                 <td>Da</td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td><literal>⌿</literal></td>
-                <td>dyadic, oper[<literal>⌿</literal>]</td>
+                <td>dyadic axis, oper[<literal>⌿</literal>]</td>
                 <td>Da</td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td><literal>\</literal></td>
-                <td>dyadic, oper[<literal>\</literal>]</td>
+                <td>dyadic axis, oper[<literal>\</literal>]</td>
                 <td>Da</td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td><literal>⍀</literal></td>
-                <td>dyadic, oper[<literal>⍀</literal>]</td>
+                <td>dyadic axis, oper[<literal>⍀</literal>]</td>
                 <td>Da</td>
                 <td>4, D5</td>
               </tr>
@@ -9325,7 +9325,7 @@
               </tr>
               <tr>
                 <td>Da</td>
-                <td>dyadic</td>
+                <td>dyadic axis</td>
                 <td></td>
                 <td>4</td>
               </tr>
@@ -9337,7 +9337,7 @@
               </tr>
               <tr>
                 <td>Ma</td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Da</td>
                 <td>4</td>
               </tr>
@@ -9753,25 +9753,25 @@
               </tr>
               <tr>
                 <td>Fn <literal>/</literal></td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Ma</td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Fn <literal>⌿</literal></td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Ma</td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal></td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td></td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>⍀</literal></td>
-                <td>monatic</td>
+                <td>monatic axis</td>
                 <td>Fn <literal>\</literal></td>
                 <td>4, D5</td>
               </tr>
@@ -9855,13 +9855,13 @@
               </tr>
               <tr>
                 <td>Fn Vo[<literal>/</literal> <literal>⌿</literal>]</td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Fn /</td>
                 <td>4, 10, D5</td>
               </tr>
               <tr>
                 <td>Fn Vo[<literal>\</literal> <literal>⍀</literal>]</td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td>Fn \</td>
                 <td>4, 10, D5</td>
               </tr>
@@ -10693,25 +10693,25 @@
               </tr>
               <tr>
                 <td>Da <literal>/</literal></td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Ma</td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Da <literal>⌿</literal></td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Ma</td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Da <literal>\</literal></td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td>Fn <literal>\</literal></td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Da <literal>⍀</literal></td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td>Da <literal>\</literal></td>
                 <td>4</td>
               </tr>
@@ -10801,13 +10801,13 @@
               </tr>
               <tr>
                 <td>Da Vo[<literal>/</literal> <literal>⌿</literal>]</td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Da <literal>/</literal></td>
                 <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da Vo[<literal>\</literal> <literal>⍀</literal>]</td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td>Da <literal>\</literal></td>
                 <td>4, D5</td>
               </tr>
@@ -12097,25 +12097,25 @@
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> <literal>/</literal></td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Fn /</td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> <literal>⌿</literal></td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Fn /</td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> <literal>\</literal></td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td>Fn \</td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> <literal>⍀</literal></td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td>Fn \</td>
                 <td>4</td>
               </tr>
@@ -12205,13 +12205,13 @@
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> Vo[<literal>/</literal> <literal>⌿</literal>]</td>
-                <td>ambivalent</td>
+                <td>ambivalent axis</td>
                 <td>Fn /</td>
                 <td>4, 10, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> Vo[<literal>\</literal> <literal>⍀</literal>]</td>
-                <td>monadic</td>
+                <td>monadic axis</td>
                 <td>Fn \</td>
                 <td>4, 10, D5</td>
               </tr>
