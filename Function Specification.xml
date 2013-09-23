@@ -14513,7 +14513,55 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Da ( Feo[op]</td>
+                <td>Da ( Feo[Fnm]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[Fnd]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[<literal>⍨</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[<literal>∘</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[<literal>¨</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[<literal>.</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[<literal>⍣</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[<literal>/</literal> <literal>⌿</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[<literal>\</literal> <literal>⍀</literal>]</td>
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
@@ -14663,10 +14711,58 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>Da ( Vo[op]</td>
+                <td>Da ( Vo[Fnm]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4, D5</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[Fnd]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[<literal>⍨</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[<literal>∘</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[<literal>¨</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[<literal>.</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[<literal>⍣</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[<literal>/</literal> <literal>⌿</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[<literal>\</literal> <literal>⍀</literal>]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Da ( Vu</td>
@@ -18846,7 +18942,1791 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Da ( Feo[op] *</title>
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[Fnm] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[Fnd] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[<literal>⍨</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[<literal>∘</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[<literal>¨</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[<literal>.</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[<literal>⍣</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[<literal>/</literal> <literal>⌿</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Feo[<literal>\</literal> <literal>⍀</literal>] *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -19292,7 +21172,1791 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Da ( Vo[op] * </title>
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[Fnm] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[Fnd] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[<literal>⍨</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[<literal>∘</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[<literal>¨</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[<literal>.</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[<literal>⍣</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[<literal>/</literal> <literal>⌿</literal>] *</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Da ( E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fea</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feaa</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fed</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feda</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fem</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Fema</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( Feo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Fn</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnm</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Fnd</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( [</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( ]</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( (</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( )</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>←</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Da ( D</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Da</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( M</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Ma</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vi</td>
+                <td>subsumed</td>
+                <td>Da ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da ( Vf</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Da ( Vo[op]</td>
+                <td>wait</td>
+                <td></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td>Da ( Vu</td>
+                <td>wait</td>
+                <td></td>
+                <td>4</td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Da ( Vo[<literal>\</literal> <literal>⍀</literal>] *</title>
             <thead>
               <tr>
                 <th>Sequence</th>
