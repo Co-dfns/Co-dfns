@@ -13562,7 +13562,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Feo[op] *</title>
+            <title>Source Input Enumeration: Function Exprs., ( Feo[op]</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -13586,45 +13586,45 @@
               </tr>
               <tr>
                 <td>( Feo[op] Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feo[op] Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feo[op] Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feo[op] Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feo[op] Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feo[op] Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feo[op] Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feo[op] Fn</td>
@@ -13664,9 +13664,9 @@
               </tr>
               <tr>
                 <td>( Feo[op] )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>oper[op]</td>
+                <td>op</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>( Feo[op] <literal>←</literal></td>
