@@ -13339,7 +13339,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Fema *</title>
+            <title>Source Input Enumeration: Function Expressions, ( Fema</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -13363,45 +13363,45 @@
               </tr>
               <tr>
                 <td>( Fema Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema Fn</td>
@@ -13441,9 +13441,9 @@
               </tr>
               <tr>
                 <td>( Fema )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>monadic axis</td>
+                <td>Fn \</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Fema <literal>←</literal></td>
