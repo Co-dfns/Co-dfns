@@ -12670,7 +12670,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Fed *</title>
+            <title>Source Input Enumeration: Function Expressions, ( Fed</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -12694,45 +12694,45 @@
               </tr>
               <tr>
                 <td>( Fed Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed Fn</td>
@@ -12772,9 +12772,9 @@
               </tr>
               <tr>
                 <td>( Fed )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>dyadic</td>
+                <td>D</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Fed <literal>←</literal></td>
