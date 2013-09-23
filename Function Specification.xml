@@ -13116,7 +13116,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Fem *</title>
+            <title>Source Input Enumeration: Function Expressions, ( Fem</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -13140,45 +13140,45 @@
               </tr>
               <tr>
                 <td>( Fem Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem Fn</td>
@@ -13218,9 +13218,9 @@
               </tr>
               <tr>
                 <td>( Fem )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>monadic</td>
+                <td>Ea <literal>∘</literal> Fn</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Fem <literal>←</literal></td>
