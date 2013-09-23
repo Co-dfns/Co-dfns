@@ -241,18 +241,18 @@
             <td colspan="3">An expression evaluating to any function value, including operators</td>
           </tr>
           <tr>
-            <td>Fea</td>
-            <td colspan="2">Ambivalent Function Expression</td>
+            <td>Fea/Feaa</td>
+            <td colspan="2">Ambivalent Function Expr. (Axis)</td>
             <td colspan="3">An expression evaluating to an ambivalent function value</td>
           </tr>
           <tr>
-            <td>Fed</td>
-            <td colspan="2">Dyadic Function Expression</td>
+            <td>Fed/Feda</td>
+            <td colspan="2">Dyadic Function Expr. (Axis)</td>
             <td colspan="3">An expression evaluating to a dyadic function value</td>
           </tr>
           <tr>
-            <td>Fem</td>
-            <td colspan="2">Monadic Function Expression</td>
+            <td>Fem/Fema</td>
+            <td colspan="2">Monadic Function Expr. (Axis)</td>
             <td colspan="3">An expression evaluating to an monadic-only function value</td>
           </tr>
           <tr>
@@ -273,6 +273,12 @@
         as yet is not a valid stimuli, but that it may yet become a valid sequence. The
         <symbol>okay</symbol> response indicates that the sequence as is constitutes a
         valid sequence, but need not be final or unextendable.
+      </simpara>
+      <simpara>
+        Function expressions turn out to be quite complicated in terms of
+        their recursions and what sort of state need to be encoded, and
+        when. For more information about these stimuli, see the section on the 
+        Function Expression enumeration.
       </simpara>
       <simpara>
         As a rule, during enumeration, one should consider the use of a recursive stimuli
@@ -635,7 +641,7 @@
             <td colspan="4">
               [ ] ( ) <literal>←</literal> <literal>⍨</literal> <literal>∘</literal> <literal>¨</literal> 
               <literal>.</literal> <literal>⍣</literal> / <literal>⌿</literal> \ <literal>⍀</literal> 
-              Break D Da M Ma Vi Vf Vo Vu E Ea Fea Fed Fem Feo Fn Fnm Fnd</td>
+              Break D Da M Ma Vi Vf Vo Vu E Ea Fea(a) Fed(a) Fem(a) Feo Fn Fnm Fnd</td>
           </tr>
         </tbody>
       </table>
@@ -9059,7 +9065,11 @@
             indicate additionally the arity of the functions. Finally, 
             there is the <firstterm>oper[op]</firstterm>
             responses which are described in more detail below, which are used to 
-            map to the Feo stimuli.
+            map to the Feo stimuli. We allow the <firstterm>axis</firstterm> to 
+            augment any of these other responses in the case when the expression 
+            described accepts an axis specification. Axis specifications may only 
+            appear in conjunction with one of the function responses, and not with, 
+            for instance, the <glossterm>oper</glossterm> response.
           </simpara>
           <simpara>
             There are five recursive stimuli that are enumerated here by these 
@@ -9097,6 +9107,14 @@
             but do not need one syntactically. The Fed stimuli captures the cases where 
             there is no valid monadic form, and the function expression requires a left 
             argument. 
+          </simpara>
+          <simpara>
+            In all of the above function stimuli, Fea, Fem, and Fed, we allow for an additional 
+            <quote>a</quote> to be appeneded to each name to indicate that the expression 
+            also saw an axis response. This indicates that the expression accepts an axis 
+            specification. We do not allow for an <quote>a</quote> to be appended to the 
+            end of either the <glossterm>Fe</glossterm> or <glossterm>Feo</glossterm> 
+            stimuli.
           </simpara>
           <simpara>
             Finally, we have the odd one out, Feo. This is a special enumeration that is 
@@ -12056,8 +12074,8 @@
               </tr>
               <tr>
                 <td>( Fea )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
+                <td>ambivalent</td>
+                <td>Fn</td>
                 <td></td>
               </tr>
               <tr>
