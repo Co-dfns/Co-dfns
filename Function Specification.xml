@@ -14008,7 +14008,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Vu *</title>
+            <title>Source Input Enumeration: Function Expressions, ( Vu</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -14032,45 +14032,45 @@
               </tr>
               <tr>
                 <td>( Vu Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4, D5</td>
               </tr>
               <tr>
                 <td>( Vu Fn</td>
@@ -14110,15 +14110,15 @@
               </tr>
               <tr>
                 <td>( Vu )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>Value Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>( Vu <literal>←</literal></td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>wait</td>
+                <td>(</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu <literal>⍨</literal></td>
@@ -14212,21 +14212,21 @@
               </tr>
               <tr>
                 <td>( Vu Vf</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vu Vo</td>
-                <td>wait</td>
-                <td>( Vf</td>
-                <td>4</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Vu Vu</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
             </tbody>
           </table>
