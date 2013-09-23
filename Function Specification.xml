@@ -12224,7 +12224,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Fea *</title>
+            <title>Source Input Enumeration: Function Expressions, ( Fea</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -12248,45 +12248,45 @@
               </tr>
               <tr>
                 <td>( Fea Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea Fn</td>
@@ -12328,7 +12328,7 @@
                 <td>( Fea )</td>
                 <td>ambivalent</td>
                 <td>Fn</td>
-                <td></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Fea <literal>←</literal></td>
