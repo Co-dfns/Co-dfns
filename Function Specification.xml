@@ -12893,7 +12893,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Feda *</title>
+            <title>Source Input Enumeration: Function Expressions, ( Feda</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -12917,45 +12917,45 @@
               </tr>
               <tr>
                 <td>( Feda Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda Fn</td>
@@ -12995,9 +12995,9 @@
               </tr>
               <tr>
                 <td>( Feda )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>dyadic axis</td>
+                <td>Da</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Feda <literal>←</literal></td>
