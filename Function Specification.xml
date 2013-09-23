@@ -13785,7 +13785,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, ( Vf *</title>
+            <title>Source Input Enumeration: Function Expressions, ( Vf</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -13809,45 +13809,45 @@
               </tr>
               <tr>
                 <td>( Vf Fea</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf Feaa</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf Fed</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf Feda</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf Fem</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf Fema</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf Feo[op]</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4, D5</td>
               </tr>
               <tr>
                 <td>( Vf Fn</td>
@@ -13887,15 +13887,15 @@
               </tr>
               <tr>
                 <td>( Vf )</td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>ambivalent</td>
+                <td>Fn</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf <literal>←</literal></td>
-                <td>subsumed</td>
-                <td>( Fe</td>
-                <td></td>
+                <td>wait</td>
+                <td>(</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf <literal>⍨</literal></td>
@@ -13989,21 +13989,21 @@
               </tr>
               <tr>
                 <td>( Vf Vf</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
                 <td>( Vf Vo</td>
-                <td>wait</td>
-                <td>( Vf</td>
-                <td>4</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
+                <td></td>
               </tr>
               <tr>
                 <td>( Vf Vu</td>
-                <td>wait</td>
+                <td>subsumed</td>
+                <td>( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
             </tbody>
           </table>
