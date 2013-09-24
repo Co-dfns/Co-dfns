@@ -11270,7 +11270,25 @@
                 <td>4, D5</td>
               </tr>
               <tr>
-                <td colspan="2">Ea ( Vo</td>
+                <td colspan="2">Ea ( Vo[<literal>∘</literal>]</td>
+                <td>wait</td>
+                <td colspan="2"></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td colspan="2">Ea ( Vo[Fnm]</td>
+                <td>wait</td>
+                <td colspan="2"></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td colspan="2">Ea ( Vo[Fnd]</td>
+                <td>wait</td>
+                <td colspan="2"></td>
+                <td>4, D5</td>
+              </tr>
+              <tr>
+                <td colspan="2">Ea ( Vo[<literal>⍨</literal> <literal>¨</literal> <literal>.</literal> <literal>⍣</literal> <literal>/</literal> <literal>⌿</literal> <literal>\</literal> <literal>⍀</literal>]</td>
                 <td>wait</td>
                 <td colspan="2">Ea ( Vf</td>
                 <td>4, D5</td>
@@ -16334,7 +16352,676 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Ea ( Vu *</title>
+            <title>Source Input Enumeration: Func. Expr., Ea ( Vo[Fnm]</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ea ( Vo[Fnm] E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Ea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Fn</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Fnm</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Fnd</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] [</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] ]</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] (</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] )</td>
+                <td>ambivalent</td>
+                <td>Ea Fnm</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>←</literal></td>
+                <td>wait</td>
+                <td>Ea (</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] D</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Da</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] M</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Ma</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Vi</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Vf</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Vo</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnm] Vu</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Func. Expr., Ea ( Vo[Fnd]</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ea ( Vo[Fnd] E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Ea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Fn</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Fnm</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Fnd</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] [</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] ]</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] (</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] )</td>
+                <td>wait</td>
+                <td>Ea Fnd</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>←</literal></td>
+                <td>wait</td>
+                <td>Ea (</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] D</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Da</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] M</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Ma</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Vi</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Vf</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Vo</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[Fnd] Vu</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Func. Expr., Ea ( Vo[<literal>∘</literal>]</title>
+            <thead>
+              <tr>
+                <th>Sequence</th>
+                <th>Response</th>
+                <th>Equivalent</th>
+                <th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] E</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Ea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Fn</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Fnm</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Fnd</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] [</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] ]</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] (</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] )</td>
+                <td>wait</td>
+                <td>Ea <literal>∘</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>←</literal></td>
+                <td>wait</td>
+                <td>Ea (</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>⍨</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>∘</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>¨</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>.</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>⍣</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>/</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>⌿</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>\</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] <literal>⍀</literal></td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Break</td>
+                <td>Interrupt</td>
+                <td>empty, top-level</td>
+                <td>D3</td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] D</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Da</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] M</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Ma</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Vi</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Vf</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Vo</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vo[<literal>∘</literal>] Vu</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <table frame="void" rules="rows">
+            <title>Source Input Enumeration: Function Expressions, Ea ( Vu</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -16352,69 +17039,51 @@
               </tr>
               <tr>
                 <td>Ea ( Vu Ea</td>
+                <td>subsumed</td>
+                <td>Ea ( Feo</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vu Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea ( Vu Fea</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
                 <td>Ea ( Vu Feaa</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vu Fed</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vu Feda</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vu Fem</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vu Fema</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vu Feo[Fnm]</td>
-                <td>wait</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vu Feo[Fnd]</td>
-                <td>wait</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Ea ( Vu Feo[<literal>⍨</literal> <literal>¨</literal> <literal>.</literal> <literal>⍣</literal> <literal>/</literal> <literal>⌿</literal> <literal>\</literal> <literal>⍀</literal>]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vu Feo[<literal>∘</literal>]</td>
-                <td>wait</td>
+                <td>Ea ( Vu Feo</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vu Fn</td>
@@ -16454,15 +17123,15 @@
               </tr>
               <tr>
                 <td>Ea ( Vu )</td>
-                <td>Syntax Error</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
                 <td>Ea ( Vu <literal>←</literal></td>
-                <td>subsumed</td>
-                <td>Ea ( Feo</td>
-                <td></td>
+                <td>wait</td>
+                <td>Ea ( </td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea ( Vu <literal>⍨</literal></td>
