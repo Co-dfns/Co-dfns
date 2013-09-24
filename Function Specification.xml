@@ -17244,7 +17244,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Ea <literal>∘</literal> Fn *</title>
+            <title>Source Input Enumeration: Function Expressions, Ea <literal>∘</literal> Fn</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -17310,21 +17310,21 @@
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Fn</td>
-                <td>monadic</td>
-                <td></td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Fnm</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>ambivalent</td>
+                <td>Fn Fnm</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Fnd</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td>Fn Fnd</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn [</td>
@@ -17341,7 +17341,7 @@
               <tr>
                 <td>Ea <literal>∘</literal> Fn (</td>
                 <td>wait</td>
-                <td></td>
+                <td>Fn <literal>\</literal> (</td>
                 <td>4</td>
               </tr>
               <tr>
@@ -17364,50 +17364,50 @@
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>∘</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>¨</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>monadic</td>
+                <td>Fn <literal>\</literal> <literal>¨</literal></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>.</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>.</literal> </td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>⍣</literal></td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>⍣</literal></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>/</literal></td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
+                <td>dyadic axis</td>
+                <td>Fn <literal>\</literal> <literal>/</literal></td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>⌿</literal></td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
+                <td>dyadic axis</td>
+                <td>Fn <literal>\</literal> <literal>/</literal></td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>\</literal></td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
+                <td>monadic axis</td>
+                <td>Fn <literal>\</literal> <literal>\</literal></td>
                 <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn <literal>⍀</literal></td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
+                <td>monadic axis</td>
+                <td>Fn <literal>\</literal> <literal>\</literal></td>
                 <td>4</td>
               </tr>
               <tr>
@@ -17418,27 +17418,27 @@
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn D</td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Da</td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn M</td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Ma</td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
-                <td>4</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vi</td>
@@ -17448,15 +17448,75 @@
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vf</td>
-                <td>monadic</td>
-                <td>Ea <literal>∘</literal> Fn</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea <literal>∘</literal> Fn Vo</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[Fnm]</td>
+                <td>ambivalent</td>
+                <td>Fn Fnm</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[Fnd]</td>
+                <td>wait</td>
+                <td>Fn Fnd</td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>¨</literal>]</td>
+                <td>monadic</td>
+                <td>Fn <literal>\</literal> <literal>¨</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>⍨</literal>]</td>
+                <td>Syntax Error</td>
+                <td>empty</td>
+                <td>4, 10</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>∘</literal>]</td>
+                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>⍣</literal>]</td>
+                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>⍣</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>/</literal>]</td>
+                <td>dyadic axis</td>
+                <td>Fn <literal>\</literal> <literal>/</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>⌿</literal>]</td>
+                <td>dyadic axis</td>
+                <td>Fn <literal>\</literal> <literal>/</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>\</literal>]</td>
+                <td>monadic axis</td>
+                <td>Fn <literal>\</literal> <literal>\</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>⍀</literal>]</td>
+                <td>monadic axis</td>
+                <td>Fn <literal>\</literal> <literal>\</literal></td>
+                <td>4</td>
+              </tr>
+              <tr>
+                <td>Ea <literal>∘</literal> Fn Vo[<literal>.</literal>]</td>
+                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>.</literal></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vu</td>
