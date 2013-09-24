@@ -15888,7 +15888,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Ea ( Feo[<literal>∘</literal>] *</title>
+            <title>Source Input Enumeration: Func. Expr., Ea ( Feo[<literal>∘</literal>]</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -15912,63 +15912,45 @@
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] Fea</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] Feaa</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] Fed</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] Feda</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] Fem</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] Fema</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Feo[<literal>∘</literal>] Feo[Fnm]</td>
-                <td>wait</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea ( Feo[<literal>∘</literal>] Feo[Fnd]</td>
-                <td>wait</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Ea ( Feo[<literal>∘</literal>] Feo[<literal>⍨</literal> <literal>¨</literal> <literal>.</literal> <literal>⍣</literal> <literal>/</literal> <literal>⌿</literal> <literal>\</literal> <literal>⍀</literal>]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Ea ( Feo[<literal>∘</literal>] Feo[<literal>∘</literal>]</td>
-                <td>wait</td>
+                <td>Ea ( Feo[<literal>∘</literal>] Feo</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] Fn</td>
@@ -16008,9 +15990,9 @@
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>wait</td>
+                <td>Ea <literal>∘</literal></td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea ( Feo[<literal>∘</literal>] <literal>←</literal></td>
