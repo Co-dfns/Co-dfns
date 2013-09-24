@@ -12097,8 +12097,8 @@
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> <literal>¨</literal></td>
-                <td>ambivalent</td>
-                <td>Fn</td>
+                <td>monadic</td>
+                <td>Ea <literal>∘</literal> Fn</td>
                 <td>4</td>
               </tr>
               <tr>
