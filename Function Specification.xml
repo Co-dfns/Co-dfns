@@ -16111,7 +16111,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Ea ( Vf *</title>
+            <title>Source Input Enumeration: Function Expressions, Ea ( Vf</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -16129,104 +16129,86 @@
               </tr>
               <tr>
                 <td>Ea ( Vf Ea</td>
-                <td>illegal</td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Fea</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Feaa</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Fed</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Feda</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Fem</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Fema</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 19</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Feo[Fnm]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Feo[Fnd]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea ( Vf Feo[<literal>⍨</literal> <literal>¨</literal> <literal>.</literal> <literal>⍣</literal> <literal>/</literal> <literal>⌿</literal> <literal>\</literal> <literal>⍀</literal>]</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Ea ( Vf Feo[<literal>∘</literal>]</td>
-                <td>wait</td>
+                <td>Ea ( Vf Fea</td>
+                <td>illegal</td>
                 <td></td>
-                <td>4</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vf Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vf Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vf Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vf Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vf Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea ( Vf Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Fn</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Fnm</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Fnd</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf [</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf ]</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf (</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
@@ -16237,62 +16219,62 @@
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>←</literal></td>
-                <td>subsumed</td>
-                <td>Ea ( Feo</td>
-                <td></td>
+                <td>wait</td>
+                <td>Ea ( </td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>⍨</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>∘</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>¨</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>.</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>⍣</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>/</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>⌿</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>\</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf <literal>⍀</literal></td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
@@ -16304,49 +16286,49 @@
               <tr>
                 <td>Ea ( Vf D</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Da</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf M</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Ma</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Vi</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Vf</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Vo</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
               <tr>
                 <td>Ea ( Vf Vu</td>
                 <td>subsumed</td>
-                <td>Ea ( Feo</td>
+                <td>Ea ( Fe</td>
                 <td></td>
               </tr>
             </tbody>
