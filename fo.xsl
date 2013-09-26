@@ -7,4 +7,5 @@
 <xsl:param name="title.font.family" select="'Candara'" />
 <xsl:param name="monospace.font.family" select="'APL385 Unicode,FreeMono for APL'" />
 <xsl:param name="generate.toc" select="'article nop'" />
+<xsl:param name="fop1.extensions" select="1" />
 </xsl:stylesheet>
