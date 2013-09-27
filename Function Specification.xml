@@ -28131,7 +28131,7 @@
             <title>Source Input Enumeration: Func. Exprs., Fn <literal>\</literal> ( Feo[Fnm]</title>
             <thead>
               <tr>
-                <th>Sequence</th>
+                <th colspan="2">Sequence</th>
                 <th>Response</th>
                 <th>Equivalent</th>
                 <th>Trace</th>
@@ -28139,211 +28139,211 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] E</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Ea</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Ea</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Fea</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Feaa</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Feaa</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Fed</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Fed</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Feda</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Feda</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Fem</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Fem</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Fema</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Fema</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Feo</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Fn</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Fn</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Fnm</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Fnm</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Fnd</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Fnd</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] [</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] [</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] ]</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] ]</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] (</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] (</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] )</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] )</td>
                 <td>ambivalent</td>
                 <td>Fn Fnm</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>←</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>←</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>⍨</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>∘</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>¨</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>.</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>⍣</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>/</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>⌿</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>\</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] <literal>⍀</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Break</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] D</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] D</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Da</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Da</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] M</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] M</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Ma</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Ma</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Vi</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Vi</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Vf</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Vf</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Vo</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Vo</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm] Vu</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm] Vu</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
@@ -28354,7 +28354,7 @@
             <title>Source Input Enumeration: Func. Exprs., Fn <literal>\</literal> ( Feo[Fnd]</title>
             <thead>
               <tr>
-                <th>Sequence</th>
+                <th colspan="2">Sequence</th>
                 <th>Response</th>
                 <th>Equivalent</th>
                 <th>Trace</th>
@@ -28362,211 +28362,211 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] E</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Ea</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Ea</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Fea</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Feaa</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Feaa</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Fed</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Fed</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Feda</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Feda</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Fem</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Fem</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Fema</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Fema</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Feo</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Fn</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Fn</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Fnm</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Fnm</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Fnd</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Fnd</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] [</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] [</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] ]</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] ]</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] (</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] (</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] )</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] )</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> Fnd</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>←</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>←</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>⍨</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>∘</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>¨</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>.</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>⍣</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>/</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>⌿</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>\</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] <literal>⍀</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Break</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] D</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] D</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Da</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Da</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] M</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] M</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Ma</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Ma</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Vi</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Vi</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Vf</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Vf</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Vo</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Vo</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd] Vu</td>
+                <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd] Vu</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
@@ -30138,7 +30138,7 @@
             <title>Source Input Enumeration: Func. Exprs., Fn <literal>\</literal> ( Vo[Fnm]</title>
             <thead>
               <tr>
-                <th>Sequence</th>
+                <th colspan="2">Sequence</th>
                 <th>Response</th>
                 <th>Equivalent</th>
                 <th>Trace</th>
@@ -30146,211 +30146,211 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] E</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Ea</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Ea</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Fea</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Fea</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Feaa</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Feaa</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Fed</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Fed</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Feda</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Feda</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Fem</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Fem</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Fema</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Fema</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Feo</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Feo</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Fn</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Fn</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Fnm</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Fnm</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Fnd</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Fnd</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] [</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] [</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] ]</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] ]</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] (</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] (</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] )</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] )</td>
                 <td>ambivalent</td>
                 <td>Fn <literal>\</literal> Fnm</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>←</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⍨</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>∘</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>¨</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>.</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⍣</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>/</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⌿</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>\</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⍀</literal></td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Break</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] D</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] D</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Da</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Da</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] M</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] M</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Ma</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Ma</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Vi</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Vi</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Vf</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Vf</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Vo</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Vo</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm] Vu</td>
+                <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm] Vu</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
