@@ -30358,7 +30358,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Fn <literal>\</literal> ( Vo[Fnm] *</title>
+            <title>Source Input Enumeration: Function Expressions, Fn <literal>\</literal> ( Vo[Fnm]</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -30369,334 +30369,214 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fn <literal>\</literal> ( E</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Ea</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Fea</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feaa</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Fed</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feda</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Fem</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Fema</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnm]</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Ea</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Fn</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Fnm</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Fnd</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] [</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] ]</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] (</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] )</td>
+                <td>ambivalent</td>
+                <td>Fn <literal>\</literal> Fnm</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[Fnd]</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>←</literal></td>
                 <td>wait</td>
-                <td></td>
+                <td>Fn <literal>\</literal> (</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>⍨</literal>]</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>∘</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>¨</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>⍣</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>.</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>/</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>⌿</literal>]</td>
-                <td>wait</td>
-                <td>Fn <literal>\</literal> ( Feo[<literal>/</literal>]</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>\</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Feo[<literal>⍀</literal>]</td>
-                <td>wait</td>
-                <td>Fn <literal>\</literal> ( Feo[<literal>\</literal>]</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Fn</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Fnm</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Fnd</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( [</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( ]</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( (</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( <literal>←</literal></td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( <literal>⍨</literal></td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( <literal>∘</literal></td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( <literal>¨</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( <literal>.</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( <literal>⍣</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( <literal>/</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( <literal>⌿</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( <literal>\</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( <literal>⍀</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Break</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( D</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] D</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Da</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Da</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( M</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] M</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Ma</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Ma</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vi</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Vi</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vf</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Vf</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnm]</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Vo</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> ( Vo[Fnd]</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> ( Vo[Fnm] Vu</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>⍨</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>∘</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>¨</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>⍣</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>.</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>⌿</literal>]</td>
-                <td>wait</td>
-                <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>]</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>]</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vo[<literal>⍀</literal>]</td>
-                <td>wait</td>
-                <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>]</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> ( Vu</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
               </tr>
             </tbody>
           </table>
