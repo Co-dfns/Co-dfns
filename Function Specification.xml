@@ -35264,7 +35264,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Fn <literal>\</literal> <literal>∘</literal> ( Fem *</title>
+            <title>Source Input Enumeration: Function Expressions, Fn <literal>\</literal> <literal>∘</literal> ( Fem</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -35275,214 +35275,214 @@
             </thead>
             <tbody>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( E</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Ea</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Ea</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fea</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Fea</td>
+                <td>illegal</td>
                 <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Fn</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Fnm</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Fnd</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem [</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem ]</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem (</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem )</td>
+                <td>monadic</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> Fn</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Feaa</td>
-                <td>wait</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fed</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Feda</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fema</td>
-                <td>wait</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Feo</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fn</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>←</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fnm</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fnd</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( [</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( ]</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( (</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>←</literal></td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>⍨</literal></td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>∘</literal></td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>¨</literal></td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>.</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>⍣</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>/</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>⌿</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>\</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( <literal>⍀</literal></td>
-                <td>subsumed</td>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Break</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( D</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem D</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Da</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Da</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( M</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem M</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Ma</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Ma</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Vi</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Vi</td>
                 <td>subsumed</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Vf</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Vf</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Vo</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Vo</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Fn <literal>\</literal> <literal>∘</literal> ( Vu</td>
-                <td>wait</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fem Vu</td>
+                <td>subsumed</td>
+                <td>Fn <literal>\</literal> <literal>∘</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
             </tbody>
           </table>
