@@ -33703,7 +33703,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Da <literal>∘</literal> ( Vf *</title>
+            <title>Source Input Enumeration: Function Expressions, Da <literal>∘</literal> ( Vf</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -33714,214 +33714,214 @@
             </thead>
             <tbody>
               <tr>
-                <td>Da <literal>∘</literal> ( E</td>
+                <td>Da <literal>∘</literal> ( Vf E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Ea</td>
-                <td>wait</td>
+                <td>Da <literal>∘</literal> ( Vf Ea</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Fn</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Fnm</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf Fnd</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf [</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf ]</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf (</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Da <literal>∘</literal> ( Vf )</td>
+                <td>dyadic</td>
+                <td>Da <literal>∘</literal> Vf</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Fea</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Feaa</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Fed</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Feda</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Fem</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Fema</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Feo</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Fn</td>
+                <td>Da <literal>∘</literal> ( Vf <literal>←</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Fnm</td>
+                <td>Da <literal>∘</literal> ( Vf <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Fnd</td>
+                <td>Da <literal>∘</literal> ( Vf <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( [</td>
+                <td>Da <literal>∘</literal> ( Vf <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( ]</td>
+                <td>Da <literal>∘</literal> ( Vf <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( (</td>
+                <td>Da <literal>∘</literal> ( Vf <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( <literal>←</literal></td>
+                <td>Da <literal>∘</literal> ( Vf <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( <literal>⍨</literal></td>
+                <td>Da <literal>∘</literal> ( Vf <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( <literal>∘</literal></td>
+                <td>Da <literal>∘</literal> ( Vf <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( <literal>¨</literal></td>
+                <td>Da <literal>∘</literal> ( Vf <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( <literal>.</literal></td>
-                <td>subsumed</td>
-                <td>Da <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( <literal>⍣</literal></td>
-                <td>subsumed</td>
-                <td>Da <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( <literal>/</literal></td>
-                <td>subsumed</td>
-                <td>Da <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( <literal>⌿</literal></td>
-                <td>subsumed</td>
-                <td>Da <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( <literal>\</literal></td>
-                <td>subsumed</td>
-                <td>Da <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( <literal>⍀</literal></td>
-                <td>subsumed</td>
-                <td>Da <literal>∘</literal> ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Da <literal>∘</literal> ( Break</td>
+                <td>Da <literal>∘</literal> ( Vf Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( D</td>
+                <td>Da <literal>∘</literal> ( Vf D</td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Da</td>
+                <td>Da <literal>∘</literal> ( Vf Da</td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( M</td>
+                <td>Da <literal>∘</literal> ( Vf M</td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Ma</td>
+                <td>Da <literal>∘</literal> ( Vf Ma</td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Vi</td>
+                <td>Da <literal>∘</literal> ( Vf Vi</td>
                 <td>subsumed</td>
                 <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Vf</td>
-                <td>wait</td>
+                <td>Da <literal>∘</literal> ( Vf Vf</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Vo</td>
-                <td>wait</td>
+                <td>Da <literal>∘</literal> ( Vf Vo</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Da <literal>∘</literal> ( Vu</td>
-                <td>wait</td>
+                <td>Da <literal>∘</literal> ( Vf Vu</td>
+                <td>subsumed</td>
+                <td>Da <literal>∘</literal> ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
             </tbody>
           </table>
