@@ -24337,7 +24337,7 @@
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Ea Fnd ( Ea *</title>
+            <title>Source Input Enumeration: Function Expressions, Ea Fnd ( Ea</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -24348,219 +24348,219 @@
             </thead>
             <tbody>
               <tr>
-                <td>Ea Fnd ( E</td>
+                <td>Ea Fnd ( Ea E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Ea</td>
-                <td>wait</td>
-                <td></td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fea</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Feaa</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fed</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Feda</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fem</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fema</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Feo</td>
+                <td>Ea Fnd ( Ea Ea</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
-                <td>4, 10</td>
+                <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Fn</td>
+                <td>Ea Fnd ( Ea Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Ea Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Ea Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Ea Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Ea Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Ea Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Ea Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Ea Fn</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Fnm</td>
+                <td>Ea Fnd ( Ea Fnm</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Fnd</td>
+                <td>Ea Fnd ( Ea Fnd</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( [</td>
+                <td>Ea Fnd ( Ea [</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( ]</td>
+                <td>Ea Fnd ( Ea ]</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( (</td>
+                <td>Ea Fnd ( Ea (</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
+                <td>Ea Fnd ( Ea )</td>
+                <td>ambivalent</td>
+                <td>Ea Fnd Ea</td>
+                <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>←</literal></td>
+                <td>Ea Fnd ( Ea <literal>←</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>⍨</literal></td>
+                <td>Ea Fnd ( Ea <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>∘</literal></td>
+                <td>Ea Fnd ( Ea <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>¨</literal></td>
+                <td>Ea Fnd ( Ea <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>.</literal></td>
+                <td>Ea Fnd ( Ea <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>⍣</literal></td>
+                <td>Ea Fnd ( Ea <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>/</literal></td>
+                <td>Ea Fnd ( Ea <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>⌿</literal></td>
+                <td>Ea Fnd ( Ea <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>\</literal></td>
+                <td>Ea Fnd ( Ea <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>⍀</literal></td>
+                <td>Ea Fnd ( Ea <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Break</td>
+                <td>Ea Fnd ( Ea Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( D</td>
+                <td>Ea Fnd ( Ea D</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Da</td>
+                <td>Ea Fnd ( Ea Da</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( M</td>
+                <td>Ea Fnd ( Ea M</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Ma</td>
+                <td>Ea Fnd ( Ea Ma</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vi</td>
+                <td>Ea Fnd ( Ea Vi</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vf</td>
-                <td>wait</td>
+                <td>Ea Fnd ( Ea Vf</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vo</td>
-                <td>wait</td>
+                <td>Ea Fnd ( Ea Vo</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vu</td>
-                <td>wait</td>
+                <td>Ea Fnd ( Ea Vu</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
             </tbody>
           </table>
           <table frame="void" rules="rows">
-            <title>Source Input Enumeration: Function Expressions, Ea Fnd ( Vf *</title>
+            <title>Source Input Enumeration: Function Expressions, Ea Fnd ( Vf</title>
             <thead>
               <tr>
                 <th>Sequence</th>
@@ -24571,214 +24571,214 @@
             </thead>
             <tbody>
               <tr>
-                <td>Ea Fnd ( E</td>
+                <td>Ea Fnd ( Vf E</td>
                 <td>illegal</td>
                 <td></td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Ea</td>
-                <td>wait</td>
+                <td>Ea Fnd ( Vf Ea</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
                 <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Fea</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Feaa</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Fed</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Feda</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Fem</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Fema</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Feo</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Fn</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Fnm</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf Fnd</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf [</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf ]</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf (</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Ea Fnd ( Vf )</td>
+                <td>ambivalent</td>
+                <td>Ea Fnd Vf</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Fea</td>
+                <td>Ea Fnd ( Vf <literal>←</literal></td>
                 <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
+                <td>Ea Fnd (</td>
                 <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Feaa</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fed</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Feda</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fem</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fema</td>
-                <td>wait</td>
-                <td>Ea Fnd ( Ea</td>
-                <td>4</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Feo</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Fn</td>
+                <td>Ea Fnd ( Vf <literal>⍨</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Fnm</td>
+                <td>Ea Fnd ( Vf <literal>∘</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Fnd</td>
+                <td>Ea Fnd ( Vf <literal>¨</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( [</td>
+                <td>Ea Fnd ( Vf <literal>.</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( ]</td>
+                <td>Ea Fnd ( Vf <literal>⍣</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( (</td>
+                <td>Ea Fnd ( Vf <literal>/</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( )</td>
-                <td>Syntax Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( <literal>←</literal></td>
+                <td>Ea Fnd ( Vf <literal>⌿</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>⍨</literal></td>
+                <td>Ea Fnd ( Vf <literal>\</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>∘</literal></td>
+                <td>Ea Fnd ( Vf <literal>⍀</literal></td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( <literal>¨</literal></td>
-                <td>subsumed</td>
-                <td>Ea Fnd ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( <literal>.</literal></td>
-                <td>subsumed</td>
-                <td>Ea Fnd ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( <literal>⍣</literal></td>
-                <td>subsumed</td>
-                <td>Ea Fnd ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( <literal>/</literal></td>
-                <td>subsumed</td>
-                <td>Ea Fnd ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( <literal>⌿</literal></td>
-                <td>subsumed</td>
-                <td>Ea Fnd ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( <literal>\</literal></td>
-                <td>subsumed</td>
-                <td>Ea Fnd ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( <literal>⍀</literal></td>
-                <td>subsumed</td>
-                <td>Ea Fnd ( Fe</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Ea Fnd ( Break</td>
+                <td>Ea Fnd ( Vf Break</td>
                 <td>Interrupt</td>
                 <td>empty, top-level</td>
                 <td>D3</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( D</td>
+                <td>Ea Fnd ( Vf D</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Da</td>
+                <td>Ea Fnd ( Vf Da</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( M</td>
+                <td>Ea Fnd ( Vf M</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Ma</td>
+                <td>Ea Fnd ( Vf Ma</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vi</td>
+                <td>Ea Fnd ( Vf Vi</td>
                 <td>subsumed</td>
                 <td>Ea Fnd ( Fe</td>
                 <td></td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vf</td>
-                <td>wait</td>
+                <td>Ea Fnd ( Vf Vf</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vo</td>
-                <td>wait</td>
+                <td>Ea Fnd ( Vf Vo</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
               <tr>
-                <td>Ea Fnd ( Vu</td>
-                <td>wait</td>
+                <td>Ea Fnd ( Vf Vu</td>
+                <td>subsumed</td>
+                <td>Ea Fnd ( Fe</td>
                 <td></td>
-                <td>4</td>
               </tr>
             </tbody>
           </table>
