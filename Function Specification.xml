@@ -14744,43 +14744,43 @@
                 <td>Da ( Vo[<literal>⍨</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>∘</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>¨</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>.</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>⍣</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>/</literal> <literal>⌿</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>\</literal> <literal>⍀</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vu</td>
@@ -16902,13 +16902,13 @@
                 <td>Ea ( Vo[<literal>∘</literal>] )</td>
                 <td>wait</td>
                 <td>Ea <literal>∘</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea ( Vo[<literal>∘</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Ea (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea ( Vo[<literal>∘</literal>] <literal>⍨</literal></td>
@@ -17468,7 +17468,7 @@
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>¨</literal>]</td>
                 <td>monadic</td>
                 <td>Fn <literal>\</literal> <literal>¨</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>⍨</literal>]</td>
@@ -17480,43 +17480,43 @@
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>∘</literal>]</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>⍣</literal>]</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> <literal>⍣</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>/</literal>]</td>
                 <td>dyadic axis</td>
                 <td>Fn <literal>\</literal> <literal>/</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>⌿</literal>]</td>
                 <td>dyadic axis</td>
                 <td>Fn <literal>\</literal> <literal>/</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>\</literal>]</td>
                 <td>monadic axis</td>
                 <td>Fn <literal>\</literal> <literal>\</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>⍀</literal>]</td>
                 <td>monadic axis</td>
                 <td>Fn <literal>\</literal> <literal>\</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vo[<literal>.</literal>]</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> <literal>.</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Ea <literal>∘</literal> Fn Vu</td>
@@ -18703,55 +18703,55 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍨</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>∘</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>¨</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍣</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>.</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>⌿</literal>]</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>]</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>]</td>
                 <td>wait</td>
                 <td></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍀</literal>]</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>]</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vu</td>
@@ -22211,13 +22211,13 @@
                 <td>Da ( Vo[<literal>⍨</literal>] )</td>
                 <td>ambivalent</td>
                 <td>Da <literal>⍨</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>⍨</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Da ( </td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>⍨</literal>] <literal>⍨</literal></td>
@@ -22434,13 +22434,13 @@
                 <td>Da ( Vo[<literal>∘</literal>] )</td>
                 <td>wait</td>
                 <td>Da <literal>∘</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>∘</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Da ( </td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>∘</literal>] <literal>⍨</literal></td>
@@ -22657,13 +22657,13 @@
                 <td>Da ( Vo[<literal>¨</literal>] )</td>
                 <td>dyadic</td>
                 <td>Da <literal>¨</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>¨</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Da ( </td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>¨</literal>] <literal>⍨</literal></td>
@@ -22880,13 +22880,13 @@
                 <td>Da ( Vo[<literal>.</literal>] )</td>
                 <td>wait</td>
                 <td>Da <literal>.</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>.</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Da ( </td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>.</literal>] <literal>⍨</literal></td>
@@ -23103,13 +23103,13 @@
                 <td>Da ( Vo[<literal>⍣</literal>] )</td>
                 <td>wait</td>
                 <td>Da <literal>⍣</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>⍣</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Da ( </td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>⍣</literal>] <literal>⍨</literal></td>
@@ -23326,13 +23326,13 @@
                 <td>Da ( Vo[<literal>/</literal> <literal>⌿</literal>] )</td>
                 <td>ambivalent axis</td>
                 <td>Da <literal>/</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>/</literal> <literal>⌿</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Da ( </td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>/</literal> <literal>⌿</literal>] <literal>⍨</literal></td>
@@ -23549,13 +23549,13 @@
                 <td>Da ( Vo[<literal>\</literal> <literal>⍀</literal>] )</td>
                 <td>monadic axis</td>
                 <td>Da <literal>\</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>\</literal> <literal>⍀</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Da ( </td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Da ( Vo[<literal>\</literal> <literal>⍀</literal>] <literal>⍨</literal></td>
@@ -30691,7 +30691,7 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍨</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍨</literal>] <literal>⍨</literal></td>
@@ -30908,13 +30908,13 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>∘</literal>] )</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> <literal>∘</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>∘</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>∘</literal>] <literal>⍨</literal></td>
@@ -31131,13 +31131,13 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>¨</literal>] )</td>
                 <td>monadic</td>
                 <td>Fn <literal>\</literal> <literal>¨</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>¨</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>¨</literal>] <literal>⍨</literal></td>
@@ -31354,13 +31354,13 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍣</literal>] )</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> <literal>⍣</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍣</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>⍣</literal>] <literal>⍨</literal></td>
@@ -31577,13 +31577,13 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>.</literal>] )</td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> <literal>.</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>.</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>.</literal>] <literal>⍨</literal></td>
@@ -31800,13 +31800,13 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>] )</td>
                 <td>ambivalent</td>
                 <td>Fn <literal>\</literal> <literal>/</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>] <literal>⍨</literal></td>
@@ -32023,13 +32023,13 @@
                 <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>] )</td>
                 <td>monadic</td>
                 <td>Fn <literal>\</literal> <literal>\</literal></td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>] <literal>←</literal></td>
                 <td>wait</td>
                 <td>Fn <literal>\</literal> (</td>
-                <td>4</td>
+                <td>4, D5</td>
               </tr>
               <tr>
                 <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>] <literal>⍨</literal></td>
@@ -37272,6 +37272,113 @@
           </table>
         </section>
       </section>
+      <section>
+        <title>Module Invocation Enumeration</title>
+        <simpara>
+          The enumeration of the module invocation is much simpler than that
+          for the Source Input enumeration. We mostly include this
+          enumeration to be clear about the basic cases, and the basic
+          responses. 
+        </simpara>
+        <table frame="void" rules="rows">
+          <title>Module Invocation Enumeration: Top-level</title>
+          <thead>
+            <tr>
+              <th>Sequence</th>
+              <th>Response</th>
+              <th>Equivalent</th>
+              <th>Trace</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Fv</td>
+              <td>Value</td>
+              <td>empty</td>
+              <td>D6</td>
+            </tr>
+            <tr>
+              <td>Var</td>
+              <td>Value</td>
+              <td>empty</td>
+              <td>D6</td>
+            </tr>
+            <tr>
+              <td>Ub</td>
+              <td>Value Error</td>
+              <td>empty</td>
+              <td>D7</td>
+            </tr>
+            <tr>
+              <td>In</td>
+              <td>illegal</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Err</td>
+              <td>illegal</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Call</td>
+              <td>wait</td>
+              <td></td>
+              <td>4</td>
+            </tr>
+          </tbody>
+        </table>
+        <table frame="void" rules="rows">
+          <title>Module Invocation Enumeration: Top-level, Call</title>
+          <thead>
+            <tr>
+              <th>Sequence</th>
+              <th>Response</th>
+              <th>Equivalent</th>
+              <th>Trace</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Call Fv</td>
+              <td>illegal</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Call Var</td>
+              <td>illegal</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Call Ub</td>
+              <td>illegal</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Call In</td>
+              <td>Value</td>
+              <td>empty</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Call Err</td>
+              <td>Error</td>
+              <td>empty</td>
+              <td>D8</td>
+            </tr>
+            <tr>
+              <td>Call Call</td>
+              <td>illegal</td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </section>
     <section>
       <title>Derived Requirements</title>
@@ -37310,6 +37417,31 @@
         <listitem>
           <simpara>
             Allow for any operator to be named or parenthesized.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            The namespace returned by <function>CoDfns.Fix</function> should
+            allow both calling of the functions defined in the given
+            namespace script as well as rebinding them to names outside of
+            the namespace in a manner consistent with normally fixed
+            namespaces.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Attempting to access a variable in the namespace returned by
+            <function>CoDfns.Fix</function> that is not bound by the
+            namespace script should signal a <symbol>VALUE ERROR</symbol>.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Any erroneous input passed to a function of a namespace returned
+            by <function>CoDfns.Fix</function> should result in the same
+            error as would have been produced by giving the same input to
+            the namespace returned by the <function>⎕FIX</function> function
+            on the same namespace script.
           </simpara>
         </listitem>
       </orderedlist>
