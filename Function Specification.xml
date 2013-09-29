@@ -37887,52 +37887,149 @@
           </tr>
         </tbody>
       </table>
+      <simpara>
+        The following analysis for the canonical sequence of Functions is the analysis for all 
+        Function values, including operators, monadic, ambivalent, and dyadic functions.
+      </simpara>
+      <variablelist>
+        <title>Properties for Function Canonical Sequences</title>
+        <varlistentry>
+          <term>Bracket</term>
+          <listitem>
+            <simpara>
+              Have we seen an opening bracket? This is a boolean property.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Cond</term>
+          <listitem>
+            <simpara>
+              Does the current statement we are processing have a conditional? This is a boolean property.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Bind</term>
+          <listitem>
+            <simpara>
+              Are we binding a function? Possible values are: 
+              <symbol>NO</symbol>, <symbol>BOUND</symbol>, or <symbol>UNBOUND</symbol>.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Value</term>
+          <listitem>
+            <simpara>
+              What sort of value is the expression? Possible values are:
+              <symbol>EMPTY</symbol>, <symbol>EXPR</symbol>, <symbol>FUNC</symbol>, <symbol>FVAR</symbol>, or <symbol>UNBOUND</symbol>.
+            </simpara>
+          </listitem>
+        </varlistentry>
+      </variablelist>
       <table frame="void" rules="rows">
         <title>Canonical Sequence Analysis: Functions</title>
         <thead>
           <tr>
             <th>Sequence</th>
+            <th>Bracket</th>
+            <th>Cond</th>
+            <th>Bind</th>
+            <th>Value</th>
           </tr>
         </thead>
         <tbody>
           <tr>
+            <td>empty</td>
+            <td>No</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
             <td>{</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>NO</td>
+            <td>EMPTY</td>
           </tr>
           <tr>
             <td>{ E</td>
-          </tr>
-          <tr>
-            <td>{ }</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>NO</td>
+            <td>EXPR</td>
           </tr>
           <tr>
             <td>{ Vfo</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>NO</td>
+            <td>FVAR</td>
           </tr>
           <tr>
             <td>{ Vu</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>NO</td>
+            <td>UNBOUND</td>
           </tr>
           <tr>
             <td>{ E :</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>NO</td>
+            <td>EMPTY</td>
           </tr>
           <tr>
             <td>{ Vfo <literal>←</literal></td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>BOUND</td>
+            <td>EMPTY</td>
           </tr>
           <tr>
             <td>{ Vu <literal>←</literal></td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>UNBOUND</td>
+            <td>EMPTY</td>
           </tr>
           <tr>
             <td>{ E : E</td>
+            <td>Yes</td>
+            <td>Yes</td>
+            <td>NO</td>
+            <td>EXPR</td>
           </tr>
           <tr>
             <td>{ Vfo <literal>←</literal> Fe</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>BOUND</td>
+            <td>FUNC</td>
           </tr>
           <tr>
             <td>{ Vfo <literal>←</literal> Vfo</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>BOUND</td>
+            <td>FVAR</td>
           </tr>
           <tr>
             <td>{ Vfo <literal>←</literal> Vu</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>BOUND</td>
+            <td>UNBOUND</td>
           </tr>
           <tr>
             <td>{ Vu <literal>←</literal> Fe</td>
+            <td>Yes</td>
+            <td>No</td>
+            <td>UNBOUND</td>
+            <td>FUNC</td>
           </tr>
         </tbody>
       </table>
