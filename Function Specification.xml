@@ -38307,7 +38307,7 @@
             <simpara>
               Are we dealing with an unclosed bracket or parenthesis pair, a closed one, or none at all?
               Possible values are:
-              <symbol>NONE</symbol>, <symbol>PAREN</symbol>, <symbol>BRACKET</symbol>, or <symbol>RBRACK</symbol>.
+              <symbol>NONE</symbol>, <symbol>PAREN</symbol>, <symbol>BRACKET</symbol>, <symbol>EBRACK</symbol> or <symbol>RBRACK</symbol>.
             </simpara>
           </listitem>
         </varlistentry>
@@ -38319,6 +38319,12 @@
               Possible values are:
               <symbol>ATOM</symbol>. <symbol>FUNC</symbol>, or <symbol>SELECT</symbol>.
             </simpara>
+            <simpara>
+              Note that the <symbol>ATOM</symbol> value here does not correspond or map over the same concept as the <glossterm>atomic</glossterm> 
+              response used in expression enumeration. Notably, the <glossterm>atomic</glossterm> response is used in the handling of the right 
+              operand to an operator, while the <symbol>ATOM</symbol> value is used to identify locations of data that will be stranded together, 
+              including indexing operations, even though an indexing operation is not consumed in the right operand to an operator.
+            </simpara>
           </listitem>
         </varlistentry>
         <varlistentry>
@@ -38326,7 +38332,9 @@
           <listitem>
             <simpara>
               What was the last seen value type? Possible values are:
-              <symbol>EMPTY</symbol>, <symbol>LIT</symbol>, <symbol>VAR</symbol>, <symbol>NVAR</symbol>, <symbol>UVAR</symbol>, <symbol>EXPR</symbol>, or <symbol>SELEX</symbol>.
+              <symbol>EMPTY</symbol>, <symbol>LIT</symbol>, <symbol>VAR</symbol>, 
+              <symbol>NVAR</symbol>, <symbol>UVAR</symbol>, <symbol>MIXED</symbol>
+              <symbol>EXPR</symbol>, or <symbol>SELEX</symbol>.
             </simpara>
           </listitem>
         </varlistentry>
@@ -38417,7 +38425,7 @@
           <tr>
             <td>( Es</td>
             <td>PAREN</td>
-            <td>SELECT</td>
+            <td>ATOM</td>
             <td>SELEX</td>
           </tr>
           <tr>
@@ -38436,7 +38444,19 @@
             <td>N Vnu</td>
             <td>NONE</td>
             <td>ATOM</td>
-            <td>UVAR</td>
+            <td>MIXED</td>
+          </tr>
+          <tr>
+            <td>Sm (</td>
+            <td>PAREN</td>
+            <td>SELECT</td>
+            <td>EMPTY</td>
+          </tr>
+          <tr>
+            <td>Sm N</td>
+            <td>NONE</td>
+            <td>SELECT</td>
+            <td>LIT</td>
           </tr>
           <tr>
             <td>Sm Va</td>
@@ -38445,14 +38465,14 @@
             <td>VAR</td>
           </tr>
           <tr>
-            <td>Va [</td>
-            <td>BRACKET</td>
-            <td>ATOM</td>
-            <td>VAR</td>
+            <td>Sm Vna</td>
+            <td>NONE</td>
+            <td>SELECT</td>
+            <td>NVAR</td>
           </tr>
           <tr>
-            <td>Va (</td>
-            <td>PAREN</td>
+            <td>Va [</td>
+            <td>BRACKET</td>
             <td>ATOM</td>
             <td>VAR</td>
           </tr>
@@ -38467,12 +38487,6 @@
             <td>PAREN</td>
             <td>FUNC</td>
             <td>SELEX</td>
-          </tr>
-          <tr>
-            <td>Fea N [</td>
-            <td>BRACKET</td>
-            <td>FUNC</td>
-            <td>LIT</td>
           </tr>
           <tr>
             <td>Fea N (</td>
@@ -38494,9 +38508,27 @@
           </tr>
           <tr>
             <td>N [ E</td>
-            <td>BRACKET</td>
+            <td>EBRACK</td>
             <td>ATOM</td>
+            <td>LIT</td>
+          </tr>
+          <tr>
+            <td>Sm ( E</td>
+            <td>PAREN</td>
+            <td>SELECT</td>
             <td>EXPR</td>
+          </tr>
+          <tr>
+            <td>Sm ( Es</td>
+            <td>PAREN</td>
+            <td>SELECT</td>
+            <td>SELEX</td>
+          </tr>
+          <tr>
+            <td>Sm N (</td>
+            <td>PAREN</td>
+            <td>SELECT</td>
+            <td>LIT</td>
           </tr>
           <tr>
             <td>Sm Va [</td>
@@ -38506,7 +38538,7 @@
           </tr>
           <tr>
             <td>Va [ E</td>
-            <td>BRACKET</td>
+            <td>EBRACK</td>
             <td>ATOM</td>
             <td>VAR</td>
           </tr>
@@ -38518,15 +38550,15 @@
           </tr>
           <tr>
             <td>Fea N [ E</td>
-            <td>BRACKET</td>
+            <td>EBRACK</td>
             <td>FUNC</td>
-            <td>EXPR</td>
+            <td>LIT</td>
           </tr>
           <tr>
             <td>Fea Va [ E</td>
-            <td>BRACKET</td>
+            <td>EBRACK</td>
             <td>FUNC</td>
-            <td>EXPR</td>
+            <td>VAR</td>
           </tr>
           <tr>
             <td>Fea Va [ ]</td>
@@ -38536,9 +38568,9 @@
           </tr>
           <tr>
             <td>Sm Va [ E</td>
-            <td>BRACKET</td>
+            <td>EBRACK</td>
             <td>SELECT</td>
-            <td>EXPR</td>
+            <td>VAR</td>
           </tr>
         </tbody>
       </table>
