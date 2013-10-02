@@ -38574,385 +38574,1084 @@
           </tr>
         </tbody>
       </table>
+      <simpara>
+        Function expressions are by far the most difficult and sequence heavy of the enumerations. 
+        The Function Expression enumerations have a great deal of states because of the subtle 
+        differences in the ways that operators behave. Much of this is hidden in the interpreter 
+        because their behaviors can be encoded in the runtime environment. Since this does not 
+        aid a compiler, it is better to encode these semantics as part of the visible external 
+        behavior, and not hide it behind the semantics of the runtime system.
+      </simpara>
+      <simpara>
+        Conceptually, we have situations where we just have functions, or functions that are the 
+        result of combining some functions or function expressions with operators. Operators can 
+        take axis specifications and some funtions may also do so. Some funtions are ambivalent,
+        others dyadic, and a few are explicitly monadic in their arity. Operators are either 
+        dyadic or monadic, and may take either only functions, or sometimes function values 
+        together with array values. The following properties encode these behaviors.
+      </simpara>
+      <variablelist>
+        <title>Properties for Function Expression Canonical Sequence Analysis</title>
+        <varlistentry>
+          <term>Opnd</term>
+          <listitem>
+            <simpara>
+              What is the current function value without taking into consideration the 
+              current operator? This would be the left operand if there is an operator 
+              to deal with, and would be the function value if there is not. Possible values 
+              are:
+              <symbol>ATOM</symbol>, <symbol>AMB</symbol>, <symbol>NONE</symbol>, 
+              <symbol>JOT</symbol>, <symbol>MON</symbol>, or <symbol>DYA</symbol>.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Oper</term>
+          <listitem>
+            <simpara>
+              What is the current operator we are dealing with? This will be nothing if 
+              we have not seen an operator, or the semantic equivalent value of the operator 
+              that is currently at the top of the parse tree. Possible values are:
+              <symbol>NONE</symbol>, <symbol>DOT</symbol>, <symbol>COMP</symbol>, 
+              <symbol>POW</symbol>, <symbol>ANY</symbol>, <symbol>EACH</symbol>, 
+              <symbol>MON</symbol>, <symbol>DYA</symbol>, <symbol>RED</symbol>, 
+              <symbol>FUNC</symbol>, <symbol>COMM</symbol>, or <symbol>SCN</symbol>.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Axis</term>
+          <listitem>
+            <simpara>
+              Indicates whether a function can take an axis specification or not. It also indicates 
+              whether an axis specification has already been seen, and whether an expression for the 
+              axis specification has already been seen. Possible values are:
+              <symbol>NO</symbol>, <symbol>YES</symbol>, <symbol>SEEN</symbol>, or <symbol>FILD</symbol>.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Nest</term>
+          <listitem>
+            <simpara>
+              Determines whether a parenthesis has been seen. This is a boolean value.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Target</term>
+          <listitem>
+            <simpara>
+              Identifies whether or not we are currently in a targetable position where a variable may be 
+              assigned. This is a boolean value.
+            </simpara>
+          </listitem>
+        </varlistentry>
+      </variablelist>
       <table frame="void" rules="rows">
         <title>Canonical Sequence Analysis: Function Expressions</title>
         <thead>
           <tr>
-            <th>Sequence</th>
+            <th colspan="2">Sequence</th>
+            <th>Opnd</th>
+            <th>Oper</th>
+            <th>Axis</th>
+            <th>Nest</th>
+            <th>Tgt</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>Ea</td>
+            <td colspan="2">Ea</td>
+            <td>ATOM</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn</td>
+            <td>AMB</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fnm</td>
+            <td>NONE</td>
+            <td>MON</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">(</td>
+            <td>NONE</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2"><literal>∘</literal></td>
+            <td>JOT</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Da</td>
+            <td>DYA</td>
+            <td>NONE</td>
+            <td>YES</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Ea Fnd</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Ea (</td>
+            <td>ATOM</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Ea <literal>∘</literal></td>
+            <td>ATOM</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>∘</literal></td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>.</literal></td>
+            <td>AMB</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>\</literal></td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>YES</td>
+            <td>No</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">( Fea</td>
+            <td>AMB</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn</td>
+            <td colspan="2">( Feaa</td>
+            <td>AMB</td>
+            <td>NONE</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fnm</td>
+            <td colspan="2">( Fed</td>
+            <td>DYA</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>(</td>
+            <td colspan="2">( Feda</td>
+            <td>DYA</td>
+            <td>NONE</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td><literal>∘</literal></td>
+            <td colspan="2">( Fem</td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da</td>
+            <td colspan="2">( Fema</td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea Fnd</td>
+            <td colspan="2">( Feo[op]</td>
+            <td>NONE</td>
+            <td>ANY</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea (</td>
+            <td colspan="2">( Vf</td>
+            <td>AMB</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Ea <literal>∘</literal></td>
+            <td colspan="2">( Vo[op]</td>
+            <td>NONE</td>
+            <td>ANY</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>∘</literal></td>
+            <td colspan="2">( Vu</td>
+            <td>NONE</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>.</literal></td>
+            <td colspan="2">Da [</td>
+            <td>DYA</td>
+            <td>NONE</td>
+            <td>SEEN</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal></td>
+            <td colspan="2">Da (</td>
+            <td>DYA</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>( Fea</td>
+            <td colspan="2">Da <literal>∘</literal></td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>( Feaa</td>
+            <td colspan="2">Da <literal>⍣</literal></td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>( Fed</td>
+            <td colspan="2">Ea Fnd (</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>( Feda</td>
+            <td colspan="2">Ea ( Feo[Fnm]</td>
+            <td>ATOM</td>
+            <td>MON</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>( Fem</td>
+            <td colspan="2">Ea ( Feo[Fnd]</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>( Fema</td>
+            <td colspan="2">Ea ( Feo[<literal>∘</literal>]</td>
+            <td>ATOM</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>( Feo[op]</td>
+            <td colspan="2">Ea ( Vf</td>
+            <td>ATOM</td>
+            <td>FUNC</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>( Vf</td>
+            <td colspan="2">Ea ( Vo[<literal>∘</literal>]</td>
+            <td>ATOM</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>( Vo[op]</td>
+            <td colspan="2">Ea ( Vo[Fnm]</td>
+            <td>ATOM</td>
+            <td>MON</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>( Vu</td>
+            <td colspan="2">Ea ( Vo[Fnd]</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da [</td>
+            <td colspan="2">Ea ( Vu</td>
+            <td>ATOM</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da (</td>
+            <td colspan="2">Ea <literal>∘</literal> Fn</td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da <literal>∘</literal></td>
+            <td colspan="2">Ea <literal>∘</literal> (</td>
+            <td>ATOM</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da <literal>⍣</literal></td>
+            <td colspan="2">Fn <literal>∘</literal> (</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea Fnd (</td>
+            <td colspan="2">Fn <literal>.</literal> (</td>
+            <td>AMB</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Feo[Fnm]</td>
+            <td colspan="2">Fn <literal>\</literal> [</td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>SEEN</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Feo[Fnd]</td>
+            <td colspan="2">Fn <literal>\</literal> (</td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Feo[<literal>∘</literal>]</td>
+            <td colspan="2">Fn <literal>\</literal> <literal>∘</literal></td>
+            <td>MON</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Vf</td>
+            <td colspan="2">Fn <literal>\</literal> <literal>⍣</literal></td>
+            <td>MON</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Vo[<literal>∘</literal>]</td>
+            <td colspan="2">Da [ E</td>
+            <td>DYA</td>
+            <td>NONE</td>
+            <td>FILD</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Vo[Fnm]</td>
+            <td colspan="2">Da ( Feo[Fnm]</td>
+            <td>DYA</td>
+            <td>MON</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Vo[Fnd]</td>
+            <td colspan="2">Da ( Feo[Fnd]</td>
+            <td>DYA</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea ( Vu</td>
+            <td colspan="2">Da ( Feo[<literal>⍨</literal>]</td>
+            <td>DYA</td>
+            <td>COMM</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea <literal>∘</literal> Fn</td>
+            <td colspan="2">Da ( Feo[<literal>∘</literal>]</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea <literal>∘</literal> (</td>
+            <td colspan="2">Da ( Feo[<literal>¨</literal>]</td>
+            <td>DYA</td>
+            <td>EACH</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>∘</literal> (</td>
+            <td colspan="2">Da ( Feo[<literal>.</literal>]</td>
+            <td>DYA</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>.</literal> (</td>
+            <td colspan="2">Da ( Feo[<literal>⍣</literal>]</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> [</td>
+            <td colspan="2">Da ( Feo[<literal>/</literal> <literal>⌿</literal>]</td>
+            <td>DYA</td>
+            <td>RED</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> (</td>
+            <td colspan="2">Da ( Feo[<literal>\</literal> <literal>⍀</literal>]</td>
+            <td>DYA</td>
+            <td>SCN</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> <literal>∘</literal></td>
+            <td colspan="2">Da ( Vf</td>
+            <td>DYA</td>
+            <td>FUNC</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> <literal>⍣</literal></td>
+            <td colspan="2">Da ( Vo[Fnm]</td>
+            <td>DYA</td>
+            <td>MON</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da [ E</td>
+            <td colspan="2">Da ( Vo[Fnd]</td>
+            <td>DYA</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[Fnm]</td>
+            <td colspan="2">Da ( Vo[<literal>⍨</literal>]</td>
+            <td>DYA</td>
+            <td>COMM</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[Fnd]</td>
+            <td colspan="2">Da ( Vo[<literal>∘</literal>]</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[<literal>⍨</literal>]</td>
+            <td colspan="2">Da ( Vo[<literal>¨</literal>]</td>
+            <td>DYA</td>
+            <td>EACH</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[<literal>∘</literal>]</td>
+            <td colspan="2">Da ( Vo[<literal>.</literal>]</td>
+            <td>DYA</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[<literal>¨</literal>]</td>
+            <td colspan="2">Da ( Vo[<literal>⍣</literal>]</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[<literal>.</literal>]</td>
+            <td colspan="2">Da ( Vo[<literal>/</literal> <literal>⌿</literal>]</td>
+            <td>DYA</td>
+            <td>RED</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[<literal>⍣</literal>]</td>
+            <td colspan="2">Da ( Vo[<literal>\</literal> <literal>⍀</literal>]</td>
+            <td>DYA</td>
+            <td>SCN</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[<literal>/</literal> <literal>⌿</literal>]</td>
+            <td colspan="2">Da ( Vu</td>
+            <td>DYA</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Feo[<literal>\</literal> <literal>⍀</literal>]</td>
+            <td colspan="2">Da <literal>∘</literal> (</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da ( Vf</td>
+            <td colspan="2">Da <literal>⍣</literal> (</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da ( Vo[Fnm]</td>
+            <td colspan="2">Ea Fnd ( Fea</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da ( Vo[Fnd]</td>
+            <td colspan="2">Ea Fnd ( Vf</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Vo[<literal>⍨</literal>]</td>
+            <td colspan="2">Ea Fnd ( Vo</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Vo[<literal>∘</literal>]</td>
+            <td colspan="2">Ea Fnd ( Vu</td>
+            <td>ATOM</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Vo[<literal>¨</literal>]</td>
+            <td colspan="2">Ea <literal>∘</literal> ( Fea</td>
+            <td>ATOM</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da ( Vo[<literal>.</literal>]</td>
+            <td colspan="2">Ea <literal>∘</literal> ( Vf</td>
+            <td>ATOM</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Vo[<literal>⍣</literal>]</td>
+            <td colspan="2">Ea <literal>∘</literal> ( Vo</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Vo[<literal>/</literal> <literal>⌿</literal>]</td>
+            <td colspan="2">Ea <literal>∘</literal> ( Vu</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da ( Vo[<literal>\</literal> <literal>⍀</literal>]</td>
+            <td colspan="2">Fn <literal>∘</literal> ( Fea</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Da ( Vu</td>
+            <td colspan="2">Fn <literal>∘</literal> ( Vf</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da <literal>∘</literal> (</td>
+            <td colspan="2">Fn <literal>∘</literal> ( Vo</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>NO</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Da <literal>⍣</literal> (</td>
+            <td colspan="2">Fn <literal>∘</literal> ( Vu</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Ea Fnd ( Fea</td>
+            <td colspan="2">Fn <literal>.</literal> ( Fea</td>
+            <td>AMB</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea Fnd ( Vf</td>
+            <td colspan="2">Fn <literal>.</literal> ( Vf</td>
+            <td>AMB</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Ea Fnd ( Vo</td>
+            <td colspan="2">Fn <literal>.</literal> ( Vo</td>
+            <td>AMB</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Ea Fnd ( Vu</td>
+            <td colspan="2">Fn <literal>.</literal> ( Vu</td>
+            <td>AMB</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Ea <literal>∘</literal> ( Fea</td>
+            <td colspan="2">Fn <literal>\</literal> [ E</td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>FILD</td>
+            <td>No</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea <literal>∘</literal> ( Vf</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[Fnm]</td>
+            <td>MON</td>
+            <td>MON</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea <literal>∘</literal> ( Vo</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[Fnd]</td>
+            <td>MON</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Ea <literal>∘</literal> ( Vu</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>∘</literal>]</td>
+            <td>MON</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>∘</literal> ( Fea</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>¨</literal>]</td>
+            <td>MON</td>
+            <td>EACH</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>∘</literal> ( Vf</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>⍣</literal>]</td>
+            <td>MON</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>∘</literal> ( Vo</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>.</literal>]</td>
+            <td>MON</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>∘</literal> ( Vu</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>/</literal>]</td>
+            <td>MON</td>
+            <td>RED</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>.</literal> ( Fea</td>
+            <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>\</literal>]</td>
+            <td>MON</td>
+            <td>SCN</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>.</literal> ( Vf</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vf</td>
+            <td>MON</td>
+            <td>FUNC</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>.</literal> ( Vo</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm]</td>
+            <td>MON</td>
+            <td>MON</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>.</literal> ( Vu</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[Fnd]</td>
+            <td>MON</td>
+            <td>DYA</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> [ E</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>⍨</literal>]</td>
+            <td>MON</td>
+            <td>COMM</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[Fnm]</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>∘</literal>]</td>
+            <td>MON</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[Fnd]</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>¨</literal>]</td>
+            <td>MON</td>
+            <td>EACH</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[<literal>∘</literal>]</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>⍣</literal>]</td>
+            <td>MON</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[<literal>¨</literal>]</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>.</literal>]</td>
+            <td>MON</td>
+            <td>DOT</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[<literal>⍣</literal>]</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>/</literal>]</td>
+            <td>MON</td>
+            <td>RED</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[<literal>.</literal>]</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>\</literal>]</td>
+            <td>MON</td>
+            <td>SCN</td>
+            <td>YES</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[<literal>/</literal>]</td>
+            <td colspan="2">Fn <literal>\</literal> ( Vu</td>
+            <td>MON</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Feo[<literal>\</literal>]</td>
+            <td colspan="2">Fn <literal>\</literal> <literal>∘</literal> (</td>
+            <td>MON</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vf</td>
+            <td colspan="2">Fn <literal>\</literal> <literal>⍣</literal> (</td>
+            <td>MON</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[Fnm]</td>
+            <td colspan="2">Da <literal>∘</literal> ( Fea</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[Fnd]</td>
+            <td colspan="2">Da <literal>∘</literal> ( Fem</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[<literal>⍨</literal>]</td>
+            <td colspan="2">Da <literal>∘</literal> ( Vf</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[<literal>∘</literal>]</td>
+            <td colspan="2">Da <literal>∘</literal> ( Vo</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[<literal>¨</literal>]</td>
+            <td colspan="2">Da <literal>∘</literal> ( Vu</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[<literal>⍣</literal>]</td>
+            <td colspan="2">Da <literal>⍣</literal> ( Fea</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[<literal>.</literal>]</td>
+            <td colspan="2">Da <literal>⍣</literal> ( Fed</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
           </tr>
           <tr>
-            <td>Fn <literal>\</literal> ( Vo[<literal>/</literal>]</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>\</literal> ( Vo[<literal>\</literal>]</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>\</literal> ( Vu</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>\</literal> <literal>∘</literal> (</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>\</literal> <literal>⍣</literal> (</td>
-          </tr>
-          <tr>
-            <td>Da <literal>∘</literal> ( Fea</td>
-          </tr>
-          <tr>
-            <td>Da <literal>∘</literal> ( Fem</td>
-          </tr>
-          <tr>
-            <td>Da <literal>∘</literal> ( Vf</td>
-          </tr>
-          <tr>
-            <td>Da <literal>∘</literal> ( Vo</td>
-          </tr>
-          <tr>
-            <td>Da <literal>∘</literal> ( Vu</td>
-          </tr>
-          <tr>
-            <td>Da <literal>⍣</literal> ( Fea</td>
-          </tr>
-          <tr>
-            <td>Da <literal>⍣</literal> ( Fed</td>
-          </tr>
-          <tr>
-            <td>Da <literal>⍣</literal> ( Vf</td>
-          </tr>
-          <tr>
-            <td>Da <literal>⍣</literal> ( Vo</td>
-          </tr>
-          <tr>
-            <td>Da <literal>⍣</literal> ( Vu</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>∘</literal> ( Fea</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>∘</literal> ( Fem</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>∘</literal> ( Vf</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>∘</literal> ( Vo</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>∘</literal> ( Vu</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>⍣</literal> ( Fea</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>⍣</literal> ( Fed</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>⍣</literal> ( Vf</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>⍣</literal> ( Vo</td>
-          </tr>
-          <tr>
-            <td>Fn <literal>⍣</literal> ( Vu</td>
+            <td colspan="2">Da <literal>⍣</literal> ( Vf</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Da <literal>⍣</literal> ( Vo</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Da <literal>⍣</literal> ( Vu</td>
+            <td>DYA</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>∘</literal> ( Fea</td>
+            <td>DYA</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>∘</literal> ( Fem</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>∘</literal> ( Vf</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>∘</literal> ( Vo</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>∘</literal> ( Vu</td>
+            <td>AMB</td>
+            <td>COMP</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>⍣</literal> ( Fea</td>
+            <td>AMB</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>⍣</literal> ( Fed</td>
+            <td>AMB</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>⍣</literal> ( Vf</td>
+            <td>AMB</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>⍣</literal> ( Vo</td>
+            <td>AMB</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td colspan="2">Fn <literal>⍣</literal> ( Vu</td>
+            <td>AMB</td>
+            <td>POW</td>
+            <td>NO</td>
+            <td>Yes</td>
+            <td>Yes</td>
           </tr>
         </tbody>
       </table>
