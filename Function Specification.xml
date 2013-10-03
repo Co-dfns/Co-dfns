@@ -38634,7 +38634,12 @@
           <term>Nest</term>
           <listitem>
             <simpara>
-              Determines whether a parenthesis has been seen. This is a boolean value.
+              Determines whether a parenthesis has been seen, and what value was found in the nesting.
+              Possible values are:
+              <symbol>NONE</symbol>, <symbol>EMPTY</symbol>, <symbol>A</symbol>, <symbol>AA</symbol>, <symbol>M</symbol>, 
+              <symbol>MA</symbol>, <symbol>D</symbol>, <symbol>DA</symbol>, <symbol>O</symbol>,
+              <symbol>OM</symbol>, <symbol>OD</symbol>, <symbol>COMM</symbol>, <symbol>COMP</symbol>, <symbol>EACH</symbol>, 
+              <symbol>POW</symbol>, <symbol>DOT</symbol>, <symbol>RED</symbol>, or <symbol>SCN</symbol>.
             </simpara>
           </listitem>
         </varlistentry>
@@ -38666,7 +38671,7 @@
             <td>ATOM</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38674,7 +38679,7 @@
             <td>AMB</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38682,7 +38687,7 @@
             <td>NONE</td>
             <td>MON</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38690,7 +38695,7 @@
             <td>NONE</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38698,7 +38703,7 @@
             <td>JOT</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38706,7 +38711,7 @@
             <td>DYA</td>
             <td>NONE</td>
             <td>YES</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38714,7 +38719,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38722,7 +38727,7 @@
             <td>ATOM</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38730,7 +38735,7 @@
             <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38738,7 +38743,7 @@
             <td>AMB</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38746,7 +38751,7 @@
             <td>AMB</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38754,7 +38759,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>YES</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38762,7 +38767,7 @@
             <td>AMB</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38770,7 +38775,7 @@
             <td>AMB</td>
             <td>NONE</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>AA</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38778,7 +38783,7 @@
             <td>DYA</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>D</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38786,7 +38791,7 @@
             <td>DYA</td>
             <td>NONE</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>DA</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38794,7 +38799,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>M</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38802,7 +38807,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>MA</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38810,7 +38815,7 @@
             <td>NONE</td>
             <td>ANY</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38818,7 +38823,7 @@
             <td>AMB</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38826,7 +38831,7 @@
             <td>NONE</td>
             <td>ANY</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38834,7 +38839,7 @@
             <td>NONE</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38842,7 +38847,7 @@
             <td>DYA</td>
             <td>NONE</td>
             <td>SEEN</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38850,7 +38855,7 @@
             <td>DYA</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38858,7 +38863,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38866,7 +38871,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38874,7 +38879,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38882,7 +38887,7 @@
             <td>ATOM</td>
             <td>MON</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OM</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38890,7 +38895,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OD</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38898,7 +38903,7 @@
             <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMP</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38906,7 +38911,7 @@
             <td>ATOM</td>
             <td>FUNC</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38914,7 +38919,7 @@
             <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMP</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38922,7 +38927,7 @@
             <td>ATOM</td>
             <td>MON</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OM</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38930,7 +38935,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OD</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38938,7 +38943,7 @@
             <td>ATOM</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -38946,7 +38951,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38954,7 +38959,7 @@
             <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38962,7 +38967,7 @@
             <td>AMB</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38970,7 +38975,7 @@
             <td>AMB</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38978,7 +38983,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>SEEN</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38986,7 +38991,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -38994,7 +38999,7 @@
             <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39002,7 +39007,7 @@
             <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39010,7 +39015,7 @@
             <td>DYA</td>
             <td>NONE</td>
             <td>FILD</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39018,7 +39023,7 @@
             <td>DYA</td>
             <td>MON</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OM</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39026,7 +39031,7 @@
             <td>DYA</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OD</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39034,7 +39039,7 @@
             <td>DYA</td>
             <td>COMM</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMM</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39042,7 +39047,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMP</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39050,7 +39055,7 @@
             <td>DYA</td>
             <td>EACH</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EACH</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39058,7 +39063,7 @@
             <td>DYA</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>DOT</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39066,7 +39071,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>POW</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39074,7 +39079,7 @@
             <td>DYA</td>
             <td>RED</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>RED</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39082,7 +39087,7 @@
             <td>DYA</td>
             <td>SCN</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>SCN</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39090,7 +39095,7 @@
             <td>DYA</td>
             <td>FUNC</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39098,7 +39103,7 @@
             <td>DYA</td>
             <td>MON</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OM</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39106,7 +39111,7 @@
             <td>DYA</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OD</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39114,7 +39119,7 @@
             <td>DYA</td>
             <td>COMM</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMM</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39122,7 +39127,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMP</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39130,7 +39135,7 @@
             <td>DYA</td>
             <td>EACH</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EACH</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39138,7 +39143,7 @@
             <td>DYA</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>DOT</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39146,7 +39151,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>POW</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39154,7 +39159,7 @@
             <td>DYA</td>
             <td>RED</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>RED</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39162,7 +39167,7 @@
             <td>DYA</td>
             <td>SCN</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>SCN</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39170,7 +39175,7 @@
             <td>DYA</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39178,7 +39183,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39186,7 +39191,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39194,7 +39199,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39202,7 +39207,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39210,7 +39215,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39218,7 +39223,7 @@
             <td>ATOM</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39226,7 +39231,7 @@
             <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39234,23 +39239,23 @@
             <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
             <td colspan="2">Ea <literal>∘</literal> ( Vo</td>
-            <td>AMB</td>
+            <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
             <td colspan="2">Ea <literal>∘</literal> ( Vu</td>
-            <td>AMB</td>
+            <td>ATOM</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39258,7 +39263,7 @@
             <td>AMB</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39266,7 +39271,7 @@
             <td>AMB</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39274,7 +39279,7 @@
             <td>AMB</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>NO</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39282,7 +39287,7 @@
             <td>AMB</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39290,7 +39295,7 @@
             <td>AMB</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39298,7 +39303,7 @@
             <td>AMB</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39306,7 +39311,7 @@
             <td>AMB</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39314,7 +39319,7 @@
             <td>AMB</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39322,7 +39327,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>FILD</td>
-            <td>No</td>
+            <td>NONE</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39330,7 +39335,7 @@
             <td>MON</td>
             <td>MON</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OM</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39338,7 +39343,7 @@
             <td>MON</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OD</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39346,7 +39351,7 @@
             <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMP</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39354,7 +39359,7 @@
             <td>MON</td>
             <td>EACH</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EACH</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39362,7 +39367,7 @@
             <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>POW</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39370,7 +39375,7 @@
             <td>MON</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>DOT</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39378,7 +39383,7 @@
             <td>MON</td>
             <td>RED</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>RED</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39386,7 +39391,7 @@
             <td>MON</td>
             <td>SCN</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>SCN</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39394,7 +39399,7 @@
             <td>MON</td>
             <td>FUNC</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39402,7 +39407,7 @@
             <td>MON</td>
             <td>MON</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OM</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39410,7 +39415,7 @@
             <td>MON</td>
             <td>DYA</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>OD</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39418,7 +39423,7 @@
             <td>MON</td>
             <td>COMM</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMM</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39426,7 +39431,7 @@
             <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>COMP</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39434,7 +39439,7 @@
             <td>MON</td>
             <td>EACH</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EACH</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39442,7 +39447,7 @@
             <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>POW</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39450,7 +39455,7 @@
             <td>MON</td>
             <td>DOT</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>DOT</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39458,7 +39463,7 @@
             <td>MON</td>
             <td>RED</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>RED</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39466,7 +39471,7 @@
             <td>MON</td>
             <td>SCN</td>
             <td>YES</td>
-            <td>Yes</td>
+            <td>SCN</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39474,7 +39479,7 @@
             <td>MON</td>
             <td>NONE</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39482,7 +39487,7 @@
             <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39490,7 +39495,7 @@
             <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39498,7 +39503,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39506,7 +39511,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>M</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39514,7 +39519,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39522,7 +39527,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39530,7 +39535,7 @@
             <td>DYA</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39538,7 +39543,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39546,7 +39551,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>D</td>
             <td>No</td>
           </tr>
           <tr>
@@ -39554,7 +39559,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39562,7 +39567,7 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
@@ -39570,87 +39575,87 @@
             <td>DYA</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>∘</literal> ( Fea</td>
-            <td>DYA</td>
+            <td colspan="2">Fn \ <literal>∘</literal> ( Fea</td>
+            <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>∘</literal> ( Fem</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>∘</literal> ( Fem</td>
+            <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>M</td>
             <td>No</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>∘</literal> ( Vf</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>∘</literal> ( Vf</td>
+            <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>∘</literal> ( Vo</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>∘</literal> ( Vo</td>
+            <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>∘</literal> ( Vu</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>∘</literal> ( Vu</td>
+            <td>MON</td>
             <td>COMP</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>⍣</literal> ( Fea</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>⍣</literal> ( Fea</td>
+            <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>No</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>⍣</literal> ( Fed</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>⍣</literal> ( Fed</td>
+            <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>D</td>
             <td>No</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>⍣</literal> ( Vf</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>⍣</literal> ( Vf</td>
+            <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>A</td>
             <td>Yes</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>⍣</literal> ( Vo</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>⍣</literal> ( Vo</td>
+            <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>O</td>
             <td>Yes</td>
           </tr>
           <tr>
-            <td colspan="2">Fn <literal>⍣</literal> ( Vu</td>
-            <td>AMB</td>
+            <td colspan="2">Fn \ <literal>⍣</literal> ( Vu</td>
+            <td>MON</td>
             <td>POW</td>
             <td>NO</td>
-            <td>Yes</td>
+            <td>EMPTY</td>
             <td>Yes</td>
           </tr>
         </tbody>
