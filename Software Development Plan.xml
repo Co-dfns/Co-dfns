@@ -603,21 +603,19 @@
     <section>
       <title>Configuration Management</title>
       <simpara>
-        Initial prototypes were completed in the GitHub domain. These have been 
-        switched to the use of Fossil, and the Fossil SCM will be used for the 
-        duration of the development. Each increment should receive its own tag 
-        on trunk. 
-        Primary development will occur on the Trunk of the system. Commits should 
+        Git and GitHub.com will be the primary hosting for the configuration management.
+        Each increment should receive its own tag on master.
+        Primary development will occur on the master branch. Commits should 
         maintain code correctness, but there are expected to be more commits than 
         just a single commit per increment. All source and work products will be 
-        kept under configuration management through Fossil. Commits to the 
-        trunk should be small and obviously correct.
+        kept under configuration management through Git. Commits to the 
+        master should be small and obviously correct.
       </simpara>
       <simpara>
         Documentation will be maintained in the source tree through the use of 
-        DocBook files. Their configurations and stylesheets should also be kept 
+        DocBook v5 files. Their configurations and stylesheets should also be kept 
         in source if they differ from the standard, openly available stylesheets.
-        The built-in Wiki of Fossil will not be used for programmer level 
+        The built-in Wiki of GitHub will not be used for programmer level 
         documentation, but will be used as the website and front facing content 
         delivery platform. Likewise, the ticket system should be used as a 
         customer interaction vehicle, and not as a means of tracking errors 
@@ -626,18 +624,9 @@
         <citetitle>Cleanroom Engineering Guide</citetitle>. 
       </simpara>
       <simpara>
-        The central server for hosting will be located at the 
-        <link xlink:href="http://chiselapp.com">Chisel App</link> hosting 
-        until such a time as this becomes impractical, at which point a self-hosted 
-        option will be pursued. This is not likely to be necessary until after the 
-        completion of the first version of the software, and thus deemed mostly 
-        irrelevant for the scope of this development plan. 
-      </simpara>
-      <simpara>
-        Events should be used to report publicly facing announcements, while the 
-        <citetitle>Project Journal</citetitle> should be used to track changes 
-        in the project state and work products that are important to the development 
-        team. 
+        Public facing information and details can be kept on the GitHub wiki. User 
+        comments are to be funneled through the ticket system. The community should 
+        be able to update the Wiki as a vehicle of contribution and ideas.
       </simpara>
     </section>
   </section>
