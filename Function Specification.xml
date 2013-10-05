@@ -38333,7 +38333,7 @@
             <simpara>
               What was the last seen value type? Possible values are:
               <symbol>EMPTY</symbol>, <symbol>LIT</symbol>, <symbol>VAR</symbol>, 
-              <symbol>NVAR</symbol>, <symbol>UVAR</symbol>, <symbol>MIXED</symbol>
+              <symbol>NVAR</symbol>, <symbol>UVAR</symbol>, <symbol>MIXED</symbol>,
               <symbol>EXPR</symbol>, or <symbol>SELEX</symbol>.
             </simpara>
           </listitem>
@@ -39663,11 +39663,1197 @@
     </section>
     <section>
       <title>Specification Functions</title>
-
+      <simpara>
+        The specifications that we will use are based directly off of the properties that 
+        are used above. This is because these functions and properties are of specific but 
+        limited use going forward. The main use they have is to collapse the prior effort into a 
+        stimuli oriented table, rather than a sequence oriented table, and to flatten out the 
+        recursions so that it is not necessary to have the recursive stimuli in the black box 
+        specification.
+      </simpara>
+      <simpara>
+        An intential reduction in the precision is given here by omitting the definitions of the 
+        specification functions. Normally, this would signal a serious problem given the nature 
+        of the state-box specification. However, since we are not going to be using 
+        a state-box specification in the normal fashion, we will not be losing much here, and we 
+        will encode the appropriate behaviors through recursion in the clear-box development.
+      </simpara>
+      <simpara>
+        Additionally, there is an implicit possibility for each of the specification functions to 
+        have no readily useful value in some of the contexts, so we will just omit their mention when 
+        the contribute nothing to the specification.
+      </simpara>
+      <simpara>
+        There is one additional specification function that is not defined by the properties above. 
+        The <function>Context</function> specification function gives a set of possible recursive 
+        stimuli that are accepted at this point, indicating the contexts that could be used. This 
+        return of a set of values instead of a single value distinguishes it slightly from the other 
+        functions, which return only single states. 
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Specification Functions and Ranges</title>
+        <thead>
+          <tr>
+            <th>Function Name</th>
+            <th colspan="3">Possible Values</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Context</td>
+            <td colspan="3">Top, Func, Expr, Fnex</td>
+          </tr>
+          <tr>
+            <td>Fix</td>
+            <td colspan="3">Yes, No</td>
+          </tr>
+          <tr>
+            <td>Obj</td>
+            <td colspan="3">Yes, No</td>
+          </tr>
+          <tr>
+            <td>Namespace</td>
+            <td colspan="3">NOTSEEN, OPEN, CLOSED</td>
+          </tr>
+          <tr>
+            <td>Eot</td>
+            <td colspan="3">Yes, No</td>
+          </tr>
+          <tr>
+            <td>Value</td>
+            <td colspan="3">UNBOUND, EXPR, FUNC, EMPTY, FVAR</td>
+          </tr>
+          <tr>
+            <td>Named</td>
+            <td colspan="3">MAYBE, BOUND, UNBOUND, NO</td>
+          </tr>
+          <tr>
+            <td>Bracket</td>
+            <td colspan="3">Yes, No</td>
+          </tr>
+          <tr>
+            <td>Cond</td>
+            <td colspan="3">Yes, No</td>
+          </tr>
+          <tr>
+            <td>Bind</td>
+            <td colspan="3">NO, BOUND, UNBOUND</td>
+          </tr>
+          <tr>
+            <td>Nest</td>
+            <td colspan="3">NONE, PAREN, BRACKET, EBRACK, RBRACK</td>
+          </tr>
+          <tr>
+            <td>Class</td>
+            <td colspan="3">ATOM, FUNC, SELECT</td>
+          </tr>
+          <tr>
+            <td>Last Seen</td>
+            <td colspan="3">EMPTY, LIT, VAR, NVAR, UVAR, MIXED, EXPR, SELEX</td>
+          </tr>
+          <tr>
+            <td>Opnd</td>
+            <td colspan="3">ATOM, AMB, NONE, JOT, MON, DYA</td>
+          </tr>
+          <tr>
+            <td>Oper</td>
+            <td colspan="3">NONE, DOT, COMP, POW, ANY, EACH, MON, DYA, RED, FUNC, COMM, SCN</td>
+          </tr>
+          <tr>
+            <td>Axis</td>
+            <td colspan="3">NO, YES, SEEN, FILD</td>
+          </tr>
+          <tr>
+            <td>Nest</td>
+            <td colspan="3">NONE, EMPTY, A, AA, M, MA, D, DA, O, OM, OD, COMM, COMP, EACH, POW, DOT, RED, SCN</td>
+          </tr>
+          <tr>
+            <td>Target</td>
+            <td colspan="3">Yes, No</td>
+          </tr>
+        </tbody>
+      </table>
     </section>
     <section>
       <title>Black Box Definitions</title>
-
+      <simpara>
+        The black-box definition is a completely specification at the stimuli level of the 
+        behavior of the system based on external stimuli and responses documented in the previous 
+        sections. In particular, there is a table for each possible stimuli that can enter the 
+        system and a row in each table for the different possible responses. Traces indicate 
+        the where and why of requirements that determins this behavior.
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: {</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <simplelist type="vert" columns="1">
+                <member>Context <literal>∊</literal> Top Expr Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> Yes</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: }</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Expr Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EXPR FUNC</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bind <literal>∊</literal> NO</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bind <literal>∊</literal> BOUND</member>
+                <member>Value <literal>∊</literal> FVAR FUNC</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> UNBOUND</member>
+              </simplelist>
+            </td>
+            <td>VALUE ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bind <literal>∊</literal> NO</member>
+                <member>Value <literal>∊</literal> FVAR</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bind <literal>∊</literal> BOUND UNBOUND</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: [</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: ]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: (</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: )</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: ;</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: :</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: ::</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>⋄</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>←</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>⍨</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>∘</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>¨</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>.</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>⍣</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>/</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>⌿</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>\</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: <literal>⍀</literal></title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Break</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: D</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Da</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Eot</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Fix</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Fnb</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Fne</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Fnf</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Lle</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Lls</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: M</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Ma</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: N</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Nl</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Nse</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Nss</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: S</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Sm</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Sd</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Va</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vna</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vi</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vf</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vfo</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[Fnm]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[Fnd]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>⍨</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>∘</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>¨</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>.</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>⍣</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>/</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>⌿</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>\</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vo[<literal>⍀</literal>]</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vnu</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Black Box Definition: Vu</title>
+        <thead>
+          <tr>
+            <th>Conditions</th>
+            <th>Response</th>
+            <th>Trace</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </section>
 </article>
