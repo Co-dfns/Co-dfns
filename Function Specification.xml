@@ -40012,9 +40012,77 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Func</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> BRACKET EBRACK</member>
+                <member>~Class <literal>∊</literal> SELECT</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> BRACKET EBRACK</member>
+                <member>Class <literal>∊</literal> SELECT</member>
+              </simplelist>
+            </td>
+            <td>selective</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>~Nest <literal>∊</literal> BRACKET EBRACK</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Axis <literal>∊</literal> FILD</member>
+                <member>Opnd <literal>∊</literal> DYA</member>
+              </simplelist>
+            </td>
+            <td>dyadic</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Axis <literal>∊</literal> FILD</member>
+                <member>Opnd <literal>∊</literal> MON</member>
+              </simplelist>
+            </td>
+            <td>monadic</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Axis <literal>∊</literal> FILD</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
         </tbody>
       </table>
