@@ -42373,9 +42373,50 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Func Expr</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>oper[<literal>∘</literal>]</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>wait</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
