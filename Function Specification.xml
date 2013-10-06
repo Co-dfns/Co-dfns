@@ -43718,7 +43718,6 @@
             <td>
               <simplelist>
                 <member>Context <literal>∊</literal> Top</member>
-                <member>Fix <literal>∊</literal> Yes</member>
                 <member>Value <literal>∊</literal> EXPR FUNC</member>
               </simplelist>
             </td>
@@ -43729,13 +43728,23 @@
             <td>
               <simplelist>
                 <member>Context <literal>∊</literal> Top</member>
-                <member>Fix <literal>∊</literal> Yes</member>
                 <member>Value <literal>∊</literal> EMPTY</member>
                 <member>Named <literal>∊</literal> NO</member>
               </simplelist>
             </td>
             <td>null</td>
             <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Named <literal>∊</literal> BOUND UNBOUND</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
           <tr>
             <td>
@@ -43814,9 +43823,65 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func Expr Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EXPR FUNC</member>
+              </simplelist>
+            </td>
+            <td>null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Named <literal>∊</literal> NO</member>
+              </simplelist>
+            </td>
+            <td>null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> UNBOUND</member>
+              </simplelist>
+            </td>
+            <td>VALUE ERROR</td>
+            <td>4, 10, 16, 21</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Named <literal>∊</literal> BOUND UNBOUND</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
         </tbody>
       </table>
@@ -43831,9 +43896,33 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func Expr Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>~Namespace <literal>∊</literal> NOTSEEN</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN</member>
+              </simplelist>
+            </td>
+            <td>null</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
