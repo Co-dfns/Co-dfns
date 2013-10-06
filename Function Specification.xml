@@ -41971,16 +41971,40 @@
         <title>Black Box Definition: ;</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="2">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Func Fnex</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> BRACKET EBRACK</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE PAREN RBRACK</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
         </tbody>
       </table>
