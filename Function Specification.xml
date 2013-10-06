@@ -4161,7 +4161,7 @@
               </tr>
               <tr>
                 <td>{ Vfo <literal>←</literal> Vu :</td>
-                <td>Syntax Error</td>
+                <td>Value Error</td>
                 <td>empty, top-level</td>
                 <td>4, 10</td>
               </tr>
@@ -42009,7 +42009,7 @@
         </tbody>
       </table>
       <table frame="void" rules="rows">
-        <title>Black Box Definition: :</title>
+        <title>Black Box Definition: : or ::</title>
         <thead>
           <tr>
             <th>Conditions</th>
@@ -42019,26 +42019,55 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Expr Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
-        </tbody>
-      </table>
-      <table frame="void" rules="rows">
-        <title>Black Box Definition: ::</title>
-        <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
-            <th>Trace</th>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EXPR</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>wait</td>
+            <td>4</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> UNBOUND</member>
+              </simplelist>
+            </td>
+            <td>VALUE ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>~Value <literal>∊</literal> EXPR UNBOUND</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EXPR</member>
+                <member>Cond <literal>∊</literal> Yes</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
         </tbody>
       </table>
