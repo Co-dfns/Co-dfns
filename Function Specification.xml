@@ -43201,9 +43201,44 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func Expr Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> CLOSED</member>
+                <member>Eot <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>~Namespace <literal>∊</literal> CLOSED</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>~Eot <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
         </tbody>
       </table>
@@ -43218,9 +43253,14 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Fix <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>null</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
