@@ -43341,9 +43341,15 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> CLOSED</member>
+                <member>Eot <literal>∊</literal> Yes</member>
+              </simplelist>
+            </td>
+            <td>INTERNAL ERROR</td>
+            <td>D4</td>
           </tr>
         </tbody>
       </table>
@@ -43358,9 +43364,15 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> CLOSED</member>
+                <member>Eot <literal>∊</literal> Yes</member>
+              </simplelist>
+            </td>
+            <td>Namespace</td>
+            <td>4, 16, 21</td>
           </tr>
         </tbody>
       </table>
