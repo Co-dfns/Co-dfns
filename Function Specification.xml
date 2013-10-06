@@ -1262,9 +1262,9 @@
               </tr>
               <tr>
                 <td>Fix Fne Fnb</td>
-                <td>Domain Error</td>
-                <td>empty</td>
-                <td>D2</td>
+                <td>illegal</td>
+                <td></td>
+                <td></td>
               </tr>
               <tr>
                 <td>Fix Fne Fne</td>
@@ -43275,9 +43275,14 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN</member>
+              </simplelist>
+            </td>
+            <td>DOMAIN ERROR</td>
+            <td>D2</td>
           </tr>
         </tbody>
       </table>
@@ -43292,9 +43297,14 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN</member>
+              </simplelist>
+            </td>
+            <td>null</td>
+            <td>17, 21</td>
           </tr>
         </tbody>
       </table>
@@ -43309,9 +43319,14 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN</member>
+              </simplelist>
+            </td>
+            <td>FILE NAME ERROR</td>
+            <td>30</td>
           </tr>
         </tbody>
       </table>
