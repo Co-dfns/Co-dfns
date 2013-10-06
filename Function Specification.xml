@@ -43631,7 +43631,7 @@
         </tbody>
       </table>
       <table frame="void" rules="rows">
-        <title>Black Box Definition: N</title>
+        <title>Black Box Definition: N and S</title>
         <thead>
           <tr>
             <th>Conditions</th>
@@ -43923,23 +43923,6 @@
             </td>
             <td>null</td>
             <td>4</td>
-          </tr>
-        </tbody>
-      </table>
-      <table frame="void" rules="rows">
-        <title>Black Box Definition: S</title>
-        <thead>
-          <tr>
-            <th>Conditions</th>
-            <th>Response</th>
-            <th>Trace</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
           </tr>
         </tbody>
       </table>
