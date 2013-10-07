@@ -3063,12 +3063,6 @@
                 <td>4, 10</td>
               </tr>
               <tr>
-                <td>Vi</td>
-                <td>Value Error</td>
-                <td>empty</td>
-                <td>4, 10</td>
-              </tr>
-              <tr>
                 <td>Vfo</td>
                 <td>Syntax Error</td>
                 <td>empty</td>
@@ -3172,12 +3166,6 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vi</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vu</td>
                 <td>wait</td>
                 <td></td>
@@ -3270,12 +3258,6 @@
               </tr>
               <tr>
                 <td>{ E Vfo</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E Vi</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
@@ -3378,12 +3360,6 @@
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vfo Vi</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vfo Vu</td>
                 <td>subsumed</td>
                 <td>{ E</td>
@@ -3476,12 +3452,6 @@
               </tr>
               <tr>
                 <td>{ Vu Vfo</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vu Vi</td>
                 <td>subsumed</td>
                 <td>{ E</td>
                 <td></td>
@@ -3584,12 +3554,6 @@
                 <td></td>
               </tr>
               <tr>
-                <td>{ E : Vi</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ E : Vu</td>
                 <td>subsumed</td>
                 <td>{ E : E</td>
@@ -3685,12 +3649,6 @@
                 <td>wait</td>
                 <td></td>
                 <td>4</td>
-              </tr>
-              <tr>
-                <td>{ Vfo <literal>←</literal> Vi</td>
-                <td>subsumed</td>
-                <td>{ Vfo <literal>←</literal> E</td>
-                <td></td>
               </tr>
               <tr>
                 <td>{ Vfo <literal>←</literal> Vu</td>
@@ -3790,12 +3748,6 @@
                 <td>4</td>
               </tr>
               <tr>
-                <td>{ Vu <literal>←</literal> Vi</td>
-                <td>subsumed</td>
-                <td>{ E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vu <literal>←</literal> Vu</td>
                 <td>subsumed</td>
                 <td>{ E</td>
@@ -3888,12 +3840,6 @@
               </tr>
               <tr>
                 <td>{ E : E Vfo</td>
-                <td>subsumed</td>
-                <td>{ E : E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ E : E Vi</td>
                 <td>subsumed</td>
                 <td>{ E : E</td>
                 <td></td>
@@ -3996,12 +3942,6 @@
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vfo <literal>←</literal> Fe Vi</td>
-                <td>subsumed</td>
-                <td>{ Vfo <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vfo <literal>←</literal> Fe Vu</td>
                 <td>subsumed</td>
                 <td>{ Vfo <literal>←</literal> E</td>
@@ -4094,12 +4034,6 @@
               </tr>
               <tr>
                 <td>{ Vfo <literal>←</literal> Vfo Vfo</td>
-                <td>subsumed</td>
-                <td>{ Vfo <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vfo <literal>←</literal> Vfo Vi</td>
                 <td>subsumed</td>
                 <td>{ Vfo <literal>←</literal> E</td>
                 <td></td>
@@ -4202,12 +4136,6 @@
                 <td></td>
               </tr>
               <tr>
-                <td>{ Vfo <literal>←</literal> Vu Vi</td>
-                <td>subsumed</td>
-                <td>{ Vfo <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
                 <td>{ Vfo <literal>←</literal> Vu Vu</td>
                 <td>subsumed</td>
                 <td>{ Vfo <literal>←</literal> E</td>
@@ -4300,12 +4228,6 @@
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Fe Vfo</td>
-                <td>subsumed</td>
-                <td>{ Vu <literal>←</literal> E</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>{ Vu <literal>←</literal> Fe Vi</td>
                 <td>subsumed</td>
                 <td>{ Vu <literal>←</literal> E</td>
                 <td></td>
@@ -44032,9 +43954,71 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Func Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>Class <literal>∊</literal> FUNC</member>
+                <member>Last Seen <literal>∊</literal> EMPTY LIT</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> RBRACK</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>Class <literal>∊</literal> ATOM</member>
+                <member>Last Seen <literal>∊</literal> LIT EMPTY</member>
+              </simplelist>
+            </td>
+            <td>atomic</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>Class <literal>∊</literal> SELECT</member>
+                <member>Last Seen <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td>selective</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>Class <literal>∊</literal> SELECT</member>
+                <member>Last Seen <literal>∊</literal> LIT</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44049,9 +44033,47 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Func Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>Class <literal>∊</literal> FUNC SELECT</member>
+                <member>Last Seen <literal>∊</literal> EMPTY LIT</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> RBRACK</member>
+              </simplelist>
+            </td>
+            <td>okay</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>Class <literal>∊</literal> ATOM</member>
+                <member>Last Seen <literal>∊</literal> LIT EMPTY</member>
+              </simplelist>
+            </td>
+            <td>atomic</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44066,9 +44088,33 @@
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr Fnex</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>VALUE ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
           </tr>
         </tbody>
       </table>
