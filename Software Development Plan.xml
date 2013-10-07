@@ -317,31 +317,48 @@
         <informaltable frame="void" rules="rows">
           <thead>
             <tr>
-              <th>Number</th>
-              <th colspan="5">Description</th>
-              <th colspan="2">Due Date</th>
+              <th>#</th>
+              <th colspan="7">Description</th>
+              <th colspan="3">Due Date</th>
+              <th colspan="3">Completed</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>1</td>
-              <td colspan="5">Planning and Specification</td>
-              <td colspan="2">July 31st, 2013</td>
+              <td colspan="7">Planning and Function Specification</td>
+              <td colspan="3">July 31st, 2013</td>
+              <td colspan="3">Oct. 6th, 2013</td>
             </tr>
             <tr>
               <td>2</td>
-              <td colspan="5">Architecture Specification</td>
-              <td colspan="2">August 9th, 2013</td>
+              <td colspan="7">Architecture Specification and Increment Planning</td>
+              <td colspan="3">Oct. 7th, 2013</td>
+              <td colspan="3"></td>
             </tr>
             <tr>
               <td>3</td>
-              <td colspan="5">Increment, Usage Model, and Test Planning</td>
-              <td colspan="2">August 18th, 2013</td>
+              <td colspan="7">Preliminary Increment Design and Testing for Conference</td>
+              <td colspan="3">Oct. 11th, 2013</td>
+              <td colspan="3"></td>
             </tr>
             <tr>
               <td>4</td>
-              <td colspan="5">Increment Design</td>
-              <td colspan="2">October 19th, 2013</td>
+              <td colspan="7">Usage Specification, Model, and Test Planning</td>
+              <td colspan="3">Oct. 17th, 2013</td>
+              <td colspan="3"></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td colspan="7">Continuing Increment Design</td>
+              <td colspan="3">Dec. 1st, 2013</td>
+              <td colspan="3"></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td colspan="7">Final Certification and Release Packaging</td>
+              <td colspan="3">Dec. 15th, 2013</td>
+              <td colspan="3"></td>
             </tr>
           </tbody>
         </informaltable>

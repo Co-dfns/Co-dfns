@@ -124,7 +124,12 @@
             <td colspan="2">
               <simplelist type="horiz">
                 <member>Completed <citetitle>Function Specification</citetitle></member>
-                <member>Merging derived requirements into <citetitle>Software Requirements</citetitle></member>
+                <member>Merged derived requirements into <citetitle>Software Requirements</citetitle></member>
+                <member>Entering Project Planning to revise <citetitle>Software Development Plan</citetitle></member>
+                <member>Assess adjustment of the schedule due to delays and deadlines</member>
+                <member>Revised <citetitle>Software Development Plan</citetitle></member>
+                <member>Exiting Project Planning</member>
+                <member>Entering Architecture Specification</member>
               </simplelist>
             </td>
           </tr>
