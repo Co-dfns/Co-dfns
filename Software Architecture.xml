@@ -122,6 +122,73 @@
       </section>
       <section>
         <title>Analysis: Parsing Prototypes</title>
+        <simpara>
+          Three main parsing prototypes have been created, each using a different parsing technology. 
+          These were implemented in three different languages: C, C++, and Dyalog. The C version used the Peg(1) 
+          parser generator, while the C++ version used the Boost Spirit parser combinators. The Dyalog version 
+          was an attempt to move the parser generator style based on combinators into the Dyalog framework. 
+        </simpara>
+        <simpara>
+          The peg(1) based parsers all suffered from a single major flaw: difficulty in threading state information 
+          up and down the channels of parsing. In other words, the Co-Dfns language has a few places where ambiguity 
+          exist and require information about the bindings in the environment to disambiguate. In particular, it is 
+          important to know whether a variable is bound to a value, a function, or a monadic or dyadic operator, and 
+          if it is some sort of operator, what operator it is. 
+        </simpara>
+        <simpara>
+          The interpreter gets around this by leaving some of this ambiguity around until runtime, but it also 
+          interleaves evaluation with parsing, so that parsing already has some environmental information ahead of 
+          time. The compiler will not have this luxury. Instead, it seems necessary to have a series of passes specifically 
+          for the parser to enable it to extract the important information ahead of time without requiring all of 
+          the elements to be parsed. 
+        </simpara>
+        <simpara>
+          The Boost C++ parser was the most successful attempt, and the boost system does in fact have facilities for 
+          parsing while threading information through the system. It became clear, however, that the clarity of the 
+          code was beginning to suffer through the system, and the approach still resulted in the need to have a multi-phase 
+          parser that would have looked slightly convoluted in the Spirit combinators, despite their capacity.
+        </simpara>
+        <simpara>
+          The vast majority of parsing in Co-Dfns is very simple, or at least, regular in description. It is possible to 
+          use state machines to describe most of the behavior of the system (see the analysis of 
+          <citetitle>Function Specification</citetitle>) with only very specific instances of needing recursion. This leads 
+          to the general conclusion that a traditional in-code parser written using aggregate operators on top of a decent 
+          tokenization will lead to better results and a more readable solution, allowing the code to match very closely the 
+          regular and recursive elements and keeping the code much more compact than would have arisen with the use of a 
+          parser library.
+        </simpara>
+        <simpara>
+          Even if most of the instances of ambiguity are removed through the use of a multi-stage parser, there are specific 
+          instances in the case of operators with the <literal>⍺⍺</literal> and <literal>⍵⍵</literal> types and the 
+          ambivalent assignment of <literal>⍺</literal> that result in ambiguities which cannot be easily removed. Thus, 
+          the grammar will need to be able to take into account different compilation strategies for different versions.
+          Fortunately, the potential differences are isolated and contained within a single scope and do not extend across 
+          scopes.
+        </simpara>
+        <itemizedlist spacing="compact">
+          <title>Summary of Parsing Prototypes Insights</title>
+          <listitem>
+            <simpara>Most of the parsing of Co-Dfns is regular</simpara>
+          </listitem>
+          <listitem>
+            <simpara>There are specific cases of necessary recursions</simpara>
+          </listitem>
+          <listitem>
+            <simpara>There are simple, but necessary needs for muli-pass refinements of the parsing</simpara>
+          </listitem>
+          <listitem>
+            <simpara>The parser must use passes to extract type information for variables in order to eliminate most ambiguity</simpara>
+          </listitem>
+          <listitem>
+            <simpara>Some instance of ambiguity will remain</simpara>
+          </listitem>
+          <listitem>
+            <simpara>The grammar will need to take into account those instances of ambiguity that cannot be eliminated</simpara>
+          </listitem>
+          <listitem>
+            <simpara>Most of the parser should be able to use aggregate style programming to express the parsing stages clearly</simpara>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Analysis: Runtime Prototypes</title>
@@ -138,6 +205,45 @@
       <section>
         <title>Analysis: Miscellaneous Observations</title>
       </section>
+      <itemizedlist spacing="compact">
+        <title>Summary of Analysis</title>
+        <listitem>
+          <simpara>[NanoPass] Compiler should use a single unified grammar</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Use a formal verification of the correctness of each compiler pass</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Use small, numerous compiler passes rather than large, monolithic passes</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Use aggregate, pure-functional programming as much as possible</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Global state is okay, but should remain immutable throughout a given compiler invocation</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] Most of the parsing of Co-Dfns is regular</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] There are specific cases of necessary recursions</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] There are simple, but necessary needs for muli-pass refinements of the parsing</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] The parser must use passes to extract type information for variables in order to eliminate most ambiguity</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] Some instance of ambiguity will remain</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] The grammar will need to take into account those instances of ambiguity that cannot be eliminated</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] Most of the parser should be able to use aggregate style programming to express the parsing stages clearly</simpara>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>Software Strategy</title>
