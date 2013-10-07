@@ -51,6 +51,71 @@
       </simpara>
       <section>
         <title>Analysis: Nanopass</title>
+        <simpara>
+          The NanoPass compiler framework is a Scheme eDSL designed to make it easier to write 
+          compilers by using a series of small compiler passes over a series of ASTs that are 
+          all related to one another. A compiler pass in the NanoPass framework consists of 
+          an input and output grammar for the language being transformed, and the code that 
+          described the transformation from the old grammar into the new grammar. 
+        </simpara>
+        <simpara>
+          Andy Keep demonstrated in his dissertation that the NanoPass framework scaled to 
+          commercial compiler enterprises effectively. However, the framework itself does not 
+          fit with the requirement to have a self-hosting compiler. The overall approach can be 
+          kept the same, and indeed, the NanoPass style is probably best for lifting out the 
+          salient features of the compiler and making the compiler easier to modify and to 
+          understand. 
+        </simpara>
+        <simpara>
+          Adapting the NanoPass framework to Co-Dfns will require a few changes. Namely, it is 
+          slightly more difficult to do careful checking of error conditions on grammars, which 
+          the NanoPass framework gives by default. This will require either explicit checking 
+          or adaptation in terms of the grammars used. One approach would be to use a single
+          unified grammar rather than many smaller grammars, and then make adjustments based on 
+          this. This has the benefits of making the definition of the AST simpler, and could 
+          simplify some of the code, but will require the use of more rigorous development 
+          processes to offset potential problems with verification of the output of each 
+          pass.
+        </simpara>
+        <simpara>
+          The NanoPass framework also encourages a pure functional, compositional approach to 
+          pass development, and this is a very good practice. Thus, state should, in general, not 
+          be shared across passes, and the overall design of the compiler should be as state-free 
+          as can be managed. Mutation, if used, should be isolated to a single scope and depth for 
+          any given mutation over any given object. Global state may be used, but should remain 
+          fixed for any given run of the compiler and should not change from one pass to the next.
+        </simpara>
+        <simpara>
+          A final insight from the NanoPass framework is the benefit of thinking in terms of a series 
+          of global transformations over an object, rather than on local iterations over the same 
+          space. We can scale this even further to encourage programming in the aggregate as much as 
+          possible for clarity. This means that we should avoid as much as possible iterations and 
+          recursions that cannot be expressed as a simple aggregate transformation. Where recursion is 
+          inherent in the problem, then it makes sense to use recursion where expected but otherwise, 
+          we should hope to avoid the use of unnecessary control structures where aggregate operations 
+          can more succinctly express the problem. This has benefits both in terms of potential 
+          performance and in terms of problem decomposition. This decomposition is the primary concern 
+          of our state-box design methodology that we use to replace the traditional box-structure 
+          method of doing state-box design.
+        </simpara>
+        <itemizedlist spacing="compact">
+          <title>Summary of NanoPass Insights</title>
+          <listitem>
+            <simpara>Compiler should use a single unified grammar</simpara>
+          </listitem>
+          <listitem>
+            <simpara>Use a formal verification of the correctness of each compiler pass</simpara>
+          </listitem>
+          <listitem>
+            <simpara>Use small, numerous compiler passes rather than large, monolithic passes</simpara>
+          </listitem>
+          <listitem>
+            <simpara>Use aggregate, pure-functional programming as much as possible</simpara>
+          </listitem>
+          <listitem>
+            <simpara>Global state is okay, but should remain immutable throughout a given compiler invocation</simpara>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Analysis: LLVM</title>
