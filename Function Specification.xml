@@ -44122,16 +44122,130 @@
         <title>Black Box Definition: Vf</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE AMB</member>
+                <member>Oper <literal>∊</literal> NONE DYA COMP</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">ambivalent</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM AMB JOT DYA MON</member>
+                <member>Oper <literal>∊</literal> NONE MON</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM MON</member>
+                <member>Oper <literal>∊</literal> COMP</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">monadic</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> DYA</member>
+                <member>Oper <literal>∊</literal> COMP POW</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">dyadic</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Oper <literal>∊</literal> DOT</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">dyadic</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44139,16 +44253,121 @@
         <title>Black Box Definition: Vo[Fnm]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> JOT</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">oper[Fnm]</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM AMB MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">ambivalent</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44156,16 +44375,121 @@
         <title>Black Box Definition: Vo[Fnd]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> JOT</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">oper[Fnd]</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM AMB MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44173,16 +44497,121 @@
         <title>Black Box Definition: Vo[<literal>⍨</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">ambivalent</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> JOT MON ATOM</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">oper[<literal>⍨</literal>]</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44190,16 +44619,108 @@
         <title>Black Box Definition: Vo[<literal>∘</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">oper[<literal>∘</literal>]</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44207,16 +44728,147 @@
         <title>Black Box Definition: Vo[<literal>¨</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> JOT ATOM</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">oper[<literal>¨</literal>]</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">ambivalent</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> MON</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">monadic</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">dyadic</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44224,16 +44876,121 @@
         <title>Black Box Definition: Vo[<literal>.</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">oper[<literal>.</literal>]</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB JOT MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44241,16 +44998,121 @@
         <title>Black Box Definition: Vo[<literal>⍣</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> JOT ATOM</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">oper[<literal>⍣</literal>]</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44258,16 +45120,121 @@
         <title>Black Box Definition: Vo[<literal>/</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM JOT</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">dyadic axis</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">ambivalent axis</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44275,16 +45242,121 @@
         <title>Black Box Definition: Vo[<literal>⌿</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM JOT</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">dyadic axis</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">ambivalent axis</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44292,16 +45364,121 @@
         <title>Black Box Definition: Vo[<literal>\</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM JOT</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">dyadic axis</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">monadic axis</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -44309,16 +45486,121 @@
         <title>Black Box Definition: Vo[<literal>⍀</literal>]</title>
         <thead>
           <tr>
-            <th>Conditions</th>
-            <th>Response</th>
+            <th colspan="3">Conditions</th>
+            <th colspan="2">Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td colspan="2">wait</td>
+            <td>4, D5</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>~Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> ATOM JOT</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">dyadic axis</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Opnd <literal>∊</literal> AMB MON DYA</member>
+                <member>Oper <literal>∊</literal> NONE</member>
+                <member>Axis <literal>∊</literal> NO YES</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td colspan="2">monadic axis</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
