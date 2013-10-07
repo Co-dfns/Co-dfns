@@ -44136,23 +44136,6 @@
         </tbody>
       </table>
       <table frame="void" rules="rows">
-        <title>Black Box Definition: Vfo</title>
-        <thead>
-          <tr>
-            <th>Conditions</th>
-            <th>Response</th>
-            <th>Trace</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-      <table frame="void" rules="rows">
         <title>Black Box Definition: Vo[Fnm]</title>
         <thead>
           <tr>
