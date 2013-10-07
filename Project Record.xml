@@ -119,6 +119,15 @@
               </simplelist>
             </td>
           </tr>
+          <tr>
+            <td>Sunday, October 6th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>Completed <citetitle>Function Specification</citetitle></member>
+                <member>Merging derived requirements into <citetitle>Software Requirements</citetitle></member>
+              </simplelist>
+            </td>
+          </tr>
         </tbody>
       </informaltable>
     </section>
