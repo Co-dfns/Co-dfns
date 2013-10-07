@@ -136,6 +136,52 @@
             not affecting the performance.
           </simpara>
         </listitem>
+        <listitem>
+          <simpara>
+            [Specification] Tokenization scheme is suggested by the abstract stimuli chosen
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Specification] Recursions inherent in the problem are indicated by the recursive stimuli
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Specification] Recursive stimuli suggest a decomposition and grammar for the AST
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Specification] Many stimuli lend themselves to aggregate analysis
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Specification] Variables and their relation to primitives is very complex and should be handled carefully in the AST
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Specification] The AST should allow for easy analysis of primitive values, whatever they are named
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Specification] Atom-level elements of the AST are suggested by the stimuli sets and scheme in general
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Specification] Function expressions are the most state-heavy elements due to the number of classes of operator behavior and the supporting of nested behavior
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Language Reference] The Language Reference should be used to provide detailed behavior of the primitives and the
+            nature of promotion
+          </simpara>
+        </listitem>
       </itemizedlist>
       <section>
         <title>Analysis: Nanopass</title>
@@ -424,9 +470,111 @@
       </section>
       <section>
         <title>Analysis: Function Specification</title>
+        <simpara>
+          The <citetitle>Function Specification</citetitle> is a work product of our development process and 
+          includes the detailed specification of the compiler behavior as an external Black Box definition.
+          A number of interesting elements came out of this effort.
+        </simpara>
+        <simpara>
+          The first advantage is a clear identification of the sort of tokens that matter most and their 
+          classifications. These are mostly abstract, but serve as an useful initial guide for the tokenization 
+          effort as well as for the definition of the Grammar.
+          Secondly, the specification divides the complexity of the system into four classes of entities in the 
+          system, which informs the grammar. Furthermore, these classes identify the only places where recursion 
+          is inherent in the problem.
+          Examining the specification, many of the stimuli lend themselves to aggregate 
+          examination and processing without requiring iteration through the tokens.
+        </simpara>
+        <simpara>
+          Variables are one of the most complex stimuli in the specification, as expected, since they can hold 
+          so many different values. It will be helpful to link the variable and primitive functions in such a 
+          way that one can identity all of the instances of a primitive, regardless of its name. Additionally, 
+          the grammar should make sure to clearly identify the class or type of a variable. 
+        </simpara>
+        <simpara>
+          Each of the classes of recursive stimuli which partition the various values also suggests an implementation 
+          strategy for the various sub-classes of these recursions. In particular, it suggests that we should 
+          attribute the various types to the stimuli in the expression to ensure that we can handle them either as a 
+          group or specifically. It also suggests that we can create the grammar at least partially from the core 
+          stimuli and then the recursive stimuli, which will not be atomic.
+          The stimuli are abstract enough to suggest a possible atom-level vocabulary for the grammar and AST of 
+          the compiler.
+        </simpara>
+        <simpara>
+          The specification quite unexpectedly reveals that the most complex component of the parser and likely of the 
+          system in general, at least in terms of state-space, is the function expressions, and not anything else. 
+          In fact, there is a huge difference in terms of the state-space of the function expressions as compared to 
+          anything else. Further analysis reveals that the reason for this massive explosion of state compared to the
+          other systems is the different classifications and results of the various operators, together with the 
+          requisite handling of these operators under the presence of parentheses. Handling these nested cases results 
+          in a significant amount of complexity to ensure that parentheses don't get in the way, and map accurately 
+          to the concepts contained by them.
+        </simpara>
+        <itemizedlist spacing="compact">
+          <title>Summary of Function Specification Insights</title>
+          <listitem>
+            <simpara>
+              Tokenization scheme is suggested by the abstract stimuli chosen
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Recursions inherent in the problem are indicated by the recursive stimuli
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Recursive stimuli suggest a decomposition and grammar for the AST
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Many stimuli lend themselves to aggregate analysis
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Variables and their relation to primitives is very complex and should be handled carefully in the AST
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              The AST should allow for easy analysis of primitive values, whatever they are named
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Atom-level elements of the AST are suggested by the stimuli sets and scheme in general
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Function expressions are the most state-heavy elements due to the number of classes of operator behavior and the supporting of nested behavior
+            </simpara>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Analysis: Language Reference</title>
+        <simpara>
+          In general, most of the information that can be gleaned from the Language Reference is embedded in the 
+          <citetitle>Function Specification</citetitle> or some other element, including the prototypes. However, 
+          the language reference remains the only place to get a clear view of the semantics of each individual 
+          primitive, and it generally does a good job of defining this behavior. It also is the place to locate 
+          the information about how promotion works in detail, which is outside of the scope of detail in 
+          the <citetitle>Function Specification</citetitle>. While little can be extracted from the reference, 
+          it should be used as the means to define the behaviors of some of the more detailed elements of the 
+          runtime system when that time comes.
+        </simpara>
+        <itemizedlist spacing="compact">
+          <title>Summary of Language Reference Insights</title>
+          <listitem>
+            <simpara>
+              The Language Reference should be used to provide detailed behavior of the primitives and the 
+              nature of promotion
+            </simpara>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Analysis: Miscellaneous Observations</title>
