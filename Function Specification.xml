@@ -3749,8 +3749,8 @@
               </tr>
               <tr>
                 <td>{ Vu <literal>←</literal> Vu</td>
-                <td>subsumed</td>
-                <td>{ E</td>
+                <td>wait</td>
+                <td>{ Vu</td>
                 <td></td>
               </tr>
             </tbody>
@@ -6822,8 +6822,8 @@
               </tr>
               <tr> 
                 <td>Sm N Vnu</td>
-                <td>Value Error</td>
-                <td>empty, top-level</td>
+                <td>wait</td>
+                <td>N Vnu</td>
                 <td>4, 10</td>
               </tr>
             </tbody>
@@ -10055,7 +10055,7 @@
               </tr>
               <tr>
                 <td>Fn Vu</td>
-                <td>Syntax Error</td>
+                <td>Value Error</td>
                 <td>empty</td>
                 <td>4, 10</td>
               </tr>
@@ -45608,16 +45608,42 @@
         <title>Black Box Definition: Vnu</title>
         <thead>
           <tr>
-            <th>Conditions</th>
+            <th colspan="2">Conditions</th>
             <th>Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top Func Fnex</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>Class <literal>∊</literal> ATOM FUNC SELECT</member>
+                <member>Last Seen <literal>∊</literal> EMPTY LIT</member>
+              </simplelist>
+            </td>
+            <td>wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+                <member>Nest <literal>∊</literal> RBRACK</member>
+              </simplelist>
+            </td>
+            <td>wait</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
@@ -45625,16 +45651,93 @@
         <title>Black Box Definition: Vu</title>
         <thead>
           <tr>
-            <th>Conditions</th>
+            <th colspan="2">Conditions</th>
             <th>Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Expr</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> NOTSEEN CLOSED</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Top</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td>null</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Bracket <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Func</member>
+                <member>Value <literal>∊</literal> EMPTY</member>
+                <member>Cond <literal>∊</literal> No</member>
+              </simplelist>
+            </td>
+            <td>wait</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+                <member>~Oper <literal>∊</literal> MON</member>
+              </simplelist>
+            </td>
+            <td>VALUE ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Oper <literal>∊</literal> MON</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> EMPTY</member>
+              </simplelist>
+            </td>
+            <td>wait</td>
+            <td>4</td>
           </tr>
         </tbody>
       </table>
