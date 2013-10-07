@@ -49,6 +49,94 @@
         deal with analysis of the <citetitle>Function Specification</citetitle> and other 
         miscellaneous assets.
       </simpara>
+      <itemizedlist spacing="compact">
+        <title>Summary of Analysis</title>
+        <listitem>
+          <simpara>[NanoPass] Compiler should use a single unified grammar</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Use a formal verification of the correctness of each compiler pass</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Use small, numerous compiler passes rather than large, monolithic passes</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Use aggregate, pure-functional programming as much as possible</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[NanoPass] Global state is okay, but should remain immutable throughout a given compiler invocation</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] Most of the parsing of Co-Dfns is regular</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] There are specific cases of necessary recursions</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] There are simple, but necessary needs for muli-pass refinements of the parsing</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] The parser must use passes to extract type information for variables in order to eliminate most ambiguity</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] Some instance of ambiguity will remain</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] The grammar will need to take into account those instances of ambiguity that cannot be eliminated</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Parsing] Most of the parser should be able to use aggregate style programming to express the parsing stages clearly</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Runtime] Runtime should provide facilities for array class promotion</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Runtime] It might make sense to have individual scalar operations in C</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Runtime] Scalar functions are probably best implemented in Co-Dfns</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Runtime] Most of the primitive functions and operators should be implemented in Co-Dfns, not in the runtime</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Runtime] Implementation language of the core runtime should be C</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Runtime] Runtime should take cache behavior into account</simpara>
+        </listitem>
+        <listitem>
+          <simpara>[Runtime] The compiler should try to mitigate the cost of a function call</simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Benchmark] Scalar fusion is a significant opportunity for performance increase and is the primary
+            bottleneck in Dyalog APL interpretation based strategies
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Benchmark] Many optimization transformation conducted by hand on Dyalog code had to do with copy avoidance
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Benchmark] Avoiding garbage collection and providing predictable allocation behavior is a win
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Benchmark] Cache behavior is one of the key performance killers in the existing system, and a core target for
+            optimization in the compiler
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            [Benchmark] A specialized runtime can keep up with other code in most cases when the above conditions are
+            not affecting the performance.
+          </simpara>
+        </listitem>
+      </itemizedlist>
       <section>
         <title>Analysis: Nanopass</title>
         <simpara>
@@ -273,6 +361,66 @@
       </section>
       <section>
         <title>Analysis: Performance Benchmarks</title>
+        <simpara>
+          A series of benchmarks, mostly taken from the NAS Parallel Benchmarks suite were implemented in Dyalog APL.
+          These were compared against the reference versions in Fortran and C provided by the NPB. Analysis of these 
+          benchmarks verified some initial expectations of the compiler, but also revealed that certain issues would 
+          not be relevant. 
+        </simpara>
+        <simpara>
+          In particular, the benchmarks revealed that cache behavior played a very significant role in the relative 
+          performance of the two systems. Where the cache behavior of Dyalog was not friendly, then we saw 10 times or 
+          worse slow downs compared to the reference implementations. However, where this was not an issue, the Dyalog 
+          system could keep up with the reference implementations nearly tit for tat, though in some versions it was 
+          around 2 or 3 times slower. 
+        </simpara>
+        <simpara>
+          The use of specific, optimized runtime elements gets good results in many cases, but the case of strings 
+          of scalar functions on large arrays is a clear bottleneck for the Dyalog interpreter which likely cannot 
+          be easily handled using just the interpreter technology without significant effort. Additionally, memory 
+          usage is a concern, and garbage collection can present some limitations. Thus, it is beneficial if the 
+          language can be implemented without the need for garbage collection and in a predictable, allocation 
+          friendly way. There are man opportunities for optimization in these cases. 
+        </simpara>
+        <simpara>
+          Finally, significant optimization focused transformations needed to be applied to the simpler Dyalog code 
+          in order to get it to go fastest, including some optimizations which were not obvious or that obfuscated 
+          the code somewhat. Many of these optimizations were for the sake of memory allocation or copying costs. 
+          The compiler, then, has a great opportunity to improve this behavior by using a cost-effective strategy 
+          for allocation and avoding copying if it can, while still keeping the code simple, and not requiring 
+          excessive massaging to get the code into a copy-friendly state.
+        </simpara>
+        <itemizedlist spacing="compact">
+          <title>Summary of Benchmarking Insights</title>
+          <listitem>
+            <simpara>
+              Scalar fusion is a significant opportunity for performance increase and is the primary 
+              bottleneck in Dyalog APL interpretation based strategies
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Many optimization transformation conducted by hand on Dyalog code had to do with copy avoidance
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Avoiding garbage collection and providing predictable allocation behavior is a win
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              Cache behavior is one of the key performance killers in the existing system, and a core target for 
+              optimization in the compiler
+            </simpara>
+          </listitem>
+          <listitem>
+            <simpara>
+              A specialized runtime can keep up with other code in most cases when the above conditions are 
+              not affecting the performance.
+            </simpara>
+          </listitem>
+        </itemizedlist>
       </section>
       <section>
         <title>Analysis: Function Specification</title>
@@ -283,66 +431,6 @@
       <section>
         <title>Analysis: Miscellaneous Observations</title>
       </section>
-      <itemizedlist spacing="compact">
-        <title>Summary of Analysis</title>
-        <listitem>
-          <simpara>[NanoPass] Compiler should use a single unified grammar</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[NanoPass] Use a formal verification of the correctness of each compiler pass</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[NanoPass] Use small, numerous compiler passes rather than large, monolithic passes</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[NanoPass] Use aggregate, pure-functional programming as much as possible</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[NanoPass] Global state is okay, but should remain immutable throughout a given compiler invocation</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Parsing] Most of the parsing of Co-Dfns is regular</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Parsing] There are specific cases of necessary recursions</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Parsing] There are simple, but necessary needs for muli-pass refinements of the parsing</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Parsing] The parser must use passes to extract type information for variables in order to eliminate most ambiguity</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Parsing] Some instance of ambiguity will remain</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Parsing] The grammar will need to take into account those instances of ambiguity that cannot be eliminated</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Parsing] Most of the parser should be able to use aggregate style programming to express the parsing stages clearly</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Runtime] Runtime should provide facilities for array class promotion</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Runtime] It might make sense to have individual scalar operations in C</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Runtime] Scalar functions are probably best implemented in Co-Dfns</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Runtime] Most of the primitive functions and operators should be implemented in Co-Dfns, not in the runtime</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Runtime] Implementation language of the core runtime should be C</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Runtime] Runtime should take cache behavior into account</simpara>
-        </listitem>
-        <listitem>
-          <simpara>[Runtime] The compiler should try to mitigate the cost of a function call</simpara>
-        </listitem>
-      </itemizedlist>
     </section>
     <section>
       <title>Software Strategy</title>
