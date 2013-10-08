@@ -749,28 +749,356 @@
         specification of the AST to be used in the compiler as well as the black-box view of each 
         pass.
       </simpara>
-      <table frame="void" rules="rows>
+      <table frame="void" rules="rows">
         <title>Pass Overview</title>
         <thead>
           <tr>
             <th>Name</th>
             <th>Class</th>
-            <th colspan="5">Description</th>
+            <th colspan="3">Description</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>Tokenize</td>
             <td>Entry</td>
-            <td colspan="5"></td>
+            <td colspan="3">
+              Takes in the initial right argument of the Fix function and tokenizes it into its various
+              components
+            </td>
+          </tr>
+          <tr>
+            <td>Parse</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Takes the result of <function>Tokenize</function> and produces a standard AST
+            </td>
+          </tr>
+          <tr>
+            <td>KillLines</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Eliminates useless or semantically irrelevant nodes from the AST
+            </td>
+          </tr>
+          <tr>
+            <td>FuseScalars</td>
+            <td>Optimization</td>
+            <td colspan="3">
+              Fuse Scalar expressions together
+            </td>
+          </tr>
+          <tr>
+            <td>IntroCopies</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Introduce array copying to preserve semantics when necessary
+            </td>
+          </tr>
+          <tr>
+            <td>IntroFrees</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Introduce array free statements as necessary
+            </td>
+          </tr>
+          <tr>
+            <td>IntroSetps</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Introduce cells for mutable variables
+            </td>
+          </tr>
+          <tr>
+            <td>ConvAssgn</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Convert assignments into normal expressions
+            </td>
+          </tr>
+          <tr>
+            <td>LiftConsts</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Lift all constant expressions to the top-level
+            </td>
+          </tr>
+          <tr>
+            <td>ElimFVs</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Eliminate all the free variables in functions
+            </td>
+          </tr>
+          <tr>
+            <td>LiftFuncs</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Lift all Functions to the top-level
+            </td>
+          </tr>
+          <tr>
+            <td>ExposeBBs</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Convert function bodies into basic blocks
+            </td>
+          </tr>
+          <tr>
+            <td>ConvNames</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Convert all names into valid output names, including the primitives
+            </td>
+          </tr>
+          <tr>
+            <td>GenLLVM</td>
+            <td>Exit</td>
+            <td colspan="3">
+              Takes the AST massaged for LLVM generation and generates the LLVM module
+            </td>
           </tr>
         </tbody>
       </table>
       <section>
         <title>AST Definition</title>
+        <simpara>
+          Our AST encapsulates all of the data structures that we might want to use in the 
+          transfer of information two and from one pass to another. This includes the output 
+          of the <function>Tokenize</function> pass.
+        </simpara>
+        <simpara>
+          There are two valid root nodes: <varname>Tokens</varname> and <varname>Namespace</varname>.
+        </simpara>
+        <table frame="void" rules="rows">
+          <title>AST Elements/Nodes</title>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Attributes</th>
+              <th colspan="2">Content</th>
+              <th colspan="2">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tokens</td>
+              <td></td>
+              <td colspan="2">Line</td>
+              <td colspan="2">A series of lines consisting of tokens</td>
+            </tr>
+            <tr>
+              <td>Namespace</td>
+              <td>name</td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>Line</member>
+                  <member>Expression</member>
+                  <member>Function</member>
+                  <member>FuncExpr</member>
+                </simplelist>
+              </td>
+              <td colspan="2">A possibly named namespace of code</td>
+            </tr>
+            <tr>
+              <td>Line</td>
+              <td>comment</td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>Token</member>
+                  <member>Primitive</member>
+                  <member>Number</member>
+                  <member>String</member>
+                  <member>Variable</member>
+                </simplelist>
+              </td>
+              <td colspan="2">A line of tokens</td>
+            </tr>
+            <tr>
+              <td>Expression</td>
+              <td>
+                <simplelist type="inline">
+                  <member>class</member>
+                  <member>name</member>
+                </simplelist>
+              </td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>FuncExpr</member>
+                  <member>Expression</member>
+                  <member>Variable</member>
+                  <member>Number</member>
+                  <member>String</member>
+                  <member>Index</member>
+                </simplelist>
+              </td>
+              <td colspan="2">An expression</td>
+            </tr>
+            <tr>
+              <td>Function</td>
+              <td>
+                <simplelist type="inline">
+                  <member>class</member>
+                  <member>name</member>
+                </simplelist>
+              </td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>Expression</member>
+                  <member>FuncExpr</member>
+                  <member>Condition</member>
+                  <member>Guard</member>
+                </simplelist>
+              </td>
+              <td colspan="2">An user-defined function or operator</td>
+            </tr>
+            <tr>
+              <td>FuncExpr</td>
+              <td>
+                <simplelist type="inline">
+                  <member>name</member>
+                  <member>class</member>
+                  <member>equiv</member>
+                </simplelist>
+              </td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>Primitive</member>
+                  <member>Expression</member>
+                  <member>Function</member>
+                  <member>FuncExpr</member>
+                </simplelist>
+              </td>
+              <td colspan="2">A function valued expression</td>
+            </tr>
+            <tr>
+              <td>Index</td>
+              <td></td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>Expression</member>
+                </simplelist>
+              </td>
+              <td colspan="2">An index into an expression</td>
+            </tr>
+            <tr>
+              <td>Condition</td>
+              <td></td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>Expression</member>
+                </simplelist>
+              </td>
+              <td colspan="2">Conditional statement in a function</td>
+            </tr>
+            <tr>
+              <td>Guard</td>
+              <td></td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>Expression</member>
+                </simplelist>
+              </td>
+              <td colspan="2">Guard statement in a function</td>
+            </tr>
+            <tr>
+              <td>Token</td>
+              <td>
+                <simplelist type="inline">
+                  <member>name</member>
+                  <member>class</member>
+                </simplelist>
+              </td>
+              <td colspan="2"></td>
+              <td colspan="2">A token not meant to exist in the normal AST</td>
+            </tr>
+            <tr>
+              <td>Primitive</td>
+              <td>
+                <simplelist type="inline">
+                  <member>name</member>
+                  <member>class</member>
+                </simplelist>
+              </td>
+              <td colspan="2"></td>
+              <td colspan="2">A primitive function or operator</td>
+            </tr>
+            <tr>
+              <td>Number</td>
+              <td>
+                <simplelist type="inline">
+                  <member>value</member>
+                  <member>class</member>
+                </simplelist>
+              </td>
+              <td colspan="2"></td>
+              <td colspan="2">A literal number</td>
+            </tr>
+            <tr>
+              <td>String</td>
+              <td></td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>text</member>
+                </simplelist>
+              </td>
+              <td colspan="2">A literal string</td>
+            </tr>
+            <tr>
+              <td>Variable</td>
+              <td>
+                <simplelist type="inline">
+                  <member>name</member>
+                  <member>class</member>
+                  <member>equiv</member>
+                </simplelist>
+              </td>
+              <td colspan="2"></td>
+              <td colspan="2">A single variable</td>
+            </tr>
+          </tbody>
+        </table>
+        <table frame="void" rules="rows">
+          <title>Element Attributes</title>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th colspan="3">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>name</td>
+              <td>string</td>
+              <td colspan="3">The name of an element, multi-purpose</td>
+            </tr>
+            <tr>
+              <td>class</td>
+              <td>string</td>
+              <td colspan="3">The class of an element, multi-purpose</td>
+            </tr>
+            <tr>
+              <td>comment</td>
+              <td>string</td>
+              <td colspan="3">The comment on a given line</td>
+            </tr>
+            <tr>
+              <td>equiv</td>
+              <td>string</td>
+              <td colspan="3">The equivalence <quote>class</quote> of a thing</td>
+            </tr>
+            <tr>
+              <td>value</td>
+              <td>numeric</td>
+              <td colspan="3">A numeric value</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
       <section>
         <title>Pass Specifications</title>
+        
       </section>
     </section>
   </section>
