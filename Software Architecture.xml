@@ -661,14 +661,113 @@
     </section>
     <section>
       <title>Software Strategy</title>
+      <simpara>
+        Following the NanoPass style, we divide the compiler problem into a series of functional, independent 
+        passes that have a defined input and output grammar. There are five different types of passes.
+      </simpara>
+      <variablelist>
+        <title>Types of Passes</title>
+        <varlistentry>
+          <term>Entry</term>
+          <listitem>
+            <simpara>A pass that is taking in data and transforming it into the AST</simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Exit</term>
+          <listitem>
+            <simpara>A pass that is taking an AST and transforming it into some sort of external data</simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Verification</term>
+          <listitem>
+            <simpara>
+              A pass that does not alter the contents of the AST and just passes it along, 
+              but that might potentially signal an error if some invariant is broken along the 
+              way. These passes are used to check properties and ensure the correct operation 
+              of the compiler.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Standard</term>
+          <listitem>
+            <simpara>
+              Normal passes take an AST and return a modified AST based on whatever intended function 
+              defines the pass.
+            </simpara>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Optimization</term>
+          <listitem>
+            <simpara>
+              And optimization pass is a pass that does not change the invariants on the AST, 
+              like what might happen with a normal pass, but instead returns something of the same 
+              AST, but with some sort of optimization or other transformation that does not affect 
+              the grammar or AST invariants.
+            </simpara>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      <simpara>
+        In the design of the system, because we are aiming as much as possible for aggregation, there are 
+        a few notes of design. Firstly, we will keep all of the functions at the top-level if possible, 
+        and avoid over-nesting of elements. Additionally, we will try to aim for simple, concise expressions 
+        of the solution, and avoid explicit iteration or recursion where possible. We should avoid the 
+        use of branching and conditionals where possible as well to simplify the code flow.
+      </simpara>
+      <simpara>
+        The ASTs will be encoded into the <function>⎕XML</function> format for easy use. In these 
+        cases, there are a few things that are easy to get to in bulk, such as a single column with 
+        some content or the like. Thus, we should try to make certain bulk queries easy in the design of 
+        the ASTs, so that while things may be different in one access, if they share some similar aspect, 
+        they are easily identified as a class without excessive computation.
+      </simpara>
+      <simpara>
+        We should avoid unnecessary complication in the AST if it is possible. Thus, if some information
+        is local to a given pass and it is possible to keep it that way, we should avoid storing that 
+        information in the AST, but rather, keep it in local information.
+      </simpara>
+      <simpara>
+        A single AST definition should be sufficient to describe the entire compiler languages. The 
+        input and output invariants of a given pass can be defined in terms of invariants on this 
+        single AST definition.
+      </simpara>
+      <simpara>
+        We should clearly identify the intended function and the properties of each pass in a manner 
+        that allows for verification during the clear-box design.
+      </simpara>
     </section>
     <section>
       <title>Top-level Structure</title>
+      <simpara>
+        This section details the refinement of the <citetitle>Function Specification</citetitle> into a 
+        suitable design at the top level. We divide this operation into a series of passes, and 
+        then detail the behavior of these passes and how they need to be used. This includes a complete 
+        specification of the AST to be used in the compiler as well as the black-box view of each 
+        pass.
+      </simpara>
+      <table frame="void" rules="rows>
+        <title>Pass Overview</title>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Class</th>
+            <th colspan="5">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tokenize</td>
+            <td>Entry</td>
+            <td colspan="5"></td>
+          </tr>
+        </tbody>
+      </table>
       <section>
         <title>AST Definition</title>
-      </section>
-      <section>
-        <title>Pass Overview</title>
       </section>
       <section>
         <title>Pass Specifications</title>
