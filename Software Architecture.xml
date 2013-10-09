@@ -789,6 +789,13 @@
             </td>
           </tr>
           <tr>
+            <td>FindMutated</td>
+            <td>Standard</td>
+            <td colspan="3">
+              Mark the arrays that are mutated in some way
+            </td>
+          </tr>
+          <tr>
             <td>IntroCopies</td>
             <td>Standard</td>
             <td colspan="3">
@@ -1154,7 +1161,9 @@
           <title>Element: Expression</title>
           <simpara>
             The <varname>Expression</varname> element contains the various types of expressions we can see 
-            in our program, and is a direct derivation of the <token>E</token> recursive stimuli. 
+            in our program, and is a direct derivation of the <token>E</token> recursive stimuli. We must 
+            make sure that we have a way to represent ambiguous parsings that cannot be eliminated through 
+            the basic type inference.
           </simpara>
           <formalpara>
             <title>Expression contents</title>
@@ -1198,6 +1207,10 @@
                 <td>assignment</td>
                 <td colspan="3">Expression Expression | FuncExpr Expression Expression</td>
               </tr>
+              <tr>
+                <td>ambiguous</td>
+                <td colspan="3">Expression+</td>
+              </tr>
             </tbody>
           </informaltable>
           <formalpara>
@@ -1218,6 +1231,7 @@
                 <member><literal>dyadic</literal></member>
                 <member><literal>index</literal></member>
                 <member><literal>assignment</literal></member>
+                <member><literal>ambiguous</literal></member>
               </simplelist>.
               The <parameter>comment</parameter> attribute may also be used to indicate the comment that appears 
               on the same line as the expression.
@@ -1500,46 +1514,408 @@
         <title>Pass Specifications</title>
         <section>
           <title>Entry Pass: Tokenizer</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td><varname>⍵</varname> of <function>Fix</function></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Tokens</td>
+              </tr>
+            </tbody>
+          </informaltable>
         </section>
         <section>
           <title>Standard Pass: Parse</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Tokens</td>
+                <td>Expects the result of <function>Tokenize</function></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Restriction</td>
+                <td>Idempotent</td>
+                <td>
+                  The result of the Parser should be able to reconstruct the 
+                  exact structure of the original code modulo inter-token spacing.
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
         </section>
         <section>
           <title>Standard Pass: KillLines</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td>Expects the result of <function>Parse</function></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td>Returns a namespace, but not the complete version</td>
+              </tr>
+              <tr>
+                <td>Line</td>
+                <td>Remove</td>
+                <td>
+                  Remove all lines in the program that have not been 
+                  parsed or that do not contribute semantic information
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
         </section>
         <section>
           <title>Optimization Pass: FuseScalars</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td>Should handle any arbitrary Namespace</td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Scalar Expressions</td>
+                <td>Fuse</td>
+                <td>
+                  Each scalar expression, which is a series of scalar 
+                  operations should be rewritten so that the primitives 
+                  only operate on a single scalar value at a time.
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
+          <simpara>
+            XXX: There is more to document here, including the overall 
+            transformation and the code that is used to replace things.
+          </simpara>
+        </section>
+        <section>
+          <title>Standard Pass: FindMutated</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Variable</td>
+                <td>Introduce mutated attribute</td>
+                <td>
+                  Add a mutated attribute to those arrays that are assigned
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
+          <simpara>
+            XXX: Need more detail about this.
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: IntroCopies</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td>Should handle any arbitrary Namespace</td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Primitive</td>
+                <td>Introduce Copy</td>
+                <td>
+                  Introduce copies where necessary or important to preserve the 
+                  semantics of the program.
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
+          <simpara>
+            XXX: This needs more detail about what this actually means.
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: IntroFrees</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Primitive</td>
+                <td>Introduce Free</td>
+                <td>
+                  Introduce frees to ensure that the program does not leave 
+                  dangling elements.
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
         </section>
         <section>
           <title>Standard Pass: IntroSetps</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Variable</td>
+                <td>Convert</td>
+                <td>
+                  Convert assignments to mutated variables and their references to 
+                  boxed values
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: ConvAssgn</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Indexed Assignment</td>
+                <td>Convert to Call</td>
+                <td>
+                  Convert indexed assignments of one form or the other to 
+                  some sort of assignment operation, either in LLVM or 
+                  the runtime.
+                </td>
+              </tr>
+              <tr>
+                <td>Selective Assignment</td>
+                <td>Convert to Call</td>
+                <td>
+                  Convert selective assignments of one form or the other to 
+                  some sort of assignment operation, either in LLVM or 
+                  the runtime.
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: LiftConsts</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Constant Expressions</td>
+                <td>Lift to top-level</td>
+                <td>
+                  All constant expressions are lifted to the top-level and replaced 
+                  with variable references.
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: ElimFVs</title>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output Root Element</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Variable</td>
+                <td>Convert if Free</td>
+                <td>
+                  If there is a variable reference in a function that is free, 
+                  then convert it to a reference into the global environment and 
+                  adjust assignments to said variable as appropriate to also assign 
+                  the global environment.
+                </td>
+              </tr>
+            </tbody>
+          </informaltable>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: LiftFuncs</title>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: ExposeBBs</title>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
         <section>
           <title>Standard Pass: ConvNames</title>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
         <section>
           <title>Exit Pass: GenLLVM</title>
+          <simpara>
+            XXX: Need more information here
+          </simpara>
         </section>
+      </section>
+      <section>
+        <title>Runtime Design</title>
       </section>
     </section>
   </section>
