@@ -3,7 +3,7 @@
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
     <author>Aaron W. Hsu</author>
-    <date>Wednesday, July 3rd, 2013</date>
+    <date>Tuesday, October 8th, 2013</date>
   </info>
   <section>
     <title>Co-Dfns Cleanroom Engineering Guide</title>
@@ -268,6 +268,12 @@
           Management process is not entirely eliminated, but is reduced to 
           a single step occuring at process transitions to update and maintain 
           the <citetitle>Project Record</citetitle>. 
+        </simpara>
+        <simpara>
+          The Architecture Specification can be conducted either as a single 
+          process or as a combined part of the work with the Increment 
+          Design. That is, the cycle of Increment design can explicitly feed 
+          back into the Architecture Design.
         </simpara>
       </section>
     </section>

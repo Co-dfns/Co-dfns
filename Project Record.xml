@@ -133,6 +133,21 @@
               </simplelist>
             </td>
           </tr>
+          <tr>
+            <td>Tuesday, October 8th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>Exiting Architecture Specification</member>
+                <member>Suggesting altering of development plan</member>
+                <member>Entering Project Planning</member>
+                <member>Adjusting <citetitle>Software Development Plan</citetitle> and 
+                <citetitle>Cleanroom Engineering Guide</citetitle> to account for differences 
+                in project progress</member>
+                <member>Exiting Project Planning</member>
+                <member>Entering Increment Planning</member>
+              </simplelist>
+            </td>
+          </tr>
         </tbody>
       </informaltable>
     </section>

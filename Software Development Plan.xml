@@ -5,7 +5,7 @@
          version="5.0">
   <info>
     <author>Aaron W. Hsu</author>
-    <date>Monday, October 7th, 2013</date>
+    <date>Tuesday, October 8th, 2013</date>
   </info>
   <section>
     <title>Co-Dfns Software Development Plan</title>
@@ -334,7 +334,7 @@
               <td>2</td>
               <td colspan="7">Architecture Specification and Increment Planning</td>
               <td colspan="3">Oct. 7th, 2013</td>
-              <td colspan="3"></td>
+              <td colspan="3">Oct. 8th, 2013</td>
             </tr>
             <tr>
               <td>3</td>
@@ -350,7 +350,7 @@
             </tr>
             <tr>
               <td>5</td>
-              <td colspan="7">Continuing Increment Design</td>
+              <td colspan="7">Continuing Increment Design and Architecture Specification</td>
               <td colspan="3">Dec. 1st, 2013</td>
               <td colspan="3"></td>
             </tr>
