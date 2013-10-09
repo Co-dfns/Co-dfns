@@ -1498,7 +1498,48 @@
       </section>
       <section>
         <title>Pass Specifications</title>
-        
+        <section>
+          <title>Entry Pass: Tokenizer</title>
+        </section>
+        <section>
+          <title>Standard Pass: Parse</title>
+        </section>
+        <section>
+          <title>Standard Pass: KillLines</title>
+        </section>
+        <section>
+          <title>Optimization Pass: FuseScalars</title>
+        </section>
+        <section>
+          <title>Standard Pass: IntroCopies</title>
+        </section>
+        <section>
+          <title>Standard Pass: IntroFrees</title>
+        </section>
+        <section>
+          <title>Standard Pass: IntroSetps</title>
+        </section>
+        <section>
+          <title>Standard Pass: ConvAssgn</title>
+        </section>
+        <section>
+          <title>Standard Pass: LiftConsts</title>
+        </section>
+        <section>
+          <title>Standard Pass: ElimFVs</title>
+        </section>
+        <section>
+          <title>Standard Pass: LiftFuncs</title>
+        </section>
+        <section>
+          <title>Standard Pass: ExposeBBs</title>
+        </section>
+        <section>
+          <title>Standard Pass: ConvNames</title>
+        </section>
+        <section>
+          <title>Exit Pass: GenLLVM</title>
+        </section>
       </section>
     </section>
   </section>
