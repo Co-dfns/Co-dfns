@@ -3,7 +3,7 @@
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
     <author>Aaron W. Hsu</author>
-    <date>Monday, October 7th, 2013</date>
+    <date>Monday, October 8th, 2013</date>
   </info>
   <section>
     <title>Co-Dfns Project Record</title>
@@ -145,6 +145,8 @@
                 in project progress</member>
                 <member>Exiting Project Planning</member>
                 <member>Entering Increment Planning</member>
+                <member>Exiting Increment Planning</member>
+                <member>Entering Increment 1 Design</member>
               </simplelist>
             </td>
           </tr>

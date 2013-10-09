@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Tuesday, October 8th, 2013</date>
+  </info>
+  <section>
+    <title>Co-Dfns Increment Construction Plan</title>
+    <simpara>
+      This is a documentation of a series of sub-divisions of the 
+      Co-Dfns compiler development into a series of increments for 
+      implementing specific elements over time. Each of these series 
+      is design to be very very short due to the short iteration 
+      cycle that we have, hopefully to be tested rapidly and easily.
+    </simpara>
+    <table frame="void" rules="rows">
+      <title>Co-Dfns Design Increments</title>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th colspan="6">Functionality</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Support an empty namespace</member>
+              <member>Generate an empty LLVM Object to a file</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Support static global constants of integers</member>
+              <member>Support functions that return constants of integers</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Points free functions of simple arithmetic scalars</member>
+              <member>Functions with variable bindings</member>
+              <member>Assumes only integers on operations</member>
+              <member>Returning JIT'd or Fixed Namespace</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Expressions that use shapes and other structural primitives</member>
+              <member>Should not need to support other numeric types</member>
+              <member>Support function calls to other user-defined functions at the top-level</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Functions without free variables defined in other functions</member>
+              <member>Array indexing, but not mutation</member>
+              <member>Additional scalar primitives implemented</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Functions with free variables defined in other functions</member>
+              <member>Array Mutation through Index Assignment</member>
+              <member>Support for strings and real numbers</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Support rest of primitive functions</member>
+              <member>Support for value promotion</member>
+              <member>Support for Scalar Fusion</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Primitive Operators</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>User-defined operators</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Finish scoping semantics</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Nested Arrays</member>
+              <member>Strand Notation</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Selective Assignment</member>
+            </simplelist>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</article>
