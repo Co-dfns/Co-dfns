@@ -149,9 +149,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Co-Dfns Runtime.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
