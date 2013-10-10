@@ -155,7 +155,7 @@ Tokenize←{
   T←{1 4⍴2 'Token' '' (2 2⍴'class' 'delimiter' 'name' ⍵)}¨¨T
   
   ⍝ Wrap in Lines
-  C {1 'Line' '' (1 2⍴'comment' ⍺)⍪⊃⍪/⍵}¨T
+  T←C {1 'Line' '' (1 2⍴'comment' ⍺)⍪⊃⍪/⍵}¨T
   
   ⍝ Create and return Tokens tree
   0 'Tokens' '' (0 2⍴'')⍪⊃⍪/T
