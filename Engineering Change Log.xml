@@ -86,6 +86,12 @@
           <td colspan="5">Missing assignment</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>11</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">Incorrect comment identification</td>
+          <td colspan="2">Applied</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -345,6 +351,21 @@
           <title>Analysis</title>
           <para>
             There is a missing assignment in the <function>Tokenize</function> function.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>Tokenize</function> function identifies comments incorrectly.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The code that finds the index incorrectly treats the non-scalar set of 
+            lines as a scalar, leading to a single index value that cannot be correct.
           </para>
         </formalpara>
       </listitem>

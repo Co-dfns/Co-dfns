@@ -144,7 +144,7 @@ Tokenize←{
   A←((⌽∘(∨\)∘⌽¨A)∧∨\¨A←' '≠⍵)/¨⍵
   
   ⍝ Divide into comment and code
-  I←(⊂A)⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A
+  I←A⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A
   
   ⍝ Split code on spaces
   T←(1,¨2≠/¨' '=T)⊂¨T

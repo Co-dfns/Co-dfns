@@ -49,6 +49,12 @@
             <td>Fail</td>
             <td colspan="5">Missing Assignment</td>
           </tr>
+          <tr>
+            <td>6</td>
+            <td>1</td>
+            <td>Fail</td>
+            <td colspan="5">Incorrect identification of comment location</td>
+          </tr>
         </tbody>
       </informaltable>
       <formalpara>
@@ -92,6 +98,13 @@ FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
         <para>
           The <function>Tokenize</function> returns before finishing the code because 
           of a missing assignment statement.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Iteration 6, Test Case 1</title>
+        <para>
+          The <function>Tokenize</function> fails to correctly identify the location 
+          of comments.
         </para>
       </formalpara>
     </section>
