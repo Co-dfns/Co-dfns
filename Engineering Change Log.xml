@@ -56,6 +56,12 @@
           <td colspan="5">Cleanup System Requirements</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>6</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">Fix FFI Declaration</td>
+          <td colspan="2">Pending</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -237,6 +243,15 @@
           <para>
             The change does not alter the functionality or intention of the compiler, but it 
             does create a simplified interface and is worth doing. It reduces workload later on.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            An error in the declaration of an FFI function was discovered during certification.
+            This must be adjusted before further certification can proceed.
           </para>
         </formalpara>
       </listitem>

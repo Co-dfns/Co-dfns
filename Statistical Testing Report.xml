@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Monday, October 7th, 2013</date>
+  </info>
+  <section>
+    <title>Co-Dfns Statistical Testing Report</title>
+    <section>
+      <title>Increment 1</title>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th>Iteration</th>
+            <th>Test #</th>
+            <th>Result</th>
+            <th colspan="5">Failure Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>Fail</td>
+            <td colspan="5">Invalid FFI return type specifier</td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <formalpara>
+        <title>Iteration 1, Test Case 1</title>
+        <para>
+          This case fails with the following error:
+        </para>
+      </formalpara>
+      <programlisting>      'Test.ll'CoDfns.Fix ':EndNamespace' ':EndNamespace' '' ''
+DOMAIN ERROR: Bad parameter specification: \
+    ⎕NA errored at int - invalid specification
+FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
+    CoDfns|PrintModuleToFile P &lt;0C &gt;P'</programlisting>
+      <simpara>
+        Diagnosis of this error is self evident.
+      </simpara>
+    </section>
+  </section>
+</article>

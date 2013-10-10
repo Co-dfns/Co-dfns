@@ -150,6 +150,18 @@
               </simplelist>
             </td>
           </tr>
+          <tr>
+            <td>Wednesday, October 9th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>Exiting Increment 1 Design</member>
+                <member>Entering Increment 1 Certification</member>
+                <member>Certification failed</member>
+                <member>Exiting Certification</member>
+                <member>Entering Engineering Change for Increment 1</member>
+              </simplelist>
+            </td>
+          </tr>
         </tbody>
       </informaltable>
     </section>
