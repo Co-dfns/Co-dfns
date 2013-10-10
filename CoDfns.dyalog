@@ -147,7 +147,7 @@ Tokenize←{
   I←A⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A
   
   ⍝ Split code on spaces
-  T←(1,¨2≠/¨' '=T)⊂¨T
+  T←{((⍴X)⍴1 0)/(2≠/' '=' ',⍵)⊂⍵}¨T
   
   ⍝ Wrap in Token containers
   ⍝ This works right now because we do not have any other elements to 

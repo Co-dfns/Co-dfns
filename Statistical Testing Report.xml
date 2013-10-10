@@ -55,6 +55,12 @@
             <td>Fail</td>
             <td colspan="5">Incorrect identification of comment location</td>
           </tr>
+          <tr>
+            <td>7</td>
+            <td>1</td>
+            <td>Fail</td>
+            <td colspan="5">Token splitting by spaces fails</td>
+          </tr>
         </tbody>
       </informaltable>
       <formalpara>
@@ -105,6 +111,12 @@ FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
         <para>
           The <function>Tokenize</function> fails to correctly identify the location 
           of comments.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Iteration 7, Test Case 1</title>
+        <para>
+          The <function>Tokenize</function> fails to correctly split tokens on spaces.
         </para>
       </formalpara>
     </section>
