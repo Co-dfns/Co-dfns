@@ -27,14 +27,12 @@ Fix←{
   
   ⍝ Identify Obj property
   ⍝ This is based on the arity of the Fix call
-  
   ⍺←⊢ ⋄ Obj←⍺⊣''
   
   ⍝ We must handle the other transitions: 
   ⍝   Fnb → DOMAIN ERROR    → (Fix ← No)
   ⍝   Fnf → FILE NAME ERROR → (Fix ← No)
   ⍝   Fne → null            → (Obj ← Yes)
-  
   IsFnb Obj:⎕SIGNAL 11
   IsFnf Obj:⎕SIGNAL 22
   
@@ -46,24 +44,20 @@ Fix←{
   ⍝   Nl  → null            → (Obj ← No)
   ⍝   Nse → SYNTAX ERROR    → (Fix ← No)
   ⍝   Nss → null            → (Obj ← No ⋄ Namespace ← OPEN)
-  
   Module Names←Compile ⍵
 
   ⍝ State: Namespace ← CLOSED ⋄ Eot ← Yes
   ⍝ Now we need only create the Namespace
   ⍝ And deal with the Obj property and states
-  
   Namespace←Names ModToNS Module
   
   ⍝ State: Obj ← No
   ⍝ When Obj ← No we need only give a namespace 
-  
   ''≡Obj:Namespace
   
   ⍝ State: Obj ← Yes
   ⍝ Must return the namespace and generate the 
   ⍝ module object as well.
-  
   _←Obj ModToObj Module
   Namespace
 }
@@ -158,13 +152,13 @@ Tokenize←{
   ⍝ Wrap in Token containers
   ⍝ This works right now because we do not have any other elements to 
   ⍝ worry about besides tokens
-  T←(2 'Token' '')∘,∘⊂¨¨2 2∘⍴¨¨('class' 'delimiter')∘,¨¨(⊂'name')∘,∘⊂¨¨T
+  T←{1 4⍴2 'Token' '' (2 2⍴'class' 'delimiter' 'name' ⍵)}¨¨T
   
   ⍝ Wrap in Lines
-  T←(⊃⍪/1 4∘⍴¨1 'Line' ''∘,⊂¨1 2∘⍴¨(⊂'comment')∘,¨C)∘⍪¨⊃∘(⍪/)¨1 4∘⍴¨¨T
+  C {1 'Line' '' (1 2⍴'comment' ⍺)⍪⊃⍪/⍵}¨T
   
   ⍝ Create and return Tokens tree
-  0 'Tokens' '' (0 2⍴'')⍪T
+  0 'Tokens' '' (0 2⍴'')⍪⊃⍪/T
 }
 
 ⍝ Parse

@@ -72,7 +72,13 @@
           <td>8</td>
           <td colspan="2">2013-10-09</td>
           <td colspan="5">Incorrect use of Scan</td>
-          <td colspan="2">Pending</td>
+          <td colspan="2">Applied</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">Malformed result from Tokenize</td>
+          <td colspan="2">Applied</td>
         </tr>
       </tbody>
     </table>
@@ -304,6 +310,23 @@
           use of the <literal>⍳</literal> function. We can use the following code instead:
         </simpara>
         <programlisting>I←(⊂A)⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A</programlisting>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>Tokenize</function> function gives a malformed result.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            This is due to an unnecessarily complex set of code. It is difficult to 
+            verify this code, and it should not have made it through. Replacing the 
+            code with simpler code that can be proven should fix the malformation 
+            result.
+          </para>
+        </formalpara>
       </listitem>
     </orderedlist>
   </section>
