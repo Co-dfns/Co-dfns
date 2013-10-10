@@ -202,6 +202,10 @@ Parse←{
   NS←(⊃N),⊃⌽N←(¯1⌽T∊⊂'name')/T←,↑(⍵[;1]∊⊂'Token')/⍵[;3]
   ':Namespace:EndNamespace'≢NS:⎕SIGNAL 2
   
+  ⍝ We need to ensure that there are not more than two Nss and Nse 
+  ⍝ tokens combined either, or it is also a syntax error
+  2≠+/N∊':Namespace' ':EndNamespace':⎕SIGNAL 2
+  
   ⍝ Remove Nss and Nse tokens
   ⍝ This corresponds to lifting the tokens to part of the structure
   ⍝ This changes the root from Tokens to Namespace

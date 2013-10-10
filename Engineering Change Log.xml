@@ -116,6 +116,12 @@
           <td colspan="5">RANK ERROR on Parse return</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>16</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">Parse accepts invalid input</td>
+          <td colspan="2">Applied</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -461,6 +467,23 @@
             The function <function>Parse</function> is supposed to return both 
             and AST and the Names that are bound at the top-level, but it does 
             not do this currently.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>Parse</function> function accepts more than one 
+            Nss and one Nse stimuli.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            This happens because there is no check for it, while there is a 
+            check to ensure that the first and last stimuli are Nss and Nse 
+            respectively. Inserting this check should fix this issue.
           </para>
         </formalpara>
       </listitem>

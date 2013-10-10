@@ -121,6 +121,36 @@
             <td>Fail</td>
             <td colspan="5">Rank error in return from Parse</td>
           </tr>
+          <tr>
+            <td>11</td>
+            <td>1</td>
+            <td>Pass</td>
+            <td colspan="5"></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>2</td>
+            <td>Pass</td>
+            <td colspan="5"></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>3</td>
+            <td>Pass</td>
+            <td colspan="5"></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>4</td>
+            <td>Pass</td>
+            <td colspan="5"></td>
+          </tr>
+          <tr>
+            <td>11</td>
+            <td>5</td>
+            <td>Fail</td>
+            <td colspan="5">Accepts invalid input</td>
+          </tr>
         </tbody>
       </informaltable>
       <formalpara>
@@ -197,6 +227,13 @@ FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
         <title>Iteration 10, Test Case 1</title>
         <para>
           The <function>Parse</function> does not return the names array.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Iteration 11, Test Case 5</title>
+        <para>
+          The <function>Parse</function> accepts more than one Nss and Nse 
+          stimuli in a namespace script.
         </para>
       </formalpara>
     </section>
