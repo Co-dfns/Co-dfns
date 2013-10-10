@@ -31,6 +31,12 @@
             <td>Fail</td>
             <td colspan="5">Missing definition/function</td>
           </tr>
+          <tr>
+            <td>3</td>
+            <td>1</td>
+            <td>Fail</td>
+            <td colspan="5">Length Error due to zero-length scan</td>
+          </tr>
         </tbody>
       </informaltable>
       <formalpara>
@@ -51,6 +57,15 @@ FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
         <title>Iteration 2, Test Case 1</title>
         <para>
           The <function>ValidateInput</function> function is undefined.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Iteration 3, Test Case 1</title>
+        <para>
+          The <function>Tokenize</function> fails due to a length error when splitting 
+          comments and code. This occurs because of the scan used with a zero length 
+          string. In this case, the scan always gives back a one element result, while it 
+          is clear that the intent was to return an empty array in this case.
         </para>
       </formalpara>
     </section>

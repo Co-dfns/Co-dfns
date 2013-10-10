@@ -68,6 +68,12 @@
           <td colspan="5">Fix missing definition</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>8</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">Incorrect use of Scan</td>
+          <td colspan="2">Pending</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -269,6 +275,35 @@
             defined or it should be replaced.
           </para>
         </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>Tokenize</function> function gives a length error when trying to 
+            split comments and code.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The comment splitting code is the following line:
+          </para>
+        </formalpara>
+        <programlisting>T C←⊂[0]↑2↑¨(1,¨1↓¨(~∨\¨0,¨1↓¨¯1⌽¨A)∧A←1↓¨'⍝'=A)⊂¨A</programlisting>
+        <simpara>
+          This code assumes that the array being scanned is always the same length as the 
+          array itself. However, this is not the case when we deal with an empty array.
+          The <literal>0,</literal> catenation will mean that we have an array of at least 
+          length 1. In this case, the above expression will not work.
+        </simpara>
+        <simpara>
+          This problem has wide ranging consequences because it is very likely that a given 
+          namespace script will have blank lines in it, which will trigger this problem. 
+          This function is overly complicated anyways, and can be simplified by a proper 
+          use of the <literal>⍳</literal> function. We can use the following code instead:
+        </simpara>
+        <programlisting>I←(⊂A)⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A</programlisting>
       </listitem>
     </orderedlist>
   </section>

@@ -155,14 +155,12 @@
             <td colspan="2">
               <simplelist type="horiz">
                 <member>Exiting Increment 1 Design</member>
-                <member>Entering Increment 1 Certification</member>
-                <member>Certification failed</member>
-                <member>Exiting Certification</member>
+                <member>Increment 1 Certification Iteration 1 failed</member>
                 <member>Engineering Change 6 applied</member>
-                <member>Entering Increment 1 Certification Iteration 2</member>
-                <member>Exiting Certification with failure</member>
-                <member>Engineering Change 7</member>
-                <member>Entering Increment 1 Certification Iteration 3</member>
+                <member>Increment 1 Certification Iteration 2 failed</member>
+                <member>Engineering Change 7 applied</member>
+                <member>Increment 1 Certification Iteration 3 failed</member>
+                <member>Engineering Change 8 applied</member>
               </simplelist>
             </td>
           </tr>

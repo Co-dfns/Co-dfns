@@ -23,7 +23,7 @@ Fix←{
   _←FFI∆INIT
   
   ⍝ Input Validation, Signal DOMAIN ERROR if not valid
-  ((,1)≡⍴⍵)∧(∧/1≥⊃∘⍴∘⍴¨⍵)∧(∧/' '=∊¨⍵):⎕SIGNAL 11
+  ((,1)≡⍴⍵)∧(∧/1≥⊃∘⍴∘⍴¨⍵)∧(∧/⊃,/' '=∊¨⍵):⎕SIGNAL 11
   
   ⍝ Identify Obj property
   ⍝ This is based on the arity of the Fix call
@@ -150,7 +150,7 @@ Tokenize←{
   A←((⌽∘(∨\)∘⌽¨A)∧∨\¨A←' '≠⍵)/¨⍵
   
   ⍝ Divide into comment and code
-  T C←⊂[0]↑2↑¨(1,¨1↓¨(~∨\¨0,¨1↓¨¯1⌽¨A)∧A←1↓¨'⍝'=A)⊂¨A
+  I←(⊂A)⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A
   
   ⍝ Split code on spaces
   T←(1,¨2≠/¨' '=T)⊂¨T
