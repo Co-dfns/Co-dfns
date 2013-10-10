@@ -25,6 +25,12 @@
             <td>Fail</td>
             <td colspan="5">Invalid FFI return type specifier</td>
           </tr>
+          <tr>
+            <td>2</td>
+            <td>1</td>
+            <td>Fail</td>
+            <td colspan="5">Missing definition/function</td>
+          </tr>
         </tbody>
       </informaltable>
       <formalpara>
@@ -41,6 +47,12 @@ FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
       <simpara>
         Diagnosis of this error is self evident.
       </simpara>
+      <formalpara>
+        <title>Iteration 2, Test Case 1</title>
+        <para>
+          The <function>ValidateInput</function> function is undefined.
+        </para>
+      </formalpara>
     </section>
   </section>
 </article>

@@ -23,7 +23,7 @@ Fix←{
   _←FFI∆INIT
   
   ⍝ Input Validation, Signal DOMAIN ERROR if not valid
-  ValidateInput ⍵:⎕SIGNAL 11
+  ((,1)≡⍴⍵)∧(∧/1≥⊃∘⍴∘⍴¨⍵)∧(∧/' '=∊¨⍵):⎕SIGNAL 11
   
   ⍝ Identify Obj property
   ⍝ This is based on the arity of the Fix call
@@ -250,7 +250,7 @@ GenLLVM←{
 Z←⍬
 
 ⍝ LLVMBool LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
-'PrintModuleToFile'⎕NA'int CoDfns|PrintModuleToFile P <0C >P'
+'PrintModuleToFile'⎕NA'I4 CoDfns|PrintModuleToFile P <0C >P'
 
 ⍝ void LLVMDisposeMessage (char *Message)
 'DisposeMessage'⎕NA'CoDfns|DisposeMessage P'

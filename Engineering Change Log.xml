@@ -60,7 +60,13 @@
           <td>6</td>
           <td colspan="2">2013-10-09</td>
           <td colspan="5">Fix FFI Declaration</td>
-          <td colspan="2">Pending</td>
+          <td colspan="2">Applied</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">Fix missing definition</td>
+          <td colspan="2">Applied</td>
         </tr>
       </tbody>
     </table>
@@ -252,6 +258,15 @@
           <para>
             An error in the declaration of an FFI function was discovered during certification.
             This must be adjusted before further certification can proceed.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>ValidateInput</function> function is not defined. It should either be 
+            defined or it should be replaced.
           </para>
         </formalpara>
       </listitem>

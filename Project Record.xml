@@ -158,7 +158,11 @@
                 <member>Entering Increment 1 Certification</member>
                 <member>Certification failed</member>
                 <member>Exiting Certification</member>
-                <member>Entering Engineering Change for Increment 1</member>
+                <member>Engineering Change 6 applied</member>
+                <member>Entering Increment 1 Certification Iteration 2</member>
+                <member>Exiting Certification with failure</member>
+                <member>Engineering Change 7</member>
+                <member>Entering Increment 1 Certification Iteration 3</member>
               </simplelist>
             </td>
           </tr>
