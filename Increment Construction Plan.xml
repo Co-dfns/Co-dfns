@@ -29,6 +29,11 @@
             <simplelist type="horiz">
               <member>Support an empty namespace</member>
               <member>Generate an empty LLVM Object to a file</member>
+              <member>Create passes Tokenize, GenLLVM, Parse</member>
+              <member>
+                Add support for stimuli: Fix Break Eot Fnb Fne Fnf
+                Lle Lls Nl Nse Nss
+              </member>
             </simplelist>
           </td>
         </tr>
@@ -130,6 +135,14 @@
           <td colspan="6">
             <simplelist type="horiz">
               <member>Selective Assignment</member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td colspan="6">
+            <simplelist type="horiz">
+              <member>Complete Error Handling and Reporting</member>
             </simplelist>
           </td>
         </tr>

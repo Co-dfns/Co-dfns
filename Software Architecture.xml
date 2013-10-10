@@ -1514,6 +1514,13 @@
         <title>Pass Specifications</title>
         <section>
           <title>Entry Pass: Tokenizer</title>
+          <formalpara>
+            <title>Intended Function</title>
+            <para>
+              Convert a vector of character vectors or scalars to a valid 
+              AST with a Tokens root that is lexically equivalent modulo spaces.
+            </para>
+          </formalpara>
           <informaltable frame="void" rules="rows">
             <thead>
               <tr>
@@ -1537,6 +1544,13 @@
         </section>
         <section>
           <title>Standard Pass: Parse</title>
+          <formalpara>
+            <title>Intended Function</title>
+            <para>
+              Convert a Tokens AST to a Namespace AST that is structurally equivalent 
+              and that preserves comments and line counts.
+            </para>
+          </formalpara>
           <informaltable frame="void" rules="rows">
             <thead>
               <tr>
@@ -1909,9 +1923,34 @@
         </section>
         <section>
           <title>Exit Pass: GenLLVM</title>
-          <simpara>
-            XXX: Need more information here
-          </simpara>
+          <formalpara>
+            <title>Intended Function</title>
+            <para>
+              Take a namespace and convert it to an LLVM Module that is 
+              semantically equivalent.
+            </para>
+          </formalpara>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Type/Action</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Input</td>
+                <td>Namespace</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>Output</td>
+                <td>LLVM Module</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </informaltable>
         </section>
       </section>
       <section>
