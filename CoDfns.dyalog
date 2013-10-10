@@ -167,7 +167,7 @@ Tokenize←{
 ⍝ and that preserves comments and line counts.
 ⍝ 
 ⍝ Input: Tokens tree
-⍝ Output: Namespace AST
+⍝ Output: Namespace AST, Top-level Names
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 Parse←{
@@ -207,7 +207,10 @@ Parse←{
   ⍝ This changes the root from Tokens to Namespace
   
   NS←(~⍵[;1]∊⊂'Token')/[0]⍵
-  0 'Namespace' '' (1 2⍴'name' '')⍪1↓NS
+  NS←0 'Namespace' '' (1 2⍴'name' '')⍪1↓NS
+  
+  ⍝ We stub out an empty names table for now
+  NS(0 2⍴⍬)
 }
 
 ⍝ GenLLVM

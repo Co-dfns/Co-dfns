@@ -115,6 +115,12 @@
             <td>Fail</td>
             <td colspan="5">Incorrect Syntax Error</td>
           </tr>
+          <tr>
+            <td>10</td>
+            <td>1</td>
+            <td>Fail</td>
+            <td colspan="5">Rank error in return from Parse</td>
+          </tr>
         </tbody>
       </informaltable>
       <formalpara>
@@ -185,6 +191,12 @@ FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
         <para>
           The <function>Parse</function> gives an incorrect Syntax error on valid 
           input.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Iteration 10, Test Case 1</title>
+        <para>
+          The <function>Parse</function> does not return the names array.
         </para>
       </formalpara>
     </section>

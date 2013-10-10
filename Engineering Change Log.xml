@@ -110,6 +110,12 @@
           <td colspan="5">SYNTAX ERROR on valid input</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>15</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">RANK ERROR on Parse return</td>
+          <td colspan="2">Applied</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -441,6 +447,22 @@
         <simpara>
           This is trivially fixed by unifying the types.
         </simpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>Parse</function> function does not return two elements.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The function <function>Parse</function> is supposed to return both 
+            and AST and the Names that are bound at the top-level, but it does 
+            not do this currently.
+          </para>
+        </formalpara>
       </listitem>
     </orderedlist>
   </section>
