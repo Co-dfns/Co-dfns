@@ -104,6 +104,12 @@
           <td colspan="5">Domain error when wrapping tokens</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>14</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">SYNTAX ERROR on valid input</td>
+          <td colspan="2">Applied</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -414,6 +420,27 @@
             that handles this special case.
           </para>
         </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>Parse</function> function fails with a SYNTAX ERROR on 
+            valid input.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            The problem is the assumption of a nested result in this code for 
+            doing the comparison, but in reality having a flat array:
+          </para>
+        </formalpara>
+        <programlisting>NS←(⊃N),⊃⌽N←(¯1⌽T∊⊂'name')/T←,↑(⍵[;1]∊⊂'Token')/⍵[;3]
+':Namespace' ':EndNamespace'≢NS:⎕SIGNAL 2</programlisting>
+        <simpara>
+          This is trivially fixed by unifying the types.
+        </simpara>
       </listitem>
     </orderedlist>
   </section>

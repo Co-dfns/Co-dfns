@@ -200,7 +200,7 @@ Parse←{
   ⍝ in the document. If they are not then we have a syntax error.
   
   NS←(⊃N),⊃⌽N←(¯1⌽T∊⊂'name')/T←,↑(⍵[;1]∊⊂'Token')/⍵[;3]
-  ':Namespace' ':EndNamespace'≢NS:⎕SIGNAL 2
+  ':Namespace:EndNamespace'≢NS:⎕SIGNAL 2
   
   ⍝ Remove Nss and Nse tokens
   ⍝ This corresponds to lifting the tokens to part of the structure

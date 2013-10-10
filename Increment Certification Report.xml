@@ -13,16 +13,14 @@
           <th>Increment</th>
           <th>Iterations</th>
           <th>Total Cases</th>
-          <th>Total Failures</th>
           <th>Certification</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>1</td>
-          <td>8</td>
-          <td>8</td>
-          <td>8</td>
+          <td>9</td>
+          <td>16</td>
           <td>No</td>
         </tr>
       </tbody>
