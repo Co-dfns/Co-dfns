@@ -61,6 +61,12 @@
             <td>Fail</td>
             <td colspan="5">Token splitting by spaces fails</td>
           </tr>
+          <tr>
+            <td>8</td>
+            <td>1</td>
+            <td>Fail</td>
+            <td colspan="5">Domain error when tokenizing</td>
+          </tr>
         </tbody>
       </informaltable>
       <formalpara>
@@ -117,6 +123,13 @@ FFI∆INIT[4] 'PrintModuleToFile'⎕NA'int \
         <title>Iteration 7, Test Case 1</title>
         <para>
           The <function>Tokenize</function> fails to correctly split tokens on spaces.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Iteration 8, Test Case 1</title>
+        <para>
+          The <function>Tokenize</function> fails with a domain error when trying to 
+          wrap tokens around everything.
         </para>
       </formalpara>
     </section>

@@ -98,6 +98,12 @@
           <td colspan="5">Splitting on spaces fails for empty strings</td>
           <td colspan="2">Applied</td>
         </tr>
+        <tr>
+          <td>13</td>
+          <td colspan="2">2013-10-09</td>
+          <td colspan="5">Domain error when wrapping tokens</td>
+          <td colspan="2">Applied</td>
+        </tr>
       </tbody>
     </table>
     <orderedlist>
@@ -389,6 +395,23 @@
             This reveals further problems with this first expression. It fails to 
             clearly split, and it also leaves the spaces around to be cleaned up later 
             or to introduce faulty tokens in the future.
+          </para>
+        </formalpara>
+      </listitem>
+      <listitem>
+        <formalpara>
+          <title>Description</title>
+          <para>
+            The <function>Tokenize</function> function fails with a DOMAIN ERROR when 
+            it tries to wrap tokens around empty lines.
+          </para>
+        </formalpara>
+        <formalpara>
+          <title>Analysis</title>
+          <para>
+            Apparently you cannot catenate reduce on an empty vector of any sort. 
+            This was news to me. The easiest way to fix this is to insert a check 
+            that handles this special case.
           </para>
         </formalpara>
       </listitem>

@@ -147,7 +147,7 @@ Tokenize←{
   I←A⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A
   
   ⍝ Split code on spaces
-  T←{((⍴X)⍴1 0)/(2≠/' '=' ',⍵)⊂⍵}¨T
+  T←{((⍴X)⍴1 0)/X←(2≠/' '=' ',⍵)⊂⍵}¨T
   
   ⍝ Wrap in Token containers
   ⍝ This works right now because we do not have any other elements to 
@@ -155,7 +155,7 @@ Tokenize←{
   T←{1 4⍴2 'Token' '' (2 2⍴'class' 'delimiter' 'name' ⍵)}¨¨T
   
   ⍝ Wrap in Lines
-  T←C {1 'Line' '' (1 2⍴'comment' ⍺)⍪⊃⍪/⍵}¨T
+  T←C {H←1 'Line' '' (1 2⍴'comment' ⍺) ⋄ 0=⊃⍴⍵:1 4⍴H ⋄ H⍪⊃⍪/⍵}¨T
   
   ⍝ Create and return Tokens tree
   0 'Tokens' '' (0 2⍴'')⍪⊃⍪/T
