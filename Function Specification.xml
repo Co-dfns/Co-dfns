@@ -39344,7 +39344,7 @@
             <simpara>
               What is the value of the current unit we are processing?
               Possible values are:
-              <symbol>UNBOUND</symbol>, <symbol>EXPR</symbol> or <symbol>FUNC</symbol>.
+              <symbol>EMPTY</symbol>, <symbol>UNBOUND</symbol>, <symbol>EXPR</symbol> or <symbol>FUNC</symbol>.
             </simpara>
           </listitem>
         </varlistentry>
@@ -39376,10 +39376,10 @@
             <td colspan="3">empty</td>
             <td>No</td>
             <td></td>
-            <td colspan="2"></td>
-            <td></td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
+            <td colspan="2">NOTSEEN</td>
+            <td>No</td>
+            <td colspan="2">EMPTY</td>
+            <td colspan="2">NO</td>
           </tr>
           <tr>
             <td colspan="3">Fix</td>
@@ -39387,17 +39387,17 @@
             <td></td>
             <td colspan="2">NOTSEEN</td>
             <td>No</td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
+            <td colspan="2">EMPTY</td>
+            <td colspan="2">NO</td>
           </tr>
           <tr>
             <td colspan="3">Fix Fne</td>
             <td>Yes</td>
             <td>Yes</td>
-            <td colspan="2"></td>
+            <td colspan="2">NOTSEEN</td>
             <td>No</td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
+            <td colspan="2">EMPTY</td>
+            <td colspan="2">NO</td>
           </tr>
           <tr>
             <td colspan="3">Fix Nss</td>
@@ -39405,8 +39405,8 @@
             <td></td>
             <td colspan="2">OPEN</td>
             <td>No</td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
+            <td colspan="2">EMPTY</td>
+            <td colspan="2">NO</td>
           </tr>
           <tr>
             <td colspan="3">Fix Nss E</td>
@@ -39415,7 +39415,7 @@
             <td colspan="2">OPEN</td>
             <td>No</td>
             <td colspan="2">EXPR</td>
-            <td colspan="2"></td>
+            <td colspan="2">NO</td>
           </tr>
           <tr>
             <td colspan="3">Fix Nss Fe</td>
@@ -39432,8 +39432,8 @@
             <td></td>
             <td colspan="2">CLOSED</td>
             <td>No</td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
+            <td colspan="2">EMPTY</td>
+            <td colspan="2">NO</td>
           </tr>
           <tr>
             <td colspan="3">Fix Nss Vfo</td>
@@ -39459,7 +39459,7 @@
             <td></td>
             <td colspan="2">OPEN</td>
             <td>No</td>
-            <td colspan="2"></td>
+            <td colspan="2">EMPTY</td>
             <td colspan="2">BOUND</td>
           </tr>
           <tr>
@@ -39468,7 +39468,7 @@
             <td></td>
             <td colspan="2">OPEN</td>
             <td>No</td>
-            <td colspan="2"></td>
+            <td colspan="2">EMPTY</td>
             <td colspan="2">UNBOUND</td>
           </tr>
           <tr>
@@ -39477,8 +39477,8 @@
             <td></td>
             <td colspan="2">CLOSED</td>
             <td>Yes</td>
-            <td colspan="2"></td>
-            <td colspan="2"></td>
+            <td colspan="2">EMPTY</td>
+            <td colspan="2">NO</td>
           </tr>
           <tr>
             <td colspan="3">Fix Nss Vfo <literal>←</literal> Fe</td>
@@ -39565,9 +39565,9 @@
           <tr>
             <td>empty</td>
             <td>No</td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>No</td>
+            <td>NO</td>
+            <td>EMPTY</td>
           </tr>
           <tr>
             <td>{</td>
@@ -39706,6 +39706,12 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td>empty</td>
+            <td>NONE</td>
+            <td>ATOM</td>
+            <td>EMPTY</td>
+          </tr>
           <tr>
             <td>Fea</td>
             <td>NONE</td>
@@ -40022,6 +40028,14 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td colspan="2">empty</td>
+            <td>NONE</td>
+            <td>NONE</td>
+            <td>NO</td>
+            <td>NONE</td>
+            <td>No</td>
+          </tr>
           <tr>
             <td colspan="2">Ea</td>
             <td>ATOM</td>
@@ -43577,7 +43591,7 @@
                 <member>Context <literal>∊</literal> Expr</member>
                 <member>Nest <literal>∊</literal> NONE</member>
                 <member>Class <literal>∊</literal> ATOM</member>
-                <member>Last Seen <literal>∊</literal> LIT VAR NVAR</member>
+                <member>Last Seen <literal>∊</literal> EMPTY LIT VAR NVAR</member>
               </simplelist>
             </td>
             <td>atomic</td>
