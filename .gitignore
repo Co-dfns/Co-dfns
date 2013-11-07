@@ -13,3 +13,7 @@ ipch/
 *.pdb
 *.lib
 *.ll
+Materials/
+Thumbs.db
+*.mp4
+*.zip
