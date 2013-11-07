@@ -922,6 +922,19 @@
               <td colspan="2">A line of tokens</td>
             </tr>
             <tr>
+              <td>Ambiguous</td>
+              <td></td>
+              <td colspan="2">
+                <simplelist type="inline">
+                  <member>FuncExpr</member>
+                  <member>Expression</member>
+                </simplelist>
+              </td>
+              <td colspan="2">
+                A set of possible parsings
+              </td>
+            </tr>
+            <tr>
               <td>Expression</td>
               <td>
                 <simplelist type="inline">
@@ -1158,6 +1171,27 @@
           </formalpara>
         </section>
         <section>
+          <title>Element: Ambiguous</title>
+          <simpara>
+            There are some cases where a given expression may be ambiguous with the information that we 
+            have now. In order to move forward, we allow for a given parsing to have ambiguous expression 
+            parses when the correct information cannot be determined.
+          </simpara>
+          <formalpara>
+            <title>Ambiguous contents</title>
+            <para>
+              The contents of a <varname>Ambiguous</varname> element is one or more <varname>FuncExpr</varname>
+              or <varname>Expression</varname> elements.
+            </para>
+          </formalpara>
+          <formalpara>
+            <title>Ambiguous attributes</title>
+            <para>
+              There are no attributes for the <varname>Ambiguous</varname> element.
+            </para>
+          </formalpara>
+        </section>
+        <section>
           <title>Element: Expression</title>
           <simpara>
             The <varname>Expression</varname> element contains the various types of expressions we can see 
@@ -1189,7 +1223,7 @@
             <tbody>
               <tr>
                 <td>atomic</td>
-                <td colspan="3">(Variable | Number | String)+</td>
+                <td colspan="3">(Variable | Number | String | Expression)+</td>
               </tr>
               <tr>
                 <td>monadic</td>
@@ -1206,10 +1240,6 @@
               <tr>
                 <td>assignment</td>
                 <td colspan="3">Expression Expression | FuncExpr Expression Expression</td>
-              </tr>
-              <tr>
-                <td>ambiguous</td>
-                <td colspan="3">Expression+</td>
               </tr>
             </tbody>
           </informaltable>
@@ -1231,7 +1261,6 @@
                 <member><literal>dyadic</literal></member>
                 <member><literal>index</literal></member>
                 <member><literal>assignment</literal></member>
-                <member><literal>ambiguous</literal></member>
               </simplelist>.
               The <parameter>comment</parameter> attribute may also be used to indicate the comment that appears 
               on the same line as the expression.
@@ -1512,107 +1541,147 @@
       </section>
       <section>
         <title>Pass Specifications</title>
-        <section>
-          <title>Entry Pass: Tokenizer</title>
-          <formalpara>
-            <title>Intended Function</title>
-            <para>
-              Convert a vector of character vectors or scalars to a valid 
-              AST with a Tokens root that is lexically equivalent modulo spaces.
-            </para>
-          </formalpara>
-          <informaltable frame="void" rules="rows">
-            <thead>
-              <tr>
-                <th>Class</th>
-                <th>Type/Action</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Input</td>
-                <td><varname>⍵</varname> of <function>Fix</function></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Output Root Element</td>
-                <td>Tokens</td>
-              </tr>
-            </tbody>
-          </informaltable>
-        </section>
-        <section>
-          <title>Standard Pass: Parse</title>
-          <formalpara>
-            <title>Intended Function</title>
-            <para>
-              Convert a Tokens AST to a Namespace AST that is structurally equivalent 
-              and that preserves comments and line counts.
-            </para>
-          </formalpara>
-          <informaltable frame="void" rules="rows">
-            <thead>
-              <tr>
-                <th>Class</th>
-                <th>Type/Action</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Input</td>
-                <td>Tokens</td>
-                <td>Expects the result of <function>Tokenize</function></td>
-              </tr>
-              <tr>
-                <td>Output Root Element</td>
-                <td>Namespace</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Restriction</td>
-                <td>Idempotent</td>
-                <td>
-                  The result of the Parser should be able to reconstruct the 
-                  exact structure of the original code modulo inter-token spacing.
-                </td>
-              </tr>
-            </tbody>
-          </informaltable>
-        </section>
-        <section>
-          <title>Standard Pass: KillLines</title>
-          <informaltable frame="void" rules="rows">
-            <thead>
-              <tr>
-                <th>Class</th>
-                <th>Type/Action</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Input</td>
-                <td>Namespace</td>
-                <td>Expects the result of <function>Parse</function></td>
-              </tr>
-              <tr>
-                <td>Output Root Element</td>
-                <td>Namespace</td>
-                <td>Returns a namespace, but not the complete version</td>
-              </tr>
-              <tr>
-                <td>Line</td>
-                <td>Remove</td>
-                <td>
-                  Remove all lines in the program that have not been 
-                  parsed or that do not contribute semantic information
-                </td>
-              </tr>
-            </tbody>
-          </informaltable>
-        </section>
+        <informaltable frame="void" rules="rows">
+          <thead>
+            <tr>
+              <th colspan="4">Entry pass: Tokenize</th>
+            </tr>
+            <tr>
+              <th>Type</th>
+              <th colspan="3">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Intended Function</td>
+              <td colspan="3">
+                Convert a vector of character vectors or scalars to a valid
+                AST with a Tokens root that is lexically equivalent modulo spaces.
+              </td>
+            </tr>
+            <tr>
+              <td>Right Argument</td>
+              <td colspan="3">
+                <varname>⍵</varname> of
+                <function>Fix</function>
+              </td>
+            </tr>
+            <tr>
+              <td>Output</td>
+              <td colspan="3">AST with a
+                <varname>Tokens</varname> root
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
+        <informaltable frame="void" rules="rows">
+          <thead>
+          <tr>
+            <th colspan="4">Standard pass: Parse</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Intended function</td>
+              <td colspan="3">
+                Convert a Tokens AST to a Namespace AST that is structurally equivalent 
+                and that preserves comments and line counts.
+              </td>
+            </tr>
+            <tr>
+              <td>Right argument</td>
+              <td colspan="3">The result of <function>Tokenize</function></td>
+            </tr>
+            <tr>
+              <td>Output</td>
+              <td colspan="3">
+                <simplelist type="vert">
+                  <member>AST with a <varname>Namespace</varname> root</member>
+                  <member>Name bindings from global name to type</member>
+                </simplelist>
+              </td>
+            </tr>
+            <tr>
+              <td>Invariant</td>
+              <td colspan="3">
+                The result of the Parser should be able to reconstruct the 
+                exact structure of the original code modulo inter-token spacing.
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
+        <informaltable frame="void" rules="rows">
+          <thead>
+          <tr>
+            <th colspan="4">Standard pass: KillLines</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Intended function</td>
+              <td colspan="3">
+                Eliminate all semantically irrelevant lines from AST to create an 
+                AST suitable for compiling.
+              </td>
+            </tr>
+            <tr>
+              <td>Right argument</td>
+              <td colspan="3">The AST result of <function>Parse</function></td>
+            </tr>
+            <tr>
+              <td>Output</td>
+              <td colspan="3">AST with a <varname>Namespace</varname> root</td>
+            </tr>
+            <tr>
+              <td>Invariant</td>
+              <td colspan="3">
+                The result should contain no more <varname>Line</varname> elements.
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
+        <informaltable frame="void" rules="rows">
+          <thead>
+          <tr>
+            <th colspan="4">Standard pass: LiftConsts</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Intended function</td>
+              <td colspan="3">
+                Remove all constants from all depths to ensure that there exist constant 
+                values only at the top level.
+              </td>
+            </tr>
+            <tr>
+              <td>Right argument</td>
+              <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+            </tr>
+            <tr>
+              <td>Output</td>
+              <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+            </tr>
+            <tr>
+              <td>Invariant</td>
+              <td colspan="3">
+                The depth of any constant expression should always be 1.
+              </td>
+            </tr>
+          </tbody>
+        </informaltable>
         <section>
           <title>Optimization Pass: FuseScalars</title>
           <informaltable frame="void" rules="rows">
@@ -1832,41 +1901,6 @@
           </simpara>
         </section>
         <section>
-          <title>Standard Pass: LiftConsts</title>
-          <informaltable frame="void" rules="rows">
-            <thead>
-              <tr>
-                <th>Class</th>
-                <th>Type/Action</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Input</td>
-                <td>Namespace</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Output Root Element</td>
-                <td>Namespace</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>Constant Expressions</td>
-                <td>Lift to top-level</td>
-                <td>
-                  All constant expressions are lifted to the top-level and replaced 
-                  with variable references.
-                </td>
-              </tr>
-            </tbody>
-          </informaltable>
-          <simpara>
-            XXX: Need more information here
-          </simpara>
-        </section>
-        <section>
           <title>Standard Pass: ElimFVs</title>
           <informaltable frame="void" rules="rows">
             <thead>
@@ -1955,6 +1989,132 @@
       </section>
       <section>
         <title>Runtime Design</title>
+        <section>
+          <title>Representing Arrays</title>
+          <simpara>
+            The array data structure is the most critical structure in the system, and deserves 
+            careful consideration. The following table details the fields of the array structure 
+            and all the elements necessary to construct a valid array structure.
+          </simpara>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Width (Bits)</th>
+                <th colspan="2">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Rank</td>
+                <td><simplelist type="horiz"><member>unsigned</member><member>integer</member></simplelist></td>
+                <td>16</td>
+                <td colspan="2">The count of the dimensions of the array</td>
+              </tr>
+              <tr>
+                <td>Size</td>
+                <td><simplelist type="horiz"><member>unsigned</member><member>integer</member></simplelist></td>
+                <td>64</td>
+                <td colspan="2">The count of the elements in the array</td>
+              </tr>
+              <tr>
+                <td>Type</td>
+                <td><simplelist type="horiz"><member>unsigned</member><member>integer</member></simplelist></td>
+                <td>4</td>
+                <td colspan="2">The type of the array elements</td>
+              </tr>
+              <tr>
+                <td>Shape</td>
+                <td>Pointer</td>
+                <td>N/A</td>
+                <td colspan="2">A pointer to the dimensions; each dimension is a 32-bit unsigned integer</td>
+              </tr>
+              <tr>
+                <td>Elements</td>
+                <td>Pointer</td>
+                <td>N/A</td>
+                <td colspan="2">A pointer to the buffer containing the elements; the nature of the elements is dependent on the Type</td>
+              </tr>
+              <tr>
+                <td>Kinds</td>
+                <td>Pointer</td>
+                <td>N/A</td>
+                <td colspan="2">A pointer to the types of the elements in a mixed array; only necessary for mixed arrays</td>
+              </tr>
+            </tbody>
+          </informaltable>
+        </section>
+        <section>
+          <title>Representing Scalars</title>
+          <simpara>
+            Each array has a buffer pointing to a set of elements. How these elements are 
+            arrayed in the buffer depends on the type of the scalar. The following table 
+            details the types of scalars, and their structures.
+          </simpara>
+          <informaltable frame="void" rules="rows">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th colspan="2">Name</th>
+                <th colspan="2">Type</th>
+                <th colspan="2">Width (Bits)</th>
+                <th colspan="3">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td colspan="2">Boolean</td>
+                <td colspan="2"><simplelist type="horiz"><member>unsigned</member><member>integer</member></simplelist></td>
+                <td colspan="2">1</td>
+                <td colspan="3">A single boolean value; used to compress a bitvector</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td colspan="2">Integer</td>
+                <td colspan="2"><simplelist type="horiz"><member>signed</member><member>integer</member></simplelist></td>
+                <td colspan="2">64</td>
+                <td colspan="3">A signed integer value</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td colspan="2">Floating</td>
+                <td colspan="2">IEEE Float</td>
+                <td colspan="2">64</td>
+                <td colspan="3">A floating point value</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td colspan="2">Character</td>
+                <td colspan="2">UCS-4/UTF-32</td>
+                <td colspan="2">32</td>
+                <td colspan="3">A single Unicode Character</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td colspan="2">Complex</td>
+                <td colspan="2">{3, 3}</td>
+                <td colspan="2">128</td>
+                <td colspan="3">A complex number represented as a pair of floating point values</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td colspan="2">Mixed</td>
+                <td colspan="2">Varied</td>
+                <td colspan="2">Varied</td>
+                <td colspan="3">Any scalar value, whose type is indicated by an auxiliary vector</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td colspan="2">Nested</td>
+                <td colspan="2">Array</td>
+                <td colspan="2">sizeof(Array)</td>
+                <td colspan="3">An array header representing an element in a nested array</td>
+              </tr>
+            </tbody>
+          </informaltable>
+        </section>
       </section>
     </section>
   </section>
