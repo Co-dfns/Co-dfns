@@ -42,7 +42,21 @@
           <td colspan="6">
             <simplelist type="horiz">
               <member>Support static global constants of integers</member>
+              <member>New Stimuli: N <literal>←</literal> V { }</member>
               <member>Support functions that return constants of integers</member>
+              <member>New Passes: 
+                <simplelist type="inline">
+                  <member>KillLines</member>
+                  <member>LiftConsts</member>
+                </simplelist>
+              </member>
+              <member>Modified Passes:
+                <simplelist type="inline">
+                  <member>GenLLVM</member>
+                  <member>Tokenize</member>
+                  <member>Parse</member>
+                </simplelist>
+              </member>
             </simplelist>
           </td>
         </tr>
