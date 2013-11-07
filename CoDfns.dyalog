@@ -531,18 +531,44 @@ Parse←{
     ⍝ Token: Vu
     ⍝
     ⍝ State-Box Definition:
+    ⍝   (Context ∊ Expr)                             → SYNTAX ERROR →
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN CLOSED) → SYNTAX ERROR →
+    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY)              → null         →
+    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)              → SYNTAX ERROR →
+    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Cond ∊ No) → wait         →
+    ⍝   (Context ∊ Fnex ⋄ Nest ∊ NONE ⋄ ~Oper ∊ MON) → VALUE ERROR  →
+    ⍝   (Context ∊ Fnex ⋄ Oper ∊ MON ⋄ Nest ∊ NONE)  → SYNTAX ERROR →
+    ⍝   (Context ∊ Fnex ⋄ Nest ∊ EMPTY)              → wait         →
+        
     
     ⍝ Token: Va
     ⍝
     ⍝ State-Box Definition:
+    ⍝   (Context ∊ Top Func Fnex)                                             → SYNTAX ERROR →
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ FUNC ⋄ Last Seen ∊ EMPTY LIT) → okay         →
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ RBRACK)                                      → okay         →
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ ATOM ⋄ Last Seen ∊ EMPTY LIT) → atomic       →
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ SELECT ⋄ Last Seen ∊ EMPTY)   → selective    →
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ SELECT ⋄ Last Seen ∊ LIT)     → okay         →
     
     ⍝ Token: {
     ⍝
     ⍝ State-Box Definition:
+    ⍝   (Context ∊ Top Expr Fnex)        → SYNTAX ERROR →
+    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)  → wait         →
+    ⍝   (Context ∊ Func ⋄ Bracket ∊ Yes) → SYNTAX ERROR →
     
     ⍝ Token: }
     ⍝
     ⍝ State-Box Definition:
+    ⍝   (Context ∊ Top Expr Fnex)                               → SYNTAX ERROR →
+    ⍝   (Context ∊ Func ⋄ Value ∊ EXPR FUNC)                    → okay         →
+    ⍝   (Context ∊ Func ⋄ Bind ∊ NO ⋄ Value ∊ EMPTY)            → okay         →
+    ⍝   (Context ∊ Func ⋄ Bind ∊ BOUND ⋄ Value ∊ FVAR FUNC)     → okay         →
+    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)                         → SYNTAX ERROR →
+    ⍝   (Context ∊ Func ⋄ Value ∊ UNBOUND)                      → VALUE ERROR  →
+    ⍝   (Context ∊ Func ⋄ Bind ∊ NO ⋄ Value ∊ FVAR)             → SYNTAX ERROR →
+    ⍝   (Context ∊ Func ⋄ Bind ∊ BOUND UNBOUND ⋄ Value ∊ EMPTY) → SYNTAX ERROR →
   }
   
   ⍝ We convert the tokens into a vector of token elements, inserting Nl Tokens 
