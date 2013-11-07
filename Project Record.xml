@@ -181,6 +181,23 @@
               </simplelist>
             </td>
           </tr>
+          <tr>
+            <td>Monday, October 14th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>Entering Increment 2 Design</member>
+                <member>Updated <citetitle>Increment Construction Plan</citetitle></member>
+              </simplelist>
+            </td>
+          </tr>
+          <tr>
+            <td>Tuesday, October 15th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>Updated <citetitle>Software Architecture</citetitle></member>
+              </simplelist>
+            </td>
+          </tr>
         </tbody>
       </informaltable>
     </section>
