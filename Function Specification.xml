@@ -43570,14 +43570,14 @@
         <title>Black Box Definition: N and S</title>
         <thead>
           <tr>
-            <th>Conditions</th>
+            <th colspan="2">Conditions</th>
             <th>Response</th>
             <th>Trace</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>
+            <td colspan="2">
               <simplelist>
                 <member>Context <literal>∊</literal> Top Func Fnex</member>
               </simplelist>
@@ -43586,7 +43586,7 @@
             <td>4, 10</td>
           </tr>
           <tr>
-            <td>
+            <td colspan="2">
               <simplelist>
                 <member>Context <literal>∊</literal> Expr</member>
                 <member>Nest <literal>∊</literal> NONE</member>
@@ -43598,7 +43598,7 @@
             <td>4</td>
           </tr>
           <tr>
-            <td>
+            <td colspan="2">
               <simplelist>
                 <member>Context <literal>∊</literal> Expr</member>
                 <member>Nest <literal>∊</literal> NONE</member>
@@ -43609,7 +43609,7 @@
             <td>4</td>
           </tr>
           <tr>
-            <td>
+            <td colspan="2">
               <simplelist>
                 <member>Context <literal>∊</literal> Expr</member>
                 <member>Nest <literal>∊</literal> NONE</member>
@@ -43620,7 +43620,7 @@
             <td>4, 10</td>
           </tr>
           <tr>
-            <td>
+            <td colspan="2">
               <simplelist>
                 <member>Context <literal>∊</literal> Expr</member>
                 <member>Nest <literal>∊</literal> RBRACK</member>
