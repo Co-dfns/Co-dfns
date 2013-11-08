@@ -43827,6 +43827,7 @@
             <td>
               <simplelist>
                 <member>Context <literal>∊</literal> Top</member>
+                <member>Namespace <literal>∊</literal> OPEN</member>
                 <member>Value <literal>∊</literal> EMPTY</member>
                 <member>Named <literal>∊</literal> NO</member>
               </simplelist>
