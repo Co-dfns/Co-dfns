@@ -198,6 +198,16 @@
               </simplelist>
             </td>
           </tr>
+          <tr>
+            <td>Thursday, November 7th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>Exited Increment 2 Design</member>
+                <member>Entering Function Specification</member>
+                <member>Update <citetitle>Function Specification</citetitle></member>
+              </simplelist>
+            </td>
+          </tr>
         </tbody>
       </informaltable>
     </section>

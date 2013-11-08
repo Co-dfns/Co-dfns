@@ -39960,8 +39960,9 @@
             <simpara>
               What is the current function value without taking into consideration the 
               current operator? This would be the left operand if there is an operator 
-              to deal with, and would be the function value if there is not. Possible values 
-              are:
+              to deal with, and would be the function value if there is not.
+              It does not include content in an unclosed parenthesized group.
+              Possible values are:
               <symbol>ATOM</symbol>, <symbol>AMB</symbol>, <symbol>NONE</symbol>, 
               <symbol>JOT</symbol>, <symbol>MON</symbol>, or <symbol>DYA</symbol>.
             </simpara>
@@ -39975,9 +39976,9 @@
               we have not seen an operator, or the semantic equivalent value of the operator 
               that is currently at the top of the parse tree. Possible values are:
               <symbol>NONE</symbol>, <symbol>DOT</symbol>, <symbol>COMP</symbol>, 
-              <symbol>POW</symbol>, <symbol>ANY</symbol>, <symbol>EACH</symbol>, 
-              <symbol>MON</symbol>, <symbol>DYA</symbol>, <symbol>RED</symbol>, 
-              <symbol>FUNC</symbol>, <symbol>COMM</symbol>, or <symbol>SCN</symbol>.
+              <symbol>POW</symbol>, <symbol>MON</symbol>, <symbol>DYA</symbol>.
+              This property is for talking about what is outside of a currently opened 
+              parenthesis.
             </simpara>
           </listitem>
         </varlistentry>
@@ -40142,7 +40143,7 @@
           </tr>
           <tr>
             <td colspan="2">( Fea</td>
-            <td>AMB</td>
+            <td>NONE</td>
             <td>NONE</td>
             <td>NO</td>
             <td>A</td>
@@ -40150,7 +40151,7 @@
           </tr>
           <tr>
             <td colspan="2">( Feaa</td>
-            <td>AMB</td>
+            <td>NONE</td>
             <td>NONE</td>
             <td>YES</td>
             <td>AA</td>
@@ -40158,7 +40159,7 @@
           </tr>
           <tr>
             <td colspan="2">( Fed</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NONE</td>
             <td>NO</td>
             <td>D</td>
@@ -40166,7 +40167,7 @@
           </tr>
           <tr>
             <td colspan="2">( Feda</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NONE</td>
             <td>YES</td>
             <td>DA</td>
@@ -40174,7 +40175,7 @@
           </tr>
           <tr>
             <td colspan="2">( Fem</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NONE</td>
             <td>NO</td>
             <td>M</td>
@@ -40182,7 +40183,7 @@
           </tr>
           <tr>
             <td colspan="2">( Fema</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NONE</td>
             <td>YES</td>
             <td>MA</td>
@@ -40191,14 +40192,14 @@
           <tr>
             <td colspan="2">( Feo[op]</td>
             <td>NONE</td>
-            <td>ANY</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>O</td>
             <td>No</td>
           </tr>
           <tr>
             <td colspan="2">( Vf</td>
-            <td>AMB</td>
+            <td>NONE</td>
             <td>NONE</td>
             <td>NO</td>
             <td>A</td>
@@ -40207,7 +40208,7 @@
           <tr>
             <td colspan="2">( Vo[op]</td>
             <td>NONE</td>
-            <td>ANY</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>O</td>
             <td>Yes</td>
@@ -40263,7 +40264,7 @@
           <tr>
             <td colspan="2">Ea ( Feo[Fnm]</td>
             <td>ATOM</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OM</td>
             <td>No</td>
@@ -40271,7 +40272,7 @@
           <tr>
             <td colspan="2">Ea ( Feo[Fnd]</td>
             <td>ATOM</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OD</td>
             <td>No</td>
@@ -40279,7 +40280,7 @@
           <tr>
             <td colspan="2">Ea ( Feo[<literal>∘</literal>]</td>
             <td>ATOM</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>No</td>
@@ -40287,7 +40288,7 @@
           <tr>
             <td colspan="2">Ea ( Vf</td>
             <td>ATOM</td>
-            <td>FUNC</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>A</td>
             <td>Yes</td>
@@ -40295,7 +40296,7 @@
           <tr>
             <td colspan="2">Ea ( Vo[<literal>∘</literal>]</td>
             <td>ATOM</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>Yes</td>
@@ -40303,7 +40304,7 @@
           <tr>
             <td colspan="2">Ea ( Vo[Fnm]</td>
             <td>ATOM</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OM</td>
             <td>Yes</td>
@@ -40311,7 +40312,7 @@
           <tr>
             <td colspan="2">Ea ( Vo[Fnd]</td>
             <td>ATOM</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OD</td>
             <td>Yes</td>
@@ -40343,7 +40344,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[Fnm]</td>
             <td>AMB</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OM</td>
             <td>No</td>
@@ -40351,7 +40352,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[Fnd]</td>
             <td>AMB</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OD</td>
             <td>No</td>
@@ -40359,7 +40360,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[<literal>⍨</literal>]</td>
             <td>AMB</td>
-            <td>COMM</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMM</td>
             <td>No</td>
@@ -40367,7 +40368,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[<literal>∘</literal>]</td>
             <td>AMB</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>No</td>
@@ -40375,7 +40376,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[<literal>¨</literal>]</td>
             <td>AMB</td>
-            <td>EACH</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>EACH</td>
             <td>No</td>
@@ -40383,7 +40384,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[<literal>.</literal>]</td>
             <td>AMB</td>
-            <td>DOT</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>DOT</td>
             <td>No</td>
@@ -40391,7 +40392,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[<literal>⍣</literal>]</td>
             <td>AMB</td>
-            <td>POW</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>POW</td>
             <td>No</td>
@@ -40399,7 +40400,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[<literal>/</literal> <literal>⌿</literal>]</td>
             <td>AMB</td>
-            <td>RED</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>RED</td>
             <td>No</td>
@@ -40407,7 +40408,7 @@
           <tr>
             <td colspan="2">Fn ( Feo[<literal>\</literal> <literal>⍀</literal>]</td>
             <td>AMB</td>
-            <td>SCN</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>SCN</td>
             <td>No</td>
@@ -40415,7 +40416,7 @@
           <tr>
             <td colspan="2">Fn ( Vf</td>
             <td>AMB</td>
-            <td>FUNC</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>A</td>
             <td>Yes</td>
@@ -40423,7 +40424,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[Fnm]</td>
             <td>AMB</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OM</td>
             <td>Yes</td>
@@ -40431,7 +40432,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[Fnd]</td>
             <td>AMB</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OD</td>
             <td>Yes</td>
@@ -40439,7 +40440,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[<literal>⍨</literal>]</td>
             <td>AMB</td>
-            <td>COMM</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMM</td>
             <td>Yes</td>
@@ -40447,7 +40448,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[<literal>∘</literal>]</td>
             <td>AMB</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>Yes</td>
@@ -40455,7 +40456,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[<literal>¨</literal>]</td>
             <td>AMB</td>
-            <td>EACH</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>EACH</td>
             <td>Yes</td>
@@ -40463,7 +40464,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[<literal>.</literal>]</td>
             <td>AMB</td>
-            <td>DOT</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>DOT</td>
             <td>Yes</td>
@@ -40471,7 +40472,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[<literal>⍣</literal>]</td>
             <td>AMB</td>
-            <td>POW</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>POW</td>
             <td>Yes</td>
@@ -40479,7 +40480,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[<literal>/</literal> <literal>⌿</literal>]</td>
             <td>AMB</td>
-            <td>RED</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>RED</td>
             <td>Yes</td>
@@ -40487,7 +40488,7 @@
           <tr>
             <td colspan="2">Fn ( Vo[<literal>\</literal> <literal>⍀</literal>]</td>
             <td>AMB</td>
-            <td>SCN</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>SCN</td>
             <td>Yes</td>
@@ -40559,7 +40560,7 @@
           <tr>
             <td colspan="2">Da ( Feo[<literal>∘</literal>]</td>
             <td>DYA</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>No</td>
@@ -40567,7 +40568,7 @@
           <tr>
             <td colspan="2">Da ( Feo[<literal>¨</literal>]</td>
             <td>DYA</td>
-            <td>EACH</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>EACH</td>
             <td>No</td>
@@ -40575,7 +40576,7 @@
           <tr>
             <td colspan="2">Da ( Feo[<literal>⍣</literal>]</td>
             <td>DYA</td>
-            <td>POW</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>POW</td>
             <td>No</td>
@@ -40583,7 +40584,7 @@
           <tr>
             <td colspan="2">Da ( Vf</td>
             <td>DYA</td>
-            <td>FUNC</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>A</td>
             <td>Yes</td>
@@ -40591,7 +40592,7 @@
           <tr>
             <td colspan="2">Da ( Vo[Fnm]</td>
             <td>DYA</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OM</td>
             <td>Yes</td>
@@ -40599,7 +40600,7 @@
           <tr>
             <td colspan="2">Da ( Vo[Fnd]</td>
             <td>DYA</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OD</td>
             <td>Yes</td>
@@ -40607,7 +40608,7 @@
           <tr>
             <td colspan="2">Da ( Vo[<literal>⍨</literal>]</td>
             <td>DYA</td>
-            <td>COMM</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMM</td>
             <td>Yes</td>
@@ -40615,7 +40616,7 @@
           <tr>
             <td colspan="2">Da ( Vo[<literal>∘</literal>]</td>
             <td>DYA</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>Yes</td>
@@ -40623,7 +40624,7 @@
           <tr>
             <td colspan="2">Da ( Vo[<literal>¨</literal>]</td>
             <td>DYA</td>
-            <td>EACH</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>EACH</td>
             <td>Yes</td>
@@ -40631,7 +40632,7 @@
           <tr>
             <td colspan="2">Da ( Vo[<literal>.</literal>]</td>
             <td>DYA</td>
-            <td>DOT</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>DOT</td>
             <td>Yes</td>
@@ -40639,7 +40640,7 @@
           <tr>
             <td colspan="2">Da ( Vo[<literal>⍣</literal>]</td>
             <td>DYA</td>
-            <td>POW</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>POW</td>
             <td>Yes</td>
@@ -40647,7 +40648,7 @@
           <tr>
             <td colspan="2">Da ( Vo[<literal>/</literal> <literal>⌿</literal>]</td>
             <td>DYA</td>
-            <td>RED</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>RED</td>
             <td>Yes</td>
@@ -40655,7 +40656,7 @@
           <tr>
             <td colspan="2">Da ( Vo[<literal>\</literal> <literal>⍀</literal>]</td>
             <td>DYA</td>
-            <td>SCN</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>SCN</td>
             <td>Yes</td>
@@ -40823,7 +40824,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>∘</literal>]</td>
             <td>MON</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>No</td>
@@ -40831,7 +40832,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>¨</literal>]</td>
             <td>MON</td>
-            <td>EACH</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>EACH</td>
             <td>No</td>
@@ -40839,7 +40840,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Feo[<literal>⍣</literal>]</td>
             <td>MON</td>
-            <td>POW</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>POW</td>
             <td>No</td>
@@ -40847,7 +40848,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vf</td>
             <td>MON</td>
-            <td>FUNC</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>A</td>
             <td>Yes</td>
@@ -40855,7 +40856,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[Fnm]</td>
             <td>MON</td>
-            <td>MON</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OM</td>
             <td>Yes</td>
@@ -40863,7 +40864,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[Fnd]</td>
             <td>MON</td>
-            <td>DYA</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>OD</td>
             <td>Yes</td>
@@ -40871,7 +40872,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>⍨</literal>]</td>
             <td>MON</td>
-            <td>COMM</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMM</td>
             <td>Yes</td>
@@ -40879,7 +40880,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>∘</literal>]</td>
             <td>MON</td>
-            <td>COMP</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>COMP</td>
             <td>Yes</td>
@@ -40887,7 +40888,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>¨</literal>]</td>
             <td>MON</td>
-            <td>EACH</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>EACH</td>
             <td>Yes</td>
@@ -40895,7 +40896,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>⍣</literal>]</td>
             <td>MON</td>
-            <td>POW</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>POW</td>
             <td>Yes</td>
@@ -40903,7 +40904,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>.</literal>]</td>
             <td>MON</td>
-            <td>DOT</td>
+            <td>NONE</td>
             <td>NO</td>
             <td>DOT</td>
             <td>Yes</td>
@@ -40911,7 +40912,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>/</literal>]</td>
             <td>MON</td>
-            <td>RED</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>RED</td>
             <td>Yes</td>
@@ -40919,7 +40920,7 @@
           <tr>
             <td colspan="2">Fn <literal>\</literal> ( Vo[<literal>\</literal>]</td>
             <td>MON</td>
-            <td>SCN</td>
+            <td>NONE</td>
             <td>YES</td>
             <td>SCN</td>
             <td>Yes</td>
@@ -41687,8 +41688,29 @@
             <td>
               <simplelist>
                 <member>Context <literal>∊</literal> Fnex</member>
-                <member>Nest <literal>∊</literal> A OM</member>
-                <member>Oper <literal>∊</literal> NONE MON DYA</member>
+                <member>Nest <literal>∊</literal> A</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>ambivalent</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> A</member>
+                <member>Oper <literal>∊</literal> DYA</member>
+              </simplelist>
+            </td>
+            <td>ambivalent</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> OM</member>
               </simplelist>
             </td>
             <td>ambivalent</td>
@@ -41833,7 +41855,7 @@
               <simplelist>
                 <member>Context <literal>∊</literal> Fnex</member>
                 <member>Nest <literal>∊</literal> MA SCN</member>
-                <member>Oper <literal>∊</literal> NONE SCN</member>
+                <member>Oper <literal>∊</literal> NONE</member>
               </simplelist>
             </td>
             <td>monadic axis</td>
@@ -41843,7 +41865,8 @@
             <td>
               <simplelist>
                 <member>Context <literal>∊</literal> Fnex</member>
-                <member>Oper <literal>∊</literal> ANY</member>
+                <member>Nest <literal>∊</literal> O</member>
+                <member>Opnd <literal>∊</literal> NONE</member>
               </simplelist>
             </td>
             <td>oper[op]</td>
@@ -41885,7 +41908,9 @@
             <td>
               <simplelist>
                 <member>Context <literal>∊</literal> Fnex</member>
-                <member>Oper <literal>∊</literal> FUNC</member>
+                <member>Nest <literal>∊</literal> A</member>
+                <member>~Opnd <literal>∊</literal> NONE</member>
+                <member>Oper <literal>∊</literal> NONE</member>
               </simplelist>
             </td>
             <td>SYNTAX ERROR</td>
@@ -41895,7 +41920,18 @@
             <td>
               <simplelist>
                 <member>Context <literal>∊</literal> Fnex</member>
-                <member>Nest <literal>∊</literal> O NONE</member>
+                <member>Nest <literal>∊</literal> NONE</member>
+              </simplelist>
+            </td>
+            <td>SYNTAX ERROR</td>
+            <td>4, 10</td>
+          </tr>
+          <tr>
+            <td>
+              <simplelist>
+                <member>Context <literal>∊</literal> Fnex</member>
+                <member>Nest <literal>∊</literal> O</member>
+                <member>~Opnd <literal>∊</literal> NONE</member>
               </simplelist>
             </td>
             <td>SYNTAX ERROR</td>
