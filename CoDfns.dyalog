@@ -437,12 +437,12 @@ Parse←{
     ⍝ Token: Nse
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Func Expr Fnex)                              → SYNTAX ERROR → ()
-    ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN CLOSED)            → SYNTAX ERROR → ()
-    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                     → null         → (Ast ← Namespace ⋄ Index +← 1 ⋄ Namespace ← CLOSED ⋄ Value ← EMPTY ⋄ Named ← NO)
-    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ NO)            → null         → (Ast ← Namespace ⋄ Index +← 1 ⋄ Namespace ← CLOSED)
-    ⍝   (Context ∊ Top ⋄ Value ∊ UNBOUND)                       → VALUE ERROR  → ()
-    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ BOUND UNBOUND) → SYNTAX ERROR → ()
+    ⍝   (Context ∊ Func Expr Fnex)                                      → SYNTAX ERROR → ()
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN CLOSED)                    → SYNTAX ERROR → ()
+    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                             → null         → (Ast ← Namespace ⋄ Index +← 1 ⋄ Namespace ← CLOSED ⋄ Value ← EMPTY ⋄ Named ← NO)
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ NO) → null         → (Ast ← Namespace ⋄ Index +← 1 ⋄ Namespace ← CLOSED)
+    ⍝   (Context ∊ Top ⋄ Value ∊ UNBOUND)                               → VALUE ERROR  → ()
+    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ BOUND UNBOUND)         → SYNTAX ERROR → ()
     ⍝
     ⍝ It is impossible to encounter an Nse token in a Func, Expr, or Fnex context 
     ⍝ unless something has gone horribly wrong. This is because an Nse token 
@@ -479,49 +479,53 @@ Parse←{
     ⍝ Token: Nl
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Expr Fnex)                                       → SYNTAX ERROR → (Finish Expr/Fnex)
-    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                         → null         → (Index +← 1 ⋄ Value ← EMPTY ⋄ Named ← NO)
-    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ NO)                → null         → (Index +← 1)
-    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ BOUND UNBOUND)     → SYNTAX ERROR → ()
-    ⍝   (Context ∊ Top Func ⋄ Value ∊ UNBOUND)                      → VALUE ERROR  → ()
-    ⍝   (Context ∊ Func ⋄ Value ∊ EXPR)                             → wait         → (Index +← 1 ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
-    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ NO)                → wait         → (Index +← 1)
-    ⍝   (Context ∊ Func ⋄ Value ∊ FUNC FVAR ⋄ Bind ∊ BOUND UNBOUND) → wait         → (Index +← 1 ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
-    ⍝   (Context ∊ Func ⋄ Value ∊ FVAR ⋄ Bind ∊ NO)                 → SYNTAX ERROR → (Finish Func)
-    ⍝   (context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ BOUND UNBOUND)     → SYNTAX ERROR → (Finish Func)
+    ⍝   (Context ∊ Expr Fnex)                                           → SYNTAX ERROR → (Finish Expr/Fnex)
+    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                             → null         → (Index +← 1 ⋄ Value ← EMPTY ⋄ Named ← NO)
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ NO) → null         → (Index +← 1)
+    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ BOUND UNBOUND)         → SYNTAX ERROR → ()
+    ⍝   (Context ∊ Top Func ⋄ Value ∊ UNBOUND)                          → VALUE ERROR  → ()
+    ⍝   (Context ∊ Func ⋄ Value ∊ EXPR)                                 → wait         → (Index +← 1 ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ NO)                    → wait         → (Index +← 1)
+    ⍝   (Context ∊ Func ⋄ Value ∊ FUNC FVAR ⋄ Bind ∊ BOUND UNBOUND)     → wait         → (Index +← 1 ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ Value ∊ FVAR ⋄ Bind ∊ NO)                     → SYNTAX ERROR → (Finish Func)
+    ⍝   (context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ BOUND UNBOUND)         → SYNTAX ERROR → (Finish Func)
     
     ⍝ Token: N
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Top Func Fnex)                                                → SYNTAX ERROR →
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ ATOM ⋄ Last Seen ∊ LIT VAR NVAR) → atomic       →
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ SELECT FUNC)                     → okay         →
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Last Seen ∊ UVAR MIXED)                  → VALUE ERROR  → 
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ RBRACK)                                         → okay         → 
+    ⍝   (Context ∊ Top Func Fnex)                                                      → SYNTAX ERROR → 
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ ATOM ⋄ Last Seen ∊ EMPTY LIT VAR NVAR) → atomic       → (Last Seen ← LIT)
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ SELECT FUNC)                           → okay         → (Last Seen ← LIT)
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Last Seen ∊ UVAR MIXED)                        → VALUE ERROR  → 
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ RBRACK)                                               → okay         → (Nest ← NONE ⋄ Class ← FUNC ⋄ Last Seen ← LIT)
     
     ⍝ Token: ←
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Top ⋄ Named ∊ MAYBE)                                   → null         →
-    ⍝   (Context ∊ Top ⋄ Named ∊ BOUND ⋄ Value ∊ UNBOUND)                 → null         →
-    ⍝   (Context ∊ Top ⋄ Named ∊ BOUND ⋄ ~Value ∊ UNBOUND)                → SYNTAX ERROR →
-    ⍝   (Context ∊ Top ⋄ ~Named ∊ BOUND MAYBE)                            → SYNTAX ERROR →
-    ⍝   (Context ∊ Func ⋄ Value ∊ UNBOUND FVAR)                           → wait         →
-    ⍝   (Context ∊ Func ⋄ ~Value ∊ UNBOUND FVAR)                          → SYNTAX ERROR →
-    ⍝   (Context ∊ Expr ⋄ Last Seen ∊ VAR NVAR UVAR ⋄ Nest ∊ NONE RBRACK) → wait         →
-    ⍝   (Context ∊ Expr ⋄ ~Last Seen ∊ VAR NVAR UVAR)                     → SYNTAX ERROR →
-    ⍝   (Context ∊ Fnex ⋄ Tgt ∊ Yes)                                      → wait         →
-    ⍝   (Context ∊ Fnex ⋄ Tgt ∊ No)                                       → SYNTAX ERROR →
+    ⍝   (Context ∊ Top ⋄ Named ∊ MAYBE ⋄ Value ∊ FUNC)                    → null         → (Value ← EMPTY ⋄ Named ← BOUND)
+    ⍝   (Context ∊ Top ⋄ Named ∊ MAYBE ⋄ Value ∊ UNBOUND)                 → null         → (Value ← EMPTY ⋄ Named ← UNBOUND)
+    ⍝   (Context ∊ Top ⋄ Named ∊ BOUND ⋄ Value ∊ UNBOUND)                 → null         → (Value ← EMPTY ⋄ Named ← BOUND)
+    ⍝   (Context ∊ Top ⋄ Named ∊ BOUND ⋄ ~Value ∊ UNBOUND)                → SYNTAX ERROR → 
+    ⍝   (Context ∊ Top ⋄ ~Named ∊ BOUND MAYBE)                            → SYNTAX ERROR → 
+    ⍝   (Context ∊ Func ⋄ Bind ∊ NO ⋄ Value ∊ UNBOUND)                    → wait         → (Bind ← UNBOUND ⋄ Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ Bind ∊ NO ⋄ Value ∊ FVAR)                       → wait         → (Bind ← BOUND ⋄ Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ Bind ∊ BOUND ⋄ Value ∊ UNBOUND FVAR)            → wait         → (Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ ~Value ∊ UNBOUND FVAR)                          → SYNTAX ERROR → 
+    ⍝   (Context ∊ Expr ⋄ Last Seen ∊ VAR NVAR UVAR ⋄ Nest ∊ NONE RBRACK) → wait         → (Nest ← NONE ⋄ Class ← FUNC ⋄ Last Seen ← EMPTY)
+    ⍝   (Context ∊ Expr ⋄ ~Last Seen ∊ VAR NVAR UVAR)                     → SYNTAX ERROR → 
+    ⍝   (Context ∊ Fnex ⋄ Tgt ∊ Yes)                                      → wait         → (Nest ← EMPTY ⋄ Tgt ← No)
+    ⍝   (Context ∊ Fnex ⋄ Tgt ∊ No)                                       → SYNTAX ERROR → 
     
     ⍝ Token: Vf
     ⍝
     ⍝ State-Box Definition:
     ⍝   (Context ∊ Expr)                                                               → SYNTAX ERROR →
     ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN CLOSED)                                   → SYNTAX ERROR →
-    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY)                                                → null         →
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY)                             → null         → (Value ← FUNC ⋄ Named ← MAYBE)
     ⍝   (Context ∊ Func ⋄ Bracket ∊ No)                                                → SYNTAX ERROR →
-    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Cond ∊ No)                                   → wait         →
-    ⍝   (Context ∊ Fnex ⋄ Opnd ∊ NONE AMB ⋄ Oper ∊ NONE DYA COMP ⋄ Nest ∊ NONE)        → ambivalent   →
+    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Cond ∊ No ⋄ Bind ∊ NO)                       → wait         → (Value ← FVAR)
+    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Cond ∊ No ⋄ Bind ∊ BOUND UNBOUND)            → wait         → (Value ← FVAR ⋄ Bind ← BOUND)
+    ⍝   (Context ∊ Fnex ⋄ Opnd ∊ NONE AMB ⋄ Oper ∊ NONE DYA COMP ⋄ Nest ∊ NONE)        → ambivalent   → 
     ⍝   (Context ∊ Fnex ⋄ Opnd ∊ ATOM AMB JOT DYA MON ⋄ Oper ∊ NONE MON ⋄ Nest ∊ NONE) → SYNTAX ERROR →
     ⍝   (Context ∊ Fnex ⋄ Nest ∊ EMPTY)                                                → wait         →
     ⍝   (Context ∊ Fnex ⋄ Opnd ∊ ATOM MON ⋄ Oper ∊ COMP ⋄ Nest ∊ NONE)                 → monadic      →
@@ -531,23 +535,24 @@ Parse←{
     ⍝ Token: Vu
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Expr)                             → SYNTAX ERROR →
-    ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN CLOSED) → SYNTAX ERROR →
-    ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY)              → null         →
-    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)              → SYNTAX ERROR →
-    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Cond ∊ No) → wait         →
-    ⍝   (Context ∊ Fnex ⋄ Nest ∊ NONE ⋄ ~Oper ∊ MON) → VALUE ERROR  →
-    ⍝   (Context ∊ Fnex ⋄ Oper ∊ MON ⋄ Nest ∊ NONE)  → SYNTAX ERROR →
-    ⍝   (Context ∊ Fnex ⋄ Nest ∊ EMPTY)              → wait         →
-        
+    ⍝   (Context ∊ Expr)                                                        → SYNTAX ERROR →
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN CLOSED)                            → SYNTAX ERROR →
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ NO UNBOUND) → null         → (Value ← UNBOUND ⋄ Named ← MAYBE)
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ BOUND)      → null         → (Value ← UNBOUND ⋄ Named ← BOUND)
+    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)                                         → SYNTAX ERROR →
+    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Cond ∊ No)                            → wait         →
+    ⍝   (Context ∊ Fnex ⋄ Nest ∊ NONE ⋄ ~Oper ∊ MON)                            → VALUE ERROR  →
+    ⍝   (Context ∊ Fnex ⋄ Oper ∊ MON ⋄ Nest ∊ NONE)                             → SYNTAX ERROR →
+    ⍝   (Context ∊ Fnex ⋄ Nest ∊ EMPTY)                                         → wait         →
     
     ⍝ Token: Va
     ⍝
     ⍝ State-Box Definition:
     ⍝   (Context ∊ Top Func Fnex)                                             → SYNTAX ERROR →
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ FUNC ⋄ Last Seen ∊ EMPTY LIT) → okay         →
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ RBRACK)                                      → okay         →
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ ATOM ⋄ Last Seen ∊ EMPTY LIT) → atomic       →
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ FUNC ⋄ Last Seen ∊ EMPTY)     → okay         → (Last Seen ← VAR)
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ FUNC ⋄ Last Seen ∊ LIT)       → okay         → ()
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ RBRACK)                                      → okay         → 
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ ATOM ⋄ Last Seen ∊ EMPTY LIT) → atomic       → (Last Seen ← VAR)
     ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ SELECT ⋄ Last Seen ∊ EMPTY)   → selective    →
     ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ SELECT ⋄ Last Seen ∊ LIT)     → okay         →
     
@@ -555,17 +560,17 @@ Parse←{
     ⍝
     ⍝ State-Box Definition:
     ⍝   (Context ∊ Top Expr Fnex)        → SYNTAX ERROR →
-    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)  → wait         →
+    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)  → wait         → (Bracket ← Yes)
     ⍝   (Context ∊ Func ⋄ Bracket ∊ Yes) → SYNTAX ERROR →
     
     ⍝ Token: }
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Top Expr Fnex)                               → SYNTAX ERROR →
-    ⍝   (Context ∊ Func ⋄ Value ∊ EXPR FUNC)                    → okay         →
-    ⍝   (Context ∊ Func ⋄ Bind ∊ NO ⋄ Value ∊ EMPTY)            → okay         →
+    ⍝   (Context ∊ Top Expr Fnex)                               → SYNTAX ERROR → 
+    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)                         → SYNTAX ERROR → 
+    ⍝   (Context ∊ Func ⋄ Value ∊ EXPR FUNC)                    → okay         → (Bracket ← No ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ Bind ∊ NO ⋄ Value ∊ EMPTY)            → okay         → (Bracket ← No ⋄ Cond ← No)
     ⍝   (Context ∊ Func ⋄ Bind ∊ BOUND ⋄ Value ∊ FVAR FUNC)     → okay         →
-    ⍝   (Context ∊ Func ⋄ Bracket ∊ No)                         → SYNTAX ERROR →
     ⍝   (Context ∊ Func ⋄ Value ∊ UNBOUND)                      → VALUE ERROR  →
     ⍝   (Context ∊ Func ⋄ Bind ∊ NO ⋄ Value ∊ FVAR)             → SYNTAX ERROR →
     ⍝   (Context ∊ Func ⋄ Bind ∊ BOUND UNBOUND ⋄ Value ∊ EMPTY) → SYNTAX ERROR →
