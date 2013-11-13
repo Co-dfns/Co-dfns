@@ -414,17 +414,31 @@ Parse←{
     ⍝ It is now safe to extract out the token value, since we have tested for Eot
     Tok←⊃Idx⌷⍺
     
+    ⍝ Notes on State-box Definitions: For all non-error responses, there is an implicit 
+    ⍝ state change ⟨Index +← 1⟩ for all transitions. Additionally, while it might be 
+    ⍝ possible to state the complete definition for updates to the Env and Ast structures, 
+    ⍝ these are quite different than the other state transitions and not directly relevant 
+    ⍝ to the Function Specification. Therefore, we will leave these to external definitions 
+    ⍝ to augment the state-box definitions, rather than encoding them directly in the 
+    ⍝ definitions.
+    ⍝
+    ⍝ The handling of error cases is remarkably tricky, and therefore, we will take some 
+    ⍝ time to explicate these cases in natural language as well when necessary.
+    
     ⍝ Token: Nss
     ⍝
     ⍝ State-Box Definition:
     ⍝   (Context ∊ Func Expr Fnex)             → SYNTAX ERROR → ()
     ⍝   (Context ∊ Top ⋄ ~Namespace ∊ NOTSEEN) → SYNTAX ERROR → ()
-    ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN)  → null         → (Index +← 1 ⋄ Namespace ← OPEN)
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN)  → null         → (Namespace ← OPEN)
     ⍝
-    ⍝ Encountering an Nss token anywhere but where expected is grounds for immediate 
+    ⍝ Error States: Encountering an Nss token anywhere but where expected is grounds for immediate 
     ⍝ error reporting. This is because nothing happens until we see a Namespace token, 
     ⍝ and we never even enter into any of the other contexts by then. We also never expect to 
     ⍝ see another Namespace token within any context after the first.
+    ⍝ 
+    ⍝ Ast and Env States: The Nss token by itself affects neither of these states. Only after 
+    ⍝ we have seen an Nse token do we deal with the Ast and Env states. 
     ('Token'≡Tag Tok)∧(':Namespace'≡Name Tok):{
       Test←(⊂Ctx⊃⍵)∊'Func' 'Expr' 'Fnex'
       Test∨←('Top'≡Ctx⊃⍵)∧('NOTSEEN'≢Nms⊃⍵)
@@ -439,12 +453,12 @@ Parse←{
     ⍝ State-Box Definition:
     ⍝   (Context ∊ Func Expr Fnex)                                      → SYNTAX ERROR → ()
     ⍝   (Context ∊ Top ⋄ Namespace ∊ NOTSEEN CLOSED)                    → SYNTAX ERROR → ()
-    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                             → null         → (Ast ← Namespace ⋄ Index +← 1 ⋄ Namespace ← CLOSED ⋄ Value ← EMPTY ⋄ Named ← NO)
-    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ NO) → null         → (Ast ← Namespace ⋄ Index +← 1 ⋄ Namespace ← CLOSED)
+    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                             → null         → (Namespace ← CLOSED ⋄ Value ← EMPTY ⋄ Named ← NO)
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ NO) → null         → (Namespace ← CLOSED)
     ⍝   (Context ∊ Top ⋄ Value ∊ UNBOUND)                               → VALUE ERROR  → ()
     ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ BOUND UNBOUND)         → SYNTAX ERROR → ()
     ⍝
-    ⍝ It is impossible to encounter an Nse token in a Func, Expr, or Fnex context 
+    ⍝ Error States: It is impossible to encounter an Nse token in a Func, Expr, or Fnex context 
     ⍝ unless something has gone horribly wrong. This is because an Nse token 
     ⍝ always implies two Nl tokens surrounding it. Since it always appears on a 
     ⍝ line by itself, then it will always be proceeded by an Nl token from the 
@@ -454,6 +468,11 @@ Parse←{
     ⍝ Context if we have not seen the ending } token, which is grounds for immediate 
     ⍝ errors. Thus, it is safe to immediately error immediately in all of our 
     ⍝ SYNTAX ERROR cases. 
+    ⍝
+    ⍝ Ast and Env States: On encountering an Nse token, we can construct the final 
+    ⍝ AST of the system by taking all of the elements on the Ast and wrapping them 
+    ⍝ in a Namespace node. At this point, the Env state should contain only the top-level 
+    ⍝ bindings, which is exactly what we want, so we can leave that as is.
     ('Token'≡Tag Tok)∧(':EndNamespace'≡Name Tok):{
       Test←(⊂Ctx⊃⍵)∊'Func' 'Expr' 'Fnex'
       Test∨←('Top'≡Ctx⊃⍵)∧('NOTSEEN' 'CLOSED'∊⍨⊂Nms⊃⍵)
@@ -479,25 +498,43 @@ Parse←{
     ⍝ Token: Nl
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Expr Fnex)                                           → SYNTAX ERROR → (Finish Expr/Fnex)
-    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                             → null         → (Index +← 1 ⋄ Value ← EMPTY ⋄ Named ← NO)
-    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ NO) → null         → (Index +← 1)
+    ⍝   (Context ∊ Expr Fnex)                                           → SYNTAX ERROR → (Terminate Context)
+    ⍝   (Context ∊ Top ⋄ Value ∊ EXPR FUNC)                             → null         → (Value ← EMPTY ⋄ Named ← NO)
+    ⍝   (Context ∊ Top ⋄ Namespace ∊ OPEN ⋄ Value ∊ EMPTY ⋄ Named ∊ NO) → null         → ()
     ⍝   (Context ∊ Top ⋄ Value ∊ EMPTY ⋄ Named ∊ BOUND UNBOUND)         → SYNTAX ERROR → ()
     ⍝   (Context ∊ Top Func ⋄ Value ∊ UNBOUND)                          → VALUE ERROR  → ()
-    ⍝   (Context ∊ Func ⋄ Value ∊ EXPR)                                 → wait         → (Index +← 1 ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
-    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ NO)                    → wait         → (Index +← 1)
-    ⍝   (Context ∊ Func ⋄ Value ∊ FUNC FVAR ⋄ Bind ∊ BOUND UNBOUND)     → wait         → (Index +← 1 ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
-    ⍝   (Context ∊ Func ⋄ Value ∊ FVAR ⋄ Bind ∊ NO)                     → SYNTAX ERROR → (Finish Func)
-    ⍝   (context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ BOUND UNBOUND)         → SYNTAX ERROR → (Finish Func)
+    ⍝   (Context ∊ Func ⋄ Value ∊ EXPR)                                 → wait         → (Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ NO)                    → wait         → ()
+    ⍝   (Context ∊ Func ⋄ Value ∊ FUNC FVAR ⋄ Bind ∊ BOUND UNBOUND)     → wait         → (Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY)
+    ⍝   (Context ∊ Func ⋄ Value ∊ FVAR ⋄ Bind ∊ NO)                     → SYNTAX ERROR → ()
+    ⍝   (context ∊ Func ⋄ Value ∊ EMPTY ⋄ Bind ∊ BOUND UNBOUND)         → SYNTAX ERROR → ()
+    ⍝
+    ⍝ Error States: When Context ∊ Expr Fnex we have a terminator error 
+    ⍝ condition. For errors when Context ∊ Top Func, these indicate a 
+    ⍝ either a syntactic or value sort of error and can be signalled 
+    ⍝ immediately.
+    ⍝
+    ⍝ Ast and Env States: We expect that other transitions will already have 
+    ⍝ updated the Env and Ast states so that we need not do any of that for Nl
+    ⍝ in non-error response states. In Expr and Fnex contexts the Nl token is 
+    ⍝ outside the token set, and therefore represents a terminator, and we may 
+    ⍝ Ast and Env in cases where the termination is successful.
     
     ⍝ Token: N
     ⍝
     ⍝ State-Box Definition:
-    ⍝   (Context ∊ Top Func Fnex)                                                      → SYNTAX ERROR → 
+    ⍝   (Context ∊ Top Func Fnex)                                                      → SYNTAX ERROR → ()
     ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ ATOM ⋄ Last Seen ∊ EMPTY LIT VAR NVAR) → atomic       → (Last Seen ← LIT)
     ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Class ∊ SELECT FUNC)                           → okay         → (Last Seen ← LIT)
-    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Last Seen ∊ UVAR MIXED)                        → VALUE ERROR  → 
+    ⍝   (Context ∊ Expr ⋄ Nest ∊ NONE ⋄ Last Seen ∊ UVAR MIXED)                        → VALUE ERROR  → ()
     ⍝   (Context ∊ Expr ⋄ Nest ∊ RBRACK)                                               → okay         → (Nest ← NONE ⋄ Class ← FUNC ⋄ Last Seen ← LIT)
+    ⍝
+    ⍝ Error States: Seeing an integer in any non-Expr context indicates that 
+    ⍝ something has gone wrong and we can error immediately. Likewise, a 
+    ⍝ value error must always be a value error and grant immediate erroring.
+    ⍝
+    ⍝ Ast and Env States: In each successful response case, we must push the 
+    ⍝ number onto the Ast stack. The Env state does not need to be updated here.
     
     ⍝ Token: ←
     ⍝
