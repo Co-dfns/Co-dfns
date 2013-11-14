@@ -548,7 +548,6 @@ ParseLine←{C E←⍵
   ⎕SIGNAL err
 }
 
-
 ⍝ ParseLineVar
 ⍝
 ⍝ Intended Function: Process variable stimuli that can occur when processing a 
@@ -650,7 +649,6 @@ ParseLineVar←{E SC←⍺
   ¯1 MtAST E
 }
 
-
 ⍝ ParseNamedUnB
 ⍝
 ⍝ Intended Function: Parse an assignment to an unbound variable.
@@ -661,7 +659,6 @@ ParseLineVar←{E SC←⍺
 ⍝ Output: FuncExpr Node, [Name,Type] Environment
 ⍝ State: Context ← Top ⋄ Value ← EMPTY ⋄ Named ← UNBOUND
 ⍝ Return State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
-
 
 ParseNamedUnB←{Vn E←⍺
   ⍝ Possible stimuli: Fe Vfo Vu ←
@@ -708,7 +705,6 @@ ParseNamedUnB←{Vn E←⍺
 ⍝ Output: FuncExpr Node, [Name,Type] Environment
 ⍝ State: Context ← Top ⋄ Value ← EMPTY ⋄ Named ← BOUND
 ⍝ Return State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
-
 
 ParseNamedBnd←{Vn Tp E←⍺
   ⍝ Possible stimuli: Fe Vfo Vu ←
@@ -820,7 +816,6 @@ ParseExpr←{
   ⍝ we pass it through
   0 X ⍺
 }
-
 
 ⍝ ParseFuncExpr
 ⍝ 
@@ -938,7 +933,10 @@ LiftConsts←{
   ⍝ individually
   ST←(1=⍵[;0])⊂[0]⍵
   
-  ⍝ It is helpful to know which nodes are functions expressions and which are 
+  ⍝ Quit if there is nothing to do
+  0=⍴ST:⍵
+  
+  ⍝ It is helpful to know which nodes are function expressions and which are 
   ⍝ not
   FeBV←'FuncExpr'∘≡∘⊃¨0 1∘⌷¨ST
   
@@ -1001,8 +999,14 @@ GenLLVM←{
   Nam←Nam 'Unamed Namespace'⌷⍨''≡Nam←((0 3)(0 1)⊃⍵)
   Mod←ModuleCreateWithName Nam
   
+  ⍝ All depth-1 subtrees
+  G←(1=⍵[;0])⊂[0]⍵
+  
+  ⍝ Quit if nothing to do
+  0=⍴G:Mod
+  
   ⍝ For each global we general some code
-  Mod⊣Mod∘GenGlobal¨(1=⍵[;0])⊂[0]⍵
+  Mod⊣Mod∘GenGlobal¨G
 }
 
 ⍝ GenGlobal
