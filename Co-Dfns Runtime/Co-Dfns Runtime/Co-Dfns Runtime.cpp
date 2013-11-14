@@ -125,3 +125,7 @@ CODFNSRUNTIME_API LLVMValueRef ConstStruct (LLVMValueRef *ConstantVals, unsigned
 	return LLVMConstStruct(ConstantVals, Count, Packed);
 }
 
+CODFNSRUNTIME_API LLVMTypeRef PointerType (LLVMTypeRef ElementType, unsigned AddressSpace)
+{
+	return LLVMPointerType(ElementType, AddressSpace);
+}
