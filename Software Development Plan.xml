@@ -145,25 +145,6 @@
           </glossdef>
         </glossentry>
         <glossentry>
-          <glossterm>Reengineering Plan</glossterm>
-          <glossdef>
-            <simpara>
-              Contains the information and plans necessary to prepare existing 
-              software for reuse in this project.
-            </simpara>
-          </glossdef>
-        </glossentry>
-        <glossentry>
-          <glossterm>Reengineered Software</glossterm>
-          <glossdef>
-            <simpara>
-              Consists of the specifications, designs, code, usage models, 
-              and/or testing artifacts produced during the reengineering of 
-              reused components.
-            </simpara>
-          </glossdef>
-        </glossentry>
-        <glossentry>
           <glossterm>Software Architecture</glossterm>
           <glossdef>
             <simpara>
@@ -340,12 +321,12 @@
               <td>3</td>
               <td colspan="7">Preliminary Increment Design and Testing for Conference</td>
               <td colspan="3">Oct. 11th, 2013</td>
-              <td colspan="3"></td>
+              <td colspan="3">Oct. 22nd, 2013</td>
             </tr>
             <tr>
               <td>4</td>
               <td colspan="7">Usage Specification, Model, and Test Planning</td>
-              <td colspan="3">Oct. 17th, 2013</td>
+              <td colspan="3">Nov. 17th, 2013</td>
               <td colspan="3"></td>
             </tr>
             <tr>
