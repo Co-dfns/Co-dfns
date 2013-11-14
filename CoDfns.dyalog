@@ -228,7 +228,7 @@ Tokenize←{
     T←{((⍴X)⍴1 0)/X←(2≠/' '=' ',⍵)⊂⍵}¨T
     
     ⍝ Split on ← { }
-    T←{0=⍴⍵:⍬ ⋄ ⊃,/⍵}¨{(B∨2≠/1,B←⍵∊'←{}')⊂⍵}¨¨T
+    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊'←{}')⊂⍵}¨¨T
 
     ⍝ At this point, all lines are split into tokens
     ⍝ Wrap each token in appropriate element:
