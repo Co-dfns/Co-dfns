@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <author>Aaron W. Hsu</author>
+    <date>Monday, October 7th, 2013</date>
+  </info>
+  <section>
+    <title>Usage Specification</title>
+    <simpara>
+      This document describes the high-level usage scenarios and 
+      expected behaviors of the system in terms of software structure, 
+      derived from the <citetitle>Function Specification</citetitle>, as 
+      well as the anticipated operating environments, classes of users, 
+      and use cases. 
+    </simpara>
+    <section>
+      <title>Format and Notation</title>
+      <simpara>
+        Simplified, high-level structural graphs and markov chains 
+        describe the general system operation and usage models. The high-level 
+        models elide certain transitions in favor of simplicity. This specification 
+        does not provide models for all recursive stimuli in the <citetitle>Function Specification</citetitle>. 
+        Graphs will represent some models which are simple enough to encode graphically.
+        All models will have a corresponding matrix representation.
+      </simpara>
+      <simpara>
+        Each recursive stimuli states space and the top-level states will be given explicit short names 
+        to simplify their exposition throughout.
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Top-level State Names</title>
+        <thead>
+          <tr>
+            <th>Canonical Sequence</th>
+            <th>Short Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>empty</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>Fix</td>
+            <td>Fix</td>
+          </tr>
+          <tr>
+            <td>Fix Fne</td>
+            <td>File</td>
+          </tr>
+          <tr>
+            <td>Fix Nss</td>
+            <td>Nss</td>
+          </tr>
+          <tr>
+            <td>Fix Nss E</td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Fe</td>
+            <td>Fe</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Nse</td>
+            <td>Nse</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Vfo</td>
+            <td>Vfo</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Vu</td>
+            <td>Vu</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Vfo <literal>←</literal></td>
+            <td>Vfo<literal>←</literal></td>
+          </tr>
+          <tr>
+            <td>Fix Nss Vu <literal>←</literal></td>
+            <td>Vu<literal>←</literal></td>
+          </tr>
+          <tr>
+            <td>Fix Nss Nse Eot</td>
+            <td>Eot</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Vfo <literal>←</literal> Fe</td>
+            <td>V<literal>←</literal>Fe</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Vfo <literal>←</literal> Vu</td>
+            <td>V<literal>←</literal>Vu</td>
+          </tr>
+          <tr>
+            <td>Fix Nss Vu <literal>←</literal> Fe</td>
+            <td>U<literal>←</literal>Fe</td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Short Names for Function States</title>
+        <thead>
+          <tr>
+            <th>Canonical Sequence</th>
+            <th>Short Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>empty</td>
+            <td>N/A</td>
+          </tr>
+          <tr>
+            <td>{</td>
+            <td>Open</td>
+          </tr>
+          <tr>
+            <td>{ E</td>
+            <td>E</td>
+          </tr>
+          <tr>
+            <td>{ Vfo</td>
+            <td>Vfo</td>
+          </tr>
+          <tr>
+            <td>{ Vu</td>
+            <td>Vu</td>
+          </tr>
+          <tr>
+            <td>{ E :</td>
+            <td>E:</td>
+          </tr>
+          <tr>
+            <td>{ Vfo <literal>←</literal></td>
+            <td>V<literal>←</literal></td>
+          </tr>
+          <tr>
+            <td>{ Vu <literal>←</literal></td>
+            <td>U<literal>←</literal></td>
+          </tr>
+          <tr>
+            <td>{ E : E</td>
+            <td>E:E</td>
+          </tr>
+          <tr>
+            <td>{ Vfo <literal>←</literal> Fe</td>
+            <td>V<literal>←</literal>Fe</td>
+          </tr>
+          <tr>
+            <td>{ Vfo <literal>←</literal> Vfo</td>
+            <td>V<literal>←</literal>V</td>
+          </tr>
+          <tr>
+            <td>{ Vfo <literal>←</literal> Vu</td>
+            <td>V<literal>←</literal>U</td>
+          </tr>
+          <tr>
+            <td>{ Vu <literal>←</literal> Fe</td>
+            <td>U<literal>←</literal>Fe</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        All high-level markov chains given here contain only a single 
+        merged transition from state to state, mergin any transitions that 
+        lead to the same target state from the same origin state. This allows for 
+        a simplified representation of Markov chains as matrices. All probabilities 
+        in the models are estimates and represent rough expected usage patterns 
+        that are not to be taken literally, but only serve to inform further 
+        refinements of these models during Usage Modeling and Test Planning.
+      </simpara>
+    </section>
+    <section>
+      <title>Usage Stratification</title>
+      <simpara>
+        All users will interact with the compiler through the Dyalog interface. This 
+        leads to a single interface with the compiler, which is the Dyalog APL 
+        environment. However, programmers may interact with the compiler programmatically 
+        through the autogeneration of code. They may also work with the compiler 
+        interactively. Users may be writing new code themselves, or may be tuning existing 
+        code. They may be writing library code, or they may be writing end user code.
+      </simpara>
+      <simpara>
+        Most users will prototype their code in Dyalog before using the compiler. Thus, 
+        the vast majority of users will be tuning existing code, rather that composing code 
+        directly in the compiler.        
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Users and Expected Proportions</title>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Expected Proportion</th>
+            <th colspan="2">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Auto</td>
+            <td>1%</td>
+            <td colspan="2">An automatic run of the compiler through some software interface</td>
+          </tr>
+          <tr>
+            <td>Library Writer</td>
+            <td>19%</td>
+            <td colspan="2">Someone creating a library for use by other systems or internally</td>
+          </tr>
+          <tr>
+            <td>Direct User</td>
+            <td>10%</td>
+            <td colspan="2">Someone writing front-facing code designed to be used directly</td>
+          </tr>
+          <tr>
+            <td>Tuner</td>
+            <td>70%</td>
+            <td colspan="2">Someone taking an existing piece of code and using the compiler to tune the code for performance</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        Notice that all users are expected to have some relatively high-degree of proficiency with the system, 
+        and it is expected that most of the code will be of reasonble quality. It is not expected that 
+        non-expert programmers (specifically those not familiar with dfns) will be likely to use the compiler.
+      </simpara>
+      <simpara>
+        Each user class has a set of possible usage scenarios which may dictate the expected distributions. 
+        The following tables detail the expected use cases and their expected proportions.
+      </simpara>
+      <table frame="void" rules="rows">
+        <title>Use Cases for Tuners</title>
+        <thead>
+          <tr>
+            <th>Case</th>
+            <th>Proportion</th>
+            <th colspan="2">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Benchmark</td>
+            <td>20%</td>
+            <td colspan="2">Take an existing piece of code and benchmark its performance with the compiler, without modifying the original code.</td>
+          </tr>
+          <tr>
+            <td>Profile</td>
+            <td>20%</td>
+            <td colspan="2">Take some existing code and run it on the compiler with the goal of developing a performance profile.</td>
+          </tr>
+          <tr>
+            <td>Tweak</td>
+            <td>60%</td>
+            <td colspan="2">Take existing code and make specific modifications to it for the goal of increasing performance characteristics.</td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Use Cases for Library Writers</title>
+        <thead>
+            <th>Case</th>
+            <th>Proportion</th>
+            <th colspan="2">Description</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Internal Library</td>
+            <td>90%</td>
+            <td colspan="2">Write a library for use internally within an existing Dyalog program</td>
+          </tr>
+          <tr>
+            <td>External Library</td>
+            <td>10%</td>
+            <td colspan="2">Write a library designed to produce an externally loaded artifact for use in another system.</td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Use Cases for Direct User</title>
+        <thead>
+            <th>Case</th>
+            <th>Proportion</th>
+            <th colspan="2">Description</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Interactive</td>
+            <td>30%</td>
+            <td colspan="2">Write programs that you fix directly for immediate use and not for storage or later use</td>
+          </tr>
+          <tr>
+            <td>System</td>
+            <td>70%</td>
+            <td colspan="2">Design an API designed to be used later and by others for directly working with and processing some sort of data or the like</td>
+          </tr>
+        </tbody>
+      </table>
+      <table frame="void" rules="rows">
+        <title>Use Cases for Auto</title>
+        <thead>
+            <th>Case</th>
+            <th>Proportion</th>
+            <th colspan="2">Description</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Static</td>
+            <td>40%</td>
+            <td colspan="2">Use the compiler internally to compile static, non-computer generated code</td>
+          </tr>
+          <tr>
+            <td>Dynamic</td>
+            <td>60%</td>
+            <td colspan="2">Use the compiler to compile computer generated code internally</td>
+          </tr>
+        </tbody>
+      </table>
+      <simpara>
+        All users may exist on one of four environments. These environments are classified based on the operating system, 
+        whether the system is a 32-bit or 64-bit system. The operating system is either Windows or UNIX.  There is an 
+        additional operating environment which constitutes and external environment for the compiled code which may be 
+        seen in the Library Writer's External Library case, but the compiler will still be run in one of the above environments, 
+        even though the compiled code will be run externally.
+      </simpara>
+    </section>
+    <section>
+      <title>High-level Usage Models</title>
+      
+    </section>
+  </section>
+</article>
