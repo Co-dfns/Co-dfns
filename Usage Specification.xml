@@ -325,7 +325,26 @@
     </section>
     <section>
       <title>High-level Usage Models</title>
-      
+      <simpara>
+        The following usage models describe the Top-level and Function recursive stimuli 
+        models, leaving the Expression and Function Expression models well under-modeled. 
+        This is because the function expressions and expressions both have a good number 
+        of states and are quite complicated. The Function and Top-level states give a good 
+        picture of the behavior of the system and are a good way of describing the system.
+        For the Expression and Function Expression models, non-parenthesized expressions are 
+        modeled here, but these models elide parenthetical states.
+        Even with these simpler models, only the non-error transitions are recorded for 
+        each state. This gives a concept of the non-error paths through the system, but 
+        does not allow for an adequate description of the precise usage behaviors. 
+        These models provide only the general idea of how correct usage of the system 
+        may proceed.
+      </simpara>
+      <figure>
+        <title>High-level Markov Model of Top-Level</title>
+        <mediaobject>
+          <imageobject><imagedata fileref="Graphics/Top-Level High-level State Graph.svg" width="6in" /></imageobject>
+        </mediaobject>
+      </figure>
     </section>
   </section>
 </article>
