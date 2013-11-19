@@ -345,7 +345,12 @@
 					<imageobject><imagedata fileref="Graphics/Top-Level High-level State Graph.svg" width="6in" /></imageobject>
 				</mediaobject>
 			</figure>
-			
+			<figure>
+				<title>High-level Markov Model of Functions</title>
+				<mediaobject>
+					<imageobject><imagedata fileref="Graphics/Functions High-level State Graph.svg" width="6in" /></imageobject>
+				</mediaobject>
+			</figure>
 		</section>
 	</section>
 </article>
