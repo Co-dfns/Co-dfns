@@ -477,12 +477,316 @@
 				These models provide only the general idea of how correct usage of the system 
 				may proceed.
 			</simpara>
+			<simpara>
+				The tables indicating the transition probabilities from each edge are in percentages.
+				A 0 value is actually a very small percentage, rather than a purely zero value.
+				These transitions are given as an estimate on the most common use case of the 
+				Tweaking Tuner, who is likely to be dealing with mostly correct code. This models 
+				code as it is already commonly written and would be edited for performance 
+				purposes. Other use cases would likely have more errors in them, since the code 
+				would not be so well tested.
+			</simpara>
 			<figure>
 				<title>High-level Markov Model of Top-Level</title>
 				<mediaobject>
 					<imageobject><imagedata fileref="Graphics/Top-Level High-level State Graph.svg" width="6in" /></imageobject>
 				</mediaobject>
 			</figure>
+			<table frame="void" rules="rows" orient="land">
+				<title>Transition Probabilities for Top-level</title>
+				<thead>
+					<tr>
+						<th></th>
+						<th>empty</th>
+						<th>Fix</th>
+						<th>File</th>
+						<th>Nss</th>
+						<th>E</th>
+						<th>Fe</th>
+						<th>Nse</th>
+						<th>Vfo</th>
+						<th>Vu</th>
+						<th>Vfo<literal>←</literal></th>
+						<th>Vu<literal>←</literal></th>
+						<th>Eot</th>
+						<th>V<literal>←</literal>Fe</th>
+						<th>V<literal>←</literal>Vu</th>
+						<th>U<literal>←</literal>Fe</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>empty</td>
+						<td>0</td> <!-- empty -->
+						<td>99</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>0</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Fix</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>30</td> <!-- File -->
+						<td>70</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>File</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>10</td> <!-- File -->
+						<td>90</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Nss</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>20</td> <!-- Nss -->
+						<td>10</td> <!-- E -->
+						<td>5</td> <!-- Fe -->
+						<td>10</td> <!-- Nse -->
+						<td>5</td> <!-- Vfo -->
+						<td>50</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>E</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>80</td> <!-- Nss -->
+						<td>10</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>10</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Fe</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>80</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>20</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Nse</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>0</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>99</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Vfo</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>5</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>5</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>90</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Vu</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>0</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>99</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Vfo<literal>←</literal></td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>0</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>95</td> <!-- V←Fe -->
+						<td>5</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Vu<literal>←</literal></td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>0</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>5</td> <!-- Vfo -->
+						<td>5</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>90</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>Eot</td>
+						<td>99</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>0</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>V<literal>←</literal>Fe</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>85</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>10</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>5</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>V<literal>←</literal>Vu</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>0</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>0</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>99</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+					<tr>
+						<td>U<literal>←</literal>Fe</td>
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- Fix -->
+						<td>0</td> <!-- File -->
+						<td>90</td> <!-- Nss -->
+						<td>0</td> <!-- E -->
+						<td>0</td> <!-- Fe -->
+						<td>10</td> <!-- Nse -->
+						<td>0</td> <!-- Vfo -->
+						<td>0</td> <!-- Vu -->
+						<td>0</td> <!-- Vfo← -->
+						<td>0</td> <!-- Vu← -->
+						<td>0</td> <!-- Eot -->
+						<td>0</td> <!-- V←Fe -->
+						<td>0</td> <!-- V←Vu -->
+						<td>0</td> <!-- U←Fe -->
+					</tr>
+				</tbody>
+			</table>
 			<figure>
 				<title>High-level Markov Model of Functions</title>
 				<mediaobject>
