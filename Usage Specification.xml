@@ -251,10 +251,6 @@
 						<td>F</td>
 					</tr>
 					<tr>
-						<td>Fnm</td>
-						<td>Op</td>
-					</tr>
-					<tr>
 						<td>∘</td>
 						<td></td>
 					</tr>
@@ -497,6 +493,12 @@
 				<title>High-level Markov Model of Expressions</title>
 				<mediaobject>
 					<imageobject><imagedata fileref="Graphics/Expression High-level State Graph.svg" width="6in" /></imageobject>
+				</mediaobject>
+			</figure>
+			<figure>
+				<title>High-level Markov Model of Function Expressions</title>
+				<mediaobject>
+					<imageobject><imagedata fileref="Graphics/Function Expression High-level State Graph.svg" width="6in" /></imageobject>
 				</mediaobject>
 			</figure>
 		</section>
