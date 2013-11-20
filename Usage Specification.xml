@@ -19,14 +19,22 @@
 			<simpara>
 				Simplified, high-level structural graphs and markov chains 
 				describe the general system operation and usage models. The high-level 
-				models elide certain transitions in favor of simplicity. This specification 
-				does not provide models for all recursive stimuli in the <citetitle>Function Specification</citetitle>. 
-				Graphs will represent some models which are simple enough to encode graphically.
-				All models will have a corresponding matrix representation.
+				models elide certain transitions in favor of simplicity. 
+				Some recursive stimuli, namely, the expression and function expression stimuli are too 
+				complicated to easily diagram, due in part to the handling of parentheses and brackets 
+				as well as other book keeping states. The high-level graphs corresponding to these 
+				stimuli in this document use a reduced state space intended to expose the important 
+				states for understanding the overall structure of the stimuli and its appearance in 
+				correct code productions. States that handling redundant nesting, parentheses, or 
+				states that are using only as <quote>error states</quote> do not appear in these 
+				diagrams. All models will have a corresponding matrix representation.
 			</simpara>
 			<simpara>
 				Each recursive stimuli states space and the top-level states will be given explicit short names 
-				to simplify their exposition throughout.
+				to simplify their exposition throughout. These names are also chosen to reflect pneumonics 
+				that more accurately express their actual use, rather than the first canonical sequence 
+				in the enumeration that corresponds to the state. Arguably this is a less useful excercise, 
+				but it will be worth it if the diagrams are even a bit more intuitive.
 			</simpara>
 			<table frame="void" rules="rows">
 				<title>Top-level State Names</title>
@@ -159,6 +167,140 @@
 					<tr>
 						<td>{ Vu <literal>←</literal> Fe</td>
 						<td>U<literal>←</literal>Fe</td>
+					</tr>
+				</tbody>
+			</table>
+			<table frame="void" rules="rows">
+				<title>Short Names for Expression States</title>
+				<thead>
+					<tr>
+						<th>Canonical Sequence</th>
+						<th>Short Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>empty</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Fea</td>
+						<td>F</td>
+					</tr>
+					<tr>
+						<td>N</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Va</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Vna</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Vnu</td>
+						<td>U</td>
+					</tr>
+					<tr>
+						<td>Fea N</td>
+						<td>F N</td>
+					</tr>
+					<tr>
+						<td>Fea Va</td>
+						<td>F V</td>
+					</tr>
+					<tr>
+						<td>Fea Vna</td>
+						<td>F Vn</td>
+					</tr>
+					<tr>
+						<td>Va [</td>
+						<td>V[</td>
+					</tr>
+					<tr>
+						<td>Va [ E</td>
+						<td>V[E</td>
+					</tr>
+					<tr>
+						<td>Va [ ]</td>
+						<td>V[]</td>
+					</tr>
+				</tbody>
+			</table>
+			<table frame="void" rules="rows">
+				<title>Short Names for Function Expression States</title>
+				<thead>
+					<tr>
+						<th>Canonical Sequence</th>
+						<th>Short Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>empty</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Ea</td>
+						<td>A</td>
+					</tr>
+					<tr>
+						<td>Fn</td>
+						<td>F</td>
+					</tr>
+					<tr>
+						<td>Fnm</td>
+						<td>Op</td>
+					</tr>
+					<tr>
+						<td>∘</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Da</td>
+						<td>D</td>
+					</tr>
+					<tr>
+						<td>Ea Fnd</td>
+						<td>F Op</td>
+					</tr>
+					<tr>
+						<td>Ea ∘</td>
+						<td>A∘</td>
+					</tr>
+					<tr>
+						<td>Fn ∘</td>
+						<td>F∘</td>
+					</tr>
+					<tr>
+						<td>Fn .</td>
+						<td>F.</td>
+					</tr>
+					<tr>
+						<td>Fn \</td>
+						<td>F\</td>
+					</tr>
+					<tr>
+						<td>Da ∘</td>
+						<td>D∘</td>
+					</tr>
+					<tr>
+						<td>Da ⍣</td>
+						<td>D⍣</td>
+					</tr>
+					<tr>
+						<td>Ea ∘ Fn</td>
+						<td>A∘F</td>
+					</tr>
+					<tr>
+						<td>Fn \ ∘</td>
+						<td>F\∘</td>
+					</tr>
+					<tr>
+						<td>Fn \ ⍣</td>
+						<td>F\⍣</td>
 					</tr>
 				</tbody>
 			</table>
@@ -349,6 +491,12 @@
 				<title>High-level Markov Model of Functions</title>
 				<mediaobject>
 					<imageobject><imagedata fileref="Graphics/Functions High-level State Graph.svg" width="6in" /></imageobject>
+				</mediaobject>
+			</figure>
+			<figure>
+				<title>High-level Markov Model of Expressions</title>
+				<mediaobject>
+					<imageobject><imagedata fileref="Graphics/Expression High-level State Graph.svg" width="6in" /></imageobject>
 				</mediaobject>
 			</figure>
 		</section>
