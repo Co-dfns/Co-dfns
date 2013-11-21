@@ -8,8 +8,8 @@
 	<section>
 		<title>Usage Specification</title>
 		<simpara>
-			This document describes the high-level usage scenarios and 
-			expected behaviors of the system in terms of software structure, 
+			This document describes the high-level usage and 
+			expected behavior of the system in terms of software structure, 
 			derived from the <citetitle>Function Specification</citetitle>, as 
 			well as the anticipated operating environments, classes of users, 
 			and use cases. 
@@ -1238,6 +1238,301 @@
 					<imageobject><imagedata fileref="Graphics/Function Expression High-level State Graph.svg" width="6in" /></imageobject>
 				</mediaobject>
 			</figure>
+			<table frame="void" rules="rows" orient="land">
+				<title>Transition Probabilities for Function Expressions</title>
+				<thead>
+					<tr>
+						<th></th>
+						<th>empty</th>
+						<th>A</th>
+						<th>F</th>
+						<th><literal>∘</literal></th>
+						<th>D</th>
+						<th>F Op</th>
+						<th>A<literal>∘</literal></th>
+						<th>F<literal>∘</literal></th>
+						<th>F.</th>
+						<th>F\</th>
+						<th>D<literal>∘</literal></th>
+						<th>D<literal>⍣</literal></th>
+						<th>A<literal>∘</literal>F</th>
+						<th>F\<literal>∘</literal></th>
+						<th>F\<literal>⍣</literal></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>empty</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>5</td> <!-- A -->
+						<td>45</td> <!-- F -->
+						<td>5</td> <!-- ∘ -->
+						<td>45</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>A</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>70</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>30</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>F</td> <!--  -->
+						<td>55</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>10</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>10</td> <!-- D -->
+						<td>10</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>5</td> <!-- F∘ -->
+						<td>10</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>∘</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>0</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>99</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>D</td> <!--  -->
+						<td>45</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>10</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>10</td> <!-- D -->
+						<td>10</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>10</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>10</td> <!-- D∘ -->
+						<td>5</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>F Op</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>99</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>A∘</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>0</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>99</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>F∘</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>0</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>99</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>F.</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>50</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>50</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>F\</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>0</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>20</td> <!-- D -->
+						<td>20</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>15</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>15</td> <!-- A∘F -->
+						<td>15</td> <!-- F\∘ -->
+						<td>15</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>D∘</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>50</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>50</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>D⍣</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>99</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>0</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>A∘F</td> <!--  -->
+						<td>20</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>0</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>20</td> <!-- D -->
+						<td>10</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>10</td> <!-- F. -->
+						<td>10</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>10</td> <!-- A∘F -->
+						<td>10</td> <!-- F\∘ -->
+						<td>10</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>F\∘</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>0</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>99</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+					<tr>
+						<td>F\⍣</td> <!--  -->
+						<td>0</td> <!-- empty -->
+						<td>0</td> <!-- A -->
+						<td>0</td> <!-- F -->
+						<td>0</td> <!-- ∘ -->
+						<td>0</td> <!-- D -->
+						<td>0</td> <!-- F Op -->
+						<td>0</td> <!-- A∘ -->
+						<td>0</td> <!-- F∘ -->
+						<td>0</td> <!-- F. -->
+						<td>0</td> <!-- F\ -->
+						<td>0</td> <!-- D∘ -->
+						<td>0</td> <!-- D⍣ -->
+						<td>99</td> <!-- A∘F -->
+						<td>0</td> <!-- F\∘ -->
+						<td>0</td> <!-- F\⍣ -->
+					</tr>
+				</tbody>
+			</table>
 		</section>
 	</section>
 </article>
