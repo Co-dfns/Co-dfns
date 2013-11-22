@@ -60,106 +60,112 @@
             </simplelist>
           </td>
         </tr>
-        <tr>
-          <td>3</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Points free functions of simple arithmetic scalars</member>
-              <member>Functions with variable bindings</member>
-              <member>Assumes only integers on operations</member>
-              <member>Returning JIT'd or Fixed Namespace</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Expressions that use shapes and other structural primitives</member>
-              <member>Should not need to support other numeric types</member>
-              <member>Support function calls to other user-defined functions at the top-level</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Functions without free variables defined in other functions</member>
-              <member>Array indexing, but not mutation</member>
-              <member>Additional scalar primitives implemented</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Functions with free variables defined in other functions</member>
-              <member>Array Mutation through Index Assignment</member>
-              <member>Support for strings and real numbers</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Support rest of primitive functions</member>
-              <member>Support for value promotion</member>
-              <member>Support for Scalar Fusion</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Primitive Operators</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>User-defined operators</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Finish scoping semantics</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>11</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Nested Arrays</member>
-              <member>Strand Notation</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>12</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Selective Assignment</member>
-            </simplelist>
-          </td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td colspan="6">
-            <simplelist type="horiz">
-              <member>Complete Error Handling and Reporting</member>
-            </simplelist>
-          </td>
-        </tr>
+		<tr>
+			<td>3</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Complete the implementation of top-level state space</member>
+					<member>Return a JIT'd or Fixed Namespace</member>
+					<member>Top-level Stimuli Covered: ⋄ ← Break Eot Fix Fnb Fne Fnf Lle Lls Nl Nse Nss Vi Vfo Vu E Fe Fnm Fnd</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>4</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Complete all code to cover Bind ∊ NO states in the Functions space</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>5</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support all expression states where Nest ∊ NONE and ~Class ∊ SELECT</member>
+					<member>Support atomic Function Expression states</member>
+					<member>Support basic scalar primitives and basic structural primitives</member>
+					<member>Support only the integer numeric type and do not worry about overflow</member>
+					<member>Use a simple C runtime</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>6</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support all PAREN and non SELECT expression states</member>
+					<member>Support all Bind ∊ BOUND UNBOUND Function states where ~Value ∊ FUNC</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>7</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support the rest of the Function states</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>8</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support non-SELECT bracket expression states</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>9</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support non-parenthesized and non-bracketed Function Expression states</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>10</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support parenthesized Function Expression states</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>11</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support Axis operator and bracket Function Expression states</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>12</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Complete support for primitive functions</member>
+					<member>Add support for additional numeric and string types</member>
+					<member>Add support for overflow and numeric type promotion and compaction</member>
+					<member>Support nested arrays</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>13</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Support selective assignment expressions and selective assignment</member>
+				</simplelist>
+			</td>
+		</tr>
+		<tr>
+			<td>14</td>
+			<td colspan="6">
+				<simplelist type="horiz">
+					<member>Add optimization for scalar function fusion</member>
+				</simplelist>
+			</td>
+		</tr>
       </tbody>
     </table>
   </section>

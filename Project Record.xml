@@ -229,6 +229,25 @@
               </simplelist>
             </td>
           </tr>
+          <tr>
+            <td>Wednesday, November 20th, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+				<member>Create <citetitle>Usage Specification</citetitle></member>
+                <member>Exit Project Planning</member>
+              </simplelist>
+            </td>
+          </tr>
+          <tr>
+            <td>Thursday, November 21st, 2013</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+				<member>Enter Increment Planning</member>
+                <member>Revise <citetitle>Increment Construction Plan</citetitle></member>
+				<member>Exit Increment Planning</member>
+              </simplelist>
+            </td>
+          </tr>
         </tbody>
       </informaltable>
     </section>
