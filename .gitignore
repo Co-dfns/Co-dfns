@@ -7,7 +7,7 @@
 Debug/
 x64/
 ipch/
-*.dws
+codfns.dws
 *.dll
 *.exp
 *.pdb
