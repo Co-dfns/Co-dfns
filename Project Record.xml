@@ -3,7 +3,7 @@
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
 	<info>
 		<author>Aaron W. Hsu</author>
-		<date>Monday, October 8th, 2013</date>
+		<date>Monday, November 25th, 2013</date>
 	</info>
 	<section>
 		<title>Co-Dfns Project Record</title>
@@ -227,6 +227,14 @@
 								<member>Revise <citetitle>Increment Construction Plan</citetitle></member>
 								<member>Exit Increment Planning</member>
 								<member>Entering Usage Modeling and Test Planning</member>
+							</simplelist>
+						</td>
+					</tr>
+					<tr>
+						<td>Monday, November 25th, 2013</td>
+						<td colspan="2">
+							<simplelist type="horiz">
+								<member>Create <citetitle>Increment Test Plan</citetitle></member>
 							</simplelist>
 						</td>
 					</tr>

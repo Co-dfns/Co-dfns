@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+	<info>
+		<author>Aaron W. Hsu</author>
+		<date>Monday, November 25th, 2013</date>
+	</info>
+	<section>
+		<title>Co-dfns Increment Test Plan</title>
+		<simpara>
+			This document details the overall approach to testing, and provides documentation and 
+			insight into the structure and proper use of the other work products developed during 
+			Usage Modeling and Test Planning, namely, the <citetitle>Usage Models</citetitle> and 
+			<citetitle>Statistical Test Cases</citetitle>. This includes important details like how to 
+			run the tests, how the tests will be measured, as well as the order in which testing should 
+			be conducted. It does not include the actual usage models or test cases, but covers 
+			everything else created or designed during the Usage Modeling and Test Planning 
+			process. 
+		</simpara>
+		<section>
+			<title>Usage Model Overview</title>
+			<simpara>
+				The <filename>Certification.dws</filename> workspace contains the usage models 
+				documented here. The namespace <classname>UsageModels</classname> inside 
+				of the <filename>Certification.dws</filename> workspace contains the actual usage 
+				models. There are four usage models which correspond to the four general 
+				sequence enumerations in the <citetitle>Function Specification</citetitle>. 
+				The <citetitle>Usage Specification</citetitle> diagrams and roughly estimates the 
+				basic structure and outline of each of these usage models. 				
+			</simpara>
+			<table frame="void" rules="rows">
+				<title>Usage Models and the Corresponding Recursions</title>
+				<thead>
+					<tr>
+						<th>Recursive Stimuli</th>
+						<th colspan="2">Usage Model Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Top-level</td>
+						<td colspan="2"><varname>UsageModels.TopLevel</varname></td>
+					</tr>
+					<tr>
+						<td>Function</td>
+						<td colspan="2"><varname>UsageModels.Function</varname></td>
+					</tr>
+					<tr>
+						<td>Expression</td>
+						<td colspan="2"><varname>UsageModels.Expression</varname></td>
+					</tr>
+					<tr>
+						<td>Function Expression</td>
+						<td colspan="2"><varname>UsageModels.FunctionExpression</varname></td>
+					</tr>
+				</tbody>
+			</table>
+			<simpara>
+				While the <citetitle>Usage Specification</citetitle> details a number of users and 
+				use cases, the most prominent case represents that of the tweaker who works on 
+				existing code bases and alters them for efficiency. This matches relatively well 
+				to the distribution of code in the wild right now. This is the use case that we will 
+				test against, as it has the greatest impact, and also is the most effective for 
+				testing. While we could test more than this, the benefit does not currently justify 
+				the costs of additional testing. 
+			</simpara>
+			<table frame="void" rules="rows">
+				<title>Use Case Enumeration</title>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>User Profile</th>
+						<th>Use Case</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>0</td>
+						<td>Tuner</td>
+						<td>Tweak</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Tuner</td>
+						<td>Profile</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Tuner</td>
+						<td>Benchmark</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Library Writer</td>
+						<td>Internal Library</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>Library Writer</td>
+						<td>External Library</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>Direct User</td>
+						<td>System</td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td>Direct User</td>
+						<td>Interactive</td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td>Auto</td>
+						<td>Dynamic</td>
+					</tr>
+					<tr>
+						<td>8</td>
+						<td>Auto</td>
+						<td>Static</td>
+					</tr>
+				</tbody>
+			</table>
+			<simpara>
+				While we will not test all of the use cases, we still want to allow for adequate specification 
+				of these other use cases in the case where we would like to run specific tests. Each usage model 
+				is therefore a set of Markov Models representing the distribution of the system. The states 
+				in the model are taken from the Canonical Analysis in the <citetitle>Function Specification</citetitle>
+				while the transitions correspond to some possible stimuli at the level of that model. The 
+				models are only over the stimuli that are in their stimuli sets as defined in the 
+				<citetitle>Function Specification</citetitle>. 
+			</simpara>
+			<table frame="void" rules="rows">
+				<title>Stimuli Set Ids for each Model</title>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Top-Level</th>
+						<th>Function</th>
+						<th>Expression</th>
+						<th colspan="2">Function Expression</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>0</td>
+						<td>E</td>
+						<td>E</td>
+						<td>E</td>
+						<td colspan="2">E</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>Fe</td>
+						<td>Fe</td>
+						<td>Es</td>
+						<td colspan="2">Ea</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Fnm</td>
+						<td>Fnm</td>
+						<td>Fea</td>
+						<td colspan="2">Fea</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Fnd</td>
+						<td>Fnd</td>
+						<td>Fed</td>
+						<td colspan="2">Feaa</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td><literal>⋄</literal></td>
+						<td>{</td>
+						<td>Fem</td>
+						<td colspan="2">Fed</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><literal>←</literal></td>
+						<td>}</td>
+						<td>[</td>
+						<td colspan="2">Feda</td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td>Break</td>
+						<td>:</td>
+						<td>]</td>
+						<td colspan="2">Fem</td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td>Eot</td>
+						<td>::</td>
+						<td>(</td>
+						<td colspan="2">Fema</td>
+					</tr>
+					<tr>
+						<td>8</td>
+						<td>Fix</td>
+						<td><literal>⋄</literal></td>
+						<td>)</td>
+						<td colspan="2">Feo</td>
+					</tr>
+					<tr>
+						<td>9</td>
+						<td>Fnb</td>
+						<td><literal>←</literal></td>
+						<td>;</td>
+						<td colspan="2">Fn</td>
+					</tr>
+					<tr>
+						<td>10</td>
+						<td>Fne</td>
+						<td>Break</td>
+						<td><literal>←</literal></td>
+						<td colspan="2">Fnd</td>
+					</tr>
+					<tr>
+						<td>11</td>
+						<td>Fnf</td>
+						<td>Nl</td>
+						<td>Break</td>
+						<td colspan="2">Fnm</td>
+					</tr>
+					<tr>
+						<td>12</td>
+						<td>Lle</td>
+						<td>Vi</td>
+						<td>N</td>
+						<td colspan="2">[</td>
+					</tr>
+					<tr>
+						<td>13</td>
+						<td>Lls</td>
+						<td>Vfo</td>
+						<td>S</td>
+						<td colspan="2">]</td>
+					</tr>
+					<tr>
+						<td>14</td>
+						<td>Nl</td>
+						<td>Vu</td>
+						<td>Sm</td>
+						<td colspan="2">(</td>
+					</tr>
+					<tr>
+						<td>15</td>
+						<td>Nse</td>
+						<td></td>
+						<td>Sd</td>
+						<td colspan="2">)</td>
+					</tr>
+					<tr>
+						<td>16</td>
+						<td>Nss</td>
+						<td></td>
+						<td>Va</td>
+						<td colspan="2"><literal>←</literal></td>
+					</tr>
+					<tr>
+						<td>17</td>
+						<td>Vi</td>
+						<td></td>
+						<td>Vna</td>
+						<td colspan="2"><literal>⍨</literal></td>
+					</tr>
+					<tr>
+						<td>18</td>
+						<td>Vfo</td>
+						<td></td>
+						<td>Vi</td>
+						<td colspan="2"><literal>∘</literal></td>
+					</tr>
+					<tr>
+						<td>19</td>
+						<td>Vu</td>
+						<td></td>
+						<td>Vnu</td>
+						<td colspan="2">¨</td>
+					</tr>
+					<tr>
+						<td>20</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">.</td>
+					</tr>
+					<tr>
+						<td>21</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2"><literal>⍣</literal></td>
+					</tr>
+					<tr>
+						<td>22</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2"><literal>/</literal></td>
+					</tr>
+					<tr>
+						<td>23</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2"><literal>⌿</literal></td>
+					</tr>
+					<tr>
+						<td>24</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2"><literal>\</literal></td>
+					</tr>
+					<tr>
+						<td>25</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2"><literal>⍀</literal></td>
+					</tr>
+					<tr>
+						<td>26</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">Break</td>
+					</tr>
+					<tr>
+						<td>27</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">D</td>
+					</tr>
+					<tr>
+						<td>28</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">Da</td>
+					</tr>
+					<tr>
+						<td>29</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">M</td>
+					</tr>
+					<tr>
+						<td>30</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">Ma</td>
+					</tr>
+					<tr>
+						<td>31</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">Vi</td>
+					</tr>
+					<tr>
+						<td>32</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">Vf</td>
+					</tr>
+					<tr>
+						<td>33</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">Vo</td>
+					</tr>
+					<tr>
+						<td>34</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td colspan="2">Vu</td>
+					</tr>
+				</tbody>
+			</table>
+			<simpara>
+				Traversing a Markov Model corresponds to a specific Sequence History that maps to a 
+				given behavior of the system and a specific usage case or test. These traversals are defined 
+				by probabilities assigned to each transition, which correspond to the probabilities of 
+				encountering the stimuli that corresponds to the transition. 
+			</simpara>
+			<simpara>
+				This design leads to the following choice of structure for a specific usage model. Each 
+				usage model is a rank 4 array, whose first dimension corresponds to the specific 
+				use case. The second dimension corresponds to the state in the graph, and the 
+				third to a specific stimuli in the stimuli set of the model. The fourth dimsension 
+				corresponds to a pair of the probability and target of a specific state and 
+				stimuli. This structure is summarized by the following synopsis, which is an 
+				expression for assigning model <varname>M</varname> a new transition
+				probability <varname>Prob</varname> along the edge between <varname>State</varname> and 
+				<varname>Target</varname> that corresponds to <varname>Stimuli</varname>
+				for the use case <varname>UseCase</varname>. 
+			</simpara>
+			<synopsis>M[UseCase;State;Stimuli;] ← (Prob, Target)</synopsis>
+			<simpara>
+				Those interested in the enumeration of the states should see the
+				<citetitle>Function Specification</citetitle> canonical analysis tables, which 
+				enumerate the state space of the recursions.
+			</simpara>
+		</section>
+		<section>
+			<title>Testing Plan and Procedures</title>
+			
+		</section>
+	</section>
+</article>
