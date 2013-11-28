@@ -490,6 +490,39 @@
 					</tr>
 				</tbody>
 			</table>
+			<simpara>
+				In a similiar vein, the <classname>States</classname> namespace provides an association between 
+				the canonical sequences and the state enumeration used in the usage models. This makes it easier to 
+				identify the given states by their canonical sequence rather than by their ID, which is, of course, too 
+				hard to remember for mere mortals.
+			</simpara>
+			<table frame="void" rules="rows">
+				<title>State spaces defined in <classname>States</classname></title>
+				<thead>
+					<tr>
+						<th>Recursion</th>
+						<th>Variable</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Top-Level</td>
+						<td><varname>States.TopLevel</varname></td>
+					</tr>
+					<tr>
+						<td>Function</td>
+						<td><varname>States.Function</varname></td>
+					</tr>
+					<tr>
+						<td>Expression</td>
+						<td><varname>States.Expression</varname></td>
+					</tr>
+					<tr>
+						<td>Function Expression</td>
+						<td><varname>States.FuncExpr</varname></td>
+					</tr>
+				</tbody>
+			</table>
 		</section>
 		<section>
 			<title>Testing Plan and Procedures</title>
