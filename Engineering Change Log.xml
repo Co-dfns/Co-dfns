@@ -498,7 +498,7 @@
 					<title>Description</title>
 					<para>
 						Usage Modeling has identified a number of potential redundancies 
-						in the Top-Level Sequence Enumeration. Recommendation is to remove 
+						in the Sequence Enumeration. Recommendation is to remove 
 						these redundancies to simplify the <citetitle>Function Specification</citetitle>.
 					</para>
 				</formalpara>
