@@ -39909,83 +39909,76 @@
 					</tr>
 					<tr>
 						<td>26</td>
-						<td>Fea Va (</td>
-						<td>PAREN</td>
-						<td>FUNC</td>
-						<td>VAR</td>
-					</tr>
-					<tr>
-						<td>27</td>
 						<td>N [ E</td>
 						<td>EBRACK</td>
 						<td>ATOM</td>
 						<td>LIT</td>
 					</tr>
 					<tr>
-						<td>28</td>
+						<td>27</td>
 						<td>Sm ( E</td>
 						<td>PAREN</td>
 						<td>SELECT</td>
 						<td>EXPR</td>
 					</tr>
 					<tr>
-						<td>29</td>
+						<td>28</td>
 						<td>Sm ( Es</td>
 						<td>PAREN</td>
 						<td>SELECT</td>
 						<td>SELEX</td>
 					</tr>
 					<tr>
-						<td>30</td>
+						<td>29</td>
 						<td>Sm N (</td>
 						<td>PAREN</td>
 						<td>SELECT</td>
 						<td>LIT</td>
 					</tr>
 					<tr>
-						<td>31</td>
+						<td>30</td>
 						<td>Sm Va [</td>
 						<td>BRACKET</td>
 						<td>SELECT</td>
 						<td>VAR</td>
 					</tr>
 					<tr>
-						<td>32</td>
+						<td>31</td>
 						<td>Va [ E</td>
 						<td>EBRACK</td>
 						<td>ATOM</td>
 						<td>VAR</td>
 					</tr>
 					<tr>
-						<td>33</td>
+						<td>32</td>
 						<td>Va [ ]</td>
 						<td>RBRACK</td>
 						<td>ATOM</td>
 						<td>VAR</td>
 					</tr>
 					<tr>
-						<td>34</td>
+						<td>33</td>
 						<td>Fea N [ E</td>
 						<td>EBRACK</td>
 						<td>FUNC</td>
 						<td>LIT</td>
 					</tr>
 					<tr>
-						<td>35</td>
+						<td>34</td>
 						<td>Fea Va [ E</td>
 						<td>EBRACK</td>
 						<td>FUNC</td>
 						<td>VAR</td>
 					</tr>
 					<tr>
-						<td>36</td>
+						<td>35</td>
 						<td>Fea Va [ ]</td>
 						<td>RBRACK</td>
 						<td>FUNC</td>
 						<td>VAR</td>
 					</tr>
 					<tr>
-						<td>37</td>
+						<td>36</td>
 						<td>Sm Va [ E</td>
 						<td>EBRACK</td>
 						<td>SELECT</td>
