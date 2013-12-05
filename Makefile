@@ -12,5 +12,3 @@ docs: $(DOCPDF)
 
 %.xml: %.md
 	pandoc -o $@ -t docbook $<
-
-	
