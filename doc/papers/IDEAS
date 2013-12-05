@@ -1,0 +1,39 @@
+Paper Ideas and Short Descriptions
+==================================
+
+Retrospective on Cleanroom Software Engineering for Array Languages
+-------------------------------------------------------------------
+
+CSE has been around for a while, but how does it work with a 
+very dynamic language like APL, where the rules for formal correctness
+are very different? In a low-person count development team, what sort
+of things need to be taken into account?
+
+
+Stochastic Software Certification with APL and Usage Models
+-----------------------------------------------------------
+
+A simple write up of how one can do stochastic certification and what
+that means. Demonstrate the system using APL and see how it is easy to
+create these models using an array language.
+
+
+Error by Array:
+Case Study of the Errors in a non-trivial compiler written entirely in
+APL using CSE methodologies
+----------------------------------------------------------------------
+
+A simple study of the errors encountered during the development of the
+Co-dfns compiler and what they might tell us about the design and
+implementation of array languages.
+
+
+Parsing Co-dfns
+---------------
+
+An elucidation of the parser using in the Co-dfns compiler, the
+rationale for its design and why it was designed in the way that it
+was. A description of the harder parts of parsing, and of how the
+parser can be used to generate XML directly from the parse tree and
+how the data structures operate, &c.
+
