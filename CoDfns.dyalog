@@ -25,7 +25,8 @@
 ⍝ GenLLVM Modifications: 
 ⍝ 
 ⍝ ∘ Handle global arrays
-⍝ ∘ Generate single basic block, one-statement function bodies that reference a single global variable
+⍝ ∘ Generate single basic block, one-statement function bodies that 
+⍝   reference a single global variable
 ⍝ 
 ⍝ Tokenize Modifications:
 ⍝ 
@@ -108,7 +109,8 @@ IsFnf←{0}
 ⍝ Intended Function: Compile the given Fix input into an LLVM Module.
 ⍝ 
 ⍝ Input: Valid Fix right argument
-⍝ Output: Semantically equivalent LLVM Module and a (name, type) mapping of top-level bindings
+⍝ Output: Semantically equivalent LLVM Module and a (name, type) 
+⍝   mapping of top-level bindings
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 ⍝ Return State: Namespace ← CLOSED ⋄ Eot ← Yes
 ⍝ 
@@ -332,8 +334,8 @@ VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 
 ⍝ Parse
 ⍝
-⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is structurally equivalent 
-⍝ and that preserves comments and line counts.
+⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is 
+⍝ structurally equivalent and that preserves comments and line counts.
 ⍝ 
 ⍝ Input: Tokens tree
 ⍝ Output: Namespace AST, Top-level Names
@@ -475,7 +477,8 @@ Parse←{
 ⍝
 ⍝ Right Argument: Code lines already parsed, Names environment
 ⍝ Left Argument: Current Line sub-tree to process
-⍝ Output: (Code extended by Line, Expression, Function, or FuncExpr)(New [name,type] environment)
+⍝ Output: (Code extended by Line, Expression, Function, or FuncExpr)
+⍝         (New [name,type] environment)
 ⍝ Invariant: Depth of input and output sub-trees should be the same
 ⍝ Invariant: Comment of the line should be transferred to the output node
 ⍝ Invariant: Should be able to reconstruct the original input from output
@@ -576,7 +579,8 @@ ParseLine←{C E←⍵
 ⍝
 ⍝ Right Argument: Matrix of Tokens
 ⍝ Left Argument: ([name,type] environment)(Parser state class)
-⍝ Output: (Success/Failure)(Empty Line, Expression, Function, or FuncExpr)(New [name,type] environment)
+⍝ Output: (Success/Failure)(Empty Line, Expression, Function, or FuncExpr)
+⍝         (New [name,type] environment)
 ⍝ Invariant: Depth of input and output sub-trees should be the same
 ⍝ Invariant: Should be able to reconstruct the original input from output
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
@@ -613,11 +617,12 @@ ParseLineVar←{E SC←⍺
   ⍝ After the above, there are only a few situations we can be in. All the other states 
   ⍝ described in Table 206 are tied in one way or another to the ← token. Most of them 
   ⍝ have ← directly in their names, but the Vfo and Vu states are partially handled by the 
-  ⍝ above handling, and the only other situations we can have which make sense, are not illegal, 
-  ⍝ and not otherwise subsumed by the above are the assignment cases. 
+  ⍝ above handling, and the only other situations we can have which make sense, 
+  ⍝ are not illegal, and not otherwise subsumed by the above are the assignment cases. 
   ⍝
-  ⍝ This handling of the assignment statement is really a case of handling the Named property. 
-  ⍝ We can have either BOUND or UNBOUND states. The MAYBE state will be unused here. 
+  ⍝ This handling of the assignment statement is really a case of handling the 
+  ⍝ Named property. We can have either BOUND or UNBOUND states. The MAYBE state 
+  ⍝ will be unused here. 
   ⍝
   ⍝ The first possibility is that we have no variable to be named, in which case we need 
   ⍝ to signal a SYNTAX ERROR.
@@ -1129,10 +1134,13 @@ Z←⍬
 ⍝ LLVMTypeRef  LLVMInt64Type (void) 
 'Int64Type'⎕NA 'P CoDfns|Int64Type'
 
-⍝ LLVMTypeRef  LLVMFunctionType (LLVMTypeRef ReturnType, LLVMTypeRef *ParamTypes, unsigned ParamCount, LLVMBool IsVarArg) 
+⍝ LLVMTypeRef  
+⍝ LLVMFunctionType (LLVMTypeRef ReturnType, 
+⍝    LLVMTypeRef *ParamTypes, unsigned ParamCount, LLVMBool IsVarArg) 
 'FunctionType'⎕NA 'P CoDfns|FunctionType P <P[] U I'
 
-⍝ LLVMTypeRef  LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed) 
+⍝ LLVMTypeRef 
+⍝ LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed) 
 'StructType'⎕NA 'P CoDfns|StructType <P[] U I'
 
 ⍝ LLVMPointerType (LLVMTypeRef ElementType, unsigned AddressSpace)
@@ -1144,7 +1152,8 @@ Z←⍬
 ⍝ LLVMValueRef  LLVMConstIntOfString (LLVMTypeRef IntTy, const char *Text, uint8_t Radix) 
 'ConstIntOfString'⎕NA 'P CoDfns|ConstIntOfString P <0C[] U8'
 
-⍝ LLVMValueRef  LLVMConstArray (LLVMTypeRef ElementTy, LLVMValueRef *ConstantVals, unsigned Length) 
+⍝ LLVMValueRef
+⍝ LLVMConstArray (LLVMTypeRef ElementTy, LLVMValueRef *ConstantVals, unsigned Length) 
 'ConstArray'⎕NA 'P CoDfns|ConstArray P <P[] U'
 
 ⍝ LLVMValueRef  LLVMAddGlobal (LLVMModuleRef M, LLVMTypeRef Ty, const char *Name) 
@@ -1174,10 +1183,12 @@ Z←⍬
 ⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder) 
 'DisposeBuilder'⎕NA 'P CoDfns|DisposeBuilder P'
 
-⍝ LLVMValueRef  LLVMConstStruct (LLVMValueRef *ConstantVals, unsigned Count, LLVMBool Packed) 
+⍝ LLVMValueRef
+⍝ LLVMConstStruct (LLVMValueRef *ConstantVals, unsigned Count, LLVMBool Packed) 
 'ConstStruct'⎕NA'P CoDfns|ConstStruct <P[] U I'
 
-⍝ LLVMBool LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
+⍝ LLVMBool
+⍝ LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
 'PrintModuleToFile'⎕NA'I4 CoDfns|PrintModuleToFile P <0C >P'
 
 ⍝ void LLVMDisposeMessage (char *Message)
