@@ -2,6 +2,7 @@
 
   ⎕IO ⎕ML←0 1
 
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Generate events based on Markov models
 ⍝
 ⍝ Usage: Count Generate.Distribution Stimuli Targets Probabilities 
@@ -71,5 +72,30 @@ Transition←{E T P←⍺ ⋄ Z S←⍵
 ⍝ Probabilities should not extend beyond 5 decimal places.
 
 Pick←{+/(+\⍵)≤D÷⍨?D←100000} 
+
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ Generate Minimum Coverage Tests for a Model
+⍝
+⍝ Generate.Coverate States Stimuli Targets Probs
+⍝   See Generate.Distribution for details about the inputs.
+⍝
+⍝ Generates a set of test cases that should cover the entire model described by 
+⍝ Targets. This is done by doing a breadth-first search over the graph starting at 
+⍝ the terminal nodes and traversing the graph in reverse. The traversal uses the 
+⍝ canonical sequence of an already visited node instead of traversing it twice. 
+
+Coverage←{S E T P←⍵
+  Trm←{(0=⊣/1⊃⍵)/⊢/1⊃⍵}                     ⍝ All Terminal Sequences
+  Can←{(⊃∘S¨(⊣/1⊃⍵)∩(2⊃⍵)~0),¨⊂' '}         ⍝ Matching Canonical Sequences
+  Cyc←{(Can ⍵),¨((⊣/1⊃⍵)∊(2⊃⍵)~0)/⊢/1⊃⍵}    ⍝ Cyclic node sequences
+  Dun←{(0⊃⍵),(Trm ⍵),(Cyc ⍵)}               ⍝ All sequences of done nodes
+  Pre←{⍺,⊂(⍵⊃E),' ',⍺⍺}                     ⍝ Prepend Event
+  Wlk←{↑⍵ Pre/↑(,(0≠P)∧T=⍺)/,⍳⍴T}           ⍝ Extend horizon by one degree
+  Hor←{⊃⍪/(⊂0 2⍴⍬)⍪Wlk/(~(⊣/1⊃⍵)∊2⊃⍵)⌿1⊃⍵}  ⍝ New horizon
+  Vis←{(2⊃⍵)∪⊣/1⊃⍵}                         ⍝ Visited nodes
+  Ext←{(Dun ⍵)(Hor ⍵)(Vis ⍵)}               ⍝ Extend horizon and prune
+  Z←0,(,(0≠P)×T)∩(0≠1-+/P)/⍳⊃⍴P             ⍝ Initial Terminal States
+  ↑⊃Ext⍣≡⍬((⍪Z),⊂'')⍬                       ⍝ Extend to fixpoint
+}
 
 :EndNamespace
