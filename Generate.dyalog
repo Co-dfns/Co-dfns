@@ -3,6 +3,14 @@
   ⎕IO ⎕ML←0 1
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ Utilities for easy model getting
+⍝ 
+⍝ (Case Increment) DModel Recursion  : Distribution Model
+⍝ (Case Increment) CModel Recursion  : Coverage Model
+DModel←{⍎'#.(Stimuli Targets).',⍵,',⊂#.UsageModels.',⍵,'[',(⍕⊃⍺),';;;',(⍕⊃⌽⍺),']'}
+CModel←{⍎'#.(States Stimuli Targets).',⍵,',⊂#.UsageModels.',⍵,'[',(⍕⊃⍺),';;;',(⍕⊃⌽⍺),']'}
+
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Generate events based on Markov models
 ⍝
 ⍝ Usage: Count Generate.Distribution Stimuli Targets Probabilities 
@@ -16,14 +24,14 @@
 
 Distribution←{⍵{⍵,⊂⊃⍺ Transition⍣≡'' 0}⍣⍺⊢⍬}
 
-⍝ Stimuli VerifyInputs Targets Probabilities
+⍝ VerifyInputs Stimuli Targets Probabilities
 ⍝
 ⍝ The following code only works assuming some invariants. Users can use this 
 ⍝ function to verify that their input is correct. This is not put in the 
 ⍝ Distribution function for all calls because of the potential overhead 
 ⍝ when used automatically.
 
-VerifyInputs←{S T P←⍵,⍨⊂⍺
+VerifyInputs←{S T P←⍵
   Type←⊃∘(0∘⍴)∘⊂
   ~∧/0=,Type P:     'Probability values are not numeric'                 ⎕SIGNAL 11
   ~∧/0=,Type T:     'Target values are not numeric'                      ⎕SIGNAL 11
@@ -90,11 +98,11 @@ Coverage←{S E T P←⍵
   Cyc←{(Can ⍵),¨((⊣/1⊃⍵)∊(2⊃⍵)~0)/⊢/1⊃⍵}    ⍝ Cyclic node sequences
   Dun←{(0⊃⍵),(Trm ⍵),(Cyc ⍵)}               ⍝ All sequences of done nodes
   Pre←{⍺,⊂(⍵⊃E),' ',⍺⍺}                     ⍝ Prepend Event
-  Wlk←{↑⍵ Pre/↑(,(0≠P)∧T=⍺)/,⍳⍴T}           ⍝ Extend horizon by one degree
+  Wlk←{↑(0⍴⊂2⍴⍬),⍵ Pre/↑(,(0≠P)∧T=⍺)/,⍳⍴T}  ⍝ Extend horizon by one degree
   Hor←{⊃⍪/(⊂0 2⍴⍬)⍪Wlk/(~(⊣/1⊃⍵)∊2⊃⍵)⌿1⊃⍵}  ⍝ New horizon
   Vis←{(2⊃⍵)∪⊣/1⊃⍵}                         ⍝ Visited nodes
   Ext←{(Dun ⍵)(Hor ⍵)(Vis ⍵)}               ⍝ Extend horizon and prune
-  Z←0,(,(0≠P)×T)∩(0≠1-+/P)/⍳⊃⍴P             ⍝ Initial Terminal States
+  Z←0,((0≠1-+/P)/⍳⊃⍴P)∩,(0≠P)×T             ⍝ Initial Terminal States
   ↑⊃Ext⍣≡⍬((⍪Z),⊂'')⍬                       ⍝ Extend to fixpoint
 }
 
