@@ -94,16 +94,16 @@ Pick←{+/(+\⍵)≤D÷⍨?D←100000}
 
 Coverage←{S E T P←⍵
   Trm←{(0=⊣/1⊃⍵)/⊢/1⊃⍵}                     ⍝ All Terminal Sequences
-  Can←{(⊃∘S¨(⊣/1⊃⍵)∩(2⊃⍵)~0),¨⊂' '}         ⍝ Matching Canonical Sequences
+  Can←{' '∘,¨⊃∘S¨(⊣/1⊃⍵)∩(2⊃⍵)~0}           ⍝ Matching Canonical Sequences
   Cyc←{(Can ⍵),¨((⊣/1⊃⍵)∊(2⊃⍵)~0)/⊢/1⊃⍵}    ⍝ Cyclic node sequences
   Dun←{(0⊃⍵),(Trm ⍵),(Cyc ⍵)}               ⍝ All sequences of done nodes
-  Pre←{⍺,⊂(⍵⊃E),' ',⍺⍺}                     ⍝ Prepend Event
+  Pre←{⍺,⊂' ',(⍵⊃E),⍺⍺}                     ⍝ Prepend Event
   Wlk←{↑(0⍴⊂2⍴⍬),⍵ Pre/↑(,(0≠P)∧T=⍺)/,⍳⍴T}  ⍝ Extend horizon by one degree
   Hor←{⊃⍪/(⊂0 2⍴⍬)⍪Wlk/(~(⊣/1⊃⍵)∊2⊃⍵)⌿1⊃⍵}  ⍝ New horizon
   Vis←{(2⊃⍵)∪⊣/1⊃⍵}                         ⍝ Visited nodes
   Ext←{(Dun ⍵)(Hor ⍵)(Vis ⍵)}               ⍝ Extend horizon and prune
   Z←0,((0≠1-+/P)/⍳⊃⍴P)∩,(0≠P)×T             ⍝ Initial Terminal States
-  ⊃Ext⍣≡⍬((⍪Z),⊂'')⍬                       ⍝ Extend to fixpoint
+  ⊃Ext⍣≡⍬((⍪Z),⊂'')⍬                        ⍝ Extend to fixpoint
 }
 
 :EndNamespace
