@@ -103,7 +103,7 @@ Coverage←{S E T P←⍵
   Vis←{(2⊃⍵)∪⊣/1⊃⍵}                         ⍝ Visited nodes
   Ext←{(Dun ⍵)(Hor ⍵)(Vis ⍵)}               ⍝ Extend horizon and prune
   Z←0,((0≠1-+/P)/⍳⊃⍴P)∩,(0≠P)×T             ⍝ Initial Terminal States
-  ↑⊃Ext⍣≡⍬((⍪Z),⊂'')⍬                       ⍝ Extend to fixpoint
+  ⊃Ext⍣≡⍬((⍪Z),⊂'')⍬                       ⍝ Extend to fixpoint
 }
 
 :EndNamespace
