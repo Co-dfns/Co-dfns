@@ -14,15 +14,15 @@
 ⍝ Top Level Stimuli sequence and obtain a valid input to the ⎕FIX or 
 ⍝ CoDfns.Fix function. This is done with the Expand function.
 
-⍝ (Case Increment)Expand TopLevelSequence
+⍝ (Case Increment)Expand Sequence
 ⍝   Case      The Use Case to use 
 ⍝   Increment The Increment to use
 ⍝
-⍝ Expand a Top Level stimuli sequence into a valid input to ⎕FIX
+⍝ Expand a stimuli sequence into a valid input to ⎕FIX
 ⍝ The basic idea here is to treat each stimuli as a function and 
 ⍝ reduce the stimuli sequence by evaluating each of the stimuli function. 
 
-Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(Trans ¯1↓¨(1,¯1↓' '=⍵)⊂⍵),⊂⍬}
+Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0⍴⊂''}
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Stimuli Sets
@@ -52,18 +52,55 @@ TransTbl⍪←,¨↑('←' 'Gets') ('⍨' 'Comm') ('∘' 'Jot') ('¨' 'Each') ('
 TransTbl⍪←,¨↑('⍣' 'Pow') ('/' 'Red') ('⌿' 'Fred') ('\' 'Scn') ('⍀' 'Fscn')
 TransTbl⍪←,¨↑('{' 'Lbrc') ('}' 'Rbrc') (':' 'Col') ('::' 'Dcol') ('⋄' 'Sep')
 
-Trans←{(((⍳⍴⍵)×I=⍴⍵)+I←(0⌷⍉TransTbl)⍳⍵)⊃¨⊂(1⌷⍉TransTbl),⍵}
+Trans←{(((⍳⍴⍵)×I=⊃⍴TransTbl)+I←(0⌷⍉TransTbl)⍳⍵)⊃¨⊂(1⌷⍉TransTbl),⍵}
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ Stimuli Functions
+⍝
+⍝ Each stimuli function mentioned below is designed to fit the same interface,
+⍝ which is to have the (UseCase Increment) as the left argument and the current 
+⍝ code object as the right argument.
+⍝
+⍝ The code object is a vector of strings, which may be empty. We actively rely 
+⍝ on the invariant that ⊃⍵ will be the top string of the code and 1↓⍵ will give 
+⍝ the rest of the code. 
+
 ⍝ Recursive Stimuli
 
-E←{}
+MkRec←{
+  X←⍺ Expand ⊃1 #.Generate.Distribution ⍺ #.Generate.DModel ⍺⍺
+  ((¯1↓X),⊂(⊃⌽X),⊃⍵),1↓⍵
+}
 
-Fe←{}
+E←'Expression'MkRec
+Fe←'FuncExpr'MkRec
+Fn←'Function'MkRec
 
-Fn←{}
-
-⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Non-recursive Stimuli
+
+Gets←{(⊂'← ',⊃⍵),1↓⍵}
+
+Eot←{⍵}
+
+Fix←{⍵}
+
+Fne←{⍵}
+
+Lls←{⍵}
+
+Nl←{(⊂''),⍵}
+
+Nse←{'' ':EndNamespace',⍵}
+
+Nss←{'' ':Namespace',⍵}
+
+Counter←0
+Vu←{(⊃Counter)+←1 ⋄ (⊂'V',(⍕Counter),' ',⊃⍵),1↓⍵}
+
+Lbrc←{(⊂'{ ',⊃⍵),1↓⍵}
+
+Rbrc←{(⊂'} ',⊃⍵),1↓⍵}
+
+N←{(⊂(⍕?2*30),' ',⊃⍵),1↓⍵}
 
 :EndNamespace 
