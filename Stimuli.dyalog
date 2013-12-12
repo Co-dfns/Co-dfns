@@ -74,33 +74,26 @@ MkRec←{
 
 E←'Expression'MkRec
 Fe←'FuncExpr'MkRec
-Fn←'Function'MkRec
+
+⍝ Fn←'Function'MkRec
+⍝ Hack to make Increment 2 work right for now
+Fn←{(⊂'{',(⍕?(?10)⍴2*20),'}',⊃⍵),1↓⍵}
 
 ⍝ Non-recursive Stimuli
 
-Gets←{(⊂'← ',⊃⍵),1↓⍵}
-
-Eot←{⍵}
-
-Fix←{⍵}
-
-Fne←{⍵}
-
-Lls←{⍵}
-
-Nl←{(⊂''),⍵}
-
-Nse←{'' ':EndNamespace',⍵}
-
-Nss←{'' ':Namespace',⍵}
-
 Counter←0
 Vu←{(⊃Counter)+←1 ⋄ (⊂'V',(⍕Counter),' ',⊃⍵),1↓⍵}
-
+Vnu←{⍺ Vu ⍵}
+Gets←{(⊂'← ',⊃⍵),1↓⍵}
+Eot←{⍵}
+Fix←{⍵}
+Fne←{⍵}
+Lls←{⍵}
+Nl←{(⊂''),⍵}
+Nse←{'' ':EndNamespace',⍵}
+Nss←{'' ':Namespace',⍵}
 Lbrc←{(⊂'{ ',⊃⍵),1↓⍵}
-
 Rbrc←{(⊂'} ',⊃⍵),1↓⍵}
-
 N←{(⊂(⍕?2*30),' ',⊃⍵),1↓⍵}
 
 :EndNamespace 
