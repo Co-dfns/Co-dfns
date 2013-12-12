@@ -1,4 +1,4 @@
-﻿:Namespace Stimuli
+:Namespace Stimuli
 
 ⎕IO ⎕ML←0 1
 
@@ -77,7 +77,7 @@ Fe←'FuncExpr'MkRec
 
 ⍝ Fn←'Function'MkRec
 ⍝ Hack to make Increment 2 work right for now
-Fn←{(⊂'{',(⍕?(?10)⍴2*20),'}',⊃⍵),1↓⍵}
+Fn←{(⊂'{',(⍕?(1+?10)⍴2*20),'}',⊃⍵),1↓⍵}
 
 ⍝ Non-recursive Stimuli
 
