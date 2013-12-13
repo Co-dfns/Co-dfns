@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <uri resource="Usage Specification.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Statistical Testing Report.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Statement of Work.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Software Requirements.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Software Development Plan.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Software Architecture.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Project Record.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Increment Construction Plan.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Increment Certification Report.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Function Specification.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Engineering Change Log.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Cleanroom Engineering Guide.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Increment Test Plan.xml" uri="rng/docbookxi.rnc"/>
+</locatingRules>
