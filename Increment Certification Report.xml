@@ -2,28 +2,26 @@
 
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
-    <author>Aaron W. Hsu</author>
+    <title>Co-Dfns Increment Certification Report</title>
+    <author><personname>Aaron W. Hsu</personname></author>
     <date>Monday, October 7th, 2013</date>
   </info>
-  <section>
-    <title>Co-Dfns Increment Certification Report</title>
-    <informaltable frame="void" rules="rows">
-      <thead>
-        <tr>
-          <th>Increment</th>
-          <th>Iterations</th>
-          <th>Total Cases</th>
-          <th>Certification</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>12</td>
-          <td>51</td>
-          <td>Yes</td>
-        </tr>
-      </tbody>
-    </informaltable>
-  </section>
+  <informaltable frame="void" rules="rows">
+    <thead>
+      <tr>
+        <th>Increment</th>
+        <th>Iterations</th>
+        <th>Total Cases</th>
+        <th>Certification</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>12</td>
+        <td>51</td>
+        <td>Yes</td>
+      </tr>
+    </tbody>
+  </informaltable>
 </article>

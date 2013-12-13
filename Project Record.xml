@@ -2,261 +2,259 @@
 
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
 	<info>
-		<author>Aaron W. Hsu</author>
+		<title>Co-Dfns Project Record</title>
+		<author><personname>Aaron W. Hsu</personname></author>
 		<date>Monday, November 25th, 2013</date>
 	</info>
 	<section>
-		<title>Co-Dfns Project Record</title>
-		<section>
-			<title>Chronological Journal</title>
-			<informaltable frame="void" rules="rows">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th colspan="2">Work Log</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Monday, July 1st, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Created <citetitle>Statement of Work</citetitle></member>
-								<member>Entering Requirements Analysis</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Tuesday, July 2nd, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Created <citetitle>Software Requirements</citetitle></member>
-								<member>Entering Project Planning</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Wednesday, July 3rd, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Created <citetitle>Cleanroom Engineering Guide</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Thursday, July 4th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Created <citetitle>Software Development Guide</citetitle></member>
-								<member>Updated <citetitle>Software Requirements</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Friday, July 5th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Updated <citetitle>Software Development Guide</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Wednesday, July 17th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Added Configuration Management Plan to <citetitle>Software Development Plan</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Thursday, July 18th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Adjust Milestone Deadlines</member>
-								<member>Add Reuse Analysis</member>
-								<member>Verified <citetitle>Software Development Plan</citetitle></member>
-								<member>Verified <citetitle>Cleanroom Engineering Guide</citetitle></member>
-								<member>Exiting Project Planning</member>
-								<member>Entering Function Specification</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Tuesday, July 30th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Stopped Function Specification</member>
-								<member>Entered Engineering Changes</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Thursday, August 1st, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Completed all pending Engineering Changes</member>
-								<member>Updated <citetitle>Software Requirements</citetitle></member>
-								<member>Updated <citetitle>Software Development Plan</citetitle></member>
-								<member>Restarting Function Specification</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Sunday, October 6th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Completed <citetitle>Function Specification</citetitle>
-								</member>
-								<member>Merged derived requirements into <citetitle>Software Requirements</citetitle></member>
-								<member>Entering Project Planning to revise <citetitle>Software Development Plan</citetitle></member>
-								<member>Assess adjustment of the schedule due to delays and deadlines</member>
-								<member>Revised <citetitle>Software Development Plan</citetitle></member>
-								<member>Exiting Project Planning</member>
-								<member>Entering Architecture Specification</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Tuesday, October 8th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Exiting Architecture Specification</member>
-								<member>Suggesting altering of development plan</member>
-								<member>Entering Project Planning</member>
-								<member>Adjusting <citetitle>Software Development Plan</citetitle> and <citetitle>Cleanroom Engineering Guide</citetitle> to account for differences in project progress</member>
-								<member>Exiting Project Planning</member>
-								<member>Entering Increment Planning</member>
-								<member>Exiting Increment Planning</member>
-								<member>Entering Increment 1 Design</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Wednesday, October 9th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Exiting Increment 1 Design</member>
-								<member>Increment 1 Certification Iteration 1 failed</member>
-								<member>Engineering Change 6 applied</member>
-								<member>Increment 1 Certification Iteration 2 failed</member>
-								<member>Engineering Change 7 applied</member>
-								<member>Increment 1 Certification Iteration 3 failed</member>
-								<member>Engineering Change 8 applied</member>
-								<member>Increment 1 Certification Iteration 4 failed</member>
-								<member>Engineering Change 9 applied</member>
-								<member>Increment 1 Certification Iteration 5 failed</member>
-								<member>Engineering Change 10 applied</member>
-								<member>Increment 1 Certification Iteration 6 failed</member>
-								<member>Engineering Change 11 applied</member>
-								<member>Increment 1 Certification Iteration 7 failed</member>
-								<member>Engineering Change 12 applied</member>
-								<member>Increment 1 Certification Iteration 8 failed</member>
-								<member>Engineering Change 13 applied</member>
-								<member>Increment 1 Certification Iteration 9 failed</member>
-								<member>Engineering Change 14 applied</member>
-								<member>Increment 1 Certification Iteration 10 failed</member>
-								<member>Engineering Change 15 applied</member>
-								<member>Increment 1 Certification Iteration 11 failed</member>
-								<member>Engineering Change 16 applied</member>
-								<member>Increment 1 Certification Iteration 12 passed</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Monday, October 14th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Entering Increment 2 Design</member>
-								<member>Updated <citetitle>Increment Construction Plan</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Tuesday, October 15th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Updated <citetitle>Software Architecture</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Thursday, November 7th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Exited Increment 2 Design</member>
-								<member>Entering Function Specification</member>
-								<member>Update <citetitle>Function Specification</citetitle></member>
-								<member>Exiting Function Specification</member>
-								<member>Entering Increment 2 Design</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Wednesday, November 13th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Exited Increment 2 Design</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Thursday, November 14th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Enter Project Planning</member>
-								<member>Update <citetitle>Software Development Plan</citetitle></member>
-								<member>Exiting Project Planning</member>
-								<member>Entering Usage Specification</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Wednesday, November 20th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Create <citetitle>Usage Specification</citetitle></member>
-								<member>Exit Project Planning</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Thursday, November 21st, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Enter Increment Planning</member>
-								<member>Revise <citetitle>Increment Construction Plan</citetitle></member>
-								<member>Exit Increment Planning</member>
-								<member>Entering Usage Modeling and Test Planning</member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Monday, November 25th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Create <citetitle>Increment Test Plan</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Wednesday, November 27th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Update <citetitle>Increment Test Plan</citetitle></member>
-								<member>Begin creating <citetitle>Usage Models</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-					<tr>
-						<td>Thursday, November 28th, 2013</td>
-						<td colspan="2">
-							<simplelist type="horiz">
-								<member>Update  <citetitle>Usage Models</citetitle></member>
-							</simplelist>
-						</td>
-					</tr>
-				</tbody>
-			</informaltable>
-		</section>
+		<title>Chronological Journal</title>
+		<informaltable frame="void" rules="rows">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th colspan="2">Work Log</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Monday, July 1st, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Created <citetitle>Statement of Work</citetitle></member>
+							<member>Entering Requirements Analysis</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Tuesday, July 2nd, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Created <citetitle>Software Requirements</citetitle></member>
+							<member>Entering Project Planning</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Wednesday, July 3rd, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Created <citetitle>Cleanroom Engineering Guide</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Thursday, July 4th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Created <citetitle>Software Development Guide</citetitle></member>
+							<member>Updated <citetitle>Software Requirements</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Friday, July 5th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Updated <citetitle>Software Development Guide</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Wednesday, July 17th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Added Configuration Management Plan to <citetitle>Software Development Plan</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Thursday, July 18th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Adjust Milestone Deadlines</member>
+							<member>Add Reuse Analysis</member>
+							<member>Verified <citetitle>Software Development Plan</citetitle></member>
+							<member>Verified <citetitle>Cleanroom Engineering Guide</citetitle></member>
+							<member>Exiting Project Planning</member>
+							<member>Entering Function Specification</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Tuesday, July 30th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Stopped Function Specification</member>
+							<member>Entered Engineering Changes</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Thursday, August 1st, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Completed all pending Engineering Changes</member>
+							<member>Updated <citetitle>Software Requirements</citetitle></member>
+							<member>Updated <citetitle>Software Development Plan</citetitle></member>
+							<member>Restarting Function Specification</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Sunday, October 6th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Completed <citetitle>Function Specification</citetitle>
+							</member>
+							<member>Merged derived requirements into <citetitle>Software Requirements</citetitle></member>
+							<member>Entering Project Planning to revise <citetitle>Software Development Plan</citetitle></member>
+							<member>Assess adjustment of the schedule due to delays and deadlines</member>
+							<member>Revised <citetitle>Software Development Plan</citetitle></member>
+							<member>Exiting Project Planning</member>
+							<member>Entering Architecture Specification</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Tuesday, October 8th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Exiting Architecture Specification</member>
+							<member>Suggesting altering of development plan</member>
+							<member>Entering Project Planning</member>
+							<member>Adjusting <citetitle>Software Development Plan</citetitle> and <citetitle>Cleanroom Engineering Guide</citetitle> to account for differences in project progress</member>
+							<member>Exiting Project Planning</member>
+							<member>Entering Increment Planning</member>
+							<member>Exiting Increment Planning</member>
+							<member>Entering Increment 1 Design</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Wednesday, October 9th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Exiting Increment 1 Design</member>
+							<member>Increment 1 Certification Iteration 1 failed</member>
+							<member>Engineering Change 6 applied</member>
+							<member>Increment 1 Certification Iteration 2 failed</member>
+							<member>Engineering Change 7 applied</member>
+							<member>Increment 1 Certification Iteration 3 failed</member>
+							<member>Engineering Change 8 applied</member>
+							<member>Increment 1 Certification Iteration 4 failed</member>
+							<member>Engineering Change 9 applied</member>
+							<member>Increment 1 Certification Iteration 5 failed</member>
+							<member>Engineering Change 10 applied</member>
+							<member>Increment 1 Certification Iteration 6 failed</member>
+							<member>Engineering Change 11 applied</member>
+							<member>Increment 1 Certification Iteration 7 failed</member>
+							<member>Engineering Change 12 applied</member>
+							<member>Increment 1 Certification Iteration 8 failed</member>
+							<member>Engineering Change 13 applied</member>
+							<member>Increment 1 Certification Iteration 9 failed</member>
+							<member>Engineering Change 14 applied</member>
+							<member>Increment 1 Certification Iteration 10 failed</member>
+							<member>Engineering Change 15 applied</member>
+							<member>Increment 1 Certification Iteration 11 failed</member>
+							<member>Engineering Change 16 applied</member>
+							<member>Increment 1 Certification Iteration 12 passed</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Monday, October 14th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Entering Increment 2 Design</member>
+							<member>Updated <citetitle>Increment Construction Plan</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Tuesday, October 15th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Updated <citetitle>Software Architecture</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Thursday, November 7th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Exited Increment 2 Design</member>
+							<member>Entering Function Specification</member>
+							<member>Update <citetitle>Function Specification</citetitle></member>
+							<member>Exiting Function Specification</member>
+							<member>Entering Increment 2 Design</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Wednesday, November 13th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Exited Increment 2 Design</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Thursday, November 14th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Enter Project Planning</member>
+							<member>Update <citetitle>Software Development Plan</citetitle></member>
+							<member>Exiting Project Planning</member>
+							<member>Entering Usage Specification</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Wednesday, November 20th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Create <citetitle>Usage Specification</citetitle></member>
+							<member>Exit Project Planning</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Thursday, November 21st, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Enter Increment Planning</member>
+							<member>Revise <citetitle>Increment Construction Plan</citetitle></member>
+							<member>Exit Increment Planning</member>
+							<member>Entering Usage Modeling and Test Planning</member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Monday, November 25th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Create <citetitle>Increment Test Plan</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Wednesday, November 27th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Update <citetitle>Increment Test Plan</citetitle></member>
+							<member>Begin creating <citetitle>Usage Models</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+				<tr>
+					<td>Thursday, November 28th, 2013</td>
+					<td colspan="2">
+						<simplelist type="horiz">
+							<member>Update  <citetitle>Usage Models</citetitle></member>
+						</simplelist>
+					</td>
+				</tr>
+			</tbody>
+		</informaltable>
 	</section>
 </article>

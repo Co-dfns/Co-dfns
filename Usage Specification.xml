@@ -2,1537 +2,1541 @@
 
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
 	<info>
-		<author>Aaron W. Hsu</author>
+		<title>Usage Specification</title>
+		<author><personname>Aaron W. Hsu</personname></author>
 		<date>Monday, October 7th, 2013</date>
 	</info>
+	<simpara>
+		This document describes the high-level usage and 
+		expected behavior of the system in terms of software structure, 
+		derived from the <citetitle>Function Specification</citetitle>, as 
+		well as the anticipated operating environments, classes of users, 
+		and use cases. 
+	</simpara>
 	<section>
-		<title>Usage Specification</title>
+		<title>Format and Notation</title>
 		<simpara>
-			This document describes the high-level usage and 
-			expected behavior of the system in terms of software structure, 
-			derived from the <citetitle>Function Specification</citetitle>, as 
-			well as the anticipated operating environments, classes of users, 
-			and use cases. 
+			Simplified, high-level structural graphs and markov chains 
+			describe the general system operation and usage models. The high-level 
+			models elide certain transitions in favor of simplicity. 
+			Some recursive stimuli, namely, the expression and function expression stimuli are too 
+			complicated to easily diagram, due in part to the handling of parentheses and brackets 
+			as well as other book keeping states. The high-level graphs corresponding to these 
+			stimuli in this document use a reduced state space intended to expose the important 
+			states for understanding the overall structure of the stimuli and its appearance in 
+			correct code productions. States that handling redundant nesting, parentheses, or 
+			states that are using only as <quote>error states</quote> do not appear in these 
+			diagrams. All models will have a corresponding matrix representation.
 		</simpara>
-		<section>
-			<title>Format and Notation</title>
-			<simpara>
-				Simplified, high-level structural graphs and markov chains 
-				describe the general system operation and usage models. The high-level 
-				models elide certain transitions in favor of simplicity. 
-				Some recursive stimuli, namely, the expression and function expression stimuli are too 
-				complicated to easily diagram, due in part to the handling of parentheses and brackets 
-				as well as other book keeping states. The high-level graphs corresponding to these 
-				stimuli in this document use a reduced state space intended to expose the important 
-				states for understanding the overall structure of the stimuli and its appearance in 
-				correct code productions. States that handling redundant nesting, parentheses, or 
-				states that are using only as <quote>error states</quote> do not appear in these 
-				diagrams. All models will have a corresponding matrix representation.
-			</simpara>
-			<simpara>
-				Each recursive stimuli states space and the top-level states will be given explicit short names 
-				to simplify their exposition throughout. These names are also chosen to reflect pneumonics 
-				that more accurately express their actual use, rather than the first canonical sequence 
-				in the enumeration that corresponds to the state. Arguably this is a less useful excercise, 
-				but it will be worth it if the diagrams are even a bit more intuitive.
-			</simpara>
-			<table frame="void" rules="rows">
-				<title>Top-level State Names</title>
-				<thead>
-					<tr>
-						<th>Canonical Sequence</th>
-						<th>Short Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>Fix</td>
-						<td>Fix</td>
-					</tr>
-					<tr>
-						<td>Fix Fne</td>
-						<td>File</td>
-					</tr>
-					<tr>
-						<td>Fix Nss</td>
-						<td>Nss</td>
-					</tr>
-					<tr>
-						<td>Fix Nss E</td>
-						<td>E</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Fe</td>
-						<td>Fe</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Nse</td>
-						<td>Nse</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Vfo</td>
-						<td>Vfo</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Vu</td>
-						<td>Vu</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Vfo <literal>←</literal></td>
-						<td>Vfo<literal>←</literal></td>
-					</tr>
-					<tr>
-						<td>Fix Nss Vu <literal>←</literal></td>
-						<td>Vu<literal>←</literal></td>
-					</tr>
-					<tr>
-						<td>Fix Nss Nse Eot</td>
-						<td>Eot</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Vfo <literal>←</literal> Fe</td>
-						<td>V<literal>←</literal>Fe</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Vfo <literal>←</literal> Vu</td>
-						<td>V<literal>←</literal>Vu</td>
-					</tr>
-					<tr>
-						<td>Fix Nss Vu <literal>←</literal> Fe</td>
-						<td>U<literal>←</literal>Fe</td>
-					</tr>
-				</tbody>
-			</table>
-			<table frame="void" rules="rows">
-				<title>Short Names for Function States</title>
-				<thead>
-					<tr>
-						<th>Canonical Sequence</th>
-						<th>Short Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td>
-						<td>N/A</td>
-					</tr>
-					<tr>
-						<td>{</td>
-						<td>Open</td>
-					</tr>
-					<tr>
-						<td>{ E</td>
-						<td>E</td>
-					</tr>
-					<tr>
-						<td>{ Vfo</td>
-						<td>Vfo</td>
-					</tr>
-					<tr>
-						<td>{ Vu</td>
-						<td>Vu</td>
-					</tr>
-					<tr>
-						<td>{ E :</td>
-						<td>E:</td>
-					</tr>
-					<tr>
-						<td>{ Vfo <literal>←</literal></td>
-						<td>V<literal>←</literal></td>
-					</tr>
-					<tr>
-						<td>{ Vu <literal>←</literal></td>
-						<td>U<literal>←</literal></td>
-					</tr>
-					<tr>
-						<td>{ E : E</td>
-						<td>E:E</td>
-					</tr>
-					<tr>
-						<td>{ Vfo <literal>←</literal> Fe</td>
-						<td>V<literal>←</literal>Fe</td>
-					</tr>
-					<tr>
-						<td>{ Vfo <literal>←</literal> Vfo</td>
-						<td>V<literal>←</literal>V</td>
-					</tr>
-					<tr>
-						<td>{ Vfo <literal>←</literal> Vu</td>
-						<td>V<literal>←</literal>U</td>
-					</tr>
-					<tr>
-						<td>{ Vu <literal>←</literal> Fe</td>
-						<td>U<literal>←</literal>Fe</td>
-					</tr>
-				</tbody>
-			</table>
-			<table frame="void" rules="rows">
-				<title>Short Names for Expression States</title>
-				<thead>
-					<tr>
-						<th>Canonical Sequence</th>
-						<th>Short Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Fea</td>
-						<td>F</td>
-					</tr>
-					<tr>
-						<td>N</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Va</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Vna</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Vnu</td>
-						<td>U</td>
-					</tr>
-					<tr>
-						<td>Fea N</td>
-						<td>F N</td>
-					</tr>
-					<tr>
-						<td>Fea Va</td>
-						<td>F V</td>
-					</tr>
-					<tr>
-						<td>Fea Vna</td>
-						<td>F Vn</td>
-					</tr>
-					<tr>
-						<td>Va [</td>
-						<td>V[</td>
-					</tr>
-					<tr>
-						<td>Va [ E</td>
-						<td>V[E</td>
-					</tr>
-					<tr>
-						<td>Va [ ]</td>
-						<td>V[]</td>
-					</tr>
-				</tbody>
-			</table>
-			<table frame="void" rules="rows">
-				<title>Short Names for Function Expression States</title>
-				<thead>
-					<tr>
-						<th>Canonical Sequence</th>
-						<th>Short Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Ea</td>
-						<td>A</td>
-					</tr>
-					<tr>
-						<td>Fn</td>
-						<td>F</td>
-					</tr>
-					<tr>
-						<td>∘</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Da</td>
-						<td>D</td>
-					</tr>
-					<tr>
-						<td>Ea Fnd</td>
-						<td>F Op</td>
-					</tr>
-					<tr>
-						<td>Ea ∘</td>
-						<td>A∘</td>
-					</tr>
-					<tr>
-						<td>Fn ∘</td>
-						<td>F∘</td>
-					</tr>
-					<tr>
-						<td>Fn .</td>
-						<td>F.</td>
-					</tr>
-					<tr>
-						<td>Fn \</td>
-						<td>F\</td>
-					</tr>
-					<tr>
-						<td>Da ∘</td>
-						<td>D∘</td>
-					</tr>
-					<tr>
-						<td>Da ⍣</td>
-						<td>D⍣</td>
-					</tr>
-					<tr>
-						<td>Ea ∘ Fn</td>
-						<td>A∘F</td>
-					</tr>
-					<tr>
-						<td>Fn \ ∘</td>
-						<td>F\∘</td>
-					</tr>
-					<tr>
-						<td>Fn \ ⍣</td>
-						<td>F\⍣</td>
-					</tr>
-				</tbody>
-			</table>
-			<simpara>
-				All high-level markov chains given here contain only a single 
-				merged transition from state to state, mergin any transitions that 
-				lead to the same target state from the same origin state. This allows for 
-				a simplified representation of Markov chains as matrices. All probabilities 
-				in the models are estimates and represent rough expected usage patterns 
-				that are not to be taken literally, but only serve to inform further 
-				refinements of these models during Usage Modeling and Test Planning.
-			</simpara>
-		</section>
-		<section>
-			<title>Usage Stratification</title>
-			<simpara>
-				All users will interact with the compiler through the Dyalog interface. This 
-				leads to a single interface with the compiler, which is the Dyalog APL 
-				environment. However, programmers may interact with the compiler programmatically 
-				through the autogeneration of code. They may also work with the compiler 
-				interactively. Users may be writing new code themselves, or may be tuning existing 
-				code. They may be writing library code, or they may be writing end user code.
-			</simpara>
-			<simpara>
-				Most users will prototype their code in Dyalog before using the compiler. Thus, 
-				the vast majority of users will be tuning existing code, rather that composing code 
-				directly in the compiler.        
-			</simpara>
-			<table frame="void" rules="rows">
-				<title>Users and Expected Proportions</title>
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Expected Proportion</th>
-						<th colspan="2">Description</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Auto</td>
-						<td>1%</td>
-						<td colspan="2">An automatic run of the compiler through some software interface</td>
-					</tr>
-					<tr>
-						<td>Library Writer</td>
-						<td>19%</td>
-						<td colspan="2">Someone creating a library for use by other systems or internally</td>
-					</tr>
-					<tr>
-						<td>Direct User</td>
-						<td>10%</td>
-						<td colspan="2">Someone writing front-facing code designed to be used directly</td>
-					</tr>
-					<tr>
-						<td>Tuner</td>
-						<td>70%</td>
-						<td colspan="2">Someone taking an existing piece of code and using the compiler to tune the code for performance</td>
-					</tr>
-				</tbody>
-			</table>
-			<simpara>
-				Notice that all users are expected to have some relatively high-degree of proficiency with the system, 
-				and it is expected that most of the code will be of reasonble quality. It is not expected that 
-				non-expert programmers (specifically those not familiar with dfns) will be likely to use the compiler.
-			</simpara>
-			<simpara>
-				Each user class has a set of possible usage scenarios which may dictate the expected distributions. 
-				The following tables detail the expected use cases and their expected proportions.
-			</simpara>
-			<table frame="void" rules="rows">
-				<title>Use Cases for Tuners</title>
-				<thead>
-					<tr>
-						<th>Case</th>
-						<th>Proportion</th>
-						<th colspan="2">Description</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Benchmark</td>
-						<td>20%</td>
-						<td colspan="2">Take an existing piece of code and benchmark its performance with the compiler, without modifying the original code.</td>
-					</tr>
-					<tr>
-						<td>Profile</td>
-						<td>20%</td>
-						<td colspan="2">Take some existing code and run it on the compiler with the goal of developing a performance profile.</td>
-					</tr>
-					<tr>
-						<td>Tweak</td>
-						<td>60%</td>
-						<td colspan="2">Take existing code and make specific modifications to it for the goal of increasing performance characteristics.</td>
-					</tr>
-				</tbody>
-			</table>
-			<table frame="void" rules="rows">
-				<title>Use Cases for Library Writers</title>
-				<thead>
-						<th>Case</th>
-						<th>Proportion</th>
-						<th colspan="2">Description</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Internal Library</td>
-						<td>90%</td>
-						<td colspan="2">Write a library for use internally within an existing Dyalog program</td>
-					</tr>
-					<tr>
-						<td>External Library</td>
-						<td>10%</td>
-						<td colspan="2">Write a library designed to produce an externally loaded artifact for use in another system.</td>
-					</tr>
-				</tbody>
-			</table>
-			<table frame="void" rules="rows">
-				<title>Use Cases for Direct User</title>
-				<thead>
-						<th>Case</th>
-						<th>Proportion</th>
-						<th colspan="2">Description</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Interactive</td>
-						<td>30%</td>
-						<td colspan="2">Write programs that you fix directly for immediate use and not for storage or later use</td>
-					</tr>
-					<tr>
-						<td>System</td>
-						<td>70%</td>
-						<td colspan="2">Design an API designed to be used later and by others for directly working with and processing some sort of data or the like</td>
-					</tr>
-				</tbody>
-			</table>
-			<table frame="void" rules="rows">
-				<title>Use Cases for Auto</title>
-				<thead>
-						<th>Case</th>
-						<th>Proportion</th>
-						<th colspan="2">Description</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Static</td>
-						<td>40%</td>
-						<td colspan="2">Use the compiler internally to compile static, non-computer generated code</td>
-					</tr>
-					<tr>
-						<td>Dynamic</td>
-						<td>60%</td>
-						<td colspan="2">Use the compiler to compile computer generated code internally</td>
-					</tr>
-				</tbody>
-			</table>
-			<simpara>
-				All users may exist on one of four environments. These environments are classified based on the operating system, 
-				whether the system is a 32-bit or 64-bit system. The operating system is either Windows or UNIX.  There is an 
-				additional operating environment which constitutes and external environment for the compiled code which may be 
-				seen in the Library Writer's External Library case, but the compiler will still be run in one of the above environments, 
-				even though the compiled code will be run externally.
-			</simpara>
-		</section>
-		<section>
-			<title>High-level Usage Models</title>
-			<simpara>
-				The following usage models describe the Top-level and Function recursive stimuli 
-				models, leaving the Expression and Function Expression models well under-modeled. 
-				This is because the function expressions and expressions both have a good number 
-				of states and are quite complicated. The Function and Top-level states give a good 
-				picture of the behavior of the system and are a good way of describing the system.
-				For the Expression and Function Expression models, non-parenthesized expressions are 
-				modeled here, but these models elide parenthetical states.
-				Even with these simpler models, only the non-error transitions are recorded for 
-				each state. This gives a concept of the non-error paths through the system, but 
-				does not allow for an adequate description of the precise usage behaviors. 
-				These models provide only the general idea of how correct usage of the system 
-				may proceed.
-			</simpara>
-			<simpara>
-				The tables indicating the transition probabilities from each edge are in percentages.
-				A 0 value is actually a very small percentage, rather than a purely zero value.
-				These transitions are given as an estimate on the most common use case of the 
-				Tweaking Tuner, who is likely to be dealing with mostly correct code. This models 
-				code as it is already commonly written and would be edited for performance 
-				purposes. Other use cases would likely have more errors in them, since the code 
-				would not be so well tested.
-			</simpara>
-			<figure>
-				<title>High-level Markov Model of Top-Level</title>
-				<mediaobject>
-					<imageobject><imagedata fileref="Graphics/Top-Level High-level State Graph.svg" width="6in" /></imageobject>
-				</mediaobject>
-			</figure>
-			<table frame="void" rules="rows" orient="land">
-				<title>Transition Probabilities for Top-level</title>
-				<thead>
-					<tr>
-						<th></th>
-						<th>empty</th>
-						<th>Fix</th>
-						<th>File</th>
-						<th>Nss</th>
-						<th>E</th>
-						<th>Fe</th>
-						<th>Nse</th>
-						<th>Vfo</th>
-						<th>Vu</th>
-						<th>Vfo<literal>←</literal></th>
-						<th>Vu<literal>←</literal></th>
-						<th>Eot</th>
-						<th>V<literal>←</literal>Fe</th>
-						<th>V<literal>←</literal>Vu</th>
-						<th>U<literal>←</literal>Fe</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td>
-						<td>0</td> <!-- empty -->
-						<td>99</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>0</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Fix</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>30</td> <!-- File -->
-						<td>70</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>File</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>10</td> <!-- File -->
-						<td>90</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Nss</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>20</td> <!-- Nss -->
-						<td>10</td> <!-- E -->
-						<td>5</td> <!-- Fe -->
-						<td>10</td> <!-- Nse -->
-						<td>5</td> <!-- Vfo -->
-						<td>50</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>E</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>80</td> <!-- Nss -->
-						<td>10</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>10</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Fe</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>80</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>20</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Nse</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>0</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>99</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Vfo</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>5</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>5</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>90</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Vu</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>0</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>99</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Vfo<literal>←</literal></td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>0</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>95</td> <!-- V←Fe -->
-						<td>5</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Vu<literal>←</literal></td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>0</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>5</td> <!-- Vfo -->
-						<td>5</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>90</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Eot</td>
-						<td>99</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>0</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>V<literal>←</literal>Fe</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>85</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>10</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>5</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>V<literal>←</literal>Vu</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>0</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>0</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>99</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>U<literal>←</literal>Fe</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fix -->
-						<td>0</td> <!-- File -->
-						<td>90</td> <!-- Nss -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Fe -->
-						<td>10</td> <!-- Nse -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- Vfo← -->
-						<td>0</td> <!-- Vu← -->
-						<td>0</td> <!-- Eot -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←Vu -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-				</tbody>
-			</table>
-			<figure>
-				<title>High-level Markov Model of Functions</title>
-				<mediaobject>
-					<imageobject><imagedata fileref="Graphics/Functions High-level State Graph.svg" width="6in" /></imageobject>
-				</mediaobject>
-			</figure>
-			<table frame="void" rules="rows" orient="land">
-				<title>Transition Probabilities for Functions</title>
-				<thead>
-					<tr>
-						<th></th>
-						<th>empty</th>
-						<th>Open</th>
-						<th>E</th>
-						<th>Vfo</th>
-						<th>Vu</th>
-						<th>E:</th>
-						<th>V<literal>←</literal></th>
-						<th>U<literal>←</literal></th>
-						<th>E:E</th>
-						<th>V<literal>←</literal>Fe</th>
-						<th>V<literal>←</literal>V</th>
-						<th>V<literal>←</literal>U</th>
-						<th>U<literal>←</literal>Fe</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td>
-						<td>0</td> <!-- empty -->
-						<td>99</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Open</td>
-						<td>1</td> <!-- empty -->
-						<td>5</td> <!-- Open -->
-						<td>80</td> <!-- E -->
-						<td>5</td> <!-- Vfo -->
-						<td>10</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>E</td>
-						<td>10</td> <!-- empty -->
-						<td>0</td> <!-- Open -->
-						<td>70</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>20</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Vfo</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>99</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>Vu</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>99</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>E:</td>
-						<td>1</td> <!-- empty -->
-						<td>4</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>95</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>V←</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>80</td> <!-- V←Fe -->
-						<td>15</td> <!-- V←V -->
-						<td>5</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>U←</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>3</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>7</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>90</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>E:E</td>
-						<td>5</td> <!-- empty -->
-						<td>95</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>V←Fe</td>
-						<td>1</td> <!-- empty -->
-						<td>99</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>V←V</td>
-						<td>1</td> <!-- empty -->
-						<td>98</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>1</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>V←U</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>99</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-					<tr>
-						<td>U←Fe</td>
-						<td>1</td> <!-- empty -->
-						<td>99</td> <!-- Open -->
-						<td>0</td> <!-- E -->
-						<td>0</td> <!-- Vfo -->
-						<td>0</td> <!-- Vu -->
-						<td>0</td> <!-- E: -->
-						<td>0</td> <!-- V← -->
-						<td>0</td> <!-- U← -->
-						<td>0</td> <!-- E:E -->
-						<td>0</td> <!-- V←Fe -->
-						<td>0</td> <!-- V←V -->
-						<td>0</td> <!-- V←U -->
-						<td>0</td> <!-- U←Fe -->
-					</tr>
-				</tbody>
-			</table>
-			<figure>
-				<title>High-level Markov Model of Expressions</title>
-				<mediaobject>
-					<imageobject><imagedata fileref="Graphics/Expression High-level State Graph.svg" width="6in" /></imageobject>
-				</mediaobject>
-			</figure>
-			<table frame="void" rules="rows" orient="land">
-				<title>Transition Probabilities for Expressions</title>
-				<thead>
-					<tr>
-						<th></th>
-						<th>empty</th>
-						<th>Fea</th>
-						<th>N</th>
-						<th>Va</th>
-						<th>Vna</th>
-						<th>U</th>
-						<th>F N</th>
-						<th>F V</th>
-						<th>F Vn</th>
-						<th>V[</th>
-						<th>V[E</th>
-						<th>V[]</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td>
-						<td>0</td> <!-- empty -->
-						<td>20</td> <!-- Fea -->
-						<td>20</td> <!-- N -->
-						<td>20</td> <!-- Va -->
-						<td>20</td> <!-- Vna -->
-						<td>20</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>Fea</td>
-						<td>0</td> <!-- empty -->
-						<td>20</td> <!-- Fea -->
-						<td>0</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>20</td> <!-- U -->
-						<td>20</td> <!-- F N -->
-						<td>20</td> <!-- F V -->
-						<td>20</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>N</td>
-						<td>30</td> <!-- empty -->
-						<td>30</td> <!-- Fea -->
-						<td>40</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>Va</td>
-						<td>40</td> <!-- empty -->
-						<td>30</td> <!-- Fea -->
-						<td>20</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>10</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>Vna</td>
-						<td>30</td> <!-- empty -->
-						<td>30</td> <!-- Fea -->
-						<td>30</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>U</td>
-						<td>0</td> <!-- empty -->
-						<td>99</td> <!-- Fea -->
-						<td>0</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>F N</td>
-						<td>0</td> <!-- empty -->
-						<td>50</td> <!-- Fea -->
-						<td>50</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>F V</td>
-						<td>33</td> <!-- empty -->
-						<td>33</td> <!-- Fea -->
-						<td>0</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>33</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>F Vn</td>
-						<td>33</td> <!-- empty -->
-						<td>33</td> <!-- Fea -->
-						<td>0</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>33</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>0</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>V[</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fea -->
-						<td>0</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>33</td> <!-- V[ -->
-						<td>33</td> <!-- V[E -->
-						<td>33</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>V[E</td>
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- Fea -->
-						<td>0</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>0</td> <!-- Vna -->
-						<td>0</td> <!-- U -->
-						<td>0</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>30</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>70</td> <!-- V[] -->
-					</tr>
-					<tr>
-						<td>V[]</td>
-						<td>20</td> <!-- empty -->
-						<td>20</td> <!-- Fea -->
-						<td>0</td> <!-- N -->
-						<td>0</td> <!-- Va -->
-						<td>10</td> <!-- Vna -->
-						<td>10</td> <!-- U -->
-						<td>30</td> <!-- F N -->
-						<td>0</td> <!-- F V -->
-						<td>0</td> <!-- F Vn -->
-						<td>10</td> <!-- V[ -->
-						<td>0</td> <!-- V[E -->
-						<td>0</td> <!-- V[] -->
-					</tr>
-				</tbody>
-			</table>
-			<figure>
-				<title>High-level Markov Model of Function Expressions</title>
-				<mediaobject>
-					<imageobject><imagedata fileref="Graphics/Function Expression High-level State Graph.svg" width="6in" /></imageobject>
-				</mediaobject>
-			</figure>
-			<table frame="void" rules="rows" orient="land">
-				<title>Transition Probabilities for Function Expressions</title>
-				<thead>
-					<tr>
-						<th></th>
-						<th>empty</th>
-						<th>A</th>
-						<th>F</th>
-						<th><literal>∘</literal></th>
-						<th>D</th>
-						<th>F Op</th>
-						<th>A<literal>∘</literal></th>
-						<th>F<literal>∘</literal></th>
-						<th>F.</th>
-						<th>F\</th>
-						<th>D<literal>∘</literal></th>
-						<th>D<literal>⍣</literal></th>
-						<th>A<literal>∘</literal>F</th>
-						<th>F\<literal>∘</literal></th>
-						<th>F\<literal>⍣</literal></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>empty</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>5</td> <!-- A -->
-						<td>45</td> <!-- F -->
-						<td>5</td> <!-- ∘ -->
-						<td>45</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>A</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>70</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>30</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>F</td> <!--  -->
-						<td>55</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>10</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>10</td> <!-- D -->
-						<td>10</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>5</td> <!-- F∘ -->
-						<td>10</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>∘</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>0</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>99</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>D</td> <!--  -->
-						<td>45</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>10</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>10</td> <!-- D -->
-						<td>10</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>10</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>10</td> <!-- D∘ -->
-						<td>5</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>F Op</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>99</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>A∘</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>0</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>99</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>F∘</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>0</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>99</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>F.</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>50</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>50</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>F\</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>0</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>20</td> <!-- D -->
-						<td>20</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>15</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>15</td> <!-- A∘F -->
-						<td>15</td> <!-- F\∘ -->
-						<td>15</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>D∘</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>50</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>50</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>D⍣</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>99</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>0</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>A∘F</td> <!--  -->
-						<td>20</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>0</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>20</td> <!-- D -->
-						<td>10</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>10</td> <!-- F. -->
-						<td>10</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>10</td> <!-- A∘F -->
-						<td>10</td> <!-- F\∘ -->
-						<td>10</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>F\∘</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>0</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>99</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-					<tr>
-						<td>F\⍣</td> <!--  -->
-						<td>0</td> <!-- empty -->
-						<td>0</td> <!-- A -->
-						<td>0</td> <!-- F -->
-						<td>0</td> <!-- ∘ -->
-						<td>0</td> <!-- D -->
-						<td>0</td> <!-- F Op -->
-						<td>0</td> <!-- A∘ -->
-						<td>0</td> <!-- F∘ -->
-						<td>0</td> <!-- F. -->
-						<td>0</td> <!-- F\ -->
-						<td>0</td> <!-- D∘ -->
-						<td>0</td> <!-- D⍣ -->
-						<td>99</td> <!-- A∘F -->
-						<td>0</td> <!-- F\∘ -->
-						<td>0</td> <!-- F\⍣ -->
-					</tr>
-				</tbody>
-			</table>
-		</section>
+		<simpara>
+			Each recursive stimuli states space and the top-level states will be given explicit short names 
+			to simplify their exposition throughout. These names are also chosen to reflect pneumonics 
+			that more accurately express their actual use, rather than the first canonical sequence 
+			in the enumeration that corresponds to the state. Arguably this is a less useful excercise, 
+			but it will be worth it if the diagrams are even a bit more intuitive.
+		</simpara>
+		<table frame="void" rules="rows">
+			<caption>Top-level State Names</caption>
+			<thead>
+				<tr>
+					<th>Canonical Sequence</th>
+					<th>Short Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<td>Fix</td>
+					<td>Fix</td>
+				</tr>
+				<tr>
+					<td>Fix Fne</td>
+					<td>File</td>
+				</tr>
+				<tr>
+					<td>Fix Nss</td>
+					<td>Nss</td>
+				</tr>
+				<tr>
+					<td>Fix Nss E</td>
+					<td>E</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Fe</td>
+					<td>Fe</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Nse</td>
+					<td>Nse</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Vfo</td>
+					<td>Vfo</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Vu</td>
+					<td>Vu</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Vfo <literal>←</literal></td>
+					<td>Vfo<literal>←</literal></td>
+				</tr>
+				<tr>
+					<td>Fix Nss Vu <literal>←</literal></td>
+					<td>Vu<literal>←</literal></td>
+				</tr>
+				<tr>
+					<td>Fix Nss Nse Eot</td>
+					<td>Eot</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Vfo <literal>←</literal> Fe</td>
+					<td>V<literal>←</literal>Fe</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Vfo <literal>←</literal> Vu</td>
+					<td>V<literal>←</literal>Vu</td>
+				</tr>
+				<tr>
+					<td>Fix Nss Vu <literal>←</literal> Fe</td>
+					<td>U<literal>←</literal>Fe</td>
+				</tr>
+			</tbody>
+		</table>
+		<table frame="void" rules="rows">
+			<caption>Short Names for Function States</caption>
+			<thead>
+				<tr>
+					<th>Canonical Sequence</th>
+					<th>Short Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td>
+					<td>N/A</td>
+				</tr>
+				<tr>
+					<td>{</td>
+					<td>Open</td>
+				</tr>
+				<tr>
+					<td>{ E</td>
+					<td>E</td>
+				</tr>
+				<tr>
+					<td>{ Vfo</td>
+					<td>Vfo</td>
+				</tr>
+				<tr>
+					<td>{ Vu</td>
+					<td>Vu</td>
+				</tr>
+				<tr>
+					<td>{ E :</td>
+					<td>E:</td>
+				</tr>
+				<tr>
+					<td>{ Vfo <literal>←</literal></td>
+					<td>V<literal>←</literal></td>
+				</tr>
+				<tr>
+					<td>{ Vu <literal>←</literal></td>
+					<td>U<literal>←</literal></td>
+				</tr>
+				<tr>
+					<td>{ E : E</td>
+					<td>E:E</td>
+				</tr>
+				<tr>
+					<td>{ Vfo <literal>←</literal> Fe</td>
+					<td>V<literal>←</literal>Fe</td>
+				</tr>
+				<tr>
+					<td>{ Vfo <literal>←</literal> Vfo</td>
+					<td>V<literal>←</literal>V</td>
+				</tr>
+				<tr>
+					<td>{ Vfo <literal>←</literal> Vu</td>
+					<td>V<literal>←</literal>U</td>
+				</tr>
+				<tr>
+					<td>{ Vu <literal>←</literal> Fe</td>
+					<td>U<literal>←</literal>Fe</td>
+				</tr>
+			</tbody>
+		</table>
+		<table frame="void" rules="rows">
+			<caption>Short Names for Expression States</caption>
+			<thead>
+				<tr>
+					<th>Canonical Sequence</th>
+					<th>Short Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Fea</td>
+					<td>F</td>
+				</tr>
+				<tr>
+					<td>N</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Va</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Vna</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Vnu</td>
+					<td>U</td>
+				</tr>
+				<tr>
+					<td>Fea N</td>
+					<td>F N</td>
+				</tr>
+				<tr>
+					<td>Fea Va</td>
+					<td>F V</td>
+				</tr>
+				<tr>
+					<td>Fea Vna</td>
+					<td>F Vn</td>
+				</tr>
+				<tr>
+					<td>Va [</td>
+					<td>V[</td>
+				</tr>
+				<tr>
+					<td>Va [ E</td>
+					<td>V[E</td>
+				</tr>
+				<tr>
+					<td>Va [ ]</td>
+					<td>V[]</td>
+				</tr>
+			</tbody>
+		</table>
+		<table frame="void" rules="rows">
+			<caption>Short Names for Function Expression States</caption>
+			<thead>
+				<tr>
+					<th>Canonical Sequence</th>
+					<th>Short Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Ea</td>
+					<td>A</td>
+				</tr>
+				<tr>
+					<td>Fn</td>
+					<td>F</td>
+				</tr>
+				<tr>
+					<td>∘</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Da</td>
+					<td>D</td>
+				</tr>
+				<tr>
+					<td>Ea Fnd</td>
+					<td>F Op</td>
+				</tr>
+				<tr>
+					<td>Ea ∘</td>
+					<td>A∘</td>
+				</tr>
+				<tr>
+					<td>Fn ∘</td>
+					<td>F∘</td>
+				</tr>
+				<tr>
+					<td>Fn .</td>
+					<td>F.</td>
+				</tr>
+				<tr>
+					<td>Fn \</td>
+					<td>F\</td>
+				</tr>
+				<tr>
+					<td>Da ∘</td>
+					<td>D∘</td>
+				</tr>
+				<tr>
+					<td>Da <literal>⍣</literal></td>
+					<td>D<literal>⍣</literal></td>
+				</tr>
+				<tr>
+					<td>Ea ∘ Fn</td>
+					<td>A∘F</td>
+				</tr>
+				<tr>
+					<td>Fn \ ∘</td>
+					<td>F\∘</td>
+				</tr>
+				<tr>
+					<td>Fn \ <literal>⍣</literal></td>
+					<td>F\<literal>⍣</literal></td>
+				</tr>
+			</tbody>
+		</table>
+		<simpara>
+			All high-level markov chains given here contain only a single 
+			merged transition from state to state, mergin any transitions that 
+			lead to the same target state from the same origin state. This allows for 
+			a simplified representation of Markov chains as matrices. All probabilities 
+			in the models are estimates and represent rough expected usage patterns 
+			that are not to be taken literally, but only serve to inform further 
+			refinements of these models during Usage Modeling and Test Planning.
+		</simpara>
+	</section>
+	<section>
+		<title>Usage Stratification</title>
+		<simpara>
+			All users will interact with the compiler through the Dyalog interface. This 
+			leads to a single interface with the compiler, which is the Dyalog APL 
+			environment. However, programmers may interact with the compiler programmatically 
+			through the autogeneration of code. They may also work with the compiler 
+			interactively. Users may be writing new code themselves, or may be tuning existing 
+			code. They may be writing library code, or they may be writing end user code.
+		</simpara>
+		<simpara>
+			Most users will prototype their code in Dyalog before using the compiler. Thus, 
+			the vast majority of users will be tuning existing code, rather that composing code 
+			directly in the compiler.        
+		</simpara>
+		<table frame="void" rules="rows">
+			<caption>Users and Expected Proportions</caption>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Expected Proportion</th>
+					<th colspan="2">Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Auto</td>
+					<td>1%</td>
+					<td colspan="2">An automatic run of the compiler through some software interface</td>
+				</tr>
+				<tr>
+					<td>Library Writer</td>
+					<td>19%</td>
+					<td colspan="2">Someone creating a library for use by other systems or internally</td>
+				</tr>
+				<tr>
+					<td>Direct User</td>
+					<td>10%</td>
+					<td colspan="2">Someone writing front-facing code designed to be used directly</td>
+				</tr>
+				<tr>
+					<td>Tuner</td>
+					<td>70%</td>
+					<td colspan="2">Someone taking an existing piece of code and using the compiler to tune the code for performance</td>
+				</tr>
+			</tbody>
+		</table>
+		<simpara>
+			Notice that all users are expected to have some relatively high-degree of proficiency with the system, 
+			and it is expected that most of the code will be of reasonble quality. It is not expected that 
+			non-expert programmers (specifically those not familiar with dfns) will be likely to use the compiler.
+		</simpara>
+		<simpara>
+			Each user class has a set of possible usage scenarios which may dictate the expected distributions. 
+			The following tables detail the expected use cases and their expected proportions.
+		</simpara>
+		<table frame="void" rules="rows">
+			<caption>Use Cases for Tuners</caption>
+			<thead>
+				<tr>
+					<th>Case</th>
+					<th>Proportion</th>
+					<th colspan="2">Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Benchmark</td>
+					<td>20%</td>
+					<td colspan="2">Take an existing piece of code and benchmark its performance with the compiler, without modifying the original code.</td>
+				</tr>
+				<tr>
+					<td>Profile</td>
+					<td>20%</td>
+					<td colspan="2">Take some existing code and run it on the compiler with the goal of developing a performance profile.</td>
+				</tr>
+				<tr>
+					<td>Tweak</td>
+					<td>60%</td>
+					<td colspan="2">Take existing code and make specific modifications to it for the goal of increasing performance characteristics.</td>
+				</tr>
+			</tbody>
+		</table>
+		<table frame="void" rules="rows">
+			<caption>Use Cases for Library Writers</caption>
+			<thead>
+        <tr>
+				  <th>Case</th>
+				  <th>Proportion</th>
+				  <th colspan="2">Description</th>
+        </tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Internal Library</td>
+					<td>90%</td>
+					<td colspan="2">Write a library for use internally within an existing Dyalog program</td>
+				</tr>
+				<tr>
+					<td>External Library</td>
+					<td>10%</td>
+					<td colspan="2">Write a library designed to produce an externally loaded artifact for use in another system.</td>
+				</tr>
+			</tbody>
+		</table>
+		<table frame="void" rules="rows">
+			<caption>Use Cases for Direct User</caption>
+			<thead>
+				<tr>
+          <th>Case</th>
+				  <th>Proportion</th>
+				  <th colspan="2">Description</th>
+        </tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Interactive</td>
+					<td>30%</td>
+					<td colspan="2">Write programs that you fix directly for immediate use and not for storage or later use</td>
+				</tr>
+				<tr>
+					<td>System</td>
+					<td>70%</td>
+					<td colspan="2">Design an API designed to be used later and by others for directly working with and processing some sort of data or the like</td>
+				</tr>
+			</tbody>
+		</table>
+		<table frame="void" rules="rows">
+			<caption>Use Cases for Auto</caption>
+			<thead>
+        <tr>
+				  <th>Case</th>
+				  <th>Proportion</th>
+				  <th colspan="2">Description</th>
+        </tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Static</td>
+					<td>40%</td>
+					<td colspan="2">Use the compiler internally to compile static, non-computer generated code</td>
+				</tr>
+				<tr>
+					<td>Dynamic</td>
+					<td>60%</td>
+					<td colspan="2">Use the compiler to compile computer generated code internally</td>
+				</tr>
+			</tbody>
+		</table>
+		<simpara>
+			All users may exist on one of four environments. These environments are classified based on the operating system, 
+			whether the system is a 32-bit or 64-bit system. The operating system is either Windows or UNIX.  There is an 
+			additional operating environment which constitutes and external environment for the compiled code which may be 
+			seen in the Library Writer's External Library case, but the compiler will still be run in one of the above environments, 
+			even though the compiled code will be run externally.
+		</simpara>
+	</section>
+	<section>
+		<title>High-level Usage Models</title>
+		<simpara>
+			The following usage models describe the Top-level and Function recursive stimuli 
+			models, leaving the Expression and Function Expression models well under-modeled. 
+			This is because the function expressions and expressions both have a good number 
+			of states and are quite complicated. The Function and Top-level states give a good 
+			picture of the behavior of the system and are a good way of describing the system.
+			For the Expression and Function Expression models, non-parenthesized expressions are 
+			modeled here, but these models elide parenthetical states.
+			Even with these simpler models, only the non-error transitions are recorded for 
+			each state. This gives a concept of the non-error paths through the system, but 
+			does not allow for an adequate description of the precise usage behaviors. 
+			These models provide only the general idea of how correct usage of the system 
+			may proceed.
+		</simpara>
+		<simpara>
+			The tables indicating the transition probabilities from each edge are in percentages.
+			A 0 value is actually a very small percentage, rather than a purely zero value.
+			These transitions are given as an estimate on the most common use case of the 
+			Tweaking Tuner, who is likely to be dealing with mostly correct code. This models 
+			code as it is already commonly written and would be edited for performance 
+			purposes. Other use cases would likely have more errors in them, since the code 
+			would not be so well tested.
+		</simpara>
+		<figure>
+			<title>High-level Markov Model of Top-Level</title>
+			<mediaobject>
+				<imageobject><imagedata fileref="Graphics/Top-Level High-level State Graph.svg" width="6in" /></imageobject>
+			</mediaobject>
+		</figure>
+		<table frame="void" rules="rows" orient="land">
+			<caption>Transition Probabilities for Top-level</caption>
+			<thead>
+				<tr>
+					<th></th>
+					<th>empty</th>
+					<th>Fix</th>
+					<th>File</th>
+					<th>Nss</th>
+					<th>E</th>
+					<th>Fe</th>
+					<th>Nse</th>
+					<th>Vfo</th>
+					<th>Vu</th>
+					<th>Vfo<literal>←</literal></th>
+					<th>Vu<literal>←</literal></th>
+					<th>Eot</th>
+					<th>V<literal>←</literal>Fe</th>
+					<th>V<literal>←</literal>Vu</th>
+					<th>U<literal>←</literal>Fe</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td>
+					<td>0</td> <!-- empty -->
+					<td>99</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>0</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Fix</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>30</td> <!-- File -->
+					<td>70</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>File</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>10</td> <!-- File -->
+					<td>90</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Nss</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>20</td> <!-- Nss -->
+					<td>10</td> <!-- E -->
+					<td>5</td> <!-- Fe -->
+					<td>10</td> <!-- Nse -->
+					<td>5</td> <!-- Vfo -->
+					<td>50</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>E</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>80</td> <!-- Nss -->
+					<td>10</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>10</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Fe</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>80</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>20</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Nse</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>0</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>99</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Vfo</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>5</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>5</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>90</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Vu</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>0</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>99</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Vfo<literal>←</literal></td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>0</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>95</td> <!-- V←Fe -->
+					<td>5</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Vu<literal>←</literal></td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>0</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>5</td> <!-- Vfo -->
+					<td>5</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>90</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Eot</td>
+					<td>99</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>0</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>V<literal>←</literal>Fe</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>85</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>10</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>5</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>V<literal>←</literal>Vu</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>0</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>0</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>99</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>U<literal>←</literal>Fe</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fix -->
+					<td>0</td> <!-- File -->
+					<td>90</td> <!-- Nss -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Fe -->
+					<td>10</td> <!-- Nse -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- Vfo← -->
+					<td>0</td> <!-- Vu← -->
+					<td>0</td> <!-- Eot -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←Vu -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+			</tbody>
+		</table>
+		<figure>
+			<title>High-level Markov Model of Functions</title>
+			<mediaobject>
+				<imageobject><imagedata fileref="Graphics/Functions High-level State Graph.svg" width="6in" /></imageobject>
+			</mediaobject>
+		</figure>
+		<table frame="void" rules="rows" orient="land">
+			<caption>Transition Probabilities for Functions</caption>
+			<thead>
+				<tr>
+					<th></th>
+					<th>empty</th>
+					<th>Open</th>
+					<th>E</th>
+					<th>Vfo</th>
+					<th>Vu</th>
+					<th>E:</th>
+					<th>V<literal>←</literal></th>
+					<th>U<literal>←</literal></th>
+					<th>E:E</th>
+					<th>V<literal>←</literal>Fe</th>
+					<th>V<literal>←</literal>V</th>
+					<th>V<literal>←</literal>U</th>
+					<th>U<literal>←</literal>Fe</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td>
+					<td>0</td> <!-- empty -->
+					<td>99</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Open</td>
+					<td>1</td> <!-- empty -->
+					<td>5</td> <!-- Open -->
+					<td>80</td> <!-- E -->
+					<td>5</td> <!-- Vfo -->
+					<td>10</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>E</td>
+					<td>10</td> <!-- empty -->
+					<td>0</td> <!-- Open -->
+					<td>70</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>20</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Vfo</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>99</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>Vu</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>99</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>E:</td>
+					<td>1</td> <!-- empty -->
+					<td>4</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>95</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>V←</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>80</td> <!-- V←Fe -->
+					<td>15</td> <!-- V←V -->
+					<td>5</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>U←</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>3</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>7</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>90</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>E:E</td>
+					<td>5</td> <!-- empty -->
+					<td>95</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>V←Fe</td>
+					<td>1</td> <!-- empty -->
+					<td>99</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>V←V</td>
+					<td>1</td> <!-- empty -->
+					<td>98</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>1</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>V←U</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>99</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+				<tr>
+					<td>U←Fe</td>
+					<td>1</td> <!-- empty -->
+					<td>99</td> <!-- Open -->
+					<td>0</td> <!-- E -->
+					<td>0</td> <!-- Vfo -->
+					<td>0</td> <!-- Vu -->
+					<td>0</td> <!-- E: -->
+					<td>0</td> <!-- V← -->
+					<td>0</td> <!-- U← -->
+					<td>0</td> <!-- E:E -->
+					<td>0</td> <!-- V←Fe -->
+					<td>0</td> <!-- V←V -->
+					<td>0</td> <!-- V←U -->
+					<td>0</td> <!-- U←Fe -->
+				</tr>
+			</tbody>
+		</table>
+		<figure>
+			<title>High-level Markov Model of Expressions</title>
+			<mediaobject>
+				<imageobject><imagedata fileref="Graphics/Expression High-level State Graph.svg" width="6in" /></imageobject>
+			</mediaobject>
+		</figure>
+		<table frame="void" rules="rows" orient="land">
+			<caption>Transition Probabilities for Expressions</caption>
+			<thead>
+				<tr>
+					<th></th>
+					<th>empty</th>
+					<th>Fea</th>
+					<th>N</th>
+					<th>Va</th>
+					<th>Vna</th>
+					<th>U</th>
+					<th>F N</th>
+					<th>F V</th>
+					<th>F Vn</th>
+					<th>V[</th>
+					<th>V[E</th>
+					<th>V[]</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td>
+					<td>0</td> <!-- empty -->
+					<td>20</td> <!-- Fea -->
+					<td>20</td> <!-- N -->
+					<td>20</td> <!-- Va -->
+					<td>20</td> <!-- Vna -->
+					<td>20</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>Fea</td>
+					<td>0</td> <!-- empty -->
+					<td>20</td> <!-- Fea -->
+					<td>0</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>20</td> <!-- U -->
+					<td>20</td> <!-- F N -->
+					<td>20</td> <!-- F V -->
+					<td>20</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>N</td>
+					<td>30</td> <!-- empty -->
+					<td>30</td> <!-- Fea -->
+					<td>40</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>Va</td>
+					<td>40</td> <!-- empty -->
+					<td>30</td> <!-- Fea -->
+					<td>20</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>10</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>Vna</td>
+					<td>30</td> <!-- empty -->
+					<td>30</td> <!-- Fea -->
+					<td>30</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>U</td>
+					<td>0</td> <!-- empty -->
+					<td>99</td> <!-- Fea -->
+					<td>0</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>F N</td>
+					<td>0</td> <!-- empty -->
+					<td>50</td> <!-- Fea -->
+					<td>50</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>F V</td>
+					<td>33</td> <!-- empty -->
+					<td>33</td> <!-- Fea -->
+					<td>0</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>33</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>F Vn</td>
+					<td>33</td> <!-- empty -->
+					<td>33</td> <!-- Fea -->
+					<td>0</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>33</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>0</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>V[</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fea -->
+					<td>0</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>33</td> <!-- V[ -->
+					<td>33</td> <!-- V[E -->
+					<td>33</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>V[E</td>
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- Fea -->
+					<td>0</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>0</td> <!-- Vna -->
+					<td>0</td> <!-- U -->
+					<td>0</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>30</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>70</td> <!-- V[] -->
+				</tr>
+				<tr>
+					<td>V[]</td>
+					<td>20</td> <!-- empty -->
+					<td>20</td> <!-- Fea -->
+					<td>0</td> <!-- N -->
+					<td>0</td> <!-- Va -->
+					<td>10</td> <!-- Vna -->
+					<td>10</td> <!-- U -->
+					<td>30</td> <!-- F N -->
+					<td>0</td> <!-- F V -->
+					<td>0</td> <!-- F Vn -->
+					<td>10</td> <!-- V[ -->
+					<td>0</td> <!-- V[E -->
+					<td>0</td> <!-- V[] -->
+				</tr>
+			</tbody>
+		</table>
+		<figure>
+			<title>High-level Markov Model of Function Expressions</title>
+			<mediaobject>
+				<imageobject><imagedata fileref="Graphics/Function Expression High-level State Graph.svg" width="6in" /></imageobject>
+			</mediaobject>
+		</figure>
+		<table frame="void" rules="rows" orient="land">
+			<caption>Transition Probabilities for Function Expressions</caption>
+			<thead>
+				<tr>
+					<th></th>
+					<th>empty</th>
+					<th>A</th>
+					<th>F</th>
+					<th><literal>∘</literal></th>
+					<th>D</th>
+					<th>F Op</th>
+					<th>A<literal>∘</literal></th>
+					<th>F<literal>∘</literal></th>
+					<th>F.</th>
+					<th>F\</th>
+					<th>D<literal>∘</literal></th>
+					<th>D<literal>⍣</literal></th>
+					<th>A<literal>∘</literal>F</th>
+					<th>F\<literal>∘</literal></th>
+					<th>F\<literal>⍣</literal></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>empty</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>5</td> <!-- A -->
+					<td>45</td> <!-- F -->
+					<td>5</td> <!-- ∘ -->
+					<td>45</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>A</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>70</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>30</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>F</td> <!--  -->
+					<td>55</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>10</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>10</td> <!-- D -->
+					<td>10</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>5</td> <!-- F∘ -->
+					<td>10</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>∘</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>0</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>99</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>D</td> <!--  -->
+					<td>45</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>10</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>10</td> <!-- D -->
+					<td>10</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>10</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>10</td> <!-- D∘ -->
+					<td>5</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>F Op</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>99</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>A∘</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>0</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>99</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>F∘</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>0</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>99</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>F.</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>50</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>50</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>F\</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>0</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>20</td> <!-- D -->
+					<td>20</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>15</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>15</td> <!-- A∘F -->
+					<td>15</td> <!-- F\∘ -->
+					<td>15</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>D∘</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>50</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>50</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>D<literal>⍣</literal></td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>99</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>0</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>A∘F</td> <!--  -->
+					<td>20</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>0</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>20</td> <!-- D -->
+					<td>10</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>10</td> <!-- F. -->
+					<td>10</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>10</td> <!-- A∘F -->
+					<td>10</td> <!-- F\∘ -->
+					<td>10</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>F\∘</td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>0</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>99</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+				<tr>
+					<td>F\<literal>⍣</literal></td> <!--  -->
+					<td>0</td> <!-- empty -->
+					<td>0</td> <!-- A -->
+					<td>0</td> <!-- F -->
+					<td>0</td> <!-- ∘ -->
+					<td>0</td> <!-- D -->
+					<td>0</td> <!-- F Op -->
+					<td>0</td> <!-- A∘ -->
+					<td>0</td> <!-- F∘ -->
+					<td>0</td> <!-- F. -->
+					<td>0</td> <!-- F\ -->
+					<td>0</td> <!-- D∘ -->
+					<td>0</td> <!-- D⍣ -->
+					<td>99</td> <!-- A∘F -->
+					<td>0</td> <!-- F\∘ -->
+					<td>0</td> <!-- F\⍣ -->
+				</tr>
+			</tbody>
+		</table>
 	</section>
 </article>
