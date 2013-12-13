@@ -1,14 +1,14 @@
-DOCSRC := $(wildcard *.xml)
+DOCSRC := Cleanroom\ Engineering\ Guide.xml Software\ Architecture.xml \
+          Engineering\ Change\ Log.xml Software\ Development\ Plan.xml \
+          Function\ Specification.xml Software\ Requirements.xml \
+          Increment\ Certification\ Report.xml Statement\ of\ Work.xml \
+          Increment\ Construction\ Plan.xml Statistical\ Testing\ Report.xml \
+					Increment\ Test\ Plan.xml Usage\ Specification.xml Project\ Record.xml
 DOCPDF := $(DOCSRC:.xml=.pdf)
-CP  := /usr/share/java/xalan-j2.jar
-XSL := /usr/share/sgml/docbook/xsl-ns-stylesheets/fo/docbook.xsl
-FOP := -param body.font.master 12 -param generate.toc 'article nop' \
-       -param monospace.font.family 'FreeMono for APL' -c fop.xconf
+XSL := fo.xsl
+XCONF := fop.xconf
 
 docs: $(DOCPDF)
 
-%.pdf: %.xml
-	CLASSPATH=$(CP) fop $(FOP) -xsl $(XSL) -xml $< $@
-
-%.xml: %.md
-	pandoc -o $@ -t docbook $<
+%.pdf: %.xml $(XSL) $(XCONF)
+	fop -c $(XCONF) -xsl $(XSL) -xml "$<" -pdf "$@"
