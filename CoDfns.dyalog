@@ -1119,89 +1119,93 @@ GenFuncType←{
 
 ⍝ Foreign Functions
 
-∇{Z}←FFI∆INIT
+∇{Z}←FFI∆INIT;P;D
 Z←⍬
+D←'libLLVM-3.3.so'
+P←'LLVM'
 
 ⍝ LLVMTypeRef  LLVMInt4Type (void) 
-'Int4Type'⎕NA 'P CoDfns|Int4Type'
+'IntType'⎕NA 'P ',D,'|',P,'IntType U'
+
+Int4Type←{IntType 4}
 
 ⍝ LLVMTypeRef  LLVMInt16Type (void) 
-'Int16Type'⎕NA 'P CoDfns|Int16Type'
+'Int16Type'⎕NA 'P ',D,'|',P,'Int16Type'
 
 ⍝ LLVMTypeRef  LLVMInt32Type (void) 
-'Int32Type'⎕NA 'P CoDfns|Int32Type'
+'Int32Type'⎕NA 'P ',D,'|',P,'Int32Type'
 
 ⍝ LLVMTypeRef  LLVMInt64Type (void) 
-'Int64Type'⎕NA 'P CoDfns|Int64Type'
+'Int64Type'⎕NA 'P ',D,'|',P,'Int64Type'
 
 ⍝ LLVMTypeRef  
 ⍝ LLVMFunctionType (LLVMTypeRef ReturnType, 
 ⍝    LLVMTypeRef *ParamTypes, unsigned ParamCount, LLVMBool IsVarArg) 
-'FunctionType'⎕NA 'P CoDfns|FunctionType P <P[] U I'
+'FunctionType'⎕NA 'P ',D,'|',P,'FunctionType P <P[] U I'
 
 ⍝ LLVMTypeRef 
 ⍝ LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed) 
-'StructType'⎕NA 'P CoDfns|StructType <P[] U I'
+'StructType'⎕NA 'P ',D,'|',P,'StructType <P[] U I'
 
 ⍝ LLVMPointerType (LLVMTypeRef ElementType, unsigned AddressSpace)
-'PointerType'⎕NA 'P CoDfns|PointerType P U'
+'PointerType'⎕NA 'P ',D,'|',P,'PointerType P U'
 
 ⍝ LLVMValueRef  LLVMConstInt (LLVMTypeRef IntTy, unsigned long long N, LLVMBool SignExtend) 
-'ConstInt'⎕NA 'P CoDfns|ConstInt P U8 I'
+'ConstInt'⎕NA 'P ',D,'|',P,'ConstInt P U8 I'
 
 ⍝ LLVMValueRef  LLVMConstIntOfString (LLVMTypeRef IntTy, const char *Text, uint8_t Radix) 
-'ConstIntOfString'⎕NA 'P CoDfns|ConstIntOfString P <0C[] U8'
+'ConstIntOfString'⎕NA 'P ',D,'|',P,'ConstIntOfString P <0C[] U8'
 
 ⍝ LLVMValueRef
 ⍝ LLVMConstArray (LLVMTypeRef ElementTy, LLVMValueRef *ConstantVals, unsigned Length) 
-'ConstArray'⎕NA 'P CoDfns|ConstArray P <P[] U'
+'ConstArray'⎕NA 'P ',D,'|',P,'ConstArray P <P[] U'
 
 ⍝ LLVMValueRef  LLVMAddGlobal (LLVMModuleRef M, LLVMTypeRef Ty, const char *Name) 
-'AddGlobal'⎕NA 'P CoDfns|AddGlobal P P <0C[]'
+'AddGlobal'⎕NA 'P ',D,'|',P,'AddGlobal P P <0C[]'
 
 ⍝ void  LLVMSetInitializer (LLVMValueRef GlobalVar, LLVMValueRef ConstantVal) 
-'SetInitializer'⎕NA 'CoDfns|SetInitializer P P'
+'SetInitializer'⎕NA '',D,'|',P,'SetInitializer P P'
 
 ⍝ LLVMValueRef  LLVMAddFunction (LLVMModuleRef M, const char *Name, LLVMTypeRef FunctionTy) 
-'AddFunction'⎕NA 'P CoDfns|AddFunction P <0C[] P'
+'AddFunction'⎕NA 'P ',D,'|',P,'AddFunction P <0C[] P'
 
 ⍝ LLVMValueRef  LLVMGetNamedGlobal (LLVMModuleRef M, const char *Name) 
-'GetNamedGlobal'⎕NA 'P CoDfns|GetNamedGlobal P <0C[]'
+'GetNamedGlobal'⎕NA 'P ',D,'|',P,'GetNamedGlobal P <0C[]'
 
 ⍝ LLVMBasicBlockRef  LLVMAppendBasicBlock (LLVMValueRef Fn, const char *Name) 
-'AppendBasicBlock'⎕NA 'P CoDfns|AppendBasicBlock P <0C[]'
+'AppendBasicBlock'⎕NA 'P ',D,'|',P,'AppendBasicBlock P <0C[]'
 
 ⍝ LLVMBuilderRef  LLVMCreateBuilder (void) 
-'CreateBuilder'⎕NA 'P CoDfns|CreateBuilder'
+'CreateBuilder'⎕NA 'P ',D,'|',P,'CreateBuilder'
 
 ⍝ void  LLVMPositionBuilderAtEnd (LLVMBuilderRef Builder, LLVMBasicBlockRef Block) 
-'PositionBuilderAtEnd'⎕NA 'P CoDfns|PositionBuilderAtEnd P P'
+'PositionBuilderAtEnd'⎕NA 'P ',D,'|',P,'PositionBuilderAtEnd P P'
 
 ⍝ LLVMValueRef  LLVMBuildRet (LLVMBuilderRef, LLVMValueRef V) 
-'BuildRet'⎕NA 'P CoDfns|BuildRet P P'
+'BuildRet'⎕NA 'P ',D,'|',P,'BuildRet P P'
 
 ⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder) 
-'DisposeBuilder'⎕NA 'P CoDfns|DisposeBuilder P'
+'DisposeBuilder'⎕NA 'P ',D,'|',P,'DisposeBuilder P'
 
 ⍝ LLVMValueRef
 ⍝ LLVMConstStruct (LLVMValueRef *ConstantVals, unsigned Count, LLVMBool Packed) 
-'ConstStruct'⎕NA'P CoDfns|ConstStruct <P[] U I'
+'ConstStruct'⎕NA'P ',D,'|',P,'ConstStruct <P[] U I'
 
 ⍝ LLVMBool
 ⍝ LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
-'PrintModuleToFile'⎕NA'I4 CoDfns|PrintModuleToFile P <0C >P'
+'PrintModuleToFile'⎕NA'I4 ',D,'|',P,'PrintModuleToFile P <0C >P'
 
 ⍝ void LLVMDisposeMessage (char *Message)
-'DisposeMessage'⎕NA'CoDfns|DisposeMessage P'
+'DisposeMessage'⎕NA'',D,'|',P,'DisposeMessage P'
 
 ⍝ LLVMModuleRef LLVMModuleCreateWithName (const char *ModuleID)
-'ModuleCreateWithName'⎕NA'P CoDfns|ModuleCreateWithName <0C'
+'ModuleCreateWithName'⎕NA'P ',D,'|',P,'ModuleCreateWithName <0C'
 
 ⍝ void *memcpy(void *dst, void *src, size_t size)
-'cstring'⎕NA'dyalog64|MEMCPY >C[] P P'
+'cstring'⎕NA'libc.so.6|memcpy >C[] P P'
 
 ⍝ size_t strlen(char *str)
-'strlen'⎕NA'P dyalog64|STRLEN P'
+'strlen'⎕NA'P libc.so.6|strlen P'
 
 ∇
 
