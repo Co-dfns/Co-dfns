@@ -255,7 +255,7 @@
 					</td>
 				</tr>
         <tr>
-          <td>Thursday, December 13th, 2013</td>
+          <td>Thursday, December 12th, 2013</td>
           <td colspan="2">
             <simplelist type="horiz">
               <member>
@@ -273,6 +273,19 @@
               </member>
               <member>
                 Entering Increment 2 Statistical Testing and Certification
+              </member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>Saturday, December 14th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Engineering Change 18 Applied
+              </member>
+              <member>
+                Engineering Change 19 Applied
               </member>
             </simplelist>
           </td>

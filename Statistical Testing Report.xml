@@ -11,7 +11,7 @@
     <informaltable frame="void" rules="rows">
       <thead>
         <tr>
-          <th>Iteration</th>
+          <th>Iter</th>
           <th>Test #</th>
           <th>Result</th>
           <th colspan="5">Failure Summary</th>
@@ -407,6 +407,403 @@
       <para>
         The <function>Parse</function> accepts more than one Nss and Nse 
         stimuli in a namespace script.
+      </para>
+    </formalpara>
+  </section>
+  <section>
+    <title>Increment 2</title>
+    <informaltable frame="void" rules="rows">
+      <thead>
+        <tr>
+          <th>Iter</th>
+          <th>Test #</th>
+          <th>Result</th>
+          <th colspan="5">Failure Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>C1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C8</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C9</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C10</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C11</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C12</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C13</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C14</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C15</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C16</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C17</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C18</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C19</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C20</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C21</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C21</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C22</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C23</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C24</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C25</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C26</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C27</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C28</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C29</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C30</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C31</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C32</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C33</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C34</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C35</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C36</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>8</td>
+          <td>Fail</td>
+          <td colspan="5">Incorrect Translation of <function>Int4Type</function></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>8</td>
+          <td>Fail</td>
+          <td colspan="5">Scalar has wrong rank and shape</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>8</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+      </tbody>
+    </informaltable>
+    <formalpara>
+      <title>Iteration 1, Test Case 8</title>
+      <para>
+        The <function>Int4Type</function> should be a niladic
+        function, but it is defined as a dfns, which will not
+        work.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Iteration 2, Test Case 8</title>
+      <para>
+        In the LLVM output, the V9 rank is 1, rather than 0, and the 
+        shape contains a one element vector containing 1. This is 
+        incorrect for a single scalar value.
       </para>
     </formalpara>
   </section>

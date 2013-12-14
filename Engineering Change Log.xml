@@ -127,6 +127,18 @@
 				<td colspan="5">Redundancy in Sequence Enumeration</td>
 				<td colspan="2">Pending</td>
 			</tr>
+			<tr>
+				<td>18</td>
+				<td colspan="2">2013-12-14</td>
+				<td colspan="5">Incorrect arity for <function>Int4Type</function></td>
+				<td colspan="2">Applied</td>
+			</tr>
+			<tr>
+				<td>19</td>
+				<td colspan="2">2013-12-14</td>
+				<td colspan="5">Incorrect rank and shape for scalars</td>
+				<td colspan="2">Applied</td>
+			</tr>
 		</tbody>
 	</table>
 	<orderedlist>
@@ -508,5 +520,56 @@
 				</para>
 			</formalpara>
 		</listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          Statistical testing encountered a type error in the implementation 
+          of <function>Int4Type</function> which was implemented in the 
+          <classname>CoDfns</classname> namespace during the environment 
+          conversion to UNIX. It should not be a dfns, but should be a niladic 
+          function.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          Change introduced during environment conversion was incorrect 
+          and should be rectified immediately.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          In the LLVM output, the V9 rank is 1, rather than 0, and the 
+          shape contains a one element vector containing 1. This is 
+          incorrect for a single scalar value.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The coding of the <function>GenConst</function> function 
+          is not sufficiently robust and requires reworking. In
+          particular, the initial extraction of the expression values
+          did not take into account the appropriate shape of the
+          expression. These effects are localized and contained to the
+          <function>GenConst</function> function, and do not affect
+          any other elements or problems. 
+        </para>
+      </formalpara>
+      <simpara>
+        The cause of this problem can be traced at least partially
+        back to having a function specification that is unable to
+        express these precise details about the nature of each
+        conversion. Adapting the function specification to include
+        more information like this would like improve the ability to
+        catch these errors earlier. Technically, however, these
+        elements are clearly specified in the <citetitle>Programming
+        Language Reference</citetitle> from Dyalog.
+      </simpara>
+    </listitem>
 	</orderedlist>
 </article>

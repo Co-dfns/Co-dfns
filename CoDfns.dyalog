@@ -1041,24 +1041,33 @@ GenGlobal←{
 ⍝ See the Software Architecture for details on the array structure.
 GenConst←{
   ⍝ An Expression node will contain a single array in it. Get these 
-  ⍝ values into V.
-  V←'value'Prop 1↓⍵
+  ⍝ values into V. We note that V should have the same shape 
+  ⍝ as the shape of the expression. Here V can either be a 
+  ⍝ vector of at least two elements or it can be a single scalar.
+  ⍝ The literal syntax allows for none others than this.
+  V←((2≤⍴V)⊃⍬(⍴V))⍴V←'value'Prop 1↓⍵
   
   ⍝ Generate LLVM Integers for each of these 
-  D←{ConstIntOfString (Int64Type) ⍵ 10}¨V
+  ⍝ The shape of D should be a vector, since this 
+  ⍝ will be passed directly to certain foreign functions.
+  D←{ConstIntOfString (Int64Type) ⍵ 10}¨,V
   
   ⍝ Build an LLVM Constant array from these values
   Da←ConstArray (Int64Type) D (⊃⍴D)
   
   ⍝ Shape of the array is a single element vector 
+  ⍝ Make sure that the shape of the array is based off 
+  ⍝ of V and not off of D.
   S←{ConstInt (Int32Type) ⍵ 0}¨⍴V
   Sa←ConstArray (Int64Type) S (⊃⍴S)
   
   ⍝ Rank is constant
+  ⍝ Rank must also come from V and not D
   R←ConstInt (Int16Type) (⊃⍴⍴V) 0
   
   ⍝ Size is a function of the number of elements in V
-  Sz←ConstInt (Int64Type) (⊃⍴V) 0
+  ⍝ which is really the size of D
+  Sz←ConstInt (Int64Type) (⊃⍴D) 0
   
   ⍝ For now we have a constant type
   T←ConstInt (Int4Type) 2 0
@@ -1126,8 +1135,6 @@ P←'LLVM'
 
 ⍝ LLVMTypeRef  LLVMInt4Type (void) 
 'IntType'⎕NA 'P ',D,'|',P,'IntType U'
-
-Int4Type←{IntType 4}
 
 ⍝ LLVMTypeRef  LLVMInt16Type (void) 
 'Int16Type'⎕NA 'P ',D,'|',P,'Int16Type'
@@ -1207,6 +1214,10 @@ Int4Type←{IntType 4}
 ⍝ size_t strlen(char *str)
 'strlen'⎕NA'P libc.so.6|strlen P'
 
+∇
+
+∇Z←Int4Type
+ Z←IntType 4
 ∇
 
 :EndNamespace
