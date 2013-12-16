@@ -52,11 +52,12 @@
 ⍝ Impact Analysis
 ⍝ ===============
 ⍝
-⍝ IsFnb    Must be implemented to handle the Fnb stimuli.
-⍝ IsFnf    Must be implemented to handle the Fne stimuli.
-⍝ ModToNS  Must be implemented.
-⍝ Parse    Must add support for the ⋄ stimuli.
-⍝ GenFunc  Must add support for multiple names to a single function.
+⍝ IsFnb     Must be implemented to handle the Fnb stimuli.
+⍝ IsFnf     Must be implemented to handle the Fne stimuli.
+⍝ ModToNS   Must be implemented.
+⍝ Tokenize  Add support for the ⋄ token.
+⍝ Parse     Must add support for the ⋄ stimuli.
+⍝ GenFunc   Must add support for multiple names to a single function.
 
 ⍝ Fix
 ⍝
@@ -193,7 +194,7 @@ ErrorMessage←{
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 Tokenize←{
-  ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { }
+  ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { } ⋄ 
   ⍝ 
   ⍝ The only real job of this pass is to get to these stimuli, not do anything
   ⍝ more with them.
@@ -207,11 +208,7 @@ Tokenize←{
   VC,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
   VCN←VC,NC←'0123456789'
   
-  ⍝ Additional Characters in domain: ←{}
-  ⍝ In general, the : character should be handled as well, 
-  ⍝ but for now this assumes that we only have to deal with 
-  ⍝ the Nse and Nss tokens. Thus, we do not have to deal with 
-  ⍝ : generally.
+  ⍝ Additional Characters in domain: ←{}⋄
   ⍝ 
   ⍝ The NC variable contains the decimal digits, used in both 
   ⍝ the N and V tokens. The Nl token is already parsed, so we 
@@ -219,7 +216,7 @@ Tokenize←{
   ⍝ as well.
   
   ⍝ Verify that we have only valid characters in use
-  AC←VCN,'←{}: ⍝'
+  AC←VCN,'←{}:⋄ ⍝'
   ~∧/AC∊⍨⊃,/⍵:⎕SIGNAL 2
 
   ⍝ Divide into comment and code
@@ -245,14 +242,14 @@ Tokenize←{
     ⍝ Split on and remove spaces
     T←{((⍴X)⍴1 0)/X←(2≠/' '=' ',⍵)⊂⍵}¨T
     
-    ⍝ Split on ← { }
-    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊'←{}')⊂⍵}¨¨T
+    ⍝ Split on ← { } ⋄
+    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊'←{}⋄')⊂⍵}¨¨T
 
     ⍝ At this point, all lines are split into tokens
     ⍝ Wrap each token in appropriate element:
     ⍝   Variables → Variable
     ⍝   Integer   → Number class ← 'int' 
-    ⍝   ←         → Token class ← 'separator'
+    ⍝   ← ⋄       → Token class ← 'separator'
     ⍝   { }       → Token class ← 'delimiter'
   
     ⍝ We switch from lines to a single vector of tokens
@@ -266,11 +263,11 @@ Tokenize←{
     ⍝ of the token:
     ⍝   Variable → T∊VC
     ⍝   Integer  → T∊NC
-    ⍝   ←        → T∊'←'
+    ⍝   ← ⋄      → T∊'←⋄'
     ⍝   { }      → T∊'{}'
     ⍝
     ⍝ Create a selection vector for each type of token
-    Sv Si Sa Sd←(⊃¨T)∘∊¨VC NC '←' '{}'
+    Sv Si Sa Sd←(⊃¨T)∘∊¨VC NC '←⋄' '{}'
     
     ⍝ Wrap each type in appropriate elements
     Tv←{1 4⍴2 'Variable' '' (1 2⍴'name' ⍵)}¨Sv/T
@@ -403,6 +400,13 @@ Parse←{
   ⍝ occurances. We can determine the proper result without 
   ⍝ requiring explicit handling of the Nl stimuli. 
   ⍝ Thus, we need to do no explicit parsing here for Nl.
+
+  ⍝ Stimuli: ⋄
+  ⍝
+  ⍝ The ⋄ token is treated just the same as an Nl for all intents 
+  ⍝ and purposes. However, the Tokenizer will not have broken these 
+  ⍝ out implicitly like it has for Nl due to the way the input 
+  ⍝ format works. 
   
   ⍝ Stimuli: Nss and Nse
   ⍝ Trace: Tables 233, 244, 245, and 206 in Function Specification
