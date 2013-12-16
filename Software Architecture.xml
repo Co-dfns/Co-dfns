@@ -966,6 +966,13 @@
           </td>
         </tr>
         <tr>
+          <td>DropUnmd</td>
+          <td>Standard</td>
+          <td colspan="3">
+            Eliminates unamed functions or expressions at the top-level
+          </td>
+        </tr>
+        <tr>
           <td>FuseScalars</td>
           <td>Optimization</td>
           <td colspan="3">
@@ -1872,6 +1879,41 @@
             <td>Invariant</td>
             <td colspan="3">
               The result should contain no more <varname>Line</varname> elements.
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Standard pass: DropUnmd</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended Function</td>
+            <td colspan="3">
+              Drop all unnamed expressions or functions from the top-level
+            </td>
+          </tr>
+          <tr>
+            <td>Right Argument</td>
+            <td colspan="3">A valid <classname>Namespace</classname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">A valid <classname>Namespace</classname> AST</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              All <classname>FuncExpr</classname> and <classname>Expression</classname> 
+              nodes at the top-level have a non-empty, valid <property>name</property>
+              attribute upon output.
             </td>
           </tr>
         </tbody>
