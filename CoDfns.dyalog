@@ -42,6 +42,24 @@
 ⍝ ∘ Assignment to literal integer array expressions
 ⍝ ∘ Assignment to user-defined functions
 
+⍝ Increment 3 Overview:
+⍝ 
+⍝ ∘ Implement all of top-level space
+⍝ ∘ JIT Namespace support
+⍝ ∘ Top-level Stimuli: ⋄ ← Break Eot Fix Fnb Fne Fnf Lle Lls Nl 
+⍝   Nse Nss Vi Vfo Vu E Fe
+⍝
+⍝ Impact Analysis
+⍝ ===============
+⍝
+⍝ IsFnb. Must be implemented to handle the Fnb stimuli.
+⍝ 
+⍝ IsFnf. Must be implemented to handle the Fne stimuli.
+⍝
+⍝ ModToNS. Must be implemented.
+⍝
+⍝ Parse. Must add support for the ⋄ stimuli.
+
 ⍝ Fix
 ⍝
 ⍝ Intended Function: Accept a valid namespace script and return an 
@@ -379,7 +397,7 @@ Parse←{
   ⍝ with this explicitly. We leave the empty or comment
   ⍝ only lines around for idempotency's sake
   ⍝
-  ⍝ Trace: Table 243
+  ⍝ Trace: Table 243 in Function Specification
   ⍝
   ⍝ In the above table, we see that in all cases, the Nl 
   ⍝ is a partitioning form that serves only to partition 
@@ -426,7 +444,9 @@ Parse←{
   NS⍪←⍵[1↓(⍳⊃⍴⍵)~I,¯1+I←(⊂[1]⍵)⍳⊂[1]FL;]
   
   ⍝ State: Namespace ← OPEN ⋄ Eot ← No
-  ⍝ Stimuli to consider: Vfo Vu N ← { }
+  ⍝ Stimuli already handled by this point or that do not need handling: 
+  ⍝   Eot Fix Fnb Fne Fnf Nl Nse Nss Break
+  ⍝ Stimuli to consider: Vfo Vu N ← { } E Fe
   ⍝
   ⍝ At this point we have every other line representing some sort of 
   ⍝ expression or function. If we look at the set of states in the 
@@ -486,7 +506,7 @@ Parse←{
 ⍝ Return state: Same as entry state.
 
 ParseLine←{C E←⍵
-  ⍝ Possible stimuli: Vfo Vu N ← { }
+  ⍝ Possible stimuli: Vfo Vu N ← { } E Fe
   ⍝ 
   ⍝ We are only considering the Value and Named states in this function.
   ⍝ That is to say, the Context, Namespace and Eot states should stay the 
