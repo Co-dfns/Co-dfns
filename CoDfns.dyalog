@@ -137,9 +137,10 @@ IsFnb←{0}
 Compile←{
   tks←Tokenize ⍵
   ast names←Parse tks
-  ast←KillLines ast
-  ast←LiftConsts ast
-  mod←GenLLVM ast
+  ast←KillLines   ast
+  ast←DropUnmd    ast
+  ast←LiftConsts  ast
+  mod←GenLLVM     ast
   mod names
 }
 
