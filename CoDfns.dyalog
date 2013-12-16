@@ -949,6 +949,21 @@ KillLines←{
   (~⍵[;1]∊⊂'Line')/[0]⍵
 }
 
+⍝ DropUnmd
+⍝
+⍝ Intended Function: Drop all unnamed expressions or functions from the 
+⍝ top-level.
+⍝
+⍝ Right argument: Namespace AST
+⍝ Output: Namespace AST
+⍝ Invariant: All FuncExpr and Expression nodes at the top-level 
+⍝   have a non-empty, valid name attribute upon output.
+⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
+
+DropUnmd←{
+  
+}
+
 ⍝ LiftConsts
 ⍝
 ⍝ Intended Function: Remove all constants from all depths to ensure that 
