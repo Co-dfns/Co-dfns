@@ -52,13 +52,11 @@
 ⍝ Impact Analysis
 ⍝ ===============
 ⍝
-⍝ IsFnb. Must be implemented to handle the Fnb stimuli.
-⍝ 
-⍝ IsFnf. Must be implemented to handle the Fne stimuli.
-⍝
-⍝ ModToNS. Must be implemented.
-⍝
-⍝ Parse. Must add support for the ⋄ stimuli.
+⍝ IsFnb    Must be implemented to handle the Fnb stimuli.
+⍝ IsFnf    Must be implemented to handle the Fne stimuli.
+⍝ ModToNS  Must be implemented.
+⍝ Parse    Must add support for the ⋄ stimuli.
+⍝ GenFunc  Must add support for multiple names to a single function.
 
 ⍝ Fix
 ⍝
