@@ -956,10 +956,21 @@ KillLines←{
 ⍝ Output: Namespace AST
 ⍝ Invariant: All FuncExpr and Expression nodes at the top-level 
 ⍝   have a non-empty, valid name attribute upon output.
+⍝ Invariant: All top-level nodes are either FuncExpr or Expresssion 
+⍝   nodes; particularly, there are no Line nodes.
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 DropUnmd←{
-  
+  ⍝ At this point in our program, we will have removed all lines from 
+  ⍝ the program and will have only Expression or FuncExpr nodes at 
+  ⍝ the level 1 of the tree. Thus, we can take all leve 1 nodes and 
+  ⍝ extract the names from those nodes, to get a boolean mask about which 
+  ⍝ Nodes to keep and which not to keep. At this point, we can use 
+  ⍝ this to select out all of the nodes by enclosing each of the 
+  ⍝ depth 1 sub-trees and then recombining the ones that are left 
+  ⍝ after the selection.
+  Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
+  (⊂0⌷⍵)⍪⊃⍪/(0=⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
 }
 
 ⍝ LiftConsts
