@@ -58,6 +58,8 @@
 ⍝ Tokenize  Add support for the ⋄ token.
 ⍝ Parse     Must add support for the ⋄ stimuli.
 ⍝ GenFunc   Must add support for multiple names to a single function.
+⍝ DropUnmd  Add a new pass to drop the unnamed functions that could 
+⍝           appear at the top-level.
 
 ⍝ Fix
 ⍝
