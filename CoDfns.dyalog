@@ -401,13 +401,6 @@ Parse←{
   ⍝ requiring explicit handling of the Nl stimuli. 
   ⍝ Thus, we need to do no explicit parsing here for Nl.
 
-  ⍝ Stimuli: ⋄
-  ⍝
-  ⍝ The ⋄ token is treated just the same as an Nl for all intents 
-  ⍝ and purposes. However, the Tokenizer will not have broken these 
-  ⍝ out implicitly like it has for Nl due to the way the input 
-  ⍝ format works. 
-  
   ⍝ Stimuli: Nss and Nse
   ⍝ Trace: Tables 233, 244, 245, and 206 in Function Specification
   ⍝ Properties handled: Eot and Namespace
@@ -445,9 +438,30 @@ Parse←{
   NS←0 'Namespace' '' (1 2⍴'name' '')
   NS⍪←⍵[1↓(⍳⊃⍴⍵)~I,¯1+I←(⊂[1]⍵)⍳⊂[1]FL;]
   
+  ⍝ Stimuli: ⋄
+  ⍝
+  ⍝ The ⋄ token is treated just the same as an Nl for all intents 
+  ⍝ and purposes. However, the Tokenizer will not have broken these 
+  ⍝ out implicitly like it has for Nl due to the way the input 
+  ⍝ format works. 
+  ⍝ 
+  ⍝ Trace: Table 219 in Function Specification
+  ⍝ 
+  ⍝ We can examine each of the cases illustrated by the above table 
+  ⍝ and note the same as with Nl. It thus suffices to convert all 
+  ⍝ ⋄ tokens to Nl lines. In the tree, converting each ⋄ Token node 
+  ⍝ to a Line node has this effect, and is a safe transformation 
+  ⍝ because a Token node has no children, and stores no additional 
+  ⍝ information that needs to be restored.
+  ⍝
+  ⍝ XXX: The following transformation does not adequately preserve 
+  ⍝ commenting behavior.
+  I←(('name' Prop B⌿NS)∊⊂,'⋄')/(B←NS[;1]∊⊂'Token')/⍳⊃⍴NS
+  NS[I;]←((⍴I),4)⍴1 'Line' '' MtA
+  
   ⍝ State: Namespace ← OPEN ⋄ Eot ← No
   ⍝ Stimuli already handled by this point or that do not need handling: 
-  ⍝   Eot Fix Fnb Fne Fnf Nl Nse Nss Break
+  ⍝   Eot Fix Fnb Fne Fnf Nl Nse Nss Break ⋄
   ⍝ Stimuli to consider: Vfo Vu N ← { } E Fe
   ⍝
   ⍝ At this point we have every other line representing some sort of 
@@ -1112,7 +1126,13 @@ GenConst←{
 ⍝ For now this is just a stub assuming that we have a function that 
 ⍝ has only a single variable reference in it.
 GenFunc←{
+  ⍝ We assume that this is a function with a single variable 
+  ⍝ reference in it at the moment. The only other thing we care about 
+  ⍝ is the set of names that are associated with the function. 
+  ⍝ Thus, we need both the names of the function and the variable 
+  ⍝ reference inside of it.
   fn vn←'name'Prop ⍵[0 2;]
+
   fr←AddFunction ⍺ fn (GenFuncType ⍬)
   vr←GetNamedGlobal ⍺ vn
   bb←AppendBasicBlock fr ''
