@@ -1916,6 +1916,13 @@
               attribute upon output.
             </td>
           </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              All top-level nodes are either FuncExpr or Expresssion
+              nodes; particularly, there are no Line nodes.
+            </td>
+          </tr>
         </tbody>
       </informaltable>
       <informaltable frame="void" rules="rows">
