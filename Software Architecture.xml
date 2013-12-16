@@ -1952,6 +1952,42 @@
           </tr>
         </tbody>
       </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Exit pass: GenLLVM</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended Function</td>
+            <td colspan="3">
+              Take a namespace and convert it to an LLVM Module that is 
+              semantically equivalent.
+            </td>
+          </tr>
+          <tr>
+            <td>Input</td>
+            <td colspan="3">A <classname>Namespace</classname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">An LLVM Module</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              The output LLVM Module should be operationally
+              equivalent to the incoming namespace as when
+              <function>⎕FIX</function> is used on the same input.
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
       <section>
         <title>Optimization Pass: FuseScalars</title>
         <informaltable frame="void" rules="rows">
@@ -2224,37 +2260,6 @@
         <simpara>
           XXX: Need more information here
         </simpara>
-      </section>
-      <section>
-        <title>Exit Pass: GenLLVM</title>
-        <formalpara>
-          <title>Intended Function</title>
-          <para>
-            Take a namespace and convert it to an LLVM Module that is 
-            semantically equivalent.
-          </para>
-        </formalpara>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Output</td>
-              <td>LLVM Module</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </informaltable>
       </section>
     </section>
     <section>
