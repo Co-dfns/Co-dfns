@@ -53,7 +53,6 @@
 ⍝ ===============
 ⍝
 ⍝ IsFnb     Must be implemented to handle the Fnb stimuli.
-⍝ IsFnf     Must be implemented to handle the Fne stimuli.
 ⍝ ModToNS   Must be implemented.
 ⍝ Tokenize  Add support for the ⋄ token.
 ⍝ Parse     Must add support for the ⋄ stimuli.
@@ -87,10 +86,9 @@ Fix←{
   
   ⍝ We must handle the other transitions: 
   ⍝   Fnb → DOMAIN ERROR    → (Fix ← No)
-  ⍝   Fnf → FILE NAME ERROR → (Fix ← No)
+  ⍝   Fnf → null            → (Obj ← Yes)
   ⍝   Fne → null            → (Obj ← Yes)
   IsFnb Obj:⎕SIGNAL 11
-  IsFnf Obj:⎕SIGNAL 22
   
   ⍝ State: Namespace ← NOTSEEN ⋄ Eot ← No
   ⍝ At this stage, we can compile ⍵ without consideration 
@@ -121,7 +119,6 @@ Fix←{
 ⍝ Stubbed stimuli predicates for Fix
 
 IsFnb←{0}
-IsFnf←{0}
 
 ⍝ Compile
 ⍝
