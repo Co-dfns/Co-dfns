@@ -1135,14 +1135,33 @@ GenFunc←{
   ⍝ reference inside of it.
   fn vn←'name'Prop ⍵[0 2;]
 
-  fr←AddFunction ⍺ fn (GenFuncType ⍬)
+  ⍝ A given function expression can have more than one name associated 
+  ⍝ with it. The first name in the list will be the canonical one, 
+  ⍝ and we will alias the rest of them to the first name after we have 
+  ⍝ created the function. The fn variable is actually a string of 
+  ⍝ space delimited names, so we split this up and take the first as 
+  ⍝ the canonical. It is safe to do this because we have the invariant 
+  ⍝ established in previous passes that we always have at least one 
+  ⍝ name.
+  fnf fnr←(⊃fn),1↓fn←(nsp/2≠/' '=' ',fn)⊂(nsp←' '≠fn)/fn
+
+  ⍝ With the names taken care of, we can add the function under the 
+  ⍝ first name.
+  fr←AddFunction ⍺ fnf (ft←GenFuncType ⍬)
+
+  ⍝ The following is a stub for handling the body of the function, 
+  ⍝ which we assume right now to be a single variable reference.
   vr←GetNamedGlobal ⍺ vn
   bb←AppendBasicBlock fr ''
   bldr←CreateBuilder
   _←PositionBuilderAtEnd bldr bb
   _←BuildRet bldr vr
   _←DisposeBuilder bldr
-  0 0⍴fr
+
+  ⍝ We can now add additional aliases or simply return if there 
+  ⍝ are none to work with.
+  0=⍴fnr:0 0⍴fr
+  0 0⍴fr⊣{AddAlias ⍺ ft fr ⍵}¨fnr
 }
 
 ⍝ GenArrayType
@@ -1251,6 +1270,10 @@ P←'LLVM'
 
 ⍝ LLVMModuleRef LLVMModuleCreateWithName (const char *ModuleID)
 'ModuleCreateWithName'⎕NA'P ',D,'|',P,'ModuleCreateWithName <0C'
+
+⍝ LLVMValueRef
+⍝ LLVMAddAlias (LLVMModuleRef M, LLVMTypeRef Ty, LLVMValueRef Aliasee, const char *Name)
+'AddAlias'⎕NA'P ',D,'|',P,'AddAlias P P P <0C'
 
 ⍝ void *memcpy(void *dst, void *src, size_t size)
 'cstring'⎕NA'libc.so.6|memcpy >C[] P P'
