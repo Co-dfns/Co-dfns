@@ -116,9 +116,15 @@ Fix←{
   Namespace
 }
 
-⍝ Stubbed stimuli predicates for Fix
+⍝ IsFnb
+⍝
+⍝ Intended Function: Determine whether the given input is a valid 
+⍝ filename or not.
+⍝ 
+⍝ For the moment, we just check to make sure that we are getting 
+⍝ a valid string, and if so, we consider it valid.
 
-IsFnb←{0}
+IsFnb←{~(∧/' '=⊃0⍴⊂⍵)∧((,1)≡⍴⍴⍵)∧(1≡≡⍵)}
 
 ⍝ Compile
 ⍝
@@ -1184,8 +1190,8 @@ GenFunc←{
 
   ⍝ We can now add additional aliases or simply return if there 
   ⍝ are none to work with.
-  0=⍴fnr:0 0⍴fr
-  0 0⍴fr⊣{AddAlias ⍺ ft fr ⍵}¨fnr
+  0=⍴fnr:Shy←fr
+  Shy←fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr
 }
 
 ⍝ GenArrayType
