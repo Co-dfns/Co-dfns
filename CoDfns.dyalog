@@ -180,7 +180,7 @@ ModToNS←{
   ⍝ The execution engine is the primary thing which allows us 
   ⍝ to JIT a module. We store the main execution engine in Ee 
   ⍝ after creation. 
-  C Eev Err←CreateJITCompilerForModule 1 ⍵ 1
+  C Eev Err←CreateJITCompilerForModule 1 ⍵ 0 1
   0≠C:(ErrorMessage ⊃Err)⎕SIGNAL 99
   Ee←⊃Eev
 
@@ -189,8 +189,8 @@ ModToNS←{
   ⍝ of the namespace. 
   Fn←{
     Gv←RunFunction ⍺⍺ ⍵⍵ 0 0
-    Z←ConvertArray GenericValueToPointer Gv 1
-    _←DispseGenericValue Gv
+    Z←ConvertArray GenericValueToPointer Gv
+    _←DisposeGenericValue Gv
     Z
   }
 
@@ -1161,6 +1161,7 @@ GenLLVM←{
 ⍝
 ⍝ Left Argument: LLVM Module
 ⍝ Right Argument: Global Value
+
 GenGlobal←{
   ⍝ There are two types of globals, Expression constants and Functions
   ⍝ We will use a specific helper for each.
@@ -1179,6 +1180,7 @@ GenGlobal←{
 ⍝ Right Argument: Expression Node
 ⍝
 ⍝ See the Software Architecture for details on the array structure.
+
 GenConst←{
   ⍝ An Expression node will contain a single array in it. Get these 
   ⍝ values into V. We note that V should have the same shape 
@@ -1219,7 +1221,24 @@ GenConst←{
   0 0⍴SetInitializer G A
 }
 
-⍝ GenFunc0 2;]
+⍝ GenFunc
+⍝
+⍝ Intended Function: Given a FuncExpr node, build an appropriate 
+⍝ Function in the LLVM Module given.
+⍝
+⍝ Left Argument: LLVM Module
+⍝ Right Argument: FuncExpr Node
+⍝
+⍝ For now this is just a stub assuming that we have a function that 
+⍝ has only a single variable reference in it.
+
+GenFunc←{
+  ⍝ We assume that this is a function with a single variable 
+  ⍝ reference in it at the moment. The only other thing we care about 
+  ⍝ is the set of names that are associated with the function. 
+  ⍝ Thus, we need both the names of the function and the variable 
+  ⍝ reference inside of it.
+  fn vn←'name'Prop ⍵[0 2;]
 
   ⍝ A given function expression can have more than one name associated 
   ⍝ with it. The first name in the list will be the canonical one, 
@@ -1256,6 +1275,7 @@ GenConst←{
 ⍝ array.
 ⍝ 
 ⍝ See the Software Architecture for details on the Array Structure.
+
 GenArrayType←{
   p←PointerType (Int64Type) 0
   lt←(Int16Type)(Int64Type)(Int4Type) p p
@@ -1271,6 +1291,7 @@ GenArrayType←{
 ⍝
 ⍝ For now this is just a stub assuming a constant function that returns 
 ⍝ an array.
+
 GenFuncType←{
   FunctionType (GenArrayType ⍬) ⍬ 0 0
 }
@@ -1360,6 +1381,26 @@ P←'LLVM'
 ⍝ LLVMValueRef
 ⍝ LLVMAddAlias (LLVMModuleRef M, LLVMTypeRef Ty, LLVMValueRef Aliasee, const char *Name)
 'AddAlias'⎕NA'P ',D,'|',P,'AddAlias P P P <0C'
+
+⍝ LLVMBool
+⍝ LLVMCreateJITCompilerForModule (LLVMExecutionEngineRef *OutJIT, 
+⍝     LLVMModuleRef M, unsigned OptLevel, char **OutError)
+'CreateJITCompilerForModule'⎕NA'I ',D,'|',P,'CreateJITCompilerForModule >P P U >P'
+
+⍝ LLVMGenericValueRef
+⍝ LLVMRunFunction (LLVMExecutionEngineRef EE, 
+⍝     LLVMValueRef F, unsigned NumArgs, LLVMGenericValueRef *Args)
+'RunFunction'⎕NA'P ',D,'|',P,'RunFunction P P U <P[]'
+
+⍝ void * LLVMGenericValueToPointer (LLVMGenericValueRef GenVal)
+'GenericValueToPointer'⎕NA'P ',D,'|',P,'GenericValueToPointer P'
+
+⍝ void LLVMDisposeGenericValue (LLVMGenericValueRef GenVal)
+'DisposeGenericValue'⎕NA D,'|',P,'DisposeGenericValue P'
+
+⍝ LLVMBool
+⍝ LLVMFindFunction (LLVMExecutionEngineRef EE, const char *Name, LLVMValueRef *OutFn)
+'FindFunction'⎕NA'I ',D,'|',P,'FindFunction P <0C >P'
 
 ⍝ void *memcpy(void *dst, void *src, size_t size)
 'cstring'⎕NA'libc.so.6|memcpy >C[] P P'
