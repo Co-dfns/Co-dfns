@@ -53,7 +53,7 @@
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Complete the implementation of top-level state space</member>
-					  <member>Return a JIT'd or Fixed Namespace</member>
+					  <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
 					  <member>Top-level Stimuli Covered: <literal>⋄</literal>
 					  <literal>←</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl
 					  Nse Nss Vi Vfo Vu E Fe Fnm Fnd</member>
