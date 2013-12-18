@@ -45,7 +45,7 @@
 ⍝ Increment 3 Overview:
 ⍝ 
 ⍝ ∘ Implement all of top-level space
-⍝ ∘ JIT Namespace support
+⍝ ∘ JIT Namespace support (Functions only)
 ⍝ ∘ Top-level Stimuli: ⋄ ← Break Eot Fix Fnb Fne Fnf Lle Lls Nl 
 ⍝   Nse Nss Vi Vfo Vu E Fe
 ⍝
@@ -156,9 +156,69 @@ Compile←{
 ⍝
 ⍝ Left Argument: A (name, type) mapping of top-level bindings
 ⍝ Right Argument: A valid LLVM Module
+⍝ Output: A Namespace
 ⍝ State: Context ← Top ⋄ Namespace ← CLOSED ⋄ Eot ← Yes
+⍝
+⍝ An interesting restriction here is that we need to make sure that we do not 
+⍝ have any bindings in the namespace that are not observably equivalent to 
+⍝ those that we have in the given compiled namespace. This means that we 
+⍝ cannot have any helper functions at the top level of our namespace. 
+⍝ Furthermore, we have two types of values that we need to convert, those 
+⍝ function types and the globals. The function types can be converted directly 
+⍝ to function types, but the globals need to be niladic functions to ensure that 
+⍝ they grab their values from the latest global state of the compiled module, 
+⍝ rather than an old value.
+⍝
+⍝ XXX: At the moment this function only handles the functions that are 
+⍝ exported by a namespace, and does not deal with the globals.
 
-ModToNS←{⎕FIX ':Namespace' ':EndNamespace'} ⍝ Stubbed until later
+ModToNS←{
+  ⍝ All of this starts with having a namespace where we can 
+  ⍝ put all of these functions. 
+  Ns←⎕NS⍬ ⍝ Create an Empty Namespace
+
+  ⍝ The execution engine is the primary thing which allows us 
+  ⍝ to JIT a module. We store the main execution engine in Ee 
+  ⍝ after creation. 
+  C Eev Err←CreateJITCompilerForModule 1 ⍵ 1
+  0≠C:(ErrorMessage ⊃Err)⎕SIGNAL 99
+  Ee←⊃Eev
+
+  ⍝ We use an operator here to build each function. This let's us capture 
+  ⍝ the relevant state without worrying about mucking with the top-level 
+  ⍝ of the namespace. 
+  Fn←{
+    Gv←RunFunction ⍺⍺ ⍵⍵ 0 0
+    Z←ConvertArray GenericValueToPointer Gv 1
+    _←DispseGenericValue Gv
+    Z
+  }
+
+  ⍝ We need to be able to extract out the value of a function, 
+  ⍝ as this is needed by RunFunction in order to actually do 
+  ⍝ any real work. To do this we use the FindFunction. However, 
+  ⍝ the syntax of the FindFunction is less than ideal, so we 
+  ⍝ wrap it in the function Fp to get us what we want.
+  Fp←{
+    C Fpv←FindFunction Ee ⍵ 1
+    0≠C:'Function not found'⎕SIGNAL 99
+    ⊃Fpv
+  }
+
+  ⍝ Each function is described succinctly by the function 
+  ⍝ returned by (Ee Fn Fp Fname) where Fname is one of the 
+  ⍝ keys associated with the function type in ⍺. The trick 
+  ⍝ is getting these into the namespace, which as yet does 
+  ⍝ not have defined in it any of the appropriate names. 
+  ⍝ This is, unfortunately, a case for ⍎. We have a function 
+  ⍝ Add to do this for us. This will work for either functions 
+  ⍝ or globals depending on how we invoke it.
+  AddF←Ns∘{⍎'⍺.',⍵,'←Ee Fn Fp Nm'⊣Nm←⍵}
+
+  ⍝ We can now add our appropriate functions and globals to our 
+  ⍝ namespace.
+  Ns⊣AddF¨(2=1⌷⍉⍺)/0⌷⍉⍺
+}
 
 ⍝ ModToObj
 ⍝
@@ -359,6 +419,18 @@ VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 ⍝ Input: Tokens tree
 ⍝ Output: Namespace AST, Top-level Names
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
+⍝
+⍝ The top-level names are an important structure. In particular, they 
+⍝ are a matrix of (name, type) records. The set of types are as follows:
+⍝ 
+⍝   0  Unknown Type
+⍝   1  Array
+⍝   2  Function
+⍝   3  Monadic Operator
+⍝   4  Dyadic Operator
+⍝
+⍝ The name should be a simple, valid APL variable in the form of a 
+⍝ string (that is, a simple character vector).
 
 Parse←{
   ⍝ Potential Stimuli: Eot Nl Nse Nss Vfo Vu N ← { }
@@ -1147,23 +1219,7 @@ GenConst←{
   0 0⍴SetInitializer G A
 }
 
-⍝ GenFunc
-⍝
-⍝ Intended Function: Given a FuncExpr node, build an appropriate 
-⍝ Function in the LLVM Module given.
-⍝
-⍝ Left Argument: LLVM Module
-⍝ Right Argument: FuncExpr Node
-⍝
-⍝ For now this is just a stub assuming that we have a function that 
-⍝ has only a single variable reference in it.
-GenFunc←{
-  ⍝ We assume that this is a function with a single variable 
-  ⍝ reference in it at the moment. The only other thing we care about 
-  ⍝ is the set of names that are associated with the function. 
-  ⍝ Thus, we need both the names of the function and the variable 
-  ⍝ reference inside of it.
-  fn vn←'name'Prop ⍵[0 2;]
+⍝ GenFunc0 2;]
 
   ⍝ A given function expression can have more than one name associated 
   ⍝ with it. The first name in the list will be the canonical one, 
