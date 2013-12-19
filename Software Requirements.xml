@@ -220,9 +220,8 @@
     <listitem>
       <simpara>
         If the filename given as the left argument to the function
-        <function>CoDfns.Fix</function> already exists, a
-        <literal>FILE NAME ERROR</literal> with code 22 should be
-        signalled, and no data should be written and no module created.
+        <function>CoDfns.Fix</function> already exists, the file 
+        should be overwritten upon successful compilation.
       </simpara>
     </listitem>
     <listitem>
