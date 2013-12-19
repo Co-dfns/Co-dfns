@@ -229,7 +229,8 @@ ModToNS←{
 ⍝ Output: A Dyalog Array
 
 ConvertArray←{
-  ⊃FFIGetDataInt (FFIGetSize ⍵) ⍵ ⍝ Currently Stubbed Out
+  D←⊃FFIGetDataInt (S←FFIGetSize ⍵) ⍵ 
+  ((2≤S)⊃⍬ S)⍴D
 }
 
 ⍝ ModToObj
