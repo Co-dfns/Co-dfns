@@ -220,6 +220,18 @@ ModToNS←{
   Ns⊣AddF¨(2=1⌷⍉⍺)/0⌷⍉⍺
 }
 
+⍝ ConvertArray
+⍝
+⍝ Intended Function: Convert an array from the Co-dfns compiler into an 
+⍝ array suitable for use in the Dyalog APL Interpreter.
+⍝
+⍝ Right Argument: A pointer to the array
+⍝ Output: A Dyalog Array
+
+ConvertArray←{
+  ⊃FFIGetDataInt (FFIGetSize ⍵) ⍵ ⍝ Currently Stubbed Out
+}
+
 ⍝ ModToObj
 ⍝
 ⍝ Intended Function: Generate a compiled object to the file given the LLVM Module
@@ -1301,6 +1313,7 @@ GenFuncType←{
 ∇{Z}←FFI∆INIT;P;D
 Z←⍬
 D←'libLLVM-3.3.so'
+R←'./libcodfns.so'
 P←'LLVM'
 
 ⍝ LLVMTypeRef  LLVMInt4Type (void) 
@@ -1401,6 +1414,12 @@ P←'LLVM'
 ⍝ LLVMBool
 ⍝ LLVMFindFunction (LLVMExecutionEngineRef EE, const char *Name, LLVMValueRef *OutFn)
 'FindFunction'⎕NA'I ',D,'|',P,'FindFunction P <0C >P'
+
+⍝ void FFIGetDataInt (int64_t **res, struct codfns_array *)
+'FFIGetDataInt'⎕NA R,'|FFIGetDataInt >I8[] P'
+
+⍝ uint64_t FFIGetSize (struct codfns_array *)
+'FFIGetSize'⎕NA 'U8 ',R,'|FFIGetSize P'
 
 ⍝ void *memcpy(void *dst, void *src, size_t size)
 'cstring'⎕NA'libc.so.6|memcpy >C[] P P'
