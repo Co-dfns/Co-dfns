@@ -625,7 +625,7 @@
       <tbody>
         <tr>
           <td>Top-level</td>
-          <td colspan="4"><literal>⋄</literal> <literal>←</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl Nse Nss Vi Vfo Vu E Fe Fnm Fnd</td>
+          <td colspan="4"><literal>⋄</literal> <literal>←</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl Nse Nss Vi Vfo Vu E Fe</td>
         </tr>
         <tr>
           <td>Expressions</td>
@@ -940,18 +940,6 @@
               <td>D1</td>
             </tr>
             <tr>
-              <td>Fnd</td>
-              <td>illegal</td>
-              <td></td>
-              <td>D1</td>
-            </tr>
-            <tr>
-              <td>Fnm</td>
-              <td>illegal</td>
-              <td></td>
-              <td>D1</td>
-            </tr>
-            <tr>
               <td>
                 <literal>⋄</literal>
               </td>
@@ -1072,18 +1060,6 @@
             </tr>
             <tr>
               <td>Fix Fe</td>
-              <td>Syntax Error</td>
-              <td>empty</td>
-              <td>4, 10, 16, 21</td>
-            </tr>
-            <tr>
-              <td>Fix Fnd</td>
-              <td>Syntax Error</td>
-              <td>empty</td>
-              <td>4, 10, 16, 21</td>
-            </tr>
-            <tr>
-              <td>Fix Fnm</td>
               <td>Syntax Error</td>
               <td>empty</td>
               <td>4, 10, 16, 21</td>
@@ -1214,18 +1190,6 @@
               <td>4, 10, 17, 18, 21</td>
             </tr>
             <tr>
-              <td>Fix Fne Fnd</td>
-              <td>Syntax Error</td>
-              <td>empty</td>
-              <td>4, 10, 17, 18, 21</td>
-            </tr>
-            <tr>
-              <td>Fix Fne Fnm</td>
-              <td>Syntax Error</td>
-              <td>empty</td>
-              <td>4, 10, 17, 18, 21</td>
-            </tr>
-            <tr>
               <td>Fix Fne
               <literal>⋄</literal>
               </td>
@@ -1351,18 +1315,6 @@
               <td>4, 16</td>
             </tr>
             <tr>
-              <td>Fix Nss Fnd</td>
-              <td>null</td>
-              <td>Fix Nss Fe</td>
-              <td>4, 16</td>
-            </tr>
-            <tr>
-              <td>Fix Nss Fnm</td>
-              <td>null</td>
-              <td>Fix Nss Fe</td>
-              <td>4, 16</td>
-            </tr>
-            <tr>
               <td>Fix Nss
               <literal>⋄</literal>
               </td>
@@ -1483,18 +1435,6 @@
             </tr>
             <tr>
               <td>Fix Nss E Fe</td>
-              <td>subsumed</td>
-              <td>Fix Nss E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fix Nss E Fnd</td>
-              <td>subsumed</td>
-              <td>Fix Nss E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fix Nss E Fnm</td>
               <td>subsumed</td>
               <td>Fix Nss E</td>
               <td></td>
@@ -1625,18 +1565,6 @@
               <td></td>
             </tr>
             <tr>
-              <td>Fix Nss Fe Fnd</td>
-              <td>subsumed</td>
-              <td>Fix Nss E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fix Nss Fe Fnm</td>
-              <td>subsumed</td>
-              <td>Fix Nss E</td>
-              <td></td>
-            </tr>
-            <tr>
               <td>Fix Nss Fe
               <literal>⋄</literal>
               </td>
@@ -1762,18 +1690,6 @@
               <td></td>
             </tr>
             <tr>
-              <td>Fix Nss Vfo Fnd</td>
-              <td>subsumed</td>
-              <td>Fix Nss Fe</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fix Nss Vfo Fnm</td>
-              <td>subsumed</td>
-              <td>Fix Nss Fe</td>
-              <td></td>
-            </tr>
-            <tr>
               <td>Fix Nss Vfo
               <literal>⋄</literal>
               </td>
@@ -1894,18 +1810,6 @@
             </tr>
             <tr>
               <td>Fix Nss Vu Fe</td>
-              <td>subsumed</td>
-              <td>Fix Nss E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fix Nss Vu Fnd</td>
-              <td>subsumed</td>
-              <td>Fix Nss E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fix Nss Vu Fnm</td>
               <td>subsumed</td>
               <td>Fix Nss E</td>
               <td></td>
@@ -2036,18 +1940,6 @@
               <td>4, 10, 16, 21</td>
             </tr>
             <tr>
-              <td>Fix Nss Nse Fnd</td>
-              <td>Syntax Error</td>
-              <td>empty</td>
-              <td>4, 10, 16, 21</td>
-            </tr>
-            <tr>
-              <td>Fix Nss Nse Fnm</td>
-              <td>Syntax Error</td>
-              <td>empty</td>
-              <td>4, 10, 16, 21</td>
-            </tr>
-            <tr>
               <td>Fix Nss Nse
               <literal>⋄</literal>
               </td>
@@ -2168,18 +2060,6 @@
             </tr>
             <tr>
               <td colspan="2">Fix Nss Nse Eot Fe</td>
-              <td>illegal</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2">Fix Nss Nse Eot Fnd</td>
-              <td>illegal</td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2">Fix Nss Nse Eot Fnm</td>
               <td>illegal</td>
               <td></td>
               <td></td>
@@ -2310,18 +2190,6 @@
               <td>4</td>
             </tr>
             <tr>
-              <td>Fix Nss Vfo <literal>←</literal> Fnd</td>
-              <td>null</td>
-              <td>Fix Nss Vfo <literal>←</literal> Fe</td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td>Fix Nss Vfo <literal>←</literal> Fnm</td>
-              <td>null</td>
-              <td>Fix Nss Vfo <literal>←</literal> Fe</td>
-              <td>4</td>
-            </tr>
-            <tr>
               <td>Fix Nss Vfo <literal>←</literal> 
               <literal>⋄</literal>
               </td>
@@ -2447,18 +2315,6 @@
               <td>4</td>
             </tr>
             <tr>
-              <td>Fix Nss Vu <literal>←</literal> Fnd</td>
-              <td>null</td>
-              <td>Fix Nss Vu <literal>←</literal> Fe</td>
-              <td>4</td>
-            </tr>
-            <tr>
-              <td>Fix Nss Vu <literal>←</literal> Fnm</td>
-              <td>null</td>
-              <td>Fix Nss Vu <literal>←</literal> Fe</td>
-              <td>4</td>
-            </tr>
-            <tr>
               <td>Fix Nss Vu <literal>←</literal> <literal>⋄</literal></td>
               <td>Syntax Error</td>
               <td>empty</td>
@@ -2577,18 +2433,6 @@
               <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fe</td>
               <td>subsumed</td>
               <td>Fix Nss Vfo <literal>←</literal> E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fnd</td>
-              <td>subsumed</td>
-              <td>Fix Nss Vfo <literal>←</literal> Fe</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2">Fix Nss Vfo <literal>←</literal> Fe Fnm</td>
-              <td>subsumed</td>
-              <td>Fix Nss Vfo <literal>←</literal> Fe</td>
               <td></td>
             </tr>
             <tr>
@@ -2713,18 +2557,6 @@
               <td></td>
             </tr>
             <tr>
-              <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fnd</td>
-              <td>subsumed</td>
-              <td>Fix Nss Vfo <literal>←</literal> E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu Fnm</td>
-              <td>subsumed</td>
-              <td>Fix Nss Vfo <literal>←</literal> E</td>
-              <td></td>
-            </tr>
-            <tr>
               <td colspan="2">Fix Nss Vfo <literal>←</literal> Vu <literal>⋄</literal></td>
               <td>Value Error</td>
               <td>empty</td>
@@ -2843,18 +2675,6 @@
               <td colspan="2">Fix Nss Vu <literal>←</literal> Fe Fe</td>
               <td>subsumed</td>
               <td>Fix Nss E</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2">Fix Nss Vu <literal>←</literal> Fe Fnd</td>
-              <td>subsumed</td>
-              <td>Fix Nss Vu <literal>←</literal> Fe</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="2">Fix Nss Vu <literal>←</literal> Fe Fnm</td>
-              <td>subsumed</td>
-              <td>Fix Nss Vu <literal>←</literal> Fe</td>
               <td></td>
             </tr>
             <tr>
