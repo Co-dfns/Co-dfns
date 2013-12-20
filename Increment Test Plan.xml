@@ -658,7 +658,11 @@
       purpose, and expands a single sequence. See the
       <filename>Stimuli.dyalog</filename> script for the details on
       how to correctly invoke the <function>Expand</function>
-      function. 
+      function. In practice, the correct function to call is actually
+      the <function>RstExp</function> function, which will make sure
+      that the variable counters are correctly reset and such. The
+      <function>RstExp</function> is really just a wrapper on the
+      <function>Expand</function> function, however.
     </simpara>
     <simpara>
       Generally speaking, anyone who is working on generating the test
