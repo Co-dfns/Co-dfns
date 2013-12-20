@@ -95,16 +95,23 @@ Fn←{(¯1↓⍵),⊂(⊃⌽⍵),'{',(⍕?(1+?10)⍴2*10),'}'}
 Counter←0 ⋄ FVars←⍬ ⋄ AVars←⍬
 Vu←{(⊃Counter)+←1 ⋄ (⊃FVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
 Vnu←{(⊃Counter)+←1 ⋄ (⊃AVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
+Vfo←{(¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?⍴FVars)⌷FVars}
+Vi←{(¯1↓⍵),⊂(⊃⌽⍵),' ⍺'}
 Gets←{(¯1↓⍵),⊂(⊃⌽⍵),'←'}
 Eot←{⍵}
 Fix←{⍵}
 Fne←{⍵}
+Fnb←{⍵}
+Fnf←{⍵}
 Lls←{⍵}
+Lle←{⍵}
 Nl←{⍵,⊂''}
 Nse←{⍵,':EndNamespace' ''}
 Nss←{⍵,':Namespace' ''}
 Lbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'{'}
 Rbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'}'}
 N←{(¯1↓⍵),⊂(⊃⌽⍵),' ',⍕?2*10}
+Sep←{(¯1↓⍵),⊂(⊃⌽⍵),'⋄'}
+
 
 :EndNamespace
