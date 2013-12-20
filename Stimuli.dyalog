@@ -21,8 +21,11 @@
 ⍝ Expand a stimuli sequence into a valid input to ⎕FIX
 ⍝ The basic idea here is to treat each stimuli as a function and 
 ⍝ reduce the stimuli sequence by evaluating each of the stimuli function. 
+⍝ We must make sure that we invoke these functions from left to right, 
+⍝ instead of the standard approach, because we need to ensure that the 
+⍝ variable counter is called and used in the right way.
 
-Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0⍴⊂''}
+Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(⌽Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0⍴⊂''}
 
 ⍝ It's important to be able to reset the counter on each test case so 
 ⍝ that we can know what variables have been bound and which have not, 
@@ -30,7 +33,7 @@ Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0⍴�
 ⍝ we need to have a function which does this resetting before running the 
 ⍝ top-level invocation of Expand.
 
-RstExp←{Counter←0 ⋄ ⍺ Expand ⍵}
+RstExp←{(⊃Counter)←0 ⋄ (⊃FVars)←⍬ ⋄ (⊃AVars)←⍬ ⋄ ⍺ Expand ⍵}
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Stimuli Sets
@@ -77,7 +80,7 @@ Trans←{(((⍳⍴⍵)×I=⊃⍴TransTbl)+I←(0⌷⍉TransTbl)⍳⍵)⊃¨⊂(1
 
 MkRec←{
   X←⍺ Expand ⊃1 #.Generate.Distribution ⍺ #.Generate.DModel ⍺⍺
-  ((¯1↓X),⊂(⊃⌽X),⊃⍵),1↓⍵
+  (¯1↓⍵),(⊂(⊃⌽⍵),⊃X),1↓X
 }
 
 E←'Expression'MkRec
@@ -85,23 +88,23 @@ Fe←'FuncExpr'MkRec
 
 ⍝ Fn←'Function'MkRec
 ⍝ Hack to make Increment 2 work right for now
-Fn←{(⊂'{',(⍕?(1+?10)⍴2*20),'}',⊃⍵),1↓⍵}
+Fn←{(¯1↓⍵),⊂(⊃⌽⍵),'{',(⍕?(1+?10)⍴2*10),'}'}
 
 ⍝ Non-recursive Stimuli
 
-Counter←0
-Vu←{(⊃Counter)+←1 ⋄ (⊂'V',(⍕Counter),' ',⊃⍵),1↓⍵}
-Vnu←{⍺ Vu ⍵}
-Gets←{(⊂'← ',⊃⍵),1↓⍵}
+Counter←0 ⋄ FVars←⍬ ⋄ AVars←⍬
+Vu←{(⊃Counter)+←1 ⋄ (⊃FVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
+Vnu←{(⊃Counter)+←1 ⋄ (⊃AVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
+Gets←{(¯1↓⍵),⊂(⊃⌽⍵),'←'}
 Eot←{⍵}
 Fix←{⍵}
 Fne←{⍵}
 Lls←{⍵}
-Nl←{(⊂''),⍵}
-Nse←{'' ':EndNamespace',⍵}
-Nss←{'' ':Namespace',⍵}
-Lbrc←{(⊂'{ ',⊃⍵),1↓⍵}
-Rbrc←{(⊂'} ',⊃⍵),1↓⍵}
-N←{(⊂(⍕?2*30),' ',⊃⍵),1↓⍵}
+Nl←{⍵,⊂''}
+Nse←{⍵,':EndNamespace' ''}
+Nss←{⍵,':Namespace' ''}
+Lbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'{'}
+Rbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'}'}
+N←{(¯1↓⍵),⊂(⊃⌽⍵),' ',⍕?2*10}
 
-:EndNamespace 
+:EndNamespace
