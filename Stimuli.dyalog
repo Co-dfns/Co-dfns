@@ -24,6 +24,14 @@
 
 Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0⍴⊂''}
 
+⍝ It's important to be able to reset the counter on each test case so 
+⍝ that we can know what variables have been bound and which have not, 
+⍝ so that the Vfo stimuli can work as appropriate. In order to do this, 
+⍝ we need to have a function which does this resetting before running the 
+⍝ top-level invocation of Expand.
+
+RstExp←{Counter←0 ⋄ ⍺ Expand ⍵}
+
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Stimuli Sets
 
@@ -36,7 +44,7 @@ FuncExpr,←,¨'Break' 'D' 'Da' 'M' 'Ma' 'Vi' 'Vf' 'Vo' 'Vu'
 
 Function←,¨'E' 'Fe' 'Fnm' 'Fnd' '{' '}' ':' '::' '⋄' '←' 'Break' 'Nl' 'Vfo' 'Vu'
 
-TopLevel←,¨'E' 'Fe' 'Fnm' 'Fnd' '⋄' '←' 'Break' 'Eot' 'Fix' 'Fnb' 'Fne' 'Fnf' 
+TopLevel←,¨'E' 'Fe' '⋄' '←' 'Break' 'Eot' 'Fix' 'Fnb' 'Fne' 'Fnf' 
 TopLevel,←'Lle' 'Lls' 'Nl' 'Nse' 'Nss' 'Vi' 'Vfo' 'Vu'
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
