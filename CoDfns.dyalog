@@ -1225,7 +1225,7 @@ GenConst←{
   Sz←ConstInt (Int64Type) (⊃⍴D) 0
   
   ⍝ For now we have a constant type
-  T←ConstInt (Int4Type) 2 0
+  T←ConstInt (Int8Type) 2 0
   
   ⍝ We can put this all together now and insert it into the 
   ⍝ Module
@@ -1317,8 +1317,8 @@ D←'libLLVM-3.3.so'
 R←'./libcodfns.so'
 P←'LLVM'
 
-⍝ LLVMTypeRef  LLVMInt4Type (void) 
-'IntType'⎕NA 'P ',D,'|',P,'IntType U'
+⍝ LLVMTypeRef LLVMInt8Type (void)
+'Int8Type'⎕NA 'P ',D,'|',P,'Int8Type'
 
 ⍝ LLVMTypeRef  LLVMInt16Type (void) 
 'Int16Type'⎕NA 'P ',D,'|',P,'Int16Type'
@@ -1428,10 +1428,6 @@ P←'LLVM'
 ⍝ size_t strlen(char *str)
 'strlen'⎕NA'P libc.so.6|strlen P'
 
-∇
-
-∇Z←Int4Type
- Z←IntType 4
 ∇
 
 :EndNamespace
