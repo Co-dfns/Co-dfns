@@ -92,10 +92,10 @@ Fn←{(¯1↓⍵),⊂(⊃⌽⍵),'{',(⍕?(1+?10)⍴2*10),'}'}
 
 ⍝ Non-recursive Stimuli
 
-Counter←0 ⋄ FVars←⍬ ⋄ AVars←⍬
+Counter←0 ⋄ FVars←⊂⍬ ⋄ AVars←⊂⍬
 Vu←{(⊃Counter)+←1 ⋄ (⊃FVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
 Vnu←{(⊃Counter)+←1 ⋄ (⊃AVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
-Vfo←{(¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?⍴FVars)⌷FVars}
+Vfo←{(¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?⍴⊃FVars)⌷⊃FVars}
 Vi←{(¯1↓⍵),⊂(⊃⌽⍵),' ⍺'}
 Gets←{(¯1↓⍵),⊂(⊃⌽⍵),'←'}
 Eot←{⍵}
