@@ -169,6 +169,12 @@
         <td colspan="5">Fix <function>DropUnmd</function> for empty namespace</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>25</td>
+        <td colspan="2">2013-12-21</td>
+        <td colspan="5">Fix <function>DropUnmd</function> for empty namespace</td>
+        <td colspan="2">Applied</td>
+      </tr>
 		</tbody>
 	</table>
 	<orderedlist>
@@ -765,6 +771,24 @@
         ensure a non-zero vector, but will not affect the results of
         any of the catenations in the line. 
       </para>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>LiftConsts</function> as a domain error when
+          handling an empty namespace.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The root cause for this is the invalid output produced by
+          the <function>DropUnmd</function> function, because of a
+          misplaced scalar enclosure in the second line of that
+          function. Removing the scalar enclosure will fix this.
+        </para>
+      </formalpara>
     </listitem>
 	</orderedlist>
 </article>

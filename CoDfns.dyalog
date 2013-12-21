@@ -1065,7 +1065,7 @@ DropUnmd←{
   ⍝ depth 1 sub-trees and then recombining the ones that are left 
   ⍝ after the selection.
   Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
-  (⊂0⌷⍵)⍪⊃⍪/(⊂MtAST),(0=⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
+  (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0=⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
 }
 
 ⍝ LiftConsts
