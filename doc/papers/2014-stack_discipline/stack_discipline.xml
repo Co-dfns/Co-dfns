@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en">
+  <info>
+    <title>A Stack Discipline for a High-Level Higher-Order Language</title>
+    <authorgroup>
+      <author>
+        <personname><firstname>Aaron</firstname><othername>W.</othername><surname>Hsu</surname></personname>
+        <affiliation><orgname>Indiana University</orgname></affiliation>
+      </author>
+      <author>
+        <personname><firstname>Edward</firstname><surname>Amsden</surname></personname>
+        <affiliation><orgname>Indiana University</orgname></affiliation>
+      </author>
+      <author>
+        <personname><firstname>Timothy</firstname><surname>Zakian</surname></personname>
+        <affiliation><orgname>Indiana University</orgname></affiliation>
+      </author>
+    </authorgroup>
+  </info>
+  <section>
+    <title>Introduction</title>
+    <para>TBW</para>
+  </section>
+</article>
