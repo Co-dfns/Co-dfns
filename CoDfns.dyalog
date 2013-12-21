@@ -273,7 +273,7 @@ ErrorMessage←{
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 Tokenize←{
-  ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { } ⋄ 
+  ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { } ⋄
   ⍝ 
   ⍝ The only real job of this pass is to get to these stimuli, not do anything
   ⍝ more with them.
@@ -1061,7 +1061,7 @@ DropUnmd←{
   ⍝ depth 1 sub-trees and then recombining the ones that are left 
   ⍝ after the selection.
   Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
-  (⊂0⌷⍵)⍪⊃⍪/(0=⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
+  (⊂0⌷⍵)⍪⊃⍪/(⊂MtAST),(0=⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
 }
 
 ⍝ LiftConsts

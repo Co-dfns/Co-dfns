@@ -157,10 +157,23 @@
         <td colspan="5">Remove uses of INT4</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>23</td>
+        <td colspan="2">2013-12-21</td>
+        <td colspan="5">Fix Index Errors in <function>ParseExpr</function></td>
+        <td colspan="2">Pending</td>
+      </tr>
+      <tr>
+        <td>24</td>
+        <td colspan="2">2013-12-21</td>
+        <td colspan="5">Fix <function>DropUnmd</function> for empty namespace</td>
+        <td colspan="2">Applied</td>
+      </tr>
 		</tbody>
 	</table>
 	<orderedlist>
 		<title>Change Description and Analysis</title>
+    <?dbfo label-width="0.25in"?>
 		<listitem>
 			<formalpara>
 				<title>Description</title>
@@ -661,6 +674,78 @@
           not affect other documents.
         </para>
       </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The following two programs trigger <symbol>INDEX ERROR</symbol> messages 
+          in the compiler.
+        </para>
+      </formalpara>
+      <programlisting linenumbering="numbered">:Namespace
+ Va
+:EndNamespace
+</programlisting>
+      <para>
+        Signals an error with the following stack trace:
+      </para>
+      <screen>#.CoDfns.ParseExpr[21]*
+#.CoDfns.ParseLine[51]
+/
+#.CoDfns.Parse[145]
+#.CoDfns.Compile[2]
+#.CoDfns.Fix[26]</screen>
+      <para>
+        And the following program gives a slightly different index error.
+      </para>
+      <programlisting linenumbering="numbered">:Namespace
+ V1←
+:EndNamespace
+</programlisting>
+      <para>
+        Which errors at ParseExpr[19] with this stack trace:
+      </para>
+      <screen>#.CoDfns.ParseExpr[19]*
+#.CoDfns.ParseExpr[24]
+#.CoDfns.ParseLine[51]
+/
+#.CoDfns.Parse[145]
+#.CoDfns.Compile[2]
+#.CoDfns.Fix[26]</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          We get a domain error in <function>DropUnmd</function> when
+          trying to handle an empty namespace.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The <function>DropUnmd</function> function is called in the
+          compiler right after the <function>KillLines</function>
+          function. In the case of an empty namespace, this will
+          result in a tree with no depth-1 subtrees. This will result
+          in attempting to execute a first-axis catenate against an 
+          empty array with no identity element by default. 
+        </para>
+      </formalpara>
+      <para>
+        The appropriate fix is to ensure that the catenation never
+        receives and empty vector of sub-trees. We manually insert an
+        empty AST node to the head of the vector coming in, which will
+        ensure a non-zero vector, but will not affect the results of
+        any of the catenations in the line. 
+      </para>
     </listitem>
 	</orderedlist>
 </article>
