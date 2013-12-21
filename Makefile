@@ -7,6 +7,7 @@ DOCSRC := Cleanroom\ Engineering\ Guide.xml Software\ Architecture.xml \
 DOCPDF := $(DOCSRC:.xml=.pdf)
 XSL := fo.xsl
 XCONF := fop.xconf
+CLASSPATH := /home/arcfide/Libraries/Docbook5-XSL/extensions/xalan27.jar
 
 all: docs CoDfns.dyalog
 
@@ -18,4 +19,4 @@ libcodfns.so: codfns.h codfns.c
 	clang -shared -fPIC -o libcodfns.so codfns.c
 
 %.pdf: %.xml $(XSL) $(XCONF)
-	fop -c $(XCONF) -xsl $(XSL) -xml "$<" -pdf "$@"
+	CLASSPATH=${CLASSPATH} fop -c $(XCONF) -xsl $(XSL) -xml "$<" -pdf "$@"

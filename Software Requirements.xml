@@ -30,6 +30,7 @@
   </simpara>
   <orderedlist>
     <title>Enumerated Software Requirements</title>
+    <?dbfo label-width="0.25in"?>
     <listitem>
       <simpara>
         The entire system should be implemented insofaras it be technically

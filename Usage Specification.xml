@@ -494,7 +494,10 @@
 		<figure>
 			<title>High-level Markov Model of Top-Level</title>
 			<mediaobject>
-				<imageobject><imagedata fileref="Graphics/Top-Level High-level State Graph.svg" width="6in" /></imageobject>
+				<imageobject>
+          <imagedata fileref="Graphics/Top-Level High-level State Graph.svg" 
+                     width="5.75in" />
+        </imageobject>
 			</mediaobject>
 		</figure>
 		<table frame="void" rules="rows" orient="land">
@@ -795,7 +798,10 @@
 		<figure>
 			<title>High-level Markov Model of Functions</title>
 			<mediaobject>
-				<imageobject><imagedata fileref="Graphics/Functions High-level State Graph.svg" width="6in" /></imageobject>
+				<imageobject>
+          <imagedata fileref="Graphics/Functions High-level State Graph.svg" 
+                     width="5.75in" />
+        </imageobject>
 			</mediaobject>
 		</figure>
 		<table frame="void" rules="rows" orient="land">
@@ -1032,7 +1038,10 @@
 		<figure>
 			<title>High-level Markov Model of Expressions</title>
 			<mediaobject>
-				<imageobject><imagedata fileref="Graphics/Expression High-level State Graph.svg" width="6in" /></imageobject>
+				<imageobject>
+          <imagedata fileref="Graphics/Expression High-level State Graph.svg" 
+                     width="5.75in" />
+        </imageobject>
 			</mediaobject>
 		</figure>
 		<table frame="void" rules="rows" orient="land">
@@ -1240,7 +1249,10 @@
 		<figure>
 			<title>High-level Markov Model of Function Expressions</title>
 			<mediaobject>
-				<imageobject><imagedata fileref="Graphics/Function Expression High-level State Graph.svg" width="6in" /></imageobject>
+				<imageobject>
+          <imagedata fileref="Graphics/Function Expression High-level State Graph.svg" 
+                     width="5.75in" />
+        </imageobject>
 			</mediaobject>
 		</figure>
 		<table frame="void" rules="rows" orient="land">
