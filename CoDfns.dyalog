@@ -914,10 +914,14 @@ ParseExpr←{
   ⍝ For Increment 2 we are handling only arrays of integers, which might 
   ⍝ possibly have a name. Thus, we can handle all of our cases by only 
   ⍝ checking for a name first, and then handling the integers separately.
+
+  ⍝ Do we have an empty expression?
+  0=⊃⍴⍵:2 MtAST ⍺
   
   ⍝ Check for a name, and parse as appropriate if we have a name
-  'Variable'≡⊃0 1⌷⍵:⍺ {
+  'Variable'≡⊃0 1⌷⍵:⍺{
     ⍝ Verify that we have an assignment
+    ~2≤⊃⍴⍵:2 MtAST ⍺
     ~('Token'≡⊃1 1⌷⍵)∧((,'←')≡⊃'name'Prop 1↑1↓⍵):2 MtAST ⍺
 
     ⍝ Parse the rest as an expression

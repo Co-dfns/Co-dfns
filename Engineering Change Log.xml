@@ -161,7 +161,7 @@
         <td>23</td>
         <td colspan="2">2013-12-21</td>
         <td colspan="5">Fix Index Errors in <function>ParseExpr</function></td>
-        <td colspan="2">Pending</td>
+        <td colspan="2">Applied</td>
       </tr>
       <tr>
         <td>24</td>
@@ -684,7 +684,7 @@
         </para>
       </formalpara>
       <programlisting linenumbering="numbered">:Namespace
- Va
+ V1
 :EndNamespace
 </programlisting>
       <para>
@@ -716,9 +716,28 @@
       <formalpara>
         <title>Analysis</title>
         <para>
-          
+          In the first case, we incorrectly assume that we will have
+          at least two tokens in our token matrix when parsing for an
+          expression. If there is only a single token in the token
+          list that we are parsing, and that single token is a
+          variable, then the first condition checks the second token
+          to determing whether it is an assignment or not. However,
+          since there is no second token, this fails with an
+          <symbol>INDEX ERROR</symbol>. A simple check before this
+          suffices to fix this oversight.
         </para>
       </formalpara>
+      <para>
+        The same thing happens with the second example, but a little
+        earlier. If we have an assignment to a variable that has no
+        expression on the right hand side of the assignment, then the
+        <function>ParseExpr</function> function will be called without
+        any tokens in it. Previously, we assumed that we would have at
+        least one token in the matrix, but now we need to check to
+        ensure that there is at least one token before checking
+        whether that token is a variable on the 19th line of the
+        function body.
+      </para>
     </listitem>
     <listitem>
       <formalpara>
