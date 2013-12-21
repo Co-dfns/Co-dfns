@@ -175,6 +175,12 @@
         <td colspan="5">Fix <function>DropUnmd</function> for empty namespace</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>26</td>
+        <td colspan="2">2013-12-21</td>
+        <td colspan="5">Fix <function>ErrorMessage</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
 		</tbody>
 	</table>
 	<orderedlist>
@@ -787,6 +793,26 @@
           the <function>DropUnmd</function> function, because of a
           misplaced scalar enclosure in the second line of that
           function. Removing the scalar enclosure will fix this.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The output of <function>ErrorMessage</function> does not
+          seem to work right in that it gives only a single character
+          response. 
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This is due to a misunderstanding in the way that the
+          <function>cstring</function> function works. The function
+          will actually return a vector of the characters in the
+          string, rather than a single one element vector containing
+          said string. This is an easy fix to apply.
         </para>
       </formalpara>
     </listitem>

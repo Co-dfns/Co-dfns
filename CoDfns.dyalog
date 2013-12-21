@@ -259,7 +259,7 @@ ModToObj←{
 
 ErrorMessage←{
   len←strlen ⍵
-  res←⊃cstring len ⍵ len
+  res←cstring len ⍵ len
   res⊣DisposeMessage ⍵
 }
 
