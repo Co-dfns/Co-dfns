@@ -181,6 +181,12 @@
         <td colspan="5">Fix <function>ErrorMessage</function></td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>27</td>
+        <td colspan="2">2013-12-24</td>
+        <td colspan="5">Specify Valid Triple for Module</td>
+        <td colspan="2">Applied</td>
+      </tr>
 		</tbody>
 	</table>
 	<orderedlist>
@@ -815,6 +821,37 @@
           said string. This is an easy fix to apply.
         </para>
       </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          When compiling an LLVM IR represented as a module, you must
+          specify a target triple, which indicates the kernel,
+          environment, and the processor architecture to be targeted
+          during the compilation. This holds true especially when
+          doing the JIT compilation. The current compiler does not do
+          this, and thus fails any test to produce a valid namespace.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The LLVM system has a complicated set of targets and the way
+          that they work. I am not sure exactly how this is going to
+          work, so it will take some experimentation. It appears that
+          the target system works by requiring you to first initialize
+          the set of targets that you want to support. I am not sure
+          whether this needs to be done before or after module
+          creation. 
+        </para>
+      </formalpara>
+      <simpara>
+        After the initialization of the modules, it appears that you
+        can obtain a triple for the appropriate module that you want
+        to work with and then use that triple when you JIT compile the
+        module. 
+      </simpara>
     </listitem>
 	</orderedlist>
 </article>

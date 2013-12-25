@@ -2772,7 +2772,11 @@
       <para>
         There is an error when generating the namespace in the
         system. The error that we get is the U error, and I am not
-        sure what that means.
+        sure what that means. After examination of the
+        <function>ErrorMessage</function> function and fixing a
+        problem with that, the real message is <quote>Unable to find
+        target for this triple (no targets are registered)</quote>
+        which makes much more sense.
       </para>
     </formalpara>
   </section>

@@ -4,6 +4,13 @@
 
   ⎕IO ⎕ML←0 1
 
+⍝ Platform Configuration
+⍝ 
+⍝ The following variables must be set correctly for the appropriate platform
+
+Target←'X86'
+TargetTriple←'x86_64-slackware-linux-gnu'
+
 ⍝ Increment 1 Overview:
 ⍝
 ⍝ ∘ Support an empty namespace
@@ -177,6 +184,16 @@ ModToNS←{
   ⍝ put all of these functions. 
   Ns←⎕NS⍬ ⍝ Create an Empty Namespace
 
+  ⍝ We need to specify exactly what target triple we are using 
+  ⍝ to do the compilation, which is done based on the value of 
+  ⍝ the TargetTriple Global value. Before using the triple, however, it is 
+  ⍝ necessary to ensure that we have initialized the appropriate target,
+  ⍝ which is given by the Target global value.
+  _←⍎'Initialize',Target,'TargetInfo'
+  _←⍎'Initialize',Target,'Target'
+  _←⍎'Initialize',Target,'TargetMC'
+  _←SetTarget ⍵ TargetTriple
+
   ⍝ The execution engine is the primary thing which allows us 
   ⍝ to JIT a module. We store the main execution engine in Ee 
   ⍝ after creation. 
@@ -213,7 +230,7 @@ ModToNS←{
   ⍝ This is, unfortunately, a case for ⍎. We have a function 
   ⍝ Add to do this for us. This will work for either functions 
   ⍝ or globals depending on how we invoke it.
-  AddF←Ns∘{⍎'⍺.',⍵,'←Ee Fn Fp Nm'⊣Nm←⍵}
+  AddF←Ns∘{0=⊃⍴⍵: 0 ⋄ ⍎'⍺.',⍵,'←Ee Fn Fp Nm'⊣Nm←⍵ ⋄ 0}
 
   ⍝ We can now add our appropriate functions and globals to our 
   ⍝ namespace.
@@ -1419,6 +1436,16 @@ P←'LLVM'
 ⍝ LLVMBool
 ⍝ LLVMFindFunction (LLVMExecutionEngineRef EE, const char *Name, LLVMValueRef *OutFn)
 'FindFunction'⎕NA'I ',D,'|',P,'FindFunction P <0C >P'
+
+⍝ void 	LLVMSetTarget (LLVMModuleRef M, const char *Triple)
+'SetTarget'⎕NA D,'|',P,'SetTarget P <0C'
+
+⍝ #define 	LLVM_TARGET(TargetName)   void LLVMInitialize##TargetName##TargetInfo(void);
+⍝ #define 	LLVM_TARGET(TargetName)   void LLVMInitialize##TargetName##Target(void);
+⍝ #define 	LLVM_TARGET(TargetName)   void LLVMInitialize##TargetName##TargetMC(void);
+('Initialize',Target,'TargetInfo')⎕NA D,'|',P,'Initialize',Target,'TargetInfo'
+('Initialize',Target,'Target')⎕NA D,'|',P,'Initialize',Target,'Target'
+('Initialize',Target,'TargetMC')⎕NA D,'|',P,'Initialize',Target,'TargetMC'
 
 ⍝ void FFIGetDataInt (int64_t **res, struct codfns_array *)
 'FFIGetDataInt'⎕NA R,'|FFIGetDataInt >I8[] P'
