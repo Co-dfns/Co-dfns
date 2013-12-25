@@ -852,6 +852,43 @@
         to work with and then use that triple when you JIT compile the
         module. 
       </simpara>
+      <simpara>
+        The eventual solution that was discovered for this particular
+        problem is actually a combination of things. Firstly, the
+        native target triple can be obtained using the
+        <function>llvm-config(1)</function> program by using the
+        <userinput>--host-target</userinput> option. Once this triple
+        is identified, the LLVM system must still be initialized to
+        use this target. 
+      </simpara>
+      <simpara>
+        To initialize the target, the normal system would run the
+        <function>LLVMInitializeNativeTarget()</function> function,
+        but this function is declared <type>inline</type> in the
+        headers, which makes it not possible to call from the shared
+        object file that we are using. Instead, the three functions
+        that it invokes must be manually called. Namely, the following
+        set of functions calls will initialize the native target if
+        that target is <constant>X86</constant>.
+      </simpara>
+      <programlisting>LLVMInitializeX86TargetInfo();
+LLVMInitializeX86Target();
+LLVMInitializeX86TargetMC();</programlisting>
+      <simpara>
+        Once this initialize is complete, the triple for the native
+        host can be used with the <function>LLVMSetTarget()</function>
+        function to set the target of the module. Unfortunately, I
+        could not find documentation on how to do this anywhere, and I
+        could barely find some StackOverflow postings that showed how
+        this would have worked on a normal system. A good deal of
+        experimentation was required to understand how to
+        appropriately apply this fix. The current system uses to
+        global values, <constant>Target</constant> and
+        <constant>TargetTriple</constant> to store the current native
+        settings, which are <literal>X86</literal> and
+        <literal>x86_64-slackware-linux-gnu</literal> for the current
+        development platform. 
+      </simpara>
     </listitem>
 	</orderedlist>
 </article>
