@@ -333,7 +333,17 @@
           <td colspan="2">
             <simplelist type="horiz">
               <member>
-                Applied Engineering Changes 23, 24, and 25
+                Applied Engineering Changes 23, 24, 25, and 26
+              </member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>Wednesday, December 25th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Applied Engineering Change 27
               </member>
             </simplelist>
           </td>
