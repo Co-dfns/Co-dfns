@@ -53,7 +53,6 @@
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Complete the implementation of top-level state space</member>
-					  <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
 					  <member>Top-level Stimuli Covered: <literal>⋄</literal>
 					  <literal>←</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl
 					  Nse Nss Vi Vfo Vu E Fe Fnm Fnd</member>
@@ -67,6 +66,7 @@
 					  <member>Complete all code to cover Bind
 					  <literal>∊</literal> NO states in the Functions
 					  space</member>
+					  <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
 				  </simplelist>
 			  </td>
 		  </tr>
@@ -88,6 +88,7 @@
 			  <td>6</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
+            <member>Ensure that generated names do not overlap with user names</member>
 					  <member>Support all PAREN and non SELECT expression states</member>
 					  <member>Support all Bind <literal>∊</literal> BOUND
 					  UNBOUND Function states where ~Value <literal>∊</literal> FUNC</member>
@@ -99,6 +100,7 @@
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Support the rest of the Function states</member>
+            <member>Ensure reasonable semantics for rebinding a name</member>
 				  </simplelist>
 			  </td>
 		  </tr>
