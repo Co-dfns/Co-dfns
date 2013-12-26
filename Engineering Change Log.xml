@@ -193,6 +193,12 @@
         <td colspan="5">Module to Namespace Generation Fails</td>
         <td colspan="2">Pending</td>
       </tr>
+      <tr>
+        <td>29</td>
+        <td colspan="2">2013-12-26</td>
+        <td colspan="5">Correct handling of muli-named functions</td>
+        <td colspan="2">Applied</td>
+      </tr>
 		</tbody>
 	</table>
 	<orderedlist>
@@ -922,6 +928,29 @@ LLVMInitializeX86TargetMC();</programlisting>
         arrives. Statistical testing will take place without the
         namespace generation aspect.
       </simpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          Adapt the handling of the Generation of multi-named
+          functions during the <function>GenLLVM</function> pass to
+          handle the multiple names, which currently it fails with a
+          <symbol>VALUE ERROR</symbol>. 
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The cause of this problem is that we had a shy result being
+          returned by the <function>GenFunc</function> function, which
+          apparently does not work well in places where a normal value
+          is expected. This appeared to work during our initial
+          investigations, but removing the shy value fixes this
+          problem. Some investigation is worthwhile, so this is being
+          sent to Dyalog to understand better why this error occurs. 
+        </para>
+      </formalpara>
     </listitem>
 	</orderedlist>
 </article>

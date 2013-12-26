@@ -1300,7 +1300,7 @@ GenFunc←{
   ⍝ We can now add additional aliases or simply return if there 
   ⍝ are none to work with.
   0=⍴fnr:Shy←fr
-  Shy←fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr
+  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr
 }
 
 ⍝ GenArrayType

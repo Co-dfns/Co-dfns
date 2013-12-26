@@ -2724,6 +2724,150 @@
           <td>Fail</td>
           <td colspan="5">U Error in Fix[31]</td>
         </tr>
+        <tr>
+          <td>4</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">DOMAIN ERROR in ModToNS[38]</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>8</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>9</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>10</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>11</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>12</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>13</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>14</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>15</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>16</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>17</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>18</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>19</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>20</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>21</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>22</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>23</td>
+          <td>Fail</td>
+          <td colspan="5">GenGlobal[4] GenFunc</td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -2777,6 +2921,25 @@
         problem with that, the real message is <quote>Unable to find
         target for this triple (no targets are registered)</quote>
         which makes much more sense.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Iteration 4, Test case 1</title>
+      <para>
+        There is a domain error in <function>FindFunction</function>
+        on line 38 of <function>ModToNs</function> which appears to be
+        related to an empty <literal>⍵</literal> value. That is, it
+        does not appear that the names of the functions are actually
+        given to <function>ModToNS</function>.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Iteration 5, Test Case 23</title>
+      <para>
+        The system does not appear to correctly handle Generation a
+        function with more than a single name. there is a
+        <symbol>VALUE ERROR</symbol> that occurs at GenGlobal[4] when
+        trying to do this.
       </para>
     </formalpara>
   </section>
