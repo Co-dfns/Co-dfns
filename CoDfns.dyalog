@@ -182,7 +182,7 @@ Compile←{
 ModToNS←{
   ⍝ All of this starts with having a namespace where we can 
   ⍝ put all of these functions. 
-  Ns←⎕NS⍬ ⍝ Create an Empty Namespace
+  ⊢Ns←⎕NS⍬ ⍝ Create an Empty Namespace
 
   ⍝ We need to specify exactly what target triple we are using 
   ⍝ to do the compilation, which is done based on the value of 
@@ -218,7 +218,7 @@ ModToNS←{
   ⍝ wrap it in the function Fp to get us what we want.
   Fp←{
     C Fpv←FindFunction Ee ⍵ 1
-    0≠C:'Function not found'⎕SIGNAL 99
+    0≠C:'FUNCTION NOT FOUND'⎕SIGNAL 99
     ⊃Fpv
   }
 
@@ -230,7 +230,7 @@ ModToNS←{
   ⍝ This is, unfortunately, a case for ⍎. We have a function 
   ⍝ Add to do this for us. This will work for either functions 
   ⍝ or globals depending on how we invoke it.
-  AddF←Ns∘{0=⊃⍴⍵: 0 ⋄ ⍎'⍺.',⍵,'←Ee Fn Fp Nm'⊣Nm←⍵ ⋄ 0}
+  AddF←{0=⊃⍴⍵: 0 ⋄ F←Ee Fn (Fp ⍵) ⋄ ⎕←F ⋄ _←⍎'Ns.',⍵,'←F' ⋄ 0}
 
   ⍝ We can now add our appropriate functions and globals to our 
   ⍝ namespace.
@@ -1082,7 +1082,7 @@ DropUnmd←{
   ⍝ depth 1 sub-trees and then recombining the ones that are left 
   ⍝ after the selection.
   Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
-  (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0=⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
+  (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0≠⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
 }
 
 ⍝ LiftConsts
@@ -1282,7 +1282,7 @@ GenFunc←{
   ⍝ the canonical. It is safe to do this because we have the invariant 
   ⍝ established in previous passes that we always have at least one 
   ⍝ name.
-  fnf fnr←(⊃fn),1↓fn←(nsp/2≠/' '=' ',fn)⊂(nsp←' '≠fn)/fn
+  fnf fnr←(⊃fn)(1↓fn←(nsp/2≠/' '=' ',fn)⊂(nsp←' '≠fn)/fn)
 
   ⍝ With the names taken care of, we can add the function under the 
   ⍝ first name.
@@ -1312,7 +1312,7 @@ GenFunc←{
 
 GenArrayType←{
   p←PointerType (Int64Type) 0
-  lt←(Int16Type)(Int64Type)(Int4Type) p p
+  lt←(Int16Type)(Int64Type)(Int8Type) p p
   StructType lt 5 0
 }
 
@@ -1446,6 +1446,9 @@ P←'LLVM'
 ('Initialize',Target,'TargetInfo')⎕NA D,'|',P,'Initialize',Target,'TargetInfo'
 ('Initialize',Target,'Target')⎕NA D,'|',P,'Initialize',Target,'Target'
 ('Initialize',Target,'TargetMC')⎕NA D,'|',P,'Initialize',Target,'TargetMC'
+
+⍝ void 	LLVMDumpModule (LLVMModuleRef M)
+'DumpModule'⎕NA D,'|',P,'DumpModule P'
 
 ⍝ void FFIGetDataInt (int64_t **res, struct codfns_array *)
 'FFIGetDataInt'⎕NA R,'|FFIGetDataInt >I8[] P'
