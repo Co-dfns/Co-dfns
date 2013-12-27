@@ -348,6 +348,25 @@
             </simplelist>
           </td>
         </tr>
+        <tr>
+          <td>Thursday, December 26th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Applied Engineering Change 29
+              </member>
+              <member>
+                Increment 3 Certified
+              </member>
+              <member>
+                Exiting Increment 3 Testing and Certification
+              </member>
+              <member>
+                Adapted <citetitle>Increment Construction Plan</citetitle>
+              </member>
+            </simplelist>
+          </td>
+        </tr>
 			</tbody>
 		</informaltable>
 	</section>
