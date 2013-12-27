@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0" xml:lang="en">
+  <info>
+    <title>Meeting Records</title>
+  </info>
+  <informaltable frame="void">
+    <thead>
+      <tr>
+        <th>Meeting #</th>
+        <td>1</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th>Date</th>
+        <td>Friday, December 27th, 2013</td>
+      </tr>
+      <tr>
+        <th>Time</th>
+        <td>3:45 P.M.</td>
+      </tr>
+      <tr>
+        <th>Attendees</th>
+        <td>Aaron, Ed</td>
+      </tr>
+    </tbody>
+  </informaltable>
+  <orderedlist>
+    <title>Meeting 1 Agenda/Minutes</title>
+    <listitem>
+      <formalpara>
+        <title>Status Reports</title>
+        <para>
+          Ed has started work on the benchmark, with an email thread
+          giving some basic ideas of how to proceed with the benchmark
+          in style. Specifically, he intends to have a spec written
+          down by the time the semester starts. Aaron has completed
+          the development and certification of Increment 3 of the
+          Co-dfns compiler, with some caveats in terms of JIT
+          compiling. The 4th increment is underway, but may not be
+          done by the 1st of January. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Tasks and Deadlines</title>
+        <para>
+          Aaron should attempt to have development, but not
+          necessarily certification of Increment 4 complete by the 1st
+          of January, while Ed should have the Benchmark specification
+          complete by the start of the semester. Tim should complete
+          his P423 work as quickly as possible.
+        </para>
+      </formalpara>
+    </listitem>
+  </orderedlist>
+</article>
