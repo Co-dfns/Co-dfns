@@ -52,7 +52,6 @@ TargetTriple←'x86_64-slackware-linux-gnu'
 ⍝ Increment 3 Overview:
 ⍝ 
 ⍝ ∘ Implement all of top-level space
-⍝ ∘ JIT Namespace support (Functions only)
 ⍝ ∘ Top-level Stimuli: ⋄ ← Break Eot Fix Fnb Fne Fnf Lle Lls Nl 
 ⍝   Nse Nss Vi Vfo Vu E Fe
 ⍝
@@ -66,6 +65,99 @@ TargetTriple←'x86_64-slackware-linux-gnu'
 ⍝ GenFunc   Must add support for multiple names to a single function.
 ⍝ DropUnmd  Add a new pass to drop the unnamed functions that could 
 ⍝           appear at the top-level.
+
+⍝ Increment 4 Overview:
+⍝
+⍝ ∘ Complete all code to cover Bind ∊ NO states in the Functions space
+⍝ ∘ Return a JIT'd or Fixed Namespace (Functions only)
+⍝ 
+⍝ Impact Analysis
+⍝ ===============
+⍝ 
+⍝ These additions have mostly to do with handline a more complete body 
+⍝ of the function, which will require some additional changes in the 
+⍝ handling of Tokenize first and foremost to support the : token:
+⍝
+⍝   1. Update Tokenize to handle the : token
+⍝ 
+⍝ Furthermore, we now allow multi-line functions, which will require 
+⍝ extending how we parse functions currently. We can roughly divide this
+⍝ into a series of stages. The first stage corresponds to handling the 
+⍝ { and } tokens and encapsulating the entire function space, which also 
+⍝ happens to fully deal with the 0th state of the Function Space.
+⍝
+⍝   2. Extend handling of { and } to deal with multi-line functions.
+⍝
+⍝ The next state that is left unfinished is the 1st state, which can be 
+⍝ handled separately, and should be used to dispatch into the rest of 
+⍝ the states. 
+⍝
+⍝   3. Complete handling of Function State 1.
+⍝
+⍝ Function State 4 ( { Vu ) deals with a single unbound variable. We are 
+⍝ not dealing with any assignments here, which means that all behaviors 
+⍝ encapsulated by the state are subsumed by Function State 5 ( { E ). 
+⍝ So we can deal with Vu implicitly rather than explicitly. Function 
+⍝ State 2 needs to be dealt with explicitly, but the difference between 
+⍝ this and states 5 and 8 are a matter of the : token. 
+⍝
+⍝   4. Deal with parsing the : token.
+⍝
+⍝ With this taken care of, we can handle all other cases of the state 2, 
+⍝ so we should clear that at this point.
+⍝
+⍝   5. Complete handling of parse state 2.
+⍝
+⍝ Once States 0 - 2 are cleared, states 5 and 8 fall out as the next 
+⍝ natural elements, so we should parse those next.
+⍝
+⍝   6. Complete parsing of function states 5 and 8.
+⍝ 
+⍝ This finally leaves only state 3, which is a simple case at the moment, 
+⍝ so we can complete the handling of state 3 now.
+⍝
+⍝   7. Complete parsing of function state 3.
+⍝
+⍝ At the completion of Step 7, we will have multi expression function bodies, 
+⍝ but without function bindings or nested functions. We will also have 
+⍝ conditional branching. We must first extend the compiler to handle 
+⍝ multiple expressions in the body of a function. We will allow expressions 
+⍝ to be either bound or not, but still constant. This means we will need to 
+⍝ extend the parser to handle top-level unbound expressions and function 
+⍝ level bound expressions.
+⍝ 
+⍝   8. Extend parser to handle more general constant expressions in both 
+⍝      function bodies and top-level.
+⍝
+⍝ This will also necessitate modifying DropUnmd to handle top-level 
+⍝ unbound expressions.
+⍝
+⍝   9. Extend DropUnmd pass to handle unbound top-level constant expressions.
+⍝ 
+⍝ ⍝ Now we can extend the compiler to handle multiple expressions in the 
+⍝ function body. We should start with a new compiler pass to remove code 
+⍝ that will never be executed in the function, so that we do not need to 
+⍝ generate code for this.
+⍝
+⍝   10. Create a new compiler pass that eliminates any code in a function 
+⍝       body that will never be executed by the shape of the conditionals 
+⍝       and the bindings of the body.
+⍝
+⍝ At this point LiftConst will need to be modified to handle multiple 
+⍝ expressions in the body and to lift all of the constants in the 
+⍝ function body to the top-level.
+⍝
+⍝   11. Modify LiftConst to handle multiple expression function bodies
+⍝       and to lift all of the constants in said body to the top-level, 
+⍝       but to keep the local bindings local.
+⍝
+⍝ Next GenFunc will need to be modified to handle multiple expressions in 
+⍝ a function body as well as conditional expressions.
+⍝
+⍝   12. Modify GenFunc to handle multiple constant expressions in a function 
+⍝       body and to handle branching in the system. This will require a 
+⍝       means of dealing with local bindings and the return value of expressions 
+⍝       and assignment as an expression and not as a statement.
 
 ⍝ Fix
 ⍝
