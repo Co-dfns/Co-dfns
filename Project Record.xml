@@ -367,7 +367,17 @@
             </simplelist>
           </td>
         </tr>
-			</tbody>
+        <tr>
+          <td>Friday, December 27th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Entering Increment 4 Design
+              </member>
+            </simplelist>
+          </td>
+			  </tr>
+      </tbody>
 		</informaltable>
 	</section>
 </article>
