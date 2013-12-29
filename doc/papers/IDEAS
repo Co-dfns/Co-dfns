@@ -37,3 +37,7 @@ was. A description of the harder parts of parsing, and of how the
 parser can be used to generate XML directly from the parse tree and
 how the data structures operate, &c.
 
+
+Predictable, efficient memory management for high-level languages
+-----------------------------------------------------------------
+
