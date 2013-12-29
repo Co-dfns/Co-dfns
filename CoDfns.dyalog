@@ -430,14 +430,14 @@ Tokenize←{
     ⍝ Split on and remove spaces
     T←{((⍴X)⍴1 0)/X←(2≠/' '=' ',⍵)⊂⍵}¨T
     
-    ⍝ Split on ← { } ⋄
-    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊'←{}⋄')⊂⍵}¨¨T
+    ⍝ Split on ← { } ⋄ :
+    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊'←{}⋄:')⊂⍵}¨¨T
 
     ⍝ At this point, all lines are split into tokens
     ⍝ Wrap each token in appropriate element:
     ⍝   Variables → Variable
     ⍝   Integer   → Number class ← 'int' 
-    ⍝   ← ⋄       → Token class ← 'separator'
+    ⍝   ← ⋄ :     → Token class ← 'separator'
     ⍝   { }       → Token class ← 'delimiter'
   
     ⍝ We switch from lines to a single vector of tokens
@@ -451,11 +451,11 @@ Tokenize←{
     ⍝ of the token:
     ⍝   Variable → T∊VC
     ⍝   Integer  → T∊NC
-    ⍝   ← ⋄      → T∊'←⋄'
+    ⍝   ← ⋄ :    → T∊'←⋄:'
     ⍝   { }      → T∊'{}'
     ⍝
     ⍝ Create a selection vector for each type of token
-    Sv Si Sa Sd←(⊃¨T)∘∊¨VC NC '←⋄' '{}'
+    Sv Si Sa Sd←(⊃¨T)∘∊¨VC NC '←⋄:' '{}'
     
     ⍝ Wrap each type in appropriate elements
     Tv←{1 4⍴2 'Variable' '' (1 2⍴'name' ⍵)}¨Sv/T
