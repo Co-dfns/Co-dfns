@@ -658,14 +658,59 @@ Parse←{
   ⍝ commenting behavior.
   I←(('name' Prop B⌿NS)∊⊂,'⋄')/(B←NS[;1]∊⊂'Token')/⍳⊃⍴NS
   NS[I;]←((⍴I),4)⍴1 'Line' '' MtA
+
+  ⍝ Stimuli: { }
+  ⍝
+  ⍝ The { and } stimuli delimit only function bodies, and nothing else. 
+  ⍝ Moreover, they must be balanced or a syntax error occurs. It is also 
+  ⍝ the only valid way to continue from Funtion State 0. Because of these 
+  ⍝ natural features of the way that the { and } stimuli occur, this allows 
+  ⍝ a complete removal of them from the set of tokens early on, provided 
+  ⍝ that we allow for a single internal extension to the public AST 
+  ⍝ restriction. If we allow for lines to contain not only token values, 
+  ⍝ but also Function subtrees, then we can convert all { and } stimuli 
+  ⍝ into Function nodes that themselves contain Line nodes. This, of course, 
+  ⍝ works recursively. 
+  ⍝ 
+  ⍝ At this point the NS variable contains a namespace tree of shallow 
+  ⍝ depth containing all Line nodes with various tokens in each line. 
+  ⍝ This gives a maximum depth of 2. We divide the basic operation into 
+  ⍝ two steps: 
+  ⍝
+  ⍝ 1. Adapt all depths of the nodes to ensure that the depth of each node 
+  ⍝    is incremented by two for each un-closed { that appears prior to the
+  ⍝    token in the token stream. Fm is the map of { and } tokens, where 
+  ⍝    a 1 is for any { token, and a ¯1 for any } token, and 0 for everything 
+  ⍝    else.
+  Fm←((1⌷⍉NS)∊⊂'Token')×{1 ¯1 0⌷⍨(,¨'{}')⍳((0⌷⍉⍵)⍳⊂'name')⌷(1⌷⍉⍵),⊂''}¨3⌷⍉NS
+  ⎕SIGNAL (0≠+/Fm)/2
+  NS[;0]+←2×Fd←+\0,¯1↓Fm
+
+  ⍝ 2. Delete the { and } token nodes to insert a Function node at the 
+  ⍝    { token location. Additionally, insert a child node Line under the 
+  ⍝    Function node to hold the rest of the tokens on the same line as 
+  ⍝    the { token but appearing after it. Accomplished through Ci and Fi, 
+  ⍝    the index vectors of the Children and Function nodes, respectively. 
+  Fi←(1=Fm)/⍳⍴Fm ⋄ Ci←((1⌽B)∧B←0≠Fd)/⍳⍴Fd
+  NS[1+Ci;]←NS[Ci;]
+  NS[Fi;1+⍳3]←((⍴Fi),3)⍴'Function' '' (1 2⍴'class' 'ambivalent')
+  NS[1+Fi;]←(NS[Fi;0]+1),((⍴Fi),3)⍴'Line' '' MtA
+
+  ⍝ Now we have handled all { and } stimuli and do not need to consider 
+  ⍝ them again; they have been replaced with the appropriate Function 
+  ⍝ nodes. 
   
   ⍝ State: Namespace ← OPEN ⋄ Eot ← No
   ⍝ Stimuli already handled by this point or that do not need handling: 
-  ⍝   Eot Fix Fnb Fne Fnf Nl Nse Nss Break ⋄
-  ⍝ Stimuli to consider: Vfo Vu N ← { } E Fe
+  ⍝   Eot Fix Fnb Fne Fnf Nl Nse Nss Break ⋄ { }
+  ⍝ Stimuli to consider: Vfo Vu N ← E Fe
   ⍝
-  ⍝ At this point we have every other line representing some sort of 
-  ⍝ expression or function. If we look at the set of states in the 
+  ⍝ At this point we have a series of abstract Line nodes which are either
+  ⍝ empty, contain an expression or a function. The previous handling of 
+  ⍝ { and } stimuli means that we can still treat Functions as occuring 
+  ⍝ on a single line, and that any lines that they have inside of them are 
+  ⍝ "internal" to the function and do not affect the top-level.
+  ⍝ If we look at the set of states in the 
   ⍝ top-level (Table 206) we will see that all of the Namespace ← OPEN
   ⍝ states either error out on Nl or they return back to the 
   ⍝ Namespace ← OPEN state which is right here. Thus, each line 
@@ -679,7 +724,7 @@ Parse←{
   ⍝ handle all of the cases when we have a Namespace ← Open property.
   
   ⍝ Our overal strategy here is to reduce over the lines from top to bottom, 
-  ⍝ eventually resulting in our final namespace. Each call to ParseLine will 
+  ⍝ eventually resulting in our final namespace. Each call to ParseTopLine will 
   ⍝ return an extended namespace and a new environment containing the bindings 
   ⍝ that have been created so far. 
   ⍝
@@ -690,25 +735,27 @@ Parse←{
   ⍝ We partition the AST into the appropriate sub-trees, each of which should 
   ⍝ correspond to a single line. To do this, we note that all sub-trees of the 
   ⍝ the main Tokens AST at this point are lines, which are all at depth 1. 
-  ⍝ We have no other node types with which to contend, which means that we can 
-  ⍝ easily extract each of the sub-trees to work on.
-  CN←(1=0⌷⍉S)⊂[0]S←(1≤0⌷⍉NS)⌿NS
+  ⍝ All other nodes types are at depth 2 or greater. This makes it easy to 
+  ⍝ extract all of the sub-trees. Note: we assume here that the tree consists 
+  ⍝ of a single root node of depth 0 and that there are no other depth 0 nodes 
+  ⍝ appearing anywhere else. 
+  CN←(1=0⌷⍉NS)⊂[0]NS
   
-  ⍝ Finally, we use ParseLine to reduce over the lines, extracting out the final 
+  ⍝ Finally, we use ParseTopLine to reduce over the lines, extracting out the final 
   ⍝ namespace. At this point, the namespace will not have the appropriate head on 
   ⍝ it, which we stripped off above. We put this back on to form the final, 
   ⍝ correctly parsed AST. The AST is now a Namespace AST and each line has been 
   ⍝ converted into an apropriate node, or left alone if it is an empty line.
-  NS←(1↑NS)⍪⊃A E←⊃ParseLine/⌽(⊂SD),CN
+  NS←(1↑NS)⍪⊃A E←⊃ParseTopLine/⌽(⊂SD),CN
   
-  ⍝ We return the final environment created by the ParseLine function and 
+  ⍝ We return the final environment created by the ParseTopLine function and 
   ⍝ the final Namespace AST. 
   NS E
 }
 
-⍝ ParseLine
+⍝ ParseTopLine
 ⍝
-⍝ Intended Function: Given a Line sub-tree, parse it into one of
+⍝ Intended Function: Given a Top-level Line sub-tree, parse it into one of
 ⍝ Expression, Function, or FuncExpr sub-tree at the same depth.
 ⍝
 ⍝ Right Argument: Code lines already parsed, Names environment
@@ -721,8 +768,8 @@ Parse←{
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
 ⍝ Return state: Same as entry state.
 
-ParseLine←{C E←⍵
-  ⍝ Possible stimuli: Vfo Vu N ← { } E Fe
+ParseTopLine←{C E←⍵
+  ⍝ Possible stimuli: Vfo Vu N ← E Fe
   ⍝ 
   ⍝ We are only considering the Value and Named states in this function.
   ⍝ That is to say, the Context, Namespace and Eot states should stay the 
@@ -813,7 +860,7 @@ ParseLine←{C E←⍵
 ⍝ State Class 0: Value ← EMPTY ⋄ Named ← EMPTY
 ⍝ State Class 1: Value ← EMPTY ⋄ Named ← BOUND
 ⍝
-⍝ Right Argument: Matrix of Tokens
+⍝ Right Argument: Matrix of Token and Function nodes
 ⍝ Left Argument: ([name,type] environment)(Parser state class)
 ⍝ Output: (Success/Failure)(Empty Line, Expression, Function, or FuncExpr)
 ⍝         (New [name,type] environment)
@@ -894,7 +941,7 @@ ParseLineVar←{E SC←⍺
 ⍝
 ⍝ Intended Function: Parse an assignment to an unbound variable.
 ⍝
-⍝ Right Argument: Non-empty matrix of tokens
+⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: Variable Name, [Name,Type] Environment
 ⍝ Invariant: Input should have at least one row.
 ⍝ Output: FuncExpr Node, [Name,Type] Environment
@@ -940,7 +987,7 @@ ParseNamedUnB←{Vn E←⍺
 ⍝
 ⍝ Intended Function: Parse an assignment to a bound variable.
 ⍝
-⍝ Right Argument: Non-empty matrix of tokens
+⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: Variable Name, Variable Type, [Name,Type] Environment
 ⍝ Invariant: Input should have at least one row.
 ⍝ Output: FuncExpr Node, [Name,Type] Environment
@@ -984,7 +1031,7 @@ ParseNamedBnd←{Vn Tp E←⍺
   ⍝
   ⍝ The handling of the Fe stimuli will have covered both the Fe states and 
   ⍝ the Vfo Nl state, as in the Value ← EMPTY ⋄ Named ← EMPTY case handled in 
-  ⍝ ParseLine. We must handle the Vu Nl state explicitly here, and then we are 
+  ⍝ ParseTopLine. We must handle the Vu Nl state explicitly here, and then we are 
   ⍝ left only with the states handled by ParseLineVar, except that we need to call 
   ⍝ it with a state class of 1 instead of 0.
   (1=⊃⍴⍵)∧('Variable'≡0 1⊃⍵)∧(0=E VarType⊃'name'Prop 1↑⍵):⎕SIGNAL 6
@@ -1000,7 +1047,7 @@ ParseNamedBnd←{Vn Tp E←⍺
 ⍝ and parse it as an expression, returning an error code, ast, and a new, 
 ⍝ updated environment of types.
 ⍝
-⍝ Right Argument: Matrix of token nodes
+⍝ Right Argument: Matrix of Token and Function nodes
 ⍝ Left Argument: [Name,Type] Environment
 ⍝ Output: (0 or Exception #)(Expression Node)(New [Name,Type] Environment)
 ⍝ Invariant: Depth of the output should be the same as the input
@@ -1068,7 +1115,7 @@ ParseExpr←{
 ⍝ and parse it as a function expression, returning an error code, ast, and a new, 
 ⍝ updated environment of types.
 ⍝
-⍝ Right Argument: Matrix of token nodes
+⍝ Right Argument: Matrix of Token and Function nodes
 ⍝ Left Argument: [Name,Type] Environment
 ⍝ Output: (0 or Exception #)(FuncExpr AST)(New [Name,Type] Environment)
 ⍝ Invariant: Depth of the output should be the same as the input
@@ -1076,15 +1123,11 @@ ParseExpr←{
 
 ParseFuncExpr←{
   ⍝ Possible Stimuli: Fn
-  ⍝ Indirectly processed Stimuli: N { }
+  ⍝ Indirectly processed Stimuli: N
   ⍝
   ⍝ The only possibility that we have right now is that of an user defined constant 
   ⍝ function, so we will just call that right here.
   0≠⊃err ast←⍺ ParseFunc ⍵:err ast ⍺
-  
-  ⍝ We need to push the depth of the received AST down by one to prepare for the
-  ⍝ next
-  ast[;0]+←1
   
   ⍝ The only thing we can have at this point is a function, so we just handle that 
   ⍝ here directly.
@@ -1098,7 +1141,7 @@ ParseFuncExpr←{
 ⍝ Intended Function: Take a set of tokens and parse them as an user-defined 
 ⍝ ambivalent function, monadic or dyadic operator.
 ⍝
-⍝ Right Argument: Non-empty matrix of Token nodes
+⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: [Name,Type] Environment
 ⍝ Output: (0 or Exception #)(Function AST)
 ⍝ Invariant: Depth of the output should be the same as the input
@@ -1106,30 +1149,25 @@ ParseFuncExpr←{
 ⍝ State: Context ← Func ⋄ Bracket ← No ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
 
 ParseFunc←{
-  ⍝ Possible Stimuli: { } E
+  ⍝ Possible Stimuli: E
   ⍝ Indirectly processed stimuli: N
   ⍝
   ⍝ Trace: Tables 23, 24, and 25 of Function Specification
   ⍝
   ⍝ This is a stubbed function for parsing functions, which handles only 
   ⍝ two sequences: { } and { E }.
-  
-  ⍝ Stimuli: { }
-  ⍝
-  ⍝ All functions must be surrounded by { and }. Since we do not have any 
-  ⍝ nested functions right now, we can just check to make sure that the first 
-  ⍝ and the last tokens here are { and }, respectively.
-  FL←(1↑⍵)⍪(1↑⊖⍵)
-  ~(FL[;1]∧.≡⊂'Token')∧((,¨'{' '}')∧.≡'name'Prop FL):2 MtAST
+
+  ⍝ First check to determine whether we have a Function node
+  'Function'≢0 1⊃⍵:2 MtAST
   
   ⍝ If we have only two tokens, then we have an empty function
-  2=⊃⍴⍵:0 ((¯1+⊃⍵)'Function' '' (1 2⍴'class' 'ambivalent'))
+  2=⊃⍴⍵:0 (1 4⍴1↑⍵)
   
   ⍝ Otherwise, we will have only a single expression which we should 
   ⍝ parse
-  0≠⊃err ast Ne←⍺ ParseExpr ¯1↓1↓⍵:err MtAST
-  ast[;0]+←1
-  0((¯1+⊃⍵)'Function' ''(1 2⍴'class' 'ambivalent')⍪ast)
+  0≠⊃err ast Ne←⍺ ParseExpr 2↓⍵:err MtAST
+  ast[;0]-←1
+  0((1↑⍵)⍪ast)
 }
 
 ⍝ KillLines
