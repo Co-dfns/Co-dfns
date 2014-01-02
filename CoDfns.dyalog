@@ -507,13 +507,13 @@ Prop←{(¯1⌽P∊⊂⍺)/P←,↑⍵[;3]}
 ⍝
 ⍝ ByElem extracts a matrix of all the nodes of the AST (⍺)
 ⍝ by the node name (⍵).
-ByElem←{(⍺[;1]∊⊂⍵)/[0]⍺}
+ByElem←{(⍺[;1]∊⊂⍵)⌿⍺}
 
 ⍝ AST ByDepth Depth: All nodes of a specific depth
 ⍝
 ⍝ ByDepth obtains a matrix of all the nodes of the AST (⍺) 
 ⍝ that have a given depth (⍵).
-ByDepth←{(⍵=⍺[;0])/[0]⍺}
+ByDepth←{(⍵=⍺[;0])⌿⍺}
 
 ⍝ Name Bind AST: Take the root node and attach a new name to it
 ⍝
@@ -820,7 +820,7 @@ ParseTopLine←{C E←⍵
   ⍝ We are not quite done with the handling fo the Vu and Vfo states, however, as 
   ⍝ the state-space clearly has more to handle as can be seen from the above table. 
   0=⊃eerr ast Ne←E ParseExpr 1↓⍺:(C⍪ast Comment cmt)Ne
-  0=⊃ferr ast Ne←E ParseFuncExpr 1↓⍺:(C⍪ast Comment cmt)Ne
+  0=⊃ferr ast rst Ne←E ParseFuncExpr 1↓⍺:(C⍪ast Comment cmt)Ne
   
   ⍝ At this point we have only to deal with variables. This happens to be a situation 
   ⍝ that we encounter fairly often, so we abstract this into another function.
@@ -968,7 +968,7 @@ ParseNamedUnB←{Vn E←⍺
   ⍝ In this case, we take the function expression and give it the name 
   ⍝ given to us. This further requires updating the environment and returning
   ⍝ that together with the new node.
-  0=⊃ferr ast Ne←E ParseFuncExpr ⍵:(Vn Bind ast)(Vn 2⍪Ne)
+  0=⊃ferr ast rst Ne←E ParseFuncExpr ⍵:(Vn Bind ast)(Vn 2⍪Ne)
   
   ⍝ Stimuli: Vfo Vu ←
   ⍝
@@ -1023,7 +1023,7 @@ ParseNamedBnd←{Vn Tp E←⍺
   ⍝ ensure that the type of the variable matches the type of the function 
   ⍝ expression, but at least this time, we have a chance of it succeeding.
   ⍝ If it does succeed, we simply need to add the name and move on.
-  T←2 ⋄ ferr ast Ne←E ParseFuncExpr ⍵
+  T←2 ⋄ ferr ast rst Ne←E ParseFuncExpr ⍵
   (0=ferr)∧Tp=T:(Vn Bind ast)(Vn Tp⍪Ne)
   Tp≠T:⎕SIGNAL 2
   
@@ -1117,7 +1117,7 @@ ParseExpr←{
 ⍝
 ⍝ Right Argument: Matrix of Token and Function nodes
 ⍝ Left Argument: [Name,Type] Environment
-⍝ Output: (0 or Exception #)(FuncExpr AST)(New [Name,Type] Environment)
+⍝ Output: (0 or Exception #)(FuncExpr AST)(Rest of Input)(New [Name,Type] Environment)
 ⍝ Invariant: Depth of the output should be the same as the input
 ⍝ State: Context ← Fnex ⋄ Opnd ← NONE ⋄ Oper ← NONE ⋄ Axis ← NO ⋄ Nest ← NONE ⋄ Tgt ← No
 
@@ -1127,13 +1127,13 @@ ParseFuncExpr←{
   ⍝
   ⍝ The only possibility that we have right now is that of an user defined constant 
   ⍝ function, so we will just call that right here.
-  0≠⊃err ast←⍺ ParseFunc ⍵:err ast ⍺
+  0≠⊃err ast rst←⍺ ParseFunc ⍵:err ast ⍺
   
   ⍝ The only thing we can have at this point is a function, so we just handle that 
   ⍝ here directly.
   Fn←(¯1+⊃⍵) 'FuncExpr' '' (2 2⍴'class' 'ambivalent' 'equiv' 'ambivalent')
   
-  0 (Fn⍪ast) ⍺
+  0 (Fn⍪ast) rst ⍺
 }
 
 ⍝ ParseFunc
@@ -1143,31 +1143,113 @@ ParseFuncExpr←{
 ⍝
 ⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: [Name,Type] Environment
-⍝ Output: (0 or Exception #)(Function AST)
+⍝ Output: (0 or Exception #)(Function AST)(Rest of Input)
 ⍝ Invariant: Depth of the output should be the same as the input
 ⍝ Invariant: Right argument must have at least one row
 ⍝ State: Context ← Func ⋄ Bracket ← No ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
 
 ParseFunc←{
-  ⍝ Possible Stimuli: E
+  ⍝ Possible Stimuli: E : Vfo Vu
   ⍝ Indirectly processed stimuli: N
   ⍝
-  ⍝ Trace: Tables 23, 24, and 25 of Function Specification
+  ⍝ Trace: Tables 23 - 28 and 31 of Function Specification
   ⍝
-  ⍝ This is a stubbed function for parsing functions, which handles only 
-  ⍝ two sequences: { } and { E }.
-
-  ⍝ First check to determine whether we have a Function node
+  ⍝ In Parse, the { and } stimuli have already been processed and used 
+  ⍝ to construct nested forms of the lines. The ParseFunc therefore must 
+  ⍝ check to ensure that the next node (token) to process is a Function 
+  ⍝ node and convert the body of the function from a series of Line nodes
+  ⍝ to a proper function body. Firstly, we must check to determine whether
+  ⍝ we have a Function node.
   'Function'≢0 1⊃⍵:2 MtAST
+
+  ⍝ The rest of the nodes to parse are children of the Function node, 
+  ⍝ so extract out just the Function node from the rest of the tokens.
+  Fb←(Fm←(Fd<D)×1=+\(Fd←⊃⍵)=D←0⌷⍉⍵)⌿⍵
+
+  ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
+  ⍝ 
+  ⍝ State Transitions:
+  ⍝   E     → wait → (Value ← EXPR)
+  ⍝   E :   → wait → (Cond ← Yes ⋄ Value ← EMPTY)
+  ⍝   E : E → wait → (Value ← EXPR)
+  ⍝   Vfo   → wait → (Value ← FVAR)
+  ⍝   Vu    → wait → (Value ← UNBOUND)
+  ⍝ 
+  ⍝ At this point we can use a similar technique to that used at the 
+  ⍝ top level and reduce over all the lines to collect up a final AST. 
+  ⍝ At the end we can replace the Fb contents (marked out by Fm) with 
+  ⍝ the AST that was created. This requires a ParseFnLine function.
+
+  ⍝ To begin with, we need to start with an empty environment and an empty 
+  ⍝ AST. This is our Seed value.
+  Sd←(0 4⍴⍬)MtNTE
   
-  ⍝ If we have only two tokens, then we have an empty function
-  2=⊃⍴⍵:0 (1 4⍴1↑⍵)
+  ⍝ We partition the AST into the appropriate sub-trees, each of which should 
+  ⍝ correspond to a single line. All Lines we care about are at depth Fd+1.
+  Cn←((Fd+1)=0⌷⍉Fb)⊂[0]Fb
   
-  ⍝ Otherwise, we will have only a single expression which we should 
-  ⍝ parse
-  0≠⊃err ast Ne←⍺ ParseExpr 2↓⍵:err MtAST
-  ast[;0]-←1
-  0((1↑⍵)⍪ast)
+  ⍝ Finally, we use ParseFnLine to reduce over the lines.
+  ⍝ At this point, the function will not have the appropriate root on 
+  ⍝ it, which we stripped off above. We put this back on to form the final, 
+  ⍝ correctly parsed Function. Fn is now a Function node and each line has been 
+  ⍝ converted into an apropriate node, or left alone if it is an empty line.
+   2:: 2 MtAST ⍵
+  11:: 11 MtAST ⍵
+  99:: 99 MtAST ⍵
+  Fn←(1↑Fb)⍪⊃A E←⊃ParseFnLine/⌽(⊂Sd),Cn
+  
+  ⍝ We return the function node together with the rest of the nodes after 
+  ⍝ it. 
+  0 Fn ((~Fm)⌿⍵)
+}
+
+⍝ ParseFnLine
+⍝
+⍝ Intended Function: Given a Function Line sub-tree, parse it into one of
+⍝ Expression, FuncExpr, Condition, or Guard sub-tree at the same depth.
+⍝
+⍝ Right Argument: Code lines already parsed, Names environment
+⍝ Left Argument: Current Line sub-tree to process
+⍝ Output: (Code extended by Line, Expression, FuncExpr, Condition, or Guard)
+⍝         (New [name,type] environment)
+⍝ Invariant: Depth of input and output sub-trees should be the same
+⍝ Invariant: Comment of the line should be transferred to the output node
+⍝ Invariant: Should be able to reconstruct the original input from output
+⍝ State: Context ← Func ⋄ Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
+⍝ Return state: Same as entry state.
+
+ParseFnLine←{C E←⍵
+  ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
+  ⍝ 
+  ⍝ State Transitions:
+  ⍝   E     → wait → (Value ← EXPR)
+  ⍝   E :   → wait → (Cond ← Yes ⋄ Value ← EMPTY)
+  ⍝   E : E → wait → (Value ← EXPR)
+  ⍝   Vfo   → wait → (Value ← FVAR)
+  ⍝   Vu    → wait → (Value ← UNBOUND)
+
+  ⍝ Dealing with Empty Lines
+  ⍝ We might have an empty line with no tokens. In this case, we can 
+  ⍝ just return the line, as there is nothing to do for this 
+  ⍝ line.
+  1=⊃⍴⍺:(C⍪⍺)E
+  
+  ⍝ Regardless of what we do, we need to have the comment to put on the 
+  ⍝ new head of the sub-tree that we will return.
+  cmt←⊃'comment' Prop 1↑⍺
+  
+  ⍝ Stimuli: :
+  ⍝
+  ⍝ A line may contain at most one : stimuli. If one occurs, we know exactly 
+  ⍝ what we must have, but if we do not, then we have one of E, Vfo, or Vu. 
+  Cm←{(,':')≡((0⌷⍉⍵)⍳⊂'name')⊃(1⌷⍉⍵),⊂''}¨3⌷⍉⍺ ⍝ All name attributes ≡,':'
+  Cnd←+/Cm←((1+⊃⍺)=0⌷⍉⍺)×((1⌷⍉⍺)∊⊂'Token')×Cm  ⍝ Only direct child Tokens
+  1=Cnd:((C⍪A)E)⊣A E←⊃E ParseCond/¯1↓¨(1,1↓Cm)⊂[0]1⊖⍺
+  1=<Cnd:⎕SIGNAL 2
+  0≠Cnd:'Unexpected : Token Count'⎕SIGNAL 99
+  
+  ⍝ By this point we know that we have no conditional and have either an 
+  ⍝ expression or some single variable case. 
 }
 
 ⍝ KillLines
@@ -1186,7 +1268,7 @@ KillLines←{
   ⍝ the Line nodes from the tree by compressing the Line rows, 
   ⍝ since we are guaranteed not to have any children in the Line 
   ⍝ nodes.
-  (~⍵[;1]∊⊂'Line')/[0]⍵
+  (~⍵[;1]∊⊂'Line')⌿⍵
 }
 
 ⍝ DropUnmd
