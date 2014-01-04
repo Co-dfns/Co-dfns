@@ -1232,7 +1232,6 @@ ParseFnLine←{C E←⍵
   ⍝   Vfo   → wait         → (Value ← FVAR)
   ⍝   Vu    → wait         → (Value ← UNBOUND)
   ⍝   :     → SYNTAX ERROR → ()
-  ⍝   }     → okay         → ()
 
   ⍝ Dealing with Empty Lines / Handling Immediate } Stimuli
   ⍝ We might have an empty line with no tokens. In this case, we can 
@@ -1250,14 +1249,33 @@ ParseFnLine←{C E←⍵
   ⍝ what we must have, but if we do not, then we have one of E, Vfo, or Vu. 
   Cm←{(,':')≡((0⌷⍉⍵)⍳⊂'name')⊃(1⌷⍉⍵),⊂''}¨3⌷⍉⍺ ⍝ All name attributes ≡,':'
   Cnd←+/Cm←((1+⊃⍺)=0⌷⍉⍺)×((1⌷⍉⍺)∊⊂'Token')×Cm  ⍝ Only direct child Tokens
+  1<Cnd:⎕SIGNAL 2                               ⍝ Too many : tokens
+  1=1⌷Cm:⎕SIGNAL 2                              ⍝ Empty test clause
   1=Cnd:((C⍪A)E)⊣A E←⊃E ParseCond/¯1↓¨(1,1↓Cm)⊂[0]1⊖⍺
-  1<Cnd:⎕SIGNAL 2 ⍝ Too many : tokens
-  1=⊃Cm:⎕SIGNAL 2 ⍝ Empty test clause
   0≠Cnd:'Unexpected : Token Count'⎕SIGNAL 99
   
-  ⍝ By this point we know that we have no conditional and have either an 
-  ⍝ expression or some single variable case. In Table 24 of the 
-  ⍝ Function Specification, note that 
+  ⍝ At this point, we have handled line terminators (Nl and ⋄) as well as 
+  ⍝ all closing } stimuli. We have also eliminated Stimuli : . Function 
+  ⍝ States 0, 1, 5, 8 have all been processed by the code above. That 
+  ⍝ leaves the following states:
+  ⍝
+  ⍝   State # │ Canonical Sequence
+  ⍝   ────────┼───────────────────
+  ⍝         2 │ { E
+  ⍝         3 │ { Vfo
+  ⍝         4 │ { Vu
+  ⍝   ────────┴───────────────────
+  ⍝
+  ⍝ Basically, state 3 at this point, because we do not have 
+  ⍝ assignments, can be nothing but a SYNTAX ERROR (see Table 26 
+  ⍝ in the Function Specification). State 4 (Table 27) can be nothing 
+  ⍝ more than a VALUE ERROR, and is completely subsumed by state 2 
+  ⍝ (Table 25). Thus, checking for a valid E stimuli at this point 
+  ⍝ suffices to answer all questions and complete the handling of these 
+  ⍝ tables completely. 
+  err ast Ne←E ParseExpr 1↓⍺
+  0≠err:⎕SIGNAL err
+  (C⍪ast)Ne        
 }
 
 ⍝ KillLines
