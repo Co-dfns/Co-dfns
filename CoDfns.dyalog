@@ -1174,11 +1174,15 @@ ParseFunc←{
   ⍝   E : E → wait → (Value ← EXPR)
   ⍝   Vfo   → wait → (Value ← FVAR)
   ⍝   Vu    → wait → (Value ← UNBOUND)
+  ⍝   :     → SYNTAX ERROR → ()
+  ⍝   }     → okay         → ()
   ⍝ 
   ⍝ At this point we can use a similar technique to that used at the 
   ⍝ top level and reduce over all the lines to collect up a final AST. 
   ⍝ At the end we can replace the Fb contents (marked out by Fm) with 
   ⍝ the AST that was created. This requires a ParseFnLine function.
+  ⍝ Note that the } Stimuli which could appear here for an empty function 
+  ⍝ gets implicitly handled.
 
   ⍝ To begin with, we need to start with an empty environment and an empty 
   ⍝ AST. This is our Seed value.
@@ -1222,13 +1226,15 @@ ParseFnLine←{C E←⍵
   ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
   ⍝ 
   ⍝ State Transitions:
-  ⍝   E     → wait → (Value ← EXPR)
-  ⍝   E :   → wait → (Cond ← Yes ⋄ Value ← EMPTY)
-  ⍝   E : E → wait → (Value ← EXPR)
-  ⍝   Vfo   → wait → (Value ← FVAR)
-  ⍝   Vu    → wait → (Value ← UNBOUND)
+  ⍝   E     → wait         → (Value ← EXPR)
+  ⍝   E :   → wait         → (Cond ← Yes ⋄ Value ← EMPTY)
+  ⍝   E : E → wait         → (Value ← EXPR)
+  ⍝   Vfo   → wait         → (Value ← FVAR)
+  ⍝   Vu    → wait         → (Value ← UNBOUND)
+  ⍝   :     → SYNTAX ERROR → ()
+  ⍝   }     → okay         → ()
 
-  ⍝ Dealing with Empty Lines
+  ⍝ Dealing with Empty Lines / Handling Immediate } Stimuli
   ⍝ We might have an empty line with no tokens. In this case, we can 
   ⍝ just return the line, as there is nothing to do for this 
   ⍝ line.
@@ -1245,11 +1251,13 @@ ParseFnLine←{C E←⍵
   Cm←{(,':')≡((0⌷⍉⍵)⍳⊂'name')⊃(1⌷⍉⍵),⊂''}¨3⌷⍉⍺ ⍝ All name attributes ≡,':'
   Cnd←+/Cm←((1+⊃⍺)=0⌷⍉⍺)×((1⌷⍉⍺)∊⊂'Token')×Cm  ⍝ Only direct child Tokens
   1=Cnd:((C⍪A)E)⊣A E←⊃E ParseCond/¯1↓¨(1,1↓Cm)⊂[0]1⊖⍺
-  1=<Cnd:⎕SIGNAL 2
+  1<Cnd:⎕SIGNAL 2 ⍝ Too many : tokens
+  1=⊃Cm:⎕SIGNAL 2 ⍝ Empty test clause
   0≠Cnd:'Unexpected : Token Count'⎕SIGNAL 99
   
   ⍝ By this point we know that we have no conditional and have either an 
-  ⍝ expression or some single variable case. 
+  ⍝ expression or some single variable case. In Table 24 of the 
+  ⍝ Function Specification, note that 
 }
 
 ⍝ KillLines
