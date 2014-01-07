@@ -1597,7 +1597,7 @@
           <title>Condition contents</title>
           <para>
             The contents of a <varname>Condition</varname> element should be a pair of Expressions 
-            where the first expression is the condition and the second the consequence.
+            where the first expression is the condition and the second a possibly empty consequence. 
           </para>
         </formalpara>
         <formalpara>
