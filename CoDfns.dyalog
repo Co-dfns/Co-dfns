@@ -1278,6 +1278,35 @@ ParseFnLine←{C E←⍵
   (C⍪ast)Ne        
 }
 
+⍝ ParseCond
+⍝
+⍝ Intended Function: Construct a Condition node from two expressions 
+⍝ representing a conditional line in a function body.
+⍝
+⍝ Left Operand: Current (name, type) environment
+⍝ Right argument: Tokens representing the consequent expression
+⍝ Left argument: Tokens representing the test expression
+⍝ Output: (Condition node)(New [name, type] environment)
+⍝ Invariant: Test expression is non-empty
+⍝ Invariant: Condition node depth is one less than token depth
+⍝ State: Context ← Func ⋄ Bracket ← Yes ⋄ Cond ← Yes ⋄ Bind ← NO ⋄ Value ← EMPTY
+
+ParseCond←{
+  ⍝ ParseFnLine calls ParseCond without knowing whether the test expression 
+  ⍝ parses to a valid expression. Verify this first.
+  0≠⊃err ast Ne←⍺⍺ ParseExpr ⍺:⎕SIGNAL err
+
+  ⍝ Return a Condition node
+  H←(¯1+⊃⍺)'Condition' '' MtA
+
+  ⍝ Refer to Tables 28 and 31 in Function Specification; parse a valid or 
+  ⍝ empty expression, as all other cases are subsumed. This covers 
+  ⍝ Function States 5 and 8. 
+  0=⊃⍴⍵:(H⍪ast)Ne
+  0≠⊃err con Ne←Ne ParseExpr ⍵:⎕SIGNAL err
+  (H⍪ast⍪con)Ne
+}
+
 ⍝ KillLines
 ⍝
 ⍝ Intended Function: Eliminate all semantically irrelevant lines from AST 
