@@ -634,7 +634,6 @@ Parse←{
   ⍝ token as well as the token itself. We take advantage of the 
   ⍝ assumption that a namespace token must appear on a line 
   ⍝ by itself.
-  
   NS←0 'Namespace' '' (1 2⍴'name' '')
   NS⍪←⍵[1↓(⍳⊃⍴⍵)~I,¯1+I←(⊂[1]⍵)⍳⊂[1]FL;]
   
@@ -723,7 +722,7 @@ Parse←{
   ⍝ We rely on a helper function at this point which is designed to 
   ⍝ handle all of the cases when we have a Namespace ← Open property.
   
-  ⍝ Our overal strategy here is to reduce over the lines from top to bottom, 
+  ⍝ Our overall strategy here is to reduce over the lines from top to bottom, 
   ⍝ eventually resulting in our final namespace. Each call to ParseTopLine will 
   ⍝ return an extended namespace and a new environment containing the bindings 
   ⍝ that have been created so far. 
@@ -1067,7 +1066,7 @@ ParseExpr←{
   ⍝   Vnu ← Va   → okay         → (Class ← FUNC ⋄ Last Seen ← VAR)
   ⍝   Vnu ← Vnu  → wait         → (Last Seen ← UVAR ⋄ Class ← ATOM)
   ⍝
-  ⍝ For Increment 2 we are handling only arrays of integers, which might 
+  ⍝ For Increment 4 we are handling only arrays of integers, which might 
   ⍝ possibly have a name. Thus, we can handle all of our cases by only 
   ⍝ checking for a name first, and then handling the integers separately.
 
@@ -1096,13 +1095,11 @@ ParseExpr←{
   ⍝ check for that.
   ~(1⌷⍉⍵)∧.≡⊂'Number':2 MtAST ⍺
   
-  ⍝ The depth of the expression is one less than the depth of all the tokens
-  ⍝ that we assume to all be of the same depth.
-  D←¯1+⊃⍵
-  
   ⍝ As long as we have all number tokens, we can easily construct the 
-  ⍝ appropriate expression node on top of it.
-  X←D 'Expression' '' (1 2⍴'class' 'atomic')⍪⍵
+  ⍝ appropriate expression node on top of it. The depth of the expression 
+  ⍝ is one less than the depth of all the tokens that we assume to all 
+  ⍝ be of the same depth.
+  X←(¯1+⊃⍵) 'Expression' '' (1 2⍴'class' 'atomic')⍪⍵
 
   ⍝ At the moment, there is no change to the environment possible, so 
   ⍝ we pass it through
@@ -1273,8 +1270,7 @@ ParseFnLine←{C E←⍵
   ⍝ (Table 25). Thus, checking for a valid E stimuli at this point 
   ⍝ suffices to answer all questions and complete the handling of these 
   ⍝ tables completely. 
-  err ast Ne←E ParseExpr 1↓⍺
-  0≠err:⎕SIGNAL err
+  0≠⊃err ast Ne←E ParseExpr 1↓⍺:⎕SIGNAL err
   (C⍪ast)Ne        
 }
 
