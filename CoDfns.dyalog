@@ -134,7 +134,7 @@ TargetTriple←'x86_64-slackware-linux-gnu'
 ⍝
 ⍝   9. Extend DropUnmd pass to handle unbound top-level constant expressions.
 ⍝ 
-⍝ ⍝ Now we can extend the compiler to handle multiple expressions in the 
+⍝ Now we can extend the compiler to handle multiple expressions in the 
 ⍝ function body. We should start with a new compiler pass to remove code 
 ⍝ that will never be executed in the function, so that we do not need to 
 ⍝ generate code for this.
@@ -241,11 +241,12 @@ IsFnb←{~(∧/' '=⊃0⍴⊂⍵)∧((,1)≡⍴⍴⍵)∧(1≡≡⍵)}
 
 Compile←{
   tks←Tokenize ⍵
-  ast names←Parse tks
-  ast←KillLines   ast
-  ast←DropUnmd    ast
-  ast←LiftConsts  ast
-  mod←GenLLVM     ast
+  ast names←Parse   tks
+  ast←KillLines     ast
+  ast←DropUnmd      ast
+  ast←DropUnreached ast
+  ast←LiftConsts    ast
+  mod←GenLLVM       ast
   mod names
 }
 
@@ -1346,6 +1347,34 @@ DropUnmd←{
   ⍝ after the selection.
   Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
   (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0≠⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
+}
+
+⍝ DropUnreached
+⍝
+⍝ Intended Function: Simplify function bodies to remove code that is 
+⍝ obviously not reachable.
+⍝
+⍝ Right argument: Namespace AST
+⍝ Output: Namespace AST
+⍝ Invariant: Output and input are semantically the same.
+⍝ Invariant: Function bodies are the only sub-trees which may have altered nodes.
+⍝ Invarient: Function bodies may have less nodes on output.
+⍝ state: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
+⍝
+⍝ Assume for now that all functions appear in FuncExpr nodes at the top
+⍝ level and do not contain any nested functions. This is sort of a stub 
+⍝ function, and will require additional reworking further down the line.
+
+DropUnreached←{
+  ⍝ Generate a mask covering all depth 3 nodes before and including
+  ⍝ first unnamed Expression node.
+  Msk←{~∨\0,1↓¯1⌽((⍺/1⌷⍉⍵)∊⊂'Expression')×{~(⊂'name')∊0⌷⍉⍵}¨⍺/3⌷⍉⍵}
+
+  ⍝ Drop all function body nodes after first unnamed expression node
+  Drp←{(2↑⍵)⍪⊃⍪/(⊂MtAST),(Nm Msk ⍵)/(Nm←3=0⌷⍉⍵)⊂[0]⍵}
+
+  ⍝ Apply Drp to all top-level functions and recombine results
+  (1↑⍵)⍪⊃⍪/(⊂MtAST),{'FuncExpr'≡⊃0 1⌷⍵:Drp ⍵ ⋄ ⍵}¨(1=0⌷⍉⍵)⊂[0]⍵
 }
 
 ⍝ LiftConsts
