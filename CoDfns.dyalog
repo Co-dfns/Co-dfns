@@ -1338,7 +1338,7 @@ KillLines←{
 DropUnmd←{
   ⍝ At this point in our program, we will have removed all lines from 
   ⍝ the program and will have only Expression or FuncExpr nodes at 
-  ⍝ the level 1 of the tree. Thus, we can take all leve 1 nodes and 
+  ⍝ the level 1 of the tree. Thus, we can take all level 1 nodes and 
   ⍝ extract the names from those nodes, to get a boolean mask about which 
   ⍝ Nodes to keep and which not to keep. At this point, we can use 
   ⍝ this to select out all of the nodes by enclosing each of the 
