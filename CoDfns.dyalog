@@ -536,9 +536,8 @@ VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 
 ⍝ Depth Kids Ast: Children of root node of AST
 ⍝
-⍝ Gives a vector of the child sub-trees based on the depth of the root 
-⍝ assumed to be the first node in the tree. Assumes no other 
-⍝ nodes of this depth appear.
+⍝ Obtain subtrees of a depth relative to the depth 
+⍝ of the first node of the tree.
 Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
 
 ⍝ Parse
@@ -739,21 +738,17 @@ Parse←{
   ⍝ AST. This is our Seed value.
   SD←(0 4⍴⍬)MtNTE
   
-  ⍝ We partition the AST into the appropriate sub-trees, each of which should 
-  ⍝ correspond to a single line. To do this, we note that all sub-trees of the 
-  ⍝ the main Tokens AST at this point are lines, which are all at depth 1. 
-  ⍝ All other nodes types are at depth 2 or greater. This makes it easy to 
-  ⍝ extract all of the sub-trees. Note: we assume here that the tree consists 
-  ⍝ of a single root node of depth 0 and that there are no other depth 0 nodes 
-  ⍝ appearing anywhere else. 
-  CN←(1=0⌷⍉NS)⊂[0]NS
-  
-  ⍝ Finally, we use ParseTopLine to reduce over the lines, extracting out the final 
-  ⍝ namespace. At this point, the namespace will not have the appropriate head on 
-  ⍝ it, which we stripped off above. We put this back on to form the final, 
-  ⍝ correctly parsed AST. The AST is now a Namespace AST and each line has been 
-  ⍝ converted into an apropriate node, or left alone if it is an empty line.
-  NS←(1↑NS)⍪⊃A E←⊃ParseTopLine/⌽(⊂SD),CN
+  ⍝ We note that all sub-trees of the the main Tokens AST at this point
+  ⍝ are lines.  All other nodes types are at depth 2 or greater. We assume
+  ⍝ here that the tree consists of a single root node of depth 0 and that
+  ⍝ there are no other depth 0 nodes appearing anywhere else.  Finally, we
+  ⍝ use ParseTopLine to reduce over the lines, extracting out the final
+  ⍝ namespace. At this point, the namespace will not have the appropriate
+  ⍝ head on it, which we stripped off above. We put this back on to form
+  ⍝ the final, correctly parsed AST. The AST is now a Namespace AST and
+  ⍝ each line has been converted into an apropriate node, or left alone if
+  ⍝ it is an empty line.
+  NS←(1↑NS)⍪⊃A E←⊃ParseTopLine/⌽(⊂SD),1 Kids NS
   
   ⍝ We return the final environment created by the ParseTopLine function and 
   ⍝ the final Namespace AST. 
@@ -1353,7 +1348,7 @@ DropUnmd←{
   ⍝ depth 1 sub-trees and then recombining the ones that are left 
   ⍝ after the selection.
   Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
-  (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0≠⊃∘⍴¨Nm)/(1=0⌷⍉⍵)⊂[0]⍵
+  (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0≠⊃∘⍴¨Nm)/1 Kids ⍵
 }
 
 ⍝ DropUnreached
@@ -1381,7 +1376,7 @@ DropUnreached←{
   Drp←{(2↑⍵)⍪⊃⍪/(⊂MtAST),(Nm Msk ⍵)/(Nm←3=0⌷⍉⍵)⊂[0]⍵}
 
   ⍝ Apply Drp to all top-level functions and recombine results
-  (1↑⍵)⍪⊃⍪/(⊂MtAST),{'FuncExpr'≡⊃0 1⌷⍵:Drp ⍵ ⋄ ⍵}¨(1=0⌷⍉⍵)⊂[0]⍵
+  (1↑⍵)⍪⊃⍪/(⊂MtAST),{'FuncExpr'≡⊃0 1⌷⍵:Drp ⍵ ⋄ ⍵}¨1 Kids ⍵
 }
 
 ⍝ LiftConsts
@@ -1452,11 +1447,8 @@ GenLLVM←{
   Nam←Nam 'Unamed Namespace'⌷⍨''≡Nam←((0 3)(0 1)⊃⍵)
   Mod←ModuleCreateWithName Nam
   
-  ⍝ All depth-1 subtrees
-  G←(1=⍵[;0])⊂[0]⍵
-  
   ⍝ Quit if nothing to do
-  0=⍴G:Mod
+  0=⍴G←1 Kids ⍵:Mod
   
   ⍝ For each global we general some code
   Mod⊣Mod∘GenGlobal¨G
