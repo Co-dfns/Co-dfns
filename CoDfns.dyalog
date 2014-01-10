@@ -534,6 +534,13 @@ Comment←{⍺}
 ⍝ Gives back the type of a variable in the environment
 VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 
+⍝ Depth Kids Ast: Children of root node of AST
+⍝
+⍝ Gives a vector of the child sub-trees based on the depth of the root 
+⍝ assumed to be the first node in the tree. Assumes no other 
+⍝ nodes of this depth appear.
+Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
+
 ⍝ Parse
 ⍝
 ⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is 
@@ -1384,65 +1391,40 @@ DropUnreached←{
 ⍝
 ⍝ Right argument: Namespace AST
 ⍝ Output: Namespace AST
-⍝ Invariant: Result contains only globals at top-level
-⍝ Invariant: Function bodies either empty or single variable expression
+⍝ Invariant: Function Expressions appear only at top-level
+⍝ Invariant: Expressions contain only integers
+⍝ Invariant: Functions contain only Expressions or Conditions
+⍝ Invariant: FuncExpr nodes contain only a single Function node
+⍝ Invariant: FuncExpr nodes always contain a Function node
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 LiftConsts←{
-  ⍝ The following is equivalent to the Intended function assuming that 
-  ⍝ we have the Increment 2 restrictions in place, namely, that functions 
-  ⍝ have only a single literal expression in their bodies if they have one 
-  ⍝ at all:
-  ⍝ For each expression appearing in a function
-  ⍝   Put the expression before the function that encloses it
-  ⍝   Raise the expression depth
-  ⍝   Give the expression a name
-  ⍝   Add a variable of the name of the expression to the function body
+  I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
+
+  ⍝ Note: By the invariants, processing expressions of any sort does 
+  ⍝ not depend on any other sibling or parent nodes.
+
+  ⍝ Lifting an expression generates two new expressions: a top-level 
+  ⍝ expression binding the literal to a newly generated global name, 
+  ⍝ and the previous expression will all Number nodes replaced by a single 
+  ⍝ Variable node referring to the global name. 
+  TpExpr←{1 'Expression' '' (2 2⍴'class' 'atomic' 'name' ⍺)⍪2,¯3↑[1]1↓⍵}
+  SbExpr←{(1↑⍵)⍪(1+⊃⍵) 'Variable' '' (2 2⍴'name' ⍺ 'class' 'array')}
+  Expr←{(V TpExpr ⍵)(V SbExpr ⍵)⊣V←MkV⍬}
+
+  ⍝ Lifting a Condition node is just the lifting of it's expressions, 
+  ⍝ merging the results.
+  Cond←{⍪⌿↑(⊂MtAST(1↑⍵)),Expr¨1 Kids ⍵}
   
-  ⍝ We first partition the tree into depth 1 sub-trees (which corresponded to 
-  ⍝ the individual global nodes in the tree) which allows us to work on each 
-  ⍝ individually
-  ST←(1=⍵[;0])⊂[0]⍵
-  
-  ⍝ Quit if there is nothing to do
-  0=⍴ST:⍵
-  
-  ⍝ It is helpful to know which nodes are function expressions and which are 
-  ⍝ not
-  FeBV←'FuncExpr'∘≡∘⊃¨0 1∘⌷¨ST
-  
-  ⍝ For every function that we have, if we have just the function sub-tree, 
-  ⍝ then we will note that a rotation of the matrix will result in the 
-  ⍝ expression being above the function. In the case of a Function Expression, 
-  ⍝ we will have a depth 1 FuncExpr node, a depth 2 Function node, and then 
-  ⍝ a depth 3 Expression node if any at all. In this case, a 2 rotation along the 
-  ⍝ first axis will result in the first two elements going to the bottom, which 
-  ⍝ is the same as putting the expression "above" the Function, provided that we 
-  ⍝ adjust the depths.
-  ST←(2×FeBV)⊖¨ST
-  
-  ⍝ To adjust the depths, note that for a FuncExpr the depth of the Expression 
-  ⍝ will be 3, so we can subtract 2 from the depth of the Expression to lift 
-  ⍝ the expression out to the top level. We must remember not to shift the 
-  ⍝ FuncExpr or Function nodes.
-  ST←FeBV {⍺:A⊣A[;0]+←0 0,⍨¯2⍴⍨¯2+⊃⍴⍵⊣A←⍵ ⋄ ⍵}¨ST
-  
-  ⍝ We can general names for each of the functions. 
-  ⍝ The Vars variable is actually a set of names in a format 
-  ⍝ suitable for appending onto an existing tree. The first element of this 
-  ⍝ is an empty array for when we don't want to append anything at all.
-  ⍝ The Exps variable is similiar but is designed to be prepended to the tree.
-  Vns←'LC'∘,∘⍕¨⍳+/FeBV
-  Vars←(⊂0 4⍴⍬),{1 4⍴3 'Variable' '' (2 2⍴'name' ⍵ 'class' 'array')}¨Vns
-  Exps←(⊂0 4⍴⍬),{1 4⍴1 'Expression' '' (2 2⍴'name' ⍵ 'class' 'atomic')}¨Vns
-  
-  ⍝ We can now add this name to each expression both in the assignment of the 
-  ⍝ expression and also as the variable reference in the body of the function.
-  I←FeBV\1+⍳+/FeBV
-  ST←Exps[I]⍪¨FeBV↓¨ST⍪¨Vars[I]
-  
-  ⍝ Finally, we recombine the data into the appropriate result format
-  (1↑⍵)⍪⊃⍪/ST
+  ⍝ Lifting a Function Expression generates a new set of top-level 
+  ⍝ nodes binding the constants in the body of the function to fresh 
+  ⍝ top-level names, while substituting each constant with a variable 
+  ⍝ in a newly formed Function Expression node.
+  FnEx←{⊃⍪/⍪⌿(⊂MtAST(2↑⍵)),((1⌷⍉C)∊⊂'Expression'){⍺:Expr ⍵ ⋄ Cond ⍵}¨C←2 Kids ⍵}
+
+  ⍝ Each top-level FuncExpr needs to be processed, and then recombined 
+  ⍝ to form the final output. 
+  ⊃⍪/(⊂1↑⍵),((1⌷⍉C)∊⊂'FuncExpr'){⍺:FnEx ⍵ ⋄ ⍵}¨C←1 Kids ⍵
 }
 
 ⍝ GenLLVM
