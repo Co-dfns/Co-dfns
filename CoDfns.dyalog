@@ -1429,6 +1429,10 @@ LiftConsts←{
 ⍝ 
 ⍝ Input: Namespace AST
 ⍝ Output: Semantically equivalent LLVM Module
+⍝ Invariant: All FuncExpr nodes appear at top-level
+⍝ Invariant: All FuncExpr nodes contain a single Function node
+⍝ Invariant: All FuncExpr nodes have names
+⍝ Invariant: Function nodes contain either Condition or Expression nodes
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 GenLLVM←{
@@ -1528,45 +1532,107 @@ GenConst←{
 ⍝
 ⍝ Left Argument: LLVM Module
 ⍝ Right Argument: FuncExpr Node
-⍝
-⍝ For now this is just a stub assuming that we have a function that 
-⍝ has only a single variable reference in it.
 
 GenFunc←{
-  ⍝ We assume that this is a function with a single variable 
-  ⍝ reference in it at the moment. The only other thing we care about 
-  ⍝ is the set of names that are associated with the function. 
-  ⍝ Thus, we need both the names of the function and the variable 
-  ⍝ reference inside of it.
-  fn vn←'name'Prop ⍵[0 2;]
+  ⍝ The name list of the function expression
+  fn←⊃'name'Prop 1↑⍵
 
-  ⍝ A given function expression can have more than one name associated 
-  ⍝ with it. The first name in the list will be the canonical one, 
-  ⍝ and we will alias the rest of them to the first name after we have 
-  ⍝ created the function. The fn variable is actually a string of 
-  ⍝ space delimited names, so we split this up and take the first as 
-  ⍝ the canonical. It is safe to do this because we have the invariant 
-  ⍝ established in previous passes that we always have at least one 
-  ⍝ name.
+  ⍝ Function expressions can have multiple names, canonical name first.
+  ⍝ Convert the space separated name list fn to a vector of names, then
+  ⍝ let fnf be the canonical name and fnr the rest of them. The following
+  ⍝ assumes that function expressions have names.
   fnf fnr←(⊃fn)(1↓fn←(nsp/2≠/' '=' ',fn)⊂(nsp←' '≠fn)/fn)
 
-  ⍝ With the names taken care of, we can add the function under the 
-  ⍝ first name.
+  ⍝ Create function using canonical name
   fr←AddFunction ⍺ fnf (ft←GenFuncType ⍬)
 
-  ⍝ The following is a stub for handling the body of the function, 
-  ⍝ which we assume right now to be a single variable reference.
-  vr←GetNamedGlobal ⍺ vn
-  bb←AppendBasicBlock fr ''
+  ⍝ Each node of the function body can use the same builder.
   bldr←CreateBuilder
+
+  ⍝ Functions all require at least a single basic block to 
+  ⍝ start, using the above builder.
+  bb←AppendBasicBlock fr ''
   _←PositionBuilderAtEnd bldr bb
-  _←BuildRet bldr vr
+
+  ⍝ Generate the code for each function body node.
+  ⍝ We use 2 here because a FuncExpr node contains a single 
+  ⍝ Function node; we want the children of the Function node.
+  Line←{N←⊃0 1⌷⍵
+    N≡'Expression':⍺(⍺⍺ GenExpr)⍵
+    N≡'Condition':⍺(⍺⍺ GenCond)⍵
+    'UNKNOWN FUNCTION CHILD'⎕SIGNAL 99
+  }
+  _←⍺ fr bldr Line/⌽(⊂⍬ ⍬),2 Kids ⍵
   _←DisposeBuilder bldr
 
-  ⍝ We can now add additional aliases or simply return if there 
-  ⍝ are none to work with.
+  ⍝ Alias the function to any of the other names, if any exist.
   0=⍴fnr:Shy←fr
   fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr
+}
+
+⍝ GenCond
+⍝
+⍝ Intended Function: Generate code for a Condition node.
+⍝
+⍝ Right argument: (Bound Names)(Name Values)
+⍝ Left Argument: Condition node to generate
+⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
+⍝ Output: (Bound Names)(Name Values)
+GenCond←{mod fr bldr←⍺⍺
+  ⍝ A condition node has one or two expressions 
+  Ex←1 Kids ⍺
+  
+  ⍝ We assume type correct expressions right now,
+  ⍝ meaning we can just grab the first data value for
+  ⍝ comparison. Tv should be a single integer value.
+  nm vl←(⊃Ex)(⍺⍺ GenExpr)⍵
+  Te←GetLastInstruction(ob←GetInsertBlock bldr)
+  Tp←BuildLoad(BuildStructGEP bldr Te 4 '')'Tp'
+  Tv←BuildLoad(BuildGEP bldr Tp 2 (0 0) '')'Tv'
+
+  ⍝ Create the test of Tv to conclude the block
+  T←BuildICmp bldr 32 Tv,ConstInt Int64Type 0 1
+
+  ⍝ Create the (simple) consequent block, which is a single 
+  ⍝ return of either no value or the expression value.
+  _←PositionBuilderAtEnd bldr,cb←AppendBasicBlock fr 'consequent'
+  _←(1↓Ex)(⍺⍺{0=⍴⍺:BuildRetVoid bldr ⋄ (⊃⍺)(⍺⍺ GenExpr)⍵})nm vl
+  
+  ⍝ Create the alternate block and setup the builder to 
+  ⍝ point to it.
+  ab←AppendBasicBlock fr 'alternate'
+  _←PositionBuilderAtEnd bldr ob
+  _←BuildCondBr bldr T ab cb
+  _←PositionBuilderAtEnd bldr ab
+
+  nm vl
+}
+
+⍝ GenExpr
+⍝
+⍝ Intended Function: Generate an Expression, named or unnamed.
+⍝ 
+⍝ Right Argument: (Bound names)(Name values)
+⍝ Left Argument: Expression node to generate
+⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
+⍝ Output: (Bound Names)(Name Values)
+GenExpr←{mod fr bldr←⍺⍺ ⋄ nm vl←⍵
+  ⍝ A named expression implicitly indicates an allocation
+  ⍝ and store. The environment needs to be updated in this 
+  ⍝ case.
+  Named←{
+    ptr←BuildAlloca bldr(GenArrayType⍬)⍵
+    val←(nm⍳⊂⍵)⌷vl,GetNamedGlobal mod ⍵
+    (nm,⍵)(vl,val)⊣BuildStore bldr val ptr
+  }
+
+  ⍝ An unnamed expression is a return. Since Expressions at this 
+  ⍝ point have only a single variable in them, the only name 
+  ⍝ property is the name of the variable. 
+  Unnamed←{nm vl⊣BuildRet bldr,(nm⍳⊂⍵)⌷vl,GetNamedGlobal mod ⍵}
+
+  1=⍴Vs←'name'Prop ⍺:Unnamed ⊃Vs
+  Named/Vs
 }
 
 ⍝ GenArrayType
@@ -1660,7 +1726,13 @@ P←'LLVM'
 'PositionBuilderAtEnd'⎕NA 'P ',D,'|',P,'PositionBuilderAtEnd P P'
 
 ⍝ LLVMValueRef  LLVMBuildRet (LLVMBuilderRef, LLVMValueRef V) 
-'BuildRet'⎕NA 'P ',D,'|',P,'BuildRet P P'
+'BuildRet'⎕NA'P ',D,'|',P,'BuildRet P P'
+
+⍝ LLVMValueRef 	LLVMBuildRetVoid (LLVMBuilderRef)
+'BuildRetVoid'⎕NA'P ',D,'|',P,'BuildRetVoid P'
+
+⍝ LLVMValueRef 	LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then, LLVMBasicBlockRef Else)
+'BuildCondBr'⎕NA'P ',D,'|',P,'BuildCondBr P P P P'
 
 ⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder) 
 'DisposeBuilder'⎕NA 'P ',D,'|',P,'DisposeBuilder P'
@@ -1668,6 +1740,30 @@ P←'LLVM'
 ⍝ LLVMValueRef
 ⍝ LLVMConstStruct (LLVMValueRef *ConstantVals, unsigned Count, LLVMBool Packed) 
 'ConstStruct'⎕NA'P ',D,'|',P,'ConstStruct <P[] U I'
+
+⍝ LLVMValueRef 	LLVMBuildAlloca (LLVMBuilderRef, LLVMTypeRef Ty, const char *Name)
+'BuildAlloca'⎕NA'P ',D,'|',P,'BuildAlloca P P <0C'
+
+⍝ LLVMValueRef 	LLVMBuildLoad (LLVMBuilderRef, LLVMValueRef PointerVal, const char *Name)
+'BuildLoad'⎕NA'P ',D,'|',P,'BuildLoad P P <0C'
+
+⍝ LLVMValueRef 	LLVMBuildStore (LLVMBuilderRef, LLVMValueRef Val, LLVMValueRef Ptr)
+'BuildStore'⎕NA'P ',D,'|',P,'BuildStore P P P'
+
+⍝ LLVMBasicBlockRef 	LLVMGetInsertBlock (LLVMBuilderRef Builder)
+'GetInsertBlock'⎕NA'P ',D,'|',P,'GetInsertBlock P'
+
+⍝ LLVMValueRef 	LLVMGetLastInstruction (LLVMBasicBlockRef BB)
+'GetLastInstruction'⎕NA'P ',D,'|',P,'GetLastInstruction P'
+
+⍝ LLVMValueRef 	LLVMBuildStructGEP (LLVMBuilderRef B, LLVMValueRef Pointer, unsigned Idx, const char *Name)
+'BuildStructGEP'⎕NA'P ',D,'|',P,'BuildStructGEP P P U <0C'
+
+⍝ LLVMValueRef 	LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices, unsigned NumIndices, const char *Name)
+'BuildGEP'⎕NA'P ',D,'|',P,'BuildGEP P P <P[] U <0C'
+
+⍝ LLVMValueRef 	LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, const char *Name)
+'BuildICmp'⎕NA'P ',D,'|',P,'BuildICmp P U P P <0C'
 
 ⍝ LLVMBool
 ⍝ LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
