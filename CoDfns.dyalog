@@ -1517,12 +1517,22 @@ GenConst←{
   
   ⍝ For now we have a constant type
   T←ConstInt (Int8Type) 2 0
-  
+
+  ⍝ Get all the names of the expression from the 
+  ⍝ name property, which is a space separated set of 
+  ⍝ names, see Software Architecture
+  Vs←1↓¨Vs⊂⍨' '=' ',Vs←⊃'name'Prop 1↑⍵
+
   ⍝ We can put this all together now and insert it into the 
   ⍝ Module
   A←ConstStruct (R Sz T Sa Da) 5 0
-  G←AddGlobal ⍺ (GenArrayType ⍬)(⊃'name'Prop 1↑⍵)
-  0 0⍴SetInitializer G A
+  G←AddGlobal ⍺(T←GenArrayType⍬)(⊃Vs)
+  _←SetInitializer G A
+
+  ⍝ Alias all the rest of the names to the same value
+  val←GetNamedGlobal ⍺(⊃VS)
+  0=⍴1↓Vs:val
+  val⊣⍺{AddAlias ⍺ T val ⍵}¨1↓Vs
 }
 
 ⍝ GenFunc
