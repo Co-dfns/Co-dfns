@@ -1570,6 +1570,30 @@ GenFunc←{
   fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr
 }
 
+⍝ GetExpr
+⍝
+⍝ Intended Function: Convert an Expression node into an LLVM Value
+⍝
+⍝ Right argument: (Bound Names)(Name Values)
+⍝ Left Argument: Expression node
+⍝ Left Operand: LLVM Module
+⍝ Output: (LLVM Value)(Bound Names)(Name Values)
+
+GetExpr←{
+  ⍝ When there are no names to bind, the return is simple. 
+  ⍝ At this point, we know that all expressions must be 
+  ⍝ references to global bindings.
+  1=⍴Vs←'name'Prop ⍺:⍵,⍨GetNamedGlobal ⍺⍺ (⊃Vs)
+
+  ⍝ In the binding case, we need to take the names to be 
+  ⍝ bound and associate each of those names with the global 
+  ⍝ in our environment.
+  e←GetNamedGlobal ⍺⍺ (⊃⌽Vs)
+  nu←1↓¨nu⊂⍨' '=' ',nu←⊃Vs
+  (e)(k,nu)(v,e⍴⍨⍴nu)⊣k v←⍵
+}
+
+
 ⍝ GenCond
 ⍝
 ⍝ Intended Function: Generate code for a Condition node.
@@ -1578,6 +1602,7 @@ GenFunc←{
 ⍝ Left Argument: Condition node to generate
 ⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
 ⍝ Output: (Bound Names)(Name Values)
+
 GenCond←{mod fr bldr←⍺⍺
   ⍝ A condition node has one or two expressions 
   Ex←1 Kids ⍺
@@ -1585,8 +1610,7 @@ GenCond←{mod fr bldr←⍺⍺
   ⍝ We assume type correct expressions right now,
   ⍝ meaning we can just grab the first data value for
   ⍝ comparison. Tv should be a single integer value.
-  nm vl←(⊃Ex)(⍺⍺ GenExpr)⍵
-  Te←GetLastInstruction(ob←GetInsertBlock bldr)
+  Te nm vl←(⊃Ex)(mod GetExpr)⍵
   Tp←BuildLoad(BuildStructGEP bldr Te 4 '')'Tp'
   Tv←BuildLoad(BuildGEP bldr Tp 2 (0 0) '')'Tv'
 
@@ -1616,23 +1640,10 @@ GenCond←{mod fr bldr←⍺⍺
 ⍝ Left Argument: Expression node to generate
 ⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
 ⍝ Output: (Bound Names)(Name Values)
-GenExpr←{mod fr bldr←⍺⍺ ⋄ nm vl←⍵
-  ⍝ A named expression implicitly indicates an allocation
-  ⍝ and store. The environment needs to be updated in this 
-  ⍝ case.
-  Named←{
-    ptr←BuildAlloca bldr(GenArrayType⍬)⍵
-    val←(nm⍳⊂⍵)⌷vl,GetNamedGlobal mod ⍵
-    (nm,⍵)(vl,val)⊣BuildStore bldr val ptr
-  }
 
-  ⍝ An unnamed expression is a return. Since Expressions at this 
-  ⍝ point have only a single variable in them, the only name 
-  ⍝ property is the name of the variable. 
-  Unnamed←{nm vl⊣BuildRet bldr,(nm⍳⊂⍵)⌷vl,GetNamedGlobal mod ⍵}
-
-  1=⍴Vs←'name'Prop ⍺:Unnamed ⊃Vs
-  Named/Vs
+GenExpr←{mod _ bldr←⍺⍺
+  1=⍴'name'Prop ⍺:⍵⊣BuildRet bldr,⊃⍺(mod GetExpr)⍵
+  1↓⍺(mod GetExpr)⍵
 }
 
 ⍝ GenArrayType
