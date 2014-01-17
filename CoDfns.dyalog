@@ -1493,19 +1493,22 @@ GenConst←{
   ⍝ The literal syntax allows for none others than this.
   V←((2≤⍴V)⊃⍬(⍴V))⍴V←'value'Prop 1↓⍵
   
-  ⍝ Generate LLVM Integers for each of these 
-  ⍝ The shape of D should be a vector, since this 
-  ⍝ will be passed directly to certain foreign functions.
-  D←{ConstIntOfString (Int64Type) ⍵ 10}¨,V
+  ⍝ Encapsulate the process of generating an array pointer 
+  ArrayP←{
+    A←ConstArray ⍺⍺ ⍵ (⊃⍴⍵)
+    G←AddGlobal ⍺ (ArrayType ⍺⍺ (⊃⍴⍵)) 'array'
+    _←SetInitializer G A
+    P←BuildGEP (B←CreateBuilder) G (0 0) 2 ''
+    P⊣DisposeBuilder B
+  }
   
-  ⍝ Build an LLVM Constant array from these values
-  Da←ConstArray (Int64Type) D (⊃⍴D)
+  ⍝ Generate LLVM Data Array from Values
+  D←⍺(Int64Type ArrayP){ConstIntOfString (Int64Type) ⍵ 10}¨,V
   
   ⍝ Shape of the array is a single element vector 
   ⍝ Make sure that the shape of the array is based off 
   ⍝ of V and not off of D.
-  S←{ConstInt (Int32Type) ⍵ 0}¨⍴V
-  Sa←ConstArray (Int64Type) S (⊃⍴S)
+  S←⍺(Int32Type ArrayP){0=⍴⍵:⍬ ⋄ {ConstInt (Int32Type) ⍵ 0}¨⍵}⍴V
   
   ⍝ Rank is constant
   ⍝ Rank must also come from V and not D
@@ -1525,7 +1528,7 @@ GenConst←{
 
   ⍝ We can put this all together now and insert it into the 
   ⍝ Module
-  A←ConstStruct (R Sz T Sa Da) 5 0
+  A←ConstStruct (R Sz T S D) 5 0
   G←AddGlobal ⍺(T←GenArrayType⍬)(⊃Vs)
   _←SetInitializer G A
 
@@ -1714,6 +1717,9 @@ P←'LLVM'
 
 ⍝ LLVMPointerType (LLVMTypeRef ElementType, unsigned AddressSpace)
 'PointerType'⎕NA 'P ',D,'|',P,'PointerType P U'
+
+⍝ LLVMTypeRef 	LLVMArrayType (LLVMTypeRef ElementType, unsigned ElementCount)
+'ArrayType'⎕NA'P ',D,'|',P,'ArrayType P U'
 
 ⍝ LLVMValueRef  LLVMConstInt (LLVMTypeRef IntTy, unsigned long long N, LLVMBool SignExtend) 
 'ConstInt'⎕NA 'P ',D,'|',P,'ConstInt P U8 I'
