@@ -66,7 +66,6 @@
 					  <member>Complete all code to cover Bind
 					  <literal>∊</literal> NO states in the Functions
 					  space</member>
-					  <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
 				  </simplelist>
 			  </td>
 		  </tr>
@@ -81,6 +80,7 @@
 					  <member>Support basic scalar primitives and basic structural primitives</member>
 					  <member>Support only the integer numeric type and do not worry about overflow</member>
 					  <member>Use a simple C runtime</member>
+					  <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
 				  </simplelist>
 			  </td>
 		  </tr>
