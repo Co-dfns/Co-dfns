@@ -76,26 +76,44 @@ Trans←{(((⍳⍴⍵)×I=⊃⍴TransTbl)+I←(0⌷⍉TransTbl)⍳⍵)⊃¨⊂(1
 ⍝ on the invariant that ⊃⍵ will be the top string of the code and 1↓⍵ will give 
 ⍝ the rest of the code. 
 
+do←{⍎'⍺⍺ ⍵ ⋄ ⍵' ⋄ ⍺⍺}
+
 ⍝ Recursive Stimuli
 
 MkRec←{
-  X←⍺ Expand ⊃1 #.Generate.Distribution ⍺ #.Generate.DModel ⍺⍺
+  300::⍺(⍺⍺∇)⍵
+  M←⍺ #.Generate.DModel ⍺⍺
+  S←⊃1 #.Generate.Distribution M
+  X←⍺ Expand S
   (¯1↓⍵),(⊂(⊃⌽⍵),⊃X),1↓X
 }
 
 E←'Expression'MkRec
 Fe←'FuncExpr'MkRec
+Fn←'Function'MkRec
 
-⍝ Fn←'Function'MkRec
+⍝ Top requires we use a reset expand
+
+Top←{
+  300::⍺∇⍵
+  M←⍺ #.Generate.DModel 'TopLevel'
+  S←⊃1 #.Generate.Distribution M
+  X←⍺ RstExp S
+  (¯1↓⍵),(⊂(⊃⌽⍵),⊃X),1↓X
+}
+
 ⍝ Hack to make Increment 2 work right for now
-Fn←{(¯1↓⍵),⊂(⊃⌽⍵),'{',(⍕?(1+?10)⍴2*10),'}'}
+⍝ Fn←{(¯1↓⍵),⊂(⊃⌽⍵),'{',(⍕?(1+?10)⍴2*10),'}'}
 
 ⍝ Non-recursive Stimuli
 
 Counter←0 ⋄ FVars←⊂⍬ ⋄ AVars←⊂⍬
+Vfo←{
+  _←⎕SIGNAL do (0=I←⍴⊃FVars)/300
+  (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?I)⌷⊃FVars
+}
 Vu←{(⊃Counter)+←1 ⋄ (⊃FVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
 Vnu←{(⊃Counter)+←1 ⋄ (⊃AVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
-Vfo←{(¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?⍴⊃FVars)⌷⊃FVars}
 Vi←{(¯1↓⍵),⊂(⊃⌽⍵),' ⍺'}
 Gets←{(¯1↓⍵),⊂(⊃⌽⍵),'←'}
 Eot←{⍵}
@@ -112,6 +130,7 @@ Lbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'{'}
 Rbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'}'}
 N←{(¯1↓⍵),⊂(⊃⌽⍵),' ',⍕?2*10}
 Sep←{(¯1↓⍵),⊂(⊃⌽⍵),' ⋄'}
+Col←{(¯1↓⍵),⊂(⊃⌽⍵),' :'}
 
 
 :EndNamespace
