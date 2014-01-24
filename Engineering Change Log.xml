@@ -199,6 +199,12 @@
         <td colspan="5">Correct handling of muli-named functions</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>30</td>
+        <td colspan="2">2014-01-24</td>
+        <td colspan="5">Incorrect handling of input verification</td>
+        <td colspan="2">Applied</td>
+      </tr>
 		</tbody>
 	</table>
 	<orderedlist>
@@ -951,6 +957,29 @@ LLVMInitializeX86TargetMC();</programlisting>
           sent to Dyalog to understand better why this error occurs. 
         </para>
       </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          When the input to the compiler is not a vector, then the
+          shapes do not match up in the input verification of the Fix
+          function and a <symbol>LENGTH ERROR</symbol> occurs.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          In the following code line that triggers this error:
+        </para>
+      </formalpara>
+      <programlisting>~((,1)≡⍴⍴⍵)∧(∧/1≥⊃∘⍴∘⍴¨⍵)∧(∧/⊃,/' '=⊃∘(0∘⍴)∘⊂¨⍵):⎕SIGNAL 11</programlisting>
+      <para>
+        The shape of the conditional depends on the shape of the
+        <varname>⍵</varname> value, which shouldn't be the
+        case. Instead, this needs to be a scalar or 1 element vector
+        independent of <varname>⍵</varname>.
+      </para>
     </listitem>
 	</orderedlist>
 </article>
