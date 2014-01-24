@@ -177,7 +177,9 @@ Fix←{
   _←FFI∆INIT
   
   ⍝ Input Validation, Signal DOMAIN ERROR if not valid
-  ~((,1)≡⍴⍴⍵)∧(∧/1≥⊃∘⍴∘⍴¨⍵)∧(∧/⊃,/' '=⊃∘(0∘⍴)∘⊂¨⍵):⎕SIGNAL 11
+  ~(,1)≡⍴⍴⍵:⎕SIGNAL 11
+  ~∧/1≥⊃∘⍴∘⍴¨⍵:⎕SIGNAL 11
+  ~∧/⊃,/' '=⊃∘(0∘⍴)∘⊂¨⍵):⎕SIGNAL 11
   
   ⍝ Identify Obj property
   ⍝ This is based on the arity of the Fix call
