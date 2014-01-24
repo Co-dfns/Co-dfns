@@ -397,6 +397,29 @@
             </simplelist>
           </td>
 			  </tr>
+        <tr>
+          <td>Thursday, January 23rd, 2014</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Exiting Increment 4 Usage Modeling and Test Planning
+              </member>
+              <member>
+                Entering Increment 4 Testing and Certification
+              </member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>Friday, January 24th, 2014</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Apply Engineering Change #30
+              </member>
+            </simplelist>
+          </td>
+        </tr>
       </tbody>
 		</informaltable>
 	</section>
