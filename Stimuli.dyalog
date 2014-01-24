@@ -25,7 +25,7 @@
 ⍝ instead of the standard approach, because we need to ensure that the 
 ⍝ variable counter is called and used in the right way.
 
-Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(⌽Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0⍴⊂''}
+Expand←{300::⎕SIGNAL 300 ⋄ ⊃⍺{⍺⍺(⍎⍺)⍵}/(⌽Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0⍴⊂''}
 
 ⍝ It's important to be able to reset the counter on each test case so 
 ⍝ that we can know what variables have been bound and which have not, 
@@ -33,7 +33,7 @@ Expand←{⊃⍺{⍺⍺(⍎⍺)⍵}/(⌽Trans ¯1↓¨(' '=⍵)⊂1⌽⍵),⊂0�
 ⍝ we need to have a function which does this resetting before running the 
 ⍝ top-level invocation of Expand.
 
-RstExp←{(⊃Counter)←0 ⋄ (⊃FVars)←⍬ ⋄ (⊃AVars)←⍬ ⋄ ⍺ Expand ⍵}
+RstExp←{300::⎕SIGNAL 300 ⋄ (⊃Counter)←0 ⋄ (⊃FVars)←⍬ ⋄ (⊃AVars)←⍬ ⋄ ⍺ Expand ⍵}
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Stimuli Sets
@@ -108,10 +108,20 @@ Top←{
 ⍝ Non-recursive Stimuli
 
 Counter←0 ⋄ FVars←⊂⍬ ⋄ AVars←⊂⍬
-Vfo←{
-  _←⎕SIGNAL do (0=I←⍴⊃FVars)/300
-  (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?I)⌷⊃FVars
-}
+
+⍝ This is ugly, and we should not have to use a Trad-fn
+
+∇Z←L Vfo R;I
+ ⎕SIGNAL (0=I←⍴⊃FVars)/300
+ Z←(¯1↓R),⊂(⊃⌽R),' V',⍕(?I)⌷⊃FVars
+∇
+
+⍝ This should work, but does not
+⍝ Vfo←{
+⍝   _←⎕SIGNAL do (0=I←⍴⊃FVars)/300
+⍝   (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?I)⌷⊃FVars
+⍝ }
+
 Vu←{(⊃Counter)+←1 ⋄ (⊃FVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
 Vnu←{(⊃Counter)+←1 ⋄ (⊃AVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
 Vi←{(¯1↓⍵),⊂(⊃⌽⍵),' ⍺'}

@@ -106,4 +106,9 @@ Coverage←{S E T P←⍵
   ⊃Ext⍣≡⍬((⍪Z),⊂'')⍬                        ⍝ Extend to fixpoint
 }
 
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ A helper to generating test cases for the Top Level
+
+TopLevel←{⍺{⍵∪⊂⍺ #.Stimuli.Top 0⍴⊂''}⍣(⍵{⍺⍺≤⍴⍺})⊢⍬}
+
 :EndNamespace
