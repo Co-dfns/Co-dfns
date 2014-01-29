@@ -420,6 +420,16 @@
             </simplelist>
           </td>
         </tr>
+        <tr>
+          <td>Tuesday, January 27th, 2014</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Apply Engineering Changes #31, 32, 33, 34, 35, 36, 38, 39, and 40.
+              </member>
+            </simplelist>
+          </td>
+        </tr>
       </tbody>
 		</informaltable>
 	</section>
