@@ -691,7 +691,7 @@ Parse←{
   ⍝    a 1 is for any { token, and a ¯1 for any } token, and 0 for everything 
   ⍝    else.
   Fm←((1⌷⍉NS)∊⊂'Token')×{1 ¯1 0⌷⍨(,¨'{}')⍳((0⌷⍉⍵)⍳⊂'name')⌷(1⌷⍉⍵),⊂''}¨3⌷⍉NS
-  ⎕SIGNAL (0≠+/Fm)/2
+  _←⍎'⎕SIGNAL(0≠+/Fm)/2 ⋄ ⍬ '
   NS[;0]+←2×Fd←+\0,¯1↓Fm
 
   ⍝ 2. Delete the { and } token nodes to insert a Function node at the 
@@ -935,7 +935,14 @@ ParseLineVar←{E SC←⍺
   
   ⍝ If we have a Vfo, then the Named ← BOUND
   ⍝ and when we have State Class ← 1 with a Vu
-  (2 3 4∨.=Tp)∨(0=Tp)∧(SC=1):0,Vn Tp E ParseNamedBnd 2↓⍵
+  ⍝ XXX In this case, because we know that we only have types 
+  ⍝ of 2, then we can make sure that we give a type of 2 to 
+  ⍝ the ParseNamedBnd call. In the future, we will need to make 
+  ⍝ sure that we know what the real type of the variable is for 
+  ⍝ State Class ← 1. We will also have to make sure that the 
+  ⍝ types are in the appropriate nameclass if we have another 
+  ⍝ class in the stack already.
+  (2 3 4∨.=Tp)∨(0=Tp)∧(SC=1):0,Vn 2 E ParseNamedBnd 2↓⍵
   
   ⍝ If we do not have a Vfo or Vu, then something is wrong and we should error out
   ¯1 MtAST E
@@ -1020,7 +1027,7 @@ ParseNamedBnd←{Vn Tp E←⍺
   ⍝ a binding to a different nameclass. Namely, a binding from an expression
   ⍝ to a function, operator, or the like.
   0=⊃E ParseExpr ⍵:⎕SIGNAL 2
-  
+
   ⍝ Stimuli: Fe
   ⍝ 
   ⍝ When we parse a function expression successfully, we still need to 
@@ -1038,7 +1045,7 @@ ParseNamedBnd←{Vn Tp E←⍺
   ⍝ ParseTopLine. We must handle the Vu Nl state explicitly here, and then we are 
   ⍝ left only with the states handled by ParseLineVar, except that we need to call 
   ⍝ it with a state class of 1 instead of 0.
-  (1=⊃⍴⍵)∧('Variable'≡0 1⊃⍵)∧(0=E VarType⊃'name'Prop 1↑⍵):⎕SIGNAL 6
+  (1=⊃⍴⍵)∧('Variable'≡⊃0 1⌷⍵)∧(0=E VarType⊃'name'Prop 1↑⍵):⎕SIGNAL 6
   0=⊃err ast Ne←E 1 ParseLineVar ⍵:(Vn Bind ast)(Vn Tp⍪Ne)
   
   ¯1=×err:⎕SIGNAL ferr
@@ -1129,7 +1136,7 @@ ParseFuncExpr←{
   ⍝
   ⍝ The only possibility that we have right now is that of an user defined constant 
   ⍝ function, so we will just call that right here.
-  0≠⊃err ast rst←⍺ ParseFunc ⍵:err ast ⍺
+  0≠⊃err ast rst←⍺ ParseFunc ⍵:err ast rst ⍺
   
   ⍝ The only thing we can have at this point is a function, so we just handle that 
   ⍝ here directly.
@@ -1162,11 +1169,11 @@ ParseFunc←{
   ⍝ node and convert the body of the function from a series of Line nodes
   ⍝ to a proper function body. Firstly, we must check to determine whether
   ⍝ we have a Function node.
-  'Function'≢0 1⊃⍵:2 MtAST
+  'Function'≢⊃0 1⌷⍵:2 MtAST ⍵
 
   ⍝ The rest of the nodes to parse are children of the Function node, 
   ⍝ so extract out just the Function node from the rest of the tokens.
-  Fb←(Fm←(Fd<D)×1=+\(Fd←⊃⍵)=D←0⌷⍉⍵)⌿⍵
+  Fb←(Fm←1=+\(Fd←⊃⍵)=D←0⌷⍉⍵)⌿⍵
 
   ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
   ⍝ 
@@ -1200,8 +1207,8 @@ ParseFunc←{
   ⍝ correctly parsed Function. Fn is now a Function node and each line has been 
   ⍝ converted into an apropriate node, or left alone if it is an empty line.
    2:: 2 MtAST ⍵
-  11:: 11 MtAST ⍵
-  99:: 99 MtAST ⍵
+  11::11 MtAST ⍵
+  99::99 MtAST ⍵
   Fn←(1↑Fb)⍪⊃A E←⊃ParseFnLine/⌽(⊂Sd),Cn
   
   ⍝ We return the function node together with the rest of the nodes after 
@@ -1297,6 +1304,10 @@ ParseCond←{
   ⍝ parses to a valid expression. Verify this first.
   0≠⊃err ast Ne←⍺⍺ ParseExpr ⍺:⎕SIGNAL err
 
+  ⍝ Depths of ast need to be bumped since they are going into a condition 
+  ⍝ node.
+  ast[;0]+←1
+
   ⍝ Return a Condition node
   H←(¯1+⊃⍺)'Condition' '' MtA
 
@@ -1305,6 +1316,7 @@ ParseCond←{
   ⍝ Function States 5 and 8. 
   0=⊃⍴⍵:(H⍪ast)Ne
   0≠⊃err con Ne←Ne ParseExpr ⍵:⎕SIGNAL err
+  con[;0]+←1 ⍝ Bump the consequence depth as well
   (H⍪ast⍪con)Ne
 }
 
@@ -1412,16 +1424,16 @@ LiftConsts←{
   ⍝ Lifting a Condition node is just the lifting of it's expressions, 
   ⍝ merging the results.
   Cond←{⍪⌿↑(⊂MtAST(1↑⍵)),Expr¨1 Kids ⍵}
-  
+
   ⍝ Lifting a Function Expression generates a new set of top-level 
   ⍝ nodes binding the constants in the body of the function to fresh 
   ⍝ top-level names, while substituting each constant with a variable 
   ⍝ in a newly formed Function Expression node.
-  FnEx←{⊃⍪/⍪⌿(⊂MtAST(2↑⍵)),((1⌷⍉C)∊⊂'Expression'){⍺:Expr ⍵ ⋄ Cond ⍵}¨C←2 Kids ⍵}
+  FnEx←{⊃⍪/⍪⌿↑(⊂MtAST(2↑⍵)),{'Expression'≡⊃0 1⌷⍵⍪0 '' '' MtA:Expr ⍵ ⋄ Cond ⍵}¨C←2 Kids ⍵}
 
   ⍝ Each top-level FuncExpr needs to be processed, and then recombined 
   ⍝ to form the final output. 
-  ⊃⍪/(⊂1↑⍵),((1⌷⍉C)∊⊂'FuncExpr'){⍺:FnEx ⍵ ⋄ ⍵}¨C←1 Kids ⍵
+  Z⊣⎕←⎕XML Z←⊃⍪/(⊂1↑⍵),Z←{'FuncExpr'≡⊃0 1⌷⍵:FnEx ⍵ ⋄ ⍵}¨C←⎕←1 Kids ⍵
 }
 
 ⍝ GenLLVM
@@ -1572,7 +1584,7 @@ GenFunc←{
   ⍝ Generate the code for each function body node.
   ⍝ We use 2 here because a FuncExpr node contains a single 
   ⍝ Function node; we want the children of the Function node.
-  Line←{N←⊃0 1⌷⍵
+  Line←{N←⊃0 1⌷⍺
     N≡'Expression':⍺(⍺⍺ GenExpr)⍵
     N≡'Condition':⍺(⍺⍺ GenCond)⍵
     'UNKNOWN FUNCTION CHILD'⎕SIGNAL 99

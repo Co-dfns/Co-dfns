@@ -205,7 +205,67 @@
         <td colspan="5">Incorrect handling of input verification</td>
         <td colspan="2">Applied</td>
       </tr>
-		</tbody>
+      <tr>
+        <td>31</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Incorrect handling of null return value for <function>⎕SIGNAL</function> in <function>Parse</function>.</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>32</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Incorrect use of <function>⊃</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>33</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Missing return value in <function>ParseFunc</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>34</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Missing return value in <function>ParseFuncExpr</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>35</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Condition parsing does not have right depths</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>36</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">ParseTopLine signals a SYNTAX ERROR when it should signal a VALUE ERROR.</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>37</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Improve handling of nested variable creating during test case generation</td>
+        <td colspan="2">Pending</td>
+      </tr>
+      <tr>
+        <td>38</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Functions are missing the <type>Function</type> nodes.</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>39</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">RANK ERROR due to <function>⊃</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>40</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">SYNTAX ERROR in <function>ParseLineVar[62]</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
+  	</tbody>
 	</table>
 	<orderedlist>
 		<title>Change Description and Analysis</title>
@@ -980,6 +1040,181 @@ LLVMInitializeX86TargetMC();</programlisting>
         case. Instead, this needs to be a scalar or 1 element vector
         independent of <varname>⍵</varname>.
       </para>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          In <function>Parse[128]</function>, the
+          <function>⎕SIGNAL</function> result is null and no code
+          handles that empty result value.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          In order to encapsulate the signal, we use the same
+          technique as used in <function>do</function> by enclosing
+          the signalling in an execute and returning the value of the
+          signal. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          There is a RANK ERROR in <function>ParseFunc[12]</function>.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          I'm being stupid and using <literal>0 1⊃⍵</literal> instead
+          of <literal>⊃0 1⌷⍵</literal>.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>ParseFunc</function> is not returning three values in the first line.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          Add the obvious third return value to <function>ParseFunc</function>.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>ParseFuncExpr</function> is not returning four values in the first line.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          Add the obvious missing value to <function>ParseFuncExpr</function>.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          When parsing a condition, such as <literal>{ V3← 99 : 24 ⋄ }</literal>, the 
+          <classname>Condition</classname> node will not have any children, because the 
+          children are put at a depth one higher than they should be.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          In the <function>ParseCond</function> function, the two calls to <function>ParseExpr</function>
+          will return nodes assumed to be at the same depth as the condition node, since the tokens 
+          are at the same depth. Since there is actually an additional nesting level, we need to 
+          put the (potentially) two nodes as children by increasing each of their depths by one. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          When parsing something like <literal>{Vu}</literal> where <varname>Vu</varname> 
+          is not bound, <function>ParseTopLine</function> signals a SYNTAX ERROR instead of 
+          a VALUE ERROR. 
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This is because of the way handling of <classname>Expression</classname> nodes 
+          occurs inside of the <function>ParseExpr</function> function. Specifically, it requires 
+          that every expression be either an assignment to a name or a numeric constant.
+          Because we rely on the error result of <function>ParseExpr</function> for our 
+          error to report during states 3 and 4 of the <function>ParseFunc</function> 
+          function, this causes the SYNTAX ERROR instead of the VALUE ERROR. This can be 
+          considered okay for now.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The current <classname>Stimuli</classname> namespace does not handle the generation of variable 
+          names in a clever way, and it has no concept of the scoping rules for nested scopes of any kind. 
+          Improve this so that the generators can generate more useful and reliable code out of the 
+          sequences.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          When parsing a function expression, the function expression node and the body of the 
+          function both show up, but the <type>Function</type> node does not. 
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This happens because at <function>ParseFunc[16]</function> we use <literal>(Fd&lt;D)×</literal> 
+          to strip off the <type>Function</type> node, while expecting it to be there at the end further 
+          down in the code. This is wrong. Removing the above snippet of code fixes this problem, and 
+          only includes the additional <type>Function</type> node, not any additional, unwanted nodes. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          There is a RANK ERROR in <function>ParseNamedBnd[40]</function>.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          I'm being stupid and using <literal>0 1⊃⍵</literal> instead
+          of <literal>⊃0 1⌷⍵</literal>.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          In the call to <function>ParseNamedBnd</function> in <function>ParseLineVar[62]</function>, 
+          the call returns with a syntax error. Here are some important data elements:
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          When dealing with a nested set of assignments <literal>Vu ← Vfo ← Vu ← Fe</literal>, the 
+          <function>ParseLineVar</function> function should keep track of the nameclass of the assignment. 
+          However, in the current code, it does not. Instead, it will only pass the correct type class 
+          value to <function>ParseNamedBnd</function> if it was the last seen variable. In other words, 
+          we do not ensure that all three values match class, and not just the most recently seen. 
+          Fixing this in the full will require threading the type class back through the set of 
+          recursive calls to <function>ParseLineVar</function>, but the current work around is to always 
+          pass a type of 2, since we know that this will be the only type that we support at the moment.
+        </para>
+      </formalpara>
     </listitem>
 	</orderedlist>
 </article>
