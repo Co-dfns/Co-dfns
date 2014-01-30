@@ -1433,7 +1433,7 @@ LiftConsts←{
 
   ⍝ Each top-level FuncExpr needs to be processed, and then recombined 
   ⍝ to form the final output. 
-  Z⊣⎕←⎕XML Z←⊃⍪/(⊂1↑⍵),Z←{'FuncExpr'≡⊃0 1⌷⍵:FnEx ⍵ ⋄ ⍵}¨C←⎕←1 Kids ⍵
+  ⊃⍪/(⊂1↑⍵),Z←{'FuncExpr'≡⊃0 1⌷⍵:FnEx ⍵ ⋄ ⍵}¨C←1 Kids ⍵
 }
 
 ⍝ GenLLVM
@@ -1506,39 +1506,40 @@ GenConst←{
   ⍝ vector of at least two elements or it can be a single scalar.
   ⍝ The literal syntax allows for none others than this.
   V←((2≤⍴V)⊃⍬(⍴V))⍴V←'value'Prop 1↓⍵
-  
+
   ⍝ Encapsulate the process of generating an array pointer 
   ArrayP←{
     A←ConstArray ⍺⍺ ⍵ (⊃⍴⍵)
     G←AddGlobal ⍺ (ArrayType ⍺⍺ (⊃⍴⍵)) 'array'
     _←SetInitializer G A
-    P←BuildGEP (B←CreateBuilder) G (0 0) 2 ''
+    T←PointerType (Int64Type) 0
+    P←BuildBitCast (B←CreateBuilder) G T ''
     P⊣DisposeBuilder B
   }
   
   ⍝ Generate LLVM Data Array from Values
   D←⍺(Int64Type ArrayP){ConstIntOfString (Int64Type) ⍵ 10}¨,V
-  
+
   ⍝ Shape of the array is a single element vector 
   ⍝ Make sure that the shape of the array is based off 
   ⍝ of V and not off of D.
   S←⍺(Int32Type ArrayP){0=⍴⍵:⍬ ⋄ {ConstInt (Int32Type) ⍵ 0}¨⍵}⍴V
-  
+
   ⍝ Rank is constant
   ⍝ Rank must also come from V and not D
   R←ConstInt (Int16Type) (⊃⍴⍴V) 0
-  
+
   ⍝ Size is a function of the number of elements in V
   ⍝ which is really the size of D
   Sz←ConstInt (Int64Type) (⊃⍴D) 0
-  
+
   ⍝ For now we have a constant type
   T←ConstInt (Int8Type) 2 0
 
   ⍝ Get all the names of the expression from the 
   ⍝ name property, which is a space separated set of 
   ⍝ names, see Software Architecture
-  Vs←1↓¨Vs⊂⍨' '=' ',Vs←⊃'name'Prop 1↑⍵
+  Vs←(B/2≠/' '=' ',Vs)⊂(B←' '≠Vs)/Vs←⊃'name'Prop 1↑⍵
 
   ⍝ We can put this all together now and insert it into the 
   ⍝ Module
@@ -1547,7 +1548,7 @@ GenConst←{
   _←SetInitializer G A
 
   ⍝ Alias all the rest of the names to the same value
-  val←GetNamedGlobal ⍺(⊃VS)
+  val←GetNamedGlobal ⍺(⊃Vs)
   0=⍴1↓Vs:val
   val⊣⍺{AddAlias ⍺ T val ⍵}¨1↓Vs
 }
@@ -1616,7 +1617,7 @@ GetExpr←{
   ⍝ bound and associate each of those names with the global 
   ⍝ in our environment.
   e←GetNamedGlobal ⍺⍺ (⊃⌽Vs)
-  nu←1↓¨nu⊂⍨' '=' ',nu←⊃Vs
+  nu←(B/2≠/' '=' ',nu)⊂(B←' '≠nu)/nu←⊃Vs
   (e)(k,nu)(v,e⍴⍨⍴nu)⊣k v←⍵
 }
 
@@ -1802,6 +1803,9 @@ P←'LLVM'
 
 ⍝ LLVMValueRef 	LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices, unsigned NumIndices, const char *Name)
 'BuildGEP'⎕NA'P ',D,'|',P,'BuildGEP P P <P[] U <0C'
+
+⍝ LLVMValueRef 	LLVMBuildBitCast (LLVMBuilderRef, LLVMValueRef Val, LLVMTypeRef DestTy, const char *Name)
+'BuildBitCast'⎕NA'P ',D,'|',P,'BuildBitCast P P P <0C'
 
 ⍝ LLVMValueRef 	LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, const char *Name)
 'BuildICmp'⎕NA'P ',D,'|',P,'BuildICmp P U P P <0C'
