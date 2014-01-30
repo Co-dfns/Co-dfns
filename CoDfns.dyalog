@@ -1698,7 +1698,7 @@ GenArrayType←{
 ⍝ an array.
 
 GenFuncType←{
-  FunctionType (GenArrayType ⍬) ⍬ 0 0
+  FunctionType (PointerType (GenArrayType ⍬) 0) ⍬ 0 0
 }
 
 ⍝ Foreign Functions
