@@ -101,6 +101,7 @@
 				  <simplelist type="horiz">
 					  <member>Support the rest of the Function states</member>
             <member>Ensure reasonable semantics for rebinding a name</member>
+            <member>Support Shy results correctly</member>
 				  </simplelist>
 			  </td>
 		  </tr>
