@@ -1590,7 +1590,12 @@ GenFunc←{
     N≡'Condition':⍺(⍺⍺ GenCond)⍵
     'UNKNOWN FUNCTION CHILD'⎕SIGNAL 99
   }
-  _←⍺ fr bldr Line/⌽(⊂⍬ ⍬),2 Kids ⍵
+  _←⍺ fr bldr Line/⌽(⊂⍬ ⍬),K←2 Kids ⍵
+
+  ⍝ It may be that there are no children. This still requires at 
+  ⍝ least one statement in the basic block. 
+  _←{0=⊃⍴⍵:MkEmptyReturn bldr ⋄ ⍵}K
+
   _←DisposeBuilder bldr
 
   ⍝ Alias the function to any of the other names, if any exist.
@@ -1648,7 +1653,7 @@ GenCond←{mod fr bldr←⍺⍺
   ⍝ Create the (simple) consequent block, which is a single 
   ⍝ return of either no value or the expression value.
   _←PositionBuilderAtEnd bldr,cb←AppendBasicBlock fr 'consequent'
-  _←(1↓Ex)(⍺⍺{0=⍴⍺:BuildRetVoid bldr ⋄ (⊃⍺)(⍺⍺ GenExpr)⍵})nm vl
+  _←(1↓Ex)(⍺⍺{0=⍴⍺:MkEmptyReturn bldr ⋄ (⊃⍺)(⍺⍺ GenExpr)⍵})nm vl
   
   ⍝ Create the alternate block and setup the builder to 
   ⍝ point to it.
@@ -1672,6 +1677,19 @@ GenCond←{mod fr bldr←⍺⍺
 GenExpr←{mod _ bldr←⍺⍺
   1=⍴'name'Prop ⍺:⍵⊣BuildRet bldr,⊃⍺(mod GetExpr)⍵
   1↓⍺(mod GetExpr)⍵
+}
+
+⍝ MkEmptyReturn
+⍝
+⍝ Intended Function: Insert an empty return value for a function 
+⍝ into a builder.
+⍝ 
+⍝ Right argument: LLVM Builder
+
+MkEmptyReturn←{
+  T←PointerType (GenArrayType⍬) 0
+  V←ConstPointerNull T
+  BuildRet ⍵ V
 }
 
 ⍝ GenArrayType
@@ -1745,6 +1763,9 @@ P←'LLVM'
 ⍝ LLVMValueRef
 ⍝ LLVMConstArray (LLVMTypeRef ElementTy, LLVMValueRef *ConstantVals, unsigned Length) 
 'ConstArray'⎕NA 'P ',D,'|',P,'ConstArray P <P[] U'
+
+⍝ LLVMValueRef 	LLVMConstPointerNull (LLVMTypeRef Ty)
+'ConstPointerNull'⎕NA'P ',D,'|',P,'ConstPointerNull P'
 
 ⍝ LLVMValueRef  LLVMAddGlobal (LLVMModuleRef M, LLVMTypeRef Ty, const char *Name) 
 'AddGlobal'⎕NA 'P ',D,'|',P,'AddGlobal P P <0C[]'
