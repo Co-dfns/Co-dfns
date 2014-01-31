@@ -267,9 +267,15 @@
       </tr>
       <tr>
         <td>41</td>
-        <td colspan="2">2014-01-27</td>
+        <td colspan="2">2014-01-31</td>
         <td colspan="5">Correct handling of shy results</td>
         <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>42</td>
+        <td colspan="2">2014-01-31</td>
+        <td colspan="5">Incorrect handling of empty namespace</td>
+        <td colspan="2">Pending</td>
       </tr>
   	</tbody>
 	</table>
@@ -1258,6 +1264,24 @@ LLVMInitializeX86TargetMC();</programlisting>
         We should also ensure that we do not have an empty body as we 
         currently do in the IR.
       </para>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          When given an empty namespace, there is an INDEX ERROR in 
+          <function>DropUnreached[9]</function>. 
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          An empty namespace will have no children, leading to an empty 
+          array in <function>DropUnreached[9]</function>. To fix this, 
+          we will insert a short circuit of the code when there are no 
+          children.
+        </para>
+      </formalpara>
     </listitem>
 	</orderedlist>
 </article>
