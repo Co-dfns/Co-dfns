@@ -1590,11 +1590,19 @@ GenFunc←{
     N≡'Condition':⍺(⍺⍺ GenCond)⍵
     'UNKNOWN FUNCTION CHILD'⎕SIGNAL 99
   }
-  _←⍺ fr bldr Line/⌽(⊂⍬ ⍬),K←2 Kids ⍵
+  _ V←⊃⍺ fr bldr Line/⌽(⊂⍬ ⍬),K←2 Kids ⍵
 
   ⍝ It may be that there are no children. This still requires at 
-  ⍝ least one statement in the basic block. 
-  _←{0=⊃⍴⍵:MkEmptyReturn bldr ⋄ ⍵}K
+  ⍝ least one statement in the basic block. We also need an empty 
+  ⍝ return when the last expression was a Condition node. 
+  ⍝ In the case of the last node being a named Expression, we 
+  ⍝ should return that expression.
+  _←{
+    0=⊃⍴⍵:MkEmptyReturn bldr
+    'Condition'≡⊃0 1⌷L←⊃⌽⍵:MkEmptyReturn bldr
+    2=⍴'name'Prop L:BuildRet bldr (⊃⌽V)
+    ⍵
+  }K
 
   _←DisposeBuilder bldr
 
