@@ -277,6 +277,12 @@
         <td colspan="5">Incorrect handling of empty namespace</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>43</td>
+        <td colspan="2">2014-01-31</td>
+        <td colspan="5">LENGTH ERROR in <function>GenConde[8]</function></td>
+        <td colspan="2">Pending</td>
+      </tr>
   	</tbody>
 	</table>
 	<orderedlist>
@@ -1280,6 +1286,22 @@ LLVMInitializeX86TargetMC();</programlisting>
           array in <function>DropUnreached[9]</function>. To fix this, 
           we will insert a short circuit of the code when there are no 
           children.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          There is a LENGTH ERROR in <function>GenCond[8]</function>.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The <function>BuildLoad</function> function requires three 
+          arguments, not two; this line is missing the <varname>bldr</varname>
+          variable.
         </para>
       </formalpara>
     </listitem>
