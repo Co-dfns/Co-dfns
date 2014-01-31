@@ -1389,6 +1389,9 @@ DropUnreached←{
   ⍝ Drop all function body nodes after first unnamed expression node
   Drp←{(2↑⍵)⍪⊃⍪/(⊂MtAST),(Nm Msk ⍵)/(Nm←3=0⌷⍉⍵)⊂[0]⍵}
 
+  ⍝ Shortcut when there are no children
+  1=⊃⍴⍵:⍵
+
   ⍝ Apply Drp to all top-level functions and recombine results
   (1↑⍵)⍪⊃⍪/(⊂MtAST),{'FuncExpr'≡⊃0 1⌷⍵:Drp ⍵ ⋄ ⍵}¨1 Kids ⍵
 }
@@ -1430,6 +1433,9 @@ LiftConsts←{
   ⍝ top-level names, while substituting each constant with a variable 
   ⍝ in a newly formed Function Expression node.
   FnEx←{⊃⍪/⍪⌿↑(⊂MtAST(2↑⍵)),{'Expression'≡⊃0 1⌷⍵⍪0 '' '' MtA:Expr ⍵ ⋄ Cond ⍵}¨C←2 Kids ⍵}
+
+  ⍝ Shortcut when Namespace is empty
+  1=⊃⍴⍵:⍵
 
   ⍝ Each top-level FuncExpr needs to be processed, and then recombined 
   ⍝ to form the final output. 
