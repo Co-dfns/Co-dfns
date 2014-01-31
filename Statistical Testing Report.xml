@@ -3237,6 +3237,36 @@
           <td>Fail</td>
           <td colspan="5">SYNTAX ERROR at <function>ParseLineVar[62]</function></td>
         </tr>
+        <tr>
+          <td>8</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>5</td>
+          <td>Fail</td>
+          <td colspan="5">V1 has empty function body</td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3293,5 +3323,12 @@
       2↓⍵
 2  Function     class  ambivalent
 3  Line</programlisting>
+    <formalpara>
+      <title>Iteration 8, Test 5</title>
+      <para>
+        The LLVM IR produced by test 5 contains an empty function body for 
+        <function>V1</function> when it should have returned the last value.
+      </para>
+    </formalpara>
   </section>
 </article>
