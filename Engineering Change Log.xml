@@ -265,6 +265,12 @@
         <td colspan="5">SYNTAX ERROR in <function>ParseLineVar[62]</function></td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>41</td>
+        <td colspan="2">2014-01-27</td>
+        <td colspan="5">Correct handling of shy results</td>
+        <td colspan="2">Pending</td>
+      </tr>
   	</tbody>
 	</table>
 	<orderedlist>
@@ -1172,10 +1178,13 @@ LLVMInitializeX86TargetMC();</programlisting>
       <formalpara>
         <title>Analysis</title>
         <para>
-          This happens because at <function>ParseFunc[16]</function> we use <literal>(Fd&lt;D)×</literal> 
-          to strip off the <type>Function</type> node, while expecting it to be there at the end further 
-          down in the code. This is wrong. Removing the above snippet of code fixes this problem, and 
-          only includes the additional <type>Function</type> node, not any additional, unwanted nodes. 
+          This happens because at <function>ParseFunc[16]</function>
+          we use <literal>(Fd&lt;D)×</literal> to strip off the
+          <type>Function</type> node, while expecting it to be there
+          at the end further down in the code. This is wrong. Removing
+          the above snippet of code fixes this problem, and only
+          includes the additional <type>Function</type> node, not any
+          additional, unwanted nodes.
         </para>
       </formalpara>
     </listitem>
@@ -1198,23 +1207,57 @@ LLVMInitializeX86TargetMC();</programlisting>
       <formalpara>
         <title>Description</title>
         <para>
-          In the call to <function>ParseNamedBnd</function> in <function>ParseLineVar[62]</function>, 
-          the call returns with a syntax error. Here are some important data elements:
+          In the call to <function>ParseNamedBnd</function> in
+          <function>ParseLineVar[62]</function>, the call returns with
+          a syntax error. Here are some important data elements:
         </para>
       </formalpara>
       <formalpara>
         <title>Analysis</title>
         <para>
-          When dealing with a nested set of assignments <literal>Vu ← Vfo ← Vu ← Fe</literal>, the 
-          <function>ParseLineVar</function> function should keep track of the nameclass of the assignment. 
-          However, in the current code, it does not. Instead, it will only pass the correct type class 
-          value to <function>ParseNamedBnd</function> if it was the last seen variable. In other words, 
-          we do not ensure that all three values match class, and not just the most recently seen. 
-          Fixing this in the full will require threading the type class back through the set of 
-          recursive calls to <function>ParseLineVar</function>, but the current work around is to always 
-          pass a type of 2, since we know that this will be the only type that we support at the moment.
+          When dealing with a nested set of assignments <literal>Vu ←
+          Vfo ← Vu ← Fe</literal>, the
+          <function>ParseLineVar</function> function should keep track
+          of the nameclass of the assignment.  However, in the current
+          code, it does not. Instead, it will only pass the correct
+          type class value to <function>ParseNamedBnd</function> if it
+          was the last seen variable. In other words, we do not ensure
+          that all three values match class, and not just the most
+          recently seen.  Fixing this in the full will require
+          threading the type class back through the set of recursive
+          calls to <function>ParseLineVar</function>, but the current
+          work around is to always pass a type of 2, since we know
+          that this will be the only type that we support at the
+          moment.
         </para>
       </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The current version of the compiler does not handle shy results 
+          correctly.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The <citetitle>Increment Construction Plan</citetitle> details 
+          that shy results should happen around Increment 7. However, 
+          a reasonable semantics should exist for shy results before that. 
+          In particular, shy results should just return as regular results, 
+          rather than returning nothing at all. Currently, the situation 
+          is even worse, because the compiler incorrectly generates an 
+          empty body, which is not permitted in the LLVM IR.
+        </para>
+      </formalpara>
+      <para>
+        To improve this situation, we should adapt the compiler so that 
+        shy results are at the very least returned, rather than discarded. 
+        We should also ensure that we do not have an empty body as we 
+        currently do in the IR.
+      </para>
     </listitem>
 	</orderedlist>
 </article>
