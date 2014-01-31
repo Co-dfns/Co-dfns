@@ -1518,8 +1518,7 @@ GenConst←{
     A←ConstArray ⍺⍺ ⍵ (⊃⍴⍵)
     G←AddGlobal ⍺ (ArrayType ⍺⍺ (⊃⍴⍵)) 'array'
     _←SetInitializer G A
-    T←PointerType (Int64Type) 0
-    P←BuildBitCast (B←CreateBuilder) G T ''
+    P←BuildGEP (B←CreateBuilder) G (GEPI 0 0) 2 ''
     P⊣DisposeBuilder B
   }
   
@@ -1658,8 +1657,9 @@ GenCond←{mod fr bldr←⍺⍺
   ⍝ meaning we can just grab the first data value for
   ⍝ comparison. Tv should be a single integer value.
   Te nm vl←(⊃Ex)(mod GetExpr)⍵
-  Tp←BuildLoad(BuildStructGEP bldr Te 4 '')'Tp'
-  Tv←BuildLoad(BuildGEP bldr Tp 2 (0 0) '')'Tv'
+  Tp←BuildLoad bldr(BuildStructGEP bldr Te 4 '')'Tp'
+  Tp←BuildBitCast bldr Tp (PointerType(ArrayType Int64Type 1)0)''
+  Tv←BuildLoad bldr(BuildGEP bldr Tp (GEPI 0 0) 2 '')'Tv'
 
   ⍝ Create the test of Tv to conclude the block
   T←BuildICmp bldr 32 Tv,ConstInt Int64Type 0 1
@@ -1732,6 +1732,13 @@ GenArrayType←{
 GenFuncType←{
   FunctionType (PointerType (GenArrayType ⍬) 0) ⍬ 0 0
 }
+
+⍝ GEPIndices
+⍝
+⍝ Intended Function: Generate an array of pointers to be used as 
+⍝ inputs to the BuildGEP function.
+
+GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
 
 ⍝ Foreign Functions
 
