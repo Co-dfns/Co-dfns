@@ -1516,19 +1516,19 @@ GenConst←{
   ⍝ Encapsulate the process of generating an array pointer 
   ArrayP←{
     A←ConstArray ⍺⍺ ⍵ (⊃⍴⍵)
-    G←AddGlobal ⍺ (ArrayType ⍺⍺ (⊃⍴⍵)) 'array'
+    G←AddGlobal ⍺ (ArrayType ⍺⍺ (⊃⍴⍵)) ⍵⍵
     _←SetInitializer G A
     P←BuildGEP (B←CreateBuilder) G (GEPI 0 0) 2 ''
     P⊣DisposeBuilder B
   }
   
   ⍝ Generate LLVM Data Array from Values
-  D←⍺(Int64Type ArrayP){ConstIntOfString (Int64Type) ⍵ 10}¨,V
+  D←⍺(Int64Type ArrayP 'elems'){ConstIntOfString (Int64Type) ⍵ 10}¨,V
 
   ⍝ Shape of the array is a single element vector 
   ⍝ Make sure that the shape of the array is based off 
   ⍝ of V and not off of D.
-  S←⍺(Int32Type ArrayP){0=⍴⍵:⍬ ⋄ {ConstInt (Int32Type) ⍵ 0}¨⍵}⍴V
+  S←⍺(Int32Type ArrayP 'shape'){0=⍴⍵:⍬ ⋄ {ConstInt (Int32Type) ⍵ 0}¨⍵}⍴V
 
   ⍝ Rank is constant
   ⍝ Rank must also come from V and not D
