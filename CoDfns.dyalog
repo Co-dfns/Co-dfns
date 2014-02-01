@@ -1662,7 +1662,7 @@ GenCond←{mod fr bldr←⍺⍺
   Tv←BuildLoad bldr(BuildGEP bldr Tp (GEPI 0 0) 2 '')'Tv'
 
   ⍝ Create the test of Tv to conclude the block
-  T←BuildICmp bldr 32 Tv,ConstInt Int64Type 0 1
+  T←BuildICmp bldr 32 Tv(ConstInt Int64Type 0 1)'T'
 
   ⍝ Create the (simple) consequent block, which is a single 
   ⍝ return of either no value or the expression value.
@@ -1671,6 +1671,7 @@ GenCond←{mod fr bldr←⍺⍺
   
   ⍝ Create the alternate block and setup the builder to 
   ⍝ point to it.
+  ob←GetPreviousBasicBlock cb
   ab←AppendBasicBlock fr 'alternate'
   _←PositionBuilderAtEnd bldr ob
   _←BuildCondBr bldr T ab cb
@@ -1839,6 +1840,9 @@ P←'LLVM'
 
 ⍝ LLVMValueRef 	LLVMGetLastInstruction (LLVMBasicBlockRef BB)
 'GetLastInstruction'⎕NA'P ',D,'|',P,'GetLastInstruction P'
+
+⍝ LLVMBasicBlockRef 	LLVMGetPreviousBasicBlock (LLVMBasicBlockRef BB)
+'GetPreviousBasicBlock'⎕NA'P ',D,'|',P,'GetPreviousBasicBlock P'
 
 ⍝ LLVMValueRef 	LLVMBuildStructGEP (LLVMBuilderRef B, LLVMValueRef Pointer, unsigned Idx, const char *Name)
 'BuildStructGEP'⎕NA'P ',D,'|',P,'BuildStructGEP P P U <0C'
