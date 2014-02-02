@@ -430,6 +430,29 @@
             </simplelist>
           </td>
         </tr>
+        <tr>
+          <td>Friday, January 31st, 2014</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Apply Engineering Changes #41 and 42.
+              </member>
+              <member>
+                Miscellaneous build improvements in code
+              </member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>Sunday, February 2nd, 2014</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Apply Engineering Changes #43
+              </member>
+            </simplelist>
+          </td>
+        </tr>
       </tbody>
 		</informaltable>
 	</section>
