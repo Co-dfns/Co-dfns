@@ -1535,8 +1535,8 @@ GenConst←{
   R←ConstInt (Int16Type) (⊃⍴⍴V) 0
 
   ⍝ Size is a function of the number of elements in V
-  ⍝ which is really the size of D
-  Sz←ConstInt (Int64Type) (⊃⍴D) 0
+  ⍝ which is really the size of D, or the length of ,V
+  Sz←ConstInt (Int64Type) (⊃⍴,V) 0
 
   ⍝ For now we have a constant type
   T←ConstInt (Int8Type) 2 0
