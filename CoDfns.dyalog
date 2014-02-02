@@ -1715,8 +1715,9 @@ MkEmptyReturn←{
 ⍝ See the Software Architecture for details on the Array Structure.
 
 GenArrayType←{
-  p←PointerType (Int64Type) 0
-  lt←(Int16Type)(Int64Type)(Int8Type) p p
+  D←PointerType (Int64Type) 0
+  S←PointerType (Int32Type) 0
+  lt←(Int16Type)(Int64Type)(Int8Type) D S
   StructType lt 5 0
 }
 
