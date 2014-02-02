@@ -1717,7 +1717,7 @@ MkEmptyReturn←{
 GenArrayType←{
   D←PointerType (Int64Type) 0
   S←PointerType (Int32Type) 0
-  lt←(Int16Type)(Int64Type)(Int8Type) D S
+  lt←(Int16Type)(Int64Type)(Int8Type) S D
   StructType lt 5 0
 }
 
