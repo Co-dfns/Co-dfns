@@ -88,6 +88,17 @@
 			  <td>6</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
+					  <member>Complete support for primitive functions</member>
+					  <member>Add support for additional numeric and string types</member>
+					  <member>Add support for overflow and numeric type promotion and compaction</member>
+					  <member>Support nested arrays</member>
+				  </simplelist>
+			  </td>
+		  </tr>
+		  <tr>
+			  <td>7</td>
+			  <td colspan="6">
+				  <simplelist type="horiz">
             <member>Ensure that generated names do not overlap with user names</member>
 					  <member>Support all PAREN and non SELECT expression states</member>
 					  <member>Support all Bind <literal>∊</literal> BOUND
@@ -96,7 +107,7 @@
 			  </td>
 		  </tr>
 		  <tr>
-			  <td>7</td>
+			  <td>8</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Support the rest of the Function states</member>
@@ -106,7 +117,7 @@
 			  </td>
 		  </tr>
 		  <tr>
-			  <td>8</td>
+			  <td>9</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Support non-SELECT bracket expression states</member>
@@ -114,7 +125,7 @@
 			  </td>
 		  </tr>
 		  <tr>
-			  <td>9</td>
+			  <td>10</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Support non-parenthesized and non-bracketed Function Expression states</member>
@@ -122,7 +133,7 @@
 			  </td>
 		  </tr>
 		  <tr>
-			  <td>10</td>
+			  <td>11</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Support parenthesized Function Expression states</member>
@@ -130,7 +141,7 @@
 			  </td>
 		  </tr>
 		  <tr>
-			  <td>11</td>
+			  <td>12</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Support Axis operator and bracket Function Expression states</member>
@@ -138,18 +149,7 @@
 			  </td>
 		  </tr>
 		  <tr>
-			  <td>12</td>
-			  <td colspan="6">
-				  <simplelist type="horiz">
-					  <member>Complete support for primitive functions</member>
-					  <member>Add support for additional numeric and string types</member>
-					  <member>Add support for overflow and numeric type promotion and compaction</member>
-					  <member>Support nested arrays</member>
-				  </simplelist>
-			  </td>
-		  </tr>
-		  <tr>
-			  <td>13</td>
+			  <td>14</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Support selective assignment expressions and selective assignment</member>
@@ -157,7 +157,7 @@
 			  </td>
 		  </tr>
 		  <tr>
-			  <td>14</td>
+			  <td>15</td>
 			  <td colspan="6">
 				  <simplelist type="horiz">
 					  <member>Add optimization for scalar function fusion</member>
