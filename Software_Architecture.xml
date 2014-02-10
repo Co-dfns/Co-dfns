@@ -973,45 +973,10 @@
           </td>
         </tr>
         <tr>
-          <td>FuseScalars</td>
-          <td>Optimization</td>
-          <td colspan="3">
-            Fuse Scalar expressions together
-          </td>
-        </tr>
-        <tr>
-          <td>FindMutated</td>
+          <td>DropUnreaached</td>
           <td>Standard</td>
           <td colspan="3">
-            Mark the arrays that are mutated in some way
-          </td>
-        </tr>
-        <tr>
-          <td>IntroCopies</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Introduce array copying to preserve semantics when necessary
-          </td>
-        </tr>
-        <tr>
-          <td>IntroFrees</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Introduce array free statements as necessary
-          </td>
-        </tr>
-        <tr>
-          <td>IntroSetps</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Introduce cells for mutable variables
-          </td>
-        </tr>
-        <tr>
-          <td>ConvAssgn</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Convert assignments into normal expressions
+            Eliminate code in function bodies that syntactically can never be executed.
           </td>
         </tr>
         <tr>
@@ -1019,34 +984,6 @@
           <td>Standard</td>
           <td colspan="3">
             Lift all constant expressions to the top-level
-          </td>
-        </tr>
-        <tr>
-          <td>ElimFVs</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Eliminate all the free variables in functions
-          </td>
-        </tr>
-        <tr>
-          <td>LiftFuncs</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Lift all Functions to the top-level
-          </td>
-        </tr>
-        <tr>
-          <td>ExposeBBs</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Convert function bodies into basic blocks
-          </td>
-        </tr>
-        <tr>
-          <td>ConvNames</td>
-          <td>Standard</td>
-          <td colspan="3">
-            Convert all names into valid output names, including the primitives
           </td>
         </tr>
         <tr>
@@ -1928,6 +1865,69 @@
       <informaltable frame="void" rules="rows">
         <thead>
           <tr>
+            <th colspan="4">Standard pass: DropUnreached</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended Function</td>
+            <td colspan="3">
+              Simplify function bodies to remove code that is
+              obviously not reachable.
+            </td>
+          </tr>
+          <tr>
+            <td>Right Argument</td>
+            <td colspan="3">
+              Namespace AST
+            </td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">
+              Namespace AST
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              Output and input are semantically the same.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              Function bodies are the only sub-trees which may have
+              altered nodes.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              Function bodies may have less nodes on output.
+            </td>
+          </tr>
+          <tr>
+            <td>State</td>
+            <td colspan="3">
+              Context <literal>←</literal> Top 
+              <literal>⋄</literal>
+              Fix <literal>←</literal> Yes 
+              <literal>⋄</literal>
+              Namespace <literal>←</literal> NOTSEEN 
+              <literal>⋄</literal>
+              Eot <literal>←</literal> No
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
             <th colspan="4">Standard pass: LiftConsts</th>
           </tr>
           <tr>
@@ -1995,439 +1995,166 @@
           </tr>
         </tbody>
       </informaltable>
-      <section>
-        <title>Optimization Pass: FuseScalars</title>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td>Should handle any arbitrary Namespace</td>
-            </tr>
-            <tr>
-              <td>Output Root Element</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Scalar Expressions</td>
-              <td>Fuse</td>
-              <td>
-                Each scalar expression, which is a series of scalar 
-                operations should be rewritten so that the primitives 
-                only operate on a single scalar value at a time.
-              </td>
-            </tr>
-          </tbody>
-        </informaltable>
-        <simpara>
-          XXX: There is more to document here, including the overall 
-          transformation and the code that is used to replace things.
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: FindMutated</title>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Output Root Element</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Variable</td>
-              <td>Introduce mutated attribute</td>
-              <td>
-                Add a mutated attribute to those arrays that are assigned
-              </td>
-            </tr>
-          </tbody>
-        </informaltable>
-        <simpara>
-          XXX: Need more detail about this.
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: IntroCopies</title>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td>Should handle any arbitrary Namespace</td>
-            </tr>
-            <tr>
-              <td>Output Root Element</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Primitive</td>
-              <td>Introduce Copy</td>
-              <td>
-                Introduce copies where necessary or important to preserve the 
-                semantics of the program.
-              </td>
-            </tr>
-          </tbody>
-        </informaltable>
-        <simpara>
-          XXX: This needs more detail about what this actually means.
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: IntroFrees</title>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Output Root Element</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Primitive</td>
-              <td>Introduce Free</td>
-              <td>
-                Introduce frees to ensure that the program does not leave 
-                dangling elements.
-              </td>
-            </tr>
-          </tbody>
-        </informaltable>
-      </section>
-      <section>
-        <title>Standard Pass: IntroSetps</title>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Output Root Element</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Variable</td>
-              <td>Convert</td>
-              <td>
-                Convert assignments to mutated variables and their references to 
-                boxed values
-              </td>
-            </tr>
-          </tbody>
-        </informaltable>
-        <simpara>
-          XXX: Need more information here
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: ConvAssgn</title>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Output Root Element</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Indexed Assignment</td>
-              <td>Convert to Call</td>
-              <td>
-                Convert indexed assignments of one form or the other to 
-                some sort of assignment operation, either in LLVM or 
-                the runtime.
-              </td>
-            </tr>
-            <tr>
-              <td>Selective Assignment</td>
-              <td>Convert to Call</td>
-              <td>
-                Convert selective assignments of one form or the other to 
-                some sort of assignment operation, either in LLVM or 
-                the runtime.
-              </td>
-            </tr>
-          </tbody>
-        </informaltable>
-        <simpara>
-          XXX: Need more information here
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: ElimFVs</title>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Class</th>
-              <th>Type/Action</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Input</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Output Root Element</td>
-              <td>Namespace</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Variable</td>
-              <td>Convert if Free</td>
-              <td>
-                If there is a variable reference in a function that is free, 
-                then convert it to a reference into the global environment and 
-                adjust assignments to said variable as appropriate to also assign 
-                the global environment.
-              </td>
-            </tr>
-          </tbody>
-        </informaltable>
-        <simpara>
-          XXX: Need more information here
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: LiftFuncs</title>
-        <simpara>
-          XXX: Need more information here
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: ExposeBBs</title>
-        <simpara>
-          XXX: Need more information here
-        </simpara>
-      </section>
-      <section>
-        <title>Standard Pass: ConvNames</title>
-        <simpara>
-          XXX: Need more information here
-        </simpara>
-      </section>
+    </section>
+  </section>
+  <section>
+    <title>Runtime Design</title>
+    <section>
+      <title>Representing Arrays</title>
+      <simpara>
+        The array data structure is the most critical structure in
+        the system, and deserves careful consideration. The
+        following table details the fields of the array structure
+        and all the elements necessary to construct a valid array
+        structure.
+      </simpara>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Width (Bits)</th>
+            <th colspan="2">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rank</td>
+            <td>
+              <simplelist type="horiz">
+                <member>unsigned</member>
+                <member>integer</member>
+              </simplelist>
+            </td>
+            <td>16</td>
+            <td colspan="2">The count of the dimensions of the array</td>
+          </tr>
+          <tr>
+            <td>Size</td>
+            <td>
+              <simplelist type="horiz">
+                <member>unsigned</member>
+                <member>integer</member>
+              </simplelist>
+            </td>
+            <td>64</td>
+            <td colspan="2">The count of the elements in the array</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>
+              <simplelist type="horiz">
+                <member>unsigned</member>
+                <member>integer</member>
+              </simplelist>
+            </td>
+            <td>8</td>
+            <td colspan="2">The type of the array elements</td>
+          </tr>
+          <tr>
+            <td>Shape</td>
+            <td>Pointer</td>
+            <td>N/A</td>
+            <td colspan="2">A pointer to the dimensions; each
+            dimension is a 32-bit unsigned integer</td>
+          </tr>
+          <tr>
+            <td>Elements</td>
+            <td>Pointer</td>
+            <td>N/A</td>
+            <td colspan="2">A pointer to the buffer containing the
+            elements; the nature of the elements is dependent on the
+            Type</td>
+          </tr>
+          <tr>
+            <td>Kinds</td>
+            <td>Pointer</td>
+            <td>N/A</td>
+            <td colspan="2">A pointer to the types of the elements
+            in a mixed array; only necessary for mixed arrays</td>
+          </tr>
+        </tbody>
+      </informaltable>
     </section>
     <section>
-      <title>Runtime Design</title>
-      <section>
-        <title>Representing Arrays</title>
-        <simpara>
-          The array data structure is the most critical structure in
-          the system, and deserves careful consideration. The
-          following table details the fields of the array structure
-          and all the elements necessary to construct a valid array
-          structure.
-        </simpara>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Type</th>
-              <th>Width (Bits)</th>
-              <th colspan="2">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Rank</td>
-              <td>
-                <simplelist type="horiz">
-                  <member>unsigned</member>
-                  <member>integer</member>
-                </simplelist>
-              </td>
-              <td>16</td>
-              <td colspan="2">The count of the dimensions of the array</td>
-            </tr>
-            <tr>
-              <td>Size</td>
-              <td>
-                <simplelist type="horiz">
-                  <member>unsigned</member>
-                  <member>integer</member>
-                </simplelist>
-              </td>
-              <td>64</td>
-              <td colspan="2">The count of the elements in the array</td>
-            </tr>
-            <tr>
-              <td>Type</td>
-              <td>
-                <simplelist type="horiz">
-                  <member>unsigned</member>
-                  <member>integer</member>
-                </simplelist>
-              </td>
-              <td>8</td>
-              <td colspan="2">The type of the array elements</td>
-            </tr>
-            <tr>
-              <td>Shape</td>
-              <td>Pointer</td>
-              <td>N/A</td>
-              <td colspan="2">A pointer to the dimensions; each
-              dimension is a 32-bit unsigned integer</td>
-            </tr>
-            <tr>
-              <td>Elements</td>
-              <td>Pointer</td>
-              <td>N/A</td>
-              <td colspan="2">A pointer to the buffer containing the
-              elements; the nature of the elements is dependent on the
-              Type</td>
-            </tr>
-            <tr>
-              <td>Kinds</td>
-              <td>Pointer</td>
-              <td>N/A</td>
-              <td colspan="2">A pointer to the types of the elements
-              in a mixed array; only necessary for mixed arrays</td>
-            </tr>
-          </tbody>
-        </informaltable>
-      </section>
-      <section>
-        <title>Representing Scalars</title>
-        <simpara>
-          Each array has a buffer pointing to a set of elements. How these elements are 
-          arrayed in the buffer depends on the type of the scalar. The following table 
-          details the types of scalars, and their structures.
-        </simpara>
-        <informaltable frame="void" rules="rows">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th colspan="2">Name</th>
-              <th colspan="2">Type</th>
-              <th colspan="2">Width (Bits)</th>
-              <th colspan="3">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td colspan="2">Boolean</td>
-              <td colspan="2">
-                <simplelist type="horiz">
-                  <member>unsigned</member>
-                  <member>integer</member>
-                </simplelist>
-              </td>
-              <td colspan="2">1</td>
-              <td colspan="3">A single boolean value; used to compress a bitvector</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td colspan="2">Integer</td>
-              <td colspan="2">
-                <simplelist type="horiz">
-                  <member>signed</member>
-                  <member>integer</member>
-                </simplelist>
-              </td>
-              <td colspan="2">64</td>
-              <td colspan="3">A signed integer value</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td colspan="2">Floating</td>
-              <td colspan="2">IEEE Float</td>
-              <td colspan="2">64</td>
-              <td colspan="3">A floating point value</td>
-            </tr>
-            <tr>
-              <td>4</td>
-              <td colspan="2">Character</td>
-              <td colspan="2">UCS-4/UTF-32</td>
-              <td colspan="2">32</td>
-              <td colspan="3">A single Unicode Character</td>
-            </tr>
-            <tr>
-              <td>5</td>
-              <td colspan="2">Complex</td>
-              <td colspan="2">{3, 3}</td>
-              <td colspan="2">128</td>
-              <td colspan="3">A complex number represented as a pair of floating point values</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td colspan="2">Mixed</td>
-              <td colspan="2">Varied</td>
-              <td colspan="2">Varied</td>
-              <td colspan="3">Any scalar value, whose type is indicated by an auxiliary vector</td>
-            </tr>
-            <tr>
-              <td>7</td>
-              <td colspan="2">Nested</td>
-              <td colspan="2">Array</td>
-              <td colspan="2">sizeof(Array)</td>
-              <td colspan="3">An array header representing an element in a nested array</td>
-            </tr>
-          </tbody>
-        </informaltable>
-      </section>
+      <title>Representing Scalars</title>
+      <simpara>
+        Each array has a buffer pointing to a set of elements. How these elements are 
+        arrayed in the buffer depends on the type of the scalar. The following table 
+        details the types of scalars, and their structures.
+      </simpara>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th colspan="2">Name</th>
+            <th colspan="2">Type</th>
+            <th colspan="2">Width (Bits)</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td colspan="2">Boolean</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>unsigned</member>
+                <member>integer</member>
+              </simplelist>
+            </td>
+            <td colspan="2">1</td>
+            <td colspan="3">A single boolean value; used to compress a bitvector</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td colspan="2">Integer</td>
+            <td colspan="2">
+              <simplelist type="horiz">
+                <member>signed</member>
+                <member>integer</member>
+              </simplelist>
+            </td>
+            <td colspan="2">64</td>
+            <td colspan="3">A signed integer value</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td colspan="2">Floating</td>
+            <td colspan="2">IEEE Float</td>
+            <td colspan="2">64</td>
+            <td colspan="3">A floating point value</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td colspan="2">Character</td>
+            <td colspan="2">UCS-4/UTF-32</td>
+            <td colspan="2">32</td>
+            <td colspan="3">A single Unicode Character</td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td colspan="2">Complex</td>
+            <td colspan="2">{3, 3}</td>
+            <td colspan="2">128</td>
+            <td colspan="3">A complex number represented as a pair of floating point values</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td colspan="2">Mixed</td>
+            <td colspan="2">Varied</td>
+            <td colspan="2">Varied</td>
+            <td colspan="3">Any scalar value, whose type is indicated by an auxiliary vector</td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td colspan="2">Nested</td>
+            <td colspan="2">Array</td>
+            <td colspan="2">sizeof(Array)</td>
+            <td colspan="3">An array header representing an element in a nested array</td>
+          </tr>
+        </tbody>
+      </informaltable>
     </section>
   </section>
 </article>
