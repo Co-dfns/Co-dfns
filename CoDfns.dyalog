@@ -1953,3 +1953,62 @@ P←'LLVM'
 ⍝       means of dealing with local bindings and the return value of expressions 
 ⍝       and assignment as an expression and not as a statement.
 
+⍝ Increment 5 Overview:
+⍝
+⍝ ∘ Support Expressions without nesting or selection:
+⍝    0 empty
+⍝    1 Fea
+⍝    3 N
+⍝    5 Va
+⍝    6 Vna
+⍝    7 Vnu
+⍝    9 Fea N
+⍝   10 Fea Va
+⍝   11 Fea Vna
+⍝   16 N Vnu
+⍝
+⍝ ∘ Only atomic Function Expressions:
+⍝   0 empty
+⍝
+⍝ ∘ Basic scalar function primitives:
+⍝   + - ÷ × | * ⍟ ⌈ ⌊ < ≤ = ≠ ≥ >
+⍝
+⍝ ∘ Basic structural primitives
+⍝   ⍴ , ≡ ≢
+⍝
+⍝ ∘ Only over integers without overflow concerns
+⍝
+⍝ ∘ JIT'd namespace support
+⍝
+⍝ Steps for completing Increment 5
+⍝ ────────────────────────────────
+⍝ 
+⍝ 1. Update Software Architecture with a function signature
+⍝ 
+⍝ 2. Update Tokenize with new stimuli: D[a] & M[a]
+⍝    + - ÷ × | * ⍟ ⌈ ⌊ < ≤ = ≠ ≥ >
+⍝
+⍝ 3. Rewrite ParseFuncExpr to handle atomics
+⍝
+⍝ 4. Rewrite ParseExpr
+⍝   a. Split on Function nodes
+⍝   b. Enclose literals and variables
+⍝   c. Apply nesting levels
+⍝
+⍝ 5. Rewrite DropUnreached
+⍝
+⍝ 6. Adapt Liftconsts to handle new expression types and function expressions. 
+⍝ 
+⍝ 7. Add a pass to insert allocations
+⍝ 
+⍝ 8. Add a pass to flatten function calls.
+⍝ 
+⍝ 9. Add a pass to convert free variables to environment references
+⍝
+⍝ 10. Add support for function calls in GenLlvm
+⍝
+⍝ 11. Add a pass to replace primitive function names with runtime names
+⍝ 
+⍝ 12. Fix ModToNs
+⍝ 
+⍝ 13. Implement runtime functions
