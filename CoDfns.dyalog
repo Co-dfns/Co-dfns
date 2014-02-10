@@ -1227,7 +1227,7 @@ DropUnmd←{
 ⍝ Invariant: Output and input are semantically the same.
 ⍝ Invariant: Function bodies are the only sub-trees which may have altered nodes.
 ⍝ Invarient: Function bodies may have less nodes on output.
-⍝ state: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
+⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 ⍝
 ⍝ Assume for now that all functions appear in FuncExpr nodes at the top
 ⍝ level and do not contain any nested functions. This is sort of a stub 
@@ -1699,7 +1699,9 @@ P←'LLVM'
 ⍝ LLVMValueRef 	LLVMBuildRetVoid (LLVMBuilderRef)
 'BuildRetVoid'⎕NA'P ',D,'|',P,'BuildRetVoid P'
 
-⍝ LLVMValueRef 	LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then, LLVMBasicBlockRef Else)
+⍝ LLVMValueRef 	
+⍝ LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then, 
+⍝     LLVMBasicBlockRef Else)
 'BuildCondBr'⎕NA'P ',D,'|',P,'BuildCondBr P P P P'
 
 ⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder) 
@@ -1727,16 +1729,22 @@ P←'LLVM'
 ⍝ LLVMBasicBlockRef 	LLVMGetPreviousBasicBlock (LLVMBasicBlockRef BB)
 'GetPreviousBasicBlock'⎕NA'P ',D,'|',P,'GetPreviousBasicBlock P'
 
-⍝ LLVMValueRef 	LLVMBuildStructGEP (LLVMBuilderRef B, LLVMValueRef Pointer, unsigned Idx, const char *Name)
+⍝ LLVMValueRef 	
+⍝ LLVMBuildStructGEP (LLVMBuilderRef B, LLVMValueRef Pointer, unsigned Idx, const char *Name)
 'BuildStructGEP'⎕NA'P ',D,'|',P,'BuildStructGEP P P U <0C'
 
-⍝ LLVMValueRef 	LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices, unsigned NumIndices, const char *Name)
+⍝ LLVMValueRef 	
+⍝ LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices, 
+⍝     unsigned NumIndices, const char *Name)
 'BuildGEP'⎕NA'P ',D,'|',P,'BuildGEP P P <P[] U <0C'
 
-⍝ LLVMValueRef 	LLVMBuildBitCast (LLVMBuilderRef, LLVMValueRef Val, LLVMTypeRef DestTy, const char *Name)
+⍝ LLVMValueRef 	
+⍝ LLVMBuildBitCast (LLVMBuilderRef, LLVMValueRef Val, LLVMTypeRef DestTy, const char *Name)
 'BuildBitCast'⎕NA'P ',D,'|',P,'BuildBitCast P P P <0C'
 
-⍝ LLVMValueRef 	LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS, LLVMValueRef RHS, const char *Name)
+⍝ LLVMValueRef 	
+⍝ LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS, 
+⍝     LLVMValueRef RHS, const char *Name)
 'BuildICmp'⎕NA'P ',D,'|',P,'BuildICmp P U P P <0C'
 
 ⍝ LLVMBool
