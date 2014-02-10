@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
-  <uri resource="Usage Specification.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Statistical Testing Report.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Statement of Work.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Software Requirements.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Software Development Plan.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Software Architecture.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Project Record.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Increment Construction Plan.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Increment Certification Report.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Function Specification.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Engineering Change Log.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Cleanroom Engineering Guide.xml" uri="rng/docbookxi.rnc"/>
-  <uri resource="Increment Test Plan.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Usage_Specification.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Statistical_Testing_Report.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Statement_of_Work.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Software_Requirements.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Software_Development_Plan.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Software_Architecture.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Project_Record.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Increment_Construction_Plan.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Increment_Certification_Report.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Function_Specification.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Engineering_Change_Log.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Cleanroom_Engineering_Guide.xml" uri="rng/docbookxi.rnc"/>
+  <uri resource="Increment_Test_Plan.xml" uri="rng/docbookxi.rnc"/>
 </locatingRules>
