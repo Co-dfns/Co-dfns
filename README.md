@@ -1,11 +1,11 @@
 # Co-Dfns Compiler
 
-This is the developer's repository for the Co-Dfns compiler project.
-The Co-Dfns project aims to provide a high-performance,
-high-reliability compiler for a super-set of the Dyalog D-fns
-programming language.  The D-fns language is a functionally oriented,
-lexically scoped dialect of APL. The Co-Dfns language extends the
-D-fns language to include explicit task parallelism with implicit
+This is the developer's repository for the Co-dfns compiler project.
+The Co-dfns project aims to provide a high-performance,
+high-reliability compiler for a super-set of the Dyalog dfns
+programming language.  The dfns language is a functionally oriented,
+lexically scoped dialect of APL. The Co-dfns language extends the
+dfns language to include explicit task parallelism with implicit
 structures for synchronization and determinism. The language is
 designed to enable rigorous formal analysis of programs to aid in
 compiler optimization and programmer productivity, as well as in the
