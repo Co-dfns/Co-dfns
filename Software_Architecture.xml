@@ -987,6 +987,48 @@
           </td>
         </tr>
         <tr>
+          <td>ConvFree</td>
+          <td>Standard</td>
+          <td colspan="3">
+            Convert all free references into references to an environment
+          </td>
+        </tr>
+        <tr>
+          <td>LiftFuncs</td>
+          <td>Standard</td>
+          <td colspan="3">
+            Lift all user defined functions to the top level
+          </td>
+        </tr>
+        <tr>
+          <td>FlattenExprs</td>
+          <td>Standard</td>
+          <td colspan="3">
+            Flatten all expressions to a single call or reference
+          </td>
+        </tr>
+        <tr>
+          <td>AssignVars</td>
+          <td>Standard</td>
+          <td colspan="3">
+            Assign variables to local variable slots
+          </td>
+        </tr>
+        <tr>
+          <td>InsertAllocas</td>
+          <td>Standard</td>
+          <td colspan="3">
+            Insert the allocations at function entry for all local variables
+          </td>
+        </tr>
+        <tr>
+          <td>ConvPrims</td>
+          <td>Standard</td>
+          <td colspan="3">
+            Convert primitive function calls to runtime function calls
+          </td>
+        </tr>
+        <tr>
           <td>GenLLVM</td>
           <td>Exit</td>
           <td colspan="3">
@@ -1954,7 +1996,272 @@
           <tr>
             <td>Invariant</td>
             <td colspan="3">
-              The depth of any constant expression should always be 1.
+              The depth of any constant expression should always be 1
+              on output.
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Standard pass: ConvFree</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended function</td>
+            <td colspan="3">
+              Convert all free references into references on environment.
+            </td>
+          </tr>
+          <tr>
+            <td>Right argument</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output, no function has any free variables.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output, all variables are either references into an
+              environment or references to a binding in local scope.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              Input has only variable references and function calls in
+              expressions. 
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Standard pass: LiftFuncs</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended function</td>
+            <td colspan="3">
+              Lift all user defined functions to the top-level.
+            </td>
+          </tr>
+          <tr>
+            <td>Right argument</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              All functions appear at depth 1 in output.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output all function calls include information on environments.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              All variables on input indicate their environment.
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Standard pass: FlattenExprs</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended function</td>
+            <td colspan="3">
+              Flatten all expressions to a single call or reference.
+            </td>
+          </tr>
+          <tr>
+            <td>Right argument</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On input all functions are depth 1.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On input all expressions are nested references or calls
+              involving only references.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output all function bodies consist of a string of
+              expressions where each expression is either named or unnamed.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output all expressions in function bodies are simple
+              with no nesting and are either a reference or a single
+              function call.
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Standard pass: AssignVars</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended function</td>
+            <td colspan="3">
+              Assign variables to local variable slots.
+            </td>
+          </tr>
+          <tr>
+            <td>Right argument</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On input all expressions are flat and all functions at
+              top level. 
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output all variable references and assignments are
+              annotated with the local memory slot they occupy. 
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Standard pass: InsertAllocas</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended function</td>
+            <td colspan="3">
+              Insert the allocations at function entry for all local
+              variables. 
+            </td>
+          </tr>
+          <tr>
+            <td>Right argument</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On input all variables refer to an appropriate memory slot.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output all function bodies begin with an alloca call
+              of the right size for the number of memory slots used by
+              the local function body.
+            </td>
+          </tr>
+        </tbody>
+      </informaltable>
+      <informaltable frame="void" rules="rows">
+        <thead>
+          <tr>
+            <th colspan="4">Standard pass: ConvPrims</th>
+          </tr>
+          <tr>
+            <th>Type</th>
+            <th colspan="3">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Intended function</td>
+            <td colspan="3">
+              Convert primitive function calls to runtime function calls.
+            </td>
+          </tr>
+          <tr>
+            <td>Right argument</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Output</td>
+            <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output all primitive function calls are converted to
+              runtime function calls.
             </td>
           </tr>
         </tbody>
@@ -2155,6 +2462,77 @@
           </tr>
         </tbody>
       </informaltable>
+    </section>
+    <section>
+      <title>Function Signatures and Calling Conventions</title>
+      <para>
+        Functions in Co-dfns can be nested, but obey a stack
+        discipline. This means that you cannot return functions from
+        other functions. Operators allow you to derive new functions
+        parameterized over old functions, but still maintain the stack
+        discipline. 
+      </para>
+      <para>
+        This leads to some interesting design opportunities with
+        functions. In particular, our representation of functions does
+        not require closures. A 1-1 correspondence between LLVM and
+        Co-dfns functions exists. All Co-dfns functions follow the
+        same function signature as follows:
+      </para>
+      <table rules="rows" frame="void">
+        <caption>Co-dfns Function Signature</caption>
+        <thead>
+          <tr>
+            <td>Argument</td>
+            <td>Name</td>
+            <td>Type</td>
+            <td colspan="3">Description</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Return</td>
+            <td>N/A</td>
+            <td>integer</td>
+            <td colspan="3">
+              An indication of the success of the function or its
+              error state.
+            </td>
+          </tr>
+          <tr>
+            <td>0</td>
+            <td><varname>res</varname></td>
+            <td>Array pointer</td>
+            <td colspan="3">
+              The return result of the function, already initialized.
+            </td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td><varname>lft</varname></td>
+            <td>Array pointer</td>
+            <td colspan="3">
+              A reference to the left argument of the function.
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td><varname>rgt</varname></td>
+            <td>Array pointer</td>
+            <td colspan="3">
+              A reference to the right argument of the function.
+            </td>
+          </tr>
+          <tr>
+            <td><literal>N+3</literal></td>
+            <td><varname>envN</varname></td>
+            <td>Frame pointer</td>
+            <td colspan="3">
+              A reference to a frame pointer further up in the call stack.
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </section>
   </section>
 </article>
