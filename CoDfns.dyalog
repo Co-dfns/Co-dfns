@@ -989,16 +989,22 @@ ParseExpr←{
 ⍝ State: Context ← Fnex ⋄ Opnd ← NONE ⋄ Oper ← NONE ⋄ Axis ← NO ⋄ Nest ← NONE ⋄ Tgt ← No
 
 ParseFuncExpr←{
-  ⍝ Possible Stimuli: Fn
-  ⍝ Indirectly processed Stimuli: N
-  ⍝
-  ⍝ The only possibility that we have right now is that of an user defined constant 
-  ⍝ function, so we will just call that right here.
-  0≠⊃err ast rst←⍺ ParseFunc ⍵:err ast rst ⍺
+  ⍝ Possible Stimuli: Fn Da Ma
+  ⍝ 
+  ⍝ We only accept atomic expressions right now, which means only Fn,
+  ⍝ Da, or Ma, without any consideration to multi-stimuli
+  ⍝ histories. Da and Ma can both be tested without needing to do any
+  ⍝ recursive parsing. We should check that out first. If not, then we
+  ⍝ need to see a function definition, or else fail out. 
+  0≠⊃err ast rst cls eqv←⍺{
+    Pcls←{(~∨\' '=C)/C←⊃'class'Prop 1↑⍵}
+    'Primitive'≡⊃0 1⌷⍵:0(1↑⍵)(1↓⍵)(Pcls ⍵)(⊃'name'Prop 1↑⍵)
+    ⍺ ParseFunc ⍵:err ast rst,2⍴⊂'ambivalent'
+  }⍵:err ast rst ⍺
   
   ⍝ The only thing we can have at this point is a function, so we just handle that 
   ⍝ here directly.
-  Fn←(¯1+⊃⍵) 'FuncExpr' '' (2 2⍴'class' 'ambivalent' 'equiv' 'ambivalent')
+  Fn←(¯1+⊃⍵) 'FuncExpr' '' (2 2⍴'class' cls 'equiv' eqv)
   
   0 (Fn⍪ast) rst ⍺
 }
