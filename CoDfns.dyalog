@@ -237,7 +237,7 @@ ErrorMessage←{
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 Tokenize←{
-  ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { } ⋄
+  ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { } ⋄ D Da M Ma
   ⍝ 
   ⍝ The only real job of this pass is to get to these stimuli, not do anything
   ⍝ more with them.
@@ -251,7 +251,7 @@ Tokenize←{
   VC,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
   VCN←VC,NC←'0123456789'
   
-  ⍝ Additional Characters in domain: ←{}⋄
+  ⍝ Additional Characters in domain: ←{}⋄+-÷×|*⍟⌈⌊<≤=≠≥> ⍝
   ⍝ 
   ⍝ The NC variable contains the decimal digits, used in both 
   ⍝ the N and V tokens. The Nl token is already parsed, so we 
@@ -259,7 +259,7 @@ Tokenize←{
   ⍝ as well.
   
   ⍝ Verify that we have only valid characters in use
-  AC←VCN,'←{}:⋄ ⍝'
+  AC←VCN,' ⍝',TC←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>'
   ~∧/AC∊⍨⊃,/⍵:⎕SIGNAL 2
 
   ⍝ Divide into comment and code
@@ -285,15 +285,17 @@ Tokenize←{
     ⍝ Split on and remove spaces
     T←{((⍴X)⍴1 0)/X←(2≠/' '=' ',⍵)⊂⍵}¨T
     
-    ⍝ Split on ← { } ⋄ :
-    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊'←{}⋄:')⊂⍵}¨¨T
+    ⍝ Split on All Token Characters (TC)
+    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊TC)⊂⍵}¨¨T
 
     ⍝ At this point, all lines are split into tokens
     ⍝ Wrap each token in appropriate element:
-    ⍝   Variables → Variable
-    ⍝   Integer   → Number class ← 'int' 
-    ⍝   ← ⋄ :     → Token class ← 'separator'
-    ⍝   { }       → Token class ← 'delimiter'
+    ⍝   Variables         → Variable
+    ⍝   Integer           → Number    class ← 'int' 
+    ⍝   + - ÷ × | * ⍟ ⌈ ⌊ → Primitive class ← 'monadic axis'
+    ⍝   < ≤ = ≠ ≥ >       → Primitive class ← 'dyadic axis'
+    ⍝   ← ⋄ :             → Token     class ← 'separator'
+    ⍝   { }               → Token     class ← 'delimiter'
   
     ⍝ We switch from lines to a single vector of tokens
     ⍝ Must preserve ability to construct lines
@@ -304,25 +306,29 @@ Tokenize←{
     ⍝ Identifying the type of a token here can be
     ⍝ accomplished by checking the first character 
     ⍝ of the token:
-    ⍝   Variable → T∊VC
-    ⍝   Integer  → T∊NC
-    ⍝   ← ⋄ :    → T∊'←⋄:'
-    ⍝   { }      → T∊'{}'
+    ⍝   Variable          → T∊VC
+    ⍝   Integer           → T∊NC
+    ⍝   + - ÷ × | * ⍟ ⌈ ⌊ → T∊'+-÷×|*⍟⌈⌊'
+    ⍝   < ≤ = ≠ ≥ >       → T∊'<≤=≠≥>'
+    ⍝   ← ⋄ :             → T∊'←⋄:'
+    ⍝   { }               → T∊'{}'
     ⍝
     ⍝ Create a selection vector for each type of token
-    Sv Si Sa Sd←(⊃¨T)∘∊¨VC NC '←⋄:' '{}'
+    Sv Si Spm Spd Sa Sd←(⊃¨T)∘∊¨VC NC '+-÷×|*⍟⌈⌊' '<≤=≠≥>' '←⋄:' '{}'
     
     ⍝ Wrap each type in appropriate elements
     Tv←{1 4⍴2 'Variable' '' (1 2⍴'name' ⍵)}¨Sv/T
     Ti←{1 4⍴2 'Number' '' (2 2⍴'value' ⍵ 'class' 'int')}¨Si/T
+    Tpm←{1 4⍴2 'Primitive' '' (2 2⍴'name' ⍵ 'class' 'monadic axis')}¨Spm/T
+    Tpd←{1 4⍴2 'Primitive' '' (2 2⍴'name' ⍵ 'class' 'dyadic axis')}¨Spd/T 
     Ta←{1 4⍴2 'Token' '' (2 2⍴'name' ⍵ 'class' 'separator')}¨Sa/T
     Td←{1 4⍴2 'Token' '' (2 2⍴'name' ⍵ 'class' 'delimiter')}¨Sd/T
     
     ⍝ Indexes of each type in original
-    Iv Ii Ia Id←Sv Si Sa Sd/¨⊂⍳+/L
+    Iv Ii Ipm Ipd Ia Id←Sv Si Spm Spd Sa Sd/¨⊂⍳+/L
     
     ⍝ Restore T to a vector of non-empty lines of tokens
-    T←(⊃,/L↑¨1)⊂(Tv,Ti,Ta,Td)[⍋Iv,Ii,Ia,Id]
+    T←(⊃,/L↑¨1)⊂(Tv,Ti,Tpm,Tpd,Ta,Td)[⍋Iv,Ii,Ipm,Ipd,Ia,Id]
     
     ⍝ Restore the empty lines of T
     (T,(+/0=L)↑⊂⍬)[⍋((0≠L)/⍳⍴L),(0=L)/⍳⍴L]
