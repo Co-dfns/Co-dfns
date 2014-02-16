@@ -1415,7 +1415,7 @@
             </tr>
             <tr>
               <td>dyadic</td>
-              <td colspan="3">FuncExpr Expression Expression</td>
+              <td colspan="3">Expression FuncExpr Expression</td>
             </tr>
             <tr>
               <td>index</td>
@@ -1423,7 +1423,7 @@
             </tr>
             <tr>
               <td>assignment</td>
-              <td colspan="3">Expression Expression | FuncExpr Expression Expression</td>
+              <td colspan="3">Expression Expression | Expression FuncExpr Expression</td>
             </tr>
           </tbody>
         </informaltable>
