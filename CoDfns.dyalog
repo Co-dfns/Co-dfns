@@ -920,60 +920,105 @@ ParseNamedBnd←{Vn Tp E←⍺
 ⍝ Left Argument: [Name,Type] Environment
 ⍝ Output: (0 or Exception #)(Expression Node)(New [Name,Type] Environment)
 ⍝ Invariant: Depth of the output should be the same as the input
+⍝ Invariant: Either entire right argument is parsed or an exception is given
 ⍝ State: Context ← Expr ⋄ Nest ← NONE ⋄ Class ← ATOM ⋄ Last Seen ← EMPTY
 
 ParseExpr←{
-  ⍝ Possible Stimuli: N Va Vnu ←
-  ⍝
-  ⍝ State Transitions:
-  ⍝   N          → atomic       → (Last Seen ← LIT)
-  ⍝   N N        → atomic       → (Last Seen ← LIT)
-  ⍝   Va         → atomic       → (Last Seen ← VAR)
-  ⍝   Va ←       → wait         → (Class ← FUNC)
-  ⍝   Vnu        → wait         → (Last Seen ← UVAR)
-  ⍝   Vnu Nl     → SYNTAX ERROR → ()
-  ⍝   Vnu ←      → wait         → (Class ← FUNC ⋄ Last Seen ← EMPTY)
-  ⍝   Vnu ← Va   → okay         → (Class ← FUNC ⋄ Last Seen ← VAR)
-  ⍝   Vnu ← Vnu  → wait         → (Last Seen ← UVAR ⋄ Class ← ATOM)
-  ⍝
-  ⍝ For Increment 4 we are handling only arrays of integers, which might 
-  ⍝ possibly have a name. Thus, we can handle all of our cases by only 
-  ⍝ checking for a name first, and then handling the integers separately.
+  ⍝ Possible Stimuli: ← N Va Vna Vi Vnu E Fea Fed Fem
 
   ⍝ Do we have an empty expression?
   0=⊃⍴⍵:2 MtAST ⍺
-  
-  ⍝ Check for a name, and parse as appropriate if we have a name
-  'Variable'≡⊃0 1⌷⍵:⍺{
-    ⍝ Verify that we have an assignment
-    ~2≤⊃⍴⍵:2 MtAST ⍺
-    ~('Token'≡⊃1 1⌷⍵)∧((,'←')≡⊃'name'Prop 1↑1↓⍵):2 MtAST ⍺
 
-    ⍝ Parse the rest as an expression
-    err ast Ne←⍺ ParseExpr 2↓⍵
-    
-    ⍝ If we are successful in that, then we need to bind the 
-    ⍝ parsed expression with the name given in the variable.
-    nm←⊃'name'Prop 1↑⍵
-    0=err:err (nm Bind ast) ((nm 1)⍪Ne)
-    
-    ⍝ Otherwise, we can just pass it through
-    err MtAST ⍺
-  }⍵
-  
-  ⍝ If we do not have a name then we should only have integers, so let's 
-  ⍝ check for that.
-  ~(1⌷⍉⍵)∧.≡⊂'Number':2 MtAST ⍺
-  
-  ⍝ As long as we have all number tokens, we can easily construct the 
-  ⍝ appropriate expression node on top of it. The depth of the expression 
-  ⍝ is one less than the depth of all the tokens that we assume to all 
-  ⍝ be of the same depth.
-  X←(¯1+⊃⍵) 'Expression' '' (1 2⍴'class' 'atomic')⍪⍵
+  ⍝ It is sometimes convenient to error out via signal
+  2::2 MtAST ⍺
+  6::6 MtAST ⍺
+  11::11 MtAST ⍺
 
-  ⍝ At the moment, there is no change to the environment possible, so 
-  ⍝ we pass it through
-  0 X ⍺
+  ⍝ We must consider the following expression states for Increment 5: 
+
+  ⍝  0 empty
+  ⍝  1 Fea
+  ⍝  3 N
+  ⍝  5 Va
+  ⍝  6 Vna
+  ⍝  7 Vnu
+  ⍝  9 Fea N
+  ⍝ 10 Fea Va
+  ⍝ 11 Fea Vna
+  ⍝ 16 N Vnu
+
+  ⍝ Increment 5 does not have nested vectors, so any mix of variables
+  ⍝ and literals won't be valid. Additionally, we have only atomic
+  ⍝ function expressions. There are also no nested expressions, which
+  ⍝ makes assignments and other things easier. Since we are also not
+  ⍝ worried about atomic expressions at the moment, we can consider
+  ⍝ Expression states 9, 10, and 11 (Tables 45, 46, and 47 in the
+  ⍝ Function Specification) as equivalent, more or less to states 3,
+  ⍝ 5, and 6 (Tables 39, 41, and 42). 
+
+  ⍝ State 16 (Table 52) leads only to various error states. In our
+  ⍝ case, because we don't have nested arrays yet, we can map all of
+  ⍝ these to SYNTAX ERROR and be done with it.
+
+  ⍝ State 7 leads to only VALUE ERRORS for our case except for
+  ⍝ assignment. 
+
+  ⍝ We don't have strands yet, so Vna doesn't actually make sense, and
+  ⍝ Vnu is actually Vu.  
+
+  ⍝ Analyzing the rest of the tables that are left, we see that the
+  ⍝ stimuli can be divided into a regular set of partitions:
+
+  ⍝   Group      │ Stimuli
+  ⍝   ───────────┼─────────────
+  ⍝   Variables  │ Va Vu
+  ⍝   Literals   │ N+
+  ⍝   Assignment │ ←
+  ⍝   Function   │ Fea Fed Fem
+
+  ⍝ Variables and literals may not appear next to one
+  ⍝ another. Likewise, the ← token must appear between another
+  ⍝ expression and a variable. 
+
+  ⍝ Encapsulate literals as atomic Expression nodes
+  ⍝ XXX: Is there a more elegant way to do this?
+  N←(D←⊃⍵)'Expression' ''(1 2⍴'class' 'atomic')
+  P←2</0,M←(D=0⌷⍉⍵)∧(1⌷⍉⍵)∊⊂'Number'
+  E←(⍵⍪N)[⊃,/(⊂(∧\~M)/⍳S),S,¨P⊂⍳S←⊃⍴⍵;]
+  E[M/(+\P)+⍳⊃⍴⍵;0]+←1
+
+  ⍝ Parse Function calls, Variables, Assignments
+  ⍝ XXX: Please make this neater and cleaner
+  E Ne _←⊃{ast env knd←⍵ ⋄ Dwn←{A←⍵ ⋄ A[;0]+←1 ⋄ A}
+    Em Ed←{D'Expression' '' (1 2⍴'class' ⍵)}¨'monadic' 'dyadic'
+    kid←env{0=⊃err ast←2↑⍺ ParseFuncExpr ⍵:ast ⋄ ⍵}⍺
+    ⍝ kid ∊ Expression FuncExpr Assignment
+    tp←'Expression' 'FuncExpr' 'Token' 'Variable'⍳0 1⌷kid
+    0=knd:{ ⍝ Nothing seen previously
+      0=⍵:(kid⍪ast)env 1
+      1 2∨.=⍵:⎕SIGNAL 2
+      3=⍵:(N⍪Dwn kid⍪ast)env 1
+    }tp
+    1=knd:{ ⍝ Expr seen previously
+      0=⍵:⎕SIGNAL 2
+      1=⍵:(Em⍪Dwn kid⍪ast)env 2
+      2=⍵:ast env 3
+      3=⍵:⎕SIGNAL 2
+    }tp
+    2=knd:{ ⍝ FuncExpr seen previously
+      0=⍵:(Ed⍪(Dwn kid)⍪1↓ast)env 1
+      1=⍵:(Em⍪Dwn kid⍪ast)env 2
+      2=⍵:ast env 3
+      3=⍵:(Ed⍪(Dwn N⍪Dwn kid)⍪1↓ast)env 1
+    }tp
+    3=knd:{ ⍝ Assignment seen previously
+      0 1 2∨.=⍵:⎕SIGNAL 2
+      3=⍵:(nm Bind ast)(((nm←⊃'name'Prop kid)1)⍪env)1
+    }tp
+    'INVALID KIND'⎕SIGNAL 99
+  }/(0 Kids E),⊂MtAST ⍺ 0
+
+  0 E Ne
 }
 
 ⍝ ParseFuncExpr
@@ -989,17 +1034,19 @@ ParseExpr←{
 ⍝ State: Context ← Fnex ⋄ Opnd ← NONE ⋄ Oper ← NONE ⋄ Axis ← NO ⋄ Nest ← NONE ⋄ Tgt ← No
 
 ParseFuncExpr←{
-  ⍝ Possible Stimuli: Fn Da Ma
+  ⍝ Possible Stimuli: Fn Da Ma Vf Vu Vi
   ⍝ 
-  ⍝ We only accept atomic expressions right now, which means only Fn,
-  ⍝ Da, or Ma, without any consideration to multi-stimuli
-  ⍝ histories. Da and Ma can both be tested without needing to do any
-  ⍝ recursive parsing. We should check that out first. If not, then we
-  ⍝ need to see a function definition, or else fail out. 
+  ⍝ We only accept atomic expressions right now, which means only
+  ⍝ atomic stimuli, without any consideration to multi-stimuli
+  ⍝ histories. 
+
   0≠⊃err ast rst cls eqv←⍺{
     Pcls←{(~∨\' '=C)/C←⊃'class'Prop 1↑⍵}
+    IsFunc←{('Variable'≡⊃0 1⌷⍵)∧2=⍺ VarType ⊃'name'Prop 1↑⍵}
     'Primitive'≡⊃0 1⌷⍵:0(1↑⍵)(1↓⍵)(Pcls ⍵)(⊃'name'Prop 1↑⍵)
-    ⍺ ParseFunc ⍵:err ast rst,2⍴⊂'ambivalent'
+    IsFunc ⍵:0(1↑⍵)(1↓⍵)'ambivalent' ''
+    0=⊃err ast rst←⍺ ParseFunc ⍵:err ast rst,2⍴⊂'ambivalent'
+    2 MtAST ⍵ '' ''
   }⍵:err ast rst ⍺
   
   ⍝ The only thing we can have at this point is a function, so we just handle that 
@@ -1072,7 +1119,6 @@ ParseFunc←{
   ⍝ converted into an apropriate node, or left alone if it is an empty line.
    2:: 2 MtAST ⍵
   11::11 MtAST ⍵
-  99::99 MtAST ⍵
   Fn←(1↑Fb)⍪⊃A E←⊃ParseFnLine/⌽(⊂Sd),Cn
   
   ⍝ We return the function node together with the rest of the nodes after 
@@ -2014,21 +2060,24 @@ P←'LLVM'
 ⍝   a. Split on Function nodes
 ⍝   b. Enclose literals and variables
 ⍝   c. Apply nesting levels
-⍝
-⍝ 5. Rewrite DropUnreached
-⍝
-⍝ 6. Adapt Liftconsts to handle new expression types and function expressions. 
 ⍝ 
-⍝ 7. Add a pass to insert allocations
-⍝ 
-⍝ 8. Add a pass to flatten function calls.
-⍝ 
-⍝ 9. Add a pass to convert free variables to environment references
+⍝ 5. Make sure that ParseExpr has the right environment from the top-level
+⍝    and from function bodies.
 ⍝
-⍝ 10. Add support for function calls in GenLlvm
+⍝ 6. Rewrite DropUnreached
 ⍝
-⍝ 11. Add a pass to replace primitive function names with runtime names
+⍝ 7. Adapt Liftconsts to handle new expression types and function expressions. 
 ⍝ 
-⍝ 12. Fix ModToNs
+⍝ 8. Add a pass to insert allocations
+⍝ 
+⍝ 9. Add a pass to flatten function calls.
+⍝ 
+⍝ 10. Add a pass to convert free variables to environment references
+⍝
+⍝ 11. Add support for function calls in GenLlvm
+⍝
+⍝ 12. Add a pass to replace primitive function names with runtime names
+⍝ 
+⍝ 13. Fix ModToNs
 ⍝ 
 ⍝ 13. Implement runtime functions
