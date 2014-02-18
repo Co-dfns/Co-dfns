@@ -594,9 +594,9 @@ Parse←{
   ⍝ return an extended namespace and a new environment containing the bindings 
   ⍝ that have been created so far. 
   ⍝
-  ⍝ To begin with, we need to start with an empty environment and an empty 
-  ⍝ AST. This is our Seed value.
-  SD←(0 4⍴⍬)MtNTE
+  ⍝ Start with an empty AST and the function bindings at the top-level as 
+  ⍝ the seed value.
+  SD←(0 4⍴⍬)(⊃ParseFeBindings/(1 Kids NS),⊂0 2⍴⍬)
   
   ⍝ We note that all sub-trees of the the main Tokens AST at this point
   ⍝ are lines.  All other nodes types are at depth 2 or greater. We assume
@@ -613,6 +613,22 @@ Parse←{
   ⍝ We return the final environment created by the ParseTopLine function and 
   ⍝ the final Namespace AST. 
   NS E
+}
+
+⍝ ParseFeBindings
+⍝
+⍝ Intended Function: Describe an set of bindings which is an extension of 
+⍝ given binding and any function bindings introduced by the given 
+⍝ AST top-level node. 
+⍝
+⍝ Right Argument: (Name, Type) Environment
+⍝ Left Argument: A top-level Namespace AST child node
+⍝ Output: (Name, Type) Environment
+⍝ Invariant: Output extends the right argument
+⍝ Invariant: Only function bindings are added
+
+ParseFeBindings←{
+
 }
 
 ⍝ ParseTopLine
