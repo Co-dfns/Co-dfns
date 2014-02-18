@@ -628,7 +628,9 @@ Parse←{
 ⍝ Invariant: Only function bindings are added
 
 ParseFeBindings←{
-
+  1=⊃⍴⍺:⍵
+  ~'Function' 'Primitive'∨.≡⊂0(0 1)⊃⌽C←1 Kids ⍺:⍵
+  ⍵⍪⍨2,⍨⍪'name'Prop{⍵⌿⍨(1⌷⍉⍵)∊⊂'Variable'}⊃⍪/1↑¨C
 }
 
 ⍝ ParseTopLine
