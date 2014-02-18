@@ -698,11 +698,12 @@ ParseTopLine←{C E←⍵
   ⍝ We are not quite done with the handling fo the Vu and Vfo states, however, as 
   ⍝ the state-space clearly has more to handle as can be seen from the above table. 
   0=⊃eerr ast Ne←E ParseExpr 1↓⍺:(C⍪ast Comment cmt)Ne
-  0=⊃ferr ast rst Ne←E ParseFuncExpr 1↓⍺:(C⍪ast Comment cmt)Ne
+  0=⊃ferr ast rst←E ParseFuncExpr 1↓⍺:(C⍪ast Comment cmt)E
   
   ⍝ At this point we have only to deal with variables. This happens to be a situation 
   ⍝ that we encounter fairly often, so we abstract this into another function.
-  0=⊃err ast Ne←E 0 ParseLineVar 1↓⍺:(C⍪ast Comment cmt)Ne
+  ⍝ All possible environment changes have already been handled by ParseFeBindings.
+  0=⊃err ast←E 0 ParseLineVar 1↓⍺:(C⍪ast Comment cmt)E
   
   ⍝ When the error is best taken from one of the recursive stimuli (see ParseLineVar 
   ⍝ documentation) then we will use the expression error code, as it is the one most 
@@ -741,7 +742,6 @@ ParseTopLine←{C E←⍵
 ⍝ Right Argument: Matrix of Token and Function nodes
 ⍝ Left Argument: ([name,type] environment)(Parser state class)
 ⍝ Output: (Success/Failure)(Empty Line, Expression, Function, or FuncExpr)
-⍝         (New [name,type] environment)
 ⍝ Invariant: Depth of input and output sub-trees should be the same
 ⍝ Invariant: Should be able to reconstruct the original input from output
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
@@ -787,25 +787,25 @@ ParseLineVar←{E SC←⍺
   ⍝
   ⍝ The first possibility is that we have no variable to be named, in which case we need 
   ⍝ to signal a SYNTAX ERROR.
-  '←'≡⊃'name'Prop 1↑⍵:2 MtAST E
+  '←'≡⊃'name'Prop 1↑⍵:2 MtAST
   
   ⍝ The only non-error cases that make any sense at this point are either Vfo ← or Vu ←, 
   ⍝ so we can check to make sure that we have at least 3 tokens, any less than that 
   ⍝ would indicate either Vfo ← Nl or some other error case. 
-  3>⊃⍴⍵:¯1 MtAST E
+  3>⊃⍴⍵:¯1 MtAST
   
   ⍝ If we have at least three tokens to deal with, then the first two should be an 
   ⍝ assignment token and a variable token. Let's make sure that this is what we 
   ⍝ actually have, otherwise, we should signal an error again.
-  ~'Variable' 'Token'∧.≡⍵[0 1;1]:¯1 MtAST E
-  (,'←')≢⊃'name' Prop 1 4⍴1⌷⍵:¯1 MtAST E
+  ~'Variable' 'Token'∧.≡⍵[0 1;1]:¯1 MtAST
+  (,'←')≢⊃'name' Prop 1 4⍴1⌷⍵:¯1 MtAST
   
   ⍝ Now we need to determine whether the variable is a Vfo or a Vu.
   Tp←E VarType⊢Vn←⊃'name'Prop 1 4⍴0⌷⍵
 
   ⍝ If the type of the variable is Vu, then we have 
   ⍝ the Named ← UNBOUND when we have State Class ← 0
-  (0=Tp)∧(SC=0):0,Vn E ParseNamedUnB 2↓⍵
+  (0=Tp)∧(SC=0):0,⊂Vn E ParseNamedUnB 2↓⍵
   
   ⍝ If we have a Vfo, then the Named ← BOUND
   ⍝ and when we have State Class ← 1 with a Vu
@@ -816,10 +816,10 @@ ParseLineVar←{E SC←⍺
   ⍝ State Class ← 1. We will also have to make sure that the 
   ⍝ types are in the appropriate nameclass if we have another 
   ⍝ class in the stack already.
-  (2 3 4∨.=Tp)∨(0=Tp)∧(SC=1):0,Vn 2 E ParseNamedBnd 2↓⍵
+  (2 3 4∨.=Tp)∨(0=Tp)∧(SC=1):0,⊂Vn 2 E ParseNamedBnd 2↓⍵
   
   ⍝ If we do not have a Vfo or Vu, then something is wrong and we should error out
-  ¯1 MtAST E
+  ¯1 MtAST
 }
 
 ⍝ ParseNamedUnB
@@ -829,7 +829,7 @@ ParseLineVar←{E SC←⍺
 ⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: Variable Name, [Name,Type] Environment
 ⍝ Invariant: Input should have at least one row.
-⍝ Output: FuncExpr Node, [Name,Type] Environment
+⍝ Output: FuncExpr Node
 ⍝ State: Context ← Top ⋄ Value ← EMPTY ⋄ Named ← UNBOUND
 ⍝ Return State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
 
@@ -853,7 +853,7 @@ ParseNamedUnB←{Vn E←⍺
   ⍝ In this case, we take the function expression and give it the name 
   ⍝ given to us. This further requires updating the environment and returning
   ⍝ that together with the new node.
-  0=⊃ferr ast rst Ne←E ParseFuncExpr ⍵:(Vn Bind ast)(Vn 2⍪Ne)
+  0=⊃ferr ast rst←E ParseFuncExpr ⍵:Vn Bind ast
   
   ⍝ Stimuli: Vfo Vu ←
   ⍝
@@ -862,7 +862,7 @@ ParseNamedUnB←{Vn E←⍺
   ⍝ case we have a state exactly like that handled by the ParseLineVar function
   ⍝ above. The only thing we need to remember to do is to add the extra variable 
   ⍝ name that is given to us.
-  0=⊃err ast Ne←E 0 ParseLineVar ⍵:(Vn Bind ast)(Vn 2⍪Ne)
+  0=⊃err ast←E 0 ParseLineVar ⍵:Vn Bind ast
   
   ¯1=×err:⎕SIGNAL ferr
   ⎕SIGNAL err
@@ -875,7 +875,7 @@ ParseNamedUnB←{Vn E←⍺
 ⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: Variable Name, Variable Type, [Name,Type] Environment
 ⍝ Invariant: Input should have at least one row.
-⍝ Output: FuncExpr Node, [Name,Type] Environment
+⍝ Output: FuncExpr Node
 ⍝ State: Context ← Top ⋄ Value ← EMPTY ⋄ Named ← BOUND
 ⍝ Return State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
 
@@ -908,8 +908,8 @@ ParseNamedBnd←{Vn Tp E←⍺
   ⍝ ensure that the type of the variable matches the type of the function 
   ⍝ expression, but at least this time, we have a chance of it succeeding.
   ⍝ If it does succeed, we simply need to add the name and move on.
-  T←2 ⋄ ferr ast rst Ne←E ParseFuncExpr ⍵
-  (0=ferr)∧Tp=T:(Vn Bind ast)(Vn Tp⍪Ne)
+  T←2 ⋄ ferr ast rst←E ParseFuncExpr ⍵
+  (0=ferr)∧Tp=T:Vn Bind ast
   Tp≠T:⎕SIGNAL 2
   
   ⍝ Stimuli: Vfo Vu ←
@@ -920,7 +920,7 @@ ParseNamedBnd←{Vn Tp E←⍺
   ⍝ left only with the states handled by ParseLineVar, except that we need to call 
   ⍝ it with a state class of 1 instead of 0.
   (1=⊃⍴⍵)∧('Variable'≡⊃0 1⌷⍵)∧(0=E VarType⊃'name'Prop 1↑⍵):⎕SIGNAL 6
-  0=⊃err ast Ne←E 1 ParseLineVar ⍵:(Vn Bind ast)(Vn Tp⍪Ne)
+  0=⊃err ast←E 1 ParseLineVar ⍵:Vn Bind ast
   
   ¯1=×err:⎕SIGNAL ferr
   ⎕SIGNAL err
@@ -1045,7 +1045,7 @@ ParseExpr←{
 ⍝
 ⍝ Right Argument: Matrix of Token and Function nodes
 ⍝ Left Argument: [Name,Type] Environment
-⍝ Output: (0 or Exception #)(FuncExpr AST)(Rest of Input)(New [Name,Type] Environment)
+⍝ Output: (0 or Exception #)(FuncExpr AST)(Rest of Input)
 ⍝ Invariant: Depth of the output should be the same as the input
 ⍝ State: Context ← Fnex ⋄ Opnd ← NONE ⋄ Oper ← NONE ⋄ Axis ← NO ⋄ Nest ← NONE ⋄ Tgt ← No
 
@@ -1063,13 +1063,13 @@ ParseFuncExpr←{
     IsFunc ⍵:0(1↑⍵)(1↓⍵)'ambivalent' ''
     0=⊃err ast rst←⍺ ParseFunc ⍵:err ast rst,2⍴⊂'ambivalent'
     2 MtAST ⍵ '' ''
-  }⍵:err ast rst ⍺
+  }⍵:err ast rst
   
   ⍝ The only thing we can have at this point is a function, so we just handle that 
   ⍝ here directly.
   Fn←(¯1+⊃⍵) 'FuncExpr' '' (2 2⍴'class' cls 'equiv' eqv)
   
-  0 (Fn⍪ast) rst ⍺
+  0(Fn⍪ast)rst
 }
 
 ⍝ ParseFunc
