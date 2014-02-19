@@ -400,6 +400,12 @@ VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 ⍝ of the first node of the tree.
 Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
 
+⍝ map f sel g sel h arg: case selection
+⍝ 
+⍝ Utility from Phil Last for doing case selection based on a 
+⍝ boolean map to choose which function to apply to arg.
+sel←{~∨/⍺:⍵ ⋄ g←⍵⍵⍣(⊢/⍺) ⋄ 2=⍴⍺:⍺⍺⍣(⊣/⍺)g ⍵ ⋄ (¯1↓⍺)⍺⍺ g ⍵}
+
 ⍝ Parse
 ⍝
 ⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is 
@@ -1009,32 +1015,53 @@ ParseExpr←{
   ⍝ XXX: Please make this neater and cleaner
   E Ne _←⊃{ast env knd←⍵ ⋄ Dwn←{A←⍵ ⋄ A[;0]+←1 ⋄ A}
     Em Ed←{D'Expression' '' (1 2⍴'class' ⍵)}¨'monadic' 'dyadic'
-    kid←env{0=⊃err ast←2↑⍺ ParseFuncExpr ⍵:ast ⋄ ⍵}⍺
-    ⍝ kid ∊ Expression FuncExpr Assignment
-    tp←'Expression' 'FuncExpr' 'Token' 'Variable'⍳0 1⌷kid
-    0=knd:{ ⍝ Nothing seen previously
-      0=⍵:(kid⍪ast)env 1
-      1 2∨.=⍵:⎕SIGNAL 2
-      3=⍵:(N⍪Dwn kid⍪ast)env 1
-    }tp
-    1=knd:{ ⍝ Expr seen previously
-      0=⍵:⎕SIGNAL 2
-      1=⍵:(Em⍪Dwn kid⍪ast)env 2
-      2=⍵:ast env 3
-      3=⍵:⎕SIGNAL 2
-    }tp
-    2=knd:{ ⍝ FuncExpr seen previously
-      0=⍵:(Ed⍪(Dwn kid)⍪1↓ast)env 1
-      1=⍵:(Em⍪Dwn kid⍪ast)env 2
-      2=⍵:ast env 3
-      3=⍵:(Ed⍪(Dwn N⍪Dwn kid)⍪1↓ast)env 1
-    }tp
-    3=knd:{ ⍝ Assignment seen previously
-      0 1 2∨.=⍵:⎕SIGNAL 2
-      3=⍵:(nm Bind ast)(((nm←⊃'name'Prop kid)1)⍪env)1
-    }tp
-    'INVALID KIND'⎕SIGNAL 99
+    kid←(⍵ ast)⊃⍨0=⊃_ ast←2↑env ParseFuncExpr ⍺
+    case←(16⍴2)⊤2*4⊥knd,⊂'Expression' 'FuncExpr' 'Token' 'Variable'⍳0 1⌷kid
+    c01←c02←c10←c13←c30←c31←c32←{⎕SIGNAL 2}
+    c00←{(kid⍪ast),env 1}
+    c03←{(N⍪Dwn kid⍪ast)env 1}
+    c21←c11←{(Em⍪Dwn kid⍪ast)env 2}
+    c22←c12←{ast env 3}
+    c20←{(Ed⍪(Dwn kid)⍪1↓ast)env 1}
+    c23←{(Ed⍪(Dwn N⍪Dwn kid)⍪1↓ast)env 1}
+    c33←{(nm Bind ast)(((nm←⊃'name'Prop kid)1)⍪env)1}
+    c3←c33 sel c32 sel c31 sel c30
+    c2←c3 sel c23 sel c22 sel c21 sel c20
+    c1←c2 sel c13 sel c12 sel c11 sel c10
+    c0←c1 sel c03 sel c02 sel c01 sel c00
+    case c0 ⍵
   }/(0 Kids E),⊂MtAST ⍺ 0
+
+  ⍝ Parse Function calls, Variables, Assignments
+  ⍝ XXX: Please make this neater and cleaner
+  ⍝ E Ne _←⊃{ast env knd←⍵ ⋄ Dwn←{A←⍵ ⋄ A[;0]+←1 ⋄ A}
+  ⍝   Em Ed←{D'Expression' '' (1 2⍴'class' ⍵)}¨'monadic' 'dyadic'
+  ⍝   kid←env{0=⊃err ast←2↑⍺ ParseFuncExpr ⍵:ast ⋄ ⍵}⍺
+  ⍝   ⍝ kid ∊ Expression FuncExpr Assignment
+  ⍝   tp←'Expression' 'FuncExpr' 'Token' 'Variable'⍳0 1⌷kid
+  ⍝   0=knd:{ ⍝ Nothing seen previously
+  ⍝     0=⍵:(kid⍪ast)env 1
+  ⍝     1 2∨.=⍵:⎕SIGNAL 2
+  ⍝     3=⍵:(N⍪Dwn kid⍪ast)env 1
+  ⍝   }tp
+  ⍝   1=knd:{ ⍝ Expr seen previously
+  ⍝     0=⍵:⎕SIGNAL 2
+  ⍝     1=⍵:(Em⍪Dwn kid⍪ast)env 2
+  ⍝     2=⍵:ast env 3
+  ⍝     3=⍵:⎕SIGNAL 2
+  ⍝   }tp
+  ⍝   2=knd:{ ⍝ FuncExpr seen previously
+  ⍝     0=⍵:(Ed⍪(Dwn kid)⍪1↓ast)env 1
+  ⍝     1=⍵:(Em⍪Dwn kid⍪ast)env 2
+  ⍝     2=⍵:ast env 3
+  ⍝     3=⍵:(Ed⍪(Dwn N⍪Dwn kid)⍪1↓ast)env 1
+  ⍝   }tp
+  ⍝   3=knd:{ ⍝ Assignment seen previously
+  ⍝     0 1 2∨.=⍵:⎕SIGNAL 2
+  ⍝     3=⍵:(nm Bind ast)(((nm←⊃'name'Prop kid)1)⍪env)1
+  ⍝   }tp
+  ⍝   'INVALID KIND'⎕SIGNAL 99
+  ⍝ }/(0 Kids E),⊂MtAST ⍺ 0
 
   0 E Ne
 }
