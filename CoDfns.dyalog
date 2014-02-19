@@ -1304,7 +1304,7 @@ DropUnmd←{
 DropUnreached←{
   d←(~(∨\0,1↓¯1⌽(0=⊃∘⍴∘('name'∘Prop 1∘↑))¨))/⊢
   f←'Function'≡(⊃0 1∘⌷)
-  {0=⊃⍴k←1 Kids ⍵:⍵ ⋄ ⊃⍪/∇¨k{f ⍵:d ⍺ ⋄ ⍺}⍵}⍵
+  {0=⊃⍴k←1 Kids ⍵:⍵ ⋄ ⊃⍪/∇¨d⍣(f ⍵)⊢k}⍵
 }
 
 ⍝ LiftConsts
