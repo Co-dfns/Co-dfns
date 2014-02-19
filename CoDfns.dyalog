@@ -1294,19 +1294,12 @@ DropUnmd←{
 }
 
 ⍝ DropUnreached
-⍝
-⍝ Intended Function: Simplify function bodies to remove code that is 
-⍝ obviously not reachable.
-⍝
-⍝ Right argument: Namespace AST
-⍝ Output: Namespace AST
-⍝ Invariant: Output and input are semantically the same.
-⍝ Invariant: Function bodies are the only sub-trees which may have altered nodes.
-⍝ Invarient: Function bodies may have less nodes on output.
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
+⍝ 
+⍝ Intended Function: Simplify functions by removing code in function
+⍝ bodies after a return expression (unnamed expression).
 ⍝
 ⍝ d: Drop all kids after first unnamed expression
-⍝ f: Test if node is a Functio node
+⍝ f: Test if node is a Function node
 
 DropUnreached←{
   d←(~(∨\0,1↓¯1⌽(0=⊃∘⍴∘('name'∘Prop 1∘↑))¨))/⊢
