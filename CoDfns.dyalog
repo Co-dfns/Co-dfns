@@ -1305,23 +1305,13 @@ DropUnmd←{
 ⍝ Invarient: Function bodies may have less nodes on output.
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 ⍝
-⍝ Assume for now that all functions appear in FuncExpr nodes at the top
-⍝ level and do not contain any nested functions. This is sort of a stub 
-⍝ function, and will require additional reworking further down the line.
+⍝ d: Drop all kids after first unnamed expression
+⍝ f: Test if node is a Functio node
 
 DropUnreached←{
-  ⍝ Generate a mask covering all depth 3 nodes before and including
-  ⍝ first unnamed Expression node.
-  Msk←{~∨\0,1↓¯1⌽((⍺/1⌷⍉⍵)∊⊂'Expression')×{~(⊂'name')∊0⌷⍉⍵}¨⍺/3⌷⍉⍵}
-
-  ⍝ Drop all function body nodes after first unnamed expression node
-  Drp←{(2↑⍵)⍪⊃⍪/(⊂MtAST),(Nm Msk ⍵)/(Nm←3=0⌷⍉⍵)⊂[0]⍵}
-
-  ⍝ Shortcut when there are no children
-  1=⊃⍴⍵:⍵
-
-  ⍝ Apply Drp to all top-level functions and recombine results
-  (1↑⍵)⍪⊃⍪/(⊂MtAST),{'FuncExpr'≡⊃0 1⌷⍵:Drp ⍵ ⋄ ⍵}¨1 Kids ⍵
+  d←(~(∨\0,1↓¯1⌽(0=⊃∘⍴∘('name'∘Prop 1∘↑))¨))/⊢
+  f←'Function'≡(⊃0 1∘⌷)
+  {0=⊃⍴k←1 Kids ⍵:⍵ ⋄ ⊃⍪/∇¨k{f ⍵:d ⍺ ⋄ ⍺}⍵}⍵
 }
 
 ⍝ LiftConsts
