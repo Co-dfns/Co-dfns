@@ -1032,37 +1032,6 @@ ParseExpr←{
     case c0 ⍵
   }/(0 Kids E),⊂MtAST ⍺ 0
 
-  ⍝ Parse Function calls, Variables, Assignments
-  ⍝ XXX: Please make this neater and cleaner
-  ⍝ E Ne _←⊃{ast env knd←⍵ ⋄ Dwn←{A←⍵ ⋄ A[;0]+←1 ⋄ A}
-  ⍝   Em Ed←{D'Expression' '' (1 2⍴'class' ⍵)}¨'monadic' 'dyadic'
-  ⍝   kid←env{0=⊃err ast←2↑⍺ ParseFuncExpr ⍵:ast ⋄ ⍵}⍺
-  ⍝   ⍝ kid ∊ Expression FuncExpr Assignment
-  ⍝   tp←'Expression' 'FuncExpr' 'Token' 'Variable'⍳0 1⌷kid
-  ⍝   0=knd:{ ⍝ Nothing seen previously
-  ⍝     0=⍵:(kid⍪ast)env 1
-  ⍝     1 2∨.=⍵:⎕SIGNAL 2
-  ⍝     3=⍵:(N⍪Dwn kid⍪ast)env 1
-  ⍝   }tp
-  ⍝   1=knd:{ ⍝ Expr seen previously
-  ⍝     0=⍵:⎕SIGNAL 2
-  ⍝     1=⍵:(Em⍪Dwn kid⍪ast)env 2
-  ⍝     2=⍵:ast env 3
-  ⍝     3=⍵:⎕SIGNAL 2
-  ⍝   }tp
-  ⍝   2=knd:{ ⍝ FuncExpr seen previously
-  ⍝     0=⍵:(Ed⍪(Dwn kid)⍪1↓ast)env 1
-  ⍝     1=⍵:(Em⍪Dwn kid⍪ast)env 2
-  ⍝     2=⍵:ast env 3
-  ⍝     3=⍵:(Ed⍪(Dwn N⍪Dwn kid)⍪1↓ast)env 1
-  ⍝   }tp
-  ⍝   3=knd:{ ⍝ Assignment seen previously
-  ⍝     0 1 2∨.=⍵:⎕SIGNAL 2
-  ⍝     3=⍵:(nm Bind ast)(((nm←⊃'name'Prop kid)1)⍪env)1
-  ⍝   }tp
-  ⍝   'INVALID KIND'⎕SIGNAL 99
-  ⍝ }/(0 Kids E),⊂MtAST ⍺ 0
-
   0 E Ne
 }
 
@@ -1336,17 +1305,7 @@ DropUnreached←{
 
 ⍝ LiftConsts
 ⍝
-⍝ Intended Function: Remove all constants from all depths to ensure that 
-⍝ there exist constant values only at the top level. 
-⍝
-⍝ Right argument: Namespace AST
-⍝ Output: Namespace AST
-⍝ Invariant: Function Expressions appear only at top-level
-⍝ Invariant: Expressions contain only integers
-⍝ Invariant: Functions contain only Expressions or Conditions
-⍝ Invariant: FuncExpr nodes contain only a single Function node
-⍝ Invariant: FuncExpr nodes always contain a Function node
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
+⍝ Intended Function: Lift all literal expressions to the top level.
 
 LiftConsts←{
   I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
