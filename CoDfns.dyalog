@@ -1306,37 +1306,26 @@ DropUnreached←{
 ⍝ LiftConsts
 ⍝
 ⍝ Intended Function: Lift all literal expressions to the top level.
+⍝
+⍝ I: Index counter for lifted constant variables
+⍝ MkV: Function to make a fresh lifted constant variable
+⍝ e: Bitmask of expression nodes to be lifted
+⍝ l: Bitmask of literal Number nodes for lifting
+⍝ s: Bitmask of Number nodes which start sequences of Number nodes
+⍝ v: Vector of fresh variable names
+⍝ h: Set of literal expressions to be lifted
+⍝ hn: Node names of h
+⍝ a: Incoming AST
 
-LiftConsts←{
-  I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
-
-  ⍝ Note: By the invariants, processing expressions of any sort does 
-  ⍝ not depend on any other sibling or parent nodes.
-
-  ⍝ Lifting an expression generates two new expressions: a top-level 
-  ⍝ expression binding the literal to a newly generated global name, 
-  ⍝ and the previous expression will all Number nodes replaced by a single 
-  ⍝ Variable node referring to the global name. 
-  TpExpr←{1 'Expression' '' (2 2⍴'class' 'atomic' 'name' ⍺)⍪2,¯3↑[1]1↓⍵}
-  SbExpr←{(1↑⍵)⍪(1+⊃⍵) 'Variable' '' (2 2⍴'name' ⍺ 'class' 'array')}
-  Expr←{(V TpExpr ⍵)(V SbExpr ⍵)⊣V←MkV⍬}
-
-  ⍝ Lifting a Condition node is just the lifting of it's expressions, 
-  ⍝ merging the results.
-  Cond←{⍪⌿↑(⊂MtAST(1↑⍵)),Expr¨1 Kids ⍵}
-
-  ⍝ Lifting a Function Expression generates a new set of top-level 
-  ⍝ nodes binding the constants in the body of the function to fresh 
-  ⍝ top-level names, while substituting each constant with a variable 
-  ⍝ in a newly formed Function Expression node.
-  FnEx←{⊃⍪/⍪⌿↑(⊂MtAST(2↑⍵)),{'Expression'≡⊃0 1⌷⍵⍪0 '' '' MtA:Expr ⍵ ⋄ Cond ⍵}¨C←2 Kids ⍵}
-
-  ⍝ Shortcut when Namespace is empty
-  1=⊃⍴⍵:⍵
-
-  ⍝ Each top-level FuncExpr needs to be processed, and then recombined 
-  ⍝ to form the final output. 
-  ⊃⍪/(⊂1↑⍵),Z←{'FuncExpr'≡⊃0 1⌷⍵:FnEx ⍵ ⋄ ⍵}¨C←1 Kids ⍵
+LiftConsts←{I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
+  e l←(1 2<⊂0⌷⍉a)∧((1⌷⍉a←⍵)∊⊂)¨'Expression' 'Number'
+  v←mkv¨⍳+/s←2</0,l
+  hn←1⌷⍉h←(l∨e∧1⌽l)⌿a
+  a[s/⍳⊃⍴a;1+⍳3]←↑{'Variable' '' (2 2⍴'name' ⍵ 'class' 'array')}¨v
+  a←(s∨~l)⌿a
+  h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})'Number';0]←2
+  h[i'Expression';0 3]←0,⍪{2 2⍴'name' ⍵ 'class' 'atomic'}¨v
+  (1↑a)⍪h⍪1↓a
 }
 
 ⍝ GenLLVM
