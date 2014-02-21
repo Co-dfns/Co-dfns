@@ -100,6 +100,7 @@ Compile←{
   ast←DropUnmd      ast
   ast←DropUnreached ast
   ast←LiftConsts    ast
+  ast←Allocate      ast
   mod←GenLLVM       ast
   mod names
 }
@@ -1298,7 +1299,7 @@ DropUnmd←{
 ⍝ f: Test if node is a Function node
 
 DropUnreached←{
-  d←(~(∨\0,1↓¯1⌽(0=⊃∘⍴∘('name'∘Prop 1∘↑))¨))/⊢
+  d←(~(∨\0,1↓¯1⌽(0=⊃∘⍴∘('name'∘Prop 1∘↑))¨))(/∘⊢)⊢
   f←'Function'≡(⊃0 1∘⌷)
   {0=⊃⍴k←1 Kids ⍵:⍵ ⋄ ⊃⍪/∇¨d⍣(f ⍵)⊢k}⍵
 }
@@ -1326,6 +1327,14 @@ LiftConsts←{I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
   h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})'Number';0]←2
   h[i'Expression';0 3]←0,⍪{2 2⍴'name' ⍵ 'class' 'atomic'}¨v
   (1↑a)⍪h⍪1↓a
+}
+
+⍝ Allocate
+⍝
+⍝ Intended Function: Insert allocations for each function body.
+
+Allocate←{
+  ⍵
 }
 
 ⍝ GenLLVM
