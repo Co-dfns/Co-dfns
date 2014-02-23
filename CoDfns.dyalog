@@ -100,6 +100,9 @@ Compile←{
   ast←DropUnmd      ast
   ast←DropUnreached ast
   ast←LiftConsts    ast
+  ast←FlattenExprs  ast
+  ast←ConvertFree   ast
+  ast←LiftFuncs     ast
   ast←Allocate      ast
   mod←GenLLVM       ast
   mod names
@@ -1294,14 +1297,13 @@ DropUnmd←{
 ⍝ 
 ⍝ Intended Function: Simplify functions by removing code in function
 ⍝ bodies after a return expression (unnamed expression).
-⍝
-⍝ d: Drop all kids after first unnamed expression
-⍝ f: Test if node is a Function node
 
 DropUnreached←{
-  d←(~(∨\0,1↓¯1⌽(0=⊃∘⍴∘('name'∘Prop 1∘↑))¨))(/∘⊢)⊢
-  f←'Function'≡(⊃0 1∘⌷)
-  {0=⊃⍴k←1 Kids ⍵:⍵ ⋄ ⊃⍪/∇¨d⍣(f ⍵)⊢k}⍵
+  un←0=∘≢'name'Prop 1↑¨⊢   ⍝ (un k) gives map of unnamed exprs
+  d←(~(∨\0,1↓¯1⌽un))(/∘⊢)⊢ ⍝ (d k) drops kids after first unnamed expr
+  f←'Function'≡(⊃0 1∘⌷)    ⍝ (f n) tests if n is function node
+  0=≢k←1 Kids ⍵:⍵          ⍝ Terminate at leaves
+  ⊃⍪/∇¨d⍣(f ⍵)⊢k           ⍝ Apply d to each function child and recur
 }
 
 ⍝ LiftConsts
@@ -1329,12 +1331,45 @@ LiftConsts←{I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
   (1↑a)⍪h⍪1↓a
 }
 
+⍝ FlattenExprs
+⍝
+⍝ Intended Function: Flatten expressions to the same depth.
+
+FlattenExprs←{
+  ⍵
+}
+
+⍝ ConvertFree
+⍝ 
+⍝ Intended Function: Convert all free variables to references to environments. 
+
+ConvertFree←{
+  ⍵
+}
+
+⍝ LiftFuncs
+⍝ 
+⍝ Intended Function: Lift all functions to the top level.
+
+LiftFuncs←{
+  ⍵
+}
+
 ⍝ Allocate
 ⍝
 ⍝ Intended Function: Insert allocations for each function body.
 
 Allocate←{
-  ⍵
+  attr←{a←⍺ ⋄ ((⊂0 3)⊃a)⍪←⍺⍺,⊂⍕⍵ ⋄ a}
+  split←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢
+  f←{
+    e←(eb←(1⌷⍉⍵)∊⊂'Expression')⊂[0]⍵
+    n←⊃∪/en←split¨'name'Prop ↑1↑¨e
+    h←(1↑⍵)('alloca'attr)≢n
+    b←⊃⍪/e('slots'attr)∘(n∘⍳)¨en
+    h⍪((0,1↓~∨\eb)⌿⍵)⍪b
+  }
+  ⊃⍪/(⊂(~∨\m)⌿⍵),f¨(m←(1⌷⍉⍵)∊⊂'Function')⊂[0]⍵
 }
 
 ⍝ GenLLVM
