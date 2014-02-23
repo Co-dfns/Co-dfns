@@ -366,7 +366,7 @@ MtNTE←0 2⍴'' 0
 ⍝ Prop is used to take an AST (⍵) and extract the values of 
 ⍝ an attribute (⍺) from all the nodes in the AST. It returns a
 ⍝ vector of these values.
-Prop←{(¯1⌽P∊⊂⍺)/P←,↑⍵[;3]}
+Prop←{(¯1⌽P∊⊂⍺)/P←(⊂''),,↑⍵[;3]}
 
 ⍝ AST ByElem NodeName: All nodes of the AST named NodeName
 ⍝
@@ -1299,11 +1299,11 @@ DropUnmd←{
 ⍝ bodies after a return expression (unnamed expression).
 
 DropUnreached←{
-  un←0=∘≢'name'Prop 1↑¨⊢   ⍝ (un k) gives map of unnamed exprs
-  d←(~(∨\0,1↓¯1⌽un))(/∘⊢)⊢ ⍝ (d k) drops kids after first unnamed expr
-  f←'Function'≡(⊃0 1∘⌷)    ⍝ (f n) tests if n is function node
-  0=≢k←1 Kids ⍵:⍵          ⍝ Terminate at leaves
-  ⊃⍪/∇¨d⍣(f ⍵)⊢k           ⍝ Apply d to each function child and recur
+  u←(0=∘≢('name'∘Prop 1∘↑))¨ ⍝ (u k) gives map of unnamed exprs
+  d←(~(∨\0,1↓¯1⌽u))(/∘⊢)⊢    ⍝ (d k) drops kids after first unnamed expr
+  f←'Function'≡(⊃0 1∘⌷)      ⍝ (f n) tests if n is function node
+  0=≢k←1 Kids ⍵:⍵            ⍝ Terminate at leaves
+  ⊃⍪/∇¨d⍣(f ⍵)⊢k             ⍝ Apply d to each function child and recur
 }
 
 ⍝ LiftConsts
@@ -1359,18 +1359,16 @@ LiftFuncs←{
 ⍝
 ⍝ Intended Function: Insert allocations for each function body.
 
-Allocate←{
-  attr←{a←⍺ ⋄ ((⊂0 3)⊃a)⍪←⍺⍺,⊂⍕⍵ ⋄ a}
-  split←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢
-  f←{
-    e←(eb←(1⌷⍉⍵)∊⊂'Expression')⊂[0]⍵
-    n←⊃∪/en←split¨'name'Prop ↑1↑¨e
-    h←(1↑⍵)('alloca'attr)≢n
-    b←⊃⍪/e('slots'attr)∘(n∘⍳)¨en
-    h⍪((0,1↓~∨\eb)⌿⍵)⍪b
-  }
-  ⊃⍪/(⊂(~∨\m)⌿⍵),f¨(m←(1⌷⍉⍵)∊⊂'Function')⊂[0]⍵
-}
+Allocate←{a←⍵
+  sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢   ⍝ Fn to split name lists
+  nm←sp∘⊃∘('name'∘Prop 1 4∘⍴)       ⍝ Fn to get expr name attr or empty
+  at←(⊃(∪/⊢))((≢⊣),(⊂⊣)(⍕⍳)¨⊢)⊢     ⍝ Fn to get alloca and slots attributes
+  em←(1<0⌷⍉⍵)∧(1⌷⍉⍵)∊⊂'Expression'  ⍝ Map of all Expressions in Functions
+  fem←em∨fm←(1⌷⍉⍵)∊⊂'Function'      ⍝ Map of funcs and exprs; just funcs
+  av←⍪,(em/+\fm)at⌸nm¨↓em⌿⍵         ⍝ Attribute values
+  an←(fem/fm)⊃¨⊂'slots' 'alloca'    ⍝ Attribute names
+  a⊣(3⌷⍉fem⌿a)←(3⌷⍉fem⌿⍵)⍪¨↓an,av   ⍝ Add new attributes
+}  
 
 ⍝ GenLLVM
 ⍝
