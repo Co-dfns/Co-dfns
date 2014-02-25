@@ -1336,6 +1336,20 @@ LiftConsts←{I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
 ⍝ Intended Function: Flatten expressions to the same depth.
 
 FlattenExprs←{
+  V←{                                 
+    at←2 2⍴'name' ⍺ 'class' 'array'
+    1 4⍴⍵ 'Variable' '' at
+  }
+  lft←{a←⍵ ⋄ a[;0]-←(⊃⍵)-⍺ ⋄ a}
+  mon←{((⊃⍵)lft 1⊃⍺)⍪⍵⍪(0⊃⍺)⍪'FeR'V⊃⍵}
+  dya←{
+    z←((⊃⍵)lft 2⊃⍺)⍪(((⊃⍵)lft 0⊃⍺)
+    z⍪⍵⍪('FeL'V⊃⍵)⍪(1⊃⍺)⍪('FeR'V⊃⍵)
+  }
+  noe←(1↑⊢)⍪(+\∘(⊃=⊢)0⌷(⍉1↓⊢))(∇⊢)⌸1↓⊢
+  ~'Expression'≡⊃0 1⌷⍵:noe ⍵
+  'monadic'≡⊃'name'Prop ⍵:R mon 1↑⍵
+  'dyadic'≡⊃'name'Prop ⍵:R dya 1↑⍵
   ⍵
 }
 
