@@ -1309,26 +1309,21 @@ DropUnreached←{
 ⍝ LiftConsts
 ⍝
 ⍝ Intended Function: Lift all literal expressions to the top level.
-⍝
-⍝ I: Index counter for lifted constant variables
-⍝ MkV: Function to make a fresh lifted constant variable
-⍝ e: Bitmask of expression nodes to be lifted
-⍝ l: Bitmask of literal Number nodes for lifting
-⍝ s: Bitmask of Number nodes which start sequences of Number nodes
-⍝ v: Vector of fresh variable names
-⍝ h: Set of literal expressions to be lifted
-⍝ hn: Node names of h
-⍝ a: Incoming AST
 
-LiftConsts←{I←¯1 ⋄ MkV←{(⊃I)+←1 ⋄ 'LC',⍕I}
-  e l←(1 2<⊂0⌷⍉a)∧((1⌷⍉a←⍵)∊⊂)¨'Expression' 'Number'
-  v←mkv¨⍳+/s←2</0,l
-  hn←1⌷⍉h←(l∨e∧1⌽l)⌿a
-  a[s/⍳⊃⍴a;1+⍳3]←↑{'Variable' '' (2 2⍴'name' ⍵ 'class' 'array')}¨v
-  a←(s∨~l)⌿a
-  h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})'Number';0]←2
-  h[i'Expression';0 3]←0,⍪{2 2⍴'name' ⍵ 'class' 'atomic'}¨v
-  (1↑a)⍪h⍪1↓a
+LiftConsts←{
+  I←¯1 ⋄ MkV←{'LC',⍕I⊣(⊃I)+←1}      ⍝ New variable maker
+  at←{2 2⍴'name' ⍵ 'class' ⍺}       ⍝ Attribute maker
+  ns←'Expression' 'Number'          ⍝ Nodes we care about
+  e l←((1⌷⍉a←⍵)∊⊂)¨ns               ⍝ All Expr and Number nodes
+  e l←(1 2<⊂0⌷⍉a)∧e l               ⍝ Only those at the right depth
+  v←mkv¨⍳+/s←2</0,l                 ⍝ All the variables we need; start of literals
+  hn←1⌷⍉h←(l∨e∧1⌽l)⌿a               ⍝ Literal Expressions and node names
+  vn←{'Variable' '' ('array' at ⍵)} ⍝ Variable node maker sans depth
+  a[s/⍳⊃⍴a;1+⍳3]←↑vn¨v              ⍝ Replace starting literals with variables
+  a←(s∨~l)⌿a                        ⍝ Remove all non-first literals
+  h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})1⊃ns;0]←2     ⍝ Literal depths are all 2
+  h[i⊃ns;0 3]←0,⍪'atomic'∘at¨v      ⍝ Litexprs are depth 0, with new names
+  (1↑a)⍪h⍪1↓a                       ⍝ Connect root, lifted with the rest
 }
 
 ⍝ FlattenExprs
