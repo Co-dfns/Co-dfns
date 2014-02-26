@@ -1351,7 +1351,12 @@ FlattenExprs←{
 ⍝ Intended Function: Convert all free variables to references to environments. 
 
 ConvertFree←{ 
-  ⍵
+  eachk←{(1↑⍵)⍪+\(⊃=⊢)0⌷⍉1↓⍵)(⍺⍺⊢)⌸1↓⍵}
+  0 2⍴⍬{
+    'Variable'≡⊃0 1⌷⍵:t at⍣(t←fnd ⍵)⍵
+    'Function'≡⊃0 1⌷⍵:(⍺⍺ ge ⍵)∇eachk ⍵
+    ⍺⍺∇eachk ⍵
+  }⍵
 }
 
 ⍝ LiftFuncs
