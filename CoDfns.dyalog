@@ -100,7 +100,7 @@ Compile←{
   ast←DropUnmd      ast
   ast←DropUnreached ast
   ast←LiftConsts    ast
-  ast←FlattenExprs  ast
+  ast←LiftBound     ast
   ast←ConvertFree   ast
   ast←LiftFuncs     ast
   ast←Allocate      ast
@@ -403,6 +403,12 @@ VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 ⍝ Obtain subtrees of a depth relative to the depth 
 ⍝ of the first node of the tree.
 Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
+
+⍝ Fn eachk AST: Each over children
+⍝ 
+⍝ Applies (cid Fn kid) where cid is the child id (1-based) and
+⍝ kid is a member of 1 Kids ⍵.
+eachk←{(1↑⍵)⍪+\(⊃=⊢)0⌷⍉1↓⍵)⍺⍺⌸1↓⍵}
 
 ⍝ map f sel g sel h arg: case selection
 ⍝ 
@@ -1326,19 +1332,32 @@ LiftConsts←{
   (1↑a)⍪h⍪1↓a                       ⍝ Connect root, lifted with the rest
 }
 
-⍝ FlattenExprs
+⍝ LiftBound
 ⍝
-⍝ Intended Function: Flatten expressions to the same depth.
+⍝ Intended Function: Lift all assignments to the root of their scope. 
 
-FlattenExprs←{
-  'Expression'≢⊃0 1⌷⍵:(1↑⍵)⍪(+\(⊃=⊢)0⌷⍉1↓⍵)(∇⊢)⌸1↓⍵
-  V←{1 4⍴⍵ 'Variable' '' (2 2⍴'name' ⍺ 'class' 'array')}
-  lft←{a←⍵ ⋄ a[;0]-←(⊃⍵)-⍺ ⋄ a} ⋄ R←1 Kids ⍵
-  'monadic'≡⊃'name'Prop ⍵:R{((⊃⍵)lft 1⊃⍺)⍪⍵⍪(0⊃⍺)⍪'FeR'V⊃⍵}1↑⍵
-  'dyadic'≡⊃'name'Prop ⍵:R{
-    (⊃⍪/(⊂⊃⍵)lft¨2 0⊃¨⊂⍺)⍪⍵⍪('FeL'V⊃⍵)⍪(1⊃⍺)⍪('FeR'V⊃⍵)
-  }1↑⍵
-  ⍵
+LiftBound←{
+  vex←{                             ⍝ Function to make var expr
+    at←2 2⍴'name' ⍵ 'class' 'array' ⍝ Variable name is right argument
+    v←1 4⍴(1+⍺)'Variable' '' at     ⍝ Variable node, depth in left argument
+    at←2 2⍴'class' 'atomic'         ⍝ Expression is atomic
+    e←1 4⍴⍺ 'Expression' '' at      ⍝ Expression node has no name
+    e⍪v                             ⍝ Give valid AST as result
+  }
+  lft←{                             ⍝ Function to lift expression
+    cls←⊃'class'Prop ⍵              ⍝ Class determines handling
+    'atomic'≡cls:⍵                  ⍝ Nothing to do for atomic
+    ri←1+'monadic' 'dyadic'⍳cls     ⍝ Location of the right argument
+    lf ex←⍺ ∇ ri⊃k←1 Kids ⍵         ⍝ Lift the right argument
+    nm←⊃'name'Prop ex               ⍝ Consider right argument name
+    ∧/' '=nm:lf((1↑⍵)⍪(¯1↓k)⍪ex)    ⍝ When unnamed, do nothing
+    ex[;0]-←(⊃ex)-⍺                 ⍝ When named, must lift
+    ne←(1↑⍵)⍪(¯1↓k)⍪(⊃⍵)vex nm      ⍝ Replace right with variable reference
+    (lf⍪ex)(ne)                     ⍝ New lifted exprs and new node
+  }
+  1=≢⍵:⍵                            ⍝ Do nothing for leaves
+  'Expression'≡⊃0 1⌷⍵:⊃⍪/(⊃⍵)lft ⍵  ⍝ Lift root expressions
+  (∇⊢)eachk ⍵                       ⍝ Ignore non-expr nodes
 }
 
 ⍝ ConvertFree
@@ -1346,7 +1365,6 @@ FlattenExprs←{
 ⍝ Intended Function: Convert all free variables to references to environments. 
 
 ConvertFree←{ 
-  eachk←{(1↑⍵)⍪+\(⊃=⊢)0⌷⍉1↓⍵)(⍺⍺⊢)⌸1↓⍵}
   0 2⍴⍬{
     'Variable'≡⊃0 1⌷⍵:t at⍣(t←fnd ⍵)⍵
     'Function'≡⊃0 1⌷⍵:(⍺⍺ ge ⍵)∇eachk ⍵

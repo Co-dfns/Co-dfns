@@ -2097,7 +2097,7 @@
       <informaltable frame="void" rules="rows">
         <thead>
           <tr>
-            <th colspan="4">Standard pass: FlattenExprs</th>
+            <th colspan="4">Standard pass: LiftBound</th>
           </tr>
           <tr>
             <th>Type</th>
@@ -2108,7 +2108,7 @@
           <tr>
             <td>Intended function</td>
             <td colspan="3">
-              Flatten all expressions to a single call or reference.
+              Lift bound expressions to the root of the scope.
             </td>
           </tr>
           <tr>
@@ -2118,12 +2118,6 @@
           <tr>
             <td>Output</td>
             <td colspan="3">A valid <varname>Namespace</varname> AST</td>
-          </tr>
-          <tr>
-            <td>Invariant</td>
-            <td colspan="3">
-              On input all functions are depth 1.
-            </td>
           </tr>
           <tr>
             <td>Invariant</td>
@@ -2142,9 +2136,8 @@
           <tr>
             <td>Invariant</td>
             <td colspan="3">
-              On output all expressions in function bodies are simple
-              with no nesting and are either a reference or a single
-              function call.
+              On output all assignments occur at the top-level of the scope 
+	      and no assignments occur within an expression.
             </td>
           </tr>
         </tbody>
