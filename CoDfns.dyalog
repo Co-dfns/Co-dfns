@@ -1258,20 +1258,8 @@ ParseCond←{
 ⍝
 ⍝ Intended Function: Eliminate all semantically irrelevant lines from AST 
 ⍝ to create an AST suitable for compiling. 
-⍝
-⍝ Right argument: Namespace AST
-⍝ Output: Namespace AST
-⍝ Invariant: Result contains no Line elements
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
-KillLines←{
-  ⍝ The only case when we keep a line around in the parser is 
-  ⍝ when the line is empty. This means that we can eliminate all 
-  ⍝ the Line nodes from the tree by compressing the Line rows, 
-  ⍝ since we are guaranteed not to have any children in the Line 
-  ⍝ nodes.
-  (~⍵[;1]∊⊂'Line')⌿⍵
-}
+KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}
 
 ⍝ DropUnmd
 ⍝
