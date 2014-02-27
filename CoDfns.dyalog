@@ -408,7 +408,7 @@ Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
 ⍝ 
 ⍝ Applies (cid Fn kid) where cid is the child id (1-based) and
 ⍝ kid is a member of 1 Kids ⍵.
-eachk←{(1↑⍵)⍪+\(⊃=⊢)0⌷⍉1↓⍵)⍺⍺⌸1↓⍵}
+eachk←{(1↑⍵)⍪⊃⍪/(⊂MtAST),(+\(⊃=⊢)0⌷⍉1↓⍵)(⊂⍺⍺)⌸1↓⍵}
 
 ⍝ map f sel g sel h arg: case selection
 ⍝ 
@@ -1265,24 +1265,11 @@ KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}
 ⍝
 ⍝ Intended Function: Drop all unnamed expressions or functions from the 
 ⍝ top-level.
-⍝
-⍝ Right argument: Namespace AST
-⍝ Output: Namespace AST
-⍝ Invariant: All FuncExpr and Expression nodes at the top-level 
-⍝   have a non-empty, valid name attribute upon output.
-⍝ Invariant: All top-level nodes are either FuncExpr or Expresssion 
-⍝   nodes; particularly, there are no Line nodes.
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 DropUnmd←{
-  ⍝ At this point in our program, we will have removed all lines from 
-  ⍝ the program and will have only Expression or FuncExpr nodes at 
-  ⍝ the level 1 of the tree. Thus, we can take all level 1 nodes and 
-  ⍝ extract the names from those nodes, to get a boolean mask about which 
-  ⍝ Nodes to keep and which not to keep. At this point, we can use 
-  ⍝ this to select out all of the nodes by enclosing each of the 
-  ⍝ depth 1 sub-trees and then recombining the ones that are left 
-  ⍝ after the selection.
+  gn←⊃('name'Prop 1 4⍴⊢)
+  D1←(1=0⌷⍉⍵)/3⌷⍉⍵
+  Nm←
   Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
   (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0≠⊃∘⍴¨Nm)/1 Kids ⍵
 }
