@@ -5,7 +5,7 @@
   ⎕IO ⎕ML←0 1
 
 ⍝ Platform Configuration
-⍝ 
+⍝
 ⍝ The following variables must be set correctly for the appropriate platform
 
 Target←'X86'
@@ -13,8 +13,8 @@ TargetTriple←'x86_64-slackware-linux-gnu'
 
 ⍝ Fix
 ⍝
-⍝ Intended Function: Accept a valid namespace script and return an 
-⍝ equivalent namespace script, possibly exporting a module at the same 
+⍝ Intended Function: Accept a valid namespace script and return an
+⍝ equivalent namespace script, possibly exporting a module at the same
 ⍝ time to the file named in the optional left argument.
 ⍝
 ⍝ Right argument: Valid namespace script, see ⎕FIX
@@ -25,28 +25,28 @@ TargetTriple←'x86_64-slackware-linux-gnu'
 
 Fix←{
   ⍝ State: Fix ← Yes
-  
+
   _←FFI∆INIT
-  
+
   ⍝ Input Validation, Signal DOMAIN ERROR if not valid
   ~(,1)≡⍴⍴⍵:⎕SIGNAL 11
   ~∧/1≥⊃∘⍴∘⍴¨⍵:⎕SIGNAL 11
   ~∧/⊃,/' '=⊃∘(0∘⍴)∘⊂¨⍵:⎕SIGNAL 11
-  
+
   ⍝ Identify Obj property
   ⍝ This is based on the arity of the Fix call
   ⍺←⊢ ⋄ Obj←⍺⊣''
-  
-  ⍝ We must handle the other transitions: 
+
+  ⍝ We must handle the other transitions:
   ⍝   Fnb → DOMAIN ERROR    → (Fix ← No)
   ⍝   Fnf → null            → (Obj ← Yes)
   ⍝   Fne → null            → (Obj ← Yes)
   IsFnb Obj:⎕SIGNAL 11
-  
+
   ⍝ State: Namespace ← NOTSEEN ⋄ Eot ← No
-  ⍝ At this stage, we can compile ⍵ without consideration 
+  ⍝ At this stage, we can compile ⍵ without consideration
   ⍝ to Fix or Obj properties into a single LLVM Module
-  ⍝ State Transitions Handled by Compile: 
+  ⍝ State Transitions Handled by Compile:
   ⍝   Eot → SYNTAX ERROR    → (Fix ← No)
   ⍝   Nl  → null            → (Obj ← No)
   ⍝   Nse → SYNTAX ERROR    → (Fix ← No)
@@ -57,13 +57,13 @@ Fix←{
   ⍝ Now we need only create the Namespace
   ⍝ And deal with the Obj property and states
   Namespace←Names ModToNS Module
-  
+
   ⍝ State: Obj ← No
-  ⍝ When Obj ← No we need only give a namespace 
+  ⍝ When Obj ← No we need only give a namespace
   ''≡Obj:Namespace
-  
+
   ⍝ State: Obj ← Yes
-  ⍝ Must return the namespace and generate the 
+  ⍝ Must return the namespace and generate the
   ⍝ module object as well.
   _←Obj ModToObj Module
   Namespace
@@ -71,10 +71,10 @@ Fix←{
 
 ⍝ IsFnb
 ⍝
-⍝ Intended Function: Determine whether the given input is a valid 
+⍝ Intended Function: Determine whether the given input is a valid
 ⍝ filename or not.
-⍝ 
-⍝ For the moment, we just check to make sure that we are getting 
+⍝
+⍝ For the moment, we just check to make sure that we are getting
 ⍝ a valid string, and if so, we consider it valid.
 
 IsFnb←{~(∧/' '=⊃0⍴⊂⍵)∧((,1)≡⍴⍴⍵)∧(1≡≡⍵)}
@@ -82,15 +82,15 @@ IsFnb←{~(∧/' '=⊃0⍴⊂⍵)∧((,1)≡⍴⍴⍵)∧(1≡≡⍵)}
 ⍝ Compile
 ⍝
 ⍝ Intended Function: Compile the given Fix input into an LLVM Module.
-⍝ 
+⍝
 ⍝ Input: Valid Fix right argument
-⍝ Output: Semantically equivalent LLVM Module and a (name, type) 
+⍝ Output: Semantically equivalent LLVM Module and a (name, type)
 ⍝   mapping of top-level bindings
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 ⍝ Return State: Namespace ← CLOSED ⋄ Eot ← Yes
-⍝ 
-⍝ Each of the passes of the compiler returns us to the same starting state, 
-⍝ conceptually, but refines the details over and over again, returning a 
+⍝
+⍝ Each of the passes of the compiler returns us to the same starting state,
+⍝ conceptually, but refines the details over and over again, returning a
 ⍝ slightly different namespace than the one before.
 
 Compile←{
@@ -109,7 +109,7 @@ Compile←{
 }
 
 ⍝ ModToNS
-⍝ 
+⍝
 ⍝ Intended Function: Create a Namespace that provides access to an LLVM Module
 ⍝
 ⍝ Left Argument: A (name, type) mapping of top-level bindings
@@ -117,27 +117,27 @@ Compile←{
 ⍝ Output: A Namespace
 ⍝ State: Context ← Top ⋄ Namespace ← CLOSED ⋄ Eot ← Yes
 ⍝
-⍝ An interesting restriction here is that we need to make sure that we do not 
-⍝ have any bindings in the namespace that are not observably equivalent to 
-⍝ those that we have in the given compiled namespace. This means that we 
-⍝ cannot have any helper functions at the top level of our namespace. 
-⍝ Furthermore, we have two types of values that we need to convert, those 
-⍝ function types and the globals. The function types can be converted directly 
-⍝ to function types, but the globals need to be niladic functions to ensure that 
-⍝ they grab their values from the latest global state of the compiled module, 
+⍝ An interesting restriction here is that we need to make sure that we do not
+⍝ have any bindings in the namespace that are not observably equivalent to
+⍝ those that we have in the given compiled namespace. This means that we
+⍝ cannot have any helper functions at the top level of our namespace.
+⍝ Furthermore, we have two types of values that we need to convert, those
+⍝ function types and the globals. The function types can be converted directly
+⍝ to function types, but the globals need to be niladic functions to ensure that
+⍝ they grab their values from the latest global state of the compiled module,
 ⍝ rather than an old value.
 ⍝
-⍝ XXX: At the moment this function only handles the functions that are 
+⍝ XXX: At the moment this function only handles the functions that are
 ⍝ exported by a namespace, and does not deal with the globals.
 
 ModToNS←{
-  ⍝ All of this starts with having a namespace where we can 
-  ⍝ put all of these functions. 
+  ⍝ All of this starts with having a namespace where we can
+  ⍝ put all of these functions.
   ⊢Ns←⎕NS⍬ ⍝ Create an Empty Namespace
 
-  ⍝ We need to specify exactly what target triple we are using 
-  ⍝ to do the compilation, which is done based on the value of 
-  ⍝ the TargetTriple Global value. Before using the triple, however, it is 
+  ⍝ We need to specify exactly what target triple we are using
+  ⍝ to do the compilation, which is done based on the value of
+  ⍝ the TargetTriple Global value. Before using the triple, however, it is
   ⍝ necessary to ensure that we have initialized the appropriate target,
   ⍝ which is given by the Target global value.
   _←⍎'Initialize',Target,'TargetInfo'
@@ -145,16 +145,16 @@ ModToNS←{
   _←⍎'Initialize',Target,'TargetMC'
   _←SetTarget ⍵ TargetTriple
 
-  ⍝ The execution engine is the primary thing which allows us 
-  ⍝ to JIT a module. We store the main execution engine in Ee 
-  ⍝ after creation. 
+  ⍝ The execution engine is the primary thing which allows us
+  ⍝ to JIT a module. We store the main execution engine in Ee
+  ⍝ after creation.
   C Eev Err←CreateJITCompilerForModule 1 ⍵ 0 1
   0≠C:(ErrorMessage ⊃Err)⎕SIGNAL 99
   Ee←⊃Eev
 
-  ⍝ We use an operator here to build each function. This let's us capture 
-  ⍝ the relevant state without worrying about mucking with the top-level 
-  ⍝ of the namespace. 
+  ⍝ We use an operator here to build each function. This let's us capture
+  ⍝ the relevant state without worrying about mucking with the top-level
+  ⍝ of the namespace.
   Fn←{
     Gv←RunFunction ⍺⍺ ⍵⍵ 0 0
     Z←ConvertArray GenericValueToPointer Gv
@@ -162,10 +162,10 @@ ModToNS←{
     Z
   }
 
-  ⍝ We need to be able to extract out the value of a function, 
-  ⍝ as this is needed by RunFunction in order to actually do 
-  ⍝ any real work. To do this we use the FindFunction. However, 
-  ⍝ the syntax of the FindFunction is less than ideal, so we 
+  ⍝ We need to be able to extract out the value of a function,
+  ⍝ as this is needed by RunFunction in order to actually do
+  ⍝ any real work. To do this we use the FindFunction. However,
+  ⍝ the syntax of the FindFunction is less than ideal, so we
   ⍝ wrap it in the function Fp to get us what we want.
   Fp←{
     C Fpv←FindFunction Ee ⍵ 1
@@ -173,43 +173,43 @@ ModToNS←{
     ⊃Fpv
   }
 
-  ⍝ Each function is described succinctly by the function 
-  ⍝ returned by (Ee Fn Fp Fname) where Fname is one of the 
-  ⍝ keys associated with the function type in ⍺. The trick 
-  ⍝ is getting these into the namespace, which as yet does 
-  ⍝ not have defined in it any of the appropriate names. 
-  ⍝ This is, unfortunately, a case for ⍎. We have a function 
-  ⍝ Add to do this for us. This will work for either functions 
+  ⍝ Each function is described succinctly by the function
+  ⍝ returned by (Ee Fn Fp Fname) where Fname is one of the
+  ⍝ keys associated with the function type in ⍺. The trick
+  ⍝ is getting these into the namespace, which as yet does
+  ⍝ not have defined in it any of the appropriate names.
+  ⍝ This is, unfortunately, a case for ⍎. We have a function
+  ⍝ Add to do this for us. This will work for either functions
   ⍝ or globals depending on how we invoke it.
   AddF←{0=⊃⍴⍵: 0 ⋄ F←Ee Fn (Fp ⍵) ⋄ ⎕←F ⋄ _←⍎'Ns.',⍵,'←F' ⋄ 0}
 
-  ⍝ We can now add our appropriate functions and globals to our 
+  ⍝ We can now add our appropriate functions and globals to our
   ⍝ namespace.
   Ns⊣AddF¨(2=1⌷⍉⍺)/0⌷⍉⍺
 }
 
 ⍝ ConvertArray
 ⍝
-⍝ Intended Function: Convert an array from the Co-dfns compiler into an 
+⍝ Intended Function: Convert an array from the Co-dfns compiler into an
 ⍝ array suitable for use in the Dyalog APL Interpreter.
 ⍝
 ⍝ Right Argument: A pointer to the array
 ⍝ Output: A Dyalog Array
 
 ConvertArray←{
-  D←⊃FFIGetDataInt (S←FFIGetSize ⍵) ⍵ 
+  D←⊃FFIGetDataInt (S←FFIGetSize ⍵) ⍵
   ((2≤S)⊃⍬ S)⍴D
 }
 
 ⍝ ModToObj
 ⍝
 ⍝ Intended Function: Generate a compiled object to the file given the LLVM Module
-⍝ 
+⍝
 ⍝ Left Argument: A filename
 ⍝ Right Argument: An LLVM Module
 ⍝ State: Context ← Top ⋄ Namespace ← CLOSED ⋄ Eot ← Yes
-⍝ 
-⍝ This is stubbed right now to just generate a regular text rather than a 
+⍝
+⍝ This is stubbed right now to just generate a regular text rather than a
 ⍝ compiled object module
 
 ModToObj←{
@@ -219,7 +219,7 @@ ModToObj←{
 }
 
 ⍝ ErrorMessage
-⍝ 
+⍝
 ⍝ Intended Function: Return an array of the LLVM Error Message
 ⍝
 ⍝ Right argument: An error message pointer returned by an LLVM function
@@ -233,19 +233,19 @@ ErrorMessage←{
 
 ⍝ Tokenize
 ⍝
-⍝ Intended Function: Convert a vector of character vectors or scalars to a valid 
+⍝ Intended Function: Convert a vector of character vectors or scalars to a valid
 ⍝ AST with a Tokens root that is lexically equivalent modulo spaces.
-⍝ 
+⍝
 ⍝ Input: Right argument to Fix
 ⍝ Output: Tokens structure
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 Tokenize←{
   ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { } ⋄ D Da M Ma
-  ⍝ 
+  ⍝
   ⍝ The only real job of this pass is to get to these stimuli, not do anything
   ⍝ more with them.
-  
+
   ⍝ Valid Variable characters
   VC←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'
   VC,←'abcdefghijklmnopqrstuvwxyz'
@@ -254,61 +254,61 @@ Tokenize←{
   VC,←'∆⍙'
   VC,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
   VCN←VC,NC←'0123456789'
-  
+
   ⍝ Additional Characters in domain: ←{}⋄+-÷×|*⍟⌈⌊<≤=≠≥> ⍝
-  ⍝ 
-  ⍝ The NC variable contains the decimal digits, used in both 
-  ⍝ the N and V tokens. The Nl token is already parsed, so we 
-  ⍝ do not do anything with that, and the Eot token is implicit 
+  ⍝
+  ⍝ The NC variable contains the decimal digits, used in both
+  ⍝ the N and V tokens. The Nl token is already parsed, so we
+  ⍝ do not do anything with that, and the Eot token is implicit
   ⍝ as well.
-  
+
   ⍝ Verify that we have only valid characters in use
   AC←VCN,' ⍝',TC←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>'
   ~∧/AC∊⍨⊃,/⍵:⎕SIGNAL 2
 
   ⍝ Divide into comment and code
   I←⍵⍳¨'⍝' ⋄ T←I↑¨⍵ ⋄ C←I↓¨⍵
-  
+
   ⍝ Strip leading and trailing whitespace from each line
   T←((⌽∘(∨\)∘⌽¨T)∧∨\¨T←' '≠T)/¨T
-  
-  ⍝ Recognize :Namespace and :EndNamespace tokens, which 
-  ⍝ must be on lines by themselves, split these off to 
+
+  ⍝ Recognize :Namespace and :EndNamespace tokens, which
+  ⍝ must be on lines by themselves, split these off to
   ⍝ prevent further processing and save for reassembly later.
   NSL←(NSB←T∊':Namespace' ':EndNamespace')/T
   NSI←NSB/⍳⍴T ⋄ TI←(~NSB)/⍳⍴T ⋄ T←(~NSB)/T
-  
+
   ⍝ Tokenize each Namespace element
   ⍝ This makes NSL a vector of lines where each line is a vector of tokens
   NSL←{,⊂2 'Token' '' (2 2⍴'name' ⍵ 'class' 'delimiter')}¨NSL
-  
+
   T←{
     ⍝ Special case when T is empty to make life easier
     0=⍴T:⍬
 
     ⍝ Split on and remove spaces
     T←{((⍴X)⍴1 0)/X←(2≠/' '=' ',⍵)⊂⍵}¨T
-    
+
     ⍝ Split on All Token Characters (TC)
     T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊TC)⊂⍵}¨¨T
 
     ⍝ At this point, all lines are split into tokens
     ⍝ Wrap each token in appropriate element:
     ⍝   Variables         → Variable
-    ⍝   Integer           → Number    class ← 'int' 
+    ⍝   Integer           → Number    class ← 'int'
     ⍝   + - ÷ × | * ⍟ ⌈ ⌊ → Primitive class ← 'monadic axis'
     ⍝   < ≤ = ≠ ≥ >       → Primitive class ← 'dyadic axis'
     ⍝   ← ⋄ :             → Token     class ← 'separator'
     ⍝   { }               → Token     class ← 'delimiter'
-  
+
     ⍝ We switch from lines to a single vector of tokens
     ⍝ Must preserve ability to construct lines
     ⍝ L: Count of tokens for each line
     ⍝ T: Vector of Tokens
     L←⊃∘⍴¨T ⋄ T←⊃,/T
-    
+
     ⍝ Identifying the type of a token here can be
-    ⍝ accomplished by checking the first character 
+    ⍝ accomplished by checking the first character
     ⍝ of the token:
     ⍝   Variable          → T∊VC
     ⍝   Integer           → T∊NC
@@ -319,31 +319,31 @@ Tokenize←{
     ⍝
     ⍝ Create a selection vector for each type of token
     Sv Si Spm Spd Sa Sd←(⊃¨T)∘∊¨VC NC '+-÷×|*⍟⌈⌊' '<≤=≠≥>' '←⋄:' '{}'
-    
+
     ⍝ Wrap each type in appropriate elements
     Tv←{1 4⍴2 'Variable' '' (1 2⍴'name' ⍵)}¨Sv/T
     Ti←{1 4⍴2 'Number' '' (2 2⍴'value' ⍵ 'class' 'int')}¨Si/T
     Tpm←{1 4⍴2 'Primitive' '' (2 2⍴'name' ⍵ 'class' 'monadic axis')}¨Spm/T
-    Tpd←{1 4⍴2 'Primitive' '' (2 2⍴'name' ⍵ 'class' 'dyadic axis')}¨Spd/T 
+    Tpd←{1 4⍴2 'Primitive' '' (2 2⍴'name' ⍵ 'class' 'dyadic axis')}¨Spd/T
     Ta←{1 4⍴2 'Token' '' (2 2⍴'name' ⍵ 'class' 'separator')}¨Sa/T
     Td←{1 4⍴2 'Token' '' (2 2⍴'name' ⍵ 'class' 'delimiter')}¨Sd/T
-    
+
     ⍝ Indexes of each type in original
     Iv Ii Ipm Ipd Ia Id←Sv Si Spm Spd Sa Sd/¨⊂⍳+/L
-    
+
     ⍝ Restore T to a vector of non-empty lines of tokens
     T←(⊃,/L↑¨1)⊂(Tv,Ti,Tpm,Tpd,Ta,Td)[⍋Iv,Ii,Ipm,Ipd,Ia,Id]
-    
+
     ⍝ Restore the empty lines of T
     (T,(+/0=L)↑⊂⍬)[⍋((0≠L)/⍳⍴L),(0=L)/⍳⍴L]
   }⍬
-  
+
   ⍝ Add the Namespace lines back
   T←(NSL,T)[⍋NSI,TI]
-   
+
   ⍝ Wrap in Lines
   T←C {H←1 4⍴1 'Line' '' (1 2⍴'comment' ⍺) ⋄ 0=⊃⍴⍵:H ⋄ H⍪⊃⍪/⍵}¨T
-  
+
   ⍝ Create and return Tokens tree
   0 'Tokens' '' MtA⍪⊃⍪/T
 }
@@ -363,7 +363,7 @@ MtNTE←0 2⍴'' 0
 
 ⍝ Attr Prop AST: A vector of the values of a specific attribute
 ⍝
-⍝ Prop is used to take an AST (⍵) and extract the values of 
+⍝ Prop is used to take an AST (⍵) and extract the values of
 ⍝ an attribute (⍺) from all the nodes in the AST. It returns a
 ⍝ vector of these values.
 Prop←{(¯1⌽P∊⊂⍺)/P←(⊂''),,↑⍵[;3]}
@@ -376,13 +376,13 @@ ByElem←{(⍺[;1]∊⊂⍵)⌿⍺}
 
 ⍝ AST ByDepth Depth: All nodes of a specific depth
 ⍝
-⍝ ByDepth obtains a matrix of all the nodes of the AST (⍺) 
+⍝ ByDepth obtains a matrix of all the nodes of the AST (⍺)
 ⍝ that have a given depth (⍵).
 ByDepth←{(⍵=⍺[;0])⌿⍺}
 
 ⍝ Name Bind AST: Take the root node and attach a new name to it
 ⍝
-⍝ Bind describes an AST (⍵) adjusted to include Name (⍺) as another 
+⍝ Bind describes an AST (⍵) adjusted to include Name (⍺) as another
 ⍝ name in the 'name' attribute of the node.
 Bind←{
   Ni←(A←0⌷⍉⊃0 3⌷Ast←⍵)⍳⊂'name'
@@ -400,41 +400,41 @@ VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 
 ⍝ Depth Kids Ast: Children of root node of AST
 ⍝
-⍝ Obtain subtrees of a depth relative to the depth 
+⍝ Obtain subtrees of a depth relative to the depth
 ⍝ of the first node of the tree.
 Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
 
 ⍝ Fn eachk AST: Each over children
-⍝ 
+⍝
 ⍝ Applies (cid Fn kid) where cid is the child id (1-based) and
 ⍝ kid is a member of 1 Kids ⍵.
 eachk←{(1↑⍵)⍪⊃⍪/((⍳≢)⍺⍺¨⊢)1 Kids ⍵}
 
 ⍝ map f sel g sel h arg: case selection
-⍝ 
-⍝ Utility from Phil Last for doing case selection based on a 
+⍝
+⍝ Utility from Phil Last for doing case selection based on a
 ⍝ boolean map to choose which function to apply to arg.
 sel←{~∨/⍺:⍵ ⋄ g←⍵⍵⍣(⊢/⍺) ⋄ 2=⍴⍺:⍺⍺⍣(⊣/⍺)g ⍵ ⋄ (¯1↓⍺)⍺⍺ g ⍵}
 
 ⍝ Parse
 ⍝
-⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is 
+⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is
 ⍝ structurally equivalent and that preserves comments and line counts.
-⍝ 
+⍝
 ⍝ Input: Tokens tree
 ⍝ Output: Namespace AST, Top-level Names
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 ⍝
-⍝ The top-level names are an important structure. In particular, they 
+⍝ The top-level names are an important structure. In particular, they
 ⍝ are a matrix of (name, type) records. The set of types are as follows:
-⍝ 
+⍝
 ⍝   0  Unknown Type
 ⍝   1  Array
 ⍝   2  Function
 ⍝   3  Monadic Operator
 ⍝   4  Dyadic Operator
 ⍝
-⍝ The name should be a simple, valid APL variable in the form of a 
+⍝ The name should be a simple, valid APL variable in the form of a
 ⍝ string (that is, a simple character vector).
 
 Parse←{
@@ -455,33 +455,33 @@ Parse←{
 
   ⍝ Stimuli: Eot
   ⍝ This corresponds to an empty namespace
-  ⍝ This means that there are no tokens, which we can 
+  ⍝ This means that there are no tokens, which we can
   ⍝ check easily
   ⍝
   ⍝ Importantly, we can handle this here because there is
   ⍝ only one place that an Eot is legal, and in all other
-  ⍝ cases it is a SYNTAX ERROR. Because all of the cases 
-  ⍝ occur in a Top level context, we can handle them all 
-  ⍝ here without further ado. The legal cases of Eot 
+  ⍝ cases it is a SYNTAX ERROR. Because all of the cases
+  ⍝ occur in a Top level context, we can handle them all
+  ⍝ here without further ado. The legal cases of Eot
   ⍝ falls out implicitly.
   ⍝
   ⍝ Trace: Table 233 in Function Specification
   0=+/⍵[;1]∊⊂'Token':⎕SIGNAL 2
-  
+
   ⍝ Stimuli: Nl
   ⍝
-  ⍝ Empty lines don't matter, and Nl has already been 
-  ⍝ parsed for us by Tokenize, so there is no need to deal 
+  ⍝ Empty lines don't matter, and Nl has already been
+  ⍝ parsed for us by Tokenize, so there is no need to deal
   ⍝ with this explicitly. We leave the empty or comment
   ⍝ only lines around for idempotency's sake
   ⍝
   ⍝ Trace: Table 243 in Function Specification
   ⍝
-  ⍝ In the above table, we see that in all cases, the Nl 
-  ⍝ is a partitioning form that serves only to partition 
-  ⍝ the state-space of other stimuli and their possible 
-  ⍝ occurances. We can determine the proper result without 
-  ⍝ requiring explicit handling of the Nl stimuli. 
+  ⍝ In the above table, we see that in all cases, the Nl
+  ⍝ is a partitioning form that serves only to partition
+  ⍝ the state-space of other stimuli and their possible
+  ⍝ occurances. We can determine the proper result without
+  ⍝ requiring explicit handling of the Nl stimuli.
   ⍝ Thus, we need to do no explicit parsing here for Nl.
 
   ⍝ Stimuli: Nss and Nse
@@ -489,131 +489,131 @@ Parse←{
   ⍝ Properties handled: Eot and Namespace
   ⍝
   ⍝ The only cases where we may have a valid Nse the Namespace is OPEN,
-  ⍝ which happens when we see an Nss. Nothing else will change this state. 
-  ⍝ The response of encountering an Nse token depends on the values of 
-  ⍝ the previous elements, and only on them, so we can trigger those errors 
-  ⍝ at a later time, when we care to process them. However, if we have only 
-  ⍝ Nss or only Nse it is clearly a SYNTAX ERROR. So, at this point, we can 
-  ⍝ eliminate the need to consider the Namespace property entirely by 
-  ⍝ parsing out the Nss and Nse tokens here. After this the only properties 
-  ⍝ that must be handled at the top-level Context are the Value and 
-  ⍝ Named properties. 
+  ⍝ which happens when we see an Nss. Nothing else will change this state.
+  ⍝ The response of encountering an Nse token depends on the values of
+  ⍝ the previous elements, and only on them, so we can trigger those errors
+  ⍝ at a later time, when we care to process them. However, if we have only
+  ⍝ Nss or only Nse it is clearly a SYNTAX ERROR. So, at this point, we can
+  ⍝ eliminate the need to consider the Namespace property entirely by
+  ⍝ parsing out the Nss and Nse tokens here. After this the only properties
+  ⍝ that must be handled at the top-level Context are the Value and
+  ⍝ Named properties.
   ⍝
-  ⍝ Firstly, we need to test that the beginning and end are both 
+  ⍝ Firstly, we need to test that the beginning and end are both
   ⍝ Nss and Nse tokens.
   FL←⊃1 ¯1⍪.↑⊂⍵ ByDepth 2
   ~FL[;1]∧.≡⊂'Token':⎕SIGNAL 2
   ~':Namespace' ':EndNamespace'∧.≡'name' Prop FL:⎕SIGNAL 2
-  
-  ⍝ Secondly, we must ensure that there are not more than two Nss and Nse 
+
+  ⍝ Secondly, we must ensure that there are not more than two Nss and Nse
   ⍝ tokens combined either, or it is also a syntax error
   N←'name' Prop ⍵ ByElem 'Token'
   2≠+/N∊':Namespace' ':EndNamespace':⎕SIGNAL 2
-  
+
   ⍝ Parse out the Nss and Nse tokens
   ⍝ This corresponds to lifting the tokens to part of the structure
   ⍝ This changes the root from Tokens to Namespace
-  ⍝ We remove both the Line that contains the single namespace 
-  ⍝ token as well as the token itself. We take advantage of the 
-  ⍝ assumption that a namespace token must appear on a line 
+  ⍝ We remove both the Line that contains the single namespace
+  ⍝ token as well as the token itself. We take advantage of the
+  ⍝ assumption that a namespace token must appear on a line
   ⍝ by itself.
   NS←0 'Namespace' '' (1 2⍴'name' '')
   NS⍪←⍵[1↓(⍳⊃⍴⍵)~I,¯1+I←(⊂[1]⍵)⍳⊂[1]FL;]
-  
+
   ⍝ Stimuli: ⋄
   ⍝
-  ⍝ The ⋄ token is treated just the same as an Nl for all intents 
-  ⍝ and purposes. However, the Tokenizer will not have broken these 
-  ⍝ out implicitly like it has for Nl due to the way the input 
-  ⍝ format works. 
-  ⍝ 
+  ⍝ The ⋄ token is treated just the same as an Nl for all intents
+  ⍝ and purposes. However, the Tokenizer will not have broken these
+  ⍝ out implicitly like it has for Nl due to the way the input
+  ⍝ format works.
+  ⍝
   ⍝ Trace: Table 219 in Function Specification
-  ⍝ 
-  ⍝ We can examine each of the cases illustrated by the above table 
-  ⍝ and note the same as with Nl. It thus suffices to convert all 
-  ⍝ ⋄ tokens to Nl lines. In the tree, converting each ⋄ Token node 
-  ⍝ to a Line node has this effect, and is a safe transformation 
-  ⍝ because a Token node has no children, and stores no additional 
+  ⍝
+  ⍝ We can examine each of the cases illustrated by the above table
+  ⍝ and note the same as with Nl. It thus suffices to convert all
+  ⍝ ⋄ tokens to Nl lines. In the tree, converting each ⋄ Token node
+  ⍝ to a Line node has this effect, and is a safe transformation
+  ⍝ because a Token node has no children, and stores no additional
   ⍝ information that needs to be restored.
   ⍝
-  ⍝ XXX: The following transformation does not adequately preserve 
+  ⍝ XXX: The following transformation does not adequately preserve
   ⍝ commenting behavior.
   I←(('name' Prop B⌿NS)∊⊂,'⋄')/(B←NS[;1]∊⊂'Token')/⍳⊃⍴NS
   NS[I;]←((⍴I),4)⍴1 'Line' '' MtA
 
   ⍝ Stimuli: { }
   ⍝
-  ⍝ The { and } stimuli delimit only function bodies, and nothing else. 
-  ⍝ Moreover, they must be balanced or a syntax error occurs. It is also 
-  ⍝ the only valid way to continue from Funtion State 0. Because of these 
-  ⍝ natural features of the way that the { and } stimuli occur, this allows 
-  ⍝ a complete removal of them from the set of tokens early on, provided 
-  ⍝ that we allow for a single internal extension to the public AST 
-  ⍝ restriction. If we allow for lines to contain not only token values, 
-  ⍝ but also Function subtrees, then we can convert all { and } stimuli 
-  ⍝ into Function nodes that themselves contain Line nodes. This, of course, 
-  ⍝ works recursively. 
-  ⍝ 
-  ⍝ At this point the NS variable contains a namespace tree of shallow 
-  ⍝ depth containing all Line nodes with various tokens in each line. 
-  ⍝ This gives a maximum depth of 2. We divide the basic operation into 
-  ⍝ two steps: 
+  ⍝ The { and } stimuli delimit only function bodies, and nothing else.
+  ⍝ Moreover, they must be balanced or a syntax error occurs. It is also
+  ⍝ the only valid way to continue from Funtion State 0. Because of these
+  ⍝ natural features of the way that the { and } stimuli occur, this allows
+  ⍝ a complete removal of them from the set of tokens early on, provided
+  ⍝ that we allow for a single internal extension to the public AST
+  ⍝ restriction. If we allow for lines to contain not only token values,
+  ⍝ but also Function subtrees, then we can convert all { and } stimuli
+  ⍝ into Function nodes that themselves contain Line nodes. This, of course,
+  ⍝ works recursively.
   ⍝
-  ⍝ 1. Adapt all depths of the nodes to ensure that the depth of each node 
+  ⍝ At this point the NS variable contains a namespace tree of shallow
+  ⍝ depth containing all Line nodes with various tokens in each line.
+  ⍝ This gives a maximum depth of 2. We divide the basic operation into
+  ⍝ two steps:
+  ⍝
+  ⍝ 1. Adapt all depths of the nodes to ensure that the depth of each node
   ⍝    is incremented by two for each un-closed { that appears prior to the
-  ⍝    token in the token stream. Fm is the map of { and } tokens, where 
-  ⍝    a 1 is for any { token, and a ¯1 for any } token, and 0 for everything 
+  ⍝    token in the token stream. Fm is the map of { and } tokens, where
+  ⍝    a 1 is for any { token, and a ¯1 for any } token, and 0 for everything
   ⍝    else.
   Fm←((1⌷⍉NS)∊⊂'Token')×{1 ¯1 0⌷⍨(,¨'{}')⍳((0⌷⍉⍵)⍳⊂'name')⌷(1⌷⍉⍵),⊂''}¨3⌷⍉NS
   _←⍎'⎕SIGNAL(0≠+/Fm)/2 ⋄ ⍬ '
   NS[;0]+←2×Fd←+\0,¯1↓Fm
 
-  ⍝ 2. Delete the { and } token nodes to insert a Function node at the 
-  ⍝    { token location. Additionally, insert a child node Line under the 
-  ⍝    Function node to hold the rest of the tokens on the same line as 
-  ⍝    the { token but appearing after it. Accomplished through Ci and Fi, 
-  ⍝    the index vectors of the Children and Function nodes, respectively. 
+  ⍝ 2. Delete the { and } token nodes to insert a Function node at the
+  ⍝    { token location. Additionally, insert a child node Line under the
+  ⍝    Function node to hold the rest of the tokens on the same line as
+  ⍝    the { token but appearing after it. Accomplished through Ci and Fi,
+  ⍝    the index vectors of the Children and Function nodes, respectively.
   Fi←(1=Fm)/⍳⍴Fm ⋄ Ci←((1⌽B)∧B←0≠Fd)/⍳⍴Fd
   NS[1+Ci;]←NS[Ci;]
   NS[Fi;1+⍳3]←((⍴Fi),3)⍴'Function' '' (1 2⍴'class' 'ambivalent')
   NS[1+Fi;]←(NS[Fi;0]+1),((⍴Fi),3)⍴'Line' '' MtA
 
-  ⍝ Now we have handled all { and } stimuli and do not need to consider 
-  ⍝ them again; they have been replaced with the appropriate Function 
-  ⍝ nodes. 
-  
+  ⍝ Now we have handled all { and } stimuli and do not need to consider
+  ⍝ them again; they have been replaced with the appropriate Function
+  ⍝ nodes.
+
   ⍝ State: Namespace ← OPEN ⋄ Eot ← No
-  ⍝ Stimuli already handled by this point or that do not need handling: 
+  ⍝ Stimuli already handled by this point or that do not need handling:
   ⍝   Eot Fix Fnb Fne Fnf Nl Nse Nss Break ⋄ { }
   ⍝ Stimuli to consider: Vfo Vu N ← E Fe
   ⍝
   ⍝ At this point we have a series of abstract Line nodes which are either
-  ⍝ empty, contain an expression or a function. The previous handling of 
-  ⍝ { and } stimuli means that we can still treat Functions as occuring 
-  ⍝ on a single line, and that any lines that they have inside of them are 
+  ⍝ empty, contain an expression or a function. The previous handling of
+  ⍝ { and } stimuli means that we can still treat Functions as occuring
+  ⍝ on a single line, and that any lines that they have inside of them are
   ⍝ "internal" to the function and do not affect the top-level.
-  ⍝ If we look at the set of states in the 
+  ⍝ If we look at the set of states in the
   ⍝ top-level (Table 206) we will see that all of the Namespace ← OPEN
-  ⍝ states either error out on Nl or they return back to the 
-  ⍝ Namespace ← OPEN state which is right here. Thus, each line 
-  ⍝ can be processed individually from one another as they all just 
-  ⍝ come back here anyways. 
-  ⍝ 
-  ⍝ Trace: Tables 11 through 22 in Function Specification dealing with 
+  ⍝ states either error out on Nl or they return back to the
+  ⍝ Namespace ← OPEN state which is right here. Thus, each line
+  ⍝ can be processed individually from one another as they all just
+  ⍝ come back here anyways.
+  ⍝
+  ⍝ Trace: Tables 11 through 22 in Function Specification dealing with
   ⍝ Fix Nss prefixes.
   ⍝
-  ⍝ We rely on a helper function at this point which is designed to 
+  ⍝ We rely on a helper function at this point which is designed to
   ⍝ handle all of the cases when we have a Namespace ← Open property.
-  
-  ⍝ Our overall strategy here is to reduce over the lines from top to bottom, 
-  ⍝ eventually resulting in our final namespace. Each call to ParseTopLine will 
-  ⍝ return an extended namespace and a new environment containing the bindings 
-  ⍝ that have been created so far. 
+
+  ⍝ Our overall strategy here is to reduce over the lines from top to bottom,
+  ⍝ eventually resulting in our final namespace. Each call to ParseTopLine will
+  ⍝ return an extended namespace and a new environment containing the bindings
+  ⍝ that have been created so far.
   ⍝
-  ⍝ Start with an empty AST and the function bindings at the top-level as 
+  ⍝ Start with an empty AST and the function bindings at the top-level as
   ⍝ the seed value.
   SD←(0 4⍴⍬)(⊃ParseFeBindings/(1 Kids NS),⊂0 2⍴⍬)
-  
+
   ⍝ We note that all sub-trees of the the main Tokens AST at this point
   ⍝ are lines.  All other nodes types are at depth 2 or greater. We assume
   ⍝ here that the tree consists of a single root node of depth 0 and that
@@ -625,17 +625,17 @@ Parse←{
   ⍝ each line has been converted into an apropriate node, or left alone if
   ⍝ it is an empty line.
   NS←(1↑NS)⍪⊃A E←⊃ParseTopLine/⌽(⊂SD),1 Kids NS
-  
-  ⍝ We return the final environment created by the ParseTopLine function and 
-  ⍝ the final Namespace AST. 
+
+  ⍝ We return the final environment created by the ParseTopLine function and
+  ⍝ the final Namespace AST.
   NS E
 }
 
 ⍝ ParseFeBindings
 ⍝
-⍝ Intended Function: Describe an set of bindings which is an extension of 
-⍝ given binding and any function bindings introduced by the given 
-⍝ AST top-level node. 
+⍝ Intended Function: Describe an set of bindings which is an extension of
+⍝ given binding and any function bindings introduced by the given
+⍝ AST top-level node.
 ⍝
 ⍝ Right Argument: (Name, Type) Environment
 ⍝ Left Argument: A top-level Namespace AST child node
@@ -666,13 +666,13 @@ ParseFeBindings←{
 
 ParseTopLine←{C E←⍵
   ⍝ Possible stimuli: Vfo Vu N ← E Fe
-  ⍝ 
+  ⍝
   ⍝ We are only considering the Value and Named states in this function.
-  ⍝ That is to say, the Context, Namespace and Eot states should stay the 
-  ⍝ same throughout this function. While the literal stimuli that we 
-  ⍝ consider above are the only ones that can appear, we are also implicitly 
+  ⍝ That is to say, the Context, Namespace and Eot states should stay the
+  ⍝ same throughout this function. While the literal stimuli that we
+  ⍝ consider above are the only ones that can appear, we are also implicitly
   ⍝ dealing with the Nl stimuli.
-  ⍝   
+  ⍝
   ⍝ State Transitions:
   ⍝   E        → null         → (Value ← EXPR)
   ⍝   E Nl     → null         → ()
@@ -686,73 +686,73 @@ ParseTopLine←{C E←⍵
   ⍝   Vu Nl    → VALUE ERROR  → ()
   ⍝   Vu ←     → null         → (Named ← UNBOUND)
   ⍝
-  ⍝ Trace: Tables 11-15, 18-22, 206 in Function Specification 
-  
+  ⍝ Trace: Tables 11-15, 18-22, 206 in Function Specification
+
   ⍝ Dealing with Empty Lines
-  ⍝ We might have an empty line with no tokens. In this case, we can 
-  ⍝ just return the line, as there is nothing to do for this 
+  ⍝ We might have an empty line with no tokens. In this case, we can
+  ⍝ just return the line, as there is nothing to do for this
   ⍝ line.
   1=⊃⍴⍺:(C⍪⍺)E
-  
-  ⍝ Regardless of what we do, we need to have the comment to put on the 
+
+  ⍝ Regardless of what we do, we need to have the comment to put on the
   ⍝ new head of the sub-tree that we will return.
   cmt←⊃'comment' Prop 1↑⍺
-  
+
   ⍝ Stimuli: E Fe
   ⍝ Stimuli indirectly processed: N { }
   ⍝
   ⍝ States to process: E, Fe, E Nl, Fe Nl, Vfo Nl, Vu Nl
   ⍝
-  ⍝ The first stimuli to eliminate if possible is the recursive stimuli, 
-  ⍝ which, if it parses correctly, is all we need do. Since we are dealing 
-  ⍝ with an implicit Nl, then ParseExpr and ParseFuncExpr will give us the 
-  ⍝ results both for E and Fe states, but for E Nl and Fe Nl. Since these 
-  ⍝ are the only reasonable transitions from E and Fe states, this also means 
+  ⍝ The first stimuli to eliminate if possible is the recursive stimuli,
+  ⍝ which, if it parses correctly, is all we need do. Since we are dealing
+  ⍝ with an implicit Nl, then ParseExpr and ParseFuncExpr will give us the
+  ⍝ results both for E and Fe states, but for E Nl and Fe Nl. Since these
+  ⍝ are the only reasonable transitions from E and Fe states, this also means
   ⍝ that we have properly handled the E and Fe transitions from the above table.
   ⍝
-  ⍝ We also have the happy situation of handling the Vfo Nl and Vu Nl states, as 
-  ⍝ both of these are really subsumed members of the set of parses of E Nl and Fe Nl. 
-  ⍝ Thus we can eliminate these states as well from needing further treatment. 
-  ⍝ We are not quite done with the handling fo the Vu and Vfo states, however, as 
-  ⍝ the state-space clearly has more to handle as can be seen from the above table. 
+  ⍝ We also have the happy situation of handling the Vfo Nl and Vu Nl states, as
+  ⍝ both of these are really subsumed members of the set of parses of E Nl and Fe Nl.
+  ⍝ Thus we can eliminate these states as well from needing further treatment.
+  ⍝ We are not quite done with the handling fo the Vu and Vfo states, however, as
+  ⍝ the state-space clearly has more to handle as can be seen from the above table.
   0=⊃eerr ast Ne←E ParseExpr 1↓⍺:(C⍪ast Comment cmt)Ne
   0=⊃ferr ast rst←E ParseFuncExpr 1↓⍺:(C⍪ast Comment cmt)E
-  
-  ⍝ At this point we have only to deal with variables. This happens to be a situation 
+
+  ⍝ At this point we have only to deal with variables. This happens to be a situation
   ⍝ that we encounter fairly often, so we abstract this into another function.
   ⍝ All possible environment changes have already been handled by ParseFeBindings.
   0=⊃err ast←E 0 ParseLineVar 1↓⍺:(C⍪ast Comment cmt)E
-  
-  ⍝ When the error is best taken from one of the recursive stimuli (see ParseLineVar 
-  ⍝ documentation) then we will use the expression error code, as it is the one most 
+
+  ⍝ When the error is best taken from one of the recursive stimuli (see ParseLineVar
+  ⍝ documentation) then we will use the expression error code, as it is the one most
   ⍝ likely to be useful.
   ¯1=×err:⎕SIGNAL eerr
-  
+
   ⎕SIGNAL err
 }
 
 ⍝ ParseLineVar
 ⍝
-⍝ Intended Function: Process variable stimuli that can occur when processing a 
+⍝ Intended Function: Process variable stimuli that can occur when processing a
 ⍝ top-level line.
 ⍝
 ⍝ This function exists because we need to use it in more than one place.
-⍝ ParseLineVar can be safely used whenever the state transitions in the current 
+⍝ ParseLineVar can be safely used whenever the state transitions in the current
 ⍝ state result in the same state change as given in the transition table below.
 ⍝
-⍝ The first element of the output vector is a number indicating the error that was 
-⍝ received. It will return a negative number in the case where it thinks that the 
-⍝ errors of previously parsed recursive stimuli is better than the current error, 
+⍝ The first element of the output vector is a number indicating the error that was
+⍝ received. It will return a negative number in the case where it thinks that the
+⍝ errors of previously parsed recursive stimuli is better than the current error,
 ⍝ and a positive value whenever it wants to return a very specific error code.
 ⍝ It will return zero in the case that the parsing has succeeded.
 ⍝
 ⍝ The process of parsing out a variable assignment appears in a few locations
 ⍝ so it makes a bit of sense to encapsulate this process into a single function.
-⍝ Indeed, the basic process is exactly the same, but depending on the starting 
-⍝ state, the transitions (read, function calls) are slightly different. In particular, 
-⍝ the transitions from an unbound variable depends on whether we have seen a 
-⍝ bound variable already or not. To handle this, we admit a "state class" 
-⍝ argument as the second element of the left argument vector. 
+⍝ Indeed, the basic process is exactly the same, but depending on the starting
+⍝ state, the transitions (read, function calls) are slightly different. In particular,
+⍝ the transitions from an unbound variable depends on whether we have seen a
+⍝ bound variable already or not. To handle this, we admit a "state class"
+⍝ argument as the second element of the left argument vector.
 ⍝
 ⍝ State Class 0: Value ← EMPTY ⋄ Named ← EMPTY
 ⍝ State Class 1: Value ← EMPTY ⋄ Named ← BOUND
@@ -784,58 +784,58 @@ ParseLineVar←{E SC←⍺
   ⍝   Vu Nl  → VALUE ERROR  → ()
   ⍝   Vu ←   → null         → (Value ← EMPTY   ⋄ Named ← BOUND)
   ⍝
-  ⍝ Trace: Tables 11-15, 18-22, 206 in Function Specification 
+  ⍝ Trace: Tables 11-15, 18-22, 206 in Function Specification
   ⍝
-  ⍝ The Nl suffixed states are assumed to have been already handled implicitly 
+  ⍝ The Nl suffixed states are assumed to have been already handled implicitly
   ⍝ by the caller of ParseLineVar. See ParseLine.
 
   ⍝ Stimuli: Vfo Vu ←
   ⍝
   ⍝ States to Process: Vfo, Vu, Vfo ←, Vu ←
   ⍝
-  ⍝ After the above, there are only a few situations we can be in. All the other states 
-  ⍝ described in Table 206 are tied in one way or another to the ← token. Most of them 
-  ⍝ have ← directly in their names, but the Vfo and Vu states are partially handled by the 
-  ⍝ above handling, and the only other situations we can have which make sense, 
-  ⍝ are not illegal, and not otherwise subsumed by the above are the assignment cases. 
+  ⍝ After the above, there are only a few situations we can be in. All the other states
+  ⍝ described in Table 206 are tied in one way or another to the ← token. Most of them
+  ⍝ have ← directly in their names, but the Vfo and Vu states are partially handled by the
+  ⍝ above handling, and the only other situations we can have which make sense,
+  ⍝ are not illegal, and not otherwise subsumed by the above are the assignment cases.
   ⍝
-  ⍝ This handling of the assignment statement is really a case of handling the 
-  ⍝ Named property. We can have either BOUND or UNBOUND states. The MAYBE state 
-  ⍝ will be unused here. 
+  ⍝ This handling of the assignment statement is really a case of handling the
+  ⍝ Named property. We can have either BOUND or UNBOUND states. The MAYBE state
+  ⍝ will be unused here.
   ⍝
-  ⍝ The first possibility is that we have no variable to be named, in which case we need 
+  ⍝ The first possibility is that we have no variable to be named, in which case we need
   ⍝ to signal a SYNTAX ERROR.
   '←'≡⊃'name'Prop 1↑⍵:2 MtAST
-  
-  ⍝ The only non-error cases that make any sense at this point are either Vfo ← or Vu ←, 
-  ⍝ so we can check to make sure that we have at least 3 tokens, any less than that 
-  ⍝ would indicate either Vfo ← Nl or some other error case. 
+
+  ⍝ The only non-error cases that make any sense at this point are either Vfo ← or Vu ←,
+  ⍝ so we can check to make sure that we have at least 3 tokens, any less than that
+  ⍝ would indicate either Vfo ← Nl or some other error case.
   3>⊃⍴⍵:¯1 MtAST
-  
-  ⍝ If we have at least three tokens to deal with, then the first two should be an 
-  ⍝ assignment token and a variable token. Let's make sure that this is what we 
+
+  ⍝ If we have at least three tokens to deal with, then the first two should be an
+  ⍝ assignment token and a variable token. Let's make sure that this is what we
   ⍝ actually have, otherwise, we should signal an error again.
   ~'Variable' 'Token'∧.≡⍵[0 1;1]:¯1 MtAST
   (,'←')≢⊃'name' Prop 1 4⍴1⌷⍵:¯1 MtAST
-  
+
   ⍝ Now we need to determine whether the variable is a Vfo or a Vu.
   Tp←E VarType⊢Vn←⊃'name'Prop 1 4⍴0⌷⍵
 
-  ⍝ If the type of the variable is Vu, then we have 
+  ⍝ If the type of the variable is Vu, then we have
   ⍝ the Named ← UNBOUND when we have State Class ← 0
   (0=Tp)∧(SC=0):0,⊂Vn E ParseNamedUnB 2↓⍵
-  
+
   ⍝ If we have a Vfo, then the Named ← BOUND
   ⍝ and when we have State Class ← 1 with a Vu
-  ⍝ XXX In this case, because we know that we only have types 
-  ⍝ of 2, then we can make sure that we give a type of 2 to 
-  ⍝ the ParseNamedBnd call. In the future, we will need to make 
-  ⍝ sure that we know what the real type of the variable is for 
-  ⍝ State Class ← 1. We will also have to make sure that the 
-  ⍝ types are in the appropriate nameclass if we have another 
+  ⍝ XXX In this case, because we know that we only have types
+  ⍝ of 2, then we can make sure that we give a type of 2 to
+  ⍝ the ParseNamedBnd call. In the future, we will need to make
+  ⍝ sure that we know what the real type of the variable is for
+  ⍝ State Class ← 1. We will also have to make sure that the
+  ⍝ types are in the appropriate nameclass if we have another
   ⍝ class in the stack already.
   (2 3 4∨.=Tp)∨(0=Tp)∧(SC=1):0,⊂Vn 2 E ParseNamedBnd 2↓⍵
-  
+
   ⍝ If we do not have a Vfo or Vu, then something is wrong and we should error out
   ¯1 MtAST
 }
@@ -863,25 +863,25 @@ ParseNamedUnB←{Vn E←⍺
   ⍝   Vfo   → null         → (Value ← FUNC    ⋄ Named ← MAYBE)
   ⍝   Vu    → null         → (Value ← UNBOUND ⋄ Named ← MAYBE)
   ⍝   ←     → SYNTAX ERROR → ()
-  
+
   ⍝ Stimuli: Fe
-  ⍝ 
-  ⍝ We begin by directly addressing the Fe possibility, which has only a 
-  ⍝ single valid follow-up from here, which is to end the line. 
-  ⍝ In this case, we take the function expression and give it the name 
+  ⍝
+  ⍝ We begin by directly addressing the Fe possibility, which has only a
+  ⍝ single valid follow-up from here, which is to end the line.
+  ⍝ In this case, we take the function expression and give it the name
   ⍝ given to us. This further requires updating the environment and returning
   ⍝ that together with the new node.
   0=⊃ferr ast rst←E ParseFuncExpr ⍵:Vn Bind ast
-  
+
   ⍝ Stimuli: Vfo Vu ←
   ⍝
-  ⍝ If we could not successfully parse as a function expression, the only 
+  ⍝ If we could not successfully parse as a function expression, the only
   ⍝ other valid, non-error option is the Vfo or Vu prefixes. However, in this
   ⍝ case we have a state exactly like that handled by the ParseLineVar function
-  ⍝ above. The only thing we need to remember to do is to add the extra variable 
+  ⍝ above. The only thing we need to remember to do is to add the extra variable
   ⍝ name that is given to us.
   0=⊃err ast←E 0 ParseLineVar ⍵:Vn Bind ast
-  
+
   ¯1=×err:⎕SIGNAL ferr
   ⎕SIGNAL err
 }
@@ -912,42 +912,42 @@ ParseNamedBnd←{Vn Tp E←⍺
   ⍝   Vu Nl → SYNTAX ERROR → ()
   ⍝   Vu ←  → null         → (Value ← EMPTY   ⋄ Named ← BOUND)
   ⍝   ←     → SYNTAX ERROR → ()
-  
+
   ⍝ Stimuli: E
   ⍝
-  ⍝ If we are Named ← BOUND then we need to make sure that we do not have 
+  ⍝ If we are Named ← BOUND then we need to make sure that we do not have
   ⍝ a binding to a different nameclass. Namely, a binding from an expression
   ⍝ to a function, operator, or the like.
   0=⊃E ParseExpr ⍵:⎕SIGNAL 2
 
   ⍝ Stimuli: Fe
-  ⍝ 
-  ⍝ When we parse a function expression successfully, we still need to 
-  ⍝ ensure that the type of the variable matches the type of the function 
+  ⍝
+  ⍝ When we parse a function expression successfully, we still need to
+  ⍝ ensure that the type of the variable matches the type of the function
   ⍝ expression, but at least this time, we have a chance of it succeeding.
   ⍝ If it does succeed, we simply need to add the name and move on.
   T←2 ⋄ ferr ast rst←E ParseFuncExpr ⍵
   (0=ferr)∧Tp=T:Vn Bind ast
   Tp≠T:⎕SIGNAL 2
-  
+
   ⍝ Stimuli: Vfo Vu ←
   ⍝
-  ⍝ The handling of the Fe stimuli will have covered both the Fe states and 
-  ⍝ the Vfo Nl state, as in the Value ← EMPTY ⋄ Named ← EMPTY case handled in 
-  ⍝ ParseTopLine. We must handle the Vu Nl state explicitly here, and then we are 
-  ⍝ left only with the states handled by ParseLineVar, except that we need to call 
+  ⍝ The handling of the Fe stimuli will have covered both the Fe states and
+  ⍝ the Vfo Nl state, as in the Value ← EMPTY ⋄ Named ← EMPTY case handled in
+  ⍝ ParseTopLine. We must handle the Vu Nl state explicitly here, and then we are
+  ⍝ left only with the states handled by ParseLineVar, except that we need to call
   ⍝ it with a state class of 1 instead of 0.
   (1=⊃⍴⍵)∧('Variable'≡⊃0 1⌷⍵)∧(0=E VarType⊃'name'Prop 1↑⍵):⎕SIGNAL 6
   0=⊃err ast←E 1 ParseLineVar ⍵:Vn Bind ast
-  
+
   ¯1=×err:⎕SIGNAL ferr
   ⎕SIGNAL err
 }
 
 ⍝ ParseExpr
 ⍝
-⍝ Intended Function: Take a set of tokens and an environment of types 
-⍝ and parse it as an expression, returning an error code, ast, and a new, 
+⍝ Intended Function: Take a set of tokens and an environment of types
+⍝ and parse it as an expression, returning an error code, ast, and a new,
 ⍝ updated environment of types.
 ⍝
 ⍝ Right Argument: Matrix of Token and Function nodes
@@ -968,7 +968,7 @@ ParseExpr←{
   6::6 MtAST ⍺
   11::11 MtAST ⍺
 
-  ⍝ We must consider the following expression states for Increment 5: 
+  ⍝ We must consider the following expression states for Increment 5:
 
   ⍝  0 empty
   ⍝  1 Fea
@@ -988,17 +988,17 @@ ParseExpr←{
   ⍝ worried about atomic expressions at the moment, we can consider
   ⍝ Expression states 9, 10, and 11 (Tables 45, 46, and 47 in the
   ⍝ Function Specification) as equivalent, more or less to states 3,
-  ⍝ 5, and 6 (Tables 39, 41, and 42). 
+  ⍝ 5, and 6 (Tables 39, 41, and 42).
 
   ⍝ State 16 (Table 52) leads only to various error states. In our
   ⍝ case, because we don't have nested arrays yet, we can map all of
   ⍝ these to SYNTAX ERROR and be done with it.
 
   ⍝ State 7 leads to only VALUE ERRORS for our case except for
-  ⍝ assignment. 
+  ⍝ assignment.
 
   ⍝ We don't have strands yet, so Vna doesn't actually make sense, and
-  ⍝ Vnu is actually Vu.  
+  ⍝ Vnu is actually Vu.
 
   ⍝ Analyzing the rest of the tables that are left, we see that the
   ⍝ stimuli can be divided into a regular set of partitions:
@@ -1012,7 +1012,7 @@ ParseExpr←{
 
   ⍝ Variables and literals may not appear next to one
   ⍝ another. Likewise, the ← token must appear between another
-  ⍝ expression and a variable. 
+  ⍝ expression and a variable.
 
   ⍝ Encapsulate literals as atomic Expression nodes
   ⍝ XXX: Is there a more elegant way to do this?
@@ -1046,9 +1046,9 @@ ParseExpr←{
 }
 
 ⍝ ParseFuncExpr
-⍝ 
-⍝ Intended Function: Take a set of tokens and an environment of types 
-⍝ and parse it as a function expression, returning an error code, ast, and a new, 
+⍝
+⍝ Intended Function: Take a set of tokens and an environment of types
+⍝ and parse it as a function expression, returning an error code, ast, and a new,
 ⍝ updated environment of types.
 ⍝
 ⍝ Right Argument: Matrix of Token and Function nodes
@@ -1059,10 +1059,10 @@ ParseExpr←{
 
 ParseFuncExpr←{
   ⍝ Possible Stimuli: Fn Da Ma Vf Vu Vi
-  ⍝ 
+  ⍝
   ⍝ We only accept atomic expressions right now, which means only
   ⍝ atomic stimuli, without any consideration to multi-stimuli
-  ⍝ histories. 
+  ⍝ histories.
 
   0≠⊃err ast rst cls eqv←⍺{
     Pcls←{(~∨\' '=C)/C←⊃'class'Prop 1↑⍵}
@@ -1072,17 +1072,17 @@ ParseFuncExpr←{
     0=⊃err ast rst←⍺ ParseFunc ⍵:err ast rst,2⍴⊂'ambivalent'
     2 MtAST ⍵ '' ''
   }⍵:err ast rst
-  
-  ⍝ The only thing we can have at this point is a function, so we just handle that 
+
+  ⍝ The only thing we can have at this point is a function, so we just handle that
   ⍝ here directly.
   Fn←(¯1+⊃⍵) 'FuncExpr' '' (2 2⍴'class' cls 'equiv' eqv)
-  
+
   0(Fn⍪ast)rst
 }
 
 ⍝ ParseFunc
 ⍝
-⍝ Intended Function: Take a set of tokens and parse them as an user-defined 
+⍝ Intended Function: Take a set of tokens and parse them as an user-defined
 ⍝ ambivalent function, monadic or dyadic operator.
 ⍝
 ⍝ Right Argument: Non-empty matrix of Token and Function nodes
@@ -1098,20 +1098,20 @@ ParseFunc←{
   ⍝
   ⍝ Trace: Tables 23 - 28 and 31 of Function Specification
   ⍝
-  ⍝ In Parse, the { and } stimuli have already been processed and used 
-  ⍝ to construct nested forms of the lines. The ParseFunc therefore must 
-  ⍝ check to ensure that the next node (token) to process is a Function 
+  ⍝ In Parse, the { and } stimuli have already been processed and used
+  ⍝ to construct nested forms of the lines. The ParseFunc therefore must
+  ⍝ check to ensure that the next node (token) to process is a Function
   ⍝ node and convert the body of the function from a series of Line nodes
   ⍝ to a proper function body. Firstly, we must check to determine whether
   ⍝ we have a Function node.
   'Function'≢⊃0 1⌷⍵:2 MtAST ⍵
 
-  ⍝ The rest of the nodes to parse are children of the Function node, 
+  ⍝ The rest of the nodes to parse are children of the Function node,
   ⍝ so extract out just the Function node from the rest of the tokens.
   Fb←(Fm←1=+\(Fd←⊃⍵)=D←0⌷⍉⍵)⌿⍵
 
   ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
-  ⍝ 
+  ⍝
   ⍝ State Transitions:
   ⍝   E     → wait → (Value ← EXPR)
   ⍝   E :   → wait → (Cond ← Yes ⋄ Value ← EMPTY)
@@ -1120,33 +1120,33 @@ ParseFunc←{
   ⍝   Vu    → wait → (Value ← UNBOUND)
   ⍝   :     → SYNTAX ERROR → ()
   ⍝   }     → okay         → ()
-  ⍝ 
-  ⍝ At this point we can use a similar technique to that used at the 
-  ⍝ top level and reduce over all the lines to collect up a final AST. 
-  ⍝ At the end we can replace the Fb contents (marked out by Fm) with 
+  ⍝
+  ⍝ At this point we can use a similar technique to that used at the
+  ⍝ top level and reduce over all the lines to collect up a final AST.
+  ⍝ At the end we can replace the Fb contents (marked out by Fm) with
   ⍝ the AST that was created. This requires a ParseFnLine function.
-  ⍝ Note that the } Stimuli which could appear here for an empty function 
+  ⍝ Note that the } Stimuli which could appear here for an empty function
   ⍝ gets implicitly handled.
 
-  ⍝ To begin with, we need to start with an empty environment and an empty 
+  ⍝ To begin with, we need to start with an empty environment and an empty
   ⍝ AST. This is our Seed value.
   Sd←(0 4⍴⍬)MtNTE
-  
-  ⍝ We partition the AST into the appropriate sub-trees, each of which should 
+
+  ⍝ We partition the AST into the appropriate sub-trees, each of which should
   ⍝ correspond to a single line. All Lines we care about are at depth Fd+1.
   Cn←((Fd+1)=0⌷⍉Fb)⊂[0]Fb
-  
+
   ⍝ Finally, we use ParseFnLine to reduce over the lines.
-  ⍝ At this point, the function will not have the appropriate root on 
-  ⍝ it, which we stripped off above. We put this back on to form the final, 
-  ⍝ correctly parsed Function. Fn is now a Function node and each line has been 
+  ⍝ At this point, the function will not have the appropriate root on
+  ⍝ it, which we stripped off above. We put this back on to form the final,
+  ⍝ correctly parsed Function. Fn is now a Function node and each line has been
   ⍝ converted into an apropriate node, or left alone if it is an empty line.
    2:: 2 MtAST ⍵
   11::11 MtAST ⍵
   Fn←(1↑Fb)⍪⊃A E←⊃ParseFnLine/⌽(⊂Sd),Cn
-  
-  ⍝ We return the function node together with the rest of the nodes after 
-  ⍝ it. 
+
+  ⍝ We return the function node together with the rest of the nodes after
+  ⍝ it.
   0 Fn ((~Fm)⌿⍵)
 }
 
@@ -1167,7 +1167,7 @@ ParseFunc←{
 
 ParseFnLine←{C E←⍵
   ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
-  ⍝ 
+  ⍝
   ⍝ State Transitions:
   ⍝   E     → wait         → (Value ← EXPR)
   ⍝   E :   → wait         → (Cond ← Yes ⋄ Value ← EMPTY)
@@ -1177,29 +1177,29 @@ ParseFnLine←{C E←⍵
   ⍝   :     → SYNTAX ERROR → ()
 
   ⍝ Dealing with Empty Lines / Handling Immediate } Stimuli
-  ⍝ We might have an empty line with no tokens. In this case, we can 
-  ⍝ just return the line, as there is nothing to do for this 
+  ⍝ We might have an empty line with no tokens. In this case, we can
+  ⍝ just return the line, as there is nothing to do for this
   ⍝ line.
   1=⊃⍴⍺:(C⍪⍺)E
-  
-  ⍝ Regardless of what we do, we need to have the comment to put on the 
+
+  ⍝ Regardless of what we do, we need to have the comment to put on the
   ⍝ new head of the sub-tree that we will return.
   cmt←⊃'comment' Prop 1↑⍺
-  
+
   ⍝ Stimuli: :
   ⍝
-  ⍝ A line may contain at most one : stimuli. If one occurs, we know exactly 
-  ⍝ what we must have, but if we do not, then we have one of E, Vfo, or Vu. 
+  ⍝ A line may contain at most one : stimuli. If one occurs, we know exactly
+  ⍝ what we must have, but if we do not, then we have one of E, Vfo, or Vu.
   Cm←{(,':')≡((0⌷⍉⍵)⍳⊂'name')⊃(1⌷⍉⍵),⊂''}¨3⌷⍉⍺ ⍝ All name attributes ≡,':'
   Cnd←+/Cm←((1+⊃⍺)=0⌷⍉⍺)×((1⌷⍉⍺)∊⊂'Token')×Cm  ⍝ Only direct child Tokens
   1<Cnd:⎕SIGNAL 2                               ⍝ Too many : tokens
   1=1⌷Cm:⎕SIGNAL 2                              ⍝ Empty test clause
   1=Cnd:((C⍪A)E)⊣A E←⊃E ParseCond/¯1↓¨(1,1↓Cm)⊂[0]1⊖⍺
   0≠Cnd:'Unexpected : Token Count'⎕SIGNAL 99
-  
-  ⍝ At this point, we have handled line terminators (Nl and ⋄) as well as 
-  ⍝ all closing } stimuli. We have also eliminated Stimuli : . Function 
-  ⍝ States 0, 1, 5, 8 have all been processed by the code above. That 
+
+  ⍝ At this point, we have handled line terminators (Nl and ⋄) as well as
+  ⍝ all closing } stimuli. We have also eliminated Stimuli : . Function
+  ⍝ States 0, 1, 5, 8 have all been processed by the code above. That
   ⍝ leaves the following states:
   ⍝
   ⍝   State # │ Canonical Sequence
@@ -1209,20 +1209,20 @@ ParseFnLine←{C E←⍵
   ⍝         4 │ { Vu
   ⍝   ────────┴───────────────────
   ⍝
-  ⍝ Basically, state 3 at this point, because we do not have 
-  ⍝ assignments, can be nothing but a SYNTAX ERROR (see Table 26 
-  ⍝ in the Function Specification). State 4 (Table 27) can be nothing 
-  ⍝ more than a VALUE ERROR, and is completely subsumed by state 2 
-  ⍝ (Table 25). Thus, checking for a valid E stimuli at this point 
-  ⍝ suffices to answer all questions and complete the handling of these 
-  ⍝ tables completely. 
+  ⍝ Basically, state 3 at this point, because we do not have
+  ⍝ assignments, can be nothing but a SYNTAX ERROR (see Table 26
+  ⍝ in the Function Specification). State 4 (Table 27) can be nothing
+  ⍝ more than a VALUE ERROR, and is completely subsumed by state 2
+  ⍝ (Table 25). Thus, checking for a valid E stimuli at this point
+  ⍝ suffices to answer all questions and complete the handling of these
+  ⍝ tables completely.
   0≠⊃err ast Ne←E ParseExpr 1↓⍺:⎕SIGNAL err
-  (C⍪ast)Ne        
+  (C⍪ast)Ne
 }
 
 ⍝ ParseCond
 ⍝
-⍝ Intended Function: Construct a Condition node from two expressions 
+⍝ Intended Function: Construct a Condition node from two expressions
 ⍝ representing a conditional line in a function body.
 ⍝
 ⍝ Left Operand: Current (name, type) environment
@@ -1234,20 +1234,20 @@ ParseFnLine←{C E←⍵
 ⍝ State: Context ← Func ⋄ Bracket ← Yes ⋄ Cond ← Yes ⋄ Bind ← NO ⋄ Value ← EMPTY
 
 ParseCond←{
-  ⍝ ParseFnLine calls ParseCond without knowing whether the test expression 
+  ⍝ ParseFnLine calls ParseCond without knowing whether the test expression
   ⍝ parses to a valid expression. Verify this first.
   0≠⊃err ast Ne←⍺⍺ ParseExpr ⍺:⎕SIGNAL err
 
-  ⍝ Depths of ast need to be bumped since they are going into a condition 
+  ⍝ Depths of ast need to be bumped since they are going into a condition
   ⍝ node.
   ast[;0]+←1
 
   ⍝ Return a Condition node
   H←(¯1+⊃⍺)'Condition' '' MtA
 
-  ⍝ Refer to Tables 28 and 31 in Function Specification; parse a valid or 
-  ⍝ empty expression, as all other cases are subsumed. This covers 
-  ⍝ Function States 5 and 8. 
+  ⍝ Refer to Tables 28 and 31 in Function Specification; parse a valid or
+  ⍝ empty expression, as all other cases are subsumed. This covers
+  ⍝ Function States 5 and 8.
   0=⊃⍴⍵:(H⍪ast)Ne
   0≠⊃err con Ne←Ne ParseExpr ⍵:⎕SIGNAL err
   con[;0]+←1 ⍝ Bump the consequence depth as well
@@ -1256,20 +1256,20 @@ ParseCond←{
 
 ⍝ KillLines
 ⍝
-⍝ Intended Function: Eliminate all semantically irrelevant lines from AST 
-⍝ to create an AST suitable for compiling. 
+⍝ Intended Function: Eliminate all semantically irrelevant lines from AST
+⍝ to create an AST suitable for compiling.
 
 KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}
 
 ⍝ DropUnmd
 ⍝
-⍝ Intended Function: Drop all unnamed expressions or functions from the 
+⍝ Intended Function: Drop all unnamed expressions or functions from the
 ⍝ top-level.
 
 DropUnmd←{{∧/' '=⊃'name'Prop 1↑⍵:MtAST ⋄ ⍵}eachk ⍵}
 
 ⍝ DropUnreached
-⍝ 
+⍝
 ⍝ Intended Function: Simplify functions by removing code in function
 ⍝ bodies after a return expression (unnamed expression).
 
@@ -1303,7 +1303,7 @@ LiftConsts←{
 
 ⍝ LiftBound
 ⍝
-⍝ Intended Function: Lift all assignments to the root of their scope. 
+⍝ Intended Function: Lift all assignments to the root of their scope.
 
 LiftBound←{
   vex←{                             ⍝ Function to make var expr
@@ -1330,10 +1330,10 @@ LiftBound←{
 }
 
 ⍝ ConvertFree
-⍝ 
-⍝ Intended Function: Convert all free variables to references to environments. 
+⍝
+⍝ Intended Function: Convert all free variables to references to environments.
 
-ConvertFree←{ 
+ConvertFree←{1
   0 2⍴⍬{
     'Variable'≡⊃0 1⌷⍵:t at⍣(t←fnd ⍵)⍵
     'Function'≡⊃0 1⌷⍵:(⍺⍺ ge ⍵)∇eachk ⍵
@@ -1342,7 +1342,7 @@ ConvertFree←{
 }
 
 ⍝ LiftFuncs
-⍝ 
+⍝
 ⍝ Intended Function: Lift all functions to the top level.
 
 LiftFuncs←{
@@ -1362,13 +1362,13 @@ Allocate←{a←⍵
   av←⍪,(em/+\fm)at⌸nm¨↓em⌿⍵         ⍝ Attribute values
   an←(fem/fm)⊃¨⊂'slots' 'alloca'    ⍝ Attribute names
   a⊣(3⌷⍉fem⌿a)←(3⌷⍉fem⌿⍵)⍪¨↓an,av   ⍝ Add new attributes
-}  
+}
 
 ⍝ GenLLVM
 ⍝
-⍝ Intended Function: Take a namespace and convert it to an LLVM Module that is 
+⍝ Intended Function: Take a namespace and convert it to an LLVM Module that is
 ⍝ semantically equivalent.
-⍝ 
+⍝
 ⍝ Input: Namespace AST
 ⍝ Output: Semantically equivalent LLVM Module
 ⍝ Invariant: All FuncExpr nodes appear at top-level
@@ -1378,24 +1378,24 @@ Allocate←{a←⍵
 ⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 GenLLVM←{
-  ⍝ Stimuli: Nss Nse 
-  
+  ⍝ Stimuli: Nss Nse
+
   ⍝ The Nss Nse pair triggers the start of a module creation
-  ⍝ We know that this is all that we have there right now, 
+  ⍝ We know that this is all that we have there right now,
   ⍝ so we just create a single empty module.
-  ⍝ If the namespace has a name then we use it, otherwise, 
+  ⍝ If the namespace has a name then we use it, otherwise,
   ⍝ not.
-  
-  ⍝ Extracting the name assumes that the first row of the 
-  ⍝ AST is the namespace node and that the Namespace 
-  ⍝ element contains only a single attribute, name, 
+
+  ⍝ Extracting the name assumes that the first row of the
+  ⍝ AST is the namespace node and that the Namespace
+  ⍝ element contains only a single attribute, name,
   ⍝ and that it is never without this attribute.
   Nam←Nam 'Unamed Namespace'⌷⍨''≡Nam←((0 3)(0 1)⊃⍵)
   Mod←ModuleCreateWithName Nam
-  
+
   ⍝ Quit if nothing to do
   0=⍴G←1 Kids ⍵:Mod
-  
+
   ⍝ For each global we general some code
   Mod⊣Mod∘GenGlobal¨G
 }
@@ -1418,8 +1418,8 @@ GenGlobal←{
 
 ⍝ GenConst
 ⍝
-⍝ Intended Function: Given an Expression node that has only constant 
-⍝ data in it, generate a global LLVM Constant and insert it into the 
+⍝ Intended Function: Given an Expression node that has only constant
+⍝ data in it, generate a global LLVM Constant and insert it into the
 ⍝ LLVM Module given.
 ⍝
 ⍝ Left Argument: LLVM Module
@@ -1428,14 +1428,14 @@ GenGlobal←{
 ⍝ See the Software Architecture for details on the array structure.
 
 GenConst←{
-  ⍝ An Expression node will contain a single array in it. Get these 
-  ⍝ values into V. We note that V should have the same shape 
-  ⍝ as the shape of the expression. Here V can either be a 
+  ⍝ An Expression node will contain a single array in it. Get these
+  ⍝ values into V. We note that V should have the same shape
+  ⍝ as the shape of the expression. Here V can either be a
   ⍝ vector of at least two elements or it can be a single scalar.
   ⍝ The literal syntax allows for none others than this.
   V←((2≤⍴V)⊃⍬(⍴V))⍴V←'value'Prop 1↓⍵
 
-  ⍝ Encapsulate the process of generating an array pointer 
+  ⍝ Encapsulate the process of generating an array pointer
   ArrayP←{
     A←ConstArray ⍺⍺ ⍵ (⊃⍴⍵)
     G←AddGlobal ⍺ (ArrayType ⍺⍺ (⊃⍴⍵)) ⍵⍵
@@ -1443,12 +1443,12 @@ GenConst←{
     P←BuildGEP (B←CreateBuilder) G (GEPI 0 0) 2 ''
     P⊣DisposeBuilder B
   }
-  
+
   ⍝ Generate LLVM Data Array from Values
   D←⍺(Int64Type ArrayP 'elems'){ConstIntOfString (Int64Type) ⍵ 10}¨,V
 
-  ⍝ Shape of the array is a single element vector 
-  ⍝ Make sure that the shape of the array is based off 
+  ⍝ Shape of the array is a single element vector
+  ⍝ Make sure that the shape of the array is based off
   ⍝ of V and not off of D.
   S←⍺(Int32Type ArrayP 'shape'){0=⍴⍵:⍬ ⋄ {ConstInt (Int32Type) ⍵ 0}¨⍵}⍴V
 
@@ -1463,12 +1463,12 @@ GenConst←{
   ⍝ For now we have a constant type
   T←ConstInt (Int8Type) 2 0
 
-  ⍝ Get all the names of the expression from the 
-  ⍝ name property, which is a space separated set of 
+  ⍝ Get all the names of the expression from the
+  ⍝ name property, which is a space separated set of
   ⍝ names, see Software Architecture
   Vs←(B/2≠/' '=' ',Vs)⊂(B←' '≠Vs)/Vs←⊃'name'Prop 1↑⍵
 
-  ⍝ We can put this all together now and insert it into the 
+  ⍝ We can put this all together now and insert it into the
   ⍝ Module
   A←ConstStruct (R Sz T S D) 5 0
   G←AddGlobal ⍺(T←GenArrayType⍬)(⊃Vs)
@@ -1482,7 +1482,7 @@ GenConst←{
 
 ⍝ GenFunc
 ⍝
-⍝ Intended Function: Given a FuncExpr node, build an appropriate 
+⍝ Intended Function: Given a FuncExpr node, build an appropriate
 ⍝ Function in the LLVM Module given.
 ⍝
 ⍝ Left Argument: LLVM Module
@@ -1504,13 +1504,13 @@ GenFunc←{
   ⍝ Each node of the function body can use the same builder.
   bldr←CreateBuilder
 
-  ⍝ Functions all require at least a single basic block to 
+  ⍝ Functions all require at least a single basic block to
   ⍝ start, using the above builder.
   bb←AppendBasicBlock fr ''
   _←PositionBuilderAtEnd bldr bb
 
   ⍝ Generate the code for each function body node.
-  ⍝ We use 2 here because a FuncExpr node contains a single 
+  ⍝ We use 2 here because a FuncExpr node contains a single
   ⍝ Function node; we want the children of the Function node.
   Line←{N←⊃0 1⌷⍺
     N≡'Expression':⍺(⍺⍺ GenExpr)⍵
@@ -1519,10 +1519,10 @@ GenFunc←{
   }
   _ V←⊃⍺ fr bldr Line/⌽(⊂⍬ ⍬),K←2 Kids ⍵
 
-  ⍝ It may be that there are no children. This still requires at 
-  ⍝ least one statement in the basic block. We also need an empty 
-  ⍝ return when the last expression was a Condition node. 
-  ⍝ In the case of the last node being a named Expression, we 
+  ⍝ It may be that there are no children. This still requires at
+  ⍝ least one statement in the basic block. We also need an empty
+  ⍝ return when the last expression was a Condition node.
+  ⍝ In the case of the last node being a named Expression, we
   ⍝ should return that expression.
   _←{
     0=⊃⍴⍵:MkEmptyReturn bldr
@@ -1548,13 +1548,13 @@ GenFunc←{
 ⍝ Output: (LLVM Value)(Bound Names)(Name Values)
 
 GetExpr←{
-  ⍝ When there are no names to bind, the return is simple. 
-  ⍝ At this point, we know that all expressions must be 
+  ⍝ When there are no names to bind, the return is simple.
+  ⍝ At this point, we know that all expressions must be
   ⍝ references to global bindings.
   1=⍴Vs←'name'Prop ⍺:⍵,⍨GetNamedGlobal ⍺⍺ (⊃Vs)
 
-  ⍝ In the binding case, we need to take the names to be 
-  ⍝ bound and associate each of those names with the global 
+  ⍝ In the binding case, we need to take the names to be
+  ⍝ bound and associate each of those names with the global
   ⍝ in our environment.
   e←GetNamedGlobal ⍺⍺ (⊃⌽Vs)
   nu←(B/2≠/' '=' ',nu)⊂(B←' '≠nu)/nu←⊃Vs
@@ -1572,9 +1572,9 @@ GetExpr←{
 ⍝ Output: (Bound Names)(Name Values)
 
 GenCond←{mod fr bldr←⍺⍺
-  ⍝ A condition node has one or two expressions 
+  ⍝ A condition node has one or two expressions
   Ex←1 Kids ⍺
-  
+
   ⍝ We assume type correct expressions right now,
   ⍝ meaning we can just grab the first data value for
   ⍝ comparison. Tv should be a single integer value.
@@ -1586,13 +1586,13 @@ GenCond←{mod fr bldr←⍺⍺
   ⍝ Create the test of Tv to conclude the block
   T←BuildICmp bldr 32 Tv(ConstInt Int64Type 0 1)'T'
 
-  ⍝ Create the (simple) consequent block, which is a single 
+  ⍝ Create the (simple) consequent block, which is a single
   ⍝ return of either no value or the expression value.
   _←PositionBuilderAtEnd bldr,cb←AppendBasicBlock fr 'consequent'
   _←(1↓Ex)(⍺⍺ GenConsequent)nm vl
   _←(1↓Ex)(⍺⍺{0=⍴⍺:MkEmptyReturn bldr ⋄ (⊃⍺)(⍺⍺ GenExpr)⍵})nm vl
-  
-  ⍝ Create the alternate block and setup the builder to 
+
+  ⍝ Create the alternate block and setup the builder to
   ⍝ point to it.
   ob←GetPreviousBasicBlock cb
   ab←AppendBasicBlock fr 'alternate'
@@ -1625,7 +1625,7 @@ GenConsequent←{mod fr bldr←⍺⍺
 
   ⍝ 2. Unnamed Consequent -- Nothing futher, return already generated
   1=⍴'name'Prop⊃⍺:⍬
-  
+
   ⍝ 3. Named Consequent -- Must generate return explicitly
   2=⍴'name'Prop⊃⍺:BuildRet bldr(⊃⌽V)
   'UNREACHABLE'⎕SIGNAL 99
@@ -1635,7 +1635,7 @@ GenConsequent←{mod fr bldr←⍺⍺
 ⍝ GenExpr
 ⍝
 ⍝ Intended Function: Generate an Expression, named or unnamed.
-⍝ 
+⍝
 ⍝ Right Argument: (Bound names)(Name values)
 ⍝ Left Argument: Expression node to generate
 ⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
@@ -1648,9 +1648,9 @@ GenExpr←{mod _ bldr←⍺⍺
 
 ⍝ MkEmptyReturn
 ⍝
-⍝ Intended Function: Insert an empty return value for a function 
+⍝ Intended Function: Insert an empty return value for a function
 ⍝ into a builder.
-⍝ 
+⍝
 ⍝ Right argument: LLVM Builder
 
 MkEmptyReturn←{
@@ -1661,9 +1661,9 @@ MkEmptyReturn←{
 
 ⍝ GenArrayType
 ⍝
-⍝ Intended Function: Constant function returning the type of an 
+⍝ Intended Function: Constant function returning the type of an
 ⍝ array.
-⍝ 
+⍝
 ⍝ See the Software Architecture for details on the Array Structure.
 
 GenArrayType←{
@@ -1675,12 +1675,12 @@ GenArrayType←{
 
 ⍝ GenFuncType
 ⍝
-⍝ Intended Function: A constant function returning the type of a 
+⍝ Intended Function: A constant function returning the type of a
 ⍝ Function.
 ⍝
 ⍝ See the Software Architecture for details on the Function convention.
 ⍝
-⍝ For now this is just a stub assuming a constant function that returns 
+⍝ For now this is just a stub assuming a constant function that returns
 ⍝ an array.
 
 GenFuncType←{
@@ -1689,7 +1689,7 @@ GenFuncType←{
 
 ⍝ GEPIndices
 ⍝
-⍝ Intended Function: Generate an array of pointers to be used as 
+⍝ Intended Function: Generate an array of pointers to be used as
 ⍝ inputs to the BuildGEP function.
 
 GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
@@ -1705,22 +1705,22 @@ P←'LLVM'
 ⍝ LLVMTypeRef LLVMInt8Type (void)
 'Int8Type'⎕NA 'P ',D,'|',P,'Int8Type'
 
-⍝ LLVMTypeRef  LLVMInt16Type (void) 
+⍝ LLVMTypeRef  LLVMInt16Type (void)
 'Int16Type'⎕NA 'P ',D,'|',P,'Int16Type'
 
-⍝ LLVMTypeRef  LLVMInt32Type (void) 
+⍝ LLVMTypeRef  LLVMInt32Type (void)
 'Int32Type'⎕NA 'P ',D,'|',P,'Int32Type'
 
-⍝ LLVMTypeRef  LLVMInt64Type (void) 
+⍝ LLVMTypeRef  LLVMInt64Type (void)
 'Int64Type'⎕NA 'P ',D,'|',P,'Int64Type'
 
-⍝ LLVMTypeRef  
-⍝ LLVMFunctionType (LLVMTypeRef ReturnType, 
-⍝    LLVMTypeRef *ParamTypes, unsigned ParamCount, LLVMBool IsVarArg) 
+⍝ LLVMTypeRef
+⍝ LLVMFunctionType (LLVMTypeRef ReturnType,
+⍝    LLVMTypeRef *ParamTypes, unsigned ParamCount, LLVMBool IsVarArg)
 'FunctionType'⎕NA 'P ',D,'|',P,'FunctionType P <P[] U I'
 
-⍝ LLVMTypeRef 
-⍝ LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed) 
+⍝ LLVMTypeRef
+⍝ LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed)
 'StructType'⎕NA 'P ',D,'|',P,'StructType <P[] U I'
 
 ⍝ LLVMPointerType (LLVMTypeRef ElementType, unsigned AddressSpace)
@@ -1729,56 +1729,56 @@ P←'LLVM'
 ⍝ LLVMTypeRef 	LLVMArrayType (LLVMTypeRef ElementType, unsigned ElementCount)
 'ArrayType'⎕NA'P ',D,'|',P,'ArrayType P U'
 
-⍝ LLVMValueRef  LLVMConstInt (LLVMTypeRef IntTy, unsigned long long N, LLVMBool SignExtend) 
+⍝ LLVMValueRef  LLVMConstInt (LLVMTypeRef IntTy, unsigned long long N, LLVMBool SignExtend)
 'ConstInt'⎕NA 'P ',D,'|',P,'ConstInt P U8 I'
 
-⍝ LLVMValueRef  LLVMConstIntOfString (LLVMTypeRef IntTy, const char *Text, uint8_t Radix) 
+⍝ LLVMValueRef  LLVMConstIntOfString (LLVMTypeRef IntTy, const char *Text, uint8_t Radix)
 'ConstIntOfString'⎕NA 'P ',D,'|',P,'ConstIntOfString P <0C[] U8'
 
 ⍝ LLVMValueRef
-⍝ LLVMConstArray (LLVMTypeRef ElementTy, LLVMValueRef *ConstantVals, unsigned Length) 
+⍝ LLVMConstArray (LLVMTypeRef ElementTy, LLVMValueRef *ConstantVals, unsigned Length)
 'ConstArray'⎕NA 'P ',D,'|',P,'ConstArray P <P[] U'
 
 ⍝ LLVMValueRef 	LLVMConstPointerNull (LLVMTypeRef Ty)
 'ConstPointerNull'⎕NA'P ',D,'|',P,'ConstPointerNull P'
 
-⍝ LLVMValueRef  LLVMAddGlobal (LLVMModuleRef M, LLVMTypeRef Ty, const char *Name) 
+⍝ LLVMValueRef  LLVMAddGlobal (LLVMModuleRef M, LLVMTypeRef Ty, const char *Name)
 'AddGlobal'⎕NA 'P ',D,'|',P,'AddGlobal P P <0C[]'
 
-⍝ void  LLVMSetInitializer (LLVMValueRef GlobalVar, LLVMValueRef ConstantVal) 
+⍝ void  LLVMSetInitializer (LLVMValueRef GlobalVar, LLVMValueRef ConstantVal)
 'SetInitializer'⎕NA '',D,'|',P,'SetInitializer P P'
 
-⍝ LLVMValueRef  LLVMAddFunction (LLVMModuleRef M, const char *Name, LLVMTypeRef FunctionTy) 
+⍝ LLVMValueRef  LLVMAddFunction (LLVMModuleRef M, const char *Name, LLVMTypeRef FunctionTy)
 'AddFunction'⎕NA 'P ',D,'|',P,'AddFunction P <0C[] P'
 
-⍝ LLVMValueRef  LLVMGetNamedGlobal (LLVMModuleRef M, const char *Name) 
+⍝ LLVMValueRef  LLVMGetNamedGlobal (LLVMModuleRef M, const char *Name)
 'GetNamedGlobal'⎕NA 'P ',D,'|',P,'GetNamedGlobal P <0C[]'
 
-⍝ LLVMBasicBlockRef  LLVMAppendBasicBlock (LLVMValueRef Fn, const char *Name) 
+⍝ LLVMBasicBlockRef  LLVMAppendBasicBlock (LLVMValueRef Fn, const char *Name)
 'AppendBasicBlock'⎕NA 'P ',D,'|',P,'AppendBasicBlock P <0C[]'
 
-⍝ LLVMBuilderRef  LLVMCreateBuilder (void) 
+⍝ LLVMBuilderRef  LLVMCreateBuilder (void)
 'CreateBuilder'⎕NA 'P ',D,'|',P,'CreateBuilder'
 
-⍝ void  LLVMPositionBuilderAtEnd (LLVMBuilderRef Builder, LLVMBasicBlockRef Block) 
+⍝ void  LLVMPositionBuilderAtEnd (LLVMBuilderRef Builder, LLVMBasicBlockRef Block)
 'PositionBuilderAtEnd'⎕NA 'P ',D,'|',P,'PositionBuilderAtEnd P P'
 
-⍝ LLVMValueRef  LLVMBuildRet (LLVMBuilderRef, LLVMValueRef V) 
+⍝ LLVMValueRef  LLVMBuildRet (LLVMBuilderRef, LLVMValueRef V)
 'BuildRet'⎕NA'P ',D,'|',P,'BuildRet P P'
 
 ⍝ LLVMValueRef 	LLVMBuildRetVoid (LLVMBuilderRef)
 'BuildRetVoid'⎕NA'P ',D,'|',P,'BuildRetVoid P'
 
 ⍝ LLVMValueRef 	
-⍝ LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then, 
+⍝ LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then,
 ⍝     LLVMBasicBlockRef Else)
 'BuildCondBr'⎕NA'P ',D,'|',P,'BuildCondBr P P P P'
 
-⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder) 
+⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder)
 'DisposeBuilder'⎕NA 'P ',D,'|',P,'DisposeBuilder P'
 
 ⍝ LLVMValueRef
-⍝ LLVMConstStruct (LLVMValueRef *ConstantVals, unsigned Count, LLVMBool Packed) 
+⍝ LLVMConstStruct (LLVMValueRef *ConstantVals, unsigned Count, LLVMBool Packed)
 'ConstStruct'⎕NA'P ',D,'|',P,'ConstStruct <P[] U I'
 
 ⍝ LLVMValueRef 	LLVMBuildAlloca (LLVMBuilderRef, LLVMTypeRef Ty, const char *Name)
@@ -1804,7 +1804,7 @@ P←'LLVM'
 'BuildStructGEP'⎕NA'P ',D,'|',P,'BuildStructGEP P P U <0C'
 
 ⍝ LLVMValueRef 	
-⍝ LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices, 
+⍝ LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices,
 ⍝     unsigned NumIndices, const char *Name)
 'BuildGEP'⎕NA'P ',D,'|',P,'BuildGEP P P <P[] U <0C'
 
@@ -1813,7 +1813,7 @@ P←'LLVM'
 'BuildBitCast'⎕NA'P ',D,'|',P,'BuildBitCast P P P <0C'
 
 ⍝ LLVMValueRef 	
-⍝ LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS, 
+⍝ LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS,
 ⍝     LLVMValueRef RHS, const char *Name)
 'BuildICmp'⎕NA'P ',D,'|',P,'BuildICmp P U P P <0C'
 
@@ -1832,12 +1832,12 @@ P←'LLVM'
 'AddAlias'⎕NA'P ',D,'|',P,'AddAlias P P P <0C'
 
 ⍝ LLVMBool
-⍝ LLVMCreateJITCompilerForModule (LLVMExecutionEngineRef *OutJIT, 
+⍝ LLVMCreateJITCompilerForModule (LLVMExecutionEngineRef *OutJIT,
 ⍝     LLVMModuleRef M, unsigned OptLevel, char **OutError)
 'CreateJITCompilerForModule'⎕NA'I ',D,'|',P,'CreateJITCompilerForModule >P P U >P'
 
 ⍝ LLVMGenericValueRef
-⍝ LLVMRunFunction (LLVMExecutionEngineRef EE, 
+⍝ LLVMRunFunction (LLVMExecutionEngineRef EE,
 ⍝     LLVMValueRef F, unsigned NumArgs, LLVMGenericValueRef *Args)
 'RunFunction'⎕NA'P ',D,'|',P,'RunFunction P P U <P[]'
 
@@ -1890,41 +1890,41 @@ P←'LLVM'
 ⍝ ∘ Create passes Tokenize, GenLLVM, Parse
 ⍝ ∘ Add support for stimuli: Fix Break Eot Fnb Fne Fnf Lle Lls Nl Nse Nss
 ⍝
-⍝ Handling of the Break Stimuli is automatic, and does not need to be handled 
+⍝ Handling of the Break Stimuli is automatic, and does not need to be handled
 ⍝ explicitly
 
 ⍝ Increment 2 Overview:
 ⍝
-⍝ ∘ Support static global constants of integers 
-⍝ ∘ New Stimuli: N ← V { } 
-⍝ ∘ Support functions that return constants of integers 
-⍝ ∘ New Passes: KillLines, LiftConsts 
-⍝ ∘ Modified Passes: GenLLVM, Tokenize, Parse 
+⍝ ∘ Support static global constants of integers
+⍝ ∘ New Stimuli: N ← V { }
+⍝ ∘ Support functions that return constants of integers
+⍝ ∘ New Passes: KillLines, LiftConsts
+⍝ ∘ Modified Passes: GenLLVM, Tokenize, Parse
 ⍝
-⍝ GenLLVM Modifications: 
-⍝ 
+⍝ GenLLVM Modifications:
+⍝
 ⍝ ∘ Handle global arrays
-⍝ ∘ Generate single basic block, one-statement function bodies that 
+⍝ ∘ Generate single basic block, one-statement function bodies that
 ⍝   reference a single global variable
-⍝ 
+⍝
 ⍝ Tokenize Modifications:
-⍝ 
+⍝
 ⍝ ∘ Integers
 ⍝ ∘ Variable names
 ⍝ ∘ Assignment
 ⍝ ∘ Braces
-⍝ 
+⍝
 ⍝ Parse Modifications:
-⍝ 
+⍝
 ⍝ ∘ Integer arrays
 ⍝ ∘ Constant expressions
 ⍝ ∘ Assignment to literal integer array expressions
 ⍝ ∘ Assignment to user-defined functions
 
 ⍝ Increment 3 Overview:
-⍝ 
+⍝
 ⍝ ∘ Implement all of top-level space
-⍝ ∘ Top-level Stimuli: ⋄ ← Break Eot Fix Fnb Fne Fnf Lle Lls Nl 
+⍝ ∘ Top-level Stimuli: ⋄ ← Break Eot Fix Fnb Fne Fnf Lle Lls Nl
 ⍝   Nse Nss Vi Vfo Vu E Fe
 ⍝
 ⍝ Impact Analysis
@@ -1935,100 +1935,100 @@ P←'LLVM'
 ⍝ Tokenize  Add support for the ⋄ token.
 ⍝ Parse     Must add support for the ⋄ stimuli.
 ⍝ GenFunc   Must add support for multiple names to a single function.
-⍝ DropUnmd  Add a new pass to drop the unnamed functions that could 
+⍝ DropUnmd  Add a new pass to drop the unnamed functions that could
 ⍝           appear at the top-level.
 
 ⍝ Increment 4 Overview:
 ⍝
 ⍝ ∘ Complete all code to cover Bind ∊ NO states in the Functions space
 ⍝ ∘ Return a JIT'd or Fixed Namespace (Functions only)
-⍝ 
+⍝
 ⍝ Impact Analysis
 ⍝ ===============
-⍝ 
-⍝ These additions have mostly to do with handline a more complete body 
-⍝ of the function, which will require some additional changes in the 
+⍝
+⍝ These additions have mostly to do with handline a more complete body
+⍝ of the function, which will require some additional changes in the
 ⍝ handling of Tokenize first and foremost to support the : token:
 ⍝
 ⍝   1. Update Tokenize to handle the : token
-⍝ 
-⍝ Furthermore, we now allow multi-line functions, which will require 
+⍝
+⍝ Furthermore, we now allow multi-line functions, which will require
 ⍝ extending how we parse functions currently. We can roughly divide this
-⍝ into a series of stages. The first stage corresponds to handling the 
-⍝ { and } tokens and encapsulating the entire function space, which also 
+⍝ into a series of stages. The first stage corresponds to handling the
+⍝ { and } tokens and encapsulating the entire function space, which also
 ⍝ happens to fully deal with the 0th state of the Function Space.
 ⍝
 ⍝   2. Extend handling of { and } to deal with multi-line functions.
 ⍝
-⍝ The next state that is left unfinished is the 1st state, which can be 
-⍝ handled separately, and should be used to dispatch into the rest of 
-⍝ the states. 
+⍝ The next state that is left unfinished is the 1st state, which can be
+⍝ handled separately, and should be used to dispatch into the rest of
+⍝ the states.
 ⍝
 ⍝   3. Complete handling of Function State 1.
 ⍝
-⍝ Function State 4 ( { Vu ) deals with a single unbound variable. We are 
-⍝ not dealing with any assignments here, which means that all behaviors 
-⍝ encapsulated by the state are subsumed by Function State 5 ( { E ). 
-⍝ So we can deal with Vu implicitly rather than explicitly. Function 
-⍝ State 2 needs to be dealt with explicitly, but the difference between 
-⍝ this and states 5 and 8 are a matter of the : token. 
+⍝ Function State 4 ( { Vu ) deals with a single unbound variable. We are
+⍝ not dealing with any assignments here, which means that all behaviors
+⍝ encapsulated by the state are subsumed by Function State 5 ( { E ).
+⍝ So we can deal with Vu implicitly rather than explicitly. Function
+⍝ State 2 needs to be dealt with explicitly, but the difference between
+⍝ this and states 5 and 8 are a matter of the : token.
 ⍝
 ⍝   4. Deal with parsing the : token.
 ⍝
-⍝ With this taken care of, we can handle all other cases of the state 2, 
+⍝ With this taken care of, we can handle all other cases of the state 2,
 ⍝ so we should clear that at this point.
 ⍝
 ⍝   5. Complete handling of parse state 2.
 ⍝
-⍝ Once States 0 - 2 are cleared, states 5 and 8 fall out as the next 
+⍝ Once States 0 - 2 are cleared, states 5 and 8 fall out as the next
 ⍝ natural elements, so we should parse those next.
 ⍝
 ⍝   6. Complete parsing of function states 5 and 8.
-⍝ 
-⍝ This finally leaves only state 3, which is a simple case at the moment, 
+⍝
+⍝ This finally leaves only state 3, which is a simple case at the moment,
 ⍝ so we can complete the handling of state 3 now.
 ⍝
 ⍝   7. Complete parsing of function state 3.
 ⍝
-⍝ At the completion of Step 7, we will have multi expression function bodies, 
-⍝ but without function bindings or nested functions. We will also have 
-⍝ conditional branching. We must first extend the compiler to handle 
-⍝ multiple expressions in the body of a function. We will allow expressions 
-⍝ to be either bound or not, but still constant. This means we will need to 
-⍝ extend the parser to handle top-level unbound expressions and function 
+⍝ At the completion of Step 7, we will have multi expression function bodies,
+⍝ but without function bindings or nested functions. We will also have
+⍝ conditional branching. We must first extend the compiler to handle
+⍝ multiple expressions in the body of a function. We will allow expressions
+⍝ to be either bound or not, but still constant. This means we will need to
+⍝ extend the parser to handle top-level unbound expressions and function
 ⍝ level bound expressions.
-⍝ 
-⍝   8. Extend parser to handle more general constant expressions in both 
+⍝
+⍝   8. Extend parser to handle more general constant expressions in both
 ⍝      function bodies and top-level.
 ⍝
-⍝ This will also necessitate modifying DropUnmd to handle top-level 
+⍝ This will also necessitate modifying DropUnmd to handle top-level
 ⍝ unbound expressions.
 ⍝
 ⍝   9. Extend DropUnmd pass to handle unbound top-level constant expressions.
-⍝ 
-⍝ Now we can extend the compiler to handle multiple expressions in the 
-⍝ function body. We should start with a new compiler pass to remove code 
-⍝ that will never be executed in the function, so that we do not need to 
+⍝
+⍝ Now we can extend the compiler to handle multiple expressions in the
+⍝ function body. We should start with a new compiler pass to remove code
+⍝ that will never be executed in the function, so that we do not need to
 ⍝ generate code for this.
 ⍝
-⍝   10. Create a new compiler pass that eliminates any code in a function 
-⍝       body that will never be executed by the shape of the conditionals 
+⍝   10. Create a new compiler pass that eliminates any code in a function
+⍝       body that will never be executed by the shape of the conditionals
 ⍝       and the bindings of the body.
 ⍝
-⍝ At this point LiftConst will need to be modified to handle multiple 
-⍝ expressions in the body and to lift all of the constants in the 
+⍝ At this point LiftConst will need to be modified to handle multiple
+⍝ expressions in the body and to lift all of the constants in the
 ⍝ function body to the top-level.
 ⍝
 ⍝   11. Modify LiftConst to handle multiple expression function bodies
-⍝       and to lift all of the constants in said body to the top-level, 
+⍝       and to lift all of the constants in said body to the top-level,
 ⍝       but to keep the local bindings local.
 ⍝
-⍝ Next GenFunc will need to be modified to handle multiple expressions in 
+⍝ Next GenFunc will need to be modified to handle multiple expressions in
 ⍝ a function body as well as conditional expressions.
 ⍝
-⍝   12. Modify GenFunc to handle multiple constant expressions in a function 
-⍝       body and to handle branching in the system. This will require a 
-⍝       means of dealing with local bindings and the return value of expressions 
+⍝   12. Modify GenFunc to handle multiple constant expressions in a function
+⍝       body and to handle branching in the system. This will require a
+⍝       means of dealing with local bindings and the return value of expressions
 ⍝       and assignment as an expression and not as a statement.
 
 ⍝ Increment 5 Overview:
@@ -2060,9 +2060,9 @@ P←'LLVM'
 ⍝
 ⍝ Steps for completing Increment 5
 ⍝ ────────────────────────────────
-⍝ 
+⍝
 ⍝ 1. Update Software Architecture with a function signature
-⍝ 
+⍝
 ⍝ 2. Update Tokenize with new stimuli: D[a] & M[a]
 ⍝    + - ÷ × | * ⍟ ⌈ ⌊ < ≤ = ≠ ≥ >
 ⍝
@@ -2072,24 +2072,24 @@ P←'LLVM'
 ⍝   a. Split on Function nodes
 ⍝   b. Enclose literals and variables
 ⍝   c. Apply nesting levels
-⍝ 
+⍝
 ⍝ 5. Make sure that ParseExpr has the right environment from the top-level
 ⍝    and from function bodies.
 ⍝
 ⍝ 6. Rewrite DropUnreached
 ⍝
-⍝ 7. Adapt Liftconsts to handle new expression types and function expressions. 
-⍝ 
+⍝ 7. Adapt Liftconsts to handle new expression types and function expressions.
+⍝
 ⍝ 8. Add a pass to insert allocations
-⍝ 
+⍝
 ⍝ 9. Add a pass to flatten function calls.
-⍝ 
+⍝
 ⍝ 10. Add a pass to convert free variables to environment references
 ⍝
 ⍝ 11. Add support for function calls in GenLlvm
 ⍝
 ⍝ 12. Add a pass to replace primitive function names with runtime names
-⍝ 
+⍝
 ⍝ 13. Fix ModToNs
-⍝ 
+⍝
 ⍝ 13. Implement runtime functions
