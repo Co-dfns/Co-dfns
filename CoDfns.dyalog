@@ -1309,7 +1309,7 @@ DropUnreached←{
   d←(~(∨\0,1↓¯1⌽u))(/∘⊢)⊢    ⍝ (d k) drops kids after first unnamed expr
   f←'Function'≡(⊃0 1∘⌷)      ⍝ (f n) tests if n is function node
   0=≢k←1 Kids ⍵:⍵            ⍝ Terminate at leaves
-  ⊃⍪/∇¨d⍣(f ⍵)⊢k             ⍝ Apply d to each function child and recur
+  (1↑⍵)⍪⊃⍪/∇¨d⍣(f ⍵)⊢k       ⍝ Recur after dropping unnamed exprs
 }
 
 ⍝ LiftConsts
