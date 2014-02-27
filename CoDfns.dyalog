@@ -408,7 +408,7 @@ Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
 ⍝ 
 ⍝ Applies (cid Fn kid) where cid is the child id (1-based) and
 ⍝ kid is a member of 1 Kids ⍵.
-eachk←{(1↑⍵)⍪⊃⍪/(⊂MtAST),(+\(⊃=⊢)0⌷⍉1↓⍵)(⊂⍺⍺)⌸1↓⍵}
+eachk←{(1↑⍵)⍪⊃⍪/((⍳≢)⍺⍺¨⊢)1 Kids ⍵}
 
 ⍝ map f sel g sel h arg: case selection
 ⍝ 
@@ -1266,13 +1266,7 @@ KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}
 ⍝ Intended Function: Drop all unnamed expressions or functions from the 
 ⍝ top-level.
 
-DropUnmd←{
-  gn←⊃('name'Prop 1 4⍴⊢)
-  D1←(1=0⌷⍉⍵)/3⌷⍉⍵
-  Nm←
-  Nm←{⊃(((0⌷⍉⍵)∊⊂'name')/1⌷⍉⍵),⊂''}¨(1=0⌷⍉⍵)/3⌷⍉⍵
-  (0⌷⍵)⍪⊃⍪/(⊂MtAST),(0≠⊃∘⍴¨Nm)/1 Kids ⍵
-}
+DropUnmd←{{∧/' '=⊃'name'Prop 1↑⍵:MtAST ⋄ ⍵}eachk ⍵}
 
 ⍝ DropUnreached
 ⍝ 
