@@ -1233,6 +1233,8 @@
                 <member>name</member>
                 <member>class</member>
                 <member>equiv</member>
+		<member>slot</member>
+		<member>env</member>
               </simplelist>
             </td>
             <td colspan="2"></td>
@@ -1751,7 +1753,14 @@
               <member><literal>Fn</literal></member>
               <member><literal>Fnd</literal></member>
               <member>Any function or operator primitive</member>
-            </simplelist>
+            </simplelist>. 
+	    The <parameter>slot</parameter> indicates the local memory slot of
+	    a function scope that corresponds to the variable. 
+	    The <parameter>env</parameter> indicates the environment in which 
+	    the variable is located. This is a natural indicating the number of 
+	    scopes away from the local scope; that is, 0 is for local scope, 
+	    while 2 indicates that the variable is stored in the scope two levels 
+	    above the local scope.
           </para>
         </formalpara>
       </section>
