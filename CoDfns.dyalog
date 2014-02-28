@@ -1372,7 +1372,10 @@ ConvertFree←{
       (ast⍪(1↑⍺)⍪ta⍪ca)te         ⍝ Recombine with test environment
     })⍵
     'Function'≡nm:⍺(⍺⍺{           ⍝ Function node
-      
+      ken←⍺⍪env                   ⍝ Env is current env plus all in scope
+      z←(⌽1 Kids ⍺),⊂MtAST ken    ⍝ Must go through all children
+      ka _←⊃(⍺⍺ ge ⍺)vis/z        ⍝ Extend scope env, ignore final env
+      (ast⍪(1↑⍺)⍪ka)env           ⍝ Leave environment same as when entered
     })⍵
     ast env←⍵
     z←(⌽1 Kids ⍺),⊂MtAST env
@@ -2135,4 +2138,4 @@ P←'LLVM'
 ⍝
 ⍝ 13. Fix ModToNs
 ⍝
-⍝ 13. Implement runtime functions
+⍝ 14. Implement runtime functions
