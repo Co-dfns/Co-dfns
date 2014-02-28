@@ -1346,6 +1346,9 @@ LiftBound←{
 ConvertFree←{
   mt←0 2⍴⊂'' 0                    ⍝ An empty environment
   sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢ ⍝ Fn to split name lists
+  ge←{                            ⍝ Fn to get environment for current scope
+    mt
+  }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
     'Variable'≡nm:⍺(⍺⍺{           ⍝ Variable node
       i←⊃env⍳'name'Prop ⍺         ⍝ Lookup var in env
@@ -1361,12 +1364,14 @@ ConvertFree←{
       ∧/' '=nm:z env              ⍝ Do not touch env if unnamed
       z(((⍪sp nm),0)⍪env)         ⍝ Add names to environment
     })⍵
-    'Condition'≡nm:⍺(⍺⍺{
-      k←1 Kids ⍵
-      ta te←(⊃k)⍺⍺ vis MtAST env
-      
+    'Condition'≡nm:⍺(⍺⍺{          ⍝ Condition node
+      k←1 Kids ⍵                  ⍝ Must handle children
+      ta te←(⊃k)⍺⍺ vis MtAST env  ⍝ Test and consequent handled separately
+      z←(⌽1↓k),⊂MtAST te          ⍝ Test env affects consequent
+      ca _←⊃⍺⍺ vis/z              ⍝ Ignore consequent environment
+      (ast⍪(1↑⍺)⍪ta⍪ca)te         ⍝ Recombine with test environment
     })⍵
-    'Function'≡nm:⍺(⍺⍺{
+    'Function'≡nm:⍺(⍺⍺{           ⍝ Function node
       
     })⍵
     ast env←⍵
