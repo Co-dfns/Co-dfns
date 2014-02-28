@@ -408,7 +408,10 @@ Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
 ⍝
 ⍝ Applies (cid Fn kid) where cid is the child id (1-based) and
 ⍝ kid is a member of 1 Kids ⍵.
-eachk←{(1↑⍵)⍪⊃⍪/((⍳≢)⍺⍺¨⊢)1 Kids ⍵}
+eachk←{
+  km←+\(⊃=⊢)0⌷⍉k←1↓⍵ ⍝ Map of children
+  (1↑⍵)⍪⊃⍪/km(⊂⍺⍺)⌸k ⍝ Must enclose the intermediate results
+}
 
 ⍝ map f sel g sel h arg: case selection
 ⍝
@@ -1301,6 +1304,11 @@ LiftConsts←{
   (1↑a)⍪h⍪1↓a                       ⍝ Connect root, lifted with the rest
 }
 
+⍝ SimplifyCond
+⍝
+⍝ Intended Function: Simplify conditions nodes so that test clauses 
+⍝ are atomic expressions.
+
 ⍝ LiftBound
 ⍝
 ⍝ Intended Function: Lift all assignments to the root of their scope.
@@ -1324,8 +1332,15 @@ LiftBound←{
     ne←(1↑⍵)⍪(¯1↓k)⍪(⊃⍵)vex nm      ⍝ Replace right with variable reference
     (lf⍪ex)(ne)                     ⍝ New lifted exprs and new node
   }
+  cnd←{                             ⍝ Function to handle condition nodes
+    te←⊃k←1 Kids ⍵                  ⍝ We care especially about the test expr
+    lf te←(⊃⍵)lft te                ⍝ Lift test, before cond
+    ce←⊃⍪/(1+⊃⍵)lft⊃⌽k              ⍝ Lift consequent, inside cond
+    lf⍪(1↑⍵)⍪te⍪ce                  ⍝ Put it all back in the right order
+  }
   1=≢⍵:⍵                            ⍝ Do nothing for leaves
   'Expression'≡⊃0 1⌷⍵:⊃⍪/(⊃⍵)lft ⍵  ⍝ Lift root expressions
+  'Condition'≡⊃0 1⌷⍵:cnd ⍵          ⍝ Lifting Condition nodes is special
   (∇⊢)eachk ⍵                       ⍝ Ignore non-expr nodes
 }
 
@@ -1333,12 +1348,40 @@ LiftBound←{
 ⍝
 ⍝ Intended Function: Convert all free variables to references to environments.
 
-ConvertFree←{1
-  0 2⍴⍬{
-    'Variable'≡⊃0 1⌷⍵:t at⍣(t←fnd ⍵)⍵
-    'Function'≡⊃0 1⌷⍵:(⍺⍺ ge ⍵)∇eachk ⍵
-    ⍺⍺∇eachk ⍵
-  }⍵
+ConvertFree←{
+  mt←0 2⍴⊂'' 0                    ⍝ An empty environment
+  sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢ ⍝ Fn to split name lists
+  vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
+    'Variable'≡nm:⍺(⍺⍺{           ⍝ Variable node
+      i←⊃env⍳'name'Prop ⍺         ⍝ Lookup var in env
+      0=s←i 1⌷env:(ast⍪⍺)env      ⍝ If local, leave as is
+      n←(1 3↑⍺),⊂(0 3⊃⍺)⍪'env' s  ⍝ Otherwise, attach env
+      (ast⍪n)env                  ⍝ Attach to current AST
+    })⍵
+    'Expression'≡nm:⍺(⍺⍺{         ⍝ Expression node
+      z←(⌽1 Kids ⍺),⊂MtAST env    ⍝ Children use existing env
+      ka env←⊃⍺⍺vis/z             ⍝ Children visited first
+      nm←⊃'name'Prop 1↑⍺          ⍝ Name of expression
+      z←(ast⍪(1↑⍺)⍪ka)            ⍝ AST to return
+      ∧/' '=nm:z env              ⍝ Do not touch env if unnamed
+      z(((⍪sp nm),0)⍪env)         ⍝ Add names to environment
+    })⍵
+    'Condition'≡nm:⍺(⍺⍺{
+      k←1 Kids ⍵
+      ta te←(⊃k)⍺⍺ vis MtAST env
+      
+    })⍵
+    'Function'≡nm:⍺(⍺⍺{
+      
+    })⍵
+    ast env←⍵
+    z←(⌽1 Kids ⍺),⊂MtAST env
+    ka env←⊃⍺⍺∇/z
+    (ast⍪(1↑⍺),ka)env
+  }
+  z←(⌽1 Kids ⍵),⊂MtAST mt
+  z←⊃⊃(ge ⍵)vis/z
+  (1↑⍵)⍪z
 }
 
 ⍝ LiftFuncs

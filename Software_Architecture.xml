@@ -1575,8 +1575,11 @@
         <formalpara>
           <title>Condition contents</title>
           <para>
-            The contents of a <varname>Condition</varname> element should be a pair of Expressions 
-            where the first expression is the condition and the second a possibly empty consequence. 
+            The contents of a <varname>Condition</varname> element should be a 
+	    set of Expressions where the first expression is the condition and 
+	    the rest are part of the consequent. In most cases the consequent 
+	    should be a single expression, but we allow for multiple expressions 
+	    in the consequent for the ease of some compiler passes.
           </para>
         </formalpara>
         <formalpara>
