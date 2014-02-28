@@ -1304,11 +1304,6 @@ LiftConsts←{
   (1↑a)⍪h⍪1↓a                       ⍝ Connect root, lifted with the rest
 }
 
-⍝ SimplifyCond
-⍝
-⍝ Intended Function: Simplify conditions nodes so that test clauses 
-⍝ are atomic expressions.
-
 ⍝ LiftBound
 ⍝
 ⍝ Intended Function: Lift all assignments to the root of their scope.
