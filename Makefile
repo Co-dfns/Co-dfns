@@ -7,7 +7,8 @@ DOCSRC := Cleanroom_Engineering_Guide.xml Software_Architecture.xml \
 DOCPDF := $(DOCSRC:.xml=.pdf)
 XSL := fo.xsl
 XCONF := fop.xconf
-TITLEXSL := ~/Libraries/Docbook5-XSL/template/titlepage.xsl
+
+include mk.conf
 
 all: docs CoDfns.dyalog
 
