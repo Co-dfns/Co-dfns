@@ -1357,9 +1357,8 @@ ConvertFree←{
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
     'Variable'≡nm:⍺(⍺⍺{           ⍝ Variable node
       i←⊃env⍳'name'Prop ⍺         ⍝ Lookup var in env
-      0=s←i 1⌷env:(ast⍪⍺)env      ⍝ If local, leave as is
-      n←(1 3↑⍺),⊂(0 3⊃⍺)⍪'env' s  ⍝ Otherwise, attach env
-      (ast⍪n)env                  ⍝ Attach to current AST
+      a←(⊃0 3⌷⍺)⍪'env'(i 1⌷env)   ⍝ Attach env to attributes
+      (ast⍪(1 3↑⍺),⊂a)env         ⍝ Attach to current AST
     })⍵
     'Expression'≡nm:⍺(⍺⍺{         ⍝ Expression node
       z←(⌽1 Kids ⍺),⊂MtAST env    ⍝ Children use existing env
@@ -1401,17 +1400,21 @@ LiftFuncs←{
 
 ⍝ Allocate
 ⍝
-⍝ Intended Function: Insert allocations for each function body.
+⍝ Intended Function:  Assign variables to local slots and allocate 
+⍝ necessary space for slots at each function entry point.
 
 Allocate←{a←⍵
-  sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢   ⍝ Fn to split name lists
-  nm←sp∘⊃∘('name'∘Prop 1 4∘⍴)       ⍝ Fn to get expr name attr or empty
-  at←(⊃(∪/⊢))((≢⊣),(⊂⊣)(⍕⍳)¨⊢)⊢     ⍝ Fn to get alloca and slots attributes
-  em←(1<0⌷⍉⍵)∧(1⌷⍉⍵)∊⊂'Expression'  ⍝ Map of all Expressions in Functions
-  fem←em∨fm←(1⌷⍉⍵)∊⊂'Function'      ⍝ Map of funcs and exprs; just funcs
-  av←⍪,(em/+\fm)at⌸nm¨↓em⌿⍵         ⍝ Attribute values
-  an←(fem/fm)⊃¨⊂'slots' 'alloca'    ⍝ Attribute names
-  a⊣(3⌷⍉fem⌿a)←(3⌷⍉fem⌿⍵)⍪¨↓an,av   ⍝ Add new attributes
+  nd nn na←↓(⊂0 1 3)⌷⍉⍵                ⍝ Some common slices of the AST
+  m←nn∘∊ ⋄ nm←(nd>⊣)∧(m∘⊂⊢)            ⍝ Fn to build node mask
+  sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢      ⍝ Fn to split name lists
+  en←sp∘⊃∘('name'∘Prop 1 4∘⍴)          ⍝ Fn to get expr name attr or empty
+  at←(⊃(∪/⊢))((≢⊣),(⊂⊣)(⍕⍳)¨⊢)⊢        ⍝ Fn to get alloca and slots attributes
+  n←'Function' 'Expression' 'Variable' ⍝ Nodes we care about
+  fm em vm←(⍳3)nm¨n                    ⍝ Node masks for each node type
+  nb←(em/+\fm)(,⊢)⌸en⍤1⊢em⌿⍵           ⍝ Bindings in each scope
+  av←⍪,(em/+\fm)at⌸en¨↓em⌿⍵            ⍝ Attribute values
+  an←(fem/fm)⊃¨⊂'slots' 'alloca'       ⍝ Attribute names
+  a⊣(3⌷⍉fem⌿a)←(3⌷⍉fem⌿⍵)⍪¨↓an,av      ⍝ Add new attributes
 }
 
 ⍝ GenLLVM
