@@ -8,6 +8,8 @@ DOCPDF := $(DOCSRC:.xml=.pdf)
 XSL := fo.xsl
 XCONF := fop.xconf
 
+.PHONY: all clean docs
+
 include mk.conf
 
 all: docs CoDfns.dyalog
@@ -24,3 +26,7 @@ $(DOCPDF): %.pdf: %.xml $(XSL) $(XCONF) titlepage.xsl
 
 titlepage.xsl: titlepage.templates.xml
 	xsltproc --output "$@" ${TITLEXSL} titlepage.templates.xml
+
+clean:
+	rm -f ${DOCPDF}
+	rm -f libcodfns.so titlepage.xsl
