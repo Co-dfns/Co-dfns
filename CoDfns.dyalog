@@ -1347,7 +1347,12 @@ ConvertFree←{
   mt←0 2⍴⊂'' 0                    ⍝ An empty environment
   sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢ ⍝ Fn to split name lists
   ge←{                            ⍝ Fn to get environment for current scope
-    mt
+    ⍺←⊢ ⋄ env←⍺⊣0 2⍴'' 0          ⍝ Receive optional environment
+    em←(1+⊃⍵)=0⌷⍉⍵                ⍝ All expressions are direct descendants
+    em∨←¯1⌽em∧(1⌷⍉⍵)∊⊂'Condition' ⍝ Or, they may be test expressions
+    em∧←(1⌷⍉⍵)∊⊂'Expression'      ⍝ Mask of expressions
+    nm←'name'Prop em⌿⍵            ⍝ Names bound to values in current scope
+    ((⍪nm),0)⍪env                 ⍝ Names all in local (0) scope, extend env
   }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
     'Variable'≡nm:⍺(⍺⍺{           ⍝ Variable node
@@ -1377,7 +1382,6 @@ ConvertFree←{
       ka _←⊃(⍺⍺ ge ⍺)vis/z        ⍝ Extend scope env, ignore final env
       (ast⍪(1↑⍺)⍪ka)env           ⍝ Leave environment same as when entered
     })⍵
-    ast env←⍵
     z←(⌽1 Kids ⍺),⊂MtAST env
     ka env←⊃⍺⍺∇/z
     (ast⍪(1↑⍺),ka)env
