@@ -97,13 +97,11 @@ Compile←{
   tks←Tokenize ⍵
   ast names←Parse   tks
   ast←KillLines     ast
-  ast←DropUnmd      ast
   ast←DropUnreached ast
   ast←LiftConsts    ast
   ast←LiftBound     ast
-  ast←ConvertFree   ast
+  ast←AnchorVars    ast
   ast←LiftFuncs     ast
-  ast←Allocate      ast
   mod←GenLLVM       ast
   mod names
 }
@@ -1264,13 +1262,6 @@ ParseCond←{
 
 KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}
 
-⍝ DropUnmd
-⍝
-⍝ Intended Function: Drop all unnamed expressions or functions from the
-⍝ top-level.
-
-DropUnmd←{{∧/' '=⊃'name'Prop 1↑⍵:MtAST ⋄ ⍵}eachk ⍵}
-
 ⍝ DropUnreached
 ⍝
 ⍝ Intended Function: Simplify functions by removing code in function
@@ -1300,7 +1291,7 @@ LiftConsts←{
   a[s/⍳⊃⍴a;1+⍳3]←↑vn¨v              ⍝ Replace starting literals with variables
   a←(s∨~l)⌿a                        ⍝ Remove all non-first literals
   h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})1⊃ns;0]←2     ⍝ Literal depths are all 2
-  h[i⊃ns;0 3]←0,⍪'atomic'∘at¨v      ⍝ Litexprs are depth 0, with new names
+  h[i⊃ns;0 3]←1,⍪'atomic'∘at¨v      ⍝ Litexprs are depth 1, with new names
   (1↑a)⍪h⍪1↓a                       ⍝ Connect root, lifted with the rest
 }
 
@@ -1319,17 +1310,19 @@ LiftBound←{
   lft←{                             ⍝ Function to lift expression
     cls←⊃'class'Prop ⍵              ⍝ Class determines handling
     'atomic'≡cls:⍵                  ⍝ Nothing to do for atomic
-    ri←1+'monadic' 'dyadic'⍳cls     ⍝ Location of the right argument
+    ri←1+'monadic' 'dyadic'⍳⊂cls    ⍝ Location of the right argument
     lf ex←⍺ ∇ ri⊃k←1 Kids ⍵         ⍝ Lift the right argument
     nm←⊃'name'Prop ex               ⍝ Consider right argument name
-    ∧/' '=nm:lf((1↑⍵)⍪(¯1↓k)⍪ex)    ⍝ When unnamed, do nothing
+    nr←⊃⍪/¯1↓k                      ⍝ Our not right arguments to recombine
+    ∧/' '=nm:lf((1↑⍵)⍪nr⍪ex)        ⍝ When unnamed, do nothing
     ex[;0]-←(⊃ex)-⍺                 ⍝ When named, must lift
-    ne←(1↑⍵)⍪(¯1↓k)⍪(⊃⍵)vex nm      ⍝ Replace right with variable reference
+    ne←(1↑⍵)⍪nr⍪(1+⊃⍵)vex nm        ⍝ Replace right with variable reference
     (lf⍪ex)(ne)                     ⍝ New lifted exprs and new node
   }
   cnd←{                             ⍝ Function to handle condition nodes
     te←⊃k←1 Kids ⍵                  ⍝ We care especially about the test expr
     lf te←(⊃⍵)lft te                ⍝ Lift test, before cond
+    1=≢k:lf⍪(1↑⍵)⍪te                ⍝ No consequent, no children expressions
     ce←⊃⍪/(1+⊃⍵)lft⊃⌽k              ⍝ Lift consequent, inside cond
     lf⍪(1↑⍵)⍪te⍪ce                  ⍝ Put it all back in the right order
   }
@@ -1339,32 +1332,40 @@ LiftBound←{
   (∇⊢)eachk ⍵                       ⍝ Ignore non-expr nodes
 }
 
-⍝ ConvertFree
+⍝ AnchorVars
 ⍝
-⍝ Intended Function: Convert all free variables to references to environments.
+⍝ Intended Function: Associate with each assignment, scope, and variable reference 
+⍝ an appropriate slot pointing to a specific region of memory within the stack 
+⍝ frames, or in the case of scopes, the size of the stack frame of that scope.
 
-ConvertFree←{
+AnchorVars←{
   mt←0 2⍴⊂'' 0                    ⍝ An empty environment
   sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢ ⍝ Fn to split name lists
   ge←{                            ⍝ Fn to get environment for current scope
     em←(1+⊃⍵)=0⌷⍉⍵                ⍝ All expressions are direct descendants
     em∨←¯1⌽em∧(1⌷⍉⍵)∊⊂'Condition' ⍝ Or, they may be test expressions
     em∧←(1⌷⍉⍵)∊⊂'Expression'      ⍝ Mask of expressions
-    0,⍨⍪'name'Prop em⌿⍵           ⍝ Names bound to values in current scope
+    nm←'name'Prop em⌿⍵            ⍝ Names in local scope
+    nm←⍪⊃,/(0⍴⊂''),sp¨nm          ⍝ Split names and prepare
+    (nm,0),⍳≢nm                   ⍝ Local scope 0, assign a slot to each var
   }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
     'Variable'≡nm:⍺(⍺⍺{           ⍝ Variable node
       i←⊃env⍳'name'Prop ⍺         ⍝ Lookup var in env
-      a←(⊃0 3⌷⍺)⍪'env'(i 1⌷env)   ⍝ Attach env to attributes
+      a←'env' 'slot',⍪i(1 2)⌷env  ⍝ Stack frame and slot
+      a←(⊃0 3⌷⍺)⍪a                ⍝ Attach new attributes
       (ast⍪(1 3↑⍺),⊂a)env         ⍝ Attach to current AST
     })⍵
     'Expression'≡nm:⍺(⍺⍺{         ⍝ Expression node
       z←(⌽1 Kids ⍺),⊂MtAST env    ⍝ Children use existing env
       ka env←⊃⍺⍺vis/z             ⍝ Children visited first
-      nm←⊃'name'Prop 1↑⍺          ⍝ Name of expression
-      z←(ast⍪(1↑⍺)⍪ka)            ⍝ AST to return
-      ∧/' '=nm:z env              ⍝ Do not touch env if unnamed
-      z(((⍪sp nm),0)⍪env)         ⍝ Add names to environment
+      nm←sp⊃'name'Prop 1↑⍺        ⍝ Name(s) of expression
+      id←(0⌷⍉⍺⍺)⍳nm               ⍝ Relevant names in scope env
+      sl←id⊃¨⊂2⌷⍉⍺⍺               ⍝ Slot(s) for each name
+      at←(⊃0 3⌷⍺)⍪'slots'(⍕sl)    ⍝ New attributes for node
+      nd←(1 3↑⍺),⊂at              ⍝ New node
+      z←(ast⍪nd⍪ka)               ⍝ AST to return
+      z(((⊂id)⌷⍺⍺)⍪env)           ⍝ Add any names to environment
     })⍵
     'Condition'≡nm:⍺(⍺⍺{          ⍝ Condition node
       k←1 Kids ⍵                  ⍝ Must handle children
@@ -1377,8 +1378,11 @@ ConvertFree←{
       ken←⍺⍺⍪env                  ⍝ Env is current env plus all in scope
       ken[;1]+←1                  ⍝ Push the stack count up
       z←(⌽1 Kids ⍺),⊂MtAST ken    ⍝ Must go through all children
-      ka _←⊃(ge ⍺)vis/z           ⍝ New scope env, ignore final env
-      (ast⍪(1↑⍺)⍪ka)env           ⍝ Leave environment same as when entered
+      ne←ge ⍺                     ⍝ New scope env
+      ka _←⊃ne vis/z              ⍝ Ignore env from children
+      at←(⊃0 3⌷⍺)⍪'alloca'(≢ne)   ⍝ New env attribute for function node
+      nd←(1 3↑⍺),⊂at              ⍝ New function node
+      (ast⍪nd⍪ka)env              ⍝ Leave environment same as when entered
     })⍵
     z←(⌽1 Kids ⍺),⊂MtAST env
     ka env←⊃⍺⍺∇/z
@@ -1395,25 +1399,6 @@ ConvertFree←{
 
 LiftFuncs←{
   ⍵
-}
-
-⍝ Allocate
-⍝
-⍝ Intended Function:  Assign variables to local slots and allocate 
-⍝ necessary space for slots at each function entry point.
-
-Allocate←{a←⍵
-  nd nn na←↓(⊂0 1 3)⌷⍉⍵                ⍝ Some common slices of the AST
-  m←nn∘∊ ⋄ nm←(nd>⊣)∧(m∘⊂⊢)            ⍝ Fn to build node mask
-  sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢      ⍝ Fn to split name lists
-  en←sp∘⊃∘('name'∘Prop 1 4∘⍴)          ⍝ Fn to get expr name attr or empty
-  at←(⊃(∪/⊢))((≢⊣),(⊂⊣)(⍕⍳)¨⊢)⊢        ⍝ Fn to get alloca and slots attributes
-  n←'Function' 'Expression' 'Variable' ⍝ Nodes we care about
-  fm em vm←(⍳3)nm¨n                    ⍝ Node masks for each node type
-  nb←(em/+\fm)(,⊢)⌸en⍤1⊢em⌿⍵           ⍝ Bindings in each scope
-  av←⍪,(em/+\fm)at⌸en¨↓em⌿⍵            ⍝ Attribute values
-  an←(fem/fm)⊃¨⊂'slots' 'alloca'       ⍝ Attribute names
-  a⊣(3⌷⍉fem⌿a)←(3⌷⍉fem⌿⍵)⍪¨↓an,av      ⍝ Add new attributes
 }
 
 ⍝ GenLLVM
@@ -2145,3 +2130,5 @@ P←'LLVM'
 ⍝ 13. Fix ModToNs
 ⍝
 ⍝ 14. Implement runtime functions
+⍝
+⍝ 15. Update Software Architecture to include new attributes that were added
