@@ -1279,6 +1279,26 @@
             <td>numeric</td>
             <td colspan="3">A numeric value</td>
           </tr>
+	  <tr>
+	    <td>env</td>
+	    <td>numeric</td>
+	    <td colspan="3">A relative reference to a stack frame</td>
+	  </tr>
+	  <tr>
+	    <td>slot</td>
+	    <td>numeric</td>
+	    <td colspan="3">A reference to a position in a stack frame</td>
+	  </tr>
+	  <tr>
+	    <td>slots</td>
+	    <td>numeric list</td>
+	    <td colspan="3">A list of slots</td>
+	  </tr>
+	  <tr>
+	    <td>alloca</td>
+	    <td>numeric</td>
+	    <td colspan="3">The size of a stack frame</td>
+	  </tr>
         </tbody>
       </table>
       <section>
