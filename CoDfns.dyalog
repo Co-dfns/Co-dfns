@@ -1337,6 +1337,8 @@ LiftBound←{
 ⍝ Intended Function: Associate with each assignment, scope, and variable reference 
 ⍝ an appropriate slot pointing to a specific region of memory within the stack 
 ⍝ frames, or in the case of scopes, the size of the stack frame of that scope.
+⍝
+⍝ XXX: What happens with top-level function bindings and their environments?
 
 AnchorVars←{
   mt←0 2⍴⊂'' 0                    ⍝ An empty environment
@@ -1398,7 +1400,25 @@ AnchorVars←{
 ⍝ Intended Function: Lift all functions to the top level.
 
 LiftFuncs←{
-  ⍵
+  I←¯1 ⋄ MkV←{'FN',⍕I⊣(⊃I)+←1}     ⍝ New variable maker
+  vis←{lft ast←⍵                   ⍝ Fn to visit each node
+    (1=⊃⍺)∧'FuncExpr'≡⊃0 1⌷⍺:⍵     ⍝ Ignore top-level functions
+    'Function'≡⊃0 1⌷⍺:⍺(⍺⍺{        ⍝ Only lift Function nodes
+      z←(⌽1 Kids ⍺),⊂lft MtAST     ⍝ Recur over children, updating lifted
+      lft ka←⊃(1+⍺⍺)vis/z          ⍝ Bump up the depth over children
+      at←(⊃0 3⌷⍺)⍪'depth' ⍺⍺       ⍝ New depth attribute for Function node
+      nlf←((1 3↑⍺),⊂at)⍪ka         ⍝ Function node lifted 
+      vn←1 2⍴'class' 'ambivalent'  ⍝ Replace with ambivalent variable
+      vn⍪←'depth'(⍕⍺⍺)             ⍝ With the same depth
+      vn⍪←'name'(MkV⍬)             ⍝ And a new name
+      vn←1 4⍴(⊃⍺)'Variable' '' vn  ⍝ Node has same depth
+      (lft⍪nlf)(ast⍪vn)            ⍝ Fn lifted and replaced by variable
+    })⍵
+    z←(⌽1 Kids ⍺),⊂lft (1↑⍺)       ⍝ Otherwise, traverse
+    ⊃⍺⍺ ∇/z                        ⍝ without changing anything
+  }
+  z←(⌽1 Kids ⍵),⊂2⍴⊂MtAST          ⍝ Must traverse all top-level
+  (1↑⍵)⍪⊃⍪/0 vis/z                 ⍝ Nodes just the same
 }
 
 ⍝ GenLLVM
