@@ -1112,6 +1112,7 @@
                 <member>name</member>
                 <member>comment</member>
 		<member>alloca</member>
+		<member>depth</member>
               </simplelist>
             </td>
             <td colspan="2">
@@ -1216,6 +1217,7 @@
                 <member>equiv</member>
 		<member>slot</member>
 		<member>env</member>
+		<member>depth</member>
               </simplelist>
             </td>
             <td colspan="2"></td>
@@ -1277,6 +1279,11 @@
 	    <td>alloca</td>
 	    <td>numeric</td>
 	    <td colspan="3">The size of a stack frame</td>
+	  </tr>
+	  <tr>
+	    <td>depth</td>
+	    <td>numeric</td>
+	    <td colspan="3">The stack depth of a function definition or call</td>
 	  </tr>
         </tbody>
       </table>
@@ -1513,6 +1520,9 @@
 	    The <parameter>alloca</parameter> attribute indicates the
 	    number of slots needed to allocate space for the local scope
 	    of the function.
+	    The <parameter>depth</parameter> attribute indicates the 
+	    depth of the function's definition, determining the number of 
+	    environments it may reference.
           </para>
         </formalpara>
       </section>
@@ -1771,6 +1781,9 @@
 	    scopes away from the local scope; that is, 0 is for local scope, 
 	    while 2 indicates that the variable is stored in the scope two levels 
 	    above the local scope.
+	    The <parameter>depth</parameter> attribute indicates the depth 
+	    of a function call variable; that is, it determines the number 
+	    of stack frames for that call.
           </para>
         </formalpara>
       </section>
