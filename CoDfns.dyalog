@@ -16,82 +16,32 @@ TargetTriple←'x86_64-slackware-linux-gnu'
 ⍝ Intended Function: Accept a valid namespace script and return an
 ⍝ equivalent namespace script, possibly exporting a module at the same
 ⍝ time to the file named in the optional left argument.
-⍝
-⍝ Right argument: Valid namespace script, see ⎕FIX
-⍝ Left argument: Optional character vector specifying filename
-⍝ Output: Namespace equivalent to script, possibly an object equivalent as well
-⍝ State: Context ← Top ⋄ Fix ← No
-⍝ Return State: Context ← Top ⋄ Fix ← No
 
 Fix←{
-  ⍝ State: Fix ← Yes
-
-  _←FFI∆INIT
-
-  ⍝ Input Validation, Signal DOMAIN ERROR if not valid
-  ~(,1)≡⍴⍴⍵:⎕SIGNAL 11
-  ~∧/1≥⊃∘⍴∘⍴¨⍵:⎕SIGNAL 11
-  ~∧/⊃,/' '=⊃∘(0∘⍴)∘⊂¨⍵:⎕SIGNAL 11
-
-  ⍝ Identify Obj property
-  ⍝ This is based on the arity of the Fix call
-  ⍺←⊢ ⋄ Obj←⍺⊣''
-
-  ⍝ We must handle the other transitions:
-  ⍝   Fnb → DOMAIN ERROR    → (Fix ← No)
-  ⍝   Fnf → null            → (Obj ← Yes)
-  ⍝   Fne → null            → (Obj ← Yes)
-  IsFnb Obj:⎕SIGNAL 11
-
-  ⍝ State: Namespace ← NOTSEEN ⋄ Eot ← No
-  ⍝ At this stage, we can compile ⍵ without consideration
-  ⍝ to Fix or Obj properties into a single LLVM Module
-  ⍝ State Transitions Handled by Compile:
-  ⍝   Eot → SYNTAX ERROR    → (Fix ← No)
-  ⍝   Nl  → null            → (Obj ← No)
-  ⍝   Nse → SYNTAX ERROR    → (Fix ← No)
-  ⍝   Nss → null            → (Obj ← No ⋄ Namespace ← OPEN)
-  Module Names←Compile ⍵
-
-  ⍝ State: Namespace ← CLOSED ⋄ Eot ← Yes
-  ⍝ Now we need only create the Namespace
-  ⍝ And deal with the Obj property and states
-  Namespace←Names ModToNS Module
-
-  ⍝ State: Obj ← No
-  ⍝ When Obj ← No we need only give a namespace
-  ''≡Obj:Namespace
-
-  ⍝ State: Obj ← Yes
-  ⍝ Must return the namespace and generate the
-  ⍝ module object as well.
-  _←Obj ModToObj Module
-  Namespace
+  _←FFI∆INIT                  ⍝ Initialize FFI; Fix ← Yes
+  ~1≡≢⍴⍵:⎕SIGNAL 11           ⍝ Input is vector?
+  ~∧/1≥≢∘⍴¨⍵:⎕SIGNAL 11       ⍝ Elements are vectors?
+  ~∧/∊' '=(⊃0⍴⊂)¨⍵:⎕SIGNAL 11 ⍝ Elements are characters?
+  ⍺←⊢ ⋄ obj←⍺⊣''              ⍝ Identify Obj property
+  IsFnb obj:⎕SIGNAL 11        ⍝ Handle Fnb, Fnf, Fne stimuli
+  mod nms←Compile ⍵           ⍝ Get LLVM Module
+  ns←nms ModToNS mod          ⍝ Namespace to return
+  ''≡Obj:ns                   ⍝ No optional object file output
+  ns⊣obj ModToObj mod         ⍝ Export Mod to object file
 }
 
 ⍝ IsFnb
 ⍝
 ⍝ Intended Function: Determine whether the given input is a valid
 ⍝ filename or not.
-⍝
-⍝ For the moment, we just check to make sure that we are getting
-⍝ a valid string, and if so, we consider it valid.
 
-IsFnb←{~(∧/' '=⊃0⍴⊂⍵)∧((,1)≡⍴⍴⍵)∧(1≡≡⍵)}
+IsFnb←{
+  ~(∧/∊' '=⊃0⍴⊂⍵)∧(1≡≢⍴⍵)∧(1≡≡⍵) ⍝ Is simple, character vector?
+}
 
 ⍝ Compile
 ⍝
 ⍝ Intended Function: Compile the given Fix input into an LLVM Module.
-⍝
-⍝ Input: Valid Fix right argument
-⍝ Output: Semantically equivalent LLVM Module and a (name, type)
-⍝   mapping of top-level bindings
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
-⍝ Return State: Namespace ← CLOSED ⋄ Eot ← Yes
-⍝
-⍝ Each of the passes of the compiler returns us to the same starting state,
-⍝ conceptually, but refines the details over and over again, returning a
-⍝ slightly different namespace than the one before.
 
 Compile←{
   tks←Tokenize ⍵
@@ -108,125 +58,67 @@ Compile←{
 
 ⍝ ModToNS
 ⍝
-⍝ Intended Function: Create a Namespace that provides access to an LLVM Module
-⍝
-⍝ Left Argument: A (name, type) mapping of top-level bindings
-⍝ Right Argument: A valid LLVM Module
-⍝ Output: A Namespace
-⍝ State: Context ← Top ⋄ Namespace ← CLOSED ⋄ Eot ← Yes
-⍝
-⍝ An interesting restriction here is that we need to make sure that we do not
-⍝ have any bindings in the namespace that are not observably equivalent to
-⍝ those that we have in the given compiled namespace. This means that we
-⍝ cannot have any helper functions at the top level of our namespace.
-⍝ Furthermore, we have two types of values that we need to convert, those
-⍝ function types and the globals. The function types can be converted directly
-⍝ to function types, but the globals need to be niladic functions to ensure that
-⍝ they grab their values from the latest global state of the compiled module,
-⍝ rather than an old value.
-⍝
-⍝ XXX: At the moment this function only handles the functions that are
-⍝ exported by a namespace, and does not deal with the globals.
+⍝ Intended Function: Create an observationally equivalent namespace from 
+⍝ a given LLVM Module.
 
 ModToNS←{
-  ⍝ All of this starts with having a namespace where we can
-  ⍝ put all of these functions.
-  ⊢Ns←⎕NS⍬ ⍝ Create an Empty Namespace
-
-  ⍝ We need to specify exactly what target triple we are using
-  ⍝ to do the compilation, which is done based on the value of
-  ⍝ the TargetTriple Global value. Before using the triple, however, it is
-  ⍝ necessary to ensure that we have initialized the appropriate target,
-  ⍝ which is given by the Target global value.
-  _←⍎'Initialize',Target,'TargetInfo'
-  _←⍎'Initialize',Target,'Target'
-  _←⍎'Initialize',Target,'TargetMC'
-  _←SetTarget ⍵ TargetTriple
-
-  ⍝ The execution engine is the primary thing which allows us
-  ⍝ to JIT a module. We store the main execution engine in Ee
-  ⍝ after creation.
-  C Eev Err←CreateJITCompilerForModule 1 ⍵ 0 1
-  0≠C:(ErrorMessage ⊃Err)⎕SIGNAL 99
-  Ee←⊃Eev
-
-  ⍝ We use an operator here to build each function. This let's us capture
-  ⍝ the relevant state without worrying about mucking with the top-level
-  ⍝ of the namespace.
-  Fn←{
-    Gv←RunFunction ⍺⍺ ⍵⍵ 0 0
-    Z←ConvertArray GenericValueToPointer Gv
-    _←DisposeGenericValue Gv
-    Z
+  ns←⎕NS⍬                             ⍝ Create an Empty Namespace
+  _←⍎'Initialize',Target,'TargetInfo' ⍝ Setup targeting information
+  _←⍎'Initialize',Target,'Target'     ⍝ Based on given Machine 
+  _←⍎'Initialize',Target,'TargetMC'   ⍝ Parameters in CoDfns namespace
+  _←SetTarget ⍵ TargetTriple          ⍝ JIT must have machine target
+  jc←1 ⍵ 0 1                          ⍝ Params: JIT Ov, Mod, OptLevel, Err Ov
+  jc←CreateJITCompilerForModule jc    ⍝ Make JIT compiler
+  0≠⊃jc:(ErrorMessage ⊃⌽jc)⎕SIGNAL 99 ⍝ Error handling, C style
+  ee←1⊃jc                             ⍝ Extract exec engine on success
+  fn←{                                ⍝ Op to build ns functions
+    z←RunFunction ⍺⍺ ⍵⍵ 0 0           ⍝ Eval function in module
+    z←GenericValueToPointer z         ⍝ Get something we can use
+    Z←ConvertArray z                  ⍝ Get it into Dyalog format
+    z⊣DisposeGenericValue z           ⍝ Clean memory and return
   }
-
-  ⍝ We need to be able to extract out the value of a function,
-  ⍝ as this is needed by RunFunction in order to actually do
-  ⍝ any real work. To do this we use the FindFunction. However,
-  ⍝ the syntax of the FindFunction is less than ideal, so we
-  ⍝ wrap it in the function Fp to get us what we want.
-  Fp←{
-    C Fpv←FindFunction Ee ⍵ 1
-    0≠C:'FUNCTION NOT FOUND'⎕SIGNAL 99
-    ⊃Fpv
+  fp←{                                ⍝ Fn to get function pointer
+    c fpv←FindFunction ee ⍵ 1         ⍝ Get function from LLVM Module
+    0=c:fpv                           ⍝ Function pointer on success
+    'FUNCTION NOT FOUND'⎕SIGNAL 99    ⍝ System error on failure
   }
-
-  ⍝ Each function is described succinctly by the function
-  ⍝ returned by (Ee Fn Fp Fname) where Fname is one of the
-  ⍝ keys associated with the function type in ⍺. The trick
-  ⍝ is getting these into the namespace, which as yet does
-  ⍝ not have defined in it any of the appropriate names.
-  ⍝ This is, unfortunately, a case for ⍎. We have a function
-  ⍝ Add to do this for us. This will work for either functions
-  ⍝ or globals depending on how we invoke it.
-  AddF←{0=⊃⍴⍵: 0 ⋄ F←Ee Fn (Fp ⍵) ⋄ ⎕←F ⋄ _←⍎'Ns.',⍵,'←F' ⋄ 0}
-
-  ⍝ We can now add our appropriate functions and globals to our
-  ⍝ namespace.
-  Ns⊣AddF¨(2=1⌷⍉⍺)/0⌷⍉⍺
+  addf←{                              ⍝ Fn to insert func into namespace
+    0=⊃⍴⍵:0                           ⍝ No name is no-op
+    f←ee fn (fp ⍵)                    ⍝ Get function
+    0⊣⍎'Ns.',⍵,'←f ⋄ 0'               ⍝ Store function using do oper trick
+  }
+  ns⊣addf¨(2=1⌷⍉⍺)/0⌷⍉⍺               ⍝ Add all functions
 }
 
 ⍝ ConvertArray
 ⍝
 ⍝ Intended Function: Convert an array from the Co-dfns compiler into an
 ⍝ array suitable for use in the Dyalog APL Interpreter.
-⍝
-⍝ Right Argument: A pointer to the array
-⍝ Output: A Dyalog Array
 
 ConvertArray←{
-  D←⊃FFIGetDataInt (S←FFIGetSize ⍵) ⍵
-  ((2≤S)⊃⍬ S)⍴D
+  s←FFIGetSize ⍵       ⍝ We have only vectors and scalars right now
+  d←⊃FFIGetDataInt s ⍵ ⍝ So we only need the ravel of the data
+  ((2≤s)⊃⍬ s)⍴d        ⍝ We can reshape based on the size
 }
 
 ⍝ ModToObj
 ⍝
 ⍝ Intended Function: Generate a compiled object to the file given the LLVM Module
-⍝
-⍝ Left Argument: A filename
-⍝ Right Argument: An LLVM Module
-⍝ State: Context ← Top ⋄ Namespace ← CLOSED ⋄ Eot ← Yes
-⍝
-⍝ This is stubbed right now to just generate a regular text rather than a
-⍝ compiled object module
 
 ModToObj←{
-  r err←PrintModuleToFile ⍵ ⍺ 1
-  1=r:(ErrorMessage ⊃err)⎕SIGNAL 99
-  0 0⍴⍬
+  r err←PrintModuleToFile ⍵ ⍺ 1     ⍝ Print to the file given
+  1=r:(ErrorMessage ⊃err)⎕SIGNAL 99 ⍝ And error out with LLVM errr on failure
+  0 0⍴⍬                             ⍝ Best to return something that isn't seen
 }
 
 ⍝ ErrorMessage
 ⍝
 ⍝ Intended Function: Return an array of the LLVM Error Message
-⍝
-⍝ Right argument: An error message pointer returned by an LLVM function
-⍝ Output: A character vector
 
 ErrorMessage←{
-  len←strlen ⍵
-  res←cstring len ⍵ len
-  res⊣DisposeMessage ⍵
+  len←strlen ⍵          ⍝ Length of C string
+  res←cstring len ⍵ len ⍝ Convert using memcpy
+  res⊣DisposeMessage ⍵  ⍝ Cleanup and return
 }
 
 ⍝ Tokenize
@@ -1938,6 +1830,19 @@ P←'LLVM'
 :EndNamespace
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ Notes on Style
+⍝
+⍝ ∘ Global variables are camel case
+⍝ ∘ Local variables are lower case
+⍝ ∘ Function bodies receive a two column code/comment layout
+⍝ ∘ Comments of entire function body should align
+⍝ ∘ Avoid needless bindings
+⍝ ∘ Divide bindings based on clarity of documentation
+⍝ ∘ Prefer tacit programming
+⍝ ∘ Keep to 80 columns
+⍝ ∘ Every global function must have an intended function documented in comments
+
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Notes on each increment development
 
 ⍝ Increment 1 Overview:
@@ -2152,3 +2057,5 @@ P←'LLVM'
 ⍝ 14. Implement runtime functions
 ⍝
 ⍝ 15. Update Software Architecture to include new attributes that were added
+⍝
+⍝ 16. Update ConvertArray to handle higher-ranked arrays
