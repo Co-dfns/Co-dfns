@@ -125,129 +125,75 @@ ErrorMessage←{
 ⍝
 ⍝ Intended Function: Convert a vector of character vectors or scalars to a valid
 ⍝ AST with a Tokens root that is lexically equivalent modulo spaces.
-⍝
-⍝ Input: Right argument to Fix
-⍝ Output: Tokens structure
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 Tokenize←{
-  ⍝ Potential Stimuli: Eot Nl Nse Nss V N ← { } ⋄ D Da M Ma
-  ⍝
-  ⍝ The only real job of this pass is to get to these stimuli, not do anything
-  ⍝ more with them.
-
-  ⍝ Valid Variable characters
-  VC←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'
-  VC,←'abcdefghijklmnopqrstuvwxyz'
-  VC,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß'
-  VC,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
-  VC,←'∆⍙'
-  VC,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
-  VCN←VC,NC←'0123456789'
-
-  ⍝ Additional Characters in domain: ←{}⋄+-÷×|*⍟⌈⌊<≤=≠≥> ⍝
-  ⍝
-  ⍝ The NC variable contains the decimal digits, used in both
-  ⍝ the N and V tokens. The Nl token is already parsed, so we
-  ⍝ do not do anything with that, and the Eot token is implicit
-  ⍝ as well.
-
-  ⍝ Verify that we have only valid characters in use
-  AC←VCN,' ⍝',TC←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>'
-  ~∧/AC∊⍨⊃,/⍵:⎕SIGNAL 2
-
-  ⍝ Divide into comment and code
-  I←⍵⍳¨'⍝' ⋄ T←I↑¨⍵ ⋄ C←I↓¨⍵
-
-  ⍝ Strip leading and trailing whitespace from each line
-  T←((⌽∘(∨\)∘⌽¨T)∧∨\¨T←' '≠T)/¨T
-
-  ⍝ Recognize :Namespace and :EndNamespace tokens, which
-  ⍝ must be on lines by themselves, split these off to
-  ⍝ prevent further processing and save for reassembly later.
-  NSL←(NSB←T∊':Namespace' ':EndNamespace')/T
-  NSI←NSB/⍳⍴T ⋄ TI←(~NSB)/⍳⍴T ⋄ T←(~NSB)/T
-
-  ⍝ Tokenize each Namespace element
-  ⍝ This makes NSL a vector of lines where each line is a vector of tokens
-  NSL←{,⊂2 'Token' '' (2 2⍴'name' ⍵ 'class' 'delimiter')}¨NSL
-
-  T←{
-    ⍝ Special case when T is empty to make life easier
-    0=⍴T:⍬
-
-    ⍝ Split on and remove spaces
-    T←{((⍴X)⍴1 0)/X←(2≠/' '=' ',⍵)⊂⍵}¨T
-
-    ⍝ Split on All Token Characters (TC)
-    T←{⊃,/(⊂⍬),⍵}¨{(B∨2≠/1,B←⍵∊TC)⊂⍵}¨¨T
-
-    ⍝ At this point, all lines are split into tokens
-    ⍝ Wrap each token in appropriate element:
-    ⍝   Variables         → Variable
-    ⍝   Integer           → Number    class ← 'int'
-    ⍝   + - ÷ × | * ⍟ ⌈ ⌊ → Primitive class ← 'monadic axis'
-    ⍝   < ≤ = ≠ ≥ >       → Primitive class ← 'dyadic axis'
-    ⍝   ← ⋄ :             → Token     class ← 'separator'
-    ⍝   { }               → Token     class ← 'delimiter'
-
-    ⍝ We switch from lines to a single vector of tokens
-    ⍝ Must preserve ability to construct lines
-    ⍝ L: Count of tokens for each line
-    ⍝ T: Vector of Tokens
-    L←⊃∘⍴¨T ⋄ T←⊃,/T
-
-    ⍝ Identifying the type of a token here can be
-    ⍝ accomplished by checking the first character
-    ⍝ of the token:
-    ⍝   Variable          → T∊VC
-    ⍝   Integer           → T∊NC
-    ⍝   + - ÷ × | * ⍟ ⌈ ⌊ → T∊'+-÷×|*⍟⌈⌊'
-    ⍝   < ≤ = ≠ ≥ >       → T∊'<≤=≠≥>'
-    ⍝   ← ⋄ :             → T∊'←⋄:'
-    ⍝   { }               → T∊'{}'
-    ⍝
-    ⍝ Create a selection vector for each type of token
-    Sv Si Spm Spd Sa Sd←(⊃¨T)∘∊¨VC NC '+-÷×|*⍟⌈⌊' '<≤=≠≥>' '←⋄:' '{}'
-
-    ⍝ Wrap each type in appropriate elements
-    Tv←{1 4⍴2 'Variable' '' (1 2⍴'name' ⍵)}¨Sv/T
-    Ti←{1 4⍴2 'Number' '' (2 2⍴'value' ⍵ 'class' 'int')}¨Si/T
-    Tpm←{1 4⍴2 'Primitive' '' (2 2⍴'name' ⍵ 'class' 'monadic axis')}¨Spm/T
-    Tpd←{1 4⍴2 'Primitive' '' (2 2⍴'name' ⍵ 'class' 'dyadic axis')}¨Spd/T
-    Ta←{1 4⍴2 'Token' '' (2 2⍴'name' ⍵ 'class' 'separator')}¨Sa/T
-    Td←{1 4⍴2 'Token' '' (2 2⍴'name' ⍵ 'class' 'delimiter')}¨Sd/T
-
-    ⍝ Indexes of each type in original
-    Iv Ii Ipm Ipd Ia Id←Sv Si Spm Spd Sa Sd/¨⊂⍳+/L
-
-    ⍝ Restore T to a vector of non-empty lines of tokens
-    T←(⊃,/L↑¨1)⊂(Tv,Ti,Tpm,Tpd,Ta,Td)[⍋Iv,Ii,Ipm,Ipd,Ia,Id]
-
-    ⍝ Restore the empty lines of T
-    (T,(+/0=L)↑⊂⍬)[⍋((0≠L)/⍳⍴L),(0=L)/⍳⍴L]
+  vc←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'     ⍝ Upper case characters
+  vc,←'abcdefghijklmnopqrstuvwxyz'     ⍝ Lower case characters
+  vc,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß' ⍝ Accented upper case
+  vc,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'  ⍝ Accented lower case
+  vc,←'∆⍙'                             ⍝ Deltas
+  vc,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'     ⍝ Underscored alphabet
+  vcn←vc,nc←'0123456789'               ⍝ Numbers
+  tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>'            ⍝ Single Token characters
+  ac←vcn,' ⍝',tc                       ⍝ All characters
+  ~∧/ac∊⍨⊃,/⍵:⎕SIGNAL 2                ⍝ Verify we have only good characters
+  i←⍵⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵           ⍝ Divide into comment and code
+  t←((⌽∘(∨\)∘⌽¨t)∧∨\¨t←' '≠t)/¨t       ⍝ Strip leading/trailing whitespace
+  nsb←t∊':Namespace' ':EndNamespace'   ⍝ Mask of Namespace tokens
+  nsl←nsb/t ⋄ nsi←nsb/⍳⍴t              ⍝ Namespace lines and indices
+  ti←(~nsb)/⍳⍴t ⋄ t←(~nsb)/t           ⍝ Token indices and non ns tokens
+  at←{2 2⍴'name'⍵'class' 'delimiter'}  ⍝ Fn for namespace attributes
+  nsl←{,⊂2 'Token' '' (at ⍵)}¨nsl      ⍝ Tokenize namespace elements
+  t←{                                  ⍝ Tokenize other tokens
+    0=⍴t:⍬                             ⍝ Special empty case
+    t←(m/2</0,m)⊂(m←' '≠t)/t           ⍝ Split on and remove spaces
+    t←{(b∨2≠/1,b←⍵∊tc)⊂⍵}¨¨t           ⍝ Split on token characters
+    t←{⊃,/(⊂⍬),⍵}¨t                    ⍝ Recombine lines
+    lc←+/l←≢¨t                         ⍝ Token count per line and total count
+    t←⊃,/t                             ⍝ Convert to single token vector
+    fc←⊃¨t                             ⍝ First character of each token
+    iv←(sv←fc∊vc)/⍳lc                  ⍝ Mask and indices of variables
+    ii←(si←fc∊nc)/⍳lc                  ⍝ Mask and indices of numbers
+    ia←(sa←fc∊'←⋄:')/⍳lc               ⍝ Mask and indices of separators
+    id←(sd←fc∊'{}')/⍳lc                ⍝ Mask and indices of delimiters
+    ipm←(spm←fc∊'+-÷×|*⍟⌈⌊')/⍳lc       ⍝ Mask and indices of monadic primitives
+    ipd←(spd←fc∊'<≤=≠≥>')/⍳lc          ⍝ Mask and indices of dyadic primitives
+    tv←1 2∘⍴¨↓(⊂'name'),⍪sv/t          ⍝ Variable attributes
+    tv←{1 4⍴2 'Variable' '' ⍵}¨tv      ⍝ Variable tokens
+    ti←{'value' ⍵ 'class' 'int'}¨si/t  ⍝ Number attributes
+    ti←{1 4⍴2 'Number' '' (2 2⍴⍵)}¨ti  ⍝ Number tokens
+    tpm←{1 2⍴'name' ⍵}¨spm/t           ⍝ Monadic Primitive name attributes
+    tpm←{⍵⍪'class' 'monadic axis'}¨tpm ⍝ Monadic Primtiive class
+    tpm←{1 4⍴2 'Primitive' '' ⍵}¨tpm   ⍝ Monadic Primitive tokens
+    tpd←{1 2⍴'name' ⍵}¨spd/t           ⍝ Dyadic primitive name attributes
+    tpd←{⍵⍪'class' 'dyadic axis'}¨tpd  ⍝ Dyadic primitive class
+    tpd←{1 4⍴2 'Primitive' '' ⍵}¨tpd   ⍝ Dyadic primitive tokens
+    ta←{1 2⍴'name' ⍵}¨sa/t             ⍝ Separator name attributes
+    ta←{⍵⍪'class' 'separator'}¨ta      ⍝ Separator class
+    ta←{1 4⍴2 'Token' '' ⍵}¨ta         ⍝ Separator tokens
+    td←{1 2⍴'name' ⍵}¨sd/t             ⍝ Delimiter name attributes
+    td←{⍵⍪'class' 'delimiter'}¨td      ⍝ Delimiter class attributes
+    td←{1 4⍴2 'Token' '' ⍵}¨td         ⍝ Delimiter tokens
+    t←tv,ti,tpm,tpd,ta,td              ⍝ Reassemble tokens
+    t←t[⍋iv,ii,ipm,ipd,ia,id]          ⍝ In the right order
+    t←(⊃,/l↑¨1)⊂t                      ⍝ As vector of non-empty lines of tokens
+    t←t,(+/0=l)↑⊂⍬                     ⍝ Append empty lines
+    t[⍋((0≠l)/⍳⍴l),(0=l)/⍳⍴l]          ⍝ Put empty lines where they belong
   }⍬
-
-  ⍝ Add the Namespace lines back
-  T←(NSL,T)[⍋NSI,TI]
-
-  ⍝ Wrap in Lines
-  T←C {H←1 4⍴1 'Line' '' (1 2⍴'comment' ⍺) ⋄ 0=⊃⍴⍵:H ⋄ H⍪⊃⍪/⍵}¨T
-
-  ⍝ Create and return Tokens tree
-  0 'Tokens' '' MtA⍪⊃⍪/T
+  t←(nsl,t)[⍋nsi,ti]                   ⍝ Add the Namespace lines back
+  t←c{                                 ⍝ Wrap in Line nodes
+    ha←1 2⍴'comment' ⍺                 ⍝ Head comment
+    h←1 4⍴1 'Line' '' ha               ⍝ Line node
+    0=≢⍵:h ⋄ h⍪⊃⍪/⍵                    ⍝ Wrap it
+  }¨t
+  0 'Tokens' '' MtA⍪⊃⍪/t               ⍝ Create and return tokens tree
 }
 
 ⍝ Utility Constants
 
-⍝ An empty attribute table for AST
-MtA←0 2⍴⊂''
-
-⍝ An empty AST
-MtAST←0 4⍴0 '' '' MtA
-
-⍝ An Empty (Name, Type) Environment
-MtNTE←0 2⍴'' 0
+MtA←0 2⍴⊂''           ⍝ An empty attribute table for AST
+MtAST←0 4⍴0 '' '' MtA ⍝ An empty AST
+MtNTE←0 2⍴'' 0        ⍝ An Empty (Name, Type) Environment
 
 ⍝ Utility Functions
 
@@ -256,24 +202,28 @@ MtNTE←0 2⍴'' 0
 ⍝ Prop is used to take an AST (⍵) and extract the values of
 ⍝ an attribute (⍺) from all the nodes in the AST. It returns a
 ⍝ vector of these values.
+
 Prop←{(¯1⌽P∊⊂⍺)/P←(⊂''),,↑⍵[;3]}
 
 ⍝ AST ByElem NodeName: All nodes of the AST named NodeName
 ⍝
 ⍝ ByElem extracts a matrix of all the nodes of the AST (⍺)
 ⍝ by the node name (⍵).
+
 ByElem←{(⍺[;1]∊⊂⍵)⌿⍺}
 
 ⍝ AST ByDepth Depth: All nodes of a specific depth
 ⍝
 ⍝ ByDepth obtains a matrix of all the nodes of the AST (⍺)
 ⍝ that have a given depth (⍵).
+
 ByDepth←{(⍵=⍺[;0])⌿⍺}
 
 ⍝ Name Bind AST: Take the root node and attach a new name to it
 ⍝
 ⍝ Bind describes an AST (⍵) adjusted to include Name (⍺) as another
 ⍝ name in the 'name' attribute of the node.
+
 Bind←{
   Ni←(A←0⌷⍉⊃0 3⌷Ast←⍵)⍳⊂'name'
   Ni≥⍴A:Ast⊣(⊃0 3⌷Ast)⍪←'name' ⍺
@@ -281,33 +231,38 @@ Bind←{
 }
 
 ⍝ Comment: Currently stubbed out
+
 Comment←{⍺}
 
 ⍝ Env VarType Var: Type of Var in Env
 ⍝
 ⍝ Gives back the type of a variable in the environment
+
 VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 
 ⍝ Depth Kids Ast: Children of root node of AST
 ⍝
 ⍝ Obtain subtrees of a depth relative to the depth
 ⍝ of the first node of the tree.
+
 Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}
 
-⍝ Fn eachk AST: Each over children
+⍝ Fn Eachk AST: Each over children
 ⍝
 ⍝ Applies (cid Fn kid) where cid is the child id (1-based) and
 ⍝ kid is a member of 1 Kids ⍵.
-eachk←{
+
+Eachk←{
   km←+\(⊃=⊢)0⌷⍉k←1↓⍵ ⍝ Map of children
   (1↑⍵)⍪⊃⍪/km(⊂⍺⍺)⌸k ⍝ Must enclose the intermediate results
 }
 
-⍝ map f sel g sel h arg: case selection
+⍝ map f Sel g Sel h arg: case selection
 ⍝
 ⍝ Utility from Phil Last for doing case selection based on a
 ⍝ boolean map to choose which function to apply to arg.
-sel←{~∨/⍺:⍵ ⋄ g←⍵⍵⍣(⊢/⍺) ⋄ 2=⍴⍺:⍺⍺⍣(⊣/⍺)g ⍵ ⋄ (¯1↓⍺)⍺⍺ g ⍵}
+
+Sel←{~∨/⍺:⍵ ⋄ g←⍵⍵⍣(⊢/⍺) ⋄ 2=⍴⍺:⍺⍺⍣(⊣/⍺)g ⍵ ⋄ (¯1↓⍺)⍺⍺ g ⍵}
 
 ⍝ Parse
 ⍝
@@ -928,10 +883,10 @@ ParseExpr←{
     c20←{(Ed⍪(Dwn kid)⍪1↓ast)env 1}
     c23←{(Ed⍪(Dwn N⍪Dwn kid)⍪1↓ast)env 1}
     c33←{(nm Bind ast)(((nm←⊃'name'Prop kid)1)⍪env)1}
-    c3←c33 sel c32 sel c31 sel c30
-    c2←c3 sel c23 sel c22 sel c21 sel c20
-    c1←c2 sel c13 sel c12 sel c11 sel c10
-    c0←c1 sel c03 sel c02 sel c01 sel c00
+    c3←c33 Sel c32 Sel c31 Sel c30
+    c2←c3 Sel c23 Sel c22 Sel c21 Sel c20
+    c1←c2 Sel c13 Sel c12 Sel c11 Sel c10
+    c0←c1 Sel c03 Sel c02 Sel c01 Sel c00
     case c0 ⍵
   }/(0 Kids E),⊂MtAST ⍺ 0
 
@@ -1221,7 +1176,7 @@ LiftBound←{
   1=≢⍵:⍵                            ⍝ Do nothing for leaves
   'Expression'≡⊃0 1⌷⍵:⊃⍪/(⊃⍵)lft ⍵  ⍝ Lift root expressions
   'Condition'≡⊃0 1⌷⍵:cnd ⍵          ⍝ Lifting Condition nodes is special
-  (∇⊢)eachk ⍵                       ⍝ Ignore non-expr nodes
+  (∇⊢)Eachk ⍵                       ⍝ Ignore non-expr nodes
 }
 
 ⍝ AnchorVars
