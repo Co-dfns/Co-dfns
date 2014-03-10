@@ -5,11 +5,8 @@ include conf/mk.conf
 all: docs CoDfns.dyalog
 
 include doc/tech/Makefile
+include runtime/Makefile
 
-CoDfns.dyalog: libcodfns.so
+CoDfns.dyalog: $(RUNTIME)
 
-libcodfns.so: codfns.h codfns.c
-	clang -shared -fPIC -o libcodfns.so codfns.c
-
-clean: clean-docs
-	rm -f libcodfns.so
+clean: clean-docs clean-runtime
