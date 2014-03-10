@@ -10,6 +10,7 @@
 
 Target←'X86'
 TargetTriple←'x86_64-slackware-linux-gnu'
+CoDfnsRuntime←'runtime/libcodfns.so'
 
 ⍝ Fix
 ⍝
@@ -58,13 +59,13 @@ Compile←{
 
 ⍝ ModToNS
 ⍝
-⍝ Intended Function: Create an observationally equivalent namespace from 
+⍝ Intended Function: Create an observationally equivalent namespace from
 ⍝ a given LLVM Module.
 
 ModToNS←{
   ns←⎕NS⍬                             ⍝ Create an Empty Namespace
   _←⍎'Initialize',Target,'TargetInfo' ⍝ Setup targeting information
-  _←⍎'Initialize',Target,'Target'     ⍝ Based on given Machine 
+  _←⍎'Initialize',Target,'Target'     ⍝ Based on given Machine
   _←⍎'Initialize',Target,'TargetMC'   ⍝ Parameters in CoDfns namespace
   _←SetTarget ⍵ TargetTriple          ⍝ JIT must have machine target
   jc←1 ⍵ 0 1                          ⍝ Params: JIT Ov, Mod, OptLevel, Err Ov
@@ -1181,8 +1182,8 @@ LiftBound←{
 
 ⍝ AnchorVars
 ⍝
-⍝ Intended Function: Associate with each assignment, scope, and variable reference 
-⍝ an appropriate slot pointing to a specific region of memory within the stack 
+⍝ Intended Function: Associate with each assignment, scope, and variable reference
+⍝ an appropriate slot pointing to a specific region of memory within the stack
 ⍝ frames, or in the case of scopes, the size of the stack frame of that scope.
 ⍝
 ⍝ XXX: What happens with top-level function bindings and their environments?
@@ -1254,7 +1255,7 @@ LiftFuncs←{
       z←(⌽1 Kids ⍺),⊂lft MtAST     ⍝ Recur over children, updating lifted
       lft ka←⊃(1+⍺⍺)vis/z          ⍝ Bump up the depth over children
       at←(⊃0 3⌷⍺)⍪'depth' ⍺⍺       ⍝ New depth attribute for Function node
-      nlf←((1 3↑⍺),⊂at)⍪ka         ⍝ Function node lifted 
+      nlf←((1 3↑⍺),⊂at)⍪ka         ⍝ Function node lifted
       vn←1 2⍴'class' 'ambivalent'  ⍝ Replace with ambivalent variable
       vn⍪←'depth'(⍕⍺⍺)             ⍝ With the same depth
       vn⍪←'name'(MkV⍬)             ⍝ And a new name
@@ -1600,10 +1601,10 @@ GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
 
 ⍝ Foreign Functions
 
-∇{Z}←FFI∆INIT;P;D
+∇{Z}←FFI∆INIT;P;D;R
 Z←⍬
 D←'libLLVM-3.3.so'
-R←'./libcodfns.so'
+R←CoDfnsRuntime
 P←'LLVM'
 
 ⍝ LLVMTypeRef LLVMInt8Type (void)
@@ -1673,7 +1674,7 @@ P←'LLVM'
 ⍝ LLVMValueRef 	LLVMBuildRetVoid (LLVMBuilderRef)
 'BuildRetVoid'⎕NA'P ',D,'|',P,'BuildRetVoid P'
 
-⍝ LLVMValueRef 	
+⍝ LLVMValueRef
 ⍝ LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then,
 ⍝     LLVMBasicBlockRef Else)
 'BuildCondBr'⎕NA'P ',D,'|',P,'BuildCondBr P P P P'
@@ -1703,20 +1704,20 @@ P←'LLVM'
 ⍝ LLVMBasicBlockRef 	LLVMGetPreviousBasicBlock (LLVMBasicBlockRef BB)
 'GetPreviousBasicBlock'⎕NA'P ',D,'|',P,'GetPreviousBasicBlock P'
 
-⍝ LLVMValueRef 	
+⍝ LLVMValueRef
 ⍝ LLVMBuildStructGEP (LLVMBuilderRef B, LLVMValueRef Pointer, unsigned Idx, const char *Name)
 'BuildStructGEP'⎕NA'P ',D,'|',P,'BuildStructGEP P P U <0C'
 
-⍝ LLVMValueRef 	
+⍝ LLVMValueRef
 ⍝ LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices,
 ⍝     unsigned NumIndices, const char *Name)
 'BuildGEP'⎕NA'P ',D,'|',P,'BuildGEP P P <P[] U <0C'
 
-⍝ LLVMValueRef 	
+⍝ LLVMValueRef
 ⍝ LLVMBuildBitCast (LLVMBuilderRef, LLVMValueRef Val, LLVMTypeRef DestTy, const char *Name)
 'BuildBitCast'⎕NA'P ',D,'|',P,'BuildBitCast P P P <0C'
 
-⍝ LLVMValueRef 	
+⍝ LLVMValueRef
 ⍝ LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS,
 ⍝     LLVMValueRef RHS, const char *Name)
 'BuildICmp'⎕NA'P ',D,'|',P,'BuildICmp P U P P <0C'
