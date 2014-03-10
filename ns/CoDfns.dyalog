@@ -1,4 +1,4 @@
-⍝ CoDfns Namespace: Increment 3
+⍝ CoDfns Namespace: Increment 5
 
 :Namespace CoDfns
 
@@ -1273,36 +1273,13 @@ LiftFuncs←{
 ⍝
 ⍝ Intended Function: Take a namespace and convert it to an LLVM Module that is
 ⍝ semantically equivalent.
-⍝
-⍝ Input: Namespace AST
-⍝ Output: Semantically equivalent LLVM Module
-⍝ Invariant: All FuncExpr nodes appear at top-level
-⍝ Invariant: All FuncExpr nodes contain a single Function node
-⍝ Invariant: All FuncExpr nodes have names
-⍝ Invariant: Function nodes contain either Condition or Expression nodes
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
 
 GenLLVM←{
-  ⍝ Stimuli: Nss Nse
-
-  ⍝ The Nss Nse pair triggers the start of a module creation
-  ⍝ We know that this is all that we have there right now,
-  ⍝ so we just create a single empty module.
-  ⍝ If the namespace has a name then we use it, otherwise,
-  ⍝ not.
-
-  ⍝ Extracting the name assumes that the first row of the
-  ⍝ AST is the namespace node and that the Namespace
-  ⍝ element contains only a single attribute, name,
-  ⍝ and that it is never without this attribute.
-  Nam←Nam 'Unamed Namespace'⌷⍨''≡Nam←((0 3)(0 1)⊃⍵)
-  Mod←ModuleCreateWithName Nam
-
-  ⍝ Quit if nothing to do
-  0=⍴G←1 Kids ⍵:Mod
-
-  ⍝ For each global we general some code
-  Mod⊣Mod∘GenGlobal¨G
+  nam←(0 3)(0 1)⊃⍵                   ⍝ Namespace must have name
+  nam←nam 'Unamed Namespace'⌷⍨''≡nam ⍝ Possibly empty, so fix it
+  mod←ModuleCreateWithName nam       ⍝ Empty module to start with
+  0=⍴g←1 Kids ⍵:mod                  ⍝ Quit if nothing to do
+  mod⊣mod∘GenGlobal¨g                ⍝ Generate code for each child
 }
 
 ⍝ GenGlobal
