@@ -13,12 +13,12 @@ general reliability of the code itself.
 
 ## Repository Overview
 
-conf/        Configuration for building
-doc/         General documents on Co-dfns
-ime/         Input methods and keyboards
-ns/          Namespaces for development and use
-runtime/     Co-dfns runtime
-scripts/     Various helper scripts that may or may not help you
+conf/        Configuration for building<br />
+doc/         General documents on Co-dfns<br />
+ime/         Input methods and keyboards<br />
+ns/          Namespaces for development and use<br />
+runtime/     Co-dfns runtime<br />
+scripts/     Various helper scripts that may or may not help you<br />
 ws/          Workspaces used for various purposes
 
 ## Build Requirements
