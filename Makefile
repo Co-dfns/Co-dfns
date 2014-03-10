@@ -3,7 +3,7 @@ DOCSRC := Cleanroom_Engineering_Guide.xml Software_Architecture.xml \
           Function_Specification.xml Software_Requirements.xml \
           Increment_Certification_Report.xml Statement_of_Work.xml \
           Increment_Construction_Plan.xml Statistical_Testing_Report.xml \
-	  Increment_Test_Plan.xml Usage_Specification.xml Project_Record.xml
+          Increment_Test_Plan.xml Usage_Specification.xml Project_Record.xml
 DOCPDF := $(DOCSRC:.xml=.pdf)
 XSL := fo.xsl
 XCONF := fop.xconf
