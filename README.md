@@ -15,31 +15,31 @@ general reliability of the code itself.
 
 <table>
   <tr>
-    <td>`conf/`</td>
+    <td>conf/</td>
     <td>Configuration for building</td>
   </tr>
   <tr>
-    <td>`doc/`</td>
+    <td>doc/</td>
     <td>General documents on Co-dfns</td>
   </tr>
   <tr>
-    <td>`ime/`</td>
+    <td>ime/</td>
     <td>Input methods and keyboards</td>
   </tr>
   <tr>
-    <td>`ns/`</td>
+    <td>ns/</td>
     <td>Namespaces for development and use</td>
   </tr>
   <tr>
-    <td>`runtime/`</td>
+    <td>runtime/</td>
     <td>Co-dfns runtime</td>
   </tr>
   <tr>
-    <td>`scripts/ `</td>
+    <td>scripts/</td>
     <td>Various helper scripts that may or may not help you</td>
   </tr>
   <tr>
-    <td>`ws/`</td>
+    <td>ws/</td>
     <td>Workspaces used for various purposes</td>
   </tr>
 </table>
