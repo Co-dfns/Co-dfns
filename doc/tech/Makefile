@@ -18,13 +18,14 @@ TITLECONF := conf/titlepage.templates.xml
 
 TITLEPAGE := $(DOCROOT)/titlepage.xsl
 TITLEXSL := $(DBSTYLES)/template/titlepage.xsl
+EXTS := $(DBSTYLES)/extensions/xalan27.jar
 
 .PHONY: docs
 
 docs: $(DOCPDF)
 
 $(DOCPDF): %.pdf: %.xml $(XSL) $(XCONF) $(TITLEPAGE)
-	fop -c $(XCONF) -xsl $(XSL) -xml "$<" -pdf "$@"
+	env CLASSPATH=${CLASSPATH}:$(EXTS) fop -c $(XCONF) -xsl $(XSL) -xml "$<" -pdf "$@"
 
 $(TITLEPAGE): $(TITLECONF)
 	xsltproc --output "$@" $(TITLEXSL) $(TITLECONF)
