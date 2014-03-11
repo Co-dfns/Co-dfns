@@ -1137,7 +1137,7 @@ LiftConsts←{
   ns←'Expression' 'Number'          ⍝ Nodes we care about
   e l←((1⌷⍉a←⍵)∊⊂)¨ns               ⍝ All Expr and Number nodes
   e l←(1 2<⊂0⌷⍉a)∧e l               ⍝ Only those at the right depth
-  v←mkv¨⍳+/s←2</0,l                 ⍝ All the variables we need; start of literals
+  v←mkv¨⍳+/s←2</0,l                 ⍝ Variables we need; start of literals
   hn←1⌷⍉h←(l∨e∧1⌽l)⌿a               ⍝ Literal Expressions and node names
   vn←{'Variable' '' ('array' at ⍵)} ⍝ Variable node maker sans depth
   a[s/⍳⊃⍴a;1+⍳3]←↑vn¨v              ⍝ Replace starting literals with variables
@@ -1186,9 +1186,10 @@ LiftBound←{
 
 ⍝ AnchorVars
 ⍝
-⍝ Intended Function: Associate with each assignment, scope, and variable reference
-⍝ an appropriate slot pointing to a specific region of memory within the stack
-⍝ frames, or in the case of scopes, the size of the stack frame of that scope.
+⍝ Intended Function: Associate with each assignment, scope, and variable
+⍝ reference an appropriate slot pointing to a specific region of memory within
+⍝ the stack frames, or in the case of scopes, the size of the stack frame of
+⍝ that scope.
 ⍝
 ⍝ XXX: What happens with top-level function bindings and their environments?
 
@@ -1285,7 +1286,7 @@ GenLLVM←{
   nm←1⌷⍉(1=0⌷⍉⍵)⌿⍵                   ⍝ Top-level nodes and node names
   exm←nm∊⊂'Expression'               ⍝ Mask of expressions
   fem←nm∊⊂'FuncExpr'                 ⍝ Mask of function expressions
-  tex←⊃⍪/mod GenGlobal¨exm/k         ⍝ Generate top-level globals
+  tex←mod GenGlobal¨exm/k            ⍝ Generate top-level globals
   _←mod GenFunc¨fem/k                ⍝ Generate functions
   mod⊣mod GenInit tex                ⍝ Generate Initialization function
 }
@@ -1293,14 +1294,22 @@ GenLLVM←{
 ⍝ GenGlobal
 ⍝
 ⍝ Intended Function: Take a global expression and generate a new
-⍝ binding in the module.
+⍝ binding in the module. Returns initialization expression if needed.
 
 GenGlobal←{
-  ⍝ There are two types of globals, Expression constants and Functions
-  ⍝ We will use a specific helper for each.
-  'Expression'≡⊃0 1⌷⍵:⍺ GenConst ⍵
-  'FuncExpr'≡⊃0 1⌷⍵:⍺ GenFunc ⍵
-  ⎕SIGNAL 99
+  0=≢⍵:MtAST                         ⍝ Don't do anything if nothing to do
+  cls←⊃'class'Prop 1↑⍵               ⍝ Handle atomics and others differently
+  'atomic'≡cls:MtAST⊣⍺ GenConst ⍵    ⍝ Generate the constants directly
+  ⍵⊣⍺ GenArrDec Split⊃'name'Prop 1↑⍵ ⍝ Otherwise, declare the array and queue
+}
+
+⍝ GenArrDec
+⍝
+⍝ Intended Function: Generate a new binding for an expression to be
+⍝ initialized later if there is not already a binding in the module.
+
+GenArrDec←{
+  'NEED TO IMPLEMENT'⎕SIGNAL 99
 }
 
 ⍝ GenConst
@@ -1431,7 +1440,7 @@ GenFunc←{
 ⍝ initialize all global variables that are not constants.
 
 GenInit←{
-  ⍵
+  'NEED TO IMPLEMENT'⎕SIGNAL 99
 }
 
 ⍝ GetExpr
