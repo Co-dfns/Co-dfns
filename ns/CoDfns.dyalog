@@ -1302,7 +1302,7 @@ GenGlobal←{
     ct←⊃1 1⌷⍵                        ⍝ Node type of the first child
     ('atomic'≡cls)∧'Number'≡ct       ⍝ Class is atomic; Child type is Number
   }
-  litp ⍵:⍺ GenConst ⍵                ⍝ Generate the constants directly
+  litp ⍵:MtAST⊣⍺ GenConst ⍵          ⍝ Generate the constants directly
   ∧/' '=nm←⊃'name'Prop 1↑⍵:⍵         ⍝ No need to declare unnamed expressions
   ⍵⊣⍺ GenArrDec Split⊃'name'Prop 1↑⍵ ⍝ Declare the array and enqueue
 }
@@ -1332,56 +1332,33 @@ GenArrDec←{
 ⍝ LLVM Constant and insert it into the LLVM Module given.
 
 GenConst←{
-  ⍝ An Expression node will contain a single array in it. Get these
-  ⍝ values into V. We note that V should have the same shape
-  ⍝ as the shape of the expression. Here V can either be a
-  ⍝ vector of at least two elements or it can be a single scalar.
-  ⍝ The literal syntax allows for none others than this.
-  V←((2≤⍴V)⊃⍬(⍴V))⍴V←'value'Prop 1↓⍵
-
-  ⍝ Encapsulate the process of generating an array pointer
-  ArrayP←{
-    A←ConstArray ⍺⍺ ⍵ (⊃⍴⍵)
-    G←AddGlobal ⍺ (ArrayType ⍺⍺ (⊃⍴⍵)) ⍵⍵
-    _←SetInitializer G A
-    P←BuildGEP (B←CreateBuilder) G (GEPI 0 0) 2 ''
-    P⊣DisposeBuilder B
+  vs←⊃'name'Prop 1↑⍵                   ⍝ Get the name of a literal
+  mnlerr←'BAD LITERAL NAME'            ⍝ Error message
+  ∨/' '=vs:mnlerr ⎕SIGNAL 99           ⍝ Sanity check for a single name
+  v←((2≤⍴v)⊃⍬(⍴v))⍴v←'value'Prop 1↓⍵   ⍝ Expression values with correct shape
+  arrayp←{                             ⍝ Fn to generate LLVM Array Pointer
+    a←ConstArray ⍺⍺ ⍵ (⊃⍴⍵)            ⍝ Data values
+    at←ArrayType ⍺⍺ (⊃⍴⍵)              ⍝ Type of the array
+    g←AddGlobal ⍺ at ⍵⍵                ⍝ Add global to the module
+    _←SetInitializer g a               ⍝ Initialize it
+    b←CreateBuilder                    ⍝ Need a builder
+    p←BuildGEP b g (GEPI 0 0) 2 ''     ⍝ Get the array pointer
+    p⊣DisposeBuilder b                 ⍝ Cleanup and return pointer
   }
-
-  ⍝ Generate LLVM Data Array from Values
-  D←⍺(Int64Type ArrayP 'elems'){ConstIntOfString (Int64Type) ⍵ 10}¨,V
-
-  ⍝ Shape of the array is a single element vector
-  ⍝ Make sure that the shape of the array is based off
-  ⍝ of V and not off of D.
-  S←⍺(Int32Type ArrayP 'shape'){0=⍴⍵:⍬ ⋄ {ConstInt (Int32Type) ⍵ 0}¨⍵}⍴V
-
-  ⍝ Rank is constant
-  ⍝ Rank must also come from V and not D
-  R←ConstInt (Int16Type) (⊃⍴⍴V) 0
-
-  ⍝ Size is a function of the number of elements in V
-  ⍝ which is really the size of D, or the length of ,V
-  Sz←ConstInt (Int64Type) (⊃⍴,V) 0
-
-  ⍝ For now we have a constant type
-  T←ConstInt (Int8Type) 2 0
-
-  ⍝ Get all the names of the expression from the
-  ⍝ name property, which is a space separated set of
-  ⍝ names, see Software Architecture
-  Vs←(B/2≠/' '=' ',Vs)⊂(B←' '≠Vs)/Vs←⊃'name'Prop 1↑⍵
-
-  ⍝ We can put this all together now and insert it into the
-  ⍝ Module
-  A←ConstStruct (R Sz T S D) 5 0
-  G←AddGlobal ⍺(T←GenArrayType⍬)(⊃Vs)
-  _←SetInitializer G A
-
-  ⍝ Alias all the rest of the names to the same value
-  val←GetNamedGlobal ⍺(⊃Vs)
-  0=⍴1↓Vs:val
-  val⊣⍺{AddAlias ⍺ T val ⍵}¨1↓Vs
+  cintstr←ConstIntOfString             ⍝ Shorten the name
+  d←{cintstr (Int64Type) ⍵ 10}¨,v      ⍝ Data values
+  d←⍺(Int64Type arrayp 'elems')d       ⍝ Data array pointer
+  s←{                                  ⍝ The shape is either
+    0=⍴⍵:⍬                             ⍝ An empty shape
+    {ConstInt (Int32Type) ⍵ 0}¨⍵       ⍝ Or has LLVM Integers
+  }⍴v                                  ⍝ Based on the shape of v
+  s←⍺(Int32Type arrayp 'shape')s       ⍝ Shape array pointer
+  r←ConstInt (Int16Type) (⊃⍴⍴v) 0      ⍝ Rank is constant; from v not d
+  sz←ConstInt (Int64Type) (⊃⍴,v) 0     ⍝ Size of d is length of v
+  t←ConstInt (Int8Type) 2 0            ⍝ Constant Int type, for now
+  a←ConstStruct (r sz t s s) 5 0       ⍝ Build array value
+  g←AddGlobal ⍺ (GenArrayType⍬) vs     ⍝ Create global place holder
+  g⊣SetInitializer g a                 ⍝ Initialize global with array value
 }
 
 ⍝ GenFunc
