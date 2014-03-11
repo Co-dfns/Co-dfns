@@ -265,6 +265,10 @@ Eachk←{
 
 Sel←{~∨/⍺:⍵ ⋄ g←⍵⍵⍣(⊢/⍺) ⋄ 2=⍴⍺:⍺⍺⍣(⊣/⍺)g ⍵ ⋄ (¯1↓⍺)⍺⍺ g ⍵}
 
+⍝ Split str: Split name list on spaces
+
+Split←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢
+
 ⍝ Parse
 ⍝
 ⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is
@@ -1190,13 +1194,12 @@ LiftBound←{
 
 AnchorVars←{
   mt←0 2⍴⊂'' 0                    ⍝ An empty environment
-  sp←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢ ⍝ Fn to split name lists
   ge←{                            ⍝ Fn to get environment for current scope
     em←(1+⊃⍵)=0⌷⍉⍵                ⍝ All expressions are direct descendants
     em∨←¯1⌽em∧(1⌷⍉⍵)∊⊂'Condition' ⍝ Or, they may be test expressions
     em∧←(1⌷⍉⍵)∊⊂'Expression'      ⍝ Mask of expressions
     nm←'name'Prop em⌿⍵            ⍝ Names in local scope
-    nm←⍪⊃,/(0⍴⊂''),sp¨nm          ⍝ Split names and prepare
+    nm←⍪⊃,/(0⍴⊂''),Split¨nm       ⍝ Split names and prepare
     (nm,0),⍳≢nm                   ⍝ Local scope 0, assign a slot to each var
   }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
@@ -1209,7 +1212,7 @@ AnchorVars←{
     'Expression'≡nm:⍺(⍺⍺{         ⍝ Expression node
       z←(⌽1 Kids ⍺),⊂MtAST env    ⍝ Children use existing env
       ka env←⊃⍺⍺vis/z             ⍝ Children visited first
-      nm←sp⊃'name'Prop 1↑⍺        ⍝ Name(s) of expression
+      nm←Split⊃'name'Prop 1↑⍺     ⍝ Name(s) of expression
       id←(0⌷⍉⍺⍺)⍳nm               ⍝ Relevant names in scope env
       sl←id⊃¨⊂2⌷⍉⍺⍺               ⍝ Slot(s) for each name
       at←(⊃0 3⌷⍺)⍪'slots'(⍕sl)    ⍝ New attributes for node
@@ -1278,17 +1281,19 @@ GenLLVM←{
   nam←(0 3)(0 1)⊃⍵                   ⍝ Namespace must have name
   nam←nam 'Unamed Namespace'⌷⍨''≡nam ⍝ Possibly empty, so fix it
   mod←ModuleCreateWithName nam       ⍝ Empty module to start with
-  0=⍴g←1 Kids ⍵:mod                  ⍝ Quit if nothing to do
-  mod⊣mod∘GenGlobal¨g                ⍝ Generate code for each child
+  1=≢k←1 Kids ⍵:mod                  ⍝ Quit if nothing to do
+  nm←1⌷⍉(1=0⌷⍉⍵)⌿⍵                   ⍝ Top-level nodes and node names
+  exm←nm∊⊂'Expression'               ⍝ Mask of expressions
+  fem←nm∊⊂'FuncExpr'                 ⍝ Mask of function expressions
+  tex←⊃⍪/mod GenGlobal¨exm/k         ⍝ Generate top-level globals
+  _←mod GenFunc¨fem/k                ⍝ Generate functions
+  mod⊣mod GenInit tex                ⍝ Generate Initialization function
 }
 
 ⍝ GenGlobal
 ⍝
 ⍝ Intended Function: Take a global expression and generate a new
 ⍝ binding in the module.
-⍝
-⍝ Left Argument: LLVM Module
-⍝ Right Argument: Global Value
 
 GenGlobal←{
   ⍝ There are two types of globals, Expression constants and Functions
@@ -1418,6 +1423,15 @@ GenFunc←{
   ⍝ Alias the function to any of the other names, if any exist.
   0=⍴fnr:Shy←fr
   fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr
+}
+
+⍝ GenInit
+⍝
+⍝ Intended Function: Generate the initialization function that will
+⍝ initialize all global variables that are not constants.
+
+GenInit←{
+  ⍵
 }
 
 ⍝ GetExpr
