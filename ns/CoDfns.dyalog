@@ -1300,7 +1300,8 @@ GenGlobal←{
   0=≢⍵:MtAST                         ⍝ Don't do anything if nothing to do
   cls←⊃'class'Prop 1↑⍵               ⍝ Handle atomics and others differently
   'atomic'≡cls:MtAST⊣⍺ GenConst ⍵    ⍝ Generate the constants directly
-  ⍵⊣⍺ GenArrDec Split⊃'name'Prop 1↑⍵ ⍝ Otherwise, declare the array and queue
+  ∧/' '=nm←⊃'name'Prop 1↑⍵:⍵         ⍝ No need to declare unnamed expressions
+  ⍵⊣⍺ GenArrDec Split⊃'name'Prop 1↑⍵ ⍝ Declare the array and enqueue
 }
 
 ⍝ GenArrDec
@@ -1309,7 +1310,17 @@ GenGlobal←{
 ⍝ initialized later if there is not already a binding in the module.
 
 GenArrDec←{
-  'NEED TO IMPLEMENT'⎕SIGNAL 99
+  ⍺{                               ⍝ Fn to declare new array
+    0≠GetNamedGlobal ⍺ ⍵:⍵         ⍝ Do nothing if already declared
+    r←ConstInt (Int16Type) 0 0     ⍝ Rank ← 0
+    sz←ConstInt (Int64Type) 0 0    ⍝ Size ← 0
+    t←ConstInt (Int8Type) 2 0      ⍝ Type ← 2
+    s←ConstPointerNull Int32Type   ⍝ Shape ← ⍬
+    d←ConstPointerNull Int64Type   ⍝ Data ← ⍬
+    a←ConstStruct (r sz t s d) 5 0 ⍝ Build empty structure
+    g←AddGlobal ⍺(GenArrayType⍬)⍵  ⍝ Add the Global
+    ⍵⊣SetInitializer g a           ⍝ Set the initial empty value
+  }¨⍵
 }
 
 ⍝ GenConst
