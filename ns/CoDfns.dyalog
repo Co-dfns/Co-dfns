@@ -1136,7 +1136,6 @@ LiftConsts←{
   at←{2 2⍴'name' ⍵ 'class' ⍺}       ⍝ Attribute maker
   ns←'Expression' 'Number'          ⍝ Nodes we care about
   e l←((1⌷⍉a←⍵)∊⊂)¨ns               ⍝ All Expr and Number nodes
-  e l←(1 2<⊂0⌷⍉a)∧e l               ⍝ Only those at the right depth
   v←mkv¨⍳+/s←2</0,l                 ⍝ Variables we need; start of literals
   hn←1⌷⍉h←(l∨e∧1⌽l)⌿a               ⍝ Literal Expressions and node names
   vn←{'Variable' '' ('array' at ⍵)} ⍝ Variable node maker sans depth
@@ -1298,8 +1297,12 @@ GenLLVM←{
 
 GenGlobal←{
   0=≢⍵:MtAST                         ⍝ Don't do anything if nothing to do
-  cls←⊃'class'Prop 1↑⍵               ⍝ Handle atomics and others differently
-  'atomic'≡cls:MtAST⊣⍺ GenConst ⍵    ⍝ Generate the constants directly
+  litp←{                             ⍝ Fn predicate to test if literal
+    cls←⊃'class'Prop 1↑⍵             ⍝ Class of Expression
+    ct←⊃1 1⌷⍵                        ⍝ Node type of the first child
+    ('atomic'≡cls)∧'Number'≡ct       ⍝ Class is atomic; Child type is Number
+  }
+  litp ⍵:⍺ GenConst ⍵                ⍝ Generate the constants directly
   ∧/' '=nm←⊃'name'Prop 1↑⍵:⍵         ⍝ No need to declare unnamed expressions
   ⍵⊣⍺ GenArrDec Split⊃'name'Prop 1↑⍵ ⍝ Declare the array and enqueue
 }
@@ -1325,14 +1328,8 @@ GenArrDec←{
 
 ⍝ GenConst
 ⍝
-⍝ Intended Function: Given an Expression node that has only constant
-⍝ data in it, generate a global LLVM Constant and insert it into the
-⍝ LLVM Module given.
-⍝
-⍝ Left Argument: LLVM Module
-⍝ Right Argument: Expression Node
-⍝
-⍝ See the Software Architecture for details on the array structure.
+⍝ Intended Function: Given an literal Expression node, generate a global
+⍝ LLVM Constant and insert it into the LLVM Module given.
 
 GenConst←{
   ⍝ An Expression node will contain a single array in it. Get these
