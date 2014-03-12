@@ -1285,6 +1285,7 @@ GenLLVM←{
   nm←1⌷⍉(1=0⌷⍉⍵)⌿⍵                   ⍝ Top-level nodes and node names
   exm←nm∊⊂'Expression'               ⍝ Mask of expressions
   fem←nm∊⊂'FuncExpr'                 ⍝ Mask of function expressions
+  _←GenRuntime mod                   ⍝ Generate declarations for runtime
   tex←mod GenGlobal¨exm/k            ⍝ Generate top-level globals
   fd←GetFnDepths ⍵                   ⍝ Generating Fns requires depths
   _←mod (fd GenFunc)¨fem/k           ⍝ Generate functions
@@ -1428,11 +1429,48 @@ GenFnAlias←{mod fd←⍺⍺
 ⍝ initialize all global variables that are not constants.
 
 GenInit←{
-  get←⍺ GetExpr∘⍬ ⍬
-  fr bldr _←0(0 GenFnTmpl ⍺)'Init'
-  {
-
+  fr bldr _←0(0 GenFnTmpl ⍺)'Init'   ⍝ Generate the Init function template
+  gex←{GetNamedGlobal ⍺ ⍵}           ⍝ Convenience Fn for GetNamedGlobal
+  gfn←{GetNamedFunction ⍺ ⍵}         ⍝ Convenience Fn for GetNamedFunction
+  call←{BuildCall bldr ⍺⍺ ⍵ (≢⍵) ''} ⍝ Op to build call
+  cpf←⍺ gfn 'copy'                   ⍝ Runtime copy function
+  cpy←{cpf call ⍺ ⍵}                 ⍝ Convenience Fn for Copying arrays
+  mcall←{                            ⍝ Fn to generate multiple assignment
+    v←⍺⍺ call (⊃⍺),⍵                 ⍝ Call on the first argument
+    1=≢⍺:v                           ⍝ If single target, done.
+    v,(1↓⍺)cpy¨⊃⍺                    ⍝ Otherwise, copy results to other args
+  }
+  gtg←{                              ⍝ Fn to ensure valid target name
+    nm←⊃'name'Prop 1↑⍵               ⍝ Name attr of node
+    ∧/' '=nm:(⍺ GenArrDec⊂'ign'),1   ⍝ If unnamed, generate temp name
+    (⍺ gex¨Split nm)(0)              ⍝ Otherwise, lookup references
+  }
+  free←⍺ gfn 'array_free'            ⍝ Function to cleanup arrays
+  clean←{(⊃⍺){⍵⊣free ⍺}⍣(⊃⌽⍺)⊢⍵}     ⍝ Fn to optionally cleanup temp array
+  _←{                                ⍝ Handle each global expr in turn
+    n←⊃'class'Prop 1↑⍵               ⍝ Switch on node class
+    'atomic'≡n:⍺{                    ⍝ Atomic case: variable reference
+      ∧/' '=tgt←⊃'name'Prop 1↑⍵:0    ⍝ Ignore unnamed global references
+      tgt←⍺ gex¨Split tgt            ⍝ Vector of target ValueRefs
+      src←⍺ gex ⊃'name'Prop 1↑1↓⍵    ⍝ Source ValueRef
+      tgt cpy¨src                    ⍝ Copy source to each target
+    }⍵
+    'monadic'≡n:⍺{                   ⍝ Monadic: FVar Var, Depth always 0
+      tgt ist←t←⍺ gtg ⍵              ⍝ Variables to be assigned
+      lft←GenNullArrayPtr⍬           ⍝ Left argument is null
+      fn←⍺ gfn ⊃'name'Prop 1↑2↓⍵     ⍝ Function is first child
+      rgt←⍺ gex ⊃'name'Prop 1↑4↓⍵    ⍝ Right argument is second child
+      t clean tgt(fn mcall)lft rgt   ⍝ Make the call
+    }⍵
+    'dyadic'≡n:⍺{                    ⍝ Dyadic: Var FVar Var
+      tgt ist←t←a gtg ⍵              ⍝ Variables to be assigned
+      lft←⍺ gex ⊃'name'Prop 1↑2↓⍵    ⍝ Left argument is first child
+      fn←⍺ gfn ⊃'name'Prop 1↑4↓⍵     ⍝ Function is second child
+      rgt←⍺ gex ⊃'name'Prop 1↑6↓⍵    ⍝ Right argument is third child
+      t clean tgt(fn mcall)lft rgt   ⍝ Make the call
+    }⍵
   }¨⍵
+  fr⊣DisposeBuilder bldr             ⍝ Cleanup and return function reference
 }
 
 ⍝ GenFnTmpl
@@ -1565,13 +1603,18 @@ GenExpr←{mod _ bldr←⍺⍺
 ⍝
 ⍝ Intended Function: Insert an empty return value for a function
 ⍝ into a builder.
-⍝
-⍝ Right argument: LLVM Builder
 
 MkEmptyReturn←{
-  T←PointerType (GenArrayType⍬) 0
-  V←ConstPointerNull T
-  BuildRet ⍵ V
+  BuildRet ⍵ (GenNullArrayPtr⍬) ⍝ Return a null pointer array
+}
+
+⍝ GenNullArrayPtr
+⍝
+⍝ Intended Function: Generate a null pointer to an array.
+
+GenNullArrayPtr←{
+  T←PointerType (GenArrayType⍬) 0 ⍝ Array Type
+  ConstPointerNull T              ⍝ Null Pointer
 }
 
 ⍝ GenArrayType
@@ -1605,6 +1648,15 @@ GenFuncType←{
 ⍝ inputs to the BuildGEP function.
 
 GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
+
+⍝ GenRuntime
+⍝
+⍝ Intended Function: Generate declarations for the Co-dfns runtime
+⍝ in an LLVM Module.
+
+GenRuntime←{
+  'NOT IMPLEMENTED YET'⎕SIGNAL 99
+}
 
 ⍝ Foreign Functions
 
@@ -1688,6 +1740,11 @@ P←'LLVM'
 ⍝ LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then,
 ⍝     LLVMBasicBlockRef Else)
 'BuildCondBr'⎕NA'P ',D,'|',P,'BuildCondBr P P P P'
+
+⍝ LLVMValueRef
+⍝ LLVMBuildCall (LLVMBuilderRef, LLVMValueRef Fn,
+⍝     LLVMValueRef *Args, unsigned NumArgs, const char *Name)
+'BuildCall'⎕NA'P ',D,'|',P,'BuildCall P P <P[] U <0C'
 
 ⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder)
 'DisposeBuilder'⎕NA 'P ',D,'|',P,'DisposeBuilder P'
