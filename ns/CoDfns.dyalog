@@ -1365,58 +1365,43 @@ GenConst←{
 ⍝
 ⍝ Intended Function: Given a FuncExpr node, build an appropriate
 ⍝ Function in the LLVM Module given.
-⍝
-⍝ Left Argument: LLVM Module
-⍝ Right Argument: FuncExpr Node
 
 GenFunc←{
-  ⍝ The name list of the function expression
-  fn←⊃'name'Prop 1↑⍵
-
-  ⍝ Function expressions can have multiple names, canonical name first.
-  ⍝ Convert the space separated name list fn to a vector of names, then
-  ⍝ let fnf be the canonical name and fnr the rest of them. The following
-  ⍝ assumes that function expressions have names.
-  fnf fnr←(⊃fn)(1↓fn←(nsp/2≠/' '=' ',fn)⊂(nsp←' '≠fn)/fn)
-
-  ⍝ Create function using canonical name
-  fr←AddFunction ⍺ fnf (ft←GenFuncType ⍬)
-
-  ⍝ Each node of the function body can use the same builder.
-  bldr←CreateBuilder
-
-  ⍝ Functions all require at least a single basic block to
-  ⍝ start, using the above builder.
-  bb←AppendBasicBlock fr ''
-  _←PositionBuilderAtEnd bldr bb
-
-  ⍝ Generate the code for each function body node.
-  ⍝ We use 2 here because a FuncExpr node contains a single
-  ⍝ Function node; we want the children of the Function node.
-  Line←{N←⊃0 1⌷⍺
-    N≡'Expression':⍺(⍺⍺ GenExpr)⍵
-    N≡'Condition':⍺(⍺⍺ GenCond)⍵
-    'UNKNOWN FUNCTION CHILD'⎕SIGNAL 99
+  0=≢fn←Split⊃'name'Prop 1↑⍵:0     ⍝ Ignore functions without names
+  vtst←'Variable'≡⊃1 1⌷⍵           ⍝ Child node type
+  vn←⊃'name'Prop 1↑1↓⍵             ⍝ Variable name if it exists
+  vtst:vn(⍺ GenFnAlias)fn          ⍝ Alias names if variable reference
+  fnf←⊃fn ⋄ fnr←1↓fn               ⍝ Canonical name; rest of names
+  fnn←1↑1↓⍵                        ⍝ Function node
+  alloca←⍎⊃'allloca'Prop fnn       ⍝ Allocation for local scope
+  depth←⍎⊃'depth'Prop fnn          ⍝ Function depth
+  ft←GenFuncType depth             ⍝ Function types based on depth
+  fr←AddFunction ⍺ fnf ft          ⍝ Function pointer with canonical name
+  bldr←CreateBuilder               ⍝ Builder for the function body
+  bb←AppendBasicBlock fr ''        ⍝ Starting basic block for function
+  _←PositionBuilderAtEnd bldr bb   ⍝ Sync builder and basic block
+  fsz←ConstInt Int32Type alloca 0  ⍝ LLVM Value Ref for size of frame
+  ftp←GenArrayType⍬                ⍝ Type of elements on frame
+  allocaargs←bldr ftp fsz 'env0'   ⍝ Allocations arguments
+  env0←BuildArrayAlloca allocaargs ⍝ Local scope frame
+  line←{n←⊃0 1⌷⍺                   ⍝ Op to handle node in function body
+    n≡'Expression':⍺(⍺⍺ GenExpr)⍵  ⍝ Use GenExpr on Expressions
+    n≡'Condition':⍺(⍺⍺ GenCond)⍵   ⍝ Use GenCond on Conditions
+    emsg←'UNKNOWN FUNCTION CHILD'  ⍝ Only deal with Expressions or Conditions
+    emsg ⎕SIGNAL 99                ⍝ And signal an error otherwise
   }
-  _ V←⊃⍺ fr bldr Line/⌽(⊂⍬ ⍬),K←2 Kids ⍵
-
-  ⍝ It may be that there are no children. This still requires at
-  ⍝ least one statement in the basic block. We also need an empty
-  ⍝ return when the last expression was a Condition node.
-  ⍝ In the case of the last node being a named Expression, we
-  ⍝ should return that expression.
-  _←{
-    0=⊃⍴⍵:MkEmptyReturn bldr
-    'Condition'≡⊃0 1⌷L←⊃⌽⍵:MkEmptyReturn bldr
-    2=⍴'name'Prop L:BuildRet bldr (⊃⌽V)
-    ⍵
-  }K
-
-  _←DisposeBuilder bldr
-
-  ⍝ Alias the function to any of the other names, if any exist.
-  0=⍴fnr:Shy←fr
-  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr
+  sd←(⌽k←2 Kids ⍵),⊂⍬ ⍬            ⍝ Body of Function node
+  _ v←⊃⍺ fr bldr env0 line/sd      ⍝ Reduce top to bottom over children
+  _←{                              ⍝ Deal with return value in corner cases
+    0=≢⍵:MkEmptyReturn bldr        ⍝ Empty return on empty body
+    ct←'Condition'≡⊃0 1⌷l←⊃⌽⍵      ⍝ Last node is condition?
+    ct:MkEmptyReturn bldr          ⍝ Add an extra return if so
+    nep←∨/' '≠⊃'name'Prop 1↑l      ⍝ Is last node named?
+    nep:BuildRet bldr (⊃⌽v)        ⍝ Return it just the same
+  }k
+  _←DisposeBuilder bldr            ⍝ Builder cleanup
+  0=≢fnr:fr                        ⍝ Return if no other names
+  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr     ⍝ Otherwise, alias the others
 }
 
 ⍝ GenInit
@@ -1567,14 +1552,11 @@ GenArrayType←{
 ⍝
 ⍝ Intended Function: A constant function returning the type of a
 ⍝ Function.
-⍝
-⍝ See the Software Architecture for details on the Function convention.
-⍝
-⍝ For now this is just a stub assuming a constant function that returns
-⍝ an array.
 
 GenFuncType←{
-  FunctionType (PointerType (GenArrayType ⍬) 0) ⍬ 0 0
+  typ←PointerType (GenArrayType⍬) 0 ⍝ All arguments are array pointers
+  ret←Int32Type ⋄ arg←((3+⍵)⍴typ)   ⍝ Return type and arg type vector
+  FunctionType ret arg (≢arg) 0     ⍝ Return the function type
 }
 
 ⍝ GEPIndices
@@ -1706,6 +1688,11 @@ P←'LLVM'
 ⍝ LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS,
 ⍝     LLVMValueRef RHS, const char *Name)
 'BuildICmp'⎕NA'P ',D,'|',P,'BuildICmp P U P P <0C'
+
+⍝ LLVMValueRef
+⍝ LLVMBuildArrayAlloca (LLVMBuilderRef,
+⍝     LLVMTypeRef Ty, LLVMValueRef Val, const char *Name)
+'BuildArrayAlloca'⎕NA'P ',D,'|',P,'BuildArrayAlloca P P P <0C'
 
 ⍝ LLVMBool
 ⍝ LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
