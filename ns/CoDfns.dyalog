@@ -1286,8 +1286,24 @@ GenLLVM←{
   exm←nm∊⊂'Expression'               ⍝ Mask of expressions
   fem←nm∊⊂'FuncExpr'                 ⍝ Mask of function expressions
   tex←mod GenGlobal¨exm/k            ⍝ Generate top-level globals
-  _←mod GenFunc¨fem/k                ⍝ Generate functions
+  fd←GetFnDepths ⍵                   ⍝ Generating Fns requires depths
+  _←mod (fd GenFunc)¨fem/k           ⍝ Generate functions
   mod⊣mod GenInit tex                ⍝ Generate Initialization function
+}
+
+⍝ GetFnDepths
+⍝
+⍝ Intended Function: Get a table of the depths of the functions bound to
+⍝ names.
+
+GetFnDepths←{
+  gnm←⊂∘Split∘⊃'name'Prop 1 4⍴⊢      ⍝ Fn to extract names from node
+  mrg←{↑⍺,¨⍵}                        ⍝ Function to merge names with depth
+  fnm←(1⌷⍉⍵)∊⊂'Function'             ⍝ All the Function nodes
+  fnd←⍎¨'depth'Prop fnm⌿⍵            ⍝ All the depths of each function
+  fnn←gnm⍤1⊢(1⌽fnm)⌿⍵                ⍝ All names of functions
+  nfm←0≠≢¨fnn                        ⍝ Mask of named functions
+  ⊃⍪/(nfm/fnn)mrg¨nfm/fnd            ⍝ Merge and build table
 }
 
 ⍝ GenGlobal
@@ -1367,41 +1383,43 @@ GenConst←{
 ⍝ Function in the LLVM Module given.
 
 GenFunc←{
-  0=≢fn←Split⊃'name'Prop 1↑⍵:0     ⍝ Ignore functions without names
-  vtst←'Variable'≡⊃1 1⌷⍵           ⍝ Child node type
-  vn←⊃'name'Prop 1↑1↓⍵             ⍝ Variable name if it exists
-  vtst:vn(⍺ GenFnAlias)fn          ⍝ Alias names if variable reference
-  fnf←⊃fn ⋄ fnr←1↓fn               ⍝ Canonical name; rest of names
-  fnn←1↑1↓⍵                        ⍝ Function node
-  alloca←⍎⊃'allloca'Prop fnn       ⍝ Allocation for local scope
-  depth←⍎⊃'depth'Prop fnn          ⍝ Function depth
-  ft←GenFuncType depth             ⍝ Function types based on depth
-  fr←AddFunction ⍺ fnf ft          ⍝ Function pointer with canonical name
-  bldr←CreateBuilder               ⍝ Builder for the function body
-  bb←AppendBasicBlock fr ''        ⍝ Starting basic block for function
-  _←PositionBuilderAtEnd bldr bb   ⍝ Sync builder and basic block
-  fsz←ConstInt Int32Type alloca 0  ⍝ LLVM Value Ref for size of frame
-  ftp←GenArrayType⍬                ⍝ Type of elements on frame
-  allocaargs←bldr ftp fsz 'env0'   ⍝ Allocations arguments
-  env0←BuildArrayAlloca allocaargs ⍝ Local scope frame
-  line←{n←⊃0 1⌷⍺                   ⍝ Op to handle node in function body
-    n≡'Expression':⍺(⍺⍺ GenExpr)⍵  ⍝ Use GenExpr on Expressions
-    n≡'Condition':⍺(⍺⍺ GenCond)⍵   ⍝ Use GenCond on Conditions
-    emsg←'UNKNOWN FUNCTION CHILD'  ⍝ Only deal with Expressions or Conditions
-    emsg ⎕SIGNAL 99                ⍝ And signal an error otherwise
+  0=≢fn←Split⊃'name'Prop 1↑⍵:0      ⍝ Ignore functions without names
+  vtst←'Variable'≡⊃1 1⌷⍵            ⍝ Child node type
+  vn←⊃'name'Prop 1↑1↓⍵              ⍝ Variable name if it exists
+  vtst:vn(⍺ ⍺⍺ GenFnAlias)fn        ⍝ Alias names if variable reference
+  fnf←⊃fn ⋄ fnr←1↓fn                ⍝ Canonical name; rest of names
+  fnn←1↑1↓⍵                         ⍝ Function node
+  fs←⍎⊃'allloca'Prop fnn            ⍝ Allocation for local scope
+  d←⍎⊃'depth'Prop fnn               ⍝ Function depth
+  fr bldr env0←fs(d GenFnTmpl ⍺)fnf ⍝ Initial function setup
+  line←{n←⊃0 1⌷⍺                    ⍝ Op to handle node in function body
+    n≡'Expression':⍺(⍺⍺ GenExpr)⍵   ⍝ Use GenExpr on Expressions
+    n≡'Condition':⍺(⍺⍺ GenCond)⍵    ⍝ Use GenCond on Conditions
+    emsg←'UNKNOWN FUNCTION CHILD'   ⍝ Only deal with Expressions or Conditions
+    emsg ⎕SIGNAL 99                 ⍝ And signal an error otherwise
   }
-  sd←(⌽k←2 Kids ⍵),⊂⍬ ⍬            ⍝ Body of Function node
-  _ v←⊃⍺ fr bldr env0 line/sd      ⍝ Reduce top to bottom over children
-  _←{                              ⍝ Deal with return value in corner cases
-    0=≢⍵:MkEmptyReturn bldr        ⍝ Empty return on empty body
-    ct←'Condition'≡⊃0 1⌷l←⊃⌽⍵      ⍝ Last node is condition?
-    ct:MkEmptyReturn bldr          ⍝ Add an extra return if so
-    nep←∨/' '≠⊃'name'Prop 1↑l      ⍝ Is last node named?
-    nep:BuildRet bldr (⊃⌽v)        ⍝ Return it just the same
+  sd←(⌽k←2 Kids ⍵),⊂⍬ ⍬             ⍝ Body of Function node
+  _ v←⊃⍺ fr bldr env0 line/sd       ⍝ Reduce top to bottom over children
+  _←{                               ⍝ Deal with return value in corner cases
+    0=≢⍵:MkEmptyReturn bldr         ⍝ Empty return on empty body
+    ct←'Condition'≡⊃0 1⌷l←⊃⌽⍵       ⍝ Last node is condition?
+    ct:MkEmptyReturn bldr           ⍝ Add an extra return if so
+    nep←∨/' '≠⊃'name'Prop 1↑l       ⍝ Is last node named?
+    nep:BuildRet bldr (⊃⌽v)         ⍝ Return it just the same
   }k
-  _←DisposeBuilder bldr            ⍝ Builder cleanup
-  0=≢fnr:fr                        ⍝ Return if no other names
-  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr     ⍝ Otherwise, alias the others
+  _←DisposeBuilder bldr             ⍝ Builder cleanup
+  0=≢fnr:fr                         ⍝ Return if no other names
+  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr      ⍝ Otherwise, alias the others
+}
+
+⍝ GenFnAlias
+⍝
+⍝ Intended Function: Generate aliases for a given function.
+
+GenFnAlias←{mod fd←⍺⍺
+  fr←GetNamedFunction mod ⍺       ⍝ Function reference
+  ft←GenFuncType fd[(0⌷⍉fd)⍳⊂⍺;1] ⍝ Function Type based on depth
+  mod{AddAlias ⍺ ft fr ⍵}¨⍵       ⍝ Generate aliases for each name
 }
 
 ⍝ GenInit
@@ -1410,7 +1428,29 @@ GenFunc←{
 ⍝ initialize all global variables that are not constants.
 
 GenInit←{
-  'NEED TO IMPLEMENT'⎕SIGNAL 99
+  get←⍺ GetExpr∘⍬ ⍬
+  fr bldr _←0(0 GenFnTmpl ⍺)'Init'
+  {
+
+  }¨⍵
+}
+
+⍝ GenFnTmpl
+⍝
+⍝ Intended Function: Create an initial function for use.
+
+GenFuncTemplate←{
+  ft←GenFuncType ⍺⍺                ⍝ Fn type based on depth
+  fr←AddFunction ⍵⍵ ⍵ ft           ⍝ Insert function into module
+  bldr←CreateBuilder               ⍝ Builder to be used throughout
+  bb←AppendBasicBlock fr ''        ⍝ Every function needs one basic block
+  _←PositionBuilderAtEnd bldr bb   ⍝ Setup it up with the builder
+  0=⍺:fr bldr 0                    ⍝ If there is no frame, return now
+  fsz←ConstInt Int32Type ⍺ 0       ⍝ LLVM Value Ref for size of frame
+  ftp←GenArrayType⍬                ⍝ Type of elements on frame
+  allocaargs←bldr ftp fsz 'env0'   ⍝ Allocations arguments
+  env0←BuildArrayAlloca allocaargs ⍝ Local scope frame
+  fr bldr env0                     ⍝ Return Fn, Builder, and Frame Pointer
 }
 
 ⍝ GetExpr
@@ -1625,6 +1665,9 @@ P←'LLVM'
 
 ⍝ LLVMValueRef  LLVMGetNamedGlobal (LLVMModuleRef M, const char *Name)
 'GetNamedGlobal'⎕NA 'P ',D,'|',P,'GetNamedGlobal P <0C[]'
+
+⍝ LLVMValueRef 	LLVMGetNamedFunction (LLVMModuleRef M, const char *Name)
+'GetNamedFunction'⎕NA 'P ',D,'|',P,'GetNamedFunction P <0C[]'
 
 ⍝ LLVMBasicBlockRef  LLVMAppendBasicBlock (LLVMValueRef Fn, const char *Name)
 'AppendBasicBlock'⎕NA 'P ',D,'|',P,'AppendBasicBlock P <0C[]'
