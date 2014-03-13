@@ -1556,11 +1556,6 @@ LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣⍬ ⍬
 ⍝ GenCond
 ⍝
 ⍝ Intended Function: Generate code for a Condition node.
-⍝
-⍝ Right argument: (Bound Names)(Name Values)
-⍝ Left Argument: Condition node to generate
-⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
-⍝ Output: (Bound Names)(Name Values)
 
 GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵
   te←⊃k←1 Kids ⍺                      ⍝ Children and test expression
