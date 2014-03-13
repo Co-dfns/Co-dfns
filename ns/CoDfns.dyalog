@@ -1403,7 +1403,7 @@ GenFunc←{
   _ v←⊃⍺ fr bldr env0 line/sd        ⍝ Reduce top to bottom over children
   _←⍺{                               ⍝ Deal with return value in corner cases
     mt←GetNamedFunction ⍺ 'array_mt' ⍝ Runtime function to empty array
-    res←GetFnRes fr                  ⍝ ValueRef of result parameter
+    res←GetParam fr 0                ⍝ ValueRef of result parameter
     mtret←{                          ⍝ Fn for empty return
       _←BuildCall bldr mt res 1 ''   ⍝ Empty the result parameter
       bldr(⍵ MkRet)env0              ⍝ And make return
@@ -1804,6 +1804,9 @@ P←'LLVM'
 ⍝ LLVMBuildArrayAlloca (LLVMBuilderRef,
 ⍝     LLVMTypeRef Ty, LLVMValueRef Val, const char *Name)
 'BuildArrayAlloca'⎕NA'P ',D,'|',P,'BuildArrayAlloca P P P <0C'
+
+⍝ LLVMValueRef 	LLVMGetParam (LLVMValueRef Fn, unsigned Index)
+'GetParam'⎕NA'P ',D,'|',P,'GetParam P U'
 
 ⍝ LLVMBool
 ⍝ LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
