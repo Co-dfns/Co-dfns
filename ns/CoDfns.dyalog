@@ -1154,7 +1154,7 @@ LiftBound←{
   vex←{                             ⍝ Function to make var expr
     at←2 2⍴'name' ⍵ 'class' 'array' ⍝ Variable name is right argument
     v←1 4⍴(1+⍺)'Variable' '' at     ⍝ Variable node, depth in left argument
-    at←2 2⍴'class' 'atomic'         ⍝ Expression is atomic
+    at←1 2⍴'class' 'atomic'         ⍝ Expression is atomic
     e←1 4⍴⍺ 'Expression' '' at      ⍝ Expression node has no name
     e⍪v                             ⍝ Give valid AST as result
   }
@@ -1170,9 +1170,19 @@ LiftBound←{
     ne←(1↑⍵)⍪nr⍪(1+⊃⍵)vex nm        ⍝ Replace right with variable reference
     (lf⍪ex)(ne)                     ⍝ New lifted exprs and new node
   }
+  atm←{                             ⍝ Fn to atomize test expression
+    cls←⊃'class'Prop 1↑te←⍵         ⍝ Class of test expression
+    'atomic'≡cls:MtAST ⍵            ⍝ Do nothing if atomic already
+    te[;0]-←1                       ⍝ Test expression is going up
+    nm←⊃'class'Prop 1↑⍵             ⍝ Name of test expression
+    ∨/' '≠nm:te((⊃⍵)vex ⊃Split nm)  ⍝ Already named, return with referring vex
+    ('tst'Bind te)((⊃⍵)vex'tst')    ⍝ Use temporary name otherwise
+  }
   cnd←{                             ⍝ Function to handle condition nodes
     te←⊃k←1 Kids ⍵                  ⍝ We care especially about the test expr
-    lf te←(⊃⍵)lft te                ⍝ Lift test, before cond
+    lf1 te←(⊃⍵)lft te               ⍝ Lift test children, before cond
+    lf2 te←atm te                   ⍝ Atomize test expression
+    lf←lf1⍪lf2                      ⍝ Combine liftings
     1=≢k:lf⍪(1↑⍵)⍪te                ⍝ No consequent, no children expressions
     ce←⊃⍪/(1+⊃⍵)lft⊃⌽k              ⍝ Lift consequent, inside cond
     lf⍪(1↑⍵)⍪te⍪ce                  ⍝ Put it all back in the right order
@@ -1393,15 +1403,26 @@ GenFunc←{
   fs←⍎⊃'allloca'Prop fnn             ⍝ Allocation for local scope
   d←⍎⊃'depth'Prop fnn                ⍝ Function depth
   fr bldr env0←fs(d GenFnTmpl ⍺)fnf  ⍝ Initial function setup
+  k←2 Kids ⍵                         ⍝ Nodes of the Function body
+  _←⍬ ⍬(⍺ fr bldr env0 GenFnBlock)k  ⍝ Generate the function body
+  _←DisposeBuilder bldr              ⍝ Builder cleanup
+  0=≢fnr:fr                          ⍝ Return if no other names
+  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr       ⍝ Otherwise, alias the others
+}
+
+⍝ GenFnBlock
+⍝
+⍝ Intended Function: Generate a block of code in a function.
+
+GenFnBlock←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍺ ⋄ k←⍵
   line←{n←⊃0 1⌷⍺                     ⍝ Op to handle node in function body
     n≡'Expression':⍺(⍺⍺ GenExpr)⍵    ⍝ Use GenExpr on Expressions
     n≡'Condition':⍺(⍺⍺ GenCond)⍵     ⍝ Use GenCond on Conditions
     emsg←'UNKNOWN FUNCTION CHILD'    ⍝ Only deal with Expressions or Conditions
     emsg ⎕SIGNAL 99                  ⍝ And signal an error otherwise
   }
-  sd←(⌽k←2 Kids ⍵),⊂⍬ ⍬              ⍝ Body of Function node
-  _ v←⊃⍺ fr bldr env0 line/sd        ⍝ Reduce top to bottom over children
-  _←⍺{                               ⍝ Deal with return value in corner cases
+  _ v←⊃⍺⍺ line/(⌽⍵),⊂⍺               ⍝ Reduce top to bottom over children
+  mod{                               ⍝ Deal with return value in corner cases
     mt←GetNamedFunction ⍺ 'array_mt' ⍝ Runtime function to empty array
     res←GetParam fr 0                ⍝ ValueRef of result parameter
     mtret←{                          ⍝ Fn for empty return
@@ -1416,10 +1437,7 @@ GenFunc←{
       _←BuildCall bldr cp args 2 ''  ⍝ Copied into result array
       bldr(⍺ MkRet)env0              ⍝ And return
     }⍵
-  }k
-  _←DisposeBuilder bldr              ⍝ Builder cleanup
-  0=≢fnr:fr                          ⍝ Return if no other names
-  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr       ⍝ Otherwise, alias the others
+  }⍵
 }
 
 ⍝ GenFnAlias
@@ -1524,6 +1542,16 @@ GetExpr←{
   (e)(k,nu)(v,e⍴⍨⍴nu)⊣k v←⍵
 }
 
+⍝ LookupExpr
+⍝
+⍝ Intended Function: Given an environment and a name, find the
+⍝ LLVM Value Ref for that name.
+
+LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣⍬ ⍬
+  i←nm⍳⊂⍵
+  i=≢nm:GetNamedGlobal ⍺⍺ ⍵
+  i⊃vl
+}
 
 ⍝ GenCond
 ⍝
@@ -1534,36 +1562,28 @@ GetExpr←{
 ⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
 ⍝ Output: (Bound Names)(Name Values)
 
-GenCond←{mod fr bldr←⍺⍺
-  ⍝ A condition node has one or two expressions
-  Ex←1 Kids ⍺
-
-  ⍝ We assume type correct expressions right now,
-  ⍝ meaning we can just grab the first data value for
-  ⍝ comparison. Tv should be a single integer value.
-  Te nm vl←(⊃Ex)(mod GetExpr)⍵
-  Tp←BuildLoad bldr(BuildStructGEP bldr Te 4 '')'Tp'
-  Tp←BuildBitCast bldr Tp (PointerType(ArrayType Int64Type 1)0)''
-  Tv←BuildLoad bldr(BuildGEP bldr Tp (GEPI 0 0) 2 '')'Tv'
-
-  ⍝ Create the test of Tv to conclude the block
-  T←BuildICmp bldr 32 Tv(ConstInt Int64Type 0 1)'T'
-
-  ⍝ Create the (simple) consequent block, which is a single
-  ⍝ return of either no value or the expression value.
-  _←PositionBuilderAtEnd bldr,cb←AppendBasicBlock fr 'consequent'
-  _←(1↓Ex)(⍺⍺ GenConsequent)nm vl
-  _←(1↓Ex)(⍺⍺{0=⍴⍺:MkEmptyReturn bldr ⋄ (⊃⍺)(⍺⍺ GenExpr)⍵})nm vl
-
-  ⍝ Create the alternate block and setup the builder to
-  ⍝ point to it.
-  ob←GetPreviousBasicBlock cb
-  ab←AppendBasicBlock fr 'alternate'
-  _←PositionBuilderAtEnd bldr ob
-  _←BuildCondBr bldr T ab cb
-  _←PositionBuilderAtEnd bldr ab
-
-  nm vl
+GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵
+  te←⊃k←1 Kids ⍺                      ⍝ Children and test expression
+  tn←⊃'name'Prop 1↑1↓te               ⍝ Name of test variable
+  te←⍵(mod LookupExpr)tn              ⍝ Find ValueRef of test expression
+  gp←BuildStructGEP bldr te 4 ''      ⍝ Get data values pointer
+  tp←BuildLoad bldr gp 'tp'           ⍝ Load data values
+  ap←ArrayType Int64Type 1            ⍝ Type of an Array
+  ap←PointerType ap 0                 ⍝ Pointer type to an array
+  tp←BuildBitCast bldr tp ap ''       ⍝ Cast data values to array pointer
+  gp←BuildGEP bldr tp (GEPI 0 0) 2 '' ⍝ Value pointer
+  tv←BuildLoad bldr gp 'tv'           ⍝ Load value
+  zr←ConstInt Int64Type 0 1           ⍝ We're testing against zero
+  t←BuildICmp bldr 32 tv zr 'T'       ⍝ We test at the end of block
+  cb←AppendBasicBlock fr 'consequent' ⍝ Consequent basic block
+  _←PositionBuilderAtEnd bldr cb      ⍝ Point builder to consequent
+  _←⍵(⍺⍺ GenFnBlock)1↓k               ⍝ Generate the consequent block
+  ob←GetPreviousBasicBlock cb         ⍝ Original basic block
+  ab←AppendBasicBlock fr 'alternate'  ⍝ Alternate basic block
+  _←PositionBuilderAtEnd bldr ob      ⍝ We need to add a conditional break
+  _←BuildCondBr bldr t ab cb          ⍝ To the old block pointing to cb and ab
+  _←PositionBuilderAtEnd bldr ab      ⍝ And then return pointing at the ab
+  ⍵                                   ⍝ Our environment has not changed
 }
 
 ⍝ GenConsequent
@@ -1604,7 +1624,7 @@ GenConsequent←{mod fr bldr←⍺⍺
 ⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
 ⍝ Output: (Bound Names)(Name Values)
 
-GenExpr←{mod _ bldr←⍺⍺
+GenExpr←{mod _ bldr env0←⍺⍺
   1=⍴'name'Prop ⍺:⍵⊣BuildRet bldr,⊃⍺(mod GetExpr)⍵
   1↓⍺(mod GetExpr)⍵
 }
