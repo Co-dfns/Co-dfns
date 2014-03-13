@@ -1438,7 +1438,7 @@ GenFnAlias←{mod fd←⍺⍺
 ⍝ initialize all global variables that are not constants.
 
 GenInit←{
-  fr bldr _←0(0 GenFnTmpl ⍺)'Init'   ⍝ Generate the Init function template
+  fr bldr env←0(0 GenFnTmpl ⍺)'Init' ⍝ Generate the Init function template
   gex←{GetNamedGlobal ⍺ ⍵}           ⍝ Convenience Fn for GetNamedGlobal
   gfn←{GetNamedFunction ⍺ ⍵}         ⍝ Convenience Fn for GetNamedFunction
   call←{BuildCall bldr ⍺⍺ ⍵ (≢⍵) ''} ⍝ Op to build call
@@ -1479,6 +1479,7 @@ GenInit←{
       t clean tgt(fn mcall)lft rgt   ⍝ Make the call
     }⍵
   }¨⍵
+  _←bldr(⍺ MkRet)env                 ⍝ Do a standard return
   fr⊣DisposeBuilder bldr             ⍝ Cleanup and return function reference
 }
 
