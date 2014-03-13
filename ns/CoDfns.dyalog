@@ -1384,33 +1384,42 @@ GenConst←{
 ⍝ Function in the LLVM Module given.
 
 GenFunc←{
-  0=≢fn←Split⊃'name'Prop 1↑⍵:0      ⍝ Ignore functions without names
-  vtst←'Variable'≡⊃1 1⌷⍵            ⍝ Child node type
-  vn←⊃'name'Prop 1↑1↓⍵              ⍝ Variable name if it exists
-  vtst:vn(⍺ ⍺⍺ GenFnAlias)fn        ⍝ Alias names if variable reference
-  fnf←⊃fn ⋄ fnr←1↓fn                ⍝ Canonical name; rest of names
-  fnn←1↑1↓⍵                         ⍝ Function node
-  fs←⍎⊃'allloca'Prop fnn            ⍝ Allocation for local scope
-  d←⍎⊃'depth'Prop fnn               ⍝ Function depth
-  fr bldr env0←fs(d GenFnTmpl ⍺)fnf ⍝ Initial function setup
-  line←{n←⊃0 1⌷⍺                    ⍝ Op to handle node in function body
-    n≡'Expression':⍺(⍺⍺ GenExpr)⍵   ⍝ Use GenExpr on Expressions
-    n≡'Condition':⍺(⍺⍺ GenCond)⍵    ⍝ Use GenCond on Conditions
-    emsg←'UNKNOWN FUNCTION CHILD'   ⍝ Only deal with Expressions or Conditions
-    emsg ⎕SIGNAL 99                 ⍝ And signal an error otherwise
+  0=≢fn←Split⊃'name'Prop 1↑⍵:0       ⍝ Ignore functions without names
+  vtst←'Variable'≡⊃1 1⌷⍵             ⍝ Child node type
+  vn←⊃'name'Prop 1↑1↓⍵               ⍝ Variable name if it exists
+  vtst:vn(⍺ ⍺⍺ GenFnAlias)fn         ⍝ Alias names if variable reference
+  fnf←⊃fn ⋄ fnr←1↓fn                 ⍝ Canonical name; rest of names
+  fnn←1↑1↓⍵                          ⍝ Function node
+  fs←⍎⊃'allloca'Prop fnn             ⍝ Allocation for local scope
+  d←⍎⊃'depth'Prop fnn                ⍝ Function depth
+  fr bldr env0←fs(d GenFnTmpl ⍺)fnf  ⍝ Initial function setup
+  line←{n←⊃0 1⌷⍺                     ⍝ Op to handle node in function body
+    n≡'Expression':⍺(⍺⍺ GenExpr)⍵    ⍝ Use GenExpr on Expressions
+    n≡'Condition':⍺(⍺⍺ GenCond)⍵     ⍝ Use GenCond on Conditions
+    emsg←'UNKNOWN FUNCTION CHILD'    ⍝ Only deal with Expressions or Conditions
+    emsg ⎕SIGNAL 99                  ⍝ And signal an error otherwise
   }
-  sd←(⌽k←2 Kids ⍵),⊂⍬ ⍬             ⍝ Body of Function node
-  _ v←⊃⍺ fr bldr env0 line/sd       ⍝ Reduce top to bottom over children
-  _←{                               ⍝ Deal with return value in corner cases
-    0=≢⍵:MkEmptyReturn bldr         ⍝ Empty return on empty body
-    ct←'Condition'≡⊃0 1⌷l←⊃⌽⍵       ⍝ Last node is condition?
-    ct:MkEmptyReturn bldr           ⍝ Add an extra return if so
-    nep←∨/' '≠⊃'name'Prop 1↑l       ⍝ Is last node named?
-    nep:BuildRet bldr (⊃⌽v)         ⍝ Return it just the same
+  sd←(⌽k←2 Kids ⍵),⊂⍬ ⍬              ⍝ Body of Function node
+  _ v←⊃⍺ fr bldr env0 line/sd        ⍝ Reduce top to bottom over children
+  _←⍺{                               ⍝ Deal with return value in corner cases
+    mt←GetNamedFunction ⍺ 'array_mt' ⍝ Runtime function to empty array
+    res←GetFnRes fr                  ⍝ ValueRef of result parameter
+    mtret←{                          ⍝ Fn for empty return
+      _←BuildCall bldr mt res 1 ''   ⍝ Empty the result parameter
+      bldr(⍵ MkRet)env0              ⍝ And make return
+    }
+    0=≢⍵:mtret ⍺                     ⍝ Empty return on empty body
+    'Condition'≡⊃0 1⌷l←⊃⌽⍵:mtret ⍺   ⍝ Extra return if condition
+    cp←GetNamedFunction ⍺ 'array_cp' ⍝ Runtime array copy function
+    ∨/' '≠⊃'name'Prop 1↑l:⍺{         ⍝ Is last node named?
+      args←res,⊃⌽v                   ⍝ Then we return the binding
+      _←BuildCall bldr cp args 2 ''  ⍝ Copied into result array
+      bldr(⍺ MkRet)env0              ⍝ And return
+    }⍵
   }k
-  _←DisposeBuilder bldr             ⍝ Builder cleanup
-  0=≢fnr:fr                         ⍝ Return if no other names
-  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr      ⍝ Otherwise, alias the others
+  _←DisposeBuilder bldr              ⍝ Builder cleanup
+  0=≢fnr:fr                          ⍝ Return if no other names
+  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr       ⍝ Otherwise, alias the others
 }
 
 ⍝ GenFnAlias
@@ -1433,7 +1442,7 @@ GenInit←{
   gex←{GetNamedGlobal ⍺ ⍵}           ⍝ Convenience Fn for GetNamedGlobal
   gfn←{GetNamedFunction ⍺ ⍵}         ⍝ Convenience Fn for GetNamedFunction
   call←{BuildCall bldr ⍺⍺ ⍵ (≢⍵) ''} ⍝ Op to build call
-  cpf←⍺ gfn 'copy'                   ⍝ Runtime copy function
+  cpf←⍺ gfn 'array_cp'               ⍝ Runtime copy function
   cpy←{cpf call ⍺ ⍵}                 ⍝ Convenience Fn for Copying arrays
   mcall←{                            ⍝ Fn to generate multiple assignment
     v←⍺⍺ call (⊃⍺),⍵                 ⍝ Call on the first argument
@@ -1477,18 +1486,18 @@ GenInit←{
 ⍝
 ⍝ Intended Function: Create an initial function for use.
 
-GenFuncTemplate←{
+GenFnTmpl←{
   ft←GenFuncType ⍺⍺                ⍝ Fn type based on depth
   fr←AddFunction ⍵⍵ ⍵ ft           ⍝ Insert function into module
   bldr←CreateBuilder               ⍝ Builder to be used throughout
   bb←AppendBasicBlock fr ''        ⍝ Every function needs one basic block
   _←PositionBuilderAtEnd bldr bb   ⍝ Setup it up with the builder
-  0=⍺:fr bldr 0                    ⍝ If there is no frame, return now
+  0=⍺:fr bldr (0 0)                ⍝ If there is no frame, return now
   fsz←ConstInt Int32Type ⍺ 0       ⍝ LLVM Value Ref for size of frame
   ftp←GenArrayType⍬                ⍝ Type of elements on frame
   allocaargs←bldr ftp fsz 'env0'   ⍝ Allocations arguments
   env0←BuildArrayAlloca allocaargs ⍝ Local scope frame
-  fr bldr env0                     ⍝ Return Fn, Builder, and Frame Pointer
+  fr bldr (env0 ⍺)                 ⍝ Return Fn, Builder, and Frame Pointer
 }
 
 ⍝ GetExpr
@@ -1599,13 +1608,15 @@ GenExpr←{mod _ bldr←⍺⍺
   1↓⍺(mod GetExpr)⍵
 }
 
-⍝ MkEmptyReturn
+⍝ MkRet
 ⍝
-⍝ Intended Function: Insert an empty return value for a function
-⍝ into a builder.
+⍝ Intended Function: Insert a return at the end of a function body
 
-MkEmptyReturn←{
-  BuildRet ⍵ (GenNullArrayPtr⍬) ⍝ Return a null pointer array
+MkRet←{
+  cln←GetNamedFunction ⍺⍺ 'clean_env' ⍝ Runtime function to clean environment
+  _←BuildCall ⍺ cln ⍵ 2 ''            ⍝ Clean the local environment
+  zero←ConstInt Int32Type 0 0         ⍝ Zero integer
+  BuildRet ⍺ zero                     ⍝ Return a success status
 }
 
 ⍝ GenNullArrayPtr
