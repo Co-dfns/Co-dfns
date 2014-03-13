@@ -1586,35 +1586,6 @@ GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵
   ⍵                                   ⍝ Our environment has not changed
 }
 
-⍝ GenConsequent
-⍝
-⍝ Intended Function: Build the Consequent of a Condition node.
-⍝
-⍝ Right Argument: (Bound names)(Name values)
-⍝ Left Argument: Vector with Expression node to generate
-⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
-
-GenConsequent←{mod fr bldr←⍺⍺
-  ⍝ There are three basic cases:
-  ⍝   1. Empty Consequent
-  ⍝   2. Unnamed consequent
-  ⍝   3. Named Consequent
-
-  ⍝ 1. Empty Consequent -- Null return
-  0=⍴⍺:MkEmptyReturn bldr
-
-  ⍝ For both #2 and #3, we must generate the expression.
-  K V←(⊃⍺)(⍺⍺ GenExpr)⍵
-
-  ⍝ 2. Unnamed Consequent -- Nothing futher, return already generated
-  1=⍴'name'Prop⊃⍺:⍬
-
-  ⍝ 3. Named Consequent -- Must generate return explicitly
-  2=⍴'name'Prop⊃⍺:BuildRet bldr(⊃⌽V)
-  'UNREACHABLE'⎕SIGNAL 99
-}
-
-
 ⍝ GenExpr
 ⍝
 ⍝ Intended Function: Generate an Expression, named or unnamed.
