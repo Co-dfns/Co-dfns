@@ -1199,17 +1199,14 @@ LiftBound←{
 ⍝ reference an appropriate slot pointing to a specific region of memory within
 ⍝ the stack frames, or in the case of scopes, the size of the stack frame of
 ⍝ that scope.
-⍝
-⍝ XXX: What happens with top-level function bindings and their environments?
 
 AnchorVars←{
   mt←0 2⍴⊂'' 0                    ⍝ An empty environment
   ge←{                            ⍝ Fn to get environment for current scope
     em←(1+⊃⍵)=0⌷⍉⍵                ⍝ All expressions are direct descendants
-    em∨←¯1⌽em∧(1⌷⍉⍵)∊⊂'Condition' ⍝ Or, they may be test expressions
     em∧←(1⌷⍉⍵)∊⊂'Expression'      ⍝ Mask of expressions
     nm←'name'Prop em⌿⍵            ⍝ Names in local scope
-    nm←⍪⊃,/(0⍴⊂''),Split¨nm       ⍝ Split names and prepare
+    nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm      ⍝ Split names and prepare
     (nm,0),⍳≢nm                   ⍝ Local scope 0, assign a slot to each var
   }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
@@ -1232,10 +1229,9 @@ AnchorVars←{
     })⍵
     'Condition'≡nm:⍺(⍺⍺{          ⍝ Condition node
       k←1 Kids ⍵                  ⍝ Must handle children
-      ta te←(⊃k)⍺⍺ vis MtAST env  ⍝ Test and consequent handled separately
-      z←(⌽1↓k),⊂MtAST te          ⍝ Test env affects consequent
-      ca _←⊃⍺⍺ vis/z              ⍝ Ignore consequent environment
-      (ast⍪(1↑⍺)⍪ta⍪ca)te         ⍝ Recombine with test environment
+      z←(⌽1 Kids ⍵),⊂MtAST env    ⍝ We can reduce over all the kids at once
+      ca _←⊃⍺⍺ vis/z              ⍝ We ignore the consequent environment
+      (ast⍪(1↑⍺)⍪ca)env           ⍝ Return the original environment
     })⍵
     'Function'≡nm:⍺(⍺⍺{           ⍝ Function node
       ken←⍺⍺⍪env                  ⍝ Env is current env plus all in scope
