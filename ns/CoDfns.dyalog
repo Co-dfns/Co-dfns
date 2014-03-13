@@ -1547,20 +1547,30 @@ GetExpr←{
 ⍝ Intended Function: Given an environment and a name, find the
 ⍝ LLVM Value Ref for that name.
 
-LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣⍬ ⍬
-  i←nm⍳⊂⍵
-  i=≢nm:GetNamedGlobal ⍺⍺ ⍵
-  i⊃vl
+LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr←⍺⍺
+  nam←⊃'name'Prop ⍵                 ⍝ Variable's name
+  (i←nm⍳⊂nam)<≢nm:(i⊃vl),nm vl      ⍝ Environment contains binding, use it
+  eid←⍎⊃'env'Prop ⍵                 ⍝ Variable's Environment
+  pos←⍎⊃'slot'Prop ⍵                ⍝ Position in environment
+  fnd←(CountParams fr)-3            ⍝ Get the function depth
+  eid=0:'VALUE ERROR'⎕SIGNAL 99     ⍝ Variable should not be in local scope
+  eid>fnd:{                         ⍝ Environment points to global space
+    val←GetNamedGlobal mod nam      ⍝ Grab the value from the global space
+    val,(nam val),¨nm vl            ⍝ Add it to the bindings and return
+  }⍬
+  env←GetParam fr(2+eid)            ⍝ Pointer to environment frame
+  app←BuildStructGEP bld env pos '' ⍝ Pointer to Array Pointer for Variable
+  apv←BuildLoad bld app nam         ⍝ Array Pointer for Variable
+  apv,nam apv,¨nm vl                ⍝ Update the environment and return
 }
 
 ⍝ GenCond
 ⍝
 ⍝ Intended Function: Generate code for a Condition node.
 
-GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵
+GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
   te←⊃k←1 Kids ⍺                      ⍝ Children and test expression
-  tn←⊃'name'Prop 1↑1↓te               ⍝ Name of test variable
-  te←⍵(mod LookupExpr)tn              ⍝ Find ValueRef of test expression
+  te nm vl←⍵(mod fr LookupExpr)1↑1↓te ⍝ Find ValueRef of test expression
   gp←BuildStructGEP bldr te 4 ''      ⍝ Get data values pointer
   tp←BuildLoad bldr gp 'tp'           ⍝ Load data values
   ap←ArrayType Int64Type 1            ⍝ Type of an Array
@@ -1578,7 +1588,7 @@ GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵
   _←PositionBuilderAtEnd bldr ob      ⍝ We need to add a conditional break
   _←BuildCondBr bldr t ab cb          ⍝ To the old block pointing to cb and ab
   _←PositionBuilderAtEnd bldr ab      ⍝ And then return pointing at the ab
-  ⍵                                   ⍝ Our environment has not changed
+  nm vl                               ⍝ Return our possibly new environment
 }
 
 ⍝ GenExpr
@@ -1794,6 +1804,9 @@ P←'LLVM'
 
 ⍝ LLVMValueRef 	LLVMGetParam (LLVMValueRef Fn, unsigned Index)
 'GetParam'⎕NA'P ',D,'|',P,'GetParam P U'
+
+⍝ unsigned 	LLVMCountParams (LLVMValueRef Fn)
+'CountParams'⎕NA'U ',D,'|',P,'CountParams P'
 
 ⍝ LLVMBool
 ⍝ LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
