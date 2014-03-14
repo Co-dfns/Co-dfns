@@ -3,11 +3,13 @@
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
     <title>Ancient Language, Modern Compiler</title>
-    <author>
-      <personname>Aaron W. Hsu</personname>
-      <affiliation><orgname>Indiana University</orgname></affiliation>
-      <email>awhsu@indiana.edu</email>
-    </author>
+    <authorgroup>
+      <author>
+        <personname>Aaron W. Hsu</personname>
+        <affiliation><orgname>Indiana University</orgname></affiliation>
+        <email>awhsu@indiana.edu</email>
+      </author>
+    </authorgroup>
     <date>Thursday, March 13th, 2014</date>
     <abstract>
       <para>
@@ -42,7 +44,7 @@
       specifically on the APL language, a number of language features
       support the domain expert:
     </para>
-    <orderedlist>
+    <orderedlist spacing="compact">
       <listitem>
         <para>
           APL is a mathematical style notation which maps well to
@@ -139,29 +141,478 @@
       into the compiler itself and reduce the amount of dependence on runtime implementation
       of features for different targets.
     </para>
+    <para>
+      The architecture of the compiler itself <quote>eats its own dogfood</quote>; that is, the
+      compiler is written in Co-dfns, using the Dyalog APL interpreter to bootstrap the system. It
+      integrates into the existing Dyalog APL infrastructure so that existing users can make direct
+      use of the JITed namespace directly, without requiring a separate load step. The compiler
+      produces standard object files that the clang compiler system can link against any existing
+      C or C++ codebase, and the compiler itself uses a nanopass design that allows for external
+      systems to integrate with the compiler easily. The AST serializes as XML, allowing for
+      other external tools to work on the structure. The compiler and the compiled objects intentionally
+      provide easy means to embed all or part of the system into other software stacks.
+    </para>
+    <para>
+      To judge the success of the Co-dfns compiler, three major benchmarks exist: the compiler itself,
+      the Graph500 benchmark, and a set of industry supplied functions. The latter forms a real life
+      set of applications upon which to test the compiler based on the people likely to use the system.
+    </para>
   </section>
   <section>
     <title>Background</title>
+    <para>
+      Include a description of the things that made APL hard to compile.
+    </para>
+    <para>
+      Description of John Scholes innovations with dfns.
+    </para>
+    <para>
+      The dfns language in a nutshell.
+    </para>
+    <para>
+      LLVM background.
+    </para>
   </section>
   <section>
     <title>Language Innovations</title>
+    <para>
+      The dfns language provides a good story for spiritually functional
+      data parallel programming. Indeed, the bulk simd parallelism of
+      APL forms the foundation of the language, rather than an extra
+      veneer on top of a fundamentally serial language. It does not,
+      however, provide sufficient information to leverage task
+      parallelism. That is, vectorized operations with traditional
+      APL map nicely to vector machines and GPUs, or vector engines
+      in modern CPUs, but they do not provide a good solution for
+      task parallelism, at the level of OS threading or concurrency
+      in the form of Erlang style programming.
+    </para>
+    <para>
+      Traditional solutions to task parallelism in APL have been to
+      bolt on traditional concurrency constructs such as mutexes and
+      guards, with APL underneath. This approach suffers from the
+      same programmability problems that these same constructs have
+      in any language, while additionally imposing a significant
+      cost on the consiion and productivity of the language for
+      domain experts. This makes such constructs mostly useless to
+      the domain expert who might otherwise find concurrency an
+      useful method for expressing certain paradigms, while making
+      the tuning expert's job unnecessarily hard.
+    </para>
+    <para>
+      Deterministic parallelism offers some relief from the above
+      issues by ensuring that traditional concurrency issues, such
+      as race conditions, do not manifest themselves in the programs.
+      However, the traditional expression of these deterministic
+      models does not fit nicely with the APL syntax.
+    </para>
+    <para>
+      Any good solution for task parallelism in APL ought to
+      satisfy two criteria: integration with APL style/syntax and
+      safety. That is, domain experts must find it easy to use the
+      constructs correctly and these constructs should not destroy
+      the concision and straightforward presentation of the code.
+    </para>
+    <para>
+      The Co-dfns language extends the basic dfns language to enable
+      both non-deterministic and deterministic task parallelism
+      without requiring any additional syntax, and introducing only
+      two new primitives to the language.
+    </para>
+    <para>
+      Firstly, a new literal <literal>⌾</literal> (target) represents the
+      new datatype, a single assignment array. A single assignment
+      array the same as any regular array except that any given cell
+      in the array may be assigned at most once. The <literal>⌾</literal>
+      value is exactly the same as <literal>⍬</literal>, which represents
+      the empty vector, with the sole exception that its fill value
+      is a single assignment cell, rather than the integer 0.
+      Thus, the reshape function on <literal>⌾</literal> creates
+      a single assignment array of any shape <varname>S</varname>. This
+      array has no values in it, but any write to this array will
+      fill the single assignment cell, and any attempt to further update
+      an already written cell will signal an error.
+    </para>
+    <programlisting>A←2 2⍴⌾  ⍝ SA matrix of shape 2 2
+A[0;0]←1 ⍝ Assign 0 0 cell to 1
+A[0;0]←5 ⍝ Error, multiple writes</programlisting>
+    <para>
+      The <literal>⌾</literal> literal integrates single assignment arrays
+      implicitly into the rest of the APL primitives, so that working
+      with them feels like working with any regular array. However,
+      when attempting to read from a cell that is not filled, the thread
+      in which that read occurs will block. This requires some way of
+      indicating the spawning of new concurrent computation to unblock
+      this read.
+    </para>
+    <para>
+      To allow for concurrency, Co-dfns introduces an operator
+      <literal>∥</literal> which takes a function as its left operand and
+      returns a function that behaves equivalently to the given
+      function, but concurrent with the rest of the code. That is,
+      applying the returned function spawns a new concurrent thread
+      in which to compute the value and immediately returns with a
+      single assignment array. The shape and value of the cells of
+      this array come from the result of the application of the given function.
+    </para>
+    <para>
+      These two primitives suffice to provide for all the necessary
+      elements for task parallel computation. Namely, the single assignment
+      array with its blocking semantics enables synchronization without
+      requiring explicit constructs, while the parallel operator enables
+      concurrency. By ensuring that all external writes of any concurrent
+      function occur only on single assignment arrays, a programmer can
+      safely ensure the deterministic execution of the code. That is, the
+      code will not exhibit non-deterministic behavior, but will instead
+      produce the same result on each execution of the program.
+    </para>
+    <para>
+      Notably, these primitives represent an attractive alternative to
+      traditional approaches to parallelism in APL precisely because of
+      the implicit nature of the control flow and the concision with which
+      one expresses concurrency and synchronization within an APL program.
+    </para>
   </section>
   <section>
-    <title>Evaluation</title>
+    <title>State of the Art</title>
+    <para>
+      The existing systems must inform the design of the Co-dfns compiler.
+      Particularly, how does the Dyalog APL interpreter perform on a
+      traditional regular array benchmark and on an irregular benchmark
+      compared to the reference implementations? The NPB MG benchmarks
+      represents a classic sparse matrix vector multiplication benchmark.
+      The data layout is regular and predictable. In contrast, the Graph500
+      Bread-first search benchmark intentionally creates irregular access
+      patterns and represents a tougher challenge to traditional array
+      techniques.
+    </para>
+    <para>
+      Despite the regularity of the MG benchmark, Dyalog still suffers
+      performance hits due to its architecture. In speaking with the
+      main architects of the Dyalog system, given the limitations of
+      the interpreter, further performance of the system does not seem likely.
+      In this benchmark, the interpreter suffers from repeated traversals
+      over a single set of data, which can adversely affect the cache.
+      The introduction of a segmented scan function would have greatly
+      helped in this particular case. In this case, the optimizations
+      to perform seem clear: fuse scalar functions together to do a single
+      traversal over the data, and potentially support richer scans.
+    </para>
+    <para>
+      The Graph500 benchmark has to interesting features. Firstly, the
+      benchmark itself finds easy expressions as a set of dfns functions.
+      Secondly, the benchmark itself differs from MG in that the access
+      patterns over the data vary widely throughout the computation.
+      In these cases, note the results of the three benchmarks compared
+      to the code. The second version uses a number of boolean filters
+      over the code to determine the parent vector without requiring nested
+      arrays. The other two kernels use nested arrays. This boolean
+      filter method is faster than the naive implementation, but slower
+      on a CPU than the third version which takes advantage of some ordering
+      to reduce the number of reads and writes that need occur. However,
+      the filter method seems ideally suited for implementation on a GPU.
+    </para>
+    <para>
+      The Graph500 benchmark still suffers from some uncleanliness in the
+      code. It would be nice to write this benchmark without mutation.
+      The fourth version of this kernel performs this benchmark in a
+      purely functional fashion. Note the associated performance penalty
+      for doing so. Indeed, each of these benchmarks suffers from unnecessary
+      copies within the system. Scalar function fusion would not help very
+      much in this benchmark, but it would help immensely to reduce the
+      need to allocate and copy values across arrays.
+    </para>
+    <para>
+      [Further stuff that needs to go in here are some diagrams indicating the
+      cache and memory behavior of the reference implementations compared
+      to the dyalog versions. We also need performance numbers and we need
+      to have some idea of the other performance metrics. We need to implement
+      the fourth kernel and ressurrect the MG benchmark from the grave.
+      We also need to submit this code to the Dyalog people to see if they
+      can make the BFS benchmark any faster.]
+    </para>
   </section>
   <section>
     <title>Implementation</title>
+    <para>
+      The Co-dfns compiler has a few explicit design goals:
+    </para>
+    <orderedlist spacing="compact">
+      <listitem>
+        <para>
+          Address problems in that prevent APL scaling to modern hardware
+          and parallel systems.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Make it easy to embed the compiler into existing tools,
+          namely the Dyalog interpreter, but also any other tools.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Support additional tooling through clear, well defined interfaces
+          and documentation.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Produce standard compilation products that integrate with
+          existing compiler toolchains and other languages.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Support concurrency as a tool of thought for domain experts
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      As seen in the previous section benchmarking the Dyalog interpreter,
+      memory management and locality play critical roles in the performance
+      of the system. Indeed, these represent some of the most important obstacles
+      to scalability of APL implementations.
+      Furthermore, the existing systems, while taking advantage of vectorized
+      operations on the CPU, do not as yet take good advantage of the GPU
+      for SIMD operations in a way that preserves good cache behavior.
+      Until version 14.0 (which incorporates some of the ideas presented here),
+      Dyalog APL has no good story for task parallelism, and even with version
+      14.0, it does not have a good story for fine grained parallelism/concurrency
+      as a tool for domain experts and tuning experts to leverage seamlessly into
+      existing dfns code.
+    </para>
+    <para>
+      To address these issues, the compiler firstly leverages the existing work
+      on traditional compilers by using the LLVM framework, which permits the
+      compiler to ignore traditional compiler issues, such as procedure inlining,
+      register allocation, and many other niceties. It also ensures that we have a
+      neutral back-end which can produce code for both CPUs and GPUs. Work continues
+      on doing auto-vectorization of code using polyhedral analyses within the
+      LLVM community, which is encouraging. By using LLVM, the compiler is able
+      to focus on the issues directly related to parallel scaling issues. It also
+      gives the compiler the ability to generate traditional object files for free.
+      These object files can then be used by the clang system to generate shared
+      libraries or linked directly against other programs written in C or C++.
+      As discussed later, Co-dfns functions map one to one to normal functions within
+      a C or C++ function, and have a clear, well-documented signature for interfacing
+      to them. This enables an easy integration of Co-dfns compiled code with other
+      systems.
+    </para>
+    <para>
+      Importantly, the Co-dfns compiler is itself written in dfns, with the
+      intention of eventually self-hosting. This allows the compiler to exist
+      directly in any Dyalog APL workspace, and can be used as just another
+      evaluation or <quote>fixing</quote> function. Users of the regular
+      Dyalog environment can easily compile modules that they have written as
+      easily as loading the files from the file system.
+    </para>
+    <para>
+      The compiler structure follows the NanoPass style, which builds a compiler
+      in a functional, stateless manner by progressive application of small passes
+      that accomplish small transformations to the AST. This makes it very easy to
+      plug in additional passes anywhere along this process. The AST itself
+      has a direct serialization to XML, permitting any language with XML support
+      to handle and manipulate the AST of the compiler, feeding it back into
+      the system whenever desired. Each of the interfaces from pass to pass and
+      the associated invariants have documentation which clearly indicates the
+      expectations of the pass.
+    </para>
+    <para>
+      At the moment, the compiler has no conception of the GPU or the CPU.
+      Instead, it expects the runtime to handle this. By swapping out the runtimes
+      of the systems, you get code that runs on the GPU or code that runs on the
+      CPU. However, further integration and support for these different platforms
+      in the compiler itself would improve the performance of the system measurably.
+    </para>
+    <para>
+      The current compiler does not yet implement all the Co-dfns language, but
+      it does take advantage of one interesting feature of the language. Most
+      interpreters for high-level languages, and indeed, most compilers, use
+      some form of garbage collection. The Co-dfns language does not require
+      garbage collection. Furthermore, it does not require closures, despite allowing
+      for function values to thread through operators. This allows for almost all
+      the benefits of higher order programming, but without the associated costs.
+      It does result in some limitations of expressivity, but this trade-off seems
+      worth it.
+    </para>
+    <para>
+      In Co-dfns, a function may not escape its enclosing scope. Values, likewise,
+      have stack or function lifetimes, rather than indefinite extent. Thus, each
+      Co-dfns function corresponds to a regular LLVM function, which takes
+      at least three array pointers, the result array and the right and left arrays.
+      The function may not mutate the left or right arrays, but it should store
+      the final result of the computation in the result array. All local variables
+      receive stack allocation for their headers, an their data contents appear on
+      the heap. Finally, to reference free variable inside of a function,
+      each function receives zero or more frame pointers that point to the head of
+      the frame for a containing lexical scope. This makes reference to free variables
+      the same as referencing a local variable, except in a different frame.
+    </para>
+    <para>
+      No benchmarks have been run to quantify the exact extent of the benefit of
+      this stack closure strategy. At the very least, it makes it easier to
+      inline code in Co-dfns without any great effort on the compiler's part.
+      It also makes it much easier for Co-dfns functions to integrate into existing
+      systems, as the calling conventions are the same.
+    </para>
+    <para>
+      That Co-dfns is intended to be self hosted presents an important benchmark
+      and implementation goal: to scale compilers to efficient implementation on
+      the GPU. Passes in Co-dfns are written in such a way as to minimize the
+      amount of serial or recursive operation, and prefer parallel and aggregate
+      operations friendly to GPU execution.
+    </para>
   </section>
   <section>
-    <title>Benchmarking</title>
+    <title>Evaluation</title>
+    <para></para>
   </section>
   <section>
     <title>Related Work</title>
+    <para>
+      Froma theoretical standpoint, Lenore Mullin's dissertation on the
+      Mathematics of Arrays provides a foundation upon which much of the
+      compiler optimizations are based, in terms of reasoning about the shapes
+      of arrays and their overall values. Heretofore, this work has not been
+      incorporated into the compiler, but in the future it will serve as the
+      basis for a number of planned compiler passes.
+    </para>
+    <para>
+      Timothy Budd implemented an APL compiler for a traditional APL system
+      that he describes in <quote>An APL Compiler</quote>. The work presents
+      a unique and interesting approach to reducing computation on arrays
+      by lazily executing computations. Budd's compiler delayed computation
+      until the point at which the program requested the value. As in most
+      traditional APL compilers, the language of the compiler does not match
+      directly with the semantics of normal APL programs of the time. Budd's
+      compiler also managed allocation without requiring a garbage collector.
+    </para>
+    <para>
+      Bob Bernecky implemented the APEX compiler, which perhaps best represents
+      the traditional APL compiler. It has useful passes, such as data flow
+      analysis and static single assignment. Moreover, Bernecky details an
+      approach at introducing parallelism into the compiler itself. While the
+      APEX compiler is not self-hosting, the efforts to introduce a parallel
+      expression of the compiler passes should inform the design of the Co-dfns
+      passes and their design. The APEX compiler does suffer from a strong
+      number of restrictions, some of which could evaporate given enough
+      programmer effort. Both the APEX and Co-dfns compilers share some
+      restrictions, such as not allowing the dynamic fixing of new functions
+      at runtime. However, much more effort is made to ensure that existing
+      dfns programs in Dyalog will run without modification in the Co-dfns compiler
+      than the similar compatibility in the APEX compiler.
+    </para>
+    <para>
+      Dyalog has provided a good deal of input into the Co-dfns compiler, and
+      so it makes sense that the upcoming release of their interpreter begins
+      to implement some of the ideas embedded into the Co-dfns compiler. This
+      includes a facility for doing coarse-grained parallelism with futures,
+      but does not include any ability to do more refined concurrent operations
+      since the interpreter lacks single assignment arrays for synchronization;
+      the system itself makes not guarantees when effects occur in parallel.
+    </para>
+    <para>
+      A number of systems such as Manticore, ZPL, and Accelerate are able to
+      provide interesting implementation strategies for array programming,
+      each emphasizing different elements. They all take the overall approach
+      of altering the language design in favor of making certain features
+      prevalent. Accelerate, for instance, lifts rank to the type level,
+      meaning that shapes are no longer first class entities. ZPL uses a
+      more traditional language but enables predictable data layout for distributed
+      computing. Manticore takes advantage of the language and implemenation to
+      make heavy use of fusion and fision.
+    </para>
+    <para>
+      Eric Holk's Harlan system takes a unique approach. Targeting the GPU
+      explicitly, it tries to introduce traditional programming concepts as
+      native concepts on the GPU, so that traditional programs can run reasonably
+      on the GPU. This approach, instead of lifting array programming to the
+      general-purpose sphere, pulls general-purpose language constructs such as
+      ADTs into the GPU and array world through the use of region inference and
+      a number of other transformations. It also uses the NanoPass style of
+      compiler design and includes a macro system on top of it to reduce the
+      number of core forms for the compiler to deal with.
+    </para>
   </section>
   <section>
     <title>Moving Forward</title>
+    <para>
+      The current version of the compiler does not yet implement all of the
+      features of optimizations intended. The current development plan leads
+      to a self-hosting compiler that will run on the GPU and CPU.
+    </para>
+    <para>
+      The first optimization to integrate is scalar function fusion, which
+      improves the basic locality issues of scalar primitives.
+    </para>
+    <para>
+      The current compiler naively gives each named variable in
+      a scope its own frame. However, it is possible to reuse array space
+      for multiple variables that are not live at the same time. This has
+      additional benefits on cache locality and allocation overhead.
+      Furthermore, it is possible to push as much as possible to the result
+      array, so that as little new allocation as possible is done in a
+      given call frame, making tight loops even tighter. This will allow
+      many regular data applications to operate without every doing any
+      allocation outside of the first initial setup.
+    </para>
+    <para>
+      Using shape analysis on the arrays, the compiler can determine ahead
+      of time the size and shape of many arrays, and do this allocation well
+      in advance of the computation. This in itself may not help, but these
+      allocations may be lifted outside of a function, allowing a previous
+      copying operation to occur as a mutation of an existing array instead.
+      On benchmarks like the Graph500 this can save copying overhead in
+      tight loops and make GPU performance much better.
+    </para>
+    <para>
+      In order for the compiler to be truly useful, however, the rest of
+      the dfns language must be implemented. This will allow a much greater
+      range of benchmarks, and will allow real user testing and deployment.
+    </para>
+    <para>
+      Looking far into the future, static assertions in the form of a
+      dependent type system could provide for a great deal of information
+      on which to make good compiler optimizations. This holds much potential,
+      but remains a far reaching goal while the compiler remains in an
+      incomplete state.
+    </para>
   </section>
   <section>
     <title>Conclusion</title>
+    <para></para>
   </section>
+  <section>
+    <title>Acknowledgments</title>
+    <para>
+      Bob Bernecky provided excellent insight into the state of APL
+      compilation. Dyalog, Ltd. has provided gracious funding for the
+      development of this compiler.
+    </para>
+  </section>
+  <appendix>
+    <title>Demo description</title>
+    <para>
+      Description of the demo of the tool.
+    </para>
+  </appendix>
+  <appendix>
+    <title>APL Primitives</title>
+    <para>
+      A simple cheat sheet for what all the APL primitives do.
+    </para>
+  </appendix>
+  <appendix>
+    <title>Full MG Benchmark Code</title>
+    <para>
+      The full code for the MG Benchmark.
+    </para>
+  </appendix>
+  <appendix>
+    <title>Full Graph500 Benchmark Code</title>
+    <para>
+      The full code for the Graph500 Benchmark.
+    </para>
+  </appendix>
 </article>
