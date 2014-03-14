@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <title>Ancient Language, Modern Compiler</title>
+    <author>
+      <personname>Aaron W. Hsu</personname>
+      <affiliation><orgname>Indiana University</orgname></affiliation>
+      <email>awhsu@indiana.edu</email>
+    </author>
+    <date>Thursday, March 13th, 2014</date>
+    <abstract>
+      <para>
+        APL started it all; a venerable and infamous language,
+        APL enabled the domain expert and non-programmer to
+        solve problems quickly and manipulate data more productively
+        than the languages of the day. To this day, however, languages
+        like R, Matlab, and modern APL do not have compilers, and
+        users suffer from the lack of interpreter scalability.
+        Modern architectures present new challenges for aging array platforms
+        and new opportunities for compilation and performance gains.
+        By combining innovations in the APL language with a modular,
+        memory-centric compiler design, the Co-dfns compiler delivers
+        a modern compiler and development platform that enables
+        existing users of APL to quickly benefit from compilation, while
+        scaling  to handle large scale, general-purpose APL
+        applications. The compiler design allows for high-level optimization
+        of programs to target the GPU and multi-core systems without
+        requiring performance tuning at lower-levels of abstraction.
+        It also targets irregular algorithms, such as graph traversals,
+        encouraging the broader use of high-level languages in areas
+        traditionally dominated by very hand-tuned C/C++.
+      </para>
+    </abstract>
+  </info>
+  <section>
+    <title>Introduction</title>
+    <para>
+      General purpose array languages, such as Matlab and Dyalog APL
+      excel at delivering a productive environment for domain experts to
+      solve problems rapidly and with a high degree of precision. Focusing
+      specifically on the APL language, a number of language features
+      support the domain expert:
+    </para>
+    <orderedlist>
+      <listitem>
+        <para>
+          APL is a mathematical style notation which maps well to
+          mathematical formulae
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          APL provides a rapid feedback cycle with good integration of
+          visualization and data exploration
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          APL enables a very concise representation of complex
+          computation without complicated control flow or data types.
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          APL supports useful abstractions such as higher-order programming
+          and first-class indexing of arrays, which support rich views of
+          data and manipulations of that data.
+        </para>
+      </listitem>
+    </orderedlist>
+    <para>
+      Increasingly large data sets and the advancements of modern hardware
+      have brought to light a glaring weakness in existing array programming
+      platforms such as Dyalog APL: they fail to scale well to massively parallel
+      systems or for very high-performance numeric computations. To be sure,
+      compared to many modern programming environments, APL performs remarkably
+      well. However, the limitations of existing commercial and industrial strength
+      APL systems prevents the sort of scaling now desirable with ready access
+      to GPUs and distributed systems. Much of this scalability comes from the
+      interpreted nature of the existing industrial APL implementations.
+    </para>
+    <para>
+      Interpretation traditionally delivered important benefits to the APL language,
+      including a degree of interactivity that did not exist in batch-compiled
+      systems. Modern compilers, however, can compile quickly and online in such
+      a way that the same interactivity gains exist, without the corresponding
+      performance costs. Worse, interpretation makes it difficult to ensure certain
+      constraints on execution required for good performance on modern systems,
+      including memory management and locality.
+    </para>
+    <para>
+      Traditionally, even the APL language presented challenges to compilation, with
+      things like dynamic scope making useful compiler analysis difficult, at best,
+      and a non-starter at worse. Thanks to work by John Scholes and others, this
+      problem is disappearing rapidly; a new breed of APL is emerging as an alternative
+      to traditional APL that greatly improves the compilation story.
+    </para>
+    <para>
+      Existing efforts to design compilers for array languages sail frustratingly
+      close to the conservative coastline of small, embedded languages, or else they
+      deliver a language vastly different than the languages used by experts in the field.
+      They often emphasize a limitation of features to improve compiler performance on
+      one or more hardware platforms, an unacceptable trade-off for general-purpose
+      array programming systems such as Dyalog APL.
+      This presents an opportunity to pursue a new compiler that leverages modern
+      advancements in compiler modularity, and targeting the specific challenges and
+      platforms that seem to deliver the most promise for array languages and scaling
+      their performance.
+    </para>
+    <para>
+      The Co-dfns compiler strives to deliver an easy to use, modular, and scalable platform
+      for compiling array languages. It specifically targets the dfns language subset of
+      Dyalog APL extended with primitives to enable an implicit, predictable task parallelism
+      that provides determinism without complicated control constructs that would otherwise
+      make the system inaccessible to domain experts. It relies on the LLVM system for traditional
+      compiler optimizations and instead emphasizes higher-level optimizations
+      centering around memory layout and locality. It currently targets GPUs and multi-core CPUs
+      with an eye towards distributed computing platforms.
+    </para>
+    <para>
+      The current version of the compiler leverages features of the Co-dfns language to enable
+      three optimizations designed as first steps towards more scalable performance in array
+      languages, in particular, the array mutation and assignment semantics and a stack
+      discipline on function definitions and scopes obviates the need for garbage collection,
+      enabling careful memory managment directly at compile time. This stack discipline also
+      allows for the implementation of nested, higher-order functions without the need for
+      allocating closures, which permits a one to one mapping of co-dfns functions and llvm
+      functions. This has a number of positive benefits in terms of usability and performance.
+      Finally, because of the nature of the APL expression language, scalar function fusion
+      promotes better cache behavior in the system and tackles one of the major
+      sources of performance bottlenecks found during testing of the Dyalog APL system.
+      These give a taste of the sort of optimizations the Co-dfns compiler emphasizes, with
+      more planned.
+    </para>
+    <para>
+      The compiler uses various runtime implementations of the primitives to target either
+      CPU or GPU execution of the primitives. Further development plans aim to integrate these behaviors
+      into the compiler itself and reduce the amount of dependence on runtime implementation
+      of features for different targets.
+    </para>
+  </section>
+  <section>
+    <title>Background</title>
+  </section>
+  <section>
+    <title>Language Innovations</title>
+  </section>
+  <section>
+    <title>Evaluation</title>
+  </section>
+  <section>
+    <title>Implementation</title>
+  </section>
+  <section>
+    <title>Benchmarking</title>
+  </section>
+  <section>
+    <title>Related Work</title>
+  </section>
+  <section>
+    <title>Moving Forward</title>
+  </section>
+  <section>
+    <title>Conclusion</title>
+  </section>
+</article>
