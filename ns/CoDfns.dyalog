@@ -1515,35 +1515,12 @@ GenFnTmpl←{
   fr bldr (env0 ⍺)                 ⍝ Return Fn, Builder, and Frame Pointer
 }
 
-⍝ GetExpr
-⍝
-⍝ Intended Function: Convert an Expression node into an LLVM Value
-⍝
-⍝ Right argument: (Bound Names)(Name Values)
-⍝ Left Argument: Expression node
-⍝ Left Operand: LLVM Module
-⍝ Output: (LLVM Value)(Bound Names)(Name Values)
-
-GetExpr←{
-  ⍝ When there are no names to bind, the return is simple.
-  ⍝ At this point, we know that all expressions must be
-  ⍝ references to global bindings.
-  1=⍴Vs←'name'Prop ⍺:⍵,⍨GetNamedGlobal ⍺⍺ (⊃Vs)
-
-  ⍝ In the binding case, we need to take the names to be
-  ⍝ bound and associate each of those names with the global
-  ⍝ in our environment.
-  e←GetNamedGlobal ⍺⍺ (⊃⌽Vs)
-  nu←(B/2≠/' '=' ',nu)⊂(B←' '≠nu)/nu←⊃Vs
-  (e)(k,nu)(v,e⍴⍨⍴nu)⊣k v←⍵
-}
-
 ⍝ LookupExpr
 ⍝
 ⍝ Intended Function: Given an environment and a name, find the
 ⍝ LLVM Value Ref for that name.
 
-LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr←⍺⍺
+LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr bld _←⍺⍺ ⋄ node←⍵
   nam←⊃'name'Prop ⍵                 ⍝ Variable's name
   (i←nm⍳⊂nam)<≢nm:(i⊃vl),nm vl      ⍝ Environment contains binding, use it
   eid←⍎⊃'env'Prop ⍵                 ⍝ Variable's Environment
@@ -1566,7 +1543,7 @@ LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr←⍺⍺
 
 GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
   te←⊃k←1 Kids ⍺                      ⍝ Children and test expression
-  te nm vl←⍵(mod fr LookupExpr)1↑1↓te ⍝ Find ValueRef of test expression
+  te nm vl←⍵(⍺⍺ LookupExpr)1↑1↓te     ⍝ Find ValueRef of test expression
   gp←BuildStructGEP bldr te 4 ''      ⍝ Get data values pointer
   tp←BuildLoad bldr gp 'tp'           ⍝ Load data values
   ap←ArrayType Int64Type 1            ⍝ Type of an Array
@@ -1590,15 +1567,51 @@ GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
 ⍝ GenExpr
 ⍝
 ⍝ Intended Function: Generate an Expression, named or unnamed.
-⍝
-⍝ Right Argument: (Bound names)(Name values)
-⍝ Left Argument: Expression node to generate
-⍝ Left Operand: (LLVM Module)(LLVM Function Reference)(LLVM Builder)
-⍝ Output: (Bound Names)(Name Values)
 
-GenExpr←{mod _ bldr env0←⍺⍺
-  1=⍴'name'Prop ⍺:⍵⊣BuildRet bldr,⊃⍺(mod GetExpr)⍵
-  1↓⍺(mod GetExpr)⍵
+GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
+  gnf←{GetNamedFunction mod ⍵}          ⍝ Convenience function
+  call←{BuildCall bldr ⍺⍺ ⍵ (≢⍵) ''}    ⍝ Op to build call
+  cpf←gnf 'array_cp'                    ⍝ Foreign copy function
+  cpy←{cpf call ⍺ ⍵}                    ⍝ Copy wrapper
+  gret←{GetParam ⍵ 0}                   ⍝ Fn to get result array
+  gloc←{BuildStructGEP bldr(⊃env0)⍺ ⍵}  ⍝ Fn to get local variable
+  fin←{                                 ⍝ Fn to finish expression
+    0=≢nm:bldr(mod MkRet)env0           ⍝ Return if unnamed
+    0=≢⍺:⍬                              ⍝ Nothing to copy, return
+    ⍺ cpy¨⍵                             ⍝ Copy multiple assignments
+  }
+  fen←{                                 ⍝ Function to get environment
+    fd←-(CountParams ⍵)-3               ⍝ Depth of callee
+    cd←(CountParams ⍵)-3                ⍝ Depth of caller
+    fd↑(⊃env0),fr GetParam¨2+⍳cd        ⍝ Grab from the top down
+  }
+  cls←⊃'class'Prop 1↑⍺                  ⍝ Node Class
+  nm←Split ⊃'name'Prop 1↑⍺              ⍝ Assignment variables
+  sl←⍕¨Split ⊃'slots'Prop 1↑⍺           ⍝ Slots for variable assignments
+  tgt←sl{0=≢⍵:gret fr ⋄ ⍺ gloc¨⍵}nm     ⍝ Target Value Refs for assignment
+  tgh←⊃tgt ⋄ tgr←1↓tgt                  ⍝ Split into head and rest targets
+  'atomic'≡cls:⍺(⍺⍺{                    ⍝ Atomic: Var Reference
+    av nm vl←⍵(⍺⍺ LookupExpr)1↑1↓⍺      ⍝ Lookup variable
+    _←tgt fin av                        ⍝ Copy everything
+    nm vl                               ⍝ Return new environment
+  })⍵
+  'monadic'≡cls:⍺(⍺⍺{                   ⍝ Monadic: FnVar ArVar
+    lft←GenNullArrayPtr⍬                ⍝ Null left argument
+    fn←gnf⊃'name'Prop 1↑2↓⍺             ⍝ Grab function reference
+    rgt nm vl←⍵(⍺⍺ LookupExpr)1↑4↓⍺     ⍝ Right argument is second child
+    _←fn Call tgh,lft,rgt,fen fn        ⍝ Call with environment
+    _←tgr fin tgh                       ⍝ Finish by copying head to rest
+    nm vl                               ⍝ New environment return
+  })⍵
+  'dyadic'≡cls:⍺(⍺⍺{                    ⍝ Dyadic: Var Fn Var
+    lft nm vl←⍵(⍺⍺ LookupExpr)1↑2↓⍺     ⍝ Left argument is first child
+    fn←gnf⊃'name'Prop 1↑4↓⍺             ⍝ Function is second argument
+    rgt nm vl←nm vl(⍺⍺ LookupExpr)1↑6↓⍺ ⍝ Right argument is third child
+    _←fn Call tgh,lft,rgt,fen fn        ⍝ Call with environment
+    _←tgr fin tgh                       ⍝ Copy head to rest
+    nm vl                               ⍝ REturn environment
+  })⍵
+  'BAD CLASS'⎕SIGNAL 99                 ⍝ Error trap just in case
 }
 
 ⍝ MkRet
