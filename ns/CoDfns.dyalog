@@ -98,9 +98,11 @@ ModToNS←{
 ⍝ array suitable for use in the Dyalog APL Interpreter.
 
 ConvertArray←{
-  s←FFIGetSize ⍵       ⍝ We have only vectors and scalars right now
-  d←⊃FFIGetDataInt s ⍵ ⍝ So we only need the ravel of the data
-  ((2≤s)⊃⍬ s)⍴d        ⍝ We can reshape based on the size
+  s←FFIGetSize ⍵       ⍝ Get the number of data elements
+  d←⊃FFIGetDataInt s ⍵ ⍝ We assume that we have only integer types
+  r←FFIGetRank ⍵       ⍝ Get the number of shape elements
+  p←⊃FFIGetShape r ⍵   ⍝ Get the shapes
+  p⍴d                  ⍝ Reshape based on shape
 }
 
 ⍝ ModToObj
@@ -1877,8 +1879,14 @@ P←'LLVM'
 ⍝ void FFIGetDataInt (int64_t **res, struct codfns_array *)
 'FFIGetDataInt'⎕NA R,'|FFIGetDataInt >I8[] P'
 
+⍝ void FFIGetShape (uint32_t **res, struct codfns_array *)
+'FFIGetShape'⎕NA R,'|FFIGetShape >U4[] P'
+
 ⍝ uint64_t FFIGetSize (struct codfns_array *)
 'FFIGetSize'⎕NA 'U8 ',R,'|FFIGetSize P'
+
+⍝ uint16_t FFIGetRank (struct codfns_array *)
+'FFIGetRank'⎕NA 'U2 ',R,'|FFIGetRank P'
 
 ⍝ void *memcpy(void *dst, void *src, size_t size)
 'cstring'⎕NA'libc.so.6|memcpy >C[] P P'

@@ -11,4 +11,6 @@ struct codfns_array {
 };
 
 uint64_t FFIGetSize(struct codfns_array *);
+uint16_t FFIGetRank(struct codfns_array *);
 void FFIGetDataInt(int64_t **, struct codfns_array *);
+void FFIGetShape(uint32_t **, struct codfns_array *);
