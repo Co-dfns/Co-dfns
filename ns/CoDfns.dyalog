@@ -78,11 +78,21 @@ ModToNS←{
   jc←CreateJITCompilerForModule jc    ⍝ Make JIT compiler
   0≠⊃jc:(ErrorMessage ⊃⌽jc)⎕SIGNAL 99 ⍝ Error handling, C style
   ee←1⊃jc                             ⍝ Extract exec engine on success
+  syserr←{'FFI ERROR'⎕SIGNAL 99}
   fn←{                                ⍝ Op to build ns functions
-    z←RunFunction ⍺⍺ ⍵⍵ 0 0           ⍝ Eval function in module
-    z←GenericValueToPointer z         ⍝ Get something we can use
-    Z←ConvertArray z                  ⍝ Get it into Dyalog format
-    z⊣DisposeGenericValue z           ⍝ Clean memory and return
+    0≠⊃zp←FFIMakeArray 1,4⍴0:syserr⍬  ⍝ Temporary result array
+    lp←(≢⍴⍺)(≢,⍺)(⍴⍺)(,⍺)             ⍝ Fields of left argument
+    0≠⊃lp←FFIMakeArray 1,lp:syserr⍬   ⍝ Array to match left argument
+    rp←(≢⍴⍵)(≢,⍵)(⍴⍵)(,⍵)             ⍝ Fields of right argument
+    0≠⊃rp←FFIMakeArray 1,rp:syserr⍬   ⍝ Array to match right argument
+    args←1⊃¨zp lp rp                  ⍝ Pass only the res, left and right args
+    z←RunFunction ⍺⍺ ⍵⍵ 3 args        ⍝ Eval function in module
+    z←GenericValueToInt z 1           ⍝ Get something we can use
+    0≠z:⎕SIGNAL z                     ⍝ Signal an error if there is one
+    res←ConvertArray ⊃args            ⍝ Convert result array
+    _←array_free¨args                 ⍝ Free up the arrays
+    _←free¨args                       ⍝ Free up the array headers
+    res⊣DisposeGenericValue z         ⍝ Clean return value and return
   }
   fp←{                                ⍝ Fn to get function pointer
     c fpv←FindFunction ee ⍵ 1         ⍝ Get function from LLVM Module
@@ -1865,6 +1875,9 @@ P←'LLVM'
 ⍝ void * LLVMGenericValueToPointer (LLVMGenericValueRef GenVal)
 'GenericValueToPointer'⎕NA'P ',ExEng,'|',P,'GenericValueToPointer P'
 
+⍝ void * LLVMGenericValueToPointer (LLVMGenericValueRef GenVal)
+'GenericValueToInt'⎕NA'I ',ExEng,'|',P,'GenericValueToInt P I'
+
 ⍝ void LLVMDisposeGenericValue (LLVMGenericValueRef GenVal)
 'DisposeGenericValue'⎕NA ExEng,'|',P,'DisposeGenericValue P'
 
@@ -1897,11 +1910,20 @@ P←'LLVM'
 ⍝ uint16_t FFIGetRank (struct codfns_array *)
 'FFIGetRank'⎕NA 'U2 ',R,'|FFIGetRank P'
 
+⍝ int FFIMakeArray(struct codfns_array **, uint16_t, uint64_t, uint32_t *, int64_t *)
+'FFIMakeArray'⎕NA 'I ',R,'|FFIMakeArray >P U2 U8 <U4[] <I8[]'
+
+⍝ void array_free(struct codfns_array *)
+'array_free'⎕NA R,'|array_free P'
+
 ⍝ void *memcpy(void *dst, void *src, size_t size)
 'cstring'⎕NA'libc.so.6|memcpy >C[] P P'
 
 ⍝ size_t strlen(char *str)
 'strlen'⎕NA'P libc.so.6|strlen P'
+
+⍝ void free(void *)
+'free'⎕NA 'libc.so.6|free P'
 
 ∇
 
