@@ -1647,7 +1647,17 @@ GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
 ⍝ in an LLVM Module.
 
 GenRuntime←{
-  'NOT IMPLEMENTED YET'⎕SIGNAL 99
+  two←GenFuncType ¯1
+  std←GenFuncType 0
+  add←⍵ {AddFunction ⍺⍺ ⍵ ⍺}
+  _←two add¨'array_cp' 'array_free'
+  rt←'apl_plus' 'apl_minus' 'apl_div'
+  rt,←'apl_times' 'apl_residue' 'apl_exp'
+  rt,←'apl_log' 'apl_max' 'apl_min' 'apl_lessthan'
+  rt,←'apl_lessthaneq' 'apl_equal' 'apl_noteq'
+  rt,←'apl_greaterthan' 'apl_greatthaneq'
+  _←std add¨rt
+  0 0⍴⍬
 }
 
 ⍝ Foreign Functions
@@ -2085,3 +2095,6 @@ P←'LLVM'
 ⍝ 15. Update Software Architecture to include new attributes that were added
 ⍝
 ⍝ 16. Update ConvertArray to handle higher-ranked arrays
+⍝
+⍝ 17. Update FFI declarations to use multiple libraries so that things work on
+⍝     OpenSuse
