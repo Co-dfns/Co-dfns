@@ -11,6 +11,11 @@
 Target←'X86'
 TargetTriple←'x86_64-slackware-linux-gnu'
 CoDfnsRuntime←'runtime/libcodfns.so'
+LLVMCore←'libLLVMCore.so'
+LLVMExecutionEngine←'libLLVMExecutionEngine.so'
+LLVMX86Info←'libLLVMX86Info.so'
+LLVMX86CodeGen←'libLLVMX86CodeGen.so'
+LLVMX86Desc←'libLLVMX86Desc.so'
 
 ⍝ Fix
 ⍝
@@ -1287,7 +1292,7 @@ LiftFuncs←{
 ⍝ runtime variable references.
 
 ConvPrims←{ast←⍵
-  pl←'+-÷×|*⍟⌈⌊<≤=≠≥>                 ⍝ Primitives
+  pl←'+-÷×|*⍟⌈⌊<≤=≠≥>'                ⍝ Primitives
   cl←'apl_plus' 'apl_minus' 'apl_div' ⍝ Foreign equivalents
   cl,←'apl_times' 'apl_residue'
   cl,←'apl_exp' 'apl_log' 'apl_max'
@@ -1689,192 +1694,196 @@ GenRuntime←{
 
 ⍝ Foreign Functions
 
-∇{Z}←FFI∆INIT;P;D;R
+∇{Z}←FFI∆INIT;P;Core;ExEng;X86Info;X86CodeGen;X86Desc;R
 Z←⍬
-D←'libLLVM-3.3.so'
+Core←LLVMCore
+ExEng←LLVMExecutionEngine
+X86Info←LLVMX86Info
+X86CodeGen←LLVMX86CodeGen
+X86Desc←LLVMX86Desc
 R←CoDfnsRuntime
 P←'LLVM'
 
 ⍝ LLVMTypeRef LLVMInt8Type (void)
-'Int8Type'⎕NA 'P ',D,'|',P,'Int8Type'
+'Int8Type'⎕NA 'P ',Core,'|',P,'Int8Type'
 
 ⍝ LLVMTypeRef  LLVMInt16Type (void)
-'Int16Type'⎕NA 'P ',D,'|',P,'Int16Type'
+'Int16Type'⎕NA 'P ',Core,'|',P,'Int16Type'
 
 ⍝ LLVMTypeRef  LLVMInt32Type (void)
-'Int32Type'⎕NA 'P ',D,'|',P,'Int32Type'
+'Int32Type'⎕NA 'P ',Core,'|',P,'Int32Type'
 
 ⍝ LLVMTypeRef  LLVMInt64Type (void)
-'Int64Type'⎕NA 'P ',D,'|',P,'Int64Type'
+'Int64Type'⎕NA 'P ',Core,'|',P,'Int64Type'
 
 ⍝ LLVMTypeRef
 ⍝ LLVMFunctionType (LLVMTypeRef ReturnType,
 ⍝    LLVMTypeRef *ParamTypes, unsigned ParamCount, LLVMBool IsVarArg)
-'FunctionType'⎕NA 'P ',D,'|',P,'FunctionType P <P[] U I'
+'FunctionType'⎕NA 'P ',Core,'|',P,'FunctionType P <P[] U I'
 
 ⍝ LLVMTypeRef
 ⍝ LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed)
-'StructType'⎕NA 'P ',D,'|',P,'StructType <P[] U I'
+'StructType'⎕NA 'P ',Core,'|',P,'StructType <P[] U I'
 
 ⍝ LLVMPointerType (LLVMTypeRef ElementType, unsigned AddressSpace)
-'PointerType'⎕NA 'P ',D,'|',P,'PointerType P U'
+'PointerType'⎕NA 'P ',Core,'|',P,'PointerType P U'
 
 ⍝ LLVMTypeRef 	LLVMArrayType (LLVMTypeRef ElementType, unsigned ElementCount)
-'ArrayType'⎕NA'P ',D,'|',P,'ArrayType P U'
+'ArrayType'⎕NA'P ',Core,'|',P,'ArrayType P U'
 
 ⍝ LLVMValueRef  LLVMConstInt (LLVMTypeRef IntTy, unsigned long long N, LLVMBool SignExtend)
-'ConstInt'⎕NA 'P ',D,'|',P,'ConstInt P U8 I'
+'ConstInt'⎕NA 'P ',Core,'|',P,'ConstInt P U8 I'
 
 ⍝ LLVMValueRef  LLVMConstIntOfString (LLVMTypeRef IntTy, const char *Text, uint8_t Radix)
-'ConstIntOfString'⎕NA 'P ',D,'|',P,'ConstIntOfString P <0C[] U8'
+'ConstIntOfString'⎕NA 'P ',Core,'|',P,'ConstIntOfString P <0C[] U8'
 
 ⍝ LLVMValueRef
 ⍝ LLVMConstArray (LLVMTypeRef ElementTy, LLVMValueRef *ConstantVals, unsigned Length)
-'ConstArray'⎕NA 'P ',D,'|',P,'ConstArray P <P[] U'
+'ConstArray'⎕NA 'P ',Core,'|',P,'ConstArray P <P[] U'
 
 ⍝ LLVMValueRef 	LLVMConstPointerNull (LLVMTypeRef Ty)
-'ConstPointerNull'⎕NA'P ',D,'|',P,'ConstPointerNull P'
+'ConstPointerNull'⎕NA'P ',Core,'|',P,'ConstPointerNull P'
 
 ⍝ LLVMValueRef  LLVMAddGlobal (LLVMModuleRef M, LLVMTypeRef Ty, const char *Name)
-'AddGlobal'⎕NA 'P ',D,'|',P,'AddGlobal P P <0C[]'
+'AddGlobal'⎕NA 'P ',Core,'|',P,'AddGlobal P P <0C[]'
 
 ⍝ void  LLVMSetInitializer (LLVMValueRef GlobalVar, LLVMValueRef ConstantVal)
-'SetInitializer'⎕NA '',D,'|',P,'SetInitializer P P'
+'SetInitializer'⎕NA '',Core,'|',P,'SetInitializer P P'
 
 ⍝ LLVMValueRef  LLVMAddFunction (LLVMModuleRef M, const char *Name, LLVMTypeRef FunctionTy)
-'AddFunction'⎕NA 'P ',D,'|',P,'AddFunction P <0C[] P'
+'AddFunction'⎕NA 'P ',Core,'|',P,'AddFunction P <0C[] P'
 
 ⍝ LLVMValueRef  LLVMGetNamedGlobal (LLVMModuleRef M, const char *Name)
-'GetNamedGlobal'⎕NA 'P ',D,'|',P,'GetNamedGlobal P <0C[]'
+'GetNamedGlobal'⎕NA 'P ',Core,'|',P,'GetNamedGlobal P <0C[]'
 
 ⍝ LLVMValueRef 	LLVMGetNamedFunction (LLVMModuleRef M, const char *Name)
-'GetNamedFunction'⎕NA 'P ',D,'|',P,'GetNamedFunction P <0C[]'
+'GetNamedFunction'⎕NA 'P ',Core,'|',P,'GetNamedFunction P <0C[]'
 
 ⍝ LLVMBasicBlockRef  LLVMAppendBasicBlock (LLVMValueRef Fn, const char *Name)
-'AppendBasicBlock'⎕NA 'P ',D,'|',P,'AppendBasicBlock P <0C[]'
+'AppendBasicBlock'⎕NA 'P ',Core,'|',P,'AppendBasicBlock P <0C[]'
 
 ⍝ LLVMBuilderRef  LLVMCreateBuilder (void)
-'CreateBuilder'⎕NA 'P ',D,'|',P,'CreateBuilder'
+'CreateBuilder'⎕NA 'P ',Core,'|',P,'CreateBuilder'
 
 ⍝ void  LLVMPositionBuilderAtEnd (LLVMBuilderRef Builder, LLVMBasicBlockRef Block)
-'PositionBuilderAtEnd'⎕NA 'P ',D,'|',P,'PositionBuilderAtEnd P P'
+'PositionBuilderAtEnd'⎕NA 'P ',Core,'|',P,'PositionBuilderAtEnd P P'
 
 ⍝ LLVMValueRef  LLVMBuildRet (LLVMBuilderRef, LLVMValueRef V)
-'BuildRet'⎕NA'P ',D,'|',P,'BuildRet P P'
+'BuildRet'⎕NA'P ',Core,'|',P,'BuildRet P P'
 
 ⍝ LLVMValueRef 	LLVMBuildRetVoid (LLVMBuilderRef)
-'BuildRetVoid'⎕NA'P ',D,'|',P,'BuildRetVoid P'
+'BuildRetVoid'⎕NA'P ',Core,'|',P,'BuildRetVoid P'
 
 ⍝ LLVMValueRef
 ⍝ LLVMBuildCondBr (LLVMBuilderRef, LLVMValueRef If, LLVMBasicBlockRef Then,
 ⍝     LLVMBasicBlockRef Else)
-'BuildCondBr'⎕NA'P ',D,'|',P,'BuildCondBr P P P P'
+'BuildCondBr'⎕NA'P ',Core,'|',P,'BuildCondBr P P P P'
 
 ⍝ LLVMValueRef
 ⍝ LLVMBuildCall (LLVMBuilderRef, LLVMValueRef Fn,
 ⍝     LLVMValueRef *Args, unsigned NumArgs, const char *Name)
-'BuildCall'⎕NA'P ',D,'|',P,'BuildCall P P <P[] U <0C'
+'BuildCall'⎕NA'P ',Core,'|',P,'BuildCall P P <P[] U <0C'
 
 ⍝ void  LLVMDisposeBuilder (LLVMBuilderRef Builder)
-'DisposeBuilder'⎕NA 'P ',D,'|',P,'DisposeBuilder P'
+'DisposeBuilder'⎕NA 'P ',Core,'|',P,'DisposeBuilder P'
 
 ⍝ LLVMValueRef
 ⍝ LLVMConstStruct (LLVMValueRef *ConstantVals, unsigned Count, LLVMBool Packed)
-'ConstStruct'⎕NA'P ',D,'|',P,'ConstStruct <P[] U I'
+'ConstStruct'⎕NA'P ',Core,'|',P,'ConstStruct <P[] U I'
 
 ⍝ LLVMValueRef 	LLVMBuildAlloca (LLVMBuilderRef, LLVMTypeRef Ty, const char *Name)
-'BuildAlloca'⎕NA'P ',D,'|',P,'BuildAlloca P P <0C'
+'BuildAlloca'⎕NA'P ',Core,'|',P,'BuildAlloca P P <0C'
 
 ⍝ LLVMValueRef 	LLVMBuildLoad (LLVMBuilderRef, LLVMValueRef PointerVal, const char *Name)
-'BuildLoad'⎕NA'P ',D,'|',P,'BuildLoad P P <0C'
+'BuildLoad'⎕NA'P ',Core,'|',P,'BuildLoad P P <0C'
 
 ⍝ LLVMValueRef 	LLVMBuildStore (LLVMBuilderRef, LLVMValueRef Val, LLVMValueRef Ptr)
-'BuildStore'⎕NA'P ',D,'|',P,'BuildStore P P P'
+'BuildStore'⎕NA'P ',Core,'|',P,'BuildStore P P P'
 
 ⍝ LLVMBasicBlockRef 	LLVMGetInsertBlock (LLVMBuilderRef Builder)
-'GetInsertBlock'⎕NA'P ',D,'|',P,'GetInsertBlock P'
+'GetInsertBlock'⎕NA'P ',Core,'|',P,'GetInsertBlock P'
 
 ⍝ LLVMValueRef 	LLVMGetLastInstruction (LLVMBasicBlockRef BB)
-'GetLastInstruction'⎕NA'P ',D,'|',P,'GetLastInstruction P'
+'GetLastInstruction'⎕NA'P ',Core,'|',P,'GetLastInstruction P'
 
 ⍝ LLVMBasicBlockRef 	LLVMGetPreviousBasicBlock (LLVMBasicBlockRef BB)
-'GetPreviousBasicBlock'⎕NA'P ',D,'|',P,'GetPreviousBasicBlock P'
+'GetPreviousBasicBlock'⎕NA'P ',Core,'|',P,'GetPreviousBasicBlock P'
 
 ⍝ LLVMValueRef
 ⍝ LLVMBuildStructGEP (LLVMBuilderRef B, LLVMValueRef Pointer, unsigned Idx, const char *Name)
-'BuildStructGEP'⎕NA'P ',D,'|',P,'BuildStructGEP P P U <0C'
+'BuildStructGEP'⎕NA'P ',Core,'|',P,'BuildStructGEP P P U <0C'
 
 ⍝ LLVMValueRef
 ⍝ LLVMBuildGEP (LLVMBuilderRef B, LLVMValueRef Pointer, LLVMValueRef *Indices,
 ⍝     unsigned NumIndices, const char *Name)
-'BuildGEP'⎕NA'P ',D,'|',P,'BuildGEP P P <P[] U <0C'
+'BuildGEP'⎕NA'P ',Core,'|',P,'BuildGEP P P <P[] U <0C'
 
 ⍝ LLVMValueRef
 ⍝ LLVMBuildBitCast (LLVMBuilderRef, LLVMValueRef Val, LLVMTypeRef DestTy, const char *Name)
-'BuildBitCast'⎕NA'P ',D,'|',P,'BuildBitCast P P P <0C'
+'BuildBitCast'⎕NA'P ',Core,'|',P,'BuildBitCast P P P <0C'
 
 ⍝ LLVMValueRef
 ⍝ LLVMBuildICmp (LLVMBuilderRef, LLVMIntPredicate Op, LLVMValueRef LHS,
 ⍝     LLVMValueRef RHS, const char *Name)
-'BuildICmp'⎕NA'P ',D,'|',P,'BuildICmp P U P P <0C'
+'BuildICmp'⎕NA'P ',Core,'|',P,'BuildICmp P U P P <0C'
 
 ⍝ LLVMValueRef
 ⍝ LLVMBuildArrayAlloca (LLVMBuilderRef,
 ⍝     LLVMTypeRef Ty, LLVMValueRef Val, const char *Name)
-'BuildArrayAlloca'⎕NA'P ',D,'|',P,'BuildArrayAlloca P P P <0C'
+'BuildArrayAlloca'⎕NA'P ',Core,'|',P,'BuildArrayAlloca P P P <0C'
 
 ⍝ LLVMValueRef 	LLVMGetParam (LLVMValueRef Fn, unsigned Index)
-'GetParam'⎕NA'P ',D,'|',P,'GetParam P U'
+'GetParam'⎕NA'P ',Core,'|',P,'GetParam P U'
 
 ⍝ unsigned 	LLVMCountParams (LLVMValueRef Fn)
-'CountParams'⎕NA'U ',D,'|',P,'CountParams P'
+'CountParams'⎕NA'U ',Core,'|',P,'CountParams P'
 
 ⍝ LLVMBool
 ⍝ LLVMPrintModuleToFile (LLVMModuleRef M, const char *Filename, char **ErrorMessage)
-'PrintModuleToFile'⎕NA'I4 ',D,'|',P,'PrintModuleToFile P <0C >P'
+'PrintModuleToFile'⎕NA'I4 ',Core,'|',P,'PrintModuleToFile P <0C >P'
 
 ⍝ void LLVMDisposeMessage (char *Message)
-'DisposeMessage'⎕NA'',D,'|',P,'DisposeMessage P'
+'DisposeMessage'⎕NA'',Core,'|',P,'DisposeMessage P'
 
 ⍝ LLVMModuleRef LLVMModuleCreateWithName (const char *ModuleID)
-'ModuleCreateWithName'⎕NA'P ',D,'|',P,'ModuleCreateWithName <0C'
+'ModuleCreateWithName'⎕NA'P ',Core,'|',P,'ModuleCreateWithName <0C'
 
 ⍝ LLVMValueRef
 ⍝ LLVMAddAlias (LLVMModuleRef M, LLVMTypeRef Ty, LLVMValueRef Aliasee, const char *Name)
-'AddAlias'⎕NA'P ',D,'|',P,'AddAlias P P P <0C'
+'AddAlias'⎕NA'P ',Core,'|',P,'AddAlias P P P <0C'
 
 ⍝ LLVMBool
 ⍝ LLVMCreateJITCompilerForModule (LLVMExecutionEngineRef *OutJIT,
 ⍝     LLVMModuleRef M, unsigned OptLevel, char **OutError)
-'CreateJITCompilerForModule'⎕NA'I ',D,'|',P,'CreateJITCompilerForModule >P P U >P'
+'CreateJITCompilerForModule'⎕NA'I ',ExEng,'|',P,'CreateJITCompilerForModule >P P U >P'
 
 ⍝ LLVMGenericValueRef
 ⍝ LLVMRunFunction (LLVMExecutionEngineRef EE,
 ⍝     LLVMValueRef F, unsigned NumArgs, LLVMGenericValueRef *Args)
-'RunFunction'⎕NA'P ',D,'|',P,'RunFunction P P U <P[]'
+'RunFunction'⎕NA'P ',ExEng,'|',P,'RunFunction P P U <P[]'
 
 ⍝ void * LLVMGenericValueToPointer (LLVMGenericValueRef GenVal)
-'GenericValueToPointer'⎕NA'P ',D,'|',P,'GenericValueToPointer P'
+'GenericValueToPointer'⎕NA'P ',ExEng,'|',P,'GenericValueToPointer P'
 
 ⍝ void LLVMDisposeGenericValue (LLVMGenericValueRef GenVal)
-'DisposeGenericValue'⎕NA D,'|',P,'DisposeGenericValue P'
+'DisposeGenericValue'⎕NA ExEng,'|',P,'DisposeGenericValue P'
 
 ⍝ LLVMBool
 ⍝ LLVMFindFunction (LLVMExecutionEngineRef EE, const char *Name, LLVMValueRef *OutFn)
-'FindFunction'⎕NA'I ',D,'|',P,'FindFunction P <0C >P'
+'FindFunction'⎕NA'I ',ExEng,'|',P,'FindFunction P <0C >P'
 
 ⍝ void 	LLVMSetTarget (LLVMModuleRef M, const char *Triple)
-'SetTarget'⎕NA D,'|',P,'SetTarget P <0C'
+'SetTarget'⎕NA Core,'|',P,'SetTarget P <0C'
 
 ⍝ #define 	LLVM_TARGET(TargetName)   void LLVMInitialize##TargetName##TargetInfo(void);
 ⍝ #define 	LLVM_TARGET(TargetName)   void LLVMInitialize##TargetName##Target(void);
 ⍝ #define 	LLVM_TARGET(TargetName)   void LLVMInitialize##TargetName##TargetMC(void);
-('Initialize',Target,'TargetInfo')⎕NA D,'|',P,'Initialize',Target,'TargetInfo'
-('Initialize',Target,'Target')⎕NA D,'|',P,'Initialize',Target,'Target'
-('Initialize',Target,'TargetMC')⎕NA D,'|',P,'Initialize',Target,'TargetMC'
+('Initialize',Target,'TargetInfo')⎕NA X86Info,'|',P,'Initialize',Target,'TargetInfo'
+('Initialize',Target,'Target')⎕NA X86CodeGen,'|',P,'Initialize',Target,'Target'
+('Initialize',Target,'TargetMC')⎕NA X86Desc,'|',P,'Initialize',Target,'TargetMC'
 
 ⍝ void 	LLVMDumpModule (LLVMModuleRef M)
-'DumpModule'⎕NA D,'|',P,'DumpModule P'
+'DumpModule'⎕NA Core,'|',P,'DumpModule P'
 
 ⍝ void FFIGetDataInt (int64_t **res, struct codfns_array *)
 'FFIGetDataInt'⎕NA R,'|FFIGetDataInt >I8[] P'
