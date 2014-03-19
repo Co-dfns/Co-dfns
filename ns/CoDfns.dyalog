@@ -90,7 +90,7 @@ ModToNS←{
     'FUNCTION NOT FOUND'⎕SIGNAL 99    ⍝ System error on failure
   }
   addf←{                              ⍝ Fn to insert func into namespace
-    0=⊃⍴⍵:0                           ⍝ No name is no-op
+    ∧/' '=⍵:0                         ⍝ No name is no-op
     f←ee fn (fp ⍵)                    ⍝ Get function
     0⊣⍎'Ns.',⍵,'←f ⋄ 0'               ⍝ Store function using do oper trick
   }

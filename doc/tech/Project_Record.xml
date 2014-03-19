@@ -4,7 +4,7 @@
 	<info>
 		<title>Co-Dfns Project Record</title>
 		<author><personname>Aaron W. Hsu</personname></author>
-		<date>Monday, November 25th, 2013</date>
+		<date>Wednesday, March 19th, 2014</date>
 	</info>
 	<section>
 		<title>Chronological Journal</title>
@@ -265,7 +265,7 @@
                 Complete <citetitle>Usage Models</citetitle> for Increments 1 and 2
               </member>
               <member>
-                Generate <citetitle>Statistical Test Cases</citetitle> for 
+                Generate <citetitle>Statistical Test Cases</citetitle> for
                 Increments 1 and 2
               </member>
               <member>
@@ -462,6 +462,15 @@
               <member>
                 Aaron Hsu entering Increment 5 Design
               </member>
+            </simplelist>
+          </td>
+        </tr>
+        <tr>
+          <td>Wednesday, March 19th, 2014</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>Aaron Hsu exiting Increment 5 Design</member>
+              <member>Aaron Hsu entering Increment 5 Verification</member>
             </simplelist>
           </td>
         </tr>
