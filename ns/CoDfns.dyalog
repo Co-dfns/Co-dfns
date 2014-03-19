@@ -53,6 +53,7 @@ Compile←{
   ast←LiftBound     ast
   ast←AnchorVars    ast
   ast←LiftFuncs     ast
+  ast←ConvPrims     ast
   mod←GenLLVM       ast
   mod names
 }
@@ -1276,6 +1277,30 @@ LiftFuncs←{
   }
   z←(⌽1 Kids ⍵),⊂2⍴⊂MtAST          ⍝ Must traverse all top-level
   (1↑⍵)⍪⊃⍪/0 vis/z                 ⍝ Nodes just the same
+}
+
+⍝ ConvPrims
+⍝
+⍝ Intended Function: Convert all Primitive nodes to their appropriate
+⍝ runtime variable references.
+
+ConvPrims←{ast←⍵
+  pl←'+-÷×|*⍟⌈⌊<≤=≠≥>                 ⍝ Primitives
+  cl←'apl_plus' 'apl_minus' 'apl_div' ⍝ Foreign equivalents
+  cl,←'apl_times' 'apl_residue'
+  cl,←'apl_exp' 'apl_log' 'apl_max'
+  cl,←'apl_min' 'apl_lessthan'
+  cl,←'apl_lessthaneq' 'apl_equal'
+  cl,←'apl_noteq' 'apl_greaterthaneq'
+  cl,←⊂'apl_greatthan'
+  pm←(1⌷⍉⍵)∊⊂'Primitive'              ⍝ Mask of Primitive nodes
+  pn←⊃,/'name'Prop pm⌿⍵               ⍝ Primitive names
+  cn←(pl⍳pn)⊃¨⊂cl                     ⍝ Converted names
+  at←⊂1 2⍴'class' 'function'          ⍝ Class is function
+  at⍪¨←(⊂⊂'name'),∘⊂¨cn               ⍝ Use the converted name
+  vn←(⊂'Variable'),(⊂''),⍪at          ⍝ Build the basic node structure
+  ast⊣(pm⌿ast)←(pm/0⌷⍉⍵),vn           ⍝ Replace Primitive nodes
+
 }
 
 ⍝ GenLLVM
