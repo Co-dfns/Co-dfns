@@ -18,16 +18,18 @@ FFIGetRank(struct codfns_array *arr)
 }
 
 void
-FFIGetDataInt(int64_t **res, struct codfns_array *arr)
+FFIGetDataInt(int64_t *res, struct codfns_array *arr)
 {
-  *res = arr->elements;
+  memcpy(res, arr->elements, sizeof(int64_t) * arr->size);
+
   return;
 }
 
 void
-FFIGetShape(uint32_t **res, struct codfns_array *arr)
+FFIGetShape(uint32_t *res, struct codfns_array *arr)
 {
-  *res = arr->shape;
+  memcpy(res, arr->shape, sizeof(uint32_t) * arr->rank);
+
   return;
 }
 
@@ -44,10 +46,26 @@ FFIMakeArray(struct codfns_array **res,
     return 1;
   }
 
+  arr->elements = malloc(sizeof(int64_t) * sz);
+
+  if (arr->elements == NULL) {
+    perror("FFIMakeArray");
+    return 2;
+  }
+
+  arr->shape = malloc(sizeof(uint32_t) * rnk);
+
+  if (arr->shape == NULL) {
+    perror("FFIMakeArray");
+    return 3;
+  }
+
   arr->rank = rnk;
   arr->size = sz;
-  arr->shape = shp;
-  arr->elements = dat;
+
+  memcpy(arr->shape, shp, sizeof(uint32_t) * rnk);
+  memcpy(arr->elements, dat, sizeof(int64_t) * sz);
+
   *res = arr;
 
   return 0;

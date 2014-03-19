@@ -114,9 +114,9 @@ ModToNS←{
 
 ConvertArray←{
   s←FFIGetSize ⍵       ⍝ Get the number of data elements
-  d←⊃FFIGetDataInt s ⍵ ⍝ We assume that we have only integer types
+  d←FFIGetDataInt s ⍵  ⍝ We assume that we have only integer types
   r←FFIGetRank ⍵       ⍝ Get the number of shape elements
-  p←⊃FFIGetShape r ⍵   ⍝ Get the shapes
+  p←FFIGetShape r ⍵    ⍝ Get the shapes
   p⍴d                  ⍝ Reshape based on shape
 }
 
@@ -1898,10 +1898,10 @@ P←'LLVM'
 ⍝ void 	LLVMDumpModule (LLVMModuleRef M)
 'DumpModule'⎕NA Core,'|',P,'DumpModule P'
 
-⍝ void FFIGetDataInt (int64_t **res, struct codfns_array *)
+⍝ void FFIGetDataInt (int64_t *res, struct codfns_array *)
 'FFIGetDataInt'⎕NA R,'|FFIGetDataInt >I8[] P'
 
-⍝ void FFIGetShape (uint32_t **res, struct codfns_array *)
+⍝ void FFIGetShape (uint32_t *res, struct codfns_array *)
 'FFIGetShape'⎕NA R,'|FFIGetShape >U4[] P'
 
 ⍝ uint64_t FFIGetSize (struct codfns_array *)
