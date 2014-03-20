@@ -1019,8 +1019,8 @@
     <section>
       <title>AST Definition</title>
       <simpara>
-        Our AST encapsulates all of the data structures that we might want to use in the 
-        transfer of information two and from one pass to another. This includes the output 
+        Our AST encapsulates all of the data structures that we might want to use in the
+        transfer of information two and from one pass to another. This includes the output
         of the <function>Tokenize</function> pass.
       </simpara>
       <simpara>
@@ -1458,15 +1458,15 @@
               <member><literal>dyadic</literal></member>
               <member><literal>index</literal></member>
               <member><literal>assignment</literal></member>
-              </simplelist>. 
+              </simplelist>.
             The <parameter>comment</parameter>
             attribute may also be used to indicate the comment that
 	    appears on the same line as the expression.
-	    The <parameter>slots</parameter> attribute is a space 
-	    separated list of slots that should be the same length 
-	    as that of the <parameter>name</parameter> attribute. It 
-	    should indicate the slots corresponding to the variable 
-	    names the expression receives. 
+	    The <parameter>slots</parameter> attribute is a space
+	    separated list of slots that should be the same length
+	    as that of the <parameter>name</parameter> attribute. It
+	    should indicate the slots corresponding to the variable
+	    names the expression receives.
           </para>
         </formalpara>
         <simpara>
@@ -1492,23 +1492,23 @@
               <member><varname>FuncExpr</varname></member>
               <member><varname>Condition</varname></member>
               <member><varname>Guard</varname></member>
-              </simplelist>. 
+              </simplelist>.
               They may appear in any order and in any number.
           </para>
         </formalpara>
         <formalpara>
           <title>Function attributes</title>
           <para>
-            The <parameter>name</parameter> attribute is the same as in 
-            the <varname>Expression</varname> element, containing one 
-            or more names separate by spaces to indicate the names 
-            that are given to this function. 
+            The <parameter>name</parameter> attribute is the same as in
+            the <varname>Expression</varname> element, containing one
+            or more names separate by spaces to indicate the names
+            that are given to this function.
             The <parameter>class</parameter> attribute gives the type of the function,
             which is one of the following:
             <simplelist type="inline">
               <member>ambivalent</member>
               <member>monadic</member>
-              <member>dyadic</member> </simplelist>. 
+              <member>dyadic</member> </simplelist>.
 	    These correspond
 	    directly to the three classes of Fn stimuli that we have
 	    in our <citetitle>Function Specification</citetitle>.
@@ -1520,8 +1520,8 @@
 	    The <parameter>alloca</parameter> attribute indicates the
 	    number of slots needed to allocate space for the local scope
 	    of the function.
-	    The <parameter>depth</parameter> attribute indicates the 
-	    depth of the function's definition, determining the number of 
+	    The <parameter>depth</parameter> attribute indicates the
+	    depth of the function's definition, determining the number of
 	    environments it may reference.
           </para>
         </formalpara>
@@ -1529,15 +1529,15 @@
       <section>
         <title>Element: FuncExpr</title>
         <simpara>
-          The <varname>FuncExpr</varname> element encapsulates the behavior of the 
-          Fe recursive stimuli in the <citetitle>Function Specification</citetitle>, which 
-          are values which return either operators or functions. 
+          The <varname>FuncExpr</varname> element encapsulates the behavior of the
+          Fe recursive stimuli in the <citetitle>Function Specification</citetitle>, which
+          are values which return either operators or functions.
         </simpara>
         <formalpara>
           <title>FuncExpr contents</title>
           <para>
-            The contents of a <varname>FuncExpr</varname> element follow some specific 
-            patterns based on the type of the function. These correspond to how the 
+            The contents of a <varname>FuncExpr</varname> element follow some specific
+            patterns based on the type of the function. These correspond to how the
             function expression is created.
           </para>
         </formalpara>
@@ -1583,7 +1583,7 @@
               <member><literal>monadic</literal></member>
               <member><literal>dyadic</literal></member>
               </simplelist>.
-              This corresponds to the three large classes of function expressions without regard to 
+              This corresponds to the three large classes of function expressions without regard to
               the axis specification in the <citetitle>Function Specification</citetitle>.
           </para>
         </formalpara>
@@ -1591,23 +1591,23 @@
       <section>
         <title>Element: Condition</title>
         <simpara>
-          This is a container for a line in a function body that defines a conditional 
+          This is a container for a line in a function body that defines a conditional
           expression.
         </simpara>
         <formalpara>
           <title>Condition contents</title>
           <para>
-            The contents of a <varname>Condition</varname> element should be a 
-	    set of Expressions where the first expression is the condition and 
-	    the rest are part of the consequent. In most cases the consequent 
-	    should be a single expression, but we allow for multiple expressions 
+            The contents of a <varname>Condition</varname> element should be a
+	    set of Expressions where the first expression is the condition and
+	    the rest are part of the consequent. In most cases the consequent
+	    should be a single expression, but we allow for multiple expressions
 	    in the consequent for the ease of some compiler passes.
           </para>
         </formalpara>
         <formalpara>
           <title>Condition attributes</title>
           <para>
-            The <varname>Condition</varname> element takes a single <parameter>comment</parameter> 
+            The <varname>Condition</varname> element takes a single <parameter>comment</parameter>
             attribute indicating the comment on the given line.
           </para>
         </formalpara>
@@ -1643,9 +1643,9 @@
         <formalpara>
           <title>Token attributes</title>
           <para>
-            The <parameter>name</parameter> attribute is the value of the token, or indicates the 
-            literal token value. The <parameter>class</parameter> indicates the kind of token 
-            which it is, this would be one of the following: 
+            The <parameter>name</parameter> attribute is the value of the token, or indicates the
+            literal token value. The <parameter>class</parameter> indicates the kind of token
+            which it is, this would be one of the following:
             <simplelist type="inline">
               <member><literal>delimiter</literal></member>
               <member><literal>separator</literal></member>
@@ -1773,19 +1773,74 @@
               <member><literal>Fn</literal></member>
               <member><literal>Fnd</literal></member>
               <member>Any function or operator primitive</member>
-            </simplelist>. 
+            </simplelist>.
 	    The <parameter>slot</parameter> indicates the local memory slot of
-	    a function scope that corresponds to the variable. 
-	    The <parameter>env</parameter> indicates the environment in which 
-	    the variable is located. This is a natural indicating the number of 
-	    scopes away from the local scope; that is, 0 is for local scope, 
-	    while 2 indicates that the variable is stored in the scope two levels 
+	    a function scope that corresponds to the variable.
+	    The <parameter>env</parameter> indicates the environment in which
+	    the variable is located. This is a natural indicating the number of
+	    scopes away from the local scope; that is, 0 is for local scope,
+	    while 2 indicates that the variable is stored in the scope two levels
 	    above the local scope.
-	    The <parameter>depth</parameter> attribute indicates the depth 
-	    of a function call variable; that is, it determines the number 
+	    The <parameter>depth</parameter> attribute indicates the depth
+	    of a function call variable; that is, it determines the number
 	    of stack frames for that call.
           </para>
         </formalpara>
+      </section>
+    </section>
+    <section>
+      <title>Environments</title>
+      <para>
+        Environments are used by the passes to exchange information
+        about the available bindings and related information. They
+        take the abstract form of tables, though these tables are
+        sometimes represented as column vectors, and sometimes
+        represented as matrices.
+      </para>
+      <para>
+        In all environments, the name field is a column of simple
+        character vectors, or strings.
+      </para>
+      <section>
+        <title>Parse bindings</title>
+        <para>
+          The <function>Parse</function> pass returns a second argument
+          which is an environment of the bindings at top level and
+          their types.
+        </para>
+        <variablelist spacing="compact">
+          <title>Parse binding types</title>
+          <varlistentry>
+            <term>0</term>
+            <listitem>
+              <para>Unknown Type</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>1</term>
+            <listitem>
+              <para>Array</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>2</term>
+            <listitem>
+              <para>Function</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>3</term>
+            <listitem>
+              <para>Monadic Operator</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>4</term>
+            <listitem>
+              <para>Dyadic Operator</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
       </section>
     </section>
     <section>
@@ -1837,7 +1892,7 @@
           <tr>
             <td>Intended function</td>
             <td colspan="3">
-              Convert a Tokens AST to a Namespace AST that is structurally equivalent 
+              Convert a Tokens AST to a Namespace AST that is structurally equivalent
               and that preserves comments and line counts.
             </td>
           </tr>
@@ -1857,7 +1912,7 @@
           <tr>
             <td>Invariant</td>
             <td colspan="3">
-              The result of the Parser should be able to reconstruct the 
+              The result of the Parser should be able to reconstruct the
               exact structure of the original code modulo inter-token spacing.
             </td>
           </tr>
@@ -1877,7 +1932,7 @@
           <tr>
             <td>Intended function</td>
             <td colspan="3">
-              Eliminate all semantically irrelevant lines from AST to create an 
+              Eliminate all semantically irrelevant lines from AST to create an
               AST suitable for compiling.
             </td>
           </tr>
@@ -1949,11 +2004,11 @@
           <tr>
             <td>State</td>
             <td colspan="3">
-              Context <literal>←</literal> Top 
+              Context <literal>←</literal> Top
               <literal>⋄</literal>
-              Fix <literal>←</literal> Yes 
+              Fix <literal>←</literal> Yes
               <literal>⋄</literal>
-              Namespace <literal>←</literal> NOTSEEN 
+              Namespace <literal>←</literal> NOTSEEN
               <literal>⋄</literal>
               Eot <literal>←</literal> No
             </td>
@@ -1974,7 +2029,7 @@
           <tr>
             <td>Intended function</td>
             <td colspan="3">
-              Remove all constants from all depths to ensure that there exist constant 
+              Remove all constants from all depths to ensure that there exist constant
               values only at the top level.
             </td>
           </tr>
@@ -2037,7 +2092,7 @@
           <tr>
             <td>Invariant</td>
             <td colspan="3">
-              On output all assignments occur at the top-level of the scope 
+              On output all assignments occur at the top-level of the scope
 	      and no assignments occur within an expression.
             </td>
           </tr>
@@ -2057,9 +2112,9 @@
           <tr>
             <td>Intended function</td>
             <td colspan="3">
-              Associate with each assignment, scope, and variable reference 
-	      an appropriate slot pointing to a specific region of memory 
-	      within the stack frames, or in the case of scopes, the size 
+              Associate with each assignment, scope, and variable reference
+	      an appropriate slot pointing to a specific region of memory
+	      within the stack frames, or in the case of scopes, the size
 	      of the stack frame of that scope.
             </td>
           </tr>
@@ -2088,7 +2143,7 @@
             <td>Invariant</td>
             <td colspan="3">
               Input has only variable references and function calls in
-              expressions. 
+              expressions.
             </td>
           </tr>
           <tr>
@@ -2101,7 +2156,7 @@
           <tr>
             <td>Invariant</td>
             <td colspan="3">
-	      All variable references and assignments have a slot to indicate 
+	      All variable references and assignments have a slot to indicate
 	      where they go in the local memory.
             </td>
           </tr>
@@ -2200,7 +2255,7 @@
           <tr>
             <td>Intended Function</td>
             <td colspan="3">
-              Take a namespace and convert it to an LLVM Module that is 
+              Take a namespace and convert it to an LLVM Module that is
               semantically equivalent.
             </td>
           </tr>
@@ -2306,8 +2361,8 @@
     <section>
       <title>Representing Scalars</title>
       <simpara>
-        Each array has a buffer pointing to a set of elements. How these elements are 
-        arrayed in the buffer depends on the type of the scalar. The following table 
+        Each array has a buffer pointing to a set of elements. How these elements are
+        arrayed in the buffer depends on the type of the scalar. The following table
         details the types of scalars, and their structures.
       </simpara>
       <informaltable frame="void" rules="rows">
@@ -2390,7 +2445,7 @@
         discipline. This means that you cannot return functions from
         other functions. Operators allow you to derive new functions
         parameterized over old functions, but still maintain the stack
-        discipline. 
+        discipline.
       </para>
       <para>
         This leads to some interesting design opportunities with

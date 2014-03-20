@@ -291,215 +291,38 @@ Split←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢
 ⍝
 ⍝ Intended Function: Convert a Tokens AST to a Namespace AST that is
 ⍝ structurally equivalent and that preserves comments and line counts.
-⍝
-⍝ Input: Tokens tree
-⍝ Output: Namespace AST, Top-level Names
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← NOTSEEN ⋄ Eot ← No
-⍝
-⍝ The top-level names are an important structure. In particular, they
-⍝ are a matrix of (name, type) records. The set of types are as follows:
-⍝
-⍝   0  Unknown Type
-⍝   1  Array
-⍝   2  Function
-⍝   3  Monadic Operator
-⍝   4  Dyadic Operator
-⍝
-⍝ The name should be a simple, valid APL variable in the form of a
-⍝ string (that is, a simple character vector).
+⍝ Provide a table of the top-level name bindings and their types.
 
 Parse←{
-  ⍝ Potential Stimuli: Eot Nl Nse Nss Vfo Vu N ← { }
-  ⍝
-  ⍝ State Transitions:
-  ⍝   Eot → SYNTAX ERROR → (Fix ← No)
-  ⍝   Nl  → null         → ()
-  ⍝   Nse → SYNTAX ERROR → (Fix ← No)
-  ⍝   Nss → null         → (Namespace ← OPEN)
-  ⍝   Vfo → SYNTAX ERROR → ()
-  ⍝   Vu  → SYNTAX ERROR → ()
-  ⍝   N   → SYNTAX ERROR → ()
-  ⍝   {   → SYNTAX ERROR → ()
-  ⍝   }   → SYNTAX ERROR → ()
-  ⍝
-  ⍝ Trace: Tables 9 and 206 in Function Specification
-
-  ⍝ Stimuli: Eot
-  ⍝ This corresponds to an empty namespace
-  ⍝ This means that there are no tokens, which we can
-  ⍝ check easily
-  ⍝
-  ⍝ Importantly, we can handle this here because there is
-  ⍝ only one place that an Eot is legal, and in all other
-  ⍝ cases it is a SYNTAX ERROR. Because all of the cases
-  ⍝ occur in a Top level context, we can handle them all
-  ⍝ here without further ado. The legal cases of Eot
-  ⍝ falls out implicitly.
-  ⍝
-  ⍝ Trace: Table 233 in Function Specification
-  0=+/⍵[;1]∊⊂'Token':⎕SIGNAL 2
-
-  ⍝ Stimuli: Nl
-  ⍝
-  ⍝ Empty lines don't matter, and Nl has already been
-  ⍝ parsed for us by Tokenize, so there is no need to deal
-  ⍝ with this explicitly. We leave the empty or comment
-  ⍝ only lines around for idempotency's sake
-  ⍝
-  ⍝ Trace: Table 243 in Function Specification
-  ⍝
-  ⍝ In the above table, we see that in all cases, the Nl
-  ⍝ is a partitioning form that serves only to partition
-  ⍝ the state-space of other stimuli and their possible
-  ⍝ occurances. We can determine the proper result without
-  ⍝ requiring explicit handling of the Nl stimuli.
-  ⍝ Thus, we need to do no explicit parsing here for Nl.
-
-  ⍝ Stimuli: Nss and Nse
-  ⍝ Trace: Tables 233, 244, 245, and 206 in Function Specification
-  ⍝ Properties handled: Eot and Namespace
-  ⍝
-  ⍝ The only cases where we may have a valid Nse the Namespace is OPEN,
-  ⍝ which happens when we see an Nss. Nothing else will change this state.
-  ⍝ The response of encountering an Nse token depends on the values of
-  ⍝ the previous elements, and only on them, so we can trigger those errors
-  ⍝ at a later time, when we care to process them. However, if we have only
-  ⍝ Nss or only Nse it is clearly a SYNTAX ERROR. So, at this point, we can
-  ⍝ eliminate the need to consider the Namespace property entirely by
-  ⍝ parsing out the Nss and Nse tokens here. After this the only properties
-  ⍝ that must be handled at the top-level Context are the Value and
-  ⍝ Named properties.
-  ⍝
-  ⍝ Firstly, we need to test that the beginning and end are both
-  ⍝ Nss and Nse tokens.
-  FL←⊃1 ¯1⍪.↑⊂⍵ ByDepth 2
-  ~FL[;1]∧.≡⊂'Token':⎕SIGNAL 2
-  ~':Namespace' ':EndNamespace'∧.≡'name' Prop FL:⎕SIGNAL 2
-
-  ⍝ Secondly, we must ensure that there are not more than two Nss and Nse
-  ⍝ tokens combined either, or it is also a syntax error
-  N←'name' Prop ⍵ ByElem 'Token'
-  2≠+/N∊':Namespace' ':EndNamespace':⎕SIGNAL 2
-
-  ⍝ Parse out the Nss and Nse tokens
-  ⍝ This corresponds to lifting the tokens to part of the structure
-  ⍝ This changes the root from Tokens to Namespace
-  ⍝ We remove both the Line that contains the single namespace
-  ⍝ token as well as the token itself. We take advantage of the
-  ⍝ assumption that a namespace token must appear on a line
-  ⍝ by itself.
-  NS←0 'Namespace' '' (1 2⍴'name' '')
-  NS⍪←⍵[1↓(⍳⊃⍴⍵)~I,¯1+I←(⊂[1]⍵)⍳⊂[1]FL;]
-
-  ⍝ Stimuli: ⋄
-  ⍝
-  ⍝ The ⋄ token is treated just the same as an Nl for all intents
-  ⍝ and purposes. However, the Tokenizer will not have broken these
-  ⍝ out implicitly like it has for Nl due to the way the input
-  ⍝ format works.
-  ⍝
-  ⍝ Trace: Table 219 in Function Specification
-  ⍝
-  ⍝ We can examine each of the cases illustrated by the above table
-  ⍝ and note the same as with Nl. It thus suffices to convert all
-  ⍝ ⋄ tokens to Nl lines. In the tree, converting each ⋄ Token node
-  ⍝ to a Line node has this effect, and is a safe transformation
-  ⍝ because a Token node has no children, and stores no additional
-  ⍝ information that needs to be restored.
-  ⍝
-  ⍝ XXX: The following transformation does not adequately preserve
-  ⍝ commenting behavior.
-  I←(('name' Prop B⌿NS)∊⊂,'⋄')/(B←NS[;1]∊⊂'Token')/⍳⊃⍴NS
-  NS[I;]←((⍴I),4)⍴1 'Line' '' MtA
-
-  ⍝ Stimuli: { }
-  ⍝
-  ⍝ The { and } stimuli delimit only function bodies, and nothing else.
-  ⍝ Moreover, they must be balanced or a syntax error occurs. It is also
-  ⍝ the only valid way to continue from Funtion State 0. Because of these
-  ⍝ natural features of the way that the { and } stimuli occur, this allows
-  ⍝ a complete removal of them from the set of tokens early on, provided
-  ⍝ that we allow for a single internal extension to the public AST
-  ⍝ restriction. If we allow for lines to contain not only token values,
-  ⍝ but also Function subtrees, then we can convert all { and } stimuli
-  ⍝ into Function nodes that themselves contain Line nodes. This, of course,
-  ⍝ works recursively.
-  ⍝
-  ⍝ At this point the NS variable contains a namespace tree of shallow
-  ⍝ depth containing all Line nodes with various tokens in each line.
-  ⍝ This gives a maximum depth of 2. We divide the basic operation into
-  ⍝ two steps:
-  ⍝
-  ⍝ 1. Adapt all depths of the nodes to ensure that the depth of each node
-  ⍝    is incremented by two for each un-closed { that appears prior to the
-  ⍝    token in the token stream. Fm is the map of { and } tokens, where
-  ⍝    a 1 is for any { token, and a ¯1 for any } token, and 0 for everything
-  ⍝    else.
-  Fm←((1⌷⍉NS)∊⊂'Token')×{1 ¯1 0⌷⍨(,¨'{}')⍳((0⌷⍉⍵)⍳⊂'name')⌷(1⌷⍉⍵),⊂''}¨3⌷⍉NS
-  0≠+/Fm:⎕SIGNAL 2
-  NS[;0]+←2×Fd←+\0,¯1↓Fm
-
-  ⍝ 2. Delete the { and } token nodes to insert a Function node at the
-  ⍝    { token location. Additionally, insert a child node Line under the
-  ⍝    Function node to hold the rest of the tokens on the same line as
-  ⍝    the { token but appearing after it. Accomplished through Ci and Fi,
-  ⍝    the index vectors of the Children and Function nodes, respectively.
-  Fi←(1=Fm)/⍳⍴Fm ⋄ Ci←((1⌽B)∧B←0≠Fd)/⍳⍴Fd
-  NS[1+Ci;]←NS[Ci;]
-  NS[Fi;1+⍳3]←((⍴Fi),3)⍴'Function' '' (1 2⍴'class' 'ambivalent')
-  NS[1+Fi;]←(NS[Fi;0]+1),((⍴Fi),3)⍴'Line' '' MtA
-
-  ⍝ Now we have handled all { and } stimuli and do not need to consider
-  ⍝ them again; they have been replaced with the appropriate Function
-  ⍝ nodes.
-
-  ⍝ State: Namespace ← OPEN ⋄ Eot ← No
-  ⍝ Stimuli already handled by this point or that do not need handling:
-  ⍝   Eot Fix Fnb Fne Fnf Nl Nse Nss Break ⋄ { }
-  ⍝ Stimuli to consider: Vfo Vu N ← E Fe
-  ⍝
-  ⍝ At this point we have a series of abstract Line nodes which are either
-  ⍝ empty, contain an expression or a function. The previous handling of
-  ⍝ { and } stimuli means that we can still treat Functions as occuring
-  ⍝ on a single line, and that any lines that they have inside of them are
-  ⍝ "internal" to the function and do not affect the top-level.
-  ⍝ If we look at the set of states in the
-  ⍝ top-level (Table 206) we will see that all of the Namespace ← OPEN
-  ⍝ states either error out on Nl or they return back to the
-  ⍝ Namespace ← OPEN state which is right here. Thus, each line
-  ⍝ can be processed individually from one another as they all just
-  ⍝ come back here anyways.
-  ⍝
-  ⍝ Trace: Tables 11 through 22 in Function Specification dealing with
-  ⍝ Fix Nss prefixes.
-  ⍝
-  ⍝ We rely on a helper function at this point which is designed to
-  ⍝ handle all of the cases when we have a Namespace ← Open property.
-
-  ⍝ Our overall strategy here is to reduce over the lines from top to bottom,
-  ⍝ eventually resulting in our final namespace. Each call to ParseTopLine will
-  ⍝ return an extended namespace and a new environment containing the bindings
-  ⍝ that have been created so far.
-  ⍝
-  ⍝ Start with an empty AST and the function bindings at the top-level as
-  ⍝ the seed value.
-  SD←(0 4⍴⍬)(⊃ParseFeBindings/(1 Kids NS),⊂0 2⍴⍬)
-
-  ⍝ We note that all sub-trees of the the main Tokens AST at this point
-  ⍝ are lines.  All other nodes types are at depth 2 or greater. We assume
-  ⍝ here that the tree consists of a single root node of depth 0 and that
-  ⍝ there are no other depth 0 nodes appearing anywhere else.  Finally, we
-  ⍝ use ParseTopLine to reduce over the lines, extracting out the final
-  ⍝ namespace. At this point, the namespace will not have the appropriate
-  ⍝ head on it, which we stripped off above. We put this back on to form
-  ⍝ the final, correctly parsed AST. The AST is now a Namespace AST and
-  ⍝ each line has been converted into an apropriate node, or left alone if
-  ⍝ it is an empty line.
-  NS←(1↑NS)⍪⊃A E←⊃ParseTopLine/⌽(⊂SD),1 Kids NS
-
-  ⍝ We return the final environment created by the ParseTopLine function and
-  ⍝ the final Namespace AST.
-  NS E
+  0=+/⍵[;1]∊⊂'Token':⎕SIGNAL 2         ⍝ Deal with Eot Stimuli, Table 233
+  fl←⊃1 ¯1⍪.↑⊂⍵ ByDepth 2              ⍝ First and last leafs
+  ~fl[;1]∧.≡⊂'Token':⎕SIGNAL 2         ⍝ Must be tokens
+  nms←':Namespace' ':EndNamespace'     ⍝ Correct names of first and last
+  ~nms∧.≡'name' Prop fl:⎕SIGNAL 2      ⍝ Verify correct first and last
+  n←'name' Prop ⍵ ByElem 'Token'       ⍝ Verify that the Nss and Nse
+  2≠+/n∊nms:⎕SIGNAL 2                  ⍝ Tokens never appear more than once
+  ns←0 'Namespace' '' (1 2⍴'name' '')  ⍝ New root node is Namespace
+  ns⍪←⍵⌿⍨~(⍳≢⍵)∊(0,⊢,¯1+⊢)⍵⍳fl         ⍝ Drop Nse and Nss Tokens
+  tm←(1⌷⍉ns)∊⊂'Token'                  ⍝ Mask of Tokens
+  sm←tm\('name'Prop tm⌿ns)∊⊂,'⋄'       ⍝ Mask of Separators
+  (sm⌿ns)←1 'Line' '' MtA⍴⍨4,⍨+/sm     ⍝ Replace separators by lines, Tbl 219
+    ⍝ XXX: The above does not preserve commenting behavior
+  tm←(1⌷⍉ns)∊⊂'Token'                  ⍝ Update token mask
+  fm←1 ¯1 0⌷⍨(,¨'{}')⍳'name'Prop tm⌿ns ⍝ Map of brackets, } ¯1, { 1, else 0
+  0≠+/fm:⎕SIGNAL 2                     ⍝ Verify balance
+  fd←+\0,¯1↓tm\fm                      ⍝ Nesting depths of functions
+  (0⌷⍉ns)+←2×fd                        ⍝ Push child nodes 2 for each depth
+  fm←1=fm ⋄ cm←(⊢∧1⌽⊢)0≠fd             ⍝ New masks of functions and children
+  ((¯1⌽cm)/ns)←cm/ns                   ⍝ Shift all children down by one
+  fa←1 2⍴'class' 'ambivalent'          ⍝ Function attributes
+  fd←⍪0⌷⍉fm⌿ns                         ⍝ Depth of each function node
+  (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa       ⍝ Replace { token with Fn node
+  ((¯1⌽fm)⌿ns)←(1+fd),⊂'Line',⊂'',⊂MtA ⍝ Insert Line node after Fn node
+  k←1 Kids ns                          ⍝ Children to examine
+  env←⊃ParseFeBindings/k,⊂0 2⍴⍬        ⍝ Initial Fe bindings to feed in
+  sd←MtAST env                         ⍝ Seed is an empty AST and the env
+  ast env←⊃ParseTopLine/⌽(⊂sd),k       ⍝ Parse each child top down
+  ((1↑ns)⍪ast)env                      ⍝ Return assembled AST and env
 }
 
 ⍝ ParseFeBindings
