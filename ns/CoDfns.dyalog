@@ -329,18 +329,22 @@ Parse←{
 ⍝
 ⍝ Intended Function: Describe an set of bindings which is an extension of
 ⍝ given binding and any function bindings introduced by the given
-⍝ AST top-level node.
-⍝
-⍝ Right Argument: (Name, Type) Environment
-⍝ Left Argument: A top-level Namespace AST child node
-⍝ Output: (Name, Type) Environment
-⍝ Invariant: Output extends the right argument
-⍝ Invariant: Only function bindings are added
+⍝ AST top-level line.
 
 ParseFeBindings←{
-  1=⊃⍴⍺:⍵
-  ~'Function' 'Primitive'∨.≡⊂0(0 1)⊃⌽C←1 Kids ⍺:⍵
-  ⍵⍪⍨2,⍨⍪'name'Prop{⍵⌿⍨(1⌷⍉⍵)∊⊂'Variable'}⊃⍪/1↑¨C
+  1=≢⍺:⍵                              ⍝ Nothing on the line, done
+  fp←'Function' 'Primitive'           ⍝ Looking for Functions and Prims
+  ~fp∨.≡⊂0(0 1)⊃⌽k←1 Kids ⍺:⍵         ⍝ Not a function line, done
+  ok←⊃⍪/¯1↓k                          ⍝ Other children
+  tm←(1⌷⍉ok)∊⊂'Token'                 ⍝ Mask of all Tokens
+  tn←'name'Prop tm⌿ok                 ⍝ Token names
+  ~∧/tn∊⊂'←':⎕SIGNAL 2                ⍝ Are all tokens assignments?
+  ∨/0≠2|tm/⍳≢ok:⎕SiGNAL 2             ⍝ Are all tokens separated correctly?
+  vm←(1⌷⍉ok)∊⊂'Variable'              ⍝ Mask of all variables
+  vn←'name'Prop vn⌿ok                 ⍝ Variable names
+  ∨/0=2|vm/⍳≢ok:⎕SIGNAL 2             ⍝ Are all variables before assignments?
+  ~∧/vm∨tm:⎕SIGNAL 2                  ⍝ Are there only variables, assignments?
+  ⍵⍪⍨2,⍨⍪vn                           ⍝ We're good, return new environment
 }
 
 ⍝ ParseTopLine
