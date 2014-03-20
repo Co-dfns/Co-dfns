@@ -24,16 +24,16 @@ LLVMX86Desc←'libLLVMX86Desc.so'
 ⍝ time to the file named in the optional left argument.
 
 Fix←{
-  _←FFI∆INIT                  ⍝ Initialize FFI; Fix ← Yes
-  ~1≡≢⍴⍵:⎕SIGNAL 11           ⍝ Input is vector?
-  ~∧/1≥≢∘⍴¨⍵:⎕SIGNAL 11       ⍝ Elements are vectors?
-  ~∧/∊' '=(⊃0⍴⊂)¨⍵:⎕SIGNAL 11 ⍝ Elements are characters?
-  ⍺←⊢ ⋄ obj←⍺⊣''              ⍝ Identify Obj property
-  IsFnb obj:⎕SIGNAL 11        ⍝ Handle Fnb, Fnf, Fne stimuli
-  mod nms←Compile ⍵           ⍝ Get LLVM Module
-  ns←nms ModToNS mod          ⍝ Namespace to return
-  ''≡Obj:ns                   ⍝ No optional object file output
-  ns⊣obj ModToObj mod         ⍝ Export Mod to object file
+  _←FFI∆INIT                           ⍝ Initialize FFI; Fix ← Yes
+  ~1≡≢⍴⍵:⎕SIGNAL 11                    ⍝ Input is vector?
+  ~∧/1≥≢∘⍴¨⍵:⎕SIGNAL 11                ⍝ Elements are vectors?
+  ~∧/∊' '=(⊃0⍴⊂)¨⍵:⎕SIGNAL 11          ⍝ Elements are characters?
+  ⍺←⊢ ⋄ obj←⍺⊣''                       ⍝ Identify Obj property
+  IsFnb obj:⎕SIGNAL 11                 ⍝ Handle Fnb, Fnf, Fne stimuli
+  mod nms←Compile ⍵                    ⍝ Get LLVM Module
+  ns←nms ModToNS mod                   ⍝ Namespace to return
+  ''≡Obj:ns                            ⍝ No optional object file output
+  ns⊣obj ModToObj mod                  ⍝ Export Mod to object file
 }
 
 ⍝ IsFnb
@@ -69,42 +69,42 @@ Compile←{
 ⍝ a given LLVM Module.
 
 ModToNS←{
-  ns←⎕NS⍬                             ⍝ Create an Empty Namespace
-  _←⍎'Initialize',Target,'TargetInfo' ⍝ Setup targeting information
-  _←⍎'Initialize',Target,'Target'     ⍝ Based on given Machine
-  _←⍎'Initialize',Target,'TargetMC'   ⍝ Parameters in CoDfns namespace
-  _←SetTarget ⍵ TargetTriple          ⍝ JIT must have machine target
-  jc←1 ⍵ 0 1                          ⍝ Params: JIT Ov, Mod, OptLevel, Err Ov
-  jc←CreateJITCompilerForModule jc    ⍝ Make JIT compiler
-  0≠⊃jc:(ErrorMessage ⊃⌽jc)⎕SIGNAL 99 ⍝ Error handling, C style
-  ee←1⊃jc                             ⍝ Extract exec engine on success
+  ns←⎕NS⍬                              ⍝ Create an Empty Namespace
+  _←⍎'Initialize',Target,'TargetInfo'  ⍝ Setup targeting information
+  _←⍎'Initialize',Target,'Target'      ⍝ Based on given Machine
+  _←⍎'Initialize',Target,'TargetMC'    ⍝ Parameters in CoDfns namespace
+  _←SetTarget ⍵ TargetTriple           ⍝ JIT must have machine target
+  jc←1 ⍵ 0 1                           ⍝ Params: JIT Ov, Mod, OptLevel, Err Ov
+  jc←CreateJITCompilerForModule jc     ⍝ Make JIT compiler
+  0≠⊃jc:(ErrorMessage ⊃⌽jc)⎕SIGNAL 99  ⍝ Error handling, C style
+  ee←1⊃jc                              ⍝ Extract exec engine on success
   syserr←{'FFI ERROR'⎕SIGNAL 99}
-  fn←{                                ⍝ Op to build ns functions
-    0≠⊃zp←FFIMakeArray 1,4⍴0:syserr⍬  ⍝ Temporary result array
-    lp←(≢⍴⍺)(≢,⍺)(⍴⍺)(,⍺)             ⍝ Fields of left argument
-    0≠⊃lp←FFIMakeArray 1,lp:syserr⍬   ⍝ Array to match left argument
-    rp←(≢⍴⍵)(≢,⍵)(⍴⍵)(,⍵)             ⍝ Fields of right argument
-    0≠⊃rp←FFIMakeArray 1,rp:syserr⍬   ⍝ Array to match right argument
-    args←1⊃¨zp lp rp                  ⍝ Pass only the res, left and right args
-    z←RunFunction ⍺⍺ ⍵⍵ 3 args        ⍝ Eval function in module
-    z←GenericValueToInt z 1           ⍝ Get something we can use
-    0≠z:⎕SIGNAL z                     ⍝ Signal an error if there is one
-    res←ConvertArray ⊃args            ⍝ Convert result array
-    _←array_free¨args                 ⍝ Free up the arrays
-    _←free¨args                       ⍝ Free up the array headers
-    res⊣DisposeGenericValue z         ⍝ Clean return value and return
+  fn←{                                 ⍝ Op to build ns functions
+    0≠⊃zp←FFIMakeArray 1,4⍴0:syserr⍬   ⍝ Temporary result array
+    lp←(≢⍴⍺)(≢,⍺)(⍴⍺)(,⍺)              ⍝ Fields of left argument
+    0≠⊃lp←FFIMakeArray 1,lp:syserr⍬    ⍝ Array to match left argument
+    rp←(≢⍴⍵)(≢,⍵)(⍴⍵)(,⍵)              ⍝ Fields of right argument
+    0≠⊃rp←FFIMakeArray 1,rp:syserr⍬    ⍝ Array to match right argument
+    args←1⊃¨zp lp rp                   ⍝ Pass only the res, left and right args
+    z←RunFunction ⍺⍺ ⍵⍵ 3 args         ⍝ Eval function in module
+    z←GenericValueToInt z 1            ⍝ Get something we can use
+    0≠z:⎕SIGNAL z                      ⍝ Signal an error if there is one
+    res←ConvertArray ⊃args             ⍝ Convert result array
+    _←array_free¨args                  ⍝ Free up the arrays
+    _←free¨args                        ⍝ Free up the array headers
+    res⊣DisposeGenericValue z          ⍝ Clean return value and return
   }
-  fp←{                                ⍝ Fn to get function pointer
-    c fpv←FindFunction ee ⍵ 1         ⍝ Get function from LLVM Module
-    0=c:fpv                           ⍝ Function pointer on success
-    'FUNCTION NOT FOUND'⎕SIGNAL 99    ⍝ System error on failure
+  fp←{                                 ⍝ Fn to get function pointer
+    c fpv←FindFunction ee ⍵ 1          ⍝ Get function from LLVM Module
+    0=c:fpv                            ⍝ Function pointer on success
+    'FUNCTION NOT FOUND'⎕SIGNAL 99     ⍝ System error on failure
   }
-  addf←{                              ⍝ Fn to insert func into namespace
-    ∧/' '=⍵:0                         ⍝ No name is no-op
-    f←ee fn (fp ⍵)                    ⍝ Get function
-    0⊣⍎'Ns.',⍵,'←f ⋄ 0'               ⍝ Store function using do oper trick
+  addf←{                               ⍝ Fn to insert func into namespace
+    ∧/' '=⍵:0                          ⍝ No name is no-op
+    f←ee fn (fp ⍵)                     ⍝ Get function
+    0⊣⍎'Ns.',⍵,'←f ⋄ 0'                ⍝ Store function using do oper trick
   }
-  ns⊣addf¨(2=1⌷⍉⍺)/0⌷⍉⍺               ⍝ Add all functions
+  ns⊣addf¨(2=1⌷⍉⍺)/0⌷⍉⍺                ⍝ Add all functions
 }
 
 ⍝ ConvertArray
@@ -113,11 +113,11 @@ ModToNS←{
 ⍝ array suitable for use in the Dyalog APL Interpreter.
 
 ConvertArray←{
-  s←FFIGetSize ⍵       ⍝ Get the number of data elements
-  d←FFIGetDataInt s ⍵  ⍝ We assume that we have only integer types
-  r←FFIGetRank ⍵       ⍝ Get the number of shape elements
-  p←FFIGetShape r ⍵    ⍝ Get the shapes
-  p⍴d                  ⍝ Reshape based on shape
+  s←FFIGetSize ⍵                       ⍝ Get the number of data elements
+  d←FFIGetDataInt s ⍵                  ⍝ We assume that we have only integer types
+  r←FFIGetRank ⍵                       ⍝ Get the number of shape elements
+  p←FFIGetShape r ⍵                    ⍝ Get the shapes
+  p⍴d                                  ⍝ Reshape based on shape
 }
 
 ⍝ ModToObj
@@ -125,9 +125,9 @@ ConvertArray←{
 ⍝ Intended Function: Generate a compiled object to the file given the LLVM Module
 
 ModToObj←{
-  r err←PrintModuleToFile ⍵ ⍺ 1     ⍝ Print to the file given
-  1=r:(ErrorMessage ⊃err)⎕SIGNAL 99 ⍝ And error out with LLVM errr on failure
-  0 0⍴⍬                             ⍝ Best to return something that isn't seen
+  r err←PrintModuleToFile ⍵ ⍺ 1        ⍝ Print to the file given
+  1=r:(ErrorMessage ⊃err)⎕SIGNAL 99    ⍝ And error out with LLVM errr on failure
+  0 0⍴⍬                                ⍝ Best to return something that isn't seen
 }
 
 ⍝ ErrorMessage
@@ -135,9 +135,9 @@ ModToObj←{
 ⍝ Intended Function: Return an array of the LLVM Error Message
 
 ErrorMessage←{
-  len←strlen ⍵          ⍝ Length of C string
-  res←cstring len ⍵ len ⍝ Convert using memcpy
-  res⊣DisposeMessage ⍵  ⍝ Cleanup and return
+  len←strlen ⍵                         ⍝ Length of C string
+  res←cstring len ⍵ len                ⍝ Convert using memcpy
+  res⊣DisposeMessage ⍵                 ⍝ Cleanup and return
 }
 
 ⍝ Tokenize
@@ -210,9 +210,9 @@ Tokenize←{
 
 ⍝ Utility Constants
 
-MtA←0 2⍴⊂''           ⍝ An empty attribute table for AST
-MtAST←0 4⍴0 '' '' MtA ⍝ An empty AST
-MtNTE←0 2⍴'' 0        ⍝ An Empty (Name, Type) Environment
+MtA←0 2⍴⊂''                            ⍝ An empty attribute table for AST
+MtAST←0 4⍴0 '' '' MtA                  ⍝ An empty AST
+MtNTE←0 2⍴'' 0                         ⍝ An Empty (Name, Type) Environment
 
 ⍝ Utility Functions
 
@@ -332,19 +332,19 @@ Parse←{
 ⍝ AST top-level line.
 
 ParseFeBindings←{
-  1=≢⍺:⍵                              ⍝ Nothing on the line, done
-  fp←'Function' 'Primitive'           ⍝ Looking for Functions and Prims
-  ~fp∨.≡⊂0(0 1)⊃⌽k←1 Kids ⍺:⍵         ⍝ Not a function line, done
-  ok←⊃⍪/¯1↓k                          ⍝ Other children
-  tm←(1⌷⍉ok)∊⊂'Token'                 ⍝ Mask of all Tokens
-  tn←'name'Prop tm⌿ok                 ⍝ Token names
-  ~∧/tn∊⊂'←':⎕SIGNAL 2                ⍝ Are all tokens assignments?
-  ∨/0≠2|tm/⍳≢ok:⎕SiGNAL 2             ⍝ Are all tokens separated correctly?
-  vm←(1⌷⍉ok)∊⊂'Variable'              ⍝ Mask of all variables
-  vn←'name'Prop vn⌿ok                 ⍝ Variable names
-  ∨/0=2|vm/⍳≢ok:⎕SIGNAL 2             ⍝ Are all variables before assignments?
-  ~∧/vm∨tm:⎕SIGNAL 2                  ⍝ Are there only variables, assignments?
-  ⍵⍪⍨2,⍨⍪vn                           ⍝ We're good, return new environment
+  1=≢⍺:⍵                               ⍝ Nothing on the line, done
+  fp←'Function' 'Primitive'            ⍝ Looking for Functions and Prims
+  ~fp∨.≡⊂0(0 1)⊃⌽k←1 Kids ⍺:⍵          ⍝ Not a function line, done
+  ok←⊃⍪/¯1↓k                           ⍝ Other children
+  tm←(1⌷⍉ok)∊⊂'Token'                  ⍝ Mask of all Tokens
+  tn←'name'Prop tm⌿ok                  ⍝ Token names
+  ~∧/tn∊⊂'←':⎕SIGNAL 2                 ⍝ Are all tokens assignments?
+  ∨/0≠2|tm/⍳≢ok:⎕SiGNAL 2              ⍝ Are all tokens separated correctly?
+  vm←(1⌷⍉ok)∊⊂'Variable'               ⍝ Mask of all variables
+  vn←'name'Prop vn⌿ok                  ⍝ Variable names
+  ∨/0=2|vm/⍳≢ok:⎕SIGNAL 2              ⍝ Are all variables before assignments?
+  ~∧/vm∨tm:⎕SIGNAL 2                   ⍝ Are there only variables, assignments?
+  ⍵⍪⍨2,⍨⍪vn                            ⍝ We're good, return new environment
 }
 
 ⍝ ParseTopLine
@@ -965,11 +965,11 @@ KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}
 ⍝ bodies after a return expression (unnamed expression).
 
 DropUnreached←{
-  u←(0=∘≢('name'∘Prop 1∘↑))¨ ⍝ (u k) gives map of unnamed exprs
-  d←(~(∨\0,1↓¯1⌽u))(/∘⊢)⊢    ⍝ (d k) drops kids after first unnamed expr
-  f←'Function'≡(⊃0 1∘⌷)      ⍝ (f n) tests if n is function node
-  0=≢k←1 Kids ⍵:⍵            ⍝ Terminate at leaves
-  (1↑⍵)⍪⊃⍪/∇¨d⍣(f ⍵)⊢k       ⍝ Recur after dropping unnamed exprs
+  u←(0=∘≢('name'∘Prop 1∘↑))¨           ⍝ (u k) gives map of unnamed exprs
+  d←(~(∨\0,1↓¯1⌽u))(/∘⊢)⊢              ⍝ (d k) drops kids after 1st unnamed ex
+  f←'Function'≡(⊃0 1∘⌷)                ⍝ (f n) tests if n is function node
+  0=≢k←1 Kids ⍵:⍵                      ⍝ Terminate at leaves
+  (1↑⍵)⍪⊃⍪/∇¨d⍣(f ⍵)⊢k                 ⍝ Recur after dropping unnamed exprs
 }
 
 ⍝ LiftConsts
@@ -977,18 +977,18 @@ DropUnreached←{
 ⍝ Intended Function: Lift all literal expressions to the top level.
 
 LiftConsts←{
-  I←¯1 ⋄ MkV←{'LC',⍕I⊣(⊃I)+←1}      ⍝ New variable maker
-  at←{2 2⍴'name' ⍵ 'class' ⍺}       ⍝ Attribute maker
-  ns←'Expression' 'Number'          ⍝ Nodes we care about
-  e l←((1⌷⍉a←⍵)∊⊂)¨ns               ⍝ All Expr and Number nodes
-  v←mkv¨⍳+/s←2</0,l                 ⍝ Variables we need; start of literals
-  hn←1⌷⍉h←(l∨e∧1⌽l)⌿a               ⍝ Literal Expressions and node names
-  vn←{'Variable' '' ('array' at ⍵)} ⍝ Variable node maker sans depth
-  a[s/⍳⊃⍴a;1+⍳3]←↑vn¨v              ⍝ Replace starting literals with variables
-  a←(s∨~l)⌿a                        ⍝ Remove all non-first literals
-  h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})1⊃ns;0]←2     ⍝ Literal depths are all 2
-  h[i⊃ns;0 3]←1,⍪'atomic'∘at¨v      ⍝ Litexprs are depth 1, with new names
-  (1↑a)⍪h⍪1↓a                       ⍝ Connect root, lifted with the rest
+  I←¯1 ⋄ MkV←{'LC',⍕I⊣(⊃I)+←1}         ⍝ New variable maker
+  at←{2 2⍴'name' ⍵ 'class' ⍺}          ⍝ Attribute maker
+  ns←'Expression' 'Number'             ⍝ Nodes we care about
+  e l←((1⌷⍉a←⍵)∊⊂)¨ns                  ⍝ All Expr and Number nodes
+  v←mkv¨⍳+/s←2</0,l                    ⍝ Variables we need; start of literals
+  hn←1⌷⍉h←(l∨e∧1⌽l)⌿a                  ⍝ Literal Expressions and node names
+  vn←{'Variable' '' ('array' at ⍵)}    ⍝ Variable node maker sans depth
+  a[s/⍳⊃⍴a;1+⍳3]←↑vn¨v                 ⍝ Replace starting lits with variables
+  a←(s∨~l)⌿a                           ⍝ Remove all non-first literals
+  h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})1⊃ns;0]←2        ⍝ Literal depths are all 2
+  h[i⊃ns;0 3]←1,⍪'atomic'∘at¨v         ⍝ Litexprs are depth 1, with new names
+  (1↑a)⍪h⍪1↓a                          ⍝ Connect root, lifted with the rest
 }
 
 ⍝ LiftBound
@@ -996,46 +996,46 @@ LiftConsts←{
 ⍝ Intended Function: Lift all assignments to the root of their scope.
 
 LiftBound←{
-  vex←{                             ⍝ Function to make var expr
-    at←2 2⍴'name' ⍵ 'class' 'array' ⍝ Variable name is right argument
-    v←1 4⍴(1+⍺)'Variable' '' at     ⍝ Variable node, depth in left argument
-    at←1 2⍴'class' 'atomic'         ⍝ Expression is atomic
-    e←1 4⍴⍺ 'Expression' '' at      ⍝ Expression node has no name
-    e⍪v                             ⍝ Give valid AST as result
+  vex←{                                ⍝ Function to make var expr
+    at←2 2⍴'name' ⍵ 'class' 'array'    ⍝ Variable name is right argument
+    v←1 4⍴(1+⍺)'Variable' '' at        ⍝ Variable node, depth in left argument
+    at←1 2⍴'class' 'atomic'            ⍝ Expression is atomic
+    e←1 4⍴⍺ 'Expression' '' at         ⍝ Expression node has no name
+    e⍪v                                ⍝ Give valid AST as result
   }
-  lft←{                             ⍝ Function to lift expression
-    cls←⊃'class'Prop ⍵              ⍝ Class determines handling
-    'atomic'≡cls:⍵                  ⍝ Nothing to do for atomic
-    ri←1+'monadic' 'dyadic'⍳⊂cls    ⍝ Location of the right argument
-    lf ex←⍺ ∇ ri⊃k←1 Kids ⍵         ⍝ Lift the right argument
-    nm←⊃'name'Prop ex               ⍝ Consider right argument name
-    nr←⊃⍪/¯1↓k                      ⍝ Our not right arguments to recombine
-    ∧/' '=nm:lf((1↑⍵)⍪nr⍪ex)        ⍝ When unnamed, do nothing
-    ex[;0]-←(⊃ex)-⍺                 ⍝ When named, must lift
-    ne←(1↑⍵)⍪nr⍪(1+⊃⍵)vex nm        ⍝ Replace right with variable reference
-    (lf⍪ex)(ne)                     ⍝ New lifted exprs and new node
+  lft←{                                ⍝ Function to lift expression
+    cls←⊃'class'Prop ⍵                 ⍝ Class determines handling
+    'atomic'≡cls:⍵                     ⍝ Nothing to do for atomic
+    ri←1+'monadic' 'dyadic'⍳⊂cls       ⍝ Location of the right argument
+    lf ex←⍺ ∇ ri⊃k←1 Kids ⍵            ⍝ Lift the right argument
+    nm←⊃'name'Prop ex                  ⍝ Consider right argument name
+    nr←⊃⍪/¯1↓k                         ⍝ Our not right arguments to recombine
+    ∧/' '=nm:lf((1↑⍵)⍪nr⍪ex)           ⍝ When unnamed, do nothing
+    ex[;0]-←(⊃ex)-⍺                    ⍝ When named, must lift
+    ne←(1↑⍵)⍪nr⍪(1+⊃⍵)vex nm           ⍝ Replace right with variable reference
+    (lf⍪ex)(ne)                        ⍝ New lifted exprs and new node
   }
-  atm←{                             ⍝ Fn to atomize test expression
-    cls←⊃'class'Prop 1↑te←⍵         ⍝ Class of test expression
-    'atomic'≡cls:MtAST ⍵            ⍝ Do nothing if atomic already
-    te[;0]-←1                       ⍝ Test expression is going up
-    nm←⊃'class'Prop 1↑⍵             ⍝ Name of test expression
-    ∨/' '≠nm:te((⊃⍵)vex ⊃Split nm)  ⍝ Already named, return with referring vex
-    ('tst'Bind te)((⊃⍵)vex'tst')    ⍝ Use temporary name otherwise
+  atm←{                                ⍝ Fn to atomize test expression
+    cls←⊃'class'Prop 1↑te←⍵            ⍝ Class of test expression
+    'atomic'≡cls:MtAST ⍵               ⍝ Do nothing if atomic already
+    te[;0]-←1                          ⍝ Test expression is going up
+    nm←⊃'class'Prop 1↑⍵                ⍝ Name of test expression
+    ∨/' '≠nm:te((⊃⍵)vex ⊃Split nm)     ⍝ Already named, return with vex
+    ('tst'Bind te)((⊃⍵)vex'tst')       ⍝ Use temporary name otherwise
   }
-  cnd←{                             ⍝ Function to handle condition nodes
-    te←⊃k←1 Kids ⍵                  ⍝ We care especially about the test expr
-    lf1 te←(⊃⍵)lft te               ⍝ Lift test children, before cond
-    lf2 te←atm te                   ⍝ Atomize test expression
-    lf←lf1⍪lf2                      ⍝ Combine liftings
-    1=≢k:lf⍪(1↑⍵)⍪te                ⍝ No consequent, no children expressions
-    ce←⊃⍪/(1+⊃⍵)lft⊃⌽k              ⍝ Lift consequent, inside cond
-    lf⍪(1↑⍵)⍪te⍪ce                  ⍝ Put it all back in the right order
+  cnd←{                                ⍝ Function to handle condition nodes
+    te←⊃k←1 Kids ⍵                     ⍝ We care especially about the test expr
+    lf1 te←(⊃⍵)lft te                  ⍝ Lift test children, before cond
+    lf2 te←atm te                      ⍝ Atomize test expression
+    lf←lf1⍪lf2                         ⍝ Combine liftings
+    1=≢k:lf⍪(1↑⍵)⍪te                   ⍝ No consequent, no children expressions
+    ce←⊃⍪/(1+⊃⍵)lft⊃⌽k                 ⍝ Lift consequent, inside cond
+    lf⍪(1↑⍵)⍪te⍪ce                     ⍝ Put it all back in the right order
   }
-  1=≢⍵:⍵                            ⍝ Do nothing for leaves
-  'Expression'≡⊃0 1⌷⍵:⊃⍪/(⊃⍵)lft ⍵  ⍝ Lift root expressions
-  'Condition'≡⊃0 1⌷⍵:cnd ⍵          ⍝ Lifting Condition nodes is special
-  (∇⊢)Eachk ⍵                       ⍝ Ignore non-expr nodes
+  1=≢⍵:⍵                               ⍝ Do nothing for leaves
+  'Expression'≡⊃0 1⌷⍵:⊃⍪/(⊃⍵)lft ⍵     ⍝ Lift root expressions
+  'Condition'≡⊃0 1⌷⍵:cnd ⍵             ⍝ Lifting Condition nodes is special
+  (∇⊢)Eachk ⍵                          ⍝ Ignore non-expr nodes
 }
 
 ⍝ AnchorVars
@@ -1046,47 +1046,47 @@ LiftBound←{
 ⍝ that scope.
 
 AnchorVars←{
-  mt←0 2⍴⊂'' 0                    ⍝ An empty environment
-  ge←{                            ⍝ Fn to get environment for current scope
-    em←(1+⊃⍵)=0⌷⍉⍵                ⍝ All expressions are direct descendants
-    em∧←(1⌷⍉⍵)∊⊂'Expression'      ⍝ Mask of expressions
-    nm←'name'Prop em⌿⍵            ⍝ Names in local scope
-    nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm      ⍝ Split names and prepare
-    (nm,0),⍳≢nm                   ⍝ Local scope 0, assign a slot to each var
+  mt←0 2⍴⊂'' 0                         ⍝ An empty environment
+  ge←{                                 ⍝ Fn to get env for current scope
+    em←(1+⊃⍵)=0⌷⍉⍵                     ⍝ All expressions are direct descendants
+    em∧←(1⌷⍉⍵)∊⊂'Expression'           ⍝ Mask of expressions
+    nm←'name'Prop em⌿⍵                 ⍝ Names in local scope
+    nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm           ⍝ Split names and prepare
+    (nm,0),⍳≢nm                        ⍝ Local scope 0, assign slot to each var
   }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
-    'Variable'≡nm:⍺(⍺⍺{           ⍝ Variable node
-      i←⊃env⍳'name'Prop ⍺         ⍝ Lookup var in env
-      a←'env' 'slot',⍪i(1 2)⌷env  ⍝ Stack frame and slot
-      a←(⊃0 3⌷⍺)⍪a                ⍝ Attach new attributes
-      (ast⍪(1 3↑⍺),⊂a)env         ⍝ Attach to current AST
+    'Variable'≡nm:⍺(⍺⍺{                ⍝ Variable node
+      i←⊃env⍳'name'Prop ⍺              ⍝ Lookup var in env
+      a←'env' 'slot',⍪i(1 2)⌷env       ⍝ Stack frame and slot
+      a←(⊃0 3⌷⍺)⍪a                     ⍝ Attach new attributes
+      (ast⍪(1 3↑⍺),⊂a)env              ⍝ Attach to current AST
     })⍵
-    'Expression'≡nm:⍺(⍺⍺{         ⍝ Expression node
-      z←(⌽1 Kids ⍺),⊂MtAST env    ⍝ Children use existing env
-      ka env←⊃⍺⍺vis/z             ⍝ Children visited first
-      nm←Split⊃'name'Prop 1↑⍺     ⍝ Name(s) of expression
-      id←(0⌷⍉⍺⍺)⍳nm               ⍝ Relevant names in scope env
-      sl←id⊃¨⊂2⌷⍉⍺⍺               ⍝ Slot(s) for each name
-      at←(⊃0 3⌷⍺)⍪'slots'(⍕sl)    ⍝ New attributes for node
-      nd←(1 3↑⍺),⊂at              ⍝ New node
-      z←(ast⍪nd⍪ka)               ⍝ AST to return
-      z(((⊂id)⌷⍺⍺)⍪env)           ⍝ Add any names to environment
+    'Expression'≡nm:⍺(⍺⍺{              ⍝ Expression node
+      z←(⌽1 Kids ⍺),⊂MtAST env         ⍝ Children use existing env
+      ka env←⊃⍺⍺vis/z                  ⍝ Children visited first
+      nm←Split⊃'name'Prop 1↑⍺          ⍝ Name(s) of expression
+      id←(0⌷⍉⍺⍺)⍳nm                    ⍝ Relevant names in scope env
+      sl←id⊃¨⊂2⌷⍉⍺⍺                    ⍝ Slot(s) for each name
+      at←(⊃0 3⌷⍺)⍪'slots'(⍕sl)         ⍝ New attributes for node
+      nd←(1 3↑⍺),⊂at                   ⍝ New node
+      z←(ast⍪nd⍪ka)                    ⍝ AST to return
+      z(((⊂id)⌷⍺⍺)⍪env)                ⍝ Add any names to environment
     })⍵
-    'Condition'≡nm:⍺(⍺⍺{          ⍝ Condition node
-      k←1 Kids ⍵                  ⍝ Must handle children
-      z←(⌽1 Kids ⍵),⊂MtAST env    ⍝ We can reduce over all the kids at once
-      ca _←⊃⍺⍺ vis/z              ⍝ We ignore the consequent environment
-      (ast⍪(1↑⍺)⍪ca)env           ⍝ Return the original environment
+    'Condition'≡nm:⍺(⍺⍺{               ⍝ Condition node
+      k←1 Kids ⍵                       ⍝ Must handle children
+      z←(⌽1 Kids ⍵),⊂MtAST env         ⍝ Can reduce over all the kids at once
+      ca _←⊃⍺⍺ vis/z                   ⍝ We ignore the consequent environment
+      (ast⍪(1↑⍺)⍪ca)env                ⍝ Return the original environment
     })⍵
-    'Function'≡nm:⍺(⍺⍺{           ⍝ Function node
-      ken←⍺⍺⍪env                  ⍝ Env is current env plus all in scope
-      ken[;1]+←1                  ⍝ Push the stack count up
-      z←(⌽1 Kids ⍺),⊂MtAST ken    ⍝ Must go through all children
-      ne←ge ⍺                     ⍝ New scope env
-      ka _←⊃ne vis/z              ⍝ Ignore env from children
-      at←(⊃0 3⌷⍺)⍪'alloca'(≢ne)   ⍝ New env attribute for function node
-      nd←(1 3↑⍺),⊂at              ⍝ New function node
-      (ast⍪nd⍪ka)env              ⍝ Leave environment same as when entered
+    'Function'≡nm:⍺(⍺⍺{                ⍝ Function node
+      ken←⍺⍺⍪env                       ⍝ Env is current env plus all in scope
+      ken[;1]+←1                       ⍝ Push the stack count up
+      z←(⌽1 Kids ⍺),⊂MtAST ken         ⍝ Must go through all children
+      ne←ge ⍺                          ⍝ New scope env
+      ka _←⊃ne vis/z                   ⍝ Ignore env from children
+      at←(⊃0 3⌷⍺)⍪'alloca'(≢ne)        ⍝ New env attribute for function node
+      nd←(1 3↑⍺),⊂at                   ⍝ New function node
+      (ast⍪nd⍪ka)env                   ⍝ Leave environment same as when entered
     })⍵
     z←(⌽1 Kids ⍺),⊂MtAST env
     ka env←⊃⍺⍺∇/z
@@ -1102,25 +1102,25 @@ AnchorVars←{
 ⍝ Intended Function: Lift all functions to the top level.
 
 LiftFuncs←{
-  I←¯1 ⋄ MkV←{'FN',⍕I⊣(⊃I)+←1}     ⍝ New variable maker
-  vis←{lft ast←⍵                   ⍝ Fn to visit each node
-    (1=⊃⍺)∧'FuncExpr'≡⊃0 1⌷⍺:⍵     ⍝ Ignore top-level functions
-    'Function'≡⊃0 1⌷⍺:⍺(⍺⍺{        ⍝ Only lift Function nodes
-      z←(⌽1 Kids ⍺),⊂lft MtAST     ⍝ Recur over children, updating lifted
-      lft ka←⊃(1+⍺⍺)vis/z          ⍝ Bump up the depth over children
-      at←(⊃0 3⌷⍺)⍪'depth' ⍺⍺       ⍝ New depth attribute for Function node
-      nlf←((1 3↑⍺),⊂at)⍪ka         ⍝ Function node lifted
-      vn←1 2⍴'class' 'ambivalent'  ⍝ Replace with ambivalent variable
-      vn⍪←'depth'(⍕⍺⍺)             ⍝ With the same depth
-      vn⍪←'name'(MkV⍬)             ⍝ And a new name
-      vn←1 4⍴(⊃⍺)'Variable' '' vn  ⍝ Node has same depth
-      (lft⍪nlf)(ast⍪vn)            ⍝ Fn lifted and replaced by variable
+  I←¯1 ⋄ MkV←{'FN',⍕I⊣(⊃I)+←1}         ⍝ New variable maker
+  vis←{lft ast←⍵                       ⍝ Fn to visit each node
+    (1=⊃⍺)∧'FuncExpr'≡⊃0 1⌷⍺:⍵         ⍝ Ignore top-level functions
+    'Function'≡⊃0 1⌷⍺:⍺(⍺⍺{            ⍝ Only lift Function nodes
+      z←(⌽1 Kids ⍺),⊂lft MtAST         ⍝ Recur over children, updating lifted
+      lft ka←⊃(1+⍺⍺)vis/z              ⍝ Bump up the depth over children
+      at←(⊃0 3⌷⍺)⍪'depth' ⍺⍺           ⍝ New depth attribute for Function node
+      nlf←((1 3↑⍺),⊂at)⍪ka             ⍝ Function node lifted
+      vn←1 2⍴'class' 'ambivalent'      ⍝ Replace with ambivalent variable
+      vn⍪←'depth'(⍕⍺⍺)                 ⍝ With the same depth
+      vn⍪←'name'(MkV⍬)                 ⍝ And a new name
+      vn←1 4⍴(⊃⍺)'Variable' '' vn      ⍝ Node has same depth
+      (lft⍪nlf)(ast⍪vn)                ⍝ Fn lifted and replaced by variable
     })⍵
-    z←(⌽1 Kids ⍺),⊂lft (1↑⍺)       ⍝ Otherwise, traverse
-    ⊃⍺⍺ ∇/z                        ⍝ without changing anything
+    z←(⌽1 Kids ⍺),⊂lft (1↑⍺)           ⍝ Otherwise, traverse
+    ⊃⍺⍺ ∇/z                            ⍝ without changing anything
   }
-  z←(⌽1 Kids ⍵),⊂2⍴⊂MtAST          ⍝ Must traverse all top-level
-  (1↑⍵)⍪⊃⍪/0 vis/z                 ⍝ Nodes just the same
+  z←(⌽1 Kids ⍵),⊂2⍴⊂MtAST              ⍝ Must traverse all top-level
+  (1↑⍵)⍪⊃⍪/0 vis/z                     ⍝ Nodes just the same
 }
 
 ⍝ ConvPrims
@@ -1129,21 +1129,21 @@ LiftFuncs←{
 ⍝ runtime variable references.
 
 ConvPrims←{ast←⍵
-  pl←'+-÷×|*⍟⌈⌊<≤=≠≥>'                ⍝ Primitives
-  cl←'apl_plus' 'apl_minus' 'apl_div' ⍝ Foreign equivalents
+  pl←'+-÷×|*⍟⌈⌊<≤=≠≥>'                 ⍝ Primitives
+  cl←'apl_plus' 'apl_minus' 'apl_div'  ⍝ Foreign equivalents
   cl,←'apl_times' 'apl_residue'
   cl,←'apl_exp' 'apl_log' 'apl_max'
   cl,←'apl_min' 'apl_lessthan'
   cl,←'apl_lessthaneq' 'apl_equal'
   cl,←'apl_noteq' 'apl_greaterthaneq'
   cl,←⊂'apl_greatthan'
-  pm←(1⌷⍉⍵)∊⊂'Primitive'              ⍝ Mask of Primitive nodes
-  pn←⊃,/'name'Prop pm⌿⍵               ⍝ Primitive names
-  cn←(pl⍳pn)⊃¨⊂cl                     ⍝ Converted names
-  at←⊂1 2⍴'class' 'function'          ⍝ Class is function
-  at⍪¨←(⊂⊂'name'),∘⊂¨cn               ⍝ Use the converted name
-  vn←(⊂'Variable'),(⊂''),⍪at          ⍝ Build the basic node structure
-  ast⊣(pm⌿ast)←(pm/0⌷⍉⍵),vn           ⍝ Replace Primitive nodes
+  pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
+  pn←⊃,/'name'Prop pm⌿⍵                ⍝ Primitive names
+  cn←(pl⍳pn)⊃¨⊂cl                      ⍝ Converted names
+  at←⊂1 2⍴'class' 'function'           ⍝ Class is function
+  at⍪¨←(⊂⊂'name'),∘⊂¨cn                ⍝ Use the converted name
+  vn←(⊂'Variable'),(⊂''),⍪at           ⍝ Build the basic node structure
+  ast⊣(pm⌿ast)←(pm/0⌷⍉⍵),vn            ⍝ Replace Primitive nodes
 
 }
 
@@ -1153,18 +1153,18 @@ ConvPrims←{ast←⍵
 ⍝ semantically equivalent.
 
 GenLLVM←{
-  nam←(0 3)(0 1)⊃⍵                   ⍝ Namespace must have name
-  nam←nam 'Unamed Namespace'⌷⍨''≡nam ⍝ Possibly empty, so fix it
-  mod←ModuleCreateWithName nam       ⍝ Empty module to start with
-  1=≢k←1 Kids ⍵:mod                  ⍝ Quit if nothing to do
-  nm←1⌷⍉(1=0⌷⍉⍵)⌿⍵                   ⍝ Top-level nodes and node names
-  exm←nm∊⊂'Expression'               ⍝ Mask of expressions
-  fem←nm∊⊂'FuncExpr'                 ⍝ Mask of function expressions
-  _←GenRuntime mod                   ⍝ Generate declarations for runtime
-  tex←mod GenGlobal¨exm/k            ⍝ Generate top-level globals
-  _←mod GenFnDec¨fem/k               ⍝ Generate Function declarations
-  _←mod GenFunc¨fem/k                ⍝ Generate functions
-  mod⊣mod GenInit tex                ⍝ Generate Initialization function
+  nam←(0 3)(0 1)⊃⍵                     ⍝ Namespace must have name
+  nam←nam 'Unamed Namespace'⌷⍨''≡nam   ⍝ Possibly empty, so fix it
+  mod←ModuleCreateWithName nam         ⍝ Empty module to start with
+  1=≢k←1 Kids ⍵:mod                    ⍝ Quit if nothing to do
+  nm←1⌷⍉(1=0⌷⍉⍵)⌿⍵                     ⍝ Top-level nodes and node names
+  exm←nm∊⊂'Expression'                 ⍝ Mask of expressions
+  fem←nm∊⊂'FuncExpr'                   ⍝ Mask of function expressions
+  _←GenRuntime mod                     ⍝ Generate declarations for runtime
+  tex←mod GenGlobal¨exm/k              ⍝ Generate top-level globals
+  _←mod GenFnDec¨fem/k                 ⍝ Generate Function declarations
+  _←mod GenFunc¨fem/k                  ⍝ Generate functions
+  mod⊣mod GenInit tex                  ⍝ Generate Initialization function
 }
 
 ⍝ GenFnDec
@@ -1172,20 +1172,20 @@ GenLLVM←{
 ⍝ Intended Function: Take a FuncExpr node and declare the function.
 
 GenFnDec←{
-  0=≢fn←Split⊃'name'Prop 1↑⍵:0       ⍝ Ignore functions without names
-  vtst←'Variable'≡⊃1 1⌷⍵             ⍝ Child node type
-  vn←⊃'name'Prop 1↑1↓⍵               ⍝ Variable name if it exists
-  vtst:⍺{                            ⍝ Named function reference
-    fr←GetNamedFunction ⍺ vn         ⍝ Referenced function
-    ft←GenFuncType(CountParams fr)-3 ⍝ Function Type based on depth
-    ⍺{AddAlias ⍺ ft fr ⍵}¨fn         ⍝ Generate aliases for each name
+  0=≢fn←Split⊃'name'Prop 1↑⍵:0         ⍝ Ignore functions without names
+  vtst←'Variable'≡⊃1 1⌷⍵               ⍝ Child node type
+  vn←⊃'name'Prop 1↑1↓⍵                 ⍝ Variable name if it exists
+  vtst:⍺{                              ⍝ Named function reference
+    fr←GetNamedFunction ⍺ vn           ⍝ Referenced function
+    ft←GenFuncType(CountParams fr)-3   ⍝ Function Type based on depth
+    ⍺{AddAlias ⍺ ft fr ⍵}¨fn           ⍝ Generate aliases for each name
   }⍵
-  fnf←⊃fn ⋄ fnr←1↓fn                 ⍝ Canonical name; rest of names
-  fd←⍎⊃'depth'Prop 1↑1↓⍵             ⍝ Function depth
-  ft←GenFuncType fd                  ⍝ Fn type based on depth
-  fr←AddFunction ⍺ fnf ft            ⍝ Insert function into module
-  0=≢fnr:fr                          ⍝ Return if no other names
-  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr       ⍝ Otherwise, alias the others
+  fnf←⊃fn ⋄ fnr←1↓fn                   ⍝ Canonical name; rest of names
+  fd←⍎⊃'depth'Prop 1↑1↓⍵               ⍝ Function depth
+  ft←GenFuncType fd                    ⍝ Fn type based on depth
+  fr←AddFunction ⍺ fnf ft              ⍝ Insert function into module
+  0=≢fnr:fr                            ⍝ Return if no other names
+  fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr         ⍝ Otherwise, alias the others
 }
 
 ⍝ GenGlobal
@@ -1194,15 +1194,15 @@ GenFnDec←{
 ⍝ binding in the module. Returns initialization expression if needed.
 
 GenGlobal←{
-  0=≢⍵:MtAST                         ⍝ Don't do anything if nothing to do
-  litp←{                             ⍝ Fn predicate to test if literal
-    cls←⊃'class'Prop 1↑⍵             ⍝ Class of Expression
-    ct←⊃1 1⌷⍵                        ⍝ Node type of the first child
-    ('atomic'≡cls)∧'Number'≡ct       ⍝ Class is atomic; Child type is Number
+  0=≢⍵:MtAST                           ⍝ Don't do anything if nothing to do
+  litp←{                               ⍝ Fn predicate to test if literal
+    cls←⊃'class'Prop 1↑⍵               ⍝ Class of Expression
+    ct←⊃1 1⌷⍵                          ⍝ Node type of the first child
+    ('atomic'≡cls)∧'Number'≡ct         ⍝ Class is atomic; Child type is Number
   }
-  litp ⍵:MtAST⊣⍺ GenConst ⍵          ⍝ Generate the constants directly
-  ∧/' '=nm←⊃'name'Prop 1↑⍵:⍵         ⍝ No need to declare unnamed expressions
-  ⍵⊣⍺ GenArrDec Split⊃'name'Prop 1↑⍵ ⍝ Declare the array and enqueue
+  litp ⍵:MtAST⊣⍺ GenConst ⍵            ⍝ Generate the constants directly
+  ∧/' '=nm←⊃'name'Prop 1↑⍵:⍵           ⍝ No need to declare unnamed expressions
+  ⍵⊣⍺ GenArrDec Split⊃'name'Prop 1↑⍵   ⍝ Declare the array and enqueue
 }
 
 ⍝ GenArrDec
@@ -1211,16 +1211,16 @@ GenGlobal←{
 ⍝ initialized later if there is not already a binding in the module.
 
 GenArrDec←{
-  ⍺{                               ⍝ Fn to declare new array
-    0≠GetNamedGlobal ⍺ ⍵:⍵         ⍝ Do nothing if already declared
-    r←ConstInt (Int16Type) 0 0     ⍝ Rank ← 0
-    sz←ConstInt (Int64Type) 0 0    ⍝ Size ← 0
-    t←ConstInt (Int8Type) 2 0      ⍝ Type ← 2
-    s←ConstPointerNull Int32Type   ⍝ Shape ← ⍬
-    d←ConstPointerNull Int64Type   ⍝ Data ← ⍬
-    a←ConstStruct (r sz t s d) 5 0 ⍝ Build empty structure
-    g←AddGlobal ⍺(GenArrayType⍬)⍵  ⍝ Add the Global
-    ⍵⊣SetInitializer g a           ⍝ Set the initial empty value
+  ⍺{                                   ⍝ Fn to declare new array
+    0≠GetNamedGlobal ⍺ ⍵:⍵             ⍝ Do nothing if already declared
+    r←ConstInt (Int16Type) 0 0         ⍝ Rank ← 0
+    sz←ConstInt (Int64Type) 0 0        ⍝ Size ← 0
+    t←ConstInt (Int8Type) 2 0          ⍝ Type ← 2
+    s←ConstPointerNull Int32Type       ⍝ Shape ← ⍬
+    d←ConstPointerNull Int64Type       ⍝ Data ← ⍬
+    a←ConstStruct (r sz t s d) 5 0     ⍝ Build empty structure
+    g←AddGlobal ⍺(GenArrayType⍬)⍵      ⍝ Add the Global
+    ⍵⊣SetInitializer g a               ⍝ Set the initial empty value
   }¨⍵
 }
 
@@ -1265,23 +1265,23 @@ GenConst←{
 ⍝ Function in the LLVM Module given.
 
 GenFunc←{
-  0=≢fn←Split⊃'name'Prop 1↑⍵:0       ⍝ Ignore functions without names
-  'Variable'≡⊃1 1⌷⍵:0                ⍝ Ignore named function references
-  fs←⍎⊃'allloca'Prop 1↑1↓⍵           ⍝ Allocation for local scope
-  fr←GetNamedFunction ⍺ (⊃fn)        ⍝ Get the function reference
-  bldr←CreateBuilder                 ⍝ Setup builder
-  bb←AppendBasicBlock fr ''          ⍝ Initial basic block
-  _←PositionBuilderAtEnd bldr bb     ⍝ Link builder and basic block
-  env0←{                             ⍝ Setup local frame
-    0=fs:(0 0)                       ⍝ If frame is empty, do nothing
-    fsz←ConstInt Int32Type fs        ⍝ Frame size value reference
-    ftp←GenArrayType⍬                ⍝ Frame is array pointer
-    args←bldr ftp fsz 'env0'         ⍝ Frame is env0
-    (BuildArrayAlloca args)fs        ⍝ Return pointer and size
+  0=≢fn←Split⊃'name'Prop 1↑⍵:0         ⍝ Ignore functions without names
+  'Variable'≡⊃1 1⌷⍵:0                  ⍝ Ignore named function references
+  fs←⍎⊃'allloca'Prop 1↑1↓⍵             ⍝ Allocation for local scope
+  fr←GetNamedFunction ⍺ (⊃fn)          ⍝ Get the function reference
+  bldr←CreateBuilder                   ⍝ Setup builder
+  bb←AppendBasicBlock fr ''            ⍝ Initial basic block
+  _←PositionBuilderAtEnd bldr bb       ⍝ Link builder and basic block
+  env0←{                               ⍝ Setup local frame
+    0=fs:(0 0)                         ⍝ If frame is empty, do nothing
+    fsz←ConstInt Int32Type fs          ⍝ Frame size value reference
+    ftp←GenArrayType⍬                  ⍝ Frame is array pointer
+    args←bldr ftp fsz 'env0'           ⍝ Frame is env0
+    (BuildArrayAlloca args)fs          ⍝ Return pointer and size
   }⍬
-  k←2 Kids ⍵                         ⍝ Nodes of the Function body
-  _←⍬ ⍬(⍺ fr bldr env0 GenFnBlock)k  ⍝ Generate the function body
-  fr⊣DisposeBuilder bldr             ⍝ Builder cleanup
+  k←2 Kids ⍵                           ⍝ Nodes of the Function body
+  _←⍬ ⍬(⍺ fr bldr env0 GenFnBlock)k    ⍝ Generate the function body
+  fr⊣DisposeBuilder bldr               ⍝ Builder cleanup
 }
 
 ⍝ GenFnBlock
@@ -1289,26 +1289,26 @@ GenFunc←{
 ⍝ Intended Function: Generate a block of code in a function.
 
 GenFnBlock←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍺ ⋄ k←⍵
-  line←{n←⊃0 1⌷⍺                     ⍝ Op to handle node in function body
-    n≡'Expression':⍺(⍺⍺ GenExpr)⍵    ⍝ Use GenExpr on Expressions
-    n≡'Condition':⍺(⍺⍺ GenCond)⍵     ⍝ Use GenCond on Conditions
-    emsg←'UNKNOWN FUNCTION CHILD'    ⍝ Only deal with Expressions or Conditions
-    emsg ⎕SIGNAL 99                  ⍝ And signal an error otherwise
+  line←{n←⊃0 1⌷⍺                       ⍝ Op to handle node in function body
+    n≡'Expression':⍺(⍺⍺ GenExpr)⍵      ⍝ Use GenExpr on Expressions
+    n≡'Condition':⍺(⍺⍺ GenCond)⍵       ⍝ Use GenCond on Conditions
+    emsg←'UNKNOWN FUNCTION CHILD'      ⍝ Only deal with Exprs or Conditions
+    emsg ⎕SIGNAL 99                    ⍝ And signal an error otherwise
   }
-  _ v←⊃⍺⍺ line/(⌽⍵),⊂⍺               ⍝ Reduce top to bottom over children
-  mt←GetNamedFunction mod 'array_mt' ⍝ Runtime function to empty array
-  res←GetParam fr 0                  ⍝ ValueRef of result parameter
-  mtret←{                            ⍝ Fn for empty return
-    _←BuildCall bldr mt res 1 ''     ⍝ Empty the result parameter
-    bldr(⍵ MkRet)env0                ⍝ And make return
+  _ v←⊃⍺⍺ line/(⌽⍵),⊂⍺                 ⍝ Reduce top to bottom over children
+  mt←GetNamedFunction mod 'array_mt'   ⍝ Runtime function to empty array
+  res←GetParam fr 0                    ⍝ ValueRef of result parameter
+  mtret←{                              ⍝ Fn for empty return
+    _←BuildCall bldr mt res 1 ''       ⍝ Empty the result parameter
+    bldr(⍵ MkRet)env0                  ⍝ And make return
   }
-  0=≢⍵:mtret mod                     ⍝ Empty return on empty body
-  'Condition'≡⊃0 1⌷l←⊃⌽⍵:mtret mod   ⍝ Extra return if condition
-  cp←GetNamedFunction mod 'array_cp' ⍝ Runtime array copy function
-  ∨/' '≠⊃'name'Prop 1↑l:{            ⍝ Is last node named?
-    args←res,⊃⌽v                     ⍝ Then we return the binding
-    _←BuildCall bldr cp args 2 ''    ⍝ Copied into result array
-    bldr(mod MkRet)env0              ⍝ And return
+  0=≢⍵:mtret mod                       ⍝ Empty return on empty body
+  'Condition'≡⊃0 1⌷l←⊃⌽⍵:mtret mod     ⍝ Extra return if condition
+  cp←GetNamedFunction mod 'array_cp'   ⍝ Runtime array copy function
+  ∨/' '≠⊃'name'Prop 1↑l:{              ⍝ Is last node named?
+    args←res,⊃⌽v                       ⍝ Then we return the binding
+    _←BuildCall bldr cp args 2 ''      ⍝ Copied into result array
+    bldr(mod MkRet)env0                ⍝ And return
   }⍵
 }
 
@@ -1318,54 +1318,54 @@ GenFnBlock←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍺ ⋄ k←⍵
 ⍝ initialize all global variables that are not constants.
 
 GenInit←{
-  ft←GenFuncType 0                   ⍝ Zero depth function
-  fr←AddFunction ⍺ 'Init' ft         ⍝ Named Init
-  bldr←CreateBuilder                 ⍝ Setup builder
-  bb←AppendBasicBlock fr ''          ⍝ Initial basic block
-  _←PositionBuilderAtEnd bldr bb     ⍝ Link builder and basic block
-  gex←{GetNamedGlobal ⍺ ⍵}           ⍝ Convenience Fn for GetNamedGlobal
-  gfn←{GetNamedFunction ⍺ ⍵}         ⍝ Convenience Fn for GetNamedFunction
-  call←{BuildCall bldr ⍺⍺ ⍵ (≢⍵) ''} ⍝ Op to build call
-  cpf←⍺ gfn 'array_cp'               ⍝ Runtime copy function
-  cpy←{cpf call ⍺ ⍵}                 ⍝ Convenience Fn for Copying arrays
-  mcall←{                            ⍝ Fn to generate multiple assignment
-    v←⍺⍺ call (⊃⍺),⍵                 ⍝ Call on the first argument
-    1=≢⍺:v                           ⍝ If single target, done.
-    v,(1↓⍺)cpy¨⊃⍺                    ⍝ Otherwise, copy results to other args
+  ft←GenFuncType 0                     ⍝ Zero depth function
+  fr←AddFunction ⍺ 'Init' ft           ⍝ Named Init
+  bldr←CreateBuilder                   ⍝ Setup builder
+  bb←AppendBasicBlock fr ''            ⍝ Initial basic block
+  _←PositionBuilderAtEnd bldr bb       ⍝ Link builder and basic block
+  gex←{GetNamedGlobal ⍺ ⍵}             ⍝ Convenience Fn for GetNamedGlobal
+  gfn←{GetNamedFunction ⍺ ⍵}           ⍝ Convenience Fn for GetNamedFunction
+  call←{BuildCall bldr ⍺⍺ ⍵ (≢⍵) ''}   ⍝ Op to build call
+  cpf←⍺ gfn 'array_cp'                 ⍝ Runtime copy function
+  cpy←{cpf call ⍺ ⍵}                   ⍝ Convenience Fn for Copying arrays
+  mcall←{                              ⍝ Fn to generate multiple assignment
+    v←⍺⍺ call (⊃⍺),⍵                   ⍝ Call on the first argument
+    1=≢⍺:v                             ⍝ If single target, done.
+    v,(1↓⍺)cpy¨⊃⍺                      ⍝ Otherwise, copy results to other args
   }
-  gtg←{                              ⍝ Fn to ensure valid target name
-    nm←⊃'name'Prop 1↑⍵               ⍝ Name attr of node
-    ∧/' '=nm:(⍺ GenArrDec⊂'ign'),1   ⍝ If unnamed, generate temp name
-    (⍺ gex¨Split nm)(0)              ⍝ Otherwise, lookup references
+  gtg←{                                ⍝ Fn to ensure valid target name
+    nm←⊃'name'Prop 1↑⍵                 ⍝ Name attr of node
+    ∧/' '=nm:(⍺ GenArrDec⊂'ign'),1     ⍝ If unnamed, generate temp name
+    (⍺ gex¨Split nm)(0)                ⍝ Otherwise, lookup references
   }
-  array_free←⍺ gfn 'array_free'      ⍝ Runtime cleaner function reference
-  free←{array_free call ⍵}           ⍝ Function to cleanup ararys
-  clean←{(⊃⍺){⍵⊣free ⍺}⍣(⊃⌽⍺)⊢⍵}     ⍝ Fn to optionally cleanup temp array
-  _←{                                ⍝ Handle each global expr in turn
-    n←⊃'class'Prop 1↑⍵               ⍝ Switch on node class
-    'atomic'≡n:⍺{                    ⍝ Atomic case: variable reference
-      ∧/' '=tgt←⊃'name'Prop 1↑⍵:0    ⍝ Ignore unnamed global references
-      tgt←⍺ gex¨Split tgt            ⍝ Vector of target ValueRefs
-      src←⍺ gex ⊃'name'Prop 1↑1↓⍵    ⍝ Source ValueRef
-      tgt cpy¨src                    ⍝ Copy source to each target
+  array_free←⍺ gfn 'array_free'        ⍝ Runtime cleaner function reference
+  free←{array_free call ⍵}             ⍝ Function to cleanup ararys
+  clean←{(⊃⍺){⍵⊣free ⍺}⍣(⊃⌽⍺)⊢⍵}       ⍝ Fn to optionally cleanup temp array
+  _←{                                  ⍝ Handle each global expr in turn
+    n←⊃'class'Prop 1↑⍵                 ⍝ Switch on node class
+    'atomic'≡n:⍺{                      ⍝ Atomic case: variable reference
+      ∧/' '=tgt←⊃'name'Prop 1↑⍵:0      ⍝ Ignore unnamed global references
+      tgt←⍺ gex¨Split tgt              ⍝ Vector of target ValueRefs
+      src←⍺ gex ⊃'name'Prop 1↑1↓⍵      ⍝ Source ValueRef
+      tgt cpy¨src                      ⍝ Copy source to each target
     }⍵
-    'monadic'≡n:⍺{                   ⍝ Monadic: FVar Var, Depth always 0
-      tgt ist←t←⍺ gtg ⍵              ⍝ Variables to be assigned
-      lft←GenNullArrayPtr⍬           ⍝ Left argument is null
-      fn←⍺ gfn ⊃'name'Prop 1↑2↓⍵     ⍝ Function is first child
-      rgt←⍺ gex ⊃'name'Prop 1↑4↓⍵    ⍝ Right argument is second child
-      t clean tgt(fn mcall)lft rgt   ⍝ Make the call
+    'monadic'≡n:⍺{                     ⍝ Monadic: FVar Var, Depth always 0
+      tgt ist←t←⍺ gtg ⍵                ⍝ Variables to be assigned
+      lft←GenNullArrayPtr⍬             ⍝ Left argument is null
+      fn←⍺ gfn ⊃'name'Prop 1↑2↓⍵       ⍝ Function is first child
+      rgt←⍺ gex ⊃'name'Prop 1↑4↓⍵      ⍝ Right argument is second child
+      t clean tgt(fn mcall)lft rgt     ⍝ Make the call
     }⍵
-    'dyadic'≡n:⍺{                    ⍝ Dyadic: Var FVar Var
-      tgt ist←t←a gtg ⍵              ⍝ Variables to be assigned
-      lft←⍺ gex ⊃'name'Prop 1↑2↓⍵    ⍝ Left argument is first child
-      fn←⍺ gfn ⊃'name'Prop 1↑4↓⍵     ⍝ Function is second child
-      rgt←⍺ gex ⊃'name'Prop 1↑6↓⍵    ⍝ Right argument is third child
-      t clean tgt(fn mcall)lft rgt   ⍝ Make the call
+    'dyadic'≡n:⍺{                      ⍝ Dyadic: Var FVar Var
+      tgt ist←t←a gtg ⍵                ⍝ Variables to be assigned
+      lft←⍺ gex ⊃'name'Prop 1↑2↓⍵      ⍝ Left argument is first child
+      fn←⍺ gfn ⊃'name'Prop 1↑4↓⍵       ⍝ Function is second child
+      rgt←⍺ gex ⊃'name'Prop 1↑6↓⍵      ⍝ Right argument is third child
+      t clean tgt(fn mcall)lft rgt     ⍝ Make the call
     }⍵
   }¨⍵
-  _←bldr(⍺ MkRet)0 0                 ⍝ Do a standard return
-  fr⊣DisposeBuilder bldr             ⍝ Cleanup and return function reference
+  _←bldr(⍺ MkRet)0 0                   ⍝ Do a standard return
+  fr⊣DisposeBuilder bldr               ⍝ Cleanup and return function reference
 }
 
 ⍝ LookupExpr
@@ -1374,20 +1374,20 @@ GenInit←{
 ⍝ LLVM Value Ref for that name.
 
 LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr bld _←⍺⍺ ⋄ node←⍵
-  nam←⊃'name'Prop ⍵                 ⍝ Variable's name
-  (i←nm⍳⊂nam)<≢nm:(i⊃vl),nm vl      ⍝ Environment contains binding, use it
-  eid←⍎⊃'env'Prop ⍵                 ⍝ Variable's Environment
-  pos←⍎⊃'slot'Prop ⍵                ⍝ Position in environment
-  fnd←(CountParams fr)-3            ⍝ Get the function depth
-  eid=0:'VALUE ERROR'⎕SIGNAL 99     ⍝ Variable should not be in local scope
-  eid>fnd:{                         ⍝ Environment points to global space
-    val←GetNamedGlobal mod nam      ⍝ Grab the value from the global space
-    val,(nam val),¨nm vl            ⍝ Add it to the bindings and return
+  nam←⊃'name'Prop ⍵                    ⍝ Variable's name
+  (i←nm⍳⊂nam)<≢nm:(i⊃vl),nm vl         ⍝ Environment contains binding, use it
+  eid←⍎⊃'env'Prop ⍵                    ⍝ Variable's Environment
+  pos←⍎⊃'slot'Prop ⍵                   ⍝ Position in environment
+  fnd←(CountParams fr)-3               ⍝ Get the function depth
+  eid=0:'VALUE ERROR'⎕SIGNAL 99        ⍝ Variable should not be in local scope
+  eid>fnd:{                            ⍝ Environment points to global space
+    val←GetNamedGlobal mod nam         ⍝ Grab the value from the global space
+    val,(nam val),¨nm vl               ⍝ Add it to the bindings and return
   }⍬
-  env←GetParam fr(2+eid)            ⍝ Pointer to environment frame
-  app←BuildStructGEP bld env pos '' ⍝ Pointer to Array Pointer for Variable
-  apv←BuildLoad bld app nam         ⍝ Array Pointer for Variable
-  apv,nam apv,¨nm vl                ⍝ Update the environment and return
+  env←GetParam fr(2+eid)               ⍝ Pointer to environment frame
+  app←BuildStructGEP bld env pos ''    ⍝ Pointer to Array Pointer for Variable
+  apv←BuildLoad bld app nam            ⍝ Array Pointer for Variable
+  apv,nam apv,¨nm vl                   ⍝ Update the environment and return
 }
 
 ⍝ GenCond
@@ -1395,26 +1395,26 @@ LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr bld _←�
 ⍝ Intended Function: Generate code for a Condition node.
 
 GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
-  te←⊃k←1 Kids ⍺                      ⍝ Children and test expression
-  te nm vl←⍵(⍺⍺ LookupExpr)1↑1↓te     ⍝ Find ValueRef of test expression
-  gp←BuildStructGEP bldr te 4 ''      ⍝ Get data values pointer
-  tp←BuildLoad bldr gp 'tp'           ⍝ Load data values
-  ap←ArrayType Int64Type 1            ⍝ Type of an Array
-  ap←PointerType ap 0                 ⍝ Pointer type to an array
-  tp←BuildBitCast bldr tp ap ''       ⍝ Cast data values to array pointer
-  gp←BuildGEP bldr tp (GEPI 0 0) 2 '' ⍝ Value pointer
-  tv←BuildLoad bldr gp 'tv'           ⍝ Load value
-  zr←ConstInt Int64Type 0 1           ⍝ We're testing against zero
-  t←BuildICmp bldr 32 tv zr 'T'       ⍝ We test at the end of block
-  cb←AppendBasicBlock fr 'consequent' ⍝ Consequent basic block
-  _←PositionBuilderAtEnd bldr cb      ⍝ Point builder to consequent
-  _←⍵(⍺⍺ GenFnBlock)1↓k               ⍝ Generate the consequent block
-  ob←GetPreviousBasicBlock cb         ⍝ Original basic block
-  ab←AppendBasicBlock fr 'alternate'  ⍝ Alternate basic block
-  _←PositionBuilderAtEnd bldr ob      ⍝ We need to add a conditional break
-  _←BuildCondBr bldr t ab cb          ⍝ To the old block pointing to cb and ab
-  _←PositionBuilderAtEnd bldr ab      ⍝ And then return pointing at the ab
-  nm vl                               ⍝ Return our possibly new environment
+  te←⊃k←1 Kids ⍺                       ⍝ Children and test expression
+  te nm vl←⍵(⍺⍺ LookupExpr)1↑1↓te      ⍝ Find ValueRef of test expression
+  gp←BuildStructGEP bldr te 4 ''       ⍝ Get data values pointer
+  tp←BuildLoad bldr gp 'tp'            ⍝ Load data values
+  ap←ArrayType Int64Type 1             ⍝ Type of an Array
+  ap←PointerType ap 0                  ⍝ Pointer type to an array
+  tp←BuildBitCast bldr tp ap ''        ⍝ Cast data values to array pointer
+  gp←BuildGEP bldr tp (GEPI 0 0) 2 ''  ⍝ Value pointer
+  tv←BuildLoad bldr gp 'tv'            ⍝ Load value
+  zr←ConstInt Int64Type 0 1            ⍝ We're testing against zero
+  t←BuildICmp bldr 32 tv zr 'T'        ⍝ We test at the end of block
+  cb←AppendBasicBlock fr 'consequent'  ⍝ Consequent basic block
+  _←PositionBuilderAtEnd bldr cb       ⍝ Point builder to consequent
+  _←⍵(⍺⍺ GenFnBlock)1↓k                ⍝ Generate the consequent block
+  ob←GetPreviousBasicBlock cb          ⍝ Original basic block
+  ab←AppendBasicBlock fr 'alternate'   ⍝ Alternate basic block
+  _←PositionBuilderAtEnd bldr ob       ⍝ We need to add a conditional break
+  _←BuildCondBr bldr t ab cb           ⍝ To the old block pointing to cb and ab
+  _←PositionBuilderAtEnd bldr ab       ⍝ And then return pointing at the ab
+  nm vl                                ⍝ Return our possibly new environment
 }
 
 ⍝ GenExpr
@@ -1422,40 +1422,40 @@ GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
 ⍝ Intended Function: Generate an Expression, named or unnamed.
 
 GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
-  gnf←{GetNamedFunction mod ⍵}          ⍝ Convenience function
-  call←{BuildCall bldr ⍺ ⍵ (≢⍵) ''}     ⍝ Op to build call
-  cpf←gnf 'array_cp'                    ⍝ Foreign copy function
-  cpy←{0=⍺:0 ⋄ cpf call ⍺ ⍵}            ⍝ Copy wrapper
-  gret←{GetParam ⍵ 0}                   ⍝ Fn to get result array
-  gloc←{BuildStructGEP bldr(⊃env0)⍺ ⍵}  ⍝ Fn to get local variable
-  garg←{0=⍵:⍬ ⋄ GetParam ⍺ ⍵}           ⍝ Fn to get a function parameter
-  cls←⊃'class'Prop 1↑⍺                  ⍝ Node Class
-  nms←Split ⊃'name'Prop 1↑⍺             ⍝ Assignment variables
-  sl←⍕¨Split ⊃'slots'Prop 1↑⍺           ⍝ Slots for variable assignments
-  tgt←sl{0=≢⍵:gret fr ⋄ ⍺ gloc¨⍵}nms    ⍝ Target Value Refs for assignment
-  tgh←⊃tgt ⋄ tgr←1↓tgt                  ⍝ Split into head and rest targets
-  'atomic'≡cls:⍺(⍺⍺{                    ⍝ Atomic: Var Reference
-    av nm vl←⍵(⍺⍺ LookupExpr)1↑1↓⍺      ⍝ Lookup variable
-    nb←(nms,nm)(((≢nms)↑tgt),vl)        ⍝ New bindings
-    0=≢nms:nb⊣bldr(mod MkRet)env0       ⍝ Unnamed is a return
-    nb⊣tgt cpy¨av                       ⍝ Named is a copy
+  gnf←{GetNamedFunction mod ⍵}         ⍝ Convenience function
+  call←{BuildCall bldr ⍺ ⍵ (≢⍵) ''}    ⍝ Op to build call
+  cpf←gnf 'array_cp'                   ⍝ Foreign copy function
+  cpy←{0=⍺:0 ⋄ cpf call ⍺ ⍵}           ⍝ Copy wrapper
+  gret←{GetParam ⍵ 0}                  ⍝ Fn to get result array
+  gloc←{BuildStructGEP bldr(⊃env0)⍺ ⍵} ⍝ Fn to get local variable
+  garg←{0=⍵:⍬ ⋄ GetParam ⍺ ⍵}          ⍝ Fn to get a function parameter
+  cls←⊃'class'Prop 1↑⍺                 ⍝ Node Class
+  nms←Split ⊃'name'Prop 1↑⍺            ⍝ Assignment variables
+  sl←⍕¨Split ⊃'slots'Prop 1↑⍺          ⍝ Slots for variable assignments
+  tgt←sl{0=≢⍵:gret fr ⋄ ⍺ gloc¨⍵}nms   ⍝ Target Value Refs for assignment
+  tgh←⊃tgt ⋄ tgr←1↓tgt                 ⍝ Split into head and rest targets
+  'atomic'≡cls:⍺(⍺⍺{                   ⍝ Atomic: Var Reference
+    av nm vl←⍵(⍺⍺ LookupExpr)1↑1↓⍺     ⍝ Lookup variable
+    nb←(nms,nm)(((≢nms)↑tgt),vl)       ⍝ New bindings
+    0=≢nms:nb⊣bldr(mod MkRet)env0      ⍝ Unnamed is a return
+    nb⊣tgt cpy¨av                      ⍝ Named is a copy
   })⍵
-  lft nm vl f r←⍺(⍺⍺{                   ⍝ Left argument handled based on arity
-    gnap←GenNullArrayPtr                ⍝ Convenience
-    dlft←⍺⍺{⍵(⍺⍺LookupExpr)1↑2↓⍺}       ⍝ Grab left argument in dyadic case
-    'monadic'≡cls:(gnap⍬),⍵,2 4         ⍝ No new bindings, Fn Rgt ←→ 1st, 2nd
-    'dyadic'≡cls:(⍺ dlft ⍵),4 6         ⍝ New bindings, Fn Rgt ←→ 2nd, 3rd
-    'BAD CLASS'⎕SIGNAL 99               ⍝ Error trap just in case
+  lft nm vl f r←⍺(⍺⍺{                  ⍝ Left argument handled based on arity
+    gnap←GenNullArrayPtr               ⍝ Convenience
+    dlft←⍺⍺{⍵(⍺⍺LookupExpr)1↑2↓⍺}      ⍝ Grab left argument in dyadic case
+    'monadic'≡cls:(gnap⍬),⍵,2 4        ⍝ No new bindings, Fn Rgt ←→ 1st, 2nd
+    'dyadic'≡cls:(⍺ dlft ⍵),4 6        ⍝ New bindings, Fn Rgt ←→ 2nd, 3rd
+    'BAD CLASS'⎕SIGNAL 99              ⍝ Error trap just in case
   })⍵
-  fn←gnf⊃'name'Prop 1↑f↓⍺               ⍝ Grab function (pre-declared)
-  rgt nm vl←nm vl(⍺⍺ LookupExpr)1↑r↓⍺   ⍝ Lookup right argument
-  fd←-(CountParams fn)-3                ⍝ Callee depth
-  cd←(CountParams fr)-3                 ⍝ Caller depth
-  env←fd↑(⊃env0),fr garg¨3+⍳cd          ⍝ Environments to pass to callee
-  _←fn call tgh,lft,rgt,env             ⍝ Build the call
-  nb←(nms,nm)(((≢nms)↑tgt),vl)          ⍝ New bindings
-  0=≢nms:nb⊣bldr(mod MkRet)env0         ⍝ Unnamed is a return
-  nb⊣tgr cpy¨tgh                        ⍝ Copy rest of names; return bindings
+  fn←gnf⊃'name'Prop 1↑f↓⍺              ⍝ Grab function (pre-declared)
+  rgt nm vl←nm vl(⍺⍺ LookupExpr)1↑r↓⍺  ⍝ Lookup right argument
+  fd←-(CountParams fn)-3               ⍝ Callee depth
+  cd←(CountParams fr)-3                ⍝ Caller depth
+  env←fd↑(⊃env0),fr garg¨3+⍳cd         ⍝ Environments to pass to callee
+  _←fn call tgh,lft,rgt,env            ⍝ Build the call
+  nb←(nms,nm)(((≢nms)↑tgt),vl)         ⍝ New bindings
+  0=≢nms:nb⊣bldr(mod MkRet)env0        ⍝ Unnamed is a return
+  nb⊣tgr cpy¨tgh                       ⍝ Copy rest of names; return bindings
 }
 
 ⍝ MkRet
@@ -1463,10 +1463,10 @@ GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
 ⍝ Intended Function: Insert a return at the end of a function body
 
 MkRet←{
-  cln←GetNamedFunction ⍺⍺ 'clean_env' ⍝ Runtime function to clean environment
-  _←BuildCall ⍺ cln ⍵ 2 ''            ⍝ Clean the local environment
-  zero←ConstInt Int32Type 0 0         ⍝ Zero integer
-  BuildRet ⍺ zero                     ⍝ Return a success status
+  cln←GetNamedFunction ⍺⍺ 'clean_env'  ⍝ Runtime function to clean environment
+  _←BuildCall ⍺ cln ⍵ 2 ''             ⍝ Clean the local environment
+  zero←ConstInt Int32Type 0 0          ⍝ Zero integer
+  BuildRet ⍺ zero                      ⍝ Return a success status
 }
 
 ⍝ GenNullArrayPtr
@@ -1474,8 +1474,8 @@ MkRet←{
 ⍝ Intended Function: Generate a null pointer to an array.
 
 GenNullArrayPtr←{
-  T←PointerType (GenArrayType⍬) 0 ⍝ Array Type
-  ConstPointerNull T              ⍝ Null Pointer
+  T←PointerType (GenArrayType⍬) 0      ⍝ Array Type
+  ConstPointerNull T                   ⍝ Null Pointer
 }
 
 ⍝ GenArrayType
@@ -1498,9 +1498,9 @@ GenArrayType←{
 ⍝ Function.
 
 GenFuncType←{
-  typ←PointerType (GenArrayType⍬) 0 ⍝ All arguments are array pointers
-  ret←Int32Type ⋄ arg←((3+⍵)⍴typ)   ⍝ Return type and arg type vector
-  FunctionType ret arg (≢arg) 0     ⍝ Return the function type
+  typ←PointerType (GenArrayType⍬) 0    ⍝ All arguments are array pointers
+  ret←Int32Type ⋄ arg←((3+⍵)⍴typ)      ⍝ Return type and arg type vector
+  FunctionType ret arg (≢arg) 0        ⍝ Return the function type
 }
 
 ⍝ GEPIndices
@@ -1763,6 +1763,7 @@ P←'LLVM'
 ⍝ ∘ Local variables are lower case
 ⍝ ∘ Function bodies receive a two column code/comment layout
 ⍝ ∘ Comments of entire function body should align
+⍝ ∘ All line comments start at column 40 with '⍝ '
 ⍝ ∘ Avoid needless bindings
 ⍝ ∘ Divide bindings based on clarity of documentation
 ⍝ ∘ Prefer tacit programming
