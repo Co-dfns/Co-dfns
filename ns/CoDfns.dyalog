@@ -436,7 +436,7 @@ Parse←{
   ⍝    a 1 is for any { token, and a ¯1 for any } token, and 0 for everything
   ⍝    else.
   Fm←((1⌷⍉NS)∊⊂'Token')×{1 ¯1 0⌷⍨(,¨'{}')⍳((0⌷⍉⍵)⍳⊂'name')⌷(1⌷⍉⍵),⊂''}¨3⌷⍉NS
-  _←⍎'⎕SIGNAL(0≠+/Fm)/2 ⋄ ⍬ '
+  0≠+/Fm:⎕SIGNAL 2
   NS[;0]+←2×Fd←+\0,¯1↓Fm
 
   ⍝ 2. Delete the { and } token nodes to insert a Function node at the
@@ -1454,7 +1454,7 @@ GenFunc←{
   }⍬
   k←2 Kids ⍵                         ⍝ Nodes of the Function body
   _←⍬ ⍬(⍺ fr bldr env0 GenFnBlock)k  ⍝ Generate the function body
-  fr⊣DisposeBuilder bldr              ⍝ Builder cleanup
+  fr⊣DisposeBuilder bldr             ⍝ Builder cleanup
 }
 
 ⍝ GenFnBlock
