@@ -349,84 +349,23 @@ ParseFeBindings←{
 
 ⍝ ParseTopLine
 ⍝
-⍝ Intended Function: Given a Top-level Line sub-tree, parse it into one of
-⍝ Expression, Function, or FuncExpr sub-tree at the same depth.
-⍝
-⍝ Right Argument: Code lines already parsed, Names environment
-⍝ Left Argument: Current Line sub-tree to process
-⍝ Output: (Code extended by Line, Expression, Function, or FuncExpr)
-⍝         (New [name,type] environment)
-⍝ Invariant: Depth of input and output sub-trees should be the same
-⍝ Invariant: Comment of the line should be transferred to the output node
-⍝ Invariant: Should be able to reconstruct the original input from output
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
-⍝ Return state: Same as entry state.
+⍝ Intended Function: Given a Top-level Line sub-tree as the left argument,
+⍝ and an code block and environment as the right, parse the sub-tree into
+⍝ one of Expression, Function, or FuncExpr sub-tree at the same depth and
+⍝ attach it to the existing code block, updating the environment if
+⍝ appropriate.
 
-ParseTopLine←{C E←⍵
-  ⍝ Possible stimuli: Vfo Vu N ← E Fe
-  ⍝
-  ⍝ We are only considering the Value and Named states in this function.
-  ⍝ That is to say, the Context, Namespace and Eot states should stay the
-  ⍝ same throughout this function. While the literal stimuli that we
-  ⍝ consider above are the only ones that can appear, we are also implicitly
-  ⍝ dealing with the Nl stimuli.
-  ⍝
-  ⍝ State Transitions:
-  ⍝   E        → null         → (Value ← EXPR)
-  ⍝   E Nl     → null         → ()
-  ⍝   Fe       → null         → (Value ← FUNC ⋄ Named ← No)
-  ⍝   Fe Nl    → null         → ()
-  ⍝   ←        → SYNTAX ERROR → ()
-  ⍝   Vfo      → null         → (Value ← FUNC ⋄ Named ← MAYBE)
-  ⍝   Vfo Nl   → null         → ()
-  ⍝   Vfo ←    → null         → (Named ← BOUND)
-  ⍝   Vu       → null         → (Value ← UNBOUND ⋄ Named ← MAYBE)
-  ⍝   Vu Nl    → VALUE ERROR  → ()
-  ⍝   Vu ←     → null         → (Named ← UNBOUND)
-  ⍝
-  ⍝ Trace: Tables 11-15, 18-22, 206 in Function Specification
-
-  ⍝ Dealing with Empty Lines
-  ⍝ We might have an empty line with no tokens. In this case, we can
-  ⍝ just return the line, as there is nothing to do for this
-  ⍝ line.
-  1=⊃⍴⍺:(C⍪⍺)E
-
-  ⍝ Regardless of what we do, we need to have the comment to put on the
-  ⍝ new head of the sub-tree that we will return.
-  cmt←⊃'comment' Prop 1↑⍺
-
-  ⍝ Stimuli: E Fe
-  ⍝ Stimuli indirectly processed: N { }
-  ⍝
-  ⍝ States to process: E, Fe, E Nl, Fe Nl, Vfo Nl, Vu Nl
-  ⍝
-  ⍝ The first stimuli to eliminate if possible is the recursive stimuli,
-  ⍝ which, if it parses correctly, is all we need do. Since we are dealing
-  ⍝ with an implicit Nl, then ParseExpr and ParseFuncExpr will give us the
-  ⍝ results both for E and Fe states, but for E Nl and Fe Nl. Since these
-  ⍝ are the only reasonable transitions from E and Fe states, this also means
-  ⍝ that we have properly handled the E and Fe transitions from the above table.
-  ⍝
-  ⍝ We also have the happy situation of handling the Vfo Nl and Vu Nl states, as
-  ⍝ both of these are really subsumed members of the set of parses of E Nl and Fe Nl.
-  ⍝ Thus we can eliminate these states as well from needing further treatment.
-  ⍝ We are not quite done with the handling fo the Vu and Vfo states, however, as
-  ⍝ the state-space clearly has more to handle as can be seen from the above table.
-  0=⊃eerr ast Ne←E ParseExpr 1↓⍺:(C⍪ast Comment cmt)Ne
-  0=⊃ferr ast rst←E ParseFuncExpr 1↓⍺:(C⍪ast Comment cmt)E
-
-  ⍝ At this point we have only to deal with variables. This happens to be a situation
-  ⍝ that we encounter fairly often, so we abstract this into another function.
-  ⍝ All possible environment changes have already been handled by ParseFeBindings.
-  0=⊃err ast←E 0 ParseLineVar 1↓⍺:(C⍪ast Comment cmt)E
-
-  ⍝ When the error is best taken from one of the recursive stimuli (see ParseLineVar
-  ⍝ documentation) then we will use the expression error code, as it is the one most
-  ⍝ likely to be useful.
-  ¯1=×err:⎕SIGNAL eerr
-
-  ⎕SIGNAL err
+ParseTopLine←{cod env←⍵ ⋄ line←⍺
+  1=≢⍺:(cod⍪⍺)env                      ⍝ Empty lines, do nothing
+  cmt←⊃'comment' Prop 1↑⍺              ⍝ We need the comment for later
+  eerr ast ne←env ParseExpr 1↓⍺        ⍝ Try to parse as expression first
+  0=eerr:(cod⍪ast Comment cmt)ne       ⍝ If it works, extend and replace
+  ferr ast rst←env ParseFuncExpr 1↓⍺   ⍝ Try to parse as a function expression
+  0=⊃ferr:(cod⍪ast Comment cmt)env     ⍝ It worked, extend and replace
+  err ast←env 0 ParseLineVar 1↓⍺       ⍝ Try to parse as variable prefixed line
+  0=⊃err:(cod⍪ast Comment cmt)env      ⍝ It worked, good
+  ¯1=×err:⎕SIGNAL eerr                 ⍝ Signal expr error if it seems good
+  ⎕SIGNAL err                          ⍝ Otherwise signal err from ParseLineVar
 }
 
 ⍝ ParseLineVar
