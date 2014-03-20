@@ -153,7 +153,7 @@ Tokenize←{
   vc,←'∆⍙'                             ⍝ Deltas
   vc,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'     ⍝ Underscored alphabet
   vcn←vc,nc←'0123456789'               ⍝ Numbers
-  tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>'            ⍝ Single Token characters
+  tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>⍺⍵'          ⍝ Single Token characters
   ac←vcn,' ⍝',tc                       ⍝ All characters
   ~∧/ac∊⍨⊃,/⍵:⎕SIGNAL 2                ⍝ Verify we have only good characters
   i←⍵⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵           ⍝ Divide into comment and code
@@ -164,14 +164,14 @@ Tokenize←{
   at←{2 2⍴'name'⍵'class' 'delimiter'}  ⍝ Fn for namespace attributes
   nsl←{,⊂2 'Token' '' (at ⍵)}¨nsl      ⍝ Tokenize namespace elements
   t←{                                  ⍝ Tokenize other tokens
-    0=⍴t:⍬                             ⍝ Special empty case
-    t←(m/2</0,m)⊂(m←' '≠t)/t           ⍝ Split on and remove spaces
+    0=≢t:⍬                             ⍝ Special empty case
+    t←{(m/2</0,m)⊂(m←' '≠⍵)/⍵}¨t       ⍝ Split on and remove spaces
     t←{(b∨2≠/1,b←⍵∊tc)⊂⍵}¨¨t           ⍝ Split on token characters
     t←{⊃,/(⊂⍬),⍵}¨t                    ⍝ Recombine lines
     lc←+/l←≢¨t                         ⍝ Token count per line and total count
     t←⊃,/t                             ⍝ Convert to single token vector
     fc←⊃¨t                             ⍝ First character of each token
-    iv←(sv←fc∊vc)/⍳lc                  ⍝ Mask and indices of variables
+    iv←(sv←fc∊vc,'⍺⍵')/⍳lc             ⍝ Mask and indices of variables
     ii←(si←fc∊nc)/⍳lc                  ⍝ Mask and indices of numbers
     ia←(sa←fc∊'←⋄:')/⍳lc               ⍝ Mask and indices of separators
     id←(sd←fc∊'{}')/⍳lc                ⍝ Mask and indices of delimiters
