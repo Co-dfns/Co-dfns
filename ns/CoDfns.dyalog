@@ -616,35 +616,20 @@ ParseFnLine←{cod env←⍵
 ⍝ ParseCond
 ⍝
 ⍝ Intended Function: Construct a Condition node from two expressions
-⍝ representing a conditional line in a function body.
-⍝
-⍝ Left Operand: (Current code)(Current (name, type) environment)
-⍝ Right argument: Tokens representing the consequent expression
-⍝ Left argument: Tokens representing the test expression
-⍝ Output: (Current code extended by Condition node)(New [name, type] environment)
-⍝ Invariant: Test expression is non-empty
-⍝ Invariant: Condition node depth is one less than token depth
-⍝ State: Context ← Func ⋄ Bracket ← Yes ⋄ Cond ← Yes ⋄ Bind ← NO ⋄ Value ← EMPTY
+⍝ representing a conditional line in a function body, receiving as an
+⍝ operand the current code to extend and an environment, and returning
+⍝ the newly extended code and a new environment.
 
-ParseCond←{
-  ⍝ ParseFnLine calls ParseCond without knowing whether the test expression
-  ⍝ parses to a valid expression. Verify this first.
-  0≠⊃err ast Ne←⍺⍺ ParseExpr ⍺:⎕SIGNAL err
-
-  ⍝ Depths of ast need to be bumped since they are going into a condition
-  ⍝ node.
-  ast[;0]+←1
-
-  ⍝ Return a Condition node
-  H←(¯1+⊃⍺)'Condition' '' MtA
-
-  ⍝ Refer to Tables 28 and 31 in Function Specification; parse a valid or
-  ⍝ empty expression, as all other cases are subsumed. This covers
-  ⍝ Function States 5 and 8.
-  0=⊃⍴⍵:(H⍪ast)Ne
-  0≠⊃err con Ne←Ne ParseExpr ⍵:⎕SIGNAL err
-  con[;0]+←1 ⍝ Bump the consequence depth as well
-  (H⍪ast⍪con)Ne
+ParseCond←{cod env←⍺⍺
+  err ast ne←env ParseExpr ⍺           ⍝ Try to parse the test expression 1st
+  0≠err:⎕SIGNAL err                    ⍝ Parsing test expression failed
+  (0⌷⍉ast)+←1                          ⍝ Bump test depth to fit in condition
+  m←(¯1+⊃⍺)'Condition' '' MtA          ⍝ We're returning a condition node
+  0=≢⍵:(cod⍪m⍪ast)ne                   ⍝ Emtpy consequent expression
+  err con ne←ne ParseExpr ⍵            ⍝ Try to parse consequent
+  0≠err:⎕SIGNAL err                    ⍝ Failed to parse consequent
+  (0⌷⍉con)+←1                          ⍝ Consequent depth jumps as well
+  (cod⍪m⍪ast⍪con)ne                    ⍝ Condition with conseuqent and test
 }
 
 ⍝ KillLines
