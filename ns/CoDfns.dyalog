@@ -595,72 +595,22 @@ ParseFunc←{
 
 ⍝ ParseFnLine
 ⍝
-⍝ Intended Function: Given a Function Line sub-tree, parse it into one of
-⍝ Expression, FuncExpr, Condition, or Guard sub-tree at the same depth.
-⍝
-⍝ Right Argument: Code lines already parsed, Names environment
-⍝ Left Argument: Current Line sub-tree to process
-⍝ Output: (Code extended by Line, Expression, FuncExpr, Condition, or Guard)
-⍝         (New [name,type] environment)
-⍝ Invariant: Depth of input and output sub-trees should be the same
-⍝ Invariant: Comment of the line should be transferred to the output node
-⍝ Invariant: Should be able to reconstruct the original input from output
-⍝ State: Context ← Func ⋄ Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
-⍝ Return state: Same as entry state.
+⍝ Intended Function: Given a Function Line sub-tree and a pair of already
+⍝ parsed code with an environment, parse the sub-tree into one of
+⍝ Expression, FuncExpr, Condition, or Guard sub-tree at the same depth,
+⍝ returning the extended code and a new environment.
 
-ParseFnLine←{C E←⍵
-  ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
-  ⍝
-  ⍝ State Transitions:
-  ⍝   E     → wait         → (Value ← EXPR)
-  ⍝   E :   → wait         → (Cond ← Yes ⋄ Value ← EMPTY)
-  ⍝   E : E → wait         → (Value ← EXPR)
-  ⍝   Vfo   → wait         → (Value ← FVAR)
-  ⍝   Vu    → wait         → (Value ← UNBOUND)
-  ⍝   :     → SYNTAX ERROR → ()
-
-  ⍝ Dealing with Empty Lines / Handling Immediate } Stimuli
-  ⍝ We might have an empty line with no tokens. In this case, we can
-  ⍝ just return the line, as there is nothing to do for this
-  ⍝ line.
-  1=⊃⍴⍺:(C⍪⍺)E
-
-  ⍝ Regardless of what we do, we need to have the comment to put on the
-  ⍝ new head of the sub-tree that we will return.
-  cmt←⊃'comment' Prop 1↑⍺
-
-  ⍝ Stimuli: :
-  ⍝
-  ⍝ A line may contain at most one : stimuli. If one occurs, we know exactly
-  ⍝ what we must have, but if we do not, then we have one of E, Vfo, or Vu.
-  Cm←{(,':')≡((0⌷⍉⍵)⍳⊂'name')⊃(1⌷⍉⍵),⊂''}¨3⌷⍉⍺ ⍝ All name attributes ≡,':'
-  Cnd←+/Cm←((1+⊃⍺)=0⌷⍉⍺)×((1⌷⍉⍺)∊⊂'Token')×Cm  ⍝ Only direct child Tokens
-  1<Cnd:⎕SIGNAL 2                               ⍝ Too many : tokens
-  1=1⌷Cm:⎕SIGNAL 2                              ⍝ Empty test clause
-  1=Cnd:((C⍪A)E)⊣A E←⊃E ParseCond/¯1↓¨(1,1↓Cm)⊂[0]1⊖⍺
-  0≠Cnd:'Unexpected : Token Count'⎕SIGNAL 99
-
-  ⍝ At this point, we have handled line terminators (Nl and ⋄) as well as
-  ⍝ all closing } stimuli. We have also eliminated Stimuli : . Function
-  ⍝ States 0, 1, 5, 8 have all been processed by the code above. That
-  ⍝ leaves the following states:
-  ⍝
-  ⍝   State # │ Canonical Sequence
-  ⍝   ────────┼───────────────────
-  ⍝         2 │ { E
-  ⍝         3 │ { Vfo
-  ⍝         4 │ { Vu
-  ⍝   ────────┴───────────────────
-  ⍝
-  ⍝ Basically, state 3 at this point, because we do not have
-  ⍝ assignments, can be nothing but a SYNTAX ERROR (see Table 26
-  ⍝ in the Function Specification). State 4 (Table 27) can be nothing
-  ⍝ more than a VALUE ERROR, and is completely subsumed by state 2
-  ⍝ (Table 25). Thus, checking for a valid E stimuli at this point
-  ⍝ suffices to answer all questions and complete the handling of these
-  ⍝ tables completely.
-  0≠⊃err ast Ne←E ParseExpr 1↓⍺:⎕SIGNAL err
-  (C⍪ast)Ne
+ParseFnLine←{cod env←⍵
+  1=⊃⍴⍺:(cod⍪⍺)env                     ⍝ Do nothing for empty lines
+  cmt←⊃'comment' Prop 1↑⍺              ⍝ Preserve the comment for attachment
+  cm←{(,':')≡⊃'name'Prop 1↑⍵}¨1 Kids ⍺ ⍝ Mask of : stimuli, to check for branch
+  1<cnd←+/cm:⎕SIGNAL 2                 ⍝ Too many : tokens
+  1=1⌷cm:⎕SIGNAL 2                     ⍝ Empty test clause
+  splt←{1↓¨(1,1↓cm)⊂[0]⍵}              ⍝ Fn to split on : token, drop excess
+  1=cnd:⊃cod env ParseCond/splt ⍺      ⍝ Condition found, parse it
+  err ast ne←env ParseExpr 1↓⍺         ⍝ Expr is the last non-error option
+  0=err:(cod⍪ast)ne                    ⍝ Return if it worked
+  ⎕SIGNAL err                          ⍝ Otherwise error the expr error
 }
 
 ⍝ ParseCond
@@ -668,10 +618,10 @@ ParseFnLine←{C E←⍵
 ⍝ Intended Function: Construct a Condition node from two expressions
 ⍝ representing a conditional line in a function body.
 ⍝
-⍝ Left Operand: Current (name, type) environment
+⍝ Left Operand: (Current code)(Current (name, type) environment)
 ⍝ Right argument: Tokens representing the consequent expression
 ⍝ Left argument: Tokens representing the test expression
-⍝ Output: (Condition node)(New [name, type] environment)
+⍝ Output: (Current code extended by Condition node)(New [name, type] environment)
 ⍝ Invariant: Test expression is non-empty
 ⍝ Invariant: Condition node depth is one less than token depth
 ⍝ State: Context ← Func ⋄ Bracket ← Yes ⋄ Cond ← Yes ⋄ Bind ← NO ⋄ Value ← EMPTY
