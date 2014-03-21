@@ -373,10 +373,6 @@ ParseTopLine←{cod env←⍵ ⋄ line←⍺
 ⍝ Intended Function: Process variable stimuli that can occur when processing a
 ⍝ top-level line.
 ⍝
-⍝ This function exists because we need to use it in more than one place.
-⍝ ParseLineVar can be safely used whenever the state transitions in the current
-⍝ state result in the same state change as given in the transition table below.
-⍝
 ⍝ The first element of the output vector is a number indicating the error that was
 ⍝ received. It will return a negative number in the case where it thinks that the
 ⍝ errors of previously parsed recursive stimuli is better than the current error,
@@ -397,84 +393,22 @@ ParseTopLine←{cod env←⍵ ⋄ line←⍺
 ⍝ Right Argument: Matrix of Token and Function nodes
 ⍝ Left Argument: ([name,type] environment)(Parser state class)
 ⍝ Output: (Success/Failure)(Empty Line, Expression, Function, or FuncExpr)
-⍝ Invariant: Depth of input and output sub-trees should be the same
-⍝ Invariant: Should be able to reconstruct the original input from output
-⍝ State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
-⍝ Return state: Same as entry state.
 
-ParseLineVar←{E SC←⍺
-  ⍝ State Transitions (State Class 0):
-  ⍝   ←      → SYNTAX ERROR → ()
-  ⍝   Vfo    → null         → (Value ← FUNC    ⋄ Named ← MAYBE)
-  ⍝   Vfo Nl → null         → (Value ← EMPTY   ⋄ Named ← EMPTY)
-  ⍝   Vfo ←  → null         → (Value ← EMPTY   ⋄ Named ← BOUND)
-  ⍝   Vu     → null         → (Value ← UNBOUND ⋄ Named ← MAYBE)
-  ⍝   Vu Nl  → VALUE ERROR  → ()
-  ⍝   Vu ←   → null         → (Value ← EMPTY   ⋄ Named ← UNBOUND)
-  ⍝
-  ⍝ State Transitions (State Class 1):
-  ⍝   ←      → SYNTAX ERROR → ()
-  ⍝   Vfo    → null         → (Value ← FUNC    ⋄ Named ← MAYBE)
-  ⍝   Vfo Nl → null         → (Value ← EMPTY   ⋄ Named ← EMPTY)
-  ⍝   Vfo ←  → null         → (Value ← EMPTY   ⋄ Named ← BOUND)
-  ⍝   Vu     → null         → (Value ← UNBOUND ⋄ Named ← BOUND)
-  ⍝   Vu Nl  → VALUE ERROR  → ()
-  ⍝   Vu ←   → null         → (Value ← EMPTY   ⋄ Named ← BOUND)
-  ⍝
-  ⍝ Trace: Tables 11-15, 18-22, 206 in Function Specification
-  ⍝
-  ⍝ The Nl suffixed states are assumed to have been already handled implicitly
-  ⍝ by the caller of ParseLineVar. See ParseLine.
-
-  ⍝ Stimuli: Vfo Vu ←
-  ⍝
-  ⍝ States to Process: Vfo, Vu, Vfo ←, Vu ←
-  ⍝
-  ⍝ After the above, there are only a few situations we can be in. All the other states
-  ⍝ described in Table 206 are tied in one way or another to the ← token. Most of them
-  ⍝ have ← directly in their names, but the Vfo and Vu states are partially handled by the
-  ⍝ above handling, and the only other situations we can have which make sense,
-  ⍝ are not illegal, and not otherwise subsumed by the above are the assignment cases.
-  ⍝
-  ⍝ This handling of the assignment statement is really a case of handling the
-  ⍝ Named property. We can have either BOUND or UNBOUND states. The MAYBE state
-  ⍝ will be unused here.
-  ⍝
-  ⍝ The first possibility is that we have no variable to be named, in which case we need
-  ⍝ to signal a SYNTAX ERROR.
-  '←'≡⊃'name'Prop 1↑⍵:2 MtAST
-
-  ⍝ The only non-error cases that make any sense at this point are either Vfo ← or Vu ←,
-  ⍝ so we can check to make sure that we have at least 3 tokens, any less than that
-  ⍝ would indicate either Vfo ← Nl or some other error case.
-  3>⊃⍴⍵:¯1 MtAST
-
-  ⍝ If we have at least three tokens to deal with, then the first two should be an
-  ⍝ assignment token and a variable token. Let's make sure that this is what we
-  ⍝ actually have, otherwise, we should signal an error again.
-  ~'Variable' 'Token'∧.≡⍵[0 1;1]:¯1 MtAST
-  (,'←')≢⊃'name' Prop 1 4⍴1⌷⍵:¯1 MtAST
-
-  ⍝ Now we need to determine whether the variable is a Vfo or a Vu.
-  Tp←E VarType⊢Vn←⊃'name'Prop 1 4⍴0⌷⍵
-
-  ⍝ If the type of the variable is Vu, then we have
-  ⍝ the Named ← UNBOUND when we have State Class ← 0
-  (0=Tp)∧(SC=0):0,⊂Vn E ParseNamedUnB 2↓⍵
-
-  ⍝ If we have a Vfo, then the Named ← BOUND
-  ⍝ and when we have State Class ← 1 with a Vu
-  ⍝ XXX In this case, because we know that we only have types
-  ⍝ of 2, then we can make sure that we give a type of 2 to
-  ⍝ the ParseNamedBnd call. In the future, we will need to make
-  ⍝ sure that we know what the real type of the variable is for
-  ⍝ State Class ← 1. We will also have to make sure that the
-  ⍝ types are in the appropriate nameclass if we have another
-  ⍝ class in the stack already.
-  (2 3 4∨.=Tp)∨(0=Tp)∧(SC=1):0,⊂Vn 2 E ParseNamedBnd 2↓⍵
-
-  ⍝ If we do not have a Vfo or Vu, then something is wrong and we should error out
-  ¯1 MtAST
+ParseLineVar←{env cls←⍺
+  '←'≡⊃'name'Prop 1↑⍵:2 MtAST          ⍝ No variable named, syntax error
+  3>⊃⍴⍵:¯1 MtAST                       ⍝ Valid cases have at least three nodes
+  tk←'Variable' 'Token'                ⍝ First two tokens should be Var and Tok
+  ~tk∧.≡(⊂0 1)1⌷⍵:¯1 MtAST             ⍝ If not, bad things
+  (,'←')≢⊃'name'Prop 1↑1↓⍵:¯1 MtAST    ⍝ 2nd node is assignment?
+  vn←⊃'name'Prop 1↑⍵                   ⍝ Name of the variable
+  tp←env VarType vn                    ⍝ Type of the variable: Vfo or Vu?
+  t←(0=tp)∧(cls=0)                     ⍝ Class zero with Vu?
+  t:0,⊂vn env ParseNamedUnB 2↓⍵        ⍝ Then parse as unbound
+  t←(2 3 4∨.=tp)∨(0=tp)∧(cls=1)        ⍝ Vfo or unbound with previous Vfo seen?
+  t:0,⊂vn 2 env ParseNamedBnd 2↓⍵      ⍝ Then parse as bound to Fn
+    ⍝ XXX: Right now we assume that we have only types of 2, or Fns.
+    ⍝ In the future, change this to adjust for other nameclasses.
+  ¯1 MtAST                             ⍝ Not a Vfo or Vu; something is wrong
 }
 
 ⍝ ParseNamedUnB
