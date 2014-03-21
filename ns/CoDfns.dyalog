@@ -576,72 +576,21 @@ ParseFuncExpr←{
 
 ⍝ ParseFunc
 ⍝
-⍝ Intended Function: Take a set of tokens and parse them as an user-defined
-⍝ ambivalent function, monadic or dyadic operator.
-⍝
-⍝ Right Argument: Non-empty matrix of Token and Function nodes
-⍝ Left Argument: [Name,Type] Environment
-⍝ Output: (0 or Exception #)(Function AST)(Rest of Input)
-⍝ Invariant: Depth of the output should be the same as the input
-⍝ Invariant: Right argument must have at least one row
-⍝ State: Context ← Func ⋄ Bracket ← No ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
+⍝ Intended Function: Take an environment and set of tokens/Function Nodes,
+⍝ and parse them as n user-define dambivalent function, monadic, or
+⍝ dyadic operator, returning an error code, ast, and the rest of the
+⍝ input.
 
 ParseFunc←{
-  ⍝ Possible Stimuli: E : Vfo Vu
-  ⍝ Indirectly processed stimuli: N
-  ⍝
-  ⍝ Trace: Tables 23 - 28 and 31 of Function Specification
-  ⍝
-  ⍝ In Parse, the { and } stimuli have already been processed and used
-  ⍝ to construct nested forms of the lines. The ParseFunc therefore must
-  ⍝ check to ensure that the next node (token) to process is a Function
-  ⍝ node and convert the body of the function from a series of Line nodes
-  ⍝ to a proper function body. Firstly, we must check to determine whether
-  ⍝ we have a Function node.
-  'Function'≢⊃0 1⌷⍵:2 MtAST ⍵
-
-  ⍝ The rest of the nodes to parse are children of the Function node,
-  ⍝ so extract out just the Function node from the rest of the tokens.
-  Fb←(Fm←1=+\(Fd←⊃⍵)=D←0⌷⍉⍵)⌿⍵
-
-  ⍝ State: Bracket ← Yes ⋄ Cond ← No ⋄ Bind ← NO ⋄ Value ← EMPTY
-  ⍝
-  ⍝ State Transitions:
-  ⍝   E     → wait → (Value ← EXPR)
-  ⍝   E :   → wait → (Cond ← Yes ⋄ Value ← EMPTY)
-  ⍝   E : E → wait → (Value ← EXPR)
-  ⍝   Vfo   → wait → (Value ← FVAR)
-  ⍝   Vu    → wait → (Value ← UNBOUND)
-  ⍝   :     → SYNTAX ERROR → ()
-  ⍝   }     → okay         → ()
-  ⍝
-  ⍝ At this point we can use a similar technique to that used at the
-  ⍝ top level and reduce over all the lines to collect up a final AST.
-  ⍝ At the end we can replace the Fb contents (marked out by Fm) with
-  ⍝ the AST that was created. This requires a ParseFnLine function.
-  ⍝ Note that the } Stimuli which could appear here for an empty function
-  ⍝ gets implicitly handled.
-
-  ⍝ To begin with, we need to start with an empty environment and an empty
-  ⍝ AST. This is our Seed value.
-  Sd←(0 4⍴⍬)MtNTE
-
-  ⍝ We partition the AST into the appropriate sub-trees, each of which should
-  ⍝ correspond to a single line. All Lines we care about are at depth Fd+1.
-  Cn←((Fd+1)=0⌷⍉Fb)⊂[0]Fb
-
-  ⍝ Finally, we use ParseFnLine to reduce over the lines.
-  ⍝ At this point, the function will not have the appropriate root on
-  ⍝ it, which we stripped off above. We put this back on to form the final,
-  ⍝ correctly parsed Function. Fn is now a Function node and each line has been
-  ⍝ converted into an apropriate node, or left alone if it is an empty line.
-   2:: 2 MtAST ⍵
-  11::11 MtAST ⍵
-  Fn←(1↑Fb)⍪⊃A E←⊃ParseFnLine/⌽(⊂Sd),Cn
-
-  ⍝ We return the function node together with the rest of the nodes after
-  ⍝ it.
-  0 Fn ((~Fm)⌿⍵)
+  'Function'≢⊃0 1⌷⍵:2 MtAST ⍵          ⍝ Must have a Function node first
+  fn←(fm←1=+\(fd←⊃⍵)=d←0⌷⍉⍵)⌿⍵         ⍝ Get the Function node, mask, depths
+  en←⍺⍪⍨1,⍨⍪,¨'⍺⍵'                     ⍝ Extend current environment with ⍺ & ⍵
+  sd←MtAST en                          ⍝ Seed value
+  cn←1 Kids fn                         ⍝ Lines of Function node
+   2:: 2 MtAST ⍵                       ⍝ Handle parse errors
+  11::11 MtAST ⍵                       ⍝ by passing them up
+  tr en←⊃ParseFnLine/⌽(⊂sd),cn         ⍝ Parse down each line
+  0((1↑fn)⍪tr)((~fm)⌿⍵)                ⍝ Newly parsed function, rest of tokens
 }
 
 ⍝ ParseFnLine
