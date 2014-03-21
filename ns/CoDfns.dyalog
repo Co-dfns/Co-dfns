@@ -431,60 +431,24 @@ ParseNamedUnB←{vn env←⍺
 
 ⍝ ParseNamedBnd
 ⍝
-⍝ Intended Function: Parse an assignment to a bound variable.
+⍝ Intended Function: Parse an assignment to a bound variable as a
+⍝ FuncExpr node.
 ⍝
 ⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: Variable Name, Variable Type, [Name,Type] Environment
-⍝ Invariant: Input should have at least one row.
-⍝ Output: FuncExpr Node
-⍝ State: Context ← Top ⋄ Value ← EMPTY ⋄ Named ← BOUND
-⍝ Return State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
 
-ParseNamedBnd←{Vn Tp E←⍺
-  ⍝ Possible stimuli: Fe Vfo Vu ←
-  ⍝ Indirectly processed: { }
-  ⍝
-  ⍝ Trace: Table 18, 20, 21, 206 in Function Specification
-  ⍝
-  ⍝ State Transitions:
-  ⍝   E     → SYNTAX ERROR → ()
-  ⍝   Fe    → null         → (Value ← FUNC    ⋄ Named ← BOUND)
-  ⍝   Fe Nl → null         → (Value ← EMPTY   ⋄ Named ← EMPTY)
-  ⍝   Vfo   → null         → (Value ← FUNC    ⋄ Named ← MAYBE)
-  ⍝   Vu    → null         → (Value ← UNBOUND ⋄ Named ← BOUND)
-  ⍝   Vu Nl → SYNTAX ERROR → ()
-  ⍝   Vu ←  → null         → (Value ← EMPTY   ⋄ Named ← BOUND)
-  ⍝   ←     → SYNTAX ERROR → ()
-
-  ⍝ Stimuli: E
-  ⍝
-  ⍝ If we are Named ← BOUND then we need to make sure that we do not have
-  ⍝ a binding to a different nameclass. Namely, a binding from an expression
-  ⍝ to a function, operator, or the like.
-  0=⊃E ParseExpr ⍵:⎕SIGNAL 2
-
-  ⍝ Stimuli: Fe
-  ⍝
-  ⍝ When we parse a function expression successfully, we still need to
-  ⍝ ensure that the type of the variable matches the type of the function
-  ⍝ expression, but at least this time, we have a chance of it succeeding.
-  ⍝ If it does succeed, we simply need to add the name and move on.
-  T←2 ⋄ ferr ast rst←E ParseFuncExpr ⍵
-  (0=ferr)∧Tp=T:Vn Bind ast
-  Tp≠T:⎕SIGNAL 2
-
-  ⍝ Stimuli: Vfo Vu ←
-  ⍝
-  ⍝ The handling of the Fe stimuli will have covered both the Fe states and
-  ⍝ the Vfo Nl state, as in the Value ← EMPTY ⋄ Named ← EMPTY case handled in
-  ⍝ ParseTopLine. We must handle the Vu Nl state explicitly here, and then we are
-  ⍝ left only with the states handled by ParseLineVar, except that we need to call
-  ⍝ it with a state class of 1 instead of 0.
-  (1=⊃⍴⍵)∧('Variable'≡⊃0 1⌷⍵)∧(0=E VarType⊃'name'Prop 1↑⍵):⎕SIGNAL 6
-  0=⊃err ast←E 1 ParseLineVar ⍵:Vn Bind ast
-
-  ¯1=×err:⎕SIGNAL ferr
-  ⎕SIGNAL err
+ParseNamedBnd←{vn tp env←⍺
+  0=⊃env ParseExpr ⍵:⎕SIGNAL 2         ⍝ Should not be an Expression
+  ferr ast rst←env ParseFuncExpr ⍵     ⍝ Try to parse as a FuncExpr
+  (0=ferr)∧tp=t←2:vn Bind ast          ⍝ If it works, bind it and return
+  tp≠t:⎕SIGNAL 2                       ⍝ The types must match to continue
+  t←(1=≢⍵)∧('Variable'≡⊃0 1⌷⍵)         ⍝ Do we have only a single var node?
+  t∧←0=env VarType⊃'name'Prop 1↑⍵      ⍝ And is it unbound?
+  t:⎕SIGNAL 6                          ⍝ Then signal a value error for unbound
+  err ast←env 1 ParseLineVar ⍵         ⍝ Try to parse as a variable line
+  0=err:vn Bind ast                    ⍝ If it succeeds, Bind and return
+  ¯1=×err:⎕SIGNAL ferr                 ⍝ Signal FuncExpr error if suggested
+  ⎕SIGNAL err                          ⍝ Else signal variable line error
 }
 
 ⍝ ParseExpr
