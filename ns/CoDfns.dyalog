@@ -413,48 +413,20 @@ ParseLineVar←{env cls←⍺
 
 ⍝ ParseNamedUnB
 ⍝
-⍝ Intended Function: Parse an assignment to an unbound variable.
+⍝ Intended Function: Parse an assignment to an unbound variable as a
+⍝ FuncExpr node.
 ⍝
 ⍝ Right Argument: Non-empty matrix of Token and Function nodes
 ⍝ Left Argument: Variable Name, [Name,Type] Environment
-⍝ Invariant: Input should have at least one row.
 ⍝ Output: FuncExpr Node
-⍝ State: Context ← Top ⋄ Value ← EMPTY ⋄ Named ← UNBOUND
-⍝ Return State: Context ← Top ⋄ Fix ← Yes ⋄ Namespace ← OPEN ⋄ Eot ← No
 
-ParseNamedUnB←{Vn E←⍺
-  ⍝ Possible stimuli: Fe Vfo Vu ←
-  ⍝ Indirectly processed: { }
-  ⍝
-  ⍝ Trace: Table 19, 22, 206 in Function Specification
-  ⍝
-  ⍝ State Transitions:
-  ⍝   Fe    → null         → (Value ← FUNC    ⋄ Named ← UNBOUND)
-  ⍝   Fe Nl → null         → ()
-  ⍝   Vfo   → null         → (Value ← FUNC    ⋄ Named ← MAYBE)
-  ⍝   Vu    → null         → (Value ← UNBOUND ⋄ Named ← MAYBE)
-  ⍝   ←     → SYNTAX ERROR → ()
-
-  ⍝ Stimuli: Fe
-  ⍝
-  ⍝ We begin by directly addressing the Fe possibility, which has only a
-  ⍝ single valid follow-up from here, which is to end the line.
-  ⍝ In this case, we take the function expression and give it the name
-  ⍝ given to us. This further requires updating the environment and returning
-  ⍝ that together with the new node.
-  0=⊃ferr ast rst←E ParseFuncExpr ⍵:Vn Bind ast
-
-  ⍝ Stimuli: Vfo Vu ←
-  ⍝
-  ⍝ If we could not successfully parse as a function expression, the only
-  ⍝ other valid, non-error option is the Vfo or Vu prefixes. However, in this
-  ⍝ case we have a state exactly like that handled by the ParseLineVar function
-  ⍝ above. The only thing we need to remember to do is to add the extra variable
-  ⍝ name that is given to us.
-  0=⊃err ast←E 0 ParseLineVar ⍵:Vn Bind ast
-
-  ¯1=×err:⎕SIGNAL ferr
-  ⎕SIGNAL err
+ParseNamedUnB←{vn env←⍺
+  ferr ast rst←env ParseFuncExpr ⍵     ⍝ Try to parse as a FuncExpr
+  0=ferr:vn Bind ast                   ⍝ It worked, bind it to vn
+  err ast←env 0 ParseLineVar ⍵         ⍝ Else try to parse as a variable line
+  0=err:vn Bind ast                    ⍝ that worked, so bind it
+  ¯1=×err:⎕SIGNAL ferr                 ⍝ Signal FuncExpr error if suggested
+  ⎕SIGNAL err                          ⍝ Otherwise signal Variable line error
 }
 
 ⍝ ParseNamedBnd
