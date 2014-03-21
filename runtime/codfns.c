@@ -133,7 +133,7 @@ clean_env(struct codfns_array *env, int count)
 #define scalar(x) ((x)->rank == 0)
 
 int
-codfns_same_shape(struct codfns_array *lft, struct codfns_array *rgt) 
+codfns_same_shape(struct codfns_array *lft, struct codfns_array *rgt)
 {
 
   int i, k;
@@ -146,15 +146,15 @@ codfns_same_shape(struct codfns_array *lft, struct codfns_array *rgt)
   lshape = lft->shape;
   rshape = rgt->shape;
 
-  for (i = 0; i < k; i++) 
+  for (i = 0; i < k; i++)
     if (*lshape++ != *rshape++)
       return 0;
 
   return 1;
 }
 
-int 
-codfns_add(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt) 
+int
+codfns_add(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
 {
   int i, k;
   int64_t *left_elems, *right_elems, *res_elems, sclr;
@@ -188,7 +188,7 @@ codfns_add(struct codfns_array *ret, struct codfns_array *lft, struct codfns_arr
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr + *right_elems++;
 
@@ -206,7 +206,7 @@ codfns_add(struct codfns_array *ret, struct codfns_array *lft, struct codfns_arr
 
     for (i = 0; i < k; i++)
       *res_elems++ = *left_elems++ + sclr;
-    
+
     ret->elements = res_elems;
     ret->shape = shp;
   }
@@ -215,8 +215,8 @@ codfns_add(struct codfns_array *ret, struct codfns_array *lft, struct codfns_arr
 }
 
 
-int 
-codfns_subtract(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt) 
+int
+codfns_subtract(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
 {
   int i, k;
   int64_t *left_elems, *right_elems, *res_elems, sclr;
@@ -266,7 +266,7 @@ codfns_subtract(struct codfns_array *ret, struct codfns_array *lft, struct codfn
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr - *right_elems++;
 
@@ -292,8 +292,8 @@ codfns_subtract(struct codfns_array *ret, struct codfns_array *lft, struct codfn
   return 0;
 }
 
-int 
-codfns_multiply(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt) 
+int
+codfns_multiply(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
 {
   int i, k;
   int64_t *left_elems, *right_elems, *res_elems, sclr;
@@ -348,7 +348,7 @@ codfns_multiply(struct codfns_array *ret, struct codfns_array *lft, struct codfn
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr * *right_elems++;
 
@@ -374,8 +374,8 @@ codfns_multiply(struct codfns_array *ret, struct codfns_array *lft, struct codfn
   return 0;
 }
 
-int 
-codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt, int DIV) 
+int
+codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt, int DIV)
 {
   int i, k;
   int64_t *left_elems, *right_elems, *res_elems, sclr;
@@ -397,7 +397,7 @@ codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_
         res_elems[i] = 1 / res_elems[i];
       else if (DIV == 1)
           res_elems[i] = 0;
-        else 
+        else
           return 1; /* Signal an error */
     }
 
@@ -431,7 +431,7 @@ codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr / *right_elems++;
 
@@ -458,8 +458,8 @@ codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_
 }
 
 /* Need to do error handling when x is zero and we are raising to a negative power */
-int 
-codfns_power(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt) 
+int
+codfns_power(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
 {
   int i, k;
   int64_t *left_elems, *right_elems, *res_elems, sclr;
@@ -511,7 +511,7 @@ codfns_power(struct codfns_array *ret, struct codfns_array *lft, struct codfns_a
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = pow(*right_elems++, sclr);
 
@@ -537,8 +537,8 @@ codfns_power(struct codfns_array *ret, struct codfns_array *lft, struct codfns_a
   return 0;
 }
 
-int 
-codfns_not(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt) 
+int
+codfns_not(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
 {
   int i, k;
   int64_t *res_elems, sclr;
@@ -555,9 +555,9 @@ codfns_not(struct codfns_array *ret, struct codfns_array *lft, struct codfns_arr
     memcpy(shp, rgt->shape, ret->rank);
     memcpy(res_elems, rgt->elements, rgt->size);
 
-    for (i = 0; i < k; i++) 
+    for (i = 0; i < k; i++)
         res_elems[i] = !res_elems[i];
-    
+
     ret->elements = res_elems;
     ret->shape = shp;
 
@@ -566,7 +566,7 @@ codfns_not(struct codfns_array *ret, struct codfns_array *lft, struct codfns_arr
   return 1;
 }
 
-int 
+int
 codfns_less(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
   int i, k;
@@ -602,7 +602,7 @@ codfns_less(struct codfns_array *ret, struct codfns_array *lft, struct codfns_ar
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr < *right_elems++;
 
@@ -628,7 +628,7 @@ codfns_less(struct codfns_array *ret, struct codfns_array *lft, struct codfns_ar
   return 0;
 }
 
-int 
+int
 codfns_less_or_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
   int i, k;
@@ -664,7 +664,7 @@ codfns_less_or_equal(struct codfns_array *ret, struct codfns_array *lft, struct 
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr <= *right_elems++;
 
@@ -689,7 +689,7 @@ codfns_less_or_equal(struct codfns_array *ret, struct codfns_array *lft, struct 
   return 0;
 }
 
-int 
+int
 codfns_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
   int i, k;
@@ -725,7 +725,7 @@ codfns_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_a
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr = *right_elems++;
 
@@ -751,7 +751,7 @@ codfns_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_a
   return 0;
 }
 
-int 
+int
 codfns_greater_or_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
   int i, k;
@@ -787,7 +787,7 @@ codfns_greater_or_equal(struct codfns_array *ret, struct codfns_array *lft, stru
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr >= *right_elems++;
 
@@ -798,7 +798,7 @@ codfns_greater_or_equal(struct codfns_array *ret, struct codfns_array *lft, stru
     ret->rank = lft->rank;
     left_elems = lft->elements;
     sclr = *rgt->elements;
-    
+
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
     memcpy(shp, lft->shape, ret->rank);
@@ -812,7 +812,7 @@ codfns_greater_or_equal(struct codfns_array *ret, struct codfns_array *lft, stru
   return 0;
 }
 
-int 
+int
 codfns_not_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
   int i, k;
@@ -848,7 +848,7 @@ codfns_not_equal(struct codfns_array *ret, struct codfns_array *lft, struct codf
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     for (i = 0; i < k; i++)
       *res_elems++ = sclr != *right_elems++;
 
@@ -859,7 +859,7 @@ codfns_not_equal(struct codfns_array *ret, struct codfns_array *lft, struct codf
     ret->rank = lft->rank;
     left_elems = lft->elements;
     sclr = *rgt->elements;
-    
+
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
     memcpy(shp, lft->shape, ret->rank);
@@ -873,8 +873,8 @@ codfns_not_equal(struct codfns_array *ret, struct codfns_array *lft, struct codf
   return 0;
 }
 
-int 
-codfns_magnitude(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt) 
+int
+codfns_magnitude(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
 {
   int i, k;
   int64_t *left_elems, *right_elems, *res_elems, sclr;
@@ -926,7 +926,7 @@ codfns_magnitude(struct codfns_array *ret, struct codfns_array *lft, struct codf
     res_elems = realloc(ret->elements, ret->size);
     shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
     memcpy(shp, rgt->shape, ret->rank);
-    
+
     if (sclr == 0) {
       memcpy(res_elems, rgt->elements, rgt->size);
     } else {
