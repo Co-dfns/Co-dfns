@@ -80,11 +80,11 @@ ModToNS←{
   ee←1⊃jc                              ⍝ Extract exec engine on success
   syserr←{'FFI ERROR'⎕SIGNAL 99}
   fn←{                                 ⍝ Op to build ns functions
-    0≠⊃zp←FFIMakeArray 1,4⍴0:syserr⍬   ⍝ Temporary result array
+    0≠⊃zp←ffi_make_array 1,4⍴0:syserr⍬ ⍝ Temporary result array
     lp←(≢⍴⍺)(≢,⍺)(⍴⍺)(,⍺)              ⍝ Fields of left argument
-    0≠⊃lp←FFIMakeArray 1,lp:syserr⍬    ⍝ Array to match left argument
+    0≠⊃lp←ffi_make_array 1,lp:syserr⍬  ⍝ Array to match left argument
     rp←(≢⍴⍵)(≢,⍵)(⍴⍵)(,⍵)              ⍝ Fields of right argument
-    0≠⊃rp←FFIMakeArray 1,rp:syserr⍬    ⍝ Array to match right argument
+    0≠⊃rp←ffi_make_array 1,rp:syserr⍬  ⍝ Array to match right argument
     args←1⊃¨zp lp rp                   ⍝ Pass only the res, left and right args
     z←RunFunction ⍺⍺ ⍵⍵ 3 args         ⍝ Eval function in module
     z←GenericValueToInt z 1            ⍝ Get something we can use
@@ -113,10 +113,10 @@ ModToNS←{
 ⍝ array suitable for use in the Dyalog APL Interpreter.
 
 ConvertArray←{
-  s←FFIGetSize ⍵                       ⍝ Get the number of data elements
-  d←FFIGetDataInt s ⍵                  ⍝ We assume that we have only integer types
-  r←FFIGetRank ⍵                       ⍝ Get the number of shape elements
-  p←FFIGetShape r ⍵                    ⍝ Get the shapes
+  s←ffi_get_size ⍵                     ⍝ Get the number of data elements
+  d←ffi_get_data_int s ⍵               ⍝ We assume that we have only integer types
+  r←ffi_get_rank ⍵                     ⍝ Get the number of shape elements
+  p←ffi_get_shape r ⍵                  ⍝ Get the shapes
   p⍴d                                  ⍝ Reshape based on shape
 }
 
@@ -1362,20 +1362,20 @@ P←'LLVM'
 ⍝ void 	LLVMDumpModule (LLVMModuleRef M)
 'DumpModule'⎕NA Core,'|',P,'DumpModule P'
 
-⍝ void FFIGetDataInt (int64_t *res, struct codfns_array *)
-'FFIGetDataInt'⎕NA R,'|FFIGetDataInt >I8[] P'
+⍝ void ffi_get_data_int (int64_t *res, struct codfns_array *)
+'ffi_get_data_int'⎕NA R,'|ffi_get_data_int >I8[] P'
 
-⍝ void FFIGetShape (uint32_t *res, struct codfns_array *)
-'FFIGetShape'⎕NA R,'|FFIGetShape >U4[] P'
+⍝ void ffi_get_shape (uint32_t *res, struct codfns_array *)
+'ffi_get_shape'⎕NA R,'|ffi_get_shape >U4[] P'
 
-⍝ uint64_t FFIGetSize (struct codfns_array *)
-'FFIGetSize'⎕NA 'U8 ',R,'|FFIGetSize P'
+⍝ uint64_t ffi_get_size (struct codfns_array *)
+'ffi_get_size'⎕NA 'U8 ',R,'|ffi_get_size P'
 
-⍝ uint16_t FFIGetRank (struct codfns_array *)
-'FFIGetRank'⎕NA 'U2 ',R,'|FFIGetRank P'
+⍝ uint16_t ffi_get_rank (struct codfns_array *)
+'ffi_get_rank'⎕NA 'U2 ',R,'|ffi_get_rank P'
 
-⍝ int FFIMakeArray(struct codfns_array **, uint16_t, uint64_t, uint32_t *, int64_t *)
-'FFIMakeArray'⎕NA 'I ',R,'|FFIMakeArray >P U2 U8 <U4[] <I8[]'
+⍝ int ffi_make_array(struct codfns_array **, uint16_t, uint64_t, uint32_t *, int64_t *)
+'ffi_make_array'⎕NA 'I ',R,'|ffi_make_array >P U2 U8 <U4[] <I8[]'
 
 ⍝ void array_free(struct codfns_array *)
 'array_free'⎕NA R,'|array_free P'
