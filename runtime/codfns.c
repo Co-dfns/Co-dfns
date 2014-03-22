@@ -188,27 +188,38 @@ clean_env(struct codfns_array *env, int count)
 	return;
 }
 
+/* scalar()
+ *
+ * Intended Function: Predicate that returns 1 when the rank is zero,
+ * and zero otherwise.
+ */
+
 #define scalar(x) ((x)->rank == 0)
 
+/* same_shape()
+ *
+ * Intended Function: Predicate that returns 1 when the two arrays have the
+ * same shape, and zero otherwise.
+ */
+
 int
-codfns_same_shape(struct codfns_array *lft, struct codfns_array *rgt)
+same_shape(struct codfns_array *lft, struct codfns_array *rgt)
 {
+	int i, k;
+	uint32_t *rshape, *lshape;
 
-  int i, k;
-  uint32_t *rshape, *lshape;
+	if (lft->rank != rgt->rank)
+		return 0;
 
-  if (lft->rank != rgt->rank)
-    return 0;
+	k = rgt->rank;
+	lshape = lft->shape;
+	rshape = rgt->shape;
 
-  k = rgt->rank;
-  lshape = lft->shape;
-  rshape = rgt->shape;
+	for (i = 0; i < k; i++)
+		if (*lshape++ != *rshape++)
+			return 0;
 
-  for (i = 0; i < k; i++)
-    if (*lshape++ != *rshape++)
-      return 0;
-
-  return 1;
+	return 1;
 }
 
 int
@@ -222,7 +233,7 @@ codfns_add(struct codfns_array *ret, struct codfns_array *lft, struct codfns_arr
     return array_cp(ret, rgt);
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -299,7 +310,7 @@ codfns_subtract(struct codfns_array *ret, struct codfns_array *lft, struct codfn
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -382,7 +393,7 @@ codfns_multiply(struct codfns_array *ret, struct codfns_array *lft, struct codfn
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -465,7 +476,7 @@ codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -544,7 +555,7 @@ codfns_power(struct codfns_array *ret, struct codfns_array *lft, struct codfns_a
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -636,7 +647,7 @@ codfns_less(struct codfns_array *ret, struct codfns_array *lft, struct codfns_ar
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -698,7 +709,7 @@ codfns_less_or_equal(struct codfns_array *ret, struct codfns_array *lft, struct 
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -759,7 +770,7 @@ codfns_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_a
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -821,7 +832,7 @@ codfns_greater_or_equal(struct codfns_array *ret, struct codfns_array *lft, stru
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -882,7 +893,7 @@ codfns_not_equal(struct codfns_array *ret, struct codfns_array *lft, struct codf
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
@@ -959,7 +970,7 @@ codfns_magnitude(struct codfns_array *ret, struct codfns_array *lft, struct codf
     return 0;
   }
 
-  if (codfns_same_shape(lft, rgt)) {
+  if (same_shape(lft, rgt)) {
     k = ret->size = lft->size;
     ret->rank = lft->rank;
     left_elems = lft->elements;
