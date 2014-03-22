@@ -753,28 +753,39 @@ LiftFuncs←{
   (1↑⍵)⍪⊃⍪/0 vis/z                     ⍝ Nodes just the same
 }
 
+⍝ Runtime equivalents
+⍝
+⍝ The runtime equivalents to specific APL primitives
+
+APLPrims←'+'  ⋄ APLRunts←⊂'codfns_add'
+APLPrims,←'-' ⋄ APLRunts,←⊂'codfns_subtract'
+APLPrims,←'÷' ⋄ APLRunts,←⊂'codfns_divide'
+APLPrims,←'×' ⋄ APLRunts,←⊂'codfns_multiply'
+APLPrims,←'|' ⋄ APLRunts,←⊂'codfns_magnitude'
+APLPrims,←'*' ⋄ APLRunts,←⊂'codfns_power'
+APLPrims,←'⍟' ⋄ APLRunts,←⊂'codfns_log'
+APLPrims,←'⌈' ⋄ APLRunts,←⊂'codfns_max'
+APLPrims,←'⌊' ⋄ APLRunts,←⊂'codfns_min'
+APLPrims,←'<' ⋄ APLRunts,←⊂'codfns_less'
+APLPrims,←'≤' ⋄ APLRunts,←⊂'codfns_less_or_equal'
+APLPrims,←'=' ⋄ APLRunts,←⊂'codfns_equal'
+APLPrims,←'≠' ⋄ APLRunts,←⊂'codfns_not_equal'
+APLPrims,←'≥' ⋄ APLRunts,←⊂'codfns_greater_or_equal'
+APLPrims,←'>' ⋄ APLRunts,←⊂'codfns_greater'
+
 ⍝ ConvPrims
 ⍝
 ⍝ Intended Function: Convert all Primitive nodes to their appropriate
 ⍝ runtime variable references.
 
 ConvPrims←{ast←⍵
-  pl←'+-÷×|*⍟⌈⌊<≤=≠≥>'                 ⍝ Primitives
-  cl←'apl_plus' 'apl_minus' 'apl_div'  ⍝ Foreign equivalents
-  cl,←'apl_times' 'apl_residue'
-  cl,←'apl_exp' 'apl_log' 'apl_max'
-  cl,←'apl_min' 'apl_lessthan'
-  cl,←'apl_lessthaneq' 'apl_equal'
-  cl,←'apl_noteq' 'apl_greaterthaneq'
-  cl,←⊂'apl_greatthan'
   pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
   pn←⊃,/'name'Prop pm⌿⍵                ⍝ Primitive names
-  cn←(pl⍳pn)⊃¨⊂cl                      ⍝ Converted names
+  cn←(APLPrims⍳pn)⊃¨⊂APLRunts          ⍝ Converted names
   at←⊂1 2⍴'class' 'function'           ⍝ Class is function
   at⍪¨←(⊂⊂'name'),∘⊂¨cn                ⍝ Use the converted name
   vn←(⊂'Variable'),(⊂''),⍪at           ⍝ Build the basic node structure
   ast⊣(pm⌿ast)←(pm/0⌷⍉⍵),vn            ⍝ Replace Primitive nodes
-
 }
 
 ⍝ GenLLVM
@@ -1146,17 +1157,12 @@ GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
 ⍝ in an LLVM Module.
 
 GenRuntime←{
-  two←GenFuncType ¯1
-  std←GenFuncType 0
-  add←⍵ {AddFunction ⍺⍺ ⍵ ⍺}
-  _←two add¨'array_cp' 'array_free'
-  rt←'apl_plus' 'apl_minus' 'apl_div'
-  rt,←'apl_times' 'apl_residue' 'apl_exp'
-  rt,←'apl_log' 'apl_max' 'apl_min' 'apl_lessthan'
-  rt,←'apl_lessthaneq' 'apl_equal' 'apl_noteq'
-  rt,←'apl_greaterthan' 'apl_greatthaneq'
-  _←std add¨rt
-  0 0⍴⍬
+  two←GenFuncType ¯1                   ⍝ Some functions take only two args
+  std←GenFuncType 0                    ⍝ Most take three
+  add←⍵ {AddFunction ⍺⍺ ⍵ ⍺}           ⍝ Fn to add functions to the module
+  _←two add¨'array_cp' 'array_free'    ⍝ Add the special ones
+  _←std add¨APLRunts                   ⍝ Add the normal runtime
+  0 0⍴⍬                                ⍝ Hide our return result
 }
 
 ⍝ Foreign Functions
