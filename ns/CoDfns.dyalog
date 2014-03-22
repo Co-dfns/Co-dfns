@@ -1127,10 +1127,11 @@ GenNullArrayPtr←{
 ⍝ See the Software Architecture for details on the Array Structure.
 
 GenArrayType←{
-  D←PointerType (Int64Type) 0
-  S←PointerType (Int32Type) 0
-  lt←(Int16Type)(Int64Type)(Int8Type) S D
-  StructType lt 5 0
+  D←PointerType (Int64Type) 0          ⍝ Data is int64_t *
+  S←PointerType (Int32Type) 0          ⍝ Shape is uint32_t *
+  lt←(Int16Type)(Int64Type)(Int8Type)  ⍝ Rank, Size, and Type
+  lt,←S D                              ⍝ with Shape and Data
+  StructType lt 5 0                    ⍝ Build the structure type
 }
 
 ⍝ GenFuncType
