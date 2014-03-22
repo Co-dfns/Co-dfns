@@ -109,62 +109,83 @@ ffi_make_array(struct codfns_array **res,
 	return 0;
 }
 
+/* array_free()
+ *
+ * Intended Function: Free the contents of an array without freeing
+ * the pointer to the array header itself. The array should be reset
+ * to a completely empty and consistent state that references no additional
+ * memory besides that allocated for the header/structure itself.
+ */
+
 void
 array_free(struct codfns_array *arr)
 {
-  free(arr->elements);
-  free(arr->shape);
-  arr->size = 0;
-  arr->rank = 0;
-  arr->shape = NULL;
-  arr->elements = NULL;
+	free(arr->elements);
+	free(arr->shape);
+	arr->size = 0;
+	arr->rank = 0;
+	arr->shape = NULL;
+	arr->elements = NULL;
 
-  return;
+	return;
 }
+
+/* array_cp()
+ *
+ * Intended Function: Copy the contents of one array to the other.
+ */
 
 int
 array_cp(struct codfns_array *tgt, struct codfns_array *src)
 {
-  uint32_t *shp;
-  int64_t *dat;
+	uint32_t *shp;
+	int64_t *dat;
 
-  if (tgt == src) return 0;
+	if (tgt == src) return 0;
 
-  shp = realloc(tgt->shape, src->rank);
+	if (src->rank > tgt->rank) {
+		shp = realloc(tgt->shape, sizeof(uint32_t) * src->rank);
+		if (shp == NULL) {
+			perror("array_cp");
+			return 1;
+		}
+	}
 
-  if (shp == NULL) {
-    perror("array_cp");
-    return 1;
-  }
+	if (src->size > tgt->size) {
+		dat = realloc(tgt->elements, sizeof(int64_t) * src->size);
+		if (dat == NULL) {
+			perror("array_cp");
+			return 2;
+		}
+	}
 
-  dat = realloc(tgt->elements, src->size);
+	memcpy(shp, src->shape, sizeof(uint32_t) * src->rank);
+	memcpy(dat, src->elements, sizeof(int64_t) * src->size);
 
-  if (dat == NULL) {
-    perror("array_cp");
-    return 2;
-  }
+	tgt->rank = src->rank;
+	tgt->size = src->size;
+	tgt->shape = shp;
+	tgt->elements = dat;
 
-  memcpy(shp, src->shape, src->rank);
-  memcpy(dat, src->elements, src->size);
-
-  tgt->rank = src->rank;
-  tgt->size = src->size;
-  tgt->shape = shp;
-  tgt->elements = dat;
-
-  return 0;
+	return 0;
 }
+
+/* clean_env()
+ *
+ * Intended Function: Given an environment pointer and its size, free
+ * the arrays in that environment.
+ */
 
 void
 clean_env(struct codfns_array *env, int count)
 {
-  int i;
-  struct codfns_array *cur;
+	int i;
+	struct codfns_array *cur;
 
-  for (i = 0, cur = env; i < count; i++)
-    array_free(cur++);
+	for (i = 0, cur = env; i < count; i++)
+		array_free(cur++);
 
-  return;
+	return;
 }
 
 #define scalar(x) ((x)->rank == 0)
