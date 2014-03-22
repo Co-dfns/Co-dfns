@@ -453,103 +453,53 @@ ParseNamedBnd←{vn tp env←⍺
 
 ⍝ ParseExpr
 ⍝
-⍝ Intended Function: Take a set of tokens and an environment of types
+⍝ Intended Function: Take an environment and a set of tokens
 ⍝ and parse it as an expression, returning an error code, ast, and a new,
 ⍝ updated environment of types.
-⍝
-⍝ Right Argument: Matrix of Token and Function nodes
-⍝ Left Argument: [Name,Type] Environment
-⍝ Output: (0 or Exception #)(Expression Node)(New [Name,Type] Environment)
-⍝ Invariant: Depth of the output should be the same as the input
-⍝ Invariant: Either entire right argument is parsed or an exception is given
-⍝ State: Context ← Expr ⋄ Nest ← NONE ⋄ Class ← ATOM ⋄ Last Seen ← EMPTY
 
 ParseExpr←{
-  ⍝ Possible Stimuli: ← N Va Vna Vi Vnu E Fea Fed Fem
-
-  ⍝ Do we have an empty expression?
-  0=⊃⍴⍵:2 MtAST ⍺
-
-  ⍝ It is sometimes convenient to error out via signal
-  2::2 MtAST ⍺
+  0=⊃⍴⍵:2 MtAST ⍺                      ⍝ Empty expressions are errors
+  2::2 MtAST ⍺                         ⍝ Allow instant exit while parsing
   6::6 MtAST ⍺
   11::11 MtAST ⍺
-
-  ⍝ We must consider the following expression states for Increment 5:
-
-  ⍝  0 empty
-  ⍝  1 Fea
-  ⍝  3 N
-  ⍝  5 Va
-  ⍝  6 Vna
-  ⍝  7 Vnu
-  ⍝  9 Fea N
-  ⍝ 10 Fea Va
-  ⍝ 11 Fea Vna
-  ⍝ 16 N Vnu
-
-  ⍝ Increment 5 does not have nested vectors, so any mix of variables
-  ⍝ and literals won't be valid. Additionally, we have only atomic
-  ⍝ function expressions. There are also no nested expressions, which
-  ⍝ makes assignments and other things easier. Since we are also not
-  ⍝ worried about atomic expressions at the moment, we can consider
-  ⍝ Expression states 9, 10, and 11 (Tables 45, 46, and 47 in the
-  ⍝ Function Specification) as equivalent, more or less to states 3,
-  ⍝ 5, and 6 (Tables 39, 41, and 42).
-
-  ⍝ State 16 (Table 52) leads only to various error states. In our
-  ⍝ case, because we don't have nested arrays yet, we can map all of
-  ⍝ these to SYNTAX ERROR and be done with it.
-
-  ⍝ State 7 leads to only VALUE ERRORS for our case except for
-  ⍝ assignment.
-
-  ⍝ We don't have strands yet, so Vna doesn't actually make sense, and
-  ⍝ Vnu is actually Vu.
-
-  ⍝ Analyzing the rest of the tables that are left, we see that the
-  ⍝ stimuli can be divided into a regular set of partitions:
-
-  ⍝   Group      │ Stimuli
-  ⍝   ───────────┼─────────────
-  ⍝   Variables  │ Va Vu
-  ⍝   Literals   │ N+
-  ⍝   Assignment │ ←
-  ⍝   Function   │ Fea Fed Fem
-
-  ⍝ Variables and literals may not appear next to one
-  ⍝ another. Likewise, the ← token must appear between another
-  ⍝ expression and a variable.
-
-  ⍝ Encapsulate literals as atomic Expression nodes
-  ⍝ XXX: Is there a more elegant way to do this?
-  N←(D←⊃⍵)'Expression' ''(1 2⍴'class' 'atomic')
-  P←2</0,M←(D=0⌷⍉⍵)∧(1⌷⍉⍵)∊⊂'Number'
-  E←(⍵⍪N)[⊃,/(⊂(∧\~M)/⍳S),S,¨P⊂⍳S←⊃⍴⍵;]
-  E[M/(+\P)+⍳⊃⍴⍵;0]+←1
-
-  ⍝ Parse Function calls, Variables, Assignments
-  ⍝ XXX: Please make this neater and cleaner
-  E Ne _←⊃{ast env knd←⍵ ⋄ Dwn←{A←⍵ ⋄ A[;0]+←1 ⋄ A}
-    Em Ed←{D'Expression' '' (1 2⍴'class' ⍵)}¨'monadic' 'dyadic'
-    kid←(⍵ ast)⊃⍨0=⊃_ ast←2↑env ParseFuncExpr ⍺
-    case←(16⍴2)⊤2*4⊥knd,⊂'Expression' 'FuncExpr' 'Token' 'Variable'⍳0 1⌷kid
-    c01←c02←c10←c13←c30←c31←c32←{⎕SIGNAL 2}
-    c00←{(kid⍪ast),env 1}
-    c03←{(N⍪Dwn kid⍪ast)env 1}
-    c21←c11←{(Em⍪Dwn kid⍪ast)env 2}
-    c22←c12←{ast env 3}
-    c20←{(Ed⍪(Dwn kid)⍪1↓ast)env 1}
-    c23←{(Ed⍪(Dwn N⍪Dwn kid)⍪1↓ast)env 1}
-    c33←{(nm Bind ast)(((nm←⊃'name'Prop kid)1)⍪env)1}
-    c3←c33 Sel c32 Sel c31 Sel c30
-    c2←c3 Sel c23 Sel c22 Sel c21 Sel c20
-    c1←c2 Sel c13 Sel c12 Sel c11 Sel c10
-    c0←c1 Sel c03 Sel c02 Sel c01 Sel c00
-    case c0 ⍵
-  }/(0 Kids E),⊂MtAST ⍺ 0
-
-  0 E Ne
+  at←1 2⍴'class' 'atomic'              ⍝ Literals become atomic expressions
+  n←(d←⊃⍵)'Expression' '' at           ⍝ One node per group of literals
+  p←2</0,m←(d=0⌷⍉⍵)∧(1⌷⍉⍵)∊⊂'Number'   ⍝ Mask and partition of literals
+  e←((~∨\p)⌿⍵)⍪⊃⍪/n⍪¨p⊂[0]⍵            ⍝ Add an expr node for literal groups
+  (0⌷⍉((1⌷⍉e)∊⊂'Number')⌿e)+←1         ⍝ Bump the depths of each literal
+  dwn←{a⊣(0⌷⍉a)+←1⊣a←⍵}                ⍝ Fn to push nodes down the tree
+  at←1 2⍴'class' 'monadic'             ⍝ Attributes for monadic expr node
+  em←d 'Expression' '' at              ⍝ Monadic expression node
+  at←1 2⍴'class' 'dyadic'              ⍝ Attributes for dyadic expr node
+  ed←d 'Expression' '' at              ⍝ Dyadic expression node
+  e ne _←⊃{ast env knd←⍵               ⍝ Process tokens from bottom up
+    e fe rst←env ParseFuncExpr ⍺       ⍝ Try to parse as a FuncExpr node first
+    k←(e=0)⊃⍺ fe                       ⍝ Kid is Fe if parsed, else existing kid
+    tps←'Expression' 'FuncExpr'        ⍝ Types of nodes
+    tps,→'Token' 'Variable'
+    typ←tps⍳0 1⌷k                      ⍝ Type of node we're dealing with
+    nm←⊃'name'Prop 1↑k                 ⍝ Name of the kid, if any
+    k←(typ=3)⊃k(n⍪dwn k)               ⍝ Wrap the variable if necessary
+    c←knd typ                          ⍝ Our case
+    c≡0 0:(kid⍪ast) env 1              ⍝ Nothing seen, Expression
+    c≡0 1:⎕SIGNAL 2                    ⍝ Nothing seen, FuncExpr
+    c≡0 2:⎕SIGNAL 2                    ⍝ Nothing seen, Assignment
+    c≡0 3:(k⍪dwn ast) env 1            ⍝ Nothing seen, Variable
+    c≡1 0:⎕SIGNAL 2                    ⍝ Expression seen, Expression
+    c≡1 1:(em⍪dwn k⍪ast) env 2         ⍝ Expression seen, FuncExpr
+    c≡1 2:ast env 3                    ⍝ Expression seen, Assignment
+    c≡1 3:⎕SIGNAL 2                    ⍝ Expression seen, Variable
+    c≡2 0:(ed⍪(dwn k)⍪1↓ast)env 2      ⍝ FuncExpr seen, Expression
+    c≡2 1:(em⍪dwn k⍪ast) env 2         ⍝ FuncExpr seen, FuncExpr
+    c≡2 2:ast env 3                    ⍝ FuncExpr seen, Assignment
+    c≡2 3:(ed⍪(dwn k)⍪1↓ast)env 1      ⍝ FuncExpr seen, Variable
+    c≡3 0:⎕SIGNAL 2                    ⍝ Assignment seen, Expression
+    c≡3 1:⎕SIGNAL 2                    ⍝ Assignment seen, FuncExpr
+    c≡3 2:⎕SIGNAL 2                    ⍝ Assignment seen, Assignment
+    c≡3 3:(nm Bind ast)((nm 1)⍪env)1   ⍝ Assignment seen, Variable
+    ⎕SIGNAL 99                         ⍝ Unreachable
+  }/(0 Kids e),⊂MtAST ⍺ 0
+  0 e ne                               ⍝ Return the expression and new env
 }
 
 ⍝ ParseFuncExpr
