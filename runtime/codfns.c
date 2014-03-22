@@ -6,70 +6,107 @@
 
 #include "codfns.h"
 
+/* ffi_get_size()
+ *
+ * Intended Function: Return the size field of the array.
+ */
+
 uint64_t
-FFIGetSize(struct codfns_array *arr)
+ffi_get_size(struct codfns_array *arr)
 {
-  return arr->size;
+	return arr->size;
 }
+
+/* ffi_get_rank()
+ *
+ * Intended Function: Return the rank field of the array.
+ */
 
 uint16_t
-FFIGetRank(struct codfns_array *arr)
+ffi_get_rank(struct codfns_array *arr)
 {
-  return arr->rank;
+	return arr->rank;
 }
+
+/* ffi_get_data_int()
+ *
+ * Intended Function: Fill the given result buffer with the data
+ * elements of the array interpreted as integers, assuming enough
+ * space in the buffer for the values.
+ */
 
 void
-FFIGetDataInt(int64_t *res, struct codfns_array *arr)
+ffi_get_data_int(int64_t *res, struct codfns_array *arr)
 {
-  memcpy(res, arr->elements, sizeof(int64_t) * arr->size);
+	memcpy(res, arr->elements, sizeof(int64_t) * arr->size);
 
-  return;
+	return;
 }
+
+/* ffi_get_shape()
+ *
+ * Intended Function: Fill the result buffer with the shape of the
+ * given array, assuming enough space in the result buffer.
+ */
 
 void
-FFIGetShape(uint32_t *res, struct codfns_array *arr)
+ffi_get_shape(uint32_t *res, struct codfns_array *arr)
 {
-  memcpy(res, arr->shape, sizeof(uint32_t) * arr->rank);
+	memcpy(res, arr->shape, sizeof(uint32_t) * arr->rank);
 
-  return;
+	return;
 }
+
+/* ffi_make_array()
+ *
+ * Intended Function: Given the fields of an array, create a fresh
+ * array which does not rely on any of the pointers or memory regions
+ * given in the arguments. Store this fresh array in the pointer cell
+ * provided.
+ */
 
 int
-FFIMakeArray(struct codfns_array **res,
+ffi_make_array(struct codfns_array **res,
     uint16_t rnk, uint64_t sz, uint32_t *shp, int64_t *dat)
 {
-  struct codfns_array *arr;
+	struct codfns_array *arr;
 
-  arr = malloc(sizeof(struct codfns_array));
+	arr = malloc(sizeof(struct codfns_array));
 
-  if (arr == NULL) {
-    perror("FFIMakeArray");
-    return 1;
-  }
+	if (arr == NULL) {
+		perror("ffi_make_array");
+		return 1;
+	}
 
-  arr->elements = malloc(sizeof(int64_t) * sz);
+	if (sz == 0) {
+		arr->elements = NULL;
+	} else {
+		arr->elements = calloc(sz, sizeof(int64_t));
+		if (arr->elements == NULL) {
+			perror("ffi_make_array");
+			return 2;
+		}
+	}
 
-  if (arr->elements == NULL) {
-    perror("FFIMakeArray");
-    return 2;
-  }
+	if (rnk == 0) {
+		arr->shape = NULL;
+	} else {
+		arr->shape = calloc(rnk, sizeof(uint32_t));
+		if (arr->shape == NULL) {
+			perror("ffi_make_array");
+			return 3;
+		}
+	}
 
-  arr->shape = malloc(sizeof(uint32_t) * rnk);
+	arr->rank = rnk;
+	arr->size = sz;
 
-  if (arr->shape == NULL) {
-    perror("FFIMakeArray");
-    return 3;
-  }
+	memcpy(arr->shape, shp, sizeof(uint32_t) * rnk);
+	memcpy(arr->elements, dat, sizeof(int64_t) * sz);
 
-  arr->rank = rnk;
-  arr->size = sz;
+	*res = arr;
 
-  memcpy(arr->shape, shp, sizeof(uint32_t) * rnk);
-  memcpy(arr->elements, dat, sizeof(int64_t) * sz);
-
-  *res = arr;
-
-  return 0;
+	return 0;
 }
 
 void

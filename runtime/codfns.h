@@ -29,14 +29,14 @@ ffi_get_shape(uint32_t *, struct codfns_array *);
 /* Helper functions for in and outside the compiler */
 
 int
-ffi_make_array(struct codfns_array **res,
-    uint16_t rnk, uint64_t sz, uint32_t *shp, int64_t *dat);
+ffi_make_array(struct codfns_array **,
+    uint16_t, uint64_t, uint32_t *, int64_t *);
 
 void
-array_free(struct codfns_array *arr);
+array_free(struct codfns_array *);
 
 int
-array_cp(struct codfns_array *tgt, struct codfns_array *src);
+array_cp(struct codfns_array *, struct codfns_array *);
 
 /* Runtime functions */
 
