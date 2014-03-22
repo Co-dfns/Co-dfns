@@ -401,246 +401,160 @@ codfns_add(struct codfns_array *res,
 	return scalar_fn(identity, add_int, res, lft, rgt);
 }
 
+/* codfns_subtract()
+ *
+ * Intended Function: Implement the primitive APL - function.
+ */
+
 int
-codfns_subtract(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
+negate_int(int64_t *tgt, int64_t *rgt)
 {
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
+	*tgt = -1 * *rgt;
+	return 0;
+}
 
-  if (lft == NULL) {
-    ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    k = rgt->rank;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-    memcpy(res_elems, rgt->elements, rgt->size);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ *= -1;
-
-    ret->shape = shp;
-    ret->elements = res_elems;
-
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ - *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr - *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ - sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-
-  return 0;
+int inline
+negate_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = -1 * *rgt;
+	return 0;
 }
 
 int
-codfns_multiply(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
+subtract_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
+	*tgt = *lft - *rgt;
+	return 0;
+}
 
-  /* We return the signum array for the RHS */
-  if (lft == NULL) {
-    k = rgt->rank;
-    ret->size = rgt->size;
-    ret->rank = rgt->rank;
+int inline
+subtract_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = *lft - *rgt;
+	return 0;
+}
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-    memcpy(res_elems, rgt->elements, rgt->size);
+int
+codfns_subtract(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(negate_int, subtract_int, res, lft, rgt);
+}
 
-    for (i = 0; i < k; i++) {
-      if(res_elems[i] < 0)
-        res_elems[i] = -1;
-      else if (res_elems[i] > 0)
-        res_elems[i] = 1;
-      else res_elems[i] = 0;
-    }
 
-    ret->shape = shp;
-    ret->elements = res_elems;
+/* codfns_multiply()
+ *
+ * Intended Function: Compute the APL × function.
+ */
 
-    return 0;
-  }
+int
+direction_int(int64_t *tgt, int64_t *rgt)
+{
+	if (*rgt == 0)
+		*tgt = 0;
+	else if (*rgt < 0)
+		*tgt = -1;
+	else
+		*tgt = 1;
 
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
+	return 0;
+}
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
+int inline
+direction_int(int64_t *tgt, int64_t *rgt)
+{
+	if (*rgt == 0)
+		*tgt = 0;
+	else if (*rgt < 0)
+		*tgt = -1;
+	else
+		*tgt = 1;
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ * *right_elems++;
+	return 0;
+}
 
-    ret->shape = shp;
-    ret->elements = res_elems;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
+int
+multiply_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = *lft * *rgt;
+	return 0;
+}
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
+int inline
+multiply_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = *lft * *rgt;
+	return 0;
+}
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr * *right_elems++;
+int
+codfns_multiply(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(direction_int, multiply_int, res, lft, rgt);
+}
 
-    ret->shape = shp;
-    ret->elements = res_elems;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
+/* codfns_divide()
+ *
+ * Intended Function: Compute the APL ÷ function.
+ */
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp =  scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
+int
+reciprocal_int(int64_t *tgt, int64_t *rgt)
+{
+	if (*rgt == 0) {
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
+		return 11;
+	}
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ * sclr;
+	*tgt = 1 / *rgt;
 
-    ret->shape = shp;
-    ret->elements = res_elems;
-  }
+	return 0;
+}
 
-  return 0;
+int inline
+reciprocal_int(int64_t *tgt, int64_t *rgt)
+{
+	if (*rgt == 0) {
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
+		return 11;
+	}
+
+	*tgt = 1 / *rgt;
+
+	return 0;
+}
+
+int
+divide_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	if (*rgt == 0) {
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
+		return 11;
+	}
+
+	*tgt = *lft / *rgt;
+
+	return 0;
+}
+
+int inline
+divide_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	if (*rgt == 0) {
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
+		return 11;
+	}
+
+	*tgt = *lft / *rgt;
+
+	return 0;
 }
 
 int
 codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt, int DIV)
 {
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
-
-  /* We return the reciprocal array for the RHS */
-  if (lft == NULL) {
-    k = rgt->rank;
-    ret->size = rgt->size;
-    ret->rank = rgt->rank;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-    memcpy(res_elems, rgt->elements, rgt->size);
-
-    for (i = 0; i < k; i++) {
-      if (res_elems[i] != 0)
-        res_elems[i] = 1 / res_elems[i];
-      else if (DIV == 1)
-          res_elems[i] = 0;
-        else
-          return 1; /* Signal an error */
-    }
-
-    ret->shape = shp;
-    ret->elements = res_elems;
-
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ / *right_elems++;
-
-    ret->shape = shp;
-    ret->elements = res_elems;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr / *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ / sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-
-  return 0;
+	return scalar_fn(reciprocal_int, divide_int, res, lft, rgt);
 }
 
 /* Need to do error handling when x is zero and we are raising to a negative power */
