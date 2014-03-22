@@ -202,7 +202,7 @@ clean_env(struct codfns_array *env, int count)
  * same shape, and zero otherwise.
  */
 
-int
+int static inline
 same_shape(struct codfns_array *lft, struct codfns_array *rgt)
 {
 	int i, k;
@@ -222,67 +222,184 @@ same_shape(struct codfns_array *lft, struct codfns_array *rgt)
 	return 1;
 }
 
-int
-codfns_add(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
+/* copy_shape()
+ *
+ * Intended Function: Take the shape of the source array and copy it to the
+ * target array.
+ */
+
+int static inline
+copy_shape(struct codfns_array *tgt, struct codfns_array *src)
 {
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
+	uint32_t *buf;
 
-  if (lft == NULL) {
-    return array_cp(ret, rgt);
-  }
+	buf = tgt->shape;
 
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
+	if (src->rank > tgt->rank) {
+		buf = realloc(buf, sizeof(uint32_t) * src->rank);
+		if (buf == NULL) {
+			perror("copy_shape");
+			return 1;
+		}
+	}
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
+	memcpy(buf, src->shape, sizeof(uint32_t) * tgt->rank);
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ + *right_elems++;
+	tgt->rank = src->rank;
+	tgt->shape = buf;
 
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr + *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ + sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-
-  return 0;
+	return 0;
 }
 
+/* scale_elements()
+ *
+ * Intended Function: Given a size, ensure that the element buffer of an
+ * array can handle that size of elements, and set the size field
+ * appropriately.
+ */
+
+int static inline
+scale_elements(struct codfns_array *arr, uint64_t size)
+{
+	int64_t *buf;
+
+	buf = arr->elements;
+
+	if (size > arr->size) {
+		buf = realloc(buf, sizeof(int64_t) * size);
+		if (buf == NULL) {
+			perror("scale_elements");
+			return 1;
+		}
+	}
+
+	arr->size = size;
+	arr->elements = buf;
+
+	return 0;
+}
+
+/* prepare_res()
+ *
+ * Intended Function: Prepare a result array and buffer for scalar function
+ * iteration.
+ */
+int static inline
+prepare_res(void **buf, struct codfns_array *res,
+    struct codfns_array *pat)
+{
+	if (scale_elements(res, pat->size))
+		return 99;
+
+	if (copy_shape(res, pat))
+		return 99;
+
+	*buf = res->elements;
+
+	return 0;
+}
+
+/* scalar_fn()
+ *
+ * Intended Function: Given a monadic and dyadic scalar functions,
+ * a result, left, and right argument, compute the scalar APL function
+ * defined by the given monadic and dyadic functions.
+ */
+
+int static inline
+scalar_fn(int (*mon)(struct codfns_array *, struct codfns_array *),
+    int (*dya)(struct codfns_array *,
+        struct codfns_array *, struct codfns_array *),
+    struct codfns_array *res,
+    struct codfns_array *lft,
+    struct codfns_array *rgt)
+{
+	int i, code;
+	int64_t *left_elems, *right_elems, *res_elems;
+
+	right_elems = rgt->elements;
+
+	/* Monadic case */
+	if (lft == NULL) {
+		if (code = prepare_res(&res_elems, res, rgt)) return code;
+
+		for (i = 0; i < res->size; i++) {
+			code = mon(res_elems++, right_elems++);
+			if (code) return code;
+		}
+
+		return 0;
+	}
+
+	left_elems = lft->elements;
+
+	/* Dyadic case */
+	if (same_shape(lft, rgt)) {
+		if (code = prepare_res(&res_elems, res, lft)) return code;
+
+		for (i = 0; i < res->size; i++) {
+			code = dya(res_elems++, left_elems++, right_elems++);
+			if (code) return code;
+		}
+	} else if (scalar(lft)) {
+		if (code = prepare_res(&res_elems, res, rgt)) return code;
+
+		for (i = 0; i < res->size; i++) {
+			code = dya(res_elemes++, left_elems, right_elems++);
+			if (code) return code;
+		}
+	} else if (scalar(rgt)) {
+		if (code = prepare_res(&res_elems, res, lft)) return code;
+
+		for (i = 0; i < res->size; i++) {
+			code = dya(res_elemes++, left_elems++, right_elems);
+			if (code) return code;
+		}
+	}
+
+	return 0;
+}
+
+/* codfns_add()
+ *
+ * Intended Function: Compute the + APL primitive, both monadic and dyadic
+ * cases.
+ */
+
+int
+identity(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = *rgt;
+	return 0;
+}
+
+int inline
+identity(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = *rgt;
+	return 0;
+}
+
+int
+add_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = *lft + *rgt;
+	return 0;
+}
+
+int inline
+add_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = *lft + *rgt;
+	return 0;
+}
+
+int
+codfns_add(struct codfns_array *res,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(identity, add_int, res, lft, rgt);
+}
 
 int
 codfns_subtract(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
