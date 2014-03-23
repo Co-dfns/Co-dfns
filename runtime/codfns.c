@@ -143,8 +143,11 @@ array_cp(struct codfns_array *tgt, struct codfns_array *src)
 
 	if (tgt == src) return 0;
 
+	shp = tgt->shape;
+	dat = tgt->elements;
+
 	if (src->rank > tgt->rank) {
-		shp = realloc(tgt->shape, sizeof(uint32_t) * src->rank);
+		shp = realloc(shp, sizeof(uint32_t) * src->rank);
 		if (shp == NULL) {
 			perror("array_cp");
 			return 1;
@@ -152,7 +155,7 @@ array_cp(struct codfns_array *tgt, struct codfns_array *src)
 	}
 
 	if (src->size > tgt->size) {
-		dat = realloc(tgt->elements, sizeof(int64_t) * src->size);
+		dat = realloc(dat, sizeof(int64_t) * src->size);
 		if (dat == NULL) {
 			perror("array_cp");
 			return 2;
@@ -285,7 +288,7 @@ scale_elements(struct codfns_array *arr, uint64_t size)
  * iteration.
  */
 int static inline
-prepare_res(void **buf, struct codfns_array *res,
+prepare_res(int64_t **buf, struct codfns_array *res,
     struct codfns_array *pat)
 {
 	if (scale_elements(res, pat->size))
@@ -307,9 +310,8 @@ prepare_res(void **buf, struct codfns_array *res,
  */
 
 int static inline
-scalar_fn(int (*mon)(struct codfns_array *, struct codfns_array *),
-    int (*dya)(struct codfns_array *,
-        struct codfns_array *, struct codfns_array *),
+scalar_fn(int (*mon)(int64_t *, int64_t *),
+    int (*dya)(int64_t *, int64_t *, int64_t *),
     struct codfns_array *res,
     struct codfns_array *lft,
     struct codfns_array *rgt)
@@ -321,7 +323,7 @@ scalar_fn(int (*mon)(struct codfns_array *, struct codfns_array *),
 
 	/* Monadic case */
 	if (lft == NULL) {
-		if (code = prepare_res(&res_elems, res, rgt)) return code;
+		if ((code = prepare_res(&res_elems, res, rgt))) return code;
 
 		for (i = 0; i < res->size; i++) {
 			code = mon(res_elems++, right_elems++);
@@ -335,24 +337,24 @@ scalar_fn(int (*mon)(struct codfns_array *, struct codfns_array *),
 
 	/* Dyadic case */
 	if (same_shape(lft, rgt)) {
-		if (code = prepare_res(&res_elems, res, lft)) return code;
+		if ((code = prepare_res(&res_elems, res, lft))) return code;
 
 		for (i = 0; i < res->size; i++) {
 			code = dya(res_elems++, left_elems++, right_elems++);
 			if (code) return code;
 		}
 	} else if (scalar(lft)) {
-		if (code = prepare_res(&res_elems, res, rgt)) return code;
+		if ((code = prepare_res(&res_elems, res, rgt))) return code;
 
 		for (i = 0; i < res->size; i++) {
-			code = dya(res_elemes++, left_elems, right_elems++);
+			code = dya(res_elems++, left_elems, right_elems++);
 			if (code) return code;
 		}
 	} else if (scalar(rgt)) {
-		if (code = prepare_res(&res_elems, res, lft)) return code;
+		if ((code = prepare_res(&res_elems, res, lft))) return code;
 
 		for (i = 0; i < res->size; i++) {
-			code = dya(res_elemes++, left_elems++, right_elems);
+			code = dya(res_elems++, left_elems++, right_elems);
 			if (code) return code;
 		}
 	}
@@ -366,24 +368,10 @@ scalar_fn(int (*mon)(struct codfns_array *, struct codfns_array *),
  * cases.
  */
 
-int
-identity(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = *rgt;
-	return 0;
-}
-
 int inline
 identity(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = *rgt;
-	return 0;
-}
-
-int
-add_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = *lft + *rgt;
 	return 0;
 }
 
@@ -406,24 +394,10 @@ codfns_add(struct codfns_array *res,
  * Intended Function: Implement the primitive APL - function.
  */
 
-int
-negate_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = -1 * *rgt;
-	return 0;
-}
-
 int inline
 negate_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = -1 * *rgt;
-	return 0;
-}
-
-int
-subtract_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = *lft - *rgt;
 	return 0;
 }
 
@@ -435,7 +409,7 @@ subtract_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_subtract(struct codfns_array *ret,
+codfns_subtract(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	return scalar_fn(negate_int, subtract_int, res, lft, rgt);
@@ -447,19 +421,6 @@ codfns_subtract(struct codfns_array *ret,
  * Intended Function: Compute the APL × function.
  */
 
-int
-direction_int(int64_t *tgt, int64_t *rgt)
-{
-	if (*rgt == 0)
-		*tgt = 0;
-	else if (*rgt < 0)
-		*tgt = -1;
-	else
-		*tgt = 1;
-
-	return 0;
-}
-
 int inline
 direction_int(int64_t *tgt, int64_t *rgt)
 {
@@ -473,13 +434,6 @@ direction_int(int64_t *tgt, int64_t *rgt)
 	return 0;
 }
 
-int
-multiply_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = *lft * *rgt;
-	return 0;
-}
-
 int inline
 multiply_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
@@ -488,7 +442,7 @@ multiply_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_multiply(struct codfns_array *ret,
+codfns_multiply(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	return scalar_fn(direction_int, multiply_int, res, lft, rgt);
@@ -499,19 +453,6 @@ codfns_multiply(struct codfns_array *ret,
  * Intended Function: Compute the APL ÷ function.
  */
 
-int
-reciprocal_int(int64_t *tgt, int64_t *rgt)
-{
-	if (*rgt == 0) {
-		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
-		return 11;
-	}
-
-	*tgt = 1 / *rgt;
-
-	return 0;
-}
-
 int inline
 reciprocal_int(int64_t *tgt, int64_t *rgt)
 {
@@ -521,19 +462,6 @@ reciprocal_int(int64_t *tgt, int64_t *rgt)
 	}
 
 	*tgt = 1 / *rgt;
-
-	return 0;
-}
-
-int
-divide_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	if (*rgt == 0) {
-		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
-		return 11;
-	}
-
-	*tgt = *lft / *rgt;
 
 	return 0;
 }
@@ -552,8 +480,8 @@ divide_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_divide(struct codfns_array *ret,
-    struct codfns_array *lft, struct codfns_array *rgt, int DIV)
+codfns_divide(struct codfns_array *res,
+    struct codfns_array *lft, struct codfns_array *rgt)
 {
 	return scalar_fn(reciprocal_int, divide_int, res, lft, rgt);
 }
@@ -563,26 +491,10 @@ codfns_divide(struct codfns_array *ret,
  * Intended Function: Compute the APL | function.
  */
 
-int
-magnitude_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = llabs(*rgt);
-
-	return 0;
-}
-
 int inline
 magnitude_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = llabs(*rgt);
-
-	return 0;
-}
-
-int
-residue_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = *lft % *rgt;
 
 	return 0;
 }
@@ -596,7 +508,7 @@ residue_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_residue(struct codfns_array *ret,
+codfns_residue(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	return scalar_fn(magnitude_int, residue_int, res, lft, rgt);
@@ -607,24 +519,10 @@ codfns_residue(struct codfns_array *ret,
  * Intended Function: Compute the APL * function.
  */
 
-int
-exp_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = exp(*rgt);
-	return 0;
-}
-
 int inline
 exp_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = exp(*rgt);
-	return 0;
-}
-
-int
-pow_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = pow(*lft, *rgt);
 	return 0;
 }
 
@@ -636,7 +534,7 @@ pow_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_power(struct codfns_array *ret,
+codfns_power(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	return scalar_fn(exp_int, pow_int, res, lft, rgt);
@@ -647,24 +545,10 @@ codfns_power(struct codfns_array *ret,
  * Intended Function: Compute the APL ⍟ function.
  */
 
-int
-log_int(int64_t *tgt, *rgt)
-{
-	*tgt = log(*rgt);
-	return 0;
-}
-
 int inline
-log_int(int64_t *tgt, *rgt)
+log_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = log(*rgt);
-	return 0;
-}
-
-int
-logbn_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = log(*rgt) / log(*lft);
 	return 0;
 }
 
@@ -679,7 +563,7 @@ int
 codfns_log(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(ceillog_int, logbn_int, tgt, lft, rgt);
+	return scalar_fn(log_int, logbn_int, res, lft, rgt);
 }
 
 /* codfns_max()
@@ -687,24 +571,10 @@ codfns_log(struct codfns_array *res,
  * Intended Function: Compute the APL ⌈ function.
  */
 
-int
-ceiling_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = ceiling(*rgt);
-	return 0;
-}
-
 int inline
 ceiling_int(int64_t *tgt, int64_t *rgt)
 {
-	*tgt = ceiling(*rgt);
-	return 0;
-}
-
-int
-max_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft >= *rgt ? *lft : *rgt);
+	*tgt = ceil(*rgt);
 	return 0;
 }
 
@@ -719,7 +589,7 @@ int
 codfns_max(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(ceiling_int, max_int, tgt, lft, rgt);
+	return scalar_fn(ceiling_int, max_int, res, lft, rgt);
 }
 
 /* codfns_min()
@@ -727,24 +597,10 @@ codfns_max(struct codfns_array *res,
  * Intended Function: Compute the APL ⌊ function.
  */
 
-int
-floor_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = floor(*rgt);
-	return 0;
-}
-
 int inline
 floor_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = floor(*rgt);
-	return 0;
-}
-
-int
-min_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft <= *rgt ? *lft : *rgt);
 	return 0;
 }
 
@@ -759,20 +615,13 @@ int
 codfns_min(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(floor_int, min_int, tgt, lft, rgt);
+	return scalar_fn(floor_int, min_int, res, lft, rgt);
 }
 
 /* codfns_less()
  *
  * Intended Function: Compute the APL < function.
  */
-
-int
-less_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft < *rgt);
-	return 0;
-}
 
 int inline
 less_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
@@ -782,7 +631,7 @@ less_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_less(struct codfns_array *ret,
+codfns_less(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
 	if (lft == NULL) {
@@ -798,13 +647,6 @@ codfns_less(struct codfns_array *ret,
  * Intended Function: Compute the APL ≤ function.
  */
 
-int
-less_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft <= *rgt);
-	return 0;
-}
-
 int inline
 less_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
@@ -813,7 +655,7 @@ less_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_less_or_equal(struct codfns_array *ret,
+codfns_less_or_equal(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
 	if (lft == NULL) {
@@ -829,13 +671,6 @@ codfns_less_or_equal(struct codfns_array *ret,
  * Intended Function: Compute the APL = function.
  */
 
-int
-equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft == *rgt);
-	return 0;
-}
-
 int inline
 equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
@@ -844,7 +679,7 @@ equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_equal(struct codfns_array *ret,
+codfns_equal(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
 	if (lft == NULL) {
@@ -860,13 +695,6 @@ codfns_equal(struct codfns_array *ret,
  * Intended Function: Compute the APL ≠ function.
  */
 
-int
-not_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft != *rgt);
-	return 0;
-}
-
 int inline
 not_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
@@ -875,7 +703,7 @@ not_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_not_equal(struct codfns_array *ret,
+codfns_not_equal(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
 {
 	if (lft == NULL) {
@@ -892,13 +720,6 @@ codfns_not_equal(struct codfns_array *ret,
  * Intended Function: Compute the APL ≥ function.
  */
 
-int
-greater_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft >= *rgt);
-	return 0;
-}
-
 int inline
 greater_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
@@ -907,7 +728,7 @@ greater_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_greater_or_equal(struct codfns_array *ret,
+codfns_greater_or_equal(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	if (lft == NULL) {
@@ -923,13 +744,6 @@ codfns_greater_or_equal(struct codfns_array *ret,
  * Intended Function: Compute the APL > function.
  */
 
-int
-greater_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft > *rgt);
-	return 0;
-}
-
 int inline
 greater_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
@@ -938,7 +752,7 @@ greater_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_greater_or_equal(struct codfns_array *ret,
+codfns_greater(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	if (lft == NULL) {
@@ -953,7 +767,7 @@ int
 codfns_not(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
 {
   int i, k;
-  int64_t *res_elems, sclr;
+  int64_t *res_elems;
   uint32_t *shp;
 
   /* We return the negation array for the RHS */

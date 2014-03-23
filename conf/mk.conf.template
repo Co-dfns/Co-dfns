@@ -11,3 +11,9 @@
 # see an fo/ and template/ directory as direct children of this directory
 
 DBSTYLES := /usr/share/xml/docbook/stylesheet/nwalsh5/current
+
+## Runtime Configuration
+#
+# Set this to alter the way that the runtime is compiled
+
+CFLAGS = -g -Wall -pedantic -std=c99

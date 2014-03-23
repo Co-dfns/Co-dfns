@@ -12,7 +12,7 @@ CPATHS := $(CFILES:%.c=$(RUNROOT)/%.c)
 runtime: $(RUNTIME)
 
 $(RUNTIME): $(CPATHS) $(HPATHS)
-	clang -shared -fPIC -o $(RUNTIME) $(CPATHS)
+	clang -shared -fPIC ${CFLAGS} -o $(RUNTIME) $(CPATHS)
 
 clean-runtime:
 	rm -rf $(RUNTIME)
