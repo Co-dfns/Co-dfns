@@ -552,89 +552,401 @@ divide_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 }
 
 int
-codfns_divide(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt, int DIV)
+codfns_divide(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt, int DIV)
 {
 	return scalar_fn(reciprocal_int, divide_int, res, lft, rgt);
 }
 
-/* Need to do error handling when x is zero and we are raising to a negative power */
+/* codfns_magnitude()
+ *
+ * Intended Function: Compute the APL | function.
+ */
+
 int
-codfns_power(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
+magnitude_int(int64_t *tgt, int64_t *rgt)
 {
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
+	*tgt = llabs(*rgt);
 
-  /* Exponential on the right */
-  if (lft == NULL) {
-    ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    right_elems = rgt->elements;
-    k = rgt->rank;
+	return 0;
+}
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-    memcpy(res_elems, rgt->elements, rgt->size);
+int inline
+magnitude_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = llabs(*rgt);
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = exp(*right_elems++);
+	return 0;
+}
 
-    ret->shape = shp;
-    ret->elements = res_elems;
+int
+residue_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = *lft % *rgt;
 
-    return 0;
-  }
+	return 0;
+}
 
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
+int inline
+residue_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = *lft % *rgt;
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
+	return 0;
+}
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = pow(*left_elems++, *right_elems++);
+int
+codfns_residue(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(magnitude_int, residue_int, res, lft, rgt);
+}
 
-    ret->elements = res_elems;
-    ret->shape = shp;
+/* codfns_power()
+ *
+ * Intended Function: Compute the APL * function.
+ */
 
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
+int
+exp_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = exp(*rgt);
+	return 0;
+}
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
+int inline
+exp_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = exp(*rgt);
+	return 0;
+}
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = pow(*right_elems++, sclr);
+int
+pow_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = pow(*lft, *rgt);
+	return 0;
+}
 
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
+int inline
+pow_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = pow(*lft, *rgt);
+	return 0;
+}
 
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
+int
+codfns_power(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(exp_int, pow_int, res, lft, rgt);
+}
 
-    for (i = 0; i < k; i++)
-      *res_elems++ = pow(*left_elems++, sclr);
+/* codfns_log()
+ *
+ * Intended Function: Compute the APL ⍟ function.
+ */
 
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
+int
+log_int(int64_t *tgt, *rgt)
+{
+	*tgt = log(*rgt);
+	return 0;
+}
 
-  return 0;
+int inline
+log_int(int64_t *tgt, *rgt)
+{
+	*tgt = log(*rgt);
+	return 0;
+}
+
+int
+logbn_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = log(*rgt) / log(*lft);
+	return 0;
+}
+
+int inline
+logbn_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = log(*rgt) / log(*lft);
+	return 0;
+}
+
+int
+codfns_log(struct codfns_array *res,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(ceillog_int, logbn_int, tgt, lft, rgt);
+}
+
+/* codfns_max()
+ *
+ * Intended Function: Compute the APL ⌈ function.
+ */
+
+int
+ceiling_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = ceiling(*rgt);
+	return 0;
+}
+
+int inline
+ceiling_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = ceiling(*rgt);
+	return 0;
+}
+
+int
+max_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft >= *rgt ? *lft : *rgt);
+	return 0;
+}
+
+int inline
+max_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft >= *rgt ? *lft : *rgt);
+	return 0;
+}
+
+int
+codfns_max(struct codfns_array *res,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(ceiling_int, max_int, tgt, lft, rgt);
+}
+
+/* codfns_min()
+ *
+ * Intended Function: Compute the APL ⌊ function.
+ */
+
+int
+floor_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = floor(*rgt);
+	return 0;
+}
+
+int inline
+floor_int(int64_t *tgt, int64_t *rgt)
+{
+	*tgt = floor(*rgt);
+	return 0;
+}
+
+int
+min_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft <= *rgt ? *lft : *rgt);
+	return 0;
+}
+
+int inline
+min_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft <= *rgt ? *lft : *rgt);
+	return 0;
+}
+
+int
+codfns_min(struct codfns_array *res,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	return scalar_fn(floor_int, min_int, tgt, lft, rgt);
+}
+
+/* codfns_less()
+ *
+ * Intended Function: Compute the APL < function.
+ */
+
+int
+less_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft < *rgt);
+	return 0;
+}
+
+int inline
+less_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft < *rgt);
+	return 0;
+}
+
+int
+codfns_less(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
+{
+	if (lft == NULL) {
+		fprintf(stderr, "SYNTAX ERROR");
+		return 2;
+	}
+
+	return scalar_fn(identity, less_int, res, lft, rgt);
+}
+
+/* codfns_less_or_equal()
+ *
+ * Intended Function: Compute the APL ≤ function.
+ */
+
+int
+less_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft <= *rgt);
+	return 0;
+}
+
+int inline
+less_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft <= *rgt);
+	return 0;
+}
+
+int
+codfns_less_or_equal(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
+{
+	if (lft == NULL) {
+		fprintf(stderr, "SYNTAX ERROR");
+		return 2;
+	}
+
+	return scalar_fn(identity, less_or_equal_int, res, lft, rgt);
+}
+
+/* codfns_equal()
+ *
+ * Intended Function: Compute the APL = function.
+ */
+
+int
+equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft == *rgt);
+	return 0;
+}
+
+int inline
+equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft == *rgt);
+	return 0;
+}
+
+int
+codfns_equal(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
+{
+	if (lft == NULL) {
+		fprintf(stderr, "SYNTAX ERROR");
+		return 2;
+	}
+
+	return scalar_fn(identity, equal_int, res, lft, rgt);
+}
+
+/* codfns_not_equal()
+ *
+ * Intended Function: Compute the APL ≠ function.
+ */
+
+int
+not_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft != *rgt);
+	return 0;
+}
+
+int inline
+not_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft != *rgt);
+	return 0;
+}
+
+int
+codfns_not_equal(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
+{
+	if (lft == NULL) {
+		fprintf(stderr, "SYNTAX ERROR");
+		return 2;
+	}
+
+	return scalar_fn(identity, not_equal_int, res, lft, rgt);
+}
+
+
+/* codfns_greater_or_equal()
+ *
+ * Intended Function: Compute the APL ≥ function.
+ */
+
+int
+greater_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft >= *rgt);
+	return 0;
+}
+
+int inline
+greater_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft >= *rgt);
+	return 0;
+}
+
+int
+codfns_greater_or_equal(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	if (lft == NULL) {
+		fprintf(stderr, "SYNTAX ERROR");
+		return 2;
+	}
+
+	return scalar_fn(identity, greater_or_equal_int, res, lft, rgt);
+}
+
+/* codfns_greater()
+ *
+ * Intended Function: Compute the APL > function.
+ */
+
+int
+greater_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft > *rgt);
+	return 0;
+}
+
+int inline
+greater_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+{
+	*tgt = (*lft > *rgt);
+	return 0;
+}
+
+int
+codfns_greater_or_equal(struct codfns_array *ret,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	if (lft == NULL) {
+		fprintf(stderr, "SYNTAX ERROR");
+		return 2;
+	}
+
+	return scalar_fn(identity, greater_int, res, lft, rgt);
 }
 
 int
@@ -666,392 +978,3 @@ codfns_not(struct codfns_array *ret, struct codfns_array *lft, struct codfns_arr
   return 1;
 }
 
-int
-codfns_less(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
-{
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
-
-  /* There is no monadic form */
-  if (lft == NULL) {
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ < *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr < *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ < sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-
-  return 0;
-}
-
-int
-codfns_less_or_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
-{
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
-
-  /* There is no monadic form */
-  if (lft == NULL) {
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ <= *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr <= *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ <= sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-  return 0;
-}
-
-int
-codfns_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
-{
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
-
-  /* There is no monadic form */
-  if (lft == NULL) {
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ = *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr = *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ = sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-
-  return 0;
-}
-
-int
-codfns_greater_or_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
-{
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
-
-  /* There is no monadic form */
-  if (lft == NULL) {
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ >= *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr >= *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ >= sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-  return 0;
-}
-
-int
-codfns_not_equal(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)  /* Add OCT argument */
-{
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
-
-  /* There is no monadic form */
-  if (lft == NULL) {
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ != *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = sclr != *right_elems++;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = *left_elems++ != sclr;
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-  return 0;
-}
-
-int
-codfns_magnitude(struct codfns_array *ret, struct codfns_array *lft, struct codfns_array *rgt)
-{
-  int i, k;
-  int64_t *left_elems, *right_elems, *res_elems, sclr;
-  uint32_t *shp;
-
-  /* Exponential on the right */
-  if (lft == NULL) {
-    ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    right_elems = rgt->elements;
-    k = rgt->rank;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-    memcpy(res_elems, rgt->elements, rgt->size);
-
-    for (i = 0; i < k; i++)
-      *res_elems++ = abs(*right_elems++);
-
-    ret->shape = shp;
-    ret->elements = res_elems;
-
-    return 0;
-  }
-
-  if (same_shape(lft, rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      res_elems[i] = *left_elems++ == 0 ? right_elems[i] : right_elems[i] %  left_elems[i];
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-
-  } else if (scalar(lft)) {
-    k = ret->size = rgt->size;
-    ret->rank = rgt->rank;
-    sclr = *lft->elements;
-    right_elems = rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(rgt) ? NULL : realloc(ret->shape, rgt->rank);
-    memcpy(shp, rgt->shape, ret->rank);
-
-    if (sclr == 0) {
-      memcpy(res_elems, rgt->elements, rgt->size);
-    } else {
-      for (i = 0; i < k; i++)
-        *res_elems++ = *right_elems++ % sclr;
-    }
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  } else if (scalar(rgt)) {
-    k = ret->size = lft->size;
-    ret->rank = lft->rank;
-    left_elems = lft->elements;
-    sclr = *rgt->elements;
-
-    res_elems = realloc(ret->elements, ret->size);
-    shp = scalar(lft) ? NULL : realloc(ret->shape, lft->rank);
-    memcpy(shp, lft->shape, ret->rank);
-
-    for (i = 0; i < k; i++)
-      res_elems[i] = *left_elems++ == 0 ? sclr : sclr %  left_elems[i];
-
-    ret->elements = res_elems;
-    ret->shape = shp;
-  }
-
-  return 0;
-}

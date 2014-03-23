@@ -57,7 +57,7 @@ codfns_divide(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_magnitude(struct codfns_array *,
+codfns_residue(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
