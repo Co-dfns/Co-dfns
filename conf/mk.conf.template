@@ -10,7 +10,7 @@
 # Set this to the location of your Docbook5 XSL Stylesheets, you should
 # see an fo/ and template/ directory as direct children of this directory
 
-DBSTYLES := /usr/share/xml/docbook/stylesheet/nwalsh5/current
+DBSTYLES := /home/arcfide/Libraries/Docbook5-XSL/
 
 ## Runtime Configuration
 #
