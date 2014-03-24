@@ -11,11 +11,11 @@
 Target←'X86'
 TargetTriple←'x86_64-slackware-linux-gnu'
 CoDfnsRuntime←'runtime/libcodfns.so'
-LLVMCore←'libLLVMCore.so'
-LLVMExecutionEngine←'libLLVMExecutionEngine.so'
-LLVMX86Info←'libLLVMX86Info.so'
-LLVMX86CodeGen←'libLLVMX86CodeGen.so'
-LLVMX86Desc←'libLLVMX86Desc.so'
+LLVMCore←'libLLVM-3.4.so'
+LLVMExecutionEngine←'libLLVM-3.4.so'
+LLVMX86Info←'libLLVM-3.4.so'
+LLVMX86CodeGen←'libLLVM-3.4.so'
+LLVMX86Desc←'libLLVM-3.4.so'
 
 ⍝ Fix
 ⍝
