@@ -368,14 +368,14 @@ scalar_fn(int (*mon)(int64_t *, int64_t *),
  * cases.
  */
 
-int inline
+int inline static
 identity(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = *rgt;
 	return 0;
 }
 
-int inline
+int inline static
 add_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = *lft + *rgt;
@@ -394,14 +394,14 @@ codfns_add(struct codfns_array *res,
  * Intended Function: Implement the primitive APL - function.
  */
 
-int inline
+int inline static
 negate_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = -1 * *rgt;
 	return 0;
 }
 
-int inline
+int inline static
 subtract_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = *lft - *rgt;
@@ -421,7 +421,7 @@ codfns_subtract(struct codfns_array *res,
  * Intended Function: Compute the APL × function.
  */
 
-int inline
+int inline static
 direction_int(int64_t *tgt, int64_t *rgt)
 {
 	if (*rgt == 0)
@@ -434,7 +434,7 @@ direction_int(int64_t *tgt, int64_t *rgt)
 	return 0;
 }
 
-int inline
+int inline static
 multiply_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = *lft * *rgt;
@@ -453,7 +453,7 @@ codfns_multiply(struct codfns_array *res,
  * Intended Function: Compute the APL ÷ function.
  */
 
-int inline
+int inline static
 reciprocal_int(int64_t *tgt, int64_t *rgt)
 {
 	if (*rgt == 0) {
@@ -466,7 +466,7 @@ reciprocal_int(int64_t *tgt, int64_t *rgt)
 	return 0;
 }
 
-int inline
+int inline static
 divide_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	if (*rgt == 0) {
@@ -491,7 +491,7 @@ codfns_divide(struct codfns_array *res,
  * Intended Function: Compute the APL | function.
  */
 
-int inline
+int inline static
 magnitude_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = llabs(*rgt);
@@ -499,7 +499,7 @@ magnitude_int(int64_t *tgt, int64_t *rgt)
 	return 0;
 }
 
-int inline
+int inline static
 residue_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = *lft % *rgt;
@@ -519,14 +519,14 @@ codfns_residue(struct codfns_array *res,
  * Intended Function: Compute the APL * function.
  */
 
-int inline
+int inline static
 exp_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = exp(*rgt);
 	return 0;
 }
 
-int inline
+int inline static
 pow_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = pow(*lft, *rgt);
@@ -545,14 +545,14 @@ codfns_power(struct codfns_array *res,
  * Intended Function: Compute the APL ⍟ function.
  */
 
-int inline
+int inline static
 log_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = log(*rgt);
 	return 0;
 }
 
-int inline
+int inline static
 logbn_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = log(*rgt) / log(*lft);
@@ -571,14 +571,14 @@ codfns_log(struct codfns_array *res,
  * Intended Function: Compute the APL ⌈ function.
  */
 
-int inline
+int inline static
 ceiling_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = ceil(*rgt);
 	return 0;
 }
 
-int inline
+int inline static
 max_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft >= *rgt ? *lft : *rgt);
@@ -597,14 +597,14 @@ codfns_max(struct codfns_array *res,
  * Intended Function: Compute the APL ⌊ function.
  */
 
-int inline
+int inline static
 floor_int(int64_t *tgt, int64_t *rgt)
 {
 	*tgt = floor(*rgt);
 	return 0;
 }
 
-int inline
+int inline static
 min_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft <= *rgt ? *lft : *rgt);
@@ -623,7 +623,7 @@ codfns_min(struct codfns_array *res,
  * Intended Function: Compute the APL < function.
  */
 
-int inline
+int inline static
 less_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft < *rgt);
@@ -647,7 +647,7 @@ codfns_less(struct codfns_array *res,
  * Intended Function: Compute the APL ≤ function.
  */
 
-int inline
+int inline static
 less_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft <= *rgt);
@@ -671,7 +671,7 @@ codfns_less_or_equal(struct codfns_array *res,
  * Intended Function: Compute the APL = function.
  */
 
-int inline
+int inline static
 equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft == *rgt);
@@ -695,7 +695,7 @@ codfns_equal(struct codfns_array *res,
  * Intended Function: Compute the APL ≠ function.
  */
 
-int inline
+int inline static
 not_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft != *rgt);
@@ -720,7 +720,7 @@ codfns_not_equal(struct codfns_array *res,
  * Intended Function: Compute the APL ≥ function.
  */
 
-int inline
+int inline static
 greater_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft >= *rgt);
@@ -744,7 +744,7 @@ codfns_greater_or_equal(struct codfns_array *res,
  * Intended Function: Compute the APL > function.
  */
 
-int inline
+int inline static
 greater_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = (*lft > *rgt);
