@@ -39822,7 +39822,7 @@
         together with array values. The following properties encode these behaviors.
       </simpara>
       <variablelist>
-        <title>Properties for Function Expression Canonical Sequence Analysis</title>
+        <title>Properties for Func. Expr. Canonical Sequence Analysis</title>
         <varlistentry>
           <term>Opnd</term>
           <listitem>
