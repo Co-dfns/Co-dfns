@@ -81,15 +81,15 @@ do←{⍎'⍺⍺ ⍵ ⋄ ⍵' ⋄ ⍺⍺}
 ⍝ Recursive Stimuli
 
 MkRec←{
-  300::⍺(⍺⍺∇)⍵
+  300::⍺∇⍵
   M←⍺ #.Generate.DModel ⍺⍺
-  S←⊃1 #.Generate.Distribution M
+  ⎕←S←⊃1 #.Generate.Distribution M
   X←⍺ Expand S
   (¯1↓⍵),(⊂(⊃⌽⍵),⊃X),1↓X
 }
 
 E←'Expression'MkRec
-Fe←'FuncExpr'MkRec
+Fea←Fe←'FuncExpr'MkRec
 Fn←'Function'MkRec
 
 ⍝ Top requires we use a reset expand
@@ -120,7 +120,7 @@ Vf←Vfo
 
 ∇Z←L Va R;I
  ⎕SIGNAL (0=I←⍴⊃AVars)/300
- Z←(¯1↓R),(⊂(⊃⌽R),' V',⍕(?I)⌷⊃AVars
+ Z←(¯1↓R),⊂(⊃⌽R),' V',⍕(?I)⌷⊃AVars
 ∇
 
 ⍝ This should work, but does not
