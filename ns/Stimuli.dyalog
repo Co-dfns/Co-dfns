@@ -116,6 +116,13 @@ Counter←0 ⋄ FVars←⊂⍬ ⋄ AVars←⊂⍬
  Z←(¯1↓R),⊂(⊃⌽R),' V',⍕(?I)⌷⊃FVars
 ∇
 
+Vf←Vfo
+
+∇Z←L Va R;I
+ ⎕SIGNAL (0=I←⍴⊃AVars)/300
+ Z←(¯1↓R),(⊂(⊃⌽R),' 'V',⍕(?I)⌷⊃AVars
+∇
+
 ⍝ This should work, but does not
 ⍝ Vfo←{
 ⍝   _←⎕SIGNAL do (0=I←⍴⊃FVars)/300
@@ -141,6 +148,7 @@ Rbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'}'}
 N←{(¯1↓⍵),⊂(⊃⌽⍵),' ',⍕?2*10}
 Sep←{(¯1↓⍵),⊂(⊃⌽⍵),' ⋄'}
 Col←{(¯1↓⍵),⊂(⊃⌽⍵),' :'}
-
+Da←{(¯1↓⍵),⊂(⊃⌽⍵),' ',(?≢P)⌷P←'<≤=≠≥>'}
+Ma←{(¯1↑⍵),⊂(⊃⌽⍵),' ',(?≢P)⌷P←'+-÷×|*⍟⌈⌊'}
 
 :EndNamespace
