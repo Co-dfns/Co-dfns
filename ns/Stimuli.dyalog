@@ -120,7 +120,7 @@ Vf←Vfo
 
 ∇Z←L Va R;I
  ⎕SIGNAL (0=I←⍴⊃AVars)/300
- Z←(¯1↓R),(⊂(⊃⌽R),' 'V',⍕(?I)⌷⊃AVars
+ Z←(¯1↓R),(⊂(⊃⌽R),' V',⍕(?I)⌷⊃AVars
 ∇
 
 ⍝ This should work, but does not
