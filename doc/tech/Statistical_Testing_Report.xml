@@ -3689,6 +3689,14 @@
             LENGTH ERROR: LiftFuncs[19]
           </td>
         </tr>
+        <tr>
+          <td>8</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            DOMAIN ERROR: ConvPrims[2]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3747,5 +3755,13 @@
       </para>
     </formalpara>
     <screen>LiftFuncs[19] (1↑⍵)⍪⊃⍪/0 vis/z ⍝ Nodes just	the same</screen>
+    <formalpara>
+      <title>Iteration 8, Test 1</title>
+      <para>
+        A DOMAIN ERROR in <function>ConvPrims[2]</function> occurs with
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <screen>ConvPrims[2] pn←⊃,/'name'Prop pm⌿⍵ ⍝ Primitive names</screen>
   </section>
 </article>

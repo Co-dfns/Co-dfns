@@ -782,7 +782,7 @@ APLPrims,←'>' ⋄ APLRunts,←⊂'codfns_greater'
 
 ConvPrims←{ast←⍵
   pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
-  pn←⊃,/'name'Prop pm⌿⍵                ⍝ Primitive names
+  pn←⊃,/(⊂,''),'name'Prop pm⌿⍵         ⍝ Primitive names
   cn←(APLPrims⍳pn)⊃¨⊂APLRunts          ⍝ Converted names
   at←⊂1 2⍴'class' 'function'           ⍝ Class is function
   at⍪¨←(⊂⊂'name'),∘⊂¨cn                ⍝ Use the converted name
