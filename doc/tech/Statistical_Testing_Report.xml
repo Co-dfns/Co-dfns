@@ -3697,6 +3697,14 @@
             DOMAIN ERROR: ConvPrims[2]
           </td>
         </tr>
+        <tr>
+          <td>9</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            VALUE ERROR: GenInit[24]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3763,5 +3771,13 @@
       </para>
     </formalpara>
     <screen>ConvPrims[2] pn←⊃,/'name'Prop pm⌿⍵ ⍝ Primitive names</screen>
+    <formalpara>
+      <title>Iteration 9, Test 1</title>
+      <para>
+        A VALUE ERROR in <function>GenInit[24]</function> occurs with
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <screen>GenInit[24] _←{ ⍝ Handle each global expr in turn</screen>
   </section>
 </article>

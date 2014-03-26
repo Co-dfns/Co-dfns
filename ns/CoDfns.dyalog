@@ -985,6 +985,7 @@ GenInit←{
   free←{array_free call ⍵}             ⍝ Function to cleanup ararys
   clean←{(⊃⍺){⍵⊣free ⍺}⍣(⊃⌽⍺)⊢⍵}       ⍝ Fn to optionally cleanup temp array
   _←{                                  ⍝ Handle each global expr in turn
+    0=≢⍵:0                             ⍝ Catch when ⍵ is empty
     n←⊃'class'Prop 1↑⍵                 ⍝ Switch on node class
     'atomic'≡n:⍺{                      ⍝ Atomic case: variable reference
       ∧/' '=tgt←⊃'name'Prop 1↑⍵:0      ⍝ Ignore unnamed global references
