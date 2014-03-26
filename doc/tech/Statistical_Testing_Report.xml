@@ -3681,6 +3681,14 @@
             SYNTAX ERROR: AnchorVars[6]
           </td>
         </tr>
+        <tr>
+          <td>7</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            LENGTH ERROR: LiftFuncs[19]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3731,5 +3739,13 @@
       </para>
     </formalpara>
     <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm ⍝ Split names and prepare</screen>
+    <formalpara>
+      <title>Iteration 7, Test 1</title>
+      <para>
+        A LENGTH ERROR in <function>LiftFuncs[19]</function> occurs with
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <screen>LiftFuncs[19] (1↑⍵)⍪⊃⍪/0 vis/z ⍝ Nodes just	the same</screen>
   </section>
 </article>

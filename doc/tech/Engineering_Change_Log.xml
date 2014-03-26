@@ -319,6 +319,12 @@
         <td colspan="5">SYNTAX ERROR in <function>AnchorVars[6]</function></td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>50</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">LENGTH ERROR in <function>LiftFuncs[19]</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1456,6 +1462,25 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           The <function>Split</function> is missing a set of parentheses 
           to ensure that the binding of the left argument occurs as 
           the last thing. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A LENGTH ERROR in <function>LiftFuncs[19]</function> occurs with 
+          the following message.
+        </para>
+      </formalpara>
+      <screen>LiftFuncs[19] (1↑⍵)⍪⊃⍪/0 vis/z ⍝ Nodes just the same</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          In the above code, <literal>0 vis/z</literal> will always be a 
+          scalar, which means that we need to extract out the appropriate 
+          values from there before applying the catenation reduction. 
+          Adding a <function>⊃</function> fixes this problem. 
         </para>
       </formalpara>
     </listitem>

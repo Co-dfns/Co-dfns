@@ -752,7 +752,7 @@ LiftFuncs←{
     ⊃⍺⍺ ∇/z                            ⍝ without changing anything
   }
   z←(⌽1 Kids ⍵),⊂2⍴⊂MtAST              ⍝ Must traverse all top-level
-  (1↑⍵)⍪⊃⍪/0 vis/z                     ⍝ Nodes just the same
+  (1↑⍵)⍪⊃⍪/⊃0 vis/z                    ⍝ Nodes just the same
 }
 
 ⍝ Runtime equivalents
