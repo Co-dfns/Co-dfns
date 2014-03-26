@@ -307,6 +307,12 @@
         <td colspan="5">LENGTH ERROR in <function>Parse[24]</function></td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>48</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">VALUE ERROR in <function>LiftConsts[5]</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1410,6 +1416,24 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
         </para>
       </formalpara>
       <programlisting>fd,⊂'Function',⊂'',⊂fa ←→ ((fd,⊂'Function'),⊂''),⊂fa</programlisting>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A VALUE ERROR in <function>LiftConsts[5]</function> occurs with 
+          the following message.
+        </para>
+      </formalpara>
+      <screen>LiftConsts[5] v←mkv¨⍳+/s←2&lt;/0,l                    ⍝ Variables we need; start of literals</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The binding switched from <function>MkV</function> to 
+          <function>mkv</function> but the transition didn't make it 
+          it to the definition site, so changing the name will fix this.
+        </para>
+      </formalpara>
     </listitem>
   </orderedlist>
 </article>

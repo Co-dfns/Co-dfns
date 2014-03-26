@@ -609,7 +609,7 @@ DropUnreached←{
 ⍝ Intended Function: Lift all literal expressions to the top level.
 
 LiftConsts←{
-  I←¯1 ⋄ MkV←{'LC',⍕I⊣(⊃I)+←1}         ⍝ New variable maker
+  I←¯1 ⋄ mkv←{'LC',⍕I⊣(⊃I)+←1}         ⍝ New variable maker
   at←{2 2⍴'name' ⍵ 'class' ⍺}          ⍝ Attribute maker
   ns←'Expression' 'Number'             ⍝ Nodes we care about
   e l←((1⌷⍉a←⍵)∊⊂)¨ns                  ⍝ All Expr and Number nodes
