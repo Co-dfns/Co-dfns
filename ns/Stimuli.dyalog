@@ -83,7 +83,7 @@ do←{⍎'⍺⍺ ⍵ ⋄ ⍵' ⋄ ⍺⍺}
 MkRec←{
   300::⍺∇⍵
   M←⍺ #.Generate.DModel ⍺⍺
-  ⎕←S←⊃1 #.Generate.Distribution M
+  S←⊃1 #.Generate.Distribution M
   X←⍺ Expand S
   (¯1↓⍵),(⊂(⊃⌽⍵),⊃X),1↓X
 }
@@ -111,17 +111,21 @@ Counter←0 ⋄ FVars←⊂⍬ ⋄ AVars←⊂⍬
 
 ⍝ This is ugly, and we should not have to use a Trad-fn
 
-∇Z←L Vfo R;I
- ⎕SIGNAL (0=I←⍴⊃FVars)/300
- Z←(¯1↓R),⊂(⊃⌽R),' V',⍕(?I)⌷⊃FVars
-∇
+⍝ ∇Z←L Vfo R;I
+⍝  ⎕SIGNAL (0=I←⍴⊃FVars)/300
+⍝  Z←(¯1↓R),⊂(⊃⌽R),' V',⍕(?I)⌷⊃FVars
+⍝ ∇
 
-Vf←Vfo
+⍝ Vf←Vfo
 
-∇Z←L Va R;I
- ⎕SIGNAL (0=I←⍴⊃AVars)/300
- Z←(¯1↓R),⊂(⊃⌽R),' V',⍕(?I)⌷⊃AVars
-∇
+⍝ ∇Z←L Va R;I
+⍝  ⎕SIGNAL (0=I←⍴⊃AVars)/300
+⍝  Z←(¯1↓R),⊂(⊃⌽R),' V',⍕(?I)⌷⊃AVars
+⍝ ∇
+
+Vfo←{(¯1↓⍵),⊂(⊃⌽⍵),' Vfo'}
+Vf←{(¯1↓⍵),⊂(⊃⌽⍵),' Vf'}
+Va←{(¯1↓⍵),⊂(⊃⌽⍵),' Va'}
 
 ⍝ This should work, but does not
 ⍝ Vfo←{
@@ -129,9 +133,11 @@ Vf←Vfo
 ⍝   (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕(?I)⌷⊃FVars
 ⍝ }
 
-Vu←{(⊃Counter)+←1 ⋄ (⊃FVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
-Vnu←{(⊃Counter)+←1 ⋄ (⊃AVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
-Vi←{(¯1↓⍵),⊂(⊃⌽⍵),' ⍺'}
+⍝ Vu←{(⊃Counter)+←1 ⋄ (⊃FVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
+Vu←{(¯1↓⍵),⊂(⊃⌽⍵),' Vu'}
+⍝ Vnu←{(⊃Counter)+←1 ⋄ (⊃AVars),←Counter ⋄ (¯1↓⍵),⊂(⊃⌽⍵),' V',⍕Counter}
+Vnu←{(¯1↓⍵),⊂(⊃⌽⍵),' Vnu'}
+Vi←{(¯1↓⍵),⊂(⊃⌽⍵),' Vi'}
 Gets←{(¯1↓⍵),⊂(⊃⌽⍵),'←'}
 Eot←{⍵}
 Fix←{⍵}
@@ -148,7 +154,7 @@ Rbrc←{(¯1↓⍵),⊂(⊃⌽⍵),'}'}
 N←{(¯1↓⍵),⊂(⊃⌽⍵),' ',⍕?2*10}
 Sep←{(¯1↓⍵),⊂(⊃⌽⍵),' ⋄'}
 Col←{(¯1↓⍵),⊂(⊃⌽⍵),' :'}
-Da←{(¯1↓⍵),⊂(⊃⌽⍵),' ',(?≢P)⌷P←'<≤=≠≥>'}
-Ma←{(¯1↑⍵),⊂(⊃⌽⍵),' ',(?≢P)⌷P←'+-÷×|*⍟⌈⌊'}
+Da←{(¯1↓⍵),⊂(⊃⌽⍵),(?≢P)⌷P←'<≤=≠≥>'}
+Ma←{(¯1↓⍵),⊂(⊃⌽⍵),(?≢P)⌷P←'+-÷×|*⍟⌈⌊'}
 
 :EndNamespace
