@@ -313,6 +313,12 @@
         <td colspan="5">VALUE ERROR in <function>LiftConsts[5]</function></td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>49</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">SYNTAX ERROR in <function>AnchorVars[6]</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1432,6 +1438,24 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           The binding switched from <function>MkV</function> to 
           <function>mkv</function> but the transition didn't make it 
           it to the definition site, so changing the name will fix this.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A SYNTAX ERROR in <function>AnchorVars[6]</function> occurs with 
+          the following message.
+        </para>
+      </formalpara>
+      <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm		 ⍝ Split names and prepare</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The <function>Split</function> is missing a set of parentheses 
+          to ensure that the binding of the left argument occurs as 
+          the last thing. 
         </para>
       </formalpara>
     </listitem>

@@ -3673,6 +3673,14 @@
             VALUE ERROR: LiftConsts[5]
           </td>
         </tr>
+        <tr>
+          <td>6</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            SYNTAX ERROR: AnchorVars[6]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3715,5 +3723,13 @@
       </para>
     </formalpara>
     <programlisting>LiftConsts[5] v←mkv¨⍳+/s←2&lt;/0,l                    ⍝ Variables we need; start of literals</programlisting>
+    <formalpara>
+      <title>Iteration 6, Test 1</title>
+      <para>
+        A SYNTAX ERROR in <function>AnchorVars[6]</function> occurs with
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm		 ⍝ Split names and prepare</screen>
   </section>
 </article>

@@ -285,7 +285,7 @@ Sel←{~∨/⍺:⍵ ⋄ g←⍵⍵⍣(⊢/⍺) ⋄ 2=⍴⍺:⍺⍺⍣(⊣/⍺)g 
 
 ⍝ Split str: Split name list on spaces
 
-Split←' '∘(≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢
+Split←' '∘((≠(/∘⊢)1,1↓¯1⌽=)⊂≠(/∘⊢)⊢)
 
 ⍝ Parse
 ⍝
