@@ -1349,7 +1349,7 @@ LLVMInitializeX86TargetMC();</programlisting>
           the following message.
         </para>
       </formalpara>
-      <screen>Parse[17] fd←+\0,¯1↓tm\fm		       ⍝ Nesting depths of functions</screen>
+      <screen>Parse[17] fd←+\0,¯1↓tm\fm ⍝ Nesting depths of functions</screen>
       <formalpara>
         <title>Analysis</title>
         <para>
@@ -1374,7 +1374,7 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           the following message.
         </para>
       </formalpara>
-      <screen>Parse[21] ((¯1⌽cm)/ns)←cm/ns                   ⍝ Shift all children down by one</screen>
+      <screen>Parse[21] ((¯1⌽cm)/ns)←cm/ns ⍝ Shift all children down by one</screen>
       <formalpara>
         <title>Analysis</title>
         <para>
@@ -1392,7 +1392,7 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           the following message.
         </para>
       </formalpara>
-      <screen>Parse[23] fd←⍪0⌷⍉fm⌿ns                         ⍝ Depth of each function node</screen>
+      <screen>Parse[23] fd←⍪0⌷⍉fm⌿ns ⍝ Depth of each function node</screen>
       <formalpara>
         <title>Analysis</title>
         <para>
@@ -1412,7 +1412,7 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           the following message.
         </para>
       </formalpara>
-      <screen>Parse[24] (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa       ⍝ Replace { token with Fn node</screen>
+      <screen>Parse[24] (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa ⍝ Replace { token with Fn node</screen>
       <formalpara>
         <title>Analysis</title>
         <para>
@@ -1431,7 +1431,7 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           the following message.
         </para>
       </formalpara>
-      <screen>LiftConsts[5] v←mkv¨⍳+/s←2&lt;/0,l                    ⍝ Variables we need; start of literals</screen>
+      <screen>LiftConsts[5] v←mkv¨⍳+/s←2&lt;/0,l ⍝ Variables we need; start of literals</screen>
       <formalpara>
         <title>Analysis</title>
         <para>
@@ -1449,7 +1449,7 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           the following message.
         </para>
       </formalpara>
-      <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm		 ⍝ Split names and prepare</screen>
+      <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm ⍝ Split names and prepare</screen>
       <formalpara>
         <title>Analysis</title>
         <para>

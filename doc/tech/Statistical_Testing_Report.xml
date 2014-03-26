@@ -3690,7 +3690,7 @@
         an empty namespace. This is the line in question:
       </para>
     </formalpara>
-    <programlisting>Parse[17] fd←+\0,¯1↓tm\fm		       ⍝ Nesting depths	of functions</programlisting>
+    <programlisting>Parse[17] fd←+\0,¯1↓tm\fm ⍝ Nesting depths of functions</programlisting>
     <formalpara>
       <title>Iteration 2, Test 1</title>
       <para>
@@ -3698,7 +3698,7 @@
         an empty namespace. This is the line in question:
       </para>
     </formalpara>
-    <programlisting>Parse[21] ((¯1⌽cm)/ns)←cm/ns                   ⍝ Shift all children down by one</programlisting>
+    <programlisting>Parse[21] ((¯1⌽cm)/ns)←cm/ns ⍝ Shift all children down by one</programlisting>
     <formalpara>
       <title>Iteration 3, Test 1</title>
       <para>
@@ -3706,7 +3706,7 @@
         an empty namespace. This is the line in question:
       </para>
     </formalpara>
-    <programlisting>Parse[23] fd←⍪0⌷⍉fm⌿ns                         ⍝ Depth of each function node</programlisting>
+    <programlisting>Parse[23] fd←⍪0⌷⍉fm⌿ns ⍝ Depth of each function node</programlisting>
     <formalpara>
       <title>Iteration 4, Test 1</title>
       <para>
@@ -3714,7 +3714,7 @@
         an empty namespace. This is the line in question:
       </para>
     </formalpara>
-    <programlisting>Parse[24] (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa       ⍝ Replace { token with Fn node</programlisting>
+    <programlisting>Parse[24] (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa ⍝ Replace { token with Fn node</programlisting>
     <formalpara>
       <title>Iteration 5, Test 1</title>
       <para>
@@ -3722,7 +3722,7 @@
         an empty namespace. This is the line in question:
       </para>
     </formalpara>
-    <programlisting>LiftConsts[5] v←mkv¨⍳+/s←2&lt;/0,l                    ⍝ Variables we need; start of literals</programlisting>
+    <programlisting>LiftConsts[5] v←mkv¨⍳+/s←2&lt;/0,l ⍝ Variables we need; start of literals</programlisting>
     <formalpara>
       <title>Iteration 6, Test 1</title>
       <para>
@@ -3730,6 +3730,6 @@
         an empty namespace. This is the line in question:
       </para>
     </formalpara>
-    <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm		 ⍝ Split names and prepare</screen>
+    <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm ⍝ Split names and prepare</screen>
   </section>
 </article>
