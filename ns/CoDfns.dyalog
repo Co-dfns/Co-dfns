@@ -314,7 +314,7 @@ Parse←{
   fd←+\0,¯1↓tm\fm                      ⍝ Nesting depths of functions
   (0⌷⍉ns)+←2×fd                        ⍝ Push child nodes 2 for each depth
   fm←1=fm ⋄ cm←(⊢∧1⌽⊢)0≠fd             ⍝ New masks of functions and children
-  ((¯1⌽cm)/ns)←cm/ns                   ⍝ Shift all children down by one
+  ((¯1⌽cm)⌿ns)←cm⌿ns                   ⍝ Shift all children down by one
   fa←1 2⍴'class' 'ambivalent'          ⍝ Function attributes
   fd←⍪0⌷⍉fm⌿ns                         ⍝ Depth of each function node
   (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa       ⍝ Replace { token with Fn node

@@ -289,6 +289,12 @@
         <td colspan="5">LENGTH ERROR in <function>Parse[17]</function></td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>45</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">LENGTH ERROR in <function>Parse[21]</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1335,6 +1341,24 @@ LLVMInitializeX86TargetMC();</programlisting>
       </para>
       <programlisting>fm←(,¨'{}')⍳'name'Prop tm⌿ns ⍝ Class of each token name
 fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 0</programlisting>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A LENGTH ERROR in <function>Parse[21]</function> occurs with 
+          the following message.
+        </para>
+      </formalpara>
+      <screen>Parse[21] ((¯1⌽cm)/ns)←cm/ns                   ⍝ Shift all children down by one</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The use of <function>/</function> applies the filter along the 
+          wrong axis. Instead, the <function>⌿</function> filter should be 
+          used instead. 
+        </para>
+      </formalpara>
     </listitem>
   </orderedlist>
 </article>
