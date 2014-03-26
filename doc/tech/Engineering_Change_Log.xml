@@ -1,156 +1,156 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
-	<info>
-		<title>Engineering Change Log</title>
-		<author><personname>Aaron W. Hsu</personname></author>
-		<date>Saturday, July 20th, 2013</date>
-	</info>
-	<simpara>
-		This document records and tracks all proposed engineering changes that 
-		occur during development. An engineering change is a change proposed 
-		or identified as desirable during one process that affects other work 
-		products not part of the delivery of the current process. This document 
-		tracks these proposed changes, their evaluation, analysis, and the 
-		eventual resolution of these changes. 
-	</simpara>
-	<table frame="void" rules="rows">
-		<caption>Summary of Changes</caption>
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th colspan="2">Date</th>
-				<th colspan="5">Summary</th>
-				<th colspan="2">Resolution</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>1</td>
-				<td colspan="2">2013-07-21</td>
-				<td colspan="5">Update <function>Obj</function> and <function>Fix</function> Requirements</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td colspan="2">2013-07-23</td>
-				<td colspan="5">Update class of valid input programs</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>3</td>
-				<td colspan="2">2013-07-23</td>
-				<td colspan="5">Add Dyalog Reference to Reuse Analysis</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>4</td>
-				<td colspan="2">2013-07-29</td>
-				<td colspan="5">Clarify exported bindings</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>5</td>
-				<td colspan="2">2013-08-21</td>
-				<td colspan="5">Cleanup System Requirements</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>6</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Fix FFI Declaration</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>7</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Fix missing definition</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>8</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Incorrect use of Scan</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>9</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Malformed result from Tokenize</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>10</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Missing assignment</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>11</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Incorrect comment identification</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>12</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Splitting on spaces fails for empty strings</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>13</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Domain error when wrapping tokens</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>14</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">SYNTAX ERROR on valid input</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>15</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">RANK ERROR on Parse return</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>16</td>
-				<td colspan="2">2013-10-09</td>
-				<td colspan="5">Parse accepts invalid input</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>17</td>
-				<td colspan="2">2013-11-27</td>
-				<td colspan="5">Redundancy in Sequence Enumeration</td>
-				<td colspan="2">Pending</td>
-			</tr>
-			<tr>
-				<td>18</td>
-				<td colspan="2">2013-12-14</td>
-				<td colspan="5">Incorrect arity for <function>Int4Type</function></td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>19</td>
-				<td colspan="2">2013-12-14</td>
-				<td colspan="5">Incorrect rank and shape for scalars</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>20</td>
-				<td colspan="2">2013-12-16</td>
-				<td colspan="5">Unnecessary Stimuli in Top-Level</td>
-				<td colspan="2">Applied</td>
-			</tr>
-			<tr>
-				<td>21</td>
-				<td colspan="2">2013-12-16</td>
-				<td colspan="5">Alter Fnf response</td>
-				<td colspan="2">Applied</td>
-			</tr>
+  <info>
+    <title>Engineering Change Log</title>
+    <author><personname>Aaron W. Hsu</personname></author>
+    <date>Saturday, July 20th, 2013</date>
+  </info>
+  <simpara>
+    This document records and tracks all proposed engineering changes that 
+    occur during development. An engineering change is a change proposed 
+    or identified as desirable during one process that affects other work 
+    products not part of the delivery of the current process. This document 
+    tracks these proposed changes, their evaluation, analysis, and the 
+    eventual resolution of these changes. 
+  </simpara>
+  <table frame="void" rules="rows">
+    <caption>Summary of Changes</caption>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th colspan="2">Date</th>
+        <th colspan="5">Summary</th>
+        <th colspan="2">Resolution</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td colspan="2">2013-07-21</td>
+        <td colspan="5">Update <function>Obj</function> and <function>Fix</function> Requirements</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td colspan="2">2013-07-23</td>
+        <td colspan="5">Update class of valid input programs</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td colspan="2">2013-07-23</td>
+        <td colspan="5">Add Dyalog Reference to Reuse Analysis</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td colspan="2">2013-07-29</td>
+        <td colspan="5">Clarify exported bindings</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td colspan="2">2013-08-21</td>
+        <td colspan="5">Cleanup System Requirements</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Fix FFI Declaration</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Fix missing definition</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Incorrect use of Scan</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Malformed result from Tokenize</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Missing assignment</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Incorrect comment identification</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Splitting on spaces fails for empty strings</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Domain error when wrapping tokens</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">SYNTAX ERROR on valid input</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">RANK ERROR on Parse return</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>16</td>
+        <td colspan="2">2013-10-09</td>
+        <td colspan="5">Parse accepts invalid input</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>17</td>
+        <td colspan="2">2013-11-27</td>
+        <td colspan="5">Redundancy in Sequence Enumeration</td>
+        <td colspan="2">Pending</td>
+      </tr>
+      <tr>
+        <td>18</td>
+        <td colspan="2">2013-12-14</td>
+        <td colspan="5">Incorrect arity for <function>Int4Type</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>19</td>
+        <td colspan="2">2013-12-14</td>
+        <td colspan="5">Incorrect rank and shape for scalars</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>20</td>
+        <td colspan="2">2013-12-16</td>
+        <td colspan="5">Unnecessary Stimuli in Top-Level</td>
+        <td colspan="2">Applied</td>
+      </tr>
+      <tr>
+        <td>21</td>
+        <td colspan="2">2013-12-16</td>
+        <td colspan="5">Alter Fnf response</td>
+        <td colspan="2">Applied</td>
+      </tr>
       <tr>
         <td>22</td>
         <td colspan="2">2013-12-20</td>
@@ -283,388 +283,394 @@
         <td colspan="5">LENGTH ERROR in <function>GenCond[8]</function></td>
         <td colspan="2">Applied</td>
       </tr>
-  	</tbody>
-	</table>
-	<orderedlist>
-		<title>Change Description and Analysis</title>
+      <tr>
+        <td>44</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">LENGTH ERROR in <function>Parse[17]</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
+    </tbody>
+  </table>
+  <orderedlist>
+    <title>Change Description and Analysis</title>
     <?dbfo label-width="0.25in"?>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					During Functional Specification, the <function>Obj</function> and <function>Fix</function>
-					functions were discovered to have a number of missing or undesirable requirement 
-					implications. The following changes are suggested:
-				</para>
-			</formalpara>
-			<orderedlist>
-				<listitem>
-					<simpara>
-						Amend Requirement 16 to require only implementing the monadic interface of 
-						the <function>⎕FIX</function> function.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						An additional requirement should state that the <function>Obj</function> function 
-						will produce a shared object in the given file name that has the same semantics 
-						and function bindings as defined in the namespace.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						Requirements should be added to clarify the error reporting in the case of files 
-						that already exist when handling <function>Obj</function> output.
-					</simpara>
-				</listitem>
-			</orderedlist>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					The above requirements do not change the semantics of the requirements, 
-					and only refine them. They meet the intention of the project and should 
-					be implemented. 
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					Functional specification revealed a possible ambiguity in the description of 
-					requirement 21. Recommend the following:
-				</para>
-			</formalpara>
-			<orderedlist>
-				<listitem>
-					<simpara>
-						That requirement 21 be changed to clearly indicate that only fully 
-						closed namespaces are accepted; that is, only accept namespaces with 
-						no free variable references.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						Additionally, a new requirement 
-						prohibiting the use of the <literal>⌶</literal>-beam should be included.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						A new requirement prohibiting the use of the <function>⍎</function>
-						function should be added. 
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						Requirement 4 should be amended to specify D-fns, rather than Co-Dfns 
-						programs.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						The new additions to the D-fns languages introduced by Co-Dfns should 
-						be added and fully defined.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						It should be remarked that no assignment which changes the overall 
-						nameclass of a variable is allowed. 
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						A requirement detailing the unsupported operators should be added. 
-						These operators include the <function>&amp;</function> operator as well as 
-						the <function>⍠</function> operator.
-					</simpara>
-				</listitem>
-			</orderedlist>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					No semantic change is introduced based on the intention of the design, and 
-					are at an early enough stage so as to not affect more than the functional 
-					specification, so this should be implemented.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The primary specification for the D-fns language appears in the Dyalog
-					<citetitle>Programmer's Guide and Language Reference</citetitle>. This 
-					should be explicitly marked as the reference document for the semantics of 
-					the D-fns language.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					This clarifies a number of implied assumptions on the part of the specifications 
-					and development plans, and should be included.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					Clarify the exported functions that are produced by the compiler in the exported 
-					namespace to indicate that currently, only global array variables and 
-					functions will be exported. Operators and other such things will not. This 
-					should be entered into the requirements document.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					This is a semantic change from the existing requirements, but does not affect 
-					anything more than the functional specification, which has been amended to 
-					include these adjustments anyways. Additionally, it does not add any 
-					complexity, but simplifies the technical implemenation burden. The only visible 
-					change to the user is the removal of operators from the public interface, which 
-					is acceptable. 
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					Changes in the interface design are suggested by function specification. 
-					It is unnecessary to have the object functionality separate from the fix 
-					function. Additionally, analysis of the way that LLVM works indicates that 
-					requirement #32 is not feasible, and will not be adequately implemented.
-					A new requirement is suggested to indicate failures that may originate from 
-					the LLVM Subsystem.
-					This requires the following changes:
-				</para>
-			</formalpara>
-			<orderedlist>
-				<listitem>
-					<simpara>
-						Change requirements 9, 16, 17, 18, 29, 30, 31, and 42 accordingly.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						Eliminate requirements 19, 20, and 32.
-					</simpara>
-				</listitem>
-				<listitem>
-					<simpara>
-						Add a new requirement that states an LLVM error will signal an <literal>INTERNAL ERROR</literal>.
-					</simpara>
-				</listitem>
-			</orderedlist>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					The change does not alter the functionality or intention of the compiler, but it 
-					does create a simplified interface and is worth doing. It reduces workload later on.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					An error in the declaration of an FFI function was discovered during certification.
-					This must be adjusted before further certification can proceed.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>ValidateInput</function> function is not defined. It should either be 
-					defined or it should be replaced.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Tokenize</function> function gives a length error when trying to 
-					split comments and code.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					The comment splitting code is the following line:
-				</para>
-			</formalpara>
-			<programlisting>T C←⊂[0]↑2↑¨(1,¨1↓¨(~∨\¨0,¨1↓¨¯1⌽¨A)∧A←1↓¨'⍝'=A)⊂¨A</programlisting>
-			<simpara>
-				This code assumes that the array being scanned is always the same length as the 
-				array itself. However, this is not the case when we deal with an empty array.
-				The <literal>0,</literal> catenation will mean that we have an array of at least 
-				length 1. In this case, the above expression will not work.
-			</simpara>
-			<simpara>
-				This problem has wide ranging consequences because it is very likely that a given 
-				namespace script will have blank lines in it, which will trigger this problem. 
-				This function is overly complicated anyways, and can be simplified by a proper 
-				use of the <literal>⍳</literal> function. We can use the following code instead:
-			</simpara>
-			<programlisting>I←(⊂A)⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A</programlisting>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Tokenize</function> function gives a malformed result.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					This is due to an unnecessarily complex set of code. It is difficult to 
-					verify this code, and it should not have made it through. Replacing the 
-					code with simpler code that can be proven should fix the malformation 
-					result.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Tokenize</function> function gives an incomplete result.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					There is a missing assignment in the <function>Tokenize</function> function.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Tokenize</function> function identifies comments incorrectly.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					The code that finds the index incorrectly treats the non-scalar set of 
-					lines as a scalar, leading to a single index value that cannot be correct.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Tokenize</function> function fails to split in cases where the 
-					reduction fails because of too few elements, namely, empty vectors.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					This reveals further problems with this first expression. It fails to 
-					clearly split, and it also leaves the spaces around to be cleaned up later 
-					or to introduce faulty tokens in the future.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Tokenize</function> function fails with a DOMAIN ERROR when 
-					it tries to wrap tokens around empty lines.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					Apparently you cannot catenate reduce on an empty vector of any sort. 
-					This was news to me. The easiest way to fix this is to insert a check 
-					that handles this special case.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Parse</function> function fails with a SYNTAX ERROR on 
-					valid input.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					The problem is the assumption of a nested result in this code for 
-					doing the comparison, but in reality having a flat array:
-				</para>
-			</formalpara>
-			<programlisting>NS←(⊃N),⊃⌽N←(¯1⌽T∊⊂'name')/T←,↑(⍵[;1]∊⊂'Token')/⍵[;3]
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          During Functional Specification, the <function>Obj</function> and <function>Fix</function>
+          functions were discovered to have a number of missing or undesirable requirement 
+          implications. The following changes are suggested:
+        </para>
+      </formalpara>
+      <orderedlist>
+        <listitem>
+          <simpara>
+            Amend Requirement 16 to require only implementing the monadic interface of 
+            the <function>⎕FIX</function> function.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            An additional requirement should state that the <function>Obj</function> function 
+            will produce a shared object in the given file name that has the same semantics 
+            and function bindings as defined in the namespace.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Requirements should be added to clarify the error reporting in the case of files 
+            that already exist when handling <function>Obj</function> output.
+          </simpara>
+        </listitem>
+      </orderedlist>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The above requirements do not change the semantics of the requirements, 
+          and only refine them. They meet the intention of the project and should 
+          be implemented. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          Functional specification revealed a possible ambiguity in the description of 
+          requirement 21. Recommend the following:
+        </para>
+      </formalpara>
+      <orderedlist>
+        <listitem>
+          <simpara>
+            That requirement 21 be changed to clearly indicate that only fully 
+            closed namespaces are accepted; that is, only accept namespaces with 
+            no free variable references.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Additionally, a new requirement 
+            prohibiting the use of the <literal>⌶</literal>-beam should be included.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            A new requirement prohibiting the use of the <function>⍎</function>
+            function should be added. 
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Requirement 4 should be amended to specify D-fns, rather than Co-Dfns 
+            programs.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            The new additions to the D-fns languages introduced by Co-Dfns should 
+            be added and fully defined.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            It should be remarked that no assignment which changes the overall 
+            nameclass of a variable is allowed. 
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            A requirement detailing the unsupported operators should be added. 
+            These operators include the <function>&amp;</function> operator as well as 
+            the <function>⍠</function> operator.
+          </simpara>
+        </listitem>
+      </orderedlist>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          No semantic change is introduced based on the intention of the design, and 
+          are at an early enough stage so as to not affect more than the functional 
+          specification, so this should be implemented.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The primary specification for the D-fns language appears in the Dyalog
+          <citetitle>Programmer's Guide and Language Reference</citetitle>. This 
+          should be explicitly marked as the reference document for the semantics of 
+          the D-fns language.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This clarifies a number of implied assumptions on the part of the specifications 
+          and development plans, and should be included.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          Clarify the exported functions that are produced by the compiler in the exported 
+          namespace to indicate that currently, only global array variables and 
+          functions will be exported. Operators and other such things will not. This 
+          should be entered into the requirements document.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This is a semantic change from the existing requirements, but does not affect 
+          anything more than the functional specification, which has been amended to 
+          include these adjustments anyways. Additionally, it does not add any 
+          complexity, but simplifies the technical implemenation burden. The only visible 
+          change to the user is the removal of operators from the public interface, which 
+          is acceptable. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          Changes in the interface design are suggested by function specification. 
+          It is unnecessary to have the object functionality separate from the fix 
+          function. Additionally, analysis of the way that LLVM works indicates that 
+          requirement #32 is not feasible, and will not be adequately implemented.
+          A new requirement is suggested to indicate failures that may originate from 
+          the LLVM Subsystem.
+          This requires the following changes:
+        </para>
+      </formalpara>
+      <orderedlist>
+        <listitem>
+          <simpara>
+            Change requirements 9, 16, 17, 18, 29, 30, 31, and 42 accordingly.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Eliminate requirements 19, 20, and 32.
+          </simpara>
+        </listitem>
+        <listitem>
+          <simpara>
+            Add a new requirement that states an LLVM error will signal an <literal>INTERNAL ERROR</literal>.
+          </simpara>
+        </listitem>
+      </orderedlist>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The change does not alter the functionality or intention of the compiler, but it 
+          does create a simplified interface and is worth doing. It reduces workload later on.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          An error in the declaration of an FFI function was discovered during certification.
+          This must be adjusted before further certification can proceed.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>ValidateInput</function> function is not defined. It should either be 
+          defined or it should be replaced.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Tokenize</function> function gives a length error when trying to 
+          split comments and code.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The comment splitting code is the following line:
+        </para>
+      </formalpara>
+      <programlisting>T C←⊂[0]↑2↑¨(1,¨1↓¨(~∨\¨0,¨1↓¨¯1⌽¨A)∧A←1↓¨'⍝'=A)⊂¨A</programlisting>
+      <simpara>
+        This code assumes that the array being scanned is always the same length as the 
+        array itself. However, this is not the case when we deal with an empty array.
+        The <literal>0,</literal> catenation will mean that we have an array of at least 
+        length 1. In this case, the above expression will not work.
+      </simpara>
+      <simpara>
+        This problem has wide ranging consequences because it is very likely that a given 
+        namespace script will have blank lines in it, which will trigger this problem. 
+        This function is overly complicated anyways, and can be simplified by a proper 
+        use of the <literal>⍳</literal> function. We can use the following code instead:
+      </simpara>
+      <programlisting>I←(⊂A)⍳¨'⍝' ⋄ T←I↑¨A ⋄ C←I↓¨A</programlisting>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Tokenize</function> function gives a malformed result.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This is due to an unnecessarily complex set of code. It is difficult to 
+          verify this code, and it should not have made it through. Replacing the 
+          code with simpler code that can be proven should fix the malformation 
+          result.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Tokenize</function> function gives an incomplete result.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          There is a missing assignment in the <function>Tokenize</function> function.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Tokenize</function> function identifies comments incorrectly.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The code that finds the index incorrectly treats the non-scalar set of 
+          lines as a scalar, leading to a single index value that cannot be correct.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Tokenize</function> function fails to split in cases where the 
+          reduction fails because of too few elements, namely, empty vectors.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This reveals further problems with this first expression. It fails to 
+          clearly split, and it also leaves the spaces around to be cleaned up later 
+          or to introduce faulty tokens in the future.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Tokenize</function> function fails with a DOMAIN ERROR when 
+          it tries to wrap tokens around empty lines.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          Apparently you cannot catenate reduce on an empty vector of any sort. 
+          This was news to me. The easiest way to fix this is to insert a check 
+          that handles this special case.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Parse</function> function fails with a SYNTAX ERROR on 
+          valid input.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The problem is the assumption of a nested result in this code for 
+          doing the comparison, but in reality having a flat array:
+        </para>
+      </formalpara>
+      <programlisting>NS←(⊃N),⊃⌽N←(¯1⌽T∊⊂'name')/T←,↑(⍵[;1]∊⊂'Token')/⍵[;3]
       ':Namespace' ':EndNamespace'≢NS:⎕SIGNAL 2</programlisting>
-			<simpara>
-				This is trivially fixed by unifying the types.
-			</simpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Parse</function> function does not return two elements.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					The function <function>Parse</function> is supposed to return both 
-					and AST and the Names that are bound at the top-level, but it does 
-					not do this currently.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					The <function>Parse</function> function accepts more than one 
-					Nss and one Nse stimuli.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					This happens because there is no check for it, while there is a 
-					check to ensure that the first and last stimuli are Nss and Nse 
-					respectively. Inserting this check should fix this issue.
-				</para>
-			</formalpara>
-		</listitem>
-		<listitem>
-			<formalpara>
-				<title>Description</title>
-				<para>
-					Usage Modeling has identified a number of potential redundancies 
-					in the Sequence Enumeration. Recommendation is to remove 
-					these redundancies to simplify the <citetitle>Function Specification</citetitle>.
-				</para>
-			</formalpara>
-			<formalpara>
-				<title>Analysis</title>
-				<para>
-					Analysis pending.
-				</para>
-			</formalpara>
-		</listitem>
+      <simpara>
+        This is trivially fixed by unifying the types.
+      </simpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Parse</function> function does not return two elements.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The function <function>Parse</function> is supposed to return both 
+          and AST and the Names that are bound at the top-level, but it does 
+          not do this currently.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          The <function>Parse</function> function accepts more than one 
+          Nss and one Nse stimuli.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This happens because there is no check for it, while there is a 
+          check to ensure that the first and last stimuli are Nss and Nse 
+          respectively. Inserting this check should fix this issue.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          Usage Modeling has identified a number of potential redundancies 
+          in the Sequence Enumeration. Recommendation is to remove 
+          these redundancies to simplify the <citetitle>Function Specification</citetitle>.
+        </para>
+      </formalpara>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          Analysis pending.
+        </para>
+      </formalpara>
+    </listitem>
     <listitem>
       <formalpara>
         <title>Description</title>
@@ -1305,5 +1311,30 @@ LLVMInitializeX86TargetMC();</programlisting>
         </para>
       </formalpara>
     </listitem>
-	</orderedlist>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A LENGTH ERROR in <function>Parse[17]</function> occurs with 
+          the following message.
+        </para>
+      </formalpara>
+      <screen>Parse[17] fd←+\0,¯1↓tm\fm		       ⍝ Nesting depths of functions</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          In <function>Parse[15]</function> the use of <function>⌷</function> 
+          receives an incorrect input.
+        </para>
+      </formalpara>
+      <programlisting>fm←1 ¯1 0⌷⍨(,¨'{}')⍳'name'Prop tm⌿ns ⍝ Map of brackets, } ¯1, { 1, else 0</programlisting>
+      <para>
+        The result of the <function>⍳</function> is a vector of indices, and not 
+        a single index. This means we need to use <literal>⊃¨⊂</literal> instead.
+        So to fix this we replace <function>Parse[15]</function> with the following.
+      </para>
+      <programlisting>fm←(,¨'{}')⍳'name'Prop tm⌿ns ⍝ Class of each token name
+fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 0</programlisting>
+    </listitem>
+  </orderedlist>
 </article>

@@ -3621,4 +3621,35 @@
       </para>
     </formalpara>
   </section>
+  <section>
+    <title>Increment 5</title>
+    <informaltable frame="void" rules="rows">
+      <thead>
+        <tr>
+          <th>Iter</th>
+          <th>Test #</th>
+          <th>Result</th>
+          <th colspan="5">Failure Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            LENGTH ERROR: Parse[17]
+          </td>
+        </tr>
+      </tbody>
+    </informaltable>
+    <formalpara>
+      <title>Iteration 1, Test 1</title>
+      <para>
+        A LENGTH ERROR in <function>Parse[17]</function> occurs with 
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <programlisting>Parse[17] fd←+\0,¯1↓tm\fm		       ⍝ Nesting depths	of functions</programlisting>
+  </section>
 </article>

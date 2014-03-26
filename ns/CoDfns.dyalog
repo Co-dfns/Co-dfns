@@ -308,7 +308,8 @@ Parse←{
   (sm⌿ns)←1 'Line' '' MtA⍴⍨4,⍨+/sm     ⍝ Replace separators by lines, Tbl 219
     ⍝ XXX: The above does not preserve commenting behavior
   tm←(1⌷⍉ns)∊⊂'Token'                  ⍝ Update token mask
-  fm←1 ¯1 0⌷⍨(,¨'{}')⍳'name'Prop tm⌿ns ⍝ Map of brackets, } ¯1, { 1, else 0
+  fm←(,¨'{}')⍳'name'Prop tm⌿ns         ⍝ Which tokens are brackets?
+  fm←fm⊃¨⊂1 ¯1 0                       ⍝ Convert } → ¯1; { → 1; else → 0
   0≠+/fm:⎕SIGNAL 2                     ⍝ Verify balance
   fd←+\0,¯1↓tm\fm                      ⍝ Nesting depths of functions
   (0⌷⍉ns)+←2×fd                        ⍝ Push child nodes 2 for each depth
