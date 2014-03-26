@@ -26,6 +26,9 @@ ffi_get_data_int(int64_t *, struct codfns_array *);
 void
 ffi_get_shape(uint32_t *, struct codfns_array *);
 
+void
+clean_env(struct codfns_array *, int);
+
 /* Helper functions for in and outside the compiler */
 
 int

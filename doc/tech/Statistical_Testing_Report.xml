@@ -3705,6 +3705,14 @@
             VALUE ERROR: GenInit[24]
           </td>
         </tr>
+        <tr>
+          <td>10</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            Hard crash
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3779,5 +3787,11 @@
       </para>
     </formalpara>
     <screen>GenInit[24] _←{ ⍝ Handle each global expr in turn</screen>
+    <formalpara>
+      <title>Iteration 10, Test 1</title>
+      <para>
+        Crashes Dyalog with a hard crash.
+      </para>
+    </formalpara>
   </section>
 </article>

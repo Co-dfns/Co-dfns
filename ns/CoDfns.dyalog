@@ -916,8 +916,8 @@ GenFunc←{
   bb←AppendBasicBlock fr ''            ⍝ Initial basic block
   _←PositionBuilderAtEnd bldr bb       ⍝ Link builder and basic block
   env0←{                               ⍝ Setup local frame
-    0=fs:(0 0)                         ⍝ If frame is empty, do nothing
     fsz←ConstInt Int32Type fs          ⍝ Frame size value reference
+    0=fs:(GenNullArrayPtr⍬)fsz         ⍝ If frame is empty, do nothing
     ftp←GenArrayType⍬                  ⍝ Frame is array pointer
     args←bldr ftp fsz 'env0'           ⍝ Frame is env0
     (BuildArrayAlloca args)fs          ⍝ Return pointer and size
@@ -1108,6 +1108,7 @@ GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
 
 MkRet←{
   cln←GetNamedFunction ⍺⍺ 'clean_env'  ⍝ Runtime function to clean environment
+  0=cln:'MISSING FN'⎕SIGNAL 99         ⍝ Safeguard
   _←BuildCall ⍺ cln ⍵ 2 ''             ⍝ Clean the local environment
   zero←ConstInt Int32Type 0 0          ⍝ Zero integer
   BuildRet ⍺ zero                      ⍝ Return a success status
@@ -1161,9 +1162,14 @@ GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
 ⍝ in an LLVM Module.
 
 GenRuntime←{
+  ft←PointerType (GenArrayType⍬) 0     ⍝ Pointer to array, clean_env arg 1
+  it←Int32Type                         ⍝ clean_env arg 2 type
+  vt←VoidType                          ⍝ clean_env return type
+  cet←FunctionType vt (ft it) 2 0      ⍝ clean_env type
   two←GenFuncType ¯1                   ⍝ Some functions take only two args
   std←GenFuncType 0                    ⍝ Most take three
   add←⍵ {AddFunction ⍺⍺ ⍵ ⍺}           ⍝ Fn to add functions to the module
+  _←cet add 'clean_env'                ⍝ Add clean_env()
   _←two add¨'array_cp' 'array_free'    ⍝ Add the special ones
   _←std add¨APLRunts                   ⍝ Add the normal runtime
   0 0⍴⍬                                ⍝ Hide our return result
@@ -1192,6 +1198,9 @@ P←'LLVM'
 
 ⍝ LLVMTypeRef  LLVMInt64Type (void)
 'Int64Type'⎕NA 'P ',Core,'|',P,'Int64Type'
+
+⍝ LLVMTypeRef LLVMVoidType(void)
+'VoidType'⎕NA 'P ',Core,'|',P,'VoidType'
 
 ⍝ LLVMTypeRef
 ⍝ LLVMFunctionType (LLVMTypeRef ReturnType,
