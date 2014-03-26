@@ -3649,6 +3649,14 @@
             LENGTH ERROR: Parse[21]
           </td>
         </tr>
+        <tr>
+          <td>3</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            LENGTH ERROR: Parse[23]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3667,5 +3675,13 @@
       </para>
     </formalpara>
     <programlisting>Parse[21] ((¯1⌽cm)/ns)←cm/ns                   ⍝ Shift all children down by one</programlisting>
+    <formalpara>
+      <title>Iteration 3, Test 1</title>
+      <para>
+        A LENGTH ERROR in <function>Parse[23]</function> occurs with 
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <programlisting>Parse[23] fd←⍪0⌷⍉fm⌿ns                         ⍝ Depth of each function node</programlisting>
   </section>
 </article>

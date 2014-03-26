@@ -311,7 +311,7 @@ Parse←{
   fm←(,¨'{}')⍳'name'Prop tm⌿ns         ⍝ Which tokens are brackets?
   fm←fm⊃¨⊂1 ¯1 0                       ⍝ Convert } → ¯1; { → 1; else → 0
   0≠+/fm:⎕SIGNAL 2                     ⍝ Verify balance
-  fd←+\0,¯1↓tm\fm                      ⍝ Nesting depths of functions
+  fd←+\0,¯1↓fm←tm\fm                   ⍝ Nesting depths of functions
   (0⌷⍉ns)+←2×fd                        ⍝ Push child nodes 2 for each depth
   fm←1=fm ⋄ cm←(⊢∧1⌽⊢)0≠fd             ⍝ New masks of functions and children
   ((¯1⌽cm)⌿ns)←cm⌿ns                   ⍝ Shift all children down by one
