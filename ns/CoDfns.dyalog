@@ -317,8 +317,9 @@ Parse←{
   ((¯1⌽cm)⌿ns)←cm⌿ns                   ⍝ Shift all children down by one
   fa←1 2⍴'class' 'ambivalent'          ⍝ Function attributes
   fd←⍪0⌷⍉fm⌿ns                         ⍝ Depth of each function node
-  (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa       ⍝ Replace { token with Fn node
-  ((¯1⌽fm)⌿ns)←(1+fd),⊂'Line',⊂'',⊂MtA ⍝ Insert Line node after Fn node
+  (fm⌿ns)←((fd,⊂'Function'),⊂''),⊂fa   ⍝ Replace { token with Fn node
+  ln←(((1+fd),⊂'Line'),⊂''),⊂MtA       ⍝ Line node
+  ((¯1⌽fm)⌿ns)←ln                      ⍝ Insert Line node after Fn node
   k←1 Kids ns                          ⍝ Children to examine
   env←⊃ParseFeBindings/k,⊂0 2⍴⍬        ⍝ Initial Fe bindings to feed in
   sd←MtAST env                         ⍝ Seed is an empty AST and the env
