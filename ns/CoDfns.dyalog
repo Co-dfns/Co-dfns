@@ -467,7 +467,8 @@ ParseExpr←{
   at←1 2⍴'class' 'atomic'              ⍝ Literals become atomic expressions
   n←(d←⊃⍵)'Expression' '' at           ⍝ One node per group of literals
   p←2</0,m←(d=0⌷⍉⍵)∧(1⌷⍉⍵)∊⊂'Number'   ⍝ Mask and partition of literals
-  e←((~∨\p)⌿⍵)⍪⊃⍪/n⍪¨p⊂[0]⍵            ⍝ Add an expr node for literal groups
+  e←⊃⍪/(⊂MtAST),(⊂n)⍪¨p⊂[0]⍵           ⍝ Add expr node to each literal group
+  e←((~∨\p)⌿⍵)⍪e                       ⍝ Attach anything before first literal
   (0⌷⍉((1⌷⍉e)∊⊂'Number')⌿e)+←1         ⍝ Bump the depths of each literal
   dwn←{a⊣(0⌷⍉a)+←1⊣a←⍵}                ⍝ Fn to push nodes down the tree
   at←1 2⍴'class' 'monadic'             ⍝ Attributes for monadic expr node

@@ -367,6 +367,12 @@
         <td colspan="5">SYNTAX ERROR: Parse[28]</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>58</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">LENGTH ERROR: ParseExpr[8]</td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1663,6 +1669,27 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
         <para>
           There are two flipped negations and a typo in this function which 
           were not caught during verification. Fixing this fixes the issue.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A LENGTH ERROR occurs with the following message:
+        </para>
+      </formalpara>
+      <screen>ParseExpr[8] e←((~∨\p)⌿⍵)⍪⊃⍪/n⍪¨p⊂[0]⍵ ⍝ Add an expr node for literal groups</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The expression above fails to consider the possibility of 
+          an empty vector returned by <literal>p⊂[0]⍵</literal> and it 
+          also does not properly enclose the <varname>n</varname> value. 
+          We also need to deal with the possibility of an empty 
+          vector to <literal>⊃⍪/</literal> and so we need to attach 
+          a <literal>⊂MtAST</literal> to the front (or back). This fixes 
+          these errors. 
         </para>
       </formalpara>
     </listitem>

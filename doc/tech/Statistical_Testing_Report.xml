@@ -3752,6 +3752,14 @@
            SYNTAX ERROR: Parse[28]
           </td>
         </tr>
+        <tr>
+          <td>15</td>
+          <td>2</td>
+          <td>Fail</td>
+          <td colspan="5">
+           LENGTH ERROR: ParseExpr[8]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3862,5 +3870,13 @@
       </para>
     </formalpara>
     <screen>Parse[28] env←⊃ParseFeBindings/k,⊂MtNTE ⍝ Initial Fe bindings to feed in</screen>
+    <formalpara>
+      <title>Iteration 15, Test 2</title>
+      <para>
+        A LENGTH ERROR in <function>ParseExpr[8]</function> occurs with
+        the following message:
+      </para>
+    </formalpara>
+    <screen>ParseExpr[8] e←((~∨\p)⌿⍵)⍪⊃⍪/n⍪¨p⊂[0]⍵ ⍝ Add an expr node for literal groups</screen>
   </section>
 </article>
