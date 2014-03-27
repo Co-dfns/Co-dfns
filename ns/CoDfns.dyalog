@@ -32,7 +32,7 @@ Fix←{
   IsFnb obj:⎕SIGNAL 11                 ⍝ Handle Fnb, Fnf, Fne stimuli
   mod nms←Compile ⍵                    ⍝ Get LLVM Module
   ns←nms ModToNS mod                   ⍝ Namespace to return
-  ''≡Obj:ns                            ⍝ No optional object file output
+  ''≡obj:ns                            ⍝ No optional object file output
   ns⊣obj ModToObj mod                  ⍝ Export Mod to object file
 }
 

@@ -3721,6 +3721,14 @@
             DOMAIN ERROR: ModToNS[27]
           </td>
         </tr>
+        <tr>
+          <td>12</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            VALUE ERROR: Fix[9]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3809,5 +3817,13 @@
       </para>
     </formalpara>
     <screen>ModToNS[27] c fpv←FindFunction ee ⍵ 1 ⍝ Get function from LLVM Module</screen>
+    <formalpara>
+      <title>Iteration 12, Test 1</title>
+      <para>
+        A VALUE ERROR in <function>Fix[9]</function> occurs with
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <screen>Fix[9] ''≡Obj:ns ⍝ No optional object file output</screen>
   </section>
 </article>

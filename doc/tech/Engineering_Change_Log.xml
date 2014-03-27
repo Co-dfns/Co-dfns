@@ -349,6 +349,12 @@
         <td colspan="5">DOMAIN ERROR in <function>ModToNS[27]</function></td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>55</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">VALUE ERROR in <function>Fix[9]</function></td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1595,6 +1601,22 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           function of <function>ModToNS</function> which in turn causes 
           <function>FindFunction</function> to be called on bad data. The fix is 
           to use the appropriate seed value for an empty (name, type) environment. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A VALUE ERROR in <function>Fix[9]</function> occurs with 
+          the following message.
+        </para>
+      </formalpara>
+      <screen>Fix[9] ''≡Obj:ns ⍝ No optional object file output</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This is a simple mis-capitalization.
         </para>
       </formalpara>
     </listitem>
