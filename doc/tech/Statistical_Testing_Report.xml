@@ -3729,6 +3729,14 @@
             VALUE ERROR: Fix[9]
           </td>
         </tr>
+        <tr>
+          <td>13</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            Hard Crash
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3825,5 +3833,11 @@
       </para>
     </formalpara>
     <screen>Fix[9] ''≡Obj:ns ⍝ No optional object file output</screen>
+    <formalpara>
+      <title>Iteration 13, Test 1</title>
+      <para>
+        Crashes Dyalog with a hard crash.
+      </para>
+    </formalpara>
   </section>
 </article>

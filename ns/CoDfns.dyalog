@@ -1008,7 +1008,8 @@ GenInit←{
       t clean tgt(fn mcall)lft rgt     ⍝ Make the call
     }⍵
   }¨⍵
-  _←bldr(⍺ MkRet)0 0                   ⍝ Do a standard return
+  zero←ConstInt Int32Type 0 0          ⍝ Zero Return
+  _←BuildRet bldr zero                 ⍝ No need to do regular return
   fr⊣DisposeBuilder bldr               ⍝ Cleanup and return function reference
 }
 
