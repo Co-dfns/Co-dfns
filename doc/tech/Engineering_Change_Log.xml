@@ -361,6 +361,12 @@
         <td colspan="5">System error, crash</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>57</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">SYNTAX ERROR: Parse[28]</td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1641,6 +1647,22 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           have any interesting elements that need to be returned, so we can 
           just do a direct return and eliminate the need to make the call 
           to <function>MkRet</function>.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A SYNTAX ERROR occurs with the following message:
+        </para>
+      </formalpara>
+      <screen>Parse[28] env←⊃ParseFeBindings/k,⊂MtNTE ⍝ Initial Fe bindings to	feed in</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          There are two flipped negations and a typo in this function which 
+          were not caught during verification. Fixing this fixes the issue.
         </para>
       </formalpara>
     </listitem>

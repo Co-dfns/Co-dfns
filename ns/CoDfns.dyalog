@@ -340,11 +340,11 @@ ParseFeBindings←{
   ok←⊃⍪/¯1↓k                           ⍝ Other children
   tm←(1⌷⍉ok)∊⊂'Token'                  ⍝ Mask of all Tokens
   tn←'name'Prop tm⌿ok                  ⍝ Token names
-  ~∧/tn∊⊂'←':⎕SIGNAL 2                 ⍝ Are all tokens assignments?
-  ∨/0≠2|tm/⍳≢ok:⎕SiGNAL 2              ⍝ Are all tokens separated correctly?
+  ~∧/tn∊⊂,'←':⎕SIGNAL 2                ⍝ Are all tokens assignments?
+  ∨/0=2|tm/⍳≢ok:⎕SIGNAL 2              ⍝ Are all tokens separated correctly?
   vm←(1⌷⍉ok)∊⊂'Variable'               ⍝ Mask of all variables
-  vn←'name'Prop vn⌿ok                  ⍝ Variable names
-  ∨/0=2|vm/⍳≢ok:⎕SIGNAL 2              ⍝ Are all variables before assignments?
+  vn←'name'Prop vm⌿ok                  ⍝ Variable names
+  ∨/0≠2|vm/⍳≢ok:⎕SIGNAL 2              ⍝ Are all variables before assignments?
   ~∧/vm∨tm:⎕SIGNAL 2                   ⍝ Are there only variables, assignments?
   ⍵⍪⍨2,⍨⍪vn                            ⍝ We're good, return new environment
 }

@@ -3737,6 +3737,21 @@
             Hard Crash
           </td>
         </tr>
+        <tr>
+          <td>14</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>2</td>
+          <td>Fail</td>
+          <td colspan="5">
+           SYNTAX ERROR: Parse[28]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3839,5 +3854,13 @@
         Crashes Dyalog with a hard crash.
       </para>
     </formalpara>
+    <formalpara>
+      <title>Iteration 14, Test 2</title>
+      <para>
+        A SYNTAX ERROR in <function>Parse[28]</function> occurs with
+        the following message:
+      </para>
+    </formalpara>
+    <screen>Parse[28] env←⊃ParseFeBindings/k,⊂MtNTE ⍝ Initial Fe bindings to feed in</screen>
   </section>
 </article>
