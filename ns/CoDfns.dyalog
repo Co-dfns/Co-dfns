@@ -321,7 +321,7 @@ Parse←{
   ln←(((1+fd),⊂'Line'),⊂''),⊂MtA       ⍝ Line node
   ((¯1⌽fm)⌿ns)←ln                      ⍝ Insert Line node after Fn node
   k←1 Kids ns                          ⍝ Children to examine
-  env←⊃ParseFeBindings/k,⊂0 2⍴⍬        ⍝ Initial Fe bindings to feed in
+  env←⊃ParseFeBindings/k,⊂MtNTE        ⍝ Initial Fe bindings to feed in
   sd←MtAST env                         ⍝ Seed is an empty AST and the env
   ast env←⊃ParseTopLine/⌽(⊂sd),k       ⍝ Parse each child top down
   ((1↑ns)⍪ast)env                      ⍝ Return assembled AST and env

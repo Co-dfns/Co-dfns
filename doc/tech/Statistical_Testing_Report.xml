@@ -3713,6 +3713,14 @@
             Hard crash
           </td>
         </tr>
+        <tr>
+          <td>11</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+            DOMAIN ERROR: ModToNS[27]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3793,5 +3801,13 @@
         Crashes Dyalog with a hard crash.
       </para>
     </formalpara>
+    <formalpara>
+      <title>Iteration 11, Test 1</title>
+      <para>
+        A DOMAIN ERROR in <function>ModToNS[27]</function> occurs with
+        an empty namespace. This is the line in question:
+      </para>
+    </formalpara>
+    <screen>ModToNS[27] c fpv←FindFunction ee ⍵ 1 ⍝ Get function from LLVM Module</screen>
   </section>
 </article>
