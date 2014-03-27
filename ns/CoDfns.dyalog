@@ -862,7 +862,7 @@ GenArrDec←{
     s←ConstPointerNull Int32Type       ⍝ Shape ← ⍬
     d←ConstPointerNull Int64Type       ⍝ Data ← ⍬
     a←ConstStruct (r sz t s d) 5 0     ⍝ Build empty structure
-    g←AddGlobal ⍺(GenArrayType⍬)⍵      ⍝ Add the Global
+    g←AddGlobal ⍺ ArrayTypeV ⍵         ⍝ Add the Global
     ⍵⊣SetInitializer g a               ⍝ Set the initial empty value
   }¨⍵
 }
@@ -898,7 +898,7 @@ GenConst←{
   sz←ConstInt (Int64Type) (⊃⍴,v) 0     ⍝ Size of d is length of v
   t←ConstInt (Int8Type) 2 0            ⍝ Constant Int type, for now
   a←ConstStruct (r sz t s s) 5 0       ⍝ Build array value
-  g←AddGlobal ⍺ (GenArrayType⍬) vs     ⍝ Create global place holder
+  g←AddGlobal ⍺ ArrayTypeV vs          ⍝ Create global place holder
   g⊣SetInitializer g a                 ⍝ Initialize global with array value
 }
 
@@ -918,7 +918,7 @@ GenFunc←{
   env0←{                               ⍝ Setup local frame
     fsz←ConstInt Int32Type fs          ⍝ Frame size value reference
     0=fs:(GenNullArrayPtr⍬)fsz         ⍝ If frame is empty, do nothing
-    ftp←GenArrayType⍬                  ⍝ Frame is array pointer
+    ftp←ArrayTypeV                     ⍝ Frame is array pointer
     args←bldr ftp fsz 'env0'           ⍝ Frame is env0
     (BuildArrayAlloca args)fs          ⍝ Return pointer and size
   }⍬
@@ -1119,7 +1119,7 @@ MkRet←{
 ⍝ Intended Function: Generate a null pointer to an array.
 
 GenNullArrayPtr←{
-  T←PointerType (GenArrayType⍬) 0      ⍝ Array Type
+  T←PointerType ArrayTypeV 0           ⍝ Array Type
   ConstPointerNull T                   ⍝ Null Pointer
 }
 
@@ -1135,7 +1135,9 @@ GenArrayType←{
   S←PointerType (Int32Type) 0          ⍝ Shape is uint32_t *
   lt←(Int16Type)(Int64Type)(Int8Type)  ⍝ Rank, Size, and Type
   lt,←S D                              ⍝ with Shape and Data
-  StructType lt 5 0                    ⍝ Build the structure type
+  ctx←GetGlobalContext                 ⍝ Context for the type
+  tp←StructCreateNamed ctx 'Array'     ⍝ Initial named structure
+  tp⊣StructSetBody tp lt 5 0           ⍝ Set the structure body
 }
 
 ⍝ GenFuncType
@@ -1144,7 +1146,7 @@ GenArrayType←{
 ⍝ Function.
 
 GenFuncType←{
-  typ←PointerType (GenArrayType⍬) 0    ⍝ All arguments are array pointers
+  typ←PointerType ArrayTypeV 0    ⍝ All arguments are array pointers
   ret←Int32Type ⋄ arg←((3+⍵)⍴typ)      ⍝ Return type and arg type vector
   FunctionType ret arg (≢arg) 0        ⍝ Return the function type
 }
@@ -1162,7 +1164,7 @@ GEPI←{{ConstInt (Int32Type) ⍵ 0}¨⍵}
 ⍝ in an LLVM Module.
 
 GenRuntime←{
-  ft←PointerType (GenArrayType⍬) 0     ⍝ Pointer to array, clean_env arg 1
+  ft←PointerType ArrayTypeV 0          ⍝ Pointer to array, clean_env arg 1
   it←Int32Type                         ⍝ clean_env arg 2 type
   vt←VoidType                          ⍝ clean_env return type
   cet←FunctionType vt (ft it) 2 0      ⍝ clean_env type
@@ -1211,11 +1213,19 @@ P←'LLVM'
 ⍝ LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed)
 'StructType'⎕NA 'P ',Core,'|',P,'StructType <P[] U I'
 
+⍝ void 	
+⍝ LLVMStructSetBody (LLVMTypeRef StructTy, 
+⍝     LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed)
+'StructSetBody'⎕NA Core,'|',P,'StructSetBody P <P[] U I'
+
 ⍝ LLVMPointerType (LLVMTypeRef ElementType, unsigned AddressSpace)
 'PointerType'⎕NA 'P ',Core,'|',P,'PointerType P U'
 
 ⍝ LLVMTypeRef 	LLVMArrayType (LLVMTypeRef ElementType, unsigned ElementCount)
 'ArrayType'⎕NA'P ',Core,'|',P,'ArrayType P U'
+
+⍝ LLVMTypeRef 	LLVMStructCreateNamed (LLVMContextRef C, const char *Name)
+'StructCreateNamed'⎕NA 'P ',Core,'|',P,'StructCreateNamed P <0C[]'
 
 ⍝ LLVMValueRef  LLVMConstInt (LLVMTypeRef IntTy, unsigned long long N, LLVMBool SignExtend)
 'ConstInt'⎕NA 'P ',Core,'|',P,'ConstInt P U8 I'
@@ -1329,7 +1339,10 @@ P←'LLVM'
 'PrintModuleToFile'⎕NA'I4 ',Core,'|',P,'PrintModuleToFile P <0C >P'
 
 ⍝ void LLVMDisposeMessage (char *Message)
-'DisposeMessage'⎕NA'',Core,'|',P,'DisposeMessage P'
+'DisposeMessage'⎕NA Core,'|',P,'DisposeMessage P'
+
+⍝ LLVMContextRef 	LLVMGetGlobalContext (void)
+'GetGlobalContext'⎕NA 'P ',Core,'|',P,'GetGlobalContext'
 
 ⍝ LLVMModuleRef LLVMModuleCreateWithName (const char *ModuleID)
 'ModuleCreateWithName'⎕NA'P ',Core,'|',P,'ModuleCreateWithName <0C'
@@ -1400,6 +1413,9 @@ P←'LLVM'
 
 ⍝ void free(void *)
 'free'⎕NA 'libc.so.6|free P'
+
+⍝ Generate an Array value for everyone to use
+ArrayTypeV←GenArrayType⍬
 
 ∇
 
