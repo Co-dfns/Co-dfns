@@ -3760,6 +3760,14 @@
            LENGTH ERROR: ParseExpr[8]
           </td>
         </tr>
+        <tr>
+          <td>16</td>
+          <td>2</td>
+          <td>Fail</td>
+          <td colspan="5">
+           LENGTH ERROR: AnchorVars[44]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3878,5 +3886,13 @@
       </para>
     </formalpara>
     <screen>ParseExpr[8] e←((~∨\p)⌿⍵)⍪⊃⍪/n⍪¨p⊂[0]⍵ ⍝ Add an expr node for literal groups</screen>
+    <formalpara>
+      <title>Iteration 16, Test 2</title>
+      <para>
+        A LENGTH ERROR in <function>AnchorVars[44]</function> occurs with
+        the following message:
+      </para>
+    </formalpara>
+    <screen>AnchorVars[44] ka env←⊃⍺⍺ ∇/z</screen>
   </section>
 </article>

@@ -373,6 +373,12 @@
         <td colspan="5">LENGTH ERROR: ParseExpr[8]</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>59</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">LENGTH ERROR: AnchorVars[44]</td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1690,6 +1696,37 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           vector to <literal>⊃⍪/</literal> and so we need to attach 
           a <literal>⊂MtAST</literal> to the front (or back). This fixes 
           these errors. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A LENGTH ERROR occurs with the following message:
+        </para>
+      </formalpara>
+      <screen>AnchorVars[44] ka env←⊃⍺⍺ ∇/z</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          There are some syntactic elements with handling the way that the 
+          <function>∇</function> is used, but in addition to this, the 
+          input received by <function>AnchorVars</function> isn't right 
+          at all. This is because <function>Parse</function> isn't doing 
+          its job at all. The issue is that we run the
+          <function>ParseFuncExper</function> before we run the 
+          <function>ParseLineVar</function> which turns out to be a mistake. 
+          The <function>ParseFuncExpr</function> function doesn't try to 
+          consume all of the input, and thus it will take a single variable 
+          and parse it as a single function before ever seeing or 
+          realizing that we have anything more. In this case, the 
+          <function>ParseLinVar</function> will success strictly in cases 
+          where the <function>ParseFuncExper</function> will fail, but 
+          the <function>ParseFuncExper</function> might succeed where 
+          <function>ParseLineVar</function> might also succeed, so we 
+          should do the <function>ParseLineVar</function> first instead 
+          of last. 
         </para>
       </formalpara>
     </listitem>

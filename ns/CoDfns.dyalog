@@ -362,10 +362,10 @@ ParseTopLine←{cod env←⍵ ⋄ line←⍺
   cmt←⊃'comment' Prop 1↑⍺              ⍝ We need the comment for later
   eerr ast ne←env ParseExpr 1↓⍺        ⍝ Try to parse as expression first
   0=eerr:(cod⍪ast Comment cmt)ne       ⍝ If it works, extend and replace
-  ferr ast rst←env ParseFuncExpr 1↓⍺   ⍝ Try to parse as a function expression
-  0=⊃ferr:(cod⍪ast Comment cmt)env     ⍝ It worked, extend and replace
   err ast←env 0 ParseLineVar 1↓⍺       ⍝ Try to parse as variable prefixed line
   0=⊃err:(cod⍪ast Comment cmt)env      ⍝ It worked, good
+  ferr ast rst←env ParseFuncExpr 1↓⍺   ⍝ Try to parse as a function expression
+  0=⊃ferr:(cod⍪ast Comment cmt)env     ⍝ It worked, extend and replace
   ¯1=×err:⎕SIGNAL eerr                 ⍝ Signal expr error if it seems good
   ⎕SIGNAL err                          ⍝ Otherwise signal err from ParseLineVar
 }
@@ -423,10 +423,10 @@ ParseLineVar←{env cls←⍺
 ⍝ Output: FuncExpr Node
 
 ParseNamedUnB←{vn env←⍺
-  ferr ast rst←env ParseFuncExpr ⍵     ⍝ Try to parse as a FuncExpr
-  0=ferr:vn Bind ast                   ⍝ It worked, bind it to vn
   err ast←env 0 ParseLineVar ⍵         ⍝ Else try to parse as a variable line
   0=err:vn Bind ast                    ⍝ that worked, so bind it
+  ferr ast rst←env ParseFuncExpr ⍵     ⍝ Try to parse as a FuncExpr
+  0=ferr:vn Bind ast                   ⍝ It worked, bind it to vn
   ¯1=×err:⎕SIGNAL ferr                 ⍝ Signal FuncExpr error if suggested
   ⎕SIGNAL err                          ⍝ Otherwise signal Variable line error
 }
@@ -441,14 +441,14 @@ ParseNamedUnB←{vn env←⍺
 
 ParseNamedBnd←{vn tp env←⍺
   0=⊃env ParseExpr ⍵:⎕SIGNAL 2         ⍝ Should not be an Expression
+  tp≠t←2:⎕SIGNAL 2                     ⍝ The types must match to continue
+  err ast←env 1 ParseLineVar ⍵         ⍝ Try to parse as a variable line
+  0=err:vn Bind ast                    ⍝ If it succeeds, Bind and return
   ferr ast rst←env ParseFuncExpr ⍵     ⍝ Try to parse as a FuncExpr
-  (0=ferr)∧tp=t←2:vn Bind ast          ⍝ If it works, bind it and return
-  tp≠t:⎕SIGNAL 2                       ⍝ The types must match to continue
+  (0=ferr)∧tp=t:vn Bind ast            ⍝ If it works, bind it and return
   t←(1=≢⍵)∧('Variable'≡⊃0 1⌷⍵)         ⍝ Do we have only a single var node?
   t∧←0=env VarType⊃'name'Prop 1↑⍵      ⍝ And is it unbound?
   t:⎕SIGNAL 6                          ⍝ Then signal a value error for unbound
-  err ast←env 1 ParseLineVar ⍵         ⍝ Try to parse as a variable line
-  0=err:vn Bind ast                    ⍝ If it succeeds, Bind and return
   ¯1=×err:⎕SIGNAL ferr                 ⍝ Signal FuncExpr error if suggested
   ⎕SIGNAL err                          ⍝ Else signal variable line error
 }
@@ -722,7 +722,7 @@ AnchorVars←{
       (ast⍪nd⍪ka)env                   ⍝ Leave environment same as when entered
     })⍵
     z←(⌽1 Kids ⍺),⊂MtAST env
-    ka env←⊃⍺⍺∇/z
+    ka env←⊃∇/z
     (ast⍪(1↑⍺),ka)env
   }
   z←(⌽1 Kids ⍵),⊂MtAST mt
@@ -750,7 +750,7 @@ LiftFuncs←{
       (lft⍪nlf)(ast⍪vn)                ⍝ Fn lifted and replaced by variable
     })⍵
     z←(⌽1 Kids ⍺),⊂lft (1↑⍺)           ⍝ Otherwise, traverse
-    ⊃⍺⍺ ∇/z                            ⍝ without changing anything
+    ⊃∇/z                               ⍝ without changing anything
   }
   z←(⌽1 Kids ⍵),⊂2⍴⊂MtAST              ⍝ Must traverse all top-level
   (1↑⍵)⍪⊃⍪/⊃0 vis/z                    ⍝ Nodes just the same
