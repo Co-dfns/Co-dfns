@@ -688,12 +688,12 @@ AnchorVars←{
     (nm,0),⍳≢nm                        ⍝ Local scope 0, assign slot to each var
   }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
-    'Variable'≡nm:⍺(⍺⍺{                ⍝ Variable node
+    'Variable'≡nm:⍺{                   ⍝ Variable node
       i←⊃env⍳'name'Prop ⍺              ⍝ Lookup var in env
       a←'env' 'slot',⍪i(1 2)⌷env       ⍝ Stack frame and slot
       a←(⊃0 3⌷⍺)⍪a                     ⍝ Attach new attributes
       (ast⍪(1 3↑⍺),⊂a)env              ⍝ Attach to current AST
-    })⍵
+    }⍵
     'Expression'≡nm:⍺(⍺⍺{              ⍝ Expression node
       z←(⌽1 Kids ⍺),⊂MtAST env         ⍝ Children use existing env
       ka env←⊃⍺⍺vis/z                  ⍝ Children visited first
@@ -723,7 +723,7 @@ AnchorVars←{
     })⍵
     z←(⌽1 Kids ⍺),⊂MtAST env
     ka env←⊃∇/z
-    (ast⍪(1↑⍺),ka)env
+    (ast⍪(1↑⍺)⍪ka)env
   }
   z←(⌽1 Kids ⍵),⊂MtAST mt
   z←⊃⊃(ge ⍵)vis/z
