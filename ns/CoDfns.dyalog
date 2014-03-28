@@ -70,10 +70,6 @@ Compile←{
 
 ModToNS←{
   ⎕NS⍬                                 ⍝ Create an Empty Namespace
-  _←⍎'Initialize',Target,'TargetInfo'  ⍝ Setup targeting information
-  _←⍎'Initialize',Target,'Target'      ⍝ Based on given Machine
-  _←⍎'Initialize',Target,'TargetMC'    ⍝ Parameters in CoDfns namespace
-  _←SetTarget ⍵ TargetTriple           ⍝ JIT must have machine target
   jc←1 ⍵ 0 1                           ⍝ Params: JIT Ov, Mod, OptLevel, Err Ov
   jc←CreateJITCompilerForModule jc     ⍝ Make JIT compiler
   0≠⊃jc:(ErrorMessage ⊃⌽jc)⎕SIGNAL 99  ⍝ Error handling, C style
@@ -808,7 +804,12 @@ GenLLVM←{
   tex←mod GenGlobal¨exm/k              ⍝ Generate top-level globals
   _←mod GenFnDec¨fem/k                 ⍝ Generate Function declarations
   _←mod GenFunc¨fem/k                  ⍝ Generate functions
-  mod⊣mod GenInit tex                  ⍝ Generate Initialization function
+  _←mod GenInit tex                    ⍝ Generate Initialization function
+  _←⍎'Initialize',Target,'TargetInfo'  ⍝ Setup targeting information
+  _←⍎'Initialize',Target,'Target'      ⍝ Based on given Machine
+  _←⍎'Initialize',Target,'TargetMC'    ⍝ Parameters in CoDfns namespace
+  _←SetTarget mod TargetTriple         ⍝ JIT must have machine target
+  mod  
 }
 
 ⍝ GenFnDec
@@ -820,6 +821,8 @@ GenFnDec←{
   vtst←'Variable'≡⊃1 1⌷⍵               ⍝ Child node type
   vn←⊃'name'Prop 1↑1↓⍵                 ⍝ Variable name if it exists
   vtst:⍺{                              ⍝ Named function reference
+    t←('equiv'Prop 1↑⍵)∊,¨APLPrims     ⍝ Is function equivalent to a primitive?
+    t:vn(⍺ GenPrimEquiv)fn             ⍝ Then generate the call
     fr←GetNamedFunction ⍺ vn           ⍝ Referenced function
     ft←GenFuncType(CountParams fr)-3   ⍝ Function Type based on depth
     ⍺{AddAlias ⍺ ft fr ⍵}¨fn           ⍝ Generate aliases for each name
@@ -830,6 +833,25 @@ GenFnDec←{
   fr←AddFunction ⍺ fnf ft              ⍝ Insert function into module
   0=≢fnr:fr                            ⍝ Return if no other names
   fr⊣⍺{AddAlias ⍺ ft fr ⍵}¨fnr         ⍝ Otherwise, alias the others
+}
+
+⍝ GenPrimEquiv
+⍝
+⍝ Intended Function: Generate a function equivalent to a primitive, 
+⍝ since you cannot alias a runtime definition.
+
+GenPrimEquiv←{
+  ft←GenFuncType 0                     ⍝ Primitive function type
+  fr←AddFunction ⍺⍺ (⊃⍵) ft            ⍝ Declare equivalent
+  bl←CreateBuilder                     ⍝ New builder 
+  bb←AppendBasicBlock fr ''            ⍝ Single basic block
+  _←PositionBuilderAtEnd bl bb         ⍝ Sync the builder and basic block
+  pr←GetNamedFunction ⍺⍺ ⍺             ⍝ Get the name of the primitive
+  ar←{GetParam fr ⍵}¨⍳3                ⍝ Get the arguments
+  rs←BuildCall bl pr ar 3 ''           ⍝ Make the call to the primitive
+  _←BuildRet bl rs                     ⍝ Return the error code of primitive
+  1=≢⍵:fr                              ⍝ If there is only one name then done
+  fr⊣⍺⍺{AddAlias ⍺ ft fr ⍵}¨1↓⍵        ⍝ Otherwise alias the other names
 }
 
 ⍝ GenGlobal
