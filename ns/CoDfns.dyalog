@@ -400,7 +400,7 @@ ParseLineVar←{env cls←⍺
   '←'≡⊃'name'Prop 1↑⍵:2 MtAST          ⍝ No variable named, syntax error
   3>⊃⍴⍵:¯1 MtAST                       ⍝ Valid cases have at least three nodes
   tk←'Variable' 'Token'                ⍝ First two tokens should be Var and Tok
-  ~tk∧.≡(⊂0 1)1⌷⍵:¯1 MtAST             ⍝ If not, bad things
+  ~tk∧.≡(0 1)1⌷⍵:¯1 MtAST              ⍝ If not, bad things
   (,'←')≢⊃'name'Prop 1↑1↓⍵:¯1 MtAST    ⍝ 2nd node is assignment?
   vn←⊃'name'Prop 1↑⍵                   ⍝ Name of the variable
   tp←env VarType vn                    ⍝ Type of the variable: Vfo or Vu?

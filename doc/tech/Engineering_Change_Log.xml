@@ -379,6 +379,12 @@
         <td colspan="5">LENGTH ERROR: AnchorVars[44]</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>60</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">DOMAIN ERROR: ParseLineVar[4]</td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1727,6 +1733,21 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           <function>ParseLineVar</function> might also succeed, so we 
           should do the <function>ParseLineVar</function> first instead 
           of last. 
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A DOMAIN ERROR occurs with the following message:
+        </para>
+      </formalpara>
+      <screen>ParseLineVar[4] ~tk∧.≡(⊂0 1)1⌷⍵:¯1 MtAST ⍝ If not, bad things</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          The <function>⊂</function> should not be there.
         </para>
       </formalpara>
     </listitem>

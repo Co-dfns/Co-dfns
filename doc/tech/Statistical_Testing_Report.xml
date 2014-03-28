@@ -3768,6 +3768,14 @@
            LENGTH ERROR: AnchorVars[44]
           </td>
         </tr>
+        <tr>
+          <td>17</td>
+          <td>2</td>
+          <td>Fail</td>
+          <td colspan="5">
+           DOMAIN ERROR: ParseLineVar[4]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3894,5 +3902,13 @@
       </para>
     </formalpara>
     <screen>AnchorVars[44] ka env←⊃⍺⍺ ∇/z</screen>
+    <formalpara>
+      <title>Iteration 17, Test 2</title>
+      <para>
+        A DOMAIN ERROR in <function>ParseLineVar[4]</function> occurs with
+        the following message:
+      </para>
+    </formalpara>
+    <screen>ParseLineVar[4] ~tk∧.≡(⊂0 1)1⌷⍵:¯1 MtAST ⍝ If not, bad things</screen>
   </section>
 </article>
