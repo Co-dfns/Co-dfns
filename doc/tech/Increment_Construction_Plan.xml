@@ -80,7 +80,6 @@
             <member>Support basic scalar primitives and basic structural primitives</member>
             <member>Support only the integer numeric type and do not worry about overflow</member>
             <member>Use a simple C runtime</member>
-            <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
           </simplelist>
         </td>
       </tr>
@@ -92,6 +91,7 @@
             <member>Add support for additional numeric and string types</member>
             <member>Add support for overflow and numeric type promotion and compaction</member>
             <member>Support nested arrays</member>
+            <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
           </simplelist>
         </td>
       </tr>

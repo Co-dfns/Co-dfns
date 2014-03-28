@@ -69,7 +69,7 @@ Compile←{
 ⍝ a given LLVM Module.
 
 ModToNS←{
-  ns←⎕NS⍬                              ⍝ Create an Empty Namespace
+  ⎕NS⍬                                 ⍝ Create an Empty Namespace
   _←⍎'Initialize',Target,'TargetInfo'  ⍝ Setup targeting information
   _←⍎'Initialize',Target,'Target'      ⍝ Based on given Machine
   _←⍎'Initialize',Target,'TargetMC'    ⍝ Parameters in CoDfns namespace
@@ -737,7 +737,7 @@ AnchorVars←{
 LiftFuncs←{
   I←¯1 ⋄ MkV←{'FN',⍕I⊣(⊃I)+←1}         ⍝ New variable maker
   vis←{lft ast←⍵                       ⍝ Fn to visit each node
-    (1=⊃⍺)∧'FuncExpr'≡⊃0 1⌷⍺:⍵         ⍝ Ignore top-level functions
+    1=≢⍺:lft(ast⍪⍺)                    ⍝ Do nothing for leaf nodes
     'Function'≡⊃0 1⌷⍺:⍺(⍺⍺{            ⍝ Only lift Function nodes
       z←(⌽1 Kids ⍺),⊂lft MtAST         ⍝ Recur over children, updating lifted
       lft ka←⊃(1+⍺⍺)vis/z              ⍝ Bump up the depth over children
@@ -800,7 +800,7 @@ GenLLVM←{
   nam←(0 3)(0 1)⊃⍵                     ⍝ Namespace must have name
   nam←nam 'Unamed Namespace'⌷⍨''≡nam   ⍝ Possibly empty, so fix it
   mod←ModuleCreateWithName nam         ⍝ Empty module to start with
-  1=≢k←1 Kids ⍵:mod                    ⍝ Quit if nothing to do
+  0=≢k←1 Kids ⍵:mod                    ⍝ Quit if nothing to do
   nm←1⌷⍉(1=0⌷⍉⍵)⌿⍵                     ⍝ Top-level nodes and node names
   exm←nm∊⊂'Expression'                 ⍝ Mask of expressions
   fem←nm∊⊂'FuncExpr'                   ⍝ Mask of function expressions
@@ -985,8 +985,7 @@ GenInit←{
   array_free←⍺ gfn 'array_free'        ⍝ Runtime cleaner function reference
   free←{array_free call ⍵}             ⍝ Function to cleanup ararys
   clean←{(⊃⍺){⍵⊣free ⍺}⍣(⊃⌽⍺)⊢⍵}       ⍝ Fn to optionally cleanup temp array
-  _←{                                  ⍝ Handle each global expr in turn
-    0=≢⍵:0                             ⍝ Catch when ⍵ is empty
+  expr←{                               ⍝ Handle each global expr in turn
     n←⊃'class'Prop 1↑⍵                 ⍝ Switch on node class
     'atomic'≡n:⍺{                      ⍝ Atomic case: variable reference
       ∧/' '=tgt←⊃'name'Prop 1↑⍵:0      ⍝ Ignore unnamed global references
@@ -1008,10 +1007,15 @@ GenInit←{
       rgt←⍺ gex ⊃'name'Prop 1↑6↓⍵      ⍝ Right argument is third child
       t clean tgt(fn mcall)lft rgt     ⍝ Make the call
     }⍵
-  }¨⍵
-  zero←ConstInt Int32Type 0 0          ⍝ Zero Return
-  _←BuildRet bldr zero                 ⍝ No need to do regular return
-  fr⊣DisposeBuilder bldr               ⍝ Cleanup and return function reference
+  }
+  finish←{
+    zero←ConstInt Int32Type 0 0        ⍝ Zero Return
+    _←BuildRet bldr zero               ⍝ No need to do regular return
+    fr⊣DisposeBuilder bldr             ⍝ Cleanup and return function reference
+  }
+  0=≢⍵:finish⍬                         ⍝ Nothing to do
+  _←expr¨⍵                             ⍝ Handle each expr
+  finish⍬                              ⍝ Cleanup
 }
 
 ⍝ LookupExpr

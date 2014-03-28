@@ -3784,6 +3784,14 @@
            LENGTH ERROR: AnchorVars[45]
           </td>
         </tr>
+        <tr>
+          <td>19</td>
+          <td>2</td>
+          <td>Fail</td>
+          <td colspan="5">
+           FUNCTION NOT FOUND: Fix[8]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3926,5 +3934,13 @@
       </para>
     </formalpara>
     <screen>AnchorVars[45] (ast⍪(1↑⍺),ka)env</screen>
+    <formalpara>
+      <title>Iteration 19, Test 2</title>
+      <para>
+        A FUNCTION NOT FOUND in <function>Fix[8]</function> occurs with
+        the following message:
+      </para>
+    </formalpara>
+    <screen>Fix[8] ns←nms ModToNS mod ⍝ Namespace to return</screen>
   </section>
 </article>

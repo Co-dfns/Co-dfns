@@ -391,6 +391,12 @@
         <td colspan="5">LENGTH ERROR: AnchorVars[45]</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>62</td>
+        <td colspan="2">2014-03-26</td>
+        <td colspan="5">FUNCTION NOT FOUND: Fix[8]</td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1773,6 +1779,48 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
           the <function>,</function> function. 
         </para>
       </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A FUNCTION NOT FOUND occurs with the following message:
+        </para>
+      </formalpara>
+      <screen>Fix[8] ns←nms ModToNS mod ⍝ Namespace to return</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          This error reveals a number of issues. 
+        </para>
+      </formalpara>
+      <itemizedlist spacing="compact">
+        <listitem>
+          <para>
+            The <function>LiftFuncs</function> function was not 
+            properly lifting top level functions.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            There was an incorrect test in the generation that 
+            caused generation not to occur in certain cases.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            The handling of empty modules had to be reworked again 
+            to make it more flexible since we cannot control the 
+            fill argument of the incoming data well enough.
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para>
+        In the end, the difficulty of getting the JIT compiler to 
+        work correctly stil causes unacceptable delays in moving 
+        forward, and this requires that we adjust our increment 
+        plans and delay, once again, the treatment of JIT.
+      </para>
     </listitem>
   </orderedlist>
 </article>
