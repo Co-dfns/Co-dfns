@@ -148,9 +148,9 @@ Tokenize←{
   vc,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'  ⍝ Accented lower case
   vc,←'∆⍙'                             ⍝ Deltas
   vc,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'     ⍝ Underscored alphabet
-  vcn←vc,nc←'0123456789'               ⍝ Numbers
-  tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>⍺⍵'          ⍝ Single Token characters
-  ac←vcn,' ⍝',tc                       ⍝ All characters
+  vcn←vc,nc←'¯0123456789'              ⍝ Numbers
+  tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>⍺⍵⍴⍳,⌷¨'     ⍝ Single Token characters
+  ac←vcn,' 	⍝⎕.',tc                ⍝ All characters
   ~∧/ac∊⍨⊃,/⍵:⎕SIGNAL 2                ⍝ Verify we have only good characters
   i←⍵⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵           ⍝ Divide into comment and code
   t←((⌽∘(∨\)∘⌽¨t)∧∨\¨t←' '≠t)/¨t       ⍝ Strip leading/trailing whitespace
@@ -171,11 +171,12 @@ Tokenize←{
     ii←(si←fc∊nc)/⍳lc                  ⍝ Mask and indices of numbers
     ia←(sa←fc∊'←⋄:')/⍳lc               ⍝ Mask and indices of separators
     id←(sd←fc∊'{}')/⍳lc                ⍝ Mask and indices of delimiters
-    ipm←(spm←fc∊'+-÷×|*⍟⌈⌊')/⍳lc       ⍝ Mask and indices of monadic primitives
-    ipd←(spd←fc∊'<≤=≠≥>')/⍳lc          ⍝ Mask and indices of dyadic primitives
+    ipm←(spm←fc∊'+-÷×|*⍟⌈⌊,⍴⍳¨')/⍳lc   ⍝ Mask and indices of monadic primitives
+    ipd←(spd←fc∊'<≤=≠≥>⎕⌷')/⍳lc        ⍝ Mask and indices of dyadic primitives
     tv←1 2∘⍴¨↓(⊂'name'),⍪sv/t          ⍝ Variable attributes
     tv←{1 4⍴2 'Variable' '' ⍵}¨tv      ⍝ Variable tokens
-    ti←{'value' ⍵ 'class' 'int'}¨si/t  ⍝ Number attributes
+    ncls←{('.'∊⍵)⊃'int' 'float'}       ⍝ Fn to determine Number class attr
+    ti←{'value'⍵'class'(ncls ⍵)}¨si/t  ⍝ Number attributes
     ti←{1 4⍴2 'Number' '' (2 2⍴⍵)}¨ti  ⍝ Number tokens
     tpm←{1 2⍴'name' ⍵}¨spm/t           ⍝ Monadic Primitive name attributes
     tpm←{⍵⍪'class' 'monadic axis'}¨tpm ⍝ Monadic Primtiive class
