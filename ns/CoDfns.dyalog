@@ -647,10 +647,10 @@ LiftBound←{
   }
   lft←{                                ⍝ Function to lift expression
     cls←⊃'class'Prop ⍵                 ⍝ Class determines handling
-    'atomic'≡cls:⍵                     ⍝ Nothing to do for atomic
+    'atomic'≡cls:MtAST ⍵               ⍝ Nothing to do for atomic
     ri←1+'monadic' 'dyadic'⍳⊂cls       ⍝ Location of the right argument
     lf ex←⍺ ∇ ri⊃k←1 Kids ⍵            ⍝ Lift the right argument
-    nm←⊃'name'Prop ex                  ⍝ Consider right argument name
+    nm←⊃'name'Prop 1↑ex                ⍝ Consider right argument name
     nr←⊃⍪/¯1↓k                         ⍝ Our not right arguments to recombine
     ∧/' '=nm:lf((1↑⍵)⍪nr⍪ex)           ⍝ When unnamed, do nothing
     ex[;0]-←(⊃ex)-⍺                    ⍝ When named, must lift
