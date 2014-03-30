@@ -171,7 +171,8 @@ Tokenize←{
     ii←(si←fc∊nc)/⍳lc                  ⍝ Mask and indices of numbers
     ia←(sa←fc∊'←⋄:')/⍳lc               ⍝ Mask and indices of separators
     id←(sd←fc∊'{}')/⍳lc                ⍝ Mask and indices of delimiters
-    ipm←(spm←fc∊'+-÷×|*⍟⌈⌊,⍴⍳¨')/⍳lc   ⍝ Mask and indices of monadic primitives
+    ipm←(spm←fc∊'+-÷×|*⍟⌈⌊,⍴⍳')/⍳lc    ⍝ Mask and indices of monadic primitives
+    iom←(som←fc∊'¨')/⍳lc               ⍝ Mask and indices of monadic operators
     ipd←(spd←fc∊'<≤=≠≥>⎕⌷')/⍳lc        ⍝ Mask and indices of dyadic primitives
     tv←1 2∘⍴¨↓(⊂'name'),⍪sv/t          ⍝ Variable attributes
     tv←{1 4⍴2 'Variable' '' ⍵}¨tv      ⍝ Variable tokens
@@ -181,6 +182,9 @@ Tokenize←{
     tpm←{1 2⍴'name' ⍵}¨spm/t           ⍝ Monadic Primitive name attributes
     tpm←{⍵⍪'class' 'monadic axis'}¨tpm ⍝ Monadic Primtiive class
     tpm←{1 4⍴2 'Primitive' '' ⍵}¨tpm   ⍝ Monadic Primitive tokens
+    tom←{1 2⍴'name' ⍵}¨som/t           ⍝ Monadic Operator name attributes
+    tom←{⍵⍪'class' 'operator'}¨tom     ⍝ Monadic Operator class
+    tom←{1 4⍴2 'Primitive' '' ⍵}¨tom   ⍝ Monadic Operator tokens
     tpd←{1 2⍴'name' ⍵}¨spd/t           ⍝ Dyadic primitive name attributes
     tpd←{⍵⍪'class' 'dyadic axis'}¨tpd  ⍝ Dyadic primitive class
     tpd←{1 4⍴2 'Primitive' '' ⍵}¨tpd   ⍝ Dyadic primitive tokens
@@ -190,8 +194,8 @@ Tokenize←{
     td←{1 2⍴'name' ⍵}¨sd/t             ⍝ Delimiter name attributes
     td←{⍵⍪'class' 'delimiter'}¨td      ⍝ Delimiter class attributes
     td←{1 4⍴2 'Token' '' ⍵}¨td         ⍝ Delimiter tokens
-    t←tv,ti,tpm,tpd,ta,td              ⍝ Reassemble tokens
-    t←t[⍋iv,ii,ipm,ipd,ia,id]          ⍝ In the right order
+    t←tv,ti,tpm,tom,tpd,ta,td          ⍝ Reassemble tokens
+    t←t[⍋iv,ii,ipm,iom,ipd,ia,id]      ⍝ In the right order
     t←(⊃,/l↑¨1)⊂t                      ⍝ As vector of non-empty lines of tokens
     t←t,(+/0=l)↑⊂⍬                     ⍝ Append empty lines
     t[⍋((0≠l)/⍳⍴l),(0=l)/⍳⍴l]          ⍝ Put empty lines where they belong
@@ -305,18 +309,16 @@ Parse←{
   (sm⌿ns)←1 'Line' '' MtA⍴⍨4,⍨+/sm     ⍝ Replace separators by lines, Tbl 219
     ⍝ XXX: The above does not preserve commenting behavior
   tm←(1⌷⍉ns)∊⊂'Token'                  ⍝ Update token mask
-  fm←(,¨'{}')⍳'name'Prop tm⌿ns         ⍝ Which tokens are brackets?
+  fm←(,¨'{}')⍳'name'Prop tm⌿ns         ⍝ Which tokens are braces?
   fm←fm⊃¨⊂1 ¯1 0                       ⍝ Convert } → ¯1; { → 1; else → 0
   0≠+/fm:⎕SIGNAL 2                     ⍝ Verify balance
-  fd←+\0,¯1↓fm←tm\fm                   ⍝ Nesting depths of functions
-  (0⌷⍉ns)+←2×fd                        ⍝ Push child nodes 2 for each depth
-  fm←1=fm ⋄ cm←(⊢∧1⌽⊢)0≠fd             ⍝ New masks of functions and children
-  ((¯1⌽cm)⌿ns)←cm⌿ns                   ⍝ Shift all children down by one
+  (0⌷⍉ns)+←2×+\0,¯1↓fm←tm\fm           ⍝ Push child nodes 2 for each depth
+  ns fm←(⊂¯1≠fm)⌿¨ns fm                ⍝ Drop closing braces
   fa←1 2⍴'class' 'ambivalent'          ⍝ Function attributes
-  fd←⍪0⌷⍉fm⌿ns                         ⍝ Depth of each function node
-  (fm⌿ns)←((fd,⊂'Function'),⊂''),⊂fa   ⍝ Replace { token with Fn node
-  ln←(((1+fd),⊂'Line'),⊂''),⊂MtA       ⍝ Line node
-  ((¯1⌽fm)⌿ns)←ln                      ⍝ Insert Line node after Fn node
+  fn←(d←fm/0⌷⍉ns),¨⊂'Function' '' fa   ⍝ New function nodes
+  fn←fn,[¯0.5]¨(1+d),¨⊂'Line' '' MtA   ⍝ Line node for each function
+  hd←(~∨\fm)⌿ns                        ⍝ Unaffected areas of ns
+  ns←hd⍪⊃⍪/fn(⊣⍪1↓⊢)¨fm⊂[0]ns          ⍝ Replace { with fn nodes
   k←1 Kids ns                          ⍝ Children to examine
   env←⊃ParseFeBindings/k,⊂MtNTE        ⍝ Initial Fe bindings to feed in
   sd←MtAST env                         ⍝ Seed is an empty AST and the env
@@ -464,41 +466,51 @@ ParseExpr←{
   at←1 2⍴'class' 'atomic'              ⍝ Literals become atomic expressions
   n←(d←⊃⍵)'Expression' '' at           ⍝ One node per group of literals
   p←2</0,m←(d=0⌷⍉⍵)∧(1⌷⍉⍵)∊⊂'Number'   ⍝ Mask and partition of literals
-  e←⊃⍪/(⊂MtAST),(⊂n)⍪¨p⊂[0]⍵           ⍝ Add expr node to each literal group
+  (0⌷⍉m⌿e)+←1⊣e←⍵                      ⍝ Bump the depths of each literal
+  e←⊃⍪/(⊂MtAST),(⊂n)⍪¨p⊂[0]e           ⍝ Add expr node to each literal group
   e←((~∨\p)⌿⍵)⍪e                       ⍝ Attach anything before first literal
-  (0⌷⍉((1⌷⍉e)∊⊂'Number')⌿e)+←1         ⍝ Bump the depths of each literal
   dwn←{a⊣(0⌷⍉a)+←1⊣a←⍵}                ⍝ Fn to push nodes down the tree
   at←1 2⍴'class' 'monadic'             ⍝ Attributes for monadic expr node
   em←d 'Expression' '' at              ⍝ Monadic expression node
   at←1 2⍴'class' 'dyadic'              ⍝ Attributes for dyadic expr node
   ed←d 'Expression' '' at              ⍝ Dyadic expression node
+  at←1 2⍴'class' 'ambivalent'          ⍝ Attributes for operator-derived Fns
+  feo←d 'FuncExpr' '' at               ⍝ Operator-derived Functions
   e ne _←⊃{ast env knd←⍵               ⍝ Process tokens from bottom up
     e fe rst←env ParseFuncExpr ⍺       ⍝ Try to parse as a FuncExpr node first
+    (0⌷⍉fe)+←1                         ⍝ Bump up the FuncExpr depth to match
     k←(e=0)⊃⍺ fe                       ⍝ Kid is Fe if parsed, else existing kid
     tps←'Expression' 'FuncExpr'        ⍝ Types of nodes
-    tps,→'Token' 'Variable'
+    tps,←'Token' 'Variable'
     typ←tps⍳0 1⌷k                      ⍝ Type of node we're dealing with
     nm←⊃'name'Prop 1↑k                 ⍝ Name of the kid, if any
     k←(typ=3)⊃k(n⍪dwn k)               ⍝ Wrap the variable if necessary
     c←knd typ                          ⍝ Our case
-    c≡0 0:(kid⍪ast) env 1              ⍝ Nothing seen, Expression
-    c≡0 1:⎕SIGNAL 2                    ⍝ Nothing seen, FuncExpr
-    c≡0 2:⎕SIGNAL 2                    ⍝ Nothing seen, Assignment
+    c≡0 0:(k⍪ast) env 1                ⍝ Nothing seen, Expression
+    c≡0 1:⍎'⎕SIGNAL 2'                 ⍝ Nothing seen, FuncExpr
+    c≡0 2:⍎'⎕SIGNAL 2'                 ⍝ Nothing seen, Assignment
     c≡0 3:(k⍪dwn ast) env 1            ⍝ Nothing seen, Variable
-    c≡1 0:⎕SIGNAL 2                    ⍝ Expression seen, Expression
+    c≡1 0:⍎'⎕SIGNAL 2'                 ⍝ Expression seen, Expression
     c≡1 1:(em⍪dwn k⍪ast) env 2         ⍝ Expression seen, FuncExpr
     c≡1 2:ast env 3                    ⍝ Expression seen, Assignment
-    c≡1 3:⎕SIGNAL 2                    ⍝ Expression seen, Variable
+    c≡1 3:⍎'⎕SIGNAL 2'                 ⍝ Expression seen, Variable
+    op←'operator'≡⊃'class'Prop 1↑1↓ast ⍝ Is class of kid ≡ operator?
+    mko←{dwn feo⍪(dwn k)⍪2↑1↓ast}      ⍝ Fn to make the FuncExpr node
+    op∧c≡2 0:(em⍪(mko⍬)⍪3↓ast)env 2    ⍝ FuncExpr seen, Operator, Expression
     c≡2 0:(ed⍪(dwn k)⍪1↓ast)env 2      ⍝ FuncExpr seen, Expression
+    op∧c≡2 1:(em⍪(mko⍬)⍪3↓ast)env 2    ⍝ FuncExpr seen, Operator, FuncExpr
     c≡2 1:(em⍪dwn k⍪ast) env 2         ⍝ FuncExpr seen, FuncExpr
+    op∧c≡2 2:⍎'⎕SIGNAL 2'              ⍝ FuncExpr seen, Operator, Assignment
     c≡2 2:ast env 3                    ⍝ FuncExpr seen, Assignment
+    op∧c≡2 3:(em⍪(mko⍬)⍪3↓ast)env 2    ⍝ FuncExpr seen, Operator, Variable
     c≡2 3:(ed⍪(dwn k)⍪1↓ast)env 1      ⍝ FuncExpr seen, Variable
-    c≡3 0:⎕SIGNAL 2                    ⍝ Assignment seen, Expression
-    c≡3 1:⎕SIGNAL 2                    ⍝ Assignment seen, FuncExpr
-    c≡3 2:⎕SIGNAL 2                    ⍝ Assignment seen, Assignment
+    c≡3 0:⍎'⎕SIGNAL 2'                 ⍝ Assignment seen, Expression
+    c≡3 1:⍎'⎕SIGNAL 2'                 ⍝ Assignment seen, FuncExpr
+    c≡3 2:⍎'⎕SIGNAL 2'                 ⍝ Assignment seen, Assignment
     c≡3 3:(nm Bind ast)((nm 1)⍪env)1   ⍝ Assignment seen, Variable
     ⎕SIGNAL 99                         ⍝ Unreachable
   }/(0 Kids e),⊂MtAST ⍺ 0
+  (0⌷⍉e)-←1                            ⍝ Push the node up to right final depth
   0 e ne                               ⍝ Return the expression and new env
 }
 
