@@ -785,21 +785,28 @@ LiftFuncs←{
 ⍝
 ⍝ The runtime equivalents to specific APL primitives
 
-APLPrims←'+'  ⋄ APLRunts←⊂'codfns_add'
-APLPrims,←'-' ⋄ APLRunts,←⊂'codfns_subtract'
-APLPrims,←'÷' ⋄ APLRunts,←⊂'codfns_divide'
-APLPrims,←'×' ⋄ APLRunts,←⊂'codfns_multiply'
-APLPrims,←'|' ⋄ APLRunts,←⊂'codfns_residue'
-APLPrims,←'*' ⋄ APLRunts,←⊂'codfns_power'
-APLPrims,←'⍟' ⋄ APLRunts,←⊂'codfns_log'
-APLPrims,←'⌈' ⋄ APLRunts,←⊂'codfns_max'
-APLPrims,←'⌊' ⋄ APLRunts,←⊂'codfns_min'
-APLPrims,←'<' ⋄ APLRunts,←⊂'codfns_less'
-APLPrims,←'≤' ⋄ APLRunts,←⊂'codfns_less_or_equal'
-APLPrims,←'=' ⋄ APLRunts,←⊂'codfns_equal'
-APLPrims,←'≠' ⋄ APLRunts,←⊂'codfns_not_equal'
-APLPrims,←'≥' ⋄ APLRunts,←⊂'codfns_greater_or_equal'
-APLPrims,←'>' ⋄ APLRunts,←⊂'codfns_greater'
+APLPrims←⊂,'+'  ⋄ APLRunts←⊂'codfns_add'
+APLPrims,←⊂,'-' ⋄ APLRunts,←⊂'codfns_subtract'
+APLPrims,←⊂,'÷' ⋄ APLRunts,←⊂'codfns_divide'
+APLPrims,←⊂,'×' ⋄ APLRunts,←⊂'codfns_multiply'
+APLPrims,←⊂,'|' ⋄ APLRunts,←⊂'codfns_residue'
+APLPrims,←⊂,'*' ⋄ APLRunts,←⊂'codfns_power'
+APLPrims,←⊂,'⍟' ⋄ APLRunts,←⊂'codfns_log'
+APLPrims,←⊂,'⌈' ⋄ APLRunts,←⊂'codfns_max'
+APLPrims,←⊂,'⌊' ⋄ APLRunts,←⊂'codfns_min'
+APLPrims,←⊂,'<' ⋄ APLRunts,←⊂'codfns_less'
+APLPrims,←⊂,'≤' ⋄ APLRunts,←⊂'codfns_less_or_equal'
+APLPrims,←⊂,'=' ⋄ APLRunts,←⊂'codfns_equal'
+APLPrims,←⊂,'≠' ⋄ APLRunts,←⊂'codfns_not_equal'
+APLPrims,←⊂,'≥' ⋄ APLRunts,←⊂'codfns_greater_or_equal'
+APLPrims,←⊂,'>' ⋄ APLRunts,←⊂'codfns_greater'
+APLPrims,←⊂,'⌷' ⋄ APLRunts,←⊂'codfns_squad'
+APLPrims,←⊂,'⍴' ⋄ APLRunts,←⊂'codfns_reshape'
+APLPrims,←⊂,',' ⋄ APLRunts,←⊂'codfns_catenate'
+APLPrims,←⊂,'⍳' ⋄ APLRunts,←⊂'codfns_indexgen'
+APLPrims,←⊂'⎕ptred' ⋄ APLRunts,←⊂'codfns_ptred'
+APLPrims,←⊂'⎕index' ⋄ APLRunts,←⊂'codfns_index'
+APLPrims,←⊂,'¨' ⋄ APLRunts,←⊂'codfns_each'
 
 ⍝ ConvPrims
 ⍝
@@ -808,7 +815,7 @@ APLPrims,←'>' ⋄ APLRunts,←⊂'codfns_greater'
 
 ConvPrims←{ast←⍵
   pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
-  pn←⊃,/(⊂,''),'name'Prop pm⌿⍵         ⍝ Primitive names
+  pn←'name'Prop pm⌿⍵                   ⍝ Primitive names
   cn←(APLPrims⍳pn)⊃¨⊂APLRunts          ⍝ Converted names
   at←⊂1 2⍴'class' 'function'           ⍝ Class is function
   at⍪¨←(⊂⊂'name'),∘⊂¨cn                ⍝ Use the converted name
