@@ -688,7 +688,7 @@ LiftBound←{
 ⍝ that scope.
 
 AnchorVars←{
-  mt←0 2⍴⊂'' 0                         ⍝ An empty environment
+  mt←0 3⍴'' 0 0                        ⍝ An empty environment
   ge←{                                 ⍝ Fn to get env for current scope
     em←(1+⊃⍵)=0⌷⍉⍵                     ⍝ All expressions are direct descendants
     em∧←(1⌷⍉⍵)∊⊂'Expression'           ⍝ Mask of expressions
@@ -698,11 +698,19 @@ AnchorVars←{
   }
   vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
     'Variable'≡nm:⍺{                   ⍝ Variable node
-      i←⊃env⍳'name'Prop ⍺              ⍝ Lookup var in env
+      nmv←'name'Prop ⍺                 ⍝ Name vector of node
+      nmv∊,¨'⍺⍵':(ast⍪⍺)env            ⍝ Don't annotate if ⍺ or ⍵
+      i←⊃(0⌷⍉env)⍳nmv                  ⍝ Lookup var in env
       a←'env' 'slot',⍪i(1 2)⌷env       ⍝ Stack frame and slot
       a←(⊃0 3⌷⍺)⍪a                     ⍝ Attach new attributes
       (ast⍪(1 3↑⍺),⊂a)env              ⍝ Attach to current AST
     }⍵
+    'FuncExpr'≡nm:⍺(⍺⍺{
+      'Variable'≡⊃1 1⌷⍺:(ast⍪⍺)env     ⍝ Don't process function variables
+      z←(⌽1 Kids ⍺),⊂MtAST env         ⍝ Recur down the children
+      ka env←⊃⍺⍺vis/z                  ⍝ In other cases
+      (ast⍪(1↑⍺)⍪ka)env                ⍝ and return
+    })⍵
     'Expression'≡nm:⍺(⍺⍺{              ⍝ Expression node
       z←(⌽1 Kids ⍺),⊂MtAST env         ⍝ Children use existing env
       ka env←⊃⍺⍺vis/z                  ⍝ Children visited first
