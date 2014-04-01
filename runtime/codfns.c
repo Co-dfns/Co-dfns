@@ -1084,7 +1084,7 @@ codfns_indexgen(struct codfns_array *res,
 		return 2;
 	}
 	
-	
+	res->type = 2;
 	dat = res->elements;
 	
 	for (i = 0; i < cnt; i++)
@@ -1099,7 +1099,6 @@ codfns_squad(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	int row;
-	double *elems;
 	
 	if (scale_shape(res, 1)) {
 		perror("codfns_squad");
@@ -1111,12 +1110,19 @@ codfns_squad(struct codfns_array *res,
 		return 2;
 	}
 	
+	res->type = rgt->type;
 	*res->shape = rgt->shape[1];
-	elems = rgt->elements;
 	row = *((int64_t *)lft->elements);
-	elems += row * res->size;
 	
-	memcpy(res->elements, elems, sizeof(double) * res->size);
+	if (res->type == 3) {
+		double *elems = rgt->elements;
+		elems += row * res->size;
+		memcpy(res->elements, elems, sizeof(double) * res->size);
+	} else {
+		int64_t *elems = rgt->elements;
+		elems += row * res->size;
+		memcpy(res->elements, elems, sizeof(int64_t) * res->size);
+	}
 	
 	return 0;
 }
@@ -1126,7 +1132,7 @@ codfns_index(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i;
-	int64_t *rgte, *lfte, *rese;
+	int64_t *lfte;
 	
 	if (copy_shape(res, lft)) {
 		perror("codfns_index");
@@ -1138,12 +1144,20 @@ codfns_index(struct codfns_array *res,
 		return 2;
 	}
 	
-	rgte = rgt->elements;
+	res->type = rgt->type;
 	lfte = lft->elements;
-	rese = res->elements;
 	
-	for (i = 0; i < res->size; i++)
-		*rese++ = rgte[*lfte++];
+	if (res->type == 3) {
+		double *rgte = rgt->elements;
+		double *rese = res->elements;
+		for (i = 0; i < res->size; i++)
+			*rese++ = rgte[*lfte++];
+	} else {
+		int64_t *rgte = rgt->elements;
+		int64_t *rese = res->elements;
+		for (i = 0; i < res->size; i++)
+			*rese++ = rgte[*lfte++];
+	}
 	
 	return 0;
 }
@@ -1153,10 +1167,12 @@ codfns_reshape(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i, size;
-	int64_t *rese, *lfte;
+	int64_t *lfte;
 	uint32_t *rgts, *ress;
 	
 	if (lft == NULL) {
+		int64_t *rese;
+		
 		if (scale_shape(res, 1)) {
 			perror("codfns_reshape");
 			return 1;
@@ -1167,6 +1183,7 @@ codfns_reshape(struct codfns_array *res,
 			return 2;
 		}
 		
+		res->type = 2;
 		*res->shape = rgt->rank;
 		rese = res->elements;
 		rgts = rgt->shape;
@@ -1174,6 +1191,8 @@ codfns_reshape(struct codfns_array *res,
 		for (i = 0; i < rgt->rank; i++)
 			*rese++ = *rgts++;
 	} else {
+		size_t esize;
+		
 		if (scale_shape(res, lft->size)) {
 			perror("codfns_reshape");
 			return 3;
@@ -1189,13 +1208,15 @@ codfns_reshape(struct codfns_array *res,
 			return 4;
 		}
 		
+		res->type = rgt->type;
+		esize = res->type == 3 ? sizeof(double) : sizeof(int64_t);
 		ress = res->shape;
 		lfte = lft->elements;
 		
 		for (i = 0; i < lft->size; i++)
 			*ress++ = *lfte++;
 		
-		memcpy(res->elements, rgt->elements, sizeof(int64_t) * size);
+		memcpy(res->elements, rgt->elements, esize * size);
 	}
 	
 	return 0;
@@ -1206,7 +1227,6 @@ codfns_catenate(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i;
-	int64_t *rese, *lfte, *rgte;
 	
 	if (scale_shape(res, 1)) {
 		perror("codfns_catenate");
@@ -1219,16 +1239,29 @@ codfns_catenate(struct codfns_array *res,
 	}
 	
 	*res->shape = lft->size + rgt->size;
+	res->type = lft->type;
 	
-	rese = res->elements;
-	lfte = lft->elements;
-	rgte = rgt->elements;
+	if (res->type == 3) {
+		double *rese = res->elements;
+		double *lfte = lft->elements;
+		double *rgte = rgt->elements;
 	
-	for (i = 0; i < lft->size; i++) 
-		*rese++ = *lfte++;
+		for (i = 0; i < lft->size; i++) 
+			*rese++ = *lfte++;
 	
-	for (i = 0; i < rgt->size; i++)
-		*rese++ = *rgte++;
+		for (i = 0; i < rgt->size; i++)
+			*rese++ = *rgte++;
+	} else {
+		int64_t *rese = res->elements;
+		int64_t *lfte = lft->elements;
+		int64_t *rgte = rgt->elements;
+	
+		for (i = 0; i < lft->size; i++) 
+			*rese++ = *lfte++;
+	
+		for (i = 0; i < rgt->size; i++)
+			*rese++ = *rgte++;
+	}
 		
 	return 0;
 }
