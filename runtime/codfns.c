@@ -303,7 +303,29 @@ prepare_res(void **buf, struct codfns_array *res,
 	return 0;
 }
 
-#define scalar_fn(mon, dya, rest, lftt, rgtt) \
+#define scalar_fnm(mon, typ, rest, rgtt) \
+{ \
+	int code; \
+	uint64_t i; \
+	rest *res_elems; \
+	rgtt *right_elems; \
+\
+	right_elems = rgt->elements; \
+\
+	if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
+\
+	for (i = 0; i < res->size; i++) { \
+		code = mon(res_elems++, right_elems++); \
+		if (code) return code; \
+	} \
+\
+	res->type = typ; \
+\
+	return 0; \
+}
+	
+
+#define scalar_fnd(dya, typ, rest, lftt, rgtt) \
 { \
 	int code; \
 	uint64_t i; \
@@ -312,19 +334,6 @@ prepare_res(void **buf, struct codfns_array *res,
 	rgtt *right_elems; \
  \
 	right_elems = rgt->elements; \
- \
-	/* Monadic case */ \
-	if (lft == NULL) { \
-		if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
- \
-		for (i = 0; i < res->size; i++) { \
-			code = mon(res_elems++, right_elems++); \
-			if (code) return code; \
-		} \
- \
-		return 0; \
-	} \
- \
 	left_elems = lft->elements; \
  \
 	/* Dyadic case */ \
@@ -350,9 +359,30 @@ prepare_res(void **buf, struct codfns_array *res,
 			if (code) return code; \
 		} \
 	} \
+\
+	res->type = typ; \
  \
 	return 0; \
-}	
+}
+
+#define scalar_dispatch(df, dt, dzt, drt, ifn, it, izt, irt, ddf, ddt, ddzt, ddlt, ddrt, dif, dit, dizt, dilt, dirt, idf, idt, idzt, idlt, idrt, iif, iit, iizt, iilt, iirt) \
+if (lft == NULL) { \
+	if (rgt->type == 3) \
+		scalar_fnm(df, dt, dzt, drt) \
+	else \
+		scalar_fnm(ifn, it, izt, irt) \
+} else if (lft->type == 3) { \
+	if (rgt->type == 3) \
+		scalar_fnd(ddf, ddt, ddzt, ddlt, ddrt) \
+	else \
+		scalar_fnd(dif, dit, dizt, dilt, dirt) \
+} else { \
+	if (rgt->type == 3) \
+		scalar_fnd(idf, idt, idzt, idlt, idrt) \
+	else \
+		scalar_fnd(iif, iit, iizt, iilt, iirt) \
+}
+
 
 /* codfns_add()
  *
@@ -360,25 +390,41 @@ prepare_res(void **buf, struct codfns_array *res,
  * cases.
  */
 
-int inline static
-identity(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = *rgt;
-	return 0;
+#define identity(nm, tgtt, rgtt) \
+int inline static \
+nm(tgtt *tgt, rgtt *rgt) \
+{ \
+	*tgt = *rgt; \
+	return 0; \
 }
 
-int inline static
-add_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = *lft + *rgt;
-	return 0;
+identity(identity_i, int64_t, int64_t)
+identity(identity_d, double, double)
+
+#define add(nm, zt, lt, rt) \
+int inline static \
+nm(zt *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = *lft + *rgt; \
+	return 0; \
 }
+
+add(add_ii, int64_t, int64_t, int64_t)
+add(add_id, double, int64_t, double)
+add(add_di, double, double, int64_t)
+add(add_dd, double, double, double)
 
 int
 codfns_add(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(identity, add_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    identity_d, 3, double, double,
+	    identity_i, 2, int64_t, int64_t,
+	    add_dd, 3, double, double, double,
+	    add_di, 3, double, double, int64_t,
+	    add_id, 3, double, int64_t, double,
+	    add_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_subtract()
@@ -386,25 +432,41 @@ codfns_add(struct codfns_array *res,
  * Intended Function: Implement the primitive APL - function.
  */
 
-int inline static
-negate_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = -1 * *rgt;
-	return 0;
+#define negate(nm, zt, rt) \
+int inline static \
+nm(zt *tgt, rt *rgt) \
+{ \
+	*tgt = -1 * *rgt; \
+	return 0; \
 }
 
-int inline static
-subtract_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = *lft - *rgt;
-	return 0;
+negate(negate_i, int64_t, int64_t)
+negate(negate_d, double, double)
+
+#define subtract(nm, zt, lt, rt) \
+int inline static \
+nm(zt *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = *lft - *rgt; \
+	return 0; \
 }
+
+subtract(subtract_ii, int64_t, int64_t, int64_t)
+subtract(subtract_id, double, int64_t, double)
+subtract(subtract_di, double, double, int64_t)
+subtract(subtract_dd, double, double, double)
 
 int
 codfns_subtract(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(negate_int, subtract_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    negate_d, 3, double, double,
+	    negate_i, 2, int64_t, int64_t,
+	    subtract_dd, 3, double, double, double,
+	    subtract_di, 3, double, double, int64_t,
+	    subtract_id, 3, double, int64_t, double,
+	    subtract_ii, 2, int64_t, int64_t, int64_t)
 }
 
 
@@ -413,31 +475,47 @@ codfns_subtract(struct codfns_array *res,
  * Intended Function: Compute the APL × function.
  */
 
-int inline static
-direction_int(int64_t *tgt, int64_t *rgt)
-{
-	if (*rgt == 0)
-		*tgt = 0;
-	else if (*rgt < 0)
-		*tgt = -1;
-	else
-		*tgt = 1;
-
-	return 0;
+#define direction(nm, rt) \
+int inline static \
+nm(int64_t *tgt, rt *rgt) \
+{ \
+	if (*rgt == 0) \
+		*tgt = 0; \
+	else if (*rgt < 0) \
+		*tgt = -1; \
+	else \
+		*tgt = 1; \
+ \
+	return 0; \
 }
 
-int inline static
-multiply_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = *lft * *rgt;
-	return 0;
+direction(direction_i, int64_t)
+direction(direction_d, double)
+
+#define multiply(nm, zt, lt, rt) \
+int inline static \
+nm(zt *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = *lft * *rgt; \
+	return 0; \
 }
+
+multiply(multiply_ii, int64_t, int64_t, int64_t)
+multiply(multiply_id, double, int64_t, double)
+multiply(multiply_di, double, double, int64_t)
+multiply(multiply_dd, double, double, double)
 
 int
 codfns_multiply(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(direction_int, multiply_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    direction_d, 2, int64_t, double,
+	    direction_i, 2, int64_t, int64_t,
+	    multiply_dd, 3, double, double, double,
+	    multiply_di, 3, double, double, int64_t,
+	    multiply_id, 3, double, int64_t, double,
+	    multiply_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_divide()
@@ -445,37 +523,53 @@ codfns_multiply(struct codfns_array *res,
  * Intended Function: Compute the APL ÷ function.
  */
 
-int inline static
-reciprocal_int(int64_t *tgt, int64_t *rgt)
-{
-	if (*rgt == 0) {
-		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
-		return 11;
-	}
-
-	*tgt = 1 / *rgt;
-
-	return 0;
+#define reciprocal(nm, rt) \
+int inline static \
+nm(double *tgt, rt *rgt) \
+{ \
+	if (*rgt == 0) { \
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n"); \
+		return 11; \
+	} \
+ \
+	*tgt = 1.0 / *rgt; \
+ \
+	return 0; \
 }
 
-int inline static
-divide_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	if (*rgt == 0) {
-		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
-		return 11;
-	}
+reciprocal(reciprocal_i, int64_t)
+reciprocal(reciprocal_d, double)
 
-	*tgt = *lft / *rgt;
-
-	return 0;
+#define divide(nm, lt, rt) \
+int inline static \
+nm(double *tgt, lt *lft, rt *rgt) \
+{ \
+	if (*rgt == 0) { \
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n"); \
+		return 11; \
+	} \
+ \
+	*tgt = *lft / 1.0 * *rgt; \
+ \
+	return 0; \
 }
+
+divide(divide_ii, int64_t, int64_t)
+divide(divide_id, int64_t, double)
+divide(divide_di, double, int64_t)
+divide(divide_dd, double, double)
 
 int
 codfns_divide(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(reciprocal_int, divide_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    reciprocal_d, 3, double, double,
+	    reciprocal_i, 3, double, int64_t,
+	    divide_dd, 3, double, double, double,
+	    divide_di, 3, double, double, int64_t,
+	    divide_id, 3, double, int64_t, double,
+	    divide_ii, 3, double, int64_t, int64_t)
 }
 
 /* codfns_magnitude()
@@ -483,27 +577,52 @@ codfns_divide(struct codfns_array *res,
  * Intended Function: Compute the APL | function.
  */
 
-int inline static
-magnitude_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = llabs(*rgt);
-
-	return 0;
+#define magnitude(nm, zt, rt) \
+int inline static \
+nm(zt *tgt, rt *rgt) \
+{ \
+	*tgt = llabs(*rgt); \
+ \
+	return 0; \
 }
 
+magnitude(magnitude_i, int64_t, int64_t)
+magnitude(magnitude_d, double, double)
+
 int inline static
-residue_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
+residue_ii(int64_t *tgt, int64_t *lft, int64_t *rgt)
 {
 	*tgt = *lft % *rgt;
-
 	return 0;
 }
+
+#define residue(nm, zt, lt, rt) \
+int inline static \
+nm(zt *tgt, lt *lft, rt *rgt) \
+{ \
+	double res; \
+\
+	res = *rgt / *lft; \
+	res = floor(res); \
+	*tgt = *rgt - res * *lft; \
+	return 0; \
+}
+
+residue(residue_id, double, int64_t, double)
+residue(residue_di, double, double, int64_t)
+residue(residue_dd, double, double, double)
 
 int
 codfns_residue(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(magnitude_int, residue_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    magnitude_d, 3, double, double,
+	    magnitude_i, 2, int64_t, int64_t,
+	    residue_dd, 3, double, double, double,
+	    residue_di, 3, double, double, int64_t,
+	    residue_id, 3, double, int64_t, double,
+	    residue_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_power()
@@ -511,25 +630,41 @@ codfns_residue(struct codfns_array *res,
  * Intended Function: Compute the APL * function.
  */
 
-int inline static
-exp_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = exp(*rgt);
-	return 0;
+#define expapl(nm, zt, rt) \
+int inline static \
+nm(zt *tgt, rt *rgt) \
+{ \
+	*tgt = exp(*rgt); \
+	return 0; \
 }
 
-int inline static
-pow_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = pow(*lft, *rgt);
-	return 0;
+expapl(exp_i, int64_t, int64_t)
+expapl(exp_d, double, double)
+
+#define powapl(nm, zt, lt, rt) \
+int inline static \
+nm(zt *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = pow(*lft, *rgt); \
+	return 0; \
 }
+
+powapl(pow_dd, double, double, double)
+powapl(pow_di, double, double, int64_t)
+powapl(pow_id, double, int64_t, double)
+powapl(pow_ii, int64_t, int64_t, int64_t)
 
 int
 codfns_power(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(exp_int, pow_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    exp_d, 3, double, double,
+	    exp_i, 2, int64_t, int64_t,
+	    pow_dd, 3, double, double, double,
+	    pow_di, 3, double, double, int64_t,
+	    pow_id, 3, double, int64_t, double,
+	    pow_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_log()
@@ -537,25 +672,41 @@ codfns_power(struct codfns_array *res,
  * Intended Function: Compute the APL ⍟ function.
  */
 
-int inline static
-log_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = log(*rgt);
-	return 0;
+#define logapl(nm, rt) \
+int inline static \
+nm(double *tgt, rt *rgt) \
+{ \
+	*tgt = log(*rgt); \
+	return 0; \
 }
 
-int inline static
-logbn_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = log(*rgt) / log(*lft);
-	return 0;
+logapl(log_i, int64_t)
+logapl(log_d, double)
+
+#define logbn(nm, lt, rt) \
+int inline static \
+nm(double *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = log(*rgt) / log(*lft); \
+	return 0; \
 }
+
+logbn(logbn_dd, double, double)
+logbn(logbn_di, double, int64_t)
+logbn(logbn_id, int64_t, double)
+logbn(logbn_ii, int64_t, int64_t)
 
 int
 codfns_log(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(log_int, logbn_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    log_d, 3, double, double,
+	    log_i, 3, double, int64_t,
+	    logbn_dd, 3, double, double, double,
+	    logbn_di, 3, double, double, int64_t,
+	    logbn_id, 3, double, int64_t, double,
+	    logbn_ii, 3, double, int64_t, int64_t)
 }
 
 /* codfns_max()
@@ -563,25 +714,41 @@ codfns_log(struct codfns_array *res,
  * Intended Function: Compute the APL ⌈ function.
  */
 
-int inline static
-ceiling_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = ceil(*rgt);
-	return 0;
+#define ceilapl(nm, zt, rt) \
+int inline static \
+nm(zt *tgt, rt *rgt) \
+{ \
+	*tgt = ceil(*rgt); \
+	return 0; \
 }
 
-int inline static
-max_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft >= *rgt ? *lft : *rgt);
-	return 0;
+ceilapl(ceiling_d, double, double)
+ceilapl(ceiling_i, int64_t, int64_t)
+
+#define maxapl(nm, zt, lt, rt) \
+int inline static \
+nm(zt *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft >= *rgt ? *lft : *rgt); \
+	return 0; \
 }
+
+maxapl(max_dd, double, double, double)
+maxapl(max_di, double, double, int64_t)
+maxapl(max_id, double, int64_t, double)
+maxapl(max_ii, int64_t, int64_t, int64_t)
 
 int
 codfns_max(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(ceiling_int, max_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    ceiling_d, 3, double, double,
+	    ceiling_i, 2, int64_t, int64_t,
+	    max_dd, 3, double, double, double,
+	    max_di, 3, double, double, int64_t,
+	    max_id, 3, double, int64_t, double,
+	    max_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_min()
@@ -589,25 +756,41 @@ codfns_max(struct codfns_array *res,
  * Intended Function: Compute the APL ⌊ function.
  */
 
-int inline static
-floor_int(int64_t *tgt, int64_t *rgt)
-{
-	*tgt = floor(*rgt);
-	return 0;
+#define floorapl(nm, zt, rt) \
+int inline static \
+nm(zt *tgt, rt *rgt) \
+{ \
+	*tgt = floor(*rgt); \
+	return 0; \
 }
 
-int inline static
-min_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft <= *rgt ? *lft : *rgt);
-	return 0;
+floorapl(floor_d, double, double)
+floorapl(floor_i, int64_t, int64_t)
+
+#define minapl(nm, zt, lt, rt) \
+int inline static \
+nm(zt *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft <= *rgt ? *lft : *rgt); \
+	return 0; \
 }
+
+minapl(min_dd, double, double, double)
+minapl(min_di, double, double, int64_t)
+minapl(min_id, double, int64_t, double)
+minapl(min_ii, int64_t, int64_t, int64_t)
 
 int
 codfns_min(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	scalar_fn(floor_int, min_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    floor_d, 3, double, double,
+	    floor_i, 2, int64_t, int64_t,
+	    min_dd, 3, double, double, double,
+	    min_di, 3, double, double, int64_t,
+	    min_id, 3, double, int64_t, double,
+	    min_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_less()
@@ -615,12 +798,18 @@ codfns_min(struct codfns_array *res,
  * Intended Function: Compute the APL < function.
  */
 
-int inline static
-less_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft < *rgt);
-	return 0;
+#define less(nm, lt, rt) \
+int inline static \
+nm(int64_t *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft < *rgt); \
+	return 0; \
 }
+
+less(less_dd, double, double)
+less(less_di, double, int64_t)
+less(less_id, int64_t, double)
+less(less_ii, int64_t, int64_t)
 
 int
 codfns_less(struct codfns_array *res,
@@ -631,7 +820,13 @@ codfns_less(struct codfns_array *res,
 		return 2;
 	}
 
-	scalar_fn(identity, less_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    identity_d, 3, double, double,
+	    identity_i, 2, int64_t, int64_t,
+	    less_dd, 2, int64_t, double, double,
+	    less_di, 2, int64_t, double, int64_t,
+	    less_id, 2, int64_t, int64_t, double,
+	    less_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_less_or_equal()
@@ -639,12 +834,18 @@ codfns_less(struct codfns_array *res,
  * Intended Function: Compute the APL ≤ function.
  */
 
-int inline static
-less_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft <= *rgt);
-	return 0;
+#define lesseq(nm, lt, rt) \
+int inline static \
+nm(int64_t *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft <= *rgt); \
+	return 0; \
 }
+
+lesseq(lesseq_dd, double, double)
+lesseq(lesseq_di, double, int64_t)
+lesseq(lesseq_id, int64_t, double)
+lesseq(lesseq_ii, int64_t, int64_t)
 
 int
 codfns_less_or_equal(struct codfns_array *res,
@@ -655,7 +856,13 @@ codfns_less_or_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	scalar_fn(identity, less_or_equal_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    identity_d, 3, double, double,
+	    identity_i, 2, int64_t, int64_t,
+	    lesseq_dd, 2, int64_t, double, double,
+	    lesseq_di, 2, int64_t, double, int64_t,
+	    lesseq_id, 2, int64_t, int64_t, double,
+	    lesseq_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_equal()
@@ -663,12 +870,18 @@ codfns_less_or_equal(struct codfns_array *res,
  * Intended Function: Compute the APL = function.
  */
 
-int inline static
-equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft == *rgt);
-	return 0;
+#define equal(nm, lt, rt) \
+int inline static \
+nm(int64_t *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft == *rgt); \
+	return 0; \
 }
+
+equal(equal_dd, double, double)
+equal(equal_di, double, int64_t)
+equal(equal_id, int64_t, double)
+equal(equal_ii, int64_t, int64_t)
 
 int
 codfns_equal(struct codfns_array *res,
@@ -679,7 +892,13 @@ codfns_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	scalar_fn(identity, equal_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    identity_d, 3, double, double,
+	    identity_i, 2, int64_t, int64_t,
+	    equal_dd, 2, int64_t, double, double,
+	    equal_di, 2, int64_t, double, int64_t,
+	    equal_id, 2, int64_t, int64_t, double,
+	    equal_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_not_equal()
@@ -687,12 +906,18 @@ codfns_equal(struct codfns_array *res,
  * Intended Function: Compute the APL ≠ function.
  */
 
-int inline static
-not_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft != *rgt);
-	return 0;
+#define notequal(nm, lt, rt) \
+int inline static \
+nm(int64_t *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft != *rgt); \
+	return 0; \
 }
+
+notequal(notequal_dd, double, double)
+notequal(notequal_di, double, int64_t)
+notequal(notequal_id, int64_t, double)
+notequal(notequal_ii, int64_t, int64_t)
 
 int
 codfns_not_equal(struct codfns_array *res,
@@ -703,7 +928,14 @@ codfns_not_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	scalar_fn(identity, not_equal_int, int64_t, int64_t, int64_t)
+
+	scalar_dispatch(
+	    identity_d, 3, double, double,
+	    identity_i, 2, int64_t, int64_t,
+	    notequal_dd, 2, int64_t, double, double,
+	    notequal_di, 2, int64_t, double, int64_t,
+	    notequal_id, 2, int64_t, int64_t, double,
+	    notequal_ii, 2, int64_t, int64_t, int64_t)
 }
 
 
@@ -712,12 +944,18 @@ codfns_not_equal(struct codfns_array *res,
  * Intended Function: Compute the APL ≥ function.
  */
 
-int inline static
-greater_or_equal_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft >= *rgt);
-	return 0;
+#define greateq(nm, lt, rt) \
+int inline static \
+nm(int64_t *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft >= *rgt); \
+	return 0; \
 }
+
+greateq(greateq_dd, double, double)
+greateq(greateq_di, double, int64_t)
+greateq(greateq_id, int64_t, double)
+greateq(greateq_ii, int64_t, int64_t)
 
 int
 codfns_greater_or_equal(struct codfns_array *res,
@@ -728,7 +966,13 @@ codfns_greater_or_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	scalar_fn(identity, greater_or_equal_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    identity_d, 3, double, double,
+	    identity_i, 2, int64_t, int64_t,
+	    greateq_dd, 2, int64_t, double, double,
+	    greateq_di, 2, int64_t, double, int64_t,
+	    greateq_id, 2, int64_t, int64_t, double,
+	    greateq_ii, 2, int64_t, int64_t, int64_t)
 }
 
 /* codfns_greater()
@@ -736,12 +980,18 @@ codfns_greater_or_equal(struct codfns_array *res,
  * Intended Function: Compute the APL > function.
  */
 
-int inline static
-greater_int(int64_t *tgt, int64_t *lft, int64_t *rgt)
-{
-	*tgt = (*lft > *rgt);
-	return 0;
+#define great(nm, lt, rt) \
+int inline static \
+nm(int64_t *tgt, lt *lft, rt *rgt) \
+{ \
+	*tgt = (*lft > *rgt); \
+	return 0; \
 }
+
+great(great_dd, double, double)
+great(great_di, double, int64_t)
+great(great_id, int64_t, double)
+great(great_ii, int64_t, int64_t)
 
 int
 codfns_greater(struct codfns_array *res,
@@ -752,7 +1002,13 @@ codfns_greater(struct codfns_array *res,
 		return 2;
 	}
 
-	scalar_fn(identity, greater_int, int64_t, int64_t, int64_t)
+	scalar_dispatch(
+	    identity_d, 3, double, double,
+	    identity_i, 2, int64_t, int64_t,
+	    great_dd, 2, int64_t, double, double,
+	    great_di, 2, int64_t, double, int64_t,
+	    great_id, 2, int64_t, int64_t, double,
+	    great_ii, 2, int64_t, int64_t, int64_t)
 }
 
 int
