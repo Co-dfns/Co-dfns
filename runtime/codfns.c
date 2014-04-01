@@ -139,7 +139,7 @@ int
 array_cp(struct codfns_array *tgt, struct codfns_array *src)
 {
 	uint32_t *shp;
-	int64_t *dat;
+	void *dat;
 
 	if (tgt == src) return 0;
 
@@ -265,7 +265,7 @@ copy_shape(struct codfns_array *tgt, struct codfns_array *src)
 int static inline
 scale_elements(struct codfns_array *arr, uint64_t size)
 {
-	int64_t *buf;
+	void *buf;
 
 	buf = arr->elements;
 
@@ -289,7 +289,7 @@ scale_elements(struct codfns_array *arr, uint64_t size)
  * iteration.
  */
 int static inline
-prepare_res(int64_t **buf, struct codfns_array *res,
+prepare_res(void **buf, struct codfns_array *res,
     struct codfns_array *pat)
 {
 	if (scale_elements(res, pat->size))
@@ -303,65 +303,56 @@ prepare_res(int64_t **buf, struct codfns_array *res,
 	return 0;
 }
 
-/* scalar_fn()
- *
- * Intended Function: Given a monadic and dyadic scalar functions,
- * a result, left, and right argument, compute the scalar APL function
- * defined by the given monadic and dyadic functions.
- */
-
-int static inline
-scalar_fn(int (*mon)(int64_t *, int64_t *),
-    int (*dya)(int64_t *, int64_t *, int64_t *),
-    struct codfns_array *res,
-    struct codfns_array *lft,
-    struct codfns_array *rgt)
-{
-	int i, code;
-	int64_t *left_elems, *right_elems, *res_elems;
-
-	right_elems = rgt->elements;
-
-	/* Monadic case */
-	if (lft == NULL) {
-		if ((code = prepare_res(&res_elems, res, rgt))) return code;
-
-		for (i = 0; i < res->size; i++) {
-			code = mon(res_elems++, right_elems++);
-			if (code) return code;
-		}
-
-		return 0;
-	}
-
-	left_elems = lft->elements;
-
-	/* Dyadic case */
-	if (same_shape(lft, rgt)) {
-		if ((code = prepare_res(&res_elems, res, lft))) return code;
-
-		for (i = 0; i < res->size; i++) {
-			code = dya(res_elems++, left_elems++, right_elems++);
-			if (code) return code;
-		}
-	} else if (scalar(lft)) {
-		if ((code = prepare_res(&res_elems, res, rgt))) return code;
-
-		for (i = 0; i < res->size; i++) {
-			code = dya(res_elems++, left_elems, right_elems++);
-			if (code) return code;
-		}
-	} else if (scalar(rgt)) {
-		if ((code = prepare_res(&res_elems, res, lft))) return code;
-
-		for (i = 0; i < res->size; i++) {
-			code = dya(res_elems++, left_elems++, right_elems);
-			if (code) return code;
-		}
-	}
-
-	return 0;
-}
+#define scalar_fn(mon, dya, rest, lftt, rgtt) \
+{ \
+	int code; \
+	uint64_t i; \
+	rest *res_elems; \
+	lftt *left_elems; \
+	rgtt *right_elems; \
+ \
+	right_elems = rgt->elements; \
+ \
+	/* Monadic case */ \
+	if (lft == NULL) { \
+		if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
+ \
+		for (i = 0; i < res->size; i++) { \
+			code = mon(res_elems++, right_elems++); \
+			if (code) return code; \
+		} \
+ \
+		return 0; \
+	} \
+ \
+	left_elems = lft->elements; \
+ \
+	/* Dyadic case */ \
+	if (same_shape(lft, rgt)) { \
+		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
+ \
+		for (i = 0; i < res->size; i++) { \
+			code = dya(res_elems++, left_elems++, right_elems++); \
+			if (code) return code; \
+		} \
+	} else if (scalar(lft)) { \
+		if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
+ \
+		for (i = 0; i < res->size; i++) { \
+			code = dya(res_elems++, left_elems, right_elems++); \
+			if (code) return code; \
+		} \
+	} else if (scalar(rgt)) { \
+		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
+ \
+		for (i = 0; i < res->size; i++) { \
+			code = dya(res_elems++, left_elems++, right_elems); \
+			if (code) return code; \
+		} \
+	} \
+ \
+	return 0; \
+}	
 
 /* codfns_add()
  *
@@ -387,7 +378,7 @@ int
 codfns_add(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(identity, add_int, res, lft, rgt);
+	scalar_fn(identity, add_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_subtract()
@@ -413,7 +404,7 @@ int
 codfns_subtract(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(negate_int, subtract_int, res, lft, rgt);
+	scalar_fn(negate_int, subtract_int, int64_t, int64_t, int64_t)
 }
 
 
@@ -446,7 +437,7 @@ int
 codfns_multiply(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(direction_int, multiply_int, res, lft, rgt);
+	scalar_fn(direction_int, multiply_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_divide()
@@ -484,7 +475,7 @@ int
 codfns_divide(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(reciprocal_int, divide_int, res, lft, rgt);
+	scalar_fn(reciprocal_int, divide_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_magnitude()
@@ -512,7 +503,7 @@ int
 codfns_residue(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(magnitude_int, residue_int, res, lft, rgt);
+	scalar_fn(magnitude_int, residue_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_power()
@@ -538,7 +529,7 @@ int
 codfns_power(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(exp_int, pow_int, res, lft, rgt);
+	scalar_fn(exp_int, pow_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_log()
@@ -564,7 +555,7 @@ int
 codfns_log(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(log_int, logbn_int, res, lft, rgt);
+	scalar_fn(log_int, logbn_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_max()
@@ -590,7 +581,7 @@ int
 codfns_max(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(ceiling_int, max_int, res, lft, rgt);
+	scalar_fn(ceiling_int, max_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_min()
@@ -616,7 +607,7 @@ int
 codfns_min(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	return scalar_fn(floor_int, min_int, res, lft, rgt);
+	scalar_fn(floor_int, min_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_less()
@@ -640,7 +631,7 @@ codfns_less(struct codfns_array *res,
 		return 2;
 	}
 
-	return scalar_fn(identity, less_int, res, lft, rgt);
+	scalar_fn(identity, less_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_less_or_equal()
@@ -664,7 +655,7 @@ codfns_less_or_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	return scalar_fn(identity, less_or_equal_int, res, lft, rgt);
+	scalar_fn(identity, less_or_equal_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_equal()
@@ -688,7 +679,7 @@ codfns_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	return scalar_fn(identity, equal_int, res, lft, rgt);
+	scalar_fn(identity, equal_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_not_equal()
@@ -712,7 +703,7 @@ codfns_not_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	return scalar_fn(identity, not_equal_int, res, lft, rgt);
+	scalar_fn(identity, not_equal_int, int64_t, int64_t, int64_t)
 }
 
 
@@ -737,7 +728,7 @@ codfns_greater_or_equal(struct codfns_array *res,
 		return 2;
 	}
 
-	return scalar_fn(identity, greater_or_equal_int, res, lft, rgt);
+	scalar_fn(identity, greater_or_equal_int, int64_t, int64_t, int64_t)
 }
 
 /* codfns_greater()
@@ -761,7 +752,7 @@ codfns_greater(struct codfns_array *res,
 		return 2;
 	}
 
-	return scalar_fn(identity, greater_int, res, lft, rgt);
+	scalar_fn(identity, greater_int, int64_t, int64_t, int64_t)
 }
 
 int
@@ -825,7 +816,7 @@ codfns_indexgen(struct codfns_array *res,
 	uint32_t i;
 	int64_t cnt, *dat;
 	
-	cnt = *rgt->elements;
+	cnt = *((int64_t *)rgt->elements);
 	
 	if (scale_shape(res, 1)) {
 		perror("codfns_indexgen");
@@ -851,17 +842,25 @@ int
 codfns_squad(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
+	int row;
+	double *elems;
+	
 	if (scale_shape(res, 1)) {
 		perror("codfns_squad");
 		return 1;
 	}
 	
-	if (scale_elements(res, 1)) {
+	if (scale_elements(res, rgt->shape[1])) {
 		perror("codfns_squad");
 		return 2;
 	}
 	
-	*res->elements = rgt->elements[*lft->elements];
+	*res->shape = rgt->shape[1];
+	elems = rgt->elements;
+	row = *((int64_t *)lft->elements);
+	elems += row * res->size;
+	
+	memcpy(res->elements, elems, sizeof(double) * res->size);
 	
 	return 0;
 }
@@ -983,7 +982,7 @@ codfns_ptred(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i;
-	int64_t val, *lfte, *rgte;
+	double val, *lfte, *rgte;
 	
 	if (scale_shape(res, 0)) {
 		perror("codfns_ptred");
@@ -1002,7 +1001,7 @@ codfns_ptred(struct codfns_array *res,
 	for (i = 0; i < rgt->size; i++) 
 		val += *lfte++ * *rgte++;
 		
-	*res->elements = val;
+	*((double *)res->elements) = val;
 
 	return 0;
 }
@@ -1016,7 +1015,7 @@ codfns_each(struct codfns_array *res,
 {
 	int code;
 	uint64_t i;
-	int64_t *rese;
+	double *rese, *srgte;
 	struct codfns_array sres, srgt;
 
 	if (copy_shape(res, rgt)) {
@@ -1039,7 +1038,7 @@ codfns_each(struct codfns_array *res,
 	srgt.size = 1;
 	srgt.type = rgt->type;
 	srgt.shape = NULL;
-	srgt.elements = rgt->elements;
+	srgte = srgt.elements = rgt->elements;
 	
 	rese = res->elements;
 	
@@ -1047,8 +1046,8 @@ codfns_each(struct codfns_array *res,
 		if ((code = fn(&sres, NULL, &srgt, env)))
 			return code;
 		
-		srgt.elements++;
-		*rese++ = *sres.elements;
+		srgt.elements = ++srgte;
+		*rese++ = *((double *)sres.elements);
 	}
 	
 	res->type = sres.type;

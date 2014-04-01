@@ -9,7 +9,7 @@ struct codfns_array {
 	uint64_t  size;
 	uint8_t   type;
 	uint32_t *shape;
-	int64_t  *elements;
+	void  *elements;
 };
 
 /* Helper functions upon which the compiler relies */
