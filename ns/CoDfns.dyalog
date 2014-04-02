@@ -9,7 +9,7 @@
 ⍝ The following variables must be set correctly for the appropriate platform
 
 Target←'X86'
-TargetTriple←'x86_64-slackware-linux-gnu'
+TargetTriple←'x86_64-redhat-linux-gnu'
 CoDfnsRuntime←'runtime/libcodfns.so'
 LLVMCore←'libLLVM-3.4.so'
 LLVMExecutionEngine←'libLLVM-3.4.so'
