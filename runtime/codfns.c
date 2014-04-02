@@ -1353,7 +1353,7 @@ int
 codfns_catenate(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	uint64_t i;
+	uint64_t i, lsz, rsz;
 	uint32_t sz;
 	
 	if (scale_shape(res, 1)) {
@@ -1361,7 +1361,11 @@ codfns_catenate(struct codfns_array *res,
 		return 1;
 	}
 	
-	if (scale_elements(res, sz = lft->size + rgt->size)) {
+	lsz = lft->size;
+	rsz = rgt->size;
+	sz = lsz + rsz;
+	
+	if (scale_elements(res, sz)) {
 		perror("codfns_catenate");
 		return 2;
 	}
@@ -1375,18 +1379,18 @@ codfns_catenate(struct codfns_array *res,
 		double *rgte = rgt->elements;
 		
 		if (rgt == res) {
-			rese += lft->size;
-			for (i = 0; i < rgt->size; i++)
+			rese += lsz;
+			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
 			rese = res->elements;
 		}
 	
 		if (lft != res)
-			for (i = 0; i < lft->size; i++) 
+			for (i = 0; i < lsz; i++) 
 				*rese++ = *lfte++;
 	
 		if (rgt != res)
-			for (i = 0; i < rgt->size; i++)
+			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
 	} else {
 		int64_t *rese = res->elements;
@@ -1394,18 +1398,18 @@ codfns_catenate(struct codfns_array *res,
 		int64_t *rgte = rgt->elements;
 	
 		if (rgt == res) {
-			rese += lft->size;
-			for (i = 0; i < rgt->size; i++)
+			rese += lsz;
+			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
 			rese = res->elements;
 		}
 	
 		if (lft != res)
-			for (i = 0; i < lft->size; i++) 
+			for (i = 0; i < lsz; i++) 
 				*rese++ = *lfte++;
 	
 		if (rgt != res)
-			for (i = 0; i < rgt->size; i++)
+			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
 	}
 		
