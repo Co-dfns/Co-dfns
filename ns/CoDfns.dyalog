@@ -110,7 +110,11 @@ ModToNS←{
 
 ConvertArray←{
   s←ffi_get_size ⍵                     ⍝ Get the number of data elements
-  d←ffi_get_data_int s ⍵               ⍝ We assume that we have only integer types
+  t←ffi_get_type ⍵                     ⍝ Type of data
+  d←{
+    t=2:ffi_get_data_int s ⍵           ⍝ Integer type
+    ffi_get_data_float s ⍵             ⍝ Float type
+  }⍵
   r←ffi_get_rank ⍵                     ⍝ Get the number of shape elements
   p←ffi_get_shape r ⍵                  ⍝ Get the shapes
   p⍴d                                  ⍝ Reshape based on shape
@@ -567,7 +571,7 @@ ParseFnLine←{cod env←⍵
   cmt←⊃'comment' Prop 1↑⍺              ⍝ Preserve the comment for attachment
   cm←{(,':')≡⊃'name'Prop 1↑⍵}¨1 Kids ⍺ ⍝ Mask of : stimuli, to check for branch
   1<cnd←+/cm:⎕SIGNAL 2                 ⍝ Too many : tokens
-  1=1⌷cm:⎕SIGNAL 2                     ⍝ Empty test clause
+  1=0⌷cm:⎕SIGNAL 2                     ⍝ Empty test clause
   splt←{1↓¨(1,1↓cm)⊂[0]⍵}              ⍝ Fn to split on : token, drop excess
   1=cnd:⊃cod env ParseCond/splt ⍺      ⍝ Condition found, parse it
   err ast ne←env ParseExpr 1↓⍺         ⍝ Expr is the last non-error option
@@ -982,12 +986,14 @@ GenFunc←{
   bldr←CreateBuilder                   ⍝ Setup builder
   bb←AppendBasicBlock fr ''            ⍝ Initial basic block
   _←PositionBuilderAtEnd bldr bb       ⍝ Link builder and basic block
-  env0←{                               ⍝ Setup local frame
+  env0←⍺{                              ⍝ Setup local frame
     fsz←ConstInt Int32Type fs 0        ⍝ Frame size value reference
     0=fs:(GenNullArrayPtr⍬)fsz         ⍝ If frame is empty, do nothing
     ftp←ArrayTypeV                     ⍝ Frame is array pointer
     args←bldr ftp fsz 'env0'           ⍝ Frame is env0
-    (BuildArrayAlloca args)fsz         ⍝ Return pointer and size
+    z←(BuildArrayAlloca args)fsz       ⍝ Return pointer and size
+    fn←GetNamedFunction ⍺ 'init_env'   ⍝ We must initialize the environment
+    z⊣BuildCall bldr fn z 2 ''         ⍝ Using our helper function
   }⍬
   k←2 Kids ⍵                           ⍝ Nodes of the Function body
   _←⍬ ⍬(⍺ fr bldr env0 GenFnBlock)k    ⍝ Generate the function body
@@ -1159,10 +1165,10 @@ GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
   tgh←⊃tgt ⋄ tgr←1↓tgt                 ⍝ Split into head and rest targets
   nm vl←⍺(⍺⍺{rec←∇                     ⍝ Process the Expr
     cls←⊃'class'Prop 1↑⍺               ⍝ Node class
-    'atomic'≡cls:⍺{                    ⍝ Atomic: Var Reference
-      av nm vl←⍵(⍺⍺ LookupExpr)1↑2↓⍺   ⍝ Lookup expression variable
-      nm vl⊣tgh cpy                    ⍝ Copy into the first target
-    }⍵
+    'atomic'≡cls:⍺(⍺⍺{                 ⍝ Atomic: Var Reference
+      av nm vl←⍵(⍺⍺ LookupExpr)1↑1↓⍺   ⍝ Lookup expression variable
+      nm vl⊣tgh cpy av                 ⍝ Copy into the first target
+    })⍵
     lft nm vl f r←⍺(⍺⍺{                ⍝ Left argument handled based on arity
       gnap←GenNullArrayPtr             ⍝ Convenience
       dlft←⍺⍺{⍵(⍺⍺LookupExpr)1↑2↓⍺}    ⍝ Grab left argument in dyadic case
@@ -1303,7 +1309,7 @@ GenRuntime←{
   opa←(3⍴ft),opfp,et                   ⍝ Operator argument types
   opr←FunctionType it opa 5 0          ⍝ Operator type
   add←⍵ {AddFunction ⍺⍺ ⍵ ⍺}           ⍝ Fn to add functions to the module
-  _←cet add 'clean_env'                ⍝ Add clean_env()
+  _←cet add¨'clean_env' 'init_env'     ⍝ Add clean_env()
   _←two add¨'array_cp' 'array_free'    ⍝ Add the special ones
   _←std add¨APLRunts                   ⍝ Add the normal runtime
   _←opr add¨APLRtOps                   ⍝ Add the operators
@@ -1532,8 +1538,14 @@ P←'LLVM'
 ⍝ void LLVMDumpType (LLVMValueRef Val)
 'DumpType'⎕NA Core,'|',P,'DumpType P'
 
+⍝ uint8_t ffi_get_type (struct codfns_array *)
+'ffi_get_type'⎕NA 'U1 ',R,'|ffi_get_type P'
+
 ⍝ void ffi_get_data_int (int64_t *res, struct codfns_array *)
 'ffi_get_data_int'⎕NA R,'|ffi_get_data_int >I8[] P'
+
+⍝ void ffi_get_data_float (double *res, struct codfns_array *)
+'ffi_get_data_float'⎕NA R,'|ffi_get_data_float >F8[] P'
 
 ⍝ void ffi_get_shape (uint32_t *res, struct codfns_array *)
 'ffi_get_shape'⎕NA R,'|ffi_get_shape >U4[] P'
@@ -1545,7 +1557,8 @@ P←'LLVM'
 'ffi_get_rank'⎕NA 'U2 ',R,'|ffi_get_rank P'
 
 ⍝ int ffi_make_array(struct codfns_array **, uint16_t, uint64_t, uint32_t *, int64_t *)
-'ffi_make_array'⎕NA 'I ',R,'|ffi_make_array >P U2 U8 <U4[] <I8[]'
+'ffi_make_array_int'⎕NA 'I ',R,'|ffi_make_array_int >P U2 U8 <U4[] <I8[]'
+'ffi_make_array_double'⎕NA'I ',R,'|ffi_make_array_double >P U2 U8 <U4[] <F8[]'
 
 ⍝ void array_free(struct codfns_array *)
 'array_free'⎕NA R,'|array_free P'

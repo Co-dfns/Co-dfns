@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <error.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -15,6 +16,18 @@ uint64_t
 ffi_get_size(struct codfns_array *arr)
 {
 	return arr->size;
+}
+
+
+/* ffi_get_type()
+ * 
+ * Intended Function: Return the type field of the array.
+ */
+
+uint8_t
+ffi_get_type(struct codfns_array *arr)
+{
+	return arr->type;
 }
 
 /* ffi_get_rank()
@@ -43,6 +56,21 @@ ffi_get_data_int(int64_t *res, struct codfns_array *arr)
 	return;
 }
 
+/* ffi_get_data_float()
+ *
+ * Intended Function: Fill the given result buffer with the data
+ * elements of the array interpreted as doubles, assuming enough
+ * space in the buffer for the values.
+ */
+
+void
+ffi_get_data_float(double *res, struct codfns_array *arr)
+{
+	memcpy(res, arr->elements, sizeof(double) * arr->size);
+
+	return;
+}
+
 /* ffi_get_shape()
  *
  * Intended Function: Fill the result buffer with the shape of the
@@ -66,7 +94,7 @@ ffi_get_shape(uint32_t *res, struct codfns_array *arr)
  */
 
 int
-ffi_make_array(struct codfns_array **res,
+ffi_make_array_int(struct codfns_array **res,
     uint16_t rnk, uint64_t sz, uint32_t *shp, int64_t *dat)
 {
 	struct codfns_array *arr;
@@ -100,9 +128,55 @@ ffi_make_array(struct codfns_array **res,
 
 	arr->rank = rnk;
 	arr->size = sz;
+	arr->type = 2;
 
 	memcpy(arr->shape, shp, sizeof(uint32_t) * rnk);
 	memcpy(arr->elements, dat, sizeof(int64_t) * sz);
+
+	*res = arr;
+
+	return 0;
+}
+
+int
+ffi_make_array_double(struct codfns_array **res,
+    uint16_t rnk, uint64_t sz, uint32_t *shp, double *dat)
+{
+	struct codfns_array *arr;
+
+	arr = malloc(sizeof(struct codfns_array));
+
+	if (arr == NULL) {
+		perror("ffi_make_array");
+		return 1;
+	}
+
+	if (sz == 0) {
+		arr->elements = NULL;
+	} else {
+		arr->elements = calloc(sz, sizeof(int64_t));
+		if (arr->elements == NULL) {
+			perror("ffi_make_array");
+			return 2;
+		}
+	}
+
+	if (rnk == 0) {
+		arr->shape = NULL;
+	} else {
+		arr->shape = calloc(rnk, sizeof(uint32_t));
+		if (arr->shape == NULL) {
+			perror("ffi_make_array");
+			return 3;
+		}
+	}
+
+	arr->rank = rnk;
+	arr->size = sz;
+	arr->type = 3;
+
+	memcpy(arr->shape, shp, sizeof(uint32_t) * rnk);
+	memcpy(arr->elements, dat, sizeof(double) * sz);
 
 	*res = arr;
 
@@ -172,6 +246,24 @@ array_cp(struct codfns_array *tgt, struct codfns_array *src)
 	tgt->type = src->type;
 
 	return 0;
+}
+
+/* init_env()
+ * Intended Function: Initialize a frame environment.
+ */
+
+void
+init_env(struct codfns_array *env, int count)
+{
+	int i;
+	
+	for (i = 0; i < count; i++, env++) {
+		env->type = 0;
+		env->rank = 0;
+		env->size = 0;
+		env->shape = NULL;
+		env->elements = NULL;
+	}
 }
 
 /* clean_env()
@@ -247,10 +339,9 @@ copy_shape(struct codfns_array *tgt, struct codfns_array *src)
 		}
 	}
 
-	memcpy(buf, src->shape, sizeof(uint32_t) * tgt->rank);
-
 	tgt->rank = src->rank;
 	tgt->shape = buf;
+	memcpy(buf, src->shape, sizeof(uint32_t) * tgt->rank);
 
 	return 0;
 }
@@ -310,6 +401,9 @@ prepare_res(void **buf, struct codfns_array *res,
 	rest *res_elems; \
 	rgtt *right_elems; \
 \
+	/* print_shape(rgt);\
+	printf(" rgt: %ld", rgt->size);*/\
+ \
 	right_elems = rgt->elements; \
 \
 	if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
@@ -320,8 +414,19 @@ prepare_res(void **buf, struct codfns_array *res,
 	} \
 \
 	res->type = typ; \
+	/*printf(" res: %ld\n", res->size);*/\
 \
 	return 0; \
+}
+
+void print_shape(struct codfns_array *arr)
+{
+	int i;
+	
+	printf("Shape: ");
+	
+	for (i = 0; i < arr->rank; i++)
+		printf("%"PRIu32" ", arr->shape[i]);
 }
 	
 
@@ -330,16 +435,18 @@ prepare_res(void **buf, struct codfns_array *res,
 	int code; \
 	uint64_t i; \
 	rest *res_elems; \
-	lftt *left_elems; \
-	rgtt *right_elems; \
- \
-	right_elems = rgt->elements; \
-	left_elems = lft->elements; \
+\
+	/* print_shape(lft);\
+	print_shape(rgt);\
+	printf(" lft: %ld rgt: %ld", lft->size, rgt->size); */ \
  \
 	/* Dyadic case */ \
 	if (same_shape(lft, rgt)) { \
 		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
  \
+		lftt *left_elems = lft->elements; \
+		rgtt *right_elems = rgt->elements; \
+\
 		for (i = 0; i < res->size; i++) { \
 			code = dya(res_elems++, left_elems++, right_elems++); \
 			if (code) return code; \
@@ -347,20 +454,28 @@ prepare_res(void **buf, struct codfns_array *res,
 	} else if (scalar(lft)) { \
 		if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
  \
+		lftt left_elems = *((lftt *)lft->elements); \
+		rgtt *right_elems = rgt->elements; \
+\
 		for (i = 0; i < res->size; i++) { \
-			code = dya(res_elems++, left_elems, right_elems++); \
+			code = dya(res_elems++, &left_elems, right_elems++); \
 			if (code) return code; \
 		} \
 	} else if (scalar(rgt)) { \
 		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
  \
+		lftt *left_elems = lft->elements; \
+		rgtt right_elems = *((rgtt *)rgt->elements); \
+\
 		for (i = 0; i < res->size; i++) { \
-			code = dya(res_elems++, left_elems++, right_elems); \
+			code = dya(res_elems++, left_elems++, &right_elems); \
 			if (code) return code; \
 		} \
 	} \
 \
 	res->type = typ; \
+\
+	/* printf(" res: %ld\n", res->size); */\
  \
 	return 0; \
 }
@@ -460,6 +575,7 @@ int
 codfns_subtract(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
+	/*printf("subtract ");*/
 	scalar_dispatch(
 	    negate_d, 3, double, double,
 	    negate_i, 2, int64_t, int64_t,
@@ -509,6 +625,7 @@ int
 codfns_multiply(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
+	/*printf("multiply ");*/
 	scalar_dispatch(
 	    direction_d, 2, int64_t, double,
 	    direction_i, 2, int64_t, int64_t,
@@ -549,7 +666,7 @@ nm(double *tgt, lt *lft, rt *rgt) \
 		return 11; \
 	} \
  \
-	*tgt = *lft / 1.0 * *rgt; \
+	*tgt = (1.0 * *lft) / (1.0 * *rgt); \
  \
 	return 0; \
 }
@@ -581,7 +698,11 @@ codfns_divide(struct codfns_array *res,
 int inline static \
 nm(zt *tgt, rt *rgt) \
 { \
-	*tgt = llabs(*rgt); \
+	if (*rgt < 0) { \
+		*tgt = -1 * *rgt; \
+	} else { \
+		*tgt = *rgt; \
+	} \
  \
 	return 0; \
 }
@@ -1134,6 +1255,8 @@ codfns_index(struct codfns_array *res,
 	uint64_t i;
 	int64_t *lfte;
 	
+	/*printf("Index ");*/
+	
 	if (copy_shape(res, lft)) {
 		perror("codfns_index");
 		return 1;
@@ -1158,6 +1281,10 @@ codfns_index(struct codfns_array *res,
 		for (i = 0; i < res->size; i++)
 			*rese++ = rgte[*lfte++];
 	}
+
+	/*print_shape(lft);
+	print_shape(rgt);
+	printf(" lft: %ld rgt: %ld res: %ld\n", lft->size, rgt->size, res->size);*/
 	
 	return 0;
 }
@@ -1227,40 +1354,59 @@ codfns_catenate(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i;
+	uint32_t sz;
 	
 	if (scale_shape(res, 1)) {
 		perror("codfns_catenate");
 		return 1;
 	}
 	
-	if (scale_elements(res, lft->size + rgt->size)) {
+	if (scale_elements(res, sz = lft->size + rgt->size)) {
 		perror("codfns_catenate");
 		return 2;
 	}
 	
-	*res->shape = lft->size + rgt->size;
+	*res->shape = sz;
 	res->type = lft->type;
 	
 	if (res->type == 3) {
 		double *rese = res->elements;
 		double *lfte = lft->elements;
 		double *rgte = rgt->elements;
+		
+		if (rgt == res) {
+			rese += lft->size;
+			for (i = 0; i < rgt->size; i++)
+				*rese++ = *rgte++;
+			rese = res->elements;
+		}
 	
-		for (i = 0; i < lft->size; i++) 
-			*rese++ = *lfte++;
+		if (lft != res)
+			for (i = 0; i < lft->size; i++) 
+				*rese++ = *lfte++;
 	
-		for (i = 0; i < rgt->size; i++)
-			*rese++ = *rgte++;
+		if (rgt != res)
+			for (i = 0; i < rgt->size; i++)
+				*rese++ = *rgte++;
 	} else {
 		int64_t *rese = res->elements;
 		int64_t *lfte = lft->elements;
 		int64_t *rgte = rgt->elements;
 	
-		for (i = 0; i < lft->size; i++) 
-			*rese++ = *lfte++;
+		if (rgt == res) {
+			rese += lft->size;
+			for (i = 0; i < rgt->size; i++)
+				*rese++ = *rgte++;
+			rese = res->elements;
+		}
 	
-		for (i = 0; i < rgt->size; i++)
-			*rese++ = *rgte++;
+		if (lft != res)
+			for (i = 0; i < lft->size; i++) 
+				*rese++ = *lfte++;
+	
+		if (rgt != res)
+			for (i = 0; i < rgt->size; i++)
+				*rese++ = *rgte++;
 	}
 		
 	return 0;
