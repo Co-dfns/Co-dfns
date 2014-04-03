@@ -464,6 +464,21 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       operations friendly to GPU execution.
     </para>
   </section>
+  <figure pgwide="1">
+    <title>Espen Haug Black Scholes Benchmark</title>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata align="left" width="3.5in"
+                   fileref="linear.svg" format="SVG" />
+      </imageobject>
+    </inlinemediaobject>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata align="right" width="3.5in"
+                   fileref="logarithmic.svg" format="SVG" />
+      </imageobject>
+    </inlinemediaobject>
+  </figure>
   <section>
     <title>Evaluation</title>
     <para>
