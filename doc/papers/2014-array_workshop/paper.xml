@@ -466,7 +466,96 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
   </section>
   <section>
     <title>Evaluation</title>
-    <para></para>
+    <para>
+      The Co-dfns compiler does not yet support the entire language, and it 
+      does not currently implement many of the intended optimizations designed 
+      for it. This makes evaluation challenging, as most benchmarks leverage 
+      a fairly wide array of language features and primitives. Notwithstanding
+      these challenges, the Co-dfns compiler can compile the Espen Haug 
+      Black Scholes calculation. 
+    </para>
+    <formalpara>
+      <title>Blackscholes benchmark</title>
+      <para>
+        The black scholes formula estimates options pricing, and the 
+        implementation of black scholes favors APL Interpreters to a fair 
+        degree. Particularly, it requires very little code, and an APL 
+        implementation contains very little structural control flow, 
+        reducing the interpreter overhead. Moreover, the benchmark deals 
+        mostly with scalar calculations over large arrays, for which 
+        APL can implement specialized primitives that perform very well.
+      </para>
+    </formalpara>
+    <para>
+      The benchmark does a good job of measuring the performance of APL 
+      on number crunching applications heavy with scalar computation. It 
+      also benefits from good memory and cache locality as the size of 
+      the data set increases. 
+    </para>
+    <formalpara>
+      <title>Benchmarking Methodology</title>
+      <para>
+        To compare the Co-dfns compiler and Dyalog APL, the benchmarking 
+        harness simulates as much as possible the intended use case of 
+        the compiler. That is, execution of the compiled code should 
+        occur as transparently as possible from within the Dyalog APL 
+        system, and should not require excessive tooling. 
+      </para>
+    </formalpara>
+    <para>
+      The current state of the compiler limits to some degree the level 
+      of attainable integration. In particular, the benchmark was 
+      compiled offline and linked together as a shared object, rather 
+      than taking advantage of LLVM's MCJIT system. Additionally, a 
+      custom wrapper function handled the conversion of interpreter 
+      data structures to and from the compiler structures, calling out 
+      to the shared object to perform the actual computation. This simulates 
+      the work that the JIT would do, but it still forms an undesirable 
+      manual step in the benchmarking process. 
+      The compiled objects were compiled using clang 3.4 with O3 optimizations, 
+      but no other explicit optimization settings. 
+    </para>
+    <para>
+      Each version of the benchmark, one for the interpreter and one for the 
+      compiler, used the same APL implementation of the black scholes, though 
+      the code used for the compiler was cosmetically tweaked to work around 
+      some limitations in the current implementation of the compiler. 
+      Each version ran on each data set size three times, and the average 
+      of these three computations was taken. Each run performed a collector 
+      compaction before running the code. 
+    </para>
+    <para>
+      The testing machine used an Intel Core i7-3610QM CPU @ 2.30Ghz with 
+      16GB of RAM with Dyalog APL 14.0 Beta 3 on Red Hat Enterprise Linux 
+      7.0 Beta. 
+    </para>
+    <formalpara>
+      <title>Results</title>
+      <para>
+        See the figures for two versions of the same results, one on a 
+        logarithmic scale and the other without any logarithmic adjustment. 
+        The logarithmic scale demonstrates the performance characteristics 
+        of the smaller sizes, while the linear scale demonstrates the 
+        proportions of performance factors at large sizes better. 
+      </para>
+    </formalpara>
+    <para>
+      Note that the interpreter outperforms the naive, partial implementation 
+      of the compiler at low data sizes, but then begins to suffer performance 
+      degredation as the size increases. The compiler begins to outperform 
+      the interpreter, increasingly so as the sizes of the data grows. 
+      The compiler outperforms the interpreter by 26% at the largest data set, 
+      without performing any specific optimizations available to it. 
+    </para>
+    <para>
+      The performance of the compiler at the low-end likely indicates the 
+      inefficiency of the current approach to injecting and projecting data 
+      to and from the compiled code, as this would most significantly influence 
+      the results at the low-end. Moreover, the interpreters handling of locality 
+      likely contributes to the failure to scale linearly as the data increases. 
+      The compiler does a better job of this right now, but could undoubtedly 
+      improve a great deal through the use of fusion optimizations. 
+    </para>
   </section>
   <section>
     <title>Related Work</title>
