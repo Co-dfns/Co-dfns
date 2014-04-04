@@ -286,35 +286,29 @@
   <section>
     <title>Language Innovations</title>
     <para>
-      The dfns language provides a good story for spiritually functional
-      data parallel programming. Indeed, the bulk simd parallelism of
-      APL forms the foundation of the language, rather than an extra
-      veneer on top of a fundamentally serial language. It does not,
-      however, provide sufficient information to leverage task
-      parallelism. That is, vectorized operations with traditional
-      APL map nicely to vector machines and GPUs, or vector engines
-      in modern CPUs, but they do not provide a good solution for
-      task parallelism, at the level of OS threading or concurrency
-      in the form of Erlang style programming.
+      The dfns language tells a fine story for spiritually functional
+      data parallel programming; the bulk simd parallelism of
+      APL forms the language foundation, not a veneer over mostly 
+      serial programs. It does not, however, allow the natural 
+      expression of task parallelism. Normal APL operations map well 
+      to vector engines, but not to OS threads and concurrent programming. 
     </para>
     <para>
-      Traditional solutions to task parallelism in APL have been to
-      bolt on traditional concurrency constructs such as mutexes and
+      Traditional solutions to task parallelism in APL bolted on
+      concurrency constructs such as mutexes and
       guards, with APL underneath. This approach suffers from the
       same programmability problems that these same constructs have
       in any language, while additionally imposing a significant
-      cost on the consiion and productivity of the language for
-      domain experts. This makes such constructs mostly useless to
-      the domain expert who might otherwise find concurrency an
-      useful method for expressing certain paradigms, while making
-      the tuning expert's job unnecessarily hard.
-    </para>
-    <para>
-      Deterministic parallelism offers some relief from the above
-      issues by ensuring that traditional concurrency issues, such
-      as race conditions, do not manifest themselves in the programs.
-      However, the traditional expression of these deterministic
-      models does not fit nicely with the APL syntax.
+      cost on language concision and productivity for
+      domain experts. Such constructs serve domain experts little,
+      even if the expert might otherwise benefit from a concurrent 
+      paradigm. It also unnecessarily complicates the life of a 
+      tuning expert.
+      Deterministic parallelism somewhat relieves these
+      issues by eliminating by construction some undesirable 
+      non-determinism in parallel programs. The traditional expression 
+      of these features, however, does not map any more nicely to 
+      APL than mutexes, guards, or the like.
     </para>
     <para>
       Any good solution for task parallelism in APL ought to
@@ -381,65 +375,6 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       traditional approaches to parallelism in APL precisely because of
       the implicit nature of the control flow and the concision with which
       one expresses concurrency and synchronization within an APL program.
-    </para>
-  </section>
-  <section>
-    <title>State of the Art</title>
-    <para>
-      The existing systems must inform the design of the Co-dfns compiler.
-      Particularly, how does the Dyalog APL interpreter perform on a
-      traditional regular array benchmark and on an irregular benchmark
-      compared to the reference implementations? The NPB MG benchmarks
-      represents a classic sparse matrix vector multiplication benchmark.
-      The data layout is regular and predictable. In contrast, the Graph500
-      Bread-first search benchmark intentionally creates irregular access
-      patterns and represents a tougher challenge to traditional array
-      techniques.
-    </para>
-    <para>
-      Despite the regularity of the MG benchmark, Dyalog still suffers
-      performance hits due to its architecture. In speaking with the
-      main architects of the Dyalog system, given the limitations of
-      the interpreter, further performance of the system does not seem likely.
-      In this benchmark, the interpreter suffers from repeated traversals
-      over a single set of data, which can adversely affect the cache.
-      The introduction of a segmented scan function would have greatly
-      helped in this particular case. In this case, the optimizations
-      to perform seem clear: fuse scalar functions together to do a single
-      traversal over the data, and potentially support richer scans.
-    </para>
-    <para>
-      The Graph500 benchmark has to interesting features. Firstly, the
-      benchmark itself finds easy expressions as a set of dfns functions.
-      Secondly, the benchmark itself differs from MG in that the access
-      patterns over the data vary widely throughout the computation.
-      In these cases, note the results of the three benchmarks compared
-      to the code. The second version uses a number of boolean filters
-      over the code to determine the parent vector without requiring nested
-      arrays. The other two kernels use nested arrays. This boolean
-      filter method is faster than the naive implementation, but slower
-      on a CPU than the third version which takes advantage of some ordering
-      to reduce the number of reads and writes that need occur. However,
-      the filter method seems ideally suited for implementation on a GPU.
-    </para>
-    <para>
-      The Graph500 benchmark still suffers from some uncleanliness in the
-      code. It would be nice to write this benchmark without mutation.
-      The fourth version of this kernel performs this benchmark in a
-      purely functional fashion. Note the associated performance penalty
-      for doing so. Indeed, each of these benchmarks suffers from unnecessary
-      copies within the system. Scalar function fusion would not help very
-      much in this benchmark, but it would help immensely to reduce the
-      need to allocate and copy values across arrays.
-    </para>
-    <para>
-      [Further stuff that needs to go in here are some diagrams indicating the
-      cache and memory behavior of the reference implementations compared
-      to the dyalog versions. We also need performance numbers and we need
-      to have some idea of the other performance metrics. We need to implement
-      the fourth kernel and ressurrect the MG benchmark from the grave.
-      We also need to submit this code to the Dyalog people to see if they
-      can make the BFS benchmark any faster.]
     </para>
   </section>
   <section>
