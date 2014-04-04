@@ -161,17 +161,127 @@
   <section>
     <title>Background</title>
     <para>
-      Include a description of the things that made APL hard to compile.
+      The Co-dfns compiler intentionally leverages a number of existing 
+      research and practice, choosing instead to focus on the specifics 
+      of array language compilation, rather than unnecessarily reinventing
+      concepts that already have well established execution. These 
+      include the existing APL language (in the form of dfns), existing 
+      work in functional, deterministic parallelism, and low-level 
+      compiler technology, in the form of LLVM.
+    </para>
+    <formalpara>
+      <title>APL and dfns</title>
+      <para>
+        Kenneth Iverson birthed APL in the classroom and blackboards of 
+        University mathematics, attempting to create a notation for the 
+        expression of algorithms and mathematics that avoided traditional 
+        faults in ambiguous and specialized notations used at the time. 
+        Eventually, its executability and brevity of expression deliverd 
+        impressive productivity benefits to certain expert users, who 
+        were not necessarily computer scientists. However, the original 
+        design of APL implementations invested heavily in interactive 
+        programming, at the cost of easy compilation. 
+      </para>
+    </formalpara>
+    <para>
+      The syntax of APL, in and of itself, represents a delightfully simple 
+      and easy setup. Expressions have a single order of evaluation, and 
+      there is very little lexical syntax. Most of the <quote>syntax</quote>
+      of an APL program comes in the form of its rich base of primitives, 
+      and the patterns (called idioms) that arise through increased 
+      practice and familiarity with APL. However, APL's environment model, 
+      including its scoping, focused heavily on dynamic code. This meant that
+      the systems were usually dynamically scoped, and programs had very 
+      little nesting. Structured programming was not a thing at the time, either, 
+      so the GOTO statment, together with an Execute primitive (for 
+      evaluating strings as code) and various other tricks represented the 
+      core of APL control flow. 
     </para>
     <para>
-      Description of John Scholes innovations with dfns.
+      The dynamic nature of APL systems, at the time, presented enormous
+      challenges to APL compilers. Indeed, no existing commercial compilers 
+      for APL in its original form exist today. And no compiler exists today 
+      which supports the full range of traditional APL control constructs, 
+      such as the Execute function or GOTO. All existing research compilers 
+      chose to compile only a limited subset of functionality. These research 
+      compilers did, however, establish a clear feasbility of compiling APL 
+      programs in a meaningful way, and some of these compilers still receive 
+      active maintenance. 
     </para>
     <para>
-      The dfns language in a nutshell.
+      Like most languages, however, APL did not remain stagnant. New features 
+      and capabilities continued to evolve, including structured programming 
+      and object oriented programming. These new features enabled a programmer 
+      to write a greater range of programs that a compiler could handle. 
+      Unfortunately, many of these extensions violated the original design 
+      philosophy of APL, and instead attempted to combine APL with traditional 
+      programming notation. While successful, these constructs do not present 
+      an attractive option for a modern compiler, in part because they only 
+      address specific issues with APL compilation, and do not present a more 
+      cohesive vision of APL as a modern language amenable to compilation at 
+      scale. 
     </para>
     <para>
-      LLVM background.
+      Fortunately, John Scholes invented a new lexical syntax (called dfns) 
+      for the definition of functions, branching, and error trapping. This
+      new syntax overcomes many of the challenges for a new APL compiler. 
+      The syntax eliminates the need for GOTO statements or execute functions 
+      to perform control flow, and ensures that all variables have clear, 
+      well defined, lexical scopes. See Figure YYY for a summary of this 
+      syntax. Importantly, this elimination of dynamic scoping enables the 
+      parser of the compiler to more accurately parse potentially ambiguous 
+      expressions, whose parse tree depends on the type of specific variables. 
+      The dfns syntax comes fully supported with the Dyalog APL system.
     </para>
+    <formalpara>
+      <title>LLVM Backend Compiler</title>
+      <para>
+        The LLvM project delivers an easy to use, accessible, and generic 
+        low-level infrastruture for compiler development. The system has a 
+        number of key features that make it attractive for use as a Co-dfns 
+        compiler backend. The LLVM project contains a well documented IR 
+        language that maps well to Co-dfns, supporting tail call optimization, 
+        and various forms of specific optimization features at a high level, 
+        such as calling conventions. A well designed C API for constructing the IR 
+        and producing objects exists. The API especially lends itself to binding 
+        by other language environments, such as the Dyalog APL interpreter. 
+        LLVM also produces standard, C compatible objects, making integration 
+        with external systems easier. Finally, it supports both standard CPU targets 
+        as well as GPU targets, allowing the Co-dfns compiler to target GPUs and 
+        CPUs using the same backend and IR. It also has support for JIT compilation, 
+        which makes it good for doing interactive programming, of the sort 
+        familiar to APL programmers. 
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Functional, deterministic parallelism</title>
+      <para>
+        Traditional concurrent programming often involves complicated 
+        and error prone data structures or programming constructs that 
+        require careful thought and knowledge to use. These simply don't 
+        make parallel programming accessible to non-computer scientists, 
+        which many APL programmers are. Deterministic parallelism offers 
+        parallel programming benefits, but delivers predictable results, 
+        such as guaranteeing that race conditions will not exist if the 
+        program runs to completion, or that every run of the program 
+        will produce the same result. These approaches to parallelism 
+        seem much better suited for use by domain experts than traditional 
+        concurrent programming constructs. Moreover, functional approaches 
+        to determinstic parallelism fit neatly into the very functionally 
+        oriented approach taken by dfns. A classic example is the IVar and 
+        the future. An IVar is a variable that can be assigned a value 
+        only once, and which blocks on reading, so that a thread cannot 
+        continue computation until a value is written into the IVar that 
+        it tries to read. Futures spawn a new computation in parallel to 
+        an existing one, returning an Future, which is basically an IVar which 
+        will eventually contain the results of the spawned function, provided 
+        that the function returns. IVars and Futures are examples of 
+        monotonic data structures. Monotonic data structures often support 
+        the key pieces of deterministic parallel programming environments, 
+        giving a much needed predictability that enables the determinism 
+        guarantees. 
+      </para>
+    </formalpara>
   </section>
   <section>
     <title>Language Innovations</title>
@@ -692,7 +802,8 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     <para>
       Bob Bernecky provided excellent insight into the state of APL
       compilation. Dyalog, Ltd. has provided gracious funding for the
-      development of this compiler.
+      development of this compiler. Ryan Newton and Andrew Lumsdaine 
+      have greatly aided in directing this research. 
     </para>
   </section>
   <appendix>
@@ -705,18 +816,6 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     <title>APL Primitives</title>
     <para>
       A simple cheat sheet for what all the APL primitives do.
-    </para>
-  </appendix>
-  <appendix>
-    <title>Full MG Benchmark Code</title>
-    <para>
-      The full code for the MG Benchmark.
-    </para>
-  </appendix>
-  <appendix>
-    <title>Full Graph500 Benchmark Code</title>
-    <para>
-      The full code for the Graph500 Benchmark.
     </para>
   </appendix>
 </article>
