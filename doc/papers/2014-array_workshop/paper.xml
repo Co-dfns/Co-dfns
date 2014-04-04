@@ -369,6 +369,66 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       assignment arrays, these constructs also exhibit determinism.
     </para>
   </section>
+  <table frame="void">
+    <title>APL Syntax Summary</title>
+    <thead>
+      <tr>
+        <th>Expression</th>
+        <th colspan="2">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><literal>f A</literal></td>
+        <td colspan="2">Apply <varname>f</varname> to <varname>A</varname>.</td>
+      </tr>
+      <tr>
+        <td><literal>A f B</literal></td>
+        <td colspan="2">
+          Apply <varname>f</varname> to <varname>A</varname>
+          and <varname>B</varname>.
+        </td>
+      </tr>
+      <tr>
+        <td><literal>V←Expr</literal></td>
+        <td colspan="2">
+          Give <literal>Expr</literal> the name <varname>V</varname>.
+        </td>
+      </tr>
+      <tr>
+        <td><literal>A[B]</literal></td>
+        <td colspan="2">
+          Extract array of same shape as <varname>B</varname> from 
+          <varname>A</varname> by using each element in <varname>B</varname>
+          as an index into <varname>A</varname>.
+        </td>
+      </tr>
+      <tr>
+        <td><literal>S1 ⋄ S2</literal></td>
+        <td colspan="2">
+          Evaluate <literal>S1</literal> and then <literal>S2</literal>.
+        </td>
+      </tr>
+      <tr>
+        <td><literal>{ ... }</literal></td>
+        <td colspan="2">
+          Function definition
+        </td>
+      </tr>
+      <tr>
+        <td><varname>⍺</varname></td>
+        <td colspan="2">
+          The left formal argument in a function definition.
+        </td>
+      </tr>
+      <tr>
+        <td><varname>⍵</varname></td>
+        <td colspan="2">
+          The right formal argument in a function definition.
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <section>
     <title>Implementation</title>
     <para>
@@ -501,20 +561,24 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       operations friendly to GPU execution.
     </para>
   </section>
-  <figure pgwide="1">
-    <title>Espen Haug Black Scholes Benchmark</title>
-    <inlinemediaobject>
-      <imageobject>
-        <imagedata align="left" width="3.5in"
-                   fileref="linear.svg" format="SVG" />
-      </imageobject>
-    </inlinemediaobject>
-    <inlinemediaobject>
-      <imageobject>
-        <imagedata align="right" width="3.5in"
-                   fileref="logarithmic.svg" format="SVG" />
-      </imageobject>
-    </inlinemediaobject>
+  <figure>
+    <title>Black Scholes Benchmark Code</title>
+    <programlisting>r←0.02 ⋄ v←0.03 ⋄ p←÷(○2)*0.5
+
+CNDP←{
+  K←÷1+0.2316419×L←|⍵
+  R←p×(*(L×L)÷¯2)×{coeff+.×⍵*1+⍳5}¨K
+  (1 ¯1)[B]×((0 ¯1)[B←⍵≥0])+R
+}
+
+BlackScholes←{
+  expRT←*(-r)×T ⋄ vsqrtT←v×T*0.5
+  D1←((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT
+  D2←D1-vsqrtT
+  CD1←CNDP D1 ⋄ CD2←CNDP D2
+  R←(S×CD1)-X×expRT×CD2
+  R,[0.5]((X×expRT×1-CD2)-S×1-CD1)
+}</programlisting>
   </figure>
   <section>
     <title>Evaluation</title>
@@ -609,6 +673,21 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       improve a great deal through the use of fusion optimizations. 
     </para>
   </section>
+  <figure pgwide="1">
+    <title>Black Scholes Benchmark Results</title>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata align="center" width="3.5in" 
+                   fileref="linear.svg" format="SVG" />
+      </imageobject>
+    </inlinemediaobject>
+    <inlinemediaobject>
+      <imageobject>
+        <imagedata align="center" width="3.5in"
+                   fileref="logarithmic.svg" format="SVG" />
+      </imageobject>
+    </inlinemediaobject>
+  </figure>
   <section>
     <title>Related Work</title>
     <para>
