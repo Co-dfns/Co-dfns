@@ -9,7 +9,7 @@
   <xsl:param name="body.font.master" select="10" />
   <xsl:param name="body.font.family" select="'CMU Serif'" />
   <xsl:param name="title.font.family" select="'CMU Serif'" />
-  <xsl:param name="monospace.font.family" select="'APL385 Unicode,FreeMono for APL'" />
+  <xsl:param name="monospace.font.family" select="'APL385 Unicode,DejaVu Sans'" />
   <xsl:param name="symbol.font.family" select="''" />
   <xsl:param name="generate.toc" select="'article nop'" />
   <xsl:param name="fop1.extensions" select="1" />

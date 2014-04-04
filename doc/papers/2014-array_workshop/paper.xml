@@ -311,14 +311,11 @@
       APL than mutexes, guards, or the like.
     </para>
     <para>
-      Any good solution for task parallelism in APL ought to
-      satisfy two criteria: integration with APL style/syntax and
-      safety. That is, domain experts must find it easy to use the
-      constructs correctly and these constructs should not destroy
-      the concision and straightforward presentation of the code.
-    </para>
-    <para>
-      The Co-dfns language extends the basic dfns language to enable
+      Task parallelism in APL ought to satisfy two criteria: 
+      it should feel like APL, and it should be easy to use safely.
+      That is, these constructs should not destroy
+      APL's concise expression, nor greatly burden domain experts to use.
+      Co-dfns extends the basic dfns language to enable
       both non-deterministic and deterministic task parallelism
       without requiring any additional syntax, and introducing only
       two new primitives to the language.
@@ -326,55 +323,50 @@
     <para>
       Firstly, a new literal <literal>⌾</literal> (target) represents the
       new datatype, a single assignment array. A single assignment
-      array the same as any regular array except that any given cell
-      in the array may be assigned at most once. The <literal>⌾</literal>
-      value is exactly the same as <literal>⍬</literal>, which represents
-      the empty vector, with the sole exception that its fill value
-      is a single assignment cell, rather than the integer 0.
-      Thus, the reshape function on <literal>⌾</literal> creates
-      a single assignment array of any shape <varname>S</varname>. This
-      array has no values in it, but any write to this array will
-      fill the single assignment cell, and any attempt to further update
-      an already written cell will signal an error.
+      array works like other arrays except that a slot in the array
+      receives at most one value in its lifetime. The <literal>⌾</literal>
+      value behaves like the empty vector literal <literal>⍬</literal>,
+      except that its fill value is a single assignment slot.
+      The reshape <literal>S⍴⌾</literal> builds
+      a single assignment array of shape <varname>S</varname>, where 
+      <varname>S</varname> gives the dimensions of the array. This
+      array begins empty, and each slot may be assigned a value at most once. 
     </para>
     <programlisting>A←2 2⍴⌾  ⍝ SA matrix of shape 2 2
-A[0;0]←1 ⍝ Assign 0 0 cell to 1
+A[0;0]←1 ⍝ Assign 0 0 slot to 1
 A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     <para>
-      The <literal>⌾</literal> literal integrates single assignment arrays
-      implicitly into the rest of the APL primitives, so that working
-      with them feels like working with any regular array. However,
-      when attempting to read from a cell that is not filled, the thread
-      in which that read occurs will block. This requires some way of
-      indicating the spawning of new concurrent computation to unblock
-      this read.
+      Attempting to read a slot in a single assignment array blocks until 
+      that slot receives a value. In this way, single assignment arrays 
+      deliver IVars in a fashion that completing integrates them with 
+      normal APL: they feel like any other normal array during use. 
     </para>
     <para>
-      To allow for concurrency, Co-dfns introduces an operator
-      <literal>∥</literal> which takes a function as its left operand and
-      returns a function that behaves equivalently to the given
-      function, but concurrent with the rest of the code. That is,
-      applying the returned function spawns a new concurrent thread
-      in which to compute the value and immediately returns with a
-      single assignment array. The shape and value of the cells of
-      this array come from the result of the application of the given function.
+      Co-dfns provides concurrent execution through an operator
+      <literal>∥</literal>. The expression <literal>F∥</literal> is
+      equivalent to the function <varname>F</varname> but when applied 
+      returns immediately with a single assignment array whose values 
+      will contain the results of executing F concurrently with the rest 
+      of the program. Assuming <varname>F</varname> does not deadlock, 
+      the array returned is equivalent to the array that would have been 
+      returned by the function called without <literal>∥</literal> 
+      assuming no error conditions.
     </para>
+    <programlisting>pfib←{ ⍝ Parallel Fibonacci
+  1=⍵:1
+  2=⍵:1
+  (pfib∥⍵-1)+(pfib∥⍵-2)
+}</programlisting>
     <para>
-      These two primitives suffice to provide for all the necessary
-      elements for task parallel computation. Namely, the single assignment
-      array with its blocking semantics enables synchronization without
-      requiring explicit constructs, while the parallel operator enables
-      concurrency. By ensuring that all external writes of any concurrent
-      function occur only on single assignment arrays, a programmer can
-      safely ensure the deterministic execution of the code. That is, the
-      code will not exhibit non-deterministic behavior, but will instead
-      produce the same result on each execution of the program.
-    </para>
-    <para>
-      Notably, these primitives represent an attractive alternative to
-      traditional approaches to parallelism in APL precisely because of
-      the implicit nature of the control flow and the concision with which
-      one expresses concurrency and synchronization within an APL program.
+      These two primitives suffice to deliver task parallel computation 
+      in the dfns APL dialect. Single assignment arrays allow for 
+      synchronization, while the parallel operator enables concurrency. 
+      This approach requires no explicit control constructs or syntax.
+      These primitives present an attractive alternative to
+      traditional approaches because of the implicit and concise expression 
+      of concurrency and synchronization. Moreover, by restricting all 
+      inter-thread arrays (arrays touched by more than one thread) to single 
+      assignment arrays, these constructs also exhibit determinism.
     </para>
   </section>
   <section>
