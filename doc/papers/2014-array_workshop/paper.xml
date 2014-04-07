@@ -38,124 +38,89 @@
   <section>
     <title>Introduction</title>
     <para>
-      General purpose array languages, such as Matlab and Dyalog APL
-      excel at delivering a productive environment for domain experts to
-      solve problems rapidly and with a high degree of precision. Focusing
-      specifically on the APL language, a number of language features
-      support the domain expert:
-    </para>
-    <orderedlist spacing="compact">
-      <listitem>
-        <para>
-          APL is a mathematical style notation which maps well to
-          mathematical formulae
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          APL provides a rapid feedback cycle with good integration of
-          visualization and data exploration
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          APL enables a very concise representation of complex
-          computation without complicated control flow or data types.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          APL supports useful abstractions such as higher-order programming
-          and first-class indexing of arrays, which support rich views of
-          data and manipulations of that data.
-        </para>
-      </listitem>
-    </orderedlist>
-    <para>
-      Increasingly large data sets and the advancements of modern hardware
-      have brought to light a glaring weakness in existing array programming
-      platforms such as Dyalog APL: they fail to scale well to massively parallel
-      systems or for very high-performance numeric computations. To be sure,
-      compared to many modern programming environments, APL performs remarkably
-      well. However, the limitations of existing commercial and industrial strength
-      APL systems prevents the sort of scaling now desirable with ready access
-      to GPUs and distributed systems. Much of this scalability comes from the
-      interpreted nature of the existing industrial APL implementations.
+      The general purpose array languages, especially APL, represent a 
+      critical business tool for a set of domain experts. These experts 
+      often rely on APL to construct large software systems oriented around 
+      their particular expertise. Unlike traditional computer scientists, 
+      or software engineers, the domain expert primarily intends to solve 
+      a problem outside of computation; the agility and low-cost that APL 
+      provides, primarily by reducing the domain expert's dependence on 
+      external engineering resources. This low-overhead, direct engagement 
+      with the programming environment distinguishes APL's primary successes 
+      from language such as C++ or C. 
     </para>
     <para>
-      Interpretation traditionally delivered important benefits to the APL language,
-      including a degree of interactivity that did not exist in batch-compiled
-      systems. Modern compilers, however, can compile quickly and online in such
-      a way that the same interactivity gains exist, without the corresponding
-      performance costs. Worse, interpretation makes it difficult to ensure certain
-      constraints on execution required for good performance on modern systems,
-      including memory management and locality.
+      The systems developed in this manner could be small, but often scale 
+      to very large sizes. This includes treasury management, risk 
+      and portfolio management, oil refining optimization, and large 
+      installations of patient journals and health data. Increasingly, 
+      in the fields where APL thrives, such as health data, finance, and 
+      large simulations, the sizes of the data continues to grow rapidly. 
     </para>
     <para>
-      Traditionally, even the APL language presented challenges to compilation, with
-      things like dynamic scope making useful compiler analysis difficult, at best,
-      and a non-starter at worse. Thanks to work by John Scholes and others, this
-      problem is disappearing rapidly; a new breed of APL is emerging as an alternative
-      to traditional APL that greatly improves the compilation story.
+      This rapid increase of data size combines with the large scale of 
+      the software systems to challenge the current APL systems. The success 
+      of these systems hinges on the ability of the APL system to provide a 
+      clear environment for domain experts to solve the problem themselves, 
+      but the increasing size of data strains the current APL implementations. 
+      As the size of data increases, it becomes increasingly important that 
+      domain experts can work with these large data sizes without requiring 
+      hand optimization or reimplementation of their models into other 
+      languages to obtain desirable performance. That is, their workflow 
+      should not suffer because of the size of the data. 
     </para>
     <para>
-      Existing efforts to design compilers for array languages sail frustratingly
-      close to the conservative coastline of small, embedded languages, or else they
-      deliver a language vastly different than the languages used by experts in the field.
-      They often emphasize a limitation of features to improve compiler performance on
-      one or more hardware platforms, an unacceptable trade-off for general-purpose
-      array programming systems such as Dyalog APL.
-      This presents an opportunity to pursue a new compiler that leverages modern
-      advancements in compiler modularity, and targeting the specific challenges and
-      platforms that seem to deliver the most promise for array languages and scaling
-      their performance.
+      Unfortunately, most APL implementation use interpreters. This makes 
+      sense from a historical standpoint, and APL interpreters deliver impressive 
+      performance, in part because APL programs often rely on primitives 
+      and idioms that the intrepeter optimizes. This approach cannot scale to 
+      the large, multi-core, multi-node, multi-device computational 
+      hierarchies in modern machines. For instance, a simple scalar expression, 
+      such as follows:
+    </para>
+    <programlisting>X+Y×Z</programlisting>
+    <para>
+      Will likely go very fast on small data sizes. The addition and 
+      multiplication primitives operating over the three arrays can 
+      leverage highly tuned libraries and vectorization. Unfortunately, 
+      the interpreter must run these primitives in order, and thus, 
+      as the array sizes grow, the cache locality disintegrates, 
+      and the APL interpreter will experience signification reductions 
+      in performance compared to hand-written C code. The problem 
+      gets worse when attempting to target the GPU or distributed clusters, 
+      as current APL systems do not have any story there.
     </para>
     <para>
-      The Co-dfns compiler strives to deliver an easy to use, modular, and scalable platform
-      for compiling array languages. It specifically targets the dfns language subset of
-      Dyalog APL extended with primitives to enable an implicit, predictable task parallelism
-      that provides determinism without complicated control constructs that would otherwise
-      make the system inaccessible to domain experts. It relies on the LLVM system for traditional
-      compiler optimizations and instead emphasizes higher-level optimizations
-      centering around memory layout and locality. It currently targets GPUs and multi-core CPUs
-      with an eye towards distributed computing platforms.
+      The Co-dfns project aims to address the performance trends in the 
+      APL community, delivering language innovations that enable 
+      domain experts to take advantage of concurrency, without requiring 
+      strong computer science experience in parallel programming, and 
+      delivering a new platform for APL development which integrates 
+      seamlessly with current APL systems and external software tools.
+      Instead of relying on interpretation, it takes advantage of developments 
+      in modern APL to create a compiler that addresses the issues of 
+      scalability in traditional APL systems. By leveraging mature 
+      compiler technologies such as LLVM, together with the corpus 
+      of array programming research, it is designed to enable the 
+      domain expert to scale the APL modeling workflow, so critical to 
+      the success of these projects, to new platforms, such as GPUs 
+      and massively parallel systems. It minimally impacts the working 
+      model of the APL programmer, but scales that model to larger 
+      data sets and new devices by increasing the performance of those 
+      models and providing the language features necessary to take 
+      advantage of parallel hardware.
+      The Co-dfns compiler aims to reduce the need for APL systems to 
+      replace components of their sofware with hand-optimized 
+      inner loops written in C or Cuda, allowing those hot spots to 
+      remain as APL programs. 
     </para>
     <para>
-      The current version of the compiler leverages features of the Co-dfns language to enable
-      three optimizations designed as first steps towards more scalable performance in array
-      languages, in particular, the array mutation and assignment semantics and a stack
-      discipline on function definitions and scopes obviates the need for garbage collection,
-      enabling careful memory managment directly at compile time. This stack discipline also
-      allows for the implementation of nested, higher-order functions without the need for
-      allocating closures, which permits a one to one mapping of co-dfns functions and llvm
-      functions. This has a number of positive benefits in terms of usability and performance.
-      Finally, because of the nature of the APL expression language, scalar function fusion
-      promotes better cache behavior in the system and tackles one of the major
-      sources of performance bottlenecks found during testing of the Dyalog APL system.
-      These give a taste of the sort of optimizations the Co-dfns compiler emphasizes, with
-      more planned.
-    </para>
-    <para>
-      The compiler uses various runtime implementations of the primitives to target either
-      CPU or GPU execution of the primitives. Further development plans aim to integrate these behaviors
-      into the compiler itself and reduce the amount of dependence on runtime implementation
-      of features for different targets.
-    </para>
-    <para>
-      The architecture of the compiler itself <quote>eats its own dogfood</quote>; that is, the
-      compiler is written in Co-dfns, using the Dyalog APL interpreter to bootstrap the system. It
-      integrates into the existing Dyalog APL infrastructure so that existing users can make direct
-      use of the JITed namespace directly, without requiring a separate load step. The compiler
-      produces standard object files that the clang compiler system can link against any existing
-      C or C++ codebase, and the compiler itself uses a nanopass design that allows for external
-      systems to integrate with the compiler easily. The AST serializes as XML, allowing for
-      other external tools to work on the structure. The compiler and the compiled objects intentionally
-      provide easy means to embed all or part of the system into other software stacks.
-    </para>
-    <para>
-      To judge the success of the Co-dfns compiler, three major benchmarks exist: the compiler itself,
-      the Graph500 benchmark, and a set of industry supplied functions. The latter forms a real life
-      set of applications upon which to test the compiler based on the people likely to use the system.
+      The Co-dfns compiler exists in two parts, the language 
+      design, which exists already, and the compiler itself, 
+      currently in the early stages of development. Sections 3, 4, and 5 
+      describe in turn the language itself and how it differs from 
+      traditional APL, as well as the compiler implementation and 
+      some of the early performance results.
     </para>
   </section>
   <section>
