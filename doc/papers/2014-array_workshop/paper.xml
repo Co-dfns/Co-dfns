@@ -743,45 +743,23 @@ BlackScholes←{
   <section>
     <title>Moving Forward</title>
     <para>
-      The current version of the compiler does not yet implement all of the
-      features of optimizations intended. The current development plan leads
-      to a self-hosting compiler that will run on the GPU and CPU.
+      Much work still remains to bring the compiler to its firt public version. 
+      This includes implementing more optimizations centered around 
+      memory management, fusion, and targeting the GPU as well as the CPU. 
+      Eventually, the compiler should also host itself, as it is written in 
+      dfns. Among the optimizations that have the highest priority are the 
+      work of ... to reduce copying of arrays, minimizing allocations and maximizing 
+      reuse of memory, and integrating richer and more native scalar function 
+      fusion into the compiler. 
     </para>
     <para>
-      The first optimization to integrate is scalar function fusion, which
-      improves the basic locality issues of scalar primitives.
-    </para>
-    <para>
-      The current compiler naively gives each named variable in
-      a scope its own frame. However, it is possible to reuse array space
-      for multiple variables that are not live at the same time. This has
-      additional benefits on cache locality and allocation overhead.
-      Furthermore, it is possible to push as much as possible to the result
-      array, so that as little new allocation as possible is done in a
-      given call frame, making tight loops even tighter. This will allow
-      many regular data applications to operate without every doing any
-      allocation outside of the first initial setup.
-    </para>
-    <para>
-      Using shape analysis on the arrays, the compiler can determine ahead
-      of time the size and shape of many arrays, and do this allocation well
-      in advance of the computation. This in itself may not help, but these
-      allocations may be lifted outside of a function, allowing a previous
-      copying operation to occur as a mutation of an existing array instead.
+      Further work continues on exploring irregular problem domains, such as
+      the compiler itself, and graph algorithms, such as the Graph500 Benchmark. 
+      Getting good results on these problems requires additional effort into 
+      memory management, such as recognizing shape and types of the array 
+      values and doing preallocation of the memory regions before computation. 
       On benchmarks like the Graph500 this can save copying overhead in
       tight loops and make GPU performance much better.
-    </para>
-    <para>
-      In order for the compiler to be truly useful, however, the rest of
-      the dfns language must be implemented. This will allow a much greater
-      range of benchmarks, and will allow real user testing and deployment.
-    </para>
-    <para>
-      Looking far into the future, static assertions in the form of a
-      dependent type system could provide for a great deal of information
-      on which to make good compiler optimizations. This holds much potential,
-      but remains a far reaching goal while the compiler remains in an
-      incomplete state.
     </para>
   </section>
   <section>
