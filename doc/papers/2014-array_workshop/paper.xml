@@ -764,7 +764,18 @@ BlackScholes←{
   </section>
   <section>
     <title>Conclusion</title>
-    <para></para>
+    <para>
+      The Co-dfns compiler, despit the early stages of its development, shows 
+      promise for bringing robust scalability to the venerable APL language 
+      in the context of modern hardware and platforms, on increasingly large 
+      data sets. Unlike many efforts in the array field, the Co-dfns compiler 
+      intends from the beginning to be accessible to the domain expert, 
+      rather than targeting the computer scientist, and to exhibit suitable 
+      industrial strengths for mature applications. The current stage of 
+      development can only say so much regarding the future capacity of the 
+      compiler, but it does demonstrate the feasibility of the approach and 
+      a reasonable expectation of suitable performance gains.
+    </para>
   </section>
   <section>
     <title>Acknowledgments</title>
