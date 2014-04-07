@@ -427,138 +427,123 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
           The right formal argument in a function definition.
         </td>
       </tr>
+      <tr>
+        <td><literal>T:E</literal></td>
+        <td colspan="2">
+          Inside a function, if <literal>T</literal> then return 
+          <literal>E</literal>.
+        </td>
+      </tr>
+      <tr>
+        <td><literal>f¨A</literal></td>
+        <td colspan="2">
+          Apply <varname>f</varname> to each element in <varname>A</varname>.
+        </td>
+      </tr>
     </tbody>
   </table>
   <section>
     <title>Implementation</title>
     <para>
-      The Co-dfns compiler has a few explicit design goals:
+      The language of Co-dfns explicitly tries to make concurrency a tool 
+      of thought for domain expert programming. The implementation of 
+      Co-dfns also has explicit goals:
     </para>
     <orderedlist spacing="compact">
       <listitem>
         <para>
-          Address problems in that prevent APL scaling to modern hardware
-          and parallel systems.
+          Enable APL programs to scale to larger problems and modern 
+          hardware, including massively parallel systems.
         </para>
       </listitem>
       <listitem>
         <para>
-          Make it easy to embed the compiler into existing tools,
-          namely the Dyalog interpreter, but also any other tools.
+          Make it easy to integrate the compiler into existing APL 
+          workflows.
         </para>
       </listitem>
       <listitem>
         <para>
-          Support additional tooling through clear, well defined interfaces
-          and documentation.
+          Support integration with external tools through well documented 
+          interfaces and easy to use entry and exit points.
         </para>
       </listitem>
       <listitem>
         <para>
-          Produce standard compilation products that integrate with
-          existing compiler toolchains and other languages.
-        </para>
-      </listitem>
-      <listitem>
-        <para>
-          Support concurrency as a tool of thought for domain experts
+          Support compiled APL that seamlessly integrates with external 
+          software products and systems.
         </para>
       </listitem>
     </orderedlist>
     <para>
-      As seen in the previous section benchmarking the Dyalog interpreter,
-      memory management and locality play critical roles in the performance
-      of the system. Indeed, these represent some of the most important obstacles
-      to scalability of APL implementations.
-      Furthermore, the existing systems, while taking advantage of vectorized
-      operations on the CPU, do not as yet take good advantage of the GPU
-      for SIMD operations in a way that preserves good cache behavior.
-      Until version 14.0 (which incorporates some of the ideas presented here),
-      Dyalog APL has no good story for task parallelism, and even with version
-      14.0, it does not have a good story for fine grained parallelism/concurrency
-      as a tool for domain experts and tuning experts to leverage seamlessly into
-      existing dfns code.
+      Since this is an early stage project, the compiler does not realize 
+      all of these goals to a great degree. The current compiler addresses 
+      these through four primary designs.
     </para>
+    <formalpara>
+      <title>Memory management</title>
+      <para>
+        Systems like Dyalog APL use a garbage collector to manage memory. 
+        Garbage collectors liberate programming implementations and languages 
+        greatly, and serves as the de facto standard memory management model 
+        for most all new languages. This is good. In Co-dfns, however, 
+        because the language design enforces a natural stack lifetime on 
+        variables and functions, the compiler uses a stack discipline to 
+        implement all memory management, completely avoiding the extra 
+        complexity and cost of integrating a high-performance garbage collector 
+        into the runtime. 
+      </para>
+    </formalpara>
     <para>
-      To address these issues, the compiler firstly leverages the existing work
-      on traditional compilers by using the LLVM framework, which permits the
-      compiler to ignore traditional compiler issues, such as procedure inlining,
-      register allocation, and many other niceties. It also ensures that we have a
-      neutral back-end which can produce code for both CPUs and GPUs. Work continues
-      on doing auto-vectorization of code using polyhedral analyses within the
-      LLVM community, which is encouraging. By using LLVM, the compiler is able
-      to focus on the issues directly related to parallel scaling issues. It also
-      gives the compiler the ability to generate traditional object files for free.
-      These object files can then be used by the clang system to generate shared
-      libraries or linked directly against other programs written in C or C++.
-      As discussed later, Co-dfns functions map one to one to normal functions within
-      a C or C++ function, and have a clear, well-documented signature for interfacing
-      to them. This enables an easy integration of Co-dfns compiled code with other
-      systems.
+      Interestingly, this decision does not preclude the use of operators, 
+      which are higher-order functions in APL which return functions. Functions 
+      cannot escape out of a lexical context, which would require indefinitely 
+      lifetimes of function values. These stack functions permit a wide range of 
+      higher-order programming, but require no closure allocation. Indeed, all 
+      Co-dfns functions map directly to an LLVM function. Thus, the compiler 
+      takes advantage of LLVM optimizations which might otherwise prove more 
+      difficult or costly to implement directly, such as inlining. 
     </para>
+    <formalpara>
+      <title>Fusion</title>
+      <para>
+        Existing research into parallel system demonstrates the importance and 
+        effectiveness of good fusion over certain operators. The Dyalog interpreter 
+        performance suffers even in cases where it might due well, because it 
+        cannot fuse scalar primitive functions together to leverage modern 
+        memory hierarchies. Full scalar function fusion does not yet exist in 
+        the Co-dfns compiler, but the use of stack functions above enables the 
+        inlining of many other explicit functions, including primtives. Further 
+        increments of the compiler development will introduce scalar function 
+        fusion.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Modularity and Integration</title>
+      <para>
+        The Co-dfns compiler tries as much as possible to avoid needless reinvention 
+        of proven techniques or code. It uses the LLVM compiler to provide a 
+        stable and mature compiler backend, with many optimizations. It uses a 
+        variety of the Nanopass compiler design philosophy, in which many small 
+        compiler passes, functional and stateless, compose together to form a complete 
+        transformation from the input language to the output language. 
+        Furthermore, each compiler pass accepts as input and output a data format 
+        which trivially serializes to XML. Thus, at any given point in the compiler, 
+        the state of the compiler easily exports into a portable lexical format. 
+      </para>
+    </formalpara>
     <para>
-      Importantly, the Co-dfns compiler is itself written in dfns, with the
-      intention of eventually self-hosting. This allows the compiler to exist
-      directly in any Dyalog APL workspace, and can be used as just another
-      evaluation or <quote>fixing</quote> function. Users of the regular
-      Dyalog environment can easily compile modules that they have written as
-      easily as loading the files from the file system.
-    </para>
-    <para>
-      The compiler structure follows the NanoPass style, which builds a compiler
-      in a functional, stateless manner by progressive application of small passes
-      that accomplish small transformations to the AST. This makes it very easy to
-      plug in additional passes anywhere along this process. The AST itself
-      has a direct serialization to XML, permitting any language with XML support
-      to handle and manipulate the AST of the compiler, feeding it back into
-      the system whenever desired. Each of the interfaces from pass to pass and
-      the associated invariants have documentation which clearly indicates the
-      expectations of the pass.
-    </para>
-    <para>
-      At the moment, the compiler has no conception of the GPU or the CPU.
-      Instead, it expects the runtime to handle this. By swapping out the runtimes
-      of the systems, you get code that runs on the GPU or code that runs on the
-      CPU. However, further integration and support for these different platforms
-      in the compiler itself would improve the performance of the system measurably.
-    </para>
-    <para>
-      The current compiler does not yet implement all the Co-dfns language, but
-      it does take advantage of one interesting feature of the language. Most
-      interpreters for high-level languages, and indeed, most compilers, use
-      some form of garbage collection. The Co-dfns language does not require
-      garbage collection. Furthermore, it does not require closures, despite allowing
-      for function values to thread through operators. This allows for almost all
-      the benefits of higher order programming, but without the associated costs.
-      It does result in some limitations of expressivity, but this trade-off seems
-      worth it.
-    </para>
-    <para>
-      In Co-dfns, a function may not escape its enclosing scope. Values, likewise,
-      have stack or function lifetimes, rather than indefinite extent. Thus, each
-      Co-dfns function corresponds to a regular LLVM function, which takes
-      at least three array pointers, the result array and the right and left arrays.
-      The function may not mutate the left or right arrays, but it should store
-      the final result of the computation in the result array. All local variables
-      receive stack allocation for their headers, an their data contents appear on
-      the heap. Finally, to reference free variable inside of a function,
-      each function receives zero or more frame pointers that point to the head of
-      the frame for a containing lexical scope. This makes reference to free variables
-      the same as referencing a local variable, except in a different frame.
-    </para>
-    <para>
-      No benchmarks have been run to quantify the exact extent of the benefit of
-      this stack closure strategy. At the very least, it makes it easier to
-      inline code in Co-dfns without any great effort on the compiler's part.
-      It also makes it much easier for Co-dfns functions to integrate into existing
-      systems, as the calling conventions are the same.
-    </para>
-    <para>
-      That Co-dfns is intended to be self hosted presents an important benchmark
-      and implementation goal: to scale compilers to efficient implementation on
-      the GPU. Passes in Co-dfns are written in such a way as to minimize the
-      amount of serial or recursive operation, and prefer parallel and aggregate
-      operations friendly to GPU execution.
+      The above design choices result in a compiler that easily integrates into 
+      external tools. The use of LLVM and choice of memory management strategies 
+      also gives very standard, compatible object files produced by the compiler. 
+      These compiler products can be linked into existing applications without 
+      any real change in the compilation toolchain. For Dyalog APL users, this 
+      means that the results of the compiler fit directly into the rest of the 
+      compiler with a generic wrapper around each compiled function. Work continues 
+      to eliminate any manual part of this, using the LLVM MCJIT system to 
+      allow Dyalog to completely integrate the compiler without any extra manual 
+      effort on the part of Dyalog users, greatly lowering the barrier to entry 
+      into using the compiler. 
     </para>
   </section>
   <figure>
