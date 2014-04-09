@@ -7,8 +7,8 @@
   <xsl:import href="/home/arcfide/Libraries/Docbook5-XSL/fo/docbook.xsl"/>
   <xsl:import href="./titlepage.xsl" />
   <xsl:param name="body.font.master" select="10" />
-  <xsl:param name="body.font.family" select="'CMU Serif'" />
-  <xsl:param name="title.font.family" select="'CMU Serif'" />
+  <xsl:param name="body.font.family" select="'Times'" />
+  <xsl:param name="title.font.family" select="'Times'" />
   <xsl:param name="monospace.font.family" select="'APL385 Unicode,DejaVu Sans'" />
   <xsl:param name="symbol.font.family" select="''" />
   <xsl:param name="generate.toc" select="'article nop'" />

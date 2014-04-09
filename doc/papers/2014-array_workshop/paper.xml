@@ -2,7 +2,7 @@
 
 <article xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
-    <title>Ancient Language, Modern Compiler</title>
+    <title>Co-dfns: Ancient Language, Modern Compiler</title>
     <authorgroup>
       <author>
         <personname>Aaron W. Hsu</personname>
@@ -13,25 +13,29 @@
     <date>Thursday, March 13th, 2014</date>
     <abstract>
       <para>
-        APL started it all; a venerable and infamous language,
-        APL enabled the domain expert and non-programmer to
-        solve problems quickly and manipulate data more productively
-        than the languages of the day. To this day, however, languages
-        like R, Matlab, and modern APL do not have compilers, and
-        users suffer from the lack of interpreter scalability.
-        Modern architectures present new challenges for aging array platforms
-        and new opportunities for compilation and performance gains.
-        By combining innovations in the APL language with a modular,
-        memory-centric compiler design, the Co-dfns compiler delivers
-        a modern compiler and development platform that enables
-        existing users of APL to quickly benefit from compilation, while
-        scaling  to handle large scale, general-purpose APL
-        applications. The compiler design allows for high-level optimization
-        of programs to target the GPU and multi-core systems without
-        requiring performance tuning at lower-levels of abstraction.
-        It also targets irregular algorithms, such as graph traversals,
-        encouraging the broader use of high-level languages in areas
-        traditionally dominated by very hand-tuned C/C++.
+        The APL language allows subject matter experts with no 
+        computer science experience to create large and complex 
+        software implementations of ideas without excessive 
+        costs for software engineering and external development.
+        The rapid increase in data sizes challenges existing 
+        APL systems, which are all interpreters, to scale with 
+        the domain expert's problem size. The Co-dfns project, 
+        currently in early development stages, focuses on 
+        delivering new language innovations and a high-performance 
+        compiler for modern APL that enables domain experts to scale 
+        their ideas to the size of the problems as well as the 
+        massive parallelism in modern hardware architectures.
+        The Co-dfns language provides concise primitives that 
+        allow domain experts to utilize concurrency and explicit 
+        task parallelism in their code. The compiler addresses
+        critical performance bottlenecks of the Dyalog APL interpreter,
+        while maintaining strong integration and compatibility with existing 
+        APL workflows, Co-dfns will allow domain experts to scale 
+        their code more successfully without requiring them to 
+        rewrite critical portions of their code in other languages. 
+        Early benchmarking efforts indicate that even naive and 
+        unoptimized versions of the Co-dfns compiler compete well 
+        with Dyalog APL on code that naturally lends itself to APL.
       </para>
     </abstract>
   </info>
