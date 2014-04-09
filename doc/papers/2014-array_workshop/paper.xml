@@ -318,7 +318,7 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     <programlisting>pfib←{ ⍝ Parallel Fibonacci
   1=⍵:1
   2=⍵:1
-  (pfib∥⍵-1)+(pfib∥⍵-2)
+  (pfib<literal>∥</literal>⍵-1)+(pfib<literal>∥</literal>⍵-2)
 }</programlisting>
     <para>
       These two primitives suffice to deliver task parallel computation 
