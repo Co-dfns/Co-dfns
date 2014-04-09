@@ -682,10 +682,4 @@ BlackScholes←{
       Description of the demo of the tool.
     </para>
   </appendix>
-  <appendix>
-    <title>APL Primitives</title>
-    <para>
-      A simple cheat sheet for what all the APL primitives do.
-    </para>
-  </appendix>
 </article>
