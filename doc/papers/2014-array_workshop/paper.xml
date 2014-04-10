@@ -47,8 +47,8 @@
       often rely on APL to construct large software systems oriented around 
       their particular expertise. Unlike traditional computer scientists, 
       or software engineers, the domain expert primarily intends to solve 
-      a problem outside of computation; the agility and low-cost that APL 
-      provides, primarily by reducing the domain expert's dependence on 
+      a problem outside of computation; APL provides agility and low-cost
+      by reducing the domain expert's dependence on 
       external engineering resources. This low-overhead, direct engagement 
       with the programming environment distinguishes APL's primary successes 
       from language such as C++ or C. 
@@ -60,6 +60,9 @@
       installations of patient journals and health data. Increasingly, 
       in the fields where APL thrives, such as health data, finance, and 
       large simulations, the sizes of the data continues to grow rapidly. 
+      The size of these problems often exceeds the ability of even large 
+      machines to store all relevant information in RAM, or even on a single 
+      machine. 
     </para>
     <para>
       This rapid increase of data size combines with the large scale of 
@@ -74,7 +77,7 @@
       should not suffer because of the size of the data. 
     </para>
     <para>
-      Unfortunately, most APL implementation use interpreters. This makes 
+      Unfortunately, most APL implementations use interpreters. This makes 
       sense from a historical standpoint, and APL interpreters deliver impressive 
       performance, in part because APL programs often rely on primitives 
       and idioms that the intrepeter optimizes. This approach cannot scale to 
@@ -249,7 +252,7 @@
   <section>
     <title>Language Innovations</title>
     <para>
-      The dfns language tells a fine story for spiritually functional
+      The dfns language encourages spiritually functional
       data parallel programming; the bulk simd parallelism of
       APL forms the language foundation, not a veneer over mostly 
       serial programs. It does not, however, allow the natural 
@@ -270,14 +273,14 @@
       Deterministic parallelism somewhat relieves these
       issues by eliminating by construction some undesirable 
       non-determinism in parallel programs. The traditional expression 
-      of these features, however, does not map any more nicely to 
+      of these features, does not map any more nicely to 
       APL than mutexes, guards, or the like.
     </para>
     <para>
       Task parallelism in APL ought to satisfy two criteria: 
       it should feel like APL, and it should be easy to use safely.
       That is, these constructs should not destroy
-      APL's concise expression, nor greatly burden domain experts to use.
+      APL's concise expression, nor greatly burden domain experts.
       Co-dfns extends the basic dfns language to enable
       both non-deterministic and deterministic task parallelism
       without requiring any additional syntax, and introducing only
@@ -301,7 +304,7 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     <para>
       Attempting to read a slot in a single assignment array blocks until 
       that slot receives a value. In this way, single assignment arrays 
-      deliver IVars in a fashion that completing integrates them with 
+      deliver IVars in a fashion that completely integrates them with 
       normal APL: they feel like any other normal array during use. 
     </para>
     <para>
@@ -366,7 +369,7 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       </listitem>
     </orderedlist>
     <para>
-      Since this is an early stage project, the compiler does not realize 
+      At this early stage, the compiler does not realize 
       all of these goals to a great degree. The current compiler addresses 
       these through four primary designs.
     </para>
@@ -497,13 +500,14 @@ BlackScholes←{
       The current state of the compiler limits to some degree the level 
       of attainable integration. In particular, the benchmark was 
       compiled offline and linked together as a shared object, rather 
-      than taking advantage of LLVM's MCJIT system. Additionally, a 
-      custom wrapper function handled the conversion of interpreter 
-      data structures to and from the compiler structures, calling out 
-      to the shared object to perform the actual computation. This simulates 
-      the work that the JIT would do, but it still forms an undesirable 
-      manual step in the benchmarking process. 
-      The compiled objects were compiled using clang 3.4 with O3 optimizations, 
+      than taking advantage of LLVM's MCJIT system. To use the shared 
+      object from within the Dyalog interpreter, to properly simulate 
+      the JIT behavior, a wrapper function written in the interpreter 
+      converts the array data structures from that used by the interpreter 
+      to that used by the compiled code, and back once the compiled 
+      code returns a result. The JIT implementation will remove the need 
+      for such explicit wrapper functions.
+      The compiled objects were compiled using Clang 3.4 with O3 optimizations, 
       but no other explicit optimization settings. 
     </para>
     <para>
@@ -512,8 +516,8 @@ BlackScholes←{
       the code used for the compiler was cosmetically tweaked to work around 
       some limitations in the current implementation of the compiler. 
       Each version ran on each data set size three times, and the average 
-      of these three computations was taken. Each run performed a collector 
-      compaction before running the code. 
+      of these three computations was taken. Every run manually executed 
+      the garbage collector before executing the code.
     </para>
     <para>
       The testing machine used an Intel Core i7-3610QM CPU @ 2.30Ghz with 
@@ -566,14 +570,6 @@ BlackScholes←{
   <section>
     <title>Related Work</title>
     <para>
-      Froma theoretical standpoint, Lenore Mullin's dissertation on the
-      Mathematics of Arrays provides a foundation upon which much of the
-      compiler optimizations are based, in terms of reasoning about the shapes
-      of arrays and their overall values. Heretofore, this work has not been
-      incorporated into the compiler, but in the future it will serve as the
-      basis for a number of planned compiler passes.
-    </para>
-    <para>
       Timothy Budd implemented an APL compiler for a traditional APL system
       that he describes in <quote>An APL Compiler</quote>. The work presents
       a unique and interesting approach to reducing computation on arrays
@@ -606,6 +602,34 @@ BlackScholes←{
       but does not include any ability to do more refined concurrent operations
       since the interpreter lacks single assignment arrays for synchronization;
       the system itself makes not guarantees when effects occur in parallel.
+    </para>
+    <para>
+      Single-assignment C attempts to deliver a high-level, C-like language 
+      that uses arrays as first-class data types. It focuses heavily on a 
+      functional paradigm, and on automatically parallelizing code. The same 
+      issues of memory copying and array management occur in SAC as in 
+      Co-dfns, but SAC is a purely functional language, whereas Co-dfns 
+      admits array mutation and variable assignment within a single scope. 
+    </para>
+    <para>
+      The McLAB project implements a compiler and supporting systems for MATLAB 
+      code. Like Co-dfns, it provides an explicit intermediate language for 
+      work, but goes to a lower level with its own JIT. It also produces 
+      Fortran and C code, which are not explicit targets of Co-dfns. 
+      The MATLAB language itself differs from Co-dfns, which naturally results
+      in differences of approach with McLAB and Co-dfns. Co-dfns adapts the APL 
+      language with explicit parallelism constructs, rather than emphasizing 
+      automatic parallelization of the runtime primitives. 
+    </para>
+    <para>
+      Languages like X10, Fortress, and Chapel also strive to scale 
+      programming to large distributed systems. These system inherit much of 
+      their linguistic history from Fortran, Java, and C++, rather than 
+      APL. They also emphasize a more object-oriented approach than the 
+      array-centric, functional approach of Co-dfns. They also expose much 
+      more explicit syntactic constructs for controlling data layout and 
+      synchronization, whereas Co-dfns tries to minimize explicit syntax as 
+      much as possible. 
     </para>
     <para>
       A number of systems such as Manticore, ZPL, and Accelerate are able to
