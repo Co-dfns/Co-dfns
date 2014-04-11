@@ -39,7 +39,7 @@
 
   <xsl:attribute-set name="formal.title.properties"
                      use-attribute-sets="normal.para.spacing">
-    <xsl:attribute name="font-size">10pt</xsl:attribute>
+    <xsl:attribute name="font-size">9pt</xsl:attribute>
     <xsl:attribute name="text-indent">0em</xsl:attribute>
     <xsl:attribute name="space-before.optimum">9pt</xsl:attribute>
     <xsl:attribute name="space-before.minimum">7pt</xsl:attribute>
