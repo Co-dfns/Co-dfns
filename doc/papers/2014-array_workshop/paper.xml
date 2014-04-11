@@ -114,21 +114,26 @@
       in detail.
     </para>
     <para>
-      The Co-dfns implementation compiles APL code rather than interpreting 
-      it, using LLVM as a backend. The compiler is written in Co-dfns 
-      itself and integrates directly with the Dyalog APL interpreter, 
-      allowing users to access and use compiled code without ever leaving 
-      the interactive APL session. Though still in the early stages of 
-      development, the design of the compiler and the optimizations 
-      target the most significant bottlenecks in the interpreter, namely, 
-      memory management and function fusion. It takes a high-level approach 
-      to optimization, and relies on LLVM to deliver the appropriate 
-      low-level support. The compiler means to replace the need for 
-      users to rewrite critical regions of their code in Cuda or C to 
-      scale the performance to acceptable levels as the data sizes 
-      increase. As such, the compiler design focuses on creating scalable 
-      code, both across devices and hardware as well as size of data.
-      Section 4 describes the Co-dfns compiler.
+      The Co-dfns implementation uses a unique compiler architecture,
+      which combines the nanopass philosophy of compiler design with the
+      dfns language. The compiler is a single Dyalog APL namespace
+      implemented in dfns APL as a pure functional composition of
+      compiler passes. Though in the early stages of development, the
+      current design solves all the major issues of APL compilation
+      without using a garbage collector or closures, despite the
+      higher-order style of programming that Co-dfns allows. The
+      architecture allows the compiler to take full advantage of
+      existing LLVM optimizations, and lays the groundwork for future
+      high-level optimizations including function fusion and memory
+      layout/locality optimizations, two of the primary performance
+      bottlenecks in Dyalog APL. Users can compile APL code
+      interactively without ever needing to leave their APL sessions.
+      The compiler means to replace the need for users to rewrite
+      critical regions of their code in Cuda or C to scale the
+      performance to acceptable levels as the data sizes increase. As
+      such, the compiler design focuses on creating scalable code, both
+      across devices and hardware as well as size of data. Section 4
+      describes the Co-dfns compiler.
     </para>
     <para>
       Though still immature as a compiler, some useful benchmarks and 
@@ -150,7 +155,14 @@
       In 1996, John Scholes introduced dfns, which provided a lexically scoped, 
       functionally oriented notation for writing APL code. This notation 
       eliminates many of the barriers to fast compilation. See Figure YYY 
-      for a summary of the APL notation used in the following sections.
+      for a summary of the APL notation used in the following sections. 
+      An operator is the APL term for a function which may accept functions 
+      as arguments and returns a function. The results of an operator may be 
+      bound to a name, used directly, or passed to other operators as arguments. 
+      A Namespace is the Dyalog term for a single module of APL code. 
+      To create a namespace, a program fixes it from a namespace script, which 
+      is the textual representation of the namespace stored as an 
+      array or in a file.
     </para>
     <para>
       The LLVM project provides a complete low-level compiler that transforms 
@@ -298,9 +310,12 @@
       <varname>S</varname> gives the dimensions of the array. This
       array begins empty, and each slot may be assigned a value at most once. 
     </para>
-    <programlisting>A←2 2⍴⌾  ⍝ SA matrix of shape 2 2
+    <figure>
+      <title>Single-assignment Array Example</title>
+      <programlisting>A←2 2⍴⌾  ⍝ SA matrix of shape 2 2
 A[0;0]←1 ⍝ Assign 0 0 slot to 1
 A[0;0]←5 ⍝ Error, multiple writes</programlisting>
+    </figure>
     <para>
       Attempting to read a slot in a single assignment array blocks until 
       that slot receives a value. In this way, single assignment arrays 
@@ -318,11 +333,14 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       returned by the function called without <literal>∥</literal> 
       assuming no error conditions.
     </para>
-    <programlisting>pfib←{ ⍝ Parallel Fibonacci
+    <figure>
+      <title>Example Naive Parallel Fibonacci</title>
+      <programlisting>pfib←{
   1=⍵:1
   2=⍵:1
   (pfib<literal>∥</literal>⍵-1)+(pfib<literal>∥</literal>⍵-2)
 }</programlisting>
+    </figure>
     <para>
       These two primitives suffice to deliver task parallel computation 
       in the dfns APL dialect. Single assignment arrays allow for 
@@ -335,6 +353,15 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       assignment arrays, these constructs also exhibit determinism.
     </para>
   </section>
+  <figure pgwide="0">
+    <title>Co-dfns Compiler Architecture</title>
+    <mediaobject>
+      <imageobject>
+        <imagedata align="center" width="3.25in" 
+                   fileref="architecture.svg" format="SVG" />
+      </imageobject>
+    </mediaobject>
+  </figure>
   <section>
     <title>Implementation</title>
     <para>
@@ -370,15 +397,72 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     </orderedlist>
     <para>
       At this early stage, the compiler does not realize 
-      all of these goals to a great degree. The current compiler addresses 
-      these through four primary designs.
+      all of these goals. Nonetheless, the current version does 
+      solve all major obstacles to APL compilation, including the handling 
+      of operators, nested functions, and possible ambiguity in parsing 
+      APL due to the name class of certain variables (that is, whether a variable 
+      is bound to a function or an array) in a scalable, performant manner.
+    </para>
+    <formalpara>
+      <title>Architecture</title>
+      <para>
+        The Co-dfns compiler is itself implemented using dfns in Dyalog APL. 
+        This makes the compiler easy to deploy and use. The compiler operates over 
+        Namespace scripts to create a Dyalog Namespace, replacing
+        the <function>⎕FIX</function> function in the interpreter for anonymous 
+        namespaces. Users who wish to compile their code rather than 
+        interpret it need only encapsulate their code into a single namespace, 
+        and then fix it using the <function>CoDfns.Fix</function> function 
+        instead of the <function>⎕FIX</function> function. They can optionally 
+        produce an external LL IR file, which is a clang and LLVM compatible 
+        object to integrate with other LLVM based compilation objects. 
+      </para>
+    </formalpara>
+    <para>
+      The compiler uses a pure-functional, nanopass structure, which divides 
+      the compiler into a series of small passes which compose one 
+      after another, each one transforming the incoming AST in some specific 
+      way. The <function>GenLLVM</function> pass then takes the final AST 
+      and converts it into an LLVM module for JITing or exporting to a file. 
+    </para>
+    <para>
+      Being written in dfns, the compiler operates over a linearized XML
+      tree that represents the AST, so that each compiler pass consumes
+      and produces a valid XML tree that any user can serialize into
+      standard format using the <function>⎕XML</function> function,
+      easily inserting their own passes or changing the entry or exit
+      points of the compiler for various reasons. In addition to being
+      functional, which simplifies the design of the compiler, each pass
+      tries to emphasize good APL style, focusing on aggregate, data
+      parallel operations and minimizing recursion or complex
+      operations. As such, the compiler passes have no explicit loops or
+      iterations, and they use little to no explicit recursion.
+      The degree to which these passes can be expressed using minimal
+      explicit control flow suggests that the Co-dfns compiler could
+      serve as an excellent benchmark for creating a GPU-run compiler.
+      The compiler as a dfns benchmark also suggests places where memory
+      handling could improve significantly in Dyalog APL
+      and Co-dfns to enable a more functional style of APL program to
+      perform well.
+    </para>
+    <para>
+      Finally, the compiler demonstrates the flexibility and generality of the 
+      Co-dfns language, in that the compiler itself finds a natural expression 
+      therein. It shows how to create small, parallel friendly compiler passes 
+      that exhibit none of the traditional complexity in compiler design. APL proves to 
+      have a well designed set of primitives that encourages a concise and elegant 
+      expression of the tree transformations required to implement a nanopass 
+      compiler. This emphasis on aggregate, global operations over trees distinguishes 
+      the approach used in Co-dfns from a regular nanopass compiler, 
+      which tends to define each pass based on pattern matching and implicit 
+      recursion. 
     </para>
     <formalpara>
       <title>Memory management</title>
       <para>
         Systems like Dyalog APL use a garbage collector to manage memory. 
         Garbage collectors liberate programming implementations and languages 
-        greatly, and serves as the de facto standard memory management model 
+        greatly, and serve as the de facto standard memory management model 
         for most all new languages. This is good. In Co-dfns, however, 
         because the language design enforces a natural stack lifetime on 
         variables and functions, the compiler uses a stack discipline to 
@@ -390,7 +474,7 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     <para>
       Interestingly, this decision does not preclude the use of operators, 
       which are higher-order functions in APL which return functions. Functions 
-      cannot escape out of a lexical context, which would require indefinitely 
+      cannot escape out of a lexical context, which would require indefinite 
       lifetimes of function values. These stack functions permit a wide range of 
       higher-order programming, but require no closure allocation. Indeed, all 
       Co-dfns functions map directly to an LLVM function. Thus, the compiler 
@@ -411,33 +495,6 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
         fusion.
       </para>
     </formalpara>
-    <formalpara>
-      <title>Modularity and Integration</title>
-      <para>
-        The Co-dfns compiler tries as much as possible to avoid needless reinvention 
-        of proven techniques or code. It uses the LLVM compiler to provide a 
-        stable and mature compiler backend, with many optimizations. It uses a 
-        variety of the Nanopass compiler design philosophy, in which many small 
-        compiler passes, functional and stateless, compose together to form a complete 
-        transformation from the input language to the output language. 
-        Furthermore, each compiler pass accepts as input and output a data format 
-        which trivially serializes to XML. Thus, at any given point in the compiler, 
-        the state of the compiler easily exports into a portable lexical format. 
-      </para>
-    </formalpara>
-    <para>
-      The above design choices result in a compiler that easily integrates into 
-      external tools. The use of LLVM and choice of memory management strategies 
-      also gives very standard, compatible object files produced by the compiler. 
-      These compiler products can be linked into existing applications without 
-      any real change in the compilation toolchain. For Dyalog APL users, this 
-      means that the results of the compiler fit directly into the rest of the 
-      compiler with a generic wrapper around each compiled function. Work continues 
-      to eliminate any manual part of this, using the LLVM MCJIT system to 
-      allow Dyalog to completely integrate the compiler without any extra manual 
-      effort on the part of Dyalog users, greatly lowering the barrier to entry 
-      into using the compiler. 
-    </para>
   </section>
   <figure>
     <title>Black Scholes Benchmark Code</title>
