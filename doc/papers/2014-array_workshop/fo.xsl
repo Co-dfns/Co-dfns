@@ -73,6 +73,11 @@
     <xsl:param name="gentext-key" select="''"/>
     <fo:block></fo:block>
   </xsl:template>
+  
+  <xsl:attribute-set name="biblioentry.properties">
+    <xsl:attribute name="text-indent">-2em</xsl:attribute>
+    <xsl:attribute name="start-indent">2em</xsl:attribute>
+  </xsl:attribute-set>
 
   <xsl:attribute-set name="normal.para.spacing">
     <xsl:attribute name="text-indent">1.5em</xsl:attribute>
