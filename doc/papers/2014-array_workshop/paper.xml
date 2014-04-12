@@ -654,7 +654,7 @@ BlackScholes←{
       It has useful passes, such as data flow
       analysis and static single assignment. Moreover, Bernecky details an
       approach at introducing parallelism into the compiler itself. While 
-      APEX is not self-hosting, its efforts to introduce a parallel
+      APEX is not self-hosting, its efforts to introduce parallel
       compiler passes should inform Co-dfns pass design.
       APEX does suffer from strong
       restrictions, though some could evaporate given enough
