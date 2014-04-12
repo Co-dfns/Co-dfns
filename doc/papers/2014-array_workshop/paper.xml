@@ -51,18 +51,19 @@
       by reducing the domain expert's dependence on 
       external engineering resources. This low-overhead, direct engagement 
       with the programming environment distinguishes APL's primary successes 
-      from language such as C++ or C. 
+      from language such as C++ or C. <citation>mortenemail</citation>
     </para>
     <para>
       The systems developed in this manner could be small, but often scale 
       to very large sizes. This includes treasury management, risk 
       and portfolio management, oil refining optimization, and large 
-      installations of patient journals and health data. Increasingly, 
+      installations of patient journals and health data. 
+      <citation>mortenemail</citation> Increasingly, 
       in the fields where APL thrives, such as health data, finance, and 
       large simulations, the sizes of the data continues to grow rapidly. 
       The size of these problems often exceeds the ability of even large 
       machines to store all relevant information in RAM, or even on a single 
-      machine. 
+      machine. <citation>cosmos</citation>
     </para>
     <para>
       This rapid increase of data size combines with the large scale of 
@@ -102,7 +103,8 @@
     </para>
     <para>
       The Dyalog APL interpreter already uses threading to improve 
-      performance of primitive operations. Users have little control 
+      performance of primitive operations. <citation>dyalogref</citation>
+      Users have little control 
       over this behavior however, and more often, good parallelism 
       requires explicit consideration at the algorithmic level. Thus, 
       the Co-dfns language extends the traditional SIMD parallelism 
@@ -115,7 +117,8 @@
     </para>
     <para>
       The Co-dfns implementation uses a unique compiler architecture,
-      which combines the nanopass philosophy of compiler design with the
+      which combines the nanopass philosophy of compiler design 
+      <citation>nanopass</citation> with the
       dfns language. The compiler is a single Dyalog APL namespace
       implemented in dfns APL as a pure functional composition of
       compiler passes. Though in the early stages of development, the
@@ -144,7 +147,8 @@
     <title>Background</title>
     <para>
       APL first appeared in 1957 in <citetitle>A Programming Language</citetitle>
-      by Kenneth Iverson, who designed the language as an unambiguous 
+      by Kenneth Iverson <citation>apl</citation>, 
+      who designed the language as an unambiguous 
       mathematical notation for teaching and research. This mathematical 
       and concise nature of the language make it attractive for certain 
       fields and experts. The first implementations of APL, however, 
@@ -153,7 +157,8 @@
       execute functions, and dynamic scoping made it difficult to implement 
       full APL compilers. 
       In 1996, John Scholes introduced dfns, which provided a lexically scoped, 
-      functionally oriented notation for writing APL code. This notation 
+      functionally oriented notation for writing APL code. 
+      <citation>dfns</citation> This notation 
       eliminates many of the barriers to fast compilation. See Figure YYY 
       for a summary of the APL notation used in the following sections. 
       An operator is the APL term for a function which may accept functions 
@@ -165,27 +170,29 @@
       array or in a file.
     </para>
     <para>
-      The LLVM project provides a complete low-level compiler that transforms 
-      the LLVM intermediate representation (IR) into native code. It targets 
-      multiple architectures, including PTX (for GPU programming), and 
-      x86_64 code. It provides many useful low-level optimizations that often 
-      require significant effort to implement. This includes function inlining 
-      and loop vectorization. It also provides a MCJIT system which enables 
-      just-in-time compilation of code in-memory, which suits the needs of 
-      the Co-dfns compiler particularly well.
+      The LLVM project <citation>llvm</citation> provides a complete
+      low-level compiler that transforms the LLVM intermediate
+      representation (IR) into native code. It targets multiple
+      architectures, including PTX (for GPU programming), and x86_64
+      code. It provides many useful low-level optimizations that often
+      require significant effort to implement. This includes function
+      inlining and loop vectorization. It also provides a MCJIT system
+      which enables just-in-time compilation of code in-memory, which
+      suits the needs of the Co-dfns compiler particularly well.
     </para>
     <para>
       When spawning a new parallel computation, in functional languages, 
-      often the result of that computation goes into a future. The future 
+      often the result of that computation goes into a future. <citation>futures</citation>
+      The future 
       serves as a placeholder for the data until the parallel computation 
       completes. Attempting to read the future blocks until the data associated 
       with that future exists. An IVar, or immutable variable, holds at 
-      most a single value in its lifetime. When created, it holds no value, 
+      most a single value in its lifetime. <citation>ivars</citation> When created, it holds no value, 
       and future computations may write at most once into that value. Attempting 
       to read the contents of the variable will block until some computation 
       writes to the variable. Futures and ivars often serve as the 
       synchronizing data structure in deterministic computation for functional 
-      programming.
+      programming. <citation>singleassignment</citation>
     </para>
   </section>
   <table frame="void">
@@ -264,7 +271,8 @@
   <section>
     <title>Language Innovations</title>
     <para>
-      The dfns language encourages spiritually functional
+      The dfns language <citation>dfns</citation> 
+      encourages spiritually functional
       data parallel programming; the bulk simd parallelism of
       APL forms the language foundation, not a veneer over mostly 
       serial programs. It does not, however, allow the natural 
@@ -274,7 +282,8 @@
     <para>
       Traditional solutions to task parallelism in APL bolted on
       concurrency constructs such as mutexes and
-      guards, with APL underneath. This approach suffers from the
+      guards, with APL underneath. <citation>dyalogref</citation>
+      This approach suffers from the
       same programmability problems that these same constructs have
       in any language, while additionally imposing a significant
       cost on language concision and productivity for
@@ -284,7 +293,8 @@
       tuning expert.
       Deterministic parallelism somewhat relieves these
       issues by eliminating by construction some undesirable 
-      non-determinism in parallel programs. The traditional expression 
+      non-determinism in parallel programs. <citation>singleassignment</citation>
+      The traditional expression 
       of these features, does not map any more nicely to 
       APL than mutexes, guards, or the like.
     </para>
@@ -410,12 +420,14 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
         This makes the compiler easy to deploy and use. The compiler operates over 
         Namespace scripts to create a Dyalog Namespace, replacing
         the <function>⎕FIX</function> function in the interpreter for anonymous 
-        namespaces. Users who wish to compile their code rather than 
+        namespaces. <citation>dyalogref</citation>
+        Users who wish to compile their code rather than 
         interpret it need only encapsulate their code into a single namespace, 
         and then fix it using the <function>CoDfns.Fix</function> function 
         instead of the <function>⎕FIX</function> function. They can optionally 
         produce an external LL IR file, which is a clang and LLVM compatible 
         object to integrate with other LLVM based compilation objects. 
+        <citation>llvm</citation>
       </para>
     </formalpara>
     <para>
@@ -430,6 +442,7 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       tree that represents the AST, so that each compiler pass consumes
       and produces a valid XML tree that any user can serialize into
       standard format using the <function>⎕XML</function> function,
+      <citation>quadxml</citation>
       easily inserting their own passes or changing the entry or exit
       points of the compiler for various reasons. In addition to being
       functional, which simplifies the design of the compiler, each pass
@@ -461,9 +474,12 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       <title>Memory management</title>
       <para>
         Systems like Dyalog APL use a garbage collector to manage memory. 
+        <citation>gc</citation>
         Garbage collectors liberate programming implementations and languages 
         greatly, and serve as the de facto standard memory management model 
-        for most all new languages. This is good. In Co-dfns, however, 
+        for most all new languages. 
+        <citation>gc2</citation>
+        This is good. In Co-dfns, however, 
         because the language design enforces a natural stack lifetime on 
         variables and functions, the compiler uses a stack discipline to 
         implement all memory management, completely avoiding the extra 
@@ -485,7 +501,8 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
       <title>Fusion</title>
       <para>
         Existing research into parallel system demonstrates the importance and 
-        effectiveness of good fusion over certain operators. The Dyalog interpreter 
+        effectiveness of good fusion over certain operators. <citation>fusion</citation>
+        The Dyalog interpreter 
         performance suffers even in cases where it might due well, because it 
         cannot fuse scalar primitive functions together to leverage modern 
         memory hierarchies. Full scalar function fusion does not yet exist in 
@@ -523,7 +540,7 @@ BlackScholes←{
       for it. This makes evaluation challenging, as most benchmarks leverage 
       a fairly wide array of language features and primitives. Notwithstanding
       these challenges, the Co-dfns compiler can compile the Espen Haug 
-      Black Scholes calculation. 
+      Black Scholes calculation. <citation>blackscholes</citation>
     </para>
     <formalpara>
       <title>Blackscholes benchmark</title>
@@ -557,7 +574,9 @@ BlackScholes←{
       The current state of the compiler limits to some degree the level 
       of attainable integration. In particular, the benchmark was 
       compiled offline and linked together as a shared object, rather 
-      than taking advantage of LLVM's MCJIT system. To use the shared 
+      than taking advantage of LLVM's MCJIT system.
+      <citation>llvm</citation>
+      To use the shared 
       object from within the Dyalog interpreter, to properly simulate 
       the JIT behavior, a wrapper function written in the interpreter 
       converts the array data structures from that used by the interpreter 
@@ -628,7 +647,9 @@ BlackScholes←{
     <title>Related Work</title>
     <para>
       Timothy Budd implemented an APL compiler for a traditional APL system
-      that he describes in <quote>An APL Compiler</quote>. The work presents
+      that he describes in <quote>An APL Compiler</quote>. 
+      <citation>budd</citation>
+      The work presents
       a unique and interesting approach to reducing computation on arrays
       by lazily executing computations. Budd's compiler delayed computation
       until the point at which the program requested the value. As in most
@@ -638,7 +659,8 @@ BlackScholes←{
     </para>
     <para>
       Bob Bernecky implemented the APEX compiler, which perhaps best represents
-      the traditional APL compiler. It has useful passes, such as data flow
+      the traditional APL compiler. <citation>apex</citation>
+      It has useful passes, such as data flow
       analysis and static single assignment. Moreover, Bernecky details an
       approach at introducing parallelism into the compiler itself. While the
       APEX compiler is not self-hosting, the efforts to introduce a parallel
@@ -659,9 +681,11 @@ BlackScholes←{
       but does not include any ability to do more refined concurrent operations
       since the interpreter lacks single assignment arrays for synchronization;
       the system itself makes not guarantees when effects occur in parallel.
+      <citation>dyalogv14</citation>
     </para>
     <para>
-      Single-assignment C attempts to deliver a high-level, C-like language 
+      Single-assignment C <citation>sac</citation> 
+      attempts to deliver a high-level, C-like language 
       that uses arrays as first-class data types. It focuses heavily on a 
       functional paradigm, and on automatically parallelizing code. The same 
       issues of memory copying and array management occur in SAC as in 
@@ -669,7 +693,8 @@ BlackScholes←{
       admits array mutation and variable assignment within a single scope. 
     </para>
     <para>
-      The McLAB project implements a compiler and supporting systems for MATLAB 
+      The McLAB project <citation>mclab</citation>
+      implements a compiler and supporting systems for MATLAB 
       code. Like Co-dfns, it provides an explicit intermediate language for 
       work, but goes to a lower level with its own JIT. It also produces 
       Fortran and C code, which are not explicit targets of Co-dfns. 
@@ -679,7 +704,9 @@ BlackScholes←{
       automatic parallelization of the runtime primitives. 
     </para>
     <para>
-      Languages like X10, Fortress, and Chapel also strive to scale 
+      Languages like X10 <citation>x10</citation>, Fortress
+      <citation>fortress</citation>, and Chapel <citation>chapel</citation>
+      also strive to scale 
       programming to large distributed systems. These system inherit much of 
       their linguistic history from Fortran, Java, and C++, rather than 
       APL. They also emphasize a more object-oriented approach than the 
@@ -689,7 +716,8 @@ BlackScholes←{
       much as possible. 
     </para>
     <para>
-      A number of systems such as Manticore, ZPL, and Accelerate are able to
+      A number of systems such as ZPL <citation>zpl</citation>
+      and Accelerate <citation>accelerate</citation> are able to
       provide interesting implementation strategies for array programming,
       each emphasizing different elements. They all take the overall approach
       of altering the language design in favor of making certain features
@@ -700,7 +728,8 @@ BlackScholes←{
       make heavy use of fusion and fision.
     </para>
     <para>
-      Eric Holk's Harlan system takes a unique approach. Targeting the GPU
+      Eric Holk's Harlan system <citation>harlan</citation> 
+      takes a unique approach. Targeting the GPU
       explicitly, it tries to introduce traditional programming concepts as
       native concepts on the GPU, so that traditional programs can run reasonably
       on the GPU. This approach, instead of lifting array programming to the
@@ -726,6 +755,7 @@ BlackScholes←{
     <para>
       Further work continues on exploring irregular problem domains, such as
       the compiler itself, and graph algorithms, such as the Graph500 Benchmark. 
+      <citation>graph500</citation>
       Getting good results on these problems requires additional effort into 
       memory management, such as recognizing shape and types of the array 
       values and doing preallocation of the memory regions before computation. 
@@ -757,6 +787,277 @@ BlackScholes←{
       have greatly aided in directing this research. 
     </para>
   </section>
+  <bibliography>
+    <title>References</title>
+    <bibliomixed>
+      <abbrev>mortenemail</abbrev>
+      <personname>Morten Kromberg</personname>.
+      <date>2014</date>.
+      <title>Re: The Market for APL</title>.
+      Personal email conversation, <date>March 2014</date>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>cosmos</abbrev>
+      <person>
+        <personname>Paul Grosvenor</personname>
+        <affiliation>Optima Systems</affiliation>
+      </person>.
+      <date>2013</date>.
+      <title>COSMOS Performance Improvements</title>.
+      Video. In <citetitle>Dyalog '13 Invited Guest and User Presentations</citetitle>.
+      <date>(October 2013)</date>. 
+      DOI: <biblioid class="doi">http://video.dyalog.com/Dyalog13/?v=oK_XGobiFmM</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>dyalogref</abbrev>
+      <orgname>Dyalog Limited</orgname>.
+      <date>2014</date>.
+      <citetitle>Dyalog Language Reference</citetitle>
+      (<edition>Version 14.0</edition>).
+      <publishername>Dyalog Ltd.</publishername>, 
+      <address>Bramley, UK</address>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>nanopass</abbrev>
+      <personname>Andrew W. Keep</personname> and <personname>R. Kent Dybvig</personname>. 
+      <date>2013</date>. 
+      <title>A nanopass framework for commercial compiler development</title>. 
+      In <citetitle>Proceedings of the 18th ACM SIGPLAN international conference on Functional programming (ICFP '13)</citetitle>.
+      <publishername>ACM</publishername>, <address>New York, NY, USA</address>, 
+      <pagenums>343-350</pagenums>. 
+      DOI: <biblioid class="doi">http://doi.acm.org/10.1145/2500365.2500618</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>apl</abbrev>
+      <personname>Kenneth Iverson</personname>.
+      <date>1962</date>.
+      <citetitle>A Programming Language</citetitle>
+      (<edition>4th</edition> ed.).
+      <publishername>Wiley</publishername>,
+      <address>New York, NY</address>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>dfns</abbrev>
+      <personname>John Scholes</personname>.
+      <date>2009</date>.
+      <title>Introduction to D-functions</title>.
+      Video.
+      In <citetitle>Dyalog '13 Seminars</citetitle>.
+      (<date>September 2009</date>).
+      DOI: <biblioid class="doi">http://video.dyalog.com/Dyalog09/#INTRODUCTIONTOD-FUNCTIONS-PART1</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>llvm</abbrev>
+      <personname>Chris Lattner</personname>.
+      <date>2011</date>.
+      <title>LLVM and Clang: Advancing Compiler Technology</title>.
+      In <citetitle>Free and open Source Developers' European Meeting (FOSDEM 2011)</citetitle>. 
+      (<date>February 2011</date>). <address>Brussels, Belgium</address>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>futures</abbrev>
+      <personname>Dan P. Friedman</personname> and <personname>David S. Wise</personname>.
+      <date>1976</date>.
+      <title>The Impact of Applicative Programming on Multiprocessing</title>.
+      In <citetitle>International Conference on Parallel Processing</citetitle>, 
+      <pagenums>263-272</pagenums>. 
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>ivars</abbrev>
+      <personname>R.S. Nikhil Arvind</personname> and <personname>K. K. Pingali</personname>.
+      <date>1989</date>.
+      <title>I-structures: data structures for parallel computing</title>.
+      In <citetitle>ACM Trans. Program. Lang. Syst.</citetitle>,
+      <date>October 1989</date>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>singleassignment</abbrev>
+      <personname>L. G. Tesler</personname> and <personname>H. J. Enea</personname>.
+      <date>1968</date>. 
+      <title>A language design for concurrent processes</title>. 
+      In <citetitle>AFIPS</citetitle>,
+      <date>Spring 1968</date>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>quadxml</abbrev>
+      <personname>Richard Smith</personname>.
+      <date>2009</date>.
+      <title><literal>⎕XML</literal> and Journaling File System</title>.
+      Video.
+      In <citetitle>Dyalog '13 Seminars</citetitle>.
+      (<date>September 2009</date>).
+      DOI: <biblioid class="doi">http://video.dyalog.com/Dyalog09/RichardSmith_QuadXML.html</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>gc</abbrev>
+      <personname>John McCarthy</personname>. 
+      <date>1960</date>. 
+      <title>Recursive functions of symbolic expressions and their computation by machine, Part I</title>. 
+      In <citetitle>Commun. ACM 3, 4 (April 1960)</citetitle>, <pagenums>184-195</pagenums>. 
+      DOI: <biblioid class="doi">http://doi.acm.org/10.1145/367177.367199</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>gc2</abbrev>
+      <personname>Henry C. Baker, Jr.</personname> and <personname>Carl Hewitt</personname>. 
+      <date>1977</date>. 
+      <title>The incremental garbage collection of processes</title>. 
+      In <citetitle>Proceedings of the 1977 symposium on Artificial intelligence and programming languages</citetitle>. 
+      <publishername>ACM</publishername>, 
+      <address>New York, NY, USA</address>, <pagenums>55-59</pagenums>. 
+      DOI: <biblioid class="doi">http://doi.acm.org/10.1145/800228.806932</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>fusion</abbrev>
+      <personname>Clemens Grelck</personname>,
+      <personname>Karsten Hinckfuß</personname>, and
+      <personname>Sven-Bodo Scholz</personname>. 
+      <date>2006</date>.
+      <title>With-Loop Fusion for Data Locality and Parallelism</title>.
+      In <citetitle>Implementation and Application of Functional Languages
+      Lecture Notes in Computer Science Volume 4015</citetitle>, 
+      <date>2006</date>, <pagenums>178-195</pagenums>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>blackscholes</abbrev>
+      <orgname>Wikipedia</orgname>. <date>2014</date>.
+      <title>Black–Scholes model</title>.
+      (<date>April 2014</date>).
+      Retrieved <date>11 April, 2014</date> from
+      https://en.wikipedia.org/wiki/Black%E2%80%93Scholes
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>budd</abbrev>
+      <personname>Timothy Budd</personname>.
+      <date>1988</date>.
+      <citetitle>An APL Compiler</citetitle>.
+      (<date>1 March 1988</date>).
+      <publishername>Springer</publishername>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>apex</abbrev>
+      <personname>Robert Bernecky</personname>. 
+      <date>1997</date>.
+      <citetitle>An Overview of the APEX Compiler</citetitle>.
+      Technical Report 305/97. 
+      <publishername>University of Toronto</publishername>,
+      <address>Toronto, CA</address>. 
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>dyalogv14</abbrev>
+      <personname>Morten Kromberg</personname> and <personname>Jay Foad</personname>.
+      <date>2013</date>.
+      <title>Parallel Language Features in Version 14.0</title>.
+      Video. In <citetitle>Dyalog '13</citetitle>.
+      DOI: <biblioid class="doi">http://video.dyalog.com/Dyalog13/?v=Bmx_yUKxVv0</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>sac</abbrev>
+      <personname>Clemens Grelck</personname> and <personname>Sven-Bodo Scholz</personname>.
+      <date>2006</date>.
+      <title>SAC — A FunctionalArray Language for Efficient Multi-threaded Execution</title>.
+      In <citetitle>International Journal of Parallel Programming, Vol. 34, No. 4, (August 2006)</citetitle>.
+      DOI: <biblioid class="doi">0.1007/s10766-006-0018-x</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>mclab</abbrev>
+      <personname>Andrew Casey</personname>, 
+      <personname>Jun Li</personname>, 
+      <personname>Jesse Doherty</personname>,
+      <personname>Maxime Chevalier-Boisvert</personname>, 
+      <personname>Toheed Aslam</personname>, 
+      <personname>Anton Dubrau</personname>,
+      <personname>Nurudeen Lameed</personname>, 
+      <personname>Amina Aslam</personname>, 
+      <personname>Rahul Garg</personname>,
+      <personname>Soroush Radpour</personname>, 
+      <personname>Olivier Savary Belanger</personname>, 
+      <personname>Laurie Hendren</personname>, and
+      <personname>Clark Verbrugge</personname>.
+      <date>2010</date>.
+      <title>McLab: An extensible compiler toolkit for MATLAB and related languages</title>.
+      In <citetitle>C<superscript>3</superscript>S<superscript>2</superscript>E-10</citetitle>.
+      <address>Montreal</address>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>x10</abbrev>
+      <personname>Philippe Charles</personname>, 
+      <personname>Christian Grothoff</personname>,
+      <personname>Vijay Saraswat</personname>, 
+      <personname>Christopher Donawa</personname>, 
+      <personname>Allan Kielstra</personname>, 
+      <personname>Kemal Ebcioglu</personname>, 
+      <personname>Christoph von Praun</personname>, and 
+      <personname>Vivek Sarkar</personname>. 
+      <date>2005</date>. 
+      <title>X10: an object-oriented approach to non-uniform cluster computing</title>. 
+      In <citetitle>Proceedings of the 20th annual ACM SIGPLAN conference on Object-oriented 
+      programming, systems, languages, and applications (OOPSLA '05)</citetitle>. 
+      <publishername>ACM</publishername>, 
+      <address>New York, NY, USA</address>, <pagenums>519-538</pagenums>. 
+      DOI: <biblioid class="doi">http://doi.acm.org/10.1145/1094811.1094852</biblioid>
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>fortress</abbrev>
+      <personname>Guy L. Steele Jr</personname>. 
+      <date>2006</date>.
+      <title>Parallel Programming and Parallel Abstractions in Fortress</title>.
+      In <citetitle>FLOPS</citetitle>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>chapel</abbrev>
+      <personname>B.L. Chamberlain</personname>,
+      <personname>D. Callahan</personname>, and
+      <personname>H.P. Zima</personname>.
+      <date>2007</date>.
+      <title>Parallel Programmability and the Chapel Language</title>.
+      In <citetitle>International Journal of High Performance Computing Applications  vol. 21 no. 3</citetitle>.
+      (<date>August 2007</date>). <pagenums>291-312</pagenums>. 
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>zpl</abbrev>
+      <personname>Calvin Lin</personname> and <personname>Lawrence Snyder</personname>.
+      <date>1994</date>.
+      <title>ZPL: An array sublanguage</title>.
+      In <citetitle> Languages and Compilers for Parallel Computing Lecture Notes in Computer Science Volume 768</citetitle>. 
+      <pagenums>96-114</pagenums>.
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>accelerate</abbrev>
+      <personname>Manuel M.T. Chakravarty</personname>, 
+      <personname>Gabriele Keller</personname>, 
+      <personname>Sean Lee</personname>, 
+      <personname>Trevor L. McDonell</personname>, and 
+      <personname>Vinod Grover</personname>. 
+      <date>2011</date>. 
+      <title>Accelerating Haskell array codes with multicore GPUs</title>. 
+      In <citetitle>Proceedings of the sixth workshop on Declarative aspects of multicore programming (DAMP '11)</citetitle>. 
+      <publishername>ACM</publishername>, 
+      <address>New York, NY, USA</address>, 
+      <pagenums>3-14</pagenums>. 
+      DOI: <biblioid class="doi">http://doi.acm.org/10.1145/1926354.1926358</biblioid> 
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>harlan</abbrev>
+      <personname>Eric Holk</personname>,
+      <personname>William Byrd</personname>,
+      <personname>Nilesh Mahajan</personname>,
+      <personname>Jeremiah Willock</personname>,
+      <personname>Arun Chauhan</personname>,
+      <personname>Andrew Lumsdaine</personname>.
+      <date>2011</date>.
+      <title>Declarative Programming for GPUs</title>.
+      In <citetitle>International Conference on Parallel Computing (ParCo 2011)</citetitle>.
+      (<date>September 2011</date>).
+    </bibliomixed>
+    <bibliomixed>
+      <abbrev>graph500</abbrev>
+      <orgname>Graph500 Steering Committee</orgname>.
+      <date>2010</date>.
+      <title>Graph500 Benchmark 1</title>.
+      (<date>October 2012</date>).
+      Retrieved 11 April, 2014 from http://www.graph500.org/specifications
+    </bibliomixed>
+  </bibliography>
   <appendix>
     <title>Demo description</title>
     <para>
