@@ -76,13 +76,12 @@
       Their workflow should not suffer because of the size of the data. 
     </para>
     <para>
-      Unfortunately, interpreters underly most APL implementations.
+      Unfortunately, interpreters underlie most APL implementations.
       APL interpreters exhibit impressive performance, in part because of the 
       excellent choice of abstractions, <citation>kos</citation> 
       but this approach scales poorly to 
       complicated computational hierarchies used today.
-      the large, multi-core, multi-node, multi-device computational 
-      hierarchies in modern machines. Consider the following 
+      Consider the following 
       computation, which comes from a Black Scholes formula for 
       predicting options pricing. <citation>blackscholes</citation>
     </para>
@@ -160,7 +159,7 @@
       An operator is the APL term for a function which may accept functions 
       as arguments and returns a function. The results of an operator may be 
       bound to a name, used directly, or passed to other operators as arguments. 
-      A Namespace is the Dyalog term for a single module of APL code. 
+      A namespace is the Dyalog term for a single module of APL code. 
       To create a namespace, a program fixes it from a namespace script, which 
       is the textual representation of the namespace stored as an 
       array or in a file.
@@ -604,7 +603,7 @@ A[0;0]←5 ⍝ Error, multiple writes</programlisting>
     <para>
       Note that the interpreter outperforms the naive, partial implementation 
       of the compiler at low data sizes, but then begins to suffer performance 
-      degredation as the size increases. The compiler begins to outperform 
+      degradation as the size increases. The compiler begins to outperform 
       the interpreter, increasingly so as the size increases. 
       The compiler outperforms the interpreter by 26% at the largest data set, 
       without performing any specific optimizations available to it. 
@@ -718,7 +717,7 @@ BlackScholes←{
       prevalent. Accelerate, for instance, lifts rank to the type level,
       meaning that shapes are no longer first class entities. ZPL uses a
       more traditional language but enables predictable data layout for distributed
-      computing. Accelerate takes advantage of the language and implemenation to
+      computing. Accelerate takes advantage of the language and implementation to
       make heavy use of fusion.
     </para>
     <para>
@@ -773,7 +772,7 @@ BlackScholes←{
       a reasonable expectation of suitable performance gains.
     </para>
   </section>
-  <!--
+  
   <section>
     <title>Acknowledgments</title>
     <para>
@@ -784,7 +783,7 @@ BlackScholes←{
       Paul Ojanen, and others provided critical feedback.
     </para>
   </section>
-  -->
+  
   <bibliography>
     <title>References</title>
     <bibliomixed>
