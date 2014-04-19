@@ -4,9 +4,9 @@
   <xsl:import href="/home/arcfide/Libraries/Docbook5-XSL/fo/docbook.xsl"/>
   <xsl:import href="../doc/tech/titlepage.xsl" />
   <xsl:param name="body.font.master" select="10" />
-  <xsl:param name="body.font.family" select="'DejaVu Serif'" />
-  <xsl:param name="title.font.family" select="'DejaVu Sans'" />
-  <xsl:param name="monospace.font.family" select="'APL385 Unicode,DejaVu Sans Mono,FreeMono for APL'" />
+  <xsl:param name="body.font.family" select="'FreeSerif'" />
+  <xsl:param name="title.font.family" select="'FreeSans'" />
+  <xsl:param name="monospace.font.family" select="'APL385 Unicode,FreeMono for APL'" />
   <xsl:param name="symbol.font.family" select="''" />
   <xsl:param name="generate.toc" select="'article nop'" />
   <xsl:param name="fop1.extensions" select="1" />
