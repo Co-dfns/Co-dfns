@@ -403,6 +403,12 @@
         <td colspan="5">DOMAIN ERROR: Parse[24]</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>64</td>
+        <td colspan="2">2014-04-22</td>
+        <td colspan="5">DOMAIN ERROR: GenInit[8]</td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1841,6 +1847,29 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
         <para>
           Missing seed value, use <literal>(⊂MtAST)</literal> 
           as a seed to fix.
+        </para>
+      </formalpara>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A DOMAIN ERROR occurs with the following message:
+        </para>
+      </formalpara>
+      <screen>GenInit[8] call←{BuildCall bldr	⍺⍺ ⍵(≢⍵)''}</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          Stack trace indicates that this is called from the 
+          <function>mcall</function> on the expression 
+          <literal>F1 52 52</literal> which is a function to be called 
+          in the initialization function. This requires the declaration 
+          of a temporary array. The code expects that the 
+          <function>GenArrDec</function> returns an LLVM Value reference, 
+          but it instead returns the string name of the temporary array. 
+          The fix is to instead return the LLVM Value reference to the 
+          caller instead of the string variable name.
         </para>
       </formalpara>
     </listitem>

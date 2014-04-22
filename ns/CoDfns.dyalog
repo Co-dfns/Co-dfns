@@ -918,7 +918,7 @@ GenGlobal←{
 
 GenArrDec←{
   ⍺{                                   ⍝ Fn to declare new array
-    0≠GetNamedGlobal ⍺ ⍵:⍵             ⍝ Do nothing if already declared
+    0≠g←GetNamedGlobal ⍺ ⍵:g           ⍝ Do nothing if already declared
     r←ConstInt (Int16Type) 0 0         ⍝ Rank ← 0
     sz←ConstInt (Int64Type) 0 0        ⍝ Size ← 0
     t←ConstInt (Int8Type) 2 0          ⍝ Type ← 2
@@ -928,7 +928,7 @@ GenArrDec←{
     d←ConstPointerNull dt              ⍝ Data ← ⍬
     a←ConstStruct (r sz t s d) 5 0     ⍝ Build empty structure
     g←AddGlobal ⍺ ArrayTypeV ⍵         ⍝ Add the Global
-    ⍵⊣SetInitializer g a               ⍝ Set the initial empty value
+    g⊣SetInitializer g a               ⍝ Set the initial empty value
   }¨⍵
 }
 

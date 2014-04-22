@@ -3800,6 +3800,78 @@
            DOMAIN ERROR: Parse[24]
           </td>
         </tr>
+        <tr>
+          <td>21</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>8</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>9</td>
+          <td>Fail</td>
+          <td colspan="5">
+            Syntax Error, non-critical
+          </td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>10</td>
+          <td>Fail</td>
+          <td colspan="5">
+            DOMAIN ERROR: GenInit[8]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3958,5 +4030,13 @@
       </para>
     </formalpara>
     <screen>Parse[24] ns←hd⍪⊃⍪/fn(⊣⍪1↓⊢)¨fm⊂[0]ns</screen>
+    <formalpara>
+      <title>Iteration 21, Test 10</title>
+      <para>
+        A DOMAIN ERROR in <function>GenInit[12]</function> occurs with the 
+        following message:
+      </para>
+    </formalpara>
+    <screen>GenInit[8] call←{BuildCall bldr ⍺⍺ ⍵(≢⍵)''}</screen>
   </section>
 </article>
