@@ -3792,6 +3792,14 @@
            FUNCTION NOT FOUND: Fix[8]
           </td>
         </tr>
+        <tr>
+          <td>20</td>
+          <td>1</td>
+          <td>Fail</td>
+          <td colspan="5">
+           DOMAIN ERROR: Parse[24]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -3942,5 +3950,13 @@
       </para>
     </formalpara>
     <screen>Fix[8] ns←nms ModToNS mod ⍝ Namespace to return</screen>
+    <formalpara>
+      <title>Iteration 20, Test 1</title>
+      <para>
+        A DOMAIN ERROR in <function>Parse[24]</function> occurs with the 
+        following message:
+      </para>
+    </formalpara>
+    <screen>Parse[24] ns←hd⍪⊃⍪/fn(⊣⍪1↓⊢)¨fm⊂[0]ns</screen>
   </section>
 </article>

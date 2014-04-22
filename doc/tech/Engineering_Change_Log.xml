@@ -397,6 +397,12 @@
         <td colspan="5">FUNCTION NOT FOUND: Fix[8]</td>
         <td colspan="2">Applied</td>
       </tr>
+      <tr>
+        <td>63</td>
+        <td colspan="2">2014-04-22</td>
+        <td colspan="5">DOMAIN ERROR: Parse[24]</td>
+        <td colspan="2">Applied</td>
+      </tr>
     </tbody>
   </table>
   <orderedlist>
@@ -1821,6 +1827,22 @@ fm←fm⊃¨⊂1 ¯1 0               ⍝ Convert } → ¯1 ; { → 1 ; else → 
         forward, and this requires that we adjust our increment 
         plans and delay, once again, the treatment of JIT.
       </para>
+    </listitem>
+    <listitem>
+      <formalpara>
+        <title>Description</title>
+        <para>
+          A DOMAIN ERROR occurs with the following message:
+        </para>
+      </formalpara>
+      <screen>Parse[24] ns←hd⍪⊃⍪/fn(⊣⍪1↓⊢)¨fm⊂[0]ns</screen>
+      <formalpara>
+        <title>Analysis</title>
+        <para>
+          Missing seed value, use <literal>(⊂MtAST)</literal> 
+          as a seed to fix.
+        </para>
+      </formalpara>
     </listitem>
   </orderedlist>
 </article>

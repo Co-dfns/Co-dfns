@@ -322,7 +322,7 @@ Parse←{
   fn←(d←fm/0⌷⍉ns),¨⊂'Function' '' fa   ⍝ New function nodes
   fn←fn,[¯0.5]¨(1+d),¨⊂'Line' '' MtA   ⍝ Line node for each function
   hd←(~∨\fm)⌿ns                        ⍝ Unaffected areas of ns
-  ns←hd⍪⊃⍪/fn(⊣⍪1↓⊢)¨fm⊂[0]ns          ⍝ Replace { with fn nodes
+  ns←hd⍪⊃⍪/(⊂MtAST),fn(⊣⍪1↓⊢)¨fm⊂[0]ns ⍝ Replace { with fn nodes
   k←1 Kids ns                          ⍝ Children to examine
   env←⊃ParseFeBindings/k,⊂MtNTE        ⍝ Initial Fe bindings to feed in
   sd←MtAST env                         ⍝ Seed is an empty AST and the env
