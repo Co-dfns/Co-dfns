@@ -3872,6 +3872,56 @@
             DOMAIN ERROR: GenInit[8]
           </td>
         </tr>
+        <tr>
+          <td>22</td>
+          <td>10</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>11</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>12</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>13</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>14</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>15</td>
+          <td>Pass</td>
+          <td colspan="5">
+          </td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            LENGTH ERROR: ParseFnLine[6]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -4038,5 +4088,13 @@
       </para>
     </formalpara>
     <screen>GenInit[8] call←{BuildCall bldr ⍺⍺ ⍵(≢⍵)''}</screen>
+    <formalpara>
+      <title>Iteration 22, Test 16</title>
+      <para>
+        A LENGTH ERROR in <function>ParseFnLine[6]</function> occurs with the 
+        following message:
+      </para>
+    </formalpara>
+    <screen>ParseFnLine[6] splt←{1↓¨(1,1↓cm)⊂[0]⍵}</screen>
   </section>
 </article>
