@@ -3922,6 +3922,14 @@
             LENGTH ERROR: ParseFnLine[6]
           </td>
         </tr>
+        <tr>
+          <td>23</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            RANK ERROR: Kids[0]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
     <formalpara>
@@ -4096,5 +4104,13 @@
       </para>
     </formalpara>
     <screen>ParseFnLine[6] splt←{1↓¨(1,1↓cm)⊂[0]⍵}</screen>
+    <formalpara>
+      <title>Iteration 23, Test 16</title>
+      <para>
+        A RANK ERROR in <function>Kids[0]</function> occurs with the 
+        following message:
+      </para>
+    </formalpara>
+    <screen>Kids[0] Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}</screen>
   </section>
 </article>

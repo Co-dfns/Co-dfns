@@ -691,64 +691,41 @@ LiftBound←{
 ⍝ the stack frames, or in the case of scopes, the size of the stack frame of
 ⍝ that scope.
 
-AnchorVars←{
-  mt←0 3⍴'' 0 0                        ⍝ An empty environment
-  ge←{                                 ⍝ Fn to get env for current scope
-    em←(1+⊃⍵)=0⌷⍉⍵                     ⍝ All expressions are direct descendants
-    em∧←(1⌷⍉⍵)∊⊂'Expression'           ⍝ Mask of expressions
-    nm←'name'Prop em⌿⍵                 ⍝ Names in local scope
-    nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm           ⍝ Split names and prepare
-    (nm,0),⍳≢nm                        ⍝ Local scope 0, assign slot to each var
-  }
-  vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵
-    'Variable'≡nm:⍺{                   ⍝ Variable node
-      nmv←'name'Prop ⍺                 ⍝ Name vector of node
-      nmv∊,¨'⍺⍵':(ast⍪⍺)env            ⍝ Don't annotate if ⍺ or ⍵
-      i←⊃(0⌷⍉env)⍳nmv                  ⍝ Lookup var in env
-      a←'env' 'slot',⍪⍕¨i(1 2)⌷env     ⍝ Stack frame and slot
-      a←(⊃0 3⌷⍺)⍪a                     ⍝ Attach new attributes
-      (ast⍪(1 3↑⍺),⊂a)env              ⍝ Attach to current AST
+AnchorVars←{⎕←⍵
+  em←((1+⊃)=0⌷⍉)∧(⊂'Expression')∊⍨1⌷⍉  ⍝ Fn: Mask of Expressions
+  nv←'name'Prop em(⌿∘⊢)⊢               ⍝ Fn: Vectors of expr names
+  nm←(⊃,/)(⊂0⍴⊂''),Split¨∘nv           ⍝ Fn: All expr names
+  ge←((0,⍨⊢),⍳∘≢)⍪∘nm                  ⍝ Fn: Env, scope 0, slot for each var
+  ks←(⌽1 Kids ⊢),(⊂(⊂MtAST),∘⊂⊣)       ⍝ Fn: Kids and seed for reductions
+  vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵ ⋄ nd←⍺
+    rt←(⊂ast⍪⊣),∘⊂⊢                    ⍝ Fn: Return format
+    na←{((1 3↑nd),⊂(⊃0 3⌷nd)⍪⍺⍺)⍪⍺}    ⍝ Fn: Extend node attributes, use with rt
+    'Variable'≡nm:⍺{an←'env' 'slot'    ⍝ Variable node, new attribute names
+      nmv←'name'Prop ⍺∊,¨'⍺⍵':⍺ rt env ⍝ Don't annotate if ⍺ or ⍵
+      a←an,⍪⍕¨(⊃nmv⍳⍨0⌷⍉env)(1 2)⌷env  ⍝ Stack frame and slot
+      (MtAST(a na)⍬) rt env            ⍝ Return new AST with new attributes
     }⍵
+    z←env ks ⍺                         ⍝ All other options process kids
     'FuncExpr'≡nm:⍺(⍺⍺{
       'Variable'≡⊃1 1⌷⍺:(ast⍪⍺)env     ⍝ Don't process function variables
-      z←(⌽1 Kids ⍺),⊂MtAST env         ⍝ Recur down the children
-      ka env←⊃⍺⍺vis/z                  ⍝ In other cases
-      (ast⍪(1↑⍺)⍪ka)env                ⍝ and return
+      ⊃(((1↑⍺)⍪⊣)rt⊢)/⊃⍺⍺vis/z         ⍝ Recur in other cases and return
     })⍵
     'Expression'≡nm:⍺(⍺⍺{              ⍝ Expression node
-      z←(⌽1 Kids ⍺),⊂MtAST env         ⍝ Children use existing env
-      ka env←⊃⍺⍺vis/z                  ⍝ Children visited first
-      nm←Split⊃'name'Prop 1↑⍺          ⍝ Name(s) of expression
-      id←(0⌷⍉⍺⍺)⍳nm                    ⍝ Relevant names in scope env
-      sl←id⊃¨⊂2⌷⍉⍺⍺                    ⍝ Slot(s) for each name
-      at←(⊃0 3⌷⍺)⍪'slots'(⍕sl)         ⍝ New attributes for node
-      nd←(1 3↑⍺),⊂at                   ⍝ New node
-      z←(ast⍪nd⍪ka)                    ⍝ AST to return
-      z(((⊂id)⌷⍺⍺)⍪env)                ⍝ Add any names to environment
+      n←Split⊃'name'Prop 1↑⍺           ⍝ Name(s) of expression
+      a←'slots'(⍕(i←n⍳⍨0⌷⍉⍺⍺)⊃¨⊂2⌷⍉⍺⍺) ⍝ Slot attribute for all names
+      ⊃((a na⍪⊣)rt(⍺⍺⌷⍨⊂i)⍪⊢)/⊃⍺⍺vis/z ⍝ Recur, add the names to environment
     })⍵
     'Condition'≡nm:⍺(⍺⍺{               ⍝ Condition node
-      k←1 Kids ⍵                       ⍝ Must handle children
-      z←(⌽1 Kids ⍵),⊂MtAST env         ⍝ Can reduce over all the kids at once
-      ca _←⊃⍺⍺ vis/z                   ⍝ We ignore the consequent environment
-      (ast⍪(1↑⍺)⍪ca)env                ⍝ Return the original environment
+      ⊃(((1↑⍺)⍪⊣)rt env⊣⊢)/⊃⍺⍺ vis/z   ⍝ Recur, but return the original environment
     })⍵
     'Function'≡nm:⍺(⍺⍺{                ⍝ Function node
-      ken←⍺⍺⍪env                       ⍝ Env is current env plus all in scope
-      ken[;1]+←1                       ⍝ Push the stack count up
-      z←(⌽1 Kids ⍺),⊂MtAST ken         ⍝ Must go through all children
-      ne←ge ⍺                          ⍝ New scope env
-      ka _←⊃ne vis/z                   ⍝ Ignore env from children
-      at←(⊃0 3⌷⍺)⍪'alloca'(⍕≢ne)       ⍝ New env attribute for function node
-      nd←(1 3↑⍺),⊂at                   ⍝ New function node
-      (ast⍪nd⍪ka)env                   ⍝ Leave environment same as when entered
+      kv←⍺⍺⍪env ⋄ kv[;1]+←1            ⍝ Extend env with scope and push depth
+      a←('alloca'(⍕≢ne←ge ⍺))na        ⍝ Attributes from new scope env
+      ⊃((a⍪⊣)rt env⊣⊢)/⊃ne vis/kv ks ⍺ ⍝ Recur new scope, return original env
     })⍵
-    z←(⌽1 Kids ⍺),⊂MtAST env
-    ka env←⊃∇/z
-    (ast⍪(1↑⍺)⍪ka)env
+    ⊃(((1↑⍺)⍪⊣)rt⊢)/⊃∇/z
   }
-  z←(⌽1 Kids ⍵),⊂MtAST mt
-  z←⊃⊃(ge ⍵)vis/z
-  (1↑⍵)⍪z
+  (1↑⍵)⍪⊃⊃(ge ⍵)vis/(0 3⍴'' 0 0)ks ⍵
 }
 
 ⍝ LiftFuncs
