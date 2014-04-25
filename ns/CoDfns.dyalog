@@ -639,7 +639,8 @@ LiftConsts←{
 
 ⍝ LiftBound
 ⍝
-⍝ Intended Function: Lift all assignments to the root of their scope.
+⍝ Intended Function: Lift all assignments to the root of their scope and ensure 
+⍝ all unbound 
 
 LiftBound←{
   vex←{                                ⍝ Function to make var expr
@@ -649,38 +650,24 @@ LiftBound←{
     e←1 4⍴⍺ 'Expression' '' at         ⍝ Expression node has no name
     e⍪v                                ⍝ Give valid AST as result
   }
-  lft←{                                ⍝ Function to lift expression
-    cls←⊃'class'Prop ⍵                 ⍝ Class determines handling
-    'atomic'≡cls:MtAST ⍵               ⍝ Nothing to do for atomic
-    ri←1+'monadic' 'dyadic'⍳⊂cls       ⍝ Location of the right argument
-    lf ex←⍺ ∇ ri⊃k←1 Kids ⍵            ⍝ Lift the right argument
-    nm←⊃'name'Prop 1↑ex                ⍝ Consider right argument name
-    nr←⊃⍪/¯1↓k                         ⍝ Our not right arguments to recombine
-    ∧/' '=nm:lf((1↑⍵)⍪nr⍪ex)           ⍝ When unnamed, do nothing
-    ex[;0]-←(⊃ex)-⍺                    ⍝ When named, must lift
-    ne←(1↑⍵)⍪nr⍪(1+⊃⍵)vex nm           ⍝ Replace right with variable reference
-    (lf⍪ex)(ne)                        ⍝ New lifted exprs and new node
-  }
-  atm←{                                ⍝ Fn to atomize test expression
-    cls←⊃'class'Prop 1↑te←⍵            ⍝ Class of test expression
-    'atomic'≡cls:MtAST ⍵               ⍝ Do nothing if atomic already
-    te[;0]-←1                          ⍝ Test expression is going up
-    nm←⊃'class'Prop 1↑⍵                ⍝ Name of test expression
-    ∨/' '≠nm:te((⊃⍵)vex ⊃Split nm)     ⍝ Already named, return with vex
-    ('tst'Bind te)((⊃⍵)vex'tst')       ⍝ Use temporary name otherwise
-  }
-  cnd←{                                ⍝ Function to handle condition nodes
-    te←⊃k←1 Kids ⍵                     ⍝ We care especially about the test expr
-    lf1 te←(⊃⍵)lft te                  ⍝ Lift test children, before cond
-    lf2 te←atm te                      ⍝ Atomize test expression
-    lf←lf1⍪lf2                         ⍝ Combine liftings
-    1=≢k:lf⍪(1↑⍵)⍪te                   ⍝ No consequent, no children expressions
-    ce←⊃⍪/(1+⊃⍵)lft⊃⌽k                 ⍝ Lift consequent, inside cond
-    lf⍪(1↑⍵)⍪te⍪ce                     ⍝ Put it all back in the right order
+  up←{a←⍺ ⋄ a[;0]-←(⊃a)-⍵ ⋄ a}         ⍝ Fn: Lift node ⍺ to depth ⍵
+  lft←'lbz'{                           ⍝ Op; Lift all expressions to scope root
+    nam cls←⊃¨'name' 'class'Prop¨⊂1↑⍺  ⍝ Name and class of node
+    isn←~∧/' '=nam ⋄ isa←'atomic'≡cls  ⍝ Tests of namedness and atomicity
+    isa∧isn:(⍺ up ⍵)((⊃⍺)vex nam)      ⍝ Lifted named ref & unnamed replacement
+    isa∨0=≢⍺:MtAST ⍺                   ⍝ Untouched unnamed reference or empty
+    ret←(⊃⍺)vex⊢nam←isn⊃⍺⍺ nam         ⍝ Final name & ref replacement for call
+    rlf rex←(⊃⌽k←1 Kids ⍺)nam∇∇⍵       ⍝ Lifted right argument of call
+    lfn←LiftBound ⊃⌽¯1↓k               ⍝ Lifted function in call
+    nex←((⊃¯2↓k)⍪lfn⍪rex)up ⍵          ⍝ Lifted call with right arg replacement
+    (rlf⍪isn⊃(nam Bind nex)nex)ret     ⍝ Right lifts + Bound call, & Return var
   }
   1=≢⍵:⍵                               ⍝ Do nothing for leaves
-  'Expression'≡⊃0 1⌷⍵:⊃⍪/(⊃⍵)lft ⍵     ⍝ Lift root expressions
-  'Condition'≡⊃0 1⌷⍵:cnd ⍵             ⍝ Lifting Condition nodes is special
+  'Expression'≡⊃0 1⌷⍵:⊃⍪/⍵ lft⊃⍵       ⍝ Lift root expressions
+  'Condition'≡⊃0 1⌷⍵:{                 ⍝ Lifting Condition nodes is special
+    l←⊃,/(2↑1 Kids ⍵)lft¨0 1+⊃⍵        ⍝ All lifted children and lifted code
+    ⊃⍪/(1↑l),(⊂1↑⍵),1↓l                ⍝ Test Expr lifted above the node
+  }⍵
   (∇⊢)Eachk ⍵                          ⍝ Ignore non-expr nodes
 }
 
@@ -691,7 +678,7 @@ LiftBound←{
 ⍝ the stack frames, or in the case of scopes, the size of the stack frame of
 ⍝ that scope.
 
-AnchorVars←{⎕←⍵
+AnchorVars←{
   em←((1+⊃)=0⌷⍉)∧(⊂'Expression')∊⍨1⌷⍉  ⍝ Fn: Mask of Expressions
   nv←'name'Prop em(⌿∘⊢)⊢               ⍝ Fn: Vectors of expr names
   nm←(⊃,/)(⊂0⍴⊂''),Split¨∘nv           ⍝ Fn: All expr names
