@@ -980,10 +980,11 @@
           </td>
         </tr>
         <tr>
-          <td>LiftBound</td>
+          <td>FlattenExprs</td>
           <td>Standard</td>
           <td colspan="3">
-            Lift bound expressions to the top of the scope
+            Flatten all expressions and ensure that all unnamed expressions 
+            are variable references. 
           </td>
         </tr>
         <tr>
@@ -2053,7 +2054,7 @@
       <informaltable frame="void" rules="rows">
         <thead>
           <tr>
-            <th colspan="4">Standard pass: LiftBound</th>
+            <th colspan="4">Standard pass: FlattenExprs</th>
           </tr>
           <tr>
             <th>Type</th>
@@ -2064,7 +2065,8 @@
           <tr>
             <td>Intended function</td>
             <td colspan="3">
-              Lift bound expressions to the root of the scope.
+              Flatten expressions and ensure all unnamed expressions are 
+              variable references.
             </td>
           </tr>
           <tr>
@@ -2092,8 +2094,14 @@
           <tr>
             <td>Invariant</td>
             <td colspan="3">
-              On output all assignments occur at the top-level of the scope
-	      and no assignments occur within an expression.
+              On output all expressions are either calls with reference 
+              arguments or references themselves.
+            </td>
+          </tr>
+          <tr>
+            <td>Invariant</td>
+            <td colspan="3">
+              On output all unnamed expressions are references.
             </td>
           </tr>
         </tbody>

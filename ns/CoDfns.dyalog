@@ -55,7 +55,7 @@ Compile←{
   ast←KillLines     ast
   ast←DropUnreached ast
   ast←LiftConsts    ast
-  ast←LiftBound     ast
+  ast←FlattenExprs  ast
   ast←AnchorVars    ast
   ast←LiftFuncs     ast
   ast←ConvPrims     ast
@@ -637,12 +637,12 @@ LiftConsts←{
   (1↑a)⍪h⍪1↓a                          ⍝ Connect root, lifted with the rest
 }
 
-⍝ LiftBound
+⍝ FlattenExprs
 ⍝
-⍝ Intended Function: Lift all assignments to the root of their scope and ensure 
-⍝ all unbound 
+⍝ Intended Function: Flatten all expressions and ensure that all unnamed 
+⍝ expressions are variable references.
 
-LiftBound←{
+FlattenExprs←{
   vex←{                                ⍝ Function to make var expr
     at←2 2⍴'name' ⍵ 'class' 'array'    ⍝ Variable name is right argument
     v←1 4⍴(1+⍺)'Variable' '' at        ⍝ Variable node, depth in left argument
