@@ -639,7 +639,7 @@ LiftConsts←{
 
 ⍝ FlattenExprs
 ⍝
-⍝ Intended Function: Flatten all expressions and ensure that all unnamed 
+⍝ Intended Function: Flatten all expressions and ensure that all unnamed
 ⍝ expressions are variable references.
 
 FlattenExprs←{
@@ -678,43 +678,34 @@ FlattenExprs←{
 ⍝ the stack frames, or in the case of scopes, the size of the stack frame of
 ⍝ that scope.
 
-AnchorVars←{
-  em←((1+⊃)=0⌷⍉)∧(⊂'Expression')∊⍨1⌷⍉  ⍝ Fn: Mask of Expressions
-  nv←'name'Prop em(⌿∘⊢)⊢               ⍝ Fn: Vectors of expr names
-  nm←(⊃,/)(⊂0⍴⊂''),Split¨∘nv           ⍝ Fn: All expr names
-  ge←((0,⍨⊢),⍳∘≢)⍪∘nm                  ⍝ Fn: Env, scope 0, slot for each var
-  ks←(⌽1 Kids ⊢),(⊂(⊂MtAST),∘⊂⊣)       ⍝ Fn: Kids and seed for reductions
-  vis←{nm←⊃0 1⌷⍺ ⋄ ast env←⍵ ⋄ nd←⍺
-    rt←(⊂ast⍪⊣),∘⊂⊢                    ⍝ Fn: Return format
-    na←{((1 3↑nd),⊂(⊃0 3⌷nd)⍪⍺⍺)⍪⍺}    ⍝ Fn: Extend node attributes, use with rt
-    'Variable'≡nm:⍺{an←'env' 'slot'    ⍝ Variable node, new attribute names
-      nmv←'name'Prop ⍺∊,¨'⍺⍵':⍺ rt env ⍝ Don't annotate if ⍺ or ⍵
-      a←an,⍪⍕¨(⊃nmv⍳⍨0⌷⍉env)(1 2)⌷env  ⍝ Stack frame and slot
-      (MtAST(a na)⍬) rt env            ⍝ Return new AST with new attributes
-    }⍵
-    z←env ks ⍺                         ⍝ All other options process kids
-    'FuncExpr'≡nm:⍺(⍺⍺{
-      'Variable'≡⊃1 1⌷⍺:(ast⍪⍺)env     ⍝ Don't process function variables
-      ⊃(((1↑⍺)⍪⊣)rt⊢)/⊃⍺⍺vis/z         ⍝ Recur in other cases and return
-    })⍵
-    'Expression'≡nm:⍺(⍺⍺{              ⍝ Expression node
-      n←Split⊃'name'Prop 1↑⍺           ⍝ Name(s) of expression
-      a←'slots'(⍕(i←n⍳⍨0⌷⍉⍺⍺)⊃¨⊂2⌷⍉⍺⍺) ⍝ Slot attribute for all names
-      ⊃((a na⍪⊣)rt(⍺⍺⌷⍨⊂i)⍪⊢)/⊃⍺⍺vis/z ⍝ Recur, add the names to environment
-    })⍵
-    'Condition'≡nm:⍺(⍺⍺{               ⍝ Condition node
-      ⊃(((1↑⍺)⍪⊣)rt env⊣⊢)/⊃⍺⍺ vis/z   ⍝ Recur, but return the original environment
-    })⍵
-    'Function'≡nm:⍺(⍺⍺{                ⍝ Function node
-      kv←⍺⍺⍪env ⋄ kv[;1]+←1            ⍝ Extend env with scope and push depth
-      a←('alloca'(⍕≢ne←ge ⍺))na        ⍝ Attributes from new scope env
-      ⊃((a⍪⊣)rt env⊣⊢)/⊃ne vis/kv ks ⍺ ⍝ Recur new scope, return original env
-    })⍵
-    ⊃(((1↑⍺)⍪⊣)rt⊢)/⊃∇/z
-  }
-  (1↑⍵)⍪⊃⊃(ge ⍵)vis/(0 3⍴'' 0 0)ks ⍵
+AnchorVars←{S←Split ⋄ nm←'name'∘(P←Prop)
+  e f←'Expression' 'Function'∊∘⊂¨⍨1⌷⍉⍵ ⍝ Mask of expression, function nodes
+  n←('name'∊∘⊂⍨0⌷⍉)¨3⌷⍉⍵               ⍝ Mask of nodes with names
+  c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍵          ⍝ Node coordinates
+  p←c×↑∨/c(⊣,∧).=⍉(1,1↓f)⌿c            ⍝ Parent scope coordinates per node
+  o←⍳∘∪⍨vs←(⊃,/)b←0⊃¨⊢                 ⍝ Fn: First index of vars from bindings
+  g←o⊃¨⊂(≢¨b)(\∘⊢)⊃¨ ⋄ lr←1 2 g¨∘⊂⊢    ⍝ Fn: Binding level and depth
+  gk←⊂⊣,⍤1 0(∪vs) ⋄ gi←⊂∘⍳gz←≢∘∪vs     ⍝ Fn: Binding key and slot
+  w←⍵ ⋄ en←S¨nm(m←e∧n)⌿⍵ ⋄ ep←m⌿p      ⍝ AST temp and expression scopes
+  edn←en,(m⌿d),⍪⍳≢⍵ ⋄ s←gz,gk,lr,gi    ⍝ Expr name, depth, node; Scope info fn
+  z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn           ⍝ Size, keys, levels, rows, ids
+  (f⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'            ⍝ Function frame size attributes
+  ei←ep(⊂∘⍕i⊃¨⊂⍨k⍳⊣,⍤1 0(⊃⊢))⍤¯1⊢en    ⍝ Expression slot values
+  (m⌿3⌷⍉w)⍪←↓ei,∘⍪⍨⊂'slots'            ⍝ Slots attr. given to each named expr
+  v←¯1⌽e\'atomic'∊∘⊂⍨'class'P e⌿⍵      ⍝ Mask of expression variables
+  v←v≠v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵       ⍝ Mask of non-⍺⍵ variables
+  kr←(kp←⍉¯1↓⍉k),l,⍪r ⋄ vr←v⌿p,d,⍪⍳≢⍵  ⍝ Binding/variable unique range token
+  kr vr←(rd←1+⌈⌿vid⍪klr)∘⊥∘⍉¨kr vr     ⍝ Decode range tokens
+  kz←kp,kv⍳⍨av←∪(⊂''),kv←⊢/k           ⍝ Binding integer encoding
+  vz←(v⌿p),av⍳nm v⌿⍵                   ⍝ Variable integer encoding
+  vi←kr⍳kr⌈.×(kr∘.<vr)∧kz∧.(=∨0=⊣)⍉vz  ⍝ Variable resolutions referencing k
+  pl←¯1++/∧.(=∨0=⊢)∘⍉⍨fp←(1,1↓f)⌿p     ⍝ Scope depths including root
+  (v⌿3⌷⍉w)⍪←↓(⊂'slot'),⍪⍕¨vi⊃¨⊂i       ⍝ Variable slot attribute
+  ve←(pl⊃¨⊂⍨fp⍳v⌿p)-pl⊃¨⊂⍨fp⍳↑vi⌷¨⊂kp  ⍝ Variable environment references
+  (v⌿3⌷⍉w)⍪←↓ve,∘⍪⍨⊂'env'              ⍝ Variable environment attributes
+  w                                    ⍝ Return updated AST
 }
-
+  
 ⍝ LiftFuncs
 ⍝
 ⍝ Intended Function: Lift all functions to the top level.
@@ -813,7 +804,7 @@ GenLLVM←{
   _←⍎'Initialize',Target,'Target'      ⍝ Based on given Machine
   _←⍎'Initialize',Target,'TargetMC'    ⍝ Parameters in CoDfns namespace
   _←SetTarget mod TargetTriple         ⍝ JIT must have machine target
-  mod  
+  mod
 }
 
 ⍝ GenFnDec
@@ -841,13 +832,13 @@ GenFnDec←{
 
 ⍝ GenPrimEquiv
 ⍝
-⍝ Intended Function: Generate a function equivalent to a primitive, 
+⍝ Intended Function: Generate a function equivalent to a primitive,
 ⍝ since you cannot alias a runtime definition.
 
 GenPrimEquiv←{
   ft←GenFuncType 0                     ⍝ Primitive function type
   fr←AddFunction ⍺⍺ (⊃⍵) ft            ⍝ Declare equivalent
-  bl←CreateBuilder                     ⍝ New builder 
+  bl←CreateBuilder                     ⍝ New builder
   bb←AppendBasicBlock fr ''            ⍝ Single basic block
   _←PositionBuilderAtEnd bl bb         ⍝ Sync the builder and basic block
   pr←GetNamedFunction ⍺⍺ ⍺             ⍝ Get the name of the primitive
@@ -920,7 +911,7 @@ GenConst←{mod←⍺
   mki←{ConstInt (Int64Type)(⍎⍵)1}      ⍝ Fn to make integers from v
   mkd←{ConstReal DoubleType(⍎⍵)}       ⍝ Fn to make doubles from v
   d←{⍵:mkd¨,v ⋄ mki¨,v}isf←'.'∊⊃,/v    ⍝ Construct data values from v
-  d←⍺{t←Int8Type                       ⍝ Convert data values 
+  d←⍺{t←Int8Type                       ⍝ Convert data values
     ⍵:t(DoubleType arrayp 'elems')d    ⍝ to a data array pointer
     t(Int64Type arrayp 'elems')d       ⍝ Either floats or ints
   }isf
@@ -1121,7 +1112,7 @@ GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
   gloc←{                               ⍝ Fn to get local variable
     idx←GEPI ,⍺
     BuildGEP bldr(⊃env0)idx 1 ⍵
-  } 
+  }
   nms←Split ⊃'name'Prop 1↑⍺            ⍝ Assignment variables
   sl←Split ⊃'slots'Prop 1↑⍺            ⍝ Slots for variable assignments
   sl←{∧/' '=⍵:0 ⋄ ⍎⍵}¨sl               ⍝ Convert to right type
@@ -1156,8 +1147,8 @@ GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
 
 ⍝ GenFnEx
 ⍝
-⍝ Intended Function: Generate a function reference and environment for 
-⍝ a given function expression. 
+⍝ Intended Function: Generate a function reference and environment for
+⍝ a given function expression.
 
 GenFnEx←{mod fr bldr env0←⍺ ⋄ node←⍵
   gnf←{GetNamedFunction mod ⍵}         ⍝ Convenience function
@@ -1322,8 +1313,8 @@ P←'LLVM'
 ⍝ LLVMStructType (LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed)
 'StructType'⎕NA 'P ',Core,'|',P,'StructType <P[] U I'
 
-⍝ void 	
-⍝ LLVMStructSetBody (LLVMTypeRef StructTy, 
+⍝ void
+⍝ LLVMStructSetBody (LLVMTypeRef StructTy,
 ⍝     LLVMTypeRef *ElementTypes, unsigned ElementCount, LLVMBool Packed)
 'StructSetBody'⎕NA Core,'|',P,'StructSetBody P <P[] U I'
 
