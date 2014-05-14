@@ -75,8 +75,8 @@
   </xsl:template>
   
   <xsl:attribute-set name="biblioentry.properties">
-    <xsl:attribute name="text-indent">-2em</xsl:attribute>
-    <xsl:attribute name="start-indent">2em</xsl:attribute>
+    <xsl:attribute name="text-indent">0em</xsl:attribute>
+    <xsl:attribute name="start-indent">0em</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="normal.para.spacing">
@@ -201,6 +201,91 @@
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
+  
+  <xsl:template match="d:bibliography">
+    <xsl:variable name="id">
+      <xsl:call-template name="object.id"/>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="not(parent::*) or parent::d:part or parent::d:book">
+        <xsl:variable name="master-reference">
+          <xsl:call-template name="select.pagemaster"/>
+        </xsl:variable>
+
+        <fo:page-sequence hyphenate="{$hyphenate}"
+                          master-reference="{$master-reference}">
+          <xsl:attribute name="language">
+            <xsl:call-template name="l10n.language"/>
+          </xsl:attribute>
+          <xsl:attribute name="format">
+            <xsl:call-template name="page.number.format">
+              <xsl:with-param name="master-reference" select="$master-reference"/>
+            </xsl:call-template>
+          </xsl:attribute>
+          <xsl:attribute name="initial-page-number">
+            <xsl:call-template name="initial.page.number">
+              <xsl:with-param name="master-reference" select="$master-reference"/>
+            </xsl:call-template>
+          </xsl:attribute>
+          <xsl:attribute name="force-page-count">
+            <xsl:call-template name="force.page.count">
+              <xsl:with-param name="master-reference" select="$master-reference"/>
+            </xsl:call-template>
+          </xsl:attribute>
+          <xsl:attribute name="hyphenation-character">
+            <xsl:call-template name="gentext">
+              <xsl:with-param name="key" select="'hyphenation-character'"/>
+            </xsl:call-template>
+          </xsl:attribute>
+          <xsl:attribute name="hyphenation-push-character-count">
+            <xsl:call-template name="gentext">
+              <xsl:with-param name="key" select="'hyphenation-push-character-count'"/>
+            </xsl:call-template>
+          </xsl:attribute>
+          <xsl:attribute name="hyphenation-remain-character-count">
+            <xsl:call-template name="gentext">
+              <xsl:with-param name="key" select="'hyphenation-remain-character-count'"/>
+            </xsl:call-template>
+          </xsl:attribute>
+
+          <xsl:apply-templates select="." mode="running.head.mode">
+            <xsl:with-param name="master-reference" select="$master-reference"/>
+          </xsl:apply-templates>
+          <xsl:apply-templates select="." mode="running.foot.mode">
+            <xsl:with-param name="master-reference" select="$master-reference"/>
+          </xsl:apply-templates>
+
+          <fo:flow flow-name="xsl-region-body">
+            <xsl:call-template name="set.flow.properties">
+              <xsl:with-param name="element" select="local-name(.)"/>
+              <xsl:with-param name="master-reference" select="$master-reference"/>
+            </xsl:call-template>
+
+            <fo:block id="{$id}">
+              <xsl:call-template name="bibliography.titlepage"/>
+            </fo:block>
+            <fo:list-block provisional-label-separation="0.1in"
+                           provisional-distance-between-starts="0.27in">
+              <xsl:apply-templates/>
+            </fo:list-block>
+          </fo:flow>
+        </fo:page-sequence>
+      </xsl:when>
+      <xsl:otherwise>
+        <fo:block id="{$id}"
+                  space-before.minimum="1em"
+                  space-before.optimum="1.5em"
+                  space-before.maximum="2em"> 
+          <xsl:call-template name="bibliography.titlepage"/>
+        </fo:block>
+        <fo:list-block provisional-label-separation="0.1in"
+                       provisional-distance-between-starts="0.27in">
+          <xsl:apply-templates/>
+        </fo:list-block>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
   <xsl:template match="d:appendix/*[not(self::d:title or
                        self::d:subtitle or
@@ -223,5 +308,99 @@
     </fo:block>
   </xsl:template>
 
+  <xsl:template match="d:bibliomixed">
+    <xsl:param name="label">
+      <xsl:call-template name="biblioentry.label"/>
+    </xsl:param>
+
+    <xsl:variable name="id">
+      <xsl:call-template name="object.id"/>
+    </xsl:variable>
+
+    <xsl:choose>
+      <xsl:when test="string(.) = ''">
+        <xsl:variable name="bib" select="document($bibliography.collection,.)"/>
+        <xsl:variable name="entry" select="$bib/d:bibliography//
+                                           *[@id=$id or @xml:id=$id][1]"/>
+        <xsl:choose>
+          <xsl:when test="$entry">
+            <xsl:choose>
+              <xsl:when test="$bibliography.numbered != 0">
+                <xsl:apply-templates select="$entry">
+                  <xsl:with-param name="label" select="$label"/>
+                </xsl:apply-templates>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:apply-templates select="$entry"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>
+              <xsl:text>No bibliography entry: </xsl:text>
+              <xsl:value-of select="$id"/>
+              <xsl:text> found in </xsl:text>
+              <xsl:value-of select="$bibliography.collection"/>
+            </xsl:message>
+            <fo:block id="{$id}" xsl:use-attribute-sets="normal.para.spacing">
+              <xsl:text>Error: no bibliography entry: </xsl:text>
+              <xsl:value-of select="$id"/>
+              <xsl:text> found in </xsl:text>
+              <xsl:value-of select="$bibliography.collection"/>
+            </fo:block>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <fo:list-item id="{$id}" >
+          <fo:list-item-label end-indent="label-end()">
+            <xsl:copy-of select="$label"/>
+          </fo:list-item-label>
+          <fo:list-item-body start-indent="body-start()">
+            <fo:block>
+              <xsl:apply-templates mode="bibliomixed.mode"/>
+            </fo:block>
+          </fo:list-item-body>
+        </fo:list-item>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="biblioentry.label">
+    <xsl:param name="node" select="."/>
+
+    <xsl:choose> 
+      <xsl:when test="$bibliography.numbered != 0">
+        <fo:block>
+          <xsl:text>[</xsl:text>
+          <xsl:number from="d:bibliography" count="d:biblioentry|d:bibliomixed"
+                      level="any" format="1"/>
+          <xsl:text>] </xsl:text>
+        </fo:block>
+      </xsl:when>
+      <xsl:when test="local-name($node/child::*[1]) = 'abbrev'">
+        <fo:block>
+          <xsl:text>[</xsl:text>
+          <xsl:apply-templates select="$node/d:abbrev[1]"/>
+          <xsl:text>] </xsl:text>
+        </fo:block>
+      </xsl:when>
+      <xsl:when test="$node/@xreflabel">
+        <fo:block>
+          <xsl:text>[</xsl:text>
+          <xsl:value-of select="$node/@xreflabel"/>
+          <xsl:text>] </xsl:text>
+        </fo:block>
+      </xsl:when>   
+      <xsl:when test="$node/@id or $node/@xml:id">
+        <fo:block>
+          <xsl:text>[</xsl:text>
+          <xsl:value-of select="($node/@id|$node/@xml:id)[1]"/>
+          <xsl:text>] </xsl:text>
+        </fo:block>
+      </xsl:when>
+      <xsl:otherwise><!-- nop --></xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
 
 </xsl:stylesheet>
