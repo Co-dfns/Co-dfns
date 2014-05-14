@@ -32,9 +32,9 @@
   <xsl:attribute-set name="abstract.title.properties">
     <xsl:attribute name="text-align">start</xsl:attribute>
     <xsl:attribute name="font-size">12pt</xsl:attribute>
-    <xsl:attribute name="space-before.optimum">1in</xsl:attribute>
-    <xsl:attribute name="space-before.minimum">1in</xsl:attribute>
-    <xsl:attribute name="space-before.maximum">1in</xsl:attribute>
+    <xsl:attribute name="space-before.optimum">1.11in</xsl:attribute>
+    <xsl:attribute name="space-before.minimum">1.11in</xsl:attribute>
+    <xsl:attribute name="space-before.maximum">1.11in</xsl:attribute>
     <xsl:attribute name="space-before.conditionality">retain</xsl:attribute>
   </xsl:attribute-set>
 
@@ -64,6 +64,7 @@
     <xsl:apply-templates select="d:abstract" mode="titlepage.mode"/>
     <xsl:apply-templates select="d:keywordset" mode="titlepage.mode"/>
     <xsl:apply-templates select="d:subjectset" mode="titlepage.mode"/>
+    <xsl:apply-templates select="d:legalnotice" mode="titlepage.mode" />
   </xsl:template>
 
   <xsl:template name="header.content">
@@ -202,6 +203,19 @@
     </fo:block>
   </xsl:template>
   
+  <xsl:template match="d:legalnotice" mode="titlepage.mode">
+    <fo:block-container absolute-position="absolute" bottom="0.65in" left="0pt" 
+                        height="1.11in">
+      <xsl:apply-templates />
+    </fo:block-container>
+  </xsl:template>
+  
+  <xsl:template match="d:legalnotice/*[(self::d:para or self::d:simpara)]">
+    <fo:block text-indent="0pt" font-size="7pt" space-after="2pt">
+      <xsl:apply-templates />
+    </fo:block>  
+  </xsl:template>
+
   <xsl:template match="d:bibliography">
     <xsl:variable name="id">
       <xsl:call-template name="object.id"/>

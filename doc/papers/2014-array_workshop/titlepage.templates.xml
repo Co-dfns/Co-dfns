@@ -58,10 +58,6 @@
     <othercredit space-before="0.5em"/>
     <releaseinfo space-before="0.5em"/>
     <copyright space-before="0.5em"/>
-    <legalnotice text-align="start"
-                 margin-left="0.5in"
-                 margin-right="0.5in"
-                 font-family="{$body.fontset}"/>
     <pubdate space-before="0.5em"/>
     <revision space-before="0.5em"/>
     <revhistory space-before="0.5em"/>
