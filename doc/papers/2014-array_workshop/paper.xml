@@ -771,9 +771,9 @@ BlackScholes←{
     <para>
       Bob Bernecky provided excellent insight into the state of APL
       compilation. Dyalog, Ltd. has provided gracious funding for the
-      development of this compiler. Ryan Newton and Andrew Lumsdaine 
-      have greatly aided in directing this research. Edward Amsden, 
-      Paul Ojanen, and others provided critical feedback.
+      development of this compiler. Edward Amsden, 
+      Paul Ojanen, and others provided critical feedback. The 
+      anonymous reviewers provided valuable insights.
     </para>
   </section>
   
