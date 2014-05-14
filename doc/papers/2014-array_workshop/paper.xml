@@ -42,7 +42,7 @@
     <title>Introduction</title>
     <para>
       The general purpose array languages, especially APL, represent a 
-      critical business tool domain experts. These experts 
+      critical business tool for domain experts. These experts 
       often rely on APL to construct large software systems oriented around 
       their particular expertise. Unlike traditional computer scientists, 
       the domain expert primarily solves problems outside of computing;
@@ -78,7 +78,7 @@
     <para>
       Unfortunately, interpreters underlie most APL implementations.
       APL interpreters exhibit impressive performance, in part because of the 
-      excellent choice of abstractions, <citation>kos</citation> 
+      excellent choice of abstractions <citation>kos</citation>, 
       but this approach scales poorly to 
       complicated computational hierarchies used today.
       Consider the following 
@@ -649,8 +649,7 @@ BlackScholes←{
       compiler also managed allocation without requiring a garbage collector.
     </para>
     <para>
-      Bob Bernecky implemented the APEX compiler.
-      <citation>apex</citation>
+      Bob Bernecky implemented the APEX compiler <citation>apex</citation>.
       It has useful passes, such as data flow
       analysis and static single assignment. Moreover, Bernecky details an
       approach at introducing parallelism into the compiler itself. While 
