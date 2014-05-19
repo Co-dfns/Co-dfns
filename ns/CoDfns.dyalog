@@ -679,29 +679,30 @@ FlattenExprs←{
 ⍝ that scope.
 
 AnchorVars←{S←Split ⋄ nm←'name'∘(P←Prop)
-  e f←'Expression' 'Function'∊∘⊂¨⍨1⌷⍉⍵ ⍝ Mask of expression, function nodes
+  es fs←'Expression' 'Function'        ⍝ Names of expression and function nodes
+  e f←es fs∊∘⊂¨⍨⊂1⌷⍉⍵                  ⍝ Mask of expression and function nodes
   n←('name'∊∘⊂⍨0⌷⍉)¨3⌷⍉⍵               ⍝ Mask of nodes with names
-  c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍵          ⍝ Node coordinates
-  p←c×↑∨/c(⊣,∧).=⍉(1,1↓f)⌿c            ⍝ Parent scope coordinates per node
-  o←⍳∘∪⍨vs←(⊃,/)b←0⊃¨⊢                 ⍝ Fn: First index of vars from bindings
-  g←o⊃¨⊂(≢¨b)(\∘⊢)⊃¨ ⋄ lr←1 2 g¨∘⊂⊢    ⍝ Fn: Binding level and depth
+  c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍉⍵         ⍝ Node coordinates
+  p←c×↑∨/c(⊣,∧).=⍉(rf←1,1↓f)⌿c         ⍝ Parent scope coordinates per node
+  o←⍳∘∪⍨vs←(⊃,/)(b←0⌷∘⍉⊢)              ⍝ Fn: First index of vars from bindings
+  lr←1 2(o⊃¨⊂(≢¨b)(\∘⊢)⌷∘⍉)¨∘⊂⊢        ⍝ Fn: Binding level and depth
   gk←⊂⊣,⍤1 0(∪vs) ⋄ gi←⊂∘⍳gz←≢∘∪vs     ⍝ Fn: Binding key and slot
-  w←⍵ ⋄ en←S¨nm(m←e∧n)⌿⍵ ⋄ ep←m⌿p      ⍝ AST temp and expression scopes
-  edn←en,(m⌿d),⍪⍳≢⍵ ⋄ s←gz,gk,lr,gi    ⍝ Expr name, depth, node; Scope info fn
+  w←⍵ ⋄ ep←(m←e∧n)⌿p ⋄ s←gz,gk,lr,gi   ⍝ AST temp, expr scopes, scope info fn
+  edn←(en←S¨nm m⌿⍵),m⌿d,⍪⍳≢⍵           ⍝ Expression name, node, and depth
   z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn           ⍝ Size, keys, levels, rows, ids
   (f⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'            ⍝ Function frame size attributes
   ei←ep(⊂∘⍕i⊃¨⊂⍨k⍳⊣,⍤1 0(⊃⊢))⍤¯1⊢en    ⍝ Expression slot values
   (m⌿3⌷⍉w)⍪←↓ei,∘⍪⍨⊂'slots'            ⍝ Slots attr. given to each named expr
   v←¯1⌽e\'atomic'∊∘⊂⍨'class'P e⌿⍵      ⍝ Mask of expression variables
-  v←v≠v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵       ⍝ Mask of non-⍺⍵ variables
+  v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵        ⍝ Mask of non-⍺⍵ variables
   kr←(kp←⍉¯1↓⍉k),l,⍪r ⋄ vr←v⌿p,d,⍪⍳≢⍵  ⍝ Binding/variable unique range token
-  kr vr←(rd←1+⌈⌿vid⍪klr)∘⊥∘⍉¨kr vr     ⍝ Decode range tokens
+  kr vr←(rd←1+⌈⌿kr⍪vr)∘⊥∘⍉¨kr vr       ⍝ Decode range tokens
   kz←kp,kv⍳⍨av←∪(⊂''),kv←⊢/k           ⍝ Binding integer encoding
-  vz←(v⌿p),av⍳nm v⌿⍵                   ⍝ Variable integer encoding
+  vz←(vp←v⌿p),av⍳nm v⌿⍵                ⍝ Variable integer encoding
   vi←kr⍳kr⌈.×(kr∘.<vr)∧kz∧.(=∨0=⊣)⍉vz  ⍝ Variable resolutions referencing k
-  pl←¯1++/∧.(=∨0=⊢)∘⍉⍨fp←(1,1↓f)⌿p     ⍝ Scope depths including root
+  pl←¯1++/∧.(=∨0=⊢)∘⍉⍨fp←rf⌿p          ⍝ Scope depths including root
   (v⌿3⌷⍉w)⍪←↓(⊂'slot'),⍪⍕¨vi⊃¨⊂i       ⍝ Variable slot attribute
-  ve←(pl⊃¨⊂⍨fp⍳v⌿p)-pl⊃¨⊂⍨fp⍳↑vi⌷¨⊂kp  ⍝ Variable environment references
+  ve←-/(pl⊃¨⊂⍨fp⍳⊢)¨vp(kp[vi;])        ⍝ Variable environment references
   (v⌿3⌷⍉w)⍪←↓ve,∘⍪⍨⊂'env'              ⍝ Variable environment attributes
   w                                    ⍝ Return updated AST
 }
