@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Co-Dfns Cleanroom Engineering Guide</title>
+    <author>
+      <personname>Aaron W. Hsu</personname>
+    </author>
+    <date>Tuesday, October 8th, 2013</date>
+  </info>
+  <simpara>
+    This document describes the tailored Cleanroom process to be used in the 
+    development of the Co-Dfns compiler. The process described here is 
+    driven primarily by a need to adapt the Cleanroom Process to the use of 
+    a single member team with only minimal support from a few other assets. 
+    This requires that a number of processes are scaled down and that 
+    certain other measures are in place to assure a high degree of 
+    performance. 
+  </simpara>
+  <simpara>
+    Normally this document would also include specific details about 
+    environment and tools in use, but this is not necessary for the team 
+    size.
+  </simpara>
+  <simpara>
+    The descriptions, enumerations, and organization of these processes is 
+    taken directly from <citetitle>The Cleanroom Reference Model</citetitle> 
+    as found in <citetitle>Cleanroom Software Engineering</citetitle> by 
+    Prowell, et al. but have been adapted to fit this project. For 
+    definitions of work products and the entry exit expectations of 
+    processes, as well as other normal operating procedures, the above 
+    references constitute the norm. On occassion, some work products may 
+    not contain all standard content, as this content is not relevant to 
+    this project. Most, if not all, of these omissions are on the basis 
+    of minimal management processes, accounting for a single developer 
+    environment. 
+  </simpara>
+  <xi:include href="processes.xml" />
+  <xi:include href="linearization_process.xml" />
+</article>

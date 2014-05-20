@@ -1,0 +1,51 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Cleanroom Development Processes</title>
+  <glossentry>
+    <glossterm>Software Reengineering</glossterm>
+    <glossdef>
+      <simpara>
+        Prepare reused software for incorporation into a software 
+        product. Restructure and document the functional semantics of 
+        the reused software as necessary. Determine the fitness for use 
+        of reused software as necessary through statistical testing to 
+        achieve project certification goals. 
+      </simpara>
+      <simpara>
+        Work Products:
+        <citetitle>Reengineering Plan</citetitle>,
+        <citetitle>Reengineered Software</citetitle>
+      </simpara>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Increment Design</glossterm>
+    <glossdef>
+      <simpara>
+        Design and code the increments for a software product through 
+        stepwise decomposition of box structures. Prepare designs for 
+        correctness verification by embedding intended function 
+        definitions that specify the effect on data of corresponding 
+        control structure decompositions. 
+      </simpara>
+      <simpara>
+        Work Products:
+        <citetitle>Increment Design</citetitle>
+      </simpara>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Correctness Verification</glossterm>
+    <glossdef>
+      <simpara>
+        Carry out function-theoretic correctness verification of 
+        designs to identify and correct software faults prior to first 
+        execution. Document all faults found and rereview their 
+        corrections. 
+      </simpara>
+      <simpara>
+        Work Products:
+        <citetitle>Increment Verification Report</citetitle>
+      </simpara>
+    </glossdef>
+  </glossentry>
+</glosslist>

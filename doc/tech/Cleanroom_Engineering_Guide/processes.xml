@@ -1,0 +1,37 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Cleanroom Processes</title>
+  <simpara>
+    The following is an overview of all the Cleanroom Processes used in 
+    this project, including a short summary of their function and the work 
+    products that they produce.
+  </simpara>
+  <xi:include href="processes/management.xml" />
+  <xi:include href="processes/specification.xml" />
+  <xi:include href="processes/development.xml" />
+  <xi:include href="certification.xml" />
+  <section>
+    <title>Omitted Processes and Alternative Implementations</title>
+    <simpara>
+      No specification, development, or certification processes were 
+      omitted from the above list as these are judged to be critical 
+      steps in the quality control of the development cycle. However, 
+      a number of management processes were eliminated as being too heavy 
+      for a single man development team. 
+    </simpara>
+    <simpara>
+      The performance improvement process is eliminated in favor of ad 
+      hoc improvement throughout the process, which is judged more 
+      efficient than a complete process for the same. The Project 
+      Management process is not entirely eliminated, but is reduced to 
+      a single step occuring at process transitions to update and maintain 
+      the <citetitle>Project Record</citetitle>. 
+    </simpara>
+    <simpara>
+      The Architecture Specification can be conducted either as a single 
+      process or as a combined part of the work with the Increment 
+      Design. That is, the cycle of Increment design can explicitly feed 
+      back into the Architecture Design.
+    </simpara>
+  </section>
+</section>
