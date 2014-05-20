@@ -5,7 +5,9 @@
 DOCROOT := doc/tech
 
 DOCNAMES := Engineering_Change_Log Cleanroom_Engineering_Guide \
-            Increment_Certification_Report Statement_of_Work \
+            Increment_Certification_Report \
+            Statement_of_Work \
+            Software_Requirements \
             Increment_Construction_Plan
 DOCPDF := $(addsuffix .pdf,$(DOCNAMES))
 DOCPDF := $(join $(addsuffix /,$(DOCNAMES)),$(DOCPDF))

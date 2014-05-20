@@ -1,0 +1,13 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    If the file system referenced by the left argument to the function
+    <function>CoDfns.Fix</function>
+    does not have the space to allow the shared object to be created, then
+    the
+    <function>CoDfns.Fix</function>
+    function should signal a
+    <literal>FILE SYSTEM NO SPACE</literal>
+    error and no shared object or data should be written and no module
+    created.
+  </simpara>
+</listitem>

@@ -1,0 +1,10 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    [Derived Requirement 7] Attempting to access a variable in the namespace
+    returned by
+    <function>CoDfns.Fix</function>
+    that is not bound by the namespace script should signal a
+    <symbol>VALUE ERROR</symbol>
+    .
+  </simpara>
+</listitem>

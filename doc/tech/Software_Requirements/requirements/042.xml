@@ -1,0 +1,5 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>In the namespace returned by the compiler, it is acceptable
+  to make visible only global arrays and functions, without providing operators
+  as an external interface in the namespace.</simpara>
+</listitem>

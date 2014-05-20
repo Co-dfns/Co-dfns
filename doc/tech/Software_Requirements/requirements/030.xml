@@ -1,0 +1,7 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    If the filename given as the left argument to the function
+    <function>CoDfns.Fix</function>
+    already exists, the file should be overwritten upon successful compilation.
+  </simpara>
+</listitem>

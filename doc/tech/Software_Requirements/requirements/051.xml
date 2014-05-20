@@ -1,0 +1,11 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    [Derived Requirement 8] Any erroneous input passed to a function of
+    a namespace returned by
+    <function>CoDfns.Fix</function>
+    should result in the same error as would have been produced by giving
+    the same input to the namespace returned by the
+    <function>⎕FIX</function>
+    function on the same namespace script.
+  </simpara>
+</listitem>

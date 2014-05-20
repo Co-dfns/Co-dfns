@@ -1,0 +1,9 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    The function
+    <function>CoDfns.Fix</function>
+    should produce an object to the filename given as its left argument
+    that is semantically equivalent in exports and functionality as the
+    namespace returned by the function.
+  </simpara>
+</listitem>

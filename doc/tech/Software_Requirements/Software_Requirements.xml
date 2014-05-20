@@ -1,0 +1,82 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Co-Dfns Software Requirements</title>
+    <author>
+      <personname>Aaron W. Hsu</personname>
+    </author>
+    <date>Tuesday, July 4th, 2013</date>
+  </info>
+  <para>This document clarifies in English the expected behavior of the
+  Co-Dfns compiler. It is intended to be complete, consistent, and clear
+  as regards the external, visible behavior of the system. It also may
+  state requirements on the quality of the generated code and the performance
+  of the compiler itself. That is, it describes all intended behavior,
+  and not just the requirements for correct semantics preservation of the
+  compiled code. To support tracing of future efforts to these requirements,
+  all requirements are segmented into single units and enumerated. Future
+  documents should refer to these requirements by number, so it is important
+  that the numbers remain as stable as possible.</para>
+  <simpara>
+    This requirements document also assumes that the reader has access
+    to and will refer to the
+    <citetitle>Dyalog Programmer's Guide and Language Reference</citetitle>
+    for the definition of various functions and other behaviors that are
+    mentioned here. The reference is considered to be an implicit part
+    of this document, and this document is defined in terms of the specification
+    given in the language reference.
+  </simpara>
+  <orderedlist>
+    <title>Enumerated Software Requirements</title>
+    <xi:include href="requirements/001.xml"></xi:include>
+    <xi:include href="requirements/002.xml"></xi:include>
+    <xi:include href="requirements/003.xml"></xi:include>
+    <xi:include href="requirements/004.xml"></xi:include>
+    <xi:include href="requirements/005.xml"></xi:include>
+    <xi:include href="requirements/006.xml"></xi:include>
+    <xi:include href="requirements/007.xml"></xi:include>
+    <xi:include href="requirements/008.xml"></xi:include>
+    <xi:include href="requirements/009.xml"></xi:include>
+    <xi:include href="requirements/010.xml"></xi:include>
+    <xi:include href="requirements/011.xml"></xi:include>
+    <xi:include href="requirements/012.xml"></xi:include>
+    <xi:include href="requirements/013.xml"></xi:include>
+    <xi:include href="requirements/014.xml"></xi:include>
+    <xi:include href="requirements/015.xml"></xi:include>
+    <xi:include href="requirements/016.xml"></xi:include>
+    <xi:include href="requirements/017.xml"></xi:include>
+    <xi:include href="requirements/018.xml"></xi:include>
+    <xi:include href="requirements/019.xml"></xi:include>
+    <xi:include href="requirements/020.xml"></xi:include>
+    <xi:include href="requirements/021.xml"></xi:include>
+    <xi:include href="requirements/022.xml"></xi:include>
+    <xi:include href="requirements/023.xml"></xi:include>
+    <xi:include href="requirements/024.xml"></xi:include>
+    <xi:include href="requirements/025.xml"></xi:include>
+    <xi:include href="requirements/026.xml"></xi:include>
+    <xi:include href="requirements/027.xml"></xi:include>
+    <xi:include href="requirements/028.xml"></xi:include>
+    <xi:include href="requirements/029.xml"></xi:include>
+    <xi:include href="requirements/030.xml"></xi:include>
+    <xi:include href="requirements/031.xml"></xi:include>
+    <xi:include href="requirements/032.xml"></xi:include>
+    <xi:include href="requirements/033.xml"></xi:include>
+    <xi:include href="requirements/034.xml"></xi:include>
+    <xi:include href="requirements/035.xml"></xi:include>
+    <xi:include href="requirements/036.xml"></xi:include>
+    <xi:include href="requirements/037.xml"></xi:include>
+    <xi:include href="requirements/038.xml"></xi:include>
+    <xi:include href="requirements/039.xml"></xi:include>
+    <xi:include href="requirements/040.xml"></xi:include>
+    <xi:include href="requirements/041.xml"></xi:include>
+    <xi:include href="requirements/042.xml"></xi:include>
+    <xi:include href="requirements/043.xml"></xi:include>
+    <xi:include href="requirements/044.xml"></xi:include>
+    <xi:include href="requirements/045.xml"></xi:include>
+    <xi:include href="requirements/046.xml"></xi:include>
+    <xi:include href="requirements/047.xml"></xi:include>
+    <xi:include href="requirements/048.xml"></xi:include>
+    <xi:include href="requirements/049.xml"></xi:include>
+    <xi:include href="requirements/050.xml"></xi:include>
+    <xi:include href="requirements/051.xml"></xi:include>
+  </orderedlist>
+</article>

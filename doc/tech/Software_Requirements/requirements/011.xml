@@ -1,0 +1,4 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>The same error messages should be given when compiling to shared
+  object as are given when fixing a namespace.</simpara>
+</listitem>
