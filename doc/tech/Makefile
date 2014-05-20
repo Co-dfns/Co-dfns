@@ -4,7 +4,8 @@
 
 DOCROOT := doc/tech
 
-DOCNAMES := Engineering_Change_Log Cleanroom_Engineering_Guide
+DOCNAMES := Engineering_Change_Log Cleanroom_Engineering_Guide \
+            Increment_Certification_Report
 DOCPDF := $(addsuffix .pdf,$(DOCNAMES))
 DOCPDF := $(join $(addsuffix /,$(DOCNAMES)),$(DOCPDF))
 DOCPDF := $(DOCPDF:%=$(DOCROOT)/%)
