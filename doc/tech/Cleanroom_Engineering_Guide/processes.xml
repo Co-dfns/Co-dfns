@@ -9,7 +9,7 @@
   <xi:include href="processes/management.xml" />
   <xi:include href="processes/specification.xml" />
   <xi:include href="processes/development.xml" />
-  <xi:include href="certification.xml" />
+  <xi:include href="processes/certification.xml" />
   <section>
     <title>Omitted Processes and Alternative Implementations</title>
     <simpara>
