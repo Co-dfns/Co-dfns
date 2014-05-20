@@ -1,0 +1,9 @@
+        <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+          <td>Wednesday, November 27th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>Update <citetitle>Increment Test Plan</citetitle></member>
+              <member>Begin creating <citetitle>Usage Models</citetitle></member>
+            </simplelist>
+          </td>
+        </tr>

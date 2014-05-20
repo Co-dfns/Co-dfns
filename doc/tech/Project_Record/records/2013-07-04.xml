@@ -1,0 +1,9 @@
+        <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+          <td>Thursday, July 4th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>Created <citetitle>Software Development Guide</citetitle></member>
+              <member>Updated <citetitle>Software Requirements</citetitle></member>
+            </simplelist>
+          </td>
+        </tr>

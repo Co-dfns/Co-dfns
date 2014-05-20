@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Co-Dfns Project Record</title>
+    <author><personname>Aaron W. Hsu</personname></author>
+    <date>Wednesday, March 19th, 2014</date>
+  </info>
+  <section>
+    <title>Chronological Journal</title>
+    <informaltable frame="void" rules="rows">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th colspan="2">Work Log</th>
+        </tr>
+      </thead>
+      <tbody>
+        <xi:include href="records/2013-07-01.xml" />
+        <xi:include href="records/2013-07-02.xml" />
+        <xi:include href="records/2013-07-03.xml" />
+        <xi:include href="records/2013-07-04.xml" />
+        <xi:include href="records/2013-07-05.xml" />
+        <xi:include href="records/2013-07-17.xml" />
+        <xi:include href="records/2013-07-18.xml" />
+        <xi:include href="records/2013-07-30.xml" />
+        <xi:include href="records/2013-08-01.xml" />
+        <xi:include href="records/2013-10-06.xml" />
+        <xi:include href="records/2013-10-08.xml" />
+        <xi:include href="records/2013-10-09.xml" />
+        <xi:include href="records/2013-10-14.xml" />
+        <xi:include href="records/2013-10-15.xml" />
+        <xi:include href="records/2013-11-07.xml" />
+        <xi:include href="records/2013-11-13.xml" />
+        <xi:include href="records/2013-11-14.xml" />
+        <xi:include href="records/2013-11-20.xml" />
+        <xi:include href="records/2013-11-21.xml" />
+        <xi:include href="records/2013-11-25.xml" />
+        <xi:include href="records/2013-11-27.xml" />
+        <xi:include href="records/2013-11-28.xml" />
+        <xi:include href="records/2013-12-12.xml" />
+        <xi:include href="records/2013-12-14.xml" />
+        <xi:include href="records/2013-12-18.xml" />
+        <xi:include href="records/2013-12-20.xml" />
+        <xi:include href="records/2013-12-21.xml" />
+        <xi:include href="records/2013-12-25.xml" />
+        <xi:include href="records/2013-12-26.xml" />
+        <xi:include href="records/2013-12-27.xml" />
+        <xi:include href="records/2014-01-16.xml" />
+        <xi:include href="records/2013-12-27.xml" />
+        <xi:include href="records/2014-01-23.xml" />
+        <xi:include href="records/2014-01-24.xml" />
+        <xi:include href="records/2014-01-27.xml" />
+        <xi:include href="records/2014-01-31.xml" />
+        <xi:include href="records/2014-02-02.xml" />
+        <xi:include href="records/2014-03-19.xml" />
+        <xi:include href="records/2014-03-22.xml" />
+        <xi:include href="records/2014-03-25.xml" />
+      </tbody>
+    </informaltable>
+  </section>
+</article>
