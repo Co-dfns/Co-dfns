@@ -1,0 +1,23 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A VALUE ERROR in
+      <function>LiftConsts[5]</function>
+      occurs with the following message.
+    </para>
+  </formalpara>
+  <screen>LiftConsts[5] v←mkv¨⍳+/s←2&lt;/0,l ⍝ Variables we need; start
+  of literals</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The binding switched from
+      <function>MkV</function>
+      to
+      <function>mkv</function>
+      but the transition didn't make it it to the definition site, so changing
+      the name will fix this.
+    </para>
+  </formalpara>
+</listitem>

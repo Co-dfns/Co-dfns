@@ -1,0 +1,18 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>Parse</function>
+      function fails with a SYNTAX ERROR on valid input.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>The problem is the assumption of a nested result in this code
+    for doing the comparison, but in reality having a flat array:</para>
+  </formalpara>
+  <programlisting>NS←(⊃N),⊃⌽N←(¯1⌽T∊⊂'name')/T←,↑(⍵[;1]∊⊂'Token')/⍵[;3]
+  ':Namespace' ':EndNamespace'≢NS:⎕SIGNAL 2</programlisting>
+  <simpara>This is trivially fixed by unifying the types.</simpara>
+</listitem>

@@ -1,0 +1,24 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>The current version of the compiler does not handle shy results
+    correctly.</para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The
+      <citetitle>Increment Construction Plan</citetitle>
+      details that shy results should happen around Increment 7. However,
+      a reasonable semantics should exist for shy results before that.
+      In particular, shy results should just return as regular results,
+      rather than returning nothing at all. Currently, the situation is
+      even worse, because the compiler incorrectly generates an empty body,
+      which is not permitted in the LLVM IR.
+    </para>
+  </formalpara>
+  <para>To improve this situation, we should adapt the compiler so that
+  shy results are at the very least returned, rather than discarded. We
+  should also ensure that we do not have an empty body as we currently
+  do in the IR.</para>
+</listitem>

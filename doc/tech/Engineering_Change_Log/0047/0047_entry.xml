@@ -1,0 +1,23 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A LENGTH ERROR in
+      <function>Parse[24]</function>
+      occurs with the following message.
+    </para>
+  </formalpara>
+  <screen>Parse[24] (fm⌿ns)←fd,⊂'Function',⊂'',⊂fa ⍝ Replace { token with
+  Fn node</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      There is an obvious syntax error here with the use of
+      <function>⊂</function>
+      and
+      <function>,</function>
+      . Instead, we can make the following replacement.
+    </para>
+  </formalpara>
+  <programlisting>fd,⊂'Function',⊂'',⊂fa ←→ ((fd,⊂'Function'),⊂''),⊂fa</programlisting>
+</listitem>

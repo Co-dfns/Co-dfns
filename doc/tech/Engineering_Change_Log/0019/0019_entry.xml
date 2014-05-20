@@ -1,0 +1,31 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>In the LLVM output, the V9 rank is 1, rather than 0, and the
+    shape contains a one element vector containing 1. This is incorrect
+    for a single scalar value.</para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The coding of the
+      <function>GenConst</function>
+      function is not sufficiently robust and requires reworking. In particular,
+      the initial extraction of the expression values did not take into
+      account the appropriate shape of the expression. These effects are
+      localized and contained to the
+      <function>GenConst</function>
+      function, and do not affect any other elements or problems.
+    </para>
+  </formalpara>
+  <simpara>
+    The cause of this problem can be traced at least partially back to
+    having a function specification that is unable to express these precise
+    details about the nature of each conversion. Adapting the function
+    specification to include more information like this would like improve
+    the ability to catch these errors earlier. Technically, however, these
+    elements are clearly specified in the
+    <citetitle>Programming Language Reference</citetitle>
+    from Dyalog.
+  </simpara>
+</listitem>

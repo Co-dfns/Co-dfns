@@ -1,0 +1,18 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>Tokenize</function>
+      function gives an incomplete result.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      There is a missing assignment in the
+      <function>Tokenize</function>
+      function.
+    </para>
+  </formalpara>
+</listitem>

@@ -1,0 +1,25 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      There is little support for the
+      <type>uint4_t</type>
+      in compilers, so we should remove its use from the array and the
+      compiler output. This will simplify the definition of the compiler
+      in the shared object runtime. This will fix the compiler failure
+      in building this shared object.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      This will require some changes to the
+      <citetitle>Software Architecture</citetitle>
+      and subsequently to the
+      <filename>CoDfns.dyalog</filename>
+      namespace, which will have to adjust its use of the int4 type in
+      various places. Other than this, it is not used elsewhere and will
+      not affect other documents.
+    </para>
+  </formalpara>
+</listitem>

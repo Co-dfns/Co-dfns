@@ -1,0 +1,7 @@
+    <!-- ID, Date, Summary, Rsolution -->
+    <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <td>29</td>
+      <td colspan="2">2013-12-26</td>
+      <td colspan="5">Correct handling of muli-named functions</td>
+      <td colspan="2">Applied</td>
+    </tr>

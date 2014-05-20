@@ -1,0 +1,27 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      We get a domain error in
+      <function>DropUnmd</function>
+      when trying to handle an empty namespace.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The
+      <function>DropUnmd</function>
+      function is called in the compiler right after the
+      <function>KillLines</function>
+      function. In the case of an empty namespace, this will result in
+      a tree with no depth-1 subtrees. This will result in attempting to
+      execute a first-axis catenate against an empty array with no identity
+      element by default.
+    </para>
+  </formalpara>
+  <para>The appropriate fix is to ensure that the catenation never receives
+  and empty vector of sub-trees. We manually insert an empty AST node to
+  the head of the vector coming in, which will ensure a non-zero vector,
+  but will not affect the results of any of the catenations in the line.</para>
+</listitem>

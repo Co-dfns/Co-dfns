@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Engineering Change Log</title>
+    <author><personname>Aaron W. Hsu</personname></author>
+    <date>Saturday, July 20th, 2013</date>
+  </info>
+  <simpara>
+    This document records and tracks all proposed engineering changes that 
+    occur during development. An engineering change is a change proposed 
+    or identified as desirable during one process that affects other work 
+    products not part of the delivery of the current process. This document 
+    tracks these proposed changes, their evaluation, analysis, and the 
+    eventual resolution of these changes. 
+  </simpara>
+  <xi:include href="summary_table.xml" />
+  <xi:include href="change_list.xml" />
+</article>

@@ -1,0 +1,20 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      There is a RANK ERROR in
+      <function>ParseFunc[12]</function>
+      .
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      I'm being stupid and using
+      <literal>0 1⊃⍵</literal>
+      instead of
+      <literal>⊃0 1⌷⍵</literal>
+      .
+    </para>
+  </formalpara>
+</listitem>

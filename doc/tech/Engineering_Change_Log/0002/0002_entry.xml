@@ -1,0 +1,56 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>Functional specification revealed a possible ambiguity in the
+    description of requirement 21. Recommend the following:</para>
+  </formalpara>
+  <orderedlist>
+    <listitem>
+      <simpara>That requirement 21 be changed to clearly indicate that
+      only fully closed namespaces are accepted; that is, only accept namespaces
+      with no free variable references.</simpara>
+    </listitem>
+    <listitem>
+      <simpara>
+        Additionally, a new requirement prohibiting the use of the
+        <literal>⌶</literal>
+        -beam should be included.
+      </simpara>
+    </listitem>
+    <listitem>
+      <simpara>
+        A new requirement prohibiting the use of the
+        <function>⍎</function>
+        function should be added.
+      </simpara>
+    </listitem>
+    <listitem>
+      <simpara>Requirement 4 should be amended to specify D-fns, rather
+      than Co-Dfns programs.</simpara>
+    </listitem>
+    <listitem>
+      <simpara>The new additions to the D-fns languages introduced by Co-Dfns
+      should be added and fully defined.</simpara>
+    </listitem>
+    <listitem>
+      <simpara>It should be remarked that no assignment which changes the
+      overall nameclass of a variable is allowed.</simpara>
+    </listitem>
+    <listitem>
+      <simpara>
+        A requirement detailing the unsupported operators should be added.
+        These operators include the
+        <function>&amp;</function>
+        operator as well as the
+        <function>⍠</function>
+        operator.
+      </simpara>
+    </listitem>
+  </orderedlist>
+  <formalpara>
+    <title>Analysis</title>
+    <para>No semantic change is introduced based on the intention of the
+    design, and are at an early enough stage so as to not affect more than
+    the functional specification, so this should be implemented.</para>
+  </formalpara>
+</listitem>

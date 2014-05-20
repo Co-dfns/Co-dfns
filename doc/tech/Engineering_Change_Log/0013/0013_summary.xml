@@ -1,0 +1,7 @@
+    <!-- ID, Date, Summary, Rsolution -->
+    <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <td>13</td>
+      <td colspan="2">2013-10-09</td>
+      <td colspan="5">Domain error when wrapping tokens</td>
+      <td colspan="2">Applied</td>
+    </tr>

@@ -1,0 +1,19 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>LiftConsts</function>
+      as a domain error when handling an empty namespace.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The root cause for this is the invalid output produced by the
+      <function>DropUnmd</function>
+      function, because of a misplaced scalar enclosure in the second line
+      of that function. Removing the scalar enclosure will fix this.
+    </para>
+  </formalpara>
+</listitem>

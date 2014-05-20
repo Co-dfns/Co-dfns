@@ -1,0 +1,31 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      When parsing something like
+      <literal>{Vu}</literal>
+      where
+      <varname>Vu</varname>
+      is not bound,
+      <function>ParseTopLine</function>
+      signals a SYNTAX ERROR instead of a VALUE ERROR.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      This is because of the way handling of
+      <classname>Expression</classname>
+      nodes occurs inside of the
+      <function>ParseExpr</function>
+      function. Specifically, it requires that every expression be either
+      an assignment to a name or a numeric constant. Because we rely on
+      the error result of
+      <function>ParseExpr</function>
+      for our error to report during states 3 and 4 of the
+      <function>ParseFunc</function>
+      function, this causes the SYNTAX ERROR instead of the VALUE ERROR.
+      This can be considered okay for now.
+    </para>
+  </formalpara>
+</listitem>

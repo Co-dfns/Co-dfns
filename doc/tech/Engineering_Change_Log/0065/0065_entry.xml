@@ -1,0 +1,18 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>A LENGTH ERROR occurs with the following message:</para>
+  </formalpara>
+  <screen>ParseFnLine[6] splt←{1↓¨(1,1↓cm)⊂[0]⍵}</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The
+      <varname>cm</varname>
+      bitvector does not include a bit for the root node, but the expression
+      above assumes this. Thus, the partition vector should be
+      <literal>(1,cm)</literal>
+      instead of that above.
+    </para>
+  </formalpara>
+</listitem>

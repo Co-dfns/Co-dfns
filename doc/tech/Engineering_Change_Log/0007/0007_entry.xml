@@ -1,0 +1,11 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>ValidateInput</function>
+      function is not defined. It should either be defined or it should
+      be replaced.
+    </para>
+  </formalpara>
+</listitem>

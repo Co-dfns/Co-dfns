@@ -1,0 +1,7 @@
+    <!-- ID, Date, Summary, Rsolution -->
+    <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <td>41</td>
+      <td colspan="2">2014-01-31</td>
+      <td colspan="5">Correct handling of shy results</td>
+      <td colspan="2">Applied</td>
+    </tr>

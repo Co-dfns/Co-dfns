@@ -1,0 +1,27 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      Adapt the handling of the Generation of multi-named functions during
+      the
+      <function>GenLLVM</function>
+      pass to handle the multiple names, which currently it fails with
+      a
+      <symbol>VALUE ERROR</symbol>
+      .
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The cause of this problem is that we had a shy result being returned
+      by the
+      <function>GenFunc</function>
+      function, which apparently does not work well in places where a normal
+      value is expected. This appeared to work during our initial investigations,
+      but removing the shy value fixes this problem. Some investigation
+      is worthwhile, so this is being sent to Dyalog to understand better
+      why this error occurs.
+    </para>
+  </formalpara>
+</listitem>

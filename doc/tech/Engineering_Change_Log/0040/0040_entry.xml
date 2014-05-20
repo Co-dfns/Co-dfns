@@ -1,0 +1,33 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      In the call to
+      <function>ParseNamedBnd</function>
+      in
+      <function>ParseLineVar[62]</function>
+      , the call returns with a syntax error. Here are some important data
+      elements:
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      When dealing with a nested set of assignments
+      <literal>Vu ← Vfo ← Vu ← Fe</literal>
+      , the
+      <function>ParseLineVar</function>
+      function should keep track of the nameclass of the assignment. However,
+      in the current code, it does not. Instead, it will only pass the
+      correct type class value to
+      <function>ParseNamedBnd</function>
+      if it was the last seen variable. In other words, we do not ensure
+      that all three values match class, and not just the most recently
+      seen. Fixing this in the full will require threading the type class
+      back through the set of recursive calls to
+      <function>ParseLineVar</function>
+      , but the current work around is to always pass a type of 2, since
+      we know that this will be the only type that we support at the moment.
+    </para>
+  </formalpara>
+</listitem>
