@@ -32,9 +32,9 @@
   <xsl:attribute-set name="abstract.title.properties">
     <xsl:attribute name="text-align">start</xsl:attribute>
     <xsl:attribute name="font-size">12pt</xsl:attribute>
-    <xsl:attribute name="space-before.optimum">1.11in</xsl:attribute>
-    <xsl:attribute name="space-before.minimum">1.11in</xsl:attribute>
-    <xsl:attribute name="space-before.maximum">1.11in</xsl:attribute>
+    <xsl:attribute name="space-before.optimum">1.37in</xsl:attribute>
+    <xsl:attribute name="space-before.minimum">1.37in</xsl:attribute>
+    <xsl:attribute name="space-before.maximum">1.37in</xsl:attribute>
     <xsl:attribute name="space-before.conditionality">retain</xsl:attribute>
   </xsl:attribute-set>
 
@@ -93,6 +93,11 @@
     <xsl:attribute name="space-before.optimum">5pt</xsl:attribute>
     <xsl:attribute name="space-before.minimum">3pt</xsl:attribute>
     <xsl:attribute name="space-before.maximum">7pt</xsl:attribute>
+  </xsl:attribute-set>
+
+  <xsl:attribute-set name="legalnotice.para.spacing"
+                     use-attribute-sets="formal.para.spacing">
+    <xsl:attribute name="font-size">7pt</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:attribute-set name="pgwide.properties">
@@ -204,14 +209,14 @@
   </xsl:template>
   
   <xsl:template match="d:legalnotice" mode="titlepage.mode">
-    <fo:block-container absolute-position="absolute" bottom="0.65in" left="0pt" 
-                        height="1.11in">
+    <fo:block-container absolute-position="absolute" bottom="0.35in" left="0pt" 
+                        height="1.37in">
       <xsl:apply-templates />
     </fo:block-container>
   </xsl:template>
   
   <xsl:template match="d:legalnotice/*[(self::d:para or self::d:simpara)]">
-    <fo:block text-indent="0pt" font-size="7pt" space-after="2pt">
+    <fo:block text-indent="0pt" font-size="7pt" space-after="0pt">
       <xsl:apply-templates />
     </fo:block>  
   </xsl:template>
