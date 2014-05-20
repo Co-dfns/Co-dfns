@@ -1,0 +1,20 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The <function>AnchorVars</function> does not properly handle 
+      the situation where a variable may refer to an outer scope 
+      despite a binding in the local scope. Namely, if the following 
+      expression is the first binding of <varname>V</varname> then 
+      <function>AnchorVars</function> will use the wrong environment 
+      reference.
+    </para>
+    <programlisting>V←X f V</programlisting>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>
