@@ -1,0 +1,12 @@
+      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+        <td>2</td>
+        <td colspan="6">
+          <simplelist type="horiz">
+            <member>Support static global constants of integers</member>
+            <member>New Stimuli: N <literal>←</literal> V { }</member>
+            <member>Support functions that return constants of integers</member>
+            <member>New Passes: KillLines, LiftConsts</member>
+            <member>Modified Passes: GenLLVM, Tokenize, Parse</member>
+          </simplelist>
+        </td>
+      </tr>

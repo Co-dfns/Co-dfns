@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Co-Dfns Increment Construction Plan</title>
+    <author><personname>Aaron W. Hsu</personname></author>
+    <date>Tuesday, October 8th, 2013</date>
+  </info>
+  <simpara>
+    This is a documentation of a series of sub-divisions of the 
+    Co-Dfns compiler development into a series of increments for 
+    implementing specific elements over time. Each of these series 
+    is design to be very very short due to the short iteration 
+    cycle that we have, hopefully to be tested rapidly and easily.
+  </simpara>
+  <table frame="void" rules="rows">
+    <caption>Co-Dfns Design Increments</caption>
+    <thead>
+      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+        <th>#</th>
+        <th colspan="6">Functionality</th>
+      </tr>
+    </thead>
+    <tbody>
+      <xi:include href="increments/001.xml" />
+      <xi:include href="increments/002.xml" />
+      <xi:include href="increments/003.xml" />
+      <xi:include href="increments/004.xml" />
+      <xi:include href="increments/005.xml" />
+      <xi:include href="increments/006.xml" />
+      <xi:include href="increments/007.xml" />
+      <xi:include href="increments/008.xml" />
+      <xi:include href="increments/009.xml" />
+      <xi:include href="increments/010.xml" />
+      <xi:include href="increments/011.xml" />
+      <xi:include href="increments/012.xml" />
+      <xi:include href="increments/013.xml" />
+      <xi:include href="increments/014.xml" />
+    </tbody>
+  </table>
+</article>

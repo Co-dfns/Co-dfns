@@ -1,0 +1,12 @@
+      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+        <td>6</td>
+        <td colspan="6">
+          <simplelist type="horiz">
+            <member>Complete support for primitive functions</member>
+            <member>Add support for additional numeric and string types</member>
+            <member>Add support for overflow and numeric type promotion and compaction</member>
+            <member>Support nested arrays</member>
+            <member>Return a JIT'd or Fixed Namespace (Functions only)</member>
+          </simplelist>
+        </td>
+      </tr>

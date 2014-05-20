@@ -1,0 +1,11 @@
+      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+        <td>3</td>
+        <td colspan="6">
+          <simplelist type="horiz">
+            <member>Complete the implementation of top-level state space</member>
+            <member>Top-level Stimuli Covered: <literal>⋄</literal>
+            <literal>←</literal> Break Eot Fix Fnb Fne Fnf Lle Lls Nl
+            Nse Nss Vi Vfo Vu E Fe Fnm Fnd</member>
+          </simplelist>
+        </td>
+      </tr>

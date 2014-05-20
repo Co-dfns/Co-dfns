@@ -1,0 +1,8 @@
+      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+        <td>12</td>
+        <td colspan="6">
+          <simplelist type="horiz">
+            <member>Support Axis operator and bracket Function Expression states</member>
+          </simplelist>
+        </td>
+      </tr>
