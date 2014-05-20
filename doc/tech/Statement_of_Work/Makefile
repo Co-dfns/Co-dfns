@@ -1,6 +1,4 @@
 NAME := Statement_of_Work
-VPATH := $(DOCROOT)/$(NAME)
-DEPS := $(STDDOCDEPS)
 
-$(DOCROOT)/$(NAME)/$(NAME).pdf: %.pdf: %.xml $(DEPS)
+$(DOCROOT)/$(NAME)/$(NAME).pdf: %.pdf: %.xml $(STDDOCDEPS)
 	$(FOP) -xml "$<" -pdf "$@"

@@ -1,9 +1,7 @@
 NAME := Engineering_Change_Log
-VPATH := $(DOCROOT)/$(NAME)
+ROOT := $(DOCROOT)/$(NAME)/
+DEPS := summary_table.xml change_list.xml 0*/*_summary.xml 0*/*_entry.xml
+DEPS := $(addprefix $(ROOT),$(DEPS))
 
-$(DOCROOT)/$(NAME)/$(NAME).pdf: %.pdf: %.xml $(STDDOCDEPS) summary_table.xml change_list.xml
+$(DOCROOT)/$(NAME)/$(NAME).pdf: %.pdf: %.xml $(STDDOCDEPS) $(DEPS)
 	$(FOP) -xml "$<" -pdf "$@"
-
-summary_table.xml: $(DOCROOT)/$(NAME)/0*/*_summary.xml
-
-change_list.xml: $(DOCROOT)/$(NAME)/0*/*_entry.xml

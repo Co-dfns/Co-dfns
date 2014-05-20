@@ -1,6 +1,5 @@
 NAME := Increment_Construction_Plan
-VPATH := $(DOCROOT)/$(NAME)
-DEPS := $(STDDOCDEPS)
+DEPS := $(DOCROOT)/$(NAME)/increments/*.xml
 
-$(DOCROOT)/$(NAME)/$(NAME).pdf: %.pdf: %.xml $(DEPS) $(DOCROOT)/$(NAME)/increments/*.xml
+$(DOCROOT)/$(NAME)/$(NAME).pdf: %.pdf: %.xml $(STDDOCDEPS) $(DEPS)
 	$(FOP) -xml "$<" -pdf "$@"
