@@ -22,3 +22,5 @@ conf/fo.xsl
 doc/tech/titlepage.xsl
 conf/mk.conf
 scratch/
+*.if
+titlepage.xsl
