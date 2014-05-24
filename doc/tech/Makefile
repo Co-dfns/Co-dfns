@@ -11,6 +11,7 @@ DOCNAMES := Engineering_Change_Log Cleanroom_Engineering_Guide \
             Software_Requirements \
             Project_Record \
             Software_Development_Plan \
+            Software_Architecture \
             Increment_Construction_Plan
 DOCPDF := $(addsuffix .pdf,$(DOCNAMES))
 DOCPDF := $(join $(addsuffix /,$(DOCNAMES)),$(DOCPDF))

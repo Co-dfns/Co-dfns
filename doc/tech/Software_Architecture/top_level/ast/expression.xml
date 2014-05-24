@@ -1,0 +1,95 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Element: Expression</title>
+    <simpara>
+      The <varname>Expression</varname> element contains the
+      various types of expressions we can see in our program, and
+      is a direct derivation of the <token>E</token> recursive
+      stimuli. We must make sure that we have a way to represent
+      ambiguous parsings that cannot be eliminated through the
+      basic type inference.
+    </simpara>
+    <formalpara>
+      <title>Expression contents</title>
+      <para>
+        The contents of an <varname>Expression</varname> element
+        depend on its <parameter>class</parameter>.  For each
+        class there is a specific pattern of elements taken from
+        the following set:
+        <simplelist type="inline">
+          <member><varname>FuncExpr</varname></member>
+          <member><varname>Expression</varname></member>
+          <member><varname>Variable</varname></member>
+          <member><varname>Number</varname></member>
+          <member><varname>String</varname></member>
+          </simplelist>.
+      </para>
+    </formalpara>
+    <informaltable frame="void" rules="rows">
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th colspan="3">Contents</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>atomic</td>
+          <td colspan="3">(Variable | Number | String | Expression)+</td>
+        </tr>
+        <tr>
+          <td>monadic</td>
+          <td colspan="3">FuncExpr Expression</td>
+        </tr>
+        <tr>
+          <td>dyadic</td>
+          <td colspan="3">Expression FuncExpr Expression</td>
+        </tr>
+        <tr>
+          <td>index</td>
+          <td colspan="3">Expression Expression*</td>
+        </tr>
+        <tr>
+          <td>assignment</td>
+          <td colspan="3">Expression Expression | Expression FuncExpr Expression</td>
+        </tr>
+      </tbody>
+    </informaltable>
+    <formalpara>
+      <title>Expression attributes</title>
+      <para>
+        The <parameter>name</parameter> attribute can be used to
+        identify that an expression is being given a name
+        explicitly through an assignment. In the case where an
+        expression may have more than one name, such as in the
+        case of multiple assignments of the same value, then the
+        <parameter>name</parameter> attribute can have more than
+        one name separate by spaces.  The
+        <parameter>class</parameter> attribute is one or more of
+        the following values, subject to some restrictions, which
+        correspond directly to the type of expressions we can
+        encounter:
+        <simplelist type="inline">
+          <member><literal>selective</literal></member>
+          <member><literal>atomic</literal></member>
+          <member><literal>monadic</literal></member>
+          <member><literal>dyadic</literal></member>
+          <member><literal>index</literal></member>
+          <member><literal>assignment</literal></member>
+          </simplelist>.
+        The <parameter>comment</parameter>
+        attribute may also be used to indicate the comment that
+	    appears on the same line as the expression.
+	    The <parameter>slots</parameter> attribute is a space
+	    separated list of slots that should be the same length
+	    as that of the <parameter>name</parameter> attribute. It
+	    should indicate the slots corresponding to the variable
+	    names the expression receives.
+      </para>
+    </formalpara>
+    <simpara>
+      The <literal>selective</literal> tag may appear together
+      with the other tags, but all other tags are mutually
+      exclusive with one another and must not appear together in a
+      single <parameter>class</parameter> attribute.
+    </simpara>
+  </section>

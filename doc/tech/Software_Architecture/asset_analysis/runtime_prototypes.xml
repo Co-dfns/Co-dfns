@@ -1,0 +1,105 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Analysis: Runtime Prototypes</title>
+    <simpara>
+      There were two runtimes created, one in C and one in
+      Java. Comparing their behavior to existing systems and to each
+      other, it is clear that runtimes written in either of these
+      languages will create some limitations for the compiler. In
+      particular, benchmarking reveals that fusion will be a major
+      factor, as will good cache behavior. However, the runtimes
+      created in either of these languages, if they encompass many
+      of the primitives, will not be able to easily leverage cache
+      or fusion optimizations in the compiler, and will operate more
+      or less independently of one another.
+    </simpara>
+    <simpara>
+      The general conclusion to this is that the runtime should be
+      mostly written in Co-Dfns itself.  However, there is a
+      trade-off in compilation complexity. When most of the runtime
+      is in the C or Java side, it is possible for us to avoid the
+      need to destruct arrays. We can keep them as opaque things and
+      not worry about what is inside them during compilation. If
+      elements of the compiler are lifted out of that, then it will
+      be necessary for us to handle the internals of arrays directly
+      in the compiler. However, having a small runtime that handles
+      certain things for us directly, without requiring additional
+      work, will make it easier to do the compiler things, without
+      introducing significant overhead issues. Thus, a minimal
+      runtime environment will be helpful, but most of the
+      primitives should be implemented in Co-Dfns.
+    </simpara>
+    <simpara>
+      Comparing the C and Java prototypes, Java has some clear
+      advantages, but also some serious disadvantages. Since the
+      target of the system is in fact the LLVM system, C has much
+      better integration with the system, and has better
+      opportunities to leverage existing libraries for
+      multi-programming to scale things into the large and
+      especially distributed computing.  C also allows for better
+      control over the calling conventions, which may improve the
+      ability to do fast execution with minimal hackery.
+    </simpara>
+    <simpara>
+      An additional interesting issue related to the semantics of
+      the runtime system is the promotion semantics. In Dyalog, a
+      given value might be promoted to another class if its value
+      exceeds a certain amount. This would include going from an
+      integer to a floating point number when the number exceeds the
+      bounds of the integer size. The runtime needs to provide a
+      good facility for handling these sorts of promotions in a way
+      that is fast.
+    </simpara>
+    <simpara>
+      The handling of scalar operations is interesting in light of
+      the desire to implement fusioning.  Given the nature of
+      promotion mentioned above, scalar operations could have a
+      potentially complex internal element to them, while
+      additionally having the opportunity for better cache behavior
+      if the scalar operations can be fused into a single loop. This
+      fusing should be accomplished through the compiler, but that
+      still leaves to question the behavior of the individual scalar
+      operations.  These are potentially good targets to have in the
+      runtime, provided that the compiler mitigates the cost of a
+      function call to these individual operations.
+    </simpara>
+    <simpara>
+      Ideally speaking, despite the requirement that we might have
+      to be able to get to the internals of the array structure, it
+      is beneficial if we an avoid worrying about the internals of
+      the array structure as much as possible in the compiler. Thus,
+      it might make sense to have runtime helpers that will destruct
+      and manage the array structure in an efficient way without
+      requiring the compiler to have explicit knowledge of the data
+      structures used for the arrays. If the compiler is unaware of
+      the underlying structure, it can make it easier to make some
+      changes without affecting the compiler directly. This needs to
+      be balanced with the ability of the compiler to make
+      interesting optimizations happen.
+    </simpara>
+    <itemizedlist spacing="compact">
+      <title>Summary of Runtime Prototype Insights</title>
+      <listitem>
+        <simpara>Runtime should provide facilities for array class promotion</simpara>
+      </listitem>
+      <listitem>
+        <simpara>It might make sense to have individual scalar operations in C</simpara>
+      </listitem>
+      <listitem>
+        <simpara>Scalar functions are probably best implemented in Co-Dfns</simpara>
+      </listitem>
+      <listitem>
+        <simpara>Most of the primitive functions and operators
+        should be implemented in Co-Dfns, not in the
+        runtime</simpara>
+      </listitem>
+      <listitem>
+        <simpara>Implementation language of the core runtime should be C</simpara>
+      </listitem>
+      <listitem>
+        <simpara>Runtime should take cache behavior into account</simpara>
+      </listitem>
+      <listitem>
+        <simpara>The compiler should try to mitigate the cost of a function call</simpara>
+      </listitem>
+    </itemizedlist>
+  </section>

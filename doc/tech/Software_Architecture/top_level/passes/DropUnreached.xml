@@ -1,0 +1,65 @@
+    <informaltable frame="void" rules="rows"
+                   xmlns="http://docbook.org/ns/docbook" 
+                   version="5.0">
+      <thead>
+        <tr>
+          <th colspan="4">Standard pass: DropUnreached</th>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <th colspan="3">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Intended Function</td>
+          <td colspan="3">
+            Simplify function bodies to remove code that is
+            obviously not reachable.
+          </td>
+        </tr>
+        <tr>
+          <td>Right Argument</td>
+          <td colspan="3">
+            Namespace AST
+          </td>
+        </tr>
+        <tr>
+          <td>Output</td>
+          <td colspan="3">
+            Namespace AST
+          </td>
+        </tr>
+        <tr>
+          <td>Invariant</td>
+          <td colspan="3">
+            Output and input are semantically the same.
+          </td>
+        </tr>
+        <tr>
+          <td>Invariant</td>
+          <td colspan="3">
+            Function bodies are the only sub-trees which may have
+            altered nodes.
+          </td>
+        </tr>
+        <tr>
+          <td>Invariant</td>
+          <td colspan="3">
+            Function bodies may have less nodes on output.
+          </td>
+        </tr>
+        <tr>
+          <td>State</td>
+          <td colspan="3">
+            Context <literal>←</literal> Top
+            <literal>⋄</literal>
+            Fix <literal>←</literal> Yes
+            <literal>⋄</literal>
+            Namespace <literal>←</literal> NOTSEEN
+            <literal>⋄</literal>
+            Eot <literal>←</literal> No
+          </td>
+        </tr>
+      </tbody>
+    </informaltable>

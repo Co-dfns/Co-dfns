@@ -1,0 +1,36 @@
+    <informaltable frame="void" rules="rows"
+                   xmlns="http://docbook.org/ns/docbook" 
+                   version="5.0">
+      <thead>
+        <tr>
+          <th colspan="4">Standard pass: KillLines</th>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <th colspan="3">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Intended function</td>
+          <td colspan="3">
+            Eliminate all semantically irrelevant lines from AST to create an
+            AST suitable for compiling.
+          </td>
+        </tr>
+        <tr>
+          <td>Right argument</td>
+          <td colspan="3">The AST result of <function>Parse</function></td>
+        </tr>
+        <tr>
+          <td>Output</td>
+          <td colspan="3">AST with a <varname>Namespace</varname> root</td>
+        </tr>
+        <tr>
+          <td>Invariant</td>
+          <td colspan="3">
+            The result should contain no more <varname>Line</varname> elements.
+          </td>
+        </tr>
+      </tbody>
+    </informaltable>

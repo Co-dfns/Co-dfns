@@ -1,0 +1,14 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Pass Specifications</title>
+  <xi:include href="passes/Tokenize.xml" />
+  <xi:include href="passes/Parse.xml" />
+  <xi:include href="passes/KillLines.xml" />
+  <xi:include href="passes/DropUnreached.xml" />
+  <xi:include href="passes/LiftConsts.xml" />
+  <xi:include href="passes/FlattenExprs.xml" />
+  <xi:include href="passes/AnchorVars.xml" />
+  <xi:include href="passes/LiftFuncs.xml" />
+  <xi:include href="passes/ConvPrims.xml" />
+  <xi:include href="passes/GenLLVM.xml" />
+</section>

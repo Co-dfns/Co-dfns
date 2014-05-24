@@ -1,0 +1,7 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Runtime Design</title>
+  <xi:include href="runtime_design/representing_arrays.xml" />
+  <xi:include href="runtime_design/representing_scalars.xml" />
+  <xi:include href="runtime_design/function_signatures.xml" />
+</section>

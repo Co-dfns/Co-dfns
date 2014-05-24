@@ -1,0 +1,24 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Element: Namespace</title>
+    <simpara>
+      This is the main root element of most of the passes. It is
+      designed to contain both tokens and regular code.
+    </simpara>
+    <formalpara>
+      <title>Namespace Content</title>
+      <para>
+        A namespace can contain any number of
+        <varname>Line</varname>, <varname>Expression</varname>,
+        <varname>Function</varname>, or
+        <varname>FuncExpr</varname> elements in any order.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Namespace Attributes</title>
+      <para>
+        The <varname>name</varname> attribute should contain the
+        value, if any, of the name of the namespace listed in the
+        program.
+      </para>
+    </formalpara>
+  </section>

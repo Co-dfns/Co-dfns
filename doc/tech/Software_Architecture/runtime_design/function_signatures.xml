@@ -1,0 +1,71 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Function Signatures and Calling Conventions</title>
+  <para>
+    Functions in Co-dfns can be nested, but obey a stack
+    discipline. This means that you cannot return functions from
+    other functions. Operators allow you to derive new functions
+    parameterized over old functions, but still maintain the stack
+    discipline.
+  </para>
+  <para>
+    This leads to some interesting design opportunities with
+    functions. In particular, our representation of functions does
+    not require closures. A 1-1 correspondence between LLVM and
+    Co-dfns functions exists. All Co-dfns functions follow the
+    same function signature as follows:
+  </para>
+  <table rules="rows" frame="void">
+    <caption>Co-dfns Function Signature</caption>
+    <thead>
+      <tr>
+        <td>Argument</td>
+        <td>Name</td>
+        <td>Type</td>
+        <td colspan="3">Description</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Return</td>
+        <td>N/A</td>
+        <td>integer</td>
+        <td colspan="3">
+          An indication of the success of the function or its
+          error state.
+        </td>
+      </tr>
+      <tr>
+        <td>0</td>
+        <td><varname>res</varname></td>
+        <td>Array pointer</td>
+        <td colspan="3">
+          The return result of the function, already initialized.
+        </td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td><varname>lft</varname></td>
+        <td>Array pointer</td>
+        <td colspan="3">
+          A reference to the left argument of the function.
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><varname>rgt</varname></td>
+        <td>Array pointer</td>
+        <td colspan="3">
+          A reference to the right argument of the function.
+        </td>
+      </tr>
+      <tr>
+        <td><literal>N+3</literal></td>
+        <td><varname>envN</varname></td>
+        <td>Frame pointer</td>
+        <td colspan="3">
+          A reference to a frame pointer further up in the call stack.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

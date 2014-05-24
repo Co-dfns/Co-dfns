@@ -1,0 +1,29 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>AST Definition</title>
+  <simpara>
+    Our AST encapsulates all of the data structures that we
+    might want to use in the transfer of information two and
+    from one pass to another. This includes the output of the
+    <function>Tokenize</function> pass.
+  </simpara> <simpara>
+    There are two valid root nodes: <varname>Tokens</varname> and
+    <varname>Namespace</varname>.
+  </simpara>
+  <xi:include href="ast/ast_elements.xml" />
+  <xi:include href="ast/element_attributes.xml" />
+  <xi:include href="ast/tokens.xml" />
+  <xi:include href="ast/namespace.xml" />
+  <xi:include href="ast/line.xml" />
+  <xi:include href="ast/ambiguous.xml" />
+  <xi:include href="ast/expression.xml" />
+  <xi:include href="ast/function.xml" />
+  <xi:include href="ast/funcexpr.xml" />
+  <xi:include href="ast/condition.xml" />
+  <xi:include href="ast/guard.xml" />
+  <xi:include href="ast/token.xml" />
+  <xi:include href="ast/primitive.xml" />
+  <xi:include href="ast/number.xml" />
+  <xi:include href="ast/string.xml" />
+  <xi:include href="ast/variable.xml" />
+</section>

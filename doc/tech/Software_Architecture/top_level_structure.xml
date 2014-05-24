@@ -1,0 +1,16 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Top-level Structure</title>
+  <simpara>
+    This section details the refinement of the <citetitle>Function
+    Specification</citetitle> into a suitable design at the top
+    level. We divide this operation into a series of passes, and
+    then detail the behavior of these passes and how they need to be
+    used. This includes a complete specification of the AST to be
+    used in the compiler as well as the black-box view of each pass.
+  </simpara>
+  <xi:include href="top_level/pass_overview.xml" />
+  <xi:include href="top_level/ast.xml" />
+  <xi:include href="top_level/environments.xml" />
+  <xi:include href="top_level/passes.xml" />
+</section>
