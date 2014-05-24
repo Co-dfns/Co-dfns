@@ -1,0 +1,27 @@
+  <table xmlns="http://docbook.org/ns/docbook" version="5.0" frame="void" rules="rows">
+    <caption>State spaces defined in <classname>States</classname></caption>
+    <thead>
+      <tr>
+        <th>Recursion</th>
+        <th>Variable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Top-Level</td>
+        <td><varname>States.TopLevel</varname></td>
+      </tr>
+      <tr>
+        <td>Function</td>
+        <td><varname>States.Function</varname></td>
+      </tr>
+      <tr>
+        <td>Expression</td>
+        <td><varname>States.Expression</varname></td>
+      </tr>
+      <tr>
+        <td>Function Expression</td>
+        <td><varname>States.FuncExpr</varname></td>
+      </tr>
+    </tbody>
+  </table>

@@ -6,6 +6,7 @@ DOCROOT := doc/tech
 
 DOCNAMES := Engineering_Change_Log Cleanroom_Engineering_Guide \
             Increment_Certification_Report \
+            Increment_Test_Plan \
             Statement_of_Work \
             Software_Requirements \
             Project_Record \

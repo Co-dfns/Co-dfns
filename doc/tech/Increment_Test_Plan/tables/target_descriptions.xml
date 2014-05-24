@@ -1,0 +1,27 @@
+  <table xmlns="http://docbook.org/ns/docbook" version="5.0" frame="void" rules="rows">
+    <caption>Target Descriptions for Each Model</caption>
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Target Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><varname>UsageModels.TopLevel</varname></td>
+        <td><varname>Targets.TopLevel</varname></td>
+      </tr>
+      <tr>
+        <td><varname>UsageModels.Function</varname></td>
+        <td><varname>Targets.Function</varname></td>
+      </tr>
+      <tr>
+        <td><varname>UsageModels.Expression</varname></td>
+        <td><varname>Targets.Expression</varname></td>
+      </tr>
+      <tr>
+        <td><varname>UsageModels.FuncExpr</varname></td>
+        <td><varname>Targets.FuncExpr</varname></td>
+      </tr>
+    </tbody>
+  </table>
