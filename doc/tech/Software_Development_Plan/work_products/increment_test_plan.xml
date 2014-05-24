@@ -1,0 +1,9 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Increment Test Plan</glossterm>
+      <glossdef>
+        <simpara>
+          Contains all the information needed for statistical certification 
+          and testing.               
+        </simpara>
+      </glossdef>
+    </glossentry>

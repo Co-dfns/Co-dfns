@@ -1,0 +1,27 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Milestones</title>
+  <simpara>
+    The following milestones represent the high-level organizational 
+    milestones. Milestone 4 will be refined into Increments with their 
+    own due dates during Increment Planning.
+  </simpara>
+  <informaltable frame="void" rules="rows">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th colspan="7">Description</th>
+        <th colspan="3">Due Date</th>
+        <th colspan="3">Completed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <xi:include href="milestones/planning_and_func_spec.xml" />
+      <xi:include href="milestones/arch_spec_and_increment_planning.xml" />
+      <xi:include href="milestones/conf_prelim.xml" />
+      <xi:include href="milestones/usage_specs_and_tests.xml" />
+      <xi:include href="milestones/increment_design.xml" />
+      <xi:include href="milestones/final_cert_and_release.xml" />
+    </tbody>
+  </informaltable>
+</section>

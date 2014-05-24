@@ -1,0 +1,17 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Measurement Plan</title>
+  <simpara>
+    The following sections define a plan for statistical quality control 
+    and measures of product readiness. They include the goals for 
+    software certification together with the defined metrics for measuring 
+    product and process quality. They define the process requirements to 
+    assure that the certification process accurately certifies the quality 
+    of the software and that the process can be evaluated for quality 
+    assessment.
+  </simpara>
+  <xi:include href="measurement_plan/certification_goals.xml" />
+  <xi:include href="measurement_plan/statistical_measures_of_software_quality.xml" />
+  <xi:include href="measurement_plan/testing_process_measures_and_control.xml" />
+  <xi:include href="measurement_plan/usage_model_evolution.xml" />
+</section>

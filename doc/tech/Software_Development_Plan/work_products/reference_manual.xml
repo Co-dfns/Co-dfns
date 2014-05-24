@@ -1,0 +1,13 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Reference Manual</glossterm>
+      <glossdef>
+        <simpara>
+          Not part of the development cycle, at the completion of the 
+          final certification phase, the development work products are 
+          accumulated into an useful reference manual for the user of 
+          the <citetitle>executable system</citetitle>. This may be 
+          maintained as a part of the 
+          <citetitle>Executable System</citetitle>.
+        </simpara>
+      </glossdef>
+    </glossentry>

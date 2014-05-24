@@ -1,0 +1,78 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Reuse Analysis</title>
+  <simpara>
+    In general, there are a number of opportunities for code reuse that we 
+    should leverage for this compiler. The first and most obvious is the 
+    explicit targeting of the LLVM virtual machine as the target language 
+    of the compiler. We will assume a metric of 100% reliability for this 
+    end target, and this will not factor into the calculations of the 
+    code reliability. Additionally, a number of existing prototypes have 
+    been created for this compiler, that should inform the design, 
+    system architecture, and overall structure of the compiler. A number of 
+    specific technologies have proven to be extremely useful in the creation 
+    of compilers in the past, and especially for generating type inferences, 
+    and we should use those if we can, perhaps with reimplementations to 
+    meet reliability and deployment requirements. 
+  </simpara>
+  <table rules="rows" frame="void">
+    <caption>Specific Opportunities for Reuse</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type of Reusability</th>
+        <th colspan="2">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>LLVM</td>
+        <td>Direct Target</td>
+        <td colspan="2">
+          We can directly target our compiler for the LLVM suite.
+        </td>
+      </tr>
+      <tr>
+        <td>MiniKanren</td>
+        <td>Type Inference</td>
+        <td colspan="2">
+          A reimplementation of MiniKanren will facilitate type inference 
+          and statistical testing.
+        </td>
+      </tr>
+      <tr>
+        <td>NanoPass</td>
+        <td>System Architecture</td>
+        <td colspan="2">
+          The NanoPass framework informs the designs and structure of the 
+          compiler, as well as the overall structure of compiler passes.
+        </td>
+      </tr>
+      <tr>
+        <td>C/C++ Prototypes</td>
+        <td>Parser</td>
+        <td colspan="2">
+          The parser will be a reimplementation of the existing partial 
+          parsers available in the C/C++ prototypes.
+        </td>
+      </tr>
+      <tr>
+        <td>Dyalog Sketch</td>
+        <td>Parser</td>
+        <td colspan="2">
+          An initial sketch of the parser generators written for D-fns
+          will be verified and certified as a base for the current parser.
+        </td>
+      </tr>
+      <tr>
+        <td>Dyalog References</td>
+        <td>Specification</td>
+        <td colspan="2">
+          The Dyalog Language Reference can be used as an auxilary 
+          specification document to augment the <citetitle>Function Specification</citetitle>. 
+          It additionally augments the <citetitle>Software Requirements</citetitle>.
+          It can be used without modification.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
