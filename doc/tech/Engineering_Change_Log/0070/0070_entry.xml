@@ -1,0 +1,26 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The current verification isn't working very well, as there are too many small 
+      details that aren't getting handled. This is partly because it's not very easy 
+      for a single person to do verification on their own code. We really need two 
+      people to do that. On the other hand, examining the set of errors that seem 
+      to occur, it would be easier for an automated system to verify these problems, 
+      and that would probably improve the reliability of the verification process. 
+      This is especially true given that only a single user is developing this stuff 
+      right now.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      This could definitely be done, but what the best means to do it remains a little 
+      unknown. I recommend that the first effort should be a new implementation of 
+      APL primitives which operate over abstract array descriptions rather than on 
+      their data. This should allow for a form of abstract interpretation that 
+      will deliver the appropriate level of rigor to eliminate the majority of the 
+      errors that occur while doing the program design. 
+    </para>
+  </formalpara>
+</listitem>
