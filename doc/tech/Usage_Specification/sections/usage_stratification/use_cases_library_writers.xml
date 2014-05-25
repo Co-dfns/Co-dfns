@@ -1,0 +1,25 @@
+<table frame="void" rules="rows"
+       xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Use Cases for Library Writers</caption>
+  <thead>
+  <tr>
+      <th>Case</th>
+      <th>Proportion</th>
+      <th colspan="2">Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Internal Library</td>
+      <td>90%</td>
+      <td colspan="2">Write a library for use internally within an existing
+      Dyalog program</td>
+    </tr>
+    <tr>
+      <td>External Library</td>
+      <td>10%</td>
+      <td colspan="2">Write a library designed to produce an externally
+      loaded artifact for use in another system.</td>
+    </tr>
+  </tbody>
+</table>

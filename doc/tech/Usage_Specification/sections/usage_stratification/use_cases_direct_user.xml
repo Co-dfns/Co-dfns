@@ -1,0 +1,26 @@
+<table frame="void" rules="rows"
+       xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Use Cases for Direct User</caption>
+  <thead>
+    <tr>
+    <th>Case</th>
+      <th>Proportion</th>
+      <th colspan="2">Description</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Interactive</td>
+      <td>30%</td>
+      <td colspan="2">Write programs that you fix directly for immediate
+      use and not for storage or later use</td>
+    </tr>
+    <tr>
+      <td>System</td>
+      <td>70%</td>
+      <td colspan="2">Design an API designed to be used later and by
+      others for directly working with and processing some sort of data
+      or the like</td>
+    </tr>
+  </tbody>
+</table>
