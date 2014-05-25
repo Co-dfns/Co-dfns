@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Co-Dfns Statistical Testing Report</title>
+    <author><personname>Aaron W. Hsu</personname></author>
+    <date>Monday, October 7th, 2013</date>
+  </info>
+  <xi:include href="increments/increment1.xml" />
+  <xi:include href="increments/increment2.xml" />
+  <xi:include href="increments/increment3.xml" />
+  <xi:include href="increments/increment4.xml" />
+  <xi:include href="increments/increment5.xml" />
+</article>
