@@ -1,0 +1,477 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>
+    Source Input Enumeration: Function Expressions, Ea
+    <literal>∘</literal>
+    ( Vo
+  </caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo E
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Ea
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Fea
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Feaa
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Fed
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Feda
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Fem
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Fema
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Feo
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Fn
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Fnm
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Fnd
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo [
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo ]
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo (
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo )
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>←</literal>
+      </td>
+      <td>wait</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        (
+      </td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>⍨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>∘</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>¨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>.</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>⍣</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>/</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>⌿</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>\</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo
+        <literal>⍀</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Break
+      </td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo D
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Da
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo M
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Ma
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Vi
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Vf
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Vo
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Vo Vu
+      </td>
+      <td>subsumed</td>
+      <td>
+        Ea
+        <literal>∘</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

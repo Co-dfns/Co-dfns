@@ -1,0 +1,136 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Expressions, Fea</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fea E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea Es</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea Fea</td>
+      <td>wait</td>
+      <td>Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea Fed</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea Fem</td>
+      <td>wait</td>
+      <td>Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea [</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea ]</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea (</td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea )</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea ;</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fea
+        <literal>←</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Fea N</td>
+      <td>okay</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea S</td>
+      <td>okay</td>
+      <td>Fea N</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea Sm</td>
+      <td>wait</td>
+      <td>Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea Sd</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea Va</td>
+      <td>okay</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea Vna</td>
+      <td>okay</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea Vi</td>
+      <td>Value Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea Vnu</td>
+      <td>wait</td>
+      <td>Vnu</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>

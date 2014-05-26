@@ -1,0 +1,123 @@
+<variablelist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Properties for Func. Expr. Canonical Sequence Analysis</title>
+  <varlistentry>
+    <term>Opnd</term>
+    <listitem>
+      <simpara>
+        What is the current function value without taking into consideration
+        the current operator? This would be the left operand if there
+        is an operator to deal with, and would be the function value
+        if there is not. It does not include content in an unclosed
+        parenthesized group. Possible values are:
+        <symbol>ATOM</symbol>
+        ,
+        <symbol>AMB</symbol>
+        ,
+        <symbol>NONE</symbol>
+        ,
+        <symbol>JOT</symbol>
+        ,
+        <symbol>MON</symbol>
+        , or
+        <symbol>DYA</symbol>
+        .
+      </simpara>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Oper</term>
+    <listitem>
+      <simpara>
+        What is the current operator we are dealing with? This will
+        be nothing if we have not seen an operator, or the semantic
+        equivalent value of the operator that is currently at the top
+        of the parse tree. Possible values are:
+        <symbol>NONE</symbol>
+        ,
+        <symbol>DOT</symbol>
+        ,
+        <symbol>COMP</symbol>
+        ,
+        <symbol>POW</symbol>
+        ,
+        <symbol>MON</symbol>
+        ,
+        <symbol>DYA</symbol>
+        . This property is for talking about what is outside of a currently
+        opened parenthesis.
+      </simpara>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Axis</term>
+    <listitem>
+      <simpara>
+        Indicates whether a function can take an axis specification
+        or not. It also indicates whether an axis specification has
+        already been seen, and whether an expression for the axis specification
+        has already been seen. Possible values are:
+        <symbol>NO</symbol>
+        ,
+        <symbol>YES</symbol>
+        ,
+        <symbol>SEEN</symbol>
+        , or
+        <symbol>FILD</symbol>
+        .
+      </simpara>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Nest</term>
+    <listitem>
+      <simpara>
+        Determines whether a parenthesis has been seen, and what value
+        was found in the nesting. Possible values are:
+        <symbol>NONE</symbol>
+        ,
+        <symbol>EMPTY</symbol>
+        ,
+        <symbol>A</symbol>
+        ,
+        <symbol>AA</symbol>
+        ,
+        <symbol>M</symbol>
+        ,
+        <symbol>MA</symbol>
+        ,
+        <symbol>D</symbol>
+        ,
+        <symbol>DA</symbol>
+        ,
+        <symbol>O</symbol>
+        ,
+        <symbol>OM</symbol>
+        ,
+        <symbol>OD</symbol>
+        ,
+        <symbol>COMM</symbol>
+        ,
+        <symbol>COMP</symbol>
+        ,
+        <symbol>EACH</symbol>
+        ,
+        <symbol>POW</symbol>
+        ,
+        <symbol>DOT</symbol>
+        ,
+        <symbol>RED</symbol>
+        , or
+        <symbol>SCN</symbol>
+        .
+      </simpara>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>Target</term>
+    <listitem>
+      <simpara>Identifies whether or not we are currently in a targetable
+      position where a variable may be assigned. This is a boolean
+      value.</simpara>
+    </listitem>
+  </varlistentry>
+</variablelist>

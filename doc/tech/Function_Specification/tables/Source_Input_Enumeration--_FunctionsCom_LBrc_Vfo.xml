@@ -1,0 +1,103 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Functions, { Vfo</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{ Vfo E</td>
+      <td>subsumed</td>
+      <td>{ E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{ Vfo Fe</td>
+      <td>subsumed</td>
+      <td>{ E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{ Vfo Fnd</td>
+      <td>subsumed</td>
+      <td>{ E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{ Vfo Fnm</td>
+      <td>subsumed</td>
+      <td>{ E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{ Vfo {</td>
+      <td>subsumed</td>
+      <td>{ Vfo Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{ Vfo }</td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>{ Vfo :</td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>{ Vfo ::</td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>⋄</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+      </td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>{ Vfo Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>{ Vfo Nl</td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>{ Vfo Vfo</td>
+      <td>subsumed</td>
+      <td>{ E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>{ Vfo Vu</td>
+      <td>subsumed</td>
+      <td>{ E</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

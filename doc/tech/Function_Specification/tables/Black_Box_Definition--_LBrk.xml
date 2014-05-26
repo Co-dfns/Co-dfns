@@ -1,0 +1,138 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Black Box Definition: [</caption>
+  <thead>
+    <tr>
+      <th colspan="2">Conditions</th>
+      <th colspan="2">Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top Func
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Fnex
+          </member>
+          <member>
+            Axis
+            <literal>∊</literal>
+            Yes
+          </member>
+          <member>
+            Nest
+            <literal>∊</literal>
+            NONE
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">wait</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Fnex
+          </member>
+          <member>
+            Axis
+            <literal>∊</literal>
+            NO SEEN FILD
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Fnex
+          </member>
+          <member>
+            ~Nest
+            <literal>∊</literal>
+            NONE
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            LIT VAR NVAR
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">wait</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            UVAR MIXED
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">VALUE ERROR</td>
+      <td>4, 5, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            EMPTY EXPR SELEX
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+  </tbody>
+</table>

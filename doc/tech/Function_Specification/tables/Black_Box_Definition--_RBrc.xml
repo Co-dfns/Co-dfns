@@ -1,0 +1,171 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Black Box Definition: }</caption>
+  <thead>
+    <tr>
+      <th>Conditions</th>
+      <th>Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top Expr Fnex
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            EXPR FUNC
+          </member>
+        </simplelist>
+      </td>
+      <td>okay</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Bind
+            <literal>∊</literal>
+            NO
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            EMPTY
+          </member>
+        </simplelist>
+      </td>
+      <td>okay</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Bind
+            <literal>∊</literal>
+            BOUND
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            FVAR FUNC
+          </member>
+        </simplelist>
+      </td>
+      <td>okay</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Bracket
+            <literal>∊</literal>
+            No
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            UNBOUND
+          </member>
+        </simplelist>
+      </td>
+      <td>VALUE ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Bind
+            <literal>∊</literal>
+            NO
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            FVAR
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Bind
+            <literal>∊</literal>
+            BOUND UNBOUND
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            EMPTY
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+  </tbody>
+</table>

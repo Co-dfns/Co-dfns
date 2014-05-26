@@ -1,0 +1,136 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Expressions, Fea N (</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fea N ( E</td>
+      <td>wait</td>
+      <td>Fea ( E</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea N ( Es</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Fea</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Fed</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Fem</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( [</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( ]</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( (</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( )</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fea N ( ;</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fea N (
+        <literal>←</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Break</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( N</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( S</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Sm</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Sd</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Va</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Vna</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Vi</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea N ( Vnu</td>
+      <td>subsumed</td>
+      <td>Fea N ( E</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

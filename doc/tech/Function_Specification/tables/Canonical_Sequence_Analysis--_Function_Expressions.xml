@@ -1,0 +1,1567 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Canonical Sequence Analysis: Function Expressions</caption>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th colspan="2">Sequence</th>
+      <th>Opnd</th>
+      <th>Oper</th>
+      <th>Axis</th>
+      <th>Nest</th>
+      <th>Tgt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td colspan="2">empty</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td colspan="2">Ea</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td colspan="2">Fn</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td colspan="2">Fnm</td>
+      <td>NONE</td>
+      <td>MON</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td colspan="2">(</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td colspan="2">
+        <literal>∘</literal>
+      </td>
+      <td>JOT</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td colspan="2">Da</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td colspan="2">Ea Fnd</td>
+      <td>ATOM</td>
+      <td>DYA</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td colspan="2">Ea (</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td colspan="2">
+        Ea
+        <literal>∘</literal>
+      </td>
+      <td>ATOM</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td colspan="2">Fn (</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td colspan="2">
+        Fn
+        <literal>∘</literal>
+      </td>
+      <td>AMB</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td colspan="2">
+        Fn
+        <literal>.</literal>
+      </td>
+      <td>AMB</td>
+      <td>DOT</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td colspan="2">( Fea</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td colspan="2">( Feaa</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>AA</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>16</td>
+      <td colspan="2">( Fed</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>D</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>17</td>
+      <td colspan="2">( Feda</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>DA</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td colspan="2">( Fem</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>M</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>19</td>
+      <td colspan="2">( Fema</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>MA</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>20</td>
+      <td colspan="2">( Feo[op]</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>21</td>
+      <td colspan="2">( Vf</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>22</td>
+      <td colspan="2">( Vo[op]</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>23</td>
+      <td colspan="2">( Vu</td>
+      <td>NONE</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>24</td>
+      <td colspan="2">Da [</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>SEEN</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>25</td>
+      <td colspan="2">Da (</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>26</td>
+      <td colspan="2">
+        Da
+        <literal>∘</literal>
+      </td>
+      <td>DYA</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>27</td>
+      <td colspan="2">
+        Da
+        <literal>⍣</literal>
+      </td>
+      <td>DYA</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>28</td>
+      <td colspan="2">Ea Fnd (</td>
+      <td>ATOM</td>
+      <td>DYA</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>29</td>
+      <td colspan="2">Ea ( Feo[Fnm]</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OM</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>30</td>
+      <td colspan="2">Ea ( Feo[Fnd]</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OD</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>31</td>
+      <td colspan="2">
+        Ea ( Feo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>32</td>
+      <td colspan="2">Ea ( Vf</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>33</td>
+      <td colspan="2">
+        Ea ( Vo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>34</td>
+      <td colspan="2">Ea ( Vo[Fnm]</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OM</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>35</td>
+      <td colspan="2">Ea ( Vo[Fnd]</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OD</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>36</td>
+      <td colspan="2">Ea ( Vu</td>
+      <td>ATOM</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>37</td>
+      <td colspan="2">
+        Ea
+        <literal>∘</literal>
+        Fn
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>38</td>
+      <td colspan="2">
+        Ea
+        <literal>∘</literal>
+        (
+      </td>
+      <td>ATOM</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>39</td>
+      <td colspan="2">Fn ( Feo[Fnm]</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OM</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>40</td>
+      <td colspan="2">Fn ( Feo[Fnd]</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OD</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>41</td>
+      <td colspan="2">
+        Fn ( Feo[
+        <literal>⍨</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMM</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>42</td>
+      <td colspan="2">
+        Fn ( Feo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>43</td>
+      <td colspan="2">
+        Fn ( Feo[
+        <literal>¨</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EACH</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>44</td>
+      <td colspan="2">
+        Fn ( Feo[
+        <literal>.</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>DOT</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>45</td>
+      <td colspan="2">
+        Fn ( Feo[
+        <literal>⍣</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>POW</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>46</td>
+      <td colspan="2">
+        Fn ( Feo[
+        <literal>/</literal>
+        <literal>⌿</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>RED</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>47</td>
+      <td colspan="2">
+        Fn ( Feo[
+        <literal>\</literal>
+        <literal>⍀</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>SCN</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>48</td>
+      <td colspan="2">Fn ( Vf</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>49</td>
+      <td colspan="2">Fn ( Vo[Fnm]</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OM</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td colspan="2">Fn ( Vo[Fnd]</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OD</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>51</td>
+      <td colspan="2">
+        Fn ( Vo[
+        <literal>⍨</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMM</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>52</td>
+      <td colspan="2">
+        Fn ( Vo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>53</td>
+      <td colspan="2">
+        Fn ( Vo[
+        <literal>¨</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EACH</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>54</td>
+      <td colspan="2">
+        Fn ( Vo[
+        <literal>.</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>DOT</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>55</td>
+      <td colspan="2">
+        Fn ( Vo[
+        <literal>⍣</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>POW</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>56</td>
+      <td colspan="2">
+        Fn ( Vo[
+        <literal>/</literal>
+        <literal>⌿</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>RED</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>57</td>
+      <td colspan="2">
+        Fn ( Vo[
+        <literal>\</literal>
+        <literal>⍀</literal>
+        ]
+      </td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>SCN</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>58</td>
+      <td colspan="2">Fn ( Vu</td>
+      <td>AMB</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>59</td>
+      <td colspan="2">
+        Fn
+        <literal>∘</literal>
+        (
+      </td>
+      <td>AMB</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>60</td>
+      <td colspan="2">
+        Fn
+        <literal>.</literal>
+        (
+      </td>
+      <td>AMB</td>
+      <td>DOT</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>61</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        [
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>SEEN</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>62</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        (
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>63</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        <literal>∘</literal>
+      </td>
+      <td>MON</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>64</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        <literal>⍣</literal>
+      </td>
+      <td>MON</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>65</td>
+      <td colspan="2">Da [ E</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>FILD</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>66</td>
+      <td colspan="2">
+        Da ( Feo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>67</td>
+      <td colspan="2">
+        Da ( Feo[
+        <literal>¨</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EACH</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>68</td>
+      <td colspan="2">
+        Da ( Feo[
+        <literal>⍣</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>POW</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>69</td>
+      <td colspan="2">Da ( Vf</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>70</td>
+      <td colspan="2">Da ( Vo[Fnm]</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OM</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>71</td>
+      <td colspan="2">Da ( Vo[Fnd]</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OD</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>72</td>
+      <td colspan="2">
+        Da ( Vo[
+        <literal>⍨</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMM</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>73</td>
+      <td colspan="2">
+        Da ( Vo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>74</td>
+      <td colspan="2">
+        Da ( Vo[
+        <literal>¨</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EACH</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>75</td>
+      <td colspan="2">
+        Da ( Vo[
+        <literal>.</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>DOT</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>76</td>
+      <td colspan="2">
+        Da ( Vo[
+        <literal>⍣</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>POW</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>77</td>
+      <td colspan="2">
+        Da ( Vo[
+        <literal>/</literal>
+        <literal>⌿</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>RED</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>78</td>
+      <td colspan="2">
+        Da ( Vo[
+        <literal>\</literal>
+        <literal>⍀</literal>
+        ]
+      </td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>SCN</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>79</td>
+      <td colspan="2">Da ( Vu</td>
+      <td>DYA</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>80</td>
+      <td colspan="2">
+        Da
+        <literal>∘</literal>
+        (
+      </td>
+      <td>DYA</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>81</td>
+      <td colspan="2">
+        Da
+        <literal>⍣</literal>
+        (
+      </td>
+      <td>DYA</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>82</td>
+      <td colspan="2">Ea Fnd ( Fea</td>
+      <td>ATOM</td>
+      <td>DYA</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>83</td>
+      <td colspan="2">Ea Fnd ( Vf</td>
+      <td>ATOM</td>
+      <td>DYA</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>84</td>
+      <td colspan="2">Ea Fnd ( Vo</td>
+      <td>ATOM</td>
+      <td>DYA</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>85</td>
+      <td colspan="2">Ea Fnd ( Vu</td>
+      <td>ATOM</td>
+      <td>DYA</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>86</td>
+      <td colspan="2">
+        Ea
+        <literal>∘</literal>
+        ( Fea
+      </td>
+      <td>ATOM</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>87</td>
+      <td colspan="2">
+        Ea
+        <literal>∘</literal>
+        ( Vf
+      </td>
+      <td>ATOM</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>88</td>
+      <td colspan="2">
+        Ea
+        <literal>∘</literal>
+        ( Vo
+      </td>
+      <td>ATOM</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>89</td>
+      <td colspan="2">
+        Ea
+        <literal>∘</literal>
+        ( Vu
+      </td>
+      <td>ATOM</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>90</td>
+      <td colspan="2">
+        Fn
+        <literal>∘</literal>
+        ( Fea
+      </td>
+      <td>AMB</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>91</td>
+      <td colspan="2">
+        Fn
+        <literal>∘</literal>
+        ( Vf
+      </td>
+      <td>AMB</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>92</td>
+      <td colspan="2">
+        Fn
+        <literal>∘</literal>
+        ( Vo
+      </td>
+      <td>AMB</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>93</td>
+      <td colspan="2">
+        Fn
+        <literal>∘</literal>
+        ( Vu
+      </td>
+      <td>AMB</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>94</td>
+      <td colspan="2">
+        Fn
+        <literal>.</literal>
+        ( Fea
+      </td>
+      <td>AMB</td>
+      <td>DOT</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>95</td>
+      <td colspan="2">
+        Fn
+        <literal>.</literal>
+        ( Vf
+      </td>
+      <td>AMB</td>
+      <td>DOT</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>96</td>
+      <td colspan="2">
+        Fn
+        <literal>.</literal>
+        ( Vo
+      </td>
+      <td>AMB</td>
+      <td>DOT</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>97</td>
+      <td colspan="2">
+        Fn
+        <literal>.</literal>
+        ( Vu
+      </td>
+      <td>AMB</td>
+      <td>DOT</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>98</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        [ E
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>FILD</td>
+      <td>NONE</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>99</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>100</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EACH</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>⍣</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>POW</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vf
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>103</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[Fnm]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OM</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>104</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[Fnd]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>OD</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>105</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[
+        <literal>⍨</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMM</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>106</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>COMP</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>107</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[
+        <literal>¨</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EACH</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>108</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[
+        <literal>⍣</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>POW</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>109</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[
+        <literal>.</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>DOT</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>110</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[
+        <literal>/</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>RED</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>111</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vo[
+        <literal>\</literal>
+        ]
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>YES</td>
+      <td>SCN</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>112</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        ( Vu
+      </td>
+      <td>MON</td>
+      <td>NONE</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>113</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        <literal>∘</literal>
+        (
+      </td>
+      <td>MON</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>114</td>
+      <td colspan="2">
+        Fn
+        <literal>\</literal>
+        <literal>⍣</literal>
+        (
+      </td>
+      <td>MON</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>115</td>
+      <td colspan="2">
+        Da
+        <literal>∘</literal>
+        ( Fea
+      </td>
+      <td>DYA</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>116</td>
+      <td colspan="2">
+        Da
+        <literal>∘</literal>
+        ( Vf
+      </td>
+      <td>DYA</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>117</td>
+      <td colspan="2">
+        Da
+        <literal>∘</literal>
+        ( Vo
+      </td>
+      <td>DYA</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>118</td>
+      <td colspan="2">
+        Da
+        <literal>∘</literal>
+        ( Vu
+      </td>
+      <td>DYA</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>119</td>
+      <td colspan="2">
+        Da
+        <literal>⍣</literal>
+        ( Fea
+      </td>
+      <td>DYA</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>120</td>
+      <td colspan="2">
+        Da
+        <literal>⍣</literal>
+        ( Vf
+      </td>
+      <td>DYA</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>121</td>
+      <td colspan="2">
+        Da
+        <literal>⍣</literal>
+        ( Vo
+      </td>
+      <td>DYA</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>122</td>
+      <td colspan="2">
+        Da
+        <literal>⍣</literal>
+        ( Vu
+      </td>
+      <td>DYA</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>123</td>
+      <td colspan="2">
+        Fn \
+        <literal>∘</literal>
+        ( Fea
+      </td>
+      <td>MON</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>124</td>
+      <td colspan="2">
+        Fn \
+        <literal>∘</literal>
+        ( Vf
+      </td>
+      <td>MON</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>125</td>
+      <td colspan="2">
+        Fn \
+        <literal>∘</literal>
+        ( Vo
+      </td>
+      <td>MON</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>126</td>
+      <td colspan="2">
+        Fn \
+        <literal>∘</literal>
+        ( Vu
+      </td>
+      <td>MON</td>
+      <td>COMP</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>127</td>
+      <td colspan="2">
+        Fn \
+        <literal>⍣</literal>
+        ( Fea
+      </td>
+      <td>MON</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>128</td>
+      <td colspan="2">
+        Fn \
+        <literal>⍣</literal>
+        ( Vf
+      </td>
+      <td>MON</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>A</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>129</td>
+      <td colspan="2">
+        Fn \
+        <literal>⍣</literal>
+        ( Vo
+      </td>
+      <td>MON</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>O</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>130</td>
+      <td colspan="2">
+        Fn \
+        <literal>⍣</literal>
+        ( Vu
+      </td>
+      <td>MON</td>
+      <td>POW</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>

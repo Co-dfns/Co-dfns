@@ -1,0 +1,136 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Expressions, Sm N (</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sm N ( E</td>
+      <td>wait</td>
+      <td>Sm ( E</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N ( Es</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Fea</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Fed</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Fem</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( [</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( ]</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( (</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( )</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Sm N ( ;</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Sm N (
+        <literal>←</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Sm N ( N</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( S</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Sm</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Sd</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Va</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Vna</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Vi</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N ( Vnu</td>
+      <td>subsumed</td>
+      <td>Sm N ( E</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

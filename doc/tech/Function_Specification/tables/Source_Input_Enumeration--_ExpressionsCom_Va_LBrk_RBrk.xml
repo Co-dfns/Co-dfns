@@ -1,0 +1,136 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Expressions, Va [ ]</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Va [ ] E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Va [ ] Es</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Va [ ] Fea</td>
+      <td>wait</td>
+      <td>Va Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Fed</td>
+      <td>wait</td>
+      <td>Va Fed</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Fem</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Va [ ] [</td>
+      <td>wait</td>
+      <td>Va [</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] ]</td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Va [ ] (</td>
+      <td>wait</td>
+      <td>Va (</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] )</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Va [ ] ;</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Va [ ]
+        <literal>←</literal>
+      </td>
+      <td>wait</td>
+      <td>Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Va [ ] N</td>
+      <td>okay</td>
+      <td>Fea N</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] S</td>
+      <td>okay</td>
+      <td>Fea S</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Sm</td>
+      <td>wait</td>
+      <td>Va [ ] Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Sd</td>
+      <td>wait</td>
+      <td>N Sd</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Va</td>
+      <td>okay</td>
+      <td>Vna</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Vna</td>
+      <td>okay</td>
+      <td>Vna</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Vi</td>
+      <td>Value Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Va [ ] Vnu</td>
+      <td>wait</td>
+      <td>Vnu</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>

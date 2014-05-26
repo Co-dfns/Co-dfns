@@ -1,0 +1,85 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Specification Functions and Ranges</caption>
+  <thead>
+    <tr>
+      <th>Function Name</th>
+      <th colspan="3">Possible Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Context</td>
+      <td colspan="3">Top, Func, Expr, Fnex</td>
+    </tr>
+    <tr>
+      <td>Fix</td>
+      <td colspan="3">Yes, No</td>
+    </tr>
+    <tr>
+      <td>Obj</td>
+      <td colspan="3">Yes, No</td>
+    </tr>
+    <tr>
+      <td>Namespace</td>
+      <td colspan="3">NOTSEEN, OPEN, CLOSED</td>
+    </tr>
+    <tr>
+      <td>Eot</td>
+      <td colspan="3">Yes, No</td>
+    </tr>
+    <tr>
+      <td>Value</td>
+      <td colspan="3">UNBOUND, EXPR, FUNC, EMPTY, FVAR</td>
+    </tr>
+    <tr>
+      <td>Named</td>
+      <td colspan="3">MAYBE, BOUND, UNBOUND, NO</td>
+    </tr>
+    <tr>
+      <td>Bracket</td>
+      <td colspan="3">Yes, No</td>
+    </tr>
+    <tr>
+      <td>Cond</td>
+      <td colspan="3">Yes, No</td>
+    </tr>
+    <tr>
+      <td>Bind</td>
+      <td colspan="3">NO, BOUND, UNBOUND</td>
+    </tr>
+    <tr>
+      <td>Nest</td>
+      <td colspan="3">NONE, PAREN, BRACKET, EBRACK, RBRACK</td>
+    </tr>
+    <tr>
+      <td>Class</td>
+      <td colspan="3">ATOM, FUNC, SELECT</td>
+    </tr>
+    <tr>
+      <td>Last Seen</td>
+      <td colspan="3">EMPTY, LIT, VAR, NVAR, UVAR, MIXED, EXPR, SELEX</td>
+    </tr>
+    <tr>
+      <td>Opnd</td>
+      <td colspan="3">ATOM, AMB, NONE, JOT, MON, DYA</td>
+    </tr>
+    <tr>
+      <td>Oper</td>
+      <td colspan="3">NONE, DOT, COMP, POW, ANY, EACH, MON, DYA, RED, FUNC,
+      COMM, SCN</td>
+    </tr>
+    <tr>
+      <td>Axis</td>
+      <td colspan="3">NO, YES, SEEN, FILD</td>
+    </tr>
+    <tr>
+      <td>Nest</td>
+      <td colspan="3">NONE, EMPTY, A, AA, M, MA, D, DA, O, OM, OD, COMM,
+      COMP, EACH, POW, DOT, RED, SCN</td>
+    </tr>
+    <tr>
+      <td>Target</td>
+      <td colspan="3">Yes, No</td>
+    </tr>
+  </tbody>
+</table>

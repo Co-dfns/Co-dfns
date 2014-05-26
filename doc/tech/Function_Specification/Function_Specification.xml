@@ -1,0 +1,43 @@
+<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Function Specification</title>
+    <author>
+      <personname>Aaron W. Hsu</personname>
+    </author>
+    <date>Monday, October 7th, 2013</date>
+  </info>
+  <xi:include href="overview.xml" />
+  <xi:include href="software_boundaries.xml" />
+  <xi:include href="stimuli_and_responses.xml" />
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Sequence Enumeration</title>
+    <simpara>
+      The following tables provide a complete sequence enumeration of the
+      compiler. We begin at the top-level enumeration and work our way
+      down throughout each of the recursive stimuli. Recall that we do
+      not need to enumerate each of the function stimuli separately, as
+      they all have the same syntax at this level of abstraction. In particular,
+      the Vi stimuli encodes whether or not the various
+      <literal>⍺⍺</literal>
+      or
+      <literal>⍵⍵</literal>
+      variables are visible at any given time.
+    </simpara>
+    <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+      <title>Source Input Enumeration</title>
+      <simpara>The enumeration of the source input boundary (the main compiler
+      interface) is divided into the enumeration of the top-level, the
+      function enumeration, the expressions, and function expressions.</simpara>
+      <xi:include href="top-level_enumeration.xml" />
+      <xi:include href="function_enumeration.xml" />
+      <xi:include href="expression_enumeration.xml" />
+      <xi:include href="function_expression_enumeration.xml" />
+    </section>
+    <xi:include href="module_invocation_enumeration.xml" />
+  </section>
+  <xi:include href="derived_requirements.xml" />
+  <xi:include href="canonical_sequence_analysis.xml" />
+  <xi:include href="specification_functions.xml" />
+  <xi:include href="black_box_definitions.xml" />
+</article>

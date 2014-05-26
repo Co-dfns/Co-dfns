@@ -1,0 +1,141 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Canonical Sequence Analysis: Functions</caption>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Sequence</th>
+      <th>Bracket</th>
+      <th>Cond</th>
+      <th>Bind</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>empty</td>
+      <td>No</td>
+      <td>No</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>{</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>{ E</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NO</td>
+      <td>EXPR</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>{ Vfo</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NO</td>
+      <td>FVAR</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>{ Vu</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>NO</td>
+      <td>UNBOUND</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>{ E :</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>NO</td>
+      <td>EMPTY</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+      </td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>BOUND</td>
+      <td>EMPTY</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>
+        { Vu
+        <literal>←</literal>
+      </td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>UNBOUND</td>
+      <td>EMPTY</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>{ E : E</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>NO</td>
+      <td>EXPR</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+      </td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>BOUND</td>
+      <td>FUNC</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Vfo
+      </td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>BOUND</td>
+      <td>FVAR</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Vu
+      </td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>BOUND</td>
+      <td>UNBOUND</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>
+        { Vu
+        <literal>←</literal>
+        Fe
+      </td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>UNBOUND</td>
+      <td>FUNC</td>
+    </tr>
+  </tbody>
+</table>

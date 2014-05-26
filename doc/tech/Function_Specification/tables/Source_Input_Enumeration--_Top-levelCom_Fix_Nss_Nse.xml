@@ -1,0 +1,127 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Top-level, Fix Nss Nse</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fix Nss Nse E</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Fe</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>
+        Fix Nss Nse
+        <literal>⋄</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>
+        Fix Nss Nse
+        <literal>←</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Break</td>
+      <td>Interrupt</td>
+      <td>empty</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Eot</td>
+      <td>null</td>
+      <td></td>
+      <td>4, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Fix</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Fnb</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Fne</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Fnf</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Lle</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Lls</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Nl</td>
+      <td>null</td>
+      <td>Fix Nss Nse</td>
+      <td>4, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Nse</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Nss</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Vi</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Vfo</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+    <tr>
+      <td>Fix Nss Nse Vu</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10, 16, 21</td>
+    </tr>
+  </tbody>
+</table>

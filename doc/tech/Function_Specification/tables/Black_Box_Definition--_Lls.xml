@@ -1,0 +1,35 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Black Box Definition: Lls</caption>
+  <thead>
+    <tr>
+      <th>Conditions</th>
+      <th>Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top
+          </member>
+          <member>
+            Namespace
+            <literal>∊</literal>
+            CLOSED
+          </member>
+          <member>
+            Eot
+            <literal>∊</literal>
+            Yes
+          </member>
+        </simplelist>
+      </td>
+      <td>Namespace</td>
+      <td>4, 16, 21</td>
+    </tr>
+  </tbody>
+</table>

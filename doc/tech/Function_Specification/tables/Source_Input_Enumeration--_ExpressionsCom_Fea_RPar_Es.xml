@@ -1,0 +1,136 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Expressions, Fea ( Es</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fea ( Es E</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Es</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Fea</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Fed</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Fem</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es [</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es ]</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es (</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es )</td>
+      <td>okay</td>
+      <td>Fea Va</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fea ( Es ;</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fea ( Es
+        <literal>←</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Break</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es N</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es S</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Sm</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Sd</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Va</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Vna</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Vi</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fea ( Es Vnu</td>
+      <td>subsumed</td>
+      <td>Fea ( Es</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,253 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Function Expressions, Ea Fnd</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ea Fnd E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Ea</td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Fea</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Feaa</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Fed</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Feda</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Fem</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Fema</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Feo</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Fn</td>
+      <td>amblivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Fnm</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Fnd</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd [</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd ]</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd (</td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd )</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>←</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>⍨</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>∘</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>¨</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>.</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>⍣</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>/</literal>
+      </td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>⌿</literal>
+      </td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>\</literal>
+      </td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Ea Fnd
+        <literal>⍀</literal>
+      </td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd D</td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Da</td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd M</td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Ma</td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Vi</td>
+      <td>Value Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Vf</td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Vo</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Ea Fnd Vu</td>
+      <td>Value Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+  </tbody>
+</table>
