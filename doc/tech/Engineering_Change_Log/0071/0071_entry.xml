@@ -9,7 +9,9 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      The definition of <varname>n</varname> suffered from serious flaws. 
+      Fixing this definition to ensure the appropriate shape and semantics, 
+      this error no longer occurs.
     </para>
   </formalpara>
 </listitem>
