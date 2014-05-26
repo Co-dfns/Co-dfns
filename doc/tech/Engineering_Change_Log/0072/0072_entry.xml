@@ -9,7 +9,11 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      The <function>AnchorVars</function> function in the handling 
+      of the <function>lr</function> used <literal>⊃¨⊂</literal> as 
+      a single function inside of a function train. In fact, the 
+      desired expression is <literal>⊃¨∘⊂</literal> inside of the 
+      train. 
     </para>
   </formalpara>
 </listitem>
