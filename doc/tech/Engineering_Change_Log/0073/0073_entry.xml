@@ -1,0 +1,16 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      On Increment 5 test 16 there is a LENGTH ERROR in 
+      AnchorVars[12] with the following error message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[12] (f⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>

@@ -202,4 +202,12 @@
     </para>
   </formalpara>
   <screen>AnchorVars[11] z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn</screen>
+  <formalpara>
+    <title>Iteration 26, Test 16</title>
+    <para>
+      A LENGTH ERROR in <function>AnchorVars[12]</function> occurs with the 
+      following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[12] (f⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'</screen>
 </section>

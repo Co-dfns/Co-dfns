@@ -322,5 +322,13 @@
             INDEX ERROR: AnchorVars[11]
           </td>
         </tr>
+        <tr>
+          <td>26</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            LENGTH ERROR: AnchorVars[12]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
