@@ -1,0 +1,15 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      On Test 16, there is a DOMAIN ERROR with the following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[9] w←⍵ ⋄ ep←(m←e∧n)⌿p ⋄ s←gz,gk,lr,gi</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>

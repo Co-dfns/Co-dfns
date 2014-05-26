@@ -306,5 +306,13 @@
             RANK ERROR: Kids[0]
           </td>
         </tr>
+        <tr>
+          <td>24</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            DOMAIN ERROR: AnchorVars[9]
+          </td>
+        </tr>
       </tbody>
     </informaltable>

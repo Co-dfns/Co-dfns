@@ -186,4 +186,12 @@
     </para>
   </formalpara>
   <screen>Kids[0] Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵}</screen>
+  <formalpara>
+    <title>Iteration 24, Test 16</title>
+    <para>
+      A DOMAIN ERROR in <function>AnchorVars[9]</function> occurs with the 
+      following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[9] w←⍵ ⋄ ep←(m←e∧n)⌿p ⋄ s←gz,gk,lr,gi</screen>
 </section>
