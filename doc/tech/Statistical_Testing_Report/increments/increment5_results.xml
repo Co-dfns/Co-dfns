@@ -314,5 +314,13 @@
             DOMAIN ERROR: AnchorVars[9]
           </td>
         </tr>
+        <tr>
+          <td>25</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            INDEX ERROR: AnchorVars[11]
+          </td>
+        </tr>
       </tbody>
     </informaltable>

@@ -194,4 +194,12 @@
     </para>
   </formalpara>
   <screen>AnchorVars[9] w←⍵ ⋄ ep←(m←e∧n)⌿p ⋄ s←gz,gk,lr,gi</screen>
+  <formalpara>
+    <title>Iteration 25, Test 16</title>
+    <para>
+      A INDEX ERROR in <function>AnchorVars[11]</function> occurs with the 
+      following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[11] z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn</screen>
 </section>
