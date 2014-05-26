@@ -1,0 +1,7 @@
+    <!-- ID, Date, Summary, Rsolution -->
+    <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <td>ID</td>
+      <td colspan="2">DATE</td>
+      <td colspan="5">XXX: Change this!</td>
+      <td colspan="2">Pending</td>
+    </tr>
