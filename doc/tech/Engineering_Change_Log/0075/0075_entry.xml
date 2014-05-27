@@ -10,7 +10,10 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      We assumed that all atomic expressions were variables, which 
+      is only true at depths greater than 1. In reality, at top-level, 
+      lifted literals may have numbers in them. To deal with this, 
+      we mask out those which are not variables explicitly.
     </para>
   </formalpara>
 </listitem>
