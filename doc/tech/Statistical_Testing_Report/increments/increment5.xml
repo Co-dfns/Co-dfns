@@ -234,4 +234,12 @@
     </para>
   </formalpara>
   <screen>AnchorVars[25] ve←-/(pl⊃¨⊂⍨fp⍳⊢)¨vp(kp[vi;])</screen>
+  <formalpara>
+    <title>Iteration 30, Test 16</title>
+    <para>
+      A DOMAIN ERROR in <function>GenFunc[3]</function> occurs with 
+      the following message:
+    </para>
+  </formalpara>
+  <screen>GenFunc[3] fs←⍎⊃'alloca'Prop 1↑1↓⍵</screen>
 </section>

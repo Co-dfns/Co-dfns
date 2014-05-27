@@ -354,5 +354,13 @@
             SYNTAX ERROR: AnchorVars[25]
           </td>
         </tr>
+        <tr>
+          <td>30</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            DOMAIN ERROR: GenFunc[3]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
