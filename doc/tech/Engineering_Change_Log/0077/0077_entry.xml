@@ -10,7 +10,10 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      The <function>AnchorVars</function> does not properly handle 
+      the formatting of the attributes it assigns. By making sure 
+      that the attributes stored into the tree are formatted and 
+      not raw, this issue does not arise.
     </para>
   </formalpara>
 </listitem>

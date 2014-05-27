@@ -10,9 +10,9 @@
      w←⍵ ⋄ ep←(m←e∧n)⌿p ⋄ s←gz,gk,lr,gi   ⍝ AST temp, expr scopes, scope info fn
      edn←(en←S¨nm m⌿⍵),m⌿d,⍪⍳≢⍵           ⍝ Expression name, node, and depth
      z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn           ⍝ Size, keys, levels, rows, ids
-     (rf⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'           ⍝ Function frame size attributes
+     (rf⌿3⌷⍉w)⍪←↓(⊂'alloca'),⍪⍕¨z         ⍝ Function frame size attributes
      ei←ep(⊂∘⍕i⊃¨∘⊂⍨k⍳⊣,⍤1 0(⊃⊢))⍤¯1⊢en   ⍝ Expression slot values
-     (m⌿3⌷⍉w)⍪←↓ei,∘⍪⍨⊂'slots'            ⍝ Slots attr. given to each named expr
+     (m⌿3⌷⍉w)⍪←↓(⊂'slots'),⍪⍕¨ei          ⍝ Slots attr. given to each named expr
      v←¯1⌽e\'atomic'∊∘⊂⍨'class'P e⌿⍵      ⍝ Mask of atomic expressions
      v∧←(1⌷⍉⍵)∊⊂'Variable'                ⍝ Mask of variable Expressions
      v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵        ⍝ Mask of non-⍺⍵ variables
@@ -24,6 +24,6 @@
      pl←¯1++/∧.(=∨0=⊢)∘⍉⍨fp←rf⌿p          ⍝ Scope depths including root
      (v⌿3⌷⍉w)⍪←↓(⊂'slot'),⍪⍕¨vi⊃¨⊂i       ⍝ Variable slot attribute
      ve←⊃-/(pl⊃¨∘⊂⍨fp⍳⊢)¨vp(kp[vi;])      ⍝ Variable environment references
-     (v⌿3⌷⍉w)⍪←↓ve,∘⍪⍨⊂'env'              ⍝ Variable environment attributes
+     (v⌿3⌷⍉w)⍪←↓(⊂'env'),⍪⍕¨ve            ⍝ Variable environment attributes
      w                                    ⍝ Return updated AST
  }
