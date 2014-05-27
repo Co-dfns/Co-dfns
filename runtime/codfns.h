@@ -1,6 +1,13 @@
 /* Co-dfns Foreign Structures and Helper Functions */
 
+#pragma once
+
+#include <stdlib.h>
+#include <error.h>
 #include <inttypes.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
 
 /* Core Co-dfns array structure */
 

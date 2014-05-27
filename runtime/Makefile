@@ -1,18 +1,15 @@
 RUNROOT := runtime
 RUNTIME := $(RUNROOT)/libcodfns.so
 
-CFILES := codfns.c
-HFILES := codfns.h
-
-HPATHS := $(HFILES:%.h=$(RUNROOT)/%.h)
-CPATHS := $(CFILES:%.c=$(RUNROOT)/%.c)
+CFILES := $(wildcard $(RUNROOT)/*.c)
+HFILES := $(wildcard $(RUNROOT)/*.h)
 
 .PHONY: runtime
 
 runtime: $(RUNTIME)
 
-$(RUNTIME): $(CPATHS) $(HPATHS)
-	clang -shared -fPIC ${CFLAGS} -o $(RUNTIME) $(CPATHS)
+$(RUNTIME): $(CFILES) $(HFILES)
+	clang -shared -fPIC ${CFLAGS} -o $(RUNTIME) $(CFILES)
 
 clean-runtime:
 	rm -rf $(RUNTIME)
