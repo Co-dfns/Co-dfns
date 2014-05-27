@@ -218,4 +218,12 @@
     </para>
   </formalpara>
   <screen>AnchorVars[13] ei←ep(⊂∘⍕i⊃¨⊂⍨k⍳⊣,⍤1 0(⊃⊢))⍤¯1⊢en</screen>
+  <formalpara>
+    <title>Iteration 28, Test 16</title>
+    <para>
+      A LENGTH ERROR in <function>AnchorVars[16]</function> occurs with the 
+      following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[16] v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵</screen>
 </section>

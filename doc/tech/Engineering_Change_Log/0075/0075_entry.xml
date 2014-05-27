@@ -1,0 +1,16 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A LENGTH ERROR in AnchorVars[16] occurs with the following 
+      message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[16] v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>
