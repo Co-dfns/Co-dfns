@@ -23,7 +23,7 @@
      vi←kr⍳kr⌈.×(kr∘.<vr)∧kz∧.(=∨0=⊣)⍉vz  ⍝ Variable resolutions referencing k
      pl←¯1++/∧.(=∨0=⊢)∘⍉⍨fp←rf⌿p          ⍝ Scope depths including root
      (v⌿3⌷⍉w)⍪←↓(⊂'slot'),⍪⍕¨vi⊃¨⊂i       ⍝ Variable slot attribute
-     ve←-/(pl⊃¨⊂⍨fp⍳⊢)¨vp(kp[vi;])        ⍝ Variable environment references
+     ve←⊃-/(pl⊃¨∘⊂⍨fp⍳⊢)¨vp(kp[vi;])      ⍝ Variable environment references
      (v⌿3⌷⍉w)⍪←↓ve,∘⍪⍨⊂'env'              ⍝ Variable environment attributes
      w                                    ⍝ Return updated AST
  }
