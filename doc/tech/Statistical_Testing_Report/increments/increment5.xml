@@ -242,4 +242,10 @@
     </para>
   </formalpara>
   <screen>GenFunc[3] fs←⍎⊃'alloca'Prop 1↑1↓⍵</screen>
+  <formalpara>
+    <title>Iteration 31, Test 16</title>
+    <para>
+      A core dump syserr occurs when attempting to compile.
+    </para>
+  </formalpara>
 </section>

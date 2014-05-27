@@ -362,5 +362,13 @@
             DOMAIN ERROR: GenFunc[3]
           </td>
         </tr>
+        <tr>
+          <td>31</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            Core dump, syserr
+          </td>
+        </tr>
       </tbody>
     </informaltable>
