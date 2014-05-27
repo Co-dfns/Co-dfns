@@ -24,6 +24,7 @@ array_free(struct codfns_array *arr)
 	arr->rank = 0;
 	arr->shape = NULL;
 	arr->elements = NULL;
+	arr->type = 0;
 
 	return;
 }

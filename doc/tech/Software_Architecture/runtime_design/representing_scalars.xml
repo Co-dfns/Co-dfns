@@ -17,6 +17,13 @@
     </thead>
     <tbody>
       <tr>
+        <td>0</td>
+        <td colspan="2">Empty</td>
+        <td colspan="2">N/A</td>
+        <td colspan="2">N/A</td>
+        <td colspan="3">A special type for empty or null returns</td>
+      </tr>
+      <tr>
         <td>1</td>
         <td colspan="2">Boolean</td>
         <td colspan="2">
