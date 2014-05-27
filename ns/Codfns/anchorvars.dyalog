@@ -11,7 +11,7 @@
      edn←(en←S¨nm m⌿⍵),m⌿d,⍪⍳≢⍵           ⍝ Expression name, node, and depth
      z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn           ⍝ Size, keys, levels, rows, ids
      (rf⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'           ⍝ Function frame size attributes
-     ei←ep(⊂∘⍕i⊃¨⊂⍨k⍳⊣,⍤1 0(⊃⊢))⍤¯1⊢en    ⍝ Expression slot values
+     ei←ep(⊂∘⍕i⊃¨∘⊂⍨k⍳⊣,⍤1 0(⊃⊢))⍤¯1⊢en   ⍝ Expression slot values
      (m⌿3⌷⍉w)⍪←↓ei,∘⍪⍨⊂'slots'            ⍝ Slots attr. given to each named expr
      v←¯1⌽e\'atomic'∊∘⊂⍨'class'P e⌿⍵      ⍝ Mask of expression variables
      v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵        ⍝ Mask of non-⍺⍵ variables
