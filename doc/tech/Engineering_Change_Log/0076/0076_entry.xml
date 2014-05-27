@@ -1,0 +1,16 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A SYNTAX ERROR in AnchorVars[25] occurs with the following 
+      message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[25] ve←-/(pl⊃¨⊂⍨fp⍳⊢)¨vp(kp[vi;])</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>

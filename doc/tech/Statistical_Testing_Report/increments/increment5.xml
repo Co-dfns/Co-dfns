@@ -221,9 +221,17 @@
   <formalpara>
     <title>Iteration 28, Test 16</title>
     <para>
-      A LENGTH ERROR in <function>AnchorVars[16]</function> occurs with the 
+      A SYNTAX ERROR in <function>AnchorVars[25]</function> occurs with the 
       following message:
     </para>
   </formalpara>
   <screen>AnchorVars[16] v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵</screen>
+  <formalpara>
+    <title>Iteration 29, Test 16</title>
+    <para>
+      A LENGTH ERROR in <function>AnchorVars[16]</function> occurs with 
+      the following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[25] ve←-/(pl⊃¨⊂⍨fp⍳⊢)¨vp(kp[vi;])</screen>
 </section>
