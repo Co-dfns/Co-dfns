@@ -210,4 +210,12 @@
     </para>
   </formalpara>
   <screen>AnchorVars[12] (f⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'</screen>
+  <formalpara>
+    <title>Iteration 27, Test 16</title>
+    <para>
+      A SYNTAX ERROR in <function>AnchorVars[13]</function> occurs with the 
+      following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[13] ei←ep(⊂∘⍕i⊃¨⊂⍨k⍳⊣,⍤1 0(⊃⊢))⍤¯1⊢en</screen>
 </section>

@@ -330,5 +330,13 @@
             LENGTH ERROR: AnchorVars[12]
           </td>
         </tr>
+        <tr>
+          <td>27</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            SYNTAX ERROR: AnchorVars[13]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
