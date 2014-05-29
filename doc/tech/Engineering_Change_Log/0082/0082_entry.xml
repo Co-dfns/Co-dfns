@@ -9,7 +9,8 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      This pass is no longer called <function>LiftBound</function> and 
+      so this name needs to change to <function>FlattenExprs</function>.
     </para>
   </formalpara>
 </listitem>

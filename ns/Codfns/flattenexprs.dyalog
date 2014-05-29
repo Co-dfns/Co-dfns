@@ -13,8 +13,8 @@
          isa∧isn:(⍺ up ⍵)((⊃⍺)vex nam)     ⍝ Lifted named ref & unnamed replacement
          isa∨0=≢⍺:MtAST ⍺                  ⍝ Untouched unnamed reference or empty
          ret←(⊃⍺)vex⊢nam←isn⊃⍺⍺ nam        ⍝ Final name & ref replacement for call
-         rlf rex←(⊃⌽k←1 Kids ⍺)(nam ∇∇)⍵    ⍝ Lifted right argument of call
-         lfn←LiftBound⊃⌽¯1↓k               ⍝ Lifted function in call
+         rlf rex←(⊃⌽k←1 Kids ⍺)(nam ∇∇)⍵   ⍝ Lifted right argument of call
+         lfn←FlattenExprs⊃⌽¯1↓k            ⍝ Lifted function in call
          nex←((⊃¯2↓k)⍪lfn⍪rex)up ⍵         ⍝ Lifted call with right arg replacement
          (rlf⍪isn⊃(nam Bind nex)nex)ret    ⍝ Right lifts + Bound call, & Return var
      }
