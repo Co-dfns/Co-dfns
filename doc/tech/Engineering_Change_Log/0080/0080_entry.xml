@@ -9,7 +9,14 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      The code in the <function>DropUnreached</function> pass would 
+      consider any unnamed node in the function body, including a 
+      <classname>Condition</classname> node, instead of only considering 
+      unnamed expressions when determining whether code is unreachable 
+      or not. This resulted in dropping everything after a conditional.
+      The fix is to require an additional check on the function that 
+      builds the unnamed expression map to ensure that any positive matches 
+      are actually <classname>Expression</classname> nodes.
     </para>
   </formalpara>
 </listitem>
