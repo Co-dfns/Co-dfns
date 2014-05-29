@@ -264,4 +264,12 @@
     </para>
   </formalpara>
   <screen>FlattenExprs[10] nam cls←⊃¨'name' 'class'Prop¨⊂1↑⍺</screen>
+  <formalpara>
+    <title>Iteration 34, Test 16</title>
+    <para>
+      A VALUE ERROR in <function>FlattenExprs[16]</function> occurs with 
+      the following message:
+    </para>
+  </formalpara>
+  <screen>FlattenExprs[16] lfn←LiftBound⊃⌽¯1↓k</screen>
 </section>

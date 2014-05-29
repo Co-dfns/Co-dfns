@@ -386,5 +386,13 @@
             VALUE ERROR: FlattenExprs[10]
           </td>
         </tr>
+        <tr>
+          <td>34</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            VALUE ERROR: FlattenExprs[16]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
