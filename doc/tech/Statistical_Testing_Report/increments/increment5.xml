@@ -248,4 +248,12 @@
       A core dump syserr occurs when attempting to compile.
     </para>
   </formalpara>
+  <formalpara>
+    <title>Iteration 32, Test 16</title>
+    <para>
+      The resulting code produced by the compiler does not have all of the 
+      code in it. There is a significant part of the <function>F1</function>
+      missing from the final output.
+    </para>
+  </formalpara>
 </section>

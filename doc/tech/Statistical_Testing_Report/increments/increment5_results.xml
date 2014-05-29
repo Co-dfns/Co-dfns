@@ -370,5 +370,13 @@
             Core dump, syserr
           </td>
         </tr>
+        <tr>
+          <td>32</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            Some code not output
+          </td>
+        </tr>
       </tbody>
     </informaltable>
