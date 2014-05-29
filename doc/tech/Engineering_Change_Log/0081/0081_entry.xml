@@ -9,7 +9,11 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      In the <function>FlattenExprs</function> pass the recursive call 
+      to the inner <function>lft</function> operator did not properly 
+      separate its left argument from its left operand. Wrapping the 
+      left operand in parentheses to bind it to the operator call fixes 
+      this.
     </para>
   </formalpara>
 </listitem>
