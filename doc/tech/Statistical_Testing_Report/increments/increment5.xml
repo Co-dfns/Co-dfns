@@ -256,4 +256,12 @@
       missing from the final output.
     </para>
   </formalpara>
+  <formalpara>
+    <title>Iteration 33, Test 16</title>
+    <para>
+      A VALUE ERROR in <function>FlattenExprs[10]</function> occurs with 
+      the following message:
+    </para>
+  </formalpara>
+  <screen>FlattenExprs[10] nam cls←⊃¨'name' 'class'Prop¨⊂1↑⍺</screen>
 </section>
