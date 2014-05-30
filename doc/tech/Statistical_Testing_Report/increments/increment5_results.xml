@@ -394,5 +394,13 @@
             VALUE ERROR: FlattenExprs[16]
           </td>
         </tr>
+        <tr>
+          <td>35</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            UNKNOWN FUNCTION CHILD: GenFunc[19]
+          </td>
+        </tr>
       </tbody>
     </informaltable>

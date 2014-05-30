@@ -1,0 +1,16 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      An UNKNOWN FUNCTION CHILD error occurs in GenFunc[19] with the 
+      following message:
+    </para>
+  </formalpara>
+  <screen>GenFunc[19] _←⍬ ⍬(⍺ fr bldr env0 GenFnBlock)k</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>
