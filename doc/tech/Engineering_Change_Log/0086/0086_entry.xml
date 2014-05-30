@@ -1,0 +1,15 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A VALUE ERROR in GenFunc[3] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>GenFunc[3] fs←⍎⊃'alloca'Prop 1↑1↓⍵</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>
