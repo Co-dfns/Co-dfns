@@ -10,7 +10,10 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      On a namespace without any expression bindings, we need to handle 
+      the case correctly. In this case, we were dereferencing when we 
+      should not have been. We insert a short circuit to eliminate this 
+      issue.
     </para>
   </formalpara>
 </listitem>
