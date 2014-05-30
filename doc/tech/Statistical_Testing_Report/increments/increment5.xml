@@ -301,4 +301,11 @@
     </para>
   </formalpara>
   <screen>GenFunc[3] fs←⍎⊃'alloca'Prop 1↑1↓⍵</screen>
+  <formalpara>
+    <title>Iteration 39, Test 25</title>
+    <para>
+      A INTERNAL ERROR in ParseTopLine[3] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>ParseTopLine[3] eerr ast ne←env ParseExpr 1↓⍺</screen>
 </section>

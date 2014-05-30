@@ -1,0 +1,15 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      An INTERNAL ERROR in ParseTopLine[3] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>ParseTopLine[3] eerr ast ne←env ParseExpr 1↓⍺</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>
