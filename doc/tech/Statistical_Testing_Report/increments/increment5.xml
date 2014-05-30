@@ -280,4 +280,11 @@
     </para>
   </formalpara>
   <screen>GenFunc[19] _←⍬ ⍬(⍺ fr bldr env0 GenFnBlock)k</screen>
+  <formalpara>
+    <title>Iteration 36, Test 16</title>
+    <para>
+      The alternate output in the LLVM code does not properly return the 
+      <varname>V1</varname> value.
+    </para>
+  </formalpara>
 </section>

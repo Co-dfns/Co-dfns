@@ -5,7 +5,7 @@
          emsg←'UNKNOWN FUNCTION CHILD'   ⍝ Only deal with Exprs or Conditions
          emsg ⎕SIGNAL 99                 ⍝ And signal an error otherwise
      }
-     _ v←⊃⍺⍺ line/(⌽⍵),⊂⍺                ⍝ Reduce top to bottom over children
+     n v←⊃⍺⍺ line/(⌽⍵),⊂⍺                ⍝ Reduce top to bottom over children
      mt←GetNamedFunction mod'array_free' ⍝ Runtime function to empty array
      0=mt:'MISSING RUNTIME FN'⎕SIGNAL 99
      res←GetParam fr 0                   ⍝ ValueRef of result parameter
@@ -17,8 +17,8 @@
      'Condition'≡⊃0 1⌷l←⊃⌽⍵:mtret mod    ⍝ Extra return if condition
      cp←GetNamedFunction mod'array_cp'   ⍝ Runtime array copy function
      0=cp:'MISSING RUNTIME FN'⎕SIGNAL 99
-     ∨/' '≠⊃'name'Prop 1↑l:{             ⍝ Is last node named?
-         args←res,⊃⌽v                    ⍝ Then we return the binding
+     ∨/' '≠ln←⊃'name'Prop 1↑l:{          ⍝ Is last node named?
+         args←res,(n⍳⊂ln)⌷v              ⍝ Then we return the binding
          _←BuildCall bldr cp args 2 ''   ⍝ Copied into result array
          bldr(mod MkRet)env0             ⍝ And return
      }⍵

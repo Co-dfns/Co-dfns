@@ -402,5 +402,13 @@
             UNKNOWN FUNCTION CHILD: GenFunc[19]
           </td>
         </tr>
+        <tr>
+          <td>36</td>
+          <td>16</td>
+          <td>Fail</td>
+          <td colspan="5">
+            Function returns bad value in output code
+          </td>
+        </tr>
       </tbody>
     </informaltable>
