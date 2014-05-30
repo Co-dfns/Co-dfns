@@ -2,7 +2,7 @@
      es fs←'Expression' 'Function'        ⍝ Names of expression and function nodes
      e f←es fs∊∘⊂¨⍨⊂1⌷⍉⍵                  ⍝ Mask of expression and function nodes
      n←∨/(↑0⌷∘⍉¨3⌷⍉⍵)∊⊂'name'             ⍝ Mask of nodes with names
-     ~∧/e∧n:⍵                             ⍝ Short circuit on empty
+     ~∨/e∧n:⍵                             ⍝ Short circuit on empty
      c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍉⍵         ⍝ Node coordinates
      p←c×↑∨/c(⊣,∧).=⍉(rf←1,1↓f)⌿c         ⍝ Parent scope coordinates per node
      o←⍳∘∪⍨vs←(⊃,/)(b←0⌷∘⍉⊢)              ⍝ Fn: First index of vars from bindings

@@ -9,7 +9,10 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      The previous change fixed one issue but introduced an issue with the 
+      handling of others, because the test for empty results would often 
+      return a false positive. Using <literal>∨</literal> instead of the 
+      <function>∧</function> function fixes this.
     </para>
   </formalpara>
 </listitem>
