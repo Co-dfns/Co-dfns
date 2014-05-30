@@ -10,7 +10,12 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      The <function>FlattenExprs</function> had a number of issues with 
+      the <function>lft</function> helper. Firstly, it was called on 
+      scope root expressions, while its semantics was only for inner 
+      expression nodes that are not already at the scope root. Additionally, 
+      there was a type error which resulted in empty node elements appearing 
+      in the result code. 
     </para>
   </formalpara>
 </listitem>
