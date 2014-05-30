@@ -1,0 +1,16 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A DOMAIN ERROR in AnchorVars[11] occurs in Test 17, Increment 5, with 
+      the following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[11] z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      N/A
+    </para>
+  </formalpara>
+</listitem>

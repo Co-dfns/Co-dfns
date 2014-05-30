@@ -287,4 +287,11 @@
       <varname>V1</varname> value.
     </para>
   </formalpara>
+  <formalpara>
+    <title>Iteration 37, Test 16</title>
+    <para>
+      A DOMAIN ERROR in AnchorVars[11] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[11] z k l r i←(⊃⍪/)¨↓⍉ep s⌸edn</screen>
 </section>

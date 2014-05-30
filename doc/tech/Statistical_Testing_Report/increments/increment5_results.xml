@@ -416,5 +416,13 @@
           <td>Pass</td>
           <td colspan="5"></td>
         </tr>
+        <tr>
+          <td>38</td>
+          <td>17</td>
+          <td>Fail</td>
+          <td colspan="5">
+            DOMAIN ERROR: AnchorVars[11]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
