@@ -410,5 +410,11 @@
             Function returns bad value in output code
           </td>
         </tr>
+        <tr>
+          <td>37</td>
+          <td>16</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
       </tbody>
     </informaltable>
