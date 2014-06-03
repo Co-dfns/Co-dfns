@@ -16,7 +16,7 @@
      (m⌿3⌷⍉w)⍪←↓(⊂'slots'),⍪⍕¨ei          ⍝ Slots attr. given to each named expr
      v←¯1⌽e\'atomic'∊∘⊂⍨'class'P e⌿⍵      ⍝ Mask of atomic expressions
      v∧←(1⌷⍉⍵)∊⊂'Variable'                ⍝ Mask of variable Expressions
-     v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵        ⍝ Mask of non-⍺⍵ variables
+     v≠←v\'⍺⍵'∊∘(,¨)⍨'name'P v⌿⍵          ⍝ Mask of non-⍺⍵ variables
      kr←(kp←⍉¯1↓⍉k),l,⍪r ⋄ vr←v⌿p,d,⍪⍳≢⍵  ⍝ Binding/variable unique range token
      kr vr←(rd←1+⌈⌿kr⍪vr)∘⊥∘⍉¨kr vr       ⍝ Decode range tokens
      kz←kp,kv⍳⍨av←∪(⊂''),kv←⊢/k           ⍝ Binding integer encoding

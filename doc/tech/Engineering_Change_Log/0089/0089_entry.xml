@@ -9,7 +9,12 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      When building up the <varname>v</varname> bitvector which contains 
+      the set of named variables. the line which removes the 
+      <varname>⍺</varname> and <varname>⍵</varname> variables from this 
+      list incorrectly enclosed the membership set, which results in no 
+      such variables being removed from the bitvector. Without this 
+      enclose, it works.
     </para>
   </formalpara>
 </listitem>
