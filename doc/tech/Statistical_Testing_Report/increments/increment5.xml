@@ -315,4 +315,11 @@
     </para>
   </formalpara>
   <screen>ParseFeBindings[4] ok←⊃⍪/¯1↓k</screen>
+  <formalpara>
+    <title>Iteration 41, Test 28</title>
+    <para>
+      A INDEX ERROR in AnchorVars[25] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[25] (v⌿3⌷⍉w)⍪←↓(⊂'slot'),⍪⍕¨vi⊃¨⊂i</screen>
 </section>

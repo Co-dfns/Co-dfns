@@ -536,5 +536,13 @@
             DOMAIN ERROR: ParseFeBindings[4]
           </td>
         </tr>
+        <tr>
+          <td>41</td>
+          <td>28</td>
+          <td>Fail</td>
+          <td colspan="5">
+            INDEX ERROR: AnchorVars[25]
+          </td>
+        </tr>
       </tbody>
     </informaltable>
