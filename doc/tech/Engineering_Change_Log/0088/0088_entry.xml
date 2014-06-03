@@ -9,7 +9,9 @@
   <formalpara>
     <title>Analysis</title>
     <para>
-      N/A
+      The ParseFeBindings line here does not properly handle the case where 
+      the array to reduce might be empty. We give it a reasonable seed 
+      value for this case and this fixes the problem.
     </para>
   </formalpara>
 </listitem>
