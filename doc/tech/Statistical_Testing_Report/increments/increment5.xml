@@ -308,4 +308,11 @@
     </para>
   </formalpara>
   <screen>ParseTopLine[3] eerr ast ne←env ParseExpr 1↓⍺</screen>
+  <formalpara>
+    <title>Iteration 40, Test 28</title>
+    <para>
+      A DOMAIN ERROR in ParseFeBindings[4] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>ParseFeBindings[4] ok←⊃⍪/¯1↓k</screen>
 </section>
