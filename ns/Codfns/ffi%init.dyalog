@@ -254,3 +254,4 @@
 
 ⍝ Generate an Array value for everyone to use
  ArrayTypeV←GenArrayType ⍬
+
