@@ -116,4 +116,13 @@ codfns_greater(struct codfns_array *,
 int
 codfns_not(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
+    
+/* Fusion prototype functions */
+
+int
+codfns_cursor(struct codfns_array *, struct codfns_array *);
+
+int
+codfns_bump(struct codfns_array *, struct codfns_array *);
+
 
