@@ -200,7 +200,8 @@ codfns_##s##nm##lt##rt(struct codfns_array *tgta, \
 
 #define scalar_monadic_scalar(nm, zt, rt, code) \
 int \
-codfns_##s##nm##rt(struct codfns_array *tgta, struct codfns_array *rgta) \
+codfns_##s##nm##rt(struct codfns_array *tgta, \
+    struct codfns_array *lfta, struct codfns_array *rgta) \
 { \
 	type_##zt *tgt = tgta->elements; \
 	type_##rt *rgt = rgta->elements; \
@@ -215,7 +216,8 @@ codfns_##s##nm##rt(struct codfns_array *tgta, struct codfns_array *rgta) \
 
 #define scalar_monadic_main(nm, dt, it) \
 int \
-codfns_##nm(struct codfns_array *res, struct codfns_array *rgt) \
+codfns_##nm(struct codfns_array *res, \
+    struct codfns_array *lft, struct codfns_array *rgt) \
 { \
 	scalar_monadic_dispatch(nm, dt, it) \
 }
