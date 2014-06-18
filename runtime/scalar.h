@@ -9,6 +9,26 @@
 
 #include "codfns.h"
 
+/* Scalar Type Enumerations
+ * 
+ * These enumerations aid in the use of these macros and definitions. 
+ * In particular, we use notations like d and i to represent types 
+ * during the invocation of the macros. These type enumerations help 
+ * to make sure that they resolve to the right type number in the 
+ * type field of the struct codfns_array structures.
+ */
+
+enum { apl_type_e, apl_type_b, apl_type_i, apl_type_d, apl_type_c };
+
+/* Typedefs for macros
+ *
+ * Like the enumerations above, these allow us to map specific types 
+ * to the shortcuts d, i, and so forth inside of our macros.
+ */
+
+typedef int64_t type_i;
+typedef double type_d;
+
 /* scalar()
  *
  * Intended Function: Predicate that returns 1 when the rank is zero,
@@ -17,98 +37,229 @@
 
 #define scalar(x) ((x)->rank == 0)
 
-#define scalar_fnm(mon, typ, rest, rgtt) \
+/* scalar_fnm()
+ * 
+ * The inner loop of a monadic scalar function.
+ */
+
+#define scalar_fnm(mon, rest, rgtt) \
 { \
 	int code; \
 	uint64_t i; \
-	rest *res_elems; \
-	rgtt *right_elems; \
+	type_##rest *res_elems; \
+	type_##rgtt *right_elems; \
 \
-	/* print_shape(rgt);\
-	printf(" rgt: %ld", rgt->size);*/\
- \
+\
 	right_elems = rgt->elements; \
 \
 	if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
 \
 	for (i = 0; i < res->size; i++) { \
-		code = mon(res_elems++, right_elems++); \
+		code = mon##_##rgtt(res_elems++, right_elems++); \
 		if (code) return code; \
 	} \
 \
-	res->type = typ; \
+	res->type = apl_type_##rest; \
 	/*printf(" res: %ld\n", res->size);*/\
 \
 	return 0; \
 }
 
-#define scalar_fnd(dya, typ, rest, lftt, rgtt) \
+/* scalar_fnd()
+ *
+ * The inner loop of a scalar dyadic function for specific types.
+ */
+
+#define scalar_fnd(dya, rest, lftt, rgtt) \
 { \
 	int code; \
 	uint64_t i; \
-	rest *res_elems; \
+	type_##rest *res_elems; \
 \
-	/* print_shape(lft);\
-	print_shape(rgt);\
-	printf(" lft: %ld rgt: %ld", lft->size, rgt->size); */ \
- \
 	/* Dyadic case */ \
 	if (same_shape(lft, rgt)) { \
 		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
- \
-		lftt *left_elems = lft->elements; \
-		rgtt *right_elems = rgt->elements; \
+\
+		type_##lftt *left_elems = lft->elements; \
+		type_##rgtt *right_elems = rgt->elements; \
 \
 		for (i = 0; i < res->size; i++) { \
-			code = dya(res_elems++, left_elems++, right_elems++); \
+			code = dya##_##lftt##rgtt(res_elems++, \
+			    left_elems++, right_elems++); \
 			if (code) return code; \
 		} \
 	} else if (scalar(lft)) { \
 		if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
- \
-		lftt left_elems = *((lftt *)lft->elements); \
-		rgtt *right_elems = rgt->elements; \
+\
+		type_##lftt left_elems = *((type_##lftt *)lft->elements); \
+		type_##rgtt *right_elems = rgt->elements; \
 \
 		for (i = 0; i < res->size; i++) { \
-			code = dya(res_elems++, &left_elems, right_elems++); \
+			code = dya##_##lftt##rgtt(res_elems++, \
+			    &left_elems, right_elems++); \
 			if (code) return code; \
 		} \
 	} else if (scalar(rgt)) { \
 		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
- \
-		lftt *left_elems = lft->elements; \
-		rgtt right_elems = *((rgtt *)rgt->elements); \
+\
+		type_##lftt *left_elems = lft->elements; \
+		type_##rgtt right_elems = *((type_##rgtt *)rgt->elements); \
 \
 		for (i = 0; i < res->size; i++) { \
-			code = dya(res_elems++, left_elems++, &right_elems); \
+			code = dya##_##lftt##rgtt(res_elems++, \
+			    left_elems++, &right_elems); \
 			if (code) return code; \
 		} \
 	} \
 \
-	res->type = typ; \
+	res->type = apl_type_##rest; \
 \
-	/* printf(" res: %ld\n", res->size); */\
- \
 	return 0; \
 }
 
-#define scalar_dispatch(df, dt, dzt, drt, ifn, it, izt, irt, ddf, ddt, ddzt, ddlt, ddrt, dif, dit, dizt, dilt, dirt, idf, idt, idzt, idlt, idrt, iif, iit, iizt, iilt, iirt) \
-if (lft == NULL) { \
-	if (rgt->type == 3) \
-		scalar_fnm(df, dt, dzt, drt) \
+/* scalar_monadic_dispatch()
+ *
+ * The body of a top-level scalar monadic function.
+ */
+
+#define scalar_monadic_dispatch(fn, dzt, izt) \
+if (rgt->type == apl_type_d) \
+	scalar_fnm(fn, dzt, d) \
+else \
+	scalar_fnm(fn, izt, i)
+
+/* scalar_dyadic_dispatch()
+ *
+ * The body of a top-level scalar dyadic function.
+ */
+
+#define scalar_dyadic_dispatch(fn, ddzt, dizt, idzt, iizt) \
+if (lft->type == apl_type_d) {\
+	if (rgt->type == apl_type_d) \
+		scalar_fnd(fn, ddzt, d, d) \
 	else \
-		scalar_fnm(ifn, it, izt, irt) \
-} else if (lft->type == 3) { \
-	if (rgt->type == 3) \
-		scalar_fnd(ddf, ddt, ddzt, ddlt, ddrt) \
-	else \
-		scalar_fnd(dif, dit, dizt, dilt, dirt) \
+		scalar_fnd(fn, dizt, d, i) \
 } else { \
-	if (rgt->type == 3) \
-		scalar_fnd(idf, idt, idzt, idlt, idrt) \
+	if (rgt->type == apl_type_d) \
+		scalar_fnd(fn, idzt, i, d) \
 	else \
-		scalar_fnd(iif, iit, iizt, iilt, iirt) \
+		scalar_fnd(fn, iizt, i, i) \
 }
+
+/* scalar_dyadic_inner()
+ *
+ * The function definition of the inner loop calculation used in the body of a 
+ * dyadic scalar function.
+ */
+
+#define scalar_dyadic_inner(nm, zt, lt, rt, code) \
+int inline static \
+nm##_##lt##rt(type_##zt *tgt, type_##lt *lft, type_##rt *rgt) \
+{ \
+	code \
+	return 0; \
+}
+
+/* scalar_monadic_inner()
+ *
+ * The function definition of the calculation inside the loop of 
+ * a monadic scalar function.
+ */
+
+#define scalar_monadic_inner(nm, zt, rt, code) \
+int inline static \
+nm##_##rt(type_##zt *tgt, type_##rt *rgt) \
+{ \
+	code \
+	return 0; \
+}
+
+/* scalar_dyadic_scalar()
+ *
+ * The function definition of a specialized scalar only version of a 
+ * dyadic scalar function.
+ */
+
+#define scalar_dyadic_scalar(nm, zt, lt, rt, code) \
+int \
+codfns_##s##nm##lt##rt(struct codfns_array *tgta, \
+    struct codfns_array *lfta, struct codfns_array *rgta) \
+{ \
+	type_##zt *tgt = tgta->elements; \
+	type_##lt *lft = lfta->elements; \
+	type_##rt *rgt = rgta->elements; \
+	code \
+	return 0; \
+}
+
+/* scalar_monadic_scalar()
+ *
+ * The function definition of a specialized scalar only version of a 
+ * monadic scalar function.
+ */
+
+#define scalar_monadic_scalar(nm, zt, rt, code) \
+int \
+codfns_##s##nm##rt(struct codfns_array *tgta, struct codfns_array *rgta) \
+{ \
+	type_##zt *tgt = tgta->elements; \
+	type_##rt *rgt = rgta->elements; \
+	code \
+	return 0; \
+}
+
+/* scalar_monadic_main()
+ *
+ * The function definition of a scalar monadic primitive.
+ */
+
+#define scalar_monadic_main(nm, dt, it) \
+int \
+codfns_##nm(struct codfns_array *res, struct codfns_array *rgt) \
+{ \
+	scalar_monadic_dispatch(nm, dt, it) \
+}
+
+/* scalar_dyadic_main()
+ * 
+ * The function definition of a scalar dyadic primitive.
+ */
+
+#define scalar_dyadic_main(nm, ddt, dit, idt, iit) \
+int \
+codfns_##nm(struct codfns_array *res, \
+    struct codfns_array *lft, struct codfns_array *rgt) \
+{ \
+	scalar_dyadic_dispatch(nm, ddt, dit, idt, iit) \
+}
+
+/* scalar_monadic()
+ *
+ * The definition of a scalar monadic function.
+ */
+
+#define scalar_monadic(nm, dt, it, code) \
+scalar_monadic_inner(nm, dt, d, code) \
+scalar_monadic_inner(nm, it, i, code) \
+scalar_monadic_scalar(nm, dt, d, code) \
+scalar_monadic_scalar(nm, it, i, code) \
+scalar_monadic_main(nm, dt, it)
+
+/* scalar_dyadic()
+ *
+ * The definition of a scalar dyadic function.
+ */
+
+#define scalar_dyadic(nm, ddt, dit, idt, iit, code) \
+scalar_dyadic_inner(nm, ddt, d, d, code) \
+scalar_dyadic_inner(nm, dit, d, i, code) \
+scalar_dyadic_inner(nm, idt, i, d, code) \
+scalar_dyadic_inner(nm, iit, i, i, code) \
+scalar_dyadic_scalar(nm, ddt, d, d, code) \
+scalar_dyadic_scalar(nm, dit, d, i, code) \
+scalar_dyadic_scalar(nm, idt, i, d, code) \
+scalar_dyadic_scalar(nm, iit, i, i, code) \
+scalar_dyadic_main(nm, ddt, dit, idt, iit)
 
 int
 same_shape(struct codfns_array *, struct codfns_array *);

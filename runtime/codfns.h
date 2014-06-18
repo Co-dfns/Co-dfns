@@ -114,8 +114,7 @@ codfns_greater(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_not(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
+codfns_not(struct codfns_array *, struct codfns_array *);
     
 /* Fusion prototype functions */
 

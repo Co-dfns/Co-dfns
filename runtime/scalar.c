@@ -6,6 +6,205 @@
 #include <math.h>
 
 #include "codfns.h"
+#include "scalar.h"
+
+/* SCALAR APL PRIMITIVES */
+
+/* Monadic + */
+scalar_monadic(identity, i, d, 
+{
+	*tgt = *rgt;
+})
+
+/* Dyadic + */
+scalar_dyadic(add, d, d, d, i,
+{
+	*tgt = *lft + *rgt;
+})
+
+/* Monadic ÷ */
+scalar_monadic(reciprocal, d, d,
+{
+	if (*rgt == 0) {
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
+		return 11;
+	}
+
+	*tgt = 1.0 / *rgt;
+})
+
+/* Dyadic ÷ */
+scalar_dyadic(divide, d, d, d, d,
+{
+	if (*rgt == 0) {
+		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
+		return 11;
+	}
+	
+	*tgt = (1.0 * *lft) / (1.0 * *rgt);
+})
+
+/* Dyadic = */
+scalar_dyadic(equal, i, i, i, i,
+{
+	*tgt = (*lft == *rgt);
+})
+
+/* Dyadic ≥ */
+scalar_dyadic(greateq, i, i, i, i,
+{
+	*tgt = (*lft >= *rgt);
+})
+
+/* Dyadic > */
+scalar_dyadic(greater, i, i, i, i,
+{
+	*tgt = (*lft > *rgt);
+})
+
+/* Dyadic ≤ */
+scalar_dyadic(lesseq, i, i, i, i,
+{
+	*tgt = (*lft <= *rgt);
+})
+
+/* Dyadic < */
+scalar_dyadic(less, i, i, i, i,
+{
+	*tgt = (*lft < *rgt);
+})
+
+/* Monadic ⍟ */
+scalar_monadic(logn, d, d,
+{
+	*tgt = log(*rgt);
+})
+
+/* Dyadic ⍟ */
+scalar_dyadic(log, d, d, d, d,
+{
+	*tgt = log(*rgt) / log(*lft);
+})
+
+/* Monadic | */
+scalar_monadic(magnitude, d, i,
+{
+	if (*rgt < 0) {
+		*tgt = -1 * *rgt;
+	} else {
+		*tgt = *rgt;
+	}
+
+	return 0;
+})
+
+/* Dyadic | */
+#define RESIDUEI *tgt = *lft % *rgt;
+#define RESIDUED { \
+	double res; \
+	res = *rgt / *lft; \
+	res = floor(res); \
+	*tgt = *rgt - res * *lft; \
+	return 0; \
+}
+
+scalar_dyadic_inner(residue, d, d, d, RESIDUED)
+scalar_dyadic_inner(residue, d, d, i, RESIDUED)
+scalar_dyadic_inner(residue, d, i, d, RESIDUED)
+scalar_dyadic_inner(residue, i, i, i, RESIDUEI)
+scalar_dyadic_scalar(residue, d, d, d, RESIDUED)
+scalar_dyadic_scalar(residue, d, d, i, RESIDUED)
+scalar_dyadic_scalar(residue, d, i, d, RESIDUED)
+scalar_dyadic_scalar(residue, i, i, i, RESIDUEI)
+scalar_dyadic_main(residue, d, d, d, i)
+
+/* Monadic ⌈ */
+scalar_monadic(ceiling, d, i,
+{
+	*tgt = ceil(*rgt);
+})
+
+/* Dyadic ⌈ */
+scalar_dyadic(max, d, d, d, i,
+{
+	*tgt = (*lft >= *rgt ? *lft : *rgt);
+})
+
+/* Monadic ⌊ */
+scalar_monadic(floor, d, i,
+{
+	*tgt = floor(*rgt);
+})
+
+/* Dyadic ⌊ */
+scalar_dyadic(min, d, d, d, i,
+{
+	*tgt = (*lft <= *rgt ? *lft : *rgt);
+})
+
+/* Monadic × */
+scalar_monadic(direction, d, i,
+{
+	if (*rgt == 0) *tgt = 0;
+	else if (*rgt < 0) *tgt = -1;
+	else *tgt = 1;
+
+	return 0;
+})
+
+/* Dyadic × */
+scalar_dyadic(multiply, d, d, d, i,
+{
+	*tgt = *lft * *rgt;
+})
+
+/* Dyadic ≠ */
+scalar_dyadic(neq, i, i, i, i,
+{
+	*tgt = (*lft != *rgt);
+})
+
+/* Monadic ~ */
+scalar_monadic(not, i, i,
+{
+	if (*rgt == 1) {
+		*tgt = 0;
+	} else if (*rgt == 0) {
+		*tgt = 1;
+	} else {
+		fprintf(stderr, "DOMAIN ERROR\n");
+		return 11;
+	}
+
+	return 0;
+})
+
+/* Monadic * */
+scalar_monadic(exponent, d, i,
+{
+	*tgt = exp(*rgt);
+})
+
+/* Dyadic * */
+scalar_dyadic(power, d, d, d, i,
+{
+	*tgt = pow(*lft, *rgt);
+})
+
+/* Monadic - */
+scalar_monadic(negate, d, i,
+{
+	*tgt = -1 * *rgt;
+})
+
+/* Dyadic - */
+scalar_dyadic(subtract, d, d, d, i,
+{
+	*tgt = *lft - *rgt;
+})
+
+
+/* SCALAR HELPER FUNCTION */
 
 /* same_shape()
  *
