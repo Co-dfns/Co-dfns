@@ -22,11 +22,12 @@
              av nm vl←⍵(⍺⍺ LookupExpr)1↑1↓⍺  ⍝ Lookup expression variable
              nm vl⊣tgh cpy av                ⍝ Copy into the first target
          })⍵
-         lft nm vl f r←⍺(⍺⍺{                 ⍝ Left argument handled based on arity
+         lft fld nm vl f r←⍺(⍺⍺{             ⍝ Left argument handled based on arity
              gnap←GenNullArrayPtr            ⍝ Convenience
              dlft←⍺⍺{⍵(⍺⍺ LookupExpr)1↑2↓⍺}  ⍝ Grab left argument in dyadic case
-             'monadic'≡cls:(gnap ⍬),⍵,0 1    ⍝ No new bindings, Fn Rgt ←→ 1st, 2nd
-             'dyadic'≡cls:(⍺ dlft ⍵),1 2     ⍝ New bindings, Fn Rgt ←→ 2nd, 3rd
+             mf df←'mname' 'dname'           ⍝ Monadic and dyadic name fields
+             'monadic'≡cls:(gnap ⍬)mf,⍵,0 1 ⍝ No new bindings, Fn Rgt ←→ 1st, 2nd
+             'dyadic'≡cls:(⍺ dlft ⍵)df,1 2  ⍝ New bindings, Fn Rgt ←→ 2nd, 3rd
              'BAD CLASS'⎕SIGNAL 99           ⍝ Error trap just in case
          })⍵
          rgt nm vl←(k←1 Kids ⍺)(⍺⍺{          ⍝ Process the right argument
@@ -35,7 +36,7 @@
              })⍵
              tgh,(r⊃⍺)rec ⍵                  ⍝ Recur on other types of nodes
          })nm vl
-         fn env←⍺⍺ GenFnEx f⊃k               ⍝ Get the function reference
+         fn env←⍺⍺(fld GenFnEx)f⊃k           ⍝ Get the function reference
          nm vl⊣fn call tgh,lft,rgt,env       ⍝ Build the call
      })⍵
      nb←(nms,nm)(((≢nms)↑tgt),vl)            ⍝ New bindings

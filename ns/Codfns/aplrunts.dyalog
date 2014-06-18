@@ -10,10 +10,10 @@
 <array><shape>10</shape><string>codfns_max</string></array>
 <array><shape>10</shape><string>codfns_min</string></array>
 <array><shape>11</shape><string>codfns_less</string></array>
-<array><shape>20</shape><string>codfns_lesseq</string></array>
+<array><shape>20</shape><string>codfns_lesseqcodfns_</string></array>
 <array><shape>12</shape><string>codfns_equal</string></array>
-<array><shape>16</shape><string>codfns_neq</string></array>
-<array><shape>23</shape><string>codfns_greateq</string></array>
+<array><shape>16</shape><string>codfns_neqcodfns</string></array>
+<array><shape>23</shape><string>codfns_greateqcodfns_gr</string></array>
 <array><shape>14</shape><string>codfns_greater</string></array>
 <array><shape>12</shape><string>codfns_squad</string></array>
 <array><shape>14</shape><string>codfns_reshape</string></array>

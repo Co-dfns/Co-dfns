@@ -1,7 +1,7 @@
 ﻿ GenFnEx←{mod fr bldr env0←⍺ ⋄ node←⍵
      gnf←{GetNamedFunction mod ⍵}           ⍝ Convenience function
      garg←{0=⍵:⍬ ⋄ GetParam ⍺ ⍵}            ⍝ Fn to get a function parameter
-     fn←gnf⊃'name'Prop⊃k←1 Kids ⍵           ⍝ Grab function (pre-declared)
+     fn←gnf⊃⍺⍺ Prop⊃k←1 Kids ⍵              ⍝ Grab function (pre-declared)
      0=fn:'MISSING FN'⎕SIGNAL 99            ⍝ Sanity check
      fd←-(CountParams fn)-3                 ⍝ Callee depth
      cd←(CountParams fr)-3                  ⍝ Caller depth
