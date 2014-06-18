@@ -54,36 +54,63 @@ array_mt(struct codfns_array *);
 /* Runtime functions */
 
 int
+codfns_identity(struct codfns_array *, struct codfns_array *);
+
+int
 codfns_add(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
+
+int
+codfns_negate(struct codfns_array *, struct codfns_array *);
 
 int
 codfns_subtract(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
+codfns_direction(struct codfns_array *, struct codfns_array *);
+
+int
 codfns_multiply(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
+
+int
+codfns_reciprocal(struct codfns_array *, struct codfns_array *);
 
 int
 codfns_divide(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
+codfns_magnitude(struct codfns_array *, struct codfns_array *);
+
+int
 codfns_residue(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
+
+int
+codfns_exponent(struct codfns_array *, struct codfns_array *);
 
 int
 codfns_power(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
+codfns_logn(struct codfns_array *, struct codfns_array *);
+
+int
 codfns_log(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
+codfns_ceiling(struct codfns_array *, struct codfns_array *);
+
+int
 codfns_max(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
+
+int
+codfns_floor(struct codfns_array *, struct codfns_array *);
 
 int
 codfns_min(struct codfns_array *,
@@ -94,7 +121,7 @@ codfns_less(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_less_or_equal(struct codfns_array *,
+codfns_lesseq(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
@@ -102,11 +129,11 @@ codfns_equal(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_not_equal(struct codfns_array *,
+codfns_neq(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_greater_or_equal(struct codfns_array *,
+codfns_greateq(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
@@ -116,12 +143,4 @@ codfns_greater(struct codfns_array *,
 int
 codfns_not(struct codfns_array *, struct codfns_array *);
     
-/* Fusion prototype functions */
-
-int
-codfns_cursor(struct codfns_array *, struct codfns_array *);
-
-int
-codfns_bump(struct codfns_array *, struct codfns_array *);
-
 
