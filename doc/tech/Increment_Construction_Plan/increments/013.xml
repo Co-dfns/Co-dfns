@@ -1,8 +1,12 @@
-      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <td>13</td>
-        <td colspan="6">
-          <simplelist type="horiz">
-            <member>Support selective assignment expressions and selective assignment</member>
-          </simplelist>
-        </td>
-      </tr>
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Support selective assignment</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Support selective assignment expressions and selective assignment</member>
+    </simplelist>
+  </td>
+</tr>

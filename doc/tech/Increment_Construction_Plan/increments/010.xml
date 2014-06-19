@@ -1,8 +1,12 @@
-      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <td>10</td>
-        <td colspan="6">
-          <simplelist type="horiz">
-            <member>Support non-parenthesized and non-bracketed Function Expression states</member>
-          </simplelist>
-        </td>
-      </tr>
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Support simple uses of operators</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Support non-parenthesized and non-bracketed Function Expression states</member>
+    </simplelist>
+  </td>
+</tr>

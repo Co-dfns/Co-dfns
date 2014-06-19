@@ -1,8 +1,13 @@
-      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <td>14</td>
-        <td colspan="6">
-          <simplelist type="horiz">
-            <member>Add optimization for scalar function fusion</member>
-          </simplelist>
-        </td>
-      </tr>
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Implement naive scalar function fusion</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Add optimization for scalar function fusion</member>
+      <member>Benchmark naive implemenation and analyze</member>
+    </simplelist>
+  </td>
+</tr>
