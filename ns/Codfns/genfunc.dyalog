@@ -2,7 +2,7 @@
      0=≢fn←Split⊃'name'Prop 1↑⍵:0            ⍝ Ignore functions without names
      'Variable'≡⊃1 1⌷⍵:0                     ⍝ Ignore named function references
      fs←⍎⊃'alloca'Prop 1↑1↓⍵                 ⍝ Allocation for local scope
-     fr←GetNamedFunction ⍺(⊃fn)              ⍝ Get the function reference
+     fr←GetNamedFunction ⍺('m',⍨⊃fn)         ⍝ Get the function reference
      bldr←CreateBuilder                      ⍝ Setup builder
      bb←AppendBasicBlock fr''                ⍝ Initial basic block
      _←PositionBuilderAtEnd bldr bb          ⍝ Link builder and basic block

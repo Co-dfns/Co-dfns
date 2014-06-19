@@ -34,7 +34,7 @@ scale_shape(struct codfns_array *arr, uint16_t rank)
 }
 
 int
-codfns_indexgen(struct codfns_array *res,
+codfns_indexgenm(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint32_t i;
@@ -63,7 +63,7 @@ codfns_indexgen(struct codfns_array *res,
 
 
 int
-codfns_squad(struct codfns_array *res,
+codfns_squadd(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	int row;
@@ -96,7 +96,7 @@ codfns_squad(struct codfns_array *res,
 }
 
 int
-codfns_index(struct codfns_array *res,
+codfns_indexd(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i;
@@ -137,7 +137,7 @@ codfns_index(struct codfns_array *res,
 }
 
 int
-codfns_reshape(struct codfns_array *res,
+codfns_reshaped(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i, size;
@@ -197,7 +197,7 @@ codfns_reshape(struct codfns_array *res,
 }
 
 int
-codfns_catenate(struct codfns_array *res,
+codfns_catenated(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i, lsz, rsz;
@@ -264,7 +264,7 @@ codfns_catenate(struct codfns_array *res,
 }
 
 int
-codfns_ptred(struct codfns_array *res,
+codfns_ptredd(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i;
@@ -293,7 +293,7 @@ codfns_ptred(struct codfns_array *res,
 }
 
 int
-codfns_each(struct codfns_array *res,
+codfns_eachm(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt,
     int (*fn)(struct codfns_array *, struct codfns_array *,
         struct codfns_array *, struct codfns_array **),

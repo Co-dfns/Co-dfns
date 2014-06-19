@@ -11,19 +11,19 @@
 /* SCALAR APL PRIMITIVES */
 
 /* Monadic + */
-scalar_monadic(identity, i, d, 
+scalar_monadic(addm, i, d, 
 {
 	*tgt = *rgt;
 })
 
 /* Dyadic + */
-scalar_dyadic(add, d, d, d, i,
+scalar_dyadic(addd, d, d, d, i,
 {
 	*tgt = *lft + *rgt;
 })
 
 /* Monadic ÷ */
-scalar_monadic(reciprocal, d, d,
+scalar_monadic(dividem, d, d,
 {
 	if (*rgt == 0) {
 		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
@@ -34,7 +34,7 @@ scalar_monadic(reciprocal, d, d,
 })
 
 /* Dyadic ÷ */
-scalar_dyadic(divide, d, d, d, d,
+scalar_dyadic(divided, d, d, d, d,
 {
 	if (*rgt == 0) {
 		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
@@ -45,49 +45,49 @@ scalar_dyadic(divide, d, d, d, d,
 })
 
 /* Dyadic = */
-scalar_dyadic(equal, i, i, i, i,
+scalar_dyadic(equald, i, i, i, i,
 {
 	*tgt = (*lft == *rgt);
 })
 
 /* Dyadic ≥ */
-scalar_dyadic(greateq, i, i, i, i,
+scalar_dyadic(greateqd, i, i, i, i,
 {
 	*tgt = (*lft >= *rgt);
 })
 
 /* Dyadic > */
-scalar_dyadic(greater, i, i, i, i,
+scalar_dyadic(greaterd, i, i, i, i,
 {
 	*tgt = (*lft > *rgt);
 })
 
 /* Dyadic ≤ */
-scalar_dyadic(lesseq, i, i, i, i,
+scalar_dyadic(lesseqd, i, i, i, i,
 {
 	*tgt = (*lft <= *rgt);
 })
 
 /* Dyadic < */
-scalar_dyadic(less, i, i, i, i,
+scalar_dyadic(lessd, i, i, i, i,
 {
 	*tgt = (*lft < *rgt);
 })
 
 /* Monadic ⍟ */
-scalar_monadic(logn, d, d,
+scalar_monadic(logm, d, d,
 {
 	*tgt = log(*rgt);
 })
 
 /* Dyadic ⍟ */
-scalar_dyadic(log, d, d, d, d,
+scalar_dyadic(logd, d, d, d, d,
 {
 	*tgt = log(*rgt) / log(*lft);
 })
 
 /* Monadic | */
-scalar_monadic(magnitude, d, i,
+scalar_monadic(residuem, d, i,
 {
 	if (*rgt < 0) {
 		*tgt = -1 * *rgt;
@@ -108,42 +108,42 @@ scalar_monadic(magnitude, d, i,
 	return 0; \
 }
 
-scalar_dyadic_inner(residue, d, d, d, RESIDUED)
-scalar_dyadic_inner(residue, d, d, i, RESIDUED)
-scalar_dyadic_inner(residue, d, i, d, RESIDUED)
-scalar_dyadic_inner(residue, i, i, i, RESIDUEI)
-scalar_dyadic_scalar(residue, d, d, d, RESIDUED)
-scalar_dyadic_scalar(residue, d, d, i, RESIDUED)
-scalar_dyadic_scalar(residue, d, i, d, RESIDUED)
-scalar_dyadic_scalar(residue, i, i, i, RESIDUEI)
-scalar_dyadic_main(residue, d, d, d, i)
+scalar_dyadic_inner(residued, d, d, d, RESIDUED)
+scalar_dyadic_inner(residued, d, d, i, RESIDUED)
+scalar_dyadic_inner(residued, d, i, d, RESIDUED)
+scalar_dyadic_inner(residued, i, i, i, RESIDUEI)
+scalar_dyadic_scalar(residued, d, d, d, RESIDUED)
+scalar_dyadic_scalar(residued, d, d, i, RESIDUED)
+scalar_dyadic_scalar(residued, d, i, d, RESIDUED)
+scalar_dyadic_scalar(residued, i, i, i, RESIDUEI)
+scalar_dyadic_main(residued, d, d, d, i)
 
 /* Monadic ⌈ */
-scalar_monadic(ceiling, d, i,
+scalar_monadic(maxm, d, i,
 {
 	*tgt = ceil(*rgt);
 })
 
 /* Dyadic ⌈ */
-scalar_dyadic(max, d, d, d, i,
+scalar_dyadic(maxd, d, d, d, i,
 {
 	*tgt = (*lft >= *rgt ? *lft : *rgt);
 })
 
 /* Monadic ⌊ */
-scalar_monadic(floor, d, i,
+scalar_monadic(minm, d, i,
 {
 	*tgt = floor(*rgt);
 })
 
 /* Dyadic ⌊ */
-scalar_dyadic(min, d, d, d, i,
+scalar_dyadic(mind, d, d, d, i,
 {
 	*tgt = (*lft <= *rgt ? *lft : *rgt);
 })
 
 /* Monadic × */
-scalar_monadic(direction, d, i,
+scalar_monadic(multiplym, d, i,
 {
 	if (*rgt == 0) *tgt = 0;
 	else if (*rgt < 0) *tgt = -1;
@@ -153,19 +153,19 @@ scalar_monadic(direction, d, i,
 })
 
 /* Dyadic × */
-scalar_dyadic(multiply, d, d, d, i,
+scalar_dyadic(multiplyd, d, d, d, i,
 {
 	*tgt = *lft * *rgt;
 })
 
 /* Dyadic ≠ */
-scalar_dyadic(neq, i, i, i, i,
+scalar_dyadic(neqd, i, i, i, i,
 {
 	*tgt = (*lft != *rgt);
 })
 
 /* Monadic ~ */
-scalar_monadic(not, i, i,
+scalar_monadic(notm, i, i,
 {
 	if (*rgt == 1) {
 		*tgt = 0;
@@ -180,25 +180,25 @@ scalar_monadic(not, i, i,
 })
 
 /* Monadic * */
-scalar_monadic(exponent, d, i,
+scalar_monadic(powerm, d, i,
 {
 	*tgt = exp(*rgt);
 })
 
 /* Dyadic * */
-scalar_dyadic(power, d, d, d, i,
+scalar_dyadic(powerd, d, d, d, i,
 {
 	*tgt = pow(*lft, *rgt);
 })
 
 /* Monadic - */
-scalar_monadic(negate, d, i,
+scalar_monadic(subtractm, d, i,
 {
 	*tgt = -1 * *rgt;
 })
 
 /* Dyadic - */
-scalar_dyadic(subtract, d, d, d, i,
+scalar_dyadic(subtractd, d, d, d, i,
 {
 	*tgt = *lft - *rgt;
 })

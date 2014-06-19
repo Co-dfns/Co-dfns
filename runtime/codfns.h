@@ -54,103 +54,103 @@ array_mt(struct codfns_array *);
 /* Runtime functions */
 
 int
-codfns_identity(struct codfns_array *, 
+codfns_addm(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_add(struct codfns_array *,
+codfns_addd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_negate(struct codfns_array *, 
+codfns_subtractm(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_subtract(struct codfns_array *,
+codfns_subtractd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_direction(struct codfns_array *, 
+codfns_multiplym(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_multiply(struct codfns_array *,
+codfns_multiplyd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_reciprocal(struct codfns_array *, 
+codfns_dividem(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_divide(struct codfns_array *,
+codfns_divided(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_magnitude(struct codfns_array *, 
+codfns_residuem(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_residue(struct codfns_array *,
+codfns_residued(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_exponent(struct codfns_array *, 
+codfns_powerm(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_power(struct codfns_array *,
+codfns_powerd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_logn(struct codfns_array *, 
+codfns_logm(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_log(struct codfns_array *,
+codfns_logd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_ceiling(struct codfns_array *, 
+codfns_maxm(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_max(struct codfns_array *,
+codfns_maxd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_floor(struct codfns_array *, 
+codfns_minm(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_min(struct codfns_array *,
+codfns_mind(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_less(struct codfns_array *,
+codfns_lessd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_lesseq(struct codfns_array *,
+codfns_lesseqd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_equal(struct codfns_array *,
+codfns_equald(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_neq(struct codfns_array *,
+codfns_neqd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_greateq(struct codfns_array *,
+codfns_greateqd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_greater(struct codfns_array *,
+codfns_greaterd(struct codfns_array *,
     struct codfns_array *, struct codfns_array *);
 
 int
-codfns_not(struct codfns_array *, 
+codfns_notm(struct codfns_array *, 
     struct codfns_array *, struct codfns_array *);
     
 
