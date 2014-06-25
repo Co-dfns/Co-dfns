@@ -15,6 +15,22 @@
     </glossdef>
   </glossentry>
   <glossentry>
+    <glossterm>Performance Improvement</glossterm>
+    <glossdef>
+      <para>
+        Evaluate and improve Cleanroom team performance continually, based on 
+        conformance with the <citetitle>Software Development Plan</citetitle>,
+        process control standards, and causal analysis of software failures. 
+        Analyze and pilot promising improvements in software processes and 
+        tools, and introduce them to the project as appropriate.
+      </para>
+      <para>
+        Work Products:
+        <citetitle>Performance Improvement Plan</citetitle>
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
     <glossterm>Engineering Change</glossterm>
     <glossdef>
       <simpara>

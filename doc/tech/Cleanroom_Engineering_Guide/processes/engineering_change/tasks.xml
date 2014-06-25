@@ -1,0 +1,58 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Tasks</title>
+  <glossentry>
+    <glossterm>Task 1</glossterm>
+    <glossdef>
+      <para>
+        Document proposed engineering changes in the <citetitle>Engineering 
+        Change Log</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 2</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Evaluate the impact of proposed engineering changes</title>
+        <para>
+          Analyze the scope and impact of proposed changes on project work 
+          products, and approve or reject them based on the analysis.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 3</glossterm>
+    <glossdef>
+     <formalpara>
+        <title>Identify the Cleanroom processes required to perform the 
+        engineering changes</title>
+        <para>
+          Define the Cleanroom process sequencing and scheduling required to 
+          perform approved engineering changes, and if necessary revise the 
+          <citetitle>Software Development Plan</citetitle>, the 
+          <citetitle>Increment Construction Plan</citetitle>, and/or the 
+          <citetitle>Reengineering Plan</citetitle>.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 4</glossterm>
+    <glossdef>
+     <formalpara>
+        <title>Apply the Cleanroom processes to perform the engineering 
+        changes</title>
+        <para>
+          Apply Cleanroom processes to incorporate the engineering changes at 
+          the highest level of specification affected, reengineer subsequent 
+          levels of decomposition, and reverify all affected work products 
+          for correctness. Maintain the correctness and integrity of all 
+          affected work products as the engineering changes are made, and 
+          satisfy the requirements of the <citetitle>Configuration Management 
+          Plan</citetitle>.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>
+</glosslist>

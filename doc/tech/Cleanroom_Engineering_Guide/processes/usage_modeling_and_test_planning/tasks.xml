@@ -1,0 +1,11 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0"
+           xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Tasks</title>
+  <xi:include href="tasks/t1.xml" />
+  <xi:include href="tasks/t2.xml" />
+  <xi:include href="tasks/t3.xml" />
+  <xi:include href="tasks/t4.xml" />
+  <xi:include href="tasks/t5.xml" />
+  <xi:include href="tasks/t6.xml" />
+  <xi:include href="tasks/t7.xml" />
+</glosslist>

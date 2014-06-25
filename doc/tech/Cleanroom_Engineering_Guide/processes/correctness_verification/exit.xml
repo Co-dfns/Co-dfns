@@ -1,0 +1,57 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Exit</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <para>
+        The process is complete when one of the exit criteria is satisfied.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Exit 1</glossterm>
+    <glossdef>
+      <para>
+        The increment has been verified with no faults found.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Exit 2</glossterm>
+    <glossdef>
+      <para>
+        The increment has been verified and contains faults that must 
+        be corrected and the engineering changes verified.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Exit 3</glossterm>
+    <glossdef>
+      <para>
+        The black box, state box, or intended function definitions are
+        insufficient for effective verification, and must be revised
+        before verification can be accomplished.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Exit 4</glossterm>
+    <glossdef>
+      <para>
+        Initial verification has found faults in sufficient quantity and 
+        severity that the process must be terminated and the 
+        increment redesigned.
+      </para>
+      <para>
+        In each case, the <citetitle>Increment Verification Report</citetitle>
+        is created. Written proofs, if any, are added to the 
+        <citetitle>Increment Design</citetitle>. The Correctness Verification 
+        Process cannot be completed until the 
+        <citetitle>Increment Design</citetitle> is completed.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>
+
+

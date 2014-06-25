@@ -1,0 +1,21 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 1</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Define the usage models to be developed</title>
+        <para>
+          Use the <citetitle>Usage Specification</citetitle> to define the 
+          usage models to be elaborated, and the scope and purpose of each.
+        </para>
+      </formalpara>
+      <para>
+        Include special purpose models as necessary (e.g. for certification of 
+        infrequently used functions with high consequences of failure).
+      </para>
+      <para>
+        Consider use of actual user input when available. 
+        Realtime data feeds or the output of automated usage 
+        capture facilities can be used as components of usage models.
+      </para>
+    </glossdef>
+  </glossentry>

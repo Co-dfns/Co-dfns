@@ -1,0 +1,33 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Objectives</title>
+  <glossentry>
+    <glossterm>Objective 1</glossterm>
+    <glossdef>
+      <para>
+        The incremental development and certification plan
+        supports intellectual control of the work, statistical quality
+        control of the process, and risk management of the overall
+        project.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 2</glossterm>
+    <glossdef>
+      <para>
+        The increment plan ensures ongoing clarification of 
+        requirements through user execution and evaluation of
+        increments.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 3</glossterm>
+    <glossdef>
+      <para>
+        The customer agrees with the increment plan as the basis 
+        for software development and certification.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

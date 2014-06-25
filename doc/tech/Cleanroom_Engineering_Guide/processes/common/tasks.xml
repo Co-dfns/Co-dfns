@@ -1,0 +1,44 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Common Tasks</title>
+  <glossentry>
+    <glossterm>Task 1</glossterm>
+    <glossdef>
+      <para>
+        Ensure that all participants understand process requirements as 
+        documented in the <citetitle>Cleanroom Engineering Guide</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 2</glossterm>
+    <glossdef>
+      <para>
+        Create work products according to the formats defined in the 
+        <citetitle>Cleanroom Engineering Guide</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 3</glossterm>
+    <glossdef>
+      <para>
+        Make changes to work products in compliance with the Engineering 
+        Change Process and the <citetitle>Configuration Management Plan</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 4</glossterm>
+    <glossdef>
+      <para>
+        Document project activity in the <citetitle>Project Record</citetitle>.
+      </para>
+      <para>
+        Document information that will not be recorded in other work products 
+        in the <citetitle>Project Record</citetitle>. Specifically, document 
+        process beginning and ending dates, staff assignments, process 
+        review dates and data, measurements, and other key events and decisions.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

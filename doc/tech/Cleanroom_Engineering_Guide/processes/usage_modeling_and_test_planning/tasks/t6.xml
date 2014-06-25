@@ -1,0 +1,13 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 6</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Generate the statistical test cases</title>
+        <para>
+          Use the <citetitle>Usage Models</citetitle> to generate the 
+          <citetitle>Statistical Test Cases</citetitle> to be used 
+          during statistical testing.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>

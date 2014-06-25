@@ -1,0 +1,10 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Increment Planning Process</title>
+  <xi:include href="increment_planning/objectives.xml" />
+  <xi:include href="increment_planning/entry.xml" />
+  <xi:include href="increment_planning/tasks.xml" />
+  <xi:include href="increment_planning/verification.xml" />
+  <xi:include href="increment_planning/measurement.xml" />
+  <xi:include href="increment_planning/exit.xml" />
+</section>

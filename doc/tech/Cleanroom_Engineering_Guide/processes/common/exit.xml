@@ -1,0 +1,12 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Common Exit</title>
+  <glossentry>
+    <glossterm>Exit 1</glossterm>
+    <glossdef>
+      <para>
+        Tasks and verification activities have been completed and the 
+        <citetitle>Project Record</citetitle> has been updated.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

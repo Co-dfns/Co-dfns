@@ -1,0 +1,16 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Measurement</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Measure performance improvement</title>
+        <para>
+          Assess the effect of process and technology changes by examining 
+          trends in measures defined in the <citetitle>Measurement Plan</citetitle>
+          accross successive increments.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>
+</glosslist>

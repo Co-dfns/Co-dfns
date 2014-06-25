@@ -1,0 +1,12 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 3</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Execute the statistical test cases in the test environment</title>
+        <para>
+          Execute the <citetitle>Statistical Test Cases</citetitle> according
+          to the procedures defined in the <citetitle>Increment Test Plan</citetitle>.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>

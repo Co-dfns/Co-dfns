@@ -1,0 +1,27 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 5</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Develop a plan for certification testing of the software increment</title>
+        <para>
+          Develop a test plan, including schedules, staffing, training,
+          hardware and software environment, certification goals, use of 
+          statistical test cases, use of operational input, procedures for
+          verifying correct software performance, and documentation.
+        </para>
+      </formalpara>
+      <para>
+        Define the test plan to ensure experimental control,
+        including test procedures, test monitoring, results recording,
+        failure evaluation, and engineering change control.
+      </para>
+      <para>
+        Plan for additional testing techniques to be applied in 
+        conjunction with statistical testing as necessary.
+      </para>
+      <para>
+        Document testing plans in the 
+        <citetitle>Increment Test Plan</citetitle> work product.
+      </para>
+    </glossdef>
+  </glossentry>

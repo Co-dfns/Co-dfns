@@ -1,0 +1,24 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Exit</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <para>
+        The process is complete when the exit criteria are satisfied.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Exit 1</glossterm>
+    <glossdef>
+      <para>
+        The <citetitle>Software Development Plan</citetitle> and the 
+        <citetitle>Cleanroom Engineering Guide</citetitle> have been 
+        completed and reviewed with the project team, peer organizations, 
+        and the customer, commitments have been obtained.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>
+
+

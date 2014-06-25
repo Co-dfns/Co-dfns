@@ -1,0 +1,12 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Verification</title>
+  <glossentry>
+    <glossterm>Verification 1</glossterm>
+    <glossdef>
+      <para>
+        Confirm the consistency of engineering change decisions with 
+        the <citetitle>Configuration Management Plan</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

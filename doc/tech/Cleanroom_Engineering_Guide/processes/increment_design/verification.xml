@@ -1,0 +1,14 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Verification</title>
+  <glossentry>
+    <glossterm>Verification 1</glossterm>
+    <glossdef>
+      <para>
+        Verification of the correctness of the
+        <citetitle>Increment Design</citetitle> is so critical to 
+        Cleanroom objectives that an entire process is devoted to 
+        it. 
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

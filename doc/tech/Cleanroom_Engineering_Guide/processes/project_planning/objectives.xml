@@ -1,0 +1,29 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Objectives</title>
+  <glossentry>
+    <glossterm>Objective 1</glossterm>
+    <glossdef>
+      <para>
+        Cleanroom software engineering processes are tailored for the project 
+        and documented.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 2</glossterm>
+    <glossdef>
+      <para>
+        The software project plans are defined and documented.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 3</glossterm>
+    <glossdef>
+      <para>
+        The project team and peer groups agree to the Cleanroom Processes 
+        and project plans.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>
