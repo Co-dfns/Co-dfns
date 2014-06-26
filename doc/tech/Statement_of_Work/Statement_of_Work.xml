@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<article xmlns="http://docbook.org/ns/docbook" version="5.0">
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
     <title>Co-Dfns Statement of Work</title>
-    <author><personname>Aaron W. Hsu</personname></author>
-    <date>Tuesday, July 2nd, 2013</date>
   </info>
   <para>
     Implement, document, and publish an industrial-strength compiler for the 
@@ -31,4 +29,4 @@
     optimizations as are expedient. A future version is intended to 
     address the issues of performance to a greater degree.
   </para>
-</article>
+</chapter>

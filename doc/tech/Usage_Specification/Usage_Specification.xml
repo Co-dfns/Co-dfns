@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
     <title>Usage Specification</title>
-    <author><personname>Aaron W. Hsu</personname></author>
-    <date>Monday, October 7th, 2013</date>
   </info>
   <simpara>
     This document describes the high-level usage and
@@ -17,4 +15,4 @@
   <xi:include href="sections/format_and_notation.xml" />
   <xi:include href="sections/usage_stratification.xml" />
   <xi:include href="sections/high_level_usage_models.xml" />
-</article>
+</chapter>

@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
     <title>Cleanroom Engineering Guide</title>
-    <author>
-      <personname>
-        <firstname>Aaron</firstname>
-        <othername role="middle_initial">W.</othername>
-        <surname>Hsu</surname>
-      </personname>
-    </author>
   </info>
   <simpara>
     This document describes the tailored Cleanroom process to develop 
@@ -31,4 +24,4 @@
     in general. 
   </simpara>
   <xi:include href="processes.xml" />
-</article>
+</chapter>

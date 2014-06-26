@@ -1,11 +1,7 @@
-<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
     <title>Function Specification</title>
-    <author>
-      <personname>Aaron W. Hsu</personname>
-    </author>
-    <date>Monday, October 7th, 2013</date>
   </info>
   <xi:include href="overview.xml" />
   <xi:include href="software_boundaries.xml" />
@@ -40,4 +36,4 @@
   <xi:include href="canonical_sequence_analysis.xml" />
   <xi:include href="specification_functions.xml" />
   <xi:include href="black_box_definitions.xml" />
-</article>
+</chapter>

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
     <title>Co-Dfns Project Record</title>
-    <author><personname>Aaron W. Hsu</personname></author>
-    <date>Wednesday, March 19th, 2014</date>
   </info>
   <section>
     <title>Chronological Journal</title>
@@ -75,4 +73,4 @@
       </tbody>
     </informaltable>
   </section>
-</article>
+</chapter>

@@ -1,10 +1,6 @@
-<article xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
     <title>Co-Dfns Software Requirements</title>
-    <author>
-      <personname>Aaron W. Hsu</personname>
-    </author>
-    <date>Tuesday, July 4th, 2013</date>
   </info>
   <para>This document clarifies in English the expected behavior of the
   Co-Dfns compiler. It is intended to be complete, consistent, and clear
@@ -79,4 +75,4 @@
     <xi:include href="requirements/050.xml"></xi:include>
     <xi:include href="requirements/051.xml"></xi:include>
   </orderedlist>
-</article>
+</chapter>

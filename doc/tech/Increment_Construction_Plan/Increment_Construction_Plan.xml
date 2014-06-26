@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
     <title>Co-Dfns Increment Construction Plan</title>
-    <author><personname>Aaron W. Hsu</personname></author>
-    <date>Tuesday, October 8th, 2013</date>
   </info>
   <simpara>
     This is a documentation of a series of sub-divisions of the 
@@ -39,4 +37,4 @@
       <xi:include href="increments/014.xml" />
     </tbody>
   </table>
-</article>
+</chapter>

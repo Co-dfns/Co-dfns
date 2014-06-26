@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<article xmlns="http://docbook.org/ns/docbook" version="5.0"
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
    <info>
     <title>Co-dfns Increment Test Plan</title>
-    <author>
-      <personname>Aaron W. Hsu</personname>
-    </author>
-    <date>Monday, November 25th, 2013</date>
   </info>
   <simpara>
     This document details the overall approach to testing, and
@@ -24,4 +20,4 @@
   <xi:include href="usage_model_overview.xml" />
   <xi:include href="testing_plan_and_procedures.xml" />
   <xi:include href="statistical_and_coverage_test_cases.xml" />
-</article>
+</chapter>
