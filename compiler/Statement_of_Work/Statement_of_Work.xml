@@ -24,9 +24,9 @@
     to a given cell. 
   </para>
   <para>
-    The completion of this project at the beginning of October is the 
-    first version, implementing only the semantics and making only such 
-    optimizations as are expedient. A future version is intended to 
-    address the issues of performance to a greater degree.
+    The first version of the compiler should be feature complete and 
+    demonstrate significant performance improvements over the Dyalog 
+    interpreter. Moreover, a series of publications should be possible 
+    with the technology used in the compiler.
   </para>
 </chapter>
