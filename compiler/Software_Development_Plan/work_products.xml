@@ -22,6 +22,7 @@
     <xi:include href="work_products/increment_design.xml" />
     <xi:include href="work_products/increment_test_plan.xml" />
     <xi:include href="work_products/increment_verification_report.xml" />
+    <xi:include href="work_products/performance_improvement_plan.xml" />
     <xi:include href="work_products/project_record.xml" />
     <xi:include href="work_products/software_architecture.xml" />
     <xi:include href="work_products/software_development_plan.xml" />

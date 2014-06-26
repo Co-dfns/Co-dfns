@@ -7,6 +7,7 @@
     <title>Software Development Plan</title>
   </info>
   <xi:include href="mission.xml" />
+  <xi:include href="organization.xml" />
   <xi:include href="work_products.xml" />
   <xi:include href="schedule.xml" />
   <xi:include href="measurement_plan.xml" />
