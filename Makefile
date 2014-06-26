@@ -4,7 +4,7 @@ include conf/mk.conf
 
 all: docs CoDfns.dyalog
 
-include doc/tech/Makefile
+include compiler/Makefile
 include runtime/Makefile
 
 CoDfns.dyalog: $(RUNTIME)

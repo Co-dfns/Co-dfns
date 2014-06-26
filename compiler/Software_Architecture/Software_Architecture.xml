@@ -3,7 +3,7 @@
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
-    <title>Co-Dfns Software Architecture</title>
+    <title>Software Architecture</title>
   </info>
   <simpara>
     This document describes the high-level system architecture of the

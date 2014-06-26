@@ -4,7 +4,7 @@
          xmlns:xi="http://www.w3.org/2001/XInclude"
          version="5.0">
   <info>
-    <title>Co-Dfns Software Development Plan</title>
+    <title>Software Development Plan</title>
   </info>
   <xi:include href="mission.xml" />
   <xi:include href="work_products.xml" />

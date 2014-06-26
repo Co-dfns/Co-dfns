@@ -2,7 +2,7 @@
 # in the top-level directory and relies on other external
 # information.
 
-DOCROOT := doc/tech
+DOCROOT := compiler
 
 DOCNAMES := Co-dfns_Compiler
 DOCPDF := $(addsuffix .pdf,$(DOCNAMES))

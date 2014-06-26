@@ -1,6 +1,6 @@
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
-    <title>Co-Dfns Software Requirements</title>
+    <title>Software Requirements</title>
   </info>
   <para>This document clarifies in English the expected behavior of the
   Co-Dfns compiler. It is intended to be complete, consistent, and clear

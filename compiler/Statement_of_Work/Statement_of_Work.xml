@@ -2,7 +2,7 @@
 
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0">
   <info>
-    <title>Co-Dfns Statement of Work</title>
+    <title>Statement of Work</title>
   </info>
   <para>
     Implement, document, and publish an industrial-strength compiler for the 

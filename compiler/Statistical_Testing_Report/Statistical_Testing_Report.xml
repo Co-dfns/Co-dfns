@@ -3,7 +3,7 @@
 <chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
-    <title>Co-Dfns Statistical Testing Report</title>
+    <title>Statistical Testing Report</title>
   </info>
   <xi:include href="increments/increment1.xml" />
   <xi:include href="increments/increment2.xml" />
