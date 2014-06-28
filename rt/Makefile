@@ -1,4 +1,4 @@
-RUNROOT := runtime
+RUNROOT := rt
 RUNTIME := $(RUNROOT)/libcodfns.so
 
 CFILES := $(wildcard $(RUNROOT)/*.c)

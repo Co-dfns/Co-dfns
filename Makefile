@@ -1,12 +1,11 @@
+CFLAGS := -O3 -g -Wall -pedantic -std=c11
+
 .PHONY: all clean
 
-include conf/mk.conf
+all: Codfns.dyalog
 
-all: docs CoDfns.dyalog
+include rt/Makefile
 
-include compiler/Makefile
-include runtime/Makefile
+Codfns.dyalog: $(RUNTIME)
 
-CoDfns.dyalog: $(RUNTIME)
-
-clean: clean-docs clean-runtime
+clean: clean-runtime
