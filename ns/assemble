@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo ':Namespace'; echo
+for fname in $*; do cat $fname; echo ''; done; echo ':EndNamespace'
+

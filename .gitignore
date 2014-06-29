@@ -24,3 +24,5 @@ conf/mk.conf
 tmp/
 *.if
 titlepage.xsl
+Codfns.dyalog
+
