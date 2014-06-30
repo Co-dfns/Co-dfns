@@ -1,4 +1,4 @@
-﻿ GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
+GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
      gnf←{GetNamedFunction mod ⍵}            ⍝ Convenience function
      call←{                                  ⍝ Op to build call
          0=⍺:'NULL FN'⎕SIGNAL 99

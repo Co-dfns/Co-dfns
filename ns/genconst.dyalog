@@ -1,4 +1,4 @@
-﻿ GenConst←{mod←⍺
+GenConst←{mod←⍺
      vs←⊃'name'Prop 1↑⍵                   ⍝ Get the name of a literal
      mnlerr←'BAD LITERAL NAME'            ⍝ Error message
      ∨/' '=vs:mnlerr ⎕SIGNAL 99           ⍝ Sanity check for a single name

@@ -1,4 +1,4 @@
-﻿ GenLLVM←{
+GenLLVM←{
      nam←(0 3)(0 1)⊃⍵                     ⍝ Namespace must have name
      nam←nam'Unamed Namespace'⌷⍨''≡nam   ⍝ Possibly empty, so fix it
      mod←ModuleCreateWithName nam         ⍝ Empty module to start with

@@ -1,4 +1,4 @@
-﻿ GenInit←{
+GenInit←{
      ft←GenFuncType 0                     ⍝ Zero depth function
      fr←AddFunction ⍺'Init'ft             ⍝ Named Init
      bldr←CreateBuilder                   ⍝ Setup builder

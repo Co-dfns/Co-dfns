@@ -1,4 +1,4 @@
-﻿ GenGlobal←{
+GenGlobal←{
      0=≢⍵:⍬                               ⍝ Don't do anything if nothing to do
      litp←{                               ⍝ Fn predicate to test if literal
          cls←⊃'class'Prop 1↑⍵               ⍝ Class of Expression

@@ -1,11 +1,11 @@
-﻿TargetTriple←'x86_64-redhat-linux-gnu'
+TargetTriple←'x86_64-redhat-linux-gnu'
 Target←'X86'
 LLVMX86Info←'libLLVM-3.4.so'
 LLVMX86Desc←'libLLVM-3.4.so'
 LLVMX86CodeGen←'libLLVM-3.4.so'
 LLVMExecutionEngine←'libLLVM-3.4.so'
 LLVMCore←'libLLVM-3.4.so'
-﻿CodfnsRuntime←'runtime/libcodfns.so'
+CodfnsRuntime←'runtime/libcodfns.so'
 MtNTE←0 2⍴⊂''
 MtAST←0 4⍴0
 MtA←0 2⍴⊂''

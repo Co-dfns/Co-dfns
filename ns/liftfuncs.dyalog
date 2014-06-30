@@ -1,4 +1,4 @@
-﻿ LiftFuncs←{
+LiftFuncs←{
      I←¯1 ⋄ MkV←{'FN',⍕I⊣(⊃I)+←1}         ⍝ New variable maker
      vis←{lft ast←⍵                       ⍝ Fn to visit each node
          (0=⍺⍺)∧'Function'≡⊃0 1⌷⍺:⍺(⍺⍺{     ⍝ Traverse Top-level Fn Nodes

@@ -1,4 +1,4 @@
-﻿ LiftConsts←{
+LiftConsts←{
      I←¯1 ⋄ mkv←{'LC',⍕I⊣(⊃I)+←1}         ⍝ New variable maker
      at←{2 2⍴'name'⍵'class'⍺}          ⍝ Attribute maker
      ns←'Expression' 'Number'             ⍝ Nodes we care about

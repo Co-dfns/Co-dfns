@@ -1,1 +1,1 @@
-﻿ KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}
+KillLines←{(~⍵[;1]∊⊂'Line')⌿⍵}

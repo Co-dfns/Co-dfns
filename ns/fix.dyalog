@@ -1,4 +1,4 @@
-﻿ Fix←{
+Fix←{
      _←FFI∆INIT                           ⍝ Initialize FFI; Fix ← Yes
      ~1≡≢⍴⍵:⎕SIGNAL 11                    ⍝ Input is vector?
      ~∧/1≥≢∘⍴¨⍵:⎕SIGNAL 11                ⍝ Elements are vectors?
@@ -9,4 +9,5 @@
      ns←nms ModToNS mod                   ⍝ Namespace to return
      ''≡obj:ns                            ⍝ No optional object file output
      ns⊣obj ModToObj mod                  ⍝ Export Mod to object file
- }
+}
+

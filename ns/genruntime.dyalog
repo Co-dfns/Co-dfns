@@ -1,4 +1,4 @@
-﻿ GenRuntime←{
+GenRuntime←{
      ft←PointerType ArrayTypeV 0          ⍝ Pointer to array, clean_env arg 1
      et←PointerType ft 0                  ⍝ Pointer to frame
      it←Int32Type                         ⍝ clean_env arg 2 type

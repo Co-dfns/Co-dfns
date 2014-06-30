@@ -1,4 +1,4 @@
-﻿ ModToNS←{
+ModToNS←{
      ⎕NS ⍬                                 ⍝ Create an Empty Namespace
      jc←1 ⍵ 0 1                           ⍝ Params: JIT Ov, Mod, OptLevel, Err Ov
      jc←CreateJITCompilerForModule jc     ⍝ Make JIT compiler
@@ -31,4 +31,5 @@
          0⊣⍎'Ns.',⍵,'←f ⋄ 0'                ⍝ Store function using do oper trick
      }
      ns⊣addf¨(2=1⌷⍉⍺)/0⌷⍉⍺                ⍝ Add all functions
- }
+}
+

@@ -1,4 +1,4 @@
-﻿ Compile←{
+Compile←{
      tks←Tokenize ⍵
      ast names←Parse tks
      ast←KillLines ast
@@ -10,4 +10,5 @@
      ast←ConvPrims ast
      mod←GenLLVM ast
      mod names
- }
+}
+

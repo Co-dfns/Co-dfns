@@ -1,4 +1,4 @@
-﻿ GenFunc←{
+GenFunc←{
      0=≢fn←Split⊃'name'Prop 1↑⍵:0            ⍝ Ignore functions without names
      'Variable'≡⊃1 1⌷⍵:0                     ⍝ Ignore named function references
      fs←⍎⊃'alloca'Prop 1↑1↓⍵                 ⍝ Allocation for local scope

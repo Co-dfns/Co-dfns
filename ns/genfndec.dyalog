@@ -1,4 +1,4 @@
-﻿ GenFnDec←{
+GenFnDec←{
      0=≢fn←Split⊃'name'Prop 1↑⍵:0         ⍝ Ignore functions without names
      vtst←'Variable'≡⊃1 1⌷⍵               ⍝ Child node type
      vn←⊃'name'Prop 1↑1↓⍵                 ⍝ Variable name if it exists

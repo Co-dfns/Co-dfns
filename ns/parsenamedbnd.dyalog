@@ -1,4 +1,4 @@
-﻿ParseNamedBnd←{vn tp env←⍺
+ParseNamedBnd←{vn tp env←⍺
   0=⊃env ParseExpr ⍵:⎕SIGNAL 2         ⍝ Should not be an Expression
   tp≠t←2:⎕SIGNAL 2                     ⍝ The types must match to continue
   err ast←env 1 ParseLineVar ⍵         ⍝ Try to parse as a variable line

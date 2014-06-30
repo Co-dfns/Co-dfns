@@ -1,4 +1,4 @@
-﻿ LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr bld _←⍺⍺ ⋄ node←⍵
+LookupExpr←{⍺←⊢ ⋄ nm vl←⍺⊣2⍴⊂0⍴⊂'' ⋄ mod fr bld _←⍺⍺ ⋄ node←⍵
      nam←⊃'name'Prop ⍵                    ⍝ Variable's name
      i←(,¨'⍺⍵')⍳⊂nam                      ⍝ Do we have a formal?
      2≠i:(GetParam fr(1+i)),nm vl        ⍝ Easy if we have formals

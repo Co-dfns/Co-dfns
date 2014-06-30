@@ -1,4 +1,4 @@
-﻿ GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
+GenCond←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
      te←⊃k←1 Kids ⍺                       ⍝ Children and test expression
      te nm vl←⍵(⍺⍺ LookupExpr)1↑1↓te      ⍝ Find ValueRef of test expression
      gp←BuildStructGEP bldr te 4 ''       ⍝ Get data values pointer

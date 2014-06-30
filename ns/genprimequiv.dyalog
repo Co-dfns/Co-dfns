@@ -1,4 +1,4 @@
-﻿ GenPrimEquiv←{
+GenPrimEquiv←{
      ft←GenFuncType 0                 ⍝ Primitive function type
      fr←AddFunction ⍺⍺(⊃⍵)ft          ⍝ Declare equivalent
      bl←CreateBuilder                 ⍝ New builder

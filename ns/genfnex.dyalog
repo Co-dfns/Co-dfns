@@ -1,4 +1,4 @@
-﻿ GenFnEx←{mod fr bldr env0←⍺ ⋄ node←⍵
+GenFnEx←{mod fr bldr env0←⍺ ⋄ node←⍵
      gnf←{GetNamedFunction mod ⍵}           ⍝ Convenience function
      garg←{0=⍵:⍬ ⋄ GetParam ⍺ ⍵}            ⍝ Fn to get a function parameter
      fn←gnf⊃'name'Prop⊃k←1 Kids ⍵           ⍝ Grab function (pre-declared)

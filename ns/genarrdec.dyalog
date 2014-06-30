@@ -1,4 +1,4 @@
-﻿ GenArrDec←{
+GenArrDec←{
      ⍺{                                   ⍝ Fn to declare new array
          0≠g←GetNamedGlobal ⍺ ⍵:g           ⍝ Do nothing if already declared
          r←ConstInt(Int16Type)0 0         ⍝ Rank ← 0

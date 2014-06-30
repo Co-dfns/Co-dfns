@@ -1,4 +1,4 @@
-﻿ GenFnBlock←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍺ ⋄ k←⍵
+GenFnBlock←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍺ ⋄ k←⍵
      line←{n←⊃0 1⌷⍺                      ⍝ Op to handle node in function body
          n≡'Expression':⍺(⍺⍺ GenExpr)⍵   ⍝ Use GenExpr on Expressions
          n≡'Condition':⍺(⍺⍺ GenCond)⍵    ⍝ Use GenCond on Conditions
