@@ -4,9 +4,9 @@ VI←{~1≡≢⍴⍵:E 11 ⋄ ~∧/1≥≢∘⍴¨⍵:E 11 ⋄ ~∧/∊' '=(⊃0
 VF←{~(∧/∊' '=⊃0⍴⊂⍵)∧(1≡≢⍴⍵)∧(1≡≡⍵):E 11 ⋄ ⍵}
 clang←'clang -O3 -Wall -pedantic -g -std=c11 -shared -fPIC -L. -o '
 CL←{⍵,'.so'⊣⎕SH clang,'"',⍵,'.so" "',⍵,'.ll" -lcodfns -lm'}
-LK←{n←⎕NS⍬ ⋄ 0=≢⍺:n ⋄ _←⍵∘{_←n.⍎⍵,'←''',⍵,''' #.Codfns.NA ''',⍺,'''' ⋄ 0}¨⊣/⍺ ⋄ n}
+LK←{n←⎕NS⍬ ⋄ 0=≢⍺:n ⋄ _←⍵∘{_←n.⍎⍵,'←''',⍵,'''#.Codfns.NA''',⍺,'''' ⋄ 0}¨⊣/⍺ ⋄ n}
 WM←{1=⊃r e←PrintModuleToFile ⍵ (⍺,'.ll') 1:(ErrorMessage⊃err)E 99 ⋄ ⍺}
-NA←{_←'f'⎕NA'I4 ',⍵⍵,'|',⍺⍺,' P P P' ⋄ fmad←#.CoDfns.ffi_make_array_double
-  fmai←#.CoDfns.ffi_make_array_into ⋄ o←fmad 1 0 0 ⍬ ⍬ ⋄ 0≠e←f o 0 0:E e
+NA←{_←'f'⎕NA'I4 ',⍵⍵,'|',⍺⍺,' P P P'
+  0≠⊃e o←#.Codfns.ffi_make_array_double 1 0 0 ⍬ ⍬:E e ⋄ 0≠e←f o 0 0:E e
   z⊣#.Codfns.free o⊣#.Codfns.array_free o⊣z←#.Codfns.ConvertArray o}
 

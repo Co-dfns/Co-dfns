@@ -12,4 +12,5 @@ LK1_TEST←{#.UT.expect←,9 ⋄ x←(0 2⍴⍬)#.Codfns.LK ,'' ⋄ ⎕NC'x'}
 LK2_TEST←{#.UT.expect←⍉⍪'f' ⋄ n←(⍉⍪'f' 2)#.Codfns.LK #.Codfns.CL 'ut/F'
   n.⎕NL 1 2 3 4 9}
 LK3_TEST←{#.UT.expect←,3 ⋄ n←(⍉⍪'f' 2)#.Codfns.LK #.Codfns.CL'ut/F' ⋄ n.⎕NC 'f'}
-
+LK4_TEST←{#.UT.expect←5 ⋄ _←#.Codfns.FI
+  n←(⍉⍪'f' 2)#.Codfns.LK #.Codfns.CL'ut/F' ⋄ n.f⍬}
