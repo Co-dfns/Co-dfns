@@ -7,6 +7,8 @@ CL←{⍵,'.so'⊣⎕SH clang,'"',⍵,'.so" "',⍵,'.ll" -lcodfns -lm'}
 LK←{n←⎕NS⍬ ⋄ 0=≢⍺:n ⋄ _←⍵∘{_←n.⍎⍵,'←''',⍵,'''#.Codfns.NA''',⍺,'''' ⋄ 0}¨⊣/⍺ ⋄ n}
 WM←{1=⊃r e←PrintModuleToFile ⍵ (⍺,'.ll') 1:(ErrorMessage⊃err)E 99 ⋄ ⍺}
 NA←{_←'f'⎕NA'I4 ',⍵⍵,'|',⍺⍺,' P P P'
-  0≠⊃e o←#.Codfns.ffi_make_array_double 1 0 0 ⍬ ⍬:E e ⋄ 0≠e←f o 0 0:E e
+  0≠⊃e o←#.Codfns.ffi_make_array_double 1 0 0 ⍬ ⍬:E e
+  0≠⊃e w←#.Codfns.ffi_make_array_int 1(≢⍴⍵)(≢,⍵)(⍴⍵)(,⍵):E e
+  0≠e←f o 0 w:E e
   z⊣#.Codfns.free o⊣#.Codfns.array_free o⊣z←#.Codfns.ConvertArray o}
 
