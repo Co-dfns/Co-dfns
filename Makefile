@@ -5,10 +5,10 @@ CFLAGS := -O3 -g -Wall -pedantic -std=c11
 all: Codfns.dyalog
 
 unit: Codfns.dyalog ut.dyalog
-	mapl ws/unit
+	LD_LIBRARY_PATH=. mapl ws/unit
 
 acceptance: Codfns.dyalog at.dyalog
-	mapl ws/acceptance
+	LD_LIBRARY_PATH=. mapl ws/acceptance
 
 clean:
 	rm -rf libcodfns.so Codfns.dyalog ut.dyalog at.dyalog
