@@ -1,4 +1,4 @@
-Parse←{
+P←{
   0=+/⍵[;1]∊⊂'Token':⎕SIGNAL 2         ⍝ Deal with Eot Stimuli, Table 233
   fl←⊃1 ¯1⍪.↑⊂⍵ ByDepth 2              ⍝ First and last leafs
   ~fl[;1]∧.≡⊂'Token':⎕SIGNAL 2         ⍝ Must be tokens

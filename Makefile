@@ -1,6 +1,6 @@
 CFLAGS := -O3 -g -Wall -pedantic -std=c11
 
-.PHONY: all clean unit
+.PHONY: all clean unit acceptance
 
 all: Codfns.dyalog
 
@@ -12,6 +12,9 @@ Codfns.dyalog: ns/*.dyalog libcodfns.so ns/assemble
 
 unit: Codfns.dyalog
 	mapl ws/unit
+
+acceptance: Codfns.dyalog
+	mapl ws/acceptance
 
 clean:
 	rm -rf libcodfns.so Codfns.dyalog

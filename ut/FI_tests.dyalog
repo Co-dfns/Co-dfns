@@ -1,6 +1,6 @@
 :Namespace FI_tests
 
-L_TEST←{#.UT.expect←⍬ ⋄ #.Codfns.FFI∆INIT}
+L_TEST←{#.UT.expect←⍬ ⋄ #.Codfns.FI}
 
 :EndNamespace
 

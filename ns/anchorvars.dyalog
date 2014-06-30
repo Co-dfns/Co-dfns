@@ -1,4 +1,4 @@
-AnchorVars←{S←Split ⋄ nm←'name'∘(P←Prop)
+AV←{S←Split ⋄ nm←'name'∘(P←Prop)
   es fs←'Expression' 'Function'        ⍝ Names of expression and function nodes
   e f←es fs∊∘⊂¨⍨⊂1⌷⍉⍵                  ⍝ Mask of expression and function nodes
   n←∨/(↑0⌷∘⍉¨3⌷⍉⍵)∊⊂'name'             ⍝ Mask of nodes with names

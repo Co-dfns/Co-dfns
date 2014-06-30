@@ -1,4 +1,4 @@
-ConvPrims←{ast←⍵
+CP←{ast←⍵
      pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
      pn←'name'Prop pm⌿⍵                   ⍝ Primitive names
      cn←(APLPrims⍳pn)⊃¨⊂APLRunts,APLRtOps ⍝ Converted names

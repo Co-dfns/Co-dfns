@@ -1,3 +1,5 @@
+⎕IO ⎕ML←0 1
+
 TargetTriple←'x86_64-redhat-linux-gnu'
 Target←'X86'
 LLVMX86Info←'libLLVM-3.4.so'

@@ -1,4 +1,4 @@
-Tokenize←{
+T←{
   vc←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'     ⍝ Upper case characters
   vc,←'abcdefghijklmnopqrstuvwxyz'     ⍝ Lower case characters
   vc,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß' ⍝ Accented upper case
