@@ -18,4 +18,8 @@ LK5_TEST←{#.UT.expect←6 ⋄ _←#.Codfns.FI
   n←(⍉⍪'g' 2)#.Codfns.LK #.Codfns.CL'ut/G' ⋄ n.g 5}
 LK6_TEST←{#.UT.expect←6.5 ⋄ _←#.Codfns.FI
   n←(⍉⍪'g' 2)#.Codfns.LK #.Codfns.CL'ut/G' ⋄ n.g 5.5}
+LK7_TEST←{#.UT.expect←7 ⋄ _←#.Codfns.FI
+  n←(⍉⍪'h' 2)#.Codfns.LK #.Codfns.CL'ut/H' ⋄ 1 n.h 5}
+LK8_TEST←{#.UT.expect←7.5 ⋄ _←#.Codfns.FI
+  n←(⍉⍪'h' 2)#.Codfns.LK #.Codfns.CL'ut/H' ⋄ 1.5 n.h 5}
 
