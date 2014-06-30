@@ -1,4 +1,4 @@
-﻿ {Z}←FFI∆INIT;P;Core;ExEng;X86Info;X86CodeGen;X86Desc;R
+∇{Z}←FFI∆INIT;P;Core;ExEng;X86Info;X86CodeGen;X86Desc;R
  Z←⍬
  Core←LLVMCore
  ExEng←LLVMExecutionEngine
@@ -254,3 +254,4 @@
 
 ⍝ Generate an Array value for everyone to use
  ArrayTypeV←GenArrayType ⍬
+∇
