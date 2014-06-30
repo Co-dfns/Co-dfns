@@ -16,4 +16,6 @@ LK4_TEST←{#.UT.expect←5 ⋄ _←#.Codfns.FI
   n←(⍉⍪'f' 2)#.Codfns.LK #.Codfns.CL'ut/F' ⋄ n.f⍬}
 LK5_TEST←{#.UT.expect←6 ⋄ _←#.Codfns.FI
   n←(⍉⍪'g' 2)#.Codfns.LK #.Codfns.CL'ut/G' ⋄ n.g 5}
+LK6_TEST←{#.UT.expect←6.5 ⋄ _←#.Codfns.FI
+  n←(⍉⍪'g' 2)#.Codfns.LK #.Codfns.CL'ut/G' ⋄ n.g 5.5}
 
