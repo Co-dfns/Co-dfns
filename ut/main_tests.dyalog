@@ -22,4 +22,6 @@ LK7_TEST←{#.UT.expect←7 ⋄ _←#.Codfns.FI
   n←(⍉⍪'h' 2)#.Codfns.LK #.Codfns.CL'ut/H' ⋄ 1 n.h 5}
 LK8_TEST←{#.UT.expect←7.5 ⋄ _←#.Codfns.FI
   n←(⍉⍪'h' 2)#.Codfns.LK #.Codfns.CL'ut/H' ⋄ 1.5 n.h 5}
+LK9_TEST←{#.UT.expect←5 6 ⋄ _←#.Codfns.FI
+  n←(2 2⍴'f' 2 'g' 2)#.Codfns.LK #.Codfns.CL'ut/FG' ⋄ (n.f⍬)(n.g 5)}
 
