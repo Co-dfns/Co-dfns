@@ -12,4 +12,4 @@ Bind←{
   (A⍳⊂'name')≥⍴A←0⌷⍉⊃0 3⌷Ast←⍵:Ast⊣(⊃0 3⌷Ast)⍪←'name'⍺
   Ast⊣((0 3)(Ni 1)⊃Ast){⍺,⍵,⍨' ' ''⊃⍨0=⍴⍺}←⍺
 }
-E←{⍎'⎕SIGNAL ',⍕⍵}
+E←{⍺←⊢ ⋄ ⍺ ⎕SIGNAL ⍵}

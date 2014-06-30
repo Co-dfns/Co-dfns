@@ -1,5 +1,0 @@
-#!/bin/sh
-
-echo ':Namespace Codfns'; echo
-for fname in $*; do cat $fname; echo ''; done; echo ':EndNamespace'
-
