@@ -1,11 +1,11 @@
-∇{Z}←FFI∆INIT;P;Core;ExEng;X86Info;X86CodeGen;X86Desc;R
+∇Z←FFI∆INIT;P;Core;ExEng;X86Info;X86CodeGen;X86Desc;R
  Z←⍬
  Core←LLVMCore
  ExEng←LLVMExecutionEngine
  X86Info←LLVMX86Info
  X86CodeGen←LLVMX86CodeGen
  X86Desc←LLVMX86Desc
- R←CoDfnsRuntime
+ R←CodfnsRuntime
  P←'LLVM'
 
 ⍝ LLVMTypeRef LLVMTypeOf (LLVMValueRef Val)

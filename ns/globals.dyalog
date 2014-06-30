@@ -5,7 +5,7 @@ LLVMX86Desc←'libLLVM-3.4.so'
 LLVMX86CodeGen←'libLLVM-3.4.so'
 LLVMExecutionEngine←'libLLVM-3.4.so'
 LLVMCore←'libLLVM-3.4.so'
-CodfnsRuntime←'runtime/libcodfns.so'
+CodfnsRuntime←'./libcodfns.so'
 MtNTE←0 2⍴⊂''
 MtAST←0 4⍴0
 MtA←0 2⍴⊂''
