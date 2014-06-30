@@ -19,4 +19,7 @@ LK6_TEST←{#.UT.expect←6.5 ⋄ ((⍉⍪'g' 2)LKCL'ut/G'⊣C.FI).g 5.5}
 LK7_TEST←{#.UT.expect←7 ⋄ 1((⍉⍪'h' 2)LKCL'ut/H'⊣C.FI).h 5}
 LK8_TEST←{#.UT.expect←7.5 ⋄ 1.5((⍉⍪'h' 2)LKCL'ut/H'⊣C.FI).h 5}
 LK9_TEST←{#.UT.expect←5 6 ⋄ ((2 2⍴'f' 2 'g' 2)LKCL'ut/FG'⊣C.FI).(f,g)5}
+EM_TEST←{#.UT.expect←1 ⋄ 11::1 ⋄ #.Codfns.E 11 ⋄ 0}
+ED_TEST←{#.UT.expect←1 ⋄ 11::1 ⋄ 'a'#.Codfns.E 11 ⋄ 0}
+Eachk1_TEST←{#.UT.expect←X←1 4⍴0 'a' '' (0 2⍴⍬) ⋄ ⊢ #.Codfns.Eachk X}
 
