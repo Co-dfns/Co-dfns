@@ -51,106 +51,76 @@ array_cp(struct codfns_array *, struct codfns_array *);
 void
 array_mt(struct codfns_array *);
 
+/* Scalar Type Enumerations
+ * 
+ * These enumerations aid in the use of these macros and definitions. 
+ * In particular, we use notations like d and i to represent types 
+ * during the invocation of the macros. These type enumerations help 
+ * to make sure that they resolve to the right type number in the 
+ * type field of the struct codfns_array structures.
+ */
+
+enum { apl_type_e, apl_type_b, apl_type_i, apl_type_d, apl_type_c };
+
+/* Typedefs for macros
+ *
+ * Like the enumerations above, these allow us to map specific types 
+ * to the shortcuts d, i, and so forth inside of our macros.
+ */
+
+typedef int64_t type_i;
+typedef double type_d;
+
 /* Runtime functions */
 
-int
-codfns_addm(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
+#define runtime_array(nm) \
+int \
+nm(struct codfns_array *, struct codfns_array *, struct codfns_array *)
 
-int
-codfns_addd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
+#define runtime_scalard(nm, zt, rt, lt) \
+int \
+nm##d##_##rt##lt(type_##zt *, type_##rt *, type_##lt *)
 
-int
-codfns_subtractm(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
+#define runtime_scalarm(nm, zt, rt) \
+int \
+nm##m##_##rt(type_##zt *, type_##rt *)
 
-int
-codfns_subtractd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
+#define primitive(nm, mdt, mit, dddt, ddit, didt, diit) \
+runtime_array(codfns_##nm##m); \
+runtime_array(codfns_##nm##d); \
+runtime_scalarm(nm, mdt, d); \
+runtime_scalarm(nm, mit, i); \
+runtime_scalard(nm, dddt, d, d); \
+runtime_scalard(nm, ddit, d, i); \
+runtime_scalard(nm, didt, i, d); \
+runtime_scalard(nm, diit, i, i);
 
-int
-codfns_multiplym(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
+#define primitived(nm, dddt, ddit, didt, diit) \
+runtime_array(codfns_##nm##d); \
+runtime_scalard(nm, dddt, d, d); \
+runtime_scalard(nm, ddit, d, i); \
+runtime_scalard(nm, didt, i, d); \
+runtime_scalard(nm, diit, i, i);
 
-int
-codfns_multiplyd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
+#define primitivem(nm, mdt, mit) \
+runtime_array(codfns_##nm##m); \
+runtime_scalarm(nm, mdt, d); \
+runtime_scalarm(nm, mit, i);
 
-int
-codfns_dividem(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_divided(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_residuem(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_residued(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_powerm(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_powerd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_logm(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_logd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_maxm(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_maxd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_minm(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_mind(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_lessd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_lesseqd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_equald(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_neqd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_greateqd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_greaterd(struct codfns_array *,
-    struct codfns_array *, struct codfns_array *);
-
-int
-codfns_notm(struct codfns_array *, 
-    struct codfns_array *, struct codfns_array *);
-    
+primitive(add, i, d, d, d, d, i)
+primitive(subtract, d, i, d, d, d, i)
+primitive(multiply, d, i, d, d, d, i)
+primitive(divide, d, d, d, d, d, d)
+primitive(residue, d, i, d, d, d, i)
+primitive(power, d, i, d, d, d, i)
+primitive(log, d, d, d, d, d, d)
+primitive(max, d, i, d, d, d, i)
+primitive(min, d, i, d, d, d, i)
+primitived(less, i, i, i, i)
+primitived(lesseq, i, i, i, i)
+primitived(equal, i, i, i, i)
+primitived(neq, i, i, i, i)
+primitived(greateq, i, i, i, i)
+primitived(greater, i, i, i, i)
+primitivem(not, i, i)
 
