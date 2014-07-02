@@ -1,0 +1,6 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>All valid D-fns programs should be valid Co-Dfns programs unless
+  they have a programming error that the compiler can catch that the interpreter
+  cannot catch until runtime. In other words, a valid D-fns program is
+  one that runs without unintended error as well as just parsing correctly.</simpara>
+</listitem>

@@ -1,0 +1,10 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Element: Guard</title>
+    <simpara>
+      The <varname>Guard</varname> element is the exact same in
+      behavior and specification as the
+      <varname>Condition</varname> element except that it
+      indicates when an error guard has been introduced instead of
+      a conditional.
+    </simpara>
+  </section>

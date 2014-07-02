@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Software Architecture</title>
+  </info>
+  <simpara>
+    This document describes the high-level system architecture of the
+    Co-Dfns compiler at the module and top levels. This includes the
+    high-level design of passes and their box-based specifications,
+    the programming approach used to develop each of the passes and
+    the methodology of handling state-box specifications.
+  </simpara>
+  <simpara>
+    The methodology for handling the state-based specifications are
+    different and differ from the practices found in normal
+    box-structure methods. This is because the overal design favors a
+    pure-functional approach, or one that is externally functional for
+    any given level of abstraction. This necessitates no change in the
+    clear or black box specifications, but requires a different
+    approach for state-based structured specification and design. The
+    <citetitle>Cleanroom Engineering Guide</citetitle> documents this
+    new approach for those who wish to understand it in more detail as
+    it is understood within the scope of this project.
+  </simpara>
+  <simpara>
+    After reading this document, the approach, design, and structure
+    of the compiler should be evident, and it should be possible to
+    navigate source files without difficulty or to understand the
+    reasoning behind the creation of certain essential functions or
+    how they fit together. The dependencies, orderings, and
+    relationships between functions and elements should be clear, as
+    should be the expectations and implied elements not clearly
+    documented in the source code itself. Developers who wish to
+    understand the source code should rely heavily on this document as
+    the main document that guides the structure and implementation of
+    the compiler.
+  </simpara>
+  <xi:include href="asset_analysis.xml" />
+  <xi:include href="software_strategy.xml" />
+  <xi:include href="top_level_structure.xml" />
+  <xi:include href="runtime_design.xml" />
+</chapter>

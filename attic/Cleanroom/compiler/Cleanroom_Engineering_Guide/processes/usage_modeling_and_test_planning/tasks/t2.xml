@@ -1,0 +1,13 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 2</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Document findings of team verification reviews</title>
+        <para>
+          Create an <citetitle>Increment Verification Report</citetitle>
+          that documents all faults, problems, and improvements identified in 
+          verification reviews, and assign corrective actions.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>

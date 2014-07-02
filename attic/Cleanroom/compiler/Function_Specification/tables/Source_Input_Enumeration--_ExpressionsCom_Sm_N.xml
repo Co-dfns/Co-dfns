@@ -1,0 +1,136 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Expressions, Sm N</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sm N E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N Es</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Sm N Fea</td>
+      <td>wait</td>
+      <td>Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N Fed</td>
+      <td>wait</td>
+      <td>Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N Fem</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Sm N [</td>
+      <td>wait</td>
+      <td>N [</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N ]</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Sm N (</td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N )</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Sm N ;</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Sm N
+        <literal>←</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Sm N Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Sm N N</td>
+      <td>okay</td>
+      <td>Sm N</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N S</td>
+      <td>okay</td>
+      <td>Sm S</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N Sm</td>
+      <td>wait</td>
+      <td>Fea</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N Sd</td>
+      <td>wait</td>
+      <td>N Sd</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N Va</td>
+      <td>okay</td>
+      <td>Sm N</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N Vna</td>
+      <td>okay</td>
+      <td>Sm N</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Sm N Vi</td>
+      <td>Value Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Sm N Vnu</td>
+      <td>wait</td>
+      <td>N Vnu</td>
+      <td>4, 10</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Cleanroom Engineering Guide</title>
+  </info>
+  <simpara>
+    This document describes the tailored Cleanroom process to develop 
+    the Co-dfns compiler. The current limited manpower for the project 
+    drives most of these adaptations. This scales down a number of 
+    processes since other processes exist in their place and do not 
+    contribute to the primary development team.
+  </simpara>
+  <simpara>
+    The descriptions, enumerations, and organization of these processes is 
+    taken directly from <citetitle>The Cleanroom Reference Model</citetitle> 
+    as found in <citetitle>Cleanroom Software Engineering</citetitle> by 
+    Prowell, et al. but have been adapted to fit this project. Since 
+    not everyone is expected to have a copy of this book, this guide 
+    attempts to explicate as far as possible the specific process details 
+    for successful execution, but it does not attempt to replace the 
+    above reference for an understanding of Cleanroom Software Engineering 
+    in general. 
+  </simpara>
+  <xi:include href="processes.xml" />
+</chapter>

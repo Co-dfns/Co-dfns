@@ -1,0 +1,8 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Increment Verification Report</glossterm>
+      <glossdef>
+        <simpara>
+          The record of experience during correctness verification. 
+        </simpara>
+      </glossdef>
+    </glossentry>

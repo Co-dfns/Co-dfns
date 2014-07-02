@@ -1,0 +1,42 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Element: Token</title>
+    <simpara>
+      The <varname>Token</varname> element is a body-less element
+      that represents a single token which is a symbol or element
+      in the tokenizer that does not or need not appear in the
+      final AST because it is subsumed by the structured nature of
+      the document. In other words, it represents some character
+      or element in the serialization of the syntax that controls
+      the structure of the code.
+    </simpara>
+    <formalpara>
+      <title>Token contents</title>
+      <para>
+        The <varname>Token</varname> element does not contain any
+        body elements and should be empty.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Token attributes</title>
+      <para>
+        The <parameter>name</parameter> attribute is the value of the token, or indicates the
+        literal token value. The <parameter>class</parameter> indicates the kind of token
+        which it is, this would be one of the following:
+        <simplelist type="inline">
+          <member><literal>delimiter</literal></member>
+          <member><literal>separator</literal></member>
+          <member><literal>function</literal></member>
+          </simplelist>.  The last member,
+          <literal>function</literal>, indicates that the token is
+          a part of the function notation. The
+          <literal>delimiter</literal> class contains all of the
+          tokens that are paired up with one another in one form
+          or another. The <literal>sepraator</literal> class
+          indicates those tokens that are used to separate strings
+          or arrays of things, which can be repeated more than
+          once between more than two items if need be. This would
+          include things like the statement separator and the
+          index axis separator, the semi-colon.
+      </para>
+    </formalpara>
+  </section>

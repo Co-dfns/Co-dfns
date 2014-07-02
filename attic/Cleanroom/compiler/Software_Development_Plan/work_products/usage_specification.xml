@@ -1,0 +1,11 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Usage Specification</glossterm>
+      <glossdef>
+        <simpara>
+          Description of the expected users, usage scenarios, and usage 
+          environments of the software. It contains definitions of 
+          high-level usage models that record this information, as well 
+          as the results of model analysis.
+        </simpara>
+      </glossdef>
+    </glossentry>

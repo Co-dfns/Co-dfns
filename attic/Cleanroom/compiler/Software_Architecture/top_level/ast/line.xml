@@ -1,0 +1,29 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Element: Line</title>
+    <simpara>
+      The <varname>Line</varname> element encapsulates sets of
+      tokens on a line, together with the comment on the line if
+      available.
+    </simpara>
+    <formalpara>
+      <title>Line Contents</title>
+      <para>
+        Lines consist of any of the following in any order in any amount:
+        <simplelist type="inline">
+          <member><varname>Token</varname></member>
+          <member><varname>Primitive</varname></member>
+          <member><varname>Number</varname></member>
+          <member><varname>String</varname></member>
+          <member><varname>Variable</varname></member>
+          </simplelist>.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Line Attributes</title>
+      <para>
+        The <parameter>comment</parameter> is used to store the
+        comment string that appears on a line or is empty
+        otherwise.
+      </para>
+    </formalpara>
+  </section>

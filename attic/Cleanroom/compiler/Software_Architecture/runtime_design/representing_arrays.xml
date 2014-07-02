@@ -1,0 +1,77 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Representing Arrays</title>
+  <simpara>
+    The array data structure is the most critical structure in
+    the system, and deserves careful consideration. The
+    following table details the fields of the array structure
+    and all the elements necessary to construct a valid array
+    structure.
+  </simpara>
+  <informaltable frame="void" rules="rows">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Width (Bits)</th>
+        <th colspan="2">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Rank</td>
+        <td>
+          <simplelist type="horiz">
+            <member>unsigned</member>
+            <member>integer</member>
+          </simplelist>
+        </td>
+        <td>16</td>
+        <td colspan="2">The count of the dimensions of the array</td>
+      </tr>
+      <tr>
+        <td>Size</td>
+        <td>
+          <simplelist type="horiz">
+            <member>unsigned</member>
+            <member>integer</member>
+          </simplelist>
+        </td>
+        <td>64</td>
+        <td colspan="2">The count of the elements in the array</td>
+      </tr>
+      <tr>
+        <td>Type</td>
+        <td>
+          <simplelist type="horiz">
+            <member>unsigned</member>
+            <member>integer</member>
+          </simplelist>
+        </td>
+        <td>8</td>
+        <td colspan="2">The type of the array elements</td>
+      </tr>
+      <tr>
+        <td>Shape</td>
+        <td>Pointer</td>
+        <td>N/A</td>
+        <td colspan="2">A pointer to the dimensions; each
+        dimension is a 32-bit unsigned integer</td>
+      </tr>
+      <tr>
+        <td>Elements</td>
+        <td>Pointer</td>
+        <td>N/A</td>
+        <td colspan="2">A pointer to the buffer containing the
+        elements; the nature of the elements is dependent on the
+        Type</td>
+      </tr>
+      <tr>
+        <td>Kinds</td>
+        <td>Pointer</td>
+        <td>N/A</td>
+        <td colspan="2">A pointer to the types of the elements
+        in a mixed array; only necessary for mixed arrays</td>
+      </tr>
+    </tbody>
+  </informaltable>
+</section>

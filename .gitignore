@@ -21,6 +21,11 @@ Thumbs.db
 conf/fo.xsl
 doc/tech/titlepage.xsl
 conf/mk.conf
-scratch/
+tmp/
 *.if
 titlepage.xsl
+Codfns.dyalog
+ut.dyalog
+at.dyalog
+aplcore
+

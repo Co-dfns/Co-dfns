@@ -1,0 +1,7 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    The compiler should not support the use of the
+    <function>⌶</function>
+    -beam functionality.
+  </simpara>
+</listitem>

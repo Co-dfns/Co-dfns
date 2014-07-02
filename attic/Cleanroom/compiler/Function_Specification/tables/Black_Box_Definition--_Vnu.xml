@@ -1,0 +1,71 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Black Box Definition: Vnu</caption>
+  <thead>
+    <tr>
+      <th colspan="2">Conditions</th>
+      <th>Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top Func Fnex
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Nest
+            <literal>∊</literal>
+            NONE
+          </member>
+          <member>
+            Class
+            <literal>∊</literal>
+            ATOM FUNC SELECT
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            EMPTY LIT
+          </member>
+        </simplelist>
+      </td>
+      <td>wait</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Nest
+            <literal>∊</literal>
+            RBRACK
+          </member>
+        </simplelist>
+      </td>
+      <td>wait</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,15 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Statistical Testing Report</glossterm>
+      <glossdef>
+        <simpara>
+          The record of experience in testing, and includes number of 
+          compilation sessions, faults found duing compilation, 
+          number of testing sessions, number of test cases executed 
+          during each session, failures observed during test case 
+          executions, faults found during investigation of failures, time 
+          required to correct each fault, and any other information 
+          relevant to assessment of the correctness of the executing 
+          software. 
+        </simpara>
+      </glossdef>
+    </glossentry>

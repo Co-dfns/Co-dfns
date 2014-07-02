@@ -1,0 +1,18 @@
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Static global integer constants</member>
+      <member>Functions that return integer constants</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Support the Integer sub-class of N at top-level</member>
+      <member>Support <literal>←</literal> at top-level</member>
+      <member>Support V at top-level</member>
+      <member>Support { and } at the top-level</member>
+      <member>Support Integer sub-class of N at Function level</member>
+      <member>New Stimuli Support: N <literal>←</literal> V { }</member>
+    </simplelist>
+  </td>
+</tr>

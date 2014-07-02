@@ -1,0 +1,18 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>ParseFunc</function>
+      is not returning three values in the first line.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      Add the obvious third return value to
+      <function>ParseFunc</function>
+      .
+    </para>
+  </formalpara>
+</listitem>

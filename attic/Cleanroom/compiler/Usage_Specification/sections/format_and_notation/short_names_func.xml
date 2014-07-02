@@ -1,0 +1,64 @@
+    <table frame="void" rules="rows"
+           xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <caption>Short Names for Function States</caption>
+      <thead>
+        <tr>
+          <th>Canonical Sequence</th>
+          <th>Short Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>empty</td>
+          <td>N/A</td>
+        </tr>
+        <tr>
+          <td>{</td>
+          <td>Open</td>
+        </tr>
+        <tr>
+          <td>{ E</td>
+          <td>E</td>
+        </tr>
+        <tr>
+          <td>{ Vfo</td>
+          <td>Vfo</td>
+        </tr>
+        <tr>
+          <td>{ Vu</td>
+          <td>Vu</td>
+        </tr>
+        <tr>
+          <td>{ E :</td>
+          <td>E:</td>
+        </tr>
+        <tr>
+          <td>{ Vfo <literal>←</literal></td>
+          <td>V<literal>←</literal></td>
+        </tr>
+        <tr>
+          <td>{ Vu <literal>←</literal></td>
+          <td>U<literal>←</literal></td>
+        </tr>
+        <tr>
+          <td>{ E : E</td>
+          <td>E:E</td>
+        </tr>
+        <tr>
+          <td>{ Vfo <literal>←</literal> Fe</td>
+          <td>V<literal>←</literal>Fe</td>
+        </tr>
+        <tr>
+          <td>{ Vfo <literal>←</literal> Vfo</td>
+          <td>V<literal>←</literal>V</td>
+        </tr>
+        <tr>
+          <td>{ Vfo <literal>←</literal> Vu</td>
+          <td>V<literal>←</literal>U</td>
+        </tr>
+        <tr>
+          <td>{ Vu <literal>←</literal> Fe</td>
+          <td>U<literal>←</literal>Fe</td>
+        </tr>
+      </tbody>
+    </table>

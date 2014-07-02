@@ -1,0 +1,11 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Increment Certification Report</glossterm>
+      <glossdef>
+        <simpara>
+          Contains the values for measures of the statistical goals and 
+          measures of process control. It is the means by which development 
+          either progresses or enters into engineering change, depending 
+          on the quality results reported by this report.
+        </simpara>
+      </glossdef>
+    </glossentry>

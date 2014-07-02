@@ -1,0 +1,47 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Entry</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <para>
+        The process begins when one of the entry criteria is satisfied.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Entry 1</glossterm>
+    <glossdef>
+      <para>
+        The <citetitle>Software Requirements</citetitle> have been partially or 
+        fully completed.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Entry 2</glossterm>
+    <glossdef>
+      <para>
+        The <citetitle>Function Specification</citetitle> requires revision 
+        for changes to the <citetitle>Software Requirements</citetitle>
+        or for changes from increment specification, development, or 
+        certification.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Entry work products and the following supporting work products 
+        are available</title>
+        <para>
+          The <citetitle>Engineering Chang eLog</citetitle> describes 
+          proposed changes, if any. The <citetitle>Usage 
+          Specification</citetitle>, if any, is used as a check on the 
+          completeness and consistency of the <citetitle>Function
+          Specification</citetitle>.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>
+</glosslist>

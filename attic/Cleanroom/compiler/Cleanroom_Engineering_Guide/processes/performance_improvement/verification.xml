@@ -1,0 +1,11 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Verification</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <para>
+        (See <xref linkend="ceg_proc_common" />)
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

@@ -1,0 +1,21 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      On Increment 5 test 16 there is a LENGTH ERROR in 
+      AnchorVars[12] with the following error message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[12] (f⌿3⌷⍉w)⍪←↓z,∘⍪⍨⊂'alloca'</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The <varname>f</varname> mask contains only those scopes 
+      indicated by <classname>Function</classname> nodes. However, 
+      in the calculation of the scopes, we also include the root 
+      node as a scope. This means that there is an off by one error 
+      here. To fix this, we can simply use the <varname>rf</varname>
+      mask, which includes the root node.
+    </para>
+  </formalpara>
+</listitem>

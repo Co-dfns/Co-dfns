@@ -1,0 +1,49 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Entry</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <para>
+        The process begins when one of the entry criteria is satisfied.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Entry 1</glossterm>
+    <glossdef>
+      <para>
+        A new <citetitle>Increment Design</citetitle> has been completed
+        or is in progress.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Entry 2</glossterm>
+    <glossdef>
+      <para>
+        A reengineered or corrected <citetitle>Increment Design</citetitle>
+        has been completed or is in progress.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Entry work products and the following supporting work
+        products are available</title>
+        <para>
+          The <citetitle>Function Specification</citetitle> define the 
+          required external behavior of the functions allocated to the 
+          increment in the 
+          <citetitle>Increment Construction Plan</citetitle>.
+        </para>
+      </formalpara>
+      <para>
+        The <citetitle>Software Architecture</citetitle> defines the 
+        architectural strategy to be used in the
+        <citetitle>Increment Design</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

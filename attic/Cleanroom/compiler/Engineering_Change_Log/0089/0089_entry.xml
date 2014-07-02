@@ -1,0 +1,20 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      An INDEX ERROR in AnchorVars[25] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[25] (v⌿3⌷⍉w)⍪←↓(⊂'slot'),⍪⍕¨vi⊃¨⊂i</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      When building up the <varname>v</varname> bitvector which contains 
+      the set of named variables. the line which removes the 
+      <varname>⍺</varname> and <varname>⍵</varname> variables from this 
+      list incorrectly enclosed the membership set, which results in no 
+      such variables being removed from the bitvector. Without this 
+      enclose, it works.
+    </para>
+  </formalpara>
+</listitem>

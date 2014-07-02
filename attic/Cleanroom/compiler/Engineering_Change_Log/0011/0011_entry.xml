@@ -1,0 +1,16 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>Tokenize</function>
+      function identifies comments incorrectly.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>The code that finds the index incorrectly treats the non-scalar
+    set of lines as a scalar, leading to a single index value that cannot
+    be correct.</para>
+  </formalpara>
+</listitem>

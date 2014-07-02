@@ -1,0 +1,24 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Element: Ambiguous</title>
+    <simpara>
+      There are some cases where a given expression may be
+      ambiguous with the information that we have now. In order to
+      move forward, we allow for a given parsing to have ambiguous
+      expression parses when the correct information cannot be
+      determined.
+    </simpara>
+    <formalpara>
+      <title>Ambiguous contents</title>
+      <para>
+        The contents of a <varname>Ambiguous</varname> element is
+        one or more <varname>FuncExpr</varname> or
+        <varname>Expression</varname> elements.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Ambiguous attributes</title>
+      <para>
+        There are no attributes for the <varname>Ambiguous</varname> element.
+      </para>
+    </formalpara>
+  </section>

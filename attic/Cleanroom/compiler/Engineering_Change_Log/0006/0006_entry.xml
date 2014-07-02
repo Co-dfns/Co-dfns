@@ -1,0 +1,8 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>An error in the declaration of an FFI function was discovered
+    during certification. This must be adjusted before further certification
+    can proceed.</para>
+  </formalpara>
+</listitem>

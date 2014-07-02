@@ -1,0 +1,5 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>The Co-Dfns language and the compiler may introduce system functions
+  for its own use provided that they do not conflict with system functions
+  already in use by the interpreter.</simpara>
+</listitem>

@@ -1,0 +1,22 @@
+        <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+          <td>Saturday, December 14th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Engineering Change 18 Applied
+              </member>
+              <member>
+                Engineering Change 19 Applied
+              </member>
+              <member>
+                Exiting Increment 2 Statistical Testing and Certification
+              </member>
+              <member>
+                Increment 2 Successfully Certified
+              </member>
+              <member>
+                Entering Increment 3 Design
+              </member>
+            </simplelist>
+          </td>
+        </tr>

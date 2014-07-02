@@ -1,0 +1,13 @@
+        <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+          <td>Wednesday, December 18th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>
+                Exiting Increment 3 Design
+              </member>
+              <member>
+                Entering Increment 3 Usage Modeling and Test Planning
+              </member>
+            </simplelist>
+          </td>
+        </tr>

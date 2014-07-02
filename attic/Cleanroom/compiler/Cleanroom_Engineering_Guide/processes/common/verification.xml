@@ -1,0 +1,32 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Common Verification</title>
+  <glossentry>
+    <glossterm>Verification 1</glossterm>
+    <glossdef>
+      <para>
+        Review the status of the process with management, the project team, 
+        peer groups, and the customer.
+      </para>
+      <para>
+        These verification activities include confirming that the process 
+        was performed as defined in the <citetitle>Cleanroom Engineering 
+        Guide</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Verification 2</glossterm>
+    <glossdef>
+      <para>
+        Review work products created or updated during the process with 
+        the project team. 
+      </para>
+      <para>
+        Work products are verified against properties defined for them 
+        in the <citetitle>Cleanroom Engineering Guide</citetitle>. Work 
+        products under review are verified to be fully traceable to the 
+        work products from which they were derived. 
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

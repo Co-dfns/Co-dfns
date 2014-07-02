@@ -1,0 +1,10 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Statistical Testing and Certification Process</title>
+  <xi:include href="statistical_testing_and_certification/objectives.xml" />
+  <xi:include href="statistical_testing_and_certification/entry.xml" />
+  <xi:include href="statistical_testing_and_certification/tasks.xml" />
+  <xi:include href="statistical_testing_and_certification/verification.xml" />
+  <xi:include href="statistical_testing_and_certification/measurement.xml" />
+  <xi:include href="statistical_testing_and_certification/exit.xml" />
+</section>

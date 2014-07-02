@@ -1,0 +1,87 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Representing Scalars</title>
+  <simpara>
+    Each array has a buffer pointing to a set of elements. How these elements are
+    arrayed in the buffer depends on the type of the scalar. The following table
+    details the types of scalars, and their structures.
+  </simpara>
+  <informaltable frame="void" rules="rows">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th colspan="2">Name</th>
+        <th colspan="2">Type</th>
+        <th colspan="2">Width (Bits)</th>
+        <th colspan="3">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0</td>
+        <td colspan="2">Empty</td>
+        <td colspan="2">N/A</td>
+        <td colspan="2">N/A</td>
+        <td colspan="3">A special type for empty or null returns</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td colspan="2">Boolean</td>
+        <td colspan="2">
+          <simplelist type="horiz">
+            <member>unsigned</member>
+            <member>integer</member>
+          </simplelist>
+        </td>
+        <td colspan="2">1</td>
+        <td colspan="3">A single boolean value; used to compress a bitvector</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td colspan="2">Integer</td>
+        <td colspan="2">
+          <simplelist type="horiz">
+            <member>signed</member>
+            <member>integer</member>
+          </simplelist>
+        </td>
+        <td colspan="2">64</td>
+        <td colspan="3">A signed integer value</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td colspan="2">Floating</td>
+        <td colspan="2">IEEE Float</td>
+        <td colspan="2">64</td>
+        <td colspan="3">A floating point value</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td colspan="2">Character</td>
+        <td colspan="2">UCS-4/UTF-32</td>
+        <td colspan="2">32</td>
+        <td colspan="3">A single Unicode Character</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td colspan="2">Complex</td>
+        <td colspan="2">{3, 3}</td>
+        <td colspan="2">128</td>
+        <td colspan="3">A complex number represented as a pair of floating point values</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td colspan="2">Mixed</td>
+        <td colspan="2">Varied</td>
+        <td colspan="2">Varied</td>
+        <td colspan="3">Any scalar value, whose type is indicated by an auxiliary vector</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td colspan="2">Nested</td>
+        <td colspan="2">Array</td>
+        <td colspan="2">sizeof(Array)</td>
+        <td colspan="3">An array header representing an element in a nested array</td>
+      </tr>
+    </tbody>
+  </informaltable>
+</section>

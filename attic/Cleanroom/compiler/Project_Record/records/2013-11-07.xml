@@ -1,0 +1,12 @@
+        <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+          <td>Thursday, November 7th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>Exited Increment 2 Design</member>
+              <member>Entering Function Specification</member>
+              <member>Update <citetitle>Function Specification</citetitle></member>
+              <member>Exiting Function Specification</member>
+              <member>Entering Increment 2 Design</member>
+            </simplelist>
+          </td>
+        </tr>

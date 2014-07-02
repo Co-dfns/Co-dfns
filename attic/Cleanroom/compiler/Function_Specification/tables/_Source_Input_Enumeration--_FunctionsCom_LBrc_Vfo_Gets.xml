@@ -1,0 +1,168 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>
+    Source Input Enumeration: Functions, { Vfo
+    <literal>←</literal>
+  </caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        E
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+      </td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fnd
+      </td>
+      <td>wait</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+      </td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fnm
+      </td>
+      <td>wait</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+      </td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        {
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        }
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        :
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        ::
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        <literal>⋄</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        <literal>←</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Break
+      </td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Nl
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Vfo
+      </td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Vu
+      </td>
+      <td>wait</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

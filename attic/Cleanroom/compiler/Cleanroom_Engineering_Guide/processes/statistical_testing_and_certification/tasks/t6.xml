@@ -1,0 +1,21 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 6</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Compare certification measures with certification goals</title>
+        <para>
+          Compare the values of trends in the certification measures with 
+          project goals for product quality and process control.
+        </para>
+      </formalpara>
+      <para>
+        If appropriate, combine certification measures from the current
+        statistical testing experiment with measures from other
+        experiments.
+      </para>
+      <para>
+        Document evaluations in the <citetitle>Increment Certification 
+        Report</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>

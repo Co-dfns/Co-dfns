@@ -1,9 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>
-    [Derived Requirement 6] The namespace returned by
-    <function>CoDfns.Fix</function>
-    should allow both calling of the functions defined in the given namespace
-    script as well as rebinding them to names outside of the namespace
-    in a manner consistent with normally fixed namespaces.
-  </simpara>
-</listitem>

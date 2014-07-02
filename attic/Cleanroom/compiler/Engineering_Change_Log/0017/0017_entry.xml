@@ -1,0 +1,16 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      Usage Modeling has identified a number of potential redundancies
+      in the Sequence Enumeration. Recommendation is to remove these redundancies
+      to simplify the
+      <citetitle>Function Specification</citetitle>
+      .
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>Analysis pending.</para>
+  </formalpara>
+</listitem>

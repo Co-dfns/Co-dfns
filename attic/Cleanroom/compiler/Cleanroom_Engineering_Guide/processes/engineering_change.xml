@@ -1,0 +1,10 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Engineering Change Process</title>
+  <xi:include href="engineering_change/objectives.xml" />
+  <xi:include href="engineering_change/entry.xml" />
+  <xi:include href="engineering_change/tasks.xml" />
+  <xi:include href="engineering_change/verification.xml" />
+  <xi:include href="engineering_change/measurement.xml" />
+  <xi:include href="engineering_change/exit.xml" />
+</section>

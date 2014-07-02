@@ -1,0 +1,30 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Black Box Definition: Fix</caption>
+  <thead>
+    <tr>
+      <th>Conditions</th>
+      <th>Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top
+          </member>
+          <member>
+            Fix
+            <literal>∊</literal>
+            No
+          </member>
+        </simplelist>
+      </td>
+      <td>null</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>

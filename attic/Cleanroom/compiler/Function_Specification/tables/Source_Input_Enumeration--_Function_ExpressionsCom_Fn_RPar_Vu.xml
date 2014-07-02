@@ -1,0 +1,253 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Function Expressions, Fn ( Vu</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fn ( Vu E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Ea</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Fea</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Feaa</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Fed</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Feda</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Fem</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Fema</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Feo</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Fn</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Fnm</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Fnd</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu [</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu ]</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu (</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu )</td>
+      <td>Value Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>←</literal>
+      </td>
+      <td>wait</td>
+      <td>Fn (</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>⍨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>∘</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>¨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>.</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>⍣</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>/</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>⌿</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>\</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vu
+        <literal>⍀</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu D</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Da</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu M</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Ma</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Vi</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Vf</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Vo</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vu Vu</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

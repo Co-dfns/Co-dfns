@@ -1,0 +1,56 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Entry</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <para>
+        The process begins when one of the entry criteria is satisfied.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Entry 1</glossterm>
+    <glossdef>
+      <para>
+        Candidate reusable assets identified in the 
+        <citetitle>Reuse Analysis Plan</citetitle> are to be evaluated 
+        and possibly reengineered for use in the software product.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Entry 2</glossterm>
+    <glossdef>
+      <para>
+        The <citetitle>Reengineering Plan</citetitle> and/or the 
+        <citetitle>Reengineered Software</citetitle> require revision 
+        for changes from specification, development, or certification 
+        activities.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Entry work products and the following supporting work products 
+        are available</title>
+        <para>
+          reused software and its supporting documentation are used
+          as the basis for creating the
+          <citetitle>Reengineered Software</citetitle>.
+        </para>
+      </formalpara>
+      <para>
+        The <citetitle>Engineering Change Log</citetitle>
+        describes proposed changes.
+        The <citetitle>Software Requirements</citetitle>,
+        <citetitle>Function Specification</citetitle>,
+        <citetitle>Usage Specification</citetitle>,
+        <citetitle>Software Architecture</citetitle>, and
+        <citetitle>Increment Construction Plan</citetitle>
+        are used to define requirements for reengineering reused software.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

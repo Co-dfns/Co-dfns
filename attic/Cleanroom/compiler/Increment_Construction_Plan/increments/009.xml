@@ -1,0 +1,12 @@
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Support bracketed indexing</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Support non-SELECT bracket expression states</member>
+    </simplelist>
+  </td>
+</tr>

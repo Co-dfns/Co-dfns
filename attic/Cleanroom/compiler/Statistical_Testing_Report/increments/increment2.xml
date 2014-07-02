@@ -1,0 +1,21 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0"
+           xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Increment 2</title>
+    <xi:include href="increment2_results.xml" />
+    <formalpara>
+      <title>Iteration 1, Test Case 8</title>
+      <para>
+        The <function>Int4Type</function> should be a niladic
+        function, but it is defined as a dfns, which will not
+        work.
+      </para>
+    </formalpara>
+    <formalpara>
+      <title>Iteration 2, Test Case 8</title>
+      <para>
+        In the LLVM output, the V9 rank is 1, rather than 0, and the 
+        shape contains a one element vector containing 1. This is 
+        incorrect for a single scalar value.
+      </para>
+    </formalpara>
+  </section>

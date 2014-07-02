@@ -1,0 +1,331 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Function Expressions, Fn</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fn E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Ea</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Fea</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Feaa</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Fed</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Feda</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Fem</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Fema</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Feo</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn Fn</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Fnm</td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fn Fnd</td>
+      <td>wait</td>
+      <td>Ea Fnd</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fn [</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn ]</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn (</td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Fn )</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>←</literal>
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>⍨</literal>
+      </td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>∘</literal>
+      </td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>¨</literal>
+      </td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>.</literal>
+      </td>
+      <td>wait</td>
+      <td></td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>⍣</literal>
+      </td>
+      <td>wait</td>
+      <td>Fn Fnd</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>/</literal>
+      </td>
+      <td>ambivalent axis</td>
+      <td>Ma</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>⌿</literal>
+      </td>
+      <td>ambivalent axis</td>
+      <td>Ma</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+      </td>
+      <td>monadic axis</td>
+      <td></td>
+      <td>4, D5</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>⍀</literal>
+      </td>
+      <td>monatic axis</td>
+      <td>
+        Fn
+        <literal>\</literal>
+      </td>
+      <td>4, D5</td>
+    </tr>
+    <tr>
+      <td>Fn Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Fn D</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Da</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn M</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Ma</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Vi</td>
+      <td>Value Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Vf</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Vo[Fnm]</td>
+      <td>ambivalent</td>
+      <td>Fn Fnm</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn Vo[Fnd]</td>
+      <td>wait</td>
+      <td>Fn Fnd</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fn Vo[
+        <literal>⍨</literal>
+        <literal>¨</literal>
+        ]
+      </td>
+      <td>ambivalent</td>
+      <td>Fn</td>
+      <td>4, 10, D5</td>
+    </tr>
+    <tr>
+      <td>
+        Fn Vo[
+        <literal>.</literal>
+        ]
+      </td>
+      <td>wait</td>
+      <td>
+        Fn
+        <literal>.</literal>
+      </td>
+      <td>4, 10, D5</td>
+    </tr>
+    <tr>
+      <td>
+        Fn Vo[
+        <literal>∘</literal>
+        ]
+      </td>
+      <td>wait</td>
+      <td>
+        Fn
+        <literal>∘</literal>
+      </td>
+      <td>4, 10, D5</td>
+    </tr>
+    <tr>
+      <td>
+        Fn Vo[
+        <literal>⍣</literal>
+        ]
+      </td>
+      <td>wait</td>
+      <td>Fn Fnd</td>
+      <td>4, 10, D5</td>
+    </tr>
+    <tr>
+      <td>
+        Fn Vo[
+        <literal>/</literal>
+        <literal>⌿</literal>
+        ]
+      </td>
+      <td>ambivalent axis</td>
+      <td>Fn /</td>
+      <td>4, 10, D5</td>
+    </tr>
+    <tr>
+      <td>
+        Fn Vo[
+        <literal>\</literal>
+        <literal>⍀</literal>
+        ]
+      </td>
+      <td>monadic axis</td>
+      <td>Fn \</td>
+      <td>4, 10, D5</td>
+    </tr>
+    <tr>
+      <td>Fn Vu</td>
+      <td>Value Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+  </tbody>
+</table>

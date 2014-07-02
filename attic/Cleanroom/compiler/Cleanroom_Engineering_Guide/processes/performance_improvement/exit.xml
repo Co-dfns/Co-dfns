@@ -1,0 +1,23 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Exit</title>
+  <glossentry>
+    <glossterm></glossterm>
+    <glossdef>
+      <para>
+        The process is complete when the exit criteria are satisfied.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Exit 1</glossterm>
+    <glossdef>
+      <para>
+        The <citetitle>Performance Improvement Plan</citetitle> has been 
+        applied and the recommendations have been implemented. Any 
+        changes, such as revisions to the <citetitle>Software Development 
+        Plan</citetitle> or <citetitle>Cleanroom Engineering Guide</citetitle>, 
+        have been completed.
+      </para>
+    </glossdef>
+  </glossentry>  
+</glosslist>

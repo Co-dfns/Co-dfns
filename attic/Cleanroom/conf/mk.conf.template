@@ -1,0 +1,19 @@
+# Configuration for building Co-dfns
+#
+# You'll want to set these variables according to your installation
+
+## DocBook Configuration
+#
+# You will need to set these appropriately if you want to build any of
+# the technical documentation for the compiler.
+
+# Set this to the location of your Docbook5 XSL Stylesheets, you should
+# see an fo/ and template/ directory as direct children of this directory
+
+DBSTYLES := /home/arcfide/Libraries/Docbook5-XSL/
+
+## Runtime Configuration
+#
+# Set this to alter the way that the runtime is compiled
+
+CFLAGS = -g -Wall -pedantic -std=c99

@@ -1,0 +1,61 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Certification Goals</title>
+    <simpara>
+      The following goals drive the certification effort and therefore 
+      encapsulate the core of the measurement requirements for the 
+      project. 
+    </simpara>
+    <simpara>
+      The project itself is considered a demonstration vehicle and initial 
+      product to move forward. As such, the software is not considered 
+      mission critical or sensitive to failures. It should, however, be 
+      adequately reliable for use in small scale industrial applications, 
+      meaning that failures, if they occur at all, should be immediate and 
+      obvious. 
+    </simpara>
+    <orderedlist>
+      <listitem>
+        <simpara>
+          The system should be semantically complete, and testing of all 
+          primitives and language features should succeed to a reasonable 
+          metric. No feature should be unimplemented to at least a basic 
+          degree.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Testing need not cover performance metrics, though testing and 
+          verification of optimizations should be conducted.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          System should test every requirement.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Testing should cover both compilation and execution of compiled 
+          code, and should cover both error conditions in compilation as 
+          well as error conditions in the executed code. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Certify the correctness and reliability of the compiled code to 
+          99% reliability at 95% confidence. 
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          Certify the reliability of executing the compiler to 90% at 95% 
+          confidence.
+        </simpara>
+      </listitem>
+      <listitem>
+        <simpara>
+          There should be no known faults in the generated code.
+        </simpara>
+      </listitem>
+    </orderedlist>
+  </section>

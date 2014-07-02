@@ -1,0 +1,36 @@
+    <informaltable frame="void" rules="rows"
+                   xmlns="http://docbook.org/ns/docbook" 
+                   version="5.0">
+      <thead>
+        <tr>
+          <th colspan="4">Standard pass: ConvPrims</th>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <th colspan="3">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Intended function</td>
+          <td colspan="3">
+            Convert primitive function calls to runtime function calls.
+          </td>
+        </tr>
+        <tr>
+          <td>Right argument</td>
+          <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+        </tr>
+        <tr>
+          <td>Output</td>
+          <td colspan="3">A valid <varname>Namespace</varname> AST</td>
+        </tr>
+        <tr>
+          <td>Invariant</td>
+          <td colspan="3">
+            On output all primitive function calls are converted to
+            runtime function calls.
+          </td>
+        </tr>
+      </tbody>
+    </informaltable>

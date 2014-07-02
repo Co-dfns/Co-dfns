@@ -1,0 +1,28 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Asset Analysis</title>
+  <simpara>
+    The <citetitle>Software Development Plan</citetitle> identifies
+    four to five major influences on the Software architecture:
+    LLVM, MiniKanren, Nanopass, and prototypes implemented in C,
+    C++, and Dyalog APL. MiniKanren is a specific implementation
+    suggestion for a specific component of the compiler, and as such
+    plays a less significant role in the Software Architecture. The
+    other components, however, play a very significant role in the
+    design of the software, and this section documents the analysis
+    of these elements as they relate to the design of the
+    system. There is a sub-section dedicated to each of these assets
+    as well as specific sections to deal with analysis of the
+    <citetitle>Function Specification</citetitle> and other
+    miscellaneous assets.
+  </simpara>
+  <xi:include href="asset_analysis/summary.xml" />
+  <xi:include href="asset_analysis/nanopass.xml" />
+  <xi:include href="asset_analysis/llvm.xml" />
+  <xi:include href="asset_analysis/parsing_prototypes.xml" />
+  <xi:include href="asset_analysis/runtime_prototypes.xml" />
+  <xi:include href="asset_analysis/performance_benchmarks.xml" />
+  <xi:include href="asset_analysis/function_specification.xml" />
+  <xi:include href="asset_analysis/lang_reference.xml" />
+  <xi:include href="asset_analysis/misc_observations.xml" />
+</section>

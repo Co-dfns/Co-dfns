@@ -1,0 +1,22 @@
+      <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+        <title>Function Enumeration</title>
+        <simpara>The recursive function stimuli are abstract stimuli that
+        represent the user-defined functions and the syntax for user defined
+        functions, including dyadic and monadic operators. Since they share
+        the same syntax at a high-level, we can describe them through a
+        single enumeration, relying on the Vi stimuli to encapsulate the
+        differences between them and hide that away.</simpara>
+        <xi:include href="tables/Source_Input_Enumeration--_Functions.xml"></xi:include>
+        <xi:include href="tables/Source_Input_Enumeration--_FunctionsCom_LBrc.xml"></xi:include>
+        <xi:include href="tables/Source_Input_Enumeration--_FunctionsCom_LBrc_E.xml"></xi:include>
+        <xi:include href="tables/Source_Input_Enumeration--_FunctionsCom_LBrc_Vfo.xml"></xi:include>
+        <xi:include href="tables/Source_Input_Enumeration--_FunctionsCom_LBrc_Vu.xml"></xi:include>
+        <xi:include href="tables/Source_Input_Enumeration--_FunctionsCom_LBrc_E_--.xml"></xi:include>
+        <xi:include href="tables/_Source_Input_Enumeration--_FunctionsCom_LBrc_Vfo_Gets.xml"></xi:include>
+        <xi:include href="tables/_Source_Input_Enumeration--_FunctionsCom_LBrc_Vu_Gets.xml"></xi:include>
+        <xi:include href="tables/Source_Input_Enumeration--_FunctionsCom_LBrc_E_--_E.xml"></xi:include>
+        <xi:include href="tables/_Source_Input_Enumeration--_FunctionsCom_LBrc_Vfo_Gets_Fe.xml"></xi:include>
+        <xi:include href="tables/_Source_Input_Enumeration--_FunctionsCom_LBrc_Vfo_Gets_Vfo.xml"></xi:include>
+        <xi:include href="tables/_Source_Input_Enumeration--_FunctionsCom_LBrc_Vfo_Gets_Vu.xml"></xi:include>
+        <xi:include href="tables/_Source_Input_Enumeration--_FunctionsCom_LBrc_Vu_Gets_Fe.xml"></xi:include>
+      </section>

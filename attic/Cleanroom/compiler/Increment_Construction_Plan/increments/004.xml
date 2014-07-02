@@ -1,0 +1,16 @@
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Support empty function bodies</member>
+      <member>Support functions of a single expression</member>
+      <member>Support conditional branching</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Complete all code to cover Bind
+      <literal>∊</literal> NO states in the Functions
+      space</member>
+    </simplelist>
+  </td>
+</tr>

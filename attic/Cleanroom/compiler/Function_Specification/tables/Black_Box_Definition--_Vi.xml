@@ -1,0 +1,61 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Black Box Definition: Vi</caption>
+  <thead>
+    <tr>
+      <th>Conditions</th>
+      <th>Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr Fnex
+          </member>
+          <member>
+            Nest
+            <literal>∊</literal>
+            NONE
+          </member>
+        </simplelist>
+      </td>
+      <td>VALUE ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            NONE
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+  </tbody>
+</table>

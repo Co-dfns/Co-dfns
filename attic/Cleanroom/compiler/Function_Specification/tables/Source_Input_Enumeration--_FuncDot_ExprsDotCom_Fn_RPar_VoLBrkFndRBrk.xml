@@ -1,0 +1,253 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Func. Exprs., Fn ( Vo[Fnd]</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fn ( Vo[Fnd] E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Ea</td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Fea</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Feaa</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Fed</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Feda</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Fem</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Fema</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Feo</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Fn</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Fnm</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Fnd</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] [</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] ]</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] (</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] )</td>
+      <td>wait</td>
+      <td>Fn Fnd</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>←</literal>
+      </td>
+      <td>wait</td>
+      <td>Fn (</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>⍨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>∘</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>¨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>.</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>⍣</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>/</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>⌿</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>\</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn ( Vo[Fnd]
+        <literal>⍀</literal>
+      </td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Break</td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] D</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Da</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] M</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Ma</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Vi</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Vf</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Vo</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fn ( Vo[Fnd] Vu</td>
+      <td>subsumed</td>
+      <td>Fn ( Fe</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

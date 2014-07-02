@@ -1,0 +1,13 @@
+<formalpara xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Lightweight Management Process</title>
+  <para>
+    Because of the size of the team and because of external management 
+    entities that are not involved in the Cleanroom processes, the project 
+    requires only lightweight management as a part of the Cleanroom 
+    process. Specifically, the team can update the 
+    <citetitle>Project Record</citetitle> at each transition of processes with 
+    the appropriate information, without requiring explicit management 
+    decisions, which will be handled outside of the Cleanroom processes.
+  </para>
+</formalpara>
+

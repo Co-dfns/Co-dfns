@@ -1,0 +1,20 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A SYNTAX ERROR in
+      <function>AnchorVars[6]</function>
+      occurs with the following message.
+    </para>
+  </formalpara>
+  <screen>AnchorVars[6] nm←⍪⊃,/(⊂0⍴⊂''),Split¨nm ⍝ Split names and prepare</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The
+      <function>Split</function>
+      is missing a set of parentheses to ensure that the binding of the
+      left argument occurs as the last thing.
+    </para>
+  </formalpara>
+</listitem>

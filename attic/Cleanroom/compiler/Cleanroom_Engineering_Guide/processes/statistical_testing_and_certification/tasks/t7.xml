@@ -1,0 +1,26 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 7</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Decide whether to stop testing</title>
+        <para>
+          Positive case: Testing can be stopped and the software 
+          certified as fit for use if the current values of the certification
+          measures satisfy certification goals and if no failures have 
+          been observed during testing of the current software version 
+          (or none worth the cost and risk of correction).
+        </para>
+      </formalpara>
+      <para>
+        Negative case: Testing should be stopped and the software
+        reengineered and reverified if process control standards have
+        been violated. Violation of process control standards occurs
+        when certification goals cannot be achieved given current
+        values of the certification measures and the remaining
+        schedule and resources for testing.
+      </para>
+      <para>
+        Document decisions in the <citetitle>Increment Certification Report</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>

@@ -1,0 +1,27 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      When parsing a function expression, the function expression node
+      and the body of the function both show up, but the
+      <type>Function</type>
+      node does not.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      This happens because at
+      <function>ParseFunc[16]</function>
+      we use
+      <literal>(Fd&lt;D)×</literal>
+      to strip off the
+      <type>Function</type>
+      node, while expecting it to be there at the end further down in the
+      code. This is wrong. Removing the above snippet of code fixes this
+      problem, and only includes the additional
+      <type>Function</type>
+      node, not any additional, unwanted nodes.
+    </para>
+  </formalpara>
+</listitem>

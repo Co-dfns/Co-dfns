@@ -1,0 +1,16 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         xml:id="ceg_proc_common">
+  <title>Common Cleanroom Process Elements</title>
+  <para>
+    The following common process elements belong to every Cleanroom 
+    process and receive treatment here to avoid duplication and 
+    improve concision.
+  </para>
+  <xi:include href="common/objectives.xml" />
+  <xi:include href="common/entry.xml" />
+  <xi:include href="common/tasks.xml" />
+  <xi:include href="common/verification.xml" />
+  <xi:include href="common/measurement.xml" />
+  <xi:include href="common/exit.xml" />
+</section>

@@ -1,7 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>
-    The compiler should take the form of a single public interface
-    <classname>CoDfns</classname>
-    that implements all public services.
-  </simpara>
-</listitem>

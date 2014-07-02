@@ -1,0 +1,17 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>Tokenize</function>
+      function fails to split in cases where the reduction fails because
+      of too few elements, namely, empty vectors.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>This reveals further problems with this first expression. It
+    fails to clearly split, and it also leaves the spaces around to be
+    cleaned up later or to introduce faulty tokens in the future.</para>
+  </formalpara>
+</listitem>

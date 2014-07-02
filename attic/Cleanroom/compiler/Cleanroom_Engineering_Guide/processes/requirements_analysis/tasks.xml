@@ -1,0 +1,44 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Tasks</title>
+  <glossentry>
+    <glossterm>Task 1</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Define the software requirements</title>
+        <para>
+          Understand and analyze the <citetitle>Statement of Work</citetitle>,
+          the customer's environment, and the context and mission of the 
+          product to be developed.
+        </para>
+      </formalpara>
+      <para>
+        Define requirements, including software function and usage, 
+        hardware and software configurations and environments, interfaces, 
+        operational constraints, dependencies, and goals for reliability, 
+        capacity, and performance.
+      </para>
+      <para>
+        Simplify requirements and investigate alternatives to improve usability 
+        and to reduce development and certification effort.
+      </para>
+      <para>
+        Document requirements and associated assumptions in the 
+        <citetitle>Software Requirements</citetitle> work product.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 2</glossterm>
+    <glossdef>
+      <para>
+        On completion of each increment, reconfirm or clarify requirements 
+        through customer evaluation of the executable system.
+      </para>
+      <para>
+        Monitor customer execution and evaluation of completed software 
+        increments to confirm existing <citetitle>Software Requirements</citetitle>
+        or to identify proposed changes.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

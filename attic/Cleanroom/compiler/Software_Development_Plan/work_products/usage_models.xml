@@ -1,0 +1,9 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Usage Models</glossterm>
+      <glossdef>
+        <simpara>
+          A formal representation of software use. Defines usage states 
+          and the probabilities of transitions betreen usage states. 
+        </simpara>
+      </glossdef>
+    </glossentry>

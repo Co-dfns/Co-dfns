@@ -1,0 +1,127 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Top-level, Fix Nss Nse Eot</caption>
+  <thead>
+    <tr>
+      <th colspan="2">Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot E</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Fe</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        Fix Nss Nse Eot
+        <literal>⋄</literal>
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        Fix Nss Nse Eot
+        <literal>←</literal>
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Break</td>
+      <td>Interrupt</td>
+      <td>empty</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Eot</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Fix</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Fnb</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Fne</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Fnf</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Lle</td>
+      <td>Internal Error</td>
+      <td>empty</td>
+      <td>D4</td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Lls</td>
+      <td>Namespace</td>
+      <td>empty</td>
+      <td>4, 16, 21</td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Nl</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Nse</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Nss</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Vi</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Vfo</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td colspan="2">Fix Nss Nse Eot Vu</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,56 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Organization</title>
+  <para>
+    This project has a single chief developer and primary author, 
+    while a number of additional contacts serve as points between 
+    the two institutions that are interested in the results of this 
+    project. 
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Points of contact</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Aaron Hsu</td>
+        <td>Chief Developer</td>
+        <td><email>arcfide@sacrideo.us</email></td>
+      </tr>
+      <tr>
+        <td>Andrew Lumsdaine</td>
+        <td>Academic Advisor</td>
+        <td><email>lums@indiana.edu</email></td>
+      </tr>
+      <tr>
+        <td>Morten Kromberg</td>
+        <td>Dyalog Primary</td>
+        <td><email>mkrom@dyalog.com</email></td>
+      </tr>
+      <tr>
+        <td>Jay Foad</td>
+        <td>Technical Advisor</td>
+        <td><email>jay@dyalog.com</email></td>
+      </tr>
+      <tr>
+        <td>Nikolay Nikolov</td>
+        <td>Technical Advisor</td>
+        <td><email>nick@dyalog.com</email></td>
+      </tr>
+      <tr>
+        <td>Gitte Christensen</td>
+        <td>Management/Funding</td>
+        <td><email>gc@dyalog.com</email></td>
+      </tr>
+      <tr>
+        <td>Helene Boesen</td>
+        <td>Invoicing and Funding</td>
+        <td><email>helene@dyalog.com</email></td>
+      </tr>
+    </tbody>
+  </table>
+</section>

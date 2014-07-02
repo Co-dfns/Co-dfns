@@ -1,0 +1,10 @@
+    <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <glossterm>Executable System</glossterm>
+      <glossdef>
+        <simpara>
+          Each increment is turned into an executable form during 
+          certification and testing. The final increment forms the 
+          completed software system in executable form for the end-user. 
+        </simpara>
+      </glossdef>
+    </glossentry>

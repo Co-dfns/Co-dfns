@@ -1,0 +1,32 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Objectives</title>
+  <glossentry>
+    <glossterm>Objective 1</glossterm>
+    <glossdef>
+      <para>
+        The increment design and implementation satisfy the 
+        <citetitle>Function Specification</citetitle>, the 
+        <citetitle>Software Architecture</citetitle>, and the 
+        <citetitle>Increment Construction Plan</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 2</glossterm>
+    <glossdef>
+      <para>
+        The increment design and implementation are a
+        verifiably correct decomposition of required functions.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 3</glossterm>
+    <glossdef>
+      <para>
+        Intellectual control over increment design and 
+        implementation is maintained through team reviews.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

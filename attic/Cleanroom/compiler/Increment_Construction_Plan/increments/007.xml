@@ -1,0 +1,17 @@
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Allow any type of legal variable name</member>
+      <member>Support nested expressions</member>
+      <member>Support function aliasing</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Ensure that generated names do not overlap with user names</member>
+      <member>Support all PAREN and non SELECT expression states</member>
+      <member>Support all Bind <literal>∊</literal> BOUND
+      UNBOUND Function states where ~Value <literal>∊</literal> FUNC</member>
+    </simplelist>
+  </td>
+</tr>

@@ -1,0 +1,117 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Tasks</title>
+  <glossentry>
+    <glossterm>Task 1</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Review the work products that are the basis for the 
+        increment design</title>
+        <para>
+          Review the <citetitle>Increment Constructin Plan</citetitle>
+          to identify the user functions to be implemented in the incrmeent.
+        </para>
+      </formalpara>
+      <para>
+        Review the <citetitle>Function Specification</citetitle>
+        for definitions of the user functions to be implemented in the 
+        increment.
+      </para>
+      <para>
+        Review the <citetitle>Software Architecture</citetitle> for 
+        the architectural strategy to be maintained in the increment.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 2</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Design and implement the software increment as a usage 
+        hierarchy through box structure decomposition</title>
+        <para>
+          Decompose history-based black box specifications into state-based 
+          state box specifications with equivalent behavior in all circumstances 
+          of use.
+        </para>
+      </formalpara>
+      <para>
+        Decompose state box specifications into procedure-based clear box 
+        designs with equivalent behavior in all circumstances of use. 
+        Introduce new black box uses in clear box designs as necessary.
+      </para>
+      <para>
+        Create clear box designs as structured procedures that 
+        fully define control and data relationships among new black box uses and 
+        other design elements.
+      </para>
+      <para>
+        Repeatedly decompose new black boxes into state box and clear box 
+        forms. Continue decomposition until designs can be implemented with no 
+        further invention required.
+      </para>
+      <para>
+        Maintain referential transparency between decompositions for 
+        intellectual control.
+      </para>
+      <para>
+        Incorporate components from the <citetitle>Reengineered Software</citetitle>
+        work product into the increment as planned.
+      </para>
+      <para>
+        Attach intended functions to the control structures in clear 
+        box procedure designs for use in correctness verification.
+      </para>
+      <para>
+        If necessary, translate designs into the implementation 
+        language and review for correct trasnlation.
+      </para>
+      <para>
+        Refer to the <citetitle>Usage Specification</citetitle>
+        document for information about the operational environment. Refer to the 
+        <citetitle>Increment Verification Report</citetitle> or 
+        <citetitle>Increment Cerification Report</citetitle> for 
+        faults or failures requiring correction. 
+      </para>
+      <para>
+        Document the design and code in the <citetitle>Increment Design</citetitle>
+        work product.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 3</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Improve the <citetitle>Increment Design</citetitle> through 
+        team reviews</title>
+        <para>
+          Conduct frequent development team reviews of the 
+          evolving <citetitle>Increment Design</citetitle>
+          to discuss design strategies and
+          improvements, and to assess characteristics including 
+          understandability, verifiability, and maintainability. Make design
+          simplification and style compliance explicit review 
+          objectives for efficient correctness verification. Redesign for 
+          simplicity when cost effective.
+        </para>
+      </formalpara>
+      <para>
+        Identify opportunities for state migration and use of 
+        common services.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 4</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Perform individual correctness verification</title>
+        <para>
+          Apply function-theoretic correctness verification on an
+          individual basis to evolving designs, with the objective of
+          entering the Correctness Verification Process with few faults.
+        </para>
+      </formalpara>
+    </glossdef>
+  </glossentry>
+</glosslist>

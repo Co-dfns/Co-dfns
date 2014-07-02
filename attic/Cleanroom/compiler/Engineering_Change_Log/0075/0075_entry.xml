@@ -1,0 +1,19 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A LENGTH ERROR in AnchorVars[16] occurs with the following 
+      message:
+    </para>
+  </formalpara>
+  <screen>AnchorVars[16] v≠←v\'⍺⍵'∊∘(⊂∘,¨)⍨'name'P v⌿⍵</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      We assumed that all atomic expressions were variables, which 
+      is only true at depths greater than 1. In reality, at top-level, 
+      lifted literals may have numbers in them. To deal with this, 
+      we mask out those which are not variables explicitly.
+    </para>
+  </formalpara>
+</listitem>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" 
+         xmlns:xi="http://www.w3.org/2001/XInclude"
+         version="5.0">
+  <info>
+    <title>Software Development Plan</title>
+  </info>
+  <xi:include href="mission.xml" />
+  <xi:include href="organization.xml" />
+  <xi:include href="work_products.xml" />
+  <xi:include href="schedule.xml" />
+  <xi:include href="measurement_plan.xml" />
+  <xi:include href="reuse_analysis.xml" />
+  <xi:include href="configuration_management.xml" />
+</chapter>

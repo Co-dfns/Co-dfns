@@ -1,0 +1,63 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Black Box Definitions</title>
+    <simpara>The black-box definition is a completely specification at
+    the stimuli level of the behavior of the system based on external stimuli
+    and responses documented in the previous sections. In particular, there
+    is a table for each possible stimuli that can enter the system and
+    a row in each table for the different possible responses. Traces indicate
+    the where and why of requirements that determins this behavior.</simpara>
+    <xi:include href="tables/Black_Box_Definition--_LBrc.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_RBrc.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_LBrk.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_RBrk.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_RPar.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_LPar.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_SCom.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_--_or_----.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Sep.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Gets.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Comm.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Comp.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Each.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Dot.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Powl.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Red.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_FRed.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_Scn.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_FScn.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Break.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_D.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Da.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Eot.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Fix.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Fnb.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Fne.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Fnf.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Lle.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Lls.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_M.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Ma.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_N_and_S.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Nl.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Nse.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Nss.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Sm.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Sd.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Va.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Vna.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Vi.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Vf.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_VoLBrkFnmRBrk.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_VoLBrkFndRBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_Comm_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_Comp_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_Each_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_Dot_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_Powl_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_Red_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_FRed_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_Scn_RBrk.xml"></xi:include>
+    <xi:include href="tables/_Black_Box_Definition--_VoLBrk_FScn_RBrk.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Vnu.xml"></xi:include>
+    <xi:include href="tables/Black_Box_Definition--_Vu.xml"></xi:include>
+  </section>

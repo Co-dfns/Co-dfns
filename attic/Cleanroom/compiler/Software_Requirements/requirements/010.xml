@@ -1,0 +1,7 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    When given erroneous input that would also be caught by the
+    <function>⎕FIX</function>
+    function, the compiler should produce the same error message.
+  </simpara>
+</listitem>

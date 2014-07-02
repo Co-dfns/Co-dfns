@@ -1,0 +1,553 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>
+    Source Input Enumeration: Func. Exprs., Fn
+    <literal>\</literal>
+    ( Feo[
+    <literal>¨</literal>
+    ]
+  </caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] E
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Ea
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Fea
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Feaa
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Fed
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Feda
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Fem
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Fema
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Feo
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Fn
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Fnm
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Fnd
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] [
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] ]
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] (
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] )
+      </td>
+      <td>monadic</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        <literal>¨</literal>
+      </td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>←</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>⍨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>∘</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>¨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>.</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>⍣</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>/</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>⌿</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>\</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ]
+        <literal>⍀</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Break
+      </td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] D
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Da
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] M
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Ma
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Vi
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Vf
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Vo
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Feo[
+        <literal>¨</literal>
+        ] Vu
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,29 @@
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Support an empty namespace</member>
+      <member>Support LLVM IR Code file generation</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>
+        Support non-error sequences containing <quote>Nss Nse</quote>.
+      </member>
+      <member>
+        Support non-error cases of Fne and Fnf.
+      </member>
+      <member>
+        Create passes 
+        <literal>Tokenize</literal>, 
+        <literal>GenLLVM</literal>, 
+        <literal>Parse</literal>
+      </member>
+      <member>
+        Add support for stimuli: Fix Break Eot Fnb Fne Fnf
+        Lle Lls Nl Nse Nss
+      </member>
+    </simplelist>
+  </td>
+</tr>
+

@@ -1,0 +1,104 @@
+<table xmlns="http://docbook.org/ns/docbook" version="5.0"
+       xmlns:xi="http://www.w3.org/2001/XInclude"
+       frame="void" rules="rows">
+  <caption>Summary of Changes</caption>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th colspan="2">Date</th>
+      <th colspan="5">Summary</th>
+      <th colspan="2">Resolution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <xi:include href="0001/0001_summary.xml" />
+    <xi:include href="0002/0002_summary.xml" />
+    <xi:include href="0003/0003_summary.xml" />
+    <xi:include href="0004/0004_summary.xml" />
+    <xi:include href="0005/0005_summary.xml" />
+    <xi:include href="0006/0006_summary.xml" />
+    <xi:include href="0007/0007_summary.xml" />
+    <xi:include href="0008/0008_summary.xml" />
+    <xi:include href="0009/0009_summary.xml" />
+    <xi:include href="0010/0010_summary.xml" />
+    <xi:include href="0011/0011_summary.xml" />
+    <xi:include href="0012/0012_summary.xml" />
+    <xi:include href="0013/0013_summary.xml" />
+    <xi:include href="0014/0014_summary.xml" />
+    <xi:include href="0015/0015_summary.xml" />
+    <xi:include href="0016/0016_summary.xml" />
+    <xi:include href="0017/0017_summary.xml" />
+    <xi:include href="0018/0018_summary.xml" />
+    <xi:include href="0019/0019_summary.xml" />
+    <xi:include href="0020/0020_summary.xml" />
+    <xi:include href="0021/0021_summary.xml" />
+    <xi:include href="0022/0022_summary.xml" />
+    <xi:include href="0023/0023_summary.xml" />
+    <xi:include href="0024/0024_summary.xml" />
+    <xi:include href="0025/0025_summary.xml" />
+    <xi:include href="0026/0026_summary.xml" />
+    <xi:include href="0027/0027_summary.xml" />
+    <xi:include href="0028/0028_summary.xml" />
+    <xi:include href="0029/0029_summary.xml" />
+    <xi:include href="0030/0030_summary.xml" />
+    <xi:include href="0031/0031_summary.xml" />
+    <xi:include href="0032/0032_summary.xml" />
+    <xi:include href="0033/0033_summary.xml" />
+    <xi:include href="0034/0034_summary.xml" />
+    <xi:include href="0035/0035_summary.xml" />
+    <xi:include href="0036/0036_summary.xml" />
+    <xi:include href="0037/0037_summary.xml" />
+    <xi:include href="0038/0038_summary.xml" />
+    <xi:include href="0039/0039_summary.xml" />
+    <xi:include href="0040/0040_summary.xml" />
+    <xi:include href="0041/0041_summary.xml" />
+    <xi:include href="0042/0042_summary.xml" />
+    <xi:include href="0043/0043_summary.xml" />
+    <xi:include href="0044/0044_summary.xml" />
+    <xi:include href="0045/0045_summary.xml" />
+    <xi:include href="0046/0046_summary.xml" />
+    <xi:include href="0047/0047_summary.xml" />
+    <xi:include href="0048/0048_summary.xml" />
+    <xi:include href="0049/0049_summary.xml" />
+    <xi:include href="0050/0050_summary.xml" />
+    <xi:include href="0051/0051_summary.xml" />
+    <xi:include href="0052/0052_summary.xml" />
+    <xi:include href="0053/0053_summary.xml" />
+    <xi:include href="0054/0054_summary.xml" />
+    <xi:include href="0055/0055_summary.xml" />
+    <xi:include href="0056/0056_summary.xml" />
+    <xi:include href="0057/0057_summary.xml" />
+    <xi:include href="0058/0058_summary.xml" />
+    <xi:include href="0059/0059_summary.xml" />
+    <xi:include href="0060/0060_summary.xml" />
+    <xi:include href="0061/0061_summary.xml" />
+    <xi:include href="0062/0062_summary.xml" />
+    <xi:include href="0063/0063_summary.xml" />
+    <xi:include href="0064/0064_summary.xml" />
+    <xi:include href="0065/0065_summary.xml" />
+    <xi:include href="0066/0066_summary.xml" />
+    <xi:include href="0067/0067_summary.xml" />
+    <xi:include href="0068/0068_summary.xml" />
+    <xi:include href="0069/0069_summary.xml" />
+    <xi:include href="0070/0070_summary.xml" />
+    <xi:include href="0071/0071_summary.xml" />
+    <xi:include href="0072/0072_summary.xml" />
+    <xi:include href="0073/0073_summary.xml" />
+    <xi:include href="0074/0074_summary.xml" />
+    <xi:include href="0075/0075_summary.xml" />
+    <xi:include href="0076/0076_summary.xml" />
+    <xi:include href="0077/0077_summary.xml" />
+    <xi:include href="0078/0078_summary.xml" />
+    <xi:include href="0079/0079_summary.xml" />
+    <xi:include href="0080/0080_summary.xml" />
+    <xi:include href="0081/0081_summary.xml" />
+    <xi:include href="0082/0082_summary.xml" />
+    <xi:include href="0083/0083_summary.xml" />
+    <xi:include href="0084/0084_summary.xml" />
+    <xi:include href="0085/0085_summary.xml" />
+    <xi:include href="0086/0086_summary.xml" />
+    <xi:include href="0087/0087_summary.xml" />
+    <xi:include href="0088/0088_summary.xml" />
+    <xi:include href="0089/0089_summary.xml" />
+  </tbody>
+</table>

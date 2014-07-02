@@ -1,0 +1,89 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Black Box Definition: Sd</caption>
+  <thead>
+    <tr>
+      <th>Conditions</th>
+      <th>Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top Func Fnex
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            UVAR MIXED
+          </member>
+        </simplelist>
+      </td>
+      <td>VALUE ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Nest
+            <literal>∊</literal>
+            NONE RBRACK
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            EMPTY
+          </member>
+        </simplelist>
+      </td>
+      <td>SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Nest
+            <literal>∊</literal>
+            NONE RBRACK
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            LIT VAR NVAR
+          </member>
+        </simplelist>
+      </td>
+      <td>wait</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>

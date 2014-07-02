@@ -1,9 +1,0 @@
-<section xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <title>Mission</title>
-  <simpara>
-    This project has two main goals. The first is to produce a workable 
-    compiler that can be demonstrated to Dyalog customers later this year. 
-    The second is to prepare a framework for future compiler development and 
-    research.        
-  </simpara>
-</section>

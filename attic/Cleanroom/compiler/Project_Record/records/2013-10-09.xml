@@ -1,0 +1,31 @@
+        <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+          <td>Wednesday, October 9th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>Exiting Increment 1 Design</member>
+              <member>Increment 1 Certification Iteration 1 failed</member>
+              <member>Engineering Change 6 applied</member>
+              <member>Increment 1 Certification Iteration 2 failed</member>
+              <member>Engineering Change 7 applied</member>
+              <member>Increment 1 Certification Iteration 3 failed</member>
+              <member>Engineering Change 8 applied</member>
+              <member>Increment 1 Certification Iteration 4 failed</member>
+              <member>Engineering Change 9 applied</member>
+              <member>Increment 1 Certification Iteration 5 failed</member>
+              <member>Engineering Change 10 applied</member>
+              <member>Increment 1 Certification Iteration 6 failed</member>
+              <member>Engineering Change 11 applied</member>
+              <member>Increment 1 Certification Iteration 7 failed</member>
+              <member>Engineering Change 12 applied</member>
+              <member>Increment 1 Certification Iteration 8 failed</member>
+              <member>Engineering Change 13 applied</member>
+              <member>Increment 1 Certification Iteration 9 failed</member>
+              <member>Engineering Change 14 applied</member>
+              <member>Increment 1 Certification Iteration 10 failed</member>
+              <member>Engineering Change 15 applied</member>
+              <member>Increment 1 Certification Iteration 11 failed</member>
+              <member>Engineering Change 16 applied</member>
+              <member>Increment 1 Certification Iteration 12 passed</member>
+            </simplelist>
+          </td>
+        </tr>

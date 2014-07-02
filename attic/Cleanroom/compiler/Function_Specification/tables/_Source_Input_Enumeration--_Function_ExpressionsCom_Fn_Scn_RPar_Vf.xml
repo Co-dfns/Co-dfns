@@ -1,0 +1,477 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>
+    Source Input Enumeration: Function Expressions, Fn
+    <literal>\</literal>
+    ( Vf
+  </caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf E
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Ea
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Fea
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Feaa
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Fed
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Feda
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Fem
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Fema
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Feo
+      </td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Fn
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Fnm
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Fnd
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf [
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf ]
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf (
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf )
+      </td>
+      <td>Syntax Error</td>
+      <td>empty</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>←</literal>
+      </td>
+      <td>wait</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        (
+      </td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>⍨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>∘</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>¨</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>.</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>⍣</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>/</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>⌿</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>\</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf
+        <literal>⍀</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Break
+      </td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf D
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Da
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf M
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Ma
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Vi
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Vf
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Vo
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Vf Vu
+      </td>
+      <td>subsumed</td>
+      <td>
+        Fn
+        <literal>\</literal>
+        ( Fe
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

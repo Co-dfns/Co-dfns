@@ -1,0 +1,30 @@
+  <glossentry xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <glossterm>Task 5</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Derive certification measures</title>
+        <para>
+          Use the <citetitle>Usage Models</citetitle>,
+          <citetitle>Statistical Test Cases</citetitle>,
+          <citetitle>Statistical Testing Report</citetitle>,
+          and results of other testing to derive measures
+          of the fitness for use of the software with respect to 
+          certification goals.
+        </para>
+      </formalpara>
+      <para>
+        Measures can include reliability and confidence, reliability
+        growth rate, MTTF, representativeness of the test case sample,
+        and other measures dervied from comparison of 
+        expected and observed software performance.
+      </para>
+      <para>
+        Use statistical methods such as hypothesis testing, interval
+        analysis, and analysis of failure data with reliability models.
+      </para>
+      <para>
+        Document certification measures in the <citetitle>Increment 
+        Certification Report</citetitle>.
+      </para>
+    </glossdef>
+  </glossentry>

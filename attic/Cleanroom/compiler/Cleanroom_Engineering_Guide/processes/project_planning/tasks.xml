@@ -1,0 +1,128 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Tasks</title>
+  <glossentry>
+    <glossterm>Task 1</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Create the <citetitle>Cleanroom Engineering Guide</citetitle></title>
+        <para>
+          Use the 
+          <citetitle>Cleanroom Software Engineering Reference Model</citetitle>
+          as the basis for defining or revising the project's 
+          <citetitle>Cleanroom Engineering Guide</citetitle>, including:
+        </para>
+      </formalpara>
+      <orderedlist>
+        <listitem>
+          <para>
+            Project-specific tailoring and refinement of the Cleanroom 
+            processes. Define and document clear process implementation 
+            guidance for the Cleanroom project.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Identification and documentation of facilities, hardware 
+            and software environments, and tools to support Cleanroom 
+            processes, with guidelines for their use.
+          </para>
+        </listitem>
+      </orderedlist>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Task 2</glossterm>
+    <glossdef>
+      <formalpara>
+        <title>Create the <citetitle>Software Development Plan</citetitle></title>
+        <para>
+          Use the <citetitle>Statement of Work</citetitle> and/or 
+          <citetitle>Software Requirements</citetitle> to define or revise the 
+          <citetitle>Software Development Plan</citetitle>, including the 
+          following plans:
+        </para>
+      </formalpara>
+      <orderedlist>
+        <listitem>
+          <para>
+            <citetitle>Project Mission Plan</citetitle>: Define the overall 
+            mission, goals, and objectives of the software product and 
+            the Cleanroom development project.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Project Organization Plan</citetitle>: Define the 
+            structure, responsibilities, and relationships of the Cleanroom 
+            project organization. Identify points of contact in customer 
+            and peer organizations.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Work Product Plan</citetitle>: Define the Cleanroom work 
+            products and customer deliverables to be produced during the 
+            project.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Schedule and Resource Plan</citetitle>: Define 
+            estimates for overall schedules, milestones, and budgets. Define 
+            staffing, system, and other resource requirements. These 
+            estimates will be refined in the Increment Planning Process.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Measurement Plan</citetitle>: Define product and process 
+            measures for managing the project, including goals for Cleanroom 
+            software certification and standards for statistical process 
+            control. Define the use of measures in project reviews and decision 
+            making.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Reuse Analysis Plan</citetitle>: Define methods for 
+            identifying and evaluating opportunities to reuse existing 
+            assets and create new, reusable assets. Reusable assets include 
+            domain models, reference architectures, software specifications, 
+            designs, implementations, and usage models. Define specific 
+            opportunities for reuse.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Risk Analysis Plan</citetitle>: Define methods for 
+            identifying and managing risks throughout the project. 
+            Define specific management and tehcnical risks associated with 
+            the project.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Standards Plan</citetitle>: Identify and define 
+            the application of external standards that will be used in the 
+            project.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Training Plan</citetitle>: Identify project training 
+            requirements, including training in the application domain, 
+            development environments, and Cleanroom technology and processes. 
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <citetitle>Configuration Management Plan</citetitle>: Identify 
+            the work prodcuts to be maintained under configuration control. 
+            Define procedures for change management and configuration control 
+            of work products.
+          </para>
+        </listitem>
+      </orderedlist>
+    </glossdef>
+  </glossentry>
+</glosslist>

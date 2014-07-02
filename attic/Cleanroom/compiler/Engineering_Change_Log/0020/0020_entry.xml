@@ -1,0 +1,30 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <constant>Fnd</constant>
+      and
+      <constant>Fnm</constant>
+      stimuli do not have any real purpose in the top-level enumeration
+      and are redundant, they should be removed from the stimuli set.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      This redundancy is demonstrated by the fact that these stimuli do
+      not show up in the Canonical sequences at all, as well as being subsumed
+      in all cases by the
+      <constant>Fe</constant>
+      stimuli, which itself has direct support for the
+      <constant>Fnd</constant>
+      and
+      <constant>Fnm</constant>
+      stimuli. This change has minimal impact on the rest of the system,
+      as they are not mentioned directly anywhere else, and are already
+      subsumed in the rest of the documentation. Thus, it is safe to remove
+      them at any time.
+    </para>
+  </formalpara>
+</listitem>

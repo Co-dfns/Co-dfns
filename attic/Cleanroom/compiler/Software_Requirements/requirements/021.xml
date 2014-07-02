@@ -1,0 +1,5 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>The compiler should only compile complete, closed namespace
+  scripts, which is to say, they should have no free variable references
+  that escape outside the scope of the namespace.</simpara>
+</listitem>

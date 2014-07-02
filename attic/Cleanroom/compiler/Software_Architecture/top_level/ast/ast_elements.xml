@@ -1,0 +1,200 @@
+  <table frame="void" rules="rows"
+         xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <caption>AST Elements/Nodes</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Attributes</th>
+        <th colspan="2">Content</th>
+        <th colspan="2">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tokens</td>
+        <td></td>
+        <td colspan="2">Line</td>
+        <td colspan="2">A series of lines consisting of tokens</td>
+      </tr>
+      <tr>
+        <td>Namespace</td>
+        <td>name</td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>Line</member>
+            <member>Expression</member>
+            <member>Function</member>
+            <member>FuncExpr</member>
+          </simplelist>
+        </td>
+        <td colspan="2">A possibly named namespace of code</td>
+      </tr>
+      <tr>
+        <td>Line</td>
+        <td>comment</td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>Token</member>
+            <member>Primitive</member>
+            <member>Number</member>
+            <member>String</member>
+            <member>Variable</member>
+          </simplelist>
+        </td>
+        <td colspan="2">A line of tokens</td>
+      </tr>
+      <tr>
+        <td>Ambiguous</td>
+        <td></td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>FuncExpr</member>
+            <member>Expression</member>
+          </simplelist>
+        </td>
+        <td colspan="2">
+          A set of possible parsings
+        </td>
+      </tr>
+      <tr>
+        <td>Expression</td>
+        <td>
+          <simplelist type="inline">
+            <member>class</member>
+            <member>name</member>
+            <member>comment</member>
+		<member>slots</member>
+          </simplelist>
+        </td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>FuncExpr</member>
+            <member>Expression</member>
+            <member>Variable</member>
+            <member>Number</member>
+            <member>String</member>
+          </simplelist>
+        </td>
+        <td colspan="2">An expression</td>
+      </tr>
+      <tr>
+        <td>Function</td>
+        <td>
+          <simplelist type="inline">
+            <member>class</member>
+            <member>name</member>
+            <member>comment</member>
+		<member>alloca</member>
+		<member>depth</member>
+          </simplelist>
+        </td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>Expression</member>
+            <member>FuncExpr</member>
+            <member>Condition</member>
+            <member>Guard</member>
+          </simplelist>
+        </td>
+        <td colspan="2">An user-defined function or operator</td>
+      </tr>
+      <tr>
+        <td>FuncExpr</td>
+        <td>
+          <simplelist type="inline">
+            <member>name</member>
+            <member>class</member>
+            <member>equiv</member>
+            <member>comment</member>
+          </simplelist>
+        </td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>Primitive</member>
+            <member>Expression</member>
+            <member>Function</member>
+            <member>FuncExpr</member>
+          </simplelist>
+        </td>
+        <td colspan="2">A function valued expression</td>
+      </tr>
+      <tr>
+        <td>Condition</td>
+        <td>comment</td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>Expression</member>
+          </simplelist>
+        </td>
+        <td colspan="2">Conditional statement in a function</td>
+      </tr>
+      <tr>
+        <td>Guard</td>
+        <td>comment</td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>Expression</member>
+          </simplelist>
+        </td>
+        <td colspan="2">Guard statement in a function</td>
+      </tr>
+      <tr>
+        <td>Token</td>
+        <td>
+          <simplelist type="inline">
+            <member>name</member>
+            <member>class</member>
+          </simplelist>
+        </td>
+        <td colspan="2"></td>
+        <td colspan="2">A token not meant to exist in the normal AST</td>
+      </tr>
+      <tr>
+        <td>Primitive</td>
+        <td>
+          <simplelist type="inline">
+            <member>name</member>
+            <member>class</member>
+          </simplelist>
+        </td>
+        <td colspan="2"></td>
+        <td colspan="2">A primitive function or operator</td>
+      </tr>
+      <tr>
+        <td>Number</td>
+        <td>
+          <simplelist type="inline">
+            <member>value</member>
+            <member>class</member>
+          </simplelist>
+        </td>
+        <td colspan="2"></td>
+        <td colspan="2">A literal number</td>
+      </tr>
+      <tr>
+        <td>String</td>
+        <td></td>
+        <td colspan="2">
+          <simplelist type="inline">
+            <member>text</member>
+          </simplelist>
+        </td>
+        <td colspan="2">A literal string</td>
+      </tr>
+      <tr>
+        <td>Variable</td>
+        <td>
+          <simplelist type="inline">
+            <member>name</member>
+            <member>class</member>
+            <member>equiv</member>
+		<member>slot</member>
+		<member>env</member>
+		<member>depth</member>
+          </simplelist>
+        </td>
+        <td colspan="2"></td>
+        <td colspan="2">A single variable</td>
+      </tr>
+    </tbody>
+  </table>

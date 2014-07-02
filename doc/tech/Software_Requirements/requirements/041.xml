@@ -1,5 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>Any attempt to read an assigned element of a single-assignment
-  array will return the value of the element in the same manner as a mutable
-  array.</simpara>
-</listitem>

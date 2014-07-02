@@ -1,0 +1,53 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Usage Stratification</title>
+  <simpara>
+    All users will interact with the compiler through the Dyalog
+    interface. This
+    leads to a single interface with the compiler, which is the Dyalog APL
+    environment. However, programmers may interact with the compiler
+    programmatically
+    through the autogeneration of code. They may also work with the compiler
+    interactively. Users may be writing new code themselves, or may be
+    tuning existing
+    code. They may be writing library code, or they may be writing end
+    user code.
+  </simpara>
+  <simpara>
+    Most users will prototype their code in Dyalog before using the
+    compiler. Thus,
+    the vast majority of users will be tuning existing code, rather that
+    composing code
+    directly in the compiler.
+  </simpara>
+  <xi:include href="usage_stratification/users_expected_proportions.xml" />
+  <simpara>
+    Notice that all users are expected to have some relatively high-degree
+    of proficiency with the system,
+    and it is expected that most of the code will be of reasonble quality. It
+    is not expected that
+    non-expert programmers (specifically those not familiar with dfns)
+    will be likely to use the compiler.
+  </simpara>
+  <simpara>
+    Each user class has a set of possible usage scenarios which may dictate
+    the expected distributions.
+    The following tables detail the expected use cases and their expected
+    proportions.
+  </simpara>
+  <xi:include href="usage_stratification/use_cases_tuners.xml" />
+  <xi:include href="usage_stratification/use_cases_library_writers.xml" />
+  <xi:include href="usage_stratification/use_cases_direct_user.xml" />
+  <xi:include href="usage_stratification/use_cases_auto.xml" />
+  <simpara>
+    All users may exist on one of four environments. These environments are
+    classified based on the operating system,
+    whether the system is a 32-bit or 64-bit system. The operating system
+    is either Windows or UNIX.  There is an
+    additional operating environment which constitutes and external environment
+    for the compiled code which may be
+    seen in the Library Writer's External Library case, but the compiler
+    will still be run in one of the above environments,
+    even though the compiled code will be run externally.
+  </simpara>
+</section>

@@ -1,0 +1,26 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The <function>AnchorVars</function> failed to take into account the scoping 
+      rules associated with expressions within conditionals. This leads to 
+      improper handling of scopes within conditional functions.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The issue arises because of the original check filtering out which expressions 
+      are valid and which are not. Unfortunately, it assumes that all bindings are 
+      flat and at the top level of a function scope, which, while almost true, isn't 
+      quite. In fact, all expressions are bound to the top level scope, but may 
+      appear at a slightly increased nesting level because of a
+      <classname>Condition</classname> node. To deal with this, we rewrite the 
+      <function>AnchorVars</function> function entirely, turning it into a flat 
+      and non-recursive program. This introduces on issue which isn't that important 
+      right now, but which must be addressed at some point. However, overall this 
+      makes the pass easier to deal with and will eventually require even more 
+      cleanup before all is said and done.
+    </para>
+  </formalpara>
+</listitem>

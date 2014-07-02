@@ -1,0 +1,32 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Objectives</title>
+  <glossentry>
+    <glossterm>Objective 1</glossterm>
+    <glossdef>
+      <para>
+        Valid usage models are defined that represetn all possible
+        uses of the software under expected or other usage
+        conditions.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 2</glossterm>
+    <glossdef>
+      <para>
+        A statistical testing plan based on the usage models is
+        defined and validated through model analysis and 
+        simulation.
+      </para>
+    </glossdef>
+  </glossentry>
+  <glossentry>
+    <glossterm>Objective 3</glossterm>
+    <glossdef>
+      <para>
+        The customer agrees to the usage models and statistical 
+        test plan as the basis for software certification.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

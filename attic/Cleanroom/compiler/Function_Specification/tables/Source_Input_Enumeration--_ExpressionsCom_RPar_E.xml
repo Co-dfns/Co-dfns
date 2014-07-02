@@ -1,0 +1,136 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Source Input Enumeration: Expressions, ( E</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>( E E</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Es</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Fea</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Fed</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Fem</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E [</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E ]</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E (</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E )</td>
+      <td>atomic</td>
+      <td>N</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>( E ;</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        ( E
+        <literal>←</literal>
+      </td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Break</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E N</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E S</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Sm</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Sd</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Va</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Vna</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Vi</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>( E Vnu</td>
+      <td>subsumed</td>
+      <td>( E</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,505 @@
+    <informaltable frame="void" rules="rows"
+                   xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <thead>
+        <tr>
+          <th>Iter</th>
+          <th>Test #</th>
+          <th>Result</th>
+          <th colspan="5">Failure Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>C1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C8</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C9</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C10</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C11</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C12</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C13</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C14</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C15</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C16</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C17</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C18</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C19</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C20</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C21</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C21</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C22</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C23</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C24</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C25</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C26</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C27</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C28</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C29</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C30</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C31</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C32</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C33</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C34</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C35</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>C36</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>8</td>
+          <td>Fail</td>
+          <td colspan="5">Incorrect Translation of <function>Int4Type</function></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>8</td>
+          <td>Fail</td>
+          <td colspan="5">Scalar has wrong rank and shape</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>1</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>2</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>3</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>4</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>5</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>6</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>7</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>8</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>9</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>10</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>11</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>12</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>13</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>14</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>15</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>16</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>17</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>18</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>19</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>20</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>21</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>22</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>23</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>24</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>25</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>26</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>27</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>28</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>29</td>
+          <td>Pass</td>
+          <td colspan="5"></td>
+        </tr>
+      </tbody>
+    </informaltable>

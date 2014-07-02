@@ -1,0 +1,210 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>
+    Black Box Definition:
+    <literal>←</literal>
+  </caption>
+  <thead>
+    <tr>
+      <th colspan="2">Conditions</th>
+      <th colspan="2">Response</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top
+          </member>
+          <member>
+            Named
+            <literal>∊</literal>
+            MAYBE
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">null</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top
+          </member>
+          <member>
+            Named
+            <literal>∊</literal>
+            BOUND
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            UNBOUND
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">null</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top
+          </member>
+          <member>
+            Named
+            <literal>∊</literal>
+            BOUND
+          </member>
+          <member>
+            ~Value
+            <literal>∊</literal>
+            UNBOUND
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Top
+          </member>
+          <member>
+            ~Named
+            <literal>∊</literal>
+            BOUND MAYBE
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            Value
+            <literal>∊</literal>
+            UNBOUND FVAR
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">wait</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Func
+          </member>
+          <member>
+            ~Value
+            <literal>∊</literal>
+            UNBOUND FVAR
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            Last Seen
+            <literal>∊</literal>
+            VAR NVAR UVAR
+          </member>
+          <member>
+            Nest
+            <literal>∊</literal>
+            NONE RBRACK
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">wait</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Expr
+          </member>
+          <member>
+            ~Last Seen
+            <literal>∊</literal>
+            VAR NVAR UVAR
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Fnex
+          </member>
+          <member>
+            Tgt
+            <literal>∊</literal>
+            Yes
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">wait</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <simplelist>
+          <member>
+            Context
+            <literal>∊</literal>
+            Fnex
+          </member>
+          <member>
+            Tgt
+            <literal>∊</literal>
+            No
+          </member>
+        </simplelist>
+      </td>
+      <td colspan="2">SYNTAX ERROR</td>
+      <td>4, 10</td>
+    </tr>
+  </tbody>
+</table>

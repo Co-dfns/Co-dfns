@@ -1,0 +1,57 @@
+  <table xmlns="http://docbook.org/ns/docbook" version="5.0" frame="void" rules="rows">
+    <caption>Use Case Enumeration</caption>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User Profile</th>
+        <th>Use Case</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0</td>
+        <td>Tuner</td>
+        <td>Tweak</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Tuner</td>
+        <td>Profile</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Tuner</td>
+        <td>Benchmark</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Library Writer</td>
+        <td>Internal Library</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Library Writer</td>
+        <td>External Library</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Direct User</td>
+        <td>System</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Direct User</td>
+        <td>Interactive</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Auto</td>
+        <td>Dynamic</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Auto</td>
+        <td>Static</td>
+      </tr>
+    </tbody>
+  </table>

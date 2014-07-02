@@ -1,0 +1,10 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Performance Improvement Process</title>
+  <xi:include href="performance_improvement/objectives.xml" />
+  <xi:include href="performance_improvement/entry.xml" />
+  <xi:include href="performance_improvement/tasks.xml" />
+  <xi:include href="performance_improvement/verification.xml" />
+  <xi:include href="performance_improvement/measurement.xml" />
+  <xi:include href="performance_improvement/exit.xml" />
+</section>

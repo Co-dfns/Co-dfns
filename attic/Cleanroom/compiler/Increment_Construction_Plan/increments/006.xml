@@ -1,0 +1,10 @@
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>An implementation for all primitives functions</member>
+      <member>Complete support for other datatypes</member>
+      <member>Support type promotion and compaction</member>
+    </simplelist>
+  </td>
+  <td></td>
+</tr>

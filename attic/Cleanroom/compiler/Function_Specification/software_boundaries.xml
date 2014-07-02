@@ -1,0 +1,28 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+    <title>Software Boundaries</title>
+    <simpara>There are two primary sources of user input. The user will
+    first call the compiler with a given program to compile, which represents
+    the first external input. Secondly, the compiled namespace that is
+    created as a result will be called repeatedly and used as its own thing.
+    This represents the second potential input to the system. These are
+    distinct because the input given to the second, and the behavior that
+    is appropriate to it is entirely dependent on the input that is given
+    as the program input. Thus, it is impossible to speak directly about
+    the kinds of inputs and their responses for the second types of input,
+    except very broadly. Instead, the semantics are encoded in the first
+    input, and as long as the semantics are preserved in the compiler,
+    then it will work as intended.</simpara>
+    <simpara>Thus, the main sources of input that will be considered are
+    the programs that are given, rather than on the inputs that will be
+    given to the programs described or compiled. This may or may not accurately
+    reflect how the code is used in practice. Indeed, we normally expected
+    to compile a program once and then run it multiple times. However,
+    most of the more useful information comes from the program input, rather
+    than the input to the compiled program.</simpara>
+    <simpara>As a final note, we have chosen to view the LLVM as an external
+    software artifact over which we have no control. Thus, it should be
+    considered an external artifact. It will receive inputs from the compiler
+    and return resulting responses that we will use to create the final
+    compiled object.</simpara>
+    <xi:include href="tables/Summary_of_External_Entities.xml"></xi:include>
+  </section>

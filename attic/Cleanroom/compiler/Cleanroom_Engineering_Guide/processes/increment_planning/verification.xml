@@ -1,0 +1,14 @@
+<glosslist xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <title>Verification</title>
+  <glossentry>
+    <glossterm>Verification 1</glossterm>
+    <glossdef>
+      <para>
+        Review the <citetitle>Increment Construction Plan</citetitle>
+        with the customer, the development and certification teams,
+        and affected peer groups for agreement as the basis for incremental
+        development and certification.
+      </para>
+    </glossdef>
+  </glossentry>
+</glosslist>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <info>
+    <title>Increment Certification Report</title>
+  </info>
+  <informaltable frame="void" rules="rows">
+    <thead>
+      <tr>
+        <th>Increment</th>
+        <th>Iterations</th>
+        <th>Total Cases</th>
+        <th>Certification</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>12</td>
+        <td>51</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>3</td>
+        <td>64</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>6</td>
+        <td>176</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>11</td>
+        <td>29</td>
+        <td>Yes</td>
+      </tr>
+    </tbody>
+  </informaltable>
+</chapter>

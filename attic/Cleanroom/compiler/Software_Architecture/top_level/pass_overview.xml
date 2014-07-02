@@ -1,0 +1,85 @@
+<table frame="void" rules="rows"
+       xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Pass Overview</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Class</th>
+      <th colspan="3">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tokenize</td>
+      <td>Entry</td>
+      <td colspan="3">
+        Takes in the initial right argument of the Fix function
+        and tokenizes it into its various components
+      </td>
+    </tr>
+    <tr>
+      <td>Parse</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Takes the result of <function>Tokenize</function> and produces a standard AST
+      </td>
+    </tr>
+    <tr>
+      <td>KillLines</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Eliminates useless or semantically irrelevant nodes from the AST
+      </td>
+    </tr>
+    <tr>
+      <td>DropUnreaached</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Eliminate code in function bodies that syntactically can never be executed.
+      </td>
+    </tr>
+    <tr>
+      <td>LiftConsts</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Lift all constant expressions to the top-level
+      </td>
+    </tr>
+    <tr>
+      <td>FlattenExprs</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Flatten all expressions and ensure that all unnamed expressions 
+        are variable references. 
+      </td>
+    </tr>
+    <tr>
+      <td>AnchorVars</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Convert all free references into references to an environment
+      </td>
+    </tr>
+    <tr>
+      <td>LiftFuncs</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Lift all user defined functions to the top level
+      </td>
+    </tr>
+    <tr>
+      <td>ConvPrims</td>
+      <td>Standard</td>
+      <td colspan="3">
+        Convert primitive function calls to runtime function calls
+      </td>
+    </tr>
+    <tr>
+      <td>GenLLVM</td>
+      <td>Exit</td>
+      <td colspan="3">
+        Takes the AST massaged for LLVM generation and generates the LLVM module
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,26 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      When parsing a condition, such as
+      <literal>{ V3← 99 : 24 ⋄ }</literal>
+      , the
+      <classname>Condition</classname>
+      node will not have any children, because the children are put at
+      a depth one higher than they should be.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      In the
+      <function>ParseCond</function>
+      function, the two calls to
+      <function>ParseExpr</function>
+      will return nodes assumed to be at the same depth as the condition
+      node, since the tokens are at the same depth. Since there is actually
+      an additional nesting level, we need to put the (potentially) two
+      nodes as children by increasing each of their depths by one.
+    </para>
+  </formalpara>
+</listitem>

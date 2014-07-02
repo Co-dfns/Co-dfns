@@ -1,0 +1,8 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    [Derived Requirement 2] When given a pathname that is an invalid pathname,
+    a
+    <literal>DOMAIN ERROR</literal>
+    should be signalled.
+  </simpara>
+</listitem>

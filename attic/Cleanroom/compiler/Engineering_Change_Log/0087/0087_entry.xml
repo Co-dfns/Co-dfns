@@ -1,0 +1,21 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      An INTERNAL ERROR in ParseTopLine[3] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>ParseTopLine[3] eerr ast ne←env ParseExpr 1↓⍺</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      When parsing each token of an expression string, it's possible that 
+      we can try to parse a function, but that function is syntactically 
+      invalid. This needs to be thrown back up when it is encountered. 
+      Thus, when we check on the type of the node, if we do not have one of 
+      the types of the node that we expect, this means that the parsing 
+      of the function node should have succeeded, but it did not, which 
+      implies an error that we should throw at this point.
+    </para>
+  </formalpara>
+</listitem>

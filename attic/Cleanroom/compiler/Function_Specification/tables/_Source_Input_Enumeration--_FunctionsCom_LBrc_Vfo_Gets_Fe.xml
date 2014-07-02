@@ -1,0 +1,191 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>
+    Source Input Enumeration: Functions, { Vfo
+    <literal>←</literal>
+    Fe
+  </caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe E
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        E
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Fe
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        E
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Fnd
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Fnm
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe {
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Fe
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe }
+      </td>
+      <td>okay</td>
+      <td>Fe</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe :
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe ::
+      </td>
+      <td>Syntax Error</td>
+      <td>empty, top-level</td>
+      <td>4, 10</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+        <literal>⋄</literal>
+      </td>
+      <td>wait</td>
+      <td>{</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe
+        <literal>←</literal>
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        E
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Break
+      </td>
+      <td>Interrupt</td>
+      <td>empty, top-level</td>
+      <td>D3</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Nl
+      </td>
+      <td>wait</td>
+      <td>{</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Vfo
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        E
+      </td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        Fe Vu
+      </td>
+      <td>subsumed</td>
+      <td>
+        { Vfo
+        <literal>←</literal>
+        E
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>

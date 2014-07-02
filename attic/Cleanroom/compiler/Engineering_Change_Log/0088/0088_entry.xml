@@ -1,0 +1,17 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      A DOMAIN ERROR in ParseFeBindings[4] occurs with the following message:
+    </para>
+  </formalpara>
+  <screen>ParseFeBindings[4] ok←⊃⍪/¯1↓k</screen>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      The ParseFeBindings line here does not properly handle the case where 
+      the array to reduce might be empty. We give it a reasonable seed 
+      value for this case and this fixes the problem.
+    </para>
+  </formalpara>
+</listitem>

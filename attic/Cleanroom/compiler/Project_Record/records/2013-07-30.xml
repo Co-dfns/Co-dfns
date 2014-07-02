@@ -1,0 +1,9 @@
+        <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+          <td>Tuesday, July 30th, 2013</td>
+          <td colspan="2">
+            <simplelist type="horiz">
+              <member>Stopped Function Specification</member>
+              <member>Entered Engineering Changes</member>
+            </simplelist>
+          </td>
+        </tr>

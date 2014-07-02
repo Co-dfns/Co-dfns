@@ -1,0 +1,22 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Testing Process Measures and Control</title>
+    <simpara>
+      In addition to the certification record, the testing process must 
+      record the iterations between testing, the changes in system 
+      reliability and MTTF, and the relative improvement of each version 
+      of the software both from increment to increment as well as between 
+      engineering changes within the increment. The number of faults 
+      discovered during the process should be tracked and monitered for 
+      signs that the development process is not producing software of 
+      the appropriate quality.
+    </simpara>
+    <simpara>
+      Development should not progress to the next increment until the 
+      current increment under testing is certified to appropriate levels. 
+      Moreover, of testing encounters a failure it should immediately 
+      initiate an engineering change and the fault should be addressed. 
+      Once the fault has been confirmed to be removed, the entire 
+      expirement must be run from the beginning on the new version of 
+      the software. 
+    </simpara>
+  </section>

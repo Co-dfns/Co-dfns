@@ -1,0 +1,60 @@
+    <table frame="void" rules="rows"
+           xmlns="http://docbook.org/ns/docbook" version="5.0">
+      <caption>Short Names for Expression States</caption>
+      <thead>
+        <tr>
+          <th>Canonical Sequence</th>
+          <th>Short Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>empty</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Fea</td>
+          <td>F</td>
+        </tr>
+        <tr>
+          <td>N</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Va</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Vna</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>Vnu</td>
+          <td>U</td>
+        </tr>
+        <tr>
+          <td>Fea N</td>
+          <td>F N</td>
+        </tr>
+        <tr>
+          <td>Fea Va</td>
+          <td>F V</td>
+        </tr>
+        <tr>
+          <td>Fea Vna</td>
+          <td>F Vn</td>
+        </tr>
+        <tr>
+          <td>Va [</td>
+          <td>V[</td>
+        </tr>
+        <tr>
+          <td>Va [ E</td>
+          <td>V[E</td>
+        </tr>
+        <tr>
+          <td>Va [ ]</td>
+          <td>V[]</td>
+        </tr>
+      </tbody>
+    </table>

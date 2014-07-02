@@ -1,0 +1,20 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      When given an empty namespace, there is an INDEX ERROR in
+      <function>DropUnreached[9]</function>
+      .
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      An empty namespace will have no children, leading to an empty array
+      in
+      <function>DropUnreached[9]</function>
+      . To fix this, we will insert a short circuit of the code when there
+      are no children.
+    </para>
+  </formalpara>
+</listitem>

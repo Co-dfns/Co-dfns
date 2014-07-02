@@ -1,0 +1,18 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The
+      <function>ParseFuncExpr</function>
+      is not returning four values in the first line.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      Add the obvious missing value to
+      <function>ParseFuncExpr</function>
+      .
+    </para>
+  </formalpara>
+</listitem>

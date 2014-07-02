@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Statistical Testing Report</title>
+  </info>
+  <xi:include href="increments/increment1.xml" />
+  <xi:include href="increments/increment2.xml" />
+  <xi:include href="increments/increment3.xml" />
+  <xi:include href="increments/increment4.xml" />
+  <xi:include href="increments/increment5.xml" />
+</chapter>

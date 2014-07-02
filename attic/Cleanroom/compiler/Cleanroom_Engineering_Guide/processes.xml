@@ -1,0 +1,30 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0"
+         xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Cleanroom Processes</title>
+  <simpara>
+    The following is an overview of all the Cleanroom Processes used in 
+    this project, including a short summary of their function and the work 
+    products that they produce.
+  </simpara>
+  <xi:include href="processes/summaries/management.xml" />
+  <xi:include href="processes/summaries/specification.xml" />
+  <xi:include href="processes/summaries/development.xml" />
+  <xi:include href="processes/summaries/certification.xml" />
+  <xi:include href="processes/summaries/lightweight.xml" />
+  <section>
+    <title>Process Definitions</title>
+    <xi:include href="processes/common.xml" />
+    <xi:include href="processes/project_planning.xml" />
+    <xi:include href="processes/performance_improvement.xml" />
+    <xi:include href="processes/engineering_change.xml" />
+    <xi:include href="processes/requirements_analysis.xml" />
+    <xi:include href="processes/function_specification.xml" />
+    <xi:include href="processes/architecture_specification.xml" />
+    <xi:include href="processes/increment_planning.xml" />
+    <xi:include href="processes/software_reengineering.xml" />
+    <xi:include href="processes/increment_design.xml" />
+    <xi:include href="processes/correctness_verification.xml" />
+    <xi:include href="processes/usage_modeling_and_test_planning.xml" />
+    <xi:include href="processes/statistical_testing_and_certification.xml" />
+  </section>
+</section>

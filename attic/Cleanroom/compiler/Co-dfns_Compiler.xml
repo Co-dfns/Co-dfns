@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<book xmlns="http://docbook.org/ns/docbook" version="5.0"
+      xmlns:xi="http://www.w3.org/2001/XInclude">
+  <info>
+    <title>Co-dfns Compiler</title>
+    <authorgroup>
+      <author>
+        <personname>
+          <firstname>Aaron</firstname>
+          <surname>Hsu</surname>
+        </personname>
+        <email>awhsu@indiana.edu</email>
+        <affiliation>
+          <orgname>Indiana University</orgname>
+        </affiliation>
+      </author>
+    </authorgroup>
+  </info>
+  <xi:include href="Statement_of_Work/Statement_of_Work.xml" />
+  <xi:include href="Project_Record/Project_Record.xml" />
+  <xi:include href="Cleanroom_Engineering_Guide/Cleanroom_Engineering_Guide.xml" />
+  <xi:include href="Software_Development_Plan/Software_Development_Plan.xml" />
+  <xi:include href="Engineering_Change_Log/Engineering_Change_Log.xml" />
+  <xi:include href="Software_Requirements/Software_Requirements.xml" />
+  <xi:include href="Function_Specification/Function_Specification.xml" />
+  <xi:include href="Usage_Specification/Usage_Specification.xml" />
+  <xi:include href="Software_Architecture/Software_Architecture.xml" />
+  <xi:include href="Increment_Construction_Plan/Increment_Construction_Plan.xml" />
+  <xi:include href="Increment_Test_Plan/Increment_Test_Plan.xml" />
+  <xi:include href="Increment_Certification_Report/Increment_Certification_Report.xml" />
+  <xi:include href="Statistical_Testing_Report/Statistical_Testing_Report.xml" />
+</book>
