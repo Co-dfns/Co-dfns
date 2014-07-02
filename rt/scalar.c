@@ -25,10 +25,10 @@ scalar_dyadic(addd, d, d, d, i,
 /* Monadic ÷ */
 scalar_monadic(dividem, d, d,
 {
-	/* if (*rgt == 0) {
+	if (*rgt == 0) {
 		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
 		return 11;
-	} */
+	}
 
 	*tgt = 1.0 / *rgt;
 })
@@ -36,10 +36,10 @@ scalar_monadic(dividem, d, d,
 /* Dyadic ÷ */
 scalar_dyadic(divided, d, d, d, d,
 {
-	/* if (*rgt == 0) {
+	if (*rgt == 0) {
 		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
 		return 11;
-	} */
+	}
 	
 	*tgt = (1.0 * *lft) / (1.0 * *rgt);
 })
@@ -112,10 +112,6 @@ scalar_dyadic_inner(residued, d, d, d, RESIDUED)
 scalar_dyadic_inner(residued, d, d, i, RESIDUED)
 scalar_dyadic_inner(residued, d, i, d, RESIDUED)
 scalar_dyadic_inner(residued, i, i, i, RESIDUEI)
-scalar_dyadic_scalar(residued, d, d, d, RESIDUED)
-scalar_dyadic_scalar(residued, d, d, i, RESIDUED)
-scalar_dyadic_scalar(residued, d, i, d, RESIDUED)
-scalar_dyadic_scalar(residued, i, i, i, RESIDUEI)
 scalar_dyadic_main(residued, d, d, d, i)
 
 /* Monadic ⌈ */
