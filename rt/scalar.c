@@ -25,10 +25,10 @@ scalar_dyadic(addd, d, d, d, i,
 /* Monadic ÷ */
 scalar_monadic(dividem, d, d,
 {
-	if (*rgt == 0) {
+	/* if (*rgt == 0) {
 		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
 		return 11;
-	}
+	} */
 
 	*tgt = 1.0 / *rgt;
 })
@@ -36,10 +36,10 @@ scalar_monadic(dividem, d, d,
 /* Dyadic ÷ */
 scalar_dyadic(divided, d, d, d, d,
 {
-	if (*rgt == 0) {
+	/* if (*rgt == 0) {
 		fprintf(stderr, "DOMAIN ERROR: Divide by zero\n");
 		return 11;
-	}
+	} */
 	
 	*tgt = (1.0 * *lft) / (1.0 * *rgt);
 })
