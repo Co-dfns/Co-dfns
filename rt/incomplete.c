@@ -137,61 +137,67 @@ codfns_indexd(struct codfns_array *res,
 }
 
 int
+codfns_reshapem(struct codfns_array *res,
+    struct codfns_array *lft, struct codfns_array *rgt)
+{
+	uint64_t i;
+	uint32_t *rgts;
+	int64_t *rese;
+
+	if (scale_shape(res, 1)) {
+		perror("codfns_reshape");
+		return 1;
+	}
+
+	if (scale_elements(res, rgt->rank)) {
+		perror("codfns_reshape");
+		return 2;
+	}
+
+	res->type = 2;
+	*res->shape = rgt->rank;
+	rese = res->elements;
+	rgts = rgt->shape;
+
+	for (i = 0; i < rgt->rank; i++)
+		*rese++ = *rgts++;
+
+	return 0;
+}
+
+int
 codfns_reshaped(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	uint64_t i, size;
 	int64_t *lfte;
-	uint32_t *rgts, *ress;
+	uint32_t *ress;
+	size_t esize;
 	
-	if (lft == NULL) {
-		int64_t *rese;
-		
-		if (scale_shape(res, 1)) {
-			perror("codfns_reshape");
-			return 1;
-		}
-		
-		if (scale_elements(res, rgt->rank)) {
-			perror("codfns_reshape");
-			return 2;
-		}
-		
-		res->type = 2;
-		*res->shape = rgt->rank;
-		rese = res->elements;
-		rgts = rgt->shape;
-		
-		for (i = 0; i < rgt->rank; i++)
-			*rese++ = *rgts++;
-	} else {
-		size_t esize;
-		
-		if (scale_shape(res, lft->size)) {
-			perror("codfns_reshape");
-			return 3;
-		}
-		
-		lfte = lft->elements;
-		
-		for (i = 0, size = 1; i < lft->size; i++)
-			size *= *lfte++;
-		
-		if (scale_elements(res, size)) {
-			perror("codfns_reshape");
-			return 4;
-		}
-		
-		res->type = rgt->type;
-		esize = res->type == 3 ? sizeof(double) : sizeof(int64_t);
-		ress = res->shape;
-		lfte = lft->elements;
-		
-		for (i = 0; i < lft->size; i++)
-			*ress++ = *lfte++;
-		
-		memcpy(res->elements, rgt->elements, esize * size);
+	if (scale_shape(res, lft->size)) {
+		perror("codfns_reshape");
+		return 3;
 	}
+
+	lfte = lft->elements;
+
+	for (i = 0, size = 1; i < lft->size; i++)
+		size *= *lfte++;
+
+	if (scale_elements(res, size)) {
+		perror("codfns_reshape");
+		return 4;
+	}
+
+	res->type = rgt->type;
+	esize = res->type == 3 ? sizeof(double) : sizeof(int64_t);
+	ress = res->shape;
+	lfte = lft->elements;
+
+	for (i = 0; i < lft->size; i++)
+		*ress++ = *lfte++;
+
+	memcpy(res->elements, rgt->elements, esize * size);
 	
 	return 0;
 }
