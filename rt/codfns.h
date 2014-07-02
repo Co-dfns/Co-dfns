@@ -77,35 +77,15 @@ typedef double type_d;
 int \
 nm(struct codfns_array *, struct codfns_array *, struct codfns_array *)
 
-#define runtime_scalard(nm, zt, rt, lt) \
-int \
-nm##d##_##rt##lt(type_##zt *, type_##rt *, type_##lt *)
-
-#define runtime_scalarm(nm, zt, rt) \
-int \
-nm##m##_##rt(type_##zt *, type_##rt *)
-
 #define primitive(nm, mdt, mit, dddt, ddit, didt, diit) \
 runtime_array(codfns_##nm##m); \
-runtime_array(codfns_##nm##d); \
-runtime_scalarm(nm, mdt, d); \
-runtime_scalarm(nm, mit, i); \
-runtime_scalard(nm, dddt, d, d); \
-runtime_scalard(nm, ddit, d, i); \
-runtime_scalard(nm, didt, i, d); \
-runtime_scalard(nm, diit, i, i);
+runtime_array(codfns_##nm##d);
 
 #define primitived(nm, dddt, ddit, didt, diit) \
-runtime_array(codfns_##nm##d); \
-runtime_scalard(nm, dddt, d, d); \
-runtime_scalard(nm, ddit, d, i); \
-runtime_scalard(nm, didt, i, d); \
-runtime_scalard(nm, diit, i, i);
+runtime_array(codfns_##nm##d);
 
 #define primitivem(nm, mdt, mit) \
-runtime_array(codfns_##nm##m); \
-runtime_scalarm(nm, mdt, d); \
-runtime_scalarm(nm, mit, i);
+runtime_array(codfns_##nm##m);
 
 primitive(add, i, d, d, d, d, i)
 primitive(subtract, d, i, d, d, d, i)

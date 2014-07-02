@@ -9,26 +9,6 @@
 
 #include "codfns.h"
 
-/* Scalar Type Enumerations
- * 
- * These enumerations aid in the use of these macros and definitions. 
- * In particular, we use notations like d and i to represent types 
- * during the invocation of the macros. These type enumerations help 
- * to make sure that they resolve to the right type number in the 
- * type field of the struct codfns_array structures.
- */
-
-enum { apl_type_e, apl_type_b, apl_type_i, apl_type_d, apl_type_c };
-
-/* Typedefs for macros
- *
- * Like the enumerations above, these allow us to map specific types 
- * to the shortcuts d, i, and so forth inside of our macros.
- */
-
-typedef int64_t type_i;
-typedef double type_d;
-
 /* scalar()
  *
  * Intended Function: Predicate that returns 1 when the rank is zero,
@@ -174,41 +154,6 @@ nm##_##rt(type_##zt *tgt, type_##rt *rgt) \
 	return 0; \
 }
 
-/* scalar_dyadic_scalar()
- *
- * The function definition of a specialized scalar only version of a 
- * dyadic scalar function.
- */
-
-#define scalar_dyadic_scalar(nm, zt, lt, rt, code) \
-int \
-codfns_##s##nm##lt##rt(struct codfns_array *tgta, \
-    struct codfns_array *lfta, struct codfns_array *rgta) \
-{ \
-	type_##zt *tgt = tgta->elements; \
-	type_##lt *lft = lfta->elements; \
-	type_##rt *rgt = rgta->elements; \
-	code \
-	return 0; \
-}
-
-/* scalar_monadic_scalar()
- *
- * The function definition of a specialized scalar only version of a 
- * monadic scalar function.
- */
-
-#define scalar_monadic_scalar(nm, zt, rt, code) \
-int \
-codfns_##s##nm##rt(struct codfns_array *tgta, \
-    struct codfns_array *lfta, struct codfns_array *rgta) \
-{ \
-	type_##zt *tgt = tgta->elements; \
-	type_##rt *rgt = rgta->elements; \
-	code \
-	return 0; \
-}
-
 /* scalar_monadic_main()
  *
  * The function definition of a scalar monadic primitive.
@@ -243,8 +188,6 @@ codfns_##nm(struct codfns_array *res, \
 #define scalar_monadic(nm, dt, it, code) \
 scalar_monadic_inner(nm, dt, d, code) \
 scalar_monadic_inner(nm, it, i, code) \
-scalar_monadic_scalar(nm, dt, d, code) \
-scalar_monadic_scalar(nm, it, i, code) \
 scalar_monadic_main(nm, dt, it)
 
 /* scalar_dyadic()
@@ -257,10 +200,6 @@ scalar_dyadic_inner(nm, ddt, d, d, code) \
 scalar_dyadic_inner(nm, dit, d, i, code) \
 scalar_dyadic_inner(nm, idt, i, d, code) \
 scalar_dyadic_inner(nm, iit, i, i, code) \
-scalar_dyadic_scalar(nm, ddt, d, d, code) \
-scalar_dyadic_scalar(nm, dit, d, i, code) \
-scalar_dyadic_scalar(nm, idt, i, d, code) \
-scalar_dyadic_scalar(nm, iit, i, i, code) \
 scalar_dyadic_main(nm, ddt, dit, idt, iit)
 
 int
