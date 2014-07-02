@@ -348,3 +348,32 @@ codfns_eachm(struct codfns_array *res,
 
 	return 0;
 }
+
+int
+print_array(struct codfns_array *arr)
+{
+	int i;
+	
+	printf("\nRank: %d\n", arr->rank);
+	printf("Size: %lu\n", arr->size);
+	printf("Type: %d\n", arr->type);
+	printf("Shape: ");
+	
+	for (i = 0; i < arr->rank; i++)
+		printf("%d ", arr->shape[i]);
+	
+	printf("\nElements: ");
+	
+	if (arr->type == apl_type_d)
+		for (i = 0; i < arr->size; i++)
+			printf("%lf ", ((double *)arr->elements)[i]);
+	else if (arr->type == apl_type_i)
+		for (i = 0; i < arr->size; i++)
+			printf("%ld ", ((int64_t *)arr->elements)[i]);
+	else
+		printf("N/A");
+	
+	printf("\n");
+	
+	return 0;
+}
