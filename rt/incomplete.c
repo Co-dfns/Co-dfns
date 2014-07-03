@@ -236,15 +236,18 @@ codfns_catenated(struct codfns_array *res,
 			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
 			rese = res->elements;
-		}
-	
-		if (lft != res)
-			for (i = 0; i < lsz; i++) 
+			for (i = 0; i < lsz; i++)
 				*rese++ = *lfte++;
-	
-		if (rgt != res)
+		} else if (lft == res) {
+			rese += lsz;
 			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
+		} else {
+			for (i = 0; i < lsz; i++)
+				*rese++ = *lfte++;
+			for (i = 0; i < rsz; i++)
+				*rese++ = *rgte++;
+		}
 	} else {
 		int64_t *rese = res->elements;
 		int64_t *lfte = lft->elements;
@@ -255,15 +258,18 @@ codfns_catenated(struct codfns_array *res,
 			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
 			rese = res->elements;
-		}
-	
-		if (lft != res)
-			for (i = 0; i < lsz; i++) 
+			for (i = 0; i < lsz; i++)
 				*rese++ = *lfte++;
-	
-		if (rgt != res)
+		} else if (lft == res) {
+			rese += lsz;
 			for (i = 0; i < rsz; i++)
 				*rese++ = *rgte++;
+		} else {
+			for (i = 0; i < lsz; i++)
+				*rese++ = *lfte++;
+			for (i = 0; i < rsz; i++)
+				*rese++ = *rgte++;
+		}
 	}
 		
 	return 0;

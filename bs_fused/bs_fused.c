@@ -80,7 +80,7 @@ anon_f(struct codfns_array *res,
 	codfns_indexgenm(res, NULL, &g3);
 	codfns_addd(res, &g4, res);
 	codfns_powerd(res, rgt, res);
-	codfns_ptredd(res, &coeff, res);
+	codfns_ptredd(res, &coeff, res); 
 	
 	return 0;
 }
@@ -99,11 +99,10 @@ int static inline
 scalar1(int64_t i, void *res, void *rgt, struct codfns_array *env0)
 {
 	int64_t X;
-	double *L, *K, Y, *R, *w;
+	double *L, *K, Y, *w;
 	
 	L = ((double *)(&env0[0])->elements) + i;
 	K = ((double *)(&env0[1])->elements) + i;
-	R = ((double *)(&env0[2])->elements) + i;
 	w = ((double *)rgt) + i;
 		
 	*L = *w < 0 ? -1 * *w : *w;
@@ -134,7 +133,7 @@ scalar4(int64_t i, void *res, void *rgt, struct codfns_array *env0)
 	*R = T * *R;
 	T = 0.3989422804;
 	*R = T * *R;
-
+	
 	X = 0;
 	*B = *w >= X;
 	g1s = ((int64_t *)g1.elements) + *B;
@@ -142,7 +141,7 @@ scalar4(int64_t i, void *res, void *rgt, struct codfns_array *env0)
 	ress = res;
 	ress = ress + i;
 	*ress = *g2s + *R;
-	*ress = *g1s + *ress;
+	*ress = *g1s * *ress;
 
 	return 0;
 }
@@ -152,7 +151,7 @@ CNDP2(struct codfns_array *res,
     struct codfns_array *lft, struct codfns_array *rgt)
 {
 	struct codfns_array env0[5];
-	struct codfns_array *ew[5];
+	struct codfns_array *ew[1];
 	struct codfns_array *L, *K, *R, *B, *P;
 	void *rese;
 	int64_t i;
@@ -175,19 +174,20 @@ CNDP2(struct codfns_array *res,
 	codfns_sverify(P, R, P);
 	codfns_sverify(P, rgt, R);
 	
-	for (i = 0; i < P->size; i++)
-		scalar1(i, rese, rgt->elements, env0);
+	res->type = L->type = K->type = R->type = apl_type_d;
+	B->type = apl_type_i;
 	
-	ew[0] = &env0[0];
-	ew[1] = &env0[1];
-	ew[2] = &env0[2];
-	ew[3] = &env0[3];
-	ew[4] = &env0[4];
+	for (i = 0; i < P->size; i++)
+		scalar1(i, res->elements, rgt->elements, env0);
+	
+	ew[0] = env0;
 	
 	codfns_eachm(R, NULL, K, anon_w, ew);
 	
 	for (i = 0; i < P->size; i++)
-		scalar4(i, rese, rgt->elements, env0);
+		scalar4(i, res->elements, rgt->elements, env0);
+		
+	clean_env(env0, 5);
 
 	return 0;
 }
@@ -262,21 +262,14 @@ int
 bs_codfnsm(struct codfns_array *res, 
     struct codfns_array *lft, struct codfns_array *rgt)
 {
-	struct codfns_array env0[12];
-	struct codfns_array scl, *S, *X, *T;
+	struct codfns_array env0[13];
+	struct codfns_array *scl, *S, *X, *T;
 	struct codfns_array *P, *expRT, *vsqrtT, *D1, *D2, *CD1, *CD2;
 	struct codfns_array *R, *TMP, *s;
 	int64_t i, z; void *na;
 	
-	init_env(&scl, 1);
-	init_env(env0, 12);
-	
-	scl.type = apl_type_i;
-	scl.rank = 0;
-	scl.shape = NULL;
-	scl.size = 1;
-	scl.elements = &z;
-	
+	init_env(env0, 13);
+		
 	S = &env0[0];
 	X = &env0[1];
 	P = &env0[2];
@@ -289,12 +282,21 @@ bs_codfnsm(struct codfns_array *res,
 	R = &env0[9];
 	TMP = &env0[10];
 	s = &env0[11];
+	scl = &env0[12];
+	
+	s->type = X->type = S->type = apl_type_i;
+	D2->type = D1->type = vsqrtT->type = expRT->type = apl_type_d;
+	CD1->type = CD2->type = R->type = TMP->type = apl_type_d;
+	
+	scl->type = apl_type_i;
+	scl->size = 1;
+	scl->elements = &z;
 		
 	z = 0;
-	codfns_squadd(S, &scl, lft);
+	codfns_squadd(S, scl, lft);
 	
 	z = 1;
-	codfns_squadd(X, &scl, lft);
+	codfns_squadd(X, scl, lft);
 	
 	T = rgt;
 	
@@ -312,11 +314,11 @@ bs_codfnsm(struct codfns_array *res,
 	prepare_res(&na, D2, P);
 	
 	for (i = 0; i < P->size; i++)
-		scalar2(i, res, rgt, env0);
-	
+		scalar2(i, res->elements, rgt->elements, env0);
+		
 	CNDP2(CD1, NULL, D1);
 	CNDP2(CD2, NULL, D2);
-	
+		
 	codfns_sverify(P, expRT, CD2);
 	codfns_sverify(P, X, P);
 	codfns_sverify(P, CD1, P);
@@ -325,13 +327,15 @@ bs_codfnsm(struct codfns_array *res,
 	prepare_res(&na, TMP, P);
 	
 	for (i = 0; i < P->size; i++)
-		scalar3(i, res, rgt, env0);
+		scalar3(i, res->elements, rgt->elements, env0);
 	
 	codfns_reshapem(s, NULL, S);
 	z = 2;
-	codfns_catenated(s, s, &scl);
+	codfns_catenated(s, scl, s);
 	codfns_catenated(TMP, R, TMP);
 	codfns_reshaped(res, s, TMP);
+	
+	clean_env(env0, 12);
 
 	return 0;
 }
