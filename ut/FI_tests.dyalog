@@ -1,2 +1,2 @@
-L_TEST←{#.UT.expect←⍬ ⋄ #.Codfns.FI}
+L_TEST←{_←X⍬ ⋄ #.Codfns.FI}
 
