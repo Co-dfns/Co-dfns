@@ -1,0 +1,3 @@
+T1_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':Namespace' '' ':Namespace'"}
+T2_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace'"}
+

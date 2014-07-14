@@ -16,15 +16,15 @@ clean:
 libcodfns.so: rt/*.c rt/*.h
 	clang -shared -fPIC ${CFLAGS} -o $@ rt/*.c
 	
-Codfns.dyalog: ns/*.dyalog libcodfns.so
+Codfns.dyalog: ns/*.cd libcodfns.so
 	echo ':Namespace Codfns' > Codfns.dyalog
-	bin/assemble ns/*.dyalog >> Codfns.dyalog
+	bin/assemble ns/*.cd >> Codfns.dyalog
 
-ut.dyalog: ut/*.dyalog
+ut.dyalog: ut/*.cd
 	echo ':Namespace ut' > ut.dyalog
-	bin/assemble ut/*.dyalog >> ut.dyalog
+	bin/assemble ut/*.cd >> ut.dyalog
 
-at.dyalog: at/*.dyalog
+at.dyalog: at/*.cd
 	echo ':Namespace at' > at.dyalog
-	bin/assemble at/*.dyalog >> at.dyalog
+	bin/assemble at/*.cd >> at.dyalog
 
