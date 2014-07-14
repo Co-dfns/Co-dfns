@@ -20,4 +20,5 @@ LK9_TEST←{_←X 5 6 ⋄ ((2 2⍴'f' 2 'g' 2)LKCL'ut/FG'⊣C.FI).(f,g)5}
 EM_TEST←{_←X 1 ⋄ 11::1 ⋄ #.Codfns.E 11 ⋄ 0}
 ED_TEST←{_←X 1 ⋄ 11::1 ⋄ 'a'#.Codfns.E 11 ⋄ 0}
 Eachk1_TEST←{⊢ C.Eachk X 1 4⍴0 'a' '' (0 2⍴⍬)}
+VF1_TEST←{C.VF X 'blah'}
 

@@ -1,3 +1,11 @@
 T1_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':Namespace' '' ':Namespace'"}
 T2_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace'"}
+T3_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace' '' ':Namespace'"}
+T4_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' '' ':Namespace'"}
+T5_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' '' '' ':Namespace' '' ':EndNamespace'"}
+T6_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' ''"}
+T7_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' ''"}
+T8_TEST←{_←X 0 0⍴'' ⋄ ('tmp/test'FX '' ':Namespace' '' ':EndNamespace' '').⎕NL⍳10}
+T9_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX':EndNamespace' ':Namespace' ':Namespace' ':EndNamespace'"}
+T10_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX3⍴⊂':EndNamespace'"}
 
