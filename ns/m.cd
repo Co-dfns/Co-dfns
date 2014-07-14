@@ -4,7 +4,7 @@ VI←{~1≡≢⍴⍵:E 11 ⋄ ~∧/1≥≢∘⍴¨⍵:E 11 ⋄ ~∧/∊' '=(⊃0
 VF←{~(∧/∊' '=⊃0⍴⊂⍵)∧(1≡≢⍴⍵)∧(1≡≡⍵):E 11 ⋄ ⍵}
 clang←'clang -O3 -Wall -pedantic -g -std=c11 -shared -fPIC -L. -o '
 CL←{⍵,'.so'⊣⎕SH clang,'"',⍵,'.so" "',⍵,'.ll" -lcodfns -lm'}
-LK←{n←⎕NS⍬ ⋄ 0=≢⍺:n ⋄ _←⍵∘{_←n.⍎⍵,'←''',⍵,'''##.NA''',⍺,'''' ⋄ 0}¨⊣/⍺ ⋄ n}
+LK←{n←⎕NS⍬ ⋄ 0=≢⍺:n ⋄ n⊣⍵∘{_←n.⍎⍵,'←''',⍵,'''##.NA''',⍺,'''' ⋄ 0}¨⊣/⍺⌿⍨2=⊢/⍺}
 WM←{1=⊃r e←PrintModuleToFile ⍵ (⍺,'.ll') 1:(ErrorMessage⊃err)E 99 ⋄ ⍺}
 NA←{⍺←⊢ ⋄ _←'f'⎕NA'I4 ',⍵⍵,'|',⍺⍺,' P P P' ⋄ 0≠⊃e o←EA⍬:E e ⋄ 0≠⊃e w←AP ⍵:E e 
   0≠⊃e a←AP ⍺⊣⍬:E e ⋄ 0≠e←f o a w:E e ⋄ z←ConvertArray o
