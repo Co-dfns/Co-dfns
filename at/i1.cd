@@ -1,11 +1,11 @@
-T1_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':Namespace' '' ':Namespace'"}
-T2_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace'"}
-T3_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace' '' ':Namespace'"}
-T4_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' '' ':Namespace'"}
-T5_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' '' '' ':Namespace' '' ':EndNamespace'"}
-T6_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' ''"}
-T7_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' ''"}
-T8_TEST←{_←X 0 0⍴'' ⋄ ('tmp/test'FX '' ':Namespace' '' ':EndNamespace' '').⎕NL⍳10}
-T9_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX':EndNamespace' ':Namespace' ':Namespace' ':EndNamespace'"}
-T10_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX3⍴⊂':EndNamespace'"}
+I1∆1_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':Namespace' '' ':Namespace'"}
+I1∆2_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace'"}
+I1∆3_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace' '' ':Namespace'"}
+I1∆4_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' '' ':Namespace'"}
+I1∆5_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' '' '' ':Namespace' '' ':EndNamespace'"}
+I1∆6_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' ''"}
+I1∆7_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' ''"}
+I1∆8_TEST←{_←X 0 0⍴'' ⋄ ('tmp/test'FX '' ':Namespace' '' ':EndNamespace' '').⎕NL⍳10}
+I1∆9_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX':EndNamespace' ':Namespace' ':Namespace' ':EndNamespace'"}
+I1∆10_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX3⍴⊂':EndNamespace'"}
 
