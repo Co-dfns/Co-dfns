@@ -8,7 +8,7 @@ TK←{
   vcn←vc,nc←'¯0123456789'              ⍝ Numbers
   tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>⍺⍵⍴⍳,⌷¨'     ⍝ Single Token characters
   ac←vcn,'     ⍝⎕.',tc                 ⍝ All characters
-  ~∧/ac∊⍨⊃,/⍵:⎕SIGNAL 2                ⍝ Verify we have only good characters
+  ~∧/ac∊⍨⊃,/⍵:E 2                      ⍝ Verify we have only good characters
   i←⍵⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵           ⍝ Divide into comment and code
   t←((⌽∘(∨\)∘⌽¨t)∧∨\¨t←' '≠t)/¨t       ⍝ Strip leading/trailing whitespace
   nsb←t∊':Namespace' ':EndNamespace'   ⍝ Mask of Namespace tokens
