@@ -31,3 +31,6 @@ I2∆7_TEST←{_←X 95 ⋄ ('tmp/i2.7'FX in⊂'f←{95}').f⍬}
 I2∆8_TEST←{_←X 26 42 ⋄ (n.f⍬)(n.g⍬)⊣n←'tmp/i2.8'FX in'f←{26}' 'g←{42}'}
 I2∆9_TEST←{_←X 26 42 ⋄ (n.f⍬)(n.g⍬)⊣n←'tmp/i2.8'FX in'f←{26}' 'g←{42}' 'v←69'}
 
+I3∆1_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX (in⊂''),⊂'V1'"}
+I3∆2_TEST←{_←X 99 52 ⋄ (n.f⍬)(n.g⍬)⊣n←'tmp/i3.2'FX in⊂'f←{99} ⋄ g←{52}'}
+I3∆3_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i3.3'FX in⊂'⋄').⎕NL⍳10}

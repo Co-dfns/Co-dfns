@@ -9,7 +9,7 @@ TK←{
   tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>⍺⍵⍴⍳,⌷¨'     ⍝ Single Token characters
   ac←vcn,'     ⍝⎕.',tc                 ⍝ All characters
   ~∧/ac∊⍨⊃,/⍵:E 2                      ⍝ Verify we have only good characters
-  i←⍵⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵           ⍝ Divide into comment and code
+  i←(,¨⍵)⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵       ⍝ Divide into comment and code
   t←((⌽∘(∨\)∘⌽¨t)∧∨\¨t←' '≠t)/¨t       ⍝ Strip leading/trailing whitespace
   nsb←t∊':Namespace' ':EndNamespace'   ⍝ Mask of Namespace tokens
   nsl←nsb/t ⋄ nsi←nsb/⍳⍴t              ⍝ Namespace lines and indices
