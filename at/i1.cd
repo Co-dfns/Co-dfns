@@ -1,27 +1,26 @@
-I1∆1_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':Namespace' '' ':Namespace'"}
-I1∆2_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace'"}
-I1∆3_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ':EndNamespace' '' ':Namespace'"}
-I1∆4_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' '' ':Namespace'"}
-I1∆5_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' '' '' ':Namespace' '' ':EndNamespace'"}
-I1∆6_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' '' ''"}
-I1∆7_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' '' ':Namespace' ''"}
-I1∆8_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX':EndNamespace' ':Namespace' ':Namespace' ':EndNamespace'"}
-I1∆9_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX3⍴⊂':EndNamespace'"}
+I1∆01_TEST←{2 ST '' ':Namespace' '' ':Namespace'}
+I1∆02_TEST←{2 ST '' ':EndNamespace'}
+I1∆03_TEST←{2 ST '' ':EndNamespace' '' ':Namespace'}
+I1∆04_TEST←{2 ST '' '' '' '' ':Namespace'}
+I1∆05_TEST←{2 ST '' ':Namespace' '' ':Namespace' '' ':EndNamespace'}
+I1∆06_TEST←{2 ST '' '' '' ''}
+I1∆07_TEST←{2 ST '' '' ':Namespace' ''}
+I1∆08_TEST←{2 ST ':EndNamespace' ':Namespace' ':Namespace' ':EndNamespace'}
+I1∆09_TEST←{2 ST 3⍴⊂':EndNamespace'}
 I1∆10_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i1.10'FX '' ':Namespace' '' ':EndNamespace' '').⎕NL⍳10}
-I1∆11_TEST←{_←X 1 ⋄ 11::1 ⋄ ⍎'FX ⍬'}
-I1∆12_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX ''"}
-I1∆13_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX '' ''"}
-I1∆14_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX 55"}
-I1∆15_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX 55 33"}
+I1∆11_TEST←{11 ST ⍬}
+I1∆12_TEST←{11 ST ''}
+I1∆13_TEST←{2 ST '' ''}
+I1∆14_TEST←{11 ST 55}
+I1∆15_TEST←{11 ST 55 33}
 
-I2∆1_TEST←{_←X 1 ⋄ 2::1
-  p←':Namespace' 'V4←{1014238 652510 731722 363426}'
+I2∆1_TEST←{p←':Namespace' 'V4←{1014238 652510 731722 363426}'
   p,←'V3 ← {808026 392384 317583}' 'V2 ← {36669 793720 68395}'
   p,←'V1 ← 395790808' ':EndNamespace' ':Namespace'
-  ⍎"FX p"}
-I2∆2_TEST←{_←X 1 ⋄ 2::1 ⋄ p←':Namespace' 'V6←747772600' 'V5←{541074 592928}'
-  ⍎"FX p"⊣p,←':EndNamespace' ':Namespace'}
-I2∆3_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX':Namespace' 'V7←' ':Namespace'}
+  2 ST p}
+I2∆2_TEST←{p←':Namespace' 'V6←747772600' 'V5←{541074 592928}'
+  p,←':EndNamespace' ':Namespace' ⋄ 2 ST p}
+I2∆3_TEST←{2 ST ':Namespace' 'V7←' ':Namespace'}
 I2∆4_TEST←{_←X(1 2⍴'V8')(,3)(846 481 771 169 343 130 462)
   p←':Namespace' 'V9←864' 'V8←{846 481 771 169 343 130 462}' ':EndNamespace'
   n←'tmp/i2.4'FX p ⋄ (n.⎕NL⍳10)(n.⎕NC'V8')(n.V8⍬)}
@@ -31,10 +30,13 @@ I2∆7_TEST←{_←X 95 ⋄ ('tmp/i2.7'FX in⊂'f←{95}').f⍬}
 I2∆8_TEST←{_←X 26 42 ⋄ (n.f⍬)(n.g⍬)⊣n←'tmp/i2.8'FX in'f←{26}' 'g←{42}'}
 I2∆9_TEST←{_←X 26 42 ⋄ (n.f⍬)(n.g⍬)⊣n←'tmp/i2.8'FX in'f←{26}' 'g←{42}' 'v←69'}
 
-I3∆1_TEST←{_←X 1 ⋄ 2::1 ⋄ ⍎"FX (in⊂''),⊂'V1'"}
+I3∆1_TEST←{2 ST (in⊂''),⊂'V1'}
 I3∆2_TEST←{_←X 99 52 ⋄ (n.f⍬)(n.g⍬)⊣n←'tmp/i3.2'FX in⊂'f←{99} ⋄ g←{52}'}
 I3∆3_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i3.3'FX in⊂'⋄').⎕NL⍳10}
 I3∆4_TEST←{_←X 11 ⋄ ('tmp/i3.4'FX in⊂'v←45 ⋄ f←{11}').f⍬}
 I3∆5_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i3.5'FX in'⋄' '⋄').⎕NL⍳10}
 I3∆6_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i3.6'FX in⊂'{55}').⎕NL⍳10}
+
+I4∆1_TEST←{2 ST in⊂'F←{ V ⋄'}
+I4∆2_TEST←{_←X 1 ⋄ 6::1 ⋄ ⍎'A←(''tmp/i4.2''FX in⊂''F←{}'').F⍬'}
 
