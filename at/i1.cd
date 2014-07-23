@@ -39,4 +39,5 @@ I3∆6_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i3.6'FX in⊂'{55}').⎕NL⍳10}
 
 I4∆1_TEST←{2 ST in⊂'F←{ V ⋄'}
 I4∆2_TEST←{_←X 1 ⋄ 6::1 ⋄ ⍎'A←(''tmp/i4.2''FX in⊂''F←{}'').F⍬'}
+I4∆3_TEST←{_←X 1 ⋄ ('tmp/i4.3'FX in⊂'F←{1:1 ⋄ 0}').F⍬}
 
