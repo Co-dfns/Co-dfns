@@ -24,6 +24,10 @@
   <xsl:param name="page.margin.outer" select="'0.75in'" />
   <xsl:param name="email.delimiters.enabled" select="0" />
   <xsl:param name="bibliography.numbered" select="1" />
+  
+  <xsl:template name="footer.content">
+    <fo:block></fo:block>
+  </xsl:template>
 
   <xsl:attribute-set name="component.titlepage.properties">
     <xsl:attribute name="span">all</xsl:attribute>
