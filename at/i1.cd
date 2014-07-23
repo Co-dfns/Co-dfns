@@ -43,4 +43,5 @@ I4∆3_TEST←{_←X 1 ⋄ ('tmp/i4.3'FX in⊂'F←{1:1 ⋄ 0}').F⍬}
 I4∆4_TEST←{_←X 0 ⋄ ('tmp/i4.4'FX in⊂'F←{0:1 ⋄ 0}').F⍬}
 I4∆5_TEST←{_←X 0 ⋄ ('tmp/i4.5'FX in⊂'F←{X←0}').F⍬}
 I4∆6_TEST←{_←X 1 ⋄ 6::1 ⋄ ⍎'A←(''tmp/i4.6''FX in⊂''F←{0:1⋄}'').F⍬'}
+I4∆7_TEST←{_←X 0 ⋄ ('tmp/i4.7'FX in⊂'F←{1:X←0}').F⍬}
 
