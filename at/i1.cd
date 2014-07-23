@@ -47,4 +47,8 @@ I4∆07_TEST←{_←X 0 ⋄ ('tmp/i4.7'FX in⊂'F←{1:X←0}').F⍬}
 I4∆08_TEST←{_←X 0 ⋄ ('tmp/i4.8'FX in⊂'F←{X←1:0 ⋄ 1}').F⍬}
 I4∆09_TEST←{6 ST in⊂'F←{U}'}
 I4∆10_TEST←{6 ST in⊂'F←{V←U}'}
+I4∆11_TEST←{6 ST in⊂'F←{V←V}'}
+I4∆12_TEST←{_←X 1 ⋄ ('tmp/i4.12'FX in⊂'F←{⋄ 1}').F⍬}
+I4∆13_TEST←{_←X↑,¨'fgh' ⋄ ('tmp/i4.13'FX in⊂'f←g←h←{}').⎕NL⍳10}
+I4∆14_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i4.14'FX in⊂'9 9 9').⎕NL⍳10}
 
