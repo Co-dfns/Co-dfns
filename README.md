@@ -15,5 +15,6 @@ Our mission is to deliver scalable APL programming to information and
 domain experts across many fields, expanding the scope and capabilities 
 of what you can effectively accomplish with APL.
 
-[Documentation](https://github.com/arcfide/Co-dfns/wiki)
+[Documentation](https://github.com/arcfide/Co-dfns/wiki)  
 
+Please support Co-dfns through [GitTip](https://gittip.com/arcfide).
