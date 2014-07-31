@@ -24,8 +24,8 @@ Comment←{⍺}
 ByElem←{(⍺[;1]∊⊂⍵)⌿⍺}
 ByDepth←{(⍵=⍺[;0])⌿⍺}
 Bind←{
-  (A⍳⊂'name')≥⍴A←0⌷⍉⊃0 3⌷Ast←⍵:Ast⊣(⊃0 3⌷Ast)⍪←'name'⍺
-  Ast⊣((0 3)(Ni 1)⊃Ast){⍺,⍵,⍨' ' ''⊃⍨0=⍴⍺}←⍺
+  (i←A⍳⊂'name')≥⍴A←0⌷⍉⊃0 3⌷Ast←⍵:Ast⊣(⊃0 3⌷Ast)⍪←'name'⍺
+  Ast⊣((0 3)(i 1)⊃Ast){⍺,⍵,⍨' ' ''⊃⍨0=⍴⍺}←⍺
 }
 E←{⍺←⊢ ⋄ ⍺ ⎕SIGNAL ⍵}
 

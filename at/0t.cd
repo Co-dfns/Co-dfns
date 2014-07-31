@@ -1,3 +1,4 @@
+⎕IO ⎕ML←0 1
 FX←#.Codfns.Fix ⋄ d←{'./tmp/',⍵} ⋄ #.UT.sac←0 ⋄ X←{1:#.UT.expect←⍵}
 in←{(⊂':Namespace'),(,⍵),⊂':EndNamespace'} ⋄ ST←{_←X 1 ⋄ ⍺::1 ⋄ ⍎'FX ⍵'}
 
