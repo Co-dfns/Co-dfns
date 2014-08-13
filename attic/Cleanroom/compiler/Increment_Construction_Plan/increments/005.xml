@@ -1,14 +1,42 @@
-      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <td>5</td>
-        <td colspan="6">
-          <simplelist type="horiz">
-            <member>Support all expression states where Nest
-            <literal>∊</literal> NONE and ~Class <literal>∊</literal>
-            SELECT</member>
-            <member>Support atomic Function Expression states</member>
-            <member>Support basic scalar primitives and basic structural primitives</member>
-            <member>Support only the integer numeric type and do not worry about overflow</member>
-            <member>Use a simple C runtime</member>
-          </simplelist>
-        </td>
-      </tr>
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Support flat, unnested expressions of functions</member>
+      <member>Support only function expressions of a single atom</member>
+      <member>Implement basic scalar primitives and some basic structural 
+      primitives</member>
+      <member>Support the Black Scholes benchmark as a special case</member>
+      <member>Support the Integer type without overflow</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Support all expression states where Nest
+      <literal>∊</literal> NONE and ~Class <literal>∊</literal>
+      SELECT</member>
+      <member>Support atomic Function Expression states</member>
+      <member>Partially implement the following primitives: 
+      <literal>+</literal>
+      <literal>-</literal>
+      <literal>÷</literal>
+      <literal>×</literal>
+      <literal>|</literal>
+      <literal>*</literal>
+      <literal>⍟</literal>
+      <literal>⌈</literal>
+      <literal>⌊</literal>
+      <literal>&lt;</literal>
+      <literal>≤</literal>
+      <literal>=</literal>
+      <literal>≠</literal>
+      <literal>≥</literal>
+      <literal>&gt;</literal>
+      <literal>⌷</literal>
+      <literal>⍴</literal>
+      <literal>,</literal>
+      <literal>⍳</literal>
+      <literal>¨</literal></member>
+      <member>Implement a minimal C runtime to support primitives</member>
+    </simplelist>
+  </td>
+</tr>

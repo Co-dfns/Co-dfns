@@ -1,10 +1,15 @@
-      <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-        <td>8</td>
-        <td colspan="6">
-          <simplelist type="horiz">
-            <member>Support the rest of the Function states</member>
-            <member>Ensure reasonable semantics for rebinding a name</member>
-            <member>Support Shy results correctly</member>
-          </simplelist>
-        </td>
-      </tr>
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>
+    <simplelist type="horiz">
+      <member>Support internal function binding and naming</member>
+      <member>Support function binding renaming</member>
+      <member>Support shy results</member>
+    </simplelist>
+  </td>
+  <td>
+    <simplelist type="horiz">
+      <member>Support the rest of the Function states</member>
+      <member>Ensure reasonable semantics for rebinding a name</member>
+    </simplelist>
+  </td>
+</tr>

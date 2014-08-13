@@ -1,0 +1,8 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    The Co-dfns compiler will support the following scalar data types: 
+    1-bit booleans, 64-bit signed integers, 64-bit double floating point 
+    values, UCS-1/UTF-32 Unicode characters, complex numbers, 
+    and nested arrays. 
+  </simpara>
+</listitem>

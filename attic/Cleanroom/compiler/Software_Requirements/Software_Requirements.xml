@@ -1,4 +1,5 @@
-<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+<chapter xmlns="http://docbook.org/ns/docbook" version="5.0" 
+         xmlns:xi="http://www.w3.org/2001/XInclude">
   <info>
     <title>Software Requirements</title>
   </info>
@@ -74,5 +75,6 @@
     <xi:include href="requirements/049.xml"></xi:include>
     <xi:include href="requirements/050.xml"></xi:include>
     <xi:include href="requirements/051.xml"></xi:include>
+    <xi:include href="requirements/052.xml"></xi:include>
   </orderedlist>
 </chapter>
