@@ -7,7 +7,7 @@ all: Codfns.dyalog
 unit: Codfns.dyalog ut.dyalog
 	LD_LIBRARY_PATH=. mapl ws/unit
 
-acceptance: Codfns.dyalog at.dyalog
+acceptance: at.dyalog ut.dyalog Codfns.dyalog
 	LD_LIBRARY_PATH=. mapl ws/acceptance
 
 clean:

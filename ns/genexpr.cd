@@ -22,11 +22,11 @@ GenExpr←{mod fr bldr env0←⍺⍺ ⋄ nm vl←⍵ ⋄ node←⍺
              av nm vl←⍵(⍺⍺ LookupExpr)1↑1↓⍺  ⍝ Lookup expression variable
              nm vl⊣tgh cpy av                ⍝ Copy into the first target
          })⍵
-         lft fld nm vl f r←⍺(⍺⍺{             ⍝ Left argument handled based on arity
+         lft nm vl fld f r←⍺(⍺⍺{             ⍝ Left argument handled based on arity
              gnap←GenNullArrayPtr            ⍝ Convenience
-             dlft←⍺⍺{⍵(⍺⍺ LookupExpr)1↑2↓⍺}  ⍝ Grab left argument in dyadic case
-             'monadic'≡cls:(gnap ⍬)'m',⍵,0 1 ⍝ No new bindings, Fn Rgt ←→ 1st, 2nd
-             'dyadic'≡cls:(⍺ dlft ⍵)'d',1 2  ⍝ New bindings, Fn Rgt ←→ 2nd, 3rd
+             dl←⍺⍺{⍵(⍺⍺ LookupExpr)1↑2↓⍺}    ⍝ Grab left argument in dyadic case
+             'monadic'≡cls:(gnap ⍬),⍵,'m'0 1 ⍝ No new bindings, Fn Rgt ←→ 1st, 2nd
+             'dyadic'≡cls:(⍺ dl ⍵),'d'1 2    ⍝ New bindings, Fn Rgt ←→ 2nd, 3rd
              'BAD CLASS'⎕SIGNAL 99           ⍝ Error trap just in case
          })⍵
          rgt nm vl←(k←1 Kids ⍺)(⍺⍺{          ⍝ Process the right argument
