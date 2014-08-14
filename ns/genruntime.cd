@@ -15,6 +15,6 @@ GenRuntime←{
      _←cet add¨'clean_env' 'init_env'      ⍝ Add clean_env()
      _←two one add¨'array_cp' 'array_free' ⍝ Add the special ones
      _←std add¨⊃,/'md',⍨¨¨⊂APLRunts        ⍝ Add the normal runtime
-     _←opr add¨APLRtOps                    ⍝ Add the operators
+     _←opr add¨⊃,/'md',⍨¨¨⊂APLRtOps        ⍝ Add the operators
      0 0⍴⍬                                 ⍝ Hide our return result
  }

@@ -4,7 +4,7 @@ AV←{S←Split ⋄ nm←'name'∘(P←Prop)
   n←∨/(↑0⌷∘⍉¨3⌷⍉⍵)∊⊂'name'             ⍝ Mask of nodes with names
   ~∨/e∧n:⍵                             ⍝ Short circuit on empty
   c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍉⍵         ⍝ Node coordinates
-  p←c×↑∨/c(⊣,∧).=⍉(rf←1,1↓f)⌿c         ⍝ Parent scope coordinates per node
+  p←c×↑∨/(↓c)∘.(∧\=×(∧/=∨0=⊢))↓(rf←1,1↓f)⌿c ⍝ Parent scope coordinates per node
   o←⍳∘∪⍨vs←(⊃,/)(b←0⌷∘⍉⊢)              ⍝ Fn: First index of vars from bindings
   lr←1 2(o⊃¨∘⊂(≢¨b)(\∘⊢)⌷∘⍉)¨∘⊂⊢       ⍝ Fn: Binding level and depth
   gk←⊂⊣,⍤1 0(∪vs) ⋄ gi←⊂∘⍳gz←≢∘∪vs     ⍝ Fn: Binding key and slot
