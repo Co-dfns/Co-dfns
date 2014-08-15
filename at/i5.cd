@@ -11,7 +11,7 @@ I5∆BS,←'a←B ⎕index 0 ¯1' 'a←a+R' 'b←B ⎕index 1 ¯1' 'b×a' '}' ''
 I5∆BS,←'bs←{S←0⌷⍺ ⋄ X←1⌷⍺ ⋄ T←⍵' 'expRT←-r' 'expRT←*expRT×T' 'a←v*2'
 I5∆BS,←'a←r+a÷2' 'b←⍟S÷X' 'a←b+a×T' 'D1←a÷vsqrtT←v×T*0.5' 'D2←D1-vsqrtT'
 I5∆BS,←'a←S×CD1←CNDP2 D1' 'R←a-X×expRT×CD2←CNDP2 D2' 'b←X×expRT×1-CD2'
-I5∆BS,←'s←⍴S' 's←s,2' 's⍴R,b-S×1-CD1' '}' '' ':EndNamespace'
+I5∆BS,←'s←⍴S' 's←2,s' 's⍴R,b-S×1-CD1' '}' '' ':EndNamespace'
 
 I5∆AT←{r←0.02 ⋄ v←0.03 ⋄ S X T←⊂[0]⍵
  coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442
@@ -22,4 +22,4 @@ I5∆AT←{r←0.02 ⋄ v←0.03 ⋄ S X T←⊂[0]⍵
 
 I5∆GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 
-I5∆5_TEST←{_←X 1 ⋄ ∧/,1e¯7>(I5∆AT d)-(⍉d[;⍳2])('tmp/i5.5'FX I5∆BS).bs 2⌷⍉d←I5∆GD 7}
+I5∆5_TEST←{_←X 1 ⋄ ∧/,1e¯7>|(I5∆AT d)-⍉(⍉d[;⍳2])('tmp/i5.5'FX I5∆BS).bs 2⌷⍉d←I5∆GD 7}

@@ -1,300 +1,37 @@
-#include "s.h"
+#include "h.h"
 
 /* Nothing really works here */
 
 I codfns_indexgenm(A*z,A*l,A*r){typ(z)=2;I64*c=elm(r);scale(z,1,*c);
  shp(z)[0]=*c;I64*d=elm(z);DO(*c,d[i]=i);R 0;}
-
-int
-codfns_squadd(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt)
-{
-	int row;
-	
-	if (scale_shape(res, 1)) {
-		perror("codfns_squad");
-		return 1;
-	}
-	
-	if (scale_elements(res, rgt->shape[1])) {
-		perror("codfns_squad");
-		return 2;
-	}
-	
-	res->type = rgt->type;
-	*res->shape = rgt->shape[1];
-	row = *((int64_t *)lft->elements);
-	
-	if (res->type == 3) {
-		double *elems = rgt->elements;
-		elems += row * res->size;
-		memcpy(res->elements, elems, sizeof(double) * res->size);
-	} else {
-		int64_t *elems = rgt->elements;
-		elems += row * res->size;
-		memcpy(res->elements, elems, sizeof(int64_t) * res->size);
-	}
-	
-	return 0;
-}
-
-int
-codfns_indexd(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt)
-{
-	uint64_t i;
-	int64_t *lfte;
-	
-	/*printf("Index ");*/
-	
-	if (copy_shape(res, lft)) {
-		perror("codfns_index");
-		return 1;
-	}
-	
-	if (scale_elements(res, lft->size)) {
-		perror("codfns_index");
-		return 2;
-	}
-	
-	res->type = rgt->type;
-	lfte = lft->elements;
-	
-	if (res->type == 3) {
-		double *rgte = rgt->elements;
-		double *rese = res->elements;
-		for (i = 0; i < res->size; i++)
-			*rese++ = rgte[*lfte++];
-	} else {
-		int64_t *rgte = rgt->elements;
-		int64_t *rese = res->elements;
-		for (i = 0; i < res->size; i++)
-			*rese++ = rgte[*lfte++];
-	}
-
-	/*print_shape(lft);
-	print_shape(rgt);
-	printf(" lft: %ld rgt: %ld res: %ld\n", lft->size, rgt->size, res->size);*/
-	
-	return 0;
-}
-
-int
-codfns_reshapem(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt)
-{
-	uint64_t i;
-	uint32_t *rgts;
-	int64_t *rese;
-
-	if (scale_shape(res, 1)) {
-		perror("codfns_reshape");
-		return 1;
-	}
-
-	if (scale_elements(res, rgt->rank)) {
-		perror("codfns_reshape");
-		return 2;
-	}
-
-	res->type = 2;
-	*res->shape = rgt->rank;
-	rese = res->elements;
-	rgts = rgt->shape;
-
-	for (i = 0; i < rgt->rank; i++)
-		*rese++ = *rgts++;
-
-	return 0;
-}
-
-int
-codfns_reshaped(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt)
-{
-	uint64_t i, size;
-	int64_t *lfte;
-	uint32_t *ress;
-	size_t esize;
-	
-	if (scale_shape(res, lft->size)) {
-		perror("codfns_reshape");
-		return 3;
-	}
-
-	lfte = lft->elements;
-
-	for (i = 0, size = 1; i < lft->size; i++)
-		size *= *lfte++;
-
-	if (scale_elements(res, size)) {
-		perror("codfns_reshape");
-		return 4;
-	}
-
-	res->type = rgt->type;
-	esize = res->type == 3 ? sizeof(double) : sizeof(int64_t);
-	ress = res->shape;
-	lfte = lft->elements;
-
-	for (i = 0; i < lft->size; i++)
-		*ress++ = *lfte++;
-
-	memcpy(res->elements, rgt->elements, esize * size);
-	
-	return 0;
-}
-
-int
-codfns_catenated(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt)
-{
-	uint64_t i, lsz, rsz;
-	uint32_t sz;
-	
-	if (scale_shape(res, 1)) {
-		perror("codfns_catenate");
-		return 1;
-	}
-	
-	lsz = lft->size;
-	rsz = rgt->size;
-	sz = lsz + rsz;
-	
-	if (scale_elements(res, sz)) {
-		perror("codfns_catenate");
-		return 2;
-	}
-	
-	*res->shape = sz;
-	res->type = lft->type;
-	
-	if (res->type == 3) {
-		double *rese = res->elements;
-		double *lfte = lft->elements;
-		double *rgte = rgt->elements;
-		
-		if (rgt == res) {
-			rese += lsz;
-			for (i = 0; i < rsz; i++)
-				*rese++ = *rgte++;
-			rese = res->elements;
-			for (i = 0; i < lsz; i++)
-				*rese++ = *lfte++;
-		} else if (lft == res) {
-			rese += lsz;
-			for (i = 0; i < rsz; i++)
-				*rese++ = *rgte++;
-		} else {
-			for (i = 0; i < lsz; i++)
-				*rese++ = *lfte++;
-			for (i = 0; i < rsz; i++)
-				*rese++ = *rgte++;
-		}
-	} else {
-		int64_t *rese = res->elements;
-		int64_t *lfte = lft->elements;
-		int64_t *rgte = rgt->elements;
-	
-		if (rgt == res) {
-			rese += lsz;
-			for (i = 0; i < rsz; i++)
-				*rese++ = *rgte++;
-			rese = res->elements;
-			for (i = 0; i < lsz; i++)
-				*rese++ = *lfte++;
-		} else if (lft == res) {
-			rese += lsz;
-			for (i = 0; i < rsz; i++)
-				*rese++ = *rgte++;
-		} else {
-			for (i = 0; i < lsz; i++)
-				*rese++ = *lfte++;
-			for (i = 0; i < rsz; i++)
-				*rese++ = *rgte++;
-		}
-	}
-		
-	return 0;
-}
-
-int
-codfns_ptredd(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt)
-{
-	uint64_t i;
-	double val, *lfte, *rgte;
-	
-	if (scale_shape(res, 0)) {
-		perror("codfns_ptred");
-		return 1;
-	}
-	
-	if (scale_elements(res, 1)) {
-		perror("codfns_ptred");
-		return 2;
-	}
-	
-	lfte = lft->elements;
-	rgte = rgt->elements;
-	val = 0;
-	
-	for (i = 0; i < rgt->size; i++) 
-		val += *lfte++ * *rgte++;
-		
-	*((double *)res->elements) = val;
-
-	return 0;
-}
-
-int
-codfns_eachm(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt,
-    int (*fn)(struct codfns_array *, struct codfns_array *,
-        struct codfns_array *, struct codfns_array **),
-    struct codfns_array **env)
-{
-	int code;
-	uint64_t i;
-	double *rese, *srgte;
-	struct codfns_array sres, srgt;
-
-	if (copy_shape(res, rgt)) {
-		perror("codfns_each");
-		return 1;
-	}
-	
-	if (scale_elements(res, rgt->size)) {
-		perror("codfns_each");
-		return 2;
-	}
-	
-	sres.rank = 0;
-	sres.size = 0;
-	sres.type = 2;
-	sres.shape = NULL;
-	sres.elements = NULL;
-	
-	srgt.rank = 0;
-	srgt.size = 1;
-	srgt.type = rgt->type;
-	srgt.shape = NULL;
-	srgte = srgt.elements = rgt->elements;
-	
-	rese = res->elements;
-	
-	for (i = 0; i < res->size; i++) {
-		if ((code = fn(&sres, NULL, &srgt, env)))
-			return code;
-		
-		srgt.elements = ++srgte;
-		*rese++ = *((double *)sres.elements);
-	}
-	
-	res->type = sres.type;
-	
-	array_free(&sres);
-
-	return 0;
-}
+I codfns_squadd(A*z,A*l,A*r){scale(z,1,shp(r)[1]);typ(z)=typ(r);I64*row=elm(l);
+ shp(z)[0]=shp(r)[1];
+ if(typ(z)==3){D*e=elm(r);e+=*row*siz(z);cp(elm(z),e,D,siz(z));}
+ else{I64*e=elm(r);e+=*row*siz(z);cp(elm(z),e,I64,siz(z));};R 0;}
+I codfns_indexd(A*z,A*l,A*r){I64*le=elm(l);typ(z)=typ(r);
+ if(typ(z)==3){D*ze,*re=elm(r);prep((V**)&ze,z,l);DO(siz(z),ze[i]=re[le[i]]);}
+ else{I64*ze,*re=elm(r);prep((V**)&ze,z,l);DO(siz(z),ze[i]=re[le[i]]);};R 0;}
+I codfns_reshapem(A*z,A*l,A*r){scale(z,1,rnk(r));typ(z)=2;*shp(z)=rnk(r);
+ I64*e=elm(z);DO(rnk(r),e[i]=shp(r)[i]);R 0;}
+I codfns_reshaped(A*z,A*l,A*r){UI64 s=tr(siz(l),elm(l));scale(z,siz(l),s);
+ typ(z)=typ(r);I64*le=elm(l);UI64 rs=siz(r);DO(siz(l),shp(z)[i]=le[i]);
+ if(typ(z)==3){D*e=elm(z);D*re=elm(r);DO(s,e[i]=re[i%rs]);}
+ else{I64*e=elm(z);I64*re=elm(r);DO(s,e[i]=re[i%rs]);};R 0;}
+I codfns_catenated(A*z,A*l,A*r){UI64 lsz=siz(l);UI64 rsz=siz(r);UI64 sz=lsz+rsz;
+ scale(z,1,sz);*shp(z)=sz;typ(z)=typ(l);
+ if(typ(z)==3){D*ze=elm(z);D*le=elm(l);D*re=elm(r);
+  if(r==z){DO(rsz,ze[lsz+i]=re[i]);DO(lsz,ze[i]=le[i]);}
+  else if(l==z){DO(rsz,ze[lsz+i]=re[i]);}
+  else{DO(lsz,ze[i]=le[i]);DO(rsz,ze[lsz+i]=re[i]);}}
+ else{I64*ze=elm(z);I64*le=elm(l);I64*re=elm(r);
+  if(r==z){DO(rsz,ze[lsz+i]=re[i]);DO(lsz,ze[i]=le[i]);}
+  else if(l==z){DO(rsz,ze[lsz+i]=re[i]);}
+  else{DO(lsz,ze[i]=le[i]);DO(rsz,ze[lsz+i]=re[i]);}}
+ R 0;}
+I codfns_ptredd(A*z,A*l,A*r){scale(z,0,1);D*le=elm(l);D*re=elm(r);D v=0;
+ DO(siz(r),v+=le[i]*re[i]);D*ze=elm(z);*ze=v;R 0;}
+I codfns_eachm(A*z,A*l,A*r,I(*f)(A*,A*,A*,A**),A**e){D*ze;prep((V**)&ze,z,r);
+ A sz={0,0,2,NULL,NULL};A sr={0,1,typ(r),NULL,elm(r)};
+ DO(siz(z),elm(&sr)=&((D*)elm(r))[i];f(&sz,NULL,&sr,e);ze[i]=*(D*)elm(&sz));
+ typ(z)=typ(&sz);array_free(&sz);R 0;}
 
