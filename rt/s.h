@@ -1,19 +1,6 @@
 #pragma once
 
-#include <stdlib.h>
-#include <error.h>
-#include <inttypes.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
-#include "codfns.h"
-
-/* scalar()
- *
- * Intended Function: Predicate that returns 1 when the rank is zero,
- * and zero otherwise.
- */
+#include "t.h"
 
 #define scalar(x) ((x)->rank == 0)
 

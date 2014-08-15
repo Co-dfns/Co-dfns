@@ -6,7 +6,7 @@
 #include <math.h>
 
 #include "codfns.h"
-#include "scalar.h"
+#include "s.h"
 
 /* The following are not complete implementations of anything and 
  * exist only for the benefit of getting the runtime working quickly.

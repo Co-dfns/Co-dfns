@@ -6,7 +6,7 @@
 #include <math.h>
 
 #include "codfns.h"
-#include "scalar.h"
+#include "s.h"
 
 
 /* codfns_ridx[fi]()
