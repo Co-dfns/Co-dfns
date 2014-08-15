@@ -10,3 +10,5 @@ w_TEST←{_←X 6 ⋄ ((d'w')FX in⊂'g←{5+⍵}').g 1}
 
 e_TEST←{11 ST 0⍴⊂''}
 
+iota_TEST←{_←X⍳5 ⋄ ((d'iota')FX in⊂'f←{⍳5}').f⍬}
+

@@ -16,12 +16,11 @@
 /*  ⍟A */ scalar_monadic(logm,d,d,{*tgt=log(*rgt);})
 /* A⍟B */ scalar_dyadic(logd,d,d,d,d,{*tgt=log(*rgt)/log(*lft);})
 /*  |A */ scalar_monadic(residuem,d,i,{*tgt=fabs(*rgt);})
-#define RESIDUEI *tgt=*lft%*rgt;
 #define RESIDUED {D r;r=*rgt/ *lft;r=floor(r);*tgt=*rgt-r * *lft;}
 /* A|B */ scalar_dyadic_inner(residued,d,d,d,RESIDUED)
 /* A|B */ scalar_dyadic_inner(residued,d,d,i,RESIDUED)
 /* A|B */ scalar_dyadic_inner(residued,d,i,d,RESIDUED)
-/* A|B */ scalar_dyadic_inner(residued,i,i,i,RESIDUEI)
+/* A|B */ scalar_dyadic_inner(residued,i,i,i,*tgt=*lft%*rgt;)
 /* A|B */ scalar_dyadic_main(residued,d,d,d,i)
 /*  ⌈B */ scalar_monadic(maxm,d,i,{*tgt=ceil(*rgt);})
 /* A⌈B */ scalar_dyadic(maxd,d,d,d,i,{*tgt=(*lft>=*rgt?*lft:*rgt);})

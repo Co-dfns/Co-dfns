@@ -1,66 +1,11 @@
-#include <stdlib.h>
-#include <error.h>
-#include <inttypes.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
-#include "codfns.h"
 #include "s.h"
 
-/* The following are not complete implementations of anything and 
- * exist only for the benefit of getting the runtime working quickly.
- */
- 
-int static inline
-scale_shape(struct codfns_array *arr, uint16_t rank)
-{
-	uint32_t *buf;
+/* Nothing really works here */
 
-	buf = arr->shape;
-
-	if (rank > arr->rank) {
-		buf = realloc(buf, sizeof(uint32_t) * rank);
-		if (buf == NULL) {
-			perror("scale_shape");
-			return 1;
-		}
-	}
-
-	arr->rank = rank;
-	arr->shape = buf;
-
-	return 0;
-}
-
-int
-codfns_indexgenm(struct codfns_array *res,
-    struct codfns_array *lft, struct codfns_array *rgt)
-{
-	uint32_t i;
-	int64_t cnt, *dat;
-	
-	cnt = *((int64_t *)rgt->elements);
-	
-	if (scale_shape(res, 1)) {
-		perror("codfns_indexgen");
-		return 1;
-	}
-	
-	if (scale_elements(res, cnt)) {
-		perror("codfns_indexgen");
-		return 2;
-	}
-	
-	res->type = 2;
-	dat = res->elements;
-	
-	for (i = 0; i < cnt; i++)
-		*dat++ = i;
-		
-	return 0;
-}
-
+I scale_shape(A*a,UI16 r){UI32*b=shp(a);if(r>rnk(a))b=ra(b,UI32,r);
+ rnk(a)=r;shp(a)=b;R 0;}
+I codfns_indexgenm(A*z,A*l,A*r){typ(z)=2;I64*c=elm(r);scale_shape(z,1);
+ shp(z)[0]=*c;scale_elements(z,*c);I64*d=elm(z);DO(*c,d[i]=i);pa(z);R 0;}
 
 int
 codfns_squadd(struct codfns_array *res,

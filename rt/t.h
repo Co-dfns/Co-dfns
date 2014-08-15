@@ -23,5 +23,7 @@ typedef uint8_t UI8;typedef void V;typedef int64_t I64;
 #define ra(b,s,n) realloc((b),sizeof(s)*(n))
 #define cp(d,s,z,n) memcpy((d),(s),sizeof(z)*(n))
 #define Ps(s) printf("%s",(s))
+#define Pi(x) printf("%ld",(x))
+#define Pd(x) printf("%lf",(x))
 #define P printf
 

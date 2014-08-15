@@ -189,17 +189,13 @@ scalar_dyadic_inner(nm, idt, i, d, code) \
 scalar_dyadic_inner(nm, iit, i, i, code) \
 scalar_dyadic_main(nm, ddt, dit, idt, iit)
 
-int
-same_shape(struct codfns_array *, struct codfns_array *);
+I same_shape(A*,A*);
+I copy_shape(A*,A*);
+I scale_elements(A*,UI64);
+I prepare_res(V**,A*,A*);
 
-int
-copy_shape(struct codfns_array *, struct codfns_array *);
-
-int
-scale_elements(struct codfns_array *, uint64_t);
-
-int
-prepare_res(void **, struct codfns_array *, struct codfns_array *);
-
-void print_shape(struct codfns_array *);
+V ps(A*);
+V pa(A*);
+V pei(A*);
+V ped(A*);
 

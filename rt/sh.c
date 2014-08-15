@@ -8,5 +8,7 @@ I scale_elements(A*a,UI64 s){V*b=elm(a);if(s>siz(a))b=ra(b,I64,s);
  siz(a)=s;elm(a)=b;R 0;}
 I prepare_res(V**b,A*r,A*p){if(scale_elements(r,siz(p)))R 99;
  if(copy_shape(r,p))R 99;*b=elm(r);R 0;}
-V print_shape(A*a){Ps("Shape: ");DO(rnk(a),P("%"PRIu32" ",shp(a)[i]));}
-
+V ps(A*a){Ps("Shape: ");DO(rnk(a),P("%"PRIu32" ",shp(a)[i]));}
+V pa(A*a){ps(a);Ps("\n");if(typ(a)==2)pei(a);else ped(a);}
+V pei(A*a){I64*d=elm(a);DO(siz(a),Pi(d[i]);Ps(" "););Ps("\n");}
+V ped(A*a){D*d=elm(a);DO(siz(a),Pd(d[i]);Ps(" "););Ps("\n");}
