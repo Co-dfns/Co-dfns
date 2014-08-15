@@ -19,7 +19,7 @@
 \
 	right_elems = rgt->elements; \
 \
-	if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
+	if ((code = prep((void **)&res_elems, res, rgt))) return code; \
 \
 	for (i = 0; i < res->size; i++) { \
 		code = mon##_##rgtt(res_elems++, right_elems++); \
@@ -45,7 +45,7 @@
 \
 	/* Dyadic case */ \
 	if (same_shape(lft, rgt)) { \
-		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
+		if ((code = prep((void **)&res_elems, res, lft))) return code; \
 \
 		type_##lftt *left_elems = lft->elements; \
 		type_##rgtt *right_elems = rgt->elements; \
@@ -56,7 +56,7 @@
 			if (code) return code; \
 		} \
 	} else if (scalar(lft)) { \
-		if ((code = prepare_res((void **)&res_elems, res, rgt))) return code; \
+		if ((code = prep((void **)&res_elems, res, rgt))) return code; \
 \
 		type_##lftt left_elems = *((type_##lftt *)lft->elements); \
 		type_##rgtt *right_elems = rgt->elements; \
@@ -67,7 +67,7 @@
 			if (code) return code; \
 		} \
 	} else if (scalar(rgt)) { \
-		if ((code = prepare_res((void **)&res_elems, res, lft))) return code; \
+		if ((code = prep((void **)&res_elems, res, lft))) return code; \
 \
 		type_##lftt *left_elems = lft->elements; \
 		type_##rgtt right_elems = *((type_##rgtt *)rgt->elements); \
@@ -194,7 +194,7 @@ I copy_shape(A*,A*);
 I scale_elements(A*,UI64);
 I scale_shape(A*,UI16);
 I scale(A*,UI16,UI64);
-I prepare_res(V**,A*,A*);
+I prep(V**,A*,A*);
 
 V ps(A*);
 V pa(A*);

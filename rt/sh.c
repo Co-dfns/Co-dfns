@@ -9,7 +9,7 @@ I scale_elements(A*a,UI64 s){V*b=elm(a);if(s>siz(a))b=ra(b,I64,s);
 I scale_shape(A*a,UI16 r){UI32*b=shp(a);if(r>rnk(a))b=ra(b,UI32,r);
  rnk(a)=r;shp(a)=b;R 0;}
 I scale(A*a,UI16 r,UI64 s){scale_shape(a,r);scale_elements(a,s);R 0;}
-I prepare_res(V**b,A*r,A*p){if(scale_elements(r,siz(p)))R 99;
+I prep(V**b,A*r,A*p){if(scale_elements(r,siz(p)))R 99;
  if(copy_shape(r,p))R 99;*b=elm(r);R 0;}
 V pr(A*a){Ps("Rank: ");P("%d",rnk(a));Ps("\n");}
 V ps(A*a){pr(a);Ps("Shape: ");DO(rnk(a),P("%"PRIu32" ",shp(a)[i]));Ps("\n");}
