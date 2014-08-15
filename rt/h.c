@@ -1,4 +1,4 @@
-#include "s.h"
+#include "h.h"
 
 I same_shape(A*la,A*ra){if(rnk(la)!=rnk(ra))R 0;
  DO(rnk(ra),if(shp(la)[i]!=shp(ra)[i])R 0;)R 1;}
@@ -18,3 +18,4 @@ V pt(A*a){Ps("Type: ");P("%d",typ(a));Ps("\n");}
 V pa(A*a){ps(a);pt(a);pz(a);if(typ(a)==2)pei(a);else ped(a);}
 V pei(A*a){I64*d=elm(a);DO(siz(a),Pi(d[i]);Ps(" "););Ps("\n");}
 V ped(A*a){D*d=elm(a);DO(siz(a),Pd(d[i]);Ps(" "););Ps("\n");}
+

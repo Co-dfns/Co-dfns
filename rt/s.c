@@ -1,4 +1,4 @@
-#include "s.h"
+#include "h.h"
 
 /* SCALAR PRIMITIVES */
 /*  +A */ scalar_monadic(addm,i,d,{*tgt = *rgt;}) 

@@ -1,12 +1,4 @@
-#include <stdlib.h>
-#include <error.h>
-#include <inttypes.h>
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-
-#include "codfns.h"
-#include "s.h"
+#include "h.h"
 
 
 /* codfns_ridx[fi]()
