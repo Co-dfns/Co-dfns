@@ -28,8 +28,8 @@ I codfns_catenated(A*z,A*l,A*r){UI64 lsz=siz(l);UI64 rsz=siz(r);UI64 sz=lsz+rsz;
   else if(l==z){DO(rsz,ze[lsz+i]=re[i]);}
   else{DO(lsz,ze[i]=le[i]);DO(rsz,ze[lsz+i]=re[i]);}}
  R 0;}
-I codfns_ptredd(A*z,A*l,A*r){scale(z,0,1);D*le=elm(l);D*re=elm(r);D v=0;
- DO(siz(r),v+=le[i]*re[i]);D*ze=elm(z);*ze=v;R 0;}
+I codfns_ptredd(A*z,A*l,A*r){D*le=elm(l);D*re=elm(r);D v=0;
+ DO(siz(r),v+=le[i]*re[i]);scale(z,0,1);*((D*)elm(z))=v;R 0;}
 I codfns_eachm(A*z,A*l,A*r,I(*f)(A*,A*,A*,A**),A**e){D*ze;prep((V**)&ze,z,r);
  A sz={0,0,2,NULL,NULL};A sr={0,1,typ(r),NULL,elm(r)};
  DO(siz(z),elm(&sr)=&((D*)elm(r))[i];f(&sz,NULL,&sr,e);ze[i]=*(D*)elm(&sz));
