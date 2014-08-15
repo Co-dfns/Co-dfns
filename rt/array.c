@@ -37,7 +37,7 @@ array_free(struct codfns_array *arr)
 int
 array_cp(struct codfns_array *tgt, struct codfns_array *src)
 {
-	uint32_t *shp;
+	uint64_t *shp;
 	void *dat;
 
 	if (tgt == src) return 0;
@@ -46,7 +46,7 @@ array_cp(struct codfns_array *tgt, struct codfns_array *src)
 	dat = tgt->elements;
 
 	if (src->rank > tgt->rank) {
-		shp = realloc(shp, sizeof(uint32_t) * src->rank);
+		shp = realloc(shp, sizeof(uint64_t) * src->rank);
 		if (shp == NULL) {
 			perror("array_cp");
 			return 1;
@@ -61,7 +61,7 @@ array_cp(struct codfns_array *tgt, struct codfns_array *src)
 		}
 	}
 
-	memcpy(shp, src->shape, sizeof(uint32_t) * src->rank);
+	memcpy(shp, src->shape, sizeof(uint64_t) * src->rank);
 	memcpy(dat, src->elements, sizeof(int64_t) * src->size);
 
 	tgt->rank = src->rank;

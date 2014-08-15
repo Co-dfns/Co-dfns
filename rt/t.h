@@ -9,8 +9,8 @@
 #include "codfns.h"
 
 typedef double D;typedef int I;typedef char C;typedef struct codfns_array A;
-typedef uint32_t UI32;typedef uint16_t UI16;typedef uint64_t UI64;
-typedef uint8_t UI8;typedef void V;typedef int64_t I64;
+typedef uint16_t UI16;typedef uint64_t UI64;typedef uint8_t UI8;
+typedef void V;typedef int64_t I64;
 
 #define R return
 #define ERR(c,m) {fprintf(stderr,(m));R(c);}

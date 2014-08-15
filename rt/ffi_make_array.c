@@ -17,7 +17,7 @@
 
 int
 ffi_make_array_int(struct codfns_array **res,
-    uint16_t rnk, uint64_t sz, uint32_t *shp, int64_t *dat)
+    uint16_t rnk, uint64_t sz, uint64_t *shp, int64_t *dat)
 {
 	struct codfns_array *arr;
 
@@ -41,7 +41,7 @@ ffi_make_array_int(struct codfns_array **res,
 	if (rnk == 0) {
 		arr->shape = NULL;
 	} else {
-		arr->shape = calloc(rnk, sizeof(uint32_t));
+		arr->shape = calloc(rnk, sizeof(uint64_t));
 		if (arr->shape == NULL) {
 			perror("ffi_make_array");
 			return 3;
@@ -52,7 +52,7 @@ ffi_make_array_int(struct codfns_array **res,
 	arr->size = sz;
 	arr->type = 2;
 
-	memcpy(arr->shape, shp, sizeof(uint32_t) * rnk);
+	memcpy(arr->shape, shp, sizeof(uint64_t) * rnk);
 	memcpy(arr->elements, dat, sizeof(int64_t) * sz);
 
 	*res = arr;
@@ -62,7 +62,7 @@ ffi_make_array_int(struct codfns_array **res,
 
 int
 ffi_make_array_double(struct codfns_array **res,
-    uint16_t rnk, uint64_t sz, uint32_t *shp, double *dat)
+    uint16_t rnk, uint64_t sz, uint64_t *shp, double *dat)
 {
 	struct codfns_array *arr;
 
@@ -86,7 +86,7 @@ ffi_make_array_double(struct codfns_array **res,
 	if (rnk == 0) {
 		arr->shape = NULL;
 	} else {
-		arr->shape = calloc(rnk, sizeof(uint32_t));
+		arr->shape = calloc(rnk, sizeof(uint64_t));
 		if (arr->shape == NULL) {
 			perror("ffi_make_array");
 			return 3;
@@ -97,7 +97,7 @@ ffi_make_array_double(struct codfns_array **res,
 	arr->size = sz;
 	arr->type = 3;
 
-	memcpy(arr->shape, shp, sizeof(uint32_t) * rnk);
+	memcpy(arr->shape, shp, sizeof(uint64_t) * rnk);
 	memcpy(arr->elements, dat, sizeof(double) * sz);
 
 	*res = arr;

@@ -15,7 +15,7 @@ struct codfns_array {
 	uint16_t  rank;
 	uint64_t  size;
 	uint8_t   type;
-	uint32_t *shape;
+	uint64_t *shape;
 	void  *elements;
 };
 
@@ -31,7 +31,7 @@ void
 ffi_get_data_int(int64_t *, struct codfns_array *);
 
 void
-ffi_get_shape(uint32_t *, struct codfns_array *);
+ffi_get_shape(uint64_t *, struct codfns_array *);
 
 void
 clean_env(struct codfns_array *, int);
@@ -40,7 +40,7 @@ clean_env(struct codfns_array *, int);
 
 int
 ffi_make_array(struct codfns_array **,
-    uint16_t, uint64_t, uint32_t *, int64_t *);
+    uint16_t, uint64_t, uint64_t *, int64_t *);
 
 void
 array_free(struct codfns_array *);

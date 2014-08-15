@@ -195,6 +195,7 @@ I scale_elements(A*,UI64);
 I scale_shape(A*,UI16);
 I scale(A*,UI16,UI64);
 I prep(V**,A*,A*);
+UI64 tr(UI64,UI64*);
 
 V ps(A*);
 V pa(A*);

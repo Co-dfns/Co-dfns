@@ -43,9 +43,9 @@ ffi_get_type(struct codfns_array *arr)
  */
 
 void
-ffi_get_shape(uint32_t *res, struct codfns_array *arr)
+ffi_get_shape(uint64_t *res, struct codfns_array *arr)
 {
-	memcpy(res, arr->shape, sizeof(uint32_t) * arr->rank);
+	memcpy(res, arr->shape, sizeof(uint64_t) * arr->rank);
 
 	return;
 }
