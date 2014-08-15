@@ -11,7 +11,10 @@ I scale_shape(A*a,UI16 r){UI32*b=shp(a);if(r>rnk(a))b=ra(b,UI32,r);
 I scale(A*a,UI16 r,UI64 s){scale_shape(a,r);scale_elements(a,s);R 0;}
 I prepare_res(V**b,A*r,A*p){if(scale_elements(r,siz(p)))R 99;
  if(copy_shape(r,p))R 99;*b=elm(r);R 0;}
-V ps(A*a){Ps("Shape: ");DO(rnk(a),P("%"PRIu32" ",shp(a)[i]));}
-V pa(A*a){ps(a);Ps("\n");if(typ(a)==2)pei(a);else ped(a);}
+V pr(A*a){Ps("Rank: ");P("%d",rnk(a));Ps("\n");}
+V ps(A*a){pr(a);Ps("Shape: ");DO(rnk(a),P("%"PRIu32" ",shp(a)[i]));Ps("\n");}
+V pz(A*a){Ps("Size: ");Pi(siz(a));Ps("\n");}
+V pt(A*a){Ps("Type: ");P("%d",typ(a));Ps("\n");}
+V pa(A*a){ps(a);pt(a);pz(a);if(typ(a)==2)pei(a);else ped(a);}
 V pei(A*a){I64*d=elm(a);DO(siz(a),Pi(d[i]);Ps(" "););Ps("\n");}
 V ped(A*a){D*d=elm(a);DO(siz(a),Pd(d[i]);Ps(" "););Ps("\n");}

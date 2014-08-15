@@ -3,7 +3,7 @@
 /* Nothing really works here */
 
 I codfns_indexgenm(A*z,A*l,A*r){typ(z)=2;I64*c=elm(r);scale(z,1,*c);
- shp(z)[0]=*c;I64*d=elm(z);DO(*c,d[i]=i);pa(z);R 0;}
+ shp(z)[0]=*c;I64*d=elm(z);DO(*c,d[i]=i);R 0;}
 
 int
 codfns_squadd(struct codfns_array *res,
@@ -298,31 +298,3 @@ codfns_eachm(struct codfns_array *res,
 	return 0;
 }
 
-int
-print_array(struct codfns_array *arr)
-{
-	int i;
-	
-	printf("\nRank: %d\n", arr->rank);
-	printf("Size: %lu\n", arr->size);
-	printf("Type: %d\n", arr->type);
-	printf("Shape: ");
-	
-	for (i = 0; i < arr->rank; i++)
-		printf("%d ", arr->shape[i]);
-	
-	printf("\nElements: ");
-	
-	if (arr->type == apl_type_d)
-		for (i = 0; i < arr->size; i++)
-			printf("%lf ", ((double *)arr->elements)[i]);
-	else if (arr->type == apl_type_i)
-		for (i = 0; i < arr->size; i++)
-			printf("%ld ", ((int64_t *)arr->elements)[i]);
-	else
-		printf("N/A");
-	
-	printf("\n");
-	
-	return 0;
-}
