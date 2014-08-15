@@ -2,10 +2,8 @@
 
 /* Nothing really works here */
 
-I scale_shape(A*a,UI16 r){UI32*b=shp(a);if(r>rnk(a))b=ra(b,UI32,r);
- rnk(a)=r;shp(a)=b;R 0;}
-I codfns_indexgenm(A*z,A*l,A*r){typ(z)=2;I64*c=elm(r);scale_shape(z,1);
- shp(z)[0]=*c;scale_elements(z,*c);I64*d=elm(z);DO(*c,d[i]=i);pa(z);R 0;}
+I codfns_indexgenm(A*z,A*l,A*r){typ(z)=2;I64*c=elm(r);scale(z,1,*c);
+ shp(z)[0]=*c;I64*d=elm(z);DO(*c,d[i]=i);pa(z);R 0;}
 
 int
 codfns_squadd(struct codfns_array *res,

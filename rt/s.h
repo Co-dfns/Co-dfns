@@ -192,6 +192,8 @@ scalar_dyadic_main(nm, ddt, dit, idt, iit)
 I same_shape(A*,A*);
 I copy_shape(A*,A*);
 I scale_elements(A*,UI64);
+I scale_shape(A*,UI16);
+I scale(A*,UI16,UI64);
 I prepare_res(V**,A*,A*);
 
 V ps(A*);
