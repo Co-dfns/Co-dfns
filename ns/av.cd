@@ -1,3 +1,4 @@
+⍝ Anchor Variables to slots, determine frame sizes
 AV←{e←(1⌷⍉⍵)∊⊂'Expression' ⋄ f←(1⌷⍉⍵)∊⊂'Function' ⋄ n←∨/(↑0⌷∘⍉¨3⌷⍉⍵)∊⊂'name' 
  ~∨/e∧n:⍵ ⋄ S←Split ⋄ nm←'name'∘Prop ⋄ cls←'class'∘Prop ⋄ w←⍵
  p←c×↑∨/(↓c)∘.(∧\=×(∧/=∨0=⊢))↓(rf←1,1↓f)⌿c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍉⍵
