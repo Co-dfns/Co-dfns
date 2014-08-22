@@ -1,4 +1,6 @@
-FE←{
+⍝ Flatten Expressions
+FE←{⍵}
+FEo←{
      vex←{                                  ⍝ Function to make var expr
          at←2 2⍴'name'⍵'class' 'array'      ⍝ Variable name is right argument
          v←1 4⍴(1+⍺)'Variable' ''at         ⍝ Variable node, depth in left argument

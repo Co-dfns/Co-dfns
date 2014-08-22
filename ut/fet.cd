@@ -1,0 +1,2 @@
+FEPS←{⊃C.PS C.TK C.VI ⍵⊣C.FI}
+FE1_TEST←{C.FE X FEPS in ⍬}

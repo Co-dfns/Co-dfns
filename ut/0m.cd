@@ -1,6 +1,7 @@
 ⎕IO ⎕ML←0 1
 
 C←#.Codfns ⋄ LKCL←{⍺ C.LK C.CL ⍵} ⋄ X←{1:#.UT.expect←⍵}
+in←{(⊂':Namespace'),⍵,⊂':EndNamespace'}
 
 WM1_TEST←{_←X'tmp/test' ⋄ _←C.FI ⋄ 'tmp/test'C.WM C.ModuleCreateWithName⊂'test'}
 WM2_TEST←{_←X '; ModuleID = ''test''',⎕UCS 10
