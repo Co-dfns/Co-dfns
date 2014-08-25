@@ -1,11 +1,14 @@
 ⍝ Flatten Expressions
 FE←{ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')⌿(a←⊃0 3⌷⍵)⍪'name'⍺ ⋄ w}
- lf←{e←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
-  n←(⊃'name'Prop⊢)¨{(≢n)⊃1↑¨⍺ ⍵⊣n←'name'Prop 1↑⍵}\p←e⊂[0]⍵
-  b←n{⍺ ren w⊣w[;0]-←¯1+⊃⍵⊣w←⍵}¨p
-  v←{2 4⍴2'Expression' ''(⍉⍪'class' 'atomic')3'Variable' ''(⍉⍪'name' ⍵)}¨1↓n
-  ⊃⍪/(⊂(e⍳1)↑⍵),⌽((¯1↓b)⍪¨v),((-1⌊≢b)↑b)}
- lf Eachk ⍵}
+ mv←{(1+⍺)'Expression' ''(⍉⍪'class' 'atomic')⍪⍉⍪(2+⍺)'Variable' ''(⍉⍪'name'⍵)}
+ lf←{x←⊃k←⍵⊂[0]⍨m←(⊃⍵)=0⌷⍉⍵ ⋄ e←⊃m⊂⍺
+  n←(⊃'name'Prop⊢)¨{(≢n)⊃1↑¨⍺ ⍵⊣n←'name'Prop 1↑⍵}\p←e⊂[0]x
+  b←n((⊃⍵){⍺ ren w⊣w[;0]-←⍺⍺-⍨⊃⍵⊣w←⍵})¨p
+  ⊃⍪/(1↓k),⍨⌽((¯1↓b)⍪¨(⊃⍵)mv¨1↓n),¯1↑b}
+ rf←1,1↓(1⌷⍉⍵)∊⊂'Function'
+ sd←+/0≠p←c×↑∨/(↓c)∘.(∧\=×(∧/=∨0=⊢))↓rf⌿c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍉⍵
+ re←(sd=0⌷⍉⍵)∧e←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
+ ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨e ⍵}
 FEo←{
      vex←{                                  ⍝ Function to make var expr
          at←2 2⍴'name'⍵'class' 'array'      ⍝ Variable name is right argument
