@@ -1,5 +1,8 @@
 ⍝ Flatten Expressions
-FE←{⍵}
+FE←{e←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
+ b←((c←1⌊≢l)↑l),(n←⊃'name'Prop 1↑e⌿⍵)∘Bind¨1↓l←{w⊣w[;0]-←¯1+⊃⍵⊣w←⍵}¨e⊂[0]⍵
+ v←2 4⍴2'Expression' ''(⍉⍪'class' 'atomic')3'Variable' ''(⍉⍪'name' n)
+ ⊃⍪/(⊂(+/∧\~e)↑⍵),⌽((¯1↓b)⍪¨⊂v),((-c)↑b)}
 FEo←{
      vex←{                                  ⍝ Function to make var expr
          at←2 2⍴'name'⍵'class' 'array'      ⍝ Variable name is right argument

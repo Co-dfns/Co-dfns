@@ -1,2 +1,5 @@
 FEPS←{⊃C.PS C.TK C.VI ⍵⊣C.FI}
 FE1_TEST←{C.FE X FEPS in ⍬}
+FE2_TEST←{_←X FEPS in'LC0←5' 'X←LC0×LC0' 'X←LC0×X'
+ C.FE FEPS in'LC0←5' 'X←LC0×LC0×LC0'}
+
