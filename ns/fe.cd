@@ -4,8 +4,7 @@ FE←{ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')�
  lf←{m←(⊃⍵)≥0⌷⍉⍵
   n←(⊃'name'Prop⊢)¨{(≢n)⊃1↑¨⍺ ⍵⊣n←'name'Prop 1↑⍵}\p←(⊃m⊂⍺)⊂[0]⊃k←m⊂[0]⍵
   ⊃⍪/(1↓k),⍨⌽((¯1↓b)⍪¨(⊃⍵)mv¨1↓n),¯1↑b←n((⊃⍵){⍺ ren w⊣w[;0]-←⍺⍺-⍨⊃⍵⊣w←⍵})¨p}
- rf←1,1↓(1⌷⍉⍵)∊⊂'Function'
- sd←+/0≠p←c×↑∨/(↓c)∘.(∧\=×(∧/=∨0=⊢))↓rf⌿c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍉⍵
- re←(sd=0⌷⍉⍵)∧e←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
+ e←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
+ re←e∧d=(⊢+⊣×0=⊢)\(e∧1=d←0⌷⍉⍵)+3×(1⌷⍉⍵)∊⊂'Function'
  ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨e ⍵}
 
