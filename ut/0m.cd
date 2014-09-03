@@ -1,9 +1,8 @@
 ⎕IO ⎕ML←0 1
 
 C←#.Codfns ⋄ LKCL←{⍺ C.LK C.CL ⍵} ⋄ X←{1:#.UT.expect←⍵} ⋄ #.UT.sac←0
-in←{(⊂':Namespace'),⍵,⊂':EndNamespace'}
+in←{(⊂':Namespace'),⍵,⊂':EndNamespace'} ⋄ _←C.FI
 
-A0INIT_TEST←{_←C.FI ⋄ X 0}
 WM1_TEST←{_←X'tmp/test' ⋄ 'tmp/test'C.WM C.ModuleCreateWithName⊂'test'}
 WM2_TEST←{_←X '; ModuleID = ''test''',⎕UCS 10
   #.utf8get'.ll',⍨'tmp/test'C.WM C.ModuleCreateWithName⊂'test'}
