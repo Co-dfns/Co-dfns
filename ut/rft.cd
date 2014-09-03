@@ -2,4 +2,5 @@ RFPS←{x⊣_←⎕DL÷10000⊣x←⊃C.PS C.TK C.VI ⍵}
 RFAN←{w←⍵ ⋄ w[0⌷⍉⍺;3]⍪←↓(⊂'coord'),⍪⍕¨1⌷⍉⍺ ⋄ w}
 RF1_TEST←{_←X C.MtAST ⋄ C.RF C.MtAST}
 RF2_TEST←{_←X (⍉⍪0(1 0 0))RFAN⊢c←RFPS in⊂'X←5' ⋄ C.RF c}
+RF3_TEST←{_←X (⍉⍪0(1 0 0 0))RFAN⊢c←RFPS in⊂'X←5 ⋄ Y←X×X' ⋄ C.RF c}
 
