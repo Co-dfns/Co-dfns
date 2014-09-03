@@ -18,4 +18,6 @@ FE09_TEST←{_←X FEPS in'A←5' 'F←{X←A×A ⋄ X←A×X}' 'G←{Y←A×A �
  C.FE FEPS in'A←5' 'F←{X←A×A×A}' 'G←{Y←A×A×A}'}
 FE10_TEST←{_←X FEPS in'A←5' 'F←{Z←A ⋄ X←A×A ⋄ X←A×X}'
  C.FE FEPS in'A←5' 'F←{Z←A ⋄ X←A×A×A}'}
+FE11_TEST←{_←X FEPS in'A←5' 'F←{Z←A ⋄ X←A×A ⋄ X←A×¨X}'
+ C.FE FEPS in'A←5' 'F←{Z←A ⋄ X←A×¨A×A}'}
 

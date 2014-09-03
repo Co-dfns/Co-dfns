@@ -8,38 +8,4 @@ FE←{ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')�
  sd←+/0≠p←c×↑∨/(↓c)∘.(∧\=×(∧/=∨0=⊢))↓rf⌿c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/d←0⌷⍉⍵
  re←(sd=0⌷⍉⍵)∧e←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
  ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨e ⍵}
-FEo←{
-     vex←{                                  ⍝ Function to make var expr
-         at←2 2⍴'name'⍵'class' 'array'      ⍝ Variable name is right argument
-         v←1 4⍴(1+⍺)'Variable' ''at         ⍝ Variable node, depth in left argument
-         at←1 2⍴'class' 'atomic'            ⍝ Expression is atomic
-         e←1 4⍴⍺'Expression' ''at           ⍝ Expression node has no name
-         e⍪v                                ⍝ Give valid AST as result
-     }
-     up←{a←⍺ ⋄ a[;0]-←(⊃a)-⍵ ⋄ a}           ⍝ Fn: Lift node ⍺ to depth ⍵
-     lft←{                                  ⍝ Op; Lift all expressions to scope root
-         nam cls←⊃¨'name' 'class'Prop¨⊂1↑⍺  ⍝ Name and class of node
-         isn←~∧/' '=nam ⋄ isa←'atomic'≡cls  ⍝ Tests of namedness and atomicity
-         isa∧isn:(⍺ up ⍵)((⊃⍺)vex nam)      ⍝ Lifted named ref & unnamed replacement
-         isa∨0=≢⍺:MtAST ⍺                   ⍝ Untouched unnamed reference or empty
-         ret←(⊃⍺)vex⊢nam←isn⊃⍺⍺ nam         ⍝ Final name & ref replacement for call
-         rlf rex←(⊃⌽k←1 Kids ⍺)(nam ∇∇)⍵    ⍝ Lifted right argument of call
-         lfn←FE⊃⌽¯1↓k                       ⍝ Lifted function in call
-         nex←(⊂1↑⍺),(¯2↓k),lfn rex          ⍝ All components of the lifted expr
-         nex←(⊃⍪/nex)up ⍵                   ⍝ Lifted call with right arg replacement
-         (rlf⍪isn⊃(nam Bind nex)nex)ret     ⍝ Right lifts + Bound call, & Return var
-     }
-     1=≢⍵:⍵                                 ⍝ Do nothing for leaves
-     'Expression'≡⊃0 1⌷⍵:{                  ⍝ Lift root expressions
-         'atomic'≡⊃'class'Prop 1↑⍵:⍵        ⍝ Do nothing for atomics
-         nam←⊃'name'Prop 1↑⍵                ⍝ Expression binding
-         nam←(~∧/' '=nam)⊃'exv'nam         ⍝ Expression binding or filler name
-         rlf rex←(⊃⌽k←1 Kids ⍵)(nam lft)⊃⍵  ⍝ Lifted Expression
-         ⊃⍪/rlf(1↑⍵),(¯1↓k),⊂rex            ⍝ Recombined node with lifted above
-     }⍵
-     'Condition'≡⊃0 1⌷⍵:{                   ⍝ Lifting Condition nodes is special
-         l←⊃,/(2↑1 Kids ⍵)('cnd'lft)¨0 1+⊃⍵ ⍝ All lifted children and lifted code
-         ⊃⍪/(1↑l),(⊂1↑⍵),1↓l                ⍝ Test Expr lifted above the node
-     }⍵
-     (∇⊢)Eachk ⍵                            ⍝ Ignore non-expr nodes
- }
+
