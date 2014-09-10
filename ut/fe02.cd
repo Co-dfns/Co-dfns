@@ -30,8 +30,6 @@ FE02_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴'name' '' 'coord' '1 0 0 0 0')
  x⍪←3'Variable' ''(1 2⍴'name'(,'X'))
  _←X x ⋄ C.FE t}
 
-⍝ FE04_TEST←{_←X FEPS in'A←5' 'Y←A×A' 'Y←A×Y' 'X←A×Y' 'X←A×X'
-⍝  C.FE FEPS in'A←5' 'X←A×A×Y←A×A×A'}
 ⍝ FE05_TEST←{_←X FEPS in'A←5' 'X←A×A' 'X←A×X' 'Y←A×A' 'Y←A×Y'
 ⍝  C.FE FEPS in'A←5' 'X←A×A×A' 'Y←A×A×A'}
 ⍝ FE06_TEST←{_←X FEPS in'A←5' 'X←A×A' 'X←A×X' 'Y←A' 'Y←A×Y' 'Y←A×Y'
