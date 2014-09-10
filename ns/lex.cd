@@ -1,0 +1,24 @@
+⍝ Resolve Functions: Attribute scope coordinate to functions
+RF←{rf←1,1↓f←(1⌷⍉⍵)∊⊂'Function' ⋄ c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/0,d←0⌷⍉⍵ ⋄ w←⍵
+ (3⌷⍉rf⌿w)⍪←↓(⊂'coord'),⍪⍕¨↓rf⌿c ⋄ w}
+
+⍝ Lift functions to top level after resolving
+LF←{i←¯1 ⋄ mv←{'LF',⍕i⊣(⊃i)+←1} ⋄ a←↑'class' 'equiv'{⍺ ⍵}¨⊂'ambivalent'
+ mn←{2 4⍴⍵'FuncExpr' ''a(⍵+1)'Variable' ''(2 2⍴'name' ⍺ 'class' 'function')}
+ up←{w←⍵ ⋄ (0⌷⍉w)-←(⊃⍵)-1 ⋄ w} ⋄ s←{⍵⊂[0]⍨(⍬1⊃⍨0≠≢⍵),2≠/∨\0,1↓(⊃⍵)≥0⌷⍉⍵}
+ l←(d=⌈/f/d←0⌷⍉⍵)∧f←1⌽(1⌷⍉⍵)∊⊂'Function'
+ c←↑{h r←2↑s ⍵ ⋄ n←mv⍬ ⋄ (n Bind up h)(r⍪⍨n mn ⊃h)}¨l⊂[0]⍵
+ (1↑⍵)⍪(⊃⍪/(⊂MtAST),⊣/c)⍪(1↓⍵⌿⍨~∨\l)⍪⊃⍪/(⊂MtAST),⊢/c}
+
+⍝ Flatten Expressions
+FE←{ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')⌿(a←⊃0 3⌷⍵)⍪'name'⍺ ⋄ w}
+ mv←{(1+⍺)'Expression' ''(⍉⍪'class' 'atomic')⍪⍉⍪(2+⍺)'Variable' ''(⍉⍪'name'⍵)}
+ lf←{m←(⊃⍵)≥0⌷⍉⍵
+  n←(⊃'name'Prop⊢)¨{(≢n)⊃1↑¨⍺ ⍵⊣n←'name'Prop 1↑⍵}\p←(⊃m⊂⍺)⊂[0]⊃k←m⊂[0]⍵
+  ⊃⍪/(1↓k),⍨⌽((¯1↓b)⍪¨(⊃⍵)mv¨1↓n),¯1↑b←n((⊃⍵){⍺ ren w⊣w[;0]-←⍺⍺-⍨⊃⍵⊣w←⍵})¨p}
+ e←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
+ re←e∧d=(⊢+⊣×0=⊢)\(e∧1=d←0⌷⍉⍵)+3×(1⌷⍉⍵)∊⊂'Function'
+ ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨e ⍵}
+
+⍝ Anchor Variables
+AVn←{}
