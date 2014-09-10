@@ -24,4 +24,7 @@ ED_TEST←{_←X 1 ⋄ 11::1 ⋄ 'a'#.Codfns.E 11 ⋄ 0}
 Eachk1_TEST←{⊢ C.Eachk X 1 4⍴0 'a' '' (0 2⍴⍬)}
 VF1_TEST←{C.VF X 'blah'}
 L_TEST←{_←X⍬ ⋄ #.Codfns.FI}
+TK1_TEST←{a←2 4⍴0 'Tokens' '' (0 2⍴⊂'') 1 'Line' '' (⍉⍪'comment' '')
+  a⍪←2 'Token' '' (2 2⍴'name' (,'⋄') 'class' 'separator')
+  _←X a ⋄ C.TK 1⍴⊂'⋄'}
 
