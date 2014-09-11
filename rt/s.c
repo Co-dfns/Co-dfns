@@ -15,7 +15,8 @@
 /* A<B */ scalar_dyadic(lessd,i,i,i,i,{*tgt=(*lft<*rgt);})
 /*  ⍟A */ scalar_monadic(logm,d,d,{*tgt=log(*rgt);})
 /* A⍟B */ scalar_dyadic(logd,d,d,d,d,{*tgt=log(*rgt)/log(*lft);})
-/*  |A */ scalar_monadic(residuem,d,i,{*tgt=fabs(*rgt);})
+/*  |A */ scalar_monadic(residuem,d,i,{
+ *tgt=_Generic(*rgt,double:fabs,int64_t:labs)(*rgt);})
 #define RESIDUED {D r;r=*rgt/ *lft;r=floor(r);*tgt=*rgt-r * *lft;}
 /* A|B */ scalar_dyadic_inner(residued,d,d,d,RESIDUED)
 /* A|B */ scalar_dyadic_inner(residued,d,d,i,RESIDUED)
