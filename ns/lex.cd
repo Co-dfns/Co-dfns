@@ -27,4 +27,7 @@ FE←{ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')�
  ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨e ⍵}
 
 ⍝ Anchor Variables
-AVn←{}
+AV←{b←'name'Prop ⍵⌿⍨(1⌷⍉⍵)∊⊂'Expression' ⋄ v←(1⌷⍉⍵)∊⊂'Variable' ⋄ w←⍵
+ (3⌷⍉v⌿w)⍪←↓(2,⍨+/v)⍴,¨'env' '0' ⋄ (3⌷⍉v⌿w)⍪←↓(⊂'slot'),⍪⍕¨b⍳'name'Prop v⌿⍵
+ w}
+
