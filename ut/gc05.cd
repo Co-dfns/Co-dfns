@@ -1,0 +1,15 @@
+⍝ X←5.7
+GC05_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
+ t⍪←1'Expression' ''(2 2⍴,¨'name' 'LC0' 'class' 'atomic')
+ t⍪←2'Number' ''(2 2⍴,¨'value' '5.7' 'class' 'float')
+ t⍪←1'Expression' ''(2 2⍴,¨'class' 'atomic' 'name' 'X')
+ t⍪←2'Variable' ''(4 2⍴,¨'name' 'LC0' 'class' 'array' 'env' '0' 'slot' '0')
+ x←⍪'#include "codfns.h"' 'uint64_t S0[]={};' 'type_d D0[]={5.7,};' 
+ x⍪←⊂'struct codfns_array LC0={0,1,apl_type_d,S0,D0};'
+ x⍪←⊂'struct codfns_array X;'
+ arg←'struct codfns_array res,struct codfns_array lft,struct codfns_array rgt'
+ x⍪←⊂'int Init(struct codfns_array res,' 
+ x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ x⍪←⍪' array_cp(X,LC0);' (,'}')
+ _←X x ⋄ C.GC t}
+
