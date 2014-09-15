@@ -1,0 +1,11 @@
+⍝ Generate C code
+GC←{z←,⊂'#include "codfns.h"'
+ di←¯1 ⋄ md←{'D',⍕di⊣(⊃di)+←1} ⋄ si←¯1 ⋄ ms←{'S',⍕si⊣(⊃si)+←1}
+ ce←(tm/1⌽(1⌷⍉⍵)∊⊂'Number')/t←(tm←1=0⌷⍉⍵)⊂[0]⍵
+ ntyp←{('int' 'float'⍳'class'Prop 1↓⍵)⊃'type_i' 'type_d' 'type_na'}
+ nenm←{'apl_',ntyp⍵} ⋄ gshp←{'uint64_t ',⍺,'[]={',((1=z)⊃(z←gsz⍵)''),'};'}
+ gdat←{(ntyp⍵),' ',⍺,'[]={',(com('value'Prop 1↓⍵),⊂''),'};'}
+ com←{⊃{⍺,',',⍵}/⍵} ⋄ gnm←{⊃'name'Prop 1↑⍵} ⋄ gsz←{+/(1⌷⍉⍵)∊⊂'Number'}
+ gbl←{'struct codfns_array ',(gnm⍵),'={',(com(⍕1≠gsz⍵)(⍕gsz⍵)(nenm⍵),⍺),'};'}
+ z,←⊃,/(⊂0⍴⊂''),{s←ms⍬ ⋄ d←md⍬ ⋄ (s gshp⍵)(d gdat⍵)(s d gbl⍵)}¨ce
+ ⍪z}
