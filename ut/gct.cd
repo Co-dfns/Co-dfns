@@ -3,7 +3,7 @@ GCPS←{x⊣_←⎕DL÷10000⊣x←C.{CP AV FE LF RF LC DU KL⊃a n←PS TK VI �
 ⍝ Empty Namespace
 GC01_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' '' 'coord' '1')
  x←⍪'#include "codfns.h"' 'int Init(struct codfns_array res,'
- x⍪←⍪' struct codfns_array lft,struct codfns_array rgt){' (,'}')
+ x⍪←⍪' struct codfns_array lft,struct codfns_array rgt){' ' return 0;}'
  _←X x ⋄ C.GC t}
 
 ⍝ X←5
@@ -18,7 +18,7 @@ GC02_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
  arg←'struct codfns_array res,struct codfns_array lft,struct codfns_array rgt'
  x⍪←⊂'int Init(struct codfns_array res,' 
  x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
- x⍪←⍪' array_cp(X,LC0);' (,'}')
+ x⍪←⍪' array_cp(X,LC0);' ' return 0;}'
  _←X x ⋄ C.GC t}
 
 ⍝ X←5 5
@@ -33,7 +33,7 @@ GC03_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
  x⍪←⊂'struct codfns_array X;'
  x⍪←⊂'int Init(struct codfns_array res,' 
  x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
- x⍪←⍪' array_cp(X,LC0);' (,'}')
+ x⍪←⍪' array_cp(X,LC0);' ' return 0;}'
  _←X x ⋄ C.GC t}
 
 

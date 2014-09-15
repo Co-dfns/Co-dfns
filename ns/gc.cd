@@ -9,8 +9,12 @@ GC←{z←,⊂'#include "codfns.h"'
  lit←{'struct codfns_array ',(gnm⍵),'={',(com(⍕1≠gsz⍵)(⍕gsz⍵)(nenm⍵),⍺),'};'}
  z,←⊃,/(⊂0⍴⊂''),{s←ms⍬ ⋄ d←md⍬ ⋄ (s gshp⍵)(d gdat⍵)(s d lit⍵)}¨ce
  gbl←{⊂'struct codfns_array ',(com gnm¨⍺),';'} ⋄ ve←(tm/1⌽(1⌷⍉⍵)∊⊂'Variable')/t
- z,←ve gbl⍣(0≠≢ve)⊢⍬
- z,←⊂'int Init(struct codfns_array res,'
+ z,←ve gbl⍣(0≠≢ve)⊢⍬ ⋄ z,←⊂'int Init(struct codfns_array res,'
  z,←⊂' struct codfns_array lft,struct codfns_array rgt){'
- z,←{' array_cp(',(gnm⍵),',',(gnm 1↓⍵),');'}¨ve ⋄ z,←⊂,'}'
+ z,←{' array_cp(',(gnm⍵),',',(gnm 1↓⍵),');'}¨ve ⋄ z,←⊂' return 0;}'
+ gfh←{z←'int ',(gnm⍵),'(struct codfns_array res,' 
+  z' struct codfns_array lft,struct codfns_array rgt){'}
+ gf←{(gfh⍵),(⊂' array_mt(res);'),(⊂' return 0;}')}
+ z,←⊃,/(⊂0⍴⊂''),gf¨fn←(tm/1⌽(1⌷⍉⍵)∊⊂'Function')/t
+ 
  ⍪z}

@@ -15,6 +15,6 @@ GC04_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
  x⍪←⊂'struct codfns_array X,Y;'
  x⍪←⊂'int Init(struct codfns_array res,' 
  x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
- x⍪←⍪' array_cp(X,LC0);' ' array_cp(Y,LC1);' (,'}')
+ x⍪←⍪' array_cp(X,LC0);' ' array_cp(Y,LC1);' ' return 0;}'
  _←X x ⋄ C.GC t}
 

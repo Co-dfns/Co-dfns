@@ -10,6 +10,32 @@ GC05_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
  arg←'struct codfns_array res,struct codfns_array lft,struct codfns_array rgt'
  x⍪←⊂'int Init(struct codfns_array res,' 
  x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
- x⍪←⍪' array_cp(X,LC0);' (,'}')
+ x⍪←⍪' array_cp(X,LC0);' ' return 0;}'
  _←X x ⋄ C.GC t}
 
+⍝ F←{}
+GC06_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
+ t⍪←1'FuncExpr' ''(3 2⍴,¨'class' 'ambivalent' 'equiv' 'ambivalent' 'name' 'F')
+ t⍪←2'Function' ''(2 2⍴,¨'class' 'ambivalent' 'coord' '1 1 1')
+ x←⍪'#include "codfns.h"' 'int Init(struct codfns_array res,'
+ x⍪←⍪' struct codfns_array lft,struct codfns_array rgt){' ' return 0;}'
+ x⍪←⊂'int F(struct codfns_array res,'
+ x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ x⍪←⍪' array_mt(res);' ' return 0;}'
+ _←X x ⋄ C.GC t}
+
+⍝ F←{} ⋄ G←{}
+GC07_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
+ t⍪←1'FuncExpr' ''(3 2⍴,¨'class' 'ambivalent' 'equiv' 'ambivalent' 'name' 'F')
+ t⍪←2'Function' ''(2 2⍴,¨'class' 'ambivalent' 'coord' '1 1 1')
+ t⍪←1'FuncExpr' ''(3 2⍴,¨'class' 'ambivalent' 'equiv' 'ambivalent' 'name' 'G')
+ t⍪←2'Function' ''(2 2⍴,¨'class' 'ambivalent' 'coord' '1 1 1')
+ x←⍪'#include "codfns.h"' 'int Init(struct codfns_array res,'
+ x⍪←⍪' struct codfns_array lft,struct codfns_array rgt){' ' return 0;}'
+ x⍪←⊂'int F(struct codfns_array res,'
+ x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ x⍪←⍪' array_mt(res);' ' return 0;}'
+ x⍪←⊂'int G(struct codfns_array res,'
+ x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ x⍪←⍪' array_mt(res);' ' return 0;}'
+ _←X x ⋄ C.GC t}
