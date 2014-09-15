@@ -27,7 +27,12 @@ FE←{ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')�
  ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨e ⍵}
 
 ⍝ Anchor Variables
-AV←{b←'name'Prop ⍵⌿⍨(1⌷⍉⍵)∊⊂'Expression' ⋄ v←(1⌷⍉⍵)∊⊂'Variable' ⋄ w←⍵
- (3⌷⍉v⌿w)⍪←↓(2,⍨+/v)⍴,¨'env' '0' ⋄ (3⌷⍉v⌿w)⍪←↓(⊂'slot'),⍪⍕¨b⍳'name'Prop v⌿⍵
- w}
+AV←{w←⊃⍪/((~m)/w),(m←t/t∧(1⌷⍉⍵)∊⊂'FuncExpr')/w←⍵⊂[0]⍨t←1,1↓1=0⌷⍉⍵
+ sb←(k←+\1⌽(1⌷⍉w)∊⊂'Function'){'name'Prop ⍵⌿⍨(1⌷⍉⍵)∊⊂'Expression'}⌸w
+ sk←↑⍕¨(gc←'coord'∘Prop) w ⋄ gn←'name'∘Prop
+ a←{b←sb⌷⍨sk⍳⍕⊃gc ⍵ ⋄ w←⍵
+  v←(~v\(gn v⌿⍵)∊,¨'⍺⍵')∧(v\(1⌷⍉(1⌽v)⌿⍵)∊⊂'Expression')∧v←(1⌷⍉⍵)∊⊂'Variable'
+  (3⌷⍉v⌿w)⍪←↓(2,⍨+/v)⍴,¨'env' '0' ⋄ (3⌷⍉v⌿w)⍪←↓(⊂'slot'),⍪⍕¨b⍳gn v⌿⍵
+  ⊂w}
+ ⊃⍪/k a⌸w}
 
