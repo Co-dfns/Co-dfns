@@ -17,4 +17,4 @@ of what you can effectively accomplish with APL.
 
 [Documentation](https://github.com/arcfide/Co-dfns/wiki)  
 
-Please support Co-dfns through [GitTip](https://gittip.com/arcfide).
+Please support Co-dfns through [Gratipay](https://gratipay.com/arcfide).
