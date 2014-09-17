@@ -11,7 +11,8 @@ GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
  ptr←{'struct codfns_array *',(gnm⍵),'=&',⍺,';'}
  arr←{s←ms⍬ ⋄ d←md⍬ ⋄ l←ml⍬ ⋄ (s gshp⍵)(d gdat⍵)(l s d lit⍵)(l ptr⍵)}
  z,←⊃,/(⊂0⍴⊂''),arr¨ce ⋄ ve←(tm/1⌽(1⌷⍉⍵)∊⊂'Variable')/t
- gbl←{⊂'struct codfns_array ',(com gnm¨⍺),';'}
+ frm←{⊂'struct codfns_array env0[',(⍕⍵),'];'}
+ gbl←{(frm≢n),(⍳≢n){'struct codfns_array *',⍵,'=&env0[',(⍕⍺),'];'}¨n←gnm¨⍺}
  gfh←{z←'int ',⍵,'(struct codfns_array *res,' 
   z' struct codfns_array *lft,struct codfns_array *rgt){'}
  z,←ve gbl⍣(0≠≢ve)⊢⍬ ⋄ z,←gfh'Init'
