@@ -12,13 +12,14 @@ GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
  z,←ve gbl⍣(0≠≢ve)⊢⍬ ⋄ z,←⊂'int Init(struct codfns_array res,'
  z,←⊂' struct codfns_array lft,struct codfns_array rgt){'
  z,←{' array_cp(',(gnm⍵),',',(gnm 1↓⍵),');'}¨ve ⋄ z,←⊂' return 0;}'
- gfh←{z←'int ',(gnm⍵),'(struct codfns_array res,' 
+ gfh←{z←'int ',⍵,'(struct codfns_array res,' 
   z' struct codfns_array lft,struct codfns_array rgt){'}
  gv←{' array_cp(',(com'name'Prop⍵),');'} ⋄ cv←{'lft' 'rgt' ⍵⊃⍨(,¨'⍺⍵')⍳⊂⍵}
  gd←{z l f r←'name'Prop⍵ ⋄ ' ',f,'d(',(com z (cv l) (cv r)),');'}
  gm←{z f r←'name'Prop⍵ ⋄ ' ',f,'m(',(com z'NULL'(cv r)),');'}
  ge←{'atomic'≡n←⊃'class'Prop 1↑⍵:gv⍵ ⋄ 'dyadic'≡n:gd⍵ ⋄ 'monadic'≡n:gm⍵ ⋄ ⊂''}
  ges←{⍵{ge¨(3=0⌷⍉⍺)⊂[0]⍺}⍣(2<≢⍵)⊢⊂' array_mt(res);'}
- z,←⊃,/(⊂0⍴⊂''),{(gfh⍵),(ges⍵),(⊂' return 0;}')}¨fn←(tm/1⌽(1⌷⍉⍵)∊⊂'Function')/t
- 
+ ga←{(gfh n,⍵),(⊂' return ',(n←gnm⍺),'(res,lft,rgt);}')}
+ gf←{(gfh gnm ⍵),(ges⍵),(⊂' return 0;}'),⊃,/⍵∘ga¨'m' 'd'}
+ z,←⊃,/(⊂0⍴⊂''),gf¨fn←(tm/1⌽(1⌷⍉⍵)∊⊂'Function')/t
  ⍪z}
