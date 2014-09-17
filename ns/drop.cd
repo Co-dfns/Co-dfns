@@ -7,3 +7,4 @@ DU←{
      ⊃⍪/(⊂1↑⍵),∇¨d⍣(f ⍵)⊢k     ⍝ Recur after dropping unnamed exprs
 }
 
+KL←{(~⍵[;1]∊⊂'Line')⌿⍵}
