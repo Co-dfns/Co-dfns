@@ -3,9 +3,9 @@
 C←#.Codfns ⋄ LKCL←{⍺ C.LK C.CL ⍵} ⋄ X←{1:#.UT.expect←⍵} ⋄ #.UT.sac←0
 in←{(⊂':Namespace'),⍵,⊂':EndNamespace'} ⋄ _←C.FI
 
-WM1_TEST←{_←X'tmp/test' ⋄ 'tmp/test'C.WM C.ModuleCreateWithName⊂'test'}
-WM2_TEST←{_←X '; ModuleID = ''test''',⎕UCS 10
-  #.utf8get'.ll',⍨'tmp/test'C.WM C.ModuleCreateWithName⊂'test'}
+WM1_TEST←{_←X'tmp/test' ⋄ 'tmp/test'C.WM ⍪⊂'#include "codfns.h"'}
+WM2_TEST←{_←X '#include "codfns.h"',⎕UCS 10
+  #.utf8get'.c',⍨'tmp/test'C.WM ⍪⊂'#include "codfns.h"'}
 CL1_TEST←{_←X 'ut/F.so' ⋄ C.CL 'ut/F'}
 CL2_TEST←{_←X ,⊂'ut/F.so' ⋄ ⎕SH'ls ',C.CL'ut/F'}
 Init1_TEST←{_←X 0 ⋄ 1⊃C.Init C.CL'ut/F'}

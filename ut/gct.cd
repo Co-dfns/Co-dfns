@@ -2,8 +2,8 @@ GCPS←{C.{CP AV FE LF RF LC DU KL⊃a n←PS TK VI ⍵}⍵}
 
 ⍝ Empty Namespace
 GC01_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' '' 'coord' '1')
- x←⍪'#include "codfns.h"' 'int Init(struct codfns_array res,'
- x⍪←⍪' struct codfns_array lft,struct codfns_array rgt){' ' return 0;}'
+ x←⍪'#include "codfns.h"' 'int Init(struct codfns_array *res,'
+ x⍪←⍪' struct codfns_array *lft,struct codfns_array *rgt){' ' return 0;}'
  _←X x ⋄ C.GC t}
 
 ⍝ X←5
@@ -13,11 +13,11 @@ GC02_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
  t⍪←1'Expression' ''(2 2⍴,¨'class' 'atomic' 'name' 'X')
  t⍪←2'Variable' ''(4 2⍴,¨'name' 'LC0' 'class' 'array' 'env' '0' 'slot' '0')
  x←⍪'#include "codfns.h"' 'uint64_t S0[]={};' 'type_i D0[]={5};' 
- x⍪←⊂'struct codfns_array LC0={0,1,apl_type_i,S0,D0};'
+ x⍪←⊂'struct codfns_array L0={0,1,apl_type_i,S0,D0};'
+ x⍪←⊂'struct codfns_array *LC0=&L0;'
  x⍪←⊂'struct codfns_array X;'
- arg←'struct codfns_array res,struct codfns_array lft,struct codfns_array rgt'
- x⍪←⊂'int Init(struct codfns_array res,' 
- x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ x⍪←⊂'int Init(struct codfns_array *res,' 
+ x⍪←⊂' struct codfns_array *lft,struct codfns_array *rgt){'
  x⍪←⍪' array_cp(X,LC0);' ' return 0;}'
  _←X x ⋄ C.GC t}
 
@@ -29,10 +29,11 @@ GC03_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0')
  t⍪←1'Expression' ''(2 2⍴,¨'class' 'atomic' 'name' 'X')
  t⍪←2'Variable' ''(4 2⍴,¨'name' 'LC0' 'class' 'array' 'env' '0' 'slot' '0')
  x←⍪'#include "codfns.h"' 'uint64_t S0[]={2};' 'type_i D0[]={5,5};' 
- x⍪←⊂'struct codfns_array LC0={1,2,apl_type_i,S0,D0};'
+ x⍪←⊂'struct codfns_array L0={1,2,apl_type_i,S0,D0};'
+ x⍪←⊂'struct codfns_array *LC0=&L0;'
  x⍪←⊂'struct codfns_array X;'
- x⍪←⊂'int Init(struct codfns_array res,' 
- x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ x⍪←⊂'int Init(struct codfns_array *res,' 
+ x⍪←⊂' struct codfns_array *lft,struct codfns_array *rgt){'
  x⍪←⍪' array_cp(X,LC0);' ' return 0;}'
  _←X x ⋄ C.GC t}
 

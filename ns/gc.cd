@@ -1,19 +1,21 @@
 ⍝ Generate C code
 GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
  di←¯1 ⋄ md←{'D',⍕di⊣(⊃di)+←1} ⋄ si←¯1 ⋄ ms←{'S',⍕si⊣(⊃si)+←1}
+ li←¯1 ⋄ ml←{'L',⍕li⊣(⊃li)+←1}
  ce←(tm/1⌽(1⌷⍉⍵)∊⊂'Number')/t←(tm←1=0⌷⍉⍵)⊂[0]⍵
  ntyp←{('int' 'float'⍳⊂⊃'class'Prop 1↓⍵)⊃'type_i' 'type_d' 'type_na'}
  nenm←{'apl_',ntyp⍵} ⋄ gshp←{'uint64_t ',⍺,'[]={',((1=z)⊃(⍕z←gsz⍵)''),'};'}
  gdat←{(ntyp⍵),' ',⍺,'[]={',(com'value'Prop 1↓⍵),'};'}
  gnm←{⊃'name'Prop 1↑⍵} ⋄ gsz←{+/(1⌷⍉⍵)∊⊂'Number'}
- lit←{'struct codfns_array ',(gnm⍵),'={',(com(⍕1≠gsz⍵)(⍕gsz⍵)(nenm⍵),⍺),'};'}
- z,←⊃,/(⊂0⍴⊂''),{s←ms⍬ ⋄ d←md⍬ ⋄ (s gshp⍵)(d gdat⍵)(s d lit⍵)}¨ce
- gbl←{⊂'struct codfns_array ',(com gnm¨⍺),';'} ⋄ ve←(tm/1⌽(1⌷⍉⍵)∊⊂'Variable')/t
- z,←ve gbl⍣(0≠≢ve)⊢⍬ ⋄ z,←⊂'int Init(struct codfns_array res,'
- z,←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ lit←{'struct codfns_array ',(⊃⍺),'={',(com(⍕1≠gsz⍵)(⍕gsz⍵)(nenm⍵),1↓⍺),'};'}
+ ptr←{'struct codfns_array *',(gnm⍵),'=&',⍺,';'}
+ arr←{s←ms⍬ ⋄ d←md⍬ ⋄ l←ml⍬ ⋄ (s gshp⍵)(d gdat⍵)(l s d lit⍵)(l ptr⍵)}
+ z,←⊃,/(⊂0⍴⊂''),arr¨ce ⋄ ve←(tm/1⌽(1⌷⍉⍵)∊⊂'Variable')/t
+ gbl←{⊂'struct codfns_array ',(com gnm¨⍺),';'}
+ gfh←{z←'int ',⍵,'(struct codfns_array *res,' 
+  z' struct codfns_array *lft,struct codfns_array *rgt){'}
+ z,←ve gbl⍣(0≠≢ve)⊢⍬ ⋄ z,←gfh'Init'
  z,←{' array_cp(',(gnm⍵),',',(gnm 1↓⍵),');'}¨ve ⋄ z,←⊂' return 0;}'
- gfh←{z←'int ',⍵,'(struct codfns_array res,' 
-  z' struct codfns_array lft,struct codfns_array rgt){'}
  gv←{' array_cp(',(com'name'Prop⍵),');'} ⋄ cv←{'lft' 'rgt' ⍵⊃⍨(,¨'⍺⍵')⍳⊂⍵}
  gd←{z l f r←'name'Prop⍵ ⋄ ' ',f,'d(',(com z (cv l) (cv r)),');'}
  gm←{z f r←'name'Prop⍵ ⋄ ' ',f,'m(',(com z'NULL'(cv r)),');'}
