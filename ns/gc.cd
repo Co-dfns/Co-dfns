@@ -14,7 +14,9 @@ GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
  z,←{' array_cp(',(gnm⍵),',',(gnm 1↓⍵),');'}¨ve ⋄ z,←⊂' return 0;}'
  gfh←{z←'int ',(gnm⍵),'(struct codfns_array res,' 
   z' struct codfns_array lft,struct codfns_array rgt){'}
- ge←{' array_cp(',(com (⊂'res'),'name'Prop⍵),');'}
+ gv←{' array_cp(',(com'name'Prop⍵),');'}
+ gd←{z l f r←'name'Prop⍵ ⋄ ' ',f,'d(',(com z l r),');'}
+ ge←{'atomic'≡n←⊃'class'Prop 1↑⍵:gv⍵ ⋄ 'dyadic'≡n:gd⍵ ⋄ ⊂''}
  ges←{⍵{ge¨(3=0⌷⍉⍺)⊂[0]⍺}⍣(2<≢⍵)⊢⊂' array_mt(res);'}
  z,←⊃,/(⊂0⍴⊂''),{(gfh⍵),(ges⍵),(⊂' return 0;}')}¨fn←(tm/1⌽(1⌷⍉⍵)∊⊂'Function')/t
  
