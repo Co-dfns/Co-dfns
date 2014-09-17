@@ -1,4 +1,4 @@
-LFPS←{x⊣_←⎕DL÷10000⊣x←C.{RF LC DU KL⊃a n←PS TK VI ⍵}⍵}
+LFPS←{C.{RF LC DU KL⊃a n←PS TK VI ⍵}⍵}
 LF01_TEST←{_←X⊢c←LFPS in⊂'' ⋄ C.LF c}
 LF02_TEST←{_←X⊢c←LFPS in⊂'X←5' ⋄ C.LF c}
 LF03_TEST←{_←X⊢c←LFPS in⊂'F←{}' ⋄ C.LF c}

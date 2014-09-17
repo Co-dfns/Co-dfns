@@ -1,4 +1,4 @@
-FEPS←{x⊣_←⎕DL÷10000⊣x←C.{LF RF LC DU KL⊃a n←PS TK VI ⍵}⍵}
+FEPS←{C.{LF RF LC DU KL⊃a n←PS TK VI ⍵}⍵}
 FE01_TEST←{C.FE X FEPS in ⍬}
 
 ⍝ A←5 ⋄ X←A×A×A → A←5 ⋄ X←A×A ⋄ X←A×X

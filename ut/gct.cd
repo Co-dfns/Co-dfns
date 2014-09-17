@@ -1,4 +1,4 @@
-GCPS←{x⊣_←⎕DL÷10000⊣x←C.{CP AV FE LF RF LC DU KL⊃a n←PS TK VI ⍵}⍵}
+GCPS←{C.{CP AV FE LF RF LC DU KL⊃a n←PS TK VI ⍵}⍵}
 
 ⍝ Empty Namespace
 GC01_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' '' 'coord' '1')

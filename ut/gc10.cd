@@ -15,3 +15,30 @@ GC10_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0 0 0 0')
  x⍪←⍪' codfns_addm(res,NULL,rgt);' ' return 0;}'
  _←X x ⋄ C.GC t}
 
+⍝ F←{⍺×⍵+⍵}
+GC11_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' '' 'coord' '1 0 0 0 0 0 0')
+ t⍪←1'FuncExpr' ''(3 2⍴,¨'class' 'ambivalent' 'equiv' 'ambivalent' 'name' 'F')
+ t⍪←2'Function' ''(2 2⍴,¨'class' 'ambivalent' 'coord' '1 1 1 0 0 0 0')
+ t⍪←3'Expression' ''(2 2⍴,¨'class' 'dyadic' 'name' 'res')
+ t⍪←4'Expression' ''(1 2⍴,¨'class' 'atomic')
+ t⍪←5'Variable' ''(1 2⍴,¨'name' '⍵')
+ t⍪←4'FuncExpr' ''(2 2⍴,¨'class' 'monadic' 'equiv' '+')
+ t⍪←5'Variable' ''(2 2⍴,¨'class' 'function' 'name' 'codfns_add')
+ t⍪←4'Expression' ''(1 2⍴,¨'class' 'atomic')
+ t⍪←5'Variable' ''(1 2⍴,¨'name' '⍵')
+ t⍪←3'Expression' ''(2 2⍴,¨'class' 'dyadic' 'name' 'res')
+ t⍪←4'Expression' ''(1 2⍴,¨'class' 'atomic')
+ t⍪←5'Variable' ''(1 2⍴,¨'name' '⍺')
+ t⍪←4'FuncExpr' ''(2 2⍴,¨'class' 'monadic' 'equiv' '×')
+ t⍪←5'Variable' ''(2 2⍴,¨'class' 'function' 'name' 'codfns_multiply')
+ t⍪←4'Expression' ''(1 2⍴,¨'class' 'atomic')
+ t⍪←5'Variable' ''(3 2⍴,¨'name' 'res' 'env' '0' 'slot' '0')
+ x←⍪⊂'#include "codfns.h"'
+ x⍪←⊂'int Init(struct codfns_array res,'
+ x⍪←⍪' struct codfns_array lft,struct codfns_array rgt){' ' return 0;}'
+ x⍪←⊂'int F(struct codfns_array res,'
+ x⍪←⊂' struct codfns_array lft,struct codfns_array rgt){'
+ x⍪←⍪' codfns_addd(res,rgt,rgt);' ' codfns_multiplyd(res,lft,res);' 
+ x⍪←⊂' return 0;}'
+ _←X x ⋄ C.GC t}
+
