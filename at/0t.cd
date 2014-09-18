@@ -3,8 +3,8 @@ FX←#.Codfns.Fix ⋄ d←{'./tmp/',⍵} ⋄ #.UT.sac←0 ⋄ X←{1:#.UT.expect
 in←{(⊂':Namespace'),(,⍵),⊂':EndNamespace'} ⋄ ST←{_←X 1 ⋄ ⍺::1 ⋄ ⍎'FX ⍵'}
 
 b_TEST←{_←X 0 ⋄ n←(d'b')FX in⍬ ⋄ ≢n.⎕NL 1 2 3 4 9}
-f_TEST←{_←X (d'f.')∘,¨'ll' 'so' ⋄ _←⎕sh 'rm -f ',d'f.{ll,so}'
-  _←(d'f')FX in⍬ ⋄ ⎕sh'ls ',d'f.{ll,so}'}
+f_TEST←{_←X (d'f.')∘,¨'c' 'so' ⋄ _←⎕sh 'rm -f ',d'f.{c,so}'
+  _←(d'f')FX in⍬ ⋄ ⎕sh'ls ',d'f.{c,so}'}
 c_TEST←{_←X 5 ⋄ ((d'c')FX in⊂'f←{5}').f⍬}
 w_TEST←{_←X 6 ⋄ ((d'w')FX in⊂'g←{5+⍵}').g 1}
 iota_TEST←{_←X⍳5 ⋄ ((d'iota')FX in⊂'f←{⍳5}').f⍬}
