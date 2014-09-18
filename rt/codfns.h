@@ -48,9 +48,6 @@ array_free(struct codfns_array *);
 int
 array_cp(struct codfns_array *, struct codfns_array *);
 
-void
-array_mt(struct codfns_array *);
-
 /* Scalar Type Enumerations
  * 
  * These enumerations aid in the use of these macros and definitions. 
