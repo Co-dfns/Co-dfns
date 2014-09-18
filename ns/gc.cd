@@ -26,7 +26,8 @@ GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
   'dyadic'≡n:gd⍵ ⋄ 'monadic'≡n:gm⍵ ⋄ ⊂''}
  ges←{⍵{⊃,/ge¨((⊃⍺)=0⌷⍉⍺)⊂[0]⍺}⍣(0≠≢⍵)⊢⊂' array_free(res);'}
  ga←{(gfh n,⍵),(⊂' return ',(n←gnm⍺),'(res,lft,rgt);}')}
- mvd←{n gvd⍣(0≠≢n←('name'Prop((1⌷⍉⍵)∊⊂'Expression')⌿⍵)~⊂'res')⊢⍬}
+ env←{⊂'init_env(env0,',(⍕≢⍵),');'}
+ mvd←{n{(⍺gvd⍬),env ⍺}⍣(0≠≢n←('name'Prop((1⌷⍉⍵)∊⊂'Expression')⌿⍵)~⊂'res')⊢⍬}
  gf←{(gfh gnm ⍵),(' ',¨mvd⍵),(ges 2↓⍵),(⊂' return 0;}'),⊃,/⍵∘ga¨'m' 'd'}
  z,←⊃,/(⊂0⍴⊂''),gf¨fn←(tm/1⌽(1⌷⍉⍵)∊⊂'Function')/t
  ⍪z}

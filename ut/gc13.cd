@@ -18,6 +18,7 @@ GC13_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0 0 0')
  x⍪←⊂' struct codfns_array *lft,struct codfns_array *rgt){'
  x⍪←⊂' struct codfns_array env0[1];'
  x⍪←⊂' struct codfns_array *X=&env0[0];'
+ x⍪←⊂' init_env(env0,1);'
  x⍪←⊂' array_cp(X,LC0);'
  x⍪←⊂' return 0;}'
  x⍪←⊂'int Fm(struct codfns_array *res,'
