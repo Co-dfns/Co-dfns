@@ -121,6 +121,10 @@ primitived(greater, i, i, i, i)
 primitivem(not, i, i)
 primitive(indexgen,d,i,d,d,d,i)
 primitived(ptred,d,d,d,i)
+primitive(index,i,i,i,i,i,i)
+primitive(squad,d,i,d,d,d,i)
+primitive(reshape,i,i,d,d,d,i)
+primitive(catenate,d,i,d,d,d,i)
 
 /* Runtime operators */
 
