@@ -17,17 +17,12 @@ GC11_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' '' 'coord' '1 0 0 0 0 0 0
  t⍪←4'Expression' ''(1 2⍴,¨'class' 'atomic')
  t⍪←5'Variable' ''(3 2⍴,¨'name' 'res' 'env' '0' 'slot' '0')
  x←⍪⊂'#include "codfns.h"'
- x⍪←⊂'int Init(struct codfns_array *res,'
- x⍪←⍪' struct codfns_array *lft,struct codfns_array *rgt){' ' return 0;}'
- x⍪←⊂'int F(struct codfns_array *res,'
- x⍪←⊂' struct codfns_array *lft,struct codfns_array *rgt){'
+ x⍪←⍪'UDF(Init){' ' return 0;}'
+ x⍪←⊂'UDF(F){' 
+ x⍪←⊂' struct codfns_array env0[0];'
+ x⍪←⊂' struct codfns_array*env[]={env0};'
+ x⍪←⊂' init_env(env0,0);'
  x⍪←⍪' codfns_addd(res,rgt,rgt);' ' codfns_multiplyd(res,lft,res);' 
  x⍪←⊂' return 0;}'
- x⍪←⊂'int Fm(struct codfns_array *res,'
- x⍪←⊂' struct codfns_array *lft,struct codfns_array *rgt){'
- x⍪←⊂' return F(res,lft,rgt);}'
- x⍪←⊂'int Fd(struct codfns_array *res,'
- x⍪←⊂' struct codfns_array *lft,struct codfns_array *rgt){'
- x⍪←⊂' return F(res,lft,rgt);}' 
  _←X x ⋄ C.GC t}
 

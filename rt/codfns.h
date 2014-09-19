@@ -68,6 +68,21 @@ enum { apl_type_e, apl_type_b, apl_type_i, apl_type_d, apl_type_c };
 typedef int64_t type_i;
 typedef double type_d;
 
+/* Standard Function Signature */
+#define UDF(nm) \
+int nm(struct codfns_array*,struct codfns_array*,struct codfns_array*,\
+ struct codfns_array **); \
+int \
+nm##m(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
+ struct codfns_array *env[]){return nm(res,lft,rgt,env);} \
+int \
+nm##d(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
+ struct codfns_array *env[]){return nm(res,lft,rgt,env);} \
+int \
+nm##m(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
+ struct codfns_array *onv[])
+
+
 /* Runtime functions */
 
 #define runtime_array(nm) \
@@ -100,4 +115,18 @@ primitived(neq, i, i, i, i)
 primitived(greateq, i, i, i, i)
 primitived(greater, i, i, i, i)
 primitivem(not, i, i)
+
+/* Runtime operators */
+
+#define operator_type(nm) \
+int \
+nm(struct codfns_array *,struct codfns_array *,struct codfns_array *,\
+ int(*)(struct codfns_array *,struct codfns_array *,struct codfns_array *,\
+  struct codfns_array **),\
+ struct codfns_array **);
+#define operator(nm) \
+operator_type(codfns_##nm##m)\
+operator_type(codfns_##nm##d)
+
+operator(each)
 
