@@ -20,8 +20,8 @@ GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
  gt←{⊂' if(*(type_i*)',(gnm 2↓⍵),'->elements){'}
  gif←{(gt⍵),(' ',¨ges 3↓⍵),⊂'  return 0;}'}
  gv←{⊂' array_cp(',(com cv¨⍵),');'} ⋄ cv←{'lft' 'rgt' ⍵⊃⍨(,¨'⍺⍵')⍳⊂⍵}
- gd←{z l f r←⍵ ⋄ ⊂' ',f,'d(',(com cv¨z l r),');'}
- gm←{z f r←⍵ ⋄ ⊂' ',f,'m(',(com cv¨z'NULL'r),');'}
+ gd←{z l f r←⍵ ⋄ ⊂' ',f,'d(',(com cv¨z l r'env'),');'}
+ gm←{z f r←⍵ ⋄ ⊂' ',f,'m(',(com cv¨z'NULL'r'env'),');'}
  gom←{z f o r←⍵ ⋄ ⊂' ',o,'m(',(com cv¨z'NULL'r f'env'),');'}
  god←{z l f o r←⍵ ⋄ ⊂' ',o,'d(',(com cv¨z'NULL'r f'env'),');'}
  ge←{'Condition'≡⊃0 1⌷⍵:gif⍵ ⋄ ns←'name'Prop⍵ ⋄ cl←⊃'class'Prop 1↑⍵

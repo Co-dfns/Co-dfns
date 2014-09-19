@@ -36,6 +36,9 @@ ffi_get_shape(uint64_t *, struct codfns_array *);
 void
 clean_env(struct codfns_array *, int);
 
+void
+init_env(struct codfns_array *, int);
+
 /* Helper functions for in and outside the compiler */
 
 int
@@ -79,7 +82,7 @@ int \
 nm##d(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
  struct codfns_array *env[]){return nm(res,lft,rgt,env);} \
 int \
-nm##m(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
+nm(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
  struct codfns_array *onv[])
 
 
@@ -87,7 +90,8 @@ nm##m(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
 
 #define runtime_array(nm) \
 int \
-nm(struct codfns_array *, struct codfns_array *, struct codfns_array *)
+nm(struct codfns_array *, struct codfns_array *, struct codfns_array *,\
+ struct codfns_array **)
 
 #define primitive(nm, mdt, mit, dddt, ddit, didt, diit) \
 runtime_array(codfns_##nm##m); \
@@ -115,6 +119,8 @@ primitived(neq, i, i, i, i)
 primitived(greateq, i, i, i, i)
 primitived(greater, i, i, i, i)
 primitivem(not, i, i)
+primitive(indexgen,d,i,d,d,d,i)
+primitived(ptred,d,d,d,i)
 
 /* Runtime operators */
 

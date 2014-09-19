@@ -13,6 +13,6 @@ GC10_TEST←{t←⍉⍪0'Namespace' ''(2 2⍴,¨'name' 'coord' '1 0 0 0 0 0')
  x⍪←⊂' struct codfns_array env0[0];'
  x⍪←⊂' struct codfns_array*env[]={env0};'
  x⍪←⊂' init_env(env0,0);'
- x⍪←⍪' codfns_addm(res,NULL,rgt);' ' return 0;}'
+ x⍪←⍪' codfns_addm(res,NULL,rgt,env);' ' return 0;}'
  _←X x ⋄ C.GC t}
 

@@ -149,7 +149,8 @@ nm##_##rt(type_##zt *tgt, type_##rt *rgt) \
 #define scalar_monadic_main(nm, dt, it) \
 int \
 codfns_##nm(struct codfns_array *res, \
-    struct codfns_array *lft, struct codfns_array *rgt) \
+    struct codfns_array *lft, struct codfns_array *rgt,\
+    struct codfns_array **onv) \
 { \
 	scalar_monadic_dispatch(nm, dt, it) \
 }
@@ -162,7 +163,8 @@ codfns_##nm(struct codfns_array *res, \
 #define scalar_dyadic_main(nm, ddt, dit, idt, iit) \
 int \
 codfns_##nm(struct codfns_array *res, \
-    struct codfns_array *lft, struct codfns_array *rgt) \
+    struct codfns_array *lft, struct codfns_array *rgt,\
+    struct codfns_array **onv) \
 { \
 	scalar_dyadic_dispatch(nm, ddt, dit, idt, iit) \
 }
