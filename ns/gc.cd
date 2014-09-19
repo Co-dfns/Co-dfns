@@ -29,7 +29,7 @@ GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
   (4=≢ns)∧'dyadic'≡cl:gd ns ⋄ 5=≢ns:god ns ⋄ ⊂''}
  ges←{⍵{⊃,/ge¨((⊃⍺)=0⌷⍉⍺)⊂[0]⍺}⍣(0≠≢⍵)⊢⊂' array_free(res);'}
  ga←{(gfh n,⍵),(⊂' return ',(n←gnm⍺),'(res,lft,rgt);}')}
- enm←{('name'Prop((1⌷⍉⍵)∊⊂'Expression')⌿⍵)~⊂'res'}
+ enm←{∪('name'Prop((1⌷⍉⍵)∊⊂'Expression')⌿⍵)~⊂'res'}
  ged←{⊂'struct codfns_array*env[]={env0',(com(⊂''),{'onv[',(⍕⍵),']'}¨⍳⍵),'};'}
  env←{' ',¨(frm≢⍺),(ged⍎'0',⊃'depth'Prop 1↑1↓⍵),⊂'init_env(env0,',(⍕≢⍺),');'}
  mvd←{' ',¨⍵ gvd⍣(0≠≢⍵)⊢⍬}
