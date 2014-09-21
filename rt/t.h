@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
+#include <cuda.h>
+#include <cuda_runtime_api.h>
 #include "codfns.h"
 
 typedef double D;typedef int I;typedef char C;typedef struct codfns_array A;
@@ -13,14 +15,16 @@ typedef uint16_t UI16;typedef uint64_t UI64;typedef uint8_t UI8;
 typedef void V;typedef int64_t I64;
 
 #define R return
-#define ERR(c,m){fprintf(stderr,(m));R(c);}
+#define ERR(cd,m){fprintf(stderr,(m));*c=cd;}
 #define rnk(a)((a)->rank)
 #define shp(a)((a)->shape)
 #define siz(a)((a)->size)
 #define typ(a)((a)->type)
 #define elm(a)((a)->elements)
-#define DO(n,x){I i=0,_n=(n);for(;i<_n;++i){x;}}
+#define gpu(a)((a)->gpu_elements)
+#define DO(n,x){UI64 i=0,_n=(n);for(;i<_n;++i){x;}}
 #define ra(b,s,n)realloc((b),sizeof(s)*(n))
+#define ga(b,s,n){cudaFree(b);cudaMalloc(&(b),sizeof(s)*(n));}
 #define cp(d,s,z,n){z*_d=(d);z*_s=(s);DO(n,_d[i]=_s[i]);}
 #define Ps(s)printf("%s",(s))
 #define Pi(x)printf("%ld",(x))

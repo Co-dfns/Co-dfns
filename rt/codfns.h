@@ -17,6 +17,7 @@ struct codfns_array {
 	uint8_t   type;
 	uint64_t *shape;
 	void  *elements;
+	void *gpu_elements;
 };
 
 /* Helper functions upon which the compiler relies */

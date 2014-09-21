@@ -22,6 +22,7 @@ init_env(struct codfns_array *env, int count)
 		env->size = 0;
 		env->shape = NULL;
 		env->elements = NULL;
+		env->gpu_elements = NULL;
 	}
 }
 

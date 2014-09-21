@@ -1,6 +1,10 @@
 #pragma once
 
 #include "t.h"
+
+#define scalar(x) ((x)->rank == 0)
+
+#include "l.h"
 #include "k.h"
 
 /* Scalar monadic primitive */

@@ -1,4 +1,4 @@
-# CFLAGS := -O3 -g -Wall -pedantic -std=c11
+CFLAGS := -O3 -g -Xcompiler -Wall 
 
 .PHONY: all clean unit acceptance
 
