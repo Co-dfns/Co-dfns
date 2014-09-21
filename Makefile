@@ -1,4 +1,4 @@
-CFLAGS := -O3 -g -Xcompiler -Wall 
+CFLAGS := -O3 -g -Xcompiler -Wall
 
 .PHONY: all clean unit acceptance
 
@@ -13,8 +13,8 @@ acceptance: at.dyalog ut.dyalog Codfns.dyalog
 clean:
 	rm -rf libcodfns.so Codfns.dyalog ut.dyalog at.dyalog
 
-libcodfns.so: rt/*.c rt/*.h
-	nvcc -shared -Xcompiler -fPIC ${CFLAGS} -o $@ rt/*.c
+libcodfns.so: rt/*.c rt/*.cu rt/*.h rt/*.cuh
+	nvcc -shared -Xcompiler -fPIC ${CFLAGS} -o $@ rt/*.c rt/*.cu 
 	
 Codfns.dyalog: ns/*.cd libcodfns.so
 	echo ':Namespace Codfns' > Codfns.dyalog

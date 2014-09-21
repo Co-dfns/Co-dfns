@@ -1,5 +1,6 @@
-#include "h.h"
+#include "h.cuh"
 
+extern "C" {
 I same_shape(A*la,A*ra){if(rnk(la)!=rnk(ra))R 0;
  DO(rnk(ra),if(shp(la)[i]!=shp(ra)[i])R 0;)R 1;}
 I copy_shape(A*t,A*s){UI64*b=shp(t);if(rnk(s)>rnk(t))b=ra(b,UI64,rnk(s));
@@ -18,10 +19,10 @@ V ps(A*a){pr(a);Ps("Shape: ");DO(rnk(a),P("%"PRIu64" ",shp(a)[i]));Ps("\n");}
 V pz(A*a){Ps("Size: ");Pi(siz(a));Ps("\n");}
 V pt(A*a){Ps("Type: ");P("%d",typ(a));Ps("\n");}
 V pa(A*a){ps(a);pt(a);pz(a);if(typ(a)==2)pei(a);else ped(a);}
-V pei(A*a){I64*d=elm(a);DO(siz(a),Pi(d[i]);Ps(" "););Ps("\n");}
-V ped(A*a){D*d=elm(a);DO(siz(a),Pd(d[i]);Ps(" "););Ps("\n");}
+V pei(A*a){I64*d=(I64*)elm(a);DO(siz(a),Pi(d[i]);Ps(" "););Ps("\n");}
+V ped(A*a){D*d=(D*)elm(a);DO(siz(a),Pd(d[i]);Ps(" "););Ps("\n");}
 V array_free(A*a){free(elm(a));cudaFree(gpu(a));free(shp(a));
- siz(a)=rnk(a)=0;shp(a)=elm(a)=NULL;typ(a)=0;}
+ siz(a)=rnk(a)=0;shp(a)=NULL;elm(a)=NULL;typ(a)=0;}
 I array_cp(A*t,A*s){if(t==s)R 0;UI64*p=shp(t);V*e=elm(t);
  if(rnk(s)>rnk(t))p=ra(p,UI64,rnk(s));rnk(t)=rnk(s);cp(p,shp(s),UI64,rnk(s));
  if(typ(s)==3){if(siz(s)>siz(t))e=ra(e,D,siz(s));siz(t)=siz(s);
@@ -29,4 +30,4 @@ I array_cp(A*t,A*s){if(t==s)R 0;UI64*p=shp(t);V*e=elm(t);
  else{if(siz(s)>siz(t))e=ra(e,I64,siz(s));siz(t)=siz(s);
   cp(e,elm(s),I64,siz(s));}
  typ(t)=typ(s);shp(t)=p;elm(t)=e;R 0;}
-
+}

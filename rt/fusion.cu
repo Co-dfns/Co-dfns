@@ -1,4 +1,4 @@
-#include "h.h"
+#include "h.cuh"
 
 
 /* codfns_ridx[fi]()
@@ -22,9 +22,9 @@ codfns_ridxf(struct codfns_array *res,
 	if (lft->rank == 0) {
 		*((double *)res->elements) = *((double *)lft->elements);
 	} else {
-		int64_t *ip = rgt->elements;
-		double *elm = lft->elements;
-		double *rese = res->elements;
+		int64_t *ip = (int64_t*)rgt->elements;
+		double *elm = (double*)lft->elements;
+		double *rese = (double*)res->elements;
 		*rese = elm[*ip];
 	}
 
@@ -38,9 +38,9 @@ codfns_ridxi(struct codfns_array *res,
 	if (lft->rank == 0) {
 		*((int64_t *)res->elements) = *((int64_t *)lft->elements);
 	} else {
-		int64_t *ip = rgt->elements;
-		int64_t *elm = lft->elements;
-		int64_t *rese = res->elements;
+		int64_t *ip = (int64_t*)rgt->elements;
+		int64_t *elm = (int64_t*)lft->elements;
+		int64_t *rese = (int64_t*)res->elements;
 		*rese = elm[*ip];
 	}
 

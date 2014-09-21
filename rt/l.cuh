@@ -2,21 +2,24 @@
 
 /* The inner loop of a monadic scalar function. */
 #define scalar_fnm(mk,zt,rt) \
-{I c=0;type_##zt*ze;type_##rt*re;re=elm(rgt);if((c=prep((V**)&ze,res,rgt)))R c;\
- DO(siz(res),mk##_##rt(&c,ze,re,i);if(c)R c;);\
+{I c=0;type_##zt*ze;if((c=prep((V**)&ze,res,rgt)))R c;\
+ /*cudaMemcpy(gpu(rgt),elm(rgt),sizeof(I64)*siz(rgt),cudaMemcpyHostToDevice);\
+ mk##_##rt<<<1,siz(res)>>>(&c,(type_##zt*)gpu(res),(type_##rt*)gpu(rgt),0);if(c)R c;\
+ cudaMemcpy(elm(res),gpu(res),sizeof(I64)*siz(res),cudaMemcpyDeviceToHost);*/\
+ DO(siz(res),mk##_##rt(&c,ze,(type_##rt*)elm(rgt),i);if(c)R c;);\
  typ(res)=apl_type_##zt;R 0;}
 
 /* The inner loop of a scalar dyadic function for specific types. */
 #define scalar_fnd(dk,zt,lt,rt) \
 {I c=0;type_##zt*ze;\
  if(same_shape(lft,rgt)){if((c=prep((V**)&ze,res,lft)))R c;\
-  type_##lt*le=elm(lft);type_##rt*re=elm(rgt);\
+  type_##lt*le=(type_##lt*)elm(lft);type_##rt*re=(type_##rt*)elm(rgt);\
   DO(siz(res),dk##_##lt##rt(&c,ze,le,re,i,siz(lft),siz(rgt));if(c)R c;)}\
  else if(scalar(lft)){if((c=prep((V**)&ze,res,rgt)))R c;\
-  type_##lt le=*((type_##lt*)elm(lft));type_##rt*re=elm(rgt);\
+  type_##lt le=*((type_##lt*)elm(lft));type_##rt*re=(type_##rt*)elm(rgt);\
   DO(siz(res),dk##_##lt##rt(&c,ze,&le,re,i,1,siz(rgt));if(c)R c;)}\
  else if(scalar(rgt)){if((c=prep((V**)&ze,res,lft)))R c;\
-  type_##lt*le=elm(lft);type_##rt re=*((type_##rt*)elm(rgt));\
+  type_##lt*le=(type_##lt*)elm(lft);type_##rt re=*((type_##rt*)elm(rgt));\
   DO(siz(res),dk##_##lt##rt(&c,ze,le,&re,i,siz(lft),1);if(c)R c;)}\
  typ(res)=apl_type_##zt;R 0;}
 

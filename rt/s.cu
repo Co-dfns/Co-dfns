@@ -1,5 +1,6 @@
-#include "h.h"
+#include "h.cuh"
 
+extern "C" {
 /* SCALAR PRIMITIVES */
 /*  +A */ scalar_monadic(addm,i,d,z[i]=r[i]) 
 /* A+B */ scalar_dyadic(addd,d,d,d,i,{z[i]=l[i%sl]+r[i%sr];}) 
@@ -15,8 +16,9 @@
 /* A<B */ scalar_dyadic(lessd,i,i,i,i,{z[i]=(l[i%sl]<r[i%sr]);})
 /*  ⍟A */ scalar_monadic(logm,d,d,z[i]=log(r[i]))
 /* A⍟B */ scalar_dyadic(logd,d,d,d,d,{z[i]=log(r[i%sr])/log(l[i%sl]);})
-/*  |A */ scalar_monadic(residuem,d,i,
- z[i]=_Generic(r[i],double:fabs,int64_t:labs)(r[i]))
+/*  |A */ smi(residuem,i,i,z[i]=labs(r[i]))
+/*  |A */ smi(residuem,d,d,z[i]=fabs(r[i]))
+/*  |A */ scalar_monadic_main(residuem,d,i)
 #define RESIDUED {z[i]=fmod(r[i%sr],l[i%sl]);}
 /* A|B */ sdi(residued,d,d,d,RESIDUED)
 /* A|B */ sdi(residued,d,d,i,RESIDUED)
@@ -37,4 +39,4 @@
 /* A*B */ scalar_dyadic(powerd,d,d,d,i,{z[i]=pow(l[i%sl],r[i%sr]);})
 /*  -A */ scalar_monadic(subtractm,d,i,z[i]=-1 * r[i])
 /* A-B */ scalar_dyadic(subtractd,d,d,d,i,{z[i]=l[i%sl]-r[i%sr];})
-
+}

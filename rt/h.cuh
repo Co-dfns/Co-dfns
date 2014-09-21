@@ -1,11 +1,13 @@
 #pragma once
 
+extern "C" {
+
 #include "t.h"
 
 #define scalar(x) ((x)->rank == 0)
 
-#include "l.h"
-#include "k.h"
+#include "l.cuh"
+#include "k.cuh"
 
 /* Scalar monadic primitive */
 #define scalar_monadic_main(nm, dt, it) int \
@@ -36,4 +38,4 @@ V ps(A*);
 V pa(A*);
 V pei(A*);
 V ped(A*);
-
+}
