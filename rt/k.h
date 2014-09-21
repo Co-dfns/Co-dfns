@@ -2,22 +2,22 @@
 #define scalar(x) ((x)->rank == 0)
 
 /* The inner loop of a monadic scalar function. */
-#define scalar_fnm(m,zt,rt) \
+#define scalar_fnm(mk,zt,rt) \
 {I c;type_##zt*ze;type_##rt*re;re=elm(rgt);if((c=prep((V**)&ze,res,rgt)))R c;\
- DO(siz(res),c=m##_##rt(ze++,re++);if(c)R c;);typ(res)=apl_type_##zt;R 0;}
+ DO(siz(res),c=mk##_##rt(ze++,re++);if(c)R c;);typ(res)=apl_type_##zt;R 0;}
 
 /* The inner loop of a scalar dyadic function for specific types. */
-#define scalar_fnd(dy,zt,lt,rt) \
+#define scalar_fnd(dk,zt,lt,rt) \
 {I c;type_##zt*ze;\
  if(same_shape(lft,rgt)){if((c=prep((V**)&ze,res,lft)))R c;\
   type_##lt*le=elm(lft);type_##rt*re=elm(rgt);\
-  DO(siz(res),c=dy##_##lt##rt(ze++,le++,re++);if(c)R c;)}\
+  DO(siz(res),c=dk##_##lt##rt(ze++,le++,re++);if(c)R c;)}\
  else if(scalar(lft)){if((c=prep((V**)&ze,res,rgt)))R c;\
   type_##lt le=*((type_##lt*)elm(lft));type_##rt*re=elm(rgt);\
-  DO(siz(res),c=dy##_##lt##rt(ze++,&le,re++);if(c)R c;)}\
+  DO(siz(res),c=dk##_##lt##rt(ze++,&le,re++);if(c)R c;)}\
  else if(scalar(rgt)){if((c=prep((V**)&ze,res,lft)))R c;\
   type_##lt*le=elm(lft);type_##rt re=*((type_##rt*)elm(rgt));\
-  DO(siz(res),c=dy##_##lt##rt(ze++,le++,&re);if(c)R c;)}\
+  DO(siz(res),c=dk##_##lt##rt(ze++,le++,&re);if(c)R c;)}\
  typ(res)=apl_type_##zt;R 0;}
 
 /* The body of a top-level scalar monadic function. */
