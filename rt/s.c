@@ -18,10 +18,10 @@
 /*  |A */ scalar_monadic(residuem,d,i,{
  *tgt=_Generic(*rgt,double:fabs,int64_t:labs)(*rgt);})
 #define RESIDUED {D r;r=*rgt/ *lft;r=floor(r);*tgt=*rgt-r * *lft;}
-/* A|B */ scalar_dyadic_inner(residued,d,d,d,RESIDUED)
-/* A|B */ scalar_dyadic_inner(residued,d,d,i,RESIDUED)
-/* A|B */ scalar_dyadic_inner(residued,d,i,d,RESIDUED)
-/* A|B */ scalar_dyadic_inner(residued,i,i,i,*tgt=*lft%*rgt;)
+/* A|B */ sdi(residued,d,d,d,RESIDUED)
+/* A|B */ sdi(residued,d,d,i,RESIDUED)
+/* A|B */ sdi(residued,d,i,d,RESIDUED)
+/* A|B */ sdi(residued,i,i,i,*tgt=*lft%*rgt;)
 /* A|B */ scalar_dyadic_main(residued,d,d,d,i)
 /*  ⌈B */ scalar_monadic(maxm,d,i,{*tgt=ceil(*rgt);})
 /* A⌈B */ scalar_dyadic(maxd,d,d,d,i,{*tgt=(*lft>=*rgt?*lft:*rgt);})
