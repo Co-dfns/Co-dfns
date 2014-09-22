@@ -5,9 +5,9 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
+#include <math.h>
 #include "codfns.h"
 
 typedef double D;typedef int I;typedef char C;typedef struct codfns_array A;

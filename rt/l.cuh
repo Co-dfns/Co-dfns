@@ -3,10 +3,10 @@
 /* The inner loop of a monadic scalar function. */
 #define scalar_fnm(mk,zt,rt) \
 {I c=0;type_##zt*ze;if((c=prep((V**)&ze,res,rgt)))R c;\
- /*cudaMemcpy(gpu(rgt),elm(rgt),sizeof(I64)*siz(rgt),cudaMemcpyHostToDevice);\
+ cudaMemcpy(gpu(rgt),elm(rgt),sizeof(I64)*siz(rgt),cudaMemcpyHostToDevice);\
  mk##_##rt<<<1,siz(res)>>>(&c,(type_##zt*)gpu(res),(type_##rt*)gpu(rgt),0);if(c)R c;\
- cudaMemcpy(elm(res),gpu(res),sizeof(I64)*siz(res),cudaMemcpyDeviceToHost);*/\
- DO(siz(res),mk##_##rt(&c,ze,(type_##rt*)elm(rgt),i);if(c)R c;);\
+ cudaMemcpy(elm(res),gpu(res),sizeof(I64)*siz(res),cudaMemcpyDeviceToHost);\
+ /*DO(siz(res),mk##_##rt(&c,ze,(type_##rt*)elm(rgt),i);if(c)R c;);*/\
  typ(res)=apl_type_##zt;R 0;}
 
 /* The inner loop of a scalar dyadic function for specific types. */
