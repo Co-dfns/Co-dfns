@@ -5,7 +5,7 @@
 {I c=0;type_##zt*ze;if((c=prep((V**)&ze,res,rgt)))R c;h2g(rgt);\
  UI64 bs=(siz(res)+1024-1)/1024;\
  mk##_##rt<<<bs,1024>>>(&c,(type_##zt*)gpu(res),(type_##rt*)gpu(rgt),siz(res));\
- if(c)R c;g2h(res);typ(res)=apl_type_##zt;R 0;}
+ if(c)R c;ong(res)=1;typ(res)=apl_type_##zt;R 0;}
  /*DO(siz(res),mk##_##rt(&c,ze,(type_##rt*)elm(rgt),i);if(c)R c;);*/
 
 /* The inner loop of a scalar dyadic function for specific types. */
@@ -17,7 +17,7 @@
   ze=(type_##zt*)gpu(res);\
   dk##_##lt##rt<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(lft),siz(rgt));if(c)R c;\
   /*DO(siz(res),dk##_##lt##rt(&c,ze,le,re,i,siz(lft),siz(rgt));if(c)R c;)*/\
-  }\
+ }\
  else if(scalar(lft)){if((c=prep((V**)&ze,res,rgt)))R c;\
   UI64 bs=(siz(res)+1024-1)/1024;\
   type_##lt le=*((type_##lt*)elm(lft));\
@@ -30,7 +30,7 @@
   type_##rt re=*((type_##rt*)elm(rgt));\
   dk##_##lt##rt##s<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(lft));if(c)R c;\
   /*DO(siz(res),dk##_##lt##rt##s(&c,ze,le,re,i,siz(lft));if(c)R c;)*/}\
- g2h(res);typ(res)=apl_type_##zt;R 0;}
+ ong(res)=1;typ(res)=apl_type_##zt;R 0;}
 
 /* The body of a top-level scalar monadic function. */
 #define smd(fn,dzt,izt) \

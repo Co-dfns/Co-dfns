@@ -22,6 +22,7 @@ typedef void V;typedef int64_t I64;
 #define typ(a)((a)->type)
 #define elm(a)((a)->elements)
 #define gpu(a)((a)->gpu_elements)
+#define ong(a)((a)->on_gpu)
 #define DO(n,x){UI64 i=0,_n=(n);for(;i<_n;++i){x;}}
 #define ra(b,s,n)(s*)realloc((b),sizeof(s)*(n))
 #define ga(b,s,n){cudaFree(b);cudaMalloc(&(b),sizeof(s)*(n));}

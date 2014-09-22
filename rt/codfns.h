@@ -15,6 +15,7 @@ struct codfns_array {
 	uint16_t  rank;
 	uint64_t  size;
 	uint8_t   type;
+        uint8_t   on_gpu;
 	uint64_t *shape;
 	void  *elements;
 	void *gpu_elements;

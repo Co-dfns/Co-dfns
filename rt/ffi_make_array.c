@@ -52,6 +52,7 @@ ffi_make_array_int(struct codfns_array **res,
 	arr->size = sz;
 	arr->type = 2;
 	arr->gpu_elements = NULL;
+	arr->on_gpu = 0;
 
 	memcpy(arr->shape, shp, sizeof(uint64_t) * rnk);
 	memcpy(arr->elements, dat, sizeof(int64_t) * sz);
@@ -98,6 +99,7 @@ ffi_make_array_double(struct codfns_array **res,
 	arr->size = sz;
 	arr->type = 3;
 	arr->gpu_elements = NULL;
+	arr->on_gpu = 0;
 
 	memcpy(arr->shape, shp, sizeof(uint64_t) * rnk);
 	memcpy(arr->elements, dat, sizeof(double) * sz);
