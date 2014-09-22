@@ -8,7 +8,7 @@ unit: Codfns.dyalog ut.dyalog
 	LD_LIBRARY_PATH=. mapl ws/unit
 
 acceptance: at.dyalog ut.dyalog Codfns.dyalog
-	LD_LIBRARY_PATH=. mapl ws/acceptance
+	LD_LIBRARY_PATH=. MAXWS=14G mapl ws/acceptance
 
 clean:
 	rm -rf libcodfns.so Codfns.dyalog ut.dyalog at.dyalog
