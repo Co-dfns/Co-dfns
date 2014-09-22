@@ -33,6 +33,8 @@ I scale_shape(A*,UI16);
 I scale(A*,UI16,UI64);
 I prep(V**,A*,A*);
 UI64 tr(UI64,UI64*);
+V h2g(A*);
+V g2h(A*);
 
 V ps(A*);
 V pa(A*);

@@ -30,5 +30,7 @@ I array_cp(A*t,A*s){if(t==s)R 0;UI64*p=shp(t);V*e=elm(t);
  else{if(siz(s)>siz(t))e=ra(e,I64,siz(s));siz(t)=siz(s);
   cp(e,elm(s),I64,siz(s));}
  typ(t)=typ(s);shp(t)=p;elm(t)=e;R 0;}
-V h2g(A*a){}
+V h2g(A*a){if(gpu(a)==NULL)ga(gpu(a),I64,siz(a));
+ cudaMemcpy(gpu(a),elm(a),sizeof(I64)*siz(a),cudaMemcpyHostToDevice);}
+V g2h(A*a){cudaMemcpy(elm(a),gpu(a),sizeof(I64)*siz(a),cudaMemcpyDeviceToHost);}
 }
