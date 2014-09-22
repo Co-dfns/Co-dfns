@@ -3,9 +3,15 @@
 /* Dyadic CPU Kernel */
 #define sdi(nm, zt, lt, rt, code) void \
 nm##_##lt##rt(I*c,type_##zt*z,type_##lt*l,type_##rt*r,UI64 i,UI64 sl,UI64 sr)\
-{code;}
+{code;}\
+void \
+nm##_##lt##s##rt(I*c,type_##zt*z,type_##lt lv,type_##rt*r,UI64 i,UI64 sr)\
+{type_##lt*l=&lv;UI64 sl=1;code;}\
+void \
+nm##_##lt##rt##s(I*c,type_##zt*z,type_##lt*l,type_##rt rv,UI64 i,UI64 sl)\
+{type_##rt*r=&rv;UI64 sr=1;code;}
 
 /* Monadic CPU Kernel */
 #define smi(nm, zt, rt, code) __global__ void \
-nm##_##rt(I*c,type_##zt*z,type_##rt*r,UI64 ig){UI64 i=threadIdx.x;code;}
+nm##_##rt(I*c,type_##zt*z,type_##rt*r){UI64 i=threadIdx.x;code;}
 

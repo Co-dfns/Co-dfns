@@ -19,7 +19,7 @@ extern "C" {
 /*  |A */ smi(residuem,i,i,z[i]=labs(r[i]))
 /*  |A */ smi(residuem,d,d,z[i]=fabs(r[i]))
 /*  |A */ scalar_monadic_main(residuem,d,i)
-#define RESIDUED {z[i]=fmod(r[i%sr],l[i%sl]);}
+#define RESIDUED {z[i]=fmod((D)r[i%sr],(D)l[i%sl]);}
 /* A|B */ sdi(residued,d,d,d,RESIDUED)
 /* A|B */ sdi(residued,d,d,i,RESIDUED)
 /* A|B */ sdi(residued,d,i,d,RESIDUED)
@@ -36,7 +36,7 @@ extern "C" {
 /*  ~A */ scalar_monadic(notm,i,i,{
  if(r[i]==1){z[i]=0;}else if(r[i]==0){z[i]=1;}else{ERR(11,"DOMAIN ERROR\n");}})
 /*  *A */ scalar_monadic(powerm,d,i,z[i]=exp((D)r[i]))
-/* A*B */ scalar_dyadic(powerd,d,d,d,i,{z[i]=pow(l[i%sl],r[i%sr]);})
+/* A*B */ scalar_dyadic(powerd,d,d,d,i,{z[i]=pow((D)l[i%sl],(D)r[i%sr]);})
 /*  -A */ scalar_monadic(subtractm,d,i,z[i]=-1 * r[i])
 /* A-B */ scalar_dyadic(subtractd,d,d,d,i,{z[i]=l[i%sl]-r[i%sr];})
 }
