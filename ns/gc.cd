@@ -8,7 +8,7 @@ GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
  cnv←{w←⍵ ⋄ (('¯'=w)/w)←'-' ⋄ w}
  gdat←{(ntyp⍵),' ',⍺,'[]={',(com cnv¨'value'Prop 1↓⍵),'};'}
  gnm←{⊃'name'Prop 1↑⍵} ⋄ gsz←{+/(1⌷⍉⍵)∊⊂'Number'}
- lit←{'struct codfns_array ',(⊃⍺),'={',(com(⍕1≠gsz⍵)(⍕gsz⍵)(nenm⍵),1↓⍺),'};'}
+ lit←{'struct codfns_array ',(⊃⍺),'={',(com(⍕1≠gsz⍵)(⍕gsz⍵)(nenm⍵),1↓⍺),',NULL};'}
  ptr←{'struct codfns_array *',(gnm⍵),'=&',⍺,';'}
  arr←{s←ms⍬ ⋄ d←md⍬ ⋄ l←ml⍬ ⋄ (s gshp⍵)(d gdat⍵)(l s d lit⍵)(l ptr⍵)}
  z,←⊃,/(⊂0⍴⊂''),arr¨ce ⋄ ve←(tm/1⌽(1⌷⍉⍵)∊⊂'Variable')/t

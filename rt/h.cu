@@ -30,4 +30,5 @@ I array_cp(A*t,A*s){if(t==s)R 0;UI64*p=shp(t);V*e=elm(t);
  else{if(siz(s)>siz(t))e=ra(e,I64,siz(s));siz(t)=siz(s);
   cp(e,elm(s),I64,siz(s));}
  typ(t)=typ(s);shp(t)=p;elm(t)=e;R 0;}
+V h2g(A*a){}
 }
