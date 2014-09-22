@@ -19,15 +19,15 @@
   /*DO(siz(res),dk##_##lt##rt(&c,ze,le,re,i,siz(lft),siz(rgt));if(c)R c;)*/\
  }\
  else if(scalar(lft)){if((c=prep((V**)&ze,res,rgt)))R c;\
-  UI64 bs=(siz(res)+1024-1)/1024;\
-  type_##lt le=*((type_##lt*)elm(lft));\
+  UI64 bs=(siz(res)+1024-1)/1024;type_##lt le;\
+  cudaMemcpy(&le,gpu(lft),sizeof(type_##lt),cudaMemcpyDeviceToHost);\
   type_##rt*re=(type_##rt*)gpu(rgt);ze=(type_##zt*)gpu(res);\
   dk##_##lt##s##rt<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(rgt));if(c)R c;\
   /*DO(siz(res),dk##_##lt##s##rt(&c,ze,le,re,i,siz(rgt));if(c)R c;)*/}\
  else if(scalar(rgt)){if((c=prep((V**)&ze,res,lft)))R c;\
-  UI64 bs=(siz(res)+1024-1)/1024;\
+  UI64 bs=(siz(res)+1024-1)/1024;type_##rt re;\
+  cudaMemcpy(&re,gpu(rgt),sizeof(type_##rt),cudaMemcpyDeviceToHost);\
   ze=(type_##zt*)gpu(res);type_##lt*le=(type_##lt*)gpu(lft);\
-  type_##rt re=*((type_##rt*)elm(rgt));\
   dk##_##lt##rt##s<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(lft));if(c)R c;\
   /*DO(siz(res),dk##_##lt##rt##s(&c,ze,le,re,i,siz(lft));if(c)R c;)*/}\
  ong(res)=1;typ(res)=apl_type_##zt;R 0;}

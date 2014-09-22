@@ -41,6 +41,7 @@ I codfns_ptredd(A*z,A*l,A*r,A**ig){g2h(l);g2h(r);
 I codfns_eachm(A*z,A*l,A*r,I(*f)(A*,A*,A*,A**),A**e){g2h(r);
  D*ze;prep((V**)&ze,z,r);
  A sz={0,0,2,0,NULL,NULL,NULL};A sr={0,1,typ(r),0,NULL,elm(r),NULL};
- DO(siz(z),elm(&sr)=&((D*)elm(r))[i];f(&sz,NULL,&sr,e);ze[i]=*(D*)elm(&sz));
+ DO(siz(z),elm(&sr)=&((D*)elm(r))[i];f(&sz,NULL,&sr,e);
+  g2h(&sr);g2h(&sz);ze[i]=*(D*)elm(&sz));
  typ(z)=typ(&sz);array_free(&sz);ong(z)=0;R 0;}
 
