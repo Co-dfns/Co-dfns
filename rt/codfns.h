@@ -76,16 +76,16 @@ typedef double type_d;
 /* Standard Function Signature */
 #define UDF(nm) \
 int nm(struct codfns_array*,struct codfns_array*,struct codfns_array*,\
- struct codfns_array **); \
+ struct codfns_array **,int); \
 int \
 nm##m(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
- struct codfns_array *env[]){return nm(res,lft,rgt,env);} \
+ struct codfns_array *env[],int gpu){return nm(res,lft,rgt,env,gpu);} \
 int \
 nm##d(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
- struct codfns_array *env[]){return nm(res,lft,rgt,env);} \
+ struct codfns_array *env[],int gpu){return nm(res,lft,rgt,env,gpu);} \
 int \
 nm(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
- struct codfns_array *onv[])
+ struct codfns_array *onv[],int gpu)
 
 
 /* Runtime functions */
@@ -93,7 +93,7 @@ nm(struct codfns_array*res,struct codfns_array*lft,struct codfns_array*rgt,\
 #define runtime_array(nm) \
 int \
 nm(struct codfns_array *, struct codfns_array *, struct codfns_array *,\
- struct codfns_array **)
+ struct codfns_array **,int)
 
 #define primitive(nm, mdt, mit, dddt, ddit, didt, diit) \
 runtime_array(codfns_##nm##m); \
@@ -134,8 +134,8 @@ primitive(catenate,d,i,d,d,d,i)
 int \
 nm(struct codfns_array *,struct codfns_array *,struct codfns_array *,\
  int(*)(struct codfns_array *,struct codfns_array *,struct codfns_array *,\
-  struct codfns_array **),\
- struct codfns_array **);
+  struct codfns_array **,int),\
+ struct codfns_array **,int);
 #define operator(nm) \
 operator_type(codfns_##nm##m)\
 operator_type(codfns_##nm##d)

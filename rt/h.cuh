@@ -11,11 +11,11 @@ extern "C" {
 
 /* Scalar monadic primitive */
 #define scalar_monadic_main(nm, dt, it) int \
-codfns_##nm(A*res,A*lft,A*rgt,A**onv){smd(nm,dt,it)}
+codfns_##nm(A*res,A*lft,A*rgt,A**onv,I gpu){smd(nm,dt,it)}
 
 /* Scalar dyadic primitive */
 #define scalar_dyadic_main(nm, ddt, dit, idt, iit) int \
-codfns_##nm(A*res,A*lft,A*rgt,A**onv){sdd(nm,ddt,dit,idt,iit)}
+codfns_##nm(A*res,A*lft,A*rgt,A**onv,I gpu){sdd(nm,ddt,dit,idt,iit)}
 
 /* Scalar monadic definition */
 #define scalar_monadic(nm, dt, it, code) \

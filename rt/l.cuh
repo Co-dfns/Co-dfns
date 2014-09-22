@@ -2,35 +2,48 @@
 
 /* The inner loop of a monadic scalar function. */
 #define scalar_fnm(mk,zt,rt) \
-{I c=0;type_##zt*ze;if((c=prep((V**)&ze,res,rgt)))R c;h2g(rgt);\
- UI64 bs=(siz(res)+1024-1)/1024;\
- mk##_##rt<<<bs,1024>>>(&c,(type_##zt*)gpu(res),(type_##rt*)gpu(rgt),siz(res));\
- if(c)R c;ong(res)=1;typ(res)=apl_type_##zt;R 0;}
- /*DO(siz(res),mk##_##rt(&c,ze,(type_##rt*)elm(rgt),i);if(c)R c;);*/
+{I c=0;type_##zt*ze;if((c=prep((V**)&ze,res,rgt)))R c;\
+ if(gpu){h2g(rgt);UI64 bs=(siz(res)+1024-1)/1024;\
+  mk##_##g##rt<<<bs,1024>>>(&c,(type_##zt*)gpu(res),(type_##rt*)gpu(rgt),siz(res));\
+  if(c)R c;ong(res)=1;}\
+ else{g2h(rgt);DO(siz(res),mk##_##rt(&c,ze,(type_##rt*)elm(rgt),i);\
+  if(c)R c;);ong(res)=0;}\
+ typ(res)=apl_type_##zt;R 0;}
 
 /* The inner loop of a scalar dyadic function for specific types. */
 #define scalar_fnd(dk,zt,lt,rt) \
-{I c=0;type_##zt*ze;h2g(lft);h2g(rgt);\
+{I c=0;type_##zt*ze;\
  if(same_shape(lft,rgt)){if((c=prep((V**)&ze,res,lft)))R c;\
-  UI64 bs=(siz(res)+1024-1)/1024;\
-  type_##lt*le=(type_##lt*)gpu(lft);type_##rt*re=(type_##rt*)gpu(rgt);\
-  ze=(type_##zt*)gpu(res);\
-  dk##_##lt##rt<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(lft),siz(rgt));if(c)R c;\
-  /*DO(siz(res),dk##_##lt##rt(&c,ze,le,re,i,siz(lft),siz(rgt));if(c)R c;)*/\
- }\
+  if(gpu){h2g(lft);h2g(rgt);UI64 bs=(siz(res)+1024-1)/1024;\
+   type_##lt*le=(type_##lt*)gpu(lft);type_##rt*re=(type_##rt*)gpu(rgt);\
+   ze=(type_##zt*)gpu(res);\
+   dk##_##g##lt##rt<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(lft),siz(rgt));\
+   ong(res)=1;if(c)R c;}\
+  else{g2h(lft);g2h(rgt);\
+   type_##lt*le=(type_##lt*)elm(lft);type_##rt*re=(type_##rt*)elm(rgt);\
+   DO(siz(res),dk##_##lt##rt(&c,ze,le,re,i,siz(lft),siz(rgt));if(c)R c;)\
+   ong(res)=0;}}\
  else if(scalar(lft)){if((c=prep((V**)&ze,res,rgt)))R c;\
-  UI64 bs=(siz(res)+1024-1)/1024;type_##lt le;\
-  cudaMemcpy(&le,gpu(lft),sizeof(type_##lt),cudaMemcpyDeviceToHost);\
-  type_##rt*re=(type_##rt*)gpu(rgt);ze=(type_##zt*)gpu(res);\
-  dk##_##lt##s##rt<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(rgt));if(c)R c;\
-  /*DO(siz(res),dk##_##lt##s##rt(&c,ze,le,re,i,siz(rgt));if(c)R c;)*/}\
+  if(gpu){h2g(lft);h2g(rgt);UI64 bs=(siz(res)+1024-1)/1024;type_##lt le;\
+   cudaMemcpy(&le,gpu(lft),sizeof(type_##lt),cudaMemcpyDeviceToHost);\
+   type_##rt*re=(type_##rt*)gpu(rgt);ze=(type_##zt*)gpu(res);\
+   dk##_##g##lt##s##rt<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(rgt));\
+   ong(res)=1;if(c)R c;}\
+  else{g2h(lft);g2h(rgt);\
+   type_##lt le=*((type_##lt*)elm(lft));type_##rt*re=(type_##rt*)elm(rgt);\
+   DO(siz(res),dk##_##lt##s##rt(&c,ze,le,re,i,siz(rgt));if(c)R c;)\
+   ong(res)=0;}}\
  else if(scalar(rgt)){if((c=prep((V**)&ze,res,lft)))R c;\
-  UI64 bs=(siz(res)+1024-1)/1024;type_##rt re;\
-  cudaMemcpy(&re,gpu(rgt),sizeof(type_##rt),cudaMemcpyDeviceToHost);\
-  ze=(type_##zt*)gpu(res);type_##lt*le=(type_##lt*)gpu(lft);\
-  dk##_##lt##rt##s<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(lft));if(c)R c;\
-  /*DO(siz(res),dk##_##lt##rt##s(&c,ze,le,re,i,siz(lft));if(c)R c;)*/}\
- ong(res)=1;typ(res)=apl_type_##zt;R 0;}
+  if(gpu){h2g(lft);h2g(rgt);UI64 bs=(siz(res)+1024-1)/1024;type_##rt re;\
+   cudaMemcpy(&re,gpu(rgt),sizeof(type_##rt),cudaMemcpyDeviceToHost);\
+   ze=(type_##zt*)gpu(res);type_##lt*le=(type_##lt*)gpu(lft);\
+   dk##_##g##lt##rt##s<<<bs,1024>>>(&c,ze,le,re,siz(res),siz(lft));\
+   ong(res)=1;if(c)R c;}\
+  else{g2h(lft);g2h(rgt);\
+   type_##lt*le=(type_##lt*)elm(lft);type_##rt re=*((type_##rt*)elm(rgt));\
+   DO(siz(res),dk##_##lt##rt##s(&c,ze,le,re,i,siz(lft));if(c)R c;)\
+   ong(res)=0;}}\
+ typ(res)=apl_type_##zt;R 0;}
 
 /* The body of a top-level scalar monadic function. */
 #define smd(fn,dzt,izt) \

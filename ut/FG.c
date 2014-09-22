@@ -13,6 +13,6 @@ UDF(f){
  array_cp(res,LC0);
  return 0;}
 UDF(g){
- codfns_addd(res,LC1,rgt,NULL);
+ codfns_addd(res,LC1,rgt,NULL,gpu);
  return 0;}
 

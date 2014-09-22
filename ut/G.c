@@ -6,6 +6,6 @@ struct codfns_array *LC0=&L0;
 UDF(Init){
  return 0;}
 UDF(g){
- codfns_addd(res,LC0,rgt,NULL);
+ codfns_addd(res,LC0,rgt,NULL,gpu);
  return 0;}
 

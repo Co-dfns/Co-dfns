@@ -20,4 +20,4 @@ APLRunts,←'codfns_ptred' 'codfns_index'
 APLRtOps←,⊂'codfns_each'
 APLPrims←,¨'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳'
 APLPrims,←'⎕ptred' '⎕index' (,'¨')
-
+WithGPU←1
