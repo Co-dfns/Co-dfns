@@ -1,4 +1,4 @@
-CFLAGS := -O3 -g -Xcompiler -Wall
+CFLAGS := -O3 -arch sm_21 -Xcompiler -Wall
 
 .PHONY: all clean unit acceptance
 
