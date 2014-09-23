@@ -16,8 +16,8 @@ APLRunts,←'codfns_residue' 'codfns_power' 'codfns_log' 'codfns_max'
 APLRunts,←'codfns_min' 'codfns_less' 'codfns_lesseq' 'codfns_equal'
 APLRunts,←'codfns_not_equal' 'codfns_greateq' 'codfns_greater'
 APLRunts,←'codfns_squad' 'codfns_reshape' 'codfns_catenate' 'codfns_indexgen'
-APLRunts,←'codfns_ptred' 'codfns_index'
+APLRunts,←'codfns_ptred' 'codfns_index' 'codfns_coeffred'
 APLRtOps←,⊂'codfns_each'
 APLPrims←,¨'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳'
-APLPrims,←'⎕ptred' '⎕index' (,'¨')
+APLPrims,←'⎕ptred' '⎕index' '⎕coeffred' (,'¨')
 WithGPU←1
