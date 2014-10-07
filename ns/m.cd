@@ -2,7 +2,7 @@ Fix←{n LK⊃Init CL (VF ⍺)WM GC CP FD AV FE LF RF LC DF DU DL⊃a n←PS TK 
 Init←{⍵(I 5⍴0)⊣'I'⎕NA'I4 ',⍵,'|Init P P P P I'}
 VI←{~1≡≢⍴⍵:E 11 ⋄ 2≠|≡⍵:E 11 ⋄ ~∧/1≥≢∘⍴¨⍵:E 11 ⋄ ~∧/∊' '=(⊃0⍴⊂)¨⍵:E 11 ⋄ ⍵}
 VF←{~(∧/∊' '=⊃0⍴⊂⍵)∧(1≡≢⍴⍵)∧(1≡≡⍵):E 11 ⋄ ⍵}
-CC←'nvcc -O3 -shared -Xcompiler -fPIC -Irt -Xlinker -L. -o '
+CC←'nvcc -O3 -g -shared -Xcompiler -fPIC -Irt -Xlinker -L. -o '
 CL←{⍵,'.so'⊣⎕SH CC,'"',⍵,'.so" "',⍵,'.c" -lcodfns'}
 LK←{⊃v(⍵{⍵⊣⍵.⍎⍺,'←''',⍺,'''##.NA''',⍺⍺,''' ⋄ 0'})¨⍣(0≠≢v←⊣/⍺⌿⍨2=⊢/⍺)⊂⎕NS⍬}
 WM←{⍺⊣(⊃,/,⍵,⎕UCS 10)put⍺,'.c'}
