@@ -1,0 +1,1 @@
+# Outline1. Introduction2. AST/Language Definition3. Notational conventions4. Compiler Passes    1. Overview of Passes    2. Simple Passes    3. Parsing and Generation    4. Lexical scope analysis    5. Function/Constant lifting    6. Expression Flattening    7. Variable Anchoring5. Evaluation6. Future Work7. Conclusion8. References
