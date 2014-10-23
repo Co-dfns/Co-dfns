@@ -1,0 +1,1 @@
+﻿ Init←{⍵(I 5⍴0)⊣'I'⎕NA'I4 ',⍵,'|Init P P P P I'}
