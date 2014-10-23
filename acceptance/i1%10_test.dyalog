@@ -1,0 +1,1 @@
+﻿ I1∆10_TEST←{_←X 0 0⍴'' ⋄ ('tmp/i1.10'FX'' ':Namespace' '' ':EndNamespace' '').⎕NL⍳10}

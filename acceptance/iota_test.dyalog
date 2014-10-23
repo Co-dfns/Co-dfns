@@ -1,0 +1,1 @@
+﻿ iota_TEST←{_←X⍳5 ⋄ ((d'iota')FX in⊂'f←{⍳5}').f ⍬}

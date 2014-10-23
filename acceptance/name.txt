@@ -1,0 +1,1 @@
+﻿#.acceptance (⎕IO ⎕ML ⎕WX ⎕CT)←0 1 3 1E¯14
