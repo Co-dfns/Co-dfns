@@ -1,0 +1,1 @@
+﻿ CL2_TEST←{_←X,⊂'ut/F.so' ⋄ ⎕SH'ls ',C.CL'ut/F'}

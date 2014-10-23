@@ -1,0 +1,1 @@
+﻿ RF5_TEST←{_←X(↑(0(1 0 0))(6(1 3 3)))RFAN⊢c←RFPS in⊂'X←5 ⋄ F←{}' ⋄ C.RF c}

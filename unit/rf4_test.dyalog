@@ -1,0 +1,1 @@
+﻿ RF4_TEST←{_←X(↑(0(1 0 0))(2(1 1 1)))RFAN⊢c←RFPS in⊂'F←{}' ⋄ C.RF c}

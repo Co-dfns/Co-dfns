@@ -1,0 +1,1 @@
+﻿ LK3_TEST←{_←X,3 ⋄ ((⍉⍪'f' 2)LKCL'ut/F').⎕NC'f'}
