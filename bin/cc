@@ -1,3 +1,0 @@
-#!/bin/sh
-
-exec clang  -O3 -g -std=c11 -shared -fPIC -L. -Irt -o $* -lcodfns -lm
