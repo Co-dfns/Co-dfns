@@ -1,0 +1,42 @@
+:Essay Tiled Game of Life in HPAPL
+
+:Program
+(Procs Gens Rows Cols)←⎕TAG
+Data←Gens Rows Cols↑⎕IN
+Data[Gens;;]→⎕OUT
+⟨Compute Slice Size⟩
+⟨Define Tag Functions⟩
+Gen∥1↓⎕TAG
+:EndProgram
+
+∇R←T Life D
+:Out Data[p T] :In Data[g T]
+NC←+/,1 0 ¯1∘.⊖1 0 ¯1⌽¨⊂D
+R←⊃1 D∨.∧3 4=NC
+R←¯1 ¯1↓1⊖1⌽R
+∇
+
+:Section Define Tag Functions
+g←{(G R C)←⍵
+  S←SliceSize R C
+  G,¨Rows Cols|(⊂R C-1)+⍳2+S
+}
+p←{(G R C)←⍵
+  S←SliceSize R C
+  (G+1),¨(⊂R C)+⍳S
+}
+:EndSection
+
+∇T Gen MaxSlice
+:In MaxSlice :NoOut
+(Gens Rows Cols)←T
+Life∥¨(⍳Gens-1)∘.,⍳⌈Rows Cols÷MaxSlice
+∇
+
+:Section Compute Slice Size
+MaxSlice←Procs{0=⌊⍺÷2:⍵
+               (⌊⍺÷2)∇⌈⍵÷(1 2)[(⍵⍳⌈/⍵)=⍳⍴⍵]}Rows Cols
+SliceSize←{MaxSlice⌊Rows Cols-⍵}
+:EndSection
+
+:EndEssay

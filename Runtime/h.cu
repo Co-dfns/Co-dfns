@@ -1,6 +1,9 @@
 #include "h.cuh"
 
 extern "C" {
+V init_env(A*e,I c){DO(c,typ(e[i])=0;rnk(e[i])=0;siz(e[i])=0;
+ shp(e[i])=NULL;elm(e[i])=NULL;gpu(e[i])=NULL;ong(e[i])=0;bsz(e[i])=0;);}
+V clean_env(A*e,I c){DO(c,array_free(&e[i]));}
 I same_shape(A*la,A*ra){if(rnk(la)!=rnk(ra))R 0;
  DO(rnk(ra),if(shp(la)[i]!=shp(ra)[i])R 0;)R 1;}
 I copy_shape(A*t,A*s){UI64*b=shp(t);if(rnk(s)>rnk(t))b=ra(b,UI64,rnk(s));
