@@ -24,9 +24,3 @@ conf/mk.conf
 tmp/
 *.if
 titlepage.xsl
-Codfns.dyalog
-ut.dyalog
-at.dyalog
-aplcore
-APL_Compiles_Itself
-
