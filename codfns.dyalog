@@ -15,6 +15,7 @@
 ⍝ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 :Namespace codfns
+
 ⍝ === VARIABLES ===
 
     APLPrims←(,'+') (,'-') (,'÷') (,'×') (,'|') (,'*') (,'⍟') (,'⌈') (,'⌊') (,'<') (,'≤') (,'=') (,'≠') (,'≥') (,'>') (,'⌷') (,'⍴') (,',') (,'⍳') '⎕ptred' '⎕index' '⎕coeffred' (,'¨')
@@ -46,82 +47,180 @@
 
     (⎕IO ⎕ML ⎕WX)←0 1 3
 
-      AP←{1 3∨.=10|⎕DR ⍵:ffi_make_array_int 1(≢⍴⍵)(≢,⍵)(⍴⍵)(,⍵)
-          5∨.=10|⎕DR ⍵:ffi_make_array_double 1(≢⍴⍵)(≢,⍵)(⍴⍵)(,⍵)
-          E 99}
+⍝ Primary entry point; replaces ⎕FIX
+      Fix←{
+          a n←ps tk vi ⍵
+          a←av se fe lf lc du df dl rd rn a
+          (vf ⍺)wm gc a
+      }
 
-      AV←{⍝ Anchor Variables
-          w←⊃⍪/((~m)/w),(m←t/t∧(1⌷⍉⍵)∊⊂'FuncExpr')/w←⍵⊂[0]⍨t←1,1↓1=0⌷⍉⍵
-          sb←(k←+\1⌽(1⌷⍉w)∊⊂'Function'){'name'Prop ⍵⌿⍨(1⌷⍉⍵)∊⊂'Expression'}⌸w
-          sk←↑,∘⍎¨(gc←'coord'∘Prop)w ⋄ gn←'name'∘Prop
-          a←{b←sb[sk⍳{k[⍒k;]⊣k←↑(↓sk)∩(≢⍵)↑¨(1+⍳⍵⍳0)↑¨⊂⍵},⍎⊃gc ⍵;] ⋄ s←⍴b ⋄ b←,b ⋄ w←⍵
-              v←(~v\(gn v⌿⍵)∊,¨'⍺⍵')∧(v\(1⌷⍉(1⌽v)⌿⍵)∊⊂'Expression')∧v←(1⌷⍉⍵)∊⊂'Variable'
-              (3⌷⍉v⌿w)⍪←'env' 'slot'∘{⍺,⍪⍕¨2↑⍵}¨↓⍉s⊤b⍳gn v⌿⍵ ⋄ ⊂w}
-          ⊃⍪/k a⌸w}
+⍝ Verify filename syntax
+    vf←{1≢≡⍵:err 11 ⋄ 1≢≢⍴⍵:err 11 ⋄ ~∧/∊' '=⊃0⍴⊂⍵:err 11 ⋄ ⍵}
+
+⍝ Verify namespace script input
+      vi←{
+          ~1≡≢⍴⍵:err 11 ⋄ 2≠|≡⍵:err 11 ⋄ ~∧/1≥≢∘⍴¨⍵:err 11
+          ~∧/∊' '=(⊃0⍴⊂)¨⍵:err 11 ⋄ ⍵
+      }
+
+⍝ Tokenize input stream (Rewrite!)
+      tk←{
+          vc←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'     ⍝ Upper case characters
+          vc,←'abcdefghijklmnopqrstuvwxyz'     ⍝ Lower case characters
+          vc,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß' ⍝ Accented upper case
+          vc,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'  ⍝ Accented lower case
+          vc,←'∆⍙'                             ⍝ Deltas
+          vc,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'     ⍝ Underscored alphabet
+          vcn←vc,nc←'¯0123456789'              ⍝ Numbers
+          tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>⍺⍵⍴⍳,⌷¨'     ⍝ Single Token characters
+          ac←vcn,'     ⍝⎕.',tc                 ⍝ All characters
+          ~∧/ac∊⍨⊃,/⍵:E 2                      ⍝ Verify we have only good characters
+          i←(,¨⍵)⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵       ⍝ Divide into comment and code
+          t←((⌽∘(∨\)∘⌽¨t)∧∨\¨t←' '≠t)/¨t       ⍝ Strip leading/trailing whitespace
+          nsb←t∊':Namespace' ':EndNamespace'   ⍝ Mask of Namespace tokens
+          nsl←nsb/t ⋄ nsi←nsb/⍳⍴t              ⍝ Namespace lines and indices
+          ti←(~nsb)/⍳⍴t ⋄ t←(~nsb)/t           ⍝ Token indices and non ns tokens
+          at←{2 2⍴'name'⍵'class' 'delimiter'}  ⍝ Fn for namespace attributes
+          nsl←{,⊂2 'Token' ''(at ⍵)}¨nsl       ⍝ Tokenize namespace elements
+          t←{                                  ⍝ Tokenize other tokens
+              0=≢t:⍬                             ⍝ Special empty case
+              t←{(m/2</0,m)⊂(m←' '≠⍵)/⍵}¨t       ⍝ Split on and remove spaces
+              t←{(b∨2≠/1,b←⍵∊tc)⊂⍵}¨¨t           ⍝ Split on token characters
+              t←{⊃,/(⊂⍬),⍵}¨t                    ⍝ Recombine lines
+              lc←+/l←≢¨t                         ⍝ Token count per line and total count
+              t←⊃,/t                             ⍝ Convert to single token vector
+              fc←⊃¨t                             ⍝ First character of each token
+              iv←(sv←fc∊vc,'⍺⍵')/⍳lc             ⍝ Mask and indices of variables
+              ii←(si←fc∊nc)/⍳lc                  ⍝ Mask and indices of numbers
+              ia←(sa←fc∊'←⋄:')/⍳lc               ⍝ Mask and indices of separators
+              id←(sd←fc∊'{}')/⍳lc                ⍝ Mask and indices of delimiters
+              ipm←(spm←fc∊'+-÷×|*⍟⌈⌊,⍴⍳')/⍳lc    ⍝ Mask and indices of monadic primitives
+              iom←(som←fc∊'¨')/⍳lc               ⍝ Mask and indices of monadic operators
+              ipd←(spd←fc∊'<≤=≠≥>⎕⌷')/⍳lc        ⍝ Mask and indices of dyadic primitives
+              tv←1 2∘⍴¨↓(⊂'name'),⍪sv/t          ⍝ Variable attributes
+              tv←{1 4⍴2 'Variable' ''⍵}¨tv       ⍝ Variable tokens
+              ncls←{('.'∊⍵)⊃'int' 'float'}       ⍝ Fn to determine Number class attr
+              ti←{'value'⍵'class'(ncls ⍵)}¨si/t  ⍝ Number attributes
+              ti←{1 4⍴2 'Number' ''(2 2⍴⍵)}¨ti   ⍝ Number tokens
+              tpm←{1 2⍴'name'⍵}¨spm/t            ⍝ Monadic Primitive name attributes
+              tpm←{⍵⍪'class' 'monadic axis'}¨tpm ⍝ Monadic Primtiive class
+              tpm←{1 4⍴2 'Primitive' ''⍵}¨tpm    ⍝ Monadic Primitive tokens
+              tom←{1 2⍴'name'⍵}¨som/t            ⍝ Monadic Operator name attributes
+              tom←{⍵⍪'class' 'operator'}¨tom     ⍝ Monadic Operator class
+              tom←{1 4⍴2 'Primitive' ''⍵}¨tom    ⍝ Monadic Operator tokens
+              tpd←{1 2⍴'name'⍵}¨spd/t            ⍝ Dyadic primitive name attributes
+              tpd←{⍵⍪'class' 'dyadic axis'}¨tpd  ⍝ Dyadic primitive class
+              tpd←{1 4⍴2 'Primitive' ''⍵}¨tpd    ⍝ Dyadic primitive tokens
+              ta←{1 2⍴'name'⍵}¨sa/t              ⍝ Separator name attributes
+              ta←{⍵⍪'class' 'separator'}¨ta      ⍝ Separator class
+              ta←{1 4⍴2 'Token' ''⍵}¨ta          ⍝ Separator tokens
+              td←{1 2⍴'name'⍵}¨sd/t              ⍝ Delimiter name attributes
+              td←{⍵⍪'class' 'delimiter'}¨td      ⍝ Delimiter class attributes
+              td←{1 4⍴2 'Token' ''⍵}¨td          ⍝ Delimiter tokens
+              t←tv,ti,tpm,tom,tpd,ta,td          ⍝ Reassemble tokens
+              t←t[⍋iv,ii,ipm,iom,ipd,ia,id]      ⍝ In the right order
+              t←(⊃,/l↑¨1)⊂t                      ⍝ As vector of non-empty lines of tokens
+              t←t,(+/0=l)↑⊂⍬                     ⍝ Append empty lines
+              t[⍋((0≠l)/⍳⍴l),(0=l)/⍳⍴l]          ⍝ Put empty lines where they belong
+          }⍬
+          t←(nsl,t)[⍋nsi,ti]                   ⍝ Add the Namespace lines back
+          t←c{                                 ⍝ Wrap in Line nodes
+              ha←1 2⍴'comment'⍺                  ⍝ Head comment
+              h←1 4⍴1 'Line' ''ha                ⍝ Line node
+              0=≢⍵:h ⋄ h⍪⊃⍪/⍵                    ⍝ Wrap it
+          }¨t
+          0 'Tokens' ''MtA⍪⊃⍪/t                ⍝ Create and return tokens tree
+      }
+
+⍝ Rewritten parsing code should go here
+
+⍝ Useful utilities
+    atrep←{(((~(0⌷⍉⍺)∊⊂⍺⍺)⌿⍺))⍪⍺⍺ ⍵}
+    ren←'name'atrep
+    opt←{⍵⍵⍀(⍵⍵⌿⍺)⍺⍺(⍵⍵⌿⍵)}
+    err←{⍺←⊢ ⋄ ⍺ ⎕SIGNAL ⍵}
+
+      put←{tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}⍵
+          size←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND tie 83 ⋄ 1:rslt←size⊣⎕NUNTIE tie}
 
       Bind←{0=≢⍵:⍵ ⋄ (i←A⍳⊂'name')≥⍴A←0⌷⍉⊃0 3⌷Ast←⍵:Ast⊣(⊃0 3⌷Ast)⍪←'name'⍺
           Ast⊣((0 3)(i 1)⊃Ast){⍺,⍵,⍨' ' ''⊃⍨0=⍴⍺}←⍺}
 
-      ByDepth←{(⍵=⍺[;0])⌿⍺
+      Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵
       }
 
-      ByElem←{(⍺[;1]∊⊂⍵)⌿⍺
+      Prop←{(¯1⌽P∊⊂⍺)/P←(⊂''),,↑⍵[;3]
       }
 
-      CL←{⍵,'.so'⊣⎕SH CC,'"',⍵,'.so" "',⍵,'.c" -lcodfns'
+      Eachk←{(1↑⍵)⍪⊃⍪/(⊂MtAST),(+\(⊃=⊢)0⌷⍉k)(⊂⍺⍺)⌸k←1↓⍵
       }
 
-      CP←{ast←⍵
-          pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
-          pn←'name'Prop pm⌿⍵                   ⍝ Primitive names
-          cn←(APLPrims⍳pn)⌷¨⊂APLRunts⍪APLRtOps ⍝ Converted names
-          hd←⍉⍪'class' 'function'              ⍝ Class is function
-          at←(⊂⊂'name')(hd⍪,)¨cn               ⍝ Name of the function
-          vn←(⊂'Variable'),(⊂''),⍪at           ⍝ Build the basic node structure
-          ast⊣(pm⌿ast)←(pm/0⌷⍉⍵),vn            ⍝ Replace Primitive nodes
+⍝ Function node references
+      rn←{
+          c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/0,d←0⌷⍉w←⍵
+          w⊣(3⌷⍉w)⍪←↓(⊂'ref'),⍪↓c
       }
 
-      Comment←{⍺
+⍝ Function depths
+      rd←{
+          d←¯1++/∧.(=∨0=⊢)∘⍉⍨↑ref(fn←Function ⍵)⌿w←⍵
+          w⊣(3⌷⍉fn⌿w)⍪←↓(⊂'depth'),⍪d
       }
 
-      ConvertArray←{
-          s←ffi_get_size ⍵                     ⍝ Get the number of data elements
-          t←ffi_get_type ⍵                     ⍝ Type of data
-          d←{
-              t=2:ffi_get_data_int s ⍵         ⍝ Integer type
-              ffi_get_data_float s ⍵           ⍝ Float type
-          }⍵
-          r←ffi_get_rank ⍵                     ⍝ Get the number of shape elements
-          p←ffi_get_shape r ⍵                  ⍝ Get the shapes
-          t,⊂p⍴d                               ⍝ Reshape based on shape
+⍝ Drop useless Line nodes
+    dl←{(~⍵[;1]∊⊂'Line')⌿⍵}
+
+⍝ Drop unnamed top-level functions
+      df←{
+          drop←(tl←1=0⌷⍉⍵)∧(FuncExpr ⍵)∧(name ⍵)∊⊂''
+          (~g∊drop/g←+\tl)⌿⍵
       }
 
-      DF←{⊃⍪/(⊂1↑⍵),({1=≢'name'Prop 1↑⍵}¨k)/k←1 Kids ⍵
+⍝ Drop syntactically unreachable code
+      du←{
+          rf←(fn←Function ⍵)⌿r←↑ref ⍵ ⋄ rd←{1↓(0≠⍵)/⍵}⍤1⊢r
+          adj←((name ⍵)∊⊂''){0,1↓(¯1⌽⍺)∧⍵=¯1⌽⍵}opt(fn∨(↓rd)∊↓rf)⊢0⌷⍉⍵
+          in←rd∧.(=∨0=⊢)⍉drop⌿rd ⋄ below←r∧.≥⍉drop⌿r×0=rd
+          (~adj∨∨/in∧below)⌿⍵
       }
 
-      DL←{(~⍵[;1]∊⊂'Line')⌿⍵
+⍝ Lift constants to top-level
+      lc←{
+          le←l∨e←(Expression ⍵)∧1⌽l←Number ⍵
+          h←(1+Number h),1↓[1]h←le⌿w←⍵
+          (3⌷⍉(Expression h)⌿h)ren←v←(⊂'lc'),¨⍳+/e
+          (3⌷⌽fl⌿w)←v{3 2⍴'class' 'array' 'name'⍺'ref'⍵}¨ref(fl←¯1⌽e)⌿⍵
+          (1⌷⍉fl⌿w)←⊂'Variable'
+          (1↑w)⍪h⍪1↓w←(fl∨~l)⌿w
       }
 
-      DU←{
-          e←'Expression'≡∘⊃0 1⌷⊢    ⍝ (e n) indicates a node is an expression
-          u←(e∧0=∘≢'name'Prop 1↑⊢)¨ ⍝ (u k) gives map of unnamed exprs
-          d←(~(∨\0,1↓¯1⌽u))(/∘⊢)⊢   ⍝ (d k) drops kids after 1st unnamed ex
-          f←'Function'≡∘⊃0 1⌷⊢      ⍝ (f n) tests if n is function node
-          0=≢k←1 Kids ⍵:⍵           ⍝ Terminate at leaves
-          ⊃⍪/(⊂1↑⍵),∇¨d⍣(f ⍵)⊢k     ⍝ Recur after dropping unnamed exprs
+⍝ Lift functions to top-level
+      lf←{
+          fnh←{⍝ Function handler
+              at←2 2⍴'name'('fn',⍕rm⊥⍺)'class' 'ambivalent'
+              at⍪←'ref'()
+              h←⍉⍪1 'FuncExpr' ''at
+              h⍪←2 'Function' ''(⍉⍪'ref'⍺)
+              h⍪((-¯3+⊃)0⌷⍉⍵),1↓[1]⍵
+          }
+          ngh←{⍝ Node group handler
+              rf←↑ref(fn←Function ⍵)⌿g←⍵
+              (3⌷⍉fn⌿g)ren←(⊂'fn'),¨rm⊥⍉rf
+              (1⌷⍉fn⌿g)←⊂'Variable'
+              ⍺ fnh⍣ft⊢g
+          }
+          rm←1+⌈⌿r←↑ref ⍵
+          sc←1↓{1↓(0≠⍵)/⍵}⍤1⊢r ⋄ rf←(1,1↓Function ⍵)⌿r
+          c←(⌈/(⍳1↓⍴rf)×⍤1⊢sc∧.(=∨0=⊢)⍉rf)⌷⍤0 2⊢rf
+          (1↓⍵)⍪c ngh⌸1↓⍵
       }
 
-      E←{⍺←⊢ ⋄ ⍺ ⎕SIGNAL ⍵
+⍝ Flatten expressions
+      fe←{
+     
       }
 
-      EA←{#.Codfns.ffi_make_array_double 1 0 0 ⍬ ⍬
-      }
-
-      FD←{⍝ Annotate function with their scope depths
-          w←⍵ ⋄ d←¯1++/c∧.(=∨0=⊢)⍉c←↑1↓⍎¨'coord'Prop ⍵
-          (3⌷⍉((1⌷⍉w)∊⊂'Function')⌿w)⍪←↓(⊂'depth'),⍪⍕¨d ⋄ w}
-
-      FE←{⍝ Flatten Expressions
+      FE←{
           ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')⌿(a←⊃0 3⌷⍵)⍪'name'⍺ ⋄ w}
           mv←{(1+⍺)'Expression' ''(⍉⍪'class' 'atomic')⍪⍉⍪(2+⍺)'Variable' ''(⍉⍪'name'⍵)}
           lf←{m←(⊃⍵)≥0⌷⍉⍵ ⋄ dn←⍉⍪0 '' ''(1 2⍴'name' 'res')
@@ -131,26 +230,31 @@
           re←(¯3⌽(1⌷⍉⍵)∊⊂'Condition')∨e∧d=(⊢+⊣×0=⊢)\(e∧1=d←0⌷⍉⍵)+3×(1⌷⍉⍵)∊⊂'Function'
           ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨(md∨re)⍵}
 
-    ∇ Z←FI;C;E;I;G;D;R;P
-      Z←⍬ ⋄ R←CodfnsRuntime
-      'ffi_get_type'⎕NA'U1 ',R,'|ffi_get_type P'
-      'ffi_get_data_int'⎕NA R,'|ffi_get_data_int >I8[] P'
-      'ffi_get_data_float'⎕NA R,'|ffi_get_data_float >F8[] P'
-      'ffi_get_shape'⎕NA R,'|ffi_get_shape >U8[] P'
-      'ffi_get_size'⎕NA'U8 ',R,'|ffi_get_size P'
-      'ffi_get_rank'⎕NA'U2 ',R,'|ffi_get_rank P'
-      'ffi_make_array_int'⎕NA'I ',R,'|ffi_make_array_int >P U2 U8 <U8[] <I8[]'
-      'ffi_make_array_double'⎕NA'I ',R,'|ffi_make_array_double >P U2 U8 <U8[] <F8[]'
-      'array_free'⎕NA R,'|array_free P'
-      'cstring'⎕NA'libc.so.6|memcpy >C[] P P'
-      'strlen'⎕NA'P libc.so.6|strlen P'
-      'free'⎕NA'libc.so.6|free P'
-    ∇
+⍝ Simplify expression nodes to be childless
 
-      Fix←{n LK⊃Init CL(VF ⍺)WM GC CP FD AV FE LF RF LC DF DU DL⊃a n←PS TK VI ⍵⊣FI
+⍝ Anchor variables to environments
+      AV←{⍝ Anchor Variables
+          w←⊃⍪/((~m)/w),(m←t/t∧(1⌷⍉⍵)∊⊂'FuncExpr')/w←⍵⊂[0]⍨t←1,1↓1=0⌷⍉⍵
+          sb←(k←+\1⌽(1⌷⍉w)∊⊂'Function'){'name'Prop ⍵⌿⍨(1⌷⍉⍵)∊⊂'Expression'}⌸w
+          sk←↑,∘⍎¨(gc←'coord'∘Prop)w ⋄ gn←'name'∘Prop
+          a←{b←sb[sk⍳{k[⍒k;]⊣k←↑(↓sk)∩(≢⍵)↑¨(1+⍳⍵⍳0)↑¨⊂⍵},⍎⊃gc ⍵;] ⋄ s←⍴b ⋄ b←,b ⋄ w←⍵
+              v←(~v\(gn v⌿⍵)∊,¨'⍺⍵')∧(v\(1⌷⍉(1⌽v)⌿⍵)∊⊂'Expression')∧v←(1⌷⍉⍵)∊⊂'Variable'
+              (3⌷⍉v⌿w)⍪←'env' 'slot'∘{⍺,⍪⍕¨2↑⍵}¨↓⍉s⊤b⍳gn v⌿⍵ ⋄ ⊂w}
+          ⊃⍪/k a⌸w}
+
+⍝ Convert Primitives (Rewrite!)
+      cp←{ast←⍵
+          pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
+          pn←'name'Prop pm⌿⍵                   ⍝ Primitive names
+          cn←(APLPrims⍳pn)⌷¨⊂APLRunts⍪APLRtOps ⍝ Converted names
+          hd←⍉⍪'class' 'function'              ⍝ Class is function
+          at←(⊂⊂'name')(hd⍪,)¨cn               ⍝ Name of the function
+          vn←(⊂'Variable'),(⊂''),⍪at           ⍝ Build the basic node structure
+          ast⊣(pm⌿ast)←(pm/0⌷⍉⍵),vn            ⍝ Replace Primitive nodes
       }
 
-      GC←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
+⍝ Generate C Code (Rewrite!)
+      gc←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
           di←¯1 ⋄ md←{'D',⍕di⊣(⊃di)+←1} ⋄ si←¯1 ⋄ ms←{'S',⍕si⊣(⊃si)+←1}
           li←¯1 ⋄ ml←{'L',⍕li⊣(⊃li)+←1}
           ce←(tm/1⌽(1⌷⍉⍵)∊⊂'Number')/t←(tm←1=0⌷⍉⍵)⊂[0]⍵
@@ -188,39 +292,17 @@
           z,←⊃,/(⊂0⍴⊂''),gf¨fn←(tm/1⌽(1⌷⍉⍵)∊⊂'Function')/t
           ⍪z}
 
-      GEPI←{{ConstInt(Int32Type)⍵ 0}¨⍵
-      }
+⍝ Write module to file
+    wm←{⍺⊣(⊃,/,⍵,⎕UCS 10)put ⍺,'.c'}
 
-      Init←{⍵(I 5⍴0)⊣'I'⎕NA'I4 ',⍵,'|Init P P P P I'
-      }
-
-      Kids←{((⍺+⊃⍵)=0⌷⍉⍵)⊂[0]⍵
-      }
-
-      LC←{⍝ Lift Constants
-          I←¯1 ⋄ mkv←{'LC',⍕I⊣(⊃I)+←1} ⋄ e l←((1⌷⍉a←⍵)∊⊂)¨ns←'Expression' 'Number'
-          at←{2 2⍴'name'⍵'class'⍺} ⋄ vn←{'Variable' ''('array'at ⍵)}
-          hn←1⌷⍉h←(l∨e∧1⌽l)⌿a ⋄ a[s/⍳⊃⍴a;1+⍳3]←↑vn¨v←mkv¨⍳+/s←2</0,l ⋄ a←(s∨~l)⌿a
-          h[(i←{(hn∊⊂⍵)/⍳⊃⍴h})1⊃ns;0]←2 ⋄ h[i⊃ns;0 3]←1,⍪'atomic'∘at¨v ⋄ (1↑a)⍪h⍪1↓a}
-
-      LF←{⍝ Lift functions to top level after resolving
-          i←¯1 ⋄ mv←{'LF',⍕i⊣(⊃i)+←1} ⋄ a←↑'class' 'equiv'{⍺ ⍵}¨⊂'ambivalent'
-          mn←{2 4⍴⍵'FuncExpr' ''a(⍵+1)'Variable' ''(2 2⍴'name'⍺'class' 'function')}
-          up←{w←⍵ ⋄ (0⌷⍉w)-←(⊃⍵)-1 ⋄ w} ⋄ s←{⍵⊂[0]⍨(⍬ 1⊃⍨0≠≢⍵),2≠/∨\0,1↓(⊃⍵)≥0⌷⍉⍵}
-          l←(1≠d)∧(d=⌈/f/d←0⌷⍉⍵)∧f←1⌽(1⌷⍉⍵)∊⊂'Function'
-          c←↑{h r←2↑s ⍵ ⋄ n←mv ⍬ ⋄ (n Bind up h)(r⍪⍨n mn⊃h)}¨l⊂[0]⍵
-          (1↑⍵)⍪(⊃⍪/(⊂MtAST),⊣/c)⍪(1↓⍵⌿⍨~∨\l)⍪⊃⍪/(⊂MtAST),⊢/c}
-
-      LK←{⊃v(⍵{⍵⊣⍵.⍎⍺,'←''',⍺,'''##.NA''',⍺⍺,''' ⋄ 0'})¨⍣(0≠≢v←⊣/⍺⌿⍨2=⊢/⍺)⊂⎕NS ⍬
-      }
-
-      PS←{
+⍝ Parser (Rewrite!); totally messed up
+      ps←{
           0=+/⍵[;1]∊⊂'Token':E 2               ⍝ Deal with Eot Stimuli, Table 233
-          fl←⊃1 ¯1⍪.↑⊂⍵ ByDepth 2              ⍝ First and last leafs
+          fl←⊃1 ¯1⍪.↑⊂(2=⍵[;0])⌿⍵              ⍝ First and last leafs
           ~fl[;1]∧.≡⊂'Token':E 2               ⍝ Must be tokens
           nms←':Namespace' ':EndNamespace'     ⍝ Correct names of first and last
           ~nms∧.≡'name'Prop fl:E 2             ⍝ Verify correct first and last
-          n←'name'Prop ⍵ ByElem'Token'         ⍝ Verify that the Nss and Nse
+          n←'name'Prop(⍵[;1]∊⊂'Token')⌿⍵       ⍝ Verify that the Nss and Nse
           2≠+/n∊nms:E 2                        ⍝ Tokens never appear more than once
           ns←0 'Namespace' ''(1 2⍴'name' '')   ⍝ New root node is Namespace
           ns⍪←⍵⌿⍨~(⍳≢⍵)∊(0,⊢,¯1+⊢)⍵⍳fl         ⍝ Drop Nse and Nss Tokens
@@ -412,109 +494,6 @@
           ⎕SIGNAL err                        ⍝ Otherwise signal err from ParseLineVar
       }
 
-      Prop←{(¯1⌽P∊⊂⍺)/P←(⊂''),,↑⍵[;3]
-      }
-
-      RF←{⍝ Resolve Functions: Attribute scope coordinate to functions
-          rf←1,1↓f←(1⌷⍉⍵)∊⊂'Function' ⋄ c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/0,d←0⌷⍉⍵ ⋄ w←⍵
-          (3⌷⍉rf⌿w)⍪←↓(⊂'coord'),⍪⍕¨↓rf⌿c ⋄ w}
-
-      Split←{' '((≠(/∘⊢)(1,(1↓(¯1⌽=))))⊂(≠(/∘⊢)⊢))⍵
-      }
-
-      TK←{
-          vc←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'     ⍝ Upper case characters
-          vc,←'abcdefghijklmnopqrstuvwxyz'     ⍝ Lower case characters
-          vc,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß' ⍝ Accented upper case
-          vc,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'  ⍝ Accented lower case
-          vc,←'∆⍙'                             ⍝ Deltas
-          vc,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'     ⍝ Underscored alphabet
-          vcn←vc,nc←'¯0123456789'              ⍝ Numbers
-          tc←'←{}:⋄+-÷×|*⍟⌈⌊<≤=≠≥>⍺⍵⍴⍳,⌷¨'     ⍝ Single Token characters
-          ac←vcn,'     ⍝⎕.',tc                 ⍝ All characters
-          ~∧/ac∊⍨⊃,/⍵:E 2                      ⍝ Verify we have only good characters
-          i←(,¨⍵)⍳¨'⍝' ⋄ t←i↑¨⍵ ⋄ c←i↓¨⍵       ⍝ Divide into comment and code
-          t←((⌽∘(∨\)∘⌽¨t)∧∨\¨t←' '≠t)/¨t       ⍝ Strip leading/trailing whitespace
-          nsb←t∊':Namespace' ':EndNamespace'   ⍝ Mask of Namespace tokens
-          nsl←nsb/t ⋄ nsi←nsb/⍳⍴t              ⍝ Namespace lines and indices
-          ti←(~nsb)/⍳⍴t ⋄ t←(~nsb)/t           ⍝ Token indices and non ns tokens
-          at←{2 2⍴'name'⍵'class' 'delimiter'}  ⍝ Fn for namespace attributes
-          nsl←{,⊂2 'Token' ''(at ⍵)}¨nsl       ⍝ Tokenize namespace elements
-          t←{                                  ⍝ Tokenize other tokens
-              0=≢t:⍬                             ⍝ Special empty case
-              t←{(m/2</0,m)⊂(m←' '≠⍵)/⍵}¨t       ⍝ Split on and remove spaces
-              t←{(b∨2≠/1,b←⍵∊tc)⊂⍵}¨¨t           ⍝ Split on token characters
-              t←{⊃,/(⊂⍬),⍵}¨t                    ⍝ Recombine lines
-              lc←+/l←≢¨t                         ⍝ Token count per line and total count
-              t←⊃,/t                             ⍝ Convert to single token vector
-              fc←⊃¨t                             ⍝ First character of each token
-              iv←(sv←fc∊vc,'⍺⍵')/⍳lc             ⍝ Mask and indices of variables
-              ii←(si←fc∊nc)/⍳lc                  ⍝ Mask and indices of numbers
-              ia←(sa←fc∊'←⋄:')/⍳lc               ⍝ Mask and indices of separators
-              id←(sd←fc∊'{}')/⍳lc                ⍝ Mask and indices of delimiters
-              ipm←(spm←fc∊'+-÷×|*⍟⌈⌊,⍴⍳')/⍳lc    ⍝ Mask and indices of monadic primitives
-              iom←(som←fc∊'¨')/⍳lc               ⍝ Mask and indices of monadic operators
-              ipd←(spd←fc∊'<≤=≠≥>⎕⌷')/⍳lc        ⍝ Mask and indices of dyadic primitives
-              tv←1 2∘⍴¨↓(⊂'name'),⍪sv/t          ⍝ Variable attributes
-              tv←{1 4⍴2 'Variable' ''⍵}¨tv       ⍝ Variable tokens
-              ncls←{('.'∊⍵)⊃'int' 'float'}       ⍝ Fn to determine Number class attr
-              ti←{'value'⍵'class'(ncls ⍵)}¨si/t  ⍝ Number attributes
-              ti←{1 4⍴2 'Number' ''(2 2⍴⍵)}¨ti   ⍝ Number tokens
-              tpm←{1 2⍴'name'⍵}¨spm/t            ⍝ Monadic Primitive name attributes
-              tpm←{⍵⍪'class' 'monadic axis'}¨tpm ⍝ Monadic Primtiive class
-              tpm←{1 4⍴2 'Primitive' ''⍵}¨tpm    ⍝ Monadic Primitive tokens
-              tom←{1 2⍴'name'⍵}¨som/t            ⍝ Monadic Operator name attributes
-              tom←{⍵⍪'class' 'operator'}¨tom     ⍝ Monadic Operator class
-              tom←{1 4⍴2 'Primitive' ''⍵}¨tom    ⍝ Monadic Operator tokens
-              tpd←{1 2⍴'name'⍵}¨spd/t            ⍝ Dyadic primitive name attributes
-              tpd←{⍵⍪'class' 'dyadic axis'}¨tpd  ⍝ Dyadic primitive class
-              tpd←{1 4⍴2 'Primitive' ''⍵}¨tpd    ⍝ Dyadic primitive tokens
-              ta←{1 2⍴'name'⍵}¨sa/t              ⍝ Separator name attributes
-              ta←{⍵⍪'class' 'separator'}¨ta      ⍝ Separator class
-              ta←{1 4⍴2 'Token' ''⍵}¨ta          ⍝ Separator tokens
-              td←{1 2⍴'name'⍵}¨sd/t              ⍝ Delimiter name attributes
-              td←{⍵⍪'class' 'delimiter'}¨td      ⍝ Delimiter class attributes
-              td←{1 4⍴2 'Token' ''⍵}¨td          ⍝ Delimiter tokens
-              t←tv,ti,tpm,tom,tpd,ta,td          ⍝ Reassemble tokens
-              t←t[⍋iv,ii,ipm,iom,ipd,ia,id]      ⍝ In the right order
-              t←(⊃,/l↑¨1)⊂t                      ⍝ As vector of non-empty lines of tokens
-              t←t,(+/0=l)↑⊂⍬                     ⍝ Append empty lines
-              t[⍋((0≠l)/⍳⍴l),(0=l)/⍳⍴l]          ⍝ Put empty lines where they belong
-          }⍬
-          t←(nsl,t)[⍋nsi,ti]                   ⍝ Add the Namespace lines back
-          t←c{                                 ⍝ Wrap in Line nodes
-              ha←1 2⍴'comment'⍺                  ⍝ Head comment
-              h←1 4⍴1 'Line' ''ha                ⍝ Line node
-              0=≢⍵:h ⋄ h⍪⊃⍪/⍵                    ⍝ Wrap it
-          }¨t
-          0 'Tokens' ''MtA⍪⊃⍪/t                ⍝ Create and return tokens tree
-      }
-
-      VF←{~(∧/∊' '=⊃0⍴⊂⍵)∧(1≡≢⍴⍵)∧(1≡≡⍵):E 11 ⋄ ⍵
-      }
-
-      VI←{~1≡≢⍴⍵:E 11 ⋄ 2≠|≡⍵:E 11 ⋄ ~∧/1≥≢∘⍴¨⍵:E 11 ⋄ ~∧/∊' '=(⊃0⍴⊂)¨⍵:E 11 ⋄ ⍵
-      }
-
-      VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]
-      }
-
-      WM←{⍺⊣(⊃,/,⍵,⎕UCS 10)put ⍺,'.c'
-      }
-
-      put←{tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}⍵
-          size←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND tie 83 ⋄ 1:rslt←size⊣⎕NUNTIE tie}
-
-      Eachk←{(1↑⍵)⍪⊃⍪/(⊂MtAST),(+\(⊃=⊢)0⌷⍉k)(⊂⍺⍺)⌸k←1↓⍵
-      }
-
-
-      NA←{⍺←⊢ ⋄ fmt←⍺⍺{'I4 ',⍵⍵,'|',(⍺⍺,⍵),' P P P P I'}⍵⍵ ⋄ f←{0=⎕NC'⍺':fm ⍵ ⋄ fd ⍵}
-          _←'fm'⎕NA fmt'm' ⋄ _←'fd'⎕NA fmt'd' ⋄ 0≠⊃e o←EA ⍬:E e ⋄ 0≠⊃e w←AP ⍵:E e
-          0≠⊃e a←AP ⍺⊣⍬:E e ⋄ 0≠e←⍺ f o a w 0 WithGPU:E e ⋄ t z←ConvertArray o
-          _←array_free¨o a w ⋄ _←free¨o a w ⋄ t{0≠⍺:⍵}z}
-
-
       ParseCond←{cod env←⍺⍺
           err ast ne←env ParseExpr ⍺           ⍝ Try to parse the test expression 1st
           0≠err:⎕SIGNAL err                    ⍝ Parsing test expression failed
@@ -527,9 +506,9 @@
           (cod⍪m⍪ast⍪con)ne                    ⍝ Condition with conseuqent and test
       }
 
-
-      Sel←{~∨/⍺:⍵ ⋄ g←⍵⍵⍣(⊢/⍺) ⋄ 2=⍴⍺:⍺⍺⍣(⊣/⍺)g ⍵ ⋄ (¯1↓⍺)⍺⍺ g ⍵
+      Comment←{⍺
       }
 
+    VarType←{(⍺[;1],0)[⍺[;0]⍳⊂⍵]}
 
-:EndNamespace 
+:EndNamespace
