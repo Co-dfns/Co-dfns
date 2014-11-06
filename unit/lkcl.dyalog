@@ -1,1 +1,0 @@
-﻿ LKCL←{⍺ C.LK C.CL ⍵}

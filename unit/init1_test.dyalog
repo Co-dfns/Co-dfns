@@ -1,1 +1,0 @@
-﻿ Init1_TEST←{_←X 0 ⋄ 1⊃C.Init C.CL'ut/F'}

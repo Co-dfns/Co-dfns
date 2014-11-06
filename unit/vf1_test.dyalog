@@ -1,1 +1,0 @@
-﻿ VF1_TEST←{C.VF X'blah'}

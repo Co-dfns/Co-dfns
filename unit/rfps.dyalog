@@ -1,1 +1,0 @@
-﻿ RFPS←{C.{LC DU DL⊃a n←PS TK VI ⍵}⍵}

@@ -1,1 +1,0 @@
-﻿ CL1_TEST←{_←X'ut/F.so' ⋄ C.CL'ut/F'}

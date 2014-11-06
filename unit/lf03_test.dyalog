@@ -1,1 +1,0 @@
-﻿ LF03_TEST←{_←X⊢c←LFPS in⊂'X←5+5' ⋄ C.LF c}

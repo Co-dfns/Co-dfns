@@ -1,1 +1,0 @@
-﻿ EA←{#.Codfns.ffi_make_array_double 1 0 0 ⍬ ⍬}

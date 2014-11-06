@@ -1,1 +1,0 @@
-﻿ I1∆09_TEST←{2 ST 3⍴⊂':EndNamespace'}

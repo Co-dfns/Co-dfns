@@ -1,1 +1,0 @@
-﻿ FEPS←{C.{LF RF LC DU DL⊃a n←PS TK VI ⍵}⍵}

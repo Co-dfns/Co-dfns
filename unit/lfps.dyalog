@@ -1,1 +1,0 @@
-﻿ LFPS←{C.{RF LC DU DL⊃a n←PS TK VI ⍵}⍵}

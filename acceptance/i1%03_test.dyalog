@@ -1,1 +1,0 @@
-﻿ I1∆03_TEST←{2 ST'' ':EndNamespace' '' ':Namespace'}
