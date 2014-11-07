@@ -139,6 +139,7 @@
     ren←'name'atrep
     opt←{⍵⍵⍀(⍵⍵⌿⍺)⍺⍺(⍵⍵⌿⍵)}
     err←{⍺←⊢ ⋄ ⍺ ⎕SIGNAL ⍵}
+    with←↓(⊂⊣),∘⍪⊢
 
       put←{tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}⍵
           size←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND tie 83 ⋄ 1:rslt←size⊣⎕NUNTIE tie}
@@ -156,25 +157,16 @@
       }
 
 ⍝ Function node references
-      rn←{
-          c←(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/0,d←0⌷⍉w←⍵
-          w⊣(3⌷⍉w)⍪←↓(⊂'ref'),⍪↓c
-      }
+    rn←{w⊣(3⌷⍉w)⍪←'ref'with(1+d)↑⍤¯1+⍀d∘.=⍳1+⌈/0,d←0⌷⍉w←⍵}
 
 ⍝ Function depths
-      rd←{
-          d←¯1++/∧.(=∨0=⊢)∘⍉⍨↑ref(fn←Function ⍵)⌿w←⍵
-          w⊣(3⌷⍉fn⌿w)⍪←↓(⊂'depth'),⍪d
-      }
+    rd←{w⊣(3⌷⍉fn⌿w)⍪←'depth'with ¯1++/∧.(=∨0=⊢)∘⍉⍨↑ref(fn←Function ⍵)⌿w←⍵}
 
 ⍝ Drop useless Line nodes
     dl←{(~⍵[;1]∊⊂'Line')⌿⍵}
 
 ⍝ Drop unnamed top-level functions
-      df←{
-          drop←(tl←1=0⌷⍉⍵)∧(FuncExpr ⍵)∧(name ⍵)∊⊂''
-          (~g∊drop/g←+\tl)⌿⍵
-      }
+    df←{(~g∊(tl∧(FuncExpr ⍵)∧(name ⍵)∊⊂'')/g←+\tl←1=0⌷⍉⍵)⌿⍵}
 
 ⍝ Drop syntactically unreachable code
       du←{
@@ -215,22 +207,18 @@
           (1↓⍵)⍪c ngh⌸1↓⍵
       }
 
-⍝ Flatten expressions
+⍝ Flatten expressions (Need to handle condition nodes)
       fe←{
-     
+          feg←{⍝ Flatten expression statement
+              ed←(Expression∧(⊂'dyadic')∊⍨class)⍵
+              (3⌷⍉ed⌿w)⍪←'left'with name(v←¯2⌽ed)⌿w←⍵
+              (3⌷⍉(1⌽fe)⌿w)⍪←'fn'with name(¯1⌽fe←FuncExpr w)⌿w←(~v∨1⌽v)⌿w
+              (3⌷⍉¯1↓w)⍪←'right'with 1↓{(''≡⍵)⊃⍵ ⍺}\name w←(~fe∨v)⌿w
+              3,⊖1↓[1]¯1↓w
+          }
+          fm←0≠fg←+\1⌽Function ⍵
+          ((~fm)⌿⍵)⍪(fm⌿fg){(2↑⍵)⍪(+\(⊃e)=0⌷⍉e)feg⌸e←2↓⍵}⌸fm⌿⍵
       }
-
-      FE←{
-          ren←{0=≢w←⍵:⍵ ⋄ (0 3⌷w)←⊂(1,⍨~(0⌷⍉a)∊⊂'name')⌿(a←⊃0 3⌷⍵)⍪'name'⍺ ⋄ w}
-          mv←{(1+⍺)'Expression' ''(⍉⍪'class' 'atomic')⍪⍉⍪(2+⍺)'Variable' ''(⍉⍪'name'⍵)}
-          lf←{m←(⊃⍵)≥0⌷⍉⍵ ⋄ dn←⍉⍪0 '' ''(1 2⍴'name' 'res')
-              n←(⊃'name'Prop⊢)¨1↓{(≢n)⊃1↑¨⍺ ⍵⊣n←'name'Prop 1↑⍵}\(⊂dn),p←(⊃m⊂⍺)⊂[0]⊃k←m⊂[0]⍵
-              ⊃⍪/(1↓k),⍨⌽((¯1↓b)⍪¨(⊃⍵)mv¨1↓n),¯1↑b←n((⊃⍵){⍺ ren w⊣w[;0]-←⍺⍺-⍨⊃⍵⊣w←⍵})¨p}
-          md←(e\('class'Prop e⌿⍵)∊'monadic' 'dyadic')∧e←(1⌷⍉⍵)∊⊂'Expression'
-          re←(¯3⌽(1⌷⍉⍵)∊⊂'Condition')∨e∧d=(⊢+⊣×0=⊢)\(e∧1=d←0⌷⍉⍵)+3×(1⌷⍉⍵)∊⊂'Function'
-          ⊃⍪/(⊂(e⍳1)↑⍵),lf⌿↑re∘(⊂[0])¨(md∨re)⍵}
-
-⍝ Simplify expression nodes to be childless
 
 ⍝ Anchor variables to environments
       AV←{⍝ Anchor Variables
