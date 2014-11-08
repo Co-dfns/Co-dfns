@@ -50,7 +50,7 @@
 ⍝ Primary entry point; replaces ⎕FIX
       Fix←{
           a n←ps tk vi ⍵
-          a←av se fe lf lc du df dl rd rn a
+          a←av fe lf lc du df dl rd rn a
           (vf ⍺)wm gc a
       }
 
