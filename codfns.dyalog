@@ -221,15 +221,19 @@
       }
 
 ⍝ Anchor variables to environments
-      AV←{⍝ Anchor Variables
-          w←⊃⍪/((~m)/w),(m←t/t∧(1⌷⍉⍵)∊⊂'FuncExpr')/w←⍵⊂[0]⍨t←1,1↓1=0⌷⍉⍵
-          sb←(k←+\1⌽(1⌷⍉w)∊⊂'Function'){'name'Prop ⍵⌿⍨(1⌷⍉⍵)∊⊂'Expression'}⌸w
-          sk←↑,∘⍎¨(gc←'coord'∘Prop)w ⋄ gn←'name'∘Prop
-          a←{b←sb[sk⍳{k[⍒k;]⊣k←↑(↓sk)∩(≢⍵)↑¨(1+⍳⍵⍳0)↑¨⊂⍵},⍎⊃gc ⍵;] ⋄ s←⍴b ⋄ b←,b ⋄ w←⍵
-              v←(~v\(gn v⌿⍵)∊,¨'⍺⍵')∧(v\(1⌷⍉(1⌽v)⌿⍵)∊⊂'Expression')∧v←(1⌷⍉⍵)∊⊂'Variable'
-              (3⌷⍉v⌿w)⍪←'env' 'slot'∘{⍺,⍪⍕¨2↑⍵}¨↓⍉s⊤b⍳gn v⌿⍵ ⋄ ⊂w}
-          ⊃⍪/k a⌸w}
-
+      av←{
+          sh←{⍝ Handle scope
+              b←↑(sk⍳sk∩⍨↓(⌽1+⍳r⍳0)↑⍤0 1⊢r←(0≠⍺)⊃ref ⍵)⌷¨⊂sb
+              nm←(name e),(left e),⍪right(e←(1+0≠⍺)↓⍵)
+              at←'env' 'slot' 'left_env' 'left_slot' 'right_env' 'right_slot'
+              (3⌷⍉e)⍪←⊂⍤2⊢at,((≢nm),6 1)⍴⍉(⍴b)⊤(,b)⍳,nm
+              ((1+0≠⍺)↑⍵)⍪e
+          }
+          sb←(k←+\1⌽Function ⍵){name(Expression ⍵)⌿⍵}⌸⍵
+          sk←(1,1↓Function ⍵)/ref ⍵
+          k sh⌸⍵
+      }
+     
 ⍝ Convert Primitives (Rewrite!)
       cp←{ast←⍵
           pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
