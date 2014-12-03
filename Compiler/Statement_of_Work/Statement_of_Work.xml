@@ -13,7 +13,7 @@
     research agenda. 
   </para>
   <para>
-    The Co-Dfns language is a simple extension of the D-fns language. It 
+    The Co-dfns language is a simple extension of the dfns language. It 
     implements two concepts on top of the existing language: parallel, 
     concurrent execution using the monadic operator <function>∥</function>, 
     which executes its argument concurrently and in parallel with the 
@@ -24,9 +24,7 @@
     to a given cell. 
   </para>
   <para>
-    The first version of the compiler should be feature complete and 
-    demonstrate significant performance improvements over the Dyalog 
-    interpreter. Moreover, a series of publications should be possible 
-    with the technology used in the compiler.
+    The first version should be a feature complete compiler which 
+    demonstrates significant performance improvements on the GPU and CPU. 
   </para>
 </chapter>

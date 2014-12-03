@@ -25,4 +25,5 @@
   <xi:include href="asset_analysis/function_specification.xml" />
   <xi:include href="asset_analysis/lang_reference.xml" />
   <xi:include href="asset_analysis/misc_observations.xml" />
+  <xi:include href="asset_analysis/dwa.xml" />
 </section>

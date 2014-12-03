@@ -1,0 +1,19 @@
+  <section xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <title>Analysis: DWA</title>
+    <simpara>
+      The DWA system from Dyalog allows for minimal overhead functions 
+      to be created by sharing data structures. This will require 
+      some important considerations when dealing with the array representations
+      used by the Co-dfns compiler.
+    </simpara>
+    <itemizedlist spacing="compact">
+      <title>Summary of Language Reference Insights</title>
+      <listitem>
+        <simpara>
+          The DWA system should be used for handling inter-system communication 
+          between the interpreter and the compiler, and this will in turn 
+          inform the runtime design of the system.
+        </simpara>
+      </listitem>
+    </itemizedlist>
+  </section>

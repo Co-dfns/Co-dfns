@@ -1,0 +1,6 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    It should be possible to control whether the GPU is used by the 
+    compiler or not, possibly on a per-function call basis.
+  </simpara>
+</listitem>

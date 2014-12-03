@@ -1,9 +1,26 @@
 <section xmlns="http://docbook.org/ns/docbook" version="5.0">
   <title>Mission</title>
-  <simpara>
-    This project has two main goals. The first is to produce a workable 
-    compiler that can be demonstrated to Dyalog customers later this year. 
-    The second is to prepare a framework for future compiler development and 
-    research.        
-  </simpara>
+  <itemizedlist spacing="compact">
+    <title>Goals</title>
+    <listitem>
+      <para>
+        To produce a feature complete, commercial quality APL compiler
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Prepare a platform for future compiler development and research
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To establish a clear thesis for my Ph.D. work
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        To provide the platform for implementing and testing my Ph.D. work
+      </para>
+    </listitem>
+  </itemizedlist>
 </section>

@@ -21,6 +21,7 @@
   <xi:include href="Project_Record/Project_Record.xml" />
   <xi:include href="Cleanroom_Engineering_Guide/Cleanroom_Engineering_Guide.xml" />
   <xi:include href="Software_Development_Plan/Software_Development_Plan.xml" />
+  <xi:include href="Performance_Improvement_Plan/Performance_Improvement_Plan.xml" />
   <xi:include href="Engineering_Change_Log/Engineering_Change_Log.xml" />
   <xi:include href="Software_Requirements/Software_Requirements.xml" />
   <xi:include href="Function_Specification/Function_Specification.xml" />

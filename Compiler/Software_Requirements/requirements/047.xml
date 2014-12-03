@@ -1,7 +1,5 @@
 <listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
   <simpara>
-    [Derived Requirement 4] An error in the LLVM system shall signal an
-    <literal>INTERNAL ERROR</literal>
-    .
+    [Removed as per Engineering Change #90.]
   </simpara>
 </listitem>

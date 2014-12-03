@@ -1,0 +1,6 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <simpara>
+    The overhead of calling to a compiled function should be minimal, 
+    as the functions should be suitable for tight loops.
+  </simpara>
+</listitem>

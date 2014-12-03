@@ -1,7 +1,5 @@
 <listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
   <simpara>
-    When an error occurs in the LLVM subsystem, an
-    <literal>INTERNAL ERROR</literal>
-    shall be signalled.
+    [Removed as per Engineering Change #90.]
   </simpara>
 </listitem>

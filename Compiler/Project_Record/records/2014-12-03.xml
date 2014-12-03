@@ -1,0 +1,24 @@
+<tr xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <td>Wednesday, December 3rd, 2014</td>
+  <td colspan="2">
+    <simplelist type="horiz">
+      <member>Update the <citetitle>Statement of Work</citetitle></member>
+      <member>Entering Project Planning</member>
+      <member>Updated the <citetitle>Mission Statement</citetitle></member>
+      <member>Updated the <citetitle>Schedule and Resource Plan</citetitle></member>
+      <member>Exiting Project Planning</member>
+      <member>Entering Performance Improvement</member>
+      <member>Created <citetitle>Performance Improvement Plan</citetitle></member>
+      <member>Exiting Performance Improvement</member>
+      <member>Entering Requirements Analysis</member>
+      <member>Changed requirement 3</member>
+      <member>Added requirements 53 and 54</member>
+      <member>Removed requirements 43 and 47</member>
+      <member>Exiting Requirements Analysis</member>
+      <member>Entering Architecture Specification</member>
+      <member>Added DWA as an asset</member>
+      <member>Exiting Architecture Specification</member>
+      <member>Partially apply ECL #90</member>
+    </simplelist>
+  </td>
+</tr>

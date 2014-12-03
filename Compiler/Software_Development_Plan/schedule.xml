@@ -1,6 +1,64 @@
 <section xmlns="http://docbook.org/ns/docbook" version="5.0"
          xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Schedule</title>
-  <xi:include href="schedule/overview.xml" />
-  <xi:include href="schedule/milestones.xml" />
+  <para>
+    The following milestones represent the overall future requirements
+    and deliverables intended to be impactful to the end user and
+    consumer. They represent distinct points of usefulness and
+    completion.
+  </para>
+  <table>
+    <caption>Milestones and General Schedule</caption>
+    <thead>
+      <tr>
+        <th>Milestone</th>
+        <th>Description</th>
+        <th>Scheduled Completion</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>
+          Respecification of existing code features to match desired level
+          of detail
+        </td>
+        <td>December 17th, 2014</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>
+          Reimplementation and certification of existing code features using
+          performance enhancing integration with Dyalog interpreter
+        </td>
+        <td>January 1st, 2015</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>
+          Enhancement of compiler to deal with n-body and black
+          scholes benchmarks
+        </td>
+        <td>February 1st, 2015</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>
+          Support for the array-oriented tree transformation algorithm
+        </td>
+        <td>
+          April 1st, 2015
+        </td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>
+          Feature complete compiler
+        </td>
+        <td>
+          July 1st, 2015
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </section>

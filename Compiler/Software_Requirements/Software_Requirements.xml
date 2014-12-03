@@ -76,5 +76,7 @@
     <xi:include href="requirements/050.xml"></xi:include>
     <xi:include href="requirements/051.xml"></xi:include>
     <xi:include href="requirements/052.xml"></xi:include>
+    <xi:include href="requirements/053.xml"></xi:include>
+    <xi:include href="requirements/054.xml"></xi:include>
   </orderedlist>
 </chapter>

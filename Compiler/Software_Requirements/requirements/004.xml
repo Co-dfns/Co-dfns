@@ -3,6 +3,6 @@
     The compiler should provide a fix function that behaves functionally
     equivalent to the
     <function>⎕FIX</function>
-    function on all valid D-fns programs.
+    function on all valid dfns programs.
   </simpara>
 </listitem>

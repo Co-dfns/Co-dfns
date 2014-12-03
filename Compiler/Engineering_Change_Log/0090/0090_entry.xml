@@ -1,0 +1,19 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      The compiler should no longer use LLVM, but instead use C/Cuda as its output language.
+      It should also reduce the copying overheads of the interpreter through the 
+      use of the DWA features of the system.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      This will require the changing of the system requirements and an updating of 
+      the function specification, which is already scheduled. It will also require 
+      updating the <citetitle>Software Architecture</citetitle> to include the 
+      use of the DWA system as an asset.
+    </para>
+  </formalpara>
+</listitem>
