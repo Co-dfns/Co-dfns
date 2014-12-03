@@ -18,14 +18,17 @@
 
 ⍝ === VARIABLES ===
 
-    APLPrims←(,'+') (,'-') (,'÷') (,'×') (,'|') (,'*') (,'⍟') (,'⌈') (,'⌊') (,'<') (,'≤') (,'=') (,'≠') (,'≥') (,'>') (,'⌷') (,'⍴') (,',') (,'⍳') '⎕ptred' '⎕index' '⎕coeffred' (,'¨')
+    APLPrims←,¨'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳' '⎕ptred' '⎕index' '⎕coeffred' '¨'
 
     APLRtOps←,⊂'codfns_each'
 
     _←⍬
-    _,←'codfns_add' 'codfns_subtract' 'codfns_divide' 'codfns_multiply' 'codfns_residue' 'codfns_power'
-    _,←'codfns_log' 'codfns_max' 'codfns_min' 'codfns_less' 'codfns_lesseq' 'codfns_equal' 'codfns_not_equal'
-    _,←'codfns_greateq' 'codfns_greater' 'codfns_squad' 'codfns_reshape' 'codfns_catenate' 'codfns_indexgen'
+    _,←'codfns_add' 'codfns_subtract' 'codfns_divide' 'codfns_multiply' 
+    _,←'codfns_residue' 'codfns_power'
+    _,←'codfns_log' 'codfns_max' 'codfns_min' 'codfns_less' 'codfns_lesseq' 
+    _,←'codfns_equal' 'codfns_not_equal'
+    _,←'codfns_greateq' 'codfns_greater' 'codfns_squad' 'codfns_reshape' 
+    _,←'codfns_catenate' 'codfns_indexgen'
     _,←'codfns_ptred' 'codfns_index' 'codfns_coeffred'
     APLRunts←_
 
@@ -132,7 +135,7 @@
           0 'Tokens' ''MtA⍪⊃⍪/t                ⍝ Create and return tokens tree
       }
 
-⍝ Rewritten parsing code should go here
+⍝ Rewritten parsing code should go here 
 
 ⍝ Useful utilities
     atrep←{(((~(0⌷⍉⍺)∊⊂⍺⍺)⌿⍺))⍪⍺⍺ ⍵}
