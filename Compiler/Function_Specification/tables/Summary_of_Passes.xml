@@ -1,0 +1,82 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Summary of Passes</caption>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th colspan="4">Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tokenizer</td>
+      <td>Entry</td>
+      <td colspan="4">Converts input into tokens for further use</td>
+    </tr>
+    <tr>
+      <td>ResolveVars</td>
+      <td>Entry</td>
+      <td colspan="4">Identifies binding status and type class for variables</td>
+    </tr>
+    <tr>
+      <td>Parser</td>
+      <td>Entry</td>
+      <td colspan="4">Parses token stream into an AST</td>
+    </tr>
+    <tr>
+      <td>ParseFunction</td>
+      <td>Entry</td>
+      <td colspan="4">Parses token stream into a Function AST</td>
+    </tr>
+    <tr>
+      <td>ParseExpr</td>
+      <td>Entry</td>
+      <td colspan="4">Parses token stream into an Expression AST</td>
+    </tr>
+    <tr>
+      <td>ParserFnExpr</td>
+      <td>Entry</td>
+      <td colspan="4">Parses token stream into a Function Expression AST</td>
+    </tr>
+    <tr>
+      <td>DropFnUnnamed</td>
+      <td>Optimization</td>
+      <td colspan="4">Eliminates unnamed functions at the top-level</td>
+    </tr>
+    <tr>
+      <td>DropUnreachable</td>
+      <td>Optimization</td>
+      <td colspan="4">Drop syntactically unreachable code</td>
+    </tr>
+    <tr>
+      <td>LiftConstants</td>
+      <td>Standard</td>
+      <td colspan="4">Moves all constants to the top-level</td>
+    </tr>
+    <tr>
+      <td>LiftFunctions</td>
+      <td>Standard</td>
+      <td colspan="4">Moves all function definitions to the top-level</td>
+    </tr>
+    <tr>
+      <td>FlattenExprs</td>
+      <td>Standard</td>
+      <td colspan="4">Linearizes expressions into a flat representation</td>
+    </tr>
+    <tr>
+      <td>FuseScalars</td>
+      <td>Optimization</td>
+      <td colspan="4">Fuse scalar function computations</td>
+    </tr>
+    <tr>
+      <td>AnchorVars</td>
+      <td>Standard</td>
+      <td colspan="4">Assigns variables slots and environments</td>
+    </tr>
+    <tr>
+      <td>GenCode</td>
+      <td>Exit</td>
+      <td colspan="4">Generates code for module</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,6 +1,7 @@
-  <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <title>Software Boundaries</title>
-    <simpara>There are two primary sources of user input. The user will
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Software Boundaries</title>
+  <para>
+    There are two primary sources of user input. The user will
     first call the compiler with a given program to compile, which represents
     the first external input. Secondly, the compiled namespace that is
     created as a result will be called repeatedly and used as its own thing.
@@ -11,18 +12,29 @@
     the kinds of inputs and their responses for the second types of input,
     except very broadly. Instead, the semantics are encoded in the first
     input, and as long as the semantics are preserved in the compiler,
-    then it will work as intended.</simpara>
-    <simpara>Thus, the main sources of input that will be considered are
+    then it will work as intended.
+  </para>
+  <para>
+    Thus, the main sources of input that will be considered are
     the programs that are given, rather than on the inputs that will be
     given to the programs described or compiled. This may or may not accurately
     reflect how the code is used in practice. Indeed, we normally expected
     to compile a program once and then run it multiple times. However,
     most of the more useful information comes from the program input, rather
-    than the input to the compiled program.</simpara>
-    <simpara>As a final note, we have chosen to view the LLVM as an external
-    software artifact over which we have no control. Thus, it should be
-    considered an external artifact. It will receive inputs from the compiler
-    and return resulting responses that we will use to create the final
-    compiled object.</simpara>
-    <xi:include href="tables/Summary_of_External_Entities.xml"></xi:include>
-  </section>
+    than the input to the compiled program.
+  </para>
+  <para>
+    Finally, the code produced must interact with the DWA interface of the 
+    Dyalog Interpreter, which is the primary interface to the user. 
+  </para>
+  <xi:include href="tables/Summary_of_External_Entities.xml"></xi:include>
+  <para>
+    However, the software itself, as complex as it is, requires a decomposition 
+    of the primary compiler into a set of components that are each specified 
+    individually. Each component is in charge of a specific task, transforming 
+    the input it receives into either the output of the compiler or another 
+    set of stimuli suitable for the next component to receive. In this case 
+    we have the following compiler passes for specification.
+  </para>
+  <xi:include href="tables/Summary_of_Passes.xml" />
+</section>
