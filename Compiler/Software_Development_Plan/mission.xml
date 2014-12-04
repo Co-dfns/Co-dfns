@@ -1,7 +1,6 @@
 <section xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <title>Mission</title>
+  <title>Mission/Goals</title>
   <itemizedlist spacing="compact">
-    <title>Goals</title>
     <listitem>
       <para>
         To produce a feature complete, commercial quality APL compiler

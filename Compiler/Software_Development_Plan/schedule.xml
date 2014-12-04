@@ -7,55 +7,55 @@
     consumer. They represent distinct points of usefulness and
     completion.
   </para>
-  <table>
+  <table frame="void" rules="rows">
     <caption>Milestones and General Schedule</caption>
     <thead>
       <tr>
         <th>Milestone</th>
-        <th>Description</th>
-        <th>Scheduled Completion</th>
+        <th colspan="4">Description</th>
+        <th colspan="2">Scheduled Completion</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>1</td>
-        <td>
+        <td colspan="4">
           Respecification of existing code features to match desired level
           of detail
         </td>
-        <td>December 17th, 2014</td>
+        <td colspan="2">December 17th, 2014</td>
       </tr>
       <tr>
         <td>2</td>
-        <td>
+        <td colspan="4">
           Reimplementation and certification of existing code features using
           performance enhancing integration with Dyalog interpreter
         </td>
-        <td>January 1st, 2015</td>
+        <td colspan="2">January 1st, 2015</td>
       </tr>
       <tr>
         <td>3</td>
-        <td>
+        <td colspan="4">
           Enhancement of compiler to deal with n-body and black
           scholes benchmarks
         </td>
-        <td>February 1st, 2015</td>
+        <td colspan="2">February 1st, 2015</td>
       </tr>
       <tr>
         <td>4</td>
-        <td>
+        <td colspan="4">
           Support for the array-oriented tree transformation algorithm
         </td>
-        <td>
+        <td colspan="2">
           April 1st, 2015
         </td>
       </tr>
       <tr>
         <td>5</td>
-        <td>
+        <td colspan="4">
           Feature complete compiler
         </td>
-        <td>
+        <td colspan="2">
           July 1st, 2015
         </td>
       </tr>
