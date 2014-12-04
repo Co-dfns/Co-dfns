@@ -117,7 +117,7 @@
       <td>0</td> <!-- U←Fe -->
     </tr>
     <tr>
-      <td>V←</td>
+      <td>V<literal>←</literal></td>
       <td>0</td> <!-- empty -->
       <td>0</td> <!-- Open -->
       <td>0</td> <!-- E -->
@@ -133,7 +133,7 @@
       <td>0</td> <!-- U←Fe -->
     </tr>
     <tr>
-      <td>U←</td>
+      <td>U<literal>←</literal></td>
       <td>0</td> <!-- empty -->
       <td>0</td> <!-- Open -->
       <td>0</td> <!-- E -->
@@ -165,7 +165,7 @@
       <td>0</td> <!-- U←Fe -->
     </tr>
     <tr>
-      <td>V←Fe</td>
+      <td>V<literal>←</literal>Fe</td>
       <td>1</td> <!-- empty -->
       <td>99</td> <!-- Open -->
       <td>0</td> <!-- E -->
@@ -181,7 +181,7 @@
       <td>0</td> <!-- U←Fe -->
     </tr>
     <tr>
-      <td>V←V</td>
+      <td>V<literal>←</literal>V</td>
       <td>1</td> <!-- empty -->
       <td>98</td> <!-- Open -->
       <td>0</td> <!-- E -->
@@ -197,7 +197,7 @@
       <td>0</td> <!-- U←Fe -->
     </tr>
     <tr>
-      <td>V←U</td>
+      <td>V<literal>←</literal>U</td>
       <td>0</td> <!-- empty -->
       <td>0</td> <!-- Open -->
       <td>0</td> <!-- E -->
@@ -213,7 +213,7 @@
       <td>0</td> <!-- U←Fe -->
     </tr>
     <tr>
-      <td>U←Fe</td>
+      <td>U<literal>←</literal>Fe</td>
       <td>1</td> <!-- empty -->
       <td>99</td> <!-- Open -->
       <td>0</td> <!-- E -->

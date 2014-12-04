@@ -4,8 +4,8 @@
   <xsl:import href="XSL/fo/docbook.xsl"/>
   <xsl:import href="titlepage.xsl" />
   <xsl:param name="body.font.master" select="10" />
-  <xsl:param name="body.font.family" select="'Cambria'" />
-  <xsl:param name="title.font.family" select="'Calibri'" />
+  <xsl:param name="body.font.family" select="'Constantia'" />
+  <xsl:param name="title.font.family" select="'Corbel'" />
   <xsl:param name="monospace.font.family" select="'APL385 Unicode,FreeMono for APL'" />
   <xsl:param name="symbol.font.family" select="''" />
   <xsl:param name="fop1.extensions" select="1" />
