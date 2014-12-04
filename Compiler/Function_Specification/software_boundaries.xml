@@ -24,17 +24,116 @@
     than the input to the compiled program.
   </para>
   <para>
-    Finally, the code produced must interact with the DWA interface of the 
-    Dyalog Interpreter, which is the primary interface to the user. 
+    Finally, the code produced must interact with the DWA interface of the
+    Dyalog Interpreter, which is the primary interface to the user.
   </para>
-  <xi:include href="tables/Summary_of_External_Entities.xml"></xi:include>
+  <table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <caption>Summary of External Entities</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="2">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Source Code</td>
+        <td colspan="2">
+          Primary input source from the user; specifies semantics
+          and intended behavior of module behavior.
+        </td>
+      </tr>
+      <tr>
+        <td>Compiled Module</td>
+        <td colspan="2">
+          Behavior is determined completely by the input source
+          code, and cannot be readily specified outside of a specific input
+          beyond summary behavior.
+        </td>
+      </tr>
+      <tr>
+        <td>DWA Interface</td>
+        <td colspan="2">
+          The programming API interfacing with the dyalog interpreter which
+          enables high-performance interactions between the interpreter and
+          the compiler
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <para>
-    However, the software itself, as complex as it is, requires a decomposition 
-    of the primary compiler into a set of components that are each specified 
-    individually. Each component is in charge of a specific task, transforming 
-    the input it receives into either the output of the compiler or another 
-    set of stimuli suitable for the next component to receive. In this case 
+    However, the software itself, as complex as it is, requires a decomposition
+    of the primary compiler into a set of components that are each specified
+    individually. Each component is in charge of a specific task, transforming
+    the input it receives into either the output of the compiler or another
+    set of stimuli suitable for the next component to receive. In this case
     we have the following compiler passes for specification.
   </para>
-  <xi:include href="tables/Summary_of_Passes.xml" />
+  <table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <caption>Summary of Passes</caption>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th colspan="3">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tokenizer</td>
+        <td>Entry</td>
+        <td colspan="3">Converts input into tokens for further use</td>
+      </tr>
+      <tr>
+        <td>ResolveVars</td>
+        <td>Entry</td>
+        <td colspan="3">Identifies binding status and type class for variables</td>
+      </tr>
+      <tr>
+        <td>Parser</td>
+        <td>Entry</td>
+        <td colspan="3">Parses token stream into an AST</td>
+      </tr>
+      <tr>
+        <td>DropFnUnnamed</td>
+        <td>Optimization</td>
+        <td colspan="3">Eliminates unnamed functions at the top-level</td>
+      </tr>
+      <tr>
+        <td>DropUnreachable</td>
+        <td>Optimization</td>
+        <td colspan="3">Drop syntactically unreachable code</td>
+      </tr>
+      <tr>
+        <td>LiftConstants</td>
+        <td>Standard</td>
+        <td colspan="3">Moves all constants to the top-level</td>
+      </tr>
+      <tr>
+        <td>LiftFunctions</td>
+        <td>Standard</td>
+        <td colspan="3">Moves all function definitions to the top-level</td>
+      </tr>
+      <tr>
+        <td>FlattenExprs</td>
+        <td>Standard</td>
+        <td colspan="3">Linearizes expressions into a flat representation</td>
+      </tr>
+      <tr>
+        <td>FuseScalars</td>
+        <td>Optimization</td>
+        <td colspan="3">Fuse scalar function computations</td>
+      </tr>
+      <tr>
+        <td>AnchorVars</td>
+        <td>Standard</td>
+        <td colspan="3">Assigns variables slots and environments</td>
+      </tr>
+      <tr>
+        <td>GenCode</td>
+        <td>Exit</td>
+        <td colspan="3">Generates code for module</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
