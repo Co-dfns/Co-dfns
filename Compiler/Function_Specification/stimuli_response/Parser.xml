@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Parser</title>
+  <para>
+    The parser takes in the token stream and converts that stream into an AST. The parser can
+    respond with any of the same things that it receives. These are the stimuli that we expect 
+    to receive from the Tokenizer.
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Stimuli/Responses for Parser</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="2">Name</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{</td>
+        <td colspan="2">Left Brace</td>
+        <td colspan="4">A left brace token</td>
+      </tr>
+      <tr>
+        <td>}</td>
+        <td colspan="2">Right Brace</td>
+        <td colspan="4">A right brace token</td>
+      </tr>
+      <tr>
+        <td>[</td>
+        <td colspan="2">Left Bracket</td>
+        <td colspan="4">A left bracket token</td>
+      </tr>
+      <tr>
+        <td>]</td>
+        <td colspan="2">Right Bracket</td>
+        <td colspan="4">A right bracket token</td>
+      </tr>
+      <tr>
+        <td>(</td>
+        <td colspan="2">Left Parenthesis</td>
+        <td colspan="4">A left parenthesis token</td>
+      </tr>
+      <tr>
+        <td>)</td>
+        <td colspan="2">Right Parenthesis</td>
+        <td colspan="4">A right parenthesis token</td>
+      </tr>
+      <tr>
+        <td>;</td>
+        <td colspan="2">Index Separator</td>
+        <td colspan="4">The index separator for bracket indexing</td>
+      </tr>
+      <tr>
+        <td>:</td>
+        <td colspan="2">Conditional/Guard</td>
+        <td colspan="4">The conditional or guard token</td>
+      </tr>
+      <tr>
+        <td>
+          <literal>⋄</literal>
+        </td>
+        <td colspan="2">Statement Separator</td>
+        <td colspan="4">Statement separtor token</td>
+      </tr>
+      <tr>
+        <td>
+          <literal>←</literal>
+        </td>
+        <td colspan="2">Assignment</td>
+        <td colspan="4">An assignment token</td>
+      </tr>
+      <tr>
+        <td>
+          <literal>/</literal>
+        </td>
+        <td colspan="2">Reduce/Scan</td>
+        <td colspan="4">Any of the scan or reduction operators/functions</td>
+      </tr>
+      <tr>
+        <td>Eos</td>
+        <td colspan="2">Stalled</td>
+        <td colspan="4">The end of the input to the compiler, parsing has stalled</td>
+      </tr>
+      <tr>
+        <td>Eot</td>
+        <td colspan="2">End of Transmission</td>
+        <td colspan="4">The end of the input to the compiler</td>
+      </tr>
+      <tr>
+        <td>L</td>
+        <td colspan="2">Literal</td>
+        <td colspan="4">A literal value of some sort</td>
+      </tr>
+      <tr>
+        <td>Nse</td>
+        <td colspan="2">Namespace End</td>
+        <td colspan="4">
+          The ending token for a namespace script, usually
+          <literal>:EndNamespace</literal>
+          .
+        </td>
+      </tr>
+      <tr>
+        <td>Nss</td>
+        <td colspan="2">Namespace Start</td>
+        <td colspan="4">
+          The starting token for a namespace script, usually
+          <literal>:Namespace</literal>
+          .
+        </td>
+      </tr>
+      <tr>
+        <td>P</td>
+        <td colspan="2">Primitive</td>
+        <td colspan="4">A primtive function</td>
+      </tr>
+      <tr>
+        <td>Pd</td>
+        <td colspan="2">Primitive Dyadic Operator</td>
+        <td colspan="4">Any primitive dyadic operator</td>
+      </tr>
+      <tr>
+        <td>Pm</td>
+        <td colspan="2">Primitive Monadic Operator</td>
+        <td colspan="4">Any primitive monadic operator, excluding those covered by
+          <literal>/</literal>
+        </td>
+      </tr>
+      <tr>
+        <td>V</td>
+        <td colspan="2">Ambiguous Variable</td>
+        <td colspan="4">A variable token that has not been resolved a specific class</td>
+      </tr>
+      <tr>
+        <td>Va</td>
+        <td colspan="2">Array Variable</td>
+        <td colspan="4">A variable that refers to an array</td>
+      </tr>
+      <tr>
+        <td>Vd</td>
+        <td colspan="2">Dyadic Operator Variable</td>
+        <td colspan="4">A variable that refers to a dyadic operator</td>
+      </tr>
+      <tr>
+        <td>Vf</td>
+        <td colspan="2">Function Variable</td>
+        <td colspan="4">A variable that refers to a function</td>
+      </tr>
+      <tr>
+        <td>Vm</td>
+        <td colspan="2">Monadic Operator Variable</td>
+        <td colspan="4">A variable that refers to a monadic operator</td>
+      </tr>
+    </tbody>
+  </table>
+  <para>
+    The set of responses for the parser are the same as the set of stimuli as well as an
+    additional set of responses that represent the AST nodes which can be created. These 
+    are stimuli that can be fed back into the parser on its feedback loop.
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Additional Stimuli Responses for Parser</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="2">Name</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>?</td>
+        <td colspan="2">Ambiguous</td>
+        <td colspan="4">A function or array value, but cannot be determined</td>
+      </tr>
+      <tr>
+        <td>A</td>
+        <td colspan="2">Atomic</td>
+        <td colspan="4">An atomic array value</td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td colspan="2">Binding</td>
+        <td colspan="4">A binding from one expression to another</td>
+      </tr>
+      <tr>
+        <td>E</td>
+        <td colspan="2">Expression</td>
+        <td colspan="4">An array expression</td>
+      </tr>
+      <tr>
+        <td>F</td>
+        <td colspan="2">Function</td>
+        <td colspan="4">Some function value</td>
+      </tr>
+      <tr>
+        <td>G</td>
+        <td colspan="2">Group</td>
+        <td colspan="4">A sequence of statements forming a function or namespace body</td>
+      </tr>
+      <tr>
+        <td>Ns</td>
+        <td colspan="2">Namespace</td>
+        <td colspan="4">A completed namespace AST</td>
+      </tr>
+    </tbody>
+  </table>
+  <para>
+    In addition to the responses that are fed back into the parser, there are some 
+    responses that indicate termination of the Parser component immediately and 
+    do not continue the feedback loop. If there is a corresponding error code used 
+    in the Dyalog interpreter for this response, it is given below.
+  </para>
+  <table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+    <caption>Responses for Parser</caption>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th colspan="2">Name</th>
+        <th colspan="4">Meaning</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>2</td>
+        <td colspan="2">Syntax Error</td>
+        <td colspan="4">Compiler has encountered a line that is not a meaningful
+          statement</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td colspan="2">Value Error</td>
+        <td colspan="4">The compiler has found a reference to an unbound
+          variable or a function call returning no result where one was expected</td>
+      </tr>
+      <tr>
+        <td>N/A</td>
+        <td colspan="2">Success</td>
+        <td colspan="4">Indicates a successful execution of the compiler
+          and the return of a semantically equivalent namespace</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

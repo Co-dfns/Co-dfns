@@ -85,11 +85,6 @@
         <td colspan="3">Converts input into tokens for further use</td>
       </tr>
       <tr>
-        <td>ResolveVars</td>
-        <td>Entry</td>
-        <td colspan="3">Identifies binding status and type class for variables</td>
-      </tr>
-      <tr>
         <td>Parser</td>
         <td>Entry</td>
         <td colspan="3">Parses token stream into an AST</td>

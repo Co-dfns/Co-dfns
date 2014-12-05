@@ -110,8 +110,8 @@
         <td colspan="4">
           A valid keyword; 
           <simplelist type="inline">
-            <member><literal>Namespace</literal></member>
-            <member><literal>EndNamespace</literal></member>
+            <member><literal>:Namespace</literal></member>
+            <member><literal>:EndNamespace</literal></member>
           </simplelist>
         </td>
       </tr>

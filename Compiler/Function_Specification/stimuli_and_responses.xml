@@ -10,10 +10,8 @@
   <xi:include href="stimuli_response/Compiler.xml" />
   <xi:include href="stimuli_response/Compiled_Module.xml" />
   <xi:include href="stimuli_response/Tokenizer.xml" />
-  <!--
-  <xi:include href="stimuli_response/ResolveKeywords.xml" />
-  <xi:include href="stimuli_response/ResolveVars.xml" />
   <xi:include href="stimuli_response/Parser.xml" />
+  <!--
   <xi:include href="stimuli_response/DropFnUnnamed.xml" />
   <xi:include href="stimuli_response/DropUnreachable.xml" />
   <xi:include href="stimuli_response/LiftConstants.xml" />
@@ -23,87 +21,4 @@
   <xi:include href="stimuli_response/AnchorVars.xml" />
   <xi:include href="stimuli_response/GenCode.xml" />
   -->
-  <simpara>
-    The stimuli for the Source Input correspond very closely to those
-    that might be used for the tokenization of program inputs. We abstractly
-    consider the input history for source input as first an indication
-    of which external function was called. Then the stream of argument
-    values must be considered. This encodes the arguments received by
-    the
-    <function>CoDfns.Fix</function>
-    function. We choose to keep the filename argument as a single unit,
-    but the source input should be separated into its various token elements
-    corresponding to the incoming token stream that the parser will have
-    to deal with, at least, conceptually. In particular, we are abstracting
-    the consuming of whitespace that might appear throughout the source
-    input.
-  </simpara>
-  <simpara>
-    In addition to the raw token stimuli, the processing of source code
-    is an inherently recursive process, and thus we have a set of
-    <firstterm>recursive stimuli</firstterm>
-    which represent terms which we will define by enumeration, but that
-    themselves are used within enumerations, possibly within itself.
-    This allows us to encode recursive properties without bringing the
-    recursive problems into the enumerations themselves.
-  </simpara>
-  <simpara>Each recursive stimuli and the top-level source input have
-    a subset of the total possible stimuli to accept as valid stimuli.
-    All other stimuli are implicitly illegal.</simpara>
-  <xi:include href="tables/Recursive_Stimuli_for_Source_Input.xml"></xi:include>
-  <simpara>
-    All of the function stimuli may be enumerated as one, since they
-    have the same syntax at this abstract level. When enumerating a recursive
-    stimuli, we allow potentially any error response, as well as
-    <symbol>illegal</symbol>
-    ,
-    <symbol>wait</symbol>
-    , and
-    <symbol>okay</symbol>
-    . The
-    <symbol>wait</symbol>
-    response indicates the sequence as yet is not a valid stimuli, but
-    that it may yet become a valid sequence. The
-    <symbol>okay</symbol>
-    response indicates that the sequence as is constitutes a valid sequence,
-    but need not be final or unextendable.
-  </simpara>
-  <simpara>Function expressions turn out to be quite complicated in terms
-    of their recursions and what sort of state need to be encoded, and
-    when. For more information about these stimuli, see the section on
-    the Function Expression enumeration.</simpara>
-  <simpara>As a rule, during enumeration, one should consider the use
-    of a recursive stimuli illegal unless it is used to capture some nested
-    property, or when it is used at the top-level, where no opportunity
-    for non-termination exists. When it is used, one must carefully mark
-    any sequence at the same level that may be a prefix of the enumeration
-    of the recursive stimuli as subsumed by said stimuli. A prefix must
-    have the same response to be a prefix. If a stimuli might pair up with
-    another token, they cannot cross enumeration depths or levels, but
-    much pair against one another in the same level. That is, a top-level
-    ( may not be closed in a recursive stimuli. The intent is to make each
-    enumeration as self-contained as possible, and to make sure that nested
-    recursion other than tail recursion is marked by the use of recursive
-    stimuli, rather than trying to handle that recursion through enumeration.</simpara>
-  <xi:include href="tables/Stimuli_for_Source_Input.xml"></xi:include>
-  <simpara>Each of the enumeration targets has a set of stimuli that
-    are valid. Alll other stimuli are illegal. These are chosen because
-    any possible occurance of another stimuli in the enumeration ought
-    to be subsumed by one of the other recursive stimuli. This helps to
-    quell any complexity that may occur in enumerating everything out long
-    hand.</simpara>
-  <xi:include href="tables/Enumeration_Stimuli_Sets_for_Recursive_Stimuli.xml"></xi:include>
-  <simpara>We have chosen to encode our compiler responses based primarily
-    on the class of the response. In cases of success, we have a single
-    response; all our other responses classify various types of error cases.
-    We choose to go no further than is necessary to distinguish user visible
-    errors types. We do not include source input location in our error
-    responses, but it is assumed to exist in the output if reasonably feasible.
-    We further assume that all intermediate internal states not producing
-    user visible output will have no explicit output responses, despite
-    representing the majority of states in the system. Each error state
-    corresponds to a specific error code reported by the Dyalog interpreter.
-    We include only the error codes produced by the compiler and not errors
-    occuring only at runtime.</simpara>
-  <xi:include href="tables/Responses_for_Source_Input.xml"></xi:include>
 </section>
