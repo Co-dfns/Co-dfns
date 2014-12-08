@@ -1,0 +1,16 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>DropUnreached Enumeration: E</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>E B</td> <td>Drop</td> <td>E</td> <td>4</td></tr>
+    <tr><td>E C</td> <td>Keep</td> <td>E</td> <td>4</td></tr>
+    <tr><td>E E</td> <td>Drop</td> <td>E</td> <td>4</td></tr>
+  </tbody>
+</table>

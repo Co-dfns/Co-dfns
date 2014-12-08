@@ -1,9 +1,13 @@
 <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Tokenizer Enumeration</title>
   <simpara>
-    The compiler enumeration deals with the inputs to the <function>Codfns.Fix</function>
-    function and how to respond to those arguments. We assume that the left 
-    argument will be given first, if at all, followed by the right argument. 
+    The tokenizer enumeration is the first phase of processing in the compiler, taking the 
+    raw input and converting it into a series of tokens that can be processed into an AST 
+    by the parser component. In some sense it serves to lift the abstraction level of 
+    the input to simplify further component specifications. This might have been done
+    with some type of abstraction level in the stimuli descriptions themselves, but 
+    since this is a pretty important part of the system, it was better to specify it 
+    as a set of enumerations instead.
   </simpara>
   <xi:include href="Tokenizer/Empty.xml"></xi:include>
   <xi:include href="Tokenizer/A.xml"></xi:include>

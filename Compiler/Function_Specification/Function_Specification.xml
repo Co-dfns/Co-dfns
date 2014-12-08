@@ -19,8 +19,10 @@
     <xi:include href="enumerations/Tokenizer.xml" />
     <!--
     <xi:include href="enumerations/Parser.xml" />
+    -->
     <xi:include href="enumerations/DropUnnamed.xml" />
     <xi:include href="enumerations/DropUnreached.xml" />
+    <!--
     <xi:include href="enumerations/LiftConstants.xml" />
     <xi:include href="enumerations/LiftFunctions.xml" />
     <xi:include href="enumerations/LiftFnExprs.xml" />
