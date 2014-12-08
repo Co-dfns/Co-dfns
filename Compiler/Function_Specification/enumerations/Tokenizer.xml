@@ -1,0 +1,23 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Tokenizer Enumeration</title>
+  <simpara>
+    The compiler enumeration deals with the inputs to the <function>Codfns.Fix</function>
+    function and how to respond to those arguments. We assume that the left 
+    argument will be given first, if at all, followed by the right argument. 
+  </simpara>
+  <xi:include href="Tokenizer/Empty.xml"></xi:include>
+  <xi:include href="Tokenizer/A.xml"></xi:include>
+  <xi:include href="Tokenizer/0.xml"></xi:include>
+  <xi:include href="Tokenizer/Dot.xml"></xi:include>
+  <xi:include href="Tokenizer/HighMinus.xml"></xi:include>
+  <xi:include href="Tokenizer/Lamp.xml"></xi:include>
+  <xi:include href="Tokenizer/Colon.xml"></xi:include>
+  <xi:include href="Tokenizer/Quote.xml"></xi:include>
+  <xi:include href="Tokenizer/0_E.xml"></xi:include>
+  <xi:include href="Tokenizer/0_Dot.xml"></xi:include>
+  <xi:include href="Tokenizer/Colon_K.xml"></xi:include>
+  <xi:include href="Tokenizer/Quote_A.xml"></xi:include>
+  <xi:include href="Tokenizer/0_E_0.xml"></xi:include>
+  <xi:include href="Tokenizer/0_E_HighMinus.xml"></xi:include>
+  <xi:include href="Tokenizer/Quote_A_Quote.xml"></xi:include>
+</section>

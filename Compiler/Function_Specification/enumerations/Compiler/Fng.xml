@@ -1,0 +1,43 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Compiler Enumeration: Fng</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fng Fnb</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fng Fng</td>
+      <td>illegal</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Fng Nsc</td>
+      <td>Namespace</td>
+      <td>Empty</td>
+      <td>17</td>
+    </tr>
+    <tr>
+      <td>Fng Nsi</td>
+      <td>Compiler Error</td>
+      <td>Empty</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Fng Nsd</td>
+      <td>Domain Error</td>
+      <td>Empty</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,9 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Compiled Module Enumeration</title>
+  <simpara>
+    At the moment the Compiled Module enumeration is very simple, as we have 
+    not created a lot of detail for the specification of these functions, yet.
+  </simpara>
+  <xi:include href="Compiled_Module/Empty.xml"></xi:include>
+  <xi:include href="Compiled_Module/Call.xml"></xi:include>
+</section>

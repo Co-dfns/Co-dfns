@@ -14,7 +14,7 @@
       <listitem>
         <simpara>
           When given a pathname that is an invalid pathname, a
-          <literal>DOMAIN ERROR</literal>
+          <literal>FILE NAME ERROR</literal>
           should be signalled.
         </simpara>
       </listitem>

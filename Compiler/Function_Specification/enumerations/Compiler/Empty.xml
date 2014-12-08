@@ -1,0 +1,43 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Compiler Enumeration: Empty</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fnb</td>
+      <td>File Name Error</td>
+      <td>Empty</td>
+      <td>D2</td>
+    </tr>
+    <tr>
+      <td>Fng</td>
+      <td>null</td>
+      <td></td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>Nsc</td>
+      <td>Namespace</td>
+      <td>Empty</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td>Nsi</td>
+      <td>Compiler Error</td>
+      <td>Empty</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Nsd</td>
+      <td>Domain Error</td>
+      <td>Empty</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>

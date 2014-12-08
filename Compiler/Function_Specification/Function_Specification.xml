@@ -10,27 +10,23 @@
     <title>Sequence Enumeration</title>
     <simpara>
       The following tables provide a complete sequence enumeration of the
-      compiler. We begin at the top-level enumeration and work our way
-      down throughout each of the recursive stimuli. Recall that we do
-      not need to enumerate each of the function stimuli separately, as
-      they all have the same syntax at this level of abstraction. In particular,
-      the Vi stimuli encodes whether or not the various
-      <literal>⍺⍺</literal>
-      or
-      <literal>⍵⍵</literal>
-      variables are visible at any given time.
+      compiler. Each component receives its own distinct treatment and enumeration, 
+      each following section details how to interpret the stimuli stream over the 
+      actual input into the component. 
     </simpara>
-    <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
-      <title>Source Input Enumeration</title>
-      <simpara>The enumeration of the source input boundary (the main compiler
-      interface) is divided into the enumeration of the top-level, the
-      function enumeration, the expressions, and function expressions.</simpara>
-      <xi:include href="top-level_enumeration.xml" />
-      <xi:include href="function_enumeration.xml" />
-      <xi:include href="expression_enumeration.xml" />
-      <xi:include href="function_expression_enumeration.xml" />
-    </section>
-    <xi:include href="module_invocation_enumeration.xml" />
+    <xi:include href="enumerations/Compiler.xml" />
+    <xi:include href="enumerations/Compiled_Module.xml" />
+    <xi:include href="enumerations/Tokenizer.xml" />
+    <!--
+    <xi:include href="enumerations/Parser.xml" />
+    <xi:include href="enumerations/DropUnnamed.xml" />
+    <xi:include href="enumerations/DropUnreached.xml" />
+    <xi:include href="enumerations/LiftConstants.xml" />
+    <xi:include href="enumerations/LiftFunctions.xml" />
+    <xi:include href="enumerations/LiftFnExprs.xml" />
+    <xi:include href="enumerations/FlattenExprs.xml" />
+    <xi:include href="enumerations/FuseScalars.xml" />
+    -->
   </section>
   <xi:include href="derived_requirements.xml" />
   <xi:include href="canonical_sequence_analysis.xml" />
