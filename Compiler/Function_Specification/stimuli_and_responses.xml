@@ -11,14 +11,11 @@
   <xi:include href="stimuli_response/Compiled_Module.xml" />
   <xi:include href="stimuli_response/Tokenizer.xml" />
   <xi:include href="stimuli_response/Parser.xml" />
-  <!--
-  <xi:include href="stimuli_response/DropFnUnnamed.xml" />
+  <xi:include href="stimuli_response/DropUnnamed.xml" />
   <xi:include href="stimuli_response/DropUnreachable.xml" />
   <xi:include href="stimuli_response/LiftConstants.xml" />
   <xi:include href="stimuli_response/LiftFunctions.xml" />
+  <xi:include href="stimuli_response/LiftFnExprs.xml" />
   <xi:include href="stimuli_response/FlattenExprs.xml" />
   <xi:include href="stimuli_response/FuseScalars.xml" />
-  <xi:include href="stimuli_response/AnchorVars.xml" />
-  <xi:include href="stimuli_response/GenCode.xml" />
-  -->
 </section>

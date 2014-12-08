@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Fuse Scalars</title>
+  <para>
+    The <function>FuseScalars</function> component takes in the AST delivered by 
+    <function>FlattenExprs</function> and groups scalars into related groups of operations 
+    to be fused together. This is another fix-point component that iterates on its own 
+    output
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Stimuli for FuseScalars</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="2">Name</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sd</td>
+        <td colspan="2">Dependent Scalar</td>
+        <td colspan="4">
+          A scalar expression that is dependent on one of the variables in the current 
+          scalar group
+        </td>
+      </tr>
+      <tr>
+        <td>Si</td>
+        <td colspan="2">Independent Scalar</td>
+        <td colspan="4">
+          A scalar expression that is independent of any of the variables in the 
+          current scalar group
+        </td>
+      </tr>
+      <tr>
+        <td>Sgi</td>
+        <td colspan="2">Independent Scalar Group</td>
+        <td colspan="4">
+          A scalar group that is independent of the 
+          previous scalar group
+        </td>
+      </tr>
+      <tr>
+        <td>Sgd</td>
+        <td colspan="2">Dependent Scalar Group</td>
+        <td colspan="4">
+          A scalar group that depends on values from the 
+          previous dependent group
+        </td>
+      </tr>
+      <tr>
+        <td>O</td>
+        <td colspan="2">Other Node</td>
+        <td colspan="4">
+          Any other node
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <para>
+    This function runs to a fix point. The component either merges a scalar 
+    with a previous scalar group, or begins a new scalar group containing the scalar. 
+    It can also merge two scalar groups together.
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Responses for FuseScalars</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Merge</td>
+        <td colspan="4">
+          Merge the previous scalar group with either another scalar group or 
+          a scalar expression
+        </td>
+      </tr>
+      <tr>
+        <td>Finish</td>
+        <td colspan="4">
+          Finish a scalar group and put it on the output stream
+        </td>
+      </tr>
+      <tr>
+        <td>New</td>
+        <td colspan="4">
+          Create a new scalar group
+        </td>
+      </tr>
+      <tr>
+        <td>Id</td>
+        <td colspan="4">
+          Pass the node through without changing it
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

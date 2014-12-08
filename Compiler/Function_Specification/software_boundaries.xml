@@ -90,12 +90,12 @@
         <td colspan="3">Parses token stream into an AST</td>
       </tr>
       <tr>
-        <td>DropFnUnnamed</td>
+        <td>DropUnnamed</td>
         <td>Optimization</td>
-        <td colspan="3">Eliminates unnamed functions at the top-level</td>
+        <td colspan="3">Eliminates unnamed elements at the top-level</td>
       </tr>
       <tr>
-        <td>DropUnreachable</td>
+        <td>DropUnreached</td>
         <td>Optimization</td>
         <td colspan="3">Drop syntactically unreachable code</td>
       </tr>
@@ -110,6 +110,11 @@
         <td colspan="3">Moves all function definitions to the top-level</td>
       </tr>
       <tr>
+        <td>LiftFnExprs</td>
+        <td>Standard</td>
+        <td colspan="3">Moves all function expressions to the top-level</td>
+      </tr>
+      <tr>
         <td>FlattenExprs</td>
         <td>Standard</td>
         <td colspan="3">Linearizes expressions into a flat representation</td>
@@ -118,16 +123,6 @@
         <td>FuseScalars</td>
         <td>Optimization</td>
         <td colspan="3">Fuse scalar function computations</td>
-      </tr>
-      <tr>
-        <td>AnchorVars</td>
-        <td>Standard</td>
-        <td colspan="3">Assigns variables slots and environments</td>
-      </tr>
-      <tr>
-        <td>GenCode</td>
-        <td>Exit</td>
-        <td colspan="3">Generates code for module</td>
       </tr>
     </tbody>
   </table>

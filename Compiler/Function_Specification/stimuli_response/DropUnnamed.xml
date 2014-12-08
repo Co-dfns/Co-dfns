@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Drop Unnamed</title>
+  <para>
+    The <function>DropUnnamed</function> function takes in the AST parsed by 
+    <function>Parser</function> and eliminates any unnamed expressions that appear 
+    at the top-level. These expressions will not be saved, so they will not be 
+    kept around to be evaluated. Expressions that have functions with side-effects 
+    will be kept around.
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Stimuli for DropUnamed</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="2">Name</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>E</td>
+        <td colspan="2">Unnamed Expression</td>
+        <td colspan="4">
+          An unnamed expression or function that does not have 
+          side-effects
+        </td>
+      </tr>
+      <tr>
+        <td>Es</td>
+        <td colspan="2">Stateful Expression</td>
+        <td colspan="4">
+          An expression whose function has state of 
+          some sort which is mutated and visible outside of
+          the function, or that has a name
+        </td>
+      </tr>
+      <tr>
+        <td>I</td>
+        <td colspan="2">Sub-expression</td>
+        <td colspan="4">
+          A sub-expression of a top-level expression
+          that is not stateful
+        </td>
+      </tr>
+      <tr>
+        <td>Is</td>
+        <td colspan="2">Sub-expression</td>
+        <td colspan="4">
+          A sub-expression of a top-level expression
+          that is stateful or named.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <para>
+    The set of responses is fairly simple here. We do not do anything to the 
+    stream except to keep it or drop the node, and in either case we need to 
+    consider the children in the expression. In this case, the children does 
+    not mean entering into the body of the function.
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Responses for DropUnnamed</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Keep</td>
+        <td colspan="4">Keep the Expression and deal with its children if need be</td>
+      </tr>
+      <tr>
+        <td>Drop</td>
+        <td colspan="4">Drop the expression and deal with its children if need be</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

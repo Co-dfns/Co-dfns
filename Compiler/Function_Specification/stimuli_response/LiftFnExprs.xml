@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Function Expression Lifting</title>
+  <para>
+    The <function>LiftFnExprs</function> component takes in the AST delivered by 
+    <function>LiftFunctions</function> and lifts nested function expressions into 
+    the top-level and flattens them out so that they have the appropriate 
+    shape and form. These represent a reverse polish traversal over the 
+    function expression nodes.
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Stimuli for LiftFnExprs</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="2">Name</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>R</td>
+        <td colspan="2">Reference</td>
+        <td colspan="4">
+          A reference to data or a function
+        </td>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td colspan="2">Dyadic Operator</td>
+        <td colspan="4">
+          A dyadic operator
+        </td>
+      </tr>
+      <tr>
+        <td>M</td>
+        <td colspan="2">Monadic Operator</td>
+        <td colspan="4">
+          A monadic operator
+        </td>
+      </tr>
+      <tr>
+        <td>O</td>
+        <td colspan="2">Other</td>
+        <td colspan="4">
+          Any other node in the AST
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <para>
+    If we arrange the ordering of our stimuli appropriately, then we don't 
+    have to worry about stacks or the like. We use the two streams method 
+    as we have in other components.
+  </para>
+  <table frame="void" rules="rows">
+    <caption>Responses for LiftFnExprs</caption>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th colspan="4">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Gensym</td>
+        <td colspan="4">
+          Generate a unique variable and push to the stack
+        </td>
+      </tr>
+      <tr>
+        <td>Bind</td>
+        <td colspan="4">
+          Create a new binding for the derived function at the top level
+        </td>
+      </tr>
+      <tr>
+        <td>Id</td>
+        <td colspan="4">
+          Pass the node through without changing it
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
