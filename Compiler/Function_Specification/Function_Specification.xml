@@ -14,20 +14,12 @@
       each following section details how to interpret the stimuli stream over the 
       actual input into the component. 
     </simpara>
-    <xi:include href="enumerations/Compiler.xml" />
+    <xi:include href="enumerations/API.xml" />
     <xi:include href="enumerations/Compiled_Module.xml" />
     <xi:include href="enumerations/Tokenizer.xml" />
     <!--
     <xi:include href="enumerations/Parser.xml" />
-    -->
-    <xi:include href="enumerations/DropUnnamed.xml" />
-    <xi:include href="enumerations/DropUnreached.xml" />
-    <!--
-    <xi:include href="enumerations/LiftConstants.xml" />
-    <xi:include href="enumerations/LiftFunctions.xml" />
-    <xi:include href="enumerations/LiftFnExprs.xml" />
-    <xi:include href="enumerations/FlattenExprs.xml" />
-    <xi:include href="enumerations/FuseScalars.xml" />
+    <xi:include href="enumeration/Compiler.xml" />
     -->
   </section>
   <xi:include href="derived_requirements.xml" />

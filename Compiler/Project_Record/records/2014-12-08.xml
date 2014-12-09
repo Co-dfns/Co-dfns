@@ -2,9 +2,10 @@
   <td>Monday, December 8th, 2014</td>
   <td colspan="2">
     <simplelist type="horiz">
-      <member>Enumerated Compiler component</member>
+      <member>Enumerated API component</member>
       <member>Enumerated Compiled Module component</member>
       <member>Enumerated Tokenizer component</member>
+      <member>Redesigned software boundaries</member>
     </simplelist>
   </td>
 </tr>

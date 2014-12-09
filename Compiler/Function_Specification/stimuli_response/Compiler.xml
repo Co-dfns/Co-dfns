@@ -3,106 +3,301 @@
 <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
   <title>Compiler</title>
   <para>
-    The compiler component represents the primary interface into the compiler, namely, the
-    <function>Codfns.Fix</function> function. It takes two arguments, which are specified
-    by the following stimuli:
+    The compiler component represents the primary logic of the compiler, as it computes 
+    the optimizations and the transformations necessary to convert the code into the 
+    appropriate format. 
   </para>
   <table frame="void" rules="rows">
     <caption>Stimuli for Compiler</caption>
     <thead>
       <tr>
         <th>Symbol</th>
-        <th colspan="2">Name</th>
-        <th colspan="3">Meaning</th>
+        <th colspan="4">Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>Fnb</td>
-        <td colspan="2">Bad Filename</td>
-        <td colspan="3">
-          A pathname that is somehow an invalid syntax or otherwise invalid to
-          be used as a pathname
+        <td>Fds</td>
+        <td colspan="4">
+          Start of a function definition
         </td>
       </tr>
       <tr>
-        <td>Fng</td>
-        <td colspan="2">Good Filename</td>
-        <td colspan="3">
-          A filename that is syntactically valid and accessible/writable
+        <td>Fde</td>
+        <td colspan="4">
+          End of a function definition
         </td>
       </tr>
       <tr>
-        <td>Nsc</td>
-        <td colspan="2">Correct Namespace Script</td>
-        <td colspan="3">
-          A namespace script which obeys the structural requirements of the
-          interface, which is also syntactically correct
+        <td>L</td>
+        <td colspan="4">
+          A single literal value, such as a number array or string
         </td>
       </tr>
       <tr>
-        <td>Nsi</td>
-        <td colspan="2">Incorrect Namespace Script</td>
-        <td colspan="3">
-          A namespace script which obeys the structural requirements but which
-          has syntactic errors or other compiler errors in it
+        <td>S</td>
+        <td colspan="4">
+          An strand node of variables and literals
         </td>
       </tr>
       <tr>
-        <td>Nsd</td>
-        <td colspan="2">Structurally Invalid Namespace Script</td>
-        <td colspan="3">
-          A namespace script which does not obey the correct structural requirements
-          of the
-          <function>Codfns.Fix</function> function
+        <td>C</td>
+        <td colspan="4">
+          A conditional node containing two expressions
+        </td>
+      </tr>
+      <tr>
+        <td>G</td>
+        <td colspan="4">
+          A guard node containing two expressions
+        </td>
+      </tr>
+      <tr>
+        <td>Ps</td>
+        <td colspan="4">
+          A primitive scalar function 
+        </td>
+      </tr>
+      <tr>
+        <td>P</td>
+        <td colspan="4">
+          A primitive function which is not a scalar
+        </td>
+      </tr>
+      <tr>
+        <td>Pd</td>
+        <td colspan="4">
+          A primitive dyadic operator
+        </td>
+      </tr>
+      <tr>
+        <td>Pm</td>
+        <td colspan="4">
+          A primitive monadic operator
+        </td>
+      </tr>
+      <tr>
+        <td>Vad</td>
+        <td colspan="4">
+          An array whose shape depends on the shapes of other 
+          variables through a connection of scalar operations
+        </td>
+      </tr>
+      <tr>
+        <td>Vai</td>
+        <td colspan="4">
+          An array variable which is not dependent
+        </td>
+      </tr>
+      <tr>
+        <td>Vf</td>
+        <td colspan="4">
+          A variable referencing a function
+        </td>
+      </tr>
+      <tr>
+        <td>Vd</td>
+        <td colspan="4">
+          A variable referencing a dyadic operator
+        </td>
+      </tr>
+      <tr>
+        <td>Vm</td>
+        <td colspan="4">
+          A variable referencing a monadic operator
+        </td>
+      </tr>
+      <tr>
+        <td>Ams</td>
+        <td colspan="4">
+          The start of a set of possible evaluations based 
+          on a set of ambigous variable references
+        </td>
+      </tr>
+      <tr>
+        <td>Ame</td>
+        <td colspan="4">
+          The end of a set of ambigous possibilities
+        </td>
+      </tr>
+      <tr>
+        <td>Sep</td>
+        <td colspan="4">
+          A statement separation, dividing statements and expressions 
+          in various contexts
+        </td>
+      </tr>
+      <tr>
+        <td>B</td>
+        <td colspan="4">
+          Some sort of binding
+        </td>
+      </tr>
+      <tr>
+        <td>Is</td>
+        <td colspan="4">
+          The beginning of an indexing expression
+        </td>
+      </tr>
+      <tr>
+        <td>Ie</td>
+        <td colspan="4">
+          The ending of an indexing expression
         </td>
       </tr>
     </tbody>
   </table>
   <para>
-    The
-    <function>Codfns.Fix</function> function may return the following responses,
-    most of which are errors that indicate the exit of the system.
+    The handling of responses is somewhat like parsing, in that we need to be able to 
+    control and reorder how statements will eventually appear, which we do with a form 
+    of pushing and popping.
   </para>
   <table frame="void" rules="rows">
     <caption>Responses for Compiler</caption>
     <thead>
       <tr>
         <th>Code</th>
-        <th colspan="2">Symbol</th>
-        <th colspan="4">Meaning</th>
+        <th colspan="4">Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>N/A</td>
-        <td colspan="2">Namespace</td>
+        <td>Fdb</td>
         <td colspan="4">
-          Indicates a successful execution of the compiler and the return 
-          of a semantically equivalent namespace
+          Begin a function definition, this implies that responses are saved up and 
+          readied for output when the associated Fde response is received. It's 
+          particularly important to note that this establishes a new and independent 
+          stream from other streams until it is merged with the primary one.
+          It takes a name to use as the function definition name.
         </td>
       </tr>
       <tr>
-        <td>11</td>
-        <td colspan="2">Domain Error</td>
+        <td>Fde</td>
         <td colspan="4">
-          Indicates that there was a structural error in the input 
+          End a function definition and send the resulting output stream onto the 
+          main response history, essentially finalizing the <quote>transaction</quote>, 
+          and bringing back into the input stream the previous <quote>frame</quote> 
+          that was sent out.
         </td>
       </tr>
       <tr>
-        <td>Various</td>
-        <td colspan="2">Compiler Error</td>
+        <td>Sgb</td>
         <td colspan="4">
-          Indicates that the compiler produced a specific error, triggers a domain 
-          error together with an additional error indicating the type of error 
-          found in the compiler
+          Begin a scalar group. This establishes a new stream which is likewise queued 
+          until the corresponding Sge is received. However, Sgb and Sge token cannot be 
+          nested, so this differs from the Fdb and Fde pairs. On the other hand, two 
+          streams need to be maintained for the Sgb, one for the checking information, 
+          and one for the primary loop.
         </td>
       </tr>
       <tr>
-        <td>22</td>
-        <td colspan="2">File name error</td>
+        <td>Sge</td>
         <td colspan="4">
-          Indicates that there was a problem with the filename or pathname given
+          End a scalar group, which merges the checking stream ahead of the loop stream 
+          and finalizes the transaction.
+        </td>
+      </tr>
+      <tr>
+        <td>Ib</td>
+        <td colspan="4">
+          Begin an indexing group, which sets up a tracking for expressions that belong 
+          to an indexing expression
+        </td>
+      </tr>
+      <tr>
+        <td>Ie</td>
+        <td colspan="4">
+          End an indexing group, which sets up the elements necessary to do the actual 
+          indexing
+        </td>
+      </tr>
+      <tr>
+        <td>Prim</td>
+        <td colspan="4">
+          Generate code for a primitive function, requires the input arrays and the 
+          output array as parameters as well as the primitive to generate for.
+        </td>
+      </tr>
+      <tr>
+        <td>Op</td>
+        <td colspan="4">
+          Generate a call to an operator, which requires the environment, the function 
+          to call, as well as the input arrays, output array, and the operator in question
+        </td>
+      </tr>
+      <tr>
+        <td>RVd</td>
+        <td colspan="4">
+          Register a variable as dependent for the current scalar group
+        </td>
+      </tr>
+      <tr>
+        <td>RVf</td>
+        <td colspan="4">
+          Register a variable as being equivalent or bound to a specific function name
+        </td>
+      </tr>
+      <tr>
+        <td>RVi</td>
+        <td colspan="4">
+          Register a variable as being part of an indexing expression
+        </td>
+      </tr>
+      <tr>
+        <td>Lit</td>
+        <td colspan="4">
+          Generate a literal value, this always appears at the top level
+          and is associated with a variable reference
+        </td>
+      </tr>
+      <tr>
+        <td>Strand</td>
+        <td colspan="4">
+          Generate code to build a strand out of a set of variable references
+        </td>
+      </tr>
+      <tr>
+        <td>Ifb</td>
+        <td colspan="4">
+          Generate the beginning of a conditional given a variable to test, 
+          to be closed and terminated by an Ife response; cannot be nested
+        </td>
+      </tr>
+      <tr>
+        <td>Ife</td>
+        <td colspan="4">
+          Complete generation of an If block
+        </td>
+      </tr>
+      <tr>
+        <td>Amb</td>
+        <td colspan="4">
+          Begin a case block to disambiguate at runtime a set of variables
+        </td>
+      </tr>
+      <tr>
+        <td>Ame</td>
+        <td colspan="4">
+          End a runtime disambiguation
+        </td>
+      </tr>
+      <tr>
+        <td>Casb</td>
+        <td colspan="4">
+          Insert a runtime test over a set of variables for their type to 
+          determine whether to run a block of code
+        </td>
+      </tr>
+      <tr>
+        <td>Case</td>
+        <td colspan="4">
+          End a Casb block
+        </td>
+      </tr>
+      <tr>
+        <td>Ame</td>
+        <td colspan="4">
+          End a runtime disambiguation
         </td>
       </tr>
     </tbody>

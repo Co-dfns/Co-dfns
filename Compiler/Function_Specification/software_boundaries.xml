@@ -37,9 +37,9 @@
     </thead>
     <tbody>
       <tr>
-        <td>Source Code</td>
+        <td>Source Input</td>
         <td colspan="2">
-          Primary input source from the user; specifies semantics
+          Primary access pointer for the user; specifies semantics
           and intended behavior of module behavior.
         </td>
       </tr>
@@ -70,7 +70,7 @@
     we have the following compiler passes for specification.
   </para>
   <table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
-    <caption>Summary of Passes</caption>
+    <caption>Summary of Components</caption>
     <thead>
       <tr>
         <th>Name</th>
@@ -79,6 +79,11 @@
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td>API</td>
+        <td>Entry</td>
+        <td colspan="3">Defines the API of the <function>Codfns.Fix</function> function</td>
+      </tr>
       <tr>
         <td>Tokenizer</td>
         <td>Entry</td>
@@ -90,39 +95,9 @@
         <td colspan="3">Parses token stream into an AST</td>
       </tr>
       <tr>
-        <td>DropUnnamed</td>
-        <td>Optimization</td>
-        <td colspan="3">Eliminates unnamed elements at the top-level</td>
-      </tr>
-      <tr>
-        <td>DropUnreached</td>
-        <td>Optimization</td>
-        <td colspan="3">Drop syntactically unreachable code</td>
-      </tr>
-      <tr>
-        <td>LiftConstants</td>
-        <td>Standard</td>
-        <td colspan="3">Moves all constants to the top-level</td>
-      </tr>
-      <tr>
-        <td>LiftFunctions</td>
-        <td>Standard</td>
-        <td colspan="3">Moves all function definitions to the top-level</td>
-      </tr>
-      <tr>
-        <td>LiftFnExprs</td>
-        <td>Standard</td>
-        <td colspan="3">Moves all function expressions to the top-level</td>
-      </tr>
-      <tr>
-        <td>FlattenExprs</td>
-        <td>Standard</td>
-        <td colspan="3">Linearizes expressions into a flat representation</td>
-      </tr>
-      <tr>
-        <td>FuseScalars</td>
-        <td>Optimization</td>
-        <td colspan="3">Fuse scalar function computations</td>
+        <td>Compiler</td>
+        <td>Entry</td>
+        <td colspan="3">Converts the parsed AST into an output source code</td>
       </tr>
     </tbody>
   </table>

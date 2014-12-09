@@ -7,15 +7,9 @@
     interface, detailing the set of stimuli it can receive and the set of
     responses that it might produce.
   </para>
-  <xi:include href="stimuli_response/Compiler.xml" />
+  <xi:include href="stimuli_response/API.xml" />
   <xi:include href="stimuli_response/Compiled_Module.xml" />
   <xi:include href="stimuli_response/Tokenizer.xml" />
   <xi:include href="stimuli_response/Parser.xml" />
-  <xi:include href="stimuli_response/DropUnnamed.xml" />
-  <xi:include href="stimuli_response/DropUnreachable.xml" />
-  <xi:include href="stimuli_response/LiftConstants.xml" />
-  <xi:include href="stimuli_response/LiftFunctions.xml" />
-  <xi:include href="stimuli_response/LiftFnExprs.xml" />
-  <xi:include href="stimuli_response/FlattenExprs.xml" />
-  <xi:include href="stimuli_response/FuseScalars.xml" />
+  <xi:include href="stimuli_response/Compiler.xml" />
 </section>
