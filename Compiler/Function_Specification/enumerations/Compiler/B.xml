@@ -1,0 +1,40 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Compiler Enumeration: Empty</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Fds</td> <td>null</td> <td></td> <td>3, 55, DPG 120</td></tr>
+    <tr><td>Fde</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Fdt</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>L</td> <td>null</td> <td></td> <td>3, 55, DPG 7</td></tr>
+    <tr><td>C</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>G</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Ps</td> <td>null</td> <td></td> <td>3, 55, DPG 20-21</td></tr>
+    <tr><td>P</td> <td>null</td> <td>Ps</td> <td>3, 55, DPG 20-21</td></tr>
+    <tr><td>Pd</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Pm</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Vad</td> <td>null</td> <td>L</td> <td>3, 55, DPG 6</td></tr>
+    <tr><td>Vai</td> <td>null</td> <td>L</td> <td>3, 55, DPG 6</td></tr>
+    <tr><td>Vf</td> <td>null</td> <td>Ps</td> <td>3, 55, DPG 17-19</td></tr>
+    <tr><td>Vd</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Vm</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Ams</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Ame</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Sep</td> <td>null</td> <td>Empty</td> <td>DPG 73</td></tr>
+    <tr><td>B</td> <td>null</td> <td></td> <td>3, DLR 12-21, 122-123</td></tr>
+    <tr><td>Bv</td> <td>Rb</td> <td></td> <td>3, DLR 12-21, 122-123</td></tr>
+    <tr><td>Is</td> <td>null</td> <td></td> <td>55</td></tr>
+    <tr><td>Ie</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>It</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>Se</td> <td>null</td> <td></td> <td>55</td></tr>
+    <tr><td>Ab</td> <td>null</td> <td></td> <td>55</td></tr>
+    <tr><td>Ae</td> <td>illegal</td> <td></td> <td></td></tr>
+    <tr><td>At</td> <td>illegal</td> <td></td> <td></td></tr>
+  </tbody>
+</table>

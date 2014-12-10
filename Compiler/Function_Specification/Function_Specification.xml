@@ -17,10 +17,8 @@
     <xi:include href="enumerations/API.xml" />
     <xi:include href="enumerations/Compiled_Module.xml" />
     <xi:include href="enumerations/Tokenizer.xml" />
-    <!--
     <xi:include href="enumerations/Parser.xml" />
-    <xi:include href="enumeration/Compiler.xml" />
-    -->
+    <xi:include href="enumerations/Compiler.xml" />
   </section>
   <xi:include href="derived_requirements.xml" />
   <xi:include href="canonical_sequence_analysis.xml" />

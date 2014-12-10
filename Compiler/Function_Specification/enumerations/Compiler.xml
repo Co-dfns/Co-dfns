@@ -1,0 +1,50 @@
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <title>Compiler Enumeration</title>
+  <para>
+    The compiler enumeration describes the primary actions of the compiler, including 
+    most of the optimizations and features, taking the nested AST representation 
+    into a linear format suitable for compiling from the back end of the compiler.
+    Pay attention to the way in which stimuli are ordered. Particularly, certain 
+    things, like binding, appear infix, while others, like expressions, are postfix 
+    in presentation. Still others take a start/end pattern. Some of the trickery 
+    here hides beneath the abstraction of the stimuli, but there is still a bit of 
+    it at the surface that one should consider when examining these tables. 
+  </para>
+  <itemizedlist spacing="compact">
+    <listitem>
+      <para>
+        Bindings appear in prefix order, the binding node first followed by the 
+        value to be assigned and then the thing to assign, if necessary. 
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Side-effect markers appear prefix 
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Function, Strand, and Operator applications appear in postfix order, listing 
+        the right argument first and then the left argument next in the sequence before 
+        the function, operator, or strand node.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+        Condition and Guard nodes appear infix
+      </para>
+    </listitem>
+  </itemizedlist>
+  <xi:include href="Compiler/Empty.xml"></xi:include>
+  <xi:include href="Compiler/Fds.xml"></xi:include>
+  <xi:include href="Compiler/L.xml"></xi:include>
+  <xi:include href="Compiler/Ps.xml"></xi:include>
+  <xi:include href="Compiler/B.xml"></xi:include>
+  <xi:include href="Compiler/Bv.xml"></xi:include>
+  <xi:include href="Compiler/Is.xml"></xi:include>
+  <xi:include href="Compiler/Se.xml"></xi:include>
+  <xi:include href="Compiler/Ab.xml"></xi:include>
+  <xi:include href="Compiler/L Fds.xml"></xi:include>
+  <xi:include href="Compiler/L Ps.xml"></xi:include>
+  <xi:include href="Compiler/L B.xml"></xi:include>
+</section>

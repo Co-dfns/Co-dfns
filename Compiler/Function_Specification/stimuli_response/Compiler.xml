@@ -25,19 +25,19 @@
       <tr>
         <td>Fde</td>
         <td colspan="4">
-          End of a function definition
+          End of the current function definition, still inside of a function
+        </td>
+      </tr>
+      <tr>
+        <td>Fdt</td>
+        <td colspan="4">
+          End of the current function definition, outside of a function
         </td>
       </tr>
       <tr>
         <td>L</td>
         <td colspan="4">
           A single literal value, such as a number array or string
-        </td>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td colspan="4">
-          An strand node of variables and literals
         </td>
       </tr>
       <tr>
@@ -55,25 +55,25 @@
       <tr>
         <td>Ps</td>
         <td colspan="4">
-          A primitive scalar function 
+          A primitive scalar function, even if renamed
         </td>
       </tr>
       <tr>
         <td>P</td>
         <td colspan="4">
-          A primitive function which is not a scalar
+          A primitive function which is not a scalar, even if renamed
         </td>
       </tr>
       <tr>
         <td>Pd</td>
         <td colspan="4">
-          A primitive dyadic operator
+          A primitive dyadic operator, even if renamed
         </td>
       </tr>
       <tr>
         <td>Pm</td>
         <td colspan="4">
-          A primitive monadic operator
+          A primitive monadic operator, even if renamed
         </td>
       </tr>
       <tr>
@@ -92,19 +92,19 @@
       <tr>
         <td>Vf</td>
         <td colspan="4">
-          A variable referencing a function
+          A variable referencing a user-defined function
         </td>
       </tr>
       <tr>
         <td>Vd</td>
         <td colspan="4">
-          A variable referencing a dyadic operator
+          A variable referencing a user-defined dyadic operator
         </td>
       </tr>
       <tr>
         <td>Vm</td>
         <td colspan="4">
-          A variable referencing a monadic operator
+          A variable referencing a user-defined monadic operator
         </td>
       </tr>
       <tr>
@@ -134,6 +134,12 @@
         </td>
       </tr>
       <tr>
+        <td>Bv</td>
+        <td colspan="4">
+          A binding variable for an expression group
+        </td>
+      </tr>
+      <tr>
         <td>Is</td>
         <td colspan="4">
           The beginning of an indexing expression
@@ -142,7 +148,40 @@
       <tr>
         <td>Ie</td>
         <td colspan="4">
-          The ending of an indexing expression
+          End of matching indexing expression, still inside of an indexing expression
+        </td>
+      </tr>
+      <tr>
+        <td>It</td>
+        <td colspan="4">
+          End of matching indexing expression, outside of indexing expression
+        </td>
+      </tr>
+      <tr>
+        <td>Se</td>
+        <td colspan="4">
+          Indicates that the following expression has side-effects other than 
+          bindings
+        </td>
+      </tr>
+      <tr>
+        <td>Ab</td>
+        <td colspan="4">
+          The beginning of a nested vector representation, also called a strand
+        </td>
+      </tr>
+      <tr>
+        <td>Ae</td>
+        <td colspan="4">
+          The end of a nested vector representation, still inside a parent 
+          nested vector
+        </td>
+      </tr>
+      <tr>
+        <td>At</td>
+        <td colspan="4">
+          The end of a nested vector representation, not inside a parent 
+          nested vector
         </td>
       </tr>
     </tbody>
@@ -219,10 +258,36 @@
         </td>
       </tr>
       <tr>
+        <td>Call</td>
+        <td colspan="4">
+          Generate code for a function call, requires the input arrays and the 
+          output array as parameters as well as the environment.
+        </td>
+      </tr>
+      <tr>
+        <td>Sel</td>
+        <td colspan="4">
+          Generate code for a selective primitive, requires the input arrays and the 
+          output array as parameters as well as the primitive to generate for.
+        </td>
+      </tr>
+      <tr>
         <td>Op</td>
         <td colspan="4">
           Generate a call to an operator, which requires the environment, the function 
           to call, as well as the input arrays, output array, and the operator in question
+        </td>
+      </tr>
+      <tr>
+        <td>Rb</td>
+        <td colspan="4">
+          Register a nearest expression binding name
+        </td>
+      </tr>
+      <tr>
+        <td>Ub</td>
+        <td colspan="4">
+          Unregister a nearest expression binding name
         </td>
       </tr>
       <tr>
@@ -251,9 +316,21 @@
         </td>
       </tr>
       <tr>
-        <td>Strand</td>
+        <td>Sal</td>
         <td colspan="4">
           Generate code to build a strand out of a set of variable references
+        </td>
+      </tr>
+      <tr>
+        <td>Sd</td>
+        <td colspan="4">
+          Package up the strand that was just defined
+        </td>
+      </tr>
+      <tr>
+        <td>Sr</td>
+        <td colspan="4">
+          Register a value into a current strand computation
         </td>
       </tr>
       <tr>
