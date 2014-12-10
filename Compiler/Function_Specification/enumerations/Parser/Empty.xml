@@ -1,0 +1,14 @@
+<table frame="void" rules="rows" xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <caption>Parser Enumeration: Empty</caption>
+  <thead>
+    <tr>
+      <th>Sequence</th>
+      <th>Response</th>
+      <th>Equivalent</th>
+      <th>Trace</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td></td> <td></td> <td></td> <td></td></tr>
+  </tbody>
+</table>
