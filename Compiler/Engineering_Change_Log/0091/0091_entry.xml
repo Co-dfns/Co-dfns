@@ -1,0 +1,17 @@
+<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
+  <formalpara>
+    <title>Description</title>
+    <para>
+      There should be a requirement for eliminating useless code from the 
+      compiler.
+    </para>
+  </formalpara>
+  <formalpara>
+    <title>Analysis</title>
+    <para>
+      This is an obvious and easy to implement fix, and is already being 
+      assumed in the specification process, so add requirement #56 to 
+      handle useless code elimination.
+    </para>
+  </formalpara>
+</listitem>
