@@ -37,14 +37,7 @@
   </itemizedlist>
   <xi:include href="Compiler/Empty.xml"></xi:include>
   <xi:include href="Compiler/Fds.xml"></xi:include>
-  <xi:include href="Compiler/L.xml"></xi:include>
-  <xi:include href="Compiler/Ps.xml"></xi:include>
   <xi:include href="Compiler/B.xml"></xi:include>
   <xi:include href="Compiler/Bv.xml"></xi:include>
-  <xi:include href="Compiler/Is.xml"></xi:include>
   <xi:include href="Compiler/Se.xml"></xi:include>
-  <xi:include href="Compiler/Ab.xml"></xi:include>
-  <xi:include href="Compiler/L Fds.xml"></xi:include>
-  <xi:include href="Compiler/L Ps.xml"></xi:include>
-  <xi:include href="Compiler/L B.xml"></xi:include>
 </section>
