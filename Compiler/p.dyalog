@@ -5,14 +5,14 @@
   _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵} ⋄ _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵} ⋄ _opt←{⍺(⍺⍺ _o _yes)⍵}
   _yes←{0 ⍬ ⍺ ⍵} ⋄ _t←{0<c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ e ⍵⍵ a:c a e r ⋄ 2 ⍬ ⍺ ⍵} 
   _set←{(0≠≢⍵)∧(⊃⍵)∊⍺⍺:0(,⊃⍵)⍺(1↓⍵) ⋄ 2 ⍬ ⍺ ⍵}  
-  _tk←{((≢⍺⍺)↑⍵)≡⍺⍺:0(⊂⍺⍺)⍺((≢⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
+  _tk←{((≢,⍺⍺)↑⍵)≡,⍺⍺:0(⊂,⍺⍺)⍺((≢,⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
   _as←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ c (,⊂⍵⍵ a) e r}
   _ign←{c a e r←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e r}
 
   ws←(' ',⎕UCS 9)_set ⋄ aws←ws _any _ign
 
   nss←aws _s(':Namespace'_tk)_s aws ⋄ nse←aws _s(':EndNamespace'_tk)_s aws
-  gets←'←'_tk ⋄ him←'¯'_tk ⋄ dot←'.'_tk ⋄ lbrc←'{'_tk ⋄ rbrc←'}'_tk
+  gets←'←'_tk ⋄ him←'¯'_tk ⋄ dot←'.'_set ⋄ lbrc←'{'_tk ⋄ rbrc←'}'_tk
   alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
   digits←'0123456789'_set  
   mop←'¨'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳'_set
@@ -37,7 +37,7 @@
   Bind←{⍺←⊢ ⋄ ⍺(var _s gets _s Ex _as A.Bind)⍵}
   Ex←Bind _o Dya _o Mon _o Atom
   Stmts←sep _any _s ((Ex _o Fe _s (sep _any)) _any)
-  Ns←nss _s (sep _any) _s nse _s (ws _o sep _any) _s eot _as A.Ns
+  Ns←nss _s Stmts _s nse _s (ws _o sep _any) _s eot _as A.Ns
   
   PS←{0≠⊃c a e r←(0 4⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ ⊃a}
 :EndNamespace 
