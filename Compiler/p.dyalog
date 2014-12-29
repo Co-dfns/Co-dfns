@@ -26,15 +26,15 @@
   Prim←prim _as A.Prim
   Fn←{⍺←⊢ ⋄ ⍺(lbrc _s Stmts _s rbrc _as A.Fn)⍵}
   Mop←Fn _s (mop _as A.Prim) _as ('m'A.Fe)
-  Fe←Mop _o Fn _o (Prim _as ('f'A.Fe))
+  Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.Bind)⍵}
+  Fe←{⍺(∇ Bind 1 _o Mop _o Fn _o (Prim _as ('f'A.Fe)))⍵}
   Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
   AVar←var _t (0=Vt) _as ('a'A.Var)
   Num←float _o int _as A.Num
   Atom←Num _some _o AVar _as ('a'A.Ex)
-  Mon←{⍺←⊢ ⋄ ⍺(Fe _s Ex _as ('m'A.Ex))⍵}
-  Dya←{⍺←⊢ ⋄ ⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}
-  Bind←{⍺←⊢ ⋄ ⍺(var _enc _s gets _s Ex _env {(⊃⍵)0⍪⍺} _as A.Bind)⍵}
-  Ex←Bind _o Dya _o Mon _o Atom
+  Mon←{⍺(Fe _s Ex _as ('m'A.Ex))⍵}
+  Dya←{⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}
+  Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Atom)⍵}
   Stmts←sep _any _s ((Ex _o Fe _s (sep _any)) _any)
   Ns←nss _s Stmts _s nse _s (ws _o sep _any) _s eot _as A.Ns
   
