@@ -6,20 +6,21 @@
   _yes←{0 ⍬ ⍺ ⍵} ⋄ _t←{0<c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ e ⍵⍵ a:c a e r ⋄ 2 ⍬ ⍺ ⍵} 
   _set←{(0≠≢⍵)∧(⊃⍵)∊⍺⍺:0(,⊃⍵)⍺(1↓⍵) ⋄ 2 ⍬ ⍺ ⍵}  
   _tk←{((≢,⍺⍺)↑⍵)≡,⍺⍺:0(⊂,⍺⍺)⍺((≢,⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
-  _as←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ c (,⊂⍵⍵ a) e r}
+  _as←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ c (,⊂⍵⍵ a) e r} ⋄ _enc←{⍺(⍺⍺ _as {⍵})⍵}
   _ign←{c a e r←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e r}
 
   ws←(' ',⎕UCS 9)_set ⋄ aws←ws _any _ign
 
   nss←aws _s(':Namespace'_tk)_s aws ⋄ nse←aws _s(':EndNamespace'_tk)_s aws
-  gets←'←'_tk ⋄ him←'¯'_tk ⋄ dot←'.'_set ⋄ lbrc←'{'_tk ⋄ rbrc←'}'_tk
+  gets←'←'_tk ⋄ him←'¯'_set ⋄ dot←'.'_set ⋄ lbrc←'{'_tk ⋄ rbrc←'}'_tk
   alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
   digits←'0123456789'_set  
   mop←'¨'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳'_set
 
-  eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵}  
-  int←aws _s (him _opt) _s (digits _any) _s aws
-  float←aws _s int _s dot _s (digits _any) _s aws
+  eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵}
+  digs←digits _some ⋄ odigs←digits _any
+  int←aws _s (him _opt) _s digs _s aws
+  float←aws _s (int _s dot _s odigs _o (dot _s digs)) _s aws
   var←aws _s alpha _s (alpha _o digits _any) _s aws
   sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
   
@@ -34,7 +35,7 @@
   Atom←Num _some _o AVar _as ('a'A.Ex)
   Mon←{⍺←⊢ ⋄ ⍺(Fe _s Ex _as ('m'A.Ex))⍵}
   Dya←{⍺←⊢ ⋄ ⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}
-  Bind←{⍺←⊢ ⋄ ⍺(var _s gets _s Ex _as A.Bind)⍵}
+  Bind←{⍺←⊢ ⋄ ⍺(var _enc _s gets _s Ex _as A.Bind)⍵}
   Ex←Bind _o Dya _o Mon _o Atom
   Stmts←sep _any _s ((Ex _o Fe _s (sep _any)) _any)
   Ns←nss _s Stmts _s nse _s (ws _o sep _any) _s eot _as A.Ns
