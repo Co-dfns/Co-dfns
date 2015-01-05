@@ -19,24 +19,24 @@
   digs←digits _some ⋄ odigs←digits _any
   int←aws _s (him _opt) _s digs _s aws
   float←aws _s (int _s dot _s odigs _o (dot _s digs)) _s aws
-  var←aws _s alpha _s (alpha _o digits _any) _s aws
+  var←aws _s alpha _s (alpha _o digits _any) _s aws ⋄ aw←aws _s ('⍺⍵'_set) _s aws
   sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
   
   A←##.A                         
   Prim←prim _as A.Prim
-  Fn←{⍺←⊢ ⋄ ⍺(lbrc _s Stmts _s rbrc _as A.Fn)⍵}
+  Fn←{⍺(lbrc _s Stmts _s rbrc _as A.Fn)⍵}
   Mop←Fn _s (mop _as A.Prim) _as ('m'A.Fe)
   Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.Bind)⍵}
-  Fe←{⍺(∇ Bind 1 _o Mop _o Fn _o (Prim _as ('f'A.Fe)))⍵}
+  Fe←{⍺(∇ Bind 1 _o Mop _o Fn _o Prim)⍵}
   Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
-  AVar←var _t (0=Vt) _as ('a'A.Var)
+  AVar←aw _o (var _t (0=Vt)) _as ('a'A.Var)
   Num←float _o int _as A.Num
-  Atom←Num _some _o AVar _as ('a'A.Ex)
+  Atom←Num _some _as A.Atm _o AVar
   Mon←{⍺(Fe _s Ex _as ('m'A.Ex))⍵}
   Dya←{⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}
   Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Atom)⍵}
   Stmts←sep _any _s ((Ex _o Fe _s (sep _any)) _any)
   Ns←nss _s Stmts _s nse _s (ws _o sep _any) _s eot _as A.Ns
   
-  PS←{0≠⊃c a e r←(0 2⍴)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ ⊃a}
+  PS←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ ⊃a}
 :EndNamespace 
