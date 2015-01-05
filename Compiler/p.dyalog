@@ -13,7 +13,8 @@
   nss←aws _s(':Namespace'_tk)_s aws ⋄ nse←aws _s(':EndNamespace'_tk)_s aws
   gets←'←'_tk ⋄ him←'¯'_set ⋄ dot←'.'_set ⋄ lbrc←'{'_tk ⋄ rbrc←'}'_tk
   alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
-  digits←'0123456789'_set ⋄ mop←'¨'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳'_set
+  digits←'0123456789'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳'_set
+  mop←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
 
   eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵}
   digs←digits _some ⋄ odigs←digits _any
@@ -26,8 +27,9 @@
   Prim←prim _as A.Prim
   Fn←{⍺(lbrc _s Stmts _s rbrc _as A.Fn)⍵}
   Mop←Fn _s (mop _as A.Prim) _as ('m'A.Fe)
+  Dop←Prim _s (dop _as A.Prim) _s Prim _as ('d'A.Fe)
   Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.Bind)⍵}
-  Fe←{⍺(∇ Bind 1 _o Mop _o Fn _o Prim)⍵}
+  Fe←{⍺(∇ Bind 1 _o Dop _o Mop _o Fn _o Prim)⍵}
   Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
   AVar←aw _o (var _t (0=Vt)) _as ('a'A.Var)
   Num←float _o int _as A.Num
