@@ -11,15 +11,16 @@
   _aew←{⍺(⍵⍵ _o (⍺⍺ _s ∇))⍵}
 
   ws←(' ',⎕UCS 9)_set ⋄ aws←ws _any _ign ⋄ awslf←(⎕UCS 10 13)_set _o ws _any _ign
-  nss←awslf _s(':Namespace'_tk)_s awslf ⋄ nse←awslf _s(':EndNamespace'_tk)_s awslf
+  nss←awslf _s(':Namespace'_tk)_s awslf _ign
+  nse←awslf _s(':EndNamespace'_tk)_s awslf _ign
   gets←aws _s('←'_tk)_s aws ⋄ him←'¯'_set ⋄ dot←'.'_set
-  lbrc←aws _s('{'_tk)_s aws ⋄ rbrc←aws _s('}'_tk)_s aws
-  lpar←aws _s('('_tk)_s aws ⋄ rpar←aws _s(')'_tk)_s aws
+  lbrc←aws _s('{'_tk)_s aws _ign ⋄ rbrc←aws _s('}'_tk)_s aws _ign
+  lpar←aws _s('('_tk)_s aws _ign ⋄ rpar←aws _s(')'_tk)_s aws _ign
   alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
   digits←'0123456789'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳○'_set
   mop←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
 
-  eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵}
+  eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
   digs←digits _some ⋄ odigs←digits _any
   int←aws _s (him _opt) _s digs _s aws
   float←aws _s (int _s dot _s odigs _o (dot _s digs)) _s aws
@@ -28,7 +29,7 @@
   
   A←##.A                         
   Prim←prim _as A.Prim
-  Fn←{⍺(lbrc _ign _s (Stmt _aew (rbrc _ign)) _as A.Fn)⍵}
+  Fn←{⍺(lbrc _s (Stmt _aew rbrc) _as A.Fn)⍵}
   Mop←Fn _s (mop _as A.Prim) _as ('m'A.Fe)
   Dop←Prim _s (dop _as A.Prim) _s Prim _as ('d'A.Fe)
   Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.Bind)⍵}
@@ -40,9 +41,9 @@
   Mon←{⍺(Fe _s Ex _as ('m'A.Ex))⍵}
   Dya←{⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}
   Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Atom)⍵}      
-  Pex←lpar _ign _s Ex _s (rpar _ign)
+  Pex←lpar _s Ex _s rpar
   Stmt←sep _any _s (Ex _o Fe) _s (sep _any)
-  Ns←nss _ign _s (Stmt _aew (nse _ign)) _s (eot _ign) _as A.Ns
+  Ns←nss _s (Stmt _aew nse) _s eot _as A.Ns
   
   PS←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ ⊃a}
 :EndNamespace 
