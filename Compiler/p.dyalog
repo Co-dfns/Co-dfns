@@ -33,12 +33,13 @@
   Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as A.Fn)⍵:p ⋄ c a ⍺ r}
   Mop←Fn _o Prim _s (mop _as A.Prim) _as ('m'A.Fe)
   Dop←Prim _s (dop _as A.Prim) _s Prim _as ('d'A.Fe)
+  Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'A.Fe))⍵}
   Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.Bind)⍵}
-  Fe←{⍺(∇ Bind 1 _o Dop _o Mop _o Fn _o Prim)⍵}
+  Fe←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
   Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
-  AVar←aw _o (var _t (0=Vt)) _as ('a'A.Var)
+  Var←{⍺(aw _o (var _t (⍺⍺=Vt)) _as (⍵⍵ A.Var))⍵}
   Num←float _o int _as A.Num
-  Atom←{⍺(Num _some _as A.Atm _o AVar _o Pex)⍵}
+  Atom←{⍺(Num _some _as A.Atm _o (0 Var'a') _o Pex)⍵}
   Mon←{⍺(Fe _s Ex _as ('m'A.Ex))⍵}
   Dya←{⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}  
   Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'A.Ex))⍵}
