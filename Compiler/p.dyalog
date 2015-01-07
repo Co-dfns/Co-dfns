@@ -31,7 +31,7 @@
   A←##.A                         
   Prim←prim _as A.Prim
   Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as A.Fn)⍵:p ⋄ c a ⍺ r}
-  Mop←Fn _s (mop _as A.Prim) _as ('m'A.Fe)
+  Mop←Fn _o Prim _s (mop _as A.Prim) _as ('m'A.Fe)
   Dop←Prim _s (dop _as A.Prim) _s Prim _as ('d'A.Fe)
   Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.Bind)⍵}
   Fe←{⍺(∇ Bind 1 _o Dop _o Mop _o Fn _o Prim)⍵}
