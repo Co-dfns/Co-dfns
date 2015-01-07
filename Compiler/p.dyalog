@@ -16,6 +16,7 @@
   gets←aws _s('←'_tk)_s aws ⋄ him←'¯'_set ⋄ dot←'.'_set
   lbrc←aws _s('{'_tk)_s aws _ign ⋄ rbrc←aws _s('}'_tk)_s aws _ign
   lpar←aws _s('('_tk)_s aws _ign ⋄ rpar←aws _s(')'_tk)_s aws _ign
+  lbrk←aws _s('['_tk)_s aws _ign ⋄ rbrk←aws _s(']'_tk)_s aws _ign
   alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
   digits←'0123456789'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳○'_set
   mop←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
@@ -39,8 +40,9 @@
   Num←float _o int _as A.Num
   Atom←{⍺(Num _some _as A.Atm _o AVar _o Pex)⍵}
   Mon←{⍺(Fe _s Ex _as ('m'A.Ex))⍵}
-  Dya←{⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}
-  Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Atom)⍵}      
+  Dya←{⍺(Atom _s Fe _s Ex _as ('d'A.Ex))⍵}  
+  Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'A.Ex))⍵}
+  Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}      
   Pex←lpar _s Ex _s rpar
   Stmt←sep _any _s (Ex _o Fe) _s (sep _any)
   Ns←nss _s (Stmt _aew nse) _s eot _as A.Ns
