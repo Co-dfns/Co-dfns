@@ -3,7 +3,6 @@
   FunS←A.FunS
   rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d)) ⍝ Function node references 
   rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)    ⍝ Function depths
-  dl←{(~⍵[;1]∊⊂'Line')⌿⍵}                                                        ⍝ Drop useless Line nodes
   df←{(~g∊(tl∧(FuncExpr ⍵)∧(name ⍵)∊⊂'')/g←+\tl←1=0⌷⍉⍵)⌿⍵}                       ⍝ Drop unnamed top-level functions
     du←{                                                                         ⍝ Drop syntactically unreachable code
       rf←(fn←Function ⍵)⌿r←↑ref ⍵ ⋄ rd←{1↓(0≠⍵)/⍵}⍤1⊢r
