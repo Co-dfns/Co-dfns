@@ -1,9 +1,9 @@
 ﻿:Namespace T
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s
-  FunS←A.FunS
-  rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d)) ⍝ Function node references 
-  rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)    ⍝ Function depths
-  df←{(~g∊(tl∧(FuncExpr ⍵)∧(name ⍵)∊⊂'')/g←+\tl←1=0⌷⍉⍵)⌿⍵}                       ⍝ Drop unnamed top-level functions
+  FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM
+  rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))                      ⍝ Function node refs 
+  rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)                         ⍝ Function depths 
+  df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢ ⍝ Drop unnamed tl fns
     du←{                                                                         ⍝ Drop syntactically unreachable code
       rf←(fn←Function ⍵)⌿r←↑ref ⍵ ⋄ rd←{1↓(0≠⍵)/⍵}⍤1⊢r
       adj←((name ⍵)∊⊂''){0,1↓(¯1⌽⍺)∧⍵=¯1⌽⍵}opt(fn∨(↓rd)∊↓rf)⊢0⌷⍉⍵

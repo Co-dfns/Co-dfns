@@ -11,6 +11,7 @@
   Nms←{('Nms'new⍬)⍪up⊃⍪/(⊂MtN),⍵} ⋄ Atm←{('Atm'new⍬)⍪up⊃⍪/⍵}
   Bind←{nm _ ex←⍵ ⋄ (0 nf⌷ex)←⊂nm ⋄ ex} ⋄ Num←{'Num'new⊂⍎⍵}
   
-  sel←{((t ⍵)∊⊂⍺⍺)⌿⍵} ⋄ FunS←'Fun'sel
+  msk←{(t ⍵)∊⊂⍺⍺} ⋄ FexM←'Fex'msk ⋄ FunM←'Fun'msk
+  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel
 
 :EndNamespace
