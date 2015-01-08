@@ -2,7 +2,7 @@
   (⎕IO ⎕ML ⎕WX)←0 1 3
   APLPrims←,¨'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳¨'
   MtN←0 4⍴⍬
-  df tf kf nf←⍳fc←4
+  df tf kf nf←⍳fc←4 ⋄ get←{⍺⍺⌷⍉⍵} ⋄ d←df get ⋄ t←tf get ⋄ k←kf get ⋄ n←nf get
   
   up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ new←{⍉⍪fc↑0 ⍺,⍵}
 
