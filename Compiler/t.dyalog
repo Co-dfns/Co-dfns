@@ -1,15 +1,12 @@
 ﻿:Namespace T
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s
   FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM
-  rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))                      ⍝ Function node refs 
-  rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)                         ⍝ Function depths 
+  rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))                      ⍝ Function node refs
+  rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)                         ⍝ Function depths
   df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢ ⍝ Drop unnamed tl fns
-    du←{                                                                         ⍝ Drop syntactically unreachable code
-      rf←(fn←Function ⍵)⌿r←↑ref ⍵ ⋄ rd←{1↓(0≠⍵)/⍵}⍤1⊢r
-      adj←((name ⍵)∊⊂''){0,1↓(¯1⌽⍺)∧⍵=¯1⌽⍵}opt(fn∨(↓rd)∊↓rf)⊢0⌷⍉⍵
-      in←rd∧.(=∨0=⊢)⍉drop⌿rd ⋄ below←r∧.≥⍉drop⌿r×0=rd
-      (~adj∨∨/in∧below)⌿⍵
-    }
+  prf←(≢↑¯1↓(0≠⊢)(/∘⊢)⊢)⍤1↑∘r                              ⍝ Parent refs
+  dua←(FunM∨↓∘prf∊r∘FunS)(⊣(⍀∘⊢)(⊣(⌿∘⊢)0∊⍨n)(0,1↓(¯1⌽⊣)∧⊢=¯1⌽⊢)⊣(⌿∘⊢)d)⊢
+  du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘⊢)↑∘r×0=prf))(⌿∘⊢)⊢
     lc←{                                                                         ⍝ Lift constants to top-level
       le←l∨e←(Expression ⍵)∧1⌽l←Number ⍵
       h←(1+Number h),1↓[1]h←le⌿w←⍵
@@ -61,7 +58,7 @@
       sk←(1,1↓Function ⍵)/ref ⍵
       k sh⌸⍵
     }
-     
+
 ⍝ Convert Primitives (Rewrite!)
     cp←{ast←⍵
       pm←(1⌷⍉⍵)∊⊂'Primitive'               ⍝ Mask of Primitive nodes
@@ -73,4 +70,4 @@
       ast⊣(pm⌿ast)←(pm/0⌷⍉⍵),vn            ⍝ Replace Primitive nodes
     }
 
-:EndNamespace 
+:EndNamespace
