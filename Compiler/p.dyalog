@@ -41,7 +41,7 @@
   Num←float _o int _as A.Num
   Atom←{⍺(Num _some _as A.Atm _o (0 Var'a') _o Pex)⍵}
   Mon←{⍺(Fe _s Ex _as ('m'A.Exp))⍵}
-  Dya←{⍺(Atom _s Fe _s Ex _as ('d'A.Exp))⍵}  
+  Dya←{⍺((Idx _o Atom) _s Fe _s Ex _as ('d'A.Exp))⍵}  
   Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'A.Exp))⍵}
   Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}      
   Pex←lpar _s Ex _s rpar
