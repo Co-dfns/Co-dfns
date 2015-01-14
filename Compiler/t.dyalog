@@ -1,20 +1,16 @@
 ﻿:Namespace T
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s
-  FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM
-  rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))                      ⍝ Function node refs
-  rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)                         ⍝ Function depths
-  df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢ ⍝ Drop unnamed tl fns
-  prf←(≢↑¯1↓(0≠⊢)(/∘⊢)⊢)⍤1↑∘r                              ⍝ Parent refs
+  FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM
+  rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))
+  rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)
+  df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
+  prf←(≢↑¯1↓(0≠⊢)(/∘⊢)⊢)⍤1↑∘r
   dua←(FunM∨↓∘prf∊r∘FunS)(⊣(⍀∘⊢)(⊣(⌿∘⊢)0∊⍨n)(0,1↓(¯1⌽⊣)∧⊢=¯1⌽⊢)⊣(⌿∘⊢)d)⊢
   du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘⊢)↑∘r×0=prf))(⌿∘⊢)⊢
-    lc←{                                                                         ⍝ Lift constants to top-level
-      le←l∨e←(Expression ⍵)∧1⌽l←Number ⍵
-      h←(1+Number h),1↓[1]h←le⌿w←⍵
-      (3⌷⍉(Expression h)⌿h)ren←v←(⊂'lc'),¨⍳+/e
-      (3⌷⌽fl⌿w)←v{3 2⍴'class' 'array' 'name'⍺'ref'⍵}¨ref(fl←¯1⌽e)⌿⍵
-      (1⌷⍉fl⌿w)←⊂'Variable'
-      (1↑w)⍪h⍪1↓w←(fl∨~l)⌿w
-    }
+  pck←{⍺(⍺⍺⌷⍤¯1⍵⍵,∘⍪⍺⍺(⍀∘⊢)⊣)⍵}
+  lch←⊣((1+NumM),t,k,AtmM pck n,r,∘⍪s)(AtmM∨NumM)(⌿∘⊢)⊢
+  lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
+  lc←('lc'(⊂,∘⍕)⍤1 0∘⍳(+/AtmM))((1↑⊢)⍪lch⍪((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
     lf←{                                                                         ⍝ Lift functions to top-level
       fnh←{                                                                      ⍝   Function handler
         h←⍉⍪1 'FuncExpr' ''(3 2⍴'name'('fn',⍕rm⊥⍺)'class' 'ambivalent' 'ref'())
