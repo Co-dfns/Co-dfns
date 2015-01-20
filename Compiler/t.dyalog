@@ -6,27 +6,18 @@
   df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
   prf←(≢↑¯1↓(0≠⊢)(/∘⊢)⊢)⍤1↑∘r
   dua←(FunM∨↓∘prf∊r∘FunS)(⊣(⍀∘⊢)(⊣(⌿∘⊢)0∊⍨n)(0,1↓(¯1⌽⊣)∧⊢=¯1⌽⊢)⊣(⌿∘⊢)d)⊢
-  du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘⊢)↑∘r×0=prf))(⌿∘⊢)⊢
+  du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘↑)r×0=prf))(⌿∘⊢)⊢
+  enc←⊣,∘⊃((⊣,'.',⊢)/(⍕¨(0≠⊢)(/∘⊢)⊢))
+  lfc←prf((⌈/(⍳∘≢⊢)×⍤1(1↓⊣)∧.(=∨0=⊢)∘⍉⊢)⌷⍤0 2⊢)(1,1↓FunM)(⌿∘↑)r
+  lfv←⍉∘⍪(1+⊣),(,¨'Var' 'f'),(⊂'fn'enc 4⊃⊢),4↓⊢
+  lfn←('Fun'≡1⊃⊢)⌷(⊣-⍨∘⊃⊢)((⊂∘⍉∘⍪⊣,1↓⊢),∘⊂(⊣,(,¨'Fex' 'f'),3↓⊢)⍪lfv)⊢
+  lfh←⍉∘⍪1'Fun'0,(⊂'fn'enc⊣),4↓∘,1↑⊢
+  lf←(1↑⊢)⍪∘⊃(⍪/lfc(⊂lfh⍪∘⊃(⍪/(¯2+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
   pck←{⍺(⍺⍺⌷⍤¯1⍵⍵,∘⍪⍺⍺(⍀∘⊢)⊣)⍵}
   lch←⊣((1+NumM),t,k,AtmM pck n,r,∘⍪s)(AtmM∨NumM)(⌿∘⊢)⊢
   lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
-  lc←('lc'(⊂,∘⍕)⍤1 0∘⍳(+/AtmM))((1↑⊢)⍪lch⍪((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
-    lf←{                                                                         ⍝ Lift functions to top-level
-      fnh←{                                                                      ⍝   Function handler
-        h←⍉⍪1 'FuncExpr' ''(3 2⍴'name'('fn',⍕rm⊥⍺)'class' 'ambivalent' 'ref'())
-        h⍪(2 'Function' ''(⍉⍪'ref'⍺))⍪((-¯3+⊃)0⌷⍉⍵),1↓[1]⍵
-      }
-      ngh←{                                                                      ⍝ Node group handler
-        rf←↑ref(fn←Function ⍵)⌿g←⍵
-        (3⌷⍉fn⌿g)ren←(⊂'fn'),¨rm⊥⍉rf
-        (1⌷⍉fn⌿g)←⊂'Variable'
-        ⍺ fnh⍣ft⊢g
-      }
-      rm←1+⌈⌿r←↑ref ⍵
-      sc←1↓{1↓(0≠⍵)/⍵}⍤1⊢r ⋄ rf←(1,1↓Function ⍵)⌿r
-      c←(⌈/(⍳1↓⍴rf)×⍤1⊢sc∧.(=∨0=⊢)⍉rf)⌷⍤0 2⊢rf
-      (1↓⍵)⍪c ngh⌸1↓⍵
-    }
+  lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
+  da←(~(AtmM∨FexM∧(⊂∘,'f')∊⍨k)∧0∊⍨n)(⌿∘⊢)⊢
 
 ⍝ Flatten expressions (Need to handle condition nodes)
     fe←{
