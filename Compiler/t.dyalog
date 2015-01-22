@@ -1,6 +1,7 @@
 ﻿:Namespace T
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s
-  FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM
+  FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM ⋄ ExpS←A.ExpS
+  ExpM←A.ExpM
   rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))
   rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)
   df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
@@ -8,19 +9,21 @@
   dua←(FunM∨↓∘prf∊r∘FunS)(⊣(⍀∘⊢)(⊣(⌿∘⊢)0∊⍨n)(0,1↓(¯1⌽⊣)∧⊢=¯1⌽⊢)⊣(⌿∘⊢)d)⊢
   du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘↑)r×0=prf))(⌿∘⊢)⊢
   enc←⊣,∘⊃((⊣,'.',⊢)/(⍕¨(0≠⊢)(/∘⊢)⊢))
-  lfc←prf((⌈/(⍳∘≢⊢)×⍤1(1↓⊣)∧.(=∨0=⊢)∘⍉⊢)⌷⍤0 2⊢)(1,1↓FunM)(⌿∘↑)r
+  blg←{((prf(⌈/(⍳∘≢⊢)×⍤1(1↓⊣)∧.(=∨0=⊢)∘⍉⊢)⍺⍺(⌿∘↑)r)⌷⍤0 2 ⍺⍺(⌿∘⊢)⍵⍵)⍵}
   lfv←⍉∘⍪(1+⊣),(,¨'Var' 'f'),(⊂'fn'enc 4⊃⊢),4↓⊢
   lfn←('Fun'≡1⊃⊢)⌷(⊣-⍨∘⊃⊢)((⊂∘⍉∘⍪⊣,1↓⊢),∘⊂(⊣,(,¨'Fex' 'f'),3↓⊢)⍪lfv)⊢
   lfh←⍉∘⍪1'Fun'0,(⊂'fn'enc⊣),4↓∘,1↑⊢
-  lf←(1↑⊢)⍪∘⊃(⍪/lfc(⊂lfh⍪∘⊃(⍪/(¯2+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
+  lf←(1↑⊢)⍪∘⊃(⍪/(1,1↓FunM)blg(↑r)(⊂lfh⍪∘⊃(⍪/(¯2+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
   pck←{⍺(⍺⍺⌷⍤¯1⍵⍵,∘⍪⍺⍺(⍀∘⊢)⊣)⍵}
   lch←⊣((1+NumM),t,k,AtmM pck n,r,∘⍪s)(AtmM∨NumM)(⌿∘⊢)⊢
   lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
   lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
-  da←(~(AtmM∨FexM∧(⊂∘,'f')∊⍨k)∧0∊⍨n)(⌿∘⊢)⊢
-
+  da←(~(AtmM∨FexM∧(⊂∘,'f')∊⍨k)∧0∊⍨n)(⌿∘⊢)⊢            
+  fer←(d,(,¨'Var' 'a'),(⊂'fe'enc∘⊃ n),4↓⊢)∘⍉∘⍪⍤1
+  fev←(⊂((⊢-¯2+⊃)d),1↓[1]⊢)⊣⍪(AtmM∨ExpM)⌷⍤¯1⊢,[0.5]fer
+  fe←(⊃⍪/)(+\FunM)(⍪/(+\d=1+∘⊃⊢)(⍪/∘⌽(AtmM∨ExpM)blg⊢fev⌸⊢)⌸⊢)⌸⊢
 ⍝ Flatten expressions (Need to handle condition nodes)
-    fe←{
+    feo←{
       feg←{⍝ Flatten expression statement
         ed←(Expression∧(⊂'dyadic')∊⍨class)⍵
         (3⌷⍉ed⌿w)⍪←'left'with name(v←¯2⌽ed)⌿w←⍵

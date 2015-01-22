@@ -12,7 +12,9 @@
   Bind←{nm _ ex←⍵ ⋄ (0 nf⌷ex)←⊂nm ⋄ ex} ⋄ Num←{'Num'new⊂⍎⍵}
   
   msk←{(t ⍵)∊⊂⍺⍺} ⋄ FexM←'Fex'msk ⋄ FunM←'Fun'msk ⋄ AtmM←'Atm'msk ⋄ NumM←'Num'msk
-  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel
+  ExpM←'Exp'msk
+  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel
 
 :EndNamespace
+
 
