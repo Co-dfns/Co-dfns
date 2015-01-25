@@ -7,7 +7,7 @@
   df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
   prf←((≢↑¯1↓(0≠⊢)(/∘⊢)⊢)⍤1↑∘r)⊢
   dua←(FunM∨↓∘prf∊r∘FunS)(⊣(⍀∘⊢)(⊣(⌿∘⊢)0∊⍨n)(0,1↓(¯1⌽⊣)∧⊢=¯1⌽⊢)⊣(⌿∘⊢)d)⊢
-  du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘↑)r×0=prf))(⌿∘⊢)⊢
+  du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘⊢)↑∘r×0=prf))(⌿∘⊢)⊢
   enc←⊂⊣,∘⊃((⊣,'.',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
   blg←{⍺←⊢ ⋄ ⍺((prf(⌈/(⍳∘≢⊢)×⍤1(1↓⊣)∧.(=∨0=⊢)∘⍉⊢)⍺⍺(⌿∘↑)r)⌷⍤0 2 ⍺⍺(⌿∘⊢)⍵⍵)⍵}
   lfv←⍉∘⍪(1+⊣),(,¨'Var' 'f'),('fn'enc 4⊃⊢),4↓⊢
@@ -15,13 +15,14 @@
   lfh←⍉∘⍪1'Fun'0,('fn'enc⊣),4↓∘,1↑⊢
   lf←(1↑⊢)⍪∘⊃(⍪/(1,1↓FunM)blg(↑r)(⊂lfh⍪∘⊃(⍪/(¯2+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
   pck←{⍺(⍺⍺⌷⍤¯1⍵⍵,∘⍪⍺⍺(⍀∘⊢)⊣)⍵}
-  lch←⊣((1+NumM),t,k,AtmM pck n,r,∘⍪s)(AtmM∨NumM)(⌿∘⊢)⊢
-  lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
-  lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
+  lch←⊣((1+NumM),t,k,AtmM pck n,r,∘⍪s)(NumM∨AtmM∧1⌽NumM)(⌿∘⊢)⊢
+  lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(NumM∧¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
+  lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM∧1⌽NumM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
   da←((0∊⍨n)∧AtmM∨FexM∧(⊂∘,'f')∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢            
   fer←(d,(,¨'Var' 'a'),('fe'enc∘⊃ r),4↓⊢)⍤1
-  fev←(⊂(d-(⊃d)-(⊃⊣)),1↓[1]⊢)⊣⍪(AtmM∨ExpM)⌷⍤¯1⊢,[0.5]fer
-  fe←(⊃⍪/)(+\FunM)(⍪/(+\d=1+∘⊃⊢)(⍪/((⊂1↑⊢),∘⌽(1,1↓AtmM∨ExpM)blg⊢fev⌸1↓⊢))⌸⊢)⌸⊢
+  fev←(((3↑⊢),('fe'enc∘⊃r),4↓⊢)⊣)⍪(AtmM∨ExpM)⌷⍤¯1⊢,[0.5]fer
+  fee←⍪/(⌽(1,1↓AtmM∨ExpM)blg⊢((⊂(d-(⊃d)-2⌊∘⊃d),1↓[1]⊢)fev)⌸1↓⊢)
+  fe←(⊃⍪/)(+\FunM)(⍪/(⊂1↑⊢),(1↓(+\d=1+∘⊃⊢))fee⌸1↓⊢)⌸⊢
 ⍝ Flatten expressions (Need to handle condition nodes)
     feo←{
       feg←{⍝ Flatten expression statement
