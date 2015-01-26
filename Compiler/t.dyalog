@@ -23,6 +23,7 @@
   fev←(((3↑⊢),('fe'enc∘⊃r),4↓⊢)⊣)⍪(AtmM∨ExpM∨FexM)⌷⍤¯1⊢,[0.5]fer
   fee←⍪/(⌽(1,1↓AtmM∨ExpM∨FexM)blg⊢((⊂(d-(⊃d)-2⌊∘⊃d),1↓[1]⊢)fev)⌸1↓⊢)
   fe←(⊃⍪/)(+\FunM)(⍪/(⊂1↑⊢),(1↓(+\d=1+∘⊃⊢))fee⌸1↓⊢)⌸⊢
+  ce←(+\'Atm' 'Fun' 'Fex' 'Exp'∊⍨t)(,(1↑⊢),∘⊂∘n 1↓⊢)⌸⊢
 ⍝ Anchor variables to environments
     av←{
       sh←{⍝ Handle scope
