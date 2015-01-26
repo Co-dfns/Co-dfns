@@ -19,9 +19,9 @@
   lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(NumM∧¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
   lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM∧1⌽NumM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
   da←((0∊⍨n)∧AtmM∨FexM∧(⊂∘,'f')∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢            
-  fer←(d,(,¨'Var' 'a'),('fe'enc∘⊃ r),4↓⊢)⍤1
-  fev←(((3↑⊢),('fe'enc∘⊃r),4↓⊢)⊣)⍪(AtmM∨ExpM)⌷⍤¯1⊢,[0.5]fer
-  fee←⍪/(⌽(1,1↓AtmM∨ExpM)blg⊢((⊂(d-(⊃d)-2⌊∘⊃d),1↓[1]⊢)fev)⌸1↓⊢)
+  fer←(d,(⊂'Var'),(⊂∘,'af'⊃⍨'Fex'≡∘⊃ t),('fe'enc∘⊃ r),4↓⊢)⍤1
+  fev←(((3↑⊢),('fe'enc∘⊃r),4↓⊢)⊣)⍪(AtmM∨ExpM∨FexM)⌷⍤¯1⊢,[0.5]fer
+  fee←⍪/(⌽(1,1↓AtmM∨ExpM∨FexM)blg⊢((⊂(d-(⊃d)-2⌊∘⊃d),1↓[1]⊢)fev)⌸1↓⊢)
   fe←(⊃⍪/)(+\FunM)(⍪/(⊂1↑⊢),(1↓(+\d=1+∘⊃⊢))fee⌸1↓⊢)⌸⊢
 ⍝ Anchor variables to environments
     av←{
