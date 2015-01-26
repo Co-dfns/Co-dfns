@@ -23,19 +23,6 @@
   fev←(((3↑⊢),('fe'enc∘⊃r),4↓⊢)⊣)⍪(AtmM∨ExpM)⌷⍤¯1⊢,[0.5]fer
   fee←⍪/(⌽(1,1↓AtmM∨ExpM)blg⊢((⊂(d-(⊃d)-2⌊∘⊃d),1↓[1]⊢)fev)⌸1↓⊢)
   fe←(⊃⍪/)(+\FunM)(⍪/(⊂1↑⊢),(1↓(+\d=1+∘⊃⊢))fee⌸1↓⊢)⌸⊢
-⍝ Flatten expressions (Need to handle condition nodes)
-    feo←{
-      feg←{⍝ Flatten expression statement
-        ed←(Expression∧(⊂'dyadic')∊⍨class)⍵
-        (3⌷⍉ed⌿w)⍪←'left'with name(v←¯2⌽ed)⌿w←⍵
-        (3⌷⍉(1⌽fe)⌿w)⍪←'fn'with name(¯1⌽fe←FuncExpr w)⌿w←(~v∨1⌽v)⌿w
-        (3⌷⍉¯1↓w)⍪←'right'with 1↓{(''≡⍵)⊃⍵ ⍺}\name w←(~fe∨v)⌿w
-        3,⊖1↓[1]¯1↓w
-      }
-      fm←0≠fg←+\1⌽Function ⍵
-      ((~fm)⌿⍵)⍪(fm⌿fg){(2↑⍵)⍪(+\(⊃e)=0⌷⍉e)feg⌸e←2↓⍵}⌸fm⌿⍵
-    }
-
 ⍝ Anchor variables to environments
     av←{
       sh←{⍝ Handle scope
