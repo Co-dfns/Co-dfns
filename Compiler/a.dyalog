@@ -3,7 +3,7 @@
   APLPrims←,¨'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳¨'
 
   df tf kf nf←⍳fc←4 ⋄ get←{⍺⍺⌷⍉⍵} ⋄ d←df get ⋄ t←tf get ⋄ k←kf get ⋄ n←nf get
-  rf sf←fc+⍳2 ⋄ r←rf get ⋄ s←sf get
+  rf sf vf←fc+⍳3 ⋄ r←rf get ⋄ s←sf get ⋄ v←vf get
   
   up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ new←{⍉⍪fc↑0 ⍺,⍵} ⋄ MtN←0 4⍴⍬
   Prm←{'Prm'new 0 ⍵} ⋄ Fun←{('Fun'new⍬)⍪up⊃⍪/(⊂MtN),⍵} 
