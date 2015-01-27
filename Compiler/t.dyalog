@@ -20,8 +20,9 @@
   lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(NumM∧¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
   lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM∧1⌽NumM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
   da←((0∊⍨n)∧AtmM∨FexM∧(⊂∘,'f')∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
-  fer←(d,(⊂'Var'),(⊂∘,'af'⊃⍨'Fex'≡∘⊃ t),('fe'enc∘⊃ r),4↓⊢)⍤1
-  fev←(((3↑⊢),('fe'enc∘⊃r),4↓⊢)⊣)⍪(AtmM∨ExpM∨FexM)⌷⍤¯1⊢,[0.5]fer
+  fen←(0≡∘⊃n)⌷n,'fe'enc∘⊃r
+  fer←(d,(⊂'Var'),(⊂∘,'af'⊃⍨'Fex'≡∘⊃ t),fen,4↓⊢)⍤1
+  fev←(((3↑⊢),fen,4↓⊢)⊣)⍪(AtmM∨ExpM∨FexM)⌷⍤¯1⊢,[0.5]fer
   fee←⍪/(⌽(1,1↓AtmM∨ExpM∨FexM)blg⊢((⊂(d-(⊃d)-2⌊∘⊃d),1↓[1]⊢)fev)⌸1↓⊢)
   fe←(⊃⍪/)(+\FunM)(⍪/(⊂1↑⊢),(1↓(+\d=1+∘⊃⊢))fee⌸1↓⊢)⌸⊢
   ce←(+\'Atm' 'Fun' 'Fex' 'Exp'∊⍨t)(,(1↑⊢),∘⊂∘n 1↓⊢)⌸⊢
@@ -29,3 +30,4 @@
   avh←{⊂⍵,(n⍵)((⍺⍺(⍵⍵ avb)⍵){(⍴⍺⍺)⊤(,⍺⍺)⍳(⊂⍺),⌽(¯1⌈1-≢⍵)↓¯1⌽⍵})¨v⍵}
   av←(⊃⍪/)(+\FunM){⍺((⍺(n(ExpM∨AtmM)(⌿∘⊢)⊢)⌸⍵)avh(r(1↑⍵)⍪FunS ⍵))⌸⍵}⊢
 :EndNamespace
+
