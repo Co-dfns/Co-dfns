@@ -1,19 +1,19 @@
 ﻿:Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ pp←#.pp
   t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
-  FunM←A.FunM
+  FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM
   nl←⎕UCS 13
   hdr←'#include "dwa.h"',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   do←{'{int i;for(i=0;i<',(⍕⍺),';i++){',⍵,'}}',nl}
-  ged←{'LOCALP ',⍺,'[',(⍕≢n 1↓⍵),'];',nl}
-  ger←{(≢n 1↓⍵)do'regp(',⍺,'[i]);'}
+  ged←{'LOCALP ',⍺,'[',(⍕+/(ExpM∨AtmM)1↓⍵),'];',nl}
+  ger←{(+/(ExpM∨AtmM)1↓⍵)do'regp(',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ghi←{'void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
   ght←{flp,'){',nl,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
   ghn←{flp,',LOCALP*penv[]){',nl,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
   gfh←{'void ',(⊃n ⍵),'(',(2⌊⊃s ⍵)⊃(ghi ⍵)(ght ⍵)(ghn ⍵)}
-  gff←{{'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢'}',nl}
+  gff←{⍵{'z->p=zap(',(vpp 0⌷⍉⊃⌽e 1↓⍺),');cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢'}',nl}
   elt←{⍵≡⌊⍵:'APLLONG' ⋄ 'APLDOUB'} ⋄ eld←{⍵≡⌊⍵:'aplint32' ⋄ 'double'}
   vec←{'getvector(',(elt⊃⍵),',',(⍕≢⍵),',',(var 0⌷⍉⍺),');',nl}
   var←{'&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'} ⋄ vpp←{'(',(var ⍵),')->p'}
