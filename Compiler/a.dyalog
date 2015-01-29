@@ -3,7 +3,7 @@
   APLPrims←,¨'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳¨'
 
   df tf kf nf←⍳fc←4 ⋄ get←{⍺⍺⌷⍉⍵} ⋄ d←df get ⋄ t←tf get ⋄ k←kf get ⋄ n←nf get
-  rf sf vf←fc+⍳3 ⋄ r←rf get ⋄ s←sf get ⋄ v←vf get
+  rf sf vf ef←fc+⍳4 ⋄ r←rf get ⋄ s←sf get ⋄ v←vf get ⋄ e←ef get
   
   up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ new←{⍉⍪fc↑0 ⍺,⍵} ⋄ MtN←0 4⍴⍬
   Prm←{'Prm'new 0 ⍵} ⋄ Fun←{('Fun'new⍬)⍪up⊃⍪/(⊂MtN),⍵} 
@@ -13,7 +13,7 @@
   
   msk←{(t ⍵)∊⊂⍺⍺} ⋄ FexM←'Fex'msk ⋄ FunM←'Fun'msk ⋄ AtmM←'Atm'msk ⋄ NumM←'Num'msk
   ExpM←'Exp'msk
-  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel
+  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel ⋄ VarS←'Var'sel
 
 :EndNamespace
 
