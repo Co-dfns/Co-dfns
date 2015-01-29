@@ -13,14 +13,16 @@
   ght←{flp,'){',nl,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
   ghn←{flp,',LOCALP*penv[]){',nl,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
   gfh←{'void ',(⊃n ⍵),'(',(2⌊⊃s ⍵)⊃(ghi ⍵)(ght ⍵)(ghn ⍵)}
-  gff←{⍵{'z->p=zap(',(vpp 0⌷⍉⊃⌽e 1↓⍺),');cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢'}',nl}
+  gfr←{'z->p=zap(',((⊃⌽n 1↓⍵)vpp 0⌷⍉⊃⌽e 1↓⍵),');'}
+  gff←{⍵{(gfr ⍺),'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢'}',nl}
   elt←{⍵≡⌊⍵:'APLLONG' ⋄ 'APLDOUB'} ⋄ eld←{⍵≡⌊⍵:'aplint32' ⋄ 'double'}
-  vec←{'getvector(',(elt⊃⍵),',',(⍕≢⍵),',',(var 0⌷⍉⍺),');',nl}
-  var←{'&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'} ⋄ vpp←{'(',(var ⍵),')->p'}
-  dap←{⍺⍺,'*',⍺,'=ARRAYSTART(',(vpp 0⌷⍉⍵),');',nl}
+  vec←{'getvector(',(elt⊃⍵),',',(⍕≢⍵),',',((⊃⍵)var 0⌷⍉⍺),');',nl}
+  var←{(,'⍺')≡⍺:'l' ⋄ (,'⍵')≡⍺:'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+  vpp←{'(',(⍺ var ⍵),')->p'}
+  dap←{⍺⍺,'*',⍺,'=ARRAYSTART(',((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),');',nl}
   fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(⍕⍺),';'})¨⍳≢⍵}
-  Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⊃e⍵),('v'fil⊃v⍵),'}',nl}
-  Atm0←{(vpp 0⌷⍉⊃e ⍵),'=ref(',(vpp 1⌷⍉⊃e ⍵),');',nl}
+  Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
+  Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
   Expm←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Expd←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Expi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
