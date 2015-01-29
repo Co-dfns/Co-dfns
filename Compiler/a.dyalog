@@ -13,7 +13,7 @@
   
   msk←{(t ⍵)∊⊂⍺⍺} ⋄ FexM←'Fex'msk ⋄ FunM←'Fun'msk ⋄ AtmM←'Atm'msk ⋄ NumM←'Num'msk
   ExpM←'Exp'msk
-  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel ⋄ VarS←'Var'sel
+  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel ⋄ VarS←'Var'sel ⋄ AtmS←'Atm'sel
 
 :EndNamespace
 

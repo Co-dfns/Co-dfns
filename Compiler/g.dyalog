@@ -1,6 +1,6 @@
 ﻿:Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ pp←#.pp
-  t←A.t ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
+  t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM
   nl←⎕UCS 13
   hdr←'#include "dwa.h"',nl
@@ -14,8 +14,16 @@
   ghn←{flp,',LOCALP*penv[]){',nl,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
   gfh←{'void ',(⊃n ⍵),'(',(2⌊⊃s ⍵)⊃(ghi ⍵)(ght ⍵)(ghn ⍵)}
   gff←{{'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢'}',nl}
-  gxa←{'/* ',((⍕t,n,v)⍵),' */',nl}
-  gex←{'Atm'≡nt←⊃t ⍵:gxa ⍵ ⋄ '/* ',((⍕t,n,v)⍵),' */',nl}
+  Atmc←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Atm0←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Expm←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Expd←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Expi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Fexi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Fexf←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Fexm←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl} 
+  Fexd←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  gex←{⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}
   gcf←{⍵,(gfh ⍺),(⊃,/(⊂gex)⍤1⊢1↓⍺),(gff ⍺),nl}
   gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
   gct←⊂(gtf⍪1↓⊢)gcf hdr,'tenv'ged⊢
