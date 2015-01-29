@@ -1,6 +1,24 @@
 ﻿:Namespace G
-  (⎕IO ⎕ML ⎕WX)←0 1 3
-    gc←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ pp←#.pp
+  n←A.n ⋄ s←A.s
+  FunM←A.FunM
+  nl←⎕UCS 13
+  hdr←'#include "dwa.h"',nl
+  flp←'LOCALP *z, LOCALP *l, LOCALP *r'
+  ged←{'LOCALP ',⍺,'[',(⍕≢n 1↓⍵),'];',nl}
+  gel←{'LOCALP *env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
+  ghi←{flp,'){',nl,'LOCALP *env[]={tenv};',nl}
+  ght←{flp,'){',nl,'LOCALP *penv[]={tenv};',nl,('env0'ged ⍵),gel ⍵}
+  ghn←{flp,',LOCALP *penv[]){',nl,('env0'ged ⍵),gel ⍵}
+  gfh←{'void ',(⊃n ⍵),'(',(2⌊⊃s ⍵)⊃(ghi ⍵)(ght ⍵)(ghn ⍵)}
+  gcf←{⍵,(gfh ⍺),'}',nl}
+  gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
+  gct←⊂(gtf⍪1↓⊢)gcf hdr,'tenv'ged⊢
+  gc←⊃∘(gcf/∘⌽(gct⊃),1↓⊢)(1,1↓FunM)⊂[0]⊢
+  
+  
+
+    gco←{com←{⊃,/(⊂''),1↓,',',⍪⍵} ⋄ z←,⊂'#include "codfns.h"'
       di←¯1 ⋄ md←{'D',⍕di⊣(⊃di)+←1} ⋄ si←¯1 ⋄ ms←{'S',⍕si⊣(⊃si)+←1}
       li←¯1 ⋄ ml←{'L',⍕li⊣(⊃li)+←1}
       ce←(tm/1⌽(1⌷⍉⍵)∊⊂'Number')/t←(tm←1=0⌷⍉⍵)⊂[0]⍵
