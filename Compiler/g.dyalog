@@ -14,7 +14,12 @@
   ghn←{flp,',LOCALP*penv[]){',nl,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
   gfh←{'void ',(⊃n ⍵),'(',(2⌊⊃s ⍵)⊃(ghi ⍵)(ght ⍵)(ghn ⍵)}
   gff←{{'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢'}',nl}
-  Atmc←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  elt←{⍵≡⌊⍵:'APLLONG' ⋄ 'APLDOUB'} ⋄ eld←{⍵≡⌊⍵:'aplint32' ⋄ 'double'}
+  vec←{'getvector(',(elt⊃⍵),',',(⍕≢⍵),',',(var 0⌷⍉⍺),');',nl}
+  var←{'&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+  dap←{⍺⍺,'*',⍺,'=ARRAYSTART((',(var 0⌷⍉⍵),')->p);',nl}
+  fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(⍕⍺),';'})¨⍳≢⍵}
+  Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⊃e⍵),('v'fil⊃v⍵),'}',nl}
   Atm0←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Expm←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Expd←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
