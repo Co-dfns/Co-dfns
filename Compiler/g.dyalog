@@ -1,5 +1,5 @@
 ﻿:Namespace G
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ pp←#.pp
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ pp←#.pp
   t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM
   nl←⎕UCS 13
@@ -24,7 +24,7 @@
   Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
   Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
   Expm←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
-  Expd←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Expd←{l f r←⊃v⍵ ⋄ ((⊃n⍵) l r)(f R.gd)⊃e ⍵}
   Expi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Fexi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Fexf←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
