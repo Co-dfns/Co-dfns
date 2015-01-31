@@ -1,18 +1,19 @@
 ﻿:Namespace R
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ pp←#.pp
-  var←##.G.var ⋄ nl←##.G.nl
-  prs←'relp(rslt);',nl
+  var←##.G.var ⋄ nl←##.G.nl ⋄ do←{'{BOUND i;for(i=0;i<',⍺,';i++){',⍵,'}}',nl}
   fdb←⍉⍪,¨'⌷' 'idx'
-  idxc←'unsigned r=rgt->p->RANK-lft->p->RANK;BOUND s[r];',nl
-  idxc,←'int i,j;for(i=0,j=lft->p->RANK;i<r;i++,j++){s[0]=rgt->p->SHAPETC[j];}',nl
-  idxc,←'getarray(rgt->p->ELTYPE,r,s,rslt);',nl
-  idxc,←'size_t c;for(i=0,c=1;i<r;i++){c*=s[i];}',nl
-  idxc,←'aplint32*v=ARRAYSTART(lft->p);size_t k;',nl
-  idxc,←'for(i=0,k=0;i<lft->p->SHAPETC[0];i++){k+=v[i]*rgt->p->SHAPETC[i+1];}',nl
-
+  dv←{nl,⍨⊃,/⍺∘{⍺,' ',⍵,';'}¨⍵}
+  if←{'if(',⍺,'){',⍵,'}',nl} ⋄ eif←{'else if(',⍺,'){',⍵,'}',nl}
+  det←{((⍺⍺,'==APLLONG')if('aplint32'dv ⍺),⍵),(⍺⍺,'==APLDOUB')eif('double'dv ⍺),⍵}
+  idxc←'BOUND c,j,k,m,*p,r=rgt->p->RANK-lft->p->RANK;BOUND s[r];aplint32*v;',nl
+  idxc,←'j=lft->p->RANK;p=rgt->p->SHAPETC;',nl,'r'do's[i]=p[j+i];'
+  idxc,←'getarray(rgt->p->ELTYPE,r,s,rslt);c=1;',nl,'r'do'c*=s[i];'
+  idxc,←'v=ARRAYSTART(lft->p);m=c;k=0;',nl,'j'do'int a=j-(i+1);k+=m*v[a];m*=p[a];'
+  idxb←'dst=ARRAYSTART(rslt->p);src=ARRAYSTART(rgt->p);',nl,'c'do'dst[i]=src[k+i];'
+  idxc,←'*dst' '*src'('rgt->p->ELTYPE'det)idxb
   idx←{idxc}
   gb←{'LOCALP*',⍺,'=',⍵,';'}
-  grh←{'{',(⊃,/'rslt' 'lft' 'rgt'gb¨⍺ var¨↓⍉⍵),prs}
+  grh←{'{',(⊃,/'rslt' 'lft' 'rgt'gb¨⍺ var¨↓⍉⍵),'relp(rslt);',nl}
   dff←{'default();',nl}
   gd←{d←⍵⍵⍪fdb ⋄ (⍺ grh ⍵),(⍎'⍬',⍨((0⌷⍉d)⍳⊂⍺⍺)⊃(1⌷⍉d),⊂'dff'),'}',nl}
 :EndNamespace
