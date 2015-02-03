@@ -17,10 +17,17 @@
   logm←'dd'sclm'dst[i]=log((double)src[i]);'
   pitm←'dd'sclm'dst[i]=3.14159265358979323846*src[i];'
   modm←'di'sclm'dst[i]=_Generic((src[i]),double:fabs,aplint32:labs)(src[i]);'
-  fdb←3 3⍴,¨ '⌷' idx  ''   '-' scld subm '+' scld addm
-  fdb⍪←3 3⍴,¨'÷' scld divm '×' scld mulm '*' scld powm
-  fdb⍪←3 3⍴,¨'⍟' scld logm '○' ''   pitm '|' scld modm
-  fdb⍪←1 3⍴,¨'≥' scld ''
+  subd←'dddi'scld'z[i]=l[i%sl]-r[i%sr];' ⋄ addd←'dddi'scld'z[i]=l[i%sl]-r[i%sr];'
+  divb←'if(r[i%sr]==0)error(11);z[i]=(1.0*l[i%sl])/(1.0*r[i%sr]);'
+  divd←'dddd'scld divb ⋄ muld←'dddi'scld'z[i]=l[i%sl]*r[i%sr];'
+  powd←'dddi'scld'z[i]=pow((double)l[i%sl],(double)r[i%sr]);'
+  logd←'dddd'scld'z[i]=log((double)r[i%sr])/log((double)l[i%sl]);'
+  modd←'dddi'scld'z[i]=fmod((double)r[i%sr],(double)l[i%sl]);'
+  gted←'iiii'scld'z[i]=(l[i%sl]>=r[i%sr]);'
+  fdb←3 3⍴,¨ '⌷' idx  ''   '-' subd subm '+' addd addm
+  fdb⍪←3 3⍴,¨'÷' divd divm '×' muld mulm '*' powd powm
+  fdb⍪←3 3⍴,¨'⍟' logd logm '○' ''   pitm '|' modd modm
+  fdb⍪←1 3⍴,¨'≥' gted ''
   grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),'relp(rslt);',nl}
   grhm←'rslt' 'rgt'grh ⋄ grhd←'rslt' 'lft' 'rgt'grh
   lkf←{'(',(((0⌷⍉⍵)⍳⊂⍺⍺)⊃(⍺⌷⍉⍵),⊂'dff'),')'}
