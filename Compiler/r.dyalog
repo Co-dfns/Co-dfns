@@ -2,6 +2,7 @@
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ pp←#.pp ⋄ var←##.G.var ⋄ nl←##.G.nl
   scld←##.SD.scld ⋄ sclm←##.SM.sclm ⋄ do←##.G.do ⋄ tl←##.G.tl
   idx←##.MF.idx ⋄ brki←##.MF.brki ⋄ iotm←##.MF.iotm
+  comd←##.OP.comd ⋄ comm←##.OP.comm ⋄ eacd←##.OP.eacd ⋄ eacm←##.OP.eacm
   dff←{⍺⍺,'(',(⊃{⍺,',',⍵}/⍵),'); /* Fallback */',nl}
   subm←'di'sclm'dst[i]=-1*src[i]' ⋄ addm←'di'sclm'dst[i]=src[i]'
   mulm←'ii'sclm'if(src[i]==0)dst[i]=0;else if(src[i]<0)dst[i]=-1;else if(src[i]>0)dst[i]=1;'
@@ -29,8 +30,4 @@
   gf←{⍵,'(rslt,lft,rgt);',nl}
   gomd←{⍎(((0⌷⍉odb)⍳⊂⍺)⊃1⌷⍉odb),' ⍵'} ⋄ gomm←{⍎(((0⌷⍉odb)⍳⊂⍺)⊃2⌷⍉odb),' ⍵'}
   odb←2 3⍴,¨'⍨' 'comd' 'comm' '¨' 'eacd' 'eacm'
-  comda←'LOCALP*or,*ol;or=rgt;ol=lft;lft=or;rgt=ol;',nl
-  comd←{comda,(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
-  comm←{'LOCALP*lft=rgt;',(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
-  eacd←{'eacd();',nl} ⋄ eacm←{'eacm();',nl}
 :EndNamespace
