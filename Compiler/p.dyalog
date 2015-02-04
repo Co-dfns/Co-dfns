@@ -1,4 +1,4 @@
-﻿:Namespace P
+:Namespace P
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
   _s←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ 0<⊃c2 a2 e r←e ⍵⍵ r:c2 a2 e r ⋄ (c⌈c2)(a,a2) e r}
   _o←{0≥⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ 0≥⊃c a e r2←⍺ ⍵⍵ ⍵:c a e r2 ⋄ c a e(r↑⍨-⌊/≢¨r r2)}

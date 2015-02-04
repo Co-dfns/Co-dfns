@@ -1,11 +1,11 @@
-﻿:Namespace G
+:Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ pp←#.pp
   t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM
-  nl←⎕UCS 13
-  hdr←'#include "dwa.h"',nl
+  nl←⎕UCS 10
+  hdr←'#include "math.h"',nl,'#include "dwa.h"',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
-  do←{'{BOUND i;for(i=0;i<',⍺,';i++){',⍵,'}}',nl}
+  do←{'{BOUND i;for(i=0;i<',(⍕⍺),';i++){',⍵,'}}',nl}
   tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
   ged←{'LOCALP ',⍺,'[',(⍕+/(ExpM∨AtmM)1↓⍵),'];',nl}
   ger←{(+/(ExpM∨AtmM)1↓⍵)do'regp(',⍺,'[i]);'}
@@ -24,9 +24,9 @@
   fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(⍕⍺),';'})¨⍳≢⍵}
   Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
   Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
-  Expm←{f r←⊃v⍵ ⋄ ((⊃n⍵) r)(f R.gm(0 3⍴⊂''))⊃e ⍵}
-  Expd←{l f r←⊃v⍵ ⋄ ((⊃n⍵) l r)(f R.gd(0 3⍴⊂''))⊃e ⍵}
-  Expi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Expm←{f r←⊃v⍵ ⋄ ((⊃n⍵)r)(f R.gm(0 3⍴⊂''))(⊃e⍵)[;0 2]}
+  Expd←{l f r←⊃v⍵ ⋄ ((⊃n⍵)l r)(f R.gd(0 3⍴⊂''))(⊃e⍵)[;0 1 3]}
+  Expi←{a i←⊃v⍵ ⋄ ((⊃n⍵) a i)((,'[')R.gd(0 3⍴⊂''))⊃e ⍵}
   Fexi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Fexf←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
   Fexm←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl} 

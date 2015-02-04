@@ -1,4 +1,4 @@
-﻿:Namespace A
+:Namespace A
   (⎕IO ⎕ML ⎕WX)←0 1 3
   APLPrims←,¨'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳¨'
 
@@ -12,8 +12,9 @@
   Bind←{nm _ ex←⍵ ⋄ (0 nf⌷ex)←⊂nm ⋄ ex}
   
   msk←{(t ⍵)∊⊂⍺⍺} ⋄ FexM←'Fex'msk ⋄ FunM←'Fun'msk ⋄ AtmM←'Atm'msk ⋄ NumM←'Num'msk
-  ExpM←'Exp'msk
+  ExpM←'Exp'msk ⋄ PrmM←'Prm'msk
   sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel ⋄ VarS←'Var'sel ⋄ AtmS←'Atm'sel
+  PrmS←'Prm'sel
 
 :EndNamespace
 
