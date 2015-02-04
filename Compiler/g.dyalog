@@ -30,7 +30,7 @@
   Fexi←{(⊃n⍵)('Fexid();',nl)('Fexim();',nl)}
   Fexf←{(⊃n⍵)(R.gf⊃⊃v⍵)(R.gf⊃⊃v⍵)}
   Fexm←{f o←⊃v⍵ ⋄ (⊃n⍵)(o R.gomd f)(o R.gomm f)}
-  Fexd←{(⊃n⍵)('Fexdd();',nl)('Fexdm();',nl)}
+  Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
   gex←{_←⍺⍺ ⋄ ⍎'⍺⍺ ',(⊃t⍵),(⍕⊃k⍵),' ⍵'}
   gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f} ⋄ gdf←{(~FexM ⍵)⌿⍵}
   gcf←{⍵,(gfh ⍺),(⊃,/(⊂(⍺⍺⍪gfd 1↓⍺)gex)⍤1⊢gdf 1↓⍺),(gff ⍺),nl}

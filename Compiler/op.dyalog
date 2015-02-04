@@ -15,4 +15,8 @@
   emc,←'z[i]=r[0];'
   emd←'cutp(&sz);',nl
   eacm←{ema,('c'do emb,⍵,emc),emd}
+  ptd←'getarray(APLDOUB,0,NULL,rslt);BOUND c=1;',nl
+  ptd,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
+  ptd,←'double*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
+  ptd,←'r=ARRAYSTART(rgt->p);',nl,'c'do'z[0]+=l[i]*r[i];'
 :EndNamespace
