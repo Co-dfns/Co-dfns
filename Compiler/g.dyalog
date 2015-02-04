@@ -27,14 +27,14 @@
   Expm←{f r←⊃v⍵ ⋄ ((⊃n⍵)r)(f R.gm ⍺)(⊃e⍵)[;0 2]}
   Expd←{l f r←⊃v⍵ ⋄ ((⊃n⍵)l r)(f R.gd ⍺)(⊃e⍵)[;0 1 3]}
   Expi←{a i←⊃v⍵ ⋄ ((⊃n⍵) a i)((,'[')R.gd ⍺)⊃e ⍵}
-  Fexi←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Fexi←{(⊃n⍵)('Fexid();',nl)('Fexim();',nl)}
   Fexf←{(⊃n⍵)(R.gf⊃⊃v⍵)(R.gf⊃⊃v⍵)}
-  Fexm←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl} 
-  Fexd←{'/* ',((⊃t⍵),⍕⊃k⍵),((⍕n,v)⍵),' */',nl}
+  Fexm←{f o←⊃v⍵ ⋄ (⊃n⍵)(o R.gomd f)(o R.gomm f)}
+  Fexd←{(⊃n⍵)('Fexdd();',nl)('Fexdm();',nl)}
   gex←{_←⍺⍺ ⋄ ⍎'⍺⍺ ',(⊃t⍵),(⍕⊃k⍵),' ⍵'}
-  gfd←{{⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢FexS ⍵}
-  gcf←{⍵,(gfh ⍺),(⊃,/(⊂⍺⍺ gex)⍤1⊢1↓⍺),(gff ⍺),nl}
+  gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f} ⋄ gdf←{(~FexM ⍵)⌿⍵}
+  gcf←{⍵,(gfh ⍺),(⊃,/(⊂(⍺⍺⍪gfd 1↓⍺)gex)⍤1⊢gdf 1↓⍺),(gff ⍺),nl}
   gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
   gct←⊂(gtf⍪1↓⊢)((0 3⍴⊂'')gcf) hdr,'tenv'ged⊢
-  gc←{⊃(gfd⊃⍵)gcf/⌽(gct{(~FexM ⍵)⌿⍵}⊃⍵),1↓⍵}(1,1↓FunM)⊂[0]⊢
+  gc←{⊃(gfd⊃⍵)gcf/⌽(gct gdf⊃⍵),1↓⍵}(1,1↓FunM)⊂[0]⊢
 :EndNamespace 

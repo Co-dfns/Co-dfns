@@ -26,5 +26,11 @@
   lkf←{'(',(((0⌷⍉⍵)⍳⊂⍺⍺)⊃(⍺⌷⍉⍵),⊂'dff'),')'}
   gd←{d←⍵⍵⍪fdb ⋄ (⍺ grhd ⍵),(((0⌷⍉d)⍳⊂⍺⍺)⊃(1⌷⍉d),⊂⍺⍺ dff ⍺),'}',nl}
   gm←{d←⍵⍵⍪fdb ⋄ (⍺ grhm ⍵),(((0⌷⍉d)⍳⊂⍺⍺)⊃(2⌷⍉d),⊂⍺⍺ dff ⍺),'}',nl}
-  gf←{⍵,'(rslt,lft,rgt); XXX',nl}
+  gf←{⍵,'(rslt,lft,rgt);',nl}
+  gomd←{⍎(((0⌷⍉odb)⍳⊂⍺)⊃1⌷⍉odb),' ⍵'} ⋄ gomm←{⍎(((0⌷⍉odb)⍳⊂⍺)⊃2⌷⍉odb),' ⍵'}
+  odb←2 3⍴,¨'⍨' 'comd' 'comm' '¨' 'eacd' 'eacm'
+  comda←'LOCALP*or,*ol;or=rgt;ol=lft;lft=or;rgt=ol;',nl
+  comd←{comda,(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
+  comm←{'LOCALP*lft=rgt;',(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
+  eacd←{'eacd();',nl} ⋄ eacm←{'eacm();',nl}
 :EndNamespace
