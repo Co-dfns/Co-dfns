@@ -16,4 +16,7 @@
   iota,←'BOUND s[]={c};getarray(APLLONG,1,s,rslt);',nl
   iota,←'v=ARRAYSTART(rslt->p);',nl,'c'do'v[i]=i;'
   iotm←iota
+  cat←'BOUND s[]={rgt->p->SHAPETC[0],2};getarray(APLDOUB,2,s,rslt);',nl
+  cat,←'double*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
+  cat,←'r=ARRAYSTART(rgt->p);',nl,'s[0]'do'z[i*2]=l[i];z[i*2+1]=r[i];'
 :EndNamespace

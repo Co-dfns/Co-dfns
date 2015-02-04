@@ -3,7 +3,7 @@
   t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
   nl←⎕UCS 10
-  hdr←'#include "math.h"',nl,'#include "dwa.h"',nl
+  hdr←'#include <math.h>',nl,'#include "dwa.h"',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   do←{'{BOUND i;for(i=0;i<',(⍕⍺),';i++){',⍵,'}}',nl}
   tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
@@ -27,7 +27,7 @@
   Expm←{f r←⊃v⍵ ⋄ ((⊃n⍵)r)(f R.gm ⍺)(⊃e⍵)[;0 2]}
   Expd←{l f r←⊃v⍵ ⋄ ((⊃n⍵)l r)(f R.gd ⍺)(⊃e⍵)[;0 1 3]}
   Expi←{a i←⊃v⍵ ⋄ ((⊃n⍵) a i)((,'[')R.gd ⍺)⊃e ⍵}
-  Fexi←{(⊃n⍵)('Fexid();',nl)('Fexim();',nl)}
+  Fexi←{(⊃n⍵)(##.MF.cat)('Fexim();',nl)}
   Fexf←{(⊃n⍵)(R.gf⊃⊃v⍵)(R.gf⊃⊃v⍵)}
   Fexm←{f o←⊃v⍵ ⋄ (⊃n⍵)(o R.gomd f)(o R.gomm f)}
   Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
