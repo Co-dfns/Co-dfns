@@ -1,7 +1,8 @@
 :Namespace SM
   nl←##.G.nl ⋄ do←##.G.do ⋄ tl←##.G.tl
-  sma←'BOUND c=1;getarray(rgt->p->ELTYPE==APLLONG?'
-  smb←',rgt->p->RANK,rgt->p->SHAPETC,rslt);',nl
+  sma←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
+  sma,←'BOUND c=1;getarray(rgt->p->ELTYPE==APLLONG?'
+  smb←',rgt->p->RANK,sp,rslt);',nl
   smb,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'          
   smb,←'if(rgt->p->ELTYPE==APLLONG){aplint32*src=ARRAYSTART(rgt->p);',nl
   smc←'*dst=ARRAYSTART(rslt->p);',nl

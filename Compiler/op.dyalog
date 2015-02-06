@@ -5,7 +5,8 @@
   comd←{comda,(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
   comm←{'LOCALP*lft=rgt;',(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
   eacd←{'eacd();',nl}
-  ema←'getarray(APLDOUB,rgt->p->RANK,rgt->p->SHAPETC,rslt);',nl
+  ema←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
+  ema,←'getarray(APLDOUB,rgt->p->RANK,sp,rslt);',nl
   ema,←'LOCALP sz,sr;regp(&sz);regp(&sr);',nl
   ema,←'getarray(APLDOUB,0,NULL,&sz);getarray(APLDOUB,0,NULL,&sr);',nl
   ema,←'double*z,*r;',nl

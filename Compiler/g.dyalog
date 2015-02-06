@@ -4,6 +4,7 @@
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
   nl←⎕UCS 10
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+  hdr,←'int isinit=0;',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   do←{'{BOUND i;for(i=0;i<',(⍕⍺),';i++){',⍵,'}}',nl}
   tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
@@ -13,9 +14,10 @@
   ghi←{'void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
   ght←{flp,'){',nl,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
   ghn←{flp,',LOCALP*penv[]){',nl,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
-  gfh←{'void EXPORT ',(⊃n ⍵),'(',(2⌊⊃s ⍵)⊃(ghi ⍵)(ght ⍵)(ghn ⍵)}
+  gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
+  gfh←{'void EXPORT ',(⊃n ⍵),'(',((2⌊⊃s ⍵)⊃(ghi ⍵)(ght ⍵)(ghn ⍵)),⍺⊃'' gfi}
   gfr←{'z->p=zap(',((⊃⌽n 1↓⍵)vpp 0⌷⍉⊃⌽e 1↓⍵),');'}
-  gff←{⍵{(gfr ⍺),'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢'}',nl}
+  gff←{⍵{(gfr ⍺),'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢,(⍺⊃'}' 'isinit=oi;}'),nl}
   elt←{⍵≡⌊⍵:'APLLONG' ⋄ 'APLDOUB'} ⋄ eld←{⍵≡⌊⍵:'aplint32' ⋄ 'double'}
   vec←{(vsp ≢⍵),'getarray(',(elt⊃⍵),',',(⍕1<≢⍵),',','sp,',((⊃⍵)var 0⌷⍉⍺),');}',nl}
   vsp←{'{BOUND ',(1<⍵)⊃'*sp=NULL;'('sp[1]={',(⍕⍵),'};')}
@@ -34,8 +36,9 @@
   Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
   gex←{_←⍺⍺ ⋄ ⍎'⍺⍺ ',(⊃t⍵),(⍕⊃k⍵),' ⍵'}
   gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f} ⋄ gdf←{(~FexM ⍵)⌿⍵}
-  gcf←{⍵,(gfh ⍺),(⊃,/(⊂(⍺⍺⍪gfd 1↓⍺)gex)⍤1⊢gdf 1↓⍺),(gff ⍺),nl}
+  gcf←{⍵,(⍵⍵ gfh ⍺),(⊃,/(⊂(⍺⍺⍪gfd 1↓⍺)gex)⍤1⊢gdf 1↓⍺),(⍵⍵ gff ⍺),nl}
   gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
-  gct←⊂(gtf⍪1↓⊢)((0 3⍴⊂'')gcf) hdr,'tenv'ged⊢
-  gc←{⊃(gfd⊃⍵)gcf/⌽(gct gdf⊃⍵),1↓⍵}(1,1↓FunM)⊂[0]⊢
+  gct←{b←gdf⊃⍵ ⋄ ⊂((gtf b)⍪1↓b)((0 3⍴⊂'')gcf 0)hdr,('tenv'ged b),gfs ⍵}
+  gfs←{⊃,/{'void EXPORT ',(⊃n 1↑⍵),'(',flp,((¯1+⊃s 1↑⍵)⊃');' ',LOCALP*penv[]);'),nl}¨1↓⍵}
+  gc←{⊃(gfd⊃⍵)gcf 1/⌽(gct ⍵),1↓⍵}(1,1↓FunM)⊂[0]⊢
 :EndNamespace 
