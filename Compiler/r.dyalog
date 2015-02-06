@@ -22,7 +22,7 @@
   fdb⍪←3 3⍴,¨'÷' divd divm '×' muld mulm '*' powd powm
   fdb⍪←3 3⍴,¨'⍟' logd logm '○' ''   pitm '|' modd modm
   fdb⍪←3 3⍴,¨'≥' gted ''   '[' brki ''   '⍳' ''   iotm
-  grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),'relp(rslt);',nl}
+  grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
   grhm←'rslt' 'rgt'grh ⋄ grhd←'rslt' 'lft' 'rgt'grh
   lkf←{'(',(((0⌷⍉⍵)⍳⊂⍺⍺)⊃(⍺⌷⍉⍵),⊂'dff'),')'}
   gd←{d←⍵⍵⍪fdb ⋄ (⍺ grhd ⍵),(((0⌷⍉d)⍳⊂⍺⍺)⊃(1⌷⍉d),⊂⍺⍺ dff ⍺),'}',nl}

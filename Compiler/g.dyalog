@@ -8,7 +8,7 @@
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   do←{'{BOUND i;for(i=0;i<',(⍕⍺),';i++){',⍵,'}}',nl}
   tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
-  ged←{'LOCALP ',⍺,'[',(⍕+/(ExpM∨AtmM)1↓⍵),'];',nl}
+  ged←{'LOCALP ',⍺,'[',(⍕≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵),'];',nl}
   ger←{(+/(ExpM∨AtmM)1↓⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ghi←{'void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
