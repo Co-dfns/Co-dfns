@@ -10,7 +10,8 @@
   idx←idxc,idxb,idxd,idxb,'}',nl
   bia←'getarray(APLLONG,rgt->p->RANK,rgt->p->SHAPETC,rslt);',nl
   bia,←'aplint32*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
-  bia,←'r=ARRAYSTART(rgt->p);',nl,'rgt->p->RANK'do'z[i]=l[r[i]];'
+  bia,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
+  bia,←'r=ARRAYSTART(rgt->p);',nl,'c'do'z[i]=l[r[i]];'
   brki←bia
   iota←'aplint32*v=ARRAYSTART(rgt->p);aplint32 c=v[0];',nl
   iota,←'BOUND s[]={c};getarray(APLLONG,1,s,rslt);',nl
