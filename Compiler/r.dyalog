@@ -1,6 +1,7 @@
 :Namespace R
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ pp←#.pp ⋄ var←##.G.var ⋄ nl←##.G.nl
-  scld←##.SD.scld ⋄ sclm←##.SM.sclm ⋄ do←##.G.do ⋄ tl←##.G.tl
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ pp←#.pp
+  var←##.U.var ⋄ nl←##.U.nl ⋄ tl←##.U.tl ⋄ do←##.U.do ⋄ pdo←##.U.pdo
+  scld←##.SD.scld ⋄ sclm←##.SM.sclm
   idx←##.MF.idx ⋄ brki←##.MF.brki ⋄ iotm←##.MF.iotm
   comd←##.OP.comd ⋄ comm←##.OP.comm ⋄ eacd←##.OP.eacd ⋄ eacm←##.OP.eacm
   dff←{⍺⍺,'(',(⊃{⍺,',',⍵}/⍵),'); /* Fallback */',nl}

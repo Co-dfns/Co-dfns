@@ -1,5 +1,5 @@
 :Namespace MF
-  nl←##.G.nl ⋄ do←##.G.do ⋄ tl←##.G.tl
+  nl←##.U.nl ⋄ do←##.U.do ⋄ tl←##.U.tl
   idxc←'BOUND c,j,k,m,*p,r;aplint32*v;j=lft->p->RANK;j=(j==0?1:j);',nl
   idxc,←'r=rgt->p->RANK-j;',nl
   idxc,←'BOUND sp[15];','r'do'sp[i]=rgt->p->SHAPETC[j+i];'

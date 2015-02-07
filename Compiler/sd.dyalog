@@ -1,6 +1,6 @@
 :Namespace SD
-  nl←##.G.nl ⋄ do←##.G.do ⋄ tl←##.G.tl
-  body←{⍺,'*z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);r=ARRAYSTART(rgt->p);',nl,'c'do⍵}
+  nl←##.U.nl ⋄ do←##.U.do ⋄ pdo←##.U.pdo ⋄ tl←##.U.tl
+  body←{⍺,'*z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);r=ARRAYSTART(rgt->p);',nl,'c'pdo ⍵}
   scld←{(dde ddt)(die dit)(ide idt)(iie iit)←tl ⍺ ⋄ z←''
     z,←'LOCALP tp;tp.p=NULL;int tpused=0;BOUND sr,sl,c,rk,elt,rt,lt,sp[15];',nl
     z,←'LOCALP*orz;c=1;rt=rgt->p->ELTYPE;lt=lft->p->ELTYPE;',nl

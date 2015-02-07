@@ -1,5 +1,5 @@
 :Namespace SM
-  nl←##.G.nl ⋄ do←##.G.do ⋄ tl←##.G.tl
+  nl←##.U.nl ⋄ do←##.U.do ⋄ pdo←##.U.pdo ⋄ tl←##.U.tl
   sclm←{(de dt)(ie it)←tl ⍺ ⋄ z←''
     z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
     z,←'BOUND c=1;','rgt->p->RANK'do'c*=sp[i];'
@@ -12,9 +12,9 @@
     z,←('rgt->p->RANK'do'if(sp[i]!=rslt->p->SHAPETC[i]){relp(rslt);break;}'),'}',nl
     z,←'if(rslt->p==NULL){getarray(elt,rgt->p->RANK,sp,rslt);}',nl
     z,←'if(rgt->p->ELTYPE==APLLONG){aplint32*src=ARRAYSTART(rgt->p);',nl
-    z,←' ',it,'*dst=ARRAYSTART(rslt->p);',('c'do ⍵),'}',nl
+    z,←' ',it,'*dst=ARRAYSTART(rslt->p);',('c'pdo ⍵),'}',nl
     z,←'else if(rgt->p->ELTYPE==APLDOUB){double*src=ARRAYSTART(rgt->p);',nl
-    z,←' ',dt,'*dst=ARRAYSTART(rslt->p);',('c'do ⍵),'}',nl
+    z,←' ',dt,'*dst=ARRAYSTART(rslt->p);',('c'pdo ⍵),'}',nl
     z,←'if(tpused){relp(rgt);rgt->p=zap(rslt->p);}',nl
     z}
 :EndNamespace

@@ -1,5 +1,5 @@
 :Namespace OP
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ nl←##.G.nl ⋄ do←##.G.do
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ nl←##.U.nl ⋄ do←##.U.do
   fdb←##.R.fdb
   comda←'LOCALP*or,*ol;or=rgt;ol=lft;lft=or;rgt=ol;',nl
   comd←{comda,(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
