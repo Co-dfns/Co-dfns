@@ -1,11 +1,20 @@
 :Namespace SM
   nl←##.G.nl ⋄ do←##.G.do ⋄ tl←##.G.tl
-  sma←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
-  sma,←'BOUND c=1;getarray(rgt->p->ELTYPE==APLLONG?'
-  smb←',rgt->p->RANK,sp,rslt);',nl
-  smb,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'          
-  smb,←'if(rgt->p->ELTYPE==APLLONG){aplint32*src=ARRAYSTART(rgt->p);',nl
-  smc←'*dst=ARRAYSTART(rslt->p);',nl
-  smd←'}else if(rgt->p->ELTYPE==APLDOUB){double*src=ARRAYSTART(rgt->p);',nl
-  sclm←{(de dt)(ie it)←tl ⍺ ⋄ sma,ie,':',de,smb,it,smc,('c'do⍵),smd,dt,smc,('c'do⍵),'}',nl}
+  sclm←{(de dt)(ie it)←tl ⍺ ⋄ z←''
+    z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
+    z,←'BOUND c=1;','rgt->p->RANK'do'c*=sp[i];'
+    z,←'unsigned elt=(rgt->p->ELTYPE==APLLONG?',ie,':',de,');',nl
+    z,←'LOCALP tp;tp.p=NULL;int tpused=0;',nl
+    z,←'if(rgt==rslt&&rgt->p->ELTYPE!=elt){rslt=&tp;tpused=1;}',nl
+    z,←'else if(rslt->p!=NULL&&(rslt->p->RANK!=rgt->p->RANK||rslt->p->ELTYPE!=elt)){',nl
+    z,←' relp(rslt);}',nl
+    z,←'else if(rslt->p!=NULL){',nl
+    z,←('rgt->p->RANK'do'if(sp[i]!=rslt->p->SHAPETC[i]){relp(rslt);break;}'),'}',nl
+    z,←'if(rslt->p==NULL){getarray(elt,rgt->p->RANK,sp,rslt);}',nl
+    z,←'if(rgt->p->ELTYPE==APLLONG){aplint32*src=ARRAYSTART(rgt->p);',nl
+    z,←' ',it,'*dst=ARRAYSTART(rslt->p);',('c'do ⍵),'}',nl
+    z,←'else if(rgt->p->ELTYPE==APLDOUB){double*src=ARRAYSTART(rgt->p);',nl
+    z,←' ',dt,'*dst=ARRAYSTART(rslt->p);',('c'do ⍵),'}',nl
+    z,←'if(tpused){relp(rgt);rgt->p=zap(rslt->p);}',nl
+    z}
 :EndNamespace

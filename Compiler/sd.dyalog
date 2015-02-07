@@ -1,27 +1,31 @@
 :Namespace SD
   nl←##.G.nl ⋄ do←##.G.do ⋄ tl←##.G.tl
-  sp←{'BOUND sp[15];',(⍵,'->p->RANK')do'sp[i]=',⍵,'->p->SHAPETC[i];'}
-  sb←{'getarray(',(0⊃⍺),',(unsigned)rk,sp,rslt);',nl,(1⊃⍺),sbb,'c'do ⍵}
-  sbb←'*z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);r=ARRAYSTART(rgt->p);',nl
-  st←{stdd,((0⊃⍺)sb ⍵),stdi,((1⊃⍺)sb ⍵),stid,((2⊃⍺)sb ⍵),stii,((3⊃⍺)sb ⍵),stfi}
-  stt←{'if(',⍺⍺,'->p->ELTYPE==',⍺,'){',⍵,'*',(⊃⍺⍺),';'}
-  sti←'APLLONG' 'aplint32' ⋄ std←'APLDOUB' 'double'
-  stdd←(⊃'lft'stt/std),nl,(⊃'rgt'stt/std),nl
-  stdi←'}else ',(⊃'rgt'stt/sti),nl
-  stid←'}else{error(11);}',nl,'}else ',(⊃'lft'stt/sti),nl,(⊃'rgt'stt/std),nl
-  stii←'}else ',(⊃'rgt'stt/sti),nl
-  stfi←'}else{error(11);}',nl,'}else{error(11);}',nl
-  sre←'if(lft->p->RANK==rgt->p->RANK){',nl
-  sre,←'rgt->p->RANK'do'if(rgt->p->SHAPETC[i]!=lft->p->SHAPETC[i])error(5);'
-  sre,←'BOUND rk=rgt->p->RANK;',(sp'rgt'),nl
-  sre,←'BOUND c=1;','rk'do'c*=sp[i];'
-  sre,←'BOUND sr=c;BOUND sl=c;',nl
-  srl←'}else if(lft->p->RANK==0){BOUND sl=1;BOUND rk=rgt->p->RANK;',nl
-  srl,←(sp'rgt'),'BOUND c=1;','rk'do'c*=sp[i];'
-  srl,←'BOUND sr=c;',nl
-  srr←'}else if(rgt->p->RANK==0){BOUND sr=1;BOUND rk=lft->p->RANK;',nl
-  srr,←(sp'lft'),'BOUND c=1;','rk'do'c*=sp[i];'
-  srr,←'BOUND sl=c;;',nl
-  srt←'}else{error(4);}',nl
-  scld←{t←tl ⍺ ⋄ sre,(t st ⍵),srl,(t st ⍵),srr,(t st ⍵),srt}
+  body←{⍺,'*z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);r=ARRAYSTART(rgt->p);',nl,'c'do⍵}
+  scld←{(dde ddt)(die dit)(ide idt)(iie iit)←tl ⍺ ⋄ z←''
+    z,←'LOCALP tp;tp.p=NULL;int tpused=0;BOUND sr,sl,c,rk,elt,rt,lt,sp[15];',nl
+    z,←'LOCALP*orz;c=1;rt=rgt->p->ELTYPE;lt=lft->p->ELTYPE;',nl
+    z,←'if(lt==APLDOUB&&rt==APLDOUB)elt=',dde,';if(lt==APLDOUB&&rt==APLLONG)elt=',die,';',nl
+    z,←'if(lt==APLLONG&&rt==APLDOUB)elt=',ide,';if(lt==APLLONG&&rt==APLLONG)elt=',iie,';',nl
+    z,←'if(lft->p->RANK==rgt->p->RANK){rk=rgt->p->RANK;',nl
+    z,←' ',('rk'do'sp[i]=rgt->p->SHAPETC[i];'),('rk'do'c*=sp[i];'),'sr=sl=c;',nl
+    z,←'}else if(lft->p->RANK==0){rk=rgt->p->RANK;',nl
+    z,←' ',('rk'do'sp[i]=rgt->p->SHAPETC[i];'),('rk'do'c*=sp[i];'),'sr=c;sl=1;',nl
+    z,←'}else if(rgt->p->RANK==0){rk=lft->p->RANK;',nl
+    z,←' ',('rk'do'sp[i]=lft->p->SHAPETC[i];'),('rk'do'c*=sp[i];'),'sr=1;sl=c;',nl
+    z,←'}else{error(4);}',nl
+    z,←'if((rslt==rgt||rslt==lft)&&(elt!=rslt->p->ELTYPE||rk!=rslt->p->RANK)){',nl
+    z,←' orz=rslt;rslt=&tp;tpused=1;',nl
+    z,←'}else if(rslt->p!=NULL&&(elt!=rslt->p->ELTYPE||rk!=rslt->p->RANK)){',nl
+    z,←' relp(rslt);',nl
+    z,←'}else if(rslt->p!=NULL){',nl
+    z,←' ','rk'do'if(sp[i]!=rslt->p->SHAPETC[i]){relp(rslt);break;}',nl
+    z,←'}',nl
+    z,←'if(rslt->p==NULL){getarray(elt,rk,sp,rslt);}',nl
+    z,←'if(lt==APLDOUB&&rt==APLDOUB){double*l,*r;',nl,ddt body ⍵
+    z,←'}else if(lt==APLDOUB&&rt==APLLONG){double*l;aplint32*r;',nl,dit body ⍵
+    z,←'}else if(lt==APLLONG&&rt==APLDOUB){aplint32*l;double*r;',nl,idt body ⍵
+    z,←'}else if(lt==APLLONG&&rt==APLLONG){aplint32*l,*r;',nl,iit body ⍵
+    z,←'}',nl
+    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
+    z}
 :EndNamespace

@@ -6,7 +6,7 @@
   comm←{'LOCALP*lft=rgt;',(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
   eacd←{'eacd();',nl}
   ema←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
-  ema,←'getarray(APLDOUB,rgt->p->RANK,sp,rslt);',nl
+  ema,←'if(rslt!=rgt){relp(rslt);getarray(APLDOUB,rgt->p->RANK,sp,rslt);}',nl
   ema,←'LOCALP sz,sr;regp(&sz);regp(&sr);',nl
   ema,←'getarray(APLDOUB,0,NULL,&sz);getarray(APLDOUB,0,NULL,&sr);',nl
   ema,←'double*z,*r;',nl
@@ -16,8 +16,11 @@
   emc,←'z[i]=r[0];'
   emd←'cutp(&sz);',nl
   eacm←{ema,('c'do emb,⍵,emc),emd}
-  ptd←'getarray(APLDOUB,0,NULL,rslt);BOUND c=1;',nl
+  ptd←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
+  ptd,←'if(rslt==lft||rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
+  ptd,←'getarray(APLDOUB,0,NULL,rslt);BOUND c=1;',nl
   ptd,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
   ptd,←'double*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
   ptd,←'r=ARRAYSTART(rgt->p);',nl,'c'do'z[0]+=l[i]*r[i];'
+  ptd,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
 :EndNamespace
