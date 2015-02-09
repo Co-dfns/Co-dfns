@@ -1,4 +1,4 @@
-:Namespace T
+﻿:Namespace T
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s
   v←A.v
   FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM ⋄ ExpS←A.ExpS
@@ -35,4 +35,7 @@
   avb←{⍺⌷⍨⍤2 0⊢⍺⍺⍳⍺⍺∩⍨(↓(⌽1+∘⍳0⍳⍨⊢)((≢⊢)↑↑)⍤0 1⊢)⊃r ⍵}
   avh←{⊂⍵,(n⍵)((⍺⍺(⍵⍵ avb)⍵){(⍴⍺⍺)⊤(,⍺⍺)⍳(⊂⍺),⍵})¨v⍵}
   av←(⊃⍪/)(+\FunM){⍺((⍺((∪n)(ExpM∨AtmM)(⌿∘⊢)⊢)⌸⍵)avh(r(1↑⍵)⍪FunS ⍵))⌸⍵}⊢
+  fsp←,¨'+-×÷|⌊⌈*⍟○!∧∨⍱⍲<≤=≥>≠'
+  fss←(ExpM∧((,¨'md')∊⍨k)∧fsp∊⍨(↑v)⌷⍤¯1⍨(,¨'md')⍳k)(⌿∘⊢)⊢
+  fs←{}
 :EndNamespace
