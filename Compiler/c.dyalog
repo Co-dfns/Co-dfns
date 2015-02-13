@@ -1,6 +1,6 @@
-:Namespace C
+﻿:Namespace C
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ P←##.P ⋄ G←##.G ⋄ T←##.T
-  Fix←{(vf ⍺)put⍨ G.gc T.{av mf ce fe da lc lf du df rd rn ⍵}⊃a n←P.Ps vi ⍵}
+  Fix←{(vf ⍺)put⍨ G.gc T.{fs av va ce fe da lc lf du df rd rn ⍵}⊃a n←P.Ps vi ⍵}
   vf←{1≢≡⍵:err 11 ⋄ 1≢≢⍴⍵:err 11 ⋄ ~∧/∊' '=⊃0⍴⊂⍵:err 11 ⋄ ⍵}
   vi←{~1≡≢⍴⍵:err 11 ⋄ 2≠|≡⍵:err 11 ⋄ ~∧/1≥≢∘⍴¨⍵:err 11 ⋄ ~∧/∊' '=(⊃0⍴⊂)¨⍵:err 11 ⋄ ⍵}
   wm←{⍺⊣⍵ put ⍺,'.c'}

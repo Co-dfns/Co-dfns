@@ -1,11 +1,11 @@
-:Namespace G
+﻿:Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ pp←#.pp ⋄ tl←##.U.tl ⋄ do←##.U.do
-  t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
+  d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
   var←##.U.var ⋄ nl←##.U.nl
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
-  flp←'LOCALP*z,LOCALP*l,LOCALP*r'
+  flp←'LOCALP*z,LOCALP*l,LOCALP*r' ⋄ frt←'void EXPORT '
   ged←{'LOCALP ',⍺,'[',(⍕≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵),'];',nl}
   ger←{(≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
@@ -31,11 +31,12 @@
   Fexf←{(⊃n⍵)('lft'R.gf⊃⊃v⍵)('NULL'R.gf⊃⊃v⍵)}
   Fexm←{f o←⊃v⍵ ⋄ (⊃n⍵)(o R.gomd f)(o R.gomm f)}
   Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
-  gex←{_←⍺⍺ ⋄ ⍎'⍺⍺ ',(⊃t⍵),(⍕⊃k⍵),' ⍵'}
-  gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f} ⋄ gdf←{(~FexM ⍵)⌿⍵}
-  gcf←{⍵,(⍵⍵ gfh ⍺),(⊃,/(⊂(⍺⍺⍪gfd 1↓⍺)gex)⍤1⊢gdf 1↓⍺),(⍵⍵ gff ⍺),nl}
+  Scl0←{'Scalar();',nl}
+  gex←{⍺⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~FexM ⍵)⌿⍵}
+  gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f}
+  gcf←{⍵,(⍵⍵ gfh ⍺),(⊃,/(⍺⍺⍪gfd 1↓⍺)gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍺),(⍵⍵ gff ⍺),nl}
   gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
   gct←{b←gdf⊃⍵ ⋄ ⊂((gtf b)⍪1↓b)((0 3⍴⊂'')gcf 0)hdr,('tenv'ged b),gfs ⍵}
-  gfs←{⊃,/{'void EXPORT ',(⊃n 1↑⍵),'(',flp,((¯1+⊃s 1↑⍵)⊃');' ',LOCALP*penv[]);'),nl}¨1↓⍵}
+  gfs←{⊃,/{frt,(⊃n 1↑⍵),'(',flp,((¯1+⊃s 1↑⍵)⊃');' ',LOCALP*penv[]);'),nl}¨1↓⍵}
   gc←{⊃(gfd⊃⍵)gcf 1/⌽(gct ⍵),1↓⍵}(1,1↓FunM)⊂[0]⊢
 :EndNamespace 
