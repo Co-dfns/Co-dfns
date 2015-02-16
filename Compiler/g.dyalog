@@ -31,7 +31,7 @@
   Fexf←{(⊃n⍵)('lft'R.gf⊃⊃v⍵)('NULL'R.gf⊃⊃v⍵)}
   Fexm←{f o←⊃v⍵ ⋄ (⊃n⍵)(o R.gomd f)(o R.gomm f)}
   Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
-  Scl0←{'Scalar();',nl}
+  Scl0←{⍺ R.gs 1↓⍵}
   gex←{⍺⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~FexM ⍵)⌿⍵}
   gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f}
   gcf←{⍵,(⍵⍵ gfh ⍺),(⊃,/(⍺⍺⍪gfd 1↓⍺)gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍺),(⍵⍵ gff ⍺),nl}
