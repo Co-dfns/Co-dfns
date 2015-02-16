@@ -1,0 +1,63 @@
+1. Example overview
+
+	nested
+	⊃,/nested,¨⎕UCS 13
+	exprs
+	⊃,/exprs,¨⎕UCS 13
+	⊃P.Ps nested
+	⊃P.Ps exprs
+	tdisp ⊃P.Ps nested
+	tdisp ⊃P.Ps exprs
+
+2. Important transformations
+
+	⍝ Function lifting
+	1 tdisp T.lf preLF nested
+	⍝ Expression Flattening
+	1 tdisp T.fe preFE exprs
+
+3. Computing over sub-trees
+
+3.0 Function Trains
+
+	(+⌿÷≢)⍳10
+	(+⌿÷≢)
+	5+⍳10
+	(5+⍳)10
+	(5+⍳)
+
+3.1 Computing the reference coordinates
+
+	⍝ Extract the depths
+	T.d
+	T.d nested_parsed
+	⍝ Compute depth boundary/maximum
+	T.(1+(⌈/0,d)) nested_parsed
+	⍳10
+	(1+⍳9)∘.×1+⍳9
+	T.(⍳1+(⌈/0,d)) nested_parsed
+	T.(d∘.=∘⍳1+(⌈/0,d)) nested_parsed
+	⍉T.(d∘.=∘⍳1+(⌈/0,d)) nested_parsed
+	...
+
+3.2 Computing parent references
+3.3 Computing the belongs to relationship
+3.4 The Key Operator
+
+4. Function Lifting
+
+4.1 The belongs to relationship
+4.2 New Depths
+4.3 Computing the function header
+4.4 Converting function nodes
+
+5. Expression Flattening
+
+5.1 The grouping of functions
+5.2 The grouping of expressions
+5.3 Belongs to relationship at the expression level
+5.4 Computing the new depths
+5.5 Replacing nodes
+5.6 Naming each expression
+
+
