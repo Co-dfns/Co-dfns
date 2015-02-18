@@ -3,18 +3,19 @@
   A←##.A ⋄ k←A.k ⋄ n←A.n ⋄ v←A.v ⋄ e←A.e
   ivh←{'{LOCALP *pat=',(⍺ var ⍵),';BOUND types=0;',nl}
   rt1←'if(pat->p->RANK!=(' ⋄ rt2←')->p->RANK){if(pat->p->RANK==0)pat='
-  rt3←';else error(4);}',nl,'else'
   st←{'if(pat->p->SHAPETC[i]!=(',⍵,')->p->SHAPETC[i])error(4);'}
-  crv←{rt1,⍵,rt2,⍵,rt3,'pat->p->RANK'do st ⍵}
+  crv←{rt1,⍵,rt2,⍵,';else error(4);}',nl,'else','pat->p->RANK'do st ⍵}
   frv←{∪⊃,/((⌽¯1↓¯1⌽⊢)¨⍵)~∘∪¨(⍳≢⍺)↑¨⊂⍺}
-  crk←{((n⍵)frv v⍵){((⊃⍺)ivh⊃⍵),⊃,/(1↓⍺)(crv var)¨1↓⍵}((,1↑⍉)¨frv(↓1↓⍉)¨)e⍵}
-  grt←{'/* Determine input/output types */',nl}
+  dov←{((n⍵)frv v⍵)⍺⍺((,1↑⍉)¨frv(↓1↓⍉)¨)e⍵}
+  crk←{{((⊃⍺)ivh⊃⍵),⊃,/(1↓⍺)(crv var)¨1↓⍵}dov ⍵}
+  ttst←{'if((',⍵,')->p->ELTYPE==APLLONG)types|=1<<',(⍕⍺),';',nl}
+  grt←{⊃,/{(⍳≢⍵)ttst¨⍺ var¨⍵}dov ⍵}
   ars←{'/* Allocate results */',nl}
   cnt←{'BOUND cnt=1;',nl,'pat->p->RANK'do'cnt*=pat->p->SHAPETC[i];'}
   lpa←{'/* Extract data */',nl}
   lpc←{'/* Compute data */',nl}
   lps←{'/* Store data */',nl}
-  bod←{'cnt'pdo nl,(lpa ⍵),(lpc ⍵),lps ⍵}
+  bod←{'{',nl,(ars ⍵),('cnt'pdo nl,(lpa ⍵),(lpc ⍵),lps ⍵),'}',nl}
   cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
   dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
   std←{(cnt ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),'}',nl}

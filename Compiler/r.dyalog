@@ -29,7 +29,7 @@
   gd←{d←⍵⍵⍪fdb ⋄ (⍺ grhd ⍵),(((0⌷⍉d)⍳⊂⍺⍺)⊃(1⌷⍉d),⊂⍺⍺ dff ⍺),'}',nl}
   gm←{d←⍵⍵⍪fdb ⋄ (⍺ grhm ⍵),(((0⌷⍉d)⍳⊂⍺⍺)⊃(2⌷⍉d),⊂⍺⍺ dff ⍺),'}',nl}
   gf←{⍵,'(rslt,',⍺,',rgt);',nl}
-  gs←{⍺ SD.(crk,grt,ars,std) ⍵}
+  gs←{⍺ SD.(crk,grt,std) ⍵}
   gomd←{⍎(((0⌷⍉odb)⍳⊂⍺)⊃1⌷⍉odb),' ⍵'} ⋄ gomm←{⍎(((0⌷⍉odb)⍳⊂⍺)⊃2⌷⍉odb),' ⍵'}
   odb←2 3⍴,¨'⍨' 'comd' 'comm' '¨' 'eacd' 'eacm'
 :EndNamespace
