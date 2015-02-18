@@ -1,12 +1,23 @@
 ﻿:Namespace SD
   U←##.U ⋄ nl←U.nl ⋄ do←U.do ⋄ pdo←U.pdo ⋄ tl←U.tl ⋄ var←U.var ⋄ pp←#.pp
   A←##.A ⋄ k←A.k ⋄ n←A.n ⋄ v←A.v ⋄ e←A.e
-  crv←{'CheckRank(',(⍺ var ⍵),');',nl}
-  frv←{pp∪⊃,/⍵~¨∪(⍳≢⍺)↑¨⊂⍺}
-  crk←{⊃,/((n⍵)frv(⌽¯1↓¯1⌽⊢)¨v⍵)crv¨((,1↑⍉)¨frv(⌽¯1↓¯1⌽∘↓1↓⍉)¨)e⍵}
-  grt←{'/* Get Result types */',nl}
+  ivh←{'{LOCALP *pat=',(⍺ var ⍵),';BOUND types=0;',nl}
+  rt1←'if(pat->p->RANK!=(' ⋄ rt2←')->p->RANK){if(pat->p->RANK==0)pat='
+  rt3←';else error(4);}',nl,'else'
+  st←{'if(pat->p->SHAPETC[i]!=(',⍵,')->p->SHAPETC[i])error(4);'}
+  crv←{rt1,⍵,rt2,⍵,rt3,'pat->p->RANK'do st ⍵}
+  frv←{∪⊃,/((⌽¯1↓¯1⌽⊢)¨⍵)~∘∪¨(⍳≢⍺)↑¨⊂⍺}
+  crk←{((n⍵)frv v⍵){((⊃⍺)ivh⊃⍵),⊃,/(1↓⍺)(crv var)¨1↓⍵}((,1↑⍉)¨frv(↓1↓⍉)¨)e⍵}
+  grt←{'/* Determine input/output types */',nl}
   ars←{'/* Allocate results */',nl}
-  std←{'/* Scalar Type dispatch and loop */',nl}
+  cnt←{'BOUND cnt=1;',nl,'pat->p->RANK'do'cnt*=pat->p->SHAPETC[i];'}
+  lpa←{'/* Extract data */',nl}
+  lpc←{'/* Compute data */',nl}
+  lps←{'/* Store data */',nl}
+  bod←{'cnt'pdo nl,(lpa ⍵),(lpc ⍵),lps ⍵}
+  cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
+  dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
+  std←{(cnt ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),'}',nl}
   body←{⍺,'*z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);r=ARRAYSTART(rgt->p);',nl,'c'pdo ⍵}
     scld←{(dde ddt)(die dit)(ide idt)(iie iit)←tl ⍺ ⋄ z←''
       z,←'LOCALP tp;tp.p=NULL;int tpused=0;BOUND sr,sl,c,rk,elt,rt,lt,sp[15];',nl
