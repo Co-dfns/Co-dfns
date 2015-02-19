@@ -6,7 +6,7 @@
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r' ⋄ frt←'void EXPORT '
-  ged←{'LOCALP ',⍺,'[',(⍕≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵),'];',nl}
+  ged←{'LOCALP ',⍺,'[',(⍕≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵),'];'}
   ger←{(≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ghi←{'void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
