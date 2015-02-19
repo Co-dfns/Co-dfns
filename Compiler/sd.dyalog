@@ -3,19 +3,22 @@
   A←##.A ⋄ k←A.k ⋄ n←A.n ⋄ v←A.v ⋄ e←A.e
   ivh←{'{LOCALP *pat=',(⍺ var ⍵),';BOUND types=0;',nl}
   rt1←'if(pat->p->RANK!=(' ⋄ rt2←')->p->RANK){if(pat->p->RANK==0)pat='
-  st←{'if(pat->p->SHAPETC[i]!=(',⍵,')->p->SHAPETC[i])error(4);'}
-  crv←{rt1,⍵,rt2,⍵,';else error(4);}',nl,'else','pat->p->RANK'do st ⍵}
+  spt←{'if(pat->p->SHAPETC[i]!=(',⍵,')->p->SHAPETC[i])error(4);'}
+  crv←{rt1,⍵,rt2,⍵,';else error(4);}',nl,'else','pat->p->RANK'do spt ⍵}
   frv←{∪⊃,/((⌽¯1↓¯1⌽⊢)¨⍵)~∘∪¨(⍳≢⍺)↑¨⊂⍺}
   dov←{((n⍵)frv v⍵)⍺⍺((,1↑⍉)¨frv(↓1↓⍉)¨)e⍵}
   crk←{{((⊃⍺)ivh⊃⍵),⊃,/(1↓⍺)(crv var)¨1↓⍵}dov ⍵}
-  ttst←{'if((',⍵,')->p->ELTYPE==APLLONG)types|=1<<',(⍕⍺),';',nl}
-  grt←{⊃,/{(⍳≢⍵)ttst¨⍺ var¨⍵}dov ⍵}
-  ars←{'/* Allocate results */',nl}
+  rif←{'if((',⍵,')->p->ELTYPE==APLLONG)types|=1<<',(⍕⍺),';',nl}
+  grt←{⊃,/{(⍳≢⍵)rif¨⍺ var¨⍵}dov ⍵}
+  ars←{⊃,/{'/* Allocate result for ',⍵,' */',nl}¨∪n ⍵}
+  gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
+  git←{(⌽((≢⍵)⍴2)⊤⍺⍺)⊃¨⊂'double ' 'aplint32 '}
+  gip←{⊃,/⍺{(⍺⍺ git ⍵),¨(⍳≢⍵)gdp¨⍺ var¨⍵}dov ⍵}
   cnt←{'BOUND cnt=1;',nl,'pat->p->RANK'do'cnt*=pat->p->SHAPETC[i];'}
   lpa←{'/* Extract data */',nl}
-  lpc←{'/* Compute data */',nl}
+  lpc←{⊃,/⍺{⊂'/* ',(⍕⍵[1 2 3 6]),' */',nl}⍤¯1⊢⍵}
   lps←{'/* Store data */',nl}
-  bod←{'{',nl,(ars ⍵),('cnt'pdo nl,(lpa ⍵),(lpc ⍵),lps ⍵),'}',nl}
+  bod←{'{',nl,(⍺ ars ⍵),(⍺ gip ⍵),('cnt'pdo nl,(lpa ⍵),(⍺ lpc ⍵),lps ⍵),'}',nl}
   cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
   dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
   std←{(cnt ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),'}',nl}
