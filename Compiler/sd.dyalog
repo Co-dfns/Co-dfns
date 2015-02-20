@@ -13,18 +13,19 @@
   grt←{⊃,/{(⍳≢⍵)rif¨⍵}dov ⍵}
   ars←{⊃,/{'/* Allocate result for ',⍵,' */',nl}¨∪n ⍵}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
-  git←{(⌽((≢⍵)⍴2)⊤⍺)⊃¨⊂'double ' 'aplint32 '}
-  gip←{⊃,/⍺{(⍺ git ⍵),¨(⍳≢⍵)gdp¨⍵}dov ⍵}
+  git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '}
+  gip←{⊃,/⍺{(git(≢⍵)↑⍺),¨(⍳≢⍵)gdp¨⍵}dov ⍵}
   cnt←{'BOUND cnt=1;',nl,'pat->p->RANK'do'cnt*=pat->p->SHAPETC[i];'}
   rkm←{⊃,/{(⍳≢⍵){'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}¨⍵}dov ⍵}
-  lai←{(⊃⍺ git ⍵),'s',(⍕⍵),'=d',(⍕⍵),'[i%m',(⍕⍵),'];',nl}
-  lpa←{⊃,/⍺{(⌽((≢⍵)⍴2)⊤⍺)lai¨⍳≢⍵}dov ⍵}
-  sva←{'s',∘⍕¨⍺-1+((-⍺)↑⍺⍺)⍳⌽¯1↓¯1⌽⊃v ⍵}
+  lai←{⍺,'s',(⍕⍵),'=d',(⍕⍵),'[i%m',(⍕⍵),'];',nl}
+  lpa←{⊃,/⍺{(git(≢⍵)↑⍺)lai¨⍳≢⍵}dov ⍵}
+  sva←{⍺-1+((-⍺)↑⍺⍺)⍳⌽¯1↓¯1⌽⊃v ⍵}
   cal←{f←sdn⊃⍨sdb⍳¯1↑¯1⌽⊃v⍺⍺ ⋄ 1≡≢⍵:(SR.⍎f,'m')⊃⍵ ⋄ ⊃(SR.⍎f,'d')/⍵}
-  stm←{⊂'/* ?type? s',(⍕⍺),'=',(⍵ cal ⍺(⍺⍺ sva)⍵),'; */',nl}
-  lpc←{⊃,/(⍵{(≢⍵)+⍳≢⍺}dov ⍵)((⌽((n⍵)frv v⍵),n⍵)stm)⍤¯1⊢⍵}
+  stp←{(⍺{⌽((≢⍵)⍴2)⊤⍺}dov ⍵),24⍴2}
+  stm←{⊂('s',⍕⍺),'=',(⍵ cal's',∘⍕¨⍺(⍺⍺ sva)⍵),';',nl}
+  lpc←{⊃,/(git(-≢⍵)↑⍺),¨(⍵{(≢⍵)+⍳≢⍺}dov ⍵)((⌽((n⍵)frv v⍵),n⍵)stm)⍤¯1⊢⍵}
   lps←{⊃,/((¯1+≢dov ⍵)+(≢n⍵)-(⌽n⍵)⍳∪n⍵){'r',(⍕⍵),'[i%cnt]=s',(⍕⍺),';',nl}¨⍳≢∪n⍵}
-  bod←{'{',nl,(⍺ ars ⍵),(⍺ gip ⍵),('cnt'pdo nl,(⍺ lpa ⍵),(⍺ lpc ⍵),⍺ lps ⍵),'}',nl}
+  bod←{(⍺ stp ⍵)(nl,⍨'}',⍨'{',nl,ars,gip,'cnt'pdo nl,lpa,lpc,lps)⍵}
   cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
   dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
   std←{(cnt ⍵),(rkm ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),'}',nl}
