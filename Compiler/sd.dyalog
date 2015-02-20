@@ -15,14 +15,15 @@
   git←{(⌽((≢⍵)⍴2)⊤⍺)⊃¨⊂'double ' 'aplint32 '}
   gip←{⊃,/⍺{(⍺ git ⍵),¨(⍳≢⍵)gdp¨⍵}dov ⍵}
   cnt←{'BOUND cnt=1;',nl,'pat->p->RANK'do'cnt*=pat->p->SHAPETC[i];'}
+  rkm←{⊃,/{(⍳≢⍵){'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}¨⍵}dov ⍵}
   lpai←{(⊃⍺ git ⍵),'s',(⍕⍵),'=d',(⍕⍵),'[i%m',(⍕⍵),'];',nl}
   lpa←{⊃,/⍺{(⌽((≢⍵)⍴2)⊤⍺)lpai¨⍳≢⍵}dov ⍵}
-  lpc←{⊃,/⍺{⊂'/* ',(⍕⍵[3 6]),' */',nl}⍤¯1⊢⍵}
-  lps←{⊃,/⍺{'/* r',(⍕⍵),'[i%cnt',(⍕⍵),']=???; */',nl}¨⍳≢∪n⍵}
+  lpc←{⊃,/(⍵{(≢⍵)+⍳≢⍺}dov ⍵){⊂'/* ?type? s',(⍕⍺),'=',(⍕⍵[3 6]),' */',nl}⍤¯1⊢⍵}
+  lps←{⊃,/((¯1+≢dov ⍵)+(≢n⍵)-(⌽n⍵)⍳∪n⍵){'r',(⍕⍵),'[i%cnt]=s',(⍕⍺),';',nl}¨⍳≢∪n⍵}
   bod←{'{',nl,(⍺ ars ⍵),(⍺ gip ⍵),('cnt'pdo nl,(⍺ lpa ⍵),(⍺ lpc ⍵),⍺ lps ⍵),'}',nl}
   cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
   dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
-  std←{(cnt ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),'}',nl}
+  std←{(cnt ⍵),(rkm ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),'}',nl}
   body←{⍺,'*z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);r=ARRAYSTART(rgt->p);',nl,'c'pdo ⍵}
     scld←{(dde ddt)(die dit)(ide idt)(iie iit)←tl ⍺ ⋄ z←''
       z,←'LOCALP tp;tp.p=NULL;int tpused=0;BOUND sr,sl,c,rk,elt,rt,lt,sp[15];',nl
