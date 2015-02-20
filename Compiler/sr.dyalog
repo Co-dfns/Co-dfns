@@ -1,0 +1,20 @@
+﻿:Namespace SR
+  (⎕IO ⎕ML ⎕WX)←0 1 3
+  addm←{⍺}                     ⋄ addd←{⍺,'+',⍵}
+  subm←{'-1*',⍵}               ⋄ subd←{⍺,'-',⍵}
+  mulm←{'(',⍵,'>0)-(',⍵,'<0)'} ⋄ muld←{⍺,'*',⍵}
+  divm←{'1.0/',⍵,zck ⍵}        ⋄ divd←{'(1.0*',⍺,')/(1.0*',⍵,')',zck ⍵}
+  powm←{'exp(',dtp,⍵,')'}      ⋄ powd←{'pow(',dtp,⍺,',',dtp,⍵,')'}
+  logm←{'log(',dtp,⍵,')'}      ⋄ logd←{'log(',dtp,⍵,',',dtp,⍺,')'}
+  modm←{'fabs(',⍵,')'}         ⋄ modd←{'fmod(',dtp,⍵,',',dtp,⍺,')'}
+  
+  pitm←{'3.14159265358979323846*',⍵} 
+  
+  gted←{⍺,'>=',⍵}
+  
+  zck←{';if(',⍵,'==0)error(11)'}
+  dtp←'(double)'
+  
+  sdb←,¨'+-×÷*⍟|○≥'
+  sdn←'add' 'sub' 'mul' 'div' 'pow' 'log' 'mod' 'pit' 'gte'
+:EndNamespace 

@@ -1,6 +1,7 @@
 ﻿:Namespace SD
   U←##.U ⋄ nl←U.nl ⋄ do←U.do ⋄ pdo←U.pdo ⋄ tl←U.tl ⋄ var←U.var ⋄ pp←#.pp
   A←##.A ⋄ k←A.k ⋄ n←A.n ⋄ v←A.v ⋄ e←A.e
+  SR←##.SR ⋄ sdb←SR.sdb ⋄ sdn←SR.sdn
   ivh←{'{LOCALP *pat=',⍵,';BOUND types=0;',nl}
   rt1←'if(pat->p->RANK!=(' ⋄ rt2←')->p->RANK){if(pat->p->RANK==0)pat='
   spt←{'if(pat->p->SHAPETC[i]!=(',⍵,')->p->SHAPETC[i])error(4);'}
@@ -19,7 +20,8 @@
   lai←{(⊃⍺ git ⍵),'s',(⍕⍵),'=d',(⍕⍵),'[i%m',(⍕⍵),'];',nl}
   lpa←{⊃,/⍺{(⌽((≢⍵)⍴2)⊤⍺)lai¨⍳≢⍵}dov ⍵}
   sva←{'s',∘⍕¨⍺-1+((-⍺)↑⍺⍺)⍳⌽¯1↓¯1⌽⊃v ⍵}
-  stm←{⊂'/* ?type? s',(⍕⍺),'=',(⊃⌽¯1⌽⊃v⍵),'(',(⍕⍺(⍺⍺ sva)⍵),'); */',nl}
+  cal←{f←sdn⊃⍨sdb⍳¯1↑¯1⌽⊃v⍺⍺ ⋄ 1≡≢⍵:(SR.⍎f,'m')⊃⍵ ⋄ ⊃(SR.⍎f,'d')/⍵}
+  stm←{⊂'/* ?type? s',(⍕⍺),'=',(⍵ cal ⍺(⍺⍺ sva)⍵),'; */',nl}
   lpc←{⊃,/(⍵{(≢⍵)+⍳≢⍺}dov ⍵)((⌽((n⍵)frv v⍵),n⍵)stm)⍤¯1⊢⍵}
   lps←{⊃,/((¯1+≢dov ⍵)+(≢n⍵)-(⌽n⍵)⍳∪n⍵){'r',(⍕⍵),'[i%cnt]=s',(⍕⍺),';',nl}¨⍳≢∪n⍵}
   bod←{'{',nl,(⍺ ars ⍵),(⍺ gip ⍵),('cnt'pdo nl,(⍺ lpa ⍵),(⍺ lpc ⍵),⍺ lps ⍵),'}',nl}
