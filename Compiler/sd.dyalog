@@ -4,8 +4,9 @@
   SR←##.SR ⋄ sdb←SR.sdb ⋄ sdn←SR.sdn ⋄ smt←SR.smt ⋄ sdt←SR.sdt
   ivh←{'LOCALP *pat=',⍵,';BOUND types=0;',nl}
   rt1←'if(pat->p->RANK!=(' ⋄ rt2←')->p->RANK){if(pat->p->RANK==0)pat='
+  rt3←{';else if((',⍵,')->p->RANK!=0)error(4);}',nl}
   spt←{'if(pat->p->SHAPETC[i]!=(',⍵,')->p->SHAPETC[i])error(4);'}
-  crv←{rt1,⍵,rt2,⍵,';else error(4);}',nl,'else','pat->p->RANK'do spt ⍵}
+  crv←{rt1,⍵,rt2,⍵,(rt3 ⍵),'else','pat->p->RANK'do spt ⍵}
   frv←{∪⊃,/((⌽¯1↓¯1⌽⊢)¨⍵)~∘∪¨(⍳≢⍺)↑¨⊂⍺}
   dov←{⍺←⊢ ⋄ ⍺ ⍺⍺ ((n⍵)frv v⍵)var¨((,1↑⍉)¨frv(↓1↓⍉)¨)e⍵}
   crk←{{(ivh⊃⍵),⊃,/crv¨1↓⍵}dov ⍵}
@@ -14,7 +15,7 @@
   gsp←{'BOUND prk=pat->p->RANK;BOUND sp[15];',nl,'prk'pdo'sp[i]=pat->p->SHAPETC[i];'}
   git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '} ⋄ gie←{⍵⊃¨⊂'APLDOUB' 'APLLONG' 'APLNA'}
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
-  ats←{'if(prk!=(',⍵,')->p->RANK||(',⍵,')->p->ELTYPE!=',⍺,')'}
+  ats←{'if(NULL==(',⍵,')->p||prk!=(',⍵,')->p->RANK||(',⍵,')->p->ELTYPE!=',⍺,')'}
   ack←{tp←⊃gie ⍺⌷⍺⍺ ⋄ (tp ats ⍵),(⍺ gar tp),'else p',(⍕⍺),'=(',⍵,')->p;',nl}
   ist←{⊃,/((⍳≢)⍺⍺¨⊢)(∪n⍵)var¨∪(,1↑⍉)¨e⍵}
   grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}
@@ -37,5 +38,5 @@
   cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
   dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
   std←{(cnt ⍵),(rkm ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),nl}
-  sto←{{'if((',⍵,')->p!=p',(⍕⍺),'){gerp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}ist ⍵}
+  sto←{{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}ist ⍵}
 :EndNamespace
