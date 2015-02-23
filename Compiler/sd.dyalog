@@ -19,7 +19,7 @@
   ack←{tp←⊃gie ⍺⌷⍺⍺ ⋄ (tp ats ⍵),(⍺ gar tp),'else p',(⍕⍺),'=(',⍵,')->p;',nl}
   ist←{⊃,/((⍳≢)⍺⍺¨⊢)(∪n⍵)var¨∪(,1↑⍉)¨e⍵}
   grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}
-  ars←{t←((≢⍵)-1+(⌽n⍵)⍳∪n⍵)⊃¨⊂⍺ ⋄ (t ack ist ⍵),⊃,/t grs¨⍳≢t}
+  ars←{t←((≢dov⍵)+(≢⍵)-1+(⌽n⍵)⍳∪n⍵)⊃¨⊂⍺ ⋄ (t ack ist ⍵),⊃,/t grs¨⍳≢t}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
   gip←{⊃,/⍺{(git(≢⍵)↑⍺),¨(⍳≢⍵)gdp¨⍵}dov ⍵}
   cnt←{'BOUND cnt=1;',nl,'pat->p->RANK'do'cnt*=pat->p->SHAPETC[i];'}
@@ -33,7 +33,7 @@
   stp←{⊃typ/(⌽((¯1↑¯1⌽⊢)¨v ⍵),¨(sid ⍵)((svn ⍵)sva)¨↓⍵),⊂⍺{⌽((≢⍵)⍴2)⊤⍺}dov ⍵}
   stm←{⊂('s',⍕⍺),'=',(⍵ cal's',∘⍕¨⍺(⍺⍺ sva)⍵),';',nl}
   lpc←{⊃,/(git(-≢⍵)↑⍺),¨(sid ⍵)((svn ⍵)stm)⍤¯1⊢⍵}
-  lps←{⊃,/((¯1+≢dov ⍵)+(≢n⍵)-(⌽n⍵)⍳∪n⍵){'r',(⍕⍵),'[i%cnt]=s',(⍕⍺),';',nl}¨⍳≢∪n⍵}
+  lps←{⊃,/((≢dov ⍵)+(≢n⍵)-1+(⌽n⍵)⍳∪n⍵){'r',(⍕⍵),'[i%cnt]=s',(⍕⍺),';',nl}¨⍳≢∪n⍵}
   bod←{(⍺ stp ⍵)(nl,⍨'}',⍨'{',nl,ars,gip,'cnt'pdo nl,lpa,lpc,lps)⍵}
   cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
   dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
