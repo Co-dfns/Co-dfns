@@ -1,7 +1,8 @@
 ﻿:Namespace T
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v
-  FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM ⋄ ExpS←A.ExpS
-  ExpM←A.ExpM ⋄ pp←#.pp
+  (⎕IO ⎕ML ⎕WX)←0 1 3
+  A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v
+  FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM
+  ExpS←A.ExpS ⋄ ExpM←A.ExpM ⋄ pp←#.pp
   rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))
   rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)
   df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
@@ -36,7 +37,6 @@
   av←(⊃⍪/)(+\FunM){⍺((⍺((∪n)(ExpM∨AtmM)(⌿∘⊢)⊢)⌸⍵)avh(r(1↑⍵)⍪FunS ⍵))⌸⍵}⊢
   fsp←,¨'+-×÷|⌊⌈*⍟○!∧∨⍱⍲<≤=≥>≠' ⋄ fsh←⍉⍪2'Scl'0 ⍬ ⍬ 0 ⍬ ⍬
   fss←ExpM∧((,¨'md')∊⍨k)∧fsp∊⍨(↑v)⌷⍤¯1⍨(,¨'md')⍳k ⋄ fsg←1,2≠/fss
-  fsa←⊂fsh⍪(1+d),1↓[1]⊢
-  fse←(⊃⍪/)(fsg(/∘⊢)fss∧fsg)(⊣⊃(⊂⊢),fsa)¨fsg⊂[0]⊢
+  fse←(⊃⍪/)(fsg(/∘⊢)fss∧fsg)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),1↓[1]⊢))¨fsg⊂[0]⊢
   fs←(⊃⍪/)((((~ExpM∨AtmM)(⌿∘⊢)⊢)⍪(fse(ExpM∨AtmM)(⌿∘⊢)⊢))¨(1,1↓FunM)⊂[0]⊢)
 :EndNamespace
