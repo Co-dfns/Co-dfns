@@ -1,4 +1,4 @@
-﻿:Namespace G
+:Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ pp←#.pp ⋄ tl←##.U.tl ⋄ do←##.U.do
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
@@ -17,7 +17,7 @@
   gfr←{'z->p=zap(',((⊃⌽n 1↓⍵)vpp 0⌷⍉⊃⌽e 1↓⍵),');'}
   gff←{⍵{(gfr ⍺),'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢,(⍺⊃'}' 'isinit=oi;}'),nl}
   elt←{⍵≡⌊⍵:'APLLONG' ⋄ 'APLDOUB'} ⋄ eld←{⍵≡⌊⍵:'aplint32' ⋄ 'double'}
-  vec←{(vsp ≢⍵),'getarray(',(elt⊃⍵),',',(⍕1<≢⍵),',','sp,',((⊃⍵)var 0⌷⍉⍺),');}',nl}
+  vec←{(vsp≢⍵),'getarray(',(elt⊃⍵),',',(⍕1<≢⍵),',','sp,',((⊃⍵)var 0⌷⍉⍺),');}',nl}
   vsp←{'{BOUND ',(1<⍵)⊃'*sp=NULL;'('sp[1]={',(⍕⍵),'};')}
   vpp←{'(',(⍺ var ⍵),')->p'}
   dap←{⍺⍺,'*',⍺,'=ARRAYSTART(',((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),');',nl}
@@ -34,7 +34,7 @@
   Scl0←{⍺ R.gs 1↓⍵}
   gex←{⍺⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~FexM ⍵)⌿⍵}
   gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f}
-  gcf←{⍵,(⍵⍵ gfh ⍺),(⊃,/(⍺⍺⍪gfd 1↓⍺)gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍺),(⍵⍵ gff ⍺),nl}
+  gcf←{⍵,(⍵⍵gfh⍺),(⊃,/(⍺⍺⍪gfd 1↓⍺)gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍺),(⍵⍵gff⍺),nl}
   gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
   gct←{b←gdf⊃⍵ ⋄ ⊂((gtf b)⍪1↓b)((0 3⍴⊂'')gcf 0)hdr,('tenv'ged b),gfs ⍵}
   gfs←{⊃,/{frt,(⊃n 1↑⍵),'(',flp,((¯1+⊃s 1↑⍵)⊃');' ',LOCALP*penv[]);'),nl}¨1↓⍵}

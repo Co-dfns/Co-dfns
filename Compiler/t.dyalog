@@ -1,4 +1,4 @@
-﻿:Namespace T
+:Namespace T
   (⎕IO ⎕ML ⎕WX)←0 1 3
   A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v
   FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM
@@ -18,6 +18,7 @@
   pck←{⍺(⍺⍺⌷⍤¯1⍵⍵,∘⍪⍺⍺(⍀∘⊢)⊣)⍵}
   lch←⊣((1+NumM),t,(⊂,'c'),AtmM pck n,r,∘⍪s)(NumM∨AtmM∧1⌽NumM)(⌿∘⊢)⊢
   lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(NumM∧¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
+  lcv←
   lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM∧1⌽NumM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
   da←((0∊⍨n)∧AtmM∨FexM∧(⊂∘,'f')∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
   fen←(0≡∘⊃n)⌷n,'fe'enc∘⊃r

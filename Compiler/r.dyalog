@@ -1,4 +1,4 @@
-﻿:Namespace R
+:Namespace R
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ pp←#.pp
   var←##.U.var ⋄ nl←##.U.nl ⋄ tl←##.U.tl ⋄ do←##.U.do ⋄ pdo←##.U.pdo
   SD←##.SD

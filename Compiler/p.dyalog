@@ -1,16 +1,18 @@
-﻿:Namespace P
+:Namespace P
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
-  _s←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ 0<⊃c2 a2 e r←e ⍵⍵ r:c2 a2 e r ⋄ (c⌈c2)(a,a2) e r}
-  _o←{0≥⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ 0≥⊃c a e r2←⍺ ⍵⍵ ⍵:c a e r2 ⋄ c a e(r↑⍨-⌊/≢¨r r2)}
-  _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵} ⋄ _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵} ⋄ _opt←{⍺(⍺⍺ _o _yes)⍵}
-  _yes←{0 ⍬ ⍺ ⍵} ⋄ _t←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ e ⍵⍵ a:c a e r ⋄ 2 ⍬ ⍺ ⍵}
+  _s←{0<⊃c a e r←z←⍺ ⍺⍺ ⍵:z ⋄ 0<⊃c2 a2 e r←z←e ⍵⍵ r:z ⋄ (c⌈c2)(a,a2) e r}
+  _o←{0≥⊃c a e r←z←⍺ ⍺⍺ ⍵:z ⋄ 0≥⊃c a e r2←z←⍺ ⍵⍵ ⍵:z ⋄ c a e(r↑⍨-⌊/≢¨r r2)}
+  _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵} ⋄ _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
+  _opt←{⍺(⍺⍺ _o _yes)⍵} ⋄ _yes←{0 ⍬ ⍺ ⍵}
+  _t←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ e ⍵⍵ a:c a e r ⋄ 2 ⍬ ⍺ ⍵}
   _set←{(0≠≢⍵)∧(⊃⍵)∊⍺⍺:0(,⊃⍵)⍺(1↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
   _tk←{((≢,⍺⍺)↑⍵)≡,⍺⍺:0(⊂,⍺⍺)⍺((≢,⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
   _as←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ c (,⊂⍵⍵ a) e r} ⋄ _enc←{⍺(⍺⍺ _as {⍵})⍵}
-  _ign←{c a e r←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e r} ⋄ _env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}
+  _ign←{c a e r←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e r}
+  _env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}
   _aew←{⍺(⍵⍵ _o (⍺⍺ _s ∇))⍵}
-
-  ws←(' ',⎕UCS 9)_set ⋄ aws←ws _any _ign ⋄ awslf←(⎕UCS 10 13)_set _o ws _any _ign
+  ws←(' ',⎕UCS 9)_set
+  aws←ws _any _ign ⋄ awslf←(⎕UCS 10 13)_set _o ws _any _ign
   nss←awslf _s(':Namespace'_tk)_s awslf _ign
   nse←awslf _s(':EndNamespace'_tk)_s awslf _ign
   gets←aws _s('←'_tk)_s aws ⋄ him←'¯'_set ⋄ dot←'.'_set
@@ -20,14 +22,13 @@
   alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
   digits←'0123456789'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>⌷⍴,⍳○'_set
   mop←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
-
   eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
   digs←digits _some ⋄ odigs←digits _any
   int←aws _s (him _opt) _s digs _s aws
   float←aws _s (int _s dot _s odigs _o (dot _s digs)) _s aws
-  var←aws _s alpha _s (alpha _o digits _any) _s aws ⋄ aw←aws _s ('⍺⍵'_set) _s aws
+  var←aws _s alpha _s (alpha _o digits _any) _s aws
+  aw←aws _s ('⍺⍵'_set) _s aws
   sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
-
   Prim←prim _as A.Prm
   Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as A.Fun)⍵:p ⋄ c a ⍺ r}
   Mop←Fn _o Prim _s (mop _as A.Prm) _as ('m'A.Fex)
@@ -46,6 +47,5 @@
   Pex←lpar _s Ex _s rpar
   Stmt←sep _any _s (Ex _o Fe) _s (sep _any)
   Ns←nss _s (Stmt _aew nse) _s eot _as A.Nms
-
   Ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
 :EndNamespace

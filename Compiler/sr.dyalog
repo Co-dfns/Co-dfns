@@ -1,4 +1,4 @@
-﻿:Namespace SR
+:Namespace SR
   (⎕IO ⎕ML ⎕WX)←0 1 3
   addm←{⍺}                     ⋄ addd←{⍺,'+',⍵}
   subm←{'-1*',⍵}               ⋄ subd←{⍺,'-',⍵}

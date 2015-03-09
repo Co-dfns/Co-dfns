@@ -7,11 +7,14 @@
   idxc,←'if(rslt==rgt||rslt==lft){orz=rslt;rslt=&tp;tpused=1;}',nl
   idxc,←'relp(rslt);getarray(rgt->p->ELTYPE,(unsigned)r,sp,rslt);',nl
   idxc,←'p=rgt->p->SHAPETC;c=1;','r'do'c*=sp[i];'
-  idxc,←'v=ARRAYSTART(lft->p);m=c;k=0;',nl,'j'do'BOUND a=j-(i+1);k+=m*v[a];m*=p[a];'
+  idxc,←'v=ARRAYSTART(lft->p);m=c;k=0;',nl
+  idxc,←'j'do'BOUND a=j-(i+1);k+=m*v[a];m*=p[a];'
   idxc,←'if(rgt->p->ELTYPE==APLLONG){aplint32*src,*dst;',nl
   idxd←'}else if(rgt->p->ELTYPE=APLDOUB){double*src,*dst;',nl
-  idxb←'dst=ARRAYSTART(rslt->p);src=ARRAYSTART(rgt->p);',nl,'c'do'dst[i]=src[k+i];'
-  idx←idxc,idxb,idxd,idxb,'}',nl,'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
+  idxb←'dst=ARRAYSTART(rslt->p);src=ARRAYSTART(rgt->p);',nl
+  idxb,←'c'do'dst[i]=src[k+i];'
+  idx←idxc,idxb,idxd,idxb,'}',nl
+  idx,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
   bia←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
   bia,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
   bia,←'if(rslt==rgt||rslt==lft){orz=rslt;rslt=&tp;tpused=1;}',nl
@@ -25,7 +28,8 @@
   iota,←'BOUND s[]={c};relp(rslt);getarray(APLLONG,1,s,rslt);',nl
   iota,←'v=ARRAYSTART(rslt->p);',nl,'c'do'v[i]=i;'
   iotm←iota
-  cat←'BOUND s[]={rgt->p->SHAPETC[0],2};LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
+  cat←'BOUND s[]={rgt->p->SHAPETC[0],2};'
+  cat,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
   cat,←'if(rslt==lft||rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
   cat,←'relp(rslt);getarray(APLDOUB,2,s,rslt);',nl
   cat,←'double*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl

@@ -7,14 +7,16 @@
   
   up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ new←{⍉⍪fc↑0 ⍺,⍵} ⋄ MtN←0 4⍴⍬
   Prm←{'Prm'new 0 ⍵} ⋄ Fun←{('Fun'new⍬)⍪up⊃⍪/(⊂MtN),⍵} 
-  Var←{'Var'new(,⍺⍺)⍵} ⋄ Exp←{('Exp'new⊂,⍺⍺)⍪up⊃⍪/⍵} ⋄ Fex←{('Fex'new⊂,⍺⍺)⍪up⊃⍪/⍵}
-  Nms←{('Nms'new⍬)⍪up⊃⍪/(⊂MtN),⍵} ⋄ Atm←{('Atm'new⍬)⍪up⊃⍪/⍵} ⋄ Num←{'Num'new 0 (⍎⍵)}
+  Var←{'Var'new(,⍺⍺)⍵} ⋄ Exp←{('Exp'new⊂,⍺⍺)⍪up⊃⍪/⍵}
+  Fex←{('Fex'new⊂,⍺⍺)⍪up⊃⍪/⍵}
+  Nms←{('Nms'new⍬)⍪up⊃⍪/(⊂MtN),⍵} ⋄ Atm←{('Atm'new⍬)⍪up⊃⍪/⍵}
+  Num←{'Num'new 0 (⍎⍵)}
   Bind←{nm _ ex←⍵ ⋄ (0 nf⌷ex)←⊂nm ⋄ ex}
   
-  msk←{(t ⍵)∊⊂⍺⍺} ⋄ FexM←'Fex'msk ⋄ FunM←'Fun'msk ⋄ AtmM←'Atm'msk ⋄ NumM←'Num'msk
-  ExpM←'Exp'msk ⋄ PrmM←'Prm'msk
-  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel ⋄ VarS←'Var'sel ⋄ AtmS←'Atm'sel
-  PrmS←'Prm'sel ⋄ FexS←'Fex'sel
+  msk←{(t ⍵)∊⊂⍺⍺} ⋄ FexM←'Fex'msk ⋄ FunM←'Fun'msk ⋄ AtmM←'Atm'msk
+  NumM←'Num'msk ⋄ ExpM←'Exp'msk ⋄ PrmM←'Prm'msk
+  sel←{(⍺⍺ msk ⍵)⌿⍵} ⋄ FunS←'Fun'sel ⋄ ExpS←'Exp'sel ⋄ VarS←'Var'sel
+  AtmS←'Atm'sel ⋄ PrmS←'Prm'sel ⋄ FexS←'Fex'sel
 
 :EndNamespace
 

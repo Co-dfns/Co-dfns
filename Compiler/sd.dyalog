@@ -1,4 +1,4 @@
-﻿:Namespace SD
+:Namespace SD
   U←##.U ⋄ nl←U.nl ⋄ do←U.do ⋄ pdo←U.pdo ⋄ tl←U.tl ⋄ var←U.var ⋄ pp←#.pp
   A←##.A ⋄ k←A.k ⋄ n←A.n ⋄ v←A.v ⋄ e←A.e
   SR←##.SR ⋄ sdb←SR.sdb ⋄ sdn←SR.sdn ⋄ smt←SR.smt ⋄ sdt←SR.sdt
@@ -10,12 +10,16 @@
   frv←{∪⊃,/((⌽¯1↓¯1⌽⊢)¨⍵)~∘∪¨(⍳≢⍺)↑¨⊂⍺}
   dov←{⍺←⊢ ⋄ ⍺ ⍺⍺ ((n⍵)frv v⍵)var¨((,1↑⍉)¨frv(↓1↓⍉)¨)e⍵}
   crk←{{(ivh⊃⍵),⊃,/crv¨1↓⍵}dov ⍵}
-  grt←{⊃,/{(⍳≢⍵){'if((',⍵,')->p->ELTYPE==APLLONG)types|=1<<',(⍕⍺),';',nl}¨⍵}dov ⍵}
+  grts←{'if((',⍵,')->p->ELTYPE==APLLONG)types|=1<<',(⍕⍺),';',nl}
+  grt←{⊃,/{(⍳≢⍵)grts¨⍵}dov ⍵}
   gpp←{nl,⍨';',⍨⊃,/'POCKET',⊃{⍺,',',⍵}/'*p'∘,∘⍕¨⍳≢∪n ⍵}
-  gsp←{'BOUND prk=pat->p->RANK;BOUND sp[15];',nl,'prk'pdo'sp[i]=pat->p->SHAPETC[i];'}
-  git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '} ⋄ gie←{⍵⊃¨⊂'APLDOUB' 'APLLONG' 'APLNA'}
+  gspd←'BOUND prk=pat->p->RANK;BOUND sp[15];',nl
+  gsp←{gspd,'prk'pdo'sp[i]=pat->p->SHAPETC[i];'}
+  git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '}
+  gie←{⍵⊃¨⊂'APLDOUB' 'APLLONG' 'APLNA'}
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
-  ats←{'if(NULL==(',⍵,')->p||prk!=(',⍵,')->p->RANK||(',⍵,')->p->ELTYPE!=',⍺,')'}
+  atst←'if(NULL==(',⍵,')->p||prk!=('
+  ats←{atst,⍵,')->p->RANK||(',⍵,')->p->ELTYPE!=',⍺,')'}
   ack←{tp←⊃gie ⍺⌷⍺⍺ ⋄ (tp ats ⍵),(⍺ gar tp),'else p',(⍕⍺),'=(',⍵,')->p;',nl}
   ist←{⊃,/((⍳≢)⍺⍺¨⊢)(∪n⍵)var¨∪(,1↑⍉)¨e⍵}
   grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}
@@ -23,7 +27,8 @@
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
   gip←{⊃,/⍺{(git(≢⍵)↑⍺),¨(⍳≢⍵)gdp¨⍵}dov ⍵}
   cnt←{'BOUND cnt=1;',nl,'pat->p->RANK'do'cnt*=pat->p->SHAPETC[i];'}
-  rkm←{⊃,/{(⍳≢⍵){'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}¨⍵}dov ⍵}
+  rkme←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}
+  rkm←{⊃,/{(⍳≢⍵)rkme¨⍵}dov ⍵}
   lai←{⍺,'s',(⍕⍵),'=d',(⍕⍵),'[i%m',(⍕⍵),'];',nl}
   lpa←{⊃,/⍺{(git(≢⍵)↑⍺)lai¨⍳≢⍵}dov ⍵}
   sva←{⍺-1+((-⍺)↑⍺⍺)⍳⌽¯1↓¯1⌽⊃v ⍵}
@@ -33,10 +38,12 @@
   stp←{⊃typ/(⌽((¯1↑¯1⌽⊢)¨v ⍵),¨(sid ⍵)((svn ⍵)sva)¨↓⍵),⊂⍺{⌽((≢⍵)⍴2)⊤⍺}dov ⍵}
   stm←{⊂('s',⍕⍺),'=',(⍵ cal's',∘⍕¨⍺(⍺⍺ sva)⍵),';',nl}
   lpc←{⊃,/(git(-≢⍵)↑⍺),¨(sid ⍵)((svn ⍵)stm)⍤¯1⊢⍵}
-  lps←{⊃,/((≢dov ⍵)+(≢n⍵)-1+(⌽n⍵)⍳∪n⍵){'r',(⍕⍵),'[i%cnt]=s',(⍕⍺),';',nl}¨⍳≢∪n⍵}
+  lpse←{'r',(⍕⍵),'[i%cnt]=s',(⍕⍺),';',nl}
+  lps←{⊃,/((≢dov ⍵)+(≢n⍵)-1+(⌽n⍵)⍳∪n⍵)lpse¨⍳≢∪n⍵}
   bod←{(⍺ stp ⍵)(nl,⍨'}',⍨'{',nl,ars,gip,'cnt'pdo nl,lpa,lpc,lps)⍵}
   cas←{'case ',(⍕⍺),':',(⍺ bod ⍵),'break;',nl}
   dis←{'switch(types){',nl,(⊃,/(⍳⍺)cas¨⊂⍵),'}'}
   std←{(cnt ⍵),(rkm ⍵),((2*≢(n⍵)frv v ⍵)dis ⍵),nl}
-  sto←{{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}ist ⍵}
+  stof←{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}
+  sto←{stof ist ⍵}
 :EndNamespace
