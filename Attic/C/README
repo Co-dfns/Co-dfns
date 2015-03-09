@@ -1,0 +1,13 @@
+# Co-Dfns: High Performance APL Compiler for Parallel Programs
+
+Copyright (c) 2013 Aaron W. Hsu <arcfide@sacrideo.us>. 
+All rights reserved.
+
+## Introduction
+
+This is the main compiler source for the Co-Dfns compiler.  All the
+documentation can be found in the man/ directory as man pages. You
+should read codfns_intro(3) for information on the structure of the
+compiler and the like. It will guide you to the right documentation
+for your inquiry.
+

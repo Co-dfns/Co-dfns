@@ -1,0 +1,9 @@
+⍝ A Simple Factorial Example
+fact←{ ⍝ We call the function fact
+    0=⍵: 1
+    
+    ⍝ Line with a comment on it.
+    ⍵ × ∇ ⍵-1
+} 
+
+fact 5
