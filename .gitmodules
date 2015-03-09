@@ -1,3 +1,3 @@
 [submodule "au"]
-	path = APLUnit
+	path = Testing/APLUnit
 	url = git@github.com:arcfide/APLUnit.git
