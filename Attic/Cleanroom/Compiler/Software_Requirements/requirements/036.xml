@@ -1,9 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>
-    The compiler should not support the
-    <function>⍠</function>
-    or the
-    <function>&amp;</function>
-    operators.
-  </simpara>
-</listitem>

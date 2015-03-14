@@ -1,6 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <para>
-    The compiler should performan useless code elimination at the 
-    top-level and at the function body level.
-  </para>
-</listitem>

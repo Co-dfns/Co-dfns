@@ -1,7 +1,0 @@
-    <!-- ID, Date, Summary, Rsolution -->
-    <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-      <td>3</td>
-      <td colspan="2">2013-07-23</td>
-      <td colspan="5">Add Dyalog Reference to Reuse Analysis</td>
-      <td colspan="2">Applied</td>
-    </tr>

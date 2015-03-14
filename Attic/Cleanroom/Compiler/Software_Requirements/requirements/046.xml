@@ -1,9 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>
-    [Derived Requirement 3] An interrupt or break signal shall cause an
-    immediate termination of the compiler with a signal
-    <literal>INTERRUPT</literal>
-    . Any resources in use at the time, including files, shall be released
-    as is.
-  </simpara>
-</listitem>

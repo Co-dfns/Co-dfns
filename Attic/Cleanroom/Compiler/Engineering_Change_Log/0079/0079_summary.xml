@@ -1,7 +1,0 @@
-    <!-- ID, Date, Summary, Rsolution -->
-    <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-      <td>79</td>
-      <td colspan="2">2014-05-27</td>
-      <td colspan="5">Add SYSTEM ERROR signals for dangerous calls</td>
-      <td colspan="2">Pending</td>
-    </tr>

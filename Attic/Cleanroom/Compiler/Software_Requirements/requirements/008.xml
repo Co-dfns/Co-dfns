@@ -1,5 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>The compiler should support type inference up to the point that
-  it is able to disambiguate all expressions up to the amount possible
-  given the information available.</simpara>
-</listitem>

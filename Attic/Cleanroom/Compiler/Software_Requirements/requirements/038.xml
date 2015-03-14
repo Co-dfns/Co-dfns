@@ -1,8 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>
-    The constant
-    <literal>⌾</literal>
-    single-assignment empty array returns an empty vector whose fill element
-    is a single, un-assigned cell.
-  </simpara>
-</listitem>

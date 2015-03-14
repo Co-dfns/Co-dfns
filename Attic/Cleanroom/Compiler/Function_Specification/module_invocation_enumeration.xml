@@ -1,8 +1,0 @@
-    <section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude">
-      <title>Module Invocation Enumeration</title>
-      <simpara>The enumeration of the module invocation is much simpler
-      than that for the Source Input enumeration. We mostly include this
-      enumeration to be clear about the basic cases, and the basic responses.</simpara>
-      <xi:include href="tables/Module_Invocation_Enumeration--_Top-level.xml"></xi:include>
-      <xi:include href="tables/Module_Invocation_Enumeration--_Top-levelCom_Call.xml"></xi:include>
-    </section>

@@ -1,9 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>
-    The monadic
-    <function>CoDfns.Fix</function>
-    should implement the same interface as the monadic version of the
-    <function>⎕FIX</function>
-    system function.
-  </simpara>
-</listitem>

@@ -1,5 +1,0 @@
-<listitem xmlns="http://docbook.org/ns/docbook" version="5.0">
-  <simpara>The compiler should catch errors wherein the type class of a
-  variable changes from array to function to operator or any combination
-  of the above.</simpara>
-</listitem>

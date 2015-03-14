@@ -1,7 +1,0 @@
-    <!-- ID, Date, Summary, Rsolution -->
-    <tr xmlns="http://docbook.org/ns/docbook" version="5.0">
-      <td>26</td>
-      <td colspan="2">2013-12-21</td>
-      <td colspan="5">Fix <function>ErrorMessage</function></td>
-      <td colspan="2">Applied</td>
-    </tr>
