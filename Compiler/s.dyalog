@@ -18,13 +18,13 @@
 
 ⍝ Primary Keys
 ⍝            Key Field          Unique amongst
-⍝ ─────────────────────────────────────────────  
+⍝ ─────────────────────────────────────────────
   node∆key ← uid         A.pkey L P M D U
   N∆key    ← uid         A.pkey N
 
 ⍝ Natural Keys
 ⍝            Natural Key        For Relation
-⍝ ─────────────────────────────────────────────  
+⍝ ─────────────────────────────────────────────
   L∆nkey   ← val         A.nkey L
   P∆nkey   ← nam         A.nkey P
   M∆nkey   ← fun rgt     A.nkey M
@@ -34,7 +34,7 @@
 
 ⍝ Foreign Keys
 ⍝            Relation  Foreign Key          Referencing
-⍝ ──────────────────────────────────────────────────────  
+⍝ ──────────────────────────────────────────────────────
   M∆fkey   ← M         (fun rgt)     A.fkey L P M D U
   D∆fkey   ← D         (fun rgt lft) A.fkey L P M D U
   U∆fkey   ← U         (res)         A.fkey L P M D U
