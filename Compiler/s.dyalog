@@ -6,17 +6,17 @@
 ⍝ Field Names
   uid val nam fun rgt lft res←'uid' 'val' 'nam' 'fun' 'rgt' 'lft' 'res'
 
-⍝ Relation ← Long Name     Field Names       Field Types
-⍝ ───────────────────────────────────────────────────────
-  L        ← 'Literals'    (uid val        ) A.(nat arr        )
-  P        ← 'Primitives'  (uid nam        ) A.(nat str        )
-  M        ← 'Monadics'    (uid fun rgt    ) A.(nat nat nat    )
-  D        ← 'Dyadics'     (uid fun rgt lft) A.(nat nat nat nat)
-  U        ← 'UserDefined' (uid res        ) A.(nat nat        )
-  N        ← 'Names'       (uid nam        ) A.(nat str        )
+⍝ Relation    ← Long Name     Field Names       Field Types
+⍝ ─────────────────────────────────────────────────────────────────
+  L           ← 'Literals'    (uid val        ) A.(nat arr        )
+  P           ← 'Primitives'  (uid nam        ) A.(nat str        )
+  M           ← 'Monadics'    (uid fun rgt    ) A.(nat nat nat    )
+  D           ← 'Dyadics'     (uid fun rgt lft) A.(nat nat nat nat)
+  U           ← 'UserDefined' (uid res        ) A.(nat nat        )
+  N           ← 'Names'       (uid nam        ) A.(nat str        )
 
 ⍝ Primary Key ← Key Field          Unique amongst
-⍝ ─────────────────────────────────────────────
+⍝ ───────────────────────────────────────────────
   node∆key    ← uid         A.pkey L P M D U
   N∆key       ← uid         A.pkey N
 
@@ -30,7 +30,7 @@
   N∆nkey      ← nam         A.nkey N
 
 ⍝ Foreign Key ← Relation  Foreign Key          Referencing
-⍝ ───────────────────────────────────────────────────────────
+⍝ ──────────────────────────────────────────────────────────────
   M∆fkey      ← M         (fun rgt    ) A.fkey (L P M D U) (uid)
   D∆fkey      ← D         (fun rgt lft) A.fkey (L P M D U) (uid)
   U∆fkey      ← U         (res        ) A.fkey (L P M D U) (uid)

@@ -7,16 +7,16 @@
   nam val ari pos stm typ itp ← 'nam' 'val' 'ari' 'pos' 'stm' 'typ' 'itp'
   inp out fun rgt lft ker itr ← 'inp' 'out' 'fun' 'rgt' 'lft' 'ker' 'itr'
 
-⍝ Relation ← Long Name      Field Names       Field Types
-⍝ ───────────────────────────────────────────────────────────────
-  C        ← 'Constants'    (nam val        ) A.(str arr        )
-  F        ← 'Functions'    (nam ari        ) A.(str nat        )
-  B        ← 'Blocks'       (nam pos stm    ) A.(str nat str    )
-  K        ← 'Kernels'      (nam itr        ) A.(str nat        )
-  Kio      ← 'KernelInOuts' (ker nam inp out) A.(str str bit bit)
-  Dc       ← 'DyadicCalls'  (nam fun rgt lft) A.(str str str str)
-  Mc       ← 'MonadicCalls' (nam fun rgt    ) A.(str str str    )
-  T        ← 'Types'        (nam itp typ    ) A.(str nat nat    )
+⍝ Relation    ← Long Name      Field Names       Field Types
+⍝ ──────────────────────────────────────────────────────────────────
+  C           ← 'Constants'    (nam val        ) A.(str arr        )
+  F           ← 'Functions'    (nam ari        ) A.(str nat        )
+  B           ← 'Blocks'       (nam pos stm    ) A.(str nat str    )
+  K           ← 'Kernels'      (nam itr        ) A.(str nat        )
+  Kio         ← 'KernelInOuts' (ker nam inp out) A.(str str bit bit)
+  Dc          ← 'DyadicCalls'  (nam fun rgt lft) A.(str str str str)
+  Mc          ← 'MonadicCalls' (nam fun rgt    ) A.(str str str    )
+  T           ← 'Types'        (nam itp typ    ) A.(str nat nat    )
 
 ⍝ Primary Key ← Key Field         Unique amongst
 ⍝ ───────────────────────────────────────────────
