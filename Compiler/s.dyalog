@@ -34,11 +34,11 @@
 
 ⍝ Foreign Keys
 ⍝            Relation  Foreign Key          Referencing
-⍝ ──────────────────────────────────────────────────────
-  M∆fkey   ← M         (fun rgt)     A.fkey L P M D U
-  D∆fkey   ← D         (fun rgt lft) A.fkey L P M D U
-  U∆fkey   ← U         (res)         A.fkey L P M D U
-  N∆fkey   ← N         (uid)         A.fkey L P M D U
+⍝ ───────────────────────────────────────────────────────────
+  M∆fkey   ← M         (fun rgt)     A.fkey (L P M D U) (uid)
+  D∆fkey   ← D         (fun rgt lft) A.fkey (L P M D U) (uid)
+  U∆fkey   ← U         (res)         A.fkey (L P M D U) (uid)
+  N∆fkey   ← N         (uid)         A.fkey (L P M D U) (uid)
 
 ⍝ State Descriptor
   _ ← node∆key N∆key L∆nkey P∆nkey M∆nkey D∆nkey U∆nkey N∆nkey
