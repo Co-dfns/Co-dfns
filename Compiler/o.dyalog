@@ -43,9 +43,9 @@
   T∆fkey      ← (T    )    (nam    ) A.fkey (Mc Dc      ) (nam)
 
 ⍝ State Descriptor
-  _     ← top∆key B∆key Kio∆key Dc∆key Mc∆key T∆key C∆nkey B∆fkey1 B∆fkey2
-  _    ,← Kio∆fkey1 Kio∆fkey2 DcMc∆fkey Dc∆fkey Mc∆fkey T∆fkey
-  descr ← (C F B K Kio Dc Mc T) _ 
+  _      ← top∆key B∆key Kio∆key Dc∆key Mc∆key T∆key C∆nkey B∆fkey1 B∆fkey2
+  _     ,← Kio∆fkey1 Kio∆fkey2 DcMc∆fkey Dc∆fkey Mc∆fkey T∆fkey
+  descr  ← (C F B K Kio Dc Mc T) _ 
 
 :EndNamespace
 
