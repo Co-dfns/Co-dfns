@@ -18,18 +18,18 @@
   Mc       ← 'MonadicCalls' (nam fun rgt    ) A.(str str str    )
   T        ← 'Types'        (nam itp typ    ) A.(str nat nat    )
 
-⍝ Primary Keys ← Key Field         Unique amongst
+⍝ Primary Key ← Key Field         Unique amongst
 ⍝ ───────────────────────────────────────────────
-  top∆key      ← nam        A.pkey C F K
-  B∆key        ← uid pos    A.pkey B
-  Kio∆key      ← ker nam    A.pkey Kio
-  Dc∆key       ←            A.pkey Dc
-  Mc∆key       ←            A.pkey Mc
-  T∆key        ← nam itp    A.pkey T
+  top∆key     ← nam        A.pkey C F K
+  B∆key       ← uid pos    A.pkey B
+  Kio∆key     ← ker nam    A.pkey Kio
+  Dc∆key      ←            A.pkey Dc
+  Mc∆key      ←            A.pkey Mc
+  T∆key       ← nam itp    A.pkey T
 
-⍝ Natural Keys ← Natural Key        For Relation
+⍝ Natural Key ← Natural Key        For Relation
 ⍝ ──────────────────────────────────────────────
-  C∆nkey       ← val         A.nkey C
+  C∆nkey      ← val         A.nkey C
 
 ⍝ Foreign Key ← Relations  Fields           Foreign Reference
 ⍝ ─────────────────────────────────────────────────────────────
