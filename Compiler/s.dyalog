@@ -33,12 +33,12 @@
   N∆nkey   ← nam         A.nkey N
 
 ⍝ Foreign Keys
-⍝            Foreign Key        Referencing
-⍝ ─────────────────────────────────────────────  
-  M∆fkey   ← fun rgt     A.fkey L P M D U
-  D∆fkey   ← fun rgt lft A.fkey L P M D U
-  U∆fkey   ← res         A.fkey L P M D U
-  N∆fkey   ← uid         A.fkey L P M D U
+⍝            Relation  Foreign Key          Referencing
+⍝ ──────────────────────────────────────────────────────  
+  M∆fkey   ← M         (fun rgt)     A.fkey L P M D U
+  D∆fkey   ← D         (fun rgt lft) A.fkey L P M D U
+  U∆fkey   ← U         (res)         A.fkey L P M D U
+  N∆fkey   ← N         (uid)         A.fkey L P M D U
 
 ⍝ State Descriptor
   _ ← node∆key N∆key L∆nkey P∆nkey M∆nkey D∆nkey U∆nkey N∆nkey
