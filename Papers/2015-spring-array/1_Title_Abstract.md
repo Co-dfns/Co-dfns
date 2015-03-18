@@ -1,6 +1,8 @@
-Title: Accelerating Information Experts through Compiler Design
+# Title
 
-Abstract:
+Accelerating Information Experts through Compiler Design
+
+# Abstract
 
 Dyalog APL is a tool of thought for information experts, enabling rapid and 
 effective development of domain-centric software without the costly software 

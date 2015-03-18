@@ -6,7 +6,7 @@ In APL, primitive scalar operations, such as addition or subtraction, operate po
 
     5+A×B
 
-If arrays A or B are large, then these multiples iterations can eliminate the benefits of modern cache hierarchies. This results in poor scaling of the interpreter on these results to large simulations. What should be a near perfect scaling loses ground quickly compared to hand-written C code, despite the use of vectorized operations on the iterations.
+If arrays `A` or `B` are large, then these multiples iterations can eliminate the benefits of modern cache hierarchies. This results in poor scaling of the interpreter on these results to large simulations. What should be a near perfect scaling loses ground quickly compared to hand-written C code, despite the use of vectorized operations on the iterations.
 
 The solution to this in the compiler is to recognize these loops and fuse them together. This is a well studied and difficult problem for language like Fortrain, which use things like polyhedral models to fuse arbitrary loops. However, the situation is much better and simpler in APL, because we do not need to recognize explicit loops, but instead can take advantage of the implicit behavior of the scalars. This makes it much easier to recognize when it is safe to fuse these loops. We can thus guarantee that all scalar functions operating over the same set of data will be fused together into a single large loop. We base this fusion on whether two arrays are "shape-dependent" through a flow dependency in the code. 
 
