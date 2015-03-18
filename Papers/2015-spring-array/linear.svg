@@ -1,0 +1,99 @@
+<svg version="1.1" baseProfile="full" width="100%" height="100%" viewBox="0 0 4320 3240"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" >
+ <title>Espen Haug Black Scholes (Linear)</title>
+<desc>SharpPlot version is 2.35</desc>
+<desc>Paint the paper</desc>
+ <g stroke="Black" stroke-width="0" fill="White">
+  <rect x="0" y="0" width="4320" height="3240" />
+ </g>
+<desc>Y-axis labels</desc>
+ <g font-family="Times New Roman" font-size="80" text-anchor="end"  >
+  <text x="335" y="2740" >0</text>
+  <text x="335" y="2458" >20</text>
+  <text x="335" y="2175" >40</text>
+  <text x="335" y="1893" >60</text>
+  <text x="335" y="1610" >80</text>
+  <text x="335" y="1328" >100</text>
+  <text x="335" y="1045" >120</text>
+  <text x="335" y="763" >140</text>
+  <text x="335" y="480" >160</text>
+ </g>
+<desc>Y-Captions: text and effects</desc>
+ <g transform="translate(165 460) rotate(-90)" fill="Teal" font-family="Times New Roman" font-size="100" text-anchor="end" >
+  <text>Seconds</text>
+ </g>
+<desc>Heading</desc>
+ <g id="Heading" fill="DarkSlateBlue" font-family="Arial" font-size="120" text-anchor="middle" >
+  <text x="2160" y="208" >Espen Haug Black Scholes (Linear)</text>
+ </g>
+<desc>for X-axis labels</desc>
+ <g fill="DarkSlateBlue" font-family="Arial" font-size="100" text-anchor="middle"  >
+  <text x="542" y="2864" >1</text>
+  <text x="827" y="2864" >2</text>
+  <text x="1112" y="2864" >4</text>
+  <text x="1396" y="2864" >8</text>
+  <text x="1681" y="2864" >16</text>
+  <text x="1965" y="2864" >32</text>
+  <text x="2250" y="2864" >64</text>
+  <text x="2535" y="2864" >128</text>
+  <text x="2819" y="2864" >256</text>
+  <text x="3104" y="2864" >512</text>
+  <text x="3388" y="2864" >1024</text>
+  <text x="3673" y="2864" >2048</text>
+  <text x="3958" y="2864" >4096</text>
+ </g>
+<desc>X-Caption: text and effects</desc>
+ <g id="XCaption" fill="Teal" font-family="Times New Roman" font-size="100" text-anchor="end" >
+  <text x="4100" y="3004" >&#x00d7;1000</text>
+ </g>
+<desc>X-Axis tickmarks</desc>
+ <path fill="none" stroke="Black" stroke-width="9"  d="M 542,2720 L 542,2764 M 827,2720 L 827,2764 M 1112,2720 L 1112,2764 M 1396,2720 L 1396,2764 M 1681,2720 L 1681,2764 M 1965,2720 L 1965,2764 M 2250,2720 L 2250,2764 M 2535,2720 L 2535,2764 M 2819,2720 L 2819,2764 M 3104,2720 L 3104,2764 M 3388,2720 L 3388,2764 M 3673,2720 L 3673,2764 M 3958,2720 L 3958,2764 " />
+<desc>Y-Axis tickmarks</desc>
+ <path fill="none" stroke="Black" stroke-width="9"  d="M 400,2720 L 367,2720 M 400,2438 L 367,2438 M 400,2155 L 367,2155 M 400,1873 L 367,1873 M 400,1590 L 367,1590 M 400,1308 L 367,1308 M 400,1025 L 367,1025 M 400,743 L 367,743 M 400,460 L 367,460 " />
+<desc>Start of Barchart ===========</desc>
+ <g stroke="Black" stroke-width="4" fill="Wheat">
+  <rect x="454" y="2720" width="67" height="0" />
+  <rect x="739" y="2719" width="67" height="1" />
+  <rect x="1024" y="2719" width="67" height="1" />
+  <rect x="1308" y="2718" width="67" height="2" />
+  <rect x="1593" y="2716" width="67" height="4" />
+  <rect x="1877" y="2711" width="67" height="9" />
+  <rect x="2162" y="2698" width="67" height="22" />
+  <rect x="2447" y="2675" width="67" height="45" />
+  <rect x="2731" y="2621" width="67" height="99" />
+  <rect x="3016" y="2520" width="67" height="200" />
+  <rect x="3301" y="2328" width="67" height="392" />
+  <rect x="3585" y="1928" width="67" height="792" />
+  <rect x="3870" y="730" width="67" height="1990" />
+ </g>
+ <g stroke="Black" stroke-width="4" fill="DarkSlateBlue">
+  <rect x="563" y="2720" width="67" height="0" />
+  <rect x="848" y="2719" width="67" height="1" />
+  <rect x="1132" y="2718" width="67" height="2" />
+  <rect x="1417" y="2717" width="67" height="3" />
+  <rect x="1702" y="2714" width="67" height="6" />
+  <rect x="1986" y="2708" width="67" height="12" />
+  <rect x="2271" y="2697" width="67" height="23" />
+  <rect x="2555" y="2674" width="67" height="46" />
+  <rect x="2840" y="2627" width="67" height="93" />
+  <rect x="3125" y="2552" width="67" height="168" />
+  <rect x="3409" y="2385" width="67" height="335" />
+  <rect x="3694" y="2053" width="67" height="667" />
+  <rect x="3978" y="1245" width="67" height="1475" />
+ </g>
+<desc>Axes .... </desc>
+ <path fill="none" stroke="Black" stroke-width="14"  d="M 400,2764 L 400,416 M 356,2720 L 4144,2720 " />
+<desc>Bar key (edged)</desc>
+ <g stroke="Black" stroke-width="4" fill="Wheat">
+  <rect x="490" y="2989" width="153" height="63" />
+ </g>
+<desc>Bar key (edged)</desc>
+ <g stroke="Black" stroke-width="4" fill="DarkSlateBlue">
+  <rect x="1034" y="2989" width="153" height="63" />
+ </g>
+ <g fill="Navy" font-family="Times New Roman" font-size="90"  >
+  <text x="688" y="3052" >Dyalog</text>
+ </g>
+ <g fill="Navy" font-family="Times New Roman" font-size="90"  >
+  <text x="1232" y="3052" >Co-dfns</text>
+ </g>
+</svg>
