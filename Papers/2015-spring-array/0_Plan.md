@@ -62,6 +62,7 @@ Actions:
 4. Write Section V
 5. Write Section VII
 6. Write Section VI
-7. Write Sections II and VIII
-8. Write Section IX
+7. Write Sections II and IX
+8. Write Section VIII
+9. Write Section X
 
