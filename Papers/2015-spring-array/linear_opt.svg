@@ -1,0 +1,129 @@
+<svg version="1.1" baseProfile="full" width="100%" height="100%" viewBox="0 0 4320 3240"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events" >
+ <title>Espen Haug Black Scholes (Linear)</title>
+<desc>SharpPlot version is 2.43</desc>
+<desc>Paint the paper =====</desc>
+ <g fill="White">
+  <rect x="0" y="0" width="4320" height="3240" />
+ </g>
+<desc>Border =====</desc>
+<desc>Y-axis labels</desc>
+ <g font-family="Times New Roman" font-size="80" text-anchor="end"  >
+  <text x="335" y="2740" >0</text>
+  <text x="335" y="2514" >1</text>
+  <text x="335" y="2288" >2</text>
+  <text x="335" y="2062" >3</text>
+  <text x="335" y="1836" >4</text>
+  <text x="335" y="1610" >5</text>
+  <text x="335" y="1384" >6</text>
+  <text x="335" y="1158" >7</text>
+  <text x="335" y="932" >8</text>
+  <text x="335" y="706" >9</text>
+  <text x="335" y="480" >10</text>
+ </g>
+<desc>Y-Captions: text and effects</desc>
+ <g transform="translate(205 460) rotate(-90)" fill="Teal" font-family="Times New Roman" font-size="100" text-anchor="end" >
+  <text>Seconds</text>
+ </g>
+<desc>Heading, subheading and footnotes =====</desc>
+<desc>Heading</desc>
+ <g id="Heading" fill="DarkSlateBlue" font-family="Arial" font-size="120" text-anchor="middle" >
+  <text x="2160" y="208" >Espen Haug Black Scholes (Linear)</text>
+ </g>
+<desc>Region =====</desc>
+<desc>for X-axis labels</desc>
+ <g fill="DarkSlateBlue" font-family="Arial" font-size="100" text-anchor="middle"  >
+  <text x="542" y="2864" >1</text>
+  <text x="827" y="2864" >2</text>
+  <text x="1112" y="2864" >4</text>
+  <text x="1396" y="2864" >8</text>
+  <text x="1681" y="2864" >16</text>
+  <text x="1965" y="2864" >32</text>
+  <text x="2250" y="2864" >64</text>
+  <text x="2535" y="2864" >128</text>
+  <text x="2819" y="2864" >256</text>
+  <text x="3104" y="2864" >512</text>
+  <text x="3388" y="2864" >1024</text>
+  <text x="3673" y="2864" >2048</text>
+  <text x="3958" y="2864" >4096</text>
+ </g>
+<desc>X-Caption: text and effects</desc>
+ <g id="XCaption" fill="Teal" font-family="Times New Roman" font-size="100" text-anchor="end" >
+  <text x="4100" y="3004" >&#x00d7;1000</text>
+ </g>
+<desc>X-Axis Ticks =====</desc>
+<desc>X-Axis tickmarks</desc>
+ <path fill="none" stroke="Black" stroke-width="7"  d="M 542,2720 L 542,2764 M 827,2720 L 827,2764 M 1112,2720 L 1112,2764 M 1396,2720 L 1396,2764 M 1681,2720 L 1681,2764 M 1965,2720 L 1965,2764 M 2250,2720 L 2250,2764 M 2535,2720 L 2535,2764 M 2819,2720 L 2819,2764 M 3104,2720 L 3104,2764 M 3388,2720 L 3388,2764 M 3673,2720 L 3673,2764 M 3958,2720 L 3958,2764 " />
+<desc>Y-Axis Ticks =====</desc>
+<desc>Y-Axis tickmarks</desc>
+ <path fill="none" stroke="Black" stroke-width="7"  d="M 400,2720 L 367,2720 M 400,2494 L 367,2494 M 400,2268 L 367,2268 M 400,2042 L 367,2042 M 400,1816 L 367,1816 M 400,1590 L 367,1590 M 400,1364 L 367,1364 M 400,1138 L 367,1138 M 400,912 L 367,912 M 400,686 L 367,686 M 400,460 L 367,460 " />
+<desc>Start of Barchart ===========</desc>
+ <g stroke="Black" stroke-width="4" fill="Wheat">
+  <rect x="439" y="2719" width="49" height="1" />
+  <rect x="724" y="2718" width="49" height="2" />
+  <rect x="1009" y="2715" width="49" height="5" />
+  <rect x="1293" y="2709" width="49" height="11" />
+  <rect x="1578" y="2686" width="49" height="34" />
+  <rect x="1862" y="2706" width="49" height="14" />
+  <rect x="2147" y="2693" width="49" height="27" />
+  <rect x="2432" y="2650" width="49" height="70" />
+  <rect x="2716" y="2600" width="49" height="120" />
+  <rect x="3001" y="2494" width="49" height="226" />
+  <rect x="3285" y="2245" width="49" height="475" />
+  <rect x="3570" y="1545" width="49" height="1175" />
+  <rect x="3855" y="505" width="49" height="2215" />
+ </g>
+ <g stroke="Black" stroke-width="4" fill="DarkSlateBlue">
+  <rect x="518" y="2720" width="49" height="0" />
+  <rect x="803" y="2719" width="49" height="1" />
+  <rect x="1087" y="2719" width="49" height="1" />
+  <rect x="1372" y="2718" width="49" height="2" />
+  <rect x="1656" y="2715" width="49" height="5" />
+  <rect x="1941" y="2713" width="49" height="7" />
+  <rect x="2226" y="2707" width="49" height="13" />
+  <rect x="2510" y="2695" width="49" height="25" />
+  <rect x="2795" y="2666" width="49" height="54" />
+  <rect x="3080" y="2614" width="49" height="106" />
+  <rect x="3364" y="2471" width="49" height="249" />
+  <rect x="3649" y="2223" width="49" height="497" />
+  <rect x="3933" y="1590" width="49" height="1130" />
+ </g>
+ <g stroke="Black" stroke-width="4" fill="Tomato">
+  <rect x="597" y="2720" width="49" height="0" />
+  <rect x="881" y="2719" width="49" height="1" />
+  <rect x="1166" y="2718" width="49" height="2" />
+  <rect x="1451" y="2716" width="49" height="4" />
+  <rect x="1735" y="2713" width="49" height="7" />
+  <rect x="2020" y="2706" width="49" height="14" />
+  <rect x="2304" y="2691" width="49" height="29" />
+  <rect x="2589" y="2661" width="49" height="59" />
+  <rect x="2874" y="2605" width="49" height="115" />
+  <rect x="3158" y="2494" width="49" height="226" />
+  <rect x="3443" y="2268" width="49" height="452" />
+  <rect x="3727" y="1793" width="49" height="927" />
+  <rect x="4012" y="889" width="49" height="1831" />
+ </g>
+<desc>Axes =====</desc>
+ <path fill="none" stroke="Black" stroke-width="12"  d="M 400,2764 L 400,416 M 356,2720 L 4144,2720 " />
+<desc>Key =====</desc>
+<desc>Block key</desc>
+ <g stroke="Black" stroke-width="4" fill="Wheat">
+  <rect x="490" y="2989" width="153" height="63" />
+ </g>
+<desc>Block key</desc>
+ <g stroke="Black" stroke-width="4" fill="DarkSlateBlue">
+  <rect x="1034" y="2989" width="153" height="63" />
+ </g>
+<desc>Block key</desc>
+ <g stroke="Black" stroke-width="4" fill="Tomato">
+  <rect x="1603" y="2989" width="153" height="63" />
+ </g>
+ <g fill="Navy" font-family="Times New Roman" font-size="90"  >
+  <text x="688" y="3052" >Dyalog</text>
+ </g>
+ <g fill="Navy" font-family="Times New Roman" font-size="90"  >
+  <text x="1232" y="3052" >Co-dfns</text>
+ </g>
+ <g fill="Navy" font-family="Times New Roman" font-size="90"  >
+  <text x="1801" y="3052" >C</text>
+ </g>
+</svg>
