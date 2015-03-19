@@ -50,8 +50,9 @@ VII.  Ongoing Work
   D.    Automatic runtime complexity analysis
   E.    Constant propagation/folding
   F.    Type checking reductions
-VIII. Conclusion
-IX.   References
+VIII. Related Work
+IX.   Conclusion
+X.    References
 
 Actions:
 
