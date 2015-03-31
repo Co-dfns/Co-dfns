@@ -18,8 +18,7 @@
   git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '}
   gie←{⍵⊃¨⊂'APLDOUB' 'APLLONG' 'APLNA'}
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
-  atst←'if(NULL==(',⍵,')->p||prk!=('
-  ats←{atst,⍵,')->p->RANK||(',⍵,')->p->ELTYPE!=',⍺,')'}
+  ats←{'if(NULL==(',⍵,')->p||prk!=(',⍵,')->p->RANK||(',⍵,')->p->ELTYPE!=',⍺,')'}
   ack←{tp←⊃gie ⍺⌷⍺⍺ ⋄ (tp ats ⍵),(⍺ gar tp),'else p',(⍕⍺),'=(',⍵,')->p;',nl}
   ist←{⊃,/((⍳≢)⍺⍺¨⊢)(∪n⍵)var¨∪(,1↑⍉)¨e⍵}
   grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}

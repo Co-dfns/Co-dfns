@@ -18,7 +18,6 @@
   pck←{⍺(⍺⍺⌷⍤¯1⍵⍵,∘⍪⍺⍺(⍀∘⊢)⊣)⍵}
   lch←⊣((1+NumM),t,(⊂,'c'),AtmM pck n,r,∘⍪s)(NumM∨AtmM∧1⌽NumM)(⌿∘⊢)⊢
   lcr←d,(↑(↓(⊂'Var'),(⊂,'a'),∘⍪⊣)(NumM∧¯1⌽AtmM)pck(↓t,k,∘⍪n)⊢),r,∘⍪s
-  lcv←
   lc←((⊂'lc'),∘⍕¨∘⍳(+/AtmM∧1⌽NumM))((1↑⊢)⍪lch⍪1↓((¯1⌽AtmM)∨∘~NumM)(⌿∘⊢)lcr)⊢
   da←((0∊⍨n)∧AtmM∨FexM∧(⊂∘,'f')∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
   fen←(0≡∘⊃n)⌷n,'fe'enc∘⊃r
@@ -40,4 +39,5 @@
   fss←ExpM∧((,¨'md')∊⍨k)∧fsp∊⍨(↑v)⌷⍤¯1⍨(,¨'md')⍳k ⋄ fsg←1,2≠/fss
   fse←(⊃⍪/)(fsg(/∘⊢)fss∧fsg)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),1↓[1]⊢))¨fsg⊂[0]⊢
   fs←(⊃⍪/)((((~ExpM∨AtmM)(⌿∘⊢)⊢)⍪(fse(ExpM∨AtmM)(⌿∘⊢)⊢))¨(1,1↓FunM)⊂[0]⊢)
+  tt←{fs av va ce fe da lc lf du df rd rn ⍵}
 :EndNamespace

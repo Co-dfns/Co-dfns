@@ -47,5 +47,5 @@
   Pex←lpar _s Ex _s rpar
   Stmt←sep _any _s (Ex _o Fe) _s (sep _any)
   Ns←nss _s (Stmt _aew nse) _s eot _as A.Nms
-  Ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
+  ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
 :EndNamespace
