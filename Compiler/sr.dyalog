@@ -12,7 +12,6 @@
   
   gted←{⍺,'>=',⍵}
   
-  zck←{';if(',⍵,'==0)error(11)'}
   dtp←'(double)'
   
   sdb←,¨'+-×÷*⍟|○≥'
@@ -21,4 +20,4 @@
   sdt←(0 0 0 1)(0 0 0 1)(0 0 0 1)(0 0 0 0)(0 0 0 1)(0 0 0 0)
   sdt,←(0 0 0 1)(0 0 0 0)(1 1 1 1)
   sdt←↑sdt
-:EndNamespace 
+:EndNamespace
