@@ -34,9 +34,9 @@
   Scl0←{⍺ R.gs 1↓⍵}
   gex←{⍺⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~FexM ⍵)⌿⍵}
   gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f}
-  gcf←{(⍵⍵gfh⍵),(⊃,/(⍺⍺⍪gfd 1↓⍵)gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍵),(⍵⍵gff⍵),nl}
+  gcf←{(⍺⍺gfh⍵),(⊃,/(⍺⍪gfd 1↓⍵)gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍵),(⍺⍺gff⍵),nl}
   gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
-  gct←{b←gdf⊃⍵ ⋄ hdr,('tenv'ged b),(gfs ⍵),((0 3⍴⊂'')gcf 0)(gtf b)⍪1↓b}
+  gct←{b←gdf⊃⍵ ⋄ hdr,('tenv'ged b),(gfs ⍵),(0 3⍴⊂'')(0 gcf)(gtf b)⍪1↓b}
   gfs←{⊃,/{frt,(⊃n 1↑⍵),'(',flp,((¯1+⊃s 1↑⍵)⊃');' ',LOCALP*penv[]);'),nl}¨1↓⍵}
-  gc←{(gct ⍵),⊃,/(gfd⊃⍵)gcf 1¨1↓⍵}(1,1↓FunM)⊂[0]⊢
+  gc←{(gct ⍵),⊃,/(gfd⊃⍵)∘(1 gcf)¨1↓⍵}(1,1↓FunM)⊂[0]⊢
 :EndNamespace 
