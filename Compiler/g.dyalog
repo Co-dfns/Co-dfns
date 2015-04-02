@@ -2,6 +2,7 @@
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ pp←#.pp ⋄ tl←##.U.tl ⋄ do←##.U.do
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
+  EnvM←A.EnvM
   var←##.U.var ⋄ nl←##.U.nl
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
@@ -31,13 +32,15 @@
   Fexf←{(⊃n⍵)('lft'R.gf⊃⊃v⍵)('NULL'R.gf⊃⊃v⍵)}
   Fexm←{f o←⊃v⍵ ⋄ (⊃n⍵)(o R.gomd f)(o R.gomm f)}
   Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
-  Nms←{hdr}
+  Nms0←{hdr}
+  Env0←{'LOCALP ',(⊃n⍵),'[',(⍕⊃v⍵),'];',nl}
   Scl0←{⍺ R.gs 1↓⍵}
-  gex←{⍺⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~FexM ⍵)⌿⍵}
+  gex←{⍺⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~(EnvM∨FexM) ⍵)⌿⍵}
   gfd←{0=≢f←FexS ⍵:0 3⍴⊂'' ⋄ {⍎(⊃t⍵),(⍕⊃k⍵),' ⍵'}⍤1⊢f}
   gcf←{(⍺⍺gfh⍵),(⊃,/(⍺⍪gfd 1↓⍵)gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍵),(⍺⍺gff⍵),nl}
   gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
-  gct←{b←gdf⊃⍵ ⋄ ('tenv'ged b),(gfs ⍵),(0 3⍴⊂'')(0 gcf)(gtf b)⍪1↓b}
+  gct←{b←gdf⊃⍵ ⋄ (gfs ⍵),(0 3⍴⊂'')(0 gcf)(gtf b)⍪1↓b}
   gfs←{⊃,/{frt,(⊃n 1↑⍵),'(',flp,((¯1+⊃s 1↑⍵)⊃');' ',LOCALP*penv[]);'),nl}¨1↓⍵}
-  gc←(Nms 0⌷⊢),({(gct ⍵),⊃,/(gfd⊃⍵)∘(1 gcf)¨1↓⍵}(1,1↓FunM)⊂[0]⊢)
+  gds←{⊃,/{⊂(⍎(⊃t⍵),⍕⊃k⍵)⍵}⍤1⊢2↑⍵}
+  gc←gds,({(gct ⍵),⊃,/(gfd⊃⍵)∘(1 gcf)¨1↓⍵}(1,1↓FunM)⊂[0]⊢)
 :EndNamespace
