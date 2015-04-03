@@ -40,9 +40,9 @@
   fss←ExpM∧((,¨'md')∊⍨k)∧fsp∊⍨(↑v)⌷⍤¯1⍨(,¨'md')⍳k ⋄ fsg←1,2≠/fss
   fse←(⊃⍪/)(fsg(/∘⊢)fss∧fsg)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),1↓[1]⊢))¨fsg⊂[0]⊢
   fs←(⊃⍪/)((((~ExpM∨AtmM)(⌿∘⊢)⊢)⍪(fse(ExpM∨AtmM)(⌿∘⊢)⊢))¨(1,1↓FunM)⊂[0]⊢)
-  vcd←(,1↑⊢)(((6↑⊣),(⊂⍬),⍨∘≢∘∪∘n(AtmM∨ExpM)(⌿∘⊢)⊢)⍪⊢)1↓⊢
-  vc←(⊃⍪/)(vcd¨(1,1↓FunM)⊂[0]⊢)
-  ifn←1 'Fun' 0 'Init' ⍬ 0 ⍬ ⍬
-  if←(1↑⊢)⍪((1=d)∧ExpM∨AtmM)((ifn⍪∘up⊣(⌿∘⊢)⊢)⍪1↓(~⊣)(⌿∘⊢)⊢)⊢
+  vcs←≢∘∪∘n(AtmM∨ExpM)(⌿∘⊢)⊢
+  vc←(⊃⍪/)(((,1↑⊢)(((6↑⊣),(⊂⍬),⍨vcs)⍪⊢)1↓⊢)¨(1,1↓FunM)⊂[0]⊢)
+  ifn←1 'Fun' 0 'Init' ⍬ 0,(⊂⍬),⍨⊢
+  if←(1↑⊢)⍪((1=d)∧ExpM∨AtmM)((((ifn≢∘∪∘n)⍪up)⊣(⌿∘⊢)⊢)⍪1↓(~⊣)(⌿∘⊢)⊢)⊢
   fd←(1↑⊢)⍪((1 'Fun' 'd',3↓⊢)⍤1FunM(⌿∘⊢)⊢)⍪1↓⊢
 :EndNamespace

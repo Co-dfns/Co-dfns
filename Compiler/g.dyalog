@@ -9,7 +9,7 @@
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   fpd←'(void)'('(',flp,')')('(',flp,',LOCALP*penv[])')
   ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
-  ger←{(≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵)do'regp(&',⍺,'[i]);'}
+  ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ghi←{'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
   ght←{'{',nl,gfi,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
