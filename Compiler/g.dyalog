@@ -41,7 +41,6 @@
   gex←{⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~(FunM∨EnvM∨FexM) ⍵)⌿⍵}
   gfd←{{⍎'Fex',(⍕⊃k⍵),' ⍵'}⍤1⊢FexS ⍵}
   gcf←{(gfh⍵),(⊃,/⍺∘gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍵),((⊃k⍵)gff⍵),nl}
-  gtf←⍉∘⍪0 'Fun' 0 'Init',4↓∘,1↑⊢
   gds←{⊃,/{⊂(⍎(⊃t⍵),⍕⊃k⍵)⍵}⍤1⊢(2↑⍵)⍪(('d'∊⍨k⍵)∧FunM ⍵)⌿⍵}
   gc←gds,gfd{⊃,/⍺∘gcf¨1↓⍵}((0 1∊⍨k)∧1,1↓FunM)⊂[0]⊢
 :EndNamespace
