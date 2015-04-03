@@ -2,13 +2,13 @@
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ pp←#.pp ⋄ tl←##.U.tl ⋄ do←##.U.do
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
-  EnvM←A.EnvM
+  EnvM←A.EnvM ⋄ pp←#.pp
   var←##.U.var ⋄ nl←##.U.nl
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   fpd←'(void)'('(',flp,')')('(',flp,',LOCALP*penv[])')
-  ged←{'LOCALP ',⍺,'[',(⍕≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵),'];'}
+  ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
   ger←{(≢∪n((ExpM∨AtmM)1↓⍵)⌿1↓⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ghi←{'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
@@ -35,12 +35,11 @@
   Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
   Fex0←{3⍴⊂''}
   Fund←{'void EXPORT ',(⊃n⍵),((⊃s⍵)⊃fpd),';',nl}
-  Nms0←{hdr}
-  Env0←{'LOCALP ',(⊃n⍵),'[',(⍕⊃v⍵),'];',nl}
+  Nms0←{hdr,('tenv'ged ⍵),nl}
   Scl0←{⍺ R.gs 1↓⍵}
   gex←{⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~(FunM∨EnvM∨FexM) ⍵)⌿⍵}
   gfd←{{⍎'Fex',(⍕⊃k⍵),' ⍵'}⍤1⊢FexS ⍵}
   gcf←{(gfh⍵),(⊃,/⍺∘gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍵),((⊃k⍵)gff⍵),nl}
-  gds←{⊃,/{⊂(⍎(⊃t⍵),⍕⊃k⍵)⍵}⍤1⊢(2↑⍵)⍪(('d'∊⍨k⍵)∧FunM ⍵)⌿⍵}
+  gds←{⊃,/{⊂(⍎(⊃t⍵),⍕⊃k⍵)⍵}⍤1⊢(1↑⍵)⍪(('d'∊⍨k⍵)∧FunM ⍵)⌿⍵}
   gc←gds,gfd{⊃,/⍺∘gcf¨1↓⍵}((0 1∊⍨k)∧1,1↓FunM)⊂[0]⊢
 :EndNamespace
