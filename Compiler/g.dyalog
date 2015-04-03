@@ -16,8 +16,8 @@
   ghn←{'{',nl,gfi,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
   gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
   gfh←{'void EXPORT ',(⊃n ⍵),((2⌊⊃s ⍵)⊃fpd,¨(ghi ⍵)(ght ⍵)(ghn ⍵))}
-  gfr←{'z->p=zap(',((⊃⌽n 1↓⍵)vpp 0⌷⍉⊃⌽e 1↓⍵),');'}
-  gff←{⍵{(gfr ⍺),'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢,(⍺⊃'}' 'isinit=oi;}'),nl}
+  gfr←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');'}
+  gff←{⍵{(gfr ⍺),'cutp(&env0[0]);',nl,⍵}⍣(1⌊⊃s⍵)⊢,((⊃k⍵)⊃'}' 'isinit=oi;}'),nl}
   elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'} ⋄ eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
   vec←{(vsp≢⍵),'getarray(',(elt⊃⍵),',',(⍕1<≢⍵),',','sp,',((⊃⍵)var 0⌷⍉⍺),');}',nl}
   vsp←{'{BOUND ',(1<⍵)⊃'*sp=NULL;'('sp[1]={',(⍕⍵),'};')}
@@ -39,7 +39,7 @@
   Scl0←{⍺ R.gs 1↓⍵}
   gex←{⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵} ⋄ gdf←{(~(FunM∨EnvM∨FexM) ⍵)⌿⍵}
   gfd←{{⍎'Fex',(⍕⊃k⍵),' ⍵'}⍤1⊢FexS ⍵}
-  gcf←{(gfh⍵),(⊃,/⍺∘gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf 1↓⍵),((⊃k⍵)gff⍵),nl}
+  gcf←{(gfh 1↑⍵),(⊃,/⍺∘gex¨((1,1↓(⊃d)=d)⊂[0]⊢)gdf ¯1↓1↓⍵),(gff ¯1↑⍵),nl}
   gds←{⊃,/{⊂(⍎(⊃t⍵),⍕⊃k⍵)⍵}⍤1⊢(1↑⍵)⍪(('d'∊⍨k⍵)∧FunM ⍵)⌿⍵}
   gc←gds,gfd{⊃,/⍺∘gcf¨1↓⍵}((0 1∊⍨k)∧1,1↓FunM)⊂[0]⊢
 :EndNamespace

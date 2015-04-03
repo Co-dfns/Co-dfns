@@ -3,7 +3,7 @@
   A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM
   ExpS←A.ExpS ⋄ ExpM←A.ExpM ⋄ up←A.up ⋄ pp←#.pp
-  tt←{fd if vc fs av va ce fe da lc lf du df rd rn ⍵}
+  tt←{fd ff if vc fs av va ce fe da lc lf du df rd rn ⍵}
   rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))
   rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)
   df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
@@ -44,5 +44,7 @@
   vc←(⊃⍪/)(((,1↑⊢)(((6↑⊣),(⊂⍬),⍨vcs)⍪⊢)1↓⊢)¨(1,1↓FunM)⊂[0]⊢)
   ifn←1 'Fun' 0 'Init' ⍬ 0,(⊂⍬),⍨⊢
   if←(1↑⊢)⍪((1=d)∧ExpM∨AtmM)((((ifn≢∘∪∘n)⍪up)⊣(⌿∘⊢)⊢)⍪1↓(~⊣)(⌿∘⊢)⊢)⊢
+  fft←(,1↑⊢)(1 'Nuf',(2↓¯2↓⊣),(n⊢),(⊂0⌷∘⍉∘⊃∘e⊢))(¯1↑⊢)
+  ff←((⊃⍪/)(1↑⊢),(((1↑⊢)⍪(((¯1+d),1↓[1]⊢)1↓⊢)⍪fft)¨1↓⊢))(1,1↓FunM)⊂[0]⊢
   fd←(1↑⊢)⍪((1 'Fun' 'd',3↓⊢)⍤1FunM(⌿∘⊢)⊢)⍪1↓⊢
 :EndNamespace
