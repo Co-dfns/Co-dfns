@@ -6,7 +6,7 @@
   rf sf vf ef←fc+⍳4 ⋄ r←rf get ⋄ s←sf get ⋄ v←vf get ⋄ e←ef get
   
   up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ new←{⍉⍪fc↑0 ⍺,⍵} ⋄ MtN←0 4⍴⍬
-  Prm←{'Prm'new 0 ⍵} ⋄ Fun←{('Fun'new⍬)⍪up⊃⍪/(⊂MtN),⍵} 
+  Prm←{'Prm'new 0 ⍵} ⋄ Fun←{('Fun'new 1)⍪up⊃⍪/(⊂MtN),⍵} 
   Var←{'Var'new(,⍺⍺)⍵} ⋄ Exp←{('Exp'new⊂,⍺⍺)⍪up⊃⍪/⍵}
   Fex←{('Fex'new⊂,⍺⍺)⍪up⊃⍪/⍵}
   Nms←{('Nms'new⍬)⍪up⊃⍪/(⊂MtN),⍵} ⋄ Atm←{('Atm'new⍬)⍪up⊃⍪/⍵}

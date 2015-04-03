@@ -2,8 +2,8 @@
   (⎕IO ⎕ML ⎕WX)←0 1 3
   A←##.A ⋄ d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunS←A.FunS ⋄ FexM←A.FexM ⋄ FunM←A.FunM ⋄ AtmM←A.AtmM ⋄ NumM←A.NumM
-  ExpS←A.ExpS ⋄ ExpM←A.ExpM ⋄ pp←#.pp
-  tt←{fd td fs av va ce fe da lc lf du df rd rn ⍵}
+  ExpS←A.ExpS ⋄ ExpM←A.ExpM ⋄ up←A.up ⋄ pp←#.pp
+  tt←{fd if td fs av va ce fe da lc lf du df rd rn ⍵}
   rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))
   rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r FunS)
   df←(~(+\1=d)∊((1=d)∧(FexM∨FunM)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
@@ -14,7 +14,7 @@
   blg←{⍺←⊢ ⋄ ⍺((prf(⌈/(⍳∘≢⊢)×⍤1(1↓⊣)∧.(=∨0=⊢)∘⍉⊢)⍺⍺(⌿∘↑)r)⌷⍤0 2 ⍺⍺(⌿∘⊢)⍵⍵)⍵}
   lfv←⍉∘⍪(1+⊣),(,¨'Var' 'f'),('fn'enc 4⊃⊢),4↓⊢
   lfn←('Fun'≡1⊃⊢)⌷(⊣-⍨∘⊃⊢)((⊂∘⍉∘⍪⊣,1↓⊢),∘⊂(⊣,(,¨'Fex' 'f'),3↓⊢)⍪lfv)⊢
-  lfh←(1<(+/⊣))⊃(⊂0↑⊢),∘⊂∘⍉∘⍪1'Fun'0,('fn'enc⊣),(⊂⊣),5↓∘,1↑⊢
+  lfh←(1<(+/⊣))⊃(⊂0↑⊢),∘⊂∘⍉∘⍪1'Fun'1,('fn'enc⊣),(⊂⊣),5↓∘,1↑⊢
   lf←(1↑⊢)⍪∘⊃(⍪/(1,1↓FunM)blg(↑r)(⊂lfh⍪∘⊃(⍪/((¯2+1=(+/⊣))+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
   pck←{⍺(⍺⍺⌷⍤¯1⍵⍵,∘⍪⍺⍺(⍀∘⊢)⊣)⍵}
   lch←⊣((1+NumM),t,(⊂,'c'),AtmM pck n,r,∘⍪s)(NumM∨AtmM∧1⌽NumM)(⌿∘⊢)⊢
@@ -41,5 +41,7 @@
   fse←(⊃⍪/)(fsg(/∘⊢)fss∧fsg)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),1↓[1]⊢))¨fsg⊂[0]⊢
   fs←(⊃⍪/)((((~ExpM∨AtmM)(⌿∘⊢)⊢)⍪(fse(ExpM∨AtmM)(⌿∘⊢)⊢))¨(1,1↓FunM)⊂[0]⊢)
   td←(1↑⊢)⍪(1 'Env' 0 'tenv' ⍬ 0,(⊂⍬),⍨(≢∘∪∘n((1=d)∧AtmM∨ExpM)(⌿∘⊢)⊢))⍪1↓⊢
+  ifn←1 'Fun' 0 'Init' ⍬ 0 ⍬ ⍬
+  if←(2↑⊢)⍪((1=d)∧ExpM∨AtmM)((ifn⍪∘up⊣(⌿∘⊢)⊢)⍪2↓(~⊣)(⌿∘⊢)⊢)⊢
   fd←(2↑⊢)⍪((1 'Fun' 'd',3↓⊢)⍤1FunM(⌿∘⊢)⊢)⍪2↓⊢
 :EndNamespace
