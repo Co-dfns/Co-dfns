@@ -6,6 +6,8 @@
   tl←##.U.tl ⋄ do←##.U.do ⋄ var←##.U.var ⋄ nl←##.U.nl ⋄ pp←#.pp
   comd←OP.comd ⋄ comm←OP.comm ⋄ eacd←OP.eacd ⋄ eacm←OP.eacm
   opn opd opm←(,¨'⍨¨')('comd' 'eacd')('comm' 'eacm')
+  idx←##.MF.idx ⋄ brki←##.MF.brki ⋄ iotm←##.MF.iotm
+  fdb←3 3⍴,¨ '⌷' idx  ''   '[' brki ''   '⍳' ''   iotm
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
@@ -26,9 +28,13 @@
   dis←{⍺←⊢ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
   Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
   Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
-  Expm←{f r←⊃v⍵ ⋄ ((⊃n⍵)r)(f R.gm ⍺)(⊃e⍵)[;0 2]}
-  Expd←{l f r←⊃v⍵ ⋄ ((⊃n⍵)l r)(f R.gd ⍺)(⊃e⍵)[;0 1 3]}
-  Expi←{a i←⊃v⍵ ⋄ ((⊃n⍵) a i)((,'[')R.gd ⍺)⊃e ⍵}
+  dff←{⍺⍺,'(',(⊃{⍺,',',⍵}/⍵),'); /* Fallback */',nl}
+  grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
+  grhm←'rslt' 'rgt'grh ⋄ grhd←'rslt' 'lft' 'rgt'grh
+  gec←{((0⌷⍉⍵⍵)⍳⊂⍺)⊃(⍺⍺⌷⍉⍵⍵),⊂⍺ dff ⍵}
+  Expm←{f r←⊃v⍵   ⋄ vs←(⊃n⍵)r   ⋄ (vs grhm(⊃e⍵)[;0 2  ]),(f(2 gec ⍺)vs),'}',nl}
+  Expd←{l f r←⊃v⍵ ⋄ vs←(⊃n⍵)l r ⋄ (vs grhd(⊃e⍵)[;0 1 3]),(f(1 gec ⍺)vs),'}',nl}
+  Expi←{a i←⊃v⍵   ⋄ vs←(⊃n⍵)a i ⋄ (vs grhd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
   Fexi←{(⊃n⍵)(##.MF.cat)('Fexim();',nl)}
   Fexf←{(⊃n⍵)(f,'(rslt,lft,rgt);',nl)(f,'(rslt,NULL,rgt);',nl)⊣f←⊃⊃v⍵}
   Fexm←{f o←⊃v⍵ ⋄ i←opn⍳⊂o ⋄ (⊃n⍵)((⍎i⊃opd)f)((⍎i⊃opm)f)}
@@ -41,5 +47,5 @@
   Nuf0←{'}',nl,nl}
   Nuf1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');cutp(&env0[0]);',nl,'isinit=oi;}',nl,nl}
   Scl0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl}
-  gc←{⊃,/(dis⍤1 FexS ⍵)∘dis¨((1≥d)⊂[0]⊢)(~FexM ⍵)⌿⍵}
+  gc←{⊃,/((dis⍤1 FexS ⍵)⍪fdb)∘dis¨((1≥d)⊂[0]⊢)(~FexM ⍵)⌿⍵}
 :EndNamespace

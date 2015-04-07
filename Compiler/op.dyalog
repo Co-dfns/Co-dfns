@@ -1,6 +1,7 @@
 :Namespace OP
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ nl←##.U.nl ⋄ do←##.U.do
-  fdb←##.R.fdb
+  idx←##.MF.idx ⋄ brki←##.MF.brki ⋄ iotm←##.MF.iotm
+  fdb←3 3⍴,¨ '⌷' idx  ''   '[' brki ''   '⍳' ''   iotm
   comda←'LOCALP*or,*ol;or=rgt;ol=lft;lft=or;rgt=ol;',nl
   comd←{comda,(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
   comm←{'LOCALP*lft=rgt;',(((0⌷⍉fdb)⍳⊂⍵)⊃1⌷⍉fdb)}
