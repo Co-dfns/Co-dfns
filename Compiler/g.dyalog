@@ -25,16 +25,16 @@
   vpp←{'(',(⍺ var ⍵),')->p'}
   dap←{⍺⍺,'*',⍺,'=ARRAYSTART(',((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),');',nl}
   fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(((⍺<0)⊃'' '-'),⍕|⍺),';'})¨⍳≢⍵}
+  dff←{⍺⍺,'(',(⊃{⍺,',',⍵}/⍵),'); /* Fallback */',nl}
+  grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
+  ghm←'rslt' 'rgt'grh ⋄ ghd←'rslt' 'lft' 'rgt'grh
+  gec←{((0⌷⍉⍵⍵)⍳⊂⍺)⊃(⍺⍺⌷⍉⍵⍵),⊂⍺ dff ⍵}
   dis←{⍺←⊢ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
   Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
   Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
-  dff←{⍺⍺,'(',(⊃{⍺,',',⍵}/⍵),'); /* Fallback */',nl}
-  grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
-  grhm←'rslt' 'rgt'grh ⋄ grhd←'rslt' 'lft' 'rgt'grh
-  gec←{((0⌷⍉⍵⍵)⍳⊂⍺)⊃(⍺⍺⌷⍉⍵⍵),⊂⍺ dff ⍵}
-  Expm←{f r←⊃v⍵   ⋄ vs←(⊃n⍵)r   ⋄ (vs grhm(⊃e⍵)[;0 2  ]),(f(2 gec ⍺)vs),'}',nl}
-  Expd←{l f r←⊃v⍵ ⋄ vs←(⊃n⍵)l r ⋄ (vs grhd(⊃e⍵)[;0 1 3]),(f(1 gec ⍺)vs),'}',nl}
-  Expi←{a i←⊃v⍵   ⋄ vs←(⊃n⍵)a i ⋄ (vs grhd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
+  Expm←{f r←⊃v⍵   ⋄ vs←(⊃n⍵)r   ⋄ (vs ghm(⊃e⍵)[;0 2  ]),(f(2 gec ⍺)vs),'}',nl}
+  Expd←{l f r←⊃v⍵ ⋄ vs←(⊃n⍵)l r ⋄ (vs ghd(⊃e⍵)[;0 1 3]),(f(1 gec ⍺)vs),'}',nl}
+  Expi←{a i←⊃v⍵   ⋄ vs←(⊃n⍵)a i ⋄ (vs ghd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
   Fexi←{(⊃n⍵)(##.MF.cat)('Fexim();',nl)}
   Fexf←{(⊃n⍵)(f,'(rslt,lft,rgt);',nl)(f,'(rslt,NULL,rgt);',nl)⊣f←⊃⊃v⍵}
   Fexm←{f o←⊃v⍵ ⋄ i←opn⍳⊂o ⋄ (⊃n⍵)((⍎i⊃opd)f)((⍎i⊃opm)f)}
