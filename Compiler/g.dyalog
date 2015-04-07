@@ -1,12 +1,11 @@
 :Namespace G
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ SD←##.SD
-  pp←#.pp ⋄ tl←##.U.tl ⋄ do←##.U.do
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ SD←##.SD ⋄ OP←##.OP
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
-  EnvM←A.EnvM ⋄ pp←#.pp
-  OP←##.OP ⋄ comd←OP.comd ⋄ comm←OP.comm ⋄ eacd←OP.eacd ⋄ eacm←OP.eacm
+  EnvM←A.EnvM
+  tl←##.U.tl ⋄ do←##.U.do ⋄ var←##.U.var ⋄ nl←##.U.nl ⋄ pp←#.pp
+  comd←OP.comd ⋄ comm←OP.comm ⋄ eacd←OP.eacd ⋄ eacm←OP.eacm
   opn opd opm←(,¨'⍨¨')('comd' 'eacd')('comm' 'eacm')
-  var←##.U.var ⋄ nl←##.U.nl
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
