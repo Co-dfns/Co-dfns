@@ -32,13 +32,13 @@
   dis←{⍺←⊢ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
   Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
   Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
-  Expm←{f r←⊃v⍵   ⋄ vs←(⊃n⍵)r   ⋄ (vs ghm(⊃e⍵)[;0 2  ]),(f(2 gec ⍺)vs),'}',nl}
+  Expm←{f r  ←⊃v⍵ ⋄ vs←(⊃n⍵)r   ⋄ (vs ghm(⊃e⍵)[;0 2  ]),(f(2 gec ⍺)vs),'}',nl}
   Expd←{l f r←⊃v⍵ ⋄ vs←(⊃n⍵)l r ⋄ (vs ghd(⊃e⍵)[;0 1 3]),(f(1 gec ⍺)vs),'}',nl}
-  Expi←{a i←⊃v⍵   ⋄ vs←(⊃n⍵)a i ⋄ (vs ghd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
-  Fexi←{(⊃n⍵)(##.MF.cat)('Fexim();',nl)}
+  Expi←{a i  ←⊃v⍵ ⋄ vs←(⊃n⍵)a i ⋄ (vs ghd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
+  Fexi←{(⊃n⍵)(##.MF.cat             )('Fexim();',nl          )}
   Fexf←{(⊃n⍵)(f,'(rslt,lft,rgt);',nl)(f,'(rslt,NULL,rgt);',nl)⊣f←⊃⊃v⍵}
-  Fexm←{f o←⊃v⍵ ⋄ i←opn⍳⊂o ⋄ (⊃n⍵)((⍎i⊃opd)f)((⍎i⊃opm)f)}
-  Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
+  Fexm←{(⊃n⍵)((⍎i⊃opd)f             )((⍎i⊃opm)f              )⊣i←opn⍳⊂o⊣f o←⊃v⍵}
+  Fexd←{(⊃n⍵)(##.OP.ptd             )('Fexdm();',nl          )}
   Fex0←{3⍴⊂''}
   Fund←{frt,(⊃n⍵),((⊃s⍵)⊃(⊂'(void)'),fpd),';',nl}
   Fun0←{frt,(⊃n⍵),'(void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
