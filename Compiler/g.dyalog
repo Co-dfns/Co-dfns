@@ -4,6 +4,8 @@
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
   EnvM←A.EnvM ⋄ pp←#.pp
+  OP←##.OP ⋄ comd←OP.comd ⋄ comm←OP.comm ⋄ eacd←OP.eacd ⋄ eacm←OP.eacm
+  opn opd opm←(,¨'⍨¨')('comd' 'eacd')('comm' 'eacm')
   var←##.U.var ⋄ nl←##.U.nl
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
@@ -29,8 +31,8 @@
   Expd←{l f r←⊃v⍵ ⋄ ((⊃n⍵)l r)(f R.gd ⍺)(⊃e⍵)[;0 1 3]}
   Expi←{a i←⊃v⍵ ⋄ ((⊃n⍵) a i)((,'[')R.gd ⍺)⊃e ⍵}
   Fexi←{(⊃n⍵)(##.MF.cat)('Fexim();',nl)}
-  Fexf←{(⊃n⍵)('lft'R.gf⊃⊃v⍵)('NULL'R.gf⊃⊃v⍵)}
-  Fexm←{f o←⊃v⍵ ⋄ (⊃n⍵)(o R.gomd f)(o R.gomm f)}
+  Fexf←{(⊃n⍵)(f,'(rslt,lft,rgt);',nl)(f,'(rslt,NULL,rgt);',nl)⊣f←⊃⊃v⍵}
+  Fexm←{f o←⊃v⍵ ⋄ i←opn⍳⊂o ⋄ (⊃n⍵)((⍎i⊃opd)f)((⍎i⊃opm)f)}
   Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
   Fex0←{3⍴⊂''}
   Fund←{frt,(⊃n⍵),((⊃s⍵)⊃(⊂'(void)'),fpd),';',nl}
