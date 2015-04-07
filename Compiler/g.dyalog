@@ -9,18 +9,19 @@
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   fpd←('(',flp,')')('(',flp,',LOCALP*penv[])')
   frt←'void EXPORT '
+  gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
   ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
   ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ght←{'{',nl,gfi,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
   ghn←{'{',nl,gfi,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
-  gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
   elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'} ⋄ eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
   vec←{(vsp≢⍵),'getarray(',(elt⊃⍵),',',(⍕1<≢⍵),',','sp,',((⊃⍵)var 0⌷⍉⍺),');}',nl}
   vsp←{'{BOUND ',(1<⍵)⊃'*sp=NULL;'('sp[1]={',(⍕⍵),'};')}
   vpp←{'(',(⍺ var ⍵),')->p'}
   dap←{⍺⍺,'*',⍺,'=ARRAYSTART(',((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),');',nl}
   fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(((⍺<0)⊃'' '-'),⍕|⍺),';'})¨⍳≢⍵}
+  dis←{⍺←⊢ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
   Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
   Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
   Expm←{f r←⊃v⍵ ⋄ ((⊃n⍵)r)(f R.gm ⍺)(⊃e⍵)[;0 2]}
@@ -38,6 +39,5 @@
   Nuf0←{'}',nl,nl}
   Nuf1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');cutp(&env0[0]);',nl,'isinit=oi;}',nl,nl}
   Scl0←{⍺ R.gs 1↓⍵}
-  gfd←{{⍎'Fex',(⍕⊃k⍵),' ⍵'}⍤1⊢FexS ⍵}
-  gc←{⊃,/(gfd ⍵)∘{⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}¨((1≥d)⊂[0]⊢)(~FexM ⍵)⌿⍵}
+  gc←{⊃,/(dis⍤1 FexS ⍵)∘dis¨((1≥d)⊂[0]⊢)(~FexM ⍵)⌿⍵}
 :EndNamespace
