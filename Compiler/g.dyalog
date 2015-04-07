@@ -1,5 +1,6 @@
 :Namespace G
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ pp←#.pp ⋄ tl←##.U.tl ⋄ do←##.U.do
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ R←##.R ⋄ SD←##.SD
+  pp←#.pp ⋄ tl←##.U.tl ⋄ do←##.U.do
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
   EnvM←A.EnvM ⋄ pp←#.pp
@@ -38,6 +39,6 @@
   Nms0←{hdr,('tenv'ged ⍵),nl}
   Nuf0←{'}',nl,nl}
   Nuf1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');cutp(&env0[0]);',nl,'isinit=oi;}',nl,nl}
-  Scl0←{⍺ R.gs 1↓⍵}
+  Scl0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl}
   gc←{⊃,/(dis⍤1 FexS ⍵)∘dis¨((1≥d)⊂[0]⊢)(~FexM ⍵)⌿⍵}
 :EndNamespace
