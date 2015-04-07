@@ -10,9 +10,8 @@
   fdb←3 3⍴,¨ '⌷' idx  ''   '[' brki ''   '⍳' ''   iotm
   hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
   hdr,←'int isinit=0;',nl
-  flp←'LOCALP*z,LOCALP*l,LOCALP*r'
+  frt←'void EXPORT ' ⋄ flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   fpd←('(',flp,')')('(',flp,',LOCALP*penv[])')
-  frt←'void EXPORT '
   gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
   ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
   ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
