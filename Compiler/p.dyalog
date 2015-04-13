@@ -29,23 +29,23 @@
   var←aws _s alpha _s (alpha _o digits _any) _s aws
   aw←aws _s ('⍺⍵'_set) _s aws
   sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
-  Prim←prim _as A.Prm
-  Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as A.Fun)⍵:p ⋄ c a ⍺ r}
-  Mop←Fn _o Prim _s (mop _as A.Prm) _as ('m'A.Fex)
-  Dop←Prim _s (dop _as A.Prm) _s Prim _as ('d'A.Fex)
-  Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'A.Fex))⍵}
-  Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.Bind)⍵}
+  Prim←prim _as A.P
+  Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as A.F)⍵:p ⋄ c a ⍺ r}
+  Mop←Fn _o Prim _s (mop _as A.P) _as ('m'A.O)
+  Dop←Prim _s (dop _as A.P) _s Prim _as ('d'A.O)
+  Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'A.O))⍵}
+  Bind←{⍺(var _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as A.bind)⍵}
   Fe←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
   Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
-  Var←{⍺(aw _o (var _t (⍺⍺=Vt)) _as (⍵⍵ A.Var))⍵}
-  Num←float _o int _as A.Num
-  Atom←{⍺(Num _some _as A.Atm _o (0 Var'a' _as A.Atm) _o Pex)⍵}
-  Mon←{⍺(Fe _s Ex _as ('m'A.Exp))⍵}
-  Dya←{⍺((Idx _o Atom) _s Fe _s Ex _as ('d'A.Exp))⍵}
-  Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'A.Exp))⍵}
+  Var←{⍺(aw _o (var _t (⍺⍺=Vt)) _as (⍵⍵ A.V))⍵}
+  Num←float _o int _as A.N
+  Atom←{⍺(Num _some _as A.A _o (0 Var'a' _as A.A) _o Pex)⍵}
+  Mon←{⍺(Fe _s Ex _as ('m'A.E))⍵}
+  Dya←{⍺((Idx _o Atom) _s Fe _s Ex _as ('d'A.E))⍵}
+  Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'A.E))⍵}
   Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
   Pex←lpar _s Ex _s rpar
   Stmt←sep _any _s (Ex _o Fe) _s (sep _any)
-  Ns←nss _s (Stmt _aew nse) _s eot _as A.Nms
+  Ns←nss _s (Stmt _aew nse) _s eot _as A.M
   ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
 :EndNamespace

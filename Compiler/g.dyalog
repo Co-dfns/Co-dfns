@@ -1,8 +1,6 @@
 :Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ SD←##.SD ⋄ OP←##.OP
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
-  FunM←A.FunM ⋄ ExpM←A.ExpM ⋄ AtmM←A.AtmM ⋄ FexS←A.FexS ⋄ FexM←A.FexM
-  EnvM←A.EnvM
   tl←##.U.tl ⋄ do←##.U.do ⋄ var←##.U.var ⋄ nl←##.U.nl ⋄ pp←#.pp
   comd←OP.comd ⋄ comm←OP.comm ⋄ eacd←OP.eacd ⋄ eacm←OP.eacm
   opn opd opm←(,¨'⍨¨')('comd' 'eacd')('comm' 'eacm')
@@ -30,22 +28,22 @@
   ghm←'rslt' 'rgt'grh ⋄ ghd←'rslt' 'lft' 'rgt'grh
   gec←{((0⌷⍉⍵⍵)⍳⊂⍺)⊃(⍺⍺⌷⍉⍵⍵),⊂⍺ dff ⍵}
   dis←{⍺←⊢ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
-  Atmc←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
-  Atm0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
-  Expm←{(vs ghm(⊃e⍵)[;0 2  ]),(f(2 gec ⍺)vs),'}',nl⊣vs←(⊃n⍵)r⊣f r←⊃v⍵}
-  Expd←{(vs ghd(⊃e⍵)[;0 1 3]),(f(1 gec ⍺)vs),'}',nl⊣vs←(⊃n⍵)l r⊣l f r←⊃v⍵}
-  Expi←{a i  ←⊃v⍵ ⋄ vs←(⊃n⍵)a i ⋄ (vs ghd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
-  Fexi←{(⊃n⍵)(##.MF.cat)('Fexim();',nl)}
-  Fexf←{(⊃n⍵)(f,'(rslt,lft,rgt);',nl)(f,'(rslt,NULL,rgt);',nl)⊣f←⊃⊃v⍵}
-  Fexm←{(⊃n⍵)((⍎i⊃opd)f)((⍎i⊃opm)f)⊣i←opn⍳⊂o⊣f o←⊃v⍵}
-  Fexd←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
-  Fex0←{3⍴⊂''}
-  Fund←{frt,(⊃n⍵),((⊃s⍵)⊃(⊂'(void)'),fpd),';',nl}
-  Fun0←{frt,(⊃n⍵),'(void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
-  Fun1←{frt,(⊃n⍵),(¯1+2⌊⊃s ⍵)⊃fpd,¨(ght ⍵)(ghn ⍵)}
-  Nms0←{hdr,('tenv'ged ⍵),nl}
-  Nuf0←{'}',nl,nl}
-  Nuf1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');',cutp,nl,'isinit=oi;}',nl,nl}
-  Scl0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl}
-  gc←{⊃,/((dis⍤1 FexS ⍵)⍪fdb)∘dis¨((1≥d)⊂[0]⊢)(~FexM ⍵)⌿⍵}
+  Ac←{((⊃e⍵)vec⊃v⍵),'{',('v'((eld⊃⊃v⍵)dap)⍵),('v'fil⊃v⍵),'}',nl}
+  A0←{((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),'=ref(',((⊃⊃v ⍵)vpp 1⌷⍉⊃e ⍵),');',nl}
+  Em←{(vs ghm(⊃e⍵)[;0 2  ]),(f(2 gec ⍺)vs),'}',nl⊣vs←(⊃n⍵)r⊣f r←⊃v⍵}
+  Ed←{(vs ghd(⊃e⍵)[;0 1 3]),(f(1 gec ⍺)vs),'}',nl⊣vs←(⊃n⍵)l r⊣l f r←⊃v⍵}
+  Ei←{a i  ←⊃v⍵ ⋄ vs←(⊃n⍵)a i ⋄ (vs ghd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
+  Oi←{(⊃n⍵)(##.MF.cat)('Fexim();',nl)}
+  Of←{(⊃n⍵)(f,'(rslt,lft,rgt);',nl)(f,'(rslt,NULL,rgt);',nl)⊣f←⊃⊃v⍵}
+  Om←{(⊃n⍵)((⍎i⊃opd)f)((⍎i⊃opm)f)⊣i←opn⍳⊂o⊣f o←⊃v⍵}
+  Od←{(⊃n⍵)(##.OP.ptd)('Fexdm();',nl)}
+  O0←{3⍴⊂''}
+  Fd←{frt,(⊃n⍵),((⊃s⍵)⊃(⊂'(void)'),fpd),';',nl}
+  F0←{frt,(⊃n⍵),'(void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
+  F1←{frt,(⊃n⍵),(¯1+2⌊⊃s ⍵)⊃fpd,¨(ght ⍵)(ghn ⍵)}
+  M0←{hdr,('tenv'ged ⍵),nl}
+  Z0←{'}',nl,nl}
+  Z1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');',cutp,nl,'isinit=oi;}',nl,nl}
+  S0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl}
+  gc←{⊃,/((dis⍤1 A.Os ⍵)⍪fdb)∘dis¨((1≥d)⊂[0]⊢)(~A.Om ⍵)⌿⍵}
 :EndNamespace
