@@ -39,7 +39,7 @@
   Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
   Var←{⍺(aw _o (var _t (⍺⍺=Vt)) _as (⍵⍵ A.V))⍵}
   Num←float _o int _as A.N
-  Atom←{⍺(Num _some _as A.A _o (0 Var'a' _as A.A) _o Pex)⍵}
+  Atom←{⍺(Num _some _as ('n'A.A) _o (0 Var'a' _as ('v'A.A)) _o Pex)⍵}
   Mon←{⍺(Fe _s Ex _as ('m'A.E))⍵}
   Dya←{⍺((Idx _o Atom) _s Fe _s Ex _as ('d'A.E))⍵}
   Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'A.E))⍵}

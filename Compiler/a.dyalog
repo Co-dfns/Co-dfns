@@ -9,7 +9,7 @@
   rf sf vf ef←fc+⍳4 ⋄ r←rf get ⋄ s←sf get ⋄ v←vf get ⋄ e←ef get
 
   new←{⍉⍪fc↑0 ⍺,⍵}                ⋄ msk←{(t ⍵)∊⊂⍺⍺} ⋄ sel←{(⍺⍺ msk ⍵)⌿⍵}
-  A←{('A'new⍬)⍪up⊃⍪/⍵}            ⋄ Am←'A'msk       ⋄ As←'A'sel
+  A←{('A'new ⍺⍺)⍪up⊃⍪/⍵}          ⋄ Am←'A'msk       ⋄ As←'A'sel
   E←{('E'new ⍺⍺)⍪up⊃⍪/⍵}          ⋄ Em←'E'msk       ⋄ Es←'E'sel
   F←{('F'new 1)⍪up⊃⍪/(⊂0 fc⍴⍬),⍵} ⋄ Fm←'F'msk       ⋄ Fs←'F'sel
   M←{('M'new⍬)⍪up⊃⍪/(⊂0 fc⍴⍬),⍵}  ⋄ Mm←'M'msk       ⋄ Ms←'M'sel
