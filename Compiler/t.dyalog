@@ -1,13 +1,13 @@
 :Namespace T
-  (⎕IO ⎕ML ⎕WX)←0 1 3
-  A←##.A ⋄ Am←A.Am ⋄ Em←A.Em ⋄ Fm←A.Fm ⋄ Nm←A.Nm ⋄ Om←A.Om ⋄ Vm←A.Vm
-  As←A.As ⋄ Fs←A.Fs ⋄ Vs←A.Vs
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
+  Am←A.Am ⋄ Em←A.Em ⋄ Fm←A.Fm ⋄ Nm←A.Nm ⋄ Om←A.Om ⋄ Pm←A.Pm ⋄ Vm←A.Vm
+  As←A.As ⋄ Fs←A.Fs ⋄ Ps←A.Ps ⋄ Vs←A.Vs
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
-  tt←{fd ff if vc fs av va ce pc fe ca dn lf du df rd rn ⍵}
+  tt←{fd ff if vc fs av va ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
   scp←(1,1↓Fm)⊂[0]⊢
   mnd←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
-  sub←{A⊣(m⌿A)←⍺ ⍺⍺(m←⍺ ⍵⍵ ⍵)⌿A←⍵}
+  sub←{⍺←⊢ ⋄ A⊣(m⌿A)←⍺ ⍺⍺(m←⍺ ⍵⍵ ⍵)⌿A←⍵}
   prf←((≢↑¯1↓(0≠⊢)(/∘⊢)⊢)⍤1↑∘r)⊢
   blg←{⍺←⊢ ⋄ ⍺((prf(⌈/(⍳∘≢⊢)×⍤1(1↓⊣)∧.(=∨0=⊢)∘⍉⊢)⍺⍺(⌿∘↑)r)⌷⍤0 2 ⍺⍺(⌿∘⊢)⍵⍵)⍵}
   rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))
@@ -26,10 +26,12 @@
   fee←⍪/(⌽(1,1↓Em∨Om)blg⊢((⊂(d-⊃-2⌊⊃),fetk,fen,4↓⍤1⊢)⊣⍪⊢)⌸1↓⊢)
   fef←⍪/(⊂1↑⊢),(Am∧d=1+∘⊃⊢)((⊂(⌿∘⊢)),∘((+\d=∘⊃⊢)fee⌸⊢)1↓(~⊣)(⌿∘⊢)⊢)⊢
   fe←(⊃⍪/)(+\Fm)fef⌸⊢
-  pcc←⊂∘As∘(⊢⌷⍤0 2⍨n⍳∘∪n)∘((1+⊃),1↓⍤1⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
-  pcb←((,⊣∧.(=∨0=⊣)∘⍪⊢)⍤2 1⍨∘↑∘r(1↑⊢)⍪Fs)pcc⍤1((⊢(⌿⍨)Em∨Am∧d=1+⊃)¨⊣)
-  pc←((~Am∧d=1+(∨\Fm))(⌿∘⊢)⊢)∘(⊃⍪/)scp(pcb(⊣⌷⍤0 2⍨(n⊣)⍳n)sub(Vm∧n∊∘n⊣)¨⊣)⊢
-  ⍝ fc←  
+  pcc←⊂∘As∘(((1⌈≢)↑⊢)⌷⍤0 2⍨n⍳∘∪n)∘((1+⊃),1↓⍤1⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
+  pcb←((,∧.(=∨0=⊣)∘⍪)⍤2 1⍨∘↑∘r(1↑⊢)⍪Fs)pcc⍤1((⊢(⌿⍨)Em∨Am∧d=1+⊃)¨⊣)
+  pcd←((~Am∧d=1+(∨\Fm))(⌿∘⊢)⊢)∘(⊃⍪/)
+  pc←pcd scp(pcb((((1⌈≢)↑⊢)⊣)⌷⍤0 2⍨(n⊣)⍳n)sub(Vm∧n∊∘n⊣)¨⊣)⊢
+  fce←(⊃∘n Ps){⊂⍎' ⍵',⍨(¯1+≢⍵)⊃(⍺,'⊃')('⊃',⍺,'/')}(v As)
+  fc←((⊃⍪/)(((d,'An',3↓¯1↓,)1↑⊢),fce)¨sub((∧/Em∨Am∨Pm)¨))('MFOE'∊⍨t)⊂[0]⊢
   ce←(+\'FOE'∊⍨t)((¯1↓∘,1↑⊢),∘⊂∘n 1↓⊢)⌸⊢
   val←(n⍳∘∪n),¨⊢(⊢+(≢⊣)×0=⊢)(⌈/(⍳≢)×⍤1(∪n)∘.((⊂⊣)∊⊢)v)
   vag←∧∘~∘(∘.=⍨∘⍳≢)⍨(∘.(((1⌷⊢)>0⌷⊣)∧(0⌷⊢)<1⌷⊣)⍨val)
