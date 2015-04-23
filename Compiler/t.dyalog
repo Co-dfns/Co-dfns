@@ -1,7 +1,7 @@
 :Namespace T
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
   Am←A.Am ⋄ Em←A.Em ⋄ Fm←A.Fm ⋄ Nm←A.Nm ⋄ Om←A.Om ⋄ Pm←A.Pm ⋄ Vm←A.Vm
-  As←A.As ⋄ Fs←A.Fs ⋄ Ps←A.Ps ⋄ Vs←A.Vs
+  As←A.As ⋄ Es←A.Es ⋄ Fs←A.Fs ⋄ Ps←A.Ps ⋄ Vs←A.Vs
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   tt←{fd ff if vc fs av va ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
@@ -20,7 +20,8 @@
   lfh←(1<(+/⊣))⊃(⊂0↑⊢),∘⊂∘⍉∘⍪1'F'1,('fn'enc⊣),(⊂⊣),5↓∘,1↑⊢
   lf←(1↑⊢)⍪∘⊃(⍪/(1,1↓Fm)blg(↑r)(⊂lfh⍪∘⊃(⍪/((¯2+1=(+/⊣))+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
   dn←((0∊⍨n)∧(Am∧'v'∊⍨k)∨Om∧'f'∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
-  ca←(((+\Am)((,1↑⊢),∘⊂∘n 1↓⊢)⌸⊢)(Am∨Nm)(⌿∘⊢)⊢)Am mnd⊢(⊂⍬),⍨(~Nm)(⌿∘⊢)⊢
+  can←((¯1+2⌊≢)⊃⊃,⊂)n
+  ca←(((+\Am)((,1↑⊢),∘⊂∘can 1↓⊢)⌸⊢)(Am∨Nm)(⌿∘⊢)⊢)Am mnd⊢(⊂⍬),⍨(~Nm)(⌿∘⊢)⊢
   fen←((⊂'fe')(⊃enc)¨((0∊⍨n)∧Em∨Om)(⌿∘⊢)r)((0∊⍨n)∧Em∨Om)mnd n⊢
   fetk←('V'0⍴⍨2,⍨(+/0,1↓Em∨Om))(0,1↓Em∨Om)mnd(t,∘⍪k)⊢
   fee←⍪/(⌽(1,1↓Em∨Om)blg⊢((⊂(d-⊃-2⌊⊃),fetk,fen,4↓⍤1⊢)⊣⍪⊢)⌸1↓⊢)
@@ -36,9 +37,8 @@
   val←(n⍳∘∪n),¨⊢(⊢+(≢⊣)×0=⊢)(⌈/(⍳≢)×⍤1(∪n)∘.((⊂⊣)∊⊢)v)
   vag←∧∘~∘(∘.=⍨∘⍳≢)⍨(∘.(((1⌷⊢)>0⌷⊣)∧(0⌷⊢)<1⌷⊣)⍨val)
   vae←(∪n)(⊣,⍤0⊣(⌷⍨⍤1 0)∘⊃((⊢,(⊃(⍳∘≢⊣)~((≢⊢)↑⊣)(/∘⊢)⊢))/∘⌽(⊂⍬),∘↓⊢))vag
-  var←((1⌷∘⍉⊣),⊢)⌷⍨(0⌷∘⍉⊣)⍳⊢
-  vaf←(vae(Em∨Am)(⌿∘⊢)⊢)(d,t,k,(⊣var⍤2 0n),r,s,∘⍪(⊂⊣)var⍤2 0¨v)⊢
-  va←((⊃⍪/)(1↑⊢),(vaf¨1↓⊢))scp
+  var←(((0⌷∘⍉⊣)⍳⊢)⌷(1⌷∘⍉⊣),⊢)⍤2 0
+  va←((⊃⍪/)(1↑⊢),(((vae Es)(d,t,k,(⊣var n),r,s,∘⍪(⊂⊣)var¨v)⊢)¨1↓⊢))scp
   
   ⍝ Map over all constants to get type initiators
   ⍝ Map over all expression to get type tables
