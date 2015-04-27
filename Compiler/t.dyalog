@@ -1,8 +1,8 @@
 :Namespace T
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ TC←##.TC
   Am←A.Am ⋄ Em←A.Em ⋄ Fm←A.Fm ⋄ Nm←A.Nm ⋄ Om←A.Om ⋄ Pm←A.Pm ⋄ Vm←A.Vm
-  As←A.As ⋄ Es←A.Es ⋄ Fs←A.Fs ⋄ Ps←A.Ps ⋄ Vs←A.Vs
-  d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
+  As←A.As ⋄ Es←A.Es ⋄ Fs←A.Fs ⋄ Os←A.Os ⋄ Ps←A.Ps ⋄ Vs←A.Vs
+  d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
   tt ←{fd ff if vc fs av va ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢)) ⋄ scp←(1,1↓Fm)⊂[0]⊢
   mnd←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
@@ -38,6 +38,12 @@
   vae←(∪n)(⊣,⍤0⊣(⌷⍨⍤1 0)∘⊃((⊢,(⊃(⍳∘≢⊣)~((≢⊢)↑⊣)(/∘⊢)⊢))/∘⌽(⊂⍬),∘↓⊢))vag
   var←(((0⌷∘⍉⊣)⍳⊢)⌷(1⌷∘⍉⊣),⊢)⍤2 0
   va ←((⊃⍪/)(1↑⊢),(((vae Es)(d,t,k,(⊣var n),r,s,∘⍪(⊂⊣)var¨v)⊢)¨1↓⊢))scp
+  lta←((⊂⊢),∘⊂(6⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v∘(Es⍪Os)∘(⊃⍪/)⊢
+  ltt←(⊢(⊣⍪⍨(,¯1↑⊢)⌷⍤0 1⍨2 3⊥¯1 0(+⍤¯1)2↑⊢)¯1⊖⊢)(2⊃⊢)⌷⍤0 2⍨(1⊃⊢)⍳∘⊃∘v⊣
+  lte←(⊂(0⊃⊢)⍪⊣,∘⊂ltt),(⊂(n⊣),1⊃⊢),(⊂(1↑ltt)⍪2⊃⊢)
+  ltf←⊣(⊢⍪⍨(1↑⊣),∘y¯1↑⊢)((⊃∘⊃lte/)(⌽∘↓1↓⊣),∘⊂(⊂0 8⍴⍬),1↓⊢)
+  ltr←(⊂⊢⍪⍨0⊃⊣),(⊂(n 1↑⊢),1⊃⊣),(⊂(1↑∘⊃∘y 1↑⊢)⍪2⊃⊣)
+  lt ←(⊃∘⊃∘((⊢ltr ltf)/)∘⌽(⊂(⊂0 8⍴⍬),TC.(pn pt)⍪¨⍨lta),⊢)scp
   avb←{(((,¨'⍺⍵')↑⍨1↓⍴)⍪⊢)⍺⌷⍨⍤2 0⊢⍺⍺⍳⍺⍺∩⍨(↓(⌽1+∘⍳0⍳⍨⊢)((≢⊢)↑↑)⍤0 1⊢)⊃r ⍵}
   avh←{⊂⍵,(n⍵)((⍺⍺(⍵⍵ avb)⍵){¯1 0+[0](⍴⍺⍺)⊤(,⍺⍺)⍳(⊂⍺),⍵})¨v⍵}
   av ←(⊃⍪/)(+\Fm){⍺((⍺((∪n)Es)⌸⍵)avh(r(1↑⍵)⍪Fs ⍵))⌸⍵}⊢
@@ -52,19 +58,4 @@
   ff ←((⊃⍪/)(1↑⊢),(((1↑⊢)⍪(((¯1+d),1↓⍤1⊢)1↓⊢)⍪fft)¨1↓⊢))scp
   fd ←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 :EndNamespace
-  ⍝ Map over all constants to get type initiators
-  ⍝ Map over all expression to get type tables
-  ⍝ Double reduce to determine type
-
-  ⍝ A: Single scalar type derived from the type of v
-  ⍝ E: Matrix of types, 6 columns, dyad 3 rows, monad 2 rows
-  ⍝ F: Vector of types, 6 elements
-  ⍝ M: Empty vector, can treat as F
-  ⍝ O: Matrix of types, 6 columns, dyad 3 rows, monad 2 rows
-
-  ⍝ ltt←((1⊃⊢)⍳∘⊃∘v⊣)(⌷⍤0 2)2⊃⊢
-  ⍝ lte←(⊂(0⊃⊢)⍪⊣,∘⊂ltt),(⊂(n⊣),1⊃⊢),(⊂(1↑ltt)⍪2⊃⊢)
-  ⍝ ltf←⊣(⊢⍪⍨(1↑⊣),∘y¯1↑⊢)((⊃∘⊃lte/)(⌽∘↓1↓⊣),∘⊂(⊂0 8⍴⍬),1↓⊢)
-  ⍝ ltr←(⊂⊢⍪⍨0⊃⊣),(⊂(n 1↑⊢),1⊃⊣),(⊂(1↑∘⊃∘y 1↑⊢)⍪2⊃⊣)
-  ⍝ lt←(⊃∘⊃∘((⊢ltr ltf)/)∘⌽(⊂(0 8⍴⍬)⍬ ⍬),⊢)(1,1↓Fm))⊂[0]⊢
 

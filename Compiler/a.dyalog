@@ -5,8 +5,8 @@
   up←⍉(1+1↑⍉)⍪1↓⍉
   bind←{n _ e←⍵ ⋄ (0 nf⌷e)←⊂n ⋄ e}
   
-  df tf kf nf←⍳fc←4 ⋄ d←df get ⋄ t←tf get ⋄ k←kf get ⋄ n←nf get
-  rf sf vf ef←fc+⍳4 ⋄ r←rf get ⋄ s←sf get ⋄ v←vf get ⋄ e←ef get
+  df tf kf nf   ←⍳fc←4 ⋄ d←df get ⋄ t←tf get ⋄ k←kf get ⋄ n←nf get
+  rf sf vf yf ef←fc+⍳5 ⋄ r←rf get ⋄ s←sf get ⋄ v←vf get ⋄ y←yf get ⋄ e←ef get
 
   new←{⍉⍪fc↑0 ⍺,⍵}                ⋄ msk←{(t ⍵)∊⊂⍺⍺} ⋄ sel←{(⍺⍺ msk ⍵)⌿⍵}
   A←{('A'new ⍺⍺)⍪up⊃⍪/⍵}          ⋄ Am←'A'msk       ⋄ As←'A'sel
