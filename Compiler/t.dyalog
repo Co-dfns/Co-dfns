@@ -3,7 +3,7 @@
   Am←A.Am ⋄ Em←A.Em ⋄ Fm←A.Fm ⋄ Nm←A.Nm ⋄ Om←A.Om ⋄ Pm←A.Pm ⋄ Vm←A.Vm
   As←A.As ⋄ Es←A.Es ⋄ Fs←A.Fs ⋄ Os←A.Os ⋄ Ps←A.Ps ⋄ Vs←A.Vs
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
-  tt ←{fd ff if vc fs av va ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
+  tt ←{fd ff if vc fs av lt va ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢)) ⋄ scp←(1,1↓Fm)⊂[0]⊢
   mnd←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
   sub←{⍺←⊢ ⋄ A⊣(m⌿A)←⍺ ⍺⍺(m←⍺ ⍵⍵ ⍵)⌿A←⍵}
