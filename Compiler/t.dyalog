@@ -3,7 +3,7 @@
   Am←A.Am ⋄ Em←A.Em ⋄ Fm←A.Fm ⋄ Nm←A.Nm ⋄ Om←A.Om ⋄ Pm←A.Pm ⋄ Vm←A.Vm
   As←A.As ⋄ Es←A.Es ⋄ Fs←A.Fs ⋄ Os←A.Os ⋄ Ps←A.Ps ⋄ Vs←A.Vs
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
-  tt ←{fd ff if vc fs av ca lt fv ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
+  tt ←{fd ff if td vc fs av va lt fv ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
   scp←(1,1↓Fm)⊂[0]⊢
   mnd←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
@@ -53,6 +53,9 @@
   fse←(⊃⍪/)(⊂0 9⍴⍬),(fsg(/∘⊢)fss∧fsg)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),1↓⍤1⊢))¨fsg⊂[0]⊢
   fs ←(⊃⍪/)(((fse Es)⍪⍨(~Em)(⌿∘⊢)⊢)¨scp)
   vc ←(⊃⍪/)(((1↓⊢)⍪⍨(1 6↑⊢),(≢∘∪∘n Es),1 ¯2↑⊢)¨scp)
+  tde←((¯2↓⊢),(⊂(5 6 7 9 10 11⌷⍨⊣)⌷∘⍉∘⊃y),¯1↑⊢)⍤1
+  tdf←(1↓⊢)⍪⍨(,1 3↑⊢),(⊂(⊃n),'ii' 'if' 'in' 'fi' 'ff' 'fn'⊃⍨⊣),(4↓∘,1↑⊢)
+  td ←(⊃⍪/)∘((1↑⊢),∘(⊃,/)(((⍳6)(⊣tdf tde)¨⊂)¨1↓⊢))scp
   ifn←1 'F' 0 'Init' ⍬ 0,(4 12⍴0)⍬,⍨⊢
   if ←(1↑⊢)⍪((1=d)∧Em)((((ifn≢∘∪∘n)⍪A.up)⊣(⌿∘⊢)⊢)⍪1↓(~⊣)(⌿∘⊢)⊢)⊢
   fft←(,1↑⊢)(1 'Z',(2↓¯3↓⊣),(n⊢),(y⊢),(⊂0⌷∘⍉∘⊃∘e⊢))(¯1↑⊢)
