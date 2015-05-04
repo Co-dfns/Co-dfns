@@ -16,6 +16,7 @@
   N←{'N'new 0 (⍎⍵)}               ⋄ Nm←'N'msk       ⋄ Ns←'N'sel
   O←{('O'new ⍺⍺)⍪up⊃⍪/⍵}          ⋄ Om←'O'msk       ⋄ Os←'O'sel
   P←{'P'new 0 ⍵}                  ⋄ Pm←'P'msk       ⋄ Ps←'P'sel
+  S←{'S'new 0 ⍵}                  ⋄ Sm←'S'msk       ⋄ Ss←'S'sel
   V←{'V'new ⍺⍺ ⍵}                 ⋄ Vm←'V'msk       ⋄ Vs←'V'sel
 
 :EndNamespace
