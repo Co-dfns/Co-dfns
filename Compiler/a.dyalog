@@ -18,6 +18,8 @@
   P←{'P'new 0 ⍵}                  ⋄ Pm←'P'msk       ⋄ Ps←'P'sel
   S←{'S'new 0 ⍵}                  ⋄ Sm←'S'msk       ⋄ Ss←'S'sel
   V←{'V'new ⍺⍺ ⍵}                 ⋄ Vm←'V'msk       ⋄ Vs←'V'sel
+  Y←{'Y'new 0 ⍵}                  ⋄ Ym←'Y'msk       ⋄ Ys←'Y'sel
+  Z←{'Z'new 1 ⍵}                  ⋄ Zm←'Z'msk       ⋄ Zs←'Z'sel
 
 :EndNamespace
 
