@@ -1,13 +1,7 @@
 :Namespace G
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ SD←##.SD ⋄ OP←##.OP
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ SD←##.SD ⋄ OP←##.OP ⋄ R←##.R
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
   tl←##.U.tl ⋄ do←##.U.do ⋄ var←##.U.var ⋄ nl←##.U.nl ⋄ pp←#.pp
-  comd←OP.comd ⋄ comm←OP.comm ⋄ eacd←OP.eacd ⋄ eacm←OP.eacm
-  opn opd opm←(,¨'⍨¨')('comd' 'eacd')('comm' 'eacm')
-  idx←##.MF.idx ⋄ brki←##.MF.brki ⋄ iotm←##.MF.iotm
-  fdb←3 3⍴,¨ '⌷' idx  ''   '[' brki ''   '⍳' ''   iotm
-  hdr←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
-  hdr,←'int isinit=0;',nl
   frt←'void EXPORT ' ⋄ flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   fpd←('(',flp,')')('(',flp,',LOCALP*penv[])')
   gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
@@ -41,9 +35,9 @@
   Fd←{frt,(⊃n⍵),((⊃s⍵)⊃(⊂'(void)'),fpd),';',nl}
   F0←{frt,(⊃n⍵),'(void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
   F1←{frt,(⊃n⍵),(¯1+2⌊⊃s ⍵)⊃fpd,¨(ght ⍵)(ghn ⍵)}
-  M0←{hdr,('tenv'ged ⍵),nl}
+  M0←{R.rth,('tenv'ged ⍵),nl}
   Z0←{'}',nl,nl}
   Z1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');',cutp,nl,'isinit=oi;}',nl,nl}
   S0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl}
-  gc←{⊃,/((dis⍤1 A.Os ⍵)⍪fdb)∘dis¨((1≥d)⊂[0]⊢)(~A.Om ⍵)⌿⍵}
+  gc←{⊃,/((dis⍤1 A.Os ⍵)⍪fdb)∘(⊂dis)⍤1⊢(~A.Om ⍵)⌿⍵}
 :EndNamespace

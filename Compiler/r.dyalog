@@ -1,23 +1,41 @@
-:Namespace SR
-  (⎕IO ⎕ML ⎕WX)←0 1 3
-  addm←{⍺}                     ⋄ addd←{⍺,'+',⍵}
-  subm←{'-1*',⍵}               ⋄ subd←{⍺,'-',⍵}
-  mulm←{'(',⍵,'>0)-(',⍵,'<0)'} ⋄ muld←{⍺,'*',⍵}
-  divm←{'1.0/',⍵}              ⋄ divd←{'(1.0*',⍺,')/(1.0*',⍵,')'}
-  powm←{'exp(',dtp,⍵,')'}      ⋄ powd←{'pow(',dtp,⍺,',',dtp,⍵,')'}
-  logm←{'log(',dtp,⍵,')'}      ⋄ logd←{'log(',dtp,⍵,',',dtp,⍺,')'}
-  modm←{'fabs(',⍵,')'}         ⋄ modd←{'fmod(',dtp,⍵,',',dtp,⍺,')'}
+:Namespace R
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ nl←##.U.nl
   
-  pitm←{'3.14159265358979323846*',⍵} 
+  ⍝ Runtime Header
+  rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+  rth,←'int isinit=0;',nl
+  rth,←'#define PI 3.14159265358979323846',nl
+
+  ⍝ Scalar Primitives
+  sdb←0⍴⊂'' ⋄ sdc←0 2⍴⊂'' ⋄ scl←{(((≢⍵)↑,¨'⍺⍵')⎕R ⍵)⊃sdc⌷⍨(sdb⍳⍺⍺),¯1+≢⍵}
   
-  gted←{⍺,'>=',⍵}
+  ⍝      Prim       Monadic          Dyadic
+  ⍝ ────────────────────────────────────────────────────────────────
+  sdb,←⊂,'+' ⋄ sdc⍪←'⍵'              '⍺+⍵'
+  sdb,←⊂,'-' ⋄ sdc⍪←'-1*⍵'           '⍺-⍵'
+  sdb,←⊂,'×' ⋄ sdc⍪←'(⍵>0)-(⍵<0)'    '⍺*⍵'
+  sdb,←⊂,'÷' ⋄ sdc⍪←'1.0/⍵'          '((double)⍺)/((double)⍵)'
+  sdb,←⊂,'*' ⋄ sdc⍪←'exp((double)⍵)' 'pow((double)⍺,(double)⍵)'
+  sdb,←⊂,'⍟' ⋄ sdc⍪←'log((double)⍵)' 'log((double)⍵)/log((double)⍺)'
+  sdb,←⊂,'|' ⋄ sdc⍪←'fabs(⍵)'        'fmod((double)⍵,(double)⍺)'
+  sdb,←⊂,'○' ⋄ sdc⍪←'PI*⍵'           'error(16)'
+  sdb,←⊂,'≥' ⋄ sdc⍪←'error(16)'      '⍺>=⍵'
+
+  ⍝ Mixed Functions
+  fdb←0⍴⊂'' ⋄ fdc←0 2⍴⊂'' ⋄ fcl←{(⍎⊃fdc⌷⍨(fdb⍳⍺⍺),¯1+≢⍵)⍵}
+
+  ⍝      Prim       Monadic          Dyadic
+  ⍝ ─────────────────────────────────────────────────────────────────
+  fdb,←⊂,'⌷' ⋄ fdc⍪←'MF.idx'         ''
+  fdb,←⊂,'[' ⋄ fdc⍪←'MF.brki'        ''
+  fdb,←⊂,'⍳' ⋄ fdc⍪←''               'MF.iotm'
+
+  ⍝ Operators
+  opb←0⍴⊂'' ⋄ opc←0 2⍴⊂'' ⋄ ocl←{⍵∘{(⍎⍵)⍺}¨opc⌷⍨opb⍳⍺⍺}
   
-  dtp←'(double)'
-  
-  sdb←,¨'+-×÷*⍟|○≥'
-  sdn←'add' 'sub' 'mul' 'div' 'pow' 'log' 'mod' 'pit' 'gte'
-  smt←↑(0 1)(0 1)(1 1)(0 0)(0 0)(0 0)(0 1)(0 0)(0 0)
-  sdt←(0 0 0 1)(0 0 0 1)(0 0 0 1)(0 0 0 0)(0 0 0 1)(0 0 0 0)
-  sdt,←(0 0 0 1)(0 0 0 0)(1 1 1 1)
-  sdt←↑sdt
+  ⍝      Prim       Monadic          Dyadic
+  ⍝ ─────────────────────────────────────────────────────────────────
+  opb,←⊂,'⍨' ⋄ opc⍪←'OP.comm'        'OP.comd'
+  opb,←⊂,'¨' ⋄ opc⍪←'OP.eacm'        'OP.eacd'
+
 :EndNamespace
