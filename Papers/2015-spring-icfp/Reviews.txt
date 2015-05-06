@@ -1,0 +1,268 @@
+===========================================================================
+                           ICFP '15 Review #104A
+---------------------------------------------------------------------------
+    Paper #104: The Key to a Data-parallel Compiler: A Functional Pearl
+---------------------------------------------------------------------------
+
+
+                      Overall merit: 4. Accept
+
+                         ===== Paper summary =====
+
+This paper presents a data-parallel technique for implementing a
+compiler. The first element of the technique is a representation of
+the AST that consists among other things of a node-coordinate
+structure. The node-coordinate structure provides efficient operations
+for determining topological relationships between any two specified
+AST nodes and can be processed in a data-parallel fashion. The second
+element of the proposed technique is the use of the key operator,
+along with the node-coordinate representation, to implement code
+transformations, such as function lifing and expression
+flattening. The paper shows in detail by way of two running example
+inputs exactly how the pieces all fit together to end with two
+complete code transformations.
+
+Primary contributions include a novel data-parallel representation of
+an AST and an application of the key operator of the J programming
+language together to implement code transformations. Secondary
+contributions include a presentation that optimizes for clarity rather
+than raw performance and an embedding in well-established notation for
+array-based programming.
+
+The paper was on the whole well written. Examples were well developed
+and carried through the whole paper. The notation was clear, for the
+most part, and concise. I really appreciate that the authors kept the
+technical presentation on a nice balance between simplicity and
+practical details and that the authors drew from a lot of
+well-established notation and techniques, such as the key operator.
+
+The paper alone was not enough to be convincing that the techniques
+could scale to a production optimizing compiler. In particular, first,
+I was left with concerns regarding worst-case time and space usage of
+the node-coordinate structure and the operators. Second, I did not get
+from reading the paper a very precise idea of the scope of which
+calculi and which code transformations could be handled by the
+proposed technique.
+
+                          ===== Evaluation =====
+
+The paper addresses a problem, namely that of parallelizing our
+compilers, that is timely and addresses the problem in a manner that I
+believe would be interesting to ICFP readers. Apart from parallelism,
+the style used by the author for presenting compiler transformations
+is new to me and seems quite interesting. I am left wondering how
+larger code transformations would look compared to similar code
+transformations in more traditional styles. I believe that the
+technique could generate interesting discussion among the compiler
+writers of ICFP.
+
+I found the presentation to be clear, but at times I got bogged down
+reading the paper. Not enough to stop reading, but enough to put it
+down for a while.  The first reason has to do with the style of
+presenting the transformations.  We start with the basic structures,
+e.g., F d and F v, and build incrementally until we have, e.g., F
+c. Given that F c is where we are going and that F c can be described
+quite simply by itself, I felt a little defeated after reading through
+so much detail in between. It would have been more readable for me if
+F c was presented earlier, before the details of how to derive it, so
+that the I could have better intuition for what the operators in
+between are doing.
+
+The second reason has to do with the notion for the data-parallel
+operators. Although I like the compactness, sometimes it could be too
+much. In some cases, I feel that use of parens could help to
+disambiguate order of operations.
+
+One concern that I have with respect to space use is the fact that
+ASTs can be both large and sparse. A relatively long chain of nodes in
+one branch seems like it could be problematic because the size of the
+node-coordinate structure is proportional to n*d, where n is the
+number of nodes and d the height of the tree.
+
+Another concern that I have is that the node-coordinate structure
+might waste a lot of space to "spurious" digits. The amount of
+spurious digits is unbounded in general. Is it a problem in practice?
+Are there well-known compression techniques that could be readily
+employed?
+
+                    ===== Comments for author(s) =====
+
+The \rho operator that is used on the bottom of the right column of
+page 3 seems to come out of nowhere. It took me longer than I would've
+wanted to infer its meaning. Am I missing something?
+
+There seems to be a typo on the top of the right column of page
+6. That is, "Indeed. The second row...".
+
+What is (approximately) the space of the input languages that you are
+treating in this paper? For example, what would it mean if, in the
+first example, there was a variable occurrence in the inner lambda
+that is bound by the outer lambda?
+
+===========================================================================
+                           ICFP '15 Review #104B
+---------------------------------------------------------------------------
+    Paper #104: The Key to a Data-parallel Compiler: A Functional Pearl
+---------------------------------------------------------------------------
+
+
+                      Overall merit: 2. Weak reject
+
+                         ===== Paper summary =====
+
+The paper introduces a matrix representation for abstract syntax trees, and
+shows that it is possible to apply some common transformations performed on the
+AST by the compiler to equivalent (data parallel) operation on the matrix
+representation. As concrete examples, the author shows how to do function
+lifting and expression flattening on this representation.
+
+                          ===== Evaluation =====
+
+While the idea to represent an AST as matrix and lift the usually inherently
+sequential transformations based on recursive traversal on the tree to the
+matrix, and this way imply a parallel implementation, is really neat, I do not find
+this paper convincing as functional pearl. I'm not very familiar with APL, so
+trying to undertand the examples was a real pain. Though this is probably not
+the case for APL programmers, I think the author could do a much better job
+explaining the notation and the examples. More importantly, however, it is not
+clear at all from the paper what kind of operations can be encoded this way. In
+the introductions, the author states:
+
+"When combined with more mundane array programming, we can implement the
+complete core of a compiler, including lexical scope, function lifting,
+expression flattening/normalization, loop fusion, frame/register allocation,
+and so on. The result is a completely data-parallel compiler modulo parsing and
+some aspects of code generation."
+
+The two transformations implemented in the paper, function lifting and
+expression flattening,  seem well suited to mapping onto array operations. In
+the conclusion, he mentions that he has implemented a full compiler, but not
+for what kind of language and which kind of compiler transformations. So have
+the transformations listed above really been implemented? 
+
+It doesn't seem so, because in Section 5:
+
+"We will use these keys to perform computation over the AST and accomplish our
+tasks of function lifting and expression flattening in the next section, but we
+make a final note here, that we can imagine many other operations which might
+be used throughout the compiler when we care about how nodes relate to each
+other."
+
+which seems a rather weak statement. Overall, I don't think this paper meets the
+standards for a functional pearl, and I don't recommend to accept it.
+
+                    ===== Comments for author(s) =====
+
+Sec 1.
+similar fasion
+
+locally answer the internode questions we need (solved)
+
+Sec 2. 
+
+3.  earlier      earlier wrt to a traversal order
+
+Sec 3
+
+AST on the right is incomplete
+
+why only apply -,  to Fv?
+
+
+i (well, the symbol in Line 3, Table 1)  according to the table finds the first
+occurence, but here you write it's used to obtain a sequence [0,n)?  It's explained later in  Section 5, but should be when used it the first time.
+
+===========================================================================
+                           ICFP '15 Review #104C
+---------------------------------------------------------------------------
+    Paper #104: The Key to a Data-parallel Compiler: A Functional Pearl
+---------------------------------------------------------------------------
+
+
+                      Overall merit: 2. Weak reject
+
+                         ===== Paper summary =====
+
+This paper outlines how an AST for a language can be represented as an
+array structure with operations for analyzing and manipulating the
+AST. The paper demonstrates how the techniques can be developed based
+on APL "data parallel" operations, with particular use of the APL Key
+operator (derived from the Key operator in J, a generalisation of
+SQL's GROUP BY construct).
+
+The paper gives an outline of how function lifting and expression
+flattening (binding of intermediate computations) can be implemented
+for the proposed AST representation, based on use of advanced Dyalog
+14 APL functionality (e.g, function trains, rank operator, key
+operator), and claims that the approach extends to an entire compiler
+(except parsing and final code generation).
+
+                          ===== Evaluation =====
+
+There are several problems with this paper. First, the paper claims to
+implement function lifting, but it is unclear whether
+the approach can lift out a function that refers to an identifier
+declared in an outer scope. In such cases, explicit environments need
+to be passed to lifted functions and it is unclear whether the technique
+can be extended to allow for such rewrites. This problem is not
+addressed or mentioned at all. Second, the paper suggests that the
+obtained compiler is really data-parallel. The paper provides no
+evidence to back-up this claim, except that the compiler can be
+written in APL without control structure syntax. The paper provides no
+experimental results showing that operations on the tree structure can
+be executed in parallel. Also, the paper claims that an entire
+compiler has been crafted (generating C and CUDA), but again, no
+evidence is provided to backup this claim. The language in the paper
+is ok and most of the concepts are well presented, although I fear
+that many of the concepts (APL syntax in concert with advanced APL
+features such as function trains and the rank and Key operators) will
+be difficult to appreciate for large parts of the ICFP community,
+unless the benefit from using such combinators are made very clear.
+
+                    ===== Comments for author(s) =====
+
+Details:
+
+ Sect. 3: V(d) has fallen down on a new line...
+ Sect. 3: definition of Fd is wrong; delete the last "2"
+ Sect. 3: definition of Fv is wrong; insert 'w' (omega) after '+'
+ Sect. 3: the expression Ed,Et,Ev is different from the one for F - why?
+ Sect. 3: state that expressions are parsed from the right
+ Table 1, take: delete "from right"
+ Table 1, drop: delete "from right"
+ Sect. 4: "0 1 2 3 4 5" should be "0 1 2 3 4"
+ Sect. 4: describe rho (reshape) at point of use
+ Sect. 4: the rank operator requires more explanation; what effect does -1 as argument have? What is a cell of rank -1 (see Table 2).
+ Sect. 4: "...shown using Fd and Fe": I cannot find the definition for Fe...
+ Sect. 5 and many places elsewhere: Please avoid using "this" without a reference, as in "This extends the reduction to allow us..." Instead write "This generalisation allows us..."
+ Sect. 5: "thus determine" -> "thus to determine"
+ Sect. 5: "solution to this is" -> "solution is"
+ Sect. 5: "useful to understand" -> "useful"
+ Sect. 6.1: Complete the description of the Key operator; how is the supplied function used?
+ Sect. 6.2: It is not clear that the function lifting works for closures. How is {x<-w DIA {x+w}8}5 processed?
+ Sect. 6.2: "uniquely identifying" -> "uniquely identified"
+ Sect. 6.2: Why not complete the code for the function lifting phase so that the reader can try it out as promised in the introduction?
+ Sect. 6.3: "lowing:" is in a wrong font...
+ Sect. 6.2-6.3: What happens when examples contain both nested functions and nested expressions? The first parts of each phase are identical, thus, the groupings will contain both functions to be hoisted and expressions to be flattened.
+ Sect. 7: Please be more specific about what phases of the compiler are covered. Also, the claims and the suggested results need to be backed up by evidence if ICFP readers are to take them seriously. Is the code (or an experimental version of the code) available online?
+ Sect. 7: What is meant by "correct order"?
+ Sect. 7: The claim/speculation that a complexity certificate can be generated automatically from the code needs to be backed up by evidence and references to related work.
+ Sect. 8: It is mentioned that the APEX compiler uses a matrix-representation for representing the AST. Please mention other references to matrix-representations for trees and graphs? For instance, the APL Book by K.E.Iverson, 1962.
+
+===========================================================================
+                 Response by Aaron Hsu <awhsu@indiana.edu>
+---------------------------------------------------------------------------
+Comments for review A: The notion of clarifying order of operations more explicitely makes sense for an audience not familiar with the notation makes sense and will be incorporated. Concerning space usage, the paper uses dense rectangular arrays for pedagogical simplicity, but well known compression techniques exist that can compress these arrays with or without modification of the code. Sparse matrix representations eliminate storage of spurious digits at the cost of some data regularity, and highly compressed representations exist that require some on the fly decompression for certain node operations, but not all. This treatment tries to avoid these considerations in favor of elucidating the core ideas of the transformations.
+
+The scope of input languages includes untyped lexically scoped functional or procedural mixed languages (Scheme, dfns APL, Lambda Calculus, &c.), though this is a minimal, not a maximal bound. Variable capturing is supported, since the lifting of functions retains the information necessary to compute lexical scoping information. The full compiler has a separate pass to "anchor" variables, free or otherwise, to their appropriate cells in the environments of their functions. The paper omits this pass for simplicity and focus, but the author agrees that the paper should make the generality of the function lifting more evident and will include a short discussion of handling variable capture in the final draft. In particular, the node coordinates allow the decoupling of closure creation from function lifting, since the flattening of the functions does not lose the information necessary to create closures, but instead stores them in the node coordinates.
+
+Comments for review B: The author will include a reference to [Hsu ARRAY '15] and the accompanying repository that details the current commercial compiler effort using these techniques. It is a compiler for Co-dfns, which is a lexically scoped functionally oriented dialect of APL that supports variable capture, nested functions and function arguments, and compiles to C and CUDA. The repository for the compiler is [1] and includes standard compiler passes such as constant propagation and folding, as well as all those mentioned in the paragraph quoted by the reviewer. The author agrees that this should have been made more clear in that paragraph, and will update the paper to include references to the full compiler.
+
+Comments for review C: Please see comments for A and B above for discussions about the full compiler [1] and environments; variable capture is handled in a separate compiler pass after flattening, and utilizes node coordinates to ensure the correct lexical scoping of free variables, as discussed above. 
+
+The compiler above uses only well studied array operations which have a strong and long history of data-parallel or parallel execution semantics, including inner product (matrix multiplication), outer product (tensor contraction), and reductions/prefix scans. The key operator and its associated family as been shown by Henglein to have a radix-sort like solution to its computation that is well suited to vectorization and other forms of parallel execution. His work is discussed in the Related Works section. Experimental results were omitted for clarity of presentation of the ideas as a functional pearl.
+
+The detailed comments are quite helpful and will be incorporated, including an appendix with complete code for function lifting and expression flattening for readers to try out.
+
+[1] https://github.com/arcfide/Co-dfns
+
