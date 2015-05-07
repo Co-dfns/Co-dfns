@@ -1,11 +1,6 @@
 :Namespace R
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ nl←##.U.nl
   
-  ⍝ Runtime Header
-  rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
-  rth,←'int isinit=0;',nl
-  rth,←'#define PI 3.14159265358979323846',nl
-
   ⍝ Scalar Primitives
   sdb←0⍴⊂'' ⋄ sdc←0 2⍴⊂'' ⋄ scl←{(((≢⍵)↑,¨'⍺⍵')⎕R ⍵)⊃sdc⌷⍨(sdb⍳⍺⍺),¯1+≢⍵}
   
@@ -26,9 +21,9 @@
 
   ⍝      Prim       Monadic          Dyadic
   ⍝ ─────────────────────────────────────────────────────────────────
-  fdb,←⊂,'⌷' ⋄ fdc⍪←'MF.idx'         ''
-  fdb,←⊂,'[' ⋄ fdc⍪←'MF.brki'        ''
-  fdb,←⊂,'⍳' ⋄ fdc⍪←''               'MF.iotm'
+  fdb,←⊂,'⌷' ⋄ fdc⍪←''               'MF.idx'
+  fdb,←⊂,'[' ⋄ fdc⍪←''               'MF.brki'
+  fdb,←⊂,'⍳' ⋄ fdc⍪←'MF.iotm'        ''
 
   ⍝ Operators
   opb←0⍴⊂'' ⋄ opc←0 2⍴⊂'' ⋄ ocl←{⍵∘{(⍎⍵)⍺}¨opc⌷⍨opb⍳⍺⍺}
@@ -37,5 +32,10 @@
   ⍝ ─────────────────────────────────────────────────────────────────
   opb,←⊂,'⍨' ⋄ opc⍪←'OP.comm'        'OP.comd'
   opb,←⊂,'¨' ⋄ opc⍪←'OP.eacm'        'OP.eacd'
+
+  ⍝ Runtime Header
+  rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+  rth,←'int isinit=0;',nl
+  rth,←'#define PI 3.14159265358979323846',nl
 
 :EndNamespace
