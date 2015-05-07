@@ -1,5 +1,5 @@
 :Namespace G
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ MF←##.MF ⋄ OP←##.OP ⋄ R←##.R
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ H←##.H ⋄ MF←##.MF ⋄ OP←##.OP ⋄ R←##.R
 
   ⍝ Generator
   gc←{⊃,/((dis⍤1 A.Os ⍵)⍪R.fdb)∘(⊂dis)⍤1⊢(~A.Om ⍵)⌿⍵}
