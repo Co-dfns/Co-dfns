@@ -8,10 +8,11 @@
   rth,←'int isinit=0;',nl
   rth,←'#define PI 3.14159265358979323846',nl
 
-  ⍝ Environment declarations
+  ⍝ Environments
   dnv←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
+  reg←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
 
-  ⍝ Function Declarations
+  ⍝ Functions
   frt←'void EXPORT '
   flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   fpd←('(',flp,')')('(',flp,',LOCALP*penv[])')
@@ -21,7 +22,7 @@
   cutp←'cutp(&env0[0]);'
   coms←{⊃{⍺,',',⍵}/⍵}
   ⍝ ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
-  ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
+  ⍝ ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ght←{'{',nl,gfi,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
   ghn←{'{',nl,gfi,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}

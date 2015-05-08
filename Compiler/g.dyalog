@@ -22,7 +22,7 @@
 
   ⍝ Functions
   Fd←{H.frt,(⊃n⍵),((⊃s⍵)⊃(⊂'(void)'),H.fpd),';',nl}
-  F0←{frt,(⊃n⍵),'(void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'ger ⍵}
+  F0←{H.frt,(⊃n⍵),'(void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'H.reg ⍵}
   F1←{frt,(⊃n⍵),(¯1+2⌊⊃s ⍵)⊃fpd,¨(ght ⍵)(ghn ⍵)}
   Z0←{'}',nl,nl}
   Z1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');',cutp,nl,'isinit=oi;}',nl,nl}

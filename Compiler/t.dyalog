@@ -100,7 +100,7 @@
 
   ⍝ Wrap top-level Expressions as Init function
   ifn←1 'F' 0 'Init' ⍬ 0,(4 12⍴0)⍬,⍨⊢
-  if ←(1↑⊢)⍪((1=d)∧Em∨Om)((((ifn≢∘∪∘n)⍪A.up)⊣(⌿∘⊢)⊢)⍪1↓(~⊣)(⌿∘⊢)⊢)⊢
+  if ←(1↑⊢)⍪((1=d)∧Em∨Om)(((A.up⍪⍨∘ifn∘≢∘∪∘n Es)(⌿∘⊢))⍪1↓(~⊣)(⌿∘⊢)⊢)⊢
 
   ⍝ Flatten Function sub-trees
   fft←(,1↑⊢)(1 'Z',(2↓¯3↓⊣),(n⊢),(y⊢),(⊂0⌷∘⍉∘⊃∘e⊢))(¯1↑⊢)
