@@ -8,16 +8,25 @@
   rth,←'int isinit=0;',nl
   rth,←'#define PI 3.14159265358979323846',nl
 
-  frt←'void EXPORT ' ⋄ flp←'LOCALP*z,LOCALP*l,LOCALP*r'
+  ⍝ Environment declarations
+  dnv←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
+
+  ⍝ Function Declarations
+  frt←'void EXPORT '
+  flp←'LOCALP*z,LOCALP*l,LOCALP*r'
   fpd←('(',flp,')')('(',flp,',LOCALP*penv[])')
+
+
   gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
   cutp←'cutp(&env0[0]);'
   coms←{⊃{⍺,',',⍵}/⍵}
-  ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'} ⋄ ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
+  ⍝ ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
+  ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
   gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
   ght←{'{',nl,gfi,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
   ghn←{'{',nl,gfi,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
-  elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'} ⋄ eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
+  elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'}
+  eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
   vec←{(vsp≢⍵),'getarray(',(coms (elt⊃⍵)(⍕1<≢⍵)'sp'((⊃⍵)var 0⌷⍉⍺)),');}',nl}
   vsp←{'{BOUND ',(1<⍵)⊃'*sp=NULL;'('sp[1]={',(⍕⍵),'};')}
   vpp←{'(',(⍺ var ⍵),')->p'}
@@ -25,7 +34,7 @@
   fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(((⍺<0)⊃'' '-'),⍕|⍺),';'})¨⍳≢⍵}
   dff←{⍺⍺,'(',(coms ⍵),'); /* Fallback */',nl}
   grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
-  ghm←'rslt' 'rgt'grh ⋄ ghd←'rslt' 'lft' 'rgt'grh
-  gec←{((0⌷⍉⍵⍵)⍳⊂⍺)⊃(⍺⍺⌷⍉⍵⍵),⊂⍺ dff ⍵}
+  ⍝ ghm←'rslt' 'rgt'grh ⋄ ghd←'rslt' 'lft' 'rgt'grh
+  ⍝ gec←{((0⌷⍉⍵⍵)⍳⊂⍺)⊃(⍺⍺⌷⍉⍵⍵),⊂⍺ dff ⍵}
 
-:EndNamepsace
+:EndNamespace
