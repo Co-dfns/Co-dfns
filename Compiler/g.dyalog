@@ -21,9 +21,9 @@
   O0←{('' )(''                     )(''                    )}
 
   ⍝ Functions
-  Fd←{H.frt,(⊃n⍵),((⊃s⍵)⊃(⊂'(void)'),H.fpd),';',nl}
-  F0←{H.frt,(⊃n⍵),'(void){',nl,'LOCALP *env[]={tenv};',nl,'tenv'H.reg ⍵}
-  F1←{frt,(⊃n⍵),(¯1+2⌊⊃s ⍵)⊃fpd,¨(ght ⍵)(ghn ⍵)}
+  Fd←{H.frt,(⊃n⍵),H.flp,';',nl}
+  F0←{H.frt,(⊃n⍵),H.flp,'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'H.reg ⍵}
+  F1←{H.frt,(⊃n⍵),H.flp,'{',nl,H.foi,('env0'H.dnv ⍵),(H.fnv ⍵),'env0'H.reg ⍵}
   Z0←{'}',nl,nl}
   Z1←{'z->p=zap(',((⊃n⍵)vpp⊃e⍵),');',cutp,nl,'isinit=oi;}',nl,nl}
 

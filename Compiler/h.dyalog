@@ -13,9 +13,10 @@
   reg←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
 
   ⍝ Functions
-  frt←'void EXPORT '
-  flp←'LOCALP*z,LOCALP*l,LOCALP*r'
-  fpd←('(',flp,')')('(',flp,',LOCALP*penv[])')
+  frt←'void static '
+  flp←'(LOCALP*z,LOCALP*l,LOCALP*r,LOCALP*penv[])'
+  foi←'int oi=isinit;if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
+  fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 
 
   gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
