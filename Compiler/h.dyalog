@@ -19,14 +19,8 @@
   fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 
 
-  gfi←'int oi=isinit;if(!isinit){Init();isinit=1;}',nl
   cutp←'cutp(&env0[0]);'
   coms←{⊃{⍺,',',⍵}/⍵}
-  ⍝ ged←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
-  ⍝ ger←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
-  gel←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-  ght←{'{',nl,gfi,('env0'ged ⍵),'LOCALP*env[]={env0,tenv};',nl,'env0'ger ⍵}
-  ghn←{'{',nl,gfi,('env0'ged ⍵),(gel ⍵),'env0'ger ⍵}
   elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'}
   eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
   vec←{(vsp≢⍵),'getarray(',(coms (elt⊃⍵)(⍕1<≢⍵)'sp'((⊃⍵)var 0⌷⍉⍺)),');}',nl}
