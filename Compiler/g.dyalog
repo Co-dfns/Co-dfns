@@ -25,7 +25,7 @@
   F0←{H.frt,(⊃n⍵),H.flp,'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'H.reg ⍵}
   F1←{H.frt,(⊃n⍵),H.{flp,'{',nl,foi,('env0'dnv ⍵),(fnv ⍵),'env0'reg ⍵}⍵}
   Z0←{'}',nl,nl}
-  Z1←{'z->p=zap((',((⊃n⍵)H.var⊃e⍵),')->p);',H.cutp,nl,'isinit=oi;}',nl,nl}
+  Z1←{'z->p=zap((',((⊃n⍵)H.var⊃e⍵),')->p);',H.cutp,nl,'}',nl,nl}
 
   ⍝ Namespaces
   M0←{H.rth,('tenv'H.dnv ⍵),nl}
