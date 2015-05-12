@@ -1,5 +1,5 @@
 :Namespace SD
-  U←##.U ⋄ nl←U.nl ⋄ do←U.do ⋄ pdo←U.pdo ⋄ tl←U.tl ⋄ var←U.var ⋄ pp←#.pp
+  H←##.H ⋄ nl←H.nl ⋄ do←H.do ⋄ pdo←H.pdo ⋄ tl←H.tl ⋄ var←H.var ⋄ pp←#.pp
   A←##.A ⋄ k←A.k ⋄ n←A.n ⋄ v←A.v ⋄ e←A.e
   SR←##.SR ⋄ sdb←SR.sdb ⋄ sdn←SR.sdn ⋄ smt←SR.smt ⋄ sdt←SR.sdt
   ivh←{'LOCALP *pat=',⍵,';BOUND types=0;',nl}

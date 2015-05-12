@@ -1,7 +1,15 @@
 :Namespace H
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ SD←##.SD ⋄ OP←##.OP ⋄ R←##.R
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
-  tl←##.U.tl ⋄ do←##.U.do ⋄ var←##.U.var ⋄ nl←##.U.nl ⋄ pp←#.pp
+  pp←#.pp
+
+  ⍝ Utilities
+  var←{(,'⍺')≡⍺:'l' ⋄ (,'⍵')≡⍺:'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+  nl←⎕UCS 13 10
+  for←{'for(i=0;i<',(⍕⍵),';i++){'}
+  do←{'{BOUND i;',(for ⍺),⍵,'}}',nl}
+  pdo←{'{BOUND i;',nl,'#pragma parallel',nl,(for ⍺),⍵,'}}',nl}
+  tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
 
   ⍝ Runtime Header
   rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
@@ -11,6 +19,7 @@
   ⍝ Environments
   dnv←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
   reg←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
+  cutp←'cutp(&env0[0]);'
 
   ⍝ Functions
   frt←'void static '
@@ -18,15 +27,12 @@
   foi←'int oi=isinit;if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
   fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 
-
-  cutp←'cutp(&env0[0]);'
   coms←{⊃{⍺,',',⍵}/⍵}
   elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'}
   eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
   vec←{(vsp≢⍵),'getarray(',(coms (elt⊃⍵)(⍕1<≢⍵)'sp'((⊃⍵)var 0⌷⍉⍺)),');}',nl}
   vsp←{'{BOUND ',(1<⍵)⊃'*sp=NULL;'('sp[1]={',(⍕⍵),'};')}
-  vpp←{'(',(⍺ var ⍵),')->p'}
-  dap←{⍺⍺,'*',⍺,'=ARRAYSTART(',((⊃n ⍵)vpp 0⌷⍉⊃e ⍵),');',nl}
+  dap←{⍺⍺,'*',⍺,'=ARRAYSTART((',((⊃n ⍵)var 0⌷⍉⊃e ⍵),')->p);',nl}
   fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(((⍺<0)⊃'' '-'),⍕|⍺),';'})¨⍳≢⍵}
   dff←{⍺⍺,'(',(coms ⍵),'); /* Fallback */',nl}
   grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
