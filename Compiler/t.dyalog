@@ -1,5 +1,5 @@
 :Namespace T
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ TC←##.TC
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ TC←##.TC ⋄ H←##.H
   Am←A.Am ⋄ Em←A.Em ⋄ Fm←A.Fm ⋄ Nm←A.Nm ⋄ Om←A.Om ⋄ Pm←A.Pm ⋄ Sm←A.Sm ⋄ Vm←A.Vm
   As←A.As ⋄ Es←A.Es ⋄ Fs←A.Fs ⋄ Os←A.Os ⋄ Ps←A.Ps ⋄ Vs←A.Vs
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
@@ -8,7 +8,6 @@
   tt ←{fd fz ff if td vc fs av va lt fv ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
 
   ⍝ Utilities
-  enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
   scp←(1,1↓Fm)⊂[0]⊢
   mnd←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
   sub←{⍺←⊢ ⋄ A⊣(m⌿A)←⍺ ⍺⍺(m←⍺ ⍵⍵ ⍵)⌿A←⍵}
@@ -29,9 +28,9 @@
   du ←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘⊢)↑∘r×0=prf))(⌿∘⊢)⊢
 
   ⍝ Lift Functions
-  lfv←⍉∘⍪(1+⊣),'Vf',('fn'enc 4⊃⊢),4↓⊢
+  lfv←⍉∘⍪(1+⊣),'Vf',('fn'H.enc 4⊃⊢),4↓⊢
   lfn←('F'≡1⊃⊢)⌷(⊣-⍨∘⊃⊢)((⊂∘⍉∘⍪⊣,1↓⊢),∘⊂(⊣,'Of',3↓⊢)⍪lfv)⊢
-  lfh←(1<(+/⊣))⊃(⊂0↑⊢),∘⊂∘⍉∘⍪1'F'1,('fn'enc⊣),(⊂⊣),5↓∘,1↑⊢
+  lfh←(1<(+/⊣))⊃(⊂0↑⊢),∘⊂∘⍉∘⍪1'F'1,('fn'H.enc⊣),(⊂⊣),5↓∘,1↑⊢
   lf ←(1↑⊢)⍪∘⊃(⍪/(1,1↓Fm)blg(↑r)(⊂lfh⍪∘⊃(⍪/((¯2+1=(+/⊣))+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
 
   ⍝ Drop useless nodes in the AST
@@ -42,7 +41,7 @@
   ca ←(((+\Am)((,1↑⊢),∘⊂∘can 1↓⊢)⌸⊢)(Am∨Nm)(⌿∘⊢)⊢)Am mnd⊢⍬,∘⊂⍨(~Nm)(⌿∘⊢)⊢
 
   ⍝ Flatten Expressions
-  fen←((⊂'fe')(⊃enc)¨((0∊⍨n)∧Em∨Om)(⌿∘⊢)r)((0∊⍨n)∧Em∨Om)mnd n⊢
+  fen←((⊂'fe')(⊃H.enc)¨((0∊⍨n)∧Em∨Om)(⌿∘⊢)r)((0∊⍨n)∧Em∨Om)mnd n⊢
   fet←('V'0⍴⍨2,⍨(+/0,1↓Em∨Om))(0,1↓Em∨Om)mnd(t,∘⍪k)⊢
   fee←⍪/(⌽(1,1↓Em∨Om)blg⊢((⊂(d-⊃-2⌊⊃),fet,fen,4↓⍤1⊢)⊣⍪⊢)⌸1↓⊢)
   fef←⍪/(⊂1↑⊢),(Am∧d=1+∘⊃⊢)((⊂(⌿∘⊢)),∘((+\d=∘⊃⊢)fee⌸⊢)1↓(~⊣)(⌿∘⊢)⊢)⊢
