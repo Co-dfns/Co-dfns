@@ -5,7 +5,7 @@
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
 
   ⍝ Core Compiler
-  tt ←{fd fz ff if td vc fs av va lt fv ce fc∘pc⍣≡ fe ca dn lf du df rd rn ⍵}
+  tt ←{fd fz ff if td vc fs av va lt fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
 
   ⍝ Utilities
   scp←(1,1↓Fm)⊂[0]⊢
@@ -36,21 +36,21 @@
   ⍝ Drop useless nodes in the AST
   dn ←((0∊⍨n)∧(Am∧'v'∊⍨k)∨Om∧'f'∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
 
-  ⍝ Compress Atomic sub-trees into single atomic nodes
-  can←((¯1+2⌊≢)⊃⊃,⊂)n
-  ca ←(((+\Am)((,1↑⊢),∘⊂∘can 1↓⊢)⌸⊢)(Am∨Nm)(⌿∘⊢)⊢)Am mnd⊢⍬,∘⊂⍨(~Nm)(⌿∘⊢)⊢
-
   ⍝ Flatten Expressions
-  fen←((⊂'fe')(⊃H.enc)¨((0∊⍨n)∧Em∨Om)(⌿∘⊢)r)((0∊⍨n)∧Em∨Om)mnd n⊢
-  fet←('V'0⍴⍨2,⍨(+/0,1↓Em∨Om))(0,1↓Em∨Om)mnd(t,∘⍪k)⊢
-  fee←⍪/(⌽(1,1↓Em∨Om)blg⊢((⊂(d-⊃-2⌊⊃),fet,fen,4↓⍤1⊢)⊣⍪⊢)⌸1↓⊢)
-  fef←⍪/(⊂1↑⊢),(Am∧d=1+∘⊃⊢)((⊂(⌿∘⊢)),∘((+\d=∘⊃⊢)fee⌸⊢)1↓(~⊣)(⌿∘⊢)⊢)⊢
-  fe ←(⊃⍪/)(+\Fm)fef⌸⊢
+  fen←((⊂'fe')(⊃H.enc)¨((0∊⍨n)∧Em∨Om∨Am)(⌿∘⊢)r)((0∊⍨n)∧Em∨Om∨Am)mnd n⊢
+  fet←('V'0⍴⍨2,⍨(+/0,1↓Em∨Om∨Am))(0,1↓Em∨Om∨Am)mnd(t,∘⍪k)⊢
+  fee←(⍪/⌽)(1,1↓Em∨Om∨Am)blg⊢((⊂(d-⊃-2⌊⊃),fet,fen,4↓⍤1⊢)⍪)⌸1↓⊢
+  fe ←(⊃⍪/)(+\Fm)(⍪/(⊂1↑⊢),∘((+\d=⊃)fee⌸⊢)1↓⊢)⌸⊢
 
-  ⍝ Propagate Constants
-  pcc←⊂∘As∘(((1⌈≢)↑⊢)⌷⍤0 2⍨n⍳∘∪n)∘((1+⊃),1↓⍤1⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
-  pcb←((,∧.(=∨0=⊣)∘⍪)⍤2 1⍨∘↑∘r(1↑⊢)⍪Fs)pcc⍤1((⊢(⌿⍨)Em∨Am∧d=1+⊃)¨⊣)
-  pcd←((~Am∧d=1+(∨\Fm))(⌿∘⊢)⊢)∘(⊃⍪/)
+  ⍝ Compress Atomic (Literal/Function) sub-trees into single atomic nodes
+  can←(+\Am∨Om)((,1↑⊢),∘(⊂(¯1+2⌊≢)⊃(⊂⊃),⊂)∘n 1↓⊢)⌸⊢
+  cam←Om∧'f'∊⍨k
+  ca ←(can(Am∨Nm∨cam∨¯1⌽cam)(⌿∘⊢)⊢)(Am∨cam)mnd⊢⍬,∘⊂⍨(~Nm∨¯1⌽cam)(⌿∘⊢)⊢
+
+  ⍝ Propagate Literal and Function Constants
+  pcc←(⊂⊢(⌿⍨)Am∨Om∧'f'∊⍨k)∘((⍳∘∪⍨n)⌷⍤0 2(1⌈≢)↑⊢)∘((1+⊃),1↓⍤1⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
+  pcb←((,∧.(=∨0=⊣)∘⍪)⍤2 1⍨∘↑∘r(1↑⊢)⍪Fs)pcc⍤1((⊢(⌿⍨)d=1+⊃)¨⊣)
+  pcd←((~(Om∧('f'∊⍨k)∧1≠d)∨Am∧d=1+(∨\Fm))(⌿∘⊢)⊢)∘(⊃⍪/)
   pc ←pcd scp(pcb((((1⌈≢)↑⊢)⊣)⌷⍤0 2⍨(n⊣)⍳n)sub(Vm∧n∊∘n⊣)¨⊣)⊢
 
   ⍝ Fold Constant Expressions
@@ -58,7 +58,7 @@
   fc ←((⊃⍪/)(((d,'An',3↓¯1↓,)1↑⊢),fce)¨sub((∧/Em∨Am∨Pm)¨))('MFOE'∊⍨t)⊂[0]⊢
 
   ⍝ Compress Expression sub-trees into single expression nodes
-  ce ←(+\'FOE'∊⍨t)((¯1↓∘,1↑⊢),∘⊂∘((v As)Am mnd n⊢)1↓⊢)⌸⊢
+  ce ←(+\Fm∨Om∨Em)((¯1↓∘,1↑⊢),∘⊂∘((v As)Am mnd n⊢)1↓⊢)⌸⊢
 
   ⍝ Track free variables for each function
   fv ←(⊃⍪/)(((1↓⊢)⍪⍨(,1 6↑⊢),∘⊂∘n ¯1↑⊢)¨scp)

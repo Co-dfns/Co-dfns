@@ -1,7 +1,6 @@
 :Namespace H
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
-  pp←#.pp
 
   ⍝ Utilities
   var←{(,'⍺')≡⍺:'l' ⋄ (,'⍵')≡⍺:'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
