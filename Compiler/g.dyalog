@@ -4,8 +4,8 @@
   nl←H.nl
 
   ⍝ Generator
-  gc←{⊃,/((dis⍤1 A.Os ⍵)⍪R.fdb)∘(⊂dis)⍤1⊢(~A.Om ⍵)⌿⍵}
   dis←{⍺←⊢ ⋄ 0=⊃t⍵:3⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
+  gc←(⊃,/)⊢((R.fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))A.(Om∧'mdi'∊⍨k)
 
   ⍝ Expressons
   Em←{  f r←⊃v⍵ ⋄ (⊃y⍵)(f R.fcl ⍺)(⊃n⍵)   r}
@@ -15,10 +15,10 @@
 
   ⍝ Operators ← (Name)(Monadic)(Dyadic)
   Oi←{(⊃n⍵)('Fexim()i',nl          )(MF.cat                )}
-  Of←{(⊃n⍵)(f,'(rslt,NULL,rgt);',nl)(f,'(rslt,lft,rgt);',nl)⊣f←⊃⊃v⍵}
   Om←{(⊃n⍵)((⍎i⊃opm)f              )((⍎i⊃opd)f             )⊣i←opn⍳⊂o⊣f o←⊃v⍵}
   Od←{(⊃n⍵)('Fexdm();',nl          )(##.OP.ptd             )}
   O0←{('' )(''                     )(''                    )}
+  Of←{(⊃n⍵)(f,'(rslt,NULL,rgt);',nl)(f,'(rslt,lft,rgt);',nl)⊣f←⊃⊃v⍵}
 
   ⍝ Functions
   Fd←{H.frt,(⊃n⍵),H.flp,';',nl}
