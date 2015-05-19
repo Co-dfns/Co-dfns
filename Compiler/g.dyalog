@@ -1,6 +1,6 @@
 :Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ H←##.H ⋄ MF←##.MF ⋄ OP←##.OP ⋄ R←##.R
-  d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
+  d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
   nl←H.nl
 
   ⍝ Generator
@@ -23,7 +23,7 @@
   ⍝ Functions
   Fd←{H.frt,(⊃n⍵),H.flp,';',nl}
   F0←{H.frt,(⊃n⍵),H.flp,'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'H.reg ⍵}
-  F1←{H.frt,(⊃n⍵),H.{flp,'{',nl,foi,('env0'dnv ⍵),(fnv ⍵),'env0'reg ⍵}⍵}
+  F1←{H.frt,(⊃n⍵),H.{flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),'env0'reg ⍵}⍵}
   Z0←{'}',nl,nl}
   Z1←{'z->p=zap((',((⊃n⍵)H.var⊃e⍵),')->p);',H.cutp,nl,'}',nl,nl}
 
