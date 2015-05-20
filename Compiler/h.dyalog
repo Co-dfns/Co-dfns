@@ -24,8 +24,14 @@
   ⍝ Functions
   frt←'void static '
   flp←'(LOCALP*z,LOCALP*l,LOCALP*r,LOCALP*penv[])'
+  elp←'(LOCALP*z,LOCALP*l,LOCALP*r)'
   foi←'int oi=isinit;if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
   fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
+  tps←'int tp=0;tp+=3*(r->p->ELTYPE==APLLONG?0:1);',nl
+  tps,←'tp+=(l==NULL)?2:(l->p->ELTYPE==APLLONG?0:1);',nl
+  tps,←'switch(tp){',nl
+  tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
+  cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,NULL);break;',nl}
 
   coms←{⊃{⍺,',',⍵}/⍵}
   elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'}

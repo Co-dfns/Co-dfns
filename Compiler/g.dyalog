@@ -18,7 +18,7 @@
   Om←{(⊃n⍵)((⍎i⊃opm)f              )((⍎i⊃opd)f             )⊣i←opn⍳⊂o⊣f o←⊃v⍵}
   Od←{(⊃n⍵)('Fexdm();',nl          )(##.OP.ptd             )}
   O0←{('' )(''                     )(''                    )}
-  Of←{(⊃n⍵)(f,'(rslt,NULL,rgt);',nl)(f,'(rslt,lft,rgt);',nl)⊣f←⊃⊃v⍵}
+  Of←{H.frt,(⊃n⍵),H.elp,'{',nl,H.tps,(⊃,/(⍳6)H.cas¨⊃v⍵),'}}',nl,nl}
 
   ⍝ Functions
   Fd←{H.frt,(⊃n⍵),H.flp,';',nl}
