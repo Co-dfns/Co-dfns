@@ -1,5 +1,5 @@
 :Namespace R
-  (⎕IO ⎕ML ⎕WX)←0 1 3
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ MF←##.MF ⋄ OP←##.OP
   
   ⍝ Scalar Primitives
   sdb←0 3⍴⊂'' ⋄ scl←{((≢⍵)↑,¨'⍺⍵')⎕R ⍵ ⊃⍺⌷⍨(⍺⍺⍳⍨0⌷⍉⍺),¯1+≢⍵}
@@ -26,11 +26,11 @@
   fdb⍪←,¨'⍳'   'MF.iotm'        ''
 
   ⍝ Operators
-  opb←0 3⍴⊂'' ⋄ ocl←{⍵∘{(⍎⍵)⍺}¨1↓⍺⌷⍨⍺⍺⍳⍨0⌷⍉⍺}
+  odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(''',⍺,'''',⍵,')'}¨1↓⍺⌷⍨(⊂⍺⍺)⍳⍨0⌷⍉⍺}
   
   ⍝      Prim  Monadic          Dyadic
   ⍝ ─────────────────────────────────────────────────────────────────
-  opb⍪←,¨'⍨'   'OP.comm'        'OP.comd'
-  opb⍪←,¨'¨'   'OP.eacm'        'OP.eacd'
+  odb⍪←,¨'⍨'   'OP.comm'        'OP.comd'
+  odb⍪←,¨'¨'   'OP.eacm'        'OP.eacd'
 
 :EndNamespace

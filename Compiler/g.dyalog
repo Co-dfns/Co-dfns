@@ -14,10 +14,10 @@
   Es←{}
 
   ⍝ Operators ← (Name)(Monadic)(Dyadic)
-  Oi←{(⊃n⍵)('Fexim()i',nl          )(MF.cat                )}
-  Om←{(⊃n⍵)((⍎i⊃opm)f              )((⍎i⊃opd)f             )⊣i←opn⍳⊂o⊣f o←⊃v⍵}
-  Od←{(⊃n⍵)('Fexdm();',nl          )(##.OP.ptd             )}
-  O0←{('' )(''                     )(''                    )}
+  Oi←{(⊃n⍵)('Fexim()i',nl)(MF.cat)}
+  Om←{(n⍵),R.odb(o R.ocl)f⊣f o←⊃v⍵}
+  Od←{(⊃n⍵)('Fexdm();',nl)(OP.ptd)}
+  O0←{'' '' ''}
   Of←{H.frt,(⊃n⍵),H.elp,'{',nl,H.tps,(⊃,/(⍳6)H.cas¨⊃v⍵),'}}',nl,nl}
 
   ⍝ Functions
