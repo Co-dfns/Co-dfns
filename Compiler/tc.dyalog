@@ -4,7 +4,7 @@
   ⍝ Type: (RL|UU UI UF UN IU II IF IN FU FI FF FN)
   t←(2↑⊢)((5⍴0),(2↑⊢),(0⌷⊣),0,(¯2↑⊢),1⌷⊣)(2↓⊢)
 
-  pn←⍬ ⋄ pt←0 12⍴⍬ ⋄ ⋄ id←t 1 2 0 0 0 0
+  pn←⍬ ⋄ pt←0 12⍴⍬ ⋄ id←t 1 2 0 0 0 0
 
   ⍝ Name   Type (RL|IN FN II IF FI FF)                (RL|IN FN II IF FI FF)
   ⍝ ────────────────────────────────────────────────────────────────────────

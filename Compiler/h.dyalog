@@ -33,6 +33,8 @@
   tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
   cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,NULL);break;',nl}
 
+  ⍝ Scalar Groups
+
   coms←{⊃{⍺,',',⍵}/⍵}
   elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'}
   eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
@@ -42,7 +44,5 @@
   fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(((⍺<0)⊃'' '-'),⍕|⍺),';'})¨⍳≢⍵}
   dff←{⍺⍺,'(',(coms ⍵),'); /* Fallback */',nl}
   grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
-  ⍝ ghm←'rslt' 'rgt'grh ⋄ ghd←'rslt' 'lft' 'rgt'grh
-  ⍝ gec←{((0⌷⍉⍵⍵)⍳⊂⍺)⊃(⍺⍺⌷⍉⍵⍵),⊂⍺ dff ⍵}
 
 :EndNamespace
