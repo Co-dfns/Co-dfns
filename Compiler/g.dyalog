@@ -31,7 +31,7 @@
   M0←{H.rth,('tenv'H.dnv ⍵),nl}
 
   ⍝ Scalars
-  S0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl}
+  S0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl⊣#.pp⍵}
   Y0←{}
 
 :EndNamespace
