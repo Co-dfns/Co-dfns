@@ -3,7 +3,7 @@
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ e←A.e
 
   ⍝ Utilities
-  var←{(,'⍺')≡⍺:'l' ⋄ (,'⍵')≡⍺:'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+  var←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
   nl←⎕UCS 13 10
   for←{'for(i=0;i<',(⍕⍵),';i++){'}
   do←{'{BOUND i;',(for ⍺),⍵,'}}',nl}
@@ -34,7 +34,17 @@
   cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,&tenv);break;',nl}
 
   ⍝ Scalar Groups
+  rk0←'BOUND prk=0;BOUND sp[15];',nl
+  rk1←'if(prk!=(' ⋄ rk2←')->p->RANK){',nl,'if(prk==0){'
+  rsp←{'prk=(',⍵,')->p->RANK;',nl,'prk'do'sp[i]=(',⍵,')->p->SHAPETC[i];'}
+  rk3←'}else if((' ⋄ rk4←')->p->RANK!=0)error(4);}',nl
+  spt←{'if(sp[i]!=(',⍵,')->p->SHAPETC[i])error(4);'}
+  rkv←{rk1,⍵,rk2,(rsp ⍵),rk3,⍵,rk4,'else{',nl,('prk'do spt ⍵),'}',nl}
+  rk5←'if(prk!=1){if(prk==0){prk=1;sp[0]='
+  rka←{rk5,l,';}else error(4);}else if(sp[0]!=',(l←⍕≢⍵),')error(4);',nl}
+  crk←{⍵((⊃,/)((rkv¨var/)⊣(⌿⍨)(~⊢)),(rka¨0⌷∘⍉(⌿⍨)))0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵}
 
+  ⍝ Old r code
   coms←{⊃{⍺,',',⍵}/⍵}
   elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'}
   eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}

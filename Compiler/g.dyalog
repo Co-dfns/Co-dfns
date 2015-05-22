@@ -30,8 +30,8 @@
   ⍝ Namespaces
   M0←{H.rth,('tenv'H.dnv ⍵),nl}
 
-  ⍝ Scalars
-  S0←{'{',(⍺ SD.(crk,grt,gpp,gsp,std,sto) 1↓⍵),'}',nl⊣#.pp⍵}
+  ⍝ Scalars : Missing gpp/bod for S0 and sto for Y0
+  S0←{'{',H.rk0,(H.crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)),'}',nl}
   Y0←{}
 
 :EndNamespace
