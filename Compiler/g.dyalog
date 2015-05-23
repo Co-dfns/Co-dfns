@@ -1,6 +1,6 @@
 :Namespace G
   (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ H←##.H ⋄ MF←##.MF ⋄ OP←##.OP ⋄ R←##.R
-  d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
+  d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
   nl←H.nl
 
   ⍝ Generator
@@ -30,8 +30,8 @@
   ⍝ Namespaces
   M0←{H.rth,('tenv'H.dnv ⍵),nl}
 
-  ⍝ Scalars : Missing gpp/bod for S0 and sto for Y0
-  S0←{'{',H.rk0,(H.crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵))}
+  ⍝ Scalars : Missing gpp/bod for S0
+  S0←{(H.('{',rk0,srk,sfv,spp)⍵),('prk'H.do'cnt+=sp[i];'),(H.for'cnt'),nl}
   Y0←{⊃,/((⍳≢⊃v⍵)((⊣H.sts¨∘⊃y),'}',nl,⊣H.ste¨(⊃v)H.var¨∘⊃e)⍵),'}',nl}
 
 :EndNamespace
