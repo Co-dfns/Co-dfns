@@ -31,7 +31,7 @@
   M0←{H.rth,('tenv'H.dnv ⍵),nl}
 
   ⍝ Scalars : Missing gpp/bod for S0 and sto for Y0
-  S0←{'{',H.rk0,(H.crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)),'}',nl}
-  Y0←{}
+  S0←{'{',H.rk0,(H.crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵))}
+  Y0←{⊃,/((⍳≢⊃v⍵)((⊣H.sts¨∘⊃y),'}',nl,⊣H.ste¨(⊃v)H.var¨∘⊃e)⍵),'}',nl}
 
 :EndNamespace
