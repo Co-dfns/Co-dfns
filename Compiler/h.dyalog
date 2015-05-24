@@ -61,6 +61,8 @@
   gpp←{nl,⍨';',⍨⊃,/'POCKET',⊃{⍺,',',⍵}/'*p'∘,∘⍕¨⍳≢⍵}
   grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}
   spp←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)ack¨⍵),(⊃,/2 grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
+  sip←{⍺,' f',⍵,'=d',⍵,'[i%m',⍵,'];',nl}∘⍕
+  slp←{(for'cnt'),nl,⊃,/'?type?'∘sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 
 :EndNamespace
 
