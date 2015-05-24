@@ -47,7 +47,11 @@
   srk←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
   ste←{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}
   sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
-  sfv←(⊃y){'/* Scalar Free Variable Array Pointers */',nl}(⊃v)
+  gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
+  gda←{'*d',(⍕⍺),'={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}
+  sfa←{'?type?'∘,¨{(⍳≢⍵)gda¨⍵}⊣/(0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+  sfp←{'?type?'∘,¨{(⍳≢⍵)gdp¨⍵}var/(' '=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+  sfv←(1⌷∘⍉(⊃v){⍵}(⊃y)){⊃,/(sfp,sfa)⍵}(⊃v)fvs∘#.pp (⊃e)
   git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '}
   gie←{⍵⊃¨⊂'APLLONG' 'APLDOUB' 'APLNA'}
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
