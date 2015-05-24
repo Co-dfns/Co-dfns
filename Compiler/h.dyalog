@@ -47,11 +47,12 @@
   srk←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
   ste←{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}
   sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
+  rkp←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
-  gda←{'*d',(⍕⍺),'={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}
-  sfa←{'?type?'∘,¨{(⍳≢⍵)gda¨⍵}⊣/(0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-  sfp←{'?type?'∘,¨{(⍳≢⍵)gdp¨⍵}var/(' '=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-  sfv←(1⌷∘⍉(⊃v){⍵}(⊃y)){⊃,/(sfp,sfa)⍵}(⊃v)fvs∘#.pp (⊃e)
+  gda←{'*d',(⍕⍺),'={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
+  sfa←{'?type?'∘,¨⍺{((+/~⍺)+⍳≢⍵)gda¨⍵}⊣/⍺⌿⍵}
+  sfp←{'?type?'∘,¨⍺{(⍳≢⍵)(gdp,rkp)¨⍵}var/(~⍺)⌿⍵}
+  sfv←(1⌷∘⍉(⊃v){⍵}(⊃y)){⊃,/(0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)(sfp,sfa)⍵}(⊃v)fvs(⊃e)
   git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '}
   gie←{⍵⊃¨⊂'APLLONG' 'APLDOUB' 'APLNA'}
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
@@ -62,15 +63,4 @@
   spp←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)ack¨⍵),(⊃,/2 grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
 
 :EndNamespace
-
-  ⍝ Old r code
-  ⍝ coms←{⊃{⍺,',',⍵}/⍵}
-  ⍝ elt←{(⍵≡⌊⍵)⊃'APLDOUB' 'APLLONG'}
-  ⍝ eld←{(⍵≡⌊⍵)⊃'double' 'aplint32'}
-  ⍝ vec←{(vsp≢⍵),'getarray(',(coms (elt⊃⍵)(⍕1<≢⍵)'sp'((⊃⍵)var 0⌷⍉⍺)),');}',nl}
-  ⍝ vsp←{'{BOUND ',(1<⍵)⊃'*sp=NULL;'('sp[1]={',(⍕⍵),'};')}
-  ⍝ dap←{⍺⍺,'*',⍺,'=ARRAYSTART((',((⊃n ⍵)var 0⌷⍉⊃e ⍵),')->p);',nl}
-  ⍝ fil←{⊃,/⍵(⍺{⍺⍺,'[',(⍕⍵),']=',(((⍺<0)⊃'' '-'),⍕|⍺),';'})¨⍳≢⍵}
-  ⍝ dff←{⍺⍺,'(',(coms ⍵),'); /* Fallback */',nl}
-  ⍝ grh←{'{',(⊃,/⍺⍺{'LOCALP*',⍺,'=',⍵,';'}¨⍺ var¨↓⍉⍵),nl}
 
