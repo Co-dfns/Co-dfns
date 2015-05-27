@@ -5,7 +5,7 @@
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
 
   ⍝ Core Compiler
-  tt ←{fd fz ff if td vc fs av va lt fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
+  tt ←{fd fz ff if td vc fs av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
 
   ⍝ Utilities
   scp←(1,1↓Fm)⊂[0]⊢
@@ -63,11 +63,16 @@
 
   ⍝ Track return variable for functions
   fv ←(⊃⍪/)(((1↓⊢)⍪⍨(,1 6↑⊢),∘⊂∘n ¯1↑⊢)¨scp)
+
+  ⍝ Normalize v format
+  nvu←⊂'%u' ⋄ nvi←⊂'%i'
+  nvo←((¯1↓⊢),({⍺'%b'⍵}/∘⊃v))⍤1sub(Om∧'i'∊⍨k)
+  nve←((¯1↓⊢),({⍺'%d'⍵}/∘⊃v))⍤1sub(Em∧'i'∊⍨k)
+  nv ←⊢(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪⊢),∘⊂⊢){⌽⍣⍺⊢⍵})¨v∘nvo∘nve
   
   ⍝ Lift type checking (annotate all nodes with type)
   lta←((⊂⊢),∘⊂(12⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
-  ltc←(¯1⊖(¯1+≢)⊃(⊂(12⍴3)⍪TC.id⍪⊢),(⊂(12⍴3)⍪⊢),∘⊂⊢)(⊃Om){⊖⍣⍺⊢⍵}⊢
-  ltt←(⊢⍪⍨(,¯1↑⊢)⌷⍤0 1⍨3 4⊥2↑⊢)(ltc(1⊃⊣)⌷⍤0 2⍨(0⊃⊣)⍳∘⊃v)
+  ltt←(⊢⍪⍨(,¯1↑⊢)⌷⍤0 1⍨3 4⊥2↑⊢)(1⊃⊣)⌷⍤0 2⍨(0⊃⊣)⍳∘⊃v
   ltb←⊣⍪¨(⊂n),∘⊂∘↑((,1↑⊢)¨y)
   lt ←(TC.(pn pt)⍪¨lta)(ltb((,¯1↓⊢),∘⊂ltt)⍤1⊢)⍣≡(⊂4 12⍴0),⍨⊢
 
@@ -84,10 +89,11 @@
   av ←(⊃⍪/)(+\Fm){⍺((⍺((∪n)Es)⌸⍵)avh(r(1↑⍵)⍪Fs ⍵))⌸⍵}⊢
 
   ⍝ Fuse Scalar Expressions
-  fsf←(∪∘⊃,/)(⊂⊂⍬ ⍬),(⌽¯1↓¯1⌽⊢)¨~∘∪¨∘(⍳∘≢↑¨⊂)⊣
-  fsv←↓∘⍉1↓∘↑(↓((,1↑⍉)¨e),⍤0n)fsf((↓1↓⍉)¨e)(↓,⍤0)¨v
-  fsh←(⍉⍪)2'S'0 ⍬ ⍬ 0,¯1⌽(⊂4 12⍴0),fsv
-  fss←Em∧('md'∊⍨k)∧(,¨'+-×÷|⌊⌈*⍟○!∧∨⍱⍲<≤=≥>≠')∊⍨(↑v)⌷∘,⍤¯1⍨'md'⍳k
+  fsf←(∪∘⊃,/)(⊂⊂⍬ ⍬ ⍬),(⌽¯1↓⊢)¨~¨(⊂,⊂(¯1 0)'%u')∪¨∘(⍳∘≢↑¨⊂)⊣
+  fsn←↓n,((,1↑⍉)¨y),⍤0((,1↑⍉)¨e)
+  fsv←v(↓,∘⊃⍤0)¨((↓1↓⊢)¨y)(↓,⍤0)¨((↓1↓⍉)¨e)
+  fsh←(⍉⍪)2'S'0 ⍬ ⍬ 0,∘((⊂0⌷⊢),(⊂∘↑1⌷⊢),(⊂∘⍉∘↑2⌷⊢))∘⍉1↓∘↑fsn fsf fsv
+  fss←Em∧('md'∊⍨k)∧(,¨'+-×÷|⌊⌈*⍟○!∧∨⍱⍲<≤=≥>≠')∊⍨(⊃∘⌽¨v)
   fse←(⊣(/∘⊢)fss∧⊣)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),'E','s',3↓⍤1⊢))¨⊂[0]
   fs ←(⊃⍪/)(((((⊃⍪/)(⊂0 9⍴⍬),((2≠/(~⊃),⊢)fss)fse⊢)Es)⍪⍨(~Em)(⌿∘⊢)⊢)¨scp)
 
@@ -100,7 +106,7 @@
   td ←((⊃⍪/)(1↑⊢),∘(⊃,/)(((⍳6)(⊣tdf tde)¨⊂)¨1↓⊢))scp
 
   ⍝ Wrap top-level Expressions as Init function
-  ifn←1 'F' 0 'Init' ⍬ 0,(4 12⍴0)⍬,⍨⊢
+  ifn←1 'F' 0 'Init' ⍬ 0,(4⍴0)⍬,⍨⊢
   if ←(1↑⊢)⍪(⊢(⌿⍨)Om∧1=d)⍪((A.up⍪⍨∘ifn∘≢∘∪n)⊢(⌿⍨)Em∧1=d)⍪(∨\Fm)(⌿∘⊢)⊢
 
   ⍝ Flatten Function sub-trees
