@@ -48,21 +48,21 @@
   ste←{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}
   sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
   rkp←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}
+  git←{⍵⊃¨⊂'aplint32 ' 'double ' '?type? '}
+  gie←{⍵⊃¨⊂'APLDOUB' 'APLLONG' 'APLNA'}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
   gda←{'*d',(⍕⍺),'={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
-  sfa←{'?type?'∘,¨⍺{((+/~⍺)+⍳≢⍵)gda¨⍵}⊣/⍺⌿⍵}
-  sfp←{'?type?'∘,¨⍺{(⍳≢⍵)(gdp,rkp)¨⍵}var/(~⍺)⌿⍵}
-  sfv←(1⌷∘⍉(⊃v){⍵}(⊃y)){⊃,/(0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)(sfp,sfa)⍵}(⊃v)fvs(⊃e)
-  git←{⍵⊃¨⊂'double ' 'aplint32 ' '?type? '}
-  gie←{⍵⊃¨⊂'APLLONG' 'APLDOUB' 'APLNA'}
+  sfa←{(git ¯1+m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+  sfp←{(git ¯1+⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+  sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
   ats←{⊃,/'if(NULL==('⍵')->p||prk!=('⍵')->p->RANK||('⍵')->p->ELTYPE!='⍺')'}
   ack←{tp←'TYPE' ⋄ (tp ats ⍵),nl,(⍺ gar tp),'else p',(⍕⍺),'=(',⍵,')->p;',nl}
   gpp←{nl,⍨';',⍨⊃,/'POCKET',⊃{⍺,',',⍵}/'*p'∘,∘⍕¨⍳≢⍵}
   grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}
   spp←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)ack¨⍵),(⊃,/2 grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
-  sip←{⍺,' f',⍵,'=d',⍵,'[i%m',⍵,'];',nl}∘⍕
-  slp←{(for'cnt'),nl,⊃,/'?type?'∘sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
+  sip←{⍺,'f',⍵,'=d',⍵,'[i%m',⍵,'];',nl}∘⍕
+  slp←{(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 
 :EndNamespace
 
