@@ -10,7 +10,6 @@
   ⍝ Expressons
   Em←{  f r←⊃v⍵ ⋄ (⊃y⍵)(f R.fcl ⍺)(⊃n⍵)   r}
   Ed←{l f r←⊃v⍵ ⋄ (⊃y⍵)(f R.fcl ⍺)(⊃n⍵) l r}
-  Ei←{a   i←⊃v⍵ ⋄ vs←(⊃n⍵)a i ⋄ (vs ghd(⊃e⍵)),((,'[')(1 gec ⍺)vs),'}',nl}
   Es←{r l f←⊃v⍵ ⋄ (⊃H.git 1↑⊃y⍵),(⊃n⍵),'=',(R.sdb(f R.scl)(1+'%u'≢l)↑r l),';',nl}
 
   ⍝ Operators ← (Name)(Monadic)(Dyadic)

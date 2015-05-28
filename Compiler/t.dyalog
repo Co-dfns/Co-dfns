@@ -67,8 +67,9 @@
   ⍝ Normalize v format
   nvu←⊂'%u' ⋄ nvi←⊂'%i'
   nvo←((¯1↓⊢),({⍺'%b'⍵}/∘⊃v))⍤1sub(Om∧'i'∊⍨k)
-  nve←((¯1↓⊢),({⍺'%d'⍵}/∘⊃v))⍤1sub(Em∧'i'∊⍨k)
-  nv ←⊢(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪⊢),∘⊂⊢){⌽⍣⍺⊢⍵})¨v∘nvo∘nve
+  nve←((¯1↓⊢),({,¨⍺'['⍵}/∘⊃v))⍤1sub(Em∧'i'∊⍨k)
+  nvk←((2↑⊢),'d',(3↓⊢))⍤1sub(Em∧'i'∊⍨k)
+  nv ←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪⊢),∘⊂⊢){⌽⍣⍺⊢⍵})¨v∘nvo∘nve
   
   ⍝ Lift type checking (annotate all nodes with type)
   lta←((⊂⊢),∘⊂(12⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
