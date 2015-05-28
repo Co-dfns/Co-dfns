@@ -35,7 +35,7 @@
   cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,&tenv);break;',nl}
 
   ⍝ Scalar Groups
-  rk0←'BOUND prk=0;BOUND sp[15];BOUND cnt=0,i=0;',nl
+  rk0←'BOUND prk=0;BOUND sp[15];BOUND cnt=1,i=0;',nl
   rk1←'if(prk!=(' ⋄ rk2←')->p->RANK){if(prk==0){',nl
   rsp←{'prk=(',⍵,')->p->RANK;',nl,'prk'do'sp[i]=(',⍵,')->p->SHAPETC[i];'}
   rk3←'}else if((' ⋄ rk4←')->p->RANK!=0)error(4);',nl

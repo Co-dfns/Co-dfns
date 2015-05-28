@@ -1,5 +1,5 @@
 :Namespace MF
-  nl←##.H.nl ⋄ do←##.H.do ⋄ tl←##.H.tl
+  H←##.H ⋄ nl←H.nl ⋄ do←H.do ⋄ tl←H.tl
   idxc←'BOUND c,j,k,m,*p,r;aplint32*v;j=lft->p->RANK;j=(j==0?1:j);',nl
   idxc,←'r=rgt->p->RANK-j;',nl
   idxc,←'BOUND sp[15];','r'do'sp[i]=rgt->p->SHAPETC[j+i];'
@@ -15,15 +15,29 @@
   idxb,←'c'do'dst[i]=src[k+i];'
   idx←idxc,idxb,idxd,idxb,'}',nl
   idx,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
-  bia←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
-  bia,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
-  bia,←'if(rslt==rgt||rslt==lft){orz=rslt;rslt=&tp;tpused=1;}',nl
-  bia,←'relp(rslt);getarray(APLLONG,rgt->p->RANK,sp,rslt);',nl
-  bia,←'aplint32*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
-  bia,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
-  bia,←'r=ARRAYSTART(rgt->p);',nl,'c'do'z[i]=l[r[i]];'
-  bia,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
-  brki←bia
+  briv←{z←'{',(⊃,/'rslt' 'lft' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨⍵),nl
+   z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
+   z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
+   z,←'if(rslt==rgt||rslt==lft){orz=rslt;rslt=&tp;tpused=1;}',nl
+   z,←'relp(rslt);getarray(APLLONG,rgt->p->RANK,sp,rslt);',nl
+   z,←'aplint32*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
+   z,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
+   z,←'r=ARRAYSTART(rgt->p);',nl,'c'do'z[i]=l[r[i]];'
+   z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
+   z,'}',nl}
+  bril←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨H.var/2↑⍵)
+   z,←(⊃H.git 2⌷⍺),'*lft={',(⊃{⍺,',',⍵}/⍕¨⊃2 0⌷⍵),'};',nl
+   z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
+   z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
+   z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
+   z,←'relp(rslt);getarray(',(⊃H.gie ⊃⍺),',rgt->p->RANK,sp,rslt);',nl
+   z,←(⊃H.git ⊃⍺),'*z,*l;aplint32*r;'
+   z,←'z=ARRAYSTART(rslt->p);l=lft;','r=ARRAYSTART(rgt->p);',nl
+   z,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
+   z,←'c'do'z[i]=l[r[i]];'
+   z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
+   z,'}',nl}
+  bri←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ brir ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ bril ⍵ ⋄ ⍺ briv ⍵}
   iota←'aplint32*v=ARRAYSTART(rgt->p);aplint32 c=v[0];',nl
   iota,←'BOUND s[]={c};relp(rslt);getarray(APLLONG,1,s,rslt);',nl
   iota,←'v=ARRAYSTART(rslt->p);',nl,'c'do'v[i]=i;'

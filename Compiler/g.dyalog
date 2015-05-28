@@ -8,8 +8,8 @@
   gc←(⊃,/)⊢((R.fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))A.(Om∧'mdi'∊⍨k)
 
   ⍝ Expressons
-  Em←{  f r←⊃v⍵ ⋄ (⊃y⍵)(f R.fcl ⍺)(⊃n⍵)   r}
-  Ed←{l f r←⊃v⍵ ⋄ (⊃y⍵)(f R.fcl ⍺)(⊃n⍵) l r}
+  Em←{r u f←⊃v⍵ ⋄ (⊃y⍵)(f R.fcl ⍺)(⊃n⍵)   r}
+  Ed←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f R.fcl ⍺)((⊃n⍵) r l),⍪¯1↓↓⍉⊃e⍵}
   Es←{r l f←⊃v⍵ ⋄ (⊃H.git 1↑⊃y⍵),(⊃n⍵),'=',(R.sdb(f R.scl)(1+'%u'≢l)↑r l),';',nl}
 
   ⍝ Operators ← (Name)(Monadic)(Dyadic)
