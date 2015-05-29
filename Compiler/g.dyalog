@@ -13,7 +13,7 @@
   Es←{r l f←⊃v⍵ ⋄ (⊃H.git 1↑⊃y⍵),(⊃n⍵),'=',(R.sdb(f R.scl)(1+'%u'≢l)↑r l),';',nl}
 
   ⍝ Operators ← (Name)(Monadic)(Dyadic)
-  Oi←{(⊃n⍵)('Fexim()i',nl)(MF.cat)}
+  Oi←{(⊃n⍵)('Fexim()i',nl)('MF.cat')}
   Om←{(n⍵),R.odb(o R.ocl)f⊣f o←⊃v⍵}
   Od←{(⊃n⍵)('Fexdm();',nl)(OP.ptd)}
   O0←{'' '' ''}

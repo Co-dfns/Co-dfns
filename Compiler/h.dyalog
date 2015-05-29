@@ -49,7 +49,7 @@
   sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
   rkp←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}
   git←{(¯1+⍵)⊃¨⊂'aplint32 ' 'double ' '?type? '}
-  gie←{⍵⊃¨⊂'APLLONG' 'APLDOUB' 'APLNA'}
+  gie←{(¯1+⍵)⊃¨⊂'APLLONG' 'APLDOUB' 'APLNA'}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
   gda←{'*d',(⍕⍺),'={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
   sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
@@ -57,7 +57,7 @@
   sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
   ats←{⊃,/'if(NULL==('⍵')->p||prk!=('⍵')->p->RANK',nl,'||('⍵')->p->ELTYPE!='⍺')'}
-  ack←{tp←⊃gie¯1+⍺⌷⍺⍺ ⋄ (tp ats ⍵),nl,(⍺ gar tp),'else p',(⍕⍺),'=(',⍵,')->p;',nl}
+  ack←{tp←⊃gie ⍺⌷⍺⍺ ⋄ (tp ats ⍵),nl,(⍺ gar tp),'else p',(⍕⍺),'=(',⍵,')->p;',nl}
   gpp←{nl,⍨';',⍨⊃,/'POCKET',⊃{⍺,',',⍵}/'*p'∘,∘⍕¨⍳≢⍵}
   grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}
   spp←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
