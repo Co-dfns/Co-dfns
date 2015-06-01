@@ -27,7 +27,7 @@
   Z1←{'z->p=zap((',((⊃n⍵)H.var⊃e⍵),')->p);',H.cutp,nl,'}',nl,nl}
 
   ⍝ Namespaces
-  M0←{H.rth,('tenv'H.dnv ⍵),nl}
+  M0←{H.rth,('tenv'H.dnv ⍵),nl,'LOCALP *env[]={tenv};',nl}
 
   ⍝ Scalars
   S0←{(H.('{',rk0,srk,('prk'do'cnt+=sp[i];'),sfv,spp,slp)⍵)}

@@ -32,7 +32,7 @@
   tps,←'tp+=(l==NULL)?2:(l->p->ELTYPE==APLLONG?0:1);',nl
   tps,←'switch(tp){',nl
   tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
-  cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,&tenv);break;',nl}
+  cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,env);break;',nl}
   calm←{z r←var/⍵ ⋄ ⍺⍺,((1⌷⍺)⊃'' 'i' 'f'),'n(',z,',NULL,',r,',env);',nl}
 
   ⍝ Scalar Groups
