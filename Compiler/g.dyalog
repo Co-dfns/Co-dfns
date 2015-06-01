@@ -29,7 +29,7 @@
   ⍝ Namespaces
   M0←{H.rth,('tenv'H.dnv ⍵),nl}
 
-  ⍝ Scalars : Missing gpp/bod for S0
+  ⍝ Scalars
   S0←{(H.('{',rk0,srk,('prk'do'cnt+=sp[i];'),sfv,spp,slp)⍵)}
   Y0←{⊃,/((⍳≢⊃v⍵)((⊣H.sts¨∘⊃y),'}',nl,⊣H.ste¨(⊃v)H.var¨∘⊃e)⍵),'}',nl}
 
