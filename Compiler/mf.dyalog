@@ -79,7 +79,7 @@
    z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
    z,←'if(rslt==lft||rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
    z,←'relp(rslt);getarray(',(⊃H.gie ⊃0⌷⍺),',2,s,rslt);',nl
-   z,←(⊃{⍺,',',⍵}/(git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
+   z,←(⊃{⍺,',',⍵}/(H.git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
    z,←⊃,/'zrl'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt' 'lft'
    z,←'s[0]'do'z[i*2]=l[i];z[i*2+1]=r[i];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl

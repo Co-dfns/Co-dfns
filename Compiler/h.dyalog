@@ -33,6 +33,7 @@
   tps,←'switch(tp){',nl
   tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
   cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,&tenv);break;',nl}
+  calm←{z r←var/⍵ ⋄ ⍺⍺,((1⌷⍺)⊃'' 'i' 'f'),'n(',z,',NULL,',r,',env);',nl}
 
   ⍝ Scalar Groups
   rk0←'BOUND prk=0;BOUND sp[15];BOUND cnt=1,i=0;',nl

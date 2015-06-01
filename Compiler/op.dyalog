@@ -1,5 +1,5 @@
 :Namespace OP
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ nl←##.H.nl ⋄ do←##.H.do
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ H←##.H ⋄ nl←##.H.nl ⋄ do←##.H.do
   ⍝ idx←##.MF.idx ⋄ brki←##.MF.brki ⋄ iotm←##.MF.iotm
   ⍝ fdb←3 3⍴,¨ '⌷' idx  ''   '[' brki ''   '⍳' ''   iotm
  
@@ -12,7 +12,7 @@
   eacd←{'eacd();',nl}
 
   ⍝ Monadic Each (¨)
-  eacm←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ eacmr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ eacml ⍵ ⋄ ⍺ eacmv ⍵}
+  eacm←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺(⍺⍺ eacmr)⍵ ⋄ ⍺(⍺⍺ eacmv)⍵}
 
   eacmv←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨H.var/⍵)
    z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
@@ -20,18 +20,18 @@
    z,←'getarray(',(⊃H.gie ⊃⍺),',rgt->p->RANK,sp,rslt);}',nl
    z,←'LOCALP sz,sr;regp(&sz);regp(&sr);',nl
    z,←(⊃,/(H.gie ⍺){'getarray(',⍺,',0,NULL,&',⍵,');'}¨'sz' 'sr'),nl
-   z,←(⊃{⍺,',',⍵}/(git ⍺){⍺,'*',⍵,';'}¨'zr'),nl
+   z,←(⊃{⍺,',',⍵}/(H.git ⍺){⍺,'*',⍵,';'}¨'zr'),nl
    z,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
    b←'z=ARRAYSTART(sr.p);r=ARRAYSTART(rgt->p);z[0]=r[i];',nl
-   b,←⍵,((1⌷⍺)⊃'' 'i' 'f'),'n(&sz,NULL,&sr,env);',nl
+   b,←⍺⍺,((1⌷⍺)⊃'' 'i' 'f'),'n(&sz,NULL,&sr,env);',nl
    b,←'z=ARRAYSTART(rslt->p);r=ARRAYSTART(sz.p);',nl
    b,←'z[i]=r[0];'
    z,←('c'do b),'cutp(&sz);',nl
    z,'}',nl}
 
   ⍝ TBW
-  eacml←{⎕SIGNAL 16}
-  eacmr←{⎕SIGNAL 16}
+  eacml←{_←⍺⍺ ⋄ ⎕SIGNAL 16}
+  eacmr←{_←⍺⍺ ⋄ ⎕SIGNAL 16}
 
   ⍝ XXX: Implement a proper general version
   ⍝ Inner Product
@@ -47,7 +47,7 @@
    z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
    z,←'getarray(',(⊃H.gie ⊃⍺),',0,NULL,rslt);BOUND c=1;',nl
    z,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
-   z,←(⊃{⍺,',',⍵}/(git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
+   z,←(⊃{⍺,',',⍵}/(H.git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
    z,←(⊃,/'zr'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt'),'l=lft;',nl
    z,←'c'do'z[0]+=l[i]*r[i];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
