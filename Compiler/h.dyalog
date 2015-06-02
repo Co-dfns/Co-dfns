@@ -11,6 +11,7 @@
   tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
   fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
+  cln←'¯'⎕R'-'
 
   ⍝ Runtime Header
   rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
@@ -52,9 +53,9 @@
   git←{(¯1+⍵)⊃¨⊂'aplint32 ' 'double ' '?type? '}
   gie←{(¯1+⍵)⊃¨⊂'APLLONG' 'APLDOUB' 'APLNA'}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
-  gda←{'*d',(⍕⍺),'={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
+  gda←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
   sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-  sfp←{(git ⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+  sfp←{(git m⌿⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
   sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
   gar←{'p',(⍕⍺),'=getarray(',⍵,',prk,sp,NULL);',nl}
   ats←{⊃,/'if(NULL==('⍵')->p||prk!=('⍵')->p->RANK',nl,'||('⍵')->p->ELTYPE!='⍺')'}
