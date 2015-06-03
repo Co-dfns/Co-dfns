@@ -5,7 +5,6 @@
   idx←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ idxr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ idxl ⍵ ⋄ ⍺ idxv ⍵}
   idxl←{rslt rgt←H.var/2↑⍵ ⋄ lft←⊃2 0⌷⍵
    z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨rslt rgt)
-   z,←'printf("idxl\n");',nl
    z,←(⊃H.git 2⌷⍺),'lft[]={',(⊃{⍺,',',⍵}/⍕¨lft),'};',nl
    z,←'BOUND c,j,k,m,*p,r;',(⊃H.git ⊃2⌷⍺),'*v;j=',(⍕≢lft),';',nl
    z,←'r=rgt->p->RANK-j;',nl
@@ -54,7 +53,6 @@
    z,'}',nl}
 
   bril←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨H.var/2↑⍵)
-   z,←'printf("bril\n");',nl
    z,←(⊃H.git 2⌷⍺),'lft[]={',(⊃{⍺,',',⍵}/⍕¨⊃2 0⌷⍵),'};',nl
    z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
    z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
@@ -77,7 +75,6 @@
   cat←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catl ⍵ ⋄ ⍺ catv ⍵}
   
   catv←{z←'{',(⊃,/'rslt' 'rgt' 'lft'{'LOCALP *',⍺,'=',⍵,';'}¨H.var/⍵),nl
-   z,←'printf("catv\n");',nl
    z,←'BOUND s[]={rgt->p->SHAPETC[0],2};'
    z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
    z,←'if(rslt==lft||rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl

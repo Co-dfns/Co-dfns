@@ -10,7 +10,7 @@
   ⍝ Expressons
   Em←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f R.fcl ⍺)(⊃n⍵)r,⍪2↑↓⍉⊃e⍵}
   Ed←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f R.fcl ⍺)((⊃n⍵)r l),⍪¯1↓↓⍉⊃e⍵}
-  Es←{r l f←⊃v⍵ ⋄ ('printf("ES: ',(⍕⊃⌽⊃v⍵),'\n");',nl),(⊃H.git 1↑⊃y⍵),(⊃n⍵),'=',(R.sdb(f R.scl)(1+'%u'≢l)↑r l),';',nl}
+  Es←{r l f←⊃v⍵ ⋄ (⊃H.git 1↑⊃y⍵),(⊃n⍵),'=',(R.sdb(f R.scl)(1+'%u'≢l)↑r l),';',nl}
 
   ⍝ Operators ← (Name)(Monadic)(Dyadic)
   Oi←{(⊃n⍵)('Fexim()i',nl)('MF.cat')}
@@ -30,7 +30,7 @@
   M0←{H.rth,('tenv'H.dnv ⍵),nl,'LOCALP *env[]={tenv};',nl}
 
   ⍝ Scalars
-  S0←{(H.('{',rk0,srk,('prk'do'cnt+=sp[i];'),sfv,spp,slp)⍵)}
+  S0←{(H.('{',rk0,srk,('prk'do'cnt*=sp[i];'),sfv,spp,slp)⍵)}
   Y0←{⊃,/((⍳≢⊃v⍵)((⊣H.sts¨∘⊃y),'}',nl,⊣H.ste¨(⊃v)H.var¨∘⊃e)⍵),'}',nl}
 
 :EndNamespace
