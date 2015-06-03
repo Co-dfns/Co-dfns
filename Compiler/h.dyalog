@@ -15,6 +15,7 @@
 
   ⍝ Runtime Header
   rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+  rth,←'#include <stdio.h>',nl
   rth,←'int isinit=0;',nl
   rth,←'#define PI 3.14159265358979323846',nl
 
@@ -24,7 +25,7 @@
   cutp←'cutp(&env0[0]);'
 
   ⍝ Functions
-  frt←'void static '
+  frt←'void static ' ⋄ fre←'void EXPORT '
   flp←'(LOCALP*z,LOCALP*l,LOCALP*r,LOCALP*penv[])'
   elp←'(LOCALP*z,LOCALP*l,LOCALP*r)'
   foi←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
@@ -34,7 +35,7 @@
   tps,←'switch(tp){',nl
   tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
   cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,env);break;',nl}
-  calm←{z r←var/⍵ ⋄ ⍺⍺,((1⌷⍺)⊃'' 'i' 'f'),'n(',z,',NULL,',r,',env);',nl}
+  calm←{z r←var/⍵ ⋄ ⍺⍺,((1⌷⍺)⊃'i' 'i' 'f'),'n(',z,',NULL,',r,',env);',nl}
 
   ⍝ Scalar Groups
   rk0←'BOUND prk=0;BOUND sp[15];BOUND cnt=1,i=0;',nl
@@ -50,8 +51,8 @@
   ste←{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}
   sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
   rkp←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}
-  git←{(¯1+⍵)⊃¨⊂'aplint32 ' 'double ' '?type? '}
-  gie←{(¯1+⍵)⊃¨⊂'APLLONG' 'APLDOUB' 'APLNA'}
+  git←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' '?type? '}
+  gie←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLNA'}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
   gda←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
   sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}

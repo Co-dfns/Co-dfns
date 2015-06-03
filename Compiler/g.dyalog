@@ -10,14 +10,14 @@
   ⍝ Expressons
   Em←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f R.fcl ⍺)(⊃n⍵)r,⍪2↑↓⍉⊃e⍵}
   Ed←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f R.fcl ⍺)((⊃n⍵)r l),⍪¯1↓↓⍉⊃e⍵}
-  Es←{r l f←⊃v⍵ ⋄ (⊃H.git 1↑⊃y⍵),(⊃n⍵),'=',(R.sdb(f R.scl)(1+'%u'≢l)↑r l),';',nl}
+  Es←{r l f←⊃v⍵ ⋄ ('printf("ES: ',(⍕⊃⌽⊃v⍵),'\n");',nl),(⊃H.git 1↑⊃y⍵),(⊃n⍵),'=',(R.sdb(f R.scl)(1+'%u'≢l)↑r l),';',nl}
 
   ⍝ Operators ← (Name)(Monadic)(Dyadic)
   Oi←{(⊃n⍵)('Fexim()i',nl)('MF.cat')}
   Om←{(n⍵),R.odb(o R.ocl)f⊣f u o←⊃v⍵}
   Od←{(⊃n⍵)('Fexdm();',nl)('OP.ptd')}
   O0←{'' '' ''}
-  Of←{H.frt,(⊃n⍵),H.elp,'{',nl,H.foi,H.tps,(⊃,/(⍳6)H.cas¨⊂⊃⊃v⍵),'}}',nl,nl}
+  Of←{H.fre,(⊃n⍵),H.elp,'{',nl,H.foi,H.tps,(⊃,/(⍳6)H.cas¨⊂⊃⊃v⍵),'}}',nl,nl}
 
   ⍝ Functions
   Fd←{H.frt,(⊃n⍵),H.flp,';',nl}

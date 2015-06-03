@@ -15,6 +15,7 @@
   eacm←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺(⍺⍺ eacmr)⍵ ⋄ ⍺(⍺⍺ eacmv)⍵}
 
   eacmv←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨H.var/⍵)
+   z,←'printf("eacmv\n");',nl
    z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
    z,←'if(rslt!=rgt){relp(rslt);'
    z,←'getarray(',(⊃H.gie ⊃⍺),',rgt->p->RANK,sp,rslt);}',nl
@@ -42,6 +43,7 @@
   ptdr←{⎕SIGNAL 16}
 
   ptdl←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨H.var/2↑⍵)
+   z,←'printf("ptdl\n");',nl
    z,←(⊃H.git 2⌷⍺),'lft[]={',(⊃{⍺,',',⍵}/⍕¨⊃2 0⌷⍵),'};',nl
    z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
    z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl

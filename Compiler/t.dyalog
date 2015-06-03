@@ -44,18 +44,19 @@
 
   ⍝ Compress Atomic (Literal/Function) sub-trees into single atomic nodes
   can←(+\Am∨Om)((,1↑⊢),∘(⊂(¯1+2⌊≢)⊃(⊂∘⊂⊃),⊂)∘n 1↓⊢)⌸⊢
-  cam←Om∧'f'∊⍨k
-  ca ←(can(Am∨Nm∨cam∨¯1⌽cam)(⌿∘⊢)⊢)(Am∨cam)mnd⊢⍬,∘⊂⍨(~Nm∨¯1⌽cam)(⌿∘⊢)⊢
+  cam←Om∧'f'∊⍨k ⋄ cas←Am∨Nm∨cam∨(¯1⌽Am)∨¯1⌽cam
+  ca ←(can cas(⌿∘⊢)⊢)(Am∨cam)mnd⊢⍬,∘⊂⍨(~Nm∨(¯1⌽Am)∨¯1⌽cam)(⌿∘⊢)⊢
 
   ⍝ Propagate Literal and Function Constants
   pcc←(⊂⊢(⌿⍨)Am∨Om∧'f'∊⍨k)∘((⍳∘∪⍨n)⌷⍤0 2(1⌈≢)↑⊢)∘((1+⊃),1↓⍤1⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
   pcs←(d,'V','f',(⊃v),r,(⊂⍬),⍨∘⍪s)sub Om
+  pcv←(d,'V','a',(⊃v),r,(⊂⍬),⍨∘⍪s)sub (Am∧'v'∊⍨k)
   pcb←((,∧.(=∨0=⊣)∘⍪)⍤2 1⍨∘↑∘r(1↑⊢)⍪Fs)pcc⍤1((⊢(⌿⍨)d=1+⊃)¨⊣)
   pcd←((~(Om∧('f'∊⍨k)∧1≠d)∨Am∧d=1+(∨\Fm))(⌿∘⊢)⊢)∘(⊃⍪/)
-  pc ←pcd scp(pcb(pcs(((1⌈≢)↑⊢)⊣)⌷⍤0 2⍨(n⊣)⍳n)sub(Vm∧n∊∘n⊣)¨⊣)⊢
+  pc ←pcd scp(pcb(pcv∘pcs(((1⌈≢)↑⊢)⊣)⌷⍤0 2⍨(n⊣)⍳n)sub(Vm∧n∊∘n⊣)¨⊣)⊢
 
   ⍝ Fold Constant Expressions
-  fce←(⊃∘n Ps){⊂⍎' ⍵',⍨(≢⍵)⊃''(⍺,'⊃')('⊃',⍺,'/')}(v As)
+  fce←(⊃∘n Ps){⊂⍎' ⍵',⍨(≢⍵)⊃''(⍺,'⊃')('⊃',⍺,'/')⊣⍵}(v As)
   fc ←((⊃⍪/)(((d,'An',3↓¯1↓,)1↑⊢),fce)¨sub((∧/Em∨Am∨Pm)¨))('MFOE'∊⍨t)⊂[0]⊢
 
   ⍝ Compress Expression sub-trees into single expression nodes
