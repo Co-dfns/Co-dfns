@@ -42,13 +42,14 @@
   ptdr←{⎕SIGNAL 16}
 
   ptdl←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨H.var/2↑⍵)
-   z,←(⊃H.git 2⌷⍺),'lft[]={',(⊃{⍺,',',⍵}/⍕¨⊃2 0⌷⍵),'};',nl
+   z,←(⊃H.git 2⌷⍺),'l[]={',(⊃{⍺,',',⍵}/⍕¨⊃2 0⌷⍵),'};',nl
    z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
    z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
    z,←'getarray(',(⊃H.gie ⊃⍺),',0,NULL,rslt);BOUND c=1;',nl
    z,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
-   z,←(⊃,/(H.git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
-   z,←(⊃,/'zr'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt'),'l=lft;',nl
+   z,←(⊃,/(H.git ¯1↓⍺){⍺,'*',⍵,';'}¨'zr'),nl
+   z,←(⊃,/'zr'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt'),nl
+   do←H.{'{BOUND i;',nl,'#pragma simd reduction(+:z)',nl,(for ⍺),⍵,'}}',nl}
    z,←'c'do'z[0]+=l[i]*r[i];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
    z,'}',nl}
