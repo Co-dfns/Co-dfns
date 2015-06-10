@@ -1,6 +1,5 @@
 # Co-dfns Compiler
 
-This is the developer's repository for the Co-dfns compiler project.
 The Co-dfns project aims to provide a high-performance,
 high-reliability compiler for a parallel extension of the Dyalog dfns
 programming language.  The dfns language is a functionally oriented,
