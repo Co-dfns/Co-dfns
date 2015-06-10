@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DEFINES="-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1"
+INCLUDES="-I./dwa"
+FLAGS="-fastsse -shared -fPIC -acc"
+FILES="dwa/dwa_fns.c"
+CC=pgcc
+
+echo "$CC $DEFINES $INCLUDES $FLAGS -o $1.so $FILES $1.c"
+exec $CC $DEFINES $INCLUDES $FLAGS -o "$1.so" $FILES "$1.c"
+
