@@ -15,12 +15,7 @@ Our mission is to deliver scalable APL programming to information and
 domain experts across many fields, expanding the scope and capabilities 
 of what you can effectively accomplish with APL.
 
-If you would like to support this project, please consider a small commitment 
-in gratitude through [Gratipay](https://gratipay.com/arcfide). This is one of 
-the best ways you can help ensure Co-dfns continues to improve. 
+## Supporting the Project
 
-If you are a commercial enterprise and do not wish or cannot use Gratipay, 
-but still wish to assist the project, contact Morten Kromberg of Dyalog, Ltd. 
-via email (mkrom@dyalog.com) to discuss other funding and support options.
-
-
+We need your help! Please contact <arcfide@sacrideo.us> to learn how you can 
+support the project.
