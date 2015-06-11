@@ -20,7 +20,7 @@
   rth,←'#define PI 3.14159265358979323846',nl
 
   ⍝ Environments
-  dnv←{'LOCALP ',⍺,'[',(⍕⊃v⍵),'];'}
+  dnv←{(0≡z)⊃('LOCALP ',⍺,'[',(⍕z←⊃v⍵),'];')('LOCALP*',⍺,'=NULL;')}
   reg←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
   cutp←'cutp(&env0[0]);'
 
