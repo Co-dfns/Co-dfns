@@ -17,19 +17,21 @@ NS←⎕FIX BS
 
 GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 
-icc_TEST←{D←⍉GD 7 ⋄ R←2↑D ⋄ L←,¯1↑D ⋄ interp←L NS.Run R
+C←#.codfns.C
+
+icc_TEST←{D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.compiler←'icc'
   _←'Scratch/blackscholes_icc.c'#.codfns.C.Fix BS
   _←⎕SH './icc Scratch/blackscholes_icc'
   _←'Run_icc'⎕NA'./Scratch/blackscholes_icc.so|Run >PP <PP <PP'
-  #.UT.expect←7 2⍴1
-  0.0000001≥interp-Run_icc 0 L (⊃((⎕DR R)323)⎕DR R)}
+  #.UT.expect←interp←L NS.Run R ⋄ C.compiler←'gcc'
+  Run_icc 0 L R}
 
-pgi_TEST←{D←⍉GD 7 ⋄ R←2↑D ⋄ L←,¯1↑D ⋄ interp←L NS.Run R
+pgi_TEST←{D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.compiler←'pgcc'
   _←'Scratch/blackscholes_pgi.c'#.codfns.C.Fix BS
   _←⎕SH './pgi Scratch/blackscholes_pgi'
   _←'Run_pgi'⎕NA'./Scratch/blackscholes_pgi.so|Run >PP <PP <PP'
-  #.UT.expect←7 2⍴1
-  0.0000001≥interp-Run_pgi 0 L (⊃((⎕DR R)323)⎕DR R)}
+  #.UT.expect←interp←L NS.Run R ⋄ C.compiler←'gcc'
+  Run_pgi 0 L R}
 
 
 :EndNamespace

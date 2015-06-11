@@ -1,5 +1,5 @@
 :Namespace H
-  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A
+  (⎕IO ⎕ML ⎕WX)←0 1 3 ⋄ A←##.A ⋄ C←##.C
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
 
   ⍝ Utilities
@@ -68,7 +68,8 @@
   smcd←{'copyin(',(⊃{⍺,',',⍵}/{'d',(⍕⍵),'[0:mz',(⍕⍵),']'}¨⍳≢⍵),')'}
   smcr←{'copyout(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
   simc←{(smcd(⊃v⍵)fvs(⊃e⍵)),' ',(smcr⊃n⍵),nl}
-  simd←{'#pragma acc kernels loop ',simc ⍵}
+  prag←{('#pragma acc kernels loop ',simc ⍵)('#pragma simd',nl)('')}
+  simd←{('pgcc' 'icc'⍳⊂C.compiler)⊃prag ⍵}
   slp←{(simd ⍵),(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 
 :EndNamespace
