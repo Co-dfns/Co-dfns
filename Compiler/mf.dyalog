@@ -1,5 +1,5 @@
 :Namespace MF
-  H←##.H ⋄ nl←H.nl ⋄ do←H.do ⋄ tl←H.tl ⋄ pdo←H.pdo
+  H←##.H ⋄ nl←H.nl ⋄ do←H.do ⋄ tl←H.tl ⋄ pdo←H.pdo ⋄ C←##.C
 
   ⍝ Indexing
   idx←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ idxr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ idxl ⍵ ⋄ ⍺ idxv ⍵}
@@ -36,7 +36,8 @@
    z,←'relp(rslt);getarray(APLLONG,rgt->p->RANK,sp,rslt);',nl
    z,←'aplint32*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
    z,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
-   z,←'r=ARRAYSTART(rgt->p);',nl,'#pragma ivdep',nl
+   z,←'r=ARRAYSTART(rgt->p);',nl
+   z,←((⊂C.compiler)∊'icc' 'pgcc')⊃''('#pragma simd',nl)
    z,←'c'do'z[i]=l[r[i]];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
    z,'}',nl}

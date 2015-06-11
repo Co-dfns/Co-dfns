@@ -19,6 +19,13 @@ GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 
 C←#.codfns.C
 
+gcc_TEST←{D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.compiler←'gcc'
+  _←'Scratch/blackscholes_gcc.c'#.codfns.C.Fix BS
+  _←⎕SH './gcc Scratch/blackscholes_gcc'
+  _←'Run_gcc'⎕NA'./Scratch/blackscholes_gcc.so|Run >PP <PP <PP'
+  #.UT.expect←interp←L NS.Run R
+  Run_gcc 0 L R}
+
 icc_TEST←{D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.compiler←'icc'
   _←'Scratch/blackscholes_icc.c'#.codfns.C.Fix BS
   _←⎕SH './icc Scratch/blackscholes_icc'

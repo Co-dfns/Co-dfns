@@ -7,7 +7,7 @@
   nl←⎕UCS 13 10
   for←{'for(i=0;i<',(⍕⍵),';i++){'}
   do←{'{BOUND i;',(for ⍺),⍵,'}}',nl}
-  pdo←{'{BOUND i;',nl,'#pragma simd',nl,(for ⍺),⍵,'}}',nl}
+  pdo←{'{BOUND i;',nl,(((⊂C.compiler)∊'icc' 'pgcc')⊃''('#pragma simd',nl)),(for ⍺),⍵,'}}',nl}
   tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
   fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
@@ -50,11 +50,15 @@
   srk←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
   ste←{'if((',⍵,')->p!=p',(⍕⍺),'){relp(',⍵,');(',⍵,')->p=p',(⍕⍺),';}',nl}
   sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
-  rkp←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?0:1;',nl,'BOUND mz',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl}
+  rkp1←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?0:1;',nl}
+  rkp2←{''('BOUND mz',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl)}
+  rkp←{(⍺ rkp1 ⍵),(C.compiler≡'pgcc')⊃⍺ rkp2 ⍵}
   git←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' '?type? '}
   gie←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLNA'}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
-  gda←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl,'BOUND mz',(⍕⍺),'=cnt;',nl}
+  gda1←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
+  gda2←{''('BOUND mz',(⍕⍺),'=cnt;',nl)}
+  gda←{(⍺ gda1 ⍵),(C.compiler≡'pgcc')⊃⍺ gda2 ⍵}
   sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
   sfp←{(git m⌿⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
   sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
