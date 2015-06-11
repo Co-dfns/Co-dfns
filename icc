@@ -6,8 +6,9 @@ INCLUDES="-I./dwa"
 FLAGS="-fast -fno-alias -shared -static-intel -Wall -Wno-unused-function"
 FILES="dwa/dwa_fns.c"
 CC=icc
+LOG=$1.log
 LD_LIBRARY_PATH=/opt/intel/lib/intel64
 
 echo "$CC $FEATURES $DEFINES $INCLUDES $FLAGS -o $1.so $FILES $1.c"
-exec $CC $FEATURES $DEFINES $INCLUDES $FLAGS -o "$1.so" $FILES "$1.c"
+exec $CC $FEATURES $DEFINES $INCLUDES $FLAGS -o "$1.so" $FILES "$1.c" > $LOG 2>&1
 

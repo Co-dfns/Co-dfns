@@ -5,8 +5,9 @@ DEFINES="-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1"
 INCLUDES="-I./dwa"
 FLAGS="-O3 -shared -Wall -Wno-unused-function"
 FILES="dwa/dwa_fns.c"
+LOG=$1.log
 CC=gcc
 
 echo "$CC $FEATURES $DEFINES $INCLUDES $FLAGS -o $1.so $FILES $1.c"
-exec $CC $FEATURES $DEFINES $INCLUDES $FLAGS -o "$1.so" $FILES "$1.c"
+$CC $FEATURES $DEFINES $INCLUDES $FLAGS -o "$1.so" $FILES "$1.c" > $LOG 2>&1
 
