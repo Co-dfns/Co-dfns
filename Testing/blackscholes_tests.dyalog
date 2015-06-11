@@ -19,25 +19,28 @@ GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 
 C←#.codfns.C
 
-gcc_TEST←{D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.compiler←'gcc'
+gcc_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'gcc'
   _←'Scratch/blackscholes_gcc.c'#.codfns.C.Fix BS
   _←⎕SH './gcc Scratch/blackscholes_gcc'
   _←'Run_gcc'⎕NA'./Scratch/blackscholes_gcc.so|Run >PP <PP <PP'
   #.UT.expect←interp←L NS.Run R
   Run_gcc 0 L R}
 
-icc_TEST←{D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.compiler←'icc'
+icc_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'icc'
   _←'Scratch/blackscholes_icc.c'#.codfns.C.Fix BS
   _←⎕SH './icc Scratch/blackscholes_icc'
   _←'Run_icc'⎕NA'./Scratch/blackscholes_icc.so|Run >PP <PP <PP'
-  #.UT.expect←interp←L NS.Run R ⋄ C.compiler←'gcc'
+  #.UT.expect←interp←L NS.Run R ⋄ C.COMPILER←'gcc'
   Run_icc 0 L R}
 
-pgi_TEST←{D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.compiler←'pgcc'
+pgi_TEST←{~(⊂'pgcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'pgcc'
   _←'Scratch/blackscholes_pgi.c'#.codfns.C.Fix BS
   _←⎕SH './pgi Scratch/blackscholes_pgi'
   _←'Run_pgi'⎕NA'./Scratch/blackscholes_pgi.so|Run >PP <PP <PP'
-  #.UT.expect←interp←L NS.Run R ⋄ C.compiler←'gcc'
+  #.UT.expect←interp←L NS.Run R ⋄ C.COMPILER←'gcc'
   Run_pgi 0 L R}
 
 

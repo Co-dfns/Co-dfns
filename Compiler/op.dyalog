@@ -49,7 +49,7 @@
    z,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
    z,←(⊃,/(H.git ¯1↓⍺){⍺,'*',⍵,';'}¨'zr'),nl
    z,←(⊃,/'zr'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt'),nl
-   prag←((⊂C.compiler)∊'pgcc' 'icc')⊃''('#pragma simd reduction(+:z)',nl)
+   prag←((⊂C.COMPILER)∊'pgcc' 'icc')⊃''('#pragma simd reduction(+:z)',nl)
    do←prag H.{'{BOUND i;',nl,⍺⍺,(for ⍺),⍵,'}}',nl}
    z,←'c'do'z[0]+=l[i]*r[i];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl

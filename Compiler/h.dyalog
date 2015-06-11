@@ -7,7 +7,7 @@
   nl←⎕UCS 13 10
   for←{'for(i=0;i<',(⍕⍵),';i++){'}
   do←{'{BOUND i;',(for ⍺),⍵,'}}',nl}
-  pdo←{'{BOUND i;',nl,(((⊂C.compiler)∊'icc' 'pgcc')⊃''('#pragma simd',nl)),(for ⍺),⍵,'}}',nl}
+  pdo←{'{BOUND i;',nl,(((⊂C.COMPILER)∊'icc' 'pgcc')⊃''('#pragma simd',nl)),(for ⍺),⍵,'}}',nl}
   tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
   enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
   fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
@@ -52,13 +52,13 @@
   sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
   rkp1←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?0:1;',nl}
   rkp2←{''('BOUND mz',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl)}
-  rkp←{(⍺ rkp1 ⍵),(C.compiler≡'pgcc')⊃⍺ rkp2 ⍵}
+  rkp←{(⍺ rkp1 ⍵),(C.COMPILER≡'pgcc')⊃⍺ rkp2 ⍵}
   git←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' '?type? '}
   gie←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLNA'}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
   gda1←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
   gda2←{''('BOUND mz',(⍕⍺),'=cnt;',nl)}
-  gda←{(⍺ gda1 ⍵),(C.compiler≡'pgcc')⊃⍺ gda2 ⍵}
+  gda←{(⍺ gda1 ⍵),(C.COMPILER≡'pgcc')⊃⍺ gda2 ⍵}
   sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
   sfp←{(git m⌿⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
   sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
@@ -73,7 +73,7 @@
   smcr←{'copyout(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
   simc←{(smcd(⊃v⍵)fvs(⊃e⍵)),' ',(smcr⊃n⍵),nl}
   prag←{('#pragma acc kernels loop ',simc ⍵)('#pragma simd',nl)('')}
-  simd←{('pgcc' 'icc'⍳⊂C.compiler)⊃prag ⍵}
+  simd←{('pgcc' 'icc'⍳⊂C.COMPILER)⊃prag ⍵}
   slp←{(simd ⍵),(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 
 :EndNamespace
