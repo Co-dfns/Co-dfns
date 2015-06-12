@@ -56,9 +56,10 @@
   git←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' '?type? '}
   gie←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLNA'}
   gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
-  gda1←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'BOUND m',(⍕⍺),'=cnt;',nl}
+  gda1←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}
+  gdm←{'BOUND m',(⍕⍺),'=',(⍕0≢≢⍵),';',nl}
   gda2←{''('BOUND mz',(⍕⍺),'=cnt;',nl)}
-  gda←{(⍺ gda1 ⍵),(C.COMPILER≡'pgcc')⊃⍺ gda2 ⍵}
+  gda←{(⍺ gda1 ⍵),(⍺ gdm ⍵),(C.COMPILER≡'pgcc')⊃⍺ gda2 ⍵}
   sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
   sfp←{(git m⌿⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
   sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
@@ -72,7 +73,7 @@
   smcd←{'copyin(',(⊃{⍺,',',⍵}/{'d',(⍕⍵),'[0:mz',(⍕⍵),']'}¨⍳≢⍵),')'}
   smcr←{'copyout(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
   simc←{(smcd(⊃v⍵)fvs(⊃e⍵)),' ',(smcr⊃n⍵),nl}
-  prag←{('#pragma acc kernels loop ',simc ⍵)('#pragma simd',nl)('')}
+  prag←{('#pragma acc parallel loop ',simc ⍵)('#pragma simd',nl)('')}
   simd←{('pgcc' 'icc'⍳⊂C.COMPILER)⊃prag ⍵}
   slp←{(simd ⍵),(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 

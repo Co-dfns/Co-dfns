@@ -2,7 +2,7 @@
 
 DEFINES="-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1"
 INCLUDES="-I./dwa"
-FLAGS="-fastsse -shared -fPIC -acc"
+FLAGS="-O4 -shared -fPIC -acc -ta:tesla:nordc"
 FILES="dwa/dwa_fns.c"
 LOG=$1.log
 CC=pgcc
