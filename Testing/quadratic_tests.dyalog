@@ -3,12 +3,12 @@
 ⍝ Test the Black Scholes benchmark for the correct output
 
 BS←⊂':Namespace'
-BS,←⊂'Run←{A←0⌷⍵ ⋄ B←1⌷⍵ ⋄ C←2⌷⍵ ⋄ ((-B)+((B*2)-4×A×C)*0.5)÷2×A}'
+BS,←⊂'Run←{A←0⌷⍵ ⋄ B←1⌷⍵ ⋄ C←2⌷⍵ ⋄ ((-B)+((B×B)-4×A×C)*0.5)÷2×A}'
 BS,←⊂':EndNamespace'
 
 NS←⎕FIX BS
 
-GD←{{⊃((⎕DR ⍵)645)⎕DR ⍵}{↑(⍵÷2)(⍵)(⍵÷4)}?⍵⍴1000}
+GD←{{⊃((⎕DR ⍵)645)⎕DR ⍵}{↑(0⌷⍵)(+⌿⍵)(1⌷⍵)}1+?2 ⍵⍴10}
 
 C←#.codfns.C
 
