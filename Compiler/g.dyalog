@@ -30,7 +30,7 @@
   M0←{H.rth,('tenv'H.dnv ⍵),nl,'LOCALP *env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
 
   ⍝ Scalars
-  S0←{(H.('{',rk0,srk,('prk'do'cnt*=sp[i];'),sfv,spp,slp)⍵)}
+  S0←{(H.('{',rk0,srk,('prk'do'cnt*=sp[i];'),spp,sfv,slp)⍵)}
   Y0←{⊃,/((⍳≢⊃v⍵)((⊣H.sts¨∘⊃y),'}',nl,⊣H.ste¨(⊃v)H.var¨∘⊃e)⍵),'}',nl}
 
 :EndNamespace

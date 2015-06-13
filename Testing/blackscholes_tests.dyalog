@@ -32,8 +32,8 @@ BLACKSCHOLES∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   _←'Scratch/blackscholes_icc.c'#.codfns.C.Fix BS
   _←⎕SH './icc Scratch/blackscholes_icc'
   _←'Run_icc'⎕NA'./Scratch/blackscholes_icc.so|Run >PP <PP <PP'
-  #.UT.expect←7 2⍴1
-  0.000000000001≥|(L NS.Run R)-Run_icc 0 L R}
+  #.UT.expect←1
+  ∧/,0.000000000001≥|(L NS.Run R)-Run_icc 0 L R}
 
 BLACKSCHOLES∆PGI_TEST←{~(⊂'pgcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'pgcc'
