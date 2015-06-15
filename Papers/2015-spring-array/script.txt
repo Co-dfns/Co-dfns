@@ -1,0 +1,67 @@
+⍝ Demo 1
+
+Run←{A←0⌷⍵ ⋄ B←1⌷⍵ ⋄ C←2⌷⍵ ⋄ ((-B)+((B×B)-4×A×C)*0.5)÷2×A}
+
+GD←{{⊃((⎕DR ⍵)645)⎕DR ⍵}{↑(0⌷⍵)(+⌿⍵)(1⌷⍵)}1+?2 ⍵⍴10}
+
+⊢D1←GD 7
+
+Run D1
+
+BS←⊂':Namespace'
+BS,←⊂'Run←{A←0⌷⍵ ⋄ B←1⌷⍵ ⋄ C←2⌷⍵ ⋄ ((-B)+((B×B)-4×A×C)*0.5)÷2×A}'
+BS,←⊂':EndNamespace'
+
+NS←⎕FIX BS
+C←#.codfns.C
+
+C.COMPILER←'icc' ⋄ 'Scratch/quadratic_icc.c'#.codfns.C.Fix BS
+C.COMPILER←'pgcc' ⋄ 'Scratch/quadratic_pgi.c'#.codfns.C.Fix BS
+
+⍝ Show the code in quadratic_pgi.c
+
+⎕SH './icc Scratch/quadratic_icc'
+⎕SH './pgi Scratch/quadratic_pgi'
+
+'Run_icc'⎕NA'./Scratch/quadratic_icc.so|Run >PP P <PP'
+'Run_pgi'⎕NA'./Scratch/quadratic_pgi.so|Run >PP P <PP'
+
+Run_icc 0 0 D1
+Run_pgi 0 0 D1
+
+cmpx 'Run_icc 0 0 D1' 'Run_pgi 0 0 D1' 'Run D1'
+
+D2←GD 2*10
+
+cmpx 'Run_icc 0 0 D2' 'Run_pgi 0 0 D2' 'Run D2'
+
+D3←GD 2*20
+
+cmpx 'Run_icc 0 0 D3' 'Run_pgi 0 0 D3' 'Run D3'
+
+⍝ Demo 2
+
+⍝ Tweak quadratic_pgi.c
+
+⎕SH './pgi Scratch/quadratic_pgi'
+)erase Run_pgi
+'Run_pgi'⎕NA'./Scratch/quadratic_pgi.so|Run >PP P <PP'
+
+cmpx 'Run_icc 0 0 D3' 'Run_pgi 0 0 D3' 'Run D3'
+
+)off
+
+⍝ Show fused CNDP2
+
+⍪BST
+
+BS←⎕FIX BST
+
+⎕VR'cndpload'
+⎕VR'cndpbench'
+
+cndpload
+cndpbench
+
+⍝ Demo 3: Show off t.dyalog
+
