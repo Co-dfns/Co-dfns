@@ -25,3 +25,5 @@ Scratch/
 *.if
 titlepage.xsl
 dwa
+aplcore
+*.o
