@@ -30,8 +30,11 @@
   elp←'(LOCALP*z,LOCALP*l,LOCALP*r)'
   foi←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
   fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-  tps←'int tp=0;tp+=3*(r->p->ELTYPE==APLLONG?0:1);',nl
-  tps,←'tp+=(l==NULL)?2:(l->p->ELTYPE==APLLONG?0:1);',nl
+  tps←'int tp=0;switch(r->p->ELTYPE){case APLLONG:break;',nl
+  tps,←'case APLDOUB:tp=3;break;',nl,'default:error(16);}',nl
+  tps,←'if(l==NULL)tp+=2;',nl
+  tps,←'else switch(l->p->ELTYPE){case APLLONG:break;',nl
+  tps,←'case APLDOUB:tp+=1;break;',nl,'default:error(16);}',nl
   tps,←'switch(tp){',nl
   tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
   cas←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,env);break;',nl}
