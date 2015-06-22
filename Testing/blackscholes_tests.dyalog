@@ -21,27 +21,16 @@ C←#.codfns.C
 
 BLACKSCHOLES∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'gcc'
-  _←'Scratch/blackscholes_gcc.c'#.codfns.C.Fix BS
-  _←⎕SH './gcc Scratch/blackscholes_gcc'
+  _←'Scratch/blackscholes'#.codfns.C.Fix BS
   _←'Run_gcc'⎕NA'./Scratch/blackscholes_gcc.so|Run >PP <PP <PP'
   #.UT.expect←7 2⍴1
   0.000000000001≥|(L NS.Run R)-Run_gcc 0 L R}
 
 BLACKSCHOLES∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'icc'
-  _←'Scratch/blackscholes_icc.c'#.codfns.C.Fix BS
-  _←⎕SH './icc Scratch/blackscholes_icc'
+  _←'Scratch/blackscholes'#.codfns.C.Fix BS
   _←'Run_icc'⎕NA'./Scratch/blackscholes_icc.so|Run >PP <PP <PP'
   #.UT.expect←1
   ∧/,0.000000000001≥|(L NS.Run R)-Run_icc 0 L R}
-
-BLACKSCHOLES∆PGI_TEST←{~(⊂'pgcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'pgcc'
-  _←'Scratch/blackscholes_pgi.c'#.codfns.C.Fix BS
-  _←⎕SH './pgi Scratch/blackscholes_pgi'
-  _←'Run_pgi'⎕NA'./Scratch/blackscholes_pgi.so|Run >PP <PP <PP'
-  #.UT.expect←7 2⍴1
-  0.000000000001≥|(L NS.Run R)-Run_pgi 0 L R}
-
 
 :EndNamespace

@@ -37,7 +37,7 @@
    z,←'aplint32*z,*l,*r;z=ARRAYSTART(rslt->p);l=ARRAYSTART(lft->p);',nl
    z,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
    z,←'r=ARRAYSTART(rgt->p);',nl
-   z,←((⊂C.COMPILER)∊'icc' 'pgcc')⊃''('#pragma simd',nl)
+   z,←((⊂C.COMPILER)∊'icc' 'pgi')⊃''('#pragma simd',nl)
    z,←'c'do'z[i]=l[r[i]];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
    z,'}',nl}
