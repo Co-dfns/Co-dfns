@@ -14,16 +14,14 @@ C←#.codfns.C
 
 SCALAR∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←GD 2*25 ⋄ L←,¯1↑D ⋄ R←2↑D ⋄ C.COMPILER←'gcc'
-  _←'Scratch/scalar'#.codfns.C.Fix BS
-  _←'Run_gcc'⎕NA'./Scratch/scalar_gcc.so|Run >PP <PP <PP'
+  CN←'Scratch/scalar'#.codfns.C.Fix BS
   #.UT.expect←1
-  ∧/0.0000000001≥|(Run_gcc 0 L R)-L NS.Run R}
+  ∧/0.0000000001≥|(L CN.Run R)-L NS.Run R}
 
 SCALAR∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←GD 2*25 ⋄ L←,¯1↑D ⋄ R←2↑D ⋄ C.COMPILER←'icc'
-  _←'Scratch/scalar'#.codfns.C.Fix BS
-  _←'Run_icc'⎕NA'./Scratch/scalar_icc.so|Run >PP <PP <PP'
+  CN←'Scratch/scalar'#.codfns.C.Fix BS
   #.UT.expect←1
-  ∧/0.0000000001≥|(L NS.Run R)-Run_icc 0 L R}
+  ∧/0.0000000001≥|(L NS.Run R)-L CN.Run R}
 
 :EndNamespace

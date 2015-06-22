@@ -14,16 +14,14 @@ C←#.codfns.C
 
 QUADRATIC∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←GD 7 ⋄ C.COMPILER←'gcc'
-  _←'Scratch/quadratic'#.codfns.C.Fix BS
-  _←'Run_gcc'⎕NA'./Scratch/quadratic_gcc.so|Run >PP P <PP'
+  CN←'Scratch/quadratic'#.codfns.C.Fix BS
   #.UT.expect←NS.Run D
-  Run_gcc 0 0 D}
+  CN.Run D}
 
 QUADRATIC∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←GD 7 ⋄ C.COMPILER←'icc'
-  _←'Scratch/quadratic'#.codfns.C.Fix BS
-  _←'Run_icc'⎕NA'./Scratch/quadratic_icc.so|Run >PP P <PP'
+  CN←'Scratch/quadratic'#.codfns.C.Fix BS
   #.UT.expect←NS.Run D
-  Run_icc 0 0 D}
+  CN.Run D}
 
 :EndNamespace

@@ -18,16 +18,14 @@ C←#.codfns.C
 
 BS4∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'gcc'
-  _←'Scratch/bs4'#.codfns.C.Fix BS
-  _←'Run_gcc'⎕NA'./Scratch/bs4_gcc.so|Run >PP <PP <PP'
+  CN←'Scratch/bs4'#.codfns.C.Fix BS
   #.UT.expect←interp←L NS.Run R
-  Run_gcc 0 L R}
+  L CN.Run R}
 
 BS4∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'icc'
-  _←'Scratch/bs4'#.codfns.C.Fix BS
-  _←'Run_icc'⎕NA'./Scratch/bs4_icc.so|Run >PP <PP <PP'
+  CN←'Scratch/bs4'#.codfns.C.Fix BS
   #.UT.expect←interp←L NS.Run R ⋄ C.COMPILER←'gcc'
-  Run_icc 0 L R}
+  L CN.Run R}
 
 :EndNamespace

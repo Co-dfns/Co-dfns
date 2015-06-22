@@ -18,7 +18,10 @@
   put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
 
   Cmp←{n⊣(⍎COMPILER)⍺⊣(⍺,'_',COMPILER,'.c')put⍨##.G.gc ##.T.tt⊃a n←##.P.ps ⍵}
-  MkNS←{⍪⍺ ⍵}
+  mkf←{f←⍵,'←{' ⋄ fn←⍺,'|',⍵,' '
+    f,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ _←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
+    f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
+  MkNS←{ns←#.⎕NS⍬ ⋄ ns⊣(⍺,'_',COMPILER,'.so')∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵}
 
   Fix←{⍺ MkNS ⍺ Cmp ⍵}
   

@@ -18,16 +18,14 @@ C←#.codfns.C
 
 BS9∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'gcc'
-  _←'Scratch/bs9'#.codfns.C.Fix BS
-  _←'Run_gcc'⎕NA'./Scratch/bs9_gcc.so|Run >PP <PP <PP'
+  CN←'Scratch/bs9'#.codfns.C.Fix BS
   #.UT.expect←7⍴1
-  0.000000000001≥|(L NS.Run R)-Run_gcc 0 L R}
+  0.000000000001≥|(L NS.Run R)-L CN.Run R}
 
 BS9∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'icc'
-  _←'Scratch/bs9'#.codfns.C.Fix BS
-  _←'Run_icc'⎕NA'./Scratch/bs9_icc.so|Run >PP <PP <PP'
+  CN←'Scratch/bs9'#.codfns.C.Fix BS
   #.UT.expect←7⍴1
-  0.000000000001≥|(L NS.Run R)-Run_icc 0 L R}
+  0.000000000001≥|(L NS.Run R)-L CN.Run R}
 
 :EndNamespace
