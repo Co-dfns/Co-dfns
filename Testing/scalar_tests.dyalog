@@ -8,18 +8,18 @@ BS,←'}' ':EndNamespace'
 
 NS←⎕FIX BS
 
-GD←{{⊃((⎕DR ⍵)323)⎕DR ⍵}⍉100+?⍵ 3⍴1000}
+GD←{⍉1+?⍵ 3⍴1000} ⋄ INT←{⊃((⎕DR ⍵)323)⎕DR ⍵}
 
 C←#.codfns.C
 
 SCALAR∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  D←GD 2*25 ⋄ L←,¯1↑D ⋄ R←2↑D ⋄ C.COMPILER←'gcc'
+  D←GD 2*25 ⋄ L←INT ,¯1↑D ⋄ R←INT 2↑D ⋄ C.COMPILER←'gcc'
   CN←'Scratch/scalar'#.codfns.C.Fix BS
   #.UT.expect←1
   ∧/0.0000000001≥|(L CN.Run R)-L NS.Run R}
 
 SCALAR∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  D←GD 2*25 ⋄ L←,¯1↑D ⋄ R←2↑D ⋄ C.COMPILER←'icc'
+  D←GD 2*25 ⋄ L←INT ,¯1↑D ⋄ R←INT 2↑D ⋄ C.COMPILER←'icc'
   CN←'Scratch/scalar'#.codfns.C.Fix BS
   #.UT.expect←1
   ∧/0.0000000001≥|(L NS.Run R)-L CN.Run R}
