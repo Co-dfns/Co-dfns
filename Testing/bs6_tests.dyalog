@@ -1,7 +1,5 @@
 :Namespace bs6
 
-⍝ Test the Black Scholes benchmark for the correct output
-
 BS←⊂':Namespace'
 BS,←⊂'coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442'
 BS,←'Run←{coeff+.×⍵}' ':EndNamespace'

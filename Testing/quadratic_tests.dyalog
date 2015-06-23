@@ -1,7 +1,5 @@
 :Namespace quadratic
 
-⍝ Test the Black Scholes benchmark for the correct output
-
 BS←⊂':Namespace'
 BS,←⊂'Run←{A←0⌷⍵ ⋄ B←1⌷⍵ ⋄ C←2⌷⍵ ⋄ ((-B)+((B×B)-4×A×C)*0.5)÷2×A}'
 BS,←⊂':EndNamespace'

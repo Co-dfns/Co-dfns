@@ -1,7 +1,5 @@
 :Namespace bs1
 
-⍝ Test the Black Scholes benchmark for the correct output
-
 BS←':Namespace' 'r←0.02	⋄ v←0.03' 
 BS,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
 BS,←'((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT' '}' ':EndNamespace'
