@@ -18,14 +18,6 @@
   rth,←'#include <stdio.h>',nl
   rth,←'int isinit=0;',nl
   rth,←'#define PI 3.14159265358979323846',nl
-  rth,←'#define MAX(a,b) \',nl
-  rth,←'({ __typeof__ (a) _a = (a); \',nl
-  rth,←'__typeof__ (b) _b = (b); \',nl
-  rth,←'_a > _b ? _a : _b; })',nl
-  rth,←'#define MIN(a,b) \',nl
-  rth,←'({ __typeof__ (a) _a = (a); \',nl
-  rth,←'__typeof__ (b) _b = (b); \',nl
-  rth,←'_a < _b ? _a : _b; })',nl
 
   ⍝ Environments
   dnv←{(0≡z)⊃('LOCALP ',⍺,'[',(⍕z←⊃v⍵),'];')('LOCALP*',⍺,'=NULL;')}
