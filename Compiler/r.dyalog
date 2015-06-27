@@ -16,7 +16,12 @@
   sdb⍪←,¨'○'   'PI*⍵'             'error(16)'
   sdb⍪←,¨'⌊'   'floor((double)⍵)' 'MIN((double)⍺,(double)⍵)'
   sdb⍪←,¨'⌈'   'ceil((double)⍵)'  'MAX((double)⍺,(double)⍵)'
+  sdb⍪←,¨'<'   'error(16)'        '⍺<⍵'
+  sdb⍪←,¨'≤'   'error(16)'        '⍺<=⍵'
+  sdb⍪←,¨'='   'error(16)'        '⍺==⍵'
   sdb⍪←,¨'≥'   'error(16)'        '⍺>=⍵'
+  sdb⍪←,¨'>'   'error(16)'        '⍺>⍵'
+  sdb⍪←,¨'≠'   'error(16)'        '⍺!=⍵'
 
   ⍝ Mixed Functions
   fdb←0 3⍴⊂'' ⋄ fcl←{H.cln ⍺(⍎⊃(⍵⍵⍪fnc ⍺⍺)⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍵⍵),¯1+≢⍵)⍵}
