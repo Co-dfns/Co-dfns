@@ -14,8 +14,8 @@
   sdb⍪←,¨'⍟'   'log((double)⍵)'   'log((double)⍵)/log((double)⍺)'
   sdb⍪←,¨'|'   'fabs(⍵)'          'fmod((double)⍵,(double)⍺)'
   sdb⍪←,¨'○'   'PI*⍵'             'error(16)'
-  sdb⍪←,¨'⌊'   'floor((double)⍵)' 'error(16)'
-  sdb⍪←,¨'⌈'   'ceil((double)⍵)'  'error(16)'
+  sdb⍪←,¨'⌊'   'floor((double)⍵)' 'MIN((double)⍺,(double)⍵)'
+  sdb⍪←,¨'⌈'   'ceil((double)⍵)'  'MAX((double)⍺,(double)⍵)'
   sdb⍪←,¨'≥'   'error(16)'        '⍺>=⍵'
 
   ⍝ Mixed Functions
