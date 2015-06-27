@@ -4,17 +4,19 @@
   ⍝ Scalar Primitives
   sdb←0 3⍴⊂'' ⋄ scl←{H.cln ((≢⍵)↑,¨'⍵⍺')⎕R(⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
   
-  ⍝      Prim  Monadic          Dyadic
+  ⍝      Prim  Monadic            Dyadic
   ⍝ ────────────────────────────────────────────────────────────────
-  sdb⍪←,¨'+'   '⍵'              '⍺+⍵'
-  sdb⍪←,¨'-'   '-1*⍵'           '⍺-⍵'
-  sdb⍪←,¨'×'   '(⍵>0)-(⍵<0)'    '⍺*⍵'
-  sdb⍪←,¨'÷'   '1.0/⍵'          '((double)⍺)/((double)⍵)'
-  sdb⍪←,¨'*'   'exp((double)⍵)' 'pow((double)⍺,(double)⍵)'
-  sdb⍪←,¨'⍟'   'log((double)⍵)' 'log((double)⍵)/log((double)⍺)'
-  sdb⍪←,¨'|'   'fabs(⍵)'        'fmod((double)⍵,(double)⍺)'
-  sdb⍪←,¨'○'   'PI*⍵'           'error(16)'
-  sdb⍪←,¨'≥'   'error(16)'      '⍺>=⍵'
+  sdb⍪←,¨'+'   '⍵'                '⍺+⍵'
+  sdb⍪←,¨'-'   '-1*⍵'             '⍺-⍵'
+  sdb⍪←,¨'×'   '(⍵>0)-(⍵<0)'      '⍺*⍵'
+  sdb⍪←,¨'÷'   '1.0/⍵'            '((double)⍺)/((double)⍵)'
+  sdb⍪←,¨'*'   'exp((double)⍵)'   'pow((double)⍺,(double)⍵)'
+  sdb⍪←,¨'⍟'   'log((double)⍵)'   'log((double)⍵)/log((double)⍺)'
+  sdb⍪←,¨'|'   'fabs(⍵)'          'fmod((double)⍵,(double)⍺)'
+  sdb⍪←,¨'○'   'PI*⍵'             'error(16)'
+  sdb⍪←,¨'⌊'   'floor((double)⍵)' 'error(16)'
+  sdb⍪←,¨'⌈'   'ceil((double)⍵)'  'error(16)'
+  sdb⍪←,¨'≥'   'error(16)'        '⍺>=⍵'
 
   ⍝ Mixed Functions
   fdb←0 3⍴⊂'' ⋄ fcl←{H.cln ⍺(⍎⊃(⍵⍵⍪fnc ⍺⍺)⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍵⍵),¯1+≢⍵)⍵}
