@@ -78,5 +78,10 @@
   simd←{('pgi' 'icc'⍳⊂C.COMPILER)⊃prag ⍵}
   slp←{(simd ⍵),(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 
+  ⍝ Residue Code
+  respos←'fmod((double)⍵,(double)⍺)'
+  resneg←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
+  residue←'(0<=⍺&&0<=⍵)?',respos,':',resneg
+
 :EndNamespace
 

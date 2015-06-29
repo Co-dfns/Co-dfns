@@ -12,7 +12,7 @@
   sdb⍪←,¨'÷'   '1.0/⍵'            '((double)⍺)/((double)⍵)'
   sdb⍪←,¨'*'   'exp((double)⍵)'   'pow((double)⍺,(double)⍵)'
   sdb⍪←,¨'⍟'   'log((double)⍵)'   'log((double)⍵)/log((double)⍺)'
-  sdb⍪←,¨'|'   'fabs(⍵)'          'fmod((double)⍵,(double)⍺)'
+  sdb⍪←,¨'|'   'fabs(⍵)'          H.residue
   sdb⍪←,¨'○'   'PI*⍵'             'error(16)'
   sdb⍪←,¨'⌊'   'floor((double)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'
   sdb⍪←,¨'⌈'   'ceil((double)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'
