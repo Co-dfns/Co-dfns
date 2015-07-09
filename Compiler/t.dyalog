@@ -5,7 +5,7 @@
   d←A.d ⋄ t←A.t ⋄ k←A.k ⋄ n←A.n ⋄ r←A.r ⋄ s←A.s ⋄ v←A.v ⋄ y←A.y ⋄ e←A.e
 
   ⍝ Core Compiler
-  tt ←{fd fz ff if td vc fs av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
+  tt ←{fd fz ff if ef td vc fs av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
 
   ⍝ Utilities
   scp←(1,1↓Fm)⊂[0]⊢
@@ -74,7 +74,8 @@
   
   ⍝ Lift type checking (annotate all nodes with type)
   lta←(1↓¨(⊂⊢),∘⊂(12⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(0,∘∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
-  ltt←(⊢⍪⍨(,¯1↑⊢)⌷⍤0 1⍨3 4⊥2↑⊢)(1⊃⊣)⌷⍤0 2⍨(0⊃⊣)⍳∘⊃v
+  ltd←12⌊1 3 4⊥(((∨⌿¯1=×)⍪|)2↑⊢)
+  ltt←(⊢⍪⍨ltd⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢)(1⊃⊣)⌷⍤0 2⍨(0⊃⊣)⍳∘⊃v
   ltb←⊣⍪¨(⊂n),∘⊂∘↑((,1↑⊢)¨y)
   lt ←(TC.(pn pt)⍪¨lta)(ltb((,¯1↓⊢),∘⊂ltt)⍤1⊢)⍣≡(⊂4 12⍴0),⍨⊢
 
@@ -95,7 +96,7 @@
   fsn←↓n,((,1↑⊢)¨y),⍤0((,1↑⍉)¨e)
   fsv←v(↓,∘⊃⍤0)¨((↓1↓⊢)¨y)(↓,⍤0)¨((↓1↓⍉)¨e)
   fsh←(⍉⍪)2'S'0 ⍬ ⍬ 0,∘((⊂0⌷⊢),(⊂∘↑1⌷⊢),(⊂2⌷⊢))∘⍉1↓∘↑fsn fsf fsv
-  fsm←Em∧('m'∊⍨k)∧(,¨'~')∊⍨(⊃∘⌽¨v)
+  fsm←Em∧('m'∊⍨k)∧(,¨'~⌷')∊⍨(⊃∘⌽¨v)
   fss←fsm∨Em∧('md'∊⍨k)∧(,¨'+-×÷|⌊⌈*⍟○!∧∨⍱⍲<≤=≥>≠')∊⍨(⊃∘⌽¨v)
   fse←(⊣(/∘⊢)fss∧⊣)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),'E','s',3↓⍤1⊢))¨⊂[0]
   fs ←(⊃⍪/)(((((⊃⍪/)(⊂0 9⍴⍬),((2≠/(~⊃),⊢)fss)fse⊢)Es)⍪⍨(~Em)(⌿∘⊢)⊢)¨scp)
@@ -107,6 +108,10 @@
   tde←((¯2↓⊢),(⊂(5 6 7 9 10 11⌷⍨⊣)⌷∘⍉∘⊃y),¯1↑⊢)⍤1
   tdf←(1↓⊢)⍪⍨(,1 3↑⊢),(⊂(⊃n),'ii' 'if' 'in' 'fi' 'ff' 'fn'⊃⍨⊣),(4↓∘,1↑⊢)
   td ←((⊃⍪/)(1↑⊢),∘(⊃,/)(((⍳6)(⊣tdf tde)¨⊂)¨1↓⊢))scp
+
+  ⍝ Give error functions their own sub-class
+  eff←(⊃⍪/)⊢(((⊂∘⍉∘⍪d,'Fe',3↓,)1↑⊣),1↓⊢)(d=∘⊃d)⊂[0]⊢
+  ef←(Fm∧¯1=∘×∘⊃¨y)((⊃⍪/)(⊂⊢(⌿⍨)∘~(∨\⊣)),(eff¨⊂[0]))⊢
 
   ⍝ Wrap top-level Expressions as Init function
   ifn←1 'F' 0 'Init' ⍬ 0,(4⍴0)⍬,⍨⊢

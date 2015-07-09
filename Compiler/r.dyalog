@@ -16,17 +16,18 @@
   sdb⍪←,¨'○'   'PI*⍵'             'error(16)'
   sdb⍪←,¨'⌊'   'floor((double)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'
   sdb⍪←,¨'⌈'   'ceil((double)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'
-  sdb⍪←,¨'<'   'error(16)'        '⍺<⍵'
-  sdb⍪←,¨'≤'   'error(16)'        '⍺<=⍵'
-  sdb⍪←,¨'='   'error(16)'        '⍺==⍵'
-  sdb⍪←,¨'≥'   'error(16)'        '⍺>=⍵'
-  sdb⍪←,¨'>'   'error(16)'        '⍺>⍵'
-  sdb⍪←,¨'≠'   'error(16)'        '⍺!=⍵'
+  sdb⍪←,¨'<'   'error(99)'        '⍺<⍵'
+  sdb⍪←,¨'≤'   'error(99)'        '⍺<=⍵'
+  sdb⍪←,¨'='   'error(99)'        '⍺==⍵'
+  sdb⍪←,¨'≥'   'error(99)'        '⍺>=⍵'
+  sdb⍪←,¨'>'   'error(99)'        '⍺>⍵'
+  sdb⍪←,¨'≠'   'error(99)'        '⍺!=⍵'
   sdb⍪←,¨'~'   '0==⍵'             'error(16)'
-  sdb⍪←,¨'∧'   'error(16)'        '⍺ && ⍵'
-  sdb⍪←,¨'∨'   'error(16)'        '⍺ || ⍵'
-  sdb⍪←,¨'⍲'   'error(16)'        '!(⍺ && ⍵)'
-  sdb⍪←,¨'⍱'   'error(16)'        '!(⍺ || ⍵)'
+  sdb⍪←,¨'∧'   'error(99)'        '⍺ && ⍵'
+  sdb⍪←,¨'∨'   'error(99)'        '⍺ || ⍵'
+  sdb⍪←,¨'⍲'   'error(99)'        '!(⍺ && ⍵)'
+  sdb⍪←,¨'⍱'   'error(99)'        '!(⍺ || ⍵)'
+  sdb⍪←,¨'⌷'   '⍵'                'error(99)'
 
   ⍝ Mixed Functions
   fdb←0 3⍴⊂'' ⋄ fcl←{H.cln ⍺(⍎⊃(⍵⍵⍪fnc ⍺⍺)⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍵⍵),¯1+≢⍵)⍵}
@@ -34,10 +35,10 @@
 
   ⍝      Prim  Monadic          Dyadic
   ⍝ ─────────────────────────────────────────────────────────────────
-  fdb⍪←,¨'⌷'   ''               'MF.idx'
-  fdb⍪←,¨'['   ''               'MF.bri'
-  fdb⍪←,¨'⍳'   'MF.iom'         ''
-  fdb⍪←,¨'⍴'   '##.SHP.mon'     ''
+  fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}'   'MF.idx'
+  fdb⍪←,¨'['   '{⎕SIGNAL 99}'   'MF.bri'
+  fdb⍪←,¨'⍳'   'MF.iom'         '{⎕SIGNAL 16}'
+  fdb⍪←,¨'⍴'   '##.SHP.mon'     '##.SHP.dya'
 
   ⍝ Operators
   odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(''',⍺,'''',⍵,')'}¨1↓⍺⌷⍨(⊂⍺⍺)⍳⍨0⌷⍉⍺}

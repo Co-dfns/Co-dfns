@@ -21,10 +21,12 @@
 
   ⍝ Functions
   Fd←{H.frt,(⊃n⍵),H.flp,';',nl}
+  Fe←{H.frt,(⊃n⍵),H.flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
   F0←{H.frt,(⊃n⍵),H.flp,'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'H.reg ⍵}
   F1←{H.frt,(⊃n⍵),H.{flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),'env0'reg ⍵}⍵}
   Z0←{'}',nl,nl}
   Z1←{'z->p=zap((',((⊃n⍵)H.var⊃e⍵),')->p);',H.cutp,nl,'}',nl,nl}
+  Ze←{'}',nl,nl}
 
   ⍝ Namespaces
   M0←{H.rth,('tenv'H.dnv ⍵),nl,'LOCALP *env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
