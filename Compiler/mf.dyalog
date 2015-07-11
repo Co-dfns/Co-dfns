@@ -67,12 +67,6 @@
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
    z,'}',nl}
 
-  ⍝ XXX: Rewrite this. Index generation
-  iota←'aplint32*v=ARRAYSTART(rgt->p);aplint32 c=v[0];',nl
-  iota,←'BOUND s[]={c};relp(rslt);getarray(APLLONG,1,s,rslt);',nl
-  iota,←'v=ARRAYSTART(rslt->p);',nl,'c'do'v[i]=i;'
-  iotm←iota
-
   ⍝ Catenation
   cat←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catl ⍵ ⋄ ⍺ catv ⍵}
   

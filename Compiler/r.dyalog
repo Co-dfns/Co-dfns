@@ -37,7 +37,7 @@
   ⍝ ─────────────────────────────────────────────────────────────────
   fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}'   'MF.idx'
   fdb⍪←,¨'['   '{⎕SIGNAL 99}'   'MF.bri'
-  fdb⍪←,¨'⍳'   'MF.iom'         '{⎕SIGNAL 16}'
+  fdb⍪←,¨'⍳'   '##.IOT.mon'     '{⎕SIGNAL 16}'
   fdb⍪←,¨'⍴'   '##.SHP.mon'     '##.SHP.dya'
 
   ⍝ Operators
