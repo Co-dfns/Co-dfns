@@ -6,7 +6,7 @@ F1←100÷⍨¯5000+?10⍴10000
 F2←100÷⍨¯5000+?10⍴10000
 
 S←':Namespace' 'Run←{⍺|⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns.C
+NS←⎕FIX S ⋄ C←#.codfns
 
 RESIDUE∆II∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   C.COMPILER←'gcc' ⋄ CS←'Scratch/residueii'C.Fix S ⋄ C.COMPILER←'gcc'

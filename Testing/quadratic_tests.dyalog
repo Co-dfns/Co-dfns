@@ -8,17 +8,17 @@ NS←⎕FIX BS
 
 GD←{{⊃((⎕DR ⍵)645)⎕DR ⍵}{↑(0⌷⍵)(+⌿⍵)(1⌷⍵)}1+?2 ⍵⍴10}
 
-C←#.codfns.C
+C←#.codfns
 
 QUADRATIC∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←GD 7 ⋄ C.COMPILER←'gcc'
-  CN←'Scratch/quadratic'#.codfns.C.Fix BS
+  CN←'Scratch/quadratic'C.Fix BS
   #.UT.expect←NS.Run D
   CN.Run D}
 
 QUADRATIC∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←GD 7 ⋄ C.COMPILER←'icc'
-  CN←'Scratch/quadratic'#.codfns.C.Fix BS
+  CN←'Scratch/quadratic'C.Fix BS
   #.UT.expect←NS.Run D
   CN.Run D}
 

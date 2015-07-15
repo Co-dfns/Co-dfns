@@ -3,7 +3,7 @@
 I←{⊃((⎕DR ⍵)323)⎕DR ⍵}
 ⍝ S←':Namespace' 'Rv←{⍺⍴⍵}' 'Rl←{2 2⍴⍵}' 'Rr←{⍺⍴5}' ':EndNamespace'
 S←':Namespace' 'Rv←{⍺⍴⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns.C
+NS←⎕FIX S ⋄ C←#.codfns
 
 RESHAPE∆1∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   C.COMPILER←'gcc' ⋄ CS←'Scratch/reshape1'C.Fix S ⋄ C.COMPILER←'gcc'

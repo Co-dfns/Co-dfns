@@ -6,7 +6,7 @@ F←100÷⍨?100⍴10000
 S←':Namespace' 'Run←{○⍵}' ':EndNamespace'
 
 NS←⎕FIX S
-C←#.codfns.C
+C←#.codfns
 
 PITIMES∆I∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   C.COMPILER←'gcc' ⋄ CS←'Scratch/pitimesi'C.Fix S ⋄ C.COMPILER←'gcc'

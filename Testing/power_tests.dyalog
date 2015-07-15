@@ -3,7 +3,7 @@
 IP←{⊃((⎕DR ⍵)323)⎕DR ⍵}1+?15⍴10 ⋄ IN←{⊃((⎕DR ⍵)323)⎕DR ⍵}¯5+?15⍴10
 FP←100÷⍨?15⍴1000 ⋄ FN←100÷⍨¯500+?15⍴1000
 S←':Namespace' 'Run←{⍺*⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns.C
+NS←⎕FIX S ⋄ C←#.codfns
 
 POWER∆II∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   C.COMPILER←'gcc' ⋄ CS←'Scratch/powerii'C.Fix S ⋄ C.COMPILER←'gcc'

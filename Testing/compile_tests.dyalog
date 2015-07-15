@@ -14,7 +14,7 @@ BS,←'}' ':EndNamespace'
 COMPILE_TEST←{
   #.UT.expect←1 1 1 1 1
   vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
-  (↓5 2⍴vals)∊↓'Scratch/compile'#.codfns.C.Cmp BS
+  (↓5 2⍴vals)∊↓'Scratch/compile'#.codfns.Cmp BS
 }
 
 :EndNamespace

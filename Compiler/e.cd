@@ -1,0 +1,49 @@
+fft←(,1↑⊢)(1 'Z',(2↓¯3↓⊣),(n⊢),(y⊢),(⊂2↑∘,1↑∘⍉∘⊃∘e⊢))(¯1↑⊢)
+ff←((⊃⍪/)(1↑⊢),(((1↑⊢)⍪(((¯1+d),1↓⍤1⊢)1↓⊢)⍪fft)¨1↓⊢))scp
+fzt←1 'Y',(2↓¯3↓⊣),(⊂∘∪∘n⊢),(⊂∘(≢-1+⌽⍳∪)n),∘⊂∘∪((,1↑⍉)¨e)
+fzh←(3↑⊣),(⊂∘∪n),(⊂∘∪((,1↑⍉)¨e)),(⊂((≢-1+⌽⍳∪)n)⊃¨∘⊂(⊃¨y)),6↓⊣
+fzf←0≠(≢∘⍴¨∘⊃∘v⊣)
+fzb←(((⊃∘v⊣)(⌿⍨)fzf),n),∘⍪('f'∘,∘⍕¨∘⍳(+/fzf)),('s'∘,∘⍕¨∘⍳∘≢⊢)
+fzv←((⊂⊣)(⊖↑)⍨¨(≢⊣)(-+∘⍳⊢)(≢⊢))((⊢,⍨1⌷∘⍉⊣)⌷⍨(0⌷∘⍉⊣)⍳⊢)⍤2 0¨v
+fze←(¯1+d),t,k,fzb((⊢/(-∘≢⊢)↑⊣),r,s,fzv,y,∘⍪e)⊢
+fzs←(,1↑⊢)(fzh⍪fze⍪fzt)(⌿∘⊢)
+fz←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1↓⊢))(1,1↓Sm)⊂[0]⊢
+fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
+dis←{⍺←⊢ ⋄ 0=⊃t⍵:3⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
+gc←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
+E1←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑↓⍉⊃e⍵}
+E2←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓↓⍉⊃e⍵}
+E0←{r l f←⊃v⍵ ⋄ (⊃git 1↑⊃y⍵),(⊃n⍵),'=',(sdb(f scl)(1+'%u'≢l)↑r l),';',nl}
+Oi←{(⊃n⍵)('Fexim()i',nl)('catd')}
+O1←{(n⍵),odb(o ocl)f⊣f u o←⊃v⍵}
+O2←{(⊃n⍵)('Fexdm();',nl)('ptrd')}
+O0←{'' '' ''}
+Of←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳6)case¨⊂⊃⊃v⍵),'}}',nl,nl}
+Fd←{frt,(⊃n⍵),flp,';',nl}
+Fe←{frt,(⊃n⍵),flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
+F0←{frt,(⊃n⍵),flp,'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'reg ⍵}
+F1←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),'env0'reg ⍵}
+Z0←{'}',nl,nl}
+Z1←{'z->p=zap((',((⊃n⍵)var⊃e⍵),')->p);',cutp,nl,'}',nl,nl}
+Ze←{'}',nl,nl}
+M0←{rth,('tenv'dnv ⍵),nl,'LOCALP *env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
+S0←{(('{',rk0,srk,('prk'do'cnt*=sp[i];'),spp,sfv,slp)⍵)}
+Y0←{⊃,/((⍳≢⊃v⍵)((⊣sts¨∘⊃y),'}',nl,⊣ste¨(⊃v)var¨∘⊃e)⍵),'}',nl}
+var←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+nl←⎕UCS 13 10
+for←{'for(i=0;i<',(⍕⍵),';i++){'}
+do←{'{BOUND i;',(for ⍺),⍵,'}}',nl}
+pdo←{p←((⊂COMPILER)∊'icc' 'pgi')⊃''('#pragma simd',nl)
+ '{BOUND i;',nl,p,(for ⍺),⍵,'}}',nl}
+tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
+enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
+fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
+cln←'¯'⎕R'-'
+rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+rth,←'#include <stdio.h>',nl
+rth,←'int isinit=0;',nl
+rth,←'#define PI 3.14159265358979323846',nl
+respos←'fmod((double)⍵,(double)⍺)'
+resneg←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
+residue←'(0<=⍺&&0<=⍵)?',respos,':',resneg
+

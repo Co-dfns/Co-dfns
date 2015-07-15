@@ -12,17 +12,17 @@ NS←⎕FIX BS
 
 GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 
-C←#.codfns.C
+C←#.codfns
 
 BS3∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'gcc'
-  CN←'Scratch/bs3'#.codfns.C.Fix BS
+  CN←'Scratch/bs3'C.Fix BS
   #.UT.expect←7⍴1
   0.000000000001≥|(L NS.Run R)-L CN.Run R}
 
 BS3∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'icc'
-  CN←'Scratch/bs3'#.codfns.C.Fix BS
+  CN←'Scratch/bs3'C.Fix BS
   #.UT.expect←7⍴1
   0.000000000001≥|(L NS.Run R)-L CN.Run R}
 

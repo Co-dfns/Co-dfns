@@ -3,7 +3,7 @@
 I←{⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
 F←100÷⍨?100⍴10000
 S←':Namespace' 'Run←{⍺⌊⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns.C
+NS←⎕FIX S ⋄ C←#.codfns
 
 MINIMUM∆II∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   C.COMPILER←'gcc' ⋄ CS←'Scratch/minimumii'C.Fix S ⋄ C.COMPILER←'gcc'

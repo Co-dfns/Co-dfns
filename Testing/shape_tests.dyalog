@@ -4,7 +4,7 @@ I←{⊃((⎕DR ⍵)323)⎕DR ⍵}
 
 S←':Namespace' 'Run←{⍴⍵}' ':EndNamespace'
 
-NS←⎕FIX S ⋄ C←#.codfns.C
+NS←⎕FIX S ⋄ C←#.codfns
 
 SHAPE∆1∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   C.COMPILER←'gcc' ⋄ CS←'Scratch/shape1'C.Fix S ⋄ C.COMPILER←'gcc'

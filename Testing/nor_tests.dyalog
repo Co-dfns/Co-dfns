@@ -3,7 +3,7 @@
 I1←{⊃((⎕DR ⍵)323)⎕DR ⍵}?10⍴2
 I2←{⊃((⎕DR ⍵)323)⎕DR ⍵}?10⍴2
 S←':Namespace' 'Run←{⍺⍱⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns.C
+NS←⎕FIX S ⋄ C←#.codfns
 
 NOR∆II∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   C.COMPILER←'gcc' ⋄ CS←'Scratch/norii'C.Fix S ⋄ C.COMPILER←'gcc'
