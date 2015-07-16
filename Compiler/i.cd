@@ -1,41 +1,4 @@
 
-  ⍝ Index Generator
-  iotm←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨var/⍵),nl
-    z,←'int rk=rgt->p->RANK;',nl
-    z,←'if(!(rk==0||(rk==1&&1==rgt->p->SHAPETC[0])))error(16);',nl
-    z,←'aplint32*v=ARRAYSTART(rgt->p);aplint32 c=v[0];',nl
-    z,←'BOUND s[]={c};relp(rslt);getarray(APLLONG,1,s,rslt);',nl
-    z,←'v=ARRAYSTART(rslt->p);',nl,('c'do'v[i]=i;'),'}',nl
-    z}
-
-  ⍝ Shape
-  shpm←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨var/2↑⍵)
-    z,←'BOUND rk=rgt->p->RANK;BOUND sp[15];',nl
-    z,←'rk'do'sp[i]=rgt->p->SHAPETC[i];'
-    z,←'relp(rslt);getarray(APLLONG,1,&rk,rslt);',nl
-    z,←'aplint32 *b=ARRAYSTART(rslt->p);',nl,'rk'do'b[i]=sp[i];'
-    z,←'}',nl
-    z}
-  
-  ⍝ Reshape
-  shpd←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ shpdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ shpdl ⍵ ⋄ ⍺ shpdv ⍵}
-
-  shpdv←{z←'{',(⊃,/'rslt' 'rgt' 'lft'{'LOCALP *',⍺,'=',⍵,';'}¨var/⍵),nl
-    z,←'if(1!=lft->p->RANK)error(11);',nl,'BOUND rk=lft->p->SHAPETC[0];',nl
-    z,←'if(15<rk)error(10);',nl,'BOUND sp[rk];aplint32*lv=ARRAYSTART(lft->p);'
-    z,←'BOUND c=1;','rk'do'c*=lv[i];sp[i]=lv[i];'
-    z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
-    z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
-    z,←'relp(rslt);getarray(',(⊃gie ⊃0⌷⍺),',rk,sp,rslt);',nl
-    z,←'BOUND rc=1;','rgt->p->RANK'do'rc*=rgt->p->SHAPETC[i];'
-    z,←(⊃,/(git 2↑⍺){⍺,'*',⍵,';'}¨'zr'),nl
-    z,←⊃,/'zr'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt'
-    z,←'if(rc==0){',('c'pdo'z[i]=0;'),'}',nl,'else{'
-    z,←('c'pdo'z[i]=r[i%rc];'),'}',nl
-    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
-    z,←'}',nl
-    z}
-
   ⍝ Indexing
   idxd←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ idxdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ idxdl ⍵ ⋄ ⍺ idxdv ⍵}
 
