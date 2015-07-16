@@ -5,21 +5,21 @@ prag←{('#pragma acc parallel loop ',simc ⍵)('#pragma simd',nl)('')}
 simd←{('pgi' 'icc'⍳⊂COMPILER)⊃prag ⍵}
 slp←{(simd ⍵),(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 mxfn←{chk siz exe←⍺ ⋄ tp el←⍵ ⋄ vr←0≠(⊃0⍴⊃)¨0⌷⍉el ⋄ tpv←vr/tp ⋄ tpl←(~vr)/tp
- elv←vr/(≢el)↑'rslt' 'rgt' 'lft' ⋄ ell←(~vr)/0⌷⍉el ⋄ ltn←(~vr)/(≢el)↑'zrl'
+ elv←vr/(≢el)↑'rslt' 'rgt' 'lft' ⋄ ell←(~vr)/0⌷⍉el
+ vrn←vr/(≢el)↑'zrl' ⋄ ltn←(~vr)/(≢el)↑'zrl'
  z←'{LOCALP*orz;LOCALP tp;tp.p=NULL;int tpu=0;',nl
  z,←(⊃,/elv{'LOCALP *',⍺,'=',⍵,';'}¨var/vr⌿el),nl
- z,←⊃,/(⊂''),ltn{'BOUND ',⍺,'r=1;BOUND ',⍺,'s[]=',(⍕≢⍵),';'}¨ell
+ z,←⊃,/(⊂''),ltn{'BOUND ',⍺,'r=1;BOUND ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
  z,←⊃,/(⊂''),(git tpl),¨ltn{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
  z,←'if(',(⊃{⍺,'||',⍵}/'rslt=='∘,¨1↓elv),'){orz=rslt;rslt=&tp;tpu=1;}',nl
- z,←'{',(tpv(1∘↓)decl elv),'BOUND zr;BOUND zs[15];',nl,chk,nl,siz,nl
+ z,←'{',((1↓tpv)((1↓vrn)decl)1↓elv),'BOUND zr;BOUND zs[15];',nl,chk,nl,siz,nl
  z,←'relp(rslt);getarray(',(⊃gie ⊃0⌷tp),',zr,zs,rslt);}',nl
- z,←'{',(tpv ⊢decl elv),exe,'}',nl
+ z,←'{',(tpv(vrn decl)elv),exe,'}',nl
  z,←'if(tpu){relp(orz);orz->p=zap(rslt->p);}',nl,'}',nl
  z}
-decl←{tp←⍺⍺ ⍺ ⋄ el←⍺⍺ ⍵ ⋄ n←(≢el)↑⍺⍺ 'zrl'
- z←(⊃,/n{'BOUND ',⍺,'r=',⍵,'->p->RANK;'}¨el),nl
- z,←(⊃,/n{'BOUND*',⍺,'s=',⍵,'->p->SHAPETC;'}¨el),nl
- z,←(⊃,/(git tp),¨n{'*',⍺,'v=ARRAYSTART(',⍵,'->p);'}¨el),nl
+decl←{z←(⊃,/⍺⍺{'BOUND ',⍺,'r=',⍵,'->p->RANK;'}¨⍵),nl
+ z,←(⊃,/⍺⍺{'BOUND*',⍺,'s=',⍵,'->p->SHAPETC;'}¨⍵),nl
+ z,←(⊃,/(git ⍺),¨⍺⍺{'*',⍺,'v=ARRAYSTART(',⍵,'->p);'}¨⍵),nl
  z}
 iotm←{chk←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
   siz←'zr=1;zs[0]=rv[0];' ⋄ exe←'zs[0]'do'zv[i]=i;' ⋄ chk siz exe mxfn ⍺ ⍵}
