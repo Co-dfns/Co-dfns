@@ -29,5 +29,10 @@ shpd←{chk←'if(1!=lr)error(11);' ⋄ siz←'zr=ls[0];','zr'do'zs[i]=lv[i];'
  exe,←'if(rc==0){',('zc'pdo'zv[i]=0;'),'}',nl
  exe,←'else{',('zc'pdo'zv[i]=rv[i%rc];'),'}',nl
  chk siz exe mxfn ⍺ ⍵}
-
+idxd←{chk←'if(lr>1)error(4);if(ls[0]>rr)error(5);'
+ chk,←'ls[0]'do'if(lv[i]<0||lv[i]>=rs[i])error(3);'
+ siz←'zr=rr-ls[0];','zr'do'zs[i]=rs[ls[0]+i];'
+ exe←'BOUND a,m,c=1,k=0;',('zr'do'c*=zs[i];'),'m=c;',nl
+ exe,←('ls[0]'do'a=ls[0]-(i+1);k+=m*lv[a];m*=rs[a];'),'c'pdo'zv[i]=rv[k+i];'
+ chk siz exe mxfn ⍺ ⍵}
 

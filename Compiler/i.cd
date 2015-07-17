@@ -1,24 +1,4 @@
 
-  ⍝ Indexing
-  idxd←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ idxdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ idxdl ⍵ ⋄ ⍺ idxdv ⍵}
-
-  idxdl←{rslt rgt←var/2↑⍵ ⋄ lft←⊃2 0⌷⍵
-   z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨rslt rgt)
-   z,←(⊃git 2⌷⍺),'v[]={',(⊃{⍺,',',⍵}/⍕¨lft),'};',nl
-   z,←'BOUND c,j,k,m,*p,r;','j=',(⍕≢lft),';',nl
-   z,←'r=rgt->p->RANK-j;',nl
-   z,←'BOUND sp[15];','r'do'sp[i]=rgt->p->SHAPETC[j+i];'
-   z,←'LOCALP tp;int tpused=0;tp.p=NULL;LOCALP*orz;',nl
-   z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
-   z,←'relp(rslt);getarray(',(⊃gie ⊃1⌷⍺),',(unsigned)r,sp,rslt);',nl
-   z,←'p=rgt->p->SHAPETC;c=1;','r'do'c*=sp[i];'
-   z,←'m=c;k=0;',nl
-   z,←'j'do'BOUND a=j-(i+1);k+=m*v[a];m*=p[a];'
-   z,←(⊃git 1⌷⍺),'*src,*dst;',nl
-   z,←'dst=ARRAYSTART(rslt->p);src=ARRAYSTART(rgt->p);',nl
-   z,←'c'pdo'dst[i]=src[k+i];'
-   z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
-   z,'}',nl}
 
   ⍝ Bracket Indexing
   brid←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ bridr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ bridl ⍵ ⋄ ⍺ bridv ⍵}
