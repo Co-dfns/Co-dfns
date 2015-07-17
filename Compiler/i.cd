@@ -1,21 +1,3 @@
-
-
-  ⍝ Bracket Indexing
-  brid←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ bridr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ bridl ⍵ ⋄ ⍺ bridv ⍵}
-
-  bridl←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨var/2↑⍵)
-   z,←(⊃git 2⌷⍺),'l[]={',(⊃{⍺,',',⍵}/⍕¨⊃2 0⌷⍵),'};',nl
-   z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
-   z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
-   z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
-   z,←'relp(rslt);getarray(',(⊃gie ⊃⍺),',rgt->p->RANK,sp,rslt);',nl
-   z,←(⊃git ⊃⍺),'*z;aplint32*r;'
-   z,←'z=ARRAYSTART(rslt->p);','r=ARRAYSTART(rgt->p);',nl
-   z,←'BOUND c=1;','rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
-   z,←'c'pdo'z[i]=l[r[i]];'
-   z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
-   z,'}',nl}
-
   ⍝ Catenation
   catd←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catdl ⍵ ⋄ ⍺ catdv ⍵}
   
