@@ -36,6 +36,7 @@ fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}'   'idxd'
 fdb⍪←,¨'['   '{⎕SIGNAL 99}'   'brid'
 fdb⍪←,¨'⍳'   'iotm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'⍴'   'shpm'           'shpd'
+fdb⍪←,¨','   'catm'           'catd'
 
 ⍝ Operators
 odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(''',⍺,'''',⍵,')'}¨1↓⍺⌷⍨(⊂⍺⍺)⍳⍨0⌷⍉⍺}

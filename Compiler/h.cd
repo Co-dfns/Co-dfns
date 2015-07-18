@@ -39,5 +39,5 @@ brid←{chk←'if(lr>1)error(16);','rr'do'rc*=rs[i];'
  chk,←'rc'do'if(rv[i]<0||rv[i]>ls[i])error(3);'
  siz←'zr=rr;','zr'do'zs[i]=rs[i];' ⋄ exe←'rc'pdo'zv[i]=lv[rv[i]];'
  chk siz exe mxfn ⍺ ⍵}
-
-
+catm←{chk←'' ⋄ siz←'zr=1;',('rr'do'rc*=rs[i];'),'zs[0]=rc;'
+ exe←'rc'pdo'zv[i]=rv[i];' ⋄ chk siz exe mxfn ⍺ ⍵}
