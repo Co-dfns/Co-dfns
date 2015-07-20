@@ -13,3 +13,6 @@ fctm←{siz←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
 rotm←{exe←('zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
  exe,←'zc'pdo'BOUND j=i;','rc'pdo'zv[j*rc+i]=rv[j*rc+(rc-(i+1))];'
  ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
+memm←{siz←('rr'do'rc*=rs[i];'),'zr=1;zs[0]=rc;' ⋄ exe←'rc'pdo'zv[i]=rv[i];'
+ '' siz exe mxfn ⍺ ⍵}
+
