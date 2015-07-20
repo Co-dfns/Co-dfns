@@ -7,3 +7,7 @@ catd←{chk←'if(rr==1&&rs[0]==1)rr=0;if(lr==1&&ls[0]==1)lr=0;',nl
  exe←('zr'do'zc*=zs[i];'),'BOUND li=0,ri=0,zm=zs[zr-1],'
  exe,←'lm=(lr<rr||lr==0)?1:ls[lr-1];','zc'do'zv[i]=i%zm<lm?lv[li++]:rv[ri++];'
  chk siz exe mxfn ⍺ ⍵}
+fctm←{siz←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
+ siz,←('rr-1'do'rc*=rs[i+1];'),'zs[1]=rc;rc*=rs[0];}' ⋄ exe←'rc'do'zv[i]=rv[i];'
+ '' siz exe mxfn ⍺ ⍵}
+
