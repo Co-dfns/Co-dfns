@@ -40,6 +40,7 @@ fdb⍪←,¨','   'catm'           'catd'
 fdb⍪←,¨'⍪'   'fctm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'⌽'   'rotm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'∊'   'memm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨'⊃'   'dscm'           '{⎕SIGNAL 16}'
 
 ⍝ Operators
 odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(''',⍺,'''',⍵,')'}¨1↓⍺⌷⍨(⊂⍺⍺)⍳⍨0⌷⍉⍺}

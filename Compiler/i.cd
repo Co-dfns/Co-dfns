@@ -15,4 +15,5 @@ rotm←{exe←('zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
  ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
 memm←{siz←('rr'do'rc*=rs[i];'),'zr=1;zs[0]=rc;' ⋄ exe←'rc'pdo'zv[i]=rv[i];'
  '' siz exe mxfn ⍺ ⍵}
+dscm←{'' 'zr=0;'(('rr'do'rc*=rs[i];'),'zv[0]=rc==0?0:rv[0];')mxfn ⍺ ⍵}
 
