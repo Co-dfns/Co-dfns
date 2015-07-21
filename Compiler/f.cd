@@ -39,6 +39,7 @@ fdb⍪←,¨'⍴'   'shpm'           'shpd'
 fdb⍪←,¨','   'catm'           'catd'
 fdb⍪←,¨'⍪'   'fctm'           'fctd'
 fdb⍪←,¨'⌽'   'rotm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨'⊖'   'rtfm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'∊'   'memm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'⊃'   'dscm'           '{⎕SIGNAL 16}'
 
