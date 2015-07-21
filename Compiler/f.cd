@@ -42,12 +42,4 @@ fdb⍪←,¨'⌽'   'rotm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'⊖'   'rtfm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'∊'   'memm'           '{⎕SIGNAL 16}'
 fdb⍪←,¨'⊃'   'dscm'           '{⎕SIGNAL 16}'
-
-⍝ Operators
-odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(''',⍺,'''',⍵,')'}¨1↓⍺⌷⍨(⊂⍺⍺)⍳⍨0⌷⍉⍺}
-  
-⍝      Prim  Monadic          Dyadic
-⍝ ─────────────────────────────────────────────────────────────────
-odb⍪←,¨'⍨'   'comm'        'comd'
-odb⍪←,¨'¨'   'eacm'        'eacd'
-
+fdb⍪←,¨'≡'   'eqvm'           'eqvd'
