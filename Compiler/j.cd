@@ -2,7 +2,7 @@ lftm←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
  chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}
 rgtm←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
  chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}
-lftd←{chk siz←''('zr=lr;','rr'do'zs[i]=ls[i];')
+lftd←{chk siz←''('zr=lr;','lr'do'zs[i]=ls[i];')
  chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=lv[i];'))mxfn ⍺ ⍵}
 rgtd←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
  chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}

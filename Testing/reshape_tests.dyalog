@@ -1,7 +1,6 @@
 :Namespace reshape
 
-I←{⊃((⎕DR ⍵)323)⎕DR ⍵}
-⍝ S←':Namespace' 'Rv←{⍺⍴⍵}' 'Rl←{2 2⍴⍵}' 'Rr←{⍺⍴5}' ':EndNamespace'
+I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 S←':Namespace' 'Rv←{⍺⍴⍵}' 'Rl←{2 2⍴⍵}' 'Rr←{⍺⍴5}' ':EndNamespace'
 NS←⎕FIX S ⋄ C←#.codfns
 

@@ -1,6 +1,7 @@
 :Namespace power
 
-IP←{⊃((⎕DR ⍵)323)⎕DR ⍵}1+?15⍴10 ⋄ IN←{⊃((⎕DR ⍵)323)⎕DR ⍵}¯5+?15⍴10
+I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
+IP←I 1+?15⍴10 ⋄ IN←I ¯5+?15⍴10
 FP←100÷⍨?15⍴1000 ⋄ FN←100÷⍨¯500+?15⍴1000
 S←':Namespace' 'Run←{⍺*⍵}' ':EndNamespace'
 NS←⎕FIX S ⋄ C←#.codfns

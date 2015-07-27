@@ -6,14 +6,24 @@ flp←'(LOCALP*z,LOCALP*l,LOCALP*r,LOCALP*penv[])'
 elp←'(LOCALP*z,LOCALP*l,LOCALP*r)'
 foi←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
 fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-tps←'int tp=0;switch(r->p->ELTYPE){case APLLONG:break;',nl
+cnvc←{cs st←⍺ ⋄ z←'case ',cs,':{PP p=getarray(APLLONG,0,NULL,NULL);',nl
+ z,←st,'*ss=ARRAYSTART(',⍵,'.p);aplint32*bs=ARRAYSTART(p);*bs=*ss;',nl
+ z,←'relp(&',⍵,');',⍵,'.p=p;};break;',nl ⋄ z}
+cnvs←{z←'if(',⍵,'.p->RANK==0){',nl
+ z,←'switch(',⍵,'.p->ELTYPE){case APLLONG:case APLDOUB:break;',nl
+ z,←⊃,/('APLINTG' 'aplint16')('APLSINT' 'aplint8')cnvc¨⊂⍵
+ z,←'default:error(16);}}',nl ⋄ z}
+tps←'LOCALP cl,cr;regp(&cr);cr.p=ref(r->p);',(cnvs'cr')
+tps,←'if(l!=NULL){regp(&cl);cl.p=ref(l->p);',(cnvs'cl'),'}',nl
+tps,←'int tp=0;switch(cr.p->ELTYPE){case APLLONG:break;',nl
 tps,←'case APLDOUB:tp=3;break;',nl,'default:error(16);}',nl
 tps,←'if(l==NULL)tp+=2;',nl
-tps,←'else switch(l->p->ELTYPE){case APLLONG:break;',nl
+tps,←'else switch(cl.p->ELTYPE){case APLLONG:break;',nl
 tps,←'case APLDOUB:tp+=1;break;',nl,'default:error(16);}',nl
 tps,←'switch(tp){',nl
 tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
-case←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,l,r,env);break;',nl}
+fcln←'cutp(&cr);',nl
+case←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,&cl,&cr,env);break;',nl}
 calm←{z r←var/⍵ ⋄ ⍺⍺,((1⌷⍺)⊃'i' 'i' 'f'),'n(',z,',NULL,',r,',env);',nl}
 rk0←'BOUND prk=0;BOUND sp[15];BOUND cnt=1,i=0;',nl
 rk1←'if(prk!=(' ⋄ rk2←')->p->RANK){if(prk==0){',nl
@@ -37,12 +47,4 @@ gda1←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}
 gdm←{'BOUND m',(⍕⍺),'=',(⍕0≢≢⍵),';',nl}
 gda2←{''('BOUND mz',(⍕⍺),'=cnt;',nl)}
 gda←{(⍺ gda1 ⍵),(⍺ gdm ⍵),(COMPILER≡'pgi')⊃⍺ gda2 ⍵}
-sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-sfp←{(git m⌿⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
-ack←{'p',(⍕⍺),'=getarray(',(⊃gie ⍺⌷⍺⍺),',prk,sp,NULL);',nl}
-gpp←{nl,⍨';',⍨⊃,/'POCKET',⊃{⍺,',',⍵}/'*p'∘,∘⍕¨⍳≢⍵}
-grs←{(⊃git ⍺),'*r',(⍕⍵),'=ARRAYSTART(p',(⍕⍵),');',nl}
-spp←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
-sip←{⍺,'f',⍵,'=d',⍵,'[i*m',⍵,'];',nl}∘⍕
 

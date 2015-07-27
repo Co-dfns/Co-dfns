@@ -1,3 +1,5 @@
+catm←{chk←'' ⋄ siz←'zr=1;',('rr'do'rc*=rs[i];'),'zs[0]=rc;'
+ exe←'rc'pdo'zv[i]=rv[i];' ⋄ chk siz exe mxfn ⍺ ⍵}
 catd←{chk←'if(rr==1&&rs[0]==1)rr=0;if(lr==1&&ls[0]==1)lr=0;',nl
  chk,←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
  chk,←'int sr=rr==lr&&lr!=0?lr-1:minr;','sr'do'if(rs[i]!=ls[i])error(5);'
@@ -10,7 +12,7 @@ catd←{chk←'if(rr==1&&rs[0]==1)rr=0;if(lr==1&&ls[0]==1)lr=0;',nl
 fctm←{siz←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
  siz,←('rr-1'do'rc*=rs[i+1];'),'zs[1]=rc;rc*=rs[0];}'
  '' siz ('rc'pdo'zv[i]=rv[i];') mxfn ⍺ ⍵}
-rotm←{exe←('zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
+rotm←{exe←('zr==0?0:zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
  exe,←'zc'pdo'BOUND j=i;','rc'pdo'zv[j*rc+i]=rv[j*rc+(rc-(i+1))];'
  ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
 memm←{siz←('rr'do'rc*=rs[i];'),'zr=1;zs[0]=rc;' ⋄ exe←'rc'pdo'zv[i]=rv[i];'
@@ -30,10 +32,10 @@ fctd←{chk←'if(rr==1&&rs[0]==1)rr=0;if(lr==1&&ls[0]==1)lr=0;',nl
  exe,←'if(lr==0){',('zc'pdo'zv[i]=lv[0];'),('rc'pdo'zv[zc+i]=rv[i];')
  exe,←'}else{',('lc'pdo'zv[i]=lv[i];'),('zc'pdo'zv[lc+i]=rv[0];'),'}}'
  chk siz exe mxfn ⍺ ⍵}
-rtfm←{exe←'if(zr>0){',('zr-1'do'zc*=zs[i+1];'),'};rc=rr==0?1:rs[0];'
+rtfm←{exe←('zr==0?0:zr-1'do'zc*=zs[i+1];'),'rc=rr==0?1:rs[0];'
  exe,←'rc'pdo'BOUND j=i;','zc'pdo'zv[j*zc+i]=rv[(rc-(j+1))*zc+i];'
  ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
-eqvm←{'' 'zr=0;' 'zv[0]=1;' mxfn ⍺ ⍵}
+eqvm←{'' 'zr=0;' 'zv[0]=rr==0?0:1;' mxfn ⍺ ⍵}
 eqvd←{chk siz←'' 'zr=0;' ⋄ exe←'zv[0]=1;if(rr!=lr)zv[0]=0;'
  exe,←'lr'do'if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}'
  exe,←'lr'do'lc*=ls[i];'

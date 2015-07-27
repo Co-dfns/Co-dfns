@@ -1,6 +1,6 @@
 :Namespace first
 
-I←{⊃((⎕DR ⍵)323)⎕DR ⍵}
+I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 S←':Namespace' 'Run←{⊃⍵}' ':EndNamespace'
 NS←⎕FIX S ⋄ C←#.codfns
 

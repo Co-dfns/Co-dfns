@@ -4,7 +4,7 @@ TEST∆COMPILERS←'gcc' 'icc' 'pgi'
 cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden '
 cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 '
 cso←'-fPIC -shared -I./dwa '
-gop←'-Ofast -Wall -Wno-unused-function '
+gop←'-Ofast -Wall -Wno-unused-function -Wno-unused-variable '
 iop←'-fast -fno-alias -static-intel -Wall -Wno-unused-function '
 fls←{'-o ''',⍵,'_',⍺,'.so'' dwa/dwa_fns.c ''',⍵,'_',⍺,'.c'' '}
 log←{'> ',⍵,'_',⍺,'.log 2>&1'}

@@ -1,6 +1,6 @@
 :Namespace indexgen
 
-I←{⊃((⎕DR ⍵)323)⎕DR ⍵}
+I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 
 S←':Namespace' 'Run←{⍳⍵}' ':EndNamespace'
 

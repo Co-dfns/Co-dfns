@@ -18,7 +18,7 @@ Oi←{(⊃n⍵)('Fexim()i',nl)('catdo')}
 O1←{(n⍵),odb(o ocl)f⊣f u o←⊃v⍵}
 O2←{(⊃n⍵)('Fexdm();',nl)('ptrd')}
 O0←{'' '' ''}
-Of←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳6)case¨⊂⊃⊃v⍵),'}}',nl,nl}
+Of←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳6)case¨⊂⊃⊃v⍵),'}',nl,fcln,'}',nl,nl}
 Fd←{frt,(⊃n⍵),flp,';',nl}
 Fe←{frt,(⊃n⍵),flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
 F0←{frt,(⊃n⍵),flp,'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'reg ⍵}
@@ -32,7 +32,7 @@ Y0←{⊃,/((⍳≢⊃v⍵)((⊣sts¨∘⊃y),'}',nl,⊣ste¨(⊃v)var¨∘⊃e)
 var←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
 nl←⎕UCS 13 10
 for←{'for(i=0;i<',(⍕⍵),';i++){'}
-do←{'{BOUND i;',(for ⍺),⍵,'}}',nl}
+do←{'{BOUND i,_n=',(⍕⍺),';',(for'_n'),⍵,'}}',nl}
 pdo←{p←((⊂COMPILER)∊'icc' 'pgi')⊃''('#pragma simd',nl)
  '{BOUND i;',nl,p,(for ⍺),⍵,'}}',nl}
 tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}

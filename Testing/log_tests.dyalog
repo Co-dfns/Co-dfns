@@ -1,6 +1,6 @@
 :Namespace log
 
-I←{⊃((⎕DR ⍵)323)⎕DR ⍵}?100⍴10000
+I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}?100⍴10000
 F←100÷⍨?100⍴10000
 S←':Namespace' 'Run←{⍺⍟⍵}' ':EndNamespace'
 NS←⎕FIX S ⋄ C←#.codfns
