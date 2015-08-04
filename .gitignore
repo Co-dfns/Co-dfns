@@ -22,6 +22,7 @@ conf/fo.xsl
 doc/tech/titlepage.xsl
 conf/mk.conf
 Scratch/
+Build/
 *.if
 titlepage.xsl
 dwa
