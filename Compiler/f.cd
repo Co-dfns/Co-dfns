@@ -1,48 +1,49 @@
-⍝ Scalar Primitives
-sdb←0 3⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
-  
-⍝      Prim  Monadic            Dyadic
-⍝ ────────────────────────────────────────────────────────────────
-sdb⍪←,¨'+'   '⍵'                '⍺+⍵'
-sdb⍪←,¨'-'   '-1*⍵'             '⍺-⍵'
-sdb⍪←,¨'×'   '(⍵>0)-(⍵<0)'      '⍺*⍵'
-sdb⍪←,¨'÷'   '1.0/⍵'            '((double)⍺)/((double)⍵)'
-sdb⍪←,¨'*'   'exp((double)⍵)'   'pow((double)⍺,(double)⍵)'
-sdb⍪←,¨'⍟'   'log((double)⍵)'   'log((double)⍵)/log((double)⍺)'
-sdb⍪←,¨'|'   'fabs(⍵)'          residue
-sdb⍪←,¨'○'   'PI*⍵'             'error(16)'
-sdb⍪←,¨'⌊'   'floor((double)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'
-sdb⍪←,¨'⌈'   'ceil((double)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'
-sdb⍪←,¨'<'   'error(99)'        '⍺<⍵'
-sdb⍪←,¨'≤'   'error(99)'        '⍺<=⍵'
-sdb⍪←,¨'='   'error(99)'        '⍺==⍵'
-sdb⍪←,¨'≥'   'error(99)'        '⍺>=⍵'
-sdb⍪←,¨'>'   'error(99)'        '⍺>⍵'
-sdb⍪←,¨'≠'   'error(99)'        '⍺!=⍵'
-sdb⍪←,¨'~'   '0==⍵'             'error(16)'
-sdb⍪←,¨'∧'   'error(99)'        '⍺ && ⍵'
-sdb⍪←,¨'∨'   'error(99)'        '⍺ || ⍵'
-sdb⍪←,¨'⍲'   'error(99)'        '!(⍺ && ⍵)'
-sdb⍪←,¨'⍱'   'error(99)'        '!(⍺ || ⍵)'
-sdb⍪←,¨'⌷'   '⍵'                'error(99)'
-
-⍝ Mixed Functions
-fdb←0 3⍴⊂'' ⋄ fcl←{cln ⍺(⍎⊃(⍵⍵⍪fnc ⍺⍺)⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍵⍵),¯1+≢⍵)⍵}
-fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')}
-
-⍝      Prim  Monadic          Dyadic
-⍝ ─────────────────────────────────────────────────────────────────
-fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}'   'idxd'
-fdb⍪←,¨'['   '{⎕SIGNAL 99}'   'brid'
-fdb⍪←,¨'⍳'   'iotm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'⍴'   'shpm'           'shpd'
-fdb⍪←,¨','   'catm'           'catd'
-fdb⍪←,¨'⍪'   'fctm'           'fctd'
-fdb⍪←,¨'⌽'   'rotm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'⊖'   'rtfm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'∊'   'memm'           'memd'
-fdb⍪←,¨'⊃'   'dscm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'≡'   'eqvm'           'eqvd'
-fdb⍪←,¨'≢'   'nqvm'           'nqvd'
-fdb⍪←,¨'⊢'   'rgtm'           'rgtd'
-fdb⍪←,¨'⊣'   'lftm'           'lftd'
+﻿eff←(⊃⍪/)⊢(((⊂∘⍉∘⍪d,'Fe',3↓,)1↑⊣),1↓⊢)(d=∘⊃d)⊂[0]⊢
+ef←(Fm∧¯1=∘×∘⊃¨y)((⊃⍪/)(⊂⊢(⌿⍨)∘~(∨\⊣)),(eff¨⊂[0]))⊢
+ifn←1 'F' 0 'Init' ⍬ 0,(4⍴0)⍬,⍨⊢
+if←(1↑⊢)⍪(⊢(⌿⍨)Om∧1=d)⍪((up⍪⍨∘ifn∘≢∘∪n)⊢(⌿⍨)Em∧1=d)⍪(∨\Fm)(⌿∘⊢)⊢
+fft←(,1↑⊢)(1 'Z',(2↓¯3↓⊣),(n⊢),(y⊢),(⊂2↑∘,1↑∘⍉∘⊃∘e⊢))(¯1↑⊢)
+ff←((⊃⍪/)(1↑⊢),(((1↑⊢)⍪(((¯1+d),1↓⍤1⊢)1↓⊢)⍪fft)¨1↓⊢))scp
+fzt←1 'Y',(2↓¯3↓⊣),(⊂∘∪∘n⊢),(⊂∘(≢-1+⌽⍳∪)n),∘⊂∘∪((,1↑⍉)¨e)
+fzh←(3↑⊣),(⊂∘∪n),(⊂∘∪((,1↑⍉)¨e)),(⊂((≢-1+⌽⍳∪)n)⊃¨∘⊂(⊃¨y)),6↓⊣
+fzf←0≠(≢∘⍴¨∘⊃∘v⊣)
+fzb←(((⊃∘v⊣)(⌿⍨)fzf),n),∘⍪('f'∘,∘⍕¨∘⍳(+/fzf)),('s'∘,∘⍕¨∘⍳∘≢⊢)
+fzv←((⊂⊣)(⊖↑)⍨¨(≢⊣)(-+∘⍳⊢)(≢⊢))((⊢,⍨1⌷∘⍉⊣)⌷⍨(0⌷∘⍉⊣)⍳⊢)⍤2 0¨v
+fze←(¯1+d),t,k,fzb((⊢/(-∘≢⊢)↑⊣),r,s,fzv,y,∘⍪e)⊢
+fzs←(,1↑⊢)(fzh⍪fze⍪fzt)(⌿∘⊢)
+fz←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1↓⊢))(1,1↓Sm)⊂[0]⊢
+fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
+dis←{⍺←⊢ ⋄ 0=⊃t⍵:3⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
+gc←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
+E1←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑↓⍉⊃e⍵}
+E2←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓↓⍉⊃e⍵}
+E0←{r l f←⊃v⍵ ⋄ (⊃git 1↑⊃y⍵),(⊃n⍵),'=',(sdb(f scl)(1+'%u'≢l)↑r l),';',nl}
+Oi←{(⊃n⍵)('Fexim()i',nl)('catdo')}
+O1←{(n⍵),odb(o ocl)f⊣f u o←⊃v⍵}
+O2←{(⊃n⍵)('Fexdm();',nl)('ptrd')}
+O0←{'' '' ''}
+Of←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳6)case¨⊂⊃⊃v⍵),'}',nl,fcln,'}',nl,nl}
+Fd←{frt,(⊃n⍵),flp,';',nl}
+Fe←{frt,(⊃n⍵),flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
+F0←{frt,(⊃n⍵),flp,'{',nl,'LOCALP *env[]={tenv};',nl,'tenv'reg ⍵}
+F1←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),'env0'reg ⍵}
+Z0←{'}',nl,nl}
+Z1←{'z->p=zap((',((⊃n⍵)var⊃e⍵),')->p);',cutp,nl,'}',nl,nl}
+Ze←{'}',nl,nl}
+M0←{rth,('tenv'dnv ⍵),nl,'LOCALP *env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
+S0←{(('{',rk0,srk,('prk'do'cnt*=sp[i];'),spp,sfv,slp)⍵)}
+Y0←{⊃,/((⍳≢⊃v⍵)((⊣sts¨∘⊃y),'}',nl,⊣ste¨(⊃v)var¨∘⊃e)⍵),'}',nl}
+var←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+nl←⎕UCS 13 10
+for←{'for(i=0;i<',(⍕⍵),';i++){'}
+do←{'{BOUND i,_n=',(⍕⍺),';',(for'_n'),⍵,'}}',nl}
+pdo←{p←((⊂COMPILER)∊'icc' 'pgi')⊃''('#pragma simd',nl)
+ '{BOUND i;',nl,p,(for ⍺),⍵,'}}',nl}
+tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
+enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
+fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
+cln←'¯'⎕R'-'
+rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+rth,←'#include <stdio.h>',nl
+rth,←'int isinit=0;',nl
+rth,←'#define PI 3.14159265358979323846',nl

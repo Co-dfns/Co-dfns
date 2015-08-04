@@ -1,3 +1,23 @@
+﻿⍝ Mixed Functions
+fdb←0 3⍴⊂'' ⋄ fcl←{cln ⍺(⍎⊃(⍵⍵⍪fnc ⍺⍺)⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍵⍵),¯1+≢⍵)⍵}
+fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')}
+
+⍝      Prim  Monadic          Dyadic
+⍝ ─────────────────────────────────────────────────────────────────
+fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}'   'idxd'
+fdb⍪←,¨'['   '{⎕SIGNAL 99}'   'brid'
+fdb⍪←,¨'⍳'   'iotm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨'⍴'   'shpm'           'shpd'
+fdb⍪←,¨','   'catm'           'catd'
+fdb⍪←,¨'⍪'   'fctm'           'fctd'
+fdb⍪←,¨'⌽'   'rotm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨'⊖'   'rtfm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨'∊'   'memm'           'memd'
+fdb⍪←,¨'⊃'   'dscm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨'≡'   'eqvm'           'eqvd'
+fdb⍪←,¨'≢'   'nqvm'           'nqvd'
+fdb⍪←,¨'⊢'   'rgtm'           'rgtd'
+fdb⍪←,¨'⊣'   'lftm'           'lftd'
 
 ⍝ Operators
 odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(''',⍺,'''',⍵,')'}¨1↓⍺⌷⍨(⊂⍺⍺)⍳⍨0⌷⍉⍺}
@@ -54,4 +74,3 @@ odb⍪←,¨'¨'   'eacm'        'eacd'
    z,←'c'do'z[0]+=l[i]*r[i];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
    z,'}',nl}
-

@@ -1,53 +1,38 @@
-⍝ Type: (RL|UU UI UF UN IU II IF IN FU FI FF FN)
-pft←(2↑⊢)((5⍴0),(2↑⊢),(0⌷⊣),0,(¯2↑⊢),1⌷⊣)(2↓⊢)
-pn←⍬ ⋄ pt←0 12⍴⍬
-pn,←⊂'%b' ⋄ pt⍪←pft 1 2 1 1 2 2
-pn,←⊂'%i' ⋄ pt⍪←pft 1 2 0 0 0 0
-pn,←⊂'%u' ⋄ pt⍪←12⍴3
-
-⍝ Name   Type   (RL|IN  FN II  IF FI  FF)                  (RL|IN FN II  IF FI FF)
-⍝ ───────────────────────────────────────────────────────────────────────────────
-pn,←⊂,'⍺' ⋄ pt⍪←pft ¯6  ¯6  1   2  1   2 ⋄ pn,←⊂,'⍵' ⋄ pt⍪←pft  1  2  1   1 2   2
-pn,←⊂,'+' ⋄ pt⍪←pft  1   2  1   2  2   2 ⋄ pn,←⊂,'-' ⋄ pt⍪←pft  1  2  1   2 2   2
-pn,←⊂,'÷' ⋄ pt⍪←pft  2   2  2   2  2   2 ⋄ pn,←⊂,'×' ⋄ pt⍪←pft  1  1  1   2 2   2
-pn,←⊂,'|' ⋄ pt⍪←pft  1   2  1   2  2   2 ⋄ pn,←⊂,'*' ⋄ pt⍪←pft  2  2  2   2 2   2
-pn,←⊂,'⍟' ⋄ pt⍪←pft  2   2  2   2  2   2 ⋄ pn,←⊂,'⌈' ⋄ pt⍪←pft  1  2  1   2 2   2
-pn,←⊂,'⌊' ⋄ pt⍪←pft  1   2  1   2  2   2 ⋄ pn,←⊂,'<' ⋄ pt⍪←pft ¯2 ¯2  1   1 1   1
-pn,←⊂,'≤' ⋄ pt⍪←pft ¯2  ¯2  1   1  1   1 ⋄ pn,←⊂,'=' ⋄ pt⍪←pft ¯2 ¯2  1   1 1   1
-pn,←⊂,'≠' ⋄ pt⍪←pft ¯2  ¯2  1   1  1   1 ⋄ pn,←⊂,'≥' ⋄ pt⍪←pft ¯2 ¯2  1   1 1   1
-pn,←⊂,'>' ⋄ pt⍪←pft ¯2  ¯2  1   1  1   1 ⋄ pn,←⊂,'⌷' ⋄ pt⍪←pft  1  2  1 ¯11 2 ¯11
-pn,←⊂,'⍴' ⋄ pt⍪←pft  1   1  1 ¯11  1 ¯11 ⋄ pn,←⊂,',' ⋄ pt⍪←pft  1  2  1   2 2   2
-pn,←⊂,'⍳' ⋄ pt⍪←pft  1 ¯11  1   1  1   1 ⋄ pn,←⊂,'○' ⋄ pt⍪←pft  2  2  2   2 2   2
-pn,←⊂,'¨' ⋄ pt⍪←pft  1   2 ¯2  ¯2 ¯2  ¯2 ⋄ pn,←⊂,'.' ⋄ pt⍪←pft ¯2 ¯2  1   1 2   2
-pn,←⊂,'~' ⋄ pt⍪←pft  1   1  1   2  1   2 ⋄ pn,←⊂,'[' ⋄ pt⍪←pft ¯2 ¯2  1   2 1   2
-pn,←⊂,'∧' ⋄ pt⍪←pft ¯2  ¯2  1   2  2   2 ⋄ pn,←⊂,'∨' ⋄ pt⍪←pft ¯2 ¯2  1   2 2   2
-pn,←⊂,'⍲' ⋄ pt⍪←pft ¯2  ¯2  1   1  1   1 ⋄ pn,←⊂,'⍱' ⋄ pt⍪←pft ¯2 ¯2  1   1 1   1
-pn,←⊂,'⍪' ⋄ pt⍪←pft  1   2  1   2  2   2 ⋄ pn,←⊂,'⌽' ⋄ pt⍪←pft  1  2  1   1 2   2
-pn,←⊂,'∊' ⋄ pt⍪←pft  1   2  1   1  1   1 ⋄ pn,←⊂,'⊃' ⋄ pt⍪←pft  1  2  0   0 0   0
-pn,←⊂,'⊖' ⋄ pt⍪←pft  1   2  1   1  2   2 ⋄ pn,←⊂,'≡' ⋄ pt⍪←pft  1  1  1   1 1   1
-pn,←⊂,'≢' ⋄ pt⍪←pft  1   1  1   1  1   1 ⋄ pn,←⊂,'⊢' ⋄ pt⍪←pft  1  2  1   1 2   2
-pn,←⊂,'⊣' ⋄ pt⍪←pft  1   2  1   2  1   2
-
-tt←{fd fz ff if ef td vc fs av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
-scp←(1,1↓Fm)⊂[0]⊢
-mnd←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
-sub←{⍺←⊢ ⋄ A⊣(m⌿A)←⍺ ⍺⍺(m←⍺ ⍵⍵ ⍵)⌿A←⍵}
-prf←((≢↑¯1↓(0≠⊢)(/∘⊢)⊢)⍤1↑∘r)⊢
-blg←{⍺←⊢ ⋄ ⍺((prf(⌈/(⍳∘≢⊢)×⍤1(1↓⊣)∧.(=∨0=⊢)∘⍉⊢)⍺⍺(⌿∘↑)r)⌷⍤0 2 ⍺⍺(⌿∘⊢)⍵⍵)⍵}
-enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
-
-rn←⊢,∘↓(1+d)↑⍤¯1(+⍀d∘.=∘⍳1+(⌈/0,d))
-rd←⊢,(+/↑∘r∧.(=∨0=⊢)∘⍉∘↑∘r Fs)
-df←(~(+\1=d)∊((1=d)∧(Om∨Fm)∧0∊⍨n)(/∘⊢)(+\1=d))(⌿∘⊢)⊢
-dua←(Fm∨↓∘prf∊r∘Fs)(⊣(⍀∘⊢)(⊣(⌿∘⊢)0∊⍨n)(0,1↓(¯1⌽⊣)∧⊢=¯1⌽⊢)⊣(⌿∘⊢)d)⊢
-du←(~dua∨(∨/(prf∧.(=∨0=⊢)∘⍉dua(⌿∘⊢)prf)∧↑∘r∧.≥∘⍉dua(⌿∘⊢)↑∘r×0=prf))(⌿∘⊢)⊢
-lfv←⍉∘⍪(1+⊣),'Vf',('fn'enc 4⊃⊢),4↓⊢
-lfn←('F'≡1⊃⊢)⌷(⊣-⍨∘⊃⊢)((⊂∘⍉∘⍪⊣,1↓⊢),∘⊂(⊣,'Of',3↓⊢)⍪lfv)⊢
-lfh←(1<(+/⊣))⊃(⊂0↑⊢),∘⊂∘⍉∘⍪1'F'1,('fn'enc⊣),(⊂⊣),5↓∘,1↑⊢
-lf←(1↑⊢)⍪∘⊃(⍪/(1,1↓Fm)blg(↑r)(⊂lfh⍪∘⊃(⍪/((¯2+1=(+/⊣))+∘⊃⊢)lfn⍤¯1⊢))⌸1↓⊢)
-dn←((0∊⍨n)∧(Am∧'v'∊⍨k)∨Om∧'f'∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
-fen←((⊂'fe')(⊃enc)¨((0∊⍨n)∧Em∨Om∨Am)(⌿∘⊢)r)((0∊⍨n)∧Em∨Om∨Am)mnd n⊢
-fet←('V'0⍴⍨2,⍨(+/0,1↓Em∨Om∨Am))(0,1↓Em∨Om∨Am)mnd(t,∘⍪k)⊢
-fee←(⍪/⌽)(1,1↓Em∨Om∨Am)blg⊢((⊂(d-⊃-2⌊⊃),fet,fen,4↓⍤1⊢)⍪)⌸1↓⊢
-fe←(⊃⍪/)(+\Fm)(⍪/(⊂1↑⊢),∘((+\d=⊃)fee⌸⊢)1↓⊢)⌸⊢
+﻿ws←(' ',⎕UCS 9)_set
+aws←ws _any _ign ⋄ awslf←(⎕UCS 10 13)_set _o ws _any _ign
+nss←awslf _s(':Namespace'_tk)_s awslf _ign
+nse←awslf _s(':EndNamespace'_tk)_s awslf _ign
+gets←aws _s('←'_tk)_s aws ⋄ him←'¯'_set ⋄ dot←'.'_set
+lbrc←aws _s('{'_tk)_s aws _ign ⋄ rbrc←aws _s('}'_tk)_s aws _ign
+lpar←aws _s('('_tk)_s aws _ign ⋄ rpar←aws _s(')'_tk)_s aws _ign
+lbrk←aws _s('['_tk)_s aws _ign ⋄ rbrk←aws _s(']'_tk)_s aws _ign
+alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
+digits←'0123456789'_set ⋄ prim←'+-÷×|*⍟⌈⌊<≤=≠≥>∧∨⍲⍱⌷⍴,⍪⌽⊖∊⊃⍳○~≡≢⊢⊣'_set
+mop←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
+eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
+digs←digits _some ⋄ odigs←digits _any
+int←aws _s (him _opt) _s digs _s aws
+float←aws _s (int _s dot _s odigs _o (dot _s digs)) _s aws
+name←aws _s alpha _s (alpha _o digits _any) _s aws
+aw←aws _s ('⍺⍵'_set) _s aws
+sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
+Prim←prim _as P
+Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
+Mop←Fn _o Prim _s (mop _as P) _as (1 O)
+Dop←Prim _s (dop _as P) _s Prim _as (2 O)
+Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
+Bind←{⍺(name _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as bind)⍵}
+Fex←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
+Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
+Var←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
+Num←float _o int _as N
+Atom←{⍺(Num _some _as ('n'A) _o (0 Var'a' _as ('v'A)) _o Pex)⍵}
+Mon←{⍺(Fex _s Ex _as (1 E))⍵}
+Dya←{⍺((Idx _o Atom) _s Fex _s Ex _as (2 E))⍵}
+Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
+Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
+Pex←lpar _s Ex _s rpar
+Stmt←sep _any _s (Ex _o Fex) _s (sep _any)
+Ns←nss _s (Stmt _aew nse) _s eot _as M
+ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
 

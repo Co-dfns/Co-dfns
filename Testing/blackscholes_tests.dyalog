@@ -1,4 +1,4 @@
-:Namespace blackscholes
+﻿:Namespace blackscholes
 
 BS←':Namespace' 'r←0.02	⋄ v←0.03' 
 BS,←⊂'coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442'
@@ -18,15 +18,18 @@ GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 C←#.codfns
 
 BLACKSCHOLES∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'gcc'
-  CN←'Scratch/blackscholes'C.Fix BS
-  #.UT.expect←7 2⍴1
-  0.000000000001≥|(L NS.Run R)-L CN.Run R}
+  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
+  C.COMPILER←'gcc' ⋄ CN←'Scratch/blackscholes'C.Fix BS
+  #.UT.expect←7 2⍴1 ⋄ 0.000000000001≥|(L NS.Run R)-L CN.Run R}
 
 BLACKSCHOLES∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'icc'
-  CN←'Scratch/blackscholes'C.Fix BS
-  #.UT.expect←1
-  ∧/,0.000000000001≥|(L NS.Run R)-L CN.Run R}
+  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
+  C.COMPILER←'icc' ⋄ CN←'Scratch/blackscholes'C.Fix BS
+  #.UT.expect←1 ⋄ ∧/,0.000000000001≥|(L NS.Run R)-L CN.Run R}
+
+BLACKSCHOLES∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
+  C.COMPILER←'vsc' ⋄ CN←'blackscholes'C.Fix BS
+  #.UT.expect←7 2⍴1 ⋄ 0.000000000001≥|(L NS.Run R)-L CN.Run R}
 
 :EndNamespace
