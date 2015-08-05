@@ -1,4 +1,4 @@
-:Namespace reciprocal
+﻿:Namespace reciprocal
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
 F←100÷⍨?100⍴10000
@@ -9,22 +9,32 @@ NS←⎕FIX S
 C←#.codfns
 
 RECIPROCAL∆I∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/reciprocali'C.Fix S ⋄ C.COMPILER←'gcc'
+  C.COMPILER←'gcc' ⋄ CS←'Scratch/reciprocali'C.Fix S
   #.UT.expect←NS.Run I ⋄ CS.Run I
 }
 
 RECIPROCAL∆I∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/reciprocali'C.Fix S ⋄ C.COMPILER←'gcc'
+  C.COMPILER←'icc' ⋄ CS←'Scratch/reciprocali'C.Fix S
+  #.UT.expect←NS.Run I ⋄ CS.Run I
+}
+
+RECIPROCAL∆I∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  C.COMPILER←'vsc' ⋄ CS←'reciprocali'C.Fix S
   #.UT.expect←NS.Run I ⋄ CS.Run I
 }
 
 RECIPROCAL∆F∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/reciprocalf'C.Fix S ⋄ C.COMPILER←'gcc'
+  C.COMPILER←'gcc' ⋄ CS←'Scratch/reciprocalf'C.Fix S
   #.UT.expect←NS.Run F ⋄ CS.Run F
 }
 
 RECIPROCAL∆F∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/reciprocalf'C.Fix S ⋄ C.COMPILER←'gcc'
+  C.COMPILER←'icc' ⋄ CS←'Scratch/reciprocalf'C.Fix S
+  #.UT.expect←NS.Run F ⋄ CS.Run F
+}
+
+RECIPROCAL∆F∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  C.COMPILER←'vsc' ⋄ CS←'reciprocalf'C.Fix S
   #.UT.expect←NS.Run F ⋄ CS.Run F
 }
 

@@ -1,4 +1,4 @@
-:Namespace bs9
+﻿:Namespace bs9
 
 BS←':Namespace' 'r←0.02	⋄ v←0.03' 
 BS,←⊂'coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442'
@@ -23,6 +23,12 @@ BS9∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
 BS9∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
   D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'icc'
   CN←'Scratch/bs9'C.Fix BS
+  #.UT.expect←7⍴1
+  0.000000000001≥|(L NS.Run R)-L CN.Run R}
+
+BS9∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D ⋄ C.COMPILER←'vsc'
+  CN←'bs9'C.Fix BS
   #.UT.expect←7⍴1
   0.000000000001≥|(L NS.Run R)-L CN.Run R}
 

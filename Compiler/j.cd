@@ -1,7 +1,6 @@
 ﻿catm←{chk←'' ⋄ siz←'zr=1;',('rr'do'rc*=rs[i];'),'zs[0]=rc;'
  exe←'rc'pdo'zv[i]=rv[i];' ⋄ chk siz exe mxfn ⍺ ⍵}
-catd←{chk←'if(rr==1&&rs[0]==1)rr=0;if(lr==1&&ls[0]==1)lr=0;',nl
- chk,←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
+catd←{chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
  chk,←'int sr=rr==lr&&lr!=0?lr-1:minr;','sr'do'if(rs[i]!=ls[i])error(5);'
  siz←'zs[0]=1;if(lr>rr){zr=lr;',('lr'do'zs[i]=ls[i];')
  siz,←'}else{zr=rr;',('rr'do'zs[i]=rs[i];'),'}',nl
@@ -18,8 +17,7 @@ rotm←{exe←('zr==0?0:zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
 memm←{siz←('rr'do'rc*=rs[i];'),'zr=1;zs[0]=rc;' ⋄ exe←'rc'pdo'zv[i]=rv[i];'
  '' siz exe mxfn ⍺ ⍵}
 dscm←{'' 'zr=0;'(('rr'do'rc*=rs[i];'),'zv[0]=rc==0?0:rv[0];')mxfn ⍺ ⍵}
-fctd←{chk←'if(rr==1&&rs[0]==1)rr=0;if(lr==1&&ls[0]==1)lr=0;',nl
- chk,←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
+fctd←{chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
  chk,←'if(lr==rr&&rr>0){','rr-1'do'if(rs[i+1]!=ls[i+1])error(5);'
  chk,←'}else if(lr<rr){','lr'do'if(ls[i]!=rs[i+1])error(5);'
  chk,←'}else{','rr'do'if(ls[i+1]!=rs[i])error(5);}'

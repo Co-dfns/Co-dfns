@@ -1,4 +1,4 @@
-﻿:Namespace and
+:Namespace and
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 I1←I ?10⍴2

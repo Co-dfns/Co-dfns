@@ -11,7 +11,7 @@ BS,←⊂'CD1←CNDP2 D1 ⋄ CD2←CNDP2 D2 ⋄ e←*(-r)×T'
 BS,←⊂'((S×CD1)-X×e×CD2),[0.5](X×e×1-CD2)-S×1-CD1'
 BS,←'}' ':EndNamespace'
 
-COMPILE_TEST←{
+COMPILE∆VSC_TEST←{~(⊂'vsc')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
   #.UT.expect←1 1 1 1 1
   vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
   (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
