@@ -20,12 +20,13 @@ fdb⍪←,¨'⊢'   'rgtm'           'rgtd'
 fdb⍪←,¨'⊣'   'lftm'           'lftd'
 
 ⍝ Operators
-odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(''',⍺,'''',⍵,' ⍵⍵)'}¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
+odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(',(opl ⍺),⍵,' ⍵⍵)'}¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
+opl←{⊃,/{'(,''',⍵,''')'}¨⍵}
   
-⍝      Prim  Monadic          Dyadic
+⍝      Prim  Monadic Dyadic
 ⍝ ─────────────────────────────────────────────────────────────────
-odb⍪←,¨'⍨'   'comm'        'comd'
-odb⍪←,¨'¨'   'eacm'        'eacd'
+odb⍪←,¨'⍨'   'comm'  'comd'
+odb⍪←,¨'¨'   'eacm'  'eacd'
 
   ⍝ Lamination
   catdo←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catdl ⍵ ⋄ ⍺ catdv ⍵}
