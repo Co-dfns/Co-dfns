@@ -6,5 +6,14 @@ lftd←{chk siz←''('zr=lr;','lr'do'zs[i]=ls[i];')
  chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=lv[i];'))mxfn ⍺ ⍵}
 rgtd←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
  chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}
-sdbm←(0⌷⍉sdb),('''mxsf)',⍨'(''',⊢)¨⍉1↓⍉sdb
+sdbm←(0⌷⍉sdb),'mxsm' 'mxsd'{'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
 comd←{((1↑⍺)⍪⊖1↓⍺)(⍺⍺ fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
+mxsm←{siz←'zr=rr;','zr'do'zc*=rs[i];zs[i]=rs[i];'
+ exe←'zc'pdo'zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';' ⋄ '' siz exe mxfn ⍺ ⍵}
+mxsd←{chk←'if(lr==rr){',('lr'do'if(rs[i]!=ls[i])error(5);'),'}'
+ chk,←'else if(lr!=0&&rr!=0){error(4);}' ⋄ siz←'if(rr==0){zr=lr;'
+ siz,←('lr'do'zc*=ls[i];lc*=ls[i];zs[i]=ls[i];'),'}else{zr=rr;'
+ siz,←('rr'do'zc*=rs[i];rc*=rs[i];zs[i]=rs[i];'),('lr'do'lc*=ls[i];'),'}'
+ exe←'zc'pdo'zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';'
+ chk siz exe mxfn ⍺ ⍵}
+comm←{((1↑⍺)⍪⍪⍨1↓⍺)(⍺⍺ fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
