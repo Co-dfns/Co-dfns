@@ -17,3 +17,11 @@ mxsd←{chk←'if(lr==rr){',('lr'do'if(rs[i]!=ls[i])error(5);'),'}'
  exe←'zc'pdo'zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';'
  chk siz exe mxfn ⍺ ⍵}
 comm←{((1↑⍺)⍪⍪⍨1↓⍺)(⍺⍺ fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
+eacm←{siz←'zr=rr;','zr'do'zc*=rs[i];zs[i]=rs[i];'
+ exe←'LOCALP sz,sr;regp(&sz);regp(&sr);',nl
+ exe,←(⊃,/(gie ⍺){'getarray(',⍺,',0,NULL,&',⍵,');'}¨'sz' 'sr'),nl
+ exe,←(⊃,/(git ⍺){⍺,'*',⍵,';'}¨'szv' 'srv'),nl
+ bod←'srv=ARRAYSTART(sr.p);srv[0]=rv[i];',nl
+ bod,←⍺(⍺⍺ fcl(⍵⍵⍪sdbm))↑('&sz'(2⍴¯1))('&sr'(2⍴¯1))
+ bod,←'szv=ARRAYSTART(sz.p);zv[i]=szv[0];'
+ exe,←('zc'do bod),'cutp(&sz);' ⋄ '' siz exe mxfn ⍺ ⍵}
