@@ -43,7 +43,7 @@ odb⍪←,¨'¨'   'eacm'  'eacd'
    z,'}',nl}
 
   ⍝ Monadic Each (¨)
-  eacm←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺(⍺⍺ eacmr)⍵ ⋄ ⍺(⍺⍺ eacmv)⍵}
+  eacm←{_←⍵⍵ ⋄ 0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺(⍺⍺ eacmr)⍵ ⋄ ⍺(⍺⍺ eacmv)⍵}
 
   eacmv←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨var/⍵)
    z,←'BOUND sp[15];','rgt->p->RANK'do'sp[i]=rgt->p->SHAPETC[i];'
