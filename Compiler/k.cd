@@ -25,3 +25,15 @@ eacm←{siz←'zr=rr;','zr'do'zc*=rs[i];zs[i]=rs[i];'
  bod,←⍺(⍺⍺ fcl(⍵⍵⍪sdbm))↑('&sz'(2⍴¯1))('&sr'(2⍴¯1))
  bod,←'szv=ARRAYSTART(sz.p);zv[i]=szv[0];'
  exe,←('zc'do bod),'cutp(&sz);' ⋄ '' siz exe mxfn ⍺ ⍵}
+eacd←{chk←'if(lr==rr){',('lr'do'if(rs[i]!=ls[i])error(5);'),'}'
+ chk,←'else if(lr!=0&&rr!=0){error(4);}' ⋄ siz←'if(rr==0){zr=lr;'
+ siz,←('lr'do'zc*=ls[i];lc*=ls[i];zs[i]=ls[i];'),'}else{zr=rr;'
+ siz,←('rr'do'zc*=rs[i];rc*=rs[i];zs[i]=rs[i];'),('lr'do'lc*=ls[i];'),'}'
+ exe←'LOCALP sz,sr,sl;regp(&sz);regp(&sr);regp(&sl);',nl
+ exe,←(⊃,/(gie ⍺){'getarray(',⍺,',0,NULL,&',⍵,');'}¨'s',¨'zrl'),nl
+ exe,←(⊃,/(git ⍺){⍺,'*',⍵,';'}¨'s',¨'zrl',¨'v'),nl
+ bod←'srv=ARRAYSTART(sr.p);slv=ARRAYSTART(sl.p);*srv=rv[i];*slv=lv[i];',nl
+ bod,←⍺(⍺⍺ fcl(⍵⍵⍪sdbm))('&s'∘,¨'zrl'),⍤0⊢⊂2⍴¯1
+ bod,←'szv=ARRAYSTART(sz.p);zv[i]=szv[0];'
+ exe,←('zc'do bod),'cutp(&sz);' ⋄ '' siz exe mxfn ⍺ ⍵}
+cald←{z r l←var/⍵ ⋄ ⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl}
