@@ -16,7 +16,6 @@ tps,←'switch(tp){',nl
 tpi←'ii' 'if' 'in' 'fi' 'ff' 'fn'
 fcln←'cutp(&cr);',nl
 case←{'case ',(⍕⍺),':',⍵,(⍺⊃tpi),'(z,&cl,&cr,env);break;',nl}
-calm←{z r←var/⍵ ⋄ ⍺⍺,((1⌷⍺)⊃'i' 'i' 'f'),'n(',z,',NULL,',r,',env);',nl}
 rk0←'unsigned prk=0;BOUND sp[15];BOUND cnt=1,i=0;',nl
 rk1←'if(prk!=(' ⋄ rk2←')->p->RANK){if(prk==0){',nl
 rsp←{'prk=(',⍵,')->p->RANK;',nl,'prk'do'sp[i]=(',⍵,')->p->SHAPETC[i];'}

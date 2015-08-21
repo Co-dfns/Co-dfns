@@ -8,6 +8,7 @@ rgtd←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
  chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}
 sdbm←(0⌷⍉sdb),'mxsm' 'mxsd'{'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
 comd←{((1↑⍺)⍪⊖1↓⍺)(⍺⍺ fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
+comm←{((1↑⍺)⍪⍪⍨1↓⍺)(⍺⍺ fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
 mxsm←{siz←'zr=rr;','zr'do'zc*=rs[i];zs[i]=rs[i];'
  exe←'zc'pdo'zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';' ⋄ '' siz exe mxfn ⍺ ⍵}
 mxsd←{chk←'if(lr==rr){',('lr'do'if(rs[i]!=ls[i])error(5);'),'}'
@@ -16,24 +17,36 @@ mxsd←{chk←'if(lr==rr){',('lr'do'if(rs[i]!=ls[i])error(5);'),'}'
  siz,←('rr'do'zc*=rs[i];rc*=rs[i];zs[i]=rs[i];'),('lr'do'lc*=ls[i];'),'}'
  exe←'zc'pdo'zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';'
  chk siz exe mxfn ⍺ ⍵}
-comm←{((1↑⍺)⍪⍪⍨1↓⍺)(⍺⍺ fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
+scmx←{(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
+calm←{z r←var/⍵ ⋄ arr←⍺⍺,((1⌷⍺)⊃'iif'),'n(',z,',NULL,',r,',env);',nl
+ scl←'{LOCALP sz,sr;regp(&sz);regp(&sr);',nl
+ scl,←(⊃,/(gie ⍺){'getarray(',⍺,',0,NULL,&s',⍵,');'}¨'zr'),nl
+ scl,←(1⊃git ⍺),'*srv=ARRAYSTART(sr.p);*srv=',r,';',nl
+ scl,←⍺⍺,((1⌷⍺)⊃'iif'),'n(&sz,NULL,&sr,env);',nl
+ scl,←(⊃git ⍺),'*szv=ARRAYSTART(sz.p);',z,'=*szv;cutp(&sz);}',nl
+ (∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
+cald←{z r l←var/⍵ ⋄ arr←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl
+ scl←'{LOCALP sz,sr,sl;regp(&sz);regp(&sr);regp(&sl);',nl
+ scl,←(⊃,/(gie ⍺){'getarray(',⍺,',0,NULL,&s',⍵,');'}¨'zrl'),nl
+ scl,←(⊃,/(git ¯2↑⍺){⍺,'*s',⍵,'v=ARRAYSTART(s',⍵,'.p);'}¨'rl'),nl
+ scl,←(⊃,/'rl'{'*s',⍺,'v=',⍵,';'}¨r l),nl
+ scl,←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(&sz,&sl,&sr,env);',nl
+ scl,←(⊃git ⍺),'*szv=ARRAYSTART(sz.p);',z,'=*szv;cutp(&sz);}',nl
+ (∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 eacm←{siz←'zr=rr;','zr'do'zc*=rs[i];zs[i]=rs[i];'
- exe←'LOCALP sz,sr;regp(&sz);regp(&sr);',nl
- exe,←(⊃,/(gie ⍺){'getarray(',⍺,',0,NULL,&',⍵,');'}¨'sz' 'sr'),nl
- exe,←(⊃,/(git ⍺){⍺,'*',⍵,';'}¨'szv' 'srv'),nl
- bod←'srv=ARRAYSTART(sr.p);srv[0]=rv[i];',nl
- bod,←⍺(⍺⍺ fcl(⍵⍵⍪sdbm))↑('&sz'(2⍴¯1))('&sr'(2⍴¯1))
- bod,←'szv=ARRAYSTART(sz.p);zv[i]=szv[0];'
- exe,←('zc'do bod),'cutp(&sz);' ⋄ '' siz exe mxfn ⍺ ⍵}
+ exe←'zc'do ⍺(⍺⍺ scmx ⍵⍵)'zv[i]' 'rv[i]' ⋄ '' siz exe mxfn ⍺ ⍵}
 eacd←{chk←'if(lr==rr){',('lr'do'if(rs[i]!=ls[i])error(5);'),'}'
  chk,←'else if(lr!=0&&rr!=0){error(4);}' ⋄ siz←'if(rr==0){zr=lr;'
  siz,←('lr'do'zc*=ls[i];lc*=ls[i];zs[i]=ls[i];'),'}else{zr=rr;'
  siz,←('rr'do'zc*=rs[i];rc*=rs[i];zs[i]=rs[i];'),('lr'do'lc*=ls[i];'),'}'
- exe←'LOCALP sz,sr,sl;regp(&sz);regp(&sr);regp(&sl);',nl
- exe,←(⊃,/(gie ⍺){'getarray(',⍺,',0,NULL,&',⍵,');'}¨'s',¨'zrl'),nl
- exe,←(⊃,/(git ⍺){⍺,'*',⍵,';'}¨'s',¨'zrl',¨'v'),nl
- bod←'srv=ARRAYSTART(sr.p);slv=ARRAYSTART(sl.p);*srv=rv[i];*slv=lv[i];',nl
- bod,←⍺(⍺⍺ fcl(⍵⍵⍪sdbm))('&s'∘,¨'zrl'),⍤0⊢⊂2⍴¯1
- bod,←'szv=ARRAYSTART(sz.p);zv[i]=szv[0];'
- exe,←('zc'do bod),'cutp(&sz);' ⋄ '' siz exe mxfn ⍺ ⍵}
-cald←{z r l←var/⍵ ⋄ ⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl}
+ exe←'zc'do ⍺(⍺⍺ scmx ⍵⍵)'zv[i]' 'rv[i]' 'lv[i]' ⋄ chk siz exe mxfn ⍺ ⍵}
+redm←{idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖' ⋄ hid←idf∊⍨⊃⍺⍺ ⋄ hsc←(⊂⍺⍺)∊0⌷⍉sdb
+ idv←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
+ chk←hid⊃('if(rr>0&&rs[rr-1]==0)error(11);')'' ⋄ siz←'if(rr==0){zr=0;}',nl
+ siz,←'else{zr=rr-1;',('zr'do'zc*=rs[i];zs[i]=rs[i];'),'rc=rs[zr];}'
+ exe←'if(rc==1){',('zc'do'zv[i]=rv[i];'),'}else '
+ exe,←hid⊃''('if(rc==0){',('zc'do'zv[i]=',';',⍨idv⊃⍨idf⍳⊃⍺⍺),'}else ')
+ scl←'rc-1'do'zv[j]=',';',⍨(sdb⍪3⍴⊂⍺⍺)(⍺⍺ scl)'zv[j]' 'rv[(j*rc)+(rc-(2+i))]'
+ mxl←'error(16);'⊣⍵⍵
+ exe,←'{',('zc'do'BOUND j=i;zv[j]=rv[(j*rc)+(rc-1)];',hsc⊃mxl scl),'}'
+ chk siz exe mxfn ⍺ ⍵}

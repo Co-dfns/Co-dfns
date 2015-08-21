@@ -1,19 +1,24 @@
-﻿mxfn←{chk siz exe←⍺ ⋄ tp el←⍵ ⋄ vr←0≠(⊃0⍴⊃)¨0⌷⍉el ⋄ tpv←vr/tp ⋄ tpl←(~vr)/tp
- elv←vr/(≢el)↑'rslt' 'rgt' 'lft' ⋄ ell←(~vr)/0⌷⍉el
- vrn←vr/(≢el)↑'zrl' ⋄ ltn←(~vr)/(≢el)↑'zrl'
+﻿mxfn←{chk siz exe←⍺ ⋄ tp el←⍵ ⋄ vr←(∧/¯1=↑1⌷⍉el)+0≠(⊃0⍴⊃)¨0⌷⍉el
+ tpv←(1=vr)/tp ⋄ tpl←(0=vr)/tp ⋄ tps←(2=vr)/tp
+ elv←(1=vr)/(≢el)↑'rslt' 'rgt' 'lft' ⋄ ell←(0=vr)/0⌷⍉el ⋄ els←(2=vr)/0⌷⍉el
+ nmv←(1=vr)/(≢el)↑'zrl' ⋄ nml←(0=vr)/(≢el)↑'zrl' ⋄ nms←(2=vr)/(≢el)↑'zrl'
  z←'{BOUND zc=1,rc=1,lc=1;LOCALP*orz;LOCALP tp;tp.p=NULL;int tpu=0;',nl
- z,←(⊃,/elv{'LOCALP *',⍺,'=',⍵,';'}¨var/vr⌿el),nl
- z,←⊃,/(⊂''),ltn{'unsigned ',⍺,'r=1;BOUND ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
- z,←⊃,/(⊂''),(git tpl),¨ltn{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
- z,←'if(',(⊃{⍺,'||',⍵}/'rslt=='∘,¨1↓elv),'){orz=rslt;rslt=&tp;tpu=1;}',nl
- z,←'{',((1↓tpv)((1↓vrn)decl)1↓elv),'unsigned zr;BOUND zs[15];',nl
+ z,←(⊃,/(⊂''),elv{'LOCALP *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
+ z,←⊃,/(⊂''),nml{'unsigned ',⍺,'r=1;BOUND ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
+ z,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
+ z,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl
+ z,←(⊃,/(⊂''),{'unsigned ',⍵,'r=0;BOUND*',⍵,'s=NULL;'}¨nms),nl
+ z,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl
+ z,←'if(',(⊃{⍺,'||',⍵}/(⊂'0'),'rslt=='∘,¨1↓elv),'){orz=rslt;rslt=&tp;tpu=1;}',nl
+ z,←(0≡≢elv)⊃'' 'LOCALP*rslt=&tp;' ⋄ tpv nmv elv,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
+ z,←'{',((1↓tpv)((1↓nmv)decl)1↓elv),'unsigned zr;BOUND zs[15];',nl
  z,←chk,nl,siz,nl,'relp(rslt);getarray(',(⊃gie ⊃0⌷tp),',zr,zs,rslt);}',nl
- z,←'{',(tpv(vrn decl)elv),exe,'}',nl
+ z,←'{',(tpv(nmv decl)elv),exe,nl,((0≡≢elv)⊃'' '*sz=zv[0];relp(rslt);'),'}',nl
  z,←'if(tpu){relp(orz);orz->p=zap(rslt->p);}',nl,'}',nl
  z}
-decl←{z←(⊃,/⍺⍺{'unsigned ',⍺,'r=',⍵,'->p->RANK;'}¨⍵),nl
- z,←(⊃,/⍺⍺{'BOUND*',⍺,'s=',⍵,'->p->SHAPETC;'}¨⍵),nl
- z,←(⊃,/(git ⍺),¨⍺⍺{'*',⍺,'v=ARRAYSTART(',⍵,'->p);'}¨⍵),nl
+decl←{z←(⊃,/(⊂''),⍺⍺{'unsigned ',⍺,'r=',⍵,'->p->RANK;'}¨⍵),nl
+ z,←(⊃,/(⊂''),⍺⍺{'BOUND*',⍺,'s=',⍵,'->p->SHAPETC;'}¨⍵),nl
+ z,←(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*',⍺,'v=ARRAYSTART(',⍵,'->p);'}¨⍵),nl
  z}
 iotm←{chk←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
   siz←'zr=1;zs[0]=rv[0];' ⋄ exe←'zs[0]'do'zv[i]=i;' ⋄ chk siz exe mxfn ⍺ ⍵}
