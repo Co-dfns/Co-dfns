@@ -38,6 +38,6 @@ redm←{idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖' ⋄ hid←
  siz,←'else{zr=rr-1;',('zr'do'zc*=rs[i];zs[i]=rs[i];'),'rc=rs[zr];}'
  exe←'if(rc==1){',('zc'do'zv[i]=rv[i];'),'}else '
  exe,←hid⊃''('if(rc==0){',('zc'do'zv[i]=',';',⍨idv⊃⍨idf⍳⊃⍺⍺),'}else ')
- bod←'rc-1'do ⍺(⍺⍺ scmx ⍵⍵)'zv[j]' 'zv[j]' 'rv[(j*rc)+(rc-(2+i))]'
+ bod←'rc-1'do ((⊃⍺),⍺)(⍺⍺ scmx ⍵⍵)'zv[j]' 'zv[j]' 'rv[(j*rc)+(rc-(2+i))]'
  exe,←'{',('zc'do'BOUND j=i;zv[j]=rv[(j*rc)+(rc-1)];',bod),'}'
  chk siz exe mxfn ⍺ ⍵}
