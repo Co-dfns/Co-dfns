@@ -38,3 +38,11 @@ brid←{chk←'if(lr>1)error(16);','rr'do'rc*=rs[i];'
  chk,←'rc'do'if(rv[i]<0||rv[i]>ls[i])error(3);'
  siz←'zr=rr;','zr'do'zs[i]=rs[i];' ⋄ exe←'rc'pdo'zv[i]=lv[rv[i]];'
  chk siz exe mxfn ⍺ ⍵}
+lftm←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
+ chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}
+rgtm←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
+ chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}
+lftd←{chk siz←''('zr=lr;','lr'do'zs[i]=ls[i];')
+ chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=lv[i];'))mxfn ⍺ ⍵}
+rgtd←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')
+ chk siz (('zr'do'zc*=zs[i];'),('zc'pdo'zv[i]=rv[i];'))mxfn ⍺ ⍵}
