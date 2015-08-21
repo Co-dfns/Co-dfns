@@ -1,20 +1,7 @@
-respos←'fmod((double)⍵,(double)⍺)'
+﻿respos←'fmod((double)⍵,(double)⍺)'
 resneg←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
 residue←'(0<=⍺&&0<=⍵)?',respos,':',resneg
-dnv←{(0≡z)⊃('LOCALP ',⍺,'[',(⍕z←⊃v⍵),'];')('LOCALP*',⍺,'=NULL;')}
-reg←{(⊃v⍵)do'regp(&',⍺,'[i]);'}
-cutp←'cutp(&env0[0]);'
-frt←'void static inline ' ⋄ fre←'void EXPORT '
-flp←'(LOCALP*z,LOCALP*l,LOCALP*r,LOCALP*penv[])'
-elp←'(LOCALP*z,LOCALP*l,LOCALP*r)'
-foi←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
-fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-smcd←{'copyin(',(⊃{⍺,',',⍵}/{'d',(⍕⍵),'[0:mz',(⍕⍵),']'}¨⍳≢⍵),')'}
-smcr←{'copyout(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
-simc←{(smcd(⊃v⍵)fvs(⊃e⍵)),' ',(smcr⊃n⍵),nl}
-prag←{('#pragma acc parallel loop ',simc ⍵)('#pragma simd',nl)('')}
-simd←{('pgi' 'icc'⍳⊂COMPILER)⊃prag ⍵}
-slp←{(simd ⍵),(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
+
 ⍝ Scalar Primitives
 sdb←0 3⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝      Prim  Monadic            Dyadic
@@ -41,3 +28,13 @@ sdb⍪←,¨'∨'   'error(99)'        '⍺ || ⍵'
 sdb⍪←,¨'⍲'   'error(99)'        '!(⍺ && ⍵)'
 sdb⍪←,¨'⍱'   'error(99)'        '!(⍺ || ⍵)'
 sdb⍪←,¨'⌷'   '⍵'                'error(99)'
+
+⍝ Operators
+odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(',(opl ⍺),⍵,' ⍵⍵)'}¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
+opl←{⊃,/{'(,''',⍵,''')'}¨⍵}
+  
+⍝      Prim  Monadic Dyadic
+⍝ ─────────────────────────────────────────────────────────────────
+odb⍪←,¨'⍨'   'comm'  'comd'
+odb⍪←,¨'¨'   'eacm'  'eacd'
+odb⍪←,¨'/'   'redm'  'redd'
