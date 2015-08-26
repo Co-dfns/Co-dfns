@@ -32,7 +32,7 @@ REDUCEFIRST∆2∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect�
 }
 
 REDUCEFIRST∆2∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'Sreducefirst2'C.Fix S
+  C.COMPILER←'vsc' ⋄ CS←'reducefirst2'C.Fix S
   #.UT.expect←NS.Run I 5⍴⍳5 ⋄ CS.Run I 5⍴⍳5
 }
 
@@ -122,7 +122,7 @@ REDUCEFIRST∆8∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect�
 }
 
 REDUCEFIRST∆8∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'Sreducefirst8'C.Fix S
+  C.COMPILER←'vsc' ⋄ CS←'reducefirst8'C.Fix S
   #.UT.expect←NS.R3 I 5⍴⍳5 ⋄ CS.R3 I 5⍴⍳5
 }
 
