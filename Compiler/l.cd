@@ -9,13 +9,13 @@
  z,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl
  z,←(⊃,/(⊂''),{'unsigned ',⍵,'r=0;BOUND*',⍵,'s=NULL;'}¨nms),nl
  z,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl
- z,←'if(',(⊃{⍺,'||',⍵}/(⊂'0'),'rslt=='∘,¨1↓elv),'){orz=rslt;rslt=&tp;tpu=1;}',nl
+ z,←'if(',(⊃{⍺,'||',⍵}/(⊂'0'),'rslt=='∘,¨1↓elv),'){orz=rslt;rslt=&tp;regp(rslt);tpu=1;}',nl
  z,←(0≡≢elv)⊃'' 'LOCALP*rslt=&tp;'
  tpv nmv elv,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
  z,←'{',((1↓tpv)((1↓nmv)decl)1↓elv),'unsigned zr;BOUND zs[15];',nl
  z,←chk,nl,siz,nl,'relp(rslt);getarray(',(⊃gie ⊃0⌷tp),',zr,zs,rslt);}',nl
  z,←'{',(tpv(nmv decl)elv),exe,nl,((0≡≢elv)⊃'' '*sz=zv[0];relp(rslt);'),'}',nl
- z,←'if(tpu){relp(orz);orz->p=zap(rslt->p);}',nl,'}',nl
+ z,←'if(tpu){relp(orz);orz->p=zap(rslt->p);gerp(rslt);}',nl,'}',nl
  z}
 decl←{z←(⊃,/(⊂''),⍺⍺{'unsigned ',⍺,'r=',⍵,'->p->RANK;'}¨⍵),nl
  z,←(⊃,/(⊂''),⍺⍺{'BOUND*',⍺,'s=',⍵,'->p->SHAPETC;'}¨⍵),nl

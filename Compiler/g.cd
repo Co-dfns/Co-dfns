@@ -17,4 +17,4 @@ Z1←{'z->p=zap((',((⊃n⍵)var⊃e⍵),')->p);',cutp,nl,'}',nl,nl}
 Ze←{'}',nl,nl}
 M0←{rth,('tenv'dnv ⍵),nl,'LOCALP *env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
 S0←{(('{',rk0,srk,('prk'do'cnt*=sp[i];'),spp,sfv,slp)⍵)}
-Y0←{⊃,/((⍳≢⊃v⍵)((⊣sts¨∘⊃y),'}',nl,⊣ste¨(⊃v)var¨∘⊃e)⍵),'}',nl}
+Y0←{⊃,/((⍳≢⊃v⍵)((⊣sts¨∘⊃y),'}',nl,⊣ste¨(⊃v)var¨∘⊃e)⍵),'gerp(&p0);}',nl}
