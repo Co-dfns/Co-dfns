@@ -4,10 +4,13 @@
  siz,←'if(lr==1)lc=ls[0];if(rr!=0)rc=rs[rr-1];zs[zr-1]=0;BOUND last=0;'
  siz,←'if(lc>=rc){',('lc'do'last+=lv[i];'),'zs[zr-1]=last;}',nl
  siz,←'else{',('rc'do'last+=lv[0];'),'zs[zr-1]=last;}',nl,'zr-1'do'zc*=zs[i];'
- inc←'a+=abs(lv[i]);' ⋄ zvi←'zv[(k*zs[zr-1])+a+i]=' ⋄ age←'rv[(k*rc)+j];'
- agt←'else if(lv[i]>0){BOUND j=i;',('zc'do'BOUND k=i;','lv[j]'do zvi,age),'}'
- alt←'else{BOUND j=i;',('zc'do'BOUND k=i;','abs(lv[j])'do zvi,'0;'),'}'
- exe←'BOUND a=0;if(rc==lc){',('lc'do'if(lv[i]==0)continue;',agt,alt,inc),'}'
+ inc←'a+=lv[i];' ⋄ zvi←'zv[(k*zs[zr-1])+a+i]=' ⋄ age←'rv[(k*rc)+j];'
+ agt←'else if(lv[i]>0){BOUND j=i;',nl
+ agt,←('zc'do'BOUND k=i;',nl,'lv[j]'do zvi,age),'}'
+ alt←'else{BOUND j=i;',nl,('zc'do'BOUND k=i;',nl,'abs(lv[j])'do zvi,'0;'),'}'
+ exe←'BOUND a=0;if(rc==lc){',nl
+ exe,←('lc'do'if(lv[i])zv[a++]=rv[i];'),'}'
+ ⍝ exe,←('lc'do'if(lv[i]==0)continue;',nl,agt,nl,alt,nl,inc),'}'
  bgt←'lv[0]'do'zv[(j*zs[zr-1])+a++]=rv[(j*rc)+k];'
  exe,←'else if(rc>lc){if(lv[0]>0){','zc'do'BOUND j=i;','rc'do'BOUND k=i;',bgt
  exe,←'}else if(lv[0]<0){',('zc*zs[zr-1]'do'zv[i]=0;'),'}}else{'
