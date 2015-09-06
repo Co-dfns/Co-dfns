@@ -14,12 +14,12 @@ fls←{'-o ''',⍵,'_',⍺,'.so'' dwa/dwa_fns.c ''',⍵,'_',⍺,'.c'' '}
 log←{'> ',⍵,'_',⍺,'.log 2>&1'}
 gcc←{⎕SH'gcc ',cfs,cds,cso,gop,('gcc'fls ⍵),'gcc'log ⍵}
 icc←{⎕SH'icc ',cfs,cds,cso,iop,('icc'fls ⍵),'icc'log ⍵}
-vsco←'/W3 /Gm- /O2 /Zc:inline /fp:precise '
-vsco,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
+vsco←'/W3 /Gm- /Od /Zc:inline /fp:precise /Zi /Fd"Build\vc140.pdb" '
+vsco,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" '
 vsco,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
-vsco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+vsco,←'/errorReport:prompt /WX- /MDd /EHsc /nologo '
 vslo←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
-vslo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
+vslo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 /DEBUG '
 vsc1←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco}
 vsc2←{'/I"',DWA∆PATH,'\" /Fo"',BUILD∆PATH,'\" "',DWA∆PATH,'dwa_fns.c" '}
 vsc3←{'"',BUILD∆PATH,⍵,'_vsc.c" ',vslo,'/OUT:"',BUILD∆PATH,⍵,'_vsc.dll" '}
