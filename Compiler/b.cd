@@ -1,4 +1,4 @@
-get←{⍺⍺⌷⍉⍵} ⋄ up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ bind←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
+﻿get←{⍺⍺⌷⍉⍵} ⋄ up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ bind←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
 d_ t_ k_ n_   ←⍳f∆←4 ⋄ d←d_ get ⋄ t←t_ get ⋄ k←k_ get ⋄ n←n_ get
 r_ s_ v_ y_ e_←f∆+⍳5 ⋄ r←r_ get ⋄ s←s_ get ⋄ v←v_ get ⋄ y←y_ get ⋄ e←e_ get
 new←{⍉⍪f∆↑0 ⍺,⍵}                ⋄ msk←{(t ⍵)∊⊂⍺⍺} ⋄ sel←{(⍺⍺ msk ⍵)⌿⍵}

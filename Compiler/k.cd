@@ -1,47 +1,21 @@
-﻿catm←{chk←'' ⋄ siz←'zr=1;',('rr'do'rc*=rs[i];'),'zs[0]=rc;'
- exe←'rc'pdo'zv[i]=rv[i];' ⋄ chk siz exe mxfn ⍺ ⍵}
-catd←{chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
- chk,←'int sr=rr==lr&&lr!=0?lr-1:minr;','sr'do'if(rs[i]!=ls[i])error(5);'
- siz←'zs[0]=1;if(lr>rr){zr=lr;',('lr'do'zs[i]=ls[i];')
- siz,←'}else{zr=rr;',('rr'do'zs[i]=rs[i];'),'}',nl
- siz,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
- exe←('zr'do'zc*=zs[i];'),'BOUND li=0,ri=0,zm=zs[zr-1],'
- exe,←'lm=(lr<rr||lr==0)?1:ls[lr-1];','zc'do'zv[i]=i%zm<lm?lv[li++]:rv[ri++];'
- chk siz exe mxfn ⍺ ⍵}
-fctm←{siz←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
- siz,←('rr-1'do'rc*=rs[i+1];'),'zs[1]=rc;rc*=rs[0];}'
- '' siz ('rc'pdo'zv[i]=rv[i];') mxfn ⍺ ⍵}
-rotm←{exe←('zr==0?0:zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
- exe,←'zc'pdo'BOUND j=i;','rc'pdo'zv[j*rc+i]=rv[j*rc+(rc-(i+1))];'
- ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
-memm←{siz←('rr'do'rc*=rs[i];'),'zr=1;zs[0]=rc;' ⋄ exe←'rc'pdo'zv[i]=rv[i];'
- '' siz exe mxfn ⍺ ⍵}
-dscm←{'' 'zr=0;'(('rr'do'rc*=rs[i];'),'zv[0]=rc==0?0:rv[0];')mxfn ⍺ ⍵}
-fctd←{chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
- chk,←'if(lr==rr&&rr>0){','rr-1'do'if(rs[i+1]!=ls[i+1])error(5);'
- chk,←'}else if(lr<rr){','lr'do'if(ls[i]!=rs[i+1])error(5);'
- chk,←'}else{','rr'do'if(ls[i+1]!=rs[i])error(5);}'
- siz←'zs[0]=1;if(lr>rr){zr=lr;',('lr'do'zs[i]=ls[i];')
- siz,←'}else{zr=rr;',('rr'do'zs[i]=rs[i];'),'}',nl
- siz,←'zr=zr==0?1:zr;zs[0]+=minr==zr?ls[0]:1;'
- exe←('lr'do'lc*=ls[i];'),('rr'do'rc*=rs[i];')
- exe,←'if(abs(lr-rr)<=1){',('lc'pdo'zv[i]=lv[i];'),('rc'pdo'zv[lc+i]=rv[i];')
- exe,←'}else{',('zr-1'do'zc*=zs[i+1];')
- exe,←'if(lr==0){',('zc'pdo'zv[i]=lv[0];'),('rc'pdo'zv[zc+i]=rv[i];')
- exe,←'}else{',('lc'pdo'zv[i]=lv[i];'),('zc'pdo'zv[lc+i]=rv[0];'),'}}'
- chk siz exe mxfn ⍺ ⍵}
-rtfm←{exe←('zr==0?0:zr-1'do'zc*=zs[i+1];'),'rc=rr==0?1:rs[0];'
- exe,←'rc'pdo'BOUND j=i;','zc'pdo'zv[j*zc+i]=rv[(rc-(j+1))*zc+i];'
- ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
-eqvm←{'' 'zr=0;' 'zv[0]=rr==0?0:1;' mxfn ⍺ ⍵}
-eqvd←{chk siz←'' 'zr=0;' ⋄ exe←'zv[0]=1;if(rr!=lr)zv[0]=0;'
- exe,←'lr'do'if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}'
- exe,←'lr'do'lc*=ls[i];'
- exe,←'lc'do'if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}'
- chk siz exe mxfn ⍺ ⍵}
-nqvm←{'' 'zr=0;' 'zv[0]=rr==0?1:rs[0];' mxfn ⍺ ⍵}
-nqvd←{chk siz←'' 'zr=0;' ⋄ exe←'zv[0]=0;if(rr!=lr)zv[0]=1;'
- exe,←'lr'do'if(zv[0])break;if(rs[i]!=ls[i]){zv[0]=1;break;}'
- exe,←'lr'do'lc*=ls[i];'
- exe,←'lc'do'if(zv[0])break;if(lv[i]!=rv[i]){zv[0]=1;break;}'
- chk siz exe mxfn ⍺ ⍵}
+﻿⍝ Mixed Functions
+fdb←0 3⍴⊂'' ⋄ fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
+fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')}
+
+⍝      Prim  Monadic          Dyadic
+⍝ ─────────────────────────────────────────────────────────────────
+fdb⍪←,¨ '⌷'  '{⎕SIGNAL 99}'   'idxd'
+fdb⍪←,¨ '['  '{⎕SIGNAL 99}'   'brid'
+fdb⍪←,¨ '⍳'  'iotm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨ '⍴'  'shpm'           'shpd'
+fdb⍪←,¨ ','  'catm'           'catd'
+fdb⍪←,¨ '⍪'  'fctm'           'fctd'
+fdb⍪←,¨ '⌽'  'rotm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨ '⊖'  'rtfm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨ '∊'  'memm'           'memd'
+fdb⍪←,¨ '⊃'  'dscm'           '{⎕SIGNAL 16}'
+fdb⍪←,¨ '≡'  'eqvm'           'eqvd'
+fdb⍪←,¨ '≢'  'nqvm'           'nqvd'
+fdb⍪←,¨ '⊢'  'rgtm'           'rgtd'
+fdb⍪←,¨ '⊣'  'lftm'           'lftd'
+fdb⍪←,¨'//'  '{⎕SIGNAL 99}'   'fltd'

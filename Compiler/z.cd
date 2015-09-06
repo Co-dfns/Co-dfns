@@ -1,25 +1,4 @@
-﻿⍝ Mixed Functions
-fdb←0 3⍴⊂'' ⋄ fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
-fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')}
-
-⍝      Prim  Monadic          Dyadic
-⍝ ─────────────────────────────────────────────────────────────────
-fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}'   'idxd'
-fdb⍪←,¨'['   '{⎕SIGNAL 99}'   'brid'
-fdb⍪←,¨'⍳'   'iotm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'⍴'   'shpm'           'shpd'
-fdb⍪←,¨','   'catm'           'catd'
-fdb⍪←,¨'⍪'   'fctm'           'fctd'
-fdb⍪←,¨'⌽'   'rotm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'⊖'   'rtfm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'∊'   'memm'           'memd'
-fdb⍪←,¨'⊃'   'dscm'           '{⎕SIGNAL 16}'
-fdb⍪←,¨'≡'   'eqvm'           'eqvd'
-fdb⍪←,¨'≢'   'nqvm'           'nqvd'
-fdb⍪←,¨'⊢'   'rgtm'           'rgtd'
-fdb⍪←,¨'⊣'   'lftm'           'lftd'
-
-  ⍝ Lamination
+﻿  ⍝ Lamination
   catdo←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catdl ⍵ ⋄ ⍺ catdv ⍵}
   
   catdv←{z←'{',(⊃,/'rslt' 'rgt' 'lft'{'LOCALP *',⍺,'=',⍵,';'}¨var/⍵),nl
