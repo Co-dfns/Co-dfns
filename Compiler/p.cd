@@ -19,3 +19,28 @@
  clt←'}else{BOUND j=i;',('zc'do'BOUND k=i;','abs(lv[j])'do cle),'}'
  exe,←'lc'do'if(lv[i]==0)continue;else if(lv[i]>0){BOUND j=i;',cgt,clt,inc,'}'
  chk siz exe mxfn ⍺ ⍵}
+decd←{chk←'if(lr>1||lv[0]<0)error(16);'
+ siz←'zr=rr==0?0:rr-1;','zr'do'zs[i]=rs[i+1];zc*=rs[i+1];'
+ siz,←'if(rr>0)rc=rs[0];'
+ exe←'zc'do'BOUND j=i;zv[j]=0;','rc'do'zv[j]=rv[(i*zc)+j]+lv[0]*zv[j];'
+ chk siz exe mxfn ⍺ ⍵}
+encd←{chk←'if(lr>1)error(16);','lr'do'lc*=ls[i];'
+ chk,←'lc'do'if(lv[i]<=0)error(16);'
+ siz←'zr=1+rr;zs[0]=lc;','rr'do'zs[i+1]=rs[i];'
+ exe←('rr'do'rc*=rs[i];')
+ cod←'zv[(i*rc)+j]=(rv[j]>>(lc-(i+1)))%2;'
+ exe,←'rc'do'BOUND j=i;','lc'do cod
+ chk siz exe mxfn ⍺ ⍵}
+rtfd←{chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);' ⋄ siz←'zr=rr;','zr'do'zs[i]=rs[i];'
+ exe←'zc=rr==0?1:rs[0];','rr==0?0:rr-1'do'rc*=rs[i+1];'
+ exe,←'zc'do'BOUND j=i;','rc'do'zv[(((j-lv[0])%zc)*rc)+i]=rv[(j*rc)+i];'
+ chk siz exe mxfn ⍺ ⍵}
+sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];','zr-1'do'zs[i+1]=rs[i];'
+ exe←'zc=zs[0];rc=rs[0];lc=ls[rr-1];'
+ cod←'zv[(j*rc*lc)+(k*lc)+i]=lv[(j*lc)+i]*rv[(k*lc)+i];'
+ exe,←'zc'do'BOUND j=i;','rc'do'BOUND k=i;','lc'do cod
+ '' siz exe mxfn ⍺ ⍵}
+drpd←{chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+ siz←'zr=rr;',('zr'do'zs[i]=rs[i];'),'zs[0]-=lv[0];','zr-1'do'zc*=zs[i+1];'
+ exe←'zs[0]'do'BOUND j=i;','zc'do'zv[(j*zc)+i]=rv[((j+1)*zc)+i];'
+ chk siz exe mxfn ⍺ ⍵}

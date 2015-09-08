@@ -30,7 +30,10 @@ pn,←⊂,'≢' ⋄ pt⍪←pft  1   1   1   1   1   1 ⋄ pn,←⊂,'⊢' ⋄ p
 pn,←⊂,'⊣' ⋄ pt⍪←pft  1   2   1   2   1   2 ⋄ pn,←⊂,'⍨' ⋄ pt⍪←pft  1  2  ¯2  ¯2  ¯2  ¯2
 pn,←⊂,'/' ⋄ pt⍪←pft  1   2   1 ¯11   2 ¯11 ⋄ pn,←⊂,'⌿' ⋄ pt⍪←pft  1  2   1 ¯11   2 ¯11
 pn,←⊂,'\' ⋄ pt⍪←pft  1   2 ¯11 ¯11 ¯11 ¯11 ⋄ pn,←⊂,'⍀' ⋄ pt⍪←pft  1  2 ¯11 ¯11 ¯11 ¯11
-pn,←⊂'//' ⋄ pt⍪←pft ¯2  ¯2   1 ¯11   2 ¯11
+pn,←⊂'//' ⋄ pt⍪←pft ¯2  ¯2   1 ¯11   2 ¯11 ⋄ pn,←⊂,'⍉' ⋄ pt⍪←pft  1  2 ¯16 ¯16 ¯16 ¯16
+pn,←⊂,'↑' ⋄ pt⍪←pft ¯16 ¯16  1 ¯11   2 ¯11 ⋄ pn,←⊂,'↓' ⋄ pt⍪←pft ¯16 ¯16 1 ¯11   2 ¯11
+pn,←⊂,'⊤' ⋄ pt⍪←pft ¯2  ¯2   1 ¯16 ¯16 ¯16 ⋄ pn,←⊂,'⊥' ⋄ pt⍪←pft ¯2  ¯2  1 ¯16 ¯16 ¯16
+pn,←⊂'⎕sp'⋄ pt⍪←pft ¯2  ¯2   1 ¯11 ¯11 ¯11 ⋄ pn,←⊂'⎕XOR' ⋄ pt⍪←pft ¯2 ¯2 1 ¯16 ¯16 ¯16
 
 ⍝ Operator Type Indirects
 ⍝ Name       Type   (R|IN FN II IF FI FF)   (L|IN FN II IF FI FF)
