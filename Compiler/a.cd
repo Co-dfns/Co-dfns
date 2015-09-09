@@ -2,6 +2,8 @@
 COMPILER←'vsc'
 TEST∆COMPILERS←⊂'vsc'
 VISUAL∆STUDIO∆PATH←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
+INTEL∆C∆PATH←'C:\Program Files (x86)\IntelSWTools\compilers_and_libraries_2016.0.110\windows\bin\'
+PGI∆PATH←'C:\Program Files\PGI\win64\15.7\'
 DWA∆PATH←'dwa\'
 BUILD∆PATH←'Build\'
 DLL∆EXT←'.dll'
@@ -14,7 +16,7 @@ fls←{'-o ''',⍵,'_',⍺,'.so'' dwa/dwa_fns.c ''',⍵,'_',⍺,'.c'' '}
 log←{'> ',⍵,'_',⍺,'.log 2>&1'}
 gcc←{⎕SH'gcc ',cfs,cds,cso,gop,('gcc'fls ⍵),'gcc'log ⍵}
 icc←{⎕SH'icc ',cfs,cds,cso,iop,('icc'fls ⍵),'icc'log ⍵}
-vsco←'/W3 /Gm- /O2 /Zc:inline /fp:precise /Zi /Fd"Build\vc140.pdb" '
+vsco←'/W3 /Gm- /fast /Zc:inline /fp:precise ' ⍝ /Zi /Fd"Build\vc140.pdb" '
 vsco,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
 vsco,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
 vsco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
@@ -25,11 +27,24 @@ vsc2←{'/I"',DWA∆PATH,'\" /Fo"',BUILD∆PATH,'\" "',DWA∆PATH,'dwa_fns.c" '}
 vsc3←{'"',BUILD∆PATH,⍵,'_vsc.c" ',vslo,'/OUT:"',BUILD∆PATH,⍵,'_vsc.dll" '}
 vsc4←{'> "',BUILD∆PATH,⍵,'_vsc.log""'}
 vsc←⎕CMD '%comspec% /C ',vsc1,vsc2,vsc3,vsc4
-tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
-put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-Cmp←{n⊣(⍎COMPILER)⍺⊣(BUILD∆PATH,⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵}
-mkf←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,⍺,'_',COMPILER,DLL∆EXT,'|',⍵,' '
- f,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ _←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
- f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
-MkNS←{ns←#.⎕NS⍬ ⋄ ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵}
-Fix←{⍺ MkNS ⍺ Cmp ⍵}
+icco←'/W3 /Gm- /Ofast /Zc:inline ' ⍝ /Zi /Fd"Build\vc140.pdb" '
+icco,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
+icco,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
+icco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+iclo←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+iclo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
+icl1←{'""',INTEL∆C∆PATH,'\ipsxe-comp-vars.bat" intel64 vs2015 && icl ',icco}
+icl2←{'/I"',DWA∆PATH,'\" /Fo"',BUILD∆PATH,'\" "',DWA∆PATH,'dwa_fns.c" '}
+icl3←{'"',BUILD∆PATH,⍵,'_icl.c" ',iclo,'/OUT:"',BUILD∆PATH,⍵,'_icl.dll" '}
+icl4←{'> "',BUILD∆PATH,⍵,'_icl.log""'}
+icl←⎕CMD '%comspec% /E:ON /V:ON /C ',icl1,icl2,icl3,icl4
+pgio←'-D "HAS_UNICODE=1" -D "xxBIT=64" -D "WIN32" -D "NDEBUG" -D "_WINDOWS" '
+pgio,←'-D "_USRDLL" -D "DWA_EXPORTS" -D "_WINDLL" '
+pgcc←{z←'pgcc -fast -Bdynamic -acc -Minfo ',pgio,'-I "',DWA∆PATH,'\" '
+ z,←'-c "',⍵,'.c" -o "',⍵,'.obj"' ⋄ z}
+pglk←{z←'pgcc -fast -Mmakedll -acc -Minfo -o "',BUILD∆PATH,⍵,'_pgi.dll" "'
+ z,←BUILD∆PATH,⍵,'_pgi.obj" "',DWA∆PATH,'dwa_fns.obj"' ⋄ z}
+pgi1←{'""',PGI∆PATH,'pgi_env.bat" && ',(pgcc BUILD∆PATH,⍵,'_pgi'),' && '}
+pgi2←{(pgcc DWA∆PATH,'dwa_fns'),' && ',pglk ⍵}
+pgi3←{' > "',BUILD∆PATH,⍵,'_pgi.log""'}
+pgi←⎕CMD '%comspec% /C ',pgi1,pgi2,pgi3
