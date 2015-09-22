@@ -1,0 +1,3 @@
+﻿tspm←{siz←'zr=rr;','rr'do'zs[rr-(1+i)]=rs[i];'
+ exe←'rs[0]'do'BOUND j=i;','rs[1]'do'zv[(i*zs[1])+j]=rv[(j*rs[1])+i];'
+ '' siz exe mxfn ⍺ ⍵}

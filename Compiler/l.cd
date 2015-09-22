@@ -36,7 +36,7 @@ idxd←{chk←'if(lr>1)error(4);if(ls[0]>rr)error(5);'
  exe,←('ls[0]'do'a=ls[0]-(i+1);k+=m*lv[a];m*=rs[a];'),'zc'pdo'zv[i]=rv[k+i];'
  chk siz exe mxfn ⍺ ⍵}
 brid←{chk←'if(lr>1)error(16);','rr'do'rc*=rs[i];'
- chk,←'rc'do'if(rv[i]<0||rv[i]>ls[i])error(3);'
+ chk,←'rc'do'if(rv[i]<0||rv[i]>=ls[0])error(3);'
  siz←'zr=rr;','zr'do'zs[i]=rs[i];' ⋄ exe←'rc'pdo'zv[i]=lv[rv[i]];'
  chk siz exe mxfn ⍺ ⍵}
 lftm←{chk siz←''('zr=rr;','rr'do'zs[i]=rs[i];')

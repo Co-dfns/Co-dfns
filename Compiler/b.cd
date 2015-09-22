@@ -1,4 +1,12 @@
-﻿get←{⍺⍺⌷⍉⍵} ⋄ up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ bind←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
+﻿tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+Cmp←{n⊣(⍎COMPILER)⍺⊣(BUILD∆PATH,⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵}
+mkf←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,⍺,'_',COMPILER,DLL∆EXT,'|',⍵,' '
+ f,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ _←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
+ f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
+MkNS←{ns←#.⎕NS⍬ ⋄ ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵}
+Fix←{⍺ MkNS ⍺ Cmp ⍵}
+get←{⍺⍺⌷⍉⍵} ⋄ up←⍉(1+1↑⍉)⍪1↓⍉ ⋄ bind←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
 d_ t_ k_ n_   ←⍳f∆←4 ⋄ d←d_ get ⋄ t←t_ get ⋄ k←k_ get ⋄ n←n_ get
 r_ s_ v_ y_ e_←f∆+⍳5 ⋄ r←r_ get ⋄ s←s_ get ⋄ v←v_ get ⋄ y←y_ get ⋄ e←e_ get
 new←{⍉⍪f∆↑0 ⍺,⍵}                ⋄ msk←{(t ⍵)∊⊂⍺⍺} ⋄ sel←{(⍺⍺ msk ⍵)⌿⍵}
