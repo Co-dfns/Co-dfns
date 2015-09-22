@@ -2,7 +2,7 @@
 aws←ws _any _ign ⋄ awslf←(⎕UCS 10 13)_set _o ws _any _ign
 nss←awslf _s(':Namespace'_tk)_s awslf _ign
 nse←awslf _s(':EndNamespace'_tk)_s awslf _ign
-gets←aws _s('←'_tk)_s aws ⋄ him←'¯'_set ⋄ dot←'.'_set
+gets←aws _s('←'_tk)_s aws ⋄ him←'¯'_set ⋄ dot←'.'_set ⋄ jot←'∘'_set
 lbrc←aws _s('{'_tk)_s aws _ign ⋄ rbrc←aws _s('}'_tk)_s aws _ign
 lpar←aws _s('('_tk)_s aws _ign ⋄ rpar←aws _s(')'_tk)_s aws _ign
 lbrk←aws _s('['_tk)_s aws _ign ⋄ rbrk←aws _s(']'_tk)_s aws _ign
@@ -19,7 +19,8 @@ sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
 Sfn←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
 Prim←prim _as {P⍵⍴⍨1+⍵∊'/⌿⍀\'} _o Sfn
 Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
-Mop←Fn _o Prim _s (mop _as P) _as (1 O)
+Fnp←Fn _o Prim
+Mop←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
 Dop←Prim _s (dop _as P) _s Prim _as (2 O)
 Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
 Bind←{⍺(name _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as bind)⍵}
