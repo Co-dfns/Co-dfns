@@ -1,5 +1,5 @@
 ﻿⍝ respos←'fmod((double)⍵,(double)⍺)'
-respos←'⍵%⍺'
+respos←'fmod((double)⍵,(double)⍺)'
 resneg←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
 residue←'(0<=⍺&&0<=⍵)?',respos,':',resneg
 
@@ -13,7 +13,7 @@ sdb⍪←,¨'×'   '(⍵>0)-(⍵<0)'      '⍺*⍵'
 sdb⍪←,¨'÷'   '1.0/⍵'            '((double)⍺)/((double)⍵)'
 sdb⍪←,¨'*'   'exp((double)⍵)'   'pow((double)⍺,(double)⍵)'
 sdb⍪←,¨'⍟'   'log((double)⍵)'   'log((double)⍵)/log((double)⍺)'
-sdb⍪←,¨'|'   'fabs(⍵)'          respos
+sdb⍪←,¨'|'   'fabs(⍵)'          residue
 sdb⍪←,¨'○'   'PI*⍵'             'error(16)'
 sdb⍪←,¨'⌊'   'floor((double)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'
 sdb⍪←,¨'⌈'   'ceil((double)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'
