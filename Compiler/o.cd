@@ -4,10 +4,10 @@
  chk,←'if(rr==0)error(4);',nl,hid⊃('if(lv[0]==0)error(11);',nl)''
  chk,←'if((rs[rr-1]+1)<lv[0])error(5);rc=(1+rs[rr-1])-lv[0];'
  siz←'zr=rr;',('zr-1'do'zc*=rs[i];zs[i]=rs[i];'),'zs[zr-1]=rc;lc=rs[rr-1];'
- vl1←'zv[(j*rc)+k]' 'rv[(j*lc)+k+(lv[0]-(i+1))]' 'zv[(j*rc)+k]'
+ vl1←'zv[(j*rc)+k]' 'zv[(j*rc)+k]' 'rv[(j*lc)+k+(lv[0]-(i+1))]' 
  xi1←'zv[(j*rc)+k]=',';',⍨idv⊃⍨idf⍳⊃⍺⍺
  ex1←'zc'do'BOUND j=i;','rc'do'BOUND k=i;',xi1,'lv[0]'do a(⍺⍺ scmx ⍵⍵)vl1
- vl2←'zv[(j*rc)+k]' 'rv[(j*lc)+k+(lv[0]-(i+2))]' 'zv[(j*rc)+k]'
+ vl2←'zv[(j*rc)+k]' 'zv[(j*rc)+k]' 'rv[(j*lc)+k+(lv[0]-(i+2))]'
  xi2←'zv[(j*rc)+k]=rv[(j*lc)+k+lv[0]-1];'
  ex2←'zc'do'BOUND j=i;','rc'do'BOUND k=i;',xi2,'lv[0]-1'do a(⍺⍺ scmx ⍵⍵)vl2
  chk siz (hid⊃ex2 ex1) mxfn ⍺ ⍵}
@@ -26,10 +26,10 @@ rd1d←{idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖' ⋄ hid←
  chk,←'if(rr==0)error(4);',nl,hid⊃('if(lv[0]==0)error(11);',nl)''
  chk,←'if((rs[0]+1)<lv[0])error(5);rc=(1+rs[0])-lv[0];'
  siz←'zr=rr;',('zr-1'do'zc*=rs[i+1];zs[i+1]=rs[i+1];'),'zs[0]=rc;'
- vl1←'zv[(k*zc)+j]' 'rv[((k+(lv[0]-(i+1)))*zc)+j]' 'zv[(k*zc)+j]'
+ vl1←'zv[(k*zc)+j]' 'zv[(k*zc)+j]' 'rv[((k+(lv[0]-(i+1)))*zc)+j]'
  xi1←'zv[(k*zc)+j]=',';',⍨idv⊃⍨idf⍳⊃⍺⍺
  ex1←'zc'do'BOUND j=i;','rc'do'BOUND k=i;',xi1,'lv[0]'do a(⍺⍺ scmx ⍵⍵)vl1
- vl2←'zv[(k*zc)+j]' 'rv[((k+(lv[0]-(i+2)))*zc)+j]' 'zv[(k*zc)+j]'
+ vl2←'zv[(k*zc)+j]' 'zv[(k*zc)+j]' 'rv[((k+(lv[0]-(i+2)))*zc)+j]'
  xi2←'zv[(k*zc)+j]=rv[((k+lv[0]-1)*zc)+j];'
  ex2←'zc'do'BOUND j=i;','rc'do'BOUND k=i;',xi2,'lv[0]-1'do a(⍺⍺ scmx ⍵⍵)vl2
  chk siz (hid⊃ex2 ex1) mxfn ⍺ ⍵}
