@@ -1,3 +1,7 @@
 ﻿tspm←{siz←'zr=rr;','rr'do'zs[rr-(1+i)]=rs[i];'
  exe←'rs[0]'do'BOUND j=i;','rs[1]'do'zv[(i*zs[1])+j]=rv[(j*rs[1])+i];'
  '' siz exe mxfn ⍺ ⍵}
+oupd←{siz←'zr=lr+rr;',('lr'do'zs[i]=ls[i];'),'rr'do'zs[i+lr]=rs[i];'
+ exe←('lr'do'lc*=ls[i];'),('rr'do'rc*=rs[i];')
+ exe,←'lc'do'BOUND j=i;','rc'do ⍺(⍺⍺ scmx ⍵⍵)'zv[(j*rc)+i]' 'rv[i]' 'lv[j]'
+ '' siz exe mxfn ⍺ ⍵}

@@ -35,11 +35,12 @@ sdb⍪←'⎕XOR'  'error(99)'        '⍺ ^ ⍵'
 odb←0 3⍴⊂'' ⋄ ocl←{⍵∘{'(',(opl ⍺),⍵,' ⍵⍵)'}¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
 opl←{⊃,/{'(,''',⍵,''')'}¨⍵}
   
-⍝      Prim  Monadic Dyadic
+⍝      Prim  Monadic                  Dyadic
 ⍝ ─────────────────────────────────────────────────────────────────
-odb⍪←,¨'⍨'   'comm'  'comd'
-odb⍪←,¨'¨'   'eacm'  'eacd'
-odb⍪←,¨'/'   'redm'  'redd'
-odb⍪←,¨'⌿'   'rd1m'  'rd1d'
-odb⍪←,¨'\'   'scnm'  '{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}'
-odb⍪←,¨'⍀'   'sc1m'  '{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}'
+odb⍪←,¨'⍨'   'comm'                   'comd'
+odb⍪←,¨'¨'   'eacm'                   'eacd'
+odb⍪←,¨'/'   'redm'                   'redd'
+odb⍪←,¨'⌿'   'rd1m'                   'rd1d'
+odb⍪←,¨'\'   'scnm'                   '{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}'
+odb⍪←,¨'⍀'   'sc1m'                   '{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}'
+odb⍪←'∘.'    '{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}' 'oupd'
