@@ -31,7 +31,8 @@ encd←{chk←'if(lr>1)error(16);','lr'do'lc*=ls[i];'
  cod←'zv[(i*rc)+j]=(rv[j]>>(lc-(i+1)))%2;'
  exe,←'rc'do'BOUND j=i;','lc'do cod
  chk siz exe mxfn ⍺ ⍵}
-rtfd←{chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);' ⋄ siz←'zr=rr;','zr'do'zs[i]=rs[i];'
+rtfd←{chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+ siz←'zr=rr;','zr'do'zs[i]=rs[i];'
  exe←'zc=rr==0?1:rs[0];','rr==0?0:rr-1'do'rc*=rs[i+1];'
  exe,←'zc'do'BOUND j=i;','rc'do'zv[(((j-lv[0])%zc)*rc)+i]=rv[(j*rc)+i];'
  chk siz exe mxfn ⍺ ⍵}
