@@ -2,7 +2,7 @@
 nl←⎕UCS 13 10
 for←{'for(i=0;i<',(⍕⍵),';i++){'}
 do←{'{BOUND i,_n=',(⍕⍺),';',(for'_n'),⍵,'}}',nl}
-pdo←{p←((⊂COMPILER)∊'icc' 'icl' 'pgi')⊃''('#pragma simd',nl)
+pdo←{p←((⊂2↑COMPILER)∊'ic' 'pg')⊃''('#pragma simd',nl)
  '{BOUND i;',nl,p,(for ⍺),⍵,'}}',nl}
 tl←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
 enc←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
@@ -23,6 +23,6 @@ fnv←{'LOCALP*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),
 smcd←{'copyin(',(⊃{⍺,',',⍵}/{'d',(⍕⍵),'[0:mz',(⍕⍵),']'}¨⍳≢⍵),')'}
 smcr←{'copyout(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
 simc←{(smcd(⊃v⍵)fvs(⊃e⍵)),' ',(smcr⊃n⍵),nl}
-prag←{('#pragma acc parallel loop ',simc ⍵)('#pragma simd',nl)('#pragma simd',nl)('')}
-simd←{('pgi' 'icc' 'icl'⍳⊂COMPILER)⊃prag ⍵}
+prag←{('#pragma acc parallel loop ',simc ⍵)('#pragma simd',nl)('')}
+simd←{('pg' 'ic'⍳⊂2↑COMPILER)⊃prag ⍵}
 slp←{(simd ⍵),(for'cnt'),nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}

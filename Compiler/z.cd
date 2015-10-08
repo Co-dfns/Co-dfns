@@ -21,7 +21,7 @@
    z,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
    z,←(⊃,/(git ¯1↓⍺){⍺,'*',⍵,';'}¨'zr'),nl
    z,←(⊃,/'zr'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt'),nl
-   prag←((⊂COMPILER)∊'pgi' 'icc')⊃''('#pragma simd reduction(+:z)',nl)
+   prag←((⊂2↑COMPILER)∊'pg' 'ic')⊃''('#pragma simd reduction(+:z)',nl)
    do←prag {'{BOUND i;',nl,⍺⍺,(for ⍺),⍵,'}}',nl}
    z,←'c'do'z[0]+=l[i]*r[i];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl

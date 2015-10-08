@@ -1,30 +1,22 @@
 ﻿:Namespace bs7
 
-BS←⊂':Namespace'
-BS,←⊂'coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442'
-BS,←'Run←{{coeff+.×⍵*1 2 3 4 5}¨⍵}' ':EndNamespace'
+S←⊂':Namespace'
+S,←⊂'coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442'
+S,←'Run←{{coeff+.×⍵*1 2 3 4 5}¨⍵}' ':EndNamespace'
 
-NS←⎕FIX BS
-C←#.codfns
+NS←⎕FIX S ⋄ C←#.codfns
 
 coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442
 
-BS7∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc'
-  CN←'Scratch/bs7'C.Fix BS
-  #.UT.expect←interp←NS.Run coeff
-  CN.Run coeff}
+MK∆TST←{id cmp fn←⍺⍺ ⋄ r←⍎⍵⍵
+  ~(⊂cmp)∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
+  C.COMPILER←cmp ⋄ CS←('bs7',⍕id)C.Fix S
+  #.UT.expect←(⍎'NS.',fn)r ⋄ (⍎'CS.',fn)r
+}
 
-BS7∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc'
-  CN←'Scratch/bs7'C.Fix BS
-  #.UT.expect←interp←NS.Run coeff
-  CN.Run coeff}
-
-BS7∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc'
-  CN←'bs7'C.Fix BS
-  #.UT.expect←interp←NS.Run coeff
-  CN.Run coeff}
+BS7∆GCC_TEST←'' 'gcc' 'Run' MK∆TST 'coeff'
+BS7∆ICC_TEST←'' 'icc' 'Run' MK∆TST 'coeff'
+BS7∆VSC_TEST←'' 'vsc' 'Run' MK∆TST 'coeff'
+BS7∆PGCC_TEST←'' 'pgcc' 'Run' MK∆TST 'coeff'
 
 :EndNamespace

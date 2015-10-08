@@ -30,14 +30,14 @@ ste←{'relp(',⍵,');(',⍵,')->p=zap(p',(⍕⍺),'.p);',nl}
 sts←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
 rkp1←{'BOUND m',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?0:1;',nl}
 rkp2←{''('BOUND mz',(⍕⍺),'=(',(⍕⍵),')->p->RANK==0?1:cnt;',nl)}
-rkp←{(⍺ rkp1 ⍵),(COMPILER≡'pgi')⊃⍺ rkp2 ⍵}
+rkp←{(⍺ rkp1 ⍵),('pg'≡2↑COMPILER)⊃⍺ rkp2 ⍵}
 git←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' '?type? '}
 gie←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLNA'}
 gdp←{'*d',(⍕⍺),'=ARRAYSTART((',⍵,')->p);',nl}
 gda1←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}
 gdm←{'BOUND m',(⍕⍺),'=',(⍕0≢≢⍵),';',nl}
 gda2←{''('BOUND mz',(⍕⍺),'=cnt;',nl)}
-gda←{(⍺ gda1 ⍵),(⍺ gdm ⍵),(COMPILER≡'pgi')⊃⍺ gda2 ⍵}
+gda←{(⍺ gda1 ⍵),(⍺ gdm ⍵),('pg'≡2↑COMPILER)⊃⍺ gda2 ⍵}
 sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 sfp←{(git m⌿⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
