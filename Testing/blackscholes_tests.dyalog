@@ -11,22 +11,9 @@ S,←⊂'CD1←CNDP2 D1 ⋄ CD2←CNDP2 D2 ⋄ e←*(-r)×T'
 S,←⊂'((S×CD1)-X×e×CD2),[0.5](X×e×1-CD2)-S×1-CD1'
 S,←'}' ':EndNamespace'
 
-NS←⎕FIX S ⋄ C←#.codfns
-
 GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
-
-MK∆TST←{id cmp fn←⍺⍺ ⋄ ls rs←⍵⍵ ⋄ l←⍎ls ⋄ r←⍎rs
-  ~(⊂cmp)∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←cmp ⋄ CS←('blackscholes',⍕id)C.Fix S
-  nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
-  #.UT.expect←1 ⋄ ∧/,1e¯12>|nv-cv
-}
-
 D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
 
-BLACKSCHOLES∆GCC_TEST←'' 'gcc' 'Run' MK∆TST 'L' 'R'
-BLACKSCHOLES∆ICC_TEST←'' 'icc' 'Run' MK∆TST 'L' 'R'
-BLACKSCHOLES∆VSC_TEST←'' 'vsc' 'Run' MK∆TST 'L' 'R'
-BLACKSCHOLES∆PGCC_TEST←'' 'pgcc' 'Run' MK∆TST 'L' 'R'
+''('blackscholes' S 'Run' #.GEN∆T3 ⎕THIS) L R
 
 :EndNamespace
