@@ -42,81 +42,26 @@ CATENATE∆08∆GCC_TEST← '08' 'gcc'  'Run' MK∆TST 'I 2 2 3⍴0' 'I 2 2⍴0'
 CATENATE∆08∆ICC_TEST← '08' 'icc'  'Run' MK∆TST 'I 2 2 3⍴0' 'I 2 2⍴0'
 CATENATE∆08∆VSC_TEST← '08' 'vsc'  'Run' MK∆TST 'I 2 2 3⍴0' 'I 2 2⍴0'
 CATENATE∆08∆PGCC_TEST←'08' 'pgcc' 'Run' MK∆TST 'I 2 2 3⍴0' 'I 2 2⍴0'
-
-CATENATE∆09∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/catenate09'C.Fix S
-  L←I 2 2⍴0 ⋄ R←I 2 2 3⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆09∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/catenate09'C.Fix S
-  L←I 2 2⍴0 ⋄ R←I 2 2 3⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆09∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'catenate09'C.Fix S
-  L←I 2 2⍴0 ⋄ R←I 2 2 3⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆10∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/catenate10'C.Fix S
-  L←I 2 2⍴0 ⋄ R←I 2 2 3⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆10∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/catenate10'C.Fix S
-  L←I 2 2⍴0 ⋄ R←I 2 2 3⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆10∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'catenate10'C.Fix S
-  L←I 2 2⍴0 ⋄ R←I 2 2 3⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆11∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/catenate11'C.Fix S
-  L←I 0 ⋄ R←I 2 2⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆11∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/catenate11'C.Fix S
-  L←I 0 ⋄ R←I 2 2⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆11∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'catenate11'C.Fix S
-  L←I 0 ⋄ R←I 2 2⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆12∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/catenate12'C.Fix S
-  L←I ,0 0 ⋄ R←I 2 2⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆12∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/catenate12'C.Fix S
-  L←I ,0 0 ⋄ R←I 2 2⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆12∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'catenate12'C.Fix S
-  L←I ,0 0 ⋄ R←I 2 2⍴0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆13∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/catenate13'C.Fix S
-  L←I ,0 ⋄ R←I ,0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆13∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/catenate13'C.Fix S
-  L←I ,0 ⋄ R←I ,0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
-
-CATENATE∆13∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'catenate13'C.Fix S
-  L←I ,0 ⋄ R←I ,0 ⋄ #.UT.expect←L NS.Run R ⋄ L CS.Run R
-}
+CATENATE∆09∆GCC_TEST← '09' 'gcc'  'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆09∆ICC_TEST← '09' 'icc'  'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆09∆VSC_TEST← '09' 'vsc'  'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆09∆PGCC_TEST←'09' 'pgcc' 'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆10∆GCC_TEST← '10' 'gcc'  'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆10∆ICC_TEST← '10' 'icc'  'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆10∆VSC_TEST← '10' 'vsc'  'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆10∆PGCC_TEST←'10' 'pgcc' 'Run' MK∆TST 'I 2 2⍴0'   'I 2 2 3⍴0'
+CATENATE∆11∆GCC_TEST← '11' 'gcc'  'Run' MK∆TST 'I 0'       'I 2 2⍴0'
+CATENATE∆11∆ICC_TEST← '11' 'icc'  'Run' MK∆TST 'I 0'       'I 2 2⍴0'
+CATENATE∆11∆VSC_TEST← '11' 'vsc'  'Run' MK∆TST 'I 0'       'I 2 2⍴0'
+CATENATE∆11∆PGCC_TEST←'11' 'pgcc' 'Run' MK∆TST 'I 0'       'I 2 2⍴0'
+CATENATE∆12∆GCC_TEST← '12' 'gcc'  'Run' MK∆TST 'I ,0 0'    'I 2 2⍴0'
+CATENATE∆12∆ICC_TEST← '12' 'icc'  'Run' MK∆TST 'I ,0 0'    'I 2 2⍴0'
+CATENATE∆12∆VSC_TEST← '12' 'vsc'  'Run' MK∆TST 'I ,0 0'    'I 2 2⍴0'
+CATENATE∆12∆PGCC_TEST←'12' 'pgcc' 'Run' MK∆TST 'I ,0 0'    'I 2 2⍴0'
+CATENATE∆13∆GCC_TEST← '13' 'gcc'  'Run' MK∆TST 'I ,0'      'I ,0'
+CATENATE∆13∆ICC_TEST← '13' 'icc'  'Run' MK∆TST 'I ,0'      'I ,0'
+CATENATE∆13∆VSC_TEST← '13' 'vsc'  'Run' MK∆TST 'I ,0'      'I ,0'
+CATENATE∆13∆PGCC_TEST←'13' 'pgcc' 'Run' MK∆TST 'I ,0'      'I ,0'
 
 :EndNamespace
 
