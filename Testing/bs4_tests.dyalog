@@ -8,20 +8,9 @@ S,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
 S,←⊂'D1←((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT ⋄ D2←D1-vsqrtT'
 S,←'CNDP2 D1' '}' ':EndNamespace'
 
-NS←⎕FIX S ⋄ C←#.codfns
-
 GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
 
-MK∆TST←{id cmp fn←⍺⍺ ⋄ ls rs←⍵⍵ ⋄ l←⍎ls ⋄ r←⍎rs
-  ~(⊂cmp)∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←cmp ⋄ CS←('bs4',⍕id)C.Fix S
-  #.UT.expect←l(⍎'NS.',fn)r ⋄ l(⍎'CS.',fn)r
-}
-
-BS4∆GCC_TEST←'' 'gcc' 'Run' MK∆TST 'L' 'R'
-BS4∆ICC_TEST←'' 'icc' 'Run' MK∆TST 'L' 'R'
-BS4∆VSC_TEST←'' 'vsc' 'Run' MK∆TST 'L' 'R'
-BS4∆PGCC_TEST←'' 'pgcc' 'Run' MK∆TST 'L' 'R'
+''('bs4' S 'Run' #.GEN∆T2 ⎕THIS) L R
 
 :EndNamespace
