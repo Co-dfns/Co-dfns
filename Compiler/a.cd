@@ -23,7 +23,7 @@ vsco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
 vslo←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
 vslo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
 vsc1←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
-vsc2←{'/I"',DWA∆PATH,'\\" /Fo"',BUILD∆PATH,'\" "',DWA∆PATH,'\dwa_fns.c" '}
+vsc2←{'/I"',DWA∆PATH,'\\" /Fo"',BUILD∆PATH,'\\" "',DWA∆PATH,'\dwa_fns.c" '}
 vsc3←{'"',BUILD∆PATH,'\',⍵,'_vsc.c" ',vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
 vsc4←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
 vsc←⎕CMD '%comspec% /C ',vsc1,vsc2,vsc3,vsc4
