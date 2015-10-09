@@ -15,7 +15,7 @@ fls←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 gcc←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
-pgcc←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
+pgcc←{⎕SH'pgcc ',cds,'-DHASACC ',pop,'pgcc'(cio,fls,log)⍵}
 vsco←'/W3 /Gm- /Zc:inline ' ⍝ /Zi /Fd"Build\vc140.pdb" '
 vsco,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
 vsco,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
@@ -32,7 +32,7 @@ icl3←{'"',BUILD∆PATH,'\',⍵,'_icl.c" ',vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'
 icl4←{'> "',BUILD∆PATH,'\',⍵,'_icl.log""'}
 icl←⎕CMD '%comspec% /E:ON /V:ON /C ',icl1,vsc2,icl3,icl4
 pgio←'-D "HAS_UNICODE=1" -D "xxBIT=64" -D "WIN32" -D "NDEBUG" -D "_WINDOWS" '
-pgio,←'-D "_USRDLL" -D "DWA_EXPORTS" -D "_WINDLL" '
+pgio,←'-D "_USRDLL" -D "DWA_EXPORTS" -D "_WINDLL" -D "HASACC" '
 pgwc←{z←'pgcc -fast -Bdynamic -acc -Minfo ',pgio,'-I "',DWA∆PATH,'\\" '
  z,←'-c "',⍵,'.c" -o "',⍵,'.obj"' ⋄ z}
 pglk←{z←'pgcc -fast -Mmakedll -acc -Minfo -o "',BUILD∆PATH,'\',⍵,'_pgi.dll" "'
