@@ -9,13 +9,13 @@ cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden '
 cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 '
 gop←'-Ofast -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
 iop←'-fast -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared '
-pop←'-fast -acc -Minfo -fPIC -shared '
+pop←'-DHASACC -fastsse -acc -ta=tesla -Minfo -fPIC -shared '
 cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
 fls←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 gcc←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
-pgcc←{⎕SH'pgcc ',cds,'-DHASACC ',pop,'pgcc'(cio,fls,log)⍵}
+pgcc←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 vsco←'/W3 /Gm- /Zc:inline ' ⍝ /Zi /Fd"Build\vc140.pdb" '
 vsco,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
 vsco,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
