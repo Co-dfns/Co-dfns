@@ -5,38 +5,8 @@ F←100÷⍨?100⍴10000
 
 S←':Namespace' 'Run←{⌈⍵}' ':EndNamespace'
 
-NS←⎕FIX S
-C←#.codfns
-
-CEILING∆I∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/ceilingi'C.Fix S
-  #.UT.expect←NS.Run I ⋄ CS.Run I
-}
-
-CEILING∆I∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/ceilingi'C.Fix S
-  #.UT.expect←NS.Run I ⋄ CS.Run I
-}
-
-CEILING∆I∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'ceilingi'C.Fix S
-  #.UT.expect←NS.Run I ⋄ CS.Run I
-}
-
-CEILING∆F∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/ceilingf'C.Fix S
-  #.UT.expect←NS.Run F ⋄ CS.Run F
-}
-
-CEILING∆F∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/ceilingf'C.Fix S
-  #.UT.expect←NS.Run F ⋄ CS.Run F
-}
-
-CEILING∆F∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'ceilingf'C.Fix S
-  #.UT.expect←NS.Run F ⋄ CS.Run F
-}
+'i'('ceiling' S 'Run' #.GEN∆T1 ⎕THIS) I
+'f'('ceiling' S 'Run' #.GEN∆T1 ⎕THIS) F
 
 :EndNamespace
 

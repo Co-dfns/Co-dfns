@@ -3,67 +3,11 @@
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
 F←100÷⍨?100⍴10000
 S←':Namespace' 'Run←{⍺-⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns
 
-MINUS∆II∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/minusii'C.Fix S
-  #.UT.expect←I NS.Run I ⋄ I CS.Run I
-}
-
-MINUS∆II∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/minusii'C.Fix S
-  #.UT.expect←I NS.Run I ⋄ I CS.Run I
-}
-
-MINUS∆II∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'minusii'C.Fix S
-  #.UT.expect←I NS.Run I ⋄ I CS.Run I
-}
-
-MINUS∆FF∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/minusff'C.Fix S
-  #.UT.expect←F NS.Run F ⋄ F CS.Run F
-}
-
-MINUS∆FF∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/minusff'C.Fix S
-  #.UT.expect←F NS.Run F ⋄ F CS.Run F
-}
-
-MINUS∆FF∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'minusff'C.Fix S
-  #.UT.expect←F NS.Run F ⋄ F CS.Run F
-}
-
-MINUS∆IF∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/minusif'C.Fix S
-  #.UT.expect←I NS.Run F ⋄ I CS.Run F
-}
-
-MINUS∆IF∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/minusif'C.Fix S
-  #.UT.expect←I NS.Run F ⋄ I CS.Run F
-}
-
-MINUS∆IF∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'minusif'C.Fix S
-  #.UT.expect←I NS.Run F ⋄ I CS.Run F
-}
-
-MINUS∆FI∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/minusfi'C.Fix S
-  #.UT.expect←F NS.Run I ⋄ F CS.Run I
-}
-
-MINUS∆FI∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/minusfi'C.Fix S
-  #.UT.expect←F NS.Run I ⋄ F CS.Run I
-}
-
-MINUS∆FI∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'minusfi'C.Fix S
-  #.UT.expect←F NS.Run I ⋄ F CS.Run I
-}
+'ii'('minus' S 'Run' #.GEN∆T2 ⎕THIS) I I
+'ff'('minus' S 'Run' #.GEN∆T2 ⎕THIS) F F
+'if'('minus' S 'Run' #.GEN∆T2 ⎕THIS) I F
+'fi'('minus' S 'Run' #.GEN∆T2 ⎕THIS) F I
 
 :EndNamespace
 

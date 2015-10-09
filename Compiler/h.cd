@@ -1,5 +1,5 @@
-﻿⍝ respos←'fmod((double)⍵,(double)⍺)'
-respos←'fmod((double)⍵,(double)⍺)'
+﻿respos←'fmod((double)⍵,(double)⍺)'
+⍝ respos←'⍵ % ⍺'
 resneg←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
 residue←'(0<=⍺&&0<=⍵)?',respos,':',resneg
 

@@ -1,68 +1,11 @@
 ﻿:Namespace same
 
-I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 S←':Namespace' 'Run←{⊣⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns
 
-SAME∆01∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/same01'C.Fix S
-  R←I ⍬ ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆01∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/same01'C.Fix S
-  R←I ⍬ ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆01∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'same01'C.Fix S
-  R←I ⍬ ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆02∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/same02'C.Fix S
-  R←I 0 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆02∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/same02'C.Fix S
-  R←I 0 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆02∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'same02'C.Fix S
-  R←I 0 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆03∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/same03'C.Fix S
-  R←I ⍳5 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆03∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/same03'C.Fix S
-  R←I ⍳5 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆03∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'same03'C.Fix S
-  R←I ⍳5 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆04∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/same04'C.Fix S
-  R←I 2 3 4⍴⍳5 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆04∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/same04'C.Fix S
-  R←I 2 3 4⍴⍳5 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
-
-SAME∆04∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'same04'C.Fix S
-  R←I 2 3 4⍴⍳5 ⋄ #.UT.expect←NS.Run R ⋄ CS.Run R
-}
+'01'('same' S 'Run' #.GEN∆T1 ⎕THIS) #.I ⍬
+'02'('same' S 'Run' #.GEN∆T1 ⎕THIS) #.I 0
+'03'('same' S 'Run' #.GEN∆T1 ⎕THIS) #.I ⍳5
+'04'('same' S 'Run' #.GEN∆T1 ⎕THIS) #.I 2 3 4⍴⍳5
 
 :EndNamespace
 

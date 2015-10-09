@@ -3,67 +3,11 @@
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
 F←100÷⍨?100⍴10000
 S←':Namespace' 'Run←{⍺>⍵}' ':EndNamespace'
-NS←⎕FIX S ⋄ C←#.codfns
 
-GTH∆II∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/gthii'C.Fix S
-  #.UT.expect←I NS.Run I ⋄ I CS.Run I
-}
-
-GTH∆II∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/gthii'C.Fix S
-  #.UT.expect←I NS.Run I ⋄ I CS.Run I
-}
-
-GTH∆II∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'gthii'C.Fix S
-  #.UT.expect←I NS.Run I ⋄ I CS.Run I
-}
-
-GTH∆FF∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/gthff'C.Fix S
-  #.UT.expect←F NS.Run F ⋄ F CS.Run F
-}
-
-GTH∆FF∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/gthff'C.Fix S
-  #.UT.expect←F NS.Run F ⋄ F CS.Run F
-}
-
-GTH∆FF∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'gthff'C.Fix S
-  #.UT.expect←F NS.Run F ⋄ F CS.Run F
-}
-
-GTH∆IF∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/gthif'C.Fix S
-  #.UT.expect←I NS.Run F ⋄ I CS.Run F
-}
-
-GTH∆IF∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/gthif'C.Fix S
-  #.UT.expect←I NS.Run F ⋄ I CS.Run F
-}
-
-GTH∆IF∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'gthif'C.Fix S
-  #.UT.expect←I NS.Run F ⋄ I CS.Run F
-}
-
-GTH∆FI∆GCC_TEST←{~(⊂'gcc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'gcc' ⋄ CS←'Scratch/gthfi'C.Fix S
-  #.UT.expect←F NS.Run I ⋄ F CS.Run I
-}
-
-GTH∆FI∆ICC_TEST←{~(⊂'icc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'icc' ⋄ CS←'Scratch/gthfi'C.Fix S
-  #.UT.expect←F NS.Run I ⋄ F CS.Run I
-}
-
-GTH∆FI∆VSC_TEST←{~(⊂'vsc')∊C.TEST∆COMPILERS:0⊣#.UT.expect←0
-  C.COMPILER←'vsc' ⋄ CS←'gthfi'C.Fix S
-  #.UT.expect←F NS.Run I ⋄ F CS.Run I
-}
+'ii'('gth' S 'Run' #.GEN∆T2 ⎕THIS) I I
+'ff'('gth' S 'Run' #.GEN∆T2 ⎕THIS) F F
+'if'('gth' S 'Run' #.GEN∆T2 ⎕THIS) I F
+'fi'('gth' S 'Run' #.GEN∆T2 ⎕THIS) F I
 
 :EndNamespace
 
