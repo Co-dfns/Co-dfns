@@ -1,0 +1,13 @@
+themes.solarized-light.font-family	= APL333
+themes.solarized-light.font-size	= 13
+themes.solarized-light.font-style	= none
+themes.solarized-light.fixed-font-family	= APL385 Unicode
+themes.solarized-light.fixed-font-size	= 13
+themes.solarized-light.fixed-font-style	= none
+themes.solarized-light.title-font-family	= APL333
+themes.solarized-light.title-font-size	= 14
+themes.solarized-light.title-font-style	= none
+themes.solarized-light.tree-view-font-family	= APL333
+themes.solarized-light.tree-view-font-size	= 13
+themes.solarized-light.tree-view-font-style	= none
+languages.default.elastic-tabstops	= true
