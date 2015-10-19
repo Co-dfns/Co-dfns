@@ -12,7 +12,7 @@
 VERSION	←0 4 42 ⋄ COMPILER←'vsc'
 DWA∆PATH	←'dwa'
 BUILD∆PATH	←'Build'
-⍝[c]TEST∆COMPILERS	←⊂'vsc'
+TEST∆COMPILERS	←⊂'vsc'
 VISUAL∆STUDIO∆PATH	←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
 INTEL∆C∆PATH	←'C:\Program Files (x86)\IntelSWTools\'
 INTEL∆C∆PATH	,←'compilers_and_libraries_2016.0.110\windows\bin\'
@@ -83,6 +83,7 @@ mkf	←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext�
 	f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
 MkNS	←{ns←#.⎕NS⍬ ⋄ ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵}
 Fix	←{⍺ MkNS ⍺ Cmp ⍵}
+Xml	←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
 ⍝[cf]
 ⍝[of]:AST
 get	←{⍺⍺⌷⍉⍵}
@@ -149,7 +150,7 @@ Prim←prim _as {P⍵⍴⍨1+⍵∊'/⌿⍀\'} _o Sfn
 Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
 Fnp←Fn _o Prim
 Mop←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
-Dop←Prim _s (dop _as P) _s Prim _as (2 O)
+Dop←Fnp _s (dop _as P) _s Fnp _as (2 O)
 Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
 Bind←{⍺(name _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as bind)⍵}
 Fex←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
@@ -312,8 +313,11 @@ pn,←⊂,'↓'	⋄ pt⍪←pft	¯16	¯16	1	¯11	2	¯11
 pn,←⊂,'⊤'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
 pn,←⊂,'⊥'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
 pn,←⊂'∘.'	⋄ pt⍪←pft	¯2	¯2	1	1	2	2
+pn,←⊂'.'	⋄ pt⍪←pft	¯2	¯2	1	2	1	2
 pn,←⊂'⎕sp'	⋄ pt⍪←pft	¯2	¯2	1	11	11	¯11
 pn,←⊂'⎕XOR'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
+⍝[c]Name	RL:	IN	FN	II	IF	FI	FF
+⍝[c]
 ⍝[cf]
 ⍝[of]:Operator Type Indirects
 ⍝[c]Convert Operand Types based on Calling Pattern of Operator
@@ -334,6 +338,7 @@ otn,←⊂,'⍀'	⋄ _←pft	5	10	5	5	10	10
 	oti⍪←⍉_,⍪pft	15	15	13	14	13	14
 otn,←⊂'∘.'	⋄ _←pft	5	10	5	6	9	10
 	oti⍪←⍉_,⍪pft	15	15	13	14	13	14
+⍝[c]otn,←⊂'.'	⋄ _←pft	
 	_←pft	7	11	5	6	9	10
 	oti⍪←⍉_,⍪pft	7	11	5	6	9	10
 ⍝[cf]
