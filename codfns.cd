@@ -239,18 +239,17 @@ nvk	←((2↑⊢),2,(3↓⊢))⍤1sub(Em∧'i'∊⍨k)
 nv	←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪⊢),∘⊂⊢){⌽⍣⍺⊢⍵})¨v∘nvo∘nve
 ⍝[cf]
 ⍝[of]:Lift Type-Checking
-⍝[of]:Primitive Type Definitions
-⍝[of]:Basic Type Definitions
+⍝[of]:Primitive Types
 ⍝[c]Type:	Index	Right	Left		Type Codes:	Value	Type
 ⍝[c]	0	Unknown	Unknown			Unknown	0
 ⍝[c]	1	Unknown	Integer			Integer	1
 ⍝[c]	2	Unknown	Float			Float	2
 ⍝[c]	3	Unknown	Not bound			Not bound	3
-⍝[c]	4	Integer	Unknown
-⍝[c]	5	Integer	Integer
-⍝[c]	6	Integer	Float
-⍝[c]	7	Integer	Not bound
-⍝[c]	8	Float	Unknown
+⍝[c]	4	Integer	Unknown		
+⍝[c]	5	Integer	Integer		Operator Codes:	Meaning	Code
+⍝[c]	6	Integer	Float			Left	0
+⍝[c]	7	Integer	Not bound			Right	1
+⍝[c]	8	Float	Unknown			Error	¯N
 ⍝[c]	9	Float	Integer
 ⍝[c]	10	Float	Float
 ⍝[c]	11	Float	Not bound
@@ -284,8 +283,6 @@ pn,←⊂,'⍴'	⋄ pt⍪←pft	1	1	1	¯11	1	¯11
 pn,←⊂,','	⋄ pt⍪←pft	1	2	1	2	2	2
 pn,←⊂,'⍳'	⋄ pt⍪←pft	1	¯11	1	1	1	1
 pn,←⊂,'○'	⋄ pt⍪←pft	2	2	2	2	2	2
-pn,←⊂,'¨'	⋄ pt⍪←pft	1	2	¯2	¯2	¯2	¯2
-pn,←⊂,'.'	⋄ pt⍪←pft	¯2	¯2	1	1	2	2
 pn,←⊂,'~'	⋄ pt⍪←pft	1	1	1	2	1	2
 pn,←⊂,'['	⋄ pt⍪←pft	¯2	¯2	1	2	1	2
 pn,←⊂,'∧'	⋄ pt⍪←pft	¯2	¯2	1	2	2	2
@@ -301,51 +298,40 @@ pn,←⊂,'≡'	⋄ pt⍪←pft	1	1	1	1	1	1
 pn,←⊂,'≢'	⋄ pt⍪←pft	1	1	1	1	1	1
 pn,←⊂,'⊢'	⋄ pt⍪←pft	1	2	1	1	2	2
 pn,←⊂,'⊣'	⋄ pt⍪←pft	1	2	1	2	1	2
-pn,←⊂,'⍨'	⋄ pt⍪←pft	1	2	¯2	¯2	¯2	¯2
-pn,←⊂,'/'	⋄ pt⍪←pft	1	2	1	¯11	2	¯11
-pn,←⊂,'⌿'	⋄ pt⍪←pft	1	2	1	¯11	2	¯11
-pn,←⊂,'\'	⋄ pt⍪←pft	1	2	¯11	¯11	¯11	¯11
-pn,←⊂,'⍀'	⋄ pt⍪←pft	1	2	¯11	¯11	¯11	¯11
 pn,←⊂'//'	⋄ pt⍪←pft	¯2	¯2	1	¯11	2	¯11
 pn,←⊂,'⍉'	⋄ pt⍪←pft	1	2	¯16	¯16	¯16	¯16
 pn,←⊂,'↑'	⋄ pt⍪←pft	¯16	¯16	1	¯11	2	¯11
 pn,←⊂,'↓'	⋄ pt⍪←pft	¯16	¯16	1	¯11	2	¯11
 pn,←⊂,'⊤'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
 pn,←⊂,'⊥'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
-pn,←⊂'∘.'	⋄ pt⍪←pft	¯2	¯2	1	1	2	2
-pn,←⊂'.'	⋄ pt⍪←pft	¯2	¯2	1	2	1	2
+pn,←⊂,'¨'	⋄ pt⍪←pft	0	0	0	0	0	0
+pn,←⊂,'⍨'	⋄ pt⍪←pft	0	0	0	0	0	0
+pn,←⊂,'/'	⋄ pt⍪←pft	0	0	0	¯11	0	¯11
+pn,←⊂,'⌿'	⋄ pt⍪←pft	0	0	0	¯11	0	¯11
+pn,←⊂,'\'	⋄ pt⍪←pft	0	0	¯11	¯11	¯11	¯11
+pn,←⊂,'⍀'	⋄ pt⍪←pft	0	0	¯11	¯11	¯11	¯11
+pn,←⊂'∘.'	⋄ pt⍪←pft	¯2	¯2	0	0	0	0
+pn,←⊂,'.'	⋄ pt⍪←pft	¯2	¯2	0	0	0	0
 pn,←⊂'⎕sp'	⋄ pt⍪←pft	¯2	¯2	1	11	11	¯11
 pn,←⊂'⎕XOR'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
 ⍝[c]Name	RL:	IN	FN	II	IF	FI	FF
 ⍝[c]
 ⍝[cf]
-⍝[of]:Operator Type Indirects
-⍝[c]Convert Operand Types based on Calling Pattern of Operator
-⍝[c]
-⍝[c]Conversion Maps:	Operator called with X type → Operand type is found at Y
-⍝[c]
-otn←⍬      ⋄ oti←0 2 12⍴⍬
-⍝[c]
-⍝[c]Name	R:	IN	FN	II	IF	FI	FF
-⍝[c]	L:	IN	FN	II	IF	FI	FF
-otn,←⊂,'/'	⋄ _←pft	5	10	5	5	10	10
-	oti⍪←⍉_,⍪pft	15	15	13	14	13	14
-otn,←⊂,'⌿'	⋄ _←pft	5	10	5	5	10	10
-	oti⍪←⍉_,⍪pft	15	15	13	14	13	14
-otn,←⊂,'\'	⋄ _←pft	5	10	5	5	10	10
-	oti⍪←⍉_,⍪pft	15	15	13	14	13	14
-otn,←⊂,'⍀'	⋄ _←pft	5	10	5	5	10	10
-	oti⍪←⍉_,⍪pft	15	15	13	14	13	14
-otn,←⊂'∘.'	⋄ _←pft	5	10	5	6	9	10
-	oti⍪←⍉_,⍪pft	15	15	13	14	13	14
-⍝[c]otn,←⊂'.'	⋄ _←pft	
-	_←pft	7	11	5	6	9	10
-	oti⍪←⍉_,⍪pft	7	11	5	6	9	10
-⍝[cf]
-⍝[cf]
+⍝[c]oti:	(0 Lop) (1 Rop) (2 Rarg) (3 Larg)
+otn←⍬	⋄ oti←0 2 2⍴⍬
+otn,←⊂,'.'	⋄ oti⍪←↑(1 1)	(2 3)	⋄ otn,←⊂,'/'	⋄ oti⍪←↑(2 2)	(2 3)
+otn,←⊂,'⌿'	⋄ oti⍪←↑(2 2)	(2 3)	⋄ otn,←⊂,'\'	⋄ oti⍪←↑(2 2)	(2 3)
+otn,←⊂,'⍀'	⋄ oti⍪←↑(2 2)	(2 3)	⋄ otn,←⊂'∘.'	⋄ oti⍪←↑(2 3)	(2 3)
+otn,←⊂,'¨'	⋄ oti⍪←↑(2 3)	(2 3)	
+	oti⍪←↑(2 3)	(2 3)
+
+lte	←((12⌊1 3 4⊥((∨⌿¯1=×)⍪|))2↑⊢)⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢
+ltot	←((pft 1 2 1 1 2 2)⍪⍉⍪pft 3 3 1 2 1 2)⍪⍨(2↑1↓(⊃y))
+ltoa	←lte⍤2(2↑⊣),[1]⍨(oti⌷⍨otn⍳¯1↑∘⊃v)⌷⍤0 2 ltot
+lto	←(((0,⍨⊢)⌷⍨1+¯1⌈⊃)⍤1∘⍉⍪1⊖⊢)ltoa⍪⍨¯1↑⊣
+ltv	←(1⊃⊣)⌷⍤0 2⍨(0⊃⊣)⍳∘⊃v
+ltt	←Om⊃⊣(((lte⍪⊢)ltv){⍺⍵}ltv lto ⊢)∘{(2=⊃k ⍵)∧Om ⍵: ⍵ ⋄ ⍵}(⍉∘⍪⊢)
 lta	←(1↓¨(⊂⊢),∘⊂(12⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(0,∘∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
-ltd	←12⌊1 3 4⊥(((∨⌿¯1=×)⍪|)(oti⌷⍨otn⍳∘⊂⊣)(⊃¨∘⊂⍤1)(2 4⍴⍳4),⍨2↑⊢)
-ltt	←(⊃∘⌽∘⊃v)(⊢⍪⍨ltd⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢)(1⊃⊣)⌷⍤0 2⍨(0⊃⊣)⍳∘⊃v
 ltb	←⊣⍪¨(⊂n),∘⊂∘↑((,1↑⊢)¨y)
 lt	←(pn pt⍪¨lta)(ltb((,¯1↓⊢),∘⊂ltt)⍤1⊢)⍣≡(⊂4 12⍴0),⍨⊢
 ⍝[cf]
