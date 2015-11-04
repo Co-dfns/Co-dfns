@@ -941,10 +941,11 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];','zr-1'do'zs[i+1]=rs[i];'
    z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
    z,'}',nl}
 ⍝[cf]
-rth ←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
-rth,←'#include <stdio.h>',nl,'#ifdef HASACC',nl,'#include <accelmath.h>',nl
-rth,←'#endif',nl
-rth,←'int isinit=0;',nl
-rth,←'#define PI 3.14159265358979323846',nl
+rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+rth	,←'#include <stdio.h>',nl,'#ifdef HASACC',nl,'#include <accelmath.h>',nl
+rth	,←'#endif',nl
+rth	,←'int isinit=0;',nl
+rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
+rth	,←'struct array {B r; B s[15]; void *v;};',nl,'typedef struct array A;',nl
 ⍝[cf]
 :EndNamespace
