@@ -20,7 +20,7 @@ PGI∆PATH	←'C:\Program Files\PGI\win64\15.7\'
 ⍝[cf]
 ⍝[of]:Backend Compilers
 ⍝[of]:UNIX Generic Flags/Options
-cfs	←'-funsigned-bitfields -funsigned-char -fvisibility=hidden '
+cfs	←'-funsigned-bitfields -funsigned-char -fvisibility=hidden -std=c11 '
 cds	←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 '
 cio	←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
 fls	←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
@@ -35,7 +35,7 @@ iop	←'-fast -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared 
 icc	←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:PGI C Linux
-pop	←'-DHASACC -fastsse -acc -ta=tesla:cuda7.5 -Minfo=ccff -fPIC -shared '
+pop	←'-DHASACC -fast -acc -ta=tesla:cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
 pgcc	←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
@@ -424,8 +424,11 @@ var	←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ ¯1=⊃⍵:,⍺ ⋄ '&en
 nl	←⎕UCS 13 10
 for	←{'for(i=0;i<',(⍕⍵),';i++){'}
 do	←{'{BOUND i,_n=',(⍕⍺),';',(for'_n'),⍵,'}}',nl}
-pdo	←{p←((⊂2↑COMPILER)∊'ic' 'pg')⊃''('#pragma simd',nl)
-	'{BOUND i;',nl,p,(for ⍺),⍵,'}}',nl}
+ado	←{'{BOUND i,_n=',(⍕⍺),';',nl,⍺⍺,(for'_n'),⍵,'}}',nl}
+pdop	←('#pragma simd',nl)('#pragma acc kernels loop ')''
+pdo	←{⍺((('ic' 'pg'⍳⊂2↑COMPILER)⊃pdop,¨'' nl '')ado)⍵}
+pcopyin	←{' pcopyin(',(⊃{⍺,',',⍵}/⍵),') '}
+cdo	←{⍺((('ic' 'pg'⍳⊂2↑COMPILER)⊃pdop,¨''(nl,⍨pcopyin ⍺⍺)'')ado)⍵}
 tl	←{('di'⍳⍵)⊃¨⊂('APLDOUB' 'double')('APLLONG' 'aplint32')}
 enc	←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
 fvs	←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
@@ -552,7 +555,7 @@ mxsd←{	chk	←'if(lr==rr){',('lr'do'if(rs[i]!=ls[i])error(5);'),'}'
 	chk	,←'else if(lr!=0&&rr!=0){error(4);}' ⋄ siz←'if(rr==0){zr=lr;'
 	siz	,←('lr'do'zc*=ls[i];lc*=ls[i];zs[i]=ls[i];'),'}else{zr=rr;'
 	siz	,←('rr'do'zc*=rs[i];rc*=rs[i];zs[i]=rs[i];'),('lr'do'lc*=ls[i];'),'}'
-	exe	←'zc'pdo'zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';'
+	exe	←'zc'('lv[:lc]' 'rv[:rc]'cdo)'zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';'
 		chk siz exe mxfn ⍺ ⍵}
 scmx←{	(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
 sdbm	←(0⌷⍉sdb),'mxsm' 'mxsd'{'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
@@ -740,7 +743,7 @@ mxfn←{	chk siz exe	←⍺
 		z}
 decl←{	z	←(⊃,/(⊂''),⍺⍺{'unsigned ',⍺,'r=',⍵,'->p->RANK;'}¨⍵),nl
 	z	,←(⊃,/(⊂''),⍺⍺{'BOUND*',⍺,'s=',⍵,'->p->SHAPETC;'}¨⍵),nl
-	z	,←(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*',⍺,'v=ARRAYSTART(',⍵,'->p);'}¨⍵),nl
+	z	,←(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=ARRAYSTART(',⍵,'->p);'}¨⍵),nl
 		z}
 ⍝[cf]
 ⍝[of]:Iota/Index Generation
@@ -752,7 +755,7 @@ shpm←{'' 'zr=1;zs[0]=rr;'('rr'do'zv[i]=rs[i];')mxfn ⍺ ⍵}
 shpd←{chk←'if(1!=lr)error(11);' ⋄ siz←'zr=ls[0];','zr'do'zs[i]=lv[i];'
  exe←('zr'do'zc*=zs[i];'),('rr'do'rc*=rs[i];')
  exe,←'if(rc==0){',('zc'pdo'zv[i]=0;'),'}',nl
- exe,←'else{',('zc'pdo'zv[i]=rv[i%rc];'),'}',nl
+ exe,←'else{',('zc'((⊂'rv[:rc]')cdo)'zv[i]=rv[i%rc];'),'}',nl
  chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Squad Indexing
@@ -810,9 +813,11 @@ fctd←{chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
  chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Reverse/Rotate
-rotm←{exe←('zr==0?0:zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
- exe,←'zc'pdo'BOUND j=i;','rc'pdo'zv[j*rc+i]=rv[j*rc+(rc-(i+1))];'
- ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
+rotm←{	exe	←('zr==0?0:zr-1'do'zc*=zs[i];'),'rc=rr==0?1:rs[rr-1];'
+	acc	←'pcopyin(rv[:rc*zc]) pcopyout(zv[:rc*zc])'
+	prag	←('ic' 'pg'⍳⊂2↑COMPILER)⊃pdop,¨''(acc,nl)''
+	exe	,←'zc'(prag ado)'BOUND j=i;',nl,'rc'do'zv[j*rc+i]=rv[j*rc+(rc-(i+1))];'
+		''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Member/Enlist
 memm←{siz←('rr'do'rc*=rs[i];'),'zr=1;zs[0]=rc;' ⋄ exe←'rc'pdo'zv[i]=rv[i];'
@@ -822,9 +827,11 @@ memm←{siz←('rr'do'rc*=rs[i];'),'zr=1;zs[0]=rc;' ⋄ exe←'rc'pdo'zv[i]=rv[i
 dscm←{'' 'zr=0;'(('rr'do'rc*=rs[i];'),'zv[0]=rc==0?0:rv[0];')mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Rotate First Axis/Reverse First Axis
-rtfm←{exe←('zr==0?0:zr-1'do'zc*=zs[i+1];'),'rc=rr==0?1:rs[0];'
- exe,←'rc'pdo'BOUND j=i;','zc'pdo'zv[j*zc+i]=rv[(rc-(j+1))*zc+i];'
- ''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
+rtfm←{	exe	←('zr==0?0:zr-1'do'zc*=zs[i+1];'),'rc=rr==0?1:rs[0];'
+	acc	←'pcopyin(rv[:rc*zc]) pcopyout(zv[:rc*zc])'
+	prag	←('ic' 'pg'⍳⊂2↑COMPILER)⊃pdop,¨''(acc,nl)''
+	exe	,←'rc'(prag ado)'BOUND j=i;','zc'do'zv[j*zc+i]=rv[(rc-(j+1))*zc+i];'
+		''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
 rtfd←{chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
  siz←'zr=rr;','zr'do'zs[i]=rs[i];'
  exe←'zc=rr==0?1:rs[0];','rr==0?0:rr-1'do'rc*=rs[i+1];'
