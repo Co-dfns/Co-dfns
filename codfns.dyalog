@@ -946,6 +946,10 @@ rth	,←'#include <stdio.h>',nl,'#ifdef HASACC',nl,'#include <accelmath.h>',nl
 rth	,←'#endif',nl
 rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
-rth	,←'struct array {B r; B s[15]; void *v;};',nl,'typedef struct array A;',nl
+rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
+rth	,←'struct array {I r; B s[15]; V*v;};',nl,'typedef struct array A;',nl
+rth	,←'V aa(A*a,I s){B c=1;for(I i=0;i<a->r;i++)c*=a->s[i];',nl
+rth	,←' a->v=malloc(s*c);if(NULL==a->v)error(1);}',nl
+rth	,←'#define AA(a,s) aa((a),sizeof(s))',nl
 ⍝[cf]
 :EndNamespace
