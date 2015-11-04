@@ -951,5 +951,6 @@ rth	,←'struct array {I r; B s[15]; V*v;};',nl,'typedef struct array A;',nl
 rth	,←'V aa(A*a,I s){B c=1;for(I i=0;i<a->r;i++)c*=a->s[i];',nl
 rth	,←' a->v=malloc(s*c);if(NULL==a->v)error(1);}',nl
 rth	,←'#define AA(a,s) aa((a),sizeof(s))',nl
+rth	,←'V fe(A*e,I c){for(I i=0;i<c;i++){free(e[i].v);}}',nl
 ⍝[cf]
 :EndNamespace
