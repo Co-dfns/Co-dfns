@@ -27,8 +27,7 @@ fls	←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log	←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 ⍝[cf]
 ⍝[of]:GCC (Linux Only)
-⍝ gop	←'-Ofast -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
-gop	←'-g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
+gop	←'-Ofast -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
 gcc	←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:Intel C Linux
@@ -36,8 +35,7 @@ iop	←'-fast -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared 
 icc	←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:PGI C Linux
-⍝ pop	←'-DHASACC -fast -acc -ta=tesla:cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
-pop	←'-Minfo -Minfo=ccff -fPIC -shared '
+pop	←'-DHASACC -fast -acc -ta=tesla:cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
 pgcc	←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
@@ -446,14 +444,14 @@ elp	←'(LOCALP*z,LOCALP*l,LOCALP*r)'
 cnvc←{	cs st	←⍺
 	r c	←⍵
 	z	←'case ',cs,':{AA(&',c,',I);',st,'*ss=ARRAYSTART(',r,'->p);I*bs=',c,'.v;'
-	z	,←'*bs=*ss;};break;',nl
+	z	,←'*bs=*ss;f',r,'=1;};break;',nl
 		z}
 cnvs←{	z	←'if(',⍵,'.r==0){',nl
 	z	,←'switch(',⍺,'->p->ELTYPE){case APLLONG:case APLDOUB:break;',nl
 	z	,←⊃,/('APLINTG' 'aplint16')('APLSINT' 'aplint8')cnvc¨⊂⍺ ⍵
 	z	,←'default:error(16);}}'
 		z}
-tps	←'A cl,cr;cl.v=NULL;cpda(&cr,r);',('r'cnvs'cr')
+tps	←'A cl,cr;cl.v=NULL;I fl=0,fr=0;cpda(&cr,r);',('r'cnvs'cr')
 tps	,←nl,'if(l!=NULL){cpda(&cl,l);',('l'cnvs'cl'),'}',nl
 tps	,←'int tp=0;switch(r->p->ELTYPE){',nl,'case APLINTG:',nl,'case APLSINT:',nl
 tps	,←'case APLLONG:break;',nl
@@ -464,7 +462,7 @@ tps	,←'case APLLONG:break;',nl
 tps	,←'case APLDOUB:tp+=1;break;',nl,'default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
 tpi	←'ii' 'if' 'in' 'fi' 'ff' 'fn'
-fcln	←'frea(&cl);',nl,'frea(&cr);',nl,'frea(&za);',nl
+fcln	←'if(fl)frea(&cl);if(fr)frea(&cr);frea(&za);',nl
 did	←5 6 7 9 10 11
 dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tpi),'(&za,&cl,&cr,env);')('error(',(cln⍕e←⊃(⍺⌷did)⌷⍉⊃y⍵),');')}
 dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷did)⌷⍉⊃y ⍵),');')''}
@@ -883,6 +881,7 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	siz	,←'if(lc>=rc){DO(i,lc)last+=lv[i];zs[zr-1]=last;}',nl
 	siz	,←'else{last+=rc*lv[0];zs[zr-1]=last;}',nl,'DO(i,n)zc*=zs[i];'
 	exe	←'B a=0;if(rc==lc){DO(i,lc){',nl
+⍝[c]	exe	,←' if(lv[i])zv[a++]=rv[i];}}',nl
 	exe	,←' if(lv[i]==0)continue;',nl
 	exe	,←' else if(lv[i]>0){DO(j,zc){DO(k,lv[j]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}}',nl
 	exe	,←' else{DO(j,zc){L n=abs(lv[j]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}}',nl
@@ -980,6 +979,6 @@ rth	,←' L c=1;DO(i,a->r)c*=a->s[i];',nl
 rth	,←' memcpy(ARRAYSTART(d->p),a->v,c*(t==APLLONG?sizeof(I):sizeof(D)));}',nl
 rth	,←'V cpda(A*a,LOCALP*d){a->r=d->p->RANK;a->v=ARRAYSTART(d->p);',nl
 rth	,←' I r=a->r;DO(i,r)a->s[i]=d->p->SHAPETC[i];}',nl
-rth	,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
+rth	,←'V cpaa(A*t,A*s){frea(t);I r=t->r=s->r;DO(i,r)t->s[i]=s->s[i];t->v=s->v;}',nl
 ⍝[cf]
 :EndNamespace
