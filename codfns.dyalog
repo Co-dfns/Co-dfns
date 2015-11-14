@@ -35,7 +35,7 @@ iop	←'-fast -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared 
 icc	←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:PGI C Linux
-pop	←'-DHASACC -fast -acc -ta=tesla:cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
+pop	←' -fast -acc -ta=tesla:cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
 pgcc	←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
@@ -410,10 +410,10 @@ Of	←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳6)case¨⊂⍵),'}',nl,fcln,'}
 Fd	←{frt,(⊃n⍵),flp,';',nl}
 Fe	←{frt,(⊃n⍵),flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
 F0	←{frt,(⊃n⍵),flp,'{',nl,'A*env[]={tenv};',nl,('tenv'reg ⍵),nl}
-F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),('env0'reg ⍵),nl,fnacc⍵}
+F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),('env0'reg ⍵),nl,''⊣fnacc⍵}
 Z0	←{'}',nl,nl}
 zap	←{'memcpy(z,',((⊃n⍵)var ⊃e⍵),',sizeof(A));'}
-Z1	←{'}',nl,'cpaa(z,',((⊃n⍵)var⊃e⍵),');',nl,'fe(&env0[1],',(⍕¯1+⊃s⍵),');}',nl,nl}
+Z1	←{'cpaa(z,',((⊃n⍵)var⊃e⍵),');',nl,'fe(&env0[1],',(⍕¯1+⊃s⍵),');}',nl,nl}
 Ze	←{'}',nl,nl}
 M0	←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
 S0	←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
@@ -444,14 +444,14 @@ elp	←'(LOCALP*z,LOCALP*l,LOCALP*r)'
 cnvc←{	cs st	←⍺
 	r c	←⍵
 	z	←'case ',cs,':{AA(&',c,',I);',st,'*ss=ARRAYSTART(',r,'->p);I*bs=',c,'.v;'
-	z	,←'*bs=*ss;f',r,'=1;};break;',nl
+	z	,←'*bs=*ss;};break;',nl
 		z}
 cnvs←{	z	←'if(',⍵,'.r==0){',nl
 	z	,←'switch(',⍺,'->p->ELTYPE){case APLLONG:case APLDOUB:break;',nl
 	z	,←⊃,/('APLINTG' 'aplint16')('APLSINT' 'aplint8')cnvc¨⊂⍺ ⍵
 	z	,←'default:error(16);}}'
 		z}
-tps	←'A cl,cr;cl.v=NULL;I fl=0,fr=0;cpda(&cr,r);',('r'cnvs'cr')
+tps	←'A cl,cr;cl.v=NULL;cr.v=NULL;cpda(&cr,r);',('r'cnvs'cr')
 tps	,←nl,'if(l!=NULL){cpda(&cl,l);',('l'cnvs'cl'),'}',nl
 tps	,←'int tp=0;switch(r->p->ELTYPE){',nl,'case APLINTG:',nl,'case APLSINT:',nl
 tps	,←'case APLLONG:break;',nl
@@ -462,7 +462,7 @@ tps	,←'case APLLONG:break;',nl
 tps	,←'case APLDOUB:tp+=1;break;',nl,'default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
 tpi	←'ii' 'if' 'in' 'fi' 'ff' 'fn'
-fcln	←'if(fl)frea(&cl);if(fr)frea(&cr);frea(&za);',nl
+fcln	←'frea(&cl);frea(&cr);frea(&za);',nl
 did	←5 6 7 9 10 11
 dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tpi),'(&za,&cl,&cr,env);')('error(',(cln⍕e←⊃(⍺⌷did)⌷⍉⊃y⍵),');')}
 dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷did)⌷⍉⊃y ⍵),');')''}
@@ -747,7 +747,7 @@ mxfn←{	chk siz exe	←⍺
 	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
 	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl,'AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');',nl
 	z	,←((1↑tpv)((1↑nmv)declv)1↑elv),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
-	z	,←'if(tpu){cpaa(orz,rslt);}',nl,'}',nl
+	z	,←'if(tpu){cpaa(orz,rslt);}}'
 		z}
 decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
 	z	,←(⊃,/(⊂''),⍺⍺{'B*restrict ',⍺,'s=',⍵,'->s;'}¨⍵),nl
@@ -758,8 +758,8 @@ declv←{		(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}�
 ⍝[of]:Iota/Index Generation
 iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 	siz	←'zr=1;zc=zs[0]=rv[0];'
-	exe	←(simd ''),'DO(i,zs[0])zv[i]=i;',nl
-	exe	,←''⊣'#pragma acc update self(zv[:zc])'
+	exe	←(simd 'present(zv[:zc])'),'DO(i,zs[0])zv[i]=i;',nl
+	exe	,←'#pragma acc update host(zv[0:zc])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Shape/Reshape
@@ -948,28 +948,35 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 ⍝[cf]
 rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
 rth	,←'#include <stdio.h>',nl,'#include <string.h>',nl
-rth	,←'#ifdef HASACC',nl,'#include <accelmath.h>',nl,'#endif',nl
+rth	,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
 rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
 rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
-rth	,←'struct array {I r; B s[15];B c;B z;V*v;};',nl,'typedef struct array A;',nl
+rth	,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array A;',nl
 rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl
-rth	,←'V aa(A*a,I s){B c=1;DO(i,a->r)c*=a->s[i];B z=s*c;',nl
-rth	,←' V*v=malloc(z);if(NULL==v)error(1);',nl
-rth	,←'#ifdef HASACC',nl,'#pragma acc enter data create(v[:z])',nl,'#endif',nl
-rth	,←' a->v=v;a->z=z;a->c=c;}',nl
+rth	,←'V frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
+rth	,←'#ifdef _OPENACC',nl,'#pragma acc exit data delete(v[:z])',nl,'#endif',nl
+rth	,←' if(a->f)free(v);}}',nl
+rth	,←'V aa(A*a,I s){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=s*c;',nl
+rth	,←' char*v=malloc(z);if(NULL==v)error(1);',nl
+rth	,←'#ifdef _OPENACC',nl,'#pragma acc enter data create(v[:z])',nl,'#endif',nl
+rth	,←' a->v=v;a->z=z;a->c=c;a->f=1;}',nl
 rth	,←'#define AA(a,s) aa((a),sizeof(s))',nl
 rth	,←'V ai(A*a,I r,B *s,I sz){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,sz);}',nl
 rth	,←'#define AI(a,r,s,sz) ai((a),(r),(s),sizeof(sz))',nl
-rth	,←'V frea(A*a){V*v=a->v;B z=a->z;',nl
-rth	,←'#ifdef HASACC',nl,'#pragma acc exit data delete(v[:z])',nl,'#endif',nl
-rth	,←'free(v);}',nl
 rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);',nl
-rth	,←' L c=1;DO(i,a->r)c*=a->s[i];',nl
-rth	,←' memcpy(ARRAYSTART(d->p),a->v,c*(t==APLLONG?sizeof(I):sizeof(D)));}',nl
-rth	,←'V cpda(A*a,LOCALP*d){a->r=d->p->RANK;a->v=ARRAYSTART(d->p);',nl
-rth	,←' I r=a->r;DO(i,r)a->s[i]=d->p->SHAPETC[i];}',nl
-rth	,←'V cpaa(A*t,A*s){frea(t);I r=t->r=s->r;DO(i,r)t->s[i]=s->s[i];t->v=s->v;}',nl
+rth	,←' memcpy(ARRAYSTART(d->p),a->v,a->z);}',nl
+rth	,←'V cpda(A*a,LOCALP*d){frea(a);',nl
+rth	,←' a->r=d->p->RANK;a->v=ARRAYSTART(d->p);a->f=0;',nl
+rth	,←' I r=a->r;B c=1;DO(i,r){a->s[i]=d->p->SHAPETC[i];c*=a->s[i];};a->c=c;',nl
+rth	,←' switch(d->p->ELTYPE){case APLLONG:a->z=c*sizeof(I);break;',nl
+rth	,←'  case APLDOUB:a->z=c*sizeof(D);break;',nl
+rth	,←'  case APLINTG:a->z=c*sizeof(aplint16);break;',nl
+rth	,←'  case APLSINT:a->z=c*sizeof(aplint8);break;',nl
+rth	,←'  default: error(16);};',nl
+rth	,←'#ifdef _OPENACC',nl,'char *v=a->v;B z=a->z;',nl
+rth	,←'#pragma acc enter data copyin(v[:z])',nl,'#endif',nl,'}',nl
+rth	,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
 ⍝[cf]
 :EndNamespace
