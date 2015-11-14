@@ -409,11 +409,11 @@ O0	←{'' '' ''}
 Of	←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳6)case¨⊂⍵),'}',nl,fcln,'}',nl,nl}
 Fd	←{frt,(⊃n⍵),flp,';',nl}
 Fe	←{frt,(⊃n⍵),flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
-F0	←{frt,(⊃n⍵),flp,'{',nl,'A*env[]={tenv};',nl,'tenv'reg ⍵}
-F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),'env0'reg ⍵}
+F0	←{frt,(⊃n⍵),flp,'{',nl,'A*env[]={tenv};',nl,('tenv'reg ⍵),nl}
+F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),('env0'reg ⍵),nl,fnacc⍵}
 Z0	←{'}',nl,nl}
 zap	←{'memcpy(z,',((⊃n⍵)var ⊃e⍵),',sizeof(A));'}
-Z1	←{'cpaa(z,',((⊃n⍵)var⊃e⍵),');',nl,'fe(&env0[1],',(⍕¯1+⊃s⍵),');}',nl,nl}
+Z1	←{'}',nl,'cpaa(z,',((⊃n⍵)var⊃e⍵),');',nl,'fe(&env0[1],',(⍕¯1+⊃s⍵),');}',nl,nl}
 Ze	←{'}',nl,nl}
 M0	←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
 S0	←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
@@ -431,7 +431,7 @@ reg	←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
 fnv	←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 git	←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' '?type? '}
 gie	←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLNA'}
-pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵)}
+pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
 simdc	←{('#pragma acc kernels loop ',⍵,nl)('#pragma simd',nl)('')}
 simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 ⍝[cf]
@@ -467,6 +467,7 @@ did	←5 6 7 9 10 11
 dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tpi),'(&za,&cl,&cr,env);')('error(',(cln⍕e←⊃(⍺⌷did)⌷⍉⊃y⍵),');')}
 dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷did)⌷⍉⊃y ⍵),');')''}
 case	←{'case ',(⍕⍺),':',(⍺ dcl ⍵),(⍺ dcp ⍵),'break;',nl}
+fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
 ⍝[cf]
 ⍝[of]:Scalar Primitives
 ⍝ respos←'⍵ % ⍺'
@@ -590,9 +591,10 @@ redm←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i];zs[i]=rs[i];};rc=rs[zr];}'
 	exe	←'if(rc==1){DO(i,zc)zv[i]=rv[i];}',nl,'else '
 	exe	,←hid⊃''('if(rc==0){DO(i,zc)zv[i]=',(idv⊃⍨idf⍳⊃⊃⍺⍺),';}',nl,'else ')
-	exe	,←'{DO(i,zc){zv[i]=rv[(i*rc)+rc-1];',nl,' L n=rc-1;DO(j,n){'
-	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'zv[i]' 'rv[(i*rc)+(rc-(2+j))]'
-	exe	,←nl,'}}}'
+	exe	,←'{DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl
+	exe	,←(('+×∧∨'∊⍨⊃⊃⍺⍺)⊃'' (simd '')),'DO(j,n){'
+	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
+	exe	,←'}',nl,'zv[i]=val;}}'
 		chk siz exe mxfn ⍺ ⍵}
 redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	hid	←idf∊⍨⊃⊃⍺⍺ ⋄ a←0 1 1⊃¨⊂⍺
@@ -675,7 +677,7 @@ inpd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	fil	←'zv[(i*rc)+j]' 'rv[(((lc-1)*rc)+j)%rz]' 'lv[((i*lc)+(lc-1))%lz]'
 	exe	,←'DO(i,zc){',hid⊃('DO(j,rc){',(⍺((1⊃⍺⍺)scmx ⍵⍵)fil),'}',nl)''
 	exe	,←' L n=',rng,';DO(j,n){DO(k,rc){',nl
-	exe	,←(typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)arg1),nl
+	exe	,←((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)arg1),nl
 	exe	,←((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)arg2),'}}}'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
@@ -711,7 +713,7 @@ fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
 calm←{	z r	←var/⍵
 	arr	←⍺⍺,((1⌷⍺)⊃'iif'),'n(',z,',NULL,',r,',env);',nl
 	scl	←'{A sz,sr;sz.v=NULL;sr.v=NULL;',nl
-	scl	,←(⊃,/(git ⍺){'AI(s',⍵,',0,NULL,',⍺,');'}¨'zr'),nl
+	scl	,←(⊃,/(git ⍺){'AI(&s',⍵,',0,NULL,',⍺,');'}¨'zr'),nl
 	scl	,←(1⊃git ⍺),'*restrict srv=sr.v;*srv=',r,';',nl
 	scl	,←⍺⍺,((1⌷⍺)⊃'iif'),'n(&sz,NULL,&sr,env);',nl
 	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',z,'=*szv;frea(&sz);frea(&sr);}',nl
@@ -719,7 +721,7 @@ calm←{	z r	←var/⍵
 cald←{	z r l	←var/⍵
 	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl
 	scl	←'{A sz,sr,sl;sz.v=sr.v=sl.v=NULL;',nl
-	scl	,←(⊃,/(gie ⍺){'AI(s',⍵,',0,NULL,',⍺,');'}¨'zrl'),nl
+	scl	,←(⊃,/(gie ⍺){'AI(&s',⍵,',0,NULL,',⍺,');'}¨'zrl'),nl
 	scl	,←(⊃,/(git ¯2↑⍺){⍺,'*restrict s',⍵,'v=s',⍵,'.v;'}¨'rl'),nl
 	scl	,←(⊃,/'rl'{'*s',⍺,'v=',⍵,';'}¨r l),nl
 	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(&sz,&sl,&sr,env);',nl
@@ -742,20 +744,22 @@ mxfn←{	chk siz exe	←⍺
 	z	,←'{orz=rslt;rslt=&tp;tpu=1;}',nl
 	z	,←(0≡≢elv)⊃'' 'A*rslt=&tp;'
 	tpv nmv elv	,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
-	z	,←'{',((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
-	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl,'AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');}',nl
-	z	,←'{',(tpv(nmv decl)elv),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),'}',nl
+	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
+	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl,'AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');',nl
+	z	,←((1↑tpv)((1↑nmv)declv)1↑elv),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
 	z	,←'if(tpu){cpaa(orz,rslt);}',nl,'}',nl
 		z}
 decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
-	z	,←(⊃,/(⊂''),⍺⍺{'B*',⍺,'s=',⍵,'->s;'}¨⍵),nl
-	z	,←(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl
+	z	,←(⊃,/(⊂''),⍺⍺{'B*restrict ',⍺,'s=',⍵,'->s;'}¨⍵),nl
+	z	,←⍺(⍺⍺ declv) ⍵
 		z}
+declv←{		(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
 ⍝[cf]
 ⍝[of]:Iota/Index Generation
 iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
-	siz	←'zr=1;zs[0]=rv[0];'
-	exe	←(simd ''),'DO(i,zs[0])zv[i]=i;'
+	siz	←'zr=1;zc=zs[0]=rv[0];'
+	exe	←(simd ''),'DO(i,zs[0])zv[i]=i;',nl
+	exe	,←''⊣'#pragma acc update self(zv[:zc])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Shape/Reshape
@@ -763,8 +767,8 @@ shpm←{		'' 'zr=1;zs[0]=rr;' 'DO(i,rr)zv[i]=rs[i];'mxfn ⍺ ⍵}
 shpd←{	chk	←'if(1!=lr)error(11);'
 	siz	←'zr=ls[0];DO(i,zr)zs[i]=lv[i];'
 	exe	←'DO(i,zr)zc*=zs[i];DO(i,rr)rc*=rs[i];',nl
-	exe	,←'if(rc==0){',(simd''),'DO(i,zc)zv[i]=0;}',nl
-	exe	,←'else{',(simd'pcopyin(rv[:rc])'),'DO(i,zc)zv[i]=rv[i%rc];}',nl
+	exe	,←'if(rc==0){',nl,(simd''),'DO(i,zc)zv[i]=0;}',nl
+	exe	,←'else{',nl,(simd'pcopyin(rv[:rc])'),'DO(i,zc)zv[i]=rv[i%rc];}',nl
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Squad Indexing
@@ -785,13 +789,13 @@ brid←{	chk	←'if(lr>1)error(16);DO(i,rr)rc*=rs[i];'
 ⍝[cf]
 ⍝[of]:Left/Right
 lftm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
+		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
 rgtm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
+		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
 lftd←{	chk siz	←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',(simd''),'DO(i,zc)zv[i]=lv[i];')mxfn ⍺ ⍵}
+		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=lv[i];')mxfn ⍺ ⍵}
 rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
+		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Catenate/Ravel
 catm←{	chk	←''
@@ -805,7 +809,6 @@ catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 	siz	,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
 	exe	←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
 	exe	,←'B li=0,ri=0,zm=zs[zr-1],lm=(lr<rr||lr==0)?1:ls[lr-1];',nl
-	exe	,←simd'pcopyin(lv[:lc],rv[:rc])'
 	exe	,←'DO(i,zc)zv[i]=i%zm<lm?lv[li++]:rv[ri++];'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
@@ -822,19 +825,19 @@ fctd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 	siz	,←'zr=zr==0?1:zr;zs[0]+=minr==zr?ls[0]:1;'
 	exe	←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
 	exe	,←'if(abs(lr-rr)<=1){',nl
-	exe	,←' ',(simd''),'DO(i,lc)zv[i]=lv[i];',(simd''),'DO(i,rc)zv[lc+i]=rv[i];'
+	exe	,←(simd''),' DO(i,lc)zv[i]=lv[i];',nl,(simd''),'DO(i,rc)zv[lc+i]=rv[i];'
 	exe	,←'}else{I n=zr-1;DO(i,n)zc*=zs[i+1];',nl
 	exe	,←' if(lr==0){',nl,(simd''),'DO(i,zc)zv[i]=lv[0];',nl
-	exe	,←'  ',(simd''),'DO(i,rc)zv[zc+i]=rv[i];}',nl
-	exe	,←' else{',(simd''),'DO(i,lc)zv[i]=lv[i];',nl
-	exe	,←'  ',(simd''),'DO(i,zc)zv[lc+i]=rv[0];}}'
+	exe	,←(simd''),' DO(i,rc)zv[zc+i]=rv[i];}',nl
+	exe	,←' else{',nl,(simd''),'DO(i,lc)zv[i]=lv[i];',nl
+	exe	,←(simd''),'DO(i,zc)zv[lc+i]=rv[0];}}'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Reverse/Rotate
-rotm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];'
-	acc	←'pcopyin(rv[:rc*zc]) pcopyout(zv[:rc*zc])'
+rotm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
+	acc	←'independent collapse(2) pcopyin(rv[:lc]) pcopyout(zv[:lc])'
 	exe	,←(simd acc),'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
-		''('zr=rr;','zr'do'zs[i]=rs[i];')exe mxfn ⍺ ⍵}
+		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Member/Enlist
 memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
@@ -880,7 +883,7 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	siz	,←'if(lr==1)lc=ls[0];if(rr!=0)rc=rs[rr-1];zs[zr-1]=0;B last=0;',nl
 	siz	,←'if(lc>=rc){DO(i,lc)last+=lv[i];zs[zr-1]=last;}',nl
 	siz	,←'else{last+=rc*lv[0];zs[zr-1]=last;}',nl,'DO(i,n)zc*=zs[i];'
-	exe	←'B a=0;if(rc==lc){DO(i,lc){',nl
+	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
 ⍝[c]	exe	,←' if(lv[i])zv[a++]=rv[i];}}',nl
 	exe	,←' if(lv[i]==0)continue;',nl
 	exe	,←' else if(lv[i]>0){DO(j,zc){DO(k,lv[j]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}}',nl
@@ -923,40 +926,24 @@ tspm←{	siz	←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Horrible Hacks
-ptrd←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ ptrdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ ptrdl ⍵ ⋄ ⍺ ptrdv ⍵}
-
-ptrdl←{z←'{',(⊃,/'rslt' 'rgt'{'LOCALP *',⍺,'=',⍵,';'}¨var/2↑⍵)
- z,←(⊃git 2⌷⍺),'l[]={',(⊃{⍺,',',⍵}/⍕¨⊃2 0⌷⍵),'};',nl
- z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
- z,←'if(rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
- z,←'getarray(',(⊃gie ⊃⍺),',0,NULL,rslt);BOUND c=1;',nl
- z,←'rgt->p->RANK'do'c*=rgt->p->SHAPETC[i];'
- z,←(⊃,/(git ¯1↓⍺){⍺,'*',⍵,';'}¨'zr'),nl
- z,←(⊃,/'zr'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt'),nl
- prag←((⊂2↑COMPILER)∊'pg' 'ic')⊃''('#pragma simd reduction(+:z)',nl)
- do←prag {'{BOUND i;',nl,⍺⍺,(for ⍺),⍵,'}}',nl}
- z,←'c'do'z[0]+=l[i]*r[i];'
- z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
- z,'}',nl}
- 
-sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];','zr-1'do'zs[i+1]=rs[i];'
- exe←'zc=zs[0];rc=rs[0];lc=ls[rr-1];'
- cod←'zv[(j*rc*lc)+(k*lc)+i]=lv[(j*lc)+i]*rv[(k*lc)+i];'
- exe,←'zc'do'BOUND j=i;','rc'do'BOUND k=i;','lc'do cod
+sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
+ exe←'zc=zs[0];rc=rs[0];lc=ls[rr-1];B szz=rslt->c,szr=rgt->c,szl=lft->c;',nl
+ exe,←''⊣simd'independent collapse(3) pcopyout(zv[:szz]) pcopyin(rv[:szr],lv[:szl])'
+ exe,←'DO(i,zc){DO(j,rc){DO(k,lc){zv[(i*rc*lc)+(j*lc)+k]=lv[(i*lc)+k]*rv[(j*lc)+k];}}}'
  '' siz exe mxfn ⍺ ⍵}
  
  ⍝ Lamination
   catdo←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catdl ⍵ ⋄ ⍺ catdv ⍵}
   
-  catdv←{z←'{',(⊃,/'rslt' 'rgt' 'lft'{'LOCALP *',⍺,'=',⍵,';'}¨var/⍵),nl
-   z,←'BOUND s[]={rgt->p->SHAPETC[0],2};'
-   z,←'LOCALP*orz;LOCALP tp;tp.p=NULL;int tpused=0;',nl
+  catdv←{z←'{',(⊃,/'rslt' 'rgt' 'lft'{'A*',⍺,'=',⍵,';'}¨var/⍵),nl
+   z,←'B s[]={rgt->s[0],2};'
+   z,←'A*orz;A tp;tp.v=NULL;int tpused=0;',nl
    z,←'if(rslt==lft||rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
-   z,←'relp(rslt);getarray(',(⊃gie ⊃0⌷⍺),',2,s,rslt);',nl
+   z,←'AI(rslt,2,s,',(⊃git ⊃0⌷⍺),');',nl
    z,←(⊃,/(git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
-   z,←⊃,/'zrl'{⍺,'=ARRAYSTART(',⍵,'->p);',nl}¨'rslt' 'rgt' 'lft'
-   z,←'s[0]'pdo'z[i*2]=l[i];z[i*2+1]=r[i];'
-   z,←'if(tpused){relp(orz);orz->p=zap(rslt->p);}',nl
+   z,←⊃,/'zrl'{⍺,'=',⍵,'->v;',nl}¨'rslt' 'rgt' 'lft'
+   z,←(''⊣simd''),'DO(i,s[0]){z[i*2]=l[i];z[i*2+1]=r[i];}'
+   z,←'if(tpused){cpaa(orz,rslt);}',nl
    z,'}',nl}
 ⍝[cf]
 rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
@@ -965,14 +952,18 @@ rth	,←'#ifdef HASACC',nl,'#include <accelmath.h>',nl,'#endif',nl
 rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
 rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
-rth	,←'struct array {I r; B s[15]; V*v;};',nl,'typedef struct array A;',nl
+rth	,←'struct array {I r; B s[15];B c;B z;V*v;};',nl,'typedef struct array A;',nl
 rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl
-rth	,←'V aa(A*a,I s){B c=1;DO(i,a->r)c*=a->s[i];',nl
-rth	,←' a->v=malloc(s*c);if(NULL==a->v)error(1);}',nl
+rth	,←'V aa(A*a,I s){B c=1;DO(i,a->r)c*=a->s[i];B z=s*c;',nl
+rth	,←' V*v=malloc(z);if(NULL==v)error(1);',nl
+rth	,←'#ifdef HASACC',nl,'#pragma acc enter data create(v[:z])',nl,'#endif',nl
+rth	,←' a->v=v;a->z=z;a->c=c;}',nl
 rth	,←'#define AA(a,s) aa((a),sizeof(s))',nl
 rth	,←'V ai(A*a,I r,B *s,I sz){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,sz);}',nl
 rth	,←'#define AI(a,r,s,sz) ai((a),(r),(s),sizeof(sz))',nl
-rth	,←'V frea(A*a){free(a->v);}',nl
+rth	,←'V frea(A*a){V*v=a->v;B z=a->z;',nl
+rth	,←'#ifdef HASACC',nl,'#pragma acc exit data delete(v[:z])',nl,'#endif',nl
+rth	,←'free(v);}',nl
 rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);',nl
 rth	,←' L c=1;DO(i,a->r)c*=a->s[i];',nl

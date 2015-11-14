@@ -1,6 +1,6 @@
 ﻿:Namespace revfirst
 
-S←':Namespace' 'Run←{⌽⍵}' ':EndNamespace'
+S←':Namespace' 'Run←{⊖⍵}' ':EndNamespace'
 
 '01'('revfirst' S 'Run' #.GEN∆T1 ⎕THIS) #.I ⍬
 '02'('revfirst' S 'Run' #.GEN∆T1 ⎕THIS) #.I 0
