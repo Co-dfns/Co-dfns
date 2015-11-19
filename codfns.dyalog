@@ -441,25 +441,13 @@ fre	←'void EXPORT '
 foi	←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
 flp	←'(A*z,A*l,A*r,A*penv[])'
 elp	←'(LOCALP*z,LOCALP*l,LOCALP*r)'
-cnvc←{	cs st	←⍺
-	r c	←⍵
-	z	←'case ',cs,':{AA(&',c,',I);',st,'*ss=ARRAYSTART(',r,'->p);I*bs=',c,'.v;'
-	z	,←'*bs=*ss;};break;',nl
-		z}
-cnvs←{	z	←'if(',⍵,'.r==0){',nl
-	z	,←'switch(',⍺,'->p->ELTYPE){case APLLONG:case APLDOUB:break;',nl
-	z	,←⊃,/('APLINTG' 'aplint16')('APLSINT' 'aplint8')cnvc¨⊂⍺ ⍵
-	z	,←'default:error(16);}}'
-		z}
-tps	←'A cl,cr;cl.v=NULL;cr.v=NULL;cpda(&cr,r);',('r'cnvs'cr')
-tps	,←nl,'if(l!=NULL){cpda(&cl,l);',('l'cnvs'cl'),'}',nl
-tps	,←'int tp=0;switch(r->p->ELTYPE){',nl,'case APLINTG:',nl,'case APLSINT:',nl
-tps	,←'case APLLONG:break;',nl
-tps	,←'case APLDOUB:tp=3;break;',nl,'default:error(16);}',nl
-tps	,←'if(l==NULL)tp+=2;',nl
-tps	,←'else switch(l->p->ELTYPE){',nl,'case APLINTG:',nl,'case APLSINT:',nl
-tps	,←'case APLLONG:break;',nl
-tps	,←'case APLDOUB:tp+=1;break;',nl,'default:error(16);}',nl
+tps	←'A cl,cr;cl.v=NULL;cr.v=NULL;cpda(&cr,r);if(l!=NULL)cpda(&cl,l);',nl
+tps	,←'int tp=0;switch(r->p->ELTYPE){',nl
+tps	,←'case APLINTG:case APLSINT:case APLLONG:break;',nl
+tps	,←'case APLDOUB:tp=3;break;default:error(16);}',nl
+tps	,←'if(l==NULL)tp+=2;else switch(l->p->ELTYPE){',nl
+tps	,←'case APLINTG:case APLSINT:case APLLONG:break;',nl
+tps	,←'case APLDOUB:tp+=1;break;default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
 tpi	←'ii' 'if' 'in' 'fi' 'ff' 'fn'
 fcln	←'frea(&cl);frea(&cr);frea(&za);',nl
@@ -503,11 +491,12 @@ sdb⍪←,¨'⌷'	'⍵'	'error(99)'
 sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'
 
 ⍝[of]:Scalar Loop Generators
-smcd	←{'copyin(',(⊃{⍺,',',⍵}/{'d',(⍕⍵),'[0:mz',(⍕⍵),']'}¨⍳≢⍵),')'}
-smcr	←{'copyout(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
+smcd	←{'present(',(⊃{⍺,',',⍵}/{'d',(⍕⍵),'[0:mz',(⍕⍵),']'}¨⍳≢⍵),')'}
+smcr	←{'present(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
 simc	←{(smcd(⊃v⍵)fvs(⊃e⍵)),' ',(smcr⊃n⍵)}
+⍝[c]simc	←{'present(',(⊃{⍺,',',⍵}/⊃,/'dr',∘⍳∘≢¨¨((⊃v⍵)fvs(⊃e⍵))(⊃n⍵)),')'}
 slp	←{(simd simc ⍵),'DO(i,cnt){',nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
-rk0	←'I prk=0;B sp[15];B cnt=1;L i=0;',nl
+rk0	←'I prk=0;B sp[15];B cnt=1;',nl
 rk1	←'if(prk!=(' ⋄ rk2←')->r){if(prk==0){',nl
 rsp	←{'prk=(',⍵,')->r;',nl,'DO(i,prk) sp[i]=(',⍵,')->s[i];'}
 rk3	←'}else if((' ⋄ rk4←')->r!=0)error(4);',nl
@@ -583,19 +572,35 @@ eacd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Reduce
-redm←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
-	hid	←idf∊⍨⊃⊃⍺⍺
-	idv	←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
+redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂'⎕XOR'
+	idv	←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 0 ''
+	hid	←idf∊⍨0⌷⍺⍺
+	gpf	←(,¨'+×∧∨'),⊂'⎕XOR'
+	gpv	←⍕¨0 1 1 0 0 ''
+	gid	←gpf∊⍨0⌷⍺⍺
 	chk	←hid⊃('if(rr>0&&rs[rr-1]==0)error(11);')''
 	siz	←'if(rr==0){zr=0;}',nl
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i];zs[i]=rs[i];};rc=rs[zr];}'
-	exe	←'if(rc==1){DO(i,zc)zv[i]=rv[i];}',nl,'else '
-	exe	,←hid⊃''('if(rc==0){DO(i,zc)zv[i]=',(idv⊃⍨idf⍳⊃⊃⍺⍺),';}',nl,'else ')
-	exe	,←'{DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl
-	exe	,←(('+×∧∨'∊⍨⊃⊃⍺⍺)⊃'' (simd '')),'DO(j,n){'
+	gxe	←'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
+	gxe	,←pacc 'kernels loop present(rv)'
+	gxe	,←'DO(i,rc){'
+	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(1+i)]'
+	gxe	,←'}',nl,'zv[0]=val;',nl,pacc 'update device(zv[:1])'
+	gxe	,←'}else{',nl,pacc'kernels loop gang worker(32) present(zv,rv)'
+	gxe	,←'DO(i,zc){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
+	gxe	,←pacc'loop vector(32)'
+	gxe	,←'DO(j,rc){'
+	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(1+j))]'
+	gxe	,←'}',nl,'zv[i]=val;}}',nl
+	ixe	←pacc 'update host(rv[:rgt->c])'
+	ixe	,←'DO(i,zc){',(⊃git⊃⍺),'val=',(idv⊃⍨idf⍳0⌷⍺⍺),';',nl,'DO(j,rc){'
+	ixe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(1+j))]'
+	ixe	,←'}',nl,'zv[i]=val;}',nl,pacc'update device(zv[:rslt->c])'
+	exe	←pacc'update host(rv[:rgt->c])'
+	exe	,←'DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl,'DO(j,n){'
 	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
-	exe	,←'}',nl,'zv[i]=val;}}'
-		chk siz exe mxfn ⍺ ⍵}
+	exe	,←'}',nl,'zv[i]=val;}',nl,pacc'update device(zv[:rslt->c])'
+		chk siz (exe ixe gxe⊃⍨gid+hid) mxfn ⍺ ⍵}
 redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	hid	←idf∊⍨⊃⊃⍺⍺ ⋄ a←0 1 1⊃¨⊂⍺
 	idv	←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
@@ -737,6 +742,7 @@ mxfn←{	chk siz exe	←⍺
 	z	,←(⊃,/(⊂''),elv{'A *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
 	z	,←⊃,/(⊂''),nml{'I ',⍺,'r=1;B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
 	z	,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
+	z	,←pacc'enter data copyin(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
 	z	,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl↑⍨≢els
 	z	,←(⊃,/(⊂''),{'I ',⍵,'r=0;B*',⍵,'s=NULL;'}¨nms),nl↑⍨≢nms
 	z	,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl↑⍨≢nms
@@ -747,7 +753,8 @@ mxfn←{	chk siz exe	←⍺
 	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
 	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl,'AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');',nl
 	z	,←((1↑tpv)((1↑nmv)declv)1↑elv),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
-	z	,←'if(tpu){cpaa(orz,rslt);}}'
+	z	,←pacc'exit data delete(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
+	z	,←'if(tpu){cpaa(orz,rslt);}}',nl
 		z}
 decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
 	z	,←(⊃,/(⊂''),⍺⍺{'B*restrict ',⍺,'s=',⍵,'->s;'}¨⍵),nl
@@ -758,8 +765,7 @@ declv←{		(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}�
 ⍝[of]:Iota/Index Generation
 iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 	siz	←'zr=1;zc=zs[0]=rv[0];'
-	exe	←(simd 'present(zv[:zc])'),'DO(i,zs[0])zv[i]=i;',nl
-	exe	,←'#pragma acc update host(zv[0:zc])'
+	exe	←(simd 'present(zv[:zc])'),'DO(i,zs[0])zv[i]=i;'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Shape/Reshape
@@ -767,8 +773,8 @@ shpm←{		'' 'zr=1;zs[0]=rr;' 'DO(i,rr)zv[i]=rs[i];'mxfn ⍺ ⍵}
 shpd←{	chk	←'if(1!=lr)error(11);'
 	siz	←'zr=ls[0];DO(i,zr)zs[i]=lv[i];'
 	exe	←'DO(i,zr)zc*=zs[i];DO(i,rr)rc*=rs[i];',nl
-	exe	,←'if(rc==0){',nl,(simd''),'DO(i,zc)zv[i]=0;}',nl
-	exe	,←'else{',nl,(simd'pcopyin(rv[:rc])'),'DO(i,zc)zv[i]=rv[i%rc];}',nl
+	exe	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
+	exe	,←'else{',nl,(simd'present(zv,rv)'),'DO(i,zc)zv[i]=rv[i%rc];}',nl
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Squad Indexing
@@ -809,7 +815,9 @@ catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 	siz	,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
 	exe	←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
 	exe	,←'B li=0,ri=0,zm=zs[zr-1],lm=(lr<rr||lr==0)?1:ls[lr-1];',nl
-	exe	,←'DO(i,zc)zv[i]=i%zm<lm?lv[li++]:rv[ri++];'
+	exe	,←pacc'update host(lv[:lc],rv[:rc])'
+	exe	,←'DO(i,zc)zv[i]=i%zm<lm?lv[li++]:rv[ri++];',nl
+	exe	,←pacc'update device(zv[:zc])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Catenate First Axis/Table
@@ -835,7 +843,7 @@ fctd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 ⍝[cf]
 ⍝[of]:Reverse/Rotate
 rotm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
-	acc	←'independent collapse(2) pcopyin(rv[:lc]) pcopyout(zv[:lc])'
+	acc	←'independent collapse(2) present(rv[:lc],zv[:lc])'
 	exe	,←(simd acc),'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
 		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn ⍺ ⍵}
 ⍝[cf]
@@ -859,7 +867,8 @@ rtfd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Equivalent/Match/Depth
-eqvm←{		'' 'zr=0;' 'zv[0]=rr==0?0:1;' mxfn ⍺ ⍵}
+eqvm←{	exe	←'zv[0]=rr==0?0:1;',nl,pacc'update device(zv[:1])'
+		'' 'zr=0;' exe mxfn ⍺ ⍵}
 eqvd←{	chk siz	←'' 'zr=0;'
 	exe	←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
 	exe	,←'DO(i,lr){if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}}',nl
@@ -868,7 +877,8 @@ eqvd←{	chk siz	←'' 'zr=0;'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Not Match/Disequivalent/Tally
-nqvm←{'' 'zr=0;' 'zv[0]=rr==0?1:rs[0];' mxfn ⍺ ⍵}
+nqvm←{	exe	←'zv[0]=rr==0?1:rs[0];',nl,pacc'update device(zv[:1])'
+		'' 'zr=0;' exe mxfn ⍺ ⍵}
 nqvd←{	chk siz	←'' 'zr=0;'
 	exe	←'zv[0]=0;if(rr!=lr)zv[0]=1;',nl
 	exe	,←'DO(i,lr){if(zv[0])break;if(rs[i]!=ls[i]){zv[0]=1;break;}}',nl
@@ -881,6 +891,7 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	chk	,←'if(lr!=0&&ls[0]!=1&&rr!=0&&rs[rr-1]!=1&&ls[0]!=rs[rr-1])error(5);'
 	siz	←'zr=rr==0?1:rr;I n=zr-1;DO(i,n)zs[i]=rs[i];',nl
 	siz	,←'if(lr==1)lc=ls[0];if(rr!=0)rc=rs[rr-1];zs[zr-1]=0;B last=0;',nl
+	siz	,←pacc 'update host(lv[:lc],rv[:rgt->c])'
 	siz	,←'if(lc>=rc){DO(i,lc)last+=lv[i];zs[zr-1]=last;}',nl
 	siz	,←'else{last+=rc*lv[0];zs[zr-1]=last;}',nl,'DO(i,n)zc*=zs[i];'
 	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
@@ -897,7 +908,7 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	exe	,←' if(lv[i]==0)continue;',nl
 	exe	,←' else if(lv[i]>0){DO(j,zc){DO(k,lv[j]){zv[(j*zs[zr-1])+a+k]=rv[j*rc];}}}',nl
 	exe	,←' else{DO(j,zc){L n=abs(lv[j]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}}',nl
-	exe	,←' a+=lv[i];}}'
+	exe	,←' a+=lv[i];}}',nl,pacc 'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Decode/Encode
@@ -928,7 +939,7 @@ tspm←{	siz	←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
 ⍝[of]:Horrible Hacks
 sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
  exe←'zc=zs[0];rc=rs[0];lc=ls[rr-1];B szz=rslt->c,szr=rgt->c,szl=lft->c;',nl
- exe,←''⊣simd'independent collapse(3) pcopyout(zv[:szz]) pcopyin(rv[:szr],lv[:szl])'
+ exe,←simd'independent collapse(3) present(zv[:rslt->c],rv[:rgt->c],lv[:lft->c])'
  exe,←'DO(i,zc){DO(j,rc){DO(k,lc){zv[(i*rc*lc)+(j*lc)+k]=lv[(i*lc)+k]*rv[(j*lc)+k];}}}'
  '' siz exe mxfn ⍺ ⍵}
  
@@ -966,17 +977,25 @@ rth	,←'V ai(A*a,I r,B *s,I sz){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,sz);}',nl
 rth	,←'#define AI(a,r,s,sz) ai((a),(r),(s),sizeof(sz))',nl
 rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);',nl
+rth	,←'#ifdef _OPENACC',nl,'char *v=a->v;B z=a->z;',nl
+rth	,←'#pragma acc update host(v[:z])',nl,'#endif',nl
 rth	,←' memcpy(ARRAYSTART(d->p),a->v,a->z);}',nl
 rth	,←'V cpda(A*a,LOCALP*d){frea(a);',nl
-rth	,←' a->r=d->p->RANK;a->v=ARRAYSTART(d->p);a->f=0;',nl
-rth	,←' I r=a->r;B c=1;DO(i,r){a->s[i]=d->p->SHAPETC[i];c*=a->s[i];};a->c=c;',nl
-rth	,←' switch(d->p->ELTYPE){case APLLONG:a->z=c*sizeof(I);break;',nl
-rth	,←'  case APLDOUB:a->z=c*sizeof(D);break;',nl
-rth	,←'  case APLINTG:a->z=c*sizeof(aplint16);break;',nl
-rth	,←'  case APLSINT:a->z=c*sizeof(aplint8);break;',nl
-rth	,←'  default: error(16);};',nl
-rth	,←'#ifdef _OPENACC',nl,'char *v=a->v;B z=a->z;',nl
-rth	,←'#pragma acc enter data copyin(v[:z])',nl,'#endif',nl,'}',nl
+rth	,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
+rth	,←' switch(d->p->ELTYPE){',nl
+rth	,←'  case APLLONG:a->z=c*sizeof(I);a->f=0;a->v=ARRAYSTART(d->p);break;',nl
+rth	,←'  case APLDOUB:a->z=c*sizeof(D);a->f=0;a->v=ARRAYSTART(d->p);break;',nl
+rth	,←'  case APLINTG:a->z=c*sizeof(I);a->f=1;',nl
+rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth	,←'   {aplint16 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
+rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
+rth	,←'  case APLSINT:a->z=c*sizeof(I);a->f=1;',nl
+rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
+rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
+rth	,←'  default:error(16);}',nl
+rth	,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
+rth	,←' #pragma acc enter data copyin(vc[:z])',nl,' #endif',nl,'}',nl
 rth	,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
 ⍝[cf]
 :EndNamespace
