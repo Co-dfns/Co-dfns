@@ -491,10 +491,7 @@ sdb⍪←,¨'⌷'	'⍵'	'error(99)'
 sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'
 
 ⍝[of]:Scalar Loop Generators
-smcd	←{'present(',(⊃{⍺,',',⍵}/{'d',(⍕⍵),'[0:mz',(⍕⍵),']'}¨⍳≢⍵),')'}
-smcr	←{'present(',(⊃{⍺,',',⍵}/{'r',(⍕⍵),'[0:cnt]'}¨⍳≢⍵),')'}
-simc	←{(smcd(⊃v⍵)fvs(⊃e⍵)),' ',(smcr⊃n⍵)}
-⍝[c]simc	←{'present(',(⊃{⍺,',',⍵}/⊃,/'dr',∘⍳∘≢¨¨((⊃v⍵)fvs(⊃e⍵))(⊃n⍵)),')'}
+simc	←{'present(',(⊃{⍺,',',⍵}/⊃,/'dr',∘⍕¨∘⍳∘≢¨((⊃v⍵)fvs(⊃e⍵))(⊃n⍵)),')'}
 slp	←{(simd simc ⍵),'DO(i,cnt){',nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 rk0	←'I prk=0;B sp[15];B cnt=1;',nl
 rk1	←'if(prk!=(' ⋄ rk2←')->r){if(prk==0){',nl
