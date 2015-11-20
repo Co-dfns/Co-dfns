@@ -578,7 +578,9 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	chk	←hid⊃('if(rr>0&&rs[rr-1]==0)error(11);')''
 	siz	←'if(rr==0){zr=0;}',nl
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i];zs[i]=rs[i];};rc=rs[zr];}'
-	gxe	←'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
+	gxe	←'if(rc==0){',nl,(simd'present(zv)')
+	gxe	,←'DO(i,zc){zv[i]=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';}',nl,'} else '
+	gxe	,←'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
 	gxe	,←pacc 'kernels loop present(rv)'
 	gxe	,←'DO(i,rc){'
 	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(1+i)]'
@@ -726,8 +728,10 @@ cald←{	z r l	←var/⍵
 	scl	,←(⊃,/(gie ⍺){'AI(&s',⍵,',0,NULL,',⍺,');'}¨'zrl'),nl
 	scl	,←(⊃,/(git ¯2↑⍺){⍺,'*restrict s',⍵,'v=s',⍵,'.v;'}¨'rl'),nl
 	scl	,←(⊃,/'rl'{'*s',⍺,'v=',⍵,';'}¨r l),nl
+	scl	,←pacc'update device(srv[:1],slv[:1])'
 	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(&sz,&sl,&sr,env);',nl
-	scl	,←(⊃git ⍺),'*szv=sz.v;',z,'=*szv;frea(&sz);frea(&sr);frea(&sl);}',nl
+	scl	,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
+	scl	,←z,'=*szv;frea(&sz);frea(&sr);frea(&sl);}',nl
 		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 mxfn←{	chk siz exe	←⍺
 	tp el	←⍵
