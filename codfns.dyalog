@@ -641,8 +641,10 @@ rd1d←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 scnm←{	siz	←'zr=rr;rc=rr==0?1:rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
 	siz	,←'I n=zr==0?0:zr-1;DO(i,n)zc*=rs[i];'
 	val	←'zv[(i*rc)+j+1]' 'zv[(i*rc)+j]' 'rv[(i*rc)+j+1]'
-	exe	←'if(rc!=0){DO(i,zc){zv[i*rc]=rv[i*rc];',nl
-	exe	,←' L n=rc-1;DO(j,n){',(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}'
+	exe	←pacc'update host(zv[:rslt->c],rv[:rgt->c])'
+	exe	,←'if(rc!=0){DO(i,zc){zv[i*rc]=rv[i*rc];',nl
+	exe	,←' L n=rc-1;DO(j,n){',(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
+	exe	,←pacc'update device(zv[:rslt->c],rv[:rgt->c])'
 		'' siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Scan First Axis
