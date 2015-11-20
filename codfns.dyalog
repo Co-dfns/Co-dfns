@@ -770,7 +770,8 @@ iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Shape/Reshape
-shpm←{		'' 'zr=1;zs[0]=rr;' 'DO(i,rr)zv[i]=rs[i];'mxfn ⍺ ⍵}
+shpm←{	exe	←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
+		'' 'zr=1;zs[0]=rr;' exe mxfn ⍺ ⍵}
 shpd←{	chk	←'if(1!=lr)error(11);'
 	siz	←'zr=ls[0];DO(i,zr)zs[i]=lv[i];'
 	exe	←'DO(i,zr)zc*=zs[i];DO(i,rr)rc*=rs[i];',nl
