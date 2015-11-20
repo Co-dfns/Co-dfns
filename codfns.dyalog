@@ -578,14 +578,12 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	chk	←hid⊃('if(rr>0&&rs[rr-1]==0)error(11);')''
 	siz	←'if(rr==0){zr=0;}',nl
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i];zs[i]=rs[i];};rc=rs[zr];}'
-	gxe	←'if(rc==0){',nl,(simd'present(zv)')
-	gxe	,←'DO(i,zc){zv[i]=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';}',nl,'} else '
-	gxe	,←'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
-	gxe	,←pacc 'kernels loop present(rv)'
+	gxe	←'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
+	gxe	,←pacc 'kernels loop present(rv[:rc])'
 	gxe	,←'DO(i,rc){'
 	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(1+i)]'
 	gxe	,←'}',nl,'zv[0]=val;',nl,pacc 'update device(zv[:1])'
-	gxe	,←'}else{',nl,pacc'kernels loop gang worker(32) present(zv,rv)'
+	gxe	,←'}else{',nl,pacc'kernels loop gang worker(32) present(zv,rv[:rc])'
 	gxe	,←'DO(i,zc){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
 	gxe	,←pacc'loop vector(32)'
 	gxe	,←'DO(j,rc){'
