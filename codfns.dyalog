@@ -866,12 +866,13 @@ dscm←{'' 'zr=0;'('DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];')mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Rotate First Axis/Reverse First Axis
 rtfm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i+1];rc=rr==0?1:rs[0];',nl
-	exe	,←simd 'pcopyin(rv[:rc*zc]) pcopyout(zv[:rc*zc])'
+	exe	,←simd 'collapse(2) independent present(rv[:rc*zc],zv[:rc*zc])'
 	exe	,←'DO(i,rc){DO(j,zc){zv[i*zc+j]=rv[(rc-(i+1))*zc+j];}}'
 		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn ⍺ ⍵}
 rtfd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
 	exe	←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
+	exe	,←simd'collapse(2) present(zv[:rslt->c],rv[:rgt->c],lv[:lft->c])'
 	exe	,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
