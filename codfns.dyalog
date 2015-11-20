@@ -797,13 +797,17 @@ brid←{	chk	←'if(lr>1)error(16);DO(i,rr)rc*=rs[i];'
 ⍝[cf]
 ⍝[of]:Left/Right
 lftm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
+		chk siz exe mxfn ⍺ ⍵}
 rgtm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
+		chk siz exe mxfn ⍺ ⍵}
 lftd←{	chk siz	←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=lv[i];')mxfn ⍺ ⍵}
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],lv[:zc])'),'DO(i,zc)zv[i]=lv[i];'
+		chk siz exe mxfn ⍺ ⍵}
 rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-		chk siz ('DO(i,zr)zc*=zs[i];',nl,(simd''),'DO(i,zc)zv[i]=rv[i];')mxfn ⍺ ⍵}
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
+		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Catenate/Ravel
 catm←{	chk	←''
