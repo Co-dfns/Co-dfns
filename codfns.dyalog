@@ -650,9 +650,11 @@ scnm←{	siz	←'zr=rr;rc=rr==0?1:rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
 ⍝[of]:Scan First Axis
 sc1m←{	siz	←'zr=rr;rc=rr==0?1:rs[0];DO(i,zr)zs[i]=rs[i];',nl
 	siz	,←'I n=zr==0?0:zr-1;DO(i,n)zc*=rs[i+1];'
-	exe	←'if(rc!=0){DO(i,zc){zv[i]=rv[i];}',nl
+	exe	←pacc'update host(zv[:rslt->c],rv[:rgt->c])'
+	exe	,←'if(rc!=0){DO(i,zc){zv[i]=rv[i];}',nl
 	val	←'zv[((j+1)*zc)+i]' 'zv[(j*zc)+i]' 'rv[((j+1)*zc)+i]'
-	exe	,←' DO(i,zc){L n=rc-1;DO(j,n){',(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}'
+	exe	,←' DO(i,zc){L n=rc-1;DO(j,n){',(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
+	exe	,←pacc'update device(zv[:rslt->c],rv[:rgt->c])'
 		'' siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Outer Product
