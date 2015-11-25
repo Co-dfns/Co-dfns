@@ -873,7 +873,10 @@ memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
 		'' siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Disclose/Pick/First
-dscm←{'' 'zr=0;'('DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];')mxfn ⍺ ⍵}
+dscm←{	exe	←pacc'update host(rv[:rgt->c])'
+	exe	,←'DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
+		'' 'zr=0;' exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Rotate First Axis/Reverse First Axis
 rtfm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i+1];rc=rr==0?1:rs[0];',nl
