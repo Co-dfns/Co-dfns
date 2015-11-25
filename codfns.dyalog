@@ -869,7 +869,7 @@ rotm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;
 ⍝[cf]
 ⍝[of]:Member/Enlist
 memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
-	exe	←(simd''),'DO(i,rc)zv[i]=rv[i];'
+	exe	←(simd'present(rv,zv)'),'DO(i,rc)zv[i]=rv[i];'
 		'' siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Disclose/Pick/First
