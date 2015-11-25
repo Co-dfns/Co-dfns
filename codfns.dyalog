@@ -559,13 +559,17 @@ comm	←{((1↑⍺)⍪⍪⍨1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪�
 ⍝[cf]
 ⍝[of]:Each
 eacm←{	siz	←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
-	exe	←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]'),'}'
+	exe	←pacc'update host(rv[:rgt->c])'
+	exe	,←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]'),'}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
 		'' siz exe mxfn ⍺ ⍵}
 eacd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
 	chk	,←'else if(lr!=0&&rr!=0){error(4);}'
 	siz	←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
 	siz	,←'else{zr=rr;DO(i,rr){zc*=rs[i];rc*=rs[i];zs[i]=rs[i];}DO(i,lr)lc*=ls[i];}'
-	exe	←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]' 'lv[i]'),'}'
+	exe	←pacc'update host(rv[:rgt->c])'
+	exe	,←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]' 'lv[i]'),'}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Reduce
@@ -825,7 +829,7 @@ rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
 ⍝[of]:Catenate/Ravel
 catm←{	chk	←''
 	siz	←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
-	exe	←(simd''),'DO(i,rc)zv[i]=rv[i];'
+	exe	←(simd'present(zv,rv)'),'DO(i,rc)zv[i]=rv[i];'
 		chk siz exe mxfn ⍺ ⍵}
 catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
 	chk	,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
@@ -834,9 +838,10 @@ catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 	siz	,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
 	exe	←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
 	exe	,←'B li=0,ri=0,zm=zs[zr-1],lm=(lr<rr||lr==0)?1:ls[lr-1];',nl
-	exe	,←pacc'update host(lv[:lc],rv[:rc])'
-	exe	,←'DO(i,zc)zv[i]=i%zm<lm?lv[li++]:rv[ri++];',nl
-	exe	,←pacc'update device(zv[:zc])'
+	exe	,←'B lt=lft->c!=1,rt=rgt->c!=1;',nl
+	exe	,←pacc'update host(lv[:lft->c],rv[:rgt->c])'
+	exe	,←'DO(i,zc){zv[i]=(i%zm)<lm?lv[lt*(li++)]:rv[rt*(ri++)];}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Catenate First Axis/Table
