@@ -605,7 +605,7 @@ redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	chk	,←'if(rr==0)error(4);',nl,hid⊃('if(lv[0]==0)error(11);',nl)''
 	chk	,←'if((rs[rr-1]+1)<lv[0])error(5);rc=(1+rs[rr-1])-lv[0];'
 	siz	←'zr=rr;I n=zr-1;DO(i,n){zc*=rs[i];zs[i]=rs[i];};zs[zr-1]=rc;lc=rs[rr-1];'
-	exe	←pacc'update host(zv[:rslt->c],rv[:rgt->c],lv[:lft->c])'
+	exe	←pacc'update host(rv[:rgt->c],lv[:lft->c])'
 	exe	,←'DO(i,zc){DO(j,rc){zv[(i*rc)+j]='
 	exe	,←hid⊃'rv[(i*lc)+j+lv[0]-1];'(';',⍨idv⊃⍨idf⍳⊃⊃⍺⍺)
 	val	←'zv[(i*rc)+j]' 'zv[(i*rc)+j]'('rv[(i*lc)+j+(lv[0]-(k+',(hid⌷'21'),'))]')
@@ -620,7 +620,7 @@ rd1m←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	chk	←hid⊃('if(rr>0&&rs[0]==0)error(11);')''
 	siz	←'if(rr==0){zr=0;}',nl
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i+1];zs[i]=rs[i+1];};rc=rs[0];}'
-	exe	←pacc 'update host(zv[:rslt->c],rv[:rgt->c])'
+	exe	←pacc 'update host(rv[:rgt->c])'
 	exe	,←'if(rc==1){DO(i,zc)zv[i]=rv[i];}',nl,'else '
 	exe	,←hid⊃''('if(rc==0){DO(i,zc)zv[i]=',(';',⍨idv⊃⍨idf⍳⊃⊃⍺⍺),'}',nl,'else ')
 	exe	,←'{DO(i,zc){zv[i]=rv[((rc-1)*zc)+i];',nl,' L n=rc-1;DO(j,n){'
@@ -635,7 +635,7 @@ rd1d←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	chk	,←'if(rr==0)error(4);',nl,hid⊃('if(lv[0]==0)error(11);',nl)''
 	chk	,←'if((rs[0]+1)<lv[0])error(5);rc=(1+rs[0])-lv[0];'
 	siz	←'zr=rr;I n=zr-1;DO(i,n){zc*=rs[i+1];zs[i+1]=rs[i+1];};zs[0]=rc;'
-	exe	←pacc'update host(zv[:rslt->c],rv[:rgt->c],lv[:lft->c])'
+	exe	←pacc'update host(rv[:rgt->c],lv[:lft->c])'
 	exe	,←'DO(i,zc){DO(j,rc){zv[(j*zc)+i]='
 	exe	,←hid⊃'rv[((j+lv[0]-1)*zc)+i];'(';',⍨idv⊃⍨idf⍳⊃⊃⍺⍺)
 	val	←'zv[(j*zc)+i]' 'zv[(j*zc)+i]'('rv[((j+(lv[0]-(k+',(hid⌷'21'),')))*zc)+i]')
@@ -896,10 +896,12 @@ eqvd←{	chk siz	←'' 'zr=0;'
 nqvm←{	exe	←'zv[0]=rr==0?1:rs[0];',nl,pacc'update device(zv[:1])'
 		'' 'zr=0;' exe mxfn ⍺ ⍵}
 nqvd←{	chk siz	←'' 'zr=0;'
-	exe	←'zv[0]=0;if(rr!=lr)zv[0]=1;',nl
+	exe	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
+	exe	,←'zv[0]=0;if(rr!=lr)zv[0]=1;',nl
 	exe	,←'DO(i,lr){if(zv[0])break;if(rs[i]!=ls[i]){zv[0]=1;break;}}',nl
 	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←'DO(i,lc){if(zv[0])break;if(lv[i]!=rv[i]){zv[0]=1;break;}}'
+	exe	,←'DO(i,lc){if(zv[0])break;if(lv[i]!=rv[i]){zv[0]=1;break;}}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Replicate/Filter
