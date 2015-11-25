@@ -1011,7 +1011,7 @@ rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
 rth	,←'  default:error(16);}',nl
 rth	,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
-rth	,←' #pragma acc enter data copyin(vc[:z])',nl,' #endif',nl,'}',nl
+rth	,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
 rth	,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
 ⍝[cf]
 :EndNamespace
