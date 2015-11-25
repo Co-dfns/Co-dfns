@@ -567,7 +567,7 @@ eacd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
 	chk	,←'else if(lr!=0&&rr!=0){error(4);}'
 	siz	←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
 	siz	,←'else{zr=rr;DO(i,rr){zc*=rs[i];rc*=rs[i];zs[i]=rs[i];}DO(i,lr)lc*=ls[i];}'
-	exe	←pacc'update host(rv[:rgt->c])'
+	exe	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
 	exe	,←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]' 'lv[i]'),'}',nl
 	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
@@ -688,7 +688,8 @@ inpd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	siz	←'zr=0;if(lr>0){zr=lr-1;DO(i,zr)zs[i]=ls[i];}',nl
 	siz	,←'if(rr>0){I n=rr-1;DO(i,n){zs[i+zr]=rs[i+1];}zr+=rr-1;}'
 	typ	←2⌷(3 4⊥2↑1↓⍺)⌷⍉2⊃⍺⍺
-	exe	←'I n=lr==0?0:lr-1;DO(i,n)zc*=ls[i];n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
+	exe	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
+	exe	,←'I n=lr==0?0:lr-1;DO(i,n)zc*=ls[i];n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
 	exe	,←'if(lr!=0)lc=ls[lr-1];else if(rr!=0)lc=rs[0];',nl,(⊃git typ),'tmp;',nl
 	exe	,←'BOUND lz,rz;lz=lr==0?1:zc*lc;rz=rr==0?1:rc*lc;',nl
 	exe	,←hid⊃''('L m=zc*rc;DO(i,m){zv[i]=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';}')
@@ -699,7 +700,8 @@ inpd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	exe	,←'DO(i,zc){',hid⊃('DO(j,rc){',(⍺((1⊃⍺⍺)scmx ⍵⍵)fil),'}',nl)''
 	exe	,←' L n=',rng,';DO(j,n){DO(k,rc){',nl
 	exe	,←((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)arg1),nl
-	exe	,←((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)arg2),'}}}'
+	exe	,←((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)arg2),'}}}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[cf]
@@ -733,22 +735,20 @@ fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
 ⍝[of]:Function Utilities
 calm←{	z r	←var/⍵
 	arr	←⍺⍺,((1⌷⍺)⊃'iif'),'n(',z,',NULL,',r,',env);',nl
-	scl	←'{A sz,sr;sz.v=NULL;sr.v=NULL;',nl
-	scl	,←(⊃,/(git ⍺){'AI(&s',⍵,',0,NULL,',⍺,');'}¨'zr'),nl
-	scl	,←(1⊃git ⍺),'*restrict srv=sr.v;*srv=',r,';',nl
+	scl	←'{A sz,sr;sz.v=NULL;AI(&sz,0,NULL,',(⊃git ⍺),');',nl
+	scl	,←'sr.r=0;sr.v=&',r,';sr.f=0;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
 	scl	,←⍺⍺,((1⌷⍺)⊃'iif'),'n(&sz,NULL,&sr,env);',nl
-	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',z,'=*szv;frea(&sz);frea(&sr);}',nl
+	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',nl,pacc'update host(szv[:1])'
+	scl	,←z,'=*szv;frea(&sz);}',nl
 		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 cald←{	z r l	←var/⍵
 	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl
-	scl	←'{A sz,sr,sl;sz.v=sr.v=sl.v=NULL;',nl
-	scl	,←(⊃,/(gie ⍺){'AI(&s',⍵,',0,NULL,',⍺,');'}¨'zrl'),nl
-	scl	,←(⊃,/(git ¯2↑⍺){⍺,'*restrict s',⍵,'v=s',⍵,'.v;'}¨'rl'),nl
-	scl	,←(⊃,/'rl'{'*s',⍺,'v=',⍵,';'}¨r l),nl
-	scl	,←pacc'update device(srv[:1],slv[:1])'
+	scl	←'{A sz,sr,sl;AI(&sz,0,NULL,',(⊃git ⍺),');',nl
+	scl	,←'sr.r=0;sr.f=0;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
+	scl	,←'sl.r=0;sl.f=0;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
 	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(&sz,&sl,&sr,env);',nl
 	scl	,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
-	scl	,←z,'=*szv;frea(&sz);frea(&sr);frea(&sl);}',nl
+	scl	,←z,'=*szv;frea(&sz);}',nl
 		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 mxfn←{	chk siz exe	←⍺
 	tp el	←⍵
