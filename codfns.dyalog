@@ -665,8 +665,13 @@ sc1m←{	siz	←'zr=rr;rc=rr==0?1:rs[0];DO(i,zr)zs[i]=rs[i];',nl
 ⍝[cf]
 ⍝[of]:Outer Product
 oupd←{	siz	←'zr=lr+rr;DO(i,lr)zs[i]=ls[i];DO(i,rr)zs[i+lr]=rs[i];'
+	scl	←(⊂⊃⍺⍺)∊0⌷⍉sdb
+	cpu	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
+	gpu	←simd'present(rv[:rgt->c],lv[:lft->c])'
 	exe	←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
-	exe	,←'DO(i,lc){DO(j,rc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[(i*rc)+j]' 'rv[j]' 'lv[i]'),'}}'
+	exe	,←scl⊃cpu gpu
+	exe	,←'DO(i,lc){DO(j,rc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[(i*rc)+j]' 'rv[j]' 'lv[i]'),'}}',nl
+	exe	,←scl⊃(pacc'update device(zv[:rslt->c])')''
 		'' siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Inner Product
@@ -886,10 +891,12 @@ rtfd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 eqvm←{	exe	←'zv[0]=rr==0?0:1;',nl,pacc'update device(zv[:1])'
 		'' 'zr=0;' exe mxfn ⍺ ⍵}
 eqvd←{	chk siz	←'' 'zr=0;'
-	exe	←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
+	exe	←pacc 'update host(lv[:lft->c],rv[:rgt->c])'
+	exe	,←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
 	exe	,←'DO(i,lr){if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}}',nl
 	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←'DO(i,lc){if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}}'
+	exe	,←'DO(i,lc){if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Not Match/Disequivalent/Tally
