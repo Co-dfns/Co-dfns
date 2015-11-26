@@ -815,18 +815,21 @@ shpd←{	chk	←'if(1!=lr)error(11);'
 ⍝[cf]
 ⍝[of]:Squad Indexing
 idxd←{	chk	←'if(lr>1)error(4);if(ls[0]>rr)error(5);'
+	chk	,←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+	chk	,←pacc'update host(lv[:lc])'
 	chk	,←'DO(i,ls[0])if(lv[i]<0||lv[i]>=rs[i])error(3);'
 	siz	←'zr=rr-ls[0];DO(i,zr)zs[i]=rs[ls[0]+i];'
 	exe	←'B a,m,k=0;DO(i,zr)zc*=zs[i];m=zc;',nl
 	exe	,←'DO(i,ls[0]){a=ls[0]-(i+1);k+=m*lv[a];m*=rs[a];}',nl
-	exe	,←(simd''),'DO(i,zc)zv[i]=rv[k+i];'
+	exe	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[k+i];'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Bracket Indexing
-brid←{	chk	←'if(lr>1)error(16);DO(i,rr)rc*=rs[i];'
+brid←{	chk	←'if(lr>1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
+	chk	,←pacc'update host(rv[:rc],lv[:lc])'
 	chk	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])error(3);'
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-	exe	←(simd''),'DO(i,rc)zv[i]=lv[rv[i]];'
+	exe	←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Left/Right
@@ -908,7 +911,8 @@ rtfm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i+1];rc=rr==0?1:rs[0];',nl
 rtfd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
 	exe	←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
-	exe	,←simd'collapse(2) present(zv[:rslt->c],rv[:rgt->c],lv[:lft->c])'
+	exe	,←'DO(i,lr)lc*=ls[i];',nl
+	exe	,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
 	exe	,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
@@ -1003,7 +1007,7 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
    z,←'AI(rslt,2,s,',(⊃git ⊃0⌷⍺),');',nl
    z,←(⊃,/(git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
    z,←⊃,/'zrl'{⍺,'=',⍵,'->v;',nl}¨'rslt' 'rgt' 'lft'
-   z,←(''⊣simd''),'DO(i,s[0]){z[i*2]=l[i];z[i*2+1]=r[i];}'
+   z,←(simd'present(z,l,r)'),'DO(i,s[0]){z[i*2]=l[i];z[i*2+1]=r[i];}'
    z,←'if(tpused){cpaa(orz,rslt);}',nl
    z,'}',nl}
 ⍝[cf]
