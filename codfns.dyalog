@@ -1008,7 +1008,7 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
    z,←'A*orz;A tp;tp.v=NULL;int tpused=0;',nl
    z,←'if(rslt==lft||rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
    z,←'AI(rslt,2,s,',(⊃git ⊃0⌷⍺),');',nl
-   z,←(⊃,/(git ⍺){⍺,'*',⍵,';'}¨'zrl'),nl
+   z,←(⊃,/(git ⍺){⍺,'*restrict ',⍵,';'}¨'zrl'),nl
    z,←⊃,/'zrl'{⍺,'=',⍵,'->v;',nl}¨'rslt' 'rgt' 'lft'
    z,←(simd'present(z,l,r)'),'DO(i,s[0]){z[i*2]=l[i];z[i*2+1]=r[i];}'
    z,←'if(tpused){cpaa(orz,rslt);}',nl
