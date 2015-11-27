@@ -601,9 +601,12 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	ixe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(1+j))]'
 	ixe	,←'}',nl,'zv[i]=val;}',nl,pacc'update device(zv[:rslt->c])'
 	exe	←pacc'update host(rv[:rgt->c])'
-	exe	,←'DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl,'DO(j,n){'
+	exe	,←'DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl
+	exe	,←(pacc'enter data copyin(val)'),'DO(j,n){'
 	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
-	exe	,←'}',nl,'zv[i]=val;}',nl,pacc'update device(zv[:rslt->c])'
+	exe	,←pacc'update device(val)'
+	exe	,←'}',nl,pacc'exit data delete(val)'
+	exe	,←'zv[i]=val;}',nl,pacc'update device(zv[:rslt->c])'
 		chk siz (exe ixe gxe⊃⍨gid+hid) mxfn ⍺ ⍵}
 redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	hid	←idf∊⍨⊃⊃⍺⍺ ⋄ a←0 1 1⊃¨⊂⍺
