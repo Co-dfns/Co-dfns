@@ -972,31 +972,37 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 decd←{	chk	←'if(lr>1||lv[0]<0)error(16);'
 	siz	←'zr=rr==0?0:rr-1;DO(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
 	siz	,←'if(rr>0)rc=rs[0];'
-	exe	←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}'
+	exe	←pacc'update host(lv,rv[:rgt->c])'
+	exe	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn ⍺ ⍵}
-encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];'
+encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
+	chk	,←pacc'update host(lv[:lc])'
 	chk	,←'DO(i,lc){if(lv[i]<=0)error(16);}'
-	siz	←'zr=1+rr;zs[0]=lc;DO(i,rr)zs[i+1]=rs[i];'
-	exe	←'DO(i,rr)rc*=rs[i];DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
+	siz	←'zr=1+rr;zs[0]=lc;DO(i,rr)zs[i+1]=rs[i];DO(i,rr)rc*=rs[i];'
+	exe	←simd'collapse(2) present(zv[:rslt->c],rv[:rc],lv[:lc])'
+	exe	,←'DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[l]:Definition for sopid:codfns.dyalog?s=^sopid←
 ⍝[of]:Take/Drop
 drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
-	exe	←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+1)*zc)+j];}}'
+	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+1)*zc)+j];}}'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Transpose
 tspm←{	siz	←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
-	exe	←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
+	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	exe	,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
 		'' siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Horrible Hacks
 sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
  exe←'zc=zs[0];rc=rs[0];lc=ls[rr-1];B szz=rslt->c,szr=rgt->c,szl=lft->c;',nl
- exe,←simd'independent collapse(3) present(zv[:rslt->c],rv[:rgt->c],lv)'
+ exe,←simd'independent collapse(3) present(zv[:szz],rv[:szr],lv[:szl])'
  exe,←'DO(i,zc){DO(j,rc){DO(k,lc){zv[(i*rc*lc)+(j*lc)+k]=lv[(i*lc)+k]*rv[(j*lc)+k];}}}'
  '' siz exe mxfn ⍺ ⍵}
  
