@@ -590,7 +590,7 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	gxe	,←'DO(i,rc){'
 	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(1+i)]'
 	gxe	,←'}',nl,'zv[0]=val;',nl,pacc 'update device(zv[:1])'
-	gxe	,←'}else{',nl,pacc'kernels loop gang worker(32) present(zv,rv[:rc])'
+	gxe	,←'}else{',nl,pacc'kernels loop gang worker(32) present(zv[:zc],rv[:rgt->c])'
 	gxe	,←'DO(i,zc){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
 	gxe	,←pacc'loop vector(32)'
 	gxe	,←'DO(j,rc){'
