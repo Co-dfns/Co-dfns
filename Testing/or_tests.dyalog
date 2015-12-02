@@ -1,7 +1,8 @@
 ﻿:Namespace or
 
-I1←?10⍴2
-I2←?10⍴2
+I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
+I1←I ?10⍴2
+I2←I ?10⍴2
 S←':Namespace' 'Run←{⍺∨⍵}' ':EndNamespace'
 
 'ii'('or' S 'Run' #.util.GEN∆T2 ⎕THIS) I1 I2

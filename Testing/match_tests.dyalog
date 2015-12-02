@@ -8,12 +8,12 @@ S←':Namespace' 'Run←{⍺≡⍵}' ':EndNamespace'
 '04'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)(⍳5)
 '05'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍳7)(⍳5)
 '06'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(0)(⍳5)
-'07'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴0)(2 2⍴0)
-'08'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2 3⍴0)(2 2⍴0)
-'09'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴0)(2 2 3⍴0)
-'10'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2 3⍴0)(2 2 3⍴1)
-'11'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(0)(2 2⍴0)
-'12'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(,0)(2 2⍴0)
+'07'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴⍳4)(2 2⍴⍳4)
+'08'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2 3⍴⍳12)(2 2⍴⍳4)
+'09'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴⍳4)(2 2 3⍴⍳12)
+'10'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2 3⍴⍳12)(2 2 3⍴1+⍳12)
+'11'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(0)(2 2⍴⍳4)
+'12'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(,0)(2 2⍴⍳4)
 '13'('match' S 'Run' #.util.GEN∆T2 ⎕THIS)(,0)(,0)
 
 :EndNamespace
