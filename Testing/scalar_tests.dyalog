@@ -6,8 +6,8 @@ BS,←⊂'L←|(((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT)-vsqrtT'
 BS,←⊂'(÷(○2)*0.5)×(*(L×L)÷¯2)×÷1+0.2316419×L' 
 BS,←'}' ':EndNamespace'
 
-D←{⍉1+?⍵ 3⍴1000}2*20 ⋄ L←#.I ,¯1↑D ⋄ R←#.I 2↑D
+D←{⍉1+?⍵ 3⍴1000}2*20 ⋄ L←,¯1↑D ⋄ R←2↑D
 
-''('scalar' BS 'Run' #.GEN∆T3 ⎕THIS) L R
+''('scalar' BS 'Run' #.util.GEN∆T3 ⎕THIS) L R
 
 :EndNamespace

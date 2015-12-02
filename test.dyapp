@@ -1,0 +1,6 @@
+Target #
+Load codfns
+Load APLUnit\UT
+Load util
+Load config
+Run util.TEST

@@ -5,8 +5,8 @@ F←100÷⍨?100⍴10000
 
 S←':Namespace' 'Run←{⌈⍵}' ':EndNamespace'
 
-'i'('ceiling' S 'Run' #.GEN∆T1 ⎕THIS) I
-'f'('ceiling' S 'Run' #.GEN∆T1 ⎕THIS) F
+'i'('ceiling' S 'Run' #.util.GEN∆T1 ⎕THIS) I
+'f'('ceiling' S 'Run' #.util.GEN∆T1 ⎕THIS) F
 
 :EndNamespace
 

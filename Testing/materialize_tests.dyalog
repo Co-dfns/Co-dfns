@@ -5,8 +5,8 @@ F←100÷⍨?10⍴10000
 
 S←':Namespace' 'Run←{⌷⍵}' ':EndNamespace'
 
-'i'('materialize' S 'Run' #.GEN∆T1 ⎕THIS) I
-'f'('materialize' S 'Run' #.GEN∆T1 ⎕THIS) F
+'i'('materialize' S 'Run' #.util.GEN∆T1 ⎕THIS) I
+'f'('materialize' S 'Run' #.util.GEN∆T1 ⎕THIS) F
 
 :EndNamespace
 

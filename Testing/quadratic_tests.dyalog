@@ -7,6 +7,6 @@ S,←⊂':EndNamespace'
 GD←{{⊃((⎕DR ⍵)645)⎕DR ⍵}{↑(0⌷⍵)(+⌿⍵)(1⌷⍵)}1+?2 ⍵⍴10}
 D←GD 7
 
-''('quadratic' S 'Run' #.GEN∆T1 ⎕THIS) D
+''('quadratic' S 'Run' #.util.GEN∆T1 ⎕THIS) D
 
 :EndNamespace

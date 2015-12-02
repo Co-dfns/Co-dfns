@@ -5,8 +5,8 @@ F←100÷⍨?100⍴10000
 
 S←':Namespace' 'Run←{+⍵}' ':EndNamespace'
 
-'i'('cojugate' S 'Run' #.GEN∆T1 ⎕THIS) I
-'f'('cojugate' S 'Run' #.GEN∆T1 ⎕THIS) F
+'i'('cojugate' S 'Run' #.util.GEN∆T1 ⎕THIS) I
+'f'('cojugate' S 'Run' #.util.GEN∆T1 ⎕THIS) F
 
 :EndNamespace
 

@@ -7,6 +7,6 @@ S,←'((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT' '}' ':EndNamespace'
 GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
 
-''('bs1' S 'Run' #.GEN∆T2 ⎕THIS) L R
+''('bs1' S 'Run' #.util.GEN∆T2 ⎕THIS) L R
 
 :EndNamespace
