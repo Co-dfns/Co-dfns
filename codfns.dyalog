@@ -84,6 +84,12 @@ mkf	←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext�
 MkNS	←{ns←#.⎕NS⍬ ⋄ ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵}
 Fix	←{⍺ MkNS ⍺ Cmp ⍵}
 Xml	←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
+MKA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
+	_	←'mka'⎕NA 'P ',so,'|mkarray <PP'
+		mka ⊂⍵}
+EXA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
+	_	←'exa'⎕NA so,'|exarray >PP P I4'
+		exa ⍬ (0⊃⍵) (1⊃⍵)}
 ⍝[cf]
 ⍝[of]:AST
 get	←{⍺⍺⌷⍉⍵}
@@ -1060,5 +1066,11 @@ rth	,←'  default:error(16);}',nl
 rth	,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
 rth	,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
 rth	,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
+rth	,←'EXPORT V*mkarray(LOCALP*da){A*aa=malloc(sizeof(A));if(aa==NULL)error(1);',nl
+rth	,←' aa->v=NULL;cpda(aa,da);return aa;}',nl
+rth	,←'V EXPORT exarray(LOCALP*da,A*aa,I at){I tp=0;',nl
+rth	,←' switch(at){case 1:tp=APLLONG;break;case 2:tp=APLDOUB;break;',nl
+rth	,←'  default:error(11);}',nl
+rth	,←' cpad(da,aa,tp);frea(aa);}',nl
 ⍝[cf]
 :EndNamespace
