@@ -90,6 +90,9 @@ MKA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
 EXA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
 	_	←'exa'⎕NA so,'|exarray >PP P I4'
 		exa ⍬ (0⊃⍵) (1⊃⍵)}
+FREA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
+	_	←'frea'⎕NA so,'|frea P'
+		frea ⍵}
 ⍝[cf]
 ⍝[of]:AST
 get	←{⍺⍺⌷⍉⍵}
@@ -1034,7 +1037,7 @@ rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
 rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
 rth	,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array A;',nl
 rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl
-rth	,←'V frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
+rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
 rth	,←'#ifdef _OPENACC',nl,'#pragma acc exit data delete(v[:z])',nl,'#endif',nl
 rth	,←' if(a->f)free(v);}}',nl
 rth	,←'V aa(A*a,I s){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=s*c;',nl
