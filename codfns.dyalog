@@ -84,14 +84,12 @@ mkf	←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext�
 MkNS	←{ns←#.⎕NS⍬ ⋄ ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵}
 Fix	←{⍺ MkNS ⍺ Cmp ⍵}
 Xml	←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
-MKA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
-	_	←'mka'⎕NA 'P ',so,'|mkarray <PP'
+BSO	←{BUILD∆PATH,(dirc⍬),⍵,'_',COMPILER,(soext⍬)}
+MKA←{	_	←'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'
 		mka ⊂⍵}
-EXA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
-	_	←'exa'⎕NA so,'|exarray >PP P I4'
+EXA←{	_	←'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'
 		exa ⍬ (0⊃⍵) (1⊃⍵)}
-FREA←{	so	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬)
-	_	←'frea'⎕NA so,'|frea P'
+FREA←{	_	←'frea'⎕NA (BSO ⍺),'|frea P'
 		frea ⍵}
 ⍝[cf]
 ⍝[of]:AST
@@ -445,7 +443,7 @@ simdc	←{('#pragma acc kernels loop ',⍵,nl)('#pragma simd',nl)('')}
 simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 ⍝[cf]
 ⍝[of]:Function Entry
-frt	←'static void '
+frt	←'void EXPORT '
 fre	←'void EXPORT '
 foi	←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
 flp	←'(A*z,A*l,A*r,A*penv[])'
