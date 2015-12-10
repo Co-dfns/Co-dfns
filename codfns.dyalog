@@ -39,7 +39,7 @@ pop	←' -fast -acc -ta=tesla:cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
 pgcc	←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
-vsco	←'/W3 /Gm- /Zc:inline ' ⍝ /Zi /Fd"Build\vc140.pdb" '
+vsco	←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"Build\vc140.pdb" '
 vsco	,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
 vsco	,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
 vsco	,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
