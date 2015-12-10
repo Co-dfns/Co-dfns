@@ -824,7 +824,7 @@ shpd←{	chk	←'if(1!=lr)error(11);'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Squad Indexing
-idxd←{	chk	←'if(lr>1)error(4);if(ls[0]>rr)error(5);'
+idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
 	chk	,←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
 	chk	,←pacc'update host(lv[:lc])'
 	chk	,←'DO(i,ls[0])if(lv[i]<0||lv[i]>=rs[i])error(3);'
