@@ -785,7 +785,7 @@ mxfn←{	chk siz exe	←⍺
 	elv ell els	←1 0 2(⊢(/⍨)vr=⊣)¨(⊂(≢el)↑'rslt' 'rgt' 'lft'),2⍴⊂0⌷⍉el
 	z	←'{B zc=1,rc=1,lc=1;A*orz;A tp;tp.v=NULL;int tpu=0;',nl
 	z	,←(⊃,/(⊂''),elv{'A *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
-	z	,←⊃,/(⊂''),nml{'I ',⍺,'r=1;B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
+	z	,←⊃,/(⊂''),nml{'I ',⍺,'r=',(⍕≢⍴⍵),';B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
 	z	,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
 	z	,←pacc'enter data copyin(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
 	z	,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl↑⍨≢els
