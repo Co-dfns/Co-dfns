@@ -164,7 +164,8 @@ Fex←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
 Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
 Var←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
 Num←float _o int _as N
-Atom←{⍺(Num _some _as ('n'A) _o (0 Var'a' _as ('v'A)) _o Pex)⍵}
+Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A)
+Atom←{⍺(Num _some _as ('n'A) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex)⍵}
 Mon←{⍺(Fex _s Ex _as (1 E))⍵}
 Dya←{⍺((Idx _o Atom) _s Fex _s Ex _as (2 E))⍵}
 Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
