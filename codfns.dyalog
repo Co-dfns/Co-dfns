@@ -218,8 +218,9 @@ fe	←(⊃⍪/)(+\Fm)(⍪/(⊂1↑⊢),∘((+\d=⊃)fee⌸⊢)1↓⊢)⌸⊢
 ⍝[cf]
 ⍝[of]:Compress Atomic Nodes
 can	←(+\Am∨Om)((,1↑⊢),∘(⊂(¯1+2⌊≢)⊃(⊂∘⊂⊃),⊂)∘n 1↓⊢)⌸⊢
-cam	←Om∧'f'∊⍨k ⋄ cas←Am∨Nm∨cam∨(¯1⌽Am)∨¯1⌽cam
-ca	←(can cas(⌿∘⊢)⊢)(Am∨cam)mnd⊢⍬,∘⊂⍨(~Nm∨(¯1⌽Am)∨¯1⌽cam)(⌿∘⊢)⊢
+cam	←Om∧'f'∊⍨k
+cas	←(Am(1↑⊢)⍪(Mm∨Am)blg⊢)∨¯1⌽cam
+ca	←(can (cam∨cas∨Am)(⌿∘⊢)⊢)(Am∨cam)mnd⊢⍬,∘⊂⍨(~cas)(⌿∘⊢)⊢
 ⍝[cf]
 ⍝[of]:Propogate Constants
 pcc	←(⊂⊢(⌿⍨)Am∨Om∧'f'∊⍨k)∘((⍳∘∪⍨n)⌷⍤0 2(1⌈≢)↑⊢)∘((1+⊃),1↓⍤1⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
