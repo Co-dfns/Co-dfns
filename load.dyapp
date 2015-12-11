@@ -1,5 +1,5 @@
 Target #
+Load util
 Load codfns
 Load APLUnit\UT
-Load util
 Load config
