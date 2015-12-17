@@ -410,8 +410,8 @@ fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝[of]:Code Generator
 dis	←{⍺←⊢ ⋄ 0=⊃t⍵:3⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
 gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
-E1	←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑↓⍉⊃e⍵}
-E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓↓⍉⊃e⍵}
+E1	←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵}
+E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
 E0	←{r l f←⊃v⍵ ⋄ (⊃git 1↑⊃y⍵),(⊃n⍵),'=',(sdb(f scl)(1+'%u'≢l)↑r l),';',nl}
 Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
@@ -836,7 +836,26 @@ idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
 	exe	←'B a,m,k=0;DO(i,zr)zc*=zs[i];m=zc;',nl
 	exe	,←'DO(i,ls[0]){a=ls[0]-(i+1);k+=m*lv[a];m*=rs[a];}',nl
 	exe	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[k+i];'
-		chk siz exe mxfn ⍺ ⍵}
+	∧/,1=≡¨⍵:	chk siz exe mxfn ⍺ ⍵
+	sep	←{⊃⍺{⍺,⍺⍺,⍵}/⍵}
+	ixv ixe	←2⌷⍵
+	ixn	←{'idx[',(⍕⍵),']'}¨⍳≢ixv
+	idx	←'{A *idx[]={',(','sep ixv var¨ixe),'};',nl
+	idx	,←(⊃,/(⍳≢ixv){'I ir',(⍕⍺),'=',⍵,'->r;'}¨ixn),nl
+	idx	,←(⊃,/(⍳≢ixv){'B*is',(⍕⍺),'=',⍵,'->s;'}¨ixn),nl
+	idx	,←(⊃,/(⍳≢ixv){'I*iv',(⍕⍺),'=',⍵,'->v;'}¨ixn),nl
+	idx	,←(⊃,/(⍳≢ixv){'B ic',(⍕⍺),'=',⍵,'->c;'}¨ixn),nl
+	siz	←'zr=',(⍕≢ixv),';',(⊃,/{'zs[',(⍕⍵),']=ic',(⍕⍵),';'}¨⍳≢ixv),nl
+	gdx	←{'+'sep (↑∘⍺¨-⌽⍳≢⍺){'(',('*'sep(⊂⍵),⍺),')'}¨⍵}
+	idi	←(≢ixv)↑'ijklmnopqrstuvw'
+	zidx	←({'ic',(⍕⍵),''}¨⍳≢ixv)gdx idi
+	ridx	←({'rs[',(⍕⍵),']'}¨⍳≢ixv)gdx(⍳≢ixv){'iv',(⍕⍺),'[',⍵,']'}¨idi
+	stm	←'zv[',zidx,']=rv[',(ridx),'];',nl
+	mklp	←{i s←⍺ ⋄ (⊂'DO(',i,',',s,'){',nl),(' ',¨⍵),(⊂'}',nl)}
+	pres	←'present(zv[:rslt->c],rv[:rgt->c],',(','sep{'iv',(⍕⍵),'[:ic',(⍕⍵),']'}¨⍳≢ixv),') '
+	exe	←simd pres,'independent collapse(',(⍕≢ixv),')'
+	exe	,←⊃,/⊃mklp/(idi{⍺('ic',⍕⍵)}¨⍳≢ixv),⊂⊂stm
+		idx,('' siz exe mxfn ¯1↓¨⍺ ⍵),'}',nl}
 ⍝[cf]
 ⍝[of]:Bracket Indexing
 brid←{	chk	←'if(lr>1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
