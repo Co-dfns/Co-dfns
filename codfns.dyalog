@@ -438,7 +438,7 @@ nl	←⎕UCS 13 10
 enc	←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
 fvs	←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
 cln	←'¯'⎕R'-'
-var	←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ ¯1=⊃⍵:,⍺ ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+var	←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ ¯1≥⊃⍵:,⍺ ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
 dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
 reg	←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
 fnv	←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
@@ -789,7 +789,7 @@ mxfn←{	chk siz exe	←⍺
 	tpl tpv tps	←(tp(/⍨)vr=⊢)¨⍳3
 	nml nmv nms	←(('zrl'↑⍨≢el)/⍨vr=⊢)¨⍳3
 	elv ell els	←1 0 2(⊢(/⍨)vr=⊣)¨(⊂(≢el)↑'rslt' 'rgt' 'lft'),2⍴⊂0⌷⍉el
-	z	←'{B zc=1,rc=1,lc=1;A*orz;A tp;tp.v=NULL;int tpu=0;',nl
+	z	←'{B zc=1,rc=1,lc=1;',nl
 	z	,←(⊃,/(⊂''),elv{'A *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
 	z	,←⊃,/(⊂''),nml{'I ',⍺,'r=',(⍕≢⍴⍵),';B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
 	z	,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
@@ -797,21 +797,23 @@ mxfn←{	chk siz exe	←⍺
 	z	,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl↑⍨≢els
 	z	,←(⊃,/(⊂''),{'I ',⍵,'r=0;B*',⍵,'s=NULL;'}¨nms),nl↑⍨≢nms
 	z	,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl↑⍨≢nms
-	z	,←'if(',(⊃{⍺,'||',⍵}/(⊂'0'),'rslt=='∘,¨1↓elv),')'
-	z	,←'{orz=rslt;rslt=&tp;tpu=1;}',nl
-	z	,←(0≡≢elv)⊃'' 'A*rslt=&tp;'
+	iso	←(⊂⊃1⌷⍉el)∨.≡n2f 1↓1⌷⍉el
+	z	,←iso⊃''('A*orz=rslt;A rz;rz.v=NULL;rslt=&rz;',nl)
+	z	,←(0≡≢elv)⊃'' 'A tp;tp.v=NULL;A*rslt=&tp;'
 	tpv nmv elv	,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
 	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
 	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl,'AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');',nl
 	z	,←((1↑tpv)((1↑nmv)declv)1↑elv),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
 	z	,←pacc'exit data delete(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
-	z	,←'if(tpu){cpaa(orz,rslt);}}',nl
+	z	,←iso⊃''('cpaa(orz,rslt);',nl)
+	z	,←'}',nl
 		z}
 decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
 	z	,←(⊃,/(⊂''),⍺⍺{'B*restrict ',⍺,'s=',⍵,'->s;'}¨⍵),nl
 	z	,←⍺(⍺⍺ declv) ⍵
 		z}
-declv←{		(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
+declv	←{(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
+	
 ⍝[cf]
 ⍝[of]:Iota/Index Generation
 iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
@@ -847,6 +849,9 @@ idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
 	idx	,←(⊃,/(⍳≢ixv){'B*restrict is',(⍕⍺),'=',⍵,'->s;'}¨ixn),nl
 	idx	,←(⊃,/(⍳≢ixv){'I*restrict iv',(⍕⍺),'=',⍵,'->v;'}¨ixn),nl
 	idx	,←(⊃,/(⍳≢ixv){'B ic',(⍕⍺),'=',⍵,'->c;'}¨ixn),nl
+	idx	,←'A irz;irz.v=NULL;A*irzp=&irz;',nl
+	iso	←(0 1⌷⍵)∨.≡ixe
+	idx	,←iso⊃('irzp=',(irzv←⊃var/0⌷⍵),';',nl)''
 	siz	←'zr=',(⍕≢ixv),';',⊃,/{'zs[',(⍕⍵),']=ic',(⍕⍵),';'}¨⍳≢ixv
 	gdx	←{'+'sep (↑∘⍺¨-⌽⍳≢⍺){'(',('*'sep(⊂⍵),⍺),')'}¨⍵}
 	idi	←(≢ixv)↑'ijklmnopqrstuvw'
@@ -857,7 +862,9 @@ idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
 	pres	←'present(zv[:rslt->c],rv[:rgt->c],',(','sep{'iv',(⍕⍵),'[:ic',(⍕⍵),']'}¨⍳≢ixv),') '
 	exe	←simd pres,'independent collapse(',(⍕≢ixv),')'
 	exe	,←⊃,/⊃mklp/(idi{⍺('ic',⍕⍵)}¨⍳≢ixv),⊂⊂stm
-		idx,('' siz exe mxfn ¯1↓¨⍺ ⍵),'}',nl}
+	idx	,←'' siz exe mxfn (¯1↓⍺)('irzp'(¯2 0)⍪1↓¯1↓⍵)
+	idx	,←(iso⊃''('cpaa(',irzv,',irzp);')),'}',nl
+		idx}
 ⍝[cf]
 ⍝[of]:Bracket Indexing
 brid←{	chk	←'if(lr>1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
