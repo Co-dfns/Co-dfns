@@ -2,11 +2,11 @@
 
 S←':Namespace' 'Run←{≢⍵}' ':EndNamespace'
 
-'01'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'02'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'03'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) ,0
-'04'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'05'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
+'01'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
+'02'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
+'03'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ,0
+'04'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
+'05'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
 
 :EndNamespace
 
