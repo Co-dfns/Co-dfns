@@ -760,7 +760,7 @@ fdb⍪←,¨'⊣'	'lftm'	'lftd'
 fdb⍪←,¨'//'	'{⎕SIGNAL 99}'	'fltd'
 fdb⍪←,¨'⍉'	'tspm'	'{⎕SIGNAL 16}'
 fdb⍪←,¨'↓'	'{⎕SIGNAL 16}'	'drpd'
-fdb⍪←,¨'↑'	'{⎕SIGNAL 16}'	'{⎕SIGNAL 16}'
+fdb⍪←,¨'↑'	'{⎕SIGNAL 16}'	'tked'
 fdb⍪←,¨'⊤'	'{⎕SIGNAL 99}'	'encd'
 fdb⍪←,¨'⊥'	'{⎕SIGNAL 99}'	'decd'
 fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
@@ -1027,8 +1027,15 @@ encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
 ⍝[of]:Take/Drop
 drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
+	siz	,←'lc=lv[0];'
 	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+1)*zc)+j];}}'
+	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
+		chk siz exe mxfn ⍺ ⍵}
+tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
+	siz	,←'zs[0]=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
+	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
 		chk siz exe mxfn ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Transpose

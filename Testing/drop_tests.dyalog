@@ -1,7 +1,8 @@
 :Namespace drop
 
-S←':Namespace' 'Run←{1↓⍵}' ':EndNamespace'
+S←':Namespace' 'Run←{⍺↓⍵}' ':EndNamespace'
 
-'01'('drop' S 'Run' #.util.GEN∆T1 ⎕THIS) 5 5⍴⍳5
+'01'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)1	(5 5⍴⍳5)
+'02'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)3	(⍳10)
 
 :EndNamespace
