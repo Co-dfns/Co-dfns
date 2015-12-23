@@ -1025,13 +1025,15 @@ encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
 ⍝[l]:Definition for sopid:codfns.dyalog?s=^sopid←
 ⍝[of]:Take/Drop
 drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
+	siz	←pacc'update host(lv[:1])'
+	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
 	siz	,←'lc=lv[0];'
 	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
 	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
 		chk siz exe mxfn ⍺ ⍵}
 tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
+	siz	←pacc'update host(lv[:1])'
+	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
 	siz	,←'zs[0]=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
 	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
 	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
