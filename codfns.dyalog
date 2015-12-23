@@ -823,7 +823,7 @@ iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 ⍝[of]:Shape/Reshape
 shpm←{	exe	←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
 		'' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
-shpd←{	chk	←'if(1!=lr)error(11);'
+shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
 	siz	←'zr=ls[0];DO(i,zr)zs[i]=lv[i];'
 	exe	←'DO(i,zr)zc*=zs[i];DO(i,rr)rc*=rs[i];',nl
 	exe	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
