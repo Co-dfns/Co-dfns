@@ -768,7 +768,7 @@ fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
 calm←{	z r	←var/⍵
 	arr	←⍺⍺,((1⌷⍺)⊃'iif'),'n(',z,',NULL,',r,',env);',nl
 	scl	←'{A sz,sr;sz.v=NULL;AI(&sz,0,NULL,',(⊃git ⍺),');',nl
-	scl	,←'sr.r=0;sr.v=&',r,';sr.f=0;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
+	scl	,←'sr.r=0;sr.v=&',r,';sr.f=1;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
 	scl	,←⍺⍺,((1⌷⍺)⊃'iif'),'n(&sz,NULL,&sr,env);',nl
 	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',nl,pacc'update host(szv[:1])'
 	scl	,←z,'=*szv;frea(&sz);}',nl
@@ -776,8 +776,8 @@ calm←{	z r	←var/⍵
 cald←{	z r l	←var/⍵
 	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl
 	scl	←'{A sz,sr,sl;sz.v=NULL;AI(&sz,0,NULL,',(⊃git ⍺),');',nl
-	scl	,←'sr.r=0;sr.f=0;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
-	scl	,←'sl.r=0;sl.f=0;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
+	scl	,←'sr.r=0;sr.f=1;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
+	scl	,←'sl.r=0;sl.f=1;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
 	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(&sz,&sl,&sr,env);',nl
 	scl	,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
 	scl	,←z,'=*szv;frea(&sz);}',nl
@@ -801,8 +801,10 @@ mxfn←{	chk siz exe	←⍺
 	z	,←(0≡≢elv)⊃'' 'A tp;tp.v=NULL;A*rslt=&tp;'
 	tpv nmv elv	,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
 	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
-	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl,al⊃''('AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');',nl)
-	z	,←((1↑tpv)((1↑nmv)declv)1↑elv),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
+	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl
+	alloc	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');',nl
+	alloc	,←(1↑tpv)((1↑nmv)declv)1↑elv
+	z	,←(al⊃'' alloc),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
 	z	,←pacc'exit data delete(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
 	z	,←iso⊃''('cpaa(orz,rslt);',nl)
 	z	,←'}',nl
@@ -824,11 +826,15 @@ iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 shpm←{	exe	←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
 		'' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
 shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
-	siz	←'zr=ls[0];DO(i,zr)zs[i]=lv[i];'
-	exe	←'DO(i,zr)zc*=zs[i];DO(i,rr)rc*=rs[i];',nl
-	exe	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
-	exe	,←'else{',nl,(simd'present(zv,rv)'),'DO(i,zc)zv[i]=rv[i%rc];}',nl
-		chk siz exe mxfn 1 ⍺ ⍵}
+	siz	←'zr=ls[0];DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
+	cpy	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷⍺),');',nl
+	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
+	cpy	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
+	cpy	,←'else{',nl,(simd'present(zv,rv)'),'DO(i,zc)zv[i]=rv[i%rc];}'
+	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;rslt->c=zc;',nl
+	ref	,←'rslt->z=zc*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
+	exe	←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
+		chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Squad Indexing
 idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
@@ -1076,12 +1082,13 @@ rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef voi
 rth	,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array A;',nl
 rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl
 rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
-rth	,←'#ifdef _OPENACC',nl,'#pragma acc exit data delete(v[:z])',nl,'#endif',nl
-rth	,←' if(a->f)free(v);}}',nl
+rth	,←' if(a->f){',nl,'#ifdef _OPENACC',nl
+rth	,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
+rth	,←' if(a->f>1)free(v);}}',nl
 rth	,←'V aa(A*a,I s){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=s*c;',nl
 rth	,←' char*v=malloc(z);if(NULL==v)error(1);',nl
 rth	,←'#ifdef _OPENACC',nl,'#pragma acc enter data create(v[:z])',nl,'#endif',nl
-rth	,←' a->v=v;a->z=z;a->c=c;a->f=1;}',nl
+rth	,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
 rth	,←'#define AA(a,s) aa((a),sizeof(s))',nl
 rth	,←'V ai(A*a,I r,B *s,I sz){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,sz);}',nl
 rth	,←'#define AI(a,r,s,sz) ai((a),(r),(s),sizeof(sz))',nl
@@ -1093,13 +1100,13 @@ rth	,←' memcpy(ARRAYSTART(d->p),a->v,a->z);}',nl
 rth	,←'V cpda(A*a,LOCALP*d){frea(a);',nl
 rth	,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
 rth	,←' switch(d->p->ELTYPE){',nl
-rth	,←'  case APLLONG:a->z=c*sizeof(I);a->f=0;a->v=ARRAYSTART(d->p);break;',nl
-rth	,←'  case APLDOUB:a->z=c*sizeof(D);a->f=0;a->v=ARRAYSTART(d->p);break;',nl
-rth	,←'  case APLINTG:a->z=c*sizeof(I);a->f=1;',nl
+rth	,←'  case APLLONG:a->z=c*sizeof(I);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
+rth	,←'  case APLDOUB:a->z=c*sizeof(D);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
+rth	,←'  case APLINTG:a->z=c*sizeof(I);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
 rth	,←'   {aplint16 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLSINT:a->z=c*sizeof(I);a->f=1;',nl
+rth	,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
 rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
