@@ -1034,9 +1034,15 @@ drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←pacc'update host(lv[:1])'
 	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
 	siz	,←'lc=lv[0];'
-	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
-		chk siz exe mxfn 1 ⍺ ⍵}
+	cpy	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷⍺),');',nl
+	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
+	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
+	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
+	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
+	ref	,←'rslt->v=rv+(lc*zc);'
+	exe	←ref cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
+		chk siz exe mxfn 0 ⍺ ⍵}
 tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←pacc'update host(lv[:1])'
 	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
@@ -1073,6 +1079,7 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
    z,←'if(tpused){cpaa(orz,rslt);}',nl
    z,'}',nl}
 ⍝[cf]
+⍝[of]:Runtime Header
 rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
 rth	,←'#include <stdio.h>',nl,'#include <string.h>',nl
 rth	,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
@@ -1120,5 +1127,6 @@ rth	,←'V EXPORT exarray(LOCALP*da,A*aa,I at){I tp=0;',nl
 rth	,←' switch(at){case 1:tp=APLLONG;break;case 2:tp=APLDOUB;break;',nl
 rth	,←'  default:error(11);}',nl
 rth	,←' cpad(da,aa,tp);frea(aa);}',nl
+⍝[cf]
 ⍝[cf]
 :EndNamespace
