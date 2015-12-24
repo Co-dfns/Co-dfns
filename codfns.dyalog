@@ -1047,9 +1047,15 @@ tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←pacc'update host(lv[:1])'
 	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
 	siz	,←'zs[0]=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
-	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	exe	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
-		chk siz exe mxfn 1 ⍺ ⍵}
+	cpy	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷⍺),');',nl
+	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'	
+	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
+	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
+	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
+	ref	,←'rslt->v=rv;'
+	exe	←ref cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
+		chk siz exe mxfn 0 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Transpose
 tspm←{	siz	←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
