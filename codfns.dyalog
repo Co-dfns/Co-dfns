@@ -96,12 +96,11 @@ FREA←{	_	←'frea'⎕NA (BSO ⍺),'|frea P'
 get	←{⍺⍺⌷⍉⍵}
 up	←⍉(1+1↑⍉)⍪1↓⍉
 bind	←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
-⍝[of]:Field Accessors
+
 d_ t_ k_ n_	←⍳f∆←4	⋄ d←d_ get	⋄ t←t_ get	⋄ k←k_ get	⋄ n←n_ get	
 r_ s_ v_ y_ e_	←f∆+⍳5	⋄ r←r_ get	⋄ s←s_ get	⋄ v←v_ get	⋄ y←y_ get	⋄ e←e_ get
 l_	←f∆+5+⍳1	⋄ l←l_ get	
-⍝[cf]
-⍝[of]:Node Constructors
+
 new	←{⍉⍪f∆↑0 ⍺,⍵}	⋄ msk	←{(t ⍵)∊⊂⍺⍺}	⋄ sel	←{(⍺⍺ msk ⍵)⌿⍵}
 A	←{('A'new ⍺⍺)⍪up⊃⍪/⍵}	⋄ Am	←'A'msk	⋄ As	←'A'sel
 E	←{('E'new ⍺⍺)⍪up⊃⍪/⍵}	⋄ Em	←'E'msk	⋄ Es	←'E'sel
@@ -114,7 +113,6 @@ S	←{'S'new 0 ⍵}	⋄ Sm	←'S'msk	⋄ Ss	←'S'sel
 V	←{'V'new ⍺⍺ ⍵}	⋄ Vm	←'V'msk	⋄ Vs	←'V'sel
 Y	←{'Y'new 0 ⍵}	⋄ Ym	←'Y'msk	⋄ Ys	←'Y'sel
 Z	←{'Z'new 1 ⍵}	⋄ Zm	←'Z'msk	⋄ Zs	←'Z'sel
-⍝[cf]
 ⍝[cf]
 ⍝[of]:Parser
 ⍝[of]:Parsing Combinators
@@ -250,84 +248,212 @@ nvk	←((2↑⊢),2,(3↓⊢))⍤1sub(Em∧'i'∊⍨k)
 nv	←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪⊢),∘⊂⊢){⌽⍣⍺⊢⍵})¨v∘nvo∘nve
 ⍝[cf]
 ⍝[of]:Lift Type-Checking
-⍝[of]:Primitive Types
 ⍝[c]Type:	Index	Right	Left		Type Codes:	Value	Type
 ⍝[c]	0	Unknown	Unknown			Unknown	0
 ⍝[c]	1	Unknown	Integer			Integer	1
 ⍝[c]	2	Unknown	Float			Float	2
-⍝[c]	3	Unknown	Not bound			Not bound	3
-⍝[c]	4	Integer	Unknown		
-⍝[c]	5	Integer	Integer		Operator Codes:	Meaning	Code
-⍝[c]	6	Integer	Float			Left	0
-⍝[c]	7	Integer	Not bound			Right	1
-⍝[c]	8	Float	Unknown			Error	¯N
-⍝[c]	9	Float	Integer
-⍝[c]	10	Float	Float
-⍝[c]	11	Float	Not bound
+⍝[c]	3	Unknown	Bitvector			Bitvector	3
+⍝[c]	4	Unknown	Not bound			Not bound	4
+⍝[c]	5	Integer	Unknown			
+⍝[c]	6	Integer	Integer		
+⍝[c]	7	Integer	Float		Operator Codes:	Meaning	Code	
+⍝[c]	8	Integer	Bitvector			Left	0
+⍝[c]	9	Integer	Not bound			Right	1
+⍝[c]	10	Float	Unknown			Error	¯N					
+⍝[c]	11	Float	Integer
+⍝[c]	12	Float	Float
+⍝[c]	13	Float	Bitvector
+⍝[c]	14	Float	Not bound
+⍝[c]	15	Bitvector	Unknown
+⍝[c]	16	Bitvector	Integer
+⍝[c]	17	Bitvector	Float
+⍝[c]	18	Bitvector	Bitvector
+⍝[c]	19	Bitvector	Not bound
 ⍝[c]	
-pft←(2↑⊢)((5⍴0),(2↑⊢),(0⌷⊣),0,(¯2↑⊢),1⌷⊣)(2↓⊢)
-pn←⍬	⋄ pt←0 12⍴⍬
-pn,←⊂'%b'	⋄ pt⍪←pft 1 2 1 1 2 2
-pn,←⊂'%i'	⋄ pt⍪←pft 1 2 0 0 0 0
-pn,←⊂'%u'	⋄ pt⍪←12⍴3
+
+⍝[of]:Primitive Types
+pf1←9 14 19 6 7 8 ⋄ pf2←11 12 13 16 17 18
+pn←⍬	⋄ pt←56 20⍴0
+pn,←⊂'%b'	⋄ pt[00;pf1,pf2]←1 2 3 1 1 1 2 2 2 3 3 3
+pn,←⊂'%i'	⋄ pt[01;pf1,pf2]←1 2 3 0 0 0 0 0 0 0 0 0
+pn,←⊂'%u'	⋄ pt[02;]←20⍴3
 ⍝[c]
-⍝[c]Name	RL:	IN	FN	II	IF	FI	FF
-pn,←⊂,'⍺'	⋄ pt⍪←pft	¯6	¯6	1	2	1	2
-pn,←⊂,'⍵'	⋄ pt⍪←pft	1	2	1	1	2	2
-pn,←⊂,'+'	⋄ pt⍪←pft	1	2	1	2	2	2
-pn,←⊂,'-'	⋄ pt⍪←pft	1	2	1	2	2	2
-pn,←⊂,'÷'	⋄ pt⍪←pft	2	2	2	2	2	2
-pn,←⊂,'×'	⋄ pt⍪←pft	1	1	1	2	2	2
-pn,←⊂,'|'	⋄ pt⍪←pft	1	2	1	2	2	2
-pn,←⊂,'*'	⋄ pt⍪←pft	2	2	2	2	2	2
-pn,←⊂,'⍟'	⋄ pt⍪←pft	2	2	2	2	2	2
-pn,←⊂,'⌈'	⋄ pt⍪←pft	1	2	1	2	2	2
-pn,←⊂,'⌊'	⋄ pt⍪←pft	1	2	1	2	2	2
-pn,←⊂,'<'	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'≤'	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'='	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'≠'	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'≥'	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'>'	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'⌷'	⋄ pt⍪←pft	1	2	1	¯11	2	¯11
-pn,←⊂,'⍴'	⋄ pt⍪←pft	1	1	1	¯11	1	¯11
-pn,←⊂,','	⋄ pt⍪←pft	1	2	1	2	2	2
-pn,←⊂,'⍳'	⋄ pt⍪←pft	1	¯11	1	1	1	1
-pn,←⊂,'○'	⋄ pt⍪←pft	2	2	2	2	2	2
-pn,←⊂,'~'	⋄ pt⍪←pft	1	1	1	2	1	2
-pn,←⊂,'['	⋄ pt⍪←pft	¯2	¯2	1	2	1	2
-pn,←⊂,'∧'	⋄ pt⍪←pft	¯2	¯2	1	2	2	2
-pn,←⊂,'∨'	⋄ pt⍪←pft	¯2	¯2	1	2	2	2
-pn,←⊂,'⍲'	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'⍱'	⋄ pt⍪←pft	¯2	¯2	1	1	1	1
-pn,←⊂,'⍪'	⋄ pt⍪←pft	1	2	1	2	2	2
-pn,←⊂,'⌽'	⋄ pt⍪←pft	1	2	1	1	2	2
-pn,←⊂,'∊'	⋄ pt⍪←pft	1	2	1	1	1	1
-pn,←⊂,'⊃'	⋄ pt⍪←pft	1	2	0	0	0	0
-pn,←⊂,'⊖'	⋄ pt⍪←pft	1	2	1	1	2	2
-pn,←⊂,'≡'	⋄ pt⍪←pft	1	1	1	1	1	1
-pn,←⊂,'≢'	⋄ pt⍪←pft	1	1	1	1	1	1
-pn,←⊂,'⊢'	⋄ pt⍪←pft	1	2	1	1	2	2
-pn,←⊂,'⊣'	⋄ pt⍪←pft	1	2	1	2	1	2
-pn,←⊂'//'	⋄ pt⍪←pft	¯2	¯2	1	¯11	2	¯11
-pn,←⊂,'⍉'	⋄ pt⍪←pft	1	2	¯16	¯16	¯16	¯16
-pn,←⊂,'↑'	⋄ pt⍪←pft	¯16	¯16	1	¯11	2	¯11
-pn,←⊂,'↓'	⋄ pt⍪←pft	¯16	¯16	1	¯11	2	¯11
-pn,←⊂,'⊤'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
-pn,←⊂,'⊥'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
-pn,←⊂,'¨'	⋄ pt⍪←pft	0	0	0	0	0	0
-pn,←⊂,'⍨'	⋄ pt⍪←pft	0	0	0	0	0	0
-pn,←⊂,'/'	⋄ pt⍪←pft	0	0	0	¯11	0	¯11
-pn,←⊂,'⌿'	⋄ pt⍪←pft	0	0	0	¯11	0	¯11
-pn,←⊂,'\'	⋄ pt⍪←pft	0	0	¯11	¯11	¯11	¯11
-pn,←⊂,'⍀'	⋄ pt⍪←pft	0	0	¯11	¯11	¯11	¯11
-pn,←⊂'∘.'	⋄ pt⍪←pft	¯2	¯2	0	0	0	0
-pn,←⊂,'.'	⋄ pt⍪←pft	¯2	¯2	0	0	0	0
-pn,←⊂'⎕sp'	⋄ pt⍪←pft	¯2	¯2	1	¯11	¯11	¯11
-pn,←⊂'⎕XOR'	⋄ pt⍪←pft	¯2	¯2	1	¯16	¯16	¯16
-⍝[c]Name	RL:	IN	FN	II	IF	FI	FF
+⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
+⍝[c]		FI	FF	FB	BI	BF	BB
+pn,←⊂,'⍺'		
+	pt[03;pf1]←	¯6	¯6	¯6	1	2	3
+	pt[03;pf2]←	1	2	3	1	2	3
+pn,←⊂,'⍵'		
+	pt[04;pf1]←	1	2	3	1	1	1
+	pt[04;pf2]←	2	2	2	3	3	3
+pn,←⊂,'+'		
+	pt[05;pf1]←	1	2	3	1	2	1
+	pt[05;pf2]←	2	2	2	1	2	1
+pn,←⊂,'-'		
+	pt[06;pf1]←	1	2	1	1	2	1
+	pt[06;pf2]←	2	2	2	1	2	1
+pn,←⊂,'÷'		
+	pt[07;pf1]←	2	2	3	2	2	2
+	pt[07;pf2]←	2	2	2	1	2	3
+pn,←⊂,'×'		
+	pt[08;pf1]←	1	1	3	1	2	1
+	pt[08;pf2]←	2	2	2	1	2	3
+pn,←⊂,'|'		
+	pt[09;pf1]←	1	2	3	1	2	1
+	pt[09;pf2]←	2	2	2	3	3	3
+pn,←⊂,'*'		
+	pt[10;pf1]←	2	2	2	2	2	3
+	pt[10;pf2]←	2	2	3	1	2	3
+pn,←⊂,'⍟'		
+	pt[11;pf1]←	2	2	2	2	2	3
+	pt[11;pf2]←	2	2	3	3	3	3
+pn,←⊂,'⌈'		
+	pt[12;pf1]←	1	2	3	1	2	1
+	pt[12;pf2]←	2	2	2	1	2	3
+pn,←⊂,'⌊'		
+	pt[12;pf1]←	1	2	3	1	2	1
+	pt[12;pf2]←	2	2	2	1	2	3
+pn,←⊂,'<'		
+	pt[13;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[13;pf2]←	3	3	3	3	3	3
+pn,←⊂,'≤'		
+	pt[14;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[14;pf2]←	3	3	3	3	3	3
 ⍝[c]
+⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
+⍝[c]		FI	FF	FB	BI	BF	BB
+pn,←⊂,'='		
+	pt[15;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[15;pf2]←	3	3	3	3	3	3
+pn,←⊂,'≠'		
+	pt[16;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[16;pf2]←	3	3	3	3	3	3
+pn,←⊂,'≥'		
+
+	pt[17;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[17;pf2]←	3	3	3	3	3	3
+pn,←⊂,'>'		
+	pt[18;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[18;pf2]←	3	3	3	3	3	3
+pn,←⊂,'⌷'		
+	pt[19;pf1]←	1	2	3	1	¯11	1
+	pt[19;pf2]←	2	¯11	2	3	¯11	3
+pn,←⊂,'⍴'		
+	pt[20;pf1]←	1	1	1	1	¯11	1
+	pt[20;pf2]←	2	¯11	2	3	¯11	3
+pn,←⊂,','		
+	pt[21;pf1]←	1	2	3	1	2	1
+	pt[21;pf2]←	2	2	2	1	2	3
+pn,←⊂,'⍳'		
+	pt[22;pf1]←	1	¯11	3	1	1	1
+	pt[22;pf2]←	1	1	1	1	1	1
+pn,←⊂,'○'		
+	pt[23;pf1]←	2	2	2	2	¯11	2
+	pt[23;pf2]←	2	¯11	2	2	¯11	2	
+pn,←⊂,'~'		
+	pt[24;pf1]←	3	3	3	1	2	3
+	pt[24;pf2]←	1	2	3	1	2	3
+pn,←⊂,'['		
+	pt[25;pf1]←	¯2	¯2	¯2	1	2	3
+	pt[25;pf2]←	1	2	3	1	2	3
+pn,←⊂,'∧'		
+	pt[26;pf1]←	¯2	¯2	¯2	1	1	1
+	pt[26;pf2]←	1	2	2	1	2	3
+pn,←⊂,'∨'		
+	pt[27;pf1]←	¯2	¯2	¯2	1	2	1
+	pt[27;pf2]←	2	2	2	1	2	3
+⍝[c]
+⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
+⍝[c]		FI	FF	FB	BI	BF	BB
+pn,←⊂,'⍲'		
+	pt[28;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[28;pf2]←	3	3	3	3	3	3
+pn,←⊂,'⍱'		
+	pt[29;pf1]←	¯2	¯2	¯2	3	3	3
+	pt[29;pf2]←	3	3	3	3	3	3
+pn,←⊂,'⍪'		
+	pt[30;pf1]←	1	2	3	1	2	1
+	pt[30;pf2]←	2	2	2	1	2	3
+pn,←⊂,'⌽'		
+	pt[31;pf1]←	1	2	3	1	1	1
+	pt[31;pf2]←	2	2	2	3	3	3
+pn,←⊂,'∊'		
+	pt[32;pf1]←	1	2	3	3	3	3
+	pt[32;pf2]←	3	3	3	3	3	3
+pn,←⊂,'⊃'		
+	pt[33;pf1]←	1	2	3	1	1	1
+	pt[33;pf2]←	2	2	2	3	3	3
+pn,←⊂,'⊖'		
+	pt[34;pf1]←	1	2	3	1	1	1
+	pt[34;pf2]←	2	2	2	3	3	3
+pn,←⊂,'≡'		
+	pt[35;pf1]←	1	1	1	3	3	3
+	pt[35;pf2]←	3	3	3	3	3	3
+pn,←⊂,'≢'		
+	pt[36;pf1]←	1	1	1	3	3	3
+	pt[36;pf2]←	3	3	3	3	3	3
+pn,←⊂,'⊢'		
+	pt[37;pf1]←	1	2	3	1	1	1
+	pt[37;pf2]←	2	2	2	3	3	3
+pn,←⊂,'⊣'		
+	pt[38;pf1]←	1	2	3	1	2	3
+	pt[38;pf2]←	1	2	3	1	2	3
+pn,←⊂'//'		
+	pt[39;pf1]←	¯2	¯2	¯2	1	1	1
+	pt[39;pf2]←	2	2	2	3	3	3
+pn,←⊂,'⍉'		
+	pt[40;pf1]←	1	2	3	1	1	1
+	pt[40;pf2]←	2	2	2	3	3	3
+⍝[c]
+⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
+⍝[c]		FI	FF	FB	BI	BF	BB
+pn,←⊂,'↑'		
+	pt[41;pf1]←	1	2	3	1	1	1
+	pt[41;pf2]←	2	2	2	3	3	3
+pn,←⊂,'↓'		
+	pt[42;pf1]←	1	2	3	1	1	1
+	pt[42;pf2]←	2	2	2	3	3	3
+pn,←⊂,'⊤'		
+	pt[43;pf1]←	¯2	¯2	¯2	1	¯16	1
+	pt[43;pf2]←	¯16	¯16	¯16	3	3	3
+pn,←⊂,'⊥'		
+	pt[44;pf1]←	¯2	¯2	¯2	1	¯16	1
+	pt[44;pf2]←	¯16	¯16	¯16	1	¯16	1
+pn,←⊂,'¨'		
+	pt[45;pf1]←	0	0	0	0	0	0
+	pt[45;pf2]←	0	0	0	0	0	0
+pn,←⊂,'⍨'		
+	pt[46;pf1]←	0	0	0	0	0	0
+	pt[46;pf2]←	0	0	0	0	0	0
+pn,←⊂,'/'		
+	pt[47;pf1]←	0	0	0	0	¯11	0
+	pt[47;pf2]←	0	¯11	0	0	¯11	0
+pn,←⊂,'⌿'		
+	pt[48;pf1]←	0	0	0	0	¯11	0
+	pt[48;pf2]←	0	¯11	0	0	¯11	0
+pn,←⊂,'\'		
+	pt[49;pf1]←	0	0	0	¯11	¯11	¯11
+	pt[49;pf2]←	¯11	¯11	¯11	¯11	¯11	¯11
+pn,←⊂,'⍀'		
+	pt[50;pf1]←	0	0	0	¯11	¯11	¯11
+	pt[50;pf2]←	¯11	¯11	¯11	¯11	¯11	¯11
+pn,←⊂'∘.'		
+	pt[51;pf1]←	¯2	¯2	¯2	0	0	0
+	pt[51;pf2]←	0	0	0	0	0	0
+pn,←⊂,'.'		
+	pt[52;pf1]←	¯2	¯2	¯2	0	0	0
+	pt[52;pf2]←	0	0	0	0	0	0
+pn,←⊂'⎕sp'		
+	pt[53;pf1]←	¯2	¯2	¯2	1	¯11	¯11
+	pt[53;pf2]←	¯11	¯11	¯11	¯11	¯11	¯11
+⍝[c]
+⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
+⍝[c]		FI	FF	FB	BI	BF	BB
+pn,←⊂'⎕XOR'		
+	pt[54;pf1]←	¯2	¯2	¯2	1	¯16	¯16
+	pt[54;pf2]←	¯16	¯16	¯16	¯16	¯16	¯16
 ⍝[cf]
+⍝[of]:Operator Indirections
 ⍝[c]oti:	(0 Lop) (1 Rop) (2 Rarg) (3 Larg)
 otn←⍬	⋄ oti←0 2 2⍴⍬
 otn,←⊂,'.'	⋄ oti⍪←↑(1 1)	(2 3)	⋄ otn,←⊂,'/'	⋄ oti⍪←↑(2 2)	(2 3)
@@ -335,16 +461,16 @@ otn,←⊂,'⌿'	⋄ oti⍪←↑(2 2)	(2 3)	⋄ otn,←⊂,'\'	⋄ oti⍪←↑
 otn,←⊂,'⍀'	⋄ oti⍪←↑(2 2)	(2 3)	⋄ otn,←⊂'∘.'	⋄ oti⍪←↑(2 3)	(2 3)
 otn,←⊂,'¨'	⋄ oti⍪←↑(2 3)	(2 3)	
 	oti⍪←↑(2 3)	(2 3)
-
-lte	←((12⌊1 3 4⊥((∨⌿¯1=×)⍪|))2↑⊢)⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢
-ltot	←((pft 1 2 1 1 2 2)⍪⍉⍪pft 3 3 1 2 1 2)⍪⍨(2↑1↓(⊃y))
-ltoa	←lte⍤2(2↑⊣),[1]⍨(oti⌷⍨otn⍳¯1↑∘⊃v)⌷⍤0 2 ltot
-lto	←(((0,⍨⊢)⌷⍨1+¯1⌈⊃)⍤1∘⍉⍪1⊖⊢)ltoa⍪⍨¯1↑⊣
+⍝[cf]
+ 
+lte	←((20⌊1 4 5⊥((∨⌿¯1=×)⍪|))2↑⊢)⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢
+ltoa	←lte⍤2(2↑⊣),[1]⍨(oti⌷⍨otn⍳¯1↑∘⊃v)(⌷⍤0 2)(4 5⊤⍳20)⍪⍨(2↑1↓(⊃y))
+lto	←(((1+¯1⌈⊃)⌷0 0,⍨⊢)⍤1∘⍉⍪1⊖⊢) ltoa⍪⍨¯1↑⊣
 ltv	←(1⊃⊣)⌷⍤0 2⍨(⊃¨(0⊃⊣)⍳∘⊂ndo(⊃v))
 ltt	←(Om∧1 2∨.=∘⊃k)⊃⊣(((lte⍪⊢)ltv){⍺⍵}ltv lto ⊢)(⍉∘⍪⊢)
-lta	←(1↓¨(⊂⊢),∘⊂(12⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(0,∘∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
+lta	←(1↓¨(⊂⊢),∘⊂(20⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(0,∘∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
 ltb	←⊣⍪¨(⊂n),∘⊂∘↑((,1↑⊢)¨y)
-lt	←(pn pt⍪¨lta)(ltb((,¯1↓⊢),∘⊂ltt)⍤1⊢)⍣≡(⊂4 12⍴0),⍨⊢
+lt	←(pn pt⍪¨lta)(ltb((,¯1↓⊢),∘⊂ltt)⍤1⊢)⍣≡(⊂4 20⍴0),⍨⊢
 ⍝[cf]
 ⍝[of]:Allocate Value Slots
 val	←(n⍳∘∪n),¨⊢(⊢+(≢⊣)×0=⊢)(⌈/(⍳≢)×⍤1(∪n)∘.((⊂⊣)∊⊢)(n2f¨v))
@@ -377,9 +503,11 @@ fs	←(⊃⍪/)(((((⊃⍪/)(⊂0 10⍴⍬),((2≠/(~⊃),⊢)fss)fsx⊢)Es)⍪�
 vc←(⊃⍪/)(((1↓⊢)⍪⍨(1 6↑⊢),(≢∘∪∘n Es),1 ¯3↑⊢)¨scp)
 ⍝[cf]
 ⍝[of]:Type Dispatch/Specialization
-tde	←((¯3↓⊢),(Om⌷y,⍨∘⊂(5 6 7 9 10 11⌷⍨⊣)⌷∘⍉∘⊃y),¯2↑⊢)⍤1
-tdf	←(1↓⊢)⍪⍨(,1 3↑⊢),(⊂(⊃n),'ii' 'if' 'in' 'fi' 'ff' 'fn'⊃⍨⊣),(4↓∘,1↑⊢)
-td	←((⊃⍪/)(1↑⊢),∘(⊃,/)(((⍳6)(⊣tdf tde)¨⊂)¨1↓⊢))scp
+tdn	←'ii' 'if' 'ib' 'in' 'fi' 'ff' 'fb' 'fn' 'bi' 'bf' 'bb' 'bn'
+tdi	←6 7 8 9 11 12 13 14 16 17 18 19
+tde	←((¯3↓⊢),(Om⌷y,⍨∘⊂(tdi⌷⍨⊣)⌷∘⍉∘⊃y),¯2↑⊢)⍤1
+tdf	←(1↓⊢)⍪⍨(,1 3↑⊢),(⊂(⊃n),tdn⊃⍨⊣),(4↓∘,1↑⊢)
+td	←((⊃⍪/)(1↑⊢),∘(⊃,/)(((⍳12)(⊣tdf tde)¨⊂)¨1↓⊢))scp
 ⍝[cf]
 ⍝[of]:Convert Error Functions
 eff	←(⊃⍪/)⊢(((⊂∘⍉∘⍪d,'Fe',3↓,)1↑⊣),1↓⊢)(d=∘⊃d)⊂[0]⊢
@@ -441,8 +569,8 @@ var	←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ ¯1≥⊃⍵:,⍺ ⋄ '&
 dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
 reg	←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
 fnv	←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-git	←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' '?type? '}
-gie	←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLNA'}
+git	←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'aplint8 ' '?type? '}
+gie	←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLSINT' 'APLNA'}
 pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
 simdc	←{('#pragma acc kernels loop ',⍵,nl)('#pragma simd',nl)('')}
 simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
@@ -461,11 +589,9 @@ tps	,←'if(l==NULL)tp+=2;else switch(l->p->ELTYPE){',nl
 tps	,←'case APLINTG:case APLSINT:case APLLONG:break;',nl
 tps	,←'case APLDOUB:tp+=1;break;default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
-tpi	←'ii' 'if' 'in' 'fi' 'ff' 'fn'
 fcln	←'frea(&cl);frea(&cr);frea(&za);',nl
-did	←5 6 7 9 10 11
-dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tpi),'(&za,&cl,&cr,env);')('error(',(cln⍕e←⊃(⍺⌷did)⌷⍉⊃y⍵),');')}
-dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷did)⌷⍉⊃y ⍵),');')''}
+dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(&za,&cl,&cr,env);')('error(',(cln⍕e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
+dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y ⍵),');')''}
 case	←{'case ',(⍕⍺),':',(⍺ dcl ⍵),(⍺ dcp ⍵),'break;',nl}
 fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
 ⍝[cf]
@@ -1086,6 +1212,7 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
    z,'}',nl}
 ⍝[cf]
 ⍝[of]:Runtime Header
+⍝[of]:Includes, Structures, Allocation
 rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
 rth	,←'#include <stdio.h>',nl,'#include <string.h>',nl
 rth	,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
@@ -1106,6 +1233,8 @@ rth	,←'#define AA(a,s) aa((a),sizeof(s))',nl
 rth	,←'V ai(A*a,I r,B *s,I sz){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,sz);}',nl
 rth	,←'#define AI(a,r,s,sz) ai((a),(r),(s),sizeof(sz))',nl
 rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
+⍝[cf]
+⍝[of]:Co-dfns/Dyalog Conversion
 rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);',nl
 rth	,←'#ifdef _OPENACC',nl,'char *v=a->v;B z=a->z;',nl
 rth	,←'#pragma acc update host(v[:z])',nl,'#endif',nl
@@ -1123,16 +1252,26 @@ rth	,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
 rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
+rth	,←'  case APLBOOL:a->z=c*sizeof(aplint8);a->f=2;',nl
+rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);aplint8 *restrict t=a->v;',nl
+rth	,←'   DO(i,c)t[i]=1&(s[i/8]>>(7-i%8));};break;',nl
 rth	,←'  default:error(16);}',nl
 rth	,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
 rth	,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
 rth	,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
+⍝[cf]
+⍝[of]:External Makers, Extractors
 rth	,←'EXPORT V*mkarray(LOCALP*da){A*aa=malloc(sizeof(A));if(aa==NULL)error(1);',nl
 rth	,←' aa->v=NULL;cpda(aa,da);return aa;}',nl
 rth	,←'V EXPORT exarray(LOCALP*da,A*aa,I at){I tp=0;',nl
-rth	,←' switch(at){case 1:tp=APLLONG;break;case 2:tp=APLDOUB;break;',nl
+rth	,←' switch(at){',nl
+rth	,←'  case 1:tp=APLLONG;break;',nl
+rth	,←'  case 2:tp=APLDOUB;break;',nl
+rth	,←'  case 3:tp=APLSINT;break;',nl
 rth	,←'  default:error(11);}',nl
 rth	,←' cpad(da,aa,tp);frea(aa);}',nl
+⍝[cf]
 ⍝[cf]
 ⍝[cf]
 :EndNamespace
