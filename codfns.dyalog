@@ -275,7 +275,7 @@ nv	←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪
 pf1←9 14 19 6 7 8 ⋄ pf2←11 12 13 16 17 18
 pn←⍬	⋄ pt←56 20⍴0
 pn,←⊂'%b'	⋄ pt[00;pf1,pf2]←1 2 3 1 1 1 2 2 2 3 3 3
-pn,←⊂'%i'	⋄ pt[01;pf1,pf2]←1 2 3 0 0 0 0 0 0 0 0 0
+pn,←⊂'%i'	⋄ pt[01;pf1,pf2]←1 2 3 1 1 1 2 2 2 3 3 3
 pn,←⊂'%u'	⋄ pt[02;]←20⍴3
 ⍝[c]
 ⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
@@ -546,7 +546,7 @@ Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
 O2	←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
 O0	←{'' '' ''}
-Of	←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳6)case¨⊂⍵),'}',nl,fcln,'}',nl,nl}
+Of	←{(fndy ⍵),nl,nl,(⊃,/(⍳12)fncd¨⊂⍵),nl}
 Fd	←{frt,(⊃n⍵),flp,';',nl}
 Fe	←{frt,(⊃n⍵),flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
 F0	←{frt,(⊃n⍵),flp,'{',nl,'A*env[]={tenv};',nl,('tenv'reg ⍵),nl}
@@ -576,7 +576,7 @@ simdc	←{('#pragma acc kernels loop ',⍵,nl)('#pragma simd',nl)('')}
 simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 ⍝[cf]
 ⍝[of]:Function Entry
-frt	←'void EXPORT '
+frt	←'static void EXPORT '
 fre	←'void EXPORT '
 foi	←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
 flp	←'(A*z,A*l,A*r,A*penv[])'
@@ -590,10 +590,12 @@ tps	,←'case APLINTG:case APLSINT:case APLLONG:break;',nl
 tps	,←'case APLDOUB:tp+=1;break;default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
 fcln	←'frea(&cl);frea(&cr);frea(&za);',nl
-dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(&za,&cl,&cr,env);')('error(',(cln⍕e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
+dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('error(',(cln⍕e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
 dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y ⍵),');')''}
-case	←{'case ',(⍕⍺),':',(⍺ dcl ⍵),(⍺ dcp ⍵),'break;',nl}
+case	←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
 fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
+fndy	←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,fcln,'}'}
+fncd	←{fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'}',nl}
 ⍝[cf]
 ⍝[of]:Scalar Primitives
 ⍝ respos←'⍵ % ⍺'
