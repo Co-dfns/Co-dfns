@@ -603,32 +603,32 @@ respos	←'fmod((double)⍵,(double)⍺)'
 resneg	←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
 residue	←'(0<=⍺&&0<=⍵)?',respos,':',resneg
 
-sdb←0 3⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(('%'⎕R'\\\%')∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
+sdb←0 4⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(('%'⎕R'\\\%')∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝[c]
-⍝[c]Prim	Monadic	Dyadic
-sdb⍪←,¨'+'	'⍵'	'⍺+⍵'
-sdb⍪←,¨'-'	'-1*⍵'	'⍺-⍵'
-sdb⍪←,¨'×'	'(⍵>0)-(⍵<0)'	'⍺*⍵'
-sdb⍪←,¨'÷'	'1.0/⍵'	'((double)⍺)/((double)⍵)'
-sdb⍪←,¨'*'	'exp((double)⍵)'	'pow((double)⍺,(double)⍵)'
-sdb⍪←,¨'⍟'	'log((double)⍵)'	'log((double)⍵)/log((double)⍺)'
-sdb⍪←,¨'|'	'fabs(⍵)'	residue
-sdb⍪←,¨'○'	'PI*⍵'	'error(16)'
-sdb⍪←,¨'⌊'	'floor((double)⍵)'	'⍺ < ⍵ ? ⍺ : ⍵'
-sdb⍪←,¨'⌈'	'ceil((double)⍵)'	'⍺ > ⍵ ? ⍺ : ⍵'
-sdb⍪←,¨'<'	'error(99)'	'⍺<⍵'
-sdb⍪←,¨'≤'	'error(99)'	'⍺<=⍵'
-sdb⍪←,¨'='	'error(99)'	'⍺==⍵'
-sdb⍪←,¨'≥'	'error(99)'	'⍺>=⍵'
-sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'
-sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'
-sdb⍪←,¨'~'	'0==⍵'	'error(16)'
-sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'
-sdb⍪←,¨'∨'	'error(99)'	'⍺ || ⍵'
-sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'
-sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'
-sdb⍪←,¨'⌷'	'⍵'	'error(99)'
-sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'
+⍝[c]Prim	Monadic	Dyadic	Boolean
+sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	''
+sdb⍪←,¨'-'	'-1*⍵'	'⍺-⍵'	''
+sdb⍪←,¨'×'	'(⍵>0)-(⍵<0)'	'⍺*⍵'	''
+sdb⍪←,¨'÷'	'1.0/⍵'	'((D)⍺)/((D)⍵)'	''
+sdb⍪←,¨'*'	'exp((double)⍵)'	'pow((D)⍺,(D)⍵)'	''
+sdb⍪←,¨'⍟'	'log((double)⍵)'	'log((D)⍵)/log((D)⍺)'	''
+sdb⍪←,¨'|'	'fabs(⍵)'	residue	''
+sdb⍪←,¨'○'	'PI*⍵'	'error(16)'	''
+sdb⍪←,¨'⌊'	'floor((double)⍵)'	'⍺ < ⍵ ? ⍺ : ⍵'	''
+sdb⍪←,¨'⌈'	'ceil((double)⍵)'	'⍺ > ⍵ ? ⍺ : ⍵'	''
+sdb⍪←,¨'<'	'error(99)'	'⍺<⍵'	''
+sdb⍪←,¨'≤'	'error(99)'	'⍺<=⍵'	''
+sdb⍪←,¨'='	'error(99)'	'⍺==⍵'	''
+sdb⍪←,¨'≥'	'error(99)'	'⍺>=⍵'	''
+sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'	''
+sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'	'⍺^⍵'
+sdb⍪←,¨'~'	'0==⍵'	'error(16)'	''
+sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'	'⍺&⍵'
+sdb⍪←,¨'∨'	'error(99)'	'⍺ || ⍵'	''
+sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'	''
+sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'	''
+sdb⍪←,¨'⌷'	'⍵'	'error(99)'	''
+sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'	''
 
 ⍝[of]:Scalar Loop Generators
 simp	←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
@@ -666,6 +666,20 @@ spp	←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵
 sip	←{⍺,'f',⍵,'=d',⍵,'[i*m',⍵,'];',nl}∘⍕
 ⍝[cf]
 ⍝[cf]
+⍝[of]:Scalar/Mixed Conversion
+mxsm←{	siz	←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
+	exe	←(simd''),'DO(i,zc){zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';}'
+		'' siz exe mxfn 1 ⍺ ⍵}
+mxsd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
+	chk	,←'else if(lr!=0&&rr!=0){error(4);}'
+	siz	←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
+	siz	,←'else{zr=rr;DO(i,rr){zc*=rs[i];rc*=rs[i];zs[i]=rs[i];}DO(i,lr)lc*=ls[i];}',nl
+	exe	←simd 'pcopyin(lv[:lc],rv[:rc])'
+	exe	,←'DO(i,zc){zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';}'
+		chk siz exe mxfn 1 ⍺ ⍵}
+scmx←{	(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
+sdbm	←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxsb' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
+⍝[cf]
 ⍝[of]:Primitive Operators
 ocl	←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
 opl	←{⊃,/{'(,''',⍵,''')'}¨⍵}
@@ -682,20 +696,6 @@ odb⍪←,¨'⍀'	'sc1m'	'{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}'
 odb⍪←,¨'.'	'{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}'	'inpd'
 odb⍪←'∘.'	'{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}'	'oupd'
 
-⍝[of]:Scalar/Mixed Function Conversion
-mxsm←{	siz	←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
-	exe	←(simd''),'DO(i,zc){zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';}'
-		'' siz exe mxfn 1 ⍺ ⍵}
-mxsd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
-	chk	,←'else if(lr!=0&&rr!=0){error(4);}'
-	siz	←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
-	siz	,←'else{zr=rr;DO(i,rr){zc*=rs[i];rc*=rs[i];zs[i]=rs[i];}DO(i,lr)lc*=ls[i];}',nl
-	exe	←simd 'pcopyin(lv[:lc],rv[:rc])'
-	exe	,←'DO(i,zc){zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';}'
-		chk siz exe mxfn 1 ⍺ ⍵}
-scmx←{	(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
-sdbm	←(0⌷⍉sdb),'mxsm' 'mxsd'{'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
-⍝[cf]
 ⍝[of]:Commute
 comd	←{((1↑⍺)⍪⊖1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
 comm	←{((1↑⍺)⍪⍪⍨1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
