@@ -522,13 +522,12 @@ fft	←(,1↑⊢)(1 'Z',(2↓¯5↓⊣),(v⊣),n,y,(⊂2↑∘,∘⊃∘⊃e),l)
 ff	←((⊃⍪/)(1↑⊢),(((1↑⊢)⍪(((¯1+d),1↓⍤1⊢)1↓⊢)⍪fft)¨1↓⊢))scp
 ⍝[cf]
 ⍝[of]:Flatten Scalar Groups
-fzt	←((∪n)∩(⊃∘l⊣))((⊂⊣),((≢⊢)-1+(⌽n)⍳⊣)((⊂⊣),∘⊂⊣⊃¨∘⊂(⊃¨e))⊢)⊢
-fzh	←((∪n)∩(⊃∘l⊣))((⊂⊣),((≢⊢)-1+(⌽n)⍳⊣)((⊂⊣⊃¨∘⊂(⊃¨e)),∘⊂⊣⊃¨∘⊂(⊃¨y))⊢)⊢
+fzh	←((∪n)∩(⊃∘l⊣))(¯1⌽(⊂⊣),((≢⊢)-1+(⌽n)⍳⊣)((⊂⊣⊃¨∘⊂(⊃¨e)),(⊂⊣⊃¨∘⊂(⊃¨y)),∘⊂⊣)⊢)⊢
 fzf	←0≠(≢∘⍴¨∘⊃∘v⊣)
 fzb	←(((⊃∘v⊣)(⌿⍨)fzf),n),∘⍪('f'∘,∘⍕¨∘⍳(+/fzf)),('s'∘,∘⍕¨∘⍳∘≢⊢)
 fzv	←((⊂⊣)(⊖↑)⍨¨(≢⊣)(-+∘⍳⊢)(≢⊢))((⊢,⍨1⌷∘⍉⊣)⌷⍨(0⌷∘⍉⊣)⍳⊢)⍤2 0¨v
 fze	←(¯1+d),t,k,fzb((⊢/(-∘≢⊢)↑⊣),r,s,fzv,y,e,∘⍪l)⊢
-fzs	←(,1↑⊢)(((3↑⊣),fzh,6↓⊣)⍪fze⍪(1 'Y',(2↓¯4↓⊣),(⊂⍬),⍨fzt))(⌿∘⊢)
+fzs	←(,1↑⊢)(1⊖(⊣((1 'Y',(2⌷⊣),⊢)⍪∘⍉∘⍪(3↑⊣),⊢)1⌽fzh,¯1↓6↓⊣)⍪fze)(⌿∘⊢)
 fz	←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1↓⊢))(1,1↓Sm)⊂[0]⊢
 ⍝[cf]
 ⍝[of]:Create Function Declarations
@@ -541,7 +540,7 @@ dis	←{⍺←⊢ ⋄ 0=⊃t⍵:3⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
 gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
 E1	←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵}
 E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
-E0	←{r l f←⊃v⍵ ⋄ (⊃git 1↑⊃y⍵),(⊃n⍵),'=',(sdb(f scl)(1+'%u'≢l)↑r l),';',nl}
+E0	←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(t↑1↓⊃y⍵)(f scal sdb)(t←1+'%u'≢l)↑r l}
 Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
 O2	←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
@@ -557,7 +556,7 @@ Z1	←{'cpaa(z,',((⊃n⍵)var⊃e⍵),');',nl,'fe(&env0[1],',(⍕¯1+⊃s⍵),'
 Ze	←{'}',nl,nl}
 M0	←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
 S0	←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
-Y0	←{⊃,/((⍳≢⊃v⍵)((⊣sts¨∘⊃y),'}',nl,⊣ste¨(⊃v)var¨∘⊃e)⍵),'}',nl}
+Y0	←{⊃,/((⍳≢⊃n⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
 ⍝[cf]
 ⍝[of]:Runtime Code
 ⍝[of]:Runtime Utilities
@@ -570,13 +569,13 @@ dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
 reg	←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
 fnv	←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 git	←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'aplint8 ' '?type? '}
-gie	←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLSINT' 'APLNA'}
+gie	←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLBOOL' 'APLNA'}
 pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
 simdc	←{('#pragma acc kernels loop ',⍵,nl)('#pragma simd',nl)('')}
 simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 ⍝[cf]
 ⍝[of]:Function Entry
-frt	←'static void EXPORT '
+frt	←'static void '
 fre	←'void EXPORT '
 foi	←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
 flp	←'(A*z,A*l,A*r,A*penv[])'
@@ -584,10 +583,12 @@ elp	←'(LOCALP*z,LOCALP*l,LOCALP*r)'
 tps	←'A cl,cr;cl.v=NULL;cr.v=NULL;cpda(&cr,r);if(l!=NULL)cpda(&cl,l);',nl
 tps	,←'int tp=0;switch(r->p->ELTYPE){',nl
 tps	,←'case APLINTG:case APLSINT:case APLLONG:break;',nl
-tps	,←'case APLDOUB:tp=3;break;default:error(16);}',nl
-tps	,←'if(l==NULL)tp+=2;else switch(l->p->ELTYPE){',nl
+tps	,←'case APLDOUB:tp=4;break;case APLBOOL:tp=8;break;',nl
+tps	,←'default:error(16);}',nl
+tps	,←'if(l==NULL)tp+=3;else switch(l->p->ELTYPE){',nl
 tps	,←'case APLINTG:case APLSINT:case APLLONG:break;',nl
-tps	,←'case APLDOUB:tp+=1;break;default:error(16);}',nl
+tps	,←'case APLDOUB:tp+=1;break;case APLBOOL:tp+=2;break;',nl
+tps	,←'default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
 fcln	←'frea(&cl);frea(&cr);frea(&za);',nl
 dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('error(',(cln⍕e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
@@ -606,7 +607,7 @@ residue	←'(0<=⍺&&0<=⍵)?',respos,':',resneg
 sdb←0 4⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(('%'⎕R'\\\%')∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝[c]
 ⍝[c]Prim	Monadic	Dyadic	Boolean
-sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	''
+sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	'0'
 sdb⍪←,¨'-'	'-1*⍵'	'⍺-⍵'	''
 sdb⍪←,¨'×'	'(⍵>0)-(⍵<0)'	'⍺*⍵'	''
 sdb⍪←,¨'÷'	'1.0/⍵'	'((D)⍺)/((D)⍵)'	''
@@ -635,7 +636,8 @@ simp	←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘
 sima	←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 simr	←{' present(',(⊃{⍺,',',⍵}/'r',∘⍕¨⍳≢⊃n⍵),')'}
 simc	←{fv←(⊃v⍵)fvs(⊃e⍵) ⋄ (simp fv),(sima fv),simr ⍵}
-slp	←{(simd simc ⍵),'DO(i,cnt){',nl,⊃,/(git 1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
+slpd	←'I n=ceil(cnt/8.0);',nl
+slp	←{slpd,(simd simc ⍵),'DO(i,n){',nl,⊃,/(1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 rk0	←'I prk=0;B sp[15];B cnt=1;',nl
 rk1	←'if(prk!=(' ⋄ rk2←')->r){if(prk==0){',nl
 rsp	←{'prk=(',⍵,')->r;',nl,'DO(i,prk) sp[i]=(',⍵,')->s[i];'}
@@ -647,15 +649,11 @@ rka	←{rk5,l,';}else error(4);}else if(sp[0]!=',(l←⍕≢⍵),')error(4);',nl
 crk	←{⍵((⊃,/)((rkv¨var/)⊣(⌿⍨)(~⊢)),(rka¨0⌷∘⍉(⌿⍨)))0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵}
 srk	←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
 ste	←{'cpaa(',⍵,',&p',(⍕⍺),');',nl}
-sts	←{'r',(⍕⍺),'[i]=s',(⍕⍵),';',nl}
-rkp1	←{'I m',(⍕⍺),'=(',(⍕⍵),')->r==0?0:1;',nl}
-rkp2	←{''('B mz',(⍕⍺),'=(',(⍕⍵),')->r==0?1:cnt;',nl)}
-rkp	←{(⍺ rkp1 ⍵),('pg'≡2↑COMPILER)⊃⍺ rkp2 ⍵}
+stsn	←{⊃,/((⍳8){'r',(⍕⍵),'[i*8+',(⍕⍺),']='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
+sts	←{i t←⍵ ⋄ 3≡t:'r',(⍕⍺),'[i]=s',(⍕i),';',nl ⋄ ⍺ stsn i}
+rkp	←{'I m',(⍕⍺),'=(',(⍕⍵),')->r==0?0:cnt;',nl}
 gdp	←{'*restrict d',(⍕⍺),'=(',⍵,')->v;',nl}
-gda1	←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}
-gdm	←{'I m',(⍕⍺),'=',(⍕0≢≢⍵),';',nl}
-gda2	←{''('B mz',(⍕⍺),'=cnt;',nl)}
-gda	←{(⍺ gda1 ⍵),(⍺ gdm ⍵),('pg'≡2↑COMPILER)⊃⍺ gda2 ⍵}
+gda	←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'B m',(⍕⍺),'=cnt;',nl}
 sfa	←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 sfp	←{(git m⌿⍺),¨{(⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 sfv	←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
@@ -663,7 +661,26 @@ ack	←{'AI(&p',(⍕⍺),',prk,sp,',(⊃git ⍺⌷⍺⍺),');',nl}
 gpp	←{⊃,/{'A p',(⍕⍵),';p',(⍕⍵),'.v=NULL;',nl}¨⍳≢⍵}
 grs	←{(⊃git ⍺),'*restrict r',(⍕⍵),'=p',(⍕⍵),'.v;',nl}
 spp	←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
-sip	←{⍺,'f',⍵,'=d',⍵,'[i*m',⍵,'];',nl}∘⍕
+sip←{	w←⍕⍵
+	3≡⍺:	(⊃git ⍺),'f',w,'=d',w,'[i%m',w,'];',nl
+		⊃,/(⍕¨⍳8)((⊃git ⍺){⍺⍺,'f',⍵,'_',⍺,'=d',⍵,'[(i*8+',⍺,')%m',⍵,'];',nl})¨⊂w}
+⍝[cf]
+⍝[of]:Scalar Expression Generators
+sfnl	←{⊃⍺⍺⌷⍨((⊂⍺)⍳⍨0⌷⍉⍺⍺),(3×3∧.=⍵)⌈≢⍵}
+scln	←(,¨'%&')⎕R'\\\%' '\\\&'
+sstm	←{⍺←⊢ ⋄ cln ((≢⍺ ⍵)↑,¨'⍵⍺')⎕R(scln∘⍕∘⊃¨⍺ ⍵)⊢⍺⍺(⍵⍵ sfnl)⊃∘⌽¨⍺ ⍵}
+sidx←{	0=⊃⊃0⍴⊂⍵:	8⍴⊂⍵ (⊃⍺)
+	3∧.=⍺:	⊂⍵ (⊃⍺)
+	3=⊃⍺:	↓(⊃⍺),⍨⍪(⌽⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
+		↓(⊃⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
+scal	←{⊃⍺⍺ sstm ⍵⍵¨/(0 1⌽¨⊂⍺)sidx¨⍵}
+sgtbn	←{⍺⍺,'|=(',⍵,')<<',(⍕7-⍺),';',nl}
+sgtnn	←{⍺⍺,'_',(⍕⍺),'=',⍵,';',nl}
+sgtbb	←{⍺,'=',⍵,';',nl}
+sget←{	nm	←(⊃git⊃⍺⍺),⊃⍺
+	3∧.=3↑⍺⍺:	⊃,/nm∘sgtbb¨⍵
+	3=⊃⍺⍺:	nm,'=0;',nl,⊃,/(⍳8)((⊃⍺)sgtbn)¨⍵
+		⊃,/(⍳8)(nm sgtnn)¨⍵}
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Scalar/Mixed Conversion
@@ -954,7 +971,9 @@ iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 shpm←{	exe	←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
 		'' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
 shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
-	siz	←'zr=ls[0];DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
+	siz	←'zr=ls[0];',nl
+	siz	,←pacc'update host(lv[:zr])'
+	siz	,←'DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
 	cpy	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷⍺),');',nl
 	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
 	cpy	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
@@ -1254,10 +1273,8 @@ rth	,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
 rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLBOOL:a->z=c*sizeof(aplint8);a->f=2;',nl
-rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);aplint8 *restrict t=a->v;',nl
-rth	,←'   DO(i,c)t[i]=1&(s[i/8]>>(7-i%8));};break;',nl
+rth	,←'  case APLBOOL:a->z=ceil(c/8.0)*sizeof(aplint8);a->f=1;',nl
+rth	,←'   a->v=ARRAYSTART(d->p);break;',nl
 rth	,←'  default:error(16);}',nl
 rth	,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
 rth	,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
@@ -1270,7 +1287,7 @@ rth	,←'V EXPORT exarray(LOCALP*da,A*aa,I at){I tp=0;',nl
 rth	,←' switch(at){',nl
 rth	,←'  case 1:tp=APLLONG;break;',nl
 rth	,←'  case 2:tp=APLDOUB;break;',nl
-rth	,←'  case 3:tp=APLSINT;break;',nl
+rth	,←'  case 3:tp=APLBOOL;break;',nl
 rth	,←'  default:error(11);}',nl
 rth	,←' cpad(da,aa,tp);frea(aa);}',nl
 ⍝[cf]
