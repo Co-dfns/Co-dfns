@@ -1260,7 +1260,7 @@ rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);',nl
 rth	,←'#ifdef _OPENACC',nl,'char *v=a->v;B z=a->z;',nl
 rth	,←'#pragma acc update host(v[:z])',nl,'#endif',nl
 rth	,←' memcpy(ARRAYSTART(d->p),a->v,a->z);}',nl
-rth	,←'V cpda(A*a,LOCALP*d){frea(a);',nl
+rth	,←'V cpda(A*a,LOCALP*d){if(TYPESIMPLE!=d->p->TYPE)error(16);frea(a);',nl
 rth	,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
 rth	,←' switch(d->p->ELTYPE){',nl
 rth	,←'  case APLLONG:a->z=c*sizeof(I);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
