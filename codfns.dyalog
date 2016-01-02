@@ -656,7 +656,7 @@ gda	←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'B m',(⍕⍺),'
 sfa	←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 sfp	←{(m⌿⍺){(⍺,¨⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 sfv	←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
-ack	←{'AI(&p',(⍕⍺),',prk,sp,',(⊃git ⍺⌷⍺⍺),');',nl}
+ack	←{'ai(&p',(⍕⍺),',prk,sp,',(⍕⍺⌷⍺⍺),');',nl}
 gpp	←{⊃,/{'A p',(⍕⍵),';p',(⍕⍵),'.v=NULL;',nl}¨⍳≢⍵}
 grs	←{(⊃git ⍺),'*restrict r',(⍕⍵),'=p',(⍕⍵),'.v;',nl}
 spp	←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
@@ -911,7 +911,7 @@ fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
 ⍝[of]:Function Utilities
 calm←{	z r	←var/⍵
 	arr	←⍺⍺,((1⌷⍺)⊃'iif'),'n(',z,',NULL,',r,',env);',nl
-	scl	←'{A sz,sr;sz.v=NULL;AI(&sz,0,NULL,',(⊃git ⍺),');',nl
+	scl	←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
 	scl	,←'sr.r=0;sr.v=&',r,';sr.f=1;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
 	scl	,←⍺⍺,((1⌷⍺)⊃'iif'),'n(&sz,NULL,&sr,env);',nl
 	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',nl,pacc'update host(szv[:1])'
@@ -919,7 +919,7 @@ calm←{	z r	←var/⍵
 		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 cald←{	z r l	←var/⍵
 	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl
-	scl	←'{A sz,sr,sl;sz.v=NULL;AI(&sz,0,NULL,',(⊃git ⍺),');',nl
+	scl	←'{A sz,sr,sl;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
 	scl	,←'sr.r=0;sr.f=1;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
 	scl	,←'sl.r=0;sl.f=1;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
 	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(&sz,&sl,&sr,env);',nl
@@ -946,7 +946,7 @@ mxfn←{	chk siz exe	←⍺
 	tpv nmv elv	,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
 	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
 	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl
-	alloc	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷tp),');',nl
+	alloc	←'ai(rslt,zr,zs,',(⍕⊃0⌷tp),');',nl
 	alloc	,←(1↑tpv)((1↑nmv)declv)1↑elv
 	z	,←(al⊃'' alloc),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
 	z	,←pacc'exit data delete(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
@@ -973,7 +973,7 @@ shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
 	siz	←'zr=ls[0];',nl
 	siz	,←pacc'update host(lv[:zr])'
 	siz	,←'DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
-	cpy	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷⍺),');',nl
+	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
 	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
 	cpy	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
 	cpy	,←'else{',nl,(simd'present(zv,rv)'),'DO(i,zc)zv[i]=rv[i%rc];}'
@@ -1180,7 +1180,7 @@ drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←pacc'update host(lv[:1])'
 	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
 	siz	,←'lc=lv[0];'
-	cpy	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷⍺),');',nl
+	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
 	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
 	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
 	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
@@ -1193,7 +1193,7 @@ tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←pacc'update host(lv[:1])'
 	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
 	siz	,←'zs[0]=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
-	cpy	←'AI(rslt,zr,zs,',(⊃git ⊃0⌷⍺),');',nl
+	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
 	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'	
 	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
 	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
@@ -1224,7 +1224,7 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
    z,←'B s[]={rgt->s[0],2};'
    z,←'A*orz;A tp;tp.v=NULL;int tpused=0;',nl
    z,←'if(rslt==lft||rslt==rgt){orz=rslt;rslt=&tp;tpused=1;}',nl
-   z,←'AI(rslt,2,s,',(⊃git ⊃0⌷⍺),');',nl
+   z,←'ai(rslt,2,s,',(⍕⊃0⌷⍺),');',nl
    z,←(⊃,/(git ⍺){⍺,'*restrict ',⍵,';'}¨'zrl'),nl
    z,←⊃,/'zrl'{⍺,'=',⍵,'->v;',nl}¨'rslt' 'rgt' 'lft'
    z,←(simd'present(z,l,r)'),'DO(i,s[0]){z[i*2]=l[i];z[i*2+1]=r[i];}'
@@ -1245,13 +1245,16 @@ rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
 rth	,←' if(a->f){',nl,'#ifdef _OPENACC',nl
 rth	,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
 rth	,←' if(a->f>1)free(v);}}',nl
-rth	,←'V aa(A*a,I s){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=s*c;',nl
+rth	,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];I s=0;B z=0;',nl
+rth	,←' switch(tp){',nl
+rth	,←'  case 1:s=sizeof(I);z=s*c;break;',nl
+rth	,←'  case 2:s=sizeof(D);z=s*c;break;',nl
+rth	,←'  case 3:s=sizeof(aplint8);z=ceil((s*c)/8.0);break;',nl
+rth	,←'  default: error(16);}',nl
 rth	,←' char*v=malloc(z);if(NULL==v)error(1);',nl
 rth	,←'#ifdef _OPENACC',nl,'#pragma acc enter data create(v[:z])',nl,'#endif',nl
 rth	,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
-rth	,←'#define AA(a,s) aa((a),sizeof(s))',nl
-rth	,←'V ai(A*a,I r,B *s,I sz){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,sz);}',nl
-rth	,←'#define AI(a,r,s,sz) ai((a),(r),(s),sizeof(sz))',nl
+rth	,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl
 rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 ⍝[cf]
 ⍝[of]:Co-dfns/Dyalog Conversion
