@@ -1245,24 +1245,28 @@ rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
 rth	,←' if(a->f){',nl,'#ifdef _OPENACC',nl
 rth	,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
 rth	,←' if(a->f>1)free(v);}}',nl
-rth	,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];I s=0;B z=0;',nl
-rth	,←' c=8*ceil(c/8.0);',nl
+rth	,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=0;',nl
+rth	,←' B pc=8*ceil(c/8.0);',nl
 rth	,←' switch(tp){',nl
-rth	,←'  case 1:s=sizeof(I);z=s*c;break;',nl
-rth	,←'  case 2:s=sizeof(D);z=s*c;break;',nl
-rth	,←'  case 3:s=sizeof(aplint8);z=ceil((s*c)/8.0);break;',nl
+rth	,←'  case 1:z=sizeof(I)*pc;break;',nl
+rth	,←'  case 2:z=sizeof(D)*pc;break;',nl
+rth	,←'  case 3:z=ceil((sizeof(aplint8)*pc)/8.0);break;',nl
 rth	,←'  default: error(16);}',nl
 rth	,←' char*v=malloc(z);if(NULL==v)error(1);',nl
-rth	,←'#ifdef _OPENACC',nl,'#pragma acc enter data create(v[:z])',nl,'#endif',nl
+rth	,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
 rth	,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
 rth	,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl
 rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 ⍝[cf]
 ⍝[of]:Co-dfns/Dyalog Conversion
-rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);',nl
-rth	,←'#ifdef _OPENACC',nl,'char *v=a->v;B z=a->z;',nl
-rth	,←'#pragma acc update host(v[:z])',nl,'#endif',nl
-rth	,←' memcpy(ARRAYSTART(d->p),a->v,a->z);}',nl
+rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);B z=0;',nl
+rth	,←' #ifdef _OPENACC',nl,'  char *v=a->v;B z=a->z;',nl
+rth	,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
+rth	,←' switch(t){',nl,'  case APLLONG:z=a->c*sizeof(I);break;',nl
+rth	,←'  case APLDOUB:z=a->c*sizeof(D);break;',nl
+rth	,←'  case APLBOOL:z=ceil(a->c/8.0)*sizeof(aplint8);break;',nl
+rth	,←'  default:error(11);}',nl
+rth	,←' memcpy(ARRAYSTART(d->p),a->v,z);}',nl
 rth	,←'V cpda(A*a,LOCALP*d){if(TYPESIMPLE!=d->p->TYPE)error(16);frea(a);',nl
 rth	,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
 rth	,←' switch(d->p->ELTYPE){',nl
