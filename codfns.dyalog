@@ -27,7 +27,7 @@ fls	←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log	←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 ⍝[cf]
 ⍝[of]:GCC (Linux Only)
-gop	←'-g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
+gop	←'-Ofast -g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
 gcc	←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:Intel C Linux
