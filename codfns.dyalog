@@ -31,7 +31,7 @@ gop	←'-g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
 gcc	←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:Intel C Linux
-iop	←'-fast -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared '
+iop	←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared '
 icc	←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:PGI C Linux
@@ -570,7 +570,7 @@ fnv	←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};'
 git	←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'aplint8 ' '?type? '}
 gie	←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLBOOL' 'APLNA'}
 pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
-simdc	←{('#pragma acc kernels loop ',⍵,nl)('#pragma simd',nl)('')}
+simdc	←{('#pragma acc kernels loop ',⍵,nl)('')('')}
 simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 ⍝[cf]
 ⍝[of]:Function Entry
@@ -650,7 +650,7 @@ srk	←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
 ste	←{'cpaa(',⍵,',&p',(⍕⍺),');',nl}
 stsn	←{⊃,/((⍳8){'r',(⍕⍵),'[(i*8+',(⍕⍺),')%cnt]='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
 sts	←{i t←⍵ ⋄ 3≡t:'r',(⍕⍺),'[i]=s',(⍕i),';',nl ⋄ ⍺ stsn i}
-rkp	←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r==0?1:',('cnt' 'ceil(cnt/8.0)'⊃⍨3=⊃⍺),';',nl}
+rkp	←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r==0?0:1;',nl}
 gdp	←{(⊃git ⊃⍺),'*restrict d',(⍕⊃⌽⍺),'=(',⍵,')->v;',nl}
 gda	←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'B m',(⍕⍺),'=cnt;',nl}
 sfa	←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
@@ -661,8 +661,8 @@ gpp	←{⊃,/{'A p',(⍕⍵),';p',(⍕⍵),'.v=NULL;',nl}¨⍳≢⍵}
 grs	←{(⊃git ⍺),'*restrict r',(⍕⍵),'=p',(⍕⍵),'.v;',nl}
 spp	←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
 sip←{	w←⍕⍵
-	3≡⍺:	(⊃git ⍺),'f',w,'=d',w,'[i%m',w,'];',nl
-		⊃,/(⍕¨⍳8)((⊃git ⍺){⍺⍺,'f',⍵,'_',⍺,'=d',⍵,'[(i*8+',⍺,')%m',⍵,'];',nl})¨⊂w}
+	3≡⍺:	(⊃git ⍺),'f',w,'=d',w,'[i*m',w,'];',nl
+		⊃,/(⍕¨⍳8)((⊃git ⍺){⍺⍺,'f',⍵,'_',⍺,'=d',⍵,'[(i*8+',⍺,')*m',⍵,'];',nl})¨⊂w}
 ⍝[cf]
 ⍝[of]:Scalar Expression Generators
 sfnl	←{⊃⍺⍺⌷⍨((⊂⍺)⍳⍨0⌷⍉⍺⍺),(3×3∧.=⍵)⌈≢⍵}
@@ -1246,6 +1246,7 @@ rth	,←' if(a->f){',nl,'#ifdef _OPENACC',nl
 rth	,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
 rth	,←' if(a->f>1)free(v);}}',nl
 rth	,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];I s=0;B z=0;',nl
+rth	,←' c=8*ceil(c/8.0);',nl
 rth	,←' switch(tp){',nl
 rth	,←'  case 1:s=sizeof(I);z=s*c;break;',nl
 rth	,←'  case 2:s=sizeof(D);z=s*c;break;',nl
