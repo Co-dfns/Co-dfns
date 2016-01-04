@@ -92,4 +92,6 @@ MK∆T3←{	id cmp ns fn←⍺⍺	⋄ l r←⍵⍵
 #.UT.run'./Testing'
 ∇
 
+test←{#.UT.run'./Testing/',⍵,'_tests.dyalog'}
+
 :EndNamespace
