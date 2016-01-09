@@ -308,10 +308,10 @@ pn,←⊂,'⍟'
 	pt[11;pf1]←	2	2	2	2	2	3
 	pt[11;pf2]←	2	2	3	3	3	3
 pn,←⊂,'⌈'		
-	pt[12;pf1]←	1	2	3	1	2	1
+	pt[12;pf1]←	1	1	3	1	2	1
 	pt[12;pf2]←	2	2	2	1	2	3
 pn,←⊂,'⌊'		
-	pt[13;pf1]←	1	2	3	1	2	1
+	pt[13;pf1]←	1	1	3	1	2	1
 	pt[13;pf2]←	2	2	2	1	2	3
 pn,←⊂,'<'		
 	pt[14;pf1]←	¯2	¯2	¯2	3	3	3
@@ -539,7 +539,7 @@ dis	←{⍺←⊢ ⋄ 0=⊃t⍵:3⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
 gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
 E1	←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵}
 E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
-E0	←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(t↑1↓⊃y⍵)(f scal sdb)(t←1+'%u'≢l)↑r l}
+E0	←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(1↓⊃y⍵)(f scal sdb)r l}
 Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
 O2	←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
@@ -603,38 +603,38 @@ respos	←'fmod((double)⍵,(double)⍺)'
 resneg	←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
 residue	←'(0<=⍺&&0<=⍵)?',respos,':',resneg
 
-sdb←0 4⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(('%'⎕R'\\\%')∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
+sdb←0 5⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(('%'⎕R'\\\%')∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝[c]
-⍝[c]Prim	Monadic	Dyadic	Boolean
-sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	'0'
-sdb⍪←,¨'-'	'-1*⍵'	'⍺-⍵'	''
-sdb⍪←,¨'×'	'(⍵>0)-(⍵<0)'	'⍺*⍵'	''
-sdb⍪←,¨'÷'	'1.0/⍵'	'((D)⍺)/((D)⍵)'	''
-sdb⍪←,¨'*'	'exp((double)⍵)'	'pow((D)⍺,(D)⍵)'	''
-sdb⍪←,¨'⍟'	'log((double)⍵)'	'log((D)⍵)/log((D)⍺)'	''
-sdb⍪←,¨'|'	'fabs(⍵)'	residue	''
-sdb⍪←,¨'○'	'PI*⍵'	'error(16)'	''
-sdb⍪←,¨'⌊'	'floor((double)⍵)'	'⍺ < ⍵ ? ⍺ : ⍵'	''
-sdb⍪←,¨'⌈'	'ceil((double)⍵)'	'⍺ > ⍵ ? ⍺ : ⍵'	''
-sdb⍪←,¨'<'	'error(99)'	'⍺<⍵'	''
-sdb⍪←,¨'≤'	'error(99)'	'⍺<=⍵'	''
-sdb⍪←,¨'='	'error(99)'	'⍺==⍵'	''
-sdb⍪←,¨'≥'	'error(99)'	'⍺>=⍵'	''
-sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'	''
-sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'	'⍺^⍵'
-sdb⍪←,¨'~'	'0==⍵'	'error(16)'	''
-sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'	'⍺&⍵'
-sdb⍪←,¨'∨'	'error(99)'	'⍺ || ⍵'	''
-sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'	''
-sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'	''
-sdb⍪←,¨'⌷'	'⍵'	'error(99)'	''
-sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'	''
-
+⍝[c]Prim	Monadic	Dyadic	Monadic Bool	Dyadic Bool
+sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	'0'	''
+sdb⍪←,¨'-'	'-1*⍵'	'⍺-⍵'	''	''
+sdb⍪←,¨'×'	'(⍵>0)-(⍵<0)'	'⍺*⍵'	''	''
+sdb⍪←,¨'÷'	'1.0/⍵'	'((D)⍺)/((D)⍵)'	''	''
+sdb⍪←,¨'*'	'exp((double)⍵)'	'pow((D)⍺,(D)⍵)'	''	''
+sdb⍪←,¨'⍟'	'log((double)⍵)'	'log((D)⍵)/log((D)⍺)'	''	''
+sdb⍪←,¨'|'	'fabs(⍵)'	residue	''	''
+sdb⍪←,¨'○'	'PI*⍵'	'error(16)'	''	''
+sdb⍪←,¨'⌊'	'floor((double)⍵)'	'⍺ < ⍵ ? ⍺ : ⍵'	''	''
+sdb⍪←,¨'⌈'	'ceil((double)⍵)'	'⍺ > ⍵ ? ⍺ : ⍵'	'⍵'	''
+sdb⍪←,¨'<'	'error(99)'	'⍺<⍵'	''	''
+sdb⍪←,¨'≤'	'error(99)'	'⍺<=⍵'	''	''
+sdb⍪←,¨'='	'error(99)'	'⍺==⍵'	''	''
+sdb⍪←,¨'≥'	'error(99)'	'⍺>=⍵'	''	''
+sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'	''	''
+sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'	''	'⍺^⍵'
+sdb⍪←,¨'~'	'0==⍵'	'error(16)'	''	''
+sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'	''	'⍺&⍵'
+sdb⍪←,¨'∨'	'error(99)'	'⍺ || ⍵'	''	''
+sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'	''	''
+sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'	''	''
+sdb⍪←,¨'⌷'	'⍵'	'error(99)'	''	''
+sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'	''	''
+⍝[cf]
 ⍝[of]:Scalar Loop Generators
 simp	←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima	←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
 simr	←{' present(',(⊃{⍺,',',⍵}/'r',∘⍕¨⍳≢⊃n⍵),')'}
-simc	←{fv←(⊃v⍵)fvs(⊃e⍵) ⋄ (simp fv),(sima fv),simr ⍵}
+simc	←{fv←(⊃v⍵)fvs(⊃e⍵) ⋄ ' independent ',(simp fv),(sima fv),simr ⍵}
 slpd	←'I n=ceil(cnt/8.0);',nl
 slp	←{slpd,(simd simc ⍵),'DO(i,n){',nl,⊃,/(1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
 rk0	←'I prk=0;B sp[15];B cnt=1;',nl
@@ -648,7 +648,7 @@ rka	←{rk5,l,';}else error(4);}else if(sp[0]!=',(l←⍕≢⍵),')error(4);',nl
 crk	←{⍵((⊃,/)((rkv¨var/)⊣(⌿⍨)(~⊢)),(rka¨0⌷∘⍉(⌿⍨)))0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵}
 srk	←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
 ste	←{'cpaa(',⍵,',&p',(⍕⍺),');',nl}
-stsn	←{⊃,/((⍳8){'r',(⍕⍵),'[(i*8+',(⍕⍺),')%cnt]='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
+stsn	←{⊃,/((⍳8){'r',(⍕⍵),'[i*8+',(⍕⍺),']='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
 sts	←{i t←⍵ ⋄ 3≡t:'r',(⍕⍺),'[i]=s',(⍕i),';',nl ⋄ ⍺ stsn i}
 rkp	←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r==0?0:1;',nl}
 gdp	←{(⊃git ⊃⍺),'*restrict d',(⍕⊃⌽⍺),'=(',⍵,')->v;',nl}
@@ -665,14 +665,14 @@ sip←{	w←⍕⍵
 		⊃,/(⍕¨⍳8)((⊃git ⍺){⍺⍺,'f',⍵,'_',⍺,'=d',⍵,'[(i*8+',⍺,')*m',⍵,'];',nl})¨⊂w}
 ⍝[cf]
 ⍝[of]:Scalar Expression Generators
-sfnl	←{⊃⍺⍺⌷⍨((⊂⍺)⍳⍨0⌷⍉⍺⍺),(3×3∧.=⍵)⌈≢⍵}
+sfnl	←{⊃⍺⍺⌷⍨((⊂⍺)⍳⍨0⌷⍉⍺⍺),(2×∧/∨⌿3 4∘.=⍵)+4+.≠⍵}
 scln	←(,¨'%&')⎕R'\\\%' '\\\&'
-sstm	←{⍺←⊢ ⋄ cln ((≢⍺ ⍵)↑,¨'⍵⍺')⎕R(scln∘⍕∘⊃¨⍺ ⍵)⊢⍺⍺(⍵⍵ sfnl)⊃∘⌽¨⍺ ⍵}
-sidx←{	0=⊃⊃0⍴⊂⍵:	8⍴⊂⍵ (⊃⍺)
-	3∧.=⍺:	⊂⍵ (⊃⍺)
-	3=⊃⍺:	↓(⊃⍺),⍨⍪(⌽⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
-		↓(⊃⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
-scal	←{⊃⍺⍺ sstm ⍵⍵¨/(0 1⌽¨⊂⍺)sidx¨⍵}
+sstm	←{cln (,¨'⍵⍺')⎕R(scln∘⍕∘⊃¨⍺ ⍵)⊢⍺⍺(⍵⍵ sfnl)⊃∘⌽¨⍺ ⍵}
+sidx←{	0=⊃⊃0⍴⊂⍵:	8⍴⊂⍵ (⍺⊃⍺⍺)
+	3∧.=⍺⍺:	⊂⍵ (⍺⊃⍺⍺)
+	3=⍺⊃⍺⍺:	↓(⍺⊃⍺⍺),⍨⍪(⌽⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
+		↓(⍺⊃⍺⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
+scal	←{⊃⍺⍺ sstm ⍵⍵¨/0 1(⍺ sidx)¨⍵}
 sgtbn	←{⍺⍺,'|=(',⍵,')<<',(⍕7-⍺),';',nl}
 sgtnn	←{⍺⍺,'_',(⍕⍺),'=',⍵,';',nl}
 sgtbb	←{⍺,'=',⍵,';',nl}
@@ -680,7 +680,6 @@ sget←{	nm	←(⊃git⊃⍺⍺),⊃⍺
 	3∧.=3↑⍺⍺:	⊃,/nm∘sgtbb¨⍵
 	3=⊃⍺⍺:	nm,'=0;',nl,⊃,/(⍳8)((⊃⍺)sgtbn)¨⍵
 		⊃,/(⍳8)(nm sgtnn)¨⍵}
-⍝[cf]
 ⍝[cf]
 ⍝[of]:Scalar/Mixed Conversion
 mxsm←{	siz	←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
@@ -694,7 +693,7 @@ mxsd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
 	exe	,←'DO(i,zc){zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';}'
 		chk siz exe mxfn 1 ⍺ ⍵}
 scmx←{	(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
-sdbm	←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxsb' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
+sdbm	←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxbm' 'mxbd' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
 ⍝[cf]
 ⍝[of]:Primitive Operators
 ocl	←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
@@ -1260,12 +1259,12 @@ rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 ⍝[cf]
 ⍝[of]:Co-dfns/Dyalog Conversion
 rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);B z=0;',nl
-rth	,←' #ifdef _OPENACC',nl,'  char *v=a->v;B z=a->z;',nl
-rth	,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
 rth	,←' switch(t){',nl,'  case APLLONG:z=a->c*sizeof(I);break;',nl
 rth	,←'  case APLDOUB:z=a->c*sizeof(D);break;',nl
 rth	,←'  case APLBOOL:z=ceil(a->c/8.0)*sizeof(aplint8);break;',nl
 rth	,←'  default:error(11);}',nl
+rth	,←' #ifdef _OPENACC',nl,'  char *v=a->v;',nl
+rth	,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
 rth	,←' memcpy(ARRAYSTART(d->p),a->v,z);}',nl
 rth	,←'V cpda(A*a,LOCALP*d){if(TYPESIMPLE!=d->p->TYPE)error(16);frea(a);',nl
 rth	,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
