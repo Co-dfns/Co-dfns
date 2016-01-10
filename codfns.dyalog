@@ -300,13 +300,13 @@ pn,←⊂,'×'
 	pt[08;pf2]←	2	2	2	1	2	3
 pn,←⊂,'|'		
 	pt[09;pf1]←	1	2	3	1	2	1
-	pt[09;pf2]←	2	2	2	3	3	3
+	pt[09;pf2]←	2	2	2	1	2	3
 pn,←⊂,'*'		
 	pt[10;pf1]←	2	2	2	2	2	3
 	pt[10;pf2]←	2	2	3	1	2	3
 pn,←⊂,'⍟'		
-	pt[11;pf1]←	2	2	2	2	2	3
-	pt[11;pf2]←	2	2	3	3	3	3
+	pt[11;pf1]←	2	2	2	2	2	¯11
+	pt[11;pf2]←	2	2	¯11	¯11	¯11	¯11
 pn,←⊂,'⌈'		
 	pt[12;pf1]←	1	1	3	1	2	1
 	pt[12;pf2]←	2	2	2	1	2	3
@@ -599,36 +599,36 @@ fncd	←{fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'}',nl}
 ⍝[cf]
 ⍝[of]:Scalar Primitives
 ⍝ respos←'⍵ % ⍺'
-respos	←'fmod((double)⍵,(double)⍺)'
-resneg	←'⍵-⍺*floor(((double)⍵)/(double)(⍺+(0==⍺)))'
-residue	←'(0<=⍺&&0<=⍵)?',respos,':',resneg
+respos	←'fmod((D)⍵,(D)⍺)'
+resneg	←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
+residue	←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
 
 sdb←0 5⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(('%'⎕R'\\\%')∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝[c]
 ⍝[c]Prim	Monadic	Dyadic	Monadic Bool	Dyadic Bool
-sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	'0'	''
-sdb⍪←,¨'-'	'-1*⍵'	'⍺-⍵'	''	''
-sdb⍪←,¨'×'	'(⍵>0)-(⍵<0)'	'⍺*⍵'	''	''
-sdb⍪←,¨'÷'	'1.0/⍵'	'((D)⍺)/((D)⍵)'	''	''
-sdb⍪←,¨'*'	'exp((double)⍵)'	'pow((D)⍺,(D)⍵)'	''	''
-sdb⍪←,¨'⍟'	'log((double)⍵)'	'log((D)⍵)/log((D)⍺)'	''	''
-sdb⍪←,¨'|'	'fabs(⍵)'	residue	''	''
-sdb⍪←,¨'○'	'PI*⍵'	'error(16)'	''	''
-sdb⍪←,¨'⌊'	'floor((double)⍵)'	'⍺ < ⍵ ? ⍺ : ⍵'	''	''
-sdb⍪←,¨'⌈'	'ceil((double)⍵)'	'⍺ > ⍵ ? ⍺ : ⍵'	'⍵'	''
-sdb⍪←,¨'<'	'error(99)'	'⍺<⍵'	''	''
-sdb⍪←,¨'≤'	'error(99)'	'⍺<=⍵'	''	''
-sdb⍪←,¨'='	'error(99)'	'⍺==⍵'	''	''
-sdb⍪←,¨'≥'	'error(99)'	'⍺>=⍵'	''	''
-sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'	''	''
-sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'	''	'⍺^⍵'
-sdb⍪←,¨'~'	'0==⍵'	'error(16)'	''	''
-sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'	''	'⍺&⍵'
-sdb⍪←,¨'∨'	'error(99)'	'⍺ || ⍵'	''	''
-sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'	''	''
-sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'	''	''
-sdb⍪←,¨'⌷'	'⍵'	'error(99)'	''	''
-sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'	''	''
+sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	'⍵'	'⍺+⍵'
+sdb⍪←,¨'-'	'-1*⍵'	'⍺-⍵'	'-1*⍵'	'⍺-⍵'
+sdb⍪←,¨'×'	'(⍵>0)-(⍵<0)'	'⍺*⍵'	'⍵'	'⍺&⍵'
+sdb⍪←,¨'÷'	'1.0/⍵'	'((D)⍺)/((D)⍵)'	'⍵'	'⍺&⍵'
+sdb⍪←,¨'*'	'exp((D)⍵)'	'pow((D)⍺,(D)⍵)'	'exp((double)⍵)'	'⍺|~⍵'
+sdb⍪←,¨'⍟'	'log((D)⍵)'	'log((D)⍵)/log((D)⍺)'	''	''
+sdb⍪←,¨'|'	'fabs(⍵)'	residue	'⍵'	'⍵&(⍺^⍵)'
+sdb⍪←,¨'○'	'PI*⍵'	'error(16)'	'PI*⍵'	'error(16)'
+sdb⍪←,¨'⌊'	'floor((double)⍵)'	'⍺ < ⍵ ? ⍺ : ⍵'	'⍵'	'⍺&⍵'
+sdb⍪←,¨'⌈'	'ceil((double)⍵)'	'⍺ > ⍵ ? ⍺ : ⍵'	'⍵'	'⍺|⍵'
+sdb⍪←,¨'<'	'error(99)'	'⍺<⍵'	'error(99)'	'(~⍺)&⍵'
+sdb⍪←,¨'≤'	'error(99)'	'⍺<=⍵'	'error(99)'	'(~⍺)|⍵'
+sdb⍪←,¨'='	'error(99)'	'⍺==⍵'	'error(99)'	'(⍺&⍵)|((~⍺)&(~⍵))'
+sdb⍪←,¨'≥'	'error(99)'	'⍺>=⍵'	'error(99)'	'⍺|(~⍵)'
+sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'	'error(99)'	'⍺&(~⍵)'
+sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'	'error(99)'	'⍺^⍵'
+sdb⍪←,¨'~'	'0==⍵'	'error(16)'	'~⍵'	'error(16)'
+sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'	'error(99)'	'⍺&⍵'
+sdb⍪←,¨'∨'	'error(99)'	'⍺ || ⍵'	'error(99)'	'⍺|⍵'
+sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'	'error(99)'	'~⍺&⍵'
+sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'	'error(99)'	'~⍺|⍵'
+sdb⍪←,¨'⌷'	'⍵'	'error(99)'	'⍵'	'error(99)'
+sdb⍪←'⎕XOR'	'error(99)'	'⍺ ^ ⍵'	'error(99)'	'⍺ ^ ⍵'
 ⍝[cf]
 ⍝[of]:Scalar Loop Generators
 simp	←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
@@ -673,7 +673,7 @@ sidx←{	0=⊃⊃0⍴⊂⍵:	8⍴⊂⍵ (⍺⊃⍺⍺)
 	3=⍺⊃⍺⍺:	↓(⍺⊃⍺⍺),⍨⍪(⌽⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
 		↓(⍺⊃⍺⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
 scal	←{⊃⍺⍺ sstm ⍵⍵¨/0 1(⍺ sidx)¨⍵}
-sgtbn	←{⍺⍺,'|=(',⍵,')<<',(⍕7-⍺),';',nl}
+sgtbn	←{⍺⍺,'|=((aplint8)(',⍵,'))<<',(⍕7-⍺),';',nl}
 sgtnn	←{⍺⍺,'_',(⍕⍺),'=',⍵,';',nl}
 sgtbb	←{⍺,'=',⍵,';',nl}
 sget←{	nm	←(⊃git⊃⍺⍺),⊃⍺
@@ -917,11 +917,11 @@ calm←{	z r	←var/⍵
 	scl	,←z,'=*szv;frea(&sz);}',nl
 		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 cald←{	z r l	←var/⍵
-	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(',z,',',l,',',r,',env);',nl
+	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(',z,',',l,',',r,',env);',nl
 	scl	←'{A sz,sr,sl;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
 	scl	,←'sr.r=0;sr.f=1;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
 	scl	,←'sl.r=0;sl.f=1;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
-	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iif'),'(&sz,&sl,&sr,env);',nl
+	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(&sz,&sl,&sr,env);',nl
 	scl	,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
 	scl	,←z,'=*szv;frea(&sz);}',nl
 		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
