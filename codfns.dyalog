@@ -175,7 +175,7 @@ Ns←nss _s (Stmt _aew nse) _s eot _as M
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
 ⍝[cf]
 ⍝[of]:Core Compiler
-tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
+tt←{⊢#.AST←fd fz ff if ef td vc fs rl av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
 ⍝[of]:Utilities
 scp	←(1,1↓Fm)⊂[0]⊢
 mnd	←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
@@ -305,7 +305,7 @@ pn,←⊂,'*'
 	pt[10;pf1]←	2	2	2	2	2	3
 	pt[10;pf2]←	2	2	3	1	2	3
 pn,←⊂,'⍟'		
-	pt[11;pf1]←	2	2	2	2	2	¯11
+	pt[11;pf1]←	2	2	¯11	2	2	¯11
 	pt[11;pf2]←	2	2	¯11	¯11	¯11	¯11
 pn,←⊂,'⌈'		
 	pt[12;pf1]←	1	1	3	1	2	1
@@ -669,7 +669,7 @@ sfnl	←{⊃⍺⍺⌷⍨((⊂⍺)⍳⍨0⌷⍉⍺⍺),(2×∧/∨⌿3 4∘.=⍵)
 scln	←(,¨'%&')⎕R'\\\%' '\\\&'
 sstm	←{cln (,¨'⍵⍺')⎕R(scln∘⍕∘⊃¨⍺ ⍵)⊢⍺⍺(⍵⍵ sfnl)⊃∘⌽¨⍺ ⍵}
 sidx←{	0=⊃⊃0⍴⊂⍵:	8⍴⊂⍵ (⍺⊃⍺⍺)
-	3∧.=⍺⍺:	⊂⍵ (⍺⊃⍺⍺)
+	3∧.=2↑⍺⍺:	⊂⍵ (⍺⊃⍺⍺)
 	3=⍺⊃⍺⍺:	↓(⍺⊃⍺⍺),⍨⍪(⌽⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
 		↓(⍺⊃⍺⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
 scal	←{⊃⍺⍺ sstm ⍵⍵¨/0 1(⍺ sidx)¨⍵}
