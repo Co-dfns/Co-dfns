@@ -25,6 +25,14 @@ S←':Namespace' ('Run←{⍺',FN,'⍵}') ':EndNamespace'
 Z←0 0⍴⍬
 ∇
 
+∇Z←N SCL∆TST∆MONADIC(FN I F B);S
+S←':Namespace' ('Run←{',FN,'⍵}')':EndNamespace'
+'i'	(N S 'Run' #.util.GEN∆T1 ⎕THIS)	I
+'f'	(N S 'Run' #.util.GEN∆T1 ⎕THIS)	F
+'b'	(N S 'Run' #.util.GEN∆T1 ⎕THIS)	B
+Z←0 0⍴⍬
+∇
+
 'plus'	SCL∆TST∆DYADIC	'+'	I	I	F	F	B	B
 'minus'	SCL∆TST∆DYADIC	'-'	I	I	F	F	B	B
 'times'	SCL∆TST∆DYADIC	'×'	I	I	F	F	B	B
@@ -46,7 +54,19 @@ Z←0 0⍴⍬
 'or'	SCL∆TST∆DYADIC	'∨'	I	I	F	F	B	B
 'notand'	SCL∆TST∆DYADIC	'⍲'	I	I	F	F	B	B
 'notor'	SCL∆TST∆DYADIC	'⍱'	I	I	F	F	B	B
-'xor'	SCL∆TST∆DYADIC	'⎕XOR'	I	I	F	F	B	B
+
+'conjugate'	SCL∆TST∆MONADIC	'+'	I	F	B
+'negate'	SCL∆TST∆MONADIC	'-'	I	F	B
+'direction'	SCL∆TST∆MONADIC	'×'	I	F	B
+'reciprocal'	SCL∆TST∆MONADIC	'÷'	INZ	FNZ	BNZ
+'exponential'	SCL∆TST∆MONADIC	'*'	I	F	B
+'natlog'	SCL∆TST∆MONADIC	'⍟'	IPS	FPS	IPS
+'magnitude'	SCL∆TST∆MONADIC	'|'	I	F	B
+'pitimes'	SCL∆TST∆MONADIC	'○'	I	F	B
+'floor'	SCL∆TST∆MONADIC	'⌊'	I	F	B
+'ceiling'	SCL∆TST∆MONADIC	'⌈'	I	F	B
+'not'	SCL∆TST∆MONADIC	'~'	B	B	B
+'materialize'	SCL∆TST∆MONADIC	'⌷'	I	F	B
 
 BS←':Namespace' 'r←0.02	⋄ v←0.03' 
 BS,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
