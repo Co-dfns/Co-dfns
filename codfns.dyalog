@@ -909,10 +909,10 @@ fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
 
 ⍝[of]:Function Utilities
 calm←{	z r	←var/⍵
-	arr	←⍺⍺,((1⌷⍺)⊃'iif'),'n(',z,',NULL,',r,',env);',nl
+	arr	←⍺⍺,((1⌷⍺)⊃'iifb'),'n(',z,',NULL,',r,',env);',nl
 	scl	←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
 	scl	,←'sr.r=0;sr.v=&',r,';sr.f=1;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
-	scl	,←⍺⍺,((1⌷⍺)⊃'iif'),'n(&sz,NULL,&sr,env);',nl
+	scl	,←⍺⍺,((1⌷⍺)⊃'iifb'),'n(&sz,NULL,&sr,env);',nl
 	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',nl,pacc'update host(szv[:1])'
 	scl	,←z,'=*szv;frea(&sz);}',nl
 		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
