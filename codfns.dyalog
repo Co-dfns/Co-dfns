@@ -857,7 +857,7 @@ inpd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	chk	,←(hid⊃('if(rs[0]==0)error(11);',nl)''),'}'
 	siz	←'zr=0;if(lr>0){zr=lr-1;DO(i,zr)zs[i]=ls[i];}',nl
 	siz	,←'if(rr>0){I n=rr-1;DO(i,n){zs[i+zr]=rs[i+1];}zr+=rr-1;}'
-	typ	←2⌷(3 4⊥2↑1↓⍺)⌷⍉2⊃⍺⍺
+	typ	←2⌷(4 5⊥2↑1↓⍺)⌷⍉2⊃⍺⍺
 	exe	←'I n=lr==0?0:lr-1;DO(i,n)zc*=ls[i];n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
 	exe	,←'if(lr!=0)lc=ls[lr-1];else if(rr!=0)lc=rs[0];',nl,(⊃git typ),'tmp[1];',nl
 	exe	,←hid⊃(pacc'enter data create(tmp[:1])')''
