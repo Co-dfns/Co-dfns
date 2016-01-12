@@ -389,8 +389,8 @@ pn,←⊂,'≡'
 	pt[36;pf1]←	1	1	1	3	3	3
 	pt[36;pf2]←	3	3	3	3	3	3
 pn,←⊂,'≢'		
-	pt[37;pf1]←	1	1	1	3	3	3
-	pt[37;pf2]←	3	3	3	3	3	3
+	pt[37;pf1]←	1	1	1	1	1	1
+	pt[37;pf2]←	1	1	1	1	1	1
 pn,←⊂,'⊢'		
 	pt[38;pf1]←	1	2	3	1	1	1
 	pt[38;pf2]←	2	2	2	3	3	3
@@ -535,7 +535,7 @@ fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Code Generator
-dis	←{⍺←⊢ ⋄ 0=⊃t⍵:3⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
+dis	←{⍺←⊢ ⋄ 0=⊃t⍵:5⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
 gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
 E1	←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵}
 E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
@@ -696,20 +696,23 @@ scmx←{	(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄
 sdbm	←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxbm' 'mxbd' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
 ⍝[cf]
 ⍝[of]:Primitive Operators
-ocl	←{'' '',⍨⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
+ocl	←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
 opl	←{⊃,/{'(,''',⍵,''')'}¨⍵}
 opt	←{'(',(⍕⍴⍵),'⍴',(⍕,⍵),')'}
-odb	←0 3⍴⊂''
+odb	←0 5⍴⊂''
 ⍝[c]
-⍝[c]Prim	Monadic	Dyadic
-odb⍪←,¨'⍨'	'comm'	'comd'
-odb⍪←,¨'¨'	'eacm'	'eacd'
-odb⍪←,¨'/'	'redm'	'redd'
-odb⍪←,¨'⌿'	'rd1m'	'rd1d'
-odb⍪←,¨'\'	'scnm'	'{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}'
-odb⍪←,¨'⍀'	'sc1m'	'{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}'
-odb⍪←,¨'.'	'{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}'	'inpd'
-odb⍪←'∘.'	'{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}'	'oupd'
+⍝[c]Prim	Monadic	Dyadic	Monadic Bool	Dyadic Bool
+odb⍪←,¨'⍨'	'comm'	'comd'	''	''
+odb⍪←,¨'¨'	'eacm'	'eacd'	''	''
+odb⍪←,¨'/'	'redm'	'redd'	''	''
+odb⍪←,¨'⌿'	'rd1m'	'rd1d'	''	''
+odb⍪←,¨'\'	'scnm'	'err16'	''	''
+odb⍪←,¨'⍀'	'sc1m'	'err16'	''	''
+odb⍪←,¨'.'	'err99'	'inpd'	''	''
+odb⍪←'∘.'	'err99'	'oupd'	''	''
+
+err99←{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}
+err16←{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}
 
 ⍝[of]:Commute
 comd	←{((1↑⍺)⍪⊖1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
