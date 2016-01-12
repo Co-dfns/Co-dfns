@@ -175,7 +175,7 @@ Ns←nss _s (Stmt _aew nse) _s eot _as M
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
 ⍝[cf]
 ⍝[of]:Core Compiler
-tt←{⊢#.AST←fd fz ff if ef td vc fs rl av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
+tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
 ⍝[of]:Utilities
 scp	←(1,1↓Fm)⊂[0]⊢
 mnd	←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
@@ -540,10 +540,10 @@ gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om
 E1	←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵}
 E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
 E0	←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
-Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')}
+Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
 O2	←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
-O0	←{'' '' ''}
+O0	←{'' '' '' '' ''}
 Of	←{(fndy ⍵),nl,nl,(⊃,/(⍳12)fncd¨⊂⍵),nl}
 Fd	←{frt,(⊃n⍵),flp,';',nl}
 Fe	←{frt,(⊃n⍵),flp,'{',nl,'error(',(⍕|⊃⊃y⍵),');',nl}
@@ -696,7 +696,7 @@ scmx←{	(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄
 sdbm	←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxbm' 'mxbd' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
 ⍝[cf]
 ⍝[of]:Primitive Operators
-ocl	←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
+ocl	←{'' '',⍨⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
 opl	←{⊃,/{'(,''',⍵,''')'}¨⍵}
 opt	←{'(',(⍕⍴⍵),'⍴',(⍕,⍵),')'}
 odb	←0 3⍴⊂''
@@ -881,31 +881,31 @@ inpd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Mixed Functions
-fdb←0 3⍴⊂'' ⋄ fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
-fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')}
+fdb←0 5⍴⊂'' ⋄ fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
+fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')'' ''}
 ⍝[c]
-⍝[c]Prim	Monadic	Dyadic
-fdb⍪←,¨'⌷'	'{⎕SIGNAL 99}'	'idxd'
-fdb⍪←,¨'['	'{⎕SIGNAL 99}'	'brid'
-fdb⍪←,¨'⍳'	'iotm'	'{⎕SIGNAL 16}'
-fdb⍪←,¨'⍴'	'shpm'	'shpd'
-fdb⍪←,¨','	'catm'	'catd'
-fdb⍪←,¨'⍪'	'fctm'	'fctd'
-fdb⍪←,¨'⌽'	'rotm'	'{⎕SIGNAL 16}'
-fdb⍪←,¨'⊖'	'rtfm'	'rtfd'
-fdb⍪←,¨'∊'	'memm'	'memd'
-fdb⍪←,¨'⊃'	'dscm'	'{⎕SIGNAL 16}'
-fdb⍪←,¨'≡'	'eqvm'	'eqvd'
-fdb⍪←,¨'≢'	'nqvm'	'nqvd'
-fdb⍪←,¨'⊢'	'rgtm'	'rgtd'
-fdb⍪←,¨'⊣'	'lftm'	'lftd'
-fdb⍪←,¨'//'	'{⎕SIGNAL 99}'	'fltd'
-fdb⍪←,¨'⍉'	'tspm'	'{⎕SIGNAL 16}'
-fdb⍪←,¨'↓'	'{⎕SIGNAL 16}'	'drpd'
-fdb⍪←,¨'↑'	'{⎕SIGNAL 16}'	'tked'
-fdb⍪←,¨'⊤'	'{⎕SIGNAL 99}'	'encd'
-fdb⍪←,¨'⊥'	'{⎕SIGNAL 99}'	'decd'
-fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
+⍝[c]Prim	Monadic	Dyadic	Monadic Bool	Dyadic Bool
+fdb⍪←,¨'⌷'	'{⎕SIGNAL 99}'	'idxd'	''	''
+fdb⍪←,¨'['	'{⎕SIGNAL 99}'	'brid'	''	''
+fdb⍪←,¨'⍳'	'iotm'	'{⎕SIGNAL 16}'	''	''
+fdb⍪←,¨'⍴'	'shpm'	'shpd'	''	''
+fdb⍪←,¨','	'catm'	'catd'	''	''
+fdb⍪←,¨'⍪'	'fctm'	'fctd'	''	''
+fdb⍪←,¨'⌽'	'rotm'	'{⎕SIGNAL 16}'	''	''
+fdb⍪←,¨'⊖'	'rtfm'	'rtfd'	''	''
+fdb⍪←,¨'∊'	'memm'	'memd'	''	''
+fdb⍪←,¨'⊃'	'dscm'	'{⎕SIGNAL 16}'	''	''
+fdb⍪←,¨'≡'	'eqvm'	'eqvd'	''	''
+fdb⍪←,¨'≢'	'nqvm'	'nqvd'	''	''
+fdb⍪←,¨'⊢'	'rgtm'	'rgtd'	''	''
+fdb⍪←,¨'⊣'	'lftm'	'lftd'	''	''
+fdb⍪←,¨'//'	'{⎕SIGNAL 99}'	'fltd'	''	''
+fdb⍪←,¨'⍉'	'tspm'	'{⎕SIGNAL 16}'	''	''
+fdb⍪←,¨'↓'	'{⎕SIGNAL 16}'	'drpd'	''	''
+fdb⍪←,¨'↑'	'{⎕SIGNAL 16}'	'tked'	''	''
+fdb⍪←,¨'⊤'	'{⎕SIGNAL 99}'	'encd'	''	''
+fdb⍪←,¨'⊥'	'{⎕SIGNAL 99}'	'decd'	''	''
+fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'	''	''
 
 ⍝[of]:Function Utilities
 calm←{	z r	←var/⍵
