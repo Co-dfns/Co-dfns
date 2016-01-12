@@ -35,7 +35,7 @@ iop	←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shar
 icc	←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:PGI C Linux
-pop	←' -fast -acc -ta=tesla:cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
+pop	←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
 pgcc	←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
@@ -1070,12 +1070,13 @@ fctd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 	siz	,←'zr=zr==0?1:zr;zs[0]+=minr==zr?ls[0]:1;'
 	exe	←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
 	exe	,←'if(abs(lr-rr)<=1){',nl
-	exe	,←(simd''),' DO(i,lc)zv[i]=lv[i];',nl,(simd''),'DO(i,rc)zv[lc+i]=rv[i];'
-	exe	,←'}else{I n=zr-1;DO(i,n)zc*=zs[i+1];',nl
-	exe	,←' if(lr==0){',nl,(simd''),'DO(i,zc)zv[i]=lv[0];',nl
-	exe	,←(simd''),' DO(i,rc)zv[zc+i]=rv[i];}',nl
-	exe	,←' else{',nl,(simd''),'DO(i,lc)zv[i]=lv[i];',nl
-	exe	,←(simd''),'DO(i,zc)zv[lc+i]=rv[0];}}'
+	exe	,←(simd'present(zv[:lc],lv[:lc])'),' DO(i,lc)zv[i]=lv[i];',nl
+	exe	,←(simd'present(zv[lc:rc],rv[:rc])'),'DO(i,rc)zv[lc+i]=rv[i];',nl
+	exe	,←'}else{I n=zr-1;DO(i,n)zc*=zs[i+1];',nl,' if(lr==0){',nl
+	exe	,←(simd'present(zv[:zc],lv[:1])'),'DO(i,zc)zv[i]=lv[0];',nl
+	exe	,←(simd'present(zv[zc:rc],rv[:rc])'),' DO(i,rc)zv[zc+i]=rv[i];}',nl
+	exe	,←' else{',nl,(simd'present(zv[:lc],lv[:lc])'),'DO(i,lc)zv[i]=lv[i];',nl
+	exe	,←(simd'present(zv[lc:zc],rv[:1])'),'DO(i,zc)zv[lc+i]=rv[0];}}'
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Reverse/Rotate
