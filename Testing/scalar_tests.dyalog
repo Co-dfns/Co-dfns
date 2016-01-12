@@ -52,8 +52,8 @@ Z←0 0⍴⍬
 'notequal'	SCL∆TST∆DYADIC	'≠'	I	I	F	F	B	B
 'and'	SCL∆TST∆DYADIC	'∧'	I	I	F	F	B	B
 'or'	SCL∆TST∆DYADIC	'∨'	I	I	F	F	B	B
-'notand'	SCL∆TST∆DYADIC	'⍲'	I	I	F	F	B	B
-'notor'	SCL∆TST∆DYADIC	'⍱'	I	I	F	F	B	B
+'notand'	SCL∆TST∆DYADIC	'⍲'	B	B	B	B	B	B
+'notor'	SCL∆TST∆DYADIC	'⍱'	B	B	B	B	B	B
 
 'conjugate'	SCL∆TST∆MONADIC	'+'	I	F	B
 'negate'	SCL∆TST∆MONADIC	'-'	I	F	B
