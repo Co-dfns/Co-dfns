@@ -13,23 +13,13 @@ BNZ←10⍴1
 
 ∇Z←N SCL∆TST∆DYADIC(FN IL IR FL FR BL BR);S
 S←':Namespace' ('Run←{⍺',FN,'⍵}') ':EndNamespace'
-'ii'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	IL	IR
-'if'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	IL	FR
-'ib'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	IL	BR
-'fi'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	FL	IR
-'ff'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	FL	FR
-'fb'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	FL	BR
-'bi'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	BL	IR
-'bf'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	BL	FR
-'bb'	(N S 'Run' #.util.GEN∆T2 ⎕THIS)	BL	BR
+(∘.,⍨'ifb')(N S 'Run' #.util.GEN∆T2 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
 Z←0 0⍴⍬
 ∇
 
 ∇Z←N SCL∆TST∆MONADIC(FN I F B);S
 S←':Namespace' ('Run←{',FN,'⍵}')':EndNamespace'
-'i'	(N S 'Run' #.util.GEN∆T1 ⎕THIS)	I
-'f'	(N S 'Run' #.util.GEN∆T1 ⎕THIS)	F
-'b'	(N S 'Run' #.util.GEN∆T1 ⎕THIS)	B
+'ifb'(N S 'Run' #.util.GEN∆T1 ⎕THIS)¨I F B
 Z←0 0⍴⍬
 ∇
 
