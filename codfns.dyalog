@@ -911,7 +911,7 @@ fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'
 calm←{	z r	←var/⍵
 	arr	←⍺⍺,((1⌷⍺)⊃'iifb'),'n(',z,',NULL,',r,',env);',nl
 	scl	←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
-	scl	,←'sr.r=0;sr.v=&',r,';sr.f=1;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
+	scl	,←'sr.r=0;sr.v=&',r,';sr.f=0;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
 	scl	,←⍺⍺,((1⌷⍺)⊃'iifb'),'n(&sz,NULL,&sr,env);',nl
 	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',nl,pacc'update host(szv[:1])'
 	scl	,←z,'=*szv;frea(&sz);}',nl
@@ -919,8 +919,8 @@ calm←{	z r	←var/⍵
 cald←{	z r l	←var/⍵
 	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(',z,',',l,',',r,',env);',nl
 	scl	←'{A sz,sr,sl;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
-	scl	,←'sr.r=0;sr.f=1;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
-	scl	,←'sl.r=0;sl.f=1;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
+	scl	,←'sr.r=0;sr.f=0;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
+	scl	,←'sl.r=0;sl.f=0;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
 	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(&sz,&sl,&sr,env);',nl
 	scl	,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
 	scl	,←z,'=*szv;frea(&sz);}',nl
