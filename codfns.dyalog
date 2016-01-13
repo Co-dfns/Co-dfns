@@ -1139,11 +1139,13 @@ nqvd←{	chk siz	←'' 'zr=0;'
 ⍝[of]:Replicate/Filter
 fltd←{	chk	←'if(lr>1)error(4);',nl
 	chk	,←'if(lr!=0&&ls[0]!=1&&rr!=0&&rs[rr-1]!=1&&ls[0]!=rs[rr-1])error(5);'
+	popcnt	←'__builtin_popcount' '_popcnt32' '__popcnt'
+	pcnt	←popcnt⊃⍨'gc' 'ic' 'pg'⍳⊂2↑COMPILER
 	siz	←'zr=rr==0?1:rr;I n=zr-1;DO(i,n)zs[i]=rs[i];',nl
 	siz	,←'if(lr==1)lc=ls[0];if(rr!=0)rc=rs[rr-1];zs[zr-1]=0;B last=0;',nl
-	siz	,←pacc 'update host(lv[:lc],rv[:rgt->c])'
-	siz	,←'if(lc>=rc){DO(i,lc)last+=lv[i];zs[zr-1]=last;}',nl
-	siz	,←'else{last+=rc*lv[0];zs[zr-1]=last;}',nl,'DO(i,n)zc*=zs[i];'
+	szn	←siz,pacc 'update host(lv[:lc],rv[:rgt->c])'
+	szn	,←'if(lc>=rc){DO(i,lc)last+=lv[i];}else{last+=rc*lv[0];}',nl
+	szn	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
 	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
 ⍝[c]	exe	,←' if(lv[i])zv[a++]=rv[i];}}',nl
 	exe	,←' if(lv[i]==0)continue;',nl
@@ -1159,7 +1161,7 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	exe	,←' else if(lv[i]>0){DO(j,zc){DO(k,lv[j]){zv[(j*zs[zr-1])+a+k]=rv[j*rc];}}}',nl
 	exe	,←' else{DO(j,zc){L n=abs(lv[j]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}}',nl
 	exe	,←' a+=lv[i];}}',nl,pacc 'update device(zv[:rslt->c])'
-		chk siz exe mxfn 1 ⍺ ⍵}
+		chk szn exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Decode/Encode
 decd←{	chk	←'if(lr>1||lv[0]<0)error(16);'
@@ -1238,7 +1240,9 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 ⍝[of]:Includes, Structures, Allocation
 rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
 rth	,←'#include <stdio.h>',nl,'#include <string.h>',nl
-rth	,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
+rth	,←'#ifdef _OPENACC',nl
+rth	,←'#include <accelmath.h>',nl⍝ ,'#include <intrin.h>',nl
+rth	,←'#endif',nl
 rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
 rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
