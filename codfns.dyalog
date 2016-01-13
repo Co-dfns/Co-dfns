@@ -1149,7 +1149,7 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
 ⍝[c]	exe	,←' if(lv[i])zv[a++]=rv[i];}}',nl
 	exe	,←' if(lv[i]==0)continue;',nl
-	exe	,←' else if(lv[i]>0){DO(j,zc){DO(k,lv[j]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}}',nl
+	exe	,←' else if(lv[i]>0){DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}}',nl
 	exe	,←' else{DO(j,zc){L n=abs(lv[j]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}}',nl
 	exe	,←' a+=lv[i];}}',nl
 	exe	,←'else if(rc>lc){',nl
