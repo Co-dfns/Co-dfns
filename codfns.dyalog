@@ -398,8 +398,8 @@ pn,←⊂,'⊣'
 	pt[39;pf1]←	1	2	3	1	2	3
 	pt[39;pf2]←	1	2	3	1	2	3
 pn,←⊂'//'		
-	pt[40;pf1]←	¯2	¯2	¯2	1	1	1
-	pt[40;pf2]←	2	2	2	3	3	3
+	pt[40;pf1]←	¯2	¯2	¯2	1	¯11	1
+	pt[40;pf2]←	2	¯11	2	3	¯11	3
 pn,←⊂,'⍉'		
 	pt[41;pf1]←	1	2	3	1	1	1
 	pt[41;pf2]←	2	2	2	3	3	3
@@ -589,7 +589,7 @@ tps	,←'case APLINTG:case APLSINT:case APLLONG:break;',nl
 tps	,←'case APLDOUB:tp+=1;break;case APLBOOL:tp+=2;break;',nl
 tps	,←'default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
-fcln	←'frea(&cl);frea(&cr);frea(&za);',nl
+fcln	←'frea(&cl);',nl,'frea(&cr);',nl,'frea(&za);',nl
 dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('error(',(cln⍕e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
 dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y ⍵),');')''}
 case	←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
@@ -1146,8 +1146,12 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	szn	←siz,pacc 'update host(lv[:lc],rv[:rgt->c])'
 	szn	,←'if(lc>=rc){DO(i,lc)last+=abs(lv[i]);}else{last+=rc*abs(lv[0]);}',nl
 	szn	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
+	szb	←siz,pacc 'update host(lv[:lft->z],rv[:rgt->c])'
+	szb	,←'if(lc>=rc){I n=ceil(lc/32.0);I*lv32=(I*)lv;',nl
+	szb	,←'DO(i,n)last+=',pcnt,'(lv32[i]);',nl
+	szb	,←'}else{last+=rc*(lv[0]>>7);}',nl
+	szb	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
 	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
-⍝[c]	exe	,←' if(lv[i])zv[a++]=rv[i];}}',nl
 	exe	,←' if(lv[i]==0)continue;',nl
 	exe	,←' else if(lv[i]>0){',nl
 	exe	,←'  DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}',nl
@@ -1168,7 +1172,20 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 	exe	,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
 	exe	,←'  a+=abs(lv[i]);}}}',nl
 	exe	,←pacc 'update device(zv[:rslt->c])'
-		chk szn exe mxfn 1 ⍺ ⍵}
+	exb	←'B a=0;if(rr==1&&rc==lc){I n=ceil(lc/8.0);;',nl
+	exb	,←' DO(i,n){DO(j,8){if(1&(lv[i]>>(7-j)))zv[a++]=rv[i*8+j];}}',nl
+	exb	,←'}else if(rc==lc){I n=ceil(lc/8.0);',nl,'DO(i,n){DO(m,8){',nl
+	exb	,←' if(1&(lv[i]>>(7-m))){',nl
+	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[(j*rc)+i*8+m];}',nl
+	exb	,←'  a++;}}}',nl
+	exb	,←'}else if(rc>lc){if(lv[0]>>7){',nl
+	exb	,←'  DO(i,zc){DO(j,rc){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}',nl
+	exb	,←'}else{I n=ceil(lc/8.0);DO(i,n){DO(m,8){',nl
+	exb	,←' if(1&(lv[i]>>(7-m))){',nl
+	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[j*rc];}',nl
+	exb	,←'  a++;}}}}',nl
+	exb	,←pacc 'update device(zv[:rslt->c])'
+		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Decode/Encode
 decd←{	chk	←'if(lr>1||lv[0]<0)error(16);'
@@ -1266,7 +1283,7 @@ rth	,←'  case 1:z=sizeof(I)*pc;break;',nl
 rth	,←'  case 2:z=sizeof(D)*pc;break;',nl
 rth	,←'  case 3:z=ceil((sizeof(aplint8)*pc)/8.0);break;',nl
 rth	,←'  default: error(16);}',nl
-rth	,←' char*v=malloc(z);if(NULL==v)error(1);',nl
+rth	,←' z=4*ceil(z/4.0);char*v=malloc(z);if(NULL==v)error(1);',nl
 rth	,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
 rth	,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
 rth	,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl

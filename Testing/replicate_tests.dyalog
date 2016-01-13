@@ -17,5 +17,10 @@ S←':Namespace' 'Run←{⍺/⍵}' ':EndNamespace'
 '12'	('replicate' S 'Run' #.util.GEN∆T2 ⎕THIS)	(I 0)	(⍳3)
 '13'	('replicate' S 'Run' #.util.GEN∆T2 ⎕THIS)	(I 1)	(⍳3)
 '14'	('replicate' S 'Run' #.util.GEN∆T2 ⎕THIS)	(I 3)	(⍳3)
+'15'	('replicate' S 'Run' #.util.GEN∆T2 ⎕THIS)	(I 0 1 0 ¯2 0 3 1)	(5 7⍴⍳35)
+'16'	('replicate' S 'Run' #.util.GEN∆T2 ⎕THIS)	(0 1 0 1 1 1 0)	(5 7⍴⍳35)
+'17'	('replicate' S 'Run' #.util.GEN∆T2 ⎕THIS)	(0 1 0 1 1 1 0)	(5)
+'18'	('replicate' S 'Run' #.util.GEN∆T2 ⎕THIS)	(14⍴0 1 0 1 1 1 0)	(⍳14)
+
 
 :EndNamespace
