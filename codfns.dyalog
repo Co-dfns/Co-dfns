@@ -1265,7 +1265,7 @@ sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
 rth	,←'#include <stdio.h>',nl,'#include <string.h>',nl
 rth	,←'#ifdef _OPENACC',nl
-rth	,←'#include <accelmath.h>',nl⍝ ,'#include <intrin.h>',nl
+rth	,←'#include <accelmath.h>',nl,'extern unsigned int __popcnt (unsigned int);',nl
 rth	,←'#endif',nl
 rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
