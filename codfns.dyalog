@@ -623,7 +623,7 @@ sdb⍪←,¨'≥'	'error(99)'	'⍺>=⍵'	'error(99)'	'⍺|(~⍵)'
 sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'	'error(99)'	'⍺&(~⍵)'
 sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'	'error(99)'	'⍺^⍵'
 sdb⍪←,¨'~'	'0==⍵'	'error(16)'	'~⍵'	'error(16)'
-sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'	'error(99)'	'⍺&⍵'
+sdb⍪←,¨'∧'	'error(99)'	'lcm(⍺,⍵)'	'error(99)'	'⍺&⍵'
 sdb⍪←,¨'∨'	'error(99)'	'gcd(⍺,⍵)'	'error(99)'	'⍺|⍵'
 sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'	'error(99)'	'~(⍺&⍵)'
 sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'	'error(99)'	'~(⍺|⍵)'
@@ -1333,6 +1333,9 @@ rth	,←' cpad(da,aa,tp);frea(aa);}',nl
 rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
 rth	,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
 rth	,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
+rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+rth	,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
+rth	,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
 ⍝[cf]
 ⍝[cf]
 ⍝[cf]

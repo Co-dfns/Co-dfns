@@ -21,7 +21,7 @@ Z←0 0⍴⍬
 
 ∇Z←N SCL∆TST∆RELATIVE(FN IL IR FL FR BL BR);S
 S←':Namespace' ('Run←{⍺',FN,'⍵}') ':EndNamespace'
-(∘.,⍨'ifb')(N S 'Run' #.util.GEN∆T3 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
+(∘.,⍨'ifb')(N S 'Run' 1e¯7 #.util.GEN∆T3 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
 Z←0 0⍴⍬
 ∇
 
@@ -48,7 +48,8 @@ Z←0 0⍴⍬
 'greatereq'	SCL∆TST∆DYADIC	'≥'	I	I	F	F	B	B
 'greater'	SCL∆TST∆DYADIC	'>'	I	I	F	F	B	B
 'notequal'	SCL∆TST∆DYADIC	'≠'	I	I	F	F	B	B
-'and'	SCL∆TST∆DYADIC	'∧'	I	I	F	F	B	B
+'andi'	SCL∆TST∆DYADIC	'∧'	I	I	I2	I2	B	B
+'andf'	SCL∆TST∆RELATIVE	'∧'	F	F	F2	F2	B	B
 'ori'	SCL∆TST∆DYADIC	'∨'	I	I	I2	I2	B	B
 'orf'	SCL∆TST∆RELATIVE	'∨'	F	F	F2	F2	B	B
 'notand'	SCL∆TST∆DYADIC	'⍲'	B	B	B	B	B	B

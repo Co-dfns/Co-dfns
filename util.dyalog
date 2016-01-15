@@ -52,11 +52,11 @@ MK∆T2←{	id cmp ns fn←⍺⍺ ⋄ l r←⍵⍵
 	#.UT.expect←l(⍎'NS.',fn)r ⋄ l(⍎'CS.',fn)r
 }
 
-MK∆T3←{	id cmp ns fn←⍺⍺	⋄ l r←⍵⍵
+MK∆T3←{	id cmp ns fn tl←⍺⍺	⋄ l r←⍵⍵
 	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
 	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
 	nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
-	#.UT.expect←1 ⋄ ∧/,1E¯10>|nv-cv
+	#.UT.expect←(≢nv)⍴1 ⋄ ,tl>|nv-cv
 }
 
 ∇Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;CMP;TC;TMP
@@ -77,10 +77,10 @@ MK∆T3←{	id cmp ns fn←⍺⍺	⋄ l r←⍵⍵
  Z←0 0⍴⍬
 ∇
 
-∇Z←ID(NCF GEN∆T3 THIS)IN;NS;FN;CMP;TC;TMP
- NS TC FN←NCF
+∇Z←ID(NCFT GEN∆T3 THIS)IN;NS;FN;CMP;TC;TMP;TL
+ NS TC FN TL←NCFT
  :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
-     TMP←(NS,ID)CMP TC FN MK∆T3	IN
+     TMP←(NS,ID)CMP TC FN TL MK∆T3	IN
      ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
  :EndFor
  Z←0 0⍴⍬
