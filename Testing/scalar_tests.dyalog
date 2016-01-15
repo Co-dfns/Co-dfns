@@ -1,7 +1,9 @@
 ﻿:Namespace scalar
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,¯50+?9⍴100
+I2←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,¯50+?9⍴100
 F←0,¯5+100÷⍨?9⍴1000
+F2←0,¯5+100÷⍨?9⍴1000
 B←?10⍴2
 INT←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,?9⍴100
 FNT←0,100÷⍨?9⍴1000
@@ -14,6 +16,12 @@ BNZ←10⍴1
 ∇Z←N SCL∆TST∆DYADIC(FN IL IR FL FR BL BR);S
 S←':Namespace' ('Run←{⍺',FN,'⍵}') ':EndNamespace'
 (∘.,⍨'ifb')(N S 'Run' #.util.GEN∆T2 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
+Z←0 0⍴⍬
+∇
+
+∇Z←N SCL∆TST∆RELATIVE(FN IL IR FL FR BL BR);S
+S←':Namespace' ('Run←{⍺',FN,'⍵}') ':EndNamespace'
+(∘.,⍨'ifb')(N S 'Run' #.util.GEN∆T3 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
 Z←0 0⍴⍬
 ∇
 
@@ -41,7 +49,8 @@ Z←0 0⍴⍬
 'greater'	SCL∆TST∆DYADIC	'>'	I	I	F	F	B	B
 'notequal'	SCL∆TST∆DYADIC	'≠'	I	I	F	F	B	B
 'and'	SCL∆TST∆DYADIC	'∧'	I	I	F	F	B	B
-'or'	SCL∆TST∆DYADIC	'∨'	I	I	F	F	B	B
+'ori'	SCL∆TST∆DYADIC	'∨'	I	I	I2	I2	B	B
+'orf'	SCL∆TST∆RELATIVE	'∨'	F	F	F2	F2	B	B
 'notand'	SCL∆TST∆DYADIC	'⍲'	B	B	B	B	B	B
 'notor'	SCL∆TST∆DYADIC	'⍱'	B	B	B	B	B	B
 

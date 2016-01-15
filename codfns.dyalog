@@ -624,7 +624,7 @@ sdb⍪←,¨'>'	'error(99)'	'⍺>⍵'	'error(99)'	'⍺&(~⍵)'
 sdb⍪←,¨'≠'	'error(99)'	'⍺!=⍵'	'error(99)'	'⍺^⍵'
 sdb⍪←,¨'~'	'0==⍵'	'error(16)'	'~⍵'	'error(16)'
 sdb⍪←,¨'∧'	'error(99)'	'⍺ && ⍵'	'error(99)'	'⍺&⍵'
-sdb⍪←,¨'∨'	'error(99)'	'⍺ || ⍵'	'error(99)'	'⍺|⍵'
+sdb⍪←,¨'∨'	'error(99)'	'gcd(⍺,⍵)'	'error(99)'	'⍺|⍵'
 sdb⍪←,¨'⍲'	'error(99)'	'!(⍺ && ⍵)'	'error(99)'	'~(⍺&⍵)'
 sdb⍪←,¨'⍱'	'error(99)'	'!(⍺ || ⍵)'	'error(99)'	'~(⍺|⍵)'
 sdb⍪←,¨'⌷'	'⍵'	'error(99)'	'⍵'	'error(99)'
@@ -1271,7 +1271,7 @@ rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
 rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
 rth	,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array A;',nl
-rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl
+rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
 rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
 rth	,←' if(a->f){',nl,'#ifdef _OPENACC',nl
 rth	,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
@@ -1328,6 +1328,11 @@ rth	,←'  case 2:tp=APLDOUB;break;',nl
 rth	,←'  case 3:tp=APLBOOL;break;',nl
 rth	,←'  default:error(11);}',nl
 rth	,←' cpad(da,aa,tp);frea(aa);}',nl
+⍝[cf]
+⍝[of]:Scalar Helpers
+rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+rth	,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
+rth	,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
 ⍝[cf]
 ⍝[cf]
 ⍝[cf]
