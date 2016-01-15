@@ -14,6 +14,6 @@ S,←'}' ':EndNamespace'
 GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
 D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
 
-''('blackscholes' S 'Run' #.util.GEN∆T3 ⎕THIS) L R
+''('blackscholes' S 'Run' 1e¯10 #.util.GEN∆T3 ⎕THIS) L R
 
 :EndNamespace

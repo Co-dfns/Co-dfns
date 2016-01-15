@@ -76,6 +76,6 @@ BS,←'}' ':EndNamespace'
 
 D←{⍉1+?⍵ 3⍴1000}2*20 ⋄ L←,¯1↑D ⋄ R←2↑D
 
-''('scalar' BS 'Run' #.util.GEN∆T3 ⎕THIS) L R
+''('scalar' BS 'Run' 1e¯10 #.util.GEN∆T3 ⎕THIS) L R
 
 :EndNamespace
