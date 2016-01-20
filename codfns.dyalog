@@ -175,7 +175,7 @@ Ns	←nss _s (Stmt _aew nse) _s eot _as M
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
 ⍝[cf]
 ⍝[of]:Core Compiler
-tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce fc∘pc⍣≡ ca fe dn lf du df rd rn ⍵}
+tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce ur fc∘pc⍣≡ ca fe mr dn lf du df rd rn ⍵}
 ⍝[of]:Utilities
 scp	←(1,1↓Fm)⊂[0]⊢
 mnd	←{A⊣((⍺ ⍺⍺ ⍵)⌿A)←⍺⊣A←⍵⍵ ⍵}
@@ -209,6 +209,12 @@ lf	←(1↑⊢)⍪∘⊃(⍪/(1,1↓Fm)blg(↑r)(⊂lfh⍪∘⊃(⍪/((¯2+1=(+/
 ⍝[cf]
 ⍝[of]:Drop Redundant Nodes
 dn←((0∊⍨n)∧(Am∧'v'∊⍨k)∨Om∧'f'∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
+⍝[cf]
+⍝[of]:Mark/Unmark Unit Returns
+mre←(⊢⍴⍨6,⍨≢×2<≢)(2 'E' 'u',3↓∘,1↑⊢)⍪(3'P'0(,'⊢'),4↓∘,1↑⊢)⍪(1+d),1↓⍤1⊢
+mrm←∨\(Vm∨Am)∧((¯1+≢)-1⍳⍨∘⌽2=d)=(⍳≢)
+mr←(⊃⍪/)((1↑⊢),((⊢(⌿⍨∘~⍪∘mre(⌿⍨))mrm)¨1↓⊢))∘scp
+ur←⊢
 ⍝[cf]
 ⍝[of]:Flatten Expressions
 fen	←((⊂'fe')(⊃enc)¨((0∊⍨n)∧Em∨Om∨Am)(⌿∘⊢)r)((0∊⍨n)∧Em∨Om∨Am)mnd n⊢
