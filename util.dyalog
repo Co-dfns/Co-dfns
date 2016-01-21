@@ -56,7 +56,7 @@ MK∆T3←{	id cmp ns fn tl←⍺⍺	⋄ l r←⍵⍵
 	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
 	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
 	nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
-	#.UT.expect←(≢nv)⍴1 ⋄ ,tl>|nv-cv
+	#.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv
 }
 
 ∇Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;CMP;TC;TMP
