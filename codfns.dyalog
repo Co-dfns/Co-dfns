@@ -1027,11 +1027,18 @@ idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
 		idx}
 ⍝[cf]
 ⍝[of]:Bracket Indexing
-brid←{	chk	←'if(lr>1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
-	chk	,←pacc'update host(rv[:rc],lv[:lc])'
-	chk	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])error(3);'
+brid←{	chk	←'if(lr!=1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
+	chkn	←pacc'update host(rv[:rc],lv[:lc])'
+	chkn	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])error(3);'
+	chkb	←'I n=ceil(rc/8.0);',nl
+	chkb	,←pacc'update host(rv[:n],lv[:lc])'
+	chkb	,←'DO(i,n){DO(j,8){if((1&(rv[i]>>(7-j)))>=ls[0])error(3);}}'
+	chk	,←(3≡1⊃⍺)⊃chkn chkb
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-	exe	←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
+	exen	←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
+	exeb	←(simd'present(zv[:rslt->c],lv[:lc],rv[:n])')
+	exeb	,←'DO(i,n){DO(j,8){zv[i*8+j]=lv[1&(rv[i]>>(7-j))];}}'
+	exe	←(3≡1⊃⍺)⊃exen exeb
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Left/Right
