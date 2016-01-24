@@ -597,7 +597,7 @@ tps	,←'case APLDOUB:tp+=1;break;case APLBOOL:tp+=2;break;',nl
 tps	,←'default:error(16);}',nl
 tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
 fcln	←'frea(&cl);',nl,'frea(&cr);',nl,'frea(&za);',nl
-dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('error(',(cln⍕e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
+dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('error(',(cln⍕|e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
 dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y ⍵),');')''}
 case	←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
 fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
