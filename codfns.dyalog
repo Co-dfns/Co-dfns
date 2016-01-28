@@ -1231,7 +1231,8 @@ drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	cpyb	,←'I sti=(lc*zc)/8;I stp=(lc*zc)%8;n=(zcp==0?0:zcp-1);',nl
 	cpyb	,←simd'independent present(zv[:zcp],rv[:rcp])'
 	cpyb	,←'DO(i,n){U8 x=rv[i+sti]<<stp;x|=rv[i+1+sti]>>(8-stp);zv[i]=x;}',nl
-	cpyb	,←'if(zcp)zv[n]=rv[n+sti]<<stp;'
+	cpyb	,←'if(zcp){',nl,(pacc'update host(rv[n+sti:1])')
+	cpyb	,←'zv[n]=rv[n+sti]<<stp;',nl,(pacc'update device(zv[n:1])'),'}'
 	cpy	,←(3=⊃0⌷⍺)⊃cpyn cpyb
 	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
 	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
