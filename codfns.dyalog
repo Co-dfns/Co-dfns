@@ -1221,8 +1221,8 @@ encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
 ⍝[of]:Take/Drop
 drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←pacc'update host(lv[:1])'
-	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
-	siz	,←'lc=lv[0];'
+	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=(zs[0]==0?0:lv[0]);',nl
+	siz	,←'I n=zr-1;DO(i,n)zc*=zs[i+1];lc=lv[0];'
 	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
 	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
 	cpyn	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
