@@ -574,7 +574,7 @@ var	←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ ¯1≥⊃⍵:,⍺ ⋄ '&
 dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
 reg	←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
 fnv	←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-git	←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'aplint8 ' '?type? '}
+git	←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'U8 ' '?type? '}
 gie	←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLBOOL' 'APLNA'}
 pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
 simdc	←{('#pragma acc kernels loop ',⍵,nl)('')('')}
@@ -680,7 +680,7 @@ sidx←{	0=⊃⊃0⍴⊂⍵:	8⍴⊂⍵ (⍺⊃⍺⍺)
 	3=⍺⊃⍺⍺:	↓(⍺⊃⍺⍺),⍨⍪(⌽⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
 		↓(⍺⊃⍺⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
 scal	←{⊃⍺⍺ sstm ⍵⍵¨/1 2(⍺ sidx)¨⍵}
-sgtbn	←{⍺⍺,'|=((aplint8)(',⍵,'))<<',(⍕7-⍺),';',nl}
+sgtbn	←{⍺⍺,'|=((U8)(',⍵,'))<<',(⍕7-⍺),';',nl}
 sgtnn	←{⍺⍺,'_',(⍕⍺),'=',⍵,';',nl}
 sgtbb	←{⍺,'=',⍵,';',nl}
 sget←{	nm	←(⊃git⊃⍺⍺),⊃⍺
@@ -1225,12 +1225,18 @@ drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	,←'lc=lv[0];'
 	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
 	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
+	cpyn	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	cpyn	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
+	cpyb	←'I zcp=ceil(rslt->c/8.0);I rcp=ceil(rgt->c/8.0);',nl
+	cpyb	,←'I sti=(lc*zc)/8;I stp=(lc*zc)%8;n=(zcp==0?0:zcp-1);',nl
+	cpyb	,←simd'independent present(zv[:zcp],rv[:rcp])'
+	cpyb	,←'DO(i,n){U8 x=rv[i+sti]<<stp;x|=rv[i+1+sti]>>(8-stp);zv[i]=x;}',nl
+	cpyb	,←'if(zcp)zv[n]=rv[n+sti]<<stp;'
+	cpy	,←(3=⊃0⌷⍺)⊃cpyn cpyb
 	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
 	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
 	ref	,←'rslt->v=rv+(lc*zc);'
-	exe	←ref cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
+	exe	←ref cpy⊃⍨1⌊(3=⊃0⌷⍺)+0=⊃0⍴⊃⊃1 0⌷⍵
 		chk siz exe mxfn 0 ⍺ ⍵}
 tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←pacc'update host(lv[:1])'
@@ -1284,6 +1290,7 @@ rth	,←'#endif',nl
 rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
 rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
+rth	,←'typedef unsigned char U8;',nl
 rth	,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array A;',nl
 rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
 rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
@@ -1295,7 +1302,7 @@ rth	,←' B pc=8*ceil(c/8.0);',nl
 rth	,←' switch(tp){',nl
 rth	,←'  case 1:z=sizeof(I)*pc;break;',nl
 rth	,←'  case 2:z=sizeof(D)*pc;break;',nl
-rth	,←'  case 3:z=ceil((sizeof(aplint8)*pc)/8.0);break;',nl
+rth	,←'  case 3:z=ceil((sizeof(U8)*pc)/8.0);break;',nl
 rth	,←'  default: error(16);}',nl
 rth	,←' z=4*ceil(z/4.0);char*v=malloc(z);if(NULL==v)error(1);',nl
 rth	,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
@@ -1307,7 +1314,7 @@ rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 rth	,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);B z=0;',nl
 rth	,←' switch(t){',nl,'  case APLLONG:z=a->c*sizeof(I);break;',nl
 rth	,←'  case APLDOUB:z=a->c*sizeof(D);break;',nl
-rth	,←'  case APLBOOL:z=ceil(a->c/8.0)*sizeof(aplint8);break;',nl
+rth	,←'  case APLBOOL:z=ceil(a->c/8.0)*sizeof(U8);break;',nl
 rth	,←'  default:error(11);}',nl
 rth	,←' #ifdef _OPENACC',nl,'  char *v=a->v;',nl
 rth	,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
@@ -1323,9 +1330,9 @@ rth	,←'   {aplint16 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
 rth	,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
+rth	,←'   {U8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLBOOL:a->z=ceil(c/8.0)*sizeof(aplint8);a->f=1;',nl
+rth	,←'  case APLBOOL:a->z=ceil(c/8.0)*sizeof(U8);a->f=1;',nl
 rth	,←'   a->v=ARRAYSTART(d->p);break;',nl
 rth	,←'  default:error(16);}',nl
 rth	,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
