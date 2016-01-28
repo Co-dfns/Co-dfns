@@ -381,8 +381,8 @@ pn,←⊂,'⍪'
 	pt[31;pf1]←	1	2	3	1	2	1
 	pt[31;pf2]←	2	2	2	1	2	3
 pn,←⊂,'⌽'		
-	pt[32;pf1]←	1	2	3	1	1	1
-	pt[32;pf2]←	2	2	2	3	3	3
+	pt[32;pf1]←	1	2	3	1	¯11	1
+	pt[32;pf2]←	2	¯11	2	3	¯11	3
 pn,←⊂,'∊'		
 	pt[33;pf1]←	1	2	3	3	3	3
 	pt[33;pf2]←	3	3	3	3	3	3
@@ -901,7 +901,7 @@ fdb⍪←,¨'⍳'	'iotm'	'{⎕SIGNAL 16}'	''	''
 fdb⍪←,¨'⍴'	'shpm'	'shpd'	''	''
 fdb⍪←,¨','	'catm'	'catd'	''	''
 fdb⍪←,¨'⍪'	'fctm'	'fctd'	''	''
-fdb⍪←,¨'⌽'	'rotm'	'{⎕SIGNAL 16}'	''	''
+fdb⍪←,¨'⌽'	'rotm'	'rotd'	''	''
 fdb⍪←,¨'⊖'	'rtfm'	'rtfd'	''	''
 fdb⍪←,¨'∊'	'memm'	'memd'	''	''
 fdb⍪←,¨'⊃'	'dscm'	'{⎕SIGNAL 16}'	''	''
@@ -1101,6 +1101,13 @@ rotm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;
 	acc	←'independent collapse(2) present(rv[:lc],zv[:lc])'
 	exe	,←(simd acc),'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
 		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
+rotd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+	exe	←'zc=rr==0?1:rs[rr-1];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i];',nl
+	exe	,←'DO(i,lr)lc*=ls[i];',nl
+	exe	,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
+	exe	,←'DO(i,rc){DO(j,zc){zv[i*zc+((j-lv[0])%zc)]=rv[(i*zc)+j];}}'
+		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Member/Enlist
 memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
