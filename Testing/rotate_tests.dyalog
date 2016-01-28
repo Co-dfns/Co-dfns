@@ -6,6 +6,9 @@ S←':Namespace' 'Run←{⍺⌽⍵}' ':EndNamespace'
 '02'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	0
 '03'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(⍳5)
 '04'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(2 3 4⍴⍳5)
+'05'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(0 1 1 0 0 1 1 1 1 0 0)
+'06'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(0 1 1 0 0 1 1)
+
 
 :EndNamespace
 
