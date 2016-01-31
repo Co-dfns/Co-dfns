@@ -1104,9 +1104,19 @@ rotm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;
 rotd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
 	exe	←'zc=rr==0?1:rs[rr-1];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i];',nl
-	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
-	exe	,←'DO(i,rc){DO(j,zc){zv[i*zc+((j-lv[0])%zc)]=rv[(i*zc)+j];}}'
+	exe	,←'DO(i,lr)lc*=ls[i];I s=(lv[0]<0)?abs(lv[0]):zc-lv[0];',nl
+	exen	←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
+	exen	,←'DO(i,rc){DO(j,zc){zv[i*zc+((j+s)%zc)]=rv[(i*zc)+j];}}'
+	exeb	←'I zcp=ceil(rslt->c/8.0);',nl
+	exeb	,←simd'present(zv[:zcp])'
+	exeb	,←'DO(i,zcp){zv[i]=0;}',nl
+	exeb	,←simd'collapse(2) present(zv[:zcp],rv[:zcp],lv[:lc])'
+	exeb	,←'DO(i,rc){DO(j,zc){',nl
+	exeb	,←' I zi=i*zc+((j+s)%zc);',nl
+	exeb	,←' I ri=(i*zc)+j;',nl
+	exeb	,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
+	exeb	,←'}}'
+	exe	,←(3=⊃0⌷⍺)⊃exen exeb
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Member/Enlist
@@ -1338,7 +1348,7 @@ rth	,←'   {aplint16 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
 rth	,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth	,←'   {U8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
+rth	,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
 rth	,←'   DO(i,c)t[i]=s[i];};break;',nl
 rth	,←'  case APLBOOL:a->z=ceil(c/8.0)*sizeof(U8);a->f=1;',nl
 rth	,←'   a->v=ARRAYSTART(d->p);break;',nl
