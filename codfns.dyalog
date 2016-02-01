@@ -1097,9 +1097,18 @@ fctd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Reverse/Rotate
-rotm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
-	acc	←'independent collapse(2) present(rv[:lc],zv[:lc])'
-	exe	,←(simd acc),'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
+rotm←{	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
+	exen	←simd 'independent collapse(2) present(rv[:lc],zv[:lc])'
+	exen	,←'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
+	exeb	←'I zcp=ceil(lc/8.0);',nl
+	exeb	,←simd'present(zv[:zcp])'
+	exeb	,←'DO(i,zcp){zv[i]=0;}',nl
+	exeb	,←simd'collapse(2) present(zv[:zcp],rv[:zcp])'
+	exeb	,←'DO(i,zc){DO(j,rc){I zi=i*rc+j;I ri=i*rc+(rc-(j+1));',nl
+	exeb	,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
+	exeb	,←'}}'
+	exe	,←(3=⊃0⌷⍺)⊃exen exeb
 		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
 rotd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
