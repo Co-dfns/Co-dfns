@@ -450,7 +450,7 @@ pn,←⊂,'.'
 	pt[53;pf1]←	¯2	¯2	¯2	0	0	0
 	pt[53;pf2]←	0	0	0	0	0	0
 pn,←⊂'⎕sp'		
-	pt[54;pf1]←	¯2	¯2	¯2	1	¯11	¯11
+	pt[54;pf1]←	¯2	¯2	¯2	¯11	¯11	1
 	pt[54;pf2]←	¯11	¯11	¯11	¯11	¯11	¯11
 ⍝[c]
 ⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
@@ -750,28 +750,31 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	chk	←hid⊃('if(rr>0&&rs[rr-1]==0)error(11);')''
 	siz	←'if(rr==0){zr=0;}',nl
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i];zs[i]=rs[i];};rc=rs[zr];}'
-	gxe	←'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
+	zro	←(3=⊃0⌷⍺)⊃'' ('DO(i,zc){zv[i]=0;}',nl)
+	zvset	←(3=⊃0⌷⍺)⊃'zv[i]=val;' 'zv[i/8]|=val<<(7-(i%8));'
+	gxe	←zro,'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
 	gxe	,←pacc 'kernels loop present(rv[:rc])'
 	gxe	,←'DO(i,rc){'
 	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(1+i)]'
-	gxe	,←'}',nl,'zv[0]=val;',nl,pacc 'update device(zv[:1])'
+	gxe	,←'}',nl,'I i=0;',zvset,nl,pacc 'update device(zv[:1])'
 	gxe	,←'}else{',nl,pacc'kernels loop gang worker(32) present(zv[:zc],rv[:rgt->c])'
 	gxe	,←'DO(i,zc){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
 	gxe	,←pacc'loop vector(32)'
 	gxe	,←'DO(j,rc){'
 	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(1+j))]'
-	gxe	,←'}',nl,'zv[i]=val;}}',nl
-	ixe	←pacc 'update host(rv[:rgt->c])'
-	ixe	,←'DO(i,zc){',(⊃git⊃⍺),'val=',(idv⊃⍨idf⍳0⌷⍺⍺),';',nl,'DO(j,rc){'
-	ixe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(1+j))]'
-	ixe	,←'}',nl,'zv[i]=val;}',nl,pacc'update device(zv[:rslt->c])'
-	exe	←pacc'update host(rv[:rgt->c])'
+	gxe	,←'}',nl,zvset,'}}',nl
+	ixe	←'if(rc==0){DO(i,zc){zv[i]=',(idv⊃⍨idf⍳0⌷⍺⍺),';}}',nl
+	ixe	,←'else{',zro,pacc 'update host(rv[:rgt->c])'
+	ixe	,←'DO(i,zc){',(⊃git⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl,'DO(j,n){'
+	ixe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
+	ixe	,←'}',nl,zvset,'}}',nl,pacc'update device(zv[:rslt->c])'
+	exe	←zro,pacc'update host(rv[:rgt->c])'
 	exe	,←'DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl
 	exe	,←(pacc'enter data copyin(val)'),'DO(j,n){'
 	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
 	exe	,←pacc'update device(val)'
 	exe	,←'}',nl,pacc'exit data delete(val)'
-	exe	,←'zv[i]=val;}',nl,pacc'update device(zv[:rslt->c])'
+	exe	,←zvset,'}',nl,pacc'update device(zv[:rslt->c])'
 		chk siz (exe ixe gxe⊃⍨gid+hid) mxfn 1 ⍺ ⍵}
 redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	hid	←idf∊⍨⊃⊃⍺⍺ ⋄ a←0 1 1⊃¨⊂⍺
@@ -1287,11 +1290,14 @@ tspm←{	siz	←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Horrible Hacks
-sopid←{siz←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
- exe←'zc=zs[0];rc=rs[0];lc=ls[rr-1];B szz=rslt->c,szr=rgt->c,szl=lft->c;',nl
- exe,←simd'independent collapse(3) present(zv[:szz],rv[:szr],lv[:szl])'
- exe,←'DO(i,zc){DO(j,rc){DO(k,lc){zv[(i*rc*lc)+(j*lc)+k]=lv[(i*lc)+k]*rv[(j*lc)+k];}}}'
- '' siz exe mxfn 1 ⍺ ⍵}
+sopid←{	siz	←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
+	exe	←'zc=zs[0];rc=rs[0];lc=ls[rr-1];',nl
+	exe	,←'B szz=rslt->c,szr=rgt->c,szl=ceil(lft->c/8.0);',nl
+	exe	,←simd'independent collapse(3) present(zv[:szz],rv[:szr],lv[:szl])'
+	exe	,←'DO(i,zc){DO(j,rc){DO(k,lc){I li=(i*lc)+k;',nl
+	exe	,←'zv[(i*rc*lc)+(j*lc)+k]=(1&(lv[li/8]>>(7-(li%8))))*rv[(j*lc)+k];',nl
+	exe	,←'}}}'
+		'' siz exe mxfn 1 ⍺ ⍵}
  
  ⍝ Lamination
   catdo←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catdl ⍵ ⋄ ⍺ catdv ⍵}
