@@ -1234,9 +1234,15 @@ fltd←{	chk	←'if(lr>1)error(4);',nl
 decd←{	chk	←'if(lr>1||lv[0]<0)error(16);'
 	siz	←'zr=rr==0?0:rr-1;DO(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
 	siz	,←'if(rr>0)rc=rs[0];'
-	exe	←pacc'update host(lv,rv[:rgt->c])'
-	exe	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
+	exen	←pacc'update host(lv,rv[:rgt->c])'
+	exen	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
+	exen	,←pacc'update device(zv[:rslt->c])'
+	exeb	←'I rcp=ceil(rgt->c/8.0);',nl
+	exeb	,←pacc'update host(lv,rv[:rcp])'
+	exeb	,←'DO(i,zc){zv[i]=0;DO(j,rc){I ri=(j*zc)+i;',nl
+	exeb	,←'zv[i]=(1&(rv[ri/8]>>(7-(ri%8))))+lv[0]*zv[i];}}',nl
+	exeb	,←pacc'update device(zv[:rslt->c])'
+	exe	←(3=⊃1⌷⍺)⊃exen exeb
 		chk siz exe mxfn 1 ⍺ ⍵}
 encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
 	chk	,←pacc'update host(lv[:lc])'
