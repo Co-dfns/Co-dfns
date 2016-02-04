@@ -750,9 +750,10 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	chk	←hid⊃('if(rr>0&&rs[rr-1]==0)error(11);')''
 	siz	←'if(rr==0){zr=0;}',nl
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i];zs[i]=rs[i];};rc=rs[zr];}'
-	zro	←(3=⊃0⌷⍺)⊃'' ('DO(i,zc){zv[i]=0;}',nl)
+	zn	←(3=⊃0⌷⍺)⊃'I n=zc;' 'I n=ceil(zc/8.0);'
+	zro	←(3=⊃0⌷⍺)⊃'' ('DO(i,n){zv[i]=0;}',nl)
 	zvset	←(3=⊃0⌷⍺)⊃'zv[i]=val;' 'zv[i/8]|=val<<(7-(i%8));'
-	gxe	←zro,'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
+	gxe	←zn,nl,zro,'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
 	gxe	,←pacc 'kernels loop present(rv[:rc])'
 	gxe	,←'DO(i,rc){'
 	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(1+i)]'
@@ -763,18 +764,18 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	gxe	,←'DO(j,rc){'
 	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(1+j))]'
 	gxe	,←'}',nl,zvset,'}}',nl
-	ixe	←'if(rc==0){DO(i,zc){zv[i]=',(idv⊃⍨idf⍳0⌷⍺⍺),';}}',nl
+	ixe	←zn,nl,'if(rc==0){DO(i,n){zv[i]=',(idv⊃⍨idf⍳0⌷⍺⍺),';}}',nl
 	ixe	,←'else{',zro,pacc 'update host(rv[:rgt->c])'
 	ixe	,←'DO(i,zc){',(⊃git⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl,'DO(j,n){'
 	ixe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
-	ixe	,←'}',nl,zvset,'}}',nl,pacc'update device(zv[:rslt->c])'
-	exe	←zro,pacc'update host(rv[:rgt->c])'
+	ixe	,←'}',nl,zvset,'}}',nl,pacc'update device(zv[:n])'
+	exe	←zn,nl,zro,pacc'update host(rv[:rgt->c])'
 	exe	,←'DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl
 	exe	,←(pacc'enter data copyin(val)'),'DO(j,n){'
 	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
 	exe	,←pacc'update device(val)'
 	exe	,←'}',nl,pacc'exit data delete(val)'
-	exe	,←zvset,'}',nl,pacc'update device(zv[:rslt->c])'
+	exe	,←zvset,'}',nl,pacc'update device(zv[:n])'
 		chk siz (exe ixe gxe⊃⍨gid+hid) mxfn 1 ⍺ ⍵}
 redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	hid	←idf∊⍨⊃⊃⍺⍺ ⋄ a←0 1 1⊃¨⊂⍺
@@ -1335,7 +1336,7 @@ rth	,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
 rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
 rth	,←' if(a->f){',nl,'#ifdef _OPENACC',nl
 rth	,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
-rth	,←' if(a->f>1)free(v);}}',nl
+rth	,←' if(a->f>1){free(v);}}}',nl
 rth	,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=0;',nl
 rth	,←' B pc=8*ceil(c/8.0);',nl
 rth	,←' switch(tp){',nl
