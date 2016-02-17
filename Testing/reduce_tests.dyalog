@@ -5,6 +5,7 @@ S2←':Namespace' 'Run←{×/⍵}'  ':EndNamespace'
 S3←':Namespace' 'Run←{{⍺+⍵}/⍵}' ':EndNamespace'
 S4←':Namespace' 'Run←{≠/⍵}' ':EndNamespace'
 S5←':Namespace' 'Run←{{⍺≠⍵}/⍵}' ':EndNamespace'
+S6←':Namespace' 'Run←{∧/⍵}' ':EndNamespace'
 
 '01'('reduce' S1 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
 '02'('reduce' S1 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
@@ -20,6 +21,14 @@ S5←':Namespace' 'Run←{{⍺≠⍵}/⍵}' ':EndNamespace'
 '12'('reduce' S4 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
 '13'('reduce' S4 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
 '14'('reduce' S4 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
+'15'('reduce' S1 'Run' #.util.GEN∆T1 ⎕THIS) 10⍴0 1
+'16'('reduce' S4 'Run' #.util.GEN∆T1 ⎕THIS) 10 5 0⍴0 1
+'17'('reduce' S4 'Run' #.util.GEN∆T1 ⎕THIS) 10 0 5⍴0 1
+'18'('reduce' S6 'Run' #.util.GEN∆T1 ⎕THIS) 10 5 0⍴0 1
+'19'('reduce' S6 'Run' #.util.GEN∆T1 ⎕THIS) 10 0 5⍴0 1
+'20'('reduce' S5 'Run' #.util.GEN∆T1 ⎕THIS) 10⍴0 1
+'21'('reduce' S1 'Run' #.util.GEN∆T1 ⎕THIS) 10 15⍴0 1
+'22'('reduce' S5 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
 
 :EndNamespace
 

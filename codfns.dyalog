@@ -277,7 +277,6 @@ nv	←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪
 ⍝[c]	18	Bitvector	Bitvector
 ⍝[c]	19	Bitvector	Not bound
 ⍝[c]	
-
 ⍝[of]:Primitive Types
 pf1←9 14 19 6 7 8 ⋄ pf2←11 12 13 16 17 18
 pn←⍬	⋄ pt←56 20⍴0
@@ -471,7 +470,9 @@ otn,←⊂,'¨'	⋄ oti⍪←↑(2 3)	(2 3)
 
 lte	←((20⌊1 4 5⊥((∨⌿¯1=×)⍪|))2↑⊢)⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢
 ltoa	←lte⍤2(2↑⊣),[1]⍨(oti⌷⍨otn⍳¯1↑∘⊃v)(⌷⍤0 2)(4 5⊤⍳20)⍪⍨(2↑1↓(⊃y))
-lto	←(((1+¯1⌈⊃)⌷0 0,⍨⊢)⍤1∘⍉⍪1⊖⊢) ltoa⍪⍨¯1↑⊣
+ltob	←(⍴⊣)⍴(,(⌈/⊢))(⌷⍤0 1)0 4 3 1 2,⍤1 0∘,⊣
+ltoc	←ltoa(⊣ltob 5 0 3 4 2 1⌷⍤0 1⍨1+¯1⌈,∘⍪⍤1)(4 5⊤⍳20)×(,¨'/⌿\⍀')∊⍨¯1↑∘⊃v 
+lto	←(((1+¯1⌈⊃)⌷0 0,⍨⊢)⍤1∘⍉⍪1⊖⊢)(¯1↑⊣)⍪ltoc
 ltv	←(1⊃⊣)⌷⍤0 2⍨(⊃¨(0⊃⊣)⍳∘⊂ndo(⊃v))
 ltt	←(Om∧1 2∨.=∘⊃k)⊃⊣(((lte⍪⊢)ltv){⍺⍵}ltv lto ⊢)(⍉∘⍪⊢)
 lta	←(1↓¨(⊂⊢),∘⊂(20⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(0,∘∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
@@ -610,7 +611,7 @@ respos	←'fmod((D)⍵,(D)⍺)'
 resneg	←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
 residue	←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
 
-sdb←0 5⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(('%'⎕R'\\\%')∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
+sdb←0 5⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(scln∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝[c]
 ⍝[c]Prim	Monadic	Dyadic	Monadic Bool	Dyadic Bool
 sdb⍪←,¨'+'	'⍵'	'⍺+⍵'	'⍵'	'⍺+⍵'
@@ -750,33 +751,65 @@ redm←{	idf	←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂
 	chk	←hid⊃('if(rr>0&&rs[rr-1]==0)error(11);')''
 	siz	←'if(rr==0){zr=0;}',nl
 	siz	,←'else{zr=rr-1;DO(i,zr){zc*=rs[i];zs[i]=rs[i];};rc=rs[zr];}'
-	zn	←(3=⊃0⌷⍺)⊃'I n=zc;' 'I n=ceil(zc/8.0);'
-	zro	←(3=⊃0⌷⍺)⊃'' ('DO(i,n){zv[i]=0;}',nl)
-	zvset	←(3=⊃0⌷⍺)⊃'zv[i]=val;' 'zv[i/8]|=val<<(7-(i%8));'
-	gxe	←zn,nl,zro,'if(zc==1){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
-	gxe	,←pacc 'kernels loop present(rv[:rc])'
-	gxe	,←'DO(i,rc){'
-	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(1+i)]'
-	gxe	,←'}',nl,'I i=0;',zvset,nl,pacc 'update device(zv[:1])'
-	gxe	,←'}else{',nl,pacc'kernels loop gang worker(32) present(zv[:zc],rv[:rgt->c])'
-	gxe	,←'DO(i,zc){',(⊃git⊃⍺),'val=',(gpv⊃⍨gpf⍳0⌷⍺⍺),';',nl
-	gxe	,←pacc'loop vector(32)'
-	gxe	,←'DO(j,rc){'
-	gxe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(1+j))]'
-	gxe	,←'}',nl,zvset,'}}',nl
-	ixe	←zn,nl,'if(rc==0){DO(i,n){zv[i]=',(idv⊃⍨idf⍳0⌷⍺⍺),';}}',nl
-	ixe	,←'else{',zro,pacc 'update host(rv[:rgt->c])'
-	ixe	,←'DO(i,zc){',(⊃git⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl,'DO(j,n){'
-	ixe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
-	ixe	,←'}',nl,zvset,'}}',nl,pacc'update device(zv[:n])'
-	exe	←zn,nl,zro,pacc'update host(rv[:rgt->c])'
-	exe	,←'DO(i,zc){',(⊃git ⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl
-	exe	,←(pacc'enter data copyin(val)'),'DO(j,n){'
-	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
-	exe	,←pacc'update device(val)'
-	exe	,←'}',nl,pacc'exit data delete(val)'
-	exe	,←zvset,'}',nl,pacc'update device(zv[:n])'
-		chk siz (exe ixe gxe⊃⍨gid+hid) mxfn 1 ⍺ ⍵}
+	exe	←'I zn=',((3=⊃0⌷⍺)⊃'zc' 'ceil(zc/8.0)'),';'
+	exe	,←'I rn=',((3=⊃1⌷⍺)⊃'rc' 'ceil(rc/8.0)'),';',nl
+	exe	,←'if(rc==0){'
+	exe1a	←'error(11);',nl
+	exe1b	←nl,simd'present(zv[:zc])'
+	exe1b	,←'DO(i,zc){zv[i]=',(idv⊃⍨idf⍳0⌷⍺⍺),';}',nl
+	exe1c	←nl,simd'present(zv[:zn])'
+	exe1c	,←'DO(i,zn){zv[i]=',('0' '-1' ''⊃⍨(,¨'01')⍳idv⌷⍨idf⍳0⌷⍺⍺),';}',nl
+	exe	,←(2⊥hid(3=⊃0⌷⍺))⊃exe1a exe1a exe1b exe1c
+	exe	,←'}else if(rc==1){'
+	exe	,←nl,simd'present(zv[:zn],rv[:zn])'
+	exe	,←'DO(i,zn){zv[i]=rv[i];}',nl
+	exe	,←'}else if(zc==1){'
+	exe3a	←nl,pacc gid⊃'update host(rv[:rc])' 'update host(rv[rc-1:1])'
+	exe3a	,←(⊃git⊃⍺),'val=rv[rc-1];I n=rc-1;',nl
+	exe3a	,←pacc gid⊃'enter data copyin(val)' 'kernels loop present(rv[:rc])'
+	exe3a	,←'DO(i,n){',nl
+	exe3a	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[rc-(2+i)]'
+	exe3a	,←gid⊃(nl,pacc'update device(val)')''
+	exe3a	,←'}',nl,gid⊃(pacc'exit data delete(val)')''
+	exe3a	,←'zv[0]=val;',nl,pacc'update device(zv[:1])'
+	exe3b	←nl,pacc gid⊃'update host(rv[:rn])' 'update host(rv[rn-1:1])'
+	exe3b	,←(⊃git⊃⍺),'val=1&(rv[rn-1]>>(7-((rc-1)%8)));I n=rc-1;',nl
+	exe3b	,←pacc gid⊃'enter data copyin(val)' 'kernels loop present(rv[:rn])'
+	exe3b	,←'DO(i,n){I ri=rc-(2+i);I cr=1&(rv[ri/8]>>(7-(ri%8)));',nl
+	exe3b	,←gid⊃(pacc'data copyin(cr)')''
+	exe3b	,←((2⍴⊃⍺),1,2↓⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'cr'
+	exe3b	,←gid⊃(nl,pacc'update device(val)')''
+	exe3b	,←'}',nl,gid⊃(pacc'exit data delete(val)')''
+	exe3b	,←'zv[0]=',('val;' 'val<<7;'⊃⍨3=⊃0⌷⍺),nl
+	exe3b	,←pacc'update device(zv[:1])'
+	exe	,←(2⊥(3=2↑⍺))⊃exe3a exe3b exe3a exe3b
+	exe	,←'}else if(0==zc*rc){',nl
+	exe	,←'}else{'
+	exe4lp	←'kernels loop gang worker(32) present(zv[:zn],rv[:rn])'
+	exe4a	←nl,pacc gid⊃'update host(rv[:rc])' exe4lp
+	exe4a	,←'DO(i,zc){',(⊃git⊃⍺),'val=rv[(i*rc)+rc-1];L n=rc-1;',nl
+	exe4a	,←pacc gid⊃'enter data copyin(val)' 'loop vector(32)'
+	exe4a	,←'DO(j,n){',nl
+	exe4a	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'rv[(i*rc)+(rc-(2+j))]'
+	exe4a	,←gid⊃(nl,pacc'update device(val)')''
+	exe4a	,←'}',nl,gid⊃(pacc'exit data delete(val)')''
+	exe4a	,←'zv[i]=val;}',nl, gid⊃(pacc'update device(zv[:zc])')''
+	exe4b	←nl,(simd'present(zv[:zn])'),'DO(i,zn){zv[i]=0;};I n=rc-1;',nl
+	exe4b	,←pacc gid⊃'update host(rv[:rn])' exe4lp
+	exe4b	,←'DO(i,zc){I si=(i*rc)+rc-1;',nl
+	exe4b	,←(⊃git⊃⍺),'val=1&(rv[si/8]>>(7-(si%8)));',nl
+	exe4b	,←pacc gid⊃'enter data copyin(val)' 'loop vector(32)'
+	exe4b	,←'DO(j,n){I ri=(i*rc)+(rc-(2+j));I cr=1&(rv[ri/8]>>(7-(ri%8)));',nl
+	exe4b	,←((2⍴⊃⍺),1,2↓⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'cr'
+	exe4b	,←gid⊃(nl,pacc'update device(val)')''
+	exe4b	,←'}',nl,gid⊃(pacc'exit data delete(val)')''
+	exe4b	,←(3=⊃0⌷⍺)⊃'zv[i]=val;' 'zv[i/8]|=val<<(7-(i%8));'
+	exe4b	,←'}',nl,gid⊃(pacc'update device(zv[:zn])')''
+	exe	,←(2⊥(3=2↑⍺))⊃exe4a exe4b exe4a exe4b
+	exe	,←'}'
+		chk siz exe mxfn 1 ⍺ ⍵}
+⍝[cf]
+⍝[of]:Reduce N-wise
 redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	hid	←idf∊⍨⊃⊃⍺⍺ ⋄ a←0 1 1⊃¨⊂⍺
 	idv	←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
@@ -1322,11 +1355,11 @@ sopid←{	siz	←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 ⍝[cf]
 ⍝[of]:Runtime Header
 ⍝[of]:Includes, Structures, Allocation
-rth	←'#include <math.h>',nl,'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
-rth	,←'#include <stdio.h>',nl,'#include <string.h>',nl
+rth	←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
 rth	,←'#ifdef _OPENACC',nl
 rth	,←'#include <accelmath.h>',nl,'extern unsigned int __popcnt (unsigned int);',nl
 rth	,←'#endif',nl
+rth	,←'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
 rth	,←'int isinit=0;',nl
 rth	,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
 rth	,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
