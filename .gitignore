@@ -29,3 +29,9 @@ dwa
 aplcore
 *.o
 config.dyalog
+CONTINUE
+*.aux
+*.log
+*.out
+codfns.tex
+*.toc
