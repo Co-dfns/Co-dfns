@@ -64,15 +64,86 @@ from a programming languages research standpoing, as well as a compiler
 design standpoint. Probably also cover something about the nature of 
 computing, programming, and HCI. 
 
+We should probably also describe how this file stores all of the information
+on the compiler, including the testing and such.
+
 @ 
 \mainmatter
 \chapter{Overview}
 
-The compiler itself consists of a few different logical sections. 
+The Co-dfns compiler exists as a single monolithic Dyalog APL namespace
+called conveniently enough, [[codfns]]. This has a number of specific
+advantages considered desirable for the compiler:
+
+\begin{itemize}
+\item A single namespace is very easy to distribute and maintain
+\item Hacking and debugging on the single namespace aids in transparency
+\item There is little to no clutter to the end user
+\item It avoids complex build or infrastructure support outside of [[noweb]]
+\item It reduces the overall burden to self-hosting
+\end{itemize}
+
+Within the compiler itself there are a number of logical sections. To which 
+we will normally dedicate a chapter for each major section. 
 
 <<*>>=
+:Namespace codfns
+<<Choices for [[⎕IO]], [[⎕ML]], and [[⎕WX]]>>
 <<Unprocessed code>>
-@ 
+:EndNamespace
+@ %def codfns
+
+The entire namespace and the rest of this document all assume the following
+settings for the global constants [[⎕IO]], [[⎕ML]], and [[⎕WX]]. It is 
+important that these constants are fixed throughout the code, and we also 
+make the assumption that the end user is compiling under these constants. 
+That is, there is no facility in the compiler for supporting different 
+values of, say, [[⎕IO]]. 
+
+<<Choices for [[⎕IO]], [[⎕ML]], and [[⎕WX]]>>=
+⎕IO ⎕ML ⎕WX←0 1 3
+@ %def ⎕IO ⎕ML ⎕WX
+
+\section{Coding Conventions/Style Guide}
+
+@
+\section{Testing Requirements and Methods}
+
+@
+\chapter{Public Interface}
+
+@
+\chapter{Installation, Configuration, and Settings}
+
+@
+\chapter{Parsing}
+
+@
+\chapter{Core Compiler Architecture}
+
+@
+\chapter{Placeholder for Passes, 1 per chapter}
+
+@
+\chapter{Code Generation}
+
+@
+\chapter{Runtime: Architecture}
+
+@
+\chapter{Runtime: Scalars}
+
+@
+\chapter{Runtime: Mixed Functions}
+
+@
+\chapter{Runtime: Operators}
+
+@
+\chapter{Runtime: Performance/Internal Hacks}
+
+@
+\chapter{Backend Compilers}
 
 @
 \backmatter
@@ -90,17 +161,7 @@ This chapter includes all of the unprocessed code that has not yet been
 incorporated into the rest of the document.
 
 <<Unprocessed code>>=
-﻿⍝[c]The Co-dfns Compiler: High-performance, Parallel APL Compiler
-⍝[c]Copyright (c) 2015 Aaron W. Hsu <arcfide@sacrideo.us>
-⍝[c]See LICENSE.txt and COPYING.txt for copyright information.
-⍝[c]
-⍝[c]This file is best viewed using code-browser and the associated language 
-⍝[c]file. It is designed with explicitly marked code folding in mind. It makes 
-⍝[c]use of elastic tabstops.
-⍝[c]
-:Namespace codfns
 ⍝[of]:Global Configuration
-⎕IO ⎕ML ⎕WX←0 1 3
 VERSION	←0 4 42 ⋄ COMPILER←'vsc'
 DWA∆PATH	←'dwa'
 BUILD∆PATH	←'Build'
@@ -1526,6 +1587,5 @@ rth	,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
 ⍝[cf]
 ⍝[cf]
 ⍝[cf]
-:EndNamespace
 @
 \end{document}
