@@ -117,7 +117,7 @@ values of, say, [[⎕IO]].
 We recommend the use of a configuration file for loading and using the compiler. 
 This is a small file that you use to store your system specific settings that 
 configure the compiler for your specific use case. You would load this file 
-into your workspace after you have loaded the [[codfns.dyalog]] file. 
+into your workspace after you have loaded the [[<<codfns.dyalog>>]] file. 
 
 We frame the code in the form of an empty namespace that, as a side effect of 
 loading, sets the appropriate [[codfns]] global settings to make the compiler 
@@ -140,14 +140,59 @@ may wish to simply set these settings as a part of the loading process for
 whatever program uses the compiler, instead of an explicit [[config]] 
 namespace for this purpose. 
 
-<<config.dyalog.template>>=
+<<config.dyalog>>=
 :Namespace config
 
-#.codfns.COMPILER←'pgcc'
-#.codfns.TEST∆COMPILERS←'gcc' 'icc' 'pgcc'
+##.codfns.COMPILER←'pgcc'
+##.codfns.TEST∆COMPILERS←'gcc' 'icc' 'pgcc'
 
 :EndNamespace
 @ %def config COMPILER TEST∆COMPILERS
+
+\section{Loading the Compiler}
+
+As a single namespace script, the Co-dfns compiler is particularly well suited 
+to loading using the SALT system from Dyalog. In particular, the developers 
+use themselves and recommend the use of two special Dyalog Application Scripts 
+that load the compiler and run the entire test suite, respectively. 
+
+@ The core element is loading the compiler itself. We will assume that you also 
+want to load all of the utility functions, the testing harness and your own 
+personal configuration settings in the form of a [[<<config.dyalog>>]] file. This 
+represents the ``Kitchen Sink'' solution so that you have everything that you 
+could possibly require at your fingertips whenever your are using the compiler, 
+and it is particularly well suited for use as is by developers and other 
+users who are tinkering with the compiler, as it will allow them to test that 
+the compiler works using test scripts without requiring additional elements to 
+be loaded. 
+
+The result will of course, be four loaded namespaces loaded into the [[#]] 
+namespace: [[util]], [[codfns]], [[UT]], and [[config]]. You can change [[#]] 
+to be anything you want, but all of the namespaces should be loaded into the 
+same parent namespace. 
+
+<<load.dyapp>>=
+Target #
+Load util
+Load codfns
+Load APLUnit\UT
+Load config
+@
+Running the test suite in its entirety is a good practice, and it can be 
+helpful as a debugging tool when submitting error reports if the compiler is 
+not doing what you expect. It is the same as [[<<load.dyapp>>]] but it includes 
+a final command to [[Run]] the [[util.TEST]] function, which will attempt to 
+run all of the tests for all of the compilers that you have defined in 
+[[TEST∆COMPILERS]]. 
+
+<<test.dyapp>>=
+Target #
+Load util
+Load codfns
+Load APLUnit\UT
+Load config
+Run util.TEST
+@
 
 \chapter{Parsing}
 
