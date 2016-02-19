@@ -23,7 +23,7 @@ can support the project.
 There are two ways to get the Co-dfns compiler. You can download the source 
 directly from GitHub 
 [[.zip](https://github.com/arcfide/Co-dfns/zipball/master)]
-[[tar.gz](https://github.com/arcfide/Co-dfns/tarball/master). This requires 
+[[tar.gz](https://github.com/arcfide/Co-dfns/tarball/master)]. This requires 
 the `noweb` program to weave and tangle the sources into something usable. 
 
 Alternatively, the pre-prepared distribution is available through BT Sync and 
