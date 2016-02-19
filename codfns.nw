@@ -112,7 +112,43 @@ values of, say, [[⎕IO]].
 @
 \chapter{Installation, Configuration, and Settings}
 
-@
+@ \section{Configuration File}
+
+We recommend the use of a configuration file for loading and using the compiler. 
+This is a small file that you use to store your system specific settings that 
+configure the compiler for your specific use case. You would load this file 
+into your workspace after you have loaded the [[codfns.dyalog]] file. 
+
+We frame the code in the form of an empty namespace that, as a side effect of 
+loading, sets the appropriate [[codfns]] global settings to make the compiler 
+ready for action. At a bare minimum we recommend that you set at least the 
+[[COMPILER]] and [[TEST∆COMPILERS]] global settings. You could also include 
+settings to configure each individual backend compiler that you are going to 
+use if the default settings for those compilers do not work. This is more 
+likely to be a concern on the Windows platform where the paths are subject to 
+change based on your versioning. On a UNIX-like platform it should not be 
+necessary to configure paths for your back end compilers. 
+
+The following sample template may be tangled and used as a starting point for 
+your own configuration. It assumes that you are on UNIX and that you wish to 
+use the PGI OpenACC C compiler for your primary compiler, but that when you 
+run tests you want to use [[gcc]], [[icc]], and [[pgcc]] compilers all. 
+
+The use of an empty namespace here allows us to test whether the configuration 
+has been loaded, but this could be of limited value, and as such, an user 
+may wish to simply set these settings as a part of the loading process for 
+whatever program uses the compiler, instead of an explicit [[config]] 
+namespace for this purpose. 
+
+<<config.dyalog.template>>=
+:Namespace config
+
+#.codfns.COMPILER←'pgcc'
+#.codfns.TEST∆COMPILERS←'gcc' 'icc' 'pgcc'
+
+:EndNamespace
+@ %def config COMPILER TEST∆COMPILERS
+
 \chapter{Parsing}
 
 @
