@@ -35,3 +35,9 @@ CONTINUE
 *.out
 codfns.tex
 *.toc
+*.bbl
+*.blg
+codfns.dyalog
+load.dyapp
+test.dyapp
+

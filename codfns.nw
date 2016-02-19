@@ -200,29 +200,224 @@ utf8get←{                              ⍝ Char vector from UTF-8 file ⍵.
 }
 @ %def utf8get
 
-@
 \section{Testing Requirements and Methods}
 
+The Co-dfns compiler follows a very specific philosophy when it comes to 
+quality control. It dreams of the day that formal methods catch up to testing, 
+and quietly waits for this moment to be right in the APL community; until then, 
+the developer's rely on Direct Development strategies
+\cite{taylor2016second,bussell2006software,taylor2006pair}. As this relates to 
+testing, it can be summed up nicely as customer-driven black-box testing.
+
+The Co-dfns compiler has a testing harness explicitly designed for black-box 
+testing only. That is, the only sorts of supported tests are tests that invoke 
+the entire compiler as a single black box, rather than having many unit tests.%
+\footnote{The inspiration for black-box centered testing rather than the 
+more in-vogue emphasis on a combination of unit testing and integration 
+testing derives chiefly from two sources: Prof. Kent Dybvig's Compilers course 
+P423 at Indiana University and the Software Engineering methodology known as 
+Cleanroom Software Engineering. Kent's course demonstrated the value of 
+architectural designs that were flexible, adaptable, and easily refactored, 
+which in turn resulted in a compiler whose interlocking interfaces were 
+simple enough that unit testing gave precious little extra over simple 
+automatic verification on the API boundaries, while heavily increasing the 
+testing burden. Unit Testing of ASTs is especially difficult, since one must 
+have a good way of serializing the AST used at any given point. Automatic 
+verification works better. Cleanroom SE \cite{prowell1999cleanroom} 
+took this idea even further by 
+relying strongly on stochastic methods for ensuring that testing coverage was 
+based both on the edge cases as well as the general usage models, and eschews 
+unit testing for formal methods during development. Translated to a program 
+like this one, this means essentially that design trumps unit tests; by 
+designing the compiler in the right way, we can improve our ability to reason 
+about the compiler, and greatly reduce the errors that would be caught by 
+unit testing but not caught by black box testing. We additionally lower 
+the barrier of entry to black box testing and increase our use of black-box 
+testing in such a way that unit testing simply overlaps too much, further 
+reducing its value.}
+Experience suggests that this is, in fact, more useful on a rapidly evolving 
+code base than unit testing, and it provides the same degree of testing 
+``expressivity'' in terms of the end-user experience, which is really what 
+we care about. In other words, we really don't care how well each unit works 
+individually, we only care how well they work as a whole, because that is what 
+the user sees, and that's what matters, and if you cannot test it with a black 
+box, then it's probably not as valuable to test. 
+
+We design the compiler with this in mind. This also means that we have a high 
+demand for black box tests. Pretty much any program or complaint or issue that 
+comes up is given a test to illustrate it, both a small and a large version of 
+the test, one for isolating the problem, and one for confirming at scale, 
+respectively. Sometimes these two are the same. 
+
+Because Co-dfns is developed remotely, it can be hard sometimes to work 
+directly with customers to make changes to the code base. To account for this, 
+we try to make the testing harness as easy to use as possible, with the idea 
+that if an user can do nothing else with the code base, at least submitting a 
+test case is not out of reach. 
+
+All of the testing harness definitions are defined in the [[util]] namespace
+defined in [[<<util.dyalog>>]]. The testing harness is built around the 
+[[APLUnit]] \cite{alongi2013aplunit} framework, 
+which is defined as a submodule in the 
+git repository, and should be included in the [[APLUnit]] directory in the 
+Co-dfns distribution. 
+
+Most, if not all of the tests for the compiler are included in this document, 
+and designed to be tangled out into a specific [[Testing/]] directory for use. 
+They should, of course, follow the naming conventions given below as required 
+by the [[APLUnit]] framework. Test suites should be focused on a single 
+``feature'' that needs to be tested, and should not grow too large. Try to 
+keep suites close to and near the definitions of the things that are being 
+tested, preferrably woven into the fabric of the examples demonstrating correct 
+behavior in the description of the function. 
+
 <<Testing Verbs, Adverbs, and Conjunctions>>=
-MK∆T1←{	id cmp ns fn←⍺⍺ ⋄ r←⍵⍵
-	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
-	#.UT.expect←(⍎'NS.',fn)r ⋄ (⍎'CS.',fn)r
-}
+<<[[util.TEST]] verb for running all the tests>>
+<<[[util.test]] verb for running individual tests>>
+<<Test Makers (conjunctions) for Abstracting a Single Test Case>>
+<<Test Generators (conjunctions) for Abstracting a Single Test Input>>
+@ 
 
-MK∆T2←{	id cmp ns fn←⍺⍺ ⋄ l r←⍵⍵
-	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
-	#.UT.expect←l(⍎'NS.',fn)r ⋄ l(⍎'CS.',fn)r
-}
+\subsection{Using APLUnit}
 
-MK∆T3←{	id cmp ns fn tl←⍺⍺	⋄ l r←⍵⍵
-	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
-	nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
-	#.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv
-}
+As a basic tutorial for the [[APLUnit]] framework, we include some information 
+on the features upon which we rely here, so that the harness code will make 
+more sense. Interested readers are encouraged to look at the upstream 
+repository \cite{alongi2016aplunit} for more information. 
 
+A given testing suite is given as a namespace script whose filename ends in 
+[[_tests.dyalog]]. Inside, each test is a verb whose name ends with 
+[[_TEST]]. This verb should set the [[UT.expect]] noun to the expected 
+return value and then return the value to test for equivalency. Failure 
+indicates the returned value did not equal (in the [[≢]] sense) the value 
+in [[UT.expect]]. 
+
+A test, test suite, or multiple tests suites in a directory may be launched 
+by using the [[UT.run]] verb, which takes the name of a test, suite, or 
+directory containing suites as its right argument. 
+
+The output of the testing can be controlled by the use of two parameters. 
+
+\begin{description}
+\item[ [[UT.print_passed]] ] $0$ or $1$: Tells [[APLUnit]] whether to print out 
+a line for each test that passed or only to print failures.
+\item[ [[UT.print_summary]] ] $0$ or $1$: Tells [[APLUnit]] whether to print 
+a summary of the testing results at the end or not.
+\end{description}
+
+@ \subsection{Running Tests}
+
+The primary mode of testing is the [[util.TEST]] utility verb. This will run 
+the entire testing suite. We expect the entire set of tests to be in the 
+[[Testing/]] directory, and each should have the suffix [[_tests.dyalog]]. 
+The invocation looks like this:
+
+\begin{verbatim}
+util.TEST
+\end{verbatim}
+%
+Because there are so many tests to run, it does not help at all to print out 
+each test passed. Instead, we set [[UT.print_passed]] to [[0]] so that it 
+will simply print out the name of the suite currently being tested. We do 
+however want to keep the summary printing, and set [[UT.print_summary]] as 
+appropriate. 
+
+<<[[util.TEST]] verb for running all the tests>>=
+∇TEST
+##.UT.print_passed←0
+##.UT.print_summary←1
+##.UT.run './Testing'
+∇
+@ %def util.TEST
+While running all the tests is nice, this can take a very long time. When 
+working on a specific test or a specific problem, and needing to focus in 
+on a single test suite, the [[util.test]] verb should be used instead. It takes 
+the name of the test suite without the [[_tests.dyalog]] suffix. For example, 
+
+\begin{verbatim}
+util.test'reduce'
+\end{verbatim}
+%
+This should not be relied on to replace [[util.TEST]] however, and the 
+[[util.TEST]] suite should be run through on a regular basis. 
+
+<<[[util.test]] verb for running individual tests>>=
+test←{##.UT.run './Testing/',⍵,'_tests.dyalog'}
+@ %def util.test
+
+\subsection{Making a Single Test Function}
+
+There are a few main maker conjunctions designed to create 
+testing verbs. The first two define the simple cases where the expected 
+output and the actual output should match exactly. They differ only in whether 
+the inputs are monadic or dyadic. We use [[MK∆T1]] for monadic inputs, and 
+[[MK∆T2]] for dyadic inputs, obviously.
+
+We compare for equivalence by running a Dyalog APL version of the code to be 
+tested against the Co-dfns version and compare the two, to see if they come 
+out the same. In this way we never have to define our expected values, we 
+simply ensure that we are operationally equivalent to the Dyalog APL 
+interperter, which is our gold standard. 
+
+<<Test Makers (conjunctions) for Abstracting a Single Test Case>>=
+MK∆T1←{id cmp ns fn←⍺⍺ ⋄ r←⍵⍵
+    <<Fix and compile test namespaces [[NS]] and [[CS]]>>
+    ##.UT.expect←(⍎'NS.',fn)r ⋄ (⍎'CS.',fn)r}
+MK∆T2←{id cmp ns fn←⍺⍺ ⋄ l r←⍵⍵
+    <<Fix and compile test namespaces [[NS]] and [[CS]]>>
+    ##.UT.expect←l(⍎'NS.',fn)r ⋄ l(⍎'CS.',fn)r}
+@ %def MK∆T1 MK∆T2
+All of the maker conjunctions rely on being able to have two versions of the 
+same namespace to test. Essentially, for every given test, we expect to 
+have the following information:
+
+\begin{description}
+\item[ [[id]] ] The string identifier for this test suite, which is used to 
+generate the right intermediate files when compiling the function, and also 
+for generally having some idea of the family of tests being conducted. 
+\item[ [[cmp]] ] The string idnetifier for which compiler to use for this 
+test. 
+\item[ [[ns]] ] The actual namespace script represented as a vector of strings 
+that contains the code to test.
+\item[ [[fn]] ] The function defined in the namespace described by [[ns]] that 
+we are to test. 
+\end{description}
+%
+Once we have all of this stuff, we verify that the compiler in this test is 
+currently part of the compilers that we are going to test, and if it is not, 
+we simply consider the test as passed for now. (Todo: later we may wish to 
+somehow mark this test as ``not run'' so that we can distinguish a skipped 
+test from a test that was run and passed.) At this point, we set the 
+[[COMPILER]] to the compiler we are testing and create two namespaces, the 
+first using [[⎕FIX]] to get a Dyalog APL versions of the namespace, and the 
+other using [[codfns.Fix]] to get what should be an equivalent namespace 
+compiled with Co-dfns. These are called [[NS]] and [[CS]] respectively. 
+
+<<Fix and compile test namespaces [[NS]] and [[CS]]>>=
+~(⊂cmp)∊##.codfns.TEST∆COMPILERS:0⊣##.UT.expect←0
+##.codfns.COMPILER←cmp
+CS←id ##.codfns.Fix ns
+NS←⎕FIX ns
+@ %
+The third type of test is basically the same as [[MK∆T2]] with the main 
+difference that we only expect the expected return values and the actual 
+return values to be ``approximately'' equivalent. This is for testing floating 
+point code which will naturally have different rounding behaviors. For this 
+we introduce a fifth element in the left argument of the conjunction to give 
+the tolerance [[tl]] for rounding errors in the relative difference of the 
+expected and actual values. The absolute difference (always positive) of the 
+actual and expected results should be less than the tolerance [[tl]].
+
+<<Test Makers (conjunctions) for Abstracting a Single Test Case>>=
+MK∆T3←{id cmp ns fn tl←⍺⍺ ⋄ l r←⍵⍵
+    <<Fix and compile test namespaces [[NS]] and [[CS]]>>
+    nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
+    ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
+@ %def MK∆T3
+
+\subsection{Generating Tests for Specific Inputs}
+
+<<Test Generators (conjunctions) for Abstracting a Single Test Input>>=
 ∇Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;CMP;TC;TMP
  NS TC FN←NCF
  :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
@@ -250,14 +445,8 @@ MK∆T3←{	id cmp ns fn tl←⍺⍺	⋄ l r←⍵⍵
  Z←0 0⍴⍬
 ∇
 
-∇TEST
-#.UT.print_passed←0
-#.UT.print_summary←1
-#.UT.run'./Testing'
-∇
 
-test←{#.UT.run'./Testing/',⍵,'_tests.dyalog'}
-@ %def TEST test GEN∆T1 GEN∆T2 GEN∆T3 MK∆T1 MK∆T2 MK∆T3
+@ %def GEN∆T1 GEN∆T2 GEN∆T3
 
 \chapter{Public Interface}
 
@@ -334,7 +523,7 @@ Load codfns
 Load util
 Load APLUnit\UT
 Load config
-@
+@ %def UT.run UT.expect UT.print_passed UT.print_summary
 Running the test suite in its entirety is a good practice, and it can be
 helpful as a debugging tool when submitting error reports if the compiler is
 not doing what you expect. It is the same as [[<<load.dyapp>>]] but it includes
@@ -349,7 +538,7 @@ Load util
 Load APLUnit\UT
 Load config
 Run util.TEST
-@
+@ %def UT.run UT.expect UT.print_passed UT.print_summary
 
 \chapter{Parsing}
 
@@ -1083,8 +1272,6 @@ For more information on this, and how to apply and follow the GNU AGPL, see
 \nowebindex
 \end{multicols}
 @
-
-\chapter{Bibliography}
 
 \nocite{*}
 \bibliographystyle{plain}
