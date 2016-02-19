@@ -58,22 +58,27 @@ We probably also need information on commercial interests and how to get
 the licensing for proprietary use.
 
 Maybe some philosophical underpinnings of why the Co-dfns compiler exists?
-This would include the target user base, but also what makes the compiler 
+This would include the target user base, but also what makes the compiler
 interesting from an academic standpoint and what it tries to accomplish
-from a programming languages research standpoing, as well as a compiler 
-design standpoint. Probably also cover something about the nature of 
-computing, programming, and HCI. 
+from a programming languages research standpoing, as well as a compiler
+design standpoint. Probably also cover something about the nature of
+computing, programming, and HCI.
 
 We should probably also describe how this file stores all of the information
 on the compiler, including the testing and such.
 
-@ 
+We should also probably include some comments about the style of APL
+terminology used in ths guide, in particular the J-isms of verbs, adverbs,
+and so forth.
+
+@
 \mainmatter
 \chapter{Overview}
 
 The Co-dfns compiler exists as a single monolithic Dyalog APL namespace
 called conveniently enough, [[codfns]]. This has a number of specific
 advantages considered desirable for the compiler:
+
 \begin{itemize}
 \item A single namespace is very easy to distribute and maintain
 \item Hacking and debugging on the single namespace aids in transparency
@@ -81,10 +86,12 @@ advantages considered desirable for the compiler:
 \item It avoids complex build or infrastructure support outside of [[noweb]]
 \item It reduces the overall burden to self-hosting
 \end{itemize}
-Within the compiler itself there are a number of logical sections. To which 
-we will normally dedicate a chapter for each major section. The extra comment 
-here is to assist the indexing facilities with global implicit constants so 
+%
+Within the compiler itself there are a number of logical sections. To which
+we will normally dedicate a chapter for each major section. The extra comment
+here is to assist the indexing facilities with global implicit nouns so
 that we get better information in the index.
+
 <<codfns.dyalog>>=
 :Namespace codfns
 <<Choices for [[⎕IO]], [[⎕ML]], and [[⎕WX]]>> ⍝ ⎕IO, ⎕ML, ⎕WX
@@ -92,11 +99,12 @@ that we get better information in the index.
 :EndNamespace
 @ %def codfns
 The entire namespace and the rest of this document all assume the following
-settings for the global constants [[⎕IO]], [[⎕ML]], and [[⎕WX]]. It is 
-important that these constants are fixed throughout the code, and we also 
-make the assumption that the end user is compiling under these constants. 
-That is, there is no facility in the compiler for supporting different 
-values of, say, [[⎕IO]]. 
+settings for the global nouns [[⎕IO]], [[⎕ML]], and [[⎕WX]]. It is
+important that these nouns are fixed throughout the code, and we also
+make the assumption that the end user is compiling under these nouns.
+That is, there is no facility in the compiler for supporting different
+values of, say, [[⎕IO]].
+
 <<Choices for [[⎕IO]], [[⎕ML]], and [[⎕WX]]>>=
 ⎕IO ⎕ML ⎕WX←0 1 3
 @ %def ⎕IO ⎕ML ⎕WX
@@ -104,9 +112,153 @@ values of, say, [[⎕IO]].
 \section{Coding Conventions/Style Guide}
 
 @
-\section{Testing Requirements and Methods}
+
+\section{Utilites for Developing the Compiler}
+
+On the whole the compiler is relatively self-contained, but when working with
+the compiler, there are specific utilities that come in quite handy when
+debugging or playing with things. These are not meant to be refereneced or
+included in the [[codfns]] namespace, and so it makes the most sense to load
+these utilities only after we have successfully loaded the compiler proper.
+See [[<<load.dyapp>>]] and [[<<test.dyapp>>]] for how we do this.
+
+The [[util]] namespace stores these utility functions, as well as testing
+and other functions that we may require that facilitate the development of
+the compiler.
+
+<<util.dyalog>>=
+:Namespace util
+<<The [[display]] verb for boxed display>>
+<<The [[pp]] verb for pretty-printing arrays during debugging>>
+<<The [[utf8get]] verb for reading in UTF-8 encoded text files>>
+<<Testing Verbs, Adverbs, and Conjunctions>>
+:EndNamespace
+@ %def util
+The [[display]] verb comes from the Dyalog dfns repository \cite{dfnsrepo} and
+provides a verbose boxed display of arrays. We make no effort to explicate
+the function here, but instead refer the reader to the appropriate explanations
+in the upstream repository.
+
+<<The [[display]] verb for boxed display>>=
+display←{⎕IO ⎕ML←0 1                        ⍝ Boxed display of array.
+
+    box←{                                   ⍝ box with type and axes
+        vrt hrz←(¯1+⍴⍵)⍴¨'│─'               ⍝ vert. and horiz. lines
+        top←'─⊖→'[¯1↑⍺],hrz                 ⍝ upper border with axis
+        bot←(⊃⍺),hrz                        ⍝ lower border with type
+        rgt←'┐│',vrt,'┘'                    ⍝ right side with corners
+        lax←'│⌽↓'[¯1↓1↓⍺],¨⊂vrt             ⍝ left side(s) with axes,
+        lft←⍉'┌',(↑lax),'└'                 ⍝ ... and corners
+        lft,(top⍪⍵⍪bot),rgt                 ⍝ fully boxed array
+    }
+
+    deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}         ⍝ type and axes vector
+    axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}                   ⍝ array axis types
+    open←{16::(1⌈⍴⍵)⍴⊂'[ref]' ⋄ (1⌈⍴⍵)⍴⍵}   ⍝ exposure of null axes
+    trim←{(~1 1⍷∧⌿⍵=' ')/⍵}                 ⍝ removal of extra blank cols
+    type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}            ⍝ simple array type
+    char←{⍬≡⍴⍵:'─' ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕    ⍝ simple scalar type
+    line←{(6≠10|⎕DR' '⍵)⊃' -'}              ⍝ underline for atom
+
+    {                                       ⍝ recursive boxing of arrays:
+        0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵       ⍝ simple scalar
+        1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵     ⍝ object rep: ⎕OR
+        1=≡⍵:(deco ⍵)box open ⎕FMT open ⍵   ⍝ simple array
+        ('∊'deco ⍵)box trim ⎕FMT ∇¨open ⍵   ⍝ nested array
+    }⍵
+}
+@ %def display
+The [[pp]] verb is very similar to the [[display]] verb, but it also prints
+the shape information for the array to make sure that there is no ambiguity
+there. It also makes sure to return the input array instead of returning the
+boxed version. Instead, [[pp]] displays the boxed version of the array as a
+side-effect.
+
+The intended use of this verb is for printing the intermediate arrays that
+exist through the flow of the compiler to determine where something goes wrong.
+This allows a [[printf(3)]] style debugging for programs defined in the Co-dfns
+style of development. This helps to compensate for the lack of a sophisticated
+debugger in Dyalog APL capable of adequately handling function trains and
+dfns. (Hopefully, in future versions of Dyalog APL, the need for [[pp]] will
+gradually lessen.)
+
+<<The [[pp]] verb for pretty-printing arrays during debugging>>=
+pp←{⍵⊣⎕←display ⍵⊣⍞←⍴⍵⊣⍞←'Shape: '}
+@ %def pp
+It sometimes helps to be able to read in files, either for testing or for
+bringing in code examples that have been prepared in advance from somewhere
+else. It can be useful during test development as well. The [[utf8get]] verb
+provides this functionality, and it again comes from the Dyalog dfns
+repository. \cite{dfnsrepo}
+
+<<The [[utf8get]] verb for reading in UTF-8 encoded text files>>=
+utf8get←{                              ⍝ Char vector from UTF-8 file ⍵.
+    0::⎕SIGNAL ⎕EN                     ⍝ signal error to caller.
+    tie←⍵ ⎕NTIE 0                      ⍝ file handle.
+    ints←⎕NREAD tie 83,⎕NSIZE tie      ⍝ all UTF-8 file bytes.
+    ('UTF-8'⎕UCS 256|ints)⊣⎕NUNTIE tie ⍝ ⎕AV chars.
+}
+@ %def utf8get
 
 @
+\section{Testing Requirements and Methods}
+
+<<Testing Verbs, Adverbs, and Conjunctions>>=
+MK∆T1←{	id cmp ns fn←⍺⍺ ⋄ r←⍵⍵
+	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
+	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
+	#.UT.expect←(⍎'NS.',fn)r ⋄ (⍎'CS.',fn)r
+}
+
+MK∆T2←{	id cmp ns fn←⍺⍺ ⋄ l r←⍵⍵
+	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
+	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
+	#.UT.expect←l(⍎'NS.',fn)r ⋄ l(⍎'CS.',fn)r
+}
+
+MK∆T3←{	id cmp ns fn tl←⍺⍺	⋄ l r←⍵⍵
+	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
+	#.codfns.COMPILER←cmp ⋄ CS←id #.codfns.Fix	ns ⋄ NS←⎕FIX ns
+	nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
+	#.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv
+}
+
+∇Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;CMP;TC;TMP
+ NS TC FN←NCF
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+     TMP←(NS,ID)CMP TC FN MK∆T1	IN
+     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
+ :EndFor
+ Z←0 0⍴⍬
+∇
+
+∇Z←ID(NCF GEN∆T2 THIS)IN;NS;FN;CMP;TC;TMP
+ NS TC FN←NCF
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+     TMP←(NS,ID)CMP TC FN MK∆T2	IN
+     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
+ :EndFor
+ Z←0 0⍴⍬
+∇
+
+∇Z←ID(NCFT GEN∆T3 THIS)IN;NS;FN;CMP;TC;TMP;TL
+ NS TC FN TL←NCFT
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+     TMP←(NS,ID)CMP TC FN TL MK∆T3	IN
+     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
+ :EndFor
+ Z←0 0⍴⍬
+∇
+
+∇TEST
+#.UT.print_passed←0
+#.UT.print_summary←1
+#.UT.run'./Testing'
+∇
+
+test←{#.UT.run'./Testing/',⍵,'_tests.dyalog'}
+@ %def TEST test GEN∆T1 GEN∆T2 GEN∆T3 MK∆T1 MK∆T2 MK∆T3
+
 \chapter{Public Interface}
 
 @
@@ -114,31 +266,31 @@ values of, say, [[⎕IO]].
 
 @ \section{Configuration File}
 
-We recommend the use of a configuration file for loading and using the compiler. 
-This is a small file that you use to store your system specific settings that 
-configure the compiler for your specific use case. You would load this file 
-into your workspace after you have loaded the [[<<codfns.dyalog>>]] file. 
+We recommend the use of a configuration file for loading and using the compiler.
+This is a small file that you use to store your system specific settings that
+configure the compiler for your specific use case. You would load this file
+into your workspace after you have loaded the [[<<codfns.dyalog>>]] file.
 
-We frame the code in the form of an empty namespace that, as a side effect of 
-loading, sets the appropriate [[codfns]] global settings to make the compiler 
-ready for action. At a bare minimum we recommend that you set at least the 
-[[COMPILER]] and [[TEST∆COMPILERS]] global settings. You could also include 
-settings to configure each individual backend compiler that you are going to 
-use if the default settings for those compilers do not work. This is more 
-likely to be a concern on the Windows platform where the paths are subject to 
-change based on your versioning. On a UNIX-like platform it should not be 
-necessary to configure paths for your back end compilers. 
+We frame the code in the form of an empty namespace that, as a side effect of
+loading, sets the appropriate [[codfns]] global settings to make the compiler
+ready for action. At a bare minimum we recommend that you set at least the
+[[COMPILER]] and [[TEST∆COMPILERS]] global settings. You could also include
+settings to configure each individual backend compiler that you are going to
+use if the default settings for those compilers do not work. This is more
+likely to be a concern on the Windows platform where the paths are subject to
+change based on your versioning. On a UNIX-like platform it should not be
+necessary to configure paths for your back end compilers.
 
-The following sample template may be tangled and used as a starting point for 
-your own configuration. It assumes that you are on UNIX and that you wish to 
-use the PGI OpenACC C compiler for your primary compiler, but that when you 
-run tests you want to use [[gcc]], [[icc]], and [[pgcc]] compilers all. 
+The following sample template may be tangled and used as a starting point for
+your own configuration. It assumes that you are on UNIX and that you wish to
+use the PGI OpenACC C compiler for your primary compiler, but that when you
+run tests you want to use [[gcc]], [[icc]], and [[pgcc]] compilers all.
 
-The use of an empty namespace here allows us to test whether the configuration 
-has been loaded, but this could be of limited value, and as such, an user 
-may wish to simply set these settings as a part of the loading process for 
-whatever program uses the compiler, instead of an explicit [[config]] 
-namespace for this purpose. 
+The use of an empty namespace here allows us to test whether the configuration
+has been loaded, but this could be of limited value, and as such, an user
+may wish to simply set these settings as a part of the loading process for
+whatever program uses the compiler, instead of an explicit [[config]]
+namespace for this purpose.
 
 <<config.dyalog>>=
 :Namespace config
@@ -151,44 +303,49 @@ namespace for this purpose.
 
 \section{Loading the Compiler}
 
-As a single namespace script, the Co-dfns compiler is particularly well suited 
-to loading using the SALT system from Dyalog. In particular, the developers 
-use themselves and recommend the use of two special Dyalog Application Scripts 
-that load the compiler and run the entire test suite, respectively. 
+As a single namespace script, the Co-dfns compiler is particularly well suited
+to loading using the SALT system from Dyalog. In particular, the developers
+use themselves and recommend the use of two special Dyalog Application Scripts
+that load the compiler and run the entire test suite, respectively.
 
-@ The core element is loading the compiler itself. We will assume that you also 
-want to load all of the utility functions, the testing harness and your own 
-personal configuration settings in the form of a [[<<config.dyalog>>]] file. This 
-represents the ``Kitchen Sink'' solution so that you have everything that you 
-could possibly require at your fingertips whenever your are using the compiler, 
-and it is particularly well suited for use as is by developers and other 
-users who are tinkering with the compiler, as it will allow them to test that 
-the compiler works using test scripts without requiring additional elements to 
-be loaded. 
+@ The core element is loading the compiler itself. We will assume that you also
+want to load all of the utility definitions, the testing harness and your own
+personal configuration settings in the form of a [[<<config.dyalog>>]] file. This
+represents the ``Kitchen Sink'' solution so that you have everything that you
+could possibly require at your fingertips whenever your are using the compiler,
+and it is particularly well suited for use as is by developers and other
+users who are tinkering with the compiler, as it will allow them to test that
+the compiler works using test scripts without requiring additional elements to
+be loaded.
 
-The result will of course, be four loaded namespaces loaded into the [[#]] 
-namespace: [[util]], [[codfns]], [[UT]], and [[config]]. You can change [[#]] 
-to be anything you want, but all of the namespaces should be loaded into the 
-same parent namespace. 
+The result will of course, be four loaded namespaces loaded into the [[#]]
+namespace: [[util]], [[codfns]], [[UT]], and [[config]]. You can change [[#]]
+to be anything you want, but all of the namespaces should be loaded into the
+same parent namespace.
+
+Note that we make sure to load the [[codfns]] namespace first. This is important
+since it serves as a check that the compiler can load without any dependencies
+having accidentally arisen by referring to one of the other namespaces inside
+of the [[codfns]] namespace.
 
 <<load.dyapp>>=
 Target #
-Load util
 Load codfns
+Load util
 Load APLUnit\UT
 Load config
 @
-Running the test suite in its entirety is a good practice, and it can be 
-helpful as a debugging tool when submitting error reports if the compiler is 
-not doing what you expect. It is the same as [[<<load.dyapp>>]] but it includes 
-a final command to [[Run]] the [[util.TEST]] function, which will attempt to 
-run all of the tests for all of the compilers that you have defined in 
-[[TEST∆COMPILERS]]. 
+Running the test suite in its entirety is a good practice, and it can be
+helpful as a debugging tool when submitting error reports if the compiler is
+not doing what you expect. It is the same as [[<<load.dyapp>>]] but it includes
+a final command to [[Run]] the [[util.TEST]] function, which will attempt to
+run all of the tests for all of the compilers that you have defined in
+[[TEST∆COMPILERS]]. See the note on [[<<load.dyapp>>]] about the loading order.
 
 <<test.dyapp>>=
 Target #
-Load util
 Load codfns
+Load util
 Load APLUnit\UT
 Load config
 Run util.TEST
@@ -212,7 +369,7 @@ Run util.TEST
 \chapter{Runtime: Scalars}
 
 @
-\chapter{Runtime: Mixed Functions}
+\chapter{Runtime: Mixed Verbs}
 
 @
 \chapter{Runtime: Operators}
@@ -226,13 +383,13 @@ Run util.TEST
 @
 \chapter{Licensing/Legal Information}
 
-The copyright notice is given at the beginning of this program, but as we 
-produce a distribution where the files are tangled and woven, and the original 
-source is omitted, it makes sense to include the common [[LICENSE.txt]] and 
-[[COPYING.txt]] files. 
+The copyright notice is given at the beginning of this program, but as we
+produce a distribution where the files are tangled and woven, and the original
+source is omitted, it makes sense to include the common [[LICENSE.txt]] and
+[[COPYING.txt]] files.
 
-@ The [[LICENSE.txt]] file contains the same bare necessities for understanding 
-the distribution and copyright restrictions on the compiler as distributed 
+@ The [[LICENSE.txt]] file contains the same bare necessities for understanding
+the distribution and copyright restrictions on the compiler as distributed
 here.
 
 <<LICENSE.txt>>=
@@ -252,9 +409,9 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 @
-The [[COPYING.txt]] file contains the full contents of the Affero General 
-Public License referenced in [[LICENSE.txt]] and should be distributed with 
-any version of the Co-dfns compiler, whether tangled or woven. 
+The [[COPYING.txt]] file contains the full contents of the Affero General
+Public License referenced in [[LICENSE.txt]] and should be distributed with
+any version of the Co-dfns compiler, whether tangled or woven.
 
 <<COPYING.txt>>=
                     GNU AFFERO GENERAL PUBLIC LICENSE
@@ -925,9 +1082,15 @@ For more information on this, and how to apply and follow the GNU AGPL, see
 \begin{multicols}{2}
 \nowebindex
 \end{multicols}
+@
+
 \chapter{Bibliography}
 
-@ 
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{codfnsbiblio}
+
+@
 \chapter*{Unprocessed Code}
 
 This chapter includes all of the unprocessed code that has not yet been
@@ -1023,9 +1186,9 @@ get	←{⍺⍺⌷⍉⍵}
 up	←⍉(1+1↑⍉)⍪1↓⍉
 bind	←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
 
-d_ t_ k_ n_	←⍳f∆←4	⋄ d←d_ get	⋄ t←t_ get	⋄ k←k_ get	⋄ n←n_ get	
+d_ t_ k_ n_	←⍳f∆←4	⋄ d←d_ get	⋄ t←t_ get	⋄ k←k_ get	⋄ n←n_ get
 r_ s_ v_ y_ e_	←f∆+⍳5	⋄ r←r_ get	⋄ s←s_ get	⋄ v←v_ get	⋄ y←y_ get	⋄ e←e_ get
-l_	←f∆+5+⍳1	⋄ l←l_ get	
+l_	←f∆+5+⍳1	⋄ l←l_ get
 
 new	←{⍉⍪f∆↑0 ⍺,⍵}	⋄ msk	←{(t ⍵)∊⊂⍺⍺}	⋄ sel	←{(⍺⍺ msk ⍵)⌿⍵}
 A	←{('A'new ⍺⍺)⍪up⊃⍪/⍵}	⋄ Am	←'A'msk	⋄ As	←'A'sel
@@ -1187,12 +1350,12 @@ nv	←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪
 ⍝[c]	2	Unknown	Float			Float	2
 ⍝[c]	3	Unknown	Bitvector			Bitvector	3
 ⍝[c]	4	Unknown	Not bound			Not bound	4
-⍝[c]	5	Integer	Unknown			
-⍝[c]	6	Integer	Integer		
-⍝[c]	7	Integer	Float		Operator Codes:	Meaning	Code	
+⍝[c]	5	Integer	Unknown
+⍝[c]	6	Integer	Integer
+⍝[c]	7	Integer	Float		Operator Codes:	Meaning	Code
 ⍝[c]	8	Integer	Bitvector			Left	0
 ⍝[c]	9	Integer	Not bound			Right	1
-⍝[c]	10	Float	Unknown			Error	¯N					
+⍝[c]	10	Float	Unknown			Error	¯N
 ⍝[c]	11	Float	Integer
 ⍝[c]	12	Float	Float
 ⍝[c]	13	Float	Bitvector
@@ -1202,7 +1365,7 @@ nv	←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪
 ⍝[c]	17	Bitvector	Float
 ⍝[c]	18	Bitvector	Bitvector
 ⍝[c]	19	Bitvector	Not bound
-⍝[c]	
+⍝[c]
 ⍝[of]:Primitive Types
 pf1←9 14 19 6 7 8 ⋄ pf2←11 12 13 16 17 18
 pn←⍬	⋄ pt←56 20⍴0
@@ -1212,175 +1375,175 @@ pn,←⊂'%u'	⋄ pt[02;]←20⍴4
 ⍝[c]
 ⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
 ⍝[c]		FI	FF	FB	BI	BF	BB
-pn,←⊂,'⍺'		
+pn,←⊂,'⍺'
 	pt[03;pf1]←	¯6	¯6	¯6	1	2	3
 	pt[03;pf2]←	1	2	3	1	2	3
-pn,←⊂,'⍵'		
+pn,←⊂,'⍵'
 	pt[04;pf1]←	1	2	3	1	1	1
 	pt[04;pf2]←	2	2	2	3	3	3
-pn,←⊂,'+'		
+pn,←⊂,'+'
 	pt[05;pf1]←	1	2	3	1	2	1
 	pt[05;pf2]←	2	2	2	1	2	1
-pn,←⊂,'-'		
+pn,←⊂,'-'
 	pt[06;pf1]←	1	2	1	1	2	1
 	pt[06;pf2]←	2	2	2	1	2	1
-pn,←⊂,'÷'		
+pn,←⊂,'÷'
 	pt[07;pf1]←	2	2	3	2	2	2
 	pt[07;pf2]←	2	2	2	1	2	3
-pn,←⊂,'×'		
+pn,←⊂,'×'
 	pt[08;pf1]←	1	1	3	1	2	1
 	pt[08;pf2]←	2	2	2	1	2	3
-pn,←⊂,'|'		
+pn,←⊂,'|'
 	pt[09;pf1]←	1	2	3	1	2	1
 	pt[09;pf2]←	2	2	2	1	2	3
-pn,←⊂,'*'		
+pn,←⊂,'*'
 	pt[10;pf1]←	2	2	2	2	2	3
 	pt[10;pf2]←	2	2	3	1	2	3
-pn,←⊂,'⍟'		
+pn,←⊂,'⍟'
 	pt[11;pf1]←	2	2	¯11	2	2	¯11
 	pt[11;pf2]←	2	2	¯11	¯11	¯11	¯11
-pn,←⊂,'⌈'		
+pn,←⊂,'⌈'
 	pt[12;pf1]←	1	1	3	1	2	1
 	pt[12;pf2]←	2	2	2	1	2	3
-pn,←⊂,'⌊'		
+pn,←⊂,'⌊'
 	pt[13;pf1]←	1	1	3	1	2	1
 	pt[13;pf2]←	2	2	2	1	2	3
-pn,←⊂,'<'		
+pn,←⊂,'<'
 	pt[14;pf1]←	¯2	¯2	¯2	3	3	3
 	pt[14;pf2]←	3	3	3	3	3	3
-pn,←⊂,'≤'		
+pn,←⊂,'≤'
 	pt[15;pf1]←	¯2	¯2	¯2	3	3	3
 	pt[15;pf2]←	3	3	3	3	3	3
 ⍝[c]
 ⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
 ⍝[c]		FI	FF	FB	BI	BF	BB
-pn,←⊂,'='		
+pn,←⊂,'='
 	pt[16;pf1]←	¯2	¯2	¯2	3	3	3
 	pt[16;pf2]←	3	3	3	3	3	3
-pn,←⊂,'≠'		
+pn,←⊂,'≠'
 	pt[17;pf1]←	¯2	¯2	¯2	3	3	3
 	pt[17;pf2]←	3	3	3	3	3	3
-pn,←⊂,'≥'		
+pn,←⊂,'≥'
 	pt[18;pf1]←	¯2	¯2	¯2	3	3	3
 	pt[18;pf2]←	3	3	3	3	3	3
-pn,←⊂,'>'		
+pn,←⊂,'>'
 	pt[19;pf1]←	¯2	¯2	¯2	3	3	3
 	pt[19;pf2]←	3	3	3	3	3	3
-pn,←⊂,'⌷'		
+pn,←⊂,'⌷'
 	pt[20;pf1]←	1	2	3	1	¯11	1
 	pt[20;pf2]←	2	¯11	2	3	¯11	3
-pn,←⊂,'⍴'		
+pn,←⊂,'⍴'
 	pt[21;pf1]←	1	1	1	1	¯11	1
 	pt[21;pf2]←	2	¯11	2	3	¯11	3
-pn,←⊂,','		
+pn,←⊂,','
 	pt[22;pf1]←	1	2	3	1	2	1
 	pt[22;pf2]←	2	2	2	1	2	3
-pn,←⊂,'⍳'		
+pn,←⊂,'⍳'
 	pt[23;pf1]←	1	¯11	3	1	1	1
 	pt[23;pf2]←	1	1	1	1	1	1
-pn,←⊂,'○'		
+pn,←⊂,'○'
 	pt[24;pf1]←	2	2	2	2	¯11	2
-	pt[24;pf2]←	2	¯11	2	2	¯11	2	
-pn,←⊂,'~'		
+	pt[24;pf2]←	2	¯11	2	2	¯11	2
+pn,←⊂,'~'
 	pt[25;pf1]←	¯11	¯11	3	1	2	3
 	pt[25;pf2]←	1	2	3	1	2	3
-pn,←⊂,'['		
+pn,←⊂,'['
 	pt[26;pf1]←	¯2	¯2	¯2	1	2	3
 	pt[26;pf2]←	¯11	¯11	¯11	1	2	3
-pn,←⊂,'∧'		
+pn,←⊂,'∧'
 	pt[27;pf1]←	¯2	¯2	¯2	1	1	1
 	pt[27;pf2]←	1	2	2	1	2	3
-pn,←⊂,'∨'		
+pn,←⊂,'∨'
 	pt[28;pf1]←	¯2	¯2	¯2	1	2	1
 	pt[28;pf2]←	2	2	2	1	2	3
 ⍝[c]
 ⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
 ⍝[c]		FI	FF	FB	BI	BF	BB
-pn,←⊂,'⍲'		
+pn,←⊂,'⍲'
 	pt[29;pf1]←	¯2	¯2	¯2	¯11	¯11	¯11
 	pt[29;pf2]←	¯11	¯11	¯11	¯11	¯11	3
-pn,←⊂,'⍱'		
+pn,←⊂,'⍱'
 	pt[30;pf1]←	¯2	¯2	¯2	¯11	¯11	¯11
 	pt[30;pf2]←	¯11	¯11	¯11	¯11	¯11	3
-pn,←⊂,'⍪'		
+pn,←⊂,'⍪'
 	pt[31;pf1]←	1	2	3	1	2	1
 	pt[31;pf2]←	2	2	2	1	2	3
-pn,←⊂,'⌽'		
+pn,←⊂,'⌽'
 	pt[32;pf1]←	1	2	3	1	¯11	1
 	pt[32;pf2]←	2	¯11	2	3	¯11	3
-pn,←⊂,'∊'		
+pn,←⊂,'∊'
 	pt[33;pf1]←	1	2	3	3	3	3
 	pt[33;pf2]←	3	3	3	3	3	3
-pn,←⊂,'⊃'		
+pn,←⊂,'⊃'
 	pt[34;pf1]←	1	2	3	1	1	1
 	pt[34;pf2]←	2	2	2	3	3	3
-pn,←⊂,'⊖'		
+pn,←⊂,'⊖'
 	pt[35;pf1]←	1	2	3	1	1	1
 	pt[35;pf2]←	2	2	2	3	3	3
-pn,←⊂,'≡'		
+pn,←⊂,'≡'
 	pt[36;pf1]←	1	1	1	1	1	1
 	pt[36;pf2]←	1	1	1	1	1	1
-pn,←⊂,'≢'		
+pn,←⊂,'≢'
 	pt[37;pf1]←	1	1	1	1	1	1
 	pt[37;pf2]←	1	1	1	1	1	1
-pn,←⊂,'⊢'		
+pn,←⊂,'⊢'
 	pt[38;pf1]←	1	2	3	1	1	1
 	pt[38;pf2]←	2	2	2	3	3	3
-pn,←⊂,'⊣'		
+pn,←⊂,'⊣'
 	pt[39;pf1]←	1	2	3	1	2	3
 	pt[39;pf2]←	1	2	3	1	2	3
-pn,←⊂'//'		
+pn,←⊂'//'
 	pt[40;pf1]←	¯2	¯2	¯2	1	¯11	1
 	pt[40;pf2]←	2	¯11	2	3	¯11	3
-pn,←⊂,'⍉'		
+pn,←⊂,'⍉'
 	pt[41;pf1]←	1	2	3	1	1	1
 	pt[41;pf2]←	2	2	2	3	3	3
 ⍝[c]
 ⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
 ⍝[c]		FI	FF	FB	BI	BF	BB
-pn,←⊂,'↑'		
+pn,←⊂,'↑'
 	pt[42;pf1]←	1	2	3	1	1	1
 	pt[42;pf2]←	2	2	2	3	3	3
-pn,←⊂,'↓'		
+pn,←⊂,'↓'
 	pt[43;pf1]←	1	2	3	1	1	1
 	pt[43;pf2]←	2	2	2	3	3	3
-pn,←⊂,'⊤'		
+pn,←⊂,'⊤'
 	pt[44;pf1]←	¯2	¯2	¯2	1	¯16	1
 	pt[44;pf2]←	¯16	¯16	¯16	3	3	3
-pn,←⊂,'⊥'		
+pn,←⊂,'⊥'
 	pt[45;pf1]←	¯2	¯2	¯2	1	¯16	1
 	pt[45;pf2]←	¯16	¯16	¯16	1	¯16	1
-pn,←⊂,'¨'		
+pn,←⊂,'¨'
 	pt[46;pf1]←	0	0	0	0	0	0
 	pt[46;pf2]←	0	0	0	0	0	0
-pn,←⊂,'⍨'		
+pn,←⊂,'⍨'
 	pt[47;pf1]←	0	0	0	0	0	0
 	pt[47;pf2]←	0	0	0	0	0	0
-pn,←⊂,'/'		
+pn,←⊂,'/'
 	pt[48;pf1]←	0	0	0	0	¯11	0
 	pt[48;pf2]←	0	¯11	0	0	¯11	0
-pn,←⊂,'⌿'		
+pn,←⊂,'⌿'
 	pt[49;pf1]←	0	0	0	0	¯11	0
 	pt[49;pf2]←	0	¯11	0	0	¯11	0
-pn,←⊂,'\'		
+pn,←⊂,'\'
 	pt[50;pf1]←	0	0	0	¯11	¯11	¯11
 	pt[50;pf2]←	¯11	¯11	¯11	¯11	¯11	¯11
-pn,←⊂,'⍀'		
+pn,←⊂,'⍀'
 	pt[51;pf1]←	0	0	0	¯11	¯11	¯11
 	pt[51;pf2]←	¯11	¯11	¯11	¯11	¯11	¯11
-pn,←⊂'∘.'		
+pn,←⊂'∘.'
 	pt[52;pf1]←	¯2	¯2	¯2	0	0	0
 	pt[52;pf2]←	0	0	0	0	0	0
-pn,←⊂,'.'		
+pn,←⊂,'.'
 	pt[53;pf1]←	¯2	¯2	¯2	0	0	0
 	pt[53;pf2]←	0	0	0	0	0	0
-pn,←⊂'⎕sp'		
+pn,←⊂'⎕sp'
 	pt[54;pf1]←	¯2	¯2	¯2	¯11	¯11	1
 	pt[54;pf2]←	¯11	¯11	¯11	¯11	¯11	¯11
 ⍝[c]
 ⍝[c]Name	RL:	IN	FN	BN	II	IF	IB
 ⍝[c]		FI	FF	FB	BI	BF	BB
-pn,←⊂'⎕XOR'		
+pn,←⊂'⎕XOR'
 	pt[55;pf1]←	¯2	¯2	¯2	1	¯16	¯16
 	pt[55;pf2]←	¯16	¯16	¯16	¯16	¯16	¯16
 ⍝[cf]
@@ -1390,14 +1553,14 @@ otn←⍬	⋄ oti←0 2 2⍴⍬
 otn,←⊂,'.'	⋄ oti⍪←↑(1 1)	(2 3)	⋄ otn,←⊂,'/'	⋄ oti⍪←↑(2 2)	(2 3)
 otn,←⊂,'⌿'	⋄ oti⍪←↑(2 2)	(2 3)	⋄ otn,←⊂,'\'	⋄ oti⍪←↑(2 2)	(2 3)
 otn,←⊂,'⍀'	⋄ oti⍪←↑(2 2)	(2 3)	⋄ otn,←⊂'∘.'	⋄ oti⍪←↑(2 3)	(2 3)
-otn,←⊂,'¨'	⋄ oti⍪←↑(2 3)	(2 3)	
+otn,←⊂,'¨'	⋄ oti⍪←↑(2 3)	(2 3)
 	oti⍪←↑(2 3)	(2 3)
 ⍝[cf]
 
 lte	←((20⌊1 4 5⊥((∨⌿¯1=×)⍪|))2↑⊢)⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢
 ltoa	←lte⍤2(2↑⊣),[1]⍨(oti⌷⍨otn⍳¯1↑∘⊃v)(⌷⍤0 2)(4 5⊤⍳20)⍪⍨(2↑1↓(⊃y))
 ltob	←(⍴⊣)⍴(,(⌈/⊢))(⌷⍤0 1)0 4 3 1 2,⍤1 0∘,⊣
-ltoc	←ltoa(⊣ltob 5 0 3 4 2 1⌷⍤0 1⍨1+¯1⌈,∘⍪⍤1)(4 5⊤⍳20)×(,¨'/⌿\⍀')∊⍨¯1↑∘⊃v 
+ltoc	←ltoa(⊣ltob 5 0 3 4 2 1⌷⍤0 1⍨1+¯1⌈,∘⍪⍤1)(4 5⊤⍳20)×(,¨'/⌿\⍀')∊⍨¯1↑∘⊃v
 lto	←(((1+¯1⌈⊃)⌷0 0,⍨⊢)⍤1∘⍉⍪1⊖⊢)(¯1↑⊣)⍪ltoc
 ltv	←(1⊃⊣)⌷⍤0 2⍨(⊃¨(0⊃⊣)⍳∘⊂ndo(⊃v))
 ltt	←(Om∧1 2∨.=∘⊃k)⊃⊣(((lte⍪⊢)ltv){⍺⍵}ltv lto ⊢)(⍉∘⍪⊢)
@@ -1930,7 +2093,7 @@ decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
 	z	,←⍺(⍺⍺ declv) ⍵
 		z}
 declv	←{(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
-	
+
 ⍝[cf]
 ⍝[of]:Iota/Index Generation
 iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
@@ -2240,7 +2403,7 @@ tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
 	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
 	siz	,←'zs[0]=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
 	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
-	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'	
+	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
 	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
 	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
 	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
@@ -2265,10 +2428,10 @@ sopid←{	siz	←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 	exe	,←'zv[(i*rc*lc)+(j*lc)+k]=(1&(lv[li/8]>>(7-(li%8))))*rv[(j*lc)+k];',nl
 	exe	,←'}}}'
 		'' siz exe mxfn 1 ⍺ ⍵}
- 
+
  ⍝ Lamination
   catdo←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catdl ⍵ ⋄ ⍺ catdv ⍵}
-  
+
   catdv←{z←'{',(⊃,/'rslt' 'rgt' 'lft'{'A*',⍺,'=',⍵,';'}¨var/⍵),nl
    z,←'B s[]={rgt->s[0],2};'
    z,←'A*orz;A tp;tp.v=NULL;int tpused=0;',nl
