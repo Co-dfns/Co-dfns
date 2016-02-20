@@ -345,6 +345,100 @@ This should not be relied on to replace [[util.TEST]] however, and the
 test←{##.UT.run './Testing/',⍵,'_tests.dyalog'}
 @ %def util.test
 
+\subsection{Generating Tests for Specific Inputs}
+
+When generating tests for a set of inputs, first break up the tests into suites. 
+Each suite should focus on a specific thing to test. After that, you can write 
+a single file for each test ``suite.'' 
+These files will eventually go into the [[Testing/]] directory. It's important 
+to note than when tangling these files out of the main Co-dfns program, you'll 
+need to use [[sample\_tests.dyalog]] as the target instead of 
+[[sample_tests.dyalog]] because the Noweb implementation does not handle 
+underscores explicitly, so we need to do this ourselves. Files should be stored 
+without the backslash when they are placed in the [[Testing/]] directory. 
+
+The following test is called [[sample01]] in the results, which is the result 
+of a catenation of the test identifier and the suite identifier. The above 
+test will test the [[Run]] function from namespace [[S]] 
+with inputs [[A]] and [[B]] on each of the compilers that are enabled in 
+[[TEST∆COMPILERS]]. 
+The test suites normally look something like this:
+
+<<sample\_tests.dyalog>>=
+﻿:Namespace sample
+
+S←':Namespace' 'Run←{...}' ':EndNamespace'
+
+'01'('sample' S 'Run' ##.util.GEN∆T2 ⎕THIS)A B
+...
+
+:EndNamespace
+@ %
+The [[GEN∆T2]] conjunction and its siblings do all of the hard work for us. Their 
+basic job is to make it easy to create a set of tests over a single function 
+and a single input into that function. They use the [[MK∆T2]] conjunction  
+under the hood. These conjunctions create new definitions in the same scope in
+which they appear, which means that we must take advantage of the dynamic 
+scoping behavior of trad-fns, rather than using the usually more preferrable 
+dfns syntax. This means that we also need to use some structured programming 
+to get things done for clarity rather than the more prefferrable functional 
+style. 
+
+The left operand for the generators are vectors containing the following 
+elements:
+
+\begin{description}
+\item[ [[NS]] ] The name of the testing suite
+\item[ [[TC]] ] The namespace script containing the function to test in the 
+form of a vector of strings
+\item[ [[FN]] ] The name of the function to test
+\end{description}
+%
+We use the test maker conjunctions defined further down to create the tests 
+themselves, and catenate the test suite name to the test identifier [[ID]] 
+given as the left argument to create the name of the individual test. Each 
+individual ``test'' is actually a set of tests, one for each different compiler 
+that we support. We iterate over each compiler type and create a test for each. 
+
+<<Test Generators (conjunctions) for Abstracting a Single Test Input>>=
+∇Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;CMP;TC;TMP
+ NS TC FN←NCF
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+     TMP←(NS,ID)CMP TC FN MK∆T1 IN
+     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
+ :EndFor
+ Z←0 0⍴⍬
+∇
+
+∇Z←ID(NCF GEN∆T2 THIS)IN;NS;FN;CMP;TC;TMP
+ NS TC FN←NCF
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+     TMP←(NS,ID)CMP TC FN MK∆T2 IN
+     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
+ :EndFor
+ Z←0 0⍴⍬
+∇
+@ %def GEN∆T1 GEN∆T2
+The [[GEN∆T3]] conjunction differs from [[GEN∆T2]] in that it tests 
+approximately rather than exactly. This requires the use of the [[TL]] tolerance 
+parameter in addition to the normal parameters. 
+
+\begin{description}
+\item[ [[TL]] ] The tolerance for approximate matches when testing the 
+expected and actual results
+\end{description}
+
+<<Test Generators (conjunctions) for Abstracting a Single Test Input>>=
+∇Z←ID(NCFT GEN∆T3 THIS)IN;NS;FN;CMP;TC;TMP;TL
+ NS TC FN TL←NCFT
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+     TMP←(NS,ID)CMP TC FN TL MK∆T3 IN
+     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
+ :EndFor
+ Z←0 0⍴⍬
+∇
+@ %def GEN∆T3
+
 \subsection{Making a Single Test Function}
 
 There are a few main maker conjunctions designed to create 
@@ -414,39 +508,6 @@ MK∆T3←{id cmp ns fn tl←⍺⍺ ⋄ l r←⍵⍵
     nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
     ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 @ %def MK∆T3
-
-\subsection{Generating Tests for Specific Inputs}
-
-<<Test Generators (conjunctions) for Abstracting a Single Test Input>>=
-∇Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;CMP;TC;TMP
- NS TC FN←NCF
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
-     TMP←(NS,ID)CMP TC FN MK∆T1	IN
-     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
- :EndFor
- Z←0 0⍴⍬
-∇
-
-∇Z←ID(NCF GEN∆T2 THIS)IN;NS;FN;CMP;TC;TMP
- NS TC FN←NCF
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
-     TMP←(NS,ID)CMP TC FN MK∆T2	IN
-     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
- :EndFor
- Z←0 0⍴⍬
-∇
-
-∇Z←ID(NCFT GEN∆T3 THIS)IN;NS;FN;CMP;TC;TMP;TL
- NS TC FN TL←NCFT
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
-     TMP←(NS,ID)CMP TC FN TL MK∆T3	IN
-     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
- :EndFor
- Z←0 0⍴⍬
-∇
-
-
-@ %def GEN∆T1 GEN∆T2 GEN∆T3
 
 \chapter{Public Interface}
 
