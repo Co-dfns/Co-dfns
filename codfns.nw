@@ -48,7 +48,9 @@ along with this program. If not, see \url{http://www.gnu.org/licenses/}.
 @
 \chapter{Acknowledgments}
 
-Acknowledge Dyalog here.
+Dyalog, Ltd. has provided significant funding and resources to bring the 
+Co-dfns compiler to fruition, and this project would not be what it is today 
+without their assistance. 
 
 \chapter{Preface}
 
@@ -70,6 +72,9 @@ on the compiler, including the testing and such.
 We should also probably include some comments about the style of APL
 terminology used in ths guide, in particular the J-isms of verbs, adverbs,
 and so forth.
+
+The Preface should also include information about how to extract the files 
+from this document and how to weave this document into a PDF.
 
 @
 \mainmatter
