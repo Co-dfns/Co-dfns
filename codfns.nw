@@ -12,10 +12,11 @@
 \usepackage{babel}
 \usepackage[unicode=true,pdfusetitle,
  bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
- breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ breaklinks=false,backref=false,colorlinks=true,allcolors=blue]
  {hyperref}
 \usepackage{breakurl}
 \usepackage{multicol}
+\usepackage{booktabs}
 
 \begin{document}
 
@@ -100,6 +101,7 @@ that we get better information in the index.
 <<codfns.dyalog>>=
 :Namespace codfns
 <<Choices for [[⎕IO]], [[⎕ML]], and [[⎕WX]]>> ⍝ ⎕IO, ⎕ML, ⎕WX
+<<Global Configuration>>
 <<Unprocessed code>>
 :EndNamespace
 @ %def codfns
@@ -206,6 +208,7 @@ utf8get←{                              ⍝ Char vector from UTF-8 file ⍵.
 @ %def utf8get
 
 \section{Testing Requirements and Methods}
+\label{sec:test_reqs_methods}
 
 The Co-dfns compiler follows a very specific philosophy when it comes to 
 quality control. It dreams of the day that formal methods catch up to testing, 
@@ -519,7 +522,99 @@ MK∆T3←{id cmp ns fn tl←⍺⍺ ⋄ l r←⍵⍵
 @
 \chapter{Installation, Configuration, and Settings}
 
-@ \section{Configuration File}
+@
+\section{Global Configuration}
+
+There are a number of configuration settings that can be set in the [[codfns]]
+namespace that control the behavior of the compiler. These can roughly be 
+divided into three types: settings for choosing your backend, settings for 
+choosing the working directories, and settings for configuring the compiler 
+backends themselves. 
+
+<<Global Configuration>>=
+<<[[COMPILER]] and [[TEST∆COMPILERS]] settings for choosing compiler backends>>
+<<[[DWA∆PATH]] and [[BUILD∆PATH]] settings for compiler artifacts>>
+<<Compiler backend search paths for Windows backends>>
+@
+
+\subsection{Choosing Your Compiler Backend}
+
+The Co-dfns compiler is really more of a front-end compiler for a specific 
+backend C compiler. The compiler processes your APL namespace into C code that 
+is then compiled with the back-end compiler of your choice. Table 
+\ref{tab:compbackends} 
+describes the C compilers that we support, the [[code]] for that compiler, 
+and the operating systems on which we support that specific compiler.
+
+\begin{table}
+\centering
+\begin{tabular}{lll}
+\toprule
+Compiler Code & Compiler & Supported Operating System \\
+\midrule
+[[gcc]] & GNU C Compiler & Linux \\
+[[icc]] & Intel C++ Compiler & Linux \\
+[[icl]] & Intel C++ Compiler & Windows \\
+[[pgcc]] & PGI C/OpenACC Compiler & Linux \\
+[[pgi]] & PGI C/OpenACC Compiler & Windows \\
+[[vsc]] & Microsoft Visual Studio C++ Compiler & Windows \\
+\bottomrule
+\end{tabular}
+\caption{The supported compiler backends and their associated codes.}
+\label{tab:compbackends}
+\end{table}
+
+The relative support for each compiler differs principally in the type of 
+performance that one can expect from each C compiler backend. We make 
+significant efforts to ensure that the Intel and PGI backends perform well, 
+but we do not make any extraordinary or special efforts to ensure that the 
+Visual Studio or GNU C compilers produce fast code. The Visual Studio and 
+GNU C compilers are intended to serve as safe defaults and readily accessible 
+options for those who lack the Intel or PGI compilers, which are not freely 
+available. This provides an option for trial, but it is not intended to replace 
+using one of the other compilers for higher performance on your specific 
+platform. 
+
+The [[COMPILER]] noun determines what backend the Co-dfns compiler will use 
+when calling the [[Fix]] verb. It should be set to one of the codes listed 
+above. We choose [[vsc]] as the default code since we assume that it is more 
+likely to find someone wanting to test this out on Windows than on Linux. 
+The [[gcc]] code is the appropriate default on Linux if you don't know which 
+one to use. 
+
+<<[[COMPILER]] and [[TEST∆COMPILERS]] settings for choosing compiler backends>>=
+COMPILER←'vsc'
+@ %def COMPILER
+The [[TEST∆COMPILERS]] noun is a vector of compiler codes (selected from 
+Table \ref{tab:compbackends}) 
+indicating which compilers are available and desired to use when 
+running the Co-dfns test suite through [[util.TEST]] or [[util.test]]. See 
+Section \ref{sec:test_reqs_methods} for more information on the use of this 
+setting. Notice that we need to enclose the code if we are using only a single 
+compiler for our testing. We also use the [[vsc]] compiler as our default 
+as explained for [[COMPILER]].
+
+<<[[COMPILER]] and [[TEST∆COMPILERS]] settings for choosing compiler backends>>=
+TEST∆COMPILERS←⊂'vsc'
+@ %def TEST∆COMPILERS
+
+\subsection{Setting Up Compiler Support Directories}
+
+<<[[DWA∆PATH]] and [[BUILD∆PATH]] settings for compiler artifacts>>=
+DWA∆PATH   ←'dwa'
+BUILD∆PATH ←'Build'
+@ %def DWA∆PATH BUILD∆PATH
+
+\subsection{Configuring Compiler Backend Paths}
+
+<<Compiler backend search paths for Windows backends>>=
+VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
+INTEL∆C∆PATH       ←'C:\Program Files (x86)\IntelSWTools\'
+INTEL∆C∆PATH      ,←'compilers_and_libraries_2016.0.110\windows\bin\'
+PGI∆PATH           ←'C:\Program Files\PGI\win64\15.7\'
+@ %def VISUAL∆STUDIO∆PATH INTEL∆C∆PATH PGI∆PATH
+
+\section{Configuration File}
 
 We recommend the use of a configuration file for loading and using the compiler.
 This is a small file that you use to store your system specific settings that
@@ -1350,16 +1445,6 @@ This chapter includes all of the unprocessed code that has not yet been
 incorporated into the rest of the document.
 
 <<Unprocessed code>>=
-⍝[of]:Global Configuration
-VERSION	←0 4 42 ⋄ COMPILER←'vsc'
-DWA∆PATH	←'dwa'
-BUILD∆PATH	←'Build'
-TEST∆COMPILERS	←⊂'vsc'
-VISUAL∆STUDIO∆PATH	←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
-INTEL∆C∆PATH	←'C:\Program Files (x86)\IntelSWTools\'
-INTEL∆C∆PATH	,←'compilers_and_libraries_2016.0.110\windows\bin\'
-PGI∆PATH	←'C:\Program Files\PGI\win64\15.7\'
-⍝[cf]
 ⍝[of]:Backend Compilers
 ⍝[of]:UNIX Generic Flags/Options
 cfs	←'-funsigned-bitfields -funsigned-char -fvisibility=hidden -std=c11 '
