@@ -103,6 +103,7 @@ that we get better information in the index.
 <<Choices for [[⎕IO]], [[⎕ML]], and [[⎕WX]]>> ⍝ ⎕IO, ⎕ML, ⎕WX
 <<Global Configuration>>
 <<Unprocessed code>>
+<<Runtime: Mixed Verbs>>
 :EndNamespace
 @ %def codfns
 The entire namespace and the rest of this document all assume the following
@@ -721,7 +722,502 @@ Run util.TEST
 @
 \chapter{Runtime: Mixed Verbs}
 
+Mixed verbs are those verbs that require more specific and special handling 
+with regards to their traversals over an array than simply scalar verbs. Unlike 
+with scalar verbs, whose shape will not change and that operate point-wise 
+over their elements, mixed functions often describe arrays of a very different 
+shape than their arguments. 
+
+Table \ref{tab:mixedverbs} describes the general outlook for mixed verbs. 
+We classify them into categories, and we associate with each symbol a set of 
+generators, for each specific case of input types. Each generator is a 
+verb which has the following type:
+
+\begin{verbatim}
+CODE ← TYPES GENERATOR ELEMENTS
+\end{verbatim}
+%
+That is, each generator takes on the left a vector of the types corresponding 
+to each element/variable on the right. The elements are expected to follow 
+standard argument ordering of Result, Right, Left, Function (ZRLF). 
+
+\begin{table}
+\centering
+\begin{tabular}{cllllll}
+\toprule
+ & \multicolumn{2}{c}{Monadic} & \multicolumn{2}{c}{Dyadic} \\
+\cmidrule(lr){2-3} \cmidrule(l){4-5}
+Symbol & Category      & Generator & Category      & Generator \\
+\midrule
+[[⍴]]  & Miscellaneous & [[shpm]]  & Structural    & [[shpd]] \\
+[[,]]  & Structural    & [[catm]]  & Structural    & [[catd]] \\
+[[⍪]]  & Structural    & [[fctm]]  & Structural    & [[fctd]] \\
+[[⌽]]  & Structural    & [[rotm]]  & Structural    & [[rotd]] \\
+[[⍉]]  & Structural    & [[tspm]]  & Structural    & [[tspd]] \\
+[[⊖]]  & Structural    & [[rtfm]]  & Structural    & [[rtfd]] \\
+[[↑]]  & Structural    & [[tkem]]  & Selection     & [[tked]] \\
+[[↓]]  & Structural    & [[drpm]]  & Selection     & [[drpd]] \\
+[[⊂]]  & Structural    & [[clsm]]  & Structural    & [[clsd]] \\
+[[∊]]  & Structural    & [[memm]]  & Selector      & [[memd]] \\
+[[⊃]]  & Selection     & [[dism]]  & Selection     & [[disd]] \\
+[[/]]  &               &           & Selection     & [[fltd]] \\
+[[⌿]]  &               &           & Selection     & [[flfd]] \\
+[[\]]  &               &           & Selection     & [[expd]] \\
+[[⍀]]  &               &           & Selection     & [[exfd]] \\
+[[~]]  & \emph{Scalar} & N/A       & Selection     & [[notd]] \\
+[[∩]]  &               &           & Selection     & [[intd]] \\
+[[∪]]  & Selection     & [[unim]]  & Selection     & [[unid]] \\
+[[⊣]]  & Selection     & [[lftm]]  & Selection     & [[lftd]] \\
+[[⊢]]  & Selection     & [[rgtm]]  & Selection     & [[rgtd]] \\
+[[⍳]]  & Selector      & [[iotm]]  & Selector      & [[iotd]] \\
+[[⍋]]  & Selector      & [[gdum]]  & Selector      & [[gdud]] \\
+[[⍒]]  & Selector      & [[gddm]]  & Selector      & [[gddd]] \\
+[[?]]  & \emph{Scalar} & N/A       & Selector      & [[qstd]] \\
+[[⍷]]  &               &           & Selector      & [[fndd]] \\
+[[≡]]  & Miscellaneous & [[eqvm]]  & Miscellaneous & [[eqvd]] \\
+[[≢]]  & Miscellaneous & [[nqvm]]  & Miscellaneous & [[nqvd]] \\
+[[⍎]]  & Miscellaneous & [[exem]]  & Miscellaneous & [[exed]] \\
+[[⍕]]  & Miscellaneous & [[fmtm]]  & Miscellaneous & [[fmtd]] \\
+[[⊥]]  &               &           & Miscellaneous & [[decd]] \\
+[[⊤]]  &               &           & Miscellaneous & [[encd]] \\
+[[⌹]]  & Miscellaneous & [[domm]]  & Miscellaneous & [[domd]] \\
+[[←]]  &               &           & Special       & [[getd]] \\
+[[[]]] &               &           & Special       & [[brid]] \\
+\bottomrule
+\end{tabular}
+\caption{The mixed primitive verbs, their categorizations, and associated 
+generators}
+\label{tab:mixedverbs}
+\end{table}
+
+We encode this information in the form of a data base associating the 
+appropriate symbols with their generators. This database, called [[fdb]] 
+for mixed \emph{function database}, has the following shape:
+
+<<Mixed Primitive Verb Database>>=
+fdb←0 5⍴⊂''
+@ %def fdb
+The database has the following fields in order:
+
+\begin{enumerate}
+\item Primitive Symbol
+\item Monadic Generator
+\item Dyadic Generator
+\item Monadic Boolean Generator
+\item Dyadic Boolean Generator
+\end{enumerate}
+%
+At the moment the boolean generators are just placeholders for use later, 
+since we must ensure that the shape of [[fdb]] conforms to the shape of [[sdb]]. 
+
+<<Mixed Primitive Verb Database>>=
+⍝      Prim  Monadic        Dyadic         MBool DBool
+fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}' 'idxd'         ''    ''
+fdb⍪←,¨'['   '{⎕SIGNAL 99}' 'brid'         ''    ''
+fdb⍪←,¨'⍳'   'iotm'         '{⎕SIGNAL 16}' ''    ''
+fdb⍪←,¨'⍴'   'shpm'         'shpd'         ''    ''
+fdb⍪←,¨','   'catm'         'catd'         ''    ''
+fdb⍪←,¨'⍪'   'fctm'         'fctd'         ''    ''
+fdb⍪←,¨'⌽'   'rotm'         'rotd'         ''    ''
+fdb⍪←,¨'⊖'   'rtfm'         'rtfd'         ''    ''
+fdb⍪←,¨'∊'   'memm'         'memd'         ''    ''
+fdb⍪←,¨'⊃'   'dscm'         '{⎕SIGNAL 16}' ''    ''
+fdb⍪←,¨'≡'   'eqvm'         'eqvd'         ''    ''
+fdb⍪←,¨'≢'   'nqvm'         'nqvd'         ''    ''
+fdb⍪←,¨'⊢'   'rgtm'         'rgtd'         ''    ''
+fdb⍪←,¨'⊣'   'lftm'         'lftd'         ''    ''
+fdb⍪←,¨'//'  '{⎕SIGNAL 99}' 'fltd'         ''    ''
+fdb⍪←,¨'⍉'   'tspm'         '{⎕SIGNAL 16}' ''    ''
+fdb⍪←,¨'↓'   '{⎕SIGNAL 16}' 'drpd'         ''    ''
+fdb⍪←,¨'↑'   '{⎕SIGNAL 16}' 'tked'         ''    ''
+fdb⍪←,¨'⊤'   '{⎕SIGNAL 99}' 'encd'         ''    ''
+fdb⍪←,¨'⊥'   '{⎕SIGNAL 99}' 'decd'         ''    ''
+fdb⍪←,¨'⎕sp' '{⎕SIGNAL 99}' 'sopid'        ''    ''
+@ %def fdb
+
+<<Runtime: Mixed Verbs>>=
+<<Mixed Primitive Verb Database>>
+fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
+fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')'' ''}
+
+⍝[of]:Function Utilities
+calm←{	z r	←var/⍵
+	arr	←⍺⍺,((1⌷⍺)⊃'iifb'),'n(',z,',NULL,',r,',env);',nl
+	scl	←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
+	scl	,←'sr.r=0;sr.v=&',r,';sr.f=0;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
+	scl	,←⍺⍺,((1⌷⍺)⊃'iifb'),'n(&sz,NULL,&sr,env);',nl
+	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',nl,pacc'update host(szv[:1])'
+	scl	,←z,'=*szv;frea(&sz);}',nl
+		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
+cald←{	z r l	←var/⍵
+	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(',z,',',l,',',r,',env);',nl
+	scl	←'{A sz,sr,sl;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
+	scl	,←'sr.r=0;sr.f=0;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
+	scl	,←'sl.r=0;sl.f=0;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
+	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(&sz,&sl,&sr,env);',nl
+	scl	,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
+	scl	,←z,'=*szv;frea(&sz);}',nl
+		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
+mxfn←{	chk siz exe	←⍺
+	al tp el	←⍵
+	vr	←(∧/¯1=↑1⌷⍉el)+0≠(⊃0⍴⊃)¨0⌷⍉el
+	tpl tpv tps	←(tp(/⍨)vr=⊢)¨⍳3
+	nml nmv nms	←(('zrl'↑⍨≢el)/⍨vr=⊢)¨⍳3
+	elv ell els	←1 0 2(⊢(/⍨)vr=⊣)¨(⊂(≢el)↑'rslt' 'rgt' 'lft'),2⍴⊂0⌷⍉el
+	z	←'{B zc=1,rc=1,lc=1;',nl
+	z	,←(⊃,/(⊂''),elv{'A *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
+	z	,←⊃,/(⊂''),nml{'I ',⍺,'r=',(⍕≢⍴⍵),';B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
+	z	,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
+	z	,←pacc'enter data copyin(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
+	z	,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl↑⍨≢els
+	z	,←(⊃,/(⊂''),{'I ',⍵,'r=0;B*',⍵,'s=NULL;'}¨nms),nl↑⍨≢nms
+	z	,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl↑⍨≢nms
+	iso	←(⊂⊃1⌷⍉el)∨.≡n2f 1↓1⌷⍉el
+	z	,←iso⊃''('A*orz=rslt;A tz;tz.v=NULL;rslt=&tz;',nl)
+	z	,←(0≡≢elv)⊃'' 'A tp;tp.v=NULL;A*rslt=&tp;'
+	tpv nmv elv	,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
+	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
+	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl
+	alloc	←'ai(rslt,zr,zs,',(⍕⊃0⌷tp),');',nl
+	alloc	,←(1↑tpv)((1↑nmv)declv)1↑elv
+	z	,←(al⊃'' alloc),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
+	z	,←pacc'exit data delete(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
+	z	,←iso⊃''('cpaa(orz,rslt);',nl)
+	z	,←'}',nl
+		z}
+decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
+	z	,←(⊃,/(⊂''),⍺⍺{'B*restrict ',⍺,'s=',⍵,'->s;'}¨⍵),nl
+	z	,←⍺(⍺⍺ declv) ⍵
+		z}
+declv	←{(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
+<<Mixed Primitive Verb Generators>>
 @
+
+\section{Mixed Primitive Verb Generators}
+
+We generally classify mixed verbs as belonging to one of a few categories:
+
+<<Mixed Primitive Verb Generators>>=
+<<Structural Primitive Verb Generators>>
+<<Selection Primitive Verb Generators>>
+<<Selector Primitive Verb Generators>>
+<<Miscellaneous Primitive Verb Generators>>
+<<Special Primitive Verb Generators>>
+@
+
+\subsection{Structural Primitive Verb Generators}
+
+<<Structural Primitive Verb Generators>>=
+shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
+	siz	←'zr=ls[0];',nl
+	siz	,←pacc'update host(lv[:zr])'
+	siz	,←'DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
+	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
+	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
+	cpy	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
+	cpy	,←'else{',nl,(simd'present(zv,rv)'),'DO(i,zc)zv[i]=rv[i%rc];}'
+	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;rslt->c=zc;',nl
+	ref	,←'rslt->z=zc*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
+	exe	←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
+		chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
+catm←{	chk	←''
+	siz	←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
+	exe	←(simd'present(zv[:rslt->c],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
+		chk siz exe mxfn 1 ⍺ ⍵}
+catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
+	chk	,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
+	siz	←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
+	siz	,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
+	siz	,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
+	exe	←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+	exe	,←'B li=0,ri=0,zm=zs[zr-1],lm=(lr<rr||lr==0)?1:ls[lr-1];',nl
+	exe	,←'B lt=lft->c!=1,rt=rgt->c!=1;',nl
+	exe	,←pacc'update host(lv[:lft->c],rv[:rgt->c])'
+	exe	,←'DO(i,zc){zv[i]=(i%zm)<lm?lv[lt*(li++)]:rv[rt*(ri++)];}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
+		chk siz exe mxfn 1 ⍺ ⍵}
+fctm←{	siz	←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
+	siz	,←'I n=rr-1;DO(i,n)rc*=rs[i+1];zs[1]=rc;rc*=rs[0];}'
+	exe	←(simd'present(zv[:rc],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
+		'' siz exe mxfn 1 ⍺ ⍵}
+fctd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
+	chk	,←'if(lr==rr&&rr>0){I n=rr-1;DO(i,n)if(rs[i+1]!=ls[i+1])error(5);}',nl
+	chk	,←'else if(lr<rr){DO(i,lr)if(ls[i]!=rs[i+1])error(5);}',nl
+	chk	,←'else{DO(i,rr)if(ls[i+1]!=rs[i])error(5);}'
+	siz	←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
+	siz	,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
+	siz	,←'zr=zr==0?1:zr;zs[0]+=minr==zr?ls[0]:1;'
+	exe	←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+	exe	,←'if(abs(lr-rr)<=1){',nl
+	exe	,←(simd'present(zv[:lc],lv[:lc])'),' DO(i,lc)zv[i]=lv[i];',nl
+	exe	,←(simd'present(zv[lc:rc],rv[:rc])'),'DO(i,rc)zv[lc+i]=rv[i];',nl
+	exe	,←'}else{I n=zr-1;DO(i,n)zc*=zs[i+1];',nl,' if(lr==0){',nl
+	exe	,←(simd'present(zv[:zc],lv[:1])'),'DO(i,zc)zv[i]=lv[0];',nl
+	exe	,←(simd'present(zv[zc:rc],rv[:rc])'),' DO(i,rc)zv[zc+i]=rv[i];}',nl
+	exe	,←' else{',nl,(simd'present(zv[:lc],lv[:lc])'),'DO(i,lc)zv[i]=lv[i];',nl
+	exe	,←(simd'present(zv[lc:zc],rv[:1])'),'DO(i,zc)zv[lc+i]=rv[0];}}'
+		chk siz exe mxfn 1 ⍺ ⍵}
+rotm←{	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
+	exen	←simd 'independent collapse(2) present(rv[:lc],zv[:lc])'
+	exen	,←'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
+	exeb	←'I zcp=ceil(lc/8.0);',nl
+	exeb	,←simd'present(zv[:zcp])'
+	exeb	,←'DO(i,zcp){zv[i]=0;}',nl
+	exeb	,←simd'collapse(2) present(zv[:zcp],rv[:zcp])'
+	exeb	,←'DO(i,zc){DO(j,rc){I zi=i*rc+j;I ri=i*rc+(rc-(j+1));',nl
+	exeb	,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
+	exeb	,←'}}'
+	exe	,←(3=⊃0⌷⍺)⊃exen exeb
+		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
+rotd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+	exe	←'zc=rr==0?1:rs[rr-1];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i];',nl
+	exe	,←'DO(i,lr)lc*=ls[i];I s=(lv[0]<0)?abs(lv[0]):zc-lv[0];',nl
+	exen	←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
+	exen	,←'DO(i,rc){DO(j,zc){zv[i*zc+((j+s)%zc)]=rv[(i*zc)+j];}}'
+	exeb	←'I zcp=ceil(rslt->c/8.0);',nl
+	exeb	,←simd'present(zv[:zcp])'
+	exeb	,←'DO(i,zcp){zv[i]=0;}',nl
+	exeb	,←simd'collapse(2) present(zv[:zcp],rv[:zcp],lv[:lc])'
+	exeb	,←'DO(i,rc){DO(j,zc){',nl
+	exeb	,←' I zi=i*zc+((j+s)%zc);',nl
+	exeb	,←' I ri=(i*zc)+j;',nl
+	exeb	,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
+	exeb	,←'}}'
+	exe	,←(3=⊃0⌷⍺)⊃exen exeb
+		chk siz exe mxfn 1 ⍺ ⍵}
+rtfm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i+1];rc=rr==0?1:rs[0];',nl
+	exe	,←simd 'collapse(2) independent present(rv[:rc*zc],zv[:rc*zc])'
+	exe	,←'DO(i,rc){DO(j,zc){zv[i*zc+j]=rv[(rc-(i+1))*zc+j];}}'
+		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
+rtfd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+	exe	←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
+	exe	,←'DO(i,lr)lc*=ls[i];',nl
+	exe	,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
+	exe	,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
+		chk siz exe mxfn 1 ⍺ ⍵}
+tspm←{	siz	←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
+	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	exe	,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
+		'' siz exe mxfn 1 ⍺ ⍵}
+memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
+	exe	←(simd'present(rv[:rc],zv[:rslt->c])'),'DO(i,rc)zv[i]=rv[i];'
+		'' siz exe mxfn 1 ⍺ ⍵}
+@
+
+\subsection{Selection Primitive Verb Generators}
+
+<<Selection Primitive Verb Generators>>=
+dscm←{	exe	←pacc'update host(rv[:rgt->c])'
+	exe	,←'DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
+		'' 'zr=0;' exe mxfn 1 ⍺ ⍵}
+drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+	siz	←pacc'update host(lv[:1])'
+	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=(zs[0]==0?0:lv[0]);',nl
+	siz	,←'I n=zr-1;DO(i,n)zc*=zs[i+1];lc=lv[0];'
+	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
+	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
+	cpyn	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	cpyn	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
+	cpyb	←'I zcp=ceil(rslt->c/8.0);I rcp=ceil(rgt->c/8.0);',nl
+	cpyb	,←'I sti=(lc*zc)/8;I stp=(lc*zc)%8;n=(zcp==0?0:zcp-1);',nl
+	cpyb	,←simd'independent present(zv[:zcp],rv[:rcp])'
+	cpyb	,←'DO(i,n){U8 x=rv[i+sti]<<stp;',nl
+	cpyb	,←'x|=rv[i+1+sti]>>(8-stp);zv[i]=x;}',nl
+	cpyb	,←'if(zcp){',nl,(pacc'update host(rv[n+sti:1])')
+	cpyb	,←'zv[n]=rv[n+sti]<<stp;',nl,(pacc'update device(zv[n:1])'),'}'
+	cpy	,←(3=⊃0⌷⍺)⊃cpyn cpyb
+	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
+	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
+	ref	,←'rslt->v=rv+(lc*zc);'
+	exe	←ref cpy⊃⍨1⌊(3=⊃0⌷⍺)+0=⊃0⍴⊃⊃1 0⌷⍵
+		chk siz exe mxfn 0 ⍺ ⍵}
+tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+	siz	←pacc'update host(lv[:1])'
+	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
+	siz	,←'zs[0]=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
+	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
+	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
+	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
+	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
+	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
+	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
+	ref	,←'rslt->v=rv;'
+	exe	←ref cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
+		chk siz exe mxfn 0 ⍺ ⍵}
+fltd←{	chk	←'if(lr>1)error(4);',nl
+	chk	,←'if(lr!=0&&ls[0]!=1&&rr!=0&&rs[rr-1]!=1&&ls[0]!=rs[rr-1])error(5);'
+	popcnt	←'__builtin_popcount' '_popcnt32' '__popcnt'
+	pcnt	←popcnt⊃⍨'gc' 'ic' 'pg'⍳⊂2↑COMPILER
+	siz	←'zr=rr==0?1:rr;I n=zr-1;DO(i,n)zs[i]=rs[i];',nl
+	siz	,←'if(lr==1)lc=ls[0];if(rr!=0)rc=rs[rr-1];zs[zr-1]=0;B last=0;',nl
+	szn	←siz,pacc 'update host(lv[:lc],rv[:rgt->c])'
+	szn	,←'if(lc>=rc){DO(i,lc)last+=abs(lv[i]);}else{last+=rc*abs(lv[0]);}',nl
+	szn	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
+	szb	←siz,pacc 'update host(lv[:lft->z],rv[:rgt->c])'
+	szb	,←'if(lc>=rc){I n=ceil(lc/32.0);I*lv32=(I*)lv;',nl
+	szb	,←'DO(i,n)last+=',pcnt,'(lv32[i]);',nl
+	szb	,←'}else{last+=rc*(lv[0]>>7);}',nl
+	szb	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
+	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
+	exe	,←' if(lv[i]==0)continue;',nl
+	exe	,←' else if(lv[i]>0){',nl
+	exe	,←'  DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}',nl
+	exe	,←'  a+=lv[i];',nl
+	exe	,←' }else{',nl
+	exe	,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
+	exe	,←'  a+=abs(lv[i]);}}}',nl
+	exe	,←'else if(rc>lc){',nl
+	exe	,←' if(lv[0]>0){'
+	exe	,←'DO(i,zc){DO(j,rc){DO(k,lv[0]){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}}',nl
+	exe	,←' else if(lv[0]<0){L n=zc*zs[zr-1];DO(i,n)zv[i]=0;}}',nl
+	exe	,←'else{DO(i,lc){',nl
+	exe	,←' if(lv[i]==0)continue;',nl
+	exe	,←' else if(lv[i]>0){',nl
+	exe	,←'  DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[j*rc];}}',nl
+	exe	,←'  a+=lv[i];',nl
+	exe	,←' }else{',nl
+	exe	,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
+	exe	,←'  a+=abs(lv[i]);}}}',nl
+	exe	,←pacc 'update device(zv[:rslt->c])'
+	exb	←'B a=0;if(rr==1&&rc==lc){I n=ceil(lc/8.0);;',nl
+	exb	,←' DO(i,n){DO(j,8){if(1&(lv[i]>>(7-j)))zv[a++]=rv[i*8+j];}}',nl
+	exb	,←'}else if(rc==lc){I n=ceil(lc/8.0);',nl,'DO(i,n){DO(m,8){',nl
+	exb	,←' if(1&(lv[i]>>(7-m))){',nl
+	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[(j*rc)+i*8+m];}',nl
+	exb	,←'  a++;}}}',nl
+	exb	,←'}else if(rc>lc){if(lv[0]>>7){',nl
+	exb	,←'  DO(i,zc){DO(j,rc){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}',nl
+	exb	,←'}else{I n=ceil(lc/8.0);DO(i,n){DO(m,8){',nl
+	exb	,←' if(1&(lv[i]>>(7-m))){',nl
+	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[j*rc];}',nl
+	exb	,←'  a++;}}}}',nl
+	exb	,←pacc 'update device(zv[:rslt->c])'
+		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
+lftm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
+		chk siz exe mxfn 1 ⍺ ⍵}
+rgtm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
+		chk siz exe mxfn 1 ⍺ ⍵}
+lftd←{	chk siz	←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],lv[:zc])'),'DO(i,zc)zv[i]=lv[i];'
+		chk siz exe mxfn 1 ⍺ ⍵}
+rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
+	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
+		chk siz exe mxfn 1 ⍺ ⍵}
+idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
+	chk	,←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+	chk	,←pacc'update host(lv[:lc])'
+	chk	,←'DO(i,ls[0])if(lv[i]<0||lv[i]>=rs[i])error(3);'
+	siz	←'zr=rr-ls[0];DO(i,zr)zs[i]=rs[ls[0]+i];'
+	exe	←'B a,m,k=0;DO(i,zr)zc*=zs[i];m=zc;',nl
+	exe	,←'DO(i,ls[0]){a=ls[0]-(i+1);k+=m*lv[a];m*=rs[a];}',nl
+	exe	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[k+i];'
+	∧/,1≥≡¨⍵:	chk siz exe mxfn 1 ⍺ ⍵
+	sep	←{⊃⍺{⍺,⍺⍺,⍵}/⍵}
+	ixv ixe	←2⌷⍵
+	ixn	←{'idx[',(⍕⍵),']'}¨⍳≢ixv
+	idx	←'{A *idx[]={',(','sep ixv var¨ixe),'};',nl
+	idx	,←(⊃,/(⍳≢ixv){'I ir',(⍕⍺),'=',⍵,'->r;'}¨ixn),nl
+	idx	,←(⊃,/(⍳≢ixv){'B*restrict is',(⍕⍺),'=',⍵,'->s;'}¨ixn),nl
+	idx	,←(⊃,/(⍳≢ixv){'I*restrict iv',(⍕⍺),'=',⍵,'->v;'}¨ixn),nl
+	idx	,←(⊃,/(⍳≢ixv){'B ic',(⍕⍺),'=',⍵,'->c;'}¨ixn),nl
+	idx	,←'A irz;irz.v=NULL;A*irzp=&irz;',nl
+	iso	←(0 1⌷⍵)∨.≡ixe
+	idx	,←iso⊃('irzp=',(irzv←⊃var/0⌷⍵),';',nl)''
+	siz	←'zr=',(⍕≢ixv),';',⊃,/{'zs[',(⍕⍵),']=ic',(⍕⍵),';'}¨⍳≢ixv
+	gdx	←{'+'sep (↑∘⍺¨-⌽⍳≢⍺){'(',('*'sep(⊂⍵),⍺),')'}¨⍵}
+	idi	←(≢ixv)↑'ijklmnopqrstuvw'
+	zidx	←({'ic',(⍕⍵),''}¨⍳≢ixv)gdx idi
+	ridx	←({'rs[',(⍕⍵),']'}¨⍳≢ixv)gdx(⍳≢ixv){'iv',(⍕⍺),'[',⍵,']'}¨idi
+	stm	←'zv[',zidx,']=rv[',(ridx),'];',nl
+	mklp	←{i s←⍺ ⋄ (⊂'DO(',i,',',s,'){',nl),(' ',¨⍵),(⊂'}')}
+	pres	←'present(zv[:rslt->c],rv[:rgt->c],',(','sep{'iv',(⍕⍵),'[:ic',(⍕⍵),']'}¨⍳≢ixv),') '
+	exe	←simd pres,'independent collapse(',(⍕≢ixv),')'
+	exe	,←⊃,/⊃mklp/(idi{⍺('ic',⍕⍵)}¨⍳≢ixv),⊂⊂stm
+	idx	,←'' siz exe mxfn 1(¯1↓⍺)('irzp'(¯2 0)⍪1↓¯1↓⍵)
+	idx	,←(iso⊃''('cpaa(',irzv,',irzp);')),'}',nl
+		idx}
+@
+
+\subsection{Selector Primitive Verb Generators}
+
+<<Selector Primitive Verb Generators>>=
+iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
+	siz	←'zr=1;zc=zs[0]=rv[0];'
+	exe	←(simd 'present(zv[:zc])'),'DO(i,zs[0])zv[i]=i;'
+		chk siz exe mxfn 1 ⍺ ⍵}
+@
+
+\subsection{Miscellaneous Primitive Verb Generators}
+
+<<Miscellaneous Primitive Verb Generators>>=
+shpm←{	exe	←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
+		'' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
+eqvm←{	exe	←'zv[0]=rr==0?0:1;',nl,pacc'update device(zv[:1])'
+		'' 'zr=0;' exe mxfn 1 ⍺ ⍵}
+eqvd←{	chk siz	←'' 'zr=0;'
+	exe	←pacc 'update host(lv[:lft->c],rv[:rgt->c])'
+	exe	,←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
+	exe	,←'DO(i,lr){if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}}',nl
+	exe	,←'DO(i,lr)lc*=ls[i];',nl
+	exe	,←'DO(i,lc){if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
+		chk siz exe mxfn 1 ⍺ ⍵}
+nqvm←{	exe	←'zv[0]=rr==0?1:rs[0];',nl,pacc'update device(zv[:1])'
+		'' 'zr=0;' exe mxfn 1 ⍺ ⍵}
+nqvd←{	chk siz	←'' 'zr=0;'
+	exe	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
+	exe	,←'zv[0]=0;if(rr!=lr)zv[0]=1;',nl
+	exe	,←'DO(i,lr){if(zv[0])break;if(rs[i]!=ls[i]){zv[0]=1;break;}}',nl
+	exe	,←'DO(i,lr)lc*=ls[i];',nl
+	exe	,←'DO(i,lc){if(zv[0])break;if(lv[i]!=rv[i]){zv[0]=1;break;}}',nl
+	exe	,←pacc'update device(zv[:rslt->c])'
+		chk siz exe mxfn 1 ⍺ ⍵}
+decd←{	chk	←'if(lr>1||lv[0]<0)error(16);'
+	siz	←'zr=rr==0?0:rr-1;DO(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
+	siz	,←'if(rr>0)rc=rs[0];'
+	exen	←pacc'update host(lv,rv[:rgt->c])'
+	exen	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
+	exen	,←pacc'update device(zv[:rslt->c])'
+	exeb	←'I rcp=ceil(rgt->c/8.0);',nl
+	exeb	,←pacc'update host(lv,rv[:rcp])'
+	exeb	,←'DO(i,zc){zv[i]=0;DO(j,rc){I ri=(j*zc)+i;',nl
+	exeb	,←'zv[i]=(1&(rv[ri/8]>>(7-(ri%8))))+lv[0]*zv[i];}}',nl
+	exeb	,←pacc'update device(zv[:rslt->c])'
+	exe	←(3=⊃1⌷⍺)⊃exen exeb
+		chk siz exe mxfn 1 ⍺ ⍵}
+encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
+	chk	,←pacc'update host(lv[:lc])'
+	chk	,←'DO(i,lc){if(lv[i]<=0)error(16);}'
+	siz	←'zr=1+rr;zs[0]=lc;DO(i,rr)zs[i+1]=rs[i];DO(i,rr)rc*=rs[i];'
+	exe	←simd'collapse(2) present(zv[:rslt->c],rv[:rc],lv[:lc])'
+	exe	,←'DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
+		chk siz exe mxfn 1 ⍺ ⍵}
+@
+
+\subsection{Special Primitive Verb Generators}
+
+<<Special Primitive Verb Generators>>=
+brid←{	chk	←'if(lr!=1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
+	chkn	←pacc'update host(rv[:rc],lv[:lc])'
+	chkn	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])error(3);'
+	chkb	←'I n=ceil(rc/8.0);',nl
+	chkb	,←pacc'update host(rv[:n],lv[:lc])'
+	chkb	,←'DO(i,n){DO(j,8){if((1&(rv[i]>>(7-j)))>=ls[0])error(3);}}'
+	chk	,←(3≡1⊃⍺)⊃chkn chkb
+	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+	exen	←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
+	exeb	←(simd'present(zv[:rslt->c],lv[:lc],rv[:n])')
+	exeb	,←'DO(i,n){DO(j,8){zv[i*8+j]=lv[1&(rv[i]>>(7-j))];}}'
+	exe	←(3≡1⊃⍺)⊃exen exeb
+		chk siz exe mxfn 1 ⍺ ⍵}
+@
+
 \chapter{Runtime: Operators}
 
 @
@@ -2352,409 +2848,6 @@ inpd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	exe	,←hid⊃(pacc'exit data delete(tmp[:1])')''
 	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[cf]
-⍝[of]:Mixed Functions
-fdb←0 5⍴⊂'' ⋄ fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
-fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')'' ''}
-⍝[c]
-⍝[c]Prim	Monadic	Dyadic	Monadic Bool	Dyadic Bool
-fdb⍪←,¨'⌷'	'{⎕SIGNAL 99}'	'idxd'	''	''
-fdb⍪←,¨'['	'{⎕SIGNAL 99}'	'brid'	''	''
-fdb⍪←,¨'⍳'	'iotm'	'{⎕SIGNAL 16}'	''	''
-fdb⍪←,¨'⍴'	'shpm'	'shpd'	''	''
-fdb⍪←,¨','	'catm'	'catd'	''	''
-fdb⍪←,¨'⍪'	'fctm'	'fctd'	''	''
-fdb⍪←,¨'⌽'	'rotm'	'rotd'	''	''
-fdb⍪←,¨'⊖'	'rtfm'	'rtfd'	''	''
-fdb⍪←,¨'∊'	'memm'	'memd'	''	''
-fdb⍪←,¨'⊃'	'dscm'	'{⎕SIGNAL 16}'	''	''
-fdb⍪←,¨'≡'	'eqvm'	'eqvd'	''	''
-fdb⍪←,¨'≢'	'nqvm'	'nqvd'	''	''
-fdb⍪←,¨'⊢'	'rgtm'	'rgtd'	''	''
-fdb⍪←,¨'⊣'	'lftm'	'lftd'	''	''
-fdb⍪←,¨'//'	'{⎕SIGNAL 99}'	'fltd'	''	''
-fdb⍪←,¨'⍉'	'tspm'	'{⎕SIGNAL 16}'	''	''
-fdb⍪←,¨'↓'	'{⎕SIGNAL 16}'	'drpd'	''	''
-fdb⍪←,¨'↑'	'{⎕SIGNAL 16}'	'tked'	''	''
-fdb⍪←,¨'⊤'	'{⎕SIGNAL 99}'	'encd'	''	''
-fdb⍪←,¨'⊥'	'{⎕SIGNAL 99}'	'decd'	''	''
-fdb⍪←,¨'⎕sp'	'{⎕SIGNAL 99}'	'sopid'	''	''
-
-⍝[of]:Function Utilities
-calm←{	z r	←var/⍵
-	arr	←⍺⍺,((1⌷⍺)⊃'iifb'),'n(',z,',NULL,',r,',env);',nl
-	scl	←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
-	scl	,←'sr.r=0;sr.v=&',r,';sr.f=0;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
-	scl	,←⍺⍺,((1⌷⍺)⊃'iifb'),'n(&sz,NULL,&sr,env);',nl
-	scl	,←(⊃git ⍺),'*restrict szv=sz.v;',nl,pacc'update host(szv[:1])'
-	scl	,←z,'=*szv;frea(&sz);}',nl
-		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
-cald←{	z r l	←var/⍵
-	arr	←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(',z,',',l,',',r,',env);',nl
-	scl	←'{A sz,sr,sl;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
-	scl	,←'sr.r=0;sr.f=0;sr.c=1;sr.v=&',r,';sr.z=sizeof(',(1⊃git ⍺),');',nl
-	scl	,←'sl.r=0;sl.f=0;sl.c=1;sl.v=&',l,';sl.z=sizeof(',(2⊃git ⍺),');',nl
-	scl	,←⍺⍺,((¯2↑⍺)⊃¨⊂'iifb'),'(&sz,&sl,&sr,env);',nl
-	scl	,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
-	scl	,←z,'=*szv;frea(&sz);}',nl
-		(∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
-mxfn←{	chk siz exe	←⍺
-	al tp el	←⍵
-	vr	←(∧/¯1=↑1⌷⍉el)+0≠(⊃0⍴⊃)¨0⌷⍉el
-	tpl tpv tps	←(tp(/⍨)vr=⊢)¨⍳3
-	nml nmv nms	←(('zrl'↑⍨≢el)/⍨vr=⊢)¨⍳3
-	elv ell els	←1 0 2(⊢(/⍨)vr=⊣)¨(⊂(≢el)↑'rslt' 'rgt' 'lft'),2⍴⊂0⌷⍉el
-	z	←'{B zc=1,rc=1,lc=1;',nl
-	z	,←(⊃,/(⊂''),elv{'A *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
-	z	,←⊃,/(⊂''),nml{'I ',⍺,'r=',(⍕≢⍴⍵),';B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
-	z	,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
-	z	,←pacc'enter data copyin(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
-	z	,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl↑⍨≢els
-	z	,←(⊃,/(⊂''),{'I ',⍵,'r=0;B*',⍵,'s=NULL;'}¨nms),nl↑⍨≢nms
-	z	,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl↑⍨≢nms
-	iso	←(⊂⊃1⌷⍉el)∨.≡n2f 1↓1⌷⍉el
-	z	,←iso⊃''('A*orz=rslt;A tz;tz.v=NULL;rslt=&tz;',nl)
-	z	,←(0≡≢elv)⊃'' 'A tp;tp.v=NULL;A*rslt=&tp;'
-	tpv nmv elv	,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
-	z	,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
-	z	,←chk,(nl ''⊃⍨''≡chk),siz,nl
-	alloc	←'ai(rslt,zr,zs,',(⍕⊃0⌷tp),');',nl
-	alloc	,←(1↑tpv)((1↑nmv)declv)1↑elv
-	z	,←(al⊃'' alloc),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
-	z	,←pacc'exit data delete(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
-	z	,←iso⊃''('cpaa(orz,rslt);',nl)
-	z	,←'}',nl
-		z}
-decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
-	z	,←(⊃,/(⊂''),⍺⍺{'B*restrict ',⍺,'s=',⍵,'->s;'}¨⍵),nl
-	z	,←⍺(⍺⍺ declv) ⍵
-		z}
-declv	←{(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
-
-⍝[cf]
-⍝[of]:Iota/Index Generation
-iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
-	siz	←'zr=1;zc=zs[0]=rv[0];'
-	exe	←(simd 'present(zv[:zc])'),'DO(i,zs[0])zv[i]=i;'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Shape/Reshape
-shpm←{	exe	←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
-		'' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
-shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
-	siz	←'zr=ls[0];',nl
-	siz	,←pacc'update host(lv[:zr])'
-	siz	,←'DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
-	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
-	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpy	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
-	cpy	,←'else{',nl,(simd'present(zv,rv)'),'DO(i,zc)zv[i]=rv[i%rc];}'
-	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;rslt->c=zc;',nl
-	ref	,←'rslt->z=zc*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
-	exe	←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
-		chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Squad Indexing
-idxd←{	chk	←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(5);'
-	chk	,←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
-	chk	,←pacc'update host(lv[:lc])'
-	chk	,←'DO(i,ls[0])if(lv[i]<0||lv[i]>=rs[i])error(3);'
-	siz	←'zr=rr-ls[0];DO(i,zr)zs[i]=rs[ls[0]+i];'
-	exe	←'B a,m,k=0;DO(i,zr)zc*=zs[i];m=zc;',nl
-	exe	,←'DO(i,ls[0]){a=ls[0]-(i+1);k+=m*lv[a];m*=rs[a];}',nl
-	exe	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[k+i];'
-	∧/,1≥≡¨⍵:	chk siz exe mxfn 1 ⍺ ⍵
-	sep	←{⊃⍺{⍺,⍺⍺,⍵}/⍵}
-	ixv ixe	←2⌷⍵
-	ixn	←{'idx[',(⍕⍵),']'}¨⍳≢ixv
-	idx	←'{A *idx[]={',(','sep ixv var¨ixe),'};',nl
-	idx	,←(⊃,/(⍳≢ixv){'I ir',(⍕⍺),'=',⍵,'->r;'}¨ixn),nl
-	idx	,←(⊃,/(⍳≢ixv){'B*restrict is',(⍕⍺),'=',⍵,'->s;'}¨ixn),nl
-	idx	,←(⊃,/(⍳≢ixv){'I*restrict iv',(⍕⍺),'=',⍵,'->v;'}¨ixn),nl
-	idx	,←(⊃,/(⍳≢ixv){'B ic',(⍕⍺),'=',⍵,'->c;'}¨ixn),nl
-	idx	,←'A irz;irz.v=NULL;A*irzp=&irz;',nl
-	iso	←(0 1⌷⍵)∨.≡ixe
-	idx	,←iso⊃('irzp=',(irzv←⊃var/0⌷⍵),';',nl)''
-	siz	←'zr=',(⍕≢ixv),';',⊃,/{'zs[',(⍕⍵),']=ic',(⍕⍵),';'}¨⍳≢ixv
-	gdx	←{'+'sep (↑∘⍺¨-⌽⍳≢⍺){'(',('*'sep(⊂⍵),⍺),')'}¨⍵}
-	idi	←(≢ixv)↑'ijklmnopqrstuvw'
-	zidx	←({'ic',(⍕⍵),''}¨⍳≢ixv)gdx idi
-	ridx	←({'rs[',(⍕⍵),']'}¨⍳≢ixv)gdx(⍳≢ixv){'iv',(⍕⍺),'[',⍵,']'}¨idi
-	stm	←'zv[',zidx,']=rv[',(ridx),'];',nl
-	mklp	←{i s←⍺ ⋄ (⊂'DO(',i,',',s,'){',nl),(' ',¨⍵),(⊂'}')}
-	pres	←'present(zv[:rslt->c],rv[:rgt->c],',(','sep{'iv',(⍕⍵),'[:ic',(⍕⍵),']'}¨⍳≢ixv),') '
-	exe	←simd pres,'independent collapse(',(⍕≢ixv),')'
-	exe	,←⊃,/⊃mklp/(idi{⍺('ic',⍕⍵)}¨⍳≢ixv),⊂⊂stm
-	idx	,←'' siz exe mxfn 1(¯1↓⍺)('irzp'(¯2 0)⍪1↓¯1↓⍵)
-	idx	,←(iso⊃''('cpaa(',irzv,',irzp);')),'}',nl
-		idx}
-⍝[cf]
-⍝[of]:Bracket Indexing
-brid←{	chk	←'if(lr!=1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
-	chkn	←pacc'update host(rv[:rc],lv[:lc])'
-	chkn	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])error(3);'
-	chkb	←'I n=ceil(rc/8.0);',nl
-	chkb	,←pacc'update host(rv[:n],lv[:lc])'
-	chkb	,←'DO(i,n){DO(j,8){if((1&(rv[i]>>(7-j)))>=ls[0])error(3);}}'
-	chk	,←(3≡1⊃⍺)⊃chkn chkb
-	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-	exen	←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
-	exeb	←(simd'present(zv[:rslt->c],lv[:lc],rv[:n])')
-	exeb	,←'DO(i,n){DO(j,8){zv[i*8+j]=lv[1&(rv[i]>>(7-j))];}}'
-	exe	←(3≡1⊃⍺)⊃exen exeb
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Left/Right
-lftm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-rgtm←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-lftd←{	chk siz	←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
-	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],lv[:zc])'),'DO(i,zc)zv[i]=lv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-	exe	←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Catenate/Ravel
-catm←{	chk	←''
-	siz	←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
-	exe	←(simd'present(zv[:rslt->c],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
-	chk	,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
-	siz	←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
-	siz	,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
-	siz	,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
-	exe	←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
-	exe	,←'B li=0,ri=0,zm=zs[zr-1],lm=(lr<rr||lr==0)?1:ls[lr-1];',nl
-	exe	,←'B lt=lft->c!=1,rt=rgt->c!=1;',nl
-	exe	,←pacc'update host(lv[:lft->c],rv[:rgt->c])'
-	exe	,←'DO(i,zc){zv[i]=(i%zm)<lm?lv[lt*(li++)]:rv[rt*(ri++)];}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Catenate First Axis/Table
-fctm←{	siz	←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
-	siz	,←'I n=rr-1;DO(i,n)rc*=rs[i+1];zs[1]=rc;rc*=rs[0];}'
-	exe	←(simd'present(zv[:rc],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
-		'' siz exe mxfn 1 ⍺ ⍵}
-fctd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
-	chk	,←'if(lr==rr&&rr>0){I n=rr-1;DO(i,n)if(rs[i+1]!=ls[i+1])error(5);}',nl
-	chk	,←'else if(lr<rr){DO(i,lr)if(ls[i]!=rs[i+1])error(5);}',nl
-	chk	,←'else{DO(i,rr)if(ls[i+1]!=rs[i])error(5);}'
-	siz	←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
-	siz	,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
-	siz	,←'zr=zr==0?1:zr;zs[0]+=minr==zr?ls[0]:1;'
-	exe	←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
-	exe	,←'if(abs(lr-rr)<=1){',nl
-	exe	,←(simd'present(zv[:lc],lv[:lc])'),' DO(i,lc)zv[i]=lv[i];',nl
-	exe	,←(simd'present(zv[lc:rc],rv[:rc])'),'DO(i,rc)zv[lc+i]=rv[i];',nl
-	exe	,←'}else{I n=zr-1;DO(i,n)zc*=zs[i+1];',nl,' if(lr==0){',nl
-	exe	,←(simd'present(zv[:zc],lv[:1])'),'DO(i,zc)zv[i]=lv[0];',nl
-	exe	,←(simd'present(zv[zc:rc],rv[:rc])'),' DO(i,rc)zv[zc+i]=rv[i];}',nl
-	exe	,←' else{',nl,(simd'present(zv[:lc],lv[:lc])'),'DO(i,lc)zv[i]=lv[i];',nl
-	exe	,←(simd'present(zv[lc:zc],rv[:1])'),'DO(i,zc)zv[lc+i]=rv[0];}}'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Reverse/Rotate
-rotm←{	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
-	exen	←simd 'independent collapse(2) present(rv[:lc],zv[:lc])'
-	exen	,←'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
-	exeb	←'I zcp=ceil(lc/8.0);',nl
-	exeb	,←simd'present(zv[:zcp])'
-	exeb	,←'DO(i,zcp){zv[i]=0;}',nl
-	exeb	,←simd'collapse(2) present(zv[:zcp],rv[:zcp])'
-	exeb	,←'DO(i,zc){DO(j,rc){I zi=i*rc+j;I ri=i*rc+(rc-(j+1));',nl
-	exeb	,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
-	exeb	,←'}}'
-	exe	,←(3=⊃0⌷⍺)⊃exen exeb
-		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
-rotd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-	exe	←'zc=rr==0?1:rs[rr-1];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i];',nl
-	exe	,←'DO(i,lr)lc*=ls[i];I s=(lv[0]<0)?abs(lv[0]):zc-lv[0];',nl
-	exen	←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
-	exen	,←'DO(i,rc){DO(j,zc){zv[i*zc+((j+s)%zc)]=rv[(i*zc)+j];}}'
-	exeb	←'I zcp=ceil(rslt->c/8.0);',nl
-	exeb	,←simd'present(zv[:zcp])'
-	exeb	,←'DO(i,zcp){zv[i]=0;}',nl
-	exeb	,←simd'collapse(2) present(zv[:zcp],rv[:zcp],lv[:lc])'
-	exeb	,←'DO(i,rc){DO(j,zc){',nl
-	exeb	,←' I zi=i*zc+((j+s)%zc);',nl
-	exeb	,←' I ri=(i*zc)+j;',nl
-	exeb	,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
-	exeb	,←'}}'
-	exe	,←(3=⊃0⌷⍺)⊃exen exeb
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Member/Enlist
-memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
-	exe	←(simd'present(rv[:rc],zv[:rslt->c])'),'DO(i,rc)zv[i]=rv[i];'
-		'' siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Disclose/Pick/First
-dscm←{	exe	←pacc'update host(rv[:rgt->c])'
-	exe	,←'DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		'' 'zr=0;' exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Rotate First Axis/Reverse First Axis
-rtfm←{	exe	←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i+1];rc=rr==0?1:rs[0];',nl
-	exe	,←simd 'collapse(2) independent present(rv[:rc*zc],zv[:rc*zc])'
-	exe	,←'DO(i,rc){DO(j,zc){zv[i*zc+j]=rv[(rc-(i+1))*zc+j];}}'
-		''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
-rtfd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-	siz	←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-	exe	←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
-	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
-	exe	,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Equivalent/Match/Depth
-eqvm←{	exe	←'zv[0]=rr==0?0:1;',nl,pacc'update device(zv[:1])'
-		'' 'zr=0;' exe mxfn 1 ⍺ ⍵}
-eqvd←{	chk siz	←'' 'zr=0;'
-	exe	←pacc 'update host(lv[:lft->c],rv[:rgt->c])'
-	exe	,←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
-	exe	,←'DO(i,lr){if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}}',nl
-	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←'DO(i,lc){if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Not Match/Disequivalent/Tally
-nqvm←{	exe	←'zv[0]=rr==0?1:rs[0];',nl,pacc'update device(zv[:1])'
-		'' 'zr=0;' exe mxfn 1 ⍺ ⍵}
-nqvd←{	chk siz	←'' 'zr=0;'
-	exe	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
-	exe	,←'zv[0]=0;if(rr!=lr)zv[0]=1;',nl
-	exe	,←'DO(i,lr){if(zv[0])break;if(rs[i]!=ls[i]){zv[0]=1;break;}}',nl
-	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←'DO(i,lc){if(zv[0])break;if(lv[i]!=rv[i]){zv[0]=1;break;}}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Replicate/Filter
-fltd←{	chk	←'if(lr>1)error(4);',nl
-	chk	,←'if(lr!=0&&ls[0]!=1&&rr!=0&&rs[rr-1]!=1&&ls[0]!=rs[rr-1])error(5);'
-	popcnt	←'__builtin_popcount' '_popcnt32' '__popcnt'
-	pcnt	←popcnt⊃⍨'gc' 'ic' 'pg'⍳⊂2↑COMPILER
-	siz	←'zr=rr==0?1:rr;I n=zr-1;DO(i,n)zs[i]=rs[i];',nl
-	siz	,←'if(lr==1)lc=ls[0];if(rr!=0)rc=rs[rr-1];zs[zr-1]=0;B last=0;',nl
-	szn	←siz,pacc 'update host(lv[:lc],rv[:rgt->c])'
-	szn	,←'if(lc>=rc){DO(i,lc)last+=abs(lv[i]);}else{last+=rc*abs(lv[0]);}',nl
-	szn	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
-	szb	←siz,pacc 'update host(lv[:lft->z],rv[:rgt->c])'
-	szb	,←'if(lc>=rc){I n=ceil(lc/32.0);I*lv32=(I*)lv;',nl
-	szb	,←'DO(i,n)last+=',pcnt,'(lv32[i]);',nl
-	szb	,←'}else{last+=rc*(lv[0]>>7);}',nl
-	szb	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
-	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
-	exe	,←' if(lv[i]==0)continue;',nl
-	exe	,←' else if(lv[i]>0){',nl
-	exe	,←'  DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}',nl
-	exe	,←'  a+=lv[i];',nl
-	exe	,←' }else{',nl
-	exe	,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
-	exe	,←'  a+=abs(lv[i]);}}}',nl
-	exe	,←'else if(rc>lc){',nl
-	exe	,←' if(lv[0]>0){'
-	exe	,←'DO(i,zc){DO(j,rc){DO(k,lv[0]){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}}',nl
-	exe	,←' else if(lv[0]<0){L n=zc*zs[zr-1];DO(i,n)zv[i]=0;}}',nl
-	exe	,←'else{DO(i,lc){',nl
-	exe	,←' if(lv[i]==0)continue;',nl
-	exe	,←' else if(lv[i]>0){',nl
-	exe	,←'  DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[j*rc];}}',nl
-	exe	,←'  a+=lv[i];',nl
-	exe	,←' }else{',nl
-	exe	,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
-	exe	,←'  a+=abs(lv[i]);}}}',nl
-	exe	,←pacc 'update device(zv[:rslt->c])'
-	exb	←'B a=0;if(rr==1&&rc==lc){I n=ceil(lc/8.0);;',nl
-	exb	,←' DO(i,n){DO(j,8){if(1&(lv[i]>>(7-j)))zv[a++]=rv[i*8+j];}}',nl
-	exb	,←'}else if(rc==lc){I n=ceil(lc/8.0);',nl,'DO(i,n){DO(m,8){',nl
-	exb	,←' if(1&(lv[i]>>(7-m))){',nl
-	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[(j*rc)+i*8+m];}',nl
-	exb	,←'  a++;}}}',nl
-	exb	,←'}else if(rc>lc){if(lv[0]>>7){',nl
-	exb	,←'  DO(i,zc){DO(j,rc){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}',nl
-	exb	,←'}else{I n=ceil(lc/8.0);DO(i,n){DO(m,8){',nl
-	exb	,←' if(1&(lv[i]>>(7-m))){',nl
-	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[j*rc];}',nl
-	exb	,←'  a++;}}}}',nl
-	exb	,←pacc 'update device(zv[:rslt->c])'
-		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Decode/Encode
-decd←{	chk	←'if(lr>1||lv[0]<0)error(16);'
-	siz	←'zr=rr==0?0:rr-1;DO(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
-	siz	,←'if(rr>0)rc=rs[0];'
-	exen	←pacc'update host(lv,rv[:rgt->c])'
-	exen	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
-	exen	,←pacc'update device(zv[:rslt->c])'
-	exeb	←'I rcp=ceil(rgt->c/8.0);',nl
-	exeb	,←pacc'update host(lv,rv[:rcp])'
-	exeb	,←'DO(i,zc){zv[i]=0;DO(j,rc){I ri=(j*zc)+i;',nl
-	exeb	,←'zv[i]=(1&(rv[ri/8]>>(7-(ri%8))))+lv[0]*zv[i];}}',nl
-	exeb	,←pacc'update device(zv[:rslt->c])'
-	exe	←(3=⊃1⌷⍺)⊃exen exeb
-		chk siz exe mxfn 1 ⍺ ⍵}
-encd←{	chk	←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
-	chk	,←pacc'update host(lv[:lc])'
-	chk	,←'DO(i,lc){if(lv[i]<=0)error(16);}'
-	siz	←'zr=1+rr;zs[0]=lc;DO(i,rr)zs[i+1]=rs[i];DO(i,rr)rc*=rs[i];'
-	exe	←simd'collapse(2) present(zv[:rslt->c],rv[:rc],lv[:lc])'
-	exe	,←'DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[l]:Definition for sopid:codfns.dyalog?s=^sopid←
-⍝[of]:Take/Drop
-drpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-	siz	←pacc'update host(lv[:1])'
-	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];zs[0]-=(zs[0]==0?0:lv[0]);',nl
-	siz	,←'I n=zr-1;DO(i,n)zc*=zs[i+1];lc=lv[0];'
-	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
-	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpyn	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	cpyn	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
-	cpyb	←'I zcp=ceil(rslt->c/8.0);I rcp=ceil(rgt->c/8.0);',nl
-	cpyb	,←'I sti=(lc*zc)/8;I stp=(lc*zc)%8;n=(zcp==0?0:zcp-1);',nl
-	cpyb	,←simd'independent present(zv[:zcp],rv[:rcp])'
-	cpyb	,←'DO(i,n){U8 x=rv[i+sti]<<stp;',nl
-	cpyb	,←'x|=rv[i+1+sti]>>(8-stp);zv[i]=x;}',nl
-	cpyb	,←'if(zcp){',nl,(pacc'update host(rv[n+sti:1])')
-	cpyb	,←'zv[n]=rv[n+sti]<<stp;',nl,(pacc'update device(zv[n:1])'),'}'
-	cpy	,←(3=⊃0⌷⍺)⊃cpyn cpyb
-	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
-	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
-	ref	,←'rslt->v=rv+(lc*zc);'
-	exe	←ref cpy⊃⍨1⌊(3=⊃0⌷⍺)+0=⊃0⍴⊃⊃1 0⌷⍵
-		chk siz exe mxfn 0 ⍺ ⍵}
-tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-	siz	←pacc'update host(lv[:1])'
-	siz	,←'zr=rr;DO(i,zr)zs[i]=rs[i];',nl
-	siz	,←'zs[0]=lv[0];I n=zr-1;DO(i,n)zc*=zs[i+1];'
-	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
-	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
-	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
-	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
-	ref	,←'rslt->v=rv;'
-	exe	←ref cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
-		chk siz exe mxfn 0 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Transpose
-tspm←{	siz	←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
-	exe	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	exe	,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
-		'' siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Horrible Hacks
