@@ -892,12 +892,23 @@ which will be the types and names for the call.
 fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
 fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')'' ''}
 @ %def fcl fnc
+The final overall piece of the puzzle is a set of conventions and helpers 
+to define how mixed verbs are called and the helpers to make doing so easy 
+for each generator. That is discussed in a future section, but forms the 
+final piece to the runtime components for mixed verbs, giving us the 
+following overall picture of how mixed verbs are accomplished in the 
+compiler.
 
 <<Runtime: Mixed Verbs>>=
 <<Mixed Primitive Verb Database>>
 <<Conjunction [[fcl]] for calling mixed verbs>>
+<<Mixed Verb Calling Convention Helpers>>
+<<Mixed Primitive Verb Generators>>
+@
 
-⍝[of]:Function Utilities
+\section{Calling Conventions for Mixed Verbs}
+
+<<Mixed Verb Calling Convention Helpers>>=
 calm←{	z r	←var/⍵
 	arr	←⍺⍺,((1⌷⍺)⊃'iifb'),'n(',z,',NULL,',r,',env);',nl
 	scl	←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
@@ -947,7 +958,6 @@ decl←{	z	←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
 	z	,←⍺(⍺⍺ declv) ⍵
 		z}
 declv	←{(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
-<<Mixed Primitive Verb Generators>>
 @
 
 \section{Mixed Primitive Verb Generators}
