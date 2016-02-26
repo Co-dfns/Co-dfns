@@ -987,10 +987,7 @@ shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
 	ref	,←'rslt->z=zc*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
 	exe	←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
 		chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
-catm←{	chk	←''
-	siz	←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
-	exe	←(simd'present(zv[:rslt->c],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
+<<[[catm]]: Ravel Generator>>
 catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
 	chk	,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
 	siz	←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
@@ -1073,6 +1070,36 @@ memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
 	exe	←(simd'present(rv[:rc],zv[:rslt->c])'),'DO(i,rc)zv[i]=rv[i];'
 		'' siz exe mxfn 1 ⍺ ⍵}
 @
+
+\subsubsection{Ravel}
+
+The ravel function is particularly simple, as it works on any input array, 
+meaning that we don't have to do any checking.
+Similarly, the shape described by ravel is given by [[×/⍴⍵]], implying that 
+the rank of [[,⍵]] is always [[1]]. The results are a simply copy operation, 
+requiring only that we be cautious of the difference in sizes between our 
+bitvector datatypes and the others.
+
+<<ravel\_tests.dyalog>>=
+﻿:Namespace ravel_tests
+
+S←':Namespace' 'Run←{,⍵}' ':EndNamespace'
+
+'1'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
+'2'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
+'3'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
+'4'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ÷2 2⍴1+⍳5
+'5'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴0 1
+
+:EndNamespace
+@ %def ravel_tests
+
+<<[[catm]]: Ravel Generator>>=
+catm←{chk←'' ⋄ siz←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
+ exe←(3=0⌷⍺)⊃'I pc=rc;' 'I pc=ceil(rc/8.0);'
+ exe,←nl,(simd'present(zv[:pc],rv[:pc])'),'DO(i,pc)zv[i]=rv[i];'
+ chk siz exe mxfn 1 ⍺ ⍵}
+@ %def catm
 
 \subsection{Selection Primitive Verb Generators}
 

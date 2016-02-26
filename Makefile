@@ -1,10 +1,7 @@
-# noweave -delay -index codfns.nw > codfns.tex && lualatex codfns && bibtex codfns && lualatex codfns && lualatex codfns
-
-# notangle -R<> codfns.nw > <>
-
 TANGLE_FILES=codfns.dyalog util.dyalog config.dyalog load.dyapp test.dyapp
 WEAVE_NAME=codfns.pdf
 DISTRIBUTION="../Co-dfns Distribution"
+TEST_FILES=ravel_tests.dyalog
 
 all: tangle weave
 
@@ -29,3 +26,5 @@ distribution: tangle weave
 %.dyapp: codfns.nw
 	notangle -R$@ codfns.nw > $@
 
+Testing/%_tests.dyalog: codfns.nw
+	notangle -R$(notdir $(subst _,\\_,$@)) codfns.nw > $@
