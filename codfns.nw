@@ -815,8 +815,8 @@ since we must ensure that the shape of [[fdb]] conforms to the shape of [[sdb]].
 fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}' 'idxd'         ''    ''
 fdb⍪←,¨'['   '{⎕SIGNAL 99}' 'brid'         ''    ''
 fdb⍪←,¨'⍳'   'iotm'         '{⎕SIGNAL 16}' ''    ''
-fdb⍪←,¨'⍴'   'shpm'         'shpd'         ''    ''
-fdb⍪←,¨','   'catm'         'catd'         ''    ''
+fdb⍪←,¨'⍴'   'shpm'         'shpd'         ''    '' ⍝ Ref: shpm shpd
+fdb⍪←,¨','   'catm'         'catd'         ''    '' ⍝ Ref: catm catd
 fdb⍪←,¨'⍪'   'fctm'         'fctd'         ''    ''
 fdb⍪←,¨'⌽'   'rotm'         'rotd'         ''    ''
 fdb⍪←,¨'⊖'   'rtfm'         'rtfd'         ''    ''
@@ -1249,9 +1249,38 @@ iotm←{	chk	←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 
 \subsection{Miscellaneous Primitive Verb Generators}
 
+\subsubsection{Shape}
+
+The Shape ([[⍴]]) primitive verb is exceptionally easy to handle, as it has 
+no restrictions on its input, its resulting shape is always a vector, and the 
+type of that vector is always an integer. Moreover, because we never touch the 
+values of the array, we never have to worry about the differences in element 
+size. We simply determine the rank of the array and then copy the shape into 
+the appropriate values block in the target array.
+
+<<[[shpm]]: Shape Generator>>=
+shpm←{exe←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
+ '' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
+@ %def shpm
+The testing for this function is likewise pretty trivial as we merely need to 
+ensure that the main datatypes are handled and that the main shapes are also 
+handled in an appropriate way.
+
+<<shape\_tests.dyalog>>=
+:Namespace shape_tests
+
+S←':Namespace' 'Run←{⍴⍵}' ':EndNamespace'
+
+'1'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴0
+'2'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
+'3'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 2⍴⍳4
+'4'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 5⍴0 1
+
+:EndNamespace
+@ %def shape_tests
+
 <<Miscellaneous Primitive Verb Generators>>=
-shpm←{	exe	←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
-		'' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
+<<[[shpm]]: Shape Generator>>
 eqvm←{	exe	←'zv[0]=rr==0?0:1;',nl,pacc'update device(zv[:1])'
 		'' 'zr=0;' exe mxfn 1 ⍺ ⍵}
 eqvd←{	chk siz	←'' 'zr=0;'

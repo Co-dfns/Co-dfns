@@ -1,13 +1,15 @@
 TANGLE_FILES=codfns.dyalog util.dyalog config.dyalog load.dyapp test.dyapp
 WEAVE_NAME=codfns.pdf
 DISTRIBUTION="../Co-dfns Distribution"
-TEST_FILES=ravel_tests.dyalog
+TEST_FILES=ravel_tests.dyalog shape_tests.dyalog
 
 all: tangle weave
 
 tangle: ${TANGLE_FILES}
 
 weave: ${WEAVE_NAME}
+
+tests: $(TEST_FILES:%=Testing/%)
 
 distribution: tangle weave
 	cp ${TANGLE_FILES} ${WEAVE_NAME} ${DISTRIBUTION}
