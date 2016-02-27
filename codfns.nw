@@ -974,19 +974,110 @@ We generally classify mixed verbs as belonging to one of a few categories:
 
 \subsection{Structural Primitive Verb Generators}
 
+\subsubsection{Reshape}
+
+Reshape is a fairly basic, simple function, but does have some particular 
+requirements. When doing our checking, we must ensure that the left argument 
+to reshape is either a scalar or a vector. Computing the size is a simple 
+copy, though in the case of GPU computing we need to make sure that we have 
+the result shape and the left argument value array in the same place. 
+The actual filling of the result argument is a straight linear copy up to 
+and including cycling. This means that we mostly only need to worry about 
+the sizes of the elements and nothing else at that point, since the traversal 
+is relatively trivial. 
+
+To test this, we need to cover both the input types of the relative sizes, 
+as well as the various left argument types, from the empty vector on to 
+a matrix. 
+
+<<reshape\_tests.dyalog>>=
+:Namespace reshape_tests
+
+S←':Namespace' 'Rv←{⍺⍴⍵}' 'Rl←{2 2⍴⍵}' 'Rr←{⍺⍴5}' ':EndNamespace'
+
+'01'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) (2 2) (⍳4)
+'02'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) (2 2) (1+⍳2)
+'03'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) (2 2) (⍳6)
+'04'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) (⍬)   (⍳6)
+'05'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) (2 2) (⍬)
+'06'('reshape' S 'Rl' #.util.GEN∆T2 ⎕THIS) (2 2) (⍳4)
+'07'('reshape' S 'Rl' #.util.GEN∆T2 ⎕THIS) (2 2) (1+⍳2)
+'08'('reshape' S 'Rl' #.util.GEN∆T2 ⎕THIS) (2 2) (⍳6)
+'09'('reshape' S 'Rl' #.util.GEN∆T2 ⎕THIS) (⍬)   (⍳6)
+'10'('reshape' S 'Rl' #.util.GEN∆T2 ⎕THIS) (2 2) (⍬)
+'11'('reshape' S 'Rr' #.util.GEN∆T2 ⎕THIS) (2 2) (⍳4)
+'12'('reshape' S 'Rr' #.util.GEN∆T2 ⎕THIS) (2 2) (1+⍳2)
+'13'('reshape' S 'Rr' #.util.GEN∆T2 ⎕THIS) (2 2) (⍳6)
+'14'('reshape' S 'Rr' #.util.GEN∆T2 ⎕THIS) (⍬)   (⍳6)
+'15'('reshape' S 'Rr' #.util.GEN∆T2 ⎕THIS) (2 2) (⍬)
+'16'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) 5     (⍳10)
+'17'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) (3 7) (0 1)
+'18'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) 3     (0 1 1 1 0 0 1 0 1)
+
+:EndNamespace
+@ %def reshape_tests
+And the actual code looks something like this.
+Note that we have an optimization here with reshape, which allows us to avoid 
+copying if we don't need to do it. If we already have the values allocated 
+on heap, that is, we do not have a literal array as our right argument, then 
+we can avoid doing the copy of the elements provided that the right 
+argument has a higher or equal element count compared to the size of the 
+result array. We need to put a runtime check into the code to see whether 
+the result array is smaller in element count than the input to know whether 
+we can use the reference code or if we have to do a copy, but we can do a 
+static check at compile time to know whether we have a literal array that 
+we need to copy.
+
+<<[[shpd]]: Reshape Generator>>=
+shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
+ siz←pacc'update host(lv[:ls[0]])'
+ siz,←'zr=ls[0];DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
+ <<[[shpd]] type independent copy code [[cpy]]>>
+ <<[[shpd]] integer/double copy code [[cpyn]]>>
+ <<[[shpd]] boolean copy code [[cpyb]]>>
+ cpy←(3=0⌷⍺)⊃cpyn cpyb
+ ref←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;rslt->c=zc;',nl
+ ref,←nl,⍨(3=0⌷⍺)⊃'I zcp=zc;' 'I zcp=ceil(zc/8.0);'
+ ref,←'rslt->z=zcp*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
+ exe←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
+ chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
+@ %def shpd
+We have two different algorithms for the copy code, depending on whether 
+we have a boolean type or not. For each of these we have to do a few things 
+in common. We have to allocate the space for the array manually, since 
+we are manually controlling whether this is a referencing or copying 
+verb. We have to declare the appropriate variables as well because we are 
+handling allocation manually. We also have a common case when [[rc≡0]] which 
+means that we just fill the result with zeros. In the non-empty case, 
+however, we have to have separate algorithms.
+
+<<[[shpd]] type independent copy code [[cpy]]>>=
+cpy←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl,(⊃0⌷⍺)((,'z')declv),⊂'rslt'
+cpy,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
+cpy,←'else{',nl
+@ %
+In the normal case, we simply do a normal copy of the arguments.
+
+<<[[shpd]] integer/double copy code [[cpyn]]>>=
+cpyn←cpy,(simd'present(zv[:zc],rv[:rc])'),'DO(i,zc)zv[i]=rv[i%rc];}'
+@ %
+In the case when we have a boolean element type, we have some more 
+complicated code. We would like to be able to do this with only some 
+shifting and some copying, but this requires some relatively complicated 
+code to make sure that we're constantly figuring out the overlap for all 
+of our cycling, and it gets annoying. This would be a good thing to do in 
+the future as an optimization. Right now, we're just doing the manual bit 
+extraction for each individual bit throughout, which is slow but expedient. 
+
+<<[[shpd]] boolean copy code [[cpyb]]>>=
+cpyb←cpy,'I rcp=ceil(rc/8.0),zcp=ceil(zc/8.0);',nl
+cpyb,←(simd'present(zv[:zcp],rv[:rcp])'),'DO(i,zcp){U8 b=0;',nl
+cpyb,←' DO(j,8){I ri=(i*8+j)%rc;b|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}',nl
+cpyb,←' zv[i]=b;}}'
+@
+
 <<Structural Primitive Verb Generators>>=
-shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
-	siz	←'zr=ls[0];',nl
-	siz	,←pacc'update host(lv[:zr])'
-	siz	,←'DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
-	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
-	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpy	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
-	cpy	,←'else{',nl,(simd'present(zv,rv)'),'DO(i,zc)zv[i]=rv[i%rc];}'
-	ref	←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;rslt->c=zc;',nl
-	ref	,←'rslt->z=zc*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
-	exe	←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
-		chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
+<<[[shpd]]: Reshape Generator>>
 <<[[catm]]: Ravel Generator>>
 catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
 	chk	,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
