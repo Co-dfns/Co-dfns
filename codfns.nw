@@ -974,6 +974,12 @@ We generally classify mixed verbs as belonging to one of a few categories:
 
 \subsection{Structural Primitive Verb Generators}
 
+Structural primitive verbs are those verbs whose primary role is to alter 
+the arrangement or structure of elements in an array, either through altering 
+the shape or through rearranging the internal elements. They may alter the 
+shape, depth, or ordering of elements in an array. They will generally not 
+modify or remove elements from an array, however. 
+
 \subsubsection{Reshape}
 
 Reshape is a fairly basic, simple function, but does have some particular 
@@ -1076,9 +1082,61 @@ cpyb,←' DO(j,8){I ri=(i*8+j)%rc;b|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}',nl
 cpyb,←' zv[i]=b;}}'
 @
 
-<<Structural Primitive Verb Generators>>=
-<<[[shpd]]: Reshape Generator>>
-<<[[catm]]: Ravel Generator>>
+\subsubsection{Ravel}
+
+The ravel function is particularly simple, as it works on any input array, 
+meaning that we don't have to do any checking.
+Similarly, the shape described by ravel is given by [[×/⍴⍵]], implying that 
+the rank of [[,⍵]] is always [[1]]. The results are a simply copy operation, 
+requiring only that we be cautious of the difference in sizes between our 
+bitvector datatypes and the others.
+
+<<ravel\_tests.dyalog>>=
+:Namespace ravel_tests
+
+S←':Namespace' 'Run←{,⍵}' ':EndNamespace'
+
+'1'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
+'2'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
+'3'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
+'4'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ÷2 2⍴1+⍳5
+'5'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴0 1
+
+:EndNamespace
+@ %def ravel_tests
+
+<<[[catm]]: Ravel Generator>>=
+catm←{chk←'' ⋄ siz←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
+ exe←(3=0⌷⍺)⊃'I pc=rc;' 'I pc=ceil(rc/8.0);'
+ exe,←nl,(simd'present(zv[:pc],rv[:pc])'),'DO(i,pc)zv[i]=rv[i];'
+ chk siz exe mxfn 1 ⍺ ⍵}
+@ %def catm
+
+\subsubsection{Catenate/Laminate}
+
+<<catenate\_tests.dyalog>>=
+:Namespace catenate_tests
+
+S←':Namespace' 'Run←{⍺,⍵}' ':EndNamespace'
+
+'01'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)       (⍬)
+'02'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(5)       (5)
+'03'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)       (5)
+'04'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)       (⍳5)
+'05'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍳7)      (⍳5)
+'06'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(5)       (⍳5)
+'07'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴5)   (2 2⍴5)
+'08'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2 3⍴5) (2 2⍴5)
+'09'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴5)   (2 2 3⍴5)
+'10'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴5)   (2 2 3⍴5)
+'11'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(5)       (2 2⍴5)
+'12'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(,5 5)    (2 2⍴5)
+'13'('catenate' S 'Run' #.util.GEN∆T2 ⎕THIS)(,5)      (,5)
+
+:EndNamespace
+@ %def catenate_tests
+
+<<[[catd]]: Catenate/Laminate Generator>>=
 catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
 	chk	,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
 	siz	←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
@@ -1091,6 +1149,12 @@ catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',n
 	exe	,←'DO(i,zc){zv[i]=(i%zm)<lm?lv[lt*(li++)]:rv[rt*(ri++)];}',nl
 	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn 1 ⍺ ⍵}
+@ %def catd
+
+<<Structural Primitive Verb Generators>>=
+<<[[shpd]]: Reshape Generator>>
+<<[[catm]]: Ravel Generator>>
+<<[[catd]]: Catenate/Laminate Generator>>
 fctm←{	siz	←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
 	siz	,←'I n=rr-1;DO(i,n)rc*=rs[i+1];zs[1]=rc;rc*=rs[0];}'
 	exe	←(simd'present(zv[:rc],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
@@ -1162,35 +1226,6 @@ memm←{	siz	←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
 		'' siz exe mxfn 1 ⍺ ⍵}
 @
 
-\subsubsection{Ravel}
-
-The ravel function is particularly simple, as it works on any input array, 
-meaning that we don't have to do any checking.
-Similarly, the shape described by ravel is given by [[×/⍴⍵]], implying that 
-the rank of [[,⍵]] is always [[1]]. The results are a simply copy operation, 
-requiring only that we be cautious of the difference in sizes between our 
-bitvector datatypes and the others.
-
-<<ravel\_tests.dyalog>>=
-﻿:Namespace ravel_tests
-
-S←':Namespace' 'Run←{,⍵}' ':EndNamespace'
-
-'1'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'2'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'3'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'4'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) ÷2 2⍴1+⍳5
-'5'('ravel' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴0 1
-
-:EndNamespace
-@ %def ravel_tests
-
-<<[[catm]]: Ravel Generator>>=
-catm←{chk←'' ⋄ siz←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
- exe←(3=0⌷⍺)⊃'I pc=rc;' 'I pc=ceil(rc/8.0);'
- exe,←nl,(simd'present(zv[:pc],rv[:pc])'),'DO(i,pc)zv[i]=rv[i];'
- chk siz exe mxfn 1 ⍺ ⍵}
-@ %def catm
 
 \subsection{Selection Primitive Verb Generators}
 

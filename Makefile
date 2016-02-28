@@ -1,7 +1,8 @@
 TANGLE_FILES=codfns.dyalog util.dyalog config.dyalog load.dyapp test.dyapp
 WEAVE_NAME=codfns.pdf
 DISTRIBUTION="../Co-dfns Distribution"
-TEST_FILES=ravel_tests.dyalog shape_tests.dyalog reshape_tests.dyalog
+TEST_NAMES=ravel shape reshape catenate
+TEST_FILES=$(TEST_NAMES:%=Testing/%_tests.dyalog)
 
 all: tangle weave tests
 
@@ -9,10 +10,12 @@ tangle: ${TANGLE_FILES}
 
 weave: ${WEAVE_NAME}
 
-tests: $(TEST_FILES:%=Testing/%)
+tests: $(TEST_FILES)
 
 distribution: tangle weave
 	cp ${TANGLE_FILES} ${WEAVE_NAME} ${DISTRIBUTION}
+	mkdir -p ${DISTRIBUTION}/Testing
+	cp ${TEST_FILES} ${DISTRIBUTION}/Testing
 
 %.pdf: %.nw
 	noweave -delay -index $*.nw > $*.tex
