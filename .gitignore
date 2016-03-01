@@ -30,14 +30,3 @@ aplcore
 *.o
 config.dyalog
 CONTINUE
-*.aux
-*.log
-*.out
-codfns.tex
-*.toc
-*.bbl
-*.blg
-codfns.dyalog
-load.dyapp
-test.dyapp
-util.dyalog
