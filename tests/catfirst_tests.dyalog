@@ -15,6 +15,6 @@ S←':Namespace' 'Run←{⍺⍪⍵}' ':EndNamespace'
 '11'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(5)       (2 2⍴5)
 '12'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(,5 5)    (2 2⍴5)
 '13'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(,5)      (,5)
+'14'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(7⍴1 0) (2 3⍴0 1)
 
 :EndNamespace
-
