@@ -21,7 +21,7 @@ Thumbs.db
 conf/fo.xsl
 doc/tech/titlepage.xsl
 conf/mk.conf
-Scratch/
+tmp/
 Build/
 *.if
 titlepage.xsl

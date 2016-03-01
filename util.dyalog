@@ -36,9 +36,9 @@ utf8get←{                              ⍝ Char vector from UTF-8 file ⍵.
 ∇TEST
 ##.UT.print_passed←0
 ##.UT.print_summary←1
-##.UT.run './Testing'
+##.UT.run './tests'
 ∇
-test←{##.UT.run './Testing/',⍵,'_tests.dyalog'}
+test←{##.UT.run './tests/',⍵,'_tests.dyalog'}
 MK∆T1←{id cmp ns fn←⍺⍺ ⋄ r←⍵⍵
     ~(⊂cmp)∊##.codfns.TEST∆COMPILERS:0⊣##.UT.expect←0
     ##.codfns.COMPILER←cmp

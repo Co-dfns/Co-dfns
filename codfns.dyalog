@@ -3,7 +3,7 @@
 COMPILER←'vsc'
 TEST∆COMPILERS←⊂'vsc'
 DWA∆PATH   ←'dwa'
-BUILD∆PATH ←'Build'
+BUILD∆PATH ←'build'
 VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
 INTEL∆C∆PATH       ←'C:\Program Files (x86)\IntelSWTools\'
 INTEL∆C∆PATH      ,←'compilers_and_libraries_2016.0.110\windows\bin\'
@@ -29,7 +29,7 @@ pop     ←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -Minfo=ccff -fPIC 
 pgcc    ←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
-vsco    ←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"Build\vc140.pdb" '
+vsco    ←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"build\vc140.pdb" '
 vsco    ,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
 vsco    ,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
 vsco    ,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
