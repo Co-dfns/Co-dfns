@@ -13,13 +13,13 @@
 ⍝ 
 ⍝ You should have received a copy of the GNU Affero General Public License
 ⍝ along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
+⍝ 
 :Namespace codfns
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Public API
 
-⍝ Global Settings
+⍝  Global Settings
 ⎕IO ⎕ML ⎕WX        ←0 1 3
 COMPILER           ←'vsc'
 TEST∆COMPILERS     ←⊂'vsc'
@@ -30,7 +30,7 @@ INTEL∆C∆PATH       ←'C:\Program Files (x86)\IntelSWTools\'
 INTEL∆C∆PATH      ,←'compilers_and_libraries_2016.0.110\windows\bin\'
 PGI∆PATH           ←'C:\Program Files\PGI\win64\15.7\'
 
-⍝ Primary Interface
+⍝  Primary Interface
 Cmp ←{n⊣(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵}
 MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS⍬}
 Fix ←{⍺ MkNS ⍺ Cmp ⍵}
@@ -40,7 +40,7 @@ MKA ←{mka⊂⍵⊣'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'}
 EXA ←{exa⍬(0⊃⍵)(1⊃⍵)⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'}
 FREA←{frea⍵⊣'frea'⎕NA (BSO ⍺),'|frea P'}
 
-⍝ Helpers for the Primary Interface
+⍝   Helpers for the Primary Interface
 dirc ←{'\/'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
 soext←{'.dll' '.so'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
 tie  ←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
@@ -53,7 +53,7 @@ mkf  ←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext�
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Backend Compilers
 
-⍝ UNIX Generic Flags/Options
+⍝  UNIX Generic Flags/Options
 cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden -std=c11 '
 cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 '
 cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
