@@ -579,22 +579,25 @@ M0      ←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'}
 S0      ←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
 Y0      ←{⊃,/((⍳≢⊃n⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
 ⍝[cf]
-⍝[of]:Runtime Code
-⍝[of]:Runtime Utilities
-nl      ←⎕UCS 13 10
-enc     ←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
-fvs     ←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
-cln     ←'¯'⎕R'-'
-var     ←{(,'⍺')≡⍺:,'l' ⋄ (,'⍵')≡⍺:,'r' ⋄ ¯1≥⊃⍵:,⍺ ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
-dnv     ←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
-reg     ←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
-fnv     ←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-git     ←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'U8 ' '?type? '}
-gie     ←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLBOOL' 'APLNA'}
-pacc    ←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
-simdc   ←{('#pragma acc kernels loop ',⍵,nl)('')('')}
-simd    ←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
-⍝[cf]
+
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ Runtime Code
+
+⍝  Runtime Utilities
+nl   ←⎕UCS 13 10
+enc  ←⊂⊣,∘⊃((⊣,'_',⊢)/(⊂''),(⍕¨(0≠⊢)(/∘⊢)⊢))
+fvs  ←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
+cln  ←'¯'⎕R'-'
+var  ←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:,⍺ ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+dnv  ←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
+reg  ←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
+fnv  ←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
+git  ←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'U8 ' '?type? '}
+gie  ←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLBOOL' 'APLNA'}
+pacc ←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
+simdc←{('#pragma acc kernels loop ',⍵,nl)('')('')}
+simd ←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
+
 ⍝[of]:Function Entry
 frt     ←'static void '
 fre     ←'void EXPORT '
@@ -1140,18 +1143,36 @@ catm←{chk←'' ⋄ siz←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
  exe←(3=0⌷⍺)⊃'I pc=rc;' 'I pc=ceil(rc/8.0);'
  exe,←nl,(simd'present(zv[:pc],rv[:pc])'),'DO(i,pc)zv[i]=rv[i];'
  chk siz exe mxfn 1 ⍺ ⍵}
-catd←{        chk     ←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
-        chk     ,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
-        siz     ←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
-        siz     ,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
-        siz     ,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
-        exe     ←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
-        exe     ,←'B li=0,ri=0,zm=zs[zr-1],lm=(lr<rr||lr==0)?1:ls[lr-1];',nl
-        exe     ,←'B lt=lft->c!=1,rt=rgt->c!=1;',nl
-        exe     ,←pacc'update host(lv[:lft->c],rv[:rgt->c])'
-        exe     ,←'DO(i,zc){zv[i]=(i%zm)<lm?lv[lt*(li++)]:rv[rt*(ri++)];}',nl
-        exe     ,←pacc'update device(zv[:rslt->c])'
-                chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝   Catenate/Laminate
+catd←{
+  chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
+  chk,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
+  siz←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
+  siz,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
+  siz,←'zr=zr==0?1:zr;zs[zr-1]+=minr==zr?ls[zr-1]:1;'
+  exe←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+  exe,←'B zm=zs[zr-1],zi=zc<=zm?1:zc/zm;',nl
+  exe,←'B lm=(lr<rr||lr==0)?1:ls[lr-1],rm=(rr<lr||rr==0)?1:rs[rr-1];',nl
+  exe,←'B lt=lc!=1,rt=rc!=1;',nl
+  exe,←(3=0⌷⍺)⊃'I zcp=zc;' 'I zcp=ceil(zc/8.0);'
+  exe,←(3=1⌷⍺)⊃'I rcp=rc;' 'I rcp=ceil(rc/8.0);'
+  exe,←(3=2⌷⍺)⊃'I lcp=lc;' 'I lcp=ceil(lc/8.0);'
+  exe,←(3=0⌷⍺)⊃''('DO(i,zcp)zv[i]=0;',nl)
+  exe,←(3=0⌷⍺)⊃nl(pacc'update host(rv[:rcp],lv[:lcp])')
+  exe,←(3=0⌷⍺)⊃(simd'collapse(2) present(zv[:zcp],lv[:lcp])')''
+  exe,←'DO(i,zi){DO(j,lm){I zvi=i*zm+j,lvi=lt*(i*lm+j);',nl
+  exe,←(3=0⌷⍺)⊃'zv[zvi]=' 'zv[zvi/8]|='
+  exe,←(3=2⌷⍺)⊃'lv[lvi]' '(1&(lv[lvi/8]>>(7-(lvi%8))))'
+  exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(7-(zvi%8));}}',nl)
+  exe,←(3=0⌷⍺)⊃(simd'collapse(2) present(zv[:zcp],rv[:rcp])')''
+  exe,←'DO(i,zi){DO(j,rm){I zvi=i*zm+lm+j,rvi=rt*(i*rm+j);',nl
+  exe,←(3=0⌷⍺)⊃'zv[zvi]=' 'zv[zvi/8]|='
+  exe,←(3=1⌷⍺)⊃'rv[rvi]' '(1&(rv[rvi/8]>>(7-(rvi%8))))'
+  exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(7-(zvi%8));}}',nl)
+  exe,←(3=0⌷⍺)⊃''(pacc'update device(zv[:zcp])')
+       chk siz exe mxfn 1 ⍺ ⍵}
+
 fctm←{        siz     ←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
         siz     ,←'I n=rr-1;DO(i,n)rc*=rs[i+1];zs[1]=rc;rc*=rs[0];}'
         exe     ←(simd'present(zv[:rc],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
