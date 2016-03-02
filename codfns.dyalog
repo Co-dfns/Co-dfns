@@ -15,23 +15,51 @@
 ⍝ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 :Namespace codfns
-⎕IO ⎕ML ⎕WX←0 1 3 ⍝ ⎕IO, ⎕ML, ⎕WX
-COMPILER←'vsc'
-TEST∆COMPILERS←⊂'vsc'
-DWA∆PATH   ←'dwa'
-BUILD∆PATH ←'build'
+
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ Public API
+
+⍝ Global Settings
+⎕IO ⎕ML ⎕WX        ←0 1 3
+COMPILER           ←'vsc'
+TEST∆COMPILERS     ←⊂'vsc'
+DWA∆PATH           ←'dwa'
+BUILD∆PATH         ←'build'
 VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
 INTEL∆C∆PATH       ←'C:\Program Files (x86)\IntelSWTools\'
 INTEL∆C∆PATH      ,←'compilers_and_libraries_2016.0.110\windows\bin\'
 PGI∆PATH           ←'C:\Program Files\PGI\win64\15.7\'
-⍝[of]:Backend Compilers
-⍝[of]:UNIX Generic Flags/Options
-cfs     ←'-funsigned-bitfields -funsigned-char -fvisibility=hidden -std=c11 '
-cds     ←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 '
-cio     ←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
-fls     ←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
-log     ←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
-⍝[cf]
+
+⍝ Primary Interface
+Cmp ←{n⊣(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵}
+MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS⍬}
+Fix ←{⍺ MkNS ⍺ Cmp ⍵}
+Xml ←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
+BSO ←{BUILD∆PATH,(dirc⍬),⍵,'_',COMPILER,(soext⍬)}
+MKA ←{mka⊂⍵⊣'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'}
+EXA ←{exa⍬(0⊃⍵)(1⊃⍵)⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'}
+FREA←{frea⍵⊣'frea'⎕NA (BSO ⍺),'|frea P'}
+
+⍝ Helpers for the Primary Interface
+dirc ←{'\/'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
+soext←{'.dll' '.so'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
+tie  ←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+put  ←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+mkf  ←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,' '
+       f,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
+       f,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
+       f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
+
+⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
+⍝ Backend Compilers
+
+⍝ UNIX Generic Flags/Options
+cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden -std=c11 '
+cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 '
+cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
+fls←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
+log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
+
 ⍝[of]:GCC (Linux Only)
 gop     ←'-Ofast -g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
 gcc     ←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
@@ -77,26 +105,6 @@ pgi2    ←{(pgwc DWA∆PATH,'\dwa_fns'),' && ',pglk ⍵}
 pgi3    ←{' > "',BUILD∆PATH,'\',⍵,'_pgi.log""'}
 pgi     ←⎕CMD '%comspec% /C ',pgi1,pgi2,pgi3
 ⍝[cf]
-⍝[cf]
-⍝[of]:Primary Interface/API
-dirc    ←{'\/'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
-soext   ←{'.dll' '.so'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
-tie     ←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
-put     ←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-Cmp     ←{n⊣(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵}
-mkf     ←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,' '
-        f,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ _←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
-        f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
-MkNS    ←{ns←#.⎕NS⍬ ⋄ ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵}
-Fix     ←{⍺ MkNS ⍺ Cmp ⍵}
-Xml     ←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
-BSO     ←{BUILD∆PATH,(dirc⍬),⍵,'_',COMPILER,(soext⍬)}
-MKA←{ _       ←'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'
-                mka ⊂⍵}
-EXA←{ _       ←'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'
-                exa ⍬ (0⊃⍵) (1⊃⍵)}
-FREA←{        _       ←'frea'⎕NA (BSO ⍺),'|frea P'
-                frea ⍵}
 ⍝[cf]
 ⍝[of]:AST
 get     ←{⍺⍺⌷⍉⍵}
@@ -1042,8 +1050,8 @@ fdb←0 5⍴⊂''
 fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}' 'idxd'         ''    ''
 fdb⍪←,¨'['   '{⎕SIGNAL 99}' 'brid'         ''    ''
 fdb⍪←,¨'⍳'   'iotm'         '{⎕SIGNAL 16}' ''    ''
-fdb⍪←,¨'⍴'   'shpm'         'shpd'         ''    '' ⍝ Ref: shpm shpd
-fdb⍪←,¨','   'catm'         'catd'         ''    '' ⍝ Ref: catm catd
+fdb⍪←,¨'⍴'   'shpm'         'shpd'         ''    ''
+fdb⍪←,¨','   'catm'         'catd'         ''    ''
 fdb⍪←,¨'⍪'   'fctm'         'fctd'         ''    ''
 fdb⍪←,¨'⌽'   'rotm'         'rotd'         ''    ''
 fdb⍪←,¨'⊖'   'rtfm'         'rtfd'         ''    ''
