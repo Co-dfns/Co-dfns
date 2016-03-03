@@ -1073,6 +1073,8 @@ fdb⍪←,¨'⊥'   '{⎕SIGNAL 99}' 'decd'         ''    ''
 fdb⍪←,¨'⎕sp' '{⎕SIGNAL 99}' 'sopid'        ''    ''
 fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
 fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')'' ''}
+
+⍝   Mixed Verb Helpers
 calm←{        z r     ←var/⍵
         arr     ←⍺⍺,((1⌷⍺)⊃'iifb'),'n(',z,',NULL,',r,',env);',nl
         scl     ←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
@@ -1090,33 +1092,35 @@ cald←{        z r l   ←var/⍵
         scl     ,←(⊃git⍺),'*szv=sz.v;',nl,pacc'update host(szv[:1])'
         scl     ,←z,'=*szv;frea(&sz);}',nl
                 (∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
-mxfn←{        chk siz exe     ←⍺
-        al tp el        ←⍵
-        vr      ←(∧/¯1=↑1⌷⍉el)+0≠(⊃0⍴⊃)¨0⌷⍉el
-        tpl tpv tps     ←(tp(/⍨)vr=⊢)¨⍳3
-        nml nmv nms     ←(('zrl'↑⍨≢el)/⍨vr=⊢)¨⍳3
-        elv ell els     ←1 0 2(⊢(/⍨)vr=⊣)¨(⊂(≢el)↑'rslt' 'rgt' 'lft'),2⍴⊂0⌷⍉el
-        z       ←'{B zc=1,rc=1,lc=1;',nl
-        z       ,←(⊃,/(⊂''),elv{'A *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
-        z       ,←⊃,/(⊂''),nml{'I ',⍺,'r=',(⍕≢⍴⍵),';B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
-        z       ,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
-        z       ,←pacc'enter data copyin(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
-        z       ,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl↑⍨≢els
-        z       ,←(⊃,/(⊂''),{'I ',⍵,'r=0;B*',⍵,'s=NULL;'}¨nms),nl↑⍨≢nms
-        z       ,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl↑⍨≢nms
-        iso     ←(⊂⊃1⌷⍉el)∨.≡n2f 1↓1⌷⍉el
-        z       ,←iso⊃''('A*orz=rslt;A tz;tz.v=NULL;rslt=&tz;',nl)
-        z       ,←(0≡≢elv)⊃'' 'A tp;tp.v=NULL;A*rslt=&tp;'
-        tpv nmv elv     ,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
-        z       ,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
-        z       ,←chk,(nl ''⊃⍨''≡chk),siz,nl
-        alloc   ←'ai(rslt,zr,zs,',(⍕⊃0⌷tp),');',nl
-        alloc   ,←(1↑tpv)((1↑nmv)declv)1↑elv
-        z       ,←(al⊃'' alloc),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
-        z       ,←pacc'exit data delete(',(⊃{⍺,',',⍵}/(⊂'zc'),{⍵,'v'}¨nml),')'
-        z       ,←iso⊃''('cpaa(orz,rslt);',nl)
-        z       ,←'}',nl
-                z}
+
+⍝    Mixed Verb Generator Skeleton
+mxfn←{chk siz exe←⍺ ⋄ al tp el←⍵
+  vr←(∧/¯1=↑1⌷⍉el)+0≠(⊃0⍴⊃)¨0⌷⍉el
+  tpl tpv tps←(tp(/⍨)vr=⊢)¨⍳3
+  nml nmv nms←(('zrl'↑⍨≢el)/⍨vr=⊢)¨⍳3
+  elv ell els←1 0 2(⊢(/⍨)vr=⊣)¨(⊂(≢el)↑'rslt' 'rgt' 'lft'),2⍴⊂0⌷⍉el
+  z←'{B zc=1,rc=1,lc=1;',nl
+  z,←(⊃,/(⊂''),elv{'A *',⍺,'=',⍵,';'}¨var/(1=vr)⌿el),nl
+  z,←⊃,/(⊂''),nml{'I ',⍺,'r=',(⍕≢⍴⍵),';B ',⍺,'s[]={',(⍕≢⍵),'};'}¨ell
+  z,←⊃,/(⊂''),(git tpl),¨nml{⍺,'v[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl}¨ell
+  z,←(0=≢nml)⊃(pacc')',⍨¯1↓⊃,/(⊂'enter data copyin('),nml,¨⊂'v,')''
+  z,←(⊃,/(⊂''),(git tps),¨nms{'*s',⍺,'=&',⍵,';'}¨els),nl↑⍨≢els
+  z,←(⊃,/(⊂''),{'I ',⍵,'r=0;B*',⍵,'s=NULL;'}¨nms),nl↑⍨≢nms
+  z,←(⊃,/(⊂''),(git tps){⍺,⍵,'v[]={*s',⍵,'};'}¨nms),nl↑⍨≢nms
+  iso←(⊂⊃1⌷⍉el)∨.≡n2f 1↓1⌷⍉el
+  z,←iso⊃''('A*orz=rslt;A tz;tz.v=NULL;rslt=&tz;',nl)
+  z,←(0≡≢elv)⊃'' 'A tp;tp.v=NULL;A*rslt=&tp;'
+  tpv nmv elv,←(0≡≢elv)⊃(3⍴⊂⍬)((⊃tps)'z' 'rslt')
+  z,←((1↓tpv)((1↓nmv)decl)1↓elv),'I zr;B zs[15];',nl
+  z,←chk,(nl ''⊃⍨''≡chk),siz,nl
+  alloc←'ai(rslt,zr,zs,',(⍕⊃0⌷tp),');',nl
+  alloc,←(1↑tpv)((1↑nmv)declv)1↑elv
+  z,←(al⊃'' alloc),exe,((0≡≢elv)⊃'' '*sz=zv[0];'),nl
+  z,←(0=≢nml)⊃(pacc')',⍨¯1↓⊃,/(⊂'exit data delete('),nml,¨⊂'v,')''
+  z,←iso⊃''('cpaa(orz,rslt);',nl)
+  z,←'}',nl
+    z}
+
 decl←{        z       ←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),nl
         z       ,←(⊃,/(⊂''),⍺⍺{'B*restrict ',⍺,'s=',⍵,'->s;'}¨⍵),nl
         z       ,←⍺(⍺⍺ declv) ⍵
