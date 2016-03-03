@@ -1162,12 +1162,12 @@ catd←{
   exe,←(3=2⌷⍺)⊃'I lcp=lc;' 'I lcp=ceil(lc/8.0);'
   exe,←(3=0⌷⍺)⊃''('DO(i,zcp)zv[i]=0;',nl)
   exe,←(3=0⌷⍺)⊃nl(pacc'update host(rv[:rcp],lv[:lcp])')
-  exe,←(3=0⌷⍺)⊃(simd'collapse(2) present(zv[:zcp],lv[:lcp])')''
+  exe,←(3=0⌷⍺)⊃(simd'independent collapse(2) present(zv[:zcp],lv[:lcp])')''
   exe,←'DO(i,zi){DO(j,lm){I zvi=i*zm+j,lvi=lt*(i*lm+j);',nl
   exe,←(3=0⌷⍺)⊃'zv[zvi]=' 'zv[zvi/8]|='
   exe,←(3=2⌷⍺)⊃'lv[lvi]' '(1&(lv[lvi/8]>>(7-(lvi%8))))'
   exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(7-(zvi%8));}}',nl)
-  exe,←(3=0⌷⍺)⊃(simd'collapse(2) present(zv[:zcp],rv[:rcp])')''
+  exe,←(3=0⌷⍺)⊃(simd'independent collapse(2) present(zv[:zcp],rv[:rcp])')''
   exe,←'DO(i,zi){DO(j,rm){I zvi=i*zm+lm+j,rvi=rt*(i*rm+j);',nl
   exe,←(3=0⌷⍺)⊃'zv[zvi]=' 'zv[zvi/8]|='
   exe,←(3=1⌷⍺)⊃'rv[rvi]' '(1&(rv[rvi/8]>>(7-(rvi%8))))'
