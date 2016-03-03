@@ -1184,23 +1184,35 @@ fctm←{
   exe,←nl,(simd'present(zv[:rcp],rv[:rcp])'),'DO(i,rcp)zv[i]=rv[i];'
     '' siz exe mxfn 1 ⍺ ⍵}
 
-fctd←{        chk     ←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
-        chk     ,←'if(lr==rr&&rr>0){I n=rr-1;DO(i,n)if(rs[i+1]!=ls[i+1])error(5);}',nl
-        chk     ,←'else if(lr<rr){DO(i,lr)if(ls[i]!=rs[i+1])error(5);}',nl
-        chk     ,←'else{DO(i,rr)if(ls[i+1]!=rs[i])error(5);}'
-        siz     ←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
-        siz     ,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
-        siz     ,←'zr=zr==0?1:zr;zs[0]+=minr==zr?ls[0]:1;'
-        exe     ←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
-        exe     ,←'if(abs(lr-rr)<=1){',nl
-        exe     ,←(simd'present(zv[:lc],lv[:lc])'),' DO(i,lc)zv[i]=lv[i];',nl
-        exe     ,←(simd'present(zv[lc:rc],rv[:rc])'),'DO(i,rc)zv[lc+i]=rv[i];',nl
-        exe     ,←'}else{I n=zr-1;DO(i,n)zc*=zs[i+1];',nl,' if(lr==0){',nl
-        exe     ,←(simd'present(zv[:zc],lv[:1])'),'DO(i,zc)zv[i]=lv[0];',nl
-        exe     ,←(simd'present(zv[zc:rc],rv[:rc])'),' DO(i,rc)zv[zc+i]=rv[i];}',nl
-        exe     ,←' else{',nl,(simd'present(zv[:lc],lv[:lc])'),'DO(i,lc)zv[i]=lv[i];',nl
-        exe     ,←(simd'present(zv[lc:zc],rv[:1])'),'DO(i,zc)zv[lc+i]=rv[0];}}'
-                chk siz exe mxfn 1 ⍺ ⍵}
+⍝    Catenate First/Laminate
+fctd←{
+  chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
+  chk,←'if(lr==rr&&rr>0){I n=rr-1;DO(i,n)if(rs[i+1]!=ls[i+1])error(5);}',nl
+  chk,←'else if(lr<rr){DO(i,lr)if(ls[i]!=rs[i+1])error(5);}',nl
+  chk,←'else{DO(i,rr)if(ls[i+1]!=rs[i])error(5);}'
+  siz←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
+  siz,←'else{zr=rr;DO(i,rr)zs[i]=rs[i];}',nl
+  siz,←'zr=zr==0?1:zr;zs[0]+=minr==zr?ls[0]:1;'
+  exe←'DO(i,zr)zc*=zs[i];DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+  exe,←(3=0⌷⍺)⊃'I zcp=zc;' 'I zcp=ceil(zc/8.0);'
+  exe,←(3=1⌷⍺)⊃'I rcp=rc;' 'I rcp=ceil(rc/8.0);'
+  exe,←(3=2⌷⍺)⊃'I lcp=lc;' 'I lcp=ceil(lc/8.0);'
+  exe,←nl,'I lt=lr!=0;I rt=rr!=0;'
+  exe,←'zc/=zc==0?1:zs[0];rc=rr==0?zc:rc;lc=lr==0?zc:lc;',nl
+  exe,←(3=0⌷⍺)⊃''((pacc'update host(rv[:rcp],lv[:lcp])'),'DO(i,zcp)zv[i]=0;',nl)
+  exe,←(3=0⌷⍺)⊃(simd'present(zv[:zcp],lv[:lcp])')''
+  exe,←'DO(i,lc){I lvi=lt*i;'
+  exe,←(3=0⌷⍺)⊃'zv[i]=' 'zv[i/8]|='
+  exe,←(3=2⌷⍺)⊃'lv[lvi]' '(1&(lv[lvi/8]>>(7-(lvi%8))))'
+  exe,←(3=0⌷⍺)⊃(';}',nl)('<<(7-(i%8));}',nl)
+  exe,←(3=0⌷⍺)⊃(simd'independent present(zv[:zcp],rv[:rcp])')''
+  exe,←'DO(i,rc){I zvi=lc+i;I rvi=rt*i;'
+  exe,←(3=0⌷⍺)⊃'zv[zvi]=' 'zv[zvi/8]|='
+  exe,←(3=1⌷⍺)⊃'rv[rvi]' '(1&(rv[rvi/8]>>(7-(rvi%8))))'
+  exe,←(3=0⌷⍺)⊃(';}')('<<(7-(zvi%8));}')
+  exe,←(3=0⌷⍺)⊃''(nl,pacc'update device(zv[:zcp])')
+    chk siz exe mxfn 1 ⍺ ⍵}
+
 rotm←{        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
         exe     ←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
         exen    ←simd 'independent collapse(2) present(rv[:lc],zv[:lc])'
