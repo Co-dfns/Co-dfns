@@ -1122,6 +1122,8 @@ decl←{        z       ←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),
         z       ,←⍺(⍺⍺ declv) ⍵
                 z}
 declv   ←{(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
+
+⍝   Structural Primitive Verbs
 shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
  siz←pacc'update host(lv[:ls[0]])'
  siz,←'zr=ls[0];DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
@@ -1144,7 +1146,7 @@ catm←{chk←'' ⋄ siz←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
  exe,←nl,(simd'present(zv[:pc],rv[:pc])'),'DO(i,pc)zv[i]=rv[i];'
  chk siz exe mxfn 1 ⍺ ⍵}
 
-⍝   Catenate/Laminate
+⍝    Catenate/Laminate
 catd←{
   chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
   chk,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])error(5);'
@@ -1171,12 +1173,17 @@ catd←{
   exe,←(3=1⌷⍺)⊃'rv[rvi]' '(1&(rv[rvi/8]>>(7-(rvi%8))))'
   exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(7-(zvi%8));}}',nl)
   exe,←(3=0⌷⍺)⊃''(pacc'update device(zv[:zcp])')
-       chk siz exe mxfn 1 ⍺ ⍵}
+    chk siz exe mxfn 1 ⍺ ⍵}
 
-fctm←{        siz     ←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
-        siz     ,←'I n=rr-1;DO(i,n)rc*=rs[i+1];zs[1]=rc;rc*=rs[0];}'
-        exe     ←(simd'present(zv[:rc],rv[:rc])'),'DO(i,rc)zv[i]=rv[i];'
-                '' siz exe mxfn 1 ⍺ ⍵}
+
+⍝    Table
+fctm←{
+  siz←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
+  siz,←'I n=rr-1;DO(i,n)rc*=rs[i+1];zs[1]=rc;rc*=rs[0];}'
+  exe←(3=0⌷⍺)⊃'I rcp=rc;' 'I rcp=ceil(rc/8.0);'
+  exe,←nl,(simd'present(zv[:rcp],rv[:rcp])'),'DO(i,rcp)zv[i]=rv[i];'
+    '' siz exe mxfn 1 ⍺ ⍵}
+
 fctd←{        chk     ←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
         chk     ,←'if(lr==rr&&rr>0){I n=rr-1;DO(i,n)if(rs[i+1]!=ls[i+1])error(5);}',nl
         chk     ,←'else if(lr<rr){DO(i,lr)if(ls[i]!=rs[i+1])error(5);}',nl
