@@ -142,6 +142,13 @@ Intel's C compiler on Windows.
 The path to your PGI installation on Windows. Needed if you wish to use PGI 
 on Windows. You must have the OpenACC version of PGI. 
 
+### VERSION
+
+    Major Minor Patch ← VERSION
+
+This is not designed to be set by the user, but indicates the version of the 
+compiler. Version numbers are only valid as releases, and are subject to change 
+during development in the repository. 
 
 ## Supporting the Project
 
