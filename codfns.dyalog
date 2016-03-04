@@ -1045,11 +1045,12 @@ rth     ,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
 rth     ,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
 rth     ,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
 rth     ,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
-⍝[cf]
-⍝[cf]
-⍝[cf]
+
+⍝  Mixed Verbs
+
+⍝   Mixed Verbs Dispatch Table
 fdb←0 5⍴⊂''
-⍝      Prim  Monadic        Dyadic         MBool DBool
+⍝⍝     Prim  Monadic        Dyadic         MBool DBool
 fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}' 'idxd'         ''    ''
 fdb⍪←,¨'['   '{⎕SIGNAL 99}' 'brid'         ''    ''
 fdb⍪←,¨'⍳'   'iotm'         '{⎕SIGNAL 16}' ''    ''
@@ -1071,6 +1072,8 @@ fdb⍪←,¨'↑'   '{⎕SIGNAL 16}' 'tked'         ''    ''
 fdb⍪←,¨'⊤'   '{⎕SIGNAL 99}' 'encd'         ''    ''
 fdb⍪←,¨'⊥'   '{⎕SIGNAL 99}' 'decd'         ''    ''
 fdb⍪←,¨'⎕sp' '{⎕SIGNAL 99}' 'sopid'        ''    ''
+
+⍝   Mixed Verb Dispatch/Calling
 fcl←{cln ⍺(⍎⊃(((0⌷⍉⍵⍵)⍳⊂⍺⍺),¯1+≢⍵)⌷⍵⍵⍪fnc ⍺⍺)⍵}
 fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')'' ''}
 
