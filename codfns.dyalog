@@ -69,7 +69,7 @@ iop     ←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -
 icc     ←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:PGI C Linux
-pop     ←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -Minfo=ccff -fPIC -shared '
+pop     ←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC -shared '
 pgcc    ←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
@@ -1233,27 +1233,39 @@ rotm←{        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
         exeb    ,←'}}'
         exe     ,←(3=⊃0⌷⍺)⊃exen exeb
                 ''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
-rotd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-        exe     ←'zc=rr==0?1:rs[rr-1];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i];',nl
-        exe     ,←'DO(i,lr)lc*=ls[i];I s=(lv[0]<0)?abs(lv[0]):zc-lv[0];',nl
-        exen    ←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
-        exen    ,←'DO(i,rc){DO(j,zc){zv[i*zc+((j+s)%zc)]=rv[(i*zc)+j];}}'
-        exeb    ←'I zcp=ceil(rslt->c/8.0);',nl
-        exeb    ,←simd'present(zv[:zcp])'
-        exeb    ,←'DO(i,zcp){zv[i]=0;}',nl
-        exeb    ,←simd'collapse(2) present(zv[:zcp],rv[:zcp],lv[:lc])'
-        exeb    ,←'DO(i,rc){DO(j,zc){',nl
-        exeb    ,←' I zi=i*zc+((j+s)%zc);',nl
-        exeb    ,←' I ri=(i*zc)+j;',nl
-        exeb    ,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
-        exeb    ,←'}}'
-        exe     ,←(3=⊃0⌷⍺)⊃exen exeb
-                chk siz exe mxfn 1 ⍺ ⍵}
-rtfm←{        exe     ←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i+1];rc=rr==0?1:rs[0];',nl
-        exe     ,←simd 'collapse(2) independent present(rv[:rc*zc],zv[:rc*zc])'
-        exe     ,←'DO(i,rc){DO(j,zc){zv[i*zc+j]=rv[(rc-(i+1))*zc+j];}}'
-                ''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
+
+⍝    Rotate
+rotd←{
+  chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+  siz←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+  exe←'zc=rr==0?1:rs[rr-1];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i];',nl
+  exe,←'DO(i,lr)lc*=ls[i];I s=(lv[0]<0)?abs(lv[0]):zc-lv[0];',nl
+  exen←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
+  exen,←'DO(i,rc){DO(j,zc){zv[i*zc+((j+s)%zc)]=rv[(i*zc)+j];}}'
+  exeb←'I zcp=ceil(rslt->c/8.0);',nl
+  exeb,←simd'present(zv[:zcp])'
+  exeb,←'DO(i,zcp){zv[i]=0;}',nl
+  exeb,←simd'collapse(2) present(zv[:zcp],rv[:zcp],lv[:lc])'
+  exeb,←'DO(i,rc){DO(j,zc){',nl
+  exeb,←' I zi=i*zc+((j+s)%zc);',nl
+  exeb,←' I ri=(i*zc)+j;',nl
+  exeb,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
+  exeb,←'}}'
+  exe,←(3=⊃0⌷⍺)⊃exen exeb
+    chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝    Rotate First
+rtfm←{
+  exe←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i+1];rc=rr==0?1:rs[0];',nl
+  exe,←(3=0⌷⍺)⊃'I zcp=rc*zc;' 'I zcp=ceil((rc*zc)/8.0);'
+  exe,←(3=0⌷⍺)⊃nl(nl,(pacc'update host(rv[:zcp])'),'DO(i,zcp)zv[i]=0;',nl)
+  exe,←(3=0⌷⍺)⊃(simd'collapse(2) independent present(rv[:zcp],zv[:zcp])')''
+  exe,←'DO(i,rc){DO(j,zc){I zvi=i*zc+j;I rvi=(rc-(i+1))*zc+j;',nl
+  exe,←(3=0⌷⍺)⊃('zv[zvi]=rv[rvi];}}')''
+  exe,←(3=0⌷⍺)⊃''('zv[zvi/8]|=(1&(rv[rvi/8]>>(7-(rvi%8))))<<(7-(zvi%8));}}')
+  exe,←(3=0⌷⍺)⊃''(nl,pacc'update device(zv[:zcp])')
+    ''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
+
 rtfd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
         siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
         exe     ←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
