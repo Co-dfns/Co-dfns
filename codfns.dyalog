@@ -32,7 +32,9 @@ PGI∆PATH           ←'C:\Program Files\PGI\win64\15.7\'
 VERSION            ←0 5 0
 
 ⍝  Primary Interface
-Cmp ←{n⊣(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵}
+Cmp ←{_←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
+  _←(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵
+  22::'COMPILE ERROR'⎕SIGNAL 22 ⋄ n⊣⎕NUNTIE so ⎕NTIE 0}
 MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS⍬}
 Fix ←{⍺ MkNS ⍺ Cmp ⍵}
 Xml ←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
