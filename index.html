@@ -45,34 +45,182 @@ experts across many fields, expanding the scope and capabilities of what
 you can effectively accomplish with APL.</p>
 
 <h2>
+<a id="using-the-compiler" class="anchor" href="#using-the-compiler" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using the Compiler</h2>
+
+<p>The compiler is designed around a simple public interface that can be 
+directly and simply used to replace or enhance traditional funtionality. </p>
+
+<h3>
+<a id="codfnsfix" class="anchor" href="#codfnsfix" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.Fix</h3>
+
+<pre><code>Namespace ← Name codfns.Fix Namspace_Script
+</code></pre>
+
+<p>This is the primary interface into the compiler. It serves as a drop-in 
+replacement for the ⎕FIX function. The <code>Name</code> should be some name that 
+will serve as a prefix identifier for extra files that the compiler 
+needs to generate in the build directory to create the namespace. It 
+will compile the namespace and return the accessible functions as a 
+Dyalog Namespace object.</p>
+
+<h3>
+<a id="codfnscmp" class="anchor" href="#codfnscmp" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.Cmp</h3>
+
+<pre><code>Exports ← Name codfns.Cmp Namespace_Script
+</code></pre>
+
+<p>This is used as a part of fixing, and allows you to run the compiler without 
+building the namespace object. It will return a list of the exports of 
+the namespace.</p>
+
+<h3>
+<a id="codfnsmkns" class="anchor" href="#codfnsmkns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.MkNS</h3>
+
+<pre><code>Namespace ← Name codfns.MkNS Exports
+</code></pre>
+
+<p>This will take a list of exports and the compiler prefix name and fix a 
+Dyalog namespace object with functions coming from the compiled code given 
+by <code>Name</code>. </p>
+
+<h3>
+<a id="codfnsxml" class="anchor" href="#codfnsxml" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.Xml</h3>
+
+<pre><code>String ← codfns.Xml AST
+</code></pre>
+
+<p>If you need to see the AST of the compiler, or work with it, this function 
+allows you to serialize your code in the form of XML, rather than as a 
+Namespace Script. It does require that you use either the parser or 
+your own hacking skills to extract out a Co-dfns AST. </p>
+
+<h3>
+<a id="codfnsbso" class="anchor" href="#codfnsbso" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.BSO</h3>
+
+<pre><code>Path ← codfns.BSO Name
+</code></pre>
+
+<p>Given the <code>Name</code> used as the left argument to <code>Fix</code>, it will give back the 
+path to the primary Co-dfns compilation object. This is useful for doing 
+manual linking into the compilation object using <code>⎕NA</code>.</p>
+
+<h3>
+<a id="codfnsmka" class="anchor" href="#codfnsmka" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.MKA</h3>
+
+<pre><code>Codfns_Array ← codfns.MKA Array
+</code></pre>
+
+<p>This allows you to manually obtain a pointer to a Co-dfns array created from 
+a given Dyalog DWA Array. </p>
+
+<h3>
+<a id="codfnsexa" class="anchor" href="#codfnsexa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.EXA</h3>
+
+<pre><code>Array ← codfns.EXA Codfns_Array Type
+</code></pre>
+
+<p>Used to extract an array from Co-dfns. It will take a pointer to a Co-dfns 
+array and the type of that array, and will free the array from the Co-dfns 
+space and return that array as its result in the form of a normal Dyalog 
+array.</p>
+
+<h3>
+<a id="codfnsfrea" class="anchor" href="#codfnsfrea" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.FREA</h3>
+
+<pre><code>{} ← codfns.FREA Codfns_Array
+</code></pre>
+
+<p>Frees a Co-dfns array pointer obtained from <code>MKA</code>. </p>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>There are a few global settings that should be examined or set based on your 
+local environment. The values given below are their default values.</p>
+
+<h3>
+<a id="compiler" class="anchor" href="#compiler" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>COMPILER</h3>
+
+<pre><code>COMPILER ← 'vsc'
+</code></pre>
+
+<p>This indicates the backend compiler to use. It should be one of the following 
+names:</p>
+
+<pre><code>Windows: vsc pgi
+Linux: gcc icc pgcc
+</code></pre>
+
+<h3>
+<a id="testcompilers" class="anchor" href="#testcompilers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TEST∆COMPILERS</h3>
+
+<pre><code>TEST∆COMPILERS ← ⊂'vsc'
+</code></pre>
+
+<p>A vector of the backend compilers to test when running the test suite. See 
+<code>COMPILERS</code> for valid options.</p>
+
+<h3>
+<a id="dwapath" class="anchor" href="#dwapath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DWA∆PATH</h3>
+
+<pre><code>DWA∆PATH ← 'dwa'
+</code></pre>
+
+<p>The path relative to your working directory indicating the location of the 
+dwa package. Contact Dyalog, Ltd. for a copy of DWA for your platform. </p>
+
+<h3>
+<a id="buildpath" class="anchor" href="#buildpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BUILD∆PATH</h3>
+
+<pre><code>BUILD∆PATH ← 'build'
+</code></pre>
+
+<p>The path relative to your working directory where the compiler will store its 
+intermediate files and the compiled objects. Should be a directory. </p>
+
+<h3>
+<a id="visualstudiopath" class="anchor" href="#visualstudiopath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>VISUAL∆STUDIO∆PATH</h3>
+
+<pre><code>VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
+</code></pre>
+
+<p>The path to your Visual Studio installation. Make sure that you have installed 
+the C++ compiler. </p>
+
+<h3>
+<a id="intelcpath" class="anchor" href="#intelcpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INTEL∆C∆PATH</h3>
+
+<pre><code>INTEL∆C∆PATH ← 'C:\Program Files (x86)\IntelSWTools\'
+INTEL∆C∆PATH ,← 'compilers_and_libraries_2016.0.110\windows\bin\'
+</code></pre>
+
+<p>The location of your <code>bin</code> directory for the Intel C Compiler. Needed to use 
+Intel's C compiler on Windows. </p>
+
+<h3>
+<a id="pgipath" class="anchor" href="#pgipath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PGI∆PATH</h3>
+
+<pre><code>PGI∆PATH ← 'C:\Program Files\PGI\win64\15.7\'
+</code></pre>
+
+<p>The path to your PGI installation on Windows. Needed if you wish to use PGI 
+on Windows. You must have the OpenACC version of PGI. </p>
+
+<h3>
+<a id="version" class="anchor" href="#version" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>VERSION</h3>
+
+<pre><code>Major Minor Patch ← VERSION
+</code></pre>
+
+<p>This is not designed to be set by the user, but indicates the version of the 
+compiler. Version numbers are only valid as releases, and are subject to change 
+during development in the repository. </p>
+
+<h2>
 <a id="supporting-the-project" class="anchor" href="#supporting-the-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Supporting the Project</h2>
 
 <p>We need your help! Please contact <a href="mailto:arcfide@sacrideo.us">arcfide@sacrideo.us</a> to learn how you
 can support the project.</p>
-
-<h2>
-<a id="obtaining-the-official-distribution" class="anchor" href="#obtaining-the-official-distribution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Obtaining the official Distribution</h2>
-
-<p>There are two ways to get the Co-dfns compiler. You can download the source 
-directly from GitHub 
-[<a href="https://github.com/arcfide/Co-dfns/zipball/master">.zip</a>]
-[<a href="https://github.com/arcfide/Co-dfns/tarball/master">tar.gz</a>]. This requires 
-the <code>noweb</code> program to weave and tangle the sources into something usable. </p>
-
-<p>Alternatively, the pre-prepared distribution is available through BT Sync and 
-includes the complete Co-dfns program in PDF (woven) form and a tangled 
-<code>codfns.dyalog</code> file and its associated utility files for use. </p>
-
-<p><a href="https://link.getsync.com/#f=Co-dfns%20Distribution&amp;sz=0&amp;t=1&amp;s=UJL5Y6DONSWMZ6KVKVV2J5VXC73J3CM5&amp;i=CI3NEENAIZOAGZ4RKB75OLS2IKRS7QLUZ&amp;v=2.3">Official Co-dfns Distribution</a></p>
-
-<p>This distribution is released as a rolling release with all of the latest 
-updates and information. If you want to use Co-dfns, it is recommended that 
-you obtain and track the distribution. if you want to hack on the compiler 
-itself, you should work through the Git repository. </p>
-
-<p>The official distribution requires no additional tools to prepare and use other 
-than the core compiler requirements, and thus, can be considered a sort of 
-"binary" form. </p>
         </section>
 
         <aside id="sidebar">
