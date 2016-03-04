@@ -112,30 +112,33 @@ pgi2←{(pgwc DWA∆PATH,'\dwa_fns'),' && ',pglk ⍵}
 pgi3←{' > "',BUILD∆PATH,'\',⍵,'_pgi.log""'}
 pgi←⎕CMD '%comspec% /C ',pgi1,pgi2,pgi3
 
-⍝[of]:AST
+⍝ AST
 get     ←{⍺⍺⌷⍉⍵}
 up      ←⍉(1+1↑⍉)⍪1↓⍉
 bind    ←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
 
-d_ t_ k_ n_     ←⍳f∆←4  ⋄ d←d_ get  ⋄ t←t_ get  ⋄ k←k_ get  ⋄ n←n_ get
-r_ s_ v_ y_ e_  ←f∆+⍳5    ⋄ r←r_ get  ⋄ s←s_ get  ⋄ v←v_ get  ⋄ y←y_ get  ⋄ e←e_ get
-l_      ←f∆+5+⍳1  ⋄ l←l_ get
+⍝  Field Descriptors/Accessors
+d_ t_ k_ n_   ←⍳f∆←4   ⋄ d←d_ get ⋄ t←t_ get ⋄ k←k_ get ⋄ n←n_ get
+r_ s_ v_ y_ e_←f∆+⍳5   ⋄ r←r_ get ⋄ s←s_ get ⋄ v←v_ get ⋄ y←y_ get ⋄ e←e_ get
+l_            ←f∆+5+⍳1 ⋄ l←l_ get
 
-new     ←{⍉⍪f∆↑0 ⍺,⍵}     ⋄ msk ←{(t ⍵)∊⊂⍺⍺}        ⋄ sel ←{(⍺⍺ msk ⍵)⌿⍵}
-A       ←{('A'new ⍺⍺)⍪up⊃⍪/⍵}     ⋄ Am  ←'A'msk       ⋄ As  ←'A'sel
-E       ←{('E'new ⍺⍺)⍪up⊃⍪/⍵}     ⋄ Em  ←'E'msk       ⋄ Es  ←'E'sel
-F       ←{('F'new 1)⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵}        ⋄ Fm  ←'F'msk       ⋄ Fs  ←'F'sel
-M       ←{('M'new⍬)⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵}       ⋄ Mm  ←'M'msk       ⋄ Ms  ←'M'sel
-N       ←{'N'new 0 (⍎⍵)}  ⋄ Nm  ←'N'msk       ⋄ Ns  ←'N'sel
-O       ←{('O'new ⍺⍺)⍪up⊃⍪/⍵}     ⋄ Om  ←'O'msk       ⋄ Os  ←'O'sel
-P       ←{'P'new 0 ⍵}       ⋄ Pm  ←'P'msk       ⋄ Ps  ←'P'sel
-S       ←{'S'new 0 ⍵}       ⋄ Sm  ←'S'msk       ⋄ Ss  ←'S'sel
-V       ←{'V'new ⍺⍺ ⍵}  ⋄ Vm  ←'V'msk       ⋄ Vs  ←'V'sel
-Y       ←{'Y'new 0 ⍵}       ⋄ Ym  ←'Y'msk       ⋄ Ys  ←'Y'sel
-Z       ←{'Z'new 1 ⍵}       ⋄ Zm  ←'Z'msk       ⋄ Zs  ←'Z'sel
-⍝[cf]
-⍝[of]:Parser
-⍝[of]:Parsing Combinators
+⍝  Node Constructors, Masks, and Selectors
+new←{⍉⍪f∆↑0 ⍺,⍵}                  ⋄ msk←{(t ⍵)∊⊂⍺⍺} ⋄ sel←{(⍺⍺ msk ⍵)⌿⍵}
+A  ←{('A'new ⍺⍺)⍪up⊃⍪/⍵}          ⋄ Am←'A'msk       ⋄ As←'A'sel
+E  ←{('E'new ⍺⍺)⍪up⊃⍪/⍵}          ⋄ Em←'E'msk       ⋄ Es←'E'sel
+F  ←{('F'new 1)⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵} ⋄ Fm←'F'msk       ⋄ Fs←'F'sel
+M  ←{('M'new⍬)⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵}  ⋄ Mm←'M'msk       ⋄ Ms←'M'sel
+N  ←{'N'new 0 (⍎⍵)}               ⋄ Nm←'N'msk       ⋄ Ns←'N'sel
+O  ←{('O'new ⍺⍺)⍪up⊃⍪/⍵}          ⋄ Om←'O'msk       ⋄ Os←'O'sel
+P  ←{'P'new 0 ⍵}                  ⋄ Pm←'P'msk       ⋄ Ps←'P'sel
+S  ←{'S'new 0 ⍵}                  ⋄ Sm←'S'msk       ⋄ Ss←'S'sel
+V  ←{'V'new ⍺⍺ ⍵}                 ⋄ Vm←'V'msk       ⋄ Vs←'V'sel
+Y  ←{'Y'new 0 ⍵}                  ⋄ Ym←'Y'msk       ⋄ Ys←'Y'sel
+Z  ←{'Z'new 1 ⍵}                  ⋄ Zm←'Z'msk       ⋄ Zs←'Z'sel
+
+⍝ Parser
+
+⍝  Parsing Combinators
 _s←{0<⊃c a e r←z←⍺ ⍺⍺ ⍵:z ⋄ 0<⊃c2 a2 e r←z←e ⍵⍵ r:z ⋄ (c⌈c2)(a,a2) e r}
 _o←{0≥⊃c a e r←z←⍺ ⍺⍺ ⍵:z ⋄ 0≥⊃c a e r2←z←⍺ ⍵⍵ ⍵:z ⋄ c a e(r↑⍨-⌊/≢¨r r2)}
 _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵} ⋄ _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
@@ -147,8 +150,8 @@ _as←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ c (,⊂⍵⍵ a) e r} ⋄ _enc�
 _ign←{c a e r←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e r}
 _env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}
 _aew←{⍺(⍵⍵ _o (⍺⍺ _s ∇))⍵}
-⍝[cf]
-⍝[of]:Terminals/Tokens
+
+⍝  Terminals/Tokens
 ws←(' ',⎕UCS 9)_set
 aws←ws _any _ign ⋄ awslf←(⎕UCS 10 13)_set _o ws _any _ign
 nss←awslf _s(':Namespace'_tk)_s awslf _ign
@@ -159,7 +162,7 @@ lpar←aws _s('('_tk)_s aws _ign ⋄ rpar←aws _s(')'_tk)_s aws _ign
 lbrk←aws _s('['_tk)_s aws _ign ⋄ rbrk←aws _s(']'_tk)_s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
 digits←'0123456789'_set
-prim←(prims←'+-÷×|*⍟⌈⌊<≤=≠≥>∧∨⍲⍱⌷⍴,⍪⌽⊖⍉∊⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓')_set
+prim←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷⍴,⍪⌽⊖⍉∊⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓')_set
 mop←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
 eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs←digits _some ⋄ odigs←digits _any
@@ -168,33 +171,33 @@ float←aws _s (int _s dot _s odigs _o (dot _s digs)) _s aws
 name←aws _s alpha _s (alpha _o digits _any) _s aws
 aw←aws _s ('⍺⍵'_set) _s aws
 sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
-⍝[cf]
-⍝[of]:Productions
-Sfn     ←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
-Prim    ←prim _as {P⍵⍴⍨1+⍵∊'/⌿⍀\'} _o Sfn
-Fn      ←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
-Fnp     ←Fn _o Prim
-Mop     ←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
-Dop     ←Fnp _s (dop _as P) _s Fnp _as (2 O)
-Bop     ←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
-Bind    ←{⍺(name _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as bind)⍵}
-Fex     ←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
-Vt      ←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
-Var     ←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
-Num     ←float _o int _as N
-Strand  ←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A)
-Atom    ←{⍺(Num _some _as ('n'A) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex)⍵}
-Mon     ←{⍺(Fex _s Ex _as (1 E))⍵}
-Dya     ←{⍺((Idx _o Atom) _s Fex _s Ex _as (2 E))⍵}
-Idx     ←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
-Ex      ←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
-Pex     ←lpar _s Ex _s rpar
-Stmt    ←sep _any _s (Ex _o Fex) _s (sep _any)
-Ns      ←nss _s (Stmt _aew nse) _s eot _as M
-⍝[cf]
+
+⍝  Productions
+Sfn   ←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
+Prim  ←prim _as {P⍵⍴⍨1+⍵∊'/⌿⍀\'} _o Sfn
+Fn    ←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
+Fnp   ←Fn _o Prim
+Mop   ←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
+Dop   ←Fnp _s (dop _as P) _s Fnp _as (2 O)
+Bop   ←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
+Bind  ←{⍺(name _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as bind)⍵}
+Fex   ←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
+Vt    ←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
+Var   ←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
+Num   ←float _o int _as N
+Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A)
+Atom  ←{⍺(Num _some _as ('n'A) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex)⍵}
+Mon   ←{⍺(Fex _s Ex _as (1 E))⍵}
+Dya   ←{⍺((Idx _o Atom) _s Fex _s Ex _as (2 E))⍵}
+Idx   ←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
+Ex    ←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
+Pex   ←lpar _s Ex _s rpar
+Stmt  ←sep _any _s (Ex _o Fex) _s (sep _any)
+Ns    ←nss _s (Stmt _aew nse) _s eot _as M
+
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
-⍝[cf]
-⍝[of]:Core Compiler
+
+⍝ Core Compiler
 tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce ur fc∘pc⍣≡ ca fe mr dn lf du df rd rn ⍵}
 ⍝[of]:Utilities
 scp     ←(1,1↓Fm)⊂[0]⊢
