@@ -1276,9 +1276,14 @@ tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
         exe     ←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
         exe     ,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
                 '' siz exe mxfn 1 ⍺ ⍵}
-memm←{        siz     ←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
-        exe     ←(simd'present(rv[:rc],zv[:rslt->c])'),'DO(i,rc)zv[i]=rv[i];'
-                '' siz exe mxfn 1 ⍺ ⍵}
+
+⍝    Enlist
+memm←{
+  siz←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
+  exe←(3=0⌷⍺)⊃'I rcp=rc;' 'I rcp=ceil(rc/8.0);'
+  exe,←nl,(simd'present(rv[:rcp],zv[:rcp])'),'DO(i,rcp)zv[i]=rv[i];'
+    '' siz exe mxfn 1 ⍺ ⍵}
+
 dscm←{        exe     ←pacc'update host(rv[:rgt->c])'
         exe     ,←'DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];',nl
         exe     ,←pacc'update device(zv[:rslt->c])'
