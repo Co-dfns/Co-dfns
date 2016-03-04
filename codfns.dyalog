@@ -60,52 +60,51 @@ cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
 fls←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 
-⍝[of]:GCC (Linux Only)
-gop     ←'-Ofast -g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
-gcc     ←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
-⍝[cf]
-⍝[of]:Intel C Linux
-iop     ←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared '
-icc     ←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
-⍝[cf]
-⍝[of]:PGI C Linux
-pop     ←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC -shared '
-pgcc    ←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
-⍝[cf]
-⍝[of]:VS/IC Windows Flags
-vsco    ←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"build\vc140.pdb" '
-vsco    ,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
-vsco    ,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
-vsco    ,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
-vslo    ←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
-vslo    ,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
-⍝[cf]
-⍝[of]:Visual Studio C
-vsc1    ←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
-vsc2    ←{'/I"',DWA∆PATH,'\\" /Fo"',BUILD∆PATH,'\\" "',DWA∆PATH,'\dwa_fns.c" '}
-vsc3    ←{'"',BUILD∆PATH,'\',⍵,'_vsc.c" ',vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
-vsc4    ←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
-vsc     ←⎕CMD '%comspec% /C ',vsc1,vsc2,vsc3,vsc4
-⍝[cf]
-⍝[of]:Intel C Windows
-icl1    ←{'""',INTEL∆C∆PATH,'\ipsxe-comp-vars.bat" intel64 vs2015 && icl ',vsco,'/Ofast '}
-icl3    ←{'"',BUILD∆PATH,'\',⍵,'_icl.c" ',vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_icl.dll" '}
-icl4    ←{'> "',BUILD∆PATH,'\',⍵,'_icl.log""'}
-icl     ←⎕CMD '%comspec% /E:ON /V:ON /C ',icl1,vsc2,icl3,icl4
-⍝[cf]
-⍝[of]:PGI C Windows
-pgio    ←'-D "HAS_UNICODE=1" -D "xxBIT=64" -D "WIN32" -D "NDEBUG" -D "_WINDOWS" '
-pgio    ,←'-D "_USRDLL" -D "DWA_EXPORTS" -D "_WINDLL" -D "HASACC" '
-pgwc    ←{z←'pgcc -fast -Bdynamic -acc -Minfo ',pgio,'-I "',DWA∆PATH,'\\" '
-        z,←'-c "',⍵,'.c" -o "',⍵,'.obj"' ⋄ z}
-pglk    ←{z←'pgcc -fast -Mmakedll -acc -Minfo -o "',BUILD∆PATH,'\',⍵,'_pgi.dll" "'
-        z,←BUILD∆PATH,'\',⍵,'_pgi.obj" "',DWA∆PATH,'\dwa_fns.obj"' ⋄ z}
-pgi1    ←{'""',PGI∆PATH,'pgi_env.bat" && ',(pgcc BUILD∆PATH,'\',⍵,'_pgi'),' && '}
-pgi2    ←{(pgwc DWA∆PATH,'\dwa_fns'),' && ',pglk ⍵}
-pgi3    ←{' > "',BUILD∆PATH,'\',⍵,'_pgi.log""'}
-pgi     ←⎕CMD '%comspec% /C ',pgi1,pgi2,pgi3
-⍝[cf]
-⍝[cf]
+⍝  GCC (Linux Only)
+gop←'-Ofast -g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
+gcc←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
+
+⍝  Intel C Linux
+iop←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared '
+icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
+
+⍝  PGI C Linux
+pop←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC -shared '
+pgcc←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
+
+⍝  VS/IC Windows Flags
+vsco←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"build\vc140.pdb" '
+vsco,←'/D "HAS_UNICODE=1" /D "xxBIT=64" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" '
+vsco,←'/D "_USRDLL" /D "DWA_EXPORTS" /D "_WINDLL" '
+vsco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+vslo←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+vslo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
+
+⍝  Visual Studio C
+vsc1←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
+vsc2←{'/I"',DWA∆PATH,'\\" /Fo"',BUILD∆PATH,'\\" "',DWA∆PATH,'\dwa_fns.c" '}
+vsc3←{'"',BUILD∆PATH,'\',⍵,'_vsc.c" ',vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
+vsc4←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
+vsc←⎕CMD '%comspec% /C ',vsc1,vsc2,vsc3,vsc4
+
+⍝  Intel C Windows
+icl1←{'""',INTEL∆C∆PATH,'\ipsxe-comp-vars.bat" intel64 vs2015 && icl ',vsco,'/Ofast '}
+icl3←{'"',BUILD∆PATH,'\',⍵,'_icl.c" ',vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_icl.dll" '}
+icl4←{'> "',BUILD∆PATH,'\',⍵,'_icl.log""'}
+icl←⎕CMD '%comspec% /E:ON /V:ON /C ',icl1,vsc2,icl3,icl4
+
+⍝  PGI C Windows
+pgio←'-D "HAS_UNICODE=1" -D "xxBIT=64" -D "WIN32" -D "NDEBUG" -D "_WINDOWS" '
+pgio,←'-D "_USRDLL" -D "DWA_EXPORTS" -D "_WINDLL" -D "HASACC" '
+pgwc←{z←'pgcc -fast -Bdynamic -acc -Minfo ',pgio,'-I "',DWA∆PATH,'\\" '
+  z,←'-c "',⍵,'.c" -o "',⍵,'.obj"' ⋄ z}
+pglk←{z←'pgcc -fast -Mmakedll -acc -Minfo -o "',BUILD∆PATH,'\',⍵,'_pgi.dll" "'
+  z,←BUILD∆PATH,'\',⍵,'_pgi.obj" "',DWA∆PATH,'\dwa_fns.obj"' ⋄ z}
+pgi1←{'""',PGI∆PATH,'pgi_env.bat" && ',(pgcc BUILD∆PATH,'\',⍵,'_pgi'),' && '}
+pgi2←{(pgwc DWA∆PATH,'\dwa_fns'),' && ',pglk ⍵}
+pgi3←{' > "',BUILD∆PATH,'\',⍵,'_pgi.log""'}
+pgi←⎕CMD '%comspec% /C ',pgi1,pgi2,pgi3
+
 ⍝[of]:AST
 get     ←{⍺⍺⌷⍉⍵}
 up      ←⍉(1+1↑⍉)⍪1↓⍉
@@ -623,7 +622,7 @@ fndy    ←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,f
 fncd    ←{fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'}',nl}
 ⍝[cf]
 ⍝[of]:Scalar Primitives
-⍝ respos←'⍵ % ⍺'
+⍝respos←'⍵ % ⍺'
 respos  ←'fmod((D)⍵,(D)⍺)'
 resneg  ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
 residue ←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
