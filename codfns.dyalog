@@ -69,8 +69,14 @@ iop←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -share
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 
 ⍝  PGI C Linux
-pop←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC -shared '
-pgcc←{⎕SH'pgcc ',cds,pop,'pgcc'(cio,fls,log)⍵}
+pop←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC '
+pgcco←{cmd←'pgcc -c ',cds,pop,'-I',DWA∆PATH,' '
+  ⎕SH cmd,'-o ''',⍵,'.o'' ''',⍵,'.c'' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
+pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' '
+  ⎕SH cmd,⍵,' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
+pgcc←{_←⎕SH'echo "" > ''',BUILD∆PATH,'/',⍵,'_pgcc.log'''
+  _←⍵ pgcco DWA∆PATH,'/dwa_fns' ⋄ _←⍵ pgcco BUILD∆PATH,'/',⍵,'_pgcc'
+  ⍵ pgccld '''',DWA∆PATH,'/dwa_fns.o'' ''',BUILD∆PATH,'/',⍵,'_pgcc.o'''}
 
 ⍝  VS/IC Windows Flags
 vsco←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"build\vc140.pdb" '
