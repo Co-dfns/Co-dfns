@@ -1074,6 +1074,7 @@ rth,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
 rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
 rth,←'D circ(I a,D b){switch(a){',nl
 rth,←' case 0:return sqrt(1-b*b);break;',nl
+rth,←' case 1:return sin(b);break;',nl
 rth,←' };return -1;}',nl
 
 ⍝  Mixed Verbs

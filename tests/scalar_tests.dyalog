@@ -56,6 +56,7 @@ Z←0 0⍴⍬
 'notand'    SCL∆TST∆DYADIC   '⍲' B   B    B          B    B   B
 'notor'     SCL∆TST∆DYADIC   '⍱' B   B    B          B    B   B
 'circular0' SCL∆TST∆DYADIC   '○' 0   F1LT (0⍴⍨≢F1LT) F1LT 0   B
+'circular1' SCL∆TST∆DYADIC   '○' 1   I    (1⍴⍨≢F)    F    1   B
 
 'conjugate'        SCL∆TST∆MONADIC        '+'        I        F        B
 'negate'        SCL∆TST∆MONADIC        '-'        I        F        B
