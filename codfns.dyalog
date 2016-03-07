@@ -635,40 +635,40 @@ case    ←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break
 fnacc   ←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
 fndy    ←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,fcln,'}'}
 fncd    ←{fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'}',nl}
-⍝[cf]
-⍝[of]:Scalar Primitives
-⍝respos←'⍵ % ⍺'
-respos  ←'fmod((D)⍵,(D)⍺)'
-resneg  ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
-residue ←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
 
-sdb←0 5⍴⊂'' ⋄ scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(scln∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
-⍝[c]
-⍝[c]Prim      Monadic Dyadic  Monadic Bool    Dyadic Bool
-sdb⍪←,¨'+' '⍵'   '⍺+⍵'       '⍵'   '⍺+⍵'
-sdb⍪←,¨'-' '-1*⍵'        '⍺-⍵'       '-1*⍵'        '⍺-⍵'
-sdb⍪←,¨'×'        '(⍵>0)-(⍵<0)'       '⍺*⍵'       '⍵'   '⍺&⍵'
-sdb⍪←,¨'÷'        '1.0/⍵'       '((D)⍺)/((D)⍵)'     '⍵'   '⍺&⍵'
-sdb⍪←,¨'*' 'exp((D)⍵)'   'pow((D)⍺,(D)⍵)'    'exp((double)⍵)'      '⍺|~⍵'
-sdb⍪←,¨'⍟'       'log((D)⍵)'   'log((D)⍵)/log((D)⍺)'       ''      ''
-sdb⍪←,¨'|' 'fabs(⍵)'     residue '⍵'   '⍵&(⍺^⍵)'
-sdb⍪←,¨'○'       'PI*⍵'        'error(16)'     'PI*⍵'        'error(16)'
-sdb⍪←,¨'⌊'       'floor((double)⍵)'    '⍺ < ⍵ ? ⍺ : ⍵' '⍵'   '⍺&⍵'
-sdb⍪←,¨'⌈'       'ceil((double)⍵)'     '⍺ > ⍵ ? ⍺ : ⍵' '⍵'   '⍺|⍵'
-sdb⍪←,¨'<' 'error(99)'     '⍺<⍵'       'error(99)'     '(~⍺)&⍵'
-sdb⍪←,¨'≤'       'error(99)'     '⍺<=⍵'      'error(99)'     '(~⍺)|⍵'
-sdb⍪←,¨'=' 'error(99)'     '⍺==⍵'      'error(99)'     '(⍺&⍵)|((~⍺)&(~⍵))'
-sdb⍪←,¨'≥'       'error(99)'     '⍺>=⍵'      'error(99)'     '⍺|(~⍵)'
-sdb⍪←,¨'>' 'error(99)'     '⍺>⍵'       'error(99)'     '⍺&(~⍵)'
-sdb⍪←,¨'≠'       'error(99)'     '⍺!=⍵'      'error(99)'     '⍺^⍵'
-sdb⍪←,¨'~' '0==⍵'        'error(16)'     '~⍵'  'error(16)'
-sdb⍪←,¨'∧'       'error(99)'     'lcm(⍺,⍵)'  'error(99)'     '⍺&⍵'
-sdb⍪←,¨'∨'       'error(99)'     'gcd(⍺,⍵)'  'error(99)'     '⍺|⍵'
-sdb⍪←,¨'⍲'       'error(99)'     '!(⍺ && ⍵)' 'error(99)'     '~(⍺&⍵)'
-sdb⍪←,¨'⍱'       'error(99)'     '!(⍺ || ⍵)' 'error(99)'     '~(⍺|⍵)'
-sdb⍪←,¨'⌷'       '⍵'   'error(99)'     '⍵'   'error(99)'
-sdb⍪←'⎕XOR'       'error(99)'     '⍺ ^ ⍵'     'error(99)'     '⍺ ^ ⍵'
-⍝[cf]
+⍝  Scalar Primitives
+⍝respos←'⍵ % ⍺'
+respos ←'fmod((D)⍵,(D)⍺)'
+resneg ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
+residue←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
+
+⍝   Scalar Dispatch Table
+sdb←0 5⍴⊂''
+⍝⍝     Prim Monadic            Dyadic                Monadic Bool     Dyadic Bool
+sdb⍪←,¨'+'  '⍵'           '⍺+⍵'                 '⍵'         '⍺+⍵'
+sdb⍪←,¨'-'  '-1*⍵'        '⍺-⍵'                 '-1*⍵'      '⍺-⍵'
+sdb⍪←,¨'×'  '(⍵>0)-(⍵<0)' '⍺*⍵'                 '⍵'         '⍺&⍵'
+sdb⍪←,¨'÷'  '1.0/⍵'       '((D)⍺)/((D)⍵)'       '⍵'         '⍺&⍵'
+sdb⍪←,¨'*'  'exp((D)⍵)'   'pow((D)⍺,(D)⍵)'      'exp((D)⍵)' '⍺|~⍵'
+sdb⍪←,¨'⍟'  'log((D)⍵)'   'log((D)⍵)/log((D)⍺)' ''          ''
+sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^⍵)'
+sdb⍪←,¨'○'  'PI*⍵'        'error(16)'           'PI*⍵'      'error(16)'
+sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
+sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
+sdb⍪←,¨'<'  'error(99)'   '⍺<⍵'                 'error(99)' '(~⍺)&⍵'
+sdb⍪←,¨'≤'  'error(99)'   '⍺<=⍵'                'error(99)' '(~⍺)|⍵'
+sdb⍪←,¨'='  'error(99)'   '⍺==⍵'                'error(99)' '(⍺&⍵)|((~⍺)&(~⍵))'
+sdb⍪←,¨'≥'  'error(99)'   '⍺>=⍵'                'error(99)' '⍺|(~⍵)'
+sdb⍪←,¨'>'  'error(99)'   '⍺>⍵'                 'error(99)' '⍺&(~⍵)'
+sdb⍪←,¨'≠'  'error(99)'   '⍺!=⍵'                'error(99)' '⍺^⍵'
+sdb⍪←,¨'~'  '0==⍵'        'error(16)'           '~⍵'        'error(16)'
+sdb⍪←,¨'∧'  'error(99)'   'lcm(⍺,⍵)'            'error(99)' '⍺&⍵'
+sdb⍪←,¨'∨'  'error(99)'   'gcd(⍺,⍵)'            'error(99)' '⍺|⍵'
+sdb⍪←,¨'⍲'  'error(99)'   '!(⍺ && ⍵)'           'error(99)' '~(⍺&⍵)'
+sdb⍪←,¨'⍱'  'error(99)'   '!(⍺ || ⍵)'           'error(99)' '~(⍺|⍵)'
+sdb⍪←,¨'⌷'  '⍵'           'error(99)'           '⍵'         'error(99)'
+sdb⍪←'⎕XOR' 'error(99)'   '⍺^⍵'                 'error(99)' '⍺ ^ ⍵'
+
 ⍝[of]:Scalar Loop Generators
 simp    ←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima    ←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
@@ -719,6 +719,7 @@ sget←{        nm      ←(⊃git⊃⍺⍺),⊃⍺
         ∧/⊃3 4∨.=⊂3↑⍺⍺:   ⊃,/nm∘sgtbb¨⍵
         3=⊃⍺⍺:    nm,'=0;',nl,⊃,/(⍳8)((⊃⍺)sgtbn)¨⍵
                 ⊃,/(⍳8)(nm sgtnn)¨⍵}
+scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(scln∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝[cf]
 ⍝[of]:Scalar/Mixed Conversion
 mxsm←{        siz     ←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
