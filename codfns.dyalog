@@ -652,7 +652,7 @@ sdb⍪←,¨'÷'  '1.0/⍵'       '((D)⍺)/((D)⍵)'       '⍵'         '⍺&�
 sdb⍪←,¨'*'  'exp((D)⍵)'   'pow((D)⍺,(D)⍵)'      'exp((D)⍵)' '⍺|~⍵'
 sdb⍪←,¨'⍟'  'log((D)⍵)'   'log((D)⍵)/log((D)⍺)' ''          ''
 sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^⍵)'
-sdb⍪←,¨'○'  'PI*⍵'        'error(16)'           'PI*⍵'      'error(16)'
+sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ(⍺,⍵)'
 sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
 sdb⍪←,¨'<'  'error(99)'   '⍺<⍵'                 'error(99)' '(~⍺)&⍵'
@@ -982,84 +982,99 @@ sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
    z,←(simd'present(z,l,r)'),'DO(i,s[0]){z[i*2]=l[i];z[i*2+1]=r[i];}'
    z,←'if(tpused){cpaa(orz,rslt);}',nl
    z,'}',nl}
-⍝[cf]
-⍝[of]:Runtime Header
-⍝[of]:Includes, Structures, Allocation
-rth     ←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
-rth     ,←'#ifdef _OPENACC',nl
-rth     ,←'#include <accelmath.h>',nl,'extern unsigned int __popcnt (unsigned int);',nl
-rth     ,←'#endif',nl
-rth     ,←'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
-rth     ,←'int isinit=0;',nl
-rth     ,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
-rth     ,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
-rth     ,←'typedef unsigned char U8;',nl
-rth     ,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array A;',nl
-rth     ,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
-rth     ,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
-rth     ,←' if(a->f){',nl,'#ifdef _OPENACC',nl
-rth     ,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
-rth     ,←' if(a->f>1){free(v);}}}',nl
-rth     ,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=0;',nl
-rth     ,←' B pc=8*ceil(c/8.0);',nl
-rth     ,←' switch(tp){',nl
-rth     ,←'  case 1:z=sizeof(I)*pc;break;',nl
-rth     ,←'  case 2:z=sizeof(D)*pc;break;',nl
-rth     ,←'  case 3:z=ceil((sizeof(U8)*pc)/8.0);break;',nl
-rth     ,←'  default: error(16);}',nl
-rth     ,←' z=4*ceil(z/4.0);char*v=malloc(z);if(NULL==v)error(1);',nl
-rth     ,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
-rth     ,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
-rth     ,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl
-rth     ,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
-⍝[cf]
-⍝[of]:Co-dfns/Dyalog Conversion
-rth     ,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);B z=0;',nl
-rth     ,←' switch(t){',nl,'  case APLLONG:z=a->c*sizeof(I);break;',nl
-rth     ,←'  case APLDOUB:z=a->c*sizeof(D);break;',nl
-rth     ,←'  case APLBOOL:z=ceil(a->c/8.0)*sizeof(U8);break;',nl
-rth     ,←'  default:error(11);}',nl
-rth     ,←' #ifdef _OPENACC',nl,'  char *v=a->v;',nl
-rth     ,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
-rth     ,←' memcpy(ARRAYSTART(d->p),a->v,z);}',nl
-rth     ,←'V cpda(A*a,LOCALP*d){if(TYPESIMPLE!=d->p->TYPE)error(16);frea(a);',nl
-rth     ,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
-rth     ,←' switch(d->p->ELTYPE){',nl
-rth     ,←'  case APLLONG:a->z=c*sizeof(I);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
-rth     ,←'  case APLDOUB:a->z=c*sizeof(D);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
-rth     ,←'  case APLINTG:a->z=c*sizeof(I);a->f=2;',nl
-rth     ,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth     ,←'   {aplint16 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
-rth     ,←'   DO(i,c)t[i]=s[i];};break;',nl
-rth     ,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
-rth     ,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth     ,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
-rth     ,←'   DO(i,c)t[i]=s[i];};break;',nl
-rth     ,←'  case APLBOOL:a->z=ceil(c/8.0)*sizeof(U8);a->f=1;',nl
-rth     ,←'   a->v=ARRAYSTART(d->p);break;',nl
-rth     ,←'  default:error(16);}',nl
-rth     ,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
-rth     ,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
-rth     ,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
-⍝[cf]
-⍝[of]:External Makers, Extractors
-rth     ,←'EXPORT V*mkarray(LOCALP*da){A*aa=malloc(sizeof(A));if(aa==NULL)error(1);',nl
-rth     ,←' aa->v=NULL;cpda(aa,da);return aa;}',nl
-rth     ,←'V EXPORT exarray(LOCALP*da,A*aa,I at){I tp=0;',nl
-rth     ,←' switch(at){',nl
-rth     ,←'  case 1:tp=APLLONG;break;',nl
-rth     ,←'  case 2:tp=APLDOUB;break;',nl
-rth     ,←'  case 3:tp=APLBOOL;break;',nl
-rth     ,←'  default:error(11);}',nl
-rth     ,←' cpad(da,aa,tp);frea(aa);}',nl
-⍝[cf]
-⍝[of]:Scalar Helpers
-rth     ,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-rth     ,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
-rth     ,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
-rth     ,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-rth     ,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
-rth     ,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
+
+⍝  Runtime Header
+
+⍝   Includes
+rth←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
+rth,←'#ifdef _OPENACC',nl
+rth,←'#include <accelmath.h>',nl,'extern unsigned int __popcnt (unsigned int);',nl
+rth,←'#endif',nl
+rth,←'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+
+⍝   Globals
+rth,←'int isinit=0;',nl
+rth,←'#define PI 3.14159265358979323846',nl,'typedef BOUND B;'
+
+⍝   Typedefs
+rth,←'typedef long long int L;typedef aplint32 I;typedef double D;typedef void V;',nl
+rth,←'typedef unsigned char U8;',nl
+
+⍝   Structures
+rth,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array A;',nl
+
+⍝   Helper Macros
+rth,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
+
+⍝   Allocation
+rth,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
+rth,←' if(a->f){',nl,'#ifdef _OPENACC',nl
+rth,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
+rth,←' if(a->f>1){free(v);}}}',nl
+rth,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=0;',nl
+rth,←' B pc=8*ceil(c/8.0);',nl
+rth,←' switch(tp){',nl
+rth,←'  case 1:z=sizeof(I)*pc;break;',nl
+rth,←'  case 2:z=sizeof(D)*pc;break;',nl
+rth,←'  case 3:z=ceil((sizeof(U8)*pc)/8.0);break;',nl
+rth,←'  default: error(16);}',nl
+rth,←' z=4*ceil(z/4.0);char*v=malloc(z);if(NULL==v)error(1);',nl
+rth,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
+rth,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
+rth,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl
+rth,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
+
+⍝   Co-dfns←→ Dyalog Conversion Helpers
+rth,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);B z=0;',nl
+rth,←' switch(t){',nl,'  case APLLONG:z=a->c*sizeof(I);break;',nl
+rth,←'  case APLDOUB:z=a->c*sizeof(D);break;',nl
+rth,←'  case APLBOOL:z=ceil(a->c/8.0)*sizeof(U8);break;',nl
+rth,←'  default:error(11);}',nl
+rth,←' #ifdef _OPENACC',nl,'  char *v=a->v;',nl
+rth,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
+rth,←' memcpy(ARRAYSTART(d->p),a->v,z);}',nl
+rth,←'V cpda(A*a,LOCALP*d){if(TYPESIMPLE!=d->p->TYPE)error(16);frea(a);',nl
+rth,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
+rth,←' switch(d->p->ELTYPE){',nl
+rth,←'  case APLLONG:a->z=c*sizeof(I);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
+rth,←'  case APLDOUB:a->z=c*sizeof(D);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
+rth,←'  case APLINTG:a->z=c*sizeof(I);a->f=2;',nl
+rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth,←'   {aplint16 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
+rth,←'   DO(i,c)t[i]=s[i];};break;',nl
+rth,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
+rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
+rth,←'   DO(i,c)t[i]=s[i];};break;',nl
+rth,←'  case APLBOOL:a->z=ceil(c/8.0)*sizeof(U8);a->f=1;',nl
+rth,←'   a->v=ARRAYSTART(d->p);break;',nl
+rth,←'  default:error(16);}',nl
+rth,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
+rth,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
+rth,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl
+
+⍝   External Makers & Extractors
+rth,←'EXPORT V*mkarray(LOCALP*da){A*aa=malloc(sizeof(A));if(aa==NULL)error(1);',nl
+rth,←' aa->v=NULL;cpda(aa,da);return aa;}',nl
+rth,←'V EXPORT exarray(LOCALP*da,A*aa,I at){I tp=0;',nl
+rth,←' switch(at){',nl
+rth,←'  case 1:tp=APLLONG;break;',nl
+rth,←'  case 2:tp=APLDOUB;break;',nl
+rth,←'  case 3:tp=APLBOOL;break;',nl
+rth,←'  default:error(11);}',nl
+rth,←' cpad(da,aa,tp);frea(aa);}',nl
+
+⍝   Scalar Helpers
+rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+rth,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
+rth,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
+rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+rth,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
+rth,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
+rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+rth,←'D circ(I a,D b){switch(a){',nl
+rth,←' case 0:return sqrt(1-b*b);break;',nl
+rth,←' };return -1;}',nl
 
 ⍝  Mixed Verbs
 
