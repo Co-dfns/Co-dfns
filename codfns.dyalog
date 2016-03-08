@@ -72,7 +72,7 @@ iop←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -share
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 
 ⍝  PGI C Linux
-pop←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC '
+pop←' -fast -acc -ta=tesla:nollvm,cuda7.5 -Minfo -fPIC '
 pgcco←{cmd←'pgcc -c ',cds,pop,'-I',DWA∆PATH,' '
   ⎕SH cmd,'-o ''',⍵,'.o'' ''',⍵,'.c'' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
 pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' '
@@ -669,41 +669,40 @@ sdb⍪←,¨'⍱'  'error(99)'   '!(⍺ || ⍵)'           'error(99)' '~(⍺|�
 sdb⍪←,¨'⌷'  '⍵'           'error(99)'           '⍵'         'error(99)'
 sdb⍪←'⎕XOR' 'error(99)'   '⍺^⍵'                 'error(99)' '⍺ ^ ⍵'
 
-⍝[of]:Scalar Loop Generators
-simp    ←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
-sima    ←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-simr    ←{' present(',(⊃{⍺,',',⍵}/'r',∘⍕¨⍳≢⊃n⍵),')'}
-simc    ←{fv←(⊃v⍵)fvs(⊃e⍵) ⋄ ' independent ',(simp fv),(sima fv),simr ⍵}
-slpd    ←'I n=ceil(cnt/8.0);',nl
-slp     ←{slpd,(simd simc ⍵),'DO(i,n){',nl,⊃,/(1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
-rk0     ←'I prk=0;B sp[15];B cnt=1;',nl
-rk1     ←'if(prk!=(' ⋄ rk2←')->r){if(prk==0){',nl
-rsp     ←{'prk=(',⍵,')->r;',nl,'DO(i,prk) sp[i]=(',⍵,')->s[i];'}
-rk3     ←'}else if((' ⋄ rk4←')->r!=0)error(4);',nl
-spt     ←{'if(sp[i]!=(',⍵,')->s[i])error(4);'}
-rkv     ←{rk1,⍵,rk2,(rsp ⍵),rk3,⍵,rk4,'}else{',nl,'DO(i,prk){',(spt ⍵),'}}',nl}
-rk5     ←'if(prk!=1){if(prk==0){prk=1;sp[0]='
-rka     ←{rk5,l,';}else error(4);}else if(sp[0]!=',(l←⍕≢⍵),')error(4);',nl}
-crk     ←{⍵((⊃,/)((rkv¨var/)⊣(⌿⍨)(~⊢)),(rka¨0⌷∘⍉(⌿⍨)))0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵}
-srk     ←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
-ste     ←{'cpaa(',⍵,',&p',(⍕⍺),');',nl}
-stsn    ←{⊃,/((⍳8){'r',(⍕⍵),'[i*8+',(⍕⍺),']='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
-sts     ←{i t←⍵ ⋄ 3≡t:'r',(⍕⍺),'[i]=s',(⍕i),';',nl ⋄ ⍺ stsn i}
-rkp     ←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r==0?0:1;',nl}
-gdp     ←{(⊃git ⊃⍺),'*restrict d',(⍕⊃⌽⍺),'=(',⍵,')->v;',nl}
-gda     ←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'B m',(⍕⍺),'=1;',nl}
-sfa     ←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-sfp     ←{(m⌿⍺){(⍺,¨⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-sfv     ←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
-ack     ←{'ai(&p',(⍕⍺),',prk,sp,',(⍕⍺⌷⍺⍺),');',nl}
-gpp     ←{⊃,/{'A p',(⍕⍵),';p',(⍕⍵),'.v=NULL;',nl}¨⍳≢⍵}
-grs     ←{(⊃git ⍺),'*restrict r',(⍕⍵),'=p',(⍕⍵),'.v;',nl}
-spp     ←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
-sip←{ w←⍕⍵
-        3≡⍺:        (⊃git ⍺),'f',w,'=d',w,'[i*m',w,'];',nl
-                ⊃,/(⍕¨⍳8)((⊃git ⍺){⍺⍺,'f',⍵,'_',⍺,'=d',⍵,'[(i*8+',⍺,')*m',⍵,'];',nl})¨⊂w}
-⍝[cf]
-⍝[of]:Scalar Expression Generators
+⍝   Scalar Loop Generators
+simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
+sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+simr←{' present(',(⊃{⍺,',',⍵}/'r',∘⍕¨⍳≢⊃n⍵),')'}
+simc←{fv←(⊃v⍵)fvs(⊃e⍵) ⋄ ' independent ',(simp fv),(sima fv),simr ⍵}
+slpd←'I n=ceil(cnt/8.0);',nl
+slp←{slpd,(simd simc ⍵),'DO(i,n){',nl,⊃,/(1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
+rk0←'I prk=0;B sp[15];B cnt=1;',nl
+rk1←'if(prk!=(' ⋄ rk2←')->r){if(prk==0){',nl
+rsp←{'prk=(',⍵,')->r;',nl,'DO(i,prk) sp[i]=(',⍵,')->s[i];'}
+rk3←'}else if((' ⋄ rk4←')->r!=0)error(4);',nl
+spt←{'if(sp[i]!=(',⍵,')->s[i])error(4);'}
+rkv←{rk1,⍵,rk2,(rsp ⍵),rk3,⍵,rk4,'}else{',nl,'DO(i,prk){',(spt ⍵),'}}',nl}
+rk5←'if(prk!=1){if(prk==0){prk=1;sp[0]='
+rka←{rk5,l,';}else error(4);}else if(sp[0]!=',(l←⍕≢⍵),')error(4);',nl}
+crk←{⍵((⊃,/)((rkv¨var/)⊣(⌿⍨)(~⊢)),(rka¨0⌷∘⍉(⌿⍨)))0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵}
+srk←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
+ste←{'cpaa(',⍵,',&p',(⍕⍺),');',nl}
+stsn←{⊃,/((⍳8){'r',(⍕⍵),'[i*8+',(⍕⍺),']='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
+sts←{i t←⍵ ⋄ 3≡t:'r',(⍕⍺),'[i]=s',(⍕i),';',nl ⋄ ⍺ stsn i}
+rkp←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r==0?0:1;',nl}
+gdp←{(⊃git ⊃⍺),'*restrict d',(⍕⊃⌽⍺),'=(',⍵,')->v;',nl}
+gda←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'B m',(⍕⍺),'=1;',nl}
+sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+sfp←{(m⌿⍺){(⍺,¨⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
+sfv←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
+ack←{'ai(&p',(⍕⍺),',prk,sp,',(⍕⍺⌷⍺⍺),');',nl}
+gpp←{⊃,/{'A p',(⍕⍵),';p',(⍕⍵),'.v=NULL;',nl}¨⍳≢⍵}
+grs←{(⊃git ⍺),'*restrict r',(⍕⍵),'=p',(⍕⍵),'.v;',nl}
+spp←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
+sip←{w←⍕⍵ ⋄ 3≡⍺:(⊃git ⍺),'f',w,'=d',w,'[i*m',w,'];',nl
+  ⊃,/(⍕¨⍳8)((⊃git ⍺){⍺⍺,'f',⍵,'_',⍺,'=d',⍵,'[(i*8+',⍺,')*m',⍵,'];',nl})¨⊂w}
+
+⍝   Scalar Expression Generators
 sfnl    ←{⊃⍺⍺⌷⍨((⊂⍺)⍳⍨0⌷⍉⍺⍺),(2×∧/∨⌿3 4∘.=⍵)+4+.≠⍵}
 scln    ←(,¨'%&')⎕R'\\\%' '\\\&'
 sstm    ←{cln (,¨'⍵⍺')⎕R(scln∘⍕∘⊃¨⍺ ⍵)⊢⍺⍺(⍵⍵ sfnl)⊃∘⌽¨⍺ ⍵}
@@ -720,8 +719,8 @@ sget←{        nm      ←(⊃git⊃⍺⍺),⊃⍺
         3=⊃⍺⍺:    nm,'=0;',nl,⊃,/(⍳8)((⊃⍺)sgtbn)¨⍵
                 ⊃,/(⍳8)(nm sgtnn)¨⍵}
 scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(scln∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
-⍝[cf]
-⍝[of]:Scalar/Mixed Conversion
+
+⍝   Scalar/Mixed Conversion
 mxsm←{        siz     ←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
         exe     ←(simd''),'DO(i,zc){zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';}'
                 '' siz exe mxfn 1 ⍺ ⍵}
@@ -1081,7 +1080,9 @@ rth,←'  case 4:return sqrt(1+b*b);break;',nl
 rth,←'  case 5:return sinh(b);break;',nl
 rth,←'  case 6:return cosh(b);break;',nl
 rth,←'  case 7:return tanh(b);break;',nl
-rth,←' };return -1;}',nl
+rth,←' };',nl
+rth,←'#ifdef _OPENACC',nl,' return -1;}',nl
+rth,←'#else',nl,' error(11);return -1;}',nl,'#endif',nl
 
 ⍝  Mixed Verbs
 
