@@ -1073,8 +1073,14 @@ rth,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
 rth,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
 rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
 rth,←'D circ(I a,D b){switch(a){',nl
-rth,←' case 0:return sqrt(1-b*b);break;',nl
-rth,←' case 1:return sin(b);break;',nl
+rth,←'  case 0:return sqrt(1-b*b);break;',nl
+rth,←'  case 1:return sin(b);break;',nl
+rth,←'  case 2:return cos(b);break;',nl
+rth,←'  case 3:return tan(b);break;',nl
+rth,←'  case 4:return sqrt(1+b*b);break;',nl
+rth,←'  case 5:return sinh(b);break;',nl
+rth,←'  case 6:return cosh(b);break;',nl
+rth,←'  case 7:return tanh(b);break;',nl
 rth,←' };return -1;}',nl
 
 ⍝  Mixed Verbs

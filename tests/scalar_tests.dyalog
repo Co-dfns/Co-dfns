@@ -57,6 +57,12 @@ Z←0 0⍴⍬
 'notor'     SCL∆TST∆DYADIC   '⍱' B   B    B          B    B   B
 'circular0' SCL∆TST∆DYADIC   '○' 0   F1LT (0⍴⍨≢F1LT) F1LT 0   B
 'circular1' SCL∆TST∆DYADIC   '○' 1   I    (1⍴⍨≢F)    F    1   B
+'circular2' SCL∆TST∆DYADIC   '○' 2   I    (2⍴⍨≢F)    F    2   B
+'circular3' SCL∆TST∆DYADIC   '○' 3   I    (3⍴⍨≢F)    F    3   B
+'circular4' SCL∆TST∆DYADIC   '○' 4   I    (4⍴⍨≢F)    F    4   B
+'circular5' SCL∆TST∆DYADIC   '○' 5   I    (5⍴⍨≢F)    F    5   B
+'circular6' SCL∆TST∆DYADIC   '○' 6   I    (6⍴⍨≢F)    F    6   B
+'circular7' SCL∆TST∆DYADIC   '○' 7   I    (7⍴⍨≢F)    F    7   B
 
 'conjugate'        SCL∆TST∆MONADIC        '+'        I        F        B
 'negate'        SCL∆TST∆MONADIC        '-'        I        F        B
