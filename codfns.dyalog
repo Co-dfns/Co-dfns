@@ -1248,7 +1248,7 @@ fctd←{
   exe,←(3=1⌷⍺)⊃'I rcp=rc;' 'I rcp=ceil(rc/8.0);'
   exe,←(3=2⌷⍺)⊃'I lcp=lc;' 'I lcp=ceil(lc/8.0);'
   exe,←nl,'I lt=lr!=0;I rt=rr!=0;'
-  exe,←'zc/=zc==0?1:zs[0];rc=rr==0?zc:rc;lc=lr==0?zc:lc;',nl
+  exe,←'if(zc)zc/=zs[0];if(!rr)rc=zc;if(!lr)lc=zc;',nl
   exe,←(3=0⌷⍺)⊃''((pacc'update host(rv[:rcp],lv[:lcp])'),'DO(i,zcp)zv[i]=0;',nl)
   exe,←(3=0⌷⍺)⊃(simd'present(zv[:zcp],lv[:lcp])')''
   exe,←'DO(i,lc){I lvi=lt*i;'
