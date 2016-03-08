@@ -1080,9 +1080,14 @@ rth,←'  case 4:return sqrt(1+b*b);break;',nl
 rth,←'  case 5:return sinh(b);break;',nl
 rth,←'  case 6:return cosh(b);break;',nl
 rth,←'  case 7:return tanh(b);break;',nl
-rth,←' };',nl
-rth,←'#ifdef _OPENACC',nl,' return -1;}',nl
-rth,←'#else',nl,' error(11);return -1;}',nl,'#endif',nl
+rth,←'  case -1:return asin(b);break;',nl
+rth,←'  case -2:return acos(b);break;',nl
+rth,←'  case -3:return atan(b);break;',nl
+rth,←'  case -4:return (b+1)*sqrt((b-1)/(b+1));break;',nl
+rth,←'  case -5:return asinh(b);break;',nl
+rth,←'  case -6:return acosh(b);break;',nl
+rth,←'  case -7:return atanh(b);break;',nl
+rth,←' };return -1;}',nl
 
 ⍝  Mixed Verbs
 
