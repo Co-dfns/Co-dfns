@@ -1,4 +1,4 @@
-﻿:Namespace sum35
+:Namespace sum35_tests
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}16
 S←':Namespace' 'Run←{a←⍳⍵ ⋄ +/((0=3|a)∨0=5|a)/a}' ':EndNamespace'
