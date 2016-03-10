@@ -34,7 +34,7 @@ utf8get←{                              ⍝ Char vector from UTF-8 file ⍵.
     ('UTF-8'⎕UCS 256|ints)⊣⎕NUNTIE tie ⍝ ⎕AV chars.
 }
 ∇TEST
-##.UT.print_passed←0
+##.UT.print_passed←1
 ##.UT.print_summary←1
 ##.UT.run './tests'
 ∇
