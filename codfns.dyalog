@@ -1281,8 +1281,8 @@ rotm←{        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
 rotd←{
   chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
   siz←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-  exe←'zc=rr==0?1:rs[rr-1];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i];',nl
-  exe,←'DO(i,lr)lc*=ls[i];I s=(lv[0]<0)?abs(lv[0]):zc-lv[0];',nl
+  exe←'if(rr)zc=rs[rr-1];I n=0;if(rr)n=rr-1;DO(i,n)rc*=rs[i];',nl
+  exe,←'DO(i,lr)lc*=ls[i];I s;if(lv[0]<0)s=abs(lv[0]);else s=zc-lv[0];',nl
   exen←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
   exen,←'DO(i,rc){DO(j,zc){zv[i*zc+((j+s)%zc)]=rv[(i*zc)+j];}}'
   exeb←'I zcp=ceil(rslt->c/8.0);',nl
