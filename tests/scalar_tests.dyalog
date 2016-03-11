@@ -72,6 +72,7 @@ Z←0 0⍴⍬
 'circneg5'  SCL∆TST∆RELATIVE '○' ¯5   I    (¯5⍴⍨≢F)   F   ¯5   B
 'circneg6'  SCL∆TST∆DYADIC   '○' ¯6   IPS  (¯6⍴⍨≢F)   FPS ¯6   BNZ
 'circneg7'  SCL∆TST∆DYADIC   '○' ¯7   AFN  (¯7⍴⍨≢F)   AFN ¯7   AFN
+'binompos'  SCL∆TST∆DYADIC   '!' IPS  IPS  IPS        IPS B    B
 
 'conjugate'   SCL∆TST∆MONADIC '+' I   F   B
 'negate'      SCL∆TST∆MONADIC '-' I   F   B

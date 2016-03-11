@@ -361,7 +361,7 @@ pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'↑'
 pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'↓'
 pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   3   3   3⊣pn,←⊂,'⊤'
 pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   1 ¯16   1⊣pn,←⊂,'⊥'
-pt⍪←pfs   2   2   3 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16⊣pn,←⊂,'!'
+pt⍪←pfs   2   2   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'!'
 pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'¨'
 pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'⍨'
 pt⍪←pfs   0   0   0   0 ¯11   0   0 ¯11   0   0 ¯11   0⊣pn,←⊂,'/'
@@ -539,7 +539,7 @@ sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^�
 sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ(⍺,⍵)'
 sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
-sdb⍪←,¨'!'  'fact(⍵)'     'error(16)'           '255'         ''
+sdb⍪←,¨'!'  'fact(⍵)'     'binomial(⍺,⍵)'       '255'       '(~⍺)|⍵'
 sdb⍪←,¨'<'  'error(99)'   '⍺<⍵'                 'error(99)' '(~⍺)&⍵'
 sdb⍪←,¨'≤'  'error(99)'   '⍺<=⍵'                'error(99)' '(~⍺)|⍵'
 sdb⍪←,¨'='  'error(99)'   '⍺==⍵'                'error(99)' '(⍺&⍵)|((~⍺)&(~⍵))'
@@ -975,6 +975,10 @@ rth,←' };return -1;}',nl
 rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
 rth,←'D fact(D n){if(n<0)R -1;if(n!=floor(n))R tgamma(n+1);',nl
 rth,←' D z=1;DO(i,n){z*=i+1;};R z;}',nl
+rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+rth,←'D binomial(D x,D y){if(x>=0&&y>=0&&x==floor(x)&&y==floor(y))',nl
+rth,←' R fact(y)/(fact(x)*fact(y-x));',nl
+rth,←' R -1;}',nl
 
 ⍝  Mixed Verbs
 
