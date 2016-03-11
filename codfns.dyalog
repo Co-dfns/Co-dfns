@@ -1,19 +1,19 @@
-⍝ The Co-dfns Compiler: High-performance, Parallel APL Compiler
-⍝ Copyright (c) 2011-2016 Aaron W. Hsu <arcfide@sacrideo.us>
-⍝
-⍝ This program is free software: you can redistribute it and/or modify
-⍝ it under the terms of the GNU Affero General Public License as published by
-⍝ the Free Software Foundation, either version 3 of the License, or
-⍝ (at your option) any later version.
-⍝ 
-⍝ This program is distributed in the hope that it will be useful,
-⍝ but WITHOUT ANY WARRANTY; without even the implied warranty of
-⍝ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-⍝ GNU Affero General Public License for more details.
-⍝ 
-⍝ You should have received a copy of the GNU Affero General Public License
-⍝ along with this program.  If not, see <http://www.gnu.org/licenses/>.
-⍝ 
+⍝⍝ The Co-dfns Compiler: High-performance, Parallel APL Compiler
+⍝⍝ Copyright (c) 2011-2016 Aaron W. Hsu <arcfide@sacrideo.us>
+⍝⍝ 
+⍝⍝ This program is free software: you can redistribute it and/or modify
+⍝⍝ it under the terms of the GNU Affero General Public License as published by
+⍝⍝ the Free Software Foundation, either version 3 of the License, or
+⍝⍝ (at your option) any later version.
+⍝⍝ 
+⍝⍝ This program is distributed in the hope that it will be useful,
+⍝⍝ but WITHOUT ANY WARRANTY; without even the implied warranty of
+⍝⍝ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+⍝⍝ GNU Affero General Public License for more details.
+⍝⍝ 
+⍝⍝ You should have received a copy of the GNU Affero General Public License
+⍝⍝ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+⍝⍝ 
 :Namespace codfns
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
@@ -287,210 +287,94 @@ nvk     ←((2↑⊢),2,(3↓⊢))⍤1sub(Em∧'i'∊⍨k)
 nv      ←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪⊢),∘⊂⊢){⌽⍣⍺⊢⍵})¨v∘nvo∘nve
 
 ⍝   Lift Type-checking
-⍝[c]Type:     Index   Right   Left            Type Codes:     Value   Type
-⍝[c]  0       Unknown Unknown                 Unknown 0
-⍝[c]  1       Unknown Integer                 Integer 1
-⍝[c]  2       Unknown Float                   Float   2
-⍝[c]  3       Unknown Bitvector                       Bitvector       3
-⍝[c]  4       Unknown Not bound                       Not bound       4
-⍝[c]  5       Integer Unknown
-⍝[c]  6       Integer Integer
-⍝[c]  7       Integer Float           Operator Codes: Meaning Code
-⍝[c]  8       Integer Bitvector                       Left    0
-⍝[c]  9       Integer Not bound                       Right   1
-⍝[c]  10      Float   Unknown                 Error   ¯N
-⍝[c]  11      Float   Integer
-⍝[c]  12      Float   Float
-⍝[c]  13      Float   Bitvector
-⍝[c]  14      Float   Not bound
-⍝[c]  15      Bitvector       Unknown
-⍝[c]  16      Bitvector       Integer
-⍝[c]  17      Bitvector       Float
-⍝[c]  18      Bitvector       Bitvector
-⍝[c]  19      Bitvector       Not bound
-⍝[c]
-⍝[of]:Primitive Types
-pf1←9 14 19 6 7 8 ⋄ pf2←11 12 13 16 17 18
-pn←⍬        ⋄ pt←56 20⍴0
-pn,←⊂'%b'   ⋄ pt[00;pf1,pf2]←1 2 3 1 1 1 2 2 2 3 3 3
-pn,←⊂'%i'   ⋄ pt[01;pf1,pf2]←1 2 3 1 1 1 2 2 2 3 3 3
-pn,←⊂'%u'   ⋄ pt[02;]←20⍴4
-⍝[c]
-⍝[c]Name      RL:     IN      FN      BN      II      IF      IB
-⍝[c]          FI      FF      FB      BI      BF      BB
-pn,←⊂,'⍺'
-        pt[03;pf1]←   ¯6     ¯6     ¯6     1       2       3
-        pt[03;pf2]←   1       2       3       1       2       3
-pn,←⊂,'⍵'
-        pt[04;pf1]←   1       2       3       1       1       1
-        pt[04;pf2]←   2       2       2       3       3       3
-pn,←⊂,'+'
-        pt[05;pf1]←   1       2       3       1       2       1
-        pt[05;pf2]←   2       2       2       1       2       1
-pn,←⊂,'-'
-        pt[06;pf1]←   1       2       1       1       2       1
-        pt[06;pf2]←   2       2       2       1       2       1
-pn,←⊂,'÷'
-        pt[07;pf1]←   2       2       3       2       2       2
-        pt[07;pf2]←   2       2       2       1       2       3
-pn,←⊂,'×'
-        pt[08;pf1]←   1       1       3       1       2       1
-        pt[08;pf2]←   2       2       2       1       2       3
-pn,←⊂,'|'
-        pt[09;pf1]←   1       2       3       1       2       1
-        pt[09;pf2]←   2       2       2       1       2       3
-pn,←⊂,'*'
-        pt[10;pf1]←   2       2       2       2       2       3
-        pt[10;pf2]←   2       2       3       1       2       3
-pn,←⊂,'⍟'
-        pt[11;pf1]←   2       2       ¯11    2       2       ¯11
-        pt[11;pf2]←   2       2       ¯11    ¯11    ¯11    ¯11
-pn,←⊂,'⌈'
-        pt[12;pf1]←   1       1       3       1       2       1
-        pt[12;pf2]←   2       2       2       1       2       3
-pn,←⊂,'⌊'
-        pt[13;pf1]←   1       1       3       1       2       1
-        pt[13;pf2]←   2       2       2       1       2       3
-pn,←⊂,'<'
-        pt[14;pf1]←   ¯2     ¯2     ¯2     3       3       3
-        pt[14;pf2]←   3       3       3       3       3       3
-pn,←⊂,'≤'
-        pt[15;pf1]←   ¯2     ¯2     ¯2     3       3       3
-        pt[15;pf2]←   3       3       3       3       3       3
-⍝[c]
-⍝[c]Name      RL:     IN      FN      BN      II      IF      IB
-⍝[c]          FI      FF      FB      BI      BF      BB
-pn,←⊂,'='
-        pt[16;pf1]←   ¯2     ¯2     ¯2     3       3       3
-        pt[16;pf2]←   3       3       3       3       3       3
-pn,←⊂,'≠'
-        pt[17;pf1]←   ¯2     ¯2     ¯2     3       3       3
-        pt[17;pf2]←   3       3       3       3       3       3
-pn,←⊂,'≥'
-        pt[18;pf1]←   ¯2     ¯2     ¯2     3       3       3
-        pt[18;pf2]←   3       3       3       3       3       3
-pn,←⊂,'>'
-        pt[19;pf1]←   ¯2     ¯2     ¯2     3       3       3
-        pt[19;pf2]←   3       3       3       3       3       3
-pn,←⊂,'⌷'
-        pt[20;pf1]←   1       2       3       1       ¯11    1
-        pt[20;pf2]←   2       ¯11    2       3       ¯11    3
-pn,←⊂,'⍴'
-        pt[21;pf1]←   1       1       1       1       ¯11    1
-        pt[21;pf2]←   2       ¯11    2       3       ¯11    3
-pn,←⊂,','
-        pt[22;pf1]←   1       2       3       1       2       1
-        pt[22;pf2]←   2       2       2       1       2       3
-pn,←⊂,'⍳'
-        pt[23;pf1]←   1       ¯11    3       1       1       1
-        pt[23;pf2]←   1       1       1       1       1       1
-pn,←⊂,'○'
-        pt[24;pf1]←   2       2       2       2       ¯11    2
-        pt[24;pf2]←   2       ¯11    2       2       ¯11    2
-pn,←⊂,'~'
-        pt[25;pf1]←   ¯11    ¯11    3       1       2       3
-        pt[25;pf2]←   1       2       3       1       2       3
-pn,←⊂,'['
-        pt[26;pf1]←   ¯2     ¯2     ¯2     1       2       3
-        pt[26;pf2]←   ¯11    ¯11    ¯11    1       2       3
-pn,←⊂,'∧'
-        pt[27;pf1]←   ¯2     ¯2     ¯2     1       1       1
-        pt[27;pf2]←   1       2       2       1       2       3
-pn,←⊂,'∨'
-        pt[28;pf1]←   ¯2     ¯2     ¯2     1       2       1
-        pt[28;pf2]←   2       2       2       1       2       3
-⍝[c]
-⍝[c]Name      RL:     IN      FN      BN      II      IF      IB
-⍝[c]          FI      FF      FB      BI      BF      BB
-pn,←⊂,'⍲'
-        pt[29;pf1]←   ¯2     ¯2     ¯2     ¯11    ¯11    ¯11
-        pt[29;pf2]←   ¯11    ¯11    ¯11    ¯11    ¯11    3
-pn,←⊂,'⍱'
-        pt[30;pf1]←   ¯2     ¯2     ¯2     ¯11    ¯11    ¯11
-        pt[30;pf2]←   ¯11    ¯11    ¯11    ¯11    ¯11    3
-pn,←⊂,'⍪'
-        pt[31;pf1]←   1       2       3       1       2       1
-        pt[31;pf2]←   2       2       2       1       2       3
-pn,←⊂,'⌽'
-        pt[32;pf1]←   1       2       3       1       ¯11    1
-        pt[32;pf2]←   2       ¯11    2       3       ¯11    3
-pn,←⊂,'∊'
-        pt[33;pf1]←   1       2       3       3       3       3
-        pt[33;pf2]←   3       3       3       3       3       3
-pn,←⊂,'⊃'
-        pt[34;pf1]←   1       2       3       1       1       1
-        pt[34;pf2]←   2       2       2       3       3       3
-pn,←⊂,'⊖'
-        pt[35;pf1]←   1       2       3       1       1       1
-        pt[35;pf2]←   2       2       2       3       3       3
-pn,←⊂,'≡'
-        pt[36;pf1]←   1       1       1       1       1       1
-        pt[36;pf2]←   1       1       1       1       1       1
-pn,←⊂,'≢'
-        pt[37;pf1]←   1       1       1       1       1       1
-        pt[37;pf2]←   1       1       1       1       1       1
-pn,←⊂,'⊢'
-        pt[38;pf1]←   1       2       3       1       1       1
-        pt[38;pf2]←   2       2       2       3       3       3
-pn,←⊂,'⊣'
-        pt[39;pf1]←   1       2       3       1       2       3
-        pt[39;pf2]←   1       2       3       1       2       3
-pn,←⊂'//'
-        pt[40;pf1]←   ¯2     ¯2     ¯2     1       ¯11    1
-        pt[40;pf2]←   2       ¯11    2       3       ¯11    3
-pn,←⊂,'⍉'
-        pt[41;pf1]←   1       2       3       1       1       1
-        pt[41;pf2]←   2       2       2       3       3       3
-⍝[c]
-⍝[c]Name      RL:     IN      FN      BN      II      IF      IB
-⍝[c]          FI      FF      FB      BI      BF      BB
-pn,←⊂,'↑'
-        pt[42;pf1]←   1       2       3       1       1       1
-        pt[42;pf2]←   2       2       2       3       3       3
-pn,←⊂,'↓'
-        pt[43;pf1]←   1       2       3       1       1       1
-        pt[43;pf2]←   2       2       2       3       3       3
-pn,←⊂,'⊤'
-        pt[44;pf1]←   ¯2     ¯2     ¯2     1       ¯16    1
-        pt[44;pf2]←   ¯16    ¯16    ¯16    3       3       3
-pn,←⊂,'⊥'
-        pt[45;pf1]←   ¯2     ¯2     ¯2     1       ¯16    1
-        pt[45;pf2]←   ¯16    ¯16    ¯16    1       ¯16    1
-pn,←⊂,'¨'
-        pt[46;pf1]←   0       0       0       0       0       0
-        pt[46;pf2]←   0       0       0       0       0       0
-pn,←⊂,'⍨'
-        pt[47;pf1]←   0       0       0       0       0       0
-        pt[47;pf2]←   0       0       0       0       0       0
-pn,←⊂,'/'
-        pt[48;pf1]←   0       0       0       0       ¯11    0
-        pt[48;pf2]←   0       ¯11    0       0       ¯11    0
-pn,←⊂,'⌿'
-        pt[49;pf1]←   0       0       0       0       ¯11    0
-        pt[49;pf2]←   0       ¯11    0       0       ¯11    0
-pn,←⊂,'\'
-        pt[50;pf1]←   0       0       0       ¯11    ¯11    ¯11
-        pt[50;pf2]←   ¯11    ¯11    ¯11    ¯11    ¯11    ¯11
-pn,←⊂,'⍀'
-        pt[51;pf1]←   0       0       0       ¯11    ¯11    ¯11
-        pt[51;pf2]←   ¯11    ¯11    ¯11    ¯11    ¯11    ¯11
-pn,←⊂'∘.'
-        pt[52;pf1]←   ¯2     ¯2     ¯2     0       0       0
-        pt[52;pf2]←   0       0       0       0       0       0
-pn,←⊂,'.'
-        pt[53;pf1]←   ¯2     ¯2     ¯2     0       0       0
-        pt[53;pf2]←   0       0       0       0       0       0
-pn,←⊂'⎕sp'
-        pt[54;pf1]←   ¯2     ¯2     ¯2     ¯11    ¯11    1
-        pt[54;pf2]←   ¯11    ¯11    ¯11    ¯11    ¯11    ¯11
-⍝[c]
-⍝[c]Name      RL:     IN      FN      BN      II      IF      IB
-⍝[c]          FI      FF      FB      BI      BF      BB
-pn,←⊂'⎕XOR'
-        pt[55;pf1]←   ¯2     ¯2     ¯2     1       ¯16    ¯16
-        pt[55;pf2]←   ¯16    ¯16    ¯16    ¯16    ¯16    ¯16
-⍝[cf]
-⍝[of]:Operator Indirections
+
+⍝⍝ Index Right     Left       Value Type Type
+⍝⍝    0  Unknown   Unknown    Unknown    0
+⍝⍝    1  Unknown   Integer    Integer    1
+⍝⍝    2  Unknown   Float      Float      2
+⍝⍝    3  Unknown   Bitvector  Bitvector  3
+⍝⍝    4  Unknown   Not bound  Not bound  4
+⍝⍝    5  Integer   Unknown
+⍝⍝    6  Integer   Integer
+⍝⍝    7  Integer   Float      Ops. Code  Meaning
+⍝⍝    8  Integer   Bitvector  Left       0
+⍝⍝    9  Integer   Not bound  Right      1
+⍝⍝   10  Float     Unknown    Error     ¯N
+⍝⍝   11  Float     Integer
+⍝⍝   12  Float     Float
+⍝⍝   13  Float     Bitvector
+⍝⍝   14  Float     Not bound
+⍝⍝   15  Bitvector Unknown
+⍝⍝   16  Bitvector Integer
+⍝⍝   17  Bitvector Float
+⍝⍝   18  Bitvector Bitvector
+⍝⍝   19  Bitvector Not bound
+
+⍝    Primitive Types
+pfs←{⍺←0 ⋄ A⊣A[9 14 19 6 7 8 11 12 13 16 17 18]←⍵⊣A←20⍴⍺}
+pn←⍬ ⋄ pt←0 20⍴0
+
+⍝⍝   RL: IN  FN  BN  II  IF  IB  FI  FF  FB  BI  BF  BB
+pt⍪←4 pfs 4                                            ⊣pn,←⊂'%u'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂'%b'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂'%i'
+pt⍪←pfs  ¯6  ¯6  ¯6   1   2   3   1   2   3   1   2   3⊣pn,←⊂,'⍺'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'⍵'
+pt⍪←pfs   1   2   3   1   2   1   2   2   2   1   2   1⊣pn,←⊂,'+'
+pt⍪←pfs   1   2   1   1   2   1   2   2   2   1   2   1⊣pn,←⊂,'-'
+pt⍪←pfs   2   2   3   2   2   2   2   2   2   1   2   3⊣pn,←⊂,'÷'
+pt⍪←pfs   1   1   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'×'
+pt⍪←pfs   1   2   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'|'
+pt⍪←pfs   2   2   2   2   2   2   2   2   3   1   2   3⊣pn,←⊂,'*'
+pt⍪←pfs   2   2 ¯11   2   2 ¯11   2   2 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂,'⍟'
+pt⍪←pfs   1   1   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'⌈'
+pt⍪←pfs   1   1   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'⌊'
+pt⍪←pfs  ¯2  ¯2  ¯2   3   3   3   3   3   3   3   3   3⊣pn,←⊂,'<'
+pt⍪←pfs  ¯2  ¯2  ¯2   3   3   3   3   3   3   3   3   3⊣pn,←⊂,'≤'
+pt⍪←pfs  ¯2  ¯2  ¯2   3   3   3   3   3   3   3   3   3⊣pn,←⊂,'='
+pt⍪←pfs  ¯2  ¯2  ¯2   3   3   3   3   3   3   3   3   3⊣pn,←⊂,'≠'
+pt⍪←pfs  ¯2  ¯2  ¯2   3   3   3   3   3   3   3   3   3⊣pn,←⊂,'≥'
+pt⍪←pfs  ¯2  ¯2  ¯2   3   3   3   3   3   3   3   3   3⊣pn,←⊂,'>'
+pt⍪←pfs   1   2   3   1 ¯11   1   2 ¯11   2   3 ¯11   3⊣pn,←⊂,'⌷'
+pt⍪←pfs   1   1   1   1 ¯11   1   2 ¯11   2   3 ¯11   3⊣pn,←⊂,'⍴'
+pt⍪←pfs   1   2   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,','
+pt⍪←pfs   1 ¯11   3   1   1   1   1   1   1   1   1   1⊣pn,←⊂,'⍳'
+pt⍪←pfs   2   2   2   2 ¯11   2   2 ¯11   2   2 ¯11   2⊣pn,←⊂,'○'
+pt⍪←pfs ¯11 ¯11   3   1   2   3   1   2   3   1   2   3⊣pn,←⊂,'~'
+pt⍪←pfs  ¯2  ¯2  ¯2   1   2   3 ¯11 ¯11 ¯11   1   2   3⊣pn,←⊂,'['
+pt⍪←pfs  ¯2  ¯2  ¯2   1   1   1   1   2   2   1   2   3⊣pn,←⊂,'∧'
+pt⍪←pfs  ¯2  ¯2  ¯2   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'∨'
+pt⍪←pfs  ¯2  ¯2  ¯2 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11   3⊣pn,←⊂,'⍲'
+pt⍪←pfs  ¯2  ¯2  ¯2 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11   3⊣pn,←⊂,'⍱'
+pt⍪←pfs   1   2   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'⍪'
+pt⍪←pfs   1   2   3   1 ¯11   1   2 ¯11   2   3 ¯11   3⊣pn,←⊂,'⌽'
+pt⍪←pfs   1   2   3   3   3   3   3   3   3   3   3   3⊣pn,←⊂,'∊'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'⊃'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'⊖'
+pt⍪←pfs   1   1   1   1   1   1   1   1   1   1   1   1⊣pn,←⊂,'≡'
+pt⍪←pfs   1   1   1   1   1   1   1   1   1   1   1   1⊣pn,←⊂,'≢'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'⊢'
+pt⍪←pfs   1   2   3   1   2   3   1   2   3   1   2   3⊣pn,←⊂,'⊣'
+pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯11   1   2 ¯11   2   3 ¯11   3⊣pn,←⊂'//'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'⍉'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'↑'
+pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'↓'
+pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   3   3   3⊣pn,←⊂,'⊤'
+pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   1 ¯16   1⊣pn,←⊂,'⊥'
+pt⍪←pfs   2   2   3 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16⊣pn,←⊂,'!'
+pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'¨'
+pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'⍨'
+pt⍪←pfs   0   0   0   0 ¯11   0   0 ¯11   0   0 ¯11   0⊣pn,←⊂,'/'
+pt⍪←pfs   0   0   0   0 ¯11   0   0 ¯11   0   0 ¯11   0⊣pn,←⊂,'⌿'
+pt⍪←pfs   0   0   0 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂,'\'
+pt⍪←pfs   0   0   0 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂,'⍀'
+pt⍪←pfs  ¯2  ¯2  ¯2   0   0   0   0   0   0   0   0   0⊣pn,←⊂'∘.'
+pt⍪←pfs  ¯2  ¯2  ¯2   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'.'
+pt⍪←pfs  ¯2  ¯2  ¯2 ¯11 ¯11   1 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂'⎕sp'
+pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16⊣pn,←⊂'⎕XOR'
+
+⍝    Operator Indirections
+
 ⍝[c]oti:      (0 Lop) (1 Rop) (2 Rarg) (3 Larg)
 otn←⍬       ⋄ oti←0 2 2⍴⍬
 otn,←⊂,'.'  ⋄ oti⍪←↑(1 1)   (2 3)   ⋄ otn,←⊂,'/'      ⋄ oti⍪←↑(2 2)   (2 3)
@@ -655,6 +539,7 @@ sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^�
 sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ(⍺,⍵)'
 sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
+sdb⍪←,¨'!'  'fact(⍵)'     'error(16)'           '255'         ''
 sdb⍪←,¨'<'  'error(99)'   '⍺<⍵'                 'error(99)' '(~⍺)&⍵'
 sdb⍪←,¨'≤'  'error(99)'   '⍺<=⍵'                'error(99)' '(~⍺)|⍵'
 sdb⍪←,¨'='  'error(99)'   '⍺==⍵'                'error(99)' '(⍺&⍵)|((~⍺)&(~⍵))'
@@ -689,7 +574,7 @@ srk←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
 ste←{'cpaa(',⍵,',&p',(⍕⍺),');',nl}
 stsn←{⊃,/((⍳8){'r',(⍕⍵),'[i*8+',(⍕⍺),']='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
 sts←{i t←⍵ ⋄ 3≡t:'r',(⍕⍺),'[i]=s',(⍕i),';',nl ⋄ ⍺ stsn i}
-rkp←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r==0?0:1;',nl}
+rkp←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r!=0;',nl}
 gdp←{(⊃git ⊃⍺),'*restrict d',(⍕⊃⌽⍺),'=(',⍵,')->v;',nl}
 gda←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'B m',(⍕⍺),'=1;',nl}
 sfa←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
@@ -733,8 +618,8 @@ mxsd←{        chk     ←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
                 chk siz exe mxfn 1 ⍺ ⍵}
 scmx←{        (⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
 sdbm    ←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxbm' 'mxbd' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
-⍝[cf]
-⍝[of]:Primitive Operators
+
+⍝  Primitive Operators
 ocl     ←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
 opl     ←{⊃,/{'(,''',⍵,''')'}¨⍵}
 opt     ←{'(',(⍕⍴⍵),'⍴',(⍕,⍵),')'}
@@ -890,19 +775,18 @@ rd1d←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
         exe     ,←(a((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
         exe     ,←pacc'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Scan
-scnm←{        siz     ←'zr=rr;rc=rr==0?1:rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
-        siz     ,←'I n=zr==0?0:zr-1;DO(i,n)zc*=rs[i];'
-        val     ←'zv[(i*rc)+j+1]' 'zv[(i*rc)+j]' 'rv[(i*rc)+j+1]'
-        exe     ←pacc'update host(zv[:rslt->c],rv[:rgt->c])'
-        exe     ,←'if(rc!=0){DO(i,zc){zv[i*rc]=rv[i*rc];',nl
-        exe     ,←' L n=rc-1;DO(j,n){'
-        exe     ,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,pacc'update device(zv[(i*rc)+j:1])')''
-        exe     ,←(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
-        exe     ,←pacc'update device(zv[:rslt->c],rv[:rgt->c])'
-                '' siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
+⍝   Scan
+scnm←{siz←'zr=rr;if(rr)rc=rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
+  siz,←'I n;if(zr)n=zr-1;else n=0;DO(i,n)zc*=rs[i];'
+  val←'zv[(i*rc)+j+1]' 'zv[(i*rc)+j]' 'rv[(i*rc)+j+1]'
+  exe←pacc'update host(zv[:rslt->c],rv[:rgt->c])'
+  exe,←'if(rc!=0){DO(i,zc){zv[i*rc]=rv[i*rc];',nl
+  exe,←' L n=rc-1;DO(j,n){'
+  exe,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,pacc'update device(zv[(i*rc)+j:1])')''
+  exe,←(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
+  exe,←pacc'update device(zv[:rslt->c],rv[:rgt->c])'
+    '' siz exe mxfn 1 ⍺ ⍵}
+
 ⍝[of]:Scan First Axis
 sc1m←{        siz     ←'zr=rr;rc=rr==0?1:rs[0];DO(i,zr)zs[i]=rs[i];',nl
         siz     ,←'I n=zr==0?0:zr-1;DO(i,n)zc*=rs[i+1];'
@@ -1088,6 +972,9 @@ rth,←'  case 13:return sinh(b);break;',nl
 rth,←'  case 14:return cosh(b);break;',nl
 rth,←'  case 15:return tanh(b);break;',nl
 rth,←' };return -1;}',nl
+rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+rth,←'D fact(D n){if(n<0)R -1;if(n!=floor(n))R tgamma(n+1);',nl
+rth,←' D z=1;DO(i,n){z*=i+1;};R z;}',nl
 
 ⍝  Mixed Verbs
 
