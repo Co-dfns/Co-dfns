@@ -68,7 +68,7 @@ gop←'-Ofast -g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
 gcc←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
 
 ⍝  Intel C Linux
-iop←'-fast -g -fno-alias -static-intel -Wall -Wno-unused-function -fPIC -shared '
+iop←'-fast -g -fno-alias -static-intel -mkl -Wall -Wno-unused-function -fPIC -shared '
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 
 ⍝  PGI C Linux
@@ -362,6 +362,7 @@ pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'↓'
 pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   3   3   3⊣pn,←⊂,'⊤'
 pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   1 ¯16   1⊣pn,←⊂,'⊥'
 pt⍪←pfs   2   2   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'!'
+pt⍪←pfs   2   2   2 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16⊣pn,←⊂,'?'
 pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'¨'
 pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'⍨'
 pt⍪←pfs   0   0   0   0 ¯11   0   0 ¯11   0   0 ¯11   0⊣pn,←⊂,'/'
@@ -870,9 +871,8 @@ sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 
 ⍝   Includes
 rth←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
-rth,←'#ifdef _OPENACC',nl
-rth,←'#include <accelmath.h>',nl,'extern unsigned int __popcnt (unsigned int);',nl
-rth,←'#endif',nl
+rth,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
+rth,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl
 rth,←'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
 
 ⍝   Globals
@@ -1005,6 +1005,7 @@ fdb⍪←,¨'↓'   '{⎕SIGNAL 16}' 'drpd'         ''    ''
 fdb⍪←,¨'↑'   '{⎕SIGNAL 16}' 'tked'         ''    ''
 fdb⍪←,¨'⊤'   '{⎕SIGNAL 99}' 'encd'         ''    ''
 fdb⍪←,¨'⊥'   '{⎕SIGNAL 99}' 'decd'         ''    ''
+fdb⍪←,¨'?'   'rolm'         '{⎕SIGNAL 16}' ''    ''
 fdb⍪←,¨'⎕sp' '{⎕SIGNAL 99}' 'sopid'        ''    ''
 
 ⍝   Mixed Verb Dispatch/Calling
@@ -1359,6 +1360,9 @@ iotm←{        chk     ←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
         siz     ←'zr=1;zc=zs[0]=rv[0];'
         exe     ←(simd 'present(zv[:zc])'),'DO(i,zs[0])zv[i]=i;'
                 chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝   Miscellaneous Mixed Primitive Verbs Generators
+
 shpm←{exe←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
  '' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
 eqvm←{        exe     ←'zv[0]=rr==0?0:1;',nl,pacc'update device(zv[:1])'
@@ -1394,6 +1398,7 @@ decd←{        chk     ←'if(lr>1||lv[0]<0)error(16);'
         exeb    ,←pacc'update device(zv[:rslt->c])'
         exe     ←(3=⊃1⌷⍺)⊃exen exeb
                 chk siz exe mxfn 1 ⍺ ⍵}
+
 encd←{        chk     ←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
         chk     ,←pacc'update host(lv[:lc])'
         chk     ,←'DO(i,lc){if(lv[i]<=0)error(16);}'
@@ -1401,6 +1406,7 @@ encd←{        chk     ←'if(lr>1)error(16);DO(i,lr)lc*=ls[i];',nl
         exe     ←simd'collapse(2) present(zv[:rslt->c],rv[:rc],lv[:lc])'
         exe     ,←'DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
                 chk siz exe mxfn 1 ⍺ ⍵}
+
 brid←{        chk     ←'if(lr!=1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
         chkn    ←pacc'update host(rv[:rc],lv[:lc])'
         chkn    ,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])error(3);'
