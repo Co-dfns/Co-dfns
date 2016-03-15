@@ -607,18 +607,20 @@ sget←{        nm      ←(⊃git⊃⍺⍺),⊃⍺
 scl←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(scln∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 
 ⍝   Scalar/Mixed Conversion
-mxsm←{        siz     ←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
-        exe     ←(simd''),'DO(i,zc){zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';}'
-                '' siz exe mxfn 1 ⍺ ⍵}
-mxsd←{        chk     ←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
-        chk     ,←'else if(lr!=0&&rr!=0){error(4);}'
-        siz     ←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
-        siz     ,←'else{zr=rr;DO(i,rr){zc*=rs[i];rc*=rs[i];zs[i]=rs[i];}DO(i,lr)lc*=ls[i];}',nl
-        exe     ←simd 'pcopyin(lv[:lc],rv[:rc])'
-        exe     ,←'DO(i,zc){zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';}'
-                chk siz exe mxfn 1 ⍺ ⍵}
-scmx←{        (⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
-sdbm    ←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxbm' 'mxbd' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
+mxsm←{siz←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
+  exe←(simd''),'DO(i,zc){zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';}'
+    '' siz exe mxfn 1 ⍺ ⍵}
+mxsd←{chk←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
+  chk,←'else if(lr!=0&&rr!=0){error(4);}'
+  siz←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
+  siz,←'else{zr=rr;DO(i,rr){zc*=rs[i];rc*=rs[i];zs[i]=rs[i];}DO(i,lr)lc*=ls[i];}',nl
+  exe←simd 'pcopyin(lv[:lc],rv[:rc])'
+  exe,←'DO(i,zc){zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';}'
+    chk siz exe mxfn 1 ⍺ ⍵}
+scmx←{(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
+
+⍝    Mixed Verb Database for Scalar Primitives
+sdbm←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxbm' 'mxbd' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
 
 ⍝  Primitive Operators
 ocl     ←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
@@ -639,9 +641,9 @@ odb⍪←'∘.' 'err99' 'oupd'  ''      ''
 err99←{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}
 err16←{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}
 
-⍝[of]:Commute
-comd    ←{((1↑⍺)⍪⊖1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
-comm    ←{((1↑⍺)⍪⍪⍨1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
+⍝   Commute
+comd←{((1↑⍺)⍪⊖1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
+comm←{((1↑⍺)⍪⍪⍨1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
 ⍝[cf]
 ⍝[of]:Each
 eacm←{        siz     ←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
