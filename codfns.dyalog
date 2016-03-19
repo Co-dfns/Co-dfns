@@ -1388,8 +1388,13 @@ iotm←{        chk     ←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
 
 shpm←{exe←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
  '' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
-eqvm←{        exe     ←'zv[0]=rr==0?0:1;',nl,pacc'update device(zv[:1])'
-                '' 'zr=0;' exe mxfn 1 ⍺ ⍵}
+
+⍝    Depth
+eqvmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e 
+  z←'{ai(',rslt,',0,NULL,1);I*zv=(',rslt,')->v;',nl
+  z,←'if((',rgt,')->r==0)zv[0]=0;else zv[0]=1;',nl
+  z,(pacc'update device(zv[:1])'),'}',nl}
+eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa
 eqvd←{        chk siz ←'' 'zr=0;'
         exe     ←pacc 'update host(lv[:lft->c],rv[:rgt->c])'
         exe     ,←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
