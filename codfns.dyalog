@@ -1235,11 +1235,10 @@ tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
                 '' siz exe mxfn 1 ⍺ ⍵}
 
 ⍝    Enlist
-memm←{
-  siz←'DO(i,rr)rc*=rs[i];zr=1;zs[0]=rc;'
-  exe←(3=0⌷⍺)⊃'I rcp=rc;' 'I rcp=ceil(rc/8.0);'
-  exe,←nl,(simd'present(rv[:rcp],zv[:rcp])'),'DO(i,rcp)zv[i]=rv[i];'
-    '' siz exe mxfn 1 ⍺ ⍵}
+memmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
+  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl
+  z,'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl}
+memmfbnaaa←memmffnaaa←memmfinaaa
 
 dscm←{        exe     ←pacc'update host(rv[:rgt->c])'
         exe     ,←'DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];',nl
