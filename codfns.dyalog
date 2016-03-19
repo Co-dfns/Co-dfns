@@ -459,7 +459,7 @@ fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝  Code Generator
 dis     ←{⍺←⊢ ⋄ 0=⊃t⍵:5⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
 gc      ←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
-E1      ←{r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵}
+E1←{('mf'gcl)⍵}
 E2      ←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
 E0      ←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
 Oi      ←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
@@ -520,6 +520,25 @@ case    ←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break
 fnacc   ←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
 fndy    ←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,fcln,'}'}
 fncd    ←{fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'}',nl}
+
+⍝  Symbol → Name Table
+syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'   '⌈'   '!'   '<'
+nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min' 'max' 'fac' 'lth'
+syms,←,¨'≤'   '='   '≥'   '>'   '≠'   '~'   '∧'   '∨'   '⍲'   '⍱'   '⌷'   '['
+nams,←  'lte' 'eql' 'gte' 'gth' 'neq' 'not' 'and' 'lor' 'nan' 'nor' 'sqd' 'brk'
+syms,←,¨'⍳'   '⍴'   ','   '⍪'   '⌽'   '⍉'   '⊖'   '∊'   '⊃'   '≡'   '≢'   '⊢'
+nams,←  'iot' 'rho' 'cat' 'ctf' 'rot' 'trn' 'rtf' 'mem' 'dis' 'eqv' 'nqv' 'rgt'
+syms,←,¨'⊣'   '⊤'   '⊥'   '/'   '⌿'   '\'   '⍀'   '?'   '↑'   '↓'   '¨'   '⍨'
+nams,←  'lft' 'enc' 'dec' 'red' 'rdf' 'scn' 'scf' 'rol' 'tke' 'drp' 'map' 'com'
+syms,←,¨'.'   '⍤'   '⍣'   '∘'
+nams,←  'dot' 'rnk' 'pow' 'jot'
+
+⍝  Generator Dispatch
+gnmtp←'xifbn'⊃¨∘⊂⍨2↑1↓∘⊃y
+gnmid←(nams,⊂'')⊃⍨syms⍳¯1↑∘⊃v
+gnmsla←'las'⊃¨∘⊂⍨(∧/¯1=∘↑3↑∘⊃e)+0≠((⊃0⍴⊃)¨n,2↑∘⊃v)
+gcl←{''≢id←gnmid ⍵:(⍎id,⍺⍺,(gnmtp ⍵),gnmsla ⍵)((⊂n,∘⊃v),e,y)⍵
+  ⎕SIGNAL 16}
 
 ⍝  Scalar Primitives
 ⍝respos←'⍵ % ⍺'
@@ -1316,9 +1335,11 @@ fltd←{chk←'if(lr>1)error(4);',nl
 lftm←{        chk siz ←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
         exe     ←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
                 chk siz exe mxfn 1 ⍺ ⍵}
-rgtm←{        chk siz ←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-        exe     ←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
-                chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝    Identity/Right
+rgtmfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
+  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl}
+rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa
 lftd←{        chk siz ←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
         exe     ←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],lv[:zc])'),'DO(i,zc)zv[i]=lv[i];'
                 chk siz exe mxfn 1 ⍺ ⍵}
