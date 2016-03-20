@@ -1240,10 +1240,17 @@ memmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
   z,'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl}
 memmfbnaaa←memmffnaaa←memmfinaaa
 
-dscm←{        exe     ←pacc'update host(rv[:rgt->c])'
-        exe     ,←'DO(i,rr)rc*=rs[i];zv[0]=rc==0?0:rv[0];',nl
-        exe     ,←pacc'update device(zv[:rslt->c])'
-                '' 'zr=0;' exe mxfn 1 ⍺ ⍵}
+⍝    Disclose/First
+dismfgnaaa←{v e y←⍵ ⋄ tc tn←⍺ ⋄ rslt rgt←var/2↑v,⍪e
+  z←(≡/2↑e)⊃('{A*tgt=',rslt,';')('{A tgta;A*tgt;tgta.v=NULL;tgt=tgta;')
+  z,←'ai(tgt,0,NULL,',tc,');',tn,'*zv=tgt->v;',nl
+  z,←'if((',rgt,')->c){',tn,'*rv=(',rgt,')->v;',nl
+  z,←(simd''),'DO(i,1)zv[0]=rv[0];}',nl
+  z,←'else{',nl,(simd''),'DO(i,1)zv[0]=0;}',nl
+  z,(≡/2↑e)⊃('}',nl)('cpaa(',rslt,',tgt);}',nl)}
+dismfinaaa←{'1I'dismfgnaaa ⍵}
+dismffnaaa←{'2D'dismfgnaaa ⍵}
+dismfbnaaa←{'1' 'U8'dismfgnaaa ⍵}
 
 ⍝   Selection Primitive Verbs
 
