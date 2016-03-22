@@ -1385,10 +1385,17 @@ idxd←{        chk     ←'if(lr>1)error(4);if(lr==0)ls[0]=1;if(ls[0]>rr)error(
         idx     ,←'' siz exe mxfn 1(¯1↓⍺)('irzp'(¯2 0)⍪1↓¯1↓⍵)
         idx     ,←(iso⊃''('cpaa(',irzv,',irzp);')),'}',nl
                 idx}
-iotm←{        chk     ←'if(!(rr==0||(rr==1&&1==rs[0])))error(16);'
-        siz     ←'zr=1;zc=zs[0]=rv[0];'
-        exe     ←(simd 'present(zv[:zc])'),'DO(i,zs[0])zv[i]=i;'
-                chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝    Index Generation
+iotmck←{z←'if((',⍵,')->r>1)RANK_ERROR;if((',⍵,')->c>15)LIMIT_ERROR;',nl
+  z,'if((',⍵,')->c!=1)NONCE_ERROR;',nl}
+iotmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←iotmck rgt
+  z,←'{I*restrict v=(',rgt,')->v;B c=v[0];ai(',rslt,',1,&c,1);',nl
+  z,'v=(',rslt,')->v;',nl,(simd'present(v[:c])'),'DO(i,c)v[i]=i;}',nl}
+iotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←iotmck rgt
+  z,←'{U8*v=(',rgt,')->v;B c=v[0]>>7;ai(',rslt,',1,&c,1);',nl
+  z,←'I*restrict zv=(',rslt,')->v;',nl
+  z,(simd'present(zv[:c])'),'DO(i,c)zv[i]=i;}',nl}
 
 ⍝   Miscellaneous Mixed Primitive Verbs Generators
 
