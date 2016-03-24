@@ -1179,19 +1179,26 @@ fctd←{
   exe,←(3=0⌷⍺)⊃''(nl,pacc'update device(zv[:zcp])')
     chk siz exe mxfn 1 ⍺ ⍵}
 
-rotm←{        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-        exe     ←'I n=zr==0?0:zr-1;DO(i,n)zc*=zs[i];rc=rr==0?1:rs[rr-1];lc=zc*rc;',nl
-        exen    ←simd 'independent collapse(2) present(rv[:lc],zv[:lc])'
-        exen    ,←'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[i*rc+(rc-(j+1))];}}'
-        exeb    ←'I zcp=ceil(lc/8.0);',nl
-        exeb    ,←simd'present(zv[:zcp])'
-        exeb    ,←'DO(i,zcp){zv[i]=0;}',nl
-        exeb    ,←simd'collapse(2) present(zv[:zcp],rv[:zcp])'
-        exeb    ,←'DO(i,zc){DO(j,rc){I zi=i*rc+j;I ri=i*rc+(rc-(j+1));',nl
-        exeb    ,←' zv[zi/8]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-(zi%8));',nl
-        exeb    ,←'}}'
-        exe     ,←(3=⊃0⌷⍺)⊃exen exeb
-                ''('zr=rr;DO(i,zr)zs[i]=rs[i];')exe mxfn 1 ⍺ ⍵}
+⍝    Reverse
+rotmfinaaa←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rotmne⊃vs ⋄ ⊃'1I'rotmnn/vs}
+rotmffnaaa←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'D'rotmne⊃vs ⋄ ⊃'2D'rotmnn/vs}
+rotmlp←{z←'{I n=0,rk;B oc=1,ic=1,tc,*s=(',⍵,')->s;',nl
+  z,←⍺,'*restrict rv=(',⍵,')->v;',nl
+  z,'if((rk=(',⍵,')->r)){n=rk-1;ic=s[rk-1];};DO(i,n)oc*=s[i];tc=oc*ic;',nl}
+rotmne←{z←(⍺ rotmlp ⍵),'n=ic/2;',nl,simd'independent collapse(2) present(rv[:tc])'
+  z,←'DO(i,oc){DO(j,n){',⍺,'*a,*b;a=&rv[i*ic+(ic-(j+1))];b=&rv[i*ic+j];',nl
+  z,' ',⍺,' t=*a;*a=*b;*b=t;}}}',nl}
+rotmnn←{tp td←⍺⍺ ⋄ z←(td rotmlp ⍵),'ai(',⍺,',rk,s,',tp,');',nl
+  z,←td,'*restrict zv=(',⍺,')->v;',nl
+  z,←simd'independent collapse(2) present(zv[:tc],rv[:tc])'
+  z,'DO(i,oc){DO(j,ic){zv[i*ic+j]=rv[i*ic+(ic-(j+1))];}}}',nl}
+rotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'U8'rotmlp rgt
+  z,←'B tc8=ceil(tc/8.0);A ta;ta.v=NULL;ai(&ta,rk,s,3);',nl
+  z,←'U8*restrict zv=(&ta)->v;',nl,simd'independent present(zv[:tc8],rv[:tc8])'
+  z,←'DO(i,tc8){U8 t=0;',nl,pacc'loop reduction(|:t)'
+  z,←' DO(j,8){B ti,tr,tc;ti=i*8+j;tr=ti/ic;tc=ti%ic;',nl
+  z,←'  B ri=tr*ic+(ic-(tc+1));t|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}',nl
+  z,' zv[i]=t;}',nl,'cpaa(',rslt,',&ta);}',nl}
 
 ⍝    Rotate
 rotd←{
