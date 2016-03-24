@@ -1104,10 +1104,13 @@ shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
  ref,←'rslt->z=zcp*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
  exe←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
  chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
-catm←{chk←'' ⋄ siz←'zr=1;DO(i,rr)rc*=rs[i];zs[0]=rc;'
- exe←(3=0⌷⍺)⊃'I pc=rc;' 'I pc=ceil(rc/8.0);'
- exe,←nl,(simd'present(zv[:pc],rv[:pc])'),'DO(i,pc)zv[i]=rv[i];'
- chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝    Ravel
+catmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
+  ≡/2↑e:'(',rgt,')->r=1;(',rgt,')->s[0]=(',rgt,')->c;',nl
+  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl
+  z,'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl}
+catmffnaaa←catmfbnaaa←catmfinaaa
 
 ⍝    Catenate/Laminate
 catd←{
