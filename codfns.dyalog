@@ -1106,11 +1106,10 @@ shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
  chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
 
 ⍝    Ravel
-catmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
+catmffnaaa←catmfbnaaa←catmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
   ≡/2↑e:'(',rgt,')->r=1;(',rgt,')->s[0]=(',rgt,')->c;',nl
   z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl
   z,'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl}
-catmffnaaa←catmfbnaaa←catmfinaaa
 
 ⍝    Catenate/Laminate
 catd←{
@@ -1245,10 +1244,9 @@ tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
                 '' siz exe mxfn 1 ⍺ ⍵}
 
 ⍝    Enlist
-memmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
+memmfbnaaa←memmffnaaa←memmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
   z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl
   z,'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl}
-memmfbnaaa←memmffnaaa←memmfinaaa
 
 ⍝    Disclose/First
 dismfgnaaa←{v e y←⍵ ⋄ tc tn←⍺ ⋄ rslt rgt←var/2↑v,⍪e
@@ -1353,9 +1351,8 @@ lftm←{        chk siz ←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
                 chk siz exe mxfn 1 ⍺ ⍵}
 
 ⍝    Identity/Right
-rgtmfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
+rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
   z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl}
-rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa
 lftd←{        chk siz ←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
         exe     ←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],lv[:zc])'),'DO(i,zc)zv[i]=lv[i];'
                 chk siz exe mxfn 1 ⍺ ⍵}
@@ -1413,11 +1410,10 @@ shpm←{exe←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
  '' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
 
 ⍝    Depth
-eqvmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e 
+eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e 
   z←'{ai(',rslt,',0,NULL,1);I*zv=(',rslt,')->v;',nl
   z,←'if((',rgt,')->r==0)zv[0]=0;else zv[0]=1;',nl
   z,(pacc'update device(zv[:1])'),'}',nl}
-eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa
 eqvd←{        chk siz ←'' 'zr=0;'
         exe     ←pacc 'update host(lv[:lft->c],rv[:rgt->c])'
         exe     ,←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
