@@ -72,7 +72,7 @@ iop←'-fast -g -fno-alias -static-intel -mkl -Wall -Wno-unused-function -fPIC -
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 
 ⍝  PGI C Linux
-pop←' -fast -acc -ta=tesla:nollvm,cuda7.5 -Minfo -fPIC '
+pop←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC '
 pgcco←{cmd←'pgcc -c ',cds,pop,'-I',DWA∆PATH,' '
   ⎕SH cmd,'-o ''',⍵,'.o'' ''',⍵,'.c'' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
 pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' '
@@ -459,7 +459,7 @@ fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝  Code Generator
 dis     ←{⍺←⊢ ⋄ 0=⊃t⍵:5⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
 gc      ←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
-E1←{('mf'gcl)⍵}
+E1←{⍺('mf'gcl)⍵}
 E2      ←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
 E0      ←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
 Oi      ←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
@@ -538,13 +538,14 @@ gnmtp←'xifbn'⊃¨∘⊂⍨2↑1↓∘⊃y
 gnmid←(nams,⊂'')⊃⍨syms⍳¯1↑∘⊃v
 gnmsla←'las'⊃¨∘⊂⍨(∧/¯1=∘↑3↑∘⊃e)+0≠((⊃0⍴⊃)¨n,2↑∘⊃v)
 gcl←{''≢id←gnmid ⍵:(⍎id,⍺⍺,(gnmtp ⍵),gnmsla ⍵)((⊂n,∘⊃v),e,y)⍵
+  r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵
   ⎕SIGNAL 16}
 
 ⍝  Scalar Primitives
-⍝respos←'⍵ % ⍺'
-respos ←'fmod((D)⍵,(D)⍺)'
-resneg ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
-residue←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
+respos←'⍵ % ⍺'
+⍝⍝respos ←'fmod((D)⍵,(D)⍺)'
+⍝⍝resneg ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
+⍝⍝residue←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
 
 ⍝   Scalar Dispatch Table
 sdb←0 5⍴⊂''
@@ -555,7 +556,7 @@ sdb⍪←,¨'×'  '(⍵>0)-(⍵<0)' '⍺*⍵'                 '⍵'         '⍺
 sdb⍪←,¨'÷'  '1.0/⍵'       '((D)⍺)/((D)⍵)'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'*'  'exp((D)⍵)'   'pow((D)⍺,(D)⍵)'      'exp((D)⍵)' '⍺|~⍵'
 sdb⍪←,¨'⍟'  'log((D)⍵)'   'log((D)⍵)/log((D)⍺)' ''          ''
-sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^⍵)'
+sdb⍪←,¨'|'  'fabs(⍵)'     respos               '⍵'         '⍵&(⍺^⍵)'
 sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ(⍺,⍵)'
 sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
@@ -1052,6 +1053,17 @@ cald←{        z r l   ←var/⍵
         scl     ,←z,'=*szv;frea(&sz);}',nl
                 (∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 
+⍝    Prefix Sum Scan Utility
+sumscan←{z←'{I*restrict a=',⍵,';B n=',⍺,';',nl
+  z,←' I final;',nl,(simd'present(a[:n])'),'DO(i,1)final=a[n-1];',nl
+  z,←' for(I d=2;d<=n;d<<=1){I r=n/d;',nl,simd'independent present(a[:n])'
+  z,←'  DO(i,r){a[i*d+d-1]+=a[i*d+(d>>1)-1];}}',nl
+  z,←(simd'present(a[:n])'),' DO(i,1)a[n-1]=0;',nl
+  z,←' for(I d=n;d>=2;d>>=1){I r=n/d;',nl,simd'independent present(a[:n])'
+  z,←'  DO(i,r){I t=a[i*d+(d>>1)-1];a[i*d+(d>>1)-1]=a[i*d+d-1];a[i*d+d-1]+=t;}}',nl
+  z,←(simd'present(a[:n])'),' DO(i,n-1)a[i]=a[i+1];',nl
+  z,(simd'present(a[:n])'),' DO(i,1)a[n-1]+=final;}',nl}
+
 ⍝    Mixed Verb Generator Skeleton
 mxfn←{chk siz exe←⍺ ⋄ al tp el←⍵
   vr←(∧/¯1=↑1⌷⍉el)+0≠(⊃0⍴⊃)¨0⌷⍉el
@@ -1349,7 +1361,14 @@ fltd←{chk←'if(lr>1)error(4);',nl
   exe,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
   exe,←'  a+=abs(lv[i]);}}}',nl
   exe,←pacc 'update device(zv[:rslt->c])'
-  exb←'B a=0;if(rr==1&&rc==lc){I n=ceil(lc/8.0);;',nl
+  exb←'B a=0;if(rr==1&&rc==lc){I n=ceil(lc/8.0);',nl
+⍝⍝  exb,←' A t;t.v=NULL;ai(&t,1,&lc,1);I*restrict tv=t.v;',nl
+⍝⍝  exb,←simd'collapse(2) independent present(tv[:lc],lv[:n])'
+⍝⍝  exb,←' DO(i,n){DO(j,8){tv[i*8+j]=1&(lv[i]>>(7-j));}}',nl
+⍝⍝  exb,←'lc'sumscan'tv'
+⍝⍝  exb,←simd'independent present(zv[:zc],rv[:lc],lv[:n],tv[:lc])'
+⍝⍝  exb,←' DO(i,lc){if(128&(lv[i/8]<<(i%8)))zv[tv[i]-1]=rv[i];}',nl
+⍝⍝  exb,←' frea(&t);',nl
   exb,←' DO(i,n){DO(j,8){if(1&(lv[i]>>(7-j)))zv[a++]=rv[i*8+j];}}',nl
   exb,←'}else if(rc==lc){I n=ceil(lc/8.0);',nl,'DO(i,n){DO(m,8){',nl
   exb,←' if(1&(lv[i]>>(7-m))){',nl
@@ -1361,7 +1380,9 @@ fltd←{chk←'if(lr>1)error(4);',nl
   exb,←' if(1&(lv[i]>>(7-m))){',nl
   exb,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[j*rc];}',nl
   exb,←'  a++;}}}}',nl
+⍝⍝  exb,←'if(rr!=1||rc!=lc){',nl
   exb,←pacc 'update device(zv[:rslt->c])'
+⍝⍝  exb,←'}',nl
           ((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
 
 lftm←{        chk siz ←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
