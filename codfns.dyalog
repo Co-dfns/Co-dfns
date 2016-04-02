@@ -371,7 +371,7 @@ pt⍪←pfs   0   0   0 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂
 pt⍪←pfs   0   0   0 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂,'⍀'
 pt⍪←pfs  ¯2  ¯2  ¯2   0   0   0   0   0   0   0   0   0⊣pn,←⊂'∘.'
 pt⍪←pfs  ¯2  ¯2  ¯2   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'.'
-pt⍪←pfs  ¯2  ¯2  ¯2 ¯11 ¯11   1 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂'⎕sp'
+pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11⊣pn,←⊂'⎕sp'
 pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16⊣pn,←⊂'⎕XOR'
 
 ⍝    Operator Indirections
@@ -866,12 +866,20 @@ inpd←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Horrible Hacks
+⍝sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
+⍝        exe     ←'zc=zs[0];rc=rs[0];lc=ls[rr-1];',nl
+⍝        exe     ,←'B szz=rslt->c,szr=rgt->c,szl=ceil(lft->c/8.0);',nl
+⍝        exe     ,←simd'independent collapse(3) present(zv[:szz],rv[:szr],lv[:szl])'
+⍝        exe     ,←'DO(i,zc){DO(j,rc){DO(k,lc){I li=(i*lc)+k;',nl
+⍝        exe     ,←'zv[(i*rc*lc)+(j*lc)+k]=(1&(lv[li/8]>>(7-(li%8))))*rv[(j*lc)+k];',nl
+⍝        exe     ,←'}}}'
+⍝                '' siz exe mxfn 1 ⍺ ⍵}
 sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
         exe     ←'zc=zs[0];rc=rs[0];lc=ls[rr-1];',nl
-        exe     ,←'B szz=rslt->c,szr=rgt->c,szl=ceil(lft->c/8.0);',nl
+        exe     ,←'B szz=rslt->c,szr=rgt->c,szl=lft->c;',nl
         exe     ,←simd'independent collapse(3) present(zv[:szz],rv[:szr],lv[:szl])'
         exe     ,←'DO(i,zc){DO(j,rc){DO(k,lc){I li=(i*lc)+k;',nl
-        exe     ,←'zv[(i*rc*lc)+(j*lc)+k]=(1&(lv[li/8]>>(7-(li%8))))*rv[(j*lc)+k];',nl
+        exe     ,←'zv[(i*rc*lc)+(j*lc)+k]=lv[li]*rv[(j*lc)+k];',nl
         exe     ,←'}}}'
                 '' siz exe mxfn 1 ⍺ ⍵}
 
@@ -1267,6 +1275,10 @@ rtfd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
         exe     ,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
         exe     ,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
                 chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝    Transpose
+trnmfinaaa←{v e y←⍵ ⋄ (2↑y)tspm(2↑v),⍪2↑e}
+trnmffnaaa←trnmfbnaaa←trnmfinaaa
 tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
         exe     ←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
         exe     ,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
@@ -1311,7 +1323,7 @@ drpd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
         ref     ←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
         ref     ,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
         ref     ,←'rslt->v=rv+(lc*zc);'
-        exe     ←ref cpy⊃⍨1⌊(3=⊃0⌷⍺)+0=⊃0⍴⊃⊃1 0⌷⍵
+        exe     ←cpy cpy⊃⍨1⌊(3=⊃0⌷⍺)+0=⊃0⍴⊃⊃1 0⌷⍵
                 chk siz exe mxfn 0 ⍺ ⍵}
 tked←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
         siz     ←pacc'update host(lv[:1])'
@@ -1324,7 +1336,7 @@ tked←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
         ref     ←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
         ref     ,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
         ref     ,←'rslt->v=rv;'
-        exe     ←ref cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
+        exe     ←cpy cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
                 chk siz exe mxfn 0 ⍺ ⍵}
 
 ⍝    Replicate/Filter
