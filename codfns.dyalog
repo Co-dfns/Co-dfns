@@ -1163,12 +1163,15 @@ catd←{
 
 
 ⍝    Table
-fctm←{
-  siz←'zr=2;if(rr==0){zs[0]=1;zs[1]=1;}else{zs[0]=rs[0];'
-  siz,←'I n=rr-1;DO(i,n)rc*=rs[i+1];zs[1]=rc;rc*=rs[0];}'
-  exe←(3=0⌷⍺)⊃'I rcp=rc;' 'I rcp=ceil(rc/8.0);'
-  exe,←nl,(simd'present(zv[:rcp],rv[:rcp])'),'DO(i,rcp)zv[i]=rv[i];'
-    '' siz exe mxfn 1 ⍺ ⍵}
+ctfmfaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B s[2];'
+  z,←'if((',rgt,')->r)s[0]=(',rgt,')->s[0]; else s[0]=1;',nl
+  z,←'if(s[0])s[1]=(',rgt,')->c/s[0]; else s[1]=1;',nl
+  ≡/2↑e:z,'(',rgt,')->r=2;(',rgt,')->s[0]=s[0];(',rgt,')->s[1]=s[1];}',nl
+  z,←'ai(',rslt,',2,s,',⍺,');U8*restrict v=(',rslt,')->v;',nl
+  z,←'U8*restrict rv=(',rgt,')->v;B cnt=(',rgt,')->z;',nl
+  z,(simd'present(v[:cnt],rv[:cnt])'),'DO(i,cnt)v[i]=rv[i];}',nl}
+ctfmfinaaa←{'1' ctfmfaa ⍵} ⋄ ctfmffnaaa←{'2' ctfmfaa ⍵}
+ctfmfbnaaa←{'3' ctfmfaa ⍵}
 
 ⍝    Catenate First/Laminate
 fctd←{
