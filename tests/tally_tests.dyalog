@@ -7,6 +7,7 @@ S←':Namespace' 'Run←{≢⍵}' ':EndNamespace'
 '03'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ,0
 '04'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
 '05'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
+'06'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴0 1 1
 
 :EndNamespace
 

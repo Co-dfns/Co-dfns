@@ -1485,8 +1485,14 @@ eqvd←{        chk siz ←'' 'zr=0;'
         exe     ,←'DO(i,lc){if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}}',nl
         exe     ,←pacc'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
-nqvm←{        exe     ←'zv[0]=rr==0?1:rs[0];',nl,pacc'update device(zv[:1])'
-                '' 'zr=0;' exe mxfn 1 ⍺ ⍵}
+
+⍝    Tally
+nqvmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{I c=1;'
+  z,←'if((',rgt,')->r)c=(',rgt,')->s[0];',nl
+  z,←'ai(',rslt,',0,NULL,1);I*v=(',rslt,')->v;',nl
+  z,(simd'present(v[:1])'),'DO(i,1)v[0]=c;}',nl}
+nqvmfbnaaa←nqvmffnaaa←nqvmfinaaa
+
 nqvd←{        chk siz ←'' 'zr=0;'
         exe     ←pacc'update host(lv[:lft->c],rv[:rgt->c])'
         exe     ,←'zv[0]=0;if(rr!=lr)zv[0]=1;',nl
