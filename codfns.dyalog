@@ -1460,8 +1460,12 @@ iotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←iotmck rgt
 
 ⍝   Miscellaneous Mixed Primitive Verbs Generators
 
-shpm←{exe←'DO(i,rr)zv[i]=rs[i];',nl,pacc'update device(zv[:rr])'
- '' 'zr=1;zs[0]=rr;' exe mxfn 1 ⍺ ⍵}
+⍝    Shape
+rhomfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B sp[15],cnt;'
+  z,←'cnt=(',rgt,')->r;DO(i,cnt)sp[i]=(',rgt,')->s[i];',nl
+  z,←'ai(',rslt,',1,&cnt,1);I*restrict v=(',rslt,')->v;',nl
+  z,'DO(i,cnt)v[i]=sp[i];',nl,(pacc'update device(v[:cnt])'),'}',nl}
+rhomfbnaaa←rhomffnaaa←rhomfinaaa
 
 ⍝    Depth
 eqvmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e 
