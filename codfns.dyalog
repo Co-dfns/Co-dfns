@@ -1397,9 +1397,10 @@ fltd←{chk←'if(lr>1)error(4);',nl
 ⍝⍝  exb,←'}',nl
           ((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
 
-lftm←{        chk siz ←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-        exe     ←'DO(i,zr)zc*=zs[i];',nl,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
-                chk siz exe mxfn 1 ⍺ ⍵}
+⍝    Same/Monadic Left
+lftmfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
+  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl}
+lftmfbnaaa←lftmffnaaa←lftmfinaaa
 
 ⍝    Identity/Right
 rgtmfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e

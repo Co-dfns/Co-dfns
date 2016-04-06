@@ -6,6 +6,7 @@ S←':Namespace' 'Run←{⊣⍵}' ':EndNamespace'
 '02'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
 '03'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
 '04'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
+'05'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴0 1 1
 
 :EndNamespace
 
