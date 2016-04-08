@@ -1286,11 +1286,18 @@ tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
         exe     ,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
                 '' siz exe mxfn 1 ⍺ ⍵}
 
+⍝    Mix
+tkemfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
+  'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl}
+tkemffnaaa←tkemfbnaaa←tkemfinaaa
+
 ⍝    Enlist
 memmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
   s←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl ⋄ ≡/2↑e:s
   'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
 memmfbnaaa←memmffnaaa←memmfinaaa
+
+⍝   Selection Primitive Verbs
 
 ⍝    Disclose/First
 dismfgnaaa←{v e y←⍵ ⋄ tc tn←⍺ ⋄ rslt rgt←var/2↑v,⍪e
@@ -1303,8 +1310,6 @@ dismfgnaaa←{v e y←⍵ ⋄ tc tn←⍺ ⋄ rslt rgt←var/2↑v,⍪e
 dismfinaaa←{'1I'dismfgnaaa ⍵}
 dismffnaaa←{'2D'dismfgnaaa ⍵}
 dismfbnaaa←{'1' 'U8'dismfgnaaa ⍵}
-
-⍝   Selection Primitive Verbs
 
 drpd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
         siz     ←pacc'update host(lv[:1])'
