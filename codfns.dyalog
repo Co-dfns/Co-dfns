@@ -1127,10 +1127,9 @@ shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
 
 ⍝    Ravel
 catmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
-  ≡/2↑e:'(',rgt,')->r=1;(',rgt,')->s[0]=(',rgt,')->c;',nl
-  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl
-  z,'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl}
-catmffnaa←catmfbnaaa←catmfinaaa
+  s←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl ⋄ ≡/2↑e:s
+  'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
+catmffnaaa←catmfbnaaa←catmfinaaa
 
 ⍝    Catenate/Laminate
 catd←{
@@ -1289,8 +1288,7 @@ tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
 
 ⍝    Enlist
 memmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
-  s←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl
-  ≡/2↑e:s
+  s←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl ⋄ ≡/2↑e:s
   'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
 memmfbnaaa←memmffnaaa←memmfinaaa
 
