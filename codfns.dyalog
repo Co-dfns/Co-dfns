@@ -1289,8 +1289,9 @@ tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
 
 ⍝    Enlist
 memmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e
-  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl
-  z,'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl}
+  s←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl
+  ≡/2↑e:s
+  'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
 memmfbnaaa←memmffnaaa←memmfinaaa
 
 ⍝    Disclose/First
