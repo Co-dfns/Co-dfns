@@ -1403,12 +1403,12 @@ fltd←{chk←'if(lr>1)error(4);',nl
 
 ⍝    Same/Monadic Left
 lftmfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
-  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl}
+  'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl}
 lftmfbnaaa←lftmffnaaa←lftmfinaaa
 
 ⍝    Identity/Right
 rgtmfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
-  z←'memcpy(',rslt,',',rgt,',sizeof(A));(',rslt,')->f=0;',nl}
+  'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl}
 rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa
 
 lftd←{        chk siz ←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
