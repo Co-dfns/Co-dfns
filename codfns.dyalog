@@ -1279,8 +1279,21 @@ rtfd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
                 chk siz exe mxfn 1 ⍺ ⍵}
 
 ⍝    Transpose
-trnmfinaaa←{v e y←⍵ ⋄ (2↑y)tspm(2↑v),⍪2↑e}
-trnmffnaaa←trnmfbnaaa←trnmfinaaa
+trnmfn←{v e y←⍵ ⋄ tp tc←⍺ ⋄ rslt rgt←var/2↑v,⍪e
+  z←'{I rk=(',rgt,')->r;B sp[15];DO(i,rk)sp[i]=(',rgt,')->s[rk-(1+i)];',nl
+  z,←'if(rk<=1){',nl
+  z,←(≡/2↑e)⊃('memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl)''
+  z,←'}else if(rk==2){',nl
+  z,←'A ta;ta.v=NULL;ai(&ta,rk,sp,',tc,');',tp,'*restrict zv=ta.v;',nl
+  z,←tp,'*restrict rv=(',rgt,')->v;B cnt=(',rgt,')->c;',nl
+  z,←simd'independent collapse(2) present(zv[:cnt],rv[:cnt])'
+  z,←'DO(i,sp[0]){DO(j,sp[1]){zv[(i*sp[1])+j]=rv[(j*sp[0])+i];}}',nl
+  z,←'cpaa(',rslt,',&ta);',nl
+  z,←'}else{',nl
+  z,←'NONCE_ERROR;',nl
+  z,'}}',nl}
+trnmfinaaa←{'I1'trnmfn ⍵} ⋄ trnmffnaaa←{'D2'trnmfn ⍵}
+trnmfbnaaa←{'NONCE_ERROR;',nl}
 tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
         exe     ←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
         exe     ,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
