@@ -1279,25 +1279,40 @@ rtfd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
                 chk siz exe mxfn 1 ⍺ ⍵}
 
 ⍝    Transpose
-trnmfn←{v e y←⍵ ⋄ tp tc←⍺ ⋄ rslt rgt←var/2↑v,⍪e
-  z←'{I rk=(',rgt,')->r;B sp[15];DO(i,rk)sp[i]=(',rgt,')->s[rk-(1+i)];',nl
+trnmfh←{z←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];',nl
   z,←'if(rk<=1){',nl
-  z,←(≡/2↑e)⊃('memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl)''
-  z,←'}else if(rk==2){',nl
-  z,←'A ta;ta.v=NULL;ai(&ta,rk,sp,',tc,');',tp,'*restrict zv=ta.v;',nl
-  z,←tp,'*restrict rv=(',rgt,')->v;B cnt=(',rgt,')->c;',nl
+  z,←(≡/2↑⍺⍺)⊃('memcpy(',⍺,',',⍵,',sizeof(A));(',⍵,')->f=0;',nl)''
+  z,'}else if(rk==2){',nl}
+trnmfn←{v e y←⍵ ⋄ tp tc←⍺ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←rslt(e trnmfh)rgt
+  a←'A ta;ta.v=NULL;ai(&ta,rk,sp,',tc,');',tp,'*restrict zv=ta.v;',nl
+  z,←a⊣a,←tp,'*restrict rv=(',rgt,')->v;B cnt=(',rgt,')->c;',nl
   z,←simd'independent collapse(2) present(zv[:cnt],rv[:cnt])'
   z,←'DO(i,sp[0]){DO(j,sp[1]){zv[(i*sp[1])+j]=rv[(j*sp[0])+i];}}',nl
   z,←'cpaa(',rslt,',&ta);',nl
   z,←'}else{',nl
-  z,←'NONCE_ERROR;',nl
+  z,←a,'B*rs=(',rgt,')->s;',nl
+  z,←simd'independent present(zv[:cnt],rv[:cnt]) copyin(rs[:rk])'
+  z,←'DO(i,cnt){B ri=0,zi=i;',nl
+  z,←' DO(j,rk){B k=zi%rs[j];ri*=rs[j];ri+=k;zi-=k;zi/=rs[j];}',nl
+  z,←' zv[i]=rv[ri];}',nl
+  z,←'cpaa(',rslt,',&ta);',nl
   z,'}}',nl}
 trnmfinaaa←{'I1'trnmfn ⍵} ⋄ trnmffnaaa←{'D2'trnmfn ⍵}
-trnmfbnaaa←{'NONCE_ERROR;',nl}
-tspm←{        siz     ←'zr=rr;DO(i,rr)zs[rr-(1+i)]=rs[i];'
-        exe     ←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-        exe     ,←'DO(i,rs[0]){DO(j,rs[1]){zv[(j*zs[1])+i]=rv[(i*rs[1])+j];}}'
-                '' siz exe mxfn 1 ⍺ ⍵}
+trnmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←rslt(e trnmfh)rgt
+  a←'A ta;ta.v=NULL;ai(&ta,rk,sp,3);U8*restrict zv=ta.v;',nl
+  z,←a⊣a,←'U8*restrict rv=(',rgt,')->v;B cnt=(',rgt,')->z;',nl
+  z,←simd'independent present(zv[:cnt],rv[:cnt])'
+  z,←'DO(i,cnt){zv[i]=0;DO(j,8){B zi=i*8+j;B zr=zi/sp[1],zc=zi%sp[1];',nl
+  z,←' B ri=zc*sp[0]+zr;zv[i]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}}',nl
+  z,←'cpaa(',rslt,',&ta);',nl
+  z,←'}else{',nl
+  z,←a,'B*rs=(',rgt,')->s;',nl
+  z,←simd'independent present(zv[:cnt],rv[:cnt]) copyin(rs[:rk])'
+  z,←'DO(i,cnt){zv[i]=0;DO(j,8){B i8=i*8+j;B ri=0,zi=i8;',nl
+  z,←'  DO(j,rk){B k=zi%rs[j];ri*=rs[j];ri+=k;zi-=k;zi/=rs[j];}',nl
+  z,←'  zv[i]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}}',nl
+  z,←'cpaa(',rslt,',&ta);',nl
+  z,'}}',nl}
 
 ⍝    Mix
 tkemfinaaa←{v e y←⍵ ⋄ ≡/2↑e:'' ⋄ rslt rgt←var/2↑v,⍪e
