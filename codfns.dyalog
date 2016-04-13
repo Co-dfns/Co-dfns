@@ -1207,12 +1207,12 @@ rotmffnaaa←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'D'rotmne⊃vs �
 rotmlp←{z←'{I n=0,rk;B oc=1,ic=1,tc,*s=(',⍵,')->s;',nl
   z,←⍺,'*restrict rv=(',⍵,')->v;',nl
   z,'if((rk=(',⍵,')->r)){n=rk-1;ic=s[rk-1];};DO(i,n)oc*=s[i];tc=oc*ic;',nl}
-rotmne←{z←(⍺ rotmlp ⍵),'n=ic/2;',nl,simd'independent collapse(2) present(rv[:tc])'
+rotmne←{z←(⍺ rotmlp ⍵),'n=ic/2;',nl,simd'independent present(rv[:tc])'
   z,←'DO(i,oc){DO(j,n){',⍺,'*a,*b;a=&rv[i*ic+(ic-(j+1))];b=&rv[i*ic+j];',nl
   z,' ',⍺,' t=*a;*a=*b;*b=t;}}}',nl}
 rotmnn←{tp td←⍺⍺ ⋄ z←(td rotmlp ⍵),'ai(',⍺,',rk,s,',tp,');',nl
   z,←td,'*restrict zv=(',⍺,')->v;',nl
-  z,←simd'independent collapse(2) present(zv[:tc],rv[:tc])'
+  z,←simd'independent present(zv[:tc],rv[:tc])'
   z,'DO(i,oc){DO(j,ic){zv[i*ic+j]=rv[i*ic+(ic-(j+1))];}}}',nl}
 rotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'U8'rotmlp rgt
   z,←'B tc8=ceil(tc/8.0);A ta;ta.v=NULL;ai(&ta,rk,s,3);',nl
@@ -1286,7 +1286,7 @@ trnmfh←{z←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];
 trnmfn←{v e y←⍵ ⋄ tp tc←⍺ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←rslt(e trnmfh)rgt
   a←'A ta;ta.v=NULL;ai(&ta,rk,sp,',tc,');',tp,'*restrict zv=ta.v;',nl
   z,←a⊣a,←tp,'*restrict rv=(',rgt,')->v;B cnt=(',rgt,')->c;',nl
-  z,←simd'independent collapse(2) present(zv[:cnt],rv[:cnt])'
+  z,←simd'independent present(zv[:cnt],rv[:cnt])'
   z,←'DO(i,sp[0]){DO(j,sp[1]){zv[(i*sp[1])+j]=rv[(j*sp[0])+i];}}',nl
   z,←'cpaa(',rslt,',&ta);',nl
   z,←'}else{',nl
