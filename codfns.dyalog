@@ -937,7 +937,7 @@ rth,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
 rth,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl
 rth,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl
 
-⍝   Co-dfns←→ Dyalog Conversion Helpers
+⍝   Co-dfns ←→ Dyalog Conversion Helpers
 rth,←'V cpad(LOCALP*d,A*a,I t){getarray(t,a->r,a->s,d);B z=0;',nl
 rth,←' switch(t){',nl,'  case APLLONG:z=a->c*sizeof(I);break;',nl
 rth,←'  case APLDOUB:z=a->c*sizeof(D);break;',nl
