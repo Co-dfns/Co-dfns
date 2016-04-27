@@ -664,8 +664,8 @@ err16←{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}
 ⍝   Commute
 comd←{((1↑⍺)⍪⊖1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
 comm←{((1↑⍺)⍪⍪⍨1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
-⍝[cf]
-⍝[of]:Each
+
+⍝   Each
 eacm←{        siz     ←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
         exe     ←pacc'update host(rv[:rgt->c])'
         exe     ,←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]'),'}',nl
@@ -679,8 +679,8 @@ eacd←{        chk     ←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])error(5);}}',nl
         exe     ,←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]' 'lv[i]'),'}',nl
         exe     ,←pacc'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Reduce
+
+⍝   Reduce
 redm←{        idf     ←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'),⊂'⎕XOR'
         idv     ←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 0 ''
         hid     ←idf∊⍨0⌷⍺⍺
@@ -747,8 +747,8 @@ redm←{        idf     ←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀�
         exe     ,←(2⊥(3=2↑⍺))⊃exe4a exe4b exe4a exe4b
         exe     ,←'}'
                 chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Reduce N-wise
+
+⍝   Reduce N-wise
 redd←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
         hid     ←idf∊⍨⊃⊃⍺⍺ ⋄ a←0 1 1⊃¨⊂⍺
         idv     ←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
@@ -765,8 +765,8 @@ redd←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
         exe     ,←(a((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
         exe     ,←pacc'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Reduce First Axis
+
+⍝   Reduce First Axis
 rd1m←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
         hid     ←idf∊⍨⊃⊃⍺⍺
         idv     ←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
@@ -810,7 +810,7 @@ scnm←{siz←'zr=rr;if(rr)rc=rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
   exe,←pacc'update device(zv[:rslt->c],rv[:rgt->c])'
     '' siz exe mxfn 1 ⍺ ⍵}
 
-⍝[of]:Scan First Axis
+⍝   Scan First Axis
 sc1m←{        siz     ←'zr=rr;rc=rr==0?1:rs[0];DO(i,zr)zs[i]=rs[i];',nl
         siz     ,←'I n=zr==0?0:zr-1;DO(i,n)zc*=rs[i+1];'
         exe     ←pacc'update host(zv[:rslt->c],rv[:rgt->c])'
@@ -821,8 +821,8 @@ sc1m←{        siz     ←'zr=rr;rc=rr==0?1:rs[0];DO(i,zr)zs[i]=rs[i];',nl
         exe     ,←(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
         exe     ,←pacc'update device(zv[:rslt->c],rv[:rgt->c])'
                 '' siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Outer Product
+
+⍝   Outer Product
 oupd←{        siz     ←'zr=lr+rr;DO(i,lr)zs[i]=ls[i];DO(i,rr)zs[i+lr]=rs[i];'
         scl     ←(⊂⊃⍺⍺)∊0⌷⍉sdb
         cpu     ←pacc'update host(lv[:lft->c],rv[:rgt->c])'
@@ -832,8 +832,8 @@ oupd←{        siz     ←'zr=lr+rr;DO(i,lr)zs[i]=ls[i];DO(i,rr)zs[i+lr]=rs[i];
         exe     ,←'DO(i,lc){DO(j,rc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[(i*rc)+j]' 'rv[j]' 'lv[i]'),'}}',nl
         exe     ,←scl⊃(pacc'update device(zv[:rslt->c])')''
                 '' siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:Inner Product
+
+⍝   Inner Product
 inpd←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
         hid     ←idf∊⍨⊃0⊃⍺⍺
         idv     ←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
@@ -863,17 +863,8 @@ inpd←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
         exe     ,←hid⊃(pacc'exit data delete(tmp[:1])')''
         exe     ,←pacc'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[cf]
-⍝[of]:Horrible Hacks
-⍝sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
-⍝        exe     ←'zc=zs[0];rc=rs[0];lc=ls[rr-1];',nl
-⍝        exe     ,←'B szz=rslt->c,szr=rgt->c,szl=ceil(lft->c/8.0);',nl
-⍝        exe     ,←simd'independent collapse(3) present(zv[:szz],rv[:szr],lv[:szl])'
-⍝        exe     ,←'DO(i,zc){DO(j,rc){DO(k,lc){I li=(i*lc)+k;',nl
-⍝        exe     ,←'zv[(i*rc*lc)+(j*lc)+k]=(1&(lv[li/8]>>(7-(li%8))))*rv[(j*lc)+k];',nl
-⍝        exe     ,←'}}}'
-⍝                '' siz exe mxfn 1 ⍺ ⍵}
+
+⍝  Horrible Hacks
 sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
         exe     ←'zc=zs[0];rc=rs[0];lc=ls[rr-1];',nl
         exe     ,←'B szz=rslt->c,szr=rgt->c,szl=lft->c;',nl
@@ -883,7 +874,7 @@ sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
         exe     ,←'}}}'
                 '' siz exe mxfn 1 ⍺ ⍵}
 
- ⍝ Lamination
+⍝   Lamination (Hack)
   catdo←{0≡⊃0⍴⊂⊃⊃1 0⌷⍵:⍺ catdr ⍵ ⋄ 0≡⊃0⍴⊂⊃⊃2 0⌷⍵:⍺ catdl ⍵ ⋄ ⍺ catdv ⍵}
 
   catdv←{z←'{',(⊃,/'rslt' 'rgt' 'lft'{'A*',⍺,'=',⍵,';'}¨var/⍵),nl
