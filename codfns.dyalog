@@ -837,7 +837,7 @@ oupd←{        siz     ←'zr=lr+rr;DO(i,lr)zs[i]=ls[i];DO(i,rr)zs[i+lr]=rs[i];
                 '' siz exe mxfn 1 ⍺ ⍵}
 
 ⍝   Inner Product
-inpd←{hid←(idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖')∊⍨⊃0⊃⍺⍺
+inpd←{hid←(idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖')∊⍨⊃0⊃⍺⍺ ⋄ isa←'+×⌈⌊∧∨'∊⍨⊃0⊃⍺⍺
   idv←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 '-7'
   typ←2⌷(4 5⊥2↑1↓⍺)⌷⍉2⊃⍺⍺
   chk←'if(rr!=0&&lr!=0){',nl
@@ -851,25 +851,68 @@ inpd←{hid←(idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖')∊
   exe,←'if(!lc){',nl
   exe,←hid⊃''(simd'present(zv[:m])')
   exe,←nl,⍨hid⊃'error(11);'('DO(i,m){zv[i]=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';}')
-  exe,←'}else if(',(⍕hid),'&&rc==1){',nl
+  exe,←'}else if(',(⍕isa),'&&lr==0){',nl
+  exe,←' if(rc==1){',nl
+  exe,←'  ',(⊃git typ),'res=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';',nl
+  exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
+  exe,←'  DO(i,lc){',(⊃git typ),'tmp;',nl
+  exe,←'   ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[i]' 'lv[0]'),nl
+  exe,←'   ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}}',nl
+  exe,←(pacc'parallel present(zv[:1])'),'  {zv[0]=res;}',nl
+  exe,←' }else{',nl
+  exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
+  exe,←(pacc'loop independent'),'  DO(i,rc){',nl
+  exe,←'   ',(⊃git typ),'res=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';',nl
+  exe,←(pacc'loop'),'   DO(j,lc){',(⊃git typ),'tmp;',nl
+  exe,←'    ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[j*rc+i]' 'lv[0]'),nl
+  exe,←'    ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}',nl
+  exe,←'   zv[i]=res;}}',nl
+  exe,←'}}else if(',(⍕isa),'&&rr==0){',nl
+  exe,←' if(zc==1){',nl
+  exe,←'  ',(⊃git typ),'res=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';',nl
+  exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
+  exe,←'  DO(i,lc){',(⊃git typ),'tmp;',nl
+  exe,←'   ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[0]' 'lv[i]'),nl
+  exe,←'   ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}}',nl
+  exe,←(pacc'parallel present(zv[:1])'),'  {zv[0]=res;}',nl
+  exe,←' }else{',nl
+  exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
+  exe,←(pacc'loop independent'),'  DO(i,zc){',nl
+  exe,←'   ',(⊃git typ),'res=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';',nl
+  exe,←(pacc'loop'),'   DO(j,lc){',(⊃git typ),'tmp;',nl
+  exe,←'    ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[0]' 'lv[i*lc+j]'),nl
+  exe,←'    ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}',nl
+  exe,←'   zv[i]=res;}}',nl
+  exe,←'}}else if(',(⍕isa),'&&rc==1&&zc==1){',nl
+  exe,←' ',(⊃git typ),'res=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';',nl
+  exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
+  exe,←' DO(i,lc){',(⊃git typ),'tmp;',nl
+  exe,←'  ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[i]' 'lv[i]'),nl
+  exe,←'  ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}}',nl
+  exe,←(pacc'parallel present(zv[:1])'),'  {zv[0]=res;}',nl
+  exe,←'}else if(',(⍕isa),'&&zc==1){',nl
+  exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
+  exe,←(pacc'loop independent'),'DO(i,rc){',nl
+  exe,←' ',(⊃git typ),'res=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';',nl
+  exe,←(pacc'loop'),' DO(j,lc){',(⊃git typ),'tmp;',nl
+  exe,←'  ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[j*rc+i]' 'lv[j]'),nl
+  exe,←'  ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}',nl
+  exe,←' zv[i]=res;}}',nl
+  exe,←'}else if(',(⍕isa),'&&rc==1){',nl
   exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
   exe,←(pacc'loop independent'),'DO(i,zc){',nl
   exe,←' ',(⊃git typ),'res=',(⍕idv⊃⍨idf⍳⊃0⊃⍺⍺),';',nl
-  exe,←(pacc'loop'),' DO(j,lc){',nl
-  exe,←'  ',(⊃git typ),'tmp;',nl
+  exe,←(pacc'loop'),' DO(j,lc){',(⊃git typ),'tmp;',nl
   exe,←'  ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[j]' 'lv[i*lc+j]'),nl
-  exe,←'  ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'res' 'tmp'),'}',nl
+  exe,←'  ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}',nl
   exe,←' zv[i]=res;}}',nl
   exe,←'}else{',nl
   exe,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
   exe,←(pacc'loop independent'),'DO(i,zc){',nl
-  exe,←(pacc'loop independent'),' DO(j,rc){',nl
-  exe,←'  L ri=(((lc-1)*rc)+j)%rz;L li=((i*lc)+(lc-1))%lz;',nl
-  exe,←'  ',(⊃git typ),'res;',(⍺((1⊃⍺⍺)scmx ⍵⍵)'res' 'rv[ri]' 'lv[li]'),nl
-  exe,←'  L n=lc-1;',nl
+  exe,←(pacc'loop independent'),' DO(j,rc){',(⊃git typ),'res;L n=lc-1;',nl
+  exe,←'  ',(⍺((1⊃⍺⍺)scmx ⍵⍵)'res' 'rv[((lc-1)*rc)+j]' 'lv[(i*lc)+lc-1]'),nl
   exe,←(pacc'loop'),'  DO(k,n){',nl
-  exe,←'   ',(⊃git typ),'tmp;',nl
-  exe,←'   L ri=(((lc-(k+2))*rc)+j)%rz;L li=((i*lc)+(lc-(k+2)))%lz;',nl
+  exe,←'   ',(⊃git typ),'tmp;L ri=((lc-(k+2))*rc)+j,li=(i*lc)+lc-(k+2);',nl
   exe,←'   ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[ri]' 'lv[li]'),nl
   exe,←'   ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'res' 'tmp'),'}',nl
   exe,←'  zv[(i*rc)+j]=res;}}',nl,'}}',nl
