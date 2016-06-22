@@ -493,7 +493,10 @@ reg  ←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
 fnv  ←{'A*env[]={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 git  ←{⍵⊃¨⊂'/* XXX */ aplint32 ' 'aplint32 ' 'double ' 'U8 ' '?type? '}
 gie  ←{⍵⊃¨⊂'/* XXX */ APLLONG' 'APLLONG' 'APLDOUB' 'APLBOOL' 'APLNA'}
-pacc ←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
+pacc←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
+aclp←{('pg'≡2↑COMPILER)⊃''('#pragma acc loop independent ',⍵,nl)}
+ackn←{('pg'≡2↑COMPILER)⊃''('#pragma acc kernels ',⍵,nl)}
+acup←{('pg'≡2↑COMPILER)⊃''('#pragma acc update ',⍵,nl)}
 simdc←{('#pragma acc kernels loop ',⍵,nl)('')('')}
 simd ←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 
@@ -799,18 +802,45 @@ rd1d←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
         exe     ,←pacc'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
 ⍝   Scan
-⍝    Generic Scan Algorithms
+⍝    Vector GPU Scan
+scngv←{z←'{',⍺,' b[513];I bc;B p,t,fp,ft,fpt;',nl
+  z,←'if(rc<=131072){bc=(rc+255)/256;p=256;t=1;fp=rc-256*(bc-1);ft=fpt=256;}',nl
+  z,←'else{bc=512;p=(rc+bc-1)/bc;t=(p+255)/256;',nl
+  z,←' fp=n-p*(bc-1);ft=p-256*(t-1);fpt=fp-256*(t-1);}',nl
+  z,←(ackn'present(rv[:rc],zv[:rc]) create(b[:bc+1])'),'{',⍺,' ta[256];',nl
+  z,←(aclp''),'DOI(i,bc-1){',⍺,' t=',⍵,';B p128=(p+127)/128;',nl
+  z,←(pacc'loop vector'),' DO(j,p){I x=i*p+j;if(x<rc){',nl
+  z,←'  ',(⍺⍺,¨'t' 't' 'rv[x]'),'}}',nl,' b[i+1]=t;}',nl
+  z,←'DO(i,1){b[0]=',⍵,';}',nl,'DO(i,bc){',(⍺⍺'b[i+1]' 'b[i+1]' 'b[i]'),'}',nl
+  z,←(aclp'private(ta)'),'DOI(i,bc){',⍺,' s=b[i];B pid=i*p;',nl
+  z,←(pacc'cache(ta[:256])'),' DOI(j,t-1){B tid=pid+j*256;',nl
+  z,←(aclp''),'  DOI(k,256){ta[k]=rv[tid+k];}',nl,(⍺⍺'ta[0]' 'ta[0]' 's'),nl
+  z,←(aclp''),'  DOI(k,128){I x=k*2;',(⍺⍺'ta[x+1]' 'ta[x+1]' 'ta[x]'),'}',nl
+  lp←{b←(aclp'collapse(2)'),'  DOI(g,',⍺,'){DOI(k,',⍵,'){I x=2*g*',⍵,'+',⍵,';'
+    b,(⍺⍺'ta[x+k]' 'ta[x+k]' 'ta[x-1]'),'}}',nl}
+  z,←⍺⍺{⊃,/(⌽⍵)⍺⍺ lp¨⍵}⍕¨2*1+⍳6
+  z,←(aclp''),'  DOI(k,128){',(⍺⍺'ta[k+128]' 'ta[k+128]' 'ta[127]'),'}',nl
+  z,←(aclp''),'  DOI(k,256){zv[tid+k]=ta[k];}',nl,'s=ta[255];}',nl
+  z,←' B sz=ft;if(i==bc-1)sz=fpt;B tid=pid+(t-1)*256;',nl
+  z,←(aclp''),' DOI(k,256){ta[k]=',⍵,';if(k<sz)ta[k]=rv[tid+k];}',nl
+  z,←' ',(⍺⍺'ta[0]' 'ta[0]' 's'),nl
+  z,←' for(I d=1;d<256;d*=2){',nl
+  z,←(aclp'collapse(2)'),'  for(I g=d;g<w56;g+=d*2){',nl
+  z,←'   for(I k=0;k<d;k++){',(⍺⍺'ta[g+k]' 'ta[g+k]' 'ta[g-1]'),'}}}',nl
+  z,←(aclp''),' DOI(k,sz){zv[tid+k]=ta[k];}}',nl
+  z,'}}',nl}
 
-⍝     Warp Scan Over Vector
+⍝     Scan Entry Point
 scnm←{siz←'zr=rr;if(rr)rc=rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
   siz,←'I n;if(zr)n=zr-1;else n=0;DO(i,n)zc*=rs[i];'
-  val←'zv[(i*rc)+j+1]' 'zv[(i*rc)+j]' 'rv[(i*rc)+j+1]'
-  exe←pacc'update host(zv[:rslt->c],rv[:rgt->c])'
-  exe,←'if(rc!=0){DO(i,zc){zv[i*rc]=rv[i*rc];',nl
-  exe,←' L n=rc-1;DO(j,n){'
-  exe,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,pacc'update device(zv[(i*rc)+j:1])')''
-  exe,←(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
-  exe,←pacc'update device(zv[:rslt->c],rv[:rgt->c])'
+  fil←(gid←(ass←'+×⌈⌊∨∧')⍳⊂⊃⍺⍺)⊃,¨'0' '1' '-DBL_MAX' 'DBL_MAX' '0' '1' '-1'
+  gpu←(⊃git⊃⍺)(((⊃⍺),⍺)∘((⊃⍺⍺)scmx⍵⍵)scngv)fil
+  exe←(gid<≢ass)⊃''('if(rr==1&&rc!=0){',gpu,'}else ')
+  exe,←'if(rc!=0){',nl,acup'host(zv[:rslt->c],rv[:rgt->c])'
+  exe,←' DO(i,zc){zv[i*rc]=rv[i*rc];L n=rc-1;DO(j,n){'
+  exe,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,acup'device(zv[(i*rc)+j:1])')''
+  exe,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[i*rc+j+1]' 'zv[i*rc+j]' 'rv[i*rc+j+1]'
+  exe,←'}}',nl,(acup'device(zv[:rslt->c],rv[:rgt->c])'),'}',nl
     '' siz exe mxfn 1 ⍺ ⍵}
 
 ⍝   Scan First Axis
@@ -963,6 +993,7 @@ rth,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array 
 
 ⍝   Helper Macros
 rth,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
+rth,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
 
 ⍝   Allocation
 rth,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
