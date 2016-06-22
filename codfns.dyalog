@@ -825,7 +825,7 @@ scngv←{z←'{',⍺,' b[513];I bc;B p,t,fp,ft,fpt;',nl
   z,←(aclp''),' DOI(k,256){ta[k]=',⍵,';if(k<sz)ta[k]=rv[tid+k];}',nl
   z,←' ',(⍺⍺'ta[0]' 'ta[0]' 's'),nl
   z,←' for(I d=1;d<256;d*=2){',nl
-  z,←(aclp'collapse(2)'),'  for(I g=d;g<w56;g+=d*2){',nl
+  z,←(aclp'collapse(2)'),'  for(I g=d;g<256;g+=d*2){',nl
   z,←'   for(I k=0;k<d;k++){',(⍺⍺'ta[g+k]' 'ta[g+k]' 'ta[g-1]'),'}}}',nl
   z,←(aclp''),' DOI(k,sz){zv[tid+k]=ta[k];}}',nl
   z,'}}',nl}
@@ -833,9 +833,9 @@ scngv←{z←'{',⍺,' b[513];I bc;B p,t,fp,ft,fpt;',nl
 ⍝     Scan Entry Point
 scnm←{siz←'zr=rr;if(rr)rc=rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
   siz,←'I n;if(zr)n=zr-1;else n=0;DO(i,n)zc*=rs[i];'
-  fil←(gid←(ass←'+×⌈⌊∨∧')⍳⊂⊃⍺⍺)⊃,¨'0' '1' '-DBL_MAX' 'DBL_MAX' '0' '1' '-1'
+  fil←(gid←(ass←'+×⌈⌊∨∧')⍳⊃⊃⍺⍺)⊃,¨'0' '1' '-DBL_MAX' 'DBL_MAX' '0' '1' '-1'
   gpu←(⊃git⊃⍺)(((⊃⍺),⍺)∘((⊃⍺⍺)scmx⍵⍵)scngv)fil
-  exe←(gid<≢ass)⊃''('if(rr==1&&rc!=0){',gpu,'}else ')
+  exe←(('pg'≡2↑COMPILER)∧gid<≢ass)⊃''('if(rr==1&&rc!=0){',gpu,'}else ')
   exe,←'if(rc!=0){',nl,acup'host(zv[:rslt->c],rv[:rgt->c])'
   exe,←' DO(i,zc){zv[i*rc]=rv[i*rc];L n=rc-1;DO(j,n){'
   exe,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,acup'device(zv[(i*rc)+j:1])')''
