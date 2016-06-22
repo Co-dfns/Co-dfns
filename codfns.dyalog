@@ -72,7 +72,7 @@ iop←'-fast -g -fno-alias -static-intel -mkl -Wall -Wno-unused-function -fPIC -
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
 
 ⍝  PGI C Linux
-pop←' -fast -acc -ta=tesla:nollvm,nordc,cuda7.5 -Minfo -fPIC '
+pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda7.5 -Minfo -fPIC '
 pgcco←{cmd←'pgcc -c ',cds,pop,'-I',DWA∆PATH,' '
   ⎕SH cmd,'-o ''',⍵,'.o'' ''',⍵,'.c'' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
 pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' '
@@ -806,7 +806,7 @@ rd1d←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
 scngv←{z←'{',⍺,' b[513];I bc;B p,t,fp,ft,fpt;',nl
   z,←'if(rc<=131072){bc=(rc+255)/256;p=256;t=1;fp=rc-256*(bc-1);ft=fpt=256;}',nl
   z,←'else{bc=512;p=(rc+bc-1)/bc;t=(p+255)/256;',nl
-  z,←' fp=n-p*(bc-1);ft=p-256*(t-1);fpt=fp-256*(t-1);}',nl
+  z,←' fp=rc-p*(bc-1);ft=p-256*(t-1);fpt=fp-256*(t-1);}',nl
   z,←(ackn'present(rv[:rc],zv[:rc]) create(b[:bc+1])'),'{',⍺,' ta[256];',nl
   z,←(aclp''),'DOI(i,bc-1){',⍺,' t=',⍵,';B p128=(p+127)/128;',nl
   z,←(pacc'loop vector'),' DO(j,p){I x=i*p+j;if(x<rc){',nl
@@ -814,13 +814,13 @@ scngv←{z←'{',⍺,' b[513];I bc;B p,t,fp,ft,fpt;',nl
   z,←'DO(i,1){b[0]=',⍵,';}',nl,'DO(i,bc){',(⍺⍺'b[i+1]' 'b[i+1]' 'b[i]'),'}',nl
   z,←(aclp'private(ta)'),'DOI(i,bc){',⍺,' s=b[i];B pid=i*p;',nl
   z,←(pacc'cache(ta[:256])'),' DOI(j,t-1){B tid=pid+j*256;',nl
-  z,←(aclp''),'  DOI(k,256){ta[k]=rv[tid+k];}',nl,(⍺⍺'ta[0]' 'ta[0]' 's'),nl
+  z,←(aclp''),'  DOI(k,256){ta[k]=rv[tid+k];}',nl,'  ',(⍺⍺'ta[0]' 'ta[0]' 's'),nl
   z,←(aclp''),'  DOI(k,128){I x=k*2;',(⍺⍺'ta[x+1]' 'ta[x+1]' 'ta[x]'),'}',nl
   lp←{b←(aclp'collapse(2)'),'  DOI(g,',⍺,'){DOI(k,',⍵,'){I x=2*g*',⍵,'+',⍵,';'
     b,(⍺⍺'ta[x+k]' 'ta[x+k]' 'ta[x-1]'),'}}',nl}
   z,←⍺⍺{⊃,/(⌽⍵)⍺⍺ lp¨⍵}⍕¨2*1+⍳6
   z,←(aclp''),'  DOI(k,128){',(⍺⍺'ta[k+128]' 'ta[k+128]' 'ta[127]'),'}',nl
-  z,←(aclp''),'  DOI(k,256){zv[tid+k]=ta[k];}',nl,'s=ta[255];}',nl
+  z,←(aclp''),'  DOI(k,256){zv[tid+k]=ta[k];}',nl,'  s=ta[255];}',nl
   z,←' B sz=ft;if(i==bc-1)sz=fpt;B tid=pid+(t-1)*256;',nl
   z,←(aclp''),' DOI(k,256){ta[k]=',⍵,';if(k<sz)ta[k]=rv[tid+k];}',nl
   z,←' ',(⍺⍺'ta[0]' 'ta[0]' 's'),nl
