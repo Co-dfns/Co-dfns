@@ -2,15 +2,16 @@
 
 S←':Namespace' 'Run←{+\⍵}' 'R2←{×\⍵}' 'R3←{{⍺+⍵}\⍵}' ':EndNamespace'
 
-'1'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'2'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'3'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'4'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) ⍬⍴3
-'5'('scan' S 'R2'  #.util.GEN∆T1 ⎕THIS) ⍬
-'6'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'7'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'8'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'9'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
+'01'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
+'02'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
+'03'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
+'04'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) ⍬⍴3
+'05'('scan' S 'R2'  #.util.GEN∆T1 ⎕THIS) ⍬
+'06'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
+'07'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) ⍬⍴1
+'08'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
+'09'('scan' S 'R3'  #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
+'10'('scan' S 'Run' #.util.GEN∆T1 ⎕THIS) (2*18)⍴2 0 0 0 0
 
 :EndNamespace
 
