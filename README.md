@@ -155,3 +155,17 @@ during development in the repository.
 We need your help! Please contact <arcfide@sacrideo.us> to learn how you
 can support the project.
 
+## Publications
+
+[The Key to a Data Parallel Compiler](http://dl.acm.org/citation.cfm?id=2935331)
+
+[Accelerating Information Experts Through Compiler Design](http://dl.acm.org/citation.cfm?id=2774968)
+
+[Co-dfns: Ancient Language, Modern Compiler](http://dl.acm.org/citation.cfm?id=2627384)
+
+[U11: Using Co-dfns to Accelerate APL Code](http://dyalog.com/user-meetings/dyalog15.htm)
+
+[U07: Co-dfns Report: Performance and Reliability Prototyping](http://dyalog.com/user-meetings/dyalog14.htm)
+
+[(I04) Co-dfns Compiler](http://dyalog.com/user-meetings/dyalog13.htm)
+
