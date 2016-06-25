@@ -167,5 +167,5 @@ can support the project.
 
 [U07: Co-dfns Report: Performance and Reliability Prototyping](http://dyalog.com/user-meetings/dyalog14.htm)
 
-[(I04) Co-dfns Compiler](http://dyalog.com/user-meetings/dyalog13.htm)
+[I04: Co-dfns Compiler](http://dyalog.com/user-meetings/dyalog13.htm)
 
