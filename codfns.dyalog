@@ -57,8 +57,8 @@ mkf  ←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext�
 ⍝ Backend Compilers
 
 ⍝  UNIX Generic Flags/Options
-cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden -std=c11 '
-cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 '
+cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden '
+cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 -lbsd '
 cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
 fls←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
@@ -363,7 +363,7 @@ pt⍪←pfs   1   2   3   1   1   1   2   2   2   3   3   3⊣pn,←⊂,'↓'
 pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   3   3   3⊣pn,←⊂,'⊤'
 pt⍪←pfs  ¯2  ¯2  ¯2   1 ¯16   1 ¯16 ¯16 ¯16   1 ¯16   1⊣pn,←⊂,'⊥'
 pt⍪←pfs   2   2   3   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'!'
-pt⍪←pfs   2   2   2 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16⊣pn,←⊂,'?'
+pt⍪←pfs   2 ¯11   2 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16 ¯16⊣pn,←⊂,'?'
 pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'¨'
 pt⍪←pfs   0   0   0   0   0   0   0   0   0   0   0   0⊣pn,←⊂,'⍨'
 pt⍪←pfs   0   0   0   0 ¯11   0   0 ¯11   0   0 ¯11   0⊣pn,←⊂,'/'
@@ -545,10 +545,10 @@ gcl←{''≢id←gnmid ⍵:(⍎id,⍺⍺,(gnmtp ⍵),gnmsla ⍵)((⊂n,∘⊃v),
   ⎕SIGNAL 16}
 
 ⍝  Scalar Primitives
-respos←'⍵ % ⍺'
-⍝⍝respos ←'fmod((D)⍵,(D)⍺)'
-⍝⍝resneg ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
-⍝⍝residue←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
+⍝⍝residue←'⍵ % ⍺'
+respos ←'fmod((D)⍵,(D)⍺)'
+resneg ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
+residue←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
 
 ⍝   Scalar Dispatch Table
 sdb←0 5⍴⊂''
@@ -559,7 +559,7 @@ sdb⍪←,¨'×'  '(⍵>0)-(⍵<0)' '⍺*⍵'                 '⍵'         '⍺
 sdb⍪←,¨'÷'  '1.0/⍵'       '((D)⍺)/((D)⍵)'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'*'  'exp((D)⍵)'   'pow((D)⍺,(D)⍵)'      'exp((D)⍵)' '⍺|~⍵'
 sdb⍪←,¨'⍟'  'log((D)⍵)'   'log((D)⍵)/log((D)⍺)' ''          ''
-sdb⍪←,¨'|'  'fabs(⍵)'     respos               '⍵'         '⍵&(⍺^⍵)'
+sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^⍵)'
 sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ(⍺,⍵)'
 sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
@@ -976,9 +976,13 @@ sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 
 ⍝   Includes
 rth←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
+rth,←'#include <stdlib.h>',nl,'#include <time.h>',nl
 rth,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
 rth,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl
 rth,←'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
+rth,←'#ifdef _WIN32',nl
+rth,←'#elif __linux__',nl,'#include <bsd/stdlib.h>',nl
+rth,←'#else',nl,'#endif',nl
 
 ⍝   Globals
 rth,←'int isinit=0;',nl
@@ -1183,6 +1187,8 @@ decl←{        z       ←(⊃,/(⊂''),⍺⍺{'I ',⍺,'r=',⍵,'->r;'}¨⍵),
 declv   ←{(⊃,/(⊂''),(git ⍺),¨⍺⍺{'*restrict ',⍺,'v=(',⍵,')->v;'}¨⍵),nl}
 
 ⍝   Structural Primitive Verbs
+
+⍝    Reshape
 shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
  siz←pacc'update host(lv[:ls[0]])'
  siz,←'zr=ls[0];DO(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
@@ -1195,9 +1201,9 @@ shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
  cpyb,←' DO(j,8){I ri=(i*8+j)%rc;b|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}',nl
  cpyb,←' zv[i]=b;}}'
  cpy←(3=0⌷⍺)⊃cpyn cpyb
- ref←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=0;rslt->c=zc;',nl
- ref,←nl,⍨(3=0⌷⍺)⊃'I zcp=zc;' 'I zcp=ceil(zc/8.0);'
- ref,←'rslt->z=zcp*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
+ ref←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=rgt->f;rgt->f=0;',nl
+ zcp←(3=0⌷⍺)⊃'zc' 'ceil(zc/8.0)'
+ ref,←'rslt->c=zc;rslt->z=',zcp,'*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
  exe←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
  chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
 
@@ -1570,6 +1576,24 @@ iotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←iotmck rgt
   z,(simd'present(zv[:c])'),'DO(i,c)zv[i]=i;}',nl}
 
 ⍝   Miscellaneous Mixed Primitive Verbs Generators
+
+⍝    Roll
+rolmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B c=(',rgt,')->c;',nl
+  z,←'I*restrict rv=(',rgt,')->v;',nl,acup'host(rv[:c])'
+  z,←'DO(i,c){if(rv[i]<0)DOMAIN_ERROR;}',nl
+  z,←'A t;t.v=NULL;',nl
+  z,←'ai(&t,(',rgt,')->r,(',rgt,')->s,2);D*restrict zv=t.v;',nl
+  z,←'srand48(time(NULL));',nl
+  z,←'DO(i,c){if(rv[i])zv[i]=arc4random_uniform(rv[i]);else zv[i]=drand48();}',nl
+  z,(acup'device(zv[:c])'),'cpaa(',rslt,',&t);}',nl}
+rolmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B c=ceil((',rgt,')->c/8.0);',nl
+  z,←'U8*restrict rv=(',rgt,')->v;',nl,acup'host(rv[:c])'
+  z,←'A t;t.v=NULL;',nl
+  z,←'ai(&t,(',rgt,')->r,(',rgt,')->s,2);D*restrict zv=t.v;',nl
+  z,←'srand48(time(NULL));',nl
+  z,←'DO(i,c){DO(j,8){B x=i*8+j;U8 t=1&(rv[i]>>(7-j));',nl
+  z,←' if(t)zv[x]=0;else zv[x]=drand48();}}',nl
+  z,'B zc=t.c;',nl,(acup'device(zv[:zc])'),'cpaa(',rslt,',&t);}',nl}
 
 ⍝    Shape
 rhomfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B sp[15],cnt;'
