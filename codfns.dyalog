@@ -1371,13 +1371,6 @@ rtfdfbbaaa←{'NONCE_ERROR;',nl}
 rtfdfibaaa←{'NONCE_ERROR;',nl}
 rtfdffbaaa←{'NONCE_ERROR;',nl}
 rtfd←{⍺('df'gluecl'⊖')⍵}
-⍝rtfd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-⍝        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-⍝        exe     ←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
-⍝        exe     ,←'DO(i,lr)lc*=ls[i];',nl
-⍝        exe     ,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
-⍝        exe     ,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
-⍝                chk siz exe mxfn 1 ⍺ ⍵}
 
 ⍝    Transpose
 trnmfh←{z←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];',nl
