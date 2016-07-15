@@ -540,6 +540,8 @@ nams,←  'dot' 'rnk' 'pow' 'jot'
 gnmtp←'xifbn'⊃¨∘⊂⍨2↑1↓∘⊃y
 gnmid←(nams,⊂'')⊃⍨syms⍳¯1↑∘⊃v
 gnmsla←'las'⊃¨∘⊂⍨(∧/¯1=∘↑3↑∘⊃e)+0≠((⊃0⍴⊃)¨n,2↑∘⊃v)
+gluecl←{n←0 '_' 0 (⊃⍵) ⍬ 0 ((1↓0⌷⍉⍵),⊂,⍵⍵)(⍺,0)((1⌷⍉⍵),⊂¯1 0) 0
+  (0 5⍴⊂'')(⍺⍺ gcl)n}
 gcl←{''≢id←gnmid ⍵:(⍎id,⍺⍺,(gnmtp ⍵),gnmsla ⍵)((⊂n,∘⊃v),e,y)⍵
   r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵
   ⎕SIGNAL 16}
@@ -1352,13 +1354,30 @@ rtfmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'U8'rtfmhd rgt
   z,'cpaa(',rslt,',&t);}',nl}
 
 ⍝    Rotate First
-rtfd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
-        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
-        exe     ←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
-        exe     ,←'DO(i,lr)lc*=ls[i];',nl
-        exe     ,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
-        exe     ,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
-                chk siz exe mxfn 1 ⍺ ⍵}
+rtfdfiiaaa←{v e y←⍵ ⋄ '1I'rtfdni var/3↑v,⍪e}
+rtfdffiaaa←{v e y←⍵ ⋄ '2D'rtfdni var/3↑v,⍪e}
+rtfdni←{d t←⍺ ⋄ a r l←⍵ ⋄ z←'{I lr=(',l,')->r;B*ls=(',l,')->s;',nl
+  z,←'if(lr!=0&&(lr!=1||ls[0]!=1))DOMAIN_ERROR;',nl
+  z,←'I rr=(',r,')->r;B*rs=(',r,')->s;',nl
+  z,←'A ta;ta.v=NULL;ai(&ta,rr,rs,',d,');',nl
+  z,←'B zc=1;if(rr)zc=rs[0];I n=0;if(rr)n=rr-1;B rc=1;DOI(i,n)rc*=rs[i+1];',nl
+  z,←'B lc=1;DOI(i,lr)lc*=ls[i];',nl
+  z,←t,'*zv=ta.v;I*lv=(',l,')->v;',t,'*rv=(',r,')->v;',nl
+  z,←simd'collapse(2) present(zv[:ta.c],rv[:ta.c],lv[:lc])'
+  z,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}',nl
+  z,'cpaa(',a,',&ta);}',nl}
+rtfdfbiaaa←{'NONCE_ERROR;',nl}
+rtfdfbbaaa←{'NONCE_ERROR;',nl}
+rtfdfibaaa←{'NONCE_ERROR;',nl}
+rtfdffbaaa←{'NONCE_ERROR;',nl}
+rtfd←{⍺('df'gluecl'⊖')⍵}
+⍝rtfd←{        chk     ←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
+⍝        siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
+⍝        exe     ←'zc=rr==0?1:rs[0];I n=rr==0?0:rr-1;DO(i,n)rc*=rs[i+1];',nl
+⍝        exe     ,←'DO(i,lr)lc*=ls[i];',nl
+⍝        exe     ,←simd'collapse(2) present(zv[:rslt->c],rv[:rslt->c],lv[:lc])'
+⍝        exe     ,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}'
+⍝                chk siz exe mxfn 1 ⍺ ⍵}
 
 ⍝    Transpose
 trnmfh←{z←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];',nl
