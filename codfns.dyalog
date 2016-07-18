@@ -1363,10 +1363,26 @@ rtfdni←{d t←⍺ ⋄ a r l←⍵ ⋄ z←'{I lr=(',l,')->r;B*ls=(',l,')->s;',
   z,←'B zc=1;if(rr)zc=rs[0];I n=0;if(rr)n=rr-1;B rc=1;DOI(i,n)rc*=rs[i+1];',nl
   z,←'B lc=1;DOI(i,lr)lc*=ls[i];',nl
   z,←t,'*zv=ta.v;I*lv=(',l,')->v;',t,'*rv=(',r,')->v;',nl
+  z,←'B s=lv[0];if(lv[0]<0)s=zc+lv[0];',nl
   z,←simd'collapse(2) present(zv[:ta.c],rv[:ta.c],lv[:lc])'
-  z,←'DO(i,zc){DO(j,rc){zv[(((i-lv[0])%zc)*rc)+j]=rv[(i*rc)+j];}}',nl
+  z,←'DO(i,zc){DO(j,rc){zv[i*rc+j]=rv[((i+s)%zc)*rc+j];}}',nl
   z,'cpaa(',a,',&ta);}',nl}
-rtfdfbiaaa←{'NONCE_ERROR;',nl}
+rtfdfbiaaa←{v e y←⍵ ⋄ a r l←var/3↑v,⍪e
+  z←'{I lr=(',l,')->r;B*ls=(',l,')->s;',nl
+  z,←'if(lr!=0&&(lr!=1||ls[0]!=1))DOMAIN_ERROR;',nl
+  z,←'I rr=(',r,')->r;B*rs=(',r,')->s;',nl
+  z,←'A ta;ta.v=NULL;ai(&ta,rr,rs,3);U8*restrict zv=ta.v;',nl
+  z,←'B zc=1;if(rr)zc=rs[0];I n=0;if(rr)n=rr-1;B rc=1;DOI(i,n)rc*=rs[i+1];',nl
+  z,←'B lc=(',l,')->c;B bc=(ta.c+7)/8;',nl
+  z,←'U8*restrict rv=(',r,')->v;I*restrict lv=(',l,')->v;',nl
+  z,←'B s=lv[0];if(lv[0]<0)s=zc+lv[0];',nl
+  z,←simd'present(zv[:bc],lv[:lc],rv[:bc])'
+  z,←'DO(i,bc){B i8=i*8;U8 t=0;',nl
+  z,←' DOI(j,8){B di=i8+j;B dr=di/rc;B dc=di%rc;',nl
+  z,←'  B tr=(dr+s)%zc;B ti=tr*rc+dc;',nl
+  z,←'  t|=(1&(rv[ti/8]>>(7-(ti%8))))<<(7-j);}',nl
+  z,←' zv[i]=t;}',nl
+  z,'cpaa(',a,',&ta);}',nl}
 rtfdfbbaaa←{'NONCE_ERROR;',nl}
 rtfdfibaaa←{'NONCE_ERROR;',nl}
 rtfdffbaaa←{'NONCE_ERROR;',nl}
