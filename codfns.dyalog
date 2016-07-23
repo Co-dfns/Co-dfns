@@ -1006,6 +1006,13 @@ rth,←'struct array {I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef struct array 
 rth,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
 rth,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
 
+⍝   Helper Functions
+rth,←'#define R2(n)     n,     n + 2*64,     n + 1*64,     n + 3*64',nl
+rth,←'#define R4(n) R2(n), R2(n + 2*16), R2(n + 1*16), R2(n + 3*16)',nl
+rth,←'#define R6(n) R4(n), R4(n + 2*4 ), R4(n + 1*4 ), R4(n + 3*4 )',nl
+rth,←'static const U8 bitrt[256]={R6(0), R6(2), R6(1), R6(3)};',nl
+rth,←'U8 bitrev(U8 c){return bitrt[c];}',nl
+
 ⍝   Allocation
 rth,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
 rth,←' if(a->f){',nl,'#ifdef _OPENACC',nl
@@ -1032,7 +1039,8 @@ rth,←'  case APLBOOL:z=ceil(a->c/8.0)*sizeof(U8);break;',nl
 rth,←'  default:error(11);}',nl
 rth,←' #ifdef _OPENACC',nl,'  char *v=a->v;',nl
 rth,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
-rth,←' memcpy(ARRAYSTART(d->p),a->v,z);}',nl
+rth,←' if(t==APLBOOL){U8*t=ARRAYSTART(d->p);U8*s=a->v;DO(i,z)t[i]=bitrev(s[i]);}',nl
+rth,←' else{memcpy(ARRAYSTART(d->p),a->v,z);}}',nl
 rth,←'V cpda(A*a,LOCALP*d){if(TYPESIMPLE!=d->p->TYPE)error(16);frea(a);',nl
 rth,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
 rth,←' switch(d->p->ELTYPE){',nl
@@ -1050,7 +1058,7 @@ rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
 rth,←'   {aplint8*s=ARRAYSTART(d->p);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
 rth,←'  case APLBOOL:a->z=8*((((c+7/8)*sizeof(U8))+7)/8);a->f=2;',nl
 rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth,←'   {U8*s=ARRAYSTART(d->p);U8*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
+rth,←'   {U8*s=ARRAYSTART(d->p);U8*t=a->v;DO(i,c)t[i]=bitrev(s[i]);};break;',nl
 rth,←'  default:error(16);}',nl
 rth,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
 rth,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
@@ -1397,9 +1405,8 @@ rtfdfbiaal←{v e y←⍵ ⋄ a r←var/2↑v,⍪e ⋄ lr←≢⍴l←2⊃v ⋄ 
   '{',('r'decarrb r),('rr,rs,3'dectmpb'z'),'I lv0=',(cln⍕l),';',nl,rtfdfbilp a}
 rtfdfbilp←{z←(rtfdfshft⍬),'B ec=(zc+63)/64;B*zvB=(B*)zv;B*rvB=(B*)rv;',nl
   z,←'if(zc<=1){}else if(zc<=64){',nl
-  z,←(acup'host(rvB[:ec])'),'B t=rvB[0];printf("%" PRIu64 "\n", t);',nl
   z,←simd'present(zvB[:ec],rvB[:ec])'
-  z,←' DOI(i,1){B t=rvB[0]&(((B)-1)<<(64-zc));zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
+  z,←' DOI(i,1){B t=rvB[0]&((1<<zc)-1);zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
   z,←'else{B gc=(ec+127)/128;B s64=s/64;I sm=1+(zc-1)%64;I ol=s%64;I or=64-ol;',nl
   z,←' B ta[129];',nl,simd'present(zvB[:ec],rvB[:ec]) private(ta[:129])'
   z,←' DO(i,gc){',nl,pacc'cache(ta[:129])'
