@@ -60,7 +60,7 @@ MK∆T3←{id cmp ns fn tl←⍺⍺ ⋄ l r←⍵⍵
     ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 ∇Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;CMP;TC;TMP
  NS TC FN←NCF
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc' 'clang'
      TMP←(NS,ID)CMP TC FN MK∆T1 IN
      ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
  :EndFor
@@ -69,7 +69,7 @@ MK∆T3←{id cmp ns fn tl←⍺⍺ ⋄ l r←⍵⍵
 
 ∇Z←ID(NCF GEN∆T2 THIS)IN;NS;FN;CMP;TC;TMP
  NS TC FN←NCF
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc' 'clang'
      TMP←(NS,ID)CMP TC FN MK∆T2 IN
      ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
  :EndFor
@@ -77,7 +77,7 @@ MK∆T3←{id cmp ns fn tl←⍺⍺ ⋄ l r←⍵⍵
 ∇
 ∇Z←ID(NCFT GEN∆T3 THIS)IN;NS;FN;CMP;TC;TMP;TL
  NS TC FN TL←NCFT
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc' 'clang'
      TMP←(NS,ID)CMP TC FN TL MK∆T3 IN
      ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
  :EndFor

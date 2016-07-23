@@ -59,17 +59,21 @@ mkf  ←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext�
 ⍝  UNIX Generic Flags/Options
 cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden '
 cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 -lbsd '
-cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.so'' '}
+cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.',⍺⍺,''' '}
 fls←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 
+⍝  Clang (Mac OS X)
+cop←'-Ofast -g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
+clang←{⎕SH'clang ',cfs,cds,gop,'gcc'('dylib'cio,fls,log)⍵}
+
 ⍝  GCC (Linux Only)
 gop←'-Ofast -g -Wall -Wno-unused-function -Wno-unused-variable -fPIC -shared '
-gcc←{⎕SH'gcc ',cfs,cds,gop,'gcc'(cio,fls,log)⍵}
+gcc←{⎕SH'gcc ',cfs,cds,gop,'gcc'('so'cio,fls,log)⍵}
 
 ⍝  Intel C Linux
 iop←'-fast -g -fno-alias -static-intel -mkl -Wall -Wno-unused-function -fPIC -shared '
-icc←{⎕SH'icc ',cfs,cds,iop,'icc'(cio,fls,log)⍵}
+icc←{⎕SH'icc ',cfs,cds,iop,'icc'('so'cio,fls,log)⍵}
 
 ⍝  PGI C Linux
 pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda7.5 -Minfo -fPIC '
@@ -979,6 +983,7 @@ sopid←{       siz     ←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
 ⍝   Includes
 rth←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
 rth,←'#include <stdlib.h>',nl,'#include <time.h>',nl
+rth,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
 rth,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
 rth,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl
 rth,←'#include <dwa.h>',nl,'#include <dwa_fns.h>',nl
@@ -1013,7 +1018,7 @@ rth,←'  case 1:z=sizeof(I)*pc;break;',nl
 rth,←'  case 2:z=sizeof(D)*pc;break;',nl
 rth,←'  case 3:z=ceil((sizeof(U8)*pc)/8.0);break;',nl
 rth,←'  default: error(16);}',nl
-rth,←' z=4*ceil(z/4.0);char*v=malloc(z);if(NULL==v)error(1);',nl
+rth,←' z=8*ceil(z/8.0);char*v=malloc(z);if(NULL==v)error(1);',nl
 rth,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
 rth,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
 rth,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl
@@ -1031,18 +1036,21 @@ rth,←' memcpy(ARRAYSTART(d->p),a->v,z);}',nl
 rth,←'V cpda(A*a,LOCALP*d){if(TYPESIMPLE!=d->p->TYPE)error(16);frea(a);',nl
 rth,←' I r=a->r=d->p->RANK;B c=1;DO(i,r){c*=a->s[i]=d->p->SHAPETC[i];};a->c=c;',nl
 rth,←' switch(d->p->ELTYPE){',nl
-rth,←'  case APLLONG:a->z=c*sizeof(I);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
-rth,←'  case APLDOUB:a->z=c*sizeof(D);a->f=1;a->v=ARRAYSTART(d->p);break;',nl
-rth,←'  case APLINTG:a->z=c*sizeof(I);a->f=2;',nl
+rth,←'  case APLLONG:a->z=8*((c*sizeof(I)+7)/8);a->f=2;',nl
 rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth,←'   {aplint16 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
-rth,←'   DO(i,c)t[i]=s[i];};break;',nl
-rth,←'  case APLSINT:a->z=c*sizeof(I);a->f=2;',nl
+rth,←'   {aplint32*s=ARRAYSTART(d->p);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
+rth,←'  case APLDOUB:a->z=8*((c*sizeof(D)+7)/8);a->f=2;',nl
 rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
-rth,←'   {aplint8 *restrict s=ARRAYSTART(d->p);I *restrict t=a->v;',nl
-rth,←'   DO(i,c)t[i]=s[i];};break;',nl
-rth,←'  case APLBOOL:a->z=ceil(c/8.0)*sizeof(U8);a->f=1;',nl
-rth,←'   a->v=ARRAYSTART(d->p);break;',nl
+rth,←'   {D*s=ARRAYSTART(d->p);D*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
+rth,←'  case APLINTG:a->z=8*((c*sizeof(I)+7)/8);a->f=2;',nl
+rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth,←'   {aplint16*s=ARRAYSTART(d->p);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
+rth,←'  case APLSINT:a->z=8*((c*sizeof(I)+7)/8);a->f=2;',nl
+rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth,←'   {aplint8*s=ARRAYSTART(d->p);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
+rth,←'  case APLBOOL:a->z=8*((((c+7/8)*sizeof(U8))+7)/8);a->f=2;',nl
+rth,←'   a->v=malloc(a->z);if(a->v==NULL)error(1);',nl
+rth,←'   {U8*s=ARRAYSTART(d->p);U8*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
 rth,←'  default:error(16);}',nl
 rth,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
 rth,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
@@ -1371,32 +1379,35 @@ rtfdfiiaaa←{v e y←⍵ ⋄ '1I'rtfdfxiaaa var/3↑v,⍪e}
 rtfdffiaaa←{v e y←⍵ ⋄ '2D'rtfdfxiaaa var/3↑v,⍪e}
 rtfdfxiaaa←{d t←⍺ ⋄ a r l←⍵ ⋄ z←'{',('r'(t decarr)r),'l'decarri l
   z,←'if(lr!=0&&(lr!=1||ls[0]!=1))DOMAIN_ERROR;',nl,('rr,rs,',d)(t dectmp)'z'
-  z,←'B ic=1;if(rr)ic=rs[0];I n=0;if(rr)n=rr-1;B jc=1;DOI(i,n)jc*=rs[i+1];',nl
-  z,(acup'host(lv[:1])'),'B s=lv[0];if(lv[0]<0)s=ic+lv[0];',nl,rtfdfxilp a}
+  z,'I lv0;',nl,(simd'present(lv[:1])'),'DOI(i,1)lv0=lv[0];',nl,rtfdfxilp a}
 rtfdfiiaal←{v e y←⍵ ⋄ '1I'rtfdfxiaal(var/2↑v,⍪e),2⌷v}
 rtfdffiaal←{v e y←⍵ ⋄ '2D'rtfdfxiaal(var/2↑v,⍪e),2⌷v}
 rtfdfxiaal←{d t←⍺ ⋄ a r l←⍵ ⋄ lr←≢⍴l ⋄ (lr≠0)∧(lr≠1)∨(⊃⍴l)≠1:⎕SIGNAL 11
   z←'{',('r'(t decarr)r),('rr,rs,',d)(t dectmp)'z'
-  z,←'B ic=1;if(rr)ic=rs[0];I n=0;if(rr)n=rr-1;B jc=1;DOI(i,n)jc*=rs[i+1];',nl
-  z,'B s=',((l<0)⊃'' 'ic+'),(cln⍕l),';',nl,rtfdfxilp a}
-rtfdfxilp←{z←simd'collapse(2) present(zv[:za.c],rv[:za.c])'
-  z,←'DO(i,ic){DO(j,jc){zv[i*jc+j]=rv[((i+s)%ic)*jc+j];}}',nl
-  z,'cpaa(',⍵,',&za);}',nl}
+  z,'I lv0=',(cln⍕l),';',nl,rtfdfxilp a}
+rtfdfshft←{z←'B ic=1;if(rr)ic=rs[0];I n=0;if(rr)n=rr-1;',nl
+  z,←'B jc=1;DOI(i,n)jc*=rs[i+1];B s=abs(lv0);if(ic)s%=ic;',nl
+  z,'if(lv0<0)s=(ic-s)*jc;else s*=jc;',nl}
+rtfdfxilp←{z←(rtfdfshft⍬),simd'present(zv[:zc],rv[:zc])'
+  z,'DO(i,zc){zv[i]=rv[(i+s)%zc];}',nl,'cpaa(',⍵,',&za);}',nl}
 rtfdfbiaaa←{v e y←⍵ ⋄ a r l←var/3↑v,⍪e ⋄ z←'{',('l'decarri l),'r'decarrb r
   z,←'if(lr!=0&&(lr!=1||ls[0]!=1))DOMAIN_ERROR;',nl,'rr,rs,3'dectmpb'z'
-  z,←'B ic=1;if(rr)ic=rs[0];I n=0;if(rr)n=rr-1;B jc=1;DOI(i,n)jc*=rs[i+1];',nl
-  z,←(acup'host(lv[:1])'),'B s=lv[0];if(lv[0]<0)s=ic+lv[0];B bc=(zc+7)/8;',nl
-  z,rtfdfbilp a}
+  z,'I lv0;',nl,(simd'present(lv[:1])'),'DOI(i,1)lv0=lv[0];',nl,rtfdfbilp a}
 rtfdfbiaal←{v e y←⍵ ⋄ a r←var/2↑v,⍪e ⋄ lr←≢⍴l←2⊃v ⋄ (lr≠0)∧(lr≠1)∨(⊃⍴l)≠1:⎕SIGNAL 11
-  z←'{',('r'decarrb r),'rr,rs,3'dectmpb'z'
-  z,←'B ic=1;if(rr)ic=rs[0];I n=0;if(rr)n=rr-1;B jc=1;DOI(i,n)jc*=rs[i+1];',nl
-  z,'B s=',((l<0)⊃'' 'ic+'),(cln⍕l),';B bc=(zc+7)/8;',nl,rtfdfbilp a}
-rtfdfbilp←{z←simd'present(zv[:bc],rv[:bc])'
-  z,←'DO(i,bc){B i8=i*8;U8 t=0;',nl
-  z,←' DOI(j,8){B di=i8+j;B dr=di/jc;B dc=di%jc;',nl
-  z,←'  B tr=(dr+s)%ic;B ti=tr*jc+dc;',nl
-  z,←'  t|=(1&(rv[ti/8]>>(7-(ti%8))))<<(7-j);}',nl
-  z,←' zv[i]=t;}',nl
+  '{',('r'decarrb r),('rr,rs,3'dectmpb'z'),'I lv0=',(cln⍕l),';',nl,rtfdfbilp a}
+rtfdfbilp←{z←(rtfdfshft⍬),'B ec=(zc+63)/64;B*zvB=(B*)zv;B*rvB=(B*)rv;',nl
+  z,←'if(zc<=1){}else if(zc<=64){',nl
+  z,←(acup'host(rvB[:ec])'),'B t=rvB[0];printf("%" PRIu64 "\n", t);',nl
+  z,←simd'present(zvB[:ec],rvB[:ec])'
+  z,←' DOI(i,1){B t=rvB[0]&(((B)-1)<<(64-zc));zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
+  z,←'else{B gc=(ec+127)/128;B s64=s/64;I sm=1+(zc-1)%64;I ol=s%64;I or=64-ol;',nl
+  z,←' B ta[129];',nl,simd'present(zvB[:ec],rvB[:ec]) private(ta[:129])'
+  z,←' DO(i,gc){',nl,pacc'cache(ta[:129])'
+  z,←'  I vc=128;if((i+1)*128>ec)vc=ec-i*128;',nl
+  z,←'  DOI(j,vc+1){B ri=(i*128+j+s64)%ec;',nl
+  z,←'   if(ri==ec-1)ta[j]=(rvB[ri-1]<<sm)|(rvB[ri]>>(64-sm));',nl
+  z,←'   else ta[j]=rvB[ri];}',nl
+  z,←'  DOI(j,vc){zvB[i*128+j]=(ta[j]<<ol)|(ta[j+1]>>or);}}}',nl
   z,'cpaa(',⍵,',&za);}',nl}
 rtfdfbbaaa←{'NONCE_ERROR;',nl}
 rtfdfbbaal←{'NONCE_ERROR;',nl}
