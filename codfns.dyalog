@@ -1403,18 +1403,20 @@ rtfdfbiaaa←{v e y←⍵ ⋄ a r l←var/3↑v,⍪e ⋄ z←'{',('l'decarri l),
   z,'I lv0;',nl,(simd'present(lv[:1])'),'DOI(i,1)lv0=lv[0];',nl,rtfdfbilp a}
 rtfdfbiaal←{v e y←⍵ ⋄ a r←var/2↑v,⍪e ⋄ lr←≢⍴l←2⊃v ⋄ (lr≠0)∧(lr≠1)∨(⊃⍴l)≠1:⎕SIGNAL 11
   '{',('r'decarrb r),('rr,rs,3'dectmpb'z'),'I lv0=',(cln⍕l),';',nl,rtfdfbilp a}
-rtfdfbilp←{z←(rtfdfshft⍬),'B ec=(zc+63)/64;B*zvB=(B*)zv;B*rvB=(B*)rv;',nl
+rtfdfbilp←{z←(rtfdfshft⍬),'B ec=(zc+63)/64;',nl
+  z,←'B*restrict zvB=(B*)zv;B*restrict rvB=(B*)rv;',nl
   z,←'if(zc<=1){}else if(zc<=64){',nl
   z,←simd'present(zvB[:ec],rvB[:ec])'
   z,←' DOI(i,1){B t=rvB[0]&((1<<zc)-1);zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
-  z,←'else{B gc=(ec+127)/128;B s64=s/64;I sm=1+(zc-1)%64;I ol=s%64;I or=64-ol;',nl
-  z,←' B ta[129];',nl,simd'present(zvB[:ec],rvB[:ec]) private(ta[:129])'
-  z,←' DO(i,gc){',nl,pacc'cache(ta[:129])'
-  z,←'  I vc=128;if((i+1)*128>ec)vc=ec-i*128;',nl
-  z,←'  DOI(j,vc+1){B ri=(i*128+j+s64)%ec;',nl
-  z,←'   if(ri==ec-1)ta[j]=(rvB[ri-1]<<sm)|(rvB[ri]>>(64-sm));',nl
-  z,←'   else ta[j]=rvB[ri];}',nl
-  z,←'  DOI(j,vc){zvB[i*128+j]=(ta[j]<<ol)|(ta[j+1]>>or);}}}',nl
+  z,←'else{B zc_s=zc-s;B ac=zc_s/64;B ao=s/64;I ar=s%64;I al=64-ar;',nl
+  z,←' B bc=s/64;B bo=((zc_s)+63)/64;I bl=zc_s%64;I br=64-bl;',nl
+  z,←(ackn'present(rvB[:ec],zvB[:ec])'),'{',nl
+  z,←' DO(i,ac){zvB[i]=(rvB[i+ao]>>ar)|(rvB[i+ao+1]<<al);}',nl
+  z,←' DOI(i,1){if(zc_s%64){zvB[ac]=rvB[ac+ao]>>ar;',nl
+  z,←'   zvB[bo-1]=(zvB[bo-1]&((1UL<<br)-1))|(rvB[0]<<bl);}',nl
+  z,←'  if(s%64){zvB[bc+bo]=rvB[bc]>>br;}}',nl
+  z,←' DO(i,bc){zvB[i+bo]=(rvB[i]>>br)|(rvB[i+1]<<bl);}',nl
+  z,←'}}',nl
   z,'cpaa(',⍵,',&za);}',nl}
 rtfdfbbaaa←{'NONCE_ERROR;',nl}
 rtfdfbbaal←{'NONCE_ERROR;',nl}

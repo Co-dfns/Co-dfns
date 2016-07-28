@@ -23,7 +23,8 @@ T←':Namespace' 'Run←{¯1⊖⍵}' ':EndNamespace'
 '17'('rotfirst' T 'Run' #.util.GEN∆T1 ⎕THIS)		(2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
 '18'('rotfirst' R 'Run' #.util.GEN∆T1 ⎕THIS)		(17⍴0 1 1 0 0 1 1 1 1 0 0)
 '19'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(32 32⍴0 1 1 0 0 1 1 1 1 0 0)
-'20'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(40 40⍴0 1 1 0 0 1 1 1 1 0 0)
+'20'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(64 20⍴0 1 1 0 0 1 1 1 1 0 0)
+'21'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(?15 15⍴2)
 
 
 :EndNamespace
