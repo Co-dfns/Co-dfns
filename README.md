@@ -150,10 +150,50 @@ This is not designed to be set by the user, but indicates the version of the
 compiler. Version numbers are only valid as releases, and are subject to change 
 during development in the repository. 
 
-## Supporting the Project
+## Contributing and Helping
 
-We need your help! Please contact <arcfide@sacrideo.us> to learn how you
-can support the project.
+We need your help! There are many ways to assist with the Co-dfns project. 
+Here are some ways that you can do it.
+
+### Support the Project
+
+We are seeking to create an open funding model for Co-dfns research through 
+the use of Gratipay. You can support the project by contributing code, feedback, 
+benchmarks, and otherwise becoming a member of the team, but you can also 
+directly support the Co-dfns team by funding us on Gratipay:
+
+https://www.gratipay.com/Co-dfns/
+
+### Joining the Co-dfns Team
+
+We are an open development team dedicated to free research, but we are also 
+funded by other sources as well. We encourage people to get involved in various 
+ways. Here are a few of the best ways to get working on the project:
+
+1. Download, install, and run the compiler on your code.
+
+2. Report bugs and issues in the GitHub Issue Tracker.
+
+3. Contribute code, tests, and benchmarks through pull requests to the main 
+   repository. 
+
+4. Discuss Co-dfns on various social media sites. 
+
+5. Spread the word and evangalize the Co-dfns approach to computing!
+
+This project is heavily focused on producing quality code, and as such, we 
+have strong guidelines about how to code in the project. We are happy to assist 
+with this, and it may help to read the publications listed in this document. 
+
+Furthermore, we explicitly avoid too much non-code documentation that isn't 
+human-to-human direct communication. Instead, we tend to focus on executable 
+contracts and documentation through the use of our testing suite. We also have 
+a growing Benchmarks suite here:
+
+https://github.com/arcfide/Co-dfns-benchmarks
+
+Please contact arcfide@sacrideo.us (Aaron W. Hsu) for more information on the 
+best ways to contribute and to get involved in the project. 
 
 ## Publications
 
