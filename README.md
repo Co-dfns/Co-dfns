@@ -195,6 +195,13 @@ https://github.com/arcfide/Co-dfns-benchmarks
 Please contact arcfide@sacrideo.us (Aaron W. Hsu) for more information on the 
 best ways to contribute and to get involved in the project. 
 
+Note: All pull requests and contributions to this project imply an acceptance 
+of the dual licensing nature of the Co-dfns project. Part of this is the 
+copyright assignment and details laid out in the LICENSE.txt file. Furthermore, 
+Dyalog, Ltd. is a contributing partner in this project, and receives exclusive 
+rights to non-AGPL licensing options of the Co-dfns compiler. To facilitate 
+this all contributions are assumed to be copyright transferred to Aaron Hsu.
+
 ## Publications
 
 [The Key to a Data Parallel Compiler](http://dl.acm.org/citation.cfm?id=2935331)
