@@ -1336,7 +1336,7 @@ rotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'U8'rotmlp rgt
   z,' zv[i]=t;}',nl,'cpaa(',rslt,',&ta);}',nl}
 
 ⍝    Rotate
-rotd←{
+rotd_old←{
   chk←'if(lr!=0&&(lr!=1||ls[0]!=1))error(16);'
   siz←'zr=rr;DO(i,zr)zs[i]=rs[i];'
   exe←'if(rr)zc=rs[rr-1];I n=0;if(rr)n=rr-1;DO(i,n)rc*=rs[i];',nl
@@ -1354,6 +1354,48 @@ rotd←{
   exeb,←'}}'
   exe,←(3=⊃0⌷⍺)⊃exen exeb
     chk siz exe mxfn 1 ⍺ ⍵}
+rotdfiiaaa←{v e y←⍵ ⋄ '1I'rotdfxiaaa var/3↑v,⍪e}
+rotdffiaaa←{v e y←⍵ ⋄ '2D'rotdfxiaaa var/3↑v,⍪e}
+rotdfxiaaa←{d t←⍺ ⋄ a r l←⍵ ⋄ z←'{',('r'(t decarr)r),'l'decarri l
+  z,←'if(lr!=0&&(lr!=1||ls[0]!=1))DOMAIN_ERROR;',nl,('rr,rs,',d)(t dectmp)'z'
+  z,'I lv0;',nl,(simd'present(lv[:1])'),'DOI(i,1)lv0=lv[0];',nl,rotdfxilp a}
+rotdfiiaal←{v e y←⍵ ⋄ '1I'rotdfxiaal(var/2↑v,⍪e),2⌷v}
+rotdffiaal←{v e y←⍵ ⋄ '2D'rotdfxiaal(var/2↑v,⍪e),2⌷v}
+rotdfxiaal←{d t←⍺ ⋄ a r l←⍵ ⋄ lr←≢⍴l ⋄ (lr≠0)∧(lr≠1)∨(⊃⍴l)≠1:⎕SIGNAL 11
+  z←'{',('r'(t decarr)r),('rr,rs,',d)(t dectmp)'z'
+  z,'I lv0=',(cln⍕l),';',nl,rotdfxilp a}
+rotdfshft←{z←'B ic=1,jc=1;I n=0;if(rr){jc=rs[rr-1];n=rr-1;}',nl
+  z,'DOI(i,n)ic*=rs[i];B s=abs(lv0);if(jc)s%=jc;if(lv0<0)s=jc-s;',nl}
+rotdfxilp←{z←(rotdfshft⍬),simd'present(zv[:zc],rv[:zc]) collapse(2)'
+  z,←'DO(i,ic){DO(j,jc){zv[i*jc+j]=rv[i*jc+(j+s)%jc];}}',nl
+  z,'cpaa(',⍵,',&za);}',nl}
+rotdfbiaaa←{v e y←⍵ ⋄ a r l←var/3↑v,⍪e ⋄ z←'{',('l'decarri l),'r'decarrb r
+  z,←'if(lr!=0&&(lr!=1||ls[0]!=1))DOMAIN_ERROR;',nl,'rr,rs,3'dectmpb'z'
+  z,'I lv0;',nl,(simd'present(lv[:1])'),'DOI(i,1)lv0=lv[0];',nl,rotdfbilp a}
+rotdfbiaal←{v e y←⍵ ⋄ a r←var/2↑v,⍪e ⋄ lr←≢⍴l←2⊃v ⋄ (lr≠0)∧(lr≠1)∨(⊃⍴l)≠1:⎕SIGNAL 11
+  '{',('r'decarrb r),('rr,rs,3'dectmpb'z'),'I lv0=',(cln⍕l),';',nl,rotdfbilp a}
+rotdfbilp←{z←(rotdfshft⍬),'B ec=(zc+63)/64;',nl
+  z,←'B*restrict zvB=(B*)zv;B*restrict rvB=(B*)rv;',nl
+  z,←'if(zc<=1){}else if(zc<=64){',nl
+  z,←simd'present(zvB[:ec],rvB[:ec])'
+  z,←' DOI(i,1){B t=rvB[0]&((1<<zc)-1);zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
+  z,←'else{B zc_s=zc-s;B ac=zc_s/64;B ao=s/64;I ar=s%64;I al=64-ar;',nl
+  z,←' B bc=s/64;B bo=((zc_s)+63)/64;I bl=zc_s%64;I br=64-bl;',nl
+  z,←(ackn'present(rvB[:ec],zvB[:ec])'),'{',nl
+  z,←' DO(i,ac){zvB[i]=(rvB[i+ao]>>ar)|(rvB[i+ao+1]<<al);}',nl
+  z,←' DOI(i,1){if(zc_s%64){zvB[ac]=rvB[ac+ao]>>ar;',nl
+  z,←'   zvB[bo-1]=(zvB[bo-1]&((1UL<<br)-1))|(rvB[0]<<bl);}',nl
+  z,←'  if(s%64){zvB[bc+bo]=rvB[bc]>>br;}}',nl
+  z,←' DO(i,bc){zvB[i+bo]=(rvB[i]>>br)|(rvB[i+1]<<bl);}',nl
+  z,←'}}',nl
+  z,'cpaa(',⍵,',&za);}',nl}
+rotdfbbaaa←{'NONCE_ERROR;',nl}
+rotdfbbaal←{'NONCE_ERROR;',nl}
+rotdfibaaa←{'NONCE_ERROR;',nl}
+rotdfibaal←{'NONCE_ERROR;',nl}
+rotdffbaaa←{'NONCE_ERROR;',nl}
+rotdffbaal←{'NONCE_ERROR;',nl}
+rotd←{⍺('df'gluecl'⌽')⍵}
 
 ⍝    Reverse First
 rtfmfinaaa←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rtfmne⊃vs ⋄ ⊃'1I'rtfmnn/vs}
