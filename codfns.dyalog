@@ -1374,7 +1374,11 @@ rotdfbiaaa←{v e y←⍵ ⋄ a r l←var/3↑v,⍪e ⋄ z←'{',('l'decarri l),
   z,'I lv0;',nl,(simd'present(lv[:1])'),'DOI(i,1)lv0=lv[0];',nl,rotdfbilp a}
 rotdfbiaal←{v e y←⍵ ⋄ a r←var/2↑v,⍪e ⋄ lr←≢⍴l←2⊃v ⋄ (lr≠0)∧(lr≠1)∨(⊃⍴l)≠1:⎕SIGNAL 11
   '{',('r'decarrb r),('rr,rs,3'dectmpb'z'),'I lv0=',(cln⍕l),';',nl,rotdfbilp a}
-rotdfbilp←{z←(rotdfshft⍬),'B ec=(zc+63)/64;',nl
+rotdfbilp←{z←(rotdfshft⍬),'B*restrict zvB=(B*)zv;B*restrict rvB=(B*)rv;',nl
+  z,←'if(zc<=1){}else{B ec=(zc+63)/64;',nl
+  z,←(simd'present(rvB[:ec],zvB[:ec])'),'{',nl
+  z,'}}',nl,'cpaa(',⍵,',&za);}',nl}
+rotdfbilp_old←{z←(rotdfshft⍬),'B ec=(zc+63)/64;',nl
   z,←'B*restrict zvB=(B*)zv;B*restrict rvB=(B*)rv;',nl
   z,←'if(zc<=1){}else if(zc<=64){',nl
   z,←simd'present(zvB[:ec],rvB[:ec])'
@@ -1454,9 +1458,8 @@ rtfdfbilp←{z←(rtfdfshft⍬),'B ec=(zc+63)/64;',nl
   z,←' B bc=s/64;B bo=((zc_s)+63)/64;I bl=zc_s%64;I br=64-bl;',nl
   z,←(ackn'present(rvB[:ec],zvB[:ec])'),'{',nl
   z,←' DO(i,ac){zvB[i]=(rvB[i+ao]>>ar)|(rvB[i+ao+1]<<al);}',nl
-  z,←' DOI(i,1){if(zc_s%64){zvB[ac]=rvB[ac+ao]>>ar;',nl
-  z,←'   zvB[bo-1]=(zvB[bo-1]&((1UL<<br)-1))|(rvB[0]<<bl);}',nl
-  z,←'  if(s%64){zvB[bc+bo]=rvB[bc]>>br;}}',nl
+  z,←' if(zc_s%64){DOI(i,1){zvB[ac]=rvB[ac+ao]>>ar;',nl
+  z,←'   zvB[bo-1]=(zvB[bo-1]&((1UL<<bl)-1))|(rvB[0]<<bl);}}',nl
   z,←' DO(i,bc){zvB[i+bo]=(rvB[i]>>br)|(rvB[i+1]<<bl);}',nl
   z,←'}}',nl
   z,'cpaa(',⍵,',&za);}',nl}

@@ -25,6 +25,11 @@ T←':Namespace' 'Run←{¯1⊖⍵}' ':EndNamespace'
 '19'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(32 32⍴0 1 1 0 0 1 1 1 1 0 0)
 '20'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(64 20⍴0 1 1 0 0 1 1 1 1 0 0)
 '21'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(?15 15⍴2)
+'22'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(?80 80⍴2)
+'23'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(?800 800⍴2)
+'24'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(?90 90⍴2)
+'25'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(?8100⍴2)
+'26'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(?8133⍴2)
 
 
 :EndNamespace
