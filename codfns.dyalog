@@ -1432,12 +1432,14 @@ rtfdfbilp←{z←(rtfdfshft⍬),'B ec=(zc+63)/64;',nl
   z,←' DOI(i,1){B t=rvB[0]&((1<<zc)-1);zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
   z,←'else{B ac=zc_s/64;B ao=s/64;I ar=s%64;I al=64-ar;',nl
   z,←' B bc=s/64;B bo=((zc_s)+63)/64;I bl=zc_s%64;I br=64-bl;',nl
-  z,←(ackn'present(rvB[:ec],zvB[:ec])'),'{',nl
+  z,←(acdt'present(rvB[:ec],zvB[:ec])'),'{',nl
+  z,←simd'vector(256) async(1)'
   z,←' DO(i,ac){zvB[i]=(rvB[i+ao]>>ar)|(rvB[i+ao+1]<<al);}',nl
-  z,←' if(zc_s%64){DOI(i,1){zvB[ac]=rvB[ac+ao]>>ar;',nl
+  z,←' if(zc_s%64){',nl,(simd'async(2)'),'DOI(i,1){zvB[ac]=rvB[ac+ao]>>ar;',nl
   z,←'   zvB[bo-1]=(zvB[bo-1]&((1UL<<bl)-1))|(rvB[0]<<bl);}}',nl
+  z,←simd'vector(256) async(3)'
   z,←' DO(i,bc){zvB[i+bo]=(rvB[i]>>br)|(rvB[i+1]<<bl);}',nl
-  z,←'}}',nl
+  z,←(pacc'wait'),'}}',nl
   z,'cpaa(',⍵,',&za);}',nl}
 rtfdfbbaaa←{'NONCE_ERROR;',nl}
 rtfdfbbaal←{'NONCE_ERROR;',nl}
