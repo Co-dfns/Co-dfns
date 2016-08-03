@@ -657,7 +657,7 @@ ocl     ←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺�
 opl     ←{⊃,/{'(,''',⍵,''')'}¨⍵}
 opt     ←{'(',(⍕⍴⍵),'⍴',(⍕,⍵),')'}
 odb     ←0 5⍴⊂''
-⍝[c]
+
 ⍝[c]Prim      Monadic Dyadic  Monadic Bool    Dyadic Bool
 odb⍪←,¨'⍨'       'comm'  'comd'  ''      ''
 odb⍪←,¨'¨'        'eacm'  'eacd'  ''      ''
@@ -791,6 +791,8 @@ rd1m←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
         exe     ,←(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'zv[i]' 'rv[(zc*(rc-(j+2)))+i]'),'}}}',nl
         exe     ,←pacc 'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
+
+⍝   Reduce N-wise First Axis
 rd1d←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
         hid     ←idf∊⍨⊃⊃⍺⍺
         a       ←0 1 1⊃¨⊂⍺
@@ -808,6 +810,7 @@ rd1d←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
         exe     ,←(a((⊃⍺⍺)scmx ⍵⍵)val),'}}}',nl
         exe     ,←pacc'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
+
 ⍝   Scan
 ⍝    Vector GPU Scan
 scngv←{z←'{',⍺,' b[513];I bc;B p,t,fp,ft,fpt;',nl
@@ -1008,10 +1011,10 @@ rth,←'#define DO(i,n) for(L i=0;i<(n);i++)',nl,'#define R return',nl
 rth,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
 
 ⍝   Helper Functions
-rth,←'#define R2(n)     n,     n + 2*64,     n + 1*64,     n + 3*64',nl
-rth,←'#define R4(n) R2(n), R2(n + 2*16), R2(n + 1*16), R2(n + 3*16)',nl
-rth,←'#define R6(n) R4(n), R4(n + 2*4 ), R4(n + 1*4 ), R4(n + 3*4 )',nl
-rth,←'static const U8 bitrt[256]={R6(0), R6(2), R6(1), R6(3)};',nl
+rth,←'#define CD_R2(n)     n,     n + 2*64,     n + 1*64,     n + 3*64',nl
+rth,←'#define CD_R4(n) CD_R2(n), CD_R2(n + 2*16), CD_R2(n + 1*16), CD_R2(n + 3*16)',nl
+rth,←'#define CD_R6(n) CD_R4(n), CD_R4(n + 2*4 ), CD_R4(n + 1*4 ), CD_R4(n + 3*4 )',nl
+rth,←'static const U8 bitrt[256]={CD_R6(0), CD_R6(2), CD_R6(1), CD_R6(3)};',nl
 rth,←'U8 bitrev(U8 c){return bitrt[c];}',nl
 
 ⍝   Allocation
