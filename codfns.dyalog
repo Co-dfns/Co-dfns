@@ -546,8 +546,8 @@ gnmtp←'xifbn'⊃¨∘⊂⍨2↑1↓∘⊃y
 gnmid←(nams,⊂'')⊃⍨syms⍳¯1↑∘⊃v
 gnmsla←'las'⊃¨∘⊂⍨(∧/¯1=∘↑3↑∘⊃e)+0≠((⊃0⍴⊃)¨n,2↑∘⊃v)
 gluecl←{n←0 '_' 0 (⊃⍵) ⍬ 0 ((1↓0⌷⍉⍵),⊂,⍵⍵)(⍺,0)((1⌷⍉⍵),⊂¯1 0) 0
-  (0 5⍴⊂'')(⍺⍺ gcl)n}
-gcl←{''≢id←gnmid ⍵:(⍎id,⍺⍺,(gnmtp ⍵),gnmsla ⍵)((⊂n,∘⊃v),e,y)⍵
+  (⍺⍺ gcl)n}
+gcl←{⍺←fdb ⋄ ''≢id←gnmid ⍵:⍺(⍎id,⍺⍺,(gnmtp ⍵),gnmsla ⍵)((⊂n,∘⊃v),e,y)⍵
   r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵
   ⎕SIGNAL 16}
 
