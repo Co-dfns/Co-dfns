@@ -1447,7 +1447,7 @@ rtfdfibaaa←{'NONCE_ERROR;',nl}
 rtfdfibaal←{'NONCE_ERROR;',nl}
 rtfdffbaaa←{'NONCE_ERROR;',nl}
 rtfdffbaal←{'NONCE_ERROR;',nl}
-rtfd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⌽')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
+rtfd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⊖')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 
 ⍝    Transpose
 trnmfh←{z←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];',nl
