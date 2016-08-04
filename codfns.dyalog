@@ -464,7 +464,7 @@ fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝  Code Generator
 dis     ←{⍺←⊢ ⋄ 0=⊃t⍵:5⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
 gc      ←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
-E1←{⍺('mf'gcl)⍵}
+E1←{('mf'gcl fdb)((⊂n,∘⊃v),e,y)⍵}
 E2      ←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
 E0      ←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
 Oi      ←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
@@ -542,13 +542,10 @@ syms,←,¨'.'   '⍤'   '⍣'   '∘'
 nams,←  'dot' 'rnk' 'pow' 'jot'
 
 ⍝  Generator Dispatch
-gnmtp←'xifbn'⊃¨∘⊂⍨2↑1↓∘⊃y
-gnmid←(nams,⊂'')⊃⍨syms⍳¯1↑∘⊃v
-gnmsla←'las'⊃¨∘⊂⍨(∧/¯1=∘↑3↑∘⊃e)+0≠((⊃0⍴⊃)¨n,2↑∘⊃v)
-gluecl←{n←0 '_' 0 (⊃⍵) ⍬ 0 ((1↓0⌷⍉⍵),⊂,⍵⍵)(⍺,0)((1⌷⍉⍵),⊂¯1 0) 0
-  (⍺⍺ gcl)n}
-gcl←{⍺←fdb ⋄ ''≢id←gnmid ⍵:⍺(⍎id,⍺⍺,(gnmtp ⍵),gnmsla ⍵)((⊂n,∘⊃v),e,y)⍵
-  r u f←⊃v⍵ ⋄ (2↑⊃y⍵)(f fcl ⍺)(⊃n⍵)r,⍪2↑⊃e⍵
+gcl←{⍺←⍬ ⍬ ⍬ ⋄ v e y←⍵ ⋄ id←(syms⍳¯1↑v)⊃nams,⊂'' ⋄ tp←(2↑1↓y)⊃¨⊂'xifbn'
+  sla←((∧/¯1=↑3↑e)+0≠(⊃0⍴⊃)¨3↑v)⊃¨⊂'las'
+  ''≢id:(⍺,⊂⍵⍵)(⍎id,⍺⍺,tp,sla)⍵
+  (2↑y)(f fcl ⍵⍵)(2↑v),⍪2↑e
   ⎕SIGNAL 16}
 
 ⍝  Scalar Primitives
@@ -1374,7 +1371,7 @@ rotdfibaaa←{'NONCE_ERROR;',nl}
 rotdfibaal←{'NONCE_ERROR;',nl}
 rotdffbaaa←{'NONCE_ERROR;',nl}
 rotdffbaal←{'NONCE_ERROR;',nl}
-rotd←{⍺('df'gluecl'⌽')⍵}
+rotd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⌽')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 
 ⍝    Reverse First
 rtfmfinaaa←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rtfmne⊃vs ⋄ ⊃'1I'rtfmnn/vs}
@@ -1450,7 +1447,7 @@ rtfdfibaaa←{'NONCE_ERROR;',nl}
 rtfdfibaal←{'NONCE_ERROR;',nl}
 rtfdffbaaa←{'NONCE_ERROR;',nl}
 rtfdffbaal←{'NONCE_ERROR;',nl}
-rtfd←{⍺('df'gluecl'⊖')⍵}
+rtfd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⌽')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 
 ⍝    Transpose
 trnmfh←{z←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];',nl
