@@ -388,7 +388,6 @@ otn,←⊂,'⌿'        ⋄ oti⍪←↑(2 2)   (2 3)   ⋄ otn,←⊂,'\'      
 otn,←⊂,'⍀'        ⋄ oti⍪←↑(2 2)   (2 3)   ⋄ otn,←⊂'∘.'    ⋄ oti⍪←↑(2 3)   (2 3)
 otn,←⊂,'¨' ⋄ oti⍪←↑(2 3)   (2 3)
         oti⍪←↑(2 3)       (2 3)
-⍝[cf]
 
 lte     ←((20⌊1 4 5⊥((∨⌿¯1=×)⍪|))2↑⊢)⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢
 ltoa    ←lte⍤2(2↑⊣),[1]⍨(oti⌷⍨otn⍳¯1↑∘⊃v)(⌷⍤0 2)(4 5⊤⍳20)⍪⍨(2↑1↓(⊃y))
@@ -581,6 +580,12 @@ sdb⍪←,¨'⍲'  'error(99)'   '!(⍺ && ⍵)'           'error(99)' '~(⍺&�
 sdb⍪←,¨'⍱'  'error(99)'   '!(⍺ || ⍵)'           'error(99)' '~(⍺|⍵)'
 sdb⍪←,¨'⌷'  '⍵'           'error(99)'           '⍵'         'error(99)'
 sdb⍪←'⎕XOR' 'error(99)'   '⍺^⍵'                 'error(99)' '⍺ ^ ⍵'
+
+⍝   Scalar Function Generators
+
+⍝    Addition
+adddfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'+',r,';',nl}
+adddfffsss←adddffisss←adddfifsss←adddfiisss
 
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
@@ -788,6 +793,27 @@ rd1m_old←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀�
         exe     ,←(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'zv[i]' 'rv[(zc*(rc-(j+2)))+i]'),'}}}',nl
         exe     ,←pacc 'update device(zv[:rslt->c])'
                 chk siz exe mxfn 1 ⍺ ⍵}
+rdfidf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
+rdfidv←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
+rdfmochk←{⍵∊rdfidf:'' ⋄ 'if(rr>0&&!rs[0])DOMAIN_ERROR;',nl}
+rdfmohid←{lp←'else if(!rs[0]){',nl
+  lp,←(simd''),'DO(i,zc)zv[i]=',(rdfidv⊃⍨rdfidf⍳⍵),';}',nl
+  ⍵∊rdfidf:lp ⋄ ''}
+rdfmoinaaa←{fv fe fy db←⍺ ⋄ v e y←⍵ ⋄ fy←¯1+⊃(4 5⊥1 4)⌷⍉fy
+  (1'I',fy⊃(1'I')(2'D')(1'I'))(fv rdfmolpx db)v,⍪e}
+rdfmofnaaa←{fv fe fy db←⍺ ⋄ v e y←⍵ ⋄ fy←⊃(4 5⊥2 4)⌷⍉fy
+  2'D'2'D'(fv rdfmolpx db)v,⍪e}
+rdfmolpx←{rd rt d t←⍺ ⋄ rslt rgt←var/2↑⍵ ⋄ z←'{',('r'(rt decarr)rgt),rdfmochk⊃⍺⍺
+  z,←'I jc=1;if(rr)jc=rs[0];',('rr?rr-1:0,rs+1,',⍕d)(t dectmp)'z'
+  z,←(acdt'present(rv[:rc],zv[:zc])'),'{',nl
+  z,←'if(jc==1){',nl,(simd''),'DO(i,zc)zv[i]=rv[i];}',nl
+  z,←(rdfmohid⊃⍺⍺),'else{',nl
+  z,←(simd''),'DO(i,zc){',t,' t=rv[(jc-1)*zc+i];',nl
+  z,←' DO(j,jc-1){',nl
+  z,←('df'gcl ⍵⍵)(,¨'t' 't' 'rv[zc*(jc-(j+2))+i]' ⍺⍺)(4⍴⊂¯1 ¯1)(d d rd 0)
+  z,←'}',nl,' zv[i]=t;}}',nl
+  z,'}',nl,'cpaa(',rslt,',&za);}',nl}
+rdfmobnaaa←{'NONCE_ERROR;'}
 rd1m←{fn fy←⍺⍺ ⋄ y←⍺ ⋄ v e←↓⍉⍵ ⋄ fv←,¨'_' fn '%u' '⌿' ⋄ fe←4⍴⊂¯1 0
   fn fe fy('mo'gcl ⍵⍵)(v,,¨'%u' '⌿')(e,2⍴⊂¯1 0)(y,4 0)}
 
