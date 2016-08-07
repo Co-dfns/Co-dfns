@@ -76,7 +76,7 @@ iop←'-fast -g -fno-alias -static-intel -mkl -Wall -Wno-unused-function -fPIC -
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'('so'cio,fls,log)⍵}
 
 ⍝  PGI C Linux
-pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda7.5 -Minfo -fPIC '
+pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda8 -Minfo -fPIC '
 pgcco←{cmd←'pgcc -c ',cds,pop,'-I',DWA∆PATH,' '
   ⎕SH cmd,'-o ''',⍵,'.o'' ''',⍵,'.c'' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
 pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' '
@@ -586,6 +586,10 @@ sdb⍪←'⎕XOR' 'error(99)'   '⍺^⍵'                 'error(99)' '⍺ ^ ⍵
 ⍝    Addition
 adddfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'+',r,';',nl}
 adddfffsss←adddffisss←adddfifsss←adddfiisss
+
+⍝    Multiplication
+muldfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'*',r,';',nl}
+muldfffsss←muldffisss←muldfifsss←muldfiisss
 
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
