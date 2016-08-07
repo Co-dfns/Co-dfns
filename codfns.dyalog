@@ -783,24 +783,10 @@ redd←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽�
                 chk siz exe mxfn 1 ⍺ ⍵}
 
 ⍝   Reduce First Axis
-rd1m_old←{        idf     ←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
-        hid     ←idf∊⍨⊃⊃⍺⍺
-        idv     ←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
-        chk     ←hid⊃('if(rr>0&&rs[0]==0)error(11);')''
-        siz     ←'if(rr==0){zr=0;}',nl
-        siz     ,←'else{zr=rr-1;DO(i,zr){zc*=rs[i+1];zs[i]=rs[i+1];};rc=rs[0];}'
-        exe     ←pacc 'update host(rv[:rgt->c])'
-        exe     ,←'if(rc==1){DO(i,zc)zv[i]=rv[i];}',nl,'else '
-        exe     ,←hid⊃''('if(rc==0){DO(i,zc)zv[i]=',(';',⍨idv⊃⍨idf⍳⊃⊃⍺⍺),'}',nl,'else ')
-        exe     ,←'{DO(i,zc){zv[i]=rv[((rc-1)*zc)+i];',nl,' L n=rc-1;DO(j,n){'
-        exe     ,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,pacc'update device(zv[i:1])')''
-        exe     ,←(((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'zv[i]' 'rv[(zc*(rc-(j+2)))+i]'),'}}}',nl
-        exe     ,←pacc 'update device(zv[:rslt->c])'
-                chk siz exe mxfn 1 ⍺ ⍵}
 rdfidf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 rdfidv←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
 rdfmochk←{⍵∊rdfidf:'' ⋄ 'if(rr>0&&!rs[0])DOMAIN_ERROR;',nl}
-rdfmohid←{lp←'else if(!rs[0]){',nl
+rdfmohid←{lp←'else if(!jc){',nl
   lp,←(simd''),'DO(i,zc)zv[i]=',(rdfidv⊃⍨rdfidf⍳⍵),';}',nl
   ⍵∊rdfidf:lp ⋄ ''}
 rdfmoinaaa←{fv fe fy db←⍺ ⋄ v e y←⍵ ⋄ fy←¯1+⊃(4 5⊥1 4)⌷⍉fy
@@ -811,7 +797,10 @@ rdfmolpx←{rd rt d t←⍺ ⋄ rslt rgt←var/2↑⍵ ⋄ z←'{',('r'(rt decar
   z,←'I jc=1;if(rr)jc=rs[0];',('rr?rr-1:0,rs+1,',⍕d)(t dectmp)'z'
   z,←(acdt'present(rv[:rc],zv[:zc])'),'{',nl
   z,←'if(jc==1){',nl,(simd''),'DO(i,zc)zv[i]=rv[i];}',nl
-  z,←(rdfmohid⊃⍺⍺),'else{',nl
+  z,←(rdfmohid⊃⍺⍺),'else if(zc==1){',t,' t;',nl
+  z,←(simd''),'DO(i,1){t=rv[jc-1];}',nl,(simd''),'DO(j,jc-1){',nl
+  z,←('df'gcl ⍵⍵)(,¨'t' 't' 'rv[jc-(j+2)]' ⍺⍺)(4⍴⊂¯1 ¯1)(d d rd 0)
+  z,←'}',nl,(simd''),'DO(i,1){zv[0]=t;}}',nl,'else {',nl
   z,←(simd''),'DO(i,zc){',t,' t=rv[(jc-1)*zc+i];',nl
   z,←' DO(j,jc-1){',nl
   z,←('df'gcl ⍵⍵)(,¨'t' 't' 'rv[zc*(jc-(j+2))+i]' ⍺⍺)(4⍴⊂¯1 ¯1)(d d rd 0)
