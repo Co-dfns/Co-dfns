@@ -13,7 +13,12 @@ S3←':Namespace' 'Run←{{⍺+⍵}⌿⍵}' ':EndNamespace'
 '07'('reducefirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
 '08'('reducefirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
 '09'('reducefirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'10'('reducefirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?3 3⍴2
+'10'('reducefirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?15⍴2
+'11'('reducefirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?128⍴2
+'12'('reducefirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?100⍴2
+'13'('reducefirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?3 3⍴2
+'14'('reducefirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?10 10⍴2
+'15'('reducefirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?32 32⍴2
 
 :EndNamespace
 
