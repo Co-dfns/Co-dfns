@@ -817,7 +817,8 @@ rdfmolpxb←{d t←⍺ ⋄ rslt rgt←var/2↑⍵ ⋄ z←'{',('r'decarrb rgt),r
   z,←(simd''),' DO(i,1){t=1&rvB[0];}',nl
   z,←' if(jBc){',nl,(simd''),'  DO(i,63){',nl
   z,←'   ',('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rvB[0]>>(i+1)))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
-  z,←'  }',nl,(simd''),'  DO(i,jBc-1){DOI(j,64){',nl
+  red←'reduction(',(('+×⌈⌊∨∧'⍳⊃⍺⍺)⊃'+' '*' 'max' 'min' '||' '&&' ''),':t)'
+  z,←'  }',nl,(simd''red⊃⍨'+×⌈⌊∨∧'∊⍨⊃⍺⍺),'  DO(i,jBc-1){DOI(j,64){',nl
   z,←'   ',('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rvB[i+1]>>j))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
   z,←'  }}',nl,(simd''),'  DOI(i,jBt){',nl
   z,←'   ',('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rvB[jBc]>>i))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
