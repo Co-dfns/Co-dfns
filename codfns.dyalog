@@ -810,22 +810,20 @@ rdfmobnaaa←{fv fe fy db←⍺ ⋄ v e y←⍵
   1 2∨.=⊃y:((¯1+⊃y)⊃(1'I')(2'D'))(fv rdfmolpxb db)v,⍪e ⋄ 'NONCE_ERROR;',nl}
 rdfmolpxb←{d t←⍺ ⋄ rslt rgt←var/2↑⍵ ⋄ z←'{',('r'decarrb rgt),rdfmochk⊃⍺⍺
   z,←'I jc=1;if(rr)jc=rs[0];',('rr?rr-1:0,rs+1,',⍕d)(t dectmp)'z'
-  z,←'B*restrict rvB=(B*)rv;B rBc=(rc+63)/64;',nl
-  z,←(acdt'present(rv[:rz],zv[:zc],rvB[:rBc])'),'{',nl
-  z,←'if(jc==1){',nl,(simd''),'DO(i,zc)zv[i]=1&(rv[i/8]>>(i%8));}',nl
-  z,←(rdfmohid⊃⍺⍺),'else if(zc==1){',t,' t;B jBc=jc/64;I jBt=jc%64;',nl
-  z,←(simd''),' DO(i,1){t=1&rvB[0];}',nl
-  z,←' if(jBc){',nl,(simd''),'  DO(i,63){',nl
-  z,←'   ',('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rvB[0]>>(i+1)))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
+  z,←(acdt'present(rv[:rz],zv[:zc])'),'{',nl
+  z,←'if(jc==1){',nl,simd''
+  z,←' DO(i,zc)zv[i]=1&(rv[i/8]>>(i%8));}',nl
+  z,←rdfmohid⊃⍺⍺
   red←'reduction(',(('+×⌈⌊∨∧'⍳⊃⍺⍺)⊃'+' '*' 'max' 'min' '||' '&&' ''),':t)'
-  z,←'  }',nl,(simd''red⊃⍨'+×⌈⌊∨∧'∊⍨⊃⍺⍺),'  DO(i,jBc-1){DOI(j,64){',nl
-  z,←'   ',('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rvB[i+1]>>j))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
-  z,←'  }}',nl,(simd''),'  DOI(i,jBt){',nl
-  z,←'   ',('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rvB[jBc]>>i))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
-  z,←'  }}else{',nl,(simd''),'  DOI(i,jBt-1){',nl
-  z,←'   ',('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rvB[0]>>(i+1)))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
-  z,←'  }}',nl,(simd''),' DOI(i,1){zv[0]=t;}}',nl,'else{',nl
-  z,←'NONCE_ERROR;',nl
+  cal←('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rv[x/8]>>(x%8)))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
+  z,←'else if(zc==1){',t,' t;',nl,simd''
+  z,←' DO(i,1){t=1&rv[0];}',nl,simd''
+  z,←' DO(i,jc-1){B x=i+1;',nl,cal,'}',nl,simd''
+  z,←' DOI(i,1){zv[0]=t;}',nl
+  z,←'}else{',nl,simd''
+  z,←'  DO(i,zc){',t,' t=1&(rv[i/8]>>(i%8));',nl
+  z,←'  DO(j,jc-1){B x=(j+1)*zc+i;',nl,cal,'}',nl
+  z,←'  zv[i]=t;}',nl
   z,'}}',nl,'cpaa(',rslt,',&za);}',nl}
 rd1m←{fn fy←⍺⍺ ⋄ y←⍺ ⋄ v e←↓⍉⍵ ⋄ fv←,¨'_' fn '%u' '⌿' ⋄ fe←4⍴⊂¯1 0
   fn fe fy('mo'gcl ⍵⍵)(v,,¨'%u' '⌿')(e,2⍴⊂¯1 0)(y,4 0)}
