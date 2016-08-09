@@ -1327,7 +1327,7 @@ ctfmfinaaa←{'1' ctfmfaa ⍵} ⋄ ctfmffnaaa←{'2' ctfmfaa ⍵}
 ctfmfbnaaa←{'3' ctfmfaa ⍵}
 
 ⍝    Catenate First/Laminate
-fctd←{
+fctd_old←{
   chk←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)error(4);int minr=rr>lr?lr:rr;',nl
   chk,←'if(lr==rr&&rr>0){I n=rr-1;DO(i,n)if(rs[i+1]!=ls[i+1])error(5);}',nl
   chk,←'else if(lr<rr){DO(i,lr)if(ls[i]!=rs[i+1])error(5);}',nl
@@ -1354,6 +1354,16 @@ fctd←{
   exe,←(3=0⌷⍺)⊃(';}')('<<(7-(zvi%8));}')
   exe,←(3=0⌷⍺)⊃''(nl,pacc'update device(zv[:zcp])')
     chk siz exe mxfn 1 ⍺ ⍵}
+ctfdfiiaaa←{'NONCE_ERROR;',nl}
+ctfdfifaaa←{'NONCE_ERROR;',nl}
+ctfdffiaaa←{'NONCE_ERROR;',nl}
+ctfdfffaaa←{'NONCE_ERROR;',nl}
+ctfdfibaaa←{'NONCE_ERROR;',nl}
+ctfdffbaaa←{'NONCE_ERROR;',nl}
+ctfdfbiaaa←{'NONCE_ERROR;',nl}
+ctfdfbfaaa←{'NONCE_ERROR;',nl}
+ctfdfbbaaa←{'NONCE_ERROR;',nl}
+fctd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍪')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 
 ⍝    Reverse
 rotmfinaaa←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rotmne⊃vs ⋄ ⊃'1I'rotmnn/vs}
