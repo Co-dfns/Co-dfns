@@ -81,5 +81,9 @@ S←':Namespace' 'Run←{⍺⍪⍵}' ':EndNamespace'
 '77'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬⍴0 1 0 0)   (,÷5 4 3)
 '78'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬⍴1 0 0 0)   (5 5⍴1 0 0 0)
 '79'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(5 5⍴1 0 0 0) (⍬⍴1 0 0 0)
+'80'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬⍴1 0 0 0)   (?5 200⍴2)
+'81'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬⍴1 0 0 0)   (?5 196⍴2)
+'82'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(?5 200⍴2)    (⍬⍴1 0 0 0)
+'83'('catfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)(?5 196⍴2)    (⍬⍴1 0 0 0)
 
 :EndNamespace

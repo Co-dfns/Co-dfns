@@ -1376,16 +1376,37 @@ ctfdflpx←{p rslt←⍺ ⋄ l ls r rs←⍵ ⋄ z←(acdt'present(',p,')'),'{',
 ctfdfbbaaa←{v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e 
   z←'{',('l'decarrb lft),('r'decarrb rgt),(ctfdpre⍬),'rk,sp,3'dectmpb'z'
   z,←'B*restrict zvB=(B*)zv;B*restrict rvB=(B*)rv;B*restrict lvB=(B*)lv;',nl
+  z,←'B zBc=(zc+63)/64;B rBc=(rc+63)/64;B lBc=(lc+63)/64;',nl
   z,←'B lcd=lc/64;B lcm=lc%64;',nl
-  z,←(acdt'present(rvB[:rz/8],lvB[:lz/8],zvB[:zz/8])'),'{',nl,simd''
-  z,←'DO(i,lcd){zvB[i]=lvB[i];}',nl
-  z,←'if(lcm){B sl=lcm;B sr=64-sl;B rcd=rc/64;B rcm=rc%64;',nl
-  z,←' if(rcm>sr){',nl,simd''
-  z,←'  DO(i,1){zvB[rcd+lcd+1]=rvB[rcd]>>sr;}}',nl,simd''
-  z,←' DO(i,1){zvB[lcd]=(lvB[lcd]&((1UL<<lcm)-1))|(rvB[0]<<sl);}',nl,simd''
-  z,←' DO(i,rcd){zvB[i+lcd+1]=(rvB[i]>>sr)|(rvB[i+1]<<sl);}',nl
-  z,←'}else{B rcd=(rc+63)/64;',nl,simd''
-  z,←' DO(i,rcd){zvB[i+lcd]=rvB[i];}',nl
+  z,←(acdt'present(rvB[:rBc],lvB[:lBc],zvB[:zBc])'),'{',nl
+  z,←'if(!rr&&!lr){',nl,simd''
+  z,←' DO(i,1){zvB[0]=(1&lvB[0])|((1&rvB[0])<<1);}',nl
+  z,←'}else if(!rr){B v=0;if(1&rvB[0]){v=-1;}',nl,simd''
+  z,←' DO(i,lcd){zvB[i]=lvB[i];}',nl
+  z,←' if(lcm){B rcd=zBc-(lcd+1);',nl,simd''
+  z,←'  DO(i,1){zvB[lcd]=(lvB[lcd]&((1UL<<lcm)-1))|(v<<lcm);}',nl,simd''
+  z,←'  DO(i,rcd){zvB[i+lcd+1]=v;}',nl
+  z,←' }else{B rcd=zBc-lcd;',nl,simd''
+  z,←'  DO(i,rcd){zvB[i+lcd]=v;}}',nl
+  z,←'}else if(!lr){B zc_rc=zc-rc;B lcd=zc_rc/64;B lcm=zc_rc%64;',nl
+  z,←' B v=0;if(1&lvB[0]){v=-1;}',nl,simd''
+  z,←' DO(i,lcd){zvB[i]=v;}',nl
+  z,←' if(lcm){B sl=lcm;B sr=64-sl; B rcd=rc/64;B rcm=rc%64;',nl
+  z,←'  if(rcm>sr){',nl,simd''
+  z,←'   DO(i,1){zvB[rcd+lcd+1]=rvB[rcd]>>sr;}}',nl,simd''
+  z,←'  DO(i,1){zvB[lcd]=(v&((1UL<<lcm)-1))|(rvB[0]<<sl);}',nl,simd''
+  z,←'  DO(i,rcd){zvB[i+lcd+1]=(rvB[i]>>sr)|(rvB[i+1]<<sl);}',nl
+  z,←' }else{B rcd=(rc+63)/64;',nl,simd''
+  z,←'  DO(i,rcd){zvB[i+lcd]=rvB[i];}}',nl
+  z,←'}else{',nl,simd''
+  z,←' DO(i,lcd){zvB[i]=lvB[i];}',nl
+  z,←' if(lcm){B sl=lcm;B sr=64-sl;B rcd=rc/64;B rcm=rc%64;',nl
+  z,←'  if(rcm>sr){',nl,simd''
+  z,←'   DO(i,1){zvB[rcd+lcd+1]=rvB[rcd]>>sr;}}',nl,simd''
+  z,←'  DO(i,1){zvB[lcd]=(lvB[lcd]&((1UL<<lcm)-1))|(rvB[0]<<sl);}',nl,simd''
+  z,←'  DO(i,rcd){zvB[i+lcd+1]=(rvB[i]>>sr)|(rvB[i+1]<<sl);}',nl
+  z,←' }else{B rcd=(rc+63)/64;',nl,simd''
+  z,←'  DO(i,rcd){zvB[i+lcd]=rvB[i];}}',nl
   z,'}}',nl,'cpaa(',rslt,',&za);}',nl}
 fctd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍪')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 
