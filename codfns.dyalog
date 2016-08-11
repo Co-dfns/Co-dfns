@@ -821,7 +821,7 @@ rdfmolpxb←{d t←⍺ ⋄ rslt rgt←var/2↑⍵ ⋄ z←'{',('r'decarrb rgt),r
   z,←' DO(i,jc-1){B x=i+1;',nl,cal,'}',nl,simd''
   z,←' DOI(i,1){zv[0]=t;}',nl
   z,←'}else{',nl,simd''
-  z,←'  DO(i,zc){',t,' t=1&(rv[i/8]>>(i%8));',nl
+  z,←' DO(i,zc){',t,' t=1&(rv[i/8]>>(i%8));',nl
   z,←'  DO(j,jc-1){B x=(j+1)*zc+i;',nl,cal,'}',nl
   z,←'  zv[i]=t;}',nl
   z,'}}',nl,'cpaa(',rslt,',&za);}',nl}
