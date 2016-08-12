@@ -1455,9 +1455,11 @@ rotdfbiaal←{v e y←⍵ ⋄ a r←var/2↑v,⍪e ⋄ lr←≢⍴l←2⊃v ⋄ 
 rotdfbilp←{z←(rotdfshft⍬),'B*restrict zvB=(B*)zv;B*restrict rvB=(B*)rv;',nl
   z,←'{B ec=(zc+63)/64;',nl
   z,←(ackn'present(rvB[:ec],zvB[:ec])'),'{',nl
-  z,←'DO(i,ec){B t=0;DOI(j,64){B zx=i*64+j;B zi=zx/jc,zj=zx%jc;',nl
-  z,←'  B rj=(zj+s)%jc;B rx=zi*jc+rj;',nl
-  z,←'  t|=(1&(rvB[rx/64]>>(rx%64)))<<j;}',nl
+  z,←'DO(i,ec){B t=0;B xs=i*64;B xe=xs+64;',nl
+  z,←' while(xs<xe){B yi=xs/jc;B yj=(xs+s)%jc;B y=yi*jc+yj;I ym=y%64;',nl
+  z,←'  I cnt=64-ym;if(cnt>jc-yj)cnt=jc-yj;if(cnt>jc-xs%jc)cnt=jc-xs%jc;',nl
+  z,←'  I ts=xs%64;I sl=64-(cnt+ym);I sr=sl+ym;',nl
+  z,←'  xs+=cnt;t|=((rvB[y/64]<<sl)>>sr)<<ts;}',nl
   z,←' zvB[i]=t;}',nl
   z,'}}',nl,'cpaa(',⍵,',&za);}',nl}
 rotdfbbaaa←{'NONCE_ERROR;',nl}
