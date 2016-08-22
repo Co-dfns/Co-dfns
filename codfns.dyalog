@@ -630,10 +630,10 @@ scln    ←(,¨'%&')⎕R'\\\%' '\\\&'
 sstm    ←{cln (,¨'⍵⍺')⎕R(scln∘⍕∘⊃¨⍺ ⍵)⊢⍺⍺(⍵⍵ sfnl)⊃∘⌽¨⍺ ⍵}
 sidx←{        0=⊃⊃0⍴⊂⍵:     8⍴⊂⍵ (⍺⊃⍺⍺)
         ∧/⊃3 4∨.=⊂⍺⍺:       ⊂⍵ (⍺⊃⍺⍺)
-        3=⍺⊃⍺⍺: ↓(⍺⊃⍺⍺),⍨⍪(⌽⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
+        3=⍺⊃⍺⍺: ↓(⍺⊃⍺⍺),⍨⍪(⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
                 ↓(⍺⊃⍺⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
 scal    ←{⊃⍺⍺ sstm ⍵⍵¨/1 2(⍺ sidx)¨⍵}
-sgtbn   ←{⍺⍺,'|=((U8)(',⍵,'))<<',(⍕7-⍺),';',nl}
+sgtbn   ←{⍺⍺,'|=((U8)(',⍵,'))<<',(⍕⍺),';',nl}
 sgtnn   ←{⍺⍺,'_',(⍕⍺),'=',⍵,';',nl}
 sgtbb   ←{⍺,'=',⍵,';',nl}
 sget←{        nm      ←(⊃git⊃⍺⍺),⊃⍺
@@ -728,9 +728,9 @@ redm←{        idf     ←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀�
         exe3a   ,←'}',nl,gid⊃(pacc'exit data delete(val)')''
         exe3a   ,←'zv[0]=val;',nl,pacc'update device(zv[:1])'
         exe3b   ←nl,pacc gid⊃'update host(rv[:rn])' 'update host(rv[rn-1:1])'
-        exe3b   ,←(⊃git⊃⍺),'val=1&(rv[rn-1]>>(7-((rc-1)%8)));I n=rc-1;',nl
+        exe3b   ,←(⊃git⊃⍺),'val=1&(rv[rn-1]>>((rc-1)%8));I n=rc-1;',nl
         exe3b   ,←pacc gid⊃'enter data copyin(val)' 'kernels loop present(rv[:rn])'
-        exe3b   ,←'DO(i,n){I ri=rc-(2+i);I cr=1&(rv[ri/8]>>(7-(ri%8)));',nl
+        exe3b   ,←'DO(i,n){I ri=rc-(2+i);I cr=1&(rv[ri/8]>>(ri%8));',nl
         exe3b   ,←gid⊃(pacc'data copyin(cr)')''
         exe3b   ,←((2⍴⊃⍺),1,2↓⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'cr'
         exe3b   ,←gid⊃(nl,pacc'update device(val)')''
@@ -752,13 +752,13 @@ redm←{        idf     ←(,¨'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀�
         exe4b   ←nl,(simd'present(zv[:zn])'),'DO(i,zn){zv[i]=0;};I n=rc-1;',nl
         exe4b   ,←pacc gid⊃'update host(rv[:rn])' exe4lp
         exe4b   ,←'DO(i,zc){I si=(i*rc)+rc-1;',nl
-        exe4b   ,←(⊃git⊃⍺),'val=1&(rv[si/8]>>(7-(si%8)));',nl
+        exe4b   ,←(⊃git⊃⍺),'val=1&(rv[si/8]>>(si%8));',nl
         exe4b   ,←pacc gid⊃'enter data copyin(val)' 'loop vector(32)'
-        exe4b   ,←'DO(j,n){I ri=(i*rc)+(rc-(2+j));I cr=1&(rv[ri/8]>>(7-(ri%8)));',nl
+        exe4b   ,←'DO(j,n){I ri=(i*rc)+(rc-(2+j));I cr=1&(rv[ri/8]>>(ri%8));',nl
         exe4b   ,←((2⍴⊃⍺),1,2↓⍺)((⊃⍺⍺)scmx ⍵⍵)'val' 'val' 'cr'
         exe4b   ,←gid⊃(nl,pacc'update device(val)')''
         exe4b   ,←'}',nl,gid⊃(pacc'exit data delete(val)')''
-        exe4b   ,←(3=⊃0⌷⍺)⊃'zv[i]=val;' 'zv[i/8]|=val<<(7-(i%8));'
+        exe4b   ,←(3=⊃0⌷⍺)⊃'zv[i]=val;' 'zv[i/8]|=val<<(i%8);'
         exe4b   ,←'}',nl,gid⊃(pacc'update device(zv[:zn])')''
         exe     ,←(2⊥(3=2↑⍺))⊃exe4a exe4b exe4a exe4b
         exe     ,←'}'
@@ -1270,7 +1270,7 @@ shpd←{chk←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)error(11);'
  cpyn←cpy,(simd'present(zv[:zc],rv[:rc])'),'DO(i,zc)zv[i]=rv[i%rc];}'
  cpyb←cpy,'I rcp=ceil(rc/8.0),zcp=ceil(zc/8.0);',nl
  cpyb,←(simd'present(zv[:zcp],rv[:rcp])'),'DO(i,zcp){U8 b=0;',nl
- cpyb,←' DO(j,8){I ri=(i*8+j)%rc;b|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}',nl
+ cpyb,←' DO(j,8){I ri=(i*8+j)%rc;b|=(1&(rv[ri/8]>>(ri%8)))<<j;}',nl
  cpyb,←' zv[i]=b;}}'
  cpy←(3=0⌷⍺)⊃cpyn cpyb
  ref←'rslt->r=zr;DO(i,zr){rslt->s[i]=zs[i];};rslt->f=rgt->f;rgt->f=0;',nl
@@ -1304,13 +1304,13 @@ catd←{
   exe,←(3=0⌷⍺)⊃(simd'independent collapse(2) present(zv[:zcp],lv[:lcp])')''
   exe,←'DO(i,zi){DO(j,lm){I zvi=i*zm+j,lvi=lt*(i*lm+j);',nl
   exe,←(3=0⌷⍺)⊃'zv[zvi]=' 'zv[zvi/8]|='
-  exe,←(3=2⌷⍺)⊃'lv[lvi]' '(1&(lv[lvi/8]>>(7-(lvi%8))))'
-  exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(7-(zvi%8));}}',nl)
+  exe,←(3=2⌷⍺)⊃'lv[lvi]' '(1&(lv[lvi/8]>>(lvi%8)))'
+  exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(zvi%8);}}',nl)
   exe,←(3=0⌷⍺)⊃(simd'independent collapse(2) present(zv[:zcp],rv[:rcp])')''
   exe,←'DO(i,zi){DO(j,rm){I zvi=i*zm+lm+j,rvi=rt*(i*rm+j);',nl
   exe,←(3=0⌷⍺)⊃'zv[zvi]=' 'zv[zvi/8]|='
-  exe,←(3=1⌷⍺)⊃'rv[rvi]' '(1&(rv[rvi/8]>>(7-(rvi%8))))'
-  exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(7-(zvi%8));}}',nl)
+  exe,←(3=1⌷⍺)⊃'rv[rvi]' '(1&(rv[rvi/8]>>(rvi%8)))'
+  exe,←(3=0⌷⍺)⊃(';}}',nl)('<<(zvi%8);}}',nl)
   exe,←(3=0⌷⍺)⊃''(pacc'update device(zv[:zcp])')
     chk siz exe mxfn 1 ⍺ ⍵}
 
@@ -1428,7 +1428,7 @@ rotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'U8'rotmlp rgt
   z,←'U8*restrict zv=(&ta)->v;',nl,simd'independent present(zv[:tc8],rv[:tc8])'
   z,←'DO(i,tc8){U8 t=0;',nl,pacc'loop reduction(|:t)'
   z,←' DO(j,8){B ti,tr,tc;ti=i*8+j;tr=ti/ic;tc=ti%ic;',nl
-  z,←'  B ri=tr*ic+(ic-(tc+1));t|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}',nl
+  z,←'  B ri=tr*ic+(ic-(tc+1));t|=(1&(rv[ri/8]>>(ri%8)))<<j;}',nl
   z,' zv[i]=t;}',nl,'cpaa(',rslt,',&ta);}',nl}
 
 ⍝    Rotate
@@ -1571,14 +1571,14 @@ trnmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←rslt(e trnmfh)rg
   z,←a⊣a,←'U8*restrict rv=(',rgt,')->v;B cnt=(',rgt,')->z;',nl
   z,←simd'independent present(zv[:cnt],rv[:cnt])'
   z,←'DO(i,cnt){zv[i]=0;DO(j,8){B zi=i*8+j;B zr=zi/sp[1],zc=zi%sp[1];',nl
-  z,←' B ri=zc*sp[0]+zr;zv[i]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}}',nl
+  z,←' B ri=zc*sp[0]+zr;zv[i]|=(1&(rv[ri/8]>>(ri%8)))<<j;}}',nl
   z,←'cpaa(',rslt,',&ta);',nl
   z,←'}else{',nl
   z,←a,'B*rs=(',rgt,')->s;',nl
   z,←simd'independent present(zv[:cnt],rv[:cnt]) copyin(rs[:rk])'
   z,←'DO(i,cnt){zv[i]=0;DO(j,8){B i8=i*8+j;B ri=0,zi=i8;',nl
   z,←'  DO(j,rk){B k=zi%rs[j];ri*=rs[j];ri+=k;zi-=k;zi/=rs[j];}',nl
-  z,←'  zv[i]|=(1&(rv[ri/8]>>(7-(ri%8))))<<(7-j);}}',nl
+  z,←'  zv[i]|=(1&(rv[ri/8]>>(ri%8)))<<j;}}',nl
   z,←'cpaa(',rslt,',&ta);',nl
   z,'}}',nl}
 
@@ -1652,7 +1652,7 @@ fltd←{chk←'if(lr>1)error(4);',nl
   szn,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
   szb←siz,pacc 'update host(lv[:lft->z],rv[:rgt->c])'
   szb,←'if(lc>=rc){I n=ceil(lc/8.0);',nl
-  szb,←' DO(i,n){DO(j,8){last+=1&(lv[i]>>(7-j));}}',nl
+  szb,←' DO(i,n){DO(j,8){last+=1&(lv[i]>>j);}}',nl
   szb,←'}else{last+=rc*(lv[0]>>7);}',nl
   szb,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
   exe←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
@@ -1679,20 +1679,20 @@ fltd←{chk←'if(lr>1)error(4);',nl
   exb←'B a=0;if(rr==1&&rc==lc){I n=ceil(lc/8.0);',nl
 ⍝⍝  exb,←' A t;t.v=NULL;ai(&t,1,&lc,1);I*restrict tv=t.v;',nl
 ⍝⍝  exb,←simd'collapse(2) independent present(tv[:lc],lv[:n])'
-⍝⍝  exb,←' DO(i,n){DO(j,8){tv[i*8+j]=1&(lv[i]>>(7-j));}}',nl
+⍝⍝  exb,←' DO(i,n){DO(j,8){tv[i*8+j]=1&(lv[i]>>j);}}',nl
 ⍝⍝  exb,←'lc'sumscan'tv'
 ⍝⍝  exb,←simd'independent present(zv[:zc],rv[:lc],lv[:n],tv[:lc])'
 ⍝⍝  exb,←' DO(i,lc){if(128&(lv[i/8]<<(i%8)))zv[tv[i]-1]=rv[i];}',nl
 ⍝⍝  exb,←' frea(&t);',nl
-  exb,←' DO(i,n){DO(j,8){if(1&(lv[i]>>(7-j)))zv[a++]=rv[i*8+j];}}',nl
+  exb,←' DO(i,n){DO(j,8){if(1&(lv[i]>>j))zv[a++]=rv[i*8+j];}}',nl
   exb,←'}else if(rc==lc){I n=ceil(lc/8.0);',nl,'DO(i,n){DO(m,8){',nl
-  exb,←' if(1&(lv[i]>>(7-m))){',nl
+  exb,←' if(1&(lv[i]>>m)){',nl
   exb,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[(j*rc)+i*8+m];}',nl
   exb,←'  a++;}}}',nl
   exb,←'}else if(rc>lc){if(lv[0]>>7){',nl
   exb,←'  DO(i,zc){DO(j,rc){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}',nl
   exb,←'}else{I n=ceil(lc/8.0);DO(i,n){DO(m,8){',nl
-  exb,←' if(1&(lv[i]>>(7-m))){',nl
+  exb,←' if(1&(lv[i]>>m)){',nl
   exb,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[j*rc];}',nl
   exb,←'  a++;}}}}',nl
 ⍝⍝  exb,←'if(rr!=1||rc!=lc){',nl
@@ -1777,7 +1777,7 @@ rolmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B c=ceil((',rg
   z,←'A t;t.v=NULL;',nl
   z,←'ai(&t,(',rgt,')->r,(',rgt,')->s,2);D*restrict zv=t.v;',nl
   z,←'srand48(time(NULL));',nl
-  z,←'DO(i,c){DO(j,8){B x=i*8+j;U8 t=1&(rv[i]>>(7-j));',nl
+  z,←'DO(i,c){DO(j,8){B x=i*8+j;U8 t=1&(rv[i]>>j);',nl
   z,←' if(t)zv[x]=0;else zv[x]=drand48();}}',nl
   z,'B zc=t.c;',nl,(acup'device(zv[:zc])'),'cpaa(',rslt,',&t);}',nl}
 
@@ -1828,7 +1828,7 @@ decd←{        chk     ←'if(lr>1||lv[0]<0)error(16);'
         exeb    ←'I rcp=ceil(rgt->c/8.0);',nl
         exeb    ,←pacc'update host(lv,rv[:rcp])'
         exeb    ,←'DO(i,zc){zv[i]=0;DO(j,rc){I ri=(j*zc)+i;',nl
-        exeb    ,←'zv[i]=(1&(rv[ri/8]>>(7-(ri%8))))+lv[0]*zv[i];}}',nl
+        exeb    ,←'zv[i]=(1&(rv[ri/8]>>(ri%8)))+lv[0]*zv[i];}}',nl
         exeb    ,←pacc'update device(zv[:rslt->c])'
         exe     ←(3=⊃1⌷⍺)⊃exen exeb
                 chk siz exe mxfn 1 ⍺ ⍵}
@@ -1846,12 +1846,12 @@ brid←{        chk     ←'if(lr!=1)error(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[
         chkn    ,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])error(3);'
         chkb    ←'I n=ceil(rc/8.0);',nl
         chkb    ,←pacc'update host(rv[:n],lv[:lc])'
-        chkb    ,←'DO(i,n){DO(j,8){if((1&(rv[i]>>(7-j)))>=ls[0])error(3);}}'
+        chkb    ,←'DO(i,n){DO(j,8){if((1&(rv[i]>>j))>=ls[0])error(3);}}'
         chk     ,←(3≡1⊃⍺)⊃chkn chkb
         siz     ←'zr=rr;DO(i,zr)zs[i]=rs[i];'
         exen    ←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
         exeb    ←(simd'present(zv[:rslt->c],lv[:lc],rv[:n])')
-        exeb    ,←'DO(i,n){DO(j,8){zv[i*8+j]=lv[1&(rv[i]>>(7-j))];}}'
+        exeb    ,←'DO(i,n){DO(j,8){zv[i*8+j]=lv[1&(rv[i]>>j)];}}'
         exe     ←(3≡1⊃⍺)⊃exen exeb
                 chk siz exe mxfn 1 ⍺ ⍵}
 :EndNamespace
