@@ -566,7 +566,7 @@ sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^�
 sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ(⍺,⍵)'
 sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
-sdb⍪←,¨'!'  'fact(⍵)'     'binomial(⍺,⍵)'       '255'       '(~⍺)|⍵'
+sdb⍪←,¨'!'  'tgamma(1+⍵)'  '⍵<⍺?0:tgamma(1+⍵)/(tgamma(1+⍺)*tgamma(1+⍵-⍺))' '255' '(~⍺)|⍵'
 sdb⍪←,¨'<'  'error(99)'   '⍺<⍵'                 'error(99)' '(~⍺)&⍵'
 sdb⍪←,¨'≤'  'error(99)'   '⍺<=⍵'                'error(99)' '(~⍺)|⍵'
 sdb⍪←,¨'='  'error(99)'   '⍺==⍵'                'error(99)' '(⍺&⍵)|((~⍺)&(~⍵))'
@@ -1140,13 +1140,6 @@ rth,←'  case 13:return sinh(b);break;',nl
 rth,←'  case 14:return cosh(b);break;',nl
 rth,←'  case 15:return tanh(b);break;',nl
 rth,←' };return -1;}',nl
-rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-rth,←'D fact(D n){if(n<0)R -1;if(n!=floor(n))R tgamma(n+1);',nl
-rth,←' D z=1;DO(i,n){z*=i+1;};R z;}',nl
-rth,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-rth,←'D binomial(D x,D y){if(x>=0&&y>=0&&x==floor(x)&&y==floor(y))',nl
-rth,←' R fact(y)/(fact(x)*fact(y-x));',nl
-rth,←' R -1;}',nl
 
 ⍝  Mixed Verbs
 
