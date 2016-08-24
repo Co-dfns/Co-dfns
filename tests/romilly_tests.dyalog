@@ -7,10 +7,9 @@ S,←⊂':EndNamespace'
 
 g3connector←{⍺←4 ⋄ ⍺≥?25⍴⍨25,⍵}
 g3inputs←{1=?⍵⍴2}
-conn←g3connector 30 30
-inpt←g3inputs 30 30
 
-''('romilly' S 'granule3' #.util.GEN∆T2 ⎕THIS) conn inpt
+'1'('romilly' S 'granule3' #.util.GEN∆T2 ⎕THIS) (g3connector 30 30) (g3inputs 30 30)
+'2'('romilly' S 'granule3' #.util.GEN∆T2 ⎕THIS) (g3connector 300 300) (g3inputs 300 300)
 
 :EndNamespace
 
