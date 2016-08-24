@@ -1754,7 +1754,7 @@ iotmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←iotmck rgt
   z,←'{I*restrict v=(',rgt,')->v;B c=v[0];ai(',rslt,',1,&c,1);',nl
   z,'v=(',rslt,')->v;',nl,(simd'present(v[:c])'),'DO(i,c)v[i]=i;}',nl}
 iotmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←iotmck rgt
-  z,←'{U8*v=(',rgt,')->v;B c=v[0]>>7;ai(',rslt,',1,&c,1);',nl
+  z,←'{U8*v=(',rgt,')->v;B c=1&v[0];ai(',rslt,',1,&c,1);',nl
   z,←'I*restrict zv=(',rslt,')->v;',nl
   z,(simd'present(zv[:c])'),'DO(i,c)zv[i]=i;}',nl}
 
