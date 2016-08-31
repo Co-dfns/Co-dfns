@@ -17,6 +17,12 @@ COMPILE∆VSC_TEST←{~(⊂'vsc')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←
   (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
 }
 
+COMPILE∆PGI_TEST←{~(⊂'pgi')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
+  #.UT.expect←1 1 1 1 1 ⋄ #.codfns.COMPILER←'pgi⌈'
+  vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
+  (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
+}
+
 COMPILE∆GCC_TEST←{~(⊂'gcc')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
   #.UT.expect←1 1 1 1 1 ⋄ #.codfns.COMPILER←'gcc'
   vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
