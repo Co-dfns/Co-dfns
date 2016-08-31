@@ -32,26 +32,26 @@ PGI∆PATH           ←'C:\Program Files\PGI\win64\16.7\'
 VERSION            ←0 5 0
 
 ⍝  Primary Interface
-Cmp ←{_←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
-  _←(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵
-  22::'COMPILE ERROR'⎕SIGNAL 22 ⋄ n⊣⎕NUNTIE so ⎕NTIE 0}
+Cmp←{_←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
+ _←(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵
+ 22::'COMPILE ERROR'⎕SIGNAL 22 ⋄ n⊣⎕NUNTIE so ⎕NTIE 0}
 MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS⍬}
-Fix ←{⍺ MkNS ⍺ Cmp ⍵}
-Xml ←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
-BSO ←{BUILD∆PATH,(dirc⍬),⍵,'_',COMPILER,(soext⍬)}
-MKA ←{mka⊂⍵⊣'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'}
-EXA ←{exa⍬(0⊃⍵)(1⊃⍵)⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'}
+Fix←{⍺ MkNS ⍺ Cmp ⍵}
+Xml←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
+BSO←{BUILD∆PATH,(dirc⍬),⍵,'_',COMPILER,(soext⍬)}
+MKA←{mka⊂⍵⊣'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'}
+EXA←{exa⍬(0⊃⍵)(1⊃⍵)⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'}
 FREA←{frea⍵⊣'frea'⎕NA (BSO ⍺),'|frea P'}
 
 ⍝   Helpers for the Primary Interface
-dirc ←{'\/'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
+dirc←{'\/'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
 soext←{'.dll' '.so'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
-tie  ←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
-put  ←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-mkf  ←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,' '
-       f,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
-       f,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
-       f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
+tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+mkf←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,' '
+ f,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
+ f,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
+ f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ Backend Compilers
