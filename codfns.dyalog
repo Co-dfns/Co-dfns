@@ -1063,7 +1063,7 @@ rth,←' B pc=8*ceil(c/8.0);',nl
 rth,←' switch(tp){',nl
 rth,←'  case 1:z=sizeof(I)*pc;break;',nl
 rth,←'  case 2:z=sizeof(D)*pc;break;',nl
-rth,←'  case 3:z=ceil((sizeof(U8)*pc)/8.0);break;',nl
+rth,←'  case 3:z=(sizeof(U8)*pc+7)/8;break;',nl
 rth,←'  default: error(16);}',nl
 rth,←' z=8*ceil(z/8.0);char*v=malloc(z);if(NULL==v)error(1);',nl
 rth,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
