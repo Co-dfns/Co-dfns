@@ -104,9 +104,10 @@ icl4←{'> "',BUILD∆PATH,'\',⍵,'_icl.log""'}
 icl←⎕CMD '%comspec% /E:ON /V:ON /C ',icl1,vsc2,icl3,icl4
 
 ⍝  PGI C Windows
-pgio←'-fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda7.5 -Minfo=accel '
+pgio←'-fast -acc -ta=tesla:maxregcount:32,nollvm,nordc -Minfo '
+pgilibs←'-laccapi -laccg -laccn -laccg2 -lcrypto-38 '
 pgwc←{'pgcc ',pgio,'-Bdynamic -c "',⍵,'.c" -o "',⍵,'.obj"'}
-pglk←{'pgcc ',pgio,'-Mmakedll -o "',⍵,'.dll" "',⍵,'_pgi.obj" "libcrypto-38.lib"'}
+pglk←{'pgcc ',pgio,'-Mmakedll -o "',⍵,'.dll" "',⍵,'.obj" ',pgilibs}
 pgienv←{'"',PGI∆PATH,'pgi_env.bat"',('>'pgilog ⍵)}
 pgicmp←{(pgwc BUILD∆PATH,'\',⍵,'_pgi'),('>>'pgilog ⍵)}
 pgilnk←{(pglk BUILD∆PATH,'\',⍵,'_pgi'),('>>'pgilog ⍵)}
@@ -520,11 +521,10 @@ rth,←'#define ETYPE(lp) ((lp)->p->e)',nl
 rth,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',nl
 rth,←'#define DO(i,n) for(B i=0;i<(n);i++)',nl,'#define R return',nl
 rth,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
-rth,←'#ifdef _MSC_VER',nl
-rth,←'#define EXPORT __declspec(dllexport)',nl,'#define RSTCT __restrict',nl
-rth,←'#else',nl
-rth,←'#define EXPORT ',nl,'#define RSTCT restrict',nl
-rth,←'#endif',nl
+rth,←'#ifdef _WIN32',nl,'#define EXPORT __declspec(dllexport)',nl
+rth,←'#else',nl,'#define EXPORT',nl,'#endif',nl
+rth,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
+rth,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
 rth,←'#define S struct',nl,nl
 
 ⍝   Typedefs
