@@ -92,7 +92,7 @@ vslo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
 
 ⍝  Visual Studio C
 vsc1←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
-vsc2←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.c" '}
+vsc2←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.c" "libcrypto-38.lib" '}
 vsc3←{vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
 vsc4←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
 vsc←⎕CMD '%comspec% /C ',vsc1,vsc2,vsc3,vsc4
@@ -506,10 +506,7 @@ rth←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
 rth,←'#include <stdlib.h>',nl,'#include <time.h>',nl
 rth,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
 rth,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
-rth,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl
-rth,←'#ifdef _WIN32',nl
-rth,←'#elif __linux__',nl,'#include <bsd/stdlib.h>',nl
-rth,←'#else',nl,'#endif',nl,nl
+rth,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl,nl
 
 ⍝   Globals
 rth,←'int isinit=0;',nl
@@ -639,7 +636,8 @@ rth,←'  case 12:R sqrt(1+b*b);break;',nl
 rth,←'  case 13:R sinh(b);break;',nl
 rth,←'  case 14:R cosh(b);break;',nl
 rth,←'  case 15:R tanh(b);break;',nl
-rth,←' };R -1;}',nl,nl
+rth,←' };R -1;}',nl
+rth,←'extern U arc4random_uniform(U);',nl,nl
 
 ⍝  Function Entry
 frt←'static void '
@@ -1780,16 +1778,15 @@ rolmfinaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B c=(',rgt,')-
   z,←'DO(i,c){if(rv[i]<0)dwaerr(11);}',nl
   z,←'A t;t.v=NULL;',nl
   z,←'ai(&t,(',rgt,')->r,(',rgt,')->s,2);D*RSTCT zv=t.v;',nl
-  z,←'srand48(time(NULL));',nl
-  z,←'DO(i,c){if(rv[i])zv[i]=arc4random_uniform(rv[i]);else zv[i]=drand48();}',nl
+  z,←'DO(i,c){if(rv[i])zv[i]=arc4random_uniform(rv[i]);',nl
+  z,←'  else zv[i]=(D)arc4random_uniform(UINT_MAX)/UINT_MAX;}',nl
   z,(acup'device(zv[:c])'),'cpaa(',rslt,',&t);}',nl}
 rolmfbnaaa←{v e y←⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ z←'{B c=((',rgt,')->c+7)/8;',nl
   z,←'U8*RSTCT rv=(',rgt,')->v;',nl,acup'host(rv[:c])'
   z,←'A t;t.v=NULL;',nl
   z,←'ai(&t,(',rgt,')->r,(',rgt,')->s,2);D*RSTCT zv=t.v;',nl
-  z,←'srand48(time(NULL));',nl
   z,←'DO(i,c){DO(j,8){B x=i*8+j;U8 t=1&(rv[i]>>j);',nl
-  z,←' if(t)zv[x]=0;else zv[x]=drand48();}}',nl
+  z,←' if(t)zv[x]=0;else zv[x]=(D)arc4random_uniform(UINT_MAX)/UINT_MAX;}}',nl
   z,'B zc=t.c;',nl,(acup'device(zv[:zc])'),'cpaa(',rslt,',&t);}',nl}
 
 ⍝    Shape
