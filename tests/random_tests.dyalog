@@ -1,4 +1,4 @@
-:Namespace random
+﻿:Namespace random
 
 S←':Namespace' 'Run←{?⍺⍴⍵}' ':EndNamespace'
 
@@ -14,7 +14,7 @@ MK∆TST←{id cmp ns fn←⍺⍺ ⋄ l r←⍵⍵
 
 ∇Z←ID(NCF GEN∆TST THIS)IN;NS;FN;CMP;TC;TMP
  NS TC FN←NCF
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc'
+ :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc' 'pgi'
     TMP←(NS,ID)CMP TC FN MK∆TST IN
     ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
  :EndFor
