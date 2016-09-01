@@ -1,4 +1,4 @@
-# Co-dfns Compiler
+﻿# Co-dfns Compiler
 
 The Co-dfns project aims to provide a high-performance, high-reliability
 compiler for a parallel extension of the Dyalog dfns programming language.
@@ -64,14 +64,14 @@ manual linking into the compilation object using `⎕NA`.
 
 ### codfns.MKA
 
-    Codfns_Array ← codfns.MKA Array
+    Codfns_Array ← Name codfns.MKA Array
 
 This allows you to manually obtain a pointer to a Co-dfns array created from 
 a given Dyalog DWA Array. 
 
 ### codfns.EXA
 
-    Array ← codfns.EXA Codfns_Array Type
+    Array ← Name codfns.EXA Codfns_Array Type
 
 Used to extract an array from Co-dfns. It will take a pointer to a Co-dfns 
 array and the type of that array, and will free the array from the Co-dfns 
@@ -80,7 +80,7 @@ array.
 
 ### codfns.FREA
 
-    {} ← codfns.FREA Codfns_Array
+    {} ← Name codfns.FREA Codfns_Array
 
 Frees a Co-dfns array pointer obtained from `MKA`. 
 
