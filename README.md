@@ -106,13 +106,6 @@ names:
 A vector of the backend compilers to test when running the test suite. See 
 `COMPILERS` for valid options.
 
-### DWA∆PATH
-
-    DWA∆PATH ← 'dwa'
-
-The path relative to your working directory indicating the location of the 
-dwa package. Contact Dyalog, Ltd. for a copy of DWA for your platform. 
-
 ### BUILD∆PATH
 
     BUILD∆PATH ← 'build'
