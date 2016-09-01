@@ -95,7 +95,7 @@ vsc1←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast
 vsc2←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.c" "libcrypto-38.lib" '}
 vsc3←{vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
 vsc4←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
-vsc←⎕CMD '%comspec% /C ',vsc1,vsc2,vsc3,vsc4
+vsc←{⎕CMD ('%comspec% /C ',vsc1,vsc2,vsc3,vsc4)⍵}
 
 ⍝  Intel C Windows
 icl1←{'""',INTEL∆C∆PATH,'\ipsxe-comp-vars.bat" intel64 vs2015 && icl ',vsco,'/Ofast '}
@@ -104,16 +104,14 @@ icl4←{'> "',BUILD∆PATH,'\',⍵,'_icl.log""'}
 icl←⎕CMD '%comspec% /E:ON /V:ON /C ',icl1,vsc2,icl3,icl4
 
 ⍝  PGI C Windows
-pgio←'-D "HAS_UNICODE=1" -D "xxBIT=64" -D "WIN32" -D "NDEBUG" -D "_WINDOWS" '
-pgio,←'-D "_USRDLL" -D "DWA_EXPORTS" -D "_WINDLL" -D "HASACC" '
-pgwc←{z←'pgcc -fast -Bdynamic -acc -Minfo ',pgio,'-I "',DWA∆PATH,'\\" '
-  z,←'-c "',⍵,'.c" -o "',⍵,'.obj"' ⋄ z}
-pglk←{z←'pgcc -fast -Mmakedll -acc -Minfo -o "',BUILD∆PATH,'\',⍵,'_pgi.dll" "'
-  z,←BUILD∆PATH,'\',⍵,'_pgi.obj" "',DWA∆PATH,'\dwa_fns.obj"' ⋄ z}
-pgi1←{'""',PGI∆PATH,'pgi_env.bat" && ',(pgcc BUILD∆PATH,'\',⍵,'_pgi'),' && '}
-pgi2←{(pgwc DWA∆PATH,'\dwa_fns'),' && ',pglk ⍵}
-pgi3←{' > "',BUILD∆PATH,'\',⍵,'_pgi.log""'}
-pgi←⎕CMD '%comspec% /C ',pgi1,pgi2,pgi3
+pgio←'-fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda7.5 -Minfo=accel '
+pgwc←{'pgcc ',pgio,'-Bdynamic -c "',⍵,'.c" -o "',⍵,'.obj"'}
+pglk←{'pgcc ',pgio,'-Mmakedll -o "',⍵,'.dll" "',⍵,'_pgi.obj" "libcrypto-38.lib"'}
+pgienv←{'"',PGI∆PATH,'pgi_env.bat"',('>'pgilog ⍵)}
+pgicmp←{(pgwc BUILD∆PATH,'\',⍵,'_pgi'),('>>'pgilog ⍵)}
+pgilnk←{(pglk BUILD∆PATH,'\',⍵,'_pgi'),('>>'pgilog ⍵)}
+pgilog←{' ',⍺,' "',BUILD∆PATH,'\',⍵,'_pgi.log" 2>&1'}
+pgi←{⎕CMD'%comspec% /C "',(pgienv⍵),' && ',(pgicmp⍵),' && ',(pgilnk⍵),'"'}
 
 ⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝⍝
 ⍝ AST
@@ -502,10 +500,11 @@ simd ←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 ⍝  Runtime Header
 
 ⍝   Includes
-rth←'#include <math.h>',nl,'#include <stdio.h>',nl,'#include <string.h>',nl
+rth←'#include <stdio.h>',nl,'#include <string.h>',nl
 rth,←'#include <stdlib.h>',nl,'#include <time.h>',nl
 rth,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
-rth,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl,'#endif',nl
+rth,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl
+rth,←'#else',nl,'#include <math.h>',nl,'#endif',nl
 rth,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl,nl
 
 ⍝   Globals
