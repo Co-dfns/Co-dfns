@@ -96,7 +96,7 @@ local environment. The values given below are their default values.
 This indicates the backend compiler to use. It should be one of the following 
 names:
 
-    Windows: vsc pgi
+    Windows: vsc pgi icl
     Linux: gcc icc pgcc
 
 ### TEST∆COMPILERS
@@ -130,7 +130,7 @@ Intel's C compiler on Windows.
 
 ### PGI∆PATH
 
-    PGI∆PATH ← 'C:\Program Files\PGI\win64\15.7\'
+    PGI∆PATH ← 'C:\Program Files\PGI\win64\16.7\'
 
 The path to your PGI installation on Windows. Needed if you wish to use PGI 
 on Windows. You must have the OpenACC version of PGI. 
@@ -142,6 +142,28 @@ on Windows. You must have the OpenACC version of PGI.
 This is not designed to be set by the user, but indicates the version of the 
 compiler. Version numbers are only valid as releases, and are subject to change 
 during development in the repository. 
+
+## System Requirements
+
+The Co-dfns compiler is fairly self-contained. You will need the following 
+software in order to use the compiler:
+
+1. Dyalog APL 15.0 or later 64-bit Unicode edition
+
+2. A supported compiler
+
+    a. PGI Accelerator 16.7+ (Preferred, Linux and Windows)
+    b. Visual Studio 2015 (Windows)
+    c. GCC (Linux)
+    d. Intel C Compiler (Linux or Windows)
+
+3. LibreSSL
+
+You will need to make sure that the LibreSSL libraries are visible
+and accessible to the compiler. For Windows this usually means putting 
+them in the directory where you are running/compiling your code. 
+For Linux, we generally expect them in /usr/local/lib64 or any other 
+standard location. 
 
 ## Contributing and Helping
 
