@@ -523,6 +523,8 @@ rth,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',nl
 rth,←'#define DO(i,n) for(B i=0;i<(n);i++)',nl,'#define R return',nl
 rth,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
 rth,←'#ifdef _WIN32',nl,'#define EXPORT __declspec(dllexport)',nl
+rth,←'#elif defined(__GNUC__)',nl
+rth,←'#define EXPORT __attribute__ ((visibility ("default")))',nl
 rth,←'#else',nl,'#define EXPORT',nl,'#endif',nl
 rth,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
 rth,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
