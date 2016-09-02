@@ -15,4 +15,4 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 This program is available under other licensing options. Please contact 
-arcfide@sacrideo.us for more information.
+Aaron W. Hsu <arcfide@sacrideo.us> for more information.
