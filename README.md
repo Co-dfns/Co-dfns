@@ -152,10 +152,10 @@ software in order to use the compiler:
 
 2. A supported compiler
 
-    a. PGI Accelerator 16.7+ (Preferred, Linux and Windows)
-    b. Visual Studio 2015 (Windows)
-    c. GCC (Linux)
-    d. Intel C Compiler (Linux or Windows)
+    * PGI Accelerator 16.7+ (Preferred, Linux and Windows)
+    * Visual Studio 2015 (Windows)
+    * GCC (Linux)
+    * Intel C Compiler (Linux or Windows)
 
 3. LibreSSL
 
