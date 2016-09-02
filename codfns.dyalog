@@ -705,19 +705,96 @@ sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ
 sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
 sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
 sdb⍪←,¨'!'  'tgamma(1+⍵)'  '⍵<⍺?0:tgamma(1+⍵)/(tgamma(1+⍺)*tgamma(1+⍵-⍺))' '255' '(~⍺)|⍵'
-sdb⍪←,¨'<'  'error(99)'   '⍺<⍵'                 'error(99)' '(~⍺)&⍵'
-sdb⍪←,¨'≤'  'error(99)'   '⍺<=⍵'                'error(99)' '(~⍺)|⍵'
-sdb⍪←,¨'='  'error(99)'   '⍺==⍵'                'error(99)' '(⍺&⍵)|((~⍺)&(~⍵))'
-sdb⍪←,¨'≥'  'error(99)'   '⍺>=⍵'                'error(99)' '⍺|(~⍵)'
-sdb⍪←,¨'>'  'error(99)'   '⍺>⍵'                 'error(99)' '⍺&(~⍵)'
-sdb⍪←,¨'≠'  'error(99)'   '⍺!=⍵'                'error(99)' '⍺^⍵'
-sdb⍪←,¨'~'  '0==⍵'        'error(16)'           '~⍵'        'error(16)'
-sdb⍪←,¨'∧'  'error(99)'   'lcm(⍺,⍵)'            'error(99)' '⍺&⍵'
-sdb⍪←,¨'∨'  'error(99)'   'gcd(⍺,⍵)'            'error(99)' '⍺|⍵'
-sdb⍪←,¨'⍲'  'error(99)'   '!(⍺ && ⍵)'           'error(99)' '~(⍺&⍵)'
-sdb⍪←,¨'⍱'  'error(99)'   '!(⍺ || ⍵)'           'error(99)' '~(⍺|⍵)'
-sdb⍪←,¨'⌷'  '⍵'           'error(99)'           '⍵'         'error(99)'
-sdb⍪←'⎕XOR' 'error(99)'   '⍺^⍵'                 'error(99)' '⍺ ^ ⍵'
+sdb⍪←,¨'<'  'dwaerr(99)'   '⍺<⍵'                 'dwaerr(99)' '(~⍺)&⍵'
+sdb⍪←,¨'≤'  'dwaerr(99)'   '⍺<=⍵'                'dwaerr(99)' '(~⍺)|⍵'
+sdb⍪←,¨'='  'dwaerr(99)'   '⍺==⍵'                'dwaerr(99)' '(⍺&⍵)|((~⍺)&(~⍵))'
+sdb⍪←,¨'≥'  'dwaerr(99)'   '⍺>=⍵'                'dwaerr(99)' '⍺|(~⍵)'
+sdb⍪←,¨'>'  'dwaerr(99)'   '⍺>⍵'                 'dwaerr(99)' '⍺&(~⍵)'
+sdb⍪←,¨'≠'  'dwaerr(99)'   '⍺!=⍵'                'dwaerr(99)' '⍺^⍵'
+sdb⍪←,¨'~'  '0==⍵'        'dwaerr(16)'           '~⍵'        'dwaerr(16)'
+sdb⍪←,¨'∧'  'dwaerr(99)'   'lcm(⍺,⍵)'            'dwaerr(99)' '⍺&⍵'
+sdb⍪←,¨'∨'  'dwaerr(99)'   'gcd(⍺,⍵)'            'dwaerr(99)' '⍺|⍵'
+sdb⍪←,¨'⍲'  'dwaerr(99)'   '!(⍺ && ⍵)'           'dwaerr(99)' '~(⍺&⍵)'
+sdb⍪←,¨'⍱'  'dwaerr(99)'   '!(⍺ || ⍵)'           'dwaerr(99)' '~(⍺|⍵)'
+sdb⍪←,¨'⌷'  '⍵'           'dwaerr(99)'           '⍵'         'dwaerr(99)'
+sdb⍪←'⎕XOR' 'dwaerr(99)'   '⍺^⍵'                 'dwaerr(99)' '⍺ ^ ⍵'
+
+⍝   Scalar Utilities
+scldfhd←'if(lr==rr){DOI(i,lr){if(rs[i]!=ls[i])dwaerr(5);}',nl
+scldfhd,←'}else if(lr&&rr){dwaerr(4);}',nl
+scldfhd,←'if(rr){rk=rr;DOI(i,rr){sp[i]=rs[i];}}',nl
+scldfhd,←'else{rk=lr;DOI(i,lr){sp[i]=ls[i];}}',nl
+scldfnnaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
+  z←'{I rk;B sp[15];',('r'(tr decarr)rgt),('l'(tl decarr)lft),scldfhd
+  z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rc],lv[:lc])'),'{',nl
+  3=d:z,rslt((,f)scldfbnn)y ⋄ z,rslt((,f)scldfnnn)y}
+scldfnnn←{z←'if(rr&&lr){',nl,simd''
+  z,←' DO(i,zc){',nl
+  z,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←' }',nl
+  z,←'}else if(rr){',nl,simd''
+  z,←' DO(i,zc){',nl
+  z,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←' }',nl
+  z,←'}else{',nl,simd''
+  z,←' DO(i,zc){',nl
+  z,←'  ',('df'gcl sdb)('zv[i]' 'rv[0]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←' }',nl
+  z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+scldfbnn←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
+  z,←' DO(i,zc8){U8 val=0;',nl
+  z,←'  DOI(j,8){U8 tmp;',nl
+  z,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'   val|=tmp<<j;',nl
+  z,←'  }',nl,'  zv[i]=val;}',nl
+  z,←'}else if(rr){',nl,simd''
+  z,←' DO(i,zc8){U8 val=0;',nl
+  z,←'  DOI(j,8){U8 tmp;',nl
+  z,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'   val|=tmp<<j;',nl
+  z,←'  }',nl,'  zv[i]=val;}',nl
+  z,←'}else{',nl,simd''
+  z,←' DO(i,zc8){U8 val=0;',nl
+  z,←'  DOI(j,8){U8 tmp;',nl
+  z,←'   ',('df'gcl sdb)('tmp' 'rv[0]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'   val|=tmp<<j;',nl
+  z,←'  }',nl,'  zv[i]=val;}',nl
+  z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+scldfbbaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
+  z←'{I rk;B sp[15];',('r'decarrb rgt),('l'decarrb lft),scldfhd
+  z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rz],lv[:lz])'),'{',nl
+  3=d:z,rslt((,f)scldfbbb)y ⋄ z,rslt((,f)scldfnbb)y}
+scldfnbb←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
+  z,←' DO(i,zc8){',nl
+  z,←'  DOI(j,8){',nl
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&(lv[i]>>j))' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'  }}',nl
+  z,←'}else if(rr){',nl,simd''
+  z,←' DO(i,zc8){',nl
+  z,←'  DOI(j,8){',nl
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&lv[0])' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'  }}',nl
+  z,←'}else{',nl,simd''
+  z,←' DO(i,zc8){',nl
+  z,←'  DOI(j,8){',nl
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&rv[0])' '(1&(lv[i]>>j))' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'  }}',nl
+  z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+scldfbbb←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
+  z,←' DO(i,zc8){',nl
+  z,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←' }',nl
+  z,←'}else if(rr){',nl,simd''
+  z,←' DO(i,zc8){U8 tmp=255*(1&lv[0]);',nl
+  z,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'tmp' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←' }',nl
+  z,←'}else{',nl,simd''
+  z,←' DO(i,zc8){U8 tmp=255*(1&rv[0]);',nl
+  z,←'  ',('df'gcl sdb)('zv[i]' 'tmp' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←' }',nl
+  z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+scldfbnaaa←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+scldfnbaaa←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
 
 ⍝   Scalar Function Generators
 
@@ -728,6 +805,19 @@ adddfffsss←adddffisss←adddfifsss←adddfiisss
 ⍝    Multiplication
 muldfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'*',r,';',nl}
 muldfffsss←muldffisss←muldfifsss←muldfiisss
+
+⍝    Subtraction
+subdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'-',r,';',nl}
+subdfbbsss←subdfffsss←subdffisss←subdfifsss←subdfiisss
+subdfiiaaa←'-' 'I' 1 scldfnnaaa  'I' 1  'I' 1
+subdfifaaa←'-' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+subdffiaaa←'-' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+subdfffaaa←'-' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+subdfbbaaa←'-' 'I' 1 scldfbbaaa 'U8' 3 'U8' 3
+subdfbiaaa←'-' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+subdfbfaaa←'-' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+subdfibaaa←'-' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
+subdffbaaa←'-' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
 
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
@@ -816,7 +906,7 @@ err99←{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 99}
 err16←{_←⍺⍺ ⍵⍵ ⋄ ⎕SIGNAL 16}
 
 ⍝   Commute
-comd←{((1↑⍺)⍪⊖1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⊖1↓⍵}
+comd←{('df'gcl ⍵⍵)((1↑n),(⌽1↓n),⊂⊃⍺⍺)((1↑e),(⌽1↓e),⊂¯1 0)((1↑⍺),(⌽1↓⍺),0)⊣n e←↓⍉⍵}
 comm←{((1↑⍺)⍪⍪⍨1↓⍺)((⊃⍺⍺)fcl(⍵⍵⍪sdbm))(1↑⍵)⍪⍪⍨1↓⍵}
 
 ⍝   Each
