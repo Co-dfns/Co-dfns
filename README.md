@@ -13,6 +13,12 @@ Our mission is to deliver scalable APL programming to information and domain
 experts across many fields, expanding the scope and capabilities of what
 you can effectively accomplish with APL.
 
+## Getting the compiler
+
+Co-dfns follows a rapid release cycle. Releases can be found here:
+
+https://github.com/arcfide/Co-dfns/releases
+
 ## Using the Compiler
 
 The compiler is designed around a simple public interface that can be 
@@ -189,8 +195,8 @@ ways. Here are a few of the best ways to get working on the project:
 
 2. Report bugs and issues in the GitHub Issue Tracker.
 
-3. Contribute code, tests, and benchmarks through pull requests to the main 
-   repository. 
+3. Contribute code, tests, and benchmarks through pull requests to the
+   repository.
 
 4. Discuss Co-dfns on various social media sites. 
 
