@@ -57,9 +57,9 @@ mkf←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬
 
 ⍝  UNIX Generic Flags/Options
 cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden '
-cds←'-DxxBIT=64 -DHAS_UNICODE=1 -DUNIX=1 -DWANT_REFCOUNTS=1 -D_DEBUG=1 -lbsd '
-cio←{'-I',DWA∆PATH,' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.',⍺⍺,''' '}
-fls←{'''',DWA∆PATH,'/dwa_fns.c'' ''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
+cds←' '
+cio←{' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.',⍺⍺,''' '}
+fls←{'''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 
 ⍝  Clang (Mac OS X)
@@ -75,14 +75,15 @@ iop←'-fast -g -fno-alias -static-intel -mkl -Wall -Wno-unused-function -fPIC -
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'('so'cio,fls,log)⍵}
 
 ⍝  PGI C Linux
-pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda8 -Minfo -fPIC '
-pgcco←{cmd←'pgcc -c ',cds,pop,'-I',DWA∆PATH,' '
-  ⎕SH cmd,'-o ''',⍵,'.o'' ''',⍵,'.c'' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
-pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' '
+pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc -Minfo -fPIC '
+plb←' '
+pgcco←{cmd←'pgcc -c ',cds,pop,' -o ''',⍵,'.o'' ''',⍵,'.c'''
+  ⎕SH cmd,' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
+pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' ',plb
   ⎕SH cmd,⍵,' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
 pgcc←{_←⎕SH'echo "" > ''',BUILD∆PATH,'/',⍵,'_pgcc.log'''
-  _←⍵ pgcco DWA∆PATH,'/dwa_fns' ⋄ _←⍵ pgcco BUILD∆PATH,'/',⍵,'_pgcc'
-  ⍵ pgccld '''',DWA∆PATH,'/dwa_fns.o'' ''',BUILD∆PATH,'/',⍵,'_pgcc.o'''}
+  _←⍵ pgcco BUILD∆PATH,'/',⍵,'_pgcc'
+  ⍵ pgccld '''',BUILD∆PATH,'/',⍵,'_pgcc.o'''}
 
 ⍝  VS/IC Windows Flags
 vsco←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"build\vc140.pdb" '
