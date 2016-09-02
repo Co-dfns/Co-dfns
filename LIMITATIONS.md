@@ -36,6 +36,9 @@ corresponding dyadic or monadic function, if not listed, is supported.
 * Decode (⊥) only supports special cases right now
 * Encode (⊤) only supports special cases right now
 * Matrix divide/inverse (⌹) is not supported
+* Some mixed primitives will not work over boolean values
+* Some mixed primitives will not work over 
+  mixed integer/float and boolean values
 
 ### Operators
 
