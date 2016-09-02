@@ -28,7 +28,7 @@ VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
 INTEL∆C∆PATH       ←'C:\Program Files (x86)\IntelSWTools\'
 INTEL∆C∆PATH      ,←'compilers_and_libraries_2016.0.110\windows\bin\'
 PGI∆PATH           ←'C:\Program Files\PGI\win64\16.7\'
-VERSION            ←2016 8 0
+VERSION            ←2016 8 1
 
 ⍝  Primary Interface
 Cmp←{_←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
