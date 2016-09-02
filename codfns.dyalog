@@ -75,7 +75,7 @@ iop←'-fast -g -fno-alias -static-intel -mkl -Wall -Wno-unused-function -fPIC -
 icc←{⎕SH'icc ',cfs,cds,iop,'icc'('so'cio,fls,log)⍵}
 
 ⍝  PGI C Linux
-pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc -Minfo -fPIC '
+pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda8 -Minfo -fPIC '
 plb←' '
 pgcco←{cmd←'pgcc -c ',cds,pop,' -o ''',⍵,'.o'' ''',⍵,'.c'''
   ⎕SH cmd,' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
