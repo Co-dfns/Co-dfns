@@ -107,7 +107,7 @@ manual linking into the compilation object using <code>⎕NA</code>.</p>
 <h3>
 <a id="codfnsmka" class="anchor" href="#codfnsmka" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.MKA</h3>
 
-<pre><code>Codfns_Array ← codfns.MKA Array
+<pre><code>Codfns_Array ← Name codfns.MKA Array
 </code></pre>
 
 <p>This allows you to manually obtain a pointer to a Co-dfns array created from 
@@ -116,7 +116,7 @@ a given Dyalog DWA Array. </p>
 <h3>
 <a id="codfnsexa" class="anchor" href="#codfnsexa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.EXA</h3>
 
-<pre><code>Array ← codfns.EXA Codfns_Array Type
+<pre><code>Array ← Name codfns.EXA Codfns_Array Type
 </code></pre>
 
 <p>Used to extract an array from Co-dfns. It will take a pointer to a Co-dfns 
@@ -127,7 +127,7 @@ array.</p>
 <h3>
 <a id="codfnsfrea" class="anchor" href="#codfnsfrea" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>codfns.FREA</h3>
 
-<pre><code>{} ← codfns.FREA Codfns_Array
+<pre><code>{} ← Name codfns.FREA Codfns_Array
 </code></pre>
 
 <p>Frees a Co-dfns array pointer obtained from <code>MKA</code>. </p>
@@ -159,15 +159,6 @@ Linux: gcc icc pgcc
 
 <p>A vector of the backend compilers to test when running the test suite. See 
 <code>COMPILERS</code> for valid options.</p>
-
-<h3>
-<a id="dwapath" class="anchor" href="#dwapath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>DWA∆PATH</h3>
-
-<pre><code>DWA∆PATH ← 'dwa'
-</code></pre>
-
-<p>The path relative to your working directory indicating the location of the 
-dwa package. Contact Dyalog, Ltd. for a copy of DWA for your platform. </p>
 
 <h3>
 <a id="buildpath" class="anchor" href="#buildpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BUILD∆PATH</h3>
@@ -261,6 +252,13 @@ a growing Benchmarks suite here:</p>
 
 <p>Please contact <a href="mailto:arcfide@sacrideo.us">arcfide@sacrideo.us</a> (Aaron W. Hsu) for more information on the 
 best ways to contribute and to get involved in the project. </p>
+
+<p>Note: All pull requests and contributions to this project imply an acceptance 
+of the dual licensing nature of the Co-dfns project. Part of this is the 
+copyright assignment and details laid out in the LICENSE.txt file. Furthermore, 
+Dyalog, Ltd. is a contributing partner in this project, and receives exclusive 
+rights to non-AGPL licensing options of the Co-dfns compiler. To facilitate 
+this all contributions are assumed to be copyright transferred to Aaron Hsu.</p>
 
 <h2>
 <a id="publications" class="anchor" href="#publications" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Publications</h2>
