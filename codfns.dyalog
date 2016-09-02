@@ -57,7 +57,7 @@ mkf←{f←⍵,'←{' ⋄ fn←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬
 
 ⍝  UNIX Generic Flags/Options
 cfs←'-funsigned-bitfields -funsigned-char -fvisibility=hidden '
-cds←' '
+cds←'-L/usr/local/lib64 -lcrypto '
 cio←{' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.',⍺⍺,''' '}
 fls←{'''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
@@ -76,7 +76,7 @@ icc←{⎕SH'icc ',cfs,cds,iop,'icc'('so'cio,fls,log)⍵}
 
 ⍝  PGI C Linux
 pop←' -fast -acc -ta=tesla:maxregcount:32,nollvm,nordc,cuda8 -Minfo -fPIC '
-plb←' '
+plb←'-L/usr/local/lib64 -lcrypto '
 pgcco←{cmd←'pgcc -c ',cds,pop,' -o ''',⍵,'.o'' ''',⍵,'.c'''
   ⎕SH cmd,' >> ''',BUILD∆PATH,'/',⍺,'_pgcc.log'' 2>&1'}
 pgccld←{cmd←'pgcc -shared ',cds,pop,'-o ''',BUILD∆PATH,'/',⍺,'_pgcc.so'' ',plb
@@ -505,6 +505,7 @@ simd ←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 rth←'#include <stdio.h>',nl,'#include <string.h>',nl
 rth,←'#include <stdlib.h>',nl,'#include <time.h>',nl
 rth,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
+rth,←'#include <limits.h>',nl
 rth,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl
 rth,←'#else',nl,'#include <math.h>',nl,'#endif',nl
 rth,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl,nl
