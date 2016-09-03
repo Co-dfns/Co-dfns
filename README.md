@@ -171,6 +171,16 @@ them in the directory where you are running/compiling your code.
 For Linux, we generally expect them in /usr/local/lib64 or any other 
 standard location. 
 
+## Related Projects
+
+There are a number of related initiatives that are based on the Co-dfns 
+technology:
+
+* [Mystika](https://github.com/arcfide/mystika):
+  a high-level, high-performance cryptographic stack
+* [ffdict](https://github.com/arcfide/ffdict): 
+  programmable, easy to use image processing
+
 ## Contributing and Helping
 
 We need your help! There are many ways to assist with the Co-dfns project. 
