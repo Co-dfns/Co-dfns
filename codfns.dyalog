@@ -880,7 +880,7 @@ scldfbbb←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
 
 ⍝    Addition
 adddfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'+',r,';',nl}
-adddfffsss←adddffisss←adddfifsss←adddfiisss
+adddfbbsss←adddfffsss←adddffisss←adddfifsss←adddfiisss
 adddfiiaaa←'+' 'I' 1 scldfnnaaa  'I' 1  'I' 1
 adddfifaaa←'+' 'D' 2 scldfnnaaa  'I' 1  'D' 2
 adddffiaaa←'+' 'D' 2 scldfnnaaa  'D' 2  'I' 1
@@ -890,10 +890,6 @@ adddfbiaaa←'+' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
 adddfbfaaa←'+' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
 adddfibaaa←'+' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
 adddffbaaa←'+' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
-
-⍝    Multiplication
-muldfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'*',r,';',nl}
-muldfffsss←muldffisss←muldfifsss←muldfiisss
 
 ⍝    Subtraction
 subdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'-',r,';',nl}
@@ -907,6 +903,20 @@ subdfbiaaa←'-' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
 subdfbfaaa←'-' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
 subdfibaaa←'-' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
 subdffbaaa←'-' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
+
+⍝    Multiplication
+muldfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
+muldfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'*',r,';',nl}
+muldfffsss←muldffisss←muldfifsss←muldfiisss
+muldfiiaaa←'×' 'I' 1 scldfnnaaa  'I' 1  'I' 1
+muldfifaaa←'×' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+muldffiaaa←'×' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+muldfffaaa←'×' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+muldfbbaaa←'×' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+muldfbiaaa←'×' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+muldfbfaaa←'×' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+muldfibaaa←'×' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
+muldffbaaa←'×' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
 
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
