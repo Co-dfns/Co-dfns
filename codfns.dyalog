@@ -846,20 +846,21 @@ scldfnnb←{e←4⍴⊂¯1 ¯1 ⋄ t←(2↑⍵),1 0
   z,←'   ',('df'gcl sdb)('zv[i*8+j]' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
   z,←'  }}',nl
   z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-scldfnbb←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
+scldfnbb←{e←4⍴⊂¯1 ¯1 ⋄ t←(⊃⍵),1 1 0
+  z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
   z,←' DO(i,zc8){',nl
   z,←'  DOI(j,8){',nl
-  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&(lv[i]>>j))' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&(lv[i]>>j))' ⍺⍺)e t
   z,←'  }}',nl
   z,←'}else if(rr){',nl,simd''
   z,←' DO(i,zc8){',nl
   z,←'  DOI(j,8){',nl
-  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&lv[0])' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&lv[0])' ⍺⍺)e t
   z,←'  }}',nl
   z,←'}else{',nl,simd''
   z,←' DO(i,zc8){',nl
   z,←'  DOI(j,8){',nl
-  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&rv[0])' '(1&(lv[i]>>j))' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&rv[0])' '(1&(lv[i]>>j))' ⍺⍺)e t
   z,←'  }}',nl
   z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 scldfbbb←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
