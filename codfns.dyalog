@@ -921,7 +921,7 @@ muldffbaaa←'×' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
 
 ⍝    Division
 divdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
-divdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=((D)',l,')*((D)',r,');',nl}
+divdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=((D)',l,')/((D)',r,');',nl}
 divdfffsss←divdffisss←divdfifsss←divdfiisss
 divdfiiaaa←'÷' 'D' 2 scldfnnaaa  'I' 1  'I' 1
 divdfifaaa←'÷' 'D' 2 scldfnnaaa  'I' 1  'D' 2
