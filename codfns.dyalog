@@ -918,6 +918,20 @@ muldfbfaaa←'×' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
 muldfibaaa←'×' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
 muldffbaaa←'×' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
 
+⍝    Division
+divdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
+divdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=((D)',l,')*((D)',r,');',nl}
+divdfffsss←divdffisss←divdfifsss←divdfiisss
+divdfiiaaa←'÷' 'I' 2 scldfnnaaa  'I' 1  'I' 1
+divdfifaaa←'÷' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+divdfibaaa←'÷' 'I' 2 scldfnbaaa  'I' 1 'U8' 3
+divdffiaaa←'÷' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+divdfffaaa←'÷' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+divdffbaaa←'÷' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
+divdfbiaaa←'÷' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+divdfbfaaa←'÷' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+divdfbbaaa←'÷' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
