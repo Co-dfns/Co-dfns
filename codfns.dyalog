@@ -736,7 +736,10 @@ scldfbnaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt r
   z←'{I rk;B sp[15];',('r'decarrb rgt),('l'(tl decarr)lft),scldfhd
   z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rz],lv[:lc])'),'{',nl
   3=d:z,rslt((,f)scldfbbn)y ⋄ z,rslt((,f)scldfnbn)y}
-scldfnbaaa←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+scldfnbaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
+  z←'{I rk;B sp[15];',('r'(tr decarr)rgt),('l'decarrb lft),scldfhd
+  z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rc],lv[:lz])'),'{',nl
+  3=d:z,rslt((,f)scldfbnb)y ⋄ z,rslt((,f)scldfnnb)y}
 scldfnnn←{z←'if(rr&&lr){',nl,simd''
   z,←' DO(i,zc){',nl
   z,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
@@ -804,6 +807,43 @@ scldfnbn←{e←4⍴⊂¯1 ¯1 ⋄ t←(⊃⍵)1(2⊃⍵)0
   z,←' DO(i,zc8){',nl
   z,←'  DOI(j,8){',nl
   z,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&rv[0])' 'lv[i*8+j]' ⍺⍺)e t
+  z,←'  }}',nl
+  z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+scldfbnb←{e←4⍴⊂¯1 ¯1 ⋄ t←(2↑⍵),1 0
+  z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
+  z,←' DO(i,zc8){U8 val=0;',nl
+  z,←'  DOI(j,8){U8 tmp;',nl
+  z,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
+  z,←'   val|=tmp<<j;',nl
+  z,←'  }',nl,'  zv[i]=val;}',nl
+  z,←'}else if(rr){',nl,simd''
+  z,←' DO(i,zc8){U8 val=0;',nl
+  z,←'  DOI(j,8){U8 tmp;',nl
+  z,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
+  z,←'   val|=tmp<<j;',nl
+  z,←'  }',nl,'  zv[i]=val;}',nl
+  z,←'}else{',nl,simd''
+  z,←' DO(i,zc8){U8 val=0;',nl
+  z,←'  DOI(j,8){U8 tmp;',nl
+  z,←'   ',('df'gcl sdb)('tmp' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
+  z,←'   val|=tmp<<j;',nl
+  z,←'  }',nl,'  zv[i]=val;}',nl
+  z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+scldfnnb←{e←4⍴⊂¯1 ¯1 ⋄ t←(2↑⍵),1 0
+  z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
+  z,←' DO(i,zc8){',nl
+  z,←'  DOI(j,8){',nl
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
+  z,←'  }}',nl
+  z,←'}else if(rr){',nl,simd''
+  z,←' DO(i,zc8){',nl
+  z,←'  DOI(j,8){',nl
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
+  z,←'  }}',nl
+  z,←'}else{',nl,simd''
+  z,←' DO(i,zc8){',nl
+  z,←'  DOI(j,8){',nl
+  z,←'   ',('df'gcl sdb)('zv[i*8+j]' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
   z,←'  }}',nl
   z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 scldfnbb←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
