@@ -932,6 +932,20 @@ divdfbiaaa←'÷' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
 divdfbfaaa←'÷' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
 divdfbbaaa←'÷' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
+⍝    Exponentiation
+expdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|~',r,';',nl}
+expdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=pow((D)',l,'),(D)',r,');',nl}
+expdfffsss←expdffisss←expdfifsss←expdfiisss
+expdfiiaaa←'*' 'D' 2 scldfnnaaa  'I' 1  'I' 1
+expdfifaaa←'*' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+expdfibaaa←'*' 'D' 2 scldfnbaaa  'I' 1 'U8' 3
+expdffiaaa←'*' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+expdfffaaa←'*' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+expdffbaaa←'*' 'U8'3 scldfnbaaa  'D' 2 'U8' 3
+expdfbiaaa←'*' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+expdfbfaaa←'*' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+expdfbbaaa←'*' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
