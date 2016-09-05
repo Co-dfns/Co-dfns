@@ -42,7 +42,6 @@ corresponding dyadic or monadic function, if not listed, is supported.
 
 ### Operators
 
-* Mixed boolean and integer/floating arguments to commute will not work
 * Reductions with intermediate types different from the result type will not work
 * Dyadic Reduce (/ and ⌿) with negative left arguments are not supported
 * Compose (∘) is not implemented
