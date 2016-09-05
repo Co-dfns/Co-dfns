@@ -881,6 +881,15 @@ scldfbbb←{z←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd''
 ⍝    Addition
 adddfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'+',r,';',nl}
 adddfffsss←adddffisss←adddfifsss←adddfiisss
+adddfiiaaa←'+' 'I' 1 scldfnnaaa  'I' 1  'I' 1
+adddfifaaa←'+' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+adddffiaaa←'+' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+adddfffaaa←'+' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+adddfbbaaa←'+' 'I' 1 scldfbbaaa 'U8' 3 'U8' 3
+adddfbiaaa←'+' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+adddfbfaaa←'+' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+adddfibaaa←'+' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
+adddffbaaa←'+' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
 
 ⍝    Multiplication
 muldfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'*',r,';',nl}
