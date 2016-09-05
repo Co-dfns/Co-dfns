@@ -922,7 +922,7 @@ muldffbaaa←'×' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
 divdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
 divdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=((D)',l,')*((D)',r,');',nl}
 divdfffsss←divdffisss←divdfifsss←divdfiisss
-divdfiiaaa←'÷' 'I' 2 scldfnnaaa  'I' 1  'I' 1
+divdfiiaaa←'÷' 'D' 2 scldfnnaaa  'I' 1  'I' 1
 divdfifaaa←'÷' 'D' 2 scldfnnaaa  'I' 1  'D' 2
 divdfibaaa←'÷' 'I' 2 scldfnbaaa  'I' 1 'U8' 3
 divdffiaaa←'÷' 'D' 2 scldfnnaaa  'D' 2  'I' 1
