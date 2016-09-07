@@ -720,25 +720,25 @@ sdb⍪←,¨'⌷'  '⍵'           'dwaerr(99)'           '⍵'         'dwaerr(
 sdb⍪←'⎕XOR' 'dwaerr(99)'   '⍺^⍵'                 'dwaerr(99)' '⍺ ^ ⍵'
 
 ⍝   Scalar Utilities
-scldfhd←'if(lr==rr){DOI(i,lr){if(rs[i]!=ls[i])dwaerr(5);}',nl
-scldfhd,←'}else if(lr&&rr){dwaerr(4);}',nl
-scldfhd,←'if(rr){rk=rr;DOI(i,rr){sp[i]=rs[i];}}',nl
-scldfhd,←'else{rk=lr;DOI(i,lr){sp[i]=ls[i];}}',nl
+scldfhd←{tz dz tr dr tl dl←⍺ ⋄ rgt lft←⍵ 
+  z←'{I rk;B sp[15];',('r'(tr decarr)rgt),'l'(tl decarr)lft
+  z,←'if(lr==rr){DOI(i,lr){if(rs[i]!=ls[i])dwaerr(5);}',nl
+  z,←'}else if(lr&&rr){dwaerr(4);}',nl
+  z,←'if(rr){rk=rr;DOI(i,rr){sp[i]=rs[i];}}',nl
+  z,←'else{rk=lr;DOI(i,lr){sp[i]=ls[i];}}',nl
+  pres←⊃{⍺,',',⍵}/'zrl'{⍺,'v[:',⍺,('cz'⊃⍨3=⍵),']'}¨dz dr dl
+  z,(('rk,sp,',⍕dz)(tz dectmp)'z'),(acdt'present(',pres,')'),'{',nl}
 scldfnnaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-  z←'{I rk;B sp[15];',('r'(tr decarr)rgt),('l'(tl decarr)lft),scldfhd
-  z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rc],lv[:lc])'),'{',nl
+  z←t d tr dr tl dl scldfhd rgt lft
   3=d:z,rslt((,f)scldfbnn)y ⋄ z,rslt((,f)scldfnnn)y}
 scldfbbaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-  z←'{I rk;B sp[15];',('r'decarrb rgt),('l'decarrb lft),scldfhd
-  z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rz],lv[:lz])'),'{',nl
+  z←t d tr dr tl dl scldfhd rgt lft
   3=d:z,rslt((,f)scldfbbb)y ⋄ z,rslt((,f)scldfnbb)y}
 scldfbnaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-  z←'{I rk;B sp[15];',('r'decarrb rgt),('l'(tl decarr)lft),scldfhd
-  z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rz],lv[:lc])'),'{',nl
+  z←t d tr dr tl dl scldfhd rgt lft
   3=d:z,rslt((,f)scldfbbn)y ⋄ z,rslt((,f)scldfnbn)y}
 scldfnbaaa←{f t d←⍺⍺ ⋄ tr dr tl dl←⍵⍵ ⋄ v e y←⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-  z←'{I rk;B sp[15];',('r'(tr decarr)rgt),('l'decarrb lft),scldfhd
-  z,←(('rk,sp,',⍕d)(t dectmp)'z'),(acdt'present(rv[:rc],lv[:lz])'),'{',nl
+  z←t d tr dr tl dl scldfhd rgt lft
   3=d:z,rslt((,f)scldfbnb)y ⋄ z,rslt((,f)scldfnnb)y}
 scldfnnn←{z←'if(rr&&lr){',nl,simd''
   z,←' DO(i,zc){',nl
