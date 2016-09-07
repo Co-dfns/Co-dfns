@@ -935,7 +935,7 @@ divdfbbaaa←'÷' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
 ⍝    Exponentiation
 expdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|~',r,';',nl}
-expdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=pow((D)',l,'),(D)',r,');',nl}
+expdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=pow((D)',l,',(D)',r,');',nl}
 expdfffsss←expdffisss←expdfifsss←expdfiisss
 expdfiiaaa←'*' 'D' 2 scldfnnaaa  'I' 1  'I' 1
 expdfifaaa←'*' 'D' 2 scldfnnaaa  'I' 1  'D' 2
