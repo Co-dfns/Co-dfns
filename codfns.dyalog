@@ -961,6 +961,27 @@ logdfffaaa←'⍟' 'D' 2 scldfnnaaa  'D' 2  'D' 2
 ⍝logdfbfaaa←'⍟' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
 ⍝logdfbbaaa←'⍟' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
+⍝    Residue
+resdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',r,'&(',l,'^',r,');',nl}
+resdfiisss←{((z r l f) e y)←⍵ ⋄ x←'if(',l,'){',nl
+ x,←' if(0<=',l,'&&0<=',r,'){',z,'=',r,'%',l,';}',nl
+ x,←' else{',z,'=',r,'-',l,'*floor((D)',r,'/(D)(',l,'+(0==',l,')));}}',nl
+ x,'else{',z,'=',r,';}'}
+resdfffsss←{((z r l f) e y)←⍵ ⋄ x←'if(',l,'){',nl
+ x,←' if(0<=',l,'&&0<=',r,'){',z,'=fmod((D)',r,',(D)',l,');}',nl
+ x,←' else{',z,'=',r,'-',l,'*floor((D)',r,'/(D)(',l,'+(0==',l,')));}}',nl
+ x,'else{',z,'=',r,';}'}
+resdffisss←resdfifsss←resdfffsss
+resdfiiaaa←'|' 'I' 1 scldfnnaaa  'I' 1  'I' 1
+resdfifaaa←'|' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+resdfibaaa←'|' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
+resdffiaaa←'|' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+resdfffaaa←'|' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+resdffbaaa←'|' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
+resdfbiaaa←'|' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+resdfbfaaa←'|' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+resdfbbaaa←'|' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
