@@ -966,11 +966,11 @@ resdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',r,'&(',l,'^',r,');',nl}
 resdfiisss←{((z r l f) e y)←⍵ ⋄ x←'if(',l,'){',nl
  x,←' if(0<=',l,'&&0<=',r,'){',z,'=',r,'%',l,';}',nl
  x,←' else{',z,'=',r,'-',l,'*floor((D)',r,'/(D)(',l,'+(0==',l,')));}}',nl
- x,'else{',z,'=',r,';}'}
+ x,'else{',z,'=',r,';}',nl}
 resdfffsss←{((z r l f) e y)←⍵ ⋄ x←'if(',l,'){',nl
  x,←' if(0<=',l,'&&0<=',r,'){',z,'=fmod((D)',r,',(D)',l,');}',nl
  x,←' else{',z,'=',r,'-',l,'*floor((D)',r,'/(D)(',l,'+(0==',l,')));}}',nl
- x,'else{',z,'=',r,';}'}
+ x,'else{',z,'=',r,';}',nl}
 resdffisss←resdfifsss←resdfffsss
 resdfiiaaa←'|' 'I' 1 scldfnnaaa  'I' 1  'I' 1
 resdfifaaa←'|' 'D' 2 scldfnnaaa  'I' 1  'D' 2
@@ -984,7 +984,7 @@ resdfbbaaa←'|' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
 ⍝    Floor
 mindfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
-mindfiisss←{((z r l f) e y)←⍵ ⋄ 'if(',l,'<',r,')',z,'=',l,';else ',z,'=',r,';'}
+mindfiisss←{((z r l f) e y)←⍵ ⋄ 'if(',l,'<',r,')',z,'=',l,';else ',z,'=',r,';',nl}
 mindfffsss←mindffisss←mindfifsss←mindfiisss
 mindfiiaaa←'⌊' 'I' 1 scldfnnaaa  'I' 1  'I' 1
 mindfifaaa←'⌊' 'D' 2 scldfnnaaa  'I' 1  'D' 2
@@ -998,7 +998,7 @@ mindfbbaaa←'⌊' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
 ⍝    Ceiling
 maxdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|',r,';',nl}
-maxdfiisss←{((z r l f) e y)←⍵ ⋄ 'if(',l,'>',r,')',z,'=',l,';else ',z,'=',r,';'}
+maxdfiisss←{((z r l f) e y)←⍵ ⋄ 'if(',l,'>',r,')',z,'=',l,';else ',z,'=',r,';',nl}
 maxdfffsss←maxdffisss←maxdfifsss←maxdfiisss
 maxdfiiaaa←'⌈' 'I' 1 scldfnnaaa  'I' 1  'I' 1
 maxdfifaaa←'⌈' 'D' 2 scldfnnaaa  'I' 1  'D' 2
