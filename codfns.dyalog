@@ -1038,6 +1038,20 @@ ltedfbiaaa←'≤' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
 ltedfbfaaa←'≤' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
 ltedfbbaaa←'≤' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
+⍝    Equal
+eqldfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=(',l,'&',r,')|((~',l,')&(~',r,'));',nl}
+eqldfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'==',r,';',nl}
+eqldfffsss←eqldffisss←eqldfifsss←eqldfiisss
+eqldfiiaaa←'=' 'U8'3 scldfnnaaa  'I' 1  'I' 1
+eqldfifaaa←'=' 'U8'3 scldfnnaaa  'I' 1  'D' 2
+eqldfibaaa←'=' 'U8'3 scldfnbaaa  'I' 1 'U8' 3
+eqldffiaaa←'=' 'U8'3 scldfnnaaa  'D' 2  'I' 1
+eqldfffaaa←'=' 'U8'3 scldfnnaaa  'D' 2  'D' 2
+eqldffbaaa←'=' 'U8'3 scldfnbaaa  'D' 2 'U8' 3
+eqldfbiaaa←'=' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
+eqldfbfaaa←'=' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
+eqldfbbaaa←'=' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
