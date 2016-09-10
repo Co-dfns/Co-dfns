@@ -1080,6 +1080,20 @@ gthdfbiaaa←'>' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
 gthdfbfaaa←'>' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
 gthdfbbaaa←'>' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
+⍝   Not Equal
+neqdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'^',r,';',nl}
+neqdfiisss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'!=',r,';',nl}
+neqdfffsss←neqdffisss←neqdfifsss←neqdfiisss
+neqdfiiaaa←'≠' 'U8'3 scldfnnaaa  'I' 1  'I' 1
+neqdfifaaa←'≠' 'U8'3 scldfnnaaa  'I' 1  'D' 2
+neqdfibaaa←'≠' 'U8'3 scldfnbaaa  'I' 1 'U8' 3
+neqdffiaaa←'≠' 'U8'3 scldfnnaaa  'D' 2  'I' 1
+neqdfffaaa←'≠' 'U8'3 scldfnnaaa  'D' 2  'D' 2
+neqdffbaaa←'≠' 'U8'3 scldfnbaaa  'D' 2 'U8' 3
+neqdfbiaaa←'≠' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
+neqdfbfaaa←'≠' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
+neqdfbbaaa←'≠' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
