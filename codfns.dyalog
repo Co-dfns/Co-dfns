@@ -1150,6 +1150,19 @@ nordfbiaaa←'⍱' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
 nordfbfaaa←'⍱' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
 nordfbbaaa←'⍱' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
+⍝   Circle Functions
+cirdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=circ(',l,',',r,');',nl}
+cirdfffsss←cirdffisss←cirdfifsss←cirdfiisss←cirdfbbsss
+cirdfiiaaa←'○' 'D' 2 scldfnnaaa  'I' 1  'I' 1
+cirdfifaaa←'○' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+cirdfibaaa←'○' 'D' 2 scldfnbaaa  'I' 1 'U8' 3
+cirdffiaaa←'○' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+cirdfffaaa←'○' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+cirdffbaaa←'○' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
+cirdfbiaaa←'○' 'D' 2 scldfbnaaa 'U8' 3  'I' 1
+cirdfbfaaa←'○' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+cirdfbbaaa←'○' 'D' 2 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
