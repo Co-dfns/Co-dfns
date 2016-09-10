@@ -1163,6 +1163,21 @@ cirdfbiaaa←'○' 'D' 2 scldfbnaaa 'U8' 3  'I' 1
 cirdfbfaaa←'○' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
 cirdfbbaaa←'○' 'D' 2 scldfbbaaa 'U8' 3 'U8' 3
 
+⍝   Binomial
+facdfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=(~',l,')|',r,';',nl}
+facdfiisss←{((z r l f) e y)←⍵ ⋄ x←'if(',l,'>',r,')',z,'=0;',nl
+ x,'else ',z,'=tgamma(1+',r,')/(tgamma(1+',l,')*tgamma(1+',r,'-',l,'));',nl}
+facdfffsss←facdffisss←facdfifsss←facdfiisss
+facdfiiaaa←'!' 'I' 1 scldfnnaaa  'I' 1  'I' 1
+facdfifaaa←'!' 'D' 2 scldfnnaaa  'I' 1  'D' 2
+facdfibaaa←'!' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
+facdffiaaa←'!' 'D' 2 scldfnnaaa  'D' 2  'I' 1
+facdfffaaa←'!' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+facdffbaaa←'!' 'D' 2 scldfnbaaa  'D' 2 'U8' 3
+facdfbiaaa←'!' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+facdfbfaaa←'!' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
+facdfbbaaa←'!' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
