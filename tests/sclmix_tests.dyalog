@@ -23,8 +23,8 @@ Z←0 0⍴⍬
 ∇
 
 ∇Z←N SCL∆TST∆RELATIVE(FN IL IR FL FR BL BR);S
-S←':Namespace' ('Run←{⍺',FN,'⍵}') ':EndNamespace'
-(∘.,⍨'ifb')(N S 'Run' 1e¯7 #.util.GEN∆T3 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
+S←':Namespace' ('Run←{⍵',FN,'⍨⍺}') ':EndNamespace'
+(∘.,⍨'ifb')(('mx',N)S 'Run' 1e¯7 #.util.GEN∆T3 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
 Z←0 0⍴⍬
 ∇
 
