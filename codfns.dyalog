@@ -1122,6 +1122,34 @@ lordfbiaaa←'∨' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
 lordfbfaaa←'∨' 'D' 2 scldfbnaaa 'U8' 3  'D' 2
 lordfbbaaa←'∨' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
+⍝   Not And
+nandfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=~(',l,'&',r,');',nl}
+nandfiisss←{((z r l f) e y)←⍵ ⋄ z,'=!(',l,'&&',r,');',nl}
+nandfffsss←nandffisss←nandfifsss←nandfiisss
+nandfiiaaa←'⍲' 'U8'3 scldfnnaaa  'I' 1  'I' 1
+nandfifaaa←'⍲' 'U8'3 scldfnnaaa  'I' 1  'D' 2
+nandfibaaa←'⍲' 'U8'3 scldfnbaaa  'I' 1 'U8' 3
+nandffiaaa←'⍲' 'U8'3 scldfnnaaa  'D' 2  'I' 1
+nandfffaaa←'⍲' 'U8'3 scldfnnaaa  'D' 2  'D' 2
+nandffbaaa←'⍲' 'U8'3 scldfnbaaa  'D' 2 'U8' 3
+nandfbiaaa←'⍲' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
+nandfbfaaa←'⍲' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
+nandfbbaaa←'⍲' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
+⍝   Not Or
+nordfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=~(',l,'|',r,');',nl}
+nordfiisss←{((z r l f) e y)←⍵ ⋄ z,'=!(',l,'||',r,');',nl}
+nordfffsss←nordffisss←nordfifsss←nordfiisss
+nordfiiaaa←'⍱' 'U8'3 scldfnnaaa  'I' 1  'I' 1
+nordfifaaa←'⍱' 'U8'3 scldfnnaaa  'I' 1  'D' 2
+nordfibaaa←'⍱' 'U8'3 scldfnbaaa  'I' 1 'U8' 3
+nordffiaaa←'⍱' 'U8'3 scldfnnaaa  'D' 2  'I' 1
+nordfffaaa←'⍱' 'U8'3 scldfnnaaa  'D' 2  'D' 2
+nordffbaaa←'⍱' 'U8'3 scldfnbaaa  'D' 2 'U8' 3
+nordfbiaaa←'⍱' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
+nordfbfaaa←'⍱' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
+nordfbbaaa←'⍱' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
 sima←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
