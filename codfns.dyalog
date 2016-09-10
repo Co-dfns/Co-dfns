@@ -342,7 +342,7 @@ pt⍪←pfs   1 ¯11   3   1   1   1   1   1   1   1   1   1⊣pn,←⊂,'⍳'
 pt⍪←pfs   2   2   2   2 ¯11   2   2 ¯11   2   2 ¯11   2⊣pn,←⊂,'○'
 pt⍪←pfs ¯11 ¯11   3   1   2   3   1   2   3   1   2   3⊣pn,←⊂,'~'
 pt⍪←pfs  ¯2  ¯2  ¯2   1   2   3 ¯11 ¯11 ¯11   1   2   3⊣pn,←⊂,'['
-pt⍪←pfs  ¯2  ¯2  ¯2   1   1   1   1   2   2   1   2   3⊣pn,←⊂,'∧'
+pt⍪←pfs  ¯2  ¯2  ¯2   1   1   1   1   2   1   1   1   3⊣pn,←⊂,'∧'
 pt⍪←pfs  ¯2  ¯2  ¯2   1   2   1   2   2   2   1   2   3⊣pn,←⊂,'∨'
 pt⍪←pfs  ¯2  ¯2  ¯2 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11   3⊣pn,←⊂,'⍲'
 pt⍪←pfs  ¯2  ¯2  ¯2 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11 ¯11   3⊣pn,←⊂,'⍱'
@@ -1093,6 +1093,20 @@ neqdffbaaa←'≠' 'U8'3 scldfnbaaa  'D' 2 'U8' 3
 neqdfbiaaa←'≠' 'U8'3 scldfbnaaa 'U8' 3  'I' 1
 neqdfbfaaa←'≠' 'U8'3 scldfbnaaa 'U8' 3  'D' 2
 neqdfbbaaa←'≠' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
+
+⍝   And
+anddfbbsss←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
+anddfiisss←{((z r l f) e y)←⍵ ⋄ z,'=lcm(',l,',',r,');',nl}
+anddfffsss←anddffisss←anddfifsss←anddfiisss
+anddfiiaaa←'∧' 'I' 1 scldfnnaaa  'I' 1  'I' 1
+anddfifaaa←'∧' 'I' 1 scldfnnaaa  'I' 1  'D' 2
+anddfibaaa←'∧' 'I' 1 scldfnbaaa  'I' 1 'U8' 3
+anddffiaaa←'∧' 'I' 1 scldfnnaaa  'D' 2  'I' 1
+anddfffaaa←'∧' 'D' 2 scldfnnaaa  'D' 2  'D' 2
+anddffbaaa←'∧' 'I' 1 scldfnbaaa  'D' 2 'U8' 3
+anddfbiaaa←'∧' 'I' 1 scldfbnaaa 'U8' 3  'I' 1
+anddfbfaaa←'∧' 'I' 1 scldfbnaaa 'U8' 3  'D' 2
+anddfbbaaa←'∧' 'U8'3 scldfbbaaa 'U8' 3 'U8' 3
 
 ⍝   Scalar Loop Generators
 simp←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
