@@ -1268,20 +1268,7 @@ sget←{	nm	←(⊃git⊃⍺⍺),⊃⍺
 scl	←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(scln∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
 ⍝[cf]
 ⍝[of]:Scalar/Mixed Conversion
-mxsm←{	siz	←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
-	exe	←(simd''),'DO(i,zc){zv[i]=',(,'⍵')⎕R'rv[i]'⊢⍺⍺,';}'
-		'' siz exe mxfn 1 ⍺ ⍵}
-mxsd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])dwaerr(5);}}',nl
-	chk	,←'else if(lr!=0&&rr!=0){dwaerr(4);}'
-	siz	←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
-	siz	,←'else{zr=rr;DO(i,rr){zc*=rs[i];rc*=rs[i];zs[i]=rs[i];}DO(i,lr)lc*=ls[i];}',nl
-	exe	←simd 'pcopyin(lv[:lc],rv[:rc])'
-	exe	,←'DO(i,zc){zv[i]=',(,¨'⍺⍵')⎕R'lv[i\%lc]' 'rv[i\%rc]'⊢⍺⍺,';}'
-		chk siz exe mxfn 1 ⍺ ⍵}
 scmx	←{(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
-
-⍝[c]Mixed Verb Database for Scalar Primitives
-sdbm←(0⌷⍉sdb),'mxsm' 'mxsd' 'mxbm' 'mxbd' {'(''',⍵,'''',⍺,')'}¨⍤1⊢⍉1↓⍉sdb
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Primitive Operators
