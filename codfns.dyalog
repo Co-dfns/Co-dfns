@@ -750,15 +750,15 @@ scldfhd←{((tz dz tr dr tl dl)(rgt lft))←⍺ ⍵
 ⍝[of]:N ← N N
 scldfnnn←{	z	←'if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc){',nl
-	z	,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←' }',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc){',nl
-	z	,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←' }',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc){',nl
-	z	,←'  ',('df'gcl sdb)('zv[i]' 'rv[0]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[0]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←' }',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
@@ -766,19 +766,19 @@ scldfnnn←{	z	←'if(rr&&lr){',nl,simd'independent'
 scldfbnn←{	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' 'rv[0]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[0]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
@@ -788,19 +788,19 @@ scldfbbn←{e←4⍴⊂¯1 ¯1 ⋄ t←3 1(2⌷⍵)0
 	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' '(1&(rv[i]>>j))' 'lv[i*8+j]' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' '(1&(rv[i]>>j))' 'lv[i*8+j]' ⍺⍺)e t
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' '(1&(rv[i]>>j))' 'lv[0]' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' '(1&(rv[i]>>j))' 'lv[0]' ⍺⍺)e t
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' '(1&rv[0])' 'lv[i*8+j]' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' '(1&rv[0])' 'lv[i*8+j]' ⍺⍺)e t
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
@@ -810,17 +810,17 @@ scldfnbn←{e←4⍴⊂¯1 ¯1 ⋄ t←(⊃⍵)1(2⊃⍵)0
 	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' 'lv[i*8+j]' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' 'lv[i*8+j]' ⍺⍺)e t
 	z	,←'  }}',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' 'lv[0]' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' 'lv[0]' ⍺⍺)e t
 	z	,←'  }}',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&rv[0])' 'lv[i*8+j]' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&rv[0])' 'lv[i*8+j]' ⍺⍺)e t
 	z	,←'  }}',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
@@ -829,19 +829,19 @@ scldfbnb←{e←4⍴⊂¯1 ¯1 ⋄ t←(2↑⍵),1 0
 	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 val=0;',nl
 	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl sdb)('tmp' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
 	z	,←'   val|=tmp<<j;',nl
 	z	,←'  }',nl,'  zv[i]=val;}',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
@@ -851,17 +851,17 @@ scldfnnb←{e←4⍴⊂¯1 ¯1 ⋄ t←(2↑⍵),1 0
 	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
 	z	,←'  }}',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
 	z	,←'  }}',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
 	z	,←'  }}',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
@@ -870,32 +870,32 @@ scldfnbb←{e←4⍴⊂¯1 ¯1 ⋄ t←(⊃⍵),1 1 0
 	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&(lv[i]>>j))' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&(lv[i]>>j))' ⍺⍺)e t
 	z	,←'  }}',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&lv[0])' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&lv[0])' ⍺⍺)e t
 	z	,←'  }}',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
 	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl sdb)('zv[i*8+j]' '(1&rv[0])' '(1&(lv[i]>>j))' ⍺⍺)e t
+	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&rv[0])' '(1&(lv[i]>>j))' ⍺⍺)e t
 	z	,←'  }}',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← B B
 scldfbbb←{	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' DO(i,zc8){',nl
-	z	,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←' }',nl
 	z	,←'}else if(rr){',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 tmp=255*(1&lv[0]);',nl
-	z	,←'  ',('df'gcl sdb)('zv[i]' 'rv[i]' 'tmp' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'tmp' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←' }',nl
 	z	,←'}else{',nl,simd'independent'
 	z	,←' DO(i,zc8){U8 tmp=255*(1&rv[0]);',nl
-	z	,←'  ',('df'gcl sdb)('zv[i]' 'tmp' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'tmp' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←' }',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
@@ -903,20 +903,20 @@ scldfbbb←{	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 
 scldfnnaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
 	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbnn)y
-		z,rslt((,f)scldfnnn)y}
+	3=d:	z,rslt((,f)scldfbnn sdb)y
+		z,rslt((,f)scldfnnn sdb)y}
 scldfbbaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
 	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbbb)y
-		z,rslt((,f)scldfnbb)y}
+	3=d:	z,rslt((,f)scldfbbb sdb)y
+		z,rslt((,f)scldfnbb sdb)y}
 scldfbnaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
 	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbbn)y
-		z,rslt((,f)scldfnbn)y}
+	3=d:	z,rslt((,f)scldfbbn sdb)y
+		z,rslt((,f)scldfnbn sdb)y}
 scldfnbaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
 	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbnb)y
-		z,rslt((,f)scldfnnb)y}
+	3=d:	z,rslt((,f)scldfbnb sdb)y
+		z,rslt((,f)scldfnnb sdb)y}
 ⍝[cf]
 ⍝[of]:Generators
 ⍝[of]:+	Addition
