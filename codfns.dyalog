@@ -745,6 +745,10 @@ scldfhd←{((tz dz tr dr tl dl)(rgt lft))←⍺ ⍵
 	z	,←'else{rk=lr;DOI(i,lr){sp[i]=ls[i];}}',nl
 	pres	←⊃{⍺,',',⍵}/'zrl'{⍺,'v[:',⍺,('cz'⊃⍨3=⍵),']'}¨dz dr dl
 		z,(('rk,sp,',⍕dz)(tz dectmp)'z'),(acdt'present(',pres,')'),'{',nl}
+sclmfhd←{((tz dz tr dr)rgt)←⍺ ⍵
+	z	←'{',('r'(tr decarr)rgt),(('rr,rs,',⍕dz)(tz dectmp)'z')
+	pres	←⊃{⍺,',',⍵}/'zr'{⍺,'v[:',⍺,('cz'⊃⍨3=⍵),']'}¨dz dr
+		z,(acdt'present(',pres,')'),'{',nl}
 ⍝[cf]
 ⍝[of]:Loops
 ⍝[of]:N ← N N
@@ -899,6 +903,21 @@ scldfbbb←{	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 	z	,←' }',nl
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
+⍝[of]:N ← N
+sclmfnn←{	z	←simd'independent'
+	z	,←'DO(i,zc){',nl
+	z	,←('mf'gcl ⍵⍵)('zv[i]' 'rv[i]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+⍝[cf]
+⍝[of]:N ← B
+sclmfnb←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+⍝[cf]
+⍝[of]:B ← N
+sclmfbn←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+⍝[cf]
+⍝[of]:B ← B
+sclmfbb←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+⍝[cf]
 ⍝[cf]
 
 scldfnnaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
@@ -917,6 +936,14 @@ scldfnbaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft
 	z	←t d tr dr tl dl scldfhd rgt lft
 	3=d:	z,rslt((,f)scldfbnb sdb)y
 		z,rslt((,f)scldfnnb sdb)y}
+sclmfnaaa←{((f t d)(tr dr)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ ⍺←sdb
+	z	←t d tr dr sclmfhd rgt
+	3=d:	z,rslt((,f)sclmfbn ⍺)y
+		z,rslt((,f)sclmfnn ⍺)y}
+sclmfbaaa←{((f t d)(tr dr)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ ⍺←sdb
+	z	←t d tr dr sclmfhd rgt
+	3=d:	z,rslt((,f)sclmfbb ⍺)y
+		z,rslt((,f)sclmfnb ⍺)y}
 ⍝[cf]
 ⍝[of]:Generators
 ⍝[of]:+	Addition
@@ -960,6 +987,8 @@ muldfibaaa	←'×' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
 muldffbaaa	←'×' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
 ⍝[cf]
 ⍝[of]:÷	Division
+divmfinsss	←{((z r l f) e y)←⍵  ⋄ z,'=1.0/',r,';',nl}
+divmffnsss	←divmfinsss
 divdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
 divdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=((D)',l,')/((D)',r,');',nl}
 divdfffsss	←divdffisss←divdfifsss←divdfiisss
@@ -1295,11 +1324,10 @@ comd	←{('df'gcl ⍵⍵)((1↑n),(⌽1↓n),⊂⊃⍺⍺)((1↑e),(⌽1↓e),�
 comm	←{('df'gcl ⍵⍵)((1↑n),(2⍴1↑1↓n),⊂⊃⍺⍺)((1↑e),(3⍴1↑1↓e))((1↑⍺),3⍴1↑1↓⍺)⊣n e←↓⍉⍵}
 ⍝[cf]
 ⍝[of]:Each
-eacm←{	siz	←'zr=rr;DO(i,zr){zc*=rs[i];zs[i]=rs[i];}'
-	exe	←pacc'update host(rv[:rgt->c])'
-	exe	,←'DO(i,zc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i]' 'rv[i]'),'}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		'' siz exe mxfn 1 ⍺ ⍵}
+mapmoinaaa←{(3⊃⍺)(((0⌷⍺),(2 0⊃⍵)⊃('' '')('I' 1)('D' 2)('U8' 3))sclmfnaaa'I' 1)⍵}
+mapmofnaaa←{(3⊃⍺)(((0⌷⍺),(2 0⊃⍵)⊃('' '')('I' 1)('D' 2)('U8' 3))sclmfnaaa'D' 2)⍵}
+mapmobnaaa←{'dwaerr(16);',nl}
+eacm←{(⊃⍺⍺)(4⍴⊂¯1 0)(1⊃⍺⍺)('mo'gcl ⍵⍵)((0⌷⍉⍵),,¨'%u' '¨')((1⌷⍉⍵),2⍴⊂¯1 0)(⍺,4 0)}
 eacd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])dwaerr(5);}}',nl
 	chk	,←'else if(lr!=0&&rr!=0){dwaerr(4);}'
 	siz	←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
