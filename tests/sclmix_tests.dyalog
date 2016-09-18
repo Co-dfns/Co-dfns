@@ -7,6 +7,7 @@ F2←0,¯5+100÷⍨?9⍴1000
 F1LT←?10⍴0
 AFN←(?10⍴0)-?10⍴2
 B←?10⍴2
+IB←⊃((⎕DR B)323)⎕DR B
 INT←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,?9⍴100
 FNT←0,100÷⍨?9⍴1000
 IPS←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}2+?10⍴100
@@ -18,6 +19,12 @@ BNZ←10⍴1
 
 ∇Z←N SCL∆TST∆DYADIC(FN IL IR FL FR BL BR);S
 S←':Namespace' ('Run←{⍵',FN,'⍨⍺}') ':EndNamespace'
+(∘.,⍨'ifb')(('mx',N)S 'Run' #.util.GEN∆T2 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
+Z←0 0⍴⍬
+∇
+
+∇Z←N MIX∆TST∆DYADIC(FN IL IR FL FR BL BR);S
+S←':Namespace' ('Run←{⍺',FN,'¨⍵}') ':EndNamespace'
 (∘.,⍨'ifb')(('mx',N)S 'Run' #.util.GEN∆T2 ⎕THIS)¨IL FL BL∘.{⍺⍵}IR FR BR
 Z←0 0⍴⍬
 ∇
@@ -84,7 +91,7 @@ Z←0 0⍴⍬
 'pitimes'	SCL∆TST∆MONADIC '○'	I	F	B
 'floor'	SCL∆TST∆MONADIC '⌊'	I	F	B
 'ceiling'	SCL∆TST∆MONADIC '⌈'	I	F	B
-'not'	SCL∆TST∆MONADIC '~'	I	F	B
+'not'	SCL∆TST∆MONADIC '~'	IB	F	B
 'materialize'	SCL∆TST∆MONADIC '⌷'	I	F	B
 'factorial'	SCL∆TST∆MONADIC '!'	IPS	FPS	B
 

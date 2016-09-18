@@ -350,7 +350,7 @@ pt⍪←pfs	1	1	1	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⍴'
 pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,','
 pt⍪←pfs	1	¯11	3	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'⍳'
 pt⍪←pfs	2	2	2	2	¯11	2	2	¯11	2	2	¯11	2	⊣pn,←⊂,'○'
-pt⍪←pfs	¯11	¯11	3	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'~'
+pt⍪←pfs	3	¯11	3	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'~'
 pt⍪←pfs	¯2	¯2	¯2	1	2	3	¯11	¯11	¯11	1	2	3	⊣pn,←⊂,'['
 pt⍪←pfs	¯2	¯2	¯2	1	1	1	1	2	1	1	1	3	⊣pn,←⊂,'∧'
 pt⍪←pfs	¯2	¯2	¯2	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'∨'
@@ -917,7 +917,13 @@ sclmfnb←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
 		z,'}}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← N
-sclmfbn←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);}',nl,'cpaa(',⍺,',&za);}',nl}
+sclmfbn←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
+	z	,←'DO(i,zc8){U8 val=0;',nl
+	z	,←' DOI(j,8){U8 tmp=0;',nl
+	z	,←('mf'gcl ⍵⍵)('tmp' 'rv[i*8+j]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  val|=tmp<<j;}',nl
+	z	,←' zv[i]=val;}',nl
+		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← B
 sclmfbb←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
