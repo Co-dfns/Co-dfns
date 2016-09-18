@@ -910,7 +910,11 @@ sclmfnn←{	z	←simd'independent'
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:N ← B
-sclmfnb←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);}',nl,'cpaa(',⍺,',&za);}',nl}
+sclmfnb←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
+	z	,←'DO(i,zc8){',nl
+	z	,←' DOI(j,8){',nl
+	z	,←('mf'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+		z,'}}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← N
 sclmfbn←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);}',nl,'cpaa(',⍺,',&za);}',nl}
@@ -950,6 +954,8 @@ sclmfbaaa←{((f t d)(tr dr)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt←var/2↑
 ⍝[cf]
 ⍝[of]:Generators
 ⍝[of]:+	Addition
+addmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+addmfbnsss	←addmffnsss←addmfinsss
 adddfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'+',r,';',nl}
 adddfbbsss	←adddfffsss←adddffisss←adddfifsss←adddfiisss
 adddfiiaaa	←'+' 'I'	1 scldfnnaaa 'I'	1	'I'	1
@@ -963,6 +969,8 @@ adddfibaaa	←'+' 'I'	1 scldfnbaaa 'I'	1	'U8'	3
 adddffbaaa	←'+' 'D'	2 scldfnbaaa 'D'	2	'U8'	3
 ⍝[cf]
 ⍝[of]:-	Subtraction
+submfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=-1*',r,';',nl}
+submffnsss	←submfbnsss←submfinsss
 subdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'-',r,';',nl}
 subdfbbsss	←subdfffsss←subdffisss←subdfifsss←subdfiisss
 subdfiiaaa	←'-' 'I'	1 scldfnnaaa	'I'	1	'I'	1
@@ -1010,6 +1018,8 @@ divdfbfaaa	←'÷' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
 divdfbbaaa	←'÷' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
 ⍝[cf]
 ⍝[of]:*	Exponentiation
+expmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=exp((D)',r,');',nl}
+expmffnsss	←expmfbnsss←expmfinsss
 expdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|~',r,';',nl}
 expdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=pow((D)',l,',(D)',r,');',nl}
 expdfffsss	←expdffisss←expdfifsss←expdfiisss
@@ -1024,6 +1034,8 @@ expdfbfaaa	←'*' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
 expdfbbaaa	←'*' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
 ⍝[cf]
 ⍝[of]:⍟	Logarithm
+logmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=log((D)',r,');',nl}
+logmffnsss	←logmfbnsss←logmfinsss
 logdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=log((D)',r,')/log((D)',l,');',nl}
 logdfffsss	←logdffisss←logdfifsss←logdfiisss
 logdfiiaaa	←'⍟' 'D' 2 scldfnnaaa	'I'	1	'I'	1
@@ -1032,6 +1044,9 @@ logdffiaaa	←'⍟' 'D' 2 scldfnnaaa	'D'	2	'I'	1
 logdfffaaa	←'⍟' 'D' 2 scldfnnaaa	'D'	2	'D'	2
 ⍝[cf]
 ⍝[of]:|	Residue
+resmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+resmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=fabs(',r,');',nl}
+resmffnsss	←resmfinsss
 resdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,'&(',l,'^',r,');',nl}
 resdfiisss←{	((z r l f) e y)←⍵
 	x	←'if(',l,'){',nl
@@ -1055,6 +1070,9 @@ resdfbfaaa	←'|' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
 resdfbbaaa	←'|' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
 ⍝[cf]
 ⍝[of]:⌊	Floor
+minmffnsss	←{((z r l f) e y)←⍵ ⋄ z,'=floor(',r,');',nl}
+minmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+minmfbnsss	←minmfinsss
 mindfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
 mindfiisss	←{((z r l f) e y)←⍵ ⋄ 'if(',l,'<',r,')',z,'=',l,';else ',z,'=',r,';',nl}
 mindfffsss	←mindffisss←mindfifsss←mindfiisss
@@ -1069,6 +1087,9 @@ mindfbfaaa	←'⌊' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
 mindfbbaaa	←'⌊' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
 ⍝[cf]
 ⍝[of]:⌈	Ceiling
+maxmffnsss	←{((z r l f) e y)←⍵ ⋄ z,'=ceil(',r,');',nl}
+maxmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+maxmfbnsss	←maxmfinsss
 maxdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|',r,';',nl}
 maxdfiisss	←{((z r l f) e y)←⍵ ⋄ 'if(',l,'>',r,')',z,'=',l,';else ',z,'=',r,';',nl}
 maxdfffsss	←maxdffisss←maxdfifsss←maxdfiisss
@@ -1081,6 +1102,11 @@ maxdffbaaa	←'⌈' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
 maxdfbiaaa	←'⌈' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
 maxdfbfaaa	←'⌈' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
 maxdfbbaaa	←'⌈' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
+⍝[cf]
+⍝[of]:~	Not
+notmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=(0==',r,');',nl}
+notmffnsss	←notmfinsss
+notmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=~',r,';',nl}
 ⍝[cf]
 ⍝[of]:<	Less Than
 lthdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=(~',l,')&',r,';',nl}
@@ -1223,6 +1249,8 @@ nordfbfaaa	←'⍱' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
 nordfbbaaa	←'⍱' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
 ⍝[cf]
 ⍝[of]:○	Circle Functions
+cirmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=PI*',r,';',nl}
+cirmffnsss	←cirmfbnsss←cirmfinsss
 cirdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=circ(',l,',',r,');',nl}
 cirdfffsss	←cirdffisss←cirdfifsss←cirdfiisss←cirdfbbsss
 cirdfiiaaa	←'○' 'D' 2 scldfnnaaa	'I'	1	'I'	1
@@ -1236,6 +1264,9 @@ cirdfbfaaa	←'○' 'D' 2 scldfbnaaa	'U8'	3	'D'	2
 cirdfbbaaa	←'○' 'D' 2 scldfbbaaa	'U8'	3	'U8'	3
 ⍝[cf]
 ⍝[of]:!	Binomial
+facmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=tgamma(1+',r,');',nl}
+facmffnsss	←facmfinsss
+facmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=255;',nl}
 facdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=(~',l,')|',r,';',nl}
 facdfiisss←{	((z r l f) e y)←⍵
 	x	←'if(',l,'>',r,')',z,'=0;',nl
@@ -1250,6 +1281,10 @@ facdffbaaa	←'!' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
 facdfbiaaa	←'!' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
 facdfbfaaa	←'!' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
 facdfbbaaa	←'!' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
+⍝[cf]
+⍝[of]:⌷	Materialize
+sqdmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+sqdmffnsss	←sqdmfbnsss←sqdmfinsss
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Loop Generators
