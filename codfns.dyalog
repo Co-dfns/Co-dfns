@@ -910,13 +910,16 @@ sclmfnn←{	z	←simd'independent'
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:N ← B
-sclmfnb←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+sclmfnb←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← N
-sclmfbn←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+sclmfbn←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← B
-sclmfbb←{_←⍺⍺ ⍵⍵ ⋄ 'dwaerr(16);',nl}
+sclmfbb←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
+	z	,←'DO(i,zc8){',nl
+	z	,←('mf'gcl ⍵⍵)('zv[i]' 'rv[i]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[cf]
 
@@ -973,6 +976,9 @@ subdfibaaa	←'-' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
 subdffbaaa	←'-' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
 ⍝[cf]
 ⍝[of]:×	Multiplication
+mulmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+mulmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=(',r,'>0)-(',r,'<0);',nl}
+mulmffnsss	←mulmfinsss
 muldfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
 muldfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'*',r,';',nl}
 muldfffsss	←muldffisss←muldfifsss←muldfiisss
@@ -987,6 +993,7 @@ muldfibaaa	←'×' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
 muldffbaaa	←'×' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
 ⍝[cf]
 ⍝[of]:÷	Division
+divmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
 divmfinsss	←{((z r l f) e y)←⍵  ⋄ z,'=1.0/',r,';',nl}
 divmffnsss	←divmfinsss
 divdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
@@ -1324,10 +1331,10 @@ comd	←{('df'gcl ⍵⍵)((1↑n),(⌽1↓n),⊂⊃⍺⍺)((1↑e),(⌽1↓e),�
 comm	←{('df'gcl ⍵⍵)((1↑n),(2⍴1↑1↓n),⊂⊃⍺⍺)((1↑e),(3⍴1↑1↓e))((1↑⍺),3⍴1↑1↓⍺)⊣n e←↓⍉⍵}
 ⍝[cf]
 ⍝[of]:Each
-mapmoinaaa←{(3⊃⍺)(((0⌷⍺),(2 0⊃⍵)⊃('' '')('I' 1)('D' 2)('U8' 3))sclmfnaaa'I' 1)⍵}
-mapmofnaaa←{(3⊃⍺)(((0⌷⍺),(2 0⊃⍵)⊃('' '')('I' 1)('D' 2)('U8' 3))sclmfnaaa'D' 2)⍵}
-mapmobnaaa←{'dwaerr(16);',nl}
-eacm←{(⊃⍺⍺)(4⍴⊂¯1 0)(1⊃⍺⍺)('mo'gcl ⍵⍵)((0⌷⍉⍵),,¨'%u' '¨')((1⌷⍉⍵),2⍴⊂¯1 0)(⍺,4 0)}
+mapmoinaaa	←{(3⊃⍺)(((0⌷⍺),(2 0⊃⍵)⊃('' '')('I' 1)('D' 2)('U8' 3))sclmfnaaa'I' 1)⍵}
+mapmofnaaa	←{(3⊃⍺)(((0⌷⍺),(2 0⊃⍵)⊃('' '')('I' 1)('D' 2)('U8' 3))sclmfnaaa'D' 2)⍵}
+mapmobnaaa	←{(3⊃⍺)(((0⌷⍺),(2 0⊃⍵)⊃('' '')('I' 1)('D' 2)('U8' 3))sclmfbaaa'U8' 3)⍵}
+eacm	←{(⊃⍺⍺)(4⍴⊂¯1 0)(1⊃⍺⍺)('mo'gcl ⍵⍵)((0⌷⍉⍵),,¨'%u' '¨')((1⌷⍉⍵),2⍴⊂¯1 0)(⍺,4 0)}
 eacd←{	chk	←'if(lr==rr){DO(i,lr){if(rs[i]!=ls[i])dwaerr(5);}}',nl
 	chk	,←'else if(lr!=0&&rr!=0){dwaerr(4);}'
 	siz	←'if(rr==0){zr=lr;DO(i,lr){zc*=ls[i];lc*=ls[i];zs[i]=ls[i];}}',nl
