@@ -109,7 +109,7 @@ icl4	←{'> "',BUILD∆PATH,'\',⍵,'_icl.log""'}
 icl	←⎕CMD '%comspec% /E:ON /V:ON /C ',icl1,vsc2,icl3,icl4
 ⍝[cf]
 ⍝[of]:PGI
-pgio	←'-fast -acc -ta=tesla:maxregcount:32,nollvm,nordc -Minfo '
+pgio	←'-fast -acc -ta=tesla:maxregcount:32,nollvm,nordc -Minfo -Minline '
 pgilibs	←'-laccapi -laccg -laccn -laccg2 -lcrypto-38 '
 pgwc	←{'pgcc ',pgio,'-Bdynamic -c "',⍵,'.c" -o "',⍵,'.obj"'}
 pglk	←{'pgcc ',pgio,'-Mmakedll -o "',⍵,'.dll" "',⍵,'.obj" ',pgilibs}
