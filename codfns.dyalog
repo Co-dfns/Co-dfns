@@ -904,32 +904,43 @@ scldfbbb←{	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:N ← N
-sclmfnn←{	z	←simd'independent'
+sclmfnn←{	z	←((⊂⍺⍺)∊syms)⊃(acup'host(rv[:rc])')(simd'independent')
 	z	,←'DO(i,zc){',nl
 	z	,←('mf'gcl ⍵⍵)('zv[i]' 'rv[i]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+	z	,←'}',((⊂⍺⍺)∊syms)⊃(nl,acup'device(zv[:zc])')''
+		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:N ← B
-sclmfnb←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
+sclmfnb←{	z	←'B zc8=(zc+7)/8;',nl
+	z	,←((⊂⍺⍺)∊syms)⊃(acup'host(rv[:rz])')(simd'independent')
 	z	,←'DO(i,zc8){',nl
 	z	,←' DOI(j,8){',nl
 	z	,←('mf'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-		z,'}}}',nl,'cpaa(',⍺,',&za);}',nl}
+	z	,←'}}',((⊂⍺⍺)∊syms)⊃(nl,acup'device(zv[:zc])')''
+		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← N
-sclmfbn←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
+sclmfbn←{	z	←'B zc8=(zc+7)/8;',nl
+	z	,←((⊂⍺⍺)∊syms)⊃(acup'host(rv[:rc])')(simd'independent')
 	z	,←'DO(i,zc8){U8 val=0;',nl
 	z	,←' DOI(j,8){U8 tmp=0;',nl
 	z	,←('mf'gcl ⍵⍵)('tmp' 'rv[i*8+j]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 	z	,←'  val|=tmp<<j;}',nl
-	z	,←' zv[i]=val;}',nl
+	z	,←' zv[i]=val;}',nl,((⊂⍺⍺)∊syms)⊃(acup'device(zv[:zz])')''
 		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[of]:B ← B
-sclmfbb←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
+sclmfbb←{(⊂⍺⍺)∊syms:⍺(⍺⍺ sclmfbbp ⍵⍵)⍵ ⋄ ⍺(⍺⍺ sclmfbbu ⍵⍵)⍵}
+sclmfbbp←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
 	z	,←'DO(i,zc8){',nl
 	z	,←('mf'gcl ⍵⍵)('zv[i]' 'rv[i]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
 		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
+sclmfbbu←{	z	←'B zc8=(zc+7)/8;',nl,acup'host(rv[:rz])'
+	z	,←'DO(i,zc8){zv[i]=0;',nl
+	z	,←' DOI(j,8){U8 tmp=0;',nl
+	z	,←('mf'gcl ⍵⍵)('tmp' '(1&(rv[i]>>j))' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
+	z	,←'  zv[i]|=tmp<<j;}}',nl,acup'device(zv[:zz])'
+		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
 ⍝[cf]
 ⍝[cf]
 
@@ -1734,9 +1745,11 @@ fnc←{⍵('''',⍵,'''calm')('''',⍵,'''cald')'' ''}
 calm←{	z r     ←var/⍵
         arr     ←⍺⍺,((1⌷⍺)⊃'iifb'),'n(',z,',NULL,',r,',env);',nl
         scl     ←'{A sz,sr;sz.v=NULL;ai(&sz,0,NULL,',(⍕⊃⍺),');',nl
-        scl     ,←'sr.r=0;sr.v=&',r,';sr.f=0;sr.c=1;sr.z=sizeof(',(1⊃git ⍺),');',nl
-        scl     ,←⍺⍺,((1⌷⍺)⊃'iifb'),'n(&sz,NULL,&sr,env);',nl
-        scl     ,←(⊃git ⍺),'*RSTCT szv=sz.v;',nl,pacc'update host(szv[:1])'
+        scl     ,←(1⊃git ⍺⊃¨⊂0 1 2 1),'clmtmp=',r,';sr.v=&clmtmp;',nl
+        scl     ,←'sr.r=0;sr.f=0;sr.c=1;sr.z=sizeof(',(1⊃git ⍺⊃¨⊂0 1 2 1),');',nl
+        scl     ,←(acdt'copyin(sr.v[:sr.z])'),'{',nl
+        scl     ,←⍺⍺,((1⌷⍺)⊃'iifi'),'n(&sz,NULL,&sr,env);',nl,'}',nl
+        scl     ,←nl,(⊃git ⍺),'*RSTCT szv=sz.v;',nl,pacc'update host(szv[:1])'
         scl     ,←z,'=*szv;frea(&sz);}',nl
                 (∧/¯1=,↑1⌷⍉⍵)⊃arr scl}
 cald←{        z r l   ←var/⍵
