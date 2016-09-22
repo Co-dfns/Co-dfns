@@ -2223,16 +2223,19 @@ drpdfbbaaa←{	'dwaerr(16);',nl}
 drpdfbiaaa←{	'dwaerr(16);',nl}
 drpdfbfaaa←{	'dwaerr(16);',nl}
 drpdfibaaa←{	'dwaerr(16);',nl}
-drpdfifaaa←{	'dwaerr(16);',nl}
 drpdffbaaa←{	'dwaerr(16);',nl}
-drpdfffaaa←{	'dwaerr(16);',nl}
-drpdfiiaaa	←{(1,'II')drpdfnnlp ⍵}
-drpdffiaaa	←{(2,'DI')drpdfnnlp ⍵}
-drpdfnnlp←{	v e y←⍵
-	rd rt lt←⍺
+drpdfifaaa	←{(1,'ID')((drpdfchk⍬)drpdfnnlp)⍵}
+drpdfffaaa	←{(2,'DD')((drpdfchk⍬)drpdfnnlp)⍵}
+drpdfiiaaa	←{(1,'II')(''drpdfnnlp)⍵}
+drpdffiaaa	←{(2,'DI')(''drpdfnnlp)⍵}
+drpdfchk←{	a	←'I tst=0;',nl,simd'present(lv[:lc]) reduction(max:tst)'
+	a	,←'DO(i,lc){if(lv[i]!=floor(lv[i]))tst=1;}',nl
+		a,'if(tst)dwaerr(11);',nl}
+drpdfnnlp←{	v e y	←⍵
+	rd rt lt	←⍺
 	z r l	←var/3↑v,⍪e
 	a	←'{I rk;B sp[15];',('r'(rt decarr)r),('l'(lt decarr)l)
-	a	,←'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl
+	a	,←'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl,⍺⍺
 	a	,←'rk=rr;DOI(i,rk)sp[i]=rs[i];',nl,acup'host(lv[:lc])'
 	a	,←'if(abs(*lv)>*sp)*sp=0;else if(*sp)*sp-=abs(*lv);',nl
 	a	,←('rk,sp,',⍕rd)(rt dectmp)'z'
