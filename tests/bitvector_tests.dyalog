@@ -1,4 +1,4 @@
-:Namespace bitvector
+﻿:Namespace bitvector
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 S←':Namespace' 'Run←{⍺∧0≠⍵}' ':EndNamespace'
