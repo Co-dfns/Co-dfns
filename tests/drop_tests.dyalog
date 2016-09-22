@@ -17,6 +17,16 @@ S←':Namespace' 'Run←{⍺↓⍵}' 'R2←{(1⌷⍺)↓⍵}' ':EndNamespace'
 '13'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯20	(⍳10)
 '14'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯3	(⍳10)
 '15'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	⍬
+'16'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	1	(÷1+5 5⍴⍳5)
+'17'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	3	(÷1+⍳10)
+'18'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(5 7)	(÷1+⍳35)
+'19'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	5	(÷1+5 5⍴⍳5)
+'20'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	6	(÷1+5 5⍴⍳5)
+'21'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(÷1+5 5⍴⍳5)
+'22'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯5	(÷1+5 5⍴⍳5)
+'23'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯20	(÷1+5 5⍴⍳5)
+'24'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯20	(÷1+⍳10)
+'25'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯3	(÷1+⍳10)
 
 
 
