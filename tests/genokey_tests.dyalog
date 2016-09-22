@@ -36,8 +36,8 @@ S,←⊂':EndNamespace'
  AF←↓(⍴BA)⊤(,BA)/⍳⍴,BA
 ∇
 
-⎕SE.SALT.Load './Testing/genokey_RP0'
-⎕SE.SALT.Load './Testing/genokey_RP1'
+⎕SE.SALT.Load './tests/genokey_RP0'
+⎕SE.SALT.Load './tests/genokey_RP1'
 RP2←((af∘.≤⍨0 1)(0 1))((af∘.∨⍨0 1)(2 3))
 
 genokey_TEST←{#.UT.expect←0 ⋄ 1}
