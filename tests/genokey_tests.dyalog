@@ -1,4 +1,4 @@
-:Namespace genokey
+﻿:Namespace genokey
 
 S←⊂':Namespace'
 S,←⊂'rp_joinx←{'

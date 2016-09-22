@@ -1,4 +1,4 @@
-:Namespace romilly_tests
+﻿:Namespace romilly_tests
 
 S←⊂':Namespace'
 S,←⊂'spin←{z←(¯2⊖⍵)⍪(¯1⊖⍵)⍪⍵⍪(1⊖⍵)⍪2⊖⍵ ⋄ (25,⍴⍵)⍴(¯2⌽z)⍪(¯1⌽z)⍪z⍪(1⌽z)⍪2⌽z}'
