@@ -1817,7 +1817,7 @@ dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
 ⍝[cf]
 ⍝[of]:Generators
-⍝[of]:⍴ Reshape/Shape
+⍝[of]:⍴	Reshape/Shape
 shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)dwaerr(11);'
 	siz	←pacc'update host(lv[:ls[0]])'
 	siz	,←'zr=ls[0];DOI(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
@@ -1843,7 +1843,7 @@ rhomfinaaa←{	v e y	←⍵
 		z,'DO(i,cnt)v[i]=sp[i];',nl,(pacc'update device(v[:cnt])'),'}',nl}
 rhomfbnaaa←rhomffnaaa←rhomfinaaa
 ⍝[cf]
-⍝[of]:, Ravel/Catenate
+⍝[of]:,	Ravel/Catenate
 catmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
 	s	←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl
@@ -1877,7 +1877,7 @@ catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)dwaerr(4);int minr=rr>lr?lr:rr;',
 	exe	,←(3=0⌷⍺)⊃''(pacc'update device(zv[:zcp])')
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
-⍝[of]:⍪ Table/Catenate First
+⍝[of]:⍪	Table/Catenate First
 ctfmfaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
 	z	←'{B s[2];'
@@ -1984,7 +1984,7 @@ ctfdfbbaaa←{	v e y	←⍵
 		z,'}}',nl,'cpaa(',rslt,',&za);}',nl}
 fctd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍪')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
-⍝[of]:⌽ Reverse/Rotate
+⍝[of]:⌽	Reverse/Rotate
 rotmfinaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rotmne⊃vs ⋄ ⊃'1I'rotmnn/vs}
 rotmffnaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'D'rotmne⊃vs ⋄ ⊃'2D'rotmnn/vs}
 rotmlp←{	z	←'{I n=0,rk;B oc=1,ic=1,tc,*s=(',⍵,')->s;',nl
@@ -2059,7 +2059,7 @@ rotdffbaaa	←{'dwaerr(16);',nl}
 rotdffbaal	←{'dwaerr(16);',nl}
 rotd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⌽')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
-⍝[of]:⊖ Reverse/Rotate First
+⍝[of]:⊖	Reverse/Rotate First
 rtfmfinaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rtfmne⊃vs ⋄ ⊃'1I'rtfmnn/vs}
 rtfmffnaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'D'rtfmne⊃vs ⋄ ⊃'2D'rtfmnn/vs}
 rtfmhd←{	z	←'{B*s=(',⍵,')->s;I rk=(',⍵,')->r;B rc=1,zc=1;',nl
@@ -2154,7 +2154,7 @@ rtfdffbaaa	←{'dwaerr(16);',nl}
 rtfdffbaal	←{'dwaerr(16);',nl}
 rtfd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⊖')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
-⍝[of]:⍉ Transpose
+⍝[of]:⍉	Transpose
 trnmfinaaa	←{'I1'trnmfn ⍵}
 trnmffnaaa	←{'D2'trnmfn ⍵}
 trnmfh←{	z	←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];',nl
@@ -2196,7 +2196,7 @@ trnmfbnaaa←{	v e y	←⍵
 	z	,←' cpaa(',rslt,',&ta);',nl
 		z,'}}',nl}
 ⍝[cf]
-⍝[of]:∊ Enlist/Membership
+⍝[of]:∊	Enlist/Membership
 memmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
 	s	←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl
@@ -2204,7 +2204,7 @@ memmfinaaa←{	v e y	←⍵
 		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
 memmfbnaaa←memmffnaaa←memmfinaaa
 ⍝[cf]
-⍝[of]:⊃ Disclose/Pick
+⍝[of]:⊃	Disclose/Pick
 dismfgnaaa←{	v e y	←⍵
 	tc tn	←⍺
 	rslt rgt	←var/2↑v,⍪e
@@ -2218,7 +2218,7 @@ dismfinaaa	←{'1I'dismfgnaaa ⍵}
 dismffnaaa	←{'2D'dismfgnaaa ⍵}
 dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
 ⍝[cf]
-⍝[of]:↓ Split/Drop
+⍝[of]:↓	Split/Drop
 drpdfbbaaa←{	'dwaerr(16);',nl}
 drpdfbiaaa←{	'dwaerr(16);',nl}
 drpdfbfaaa←{	'dwaerr(16);',nl}
@@ -2266,7 +2266,7 @@ olddrpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))dwaerr(16);'
 	exe	←cpy cpy⊃⍨1⌊(3=⊃0⌷⍺)+0=⊃0⍴⊃⊃1 0⌷⍵
 		chk siz exe mxfn 0 ⍺ ⍵}
 ⍝[cf]
-⍝[of]:↑ Mix/Take
+⍝[of]:↑	Mix/Take
 tkemfinaaa←{	v e y	←⍵
 	≡/2↑e:	''
 	rslt rgt	←var/2↑v,⍪e
@@ -2286,7 +2286,7 @@ tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))dwaerr(16);'
 		chk siz exe mxfn 0 ⍺ ⍵}
 tkemffnaaa←tkemfbnaaa←tkemfinaaa
 ⍝[cf]
-⍝[of]:/ Replicate/Filter
+⍝[of]:/	Replicate/Filter
 fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
 	chk	,←'if(lr!=0&&ls[0]!=1&&rr!=0&&rs[rr-1]!=1&&ls[0]!=rs[rr-1])dwaerr(5);'
 	siz	←'zr=rr==0?1:rr;I n=zr-1;DOI(i,n)zs[i]=rs[i];',nl
@@ -2335,7 +2335,7 @@ fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
 	exb	,←pacc 'update device(zv[:rslt->c])'
 		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
 ⍝[cf]
-⍝[of]:⊣ Same/Monadic Left
+⍝[of]:⊣	Same/Monadic Left
 lftmfinaaa←{	v e y	←⍵
 	≡/2↑e:	''
 	rslt rgt	←var/2↑v,⍪e
@@ -2346,7 +2346,7 @@ lftd←{	chk siz	←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
 		chk siz exe mxfn 1 ⍺ ⍵}
 lftmfbnaaa←lftmffnaaa←lftmfinaaa
 ⍝[cf]
-⍝[of]:⊢ Identity/Right
+⍝[of]:⊢	Identity/Right
 rgtmfinaaa←{	v e y	←⍵
 	≡/2↑e	:''
 	rslt rgt	←var/2↑v,⍪e
@@ -2357,7 +2357,7 @@ rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
 		chk siz exe mxfn 1 ⍺ ⍵}
 rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa
 ⍝[cf]
-⍝[of]:⍳ Index Gen./Index Of
+⍝[of]:⍳	Index Gen./Index Of
 iotmck←{	z	←'if((',⍵,')->r>1)dwaerr(4);if((',⍵,')->c>15)dwaerr(10);',nl
 		z,'if((',⍵,')->c!=1)dwaerr(16);',nl}
 iotmfinaaa←{	v e y	←⍵
@@ -2406,7 +2406,7 @@ idxd←{	chk	←'if(lr>1)dwaerr(4);if(lr==0)ls[0]=1;if(ls[0]>rr)dwaerr(5);'
 	idx	,←(iso⊃''('cpaa(',irzv,',irzp);')),'}',nl
 		idx}
 ⍝[cf]
-⍝[of]:? Roll/Deal
+⍝[of]:?	Roll/Deal
 rolmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
 	z	←'{B c=(',rgt,')->c;',nl
@@ -2428,7 +2428,7 @@ rolmfbnaaa←{	v e y	←⍵
 	z	,←' else zv[x]=(D)arc4random_uniform(UINT_MAX)/UINT_MAX;}}',nl
 		z,'B zc=t.c;',nl,(acup'device(zv[:zc])'),'cpaa(',rslt,',&t);}',nl}
 ⍝[cf]
-⍝[of]:≡ Depth/Equiv
+⍝[of]:≡	Depth/Equiv
 eqvmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e 
 	z	←'{ai(',rslt,',0,NULL,1);I*zv=(',rslt,')->v;',nl
@@ -2444,7 +2444,7 @@ eqvd←{	chk siz	←'' 'zr=0;'
 		chk siz exe mxfn 1 ⍺ ⍵}
 eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa
 ⍝[cf]
-⍝[of]:≢ Tally/Not Equiv
+⍝[of]:≢	Tally/Not Equiv
 nqvmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
 	z	←'{I c=1;'
@@ -2474,7 +2474,7 @@ decd←{	chk	←'if(lr>1||lv[0]<0)dwaerr(16);'
 		chk siz exe mxfn 1 ⍺ ⍵}
 nqvmfbnaaa←nqvmffnaaa←nqvmfinaaa
 ⍝[cf]
-⍝[of]:⊤ Encode
+⍝[of]:⊤	Encode
 encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
 	chk	,←pacc'update host(lv[:lc])'
 	chk	,←'DO(i,lc){if(lv[i]<=0)dwaerr(16);}'
@@ -2483,7 +2483,7 @@ encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
 	exe	,←'DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
-⍝[of]:[] Bracket
+⍝[of]:[]	Bracket
 brid←{	chk	←'if(lr!=1)dwaerr(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
 	chkn	←pacc'update host(rv[:rc],lv[:lc])'
 	chkn	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])dwaerr(3);'
