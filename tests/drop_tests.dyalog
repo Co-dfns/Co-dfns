@@ -6,10 +6,10 @@ F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 '01'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	1	(5 5⍴⍳5)
 '02'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	3	(⍳10)
 '03'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(5 7)	(⍳35)
-'04'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	1	(0 1 0 1 0 0 1 1 1 1 0 0 0)
-'05'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	1	(0 1 0 1 0 0)
+'04'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(0 1 0 1 0 0 1 1 1 1 0 0 0)
+'05'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(0 1 0 1 0 0)
 '06'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	1	⍬
-'07'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	1	(3 10⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'07'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(3 10⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
 '08'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	5	(5 5⍴⍳5)
 '09'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	6	(5 5⍴⍳5)
 '10'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	(5 5⍴⍳5)
@@ -50,7 +50,21 @@ F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 '45'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(F 7 ¯20)	(÷1+5 5⍴⍳5)
 '46'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(F 7 ¯20)	(÷1+⍳10)
 '47'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(F 7 ¯3)	(÷1+⍳10)
-
-
+'48'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯7	(0 1 0 1 0 0 1 1 1 1 0 0 0)
+'49'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯7	(0 1 0 1 0 0)
+'50'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯7	(3 10⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'51'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯7	(128⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'52'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯7	(100⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'53'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯7	(3 30⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'54'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯7	(30 30⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'55'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	7	(0 1 0 1 0 0)
+'56'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	64	(64⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'57'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	64	(128⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'58'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	64	(192⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'59'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	7	(70⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'60'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	7	(0 1 0 1 0 0 1 1 1 1 0 0 0)
+'61'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	7	(3 30⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'62'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	2	(4 32⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'63'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	3	(4 32⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
 
 :EndNamespace

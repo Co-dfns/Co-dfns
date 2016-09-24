@@ -2220,27 +2220,40 @@ dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
 ⍝[cf]
 ⍝[of]:↓	Split/Drop
 drpdfbbaaa←{	'dwaerr(16);',nl}
-drpdfbiaaa←{	'dwaerr(16);',nl}
+drpdfbiaaa	←{(3'U8' 'I')(''drpdflp(drpdfblp⍬))⍵}
 drpdfbfaaa←{	'dwaerr(16);',nl}
 drpdfibaaa←{	'dwaerr(16);',nl}
 drpdffbaaa←{	'dwaerr(16);',nl}
-drpdfifaaa	←{(1,'ID')((drpdfchk⍬)drpdfnnlp)⍵}
-drpdfffaaa	←{(2,'DD')((drpdfchk⍬)drpdfnnlp)⍵}
-drpdfiiaaa	←{(1,'II')(''drpdfnnlp)⍵}
-drpdffiaaa	←{(2,'DI')(''drpdfnnlp)⍵}
-drpdfchk←{	a	←'I tst=0;',nl,simd'present(lv[:lc]) reduction(max:tst)'
+drpdfifaaa	←{(1,'ID')((drpdffchk⍬)drpdflp(drpdfnlp⍬))⍵}
+drpdfffaaa	←{(2,'DD')((drpdffchk⍬)drpdflp(drpdfnlp⍬))⍵}
+drpdfiiaaa	←{(1,'II')(''drpdflp(drpdfnlp⍬))⍵}
+drpdffiaaa	←{(2,'DI')(''drpdflp(drpdfnlp⍬))⍵}
+drpdffchk←{	a	←'I tst=0;',nl,simd'present(lv[:lc]) reduction(max:tst)'
 	a	,←'DO(i,lc){if(lv[i]!=floor(lv[i]))tst=1;}',nl
 		a,'if(tst)dwaerr(11);',nl}
-drpdfnnlp←{	v e y	←⍵
+drpdfnlp←{	a	←'if(*lv>0){B s=*lv;DOI(i,zr-1)s*=zs[i+1];rv+=s;}',nl
+		a,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl}
+drpdfblp←{	a	←'B*RSTCT zv64=zv;B zc64=(zc+63)/64;',nl
+	a	,←'B*RSTCT rv64=rv;B rc64=(rc+63)/64;',nl
+	a	,←'if(*lv>0){B s=*lv;DOI(i,zr-1)s*=zs[i+1];',nl
+	a	,←' I sr=s%64;I sl=64-sr;rv64+=s/64;rc64-=s/64;',nl
+	a	,←(acdt'present(zv64[:zc64],rv64[:rc64])'),'{',nl
+	a	,←' if(sr){if(sr>rc%64){',nl,simd''
+	a	,←'   DO(i,zc64){zv64[i]=(rv64[i]>>sr)|(rv64[i+1]<<sl);}',nl
+	a	,←'  }else{',nl,simd''
+	a	,←'   DO(i,zc64){if(i==zc64-1){zv64[i]=rv64[i]>>sr;',nl
+	a	,←'    }else{zv64[i]=(rv64[i]>>sr)|(rv64[i+1]<<sl);}}}',nl
+	a	,←' }else{',nl,(simd''),'DO(i,zc64){zv64[i]=rv64[i];}}',nl
+	a	,←'}}else{',nl,simd'present(zv64[:zc64],rv64[:rc64])'
+		a,' DO(i,zc64){zv64[i]=rv64[i];}}',nl}
+drpdflp←{	v e y	←⍵
 	rd rt lt	←⍺
 	z r l	←var/3↑v,⍪e
 	a	←'{I rk;B sp[15];',('r'(rt decarr)r),('l'(lt decarr)l)
 	a	,←'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl,⍺⍺
 	a	,←'rk=rr;DOI(i,rk)sp[i]=rs[i];',nl,acup'host(lv[:lc])'
 	a	,←'if(abs(*lv)>*sp)*sp=0;else if(*sp)*sp-=abs(*lv);',nl
-	a	,←('rk,sp,',⍕rd)(rt dectmp)'z'
-	a	,←'if(zc){if(*lv>0){B s=*lv;DOI(i,zr-1)s*=zs[i+1];rv+=s;}',nl
-	a	,←(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl
+	a	,←(('rk,sp,',⍕rd)(rt dectmp)'z'),'if(zc){',nl,⍵⍵
 		a,'}',nl,'cpaa(',z,',&za);}',nl}
 drpd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'↓')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 
