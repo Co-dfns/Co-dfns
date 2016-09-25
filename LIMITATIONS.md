@@ -39,6 +39,7 @@ corresponding dyadic or monadic function, if not listed, is supported.
 * Some mixed primitives will not work over boolean values
 * Some mixed primitives will not work over 
   mixed integer/float and boolean values
+* Some primitives do not support the full range of input
 
 ### Operators
 
