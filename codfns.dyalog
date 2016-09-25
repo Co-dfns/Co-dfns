@@ -2219,23 +2219,23 @@ dismffnaaa	←{'2D'dismfgnaaa ⍵}
 dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
 ⍝[cf]
 ⍝[of]:↓	Split/Drop
-drpdfbbaaa←{	'dwaerr(16);',nl}
-drpdfbiaaa	←{(3'U8' 'I')(''drpdflp(drpdfblp⍬))⍵}
-drpdfbfaaa	←{(3'U8' 'D')((drpdffchk⍬)drpdflp(drpdfblp⍬))⍵}
-drpdfibaaa←{	'dwaerr(16);',nl}
-drpdffbaaa←{	'dwaerr(16);',nl}
-drpdfifaaa	←{(1,'ID')((drpdffchk⍬)drpdflp(drpdfnlp⍬))⍵}
-drpdfffaaa	←{(2,'DD')((drpdffchk⍬)drpdflp(drpdfnlp⍬))⍵}
-drpdfiiaaa	←{(1,'II')(''drpdflp(drpdfnlp⍬))⍵}
-drpdffiaaa	←{(2,'DI')(''drpdflp(drpdfnlp⍬))⍵}
+drpdfbbaaa	←{3'U8'((drpdfblp'(1&*lv)')drpdflp2)⍵}
+drpdfbiaaa	←{(3'U8' 'I')(''drpdflp(drpdfblp'*lv'))⍵}
+drpdfbfaaa	←{(3'U8' 'D')((drpdffchk⍬)drpdflp(drpdfblp'*lv'))⍵}
+drpdfibaaa	←{1'I'((drpdfnlp'(1&*lv)')drpdflp2)⍵}
+drpdffbaaa	←{2'D'((drpdfnlp'(1&*lv)')drpdflp2)⍵}
+drpdfifaaa	←{(1,'ID')((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵}
+drpdfffaaa	←{(2,'DD')((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵}
+drpdfiiaaa	←{(1,'II')(''drpdflp(drpdfnlp'*lv'))⍵}
+drpdffiaaa	←{(2,'DI')(''drpdflp(drpdfnlp'*lv'))⍵}
 drpdffchk←{	a	←'I tst=0;',nl,simd'present(lv[:lc]) reduction(max:tst)'
 	a	,←'DO(i,lc){if(lv[i]!=floor(lv[i]))tst=1;}',nl
 		a,'if(tst)dwaerr(11);',nl}
-drpdfnlp←{	a	←'if(*lv>0){B s=*lv;DOI(i,zr-1)s*=zs[i+1];rv+=s;}',nl
+drpdfnlp←{	a	←'if(',⍵,'>0){B s=',⍵,';DOI(i,zr-1)s*=zs[i+1];rv+=s;}',nl
 		a,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl}
 drpdfblp←{	a	←'B*RSTCT zv64=zv;B zc64=(zc+63)/64;',nl
 	a	,←'B*RSTCT rv64=rv;B rc64=(rc+63)/64;',nl
-	a	,←'if(*lv>0){B s=*lv;DOI(i,zr-1)s*=zs[i+1];',nl
+	a	,←'if(',⍵,'>0){B s=',⍵,';DOI(i,zr-1)s*=zs[i+1];',nl
 	a	,←' I sr=s%64;I sl=64-sr;rv64+=s/64;rc64-=s/64;',nl
 	a	,←(acdt'present(zv64[:zc64],rv64[:rc64])'),'{',nl
 	a	,←' if(sr){if(sr>rc%64){',nl,simd''
@@ -2255,29 +2255,16 @@ drpdflp←{	v e y	←⍵
 	a	,←'if(abs(*lv)>*sp)*sp=0;else if(*sp)*sp-=abs(*lv);',nl
 	a	,←(('rk,sp,',⍕rd)(rt dectmp)'z'),'if(zc){',nl,⍵⍵
 		a,'}',nl,'cpaa(',z,',&za);}',nl}
+drpdflp2←{	v e y	←⍵
+	rd rt	←⍺
+	z r l	←var/3↑v,⍪e
+	a	←'{I rk;B sp[15];',('r'(rt decarr)r),('l' decarrb l)
+	a	,←'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl
+	a	,←'rk=rr;DOI(i,rk)sp[i]=rs[i];',nl,acup'host(lv[:lz])'
+	a	,←'if((1&*lv)>*sp)*sp=0;else if(*sp)*sp-=(1&*lv);',nl
+	a	,←(('rk,sp,',⍕rd)(rt dectmp)'z'),'if(zc){',nl,⍺⍺
+		a,'}',nl,'cpaa(',z,',&za);}',nl}
 drpd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'↓')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
-
-olddrpd←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))dwaerr(16);'
-	siz	←pacc'update host(lv[:1])'
-	siz	,←'zr=rr;DOI(i,zr)zs[i]=rs[i];zs[0]-=(zs[0]==0?0:lv[0]);',nl
-	siz	,←'I n=zr-1;DOI(i,n)zc*=zs[i+1];lc=lv[0];'
-	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
-	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpyn	←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	cpyn	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[((i+lc)*zc)+j];}}'
-	cpyb	←'I zcp=(rslt->c+7)/8;I rcp=(rgt->c+7)/8;',nl
-	cpyb	,←'I sti=(lc*zc)/8;I stp=(lc*zc)%8;n=(zcp==0?0:zcp-1);',nl
-	cpyb	,←simd'independent present(zv[:zcp],rv[:rcp])'
-	cpyb	,←'DO(i,n){U8 x=rv[i+sti]<<stp;',nl
-	cpyb	,←'x|=rv[i+1+sti]>>(8-stp);zv[i]=x;}',nl
-	cpyb	,←'if(zcp){',nl,(pacc'update host(rv[n+sti:1])')
-	cpyb	,←'zv[n]=rv[n+sti]<<stp;',nl,(pacc'update device(zv[n:1])'),'}'
-	cpy	,←(3=⊃0⌷⍺)⊃cpyn cpyb
-	ref	←'rslt->r=zr;DOI(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
-	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
-	ref	,←'rslt->v=rv+(lc*zc);'
-	exe	←cpy cpy⊃⍨1⌊(3=⊃0⌷⍺)+0=⊃0⍴⊃⊃1 0⌷⍵
-		chk siz exe mxfn 0 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:↑	Mix/Take
 tkemfinaaa←{	v e y	←⍵
