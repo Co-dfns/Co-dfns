@@ -364,7 +364,7 @@ pt⍪←pfs	1	2	3	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⊖'
 pt⍪←pfs	1	1	1	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'≡'
 pt⍪←pfs	1	1	1	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'≢'
 pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'⊢'
-pt⍪←pfs	1	2	3	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'	⊣'
+pt⍪←pfs	1	2	3	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'⊣'
 pt⍪←pfs	¯2	¯2	¯2	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂'//'
 pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'⍉'
 pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'↑'
@@ -1985,6 +1985,8 @@ ctfdfbbaaa←{	v e y	←⍵
 fctd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍪')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⌽	Reverse/Rotate
+rotmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+rotmfbnsss	←rotmffnsss←rotmfinsss
 rotmfinaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rotmne⊃vs ⋄ ⊃'1I'rotmnn/vs}
 rotmffnaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'D'rotmne⊃vs ⋄ ⊃'2D'rotmnn/vs}
 rotmlp←{	z	←'{I n=0,rk;B oc=1,ic=1,tc,*s=(',⍵,')->s;',nl
@@ -2060,6 +2062,8 @@ rotdffbaal	←{'dwaerr(16);',nl}
 rotd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⌽')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⊖	Reverse/Rotate First
+rtfmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+rtfmfbnsss	←rtfmffnsss←rtfmfinsss
 rtfmfinaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rtfmne⊃vs ⋄ ⊃'1I'rtfmnn/vs}
 rtfmffnaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'D'rtfmne⊃vs ⋄ ⊃'2D'rtfmnn/vs}
 rtfmhd←{	z	←'{B*s=(',⍵,')->s;I rk=(',⍵,')->r;B rc=1,zc=1;',nl
@@ -2155,6 +2159,8 @@ rtfdffbaal	←{'dwaerr(16);',nl}
 rtfd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⊖')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⍉	Transpose
+trnmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+trnmfbnsss	←trnmffnsss←trnmfinsss
 trnmfinaaa	←{'I1'trnmfn ⍵}
 trnmffnaaa	←{'D2'trnmfn ⍵}
 trnmfh←{	z	←'{I rk=(',⍵,')->r;B sp[15];DO(i,rk)sp[i]=(',⍵,')->s[rk-(1+i)];',nl
@@ -2205,6 +2211,8 @@ memmfinaaa←{	v e y	←⍵
 memmfbnaaa←memmffnaaa←memmfinaaa
 ⍝[cf]
 ⍝[of]:⊃	Disclose/Pick
+dismfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+dismfbnsss	←dismffnsss←dismfinsss
 dismfgnaaa←{	v e y	←⍵
 	tc tn	←⍺
 	rslt rgt	←var/2↑v,⍪e
@@ -2219,6 +2227,8 @@ dismffnaaa	←{'2D'dismfgnaaa ⍵}
 dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
 ⍝[cf]
 ⍝[of]:↓	Split/Drop
+drpmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+drpmfbnsss	←drpmffnsss←drpmfinsss
 drpdfbbaaa	←{3'U8'((drpdfblp'(1&*lv)')drpdflp2)⍵}
 drpdfbiaaa	←{(3'U8' 'I')(''drpdflp(drpdfblp'*lv'))⍵}
 drpdfbfaaa	←{(3'U8' 'D')((drpdffchk⍬)drpdflp(drpdfblp'*lv'))⍵}
@@ -2267,6 +2277,8 @@ drpdflp2←{	v e y	←⍵
 drpd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'↓')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:↑	Mix/Take
+tkemfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+tkemfbnsss	←tkemffnsss←tkemfinsss
 tkemfinaaa←{	v e y	←⍵
 	≡/2↑e:	''
 	rslt rgt	←var/2↑v,⍪e
@@ -2336,6 +2348,8 @@ fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
 		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:⊣	Same/Monadic Left
+lftmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+lftmfbnsss	←lftmffnsss←lftmfinsss
 lftmfinaaa←{	v e y	←⍵
 	≡/2↑e:	''
 	rslt rgt	←var/2↑v,⍪e
@@ -2347,6 +2361,8 @@ lftd←{	chk siz	←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
 lftmfbnaaa←lftmffnaaa←lftmfinaaa
 ⍝[cf]
 ⍝[of]:⊢	Identity/Right
+rgtmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
+rgtmfbnsss	←rgtmffnsss←rgtmfinsss
 rgtmfinaaa←{	v e y	←⍵
 	≡/2↑e	:''
 	rslt rgt	←var/2↑v,⍪e
@@ -2431,6 +2447,8 @@ rolmfbnaaa←{	v e y	←⍵
 		z,'B zc=t.c;',nl,(acup'device(zv[:zc])'),'cpaa(',rslt,',&t);}',nl}
 ⍝[cf]
 ⍝[of]:≡	Depth/Equiv
+eqvmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=0;',nl}
+eqvmfbnsss	←eqvmffnsss←eqvmfinsss
 eqvmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e 
 	z	←'{ai(',rslt,',0,NULL,1);I*zv=(',rslt,')->v;',nl
@@ -2447,6 +2465,8 @@ eqvd←{	chk siz	←'' 'zr=0;'
 eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa
 ⍝[cf]
 ⍝[of]:≢	Tally/Not Equiv
+nqvmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=1;',nl}
+nqvmfbnsss	←nqvmffnsss←nqvmfinsss
 nqvmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
 	z	←'{I c=1;'

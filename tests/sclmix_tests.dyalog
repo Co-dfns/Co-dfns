@@ -94,6 +94,16 @@ Z←0 0⍴⍬
 'not'	SCL∆TST∆MONADIC '~'	IB	F	B
 'materialize'	SCL∆TST∆MONADIC '⌷'	I	F	B
 'factorial'	SCL∆TST∆MONADIC '!'	IPS	FPS	B
+'reverse'	SCL∆TST∆MONADIC '⌽'	I	F	B
+'revfirst'	SCL∆TST∆MONADIC '⊖'	I	F	B
+'transpose'	SCL∆TST∆MONADIC '⍉'	I	F	B
+'disclose'	SCL∆TST∆MONADIC '⊃'	I	F	B
+'split'	SCL∆TST∆MONADIC '↓'	I	F	B
+'mix'	SCL∆TST∆MONADIC '↑'	I	F	B
+'same'	SCL∆TST∆MONADIC '⊣'	I	F	B
+'identity'	SCL∆TST∆MONADIC '⊢'	I	F	B
+'depth'	SCL∆TST∆MONADIC '≡'	I	F	B
+'tally'	SCL∆TST∆MONADIC '≢'	I	F	B
 
 BS←':Namespace' 'r←0.02        ⋄ v←0.03' 
 BS,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
