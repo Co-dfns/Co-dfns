@@ -2,6 +2,7 @@
 
 S←':Namespace' 'Run←{⍺↓⍵}' 'R2←{(1⌷⍺)↓⍵}' ':EndNamespace'
 F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
+B←{⊃((⎕DR ⍵)11)⎕DR ⍵}
 
 '01'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	1	(5 5⍴⍳5)
 '02'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	3	(⍳10)
@@ -82,5 +83,21 @@ F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 '77'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(F 7 7)	(3 30⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
 '78'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(F 7 2)	(4 32⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
 '79'('drop' S 'R2' #.util.GEN∆T2 ⎕THIS)	(F 7 3)	(4 32⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'80'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	(5 5⍴⍳5)
+'81'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	(⍳10)
+'82'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	(⍳35)
+'83'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	(⍳35)
+'84'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	⍬
+'85'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	⍬
+'86'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	(5 5⍴⍳5)
+'87'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	(⍳10)
+'88'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	(÷1+5 5⍴⍳5)
+'89'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	(÷1+⍳10)
+'90'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	(÷1+⍳35)
+'91'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	(÷1+5 5⍴⍳5)
+'92'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	(0 1 0 1 0 0 1 1 1 1 0 0 0)
+'93'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	(0 1 0 1 0 0)
+'94'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 1)	(3 10⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
+'95'('drop' S 'Run' #.util.GEN∆T2 ⎕THIS)	(B 0)	(128⍴0 1 0 1 0 0 1 1 1 1 0 0 0)
 
 :EndNamespace

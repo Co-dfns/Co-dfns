@@ -2384,6 +2384,8 @@ iotmfbnaaa←{	v e y	←⍵
 	z	,←'{U8*v=(',rgt,')->v;B c=1&v[0];ai(',rslt,',1,&c,1);',nl
 	z	,←'I*RSTCT zv=(',rslt,')->v;',nl
 		z,(simd'present(zv[:c])'),'DO(i,c)zv[i]=i;}',nl}
+⍝[cf]
+⍝[of]:⌷	Index
 idxd←{	chk	←'if(lr>1)dwaerr(4);if(lr==0)ls[0]=1;if(ls[0]>rr)dwaerr(5);'
 	chk	,←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
 	chk	,←pacc'update host(lv[:lc])'
