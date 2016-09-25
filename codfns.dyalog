@@ -2221,7 +2221,7 @@ dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
 ⍝[of]:↓	Split/Drop
 drpdfbbaaa←{	'dwaerr(16);',nl}
 drpdfbiaaa	←{(3'U8' 'I')(''drpdflp(drpdfblp⍬))⍵}
-drpdfbfaaa←{	'dwaerr(16);',nl}
+drpdfbfaaa	←{(3'U8' 'D')((drpdffchk⍬)drpdflp(drpdfblp⍬))⍵}
 drpdfibaaa←{	'dwaerr(16);',nl}
 drpdffbaaa←{	'dwaerr(16);',nl}
 drpdfifaaa	←{(1,'ID')((drpdffchk⍬)drpdflp(drpdfnlp⍬))⍵}
