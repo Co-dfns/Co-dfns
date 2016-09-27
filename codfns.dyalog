@@ -2128,22 +2128,21 @@ rtfdfbiaal←{	v e y	←⍵
 rtfdfbilp←{	z	←(rtfdfshft⍬),'B ec=(zc+63)/64;',nl
 	z	,←'B*RSTCT zvB=(B*)zv;B*RSTCT rvB=(B*)rv;',nl
 	z	,←(acdt'present(zvB[:ec],rvB[:ec])'),'{',nl
-	z	,←'if(zc<=1){}else if(zc<=64){',nl,simd''
+	z	,←'if(zc){if(zc<=64){',nl,simd''
 	z	,←' DOI(i,1){B t=rvB[0]&((1<<zc)-1);zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
 	z	,←'else{I ar=s%64;I al=64-ar;B ac=(zc_s+(ar-zc%64))/64;B ao=s/64;',nl
 	z	,←' I bl=zc_s%64;I br=64-bl;B bc=(s+bl)/64;B bo=(zc_s+63)/64;',nl
-	z	,←' if(ar){',nl,simd'vector(256) async(1)'
+	z	,←' if(ar){',nl,simd''
 	z	,←'  DO(i,ac){zvB[i]=(rvB[i+ao]>>ar)|(rvB[i+ao+1]<<al);}',nl
-	z	,←' }else{',nl,simd'vector(256) async(1)'
+	z	,←' }else{',nl,simd''
 	z	,←'  DO(i,ac){zvB[i]=rvB[i+ao];}}',nl
-	z	,←' if(bl){',nl,simd'vector(256) async(2)'
-	z	,←'  DO(i,bc){zvB[i+bo]=(rvB[i]>>br)|(rvB[i+1]<<bl);}',nl,simd'async(3)'
+	z	,←' if(bl){',nl,simd''
+	z	,←'  DO(i,bc){zvB[i+bo]=(rvB[i]>>br)|(rvB[i+1]<<bl);}',nl,simd''
 	z	,←'  DOI(i,1){if(zc%64>ar){zvB[ac]=rvB[ac+ao]>>ar;}',nl
 	z	,←'   zvB[bo-1]=(zvB[bo-1]&((1UL<<bl)-1))|(rvB[0]<<bl);}',nl
-	z	,←' }else{',nl,simd'vector(256) async(2)'
-	z	,←'  DO(i,bc){zvB[i+bo]=rvB[i];}}',nl
-	z	,←(pacc'wait'),'}',nl
-		z,'}',nl,'cpaa(',⍵,',&za);}',nl}
+	z	,←' }else{',nl,simd''
+	z	,←'  DO(i,bc){zvB[i+bo]=rvB[i];}}}',nl
+		z,'}}',nl,'cpaa(',⍵,',&za);}',nl}
 rtfdfbbaaa	←{'dwaerr(16);',nl}
 rtfdfbbaal	←{'dwaerr(16);',nl}
 rtfdfibaaa	←{'dwaerr(16);',nl}
