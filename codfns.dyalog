@@ -1879,17 +1879,17 @@ catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)dwaerr(4);int minr=rr>lr?lr:rr;',
 ⍝[cf]
 ⍝[of]:⍪	Table/Catenate First
 ctfmfaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	z	←'{B s[2];'
-	z	,←'if((',rgt,')->r)s[0]=(',rgt,')->s[0]; else s[0]=1;',nl
-	z	,←'if(s[0])s[1]=(',rgt,')->c/s[0]; else s[1]=1;',nl
-	≡/2↑e:	z,'(',rgt,')->r=2;(',rgt,')->s[0]=s[0];(',rgt,')->s[1]=s[1];}',nl
-	z	,←'ai(',rslt,',2,s,',⍺,');U8*RSTCT v=(',rslt,')->v;',nl
-	z	,←'U8*RSTCT rv=(',rgt,')->v;B cnt=(',rgt,')->z;',nl
-		z,(simd'present(v[:cnt],rv[:cnt])'),'DO(i,cnt)v[i]=rv[i];}',nl}
-ctfmfinaaa	←{'1' ctfmfaa ⍵}
-ctfmffnaaa	←{'2' ctfmfaa ⍵}
-ctfmfbnaaa	←{'dwaerr(16);',nl}
+	z r	←var/2↑v,⍪e
+	d t	←⍺
+	a	←'{B s[2];',('r'(t decarr)r),'if(rr)s[0]=rs[0];else s[0]=1;',nl
+	a	,←'if(s[0])s[1]=rc/s[0];else s[1]=1;',nl
+	≡/2↑e:	a,'(',z,')->r=2;(',z,')->s[0]=s[0];(',z,')->s[1]=s[1];}',nl
+	cnt	←('3'≡d)⊃'zc' 'zz'
+	a	,←(('2,s,',d)(t dectmp)'z'),simd'present(zv[:',cnt,'],rv[:',cnt,'])'
+		a,'DO(i,',cnt,')zv[i]=rv[i];',nl,'cpaa(',z,',&za);}',nl}
+ctfmfinaaa	←{'1I'ctfmfaa ⍵}
+ctfmffnaaa	←{'2D'ctfmfaa ⍵}
+ctfmfbnaaa	←{'3' 'U8'ctfmfaa ⍵}
 ctfdpre←{	v e y	←⍵
 	zd zt rt lt	←⍺
 	z r l	←var/3↑v,⍪e
