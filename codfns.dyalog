@@ -2129,8 +2129,8 @@ rtfdfbilp←{	z	←(rtfdfshft⍬),'B ec=(zc+63)/64;',nl
 	z	,←'B*RSTCT zvB=(B*)zv;B*RSTCT rvB=(B*)rv;',nl
 	z	,←(acdt'present(zvB[:ec],rvB[:ec])'),'{',nl
 	z	,←'if(zc){if(zc<=64){',nl,simd''
-	z	,←' DOI(i,1){B t=rvB[0]&((1<<zc)-1);zvB[0]=(t<<(zc-s))|(t>>s);}}',nl
-	z	,←'else{I ar=s%64;I al=64-ar;B ac=(zc_s+(ar-zc%64))/64;B ao=s/64;',nl
+	z	,←' DOI(i,1){B t=rvB[0]&((1<<zc)-1);zvB[0]=(t<<(zc-s))|(t>>s);}',nl
+	z	,←'}else{I ar=s%64;I al=64-ar;B ac=(zc_s+(ar-zc%64))/64;B ao=s/64;',nl
 	z	,←' I bl=zc_s%64;I br=64-bl;B bc=(s+bl)/64;B bo=(zc_s+63)/64;',nl
 	z	,←' if(ar){',nl,simd''
 	z	,←'  DO(i,ac){zvB[i]=(rvB[i+ao]>>ar)|(rvB[i+ao+1]<<al);}',nl
