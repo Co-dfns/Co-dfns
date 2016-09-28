@@ -8,6 +8,7 @@ F1LT←?10⍴0
 AFN←(?10⍴0)-?10⍴2
 B←?10⍴2
 IB←⊃((⎕DR B)323)⎕DR B
+FB←⊃((⎕DR B)645)⎕DR B
 INT←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,?9⍴100
 FNT←0,100÷⍨?9⍴1000
 IPS←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}2+?10⍴100
@@ -91,7 +92,7 @@ Z←0 0⍴⍬
 'pitimes'	SCL∆TST∆MONADIC '○'	I	F	B
 'floor'	SCL∆TST∆MONADIC '⌊'	I	F	B
 'ceiling'	SCL∆TST∆MONADIC '⌈'	I	F	B
-'not'	SCL∆TST∆MONADIC '~'	IB	F	B
+'not'	SCL∆TST∆MONADIC '~'	IB	FB	B
 'materialize'	SCL∆TST∆MONADIC '⌷'	I	F	B
 'factorial'	SCL∆TST∆MONADIC '!'	IPS	FPS	B
 'reverse'	SCL∆TST∆MONADIC '⌽'	I	F	B
