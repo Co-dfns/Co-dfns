@@ -1,4 +1,4 @@
-:Namespace rotfirst
+﻿:Namespace rotfirst
 
 S←':Namespace' 'Run←{⍺⊖⍵}' ':EndNamespace'
 R←':Namespace' 'Run←{7⊖⍵}' ':EndNamespace'
