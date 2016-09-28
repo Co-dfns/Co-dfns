@@ -1889,7 +1889,7 @@ ctfmfaa←{	v e y	←⍵
 		z,(simd'present(v[:cnt],rv[:cnt])'),'DO(i,cnt)v[i]=rv[i];}',nl}
 ctfmfinaaa	←{'1' ctfmfaa ⍵}
 ctfmffnaaa	←{'2' ctfmfaa ⍵}
-ctfmfbnaaa	←{'3' ctfmfaa ⍵}
+ctfmfbnaaa	←{'dwaerr(16);',nl}
 ctfdpre←{	v e y	←⍵
 	zd zt rt lt	←⍺
 	z r l	←var/3↑v,⍪e
