@@ -1,4 +1,4 @@
-:Namespace revfirst
+﻿:Namespace revfirst
 
 S←':Namespace' 'Run←{⊖⍵}' ':EndNamespace'
 S2←':Namespace' 'Run←{⊖⊖⊖⍵}' ':EndNamespace'
