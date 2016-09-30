@@ -1801,20 +1801,29 @@ decarr←{	r s v c z	←⍺∘,¨'rsvcz'
 decarri	←'I'decarr
 decarrf	←'D'decarr
 decarrb	←'U8'decarr
-declit←{	r s v c	←⍺∘,¨'rsvc'
-	z	←'I ',r,'=',(⍕≢⍴⍵),';'
-	z	,←'B ',s,'[15]={',(⊃{⍺,',',⍵}/⍕¨15↑⍴⍵),'};B ',c,'=',(⍕≢,⍵),';',nl
-		z,⍺⍺,'*RSTCT ',v,'={',(cln ⊃{⍺,',',⍵}/⍕¨(8,⍨⌈8÷⍨≢,⍵)↑,⍵),'};',nl}
+declit←{	r s v c z	←⍺∘,¨'rsvcz'
+	d	←(8×⌈8÷⍨≢,⍵)↑,⍵
+	a	←'I ',r,'=',(⍕≢⍴⍵),';B ',z,'=',(⍕≢d),'*sizeof(',⍺⍺,');',nl
+	a	,←'B ',s,'[15]={',(⊃{⍺,',',⍵}/⍕¨15↑⍴⍵),'};B ',c,'=',(⍕≢,⍵),';',nl
+	a	,←⍺⍺,' ',v,'[]={',(cln ⊃{⍺,',',⍵}/⍕¨(8×⌈8÷⍨≢,⍵)↑,⍵),'};',nl
+		a,pacc'enter data copyin(',v,'[:',c,'])'}
 decliti	←'I'declit
 declitf	←'D'declit
-declitb←{	r s v c	←⍺∘,¨'rsvc'
-	z	←'I ',r,'=',(⍕≢⍴⍵),';'
-	z	,←'B ',s,'[15]={',(⊃{⍺,',',⍵}/⍕¨15↑⍴⍵),'};B ',c,'=',(⍕≢,⍵),';',nl
-		z,'U8*RSTCT ',v,'={',(⊃{⍺,',',⍵}/⍕¨2⊥⍉(8,⍨⌈8÷⍨≢,⍵)↑,⍵),'};',nl}
+declitb←{	r s v c z	←⍺∘,¨'rsvcz'
+	d	←2⊥⍉((8,⍨8÷⍨≢)⍴⊢)(64×⌈64÷⍨≢,⍵)↑,⍵
+	a	←'I ',r,'=',(⍕≢⍴⍵),';B ',z,'=',(⍕≢d),';',nl
+	a	,←'B ',s,'[15]={',(⊃{⍺,',',⍵}/⍕¨15↑⍴⍵),'};B ',c,'=',(⍕≢,⍵),';',nl
+	d	←2⊥⍉((8,⍨8÷⍨≢)⍴⊢)(64×⌈64÷⍨≢,⍵)↑,⍵
+	a	,←'U8 ',v,'[]={',(⊃{⍺,',',⍵}/⍕¨d),'};',nl
+		a,pacc'enter data copyin(',v,'[:',z,'])'}
+freelit	←{pacc'exit data delete(',⍵,'v[:',⍵,⍺,'])'}
 dectmp	←{'A ',a,';',a,'.v=NULL;ai(&',a,',',⍺,');',nl,⍵(⍺⍺ decarr)'&',a←⍵,'a'}
 dectmpi	←'I'dectmp
 dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
+rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
+lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
+rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 ⍝[cf]
 ⍝[of]:Generators
 ⍝[of]:⍴	Reshape/Shape
@@ -2231,22 +2240,67 @@ dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
 ⍝[of]:↓	Split/Drop
 drpmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
 drpmfbnsss	←drpmffnsss←drpmfinsss
-drpdfbbaaa	←{3'U8'((drpdfblp'(1&*lv)')drpdflp2)⍵}
-drpdfbiaaa	←{(3'U8' 'I')(''drpdflp(drpdfblp'*lv'))⍵}
-drpdfbfaaa	←{(3'U8' 'D')((drpdffchk⍬)drpdflp(drpdfblp'*lv'))⍵}
-drpdfibaaa	←{1'I'((drpdfnlp'(1&*lv)')drpdflp2)⍵}
-drpdffbaaa	←{2'D'((drpdfnlp'(1&*lv)')drpdflp2)⍵}
-drpdfifaaa	←{(1,'ID')((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵}
-drpdfffaaa	←{(2,'DD')((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵}
-drpdfiiaaa	←{(1,'II')(''drpdflp(drpdfnlp'*lv'))⍵}
-drpdffiaaa	←{(2,'DI')(''drpdflp(drpdfnlp'*lv'))⍵}
+drpdfbbaaa←{	h	←'{',('r'decarrb rgt ⍵),'l'decarrb lft ⍵
+		h,(3 'U8'((drpdfblp'(1&*lv)')drpdflp2)⍵),'}',nl}
+drpdfbiaaa←{	h	←'{',('r'decarrb rgt ⍵),'l'decarri lft ⍵
+		h,(3 'U8'(''drpdflp(drpdfblp'*lv'))⍵),'}',nl}
+drpdfbfaaa←{	h	←'{',('r'decarrb rgt ⍵),'l'decarrf lft ⍵
+		h,(3 'U8'((drpdffchk⍬)drpdflp(drpdfblp'*lv'))⍵),'}',nl}
+drpdfibaaa←{	h	←'{',('r'decarri rgt ⍵),'l'decarrb lft ⍵
+		h,(1 'I'((drpdfnlp'(1&*lv)')drpdflp2)⍵),'}',nl}
+drpdffbaaa←{	h	←'{',('r'decarrf rgt ⍵),'l'decarrb lft ⍵
+		h,(2 'D'((drpdfnlp'(1&*lv)')drpdflp2)⍵),'}',nl}
+drpdfifaaa←{	h	←'{',('r'decarri rgt ⍵),'l'decarrf lft ⍵
+		h,(1 'I'((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵),'}',nl}
+drpdfffaaa←{	h	←'{',('r'decarrf rgt ⍵),'l'decarrf lft ⍵
+		h,(2 'D'((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵),'}',nl}
+drpdfiiaaa←{	h	←'{',('r'decarri rgt ⍵),'l'decarri lft ⍵
+		h,(1 'I'(''drpdflp(drpdfnlp'*lv'))⍵),'}',nl}
+drpdffiaaa←{	h	←'{',('r'decarrf rgt ⍵),'l'decarri lft ⍵
+		h,(2 'D'(''drpdflp(drpdfnlp'*lv'))⍵),'}',nl}
+drpdfbbaal←{	h	←'{',('r'decarrb rgt ⍵),'l'declitb lft ⍵
+		h,(3 'U8'((drpdfblp'(1&*lv)')drpdflp2)⍵),('z'freelit'l'),'}',nl}
+drpdfbiaal←{	h	←'{',('r'decarrb rgt ⍵),'l'decliti lft ⍵
+		h,(3 'U8'(''drpdflp(drpdfblp'*lv'))⍵),('c'freelit'l'),'}',nl}
+drpdfbfaal←{	h	←'{',('r'decarrb rgt ⍵),'l'declitf lft ⍵
+		h,(3 'U8'((drpdffchk⍬)drpdflp(drpdfblp'*lv'))⍵),('c'freelit'l'),'}',nl}
+drpdfibaal←{	h	←'{',('r'decarri rgt ⍵),'l'declitb lft ⍵
+		h,(1 'I'((drpdfnlp'(1&*lv)')drpdflp2)⍵),('z'freelit'l'),'}',nl}
+drpdffbaal←{	h	←'{',('r'decarrf rgt ⍵),'l'declitb lft ⍵
+		h,(2 'D'((drpdfnlp'(1&*lv)')drpdflp2)⍵),('z'freelit'l'),'}',nl}
+drpdfifaal←{	h	←'{',('r'decarri rgt ⍵),'l'declitf lft ⍵
+		h,(1 'I'((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'l'),'}',nl}
+drpdfffaal←{	h	←'{',('r'decarrf rgt ⍵),'l'declitf lft ⍵
+		h,(2 'D'((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'l'),'}',nl}
+drpdfiiaal←{	h	←'{',('r'decarri rgt ⍵),'l'decliti lft ⍵
+		h,(1 'I'(''drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'l'),'}',nl}
+drpdffiaal←{	h	←'{',('r'decarrf rgt ⍵),'l'decliti lft ⍵
+		h,(2 'D'(''drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'l'),'}',nl}
+drpdfbbala←{	h	←'{',('r'declitb rgt ⍵),'l'decarrb lft ⍵
+		h,(3 'U8'((drpdfblp'(1&*lv)')drpdflp2)⍵),('z'freelit'r'),'}',nl}
+drpdfbiala←{	h	←'{',('r'declitb rgt ⍵),'l'decarri lft ⍵
+		h,(3 'U8'(''drpdflp(drpdfblp'*lv'))⍵),('z'freelit'r'),'}',nl}
+drpdfbfala←{	h	←'{',('r'declitb rgt ⍵),'l'decarrf lft ⍵
+		h,(3 'U8'((drpdffchk⍬)drpdflp(drpdfblp'*lv'))⍵),('z'freelit'r'),'}',nl}
+drpdfibala←{	h	←'{',('r'decliti rgt ⍵),'l'decarrb lft ⍵
+		h,(1 'I'((drpdfnlp'(1&*lv)')drpdflp2)⍵),('c'freelit'r'),'}',nl}
+drpdffbala←{	h	←'{',('r'declitf rgt ⍵),'l'decarrb lft ⍵
+		h,(2 'D'((drpdfnlp'(1&*lv)')drpdflp2)⍵),('c'freelit'r'),'}',nl}
+drpdfifala←{	h	←'{',('r'decliti rgt ⍵),'l'decarrf lft ⍵
+		h,(1 'I'((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'r'),'}',nl}
+drpdfffala←{	h	←'{',('r'declitf rgt ⍵),'l'decarrf lft ⍵
+		h,(2 'D'((drpdffchk⍬)drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'r'),'}',nl}
+drpdfiiala←{	h	←'{',('r'decliti rgt ⍵),'l'decarri lft ⍵
+		h,(1 'I'(''drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'r'),'}',nl}
+drpdffiala←{	h	←'{',('r'declitf rgt ⍵),'l'decarri lft ⍵
+		h,(2 'D'(''drpdflp(drpdfnlp'*lv'))⍵),('c'freelit'r'),'}',nl}
 drpdffchk←{	a	←'I tst=0;',nl,simd'present(lv[:lc]) reduction(max:tst)'
 	a	,←'DO(i,lc){if(lv[i]!=floor(lv[i]))tst=1;}',nl
 		a,'if(tst)dwaerr(11);',nl}
 drpdfnlp←{	a	←'if(',⍵,'>0){B s=',⍵,';DOI(i,zr-1)s*=zs[i+1];rv+=s;}',nl
 		a,(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl}
-drpdfblp←{	a	←'B*RSTCT zv64=zv;B zc64=(zc+63)/64;',nl
-	a	,←'B*RSTCT rv64=rv;B rc64=(rc+63)/64;',nl
+drpdfblp←{	a	←'B*RSTCT zv64=(B*)zv;B zc64=(zc+63)/64;',nl
+	a	,←'B*RSTCT rv64=(B*)rv;B rc64=(rc+63)/64;',nl
 	a	,←'if(',⍵,'>0){B s=',⍵,';DOI(i,zr-1)s*=zs[i+1];',nl
 	a	,←' I sr=s%64;I sl=64-sr;rv64+=s/64;rc64-=s/64;',nl
 	a	,←(acdt'present(zv64[:zc64],rv64[:rc64])'),'{',nl
@@ -2258,24 +2312,16 @@ drpdfblp←{	a	←'B*RSTCT zv64=zv;B zc64=(zc+63)/64;',nl
 	a	,←' }else{',nl,(simd''),'DO(i,zc64){zv64[i]=rv64[i];}}',nl
 	a	,←'}}else{',nl,simd'present(zv64[:zc64],rv64[:rc64])'
 		a,' DO(i,zc64){zv64[i]=rv64[i];}}',nl}
-drpdflp←{	v e y	←⍵
-	rd rt lt	←⍺
-	z r l	←var/3↑v,⍪e
-	a	←'{I rk;B sp[15];',('r'(rt decarr)r),('l'(lt decarr)l)
-	a	,←'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl,⍺⍺
+drpdflp←{	a	←'I rk;B sp[15];',nl,'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl,⍺⍺
 	a	,←'rk=rr;DOI(i,rk)sp[i]=rs[i];',nl,acup'host(lv[:lc])'
 	a	,←'if(abs(*lv)>*sp)*sp=0;else if(*sp)*sp-=abs(*lv);',nl
-	a	,←(('rk,sp,',⍕rd)(rt dectmp)'z'),'if(zc){',nl,⍵⍵
-		a,'}',nl,'cpaa(',z,',&za);}',nl}
-drpdflp2←{	v e y	←⍵
-	rd rt	←⍺
-	z r l	←var/3↑v,⍪e
-	a	←'{I rk;B sp[15];',('r'(rt decarr)r),('l' decarrb l)
-	a	,←'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl
+	a	,←(('rk,sp,',⍕⊃⍺)((1⊃⍺)dectmp)'z'),'if(zc){',nl,⍵⍵
+		a,'}',nl,'cpaa(',(rslt ⍵),',&za);',nl}
+drpdflp2←{	a	←'I rk;B sp[15];',nl,'if(lr&&(lr!=1||ls[0]!=1))dwaerr(16);',nl
 	a	,←'rk=rr;DOI(i,rk)sp[i]=rs[i];',nl,acup'host(lv[:lz])'
 	a	,←'if((1&*lv)>*sp)*sp=0;else if(*sp)*sp-=(1&*lv);',nl
-	a	,←(('rk,sp,',⍕rd)(rt dectmp)'z'),'if(zc){',nl,⍺⍺
-		a,'}',nl,'cpaa(',z,',&za);}',nl}
+	a	,←(('rk,sp,',⍕⊃⍺)((1⊃⍺)dectmp)'z'),'if(zc){',nl,⍺⍺
+		a,'}',nl,'cpaa(',(rslt ⍵),',&za);',nl}
 drpd←{('df'gcl fdb)((0⌷⍉⍵),⊂,'↓')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:↑	Mix/Take
