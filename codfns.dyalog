@@ -2070,33 +2070,33 @@ rtfmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
 rtfmfbnsss	←rtfmffnsss←rtfmfinsss
 rtfmfinaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'I'rtfmne⊃vs ⋄ ⊃'1I'rtfmnn/vs}
 rtfmffnaaa	←{v e y←⍵ ⋄ vs←var/2↑v,⍪e ⋄ ≡/2↑e:'D'rtfmne⊃vs ⋄ ⊃'2D'rtfmnn/vs}
-rtfmhd←{	z	←'{B*s=(',⍵,')->s;I rk=(',⍵,')->r;B rc=1,zc=1;',nl
-	z	,←'if(rk){rc=s[0];DO(i,rk-1)zc*=s[i+1];}',nl
-		z,⍺,'*RSTCT rv=(',⍵,')->v;B cnt=zc*rc;',nl}
-rtfmne←{	z	←(⍺ rtfmhd ⍵),'B n=rc/2;',nl
-	z	,←simd'collapse(2) independent present(rv[:cnt])'
-	z	,←'DO(i,n){DO(j,zc){I zvi=i*zc+j,rvi=(rc-(i+1))*zc+j;',nl
+rtfmne←{	z	←'{B cr=1,cc=1;',('r'(⍺ decarr)⍵)
+	z	,←'if(rr){cr=rs[0];DOI(i,rr-1)cc*=rs[i+1];};B n=cr/2;',nl
+	z	,←simd'collapse(2) independent present(rv[:rc])'
+	z	,←'DO(i,n){DO(j,cc){B zvi=i*cc+j,rvi=(cr-(i+1))*cc+j;',nl
 		z,⍺,' t=rv[zvi];rv[zvi]=rv[rvi];rv[rvi]=t;}}}',nl}
 rtfmnn←{	tp td	←⍺⍺
-	z←	(td rtfmhd ⍵),'ai(',⍺,',rk,s,',tp,');',nl
-	z	,←td,'*RSTCT zv=(',⍺,')->v;',nl
-	z	,←simd'independent collapse(2) present(zv[:cnt],rv[:cnt])'
-		z,'DO(i,rc){DO(j,zc){zv[i*zc+j]=rv[(rc-(i+1))*zc+j];}}}',nl}
+	z	←'{B cr=1,cc=1;',('r'(td decarr)⍵),('rr,rs,',tp)(td dectmp)'z'
+	z	,←'if(rr){cr=rs[0];DOI(i,rr-1)cc*=rs[i+1];};B n=cr/2;',nl
+	z	,←simd'independent collapse(2) present(zv[:zc],rv[:rc])'
+	z	,←'DO(i,cr){DO(j,cc){zv[i*cc+j]=rv[(cr-(i+1))*cc+j];}}',nl
+		z,'cpaa(',⍺,',&za);}',nl}
 rtfmfbnaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
-	z	←'U8'rtfmhd rgt
-	z	,←'I c8=(cnt+7)/8;A t;t.v=NULL;ai(&t,rk,s,3);U8*RSTCT zv=t.v;',nl
-	z	,←simd'independent present(rv[:c8],zv[:c8])'
-	z	,←'DO(i8,c8){zv[i8]=0;',nl
-	z	,←' for(I bi=0;bi<8;){B ci=i8*8+bi;if(ci>=cnt)break;',nl
-	z	,←'  B i=rc-(ci/zc+1),j=ci%zc;',nl
-	z	,←'  B ti=i*zc+j;B ti8=ti/8;I t,sz=(i8*8+8)-ci;',nl
-	z	,←'  if(sz>(t=(ti8*8+8)-ti))sz=t;',nl
-	z	,←'  if(sz>(t=zc-j))sz=t;U8 msk=-1;msk<<=(8-sz);msk>>=(ti%8);',nl
-	z	,←'  if(bi>ti%8)zv[i8]|=(rv[ti8]&msk)>>(bi-(ti%8));',nl
-	z	,←'  else zv[i8]|=(rv[ti8]&msk)<<((ti%8)-bi);',nl
+	z	←'{B cr=1,cc=1;',('r'decarrb rgt),'rr,rs,3'dectmpb'z'
+	z	,←'B zBc=(zc+63)/64;B*RSTCT zBv=(B*)zv;B*RSTCT rBv=(B*)rv;',nl
+	z	,←simd'independent present(rBv[:zBc],zBv[:zBc])'
+	z	,←'DO(i64,zBc){zBv[i64]=0;',nl
+	z	,←' for(I bi=0;bi<64;){B ci=i64*64+bi;if(ci>=zc)break;',nl
+	z	,←'  B i=cr-(ci/cc+1),j=ci%cc;',nl
+	z	,←'  B ti=i*cc+j;B ti64=ti/64;B t,sz=(i*64+64)-ci;',nl
+	z	,←'  if(sz>(t=(ti64*64+64)-ti))sz=t;',nl
+	z	,←'  if(sz>(t=cc-j))sz=t;',nl
+	z	,←'  B msk=UINT64_MAX;msk<<=(64-sz);msk>>=(ti%64);',nl
+	z	,←'  if(bi>ti%64)zBv[i64]|=(rBv[ti64]&msk)>>(bi-(ti%64));',nl
+	z	,←'  else zBv[i64]|=(rBv[ti64]&msk)<<((ti%64)-bi);',nl
 	z	,←'  bi+=sz;}}',nl
-		z,'cpaa(',rslt,',&t);}',nl}
+		z,'cpaa(',rslt,',&za);}',nl}
 rtfdfiiaaa	←{v e y←⍵ ⋄ '1I'rtfdfxiaaa var/3↑v,⍪e}
 rtfdffiaaa	←{v e y←⍵ ⋄ '2D'rtfdfxiaaa var/3↑v,⍪e}
 rtfdfiiaal	←{v e y←⍵ ⋄ '1I'rtfdfxiaal(var/2↑v,⍪e),2⌷v}
