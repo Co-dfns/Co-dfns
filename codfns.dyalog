@@ -2084,17 +2084,16 @@ rtfmnn←{	tp td	←⍺⍺
 rtfmfbnaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
 	z	←'{B cr=1,cc=1;',('r'decarrb rgt),'rr,rs,3'dectmpb'z'
+	z	,←'if(rr){cr=rs[0];DOI(i,rr-1)cc*=rs[i+1];};',nl
 	z	,←'B zBc=(zc+63)/64;B*RSTCT zBv=(B*)zv;B*RSTCT rBv=(B*)rv;',nl
 	z	,←simd'independent present(rBv[:zBc],zBv[:zBc])'
 	z	,←'DO(i64,zBc){zBv[i64]=0;',nl
-	z	,←' for(I bi=0;bi<64;){B ci=i64*64+bi;if(ci>=zc)break;',nl
-	z	,←'  B i=cr-(ci/cc+1),j=ci%cc;',nl
-	z	,←'  B ti=i*cc+j;B ti64=ti/64;B t,sz=(i*64+64)-ci;',nl
-	z	,←'  if(sz>(t=(ti64*64+64)-ti))sz=t;',nl
-	z	,←'  if(sz>(t=cc-j))sz=t;',nl
-	z	,←'  B msk=UINT64_MAX;msk<<=(64-sz);msk>>=(ti%64);',nl
-	z	,←'  if(bi>ti%64)zBv[i64]|=(rBv[ti64]&msk)>>(bi-(ti%64));',nl
-	z	,←'  else zBv[i64]|=(rBv[ti64]&msk)<<((ti%64)-bi);',nl
+	z	,←' for(I bi=0;bi<64;){B ci=i64*64+bi;B j=ci%cc;if(ci>=zc)break;',nl
+	z	,←'  B ti=(cr-(ci/cc+1))*cc+j;B t,ti64=ti/64;B sz=64-bi;B tim=ti%64;',nl
+	z	,←'  if(sz>(t=64-tim))sz=t;if(sz>(t=cc-j))sz=t;',nl
+	z	,←'  B msk=UINT64_MAX>>(64-sz);msk<<=tim;',nl
+	z	,←'  if(bi>tim)zBv[i64]|=(rBv[ti64]&msk)<<(bi-tim);',nl
+	z	,←'  else zBv[i64]|=(rBv[ti64]&msk)>>(tim-bi);',nl
 	z	,←'  bi+=sz;}}',nl
 		z,'cpaa(',rslt,',&za);}',nl}
 rtfdfiiaaa	←{v e y←⍵ ⋄ '1I'rtfdfxiaaa var/3↑v,⍪e}
