@@ -1,4 +1,4 @@
-:Namespace twostatements
+﻿:Namespace twostatements
 
 S←':Namespace' 'Run←{x←⍳⍵ ⋄ ⊢⍵}' ':EndNamespace'
 
