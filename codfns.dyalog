@@ -348,7 +348,7 @@ pt⍪←pfs	¯2	¯2	¯2	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'>'
 pt⍪←pfs	1	2	3	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⌷'
 pt⍪←pfs	1	1	1	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⍴'
 pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,','
-pt⍪←pfs	1	¯11	3	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'⍳'
+pt⍪←pfs	1	1	3	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'⍳'
 pt⍪←pfs	2	2	2	2	¯11	2	2	¯11	2	2	¯11	2	⊣pn,←⊂,'○'
 pt⍪←pfs	3	3	3	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'~'
 pt⍪←pfs	¯2	¯2	¯2	1	2	3	¯11	¯11	¯11	1	2	3	⊣pn,←⊂,'['
@@ -2421,19 +2421,24 @@ rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
 rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa
 ⍝[cf]
 ⍝[of]:⍳	Index Gen./Index Of
-iotmck←{	z	←'if((',⍵,')->r>1)dwaerr(4);if((',⍵,')->c>15)dwaerr(10);',nl
-		z,'if((',⍵,')->c!=1)dwaerr(16);',nl}
-iotmfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	z	←iotmck rgt
-	z	,←'{I*RSTCT v=(',rgt,')->v;B c=v[0];ai(',rslt,',1,&c,1);',nl
-		z,'v=(',rslt,')->v;',nl,(simd'present(v[:c])'),'DO(i,c)v[i]=i;}',nl}
-iotmfbnaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	z	←iotmck rgt
-	z	,←'{U8*v=(',rgt,')->v;B c=1&v[0];ai(',rslt,',1,&c,1);',nl
-	z	,←'I*RSTCT zv=(',rslt,')->v;',nl
-		z,(simd'present(zv[:c])'),'DO(i,c)zv[i]=i;}',nl}
+iotmfinaaa←{	z	←'{',('r'decarri rgt ⍵)
+	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
+	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=rv[0];}',nl
+	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
+		z,'DOI(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
+iotmffnaaa←{	z	←'{',('r'decarrf rgt ⍵)
+	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
+	z	,←'B c=0;',nl,simd'present(rv[:rc]) copyout(c)'
+	z	,←'DOI(i,1){if(rv[0]!=floor(rv[0]))c=1;else c=0;}',nl
+	z	,←'if(c){dwaerr(11);}',nl
+	z	,←(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=rv[0];}',nl
+	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
+		z,'DOI(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
+iotmfbnaaa←{	z	←'{',('r'decarrb rgt ⍵)
+	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
+	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=1&rv[0];}',nl
+	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
+		z,'DO(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
 ⍝[cf]
 ⍝[of]:⌷	Index
 idxd←{	chk	←'if(lr>1)dwaerr(4);if(lr==0)ls[0]=1;if(ls[0]>rr)dwaerr(5);'
