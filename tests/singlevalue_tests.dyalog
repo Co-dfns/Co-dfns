@@ -1,4 +1,4 @@
-:Namespace singlevalue
+﻿:Namespace singlevalue
 
 S←':Namespace' 'R1←{⍵}' 'R2←{5}' 'R3←{⊢⍵}' 'R4←{A←5 3 2 1 ⋄ A}' ':EndNamespace'
 
