@@ -1803,7 +1803,7 @@ decarrf	←'D'decarr
 decarrb	←'U8'decarr
 declit←{	r s v c z	←⍺∘,¨'rsvcz'
 	d	←(8×⌈8÷⍨≢,⍵)↑,⍵
-	a	←'I ',r,'=',(⍕≢⍴⍵),';B ',z,'=',(⍕≢d),'*sizeof(',⍺⍺,');',nl
+	a	←'I ',r,'=',(⍕(1≠≢,⍵)×≢⍴⍵),';B ',z,'=',(⍕≢d),'*sizeof(',⍺⍺,');',nl
 	a	,←'B ',s,'[15]={',(⊃{⍺,',',⍵}/⍕¨15↑⍴⍵),'};B ',c,'=',(⍕≢,⍵),';',nl
 	a	,←⍺⍺,' ',v,'[]={',(cln ⊃{⍺,',',⍵}/⍕¨(8×⌈8÷⍨≢,⍵)↑,⍵),'};',nl
 		a,pacc'enter data copyin(',v,'[:',c,'])'}
@@ -1811,7 +1811,7 @@ decliti	←'I'declit
 declitf	←'D'declit
 declitb←{	r s v c z	←⍺∘,¨'rsvcz'
 	d	←2⊥⍉((8,⍨8÷⍨≢)⍴⊢)(64×⌈64÷⍨≢,⍵)↑,⍵
-	a	←'I ',r,'=',(⍕≢⍴⍵),';B ',z,'=',(⍕≢d),';',nl
+	a	←'I ',r,'=',(⍕(1≠≢,⍵)×≢⍴⍵),';B ',z,'=',(⍕≢d),';',nl
 	a	,←'B ',s,'[15]={',(⊃{⍺,',',⍵}/⍕¨15↑⍴⍵),'};B ',c,'=',(⍕≢,⍵),';',nl
 	d	←2⊥⍉((8,⍨8÷⍨≢)⍴⊢)(64×⌈64÷⍨≢,⍵)↑,⍵
 	a	,←'U8 ',v,'[]={',(⊃{⍺,',',⍵}/⍕¨d),'};',nl
@@ -2410,10 +2410,16 @@ lftmfbnaaa←lftmffnaaa←lftmfinaaa
 ⍝[of]:⊢	Identity/Right
 rgtmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
 rgtmfbnsss	←rgtmffnsss←rgtmfinsss
-rgtmfinaaa←{	v e y	←⍵
-	≡/2↑e	:''
-	rslt rgt	←var/2↑v,⍪e
-		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl}
+rgtmfinaaa	←{≡/2↑1⊃⍵:'' ⋄ 'memcpy(',(rslt⍵),',',(rgt⍵),',sizeof(A));(',(rgt⍵),')->f=0;',nl}
+rgtmfinala←{	z	←'{',('r'decliti rgt⍵),'rr,rs,1'dectmpi'z'
+	z	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl
+		z,'cpaa(',(rslt⍵),',&za);}',nl}
+rgtmffnala←{	z	←'{',('r'declitf rgt⍵),'rr,rs,1'dectmpf'z'
+	z	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl
+		z,'cpaa(',(rslt⍵),',&za);}',nl}
+rgtmfbnala←{	z	←'{',('r'declitb rgt⍵),'rr,rs,1'dectmpb'z'
+	z	,←(simd'present(rv[:rz],zv[:zz])'),'DO(i,zc)zv[i]=rv[i];',nl
+		z,'cpaa(',(rslt⍵),',&za);}',nl}
 rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
 	exe	←'DOI(i,zr)zc*=zs[i];',nl
 	exe	,←(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
