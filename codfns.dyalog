@@ -586,7 +586,7 @@ rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl,nl
 rth	,←'V cpad(S lp*d,A*a,I t){dwafns->ws->ga(t,a->r,a->s,d);B z=0;',nl
 rth	,←' switch(t){',nl,'  case APLI:z=a->c*sizeof(I);break;',nl
 rth	,←'  case APLD:z=a->c*sizeof(D);break;',nl
-rth	,←'  case APLU8:z=((a->c+7)/8)*sizeof(U8);break;',nl
+rth	,←'  case APLU8:z=(a->c+7)/8;break;',nl
 rth	,←'  default:dwaerr(11);}',nl
 rth	,←' #ifdef _OPENACC',nl,'  char *v=a->v;',nl
 rth	,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
@@ -607,7 +607,7 @@ rth	,←'   {int16_t*s=DATA(d);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
 rth	,←'  case APLTI:a->z=8*((c*sizeof(I)+7)/8);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)dwaerr(1);',nl
 rth	,←'   {int8_t*s=DATA(d);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLU8:a->z=8*((((c+7/8)*sizeof(U8))+7)/8);a->f=2;',nl
+rth	,←'  case APLU8:c=(c+7)/8;a->z=8*((c+7)/8);a->f=2;',nl
 rth	,←'   a->v=malloc(a->z);if(a->v==NULL)dwaerr(1);',nl
 rth	,←'   {U8*s=DATA(d);U8*t=a->v;DO(i,c)t[i]=bitrev(s[i]);};break;',nl
 rth	,←'  default:dwaerr(16);}',nl
