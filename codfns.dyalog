@@ -62,7 +62,7 @@ fls	←{'''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
 log	←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 ⍝[cf]
 ⍝[of]:VS/IC Windows Flags
-vsco	←'/W3 /Gm- /O2 /Zc:inline ' ⍝ /Zi /Fd"build\vc140.pdb" '
+vsco	←'/W3 /Gm- /O2 /Zc:inline /Zi /Fd"build\vc140.pdb" '
 vsco	,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
 vslo	←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
 vslo	,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
