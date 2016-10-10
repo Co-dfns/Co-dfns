@@ -247,3 +247,4 @@ this all contributions are assumed to be copyright transferred to Aaron Hsu.
 
 [I04: Co-dfns Compiler](http://dyalog.com/user-meetings/dyalog13.htm)
 
+[Dyalog 2016 Presentation](https://sway.com/FmRyyaCSqappknRD)
