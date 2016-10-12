@@ -26,7 +26,6 @@ corresponding dyadic or monadic function, if not listed, is supported.
 * Intersection (∩) is not supported
 * Unique (∪) is not supported
 * Union (∪) is not supported
-* Index Of (⍳) is not supported
 * Membership (∊) is not supported
 * Grade Up/Down (⍒⍋) are not supported
 * Deal (?) is not supported
