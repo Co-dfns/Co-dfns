@@ -1716,7 +1716,7 @@ fdb←0 5⍴⊂''
 ⍝⍝     Prim  Monadic        Dyadic         MBool DBool
 fdb⍪←,¨'⌷'   '{⎕SIGNAL 99}' 'idxd'         ''    ''
 fdb⍪←,¨'['   '{⎕SIGNAL 99}' 'brid'         ''    ''
-fdb⍪←,¨'⍳'   'iotm'         '{⎕SIGNAL 16}' ''    ''
+fdb⍪←,¨'⍳'   'iotm'         'iotd' ''    ''
 fdb⍪←,¨'⍴'   'shpm'         'shpd'         ''    ''
 fdb⍪←,¨','   'catm'         'catd'         ''    ''
 fdb⍪←,¨'⍪'   'fctm'         'fctd'         ''    ''
@@ -2445,6 +2445,19 @@ iotmfbnaaa←{	z	←'{',('r'decarrb rgt ⍵)
 	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=1&rv[0];}',nl
 	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
 		z,'DO(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
+iotdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
+	z	,←('rr,rs,1'dectmpi'z'),simd'present(zv[:zc],rv[:rc],lv[:lc])'
+	z	,←'DO(i,zc){zv[i]=lc;DO(j,lc){if(rv[i]==lv[j]){zv[i]=j;break;}}}',nl
+		z,'cpaa(',(rslt ⍵),',&za);}',nl}
+iotdfifaaa←{		'{dwaerr(16);}',nl}
+iotdfibaaa←{		'{dwaerr(16);}',nl}
+iotdffiaaa←{		'{dwaerr(16);}',nl}
+iotdfffaaa←{		'{dwaerr(16);}',nl}
+iotdffbaaa←{		'{dwaerr(16);}',nl}
+iotdfbbaaa←{		'{dwaerr(16);}',nl}
+iotdfbiaaa←{		'{dwaerr(16);}',nl}
+iotdfbfaaa←{		'{dwaerr(16);}',nl}
+iotd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍳')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⌷	Index
 idxd←{	chk	←'if(lr>1)dwaerr(4);if(lr==0)ls[0]=1;if(ls[0]>rr)dwaerr(5);'
