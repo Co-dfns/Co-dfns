@@ -324,13 +324,18 @@
       Z←'_TEST'≡¯5↑FunctionName
     ∇
 
+    ∇ Z←format_time ts;m;s;ms
+      (m s ms)←¯3↑0 24 60 60 1000{⍺⊤⍺⊥⍵}¯5↑ts
+      Z←(⍕m),' m ',(⍕s),' s ',(⍕ms),' ms'
+    ∇
+
     ∇ Heading print_passed_crashed_failed(ArrayRes time)
       ⎕←'-----------------------------------------'
       ⎕←Heading
-      ⎕←'    ⍋  Passed: ',+/{1⊃⍵}¨ArrayRes
-      ⎕←'    ⍟ Crashed: ',+/{2⊃⍵}¨ArrayRes
-      ⎕←'    ⍒  Failed: ',+/{3⊃⍵}¨ArrayRes
-      ⎕←'    ○ Runtime: ',time[5],'m',time[6],'s',time[7],'ms'
+      ⎕←'    ⍋  Passed: ',⍕+/{1⊃⍵}¨ArrayRes
+      ⎕←'    ⍟ Crashed: ',⍕+/{2⊃⍵}¨ArrayRes
+      ⎕←'    ⍒  Failed: ',⍕+/{3⊃⍵}¨ArrayRes
+      ⎕←'    ○ Runtime: ',format_time time
     ∇
     
     determine_pass_crash_or_fail←{
@@ -342,7 +347,7 @@
       :If crashed
           Z←'CRASHED: 'failure_message name returned
       :ElseIf pass
-          Z←name,' Passed ',time[5],'m',time[6],'s',time[7],'ms'
+          Z←name,' Passed ',format_time time
       :Else
           Z←'FAILED: 'failure_message name returned
       :EndIf
