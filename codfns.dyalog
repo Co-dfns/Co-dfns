@@ -179,7 +179,7 @@ lbrk	←aws _s('['_tk)_s aws _ign
 rbrk	←aws _s(']'_tk)_s aws _ign
 alpha	←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
 digits	←'0123456789'_set
-prim	←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓')_set
+prim	←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪⍋')_set
 mop	←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
 eot	←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs	←digits _some ⋄ odigs←digits _any
@@ -373,6 +373,7 @@ pt⍪←pfs	¯2	¯2	¯2	1	¯16	1	¯16	¯16	¯16	3	3	3	⊣pn,←⊂,'⊤'
 pt⍪←pfs	¯2	¯2	¯2	1	¯16	1	¯16	¯16	¯16	1	¯16	1	⊣pn,←⊂,'⊥'
 pt⍪←pfs	2	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'!'
 pt⍪←pfs	2	¯11	2	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'?'
+pt⍪←pfs	1	1	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'⍋'
 pt⍪←pfs	0	0	0	0	0	0	0	0	0	0	0	0	⊣pn,←⊂,'¨'
 pt⍪←pfs	0	0	0	0	0	0	0	0	0	0	0	0	⊣pn,←⊂,'⍨'
 pt⍪←pfs	0	0	0	0	¯11	0	0	¯11	0	0	¯11	0	⊣pn,←⊂,'/'
@@ -650,7 +651,11 @@ rth	,←'  case 13:R sinh(b);break;',nl
 rth	,←'  case 14:R cosh(b);break;',nl
 rth	,←'  case 15:R tanh(b);break;',nl
 rth	,←' };R -1;}',nl
-rth	,←'extern U arc4random_uniform(U);',nl,nl
+rth	,←'extern U arc4random_uniform(U);',nl
+⍝[cf]
+⍝[of]:Miscellaneous Helpers
+rth	,←'I gucmp(const V*xp,const V*yp){S p{I v;B i;};S p*x=xp;S p*y=yp;',nl
+rth	,←'  I v=x->v-y->v;if(!v)R x->i-y->i;R v;}',nl,nl
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Function Entry
@@ -686,8 +691,8 @@ syms	,←,¨	'⍳'	'⍴'	','	'⍪'	'⌽'	'⍉'	'⊖'	'∊'	'⊃'	'≡'	'≢'	'�
 nams	,←	'iot'	'rho'	'cat'	'ctf'	'rot'	'trn'	'rtf'	'mem'	'dis'	'eqv'	'nqv'	'rgt'
 syms	,←,¨	'⊣'	'⊤'	'⊥'	'/'	'⌿'	'\'	'⍀'	'?'	'↑'	'↓'	'¨'	'⍨'
 nams	,←	'lft'	'enc'	'dec'	'red'	'rdf'	'scn'	'scf'	'rol'	'tke'	'drp'	'map'	'com'
-syms	,←,¨	'.'	'⍤'	'⍣'	'∘'
-nams	,←	'dot'	'rnk'	'pow'	'jot'
+syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'⍋'
+nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'gdu'
 ⍝[cf]
 ⍝[of]:Generator Dispatch
 gcl←{	⍺	←⍬ ⍬ ⍬
@@ -1890,6 +1895,18 @@ memmfinaaa←{	v e y	←⍵
 	≡/2↑e:	s
 		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
 memmfbnaaa←memmffnaaa←memmfinaaa
+⍝[cf]
+⍝[of]:⍋	Grade Up
+gdumfinaaa←{	z	←'{',('r'decarri rgt ⍵),'if(rr<1)dwaerr(4);',nl
+	z	,←'if(rr!=1)dwaerr(16);',nl,'1,rs,1'dectmpi'z'
+	z	,←(acup'host(rv[:rc])'),'S p{I v;B i;};',nl
+	z	,←'S p*b=malloc(rc*sizeof(S p));if(!b)dwaerr(1);',nl
+	z	,←'DO(i,rc){b[i].v=rv[i];b[i].i=i;}',nl
+	z	,←'qsort(b,rc,sizeof(S p),gucmp);',nl
+	z	,←'DO(i,zc){zv[i]=b[i].i;}',nl,acup'device(zv[:zc])'
+		z,'cpaa(',(rslt ⍵),',&za);}',nl}
+gdumffnaaa←{		'dwaerr(16);',nl}
+gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
 ⍝[of]:⊢	Identity/Right
 rgtmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
