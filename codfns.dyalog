@@ -2444,18 +2444,19 @@ iotmfbnaaa←{	z	←'{',('r'decarrb rgt ⍵)
 	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=1&rv[0];}',nl
 	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
 		z,'DO(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
-iotdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
-	z	,←('rr,rs,1'dectmpi'z'),simd'present(zv[:zc],rv[:rc],lv[:lc])'
-	z	,←'DO(i,zc){zv[i]=lc;DO(j,lc){if(rv[i]==lv[j]){zv[i]=j;break;}}}',nl
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-iotdfifaaa←{		'{dwaerr(16);}',nl}
+iotdfiiaaa←{		'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),iotdfnnlp ⍵}
+iotdfifaaa←{		'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),iotdfnnlp ⍵}
 iotdfibaaa←{		'{dwaerr(16);}',nl}
-iotdffiaaa←{		'{dwaerr(16);}',nl}
-iotdfffaaa←{		'{dwaerr(16);}',nl}
+iotdffiaaa←{		'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵),iotdfnnlp ⍵}
+iotdfffaaa←{		'{',('r'decarrf rgt ⍵),('l'decarrf lft ⍵),iotdfnnlp ⍵}
 iotdffbaaa←{		'{dwaerr(16);}',nl}
 iotdfbbaaa←{		'{dwaerr(16);}',nl}
 iotdfbiaaa←{		'{dwaerr(16);}',nl}
 iotdfbfaaa←{		'{dwaerr(16);}',nl}
+iotdfnnlp←{	z	←('rr,rs,1'dectmpi'z'),'if(zc){',nl
+	z	,←simd'present(zv[:zc],rv[:rc],lv[:lc])'
+	z	,←'DO(i,zc){zv[i]=lc;DO(j,lc){if(rv[i]==lv[j]){zv[i]=j;break;}}}}',nl
+		z,'cpaa(',(rslt ⍵),',&za);}',nl}
 iotd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍳')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⌷	Index
