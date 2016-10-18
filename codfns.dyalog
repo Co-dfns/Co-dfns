@@ -659,8 +659,8 @@ rth	,←'  I v=x->v-y->v;if(!v)R x->i-y->i;R v;}',nl,nl
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Function Entry
-frt	←'static void '
-fre	←'void EXPORT '
+frt	←'static V '
+fre	←'V EXPORT '
 foi	←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
 flp	←'(A*z,A*l,A*r,A*penv[])'
 elp	←'(S lp*z,S lp*l,S lp*r)'
