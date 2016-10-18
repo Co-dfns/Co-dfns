@@ -27,7 +27,6 @@ corresponding dyadic or monadic function, if not listed, is supported.
 * Unique (∪) is not supported
 * Union (∪) is not supported
 * Membership (∊) is not supported
-* Grade Up/Down (⍒⍋) are not supported
 * Deal (?) is not supported
 * Find (⍷) is not supported
 * Execute (⍎) is not supported
