@@ -373,7 +373,7 @@ pt⍪←pfs	¯2	¯2	¯2	1	¯16	1	¯16	¯16	¯16	3	3	3	⊣pn,←⊂,'⊤'
 pt⍪←pfs	¯2	¯2	¯2	1	¯16	1	¯16	¯16	¯16	1	¯16	1	⊣pn,←⊂,'⊥'
 pt⍪←pfs	2	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'!'
 pt⍪←pfs	2	¯11	2	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'?'
-pt⍪←pfs	1	2	3	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'∪'
+pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'∪'
 pt⍪←pfs	1	1	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'⍋'
 pt⍪←pfs	1	1	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'⍒'
 pt⍪←pfs	0	0	0	0	0	0	0	0	0	0	0	0	⊣pn,←⊂,'¨'
@@ -1756,6 +1756,7 @@ fdb⍪←,¨'↑'   '{⎕SIGNAL 16}' 'tked'         ''    ''
 fdb⍪←,¨'⊤'   '{⎕SIGNAL 99}' 'encd'         ''    ''
 fdb⍪←,¨'⊥'   '{⎕SIGNAL 99}' 'decd'         ''    ''
 fdb⍪←,¨'?'   'rolm'         '{⎕SIGNAL 16}' ''    ''
+fdb⍪←,¨'∪'   'unqm'         'unqd' ''    ''
 fdb⍪←,¨'⎕sp' '{⎕SIGNAL 99}' 'sopid'        ''    ''
 
 ⍝   Mixed Verb Dispatch/Calling
@@ -2658,6 +2659,53 @@ unqmfnlp←{	z	←'if(rc){I*v=malloc(rc*sizeof(I));if(!v)dwaerr(1);',nl
 	z	,←(acup'device(zv[:zc])'),'free(v);free(f);',nl
 	z	,←'cpaa(',(rslt ⍵),',&za);',nl
 		z,'}else{',('1,&rc,1'dectmpi'z'),'cpaa(',(rslt ⍵),',&za);}}',nl}
+unqdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
+		z,('1,&uc,1'dectmpi'z')('gucmpi'unqdfnnlp'gucmpi')⍵}
+unqdfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵)
+		z,('1,&uc,2'dectmpf'z')('gucmpf'unqdfnnlp'gucmpi')⍵}
+unqdffiaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵)
+		z,('1,&uc,2'dectmpf'z')('gucmpi'unqdfnnlp'gucmpf')⍵}
+unqdfffaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarrf lft ⍵)
+		z,('1,&uc,2'dectmpf'z')('gucmpf'unqdfnnlp'gucmpf')⍵}
+unqdfibaaa←{		'dwaerr(16);',nl}
+unqdffbaaa←{		'dwaerr(16);',nl}
+unqdfbbaaa←{		'dwaerr(16);',nl}
+unqdfbiaaa←{		'dwaerr(16);',nl}
+unqdfbfaaa←{		'dwaerr(16);',nl}
+unqdfiiaal←{		'dwaerr(16);',nl}
+unqdfifaal←{		'dwaerr(16);',nl}
+unqdffiaal←{		'dwaerr(16);',nl}
+unqdfffaal←{		'dwaerr(16);',nl}
+unqdfibaal←{		'dwaerr(16);',nl}
+unqdffbaal←{		'dwaerr(16);',nl}
+unqdfbbaal←{		'dwaerr(16);',nl}
+unqdfbiaal←{		'dwaerr(16);',nl}
+unqdfbfaal←{		'dwaerr(16);',nl}
+unqdfiiala←{		'dwaerr(16);',nl}
+unqdfifala←{		'dwaerr(16);',nl}
+unqdffiala←{		'dwaerr(16);',nl}
+unqdfffala←{		'dwaerr(16);',nl}
+unqdfibala←{		'dwaerr(16);',nl}
+unqdffbala←{		'dwaerr(16);',nl}
+unqdfbbala←{		'dwaerr(16);',nl}
+unqdfbiala←{		'dwaerr(16);',nl}
+unqdfbfala←{		'dwaerr(16);',nl}
+unqdfnnlp←{	z	←'if(rr>1||lr>1)dwaerr(4);B uc=lc;B lx=0;B rx=0;',nl
+	z	,←'I*li=malloc(lc*sizeof(I));if(!li)dwaerr(1);',nl
+	z	,←'I*ri=malloc(rc*sizeof(I));if(!ri)dwaerr(1);',nl
+	z	,←'U8*f=malloc(rc*sizeof(U8));if(!f)dwaerr(1);',nl
+	z	,←'DO(i,rc){ri[i]=i;f[i]=0;};DO(i,lc){li[i]=i;};',nl
+	z	,←acup'host(rv[:rc],lv[:lc])'
+	z	,←'grdv=lv;grdc=1;qsort(li,lc,sizeof(I),',⍺⍺,');',nl
+	z	,←'grdv=rv;grdc=1;qsort(ri,rc,sizeof(I),',⍵⍵,');',nl
+	z	,←'while(rx<rc){if(lx>=lc){uc++;f[ri[rx++]]=1;}',nl
+	z	,←' else if(lv[li[lx]]<rv[ri[rx]])lx++;',nl
+	z	,←' else if(lv[li[lx]]==rv[ri[rx]])rx++;',nl
+	z	,←' else{uc++;f[ri[rx++]]=1;}}',nl
+	z	,←⍺,'DO(i,lc){zv[i]=lv[i];}',nl
+	z	,←'uc=lc;DO(i,rc){if(f[i])zv[uc++]=rv[i];}',nl,acup'device(zv[:zc])'
+		z,'cpaa(',(rslt ⍵),',&za);}',nl}
+unqd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∪')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[cf]
 ⍝[cf]

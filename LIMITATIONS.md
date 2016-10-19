@@ -24,7 +24,6 @@ corresponding dyadic or monadic function, if not listed, is supported.
 * Replicate First (⌿) is not supported
 * Expand (\ and ⍀) is not supported
 * Intersection (∩) is not supported
-* Union (∪) is not supported
 * Membership (∊) is not supported
 * Deal (?) is not supported
 * Find (⍷) is not supported
