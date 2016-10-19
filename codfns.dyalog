@@ -1953,6 +1953,49 @@ memmfinaaa←{	v e y	←⍵
 	≡/2↑e:	s
 		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
 memmfbnaaa←memmffnaaa←memmfinaaa
+memdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
+		z,('gucmpi'memdfnnlp'gucmpi')⍵}
+memdfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵)
+		z,('gucmpf'memdfnnlp'gucmpi')⍵}
+memdffiaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵)
+		z,('gucmpi'memdfnnlp'gucmpf')⍵}
+memdfffaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarrf lft ⍵)
+		z,('gucmpf'memdfnnlp'gucmpf')⍵}
+memdfibaaa←{		'dwaerr(16);',nl}
+memdffbaaa←{		'dwaerr(16);',nl}
+memdfbbaaa←{		'dwaerr(16);',nl}
+memdfbiaaa←{		'dwaerr(16);',nl}
+memdfbfaaa←{		'dwaerr(16);',nl}
+memdfiiaal←{		'dwaerr(16);',nl}
+memdfifaal←{		'dwaerr(16);',nl}
+memdffiaal←{		'dwaerr(16);',nl}
+memdfffaal←{		'dwaerr(16);',nl}
+memdfibaal←{		'dwaerr(16);',nl}
+memdffbaal←{		'dwaerr(16);',nl}
+memdfbbaal←{		'dwaerr(16);',nl}
+memdfbiaal←{		'dwaerr(16);',nl}
+memdfbfaal←{		'dwaerr(16);',nl}
+memdfiiala←{		'dwaerr(16);',nl}
+memdfifala←{		'dwaerr(16);',nl}
+memdffiala←{		'dwaerr(16);',nl}
+memdfffala←{		'dwaerr(16);',nl}
+memdfibala←{		'dwaerr(16);',nl}
+memdffbala←{		'dwaerr(16);',nl}
+memdfbbala←{		'dwaerr(16);',nl}
+memdfbiala←{		'dwaerr(16);',nl}
+memdfbfala←{		'dwaerr(16);',nl}
+memdfnnlp←{	z	←'B lx=0;B rx=0;',nl,'lr,ls,3'dectmpb'z'
+	z	,←'I*li=malloc(lc*sizeof(I));if(!li)dwaerr(1);',nl
+	z	,←'I*ri=malloc(rc*sizeof(I));if(!ri)dwaerr(1);',nl
+	z	,←'DO(i,rc)ri[i]=i;DO(i,lc)li[i]=i;DO(i,zz)zv[i]=0;',nl
+	z	,←acup'host(rv[:rc],lv[:lc])'
+	z	,←'grdv=lv;grdc=1;qsort(li,lc,sizeof(I),',⍺⍺,');',nl
+	z	,←'grdv=rv;grdc=1;qsort(ri,rc,sizeof(I),',⍵⍵,');',nl
+	z	,←'while(rx<rc&&lx<lc){if(lv[li[lx]]<rv[ri[rx]])lx++;',nl
+	z	,←' else if(lv[li[lx]]==rv[ri[rx]]){zv[li[lx]/8]|=1<<li[lx]%8;lx++;}',nl
+	z	,←' else rx++;}',nl
+		z,(acup'device(zv[:zz])'),'cpaa(',(rslt ⍵),',&za);}',nl}
+memd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∊')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⍒	Grade Down
 gddmfinaaa←{	z	←'{',('r'decarri rgt ⍵),'if(rr<1)dwaerr(4);',nl
