@@ -1926,15 +1926,15 @@ disdfbiaal←{		'dwaerr(16);',nl}
 disdfbfaal←{		'dwaerr(16);',nl}
 disdfbbaal←{		'dwaerr(16);',nl}
 disdfnnlp←{	z	←'if(lr>1)dwaerr(4);',nl
-		z	,←'if(!lc){',nl,('rr,rs,',⍺)⍺⍺'z'
-		z	,←(simd'present(zv[:zc],rv[:rc])'),'DO(i,zc)zv[i]=rv[i];',nl
-		z	,←'cpaa(',(rslt ⍵),',&za);',nl
-		z	,←'}else{if(lc!=1||rr!=1)dwaerr(4);',nl
-		z	,←'I f=0;',nl,(simd''),'DOI(i,1)f=lv[0]>=rc;',nl
-		z	,←'if(f)dwaerr(3);',nl
-		z	,←(('0,0,',⍺)⍺⍺'z'),simd'present(zv[:zc],rv[:rc])'
-		z	,←'DOI(i,1)zv[0]=rv[lv[0]];',nl
-			z,'cpaa(',(rslt ⍵),',&za);}}',nl}
+	z	,←'if(!lc){',nl,('rr,rs,',⍺)⍺⍺'z'
+	z	,←(simd'present(zv[:zc],rv[:rc])'),'DO(i,zc)zv[i]=rv[i];',nl
+	z	,←'cpaa(',(rslt ⍵),',&za);',nl
+	z	,←'}else{if(lc!=1||rr!=1)dwaerr(4);',nl
+	z	,←'I f=0;',nl,(simd''),'DOI(i,1)f=lv[0]>=rc;',nl
+	z	,←'if(f)dwaerr(3);',nl
+	z	,←(('0,0,',⍺)⍺⍺'z'),simd'present(zv[:zc],rv[:rc])'
+	z	,←'DOI(i,1)zv[0]=rv[lv[0]];',nl
+		z,'cpaa(',(rslt ⍵),',&za);}}',nl}
 dscd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'⊃')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⊤	Encode
