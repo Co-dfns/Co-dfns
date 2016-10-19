@@ -2645,26 +2645,19 @@ rolmfbnaaa←{	v e y	←⍵
 ⍝[cf]
 ⍝[of]:∪	Unique/Union
 unqmfinaaa←{	z	←'{',('r'decarri rgt ⍵),'if(rr>1)dwaerr(4);',nl
-	z	,←'if(rc){I*v=malloc(rc*sizeof(I));if(!v)dwaerr(1);',nl
-	z	,←'U8*f=malloc(rc*sizeof(U8));if(!f)dwaerr(1);',nl
-	z	,←(acup'host(rv[:rc])'),'B uc=1;grdv=rv;grdc=1;',nl
-	z	,←'DO(i,rc){v[i]=i;f[i]=0;};qsort(v,rc,sizeof(I),gucmpi);',nl
-	z	,←'f[v[0]]=1;DO(i,rc-1){if(rv[v[i]]!=rv[v[i+1]]){f[v[i+1]]=1;uc++;}}',nl
-	z	,←('1,&uc,1'dectmpi'z'),'uc=0;DO(i,rc){if(f[i])zv[uc++]=rv[i];}',nl
-	z	,←(acup'device(zv[:zc])'),'free(v);free(f);',nl
-	z	,←'cpaa(',(rslt ⍵),',&za);',nl
-		z,'}else{',('1,&rc,1'dectmpi'z'),'cpaa(',(rslt ⍵),',&za);}}',nl}
+		z,('1,&uc,1'dectmpi'z')('gucmpi'unqmfnlp)⍵}
 unqmffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr>1)dwaerr(4);',nl
-	z	,←'if(rc){I*v=malloc(rc*sizeof(I));if(!v)dwaerr(1);',nl
+		z,('1,&uc,2'dectmpf'z')('gucmpf'unqmfnlp)⍵}
+unqmfbnaaa←{		'dwaerr(16);',nl}
+unqmfnlp←{	z	←'if(rc){I*v=malloc(rc*sizeof(I));if(!v)dwaerr(1);',nl
 	z	,←'U8*f=malloc(rc*sizeof(U8));if(!f)dwaerr(1);',nl
 	z	,←(acup'host(rv[:rc])'),'B uc=1;grdv=rv;grdc=1;',nl
-	z	,←'DO(i,rc){v[i]=i;f[i]=0;};qsort(v,rc,sizeof(I),gucmpf);',nl
+	z	,←'DO(i,rc){v[i]=i;f[i]=0;};qsort(v,rc,sizeof(I),',⍺⍺,');',nl
 	z	,←'f[v[0]]=1;DO(i,rc-1){if(rv[v[i]]!=rv[v[i+1]]){f[v[i+1]]=1;uc++;}}',nl
-	z	,←('1,&uc,2'dectmpf'z'),'uc=0;DO(i,rc){if(f[i])zv[uc++]=rv[i];}',nl
+	z	,←⍺,'uc=0;DO(i,rc){if(f[i])zv[uc++]=rv[i];}',nl
 	z	,←(acup'device(zv[:zc])'),'free(v);free(f);',nl
 	z	,←'cpaa(',(rslt ⍵),',&za);',nl
 		z,'}else{',('1,&rc,1'dectmpi'z'),'cpaa(',(rslt ⍵),',&za);}}',nl}
-unqmfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
 ⍝[cf]
 ⍝[cf]
