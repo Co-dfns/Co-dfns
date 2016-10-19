@@ -22,7 +22,7 @@ conf/fo.xsl
 doc/tech/titlepage.xsl
 conf/mk.conf
 tmp/
-Build/
+build/
 *.if
 titlepage.xsl
 dwa
