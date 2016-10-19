@@ -1744,7 +1744,7 @@ fdb⍪←,¨'⍪'   'fctm'         'fctd'         ''    ''
 fdb⍪←,¨'⌽'   'rotm'         'rotd'         ''    ''
 fdb⍪←,¨'⊖'   'rtfm'         'rtfd'         ''    ''
 fdb⍪←,¨'∊'   'memm'         'memd'         ''    ''
-fdb⍪←,¨'⊃'   'dscm'         '{⎕SIGNAL 16}' ''    ''
+fdb⍪←,¨'⊃'   'dscm'         'dscd'         ''    ''
 fdb⍪←,¨'≡'   'eqvm'         'eqvd'         ''    ''
 fdb⍪←,¨'≢'   'nqvm'         'nqvd'         ''    ''
 fdb⍪←,¨'⊢'   'rgtm'         'rgtd'         ''    ''
@@ -1881,7 +1881,7 @@ eqvd←{	chk siz	←'' 'zr=0;'
 		chk siz exe mxfn 1 ⍺ ⍵}
 eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa
 ⍝[cf]
-⍝[of]:⊃	Disclose/Pick
+⍝[of]:⊃	First/Pick
 dismfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
 dismfbnsss	←dismffnsss←dismfinsss
 dismfgnaaa←{	v e y	←⍵
@@ -1896,6 +1896,44 @@ dismfgnaaa←{	v e y	←⍵
 dismfinaaa	←{'1I'dismfgnaaa ⍵}
 dismffnaaa	←{'2D'dismfgnaaa ⍵}
 dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
+disdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),'1'dectmpi disdfnnlp ⍵}
+disdfifaaa←{		'dwaerr(16);',nl}
+disdfibaaa←{		'dwaerr(16);',nl}
+disdffiaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵),'2'dectmpf disdfnnlp ⍵}
+disdfffaaa←{		'dwaerr(16);',nl}
+disdffbaaa←{		'dwaerr(16);',nl}
+disdfbiaaa←{		'dwaerr(16);',nl}
+disdfbfaaa←{		'dwaerr(16);',nl}
+disdfbbaaa←{		'dwaerr(16);',nl}
+disdfiiala←{		'dwaerr(16);',nl}
+disdfifala←{		'dwaerr(16);',nl}
+disdfibala←{		'dwaerr(16);',nl}
+disdffiala←{		'dwaerr(16);',nl}
+disdfffala←{		'dwaerr(16);',nl}
+disdffbala←{		'dwaerr(16);',nl}
+disdfbiala←{		'dwaerr(16);',nl}
+disdfbfala←{		'dwaerr(16);',nl}
+disdfbbala←{		'dwaerr(16);',nl}
+disdfiiaal←{		'dwaerr(16);',nl}
+disdfifaal←{		'dwaerr(16);',nl}
+disdfibaal←{		'dwaerr(16);',nl}
+disdffiaal←{		'dwaerr(16);',nl}
+disdfffaal←{		'dwaerr(16);',nl}
+disdffbaal←{		'dwaerr(16);',nl}
+disdfbiaal←{		'dwaerr(16);',nl}
+disdfbfaal←{		'dwaerr(16);',nl}
+disdfbbaal←{		'dwaerr(16);',nl}
+disdfnnlp←{	z	←'if(lr>1)dwaerr(4);',nl
+		z	,←'if(!lc){',nl,('rr,rs,',⍺)⍺⍺'z'
+		z	,←(simd'present(zv[:zc],rv[:rc])'),'DO(i,zc)zv[i]=rv[i];',nl
+		z	,←'cpaa(',(rslt ⍵),',&za);',nl
+		z	,←'}else{if(lc!=1||rr!=1)dwaerr(4);',nl
+		z	,←'I f=0;',nl,(simd''),'DOI(i,1)f=lv[0]>=rc;',nl
+		z	,←'if(f)dwaerr(3);',nl
+		z	,←(('0,0,',⍺)⍺⍺'z'),simd'present(zv[:zc],rv[:rc])'
+		z	,←'DOI(i,1)zv[0]=rv[lv[0]];',nl
+			z,'cpaa(',(rslt ⍵),',&za);}}',nl}
+dscd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'⊃')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⊤	Encode
 encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
