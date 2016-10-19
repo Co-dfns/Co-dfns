@@ -60,7 +60,7 @@ at this time.
 * Bracket indexing of the form [X;...] is not supported, 
   though a single index array [X] is supported
 * The compiler will handle empty return values strangely at the moment.
-* Array Assignment is not supported yet
+* Indexed assignment and selective assignment are not supported yet
 * Conditional guards and Error Guards are not supported yet
 * Recursive functions are not supported yet
 * User-defined operators are not supported yet
@@ -70,7 +70,7 @@ at this time.
 ## Data types
 
 * Character types are not supported
-* Type promotion is not supported
+* Type promotion on overflow is not supported
 * Complex numbers are not supported
 * Arbitrary precision integers are not supported
 * 128-bit floating point values are not supported
