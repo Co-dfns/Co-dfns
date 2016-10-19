@@ -50,7 +50,7 @@ mkf←{	fn	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,' '
 	f	←⍵,'←{'
 	f	,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
 	f	,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
- 		f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
+		f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Backend Compilers
