@@ -179,7 +179,7 @@ lbrk	←aws _s('['_tk)_s aws _ign
 rbrk	←aws _s(']'_tk)_s aws _ign
 alpha	←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'_set
 digits	←'0123456789'_set
-prim	←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪⍋⍒')_set
+prim	←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒')_set
 mop	←'¨/⌿⍀\⍨'_set ⋄ dop←'.⍤⍣∘'_set
 eot	←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs	←digits _some ⋄ odigs←digits _any
@@ -374,6 +374,7 @@ pt⍪←pfs	¯2	¯2	¯2	1	¯16	1	¯16	¯16	¯16	1	¯16	1	⊣pn,←⊂,'⊥'
 pt⍪←pfs	2	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'!'
 pt⍪←pfs	2	¯11	2	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'?'
 pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'∪'
+pt⍪←pfs	¯2	¯2	¯2	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'∩'
 pt⍪←pfs	1	1	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'⍋'
 pt⍪←pfs	1	1	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'⍒'
 pt⍪←pfs	0	0	0	0	0	0	0	0	0	0	0	0	⊣pn,←⊂,'¨'
@@ -708,8 +709,8 @@ syms	,←,¨	'⍳'	'⍴'	','	'⍪'	'⌽'	'⍉'	'⊖'	'∊'	'⊃'	'≡'	'≢'	'�
 nams	,←	'iot'	'rho'	'cat'	'ctf'	'rot'	'trn'	'rtf'	'mem'	'dis'	'eqv'	'nqv'	'rgt'
 syms	,←,¨	'⊣'	'⊤'	'⊥'	'/'	'⌿'	'\'	'⍀'	'?'	'↑'	'↓'	'¨'	'⍨'
 nams	,←	'lft'	'enc'	'dec'	'red'	'rdf'	'scn'	'scf'	'rol'	'tke'	'drp'	'map'	'com'
-syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'⍋'	'⍒'
-nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'gdu'	'gdd'
+syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
+nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[cf]
 ⍝[of]:Generator Dispatch
 gcl←{	⍺	←⍬ ⍬ ⍬
@@ -1757,6 +1758,7 @@ fdb⍪←,¨'⊤'   '{⎕SIGNAL 99}' 'encd'         ''    ''
 fdb⍪←,¨'⊥'   '{⎕SIGNAL 99}' 'decd'         ''    ''
 fdb⍪←,¨'?'   'rolm'         '{⎕SIGNAL 16}' ''    ''
 fdb⍪←,¨'∪'   'unqm'         'unqd' ''    ''
+fdb⍪←,¨'∩'   '{⎕SIGNAL 2}'         'intd' ''    ''
 fdb⍪←,¨'⎕sp' '{⎕SIGNAL 99}' 'sopid'        ''    ''
 
 ⍝   Mixed Verb Dispatch/Calling
@@ -2032,6 +2034,53 @@ iotdfnnlp←{	z	←('rr,rs,1'dectmpi'z'),'if(zc){',nl
 	z	,←'DO(i,zc){zv[i]=lc;DO(j,lc){if(rv[i]==lv[j]){zv[i]=j;break;}}}}',nl
 		z,'cpaa(',(rslt ⍵),',&za);}',nl}
 iotd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍳')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
+⍝[cf]
+⍝[of]:∩	Intersection
+intdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
+		z,('1,&uc,1'dectmpi'z')('gucmpi'intdfnnlp'gucmpi')⍵}
+intdfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵)
+		z,('1,&uc,2'dectmpf'z')('gucmpf'intdfnnlp'gucmpi')⍵}
+intdffiaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵)
+		z,('1,&uc,2'dectmpf'z')('gucmpi'intdfnnlp'gucmpf')⍵}
+intdfffaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarrf lft ⍵)
+		z,('1,&uc,2'dectmpf'z')('gucmpf'intdfnnlp'gucmpf')⍵}
+intdfibaaa←{		'dwaerr(16);',nl}
+intdffbaaa←{		'dwaerr(16);',nl}
+intdfbbaaa←{		'dwaerr(16);',nl}
+intdfbiaaa←{		'dwaerr(16);',nl}
+intdfbfaaa←{		'dwaerr(16);',nl}
+intdfiiaal←{		'dwaerr(16);',nl}
+intdfifaal←{		'dwaerr(16);',nl}
+intdffiaal←{		'dwaerr(16);',nl}
+intdfffaal←{		'dwaerr(16);',nl}
+intdfibaal←{		'dwaerr(16);',nl}
+intdffbaal←{		'dwaerr(16);',nl}
+intdfbbaal←{		'dwaerr(16);',nl}
+intdfbiaal←{		'dwaerr(16);',nl}
+intdfbfaal←{		'dwaerr(16);',nl}
+intdfiiala←{		'dwaerr(16);',nl}
+intdfifala←{		'dwaerr(16);',nl}
+intdffiala←{		'dwaerr(16);',nl}
+intdfffala←{		'dwaerr(16);',nl}
+intdfibala←{		'dwaerr(16);',nl}
+intdffbala←{		'dwaerr(16);',nl}
+intdfbbala←{		'dwaerr(16);',nl}
+intdfbiala←{		'dwaerr(16);',nl}
+intdfbfala←{		'dwaerr(16);',nl}
+intdfnnlp←{	z	←'if(rr>1||lr>1)dwaerr(4);B uc=0;B lx=0;B rx=0;',nl
+	z	,←'I*li=malloc(lc*sizeof(I));if(!li)dwaerr(1);',nl
+	z	,←'I*ri=malloc(rc*sizeof(I));if(!ri)dwaerr(1);',nl
+	z	,←'U8*f=malloc(lc*sizeof(U8));if(!f)dwaerr(1);',nl
+	z	,←'DO(i,rc){ri[i]=i;};DO(i,lc){li[i]=i;f[i]=0;};',nl
+	z	,←acup'host(rv[:rc],lv[:lc])'
+	z	,←'grdv=lv;grdc=1;qsort(li,lc,sizeof(I),',⍺⍺,');',nl
+	z	,←'grdv=rv;grdc=1;qsort(ri,rc,sizeof(I),',⍵⍵,');',nl
+	z	,←'while(rx<rc&&lx<lc){if(lv[li[lx]]<rv[ri[rx]])lx++;',nl
+	z	,←' else if(lv[li[lx]]==rv[ri[rx]]){uc++;f[li[lx++]]=1;}',nl
+	z	,←' else rx++;}',nl
+	z	,←⍺,'uc=0;DO(i,lc){if(f[i])zv[uc++]=lv[i];}',nl,acup'device(zv[:zc])'
+		z,'cpaa(',(rslt ⍵),',&za);}',nl}
+intd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∩')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:↑	Mix/Take
 tkemfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
