@@ -17,9 +17,6 @@ or outstanding implementation or engineering work that has some recognizable
 and immediate benefit and thus will be considered part of the active set of 
 things on which we are working.
 
-* Some mixed primitives will not work over boolean values
-* Some mixed primitives will not work over 
-  mixed integer/float and boolean values
 * Rotate (⌽ or ⊖) works over scalar left arguments only
 * Dyadic Reduce (/ and ⌿) with negative left arguments are not supported
 * Reductions with intermediate types different from the result type will not work
