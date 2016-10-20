@@ -24,7 +24,6 @@ things on which we are working.
 * Replicate First (⌿) is not supported
 * Expand (\ and ⍀) is not supported
 * Laminate (⍪[N]) is supported in special cases only
-* Deal (?) is not supported
 * Find (⍷) is not supported
 * Decode (⊥) only supports special cases right now
 * Encode (⊤) only supports special cases right now
