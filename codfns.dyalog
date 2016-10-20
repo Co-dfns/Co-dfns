@@ -1993,8 +1993,8 @@ memdfnnlp←{	z	←'B lx=0;B rx=0;',nl,'lr,ls,3'dectmpb'z'
 	z	,←'grdv=rv;grdc=1;qsort(ri,rc,sizeof(I),',⍵⍵,');',nl
 	z	,←'while(rx<rc&&lx<lc){if(lv[li[lx]]<rv[ri[rx]])lx++;',nl
 	z	,←' else if(lv[li[lx]]==rv[ri[rx]]){zv[li[lx]/8]|=1<<li[lx]%8;lx++;}',nl
-	z	,←' else rx++;}',nl
-		z,(acup'device(zv[:zz])'),'cpaa(',(rslt ⍵),',&za);}',nl}
+	z	,←' else rx++;}',nl,acup'device(zv[:zz])'
+		z,'free(li);free(ri);cpaa(',(rslt ⍵),',&za);}',nl}
 memd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∊')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⍒	Grade Down
@@ -2160,7 +2160,7 @@ intdfnnlp←{	z	←'if(rr>1||lr>1)dwaerr(4);B uc=0;B lx=0;B rx=0;',nl
 	z	,←' else if(lv[li[lx]]==rv[ri[rx]]){uc++;f[li[lx++]]=1;}',nl
 	z	,←' else rx++;}',nl
 	z	,←⍺,'uc=0;DO(i,lc){if(f[i])zv[uc++]=lv[i];}',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
+		z,'free(li);free(ri);free(f);cpaa(',(rslt ⍵),',&za);}',nl}
 intd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∩')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:↑	Mix/Take
@@ -2884,7 +2884,7 @@ unqdfnnlp←{	z	←'if(rr>1||lr>1)dwaerr(4);B uc=lc;B lx=0;B rx=0;',nl
 	z	,←' else{uc++;f[ri[rx++]]=1;}}',nl
 	z	,←⍺,'DO(i,lc){zv[i]=lv[i];}',nl
 	z	,←'uc=lc;DO(i,rc){if(f[i])zv[uc++]=rv[i];}',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
+		z,'free(li);free(ri);free(f);cpaa(',(rslt ⍵),',&za);}',nl}
 unqd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∪')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[cf]
