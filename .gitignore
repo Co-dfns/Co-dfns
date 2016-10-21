@@ -30,3 +30,7 @@ aplcore
 *.o
 config.dyalog
 CONTINUE
+*.bin
+*.ptx
+*.gpu
+*.h
