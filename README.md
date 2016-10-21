@@ -60,7 +60,24 @@ allows you to serialize your code in the form of XML, rather than as a
 Namespace Script. It does require that you use either the parser or 
 your own hacking skills to extract out a Co-dfns AST. 
 
-### codfns.BSO
+### Caching API
+
+The caching api allows you to call directly into the Co-dfns compiled 
+namespace without using DWA to convert values. You do this by explicitly 
+allocating a function and then applying specialized versions of Co-dfns 
+compiled functions on those arrays until you are ready to extract the 
+result, in which case you can extract them out.
+
+The specialized functions are specialized according to your input types. 
+Given input types b, i, and f for Boolean, Integer, and Floating, respectively, 
+you can use `⎕NA` to access the function. It's name will be `<name><tr><tr>`
+where `<name>` is the name of the function, and `<tr>` and `<tl>` are the types 
+of the right and left inputs, respectively.
+
+These specialized functions return the type of the resulting array computation 
+as their return value.
+
+#### codfns.BSO
 
     Path ← codfns.BSO Name
 
@@ -68,14 +85,14 @@ Given the `Name` used as the left argument to `Fix`, it will give back the
 path to the primary Co-dfns compilation object. This is useful for doing 
 manual linking into the compilation object using `⎕NA`.
 
-### codfns.MKA
+#### codfns.MKA
 
     Codfns_Array ← Name codfns.MKA Array
 
 This allows you to manually obtain a pointer to a Co-dfns array created from 
 a given Dyalog DWA Array. 
 
-### codfns.EXA
+#### codfns.EXA
 
     Array ← Name codfns.EXA Codfns_Array Type
 
@@ -84,7 +101,7 @@ array and the type of that array, and will free the array from the Co-dfns
 space and return that array as its result in the form of a normal Dyalog 
 array.
 
-### codfns.FREA
+#### codfns.FREA
 
     {} ← Name codfns.FREA Codfns_Array
 
