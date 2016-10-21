@@ -680,7 +680,7 @@ rth	,←' if(z)R z;R x-y;}',nl
 ⍝[cf]
 ⍝[of]:Function Entry
 frt	←'static V '
-fre	←'V EXPORT '
+fre	←' EXPORT '
 foi	←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
 flp	←'(A*z,A*l,A*r,A*penv[])'
 elp	←'(S lp*z,S lp*l,S lp*r)'
@@ -699,8 +699,8 @@ dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('dwaerr(',(cln⍕
 dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')''}
 case	←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
 fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
-fndy	←{fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,fcln,'}'}
-fncd	←{fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'}',nl}
+fndy	←{'V',fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,fcln,'}'}
+fncd	←{'I',fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'R ',(⍕⊃(⍺⌷tdi)⌷⍉⊃y⍵),';}',nl}
 ⍝[cf]
 ⍝[of]:Symbol → Name Table
 syms	←,¨	'+'	'-'	'×'	'÷'	'*'	'⍟'	'|'	'○'	'⌊'	'⌈'	'!'	'<'
