@@ -35,7 +35,7 @@ Cmp←{	_	←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
 		n⊣⎕NUNTIE so ⎕NTIE 0}
 MkNS	←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS⍬}
 Fix	←{⍺ MkNS ⍺ Cmp ⍵}
-Xml	←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍉3↓⍉⍵}
+Xml	←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsvyel'),∘⍪¨↓⍕¨⍉3↓⍉⍵}
 BSO	←{BUILD∆PATH,(dirc⍬),⍵,'_',COMPILER,(soext⍬)}
 MKA	←{mka⊂⍵⊣'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'}
 EXA	←{exa⍬(0⊃⍵)(1⊃⍵)⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'}
@@ -251,7 +251,7 @@ lf	←(1↑⊢)⍪∘⊃(⍪/(1,1↓Fm)blg(↑r)(⊂lfh⍪∘⊃(⍪/((¯2+1=(+/
 ⍝[of]:dn\:	Drop Redundant Nodes
 dn←((0∊⍨n)∧(Am∧'v'∊⍨k)∨Om∧'f'∊⍨k)((~⊣)(⌿∘⊢)(d-¯1⌽⊣),1↓[1]⊢)⊢
 ⍝[cf]
-⍝[of]:mu\:	Mark Unit Returns
+⍝[of]:mr\:	Mark Unit Returns
 mre	←(⊢⍴⍨6,⍨≢×2<≢)(2 'E' 'u',3↓∘,1↑⊢)⍪(3'P'0(,'⊢'),4↓∘,1↑⊢)⍪(1+d),1↓⍤1⊢
 mrm	←∨\(Vm∨Am)∧((¯1+≢)-1⍳⍨∘⌽2=d)=(⍳≢)
 mr	←(⊃⍪/)((1↑⊢),((⊢(⌿⍨∘~⍪∘mre(⌿⍨))mrm)¨1↓⊢))∘scp

@@ -29,6 +29,7 @@ display←{⎕IO ⎕ML←0 1                        ⍝ Boxed display of array.
 }
 
 pp←{⍵⊣⎕←display ⍵⊣⍞←⍴⍵⊣⍞←'Shape: '}
+px←{⎕←##.codfns.Xml ⍵ ⋄ ⍵}
 
 utf8get←{                              ⍝ Char vector from UTF-8 file ⍵.
     0::⎕SIGNAL ⎕EN                     ⍝ signal error to caller.
