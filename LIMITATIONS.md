@@ -32,7 +32,7 @@ things on which we are working.
 * Rank (⍤) is not implemented
 * The Log (⍟) function is not implemented for bitvectors
 * Binomial is not implemented for negative and floating point values
-* Conditional guards and Error Guards are not supported yet
+* Conditional guards are not supported yet
 * Recursive functions are not supported yet
 * Assignment inside of an expression is not supported yet
 * Fusion does not work with indexed arguments
@@ -67,6 +67,7 @@ to be implemented in the near future.
 * The compiler will handle empty return values strangely at the moment.
 * Namespaces with free references are not supported yet
 * 128-bit floating point values are not supported
+* Error Guards are not supported yet
 
 ## Fundamental Limitations
 
