@@ -631,15 +631,12 @@ rth	,←'  case 3:tp=APLU8;break;',nl
 rth	,←'  default:dwaerr(11);}',nl
 rth	,←' cpad(da,aa,tp);frea(aa);}',nl,nl
 rth	,←'EXPORT V*cmka(I r,B*s,I tp,V*buf){A*a=malloc(sizeof(A));if(!a)dwaerr(1);',nl
-rth	,←' a->v=NULL;ai(a,r,s,tp);printf("Rank: ");printf("%d\n",a->r);',nl
-rth	,←' printf("Shape: ");DO(i,a->r)printf("%d ");printf("\n");',nl
+rth	,←' a->v=NULL;ai(a,r,s,tp);',nl
 rth	,←' switch(tp){',nl
 rth	,←'  case 1:{I*src=buf;I*tgt=a->v;DO(i,a->c)tgt[i]=src[i];};break;',nl
 rth	,←'  case 2:{D*src=buf;D*tgt=a->v;DO(i,a->c)tgt[i]=src[i];}break;',nl
 rth	,←'  case 3:{U8*src=buf;U8*tgt=a->v;DO(i,(a->c+7)/8)tgt[i]=src[i];}break;',nl
-rth	,←'  default:dwaerr(11);}',nl
-rth	,←' printf("Values: ");DO(i,a->c){I*b=a->v;printf("%d ", b[i]);};printf("\n");',nl
-rth	,←' R a;}',nl
+rth	,←'  default:dwaerr(11);};R a;}',nl
 rth	,←'EXPORT V cexa(A*a,I tp,I*r,B*s,U8**b){*r=a->r;DO(i,*r)s[i]=a->s[i];',nl
 rth	,←' *b=malloc(a->z);if(!*b)dwaerr(1);U8*src=a->v;DO(i,a->z)(*b)[i]=src[i];}',nl
 ⍝[cf]
