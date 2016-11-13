@@ -552,7 +552,7 @@ rth	,←'typedef int64_t L;typedef int32_t I;typedef double D;typedef void V;',n
 rth	,←'typedef unsigned char U8;typedef uint64_t B;typedef uint32_t U;',nl,nl
 ⍝[cf]
 ⍝[of]:Structures
-rth	,←'S array{I r; B s[15];I f;B c;B z;V*v;};',nl,'typedef S array A;',nl
+rth	,←'typedef S array{I r; B s[15];I f;B c;B z;V*v;} A;',nl
 rth	,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[];}*p;};',nl
 rth	,←'S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*na[4];};',nl
 rth	,←'S dwa*dwafns;',nl,nl
@@ -630,6 +630,15 @@ rth	,←'  case 2:tp=APLD;break;',nl
 rth	,←'  case 3:tp=APLU8;break;',nl
 rth	,←'  default:dwaerr(11);}',nl
 rth	,←' cpad(da,aa,tp);frea(aa);}',nl,nl
+rth	,←'EXPORT V*cmka(I r,B*s,I tp,V*buf){A*a=malloc(sizeof(A));if(!a)dwaerr(1);',nl
+rth	,←' a->v=NULL;ai(a,r,s,tp);',nl
+rth	,←' switch(tp){',nl
+rth	,←'  case 1:{I*src=buf;I*tgt=a->v;DO(i,a->c)tgt[i]=src[i];};break;',nl
+rth	,←'  case 2:{D*src=buf;D*tgt=a->v;DO(i,a->c)tgt[i]=src[i];}break;',nl
+rth	,←'  case 3:{U8*src=buf;U8*tgt=a->v;DO(i,(a->c+7)/8)tgt[i]=src[i];}break;',nl
+rth	,←'  default:dwaerr(11);};R a;}',nl
+rth	,←'EXPORT V cexa(A*a,I tp,I*r,B*s,U8**b){*r=a->r;DO(i,*r)s[i]=a->s[i];',nl
+rth	,←' *b=malloc(a->z);if(!*b)dwaerr(1);U8*src=a->v;DO(i,a->z)(*b)[i]=src[i];}',nl
 ⍝[cf]
 ⍝[of]:Scalar Helpers
 rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
