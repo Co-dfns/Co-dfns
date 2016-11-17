@@ -709,7 +709,7 @@ dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');'
 case	←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
 fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
 fndy	←{'V',fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,fcln,'}'}
-fncd	←{'I',fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'R ',(⍕⊃(⍺⌷tdi)⌷⍉⊃y⍵),';}',nl}
+fncd	←{'I',fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'R ',(cln⍕⊃(⍺⌷tdi)⌷⍉⊃y⍵),';}',nl}
 ⍝[cf]
 ⍝[of]:Symbol → Name Table
 syms	←,¨	'+'	'-'	'×'	'÷'	'*'	'⍟'	'|'	'○'	'⌊'	'⌈'	'!'	'<'
