@@ -2240,7 +2240,7 @@ fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
 	szn	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
 	szb	←siz,pacc 'update host(lv[:lft->z],rv[:rgt->c])'
 	szb	,←'if(lc>=rc){B n=(lc+7)/8;',nl
-	szb	,←' DO(i,n){DO(j,8){last+=1&(lv[i]>>j);}}',nl
+	szb	,←' DO(i,n){DO(j,8){if(lc>i*8+j)last+=1&(lv[i]>>j);}}',nl
 	szb	,←'}else{last+=rc*(lv[0]>>7);}',nl
 	szb	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
 	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
