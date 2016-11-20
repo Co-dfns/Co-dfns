@@ -1730,8 +1730,9 @@ inpd←{	hid	←(idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖')�
 	exe	,←'  ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[j]' 'lv[i*lc+j]'),nl
 	exe	,←'  ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'tmp' 'res'),'}',nl
 	exe	,←' zv[i]=res;}}',nl
-	exe	,←'}else{',nl
-	exe	,←(pacc'kernels present(zv[:m],lv[:lz],rv[:rz])'),'{',nl
+	exe	,←'}else{',((typ=3)⊃'B m8=m;' 'B m8=(m+7)/8;'),nl
+	exe	,←(pacc'kernels present(zv[:m8],lv[:lz],rv[:rz])'),'{',nl
+	exe	,←((typ=3)⊃'' 'DO(i,m8){zv[i]=0;}'),nl
 	exe	,←(pacc'loop independent'),'DO(i,zc){',nl
 	exe	,←(pacc'loop independent'),' DO(j,rc){',(⊃git typ),'res;B n=lc-1;',nl
 	exe	,←'  ',(⍺((1⊃⍺⍺)scmx ⍵⍵)'res' 'rv[((lc-1)*rc)+j]' 'lv[(i*lc)+lc-1]'),nl
@@ -1739,7 +1740,8 @@ inpd←{	hid	←(idf←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖')�
 	exe	,←'   ',(⊃git typ),'tmp;L ri=((lc-(k+2))*rc)+j,li=(i*lc)+lc-(k+2);',nl
 	exe	,←'   ',((typ,1↓⍺)((1⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[ri]' 'lv[li]'),nl
 	exe	,←'   ',((typ,⍨2⍴1↑⍺)((0⊃⍺⍺)scmx ⍵⍵)'res' 'res' 'tmp'),'}',nl
-	exe	,←'  zv[(i*rc)+j]=res;}}',nl,'}}',nl
+	bzv	←'B x=i*rc+j;zv[x/8]|=res<<(x%8)'
+	exe	,←'  ',((typ=3)⊃'zv[(i*rc)+j]=res' bzv),';}}',nl,'}}',nl
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[cf]
