@@ -1629,13 +1629,30 @@ scnm←{	siz	←'zr=rr;if(rr)rc=rs[rr-1];DO(i,zr)zs[i]=rs[i];',nl
 	siz	,←'I n;if(zr)n=zr-1;else n=0;DO(i,n)zc*=rs[i];'
 	fil	←(gid←(ass←'+×⌈⌊∨∧')⍳⊃⊃⍺⍺)⊃,¨'0' '1' '-DBL_MAX' 'DBL_MAX' '0' '1' '-1'
 	gpu	←(⊃git⊃⍺)(((⊃⍺),⍺)∘((⊃⍺⍺)scmx⍵⍵)scngv)fil
-	exe	←(('pg'≡2↑COMPILER)∧gid<≢ass)⊃''('if(rr==1&&rc!=0){',gpu,'}else ')
-	exe	,←'if(rc!=0){',nl,acup'host(zv[:rslt->c],rv[:rgt->c])'
-	exe	,←' DO(i,zc){zv[i*rc]=rv[i*rc];L n=rc-1;DO(j,n){'
-	exe	,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,acup'device(zv[(i*rc)+j:1])')''
-	exe	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[i*rc+j+1]' 'zv[i*rc+j]' 'rv[i*rc+j+1]'
-	exe	,←'}}',nl,(acup'device(zv[:rslt->c],rv[:rgt->c])'),'}',nl
-		'' siz exe mxfn 1 ⍺ ⍵}
+	exenn	←(('pg'≡2↑COMPILER)∧gid<≢ass)⊃''('if(rr==1&&rc!=0){',gpu,'}else ')
+	exenn	,←'if(rc!=0){',nl,acup'host(zv[:rslt->c],rv[:rgt->c])'
+	exenn	,←' DO(i,zc){zv[i*rc]=rv[i*rc];B n=rc-1;DO(j,n){'
+	exenn	,←((⊂⊃⍺⍺)∊0⌷⍉sdb)⊃(nl,acup'device(zv[(i*rc)+j:1])')''
+	exenn	,←((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[i*rc+j+1]' 'zv[i*rc+j]' 'rv[i*rc+j+1]'
+	exenn	,←'}}',nl,(acup'device(zv[:rslt->c],rv[:rgt->c])'),'}',nl
+	exebb	←'if(rc!=0){B z8=(rslt->c+7)/8;B r8=(rgt->c+7)/8;',nl
+	exebb	,←acup'host(zv[:z8],rv[:r8])'
+	exebb	,←' DO(i,z8){zv[i]=0;}',nl
+	exebb	,←' DO(i,zc){B irc=i*rc;B n=rc-1;U8 tmp=1&(rv[irc/8]>>(irc%8));',nl
+	exebb	,←'  zv[irc/8]|=tmp<<(irc%8);',nl
+	exebb	,←'  DO(j,n){B ircj=irc+j;B ircj1=ircj+1;',nl
+	exebb	,←'   U8 tmp2=1&(rv[ircj1/8]>>(ircj1%8));',nl
+	exebb	,←'   ',((⊃⍺),⍺)((⊃⍺⍺)scmx ⍵⍵)'tmp' 'tmp' 'tmp2'
+	exebb	,←'   zv[ircj1/8]|=tmp<<(ircj1%8);}}',nl
+	exebb	,←(acup'device(zv[:z8],rv[:r8])'),'}',nl
+	exenb	←'if(rc!=0){B r8=(rgt->c+7)/8;',nl
+	exenb	,←acup'host(zv[:rslt->c],rv[:r8])'
+	exenb	,←' DO(i,zc){B irc=i*rc;B n=rc-1;zv[irc]=1&(rv[irc/8]>>(irc%8));',nl
+	exenb	,←'  DO(j,n){B ircj=irc+j;B ircj1=ircj+1;',nl
+	exenb	,←'   U8 tmp=1&(rv[ircj1/8]>>(ircj1%8));',nl
+	exenb	,←'   ',((2⍴⊃⍺),1⊃⍺)((⊃⍺⍺)scmx ⍵⍵)'zv[ircj1]' 'zv[ircj]' 'tmp'
+	exenb	,←'}}',nl,(acup'device(zv[:rslt->c],rv[:r8])'),'}',nl
+		'' siz ((2⊥3=2↑⍺)⊃exenn exenb ('dwaerr(16);',nl) exebb) mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Scan First Axis
 sc1m←{	siz	←'zr=rr;rc=rr==0?1:rs[0];DO(i,zr)zs[i]=rs[i];',nl
