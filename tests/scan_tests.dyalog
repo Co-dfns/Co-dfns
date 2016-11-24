@@ -18,6 +18,8 @@ S4←':Namespace' 'Run←{<\⍵}' ':EndNamespace'
 '11'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴1
 '12'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴5
 '13'('scan' S1 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴1
+'14'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴1 0
+'15'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴5 0
 
 
 :EndNamespace
