@@ -1671,13 +1671,35 @@ sc1m←{	siz	←'zr=rr;rc=rr==0?1:rs[0];DO(i,zr)zs[i]=rs[i];',nl
 ⍝[cf]
 ⍝[of]:Outer Product
 oupd←{	siz	←'zr=lr+rr;DO(i,lr)zs[i]=ls[i];DO(i,rr)zs[i+lr]=rs[i];'
+	siz	,←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+	siz	,←nl,(3=⊃⍺)⊃'B zz=rc*lc;' 'B zz=(rc*lc+7)/8;'
+	siz	,←nl,(3=1⊃⍺)⊃'B rz=rc;' 'B rz=(rc+7)/8;'
+	siz	,←nl,(3=2⊃⍺)⊃'B lz=lc;' 'B lz=(lc+7)/8;'
 	scl	←(⊂⊃⍺⍺)∊0⌷⍉sdb
-	cpu	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
-	gpu	←simd'present(rv[:rgt->c],lv[:lft->c])'
-	exe	←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
+	cpu	←pacc'update host(lv[:lz],rv[:rz])'
+	gpu	←simd'present(rv[:rz],lv[:lz],zv[:zz])'
+	exe	←(3=⊃⍺)⊃''(gpu,nl,'DO(i,zz){zv[i]=0;}',nl)
 	exe	,←scl⊃cpu gpu
-	exe	,←'DO(i,lc){DO(j,rc){',(⍺((⊃⍺⍺)scmx ⍵⍵)'zv[(i*rc)+j]' 'rv[j]' 'lv[i]'),'}}',nl
-	exe	,←scl⊃(pacc'update device(zv[:rslt->c])')''
+	exe	,←'DO(i,lc){DO(j,rc){',nl
+	exennn	←⍺((⊃⍺⍺)scmx ⍵⍵)'zv[(i*rc)+j]' 'rv[j]' 'lv[i]'
+	exennb	←'U8 tmp=1&(lv[i/8]>>(i%8));',⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i*rc+j]' 'rv[j]' 'tmp'
+	exenbn	←'U8 tmp=1&(rv[j/8]>>(j%8));',⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i*rc+j]' 'tmp' 'lv[i]'
+	exenbb	←'U8 t1=1&(rv[j/8]>>(j%8));U8 t2=1&(lv[i/8]>>(i%8));',nl
+	exenbb	,←⍺((⊃⍺⍺)scmx ⍵⍵)'zv[i*rc+j]' 't1' 't2'
+	exebnn	←'U8 tmp=0;',⍺((⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[j]' 'lv[i]'
+	exebnn	,←'B x=i*rc+j;zv[x/8]|=tmp<<(x%8);',nl
+	exebnb	←'U8 tmp=0;U8 lt=1&(lv[i/8]>>(i%8));',nl
+	exebnb	,←⍺((⊃⍺⍺)scmx ⍵⍵)'tmp' 'rv[j]' 'lt'
+	exebnb	,←'B x=i*rc+j;zv[x/8]|=tmp<<(x%8);',nl
+	exebbn	←'U8 tmp=0;U8 rt=1&(rv[j/8]>>(j%8));',nl
+	exebbn	,←⍺((⊃⍺⍺)scmx ⍵⍵)'tmp' 'rt' 'lv[i]'
+	exebbn	,←'B x=i*rc+j;zv[x/8]|=tmp<<(x%8);',nl
+	exebbb	←'U8 tmp=0;U8 rt=1&(rv[j/8]>>(j%8));U8 lt=1&(lv[i/8]>>(i%8));',nl
+	exebbb	,←⍺((⊃⍺⍺)scmx ⍵⍵)'tmp' 'rt' 'lt'
+	exebbb	,←'B x=i*rc+j;zv[x/8]|=tmp<<(x%8);',nl
+	exe	,←(2⊥3=3↑⍺)⊃exennn exennb exenbn exenbb exebnn exebnb exebbn exebbb
+	exe	,←'}}',nl
+	exe	,←scl⊃(pacc'update device(zv[:zz])')''
 		'' siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:Inner Product
