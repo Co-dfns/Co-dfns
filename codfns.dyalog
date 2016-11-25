@@ -2884,7 +2884,19 @@ unqmfinaaa←{	z	←'{',('r'decarri rgt ⍵),'if(rr>1)dwaerr(4);',nl
 		z,('1,&uc,1'dectmpi'z')('gucmpi'unqmfnlp)⍵}
 unqmffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr>1)dwaerr(4);',nl
 		z,('1,&uc,2'dectmpf'z')('gucmpf'unqmfnlp)⍵}
-unqmfbnaaa←{		'dwaerr(16);',nl}
+unqmfbnaaa←{	z	←'{',('r'decarrb rgt ⍵),'if(rr>1)dwaerr(4);',nl
+	z	,←'B rc8=(rc+7)/8;B uc=2;','1,&uc,3'dectmpb'z'
+	z	,←acup'host(rv[:rz])'
+	z	,←'if(!rc){zs[0]=0;}',nl
+	z	,←'else if(rc==1){zv[0]=rv[0];zs[0]=1;}',nl
+	z	,←'else{',nl
+	z	,←'DO(i,rc8){U8 m=(i==rc8-1)?~(255<<(rc%8)):255;U8 v=m&rv[i];',nl
+	z	,←' if((i==rc8-1)&&!v){zv[0]=0;zs[0]=1;break;}',nl
+	z	,←' if((i==rc8-1)&&(v==m)){zv[0]=1;zs[0]=1;break;}',nl
+	z	,←' if((rv[i]%2)&&(v<m)){zv[0]=1;zs[0]=2;break;}',nl
+	z	,←' if((!(rv[i]%2))&&v){zv[0]=2;zs[0]=2;break;}}',nl
+	z	,←'}',nl,acup'device(zv[:1])'
+		z,'cpaa(',(rslt ⍵),',&za);}',nl}
 unqmfnlp←{	z	←'if(rc){I*v=malloc(rc*sizeof(I));if(!v)dwaerr(1);',nl
 	z	,←'U8*f=malloc(rc*sizeof(U8));if(!f)dwaerr(1);',nl
 	z	,←(acup'host(rv[:rc])'),'B uc=1;grdv=rv;grdc=1;',nl
