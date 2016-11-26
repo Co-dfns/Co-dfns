@@ -32,6 +32,7 @@ S4←':Namespace' 'Run←{⍺∘.+⍵}' ':EndNamespace'
 '25'('outerproduct' S4 'Run' #.util.GEN∆T2 ⎕THIS)(0 0 0 1 1 5 1 1)(0 0 0 1 1 1 1 1)
 '26'('outerproduct' S4 'Run' #.util.GEN∆T2 ⎕THIS)(0 0 0 1 1 1 1 1)(0 0 0 1 5 1 1 1)
 '27'('outerproduct' S4 'Run' #.util.GEN∆T2 ⎕THIS)(0 0 0 1 1 5 1 1)(0 0 0 1 5 1 1 1)
+'28'('outerproduct' S3 'Run' #.util.GEN∆T2 ⎕THIS)(0 1)(0 0 0 1 1 1 1 1)
 
 
 :EndNamespace

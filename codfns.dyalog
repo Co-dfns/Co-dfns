@@ -2890,7 +2890,7 @@ unqmfbnaaa←{	z	←'{',('r'decarrb rgt ⍵),'if(rr>1)dwaerr(4);',nl
 	z	,←'if(!rc){zs[0]=0;}',nl
 	z	,←'else if(rc==1){zv[0]=rv[0];zs[0]=1;}',nl
 	z	,←'else{',nl
-	z	,←'DO(i,rc8){U8 m=(i==rc8-1)?~(255<<(rc%8)):255;U8 v=m&rv[i];',nl
+	z	,←'DO(i,rc8){U8 m=(i==rc8-1&&rc%8)?~(255<<(rc%8)):255;U8 v=m&rv[i];',nl
 	z	,←' if((i==rc8-1)&&!v){zv[0]=0;zs[0]=1;break;}',nl
 	z	,←' if((i==rc8-1)&&(v==m)){zv[0]=1;zs[0]=1;break;}',nl
 	z	,←' if((rv[i]%2)&&(v<m)){zv[0]=1;zs[0]=2;break;}',nl
