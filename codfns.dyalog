@@ -64,7 +64,9 @@ log	←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 ⍝[of]:VS/IC Windows Flags
 vsco	←'/W3 /Gm- /O2 /Zc:inline /Zi /Fd"build\vc140.pdb" '
 vsco	,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+vsco	,←'/I"%AF_PATH%\include" '
 vslo	←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+vslo	,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af.lib" '
 vslo	,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
 ⍝[cf]
 ⍝[of]:Linux
