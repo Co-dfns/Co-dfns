@@ -15,7 +15,12 @@ F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 '10'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(F 10⍴5)
 '11'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(F 25⍴⍳10)
 '12'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?50⍴10)
-
+'13'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(0 0 1 1 1)
+'14'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(1 1 0 0)
+'15'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(0 0 0 0)
+'16'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(1 1 1 1)
+'17'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(0 0 0 1 1 1 1 1)
+'18'('unique' S 'Run' #.util.GEN∆T1 ⎕THIS)(1 0 0 0 0 1 1 1 1 1)
 
 :EndNamespace
 
