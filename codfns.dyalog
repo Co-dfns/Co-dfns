@@ -528,6 +528,8 @@ rth	,←'#include <limits.h>',nl,'#include <float.h>',nl
 rth	,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl
 rth	,←'#else',nl,'#include <math.h>',nl,'#endif',nl
 rth	,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl,nl
+rth	,←'#include <arrayfire.h>',nl
+
 ⍝[cf]
 ⍝[of]:Globals
 rth	,←'int isinit=0;',nl
