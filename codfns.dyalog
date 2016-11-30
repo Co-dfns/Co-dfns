@@ -573,7 +573,7 @@ rth	,←' af_err xc;',nl
 rth	,←' switch(ETYPE(d)){',nl
 rth	,←'  case APLI:xc=af_create_array(a,DATA(d),RANK(d),SHAPE(d),s32);break;',nl
 rth	,←'  case APLD:xc=af_create_array(a,DATA(d),RANK(d),SHAPE(d),f64);break;',nl
-rth	,←'  case APLSI:xc=af_create_array(a,DATA(d),RANK(d),SHAPE(d),s16);;break;',nl
+rth	,←'  case APLSI:xc=af_create_array(a,DATA(d),RANK(d),SHAPE(d),s16);break;',nl
 rth	,←'  case APLTI:{B c=1;DO(i,RANK(d))c*=SHAPE(d)[i];',nl
 rth	,←'   S16*b=malloc(c*sizeof(S16));if(!b)dwaerr(1);',nl
 rth	,←'   S8*src=DATA(d);DO(i,c)b[i]=src[i];',nl
