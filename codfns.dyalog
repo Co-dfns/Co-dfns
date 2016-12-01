@@ -590,7 +590,7 @@ rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):array()};};break;',nl
 rth	,←'  default:dwaerr(16);};}',nl,nl
 ⍝[cf]
 ⍝[of]:Globals
-rth	,←'int isinit=0;',nl,nl
+rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl,nl
 ⍝[cf]
 ⍝[of]:External Makers & Extractors
 ⍝[c]rth	,←'EXPORT V*mkarray(S lp*da){A*aa=malloc(sizeof(A));if(aa==NULL)dwaerr(1);',nl
@@ -657,6 +657,7 @@ rth	,←'int isinit=0;',nl,nl
 ⍝[c]rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
 ⍝[c]rth	,←' DO(i,grdc){z=v[y*grdc+i]-v[x*grdc+i];if(z)break;}',nl
 ⍝[c]rth	,←' if(z)R z;R x-y;}',nl,nl
+rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl,nl
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Function Entry
@@ -694,10 +695,9 @@ syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
 nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[cf]
 ⍝[of]:Primitives
-rth	,←'MF(eqv){z.r=0;z.s=dim4(0,(B*)NULL);z.v=constant(r.r!=0,z.s,s16);}',nl
-rth	,←'DF(eqv){bool v=l.r==r.r&&l.s==r.s;B c=1;DOU(i,r.r)c*=r.s[i];',nl
-rth	,←' if(v&&c)v=allTrue<bool>(l.v==r.v);',nl
-rth	,←' z.r=0;z.s=dim4(0,(B*)NULL);z.v=constant(v,z.s,s16);}',nl
+rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,s16);}',nl
+rth	,←'DF(eqv){bool v=l.r==r.r&&l.s==r.s;B c=cnt(r);if(v&&c)v=allTrue<bool>(l.v==r.v);',nl
+rth	,←' z.r=0;z.s=eshp;z.v=constant(v,z.s,s16);}',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←nl
