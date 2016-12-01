@@ -100,7 +100,7 @@ clang	←{⎕SH'clang ',cfs,cds,gop,'gcc'('dylib'cio,fls,log)⍵}
 ⍝[of]:Windows
 ⍝[of]:Visual Studio
 vsc1	←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
-vsc2	←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.cpp" "libcrypto-38.lib" '}
+vsc2	←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.cpp" '}
 vsc3	←{vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
 vsc4	←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
 vsc	←{⎕CMD ('%comspec% /C ',vsc1,vsc2,vsc3,vsc4)⍵}
