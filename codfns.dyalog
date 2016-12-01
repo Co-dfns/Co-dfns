@@ -480,7 +480,7 @@ tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce ur fc∘pc∘mr⍣≡ ca fe m
 ⍝[cf]
 ⍝[of]:Code Generator
 E1	←{('mf'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
-E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
+E2	←{('df'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
 E0	←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
 Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
