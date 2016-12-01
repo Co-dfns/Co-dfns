@@ -693,6 +693,10 @@ nams	,←	'lft'	'enc'	'dec'	'red'	'rdf'	'scn'	'scf'	'rol'	'tke'	'drp'	'map'	'com
 syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
 nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[cf]
+⍝[of]:Primitives
+rth	,←'MF(rgt){z=r;}',nl
+rth	,←'DF(rgt){z=r;}',nl
+⍝[cf]
 ⍝[of]:Scalar Primitives
 ⍝[of]:Old Scalar Database Tables
 ⍝⍝residue←'⍵ % ⍺'
@@ -2038,10 +2042,6 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 	z	,←'qsort(zv,zc,sizeof(I),gucmpf);',nl,acup'device(zv[:zc])'
 		z,'cpaa(',(rslt ⍵),',&za);}',nl}
 gdumfbnaaa←{		'dwaerr(16);',nl}
-⍝[cf]
-⍝[of]:⊢	Identity/Right
-rth	,←'MF(rgt){z=r;}',nl
-rth	,←'DF(rgt){z=r;}',nl
 ⍝[cf]
 ⍝[of]:⌷	Index
 idxd←{	chk	←'if(lr>1)dwaerr(4);if(lr==0)ls[0]=1;if(ls[0]>rr)dwaerr(5);'
