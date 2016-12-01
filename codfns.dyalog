@@ -513,7 +513,7 @@ gie	←{⍵⊃¨⊂'/* XXX */ APLI' 'APLI' 'APLD' 'APLTI' 'APLNA'}
 rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
 lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
 rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
-gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),',',(rgt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),');',nl⊣⍵⍵}
+gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),',',(rgt⍵),');',nl⊣⍵⍵}
 
 ⍝[cf]
 ⍝[of]:Header
@@ -543,7 +543,7 @@ rth	,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
 rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
 rth	,←'#define PI 3.14159265358979323846',nl
 rth	,←'#define MF(n) static void n##mf(A&z,A&r)',nl
-rth	,←'#define DF(n) static void n##df(A&z,A&r,A&l)',nl
+rth	,←'#define DF(n) static void n##df(A&z,A&l,A&r)',nl
 rth	,←'#define S struct',nl,nl
 ⍝[cf]
 ⍝[of]:Typedefs
