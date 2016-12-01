@@ -517,6 +517,11 @@ acup	←{('pg'≡2↑COMPILER)⊃''('#pragma acc update ',⍵,nl)}
 acdt	←{('pg'≡2↑COMPILER)⊃''('#pragma acc data ',⍵,nl)}
 simdc	←{('#pragma acc kernels loop ',⍵,nl)('')('')}
 simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
+rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
+lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
+rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
+gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),',',(rgt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),');',nl⊣⍵⍵}
+
 ⍝[cf]
 ⍝[of]:Header
 ⍝[of]:Includes
@@ -527,11 +532,6 @@ rth	,←'#include <limits.h>',nl,'#include <float.h>',nl
 rth	,←'#include <math.h>',nl,'#include <arrayfire.h>',nl
 rth	,←'using namespace af;',nl,nl
 
-⍝[cf]
-⍝[of]:Globals
-rth	,←'int isinit=0;',nl
-rth	,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
-rth	,←'#define PI 3.14159265358979323846',nl,nl
 ⍝[cf]
 ⍝[of]:Helper Macros
 rth	,←'#define RANK(lp) ((lp)->p->r)',nl
@@ -548,9 +548,13 @@ rth	,←'#define EXPORT extern "C" __attribute__ ((visibility ("default")))',nl
 rth	,←'#else',nl,'#define EXPORT extern "C"',nl,'#endif',nl
 rth	,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
 rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
+rth	,←'#define PI 3.14159265358979323846',nl
+rth	,←'#define MF(n) static void n##mf(A&z,A&r)',nl
+rth	,←'#define DF(n) static void n##df(A&z,A&r,A&l)',nl
 rth	,←'#define S struct',nl,nl
 ⍝[cf]
 ⍝[of]:Typedefs
+rth	,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
 rth	,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',nl
 rth	,←'typedef double D;typedef unsigned char U8;typedef dim_t B;typedef unsigned U;',nl
 rth	,←'typedef void V;',nl,nl
@@ -591,6 +595,9 @@ rth	,←'   std::vector<char> b(c);U8*src=(U8*)DATA(d);',nl
 rth	,←'   DO(i,c)b[i]=1&(src[i/8]>>(7-(i%8)));',nl
 rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):array()};};break;',nl
 rth	,←'  default:dwaerr(16);};}',nl,nl
+⍝[cf]
+⍝[of]:Globals
+rth	,←'int isinit=0;',nl,nl
 ⍝[cf]
 ⍝[of]:External Makers & Extractors
 ⍝[c]rth	,←'EXPORT V*mkarray(S lp*da){A*aa=malloc(sizeof(A));if(aa==NULL)dwaerr(1);',nl
@@ -693,16 +700,6 @@ syms	,←,¨	'⊣'	'⊤'	'⊥'	'/'	'⌿'	'\'	'⍀'	'?'	'↑'	'↓'	'¨'	'⍨'
 nams	,←	'lft'	'enc'	'dec'	'red'	'rdf'	'scn'	'scf'	'rol'	'tke'	'drp'	'map'	'com'
 syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
 nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
-⍝[cf]
-⍝[of]:Generator Dispatch
-gcl←{	⍺	←⍬ ⍬ ⍬
-	v e y	←⍵
-	id	←(syms⍳¯1↑v)⊃nams,⊂''
-	tp	←(2↑1↓y)⊃¨⊂'xifbn'
-	sla	←((∧/¯1=↑3↑e)+0≠(⊃0⍴⊃)¨3↑v)⊃¨⊂'las'
-	''≢id:	(⍺,⊂⍵⍵)(⍎id,⍺⍺,tp,sla)⍵
-  		(2↑y)((⊃⌽v)fcl ⍵⍵)(2↑v),⍪2↑e
-		⎕SIGNAL 16}
 ⍝[cf]
 ⍝[of]:Scalar Primitives
 ⍝[of]:Old Scalar Database Tables
@@ -1871,9 +1868,6 @@ dectmp	←{'A ',a,';',a,'.v=NULL;ai(&',a,',',⍺,');',nl,⍵(⍺⍺ decarr)'&',a
 dectmpi	←'I'dectmp
 dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
-rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
-lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
-rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 ⍝[cf]
 ⍝[of]:Generators
 ⍝[of]:[]	Bracket
@@ -2054,23 +2048,8 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
 ⍝[of]:⊢	Identity/Right
-rgtmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-rgtmfbnsss	←rgtmffnsss←rgtmfinsss
-rgtmfinaaa	←{(rslt⍵),'=',(rgt⍵),';',nl}
-rgtmfinala←{	z	←'{',('r'decliti rgt⍵),'rr,rs,1'dectmpi'z'
-	z	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl
-		z,'cpaa(',(rslt⍵),',&za);}',nl}
-rgtmffnala←{	z	←'{',('r'declitf rgt⍵),'rr,rs,1'dectmpf'z'
-	z	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl
-		z,'cpaa(',(rslt⍵),',&za);}',nl}
-rgtmfbnala←{	z	←'{',('r'declitb rgt⍵),'rr,rs,1'dectmpb'z'
-	z	,←(simd'present(rv[:rz],zv[:zz])'),'DO(i,zc)zv[i]=rv[i];',nl
-		z,'cpaa(',(rslt⍵),',&za);}',nl}
-rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-	exe	←'DOI(i,zr)zc*=zs[i];',nl
-	exe	,←(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa
+rth	,←'MF(rgt){z=r;}',nl
+rth	,←'DF(rgt){z=r;}',nl
 ⍝[cf]
 ⍝[of]:⌷	Index
 idxd←{	chk	←'if(lr>1)dwaerr(4);if(lr==0)ls[0]=1;if(ls[0]>rr)dwaerr(5);'
