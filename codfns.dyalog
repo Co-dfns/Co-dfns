@@ -1886,24 +1886,6 @@ brid←{	chk	←'if(lr!=1)dwaerr(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
 	exe	←(3≡1⊃⍺)⊃exen exeb
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
-⍝[of]:≡	Depth/Equiv
-eqvmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=0;',nl}
-eqvmfbnsss	←eqvmffnsss←eqvmfinsss
-eqvmfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e 
-	z	←'{ai(',rslt,',0,NULL,1);I*zv=(',rslt,')->v;',nl
-	z	,←'if((',rgt,')->r==0)zv[0]=0;else zv[0]=1;',nl
-		z,(pacc'update device(zv[:1])'),'}',nl}
-eqvd←{	chk siz	←'' 'zr=0;'
-	exe	←pacc 'update host(lv[:lft->c],rv[:rgt->c])'
-	exe	,←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
-	exe	,←'DO(i,lr){if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}}',nl
-	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←'DO(i,lc){if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		chk siz exe mxfn 1 ⍺ ⍵}
-eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa
-⍝[cf]
 ⍝[of]:⊃	First/Pick
 dismfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
 dismfbnsss	←dismffnsss←dismfinsss
