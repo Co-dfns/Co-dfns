@@ -694,9 +694,13 @@ syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
 nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[cf]
 ⍝[of]:Primitives
+rth	,←'MF(eqv){z.r=0;z.s=dim4(0,(B*)NULL);z.v=constant(r.r!=0,z.s,s16);}',nl
+rth	,←'DF(eqv){bool v=l.r==r.r&&l.s==r.s;B c=1;DOU(i,r.r)c*=r.s[i];',nl
+rth	,←' if(v&&c)v=allTrue<bool>(l.v==r.v);',nl
+rth	,←' z.r=0;z.s=dim4(0,(B*)NULL);z.v=constant(v,z.s,s16);}',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
-rth	,←'MF(eqv){z.r=0;z.s=dim4(0,(B*)NULL);z.v=constant(r.r!=0,z.s,s16);}',nl
+rth	,←nl
 ⍝[cf]
 ⍝[of]:Scalar Primitives
 ⍝[of]:Old Scalar Database Tables
