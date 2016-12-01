@@ -696,6 +696,7 @@ nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[of]:Primitives
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
+rth	,←'MF(eqv){z.r=0;z.s=dim4(0,(B*)NULL);z.v=constant(r.r!=0,z.s,s16);}',nl
 ⍝[cf]
 ⍝[of]:Scalar Primitives
 ⍝[of]:Old Scalar Database Tables
