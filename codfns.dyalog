@@ -580,8 +580,12 @@ rth	,←' switch(ETYPE(d)){',nl
 rth	,←'  case APLI:{I*b=(I*)DATA(d);a=array(s,b);};break;',nl
 rth	,←'  case APLD:{D*b=(D*)DATA(d);a=array(s,b);};break;',nl
 rth	,←'  case APLSI:{S16*b=(S16*)DATA(d);a=array(s,b);};break;',nl
-rth	,←'  case APLTI:dwaerr(16);;break;',nl
-rth	,←'  case APLU8:dwaerr(16);break;',nl
+rth	,←'  case APLTI:{B c=1;DO(i,RANK(d))c*=SHAPE(d)[i];',nl
+rth	,←'   std::vector<S16> b(c);S8*src=(S8*)DATA(d);DO(i,c)b[i]=src[i];',nl
+rth	,←'   a=array(s,b.data());};break;',nl
+rth	,←'  case APLU8:{B c=1;DO(i,RANK(d))c*=SHAPE(d)[i];',nl
+rth	,←'   std::vector<char> b(c);U8*src=(U8*)DATA(d);',nl
+rth	,←'   DO(i,c)b[i]=1&(src[i/8]>>(7-(i%8)));a=array(s,b.data());};break;',nl
 rth	,←'  default:dwaerr(16);};}',nl,nl
 ⍝[cf]
 ⍝[of]:External Makers & Extractors
