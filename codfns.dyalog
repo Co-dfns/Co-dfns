@@ -490,7 +490,7 @@ Of	←{(fndy ⍵),nl,nl,(⊃,/(⍳12)fncd¨⊂⍵),nl}
 Fd	←{frt,(⊃n⍵),flp,';',nl}
 Fe	←{frt,(⊃n⍵),flp,'{',nl,'dwaerr(',(⍕|⊃⊃y⍵),');',nl}
 F0	←{frt,(⊃n⍵),flp,'{',nl,'A*env[]={tenv};',nl}
-F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),''⊣fnacc⍵}
+F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵)}
 Z0	←{'}',nl,nl}
 Z1	←{'z=',((⊃n⍵)var⊃e⍵),';}',nl,nl}
 Ze	←{'}',nl,nl}
@@ -510,13 +510,6 @@ dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
 fnv	←{'A*env[',(⍕1+⊃s⍵),']={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 git	←{⍵⊃¨⊂'/* XXX */ I ' 'I ' 'D ' 'U8 ' '?NA? '}
 gie	←{⍵⊃¨⊂'/* XXX */ APLI' 'APLI' 'APLD' 'APLTI' 'APLNA'}
-pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
-aclp	←{('pg'≡2↑COMPILER)⊃''('#pragma acc loop independent ',⍵,nl)}
-ackn	←{('pg'≡2↑COMPILER)⊃''('#pragma acc kernels ',⍵,nl)}
-acup	←{('pg'≡2↑COMPILER)⊃''('#pragma acc update ',⍵,nl)}
-acdt	←{('pg'≡2↑COMPILER)⊃''('#pragma acc data ',⍵,nl)}
-simdc	←{('#pragma acc kernels loop ',⍵,nl)('')('')}
-simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
 rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
 lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
 rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
@@ -685,7 +678,6 @@ tps	,←' switch(tp){',nl
 dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('dwaerr(',(cln⍕|e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
 dcp	←{(0>⊃(⍺⌷tdi)⌷⍉⊃y⍵)⊃'cpad(z,za);' ''}
 case	←{'  case ',(⍕⍺),':',(⍺('za,cl,cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
-fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
 fndy	←{nl,fre,'V ',(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),' }',nl,'}'}
 fncd	←{fre,'I ',(⊃n⍵),(⍺⊃tdn),'(A&z,A l,A r){',(⍺('z,l,r'dcl)⍵),'R ',(cln⍕⊃(⍺⌷tdi)⌷⍉⊃y⍵),';}',nl}
 ⍝[cf]
