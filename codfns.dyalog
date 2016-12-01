@@ -564,6 +564,9 @@ rth	,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){if(p)dwafns=p;else R 0;',
 rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
 rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl,nl
 ⍝[cf]
+⍝[of]:Globals
+rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl,nl
+⍝[cf]
 ⍝[of]:Co-dfns/Dyalog Converters
 rth	,←'V cpad(S lp*d,A&a){I t;B c=1;DOU(i,a.r)c*=a.s[i];',nl
 rth	,←' switch(a.v.type()){',nl
@@ -574,23 +577,20 @@ rth	,←'  case f64:t=APLD;break;',nl
 rth	,←'  default:if(c)dwaerr(16);t=APLI;}',nl
 rth	,←' dwafns->ws->ga(t,a.r,a.s.get(),d);if(c)a.v.host(DATA(d));}',nl
 rth	,←'V cpda(A&a,S lp*d){if(15!=TYPE(d))dwaerr(16);if(4<RANK(d))dwaerr(16);',nl
-rth	,←' dim4 s(RANK(d),SHAPE(d));',nl
+rth	,←' dim4 s(RANK(d),SHAPE(d));array evec=constant(0,dim4(1),s32);',nl
 rth	,←' B c=1;DOU(i,RANK(d))c*=s[i];',nl
 rth	,←' switch(ETYPE(d)){',nl
-rth	,←'  case APLI:{I*b=(I*)DATA(d);a=A{RANK(d),s,c?array(s,b):array()};};break;',nl
-rth	,←'  case APLD:{D*b=(D*)DATA(d);a=A{RANK(d),s,c?array(s,b):array()};};break;',nl
-rth	,←'  case APLSI:{S16*b=(S16*)DATA(d);a=A{RANK(d),s,c?array(s,b):array()};};break;',nl
+rth	,←'  case APLI:{I*b=(I*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
+rth	,←'  case APLD:{D*b=(D*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
+rth	,←'  case APLSI:{S16*b=(S16*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
 rth	,←'  case APLTI:{B c=1;DO(i,RANK(d))c*=SHAPE(d)[i];',nl
 rth	,←'   std::vector<S16> b(c);S8*src=(S8*)DATA(d);DO(i,c)b[i]=src[i];',nl
-rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):array()};};break;',nl
+rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec};};break;',nl
 rth	,←'  case APLU8:{B c=1;DO(i,RANK(d))c*=SHAPE(d)[i];',nl
 rth	,←'   std::vector<char> b(c);U8*src=(U8*)DATA(d);',nl
 rth	,←'   DO(i,c)b[i]=1&(src[i/8]>>(7-(i%8)));',nl
-rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):array()};};break;',nl
+rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec};};break;',nl
 rth	,←'  default:dwaerr(16);};}',nl,nl
-⍝[cf]
-⍝[of]:Globals
-rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl,nl
 ⍝[cf]
 ⍝[of]:External Makers & Extractors
 ⍝[c]rth	,←'EXPORT V*mkarray(S lp*da){A*aa=malloc(sizeof(A));if(aa==NULL)dwaerr(1);',nl
@@ -695,9 +695,9 @@ syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
 nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[cf]
 ⍝[of]:Primitives
-rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,s16);}',nl
-rth	,←'DF(eqv){bool v=l.r==r.r&&l.s==r.s;B c=cnt(r);if(v&&c)v=allTrue<bool>(l.v==r.v);',nl
-rth	,←' z.r=0;z.s=eshp;z.v=constant(v,z.s,s16);}',nl
+rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
+rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
+rth	,←' z.v=constant(0,z.s,b8);}',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←nl
