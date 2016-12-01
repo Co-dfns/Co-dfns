@@ -566,7 +566,13 @@ rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
 rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl,nl
 ⍝[cf]
 ⍝[of]:Co-dfns/Dyalog Converters
-rth	,←'V cpad(S lp*d,A&a,I t){B s[4] = {a.dims(0),a.dims(1),a.dims(2),a.dims(3)};',nl
+rth	,←'V cpad(S lp*d,A&a){I t;B s[4] = {a.dims(0),a.dims(1),a.dims(2),a.dims(3)};',nl
+rth	,←' switch(a.type()){',nl
+rth	,←'  case s32:t=APLI;break;',nl
+rth	,←'  case s16:t=APLSI;break;',nl
+rth	,←'  case b8:t=APLTI;break;',nl
+rth	,←'  case f64:t=APLD;break;',nl
+rth	,←'  default:dwaerr(16);}',nl
 rth	,←' dwafns->ws->ga(t,a.numdims(),s,d);a.host(DATA(d));}',nl
 rth	,←'V cpda(A&a,S lp*d){if(15!=TYPE(d))dwaerr(16);if(4<RANK(d))dwaerr(16);',nl
 rth	,←' dim4 s(RANK(d),SHAPE(d));',nl
@@ -662,7 +668,7 @@ tps	,←'  case APLD:tp+=1;break;case APLU8:tp+=2;break;',nl
 tps	,←'  default:dwaerr(16);}',nl
 tps	,←' switch(tp){',nl
 dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('dwaerr(',(cln⍕|e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
-dcp	←{(0>e)⊃('cpad(z,za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')''}
+dcp	←{(0>⊃(⍺⌷tdi)⌷⍉⊃y⍵)⊃'cpad(z,za);' ''}
 case	←{'  case ',(⍕⍺),':',(⍺('za,cl,cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
 fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
 fndy	←{nl,fre,'V ',(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),' }',nl,'}'}
