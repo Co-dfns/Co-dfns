@@ -712,6 +712,7 @@ rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
 rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
 rth	,←' z.v=constant(0,z.s,b8);}',nl
 rth	,←'MF(exp){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}',nl
+rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth	,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
