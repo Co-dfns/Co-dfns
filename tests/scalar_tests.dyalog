@@ -75,7 +75,7 @@ Z←0 0⍴⍬
 ⍝[c]'binompos'	SCL∆TST∆DYADIC   '!' IPS  IPS  IPS        IPS B    B
 ⍝[c]
 'conjugate'   SCL∆TST∆MONADIC '+' I   F   B
-⍝[c]'negate'      SCL∆TST∆MONADIC '-' I   F   B
+'negate'      SCL∆TST∆MONADIC '-' I   F   B
 ⍝[c]'direction'   SCL∆TST∆MONADIC '×' I   F   B
 ⍝[c]'reciprocal'  SCL∆TST∆MONADIC '÷' INZ FNZ BNZ
 ⍝[c]'exponential' SCL∆TST∆MONADIC '*' I   F   B

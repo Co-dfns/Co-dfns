@@ -712,6 +712,7 @@ rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}
 rth	,←' z.v=constant(0,z.s,b8);}',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
+rth	,←'MF(sub){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:Scalar Primitives
