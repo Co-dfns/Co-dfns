@@ -74,7 +74,7 @@ Z←0 0⍴⍬
 ⍝[c]'circneg7'	SCL∆TST∆DYADIC   '○' ¯7   AFN  (¯7⍴⍨≢F)   AFN ¯7   AFN
 ⍝[c]'binompos'	SCL∆TST∆DYADIC   '!' IPS  IPS  IPS        IPS B    B
 ⍝[c]
-⍝[c]'conjugate'   SCL∆TST∆MONADIC '+' I   F   B
+'conjugate'   SCL∆TST∆MONADIC '+' I   F   B
 ⍝[c]'negate'      SCL∆TST∆MONADIC '-' I   F   B
 ⍝[c]'direction'   SCL∆TST∆MONADIC '×' I   F   B
 ⍝[c]'reciprocal'  SCL∆TST∆MONADIC '÷' INZ FNZ BNZ
