@@ -76,7 +76,7 @@ Z←0 0⍴⍬
 ⍝[c]
 'conjugate'   SCL∆TST∆MONADIC '+' I   F   B
 'negate'      SCL∆TST∆MONADIC '-' I   F   B
-⍝[c]'direction'   SCL∆TST∆MONADIC '×' I   F   B
+'direction'   SCL∆TST∆MONADIC '×' I   F   B
 ⍝[c]'reciprocal'  SCL∆TST∆MONADIC '÷' INZ FNZ BNZ
 ⍝[c]'exponential' SCL∆TST∆MONADIC '*' I   F   B
 ⍝[c]'natlog'      SCL∆TST∆MONADIC '⍟' IPS FPS IPS
