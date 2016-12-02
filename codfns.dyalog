@@ -476,7 +476,7 @@ fz	←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1�
 fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝[cf]
 
-tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce ur fc∘pc∘mr⍣≡ ca fe mr dn lf du df rd rn ⍵}
+tt←{fd fz ff if ef td vc rl av va lt nv fv ce ur fc∘pc∘mr⍣≡ ca fe mr dn lf du df rd rn ⍵}
 ⍝[cf]
 ⍝[of]:Code Generator
 E1	←{('mf'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
@@ -544,6 +544,17 @@ rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
 rth	,←'#define PI 3.14159265358979323846',nl
 rth	,←'#define MF(n) static void n##mf(A&z,A&r)',nl
 rth	,←'#define DF(n) static void n##df(A&z,A&l,A&r)',nl
+rth	,←'#define SCASE(v,nv,x) switch(v.type()){\',nl
+rth	,←'   case f64:{D nv=v.scalar<D>();x;R;}\',nl
+rth	,←'   case s32:{I nv=v.scalar<I>();x;R;}\',nl
+rth	,←'   case s16:{S16 nv=v.scalar<S16>();x;R;}\',nl
+rth	,←'   case b8:{bool nv=v.scalar<char>();x;R;}\',nl
+rth	,←'   default:dwaerr(16);}',nl
+rth	,←'#define SF(n,x) static void n##df(A&z,A&l,A&r){\',nl
+rth	,←' if(l.r==r.r&&l.s==r.s){z.r=l.r;z.s=l.s;array&lv=l.v;array&rv=r.v;x;R;}\',nl
+rth	,←' if(!l.r){z.r=r.r;z.s=r.s;array&rv=r.v;SCASE(l.v,lv,x);}\',nl
+rth	,←' if(!r.r){z.r=l.r;z.s=l.s;array&lv=l.v;SCASE(r.v,rv,x);}\',nl
+rth	,←' if(l.r!=r.r)dwaerr(4);if(l.s!=r.s)dwaerr(5);dwaerr(99);}',nl
 rth	,←'#define S struct',nl,nl
 ⍝[cf]
 ⍝[of]:Typedefs
@@ -657,7 +668,8 @@ rth	,←'  default:dwaerr(16);};}',nl,nl
 ⍝[c]rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
 ⍝[c]rth	,←' DO(i,grdc){z=v[y*grdc+i]-v[x*grdc+i];if(z)break;}',nl
 ⍝[c]rth	,←' if(z)R z;R x-y;}',nl,nl
-rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl,nl
+rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
+rth	,←nl
 ⍝[cf]
 ⍝[cf]
 ⍝[of]:Function Entry
@@ -695,6 +707,7 @@ syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
 nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[cf]
 ⍝[of]:Primitives
+rth	,←'SF(add,z.v=lv+rv)',nl
 rth	,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
 rth	,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);B lc=cnt(l);if(!lc){z=r;R;}',nl
 rth	,←' if(lc!=1||r.r!=1)dwaerr(4);if((cnt(r)<=l.v(0)).scalar<char>())dwaerr(3);',nl
