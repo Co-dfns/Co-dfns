@@ -544,16 +544,10 @@ rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
 rth	,←'#define PI 3.14159265358979323846',nl
 rth	,←'#define MF(n) static void n##mf(A&z,A&r)',nl
 rth	,←'#define DF(n) static void n##df(A&z,A&l,A&r)',nl
-rth	,←'#define SCASE(v,nv,x) switch(v.type()){\',nl
-rth	,←'   case f64:{D nv=v.scalar<D>();x;R;}\',nl
-rth	,←'   case s32:{I nv=v.scalar<I>();x;R;}\',nl
-rth	,←'   case s16:{S16 nv=v.scalar<S16>();x;R;}\',nl
-rth	,←'   case b8:{bool nv=v.scalar<char>();x;R;}\',nl
-rth	,←'   default:dwaerr(16);}',nl
 rth	,←'#define SF(n,x) static void n##df(A&z,A&l,A&r){\',nl
 rth	,←' if(l.r==r.r&&l.s==r.s){z.r=l.r;z.s=l.s;array&lv=l.v;array&rv=r.v;x;R;}\',nl
-rth	,←' if(!l.r){z.r=r.r;z.s=r.s;array&rv=r.v;SCASE(l.v,lv,x);}\',nl
-rth	,←' if(!r.r){z.r=l.r;z.s=l.s;array&lv=l.v;SCASE(r.v,rv,x);}\',nl
+rth	,←' if(!l.r){z.r=r.r;z.s=r.s;array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
+rth	,←' if(!r.r){z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
 rth	,←' if(l.r!=r.r)dwaerr(4);if(l.s!=r.s)dwaerr(5);dwaerr(99);}',nl
 rth	,←'#define S struct',nl,nl
 ⍝[cf]
