@@ -724,6 +724,7 @@ rth	,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
 rth	,←'SF(mul,z.v=lv*rv)',nl
 rth	,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
 rth	,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
+rth	,←'SF(res,z.v=r.v-l.v*floor(r.v.as(f64)/(l.v+(0==l.v))))',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl

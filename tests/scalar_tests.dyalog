@@ -42,7 +42,7 @@ Z←0 0⍴⍬
 'log'	SCL∆TST∆DYADIC   '⍟'  IPS IPS  FPS        FPS  IPS IPS
 'powerzro'	SCL∆TST∆DYADIC   '*'  I   INT  F          INT  B   B
 'powerneg'	SCL∆TST∆DYADIC   '*'  IPS I    FPS        F    BNZ B
-⍝[c]'residue'	SCL∆TST∆DYADIC   '|'  I   I    F          F    B   B
+'residue'	SCL∆TST∆DYADIC   '|'  I   I    F          F    B   B
 ⍝[c]'minimum'	SCL∆TST∆DYADIC   '⌊'  I   I    F          F    B   B
 ⍝[c]'maximum'	SCL∆TST∆DYADIC   '⌈'  I   I    F          F    B   B
 ⍝[c]'lessthan'	SCL∆TST∆DYADIC   '<'  I   I    F          F    B   B
