@@ -85,7 +85,7 @@ Z←0 0⍴⍬
 'floor'       SCL∆TST∆MONADIC '⌊' I   F   B
 'ceiling'     SCL∆TST∆MONADIC '⌈' I   F   B
 'not'         SCL∆TST∆MONADIC '~' B   B   B
-⍝[c]'materialize' SCL∆TST∆MONADIC '⌷' I   F   B
+'materialize' SCL∆TST∆MONADIC '⌷' I   F   B
 ⍝[c]'factorial'   SCL∆TST∆MONADIC '!' IPS FPS B
 ⍝[c]
 ⍝[c]BS←':Namespace' 'r←0.02        ⋄ v←0.03' 
