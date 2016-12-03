@@ -56,7 +56,7 @@ Z←0 0⍴⍬
 'ori'	SCL∆TST∆DYADIC   '∨'  I   I    I2         I2   B   B
 'orf'	SCL∆TST∆RELATIVE '∨'  F   F    F2         F2   B   B
 'notand'	SCL∆TST∆DYADIC   '⍲'  B   B    B          B    B   B
-⍝[c]'notor'	SCL∆TST∆DYADIC   '⍱'  B   B    B          B    B   B
+'notor'	SCL∆TST∆DYADIC   '⍱'  B   B    B          B    B   B
 ⍝[c]'circular0'	SCL∆TST∆DYADIC   '○'  0   F1LT (0⍴⍨≢F1LT) F1LT 0   B
 ⍝[c]'circular1'	SCL∆TST∆DYADIC   '○'  1   I    (1⍴⍨≢F)    F    1   B
 ⍝[c]'circular2'	SCL∆TST∆DYADIC   '○'  2   I    (2⍴⍨≢F)    F    2   B
