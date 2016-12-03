@@ -52,7 +52,7 @@ Z←0 0⍴⍬
 'greater'	SCL∆TST∆DYADIC   '>'  I   I    F          F    B   B
 'notequal'	SCL∆TST∆DYADIC   '≠'  I   I    F          F    B   B
 'andi'	SCL∆TST∆DYADIC   '∧'  I   I    I2         I2   B   B
-⍝[c]'andf'	SCL∆TST∆RELATIVE '∧'  F   F    F2         F2   B   B
+'andf'	SCL∆TST∆RELATIVE '∧'  F   F    F2         F2   B   B
 ⍝[c]'ori'	SCL∆TST∆DYADIC   '∨'  I   I    I2         I2   B   B
 ⍝[c]'orf'	SCL∆TST∆RELATIVE '∨'  F   F    F2         F2   B   B
 ⍝[c]'notand'	SCL∆TST∆DYADIC   '⍲'  B   B    B          B    B   B
