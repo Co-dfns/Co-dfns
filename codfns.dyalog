@@ -729,6 +729,7 @@ rth	,←'MF(min){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',nl
 rth	,←'SF(min,z.v=min(lv,rv))',nl
 rth	,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
 rth	,←'SF(mul,z.v=lv*rv)',nl
+rth	,←'SF(neq,z.v=lv!=rv)',nl
 rth	,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
 rth	,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
 rth	,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
