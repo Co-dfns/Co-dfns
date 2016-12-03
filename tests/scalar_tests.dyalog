@@ -86,7 +86,7 @@ Z←0 0⍴⍬
 'ceiling'     SCL∆TST∆MONADIC '⌈' I   F   B
 'not'         SCL∆TST∆MONADIC '~' B   B   B
 'materialize' SCL∆TST∆MONADIC '⌷' I   F   B
-⍝[c]'factorial'   SCL∆TST∆MONADIC '!' IPS FPS B
+'factorial'   SCL∆TST∆MONADIC '!' IPS FPS B
 ⍝[c]
 ⍝[c]BS←':Namespace' 'r←0.02        ⋄ v←0.03' 
 ⍝[c]BS,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
