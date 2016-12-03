@@ -35,7 +35,7 @@ Z←0 0⍴⍬
 ∇
 
 'plus'	SCL∆TST∆DYADIC   '+'  I   I    F          F    B   B
-⍝[c]'minus'	SCL∆TST∆DYADIC   '-'  I   I    F          F    B   B
+'minus'	SCL∆TST∆DYADIC   '-'  I   I    F          F    B   B
 ⍝[c]'times'	SCL∆TST∆DYADIC   '×'  I   I    F          F    B   B
 ⍝[c]'divide'	SCL∆TST∆DYADIC   '÷'  I   INZ  F          FNZ  B   BNZ
 ⍝[c]'power'	SCL∆TST∆DYADIC   '*'  INZ I    FNZ        I    BNZ B

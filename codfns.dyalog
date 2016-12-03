@@ -724,6 +724,7 @@ rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
 rth	,←'MF(sub){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl
+rth	,←'SF(sub,z.v=lv-rv)',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:Scalar Primitives
