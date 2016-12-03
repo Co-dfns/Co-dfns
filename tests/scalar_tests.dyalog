@@ -46,7 +46,7 @@ Z←0 0⍴⍬
 'minimum'	SCL∆TST∆DYADIC   '⌊'  I   I    F          F    B   B
 'maximum'	SCL∆TST∆DYADIC   '⌈'  I   I    F          F    B   B
 'lessthan'	SCL∆TST∆DYADIC   '<'  I   I    F          F    B   B
-⍝[c]'lesseq'	SCL∆TST∆DYADIC   '≤'  I   I    F          F    B   B
+'lesseq'	SCL∆TST∆DYADIC   '≤'  I   I    F          F    B   B
 ⍝[c]'equal'	SCL∆TST∆DYADIC   '='  I   I    F          F    B   B
 ⍝[c]'greatereq'	SCL∆TST∆DYADIC   '≥'  I   I    F          F    B   B
 ⍝[c]'greater'	SCL∆TST∆DYADIC   '>'  I   I    F          F    B   B
