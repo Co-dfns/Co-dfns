@@ -710,7 +710,7 @@ rth	,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
 rth	,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);B lc=cnt(l);if(!lc){z=r;R;}',nl
 rth	,←' if(lc!=1||r.r!=1)dwaerr(4);if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
 rth	,←' z.r=0;z.s=eshp;array i=l.v(0);z.v=r.v(i);}',nl
-rth	,←'SF(eql,z.v=l.v==r.v)',nl
+rth	,←'SF(eql,z.v=lv==rv)',nl
 rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
 rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
 rth	,←' z.v=constant(0,z.s,b8);}',nl
@@ -718,18 +718,18 @@ rth	,←'MF(exp){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}',nl
 rth	,←'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',nl
 rth	,←'MF(fac){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',nl
 rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
-rth	,←'SF(log,z.v=log(r.v.as(f64))/log(l.v.as(f64)))',nl
-rth	,←'SF(lte,z.v=l.v<=r.v)',nl
-rth	,←'SF(lth,z.v=l.v<r.v)',nl
+rth	,←'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
+rth	,←'SF(lte,z.v=lv<=rv)',nl
+rth	,←'SF(lth,z.v=lv<rv)',nl
 rth	,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl
-rth	,←'SF(max,z.v=max(l.v,r.v))',nl
+rth	,←'SF(max,z.v=max(lv,rv))',nl
 rth	,←'MF(min){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',nl
-rth	,←'SF(min,z.v=min(l.v,r.v))',nl
+rth	,←'SF(min,z.v=min(lv,rv))',nl
 rth	,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
 rth	,←'SF(mul,z.v=lv*rv)',nl
 rth	,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
 rth	,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
-rth	,←'SF(res,z.v=r.v-l.v*floor(r.v.as(f64)/(l.v+(0==l.v))))',nl
+rth	,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
