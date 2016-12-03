@@ -719,7 +719,9 @@ rth	,←'MF(fac){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',nl
 rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth	,←'SF(log,z.v=log(r.v.as(f64))/log(l.v.as(f64)))',nl
 rth	,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl
+rth	,←'SF(max,z.v=max(l.v,r.v))',nl
 rth	,←'MF(min){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',nl
+rth	,←'SF(min,z.v=min(l.v,r.v))',nl
 rth	,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
 rth	,←'SF(mul,z.v=lv*rv)',nl
 rth	,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl

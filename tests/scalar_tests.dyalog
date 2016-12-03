@@ -43,8 +43,8 @@ Z←0 0⍴⍬
 'powerzro'	SCL∆TST∆DYADIC   '*'  I   INT  F          INT  B   B
 'powerneg'	SCL∆TST∆DYADIC   '*'  IPS I    FPS        F    BNZ B
 'residue'	SCL∆TST∆DYADIC   '|'  I   I    F          F    B   B
-⍝[c]'minimum'	SCL∆TST∆DYADIC   '⌊'  I   I    F          F    B   B
-⍝[c]'maximum'	SCL∆TST∆DYADIC   '⌈'  I   I    F          F    B   B
+'minimum'	SCL∆TST∆DYADIC   '⌊'  I   I    F          F    B   B
+'maximum'	SCL∆TST∆DYADIC   '⌈'  I   I    F          F    B   B
 ⍝[c]'lessthan'	SCL∆TST∆DYADIC   '<'  I   I    F          F    B   B
 ⍝[c]'lesseq'	SCL∆TST∆DYADIC   '≤'  I   I    F          F    B   B
 ⍝[c]'equal'	SCL∆TST∆DYADIC   '='  I   I    F          F    B   B
