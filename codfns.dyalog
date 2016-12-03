@@ -722,6 +722,7 @@ rth	,←'SF(gte,z.v=lv>=rv)',nl
 rth	,←'SF(gth,z.v=lv>rv)',nl
 rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth	,←'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
+rth	,←'SF(lor,if(lv.isbool()&&rv.isbool())z.v=lv||rv;else dwaerr(16);)',nl
 rth	,←'SF(lte,z.v=lv<=rv)',nl
 rth	,←'SF(lth,z.v=lv<rv)',nl
 rth	,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl
