@@ -714,6 +714,7 @@ rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
 rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
 rth	,←' z.v=constant(0,z.s,b8);}',nl
 rth	,←'MF(exp){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}',nl
+rth	,←'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',nl
 rth	,←'MF(fac){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',nl
 rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth	,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl

@@ -38,7 +38,7 @@ Z←0 0⍴⍬
 'minus'	SCL∆TST∆DYADIC   '-'  I   I    F          F    B   B
 'times'	SCL∆TST∆DYADIC   '×'  I   I    F          F    B   B
 'divide'	SCL∆TST∆DYADIC   '÷'  I   INZ  F          FNZ  B   BNZ
-⍝[c]'power'	SCL∆TST∆DYADIC   '*'  INZ I    FNZ        I    BNZ B
+'power'	SCL∆TST∆DYADIC   '*'  INZ I    FNZ        I    BNZ B
 ⍝[c]'powerzro'	SCL∆TST∆DYADIC   '*'  I   INT  F          INT  B   B
 ⍝[c]'powerneg'	SCL∆TST∆DYADIC   '*'  IPS I    FPS        F    BNZ B
 ⍝[c]'log'	SCL∆TST∆DYADIC   '⍟'  IPS IPS  FPS        FPS  IPS IPS
