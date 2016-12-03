@@ -84,7 +84,7 @@ Z←0 0⍴⍬
 'pitimes'     SCL∆TST∆MONADIC '○' I   F   B
 'floor'       SCL∆TST∆MONADIC '⌊' I   F   B
 'ceiling'     SCL∆TST∆MONADIC '⌈' I   F   B
-⍝[c]'not'         SCL∆TST∆MONADIC '~' B   B   B
+'not'         SCL∆TST∆MONADIC '~' B   B   B
 ⍝[c]'materialize' SCL∆TST∆MONADIC '⌷' I   F   B
 ⍝[c]'factorial'   SCL∆TST∆MONADIC '!' IPS FPS B
 ⍝[c]
