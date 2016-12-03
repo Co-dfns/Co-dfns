@@ -718,6 +718,7 @@ rth	,←'MF(exp){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}',nl
 rth	,←'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',nl
 rth	,←'MF(fac){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',nl
 rth	,←'SF(gte,z.v=lv>=rv)',nl
+rth	,←'SF(gth,z.v=lv>rv)',nl
 rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth	,←'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
 rth	,←'SF(lte,z.v=lv<=rv)',nl

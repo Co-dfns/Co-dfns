@@ -49,7 +49,7 @@ Z←0 0⍴⍬
 'lesseq'	SCL∆TST∆DYADIC   '≤'  I   I    F          F    B   B
 'equal'	SCL∆TST∆DYADIC   '='  I   I    F          F    B   B
 'greatereq'	SCL∆TST∆DYADIC   '≥'  I   I    F          F    B   B
-⍝[c]'greater'	SCL∆TST∆DYADIC   '>'  I   I    F          F    B   B
+'greater'	SCL∆TST∆DYADIC   '>'  I   I    F          F    B   B
 ⍝[c]'notequal'	SCL∆TST∆DYADIC   '≠'  I   I    F          F    B   B
 ⍝[c]'andi'	SCL∆TST∆DYADIC   '∧'  I   I    I2         I2   B   B
 ⍝[c]'andf'	SCL∆TST∆RELATIVE '∧'  F   F    F2         F2   B   B
