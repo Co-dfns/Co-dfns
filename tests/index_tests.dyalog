@@ -1,4 +1,4 @@
-:Namespace index
+﻿:Namespace index
 
 S1←':Namespace' 'Run←{⍺⌷⍵}' 'Lit←{1⌷⍵}' ':EndNamespace'
 S2←':Namespace' 'Run←{X←⍳⍺ ⋄ Y←⍳⍺ ⋄ X Y⌷⍵}' ':EndNamespace'

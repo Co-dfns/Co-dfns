@@ -505,7 +505,11 @@ gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om
 nl	←⎕UCS 13 10
 fvs	←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
 cln	←'¯'⎕R'-'
-var	←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:,⍺ ⋄ 'env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+lits	←{'A{0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),')}'}
+litv	←{'std::vector<'('DI'⊃⍨⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
+lita	←{'A{1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),')}'}
+lit	←{' '=⊃0⍴⍵:⍵ ⋄ 1=≢⍵:lits ⍵ ⋄ lita ⍵}
+var	←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:lit ,⍺ ⋄ 'env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
 dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
 fnv	←{'A*env[',(⍕1+⊃s⍵),']={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 git	←{⍵⊃¨⊂'/* XXX */ I ' 'I ' 'D ' 'U8 ' '?NA? '}
@@ -740,6 +744,11 @@ rth	,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
+rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[0];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
+rth	,←' B sv[4];l.v.as(s64).host(sv);DO(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
+rth	,←' index ix[4] = {span, span, span, span};DO(i,s)ix[i]=sv[i];',nl
+rth	,←' z.r=r.r-s;DOU(i,z.r)z.s[i]=r.s[s+i];if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
+rth	,←' if(r.r==3)z.v=r.v(ix[2],ix[1],ix[0]);if(r.r==4)z.v=r.v(ix[3],ix[2],ix[1],ix[0]);}',nl
 rth	,←'MF(sub){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl
 rth	,←'SF(sub,z.v=lv-rv)',nl
 rth	,←nl
