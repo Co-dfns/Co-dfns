@@ -562,7 +562,7 @@ rth	,←'typedef double D;typedef unsigned char U8;typedef dim_t B;typedef unsig
 rth	,←'typedef void V;',nl,nl
 ⍝[cf]
 ⍝[of]:Structures
-rth	,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[];}*p;};',nl
+rth	,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',nl
 rth	,←'S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*na[4];};',nl
 rth	,←'S dwa*dwafns;',nl
 rth	,←'S A{U r;dim4 s;array v;};',nl,nl
@@ -745,9 +745,10 @@ rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
 rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[0];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
-rth	,←' B sv[4];l.v.as(s64).host(sv);DO(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
-rth	,←' index ix[4] = {span, span, span, span};DO(i,s)ix[i]=sv[i];',nl
-rth	,←' z.r=r.r-s;DOU(i,z.r)z.s[i]=r.s[s+i];if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
+rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
+rth	,←' index ix[4] = {span, span, span, span};DOU(i,s)ix[i]=sv[i];',nl
+rth	,←' z.r=r.r-(U)s;DOU(i,z.r)z.s[i]=r.s[(U)s+i];',nl
+rth	,←' if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
 rth	,←' if(r.r==3)z.v=r.v(ix[2],ix[1],ix[0]);if(r.r==4)z.v=r.v(ix[3],ix[2],ix[1],ix[0]);}',nl
 rth	,←'MF(sub){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl
 rth	,←'SF(sub,z.v=lv-rv)',nl
