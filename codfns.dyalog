@@ -46,7 +46,7 @@ dirc	←{'\/'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
 soext	←{'.dll' '.so'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
 tie	←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
 put	←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-mkf←{	fn	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,' '
+mkf←{	fn	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,'_dwa '
 	f	←⍵,'←{'
 	f	,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
 	f	,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
@@ -476,7 +476,7 @@ fz	←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1�
 fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝[cf]
 
-tt←{fd fz ff if ef td vc rl av va lt nv fv ce ur fc∘pc∘mr⍣≡ ca fe mr dn lf du df rd rn ⍵}
+tt←{fd fz ff if ef vc rl av va lt nv fv ce ur fc∘pc∘mr⍣≡ ca fe mr dn lf du df rd rn ⍵}
 ⍝[cf]
 ⍝[of]:Code Generator
 E1	←{('mf'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
@@ -486,15 +486,14 @@ Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
 O2	←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
 O0	←{'' '' '' '' ''}
-Of	←{(fndy ⍵),nl,nl,(⊃,/(⍳12)fncd¨⊂⍵),nl}
-Fd	←{frt,(⊃n⍵),flp,';',nl}
-Fe	←{frt,(⊃n⍵),flp,'{',nl,'dwaerr(',(⍕|⊃⊃y⍵),');',nl}
-F0	←{frt,(⊃n⍵),flp,'{',nl,'A*env[]={tenv};',nl}
-F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵)}
+Of	←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),')',nl}
+Fd	←{'UF(',(⊃n⍵),');',nl}
+F0	←{'UF(',(⊃n⍵),'){',nl,'A*env[]={tenv};',nl}
+F1	←{'UF(',(⊃n⍵),'){',nl,('env0'dnv ⍵),(fnv ⍵)}
 Z0	←{'}',nl,nl}
 Z1	←{'z=',((⊃n⍵)var⊃e⍵),';}',nl,nl}
 Ze	←{'}',nl,nl}
-M0	←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
+M0	←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
 S0	←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
 Y0	←{⊃,/((⍳≢⊃n⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
 dis	←{⍺←⊢ ⋄ 0=⊃t⍵:5⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
@@ -520,17 +519,22 @@ rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),',',(rgt⍵),');',nl⊣⍵⍵}
 
 ⍝[cf]
-⍝[of]:Header
-⍝[of]:Includes
+⍝[of]:Preprocessing
 rth	←'#include <stdio.h>',nl,'#include <string.h>',nl
 rth	,←'#include <stdlib.h>',nl,'#include <time.h>',nl
 rth	,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
 rth	,←'#include <limits.h>',nl,'#include <float.h>',nl
 rth	,←'#include <math.h>',nl,'#include <arrayfire.h>',nl
-rth	,←'using namespace af;',nl,nl
-
-⍝[cf]
-⍝[of]:Helper Macros
+rth	,←'using namespace af;',nl
+rth	,←nl
+rth	,←'#ifdef _WIN32',nl,'#define EXPORT extern "C" __declspec(dllexport)',nl
+rth	,←'#elif defined(__GNUC__)',nl
+rth	,←'#define EXPORT extern "C" __attribute__ ((visibility ("default")))',nl
+rth	,←'#else',nl,'#define EXPORT extern "C"',nl,'#endif',nl
+rth	,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
+rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
+rth	,←nl
+rth	,←'#define S struct',nl
 rth	,←'#define RANK(lp) ((lp)->p->r)',nl
 rth	,←'#define TYPE(lp) ((lp)->p->t)',nl
 rth	,←'#define SHAPE(lp) ((lp)->p->s)',nl
@@ -539,44 +543,38 @@ rth	,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',nl
 rth	,←'#define DO(i,n) for(B i=0;i<(n);i++)',nl,'#define R return',nl
 rth	,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
 rth	,←'#define DOU(i,n) for(U i=0;i<(n);i++)',nl
-rth	,←'#ifdef _WIN32',nl,'#define EXPORT extern "C" __declspec(dllexport)',nl
-rth	,←'#elif defined(__GNUC__)',nl
-rth	,←'#define EXPORT extern "C" __attribute__ ((visibility ("default")))',nl
-rth	,←'#else',nl,'#define EXPORT extern "C"',nl,'#endif',nl
-rth	,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
-rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
-rth	,←'#define PI 3.14159265358979323846',nl
-rth	,←'#define MF(n) static void n##mf(A&z,A&r)',nl
-rth	,←'#define DF(n) static void n##df(A&z,A&l,A&r)',nl
-rth	,←'#define SF(n,x) static void n##df(A&z,A&l,A&r){\',nl
+rth	,←'#define MF(n) static V n##mf(A&z,A&r)',nl
+rth	,←'#define DF(n) static V n##df(A&z,A&l,A&r)',nl
+rth	,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl
+rth	,←' A cl,cr,za;if(!isinit){Init(za,cl,cr,NULL);isinit=1;}\',nl
+rth	,←' cpda(cr,r);if(l!=NULL)cpda(cl,l);m(za,cl,cr,env);cpad(z,za);}\',nl
+rth	,←'EXPORT V n##_cdf(A&z,A&l,A&r){m(z,l,r,env);}',nl
+rth	,←'#define SF(n,x) static V n##df(A&z,A&l,A&r){\',nl
 rth	,←' if(l.r==r.r&&l.s==r.s){z.r=l.r;z.s=l.s;array&lv=l.v;array&rv=r.v;x;R;}\',nl
 rth	,←' if(!l.r){z.r=r.r;z.s=r.s;array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
 rth	,←' if(!r.r){z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
 rth	,←' if(l.r!=r.r)dwaerr(4);if(l.s!=r.s)dwaerr(5);dwaerr(99);}',nl
-rth	,←'#define S struct',nl,nl
+rth	,←'#define UF(n) static V n(A&z,A&l,A&r,A*penv[])',nl
+rth	,←nl
 ⍝[cf]
-⍝[of]:Typedefs
+⍝[of]:Definitions
 rth	,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
 rth	,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',nl
 rth	,←'typedef double D;typedef unsigned char U8;typedef dim_t B;typedef unsigned U;',nl
-rth	,←'typedef void V;',nl,nl
-⍝[cf]
-⍝[of]:Structures
+rth	,←'typedef void V;',nl
+rth	,←nl
 rth	,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',nl
 rth	,←'S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*na[4];};',nl
 rth	,←'S dwa*dwafns;',nl
-rth	,←'S A{U r;dim4 s;array v;};',nl,nl
-
+rth	,←'S A{U r;dim4 s;array v;};',nl
+rth	,←nl
+rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
+rth	,←nl
 ⍝[cf]
-⍝[of]:DWA Functions
+⍝[of]:External Interfaces
 rth	,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){if(p)dwafns=p;else R 0;',nl
 rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
 rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl,nl
-⍝[cf]
-⍝[of]:Globals
-rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl,nl
-⍝[cf]
-⍝[of]:Co-dfns/Dyalog Converters
 rth	,←'V cpad(S lp*d,A&a){I t;B c=1;DOU(i,a.r)c*=a.s[i];',nl
 rth	,←' switch(a.v.type()){',nl
 rth	,←'  case s32:t=APLI;break;',nl
@@ -599,9 +597,7 @@ rth	,←'  case APLU8:{B c=1;DO(i,RANK(d))c*=SHAPE(d)[i];',nl
 rth	,←'   std::vector<char> b(c);U8*src=(U8*)DATA(d);',nl
 rth	,←'   DO(i,c)b[i]=1&(src[i/8]>>(7-(i%8)));',nl
 rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec};};break;',nl
-rth	,←'  default:dwaerr(16);};}',nl,nl
-⍝[cf]
-⍝[of]:External Makers & Extractors
+rth	,←'  default:dwaerr(16);};}',nl
 ⍝[c]rth	,←'EXPORT V*mkarray(S lp*da){A*aa=malloc(sizeof(A));if(aa==NULL)dwaerr(1);',nl
 ⍝[c]rth	,←' aa->v=NULL;cpda(aa,da);R aa;}',nl
 ⍝[c]rth	,←'V EXPORT exarray(S lp*da,A*aa,I at){I tp=0;',nl
@@ -620,8 +616,9 @@ rth	,←'  default:dwaerr(16);};}',nl,nl
 ⍝[c]rth	,←'  default:dwaerr(11);};R a;}',nl
 ⍝[c]rth	,←'EXPORT V cexa(A*a,I tp,I*r,B*s,U8**b){*r=a->r;DO(i,*r)s[i]=a->s[i];',nl
 ⍝[c]rth	,←' *b=malloc(a->z);if(!*b)dwaerr(1);U8*src=a->v;DO(i,a->z)(*b)[i]=src[i];}',nl,nl
+rth	,←nl
 ⍝[cf]
-⍝[of]:Scalar Helpers
+⍝[of]:Helpers
 ⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
 ⍝[c]rth	,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
 ⍝[c]rth	,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
@@ -646,51 +643,9 @@ rth	,←'  default:dwaerr(16);};}',nl,nl
 ⍝[c]rth	,←'  case 14:R cosh(b);break;',nl
 ⍝[c]rth	,←'  case 15:R tanh(b);break;',nl
 ⍝[c]rth	,←' };R -1;}',nl
-⍝[c]rth	,←'extern U arc4random_uniform(U);',nl,nl
-⍝[cf]
-⍝[of]:Miscellaneous Helpers
-⍝[c]rth	,←'V*grdv;I grdc;',nl
-⍝[c]rth	,←'I gucmpi(const V*xp,const V*yp){I*v=grdv;',nl
-⍝[c]rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-⍝[c]rth	,←' DO(i,grdc){z=v[x*grdc+i]-v[y*grdc+i];if(z)break;}',nl
-⍝[c]rth	,←' if(z)R z;R x-y;}',nl
-⍝[c]rth	,←'I gucmpf(const V*xp,const V*yp){D*v=grdv;',nl
-⍝[c]rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-⍝[c]rth	,←' DO(i,grdc){z=v[x*grdc+i]-v[y*grdc+i];if(z)break;}',nl
-⍝[c]rth	,←' if(z)R z;R x-y;}',nl
-⍝[c]rth	,←'I gdcmpi(const V*xp,const V*yp){I*v=grdv;',nl
-⍝[c]rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-⍝[c]rth	,←' DO(i,grdc){z=v[y*grdc+i]-v[x*grdc+i];if(z)break;}',nl
-⍝[c]rth	,←' if(z)R z;R x-y;}',nl
-⍝[c]rth	,←'I gdcmpf(const V*xp,const V*yp){D*v=grdv;',nl
-⍝[c]rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-⍝[c]rth	,←' DO(i,grdc){z=v[y*grdc+i]-v[x*grdc+i];if(z)break;}',nl
-⍝[c]rth	,←' if(z)R z;R x-y;}',nl,nl
+⍝[c]rth	,←'extern U arc4random_uniform(U);',nl
 rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
 rth	,←nl
-⍝[cf]
-⍝[cf]
-⍝[of]:Function Entry
-frt	←'static V '
-fre	←'EXPORT '
-foi	←' A cl,cr,za;if(!isinit){Init(za,cl,cr,NULL);isinit=1;}',nl
-flp	←'(A&z,A l,A r,A*penv[])'
-elp	←'(S lp*z,S lp*l,S lp*r)'
-tps	←' cpda(cr,r);if(l!=NULL)cpda(cl,l);',nl
-tps	,←' int tp=0;switch(ETYPE(r)){',nl
-tps	,←'  case APLSI:case APLTI:case APLI:break;',nl
-tps	,←'  case APLD:tp=4;break;case APLU8:tp=8;break;',nl
-tps	,←' default:dwaerr(16);}',nl
-tps	,←' if(l==NULL)tp+=3;else switch(ETYPE(l)){',nl
-tps	,←'  case APLSI:case APLTI:case APLI:break;',nl
-tps	,←'  case APLD:tp+=1;break;case APLU8:tp+=2;break;',nl
-tps	,←'  default:dwaerr(16);}',nl
-tps	,←' switch(tp){',nl
-dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('dwaerr(',(cln⍕|e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
-dcp	←{(0>⊃(⍺⌷tdi)⌷⍉⊃y⍵)⊃'cpad(z,za);' ''}
-case	←{'  case ',(⍕⍺),':',(⍺('za,cl,cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
-fndy	←{nl,fre,'V ',(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),' }',nl,'}'}
-fncd	←{fre,'I ',(⊃n⍵),(⍺⊃tdn),'(A&z,A l,A r){',(⍺('z,l,r'dcl)⍵),'R ',(cln⍕⊃(⍺⌷tdi)⌷⍉⊃y⍵),';}',nl}
 ⍝[cf]
 ⍝[of]:Symbol → Name Table
 syms	←,¨	'+'	'-'	'×'	'÷'	'*'	'⍟'	'|'	'○'	'⌊'	'⌈'	'!'	'<'
