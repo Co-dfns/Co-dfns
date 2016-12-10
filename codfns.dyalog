@@ -502,6 +502,7 @@ rth	,←nl
 rth	,←'MF(add){z=r;}',nl
 rth	,←'SF(add,z.v=lv+rv)',nl
 rth	,←'SF(and,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;else dwaerr(16);)',nl
+rth	,←'DF(brk){if(l.r!=1)dwaerr(16);z.r=r.r;z.s=r.s;z.v=l.v(r.v.as(s32));}',nl
 rth	,←'MF(cir){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}',nl
 rth	,←'MF(div){z.r=r.r;z.s=r.s;z.v=1.0/r.v.as(f64);}',nl
 rth	,←'SF(div,z.v=lv.as(f64)/rv.as(f64))',nl
