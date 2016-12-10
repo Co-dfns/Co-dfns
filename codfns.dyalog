@@ -393,7 +393,7 @@ rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),',',(rgt⍵),');',nl⊣⍵⍵}
 
 ⍝[cf]
-⍝[of]:Preprocessing
+⍝[of]:Header
 rth	←'#include <stdio.h>',nl,'#include <string.h>',nl
 rth	,←'#include <stdlib.h>',nl,'#include <time.h>',nl
 rth	,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
@@ -407,7 +407,6 @@ rth	,←'#define EXPORT extern "C" __attribute__ ((visibility ("default")))',nl
 rth	,←'#else',nl,'#define EXPORT extern "C"',nl,'#endif',nl
 rth	,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
 rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
-rth	,←nl
 rth	,←'#define S struct',nl
 rth	,←'#define RANK(lp) ((lp)->p->r)',nl
 rth	,←'#define TYPE(lp) ((lp)->p->t)',nl
@@ -430,47 +429,15 @@ rth	,←' if(!r.r){z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',n
 rth	,←' if(l.r!=r.r)dwaerr(4);if(l.s!=r.s)dwaerr(5);dwaerr(99);}',nl
 rth	,←'#define UF(n) static V n(A&z,A&l,A&r,A*penv[])',nl
 rth	,←nl
-⍝[cf]
-⍝[of]:Definitions
 rth	,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
 rth	,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',nl
 rth	,←'typedef double D;typedef unsigned char U8;typedef dim_t B;typedef unsigned U;',nl
 rth	,←'typedef void V;',nl
-rth	,←nl
 rth	,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',nl
 rth	,←'S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*na[4];};',nl
 rth	,←'S dwa*dwafns;',nl
 rth	,←'S A{U r;dim4 s;array v;};',nl
-rth	,←nl
 rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
-rth	,←nl
-⍝[cf]
-⍝[of]:Helpers
-⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-⍝[c]rth	,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
-⍝[c]rth	,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
-⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-⍝[c]rth	,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
-⍝[c]rth	,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
-⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-⍝[c]rth	,←'D circ(I a,D b){switch(a+8){',nl
-⍝[c]rth	,←'  case 7:R asin(b);break;',nl
-⍝[c]rth	,←'  case 6:R acos(b);break;',nl
-⍝[c]rth	,←'  case 5:R atan(b);break;',nl
-⍝[c]rth	,←'  case 4:R (b+1)*sqrt((b-1)/(b+1));break;',nl
-⍝[c]rth	,←'  case 3:R asinh(b);break;',nl
-⍝[c]rth	,←'  case 2:R acosh(b);break;',nl
-⍝[c]rth	,←'  case 1:R atanh(b);break;',nl
-⍝[c]rth	,←'  case 8:R sqrt(1-b*b);break;',nl
-⍝[c]rth	,←'  case 9:R sin(b);break;',nl
-⍝[c]rth	,←'  case 10:R cos(b);break;',nl
-⍝[c]rth	,←'  case 11:R tan(b);break;',nl
-⍝[c]rth	,←'  case 12:R sqrt(1+b*b);break;',nl
-⍝[c]rth	,←'  case 13:R sinh(b);break;',nl
-⍝[c]rth	,←'  case 14:R cosh(b);break;',nl
-⍝[c]rth	,←'  case 15:R tanh(b);break;',nl
-⍝[c]rth	,←' };R -1;}',nl
-⍝[c]rth	,←'extern U arc4random_uniform(U);',nl
 rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
 rth	,←nl
 ⍝[cf]
