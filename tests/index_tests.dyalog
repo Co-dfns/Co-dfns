@@ -13,5 +13,10 @@ S3←':Namespace' 'Run←{R←0⌷⍺ ⋄ C←1⌷⍺ ⋄ I←R↑2↓⍺ ⋄ J�
 '07' ('index' S1 'Lit' #.util.GEN∆T1 ⎕THIS) 	⍳5
 '08' ('index' S2 'Run' #.util.GEN∆T2 ⎕THIS)(5)	(?30 30⍴5)
 '09' ('index' S3 'Run' #.util.GEN∆T2 ⎕THIS)(7 15,,?7 15⍴30)	(?50 50⍴10)
+'10' ('index' S1 'Run' #.util.GEN∆T2 ⎕THIS)(1)	(3 3 3⍴⍳27)
+'11' ('index' S1 'Run' #.util.GEN∆T2 ⎕THIS)(0)	(20 20⍴⍳400)
+'12' ('index' S1 'Lit' #.util.GEN∆T1 ⎕THIS) 	20 20⍴⍳400
+'13' ('index' S1 'Run' #.util.GEN∆T2 ⎕THIS)(0)	(?3 20⍴1000)
+
 
 :EndNamespace

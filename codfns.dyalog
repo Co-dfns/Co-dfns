@@ -445,6 +445,35 @@ rth	,←nl
 rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
 rth	,←nl
 ⍝[cf]
+⍝[of]:Helpers
+⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+⍝[c]rth	,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
+⍝[c]rth	,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
+⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+⍝[c]rth	,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
+⍝[c]rth	,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
+⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
+⍝[c]rth	,←'D circ(I a,D b){switch(a+8){',nl
+⍝[c]rth	,←'  case 7:R asin(b);break;',nl
+⍝[c]rth	,←'  case 6:R acos(b);break;',nl
+⍝[c]rth	,←'  case 5:R atan(b);break;',nl
+⍝[c]rth	,←'  case 4:R (b+1)*sqrt((b-1)/(b+1));break;',nl
+⍝[c]rth	,←'  case 3:R asinh(b);break;',nl
+⍝[c]rth	,←'  case 2:R acosh(b);break;',nl
+⍝[c]rth	,←'  case 1:R atanh(b);break;',nl
+⍝[c]rth	,←'  case 8:R sqrt(1-b*b);break;',nl
+⍝[c]rth	,←'  case 9:R sin(b);break;',nl
+⍝[c]rth	,←'  case 10:R cos(b);break;',nl
+⍝[c]rth	,←'  case 11:R tan(b);break;',nl
+⍝[c]rth	,←'  case 12:R sqrt(1+b*b);break;',nl
+⍝[c]rth	,←'  case 13:R sinh(b);break;',nl
+⍝[c]rth	,←'  case 14:R cosh(b);break;',nl
+⍝[c]rth	,←'  case 15:R tanh(b);break;',nl
+⍝[c]rth	,←' };R -1;}',nl
+⍝[c]rth	,←'extern U arc4random_uniform(U);',nl
+rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
+rth	,←nl
+⍝[cf]
 ⍝[of]:External Interfaces
 rth	,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){if(p)dwafns=p;else R 0;',nl
 rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
@@ -490,35 +519,6 @@ rth	,←'  default:dwaerr(16);};}',nl
 ⍝[c]rth	,←'  default:dwaerr(11);};R a;}',nl
 ⍝[c]rth	,←'EXPORT V cexa(A*a,I tp,I*r,B*s,U8**b){*r=a->r;DO(i,*r)s[i]=a->s[i];',nl
 ⍝[c]rth	,←' *b=malloc(a->z);if(!*b)dwaerr(1);U8*src=a->v;DO(i,a->z)(*b)[i]=src[i];}',nl,nl
-rth	,←nl
-⍝[cf]
-⍝[of]:Helpers
-⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-⍝[c]rth	,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
-⍝[c]rth	,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
-⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-⍝[c]rth	,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
-⍝[c]rth	,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
-⍝[c]rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-⍝[c]rth	,←'D circ(I a,D b){switch(a+8){',nl
-⍝[c]rth	,←'  case 7:R asin(b);break;',nl
-⍝[c]rth	,←'  case 6:R acos(b);break;',nl
-⍝[c]rth	,←'  case 5:R atan(b);break;',nl
-⍝[c]rth	,←'  case 4:R (b+1)*sqrt((b-1)/(b+1));break;',nl
-⍝[c]rth	,←'  case 3:R asinh(b);break;',nl
-⍝[c]rth	,←'  case 2:R acosh(b);break;',nl
-⍝[c]rth	,←'  case 1:R atanh(b);break;',nl
-⍝[c]rth	,←'  case 8:R sqrt(1-b*b);break;',nl
-⍝[c]rth	,←'  case 9:R sin(b);break;',nl
-⍝[c]rth	,←'  case 10:R cos(b);break;',nl
-⍝[c]rth	,←'  case 11:R tan(b);break;',nl
-⍝[c]rth	,←'  case 12:R sqrt(1+b*b);break;',nl
-⍝[c]rth	,←'  case 13:R sinh(b);break;',nl
-⍝[c]rth	,←'  case 14:R cosh(b);break;',nl
-⍝[c]rth	,←'  case 15:R tanh(b);break;',nl
-⍝[c]rth	,←' };R -1;}',nl
-⍝[c]rth	,←'extern U arc4random_uniform(U);',nl
-rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:Symbol → Name Table
