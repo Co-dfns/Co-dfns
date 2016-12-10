@@ -375,6 +375,17 @@ gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om
 ⍝[cf]
 ⍝[of]:Runtime Code
 ⍝[of]:Utilities
+syms	←,¨	'+'	'-'	'×'	'÷'	'*'	'⍟'	'|'	'○'	'⌊'	'⌈'	'!'	'<'
+nams	←	'add'	'sub'	'mul'	'div'	'exp'	'log'	'res'	'cir'	'min'	'max'	'fac'	'lth'
+syms	,←,¨	'≤'	'='	'≥'	'>'	'≠'	'~'	'∧'	'∨'	'⍲'	'⍱'	'⌷'	'['
+nams	,←	'lte'	'eql'	'gte'	'gth'	'neq'	'not'	'and'	'lor'	'nan'	'nor'	'sqd'	'brk'
+syms	,←,¨	'⍳'	'⍴'	','	'⍪'	'⌽'	'⍉'	'⊖'	'∊'	'⊃'	'≡'	'≢'	'⊢'
+nams	,←	'iot'	'rho'	'cat'	'ctf'	'rot'	'trn'	'rtf'	'mem'	'dis'	'eqv'	'nqv'	'rgt'
+syms	,←,¨	'⊣'	'⊤'	'⊥'	'/'	'⌿'	'\'	'⍀'	'?'	'↑'	'↓'	'¨'	'⍨'
+nams	,←	'lft'	'enc'	'dec'	'red'	'rdf'	'scn'	'scf'	'rol'	'tke'	'drp'	'map'	'com'
+syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
+nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
+
 nl	←⎕UCS 13 10
 fvs	←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
 cln	←'¯'⎕R'-'
@@ -391,7 +402,6 @@ rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
 lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
 rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),',',(rgt⍵),');',nl⊣⍵⍵}
-
 ⍝[cf]
 ⍝[of]:Header
 rth	←'#include <stdio.h>',nl,'#include <string.h>',nl
@@ -488,18 +498,6 @@ rth	,←'  default:dwaerr(16);};}',nl
 ⍝[c]rth	,←'EXPORT V cexa(A*a,I tp,I*r,B*s,U8**b){*r=a->r;DO(i,*r)s[i]=a->s[i];',nl
 ⍝[c]rth	,←' *b=malloc(a->z);if(!*b)dwaerr(1);U8*src=a->v;DO(i,a->z)(*b)[i]=src[i];}',nl,nl
 rth	,←nl
-⍝[cf]
-⍝[of]:Symbol → Name Table
-syms	←,¨	'+'	'-'	'×'	'÷'	'*'	'⍟'	'|'	'○'	'⌊'	'⌈'	'!'	'<'
-nams	←	'add'	'sub'	'mul'	'div'	'exp'	'log'	'res'	'cir'	'min'	'max'	'fac'	'lth'
-syms	,←,¨	'≤'	'='	'≥'	'>'	'≠'	'~'	'∧'	'∨'	'⍲'	'⍱'	'⌷'	'['
-nams	,←	'lte'	'eql'	'gte'	'gth'	'neq'	'not'	'and'	'lor'	'nan'	'nor'	'sqd'	'brk'
-syms	,←,¨	'⍳'	'⍴'	','	'⍪'	'⌽'	'⍉'	'⊖'	'∊'	'⊃'	'≡'	'≢'	'⊢'
-nams	,←	'iot'	'rho'	'cat'	'ctf'	'rot'	'trn'	'rtf'	'mem'	'dis'	'eqv'	'nqv'	'rgt'
-syms	,←,¨	'⊣'	'⊤'	'⊥'	'/'	'⌿'	'\'	'⍀'	'?'	'↑'	'↓'	'¨'	'⍨'
-nams	,←	'lft'	'enc'	'dec'	'red'	'rdf'	'scn'	'scf'	'rol'	'tke'	'drp'	'map'	'com'
-syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
-nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
 ⍝[cf]
 ⍝[of]:Primitives
 rth	,←'MF(add){z=r;}',nl
