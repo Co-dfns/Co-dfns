@@ -577,7 +577,7 @@ rth	,←'MF(sqd){z=r;}',nl
 rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
 rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
 rth	,←' index ix[4] = {span, span, span, span};DOU(i,s)ix[i]=sv[i];',nl
-rth	,←' z.r=r.r-(U)s;DOU(i,z.r)z.s[i]=r.s[i];',nl
+rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());',nl
 rth	,←' if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
 rth	,←' if(r.r==3)z.v=r.v(ix[2],ix[1],ix[0]);if(r.r==4)z.v=r.v(ix[3],ix[2],ix[1],ix[0]);}',nl
 rth	,←'MF(sub){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl

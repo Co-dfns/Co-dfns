@@ -88,14 +88,14 @@ Z←0 0⍴⍬
 'materialize' SCL∆TST∆MONADIC '⌷' I   F   B
 'factorial'   SCL∆TST∆MONADIC '!' IPS FPS B
 ⍝[c]
-⍝[c]BS←':Namespace' 'r←0.02        ⋄ v←0.03' 
-⍝[c]BS,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
-⍝[c]BS,←⊂'L←|(((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT)-vsqrtT'
-⍝[c]BS,←⊂'(÷(○2)*0.5)×(*(L×L)÷¯2)×÷1+0.2316419×L' 
-⍝[c]BS,←'}' ':EndNamespace'
-⍝[c]
-⍝[c]D←{⍉1+?⍵ 3⍴1000}2*20 ⋄ L←,¯1↑D ⋄ R←2↑D
-⍝[c]
-⍝[c]''('scalar' BS 'Run' 1e¯10 #.util.GEN∆T3 ⎕THIS) L R
+BS←':Namespace' 'r←0.02        ⋄ v←0.03' 
+BS,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
+BS,←⊂'L←|(((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT)-vsqrtT'
+BS,←⊂'(÷(○2)*0.5)×(*(L×L)÷¯2)×÷1+0.2316419×L' 
+BS,←'}' ':EndNamespace'
+
+D←{⍉1+?⍵ 3⍴1000}25 ⋄ L←,¯1↑D ⋄ R←2↑D
+
+''('scalar' BS 'Run' 1e¯10 #.util.GEN∆T3 ⎕THIS) L R
 
 :EndNamespace
