@@ -478,7 +478,7 @@ rth	,←nl
 rth	,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){if(p)dwafns=p;else R 0;',nl
 rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
 rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl,nl
-rth	,←'V cpad(S lp*d,A&a){I t;B c=1;DOU(i,a.r)c*=a.s[i];',nl
+rth	,←'V cpad(lp*d,A&a){I t;B c=cnt(a);',nl
 rth	,←' switch(a.v.type()){',nl
 rth	,←'  case s32:t=APLI;break;',nl
 rth	,←'  case s16:t=APLSI;break;',nl
