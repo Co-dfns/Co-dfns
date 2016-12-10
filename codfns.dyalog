@@ -1059,21 +1059,6 @@ dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
 ⍝[cf]
 ⍝[of]:Generators
-⍝[of]:[]	Bracket
-brid←{	chk	←'if(lr!=1)dwaerr(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
-	chkn	←pacc'update host(rv[:rc],lv[:lc])'
-	chkn	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])dwaerr(3);'
-	chkb	←'B n=(rc+7)/8;',nl
-	chkb	,←pacc'update host(rv[:n],lv[:lc])'
-	chkb	,←'DO(i,n){DO(j,8){if((1&(rv[i]>>j))>=ls[0])dwaerr(3);}}'
-	chk	,←(3≡1⊃⍺)⊃chkn chkb
-	siz	←'zr=rr;DOI(i,zr)zs[i]=rs[i];'
-	exen	←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
-	exeb	←(simd'present(zv[:rslt->c],lv[:lc],rv[:n])')
-	exeb	,←'DO(i,n){DO(j,8){zv[i*8+j]=lv[1&(rv[i]>>j)];}}'
-	exe	←(3≡1⊃⍺)⊃exen exeb
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
 ⍝[of]:⊤	Encode
 encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
 	chk	,←pacc'update host(lv[:lc])'
