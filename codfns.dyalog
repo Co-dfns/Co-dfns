@@ -485,10 +485,11 @@ rth	,←'  case s16:t=APLSI;break;',nl
 rth	,←'  case b8:t=APLTI;break;',nl
 rth	,←'  case f64:t=APLD;break;',nl
 rth	,←'  default:if(c)dwaerr(16);t=APLI;}',nl
-rth	,←' dwafns->ws->ga(t,a.r,a.s.get(),d);if(c)a.v.host(DATA(d));}',nl
-rth	,←'V cpda(A&a,S lp*d){if(15!=TYPE(d))dwaerr(16);if(4<RANK(d))dwaerr(16);',nl
-rth	,←' dim4 s(RANK(d),SHAPE(d));array evec=constant(0,dim4(1),s32);',nl
-rth	,←' B c=1;DOU(i,RANK(d))c*=s[i];',nl
+rth	,←' B s[4];DOU(i,a.r)s[a.r-(i+1)]=a.s[i];dwafns->ws->ga(t,a.r,s,d);',nl
+rth	,←' if(c)a.v.host(DATA(d));}',nl
+rth	,←'V cpda(A&a,lp*d){if(15!=TYPE(d))dwaerr(16);if(4<RANK(d))dwaerr(16);',nl
+rth	,←' B sp[4];DOU(i,RANK(d))sp[RANK(d)-(i+1)]=SHAPE(d)[i];dim4 s(RANK(d),sp);',nl
+rth	,←' array evec=constant(0,dim4(1),s32);B c=1;DOU(i,RANK(d))c*=s[i];',nl
 rth	,←' switch(ETYPE(d)){',nl
 rth	,←'  case APLI:{I*b=(I*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
 rth	,←'  case APLD:{D*b=(D*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
@@ -573,10 +574,10 @@ rth	,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
-rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[0];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
+rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
 rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
 rth	,←' index ix[4] = {span, span, span, span};DOU(i,s)ix[i]=sv[i];',nl
-rth	,←' z.r=r.r-(U)s;DOU(i,z.r)z.s[i]=r.s[(U)s+i];',nl
+rth	,←' z.r=r.r-(U)s;DOU(i,z.r)z.s[i]=r.s[i];',nl
 rth	,←' if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
 rth	,←' if(r.r==3)z.v=r.v(ix[2],ix[1],ix[0]);if(r.r==4)z.v=r.v(ix[3],ix[2],ix[1],ix[0]);}',nl
 rth	,←'MF(sub){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl
