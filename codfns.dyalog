@@ -519,6 +519,8 @@ rth	,←'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',nl
 rth	,←'MF(fac){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',nl
 rth	,←'SF(gte,z.v=lv>=rv)',nl
 rth	,←'SF(gth,z.v=lv>rv)',nl
+rth	,←'MF(iot){if(r.r>1)dwaerr(4);B c=cnt(r);if(c>4)dwaerr(10);if(c>1)dwaerr(16);',nl
+rth	,←' z.r=1;z.s=dim4(r.v.as(s32).scalar<I>());z.v=z.s[0]?iota(z.s,dim4(1),s32):evec();}',nl
 rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth	,←'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
 rth	,←'SF(lor,if(lv.isbool()&&rv.isbool())z.v=lv||rv;else dwaerr(16);)',nl
