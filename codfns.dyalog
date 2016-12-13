@@ -450,6 +450,7 @@ rth	,←'S A{U r;dim4 s;array v;};',nl
 rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
 rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
 rth	,←'B cnt(lp*d){B c=1;DOU(i,RANK(d))c*=SHAPE(d)[i];R c;}',nl
+rth	,←'array evec(V){R constant(0,dim4(1),s32);}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:External Interfaces
@@ -467,16 +468,15 @@ rth	,←' B s[4];DOU(i,a.r)s[a.r-(i+1)]=a.s[i];dwafns->ws->ga(t,a.r,s,d);',nl
 rth	,←' if(c)a.v.host(DATA(d));}',nl
 rth	,←'V cpda(A&a,lp*d){if(15!=TYPE(d))dwaerr(16);if(4<RANK(d))dwaerr(16);',nl
 rth	,←' dim4 s(1);DOU(i,RANK(d))s[RANK(d)-(i+1)]=SHAPE(d)[i];B c=cnt(d);',nl
-rth	,←' array evec=constant(0,dim4(1),s32);',nl
 rth	,←' switch(ETYPE(d)){',nl
-rth	,←'  case APLI:{I*b=(I*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
-rth	,←'  case APLD:{D*b=(D*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
-rth	,←'  case APLSI:{S16*b=(S16*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec};};break;',nl
+rth	,←'  case APLI:{I*b=(I*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec()};};break;',nl
+rth	,←'  case APLD:{D*b=(D*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec()};};break;',nl
+rth	,←'  case APLSI:{S16*b=(S16*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec()};};break;',nl
 rth	,←'  case APLTI:{std::vector<S16> b(c);S8*src=(S8*)DATA(d);DO(i,c)b[i]=src[i];',nl
-rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec};};break;',nl
+rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec()};};break;',nl
 rth	,←'  case APLU8:{std::vector<char> b(c);U8*src=(U8*)DATA(d);',nl
 rth	,←'   DO(i,c)b[i]=1&(src[i/8]>>(7-(i%8)));',nl
-rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec};};break;',nl
+rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec()};};break;',nl
 rth	,←'  default:dwaerr(16);};}',nl
 ⍝[c]rth	,←'EXPORT V*mkarray(S lp*da){A*aa=malloc(sizeof(A));if(aa==NULL)dwaerr(1);',nl
 ⍝[c]rth	,←' aa->v=NULL;cpda(aa,da);R aa;}',nl
