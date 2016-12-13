@@ -1147,24 +1147,6 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
 ⍝[of]:⍳	Index Gen./Index Of
-iotmfinaaa←{	z	←'{',('r'decarri rgt ⍵)
-	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
-	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=rv[0];}',nl
-	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
-		z,'DOI(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
-iotmffnaaa←{	z	←'{',('r'decarrf rgt ⍵)
-	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
-	z	,←'B c=0;',nl,simd'present(rv[:rc]) copyout(c)'
-	z	,←'DOI(i,1){if(rv[0]!=floor(rv[0]))c=1;else c=0;}',nl
-	z	,←'if(c){dwaerr(11);}',nl
-	z	,←(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=rv[0];}',nl
-	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
-		z,'DOI(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
-iotmfbnaaa←{	z	←'{',('r'decarrb rgt ⍵)
-	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
-	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=1&rv[0];}',nl
-	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
-		z,'DO(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
 iotdfiiaaa←{		'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),iotdfnnlp ⍵}
 iotdfifaaa←{		'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),iotdfnnlp ⍵}
 iotdfibaaa←{		'{dwaerr(16);}',nl}
