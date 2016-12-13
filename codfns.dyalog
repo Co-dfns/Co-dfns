@@ -526,6 +526,7 @@ rth	,←'SF(lte,z.v=lv<=rv)',nl
 rth	,←'SF(lth,z.v=lv<rv)',nl
 rth	,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl
 rth	,←'SF(max,z.v=max(lv,rv))',nl
+rth	,←'MF(mem){z.r=1;z.s=dim4(cnt(r));z.v=z.s[0]?array(r.v,z.s):evec();}',nl
 rth	,←'MF(min){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',nl
 rth	,←'SF(min,z.v=min(lv,rv))',nl
 rth	,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
