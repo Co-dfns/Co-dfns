@@ -1070,12 +1070,6 @@ encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:∊	Enlist/Membership
-memmfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	s	←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl
-	≡/2↑e:	s
-		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
-memmfbnaaa←memmffnaaa←memmfinaaa
 memdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
 		z,('gucmpi'memdfnnlp'gucmpi')⍵}
 memdfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵)
