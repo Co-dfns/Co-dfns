@@ -8,6 +8,7 @@ S←':Namespace' 'Run←{∊⍵}' ':EndNamespace'
 '3'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
 '4'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) ÷2 2⍴1+⍳5
 '5'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴1 0
+'6'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴⍳21
 
 :EndNamespace
 

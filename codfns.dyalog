@@ -542,7 +542,7 @@ rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}
 rth	,←' z.v=constant(0,z.s,b8);}',nl
 rth	,←'MF(iot){if(r.r>1)dwaerr(4);B c=cnt(r);if(c>4)dwaerr(10);if(c>1)dwaerr(16);',nl
 rth	,←' z.r=1;z.s=dim4(r.v.as(s32).scalar<I>());z.v=z.s[0]?iota(z.s,dim4(1),s32):evec();}',nl
-rth	,←'MF(mem){z.r=1;z.s=dim4(cnt(r));z.v=z.s[0]?array(r.v,z.s):evec();}',nl
+rth	,←'MF(mem){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
