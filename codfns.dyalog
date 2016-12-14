@@ -448,15 +448,19 @@ rth	,←'S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*n
 rth	,←'S dwa*dwafns;',nl
 rth	,←'S A{U r;dim4 s;array v;};',nl
 rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
+rth	,←nl
+⍝[cf]
+⍝[of]:Helpers
+rth	,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){if(p)dwafns=p;else R 0;',nl
+rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
+rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl
+rth	,←nl
 rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
 rth	,←'B cnt(lp*d){B c=1;DOU(i,RANK(d))c*=SHAPE(d)[i];R c;}',nl
 rth	,←'array evec(V){R constant(0,dim4(1),s32);}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:External Interfaces
-rth	,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){if(p)dwafns=p;else R 0;',nl
-rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
-rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl,nl
 rth	,←'V cpad(lp*d,A&a){I t;B c=cnt(a);',nl
 rth	,←' switch(a.v.type()){',nl
 rth	,←'  case s32:t=APLI;break;',nl
