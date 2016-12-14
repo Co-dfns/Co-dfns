@@ -458,6 +458,9 @@ rth	,←nl
 rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
 rth	,←'B cnt(lp*d){B c=1;DOU(i,RANK(d))c*=SHAPE(d)[i];R c;}',nl
 rth	,←'array evec(V){R constant(0,dim4(1),s32);}',nl
+rth	,←'dtype mxt(array&a,array&b){dtype at=a.type();dtype bt=b.type();',nl
+rth	,←' if(at==f64||bt==f64)R f64;if(at==s32||bt==s32)R s32;',nl
+rth	,←' if(at==s16||bt==s16)R s16;if(at==b8||bt==b8)R b8;dwaerr(16);R f64;}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:External Interfaces
