@@ -1159,22 +1159,6 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 		z,'cpaa(',(rslt ⍵),',&za);}',nl}
 gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
-⍝[of]:⍳	Index Gen./Index Of
-iotdfiiaaa←{		'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),iotdfnnlp ⍵}
-iotdfifaaa←{		'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),iotdfnnlp ⍵}
-iotdfibaaa←{		'{dwaerr(16);}',nl}
-iotdffiaaa←{		'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵),iotdfnnlp ⍵}
-iotdfffaaa←{		'{',('r'decarrf rgt ⍵),('l'decarrf lft ⍵),iotdfnnlp ⍵}
-iotdffbaaa←{		'{dwaerr(16);}',nl}
-iotdfbbaaa←{		'{dwaerr(16);}',nl}
-iotdfbiaaa←{		'{dwaerr(16);}',nl}
-iotdfbfaaa←{		'{dwaerr(16);}',nl}
-iotdfnnlp←{	z	←('rr,rs,1'dectmpi'z'),'if(zc){',nl
-	z	,←simd'present(zv[:zc],rv[:rc],lv[:lc])'
-	z	,←'DO(i,zc){zv[i]=lc;DO(j,lc){if(rv[i]==lv[j]){zv[i]=j;break;}}}}',nl
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-iotd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⍳')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
-⍝[cf]
 ⍝[of]:∩	Intersection
 intdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
 		z,('1,&uc,1'dectmpi'z')('gucmpi'intdfnnlp'gucmpi')⍵}
