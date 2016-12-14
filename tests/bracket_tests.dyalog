@@ -1,4 +1,4 @@
-:Namespace bracket
+﻿:Namespace bracket
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 S1←':Namespace' 'Run←{⍺[⍵]}' 'Lit←{(0 1 2 3 4 5)[⍵]}' ':EndNamespace'

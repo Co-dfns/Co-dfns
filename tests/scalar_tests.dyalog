@@ -39,9 +39,9 @@ Z←0 0⍴⍬
 'times'	SCL∆TST∆DYADIC   '×'  I   I    F          F    B   B
 'divide'	SCL∆TST∆DYADIC   '÷'  I   INZ  F          FNZ  B   BNZ
 'power'	SCL∆TST∆DYADIC   '*'  INZ I    FNZ        I    BNZ B
+'log'	SCL∆TST∆DYADIC   '⍟'  IPS IPS  FPS        FPS  IPS IPS
 'powerzro'	SCL∆TST∆DYADIC   '*'  I   INT  F          INT  B   B
 'powerneg'	SCL∆TST∆DYADIC   '*'  IPS I    FPS        F    BNZ B
-'log'	SCL∆TST∆DYADIC   '⍟'  IPS IPS  FPS        FPS  IPS IPS
 'residue'	SCL∆TST∆DYADIC   '|'  I   I    F          F    B   B
 'minimum'	SCL∆TST∆DYADIC   '⌊'  I   I    F          F    B   B
 'maximum'	SCL∆TST∆DYADIC   '⌈'  I   I    F          F    B   B
@@ -57,23 +57,23 @@ Z←0 0⍴⍬
 'orf'	SCL∆TST∆RELATIVE '∨'  F   F    F2         F2   B   B
 'notand'	SCL∆TST∆DYADIC   '⍲'  B   B    B          B    B   B
 'notor'	SCL∆TST∆DYADIC   '⍱'  B   B    B          B    B   B
-'circular0'	SCL∆TST∆DYADIC   '○'  0   F1LT (0⍴⍨≢F1LT) F1LT 0   B
-'circular1'	SCL∆TST∆DYADIC   '○'  1   I    (1⍴⍨≢F)    F    1   B
-'circular2'	SCL∆TST∆DYADIC   '○'  2   I    (2⍴⍨≢F)    F    2   B
-'circular3'	SCL∆TST∆DYADIC   '○'  3   I    (3⍴⍨≢F)    F    3   B
-'circular4'	SCL∆TST∆DYADIC   '○'  4   I    (4⍴⍨≢F)    F    4   B
-'circular5'	SCL∆TST∆DYADIC   '○'  5   I    (5⍴⍨≢F)    F    5   B
-'circular6'	SCL∆TST∆DYADIC   '○'  6   I    (6⍴⍨≢F)    F    6   B
-'circular7'	SCL∆TST∆DYADIC   '○'  7   I    (7⍴⍨≢F)    F    7   B
-'circneg1'	SCL∆TST∆DYADIC   '○' ¯1   AFN  (¯1⍴⍨≢AFN) AFN ¯1   B
-'circneg2'	SCL∆TST∆DYADIC   '○' ¯2   AFN  (¯2⍴⍨≢AFN) AFN ¯2   B
-'circneg3'	SCL∆TST∆DYADIC   '○' ¯3   I    (¯3⍴⍨≢F)   F   ¯3   B
-'circneg4'	SCL∆TST∆DYADIC   '○' ¯4   ING  (¯4⍴⍨≢F)   FNZ ¯4   BNZ
-'circneg5'	SCL∆TST∆RELATIVE '○' ¯5   I    (¯5⍴⍨≢F)   F   ¯5   B
-'circneg6'	SCL∆TST∆DYADIC   '○' ¯6   IPS  (¯6⍴⍨≢F)   FPS ¯6   BNZ
-'circneg7'	SCL∆TST∆DYADIC   '○' ¯7   AFN  (¯7⍴⍨≢F)   AFN ¯7   AFN
-'binompos'	SCL∆TST∆DYADIC   '!' IPS  IPS  IPS        IPS B    B
-
+⍝[c]'circular0'	SCL∆TST∆DYADIC   '○'  0   F1LT (0⍴⍨≢F1LT) F1LT 0   B
+⍝[c]'circular1'	SCL∆TST∆DYADIC   '○'  1   I    (1⍴⍨≢F)    F    1   B
+⍝[c]'circular2'	SCL∆TST∆DYADIC   '○'  2   I    (2⍴⍨≢F)    F    2   B
+⍝[c]'circular3'	SCL∆TST∆DYADIC   '○'  3   I    (3⍴⍨≢F)    F    3   B
+⍝[c]'circular4'	SCL∆TST∆DYADIC   '○'  4   I    (4⍴⍨≢F)    F    4   B
+⍝[c]'circular5'	SCL∆TST∆DYADIC   '○'  5   I    (5⍴⍨≢F)    F    5   B
+⍝[c]'circular6'	SCL∆TST∆DYADIC   '○'  6   I    (6⍴⍨≢F)    F    6   B
+⍝[c]'circular7'	SCL∆TST∆DYADIC   '○'  7   I    (7⍴⍨≢F)    F    7   B
+⍝[c]'circneg1'	SCL∆TST∆DYADIC   '○' ¯1   AFN  (¯1⍴⍨≢AFN) AFN ¯1   B
+⍝[c]'circneg2'	SCL∆TST∆DYADIC   '○' ¯2   AFN  (¯2⍴⍨≢AFN) AFN ¯2   B
+⍝[c]'circneg3'	SCL∆TST∆DYADIC   '○' ¯3   I    (¯3⍴⍨≢F)   F   ¯3   B
+⍝[c]'circneg4'	SCL∆TST∆DYADIC   '○' ¯4   ING  (¯4⍴⍨≢F)   FNZ ¯4   BNZ
+⍝[c]'circneg5'	SCL∆TST∆RELATIVE '○' ¯5   I    (¯5⍴⍨≢F)   F   ¯5   B
+⍝[c]'circneg6'	SCL∆TST∆DYADIC   '○' ¯6   IPS  (¯6⍴⍨≢F)   FPS ¯6   BNZ
+⍝[c]'circneg7'	SCL∆TST∆DYADIC   '○' ¯7   AFN  (¯7⍴⍨≢F)   AFN ¯7   AFN
+⍝[c]'binompos'	SCL∆TST∆DYADIC   '!' IPS  IPS  IPS        IPS B    B
+⍝[c]
 'conjugate'   SCL∆TST∆MONADIC '+' I   F   B
 'negate'      SCL∆TST∆MONADIC '-' I   F   B
 'direction'   SCL∆TST∆MONADIC '×' I   F   B
@@ -87,14 +87,14 @@ Z←0 0⍴⍬
 'not'         SCL∆TST∆MONADIC '~' B   B   B
 'materialize' SCL∆TST∆MONADIC '⌷' I   F   B
 'factorial'   SCL∆TST∆MONADIC '!' IPS FPS B
-
+⍝[c]
 BS←':Namespace' 'r←0.02        ⋄ v←0.03' 
 BS,←'Run←{' 'S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5'
 BS,←⊂'L←|(((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT)-vsqrtT'
 BS,←⊂'(÷(○2)*0.5)×(*(L×L)÷¯2)×÷1+0.2316419×L' 
 BS,←'}' ':EndNamespace'
 
-D←{⍉1+?⍵ 3⍴1000}2*20 ⋄ L←,¯1↑D ⋄ R←2↑D
+D←{⍉1+?⍵ 3⍴1000}25 ⋄ L←,¯1↑D ⋄ R←2↑D
 
 ''('scalar' BS 'Run' 1e¯10 #.util.GEN∆T3 ⎕THIS) L R
 

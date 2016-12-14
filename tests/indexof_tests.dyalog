@@ -88,6 +88,4 @@ F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 '83'('indexof' S 'Run' #.util.GEN∆T2 ⎕THIS)(F ⌽⍳2)(F 5 5 5⍴⍳5)
 '84'('indexof' S 'Run' #.util.GEN∆T2 ⎕THIS)(F ?1024⍴2*19)(F ?1024⍴2*19)
 
-
 :EndNamespace
-

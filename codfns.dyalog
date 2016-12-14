@@ -30,7 +30,7 @@ VERSION	←2016 12 0
 ⍝[cf]
 ⍝[of]:Primary Interface
 Cmp←{	_	←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
-	_	←(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.c')put⍨gc tt⊃a n←ps ⍵
+	_	←(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.cpp')put⍨gc tt⊃a n←ps ⍵
 		22::'COMPILE ERROR'⎕SIGNAL 22
 		n⊣⎕NUNTIE so ⎕NTIE 0}
 MkNS	←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS⍬}
@@ -46,7 +46,7 @@ dirc	←{'\/'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
 soext	←{'.dll' '.so'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
 tie	←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
 put	←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-mkf←{	fn	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,' '
+mkf←{	fn	←BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,(soext⍬),'|',⍵,'_dwa '
 	f	←⍵,'←{'
 	f	,←'_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
 	f	,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
@@ -64,7 +64,10 @@ log	←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 ⍝[of]:VS/IC Windows Flags
 vsco	←'/W3 /Gm- /O2 /Zc:inline /Zi /Fd"build\vc140.pdb" '
 vsco	,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+vsco	,←'/I"%AF_PATH%\include" '
+vsco	,←'/D "NOMINMAX" /D "AF_UNIFIED" /D "AF_DEBUG" '
 vslo	←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+vslo	,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af.lib" '
 vslo	,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
 ⍝[cf]
 ⍝[of]:Linux
@@ -97,7 +100,7 @@ clang	←{⎕SH'clang ',cfs,cds,gop,'gcc'('dylib'cio,fls,log)⍵}
 ⍝[of]:Windows
 ⍝[of]:Visual Studio
 vsc1	←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
-vsc2	←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.c" "libcrypto-38.lib" '}
+vsc2	←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.cpp" '}
 vsc3	←{vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
 vsc4	←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
 vsc	←{⎕CMD ('%comspec% /C ',vsc1,vsc2,vsc3,vsc4)⍵}
@@ -136,7 +139,7 @@ new	←{⍉⍪f∆↑0 ⍺,⍵}	⋄ msk	←{(t ⍵)∊⊂⍺⍺}	⋄ sel	←{(�
 A	←{('A'new ⍺⍺)⍪up⊃⍪/⍵}	⋄ Am	←'A'msk	⋄ As	←'A'sel
 E	←{('E'new ⍺⍺)⍪up⊃⍪/⍵}	⋄ Em	←'E'msk	⋄ Es	←'E'sel
 F	←{('F'new 1)⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵}	⋄ Fm	←'F'msk	⋄ Fs	←'F'sel
-M	←{('M'new⍬)⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵}	⋄ Mm	←'M'msk	⋄ Ms	←'M'sel
+M	←{('M'new 0 '')⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵}	⋄ Mm	←'M'msk	⋄ Ms	←'M'sel
 N	←{'N'new 0 (⍎⍵)}	⋄ Nm	←'N'msk	⋄ Ns	←'N'sel
 O	←{('O'new ⍺⍺)⍪up⊃⍪/⍵}	⋄ Om	←'O'msk	⋄ Os	←'O'sel
 P	←{'P'new 0 ⍵}	⋄ Pm	←'P'msk	⋄ Ps	←'P'sel
@@ -300,116 +303,7 @@ nvk	←((2↑⊢),2,(3↓⊢))⍤1sub(Em∧'i'∊⍨k)
 nv	←nvk(⊢,⍨¯1↓⍤1⊣)Om((¯1⊖(¯1+≢)⊃(⊂nvu,nvi,⊢),(⊂nvu⍪⊢),∘⊂⊢){⌽⍣⍺⊢⍵})¨v∘nvo∘nve
 ⍝[cf]
 ⍝[of]:lt\:	Lift Type-checking
-⍝[c]Index	Right	Left		Value	Type
-⍝[c]0	Unknown	Unknown		Unknown	0
-⍝[c]1	Unknown	Integer		Integer	1
-⍝[c]2	Unknown	Float		Float	2
-⍝[c]3	Unknown	Bitvector		Bitvector	3
-⍝[c]4	Unknown	Not bound		Not bound	4
-⍝[c]5	Integer	Unknown			
-⍝[c]6	Integer	Integer			
-⍝[c]7	Integer	Float		Ops. Code	Meaning
-⍝[c]8	Integer	Bitvector		Left	0
-⍝[c]9	Integer	Not bound		Right	1
-⍝[c]10	Float	Unknown		Error	¯N
-⍝[c]11	Float	Integer
-⍝[c]12	Float	Float
-⍝[c]13	Float	Bitvector
-⍝[c]14	Float	Not bound
-⍝[c]15	Bitvector	Unknown
-⍝[c]16	Bitvector	Integer
-⍝[c]17	Bitvector	Float
-⍝[c]18	Bitvector	Bitvector
-⍝[c]19	Bitvector	Not bound
-
-⍝[of]:Primitive Types
-pfs	←{⍺←0 ⋄ A	⊣A[9 14 19 6 7 8 11 12 13 16 17 18]←⍵	⊣A←20⍴⍺}
-pn	←⍬	,⊂'%u'
-pt	←(0 20⍴0)	⍪4 pfs 4
-
-⍝[c]RL:	IN	FN	BN	II	IF	IB	FI	FF	FB	BI	BF	BB
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂'%b'
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂'%i'
-pt⍪←pfs	¯6	¯6	¯6	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'⍺'
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'⍵'
-pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	1	⊣pn,←⊂,'+'
-pt⍪←pfs	1	2	1	1	2	1	2	2	2	1	2	1	⊣pn,←⊂,'-'
-pt⍪←pfs	2	2	3	2	2	2	2	2	2	1	2	3	⊣pn,←⊂,'÷'
-pt⍪←pfs	1	1	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'×'
-pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'|'
-pt⍪←pfs	2	2	2	2	2	2	2	2	3	1	2	3	⊣pn,←⊂,'*'
-pt⍪←pfs	2	2	¯11	2	2	¯11	2	2	¯11	¯11	¯11	¯11	⊣pn,←⊂,'⍟'
-pt⍪←pfs	1	1	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'⌈'
-pt⍪←pfs	1	1	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'⌊'
-pt⍪←pfs	¯2	¯2	¯2	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'<'
-pt⍪←pfs	¯2	¯2	¯2	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'≤'
-pt⍪←pfs	¯2	¯2	¯2	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'='
-pt⍪←pfs	¯2	¯2	¯2	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'≠'
-pt⍪←pfs	¯2	¯2	¯2	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'≥'
-pt⍪←pfs	¯2	¯2	¯2	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'>'
-pt⍪←pfs	1	2	3	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⌷'
-pt⍪←pfs	1	1	1	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⍴'
-pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,','
-pt⍪←pfs	1	1	3	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'⍳'
-pt⍪←pfs	2	2	2	2	¯11	2	2	¯11	2	2	¯11	2	⊣pn,←⊂,'○'
-pt⍪←pfs	3	3	3	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'~'
-pt⍪←pfs	¯2	¯2	¯2	1	2	3	¯11	¯11	¯11	1	2	3	⊣pn,←⊂,'['
-pt⍪←pfs	¯2	¯2	¯2	1	1	1	1	2	1	1	1	3	⊣pn,←⊂,'∧'
-pt⍪←pfs	¯2	¯2	¯2	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'∨'
-pt⍪←pfs	¯2	¯2	¯2	¯11	¯11	¯11	¯11	¯11	¯11	¯11	¯11	3	⊣pn,←⊂,'⍲'
-pt⍪←pfs	¯2	¯2	¯2	¯11	¯11	¯11	¯11	¯11	¯11	¯11	¯11	3	⊣pn,←⊂,'⍱'
-pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'⍪'
-pt⍪←pfs	1	2	3	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⌽'
-pt⍪←pfs	1	2	3	3	3	3	3	3	3	3	3	3	⊣pn,←⊂,'∊'
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'⊃'
-pt⍪←pfs	1	2	3	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂,'⊖'
-pt⍪←pfs	1	1	1	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'≡'
-pt⍪←pfs	1	1	1	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'≢'
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'⊢'
-pt⍪←pfs	1	2	3	1	2	3	1	2	3	1	2	3	⊣pn,←⊂,'⊣'
-pt⍪←pfs	¯2	¯2	¯2	1	¯11	1	2	¯11	2	3	¯11	3	⊣pn,←⊂'//'
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'⍉'
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'↑'
-pt⍪←pfs	1	2	3	1	1	1	2	2	2	3	3	3	⊣pn,←⊂,'↓'
-pt⍪←pfs	¯2	¯2	¯2	1	¯16	1	¯16	¯16	¯16	3	3	3	⊣pn,←⊂,'⊤'
-pt⍪←pfs	¯2	¯2	¯2	1	¯16	1	¯16	¯16	¯16	1	¯16	1	⊣pn,←⊂,'⊥'
-pt⍪←pfs	2	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'!'
-pt⍪←pfs	2	¯11	2	1	1	1	1	1	1	1	1	1	⊣pn,←⊂,'?'
-pt⍪←pfs	1	2	3	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'∪'
-pt⍪←pfs	¯2	¯2	¯2	1	2	1	2	2	2	1	2	3	⊣pn,←⊂,'∩'
-pt⍪←pfs	1	1	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'⍋'
-pt⍪←pfs	1	1	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂,'⍒'
-pt⍪←pfs	0	0	0	0	0	0	0	0	0	0	0	0	⊣pn,←⊂,'¨'
-pt⍪←pfs	0	0	0	0	0	0	0	0	0	0	0	0	⊣pn,←⊂,'⍨'
-pt⍪←pfs	0	0	0	0	¯11	0	0	¯11	0	0	¯11	0	⊣pn,←⊂,'/'
-pt⍪←pfs	0	0	0	0	¯11	0	0	¯11	0	0	¯11	0	⊣pn,←⊂,'⌿'
-pt⍪←pfs	0	0	0	¯11	¯11	¯11	¯11	¯11	¯11	¯11	¯11	¯11	⊣pn,←⊂,'\'
-pt⍪←pfs	0	0	0	¯11	¯11	¯11	¯11	¯11	¯11	¯11	¯11	¯11	⊣pn,←⊂,'⍀'
-pt⍪←pfs	¯2	¯2	¯2	0	0	0	0	0	0	0	0	0	⊣pn,←⊂'∘.'
-pt⍪←pfs	¯2	¯2	¯2	0	0	0	0	0	0	0	0	0	⊣pn,←⊂,'.'
-pt⍪←pfs	¯2	¯2	¯2	1	¯11	¯11	¯11	¯11	¯11	¯11	¯11	¯11	⊣pn,←⊂'⎕sp'
-pt⍪←pfs	¯2	¯2	¯2	1	¯16	¯16	¯16	¯16	¯16	¯16	¯16	¯16	⊣pn,←⊂'⎕XOR'
-⍝[cf]
-⍝[of]:Operator Indirections
-⍝[c]oti: (0 Lop) (1 Rop) (2 Rarg) (3 Larg)
-otn←⍬	⋄	oti←0 2 2⍴⍬
-otn,←⊂,'.'	⋄	oti⍪←↑(1 1) (2 3)	⋄ otn,←⊂,'/'	⋄ oti⍪←↑(2 2) (2 3)
-otn,←⊂,'⌿'	⋄	oti⍪←↑(2 2) (2 3)	⋄ otn,←⊂,'\'	⋄ oti⍪←↑(2 2) (2 3)
-otn,←⊂,'⍀'	⋄	oti⍪←↑(2 2) (2 3)	⋄ otn,←⊂'∘.'	⋄ oti⍪←↑(2 3) (2 3)
-otn,←⊂,'¨'	⋄	oti⍪←↑(2 3) (2 3)	⋄ otn,←⊂,'⍨'	⋄ oti⍪←↑(3 2) (3 2)
-             		oti⍪←↑(2 3) (2 3)
-⍝[cf]
-
-lte	←((20⌊1 4 5⊥((∨⌿¯1=×)⍪|))2↑⊢)⌷⍤0 1∘,(⌊/∘,2↑⊢),⍨¯1↑⊢
-ltoa	←lte⍤2(2↑⊣),[1]⍨(oti⌷⍨otn⍳¯1↑∘⊃v)(⌷⍤0 2)(4 5⊤⍳20)⍪⍨(2↑1↓(⊃y))
-ltob	←(⍴⊣)⍴(,(⌈/⊢))(⌷⍤0 1)0 4 3 1 2,⍤1 0∘,⊣
-ltoc	←ltoa(⊣ltob 5 0 3 4 2 1⌷⍤0 1⍨1+¯1⌈,∘⍪⍤1)(4 5⊤⍳20)×(,¨'/⌿\⍀')∊⍨¯1↑∘⊃v
-lto	←(((1+¯1⌈⊃)⌷0 0,⍨⊢)⍤1∘⍉⍪1⊖⊢)(¯1↑⊣)⍪ltoc
-ltv	←(1⊃⊣)⌷⍤0 2⍨(⊃¨(0⊃⊣)⍳∘⊂ndo(⊃v))
-ltt	←(Om∧1 2∨.=∘⊃k)⊃⊣(((lte⍪⊢)ltv){⍺⍵}ltv lto ⊢)(⍉∘⍪⊢)
-lta	←(1↓¨(⊂⊢),∘⊂(20⍴1+(≢∘⌊⍨⊃∘⊃))⍤0)∘(0,∘∪(0≡∘⊃0⍴⊢)¨(⌿∘⊢)⊢)∘(⊃,/)∘v Es⍪Os
-ltb	←⊣⍪¨(⊂n),∘⊂∘↑((,1↑⊢)¨y)
-lt	←(pn pt⍪¨lta)(ltb((,¯1↓⊢),∘⊂ltt)⍤1⊢)⍣≡(⊂4 20⍴0),⍨⊢
+lt	←(⊂4 20⍴0),⍨⊢
 ⍝[cf]
 ⍝[of]:va\:	Allocate Value Slots
 val	←(n⍳∘∪n),¨⊢(⊢+(≢⊣)×0=⊢)(⌈/(⍳≢)×⍤1(∪n)∘.((⊂⊣)∊⊢)(n2f¨v))
@@ -422,31 +316,14 @@ va	←((⊃⍪/)(1↑⊢),(((vae Es)(d,t,k,(⊣vac n),r,s,y,∘⍪⍨(⊂⊣)vac
 avb	←{(((,¨'⍺⍵')↑⍨1↓⍴)⍪⊢)⍺⌷⍨⍤2 0⊢⍺⍺⍳⍺⍺∩⍨(↓(⌽1+∘⍳0⍳⍨⊢)((≢⊢)↑↑)⍤0 1⊢)⊃r ⍵}
 avi	←¯1 0+(⍴⊣)⊤(,⊣)⍳(⊂⊢)
 avh	←{⊂⍵,(n⍵)((⍺⍺(⍵⍵ avb)⍵){⍺⍺ avi ndo(⊂⍺),⍵})¨v⍵}
-av	←(⊃⍪/)(+\Fm){⍺((⍺((∪∘⌽n)Es)⌸⍵)avh(r(1↑⍵)⍪Fs ⍵))⌸⍵}⊢
+av	←(⊃⍪/)(+\Fm){⍺((⍺((∪∘⌽(0⍴⊂''),n)Es)⌸⍵)avh(r(1↑⍵)⍪Fs ⍵))⌸⍵}⊢
 ⍝[cf]
 ⍝[of]:rl\:	Record Live Variables
 rlf	←(⌽↓(((1⊃⊣)∪⊢~0⌷⊣)/∘⌽(⊂⍬),↑)⍤0 1⍨1+∘⍳≢)(⊖1⊖n,⍤0(⊂⊣)veo¨v)
 rl	←⊢,∘(⊃,/)(⊂∘n Os⍪Fs)rlf¨scp
 ⍝[cf]
-⍝[of]:fs\:	Fuse Scalar Loops
-fsf	←(∪∘⊃,/)(⊂⊂⍬ ⍬ ⍬),(⌽¯1↓⊢)¨~¨(⊂,⊂'%u'(4⍴⍨≢⍉pt)(¯1 0))∪¨∘(⍳∘≢↑¨⊂)⊣
-fsn	←↓n,((,1↑⊢)¨y),⍤0(⊃¨e)
-fsv	←v(↓,∘⊃⍤0)¨((↓1↓⊢)¨y)(↓,⍤0)¨1↓¨e
-fsh	←(⍉⍪)2'S'0 ⍬ ⍬ 0,(((⊂0⌷⊢),(⊂∘↑1⌷⊢),(⊂2⌷⊢))∘⍉1↓∘↑fsn fsf fsv),∘l ¯1↑⊢
-fsm	←Em∧(1∊⍨k)∧(,¨'~⌷')∊⍨(⊃∘⌽¨v)
-fss	←fsm∨Em∧(1 2∊⍨k)∧((⊂'⎕XOR'),⍨,¨'+-×÷|⌊⌈*⍟○!∧∨⍱⍲<≤=≥>≠')∊⍨(⊃∘⌽¨v)
-fsx	←(⊣(/∘⊢)fss∧⊣)(⊣⊃(⊂⊢),(⊂fsh⍪(1+d),'E',0,3↓⍤1⊢))¨⊂[0]
-fs	←(⊃⍪/)(((((⊃⍪/)(⊂0 10⍴⍬),((2≠/(~⊃),⊢)fss)fsx⊢)Es)⍪⍨(~Em)(⌿∘⊢)⊢)¨scp)
-⍝[cf]
 ⍝[of]:vc\:	Compress Scalar Expressions
 vc←(⊃⍪/)(((1↓⊢)⍪⍨(1 6↑⊢),(≢∘∪∘n Es),1 ¯3↑⊢)¨scp)
-⍝[cf]
-⍝[of]:td\:	Type Dispatch/Specialization
-tdn	←'ii' 'if' 'ib' 'in' 'fi' 'ff' 'fb' 'fn' 'bi' 'bf' 'bb' 'bn'
-tdi	←6 7 8 9 11 12 13 14 16 17 18 19
-tde	←((¯3↓⊢),(Om⌷y,⍨∘⊂(tdi⌷⍨⊣)⌷∘⍉∘⊃y),¯2↑⊢)⍤1
-tdf	←(1↓⊢)⍪⍨(,1 3↑⊢),(⊂(⊃n),tdn⊃⍨⊣),(4↓∘,1↑⊢)
-td	←((⊃⍪/)(1↑⊢),∘(⊃,/)(((⍳12)(⊣tdf tde)¨⊂)¨1↓⊢))scp
 ⍝[cf]
 ⍝[of]:ef\:	Convert Error Functions
 eff	←(⊃⍪/)⊢(((⊂∘⍉∘⍪d,'Fe',3↓,)1↑⊣),1↓⊢)(d=∘⊃d)⊂[0]⊢
@@ -473,25 +350,24 @@ fz	←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1�
 fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 ⍝[cf]
 
-tt←{fd fz ff if ef td vc fs rl av va lt nv fv ce ur fc∘pc∘mr⍣≡ ca fe mr dn lf du df rd rn ⍵}
+tt←{fd fz ff if ef vc rl av va lt nv fv ce ur fc∘pc∘mr⍣≡ ca fe mr dn lf du df rd rn ⍵}
 ⍝[cf]
 ⍝[of]:Code Generator
 E1	←{('mf'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
-E2	←{r l f←⊃v⍵ ⋄ (¯1↓⊃y⍵)(f fcl ⍺)((⊃n⍵)r l),⍪¯1↓⊃e⍵}
+E2	←{('df'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
 E0	←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
 Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
 O2	←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
 O0	←{'' '' '' '' ''}
-Of	←{(fndy ⍵),nl,nl,(⊃,/(⍳12)fncd¨⊂⍵),nl}
-Fd	←{frt,(⊃n⍵),flp,';',nl}
-Fe	←{frt,(⊃n⍵),flp,'{',nl,'dwaerr(',(⍕|⊃⊃y⍵),');',nl}
-F0	←{frt,(⊃n⍵),flp,'{',nl,'A*env[]={tenv};',nl,('tenv'reg ⍵),nl}
-F1	←{frt,(⊃n⍵),flp,'{',nl,('env0'dnv ⍵),(fnv ⍵),('env0'reg ⍵),nl,''⊣fnacc⍵}
+Of	←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),')',nl}
+Fd	←{'UF(',(⊃n⍵),');',nl}
+F0	←{'UF(',(⊃n⍵),'){',nl,'A*env[]={tenv};',nl}
+F1	←{'UF(',(⊃n⍵),'){',nl,('env0'dnv ⍵),(fnv ⍵)}
 Z0	←{'}',nl,nl}
-Z1	←{'cpaa(z,',((⊃n⍵)var⊃e⍵),');',nl,'fe(&env0[1],',(⍕¯1+⊃s⍵),');}',nl,nl}
+Z1	←{'z=',((⊃n⍵)var⊃e⍵),';}',nl,nl}
 Ze	←{'}',nl,nl}
-M0	←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl}
+M0	←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
 S0	←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
 Y0	←{⊃,/((⍳≢⊃n⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
 dis	←{⍺←⊢ ⋄ 0=⊃t⍵:5⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
@@ -499,219 +375,6 @@ gc	←{((⊃,/)⊢((fdb⍪⍨∘(dis⍤1)(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om
 ⍝[cf]
 ⍝[of]:Runtime Code
 ⍝[of]:Utilities
-nl	←⎕UCS 13 10
-fvs	←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
-cln	←'¯'⎕R'-'
-var	←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:,⍺ ⋄ '&env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
-dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
-reg	←{'DO(i,',(⍕⊃v⍵),')',⍺,'[i].v=NULL;'}
-fnv	←{'A*env[',(⍕1+⊃s⍵),']={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-git	←{⍵⊃¨⊂'/* XXX */ I ' 'I ' 'D ' 'U8 ' '?NA? '}
-gie	←{⍵⊃¨⊂'/* XXX */ APLI' 'APLI' 'APLD' 'APLU8' 'APLNA'}
-pacc	←{('pg'≡2↑COMPILER)⊃''('#pragma acc ',⍵,nl)}
-aclp	←{('pg'≡2↑COMPILER)⊃''('#pragma acc loop independent ',⍵,nl)}
-ackn	←{('pg'≡2↑COMPILER)⊃''('#pragma acc kernels ',⍵,nl)}
-acup	←{('pg'≡2↑COMPILER)⊃''('#pragma acc update ',⍵,nl)}
-acdt	←{('pg'≡2↑COMPILER)⊃''('#pragma acc data ',⍵,nl)}
-simdc	←{('#pragma acc kernels loop ',⍵,nl)('')('')}
-simd	←{('pg' 'ic'⍳⊂2↑COMPILER)⊃simdc ⍵}
-⍝[cf]
-⍝[of]:Header
-⍝[of]:Includes
-rth	←'#include <stdio.h>',nl,'#include <string.h>',nl
-rth	,←'#include <stdlib.h>',nl,'#include <time.h>',nl
-rth	,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
-rth	,←'#include <limits.h>',nl,'#include <float.h>',nl
-rth	,←'#ifdef _OPENACC',nl,'#include <accelmath.h>',nl
-rth	,←'#else',nl,'#include <math.h>',nl,'#endif',nl
-rth	,←'#ifdef __INTEL_COMPILER',nl,'#include <mkl_vsl.h>',nl,'#endif',nl,nl
-⍝[cf]
-⍝[of]:Globals
-rth	,←'int isinit=0;',nl
-rth	,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
-rth	,←'#define PI 3.14159265358979323846',nl,nl
-⍝[cf]
-⍝[of]:Helper Macros
-rth	,←'#define RANK(lp) ((lp)->p->r)',nl
-rth	,←'#define TYPE(lp) ((lp)->p->t)',nl
-rth	,←'#define SHAPE(lp) ((lp)->p->s)',nl
-rth	,←'#define ETYPE(lp) ((lp)->p->e)',nl
-rth	,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',nl
-rth	,←'#define DO(i,n) for(B i=0;i<(n);i++)',nl,'#define R return',nl
-rth	,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
-rth	,←'#ifdef _WIN32',nl,'#define EXPORT __declspec(dllexport)',nl
-rth	,←'#elif defined(__GNUC__)',nl
-rth	,←'#define EXPORT __attribute__ ((visibility ("default")))',nl
-rth	,←'#else',nl,'#define EXPORT',nl,'#endif',nl
-rth	,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
-rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
-rth	,←'#define S struct',nl,nl
-⍝[cf]
-⍝[of]:Typedefs
-rth	,←'typedef int64_t L;typedef int32_t I;typedef double D;typedef void V;',nl
-rth	,←'typedef unsigned char U8;typedef uint64_t B;typedef uint32_t U;',nl,nl
-⍝[cf]
-⍝[of]:Structures
-rth	,←'typedef S array{I r; B s[15];I f;B c;B z;V*v;} A;',nl
-rth	,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[];}*p;};',nl
-rth	,←'S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*na[4];};',nl
-rth	,←'S dwa*dwafns;',nl,nl
-⍝[cf]
-⍝[of]:DWA Functions
-rth	,←'I EXPORT DyalogGetInterpreterFunctions(V*p){if(p)dwafns=p;else R 0;',nl
-rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
-rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl,nl
-⍝[cf]
-⍝[of]:Helpers
-rth	,←'#define CD_R2(n)     n,     n + 2*64,     n + 1*64,     n + 3*64',nl
-rth	,←'#define CD_R4(n) CD_R2(n), CD_R2(n + 2*16), CD_R2(n + 1*16), CD_R2(n + 3*16)',nl
-rth	,←'#define CD_R6(n) CD_R4(n), CD_R4(n + 2*4 ), CD_R4(n + 1*4 ), CD_R4(n + 3*4 )',nl
-rth	,←'static const U8 bitrt[256]={CD_R6(0), CD_R6(2), CD_R6(1), CD_R6(3)};',nl
-rth	,←'U8 bitrev(U8 c){R bitrt[c];}',nl,nl
-⍝[cf]
-⍝[of]:Allocation
-rth	,←'V EXPORT frea(A*a){if (a->v!=NULL){char*v=a->v;B z=a->z;',nl
-rth	,←' if(a->f){',nl,'#ifdef _OPENACC',nl
-rth	,←'#pragma acc exit data delete(v[:z])',nl,'#endif',nl,'}',nl
-rth	,←' if(a->f>1){free(v);}}}',nl
-rth	,←'V aa(A*a,I tp){frea(a);B c=1;DO(i,a->r)c*=a->s[i];B z=0;',nl
-rth	,←' B pc=8*((c+7)/8);',nl
-rth	,←' switch(tp){',nl
-rth	,←'  case 1:z=sizeof(I)*pc;break;',nl
-rth	,←'  case 2:z=sizeof(D)*pc;break;',nl
-rth	,←'  case 3:z=(sizeof(U8)*pc+7)/8;break;',nl
-rth	,←'  default: dwaerr(16);}',nl
-rth	,←' z=8*((z+7)/8);char*v=malloc(z);if(NULL==v)dwaerr(1);',nl
-rth	,←' #ifdef _OPENACC',nl,'  #pragma acc enter data create(v[:z])',nl,' #endif',nl
-rth	,←' a->v=v;a->z=z;a->c=c;a->f=2;}',nl
-rth	,←'V ai(A*a,I r,B *s,I tp){a->r=r;DO(i,r)a->s[i]=s[i];aa(a,tp);}',nl
-rth	,←'V fe(A*e,I c){DO(i,c){frea(&e[i]);}}',nl,nl
-⍝[cf]
-⍝[of]:Co-dfns/Dyalog Converters
-rth	,←'V cpad(S lp*d,A*a,I t){dwafns->ws->ga(t,a->r,a->s,d);B z=0;',nl
-rth	,←' switch(t){',nl,'  case APLI:z=a->c*sizeof(I);break;',nl
-rth	,←'  case APLD:z=a->c*sizeof(D);break;',nl
-rth	,←'  case APLU8:z=(a->c+7)/8;break;',nl
-rth	,←'  default:dwaerr(11);}',nl
-rth	,←' #ifdef _OPENACC',nl,'  char *v=a->v;',nl
-rth	,←'  #pragma acc update host(v[:z])',nl,' #endif',nl
-rth	,←' if(t==APLU8){U8*t=DATA(d);U8*s=a->v;DO(i,z)t[i]=bitrev(s[i]);}',nl
-rth	,←' else{memcpy(DATA(d),a->v,z);}}',nl
-rth	,←'V cpda(A*a,S lp*d){if(15!=TYPE(d))dwaerr(16);frea(a);',nl
-rth	,←' I r=a->r=RANK(d);B c=1;DO(i,r){c*=a->s[i]=SHAPE(d)[i];};a->c=c;',nl
-rth	,←' switch(ETYPE(d)){',nl
-rth	,←'  case APLI:a->z=8*((c*sizeof(I)+7)/8);a->f=2;',nl
-rth	,←'   a->v=malloc(a->z);if(a->v==NULL)dwaerr(1);',nl
-rth	,←'   {I*s=DATA(d);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLD:a->z=8*((c*sizeof(D)+7)/8);a->f=2;',nl
-rth	,←'   a->v=malloc(a->z);if(a->v==NULL)dwaerr(1);',nl
-rth	,←'   {D*s=DATA(d);D*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLSI:a->z=8*((c*sizeof(I)+7)/8);a->f=2;',nl
-rth	,←'   a->v=malloc(a->z);if(a->v==NULL)dwaerr(1);',nl
-rth	,←'   {int16_t*s=DATA(d);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLTI:a->z=8*((c*sizeof(I)+7)/8);a->f=2;',nl
-rth	,←'   a->v=malloc(a->z);if(a->v==NULL)dwaerr(1);',nl
-rth	,←'   {int8_t*s=DATA(d);I*t=a->v;DO(i,c)t[i]=s[i];};break;',nl
-rth	,←'  case APLU8:c=(c+7)/8;a->z=8*((c+7)/8);a->f=2;',nl
-rth	,←'   a->v=malloc(a->z);if(a->v==NULL)dwaerr(1);',nl
-rth	,←'   {U8*s=DATA(d);U8*t=a->v;DO(i,c)t[i]=bitrev(s[i]);};break;',nl
-rth	,←'  default:dwaerr(16);}',nl
-rth	,←' #ifdef _OPENACC',nl,' char *vc=a->v;B z=a->z;',nl
-rth	,←' #pragma acc enter data pcopyin(vc[:z])',nl,' #endif',nl,'}',nl
-rth	,←'V cpaa(A*t,A*s){frea(t);memcpy(t,s,sizeof(A));}',nl,nl
-⍝[cf]
-⍝[of]:External Makers & Extractors
-rth	,←'EXPORT V*mkarray(S lp*da){A*aa=malloc(sizeof(A));if(aa==NULL)dwaerr(1);',nl
-rth	,←' aa->v=NULL;cpda(aa,da);R aa;}',nl
-rth	,←'V EXPORT exarray(S lp*da,A*aa,I at){I tp=0;',nl
-rth	,←' switch(at){',nl
-rth	,←'  case 1:tp=APLI;break;',nl
-rth	,←'  case 2:tp=APLD;break;',nl
-rth	,←'  case 3:tp=APLU8;break;',nl
-rth	,←'  default:dwaerr(11);}',nl
-rth	,←' cpad(da,aa,tp);frea(aa);}',nl,nl
-rth	,←'EXPORT V*cmka(I r,B*s,I tp,V*buf){A*a=malloc(sizeof(A));if(!a)dwaerr(1);',nl
-rth	,←' a->v=NULL;ai(a,r,s,tp);',nl
-rth	,←' switch(tp){',nl
-rth	,←'  case 1:{I*src=buf;I*tgt=a->v;DO(i,a->c)tgt[i]=src[i];};break;',nl
-rth	,←'  case 2:{D*src=buf;D*tgt=a->v;DO(i,a->c)tgt[i]=src[i];}break;',nl
-rth	,←'  case 3:{U8*src=buf;U8*tgt=a->v;DO(i,(a->c+7)/8)tgt[i]=src[i];}break;',nl
-rth	,←'  default:dwaerr(11);};R a;}',nl
-rth	,←'EXPORT V cexa(A*a,I tp,I*r,B*s,U8**b){*r=a->r;DO(i,*r)s[i]=a->s[i];',nl
-rth	,←' *b=malloc(a->z);if(!*b)dwaerr(1);U8*src=a->v;DO(i,a->z)(*b)[i]=src[i];}',nl
-⍝[cf]
-⍝[of]:Scalar Helpers
-rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-rth	,←'D gcd(D an,D bn){D a=fabs(an);D b=fabs(bn);',nl
-rth	,←' for(;b>1e-10;){D n=fmod(a,b);a=b;b=n;};R a;}',nl
-rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-rth	,←'D lcm(D a,D b){D n=a*b;D z=fabs(n)/gcd(a,b);',nl
-rth	,←' if(a==0&&b==0)R 0;if(n<0)R -1*z;R z;}',nl
-rth	,←'#ifdef _OPENACC',nl,'#pragma acc routine seq',nl,'#endif',nl
-rth	,←'D circ(I a,D b){switch(a+8){',nl
-rth	,←'  case 7:R asin(b);break;',nl
-rth	,←'  case 6:R acos(b);break;',nl
-rth	,←'  case 5:R atan(b);break;',nl
-rth	,←'  case 4:R (b+1)*sqrt((b-1)/(b+1));break;',nl
-rth	,←'  case 3:R asinh(b);break;',nl
-rth	,←'  case 2:R acosh(b);break;',nl
-rth	,←'  case 1:R atanh(b);break;',nl
-rth	,←'  case 8:R sqrt(1-b*b);break;',nl
-rth	,←'  case 9:R sin(b);break;',nl
-rth	,←'  case 10:R cos(b);break;',nl
-rth	,←'  case 11:R tan(b);break;',nl
-rth	,←'  case 12:R sqrt(1+b*b);break;',nl
-rth	,←'  case 13:R sinh(b);break;',nl
-rth	,←'  case 14:R cosh(b);break;',nl
-rth	,←'  case 15:R tanh(b);break;',nl
-rth	,←' };R -1;}',nl
-rth	,←'extern U arc4random_uniform(U);',nl
-⍝[cf]
-⍝[of]:Miscellaneous Helpers
-rth	,←'V*grdv;I grdc;',nl
-rth	,←'I gucmpi(const V*xp,const V*yp){I*v=grdv;',nl
-rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-rth	,←' DO(i,grdc){z=v[x*grdc+i]-v[y*grdc+i];if(z)break;}',nl
-rth	,←' if(z)R z;R x-y;}',nl
-rth	,←'I gucmpf(const V*xp,const V*yp){D*v=grdv;',nl
-rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-rth	,←' DO(i,grdc){z=v[x*grdc+i]-v[y*grdc+i];if(z)break;}',nl
-rth	,←' if(z)R z;R x-y;}',nl
-rth	,←'I gdcmpi(const V*xp,const V*yp){I*v=grdv;',nl
-rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-rth	,←' DO(i,grdc){z=v[y*grdc+i]-v[x*grdc+i];if(z)break;}',nl
-rth	,←' if(z)R z;R x-y;}',nl
-rth	,←'I gdcmpf(const V*xp,const V*yp){D*v=grdv;',nl
-rth	,←' I x=*(I*)xp;I y=*(I*)yp;I z=0;',nl
-rth	,←' DO(i,grdc){z=v[y*grdc+i]-v[x*grdc+i];if(z)break;}',nl
-rth	,←' if(z)R z;R x-y;}',nl
-⍝[cf]
-⍝[cf]
-⍝[of]:Function Entry
-frt	←'static V '
-fre	←' EXPORT '
-foi	←'if(!isinit){Init(NULL,NULL,NULL,NULL);isinit=1;}',nl
-flp	←'(A*z,A*l,A*r,A*penv[])'
-elp	←'(S lp*z,S lp*l,S lp*r)'
-tps	←'A cl,cr;cl.v=NULL;cr.v=NULL;cpda(&cr,r);if(l!=NULL)cpda(&cl,l);',nl
-tps	,←'int tp=0;switch(ETYPE(r)){',nl
-tps	,←'case APLSI:case APLTI:case APLI:break;',nl
-tps	,←'case APLD:tp=4;break;case APLU8:tp=8;break;',nl
-tps	,←'default:dwaerr(16);}',nl
-tps	,←'if(l==NULL)tp+=3;else switch(ETYPE(l)){',nl
-tps	,←'case APLSI:case APLTI:case APLI:break;',nl
-tps	,←'case APLD:tp+=1;break;case APLU8:tp+=2;break;',nl
-tps	,←'default:dwaerr(16);}',nl
-tps	,←'A za;za.v=NULL;',nl,'switch(tp){',nl
-fcln	←'frea(&cl);',nl,'frea(&cr);',nl,'frea(&za);',nl
-dcl	←{(0>e)⊃((⊃⊃v⍵),(⍺⊃tdn),'(',⍺⍺,',env);')('dwaerr(',(cln⍕|e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')}
-dcp	←{(0>e)⊃('cpad(z,&za,',(⊃gie 0⌈e←⊃(⍺⌷tdi)⌷⍉⊃y⍵),');')''}
-case	←{'case ',(⍕⍺),':',(⍺('&za,&cl,&cr'dcl)⍵),(⍺ dcp ⍵),'break;',nl}
-fnacc	←{(pacc 'data copyin(env0[:',(⍕⊃v⍵),'])'),'{'}
-fndy	←{'V',fre,(⊃n⍵),elp,'{',nl,foi,tps,(⊃,/(⍳12)case¨⊂⍵),'}',nl,fcln,'}'}
-fncd	←{'I',fre,(⊃n⍵),(⍺⊃tdn),'(A*z,A*l,A*r){',(⍺('z,l,r'dcl)⍵),'R ',(cln⍕⊃(⍺⌷tdi)⌷⍉⊃y⍵),';}',nl}
-⍝[cf]
-⍝[of]:Symbol → Name Table
 syms	←,¨	'+'	'-'	'×'	'÷'	'*'	'⍟'	'|'	'○'	'⌊'	'⌈'	'!'	'<'
 nams	←	'add'	'sub'	'mul'	'div'	'exp'	'log'	'res'	'cir'	'min'	'max'	'fac'	'lth'
 syms	,←,¨	'≤'	'='	'≥'	'>'	'≠'	'~'	'∧'	'∨'	'⍲'	'⍱'	'⌷'	'['
@@ -722,675 +385,185 @@ syms	,←,¨	'⊣'	'⊤'	'⊥'	'/'	'⌿'	'\'	'⍀'	'?'	'↑'	'↓'	'¨'	'⍨'
 nams	,←	'lft'	'enc'	'dec'	'red'	'rdf'	'scn'	'scf'	'rol'	'tke'	'drp'	'map'	'com'
 syms	,←,¨	'.'	'⍤'	'⍣'	'∘'	'∪'	'∩'	'⍋'	'⍒'
 nams	,←	'dot'	'rnk'	'pow'	'jot'	'unq'	'int'	'gdu'	'gdd'
+
+nl	←⎕UCS 13 10
+fvs	←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
+cln	←'¯'⎕R'-'
+lits	←{'A{0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),')}'}
+litv	←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
+lita	←{'A{1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),')}'}
+lit	←{' '=⊃0⍴⍵:⍵ ⋄ 1=≢⍵:lits ⍵ ⋄ lita ⍵}
+var	←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:lit ,⍺ ⋄ 'env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+dnv	←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
+fnv	←{'A*env[',(⍕1+⊃s⍵),']={',(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
+git	←{⍵⊃¨⊂'/* XXX */ I ' 'I ' 'D ' 'U8 ' '?NA? '}
+gie	←{⍵⊃¨⊂'/* XXX */ APLI' 'APLI' 'APLD' 'APLTI' 'APLNA'}
+rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
+lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
+rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
+gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),',',(rgt⍵),');',nl⊣⍵⍵}
 ⍝[cf]
-⍝[of]:Generator Dispatch
-gcl←{	⍺	←⍬ ⍬ ⍬
-	v e y	←⍵
-	id	←(syms⍳¯1↑v)⊃nams,⊂''
-	tp	←(2↑1↓y)⊃¨⊂'xifbn'
-	sla	←((∧/¯1=↑3↑e)+0≠(⊃0⍴⊃)¨3↑v)⊃¨⊂'las'
-	''≢id:	(⍺,⊂⍵⍵)(⍎id,⍺⍺,tp,sla)⍵
-  		(2↑y)((⊃⌽v)fcl ⍵⍵)(2↑v),⍪2↑e
-		⎕SIGNAL 16}
+⍝[of]:Header
+rth	←'#include <stdio.h>',nl,'#include <string.h>',nl
+rth	,←'#include <stdlib.h>',nl,'#include <time.h>',nl
+rth	,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
+rth	,←'#include <limits.h>',nl,'#include <float.h>',nl
+rth	,←'#include <math.h>',nl,'#include <arrayfire.h>',nl
+rth	,←'using namespace af;',nl
+rth	,←nl
+rth	,←'#ifdef _WIN32',nl,'#define EXPORT extern "C" __declspec(dllexport)',nl
+rth	,←'#elif defined(__GNUC__)',nl
+rth	,←'#define EXPORT extern "C" __attribute__ ((visibility ("default")))',nl
+rth	,←'#else',nl,'#define EXPORT extern "C"',nl,'#endif',nl
+rth	,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
+rth	,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
+rth	,←'#define S struct',nl
+rth	,←'#define RANK(lp) ((lp)->p->r)',nl
+rth	,←'#define TYPE(lp) ((lp)->p->t)',nl
+rth	,←'#define SHAPE(lp) ((lp)->p->s)',nl
+rth	,←'#define ETYPE(lp) ((lp)->p->e)',nl
+rth	,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',nl
+rth	,←'#define DO(i,n) for(B i=0;i<(n);i++)',nl,'#define R return',nl
+rth	,←'#define DOI(i,n) for(I i=0;i<(n);i++)',nl
+rth	,←'#define DOU(i,n) for(U i=0;i<(n);i++)',nl
+rth	,←'#define MF(n) static V n##mf(A&z,A&r)',nl
+rth	,←'#define DF(n) static V n##df(A&z,A&l,A&r)',nl
+rth	,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl
+rth	,←' A cl,cr,za;if(!isinit){Init(za,cl,cr,NULL);isinit=1;}\',nl
+rth	,←' cpda(cr,r);if(l!=NULL)cpda(cl,l);m(za,cl,cr,env);cpad(z,za);}\',nl
+rth	,←'EXPORT V n##_cdf(A&z,A&l,A&r){m(z,l,r,env);}',nl
+rth	,←'#define SF(n,x) static V n##df(A&z,A&l,A&r){\',nl
+rth	,←' if(l.r==r.r&&l.s==r.s){z.r=l.r;z.s=l.s;array&lv=l.v;array&rv=r.v;x;R;}\',nl
+rth	,←' if(!l.r){z.r=r.r;z.s=r.s;array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
+rth	,←' if(!r.r){z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
+rth	,←' if(l.r!=r.r)dwaerr(4);if(l.s!=r.s)dwaerr(5);dwaerr(99);}',nl
+rth	,←'#define UF(n) static V n(A&z,A&l,A&r,A*penv[])',nl
+rth	,←nl
+rth	,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
+rth	,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',nl
+rth	,←'typedef double D;typedef unsigned char U8;typedef dim_t B;typedef unsigned U;',nl
+rth	,←'typedef void V;',nl
+rth	,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',nl
+rth	,←'S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*na[4];};',nl
+rth	,←'S dwa*dwafns;',nl
+rth	,←'S A{U r;dim4 s;array v;};',nl
+rth	,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
+rth	,←nl
+⍝[cf]
+⍝[of]:Helpers
+rth	,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){if(p)dwafns=p;else R 0;',nl
+rth	,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
+rth	,←'static V dwaerr(U n){dwafns->ws->er(n);}',nl
+rth	,←nl
+rth	,←'B cnt(A&a){B c=1;DOU(i,a.r)c*=a.s[i];R c;}',nl
+rth	,←'B cnt(lp*d){B c=1;DOU(i,RANK(d))c*=SHAPE(d)[i];R c;}',nl
+rth	,←'array evec(V){R constant(0,dim4(1),s32);}',nl
+rth	,←'dtype mxt(array&a,array&b){dtype at=a.type();dtype bt=b.type();',nl
+rth	,←' if(at==f64||bt==f64)R f64;if(at==s32||bt==s32)R s32;',nl
+rth	,←' if(at==s16||bt==s16)R s16;if(at==b8||bt==b8)R b8;dwaerr(16);R f64;}',nl
+rth	,←nl
+⍝[cf]
+⍝[of]:External Interfaces
+rth	,←'V cpad(lp*d,A&a){I t;B c=cnt(a);',nl
+rth	,←' switch(a.v.type()){',nl
+rth	,←'  case s32:t=APLI;break;',nl
+rth	,←'  case s16:t=APLSI;break;',nl
+rth	,←'  case b8:t=APLTI;break;',nl
+rth	,←'  case f64:t=APLD;break;',nl
+rth	,←'  default:if(c)dwaerr(16);t=APLI;}',nl
+rth	,←' B s[4];DOU(i,a.r)s[a.r-(i+1)]=a.s[i];dwafns->ws->ga(t,a.r,s,d);',nl
+rth	,←' if(c)a.v.host(DATA(d));}',nl
+rth	,←'V cpda(A&a,lp*d){if(15!=TYPE(d))dwaerr(16);if(4<RANK(d))dwaerr(16);',nl
+rth	,←' dim4 s(1);DOU(i,RANK(d))s[RANK(d)-(i+1)]=SHAPE(d)[i];B c=cnt(d);',nl
+rth	,←' switch(ETYPE(d)){',nl
+rth	,←'  case APLI:{I*b=(I*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec()};};break;',nl
+rth	,←'  case APLD:{D*b=(D*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec()};};break;',nl
+rth	,←'  case APLSI:{S16*b=(S16*)DATA(d);a=A{RANK(d),s,c?array(s,b):evec()};};break;',nl
+rth	,←'  case APLTI:{std::vector<S16> b(c);S8*src=(S8*)DATA(d);DO(i,c)b[i]=src[i];',nl
+rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec()};};break;',nl
+rth	,←'  case APLU8:{std::vector<char> b(c);U8*src=(U8*)DATA(d);',nl
+rth	,←'   DO(i,c)b[i]=1&(src[i/8]>>(7-(i%8)));',nl
+rth	,←'   a=A{RANK(d),s,c?array(s,b.data()):evec()};};break;',nl
+rth	,←'  default:dwaerr(16);};}',nl
+⍝[c]rth	,←'EXPORT V*mkarray(S lp*da){A*aa=malloc(sizeof(A));if(aa==NULL)dwaerr(1);',nl
+⍝[c]rth	,←' aa->v=NULL;cpda(aa,da);R aa;}',nl
+⍝[c]rth	,←'V EXPORT exarray(S lp*da,A*aa,I at){I tp=0;',nl
+⍝[c]rth	,←' switch(at){',nl
+⍝[c]rth	,←'  case 1:tp=APLI;break;',nl
+⍝[c]rth	,←'  case 2:tp=APLD;break;',nl
+⍝[c]rth	,←'  case 3:tp=APLTI;break;',nl
+⍝[c]rth	,←'  default:dwaerr(11);}',nl
+⍝[c]rth	,←' cpad(da,aa,tp);frea(aa);}',nl,nl
+⍝[c]rth	,←'EXPORT V*cmka(I r,B*s,I tp,V*buf){A*a=malloc(sizeof(A));if(!a)dwaerr(1);',nl
+⍝[c]rth	,←' a->v=NULL;ai(a,r,s,tp);',nl
+⍝[c]rth	,←' switch(tp){',nl
+⍝[c]rth	,←'  case 1:{I*src=buf;I*tgt=a->v;DO(i,a->c)tgt[i]=src[i];};break;',nl
+⍝[c]rth	,←'  case 2:{D*src=buf;D*tgt=a->v;DO(i,a->c)tgt[i]=src[i];}break;',nl
+⍝[c]rth	,←'  case 3:{U8*src=buf;U8*tgt=a->v;DO(i,(a->c+7)/8)tgt[i]=src[i];}break;',nl
+⍝[c]rth	,←'  default:dwaerr(11);};R a;}',nl
+⍝[c]rth	,←'EXPORT V cexa(A*a,I tp,I*r,B*s,U8**b){*r=a->r;DO(i,*r)s[i]=a->s[i];',nl
+⍝[c]rth	,←' *b=malloc(a->z);if(!*b)dwaerr(1);U8*src=a->v;DO(i,a->z)(*b)[i]=src[i];}',nl,nl
+rth	,←nl
 ⍝[cf]
 ⍝[of]:Scalar Primitives
-⍝[of]:Old Scalar Database Tables
-⍝⍝residue←'⍵ % ⍺'
-respos ←'fmod((D)⍵,(D)⍺)'
-resneg ←'⍵-⍺*floor(((D)⍵)/(D)(⍺+(0==⍺)))'
-residue←'(0==⍺)?⍵:((0<=⍺&&0<=⍵)?',respos,':',resneg,')'
-
-⍝   Scalar Dispatch Table
-sdb←0 5⍴⊂''
-⍝⍝     Prim Monadic            Dyadic                Monadic Bool     Dyadic Bool
-sdb⍪←,¨'+'  '⍵'           '⍺+⍵'                 '⍵'         '⍺+⍵'
-sdb⍪←,¨'-'  '-1*⍵'        '⍺-⍵'                 '-1*⍵'      '⍺-⍵'
-sdb⍪←,¨'×'  '(⍵>0)-(⍵<0)' '⍺*⍵'                 '⍵'         '⍺&⍵'
-sdb⍪←,¨'÷'  '1.0/⍵'       '((D)⍺)/((D)⍵)'       '⍵'         '⍺&⍵'
-sdb⍪←,¨'*'  'exp((D)⍵)'   'pow((D)⍺,(D)⍵)'      'exp((D)⍵)' '⍺|~⍵'
-sdb⍪←,¨'⍟'  'log((D)⍵)'   'log((D)⍵)/log((D)⍺)' ''          ''
-sdb⍪←,¨'|'  'fabs(⍵)'     residue               '⍵'         '⍵&(⍺^⍵)'
-sdb⍪←,¨'○'  'PI*⍵'        'circ(⍺,⍵)'           'PI*⍵'      'circ(⍺,⍵)'
-sdb⍪←,¨'⌊'  'floor((D)⍵)' '⍺ < ⍵ ? ⍺ : ⍵'       '⍵'         '⍺&⍵'
-sdb⍪←,¨'⌈'  'ceil((D)⍵)'  '⍺ > ⍵ ? ⍺ : ⍵'       '⍵'         '⍺|⍵'
-sdb⍪←,¨'!'  'tgamma(1+⍵)'  '⍵<⍺?0:⍺==1?⍵:tgamma(1+⍵)/(tgamma(1+⍺)*tgamma(1+⍵-⍺))' '255' '(~⍺)|⍵'
-sdb⍪←,¨'<'  'dwaerr(99)'   '⍺<⍵'                 'dwaerr(99)' '(~⍺)&⍵'
-sdb⍪←,¨'≤'  'dwaerr(99)'   '⍺<=⍵'                'dwaerr(99)' '(~⍺)|⍵'
-sdb⍪←,¨'='  'dwaerr(99)'   '⍺==⍵'                'dwaerr(99)' '(⍺&⍵)|((~⍺)&(~⍵))'
-sdb⍪←,¨'≥'  'dwaerr(99)'   '⍺>=⍵'                'dwaerr(99)' '⍺|(~⍵)'
-sdb⍪←,¨'>'  'dwaerr(99)'   '⍺>⍵'                 'dwaerr(99)' '⍺&(~⍵)'
-sdb⍪←,¨'≠'  'dwaerr(99)'   '⍺!=⍵'                'dwaerr(99)' '⍺^⍵'
-sdb⍪←,¨'~'  '0==⍵'        'dwaerr(16)'           '~⍵'        'dwaerr(16)'
-sdb⍪←,¨'∧'  'dwaerr(99)'   'lcm(⍺,⍵)'            'dwaerr(99)' '⍺&⍵'
-sdb⍪←,¨'∨'  'dwaerr(99)'   'gcd(⍺,⍵)'            'dwaerr(99)' '⍺|⍵'
-sdb⍪←,¨'⍲'  'dwaerr(99)'   '!(⍺ && ⍵)'           'dwaerr(99)' '~(⍺&⍵)'
-sdb⍪←,¨'⍱'  'dwaerr(99)'   '!(⍺ || ⍵)'           'dwaerr(99)' '~(⍺|⍵)'
-sdb⍪←,¨'⌷'  '⍵'           'dwaerr(99)'           '⍵'         'dwaerr(99)'
-sdb⍪←'⎕XOR' 'dwaerr(99)'   '⍺^⍵'                 'dwaerr(99)' '⍺ ^ ⍵'
+rth	,←'MF(add){z=r;}',nl
+rth	,←'SF(add,z.v=lv+rv)',nl
+rth	,←'SF(and,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;else dwaerr(16);)',nl
+rth	,←'MF(cir){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}',nl
+rth	,←'MF(div){z.r=r.r;z.s=r.s;z.v=1.0/r.v.as(f64);}',nl
+rth	,←'SF(div,z.v=lv.as(f64)/rv.as(f64))',nl
+rth	,←'SF(eql,z.v=lv==rv)',nl
+rth	,←'MF(exp){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}',nl
+rth	,←'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',nl
+rth	,←'MF(fac){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',nl
+rth	,←'SF(gte,z.v=lv>=rv)',nl
+rth	,←'SF(gth,z.v=lv>rv)',nl
+rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
+rth	,←'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
+rth	,←'SF(lor,if(lv.isbool()&&rv.isbool())z.v=lv||rv;else dwaerr(16);)',nl
+rth	,←'SF(lte,z.v=lv<=rv)',nl
+rth	,←'SF(lth,z.v=lv<rv)',nl
+rth	,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl
+rth	,←'SF(max,z.v=max(lv,rv))',nl
+rth	,←'MF(min){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',nl
+rth	,←'SF(min,z.v=min(lv,rv))',nl
+rth	,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
+rth	,←'SF(mul,z.v=lv*rv)',nl
+rth	,←'SF(nan,z.v=!(lv&&rv))',nl
+rth	,←'SF(neq,z.v=lv!=rv)',nl
+rth	,←'SF(nor,z.v=!(lv||rv))',nl
+rth	,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
+rth	,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
+rth	,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
+rth	,←'MF(sub){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl
+rth	,←'SF(sub,z.v=lv-rv)',nl
 ⍝[cf]
-⍝[of]:Utilities
-⍝[of]:Header
-scldfhd←{((tz dz tr dr tl dl)(rgt lft))←⍺ ⍵
-	z	←'{I rk;B sp[15];',('r'(tr decarr)rgt),'l'(tl decarr)lft
-	z	,←'if(lr==rr){DOI(i,lr){if(rs[i]!=ls[i])dwaerr(5);}',nl
-	z	,←'}else if(lr&&rr){dwaerr(4);}',nl
-	z	,←'if(rr){rk=rr;DOI(i,rr){sp[i]=rs[i];}}',nl
-	z	,←'else{rk=lr;DOI(i,lr){sp[i]=ls[i];}}',nl
-	pres	←⊃{⍺,',',⍵}/'zrl'{⍺,'v[:',⍺,('cz'⊃⍨3=⍵),']'}¨dz dr dl
-		z,(('rk,sp,',⍕dz)(tz dectmp)'z'),(acdt'present(',pres,')'),'{',nl}
-sclmfhd←{((tz dz tr dr)rgt)←⍺ ⍵
-	z	←'{',('r'(tr decarr)rgt),(('rr,rs,',⍕dz)(tz dectmp)'z')
-	pres	←⊃{⍺,',',⍵}/'zr'{⍺,'v[:',⍺,('cz'⊃⍨3=⍵),']'}¨dz dr
-		z,(acdt'present(',pres,')'),'{',nl}
-⍝[cf]
-⍝[of]:Loops
-⍝[of]:N ← N N
-scldfnnn←{	z	←'if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc){',nl
-	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←' }',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc){',nl
-	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←' }',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc){',nl
-	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[0]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←' }',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:B ← N N
-scldfbnn←{	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' 'lv[0]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[0]' 'lv[i*8+j]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:B ← B N
-scldfbbn←{e←4⍴⊂¯1 ¯1 ⋄ t←3 1(2⌷⍵)0
-	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' '(1&(rv[i]>>j))' 'lv[i*8+j]' ⍺⍺)e t
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' '(1&(rv[i]>>j))' 'lv[0]' ⍺⍺)e t
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' '(1&rv[0])' 'lv[i*8+j]' ⍺⍺)e t
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:N ← B N
-scldfnbn←{e←4⍴⊂¯1 ¯1 ⋄ t←(⊃⍵)1(2⊃⍵)0
-	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' 'lv[i*8+j]' ⍺⍺)e t
-	z	,←'  }}',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' 'lv[0]' ⍺⍺)e t
-	z	,←'  }}',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&rv[0])' 'lv[i*8+j]' ⍺⍺)e t
-	z	,←'  }}',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:B ← N B
-scldfbnb←{e←4⍴⊂¯1 ¯1 ⋄ t←(2↑⍵),1 0
-	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 val=0;',nl
-	z	,←'  DOI(j,8){U8 tmp;',nl
-	z	,←'   ',('df'gcl ⍵⍵)('tmp' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
-	z	,←'   val|=tmp<<j;',nl
-	z	,←'  }',nl,'  zv[i]=val;}',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:N ← N B
-scldfnnb←{e←4⍴⊂¯1 ¯1 ⋄ t←(2↑⍵),1 0
-	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' 'rv[i*8+j]' '(1&(lv[i]>>j))' ⍺⍺)e t
-	z	,←'  }}',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' 'rv[i*8+j]' '(1&lv[0])' ⍺⍺)e t
-	z	,←'  }}',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' 'rv[0]' '(1&(lv[i]>>j))' ⍺⍺)e t
-	z	,←'  }}',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:N ← B B
-scldfnbb←{e←4⍴⊂¯1 ¯1 ⋄ t←(⊃⍵),1 1 0
-	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&(lv[i]>>j))' ⍺⍺)e t
-	z	,←'  }}',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' '(1&lv[0])' ⍺⍺)e t
-	z	,←'  }}',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  DOI(j,8){',nl
-	z	,←'   ',('df'gcl ⍵⍵)('zv[i*8+j]' '(1&rv[0])' '(1&(lv[i]>>j))' ⍺⍺)e t
-	z	,←'  }}',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:B ← B B
-scldfbbb←{	z	←'B zc8=(zc+7)/8;if(rr&&lr){',nl,simd'independent'
-	z	,←' DO(i,zc8){',nl
-	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←' }',nl
-	z	,←'}else if(rr){',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 tmp=255*(1&lv[0]);',nl
-	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'rv[i]' 'tmp' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←' }',nl
-	z	,←'}else{',nl,simd'independent'
-	z	,←' DO(i,zc8){U8 tmp=255*(1&rv[0]);',nl
-	z	,←'  ',('df'gcl ⍵⍵)('zv[i]' 'tmp' 'lv[i]' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←' }',nl
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:N ← N
-sclmfnn←{	z	←((⊂⍺⍺)∊syms)⊃(acup'host(rv[:rc])')(simd'independent')
-	z	,←'DO(i,zc){',nl
-	z	,←('mf'gcl ⍵⍵)('zv[i]' 'rv[i]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←'}',((⊂⍺⍺)∊syms)⊃(nl,acup'device(zv[:zc])')''
-		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:N ← B
-sclmfnb←{	z	←'B zc8=(zc+7)/8;',nl
-	z	,←((⊂⍺⍺)∊syms)⊃(acup'host(rv[:rz])')(simd'independent')
-	z	,←'DO(i,zc8){',nl
-	z	,←' DOI(j,8){',nl
-	z	,←('mf'gcl ⍵⍵)('zv[i*8+j]' '(1&(rv[i]>>j))' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←'}}',((⊂⍺⍺)∊syms)⊃(nl,acup'device(zv[:zc])')''
-		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:B ← N
-sclmfbn←{	z	←'B zc8=(zc+7)/8;',nl
-	z	,←((⊂⍺⍺)∊syms)⊃(acup'host(rv[:rc])')(simd'independent')
-	z	,←'DO(i,zc8){U8 val=0;',nl
-	z	,←' DOI(j,8){U8 tmp=0;',nl
-	z	,←('mf'gcl ⍵⍵)('tmp' 'rv[i*8+j]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←'  val|=tmp<<j;}',nl
-	z	,←' zv[i]=val;}',nl,((⊂⍺⍺)∊syms)⊃(acup'device(zv[:zz])')''
-		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[of]:B ← B
-sclmfbb←{(⊂⍺⍺)∊syms:⍺(⍺⍺ sclmfbbp ⍵⍵)⍵ ⋄ ⍺(⍺⍺ sclmfbbu ⍵⍵)⍵}
-sclmfbbp←{	z	←'B zc8=(zc+7)/8;',nl,simd'independent'
-	z	,←'DO(i,zc8){',nl
-	z	,←('mf'gcl ⍵⍵)('zv[i]' 'rv[i]' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-		z,'}}',nl,'cpaa(',⍺,',&za);}',nl}
-sclmfbbu←{	z	←'B zc8=(zc+7)/8;',nl,acup'host(rv[:rz])'
-	z	,←'DO(i,zc8){zv[i]=0;',nl
-	z	,←' DOI(j,8){U8 tmp=0;',nl
-	z	,←('mf'gcl ⍵⍵)('tmp' '(1&(rv[i]>>j))' '_' ⍺⍺)(4⍴⊂¯1 ¯1)⍵
-	z	,←'  zv[i]|=tmp<<j;}}',nl,acup'device(zv[:zz])'
-		z,'}',nl,'cpaa(',⍺,',&za);}',nl}
-⍝[cf]
-⍝[cf]
-
-scldfnnaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbnn sdb)y
-		z,rslt((,f)scldfnnn sdb)y}
-scldfbbaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbbb sdb)y
-		z,rslt((,f)scldfnbb sdb)y}
-scldfbnaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbbn sdb)y
-		z,rslt((,f)scldfnbn sdb)y}
-scldfnbaaa←{((f t d)(tr dr tl dl)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt lft←var/3↑v,⍪e
-	z	←t d tr dr tl dl scldfhd rgt lft
-	3=d:	z,rslt((,f)scldfbnb sdb)y
-		z,rslt((,f)scldfnnb sdb)y}
-sclmfnaaa←{((f t d)(tr dr)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ ⍺←sdb
-	z	←t d tr dr sclmfhd rgt
-	3=d:	z,rslt((,f)sclmfbn ⍺)y
-		z,rslt((,f)sclmfnn ⍺)y}
-sclmfbaaa←{((f t d)(tr dr)(v e y))←⍺⍺ ⍵⍵ ⍵ ⋄ rslt rgt←var/2↑v,⍪e ⋄ ⍺←sdb
-	z	←t d tr dr sclmfhd rgt
-	3=d:	z,rslt((,f)sclmfbb ⍺)y
-		z,rslt((,f)sclmfnb ⍺)y}
-⍝[cf]
-⍝[of]:Generators
-⍝[of]:+	Addition
-addmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-addmfbnsss	←addmffnsss←addmfinsss
-adddfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'+',r,';',nl}
-adddfbbsss	←adddfffsss←adddffisss←adddfifsss←adddfiisss
-adddfiiaaa	←'+' 'I'	1 scldfnnaaa 'I'	1	'I'	1
-adddfifaaa	←'+' 'D'	2 scldfnnaaa 'I'	1	'D'	2
-adddffiaaa	←'+' 'D'	2 scldfnnaaa 'D'	2	'I'	1
-adddfffaaa	←'+' 'D'	2 scldfnnaaa 'D'	2	'D'	2
-adddfbbaaa	←'+' 'I'	1 scldfbbaaa 'U8'	3	'U8'	3
-adddfbiaaa	←'+' 'I'	1 scldfbnaaa 'U8'	3	'I'	1
-adddfbfaaa	←'+' 'D'	2 scldfbnaaa 'U8'	3	'D'	2
-adddfibaaa	←'+' 'I'	1 scldfnbaaa 'I'	1	'U8'	3
-adddffbaaa	←'+' 'D'	2 scldfnbaaa 'D'	2	'U8'	3
-⍝[cf]
-⍝[of]:-	Subtraction
-submfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=-1*',r,';',nl}
-submffnsss	←submfbnsss←submfinsss
-subdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'-',r,';',nl}
-subdfbbsss	←subdfffsss←subdffisss←subdfifsss←subdfiisss
-subdfiiaaa	←'-' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-subdfifaaa	←'-' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-subdffiaaa	←'-' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-subdfffaaa	←'-' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-subdfbbaaa	←'-' 'I'	1 scldfbbaaa	'U8'	3	'U8'	3
-subdfbiaaa	←'-' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-subdfbfaaa	←'-' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-subdfibaaa	←'-' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-subdffbaaa	←'-' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-⍝[cf]
-⍝[of]:×	Multiplication
-mulmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-mulmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=(',r,'>0)-(',r,'<0);',nl}
-mulmffnsss	←mulmfinsss
-muldfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
-muldfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'*',r,';',nl}
-muldfffsss	←muldffisss←muldfifsss←muldfiisss
-muldfiiaaa	←'×' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-muldfifaaa	←'×' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-muldffiaaa	←'×' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-muldfffaaa	←'×' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-muldfbbaaa	←'×' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-muldfbiaaa	←'×' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-muldfbfaaa	←'×' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-muldfibaaa	←'×' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-muldffbaaa	←'×' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-⍝[cf]
-⍝[of]:÷	Division
-divmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-divmfinsss	←{((z r l f) e y)←⍵  ⋄ z,'=1.0/',r,';',nl}
-divmffnsss	←divmfinsss
-divdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
-divdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=((D)',l,')/((D)',r,');',nl}
-divdfffsss	←divdffisss←divdfifsss←divdfiisss
-divdfiiaaa	←'÷' 'D'	2 scldfnnaaa	'I'	1	'I'	1
-divdfifaaa	←'÷' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-divdfibaaa	←'÷' 'D'	2 scldfnbaaa	'I'	1	'U8'	3
-divdffiaaa	←'÷' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-divdfffaaa	←'÷' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-divdffbaaa	←'÷' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-divdfbiaaa	←'÷' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-divdfbfaaa	←'÷' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-divdfbbaaa	←'÷' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:*	Exponentiation
-expmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=exp((D)',r,');',nl}
-expmffnsss	←expmfbnsss←expmfinsss
-expdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|~',r,';',nl}
-expdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=pow((D)',l,',(D)',r,');',nl}
-expdfffsss	←expdffisss←expdfifsss←expdfiisss
-expdfiiaaa	←'*' 'D'	2 scldfnnaaa	'I'	1	'I'	1
-expdfifaaa	←'*' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-expdfibaaa	←'*' 'D'	2 scldfnbaaa	'I'	1	'U8'	3
-expdffiaaa	←'*' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-expdfffaaa	←'*' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-expdffbaaa	←'*' 'U8'	3 scldfnbaaa	'D'	2	'U8'	3
-expdfbiaaa	←'*' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-expdfbfaaa	←'*' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-expdfbbaaa	←'*' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:⍟	Logarithm
-logmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=log((D)',r,');',nl}
-logmffnsss	←logmfbnsss←logmfinsss
-logdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=log((D)',r,')/log((D)',l,');',nl}
-logdfffsss	←logdffisss←logdfifsss←logdfiisss
-logdfiiaaa	←'⍟' 'D' 2 scldfnnaaa	'I'	1	'I'	1
-logdfifaaa	←'⍟' 'D' 2 scldfnnaaa	'I'	1	'D'	2
-logdffiaaa	←'⍟' 'D' 2 scldfnnaaa	'D'	2	'I'	1
-logdfffaaa	←'⍟' 'D' 2 scldfnnaaa	'D'	2	'D'	2
-⍝[cf]
-⍝[of]:|	Residue
-resmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-resmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=fabs(',r,');',nl}
-resmffnsss	←resmfinsss
-resdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,'&(',l,'^',r,');',nl}
-resdfiisss←{	((z r l f) e y)←⍵
-	x	←'if(',l,'){',nl
-	x	,←' if(0<=',l,'&&0<=',r,'){',z,'=',r,'%',l,';}',nl
-	x	,←' else{',z,'=',r,'-',l,'*floor((D)',r,'/(D)(',l,'+(0==',l,')));}}',nl
-		x,'else{',z,'=',r,';}',nl}
-resdfffsss←{	((z r l f) e y)←⍵
-	x	←'if(',l,'){',nl
-	x	,←' if(0<=',l,'&&0<=',r,'){',z,'=fmod((D)',r,',(D)',l,');}',nl
-	x	,←' else{',z,'=',r,'-',l,'*floor((D)',r,'/(D)(',l,'+(0==',l,')));}}',nl
-		x,'else{',z,'=',r,';}',nl}
-resdffisss	←resdfifsss←resdfffsss
-resdfiiaaa	←'|' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-resdfifaaa	←'|' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-resdfibaaa	←'|' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-resdffiaaa	←'|' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-resdfffaaa	←'|' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-resdffbaaa	←'|' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-resdfbiaaa	←'|' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-resdfbfaaa	←'|' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-resdfbbaaa	←'|' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:⌊	Floor
-minmffnsss	←{((z r l f) e y)←⍵ ⋄ z,'=floor(',r,');',nl}
-minmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-minmfbnsss	←minmfinsss
-mindfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
-mindfiisss	←{((z r l f) e y)←⍵ ⋄ 'if(',l,'<',r,')',z,'=',l,';else ',z,'=',r,';',nl}
-mindfffsss	←mindffisss←mindfifsss←mindfiisss
-mindfiiaaa	←'⌊' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-mindfifaaa	←'⌊' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-mindfibaaa	←'⌊' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-mindffiaaa	←'⌊' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-mindfffaaa	←'⌊' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-mindffbaaa	←'⌊' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-mindfbiaaa	←'⌊' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-mindfbfaaa	←'⌊' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-mindfbbaaa	←'⌊' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:⌈	Ceiling
-maxmffnsss	←{((z r l f) e y)←⍵ ⋄ z,'=ceil(',r,');',nl}
-maxmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-maxmfbnsss	←maxmfinsss
-maxdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|',r,';',nl}
-maxdfiisss	←{((z r l f) e y)←⍵ ⋄ 'if(',l,'>',r,')',z,'=',l,';else ',z,'=',r,';',nl}
-maxdfffsss	←maxdffisss←maxdfifsss←maxdfiisss
-maxdfiiaaa	←'⌈' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-maxdfifaaa	←'⌈' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-maxdfibaaa	←'⌈' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-maxdffiaaa	←'⌈' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-maxdfffaaa	←'⌈' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-maxdffbaaa	←'⌈' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-maxdfbiaaa	←'⌈' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-maxdfbfaaa	←'⌈' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-maxdfbbaaa	←'⌈' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:~	Not
-notmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=(0==',r,');',nl}
-notmffnsss	←notmfinsss
-notmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=~',r,';',nl}
-⍝[cf]
-⍝[of]:<	Less Than
-lthdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=(~',l,')&',r,';',nl}
-lthdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'<',r,';',nl}
-lthdfffsss	←lthdffisss←lthdfifsss←lthdfiisss
-lthdfiiaaa	←'<' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-lthdfifaaa	←'<' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-lthdfibaaa	←'<' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-lthdffiaaa	←'<' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-lthdfffaaa	←'<' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-lthdffbaaa	←'<' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-lthdfbiaaa	←'<' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-lthdfbfaaa	←'<' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-lthdfbbaaa	←'<' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:≤	Less Than or Equal
-ltedfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=(~',l,')|',r,';',nl}
-ltedfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'<=',r,';',nl}
-ltedfffsss	←ltedffisss←ltedfifsss←ltedfiisss
-ltedfiiaaa	←'≤' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-ltedfifaaa	←'≤' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-ltedfibaaa	←'≤' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-ltedffiaaa	←'≤' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-ltedfffaaa	←'≤' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-ltedffbaaa	←'≤' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-ltedfbiaaa	←'≤' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-ltedfbfaaa	←'≤' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-ltedfbbaaa	←'≤' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:=	Equal
-eqldfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=(',l,'&',r,')|((~',l,')&(~',r,'));',nl}
-eqldfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'==',r,';',nl}
-eqldfffsss	←eqldffisss←eqldfifsss←eqldfiisss
-eqldfiiaaa	←'=' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-eqldfifaaa	←'=' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-eqldfibaaa	←'=' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-eqldffiaaa	←'=' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-eqldfffaaa	←'=' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-eqldffbaaa	←'=' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-eqldfbiaaa	←'=' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-eqldfbfaaa	←'=' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-eqldfbbaaa	←'=' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:≥	Greater Than or Equal
-gtedfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|(~',r,');',nl}
-gtedfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'>=',r,';',nl}
-gtedfffsss	←gtedffisss←gtedfifsss←gtedfiisss
-gtedfiiaaa	←'≥' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-gtedfifaaa	←'≥' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-gtedfibaaa	←'≥' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-gtedffiaaa	←'≥' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-gtedfffaaa	←'≥' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-gtedffbaaa	←'≥' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-gtedfbiaaa	←'≥' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-gtedfbfaaa	←'≥' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-gtedfbbaaa	←'≥' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:>	Greater Than
-gthdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&(~',r,');',nl}
-gthdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'>',r,';',nl}
-gthdfffsss	←gthdffisss←gthdfifsss←gthdfiisss
-gthdfiiaaa	←'>' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-gthdfifaaa	←'>' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-gthdfibaaa	←'>' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-gthdffiaaa	←'>' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-gthdfffaaa	←'>' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-gthdffbaaa	←'>' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-gthdfbiaaa	←'>' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-gthdfbfaaa	←'>' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-gthdfbbaaa	←'>' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:≠	Not Equal
-neqdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'^',r,';',nl}
-neqdfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'!=',r,';',nl}
-neqdfffsss	←neqdffisss←neqdfifsss←neqdfiisss
-neqdfiiaaa	←'≠' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-neqdfifaaa	←'≠' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-neqdfibaaa	←'≠' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-neqdffiaaa	←'≠' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-neqdfffaaa	←'≠' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-neqdffbaaa	←'≠' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-neqdfbiaaa	←'≠' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-neqdfbfaaa	←'≠' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-neqdfbbaaa	←'≠' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:∧	And
-anddfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'&',r,';',nl}
-anddfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=lcm(',l,',',r,');',nl}
-anddfffsss	←anddffisss←anddfifsss←anddfiisss
-anddfiiaaa	←'∧' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-anddfifaaa	←'∧' 'I'	1 scldfnnaaa	'I'	1	'D'	2
-anddfibaaa	←'∧' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-anddffiaaa	←'∧' 'I'	1 scldfnnaaa	'D'	2	'I'	1
-anddfffaaa	←'∧' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-anddffbaaa	←'∧' 'I'	1 scldfnbaaa	'D'	2	'U8'	3
-anddfbiaaa	←'∧' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-anddfbfaaa	←'∧' 'I'	1 scldfbnaaa	'U8'	3	'D'	2
-anddfbbaaa	←'∧' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:∨	Or
-lordfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=',l,'|',r,';',nl}
-lordfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=gcd(',l,',',r,');',nl}
-lordfffsss	←lordffisss←lordfifsss←lordfiisss
-lordfiiaaa	←'∨' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-lordfifaaa	←'∨' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-lordfibaaa	←'∨' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-lordffiaaa	←'∨' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-lordfffaaa	←'∨' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-lordffbaaa	←'∨' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-lordfbiaaa	←'∨' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-lordfbfaaa	←'∨' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-lordfbbaaa	←'∨' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:⍲	Not And
-nandfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=~(',l,'&',r,');',nl}
-nandfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=!(',l,'&&',r,');',nl}
-nandfffsss	←nandffisss←nandfifsss←nandfiisss
-nandfiiaaa	←'⍲' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-nandfifaaa	←'⍲' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-nandfibaaa	←'⍲' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-nandffiaaa	←'⍲' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-nandfffaaa	←'⍲' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-nandffbaaa	←'⍲' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-nandfbiaaa	←'⍲' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-nandfbfaaa	←'⍲' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-nandfbbaaa	←'⍲' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:⍱	Not Or
-nordfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=~(',l,'|',r,');',nl}
-nordfiisss	←{((z r l f) e y)←⍵ ⋄ z,'=!(',l,'||',r,');',nl}
-nordfffsss	←nordffisss←nordfifsss←nordfiisss
-nordfiiaaa	←'⍱' 'U8'3 scldfnnaaa	'I'	1	'I'	1
-nordfifaaa	←'⍱' 'U8'3 scldfnnaaa	'I'	1	'D'	2
-nordfibaaa	←'⍱' 'U8'3 scldfnbaaa	'I'	1	'U8'	3
-nordffiaaa	←'⍱' 'U8'3 scldfnnaaa	'D'	2	'I'	1
-nordfffaaa	←'⍱' 'U8'3 scldfnnaaa	'D'	2	'D'	2
-nordffbaaa	←'⍱' 'U8'3 scldfnbaaa	'D'	2	'U8'	3
-nordfbiaaa	←'⍱' 'U8'3 scldfbnaaa	'U8'	3	'I'	1
-nordfbfaaa	←'⍱' 'U8'3 scldfbnaaa	'U8'	3	'D'	2
-nordfbbaaa	←'⍱' 'U8'3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:○	Circle Functions
-cirmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=PI*',r,';',nl}
-cirmffnsss	←cirmfbnsss←cirmfinsss
-cirdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=circ(',l,',',r,');',nl}
-cirdfffsss	←cirdffisss←cirdfifsss←cirdfiisss←cirdfbbsss
-cirdfiiaaa	←'○' 'D' 2 scldfnnaaa	'I'	1	'I'	1
-cirdfifaaa	←'○' 'D' 2 scldfnnaaa	'I'	1	'D'	2
-cirdfibaaa	←'○' 'D' 2 scldfnbaaa	'I'	1	'U8'	3
-cirdffiaaa	←'○' 'D' 2 scldfnnaaa	'D'	2	'I'	1
-cirdfffaaa	←'○' 'D' 2 scldfnnaaa	'D'	2	'D'	2
-cirdffbaaa	←'○' 'D' 2 scldfnbaaa	'D'	2	'U8'	3
-cirdfbiaaa	←'○' 'D' 2 scldfbnaaa	'U8'	3	'I'	1
-cirdfbfaaa	←'○' 'D' 2 scldfbnaaa	'U8'	3	'D'	2
-cirdfbbaaa	←'○' 'D' 2 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:!	Binomial
-facmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=tgamma(1+',r,');',nl}
-facmffnsss	←facmfinsss
-facmfbnsss	←{((z r l f) e y)←⍵ ⋄ z,'=255;',nl}
-facdfbbsss	←{((z r l f) e y)←⍵ ⋄ z,'=(~',l,')|',r,';',nl}
-facdfiisss←{	((z r l f) e y)←⍵
-	x	←'if(',l,'>',r,')',z,'=0;',nl
-		x,'else ',z,'=tgamma(1+',r,')/(tgamma(1+',l,')*tgamma(1+',r,'-',l,'));',nl}
-facdfffsss	←facdffisss←facdfifsss←facdfiisss
-facdfiiaaa	←'!' 'I'	1 scldfnnaaa	'I'	1	'I'	1
-facdfifaaa	←'!' 'D'	2 scldfnnaaa	'I'	1	'D'	2
-facdfibaaa	←'!' 'I'	1 scldfnbaaa	'I'	1	'U8'	3
-facdffiaaa	←'!' 'D'	2 scldfnnaaa	'D'	2	'I'	1
-facdfffaaa	←'!' 'D'	2 scldfnnaaa	'D'	2	'D'	2
-facdffbaaa	←'!' 'D'	2 scldfnbaaa	'D'	2	'U8'	3
-facdfbiaaa	←'!' 'I'	1 scldfbnaaa	'U8'	3	'I'	1
-facdfbfaaa	←'!' 'D'	2 scldfbnaaa	'U8'	3	'D'	2
-facdfbbaaa	←'!' 'U8'	3 scldfbbaaa	'U8'	3	'U8'	3
-⍝[cf]
-⍝[of]:⌷	Materialize
-sqdmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-sqdmffnsss	←sqdmfbnsss←sqdmfinsss
-⍝[cf]
-⍝[cf]
-⍝[of]:Loop Generators
-simp	←{' present(',(⊃{⍺,',',⍵}/'d',∘⍕¨⍳≢var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵),')'}
-sima	←{{' copyin(',(⊃{⍺,',',⍵}/⍵),')'}⍣(0<a)⊢'d',∘⍕¨(+/~m)+⍳a←≢⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-simr	←{' present(',(⊃{⍺,',',⍵}/'r',∘⍕¨⍳≢⊃n⍵),')'}
-simc	←{fv←(⊃v⍵)fvs(⊃e⍵) ⋄ ' independent ',(simp fv),(sima fv),simr ⍵}
-slpd	←'B n=(cnt+7)/8;',nl
-slp	←{slpd,(simd simc ⍵),'DO(i,n){',nl,⊃,/(1⌷⍉(⊃v⍵)fvs(⊃y⍵))sip¨⍳≢(⊃v⍵)fvs(⊃e⍵)}
-rk0	←'I prk=0;B sp[15];B cnt=1;',nl
-rk1	←'if(prk!=(' ⋄ rk2←')->r){if(prk==0){',nl
-rsp	←{'prk=(',⍵,')->r;',nl,'DO(i,prk) sp[i]=(',⍵,')->s[i];'}
-rk3	←'}else if((' ⋄ rk4←')->r!=0)dwaerr(4);',nl
-spt	←{'if(sp[i]!=(',⍵,')->s[i])dwaerr(4);'}
-rkv	←{rk1,⍵,rk2,(rsp ⍵),rk3,⍵,rk4,'}else{',nl,'DO(i,prk){',(spt ⍵),'}}',nl}
-rk5	←'if(prk!=1){if(prk==0){prk=1;sp[0]='
-rka	←{rk5,l,';}else dwaerr(4);}else if(sp[0]!=',(l←⍕≢⍵),')dwaerr(4);',nl}
-crk	←{⍵((⊃,/)((rkv¨var/)⊣(⌿⍨)(~⊢)),(rka¨0⌷∘⍉(⌿⍨)))0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵}
-srk	←{crk(⊃v⍵)(,⍤0(⌿⍨)0≠(≢∘⍴¨⊣))(⊃e⍵)}
-ste	←{'cpaa(',⍵,',&p',(⍕⍺),');',nl}
-stsn	←{⊃,/((⍳8){'r',(⍕⍵),'[i*8+',(⍕⍺),']='}¨⍺),¨(⍳8){'s',(⍕⍵),'_',(⍕⍺),';',nl}¨⍵}
-sts	←{i t←⍵ ⋄ 3≡t:'r',(⍕⍺),'[i]=s',(⍕i),';',nl ⋄ ⍺ stsn i}
-rkp	←{'I m',(⍕⊃⌽⍺),'=(',(⍕⍵),')->r!=0;',nl}
-gdp	←{(⊃git ⊃⍺),'*RSTCT d',(⍕⊃⌽⍺),'=(',⍵,')->v;',nl}
-gda	←{'d',(⍕⍺),'[]={',(⊃{⍺,',',⍵}/⍕¨⍵),'};',nl,'B m',(⍕⍺),'=1;',nl}
-sfa	←{(git m/⍺),¨{((+/~m)+⍳≢⍵)gda¨⍵}⊣/(m←0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-sfp	←{(m⌿⍺){(⍺,¨⍳≢⍵)(gdp,rkp)¨⍵}var/(m←~0=(⊃0⍴∘⊂⊃)¨0⌷⍉⍵)⌿⍵}
-sfv	←(1⌷∘⍉(⊃v)fvs(⊃y))((⊃,/)sfp,sfa)(⊃v)fvs(⊃e)
-ack	←{'ai(&p',(⍕⍺),',prk,sp,',(⍕⍺⌷⍺⍺),');',nl}
-gpp	←{⊃,/{'A p',(⍕⍵),';p',(⍕⍵),'.v=NULL;',nl}¨⍳≢⍵}
-grs	←{(⊃git ⍺),'*RSTCT r',(⍕⍵),'=p',(⍕⍵),'.v;',nl}
-spp	←(⊃s){(gpp⍵),(⊃,/(⍳≢⍵)(⍺ ack)¨⍵),(⊃,/⍺ grs¨⍳≢⍵)}(⊃n)var¨(⊃r)
-sip←{	w	←⍕⍵ ⋄ 3≡⍺:(⊃git ⍺),'f',w,'=d',w,'[i*m',w,'];',nl
-		⊃,/(⍕¨⍳8)((⊃git ⍺){⍺⍺,'f',⍵,'_',⍺,'=d',⍵,'[(i*8+',⍺,')*m',⍵,'];',nl})¨⊂w}
-⍝[cf]
-⍝[of]:Expression Generators
-sfnl	←{⊃⍺⍺⌷⍨((⊂⍺)⍳⍨0⌷⍉⍺⍺),(2×∧/∨⌿3 4∘.=⍵)+4+.≠⍵}
-scln	←(,¨'%&')⎕R'\\\%' '\\\&'
-sstm	←{cln (,¨'⍵⍺')⎕R(scln∘⍕∘⊃¨⍺ ⍵)⊢⍺⍺(⍵⍵ sfnl)⊃∘⌽¨⍺ ⍵}
-sidx←{	0=⊃⊃0⍴⊂⍵:	8⍴⊂⍵ (⍺⊃⍺⍺)
-	∧/⊃3 4∨.=⊂⍺⍺:	⊂⍵ (⍺⊃⍺⍺)
-	3=⍺⊃⍺⍺:	↓(⍺⊃⍺⍺),⍨⍪(⍳8){'(1&(',⍵,'>>',(⍕⍺),'))'}¨⊂⍵
-		↓(⍺⊃⍺⍺),⍨⍪(⍳8){⍵,'_',⍕⍺}¨⊂⍵}
-scal	←{⊃⍺⍺ sstm ⍵⍵¨/1 2(⍺ sidx)¨⍵}
-sgtbn	←{⍺⍺,'|=((U8)(',⍵,'))<<',(⍕⍺),';',nl}
-sgtnn	←{⍺⍺,'_',(⍕⍺),'=',⍵,';',nl}
-sgtbb	←{⍺,'=',⍵,';',nl}
-sget←{	nm	←(⊃git⊃⍺⍺),⊃⍺
-	∧/⊃3 4∨.=⊂3↑⍺⍺:	⊃,/nm∘sgtbb¨⍵
-	3=⊃⍺⍺:	nm,'=0;',nl,⊃,/(⍳8)((⊃⍺)sgtbn)¨⍵
-		⊃,/(⍳8)(nm sgtnn)¨⍵}
-scl	←{cln ((≢⍵)↑,¨'⍵⍺')⎕R(scln∘⍕¨⍵) ⊃⍺⌷⍨((⊂⍺⍺)⍳⍨0⌷⍉⍺),≢⍵}
-⍝[cf]
-⍝[of]:Scalar/Mixed Conversion
-scmx	←{(⊂⍺⍺)∊0⌷⍉sdb:(⊃⍵),'=',';',⍨sdb(⍺⍺ scl)1↓⍵ ⋄ ⍺(⍺⍺ fcl ⍵⍵)⍵,⍤0⊢⊂2⍴¯1}
-⍝[cf]
+⍝[of]:Mixed Primitives
+rth	,←'DF(brk){if(l.r!=1)dwaerr(16);z.r=r.r;z.s=r.s;z.v=l.v(r.v.as(s32));}',nl
+rth	,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
+rth	,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);B lc=cnt(l);if(!lc){z=r;R;}',nl
+rth	,←' if(lc!=1||r.r!=1)dwaerr(4);if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
+rth	,←' z.r=0;z.s=eshp;array i=l.v(0);z.v=r.v(i);}',nl
+rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
+rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
+rth	,←' z.v=constant(0,z.s,b8);}',nl
+rth	,←'MF(iot){if(r.r>1)dwaerr(4);B c=cnt(r);if(c>4)dwaerr(10);if(c>1)dwaerr(16);',nl
+rth	,←' z.r=1;z.s=dim4(r.v.as(s32).scalar<I>());z.v=z.s[0]?iota(z.s,dim4(1),s32):evec();}',nl
+rth	,←'DF(iot){z.r=r.r;z.s=r.s;B c=cnt(r);if(!c){z.v=evec();R;};B lc=cnt(l)+1;',nl
+rth	,←' if(lc==1){z.v=constant(0,z.s,s32);R;};if(l.r>1)dwaerr(16);array rf=flat(r.v).T();',nl
+rth	,←' dtype mt=mxt(l.v,rf);z.v=join(0,tile(l.v,1,(U)c).as(mt),rf.as(mt))==tile(rf,(U)lc,1);',nl
+rth	,←' z.v=min((z.v*iota(dim4(lc),dim4(1,c),s32)+((!z.v)*lc).as(s32)),0);z.v=array(z.v,z.s);}',nl
+rth	,←'MF(mem){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}',nl
+rth	,←'MF(rgt){z=r;}',nl
+rth	,←'DF(rgt){z=r;}',nl
+rth	,←'MF(sqd){z=r;}',nl
+rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
+rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
+rth	,←' index ix[4] = {span, span, span, span};DOU(i,s)ix[i]=sv[i];',nl
+rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());',nl
+rth	,←' if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
+rth	,←' if(r.r==3)z.v=r.v(ix[2],ix[1],ix[0]);if(r.r==4)z.v=r.v(ix[3],ix[2],ix[1],ix[0]);}',nl
+rth	,←nl
 ⍝[cf]
 ⍝[of]:Primitive Operators
 ocl	←{⍵∘(⍵⍵{'(',(opl ⍺),(opt ⍺⍺),⍵,' ⍵⍵)'})¨1↓⍺⌷⍨(0⌷⍉⍺)⍳⊂⍺⍺}
@@ -1900,98 +1073,8 @@ dectmp	←{'A ',a,';',a,'.v=NULL;ai(&',a,',',⍺,');',nl,⍵(⍺⍺ decarr)'&',a
 dectmpi	←'I'dectmp
 dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
-rgt	←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
-lft	←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
-rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 ⍝[cf]
 ⍝[of]:Generators
-⍝[of]:[]	Bracket
-brid←{	chk	←'if(lr!=1)dwaerr(16);DO(i,rr)rc*=rs[i];DO(i,lr)lc*=ls[i];',nl
-	chkn	←pacc'update host(rv[:rc],lv[:lc])'
-	chkn	,←'DO(i,rc)if(rv[i]<0||rv[i]>=ls[0])dwaerr(3);'
-	chkb	←'B n=(rc+7)/8;',nl
-	chkb	,←pacc'update host(rv[:n],lv[:lc])'
-	chkb	,←'DO(i,n){DO(j,8){if((1&(rv[i]>>j))>=ls[0])dwaerr(3);}}'
-	chk	,←(3≡1⊃⍺)⊃chkn chkb
-	siz	←'zr=rr;DOI(i,zr)zs[i]=rs[i];'
-	exen	←(simd'present(zv[:rslt->c],lv[:lc],rv[:rc])'),'DO(i,rc)zv[i]=lv[rv[i]];'
-	exeb	←(simd'present(zv[:rslt->c],lv[:lc],rv[:n])')
-	exeb	,←'DO(i,n){DO(j,8){zv[i*8+j]=lv[1&(rv[i]>>j)];}}'
-	exe	←(3≡1⊃⍺)⊃exen exeb
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:≡	Depth/Equiv
-eqvmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=0;',nl}
-eqvmfbnsss	←eqvmffnsss←eqvmfinsss
-eqvmfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e 
-	z	←'{ai(',rslt,',0,NULL,1);I*zv=(',rslt,')->v;',nl
-	z	,←'if((',rgt,')->r==0)zv[0]=0;else zv[0]=1;',nl
-		z,(pacc'update device(zv[:1])'),'}',nl}
-eqvd←{	chk siz	←'' 'zr=0;'
-	exe	←pacc 'update host(lv[:lft->c],rv[:rgt->c])'
-	exe	,←'zv[0]=1;if(rr!=lr)zv[0]=0;',nl
-	exe	,←'DO(i,lr){if(!zv[0])break;if(rs[i]!=ls[i]){zv[0]=0;break;}}',nl
-	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←'DO(i,lc){if(!zv[0])break;if(lv[i]!=rv[i]){zv[0]=0;break;}}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		chk siz exe mxfn 1 ⍺ ⍵}
-eqvmfbnaaa←eqvmffnaaa←eqvmfinaaa
-⍝[cf]
-⍝[of]:⊃	First/Pick
-dismfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-dismfbnsss	←dismffnsss←dismfinsss
-dismfgnaaa←{	v e y	←⍵
-	tc tn	←⍺
-	rslt rgt	←var/2↑v,⍪e
-	z	←(≡/2↑e)⊃('{A*tgt=',rslt,';')('{A tgta;A*tgt;tgta.v=NULL;tgt=tgta;')
-	z	,←'ai(tgt,0,NULL,',tc,');',tn,'*zv=tgt->v;',nl
-	z	,←'if((',rgt,')->c){',tn,'*rv=(',rgt,')->v;',nl
-	z	,←(simd''),'DO(i,1)zv[0]=rv[0];}',nl
-	z	,←'else{',nl,(simd''),'DO(i,1)zv[0]=0;}',nl
-		z,(≡/2↑e)⊃('}',nl)('cpaa(',rslt,',tgt);}',nl)}
-dismfinaaa	←{'1I'dismfgnaaa ⍵}
-dismffnaaa	←{'2D'dismfgnaaa ⍵}
-dismfbnaaa	←{'1' 'U8'dismfgnaaa ⍵}
-disdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),'1'dectmpi disdfnnlp ⍵}
-disdfifaaa←{		'dwaerr(16);',nl}
-disdfibaaa←{		'dwaerr(16);',nl}
-disdffiaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵),'2'dectmpf disdfnnlp ⍵}
-disdfffaaa←{		'dwaerr(16);',nl}
-disdffbaaa←{		'dwaerr(16);',nl}
-disdfbiaaa←{		'dwaerr(16);',nl}
-disdfbfaaa←{		'dwaerr(16);',nl}
-disdfbbaaa←{		'dwaerr(16);',nl}
-disdfiiala←{		'dwaerr(16);',nl}
-disdfifala←{		'dwaerr(16);',nl}
-disdfibala←{		'dwaerr(16);',nl}
-disdffiala←{		'dwaerr(16);',nl}
-disdfffala←{		'dwaerr(16);',nl}
-disdffbala←{		'dwaerr(16);',nl}
-disdfbiala←{		'dwaerr(16);',nl}
-disdfbfala←{		'dwaerr(16);',nl}
-disdfbbala←{		'dwaerr(16);',nl}
-disdfiiaal←{		'dwaerr(16);',nl}
-disdfifaal←{		'dwaerr(16);',nl}
-disdfibaal←{		'dwaerr(16);',nl}
-disdffiaal←{		'dwaerr(16);',nl}
-disdfffaal←{		'dwaerr(16);',nl}
-disdffbaal←{		'dwaerr(16);',nl}
-disdfbiaal←{		'dwaerr(16);',nl}
-disdfbfaal←{		'dwaerr(16);',nl}
-disdfbbaal←{		'dwaerr(16);',nl}
-disdfnnlp←{	z	←'if(lr>1)dwaerr(4);',nl
-	z	,←'if(!lc){',nl,('rr,rs,',⍺)⍺⍺'z'
-	z	,←(simd'present(zv[:zc],rv[:rc])'),'DO(i,zc)zv[i]=rv[i];',nl
-	z	,←'cpaa(',(rslt ⍵),',&za);',nl
-	z	,←'}else{if(lc!=1||rr!=1)dwaerr(4);',nl
-	z	,←'I f=0;',nl,(simd''),'DOI(i,1)f=lv[0]>=rc;',nl
-	z	,←'if(f)dwaerr(3);',nl
-	z	,←(('0,0,',⍺)⍺⍺'z'),simd'present(zv[:zc],rv[:rc])'
-	z	,←'DOI(i,1)zv[0]=rv[lv[0]];',nl
-		z,'cpaa(',(rslt ⍵),',&za);}}',nl}
-dscd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'⊃')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
-⍝[cf]
 ⍝[of]:⊤	Encode
 encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
 	chk	,←pacc'update host(lv[:lc])'
@@ -2002,12 +1085,6 @@ encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:∊	Enlist/Membership
-memmfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	s	←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl
-	≡/2↑e:	s
-		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
-memmfbnaaa←memmffnaaa←memmfinaaa
 memdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
 		z,('gucmpi'memdfnnlp'gucmpi')⍵}
 memdfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵)
@@ -2082,80 +1159,7 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 		z,'cpaa(',(rslt ⍵),',&za);}',nl}
 gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
-⍝[of]:⊢	Identity/Right
-rgtmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-rgtmfbnsss	←rgtmffnsss←rgtmfinsss
-rgtmfinaaa	←{≡/2↑1⊃⍵:'' ⋄ 'memcpy(',(rslt⍵),',',(rgt⍵),',sizeof(A));(',(rgt⍵),')->f=0;',nl}
-rgtmfinala←{	z	←'{',('r'decliti rgt⍵),'rr,rs,1'dectmpi'z'
-	z	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl
-		z,'cpaa(',(rslt⍵),',&za);}',nl}
-rgtmffnala←{	z	←'{',('r'declitf rgt⍵),'rr,rs,1'dectmpf'z'
-	z	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[i];',nl
-		z,'cpaa(',(rslt⍵),',&za);}',nl}
-rgtmfbnala←{	z	←'{',('r'declitb rgt⍵),'rr,rs,1'dectmpb'z'
-	z	,←(simd'present(rv[:rz],zv[:zz])'),'DO(i,zc)zv[i]=rv[i];',nl
-		z,'cpaa(',(rslt⍵),',&za);}',nl}
-rgtd←{	chk siz	←''('zr=rr;DO(i,rr)zs[i]=rs[i];')
-	exe	←'DOI(i,zr)zc*=zs[i];',nl
-	exe	,←(simd'present(zv[:zc],rv[:zc])'),'DO(i,zc)zv[i]=rv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-rgtmfbnaaa←rgtmffnaaa←rgtmfinaaa
-⍝[cf]
-⍝[of]:⌷	Index
-idxd←{	chk	←'if(lr>1)dwaerr(4);if(lr==0)ls[0]=1;if(ls[0]>rr)dwaerr(5);'
-	chk	,←'DO(i,lr)lc*=ls[i];DO(i,rr)rc*=rs[i];',nl
-	chk	,←pacc'update host(lv[:lc])'
-	chk	,←'DO(i,ls[0])if(lv[i]<0||lv[i]>=rs[i])dwaerr(3);'
-	siz	←'zr=rr-ls[0];DOI(i,zr)zs[i]=rs[ls[0]+i];'
-	exe	←'B a,m,k=0;DOI(i,zr)zc*=zs[i];m=zc;',nl
-	exe	,←'DO(i,ls[0]){a=ls[0]-(i+1);k+=m*lv[a];m*=rs[a];}',nl
-	exe	,←(simd'present(rv[:rc],zv[:zc])'),'DO(i,zc)zv[i]=rv[k+i];'
-	∧/,1≥≡¨⍵:	chk siz exe mxfn 1 ⍺ ⍵
-	sep	←{⊃⍺{⍺,⍺⍺,⍵}/⍵}
-	ixv ixe	←2⌷⍵
-	ixn	←{'idx[',(⍕⍵),']'}¨⍳≢ixv
-	idx	←'{A *idx[]={',(','sep ixv var¨ixe),'};',nl
-	idx	,←(⊃,/(⍳≢ixv){'I ir',(⍕⍺),'=',⍵,'->r;'}¨ixn),nl
-	idx	,←(⊃,/(⍳≢ixv){'B*RSTCT is',(⍕⍺),'=',⍵,'->s;'}¨ixn),nl
-	idx	,←(⊃,/(⍳≢ixv){'I*RSTCT iv',(⍕⍺),'=',⍵,'->v;'}¨ixn),nl
-	idx	,←(⊃,/(⍳≢ixv){'B ic',(⍕⍺),'=',⍵,'->c;'}¨ixn),nl
-	idx	,←'A irz;irz.v=NULL;A*irzp=&irz;',nl
-	iso	←(0 1⌷⍵)∨.≡ixe
-	idx	,←iso⊃('irzp=',(irzv←⊃var/0⌷⍵),';',nl)''
-	siz	←'zr=',(⍕≢ixv),';',⊃,/{'zs[',(⍕⍵),']=ic',(⍕⍵),';'}¨⍳≢ixv
-	gdx	←{'+'sep (↑∘⍺¨-⌽⍳≢⍺){'(',('*'sep(⊂⍵),⍺),')'}¨⍵}
-	idi	←(≢ixv)↑'ijklmnopqrstuvw'
-	zidx	←({'ic',(⍕⍵),''}¨⍳≢ixv)gdx idi
-	ridx	←({'rs[',(⍕⍵),']'}¨⍳≢ixv)gdx(⍳≢ixv){'iv',(⍕⍺),'[',⍵,']'}¨idi
-	stm	←'zv[',zidx,']=rv[',(ridx),'];',nl
-	mklp	←{i s←⍺ ⋄ (⊂'DO(',i,',',s,'){',nl),(' ',¨⍵),(⊂'}')}
-	pres	←'present(zv[:rslt->c],rv[:rgt->c],'
-	pres	,←(','sep{'iv',(⍕⍵),'[:ic',(⍕⍵),']'}¨⍳≢ixv),') '
-	exe	←simd pres,'independent collapse(',(⍕≢ixv),')'
-	exe	,←⊃,/⊃mklp/(idi{⍺('ic',⍕⍵)}¨⍳≢ixv),⊂⊂stm
-	idx	,←'' siz exe mxfn 1(¯1↓⍺)('irzp'(¯2 0)⍪1↓¯1↓⍵)
-	idx	,←(iso⊃''('cpaa(',irzv,',irzp);')),'}',nl
-		idx}
-⍝[cf]
 ⍝[of]:⍳	Index Gen./Index Of
-iotmfinaaa←{	z	←'{',('r'decarri rgt ⍵)
-	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
-	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=rv[0];}',nl
-	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
-		z,'DOI(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
-iotmffnaaa←{	z	←'{',('r'decarrf rgt ⍵)
-	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
-	z	,←'B c=0;',nl,simd'present(rv[:rc]) copyout(c)'
-	z	,←'DOI(i,1){if(rv[0]!=floor(rv[0]))c=1;else c=0;}',nl
-	z	,←'if(c){dwaerr(11);}',nl
-	z	,←(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=rv[0];}',nl
-	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
-		z,'DOI(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
-iotmfbnaaa←{	z	←'{',('r'decarrb rgt ⍵)
-	z	,←'if(rr>1)dwaerr(4);if(rc>15)dwaerr(10);if(rc!=1)dwaerr(16);',nl
-	z	,←'B c=0;',nl,(simd'present(rv[:rc]) copyout(c)'),'DOI(i,1){c=1&rv[0];}',nl
-	z	,←('1,&c,1'dectmpi 'z'),simd'present(zv[:zc])'
-		z,'DO(i,zc){zv[i]=i;}',nl,'cpaa(',(rslt⍵),',&za);}',nl}
 iotdfiiaaa←{		'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),iotdfnnlp ⍵}
 iotdfifaaa←{		'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),iotdfnnlp ⍵}
 iotdfibaaa←{		'{dwaerr(16);}',nl}
