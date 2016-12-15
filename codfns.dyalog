@@ -566,6 +566,7 @@ rth	,←' index ix[4] = {span, span, span, span};DOU(i,s)ix[i]=sv[i];',nl
 rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());',nl
 rth	,←' if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
 rth	,←' if(r.r==3)z.v=r.v(ix[2],ix[1],ix[0]);if(r.r==4)z.v=r.v(ix[3],ix[2],ix[1],ix[0]);}',nl
+rth	,←'MF(tke){z=r;}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:Primitive Operators
