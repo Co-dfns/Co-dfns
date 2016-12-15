@@ -1,4 +1,4 @@
-:Namespace take
+﻿:Namespace take
 
 S1←':Namespace' 'Run←{⍺↑⍵}'  ':EndNamespace'
 S2←':Namespace' 'Run←{(1⌷⍺)↑⍵}' ':EndNamespace'
