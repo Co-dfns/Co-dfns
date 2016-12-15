@@ -547,6 +547,9 @@ rth	,←' z.r=0;z.s=eshp;array i=l.v(0);z.v=r.v(i);}',nl
 rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
 rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
 rth	,←' z.v=constant(0,z.s,b8);}',nl
+rth	,←'DF(int){if(r.r>1||l.r>1)dwaerr(4);if(!cnt(r)||!cnt(l)){z.v=evec();z.s=dim4(0);z.r=1;R;}',nl
+rth	,←' dtype mt=mxt(l.v,r.v);z.v=setIntersect(l.v.as(mt),r.v.as(mt));',nl
+rth	,←' z.r=1;z.s=dim4(z.v.elements());}',nl
 rth	,←'MF(iot){if(r.r>1)dwaerr(4);B c=cnt(r);if(c>4)dwaerr(10);if(c>1)dwaerr(16);',nl
 rth	,←' z.r=1;z.s=dim4(r.v.as(s32).scalar<I>());z.v=z.s[0]?iota(z.s,dim4(1),s32):evec();}',nl
 rth	,←'DF(iot){z.r=r.r;z.s=r.s;B c=cnt(r);if(!c){z.v=evec();R;};B lc=cnt(l)+1;',nl
