@@ -1164,12 +1164,6 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
 ⍝[of]:↑	Mix/Take
-tkemfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-tkemfbnsss	←tkemffnsss←tkemfinsss
-tkemfinaaa←{	v e y	←⍵
-	≡/2↑e:	''
-	rslt rgt	←var/2↑v,⍪e
-		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl}
 tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))dwaerr(16);'
 	siz	←pacc'update host(lv[:1])'
 	siz	,←'zr=rr;DOI(i,zr)zs[i]=rs[i];',nl
