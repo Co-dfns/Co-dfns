@@ -563,6 +563,11 @@ rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(
 rth	,←' index ix[4]={span, span, span, span};DOU(i,s)ix[r.r-(i+1)]=sv[i];',nl
 rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
 rth	,←'MF(tke){z=r;}',nl
+rth	,←'DF(tke){B c=cnt(l);if(l.r>1||c>r.r)dwaerr(4);index ix[4]={span,span,span,span};',nl
+rth	,←' z.r=r.r;z.s=r.s;I lv[4];l.v.as(s32).host(lv);U8 f=0;',nl
+rth	,←' DOU(i,c){U j=r.r-(i+1);I a=abs(lv[i]);if(a>r.s[j])f=1;z.s[j]=a;',nl
+rth	,←'  if(lv[i]<0)if(a<r.s[j])ix[j]=seq(r.s[j]-a,r.s[j]);if(lv[i]<r.s[j])ix[j]=seq(lv[i]);}',nl
+rth	,←' z.v=idx(r,ix);}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:Primitive Operators
