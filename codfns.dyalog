@@ -458,7 +458,8 @@ rth	,←'dtype mxt(array&a,array&b){dtype at=a.type();dtype bt=b.type();',nl
 rth	,←' if(at==f64||bt==f64)R f64;if(at==s32||bt==s32)R s32;',nl
 rth	,←' if(at==s16||bt==s16)R s16;if(at==b8||bt==b8)R b8;dwaerr(16);R f64;}',nl
 rth	,←'static array idx(A&a,index ix[]){if(a.r==1)R a.v(ix[0]);if(a.r==2)R a.v(ix[0],ix[1]);',nl
-rth	,←' if(a.r==3)R a.v(ix[0],ix[1],ix[2]);if(a.r==4)R a.v(ix[0],ix[1],ix[2],ix[3]);}',nl
+rth	,←' if(a.r==3)R a.v(ix[0],ix[1],ix[2]);if(a.r==4)R a.v(ix[0],ix[1],ix[2],ix[3]);',nl
+rth	,←' if(!a.r)R a.v;dwaerr(99);R array();}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:External Interfaces
@@ -563,10 +564,12 @@ rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(
 rth	,←' index ix[4]={span, span, span, span};DOU(i,s)ix[r.r-(i+1)]=sv[i];',nl
 rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
 rth	,←'MF(tke){z=r;}',nl
-rth	,←'DF(tke){B c=cnt(l);if(l.r>1||c>r.r)dwaerr(4);index ix[4]={span,span,span,span};',nl
-rth	,←' z.r=r.r;z.s=r.s;I lv[4];l.v.as(s32).host(lv);U8 f=0;',nl
-rth	,←' DOU(i,c){U j=r.r-(i+1);I a=abs(lv[i]);if(a>r.s[j])f=1;z.s[j]=a;',nl
-rth	,←'  if(lv[i]<0)if(a<r.s[j])ix[j]=seq(r.s[j]-a,r.s[j]);if(lv[i]<r.s[j])ix[j]=seq(lv[i]);}',nl
+rth	,←'DF(tke){B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);if(!c){z=r;R;}',nl
+rth	,←' index ix[4];DOU(i,4)ix[i]=span;U rk=r.r?r.r:1;z.r=rk;z.s=r.s;',nl
+rth	,←' I lv[4];l.v.as(s32).host(lv);U8 f=0;',nl
+rth	,←' DOU(i,c){U j=rk-(i+1);I a=std::abs(lv[i]);if(a>r.s[j])f=1;z.s[j]=a;',nl
+rth	,←'  if(lv[i]<0){if(a<r.s[j])ix[j]=seq((D)r.s[j]-a,(D)r.s[j]-1,1);}',nl
+rth	,←'  else if(a<r.s[j])ix[j]=seq(a);}',nl
 rth	,←' z.v=idx(r,ix);}',nl
 rth	,←nl
 ⍝[cf]
