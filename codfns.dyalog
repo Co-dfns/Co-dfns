@@ -20,12 +20,8 @@
 ⍝[of]:Global Settings
 ⎕IO ⎕ML ⎕WX	←0 1 3
 COMPILER	←'vsc'
-TEST∆COMPILERS	←⊂'vsc'
 BUILD∆PATH	←'build'
 VISUAL∆STUDIO∆PATH	←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
-INTEL∆C∆PATH	←'C:\Program Files (x86)\IntelSWTools\'
-INTEL∆C∆PATH	,←'compilers_and_libraries_2016.0.110\windows\bin\'
-PGI∆PATH	←'C:\Program Files\PGI\win64\16.9\'
 VERSION	←2016 12 0
 ⍝[cf]
 ⍝[of]:Primary Interface
