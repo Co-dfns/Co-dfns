@@ -461,6 +461,8 @@ rth	,←'array evec(V){R constant(0,dim4(1),s32);}',nl
 rth	,←'dtype mxt(array&a,array&b){dtype at=a.type();dtype bt=b.type();',nl
 rth	,←' if(at==f64||bt==f64)R f64;if(at==s32||bt==s32)R s32;',nl
 rth	,←' if(at==s16||bt==s16)R s16;if(at==b8||bt==b8)R b8;dwaerr(16);R f64;}',nl
+rth	,←'static array idx(A&a,index ix[]){if(a.r==1)R a.v(ix[0]);if(a.r==2)R a.v(ix[0],ix[1]);',nl
+rth	,←' if(a.r==3)R a.v(ix[0],ix[1],ix[2]);if(a.r==4)R a.v(ix[0],ix[1],ix[2],ix[3]);}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:External Interfaces
@@ -562,10 +564,8 @@ rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
 rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
 rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
-rth	,←' index ix[4] = {span, span, span, span};DOU(i,s)ix[i]=sv[i];',nl
-rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());',nl
-rth	,←' if(r.r==1)z.v=r.v(ix[0]);if(r.r==2)z.v=r.v(ix[1],ix[0]);',nl
-rth	,←' if(r.r==3)z.v=r.v(ix[2],ix[1],ix[0]);if(r.r==4)z.v=r.v(ix[3],ix[2],ix[1],ix[0]);}',nl
+rth	,←' index ix[4]={span, span, span, span};DOU(i,s)ix[r.r-(i+1)]=sv[i];',nl
+rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
 rth	,←'MF(tke){z=r;}',nl
 rth	,←nl
 ⍝[cf]
@@ -1177,7 +1177,6 @@ tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))dwaerr(16);'
 	ref	,←'rslt->v=rv;'
 	exe	←cpy cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
 		chk siz exe mxfn 0 ⍺ ⍵}
-tkemffnaaa←tkemfbnaaa←tkemfinaaa
 ⍝[cf]
 ⍝[of]:,	Ravel/Catenate
 catmfinaaa←{	v e y	←⍵
