@@ -560,13 +560,11 @@ rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(sqd){z=r;}',nl
 rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
-rth	,←' I sv[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
-rth	,←' index ix[4]={span, span, span, span};DOU(i,s)ix[r.r-(i+1)]=sv[i];',nl
-rth	,←' z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
+rth	,←' I sv[4];index ix[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
+rth	,←' DOU(i,s)ix[r.r-(i+1)]=sv[i];z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
 rth	,←'MF(tke){z=r;}',nl
 rth	,←'DF(tke){B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);if(!c){z=r;R;}',nl
-rth	,←' index ix[4];DOU(i,4)ix[i]=span;U rk=r.r?r.r:1;z.r=rk;z.s=r.s;',nl
-rth	,←' I lv[4];l.v.as(s32).host(lv);U8 f=0;',nl
+rth	,←' I lv[4];index ix[4];U rk=r.r?r.r:1;z.r=rk;z.s=r.s;l.v.as(s32).host(lv);U8 f=0;',nl
 rth	,←' DOU(i,c){U j=rk-(i+1);I a=std::abs(lv[i]);if(a>r.s[j])f=1;z.s[j]=a;',nl
 rth	,←'  if(lv[i]<0){if(a<r.s[j])ix[j]=seq((D)r.s[j]-a,(D)r.s[j]-1,1);}',nl
 rth	,←'  else if(a<r.s[j])ix[j]=seq(a);}',nl
