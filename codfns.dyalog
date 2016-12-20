@@ -564,11 +564,19 @@ rth	,←' I sv[4];index ix[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.
 rth	,←' DOU(i,s)ix[r.r-(i+1)]=sv[i];z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
 rth	,←'MF(tke){z=r;}',nl
 rth	,←'DF(tke){B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);if(!c){z=r;R;}',nl
-rth	,←' I lv[4];index ix[4];U rk=r.r?r.r:1;z.r=rk;z.s=r.s;l.v.as(s32).host(lv);U8 f=0;',nl
-rth	,←' DOU(i,c){U j=rk-(i+1);I a=std::abs(lv[i]);if(a>r.s[j])f=1;z.s[j]=a;',nl
-rth	,←'  if(lv[i]<0){if(a<r.s[j])ix[j]=seq((D)r.s[j]-a,(D)r.s[j]-1,1);}',nl
-rth	,←'  else if(a<r.s[j])ix[j]=seq(a);}',nl
-rth	,←' z.v=idx(r,ix);}',nl
+rth	,←' I lv[4];seq it[4];seq ix[4];U rk=r.r?r.r:(U)l.s[0];',nl
+rth	,←' z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
+rth	,←' DOU(i,c){U j=rk-(i+1);I a=std::abs(lv[i]);z.s[j]=a;',nl
+rth	,←'  if(a>r.s[j])ix[j]=seq((D)r.s[j]);',nl
+rth	,←'  else if(lv[i]<0)ix[j]=seq((D)r.s[j]-a,(D)r.s[j]-1);',nl
+rth	,←'  else ix[j]=seq(a);',nl
+rth	,←'  it[j]=ix[j]+(lv[i]<0)*(a-(D)r.s[j]);}',nl
+rth	,←' if(!cnt(z)){z.v=constant(0,eshp,s32);R;}',nl
+rth	,←' z.v=array(z.s,r.v.type());z.v=0;if(!z.r)z.v(0)=r.v(0);',nl
+rth	,←' if(z.r==1){z.v(it[0])=r.v(ix[0]);}',nl
+rth	,←' if(z.r==2){z.v(it[0],it[1])=r.v(ix[0],ix[1]);}',nl
+rth	,←' if(z.r==3){z.v(it[0],it[1],it[2])=r.v(ix[0],ix[1],ix[2]);}',nl
+rth	,←' if(z.r==4){z.v(it[0],it[1],it[2],it[3])=r.v(ix[0],ix[1],ix[2],ix[3]);}}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:Primitive Operators

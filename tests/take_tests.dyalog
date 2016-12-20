@@ -17,5 +17,10 @@ S2←':Namespace' 'Run←{(1⌷⍺)↑⍵}' ':EndNamespace'
 '12'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(¯2)	(5 5⍴⍳25)
 '13'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(¯2 2)	(5 5 3⍴⍳75)
 '14'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(25)	(⍳12)
+'15'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(10 10)	(5 5⍴⍳25)
+'16'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(10 10)	(5)
+'17'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(10)	(5)
+'18'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(2 5 5)	(3 3 3⍴⍳27)
+'19'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(2 ¯5 5)	(3 3 3⍴⍳27)
 
 :EndNamespace
