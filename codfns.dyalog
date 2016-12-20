@@ -1173,21 +1173,6 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 		z,'cpaa(',(rslt ⍵),',&za);}',nl}
 gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
-⍝[of]:↑	Mix/Take
-tked←{	chk	←'if(lr!=0&&(lr!=1||ls[0]!=1))dwaerr(16);'
-	siz	←pacc'update host(lv[:1])'
-	siz	,←'zr=rr;DOI(i,zr)zs[i]=rs[i];',nl
-	siz	,←'zs[0]=lv[0];I n=zr-1;DOI(i,n)zc*=zs[i+1];'
-	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl
-	cpy	,←(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpy	,←simd'independent collapse(2) present(zv[:rslt->c],rv[:rgt->c])'
-	cpy	,←'DO(i,zs[0]){DO(j,zc){zv[(i*zc)+j]=rv[(i*zc)+j];}}'
-	ref	←'rslt->r=zr;DOI(i,zr){rslt->s[i]=zs[i];};rslt->f=0;',nl
-	ref	,←'rslt->c=zs[0]*zc;rslt->z=rslt->c*sizeof(',(⊃git ⊃0⌷⍺),');',nl
-	ref	,←'rslt->v=rv;'
-	exe	←cpy cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵
-		chk siz exe mxfn 0 ⍺ ⍵}
-⍝[cf]
 ⍝[of]:,	Ravel/Catenate
 catmfinaaa←{	v e y	←⍵
 	rslt rgt	←var/2↑v,⍪e
