@@ -35,10 +35,6 @@ things on which we are working.
 * Conditional guards are not supported yet
 * Recursive functions are not supported yet
 * Assignment inside of an expression is not supported yet
-* Fusion does not work with indexed arguments
-* Fusion does not work over user-defined functions
-* Scalar user-defined functions are not optimized and have overhead
-* Only scalar function expressions are fused
 * User-defined operators are not supported yet
 * Bracket indexing of the form [X;...] is not supported, 
   though a single index array [X] is supported
@@ -59,7 +55,6 @@ to be implemented in the near future.
 * Variant (⍠) is not supported
 * I-Beam (⌶) is not supported
 * Spawn (&) is not supported
-* Split (↓) is not supported
 * Enclose (⊂) is not supported
 * Partitioned Enclose (⊂) is not supported
 * Matrix divide/inverse (⌹) is not supported
