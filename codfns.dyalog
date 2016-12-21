@@ -457,9 +457,17 @@ rth	,←'array evec(V){R constant(0,dim4(1),s32);}',nl
 rth	,←'dtype mxt(array&a,array&b){dtype at=a.type();dtype bt=b.type();',nl
 rth	,←' if(at==f64||bt==f64)R f64;if(at==s32||bt==s32)R s32;',nl
 rth	,←' if(at==s16||bt==s16)R s16;if(at==b8||bt==b8)R b8;dwaerr(16);R f64;}',nl
-rth	,←'static array idx(A&a,index ix[]){if(a.r==1)R a.v(ix[0]);if(a.r==2)R a.v(ix[0],ix[1]);',nl
-rth	,←' if(a.r==3)R a.v(ix[0],ix[1],ix[2]);if(a.r==4)R a.v(ix[0],ix[1],ix[2],ix[3]);',nl
-rth	,←' if(!a.r)R a.v;dwaerr(99);R array();}',nl
+rth	,←'static array idx(A&a,index ix[]){if(!a.r)R a.v;',nl
+rth	,←' if(a.r==1)R a.v(ix[0]);',nl
+rth	,←' if(a.r==2)R a.v(ix[0],ix[1]);',nl
+rth	,←' if(a.r==3)R a.v(ix[0],ix[1],ix[2]);',nl
+rth	,←' if(a.r==4)R a.v(ix[0],ix[1],ix[2],ix[3]);',nl
+rth	,←' dwaerr(99);R array();}',nl
+rth	,←'static V cpy(A&t,seq it[],A&s,seq is[]){if(!t.r)t.v(0)=s.v(0);',nl
+rth	,←' if(t.r==1)t.v(it[0])=s.v(is[0]);',nl
+rth	,←' if(t.r==2)t.v(it[0],it[1])=s.v(is[0],is[1]);',nl
+rth	,←' if(t.r==3)t.v(it[0],it[1],it[2])=s.v(is[0],is[1],is[2]);',nl
+rth	,←' if(t.r==4)t.v(it[0],it[1],it[2],it[3])=s.v(is[0],is[1],is[2],is[3]);}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:External Interfaces
@@ -564,20 +572,15 @@ rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(
 rth	,←' I sv[4];index ix[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
 rth	,←' DOU(i,s)ix[r.r-(i+1)]=sv[i];z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
 rth	,←'MF(tke){z=r;}',nl
-rth	,←'DF(tke){B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);if(!c){z=r;R;}',nl
-rth	,←' I lv[4];seq it[4];seq ix[4];U rk=r.r?r.r:(U)l.s[0];',nl
-rth	,←' z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
+rth	,←'DF(tke){I lv[4];seq it[4];B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);if(!c){z=r;R;}',nl
+rth	,←' seq ix[4];U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
 rth	,←' DOU(i,c){U j=rk-(i+1);I a=std::abs(lv[i]);z.s[j]=a;',nl
 rth	,←'  if(a>r.s[j])ix[j]=seq((D)r.s[j]);',nl
 rth	,←'  else if(lv[i]<0)ix[j]=seq((D)r.s[j]-a,(D)r.s[j]-1);',nl
 rth	,←'  else ix[j]=seq(a);',nl
 rth	,←'  it[j]=ix[j]+(lv[i]<0)*(a-(D)r.s[j]);}',nl
 rth	,←' if(!cnt(z)){z.v=constant(0,eshp,s32);R;}',nl
-rth	,←' z.v=array(z.s,r.v.type());z.v=0;if(!z.r)z.v(0)=r.v(0);',nl
-rth	,←' if(z.r==1){z.v(it[0])=r.v(ix[0]);}',nl
-rth	,←' if(z.r==2){z.v(it[0],it[1])=r.v(ix[0],ix[1]);}',nl
-rth	,←' if(z.r==3){z.v(it[0],it[1],it[2])=r.v(ix[0],ix[1],ix[2]);}',nl
-rth	,←' if(z.r==4){z.v(it[0],it[1],it[2],it[3])=r.v(ix[0],ix[1],ix[2],ix[3]);}}',nl
+rth	,←' z.v=array(z.s,r.v.type());z.v=0;cpy(z,it,r,ix);}',nl
 rth	,←nl
 ⍝[cf]
 ⍝[of]:Primitive Operators
