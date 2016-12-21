@@ -572,8 +572,8 @@ rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(
 rth	,←' I sv[4];index ix[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
 rth	,←' DOU(i,s)ix[r.r-(i+1)]=sv[i];z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());z.v=idx(r,ix);}',nl
 rth	,←'MF(tke){z=r;}',nl
-rth	,←'DF(tke){I lv[4];seq it[4];B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);if(!c){z=r;R;}',nl
-rth	,←' seq ix[4];U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
+rth	,←'DF(tke){I lv[4];seq it[4];seq ix[4];B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);',nl
+rth	,←' if(!c){z=r;R;}U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
 rth	,←' DOU(i,c){U j=rk-(i+1);I a=std::abs(lv[i]);z.s[j]=a;',nl
 rth	,←'  if(a>r.s[j])ix[j]=seq((D)r.s[j]);',nl
 rth	,←'  else if(lv[i]<0)ix[j]=seq((D)r.s[j]-a,(D)r.s[j]-1);',nl
