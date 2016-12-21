@@ -1187,12 +1187,6 @@ gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
 gdumfbnaaa←{		'dwaerr(16);',nl}
 ⍝[cf]
 ⍝[of]:,	Ravel/Catenate
-catmfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	s	←'(',rslt,')->r=1;(',rslt,')->s[0]=(',rgt,')->c;',nl
-	≡/2↑e:	s
-		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl,s}
-catmffnaaa←catmfbnaaa←catmfinaaa
 catd←{	chk	←'if(rr!=0&&lr!=0&&abs(rr-lr)>1)dwaerr(4);int minr=rr>lr?lr:rr;',nl
 	chk	,←'int sr=rr==lr&&lr!=0?lr-1:minr;DO(i,sr)if(rs[i]!=ls[i])dwaerr(5);'
 	siz	←'zs[0]=1;if(lr>rr){zr=lr;DO(i,lr)zs[i]=ls[i];}',nl
