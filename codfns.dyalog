@@ -547,6 +547,7 @@ rth	,←'SF(sub,z.v=lv-rv)',nl
 ⍝[cf]
 ⍝[of]:Mixed Primitives
 rth	,←'DF(brk){if(l.r!=1)dwaerr(16);z.r=r.r;z.s=r.s;z.v=l.v(r.v.as(s32));}',nl
+rth	,←'MF(cat){z.r=1;z.s[0]=cnt(r);z.v=flat(r.v);}',nl
 rth	,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
 rth	,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);B lc=cnt(l);if(!lc){z=r;R;}',nl
 rth	,←' if(lc!=1||r.r!=1)dwaerr(4);if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
