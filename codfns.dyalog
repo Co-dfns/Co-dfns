@@ -356,7 +356,7 @@ Oi	←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
 O1	←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
 O2	←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
 O0	←{'' '' '' '' ''}
-Of	←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),')',nl}
+Of	←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),');',nl}
 Fd	←{'UF(',(⊃n⍵),');',nl}
 F0	←{'UF(',(⊃n⍵),'){',nl,'A*env[]={tenv};',nl}
 F1	←{'UF(',(⊃n⍵),'){',nl,('env0'dnv ⍵),(fnv ⍵)}
