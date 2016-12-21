@@ -552,6 +552,14 @@ rth	,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);B lc=cnt(l);if
 rth	,←' if(lc!=1||r.r!=1)dwaerr(4);if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
 rth	,←' z.r=0;z.s=eshp;array i=l.v(0);z.v=r.v(i);}',nl
 rth	,←'MF(drp){if(r.r)dwaerr(16);z=r;}',nl
+rth	,←'DF(drp){I lv[4];seq it[4];seq ix[4];B c=cnt(l);if(l.r>1||(c>r.r&&r.r))dwaerr(4);',nl
+rth	,←' if(!c){z=r;R;}U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
+rth	,←' DOU(i,c){U j=rk-(i+1);I a=std::abs(lv[i]);',nl
+rth	,←'  if(a>=r.s[j]){z.s[j]=0;ix[j]=seq(0);it[j]=seq(0);}',nl
+rth	,←'  else if(lv[i]<0){z.s[j]=r.s[j]-a;ix[j]=seq((D)z.s[j]);it[j]=ix[j];}',nl
+rth	,←'  else{z.s[j]=r.s[j]-a;ix[j]=seq(a,(D)r.s[j]-1);it[j]=ix[j]-(D)a;}}',nl
+rth	,←' if(!cnt(z)){z.v=constant(0,eshp,s32);R;}',nl
+rth	,←' z.v=array(z.s,r.v.type());z.v=0;cpy(z,it,r,ix);}',nl
 rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
 rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
 rth	,←' z.v=constant(0,z.s,b8);}',nl

@@ -121,5 +121,12 @@ B←{⊃((⎕DR ⍵)11)⎕DR ⍵}
 '113'('drop' S3 'Run' #.util.GEN∆T1 ⎕THIS)		(÷1+7 5⍴⍳5)
 '114'('drop' S3 'Run' #.util.GEN∆T1 ⎕THIS)		(÷1+8 5⍴⍳5)
 '115'('drop' S3 'Run' #.util.GEN∆T1 ⎕THIS)		(÷1+1 5⍴⍳5)
+'116'('drop' S1 'Run' #.util.GEN∆T2 ⎕THIS)	(¯2 2)	(5 5 3⍴⍳75)
+'117'('drop' S1 'Run' #.util.GEN∆T2 ⎕THIS)	(25)	(⍳12)
+'118'('drop' S1 'Run' #.util.GEN∆T2 ⎕THIS)	(10 10)	(5 5⍴⍳25)
+'119'('drop' S1 'Run' #.util.GEN∆T2 ⎕THIS)	(10 10)	(5)
+'120'('drop' S1 'Run' #.util.GEN∆T2 ⎕THIS)	(10)	(5)
+'121'('drop' S1 'Run' #.util.GEN∆T2 ⎕THIS)	(2 5 5)	(3 3 3⍴⍳27)
+'122'('drop' S1 'Run' #.util.GEN∆T2 ⎕THIS)	(2 ¯5 5)	(3 3 3⍴⍳27)
 
 :EndNamespace
