@@ -531,6 +531,15 @@ rth	,←' z.v=join(0,lv,rv);}',nl
 rth	,←'MF(cir){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}',nl
 rth	,←'MF(ctf){z.r=2;z.s[1]=r.r?r.s[r.r-1]:1;z.s[0]=z.s[1]?cnt(r)/z.s[1]:1;z.s[2]=z.s[3]=1;',nl
 rth	,←' z.v=!cnt(z)?constant(0,dim4(1),s32):array(r.v,z.s);}',nl
+rth	,←'DF(ctf){if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)dwaerr(4);',nl
+rth	,←' z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);dim4 ls=l.s;dim4 rs=r.s;I t=z.r-1;',nl
+rth	,←' if(!l.r){ls=rs;ls[r.r?r.r-1:0]=1;}if(!r.r){rs=ls;rs[l.r?l.r-1:1]=1;}',nl
+rth	,←' DOU(i,4){if(i<t&&rs[i]!=ls[i])dwaerr(5);',nl
+rth	,←'  z.s[i]=(l.r>=r.r||i==t)*ls[i]+(r.r>l.r||i==t)*rs[i];}',nl
+rth	,←' if(!cnt(l)){z.v=r.v;R;}if(!cnt(r)){z.v=l.v;R;}dtype mt=mxt(r.v,l.v);',nl
+rth	,←' array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);',nl
+rth	,←' array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);',nl
+rth	,←' z.v=join(z.r-1,lv,rv);}',nl
 rth	,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
 rth	,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);B lc=cnt(l);if(!lc){z=r;R;}',nl
 rth	,←' if(lc!=1||r.r!=1)dwaerr(4);if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
@@ -546,6 +555,8 @@ rth	,←'  else if(lv[i]<0){z.s[j]=r.s[j]-a;ix[j]=seq((D)z.s[j]);it[j]=ix[j];}',
 rth	,←'  else{z.s[j]=r.s[j]-a;ix[j]=seq(a,(D)r.s[j]-1);it[j]=ix[j]-(D)a;}}',nl
 rth	,←' if(!cnt(z)){z.v=constant(0,eshp,s32);R;}',nl
 rth	,←' z.v=array(z.s,r.v.type());z.v=0;cpy(z,it,r,ix);}',nl
+⍝[cf]
+⍝[of]:Primitives E
 rth	,←'SF(eql,z.v=lv==rv)',nl
 rth	,←'MF(eqv){z.r=0;z.s=eshp;z.v=constant(r.r!=0,z.s,b8);}',nl
 rth	,←'DF(eqv){z.r=0;z.s=eshp;if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}',nl
@@ -555,8 +566,6 @@ rth	,←'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',nl
 rth	,←'MF(fac){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',nl
 rth	,←'SF(gte,z.v=lv>=rv)',nl
 rth	,←'SF(gth,z.v=lv>rv)',nl
-⍝[cf]
-⍝[of]:Primitives I
 rth	,←'DF(int){if(r.r>1||l.r>1)dwaerr(4);if(!cnt(r)||!cnt(l)){z.v=evec();z.s=dim4(0);z.r=1;R;}',nl
 rth	,←' dtype mt=mxt(l.v,r.v);z.v=setIntersect(l.v.as(mt),r.v.as(mt));',nl
 rth	,←' z.r=1;z.s=dim4(z.v.elements());}',nl
