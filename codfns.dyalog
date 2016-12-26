@@ -529,6 +529,8 @@ rth	,←' array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);',nl
 rth	,←' array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);',nl
 rth	,←' z.v=join(0,lv,rv);}',nl
 rth	,←'MF(cir){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}',nl
+rth	,←'MF(ctf){z.r=2;z.s[1]=r.r?r.s[r.r-1]:1;z.s[0]=z.s[1]?cnt(r)/z.s[1]:1;z.s[2]=z.s[3]=1;',nl
+rth	,←' z.v=!cnt(z)?constant(0,dim4(1),s32):array(r.v,z.s);}',nl
 rth	,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
 rth	,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);B lc=cnt(l);if(!lc){z=r;R;}',nl
 rth	,←' if(lc!=1||r.r!=1)dwaerr(4);if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
@@ -1454,18 +1456,6 @@ rtfdffbaal	←{'dwaerr(16);',nl}
 rtfd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⊖')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:⍪	Table/Catenate First
-ctfmfaa←{	v e y	←⍵
-	z r	←var/2↑v,⍪e
-	d t	←⍺
-	a	←'{B s[2];',('r'(t decarr)r),'if(rr)s[0]=rs[0];else s[0]=1;',nl
-	a	,←'if(s[0])s[1]=rc/s[0];else s[1]=1;',nl
-	≡/2↑e:	a,'(',z,')->r=2;(',z,')->s[0]=s[0];(',z,')->s[1]=s[1];}',nl
-	cnt	←('3'≡d)⊃'zc' 'zz'
-	a	,←(('2,s,',d)(t dectmp)'z'),simd'present(zv[:',cnt,'],rv[:',cnt,'])'
-		a,'DO(i,',cnt,')zv[i]=rv[i];',nl,'cpaa(',z,',&za);}',nl}
-ctfmfinaaa	←{'1I'ctfmfaa ⍵}
-ctfmffnaaa	←{'2D'ctfmfaa ⍵}
-ctfmfbnaaa	←{'3' 'U8'ctfmfaa ⍵}
 ctfdpre←{	v e y	←⍵
 	zd zt rt lt	←⍺
 	z r l	←var/3↑v,⍪e
