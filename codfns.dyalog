@@ -532,7 +532,7 @@ rth	,←'MF(cir){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}',nl
 rth	,←'MF(ctf){z.r=2;z.s[1]=r.r?r.s[r.r-1]:1;z.s[0]=z.s[1]?cnt(r)/z.s[1]:1;z.s[2]=z.s[3]=1;',nl
 rth	,←' z.v=!cnt(z)?constant(0,dim4(1),s32):array(r.v,z.s);}',nl
 rth	,←'DF(ctf){if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)dwaerr(4);',nl
-rth	,←' z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);dim4 ls=l.s;dim4 rs=r.s;I t=z.r-1;',nl
+rth	,←' z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);dim4 ls=l.s;dim4 rs=r.s;U t=z.r-1;',nl
 rth	,←' if(!l.r){ls=rs;ls[r.r?r.r-1:0]=1;}if(!r.r){rs=ls;rs[l.r?l.r-1:1]=1;}',nl
 rth	,←' DOU(i,4){if(i<t&&rs[i]!=ls[i])dwaerr(5);',nl
 rth	,←'  z.s[i]=(l.r>=r.r||i==t)*ls[i]+(r.r>l.r||i==t)*rs[i];}',nl
