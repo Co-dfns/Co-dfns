@@ -575,6 +575,8 @@ rth	,←'DF(iot){z.r=r.r;z.s=r.s;B c=cnt(r);if(!c){z.v=evec();R;};B lc=cnt(l)+1;
 rth	,←' if(lc==1){z.v=constant(0,z.s,s32);R;};if(l.r>1)dwaerr(16);array rf=flat(r.v).T();',nl
 rth	,←' dtype mt=mxt(l.v,rf);z.v=join(0,tile(l.v,1,(U)c).as(mt),rf.as(mt))==tile(rf,(U)lc,1);',nl
 rth	,←' z.v=min((z.v*iota(dim4(lc),dim4(1,c),s32)+((!z.v)*lc).as(s32)),0);z.v=array(z.v,z.s);}',nl
+rth	,←'MF(lft){z=r;}',nl
+rth	,←'DF(lft){z=l;}',nl
 rth	,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth	,←'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
 rth	,←'SF(lor,if(lv.isbool()&&rv.isbool())z.v=lv||rv;else dwaerr(16);)',nl
@@ -1539,19 +1541,6 @@ trnmfbnaaa←{	v e y	←⍵
 	z	,←'   zv[i]|=(1&(rv[ri/8]>>(ri%8)))<<j;}}',nl
 	z	,←' cpaa(',rslt,',&ta);',nl
 		z,'}}',nl}
-⍝[cf]
-⍝[of]:⊣	Same/Monadic Left
-lftmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
-lftmfbnsss	←lftmffnsss←lftmfinsss
-lftmfinaaa←{	v e y	←⍵
-	≡/2↑e:	''
-	rslt rgt	←var/2↑v,⍪e
-		'memcpy(',rslt,',',rgt,',sizeof(A));(',rgt,')->f=0;',nl}
-lftd←{	chk siz	←''('zr=lr;DO(i,lr)zs[i]=ls[i];')
-	exe	←'DOI(i,zr)zc*=zs[i];',nl
-	exe	,←(simd'present(zv[:zc],lv[:zc])'),'DO(i,zc)zv[i]=lv[i];'
-		chk siz exe mxfn 1 ⍺ ⍵}
-lftmfbnaaa←lftmffnaaa←lftmfinaaa
 ⍝[cf]
 ⍝[of]:?	Roll/Deal
 rolmfinaaa←{	v e y	←⍵
