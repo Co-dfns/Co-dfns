@@ -594,6 +594,8 @@ rth	,←'SF(neq,z.v=lv!=rv)',nl
 rth	,←'SF(nor,z.v=!(lv||rv))',nl
 rth	,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
 rth	,←'MF(nqv){z.r=0;z.s=dim4(1);z.v=constant(r.r?r.s[r.r-1]:1,eshp,s32);}',nl
+rth	,←'DF(nqv){z.r=0;z.s=eshp;I t=l.r==r.r&&l.s==r.s;if(t)t=allTrue<I>(l.v==r.v);',nl
+rth	,←' z.v=constant(!t,eshp,s32);}',nl
 rth	,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
 rth	,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth	,←'MF(rgt){z=r;}',nl
