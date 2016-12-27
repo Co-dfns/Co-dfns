@@ -1137,6 +1137,21 @@ encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
 	exe	,←'DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
+⍝[of]:⊥	Decode
+decd←{	chk	←'if(lr>1||lv[0]<0)dwaerr(16);'
+	siz	←'zr=rr==0?0:rr-1;DOI(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
+	siz	,←'if(rr>0)rc=rs[0];'
+	exen	←pacc'update host(lv,rv[:rgt->c])'
+	exen	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
+	exen	,←pacc'update device(zv[:rslt->c])'
+	exeb	←'I rcp=(rgt->c+7)/8;',nl
+	exeb	,←pacc'update host(lv,rv[:rcp])'
+	exeb	,←'DO(i,zc){zv[i]=0;DO(j,rc){I ri=(j*zc)+i;',nl
+	exeb	,←'zv[i]=(1&(rv[ri/8]>>(ri%8)))+lv[0]*zv[i];}}',nl
+	exeb	,←pacc'update device(zv[:rslt->c])'
+	exe	←(3=⊃1⌷⍺)⊃exen exeb
+		chk siz exe mxfn 1 ⍺ ⍵}
+⍝[cf]
 ⍝[of]:∊	Enlist/Membership
 memdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
 		z,('gucmpi'memdfnnlp'gucmpi')⍵}
@@ -1466,29 +1481,6 @@ rtfdfibaal	←{'dwaerr(16);',nl}
 rtfdffbaaa	←{'dwaerr(16);',nl}
 rtfdffbaal	←{'dwaerr(16);',nl}
 rtfd	←{('df'gcl fdb)((0⌷⍉⍵),⊂,'⊖')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
-⍝[cf]
-⍝[of]:≢	Tally/Not Equiv
-nqvd←{	chk siz	←'' 'zr=0;'
-	exe	←pacc'update host(lv[:lft->c],rv[:rgt->c])'
-	exe	,←'zv[0]=0;if(rr!=lr)zv[0]=1;',nl
-	exe	,←'DO(i,lr){if(zv[0])break;if(rs[i]!=ls[i]){zv[0]=1;break;}}',nl
-	exe	,←'DO(i,lr)lc*=ls[i];',nl
-	exe	,←'DO(i,lc){if(zv[0])break;if(lv[i]!=rv[i]){zv[0]=1;break;}}',nl
-	exe	,←pacc'update device(zv[:rslt->c])'
-		chk siz exe mxfn 1 ⍺ ⍵}
-decd←{	chk	←'if(lr>1||lv[0]<0)dwaerr(16);'
-	siz	←'zr=rr==0?0:rr-1;DOI(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
-	siz	,←'if(rr>0)rc=rs[0];'
-	exen	←pacc'update host(lv,rv[:rgt->c])'
-	exen	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
-	exen	,←pacc'update device(zv[:rslt->c])'
-	exeb	←'I rcp=(rgt->c+7)/8;',nl
-	exeb	,←pacc'update host(lv,rv[:rcp])'
-	exeb	,←'DO(i,zc){zv[i]=0;DO(j,rc){I ri=(j*zc)+i;',nl
-	exeb	,←'zv[i]=(1&(rv[ri/8]>>(ri%8)))+lv[0]*zv[i];}}',nl
-	exeb	,←pacc'update device(zv[:rslt->c])'
-	exe	←(3=⊃1⌷⍺)⊃exen exeb
-		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:⍉	Transpose
 trnmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
