@@ -600,6 +600,9 @@ rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
 rth	,←'MF(rho){z.r=1;z.s=dim4(r.r);if(!cnt(z)){z.v=scl(0);R;}I sp[4]={1,1,1,1};',nl
 rth	,←' DOU(i,r.r)sp[r.r-(i+1)]=(I)r.s[i];z.v=array(z.s,sp);}',nl
+rth	,←'DF(rho){if(l.r>1)dwaerr(11);z.r=(U)cnt(l);if(z.r>4)dwaerr(16);',nl
+rth	,←' B s[4];l.v.as(s64).host(s);DOU(i,4)z.s[i]=i>=z.r?1:s[z.r-(i+1)];',nl
+rth	,←' B cz=cnt(z);B cr=cnt(r);z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',nl
 rth	,←'MF(sqd){z=r;}',nl
 rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
 rth	,←' I sv[4];index ix[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
@@ -1275,25 +1278,6 @@ fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
 	exb	,←'  a++;}}}}',nl
 	exb	,←pacc 'update device(zv[:rslt->c])'
 		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:⍴	Reshape/Shape
-shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)dwaerr(11);'
-	siz	←pacc'update host(lv[:ls[0]])'
-	siz	,←'zr=ls[0];DOI(i,zr)zc*=zs[i]=lv[i];DO(i,rr)rc*=rs[i];'
-	cpy	←'ai(rslt,zr,zs,',(⍕⊃0⌷⍺),');',nl,(⊃0⌷⍺)((,'z')declv),⊂'rslt'
-	cpy	,←'if(rc==0){',nl,(simd'present(zv)'),'DO(i,zc)zv[i]=0;}',nl
-	cpy	,←'else{',nl
-	cpyn	←cpy,(simd'present(zv[:zc],rv[:rc])'),'DO(i,zc)zv[i]=rv[i%rc];}'
-	cpyb	←cpy,'I rcp=(rc+7)/8,zcp=(zc+7)/8;',nl
-	cpyb	,←(simd'present(zv[:zcp],rv[:rcp])'),'DO(i,zcp){U8 b=0;',nl
-	cpyb	,←' DO(j,8){I ri=(i*8+j)%rc;b|=(1&(rv[ri/8]>>(ri%8)))<<j;}',nl
-	cpyb	,←' zv[i]=b;}}'
-	cpy	←(3=0⌷⍺)⊃cpyn cpyb
-	ref	←'rslt->r=zr;DOI(i,zr){rslt->s[i]=zs[i];};rslt->f=rgt->f;rgt->f=0;',nl
-	zcp	←(3=0⌷⍺)⊃'zc' '((zc+7)/8)'
-	ref	,←'rslt->c=zc;rslt->z=',zcp,'*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
-	exe	←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
-		chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:⌽	Reverse/Rotate
 rotmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
