@@ -1294,13 +1294,6 @@ shpd←{	chk	←'if(lr==0){ls[0]=1;lr=1;}if(1!=lr)dwaerr(11);'
 	ref	,←'rslt->c=zc;rslt->z=',zcp,'*sizeof(',(⊃git ⊃0⌷⍺),');rslt->v=rgt->v;',nl
 	exe	←'if(zc<=rc){',nl,ref,'} else {',nl,cpy,nl,'}'
 		chk siz (exe cpy⊃⍨0=⊃0⍴⊃⊃1 0⌷⍵) mxfn 0 ⍺ ⍵}
-rhomfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	z	←'{B sp[15],cnt;'
-	z	,←'cnt=(',rgt,')->r;DO(i,cnt)sp[i]=(',rgt,')->s[i];',nl
-	z	,←'ai(',rslt,',1,&cnt,1);I*RSTCT v=(',rslt,')->v;',nl
-		z,'DO(i,cnt)v[i]=sp[i];',nl,(pacc'update device(v[:cnt])'),'}',nl}
-rhomfbnaaa←rhomffnaaa←rhomfinaaa
 ⍝[cf]
 ⍝[of]:⌽	Reverse/Rotate
 rotmfinsss	←{((z r l f) e y)←⍵ ⋄ z,'=',r,';',nl}
