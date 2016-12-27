@@ -400,12 +400,10 @@ rslt	←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 gcl	←{(⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)),'(',(rslt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),',',(rgt⍵),');',nl⊣⍵⍵}
 ⍝[cf]
 ⍝[of]:Header
-rth	←'#include <stdio.h>',nl,'#include <string.h>',nl
-rth	,←'#include <stdlib.h>',nl,'#include <time.h>',nl
-rth	,←'#include <stdint.h>',nl,'#include <inttypes.h>',nl
-rth	,←'#include <limits.h>',nl,'#include <float.h>',nl
-rth	,←'#include <math.h>',nl,'#include <arrayfire.h>',nl
-rth	,←'using namespace af;',nl
+rth	←'#include <stdio.h>',nl,'#include <string.h>',nl,'#include <stdlib.h>',nl
+rth	,←'#include <time.h>',nl,'#include <stdint.h>',nl,'#include <inttypes.h>',nl
+rth	,←'#include <limits.h>',nl,'#include <float.h>',nl,'#include <math.h>',nl
+rth	,←'#include <arrayfire.h>',nl,'using namespace af;',nl
 rth	,←nl
 rth	,←'#ifdef _WIN32',nl,'#define EXPORT extern "C" __declspec(dllexport)',nl
 rth	,←'#elif defined(__GNUC__)',nl
