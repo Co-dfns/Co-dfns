@@ -598,6 +598,8 @@ rth	,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
 rth	,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth	,←'MF(rgt){z=r;}',nl
 rth	,←'DF(rgt){z=r;}',nl
+rth	,←'MF(rho){z.r=1;z.s=dim4(r.r);if(!cnt(z)){z.v=scl(0);R;}I sp[4]={1,1,1,1};',nl
+rth	,←' DOU(i,r.r)sp[r.r-(i+1)]=(I)r.s[i];z.v=array(z.s,sp);}',nl
 rth	,←'MF(sqd){z=r;}',nl
 rth	,←'DF(sqd){if(l.r>1)dwaerr(4);B s=!l.r?1:l.s[l.r-1];if(s>r.r)dwaerr(5);if(!cnt(l)){z=r;R;}',nl
 rth	,←' I sv[4];index ix[4];l.v.as(s32).host(sv);DOU(i,s)if(sv[i]<0||sv[i]>=r.s[i])dwaerr(3);',nl
