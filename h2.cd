@@ -1,0 +1,43 @@
+﻿nl←⎕UCS 13 10
+fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
+cln←'¯'⎕R'-'
+lits←{'A{0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),')}'}
+litv←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
+lita←{'A{1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),')}'}
+lit←{' '=⊃0⍴⍵:⍵ ⋄ 1=≢⍵:lits ⍵ ⋄ lita ⍵}
+var←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:lit ,⍺
+ 'env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
+fnv←{z←'A*env[',(⍕1+⊃s⍵),']={'
+ z,(⊃,/(⊂'env0'),{',penv[',(⍕⍵),']'}¨⍳⊃s⍵),'};',nl}
+git←{⍵⊃¨⊂'/* XXX */ I ' 'I ' 'D ' 'U8 ' '?NA? '}
+gie←{⍵⊃¨⊂'/* XXX */ APLI' 'APLI' 'APLD' 'APLTI' 'APLNA'}
+rgt←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
+lft←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
+rslt←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
+gcl←{nm←⍺⍺,⍨(syms⍳¯1↑⊃⍵)⊃(nams,¯1↑⊃⍵)
+ nm,'(',(rslt⍵),({'%u'≡⍵:'' ⋄ ',',⍵}lft⍵),',',(rgt⍵),');',nl⊣⍵⍵}
+
+rth←'#include <time.h>',nl
+rth,←'#include <stdint.h>',nl
+rth,←'#include <inttypes.h>',nl
+rth,←'#include <limits.h>',nl
+rth,←'#include <float.h>',nl
+rth,←'#include <math.h>',nl
+rth,←'#include <arrayfire.h>',nl
+rth,←'using namespace af;',nl
+rth,←nl
+rth,←'#ifdef _WIN32',nl,'#define EXPORT extern "C" __declspec(dllexport)',nl
+rth,←'#elif defined(__GNUC__)',nl
+rth,←'#define EXPORT extern "C" __attribute__ ((visibility ("default")))',nl
+rth,←'#else',nl,'#define EXPORT extern "C"',nl,'#endif',nl
+rth,←'#ifdef _MSC_VER',nl,'#define RSTCT __restrict',nl
+rth,←'#else',nl,'#define RSTCT restrict',nl,'#endif',nl
+rth,←'#define S struct',nl
+rth,←'#define Z static',nl
+rth,←'#define R return',nl
+rth,←'#define RANK(lp) ((lp)->p->r)',nl
+rth,←'#define TYPE(lp) ((lp)->p->t)',nl
+rth,←'#define SHAPE(lp) ((lp)->p->s)',nl
+rth,←'#define ETYPE(lp) ((lp)->p->e)',nl
+rth,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',nl

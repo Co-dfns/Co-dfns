@@ -1,0 +1,23 @@
+﻿Sfn	←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
+Prim	←prim _as {P⍵⍴⍨1+⍵∊'/⌿⍀\'} _o Sfn
+Fn	←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
+Fnp	←Fn _o Prim
+Mop	←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
+Dop	←Fnp _s (dop _as P) _s Fnp _as (2 O)
+Bop	←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
+Bind	←{⍺(name _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as bind)⍵}
+Fex	←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fn _o (1 Var'f') _o Prim)⍵}
+Vt	←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
+Var	←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
+Num	←float _o int _as N
+Strand	←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A)
+Atom	←{⍺(Num _some _as ('n'A) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex)⍵}
+Mon	←{⍺(Fex _s Ex _as (1 E))⍵}
+Dya	←{⍺((Idx _o Atom) _s Fex _s Ex _as (2 E))⍵}
+Idx	←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
+Ex	←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
+Pex	←lpar _s Ex _s rpar
+Stmt	←sep _any _s (Ex _o Fex) _s (sep _any)
+Ns	←nss _s (Stmt _aew nse) _s eot _as M
+
+ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}

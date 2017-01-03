@@ -1,0 +1,38 @@
+﻿cio←{' -o ''',BUILD∆PATH,'/',⍵,'_',⍺,'.',⍺⍺,''' '}
+fls←{'''',BUILD∆PATH,'/',⍵,'_',⍺,'.c'' '}
+log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
+ucc←{⎕SH ⍺⍺,' -Ofast -g -Wall -fPIC -shared -laf ',⍺(⍵⍵ cio,fls,log)⍵}
+gcc←'gcc'ucc'so' ⋄ clang←'clang'ucc'dylib'
+vsco←'/W3 /Gm- /O2 /Zc:inline /Zi /Fd"build\vc140.pdb" '
+vsco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+vsco,←'/I"%AF_PATH%\include" '
+vsco,←'/D "NOMINMAX" /D "AF_UNIFIED" /D "AF_DEBUG" '
+vslo←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+vslo,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af.lib" '
+vslo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
+vsc1←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
+vsc2←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.cpp" '}
+vsc3←{vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
+vsc4←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
+vsc←{⎕CMD ('%comspec% /C ',vsc1,vsc2,vsc3,vsc4)⍵}
+
+get	←{⍺⍺⌷⍉⍵}
+up	←⍉(1+1↑⍉)⍪1↓⍉
+bind	←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
+
+d_ t_ k_ n_ r_ s_ v_ y_ e_ l_←⍳6+f∆←4
+d←d_ get ⋄ t←t_ get ⋄ k←k_ get ⋄ n←n_ get ⋄ r←r_ get
+s←s_ get ⋄ v←v_ get ⋄ y←y_ get ⋄ e←e_ get ⋄ l←l_ get
+
+new←{⍉⍪f∆↑0 ⍺,⍵}                   ⋄ msk←{(t ⍵)∊⊂⍺⍺} ⋄ sel←{(⍺⍺ msk ⍵)⌿⍵}
+A←{('A'new ⍺⍺)⍪up⊃⍪/⍵}             ⋄ Am←'A'msk       ⋄ As←'A'sel
+E←{('E'new ⍺⍺)⍪up⊃⍪/⍵}             ⋄ Em←'E'msk       ⋄ Es←'E'sel
+F←{('F'new 1)⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵}    ⋄ Fm←'F'msk       ⋄ Fs←'F'sel
+M←{('M'new 0 '')⍪up⊃⍪/(⊂0 f∆⍴⍬),⍵} ⋄ Mm←'M'msk       ⋄ Ms←'M'sel
+N←{'N'new 0 (⍎⍵)}                  ⋄ Nm←'N'msk       ⋄ Ns←'N'sel
+O←{('O'new ⍺⍺)⍪up⊃⍪/⍵}             ⋄ Om←'O'msk       ⋄ Os←'O'sel
+P←{'P'new 0 ⍵}                     ⋄ Pm←'P'msk       ⋄ Ps←'P'sel
+S←{'S'new 0 ⍵}                     ⋄ Sm←'S'msk       ⋄ Ss←'S'sel
+V←{'V'new ⍺⍺ ⍵}                    ⋄ Vm←'V'msk       ⋄ Vs←'V'sel
+Y←{'Y'new 0 ⍵}                     ⋄ Ym←'Y'msk       ⋄ Ys←'Y'sel
+Z←{'Z'new 1 ⍵}                     ⋄ Zm←'Z'msk       ⋄ Zs←'Z'sel

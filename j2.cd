@@ -1,0 +1,35 @@
+﻿rth,←'Z array idx(A&a,index ix[]){if(!a.r)R a.v;',nl
+rth,←' if(a.r==1)R a.v(ix[0]);',nl
+rth,←' if(a.r==2)R a.v(ix[0],ix[1]);',nl
+rth,←' if(a.r==3)R a.v(ix[0],ix[1],ix[2]);',nl
+rth,←' if(a.r==4)R a.v(ix[0],ix[1],ix[2],ix[3]);',nl
+rth,←' dwaerr(99);R array();}',nl
+rth,←'Z V cpy(A&t,seq it[],A&s,seq is[]){',nl
+rth,←' if(!t.r)t.v(0)=s.v(0);',nl
+rth,←' if(t.r==1)t.v(it[0])=s.v(is[0]);',nl
+rth,←' if(t.r==2)t.v(it[0],it[1])=s.v(is[0],is[1]);',nl
+rth,←' if(t.r==3)t.v(it[0],it[1],it[2])=s.v(is[0],is[1],is[2]);',nl
+rth,←' if(t.r==4)',nl
+rth,←'  t.v(it[0],it[1],it[2],it[3])=s.v(is[0],is[1],is[2],is[3]);}',nl
+rth,←'Z array da16(B c,dim4 s,lp*d){std::vector<S16>b(c);',nl
+rth,←' S8*v=(S8*)DATA(d);DOB(c,b[i]=v[i]);R array(s,b.data());}',nl
+rth,←'Z array da8(B c,dim4 s,lp*d){std::vector<char>b(c);',nl
+rth,←' U8*v=(U8*)DATA(d);DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))',nl
+rth,←' R array(s,b.data());}',nl
+rth,←nl
+rth,←'V cpad(lp*d,A&a){I t;B c=cnt(a);',nl
+rth,←' switch(a.v.type()){',nl
+rth,←'  CS(s32,t=APLI);CS(s16,t=APLSI);CS(b8,t=APLTI);CS(f64,t=APLD);',nl
+rth,←'  default:if(c)dwaerr(16);t=APLI;}',nl
+rth,←' B s[4];DO(a.r,s[a.r-(i+1)]=a.s[i]);dwafns->ws->ga(t,a.r,s,d);',nl
+rth,←' if(c)a.v.host(DATA(d));}',nl
+rth,←'V cpda(A&a,lp*d){if(15!=TYPE(d))dwaerr(16);if(4<RANK(d))dwaerr(16);',nl
+rth,←' dim4 s(1);DO(RANK(d),s[RANK(d)-(i+1)]=SHAPE(d)[i]);B c=cnt(d);',nl
+rth,←' switch(ETYPE(d)){',nl
+rth,←'  CS(APLI,a=A(RANK(d),s,c?array(s,(I*)DATA(d)):scl(0)))',nl
+rth,←'  CS(APLD,a=A(RANK(d),s,c?array(s,(D*)DATA(d)):scl(0)))',nl
+rth,←'  CS(APLSI,a=A(RANK(d),s,c?array(s,(S16*)DATA(d)):scl(0)))',nl
+rth,←'  CS(APLTI,a=A(RANK(d),s,c?da16(c,s,d):scl(0)))',nl
+rth,←'  CS(APLU8,a=A(RANK(d),s,c?da8(c,s,d):scl(0)))',nl
+rth,←'  default:dwaerr(16);}}',nl
+rth,←nl
