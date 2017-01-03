@@ -42,6 +42,8 @@ utf8get←{
 	('UTF-8'⎕UCS 256|ints)⊣⎕NUNTIE tie	⍝ ⎕AV chars.
 }
 
+split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
+
 ∇TEST
 ##.UT.print_passed←1
 ##.UT.print_summary←1
