@@ -103,6 +103,7 @@
               (FilePath,' tests')print_passed_crashed_failed Z t
           :EndIf
       :EndIf
+      ⎕EX⍕FileNS
     ∇
 
     ∇ Z←FromSpace test_dir_function Test_files;old_sum;old_head
