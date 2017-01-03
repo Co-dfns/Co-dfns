@@ -26,3 +26,4 @@ rth,←' z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',nl
 rth,←'MF(rot){z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}',nl
 rth,←'DF(rot){if(cnt(l)!=1)dwaerr(16);z.r=r.r;z.s=r.s;',nl
 rth,←' z.v=shift(r.v,-l.v.as(s32).scalar<I>());}',nl
+rth,←'MF(rtf){z.r=r.r;z.s=r.s;z.v=r.r?flip(r.v,r.r-1):r.v;}',nl
