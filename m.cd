@@ -23,11 +23,11 @@ rth,←'DF(rho){if(l.r>1)dwaerr(11);z.r=(U)cnt(l);if(z.r>4)dwaerr(16);',nl
 rth,←' B s[4];l.v.as(s64).host(s);DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)]);',nl
 rth,←' B cz=cnt(z);B cr=cnt(r);',nl
 rth,←' z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',nl
-rth,←'MF(rot){z.r=r.r⍺;z.s=r.s;z.v=flip(r.v,0);}',nl
+rth,←'MF(rot){z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}',nl
 rth,←'DF(rot){if(cnt(l)!=1)dwaerr(16);z.r=r.r;z.s=r.s;',nl
 rth,←' z.v=shift(r.v,-l.v.as(s32).scalar<I>());}',nl
 rth,←'MF(rtf){z.r=r.r;z.s=r.s;z.v=r.r?flip(r.v,r.r-1):r.v;}',nl
 rth,←'DF(rtf){if(cnt(l)!=1)dwaerr(16);z.r=r.r;z.s=r.s;',nl
-rth,←' I v[4]={0,0,0,0};I r=l.v.as(s32).scalar<I>();',nl
-rth,←' switch(r.r){CS(1,v[0]=r)CS(2,v[1]=r)CS(3,v[2]=r)CS(4,v[3]=r)}',nl
+rth,←' I v[4]={0,0,0,0};I s=-l.v.as(s32).scalar<I>();',nl
+rth,←' switch(r.r){CS(1,v[0]=s)CS(2,v[1]=s)CS(3,v[2]=s)CS(4,v[3]=s)}',nl
 rth,←' z.v=shift(r.v,v[0],v[1],v[2],v[3]);}',nl
