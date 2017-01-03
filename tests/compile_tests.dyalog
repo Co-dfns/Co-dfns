@@ -11,34 +11,9 @@ BS,←⊂'CD1←CNDP2 D1 ⋄ CD2←CNDP2 D2 ⋄ e←*(-r)×T'
 BS,←⊂'((S×CD1)-X×e×CD2),[0.5](X×e×1-CD2)-S×1-CD1'
 BS,←'}' ':EndNamespace'
 
-COMPILE∆VSC_TEST←{~(⊂'vsc')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-  #.UT.expect←1 1 1 1 1 ⋄ #.codfns.COMPILER←'vsc'
-  vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
-  (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
-}
-
-COMPILE∆PGI_TEST←{~(⊂'pgi')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-  #.UT.expect←1 1 1 1 1 ⋄ #.codfns.COMPILER←'pgi'
-  vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
-  (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
-}
-
-COMPILE∆GCC_TEST←{~(⊂'gcc')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-  #.UT.expect←1 1 1 1 1 ⋄ #.codfns.COMPILER←'gcc'
-  vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
-  (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
-}
-
-COMPILE∆ICC_TEST←{~(⊂'icc')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-  #.UT.expect←1 1 1 1 1 ⋄ #.codfns.COMPILER←'icc'
-  vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
-  (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
-}
-
-COMPILE∆PGCC_TEST←{~(⊂'pgcc')∊#.codfns.TEST∆COMPILERS:0⊣#.UT.expect←0
-  #.UT.expect←1 1 1 1 1 ⋄ #.codfns.COMPILER←'pgcc'
-  vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
-  (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
+COMPILE_TEST←{#.UT.expect←1 1 1 1 1
+ vals←'Run' 1 'CNDP2' 1 'coeff' 0 (,'v') 0 (,'r') 0
+ (↓5 2⍴vals)∊↓'compile'#.codfns.Cmp BS
 }
 
 :EndNamespace
