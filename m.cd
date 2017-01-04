@@ -17,6 +17,12 @@ rth,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
 rth,←'MF(nqv){z.r=0;z.s=dim4(1);z.v=scl(r.r?(I)r.s[r.r-1]:1);}',nl
 rth,←'DF(nqv){z.r=0;z.s=eshp;I t=l.r==r.r&&l.s==r.s;',nl
 rth,←' if(t)t=allTrue<I>(l.v==r.v);z.v=scl(!t);}',nl
+rth,←'DF(red){if(l.r>1)dwaerr(4);U8 t=l.r!=0&&l.s[0]!=1;',nl
+rth,←' t=t&&r.r!=0&&r.s[r.r-1]!=1&&l.s[0]!=r.s[r.r-1];if(t)dwaerr(5);',nl
+rth,←' array x=l.v;if(cnt(l)==1)x=tile(x,(I)r.s[0]);',nl
+rth,←' array y=r.v;if(r.s[0]==1)y=tile(y,(I)cnt(l));',nl
+rth,←' B c=sum<B>(abs(x));z.r=r.r;z.s=r.s;z.s[0]=c;',nl
+rth,←' if(!cnt(z)){z.v=scl(0);R;}}',nl
 rth,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
 rth,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth,←'MF(rgt){z=r;}',nl

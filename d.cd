@@ -1,5 +1,5 @@
 ﻿Sfn	←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
-Prim	←prim _as {P⍵⍴⍨1+⍵∊'/⌿⍀\'} _o Sfn
+Prim	←prim _as P _o Sfn
 Fn	←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
 Fnp	←Fn _o Prim
 Mop	←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
