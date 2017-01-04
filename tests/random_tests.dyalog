@@ -2,22 +2,16 @@
 
 S←':Namespace' 'Run←{?⍺⍴⍵}' ':EndNamespace'
 
-MK∆TST←{id cmp ns fn←⍺⍺ ⋄ l r←⍵⍵
-  ~(⊂cmp)∊##.codfns.TEST∆COMPILERS:0⊣##.UT.expect←0
-  ##.codfns.COMPILER←cmp
-  CS←id ##.codfns.Fix ns
-  NS←⎕FIX ns
+MK∆TST←{id ns fn←⍺⍺ ⋄ l r←⍵⍵ ⋄ CS←id ##.codfns.Fix ns ⋄ NS←⎕FIX ns
   nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
   res←|1-(0.5⌈(⌈/r)÷2)÷(+/÷≢)cv
   _←{0.05≤⍵:⎕←⍵ ⋄ ⍬}res
   ##.UT.expect←(⍴nv)(1) ⋄ (⍴cv)(0.05>res)}
 
-∇Z←ID(NCF GEN∆TST THIS)IN;NS;FN;CMP;TC;TMP
+∇Z←ID(NCF GEN∆TST THIS)IN;NS;FN;TC;TMP
  NS TC FN←NCF
- :For CMP :In 'gcc' 'icc' 'vsc' 'pgcc' 'pgi'
-    TMP←(NS,ID)CMP TC FN MK∆TST IN
-    ⍎'THIS.',NS,'∆',ID,'∆',CMP,'_TEST←TMP'
- :EndFor
+ TMP←(NS,ID)TC FN MK∆TST IN
+ ⍎'THIS.',NS,'∆',ID,'_TEST←TMP'
  Z←0 0⍴⍬
 ∇
 
