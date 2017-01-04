@@ -20,5 +20,6 @@ S←':Namespace' 'Rv←{⍺⍴⍵}' 'Rl←{2 2⍴⍵}' 'Rr←{⍺⍴5}' ':EndNam
 '16'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) 5     (⍳10)
 '17'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) (3 7) (0 1)
 '18'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) 3     (0 1 1 1 0 0 1 0 1)
+'19'('reshape' S 'Rv' #.util.GEN∆T2 ⎕THIS) 0     14
 
 :EndNamespace
