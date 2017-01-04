@@ -23,6 +23,8 @@ rth,←'DF(rho){if(l.r>1)dwaerr(11);z.r=(U)cnt(l);if(z.r>4)dwaerr(16);',nl
 rth,←' B s[4];l.v.as(s64).host(s);DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)]);',nl
 rth,←' B cz=cnt(z);B cr=cnt(r);if(!cz){z.v=scl(0);R;}',nl
 rth,←' z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',nl
+rth,←'MF(rol){z.r=r.r;z.s=r.s;if(!cnt(r)){z.v=r.v;R;}',nl
+rth,←' array rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}',nl
 rth,←'MF(rot){z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}',nl
 rth,←'DF(rot){if(cnt(l)!=1)dwaerr(16);z.r=r.r;z.s=r.s;',nl
 rth,←' z.v=shift(r.v,-l.v.as(s32).scalar<I>());}',nl
