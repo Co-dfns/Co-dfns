@@ -627,26 +627,6 @@ fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
 		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
 ⍝[cf]
 ⍝[of]:?	Roll/Deal
-rolmfinaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	z	←'{B c=(',rgt,')->c;',nl
-	z	,←'I*RSTCT rv=(',rgt,')->v;',nl,acup'host(rv[:c])'
-	z	,←'DO(i,c){if(rv[i]<0)dwaerr(11);}',nl
-	z	,←'A t;t.v=NULL;',nl
-	z	,←'ai(&t,(',rgt,')->r,(',rgt,')->s,2);D*RSTCT zv=t.v;',nl
-	z	,←'DO(i,c){if(rv[i])zv[i]=arc4random_uniform(rv[i]);',nl
-	z	,←'  else zv[i]=(D)arc4random_uniform(UINT_MAX)/UINT_MAX;}',nl
-		z,(acup'device(zv[:c])'),'cpaa(',rslt,',&t);}',nl}
-rolmfbnaaa←{	v e y	←⍵
-	rslt rgt	←var/2↑v,⍪e
-	z	←'{B c=((',rgt,')->c+7)/8;',nl
-	z	,←'U8*RSTCT rv=(',rgt,')->v;',nl,acup'host(rv[:c])'
-	z	,←'A t;t.v=NULL;',nl
-	z	,←'ai(&t,(',rgt,')->r,(',rgt,')->s,2);D*RSTCT zv=t.v;',nl
-	z	,←'DO(i,c){DO(j,8){B x=i*8+j;U8 t=1&(rv[i]>>j);',nl
-	z	,←' if(t)zv[x]=0;',nl
-	z	,←' else zv[x]=(D)arc4random_uniform(UINT_MAX)/UINT_MAX;}}',nl
-		z,'B zc=t.c;',nl,(acup'device(zv[:zc])'),'cpaa(',rslt,',&t);}',nl}
 roldfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
 roldfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),roldfnnlp ⍵}
 roldfibaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrb lft ⍵),roldfnblp ⍵}
