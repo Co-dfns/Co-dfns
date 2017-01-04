@@ -21,7 +21,6 @@ things on which we are working.
 * Dyadic Transpose does not permit duplicate axes
 * Rotate (⌽ or ⊖) works over scalar left arguments only
 * Dyadic Reduce (/ and ⌿) with negative left arguments are not supported
-* Reductions with intermediate types different from the result type will not work
 * Replicate First (⌿) is not supported
 * Expand (\ and ⍀) is not supported
 * Laminate (⍪[N]) is supported in special cases only
@@ -31,7 +30,6 @@ things on which we are working.
 * Compose (∘) is not implemented
 * Power (⍣) is not implemented
 * Rank (⍤) is not implemented
-* The Log (⍟) function is not implemented for bitvectors
 * Binomial is not implemented for negative and floating point values
 * Conditional guards are not supported yet
 * Recursive functions are not supported yet
@@ -47,6 +45,7 @@ These limitations are considered to be of little importance or very
 difficult to implement with little benefit/gain and thus are not likely 
 to be implemented in the near future.
 
+* Arrays of rank > 4 are not supported
 * Sparse arrays are not supported yet
 * Nested arrays are not yet supported
 * Character types are not supported

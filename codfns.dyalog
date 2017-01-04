@@ -547,36 +547,6 @@ memdfnnlp←{	z	←'B lx=0;B rx=0;',nl,'lr,ls,3'dectmpb'z'
 		z,'free(li);free(ri);cpaa(',(rslt ⍵),',&za);}',nl}
 memd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∊')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
-⍝[of]:⍒	Grade Down
-gddmfinaaa←{	z	←'{',('r'decarri rgt ⍵),'if(rr<1)dwaerr(4);',nl
-	z	,←('1,rs,1'dectmpi'z'),acup'host(rv[:rc])'
-	z	,←'grdc=1;DOI(i,rr-1){grdc*=rs[i+1];}',nl
-	z	,←'grdv=rv;DO(i,zc){zv[i]=i;}',nl
-	z	,←'qsort(zv,zc,sizeof(I),gdcmpi);',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-gddmffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
-	z	,←('1,rs,1'dectmpi'z'),acup'host(rv[:rc])'
-	z	,←'grdc=1;DOI(i,rr-1){grdc*=rs[i+1];}',nl
-	z	,←'grdv=rv;DO(i,zc){zv[i]=i;}',nl
-	z	,←'qsort(zv,zc,sizeof(I),gdcmpf);',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-gddmfbnaaa←{		'dwaerr(16);',nl}
-⍝[cf]
-⍝[of]:⍋	Grade Up
-gdumfinaaa←{	z	←'{',('r'decarri rgt ⍵),'if(rr<1)dwaerr(4);',nl
-	z	,←('1,rs,1'dectmpi'z'),acup'host(rv[:rc])'
-	z	,←'grdc=1;DOI(i,rr-1){grdc*=rs[i+1];}',nl
-	z	,←'grdv=rv;DO(i,zc){zv[i]=i;}',nl
-	z	,←'qsort(zv,zc,sizeof(I),gucmpi);',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-gdumffnaaa←{	z	←'{',('r'decarrf rgt ⍵),'if(rr<1)dwaerr(4);',nl
-	z	,←('1,rs,1'dectmpi'z'),acup'host(rv[:rc])'
-	z	,←'grdc=1;DOI(i,rr-1){grdc*=rs[i+1];}',nl
-	z	,←'grdv=rv;DO(i,zc){zv[i]=i;}',nl
-	z	,←'qsort(zv,zc,sizeof(I),gucmpf);',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-gdumfbnaaa←{		'dwaerr(16);',nl}
-⍝[cf]
 ⍝[of]:/	Replicate/Filter
 fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
 	chk	,←'if(lr!=0&&ls[0]!=1&&rr!=0&&rs[rr-1]!=1&&ls[0]!=rs[rr-1])dwaerr(5);'
