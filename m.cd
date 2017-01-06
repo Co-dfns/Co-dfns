@@ -6,6 +6,11 @@ rth,←'SF(lth,z.v=lv<rv)',nl
 rth,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl
 rth,←'SF(max,z.v=max(lv,rv))',nl
 rth,←'MF(mem){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}',nl
+rth,←'DF(mem){z.r=l.r;z.s=l.s;I lc=(I)cnt(z);if(!lc){z.v=scl(0);R;}',nl
+rth,←' if(!cnt(r)){z.v=array(z.s,b8);z.v=0;R;}',nl
+rth,←' array y=setUnique(flat(r.v));I rc=(I)y.elements();',nl
+rth,←' array x=array(flat(l.v),lc,1);y=array(y,1,rc);',nl
+rth,←' z.v=array(anyTrue(tile(x,1,rc)==tile(y,lc,1),1),z.s);}',nl
 rth,←'MF(min){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',nl
 rth,←'SF(min,z.v=min(lv,rv))',nl
 rth,←'MF(mul){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',nl
@@ -28,7 +33,7 @@ rth,←' array i=shift(accum(abs(x(w))),1),d=shift(w,1);i(0)=0;d(0)=0;',nl
 rth,←' array v=array(z.s[0],s32),u=array(z.s[0],s32);v=0;u=0;',nl
 rth,←' array s=(!sign(x(w))).as(s32);array t=shift(s,1);t(0)=0;',nl
 rth,←' v(i)=w-d;u(i)=s-t;z.v=y(accum(v),span);',nl
-rth,←' z.v*=tile(accum(u),1,z.s[1],z.s[2],z.s[3]);}',nl
+rth,←' z.v*=tile(accum(u),1,(I)z.s[1],(I)z.s[2],(I)z.s[3]);}',nl
 rth,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
 rth,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth,←'MF(rgt){z=r;}',nl
