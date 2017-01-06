@@ -17,12 +17,18 @@ rth,←'MF(not){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
 rth,←'MF(nqv){z.r=0;z.s=dim4(1);z.v=scl(r.r?(I)r.s[r.r-1]:1);}',nl
 rth,←'DF(nqv){z.r=0;z.s=eshp;I t=l.r==r.r&&l.s==r.s;',nl
 rth,←' if(t)t=allTrue<I>(l.v==r.v);z.v=scl(!t);}',nl
-rth,←'DF(red){if(l.r>1)dwaerr(4);U8 t=l.r!=0&&l.s[0]!=1;',nl
-rth,←' t=t&&r.r!=0&&r.s[r.r-1]!=1&&l.s[0]!=r.s[r.r-1];if(t)dwaerr(5);',nl
+rth,←'DF(red){if(l.r>1)dwaerr(4);U8 b=l.r!=0&&l.s[0]!=1;',nl
+rth,←' b=b&&r.r!=0&&r.s[0]!=1&&l.s[0]!=r.s[0];if(b)dwaerr(5);',nl
 rth,←' array x=l.v;if(cnt(l)==1)x=tile(x,(I)r.s[0]);',nl
 rth,←' array y=r.v;if(r.s[0]==1)y=tile(y,(I)cnt(l));',nl
-rth,←' B c=sum<B>(abs(x));z.r=r.r;z.s=r.s;z.s[0]=c;',nl
-rth,←' if(!cnt(z)){z.v=scl(0);R;}}',nl
+rth,←' z.r=r.r?r.r:1;z.s=r.s;z.s[0]=sum<B>(abs(x));',nl
+rth,←' if(!cnt(z)){z.v=scl(0);R;}array w=where(x).as(s32);',nl
+rth,←' if(z.s[0]==w.elements()){z.v=y(w,span);R;}',nl
+rth,←' array i=shift(accum(abs(x(w))),1),d=shift(w,1);i(0)=0;d(0)=0;',nl
+rth,←' array v=array(z.s[0],s32),u=array(z.s[0],s32);v=0;u=0;',nl
+rth,←' array s=(!sign(x(w))).as(s32);array t=shift(s,1);t(0)=0;',nl
+rth,←' v(i)=w-d;u(i)=s-t;z.v=y(accum(v),span);',nl
+rth,←' z.v*=tile(accum(u),1,z.s[1],z.s[2],z.s[3]);}',nl
 rth,←'MF(res){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',nl
 rth,←'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',nl
 rth,←'MF(rgt){z=r;}',nl
@@ -34,13 +40,3 @@ rth,←'DF(rho){if(l.r>1)dwaerr(11);z.r=(U)cnt(l);if(z.r>4)dwaerr(16);',nl
 rth,←' B s[4];l.v.as(s64).host(s);DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)]);',nl
 rth,←' B cz=cnt(z);B cr=cnt(r);if(!cz){z.v=scl(0);R;}',nl
 rth,←' z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',nl
-rth,←'MF(rol){z.r=r.r;z.s=r.s;if(!cnt(r)){z.v=r.v;R;}',nl
-rth,←' array rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}',nl
-rth,←'MF(rot){z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}',nl
-rth,←'DF(rot){if(cnt(l)!=1)dwaerr(16);z.r=r.r;z.s=r.s;',nl
-rth,←' z.v=shift(r.v,-l.v.as(s32).scalar<I>());}',nl
-rth,←'MF(rtf){z.r=r.r;z.s=r.s;z.v=r.r?flip(r.v,r.r-1):r.v;}',nl
-rth,←'DF(rtf){if(cnt(l)!=1)dwaerr(16);z.r=r.r;z.s=r.s;',nl
-rth,←' I v[4]={0,0,0,0};I s=-l.v.as(s32).scalar<I>();',nl
-rth,←' switch(r.r){CS(1,v[0]=s)CS(2,v[1]=s)CS(3,v[2]=s)CS(4,v[3]=s)}',nl
-rth,←' z.v=shift(r.v,v[0],v[1],v[2],v[3]);}',nl

@@ -547,55 +547,6 @@ memdfnnlp←{	z	←'B lx=0;B rx=0;',nl,'lr,ls,3'dectmpb'z'
 		z,'free(li);free(ri);cpaa(',(rslt ⍵),',&za);}',nl}
 memd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∊')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
-⍝[of]:/	Replicate/Filter
-fltd←{	chk	←'if(lr>1)dwaerr(4);',nl
-	chk	,←'if(lr!=0&&ls[0]!=1&&rr!=0&&rs[rr-1]!=1&&ls[0]!=rs[rr-1])dwaerr(5);'
-	siz	←'zr=rr==0?1:rr;I n=zr-1;DOI(i,n)zs[i]=rs[i];',nl
-	siz	,←'if(lr==1)lc=ls[0];if(rr!=0)rc=rs[rr-1];zs[zr-1]=0;B last=0;',nl
-	szn	←siz,pacc 'update host(lv[:lc],rv[:rgt->c])'
-	szn	,←'if(lc>=rc){DO(i,lc)last+=abs(lv[i]);}else{last+=rc*abs(lv[0]);}',nl
-	szn	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
-	szb	←siz,pacc 'update host(lv[:lft->z],rv[:rgt->c])'
-	szb	,←'if(lc>=rc){B n=(lc+7)/8;',nl
-	szb	,←' DO(i,n){DO(j,8){if(lc>i*8+j)last+=1&(lv[i]>>j);}}',nl
-	szb	,←'}else{last+=rc*(lv[0]>>7);}',nl
-	szb	,←'zs[zr-1]=last;DO(i,n)zc*=zs[i];'
-	exe	←'B a=0;if(rc==lc){',nl,'DO(i,lc){',nl
-	exe	,←' if(lv[i]==0)continue;',nl
-	exe	,←' else if(lv[i]>0){',nl
-	exe	,←'  DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[(j*rc)+i];}}',nl
-	exe	,←'  a+=lv[i];',nl
-	exe	,←' }else{',nl
-	exe	,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
-	exe	,←'  a+=abs(lv[i]);}}}',nl
-	exe	,←'else if(rc>lc){',nl
-	exe	,←' if(lv[0]>0){'
-	exe	,←'DO(i,zc){DO(j,rc){DO(k,lv[0]){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}}',nl
-	exe	,←' else if(lv[0]<0){L n=zc*zs[zr-1];DO(i,n)zv[i]=0;}}',nl
-	exe	,←'else{DO(i,lc){',nl
-	exe	,←' if(lv[i]==0)continue;',nl
-	exe	,←' else if(lv[i]>0){',nl
-	exe	,←'  DO(j,zc){DO(k,lv[i]){zv[(j*zs[zr-1])+a+k]=rv[j*rc];}}',nl
-	exe	,←'  a+=lv[i];',nl
-	exe	,←' }else{',nl
-	exe	,←'  DO(j,zc){L n=abs(lv[i]);DO(k,n){zv[(j*zs[zr-1])+a+k]=0;}}',nl
-	exe	,←'  a+=abs(lv[i]);}}}',nl
-	exe	,←pacc 'update device(zv[:rslt->c])'
-	exb	←'B a=0;if(rr==1&&rc==lc){B n=(lc+7)/8;',nl
-	exb	,←' DO(i,n){DO(j,8){if(1&(lv[i]>>j))zv[a++]=rv[i*8+j];}}',nl
-	exb	,←'}else if(rc==lc){B n=(lc+7)/8;',nl,'DO(i,n){DO(m,8){',nl
-	exb	,←' if(1&(lv[i]>>m)){',nl
-	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[(j*rc)+i*8+m];}',nl
-	exb	,←'  a++;}}}',nl
-	exb	,←'}else if(rc>lc){if(lv[0]>>7){',nl
-	exb	,←'  DO(i,zc){DO(j,rc){zv[(i*zs[zr-1])+a++]=rv[(i*rc)+j];}}}',nl
-	exb	,←'}else{B n=(lc+7)/8;DO(i,n){DO(m,8){',nl
-	exb	,←' if(1&(lv[i]>>m)){',nl
-	exb	,←'  DO(j,zc){zv[(j*zs[zr-1])+a]=rv[j*rc];}',nl
-	exb	,←'  a++;}}}}',nl
-	exb	,←pacc 'update device(zv[:rslt->c])'
-		((3≡2⊃⍺)⊃(chk szn exe)(chk szb exb)) mxfn 1 ⍺ ⍵}
-⍝[cf]
 ⍝[of]:?	Roll/Deal
 roldfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
 roldfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),roldfnnlp ⍵}
