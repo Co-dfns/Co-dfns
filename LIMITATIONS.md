@@ -26,7 +26,7 @@ things on which we are working.
 * Laminate (⍪[N]) is supported in special cases only
 * Find (⍷) is not supported
 * Decode (⊥) only supports special cases right now
-* Encode (⊤) only supports special cases right now
+* Encode (⊤) does not support ranks greater than 1
 * Compose (∘) is not implemented
 * Power (⍣) is not implemented
 * Rank (⍤) is not implemented
