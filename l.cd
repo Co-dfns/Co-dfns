@@ -13,8 +13,9 @@ rth,←'DF(enc){z.r=r.r+l.r;z.s=r.s;DO(l.r,z.s[i+r.r]=l.s[i])',nl
 rth,←' if(!cnt(z)){z.v=scl(0);R;}dim4 lt=z.s,rt=z.s;I k=l.r?l.r-1:0;',nl
 rth,←' DO(r.r,rt[i]=1)DO(l.r,lt[i+r.r]=1)array rv=tile(r.v,rt);',nl
 rth,←' array sv=flip(scan(flip(l.v,k),k,AF_BINARY_MUL),k);',nl
-rth,←' array lv=tile(array(sv,rt),lt);array dv=sv;dv(0,span)=1;',nl
-rth,←' dv=shift(dv,-1);dv=tile(array(dv,rt),lt);',nl
+rth,←' array lv=tile(array(sv,rt),lt);index x[4];x[k]=0;',nl
+rth,←' array dv=sv;dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;',nl
+rth,←' dv=shift(dv,s[0],s[1],s[2],s[3]);dv=tile(array(dv,rt),lt);',nl
 rth,←' z.v=(lv!=0)*rem(rv,lv)+(lv==0)*rv;z.v=(dv!=0)*(z.v/dv).as(s32);}',nl
 rth,←'SF(eql,z.v=lv==rv)',nl
 rth,←'MF(eqv){z.r=0;z.s=eshp;z.v=scl(r.r!=0);}',nl
