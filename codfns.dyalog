@@ -478,15 +478,6 @@ dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
 ⍝[cf]
 ⍝[of]:Generators
-⍝[of]:⊤	Encode
-encd←{	chk	←'if(lr>1)dwaerr(16);DO(i,lr)lc*=ls[i];',nl
-	chk	,←pacc'update host(lv[:lc])'
-	chk	,←'DO(i,lc){if(lv[i]<=0)dwaerr(16);}'
-	siz	←'zr=1+rr;zs[0]=lc;DO(i,rr)zs[i+1]=rs[i];DO(i,rr)rc*=rs[i];'
-	exe	←simd'collapse(2) present(zv[:rslt->c],rv[:rc],lv[:lc])'
-	exe	,←'DO(i,rc){DO(j,lc){zv[(j*rc)+i]=(rv[i]>>(lc-(j+1)))%2;}}'
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
 ⍝[of]:⊥	Decode
 decd←{	chk	←'if(lr>1||lv[0]<0)dwaerr(16);'
 	siz	←'zr=rr==0?0:rr-1;DOI(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
@@ -501,51 +492,6 @@ decd←{	chk	←'if(lr>1||lv[0]<0)dwaerr(16);'
 	exeb	,←pacc'update device(zv[:rslt->c])'
 	exe	←(3=⊃1⌷⍺)⊃exen exeb
 		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
-⍝[of]:∊	Enlist/Membership
-memdfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵)
-		z,('gucmpi'memdfnnlp'gucmpi')⍵}
-memdfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵)
-		z,('gucmpf'memdfnnlp'gucmpi')⍵}
-memdffiaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵)
-		z,('gucmpi'memdfnnlp'gucmpf')⍵}
-memdfffaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarrf lft ⍵)
-		z,('gucmpf'memdfnnlp'gucmpf')⍵}
-memdfibaaa←{		'dwaerr(16);',nl}
-memdffbaaa←{		'dwaerr(16);',nl}
-memdfbbaaa←{		'dwaerr(16);',nl}
-memdfbiaaa←{		'dwaerr(16);',nl}
-memdfbfaaa←{		'dwaerr(16);',nl}
-memdfiiaal←{		'dwaerr(16);',nl}
-memdfifaal←{		'dwaerr(16);',nl}
-memdffiaal←{		'dwaerr(16);',nl}
-memdfffaal←{		'dwaerr(16);',nl}
-memdfibaal←{		'dwaerr(16);',nl}
-memdffbaal←{		'dwaerr(16);',nl}
-memdfbbaal←{		'dwaerr(16);',nl}
-memdfbiaal←{		'dwaerr(16);',nl}
-memdfbfaal←{		'dwaerr(16);',nl}
-memdfiiala←{		'dwaerr(16);',nl}
-memdfifala←{		'dwaerr(16);',nl}
-memdffiala←{		'dwaerr(16);',nl}
-memdfffala←{		'dwaerr(16);',nl}
-memdfibala←{		'dwaerr(16);',nl}
-memdffbala←{		'dwaerr(16);',nl}
-memdfbbala←{		'dwaerr(16);',nl}
-memdfbiala←{		'dwaerr(16);',nl}
-memdfbfala←{		'dwaerr(16);',nl}
-memdfnnlp←{	z	←'B lx=0;B rx=0;',nl,'lr,ls,3'dectmpb'z'
-	z	,←'I*li=malloc(lc*sizeof(I));if(!li)dwaerr(1);',nl
-	z	,←'I*ri=malloc(rc*sizeof(I));if(!ri)dwaerr(1);',nl
-	z	,←'DO(i,rc)ri[i]=i;DO(i,lc)li[i]=i;DO(i,zz)zv[i]=0;',nl
-	z	,←acup'host(rv[:rc],lv[:lc])'
-	z	,←'grdv=lv;grdc=1;qsort(li,lc,sizeof(I),',⍺⍺,');',nl
-	z	,←'grdv=rv;grdc=1;qsort(ri,rc,sizeof(I),',⍵⍵,');',nl
-	z	,←'while(rx<rc&&lx<lc){if(lv[li[lx]]<rv[ri[rx]])lx++;',nl
-	z	,←' else if(lv[li[lx]]==rv[ri[rx]]){zv[li[lx]/8]|=1<<li[lx]%8;lx++;}',nl
-	z	,←' else rx++;}',nl,acup'device(zv[:zz])'
-		z,'free(li);free(ri);cpaa(',(rslt ⍵),',&za);}',nl}
-memd←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'∊')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
 ⍝[cf]
 ⍝[of]:?	Roll/Deal
 roldfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
