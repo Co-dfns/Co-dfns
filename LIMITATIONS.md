@@ -25,7 +25,6 @@ things on which we are working.
 * Expand (\ and ⍀) is not supported
 * Laminate (⍪[N]) is supported in special cases only
 * Find (⍷) is not supported
-* Decode (⊥) only supports special cases right now
 * Compose (∘) is not implemented
 * Power (⍣) is not implemented
 * Rank (⍤) is not implemented
