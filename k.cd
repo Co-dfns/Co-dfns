@@ -33,10 +33,13 @@ rth,←' dtype mt=mxt(r.v,l.v);',nl
 rth,←' array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);',nl
 rth,←' array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);',nl
 rth,←' z.v=join(z.r-1,lv,rv);}',nl
-rth,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
-rth,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);',nl
-rth,←' B lc=cnt(l);if(!lc){z=r;R;}if(lc!=1||r.r!=1)dwaerr(4);',nl
-rth,←' if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
-rth,←' z.r=0;z.s=eshp;array i=l.v(0);z.v=r.v(i);}',nl
-rth,←'MF(div){z.r=r.r;z.s=r.s;z.v=1.0/r.v.as(f64);}',nl
-rth,←'SF(div,z.v=lv.as(f64)/rv.as(f64))',nl
+rth,←'DF(dec){I ra=r.r?r.r-1:0;I la=l.r?l.r-1:0;z.r=ra+la;z.s=dim4(1);',nl
+rth,←' if(l.s[0]!=1&&l.s[0]!=r.s[ra]&&r.s[ra]!=1)dwaerr(5);',nl
+rth,←' DO(ra,z.s[i]=r.s[i])DO(la,z.s[i+ra]=l.s[i+1])',nl
+rth,←' if(!cnt(z)){z.v=scl(0);R;}',nl
+rth,←' if(!cnt(r)||!cnt(l)){z.v=constant(0,z.s,s32);R;}',nl
+rth,←' B lc=l.s[0];array x=l.v;if(lc==1){lc=r.s[ra];x=tile(x,(I)lc);}',nl
+rth,←' x=flip(scan(x,0,AF_BINARY_MUL,false),0);',nl
+rth,←' x=array(x,lc,x.elements()/lc).as(f64);',nl
+rth,←' array y=array(r.v,cnt(r)/r.s[ra],r.s[ra]).as(f64);',nl
+rth,←' z.v=array(matmul(r.s[ra]==1?tile(y,1,(I)l.s[0]):y,x),z.s);}',nl

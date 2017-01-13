@@ -1,4 +1,11 @@
-﻿rth,←'MF(drp){if(r.r)dwaerr(16);z=r;}',nl
+﻿rth,←'MF(dis){z.r=0;z.s=eshp;z.v=r.v(0);}',nl
+rth,←'DF(dis){if(l.v.isfloating())dwaerr(1);if(l.r>1)dwaerr(4);',nl
+rth,←' B lc=cnt(l);if(!lc){z=r;R;}if(lc!=1||r.r!=1)dwaerr(4);',nl
+rth,←' if(allTrue<char>(cnt(r)<=l.v(0)))dwaerr(3);',nl
+rth,←' z.r=0;z.s=eshp;array i=l.v(0);z.v=r.v(i);}',nl
+rth,←'MF(div){z.r=r.r;z.s=r.s;z.v=1.0/r.v.as(f64);}',nl
+rth,←'SF(div,z.v=lv.as(f64)/rv.as(f64))',nl
+rth,←'MF(drp){if(r.r)dwaerr(16);z=r;}',nl
 rth,←'DF(drp){I lv[4];seq it[4];seq ix[4];B c=cnt(l);',nl
 rth,←' if(l.r>1||(c>r.r&&r.r))dwaerr(4);if(!c){z=r;R;}',nl
 rth,←' U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
@@ -34,7 +41,3 @@ rth,←' array a=array(r.v,c,r.s[r.r-1]);z.v=iota(z.s,dim4(1),s32);',nl
 rth,←' DO(c,sort(array(),z.v,flat(a(c-(i+1),z.v)),z.v,0,true))}',nl
 rth,←'SF(gte,z.v=lv>=rv)',nl
 rth,←'SF(gth,z.v=lv>rv)',nl
-rth,←'DF(int){if(r.r>1||l.r>1)dwaerr(4);',nl
-rth,←' if(!cnt(r)||!cnt(l)){z.v=scl(0);z.s=dim4(0);z.r=1;R;}',nl
-rth,←' dtype mt=mxt(l.v,r.v);z.v=setIntersect(l.v.as(mt),r.v.as(mt));',nl
-rth,←' z.r=1;z.s=dim4(z.v.elements());}',nl

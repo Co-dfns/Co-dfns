@@ -1,4 +1,8 @@
-﻿rth,←'MF(iot){if(r.r>1)dwaerr(4);B c=cnt(r);if(c>4)dwaerr(10);',nl
+﻿rth,←'DF(int){if(r.r>1||l.r>1)dwaerr(4);',nl
+rth,←' if(!cnt(r)||!cnt(l)){z.v=scl(0);z.s=dim4(0);z.r=1;R;}',nl
+rth,←' dtype mt=mxt(l.v,r.v);z.v=setIntersect(l.v.as(mt),r.v.as(mt));',nl
+rth,←' z.r=1;z.s=dim4(z.v.elements());}',nl
+rth,←'MF(iot){if(r.r>1)dwaerr(4);B c=cnt(r);if(c>4)dwaerr(10);',nl
 rth,←' if(c>1)dwaerr(16);',nl
 rth,←' z.r=1;z.s=dim4(r.v.as(s32).scalar<I>());',nl
 rth,←' z.v=z.s[0]?iota(z.s,dim4(1),s32):scl(0);}',nl
