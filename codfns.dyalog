@@ -478,21 +478,6 @@ dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
 ⍝[cf]
 ⍝[of]:Generators
-⍝[of]:⊥	Decode
-decd←{	chk	←'if(lr>1||lv[0]<0)dwaerr(16);'
-	siz	←'zr=rr==0?0:rr-1;DOI(i,zr){zs[i]=rs[i+1];zc*=rs[i+1];}',nl
-	siz	,←'if(rr>0)rc=rs[0];'
-	exen	←pacc'update host(lv,rv[:rgt->c])'
-	exen	,←'DO(i,zc){zv[i]=0;DO(j,rc){zv[i]=rv[(j*zc)+i]+lv[0]*zv[i];}}',nl
-	exen	,←pacc'update device(zv[:rslt->c])'
-	exeb	←'I rcp=(rgt->c+7)/8;',nl
-	exeb	,←pacc'update host(lv,rv[:rcp])'
-	exeb	,←'DO(i,zc){zv[i]=0;DO(j,rc){I ri=(j*zc)+i;',nl
-	exeb	,←'zv[i]=(1&(rv[ri/8]>>(ri%8)))+lv[0]*zv[i];}}',nl
-	exeb	,←pacc'update device(zv[:rslt->c])'
-	exe	←(3=⊃1⌷⍺)⊃exen exeb
-		chk siz exe mxfn 1 ⍺ ⍵}
-⍝[cf]
 ⍝[of]:?	Roll/Deal
 roldfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
 roldfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),roldfnnlp ⍵}
