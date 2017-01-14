@@ -478,58 +478,7 @@ dectmpf	←'D'dectmp
 dectmpb	←'U8'dectmp
 ⍝[cf]
 ⍝[of]:Generators
-⍝[of]:?	Roll/Deal
-roldfiiaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
-roldfifaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrf lft ⍵),roldfnnlp ⍵}
-roldfibaaa←{	z	←'{',('r'decarri rgt ⍵),('l'decarrb lft ⍵),roldfnblp ⍵}
-roldffiaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
-roldfffaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarrf lft ⍵),roldfnnlp ⍵}
-roldffbaaa←{	z	←'{',('r'decarrf rgt ⍵),('l'decarrb lft ⍵),roldfnblp ⍵}
-roldfbbaaa←{	z	←'{',('r'decarrb rgt ⍵),('l'decarrb lft ⍵),roldfbblp ⍵}
-roldfbiaaa←{	z	←'{',('r'decarrb rgt ⍵),('l'decarri lft ⍵),roldfbnlp ⍵}
-roldfbfaaa←{	z	←'{',('r'decarrb rgt ⍵),('l'decarrf lft ⍵),roldfbnlp ⍵}
-roldfiiaal←{	z	←'{',('r'decarri rgt ⍵),('l'decliti lft ⍵),roldfnnlp ⍵}
-roldfifaal←{	z	←'{',('r'decarri rgt ⍵),('l'declitf lft ⍵),roldfnnlp ⍵}
-roldfibaal←{	z	←'{',('r'decarri rgt ⍵),('l'declitb lft ⍵),roldfnblp ⍵}
-roldffiaal←{	z	←'{',('r'decarrf rgt ⍵),('l'decliti lft ⍵),roldfnnlp ⍵}
-roldfffaal←{	z	←'{',('r'decarrf rgt ⍵),('l'declitf lft ⍵),roldfnnlp ⍵}
-roldffbaal←{	z	←'{',('r'decarrf rgt ⍵),('l'declitb lft ⍵),roldfnblp ⍵}
-roldfbbaal←{	z	←'{',('r'decarrb rgt ⍵),('l'declitb lft ⍵),roldfbblp ⍵}
-roldfbiaal←{	z	←'{',('r'decarrb rgt ⍵),('l'decliti lft ⍵),roldfbnlp ⍵}
-roldfbfaal←{	z	←'{',('r'decarrb rgt ⍵),('l'declitf lft ⍵),roldfbnlp ⍵}
-roldfiiala←{	z	←'{',('r'decliti rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
-roldfifala←{	z	←'{',('r'decliti rgt ⍵),('l'decarrf lft ⍵),roldfnnlp ⍵}
-roldfibala←{	z	←'{',('r'decliti rgt ⍵),('l'decarrb lft ⍵),roldfnblp ⍵}
-roldffiala←{	z	←'{',('r'declitf rgt ⍵),('l'decarri lft ⍵),roldfnnlp ⍵}
-roldfffala←{	z	←'{',('r'declitf rgt ⍵),('l'decarrf lft ⍵),roldfnnlp ⍵}
-roldffbala←{	z	←'{',('r'declitf rgt ⍵),('l'decarrb lft ⍵),roldfnblp ⍵}
-roldfbbala←{	z	←'{',('r'declitb rgt ⍵),('l'decarrb lft ⍵),roldfbblp ⍵}
-roldfbiala←{	z	←'{',('r'declitb rgt ⍵),('l'decarri lft ⍵),roldfbnlp ⍵}
-roldfbfala←{	z	←'{',('r'declitb rgt ⍵),('l'decarrf lft ⍵),roldfbnlp ⍵}
-roldfnnlp←{	z	←'if(rc!=1||lc!=1)dwaerr(5);',nl,acup'host(rv[:rc],lv[:lc])'
-	z	,←'if(*lv>*rv||*lv!=floor(*lv)||*rv!=floor(*rv)||*lv<0||*rv<0)dwaerr(11);',nl
-	z	,←'B s=*lv;B t=*rv;','1,&s,1'dectmpi'z'
-	z	,←'if(s){I*d=malloc(t*sizeof(I));if(!d)dwaerr(1);',nl
-	z	,←'DO(i,t){B j=arc4random_uniform(i+1);if(i!=j)d[i]=d[j];d[j]=i;}',nl
-	z	,←'DO(i,s){zv[i]=d[i];};free(d);}',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-roldfbnlp←{	z	←'if(rc!=1||lc!=1)dwaerr(5);',nl,acup'host(rv[:rc],lv[:lc])'
-	z	,←'B s=*lv;s=1&s;if(s>*rv||*rv!=floor(*rv)||*rv<0)dwaerr(11);',nl
-	z	,←'B t=*rv;','1,&s,1'dectmpi'z'
-	z	,←'if(s){zv[0]=arc4random_uniform(t);}',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-roldfnblp←{	z	←'if(rc!=1||lc!=1)dwaerr(5);',nl,acup'host(rv[:rc],lv[:lc])'
-	z	,←'B t=*rv;t=1&t;if(*lv>t||*lv!=floor(*lv)||*lv<0)dwaerr(11);',nl
-	z	,←'B s=*lv;','1,&s,1'dectmpi'z'
-	z	,←'if(s){zv[0]=0;}',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-roldfbblp←{	z	←'if(rc!=1||lc!=1)dwaerr(5);',nl,acup'host(rv[:rc],lv[:lc])'
-	z	,←'B s=1&*lv;B t=1&*rv;if(s>t)dwaerr(11);',nl
-	z	,←'1,&s,1'dectmpi'z'
-	z	,←'if(s){zv[0]=0;}',nl,acup'device(zv[:zc])'
-		z,'cpaa(',(rslt ⍵),',&za);}',nl}
-rold←{		('df'gcl fdb)((0⌷⍉⍵),⊂,'?')((1⌷⍉⍵),⊂¯1 0)(⍺,0)}
-⍝[cf]
+
 ⍝[of]:Horrible Hacks
 ⍝[c]Sobel Pi Hack
 sopid←{	siz	←'zr=(lr-1)+rr;zs[0]=ls[0];DO(i,zr-1)zs[i+1]=rs[i];'
