@@ -16,7 +16,7 @@ rgt←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
 lft←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
 rslt←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
 cnm←(syms⍳⊂)⊃(nams,⊂)
-gcl←{n,⍺,'(',(⊃{⍺,',',⍵}/(z l r)~⊂''),');',nl⊣z r l n←cnm¨var/(⊃⍵),⍪1⊃⍵}
+gcl←{n,⍺,'(',(⊃{⍺,',',⍵}/(z l r)~⊂''),',env);',nl⊣z r l n←cnm¨var/(⊃⍵),⍪1⊃⍵}
 
 rth←'#include <time.h>',nl
 rth,←'#include <stdint.h>',nl
