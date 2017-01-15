@@ -1,9 +1,9 @@
-﻿E1←{('mf'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
-E2←{('df'gcl ⍺)((⊂n,∘⊃v),e,y)⍵}
+﻿E1←{'mf'gcl((⊂n,∘⊃v),e,y)⍵}
+E2←{'df'gcl((⊂n,∘⊃v),e,y)⍵}
 E0←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
 Oi←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
-O1←{(n⍵),odb(o ocl(⊃y⍵))⊂f⊣f u o←⊃v⍵}
-O2←{(n⍵),odb(o ocl(⊃y⍵))2↑⊣r l o←⊃v⍵}
+O1←{'mo'gcl((⊂n,∘⊃v),e,y)⍵}
+O2←{'do'gcl((⊂n,∘⊃v),e,y)⍵}
 O0←{'' '' '' '' ''}
 Of←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),');',nl}
 Fd←{'UF(',(⊃n⍵),');',nl}
@@ -15,8 +15,7 @@ Ze←{'}',nl,nl}
 M0←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
 S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
 Y0←{⊃,/((⍳≢⊃n⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
-dis←{⍺←⊢ ⋄ 0=⊃t⍵:5⍴⍬ ⋄ ⍺(⍎(⊃t⍵),⍕⊃k⍵)⍵}
-gc←{((⊃,/)⊢((dis⍤1(⌿⍨))(⊂dis)⍤2 1(⌿⍨∘~))(Om∧1 2 'i'∊⍨k))⍵}
+gc←{⊃,/{0=⊃t⍵:⊂5⍴⍬ ⋄ ⊂(⍎(⊃t⍵),⍕⊃k⍵)⍵}⍤1⊢⍵}
 
 syms←,¨ '+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'   '⌈'   '!'
 nams←   'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min' 'max' 'fac'
@@ -28,5 +27,5 @@ syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'   '⌿'   '\'   '
 nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red' 'rdf' 'scn' 'scf' 'rol'
 syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'   '∘'   '∪'   '∩'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
-syms,←,¨'⍋'   '⍒'
-nams,←  'gdu' 'gdd'
+syms,←,¨'⍋'   '⍒'   '%u'
+nams,←  'gdu' 'gdd' ''
