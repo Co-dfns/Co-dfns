@@ -1,0 +1,4 @@
+﻿rth,←'#define commo(zz,rr,pp) \',nl
+rth,←' auto zz##mf=[&](A&z,A&r,A*p[]){rr##df(z,r,r,p);}; \',nl
+rth,←' auto zz##df=[&](A&z,A&l,A&r,A*p[]){rr##df(z,r,l,p);}',nl
+rth,←nl

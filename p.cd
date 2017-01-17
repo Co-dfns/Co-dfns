@@ -1,0 +1,11 @@
+﻿rth,←'MF(unq){if(r.r>1)err(4);z.r=1;if(!cnt(r)){z.s=r.s;z.v=r.v;R;}',nl
+rth,←' array a,b;sort(a,b,r.v);z.v=a!=shift(a,1);z.v(0)=1;',nl
+rth,←' z.v=where(z.v);sort(b,z.v,b(z.v),a(z.v));',nl
+rth,←' z.s=dim4(z.v.elements());}',nl
+rth,←'DF(unq){if(r.r>1||l.r>1)err(4);z.r=1;dtype mt=mxt(l.v,r.v);',nl
+rth,←' if(!cnt(l)){z.s=r.s;z.v=r.v;R;}if(!cnt(r)){z.s=l.s;z.v=l.v;R;}',nl
+rth,←' array x=setUnique(l.v);B c=x.elements();',nl
+rth,←' z.v=!anyTrue(tile(r.v,1,(U)c)==tile(array(x,1,c),(U)r.s[0],1),1);',nl
+rth,←' z.v=join(0,l.v.as(mt),r.v(where(z.v)).as(mt));',nl
+rth,←' z.s=dim4(z.v.elements());}',nl
+rth,←nl
