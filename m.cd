@@ -1,13 +1,13 @@
-﻿rth,←'DF(int){if(r.r>1||l.r>1)dwaerr(4);',nl
+﻿rth,←'DF(int){if(r.r>1||l.r>1)err(4);',nl
 rth,←' if(!cnt(r)||!cnt(l)){z.v=scl(0);z.s=dim4(0);z.r=1;R;}',nl
 rth,←' dtype mt=mxt(l.v,r.v);z.v=setIntersect(l.v.as(mt),r.v.as(mt));',nl
 rth,←' z.r=1;z.s=dim4(z.v.elements());}',nl
-rth,←'MF(iot){if(r.r>1)dwaerr(4);B c=cnt(r);if(c>4)dwaerr(10);',nl
-rth,←' if(c>1)dwaerr(16);',nl
+rth,←'MF(iot){if(r.r>1)err(4);B c=cnt(r);if(c>4)err(10);',nl
+rth,←' if(c>1)err(16);',nl
 rth,←' z.r=1;z.s=dim4(r.v.as(s32).scalar<I>());',nl
 rth,←' z.v=z.s[0]?iota(z.s,dim4(1),s32):scl(0);}',nl
 rth,←'DF(iot){z.r=r.r;z.s=r.s;B c=cnt(r);if(!c){z.v=scl(0);R;}',nl
-rth,←' B lc=cnt(l)+1;if(lc==1){z.v=scl(0);R;};if(l.r>1)dwaerr(16);',nl
+rth,←' B lc=cnt(l)+1;if(lc==1){z.v=scl(0);R;};if(l.r>1)err(16);',nl
 rth,←' array rf=flat(r.v).T();dtype mt=mxt(l.v,rf);',nl
 rth,←' z.v=join(0,tile(l.v,1,(U)c).as(mt),rf.as(mt))==tile(rf,(U)lc,1);',nl
 rth,←' z.v=min((z.v*iota(dim4(lc),dim4(1,c),s32)+((!z.v)*lc).as(s32)),0);',nl
@@ -16,7 +16,7 @@ rth,←'MF(lft){z=r;}',nl
 rth,←'DF(lft){z=l;}',nl
 rth,←'MF(log){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth,←'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
-rth,←'SF(lor,if(lv.isbool()&&rv.isbool())z.v=lv||rv;else dwaerr(16);)',nl
+rth,←'SF(lor,if(lv.isbool()&&rv.isbool())z.v=lv||rv;else err(16);)',nl
 rth,←'SF(lte,z.v=lv<=rv)',nl
 rth,←'SF(lth,z.v=lv<rv)',nl
 rth,←'MF(max){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl

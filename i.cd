@@ -14,7 +14,7 @@ rth,←' if(!l.r){\',nl
 rth,←'  z.r=r.r;z.s=r.s;array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
 rth,←' if(!r.r){\',nl
 rth,←'  z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
-rth,←' if(l.r!=r.r)dwaerr(4);if(l.s!=r.s)dwaerr(5);dwaerr(99);}',nl
+rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',nl
 rth,←'#define UF(n) Z V n(A&z,A&l,A&r,A*penv[])',nl
 rth,←nl
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
@@ -33,7 +33,7 @@ rth,←nl
 rth,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',nl
 rth,←' if(p)dwafns=p;else R 0;',nl
 rth,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
-rth,←'Z V dwaerr(U n){dwafns->ws->er(n);}',nl
+rth,←'Z V err(U n){dwafns->ws->er(n);}',nl
 rth,←nl
 rth,←'B cnt(A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}',nl
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',nl
@@ -41,4 +41,4 @@ rth,←'array scl(I x){R constant(x,dim4(1),s32);}',nl
 rth,←'dtype mxt(array&a,array&b){dtype at=a.type();dtype bt=b.type();',nl
 rth,←' if(at==f64||bt==f64)R f64;if(at==s32||bt==s32)R s32;',nl
 rth,←' if(at==s16||bt==s16)R s16;if(at==b8||bt==b8)R b8;',nl
-rth,←' dwaerr(16);R f64;}',nl
+rth,←' err(16);R f64;}',nl

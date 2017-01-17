@@ -21,7 +21,6 @@ things on which we are working.
 * Dyadic Transpose does not permit duplicate axes
 * Rotate (⌽ or ⊖) works over scalar left arguments only
 * Dyadic Reduce (/ and ⌿) with negative left arguments are not supported
-* Replicate First (⌿) is not supported
 * Expand (\ and ⍀) is not supported
 * Laminate (⍪[N]) is supported in special cases only
 * Find (⍷) is not supported
