@@ -14,8 +14,8 @@ rth,←'  if(a>=r.s[j]){z.s[j]=0;ix[j]=seq(0);it[j]=seq(0);}',nl
 rth,←'  else if(lv[i]<0){',nl
 rth,←'   z.s[j]=r.s[j]-a;ix[j]=seq((D)z.s[j]);it[j]=ix[j];}',nl
 rth,←'  else{z.s[j]=r.s[j]-a;ix[j]=seq(a,(D)r.s[j]-1);it[j]=ix[j]-(D)a;}})',nl
-rth,←' if(!cnt(z)){z.v=scl(0);R;}',nl
-rth,←' z.v=array(z.s,r.v.type());z.v=0;cpy(z,it,r,ix);}',nl
+rth,←' if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,r.v.type());z.v=0;',nl
+rth,←' z.v(it[0],it[1],it[2],it[3])=r.v(ix[0],ix[1],ix[2],ix[3]);}',nl
 rth,←'DF(enc){z.r=r.r+l.r;z.s=r.s;DO(l.r,z.s[i+r.r]=l.s[i])',nl
 rth,←' if(!cnt(z)){z.v=scl(0);R;}dim4 lt=z.s,rt=z.s;I k=l.r?l.r-1:0;',nl
 rth,←' DO(r.r,rt[i]=1)DO(l.r,lt[i+r.r]=1)array rv=tile(r.v,rt);',nl
