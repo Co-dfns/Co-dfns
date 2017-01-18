@@ -16,6 +16,7 @@ rth,←' if(!r.r){\',nl
 rth,←'  z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',nl
 rth,←'#define UF(n) Z V n(A&z,A&l,A&r,A*p[])',nl
+rth,←'#define FP(n) UF(n);MF(n){n(z,A(),r,p);}DF(n){n(z,l,r,p);}',nl
 rth,←nl
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
 rth,←'typedef long long L;typedef int I;typedef int16_t S16;',nl

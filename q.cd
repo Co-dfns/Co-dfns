@@ -2,4 +2,9 @@
 rth,←'#define DL(n,x) auto n##df=[&](A&z,A&l,A&r,A*p[]){x;};',nl
 rth,←'#define commo(zz,rr,pp) \',nl
 rth,←' ML(zz,rr##df(z,r,r,p))DL(zz,rr##df(z,r,l,p))',nl
+rth,←'#define mapmo(zz,rr,pp) \',nl
+rth,←' ML(zz,z.r=r.r;z.s=r.s;B c=cnt(z);if(!c){z.v=scl(0);R;}\',nl
+rth,←'  A zs;A rs(0,dim4(1),r.v(0));rr##mf(zs,rs,p);\',nl
+rth,←'  if(c==1){z.v=zs.v;R;}z.v=array(z.s,zs.v.type());z.v(0)=zs.v(0);\',nl
+rth,←'  DO(c-1,rs.v=r.v(i+1);rr##mf(zs,rs,p);z.v(i+1)=zs.v(0)))\',nl
 rth,←nl

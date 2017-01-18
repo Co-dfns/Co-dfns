@@ -6,7 +6,7 @@ O1←{'mo'gcl((⊂n,∘⊃v),e,y)⍵}
 O2←{'do'gcl((⊂n,∘⊃v),e,y)⍵}
 O0←{''}
 Of←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),');',nl}
-Fd←{'UF(',(⊃n⍵),');',nl}
+Fd←{'FP(',(⊃n⍵),');',nl}
 F0←{'UF(',(⊃n⍵),'){',nl,'A*env[]={tenv};',nl}
 F1←{'UF(',(⊃n⍵),'){',nl,('env0'dnv ⍵),(fnv ⍵)}
 Z0←{'}',nl,nl}
