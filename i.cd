@@ -1,13 +1,13 @@
 ﻿rth,←'#define CS(n,x) case n:x;break;',nl
 rth,←'#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}',nl
 rth,←'#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}',nl
-rth,←'#define MF(n) Z V n##mf(A&z,A&r,A*penv[])',nl
-rth,←'#define DF(n) Z V n##df(A&z,A&l,A&r,A*penv[])',nl
+rth,←'#define MF(n) Z V n##mf(A&z,A&r,A*p[])',nl
+rth,←'#define DF(n) Z V n##df(A&z,A&l,A&r,A*p[])',nl
 rth,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl
 rth,←' A cl,cr,za;if(!isinit){Init(za,cl,cr,NULL);isinit=1;}\',nl
 rth,←' cpda(cr,r);if(l!=NULL)cpda(cl,l);m(za,cl,cr,env);cpad(z,za);}\',nl
 rth,←'EXPORT V n##_cdf(A&z,A&l,A&r){m(z,l,r,env);}',nl
-rth,←'#define SF(n,x) Z V n##df(A&z,A&l,A&r,A*penv[]){\',nl
+rth,←'#define SF(n,x) Z V n##df(A&z,A&l,A&r,A*p[]){\',nl
 rth,←' if(l.r==r.r&&l.s==r.s){\',nl
 rth,←'  z.r=l.r;z.s=l.s;array&lv=l.v;array&rv=r.v;x;R;}\',nl
 rth,←' if(!l.r){\',nl
@@ -15,7 +15,7 @@ rth,←'  z.r=r.r;z.s=r.s;array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
 rth,←' if(!r.r){\',nl
 rth,←'  z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',nl
-rth,←'#define UF(n) Z V n(A&z,A&l,A&r,A*penv[])',nl
+rth,←'#define UF(n) Z V n(A&z,A&l,A&r,A*p[])',nl
 rth,←nl
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
 rth,←'typedef long long L;typedef int I;typedef int16_t S16;',nl

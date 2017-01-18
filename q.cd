@@ -1,4 +1,5 @@
-﻿rth,←'#define commo(zz,rr,pp) \',nl
-rth,←' auto zz##mf=[&](A&z,A&r,A*p[]){rr##df(z,r,r,p);}; \',nl
-rth,←' auto zz##df=[&](A&z,A&l,A&r,A*p[]){rr##df(z,r,l,p);}',nl
+﻿rth,←'#define ML(n,x) auto n##mf=[&](A&z,A&r,A*p[]){x;};',nl
+rth,←'#define DL(n,x) auto n##df=[&](A&z,A&l,A&r,A*p[]){x;};',nl
+rth,←'#define commo(zz,rr,pp) \',nl
+rth,←' ML(zz,rr##df(z,r,r,p))DL(zz,rr##df(z,r,l,p))',nl
 rth,←nl
