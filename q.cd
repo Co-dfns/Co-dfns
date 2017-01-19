@@ -4,7 +4,19 @@ rth,←'#define commo(zz,rr,pp) \',nl
 rth,←' ML(zz,rr##df(z,r,r,p))DL(zz,rr##df(z,r,l,p))',nl
 rth,←'#define mapmo(zz,rr,pp) \',nl
 rth,←' ML(zz,z.r=r.r;z.s=r.s;B c=cnt(z);if(!c){z.v=scl(0);R;}\',nl
-rth,←'  A zs;A rs(0,dim4(1),r.v(0));rr##mf(zs,rs,p);\',nl
-rth,←'  if(c==1){z.v=zs.v;R;}z.v=array(z.s,zs.v.type());z.v(0)=zs.v(0);\',nl
+rth,←'  A zs;A rs=scl(r.v(0));rr##mf(zs,rs,p);if(c==1){z.v=zs.v;R;}\',nl
+rth,←'  z.v=array(z.s,zs.v.type());z.v(0)=zs.v(0);\',nl
 rth,←'  DO(c-1,rs.v=r.v(i+1);rr##mf(zs,rs,p);z.v(i+1)=zs.v(0)))\',nl
+rth,←' DL(zz,if((l.r==r.r&&l.s==r.s)||!l.r){z.r=r.r;z.s=r.s;}\',nl
+rth,←'  else if(!r.r){z.r=l.r;z.s=l.s;}else if(l.r!=r.r)err(4);\',nl
+rth,←'  else if(l.s!=r.s)err(5);else err(99);B c=cnt(z);\',nl
+rth,←'  if(!c){z.v=scl(0);R;}A zs;A rs=scl(r.v(0));A ls=scl(l.v(0));\',nl
+rth,←'  rr##df(zs,ls,rs,p);if(c==1){z.v=zs.v;R;}\',nl
+rth,←'  z.v=array(z.s,zs.v.type());z.v(0)=zs.v(0);\',nl
+rth,←'  if(!r.r){rs.v=r.v;\',nl
+rth,←'   DO(c-1,ls.v=l.v(i+1);rr##df(zs,ls,rs,p);z.v(i+1)=zs.v(0);)R;}\',nl
+rth,←'  if(!l.r){ls.v=l.v;\',nl
+rth,←'   DO(c-1,rs.v=r.v(i+1);rr##df(zs,ls,rs,p);z.v(i+1)=zs.v(0);)R;}\',nl
+rth,←'  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);rr##df(zs,ls,rs,p);\',nl
+rth,←'   z.v(i+1)=zs.v(0)))',nl
 rth,←nl
