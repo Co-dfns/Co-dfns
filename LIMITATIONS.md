@@ -24,7 +24,7 @@ things on which we are working.
 * Expand (\ and ⍀) is not supported
 * Laminate (⍪[N]) is supported in special cases only
 * Find (⍷) is not supported
-* Compose (∘) is not implemented
+* Compose (∘) only accepts functions arguments right now
 * Power (⍣) is not implemented
 * Rank (⍤) is not implemented
 * Binomial is not implemented for negative and floating point values
