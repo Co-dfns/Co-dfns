@@ -9,3 +9,22 @@ rth,←' z.v=!anyTrue(tile(r.v,1,(U)c)==tile(array(x,1,c),(U)r.s[0],1),1);',nl
 rth,←' z.v=join(0,l.v.as(mt),r.v(where(z.v)).as(mt));',nl
 rth,←' z.s=dim4(z.v.elements());}',nl
 rth,←nl
+rth,←'ID(add,0)ID(sub,0)ID(mul,1)ID(div,1)ID(res,0)FID(min,DBL_MAX)',nl
+rth,←'FID(max,-DBL_MAX)ID(exp,1)ID(fac,1)ID(and,1)ID(lor,0)ID(lth,0)',nl
+rth,←'ID(lte,1)ID(eql,1)ID(gth,0)ID(gte,1)ID(neq,0)ID(enc,0)NID(unq)',nl
+rth,←'ID(red,1)ID(rdf,1)ID(scn,1)ID(scf,1)ID(rot,0)ID(rtf,0)',nl
+rth,←'NID(log)NID(cir)NID(not)NID(nan)NID(nor)NID(sqd)NID(brk)NID(iot)',nl
+rth,←'NID(rho)NID(cat)NID(ctf)NID(trn)NID(mem)NID(dis)NID(eqv)NID(nqv)',nl
+rth,←'NID(rgt)NID(lft)NID(dec)NID(rol)NID(tke)NID(drp)NID(int)NID(gdu)',nl
+rth,←'NID(gdd)',nl
+rth,←nl
+rth,←'NM(add,"add")NM(sub,"")NM(mul,"mul")NM(div,"")NM(res,"")',nl
+rth,←'NM(min,"min")NM(max,"max")NM(exp,"")NM(fac,"")NM(and,"and")',nl
+rth,←'NM(lor,"lor")NM(lth,"")NM(lte,"")NM(eql,"")NM(gth,"")NM(gte,"")',nl
+rth,←'NM(neq,"")NM(enc,"")NM(unq,"")NM(red,"")NM(rdf,"")NM(scn,"")',nl
+rth,←'NM(scf,"")NM(rot,"")NM(rtf,"")NM(log,"")NM(cir,"")NM(not,"")',nl
+rth,←'NM(nan,"")NM(nor,"")NM(sqd,"")NM(brk,"")NM(iot,"")NM(rho,"")',nl
+rth,←'NM(cat,"")NM(ctf,"")NM(trn,"")NM(mem,"")NM(dis,"")NM(eqv,"")',nl
+rth,←'NM(nqv,"")NM(rgt,"")NM(lft,"")NM(dec,"")NM(rol,"")NM(tke,"")',nl
+rth,←'NM(drp,"")NM(int,"")NM(gdu,"")NM(gdd,"")',nl
+rth,←nl

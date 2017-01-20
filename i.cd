@@ -1,6 +1,10 @@
 ﻿rth,←'#define CS(n,x) case n:x;break;',nl
 rth,←'#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}',nl
 rth,←'#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}',nl
+rth,←'#define NM(n,s) std::string n##nm(s);',nl
+rth,←'#define ID(n,x) Z array n##id(dim4 s){R constant(x,s,s32);}',nl
+rth,←'#define FID(n,x) Z array n##id(dim4 s){R constant(x,s,f64);}',nl
+rth,←'#define NID(n) Z array n##id(dim4 s){err(16);R array();}',nl
 rth,←'#define MF(n) Z V n##mf(A&z,A&r,A*p[])',nl
 rth,←'#define DF(n) Z V n##df(A&z,A&l,A&r,A*p[])',nl
 rth,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl
@@ -16,7 +20,8 @@ rth,←' if(!r.r){\',nl
 rth,←'  z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',nl
 rth,←'#define UF(n) Z V n(A&z,A&l,A&r,A*p[])',nl
-rth,←'#define FP(n) UF(n);MF(n){n(z,A(),r,p);}DF(n){n(z,l,r,p);}',nl
+rth,←'#define FP(n) NID(n);NM(n,"");UF(n);\',nl
+rth,←' MF(n){n(z,A(),r,p);}DF(n){n(z,l,r,p);}',nl
 rth,←nl
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
 rth,←'typedef long long L;typedef int I;typedef int16_t S16;',nl
