@@ -24,8 +24,8 @@ rth,←'  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);rr##df(zs,ls,rs,p);\',nl
 rth,←'   z.v(i+1)=zs.v(0)))',nl
 rth,←'#define redmo(zz,rr,pp) \',nl
 rth,←' ML(zz,z.r=r.r?r.r-1:0;z.s=dim4(1);DO(z.r,z.s[i]=r.s[i+1])\',nl
-rth,←'  if(!r.s[0]){z.v=rr##id(z.s);R;}\',nl
-rth,←'  if(1==r.s[0]){z.v=array(r.v,z.s);R;}\',nl
+rth,←'  I rc=r.s[0];I zc=cnt(z);if(!zc){z.v=scl(0);R;}\',nl
+rth,←'  if(!rc){z.v=rr##id(z.s);R;}if(1==rc){z.v=array(r.v,z.s);R;}\',nl
 rth,←'  if("add"==rr##nm){if(r.v.isbool())z.v=count(r.v,0).as(s32);\',nl
 rth,←'   else z.v=sum(r.v.as(f64),0);R;}\',nl
 rth,←'  if("mul"==rr##nm){z.v=product(r.v.as(f64),0);R;}\',nl
@@ -33,5 +33,8 @@ rth,←'  if("min"==rr##nm){z.v=min(r.v,0);R;}\',nl
 rth,←'  if("max"==rr##nm){z.v=max(r.v,0);R;}\',nl
 rth,←'  if("and"==rr##nm){z.v=allTrue(r.v,0);R;}\',nl
 rth,←'  if("lor"==rr##nm){z.v=anyTrue(r.v,0);R;}\',nl
-rth,←'  err(99))',nl
+rth,←'  z.v=r.v(rc-1,span);if(rr##scl){\',nl
+rth,←'   DO(rc-1,rr##df(z,A(z.r,z.s,r.v(rc-(i+2),span)),z,p));R;}\',nl
+rth,←'  DO(rc-1,array v=r.v(rc-(i+2),span);\',nl
+rth,←'   DO(zc,A x=scl(z.v(i));rr##df(x,scl(v(i)),x,p);z.v(i)=x.v(0))))',nl
 rth,←nl
