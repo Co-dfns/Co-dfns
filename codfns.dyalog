@@ -35,67 +35,6 @@ redd←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	exe	,←pacc'update device(zv[:rslt->c])'
 		chk siz exe mxfn 1 ⍺ ⍵}
 ⍝[cf]
-⍝[of]:Reduce First Axis
-rdfidf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
-rdfidv	←⍕¨0 0 1 1 0 '1.7e308' '-1.7e308' 1 1 1 0 0 1 1 0 1 0 0 '-1' 1 1 1 1 0 0 ''
-rdfmochk	←{⍵∊rdfidf:'' ⋄ 'if(rr>0&&!rs[0])dwaerr(11);',nl}
-rdfmohid←{	lp	←'else if(!jc){',nl
-	lp	,←(simd''),'DO(i,zc)zv[i]=',(rdfidv⊃⍨rdfidf⍳⍵),';}',nl
-	⍵∊rdfidf:	lp
-		''}
-rdfmoinaaa←{	fv fe fy db	←⍺
-	v e y	←⍵
-	fy	←¯1+⊃(4 5⊥1 4)⌷⍉fy
-		(1'I',fy⊃(1'I')(2'D')(1'I'))(fv rdfmolpx db)v,⍪e}
-rdfmofnaaa←{	fv fe fy db	←⍺
-	v e y	←⍵
-	fy	←⊃(4 5⊥2 4)⌷⍉fy
-		2'D'2'D'(fv rdfmolpx db)v,⍪e}
-rdfmolpx←{	rd rt d t	←⍺
-	rslt rgt	←var/2↑⍵
-	z	←'{',('r'(rt decarr)rgt),rdfmochk⊃⍺⍺
-	z	,←'I jc=1;if(rr)jc=rs[0];',('rr?rr-1:0,rs+1,',⍕d)(t dectmp)'z'
-	z	,←(acdt'present(rv[:rc],zv[:zc])'),'{',nl
-	z	,←'if(jc==1){',nl,(simd''),'DO(i,zc)zv[i]=rv[i];}',nl
-	z	,←(rdfmohid⊃⍺⍺),'else if(zc==1){',t,' t;',nl
-	z	,←(simd''),'DO(i,1){t=rv[jc-1];}',nl,(simd''),'DO(j,jc-1){',nl
-	z	,←('df'gcl ⍵⍵)(,¨'t' 't' 'rv[jc-(j+2)]' ⍺⍺)(4⍴⊂¯1 ¯1)(d d rd 0)
-	z	,←'}',nl,(simd''),'DO(i,1){zv[0]=t;}}',nl,'else {',nl
-	z	,←(simd''),'DO(i,zc){',t,' t=rv[(jc-1)*zc+i];',nl
-	z	,←' DO(j,jc-1){',nl
-	z	,←('df'gcl ⍵⍵)(,¨'t' 't' 'rv[zc*(jc-(j+2))+i]' ⍺⍺)(4⍴⊂¯1 ¯1)(d d rd 0)
-	z	,←'}',nl,' zv[i]=t;}}',nl
-		z,'}',nl,'cpaa(',rslt,',&za);}',nl}
-rdfmobnaaa←{	fv fe fy db	←⍺
-	v e y	←⍵
-	1 2∨.=⊃y:	((¯1+⊃y)⊃(1'I')(2'D'))(fv rdfmolpxb db)v,⍪e
-		'dwaerr(16);',nl}
-rdfmolpxb←{	d t	←⍺
-	rslt rgt	←var/2↑⍵
-	z	←'{',('r'decarrb rgt),rdfmochk⊃⍺⍺
-	z	,←'I jc=1;if(rr)jc=rs[0];',('rr?rr-1:0,rs+1,',⍕d)(t dectmp)'z'
-	z	,←(acdt'present(rv[:rz],zv[:zc])'),'{',nl
-	z	,←'if(jc==1){',nl,simd''
-	z	,←' DO(i,zc)zv[i]=1&(rv[i/8]>>(i%8));}',nl
-	z	,←rdfmohid⊃⍺⍺
-	red	←'reduction(',(('+×⌈⌊∨∧'⍳⊃⍺⍺)⊃'+' '*' 'max' 'min' '||' '&&' ''),':t)'
-	cal	←('df'gcl ⍵⍵)(,¨'t' 't' '(1&(rv[x/8]>>(x%8)))' ⍺⍺)(4⍴⊂¯1 ¯1)(d d 1 0)
-	z	,←'else if(zc==1){',t,' t;',nl,simd''
-	z	,←' DO(i,1){t=1&rv[0];}',nl,simd''
-	z	,←' DO(i,jc-1){B x=i+1;',nl,cal,'}',nl,simd''
-	z	,←' DOI(i,1){zv[0]=t;}',nl
-	z	,←'}else{',nl,simd''
-	z	,←' DO(i,zc){',t,' t=1&(rv[i/8]>>(i%8));',nl
-	z	,←'  DO(j,jc-1){B x=(j+1)*zc+i;',nl,cal,'}',nl
-	z	,←'  zv[i]=t;}',nl
-		z,'}}',nl,'cpaa(',rslt,',&za);}',nl}
-rd1m←{	fn fy	←⍺⍺
-	y	←⍺
-	v e	←↓⍉⍵
-	fv	←,¨'_' fn '%u' '⌿'
-	fe	←4⍴⊂¯1 0
-		fn fe fy('mo'gcl ⍵⍵)(v,,¨'%u' '⌿')(e,2⍴⊂¯1 0)(y,4 0)}
-⍝[cf]
 ⍝[of]:Reduce N-wise First Axis
 rd1d←{	idf	←'+-×÷|⌊⌈*!∧∨<≤=>≥≠⊤∪/⌿\⍀⌽⊖'
 	hid	←idf∊⍨⊃⊃⍺⍺
