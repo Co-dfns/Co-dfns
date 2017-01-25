@@ -53,4 +53,3 @@ rth,←'  if(rr##scl){DO(rc-1,x[z.r]=rc-(i+2);\',nl
 rth,←'    rr##df(z,A(z.r,z.s,r.v(x[0],x[1],x[2],x[3])),z,p));R;}\',nl
 rth,←'  DO(rc-1,x[z.r]=rc-(i+2);array v=r.v(x[0],x[1],x[2],x[3]);\',nl
 rth,←'   DO(zc,A x=scl(z.v(i));rr##df(x,scl(v(i)),x,p);z.v(i)=x.v(0))))',nl
-rth,←nl

@@ -20,6 +20,13 @@ S4←':Namespace' 'Run←{<\⍵}' ':EndNamespace'
 '13'('scan' S1 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴1
 '14'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴1 0
 '15'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) (2 10)⍴5 0
+'16'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
+'17'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
+'18'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
+'19'('scan' S3 'Run' #.util.GEN∆T1 ⎕THIS) 3 0⍴⍳9
+'20'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) 3 0⍴⍳9
+'21'('scan' S3 'Run' #.util.GEN∆T1 ⎕THIS) 3 1⍴⍳9
+'22'('scan' S4 'Run' #.util.GEN∆T1 ⎕THIS) 3 1⍴⍳9
 
 
 :EndNamespace
