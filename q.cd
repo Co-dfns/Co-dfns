@@ -22,34 +22,12 @@ rth,←'  if(!l.r){ls.v=l.v;\',nl
 rth,←'   DO(c-1,rs.v=r.v(i+1);rr##df(zs,ls,rs,p);z.v(i+1)=zs.v(0);)R;}\',nl
 rth,←'  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);rr##df(zs,ls,rs,p);\',nl
 rth,←'   z.v(i+1)=zs.v(0)))',nl
-rth,←'#define redmo(zz,rr,pp) \',nl
-rth,←' ML(zz,z.r=r.r?r.r-1:0;z.s=dim4(1);DO(z.r,z.s[i]=r.s[i+1])\',nl
-rth,←'  I rc=(I)r.s[0];I zc=(I)cnt(z);if(!zc){z.v=scl(0);R;}\',nl
-rth,←'  if(!rc){z.v=rr##id(z.s);R;}if(1==rc){z.v=array(r.v,z.s);R;}\',nl
-rth,←'  if("add"==rr##nm){if(r.v.isbool())z.v=count(r.v,0).as(s32);\',nl
-rth,←'   else z.v=sum(r.v.as(f64),0);R;}\',nl
-rth,←'  if("mul"==rr##nm){z.v=product(r.v.as(f64),0);R;}\',nl
-rth,←'  if("min"==rr##nm){z.v=min(r.v,0);R;}\',nl
-rth,←'  if("max"==rr##nm){z.v=max(r.v,0);R;}\',nl
-rth,←'  if("and"==rr##nm){z.v=allTrue(r.v,0);R;}\',nl
-rth,←'  if("lor"==rr##nm){z.v=anyTrue(r.v,0);R;}\',nl
-rth,←'  z.v=r.v(rc-1,span);if(rr##scl){\',nl
-rth,←'   DO(rc-1,rr##df(z,A(z.r,z.s,r.v(rc-(i+2),span)),z,p));R;}\',nl
-rth,←'  DO(rc-1,array v=r.v(rc-(i+2),span);\',nl
-rth,←'   DO(zc,A x=scl(z.v(i));rr##df(x,scl(v(i)),x,p);z.v(i)=x.v(0))))',nl
-rth,←'#define rdfmo(zz,rr,pp) \',nl
-rth,←' ML(zz,z.r=r.r?r.r-1:0;z.s=dim4(1);DO(z.r,z.s[i]=r.s[i])\',nl
-rth,←'  I rc=(I)r.s[z.r];I zc=(I)cnt(z);if(!zc){z.v=scl(0);R;}\',nl
-rth,←'  if(!rc){z.v=rr##id(z.s);R;}if(1==rc){z.v=array(r.v,z.s);R;}\',nl
-rth,←'  if("add"==rr##nm){if(r.v.isbool())z.v=count(r.v,z.r).as(s32);\',nl
-rth,←'   else z.v=sum(r.v.as(f64),z.r);R;}\',nl
-rth,←'  if("mul"==rr##nm){z.v=product(r.v.as(f64),z.r);R;}\',nl
-rth,←'  if("min"==rr##nm){z.v=min(r.v,z.r);R;}\',nl
-rth,←'  if("max"==rr##nm){z.v=max(r.v,z.r);R;}\',nl
-rth,←'  if("and"==rr##nm){z.v=allTrue(r.v,z.r);R;}\',nl
-rth,←'  if("lor"==rr##nm){z.v=anyTrue(r.v,z.r);R;}\',nl
-rth,←'  index x[4];x[z.r]=rc-1;z.v=r.v(x[0],x[1],x[2],x[3]);\',nl
-rth,←'  if(rr##scl){DO(rc-1,x[z.r]=rc-(i+2);\',nl
-rth,←'    rr##df(z,A(z.r,z.s,r.v(x[0],x[1],x[2],x[3])),z,p));R;}\',nl
-rth,←'  DO(rc-1,x[z.r]=rc-(i+2);array v=r.v(x[0],x[1],x[2],x[3]);\',nl
-rth,←'   DO(zc,A x=scl(z.v(i));rr##df(x,scl(v(i)),x,p);z.v(i)=x.v(0))))',nl
+rth,←'#define oupmo(zz,rr,pp) \',nl
+rth,←' DL(zz,z.r=l.r+r.r;if(z.r>4)err(10);z.s=r.s;\',nl
+rth,←'  DO(l.r,z.s[i+r.r]=l.s[i])if(!cnt(z)){z.v=scl(0);R;}\',nl
+rth,←'  array x(flat(l.v),1,cnt(l));array y(flat(r.v),cnt(r),1);\',nl
+rth,←'  dim4 ts(cnt(r),cnt(l));x=tile(x,ts[0],1);y=tile(y,1,ts[1]);\',nl
+rth,←'  if(rr##scl){A xa(2,ts,x);A ya(2,ts,y);rr##df(xa,xa,ya,p);\',nl
+rth,←'   z.v=array(xa.v,z.s);R;}\',nl
+rth,←'  z.v=array(z.s,f64);\',nl
+rth,←'  DO(cnt(z),A t=scl(y(i));rr##df(t,scl(x(i)),t,p);z.v(i)=t.v(0)))',nl
