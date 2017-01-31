@@ -5,6 +5,7 @@ rth,←'#define NM(n,s,t) std::string n##nm(s);I n##scl=t;',nl
 rth,←'#define ID(n,x) Z array n##id(dim4 s){R constant(x,s,s32);}',nl
 rth,←'#define FID(n,x) Z array n##id(dim4 s){R constant(x,s,f64);}',nl
 rth,←'#define NID(n) Z array n##id(dim4 s){err(16);R array();}',nl
+rth,←'#define MFE(n) Z V n##mf(A&z,A&r,A*p[]){err(99);}',nl
 rth,←'#define MF(n) Z V n##mf(A&z,A&r,A*p[])',nl
 rth,←'#define DF(n) Z V n##df(A&z,A&l,A&r,A*p[])',nl
 rth,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl

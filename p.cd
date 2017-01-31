@@ -30,5 +30,9 @@ rth,←'NM(iot,"iot",0)NM(rho,"rho",0)NM(cat,"cat",0)NM(ctf,"ctf",0)',nl
 rth,←'NM(trn,"trn",0)NM(mem,"mem",0)NM(dis,"dis",0)NM(eqv,"eqv",0)',nl
 rth,←'NM(nqv,"nqv",0)NM(rgt,"rgt",0)NM(lft,"lft",0)NM(dec,"dec",0)',nl
 rth,←'NM(rol,"rol",0)NM(tke,"tke",0)NM(drp,"drp",0)NM(int,"int",0)',nl
-rth,←'NM(gdu,"gdu",0)NM(gdd,"gdd",0)',nl
+rth,←'NM(gdu,"gdu",0)NM(gdd,"gdd",0)NM(fnd,"fnd",0)',nl
+rth,←nl
+rth,←'MFE(and)MFE(lor)MFE(nan)MFE(nor)MFE(lth)MFE(lte)MFE(eql)MFE(gte)',nl
+rth,←'MFE(gth)MFE(neq)MFE(red)MFE(rdf)MFE(scn)MFE(scf)MFE(int)MFE(fnd)',nl
+rth,←'MFE(enc)MFE(dec)MFE(brk)',nl
 rth,←nl
