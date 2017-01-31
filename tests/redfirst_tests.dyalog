@@ -1,8 +1,9 @@
-:Namespace redfirst
+﻿:Namespace redfirst
 
 S1←':Namespace' 'Run←{+⌿⍵}' ':EndNamespace'
 S2←':Namespace' 'Run←{×⌿⍵}' ':EndNamespace'
 S3←':Namespace' 'Run←{{⍺+⍵}⌿⍵}' ':EndNamespace'
+S4←':Namespace' 'Run←{X←0⌷⍵ ⋄ {⍺+⍵}⌿⍵}' ':EndNamespace'
 
 '01'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
 '02'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
@@ -24,6 +25,9 @@ S3←':Namespace' 'Run←{{⍺+⍵}⌿⍵}' ':EndNamespace'
 '18'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?500 500⍴2
 '19'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?512 512⍴2
 '20'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?512⍴2
+'21'('redfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 1⍴1
+'22'('redfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 1 5⍴⍳5
+'23'('redfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 1 3 3⍴⍳9
 
 :EndNamespace
 
