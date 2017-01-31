@@ -31,7 +31,5 @@ rth,←' DL(zz,z.r=l.r+r.r;if(z.r>4)err(10);z.s=r.s;\',nl
 rth,←'  DO(l.r,z.s[i+r.r]=l.s[i])if(!cnt(z)){z.v=scl(0);R;}\',nl
 rth,←'  array x(flat(l.v),1,cnt(l));array y(flat(r.v),cnt(r),1);\',nl
 rth,←'  dim4 ts(cnt(r),cnt(l));x=tile(x,ts[0],1);y=tile(y,1,ts[1]);\',nl
-rth,←'  if(rr##scl){A xa(2,ts,x);A ya(2,ts,y);rr##df(xa,xa,ya,p);\',nl
-rth,←'   z.v=array(xa.v,z.s);R;}\',nl
-rth,←'  z.v=array(z.s,f64);\',nl
-rth,←'  DO(cnt(z),A t=scl(y(i));rr##df(t,scl(x(i)),t,p);z.v(i)=t.v(0)))',nl
+rth,←'  mapmo(m,rr,p);A xa(2,ts,x);A ya(2,ts,y);mdf(xa,xa,ya,p);\',nl
+rth,←'  z.v=array(xa.v,z.s))',nl
