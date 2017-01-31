@@ -6,22 +6,26 @@ rth,←'#define jotdo(zz,rr,ll,pp) \',nl
 rth,←' ML(zz,rr##mf(z,r,p);ll##mf(z,z,p))\',nl
 rth,←' DL(zz,rr##mf(z,r,p);ll##df(z,l,z,p))',nl
 rth,←'#define mapmo(zz,rr,pp) \',nl
-rth,←' ML(zz,z.r=r.r;z.s=r.s;B c=cnt(z);if(!c){z.v=scl(0);R;}\',nl
+rth,←' ML(zz,if(rr##scl){rr##mf(z,r,p);R;}\',nl
+rth,←'  z.r=r.r;z.s=r.s;B c=cnt(z);if(!c){z.v=scl(0);R;}\',nl
 rth,←'  A zs;A rs=scl(r.v(0));rr##mf(zs,rs,p);if(c==1){z.v=zs.v;R;}\',nl
-rth,←'  z.v=array(z.s,zs.v.type());z.v(0)=zs.v(0);\',nl
-rth,←'  DO(c-1,rs.v=r.v(i+1);rr##mf(zs,rs,p);z.v(i+1)=zs.v(0)))\',nl
-rth,←' DL(zz,if((l.r==r.r&&l.s==r.s)||!l.r){z.r=r.r;z.s=r.s;}\',nl
+rth,←'  array v=array(z.s,zs.v.type());v(0)=zs.v(0);\',nl
+rth,←'  DO(c-1,rs.v=r.v(i+1);rr##mf(zs,rs,p);v(i+1)=zs.v(0))z.v=v;)\',nl
+rth,←' DL(zz,if(rr##scl){rr##df(z,l,r,p);R;}\',nl
+rth,←'  if((l.r==r.r&&l.s==r.s)||!l.r){z.r=r.r;z.s=r.s;}\',nl
 rth,←'  else if(!r.r){z.r=l.r;z.s=l.s;}else if(l.r!=r.r)err(4);\',nl
 rth,←'  else if(l.s!=r.s)err(5);else err(99);B c=cnt(z);\',nl
 rth,←'  if(!c){z.v=scl(0);R;}A zs;A rs=scl(r.v(0));A ls=scl(l.v(0));\',nl
 rth,←'  rr##df(zs,ls,rs,p);if(c==1){z.v=zs.v;R;}\',nl
-rth,←'  z.v=array(z.s,zs.v.type());z.v(0)=zs.v(0);\',nl
+rth,←'  array v=array(z.s,zs.v.type());v(0)=zs.v(0);\',nl
 rth,←'  if(!r.r){rs.v=r.v;\',nl
-rth,←'   DO(c-1,ls.v=l.v(i+1);rr##df(zs,ls,rs,p);z.v(i+1)=zs.v(0);)R;}\',nl
+rth,←'   DO(c-1,ls.v=l.v(i+1);rr##df(zs,ls,rs,p);v(i+1)=zs.v(0);)\',nl
+rth,←'   z.v=v;R;}\',nl
 rth,←'  if(!l.r){ls.v=l.v;\',nl
-rth,←'   DO(c-1,rs.v=r.v(i+1);rr##df(zs,ls,rs,p);z.v(i+1)=zs.v(0);)R;}\',nl
+rth,←'   DO(c-1,rs.v=r.v(i+1);rr##df(zs,ls,rs,p);v(i+1)=zs.v(0);)\',nl
+rth,←'   z.v=v;R;}\',nl
 rth,←'  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);rr##df(zs,ls,rs,p);\',nl
-rth,←'   z.v(i+1)=zs.v(0)))',nl
+rth,←'   v(i+1)=zs.v(0))z.v=v;)',nl
 rth,←'#define oupmo(zz,rr,pp) \',nl
 rth,←' DL(zz,z.r=l.r+r.r;if(z.r>4)err(10);z.s=r.s;\',nl
 rth,←'  DO(l.r,z.s[i+r.r]=l.s[i])if(!cnt(z)){z.v=scl(0);R;}\',nl
