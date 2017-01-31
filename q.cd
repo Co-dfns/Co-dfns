@@ -42,9 +42,9 @@ rth,←'   z.v=v;R;}\',nl
 rth,←'  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);rr##df(zs,ls,rs,p);\',nl
 rth,←'   v(i+1)=zs.v(0))z.v=v;)',nl
 rth,←'#define oupmo(zz,rr,pp) \',nl
-rth,←' DL(zz,z.r=l.r+r.r;if(z.r>4)err(10);z.s=r.s;\',nl
-rth,←'  DO(l.r,z.s[i+r.r]=l.s[i])if(!cnt(z)){z.v=scl(0);R;}\',nl
+rth,←' DL(zz,A t(l.r+r.r,r.s,r.v(0));if(t.r>4)err(10);\',nl
+rth,←'  DO(l.r,t.s[i+r.r]=l.s[i])if(!cnt(t)){t.v=scl(0);z=t;R;}\',nl
 rth,←'  array x(flat(l.v),1,cnt(l));array y(flat(r.v),cnt(r),1);\',nl
 rth,←'  dim4 ts(cnt(r),cnt(l));x=tile(x,ts[0],1);y=tile(y,1,ts[1]);\',nl
 rth,←'  mapmo(m,rr,p);A xa(2,ts,x);A ya(2,ts,y);mdf(xa,xa,ya,p);\',nl
-rth,←'  z.v=array(xa.v,z.s))',nl
+rth,←'  t.v=array(xa.v,t.s);z=t)',nl

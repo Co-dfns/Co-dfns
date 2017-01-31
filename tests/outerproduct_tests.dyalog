@@ -3,6 +3,7 @@
 S←':Namespace' 'R1←{⍺∘.×⍵}' 'R2←{⍺∘.{⍺×⍵}⍵}' ':EndNamespace'
 S3←':Namespace' 'Run←{⍺∘.=⍵}' ':EndNamespace'
 S4←':Namespace' 'Run←{⍺∘.+⍵}' ':EndNamespace'
+S5←':Namespace' 'Run←{X←0⌷⍵ ⋄ ⍺∘.×X}' ':EndNamespace'
 
 '01'('outerproduct' S 'R1' #.util.GEN∆T2 ⎕THIS)(1)            (1)
 '02'('outerproduct' S 'R1' #.util.GEN∆T2 ⎕THIS)(1)            (⍬)
@@ -33,6 +34,7 @@ S4←':Namespace' 'Run←{⍺∘.+⍵}' ':EndNamespace'
 '26'('outerproduct' S4 'Run' #.util.GEN∆T2 ⎕THIS)(0 0 0 1 1 1 1 1)(0 0 0 1 5 1 1 1)
 '27'('outerproduct' S4 'Run' #.util.GEN∆T2 ⎕THIS)(0 0 0 1 1 5 1 1)(0 0 0 1 5 1 1 1)
 '28'('outerproduct' S3 'Run' #.util.GEN∆T2 ⎕THIS)(0 1)(0 0 0 1 1 1 1 1)
+'29'('outerproduct' S5 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴1+⍳4) (1 2 2⍴÷1+⍳4)
 
 
 :EndNamespace
