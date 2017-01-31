@@ -29,6 +29,7 @@ S26←':Namespace' 'Run←{\/⍵}' ':EndNamespace'
 S27←':Namespace' 'Run←{⍀/⍵}' ':EndNamespace'
 S28←':Namespace' 'Run←{⌽/⍵}' ':EndNamespace'
 S29←':Namespace' 'Run←{⊖/⍵}' ':EndNamespace'
+S30←':Namespace' 'Run←{X←0⌷⍵ ⋄ {⍺≠⍵}/X}' ':EndNamespace'
 
 
 '01'('reduce' S01 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
@@ -77,6 +78,7 @@ S29←':Namespace' 'Run←{⊖/⍵}' ':EndNamespace'
 '44'('reduce' S27 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
 '45'('reduce' S28 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
 '46'('reduce' S29 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
+'47'('reduce' S30 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
 
 :EndNamespace
 

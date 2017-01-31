@@ -9,6 +9,7 @@ S3	←':Namespace' 'Run←{{÷⍵}¨⍵}'	':EndNamespace'
 S4	←':Namespace' 'Run←{÷¨⍵}'	':EndNamespace'
 S5	←':Namespace' 'Run←{×¨⍵}'	':EndNamespace'
 S6	←':Namespace' 'Run←{{×⍵}¨⍵}'	':EndNamespace'
+S7	←':Namespace' 'Run←{X←0⌷⍵ ⋄ ⍺{⍺-⍵}¨X}' ':EndNamespace'
 
 'dpii'	('each'	S1 'Run' #.util.GEN∆T2 ⎕THIS) I	I
 'dpiis'	('each'	S1 'Run' #.util.GEN∆T2 ⎕THIS) 4	5
@@ -26,6 +27,7 @@ S6	←':Namespace' 'Run←{{×⍵}¨⍵}'	':EndNamespace'
 'mpi'	('each'	S4 'Run' #.util.GEN∆T2 ⎕THIS) I	I
 'mpf'	('each'	S4 'Run' #.util.GEN∆T2 ⎕THIS) F	F
 'mpb'	('each'	S5 'Run' #.util.GEN∆T2 ⎕THIS) B	B
+'durep' ('each' S7 'Run' #.util.GEN∆T2 ⎕THIS) I (⍉⍪I)
 
 
 :EndNamespace
