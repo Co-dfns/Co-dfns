@@ -20,11 +20,10 @@ things on which we are working.
 
 * Dyadic Transpose does not permit duplicate axes
 * Rotate (⌽ or ⊖) works over scalar left arguments only
-* Dyadic Reduce (/ and ⌿) with negative left arguments are not supported
 * Expand (\ and ⍀) is not supported
-* Laminate (⍪[N]) is supported in special cases only
+* Laminate is not supported
 * Find (⍷) is not supported
-* Compose (∘) only accepts functions arguments right now
+* Compose (∘) only accepts function arguments right now
 * Power (⍣) is not implemented
 * Rank (⍤) is not implemented
 * Binomial is not implemented for negative and floating point values
