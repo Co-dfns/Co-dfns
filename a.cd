@@ -14,7 +14,7 @@
 ⍝ You should have received a copy of the GNU Affero General Public License
 ⍝ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ⎕IO ⎕ML ⎕WX←0 1 3
-VERSION←2017 1 1
+VERSION←2017 2 1
 COMPILER←'vsc'
 BUILD∆PATH←'build'
 VISUAL∆STUDIO∆PATH←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
