@@ -3,6 +3,7 @@
 S←':Namespace' 'Run←{⍺⊖⍵}' ':EndNamespace'
 R←':Namespace' 'Run←{7⊖⍵}' ':EndNamespace'
 T←':Namespace' 'Run←{¯1⊖⍵}' ':EndNamespace'
+U←':Namespace' 'Run←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X⊖Y}' ':EndNamespace'
 
 '01'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	⍬
 '02'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	¯1	0
@@ -39,6 +40,10 @@ T←':Namespace' 'Run←{¯1⊖⍵}' ':EndNamespace'
 '33'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	2	(?90 90⍴2)
 '34'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	2	(?8100⍴2)
 '35'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS)	2	(?8133⍴2)
+'36'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS) (⍳5)       (7 5⍴⍳35)
+'37'('rotfirst' S 'Run' #.util.GEN∆T2 ⎕THIS) (2 3⍴⍳6)   (5 2 3⍴⍳30)
+'38'('rotfirst' U 'Run' #.util.GEN∆T2 ⎕THIS) (1 2 3⍴⍳6) (1 5 2 3⍴⍳30)
+'39'('rotfirst' U 'Run' #.util.GEN∆T2 ⎕THIS) (1 6⍴⍳6)   (1 5 6⍴⍳30)
 
 
 :EndNamespace

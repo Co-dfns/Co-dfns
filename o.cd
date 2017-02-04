@@ -1,11 +1,19 @@
 ﻿rth,←'MF(rot){z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}',nl
-rth,←'DF(rot){if(cnt(l)!=1)err(16);z.r=r.r;z.s=r.s;',nl
-rth,←' z.v=shift(r.v,-l.v.as(s32).scalar<I>());}',nl
+rth,←'DF(rot){I lc=(I)cnt(l);if(lc==1){z.r=r.r;z.s=r.s;',nl
+rth,←'  z.v=shift(r.v,-l.v.as(s32).scalar<I>());R;}',nl
+rth,←' if(l.r!=r.r-1)err(5);DO(l.r,if(l.s[i]!=r.s[i+1])err(5))',nl
+rth,←' std::vector<I> x(lc);l.v.as(s32).host(x.data());',nl
+rth,←' z.v=array(r.v,r.s[0],lc);z.r=r.r;z.s=r.s;',nl
+rth,←' DO(lc,z.v(span,i)=shift(z.v(span,i),-x[i]))z.v=array(z.v,z.s);}',nl
 rth,←'MF(rtf){z.r=r.r;z.s=r.s;z.v=r.r?flip(r.v,r.r-1):r.v;}',nl
-rth,←'DF(rtf){if(cnt(l)!=1)err(16);z.r=r.r;z.s=r.s;',nl
-rth,←' I v[4]={0,0,0,0};I s=-l.v.as(s32).scalar<I>();',nl
-rth,←' switch(r.r){CS(1,v[0]=s)CS(2,v[1]=s)CS(3,v[2]=s)CS(4,v[3]=s)}',nl
-rth,←' z.v=shift(r.v,v[0],v[1],v[2],v[3]);}',nl
+rth,←'DF(rtf){I lc=(I)cnt(l);I ra=r.r?r.r-1:0;I ix[]={0,0,0,0};',nl
+rth,←' if(lc==1){z.r=r.r;z.s=r.s;ix[ra]=-l.v.as(s32).scalar<I>();',nl
+rth,←'  z.v=shift(r.v,ix[0],ix[1],ix[2],ix[3]);R;}',nl
+rth,←' if(l.r!=r.r-1)err(5);DO(l.r,if(l.s[i]!=r.s[i])err(5))',nl
+rth,←' std::vector<I> x(lc);l.v.as(s32).host(x.data());',nl
+rth,←' z.v=array(r.v,lc,r.s[ra]);z.r=r.r;z.s=r.s;',nl
+rth,←' DO(lc,z.v(i,span)=shift(z.v(i,span),0,-x[i]))',nl
+rth,←' z.v=array(z.v,z.s);}',nl
 rth,←'MF(sqd){z=r;}',nl
 rth,←'DF(sqd){if(l.r>1)err(4);B s=!l.r?1:l.s[l.r-1];',nl
 rth,←' if(s>r.r)err(5);if(!cnt(l)){z=r;R;}',nl
