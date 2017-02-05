@@ -4,10 +4,10 @@ The Co-dfns project aims to provide a high-performance, high-reliability
 compiler for a parallel extension of the Dyalog dfns programming language.
 The dfns language is a functionally oriented, lexically scoped dialect of
 APL. The Co-dfns language extends the dfns language to include explicit task
-parallelism with implicit structures for synchronization and determinism. The
-language is designed to enable rigorous formal analysis of programs to aid
-in compiler optimization and programmer productivity, as well as in the
-general reliability of the code itself.
+parallelism with implicit structures for synchronization and determinism. 
+The language is designed to enable rigorous formal analysis of programs 
+to aid in compiler optimization and programmer productivity, as well as in
+the general reliability of the code itself.
 
 Our mission is to deliver scalable APL programming to information and domain
 experts across many fields, expanding the scope and capabilities of what
@@ -119,15 +119,9 @@ local environment. The values given below are their default values.
 This indicates the backend compiler to use. It should be one of the following 
 names:
 
-    Windows: vsc pgi icl
-    Linux: gcc icc pgcc
-
-### TEST∆COMPILERS
-
-    TEST∆COMPILERS ← ⊂'vsc'
-
-A vector of the backend compilers to test when running the test suite. See 
-`COMPILERS` for valid options.
+    Windows: vsc
+    Linux: gcc
+    Mac OS X: clang
 
 ### BUILD∆PATH
 
@@ -142,21 +136,6 @@ intermediate files and the compiled objects. Should be a directory.
 
 The path to your Visual Studio installation. Make sure that you have installed 
 the C++ compiler. 
-
-### INTEL∆C∆PATH
-
-    INTEL∆C∆PATH ← 'C:\Program Files (x86)\IntelSWTools\'
-    INTEL∆C∆PATH ,← 'compilers_and_libraries_2016.0.110\windows\bin\'
-
-The location of your `bin` directory for the Intel C Compiler. Needed to use 
-Intel's C compiler on Windows. 
-
-### PGI∆PATH
-
-    PGI∆PATH ← 'C:\Program Files\PGI\win64\16.7\'
-
-The path to your PGI installation on Windows. Needed if you wish to use PGI 
-on Windows. You must have the OpenACC version of PGI. 
 
 ### VERSION
 
@@ -173,20 +152,19 @@ software in order to use the compiler:
 
 1. Dyalog APL 15.0 or later 64-bit Unicode edition
 
-2. A supported compiler
+2. Your Operating System's host compiler:
 
-    * PGI Accelerator 16.7+ (Preferred, Linux and Windows)
     * Visual Studio 2015 (Windows)
     * GCC (Linux)
-    * Intel C Compiler (Linux or Windows)
+    * Clang (Mac OS X)
 
-3. LibreSSL
+3. ArrayFire
 
-You will need to make sure that the LibreSSL libraries are visible
-and accessible to the compiler. For Windows this usually means putting 
-them in the directory where you are running/compiling your code. 
-For Linux, we generally expect them in /usr/local/lib64 or any other 
-standard location. 
+You should be able to find the appropriate ArrayFire installer included 
+in the release page for a given Co-dfns release. On Windows, if you want 
+to use the CUDA backend you will need to make sure that the appropriate 
+nvvm64 dll (something like `nvvm64_31_0.dll`) is copied into the directory 
+from which you will launch the compiler.
 
 ## Related Projects
 
