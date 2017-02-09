@@ -1,4 +1,7 @@
-﻿rth,←'B cnt(A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}',nl
+﻿rth,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',nl
+rth,←' if(p)dwafns=p;else R 0;',nl
+rth,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
+rth,←'B cnt(A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}',nl
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',nl
 rth,←'array scl(I x){R constant(x,dim4(1),s32);}',nl
 rth,←'A scl(array v){R A(0,dim4(1),v);}',nl
@@ -11,7 +14,6 @@ rth,←' S8*v=(S8*)DATA(d);DOB(c,b[i]=v[i]);R array(s,b.data());}',nl
 rth,←'Z array da8(B c,dim4 s,lp*d){std::vector<char>b(c);',nl
 rth,←' U8*v=(U8*)DATA(d);DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))',nl
 rth,←' R array(s,b.data());}',nl
-rth,←nl
 rth,←'V cpad(lp*d,A&a){I t;B c=cnt(a);',nl
 rth,←' switch(a.v.type()){',nl
 rth,←'  CS(s32,t=APLI);CS(s16,t=APLSI);CS(b8,t=APLTI);CS(f64,t=APLD);',nl
