@@ -39,7 +39,7 @@ rth,←'OM(oup,"oup",0,0,MT,DF)',nl
 rth,←'OD(pow,"pow",l.sm,l.sd,MF,DF)',nl
 rth,←'OM(red,"red",0,0,MF,DF)',nl
 rth,←'OM(rdf,"rdf",0,0,MF,DF)',nl
-rth,←'OD(rnk,"rnk",0,0,MF,DF)',nl
+rth,←'OD(rnk,"rnk",l.sm,0,MF,DF)',nl
 rth,←'OM(scn,"scn",1,1,MF,MT)',nl
 rth,←'OM(scf,"scf",1,1,MF,MT)',nl
 rth,←nl
