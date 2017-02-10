@@ -1,19 +1,4 @@
-﻿rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',nl
-rth,←' FN():nm(""),sm(0),sd(0){}',nl
-rth,←' virtual array id(dim4 s){err(16);R array();}',nl
-rth,←' virtual V operator()(A&z,A&r,A*p[]){err(99);}',nl
-rth,←' virtual V operator()(A&z,A&l,A&r,A*p[]){err(99);}};',nl
-rth,←'S MOP:FN{FN&ll;A**pp;',nl
-rth,←' MOP(STR nm,I sm,I sd,FN&ll,A*pp[]):ll(ll),pp(pp),FN(nm,sm,sd){}};',nl
-rth,←'S DOP:FN{I f;FN&ll;FN&rr;A&ww;A**pp;',nl
-rth,←' DOP(STR nm,I sm,I sd,FN&l,FN&r,A*p[])',nl
-rth,←'  :f(1),ll(l),rr(r),ww(A()),pp(p),FN(nm,sm,sd){}',nl
-rth,←' DOP(STR nm,I sm,I sd,FN&l,A&r,A*p[])',nl
-rth,←'  :f(0),ll(l),rr(FN()),ww(r),pp(p),FN(nm,sm,sd){}};',nl
-rth,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',nl
-rth,←' if(p)dwafns=p;else R 0;',nl
-rth,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
-rth,←'I scm(FN&f){R f.sm;}I scm(A&a){R 1;}',nl
+﻿rth,←'I scm(FN&f){R f.sm;}I scm(A&a){R 1;}',nl
 rth,←'I scd(FN&f){R f.sd;}I scd(A&a){R 1;}',nl
 rth,←'B cnt(A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}',nl
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',nl

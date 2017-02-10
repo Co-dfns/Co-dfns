@@ -1,7 +1,4 @@
-﻿rth,←'#define CS(n,x) case n:x;break;',nl
-rth,←'#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}',nl
-rth,←'#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}',nl
-rth,←'#define NM(n,nm,sm,sd,di,mf,df) S n##_f:FN{\',nl
+﻿rth,←'#define NM(n,nm,sm,sd,di,mf,df) S n##_f:FN{\',nl
 rth,←' di(n##_f);mf(n##_f);df(n##_f);\',nl
 rth,←' n##_f(STR s,I m,I d):FN(s,m,d){}} n##fn(nm,sm,sd);',nl
 rth,←'#define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf(n##_o);df(n##_o);\',nl
@@ -28,17 +25,19 @@ rth,←' A cl,cr,za;if(!isinit){Initfn(za,cl,cr,NULL);isinit=1;}\',nl
 rth,←' cpda(cr,r);if(l!=NULL)cpda(cl,l);m##fn(za,cl,cr,env);cpad(z,za);}\',nl
 rth,←'EXPORT V n##_cdf(A&z,A&l,A&r){m##fn(z,l,r,env);}',nl
 rth,←nl
-rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
-rth,←'typedef long long L;typedef int I;typedef int16_t S16;',nl
-rth,←'typedef int8_t S8;typedef double D;typedef unsigned char U8;',nl
-rth,←'typedef dim_t B;typedef unsigned U;typedef void V;',nl
-rth,←'typedef std::string STR;',nl
-rth,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',nl
-rth,←'S dwa{B sz;',nl
-rth,←' S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;',nl
-rth,←' V*na[4];};',nl
-rth,←'S dwa*dwafns;Z V err(U n){dwafns->ws->er(n);}',nl
 rth,←'S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}',nl
 rth,←' A():r(0),s(dim4()),v(array()){}};',nl
 rth,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
+rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',nl
+rth,←' FN():nm(""),sm(0),sd(0){}',nl
+rth,←' virtual array id(dim4 s){err(16);R array();}',nl
+rth,←' virtual V operator()(A&z,A&r,A*p[]){err(99);}',nl
+rth,←' virtual V operator()(A&z,A&l,A&r,A*p[]){err(99);}};',nl
+rth,←'S MOP:FN{FN&ll;A**pp;',nl
+rth,←' MOP(STR nm,I sm,I sd,FN&ll,A*pp[]):ll(ll),pp(pp),FN(nm,sm,sd){}};',nl
+rth,←'S DOP:FN{I f;FN&ll;FN&rr;A&ww;A**pp;',nl
+rth,←' DOP(STR nm,I sm,I sd,FN&l,FN&r,A*p[])',nl
+rth,←'  :f(1),ll(l),rr(r),ww(A()),pp(p),FN(nm,sm,sd){}',nl
+rth,←' DOP(STR nm,I sm,I sd,FN&l,A&r,A*p[])',nl
+rth,←'  :f(0),ll(l),rr(FN()),ww(r),pp(p),FN(nm,sm,sd){}};',nl
 rth,←nl

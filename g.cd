@@ -10,7 +10,7 @@ Fd←{'FP(',(⊃n⍵),');',nl}
 F0←{'DF(',(⊃n⍵),'_f){',nl,'A*env[]={tenv};',nl}
 F1←{'DF(',(⊃n⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
 Z0←{'}',nl,nl}
-Z1←{'z=',((⊃n⍵)var⊃e⍵),';}',nl,nl}
+Z1←{'z=',((⊃n⍵)(''var)⊃e⍵),';}',nl,nl}
 Ze←{'}',nl,nl}
 M0←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
 S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
@@ -29,3 +29,16 @@ syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'   '∘'   '∪'   
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '%u'
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' ''
+
+nl←⎕UCS 13 10 ⋄ fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣) ⋄ cln←'¯'⎕R'-' ⋄ cnm←(syms⍳⊂)⊃(nams,⊂)
+lits←{'A{0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),')}'}
+litv←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
+lita←{'A{1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),')}'}
+lit←{' '=⊃0⍴⍵:(cnm ⍵),⍺ ⋄ 1=≢⍵:lits ⍵ ⋄ lita ⍵}
+var←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:⍺⍺ lit ,⍺
+ 'env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
+dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
+fnv←{z←'A*env[',(⍕1+⊃s⍵),']={'
+ z,(⊃,/(⊂'env0'),{',p[',(⍕⍵),']'}¨⍳⊃s⍵),'};',nl}
+gcl←{z r l n←((3⍴⊂'fn'),⊂⍺){⊃⍺var/⍵}¨↓(⊃⍵),⍪1⊃⍵
+ n,'(',(⊃{⍺,',',⍵}/(z l r)~⊂'fn'),',env);',nl}

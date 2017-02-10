@@ -1,25 +1,4 @@
-﻿nl←⎕UCS 13 10
-fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣)
-cln←'¯'⎕R'-'
-lits←{'A{0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),')}'}
-litv←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
-lita←{'A{1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),')}'}
-lit←{' '=⊃0⍴⍵:⍵ ⋄ 1=≢⍵:lits ⍵ ⋄ lita ⍵}
-var←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:lit ,⍺
- 'env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
-dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v⍵),'];')('A*',⍺,'=NULL;')}
-fnv←{z←'A*env[',(⍕1+⊃s⍵),']={'
- z,(⊃,/(⊂'env0'),{',p[',(⍕⍵),']'}¨⍳⊃s⍵),'};',nl}
-git←{⍵⊃¨⊂'/* XXX */ I ' 'I ' 'D ' 'U8 ' '?NA? '}
-gie←{⍵⊃¨⊂'/* XXX */ APLI' 'APLI' 'APLD' 'APLTI' 'APLNA'}
-rgt←{v e y←⍵ ⋄ 1⊃var/v,⍪e}
-lft←{v e y←⍵ ⋄ 2⊃var/v,⍪e}
-rslt←{v e y←⍵ ⋄ 0⊃var/v,⍪e}
-cnm←(syms⍳∘⊂⊢)⊃((nams,¨∘⊂⊣),∘⊂⊢)
-gcl←{z r l n←((3⍴⊂'fn'),⊂⍺)cnm¨var/(⊃⍵),⍪1⊃⍵
- n,'(',(⊃{⍺,',',⍵}/(z l r)~⊂'fn'),',env);',nl}
-
-rth←'#include <time.h>',nl
+﻿rth←'#include <time.h>',nl
 rth,←'#include <stdint.h>',nl
 rth,←'#include <inttypes.h>',nl
 rth,←'#include <limits.h>',nl
@@ -42,3 +21,21 @@ rth,←'#define TYPE(lp) ((lp)->p->t)',nl
 rth,←'#define SHAPE(lp) ((lp)->p->s)',nl
 rth,←'#define ETYPE(lp) ((lp)->p->e)',nl
 rth,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',nl
+rth,←'#define CS(n,x) case n:x;break;',nl
+rth,←'#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}',nl
+rth,←'#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}',nl
+rth,←nl
+rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD}APLTYPE;',nl
+rth,←'typedef long long L;typedef int I;typedef int16_t S16;',nl
+rth,←'typedef int8_t S8;typedef double D;typedef unsigned char U8;',nl
+rth,←'typedef dim_t B;typedef unsigned U;typedef void V;',nl
+rth,←'typedef std::string STR;',nl
+rth,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',nl
+rth,←'S dwa{B sz;',nl
+rth,←' S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;',nl
+rth,←' V*na[4];};',nl
+rth,←'S dwa*dwafns;Z V err(U n){dwafns->ws->er(n);}',nl
+rth,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',nl
+rth,←' if(p)dwafns=p;else R 0;',nl
+rth,←' if(dwafns->sz<sizeof(S dwa))R 16;R 0;}',nl
+rth,←nl
