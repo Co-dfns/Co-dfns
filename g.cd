@@ -1,9 +1,9 @@
-﻿E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
-E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
+﻿E1←{gcl((⊂n,∘⊃v),e,y)⍵}
+E2←{gcl((⊂n,∘⊃v),e,y)⍵}
 E0←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
 Oi←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
-O1←{'mo'gcl((⊂n,∘⊃v),e,y)⍵}
-O2←{'do'gcl((⊂n,∘⊃v),e,y)⍵}
+O1←{gcl((⊂n,∘⊃v),e,y)⍵}
+O2←{gcl((⊂n,∘⊃v),e,y)⍵}
 O0←{''}
 Of←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),');',nl}
 Fd←{'FP(',(⊃n⍵),');',nl}
@@ -27,5 +27,8 @@ syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'   '⌿'   '\'   '
 nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red' 'rdf' 'scn' 'scf' 'rol'
 syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'   '∘'   '∪'   '∩'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
-syms,←,¨'⍋'   '⍒'   '%u'  '∘.'  '⍷'   '⊂'
-nams,←  'gdu' 'gdd' ''    'oup' 'fnd' 'par'
+syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'
+nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par'
+nams,¨←⊂'fn'
+
+syms,←⊂'%u' ⋄ nams,←⊂''

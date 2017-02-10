@@ -3,6 +3,11 @@ rth,←'#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}',nl
 rth,←'#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}',nl
 rth,←'#define NM(n,nm,sm,sd,di,mf,df) S n##_f:FN{di(n);mf(n);df(n);\',nl
 rth,←' n##_f(STR s,I m,I d):FN(s,m,d){}} n##fn(nm,sm,sd);',nl
+rth,←'#define OM(n,nm,sm,sd,mf,df) S n##_f:MOP{mf(n);df(n);\',nl
+rth,←' n##_f(FN&l,A*p[]):MOP(nm,sm,sd,l,p){}};',nl
+rth,←'#define OD(n,nm,sm,sd,mf,df) S n##_f:DOP{mf(n);df(n);\',nl
+rth,←' n##_f(FN&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\',nl
+rth,←' n##_f(FN&l,A&r,A*p[]):DOP(nm,sm,sd,l,r,p){}};',nl
 rth,←'#define MT(n)',nl
 rth,←'#define DI(n) inline array n##_f::id(dim4 s)',nl
 rth,←'#define ID(n,x,t) DI(n){R constant(x,s,t);}',nl
@@ -35,12 +40,4 @@ rth,←'S dwa*dwafns;Z V err(U n){dwafns->ws->er(n);}',nl
 rth,←'S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}',nl
 rth,←' A():r(0),s(dim4()),v(array()){}};',nl
 rth,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
-rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',nl
-rth,←' virtual array id(dim4 s){err(16);R array();}',nl
-rth,←' virtual V operator()(A&z,A&r,A*p[]){err(99);}',nl
-rth,←' virtual V operator()(A&z,A&l,A&r,A*p[]){err(99);}};',nl
-rth,←'S MOP:FN{FN ll;A**pp;',nl
-rth,←' MOP(STR nm,I sm,I sd,FN&ll,A*pp[]):ll(ll),pp(pp),FN(nm,sm,sd){}};',nl
-rth,←'S DOP:FN{FN ll,rr;A**pp;',nl
-rth,←' DOP(STR nm,I sm,I sd,FN&l,FN&r,A*p[]):ll(l),rr(r),pp(p),FN(nm,sm,sd){}};',nl
 rth,←nl
