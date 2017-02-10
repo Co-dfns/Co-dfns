@@ -1,4 +1,4 @@
-﻿rth,←'#define comfn(zz,rr,pp) com_f zz(rr,pp)',nl
+﻿rth,←'#define comop(zz,rr,pp) com_f zz(rr,pp)',nl
 rth,←'MF(com){ll(z,r,r,p);}DF(com){ll(z,r,l,p);}',nl
 rth,←'#define dotdo(zz,rr,ll,pp) \',nl
 rth,←' DL(zz,I ra=r.r?r.r-1:0;if(r.r&&l.r&&l.s[0]!=r.s[ra])err(5);\',nl
