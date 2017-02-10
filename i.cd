@@ -1,19 +1,20 @@
 ﻿rth,←'#define CS(n,x) case n:x;break;',nl
 rth,←'#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}',nl
 rth,←'#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}',nl
-rth,←'#define NM(n,nm,sm,sd,di,mf,df) S n##_f:FN{di(n);mf(n);df(n);\',nl
+rth,←'#define NM(n,nm,sm,sd,di,mf,df) S n##_f:FN{\',nl
+rth,←' di(n##_f);mf(n##_f);df(n##_f);\',nl
 rth,←' n##_f(STR s,I m,I d):FN(s,m,d){}} n##fn(nm,sm,sd);',nl
-rth,←'#define OM(n,nm,sm,sd,mf,df) S n##_f:MOP{mf(n);df(n);\',nl
-rth,←' n##_f(FN&l,A*p[]):MOP(nm,sm,sd,l,p){}};',nl
-rth,←'#define OD(n,nm,sm,sd,mf,df) S n##_f:DOP{mf(n);df(n);\',nl
-rth,←' n##_f(FN&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\',nl
-rth,←' n##_f(FN&l,A&r,A*p[]):DOP(nm,sm,sd,l,r,p){}};',nl
+rth,←'#define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf(n##_o);df(n##_o);\',nl
+rth,←' n##_o(FN&l,A*p[]):MOP(nm,sm,sd,l,p){}};',nl
+rth,←'#define OD(n,nm,sm,sd,mf,df) S n##_o:DOP{mf(n##_o);df(n##_o);\',nl
+rth,←' n##_o(FN&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\',nl
+rth,←' n##_o(FN&l,A&r,A*p[]):DOP(nm,sm,sd,l,r,p){}};',nl
 rth,←'#define MT(n)',nl
-rth,←'#define DI(n) inline array n##_f::id(dim4 s)',nl
-rth,←'#define ID(n,x,t) DI(n){R constant(x,s,t);}',nl
-rth,←'#define MF(n) inline V n##_f::operator()(A&z,A&r,A*p[])',nl
-rth,←'#define DF(n) inline V n##_f::operator()(A&z,A&l,A&r,A*p[])',nl
-rth,←'#define SF(n,x) inline V n##_f::operator()(A&z,A&l,A&r,A*p[]){\',nl
+rth,←'#define DI(n) inline array n::id(dim4 s)',nl
+rth,←'#define ID(n,x,t) DI(n##_f){R constant(x,s,t);}',nl
+rth,←'#define MF(n) inline V n::operator()(A&z,A&r,A*p[])',nl
+rth,←'#define DF(n) inline V n::operator()(A&z,A&l,A&r,A*p[])',nl
+rth,←'#define SF(n,x) inline V n::operator()(A&z,A&l,A&r,A*p[]){\',nl
 rth,←' if(l.r==r.r&&l.s==r.s){\',nl
 rth,←'  z.r=l.r;z.s=l.s;array&lv=l.v;array&rv=r.v;x;R;}\',nl
 rth,←' if(!l.r){\',nl
@@ -21,7 +22,7 @@ rth,←'  z.r=r.r;z.s=r.s;array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
 rth,←' if(!r.r){\',nl
 rth,←'  z.r=l.r;z.s=l.s;array&rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',nl
-rth,←'#define FP(n) NM(n,"",0,0,MT,MF,DF);MF(n){n##fn(z,A(),r,p);}',nl
+rth,←'#define FP(n) NM(n,"",0,0,MT,MF,DF);MF(n##_f){n##fn(z,A(),r,p);}',nl
 rth,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl
 rth,←' A cl,cr,za;if(!isinit){Initfn(za,cl,cr,NULL);isinit=1;}\',nl
 rth,←' cpda(cr,r);if(l!=NULL)cpda(cl,l);m##fn(za,cl,cr,env);cpad(z,za);}\',nl

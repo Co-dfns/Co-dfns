@@ -31,5 +31,15 @@ rth,←'ID(and,1,s32)ID(lor,0,s32)ID(lth,0,s32)ID(lte,1,s32)ID(eql,1,s32)',nl
 rth,←'ID(gth,0,s32)ID(gte,1,s32)ID(neq,0,s32)ID(enc,0,s32)ID(red,1,s32)',nl
 rth,←'ID(rdf,1,s32)ID(scn,1,s32)ID(scf,1,s32)ID(rot,0,s32)ID(rtf,0,s32)',nl
 rth,←nl
-rth,←'OM(com,"com",l.sm,l.sd,MF,DF)',nl
+rth,←'OM(com,"com",scm(l),scd(l),MF,DF)',nl
+rth,←'OD(dot,"dot",0,0,MT,DF)',nl
+rth,←'OD(jot,"jot",(scm(l)&&scm(r)),(scd(l)&&scd(r)),MF,DF)',nl
+rth,←'OM(map,"map",1,1,MF,DF)',nl
+rth,←'OM(oup,"oup",0,0,MT,DF)',nl
+rth,←'OD(pow,"pow",l.sm,l.sd,MF,DF)',nl
+rth,←'OM(red,"red",0,0,MF,DF)',nl
+rth,←'OM(rdf,"rdf",0,0,MF,DF)',nl
+rth,←'OD(rnk,"rnk",0,0,MF,DF)',nl
+rth,←'OM(scn,"scn",1,1,MF,MT)',nl
+rth,←'OM(scf,"scf",1,1,MF,MT)',nl
 rth,←nl

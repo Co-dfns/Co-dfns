@@ -7,8 +7,8 @@ O2←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
 O0←{''}
 Of←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),');',nl}
 Fd←{'FP(',(⊃n⍵),');',nl}
-F0←{'DF(',(⊃n⍵),'){',nl,'A*env[]={tenv};',nl}
-F1←{'DF(',(⊃n⍵),'){',nl,('env0'dnv ⍵),(fnv ⍵)}
+F0←{'DF(',(⊃n⍵),'_f){',nl,'A*env[]={tenv};',nl}
+F1←{'DF(',(⊃n⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
 Z0←{'}',nl,nl}
 Z1←{'z=',((⊃n⍵)var⊃e⍵),';}',nl,nl}
 Ze←{'}',nl,nl}
