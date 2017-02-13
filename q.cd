@@ -9,3 +9,13 @@ rth,←' z.v=!anyTrue(tile(r.v,1,(U)c)==tile(array(x,1,c),(U)r.s[0],1),1);',nl
 rth,←' z.v=join(0,l.v.as(mt),r.v(where(z.v)).as(mt));',nl
 rth,←' z.s=dim4(z.v.elements());}',nl
 rth,←nl
+rth,←'#define comop(zz,rr,pp) com_o zz(rr,pp)',nl
+rth,←'#define dotop(zz,rr,ll,pp) dot_o zz(ll,rr,pp)',nl
+rth,←'#define mapop(zz,rr,pp) map_o zz(rr,pp)',nl
+rth,←'#define redop(zz,rr,pp) red_o zz(rr,pp)',nl
+rth,←'#define jotop(zz,rr,ll,pp) jot_o zz(ll,rr,pp)',nl
+rth,←'#define oupop(zz,rr,pp) oup_o zz(rr,pp)',nl
+rth,←'#define rdfop(zz,rr,pp) rdf_o zz(rr,pp)',nl
+rth,←'#define scnop(zz,rr,pp) scn_o zz(rr,pp)',nl
+rth,←'#define scfop(zz,rr,pp) scf_o zz(rr,pp)',nl
+rth,←nl
