@@ -15,39 +15,11 @@ Fn←{	A	←⍵ #.codfns.MKA 15⍴1
 	Z	←⍵ #.codfns.EXA A 3
 		(⎕DR Z) Z}
 
-bitvector∆01∆gcc_TEST←{
-	id cmp ns fn	←'bitvector01' 'gcc' S 'Run'
+bitvector∆01_TEST←{
+	id ns fn	←'bitvector01' S 'Run'
 	#.UT.expect	←0
-	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:	0
 	EX	←⊃{⍵∧0≠⍺}/B1 B2 1
 	#.UT.expect	←(⎕DR EX) EX
-	#.codfns.COMPILER	←cmp
-	CS	←id #.codfns.Fix	ns
-	so	←#.codfns.BSO id
-	_	←'Runib'⎕NA so,'|Runib P P P'
-		Runib Fn id
-}
-
-bitvector∆01∆icc_TEST←{
-	id cmp ns fn	←'bitvector01' 'icc' S 'Run'
-	#.UT.expect	←0
-	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:	0
-	EX	←⊃{⍵∧0≠⍺}/B1 B2 1
-	#.UT.expect	←(⎕DR EX) EX
-	#.codfns.COMPILER	←cmp
-	CS	←id #.codfns.Fix	ns
-	so	←#.codfns.BSO id
-	_	←'Runib'⎕NA so,'|Runib P P P'
-		Runib Fn id
-}
-
-bitvector∆01∆pgcc_TEST←{
-	id cmp ns fn	←'bitvector01' 'pgcc' S 'Run'
-	#.UT.expect	←0
-	~(⊂cmp)∊#.codfns.TEST∆COMPILERS:	0
-	EX	←⊃{⍵∧0≠⍺}/B1 B2 1
-	#.UT.expect	←(⎕DR EX) EX
-	#.codfns.COMPILER	←cmp
 	CS	←id #.codfns.Fix	ns
 	so	←#.codfns.BSO id
 	_	←'Runib'⎕NA so,'|Runib P P P'
