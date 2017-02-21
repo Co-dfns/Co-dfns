@@ -15,6 +15,7 @@ rth,←'#define mapop(zz,rr,pp) map_o zz(rr,pp)',nl
 rth,←'#define redop(zz,rr,pp) red_o zz(rr,pp)',nl
 rth,←'#define jotop(zz,rr,ll,pp) jot_o zz(ll,rr,pp)',nl
 rth,←'#define oupop(zz,rr,pp) oup_o zz(rr,pp)',nl
+rth,←'#define powop(zz,rr,ll,pp) pow_o zz(ll,rr,pp)',nl
 rth,←'#define rdfop(zz,rr,pp) rdf_o zz(rr,pp)',nl
 rth,←'#define scnop(zz,rr,pp) scn_o zz(rr,pp)',nl
 rth,←'#define scfop(zz,rr,pp) scf_o zz(rr,pp)',nl
