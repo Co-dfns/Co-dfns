@@ -22,7 +22,6 @@ things on which we are working.
 * Expand (\ and ⍀) is not supported
 * Laminate is not supported
 * Find (⍷) is not supported
-* Rank (⍤) is not implemented
 * Binomial is not implemented for negative and floating point values
 * Conditional guards are not supported yet
 * Recursive functions are not supported yet

@@ -36,7 +36,7 @@ rth,←'SF(neq_f,z.v=lv!=rv)',nl
 rth,←'SF(nor_f,z.v=!(lv||rv))',nl
 rth,←'MF(not_f){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
 rth,←'DF(not_f){err(16);}',nl
-rth,←'MF(nqv_f){z.r=0;z.s=dim4(1);z.v=scl(r.r?(I)r.s[r.r-1]:1);}',nl
+rth,←'MF(nqv_f){z.v=scl(r.r?(I)r.s[r.r-1]:1);z.r=0;z.s=dim4(1);}',nl
 rth,←'DF(nqv_f){z.r=0;z.s=eshp;I t=l.r==r.r&&l.s==r.s;',nl
 rth,←' if(t)t=allTrue<I>(l.v==r.v);z.v=scl(!t);}',nl
 rth,←'MF(par_f){err(16);}',nl
