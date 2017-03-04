@@ -14,7 +14,15 @@ rth,←' std::vector<I> x(lc);l.v.as(s32).host(x.data());',nl
 rth,←' z.v=array(r.v,lc,r.s[ra]);z.r=r.r;z.s=r.s;',nl
 rth,←' DO(lc,z.v(i,span)=shift(z.v(i,span),0,-x[i]))',nl
 rth,←' z.v=array(z.v,z.s);}',nl
-rth,←'DF(scn_f){err(16);}',nl
+rth,←'DF(scn_f){if(r.s[0]!=1&&r.s[0]!=sum<I>(l.v>0))err(5);',nl
+rth,←' if(l.r>1)err(5);array ca=max(1,abs(l.v)).as(s32);I c=sum<I>(ca);',nl
+rth,←' if(!cnt(l))c=0;A t(r.r?r.r:1,r.s,scl(0));t.s[0]=c;',nl
+rth,←' if(!cnt(t)){z=t;R;}t.v=array(t.s,r.v.type());t.v=0;',nl
+rth,←' array pw=0<l.v;array pa=pw*l.v;I pc=sum<I>(pa);if(!pc){z=t;R;}',nl
+rth,←' pw=where(pw);pa=scan(pa(pw),0,AF_BINARY_ADD,false);',nl
+rth,←' array si(pc,s32);si=0;si(pa)=1;si=accum(si)-1;',nl
+rth,←' array ti(pc,s32);ti=1;ti(pa)=scan(ca,0,AF_BINARY_ADD,false)(pw);',nl
+rth,←' ti=scanByKey(si,ti);t.v(ti,span)=r.v(si,span);z=t;}',nl
 rth,←'DF(scf_f){err(16);}',nl
 rth,←'MF(sqd_f){z=r;}',nl
 rth,←'DF(sqd_f){if(l.r>1)err(4);B s=!l.r?1:l.s[l.r-1];',nl
