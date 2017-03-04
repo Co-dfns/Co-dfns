@@ -19,7 +19,6 @@ and immediate benefit and thus will be considered part of the active set of
 things on which we are working.
 
 * Dyadic Transpose does not permit duplicate axes
-* Expand (\ and ⍀) is not supported
 * Laminate is not supported
 * Find (⍷) is not supported
 * Binomial is not implemented for negative and floating point values

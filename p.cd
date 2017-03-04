@@ -23,38 +23,20 @@ rth,←' pw=where(pw);pa=scan(pa(pw),0,AF_BINARY_ADD,false);',nl
 rth,←' array si(pc,s32);si=0;si(pa)=1;si=accum(si)-1;',nl
 rth,←' array ti(pc,s32);ti=1;ti(pa)=scan(ca,0,AF_BINARY_ADD,false)(pw);',nl
 rth,←' ti=scanByKey(si,ti);t.v(ti,span)=r.v(si,span);z=t;}',nl
-rth,←'DF(scf_f){err(16);}',nl
+rth,←'DF(scf_f){I ra=r.r?r.r-1:0;index sx[4];index tx[4];',nl
+rth,←' if(r.s[ra]!=1&&r.s[ra]!=sum<I>(l.v>0))err(5);',nl
+rth,←' if(l.r>1)err(5);array ca=max(1,abs(l.v)).as(s32);I c=sum<I>(ca);',nl
+rth,←' if(!cnt(l))c=0;A t(ra+1,r.s,scl(0));t.s[ra]=c;',nl
+rth,←' if(!cnt(t)){z=t;R;}t.v=array(t.s,r.v.type());t.v=0;',nl
+rth,←' array pw=0<l.v;array pa=pw*l.v;I pc=sum<I>(pa);if(!pc){z=t;R;}',nl
+rth,←' pw=where(pw);pa=scan(pa(pw),0,AF_BINARY_ADD,false);',nl
+rth,←' array si(pc,s32);si=0;si(pa)=1;si=accum(si)-1;sx[ra]=si;',nl
+rth,←' array ti(pc,s32);ti=1;ti(pa)=scan(ca,0,AF_BINARY_ADD,false)(pw);',nl
+rth,←' ti=scanByKey(si,ti);tx[ra]=ti;',nl
+rth,←' t.v(tx[0],tx[1],tx[2],tx[3])=r.v(sx[0],sx[1],sx[2],sx[3]);z=t;}',nl
 rth,←'MF(sqd_f){z=r;}',nl
 rth,←'DF(sqd_f){if(l.r>1)err(4);B s=!l.r?1:l.s[l.r-1];',nl
 rth,←' if(s>r.r)err(5);if(!cnt(l)){z=r;R;}',nl
 rth,←' I sv[4];index x[4];l.v.as(s32).host(sv);',nl
 rth,←' DO((I)s,if(sv[i]<0||sv[i]>=r.s[i])err(3));',nl
 rth,←' DO((I)s,x[r.r-(i+1)]=sv[i]);z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());',nl
-rth,←' z.v=r.v(x[0],x[1],x[2],x[3]);}',nl
-rth,←'MF(sub_f){z.r=r.r;z.s=r.s;z.v=-r.v;}',nl
-rth,←'SF(sub_f,z.v=lv-rv)',nl
-rth,←'MF(tke_f){z=r;}',nl
-rth,←'DF(tke_f){I lv[4];seq it[4];seq ix[4];B c=cnt(l);',nl
-rth,←' if(l.r>1||(c>r.r&&r.r))err(4);if(!c){z=r;R;}',nl
-rth,←' U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',nl
-rth,←' DO((I)c,{U j=rk-(i+1);I a=std::abs(lv[i]);z.s[j]=a;',nl
-rth,←'  if(a>r.s[j])ix[j]=seq((D)r.s[j]);',nl
-rth,←'  else if(lv[i]<0)ix[j]=seq((D)r.s[j]-a,(D)r.s[j]-1);',nl
-rth,←'  else ix[j]=seq(a);',nl
-rth,←'  it[j]=ix[j]+(lv[i]<0)*(a-(D)r.s[j]);})',nl
-rth,←' if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,r.v.type());z.v=0;',nl
-rth,←' z.v(it[0],it[1],it[2],it[3])=r.v(ix[0],ix[1],ix[2],ix[3]);}',nl
-rth,←'MF(trn_f){z.r=r.r;DO(r.r,z.s[i]=r.s[r.r-(i+1)])',nl
-rth,←' switch(r.r){CS(0,z.v=r.v)CS(1,z.v=r.v)CS(2,z.v=r.v.T())',nl
-rth,←'  CS(3,z.v=reorder(r.v,2,1,0))CS(4,z.v=reorder(r.v,3,2,1,0))}}',nl
-rth,←'DF(trn_f){I lv[4];if(l.r>1||cnt(l)!=r.r)err(5);',nl
-rth,←' l.v.as(s32).host(lv);DO(r.r,if(lv[i]<0||lv[i]>=r.r)err(4))',nl
-rth,←' U8 f[]={0,0,0,0};DO(r.r,f[lv[i]]=1)',nl
-rth,←' U8 t=1;DO(r.r,if(t&&!f[i])t=0;else if(!t&&f[i])err(5))',nl
-rth,←' DO(r.r,if(!f[i])err(16))',nl
-rth,←' z.r=r.r;DO(r.r,z.s[r.r-(lv[i]+1)]=r.s[r.r-(i+1)])',nl
-rth,←' I s[4];DO(r.r,s[r.r-(lv[i]+1)]=r.r-(i+1))',nl
-rth,←' switch(r.r){CS(0,z.v=r.v)CS(1,z.v=r.v)',nl
-rth,←'  CS(2,z.v=reorder(r.v,s[0],s[1]))',nl
-rth,←'  CS(3,z.v=reorder(r.v,s[0],s[1],s[2]))',nl
-rth,←'  CS(4,z.v=reorder(r.v,s[0],s[1],s[2],s[3]))}}',nl
