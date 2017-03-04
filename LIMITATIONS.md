@@ -18,16 +18,16 @@ or outstanding implementation or engineering work that has some recognizable
 and immediate benefit and thus will be considered part of the active set of 
 things on which we are working.
 
-* Dyadic Transpose does not permit duplicate axes
-* Laminate is not supported
 * Find (⍷) is not supported
+* Laminate is not supported
+* Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented for negative and floating point values
 * Conditional guards are not supported yet
 * Recursive functions are not supported yet
-* Assignment inside of an expression is not supported yet
-* User-defined operators are not supported yet
 * Bracket indexing of the form [X;...] is not supported, 
   though a single index array [X] is supported
+* User-defined operators are not supported yet
+* Assignment inside of an expression is not supported yet
 * Indexed assignment and selective assignment are not supported yet
 
 ## Low Priority Limitations
