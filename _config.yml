@@ -1,0 +1,8 @@
+title: Co-dfns
+description: High-performance, Reliable, and Parallel APL
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-architect
+
+gems:
+  - jekyll-mentions
