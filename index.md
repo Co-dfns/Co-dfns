@@ -1,13 +1,13 @@
-﻿# Co-dfns Compiler
+# Co-dfns Compiler
 
 The Co-dfns project aims to provide a high-performance, high-reliability
 compiler for a parallel extension of the Dyalog dfns programming language.
 The dfns language is a functionally oriented, lexically scoped dialect of
 APL. The Co-dfns language extends the dfns language to include explicit task
-parallelism with implicit structures for synchronization and determinism. The
-language is designed to enable rigorous formal analysis of programs to aid
-in compiler optimization and programmer productivity, as well as in the
-general reliability of the code itself.
+parallelism with implicit structures for synchronization and determinism. 
+The language is designed to enable rigorous formal analysis of programs 
+to aid in compiler optimization and programmer productivity, as well as in
+the general reliability of the code itself.
 
 Our mission is to deliver scalable APL programming to information and domain
 experts across many fields, expanding the scope and capabilities of what
@@ -60,7 +60,24 @@ allows you to serialize your code in the form of XML, rather than as a
 Namespace Script. It does require that you use either the parser or 
 your own hacking skills to extract out a Co-dfns AST. 
 
-### codfns.BSO
+### Caching API
+
+The caching api allows you to call directly into the Co-dfns compiled 
+namespace without using DWA to convert values. You do this by explicitly 
+allocating a function and then applying specialized versions of Co-dfns 
+compiled functions on those arrays until you are ready to extract the 
+result, in which case you can extract them out.
+
+The specialized functions are specialized according to your input types. 
+Given input types b, i, and f for Boolean, Integer, and Floating, respectively, 
+you can use `⎕NA` to access the function. It's name will be `<name><tr><tr>`
+where `<name>` is the name of the function, and `<tr>` and `<tl>` are the types 
+of the right and left inputs, respectively.
+
+These specialized functions return the type of the resulting array computation 
+as their return value.
+
+#### codfns.BSO
 
     Path ← codfns.BSO Name
 
@@ -68,14 +85,14 @@ Given the `Name` used as the left argument to `Fix`, it will give back the
 path to the primary Co-dfns compilation object. This is useful for doing 
 manual linking into the compilation object using `⎕NA`.
 
-### codfns.MKA
+#### codfns.MKA
 
     Codfns_Array ← Name codfns.MKA Array
 
 This allows you to manually obtain a pointer to a Co-dfns array created from 
 a given Dyalog DWA Array. 
 
-### codfns.EXA
+#### codfns.EXA
 
     Array ← Name codfns.EXA Codfns_Array Type
 
@@ -84,7 +101,7 @@ array and the type of that array, and will free the array from the Co-dfns
 space and return that array as its result in the form of a normal Dyalog 
 array.
 
-### codfns.FREA
+#### codfns.FREA
 
     {} ← Name codfns.FREA Codfns_Array
 
@@ -102,15 +119,9 @@ local environment. The values given below are their default values.
 This indicates the backend compiler to use. It should be one of the following 
 names:
 
-    Windows: vsc pgi icl
-    Linux: gcc icc pgcc
-
-### TEST∆COMPILERS
-
-    TEST∆COMPILERS ← ⊂'vsc'
-
-A vector of the backend compilers to test when running the test suite. See 
-`COMPILERS` for valid options.
+    Windows: vsc
+    Linux: gcc
+    Mac OS X: clang
 
 ### BUILD∆PATH
 
@@ -125,21 +136,6 @@ intermediate files and the compiled objects. Should be a directory.
 
 The path to your Visual Studio installation. Make sure that you have installed 
 the C++ compiler. 
-
-### INTEL∆C∆PATH
-
-    INTEL∆C∆PATH ← 'C:\Program Files (x86)\IntelSWTools\'
-    INTEL∆C∆PATH ,← 'compilers_and_libraries_2016.0.110\windows\bin\'
-
-The location of your `bin` directory for the Intel C Compiler. Needed to use 
-Intel's C compiler on Windows. 
-
-### PGI∆PATH
-
-    PGI∆PATH ← 'C:\Program Files\PGI\win64\16.7\'
-
-The path to your PGI installation on Windows. Needed if you wish to use PGI 
-on Windows. You must have the OpenACC version of PGI. 
 
 ### VERSION
 
@@ -156,20 +152,19 @@ software in order to use the compiler:
 
 1. Dyalog APL 15.0 or later 64-bit Unicode edition
 
-2. A supported compiler
+2. Your Operating System's host compiler:
 
-    * PGI Accelerator 16.7+ (Preferred, Linux and Windows)
     * Visual Studio 2015 (Windows)
     * GCC (Linux)
-    * Intel C Compiler (Linux or Windows)
+    * Clang (Mac OS X)
 
-3. LibreSSL
+3. ArrayFire
 
-You will need to make sure that the LibreSSL libraries are visible
-and accessible to the compiler. For Windows this usually means putting 
-them in the directory where you are running/compiling your code. 
-For Linux, we generally expect them in /usr/local/lib64 or any other 
-standard location. 
+You should be able to find the appropriate ArrayFire installer included 
+in the release page for a given Co-dfns release. On Windows, if you want 
+to use the CUDA backend you will need to make sure that the appropriate 
+nvvm64 dll (something like `nvvm64_31_0.dll`) is copied into the directory 
+from which you will launch the compiler.
 
 ## Related Projects
 
