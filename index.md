@@ -230,6 +230,8 @@ this all contributions are assumed to be copyright transferred to Aaron Hsu.
 
 ## Publications
 
+[Co-dfns Compiler Architecture and Design (Video)](https://youtu.be/gcUWTa16Jc0)
+
 [The Key to a Data Parallel Compiler](http://dl.acm.org/citation.cfm?id=2935331)
 
 [Accelerating Information Experts Through Compiler Design](http://dl.acm.org/citation.cfm?id=2774968)
