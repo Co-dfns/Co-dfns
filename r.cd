@@ -1,4 +1,16 @@
-﻿rth,←'MF(com_o){ll(z,r,r,p);}DF(com_o){ll(z,r,l,p);}',nl
+﻿rth,←'#define comop(zz,rr,pp) com_o zz(rr,pp)',nl
+rth,←'#define dotop(zz,rr,ll,pp) dot_o zz(ll,rr,pp)',nl
+rth,←'#define mapop(zz,rr,pp) map_o zz(rr,pp)',nl
+rth,←'#define redop(zz,rr,pp) red_o zz(rr,pp)',nl
+rth,←'#define jotop(zz,rr,ll,pp) jot_o zz(ll,rr,pp)',nl
+rth,←'#define oupop(zz,rr,pp) oup_o zz(rr,pp)',nl
+rth,←'#define powop(zz,rr,ll,pp) pow_o zz(ll,rr,pp)',nl
+rth,←'#define rdfop(zz,rr,pp) rdf_o zz(rr,pp)',nl
+rth,←'#define rnkop(zz,rr,ll,pp) rnk_o zz(ll,rr,pp)',nl
+rth,←'#define scnop(zz,rr,pp) scn_o zz(rr,pp)',nl
+rth,←'#define scfop(zz,rr,pp) scf_o zz(rr,pp)',nl
+rth,←nl
+rth,←'MF(com_o){ll(z,r,r,p);}DF(com_o){ll(z,r,l,p);}',nl
 rth,←'DF(dot_o){I ra=r.r?r.r-1:0;if(r.r&&l.r&&l.s[0]!=r.s[ra])err(5);',nl
 rth,←' I la=l.r?l.r-1:0;A t(la+ra,r.s,r.v(0));if(t.r>4)err(10);',nl
 rth,←' t.s[ra]=1;DO(la,t.s[i+ra]=l.s[i+1])if(!cnt(t)){t.v=scl(0);z=t;R;}',nl
@@ -36,9 +48,3 @@ rth,←'  DO(c-1,rs.v=r.v(i+1);ll(zs,ls,rs,p);v(i+1)=zs.v(0);)',nl
 rth,←'  z.v=v;R;}',nl
 rth,←' DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);ll(zs,ls,rs,p);',nl
 rth,←'  v(i+1)=zs.v(0))z.v=v;}',nl
-rth,←'DF(oup_o){A t(l.r+r.r,r.s,r.v(0));if(t.r>4)err(10);',nl
-rth,←' DO(l.r,t.s[i+r.r]=l.s[i])if(!cnt(t)){t.v=scl(0);z=t;R;}',nl
-rth,←' array x(flat(l.v),1,cnt(l));array y(flat(r.v),cnt(r),1);',nl
-rth,←' dim4 ts(cnt(r),cnt(l));x=tile(x,(I)ts[0],1);y=tile(y,1,(I)ts[1]);',nl
-rth,←' mapop(mfn,ll,p);A xa(2,ts,x);A ya(2,ts,y);mfn(xa,xa,ya,p);',nl
-rth,←' t.v=array(xa.v,t.s);z=t;}',nl

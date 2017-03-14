@@ -1,4 +1,14 @@
-﻿rth,←'DF(red_f){if(l.r>1)err(4);z.r=r.r?r.r:1;z.s=r.s;',nl
+﻿rth,←'SF(nan_f,z.v=!(lv&&rv))',nl
+rth,←'SF(neq_f,z.v=lv!=rv)',nl
+rth,←'SF(nor_f,z.v=!(lv||rv))',nl
+rth,←'MF(not_f){z.r=r.r;z.s=r.s;z.v=!r.v;}',nl
+rth,←'DF(not_f){err(16);}',nl
+rth,←'MF(nqv_f){z.v=scl(r.r?(I)r.s[r.r-1]:1);z.r=0;z.s=dim4(1);}',nl
+rth,←'DF(nqv_f){z.r=0;z.s=eshp;I t=l.r==r.r&&l.s==r.s;',nl
+rth,←' if(t)t=allTrue<I>(l.v==r.v);z.v=scl(!t);}',nl
+rth,←'MF(par_f){err(16);}',nl
+rth,←'DF(par_f){err(16);}',nl
+rth,←'DF(red_f){if(l.r>1)err(4);z.r=r.r?r.r:1;z.s=r.s;',nl
 rth,←' if(l.r!=0&&l.s[0]!=1&&r.r!=0&&r.s[0]!=1&&l.s[0]!=r.s[0])err(5);',nl
 rth,←' array x=l.v;if(cnt(l)==1)x=tile(x,(I)r.s[0]);',nl
 rth,←' array y=r.v;if(r.s[0]==1)y=tile(y,(I)cnt(l));',nl
@@ -34,12 +44,3 @@ rth,←'DF(rho_f){if(l.r>1)err(11);z.r=(U)cnt(l);if(z.r>4)err(16);',nl
 rth,←' B s[4];l.v.as(s64).host(s);DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)]);',nl
 rth,←' B cz=cnt(z);B cr=cnt(r);if(!cz){z.v=scl(0);R;}',nl
 rth,←' z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',nl
-rth,←'MF(rol_f){z.r=r.r;z.s=r.s;if(!cnt(r)){z.v=r.v;R;}',nl
-rth,←' array rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}',nl
-rth,←'DF(rol_f){if(cnt(r)!=1||cnt(l)!=1)err(5);',nl
-rth,←' D lv=l.v.as(f64).scalar<D>();D rv=r.v.as(f64).scalar<D>();',nl
-rth,←' if(lv>rv||lv!=floor(lv)||rv!=floor(rv)||lv<0||rv<0)err(11);',nl
-rth,←' I s=(I)lv;I t=(I)rv;z.r=1;z.s=dim4(s);if(!s){z.v=scl(0);R;}',nl
-rth,←' std::vector<I> g(t);std::vector<I> d(t);',nl
-rth,←' ((1+range(t))*randu(t)).as(s32).host(g.data());',nl
-rth,←' DO(t,I j=g[i];if(i!=j)d[i]=d[j];d[j]=i)z.v=array(z.s,d.data());}',nl

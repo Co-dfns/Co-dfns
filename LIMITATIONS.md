@@ -18,7 +18,6 @@ or outstanding implementation or engineering work that has some recognizable
 and immediate benefit and thus will be considered part of the active set of 
 things on which we are working.
 
-* Find (⍷) is not supported
 * Laminate is not supported
 * Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented for negative and floating point values
