@@ -28,6 +28,7 @@ new←{⍉⍪f∆↑0 ⍺,⍵}                    ⋄ msk←{(t ⍵)∊⊂⍺⍺
 A←{('A'new ⍺⍺)wrap⊃⍪/⍵}             ⋄ Am←'A'msk       ⋄ As←'A'sel
 E←{('E'new ⍺⍺)wrap⊃⍪/⍵}             ⋄ Em←'E'msk       ⋄ Es←'E'sel
 F←{('F'new 1)wrap⊃⍪/(⊂0 f∆⍴⍬),⍵}    ⋄ Fm←'F'msk       ⋄ Fs←'F'sel
+G←{('G'new 0)wrap⊃⍪/⍵}              ⋄ Gm←'G'msk       ⋄ Gs←'G'sel
 M←{('M'new 0 '')wrap⊃⍪/(⊂0 f∆⍴⍬),⍵} ⋄ Mm←'M'msk       ⋄ Ms←'M'sel
 N←{'N'new 0 (⍎⍵)}                   ⋄ Nm←'N'msk       ⋄ Ns←'N'sel
 O←{('O'new ⍺⍺)wrap⊃⍪/⍵}             ⋄ Om←'O'msk       ⋄ Os←'O'sel
