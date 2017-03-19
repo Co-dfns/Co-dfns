@@ -32,7 +32,7 @@ display←{⎕IO ⎕ML←0 1
 }
 
 pp←{⍵⊣⎕←display ⍵⊣⍞←⍴⍵⊣⍞←'Shape: '}
-px←{⎕←##.codfns.Xml ⍵ ⋄ ⍵}
+px←{⍺←'' ⋄ ⎕←⍺ ⋄ ⎕←##.codfns.Xml ⍵ ⋄ ⍵}
 
 ⍝ Char vector from UTF-8 file ⍵.
 utf8get←{
