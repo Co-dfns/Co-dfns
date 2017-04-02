@@ -20,9 +20,9 @@ get←{⍺⍺⌷⍉⍵}
 wrap←⍪∘(⍉(1+1↑⍉)⍪1↓⍉)
 bind←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
 
-d_ t_ k_ n_ r_ s_ v_ y_ e_ l_←⍳6+f∆←4
-d←d_ get ⋄ t←t_ get ⋄ k←k_ get ⋄ n←n_ get ⋄ r←r_ get
-s←s_ get ⋄ v←v_ get ⋄ y←y_ get ⋄ e←e_ get ⋄ l←l_ get
+d_ t_ k_ n_ r_ s_ g_ v_ y_ e_ l_←⍳7+f∆←4
+d←d_ get ⋄ t←t_ get ⋄ k←k_ get ⋄ n←n_ get ⋄ r←r_ get ⋄ s←s_ get 
+g←g_ get ⋄ v←v_ get ⋄ y←y_ get ⋄ e←e_ get ⋄ l←l_ get
 
 new←{⍉⍪f∆↑0 ⍺,⍵}                    ⋄ msk←{(t ⍵)∊⊂⍺⍺} ⋄ sel←{(⍺⍺ msk ⍵)⌿⍵}
 A←{('A'new ⍺⍺)wrap⊃⍪/⍵}             ⋄ Am←'A'msk       ⋄ As←'A'sel
