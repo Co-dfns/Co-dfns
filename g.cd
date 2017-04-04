@@ -9,6 +9,9 @@ Of←{'EF(',(⊃n⍵),',',(⊃⊃v⍵),');',nl}
 Fd←{'FP(',(⊃n⍵),');',nl}
 F0←{'DF(',(⊃n⍵),'_f){',nl,'A*env[]={tenv};',nl}
 F1←{'DF(',(⊃n⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
+G0←{v←(⊃⊃v⍵)(''var)⊃⊃e⍵
+ 'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
+G1←{'z=',((⊃n⍵)(''var)⊃⊃e⍵),';R;}',nl}
 Z0←{'}',nl,nl}
 Z1←{'z=',((⊃n⍵)(''var)⊃e⍵),';}',nl,nl}
 Ze←{'}',nl,nl}
