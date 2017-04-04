@@ -21,7 +21,6 @@ things on which we are working.
 * Laminate is not supported
 * Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented for negative and floating point values
-* Conditional guards are not supported yet
 * Recursive functions are not supported yet
 * Bracket indexing of the form [X;...] is not supported, 
   though a single index array [X] is supported
