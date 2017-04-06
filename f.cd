@@ -42,5 +42,5 @@ fzs←(,1↑⊢)(1⊖(⊣((1 'Y',(2⌷⊣),⊢)⍪∘⍉∘⍪(3↑⊣),⊢)1⌽
 fz←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1↓⊢))(1,1↓Sm)⊂[0]⊢
 fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 
-tta←in∘fc∘pc∘mr⍣≡∘ca∘fe∘rt∘mr∘dn∘lf∘du∘df∘rd∘rn
+tta←in∘fc∘pc∘mr⍣≡∘ca∘fe∘lg∘nm∘rt∘mr∘dn∘lf∘du∘df∘rd∘rn
 tt←fd∘fz∘ff∘fg∘if∘ef∘vc∘rl∘av∘va∘lt∘nv∘fv∘ce∘ur∘tta
