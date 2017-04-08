@@ -1,7 +1,7 @@
 ﻿Sfn←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
 Prim←prim _as P _o Sfn
 Var←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
-Fn←{0<⊃c a e r←p←⍺(lbrc _s (Stmt _aew rbrc) _as F)⍵:p ⋄ c a ⍺ r}
+Fn←{0<⊃c a e r←p←⍺(lbrc _s (Gex _o Ex _o Fex Stmt rbrc) _as F)⍵:p ⋄ c a ⍺ r}
 Pfe←{⍺(lpar _s Fex _s rpar)⍵}
 Fnp←Fn _o (1 Var 'f') _o Prim _o Pfe
 Mop←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
@@ -22,7 +22,7 @@ Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
 Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
 Pex←lpar _s Ex _s rpar
 Gex←Ex _s grd _s Ex _as G
-Stmt←sep _any _s (Gex _o Ex _o Fex) _s (sep _any)
-Ns←nss _s (Stmt _aew nse) _s eot _as M
+Stmt←{⍺(sep _any _s (⍺⍺ _s (sep _some) _any) _s (⍺⍺ _opt) _s ⍵⍵)⍵}
+Ns←nss _s (Ex _o Fex Stmt nse) _s eot _as M
 
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
