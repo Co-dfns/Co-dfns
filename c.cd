@@ -14,7 +14,6 @@ _peek←{0<p←⊃⍺ ⍺⍺ ⍵:p ⋄ 0 ⍬ ⍺ ⍵}
 _noenv←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ r}
 _then←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c a e _←p←e (⍵⍵ _s eot) a:p ⋄ c a e r}
 _eat←{0=≢⍵:2 ⍬ ⍺ ⍵ ⋄ 0 (⍺⍺↑⍵) ⍺ (⍺⍺↓⍵)}
-_not←{0=⊃p←⍺ ⍺⍺ ⍵:2 ⍬ ⍺ ⍵ ⋄ 0 ⍬ ⍺ ⍵}
 
 ws←(' ',⎕UCS 9)_set
 aws←ws _any _ign

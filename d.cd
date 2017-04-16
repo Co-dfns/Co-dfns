@@ -1,7 +1,7 @@
 ﻿Sfn←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
 Prim←prim _as P _o Sfn
 Var←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
-Fn←{⍺(lbrc _s (Gex _o Ex _o Fex Stmts rbrc) _s rbrc _as F _noenv)⍵}
+Fn←{⍺(lbrc Blrp rbrc _then (Gex _o Ex _o Fex Stmts) _as F _noenv)⍵}
 Pfe←{⍺(lpar _s Fex _s rpar)⍵}
 Fnp←Fn _o (1 Var 'f') _o Prim _o Pfe
 Mop←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
@@ -22,9 +22,10 @@ Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
 Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
 Pex←lpar _s Ex _s rpar
 Gex←Ex _s grd _s Ex _as G
-Flrp←{⍺('{'_set _s ('}'_set Slrp))⍵}
-Slrp←{⍺(⍺⍺ _o (Flrp _s ∇) _o ('{'_set _not _s (1 _eat) _s ∇))⍵}
-Stmts←{⍺(sep _any _s (sep _o (⍵⍵ _peek) Slrp _then (⍺⍺)) _any)⍵}
-Ns←nss _s (Ex _o Fex Stmts nse) _s nse _s eot _as M
+Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
+Flrp←'{' _set Blrp ('}' _set) 
+Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
+Stmts←{⍺(sep _any _s (sep _o eot Slrp Flrp _then (⍺⍺)) _any)⍵}
+Ns←nss Blrp nse _then (Ex _o Fex Stmts) _s eot _as M
 
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
