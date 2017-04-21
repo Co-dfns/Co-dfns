@@ -1,31 +1,31 @@
 ﻿Sfn←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
-Prim←prim _as P _o Sfn
-Var←{⍺(aw _o (name _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
-Fn←{⍺(lbrc Blrp rbrc _then (Gex _o Ex _o Fex Stmts) _as F _noenv)⍵}
-Pfe←{⍺(lpar _s Fex _s rpar)⍵}
-Fnp←Fn _o (1 Var 'f') _o Prim _o Pfe
+Prim←prim _as P
+Vt←{((0⌷⍉⍺)⍳⍵)1⌷⍺⍪'' ¯1}
+Var←{⍺(aw _o (name _as ⌽ _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
+Num←float _o int _as (N∘⌽)
+Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A∘⌽)
+Pex←{⍺(rpar _s Ex _s lpar)⍵}
+Atom←Num _some _as ('n'A∘⌽) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex
+Idx←{⍺(rbrk _s Ex _s lbrk _s Atom _as ('i'E∘⌽))⍵}
+Fn←{⍺(rbrc Blrp lbrc _then (Gex _o Ex _o Fex Stmts∘⌽) _as F _noenv)⍵}
+Pfe←{⍺(rpar _s Fex _s lpar)⍵}
+Fnp←Prim _o (1 Var 'f') _o Fn _o Pfe
 Mop←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
-Atom←{⍺(Num _some _as ('n'A) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex)⍵}
 Dop1←Fnp _s (dop1 _as P) _s Fnp _as (2 O)
 Dop2←Fnp _s (dop2 _as P) _s Atom _as (2 O)
 Dop3←Atom _s (dop3 _as P) _s Fnp _as (2 O)
 Dop←Dop1 _o Dop2 _o Dop3 
 Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
-Bind←{⍺(name _enc _s gets _s ⍺⍺ _env (⍵⍵{(⊃⍵)⍺⍺⍪⍺}) _as bind)⍵}
-Fex←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fnp)⍵}
-Vt←{((0⌷⍉⍺)⍳⊂⍵)1⌷⍺⍪'' ¯1}
-Num←float _o int _as N
-Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A)
-Mon←{⍺(Fex _s Ex _as (1 E))⍵}
-Dya←{⍺((Idx _o Atom) _s Fex _s Ex _as (2 E))⍵}
-Idx←{⍺(Atom _s lbrk _s Ex _s rbrk _as ('i'E))⍵}
-Ex←{⍺(∇ Bind 0 _o Dya _o Mon _o Idx _o Atom)⍵}
-Pex←lpar _s Ex _s rpar
-Gex←Ex _s grd _s Ex _as G
+Bind←{⍺(gets _s (name _as ⌽) _env (⍺⍺{(⊃⌽⍵)⍺⍺⍪⍺}) _as (⍵⍵ new 'b',1↓⊢))⍵}
+Fex←Fnp
+⍝ Fex←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fnp)⍵}
+App←Fex _s (Idx _o Atom _opt) _as {(≢⍵)E⌽⍵}
+Ex←Idx _o Atom _s {⍺(0 Bind 'E' _o App _s ∇ _opt)⍵} _as (⊃wrap/∘⌽)
+Gex←Ex _s grd _s Ex _as (G∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
 Flrp←'{' _set Blrp ('}' _set) 
 Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
-Stmts←{⍺(sep _any _s (sep _o eot Slrp Flrp _then (⍺⍺)) _any)⍵}
+Stmts←{⍺(sep _any _s (sep _o eot Slrp Flrp _then (⍺⍺∘#.util.pp∘⌽)) _any)⍵}
 Ns←nss Blrp nse _then (Ex _o Fex Stmts) _s eot _as M
 
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
