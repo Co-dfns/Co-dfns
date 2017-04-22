@@ -10,22 +10,21 @@ Idx←{⍺(rbrk _s Ex _s lbrk _s Atom _as ('i'E∘⌽))⍵}
 Fn←{⍺(rbrc Blrp lbrc _then (Gex _o Ex _o Fex Stmts∘⌽) _as F _noenv)⍵}
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
 Fnp←Prim _o (1 Var 'f') _o Fn _o Pfe
-Mop←(jot _s dot _as P) _s Fnp _as (1 O∘⌽) _o (Fnp _s (mop _as P) _as (1 O))
-Dop1←Fnp _s (dop1 _as P) _s Fnp _as (2 O)
-Dop2←Fnp _s (dop2 _as P) _s Atom _as (2 O)
-Dop3←Atom _s (dop3 _as P) _s Fnp _as (2 O)
-Dop←Dop1 _o Dop2 _o Dop3 
-Bop←{⍺(Prim _s lbrk _s Ex _s rbrk _as ('i'O))⍵}
+Mop←{⍺((mop _as P) _s Afx _as (1 O))⍵}
+Dop1←{⍺((dop1 _as P) _s Afx _as (2 O∘⌽))⍵}
+Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (2 O∘⌽))⍵}
+Dop3←(dop3 _as P) _s Atom _as (2 O∘⌽) _o (dot _s jot _as P∘⌽ _as (1 O))
+Bop←{⍺(rbrk _s Ex _s lbrk _s Afx _as ('i'O∘⌽))⍵}
+Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⊃wrap/∘⌽)) _o Dop2 _o Bop
 Bind←{⍺(gets _s (name _as ⌽) _env (⍺⍺{(⊃⌽⍵)⍺⍺⍪⍺}) _as (⍵⍵ new 'b',1↓⊢))⍵}
-Fex←Fnp
-⍝ Fex←{⍺(∇ Bind 1 _o Dop _o Mop _o Bop _o Fnp)⍵}
-App←Fex _s (Idx _o Atom _opt) _as {(≢⍵)E⌽⍵}
+Fex←Afx _s (1 Bind 'F' _any) _as (⊃wrap/∘⌽)
+App←Afx _s (Idx _o Atom _opt) _as {(≢⍵)E⌽⍵}
 Ex←Idx _o Atom _s {⍺(0 Bind 'E' _o App _s ∇ _opt)⍵} _as (⊃wrap/∘⌽)
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
 Flrp←'{' _set Blrp ('}' _set) 
 Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
-Stmts←{⍺(sep _any _s (sep _o eot Slrp Flrp _then (⍺⍺∘#.util.pp∘⌽)) _any)⍵}
+Stmts←{⍺(sep _any _s (sep _o eot Slrp Flrp _then (⍺⍺∘⌽)) _any)⍵}
 Ns←nss Blrp nse _then (Ex _o Fex Stmts) _s eot _as M
 
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
