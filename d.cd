@@ -7,7 +7,7 @@ Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Atom←Num _some _as ('n'A∘⌽) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex
 Idx←{⍺(rbrk _s Ex _s lbrk _s Atom _as ('i'E∘⌽))⍵}
-Fn←{⍺(rbrc Blrp lbrc _then (Gex _o Ex _o Fex Stmts∘⌽) _as F _noenv)⍵}
+Fn←{⍺(rbrc Blrp lbrc _then (Gex _o Ex _o Fex Stmts∘(⌽1↓¯1↓⊢)) _as F _noenv)⍵}
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
 Fnp←Prim _o (1 Var 'f') _o Fn _o Pfe
 Mop←{⍺((mop _as P) _s Afx _as (1 O))⍵}
