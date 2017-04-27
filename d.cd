@@ -1,7 +1,7 @@
 ﻿Sfn←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
 Prim←prim _as P
 Vt←{((0⌷⍉⍺)⍳⍵)1⌷⍺⍪'' ¯1}
-Var←{⍺(aw _o (name _as ⌽ _t (⍺⍺=Vt)) _as (⍵⍵ V))⍵}
+Var←{⍺(aw _o (name _as ⌽ _t (⍺⍺=Vt)) _as (⍵⍵ V∘,∘⊃))⍵}
 Num←float _o int _as (N∘⌽)
 Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
