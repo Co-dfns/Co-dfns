@@ -32,9 +32,8 @@ fet←(d,'V'0,3↓⊢)⍤1 at(0,1↓Em∨Om∨Am)(d,'Av',3↓⊢)⍤1 at(Em∧'b
 fee←(⍪/⌽)(Mm∨Em∨Om∨Am)blg⊢((⊃∘⌽⊢)(⊂(d--⍨∘⊃),1↓⍤1⊢)∘fet⊣⍪¯1↓⍤1⊢)⌸⊃,⍨1↓⊢
 fe←(⊃⍪/)(+⍀d≤g)(⊂(⊢↑⍨1=∘≢⊢)⍪∘⊃∘fee⊢)⌸⊢
 can←(+\Am∨Om)((,1↑⊢),∘(⊂(¯1+2⌊≢)⊃(⊂∘⊂⊃),⊂)∘n 1↓⊢)⌸⊢
-cam←Om∧'f'∊⍨k
-cas←(Am(1↑⊢)⍪(Mm∨Am)blg⊢)∨¯1⌽cam
-ca←(can (cam∨cas∨Am)(⌿∘⊢)⊢)(Am∨cam)mnd⊢⍬,∘⊂⍨(~cas)(⌿∘⊢)⊢
+cas←(¯1⌽(Am∨Om)∧'vf'∊⍨k)∨(↓prf)∊∘r⊢(⌿⍨)Am∧'n'∊⍨k
+ca←(can⊢(⌿⍨)cas∨Am∨Om∧'f'∊⍨k)⊣at(Am∨Om∧'f'∊⍨k)⍬,∘⊂⍨⊢(⌿⍨∘~)cas
 pcc←(⊂⊢(⌿⍨)Am∨Om∧'f'∊⍨k)∘((⍳∘∪⍨n)⌷⍤0 2(1⌈≢)↑⊢)∘((1+⊃),1↓⍤1⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
 pcs←(d,'V','f',(⊃¨v),r,s,(⊂⍬),⍨∘⍪g)sub Om
 pcv←(d,'V','a',(⊃v),r,s,(⊂⍬),⍨∘⍪g)sub (Am∧'v'∊⍨k)
