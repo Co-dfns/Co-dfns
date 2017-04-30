@@ -38,8 +38,8 @@ pcc←(⊂⊢(⌿⍨)Am∨Om∧'f'∊⍨k)∘((⍳∘∪⍨n)⌷⍤0 2(1⌈≢)�
 pcs←(d,'V','f',(⊃¨v),r,s,(⊂⍬),⍨∘⍪g)at Om
 pcv←(d,'V','a',(⊃¨v),r,s,(⊂⍬),⍨∘⍪g)at (Am∧'v'∊⍨k)
 pcb←((,∧.(=∨0=⊣)∘⍪)⍤2 1⍨∘↑∘r Ms⍪Fs)pcc⍤1((⊢(⌿⍨)(d=g)∧Am∨Em∨Om)¨⊣)
-pcd←((~(Om∧('f'∊⍨k)∧1≠d)∨Am∧d=g)(⌿∘⊢)⊢)∘(⊃⍪/)
-pc←pcd scp(pcb(pcv∘pcs(((1⌈≢)↑⊢)⊣)⌷⍤0 2⍨(n⊣)⍳n)sub(Vm∧n∊∘n⊣)¨⊣)⊢
+pc←(⊃⍪/)scp(pcb(pcv∘pcs(((1⌈≢)↑⊢)⊣)⌷⍤0 2⍨(n⊣)⍳n)sub(Vm∧n∊∘n⊣)¨⊣)⊢
+da←⊢(⌿⍨∘~)(Am∧d=g)∨Om∧('f'∊⍨k)∧1≠d
 fce←(⊃∘n Ps){⊂⍎' ⍵',⍨(≢⍵)⊃''(⍺,'⊃')('⊃',⍺,'/')⊣⍵}(v As)
 fcm←(∧/Em∨Am∨Pm)∧'u'≢∘⊃∘⊃k
 fc←((⊃⍪/)(((d,'An',3↓¯1↓,)1↑⊢),fce)¨sub(fcm¨))('MFOE'∊⍨t)⊂[0]⊢
