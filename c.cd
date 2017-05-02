@@ -38,8 +38,8 @@ mop←'¨/⌿⍀\⍨'_set
 dop1←'.⍣∘'_set ⋄ dop2←'⍤⍣∘' _set ⋄ dop3←'∘'_set
 eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs←digits _some ⋄ odigs←digits _any
-int←aws _s (him _opt) _s digs _s aws
-float←aws _s (int _s dot _s odigs _o (dot _s digs)) _s aws
+int←aws _s digs _s (him _opt) _s aws
+float←aws _s (odigs _s dot _s int _o (digs _s dot)) _s aws
 name←aws _s alpha _s (alpha _o digits _any) _s aws
 aw←aws _s ('⍺⍵'_set) _s aws
 sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
