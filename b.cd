@@ -19,6 +19,7 @@ vsc←{⎕CMD ('%comspec% /C ',vsc1,vsc2,vsc3,vsc4)⍵}
 get←{⍺⍺⌷⍉⍵}
 wrap←⍪∘(⍉(1+1↑⍉)⍪1↓⍉)
 bind←{n _ e←⍵ ⋄ (0 n_⌷e)←⊂n ⋄ e}
+at←{⍺←⊢ ⋄ A⊣((,B)⌿(r A)⍴A)←⍺ ⍺⍺ (,B)⌿((r←(≢⍴B←⍵⍵ ⍵)((×/↑),↓)⍴)A)⍴(A←⍵)}
 
 d_ t_ k_ n_ r_ s_ g_ v_ y_ e_ l_←⍳7+f∆←4
 d←d_ get ⋄ t←t_ get ⋄ k←k_ get ⋄ n←n_ get ⋄ r←r_ get ⋄ s←s_ get 

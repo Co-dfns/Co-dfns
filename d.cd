@@ -7,9 +7,13 @@ Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Atom←Num _some _as ('n'A∘⌽) _o Strand _o (0 Var'a' _as ('v'A)) _o Pex
 Idx←{⍺(rbrk _s Ex _s lbrk _s Atom _as ('i'E∘⌽))⍵}
-Fn←{⍺(rbrc Blrp lbrc _then (Gex _o Ex _o Fex Stmts∘(⌽1↓¯1↓⊢)) _as F _noenv)⍵}
+Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
+Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
+Fn←{ns←n z⌿⍨m←{(Fm ⍵)∧1∊⍨k⍵}z←⊃⍪/⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
+ p←⍺∘(Gex _o Ex _o Fex Stmts _then Fn)¨ns ⋄ 0<c←⌈/⊃¨p:c '' ⍺ ⍵
+ 0(⍪/(⊂0 4⍴⍬),⍨p{((3↑⍵),⊂'')⍪⍵((d+∘⊃⊣),1↓⍤1⊢)wrap⊃⍪/1⊃⍺}¨at{m}↓z) ⍺ ''}
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
-Fnp←Prim _o (1 Var 'f') _o Fn _o Pfe
+Fnp←Prim _o (1 Var 'f') _o (rbrc Blrp lbrc _as ('F'new 1,∘⊂∘⌽1↓¯1↓⊢)) _o Pfe
 Mop←{⍺((mop _as P) _s Afx _as (1 O))⍵}
 Dop1←{⍺((dop1 _as P) _s Afx _as (2 O∘⌽))⍵}
 Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (2 O∘⌽))⍵}
@@ -21,10 +25,7 @@ Fex←Afx _s (1 Bind 'F' _any) _as (⊃wrap/∘⌽)
 App←Afx _s (Idx _o Atom _opt) _as {(≢⍵)E⌽⍵}
 Ex←Idx _o Atom _s {⍺(0 Bind 'E' _o App _s ∇ _opt)⍵} _as (⊃wrap/∘⌽)
 Gex←Ex _s grd _s Ex _as (G∘⌽)
-Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
-Flrp←'{' _set Blrp ('}' _set) 
-Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
-Stmts←{⍺(sep _any _s (sep _o eot Slrp Flrp _then (⍺⍺∘⌽)) _any)⍵}
-Ns←nss Blrp nse _then (Ex _o Fex Stmts) _s eot _as M
+Stmts←{⍺(sep _any _s (sep _o eot Slrp (lbrc Blrp rbrc) _then (⍺⍺∘⌽)) _any)⍵}
+Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as M
 
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}

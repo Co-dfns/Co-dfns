@@ -24,8 +24,8 @@ gets←aws _s('←'_tk)_s aws
 him←'¯'_set
 dot←'.'_set
 jot←'∘'_set
-lbrc←aws _s('{'_tk)_s aws
-rbrc←aws _s('}'_tk)_s aws
+lbrc←aws _s('{'_set)_s aws
+rbrc←aws _s('}'_set)_s aws
 lpar←aws _s('('_tk)_s aws _ign
 rpar←aws _s(')'_tk)_s aws _ign
 lbrk←aws _s('['_tk)_s aws _ign
