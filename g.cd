@@ -11,9 +11,10 @@ F0←{'DF(',(⊃n⍵),'_f){',nl,'A*env[]={tenv};',nl}
 F1←{'DF(',(⊃n⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
 G0←{v←(⊃⊃v⍵)(''var)1⊃⊃e⍵
  'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
-G1←{'z=',((⊃n⍵)(''var)⊃⊃e⍵),';R;}',nl}
+G1←{'z=',((⊃n⍵)(''var)⊃⊃e⍵),';goto L',(⍕⊃l⍵),';}',nl}
+L0←{'z=',a,';L',(⍕⊃n⍵),':',(a←(1⊃⊃v⍵)(''var)1⊃⊃e⍵),'=z;',nl}
 Z0←{'}',nl,nl}
-Z1←{'z=',((⊃n⍵)(''var)⊃e⍵),';}',nl,nl}
+Z1←{'}',nl,nl}
 Ze←{'}',nl,nl}
 M0←{rth,('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
 S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
