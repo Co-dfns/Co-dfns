@@ -5,11 +5,13 @@ limitations exist with the current release.
 
 ## General Guidance on Using the Compiler
 
-Generally speaking, the current version of Co-dfns works best if you focus
-on writing pure functional programs written in dfns that do not make use 
-of :, ::, or recursion and that use classic APL primitives (/ . ∘. and 
+Generally speaking, Co-dfns works best if you focus on writing pure, 
+functional programs written in dfns that make limited use 
+of `:` or recursion and that use classic APL primitives (/ . ∘. and 
 so forth) over simple numeric arrays working over data sizes that 
-exceed 1 - 10 MB.
+exceed 1 - 10 MB. While recursion and guards are supported, it is best if 
+you restrict their use to outer-most functions, since they are significantly 
+less efficient on the GPU than APL primitives. 
 
 ## High Priority Limitations
 
@@ -21,11 +23,9 @@ things on which we are working.
 * Laminate is not supported
 * Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented for negative and floating point values
-* Recursive functions are not supported yet
 * Bracket indexing of the form [X;...] is not supported, 
   though a single index array [X] is supported
 * User-defined operators are not supported yet
-* Assignment inside of an expression is not supported yet
 * Indexed assignment and selective assignment are not supported yet
 
 ## Low Priority Limitations
