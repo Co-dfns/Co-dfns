@@ -1,4 +1,8 @@
-﻿da←⊢(⌿⍨∘~)(Am∧d=g)∨Om∧('f'∊⍨k)∧1≠d
+﻿pcc←(⊂⊢(⌿⍨)Am∨Om∧'f'∊⍨k)∘((⍳∘∪⍨n)⌷⍤0 2(1⌈≢)↑⊢)∘(⊃⍪⌿)∘⌽(⌿∘⊢)
+pcb←((,∧.(=∨0=⊣)∘⍪)⍤2 1⍨∘↑∘r Ms⍪Fs)pcc⍤1((⊢(⌿⍨)(d=g)∧Am∨Em∨Om)¨scp)
+pcv←(d,'V',('af'⊃¨∘⊂⍨Om),(⊃¨v),r,s,(⊂⍬),⍨∘⍪g)at(Om∨Am∧'v'∊⍨k)
+pc←(⊃⍪/)pcb{(pcv d(⊣,1↓⍤1⊢)(⍺↑⍨1⌈≢⍺)⌷⍤0 2⍨(n⍺)⍳n)at(Vm∧(n⍺)∊⍨n)⍵}¨scp
+da←⊢(⌿⍨∘~)(Am∧d=g)∨Om∧('f'∊⍨k)∧1≠d
 fce←(⊃∘n Ps){⊂⍎' ⍵',⍨(≢⍵)⊃''(⍺,'⊃')('⊃',⍺,'/')⊣⍵}(v As)
 fcm←(∧/Em∨Am∨Pm)∧'u'≢∘⊃∘⊃k
 fc←((⊃⍪/)(((d,'An',3↓¯1↓,)1↑⊢),fce)¨at(fcm¨))('MFOE'∊⍨t)⊂[0]⊢
@@ -39,5 +43,5 @@ fzs←(,1↑⊢)(1⊖(⊣((1 'Y',(2⌷⊣),⊢)⍪∘⍉∘⍪(3↑⊣),⊢)1⌽
 fz←((⊃⍪/)(1↑⊢),(((2=d)(fzs⍪(1↓∘~⊣)(⌿∘⊢)1↓⊢)⊢)¨1↓⊢))(1,1↓Sm)⊂[0]⊢
 fd←(1↑⊢)⍪((1,'Fd',3↓⊢)⍤1 Fs)⍪1↓⊢
 
-tta←(fc∘da∘(pc⍣≡)∘mr⍣≡)∘in⍣3∘lj∘ca∘fe∘lg∘nm∘rt∘mr∘dn∘lf∘du∘df∘rd∘rn
+tta←(fc∘da∘(pc⍣≡)∘mr⍣≡)∘in⍣3∘sd∘lj∘ca∘fe∘lg∘nm∘rt∘mr∘dn∘lf∘du∘df∘rd∘rn
 tt←fd∘fz∘ff∘fg∘if∘ef∘vc∘rl∘av∘va∘lt∘nv∘fv∘ll∘ce∘ur∘tta
