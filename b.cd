@@ -10,11 +10,12 @@ vsco,←'/D "NOMINMAX" /D "AF_UNIFIED" /D "AF_DEBUG" '
 vslo←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
 vslo,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af.lib" '
 vslo,←'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
-vsc1←{'""',VISUAL∆STUDIO∆PATH,'VC\vcvarsall.bat" amd64 && cl ',vsco,'/fast '}
+vsc0←{'""',VISUAL∆STUDIO∆PATH,'VC\Auxiliary\Build\vcvarsall.bat" amd64 '}
+vsc1←{' && cl ',vsco,'/fast '}
 vsc2←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.cpp" '}
 vsc3←{vslo,'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
 vsc4←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
-vsc←{⎕CMD ('%comspec% /C ',vsc1,vsc2,vsc3,vsc4)⍵}
+vsc←{⎕CMD ('%comspec% /C ',vsc0,vsc1,vsc2,vsc3,vsc4)⍵}
 
 get←{⍺⍺⌷⍉⍵}
 wrap←⍪∘(⍉(1+1↑⍉)⍪1↓⍉)

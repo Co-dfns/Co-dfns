@@ -17,7 +17,7 @@
 VERSION←2017 6 0
 COMPILER←'vsc'
 BUILD∆PATH←'build'
-VISUAL∆STUDIO∆PATH←'C:\Program Files (x86)\Microsoft Visual Studio 14.0\'
+VISUAL∆STUDIO∆PATH←'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\'
 Cmp←{_←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
  _←(⍎COMPILER)⍺⊣(BUILD∆PATH,(dirc⍬),⍺,'_',COMPILER,'.cpp')put⍨gc tt⊃a n←ps ⍵
  22::'COMPILE ERROR'⎕SIGNAL 22
