@@ -137,6 +137,12 @@ intermediate files and the compiled objects. Should be a directory.
 The path to your Visual Studio installation. Make sure that you have installed 
 the C++ compiler. 
 
+### AF∆PREFIX
+
+    AF∆PREFIX←'/usr/local'
+
+This path should point to the prefix for your ArrayFire installation on Linux/Mac.
+
 ### VERSION
 
     Major Minor Patch ← VERSION
