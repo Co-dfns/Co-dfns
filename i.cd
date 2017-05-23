@@ -10,15 +10,15 @@ rth,←' n##_o(FN&l,A&r,A*p[]):DOP(nm,sm,sd,l,r,p){}};',nl
 rth,←'#define MT(n)',nl
 rth,←'#define DI(n) inline array n::id(dim4 s)',nl
 rth,←'#define ID(n,x,t) DI(n##_f){R constant(x,s,t);}',nl
-rth,←'#define MF(n) inline V n::operator()(A&z,A&r,A*p[])',nl
-rth,←'#define DF(n) inline V n::operator()(A&z,A&l,A&r,A*p[])',nl
-rth,←'#define SF(n,x) inline V n::operator()(A&z,A&l,A&r,A*p[]){\',nl
+rth,←'#define MF(n) inline V n::operator()(A&z,const A&r,A*p[])',nl
+rth,←'#define DF(n) inline V n::operator()(A&z,const A&l,const A&r,A*p[])',nl
+rth,←'#define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r,A*p[]){\',nl
 rth,←' if(l.r==r.r&&l.s==r.s){\',nl
-rth,←'  z.r=l.r;z.s=l.s;array&lv=l.v;array&rv=r.v;x;R;}\',nl
+rth,←'  z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\',nl
 rth,←' if(!l.r){\',nl
-rth,←'  z.r=r.r;z.s=r.s;array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
+rth,←'  z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',nl
 rth,←' if(!r.r){\',nl
-rth,←'  z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);array&lv=l.v;x;R;}\',nl
+rth,←'  z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\',nl
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',nl
 rth,←'#define FP(n) NM(n,"",0,0,MT,MF,DF);MF(n##_f){n##fn(z,A(),r,p);}',nl
 rth,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl
@@ -32,8 +32,8 @@ rth,←'int isinit=0;dim4 eshp=dim4(0,(B*)NULL);',nl
 rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',nl
 rth,←' FN():nm(""),sm(0),sd(0){}',nl
 rth,←' virtual array id(dim4 s){err(16);R array();}',nl
-rth,←' virtual V operator()(A&z,A&r,A*p[]){err(99);}',nl
-rth,←' virtual V operator()(A&z,A&l,A&r,A*p[]){err(99);}};',nl
+rth,←' virtual V operator()(A&z,const A&r,A*p[]){err(99);}',nl
+rth,←' virtual V operator()(A&z,const A&l,const A&r,A*p[]){err(99);}};',nl
 rth,←'FN MTFN;',nl
 rth,←'S MOP:FN{FN&ll;A**pp;',nl
 rth,←' MOP(STR nm,I sm,I sd,FN&ll,A*pp[]):FN(nm,sm,sd),ll(ll),pp(pp){}};',nl
