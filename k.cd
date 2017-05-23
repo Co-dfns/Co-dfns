@@ -1,29 +1,29 @@
-﻿rth,←'NM(add,"add",1,1,DI,MF,DF)NM(sub,"sub",1,1,DI,MF,DF)',nl
-rth,←'NM(mul,"mul",1,1,DI,MF,DF)NM(div,"div",1,1,DI,MF,DF)',nl
-rth,←'NM(max,"max",1,1,DI,MF,DF)NM(min,"min",1,1,DI,MF,DF)',nl
-rth,←'NM(exp,"exp",1,1,DI,MF,DF)NM(log,"log",1,1,MT,MF,DF)',nl
-rth,←'NM(fac,"fac",1,1,DI,MF,DF)NM(res,"res",1,1,DI,MF,DF)',nl
-rth,←'NM(and,"and",1,1,DI,MT,DF)NM(lor,"lor",1,1,DI,MT,DF)',nl
-rth,←'NM(lth,"lth",1,1,DI,MT,DF)NM(lte,"lte",1,1,DI,MT,DF)',nl
-rth,←'NM(gth,"gth",1,1,DI,MT,DF)NM(gte,"gte",1,1,DI,MT,DF)',nl
-rth,←'NM(eql,"eql",1,1,DI,MT,DF)NM(neq,"neq",1,1,DI,MT,DF)',nl
-rth,←'NM(nan,"nan",1,1,MT,MT,DF)NM(nor,"nor",1,1,MT,MT,DF)',nl
-rth,←'NM(cir,"cir",1,1,MT,MF,DF)NM(not,"not",1,0,MT,MF,DF)',nl
-rth,←'NM(rot,"rot",0,0,DI,MF,DF)NM(rtf,"rtf",0,0,DI,MF,DF)',nl
-rth,←'NM(red,"red",0,0,DI,MT,DF)NM(rdf,"rdf",0,0,DI,MT,DF)',nl
-rth,←'NM(scn,"scn",0,0,DI,MT,DF)NM(scf,"scf",0,0,DI,MT,DF)',nl
-rth,←'NM(enc,"enc",0,0,DI,MT,DF)NM(dec,"dec",0,0,MT,MT,DF)',nl
-rth,←'NM(sqd,"sqd",0,0,MT,MF,DF)NM(brk,"brk",0,0,MT,MF,DF)',nl
-rth,←'NM(iot,"iot",0,0,MT,MF,DF)NM(rho,"rho",0,0,MT,MF,DF)',nl
-rth,←'NM(cat,"cat",0,0,MT,MF,DF)NM(ctf,"ctf",0,0,MT,MF,DF)',nl
-rth,←'NM(trn,"trn",0,0,MT,MF,DF)NM(rol,"rol",1,0,MT,MF,DF)',nl
-rth,←'NM(dis,"dis",0,0,MT,MF,DF)NM(par,"par",0,0,MT,MF,DF)',nl
-rth,←'NM(eqv,"eqv",0,0,MT,MF,DF)NM(nqv,"nqv",0,0,MT,MF,DF)',nl
-rth,←'NM(rgt,"rgt",0,0,MT,MF,DF)NM(lft,"lft",0,0,MT,MF,DF)',nl
-rth,←'NM(tke,"tke",0,0,MT,MF,DF)NM(drp,"drp",0,0,MT,MF,DF)',nl
-rth,←'NM(unq,"unq",0,0,MT,MF,DF)NM(int,"int",0,0,MT,MT,DF)',nl
-rth,←'NM(gdu,"gdu",0,0,MT,MF,DF)NM(gdd,"gdd",0,0,MT,MF,DF)',nl
-rth,←'NM(mem,"mem",0,0,MT,MF,DF)NM(fnd,"fnd",0,0,MT,MT,DF)',nl
+﻿rth,←'NM(add,"add",1,1,DID,MFD,DFD)NM(sub,"sub",1,1,DID,MFD,DFD)',nl
+rth,←'NM(mul,"mul",1,1,DID,MFD,DFD)NM(div,"div",1,1,DID,MFD,DFD)',nl
+rth,←'NM(max,"max",1,1,DID,MFD,DFD)NM(min,"min",1,1,DID,MFD,DFD)',nl
+rth,←'NM(exp,"exp",1,1,DID,MFD,DFD)NM(log,"log",1,1,MT ,MFD,DFD)',nl
+rth,←'NM(fac,"fac",1,1,DID,MFD,DFD)NM(res,"res",1,1,DID,MFD,DFD)',nl
+rth,←'NM(and,"and",1,1,DID,MT ,DFD)NM(lor,"lor",1,1,DID,MT ,DFD)',nl
+rth,←'NM(lth,"lth",1,1,DID,MT ,DFD)NM(lte,"lte",1,1,DID,MT ,DFD)',nl
+rth,←'NM(gth,"gth",1,1,DID,MT ,DFD)NM(gte,"gte",1,1,DID,MT ,DFD)',nl
+rth,←'NM(eql,"eql",1,1,DID,MT ,DFD)NM(neq,"neq",1,1,DID,MT ,DFD)',nl
+rth,←'NM(nan,"nan",1,1,MT ,MT ,DFD)NM(nor,"nor",1,1,MT ,MT ,DFD)',nl
+rth,←'NM(cir,"cir",1,1,MT ,MFD,DFD)NM(not,"not",1,0,MT ,MFD,DFD)',nl
+rth,←'NM(rot,"rot",0,0,DID,MFD,DFD)NM(rtf,"rtf",0,0,DID,MFD,DFD)',nl
+rth,←'NM(red,"red",0,0,DID,MT ,DFD)NM(rdf,"rdf",0,0,DID,MT ,DFD)',nl
+rth,←'NM(scn,"scn",0,0,DID,MT ,DFD)NM(scf,"scf",0,0,DID,MT ,DFD)',nl
+rth,←'NM(enc,"enc",0,0,DID,MT ,DFD)NM(dec,"dec",0,0,MT ,MT ,DFD)',nl
+rth,←'NM(sqd,"sqd",0,0,MT ,MFD,DFD)NM(brk,"brk",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(iot,"iot",0,0,MT ,MFD,DFD)NM(rho,"rho",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(cat,"cat",0,0,MT ,MFD,DFD)NM(ctf,"ctf",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(trn,"trn",0,0,MT ,MFD,DFD)NM(rol,"rol",1,0,MT ,MFD,DFD)',nl
+rth,←'NM(dis,"dis",0,0,MT ,MFD,DFD)NM(par,"par",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(eqv,"eqv",0,0,MT ,MFD,DFD)NM(nqv,"nqv",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(rgt,"rgt",0,0,MT ,MFD,DFD)NM(lft,"lft",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(tke,"tke",0,0,MT ,MFD,DFD)NM(drp,"drp",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(unq,"unq",0,0,MT ,MFD,DFD)NM(int,"int",0,0,MT ,MT ,DFD)',nl
+rth,←'NM(gdu,"gdu",0,0,MT ,MFD,DFD)NM(gdd,"gdd",0,0,MT ,MFD,DFD)',nl
+rth,←'NM(mem,"mem",0,0,MT ,MFD,DFD)NM(fnd,"fnd",0,0,MT ,MT ,DFD)',nl
 rth,←nl
 rth,←'ID(add,0,s32)ID(sub,0,s32)ID(mul,1,s32)ID(div,1,s32)ID(res,0,s32)',nl
 rth,←'ID(min,DBL_MAX,f64)ID(max,-DBL_MAX,f64)ID(exp,1,s32)ID(fac,1,s32)',nl
@@ -31,15 +31,15 @@ rth,←'ID(and,1,s32)ID(lor,0,s32)ID(lth,0,s32)ID(lte,1,s32)ID(eql,1,s32)',nl
 rth,←'ID(gth,0,s32)ID(gte,1,s32)ID(neq,0,s32)ID(enc,0,s32)ID(red,1,s32)',nl
 rth,←'ID(rdf,1,s32)ID(scn,1,s32)ID(scf,1,s32)ID(rot,0,s32)ID(rtf,0,s32)',nl
 rth,←nl
-rth,←'OM(com,"com",scm(l),scd(l),MF,DF)',nl
-rth,←'OD(dot,"dot",0,0,MT,DF)',nl
-rth,←'OD(jot,"jot",(scm(l)&&scm(r)),(scd(l)&&scd(r)),MF,DF)',nl
-rth,←'OM(map,"map",1,1,MF,DF)',nl
-rth,←'OM(oup,"oup",0,0,MT,DF)',nl
-rth,←'OD(pow,"pow",scm(l),scd(l),MF,DF)',nl
-rth,←'OM(red,"red",0,0,MF,DF)',nl
-rth,←'OM(rdf,"rdf",0,0,MF,DF)',nl
-rth,←'OD(rnk,"rnk",scm(l),0,MF,DF)',nl
-rth,←'OM(scn,"scn",1,1,MF,MT)',nl
-rth,←'OM(scf,"scf",1,1,MF,MT)',nl
+rth,←'OM(com,"com",scm(l),scd(l),MFD,DFD)',nl
+rth,←'OD(dot,"dot",0,0,MT,DFD)',nl
+rth,←'OD(jot,"jot",(scm(l)&&scm(r)),(scd(l)&&scd(r)),MFD,DFD)',nl
+rth,←'OM(map,"map",1,1,MFD,DFD)',nl
+rth,←'OM(oup,"oup",0,0,MT,DFD)',nl
+rth,←'OD(pow,"pow",scm(l),scd(l),MFD,DFD)',nl
+rth,←'OM(red,"red",0,0,MFD,DFD)',nl
+rth,←'OM(rdf,"rdf",0,0,MFD,DFD)',nl
+rth,←'OD(rnk,"rnk",scm(l),0,MFD,DFD)',nl
+rth,←'OM(scn,"scn",1,1,MFD,MT)',nl
+rth,←'OM(scf,"scf",1,1,MFD,MT)',nl
 rth,←nl
