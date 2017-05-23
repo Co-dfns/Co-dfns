@@ -36,7 +36,7 @@ rth,←'std::vector<std::unique_ptr<Window>> wins;',nl
 rth,←'EXPORT Window&w_prep(char *k){std::string s(k);',nl
 rth,←' auto it=std::find(wids.begin(),wids.end(),s);',nl
 rth,←' if(it==wids.end()){wids.push_back(s);',nl
-rth,←'  wins.push_back(std::make_unique<Window>(k));',nl
+rth,←'  wins.push_back(std::unique_ptr<Window>(new Window(k)));',nl
 rth,←'  R*wins.back();}',nl
 rth,←' R*wins[it-wids.begin()];}',nl
 rth,←'EXPORT I w_close(char*k){Window&w=w_prep(k);R w.close();}',nl
