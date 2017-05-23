@@ -4,6 +4,7 @@ rth,←'#include <inttypes.h>',nl
 rth,←'#include <limits.h>',nl
 rth,←'#include <float.h>',nl
 rth,←'#include <math.h>',nl
+rth,←'#include <unordered_map>',nl
 rth,←'#include <arrayfire.h>',nl
 rth,←'using namespace af;',nl
 rth,←nl
