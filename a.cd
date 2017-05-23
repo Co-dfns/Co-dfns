@@ -32,7 +32,7 @@ MKA←{mka⊂⍵⊣'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'}
 EXA←{exa⍬(0⊃⍵)(1⊃⍵)⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'}
 FREA←{frea⍵⊣'frea'⎕NA (BSO ⍺),'|frea P'}
 
-soext←{'.dll' '.so'⊃⍨'gcc' 'icc' 'pgcc'∊⍨⊂COMPILER}
+soext←{'.dll' '.so' '.dylib'⊃⍨'vsc' 'gcc' 'clang'⍳⊂COMPILER}
 tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
 put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
 mkf←{fn←BUILD∆PATH,'/',⍺,'_',COMPILER,(soext⍬),'|',⍵,'_dwa '
