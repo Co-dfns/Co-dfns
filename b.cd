@@ -3,7 +3,7 @@ fls←{'''',BUILD∆PATH,'/',⍵,'_',⍺,'.cpp'' '}
 log←{'> ',BUILD∆PATH,'/',⍵,'_',⍺,'.log 2>&1'}
 cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'' '}
 cco←'-std=c++11 -Ofast -g -Wall -fPIC -shared '
-ucc←{⎕SH ⍺⍺,' ',cco,(cci⍬),'-laf ',COMPILER(⍵⍵ cio,fls,log)⍵}
+ucc←{⎕SH ⍺⍺,' ',cco,(cci⍬),(n(⍵⍵ cio,fls)⍵),' -laf ',(n←COMPILER)log ⍵}
 gcc←'g++'ucc'so' ⋄ clang←'clang++'ucc'dylib'
 vsco←'/W3 /Gm- /O2 /Zc:inline /Zi /Fd"build\vc140.pdb" '
 vsco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
