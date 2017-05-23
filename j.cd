@@ -31,11 +31,12 @@ rth,←'  CS(APLTI,a=A(RANK(d),s,c?da16(c,s,d):scl(0)))',nl
 rth,←'  CS(APLU8,a=A(RANK(d),s,c?da8(c,s,d):scl(0)))',nl
 rth,←'  default:err(16);}}',nl
 rth,←nl
-rth,←'typedef std::unordered_map<std::string,Window> Wmap;Wmap wmap;',nl
-rth,←'Window& w_prep(const std::string k){auto it=wmap.find(k);',nl
+rth,←'typedef std::unordered_map<std::string,std::unique_ptr<Window>> Wmap;Wmap wmap;',nl
+rth,←'Window&w_prep(const std::string k){',nl
+rth,←' auto it=wmap.find(k);',nl
 rth,←' if(it==wmap.end()){',nl
-rth,←'  wmap.insert(Wmap::value_type(k,Window(k.c_str())));}',nl
-rth,←' R it->second;}',nl
+rth,←'  wmap.insert(Wmap::value_type(k,new Window(k.c_str())));}',nl
+rth,←' R*it->second;}',nl
 rth,←'V w_img(const array&a,const std::string k){Window&w=w_prep(k);',nl
 rth,←' if(!w.close())w.image(a,k.c_str());}',nl
 rth,←'EXPORT V w_img(lp*d,char*k){A a;const std::string s(k);',nl
