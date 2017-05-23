@@ -27,7 +27,7 @@ rth,←' if(l.r!=0&&l.s[0]!=1&&r.r!=0&&r.s[ra]!=1&&l.s[0]!=r.s[ra])err(5);',nl
 rth,←' array x=l.v;array y=r.v;if(cnt(l)==1)x=tile(x,(I)r.s[ra]);',nl
 rth,←' if(r.s[ra]==1){dim4 s(1);s[ra]=cnt(l);y=tile(y,s);}',nl
 rth,←' z.s[ra]=sum<B>(abs(x));if(!cnt(z)){z.v=scl(0);R;}',nl
-rth,←' array w=where(x).as(s32);index ix[4];if(z.s[ra]==w.elements()){',nl
+rth,←' array w=where(x).as(s32);af::index ix[4];if(z.s[ra]==w.elements()){',nl
 rth,←'  ix[ra]=w;z.v=y(ix[0],ix[1],ix[2],ix[3]);R;}',nl
 rth,←' array i=shift(accum(abs(x(w))),1),d=shift(w,1);i(0)=0;d(0)=0;',nl
 rth,←' array v=array(z.s[ra],s32),u=array(z.s[ra],s32);v=0;u=0;',nl
