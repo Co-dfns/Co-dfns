@@ -1,10 +1,14 @@
 ﻿∇Z←Gfx∆Init S
  'w_new'⎕NA'P ',(BSO S),'|w_new <C[]'
  'w_close'⎕NA'I ',(BSO S),'|w_close P'
- 'w_img'⎕NA(BSO S),'|w_img <PP P'
  'w_del'⎕NA(BSO S),'|w_del P'
+ 'w_img'⎕NA(BSO S),'|w_img <PP P'
+ 'w_plot'⎕NA(BSO S),'|w_plot <PP P'
  Z←0 0⍴⍬
 ∇
 Animate←{⍺←'Animate' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
- w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ _←w_img(⍉z←⍺⍺ ⍵)⍺ ⋄ z}⍣⍵⍵⊢⍵}
-Image←{⍺←'Image' ⋄ W←w_new⊂⍺ ⋄ w_del W⊣{⍵⊣w_img ⍵ W⊣⎕DL÷60}⍣{w_close W}⍉⍵}
+ w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
+Display←{⍺←'Display' ⋄ W←w_new⊂⍺
+ w_del W⊣W ⍺⍺{⍵⊣⍺ ⍺⍺ ⍵⊣⎕DL÷60}⍣{w_close W}⍵}
+Imager←{z⊣w_img(⍉z←⍺⍺ ⍵)⍺}
+Plotter←{z⊣w_plot(⍉z←⍺⍺ ⍵)⍺}

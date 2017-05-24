@@ -36,4 +36,5 @@ rth,←'EXPORT I w_close(Window*w){R w->close();}',nl
 rth,←'EXPORT V w_del(Window*w){delete w;}',nl
 rth,←'EXPORT V w_img(lp*d,Window*w){A a;cpda(a,d);',nl
 rth,←' w->image(a.v.as(a.r==2?f32:u8));}',nl
+rth,←'EXPORT V w_plot(lp*d,Window*w){A a;cpda(a,d);w->plot(a.v.as(f32));}',nl
 rth,←nl
