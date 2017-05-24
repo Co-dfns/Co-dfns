@@ -5,12 +5,15 @@
  'w_img'⎕NA(BSO S),'|w_img <PP P'
  'w_plot'⎕NA(BSO S),'|w_plot <PP P'
  'w_hist'⎕NA(BSO S),'|w_hist <PP F8 F8 P'
+ 'loadimg'⎕NA(BSO S),'|loadimg >PP <C[] I'
  Z←0 0⍴⍬
 ∇
 Animate←{⍺←'Animate' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
  w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
 Display←{⍺←'Display' ⋄ W←w_new⊂⍺
  w_del W⊣W ⍺⍺{⍵⊣⍺ ⍺⍺ ⍵⊣⎕DL÷60}⍣{w_close W}⍵}
-Imager←{z⊣w_img(⍉z←⍺⍺ ⍵)⍺}
-Plotter←{z⊣w_plot(z←⍺⍺ ⍵)⍺}
+Imager←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠2⊃3↑⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5
+ z⊣w_img(⍉z←⍺⍺ ⍵)⍺}
+Plotter←{~2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ z⊣w_plot(z←⍺⍺ ⍵)⍺}
 Histogrammer←{z⊣w_hist(z←⍺⍺ ⍵),⍺}
+LoadImage←{⍉loadimg ⍬ ⍵ ⍺}
