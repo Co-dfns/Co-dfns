@@ -16,4 +16,4 @@ Imager←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠2⊃3↑⍴⍵)∧3=≢⍴⍵:
  z⊣w_img(⍉z←⍺⍺ ⍵)⍺}
 Plotter←{~2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ z⊣w_plot(z←⍺⍺ ⍵)⍺}
 Histogrammer←{z⊣w_hist(z←⍺⍺ ⍵),⍺}
-LoadImage←{⍉loadimg ⍬ ⍵ ⍺}
+LoadImage←{⍺←1 ⋄ ⍉loadimg ⍬ ⍵ ⍺}
