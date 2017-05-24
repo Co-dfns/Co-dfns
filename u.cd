@@ -4,6 +4,7 @@
  'w_del'⎕NA(BSO S),'|w_del P'
  'w_img'⎕NA(BSO S),'|w_img <PP P'
  'w_plot'⎕NA(BSO S),'|w_plot <PP P'
+ 'w_hist'⎕NA(BSO S),'|w_hist <PP F8 F8 P'
  Z←0 0⍴⍬
 ∇
 Animate←{⍺←'Animate' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
@@ -11,4 +12,5 @@ Animate←{⍺←'Animate' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
 Display←{⍺←'Display' ⋄ W←w_new⊂⍺
  w_del W⊣W ⍺⍺{⍵⊣⍺ ⍺⍺ ⍵⊣⎕DL÷60}⍣{w_close W}⍵}
 Imager←{z⊣w_img(⍉z←⍺⍺ ⍵)⍺}
-Plotter←{z⊣w_plot(⍉z←⍺⍺ ⍵)⍺}
+Plotter←{z⊣w_plot(z←⍺⍺ ⍵)⍺}
+Histogrammer←{z⊣w_hist(z←⍺⍺ ⍵),⍺}
