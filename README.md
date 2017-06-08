@@ -146,7 +146,7 @@ a given Dyalog DWA Array.
 
 #### codfns.EXA
 
-    Array ← Name codfns.EXA Codfns_Array Type
+    Array ← Name codfns.EXA Codfns_Array
 
 Used to extract an array from Co-dfns. It will take a pointer to a Co-dfns 
 array and the type of that array, and will free the array from the Co-dfns 

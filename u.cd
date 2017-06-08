@@ -1,4 +1,8 @@
-﻿∇Z←Gfx∆Init S
+﻿rth,←'EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}',nl
+rth,←'EXPORT V frea(A*a){delete a;}',nl
+rth,←'EXPORT V exarray(lp*d,A*a){cpad(d,*a);}',nl
+
+∇Z←Gfx∆Init S
  'w_new'⎕NA'P ',(BSO S),'|w_new <C[]'
  'w_close'⎕NA'I ',(BSO S),'|w_close P'
  'w_del'⎕NA(BSO S),'|w_del P'

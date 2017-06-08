@@ -29,7 +29,7 @@ Fix←{⍺ MkNS ⍺ Cmp ⍵}
 Xml←{⎕XML (0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
 BSO←{BUILD∆PATH,'/',⍵,'_',COMPILER,(soext⍬)}
 MKA←{mka⊂⍵⊣'mka'⎕NA 'P ',(BSO ⍺),'|mkarray <PP'}
-EXA←{exa⍬(0⊃⍵)(1⊃⍵)⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P I4'}
+EXA←{exa⍬ ⍵⊣'exa'⎕NA (BSO ⍺),'|exarray >PP P'}
 FREA←{frea⍵⊣'frea'⎕NA (BSO ⍺),'|frea P'}
 
 soext←{'.dll' '.so' '.dylib'⊃⍨'vsc' 'gcc' 'clang'⍳⊂COMPILER}

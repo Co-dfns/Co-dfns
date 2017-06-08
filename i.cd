@@ -26,7 +26,7 @@ rth,←'#define FP(n) NM(n,"",0,0,MT,MFD,DFD);MF(n##_f){n##fn(z,A(),r,p);}',nl
 rth,←'#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\',nl
 rth,←' A cl,cr,za;if(!isinit){Initfn(za,cl,cr,NULL);isinit=1;}\',nl
 rth,←' cpda(cr,r);if(l!=NULL)cpda(cl,l);m##fn(za,cl,cr,env);cpad(z,za);}\',nl
-rth,←'EXPORT V n##_cdf(A&z,A&l,A&r){m##fn(z,l,r,env);}',nl
+rth,←'EXPORT V n##_cdf(A*z,A*l,A*r){m##fn(*z,*l,*r,env);}',nl
 rth,←nl
 rth,←'S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}',nl
 rth,←' A():r(0),s(dim4()),v(array()){}};',nl
