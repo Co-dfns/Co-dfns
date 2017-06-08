@@ -1,12 +1,12 @@
 ﻿rth,←'#define comop(zz,rr,pp) com_o zz(rr,pp)',nl
-rth,←'#define dotop(zz,rr,ll,pp) dot_o zz(ll,rr,pp)',nl
+rth,←'#define dotop(zz,ll,rr,pp) dot_o zz(ll,rr,pp)',nl
 rth,←'#define mapop(zz,rr,pp) map_o zz(rr,pp)',nl
 rth,←'#define redop(zz,rr,pp) red_o zz(rr,pp)',nl
-rth,←'#define jotop(zz,rr,ll,pp) jot_o zz(ll,rr,pp)',nl
+rth,←'#define jotop(zz,ll,rr,pp) jot_o zz(ll,rr,pp)',nl
 rth,←'#define oupop(zz,rr,pp) oup_o zz(rr,pp)',nl
-rth,←'#define powop(zz,rr,ll,pp) pow_o zz(ll,rr,pp)',nl
+rth,←'#define powop(zz,ll,rr,pp) pow_o zz(ll,rr,pp)',nl
 rth,←'#define rdfop(zz,rr,pp) rdf_o zz(rr,pp)',nl
-rth,←'#define rnkop(zz,rr,ll,pp) rnk_o zz(ll,rr,pp)',nl
+rth,←'#define rnkop(zz,ll,rr,pp) rnk_o zz(ll,rr,pp)',nl
 rth,←'#define scnop(zz,rr,pp) scn_o zz(rr,pp)',nl
 rth,←'#define scfop(zz,rr,pp) scf_o zz(rr,pp)',nl
 rth,←nl
