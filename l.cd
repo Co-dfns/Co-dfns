@@ -5,6 +5,7 @@ rth,←'MF(brk_f){err(16);}',nl
 rth,←'DF(brk_f){if(l.r!=1)err(16);',nl
 rth,←' z.r=r.r;z.s=r.s;z.v=l.v(r.v.as(s32));}',nl
 rth,←'MF(cat_f){z.r=1;z.s[0]=cnt(r);z.v=flat(r.v);}',nl
+rth,←'DA(cat_f){err(16);}',nl
 rth,←'DF(cat_f){if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);',nl
 rth,←' z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);',nl
 rth,←' dim4 ls=l.s;dim4 rs=r.s;',nl

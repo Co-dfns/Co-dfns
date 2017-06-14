@@ -1,6 +1,17 @@
 ﻿rth,←'EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}',nl
 rth,←'EXPORT V frea(A*a){delete a;}',nl
 rth,←'EXPORT V exarray(lp*d,A*a){cpad(d,*a);}',nl
+rth,←'EXPORT Window *w_new(char *k){R new Window(k);}',nl
+rth,←'EXPORT I w_close(Window*w){R w->close();}',nl
+rth,←'EXPORT V w_del(Window*w){delete w;}',nl
+rth,←'EXPORT V w_img(lp*d,Window*w){A a;cpda(a,d);',nl
+rth,←' w->image(a.v.as(a.r==2?f32:u8));}',nl
+rth,←'EXPORT V w_plot(lp*d,Window*w){A a;cpda(a,d);w->plot(a.v.as(f32));}',nl
+rth,←'EXPORT V w_hist(lp*d,D l,D h,Window*w){A a;cpda(a,d);',nl
+rth,←' w->hist(a.v.as(u32),l,h);}',nl
+rth,←'EXPORT V loadimg(lp*z,char*p,int c){array a=loadImage(p,c);',nl
+rth,←' A b(a.numdims(),a.dims(),a.as(s16));cpad(z,b);}',nl
+rth,←nl
 
 ∇Z←Gfx∆Init S
  'w_new'⎕NA'P ',(BSO S),'|w_new <C[]'
