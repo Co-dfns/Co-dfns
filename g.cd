@@ -1,7 +1,6 @@
 ﻿E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 E0←{r l f←⊃v⍵ ⋄ (n⍵)((⊃y⍵)sget)(¯1↓⊃y⍵)(f scal sdb)r l}
-Oi←{(⊃n⍵)('Fexim()i',nl)('catdo')'' ''}
 O1←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
 O2←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
 O0←{''}
