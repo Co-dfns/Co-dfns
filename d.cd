@@ -25,7 +25,8 @@ Fex←Afx _s (1 Bind 'F' _any) _as (⊃wrap/∘⌽)
 App←Afx _s (Idx _o Atom _opt) _as {(≢⍵)E⌽⍵}
 Ex←Idx _o Atom _s {⍺(0 Bind 'E' _o App _s ∇ _opt)⍵} _as (⊃wrap/∘⌽)
 Gex←Ex _s grd _s Ex _as (G∘⌽)
-Stmts←{⍺(sep _any _s (sep _o eot Slrp (lbrc Blrp rbrc) _then (⍺⍺∘⌽)) _any)⍵}
+Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
+Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
 Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as M
 
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}
