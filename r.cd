@@ -11,8 +11,9 @@ rth,←'#define rnkop(zz,ll,rr,pp) rnk_o zz(ll,rr,pp)',nl
 rth,←'#define scnop(zz,rr,pp) scn_o zz(rr,pp)',nl
 rth,←'#define scfop(zz,rr,pp) scf_o zz(rr,pp)',nl
 rth,←nl
-rth,←'MF(brk_o){ll(z,r,ww.v.as(f64).scalar<D>(),p);}',nl
-rth,←'DF(brk_o){ll(z,r,l,ww.v.as(f64).scalar<D>(),p);}',nl
+rth,←'MF(brk_o){ll(z,r,(r.r?r.r-1:0)-ww.v.as(f64).scalar<D>(),p);}',nl
+rth,←'DF(brk_o){D ax=l.r;if(r.r>l.r)ax=r.r;if(ax)ax--;',nl
+rth,←' ll(z,l,r,ax-ww.v.as(f64).scalar<D>(),p);}',nl
 rth,←'MF(com_o){ll(z,r,r,p);}DF(com_o){ll(z,r,l,p);}',nl
 rth,←'DF(dot_o){I ra=r.r?r.r-1:0;if(r.r&&l.r&&l.s[0]!=r.s[ra])err(5);',nl
 rth,←' I la=l.r?l.r-1:0;A t(la+ra,r.s,r.v(0));if(t.r>4)err(10);',nl

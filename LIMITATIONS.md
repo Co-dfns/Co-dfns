@@ -20,13 +20,12 @@ or outstanding implementation or engineering work that has some recognizable
 and immediate benefit and thus will be considered part of the active set of 
 things on which we are working.
 
-* Laminate is not supported
 * Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented for negative and floating point values
 * Bracket indexing of the form [X;...] is not supported, 
   though a single index array [X] is supported
-* User-defined operators are not supported yet
 * Indexed assignment and selective assignment are not supported yet
+* User-defined operators are not supported yet
 
 ## Low Priority Limitations
 
@@ -34,24 +33,24 @@ These limitations are considered to be of little importance or very
 difficult to implement with little benefit/gain and thus are not likely 
 to be implemented in the near future.
 
+* The compiler will handle empty return values strangely at the moment.
+* Matrix divide/inverse (⌹) is not supported
 * Arrays of rank > 4 are not supported
-* Sparse arrays are not supported yet
 * Nested arrays are not yet supported
+* Enclose (⊂) is not supported
+* Partitioned Enclose (⊂) is not supported
 * Character types are not supported
 * Complex numbers are not supported
 * Arbitrary precision integers are not supported
-* Nested namespaces are not supported
-* Variant (⍠) is not supported
+* Sparse arrays are not supported yet
+* Error Guards are not supported yet
+* Format (⍕) is not supported
 * I-Beam (⌶) is not supported
 * Spawn (&) is not supported
-* Enclose (⊂) is not supported
-* Partitioned Enclose (⊂) is not supported
-* Matrix divide/inverse (⌹) is not supported
-* Format (⍕) is not supported
-* The compiler will handle empty return values strangely at the moment.
+* Nested namespaces are not supported
 * Namespaces with free references are not supported yet
 * 128-bit floating point values are not supported
-* Error Guards are not supported yet
+* Variant (⍠) is not supported
 
 ## Fundamental Limitations
 
