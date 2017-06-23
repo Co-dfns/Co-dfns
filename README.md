@@ -148,10 +148,9 @@ a given Dyalog DWA Array.
 
     Array ← Name codfns.EXA Codfns_Array
 
-Used to extract an array from Co-dfns. It will take a pointer to a Co-dfns 
-array and the type of that array, and will free the array from the Co-dfns 
-space and return that array as its result in the form of a normal Dyalog 
-array.
+Used to extract an array from Co-dfns. It takes a pointer to a Co-dfns array 
+and the type of that array. It returns a normal Dyalog array that is equivalent
+to the Co-dfns array.
 
 #### codfns.FREA
 
