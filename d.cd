@@ -1,7 +1,7 @@
 ﻿Sfn←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
 Prim←prim _as P
 Vt←{((0⌷⍉⍺)⍳⍵)1⌷⍺⍪'' ¯1}
-Var←{⍺(aw _o (name _as ⌽ _t (⍺⍺=Vt)) _as (⍵⍵ V∘,∘⊃))⍵}
+Var←{⍺(aw _o (name _as ⌽) _t (⍺⍺=Vt) _as (⍵⍵ V∘,∘⊃))⍵}
 Num←float _o int _as (N∘⌽)
 Strand←0 Var 'a'  _s (0 Var 'a' _some) _as ('s'A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
@@ -10,7 +10,7 @@ Idx←{⍺(rbrk _s Ex _s lbrk _s Atom _as ('i'E∘⌽))⍵}
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
 Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
 Fn←{ns←n z⌿⍨m←{(Fm ⍵)∧1∊⍨k⍵}z←⊃⍪/⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
- p←⍺∘(Gex _o Ex _o Fex Stmts _then Fn)¨ns ⋄ 0<c←⌈/⊃¨p:c '' ⍺ ⍵
+ p←(⍺⍪0,⍨⍪'⍺⍵')∘(Gex _o Ex _o Fex Stmts _then Fn)¨ns ⋄ 0<c←⌈/⊃¨p:c '' ⍺ ⍵
  0(⍪/(⊂0 4⍴⍬),⍨p{((3↑⍵),⊂'')⍪⍵((d+∘⊃⊣),1↓⍤1⊢)wrap⊃⍪/1⊃⍺}¨at{m}↓z) ⍺ ''}
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
 Fnp←Prim _o (1 Var 'f') _o (rbrc Blrp lbrc _as ('F'new 1,∘⊂∘⌽1↓¯1↓⊢)) _o Pfe
