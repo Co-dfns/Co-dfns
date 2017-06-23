@@ -21,10 +21,10 @@ S7	←':Namespace' 'Run←{X←0⌷⍵ ⋄ ⍺{⍺-⍵}¨X}' ':EndNamespace'
 'duff'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) F	F
 'duif'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) I	F
 'dufi'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) F	I
-'mui'	('each'	S3 'Run' #.util.GEN∆T2 ⎕THIS) I	I
+'mui'	('each'	S3 'Run' #.util.GEN∆T2 ⎕THIS) I	(I~0)
 'muf'	('each'	S3 'Run' #.util.GEN∆T2 ⎕THIS) F	F
 'mub'	('each'	S6 'Run' #.util.GEN∆T2 ⎕THIS) B	B
-'mpi'	('each'	S4 'Run' #.util.GEN∆T2 ⎕THIS) I	I
+'mpi'	('each'	S4 'Run' #.util.GEN∆T2 ⎕THIS) I	(I~0)
 'mpf'	('each'	S4 'Run' #.util.GEN∆T2 ⎕THIS) F	F
 'mpb'	('each'	S5 'Run' #.util.GEN∆T2 ⎕THIS) B	B
 'durep' ('each' S7 'Run' #.util.GEN∆T2 ⎕THIS) I (⍉⍪I)
