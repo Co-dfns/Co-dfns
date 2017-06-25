@@ -17,7 +17,7 @@ Fnp←Prim _o (1 Var 'f') _o (rbrc Blrp lbrc _as ('F'new 1,∘⊂∘⌽1↓¯1�
 Mop←{⍺((mop _as P) _s Afx _as (1 O))⍵}
 Dop1←{⍺((dop1 _as P) _s Afx _as (2 O∘⌽))⍵}
 Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (2 O∘⌽))⍵}
-Dop3←(dop3 _as P) _s Atom _as (2 O∘⌽) _o (dot _s jot _as P∘⌽ _as (1 O))
+Dop3←(dop3 _as P) _s Atom _as (2 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (1 O))
 Bop←{⍺(rbrk _s Ex _s lbrk _s Afx _as ('i'O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⊃wrap/∘⌽)) _o Dop2 _o Bop
 Bind←{⍺(gets _s (name _as ⌽) _env (⍺⍺{(⊃⌽⍵)⍺⍺⍪⍺}) _as (⍵⍵ new 'b',1↓⊢))⍵}
