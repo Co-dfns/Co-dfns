@@ -8,8 +8,8 @@ rth,←'  :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()),pp(p){}',nl
 rth,←' DOP(STR nm,I sm,I sd,FN&l,A r,A*p[])',nl
 rth,←'  :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r),pp(p){}};',nl
 rth,←nl
-rth,←'I scm(FN&f){R f.sm;}I scm(A&a){R 1;}',nl
-rth,←'I scd(FN&f){R f.sd;}I scd(A&a){R 1;}',nl
+rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}',nl
+rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}',nl
 rth,←'B cnt(dim4 s){B c=1;DO(4,c*=s[i]);R c;}',nl
 rth,←'B cnt(const A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}',nl
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',nl

@@ -4,8 +4,8 @@ rth,←'#define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf;df;\',nl
 rth,←' n##_o(FN&l,A*p[]):MOP(nm,sm,sd,l,p){}};',nl
 rth,←'#define OD(n,nm,sm,sd,mf,df) S n##_o:DOP{mf;df;\',nl
 rth,←' n##_o(FN&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\',nl
-rth,←' n##_o(A&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\',nl
-rth,←' n##_o(FN&l,A&r,A*p[]):DOP(nm,sm,sd,l,r,p){}};',nl
+rth,←' n##_o(const A&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\',nl
+rth,←' n##_o(FN&l,const A&r,A*p[]):DOP(nm,sm,sd,l,r,p){}};',nl
 rth,←'#define MT',nl
 rth,←'#define DID inline array id(dim4)',nl
 rth,←'#define MFD inline V operator()(A&,const A&,A*[])',nl
