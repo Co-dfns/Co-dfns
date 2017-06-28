@@ -22,7 +22,7 @@ Bop←{⍺(rbrk _s Ex _s lbrk _s Afx _as ('i'O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⊃wrap/∘⌽)) _o Dop2 _o Bop
 Bind←{⍺(gets _s (name _as ⌽) _env (⍺⍺{(⊃⌽⍵)⍺⍺⍪⍺}) _as (⍵⍵ new 'b',1↓⊢))⍵}
 Fex←Afx _s (1 Bind 'F' _any) _as (⊃wrap/∘⌽)
-App←Afx _s (Idx _o Atom _opt) _as {(≢⍵)E⌽⍵}
+App←Afx _s (Idx _o Atom _s (dop2 _not) _opt) _as {(≢⍵)E⌽⍵}
 Ex←Idx _o Atom _s {⍺(0 Bind 'E' _o App _s ∇ _opt)⍵} _as (⊃wrap/∘⌽)
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
