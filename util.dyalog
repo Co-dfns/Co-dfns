@@ -44,6 +44,11 @@ utf8get←{
 
 split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
 
+∇BUILD
+#.tfns∆dya←#.⎕SE.SALT.Load'./tests/tfns_dya -target=#'
+#.tfns∆cdf←'tfns_cdf'##.codfns.Fix ⎕SRC #.tfns∆dya
+∇
+
 ∇TEST
 ##.UT.print_passed←1
 ##.UT.print_summary←1
