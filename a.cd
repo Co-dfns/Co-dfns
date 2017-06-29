@@ -35,7 +35,7 @@ FREA←{frea⍵⊣'frea'⎕NA (BSO ⍺),'|frea P'}
 soext←{'.dll' '.so' '.dylib'⊃⍨'vsc' 'gcc' 'clang'⍳⊂COMPILER}
 tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
 put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-mkf←{fn←BUILD∆PATH,'/',⍺,'_',COMPILER,(soext⍬),'|',⍵,'_dwa '
+mkf←{fn←BUILD∆PATH,'/',⍺,'_',COMPILER,(soext⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa '
  f←⍵,'←{_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
  f,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
  f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
