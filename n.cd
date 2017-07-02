@@ -28,7 +28,9 @@ rth,←'MF(lft_f){z=r;}',nl
 rth,←'DF(lft_f){z=l;}',nl
 rth,←'MF(log_f){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',nl
 rth,←'SF(log_f,z.v=log(rv.as(f64))/log(lv.as(f64)))',nl
-rth,←'SF(lor_f,if(lv.isbool()&&rv.isbool())z.v=lv||rv;else err(16);)',nl
+rth,←'SF(lor_f,if(rv.isbool()&&lv.isbool())z.v=lv||rv;',nl
+rth,←' else if(allTrue<I>(lv>=0&&lv<=1&&rv<=1&&rv>=0))z.v=lv||rv;',nl
+rth,←' else err(16);)',nl
 rth,←'SF(lte_f,z.v=lv<=rv)',nl
 rth,←'SF(lth_f,z.v=lv<rv)',nl
 rth,←'MF(max_f){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',nl
