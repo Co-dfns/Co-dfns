@@ -1,10 +1,8 @@
-:Namespace shape_tests
+﻿:Namespace shape_tests
 
-S←':Namespace' 'Run←{⍴⍵}' ':EndNamespace'
-
-'1'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴0
-'2'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'3'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 2⍴⍳4
-'4'('shape' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 5⍴0 1
+shape∆1_TEST←'shape∆Run'#.util.MK∆T1 (⍬⍴0)
+shape∆2_TEST←'shape∆Run'#.util.MK∆T1 (5⍴⍳5)
+shape∆3_TEST←'shape∆Run'#.util.MK∆T1 (2 2⍴⍳4)
+shape∆4_TEST←'shape∆Run'#.util.MK∆T1 (2 5⍴0 1)
 
 :EndNamespace

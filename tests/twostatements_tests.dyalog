@@ -1,7 +1,5 @@
-﻿:Namespace twostatements
+﻿:Namespace twostatements_tests
 
-S←':Namespace' 'Run←{x←⍳⍵ ⋄ ⊢⍵}' ':EndNamespace'
-
-'1' ('twostatements' S 'Run' #.util.GEN∆T2 ⎕THIS) 5 5
+twostatements_TEST←'twostatements∆Run'#.util.MK∆T2 5 5
 
 :EndNamespace

@@ -1,34 +1,26 @@
-﻿:Namespace each
+﻿:Namespace each_tests
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
 F←100÷⍨?100⍴10000
 B←?10⍴2
-S1	←':Namespace' 'Run←{⍺-¨⍵}'	':EndNamespace'
-S2	←':Namespace' 'Run←{⍺{⍺-⍵}¨⍵}'	':EndNamespace'
-S3	←':Namespace' 'Run←{{÷⍵}¨⍵}'	':EndNamespace'
-S4	←':Namespace' 'Run←{÷¨⍵}'	':EndNamespace'
-S5	←':Namespace' 'Run←{×¨⍵}'	':EndNamespace'
-S6	←':Namespace' 'Run←{{×⍵}¨⍵}'	':EndNamespace'
-S7	←':Namespace' 'Run←{X←0⌷⍵ ⋄ ⍺{⍺-⍵}¨X}' ':EndNamespace'
 
-'dpii'	('each'	S1 'Run' #.util.GEN∆T2 ⎕THIS) I	I
-'dpiis'	('each'	S1 'Run' #.util.GEN∆T2 ⎕THIS) 4	5
-'dpff'	('each'	S1 'Run' #.util.GEN∆T2 ⎕THIS) F	F
-'dpif'	('each'	S1 'Run' #.util.GEN∆T2 ⎕THIS) I	F
-'dpfi'	('each'	S1 'Run' #.util.GEN∆T2 ⎕THIS) F	I
-'duffs'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) 5.5	3.1
-'duii'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) I	I
-'duff'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) F	F
-'duif'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) I	F
-'dufi'	('each'	S2 'Run' #.util.GEN∆T2 ⎕THIS) F	I
-'mui'	('each'	S3 'Run' #.util.GEN∆T2 ⎕THIS) I	(I~0)
-'muf'	('each'	S3 'Run' #.util.GEN∆T2 ⎕THIS) F	F
-'mub'	('each'	S6 'Run' #.util.GEN∆T2 ⎕THIS) B	B
-'mpi'	('each'	S4 'Run' #.util.GEN∆T2 ⎕THIS) I	(I~0)
-'mpf'	('each'	S4 'Run' #.util.GEN∆T2 ⎕THIS) F	F
-'mpb'	('each'	S5 'Run' #.util.GEN∆T2 ⎕THIS) B	B
-'durep' ('each' S7 'Run' #.util.GEN∆T2 ⎕THIS) I (⍉⍪I)
-
+each∆dpii_TEST←'each∆R1'#.util.MK∆T2  I	I
+each∆dpiis_TEST←'each∆R1'#.util.MK∆T2 4	5
+each∆dpff_TEST←'each∆R1'#.util.MK∆T2  F	F
+each∆dpif_TEST←'each∆R1'#.util.MK∆T2  I	F
+each∆dpfi_TEST←'each∆R1'#.util.MK∆T2  F	I
+each∆duffs_TEST←'each∆R2'#.util.MK∆T2 5.5	3.1
+each∆duii_TEST←'each∆R2'#.util.MK∆T2  I	I
+each∆duff_TEST←'each∆R2'#.util.MK∆T2  F	F
+each∆duif_TEST←'each∆R2'#.util.MK∆T2  I	F
+each∆dufi_TEST←'each∆R2'#.util.MK∆T2  F	I
+each∆mui_TEST←'each∆R3'#.util.MK∆T2   I	(I~0)
+each∆muf_TEST←'each∆R3'#.util.MK∆T2   F	F
+each∆mub_TEST←'each∆R6'#.util.MK∆T2   B	B
+each∆mpi_TEST←'each∆R4'#.util.MK∆T2   I	(I~0)
+each∆mpf_TEST←'each∆R4'#.util.MK∆T2   F	F
+each∆mpb_TEST←'each∆R5'#.util.MK∆T2   B	B
+each∆durep_TEST←'each∆R7'#.util.MK∆T2 I (⍉⍪I)
 
 :EndNamespace
 

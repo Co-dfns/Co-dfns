@@ -1,12 +1,8 @@
-﻿:Namespace quadratic
-
-S←⊂':Namespace'
-S,←⊂'Run←{A←0⌷⍵ ⋄ B←1⌷⍵ ⋄ C←2⌷⍵ ⋄ ((-B)+((B×B)-4×A×C)*0.5)÷2×A}'
-S,←⊂':EndNamespace'
+﻿:Namespace quadratic_tests
 
 GD←{{⊃((⎕DR ⍵)645)⎕DR ⍵}{↑(0⌷⍵)(+⌿⍵)(1⌷⍵)}1+?2 ⍵⍴10}
 D←GD 7
 
-''('quadratic' S 'Run' #.util.GEN∆T1 ⎕THIS) D
+quadratic_TEST←'quadratic∆Run'#.util.MK∆T1 D
 
 :EndNamespace

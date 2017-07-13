@@ -1,13 +1,11 @@
-﻿:Namespace table
+﻿:Namespace table_tests
 
-S←':Namespace' 'Run←{⍪⍵}' ':EndNamespace'
-
-'01'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'02'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'03'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) ,0
-'04'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'05'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 2 2⍴⍳5
-'06'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴0 1
-'07'('table' S 'Run' #.util.GEN∆T1 ⎕THIS) 21⍴1 0
+table∆01_TEST←'table∆Run'#.util.MK∆T1 (⍬)
+table∆02_TEST←'table∆Run'#.util.MK∆T1 (0)
+table∆03_TEST←'table∆Run'#.util.MK∆T1 (,0)
+table∆04_TEST←'table∆Run'#.util.MK∆T1 (⍳5)
+table∆05_TEST←'table∆Run'#.util.MK∆T1 (2 2 2⍴⍳5)
+table∆06_TEST←'table∆Run'#.util.MK∆T1 (3 7⍴0 1)
+table∆07_TEST←'table∆Run'#.util.MK∆T1 (21⍴1 0)
 
 :EndNamespace

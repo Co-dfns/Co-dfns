@@ -1,84 +1,52 @@
-﻿:Namespace reduce
+﻿:Namespace reduce_tests
 
-S01←':Namespace' 'Run←{+/⍵}' ':EndNamespace'
-S02←':Namespace' 'Run←{×/⍵}'  ':EndNamespace'
-S03←':Namespace' 'Run←{{⍺+⍵}/⍵}' ':EndNamespace'
-S04←':Namespace' 'Run←{≠/⍵}' ':EndNamespace'
-S05←':Namespace' 'Run←{{⍺≠⍵}/⍵}' ':EndNamespace'
-S06←':Namespace' 'Run←{∧/⍵}' ':EndNamespace'
-S07←':Namespace' 'Run←{-/⍵}' ':EndNamespace'
-S08←':Namespace' 'Run←{÷/⍵}' ':EndNamespace'
-S09←':Namespace' 'Run←{|/⍵}' ':EndNamespace'
-S10←':Namespace' 'Run←{⌊/⍵}' ':EndNamespace'
-S11←':Namespace' 'Run←{⌈/⍵}' ':EndNamespace'
-S12←':Namespace' 'Run←{*/⍵}' ':EndNamespace'
-S13←':Namespace' 'Run←{!/⍵}' ':EndNamespace'
-S14←':Namespace' 'Run←{∧/⍵}' ':EndNamespace'
-S15←':Namespace' 'Run←{∨/⍵}' ':EndNamespace'
-S16←':Namespace' 'Run←{</⍵}' ':EndNamespace'
-S17←':Namespace' 'Run←{≤/⍵}' ':EndNamespace'
-S18←':Namespace' 'Run←{=/⍵}' ':EndNamespace'
-S19←':Namespace' 'Run←{≥/⍵}' ':EndNamespace'
-S20←':Namespace' 'Run←{>/⍵}' ':EndNamespace'
-S21←':Namespace' 'Run←{≠/⍵}' ':EndNamespace'
-S22←':Namespace' 'Run←{⊤/⍵}' ':EndNamespace'
-S23←':Namespace' 'Run←{∪/⍵}' ':EndNamespace'
-S24←':Namespace' 'Run←{//⍵}' ':EndNamespace'
-S25←':Namespace' 'Run←{⌿/⍵}' ':EndNamespace'
-S26←':Namespace' 'Run←{\/⍵}' ':EndNamespace'
-S27←':Namespace' 'Run←{⍀/⍵}' ':EndNamespace'
-S28←':Namespace' 'Run←{⌽/⍵}' ':EndNamespace'
-S29←':Namespace' 'Run←{⊖/⍵}' ':EndNamespace'
-S30←':Namespace' 'Run←{X←0⌷⍵ ⋄ {⍺≠⍵}/X}' ':EndNamespace'
-
-
-'01'('reduce' S01 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'02'('reduce' S01 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'03'('reduce' S01 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'04'('reduce' S02 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴3
-'05'('reduce' S02 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'06'('reduce' S01 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'07'('reduce' S03 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'08'('reduce' S03 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'09'('reduce' S03 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'10'('reduce' S04 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'11'('reduce' S05 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'12'('reduce' S04 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'13'('reduce' S04 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'14'('reduce' S04 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'15'('reduce' S01 'Run' #.util.GEN∆T1 ⎕THIS) 10⍴0 1
-'16'('reduce' S04 'Run' #.util.GEN∆T1 ⎕THIS) 10 5 0⍴0 1
-'17'('reduce' S04 'Run' #.util.GEN∆T1 ⎕THIS) 10 0 5⍴0 1
-'18'('reduce' S06 'Run' #.util.GEN∆T1 ⎕THIS) 10 5 0⍴0 1
-'19'('reduce' S06 'Run' #.util.GEN∆T1 ⎕THIS) 10 0 5⍴0 1
-'20'('reduce' S05 'Run' #.util.GEN∆T1 ⎕THIS) 10⍴0 1
-'21'('reduce' S01 'Run' #.util.GEN∆T1 ⎕THIS) 10 15⍴0 1
-'22'('reduce' S05 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'23'('reduce' S06 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'24'('reduce' S07 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'25'('reduce' S08 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'26'('reduce' S09 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'27'('reduce' S10 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'28'('reduce' S11 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'29'('reduce' S12 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'30'('reduce' S13 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'31'('reduce' S14 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'32'('reduce' S15 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'33'('reduce' S16 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'34'('reduce' S17 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'35'('reduce' S18 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'36'('reduce' S19 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'37'('reduce' S20 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'38'('reduce' S21 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'39'('reduce' S22 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'40'('reduce' S23 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'41'('reduce' S24 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'42'('reduce' S25 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'43'('reduce' S26 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'44'('reduce' S27 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'45'('reduce' S28 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'46'('reduce' S29 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'47'('reduce' S30 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
+reduce∆01_TEST←'reduce∆R01'#.util.MK∆T1 (⍬⍴1)
+reduce∆02_TEST←'reduce∆R01'#.util.MK∆T1 (5⍴⍳5)
+reduce∆03_TEST←'reduce∆R01'#.util.MK∆T1 (3 3⍴⍳9)
+reduce∆04_TEST←'reduce∆R02'#.util.MK∆T1 (⍬⍴3)
+reduce∆05_TEST←'reduce∆R02'#.util.MK∆T1 (⍬)
+reduce∆06_TEST←'reduce∆R01'#.util.MK∆T1 (⍬)
+reduce∆07_TEST←'reduce∆R03'#.util.MK∆T1 (⍬⍴1)
+reduce∆08_TEST←'reduce∆R03'#.util.MK∆T1 (5⍴⍳5)
+reduce∆09_TEST←'reduce∆R03'#.util.MK∆T1 (3 3⍴⍳9)
+reduce∆10_TEST←'reduce∆R04'#.util.MK∆T1 (3 3⍴⍳9)
+reduce∆11_TEST←'reduce∆R05'#.util.MK∆T1 (3 3⍴⍳9)
+reduce∆12_TEST←'reduce∆R04'#.util.MK∆T1 (⍬⍴1)
+reduce∆13_TEST←'reduce∆R04'#.util.MK∆T1 (5⍴⍳5)
+reduce∆14_TEST←'reduce∆R04'#.util.MK∆T1 (⍬)
+reduce∆15_TEST←'reduce∆R01'#.util.MK∆T1 (10⍴0 1)
+reduce∆16_TEST←'reduce∆R04'#.util.MK∆T1 (10 5 0⍴0 1)
+reduce∆17_TEST←'reduce∆R04'#.util.MK∆T1 (10 0 5⍴0 1)
+reduce∆18_TEST←'reduce∆R06'#.util.MK∆T1 (10 5 0⍴0 1)
+reduce∆19_TEST←'reduce∆R06'#.util.MK∆T1 (10 0 5⍴0 1)
+reduce∆20_TEST←'reduce∆R05'#.util.MK∆T1 (10⍴0 1)
+reduce∆21_TEST←'reduce∆R01'#.util.MK∆T1 (10 15⍴0 1)
+reduce∆22_TEST←'reduce∆R05'#.util.MK∆T1 (5⍴⍳5)
+reduce∆23_TEST←'reduce∆R06'#.util.MK∆T1 (⍬)
+reduce∆24_TEST←'reduce∆R07'#.util.MK∆T1 (⍬)
+reduce∆25_TEST←'reduce∆R08'#.util.MK∆T1 (⍬)
+reduce∆26_TEST←'reduce∆R09'#.util.MK∆T1 (⍬)
+reduce∆27_TEST←'reduce∆R10'#.util.MK∆T1 (⍬)
+reduce∆28_TEST←'reduce∆R11'#.util.MK∆T1 (⍬)
+reduce∆29_TEST←'reduce∆R12'#.util.MK∆T1 (⍬)
+reduce∆30_TEST←'reduce∆R13'#.util.MK∆T1 (⍬)
+reduce∆31_TEST←'reduce∆R14'#.util.MK∆T1 (⍬)
+reduce∆32_TEST←'reduce∆R15'#.util.MK∆T1 (⍬)
+reduce∆33_TEST←'reduce∆R16'#.util.MK∆T1 (⍬)
+reduce∆34_TEST←'reduce∆R17'#.util.MK∆T1 (⍬)
+reduce∆35_TEST←'reduce∆R18'#.util.MK∆T1 (⍬)
+reduce∆36_TEST←'reduce∆R19'#.util.MK∆T1 (⍬)
+reduce∆37_TEST←'reduce∆R20'#.util.MK∆T1 (⍬)
+reduce∆38_TEST←'reduce∆R21'#.util.MK∆T1 (⍬)
+reduce∆39_TEST←'reduce∆R22'#.util.MK∆T1 (⍬)
+reduce∆40_TEST←'reduce∆R23'#.util.MK∆T1 (⍬)
+reduce∆41_TEST←'reduce∆R24'#.util.MK∆T1 (⍬)
+reduce∆42_TEST←'reduce∆R25'#.util.MK∆T1 (⍬)
+reduce∆43_TEST←'reduce∆R26'#.util.MK∆T1 (⍬)
+reduce∆44_TEST←'reduce∆R27'#.util.MK∆T1 (⍬)
+reduce∆45_TEST←'reduce∆R28'#.util.MK∆T1 (⍬)
+reduce∆46_TEST←'reduce∆R29'#.util.MK∆T1 (⍬)
+reduce∆47_TEST←'reduce∆R30'#.util.MK∆T1 (3 3⍴⍳9)
 
 :EndNamespace
 

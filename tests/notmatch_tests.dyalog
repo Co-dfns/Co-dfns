@@ -1,20 +1,18 @@
-﻿:Namespace notmatch
+﻿:Namespace notmatch_tests
 
-S←':Namespace' 'Run←{⍺≢⍵}' ':EndNamespace'
-
-'01'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)(⍬)
-'02'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(0)(0)
-'03'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)(0)
-'04'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)(⍳5)
-'05'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍳7)(⍳5)
-'06'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(0)(⍳5)
-'07'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴⍳4)(2 2⍴⍳4)
-'08'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2 3⍴⍳12)(2 2⍴⍳4)
-'09'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2⍴⍳4)(2 2 3⍴⍳12)
-'10'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(2 2 3⍴⍳12)(2 2 3⍴1+⍳12)
-'11'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(0)(2 2⍴⍳4)
-'12'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(,0)(2 2⍴⍳4)
-'13'('notmatch' S 'Run' #.util.GEN∆T2 ⎕THIS)(,0)(,0)
+notmatch∆01_TEST←'notmatch∆Run'#.util.MK∆T2 (⍬)(⍬)
+notmatch∆02_TEST←'notmatch∆Run'#.util.MK∆T2 (0)(0)
+notmatch∆03_TEST←'notmatch∆Run'#.util.MK∆T2 (⍬)(0)
+notmatch∆04_TEST←'notmatch∆Run'#.util.MK∆T2 (⍬)(⍳5)
+notmatch∆05_TEST←'notmatch∆Run'#.util.MK∆T2 (⍳7)(⍳5)
+notmatch∆06_TEST←'notmatch∆Run'#.util.MK∆T2 (0)(⍳5)
+notmatch∆07_TEST←'notmatch∆Run'#.util.MK∆T2 (2 2⍴⍳4)(2 2⍴⍳4)
+notmatch∆08_TEST←'notmatch∆Run'#.util.MK∆T2 (2 2 3⍴⍳12)(2 2⍴⍳4)
+notmatch∆09_TEST←'notmatch∆Run'#.util.MK∆T2 (2 2⍴⍳4)(2 2 3⍴⍳12)
+notmatch∆10_TEST←'notmatch∆Run'#.util.MK∆T2 (2 2 3⍴⍳12)(2 2 3⍴1+⍳12)
+notmatch∆11_TEST←'notmatch∆Run'#.util.MK∆T2 (0)(2 2⍴⍳4)
+notmatch∆12_TEST←'notmatch∆Run'#.util.MK∆T2 (,0)(2 2⍴⍳4)
+notmatch∆13_TEST←'notmatch∆Run'#.util.MK∆T2 (,0)(,0)
 
 :EndNamespace
 

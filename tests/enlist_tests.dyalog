@@ -1,14 +1,11 @@
-﻿:Namespace enlist
+﻿:Namespace enlist_tests
 
-I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
-S←':Namespace' 'Run←{∊⍵}' ':EndNamespace'
-
-'1'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'2'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'3'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'4'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) ÷2 2⍴1+⍳5
-'5'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴1 0
-'6'('enlist' S 'Run' #.util.GEN∆T1 ⎕THIS) 3 7⍴⍳21
+enlist∆1_TEST←'enlist∆Run'#.util.MK∆T1 (⍳5)
+enlist∆2_TEST←'enlist∆Run'#.util.MK∆T1 (0)
+enlist∆3_TEST←'enlist∆Run'#.util.MK∆T1 (⍬)
+enlist∆4_TEST←'enlist∆Run'#.util.MK∆T1 (÷2 2⍴1+⍳5)
+enlist∆5_TEST←'enlist∆Run'#.util.MK∆T1 (3 7⍴1 0)
+enlist∆6_TEST←'enlist∆Run'#.util.MK∆T1 (3 7⍴⍳21)
 
 :EndNamespace
 

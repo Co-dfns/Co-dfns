@@ -1,33 +1,27 @@
-﻿:Namespace innerproduct
+﻿:Namespace innerproduct_tests
 
-S1←':Namespace' 'R1←{⍺+.×⍵}' ':EndNamespace'
-S2←':Namespace' 'R2←{⍺{⍺+⍵}.{⍺×⍵}⍵}' ':EndNamespace'
-S3←':Namespace' 'R3←{⍺=.+⍵}' ':EndNamespace'
-S4←':Namespace' 'R4←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X{⍺+⍵}.{⍺×⍵}Y}' ':EndNamespace'
-S5←':Namespace' 'R5←{⍺∧.=⍵}' ':EndNamespace'
-
-'01'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(1)          (1)
-'02'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(1)          (⍬)
-'03'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(⍬)          (⍬)
-'04'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(5)          (1+⍳3)
-'05'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(1+⍳3)       (5)
-'06'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(1+⍳3)       (1+⍳3)
-'07'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(1+⍳7)       (7 2⍴3)
-'08'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(2 7⍴3)      (1+⍳7)
-'09'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(3 2⍴1+⍳4)   (2 5⍴1+⍳4)
-'10'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(3 2⍴1+⍳4)   (2 5⍴÷1+⍳4)
-'11'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(1)          (1)
-'12'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(5)          (1+⍳3)
-'13'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(1+⍳3)       (5)
-'14'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(1+⍳3)       (1+⍳3)
-'15'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(1+⍳7)       (7 2⍴3)
-'16'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(2 7⍴3)      (1+⍳7)
-'17'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(3 2⍴1+⍳4)   (2 5⍴1+⍳4)
-'18'('innerproduct' S2 'R2' #.util.GEN∆T2 ⎕THIS)(3 2⍴1+⍳4)   (2 5⍴÷1+⍳4)
-'19'('innerproduct' S3 'R3' #.util.GEN∆T2 ⎕THIS)(1)          (÷2+⍳5)
-'20'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(0 5⍴5)      (5 5⍴3)
-'21'('innerproduct' S4 'R4' #.util.GEN∆T2 ⎕THIS)(1 3 2⍴1+⍳4) (1 2 5⍴1+⍳4)
-'22'('innerproduct' S1 'R1' #.util.GEN∆T2 ⎕THIS)(⍉2 10⍴⍳10)  (2 10⍴⍳10)
-'23'('innerproduct' S5 'R5' #.util.GEN∆T2 ⎕THIS)(⍉2 10⍴⍳10)  (2 10⍴⍳10)
+innerproduct∆01_TEST←'innerproduct∆R1'#.util.MK∆T2 (1)          (1)
+innerproduct∆02_TEST←'innerproduct∆R1'#.util.MK∆T2 (1)          (⍬)
+innerproduct∆03_TEST←'innerproduct∆R1'#.util.MK∆T2 (⍬)          (⍬)
+innerproduct∆04_TEST←'innerproduct∆R1'#.util.MK∆T2 (5)          (1+⍳3)
+innerproduct∆05_TEST←'innerproduct∆R1'#.util.MK∆T2 (1+⍳3)       (5)
+innerproduct∆06_TEST←'innerproduct∆R1'#.util.MK∆T2 (1+⍳3)       (1+⍳3)
+innerproduct∆07_TEST←'innerproduct∆R1'#.util.MK∆T2 (1+⍳7)       (7 2⍴3)
+innerproduct∆08_TEST←'innerproduct∆R1'#.util.MK∆T2 (2 7⍴3)      (1+⍳7)
+innerproduct∆09_TEST←'innerproduct∆R1'#.util.MK∆T2 (3 2⍴1+⍳4)   (2 5⍴1+⍳4)
+innerproduct∆10_TEST←'innerproduct∆R1'#.util.MK∆T2 (3 2⍴1+⍳4)   (2 5⍴÷1+⍳4)
+innerproduct∆11_TEST←'innerproduct∆R2'#.util.MK∆T2 (1)          (1)
+innerproduct∆12_TEST←'innerproduct∆R2'#.util.MK∆T2 (5)          (1+⍳3)
+innerproduct∆13_TEST←'innerproduct∆R2'#.util.MK∆T2 (1+⍳3)       (5)
+innerproduct∆14_TEST←'innerproduct∆R2'#.util.MK∆T2 (1+⍳3)       (1+⍳3)
+innerproduct∆15_TEST←'innerproduct∆R2'#.util.MK∆T2 (1+⍳7)       (7 2⍴3)
+innerproduct∆16_TEST←'innerproduct∆R2'#.util.MK∆T2 (2 7⍴3)      (1+⍳7)
+innerproduct∆17_TEST←'innerproduct∆R2'#.util.MK∆T2 (3 2⍴1+⍳4)   (2 5⍴1+⍳4)
+innerproduct∆18_TEST←'innerproduct∆R2'#.util.MK∆T2 (3 2⍴1+⍳4)   (2 5⍴÷1+⍳4)
+innerproduct∆19_TEST←'innerproduct∆R3'#.util.MK∆T2 (1)          (÷2+⍳5)
+innerproduct∆20_TEST←'innerproduct∆R1'#.util.MK∆T2 (0 5⍴5)      (5 5⍴3)
+innerproduct∆21_TEST←'innerproduct∆R4'#.util.MK∆T2 (1 3 2⍴1+⍳4) (1 2 5⍴1+⍳4)
+innerproduct∆22_TEST←'innerproduct∆R1'#.util.MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
+innerproduct∆23_TEST←'innerproduct∆R5'#.util.MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
 
 :EndNamespace

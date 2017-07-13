@@ -1,14 +1,13 @@
-﻿:Namespace split
+﻿:Namespace split_tests
 
-S←':Namespace' 'Run←{↓⍵}' ':EndNamespace'
 I32←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}
 I16←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)163)⎕DR ⍵}
 I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 
-'01'('split' S 'Run' #.util.GEN∆T1 ⎕THIS) I32 7
-'02'('split' S 'Run' #.util.GEN∆T1 ⎕THIS) I16 7
-'03'('split' S 'Run' #.util.GEN∆T1 ⎕THIS) I8 7
-'04'('split' S 'Run' #.util.GEN∆T1 ⎕THIS) 7.5
+split∆01_TEST←'split∆Run'#.util.MK∆T1 (I32 7)
+split∆02_TEST←'split∆Run'#.util.MK∆T1 (I16 7)
+split∆03_TEST←'split∆Run'#.util.MK∆T1 (I8 7)
+split∆04_TEST←'split∆Run'#.util.MK∆T1 (7.5)
 
 
 :EndNamespace

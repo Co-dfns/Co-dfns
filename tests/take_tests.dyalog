@@ -1,26 +1,23 @@
-﻿:Namespace take
+﻿:Namespace take_tests
 
-S1←':Namespace' 'Run←{⍺↑⍵}'  ':EndNamespace'
-S2←':Namespace' 'Run←{(1⌷⍺)↑⍵}' ':EndNamespace'
-
-'01'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)5	(⍳35)
-'02'('take' S2 'Run' #.util.GEN∆T2 ⎕THIS)(7 5)	(⍳12)
-'03'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(¯5)	(⍳12)
-'04'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(0)	(⍳12)
-'05'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(1)	(12)
-'06'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)	(12)
-'07'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)	(⍳12)
-'08'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(2)	(5 5⍴⍳25)
-'09'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(2 2)	(5 5⍴⍳25)
-'10'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(¯2 2)	(5 5⍴⍳25)
-'11'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(¯2 ¯3)	(5 5⍴⍳25)
-'12'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(¯2)	(5 5⍴⍳25)
-'13'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(¯2 2)	(5 5 3⍴⍳75)
-'14'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(25)	(⍳12)
-'15'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(10 10)	(5 5⍴⍳25)
-'16'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(10 10)	(5)
-'17'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(10)	(5)
-'18'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(2 5 5)	(3 3 3⍴⍳27)
-'19'('take' S1 'Run' #.util.GEN∆T2 ⎕THIS)(2 ¯5 5)	(3 3 3⍴⍳27)
+take∆01_TEST←'take∆R1'#.util.MK∆T2 5	(⍳35)
+take∆02_TEST←'take∆R2'#.util.MK∆T2 (7 5)	(⍳12)
+take∆03_TEST←'take∆R1'#.util.MK∆T2 (¯5)	(⍳12)
+take∆04_TEST←'take∆R1'#.util.MK∆T2 (0)	(⍳12)
+take∆05_TEST←'take∆R1'#.util.MK∆T2 (1)	(12)
+take∆06_TEST←'take∆R1'#.util.MK∆T2 (⍬)	(12)
+take∆07_TEST←'take∆R1'#.util.MK∆T2 (⍬)	(⍳12)
+take∆08_TEST←'take∆R1'#.util.MK∆T2 (2)	(5 5⍴⍳25)
+take∆09_TEST←'take∆R1'#.util.MK∆T2 (2 2)	(5 5⍴⍳25)
+take∆10_TEST←'take∆R1'#.util.MK∆T2 (¯2 2)	(5 5⍴⍳25)
+take∆11_TEST←'take∆R1'#.util.MK∆T2 (¯2 ¯3)	(5 5⍴⍳25)
+take∆12_TEST←'take∆R1'#.util.MK∆T2 (¯2)	(5 5⍴⍳25)
+take∆13_TEST←'take∆R1'#.util.MK∆T2 (¯2 2)	(5 5 3⍴⍳75)
+take∆14_TEST←'take∆R1'#.util.MK∆T2 (25)	(⍳12)
+take∆15_TEST←'take∆R1'#.util.MK∆T2 (10 10)	(5 5⍴⍳25)
+take∆16_TEST←'take∆R1'#.util.MK∆T2 (10 10)	(5)
+take∆17_TEST←'take∆R1'#.util.MK∆T2 (10)	(5)
+take∆18_TEST←'take∆R1'#.util.MK∆T2 (2 5 5)	(3 3 3⍴⍳27)
+take∆19_TEST←'take∆R1'#.util.MK∆T2 (2 ¯5 5)	(3 3 3⍴⍳27)
 
 :EndNamespace

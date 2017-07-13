@@ -1,13 +1,11 @@
-﻿:Namespace tally
+﻿:Namespace tally_tests
 
-S←':Namespace' 'Run←{≢⍵}' ':EndNamespace'
-
-'01'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'02'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'03'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ,0
-'04'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'05'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
-'06'('tally' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴0 1 1
+tally∆01_TEST←'tally∆Run'#.util.MK∆T1 (⍬)
+tally∆02_TEST←'tally∆Run'#.util.MK∆T1 (0)
+tally∆03_TEST←'tally∆Run'#.util.MK∆T1 (,0)
+tally∆04_TEST←'tally∆Run'#.util.MK∆T1 (⍳5)
+tally∆05_TEST←'tally∆Run'#.util.MK∆T1 (2 3 4⍴⍳5)
+tally∆06_TEST←'tally∆Run'#.util.MK∆T1 (2 3 4⍴0 1 1)
 
 :EndNamespace
 

@@ -1,15 +1,10 @@
-﻿:Namespace guards
+﻿:Namespace guards_tests
 
-S1←':Namespace' 'Run←{⍵: 0 ⋄ 1}' ':EndNamespace'
-S2←':Namespace' 'Run←{~⍵: 0 ⋄ 1}' ':EndNamespace'
-S3←':Namespace' 'Run←{~⍵∨⍵: 0 ⋄ 1}' ':EndNamespace'
-
-'01'('guards' S1 'Run' #.util.GEN∆T1 ⎕THIS) 0 
-'02'('guards' S1 'Run' #.util.GEN∆T1 ⎕THIS) 1
-'03'('guards' S2 'Run' #.util.GEN∆T1 ⎕THIS) 0 
-'04'('guards' S2 'Run' #.util.GEN∆T1 ⎕THIS) 1
-'05'('guards' S2 'Run' #.util.GEN∆T1 ⎕THIS) 0 
-'06'('guards' S2 'Run' #.util.GEN∆T1 ⎕THIS) 1
-
+guards∆01_TEST←'guards∆R1'#.util.MK∆T1 0 
+guards∆02_TEST←'guards∆R1'#.util.MK∆T1 1
+guards∆03_TEST←'guards∆R2'#.util.MK∆T1 0 
+guards∆04_TEST←'guards∆R2'#.util.MK∆T1 1
+guards∆05_TEST←'guards∆R3'#.util.MK∆T1 0 
+guards∆06_TEST←'guards∆R3'#.util.MK∆T1 1
 
 :EndNamespace

@@ -1,14 +1,12 @@
-:Namespace pytha
+﻿:Namespace pytha_tests
 
-S←':Namespace' 'Run←{((⍺*2)+⍵*2)*÷2}' ':EndNamespace'
-
-'01'('pytha' S 'Run' #.util.GEN∆T2 ⎕THIS)	3	   4
-'02'('pytha' S 'Run' #.util.GEN∆T2 ⎕THIS)	13	   14
-'03'('pytha' S 'Run' #.util.GEN∆T2 ⎕THIS)	(3 14)	   (4 13)
-'04'('pytha' S 'Run' #.util.GEN∆T2 ⎕THIS)	(⍳5)	   (⍳5)
-'05'('pytha' S 'Run' #.util.GEN∆T2 ⎕THIS) 0              0
-'06'('pytha' S 'Run' #.util.GEN∆T2 ⎕THIS) 1              1
-'07'('pytha' S 'Run' #.util.GEN∆T2 ⎕THIS) (1 7⍴0 1) (0)
+pytha∆01_TEST←'pytha∆Run'#.util.MK∆T2 3	   4
+pytha∆02_TEST←'pytha∆Run'#.util.MK∆T2 13	   14
+pytha∆03_TEST←'pytha∆Run'#.util.MK∆T2 (3 14)	   (4 13)
+pytha∆04_TEST←'pytha∆Run'#.util.MK∆T2 (⍳5)	   (⍳5)
+pytha∆05_TEST←'pytha∆Run'#.util.MK∆T2 0              0
+pytha∆06_TEST←'pytha∆Run'#.util.MK∆T2 1              1
+pytha∆07_TEST←'pytha∆Run'#.util.MK∆T2 (1 7⍴0 1) (0)
 
 :EndNamespace
 

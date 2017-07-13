@@ -1,25 +1,24 @@
-﻿:Namespace gradeup
+﻿:Namespace gradeup_tests
 
-S←':Namespace' 'Run←{⍋⍵}' ':EndNamespace'
 F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 
-'01'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(⍬)
-'02'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(,1)
-'03'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(⍳3)
-'04'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(⌽⍳3)
-'05'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(?25⍴20)
-'06'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(?100⍴50)
-'07'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(10⍴50)
-'08'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ⍬)
-'09'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ,1)
-'10'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ⍳3)
-'11'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ⌽⍳3)
-'12'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?25⍴20)
-'13'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?100⍴50)
-'14'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F 10⍴50)
-'15'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(?10 10⍴50)
-'16'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(?10 10 15⍴50)
-'17'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?10 10⍴50)
-'18'('gradeup' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?10 10 15⍴50)
+gradeup∆01_TEST←'gradeup∆Run'#.util.MK∆T1 (⍬)
+gradeup∆02_TEST←'gradeup∆Run'#.util.MK∆T1 (,1)
+gradeup∆03_TEST←'gradeup∆Run'#.util.MK∆T1 (⍳3)
+gradeup∆04_TEST←'gradeup∆Run'#.util.MK∆T1 (⌽⍳3)
+gradeup∆05_TEST←'gradeup∆Run'#.util.MK∆T1 (?25⍴20)
+gradeup∆06_TEST←'gradeup∆Run'#.util.MK∆T1 (?100⍴50)
+gradeup∆07_TEST←'gradeup∆Run'#.util.MK∆T1 (10⍴50)
+gradeup∆08_TEST←'gradeup∆Run'#.util.MK∆T1 (F ⍬)
+gradeup∆09_TEST←'gradeup∆Run'#.util.MK∆T1 (F ,1)
+gradeup∆10_TEST←'gradeup∆Run'#.util.MK∆T1 (F ⍳3)
+gradeup∆11_TEST←'gradeup∆Run'#.util.MK∆T1 (F ⌽⍳3)
+gradeup∆12_TEST←'gradeup∆Run'#.util.MK∆T1 (F ?25⍴20)
+gradeup∆13_TEST←'gradeup∆Run'#.util.MK∆T1 (F ?100⍴50)
+gradeup∆14_TEST←'gradeup∆Run'#.util.MK∆T1 (F 10⍴50)
+gradeup∆15_TEST←'gradeup∆Run'#.util.MK∆T1 (?10 10⍴50)
+gradeup∆16_TEST←'gradeup∆Run'#.util.MK∆T1 (?10 10 15⍴50)
+gradeup∆17_TEST←'gradeup∆Run'#.util.MK∆T1 (F ?10 10⍴50)
+gradeup∆18_TEST←'gradeup∆Run'#.util.MK∆T1 (F ?10 10 15⍴50)
 
 :EndNamespace

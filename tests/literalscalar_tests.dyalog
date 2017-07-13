@@ -1,8 +1,6 @@
-:Namespace literalscalar
+﻿:Namespace literalscalar_tests
 
-S←':Namespace' 'R1←{X←1 ⋄ ⍵⊢X}' 'R2←{X←1 2 ⋄ ⍵⊢X}' ':EndNamespace'
-
-'01'('literalscalar' S 'R1' #.util.GEN∆T1 ⎕THIS) ⍳5
-'02'('literalscalar' S 'R2' #.util.GEN∆T1 ⎕THIS) ⍳5
+literalscalar∆01_TEST←'literalscalar∆R1'#.util.MK∆T1 (⍳5)
+literalscalar∆02_TEST←'literalscalar∆R2'#.util.MK∆T1 (⍳5)
 
 :EndNamespace

@@ -1,22 +1,21 @@
-﻿:Namespace commute
+﻿:Namespace commute_tests
 
 I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}¯5000+?100⍴10000
 F←100÷⍨?100⍴10000
 B←?100⍴2
-S←':Namespace' 'Run←{⍺-⍨⍵}' 'Rm←{-⍨⍵}' ':EndNamespace'
 
-'ii'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) I I
-'ff'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) F F
-'if'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) I F
-'fi'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) F I
-'bb'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) B B
-'bi'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) B I
-'bf'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) B F
-'ib'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) I B
-'fb'('commute' S 'Run' #.util.GEN∆T2 ⎕THIS) F B
-'i'('commute' S 'Rm' #.util.GEN∆T1 ⎕THIS) I
-'f'('commute' S 'Rm' #.util.GEN∆T1 ⎕THIS) F
-'b'('commute' S 'Rm' #.util.GEN∆T1 ⎕THIS) B
+commute∆ii_TEST←'commute∆Run'#.util.MK∆T2 I I
+commute∆ff_TEST←'commute∆Run'#.util.MK∆T2 F F
+commute∆if_TEST←'commute∆Run'#.util.MK∆T2 I F
+commute∆fi_TEST←'commute∆Run'#.util.MK∆T2 F I
+commute∆bb_TEST←'commute∆Run'#.util.MK∆T2 B B
+commute∆bi_TEST←'commute∆Run'#.util.MK∆T2 B I
+commute∆bf_TEST←'commute∆Run'#.util.MK∆T2 B F
+commute∆ib_TEST←'commute∆Run'#.util.MK∆T2 I B
+commute∆fb_TEST←'commute∆Run'#.util.MK∆T2 F B
+commute∆i_TEST←'commute∆Rm'#.util.MK∆T1 I
+commute∆f_TEST←'commute∆Rm'#.util.MK∆T1 F
+commute∆b_TEST←'commute∆Rm'#.util.MK∆T1 B
 
 :EndNamespace
 

@@ -1,31 +1,26 @@
-﻿:Namespace scanfirst
+﻿:Namespace scanfirst_tests
 
-S1←':Namespace' 'Run←{+⍀⍵}' ':EndNamespace'
-S2←':Namespace' 'Run←{×⍀⍵}' ':EndNamespace'
-S3←':Namespace' 'Run←{{⍺+⍵}⍀⍵}' ':EndNamespace'
-S4←':Namespace' 'Run←{<⍀⍵}' ':EndNamespace'
-
-'01'('scanfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'02'('scanfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'03'('scanfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'04'('scanfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴3
-'05'('scanfirst' S2 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'06'('scanfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'07'('scanfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'08'('scanfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'09'('scanfirst' S2 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'10'('scanfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) (2*18)⍴2 0 0 0 0
-'11'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) (10 2)⍴1
-'12'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) (10 2)⍴5
-'13'('scanfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) (10 2)⍴1
-'14'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) (10 2)⍴1 0
-'15'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) (10 2)⍴5 0
-'16'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'17'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'18'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'19'('scanfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) 0 3⍴⍳9
-'20'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 0 3⍴⍳9
-'21'('scanfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) 1 3⍴⍳9
-'22'('scanfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 1 3⍴⍳9
+scanfirst∆01_TEST←'scanfirst∆R1'#.util.MK∆T1 (⍬⍴1)
+scanfirst∆02_TEST←'scanfirst∆R1'#.util.MK∆T1 (5⍴⍳5)
+scanfirst∆03_TEST←'scanfirst∆R1'#.util.MK∆T1 (3 3⍴⍳9)
+scanfirst∆04_TEST←'scanfirst∆R3'#.util.MK∆T1 (⍬⍴3)
+scanfirst∆05_TEST←'scanfirst∆R2'#.util.MK∆T1 (⍬)
+scanfirst∆06_TEST←'scanfirst∆R1'#.util.MK∆T1 (⍬)
+scanfirst∆07_TEST←'scanfirst∆R3'#.util.MK∆T1 (⍬⍴1)
+scanfirst∆08_TEST←'scanfirst∆R3'#.util.MK∆T1 (5⍴⍳5)
+scanfirst∆09_TEST←'scanfirst∆R2'#.util.MK∆T1 (3 3⍴⍳9)
+scanfirst∆10_TEST←'scanfirst∆R1'#.util.MK∆T1 ((2*18)⍴2 0 0 0 0)
+scanfirst∆11_TEST←'scanfirst∆R4'#.util.MK∆T1 ((10 2)⍴1)
+scanfirst∆12_TEST←'scanfirst∆R4'#.util.MK∆T1 ((10 2)⍴5)
+scanfirst∆13_TEST←'scanfirst∆R1'#.util.MK∆T1 ((10 2)⍴1)
+scanfirst∆14_TEST←'scanfirst∆R4'#.util.MK∆T1 ((10 2)⍴1 0)
+scanfirst∆15_TEST←'scanfirst∆R4'#.util.MK∆T1 ((10 2)⍴5 0)
+scanfirst∆16_TEST←'scanfirst∆R4'#.util.MK∆T1 (⍬⍴1)
+scanfirst∆17_TEST←'scanfirst∆R4'#.util.MK∆T1 (5⍴⍳5)
+scanfirst∆18_TEST←'scanfirst∆R4'#.util.MK∆T1 (3 3⍴⍳9)
+scanfirst∆19_TEST←'scanfirst∆R3'#.util.MK∆T1 (0 3⍴⍳9)
+scanfirst∆20_TEST←'scanfirst∆R4'#.util.MK∆T1 (0 3⍴⍳9)
+scanfirst∆21_TEST←'scanfirst∆R3'#.util.MK∆T1 (1 3⍴⍳9)
+scanfirst∆22_TEST←'scanfirst∆R4'#.util.MK∆T1 (1 3⍴⍳9)
 
 :EndNamespace

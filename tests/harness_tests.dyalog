@@ -1,8 +1,4 @@
-:Namespace harness
-
-  ⎕IO←0
-
-⍝ Test that the testing harness is functioning correctly
+﻿:Namespace harness_tests
 
 t1_TEST←{#.UT.expect←0 ⋄ 0}
 

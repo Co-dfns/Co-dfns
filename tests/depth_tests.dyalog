@@ -1,11 +1,9 @@
-﻿:Namespace depth
+﻿:Namespace depth_tests
 
-S←':Namespace' 'Run←{≡⍵}' ':EndNamespace'
-
-'01'('depth' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'02'('depth' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'03'('depth' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'04'('depth' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
+depth∆01_TEST←'depth∆Run'#.util.MK∆T1 ⍬
+depth∆02_TEST←'depth∆Run'#.util.MK∆T1 0
+depth∆03_TEST←'depth∆Run'#.util.MK∆T1 (⍳5)
+depth∆04_TEST←'depth∆Run'#.util.MK∆T1 (2 3 4⍴⍳5)
 
 :EndNamespace
 

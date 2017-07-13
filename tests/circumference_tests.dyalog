@@ -1,10 +1,8 @@
-:Namespace circumference
+﻿:Namespace circumference_tests
 
-  S←':Namespace' 'Run←{○⍵×2}' ':EndNamespace'
-
-'01'('circumference' S 'Run' #.util.GEN∆T1 ⎕THIS)	13
-'02'('circumference' S 'Run' #.util.GEN∆T1 ⎕THIS)	0
-'03'('circumference' S 'Run' #.util.GEN∆T1 ⎕THIS)	12345
-'04'('circumference' S 'Run' #.util.GEN∆T1 ⎕THIS)	⍳14
+circumference∆01_TEST←'circumference∆Run'#.util.MK∆T1 (13)
+circumference∆02_TEST←'circumference∆Run'#.util.MK∆T1 (0)
+circumference∆03_TEST←'circumference∆Run'#.util.MK∆T1 (12345)
+circumference∆04_TEST←'circumference∆Run'#.util.MK∆T1 (⍳14)
 
 :EndNamespace

@@ -1,12 +1,7 @@
 ﻿:Namespace manualallocation_tests
 
-S←':Namespace' 'F←{⊢⍵}' ':EndNamespace'
-
-manualallocation_TEST←{CS←'manualallocation'#.codfns.Fix S
- #.UT.expect←⍳5
- ptr←'manualallocation'#.codfns.MKA ⍳5
- z←'manualallocation'#.codfns.EXA ptr
- _←'manualallocation'#.codfns.FREA ptr
- z}
+manualallocation_TEST←{#.UT.expect←⍳5
+ ptr←'tfns_cdf'#.codfns.MKA ⍳5
+ z⊣_←'tfns_cdf'#.codfns.FREA ptr⊣z←'tfns_cdf'#.codfns.EXA ptr}
 
 :EndNamespace

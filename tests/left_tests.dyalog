@@ -1,9 +1,7 @@
-﻿:Namespace left
+﻿:Namespace left_tests
 
-S←':Namespace' 'Run←{⍺⊣⍵}' ':EndNamespace'
-
-'01'('left' S 'Run' #.util.GEN∆T2 ⎕THIS)(⍬)(0)
-'02'('left' S 'Run' #.util.GEN∆T2 ⎕THIS)(0)(⍬)
+left∆01_TEST←'left∆Run'#.util.MK∆T2 (⍬)(0)
+left∆02_TEST←'left∆Run'#.util.MK∆T2 (0)(⍬)
 
 :EndNamespace
 

@@ -1,25 +1,24 @@
-﻿:Namespace gradedown
+﻿:Namespace gradedown_tests
 
-S←':Namespace' 'Run←{⍒⍵}' ':EndNamespace'
 F←{⊃((⎕DR ⍵)645)⎕DR ⍵}
 
-'01'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(⍬)
-'02'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(,1)
-'03'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(⍳3)
-'04'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(⌽⍳3)
-'05'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(?25⍴20)
-'06'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(?100⍴50)
-'07'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(10⍴50)
-'08'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ⍬)
-'09'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ,1)
-'10'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ⍳3)
-'11'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ⌽⍳3)
-'12'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?25⍴20)
-'13'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?100⍴50)
-'14'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F 10⍴50)
-'15'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(?10 10⍴50)
-'16'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(?10 10 15⍴50)
-'17'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?10 10⍴50)
-'18'('gradedown' S 'Run' #.util.GEN∆T1 ⎕THIS)(F ?10 10 15⍴50)
+gradedown∆01_TEST←'gradedown∆Run'#.util.MK∆T1 (⍬)
+gradedown∆02_TEST←'gradedown∆Run'#.util.MK∆T1 (,1)
+gradedown∆03_TEST←'gradedown∆Run'#.util.MK∆T1 (⍳3)
+gradedown∆04_TEST←'gradedown∆Run'#.util.MK∆T1 (⌽⍳3)
+gradedown∆05_TEST←'gradedown∆Run'#.util.MK∆T1 (?25⍴20)
+gradedown∆06_TEST←'gradedown∆Run'#.util.MK∆T1 (?100⍴50)
+gradedown∆07_TEST←'gradedown∆Run'#.util.MK∆T1 (10⍴50)
+gradedown∆08_TEST←'gradedown∆Run'#.util.MK∆T1 (F ⍬)
+gradedown∆09_TEST←'gradedown∆Run'#.util.MK∆T1 (F ,1)
+gradedown∆10_TEST←'gradedown∆Run'#.util.MK∆T1 (F ⍳3)
+gradedown∆11_TEST←'gradedown∆Run'#.util.MK∆T1 (F ⌽⍳3)
+gradedown∆12_TEST←'gradedown∆Run'#.util.MK∆T1 (F ?25⍴20)
+gradedown∆13_TEST←'gradedown∆Run'#.util.MK∆T1 (F ?100⍴50)
+gradedown∆14_TEST←'gradedown∆Run'#.util.MK∆T1 (F 10⍴50)
+gradedown∆15_TEST←'gradedown∆Run'#.util.MK∆T1 (?10 10⍴50)
+gradedown∆16_TEST←'gradedown∆Run'#.util.MK∆T1 (?10 10 15⍴50)
+gradedown∆17_TEST←'gradedown∆Run'#.util.MK∆T1 (F ?10 10⍴50)
+gradedown∆18_TEST←'gradedown∆Run'#.util.MK∆T1 (F ?10 10 15⍴50)
 
 :EndNamespace

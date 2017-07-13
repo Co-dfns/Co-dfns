@@ -1,17 +1,14 @@
-:Namespace reverse
+﻿:Namespace reverse_tests
 
-S←':Namespace' 'Run←{⌽⍵}' ':EndNamespace'
-S2←':Namespace' 'Run←{⌽⌽⌽⍵}' ':EndNamespace'
-
-'01'('reverse' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'02'('reverse' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'03'('reverse' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'04'('reverse' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
-'05'('reverse' S 'Run' #.util.GEN∆T1 ⎕THIS) (0 1 1 0 0 1 1 1 1 0 0)
-'06'('reverse' S 'Run' #.util.GEN∆T1 ⎕THIS) (0 1 1 0 0 1 1)
-'07'('reverse' S 'Run' #.util.GEN∆T1 ⎕THIS) (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
-'08'('reverse' S2 'Run' #.util.GEN∆T1 ⎕THIS) (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
-'09'('reverse' S2 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
+reverse∆01_TEST←'reverse∆R1'#.util.MK∆T1 (⍬)
+reverse∆02_TEST←'reverse∆R1'#.util.MK∆T1 (0)
+reverse∆03_TEST←'reverse∆R1'#.util.MK∆T1 (⍳5)
+reverse∆04_TEST←'reverse∆R1'#.util.MK∆T1 (2 3 4⍴⍳5)
+reverse∆05_TEST←'reverse∆R1'#.util.MK∆T1 (0 1 1 0 0 1 1 1 1 0 0)
+reverse∆06_TEST←'reverse∆R1'#.util.MK∆T1 (0 1 1 0 0 1 1)
+reverse∆07_TEST←'reverse∆R1'#.util.MK∆T1 (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
+reverse∆08_TEST←'reverse∆R2'#.util.MK∆T1 (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
+reverse∆09_TEST←'reverse∆R2'#.util.MK∆T1 (2 3 4⍴⍳5)
 
 :EndNamespace
 

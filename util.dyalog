@@ -45,42 +45,25 @@ utf8get←{
 split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
 
 ∇BUILD
-#.tfns∆dya←#.⎕SE.SALT.Load'./tests/tfns_dya -target=#'
+⎕EX¨'#.tfns∆dya' '#.tfns∆cdf' ⋄ _←⎕WA
+#.tfns∆dya←#.⎕SE.SALT.Load'./tests/tfns -target=#'
 #.tfns∆cdf←'tfns_cdf'##.codfns.Fix ⎕SRC #.tfns∆dya
 ∇
 
 ∇TEST
+#.LOAD
+⎕←'Building test functions...' ⋄ BUILD
 ##.UT.print_passed←1
 ##.UT.print_summary←1
 ##.UT.run './tests'
 ∇
 
-test←{##.UT.run './tests/',⍵,'_tests.dyalog'}
+test←{##.UT.(print_passed print_summary)←1
+ ##.UT.run './tests/',⍵,'_tests.dyalog'}
 
-MK∆T1←{id ns fn←⍺⍺ ⋄ r←⍵⍵ ⋄ CS←id ##.codfns.Fix ns ⋄ NS←⎕FIX ns
-	##.UT.expect←(⍎'NS.',fn)r ⋄ (⍎'CS.',fn)r}
-MK∆T2←{id ns fn←⍺⍺ ⋄ l r←⍵⍵ ⋄ CS←id ##.codfns.Fix ns ⋄ NS←⎕FIX ns
-	##.UT.expect←l(⍎'NS.',fn)r ⋄ l(⍎'CS.',fn)r}
-MK∆T3←{id ns fn tl←⍺⍺ ⋄ l r←⍵⍵ ⋄ CS←id ##.codfns.Fix ns ⋄ NS←⎕FIX ns
-	nv←l(⍎'NS.',fn)r ⋄ cv←l(⍎'CS.',fn)r
-	##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
-
-∇	Z←ID(NCF GEN∆T1 THIS)IN;NS;FN;TC;TMP
-	NS TC FN←NCF ⋄ TMP←(NS,ID) TC FN MK∆T1 IN
-	⍎'THIS.',NS,'∆',ID,'_TEST←TMP'
-	Z←0 0⍴⍬
-∇
-
-∇	Z←ID(NCF GEN∆T2 THIS)IN;NS;FN;TC;TMP
-	NS TC FN←NCF ⋄ TMP←(NS,ID) TC FN MK∆T2 IN
-	⍎'THIS.',NS,'∆',ID,'_TEST←TMP'
-	Z←0 0⍴⍬
-∇
-
-∇Z←ID(NCFT GEN∆T3 THIS)IN;NS;FN;TC;TMP;TL
-	NS TC FN TL←NCFT ⋄ TMP←(NS,ID) TC FN TL MK∆T3 IN
-	⍎'THIS.',NS,'∆',ID,'_TEST←TMP'
-	Z←0 0⍴⍬
-∇
+MK∆T1←{##.UT.expect←(⍎'##.tfns∆dya.',⍺⍺)⍵⍵ ⋄ (⍎'##.tfns∆cdf.',⍺⍺)⍵⍵}
+MK∆T2←{##.UT.expect←⊃(⍎'##.tfns∆dya.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'##.tfns∆cdf.',⍺⍺)/⍵⍵}
+MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'##.tfns∆dya.',fn)/⍵⍵ ⋄ cv←⊃(⍎'##.tfns∆cdf.',fn)/⍵⍵
+ ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 
 :EndNamespace

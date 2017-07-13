@@ -1,40 +1,35 @@
-﻿:Namespace rotate
+﻿:Namespace rotate_tests
 
-S←':Namespace' 'Run←{⍺⌽⍵}' ':EndNamespace'
-R←':Namespace' 'Run←{7⌽⍵}' ':EndNamespace'
-T←':Namespace' 'Run←{¯1⌽⍵}' ':EndNamespace'
-U←':Namespace' 'Run←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X⌽Y}' ':EndNamespace'
-
-'01'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         ⍬
-'02'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         0
-'03'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (⍳5)
-'04'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (2 3 4⍴⍳5)
-'05'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (17⍴0 1 1 0 0 1 1 1 1 0 0)
-'06'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (0 1 1 0 0 1 1)
-'07'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
-'08'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) 1          (0 1 1 0 0 1 1)
-'09'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) 7          (17⍴0 1 1 0 0 1 1 1 1 0 0)
-'10'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) 7          (17⍴⍳17)
-'11'('rotate' R 'Run' #.util.GEN∆T1 ⎕THIS)            (17⍴⍳17)
-'12'('rotate' T 'Run' #.util.GEN∆T1 ⎕THIS)            (2 3 4⍴⍳5)
-'13'('rotate' T 'Run' #.util.GEN∆T1 ⎕THIS)            (⍳5)
-'14'('rotate' T 'Run' #.util.GEN∆T1 ⎕THIS)            0
-'15'('rotate' T 'Run' #.util.GEN∆T1 ⎕THIS)            (17⍴0 1 1 0 0 1 1 1 1 0 0)
-'16'('rotate' T 'Run' #.util.GEN∆T1 ⎕THIS)            (0 1 1 0 0 1 1)
-'17'('rotate' T 'Run' #.util.GEN∆T1 ⎕THIS)            (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
-'18'('rotate' R 'Run' #.util.GEN∆T1 ⎕THIS)            (17⍴0 1 1 0 0 1 1 1 1 0 0)
-'19'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (32 32⍴0 1 1 0 0 1 1 1 1 0 0)
-'20'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (64 20⍴0 1 1 0 0 1 1 1 1 0 0)
-'21'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (?15 15⍴2)
-'22'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (?80 80⍴2)
-'23'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (?800 800⍴2)
-'24'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (?90 90⍴2)
-'25'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (?8100⍴2)
-'26'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) ¯1         (?8133⍴2)
-'27'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) (⍳5)       (5 7⍴⍳35)
-'28'('rotate' S 'Run' #.util.GEN∆T2 ⎕THIS) (2 3⍴⍳6)   (2 3 5⍴⍳30)
-'29'('rotate' U 'Run' #.util.GEN∆T2 ⎕THIS) (1 2 3⍴⍳6) (1 2 3 5⍴⍳30)
-'30'('rotate' U 'Run' #.util.GEN∆T2 ⎕THIS) (1 6⍴⍳6)   (1 6 5⍴⍳30)
+rotate∆01_TEST←'rotate∆S'#.util.MK∆T2 ¯1         ⍬
+rotate∆02_TEST←'rotate∆S'#.util.MK∆T2 ¯1         0
+rotate∆03_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (⍳5)
+rotate∆04_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (2 3 4⍴⍳5)
+rotate∆05_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (17⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆06_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (0 1 1 0 0 1 1)
+rotate∆07_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆08_TEST←'rotate∆S'#.util.MK∆T2 1          (0 1 1 0 0 1 1)
+rotate∆09_TEST←'rotate∆S'#.util.MK∆T2 7          (17⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆10_TEST←'rotate∆S'#.util.MK∆T2 7          (17⍴⍳17)
+rotate∆11_TEST←'rotate∆R'#.util.MK∆T1            (17⍴⍳17)
+rotate∆12_TEST←'rotate∆T'#.util.MK∆T1            (2 3 4⍴⍳5)
+rotate∆13_TEST←'rotate∆T'#.util.MK∆T1            (⍳5)
+rotate∆14_TEST←'rotate∆T'#.util.MK∆T1            0
+rotate∆15_TEST←'rotate∆T'#.util.MK∆T1            (17⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆16_TEST←'rotate∆T'#.util.MK∆T1            (0 1 1 0 0 1 1)
+rotate∆17_TEST←'rotate∆T'#.util.MK∆T1            (2 3 4⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆18_TEST←'rotate∆R'#.util.MK∆T1            (17⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆19_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (32 32⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆20_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (64 20⍴0 1 1 0 0 1 1 1 1 0 0)
+rotate∆21_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (?15 15⍴2)
+rotate∆22_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (?80 80⍴2)
+rotate∆23_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (?800 800⍴2)
+rotate∆24_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (?90 90⍴2)
+rotate∆25_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (?8100⍴2)
+rotate∆26_TEST←'rotate∆S'#.util.MK∆T2 ¯1         (?8133⍴2)
+rotate∆27_TEST←'rotate∆S'#.util.MK∆T2 (⍳5)       (5 7⍴⍳35)
+rotate∆28_TEST←'rotate∆S'#.util.MK∆T2 (2 3⍴⍳6)   (2 3 5⍴⍳30)
+rotate∆29_TEST←'rotate∆U'#.util.MK∆T2 (1 2 3⍴⍳6) (1 2 3 5⍴⍳30)
+rotate∆30_TEST←'rotate∆U'#.util.MK∆T2 (1 6⍴⍳6)   (1 6 5⍴⍳30)
 
 :EndNamespace
 

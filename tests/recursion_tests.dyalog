@@ -1,9 +1,6 @@
-﻿:Namespace recursion
+﻿:Namespace recursion_tests
 
-S1←':Namespace' 'fact←{⍵≤0: 1 ⋄ ⍵×fact ⍵-1}' ':EndNamespace'
-S2←':Namespace' 'fact←{⍵≤0: 1 ⋄ ⍵×∇ ⍵-1}' ':EndNamespace'
-
-'01'('recursion' S1 'fact' #.util.GEN∆T1 ⎕THIS) 5 
-'02'('recursion' S2 'fact' #.util.GEN∆T1 ⎕THIS) 5 
+recursion∆01_TEST←'recursion∆R1'#.util.MK∆T1 5 
+recursion∆02_TEST←'recursion∆R2'#.util.MK∆T1 5 
 
 :EndNamespace

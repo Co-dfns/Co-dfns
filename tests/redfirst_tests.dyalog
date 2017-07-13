@@ -1,33 +1,28 @@
-﻿:Namespace redfirst
+﻿:Namespace redfirst_tests
 
-S1←':Namespace' 'Run←{+⌿⍵}' ':EndNamespace'
-S2←':Namespace' 'Run←{×⌿⍵}' ':EndNamespace'
-S3←':Namespace' 'Run←{{⍺+⍵}⌿⍵}' ':EndNamespace'
-S4←':Namespace' 'Run←{X←0⌷⍵ ⋄ {⍺+⍵}⌿⍵}' ':EndNamespace'
-
-'01'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'02'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'03'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'04'('redfirst' S2 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴3
-'05'('redfirst' S2 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'06'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'07'('redfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) ⍬⍴1
-'08'('redfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) 5⍴⍳5
-'09'('redfirst' S3 'Run' #.util.GEN∆T1 ⎕THIS) 3 3⍴⍳9
-'10'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?15⍴2
-'11'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?128⍴2
-'12'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?100⍴2
-'13'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?3 3⍴2
-'14'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?10 10⍴2
-'15'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?32 32⍴2
-'16'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?128 128⍴2
-'17'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?100 100⍴2
-'18'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?500 500⍴2
-'19'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?512 512⍴2
-'20'('redfirst' S1 'Run' #.util.GEN∆T1 ⎕THIS) ?512⍴2
-'21'('redfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 1⍴1
-'22'('redfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 1 5⍴⍳5
-'23'('redfirst' S4 'Run' #.util.GEN∆T1 ⎕THIS) 1 3 3⍴⍳9
+redfirst∆01_TEST←'redfirst∆R1'#.util.MK∆T1 (⍬⍴1)
+redfirst∆02_TEST←'redfirst∆R1'#.util.MK∆T1 (5⍴⍳5)
+redfirst∆03_TEST←'redfirst∆R1'#.util.MK∆T1 (3 3⍴⍳9)
+redfirst∆04_TEST←'redfirst∆R2'#.util.MK∆T1 (⍬⍴3)
+redfirst∆05_TEST←'redfirst∆R2'#.util.MK∆T1 (⍬)
+redfirst∆06_TEST←'redfirst∆R1'#.util.MK∆T1 (⍬)
+redfirst∆07_TEST←'redfirst∆R3'#.util.MK∆T1 (⍬⍴1)
+redfirst∆08_TEST←'redfirst∆R3'#.util.MK∆T1 (5⍴⍳5)
+redfirst∆09_TEST←'redfirst∆R3'#.util.MK∆T1 (3 3⍴⍳9)
+redfirst∆10_TEST←'redfirst∆R1'#.util.MK∆T1 (?15⍴2)
+redfirst∆11_TEST←'redfirst∆R1'#.util.MK∆T1 (?128⍴2)
+redfirst∆12_TEST←'redfirst∆R1'#.util.MK∆T1 (?100⍴2)
+redfirst∆13_TEST←'redfirst∆R1'#.util.MK∆T1 (?3 3⍴2)
+redfirst∆14_TEST←'redfirst∆R1'#.util.MK∆T1 (?10 10⍴2)
+redfirst∆15_TEST←'redfirst∆R1'#.util.MK∆T1 (?32 32⍴2)
+redfirst∆16_TEST←'redfirst∆R1'#.util.MK∆T1 (?128 128⍴2)
+redfirst∆17_TEST←'redfirst∆R1'#.util.MK∆T1 (?100 100⍴2)
+redfirst∆18_TEST←'redfirst∆R1'#.util.MK∆T1 (?500 500⍴2)
+redfirst∆19_TEST←'redfirst∆R1'#.util.MK∆T1 (?512 512⍴2)
+redfirst∆20_TEST←'redfirst∆R1'#.util.MK∆T1 (?512⍴2)
+redfirst∆21_TEST←'redfirst∆R4'#.util.MK∆T1 (1⍴1)
+redfirst∆22_TEST←'redfirst∆R4'#.util.MK∆T1 (1 5⍴⍳5)
+redfirst∆23_TEST←'redfirst∆R4'#.util.MK∆T1 (1 3 3⍴⍳9)
 
 :EndNamespace
 

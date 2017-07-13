@@ -1,12 +1,10 @@
-﻿:Namespace same
+﻿:Namespace same_tests
 
-S←':Namespace' 'Run←{⊣⍵}' ':EndNamespace'
-
-'01'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍬
-'02'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) 0
-'03'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) ⍳5
-'04'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴⍳5
-'05'('same' S 'Run' #.util.GEN∆T1 ⎕THIS) 2 3 4⍴0 1 1
+same∆01_TEST←'same∆Run'#.util.MK∆T1 (⍬)
+same∆02_TEST←'same∆Run'#.util.MK∆T1 (0)
+same∆03_TEST←'same∆Run'#.util.MK∆T1 (⍳5)
+same∆04_TEST←'same∆Run'#.util.MK∆T1 (2 3 4⍴⍳5)
+same∆05_TEST←'same∆Run'#.util.MK∆T1 (2 3 4⍴0 1 1)
 
 :EndNamespace
 

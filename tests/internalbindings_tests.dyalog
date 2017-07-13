@@ -1,7 +1,5 @@
-﻿:Namespace internalbindings
+﻿:Namespace internalbindings_tests
 
-S1←':Namespace' 'Run←{X←A+A←⍳⍵ ⋄ X+X}' ':EndNamespace'
-
-'01'('internalbindings' S1 'Run' #.util.GEN∆T1 ⎕THIS) 10
+internalbindings∆01_TEST←'internalbindings∆Run'#.util.MK∆T1 10
 
 :EndNamespace
