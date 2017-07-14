@@ -1,7 +1,7 @@
 ﻿:Namespace random_tests
 
 MK∆T←{nv←⊃(⍎'##.tfns∆dya.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'##.tfns∆cdf.',⍺⍺)/⍵⍵
- res←|1-(0.5⌈(⌈/r)÷2)÷(+/÷≢)cv ⋄ _←{0.05≤⍵:⎕←⍵ ⋄ ⍬}res
+ res←|1-(0.5⌈(⌈/1⊃⍵⍵)÷2)÷(+/÷≢)cv ⋄ _←{0.05≤⍵:⎕←⍵ ⋄ ⍬}res
  ##.UT.expect←(⍴nv)(1) ⋄ (⍴cv)(0.05>res)}
 
 random∆01_TEST←'random∆Run'   MK∆T 4096 32

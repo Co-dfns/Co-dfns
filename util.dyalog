@@ -45,17 +45,20 @@ utf8get←{
 split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
 
 ∇BUILD
+⎕←'Building test functions...'
 ⎕EX¨'#.tfns∆dya' '#.tfns∆cdf' ⋄ _←⎕WA
 #.tfns∆dya←#.⎕SE.SALT.Load'./tests/tfns -target=#'
 #.tfns∆cdf←'tfns_cdf'##.codfns.Fix ⎕SRC #.tfns∆dya
 ∇
 
 ∇TEST
-#.LOAD
-⎕←'Building test functions...' ⋄ BUILD
 ##.UT.print_passed←1
 ##.UT.print_summary←1
 ##.UT.run './tests'
+∇
+
+∇LBT
+#.LOAD ⋄ BUILD ⋄ TEST
 ∇
 
 test←{##.UT.(print_passed print_summary)←1
