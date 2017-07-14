@@ -210,6 +210,16 @@ scl∆Run←{S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5
  L←|(((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT)-vsqrtT
  (÷(○2)*0.5)×(*(L×L)÷¯2)×÷1+0.2316419×L}
 
+sclmix∆add←{⍵+⍨⍺} ⋄ sclmix∆sub←{⍵-⍨⍺} ⋄ sclmix∆mul←{⍵×⍨⍺} ⋄ sclmix∆div←{⍵÷⍨⍺}
+sclmix∆pow←{⍵*⍨⍺} ⋄ sclmix∆log←{⍵⍟⍨⍺} ⋄ sclmix∆res←{⍵|⍨⍺} ⋄ sclmix∆min←{⍵⌊⍨⍺}
+sclmix∆max←{⍵⌈⍨⍺} ⋄ sclmix∆leq←{⍵≤⍨⍺} ⋄ sclmix∆let←{⍵<⍨⍺} ⋄ sclmix∆eql←{⍵=⍨⍺}
+sclmix∆geq←{⍵≥⍨⍺} ⋄ sclmix∆get←{⍵>⍨⍺} ⋄ sclmix∆neq←{⍵≠⍨⍺} ⋄ sclmix∆and←{⍵∧⍨⍺}
+sclmix∆lor←{⍵∨⍨⍺} ⋄ sclmix∆nor←{⍵⍱⍨⍺} ⋄ sclmix∆nan←{⍵⍲⍨⍺} ⋄ sclmix∆cir←{⍵○⍨⍺}
+sclmix∆bin←{⍵!⍨⍺} ⋄ sclmix∆con←{+¨⍵} ⋄ sclmix∆neg←{-¨⍵} ⋄ sclmix∆dir←{×¨⍵}
+sclmix∆rec←{÷¨⍵} ⋄ sclmix∆exp←{*¨⍵} ⋄ sclmix∆nlg←{⍟¨⍵} ⋄ sclmix∆mag←{|¨⍵}
+sclmix∆pit←{○¨⍵} ⋄ sclmix∆flr←{⌊¨⍵} ⋄ sclmix∆cel←{⌈¨⍵} ⋄ sclmix∆not←{~¨⍵}
+sclmix∆mat←{⌷¨⍵} ⋄ sclmix∆fac←{!¨⍵}
+
 scan∆R1←{+\⍵} ⋄ scan∆R2←{×\⍵} ⋄ scan∆R3←{{⍺+⍵}\⍵} ⋄ scan∆R4←{<\⍵}
 
 scanfirst∆R1←{+⍀⍵} ⋄ scanfirst∆R2←{×⍀⍵}
