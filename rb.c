@@ -27,10 +27,11 @@
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
 #define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##fn(z,A(),r,p);}
-#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){\
- A cl,cr,za;if(!isinit){Initfn(za,cl,cr,NULL);isinit=1;}\
- cpda(cr,r);if(l!=NULL)cpda(cl,l);m##fn(za,cl,cr,env);cpad(z,za);}\
-EXPORT V n##_cdf(A*z,A*l,A*r){m##fn(*z,*l,*r,env);}
+#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){try{\
+  A cl,cr,za;if(!isinit){Initfn(za,cl,cr,NULL);isinit=1;}\
+  cpda(cr,r);if(l!=NULL)cpda(cl,l);m##fn(za,cl,cr,env);cpad(z,za);}\
+ catch(U n){derr(n);}}\
+EXPORT V n##_cdf(A*z,A*l,A*r){try{m##fn(*z,*l,*r,env);}catch(U n){derr(n);}}
 
 S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}
  A():r(0),s(dim4()),v(array()){}};

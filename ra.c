@@ -41,6 +41,6 @@ typedef dim_t B;typedef unsigned U;typedef void V;
 typedef std::string STR;
 S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};
 S dwa{B sz;S{B sz;V*(*ga)(U,U,B*,S lp*);V(*na[5])(V);V(*er)(U);}*ws;V*na[4];};
-S dwa*dwafns;Z V err(U n){dwafns->ws->er(n);}
+S dwa*dwafns;Z V derr(U n){dwafns->ws->er(n);}Z V err(U n){throw n;}
 EXPORT I DyalogGetInterpreterFunctions(dwa*p){
  if(p)dwafns=p;else R 0;if(dwafns->sz<sizeof(S dwa))R 16;R 0;}
