@@ -18,7 +18,8 @@ using namespace af;
 #else
  #define EXPORT extern "C"
 #endif
-#ifdef _MSC_VER,'#define RSTCT __restrict
+#ifdef _MSC_VER
+ #define RSTCT __restrict
 #else
  #define RSTCT restrict
 #endif

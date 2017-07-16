@@ -1,4 +1,19 @@
-﻿MF(dis_f){z.r=0;z.s=eshp;z.v=r.v(0);}
+﻿MF(ctf_f){z.r=2;z.s[1]=r.r?r.s[r.r-1]:1;
+ z.s[0]=z.s[1]?cnt(r)/z.s[1]:1;z.s[2]=z.s[3]=1;
+ z.v=!cnt(z)?scl(0):array(r.v,z.s);}
+DF(ctf_f){I x=l.r>r.r?l.r:r.r;if(l.r||r.r){catfn(z,l,r,x-1,p);R;}
+ A a,b;catfn(a,l,p);catfn(b,r,p);catfn(z,a,b,0,p);}
+DF(dec_f){I ra=r.r?r.r-1:0;I la=l.r?l.r-1:0;z.r=ra+la;z.s=dim4(1);
+ if(l.s[0]!=1&&l.s[0]!=r.s[ra]&&r.s[ra]!=1)err(5);
+ DO(ra,z.s[i]=r.s[i])DO(la,z.s[i+ra]=l.s[i+1])
+ if(!cnt(z)){z.v=scl(0);R;}
+ if(!cnt(r)||!cnt(l)){z.v=constant(0,z.s,s32);R;}
+ B lc=l.s[0];array x=l.v;if(lc==1){lc=r.s[ra];x=tile(x,(I)lc);}
+ x=flip(scan(x,0,AF_BINARY_MUL,false),0);
+ x=array(x,lc,x.elements()/lc).as(f64);
+ array y=array(r.v,cnt(r)/r.s[ra],r.s[ra]).as(f64);
+ z.v=array(matmul(r.s[ra]==1?tile(y,1,(I)l.s[0]):y,x),z.s);}
+MF(dis_f){z.r=0;z.s=eshp;z.v=r.v(0);}
 DF(dis_f){if(l.v.isfloating())err(1);if(l.r>1)err(4);
  B lc=cnt(l);if(!lc){z=r;R;}if(lc!=1||r.r!=1)err(4);
  if(allTrue<char>(cnt(r)<=l.v(0)))err(3);
@@ -30,16 +45,3 @@ DF(eqv_f){z.r=0;z.s=eshp;
  if(l.r==r.r&&l.s==r.s){z.v=allTrue(l.v==r.v);R;}z.v=scl(0);}
 MF(exp_f){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}
 SF(exp_f,z.v=pow(lv.as(f64),rv.as(f64)))
-MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}
-DF(fac_f){err(16);}
-DF(fnd_f){A t(r.r,r.s,array(r.s,b8));if(!cnt(t)){t.v=scl(0);z=t;R;}
- t.v=0;if(l.r>r.r){z=t;R;}DO(4,if(l.s[i]>r.s[i]){z=t;R;})
- if(!cnt(l)){t.v=1;z=t;R;}dim4 sp;DO(4,sp[i]=1+(t.s[i]-l.s[i]))
- seq x[4];DO(4,x[i]=seq((D)sp[i]))t.v(x[0],x[1],x[2],x[3])=1;
- DO((I)l.s[0],I m=i;
-  DO((I)l.s[1],I k=i;
-   DO((I)l.s[2],I j=i;
-    DO((I)l.s[3],t.v(x[0],x[1],x[2],x[3])=t.v(x[0],x[1],x[2],x[3])
-     &(tile(l.v(m,k,j,i),sp)
-      ==r.v(x[0]+(D)m,x[1]+(D)k,x[2]+(D)j,x[3]+(D)i))))))
- z=t;}

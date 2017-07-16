@@ -1,4 +1,18 @@
-﻿SF(nan_f,z.v=!(lv&&rv))
+﻿SF(lte_f,z.v=lv<=rv)
+SF(lth_f,z.v=lv<rv)
+MF(max_f){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}
+SF(max_f,z.v=max(lv,rv))
+MF(mem_f){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}
+DF(mem_f){z.r=l.r;z.s=l.s;I lc=(I)cnt(z);if(!lc){z.v=scl(0);R;}
+ if(!cnt(r)){z.v=array(z.s,b8);z.v=0;R;}
+ array y=setUnique(flat(r.v));I rc=(I)y.elements();
+ array x=array(flat(l.v),lc,1);y=array(y,1,rc);
+ z.v=array(anyTrue(tile(x,1,rc)==tile(y,lc,1),1),z.s);}
+MF(min_f){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}
+SF(min_f,z.v=min(lv,rv))
+MF(mul_f){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}
+SF(mul_f,z.v=lv*rv)
+SF(nan_f,z.v=!(lv&&rv))
 SF(neq_f,z.v=lv!=rv)
 SF(nor_f,z.v=!(lv||rv))
 MF(not_f){z.r=r.r;z.s=r.s;z.v=!r.v;}
@@ -35,12 +49,3 @@ DF(rdf_f){if(l.r>1)err(4);I ra=r.r?r.r-1:0;z.r=ra+1;z.s=r.s;
  v(i)=w-d;u(i)=s-t;ix[ra]=accum(v);z.v=y(ix[0],ix[1],ix[2],ix[3]);
  dim4 s1(1),s2(z.s);s1[ra]=z.s[ra];s2[ra]=1;u=array(accum(u),s1);
  z.v*=tile(u,(I)s2[0],(I)s2[1],(I)s2[2],(I)s2[3]);}
-MF(rgt_f){z=r;}
-DF(rgt_f){z=r;}
-MF(rho_f){z.r=1;z.s=dim4(r.r);if(!cnt(z)){z.v=scl(0);R;}
- I sp[4]={1,1,1,1};DO(r.r,sp[r.r-(i+1)]=(I)r.s[i]);
- z.v=array(z.s,sp);}
-DF(rho_f){if(l.r>1)err(11);z.r=(U)cnt(l);if(z.r>4)err(16);
- B s[4];l.v.as(s64).host(s);DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)]);
- B cz=cnt(z);B cr=cnt(r);if(!cz){z.v=scl(0);R;}
- z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}

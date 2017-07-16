@@ -1,4 +1,17 @@
-﻿MF(gdd_f){if(r.r<1)err(4);z.r=1;z.s=dim4(r.s[r.r-1]);
+﻿MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}
+DF(fac_f){err(16);}
+DF(fnd_f){A t(r.r,r.s,array(r.s,b8));if(!cnt(t)){t.v=scl(0);z=t;R;}
+ t.v=0;if(l.r>r.r){z=t;R;}DO(4,if(l.s[i]>r.s[i]){z=t;R;})
+ if(!cnt(l)){t.v=1;z=t;R;}dim4 sp;DO(4,sp[i]=1+(t.s[i]-l.s[i]))
+ seq x[4];DO(4,x[i]=seq((D)sp[i]))t.v(x[0],x[1],x[2],x[3])=1;
+ DO((I)l.s[0],I m=i;
+  DO((I)l.s[1],I k=i;
+   DO((I)l.s[2],I j=i;
+    DO((I)l.s[3],t.v(x[0],x[1],x[2],x[3])=t.v(x[0],x[1],x[2],x[3])
+     &(tile(l.v(m,k,j,i),sp)
+      ==r.v(x[0]+(D)m,x[1]+(D)k,x[2]+(D)j,x[3]+(D)i))))))
+ z=t;}
+MF(gdd_f){if(r.r<1)err(4);z.r=1;z.s=dim4(r.s[r.r-1]);
  if(!cnt(r)){z.v=r.v;R;}I c=1;DO(r.r-1,c*=(I)r.s[i]);
  array mt,a=array(r.v,c,r.s[r.r-1]);z.v=iota(z.s,dim4(1),s32);
  DO(c,sort(mt,z.v,flat(a(c-(i+1),z.v)),z.v,0,false))}
@@ -31,17 +44,3 @@ SF(log_f,z.v=log(rv.as(f64))/log(lv.as(f64)))
 SF(lor_f,if(rv.isbool()&&lv.isbool())z.v=lv||rv;
  else if(allTrue<I>(lv>=0&&lv<=1&&rv<=1&&rv>=0))z.v=lv||rv;
  else err(16);)
-SF(lte_f,z.v=lv<=rv)
-SF(lth_f,z.v=lv<rv)
-MF(max_f){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}
-SF(max_f,z.v=max(lv,rv))
-MF(mem_f){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}
-DF(mem_f){z.r=l.r;z.s=l.s;I lc=(I)cnt(z);if(!lc){z.v=scl(0);R;}
- if(!cnt(r)){z.v=array(z.s,b8);z.v=0;R;}
- array y=setUnique(flat(r.v));I rc=(I)y.elements();
- array x=array(flat(l.v),lc,1);y=array(y,1,rc);
- z.v=array(anyTrue(tile(x,1,rc)==tile(y,lc,1),1),z.s);}
-MF(min_f){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}
-SF(min_f,z.v=min(lv,rv))
-MF(mul_f){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}
-SF(mul_f,z.v=lv*rv)

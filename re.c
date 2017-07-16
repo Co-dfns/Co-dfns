@@ -29,19 +29,13 @@ DA(cat_f){A nl=l,nr=r;I fx=(I)ceil(ax);
 DF(cat_f){if(l.r||r.r){catfn(z,l,r,0,p);R;}
  A a,b;catfn(a,l,p);catfn(b,r,p);catfn(z,a,b,0,p);}
 MF(cir_f){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}
-DF(cir_f){err(16);}
-MF(ctf_f){z.r=2;z.s[1]=r.r?r.s[r.r-1]:1;
- z.s[0]=z.s[1]?cnt(r)/z.s[1]:1;z.s[2]=z.s[3]=1;
- z.v=!cnt(z)?scl(0):array(r.v,z.s);}
-DF(ctf_f){I x=l.r>r.r?l.r:r.r;if(l.r||r.r){catfn(z,l,r,x-1,p);R;}
- A a,b;catfn(a,l,p);catfn(b,r,p);catfn(z,a,b,0,p);}
-DF(dec_f){I ra=r.r?r.r-1:0;I la=l.r?l.r-1:0;z.r=ra+la;z.s=dim4(1);
- if(l.s[0]!=1&&l.s[0]!=r.s[ra]&&r.s[ra]!=1)err(5);
- DO(ra,z.s[i]=r.s[i])DO(la,z.s[i+ra]=l.s[i+1])
- if(!cnt(z)){z.v=scl(0);R;}
- if(!cnt(r)||!cnt(l)){z.v=constant(0,z.s,s32);R;}
- B lc=l.s[0];array x=l.v;if(lc==1){lc=r.s[ra];x=tile(x,(I)lc);}
- x=flip(scan(x,0,AF_BINARY_MUL,false),0);
- x=array(x,lc,x.elements()/lc).as(f64);
- array y=array(r.v,cnt(r)/r.s[ra],r.s[ra]).as(f64);
- z.v=array(matmul(r.s[ra]==1?tile(y,1,(I)l.s[0]):y,x),z.s);}
+SF(cir_f,array fv=rv.as(f64);
+ if(!l.r){I x=l.v.as(s32).scalar<I>();if(abs(x)>10)err(16);
+  switch(x){CS(0,z.v=sqrt(1-fv*fv))CS(1,z.v=sin(fv))CS(2,z.v=cos(fv))
+   CS(3,z.v=tan(fv))CS(4,z.v=sqrt(1+fv*fv))CS(5,z.v=sinh(fv))
+   CS(6,z.v=cosh(fv))CS(7,z.v=tanh(fv))CS(8,z.v=sqrt(fv*fv-1))CS(9,z.v=fv)
+   CS(10,z.v=abs(fv))CS(-1,z.v=asin(fv))CS(-2,z.v=acos(fv))
+   CS(-3,z.v=atan(fv))CS(-4,z.v=(fv+1)*sqrt((fv-1)/(fv+1)))
+   CS(-5,z.v=asinh(fv))CS(-6,z.v=acosh(fv))CS(-7,z.v=atanh(fv))
+   CS(-8,z.v=-sqrt(fv*fv-1))CS(-9,z.v=fv)CS(-10,z.v=fv)}R;}
+ err(16);)
