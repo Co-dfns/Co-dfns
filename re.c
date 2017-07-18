@@ -45,6 +45,6 @@ SF(cir_f,array fv=rv.as(f64);
  z.v+=(lv==4)*sqrt(1+fv*fv)+(lv==5)*sinh(fv)+(lv==6)*cosh(fv);
  z.v+=(lv==7)*tanh(fv)+(lv==8)*sqrt(fv*fv-1)+(lv==9)*fv+(lv==10)*abs(fv);
  z.v+=(lv==-1)*asin(fv)+(lv==-2)*acos(fv)+(lv==-3)*atan(fv);
- z.v+=(lv==-4)*(fv+1)*sqrt((fv-1)/(fv+1))+(lv==-5)*asinh(fv);
+ z.v+=/*(lv==-4)*(fv+1)*sqrt((fv-1)/(fv+1))+*/(lv==-5)*asinh(fv);
  z.v+=(lv==-6)*acosh(fv)+(lv==-7)*atanh(fv)+(lv==-8)*-sqrt(fv*fv-1);
- z.v+=(lv==-9)*fv+(lv==-10)*fv;z.v=z.v.as(f64);)
+ z.v+=(lv==-9)*fv+(lv==-10)*fv;)
