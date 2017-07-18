@@ -304,7 +304,7 @@
           :EndIf
      
       :Else
-          Z←(↑⎕DM)1
+          Z←(↑⎕DMX.(Vendor EM Message))1
           :If exception≢⍬
               expect←exception
               Z[2]←0

@@ -1,6 +1,8 @@
 ﻿MF(add_f){z=r;}
 SF(add_f,z.v=lv+rv)
-SF(and_f,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;else err(16);)
+SF(and_f,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;
+ else if(allTrue<I>(lv>=0&&lv<=1&&rv>0&&rv<=1))z.v=lv&&rv;
+ else err(16,L"Dyadic AND over non-boolean datatype");)
 MF(brk_f){err(16);}
 DF(brk_f){if(l.r!=1)err(16);
  z.r=r.r;z.s=r.s;z.v=l.v(r.v.as(s32));}
@@ -38,4 +40,11 @@ SF(cir_f,array fv=rv.as(f64);
    CS(-3,z.v=atan(fv))CS(-4,z.v=(fv+1)*sqrt((fv-1)/(fv+1)))
    CS(-5,z.v=asinh(fv))CS(-6,z.v=acosh(fv))CS(-7,z.v=atanh(fv))
    CS(-8,z.v=-sqrt(fv*fv-1))CS(-9,z.v=fv)CS(-10,z.v=fv)}R;}
- err(16);)
+ if(anyTrue<I>(abs(lv)>10))err(16);
+ z.v=(!lv)*sqrt(1-fv*fv)+(lv==1)*sin(fv)+(lv==2)*cos(fv)+(lv==3)*tan(fv);
+ z.v+=(lv==4)*sqrt(1+fv*fv)+(lv==5)*sinh(fv)+(lv==6)*cosh(fv);
+ z.v+=(lv==7)*tanh(fv)+(lv==8)*sqrt(fv*fv-1)+(lv==9)*fv+(lv==10)*abs(fv);
+ z.v+=(lv==-1)*asin(fv)+(lv==-2)*acos(fv)+(lv==-3)*atan(fv);
+ z.v+=(lv==-4)*(fv+1)*sqrt((fv-1)/(fv+1))+(lv==-5)*asinh(fv);
+ z.v+=(lv==-6)*acosh(fv)+(lv==-7)*atanh(fv)+(lv==-8)*-sqrt(fv*fv-1);
+ z.v+=(lv==-9)*fv+(lv==-10)*fv;z.v=z.v.as(f64);)
