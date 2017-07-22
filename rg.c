@@ -42,5 +42,15 @@ DF(lft_f){z=l;}
 MF(log_f){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}
 SF(log_f,z.v=log(rv.as(f64))/log(lv.as(f64)))
 SF(lor_f,if(rv.isbool()&&lv.isbool())z.v=lv||rv;
- else if(allTrue<I>(lv>=0&&lv<=1&&rv<=1&&rv>=0))z.v=lv||rv;
- else err(16);)
+ else if(lv.isbool()&&rv.isinteger())z.v=lv+(!lv)*abs(rv).as(rv.type());
+ else if(rv.isbool()&&lv.isinteger())z.v=rv+(!rv)*abs(lv).as(lv.type());
+ else if(lv.isinteger()&&rv.isinteger()){B c=cnt(z);
+  std::vector<I> a(c);abs(lv).as(s32).host(a.data());
+  std::vector<I> b(c);abs(rv).as(s32).host(b.data());
+  DOB(c,while(b[i]){I t=b[i];b[i]=a[i]%b[i];a[i]=t;})
+  z.v=array(z.s,a.data());}
+ else{B c=cnt(z);
+  std::vector<D> a(c);abs(lv).as(f64).host(a.data());
+  std::vector<D> b(c);abs(rv).as(f64).host(b.data());
+  DOB(c,while(b[i]>1e-12){D t=b[i];b[i]=fmod(a[i],b[i]);a[i]=t;})
+  z.v=array(z.s,a.data());})
