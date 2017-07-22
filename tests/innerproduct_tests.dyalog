@@ -1,5 +1,7 @@
 ﻿:Namespace innerproduct_tests
 
+X←⍉⍪¯35.5 ¯41.5 ¯29.5 7.5 34.5 ¯11.5 31.5 ¯0.5 32.5 12.5
+
 innerproduct∆01_TEST←'innerproduct∆R1'#.util.MK∆T2 (1)          (1)
 innerproduct∆02_TEST←'innerproduct∆R1'#.util.MK∆T2 (1)          (⍬)
 innerproduct∆03_TEST←'innerproduct∆R1'#.util.MK∆T2 (⍬)          (⍬)
@@ -23,5 +25,6 @@ innerproduct∆20_TEST←'innerproduct∆R1'#.util.MK∆T2 (0 5⍴5)      (5 5�
 innerproduct∆21_TEST←'innerproduct∆R4'#.util.MK∆T2 (1 3 2⍴1+⍳4) (1 2 5⍴1+⍳4)
 innerproduct∆22_TEST←'innerproduct∆R1'#.util.MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
 innerproduct∆23_TEST←'innerproduct∆R5'#.util.MK∆T2 (⍉2 10⍴⍳10)  (2 10⍴⍳10)
+innerproduct∆24_TEST←'innerproduct∆R6'#.util.MK∆T2 X            X
 
 :EndNamespace

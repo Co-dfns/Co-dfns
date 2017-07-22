@@ -70,6 +70,8 @@ depth∆Run←{≡⍵}
 
 drop∆R1←{⍺↓⍵} ⋄ drop∆R2←{(1⌷⍺)↓⍵} ⋄ drop∆R3←{5↓⍵}
 
+dupnames∆Run←{y←⍵ ⋄ x←⍵+⍵ ⋄ y←⍵×⍵ ⋄ y+y}
+
 each∆R1←{⍺-¨⍵} ⋄ each∆R2←{⍺{⍺-⍵}¨⍵} ⋄ each∆R3←{{÷⍵}¨⍵} ⋄ each∆R4←{÷¨⍵}
 each∆R5←{×¨⍵} ⋄ each∆R6←{{×⍵}¨⍵} ⋄ each∆R7←{X←0⌷⍵ ⋄ ⍺{⍺-⍵}¨X}
 
@@ -105,7 +107,7 @@ indexof∆Run←{⍺⍳⍵}
 
 innerproduct∆R1←{⍺+.×⍵} ⋄ innerproduct∆R2←{⍺{⍺+⍵}.{⍺×⍵}⍵}
 innerproduct∆R3←{⍺=.+⍵} ⋄ innerproduct∆R4←{X←0⌷⍺ ⋄ Y←0⌷⍵ ⋄ X{⍺+⍵}.{⍺×⍵}Y}
-innerproduct∆R5←{⍺∧.=⍵}
+innerproduct∆R5←{⍺∧.=⍵} ⋄ innerproduct∆R6←{X←0⌷⍵ ⋄ X+.×X}
 
 internalbindings∆Run←{X←A+A←⍳⍵ ⋄ X+X}
 
