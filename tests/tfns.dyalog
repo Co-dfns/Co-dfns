@@ -148,7 +148,7 @@ quadratic∆Run←{A←0⌷⍵ ⋄ B←1⌷⍵ ⋄ C←2⌷⍵ ⋄ ((-B)+((B×B)
 
 random∆Run←{?⍺⍴⍵}
 
-rank∆R1←{(×⍤⍺)⍵} ⋄ rank∆R2←{(≢⍤⍺)⍵}
+rank∆R1←{(×⍤⍺)⍵} ⋄ rank∆R2←{(≢⍤⍺)⍵} ⋄ rank∆R3←{⍺×⍤1⍤1 2⊢⍵}
 
 ravel∆Run←{,⍵}
 

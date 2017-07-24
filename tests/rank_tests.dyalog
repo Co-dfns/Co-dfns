@@ -42,6 +42,9 @@ rank∆39_TEST←'rank∆R2'#.util.MK∆T2 ¯3 (3 3⍴⍳9)
 rank∆40_TEST←'rank∆R2'#.util.MK∆T2 3 ⍬
 rank∆41_TEST←'rank∆R2'#.util.MK∆T2 3 (⍳5)
 rank∆42_TEST←'rank∆R2'#.util.MK∆T2 3 (3 3⍴⍳9)
+rank∆43_TEST←'rank∆R3'#.util.MK∆T2 (?10⍴100) (?10⍴100)
+rank∆44_TEST←'rank∆R3'#.util.MK∆T2 (?10 10⍴100) (?10⍴100)
+rank∆45_TEST←'rank∆R3'#.util.MK∆T2 (?10 10⍴100) (?10 10⍴100)
 
 :EndNamespace
 
