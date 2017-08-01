@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <string>
 #include <cstring>
+#include <vector>
 #include <unordered_map>
 #include <arrayfire.h>
 using namespace af;
