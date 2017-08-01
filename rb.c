@@ -30,12 +30,14 @@
 #define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){try{\
   A cl,cr,za;if(!isinit){Initfn(za,cl,cr,NULL);isinit=1;}\
   cpda(cr,r);if(l!=NULL)cpda(cl,l);m##fn(za,cl,cr,env);cpad(z,za);}\
- catch(U n){derr(n);}}\
-EXPORT V n##_cdf(A*z,A*l,A*r){try{m##fn(*z,*l,*r,env);}catch(U n){derr(n);}}
+ catch(U n){derr(n);}\
+ catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
+EXPORT V n##_cdf(A*z,A*l,A*r){try{m##fn(*z,*l,*r,env);}catch(U n){derr(n);}\
+ catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}
 
 S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}
  A():r(0),s(dim4()),v(array()){}};
-int isinit=0;dim4 eshp=dim4(0,(B*)NULL);
+int isinit=0;dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;
 S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
  FN():nm(""),sm(0),sd(0){}
  virtual array id(dim4 s){err(16);R array();}

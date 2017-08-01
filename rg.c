@@ -1,5 +1,6 @@
 ﻿MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}
-DF(fac_f){err(16);}
+SF(fac_f,array lvf=lv.as(f64);array rvf=rv.as(f64);
+ z.v=exp(log(tgamma(lvf))+log(tgamma(rvf))-log(tgamma(lvf+rvf))))
 DF(fnd_f){A t(r.r,r.s,array(r.s,b8));if(!cnt(t)){t.v=scl(0);z=t;R;}
  t.v=0;if(l.r>r.r){z=t;R;}DO(4,if(l.s[i]>r.s[i]){z=t;R;})
  if(!cnt(l)){t.v=1;z=t;R;}dim4 sp;DO(4,sp[i]=1+(t.s[i]-l.s[i]))

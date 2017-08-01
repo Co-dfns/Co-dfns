@@ -24,7 +24,7 @@ DF(rnk_o){I cl,cr,dl,dr;dim4 sl(1),sr(1);array wwv=ww.v.as(s32);
  B sz=dl>dr?sl[cl]:sr[cr];std::vector<A> tv(sz);
  A a(cl+1,sl,array(l.v,sl));A b(cr+1,sr,array(r.v,sr));
  I mr=0;dim4 ms(1);dtype mt=b8;
- DOB(sz,A ta;A tb;A ai=scl(scl(i%sl[cl]));A bi=scl(scl(i%sr[cr]));
+ DO((I)sz,A ta;A tb;A ai=scl(scl(i%sl[cl]));A bi=scl(scl(i%sr[cr]));
   sqdfn(ta,ai,a,p);sqdfn(tb,bi,b,p);ll(tv[i],ta,tb,p);
   if(mr<tv[i].r)mr=tv[i].r;mt=mxt(mt,tv[i]);A t=tv[i];
   DO(4,if(ms[i]<t.s[i])ms[i]=t.s[i]))

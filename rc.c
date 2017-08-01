@@ -8,6 +8,8 @@ S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;A**pp;
  DOP(STR nm,I sm,I sd,FN&l,A r,A*p[])
   :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r),pp(p){}};
 
+std::wstring mkstr(const char*s){B c=std::strlen(s);std::wstring t(c,L' ');
+ mbstowcs(&t[0],s,c);R t;}
 I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}
 I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}
 B cnt(dim4 s){B c=1;DO(4,c*=s[i]);R c;}
