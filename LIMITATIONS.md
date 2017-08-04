@@ -20,6 +20,7 @@ or outstanding implementation or engineering work that has some recognizable
 and immediate benefit and thus will be considered part of the active set of 
 things on which we are working.
 
+* Duplicate bindings in functions can lead to incorrect results
 * Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented for negative and floating point values
 * Bracket indexing of the form [X;...] is not supported, 
