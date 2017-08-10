@@ -229,7 +229,7 @@ scanfirst∆R3←{{⍺+⍵}⍀⍵} ⋄ scanfirst∆R4←{<⍀⍵}
 
 scanoverrun∆fRun←{(⍺=⍺)/⍵}
 
-shape∆Run←{⍴⍵}
+shape∆Run←{⍴⍵} ⋄ shape∆R2←{⍴0⌷⍵}
 
 singlevalue∆R1←{⍵} ⋄ singlevalue∆R2←{5} ⋄ singlevalue∆R3←{⊢⍵}
 singlevalue∆R4←{A←5 3 2 1 ⋄ A} ⋄ singlevalue∆R5←{4 3}

@@ -1,8 +1,7 @@
 ﻿MF(rgt_f){z=r;}
 DF(rgt_f){z=r;}
-MF(rho_f){z.r=1;z.s=dim4(r.r);if(!cnt(z)){z.v=scl(0);R;}
- I sp[4]={1,1,1,1};DO(r.r,sp[r.r-(i+1)]=(I)r.s[i]);
- z.v=array(z.s,sp);}
+MF(rho_f){I sp[4]={1,1,1,1};DO(r.r,sp[r.r-(i+1)]=(I)r.s[i]);
+ z.s=dim4(r.r);z.r=1;if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,sp);}
 DF(rho_f){if(l.r>1)err(11);z.r=(U)cnt(l);if(z.r>4)err(16);
  B s[4];l.v.as(s64).host(s);DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)]);
  B cz=cnt(z);B cr=cnt(r);if(!cz){z.v=scl(0);R;}
