@@ -2,10 +2,9 @@
 DF(rgt_f){z=r;}
 MF(rho_f){I sp[4]={1,1,1,1};DO(r.r,sp[r.r-(i+1)]=(I)r.s[i]);
  z.s=dim4(r.r);z.r=1;if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,sp);}
-DF(rho_f){if(l.r>1)err(11);z.r=(U)cnt(l);if(z.r>4)err(16);
- B s[4];l.v.as(s64).host(s);DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)]);
- B cz=cnt(z);B cr=cnt(r);if(!cz){z.v=scl(0);R;}
- z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}
+DF(rho_f){B cr=cnt(r);B cl=cnt(l);B s[4];if(l.r>1)err(11);if(cl>4)err(16);
+ l.v.as(s64).host(s);z.r=cl;DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)])B cz=cnt(z);
+ if(!cz){z.v=scl(0);R;}z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}
 MF(rol_f){z.r=r.r;z.s=r.s;if(!cnt(r)){z.v=r.v;R;}
  array rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}
 DF(rol_f){if(cnt(r)!=1||cnt(l)!=1)err(5);
