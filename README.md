@@ -214,7 +214,7 @@ during development in the repository.
 The Co-dfns compiler is fairly self-contained. You will need the following 
 software in order to use the compiler:
 
-1. Dyalog APL 15.0 or later 64-bit Unicode edition
+1. Dyalog APL 16.0 or later 64-bit Unicode edition
 
 2. Your Operating System's host compiler:
 
@@ -222,7 +222,7 @@ software in order to use the compiler:
     * GCC (Linux)
     * Clang (Mac OS X)
 
-3. ArrayFire
+3. ArrayFire (3.5.0+)
 
 You should be able to find the appropriate ArrayFire installer included 
 in the release page for a given Co-dfns release. On Windows, if you want 
