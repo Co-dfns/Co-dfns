@@ -75,7 +75,7 @@ dupnames∆Run←{y←⍵ ⋄ x←⍵+⍵ ⋄ y←⍵×⍵ ⋄ y+y}
 each∆R1←{⍺-¨⍵} ⋄ each∆R2←{⍺{⍺-⍵}¨⍵} ⋄ each∆R3←{{÷⍵}¨⍵} ⋄ each∆R4←{÷¨⍵}
 each∆R5←{×¨⍵} ⋄ each∆R6←{{×⍵}¨⍵} ⋄ each∆R7←{X←0⌷⍵ ⋄ ⍺{⍺-⍵}¨X}
 
-encode∆Run←{⍺⊤⍵}
+encode∆Run←{⍺⊤⍵} ⋄ encode∆Ovr←{⍺⊤0⌷⍵}
 
 enlist∆Run←{∊⍵}
 

@@ -31,9 +31,9 @@ DF(drp_f){I lv[4];seq it[4];seq ix[4];B c=cnt(l);
   else{z.s[j]=r.s[j]-a;ix[j]=seq(a,(D)r.s[j]-1);it[j]=ix[j]-(D)a;}})
  if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,r.v.type());z.v=0;
  z.v(it[0],it[1],it[2],it[3])=r.v(ix[0],ix[1],ix[2],ix[3]);}
-DF(enc_f){z.r=r.r+l.r;z.s=r.s;DO(l.r,z.s[i+r.r]=l.s[i])
- if(!cnt(z)){z.v=scl(0);R;}dim4 lt=z.s,rt=z.s;I k=l.r?l.r-1:0;
- DO(r.r,rt[i]=1)DO(l.r,lt[i+r.r]=1)array rv=tile(r.v,rt);
+DF(enc_f){I rk=r.r+l.r;if(rk>4)err(16);dim4 sp=r.s;DO(l.r,sp[i+r.r]=l.s[i])
+ if(!cnt(sp)){z.r=rk;z.s=sp;z.v=scl(0);R;}dim4 lt=sp,rt=sp;I k=l.r?l.r-1:0;
+ DO(r.r,rt[i]=1)DO(l.r,lt[i+r.r]=1)array rv=tile(r.v,rt);z.r=rk;z.s=sp;
  array sv=flip(scan(flip(l.v,k),k,AF_BINARY_MUL),k);
  array lv=tile(array(sv,rt),lt);af::index x[4];x[k]=0;
  array dv=sv;dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;
