@@ -18,5 +18,6 @@ encode∆15_TEST←'encode∆Run'#.util.MK∆T2 (3 0 4)     (⍳100)
 encode∆16_TEST←'encode∆Run'#.util.MK∆T2 (3 4 0)     (⍳100)
 encode∆17_TEST←'encode∆Run'#.util.MK∆T2 (3 3⍴2)     (⍳10)
 encode∆18_TEST←'encode∆Run'#.util.MK∆T2 (3 3⍴2 3 4) (⍳30)
+encode∆19_TEST←'encode∆Run'#.util.MK∆T2 (32⍴2)      (3 3 3⍴⍳81)
 
 :EndNamespace
