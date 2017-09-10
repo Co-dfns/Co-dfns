@@ -19,7 +19,7 @@ COMPILER←'vsc'
 BUILD∆PATH←'build'
 AF∆PREFIX←'/usr/local'
 AF∆LIB←'afcuda'
-VISUAL∆STUDIO∆PATH←'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\'
+VISUAL∆STUDIO∆PATH←'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build'
 Cmp←{_←{22::⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0}so←BSO ⍺
  _←(⍎COMPILER)⍺⊣(BUILD∆PATH,'/',⍺,'_',COMPILER,'.cpp')put⍨gc tt⊃a n←ps ⍵
  22::'COMPILE ERROR'⎕SIGNAL 22

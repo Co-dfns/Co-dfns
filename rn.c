@@ -1,6 +1,7 @@
 ﻿EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}
 EXPORT V frea(A*a){delete a;}
 EXPORT V exarray(lp*d,A*a){cpad(d,*a);}
+EXPORT V afsync(V){sync();}
 EXPORT Window *w_new(char *k){R new Window(k);}
 EXPORT I w_close(Window*w){R w->close();}
 EXPORT V w_del(Window*w){delete w;}
