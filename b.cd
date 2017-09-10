@@ -6,14 +6,14 @@ cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'' '}
 cco←'-std=c++11 -Ofast -g -Wall -fPIC -shared '
 ucc←{⎕SH ⍺⍺,' ',cco,(cci⍬),COMPILER(⍵⍵ cio,fls,lib,log)⍵}
 gcc←'g++'ucc'so' ⋄ clang←'clang++'ucc'dylib'
-vsco←'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /Fd"',BUILD∆PATH,'\vc140.pdb" '
-vsco,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
-vsco,←'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '
+vsco←{z←'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /Fd"',BUILD∆PATH,'\vc140.pdb" '
+ z,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+ z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
 vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
  z,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "',AF∆LIB,'.lib" '
  z,'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '}
 vsc0←{'""',VISUAL∆STUDIO∆PATH,'\vcvarsall.bat" amd64 '}
-vsc1←{' && cl ',vsco,'/fast '}
+vsc1←{' && cl ',(vsco⍬),'/fast '}
 vsc2←{'/Fo"',BUILD∆PATH,'\\" "',BUILD∆PATH,'\',⍵,'_vsc.cpp" '}
 vsc3←{(vslo⍬),'/OUT:"',BUILD∆PATH,'\',⍵,'_vsc.dll" '}
 vsc4←{'> "',BUILD∆PATH,'\',⍵,'_vsc.log""'}
