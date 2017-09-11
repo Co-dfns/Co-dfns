@@ -20,18 +20,18 @@ S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
 Y0←{⊃,/((⍳≢⊃n⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
 gc←{⊃,/{0=⊃t⍵:⊂5⍴⍬ ⋄ ⊂(⍎(⊃t⍵),⍕⊃k⍵)⍵}⍤1⊢⍵}
 
-syms←,¨ '+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'   '⌈'   '!'
-nams←   'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min' 'max' 'fac'
-syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'   '∧'   '∨'   '⍲'   '⍱'
-nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not' 'and' 'lor' 'nan' 'nor'
-syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'   '⍉'   '⊖'   '∊'   '⊃'
-nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot' 'trn' 'rtf' 'mem' 'dis'
-syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'   '⌿'   '\'   '⍀'   '?'
-nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red' 'rdf' 'scn' 'scf' 'rol'
-syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'   '∘'   '∪'   '∩'
-nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
-syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '%u'
-nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' ''
+syms←,¨ '+'   '-'   '×'   '÷'   '*'   '⍟'    '|'     '○'   '⌊'   '⌈'   '!'
+nams←   'add' 'sub' 'mul' 'div' 'exp' 'log'  'res'   'cir' 'min' 'max' 'fac'
+syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'    '~'     '∧'   '∨'   '⍲'   '⍱'
+nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq'  'not'   'and' 'lor' 'nan' 'nor'
+syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'    '⌽'     '⍉'   '⊖'   '∊'   '⊃'
+nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf'  'rot'   'trn' 'rtf' 'mem' 'dis'
+syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'    '/'     '⌿'   '\'   '⍀'   '?'
+nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec'  'red'   'rdf' 'scn' 'scf' 'rol'
+syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'    '⍣'     '∘'   '∪'   '∩'
+nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk'  'pow'   'jot' 'unq' 'int'
+syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⎕FFT' '⎕IFFT' '%u' 
+nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'fft'  'ift'   ''
 
 nl←⎕UCS 13 10 ⋄ fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣) ⋄ cln←'¯'⎕R'-' ⋄ cnm←(syms⍳⊂)⊃(nams,⊂)
 lits←{'A(0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'))'}

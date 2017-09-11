@@ -1,4 +1,4 @@
-﻿Sfn←aws _s (('⎕sp' _tk)_o('⎕XOR' _tk)) _s aws _as {P ∊⍵}
+﻿Sfn←aws _s (('TFF⎕'_tk)_o('TFFI⎕'_tk)) _s aws _as {P ⌽∊⍵}
 Prim←prim _as P
 Vt←{((0⌷⍉⍺)⍳⍵)1⌷⍺⍪'' ¯1}
 Var←{⍺(aw _o (name _as ⌽) _t (⍺⍺=Vt) _as (⍵⍵ V∘,∘⊃))⍵}
@@ -13,7 +13,8 @@ Fn←{ns←n z⌿⍨m←{(Fm ⍵)∧1∊⍨k⍵}z←⊃⍪/⍵ ⋄ 0=≢ns:0(,�
  p←(⍺⍪0,⍨⍪'⍺⍵')∘(Gex _o Ex _o Fex Stmts _then Fn)¨ns ⋄ 0<c←⌈/⊃¨p:c '' ⍺ ⍵
  0(⍪/(⊂0 4⍴⍬),⍨p{((3↑⍵),⊂'')⍪⍵((d+∘⊃⊣),1↓⍤1⊢)wrap⊃⍪/1⊃⍺}¨at{m}↓z) ⍺ ''}
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
-Fnp←Prim _o (1 Var 'f') _o (rbrc Blrp lbrc _as ('F'new 1,∘⊂∘⌽1↓¯1↓⊢)) _o Pfe
+Bfn←rbrc Blrp lbrc _as ('F'new 1,∘⊂∘⌽1↓¯1↓⊢)
+Fnp←Prim _o (1 Var 'f') _o Sfn _o Bfn _o Pfe
 Mop←{⍺((mop _as P) _s Afx _as (1 O))⍵}
 Dop1←{⍺((dop1 _as P) _s Afx _as (2 O∘⌽))⍵}
 Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (2 O∘⌽))⍵}
