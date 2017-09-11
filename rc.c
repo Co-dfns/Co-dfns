@@ -1,4 +1,12 @@
-﻿S MOP:FN{FN&ll;A**pp;
+﻿S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
+ FN():nm(""),sm(0),sd(0){}
+ virtual array id(dim4 s){err(16);R array();}
+ virtual V operator()(A&z,const A&r,A*p[]){err(99);}
+ virtual V operator()(A&z,const A&r,D ax,A*p[]){err(99);}
+ virtual V operator()(A&z,const A&l,const A&r,A*p[]){err(99);}
+ virtual V operator()(A&z,const A&l,const A&r,D ax,A*p[]){err(99);}};
+FN MTFN;
+S MOP:FN{FN&ll;A**pp;
  MOP(STR nm,I sm,I sd,FN&ll,A*pp[]):FN(nm,sm,sd),ll(ll),pp(pp){}};
 S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;A**pp;
  DOP(STR nm,I sm,I sd,FN&l,FN&r,A*p[])
@@ -17,7 +25,8 @@ B cnt(const A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}
 B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
 array scl(I x){R constant(x,dim4(1),s32);}
 A scl(array v){R A(0,dim4(1),v);}
-dtype mxt(dtype at,dtype bt){if(at==f64||bt==f64)R f64;
+dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;
+ if(at==f64||bt==f64)R f64;
  if(at==s32||bt==s32)R s32;if(at==s16||bt==s16)R s16;
  if(at==b8||bt==b8)R b8;err(16);R f64;}
 dtype mxt(const array&a,const array&b){R mxt(a.type(),b.type());}
@@ -28,7 +37,7 @@ Z array da8(B c,dim4 s,lp*d){std::vector<char>b(c);
  U8*v=(U8*)DATA(d);DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))
  R array(s,b.data());}
 V cpad(lp*d,A&a){I t;B c=cnt(a);
- switch(a.v.type()){
+ switch(a.v.type()){CS(c64,t=APLZ);
   CS(s32,t=APLI);CS(s16,t=APLSI);CS(b8,t=APLTI);CS(f64,t=APLD);
   default:if(c)err(16);t=APLI;}
  B s[4];DO(a.r,s[a.r-(i+1)]=a.s[i]);dwafns->ws->ga(t,a.r,s,d);
@@ -36,6 +45,7 @@ V cpad(lp*d,A&a){I t;B c=cnt(a);
 V cpda(A&a,lp*d){if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
  dim4 s(1);DO(RANK(d),s[RANK(d)-(i+1)]=SHAPE(d)[i]);B c=cnt(d);
  switch(ETYPE(d)){
+  CS(APLZ,a=A(RANK(d),s,c?array(s,(DZ*)DATA(d)):scl(0)))
   CS(APLI,a=A(RANK(d),s,c?array(s,(I*)DATA(d)):scl(0)))
   CS(APLD,a=A(RANK(d),s,c?array(s,(D*)DATA(d)):scl(0)))
   CS(APLSI,a=A(RANK(d),s,c?array(s,(S16*)DATA(d)):scl(0)))

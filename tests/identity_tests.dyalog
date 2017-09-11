@@ -15,6 +15,7 @@ identity∆08_TEST←'identity∆Run'#.util.MK∆T1 (I8 2 3 4⍴⍳5)
 identity∆09_TEST←'identity∆Run'#.util.MK∆T1 (2 3 4⍴0 1 1)
 identity∆10_TEST←'identity∆Run'#.util.MK∆T1 (4⍴0 1 1)
 identity∆11_TEST←'identity∆Run'#.util.MK∆T1 (24⍴0 1 1)
+identity∆12_TEST←'identity∆Run'#.util.MK∆T1 (1j1×⍳10)
 
 :EndNamespace
 
