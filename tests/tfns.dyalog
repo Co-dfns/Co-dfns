@@ -87,6 +87,8 @@ find∆Run←{⍺⍷⍵}
 
 first∆Run←{⊃⍵}
 
+fft∆fft←{⎕FFT ⍵} ⋄ fft∆ifft←{⎕IFFT ⍵}
+
 gofo∆Run←{go←{⍵+⍺} ⋄ fo←{⍺=⍵} ⋄ ao←{⍺ go ⍺ fo ⍵} ⋄ ⍺ ao ⍵}
 
 gradedown∆Run←{⍒⍵}
