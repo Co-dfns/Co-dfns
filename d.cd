@@ -28,7 +28,6 @@ Ex←Idx _o Atom _s {⍺(0 Bind 'E' _o App _s ∇ _opt)⍵} _as (⊃wrap/∘⌽)
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
 Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
-Nss←nss _s (name _opt _ign)
-Ns←Nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as M
+Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as M
 
 ps←{0≠⊃c a e r←(0 2⍴⍬)Ns ∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c ⋄ (⊃a)e}

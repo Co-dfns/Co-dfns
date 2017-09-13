@@ -19,8 +19,6 @@ _not←{0<⊃c a e r←⍺ ⍺⍺ ⍵:0 a ⍺ ⍵ ⋄ 2 a ⍺ ⍵}
 ws←(' ',⎕UCS 9)_set
 aws←ws _any _ign
 awslf←(⎕UCS 10 13)_set _o ws _any _ign
-nss←awslf _s(':Namespace'_tk)_s awslf _ign
-nse←awslf _s(':EndNamespace'_tk)_s awslf _ign
 gets←aws _s('←'_tk)_s aws
 him←'¯'_set
 dot←'.'_set
@@ -44,3 +42,5 @@ float←aws _s (odigs _s dot _s int _o (digs _s dot)) _s aws
 name←aws _s (alpha _o (digits _some _s alpha) _some) _s aws
 aw←aws _s ('⍺⍵'_set) _s aws
 sep←aws _s (('⋄',⎕UCS 10 13)_set _ign) _s aws
+nss←awslf _s(':Namespace'_tk) _s aws _s (name _opt) _s awslf _ign
+nse←awslf _s(':EndNamespace'_tk)_s awslf _ign
