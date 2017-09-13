@@ -246,7 +246,7 @@ split∆Run←{↓⍵}
 
 sum35∆Run←{+/((0=3|a)∨0=5|a)/a←⍳⍵}
 
-table∆Run←{⍪⍵}
+table∆Run←{⍪⍵} ⋄ table∆R2←{⍪0⌷⍵}
 
 take∆R1←{⍺↑⍵} ⋄ take∆R2←{(1⌷⍺)↑⍵}
 

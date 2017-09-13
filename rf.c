@@ -1,6 +1,5 @@
-﻿MF(ctf_f){z.r=2;z.s[1]=r.r?r.s[r.r-1]:1;
- z.s[0]=z.s[1]?cnt(r)/z.s[1]:1;z.s[2]=z.s[3]=1;
- z.v=!cnt(z)?scl(0):array(r.v,z.s);}
+﻿MF(ctf_f){dim4 sp=z.s;sp[1]=r.r?r.s[r.r-1]:1;sp[0]=sp[1]?cnt(r)/sp[1]:1;
+ sp[2]=sp[3]=1;z.r=2;z.s=sp;z.v=!cnt(z)?scl(0):array(r.v,z.s);}
 DF(ctf_f){I x=l.r>r.r?l.r:r.r;if(l.r||r.r){catfn(z,l,r,x-1,p);R;}
  A a,b;catfn(a,l,p);catfn(b,r,p);catfn(z,a,b,0,p);}
 DF(dec_f){I ra=r.r?r.r-1:0;I la=l.r?l.r-1:0;z.r=ra+la;z.s=dim4(1);
