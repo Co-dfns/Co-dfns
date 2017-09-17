@@ -8,6 +8,11 @@ DF(mem_f){z.r=l.r;z.s=l.s;I lc=(I)cnt(z);if(!lc){z.v=scl(0);R;}
  array y=setUnique(flat(r.v));I rc=(I)y.elements();
  array x=array(flat(l.v),lc,1);y=array(y,1,rc);
  z.v=array(anyTrue(tile(x,1,rc)==tile(y,lc,1),1),z.s);}
+MF(mdv_f){if(r.r>2)err(4);if(r.r==2&&r.s[1]<r.s[0])err(5);
+ if(r.s[0]==r.s[1]){z.r=r.r;z.s=r.s;z.v=inverse(r.v);R;}
+ if(r.r==1){z.v=matmulNT(inverse(matmulTN(r.v,r.v)),r.v);z.r=r.r;z.s=r.s;R;}
+ z.v=matmulTN(inverse(matmulNT(r.v,r.v)),r.v);z.r=r.r;z.s=r.s;
+ B k=z.s[0];z.s[0]=z.s[1];z.s[1]=k;z.v=transpose(z.v);}
 MF(min_f){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}
 SF(min_f,z.v=min(lv,rv))
 MF(mul_f){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}

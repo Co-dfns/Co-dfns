@@ -32,7 +32,7 @@ rbrk←aws _s(']'_tk)_s aws _ign
 grd←aws _s(':'_tk)_s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
 digits←'0123456789'_set
-prim←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇')_set
+prim←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹')_set
 mop←'¨/⌿⍀\⍨'_set
 dop1←'.⍣∘'_set ⋄ dop2←'⍤⍣∘' _set ⋄ dop3←'∘'_set
 eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign

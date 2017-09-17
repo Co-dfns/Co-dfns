@@ -124,6 +124,8 @@ literalscalar∆R1←{X←1 ⋄ ⍵⊢X} ⋄ literalscalar∆R2←{X←1 2 ⋄ �
 
 match∆Run←{⍺≡⍵}
 
+matinv∆Run←{⌹⍵}
+
 membership∆Run←{⍺∊⍵}
 
 mix∆Run←{↑⍵}
