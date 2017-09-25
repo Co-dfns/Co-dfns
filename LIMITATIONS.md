@@ -40,7 +40,6 @@ to be implemented in the near future.
 * Enclose (⊂) is not supported
 * Partitioned Enclose (⊂) is not supported
 * Character types are not supported
-* Complex numbers are not supported
 * Arbitrary precision integers are not supported
 * Sparse arrays are not supported yet
 * Error Guards are not supported yet
