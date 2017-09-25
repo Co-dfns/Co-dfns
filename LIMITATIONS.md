@@ -27,6 +27,13 @@ things on which we are working.
   though a single index array [X] is supported
 * Indexed assignment and selective assignment are not supported yet
 * User-defined operators are not supported yet
+* Lexically scoped trad-fns are not supported yet
+* Nested arrays are not yet supported
+* Enclose (⊂) is not supported
+* Partitioned Enclose (⊂) is not supported
+* Character types are not supported
+* Error Guards are not supported yet
+* Namespaces with free references are not supported yet
 
 ## Low Priority Limitations
 
@@ -36,18 +43,12 @@ to be implemented in the near future.
 
 * The compiler will handle empty return values strangely at the moment.
 * Arrays of rank > 4 are not supported
-* Nested arrays are not yet supported
-* Enclose (⊂) is not supported
-* Partitioned Enclose (⊂) is not supported
-* Character types are not supported
 * Arbitrary precision integers are not supported
 * Sparse arrays are not supported yet
-* Error Guards are not supported yet
 * Format (⍕) is not supported
 * I-Beam (⌶) is not supported
 * Spawn (&) is not supported
 * Nested namespaces are not supported
-* Namespaces with free references are not supported yet
 * 128-bit floating point values are not supported
 * Variant (⍠) is not supported
 
@@ -66,7 +67,7 @@ foreseeable future and can be thought of as hard lines around the project.
   some safety metrics for handling overflows or some exact numerics, 
   but automatic type promotion in the style of Dyalog APL will not likely 
   be supported because of severe performance issues
-* Trad-fns and dynamic scope will not be supported
+* Dynamically scoped trad-fns will not be supported
 * `⎕IO ⎕ML ⎕CT` is fixed at `0 1 0`; note that we are not likely to ever 
   allow dynamic changes of these values inside of a Co-dfns computation 
   or namespace. We may, however, be persuaded by many forces to enable 
