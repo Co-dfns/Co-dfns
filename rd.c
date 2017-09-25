@@ -25,7 +25,7 @@ NM(unq,"unq",0,0,MT ,MFD,DFD,MT ,MT )NM(int,"int",0,0,MT ,MT ,DFD,MT ,MT )
 NM(gdu,"gdu",0,0,MT ,MFD,DFD,MT ,MT )NM(gdd,"gdd",0,0,MT ,MFD,DFD,MT ,MT )
 NM(mem,"mem",0,0,MT ,MFD,DFD,MT ,MT )NM(fnd,"fnd",0,0,MT ,MT ,DFD,MT ,MT )
 NM(fft,"fft",1,0,MT ,MFD,MT ,MT ,MT )NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )
-NM(mdv,"mdv",1,0,MT ,MFD,MT ,MT ,MT )
+NM(mdv,"mdv",1,0,MT ,MFD,DFD,MT ,MT )
 
 ID(add,0,s32)ID(sub,0,s32)ID(mul,1,s32)ID(div,1,s32)ID(res,0,s32)
 ID(min,DBL_MAX,f64)ID(max,-DBL_MAX,f64)ID(exp,1,s32)ID(fac,1,s32)

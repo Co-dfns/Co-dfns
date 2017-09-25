@@ -35,7 +35,6 @@ difficult to implement with little benefit/gain and thus are not likely
 to be implemented in the near future.
 
 * The compiler will handle empty return values strangely at the moment.
-* Matrix divide/inverse (⌹) is not supported
 * Arrays of rank > 4 are not supported
 * Nested arrays are not yet supported
 * Enclose (⊂) is not supported

@@ -126,6 +126,8 @@ match∆Run←{⍺≡⍵}
 
 matinv∆Run←{⌹⍵}
 
+matdiv∆Run←{⍺⌹⍵}
+
 membership∆Run←{⍺∊⍵}
 
 mix∆Run←{↑⍵}
