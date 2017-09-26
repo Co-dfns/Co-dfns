@@ -17,7 +17,8 @@ DF(mdv_f){if(r.r>2)err(4);if(l.r>2)err(4);if(r.r==2&&r.s[1]<r.s[0])err(5);
  if(!cnt(r)||!cnt(l))err(5);if(r.r&&l.r&&l.s[l.r-1]!=r.s[r.r-1])err(5);
  array rv=r.v,lv=l.v;if(r.r==1)rv=transpose(rv);if(l.r==1)lv=transpose(lv);
  z.v=transpose(matmul(inverse(matmulNT(rv,rv)),matmulNT(rv,lv)));
- z.r=(l.r-(l.r>0))+(r.r-(r.r>0));if(l.r>1)z.s[0]=l.s[0];if(r.r>1)z.s[l.r>1]=r.s[0];}
+ z.r=(l.r-(l.r>0))+(r.r-(r.r>0));
+ if(l.r>1)z.s[0]=l.s[0];if(r.r>1)z.s[l.r>1]=r.s[0];}
 MF(min_f){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}
 SF(min_f,z.v=min(lv,rv))
 MF(mul_f){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}
