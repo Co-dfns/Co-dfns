@@ -299,6 +299,10 @@ this all contributions are assumed to be copyright transferred to Aaron Hsu.
 
 ## Publications
 
+[Co-dfns 2017 Report](https://sway.com/mJg0M7qakrJBwP6G?ref=Link)
+
+[APL Style: Patterns and Anti-patterns](https://sway.com/b1pRwmzuGjqB30On?ref=Link)
+
 [Co-dfns Compiler Architecture and Design (Video)](https://youtu.be/gcUWTa16Jc0)
 
 [The Key to a Data Parallel Compiler](http://dl.acm.org/citation.cfm?id=2935331)
