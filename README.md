@@ -183,7 +183,7 @@ intermediate files and the compiled objects. Should be a directory.
 
 ### VISUAL∆STUDIO∆PATH
 
-    VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\'
+    VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build'
 
 The path to your Visual Studio installation. Make sure that you have installed 
 the C++ compiler. 
