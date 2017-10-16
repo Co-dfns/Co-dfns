@@ -235,6 +235,12 @@ system here:
 
 http://arrayfire.org/docs/installing.htm
 
+4. [Optional] CUDA 8+
+
+If you intend to use the CUDA backend with ArrayFire, you will need to have 
+CUDA 8 or greater installed. This will also be necessary if you would like to 
+analyze performance of the generated code. 
+
 ## Related Projects
 
 There are a number of related initiatives that are based on the Co-dfns 
