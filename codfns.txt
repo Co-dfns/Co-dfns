@@ -151,6 +151,7 @@ d_ t_ k_ n_ r_ s_ g_ v_ y_ e_ l_ ← ⍳ 7 + f∆ ← 4
 			a	←	e (⍺{⍵ Gex _o Ex _o Fex Stmts _then Fn⍨ ⍺⍺ ⍪ ⍺})⍤2 1 ⊢ ⍵
 			m	←	(0 = 0 ⌷ ⍉a) ∧ ∧⌿ (∨⍀ ∘.=⍨ ⍳14) ∨ ∘.≢⍨ 1 ⌷ ⍉a
 			~∨⌿ m	:	(⌈⌿ 0 ⌷ ⍉a) ⍬ ⍺ ⍵
+			(1 = +⌿ m) ∧ 2 > m ⍳ 1	:	0 (,⊂('F' new 1) wrap ⊃⊃ m ⌿ 1 ⌷ ⍉a) ⍺ ⍵
 			z	←	('F' new 'a') wrap ⊃ (m ⌿ 'F' new¨ 1 + ⍳14) ⍪.(wrap∘⊃) m ⌿ 1 ⌷ ⍉a
 					0 (,⊂z) ⍺ ⍵}
 	Fn	← {	ns	←	n z ⌿⍨ m ← {(Fm ⍵) ∧ ¯1 ∊⍨ k ⍵} z ← ⊃⍪/ ⍵ ⋄ 0 = ≢ns : 0 (,⊂z) ⍺ ''
