@@ -71,7 +71,7 @@ d_ t_ k_ n_ r_ s_ g_ v_ y_ e_ l_ ← ⍳ 7 + f∆ ← 4
 	new	← {⍉⍪ f∆ ↑ 0 ⍺, ⍵}	⋄	msk	← {(t ⍵) ∊ ⊂⍺⍺}	⋄	sel	← {(⍺⍺ msk ⍵)⌿ ⍵}
 	A	← {('A' new ⍺⍺) wrap ⊃⍪/ ⍵}	⋄	Am	← 'A' msk	⋄	As	← 'A' sel
 	E	← {('E' new ⍺⍺) wrap ⊃⍪/ ⍵}	⋄	Em	← 'E' msk	⋄	Es	← 'E' sel
-	F	← {('F' new 1) wrap ⊃⍪/ (⊂ 0 f∆ ⍴ ⍬), ⍵}	⋄	Fm	← 'F' msk	⋄	Fs	← 'F' sel
+	F	← {('F' new ⍺⍺) wrap ⊃⍪/ (⊂ 0 f∆ ⍴ ⍬), ⍵}	⋄	Fm	← 'F' msk	⋄	Fs	← 'F' sel
 	G	← {('G' new 0) wrap ⊃⍪/ ⍵}	⋄	Gm	← 'G' msk	⋄	Gs	← 'G' sel
 	L	← {('L' new 0) wrap ⊃⍪/ ⍵}	⋄	Lm	← 'L' msk	⋄	Ls	← 'L' sel
 	M	← {('M' new 0 '') wrap ⊃⍪/ (⊂ 0 f∆ ⍴ ⍬), ⍵}	⋄	Mm	← 'M' msk	⋄	Ms	← 'M' sel
@@ -166,8 +166,9 @@ d_ t_ k_ n_ r_ s_ g_ v_ y_ e_ l_ ← ⍳ 7 + f∆ ← 4
 	Dop3	← (dop3 _as P) _s Atom _as (2 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (1 O))
 	Bop	← {⍺(rbrk _s Ex _s lbrk _s Afx _as ('i' O∘⌽))⍵}
 	Afx	← Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⊃wrap/∘⌽)) _o Dop2 _o Bop
+	Trn	← {⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as ('t' F∘⌽)
 	Bind	← {⍺(gets _s (name _as ⌽) _env (⍺⍺{(⊃⌽⍵) ⍺⍺ ⍪ ⍺}) _as (⍵⍵ new 'b', 1 ↓ ⊢))⍵}
-	Fex	← Afx _s (1 Bind 'F' _any) _as (⊃wrap/∘⌽)
+	Fex	← Afx _s (Trn _opt) _s (1 Bind 'F' _any) _as (⊃wrap/∘⌽)
 	App	← Afx _s (Idx _o Atom _s (dop2 _not) _opt) _as {(≢⍵) E ⌽⍵}
 	Ex	← Idx _o Atom _s {⍺(0 Bind 'E' _o App _s ∇ _opt)⍵} _as (⊃wrap/∘⌽)
 	Gex	← Ex _s grd _s Ex _as (G∘⌽)
