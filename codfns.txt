@@ -13,40 +13,43 @@
 ⍝ You should have received a copy of the GNU Affero General Public License along with this program.  
 ⍝ If not, see http://www.gnu.org/licenses/
 :Namespace CODFNS
-	⎕IO ⎕ML ⎕WX	← 0 1 3
-	VERSION	← 2017 11 1
-	COMPILER	← 'vsc'
-	BUILD∆PATH	← 'build'
-	AF∆PREFIX	← '/usr/local'
-	AF∆LIB	← 'afcuda'
-	VISUAL∆STUDIO∆PATH	← 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build'
-	Cmp	← {	_	←	{22 :: ⍬ ⋄ ⍵ ⎕NERASE ⍵ ⎕NTIE 0} so ← BSO ⍺
-			_	←	(⍎COMPILER) ⍺ ⊣ (BUILD∆PATH, '/', ⍺, '_', COMPILER, '.cpp') put⍨ gc tt ⊃ a n ← ps ⍵
-			22	::	'COMPILE ERROR' ⎕SIGNAL 22
-					n ⊣ ⎕NUNTIE so ⎕NTIE 0}
+	⎕IO ⎕ML ⎕WX	←	0 1 3
+	VERSION	←	2017 12 0
+	BUILD∆PATH	←	'build'
+	AF∆PREFIX	←	'/usr/local'
+	AF∆LIB	←	'afcuda'
+	VS∆PS	←	'\2017\'∘,¨ 'Enterprise' 'Professional' 'Community' ,¨ ⊂'\VC\Auxiliary\Build'
+	VS∆PS	,←	⊂' 14.0\VC'
+	VS∆PS	,¨⍨←	⊂'\Program Files (x86)\Microsoft Visual Studio'
+	VS∆PS	,¨←	⊂'\vcvarsall.bat'
+	Cmp	← {	_	←	1 ⎕NDELETE so ← BSO ⍺
+			_	←	(BUILD∆PATH, '/', ⍺, '.cpp') put⍨ gc tt ⊃ a n ← ps ⍵
+			_	← 	⎕NEXISTS so ⊣ (⍎ 'vsc' 'gcc' 'clang' ⊃⍨ 'Win' 'Lin' 'Mac' ⍳ ⊂ 3 ↑ ⊃ '.' ⎕WG 'APLVersion') ⍺
+			_	:	n
+					'COMPILE ERROR' ⎕SIGNAL 22}
 	MkNS	← {NS ⊣ ⍺∘{NS.⍎⍺ mkf ⍵}¨ (1 = 1 ⌷ ⍉⍵)⌿ 0 ⌷ ⍉⍵ ⊣ NS ← #.⎕NS ⍬}
 	Fix	← {⍺ MkNS ⍺ Cmp ⍵}
 	Xml	← {⎕XML (0 ⌷ ⍉⍵), (,∘⍕⌿ 2 ↑ 1 ↓ ⍉⍵), (⊂''), ⍪(⊂(¯3 + ≢⍉⍵) ↑ ,¨ 'nrsgvyel') ,∘⍪¨ ↓ ⍕∘,¨ ⍉ 3 ↓ ⍉⍵}
-	BSO	← {BUILD∆PATH, '/', ⍵, '_', COMPILER, soext ⍬}
+	BSO	← {BUILD∆PATH, '/', ⍵, soext ⍬}
 	MKA	← {mka ⊂ ⍵ ⊣ 'mka' ⎕NA 'P ', (BSO ⍺), '|mkarray <PP'}
 	EXA	← {exa ⍬ ⍵ ⊣ 'exa' ⎕NA (BSO ⍺), '|exarray >PP P'}
 	FREA	← {frea ⍵ ⊣ 'frea' ⎕NA (BSO ⍺), '|frea P'}
-	soext	← {'.dll' '.so' '.dylib' ⊃⍨ 'vsc' 'gcc' 'clang' ⍳ ⊂COMPILER}
+	soext	← {'.dll' '.so' '.dylib' ⊃⍨ 'Win' 'Lin' 'Mac' ⍳ ⊂ 3 ↑ ⊃ '.' ⎕WG 'APLVersion'}
 	tie	← {0 :: ⎕SIGNAL ⎕EN ⋄ 22 :: ⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
 	put	← {s ← (¯128 + 256 | 128 + 'UTF-8' ⎕UCS ⍺) ⎕NAPPEND (t ← tie ⍵) 83 ⋄ 1 : r ← s ⊣ ⎕NUNTIE t}
-	mkf	← {	fn	←	BUILD∆PATH, '/', ⍺, '_', COMPILER, (soext ⍬), '|', ('∆' ⎕R '__' ⊢ ⍵), '_dwa '
+	mkf	← {	fn	←	(BSO ⍺), '|', ('∆' ⎕R '__' ⊢ ⍵), '_dwa '
 			f	←	⍵, '←{_←''dya''⎕NA''', fn, '>PP <PP <PP'' ⋄ '
 			f	,←	'_←''mon''⎕NA''', fn, '>PP P <PP'' ⋄ '
 					f, '0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
 
 
-	cio	← {' -o ''', BUILD∆PATH, '/', ⍵, '_', ⍺, '.', ⍺⍺, ''' '}
-	fls	← {'''', BUILD∆PATH, '/', ⍵, '_', ⍺, '.cpp'' '}
-	log	← {'> ', BUILD∆PATH, '/', ⍵, '_', ⍺, '.log 2>&1'}
+	cio	← {' -o ''', BUILD∆PATH, '/', ⍵, '.', ⍺⍺, ''' '}
+	fls	← {'''', BUILD∆PATH, '/', ⍵, '.cpp'' '}
+	log	← {'> ', BUILD∆PATH, '/', ⍵, '.log 2>&1'}
 	lib	← {'-l', AF∆LIB, ' '}
 	cci	← {'-I''', AF∆PREFIX, '/include'' -L''', AF∆PREFIX, '/lib'' '}
 	cco	← '-std=c++11 -Ofast -g -Wall -fPIC -shared '
-	ucc	← {⎕SH ⍺⍺, ' ', cco, (cci ⍬), COMPILER (⍵⍵ cio, fls, lib, log) ⍵}
+	ucc	← {⎕SH ⍺⍺, ' ', cco, (cci ⍬), (⍵⍵ cio, fls, lib, log) ⍵}
 	gcc	← 'g++' ucc 'so'
 	clang	← 'clang++' ucc 'dylib'
 	vsco	← {	z	←	'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /Fd"', BUILD∆PATH
@@ -55,11 +58,11 @@
 	vslo	← {	z	←	'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
  			z	,←	'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "', AF∆LIB, '.lib" '
  					z, '/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '}
-	vsc0	← {'""', VISUAL∆STUDIO∆PATH, '\vcvarsall.bat" amd64'}
+	vsc0	← {~∨⌿ b ← ⎕NEXISTS¨ VS∆PS : 'VS NOT FOUND' ⎕SIGNAL 99 ⋄ '""', '" amd64' ,⍨ ⊃ b ⌿ VS∆PS}
 	vsc1	← {' && cd "', (⊃ ⎕CMD 'echo %CD%'), '" && cl ', (vsco ⍬), '/fast '}
-	vsc2	← {'/Fo"', BUILD∆PATH, '\\" "', BUILD∆PATH, '\', ⍵, '_vsc.cpp" '}
-	vsc3	← {(vslo ⍬), '/OUT:"', BUILD∆PATH, '\', ⍵, '_vsc.dll" '}
-	vsc4	← {'> "', BUILD∆PATH, '\', ⍵, '_vsc.log""'}
+	vsc2	← {'/Fo"', BUILD∆PATH, '\\" "', BUILD∆PATH, '\', ⍵, '.cpp" '}
+	vsc3	← {(vslo ⍬), '/OUT:"', BUILD∆PATH, '\', ⍵, '.dll" '}
+	vsc4	← {'> "', BUILD∆PATH, '\', ⍵, '.log""'}
 	vsc	← {⎕CMD ('%comspec% /C ', vsc0, vsc1, vsc2, vsc3, vsc4) ⍵}
 	get	← {⍺⍺ ⌷ ⍉⍵}
 	wrap	← ⍪∘(⍉ (1 + 1 ↑ ⍉) ⍪ 1 ↓ ⍉)

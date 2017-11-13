@@ -163,30 +163,12 @@ Frees a Co-dfns array pointer obtained from `MKA`.
 There are a few global settings that should be examined or set based on your 
 local environment. The values given below are their default values.
 
-### COMPILER
-
-    COMPILER ← 'vsc'
-
-This indicates the backend compiler to use. It should be one of the following 
-names:
-
-    Windows: vsc
-    Linux: gcc
-    Mac OS X: clang
-
 ### BUILD∆PATH
 
     BUILD∆PATH ← 'build'
 
 The path relative to your working directory where the compiler will store its 
 intermediate files and the compiled objects. Should be a directory. 
-
-### VISUAL∆STUDIO∆PATH
-
-    VISUAL∆STUDIO∆PATH ←'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build'
-
-The path to your Visual Studio installation. Make sure that you have installed 
-the C++ compiler. 
 
 ### AF∆PREFIX
 
@@ -222,7 +204,7 @@ software in order to use the compiler:
     * GCC (Linux)
     * Clang (Mac OS X)
 
-3. ArrayFire (3.5.0+)
+3. ArrayFire (3.5.1+)
 
 You should be able to find the appropriate ArrayFire installer included 
 in the release page for a given Co-dfns release. On Windows, if you want 
@@ -253,55 +235,12 @@ technology:
 
 ## Contributing and Helping
 
-We need your help! There are many ways to assist with the Co-dfns project. 
-Here are some ways that you can do it.
-
-### Support the Project
-
 We are seeking to create an open funding model for Co-dfns research through 
-the use of Gratipay. You can support the project by contributing code, feedback, 
-benchmarks, and otherwise becoming a member of the team, but you can also 
-directly support the Co-dfns team by funding us on Gratipay:
+user and patron contributions. You can support the project by contributing code, 
+feedback, benchmarks, and so forth, but you can also directly support the 
+Co-dfns project by funding the author: 
 
-https://www.gratipay.com/Co-dfns/
-
-### Joining the Co-dfns Team
-
-We are an open development team dedicated to free research, but we are also 
-funded by other sources as well. We encourage people to get involved in various 
-ways. Here are a few of the best ways to get working on the project:
-
-1. Download, install, and run the compiler on your code.
-
-2. Report bugs and issues in the GitHub Issue Tracker.
-
-3. Contribute code, tests, and benchmarks through pull requests to the
-   repository.
-
-4. Discuss Co-dfns on various social media sites. 
-
-5. Spread the word and evangalize the Co-dfns approach to computing!
-
-This project is heavily focused on producing quality code, and as such, we 
-have strong guidelines about how to code in the project. We are happy to assist 
-with this, and it may help to read the publications listed in this document. 
-
-Furthermore, we explicitly avoid too much non-code documentation that isn't 
-human-to-human direct communication. Instead, we tend to focus on executable 
-contracts and documentation through the use of our testing suite. We also have 
-a growing Benchmarks suite here:
-
-https://github.com/arcfide/Co-dfns-benchmarks
-
-Please contact arcfide@sacrideo.us (Aaron W. Hsu) for more information on the 
-best ways to contribute and to get involved in the project. 
-
-Note: All pull requests and contributions to this project imply an acceptance 
-of the dual licensing nature of the Co-dfns project. Part of this is the 
-copyright assignment and details laid out in the LICENSE.txt file. Furthermore, 
-Dyalog, Ltd. is a contributing partner in this project, and receives exclusive 
-rights to non-AGPL licensing options of the Co-dfns compiler. To facilitate 
-this all contributions are assumed to be copyright transferred to Aaron Hsu.
+https://www.paypal.me/arcfide
 
 ## Publications
 
