@@ -334,7 +334,7 @@ gc ← {⊃,/ {0 = ⊃ t ⍵ : ⊂ 5 ⍴ ⍬ ⋄ ⊂ (⍎ (⊃ t ⍵), ⍕ ⊃ k
 	LoadImage	← {⍺ ← 1 ⋄ ⍉ loadimg ⍬ ⍵ ⍺}
 	SaveImage	← {⍺ ← 'image.png' ⋄ saveimg (⍉⍵) ⍺}
 	Image	← {~ 2 3 ∨.= ≢⍴⍵ : ⎕SIGNAL 4 ⋄ (3 ≠ 2 ⊃ 3 ↑ ⍴⍵) ∧ 3 = ≢⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_img (⍉⍵) ⍺}
-	Plot	← {2 ≠ ≢⍴⍵ : ⎕SIGNAL 4 ⋄ ~ 2 3 ∨.= 1 ⊃ ⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_plot ⍵ ⍺}
+	Plot	← {2 ≠ ≢⍴⍵ : ⎕SIGNAL 4 ⋄ ~ 2 3 ∨.= 1 ⊃ ⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_plot (⍉⍵) ⍺}
 	Histogram	← {⍵ ⊣ w_hist ⍵, ⍺}
 
 :EndNamespace
