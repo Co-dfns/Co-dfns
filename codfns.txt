@@ -22,7 +22,8 @@
 	VS∆PS	,←	⊂' 14.0\VC'
 	VS∆PS	,¨⍨←	⊂'\Program Files (x86)\Microsoft Visual Studio'
 	VS∆PS	,¨←	⊂'\vcvarsall.bat'
-	Cmp	← {	_	←	1 ⎕NDELETE so ← BSO ⍺
+	Cmp	← {	_	←	~ ⎕NEXISTS BUILD∆PATH ⋄ _ : 'BUILD PATH NOT FOUND' ⎕SIGNAL 99	
+			_	←	1 ⎕NDELETE so ← BSO ⍺
 			_	←	(BUILD∆PATH, '/', ⍺, '.cpp') put⍨ gc tt ⊃ a n ← ps ⍵
 			_	← 	⎕NEXISTS so ⊣ (⍎ 'vsc' 'gcc' 'clang' ⊃⍨ 'Win' 'Lin' 'Mac' ⍳ ⊂ 3 ↑ ⊃ '.' ⎕WG 'APLVersion') ⍺
 			_	:	n
@@ -333,7 +334,7 @@ gc ← {⊃,/ {0 = ⊃ t ⍵ : ⊂ 5 ⍴ ⍬ ⋄ ⊂ (⍎ (⊃ t ⍵), ⍕ ⊃ k
 	LoadImage	← {⍺ ← 1 ⋄ ⍉ loadimg ⍬ ⍵ ⍺}
 	SaveImage	← {⍺ ← 'image.png' ⋄ saveimg (⍉⍵) ⍺}
 	Image	← {~ 2 3 ∨.= ≢⍴⍵ : ⎕SIGNAL 4 ⋄ (3 ≠ 2 ⊃ 3 ↑ ⍴⍵) ∧ 3 = ≢⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_img (⍉⍵) ⍺}
-	Plot	← {~ 2 ≠ ≢⍴⍵ : ⎕SIGNAL 4 ⋄ ~ 2 3 ∨.= 1 ⊃ ⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_plot ⍵ ⍺}
+	Plot	← {2 ≠ ≢⍴⍵ : ⎕SIGNAL 4 ⋄ ~ 2 3 ∨.= 1 ⊃ ⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_plot ⍵ ⍺}
 	Histogram	← {⍵ ⊣ w_hist ⍵, ⍺}
 
 :EndNamespace
