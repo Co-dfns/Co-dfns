@@ -34,3 +34,5 @@ CONTINUE
 *.gpu
 *.h
 attic/*.pdf
+*.obj
+*.log
