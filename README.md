@@ -129,14 +129,6 @@ of the right and left inputs, respectively.
 These specialized functions return the type of the resulting array computation 
 as their return value.
 
-#### codfns.BSO
-
-    Path ← codfns.BSO Name
-
-Given the `Name` used as the left argument to `Fix`, it will give back the 
-path to the primary Co-dfns compilation object. This is useful for doing 
-manual linking into the compilation object using `⎕NA`.
-
 #### codfns.MKA
 
     Codfns_Array ← Name codfns.MKA Array
@@ -163,13 +155,6 @@ Frees a Co-dfns array pointer obtained from `MKA`.
 There are a few global settings that should be examined or set based on your 
 local environment. The values given below are their default values.
 
-### BUILD∆PATH
-
-    BUILD∆PATH ← 'build'
-
-The path relative to your working directory where the compiler will store its 
-intermediate files and the compiled objects. Should be a directory. 
-
 ### AF∆PREFIX
 
     AF∆PREFIX←'/usr/local'
@@ -178,10 +163,10 @@ This path should point to the prefix for your ArrayFire installation on Linux/Ma
 
 ### AF∆LIB
 
-    AF∆LIB←'afcuda'
+    AF∆LIB←''
 
 This is used to select the specific backend that you want to use, and can be one 
-of `afcuda`, `afopencl`, or `afcpu`. 
+of `cuda`, `opencl`, or `cpu`. 
 
 ### VERSION
 
