@@ -311,14 +311,14 @@ gc ← {⊃,/ {0 = ⊃ t ⍵ : ⊂ 5 ⍴ ⍬ ⋄ ⊂ (⍎ (⊃ t ⍵), ⍕ ⊃ k
 
 
 ∇	Z ← Gfx∆Init S
-	'w_new'	⎕NA 'P ', (BSO S), '|w_new <C[]'
-	'w_close'	⎕NA 'I ', (BSO S),'|w_close P'
-	'w_del'	⎕NA (BSO S), '|w_del P'
-	'w_img'	⎕NA (BSO S), '|w_img <PP P'
-	'w_plot'	⎕NA (BSO S), '|w_plot <PP P'
-	'w_hist'	⎕NA (BSO S), '|w_hist <PP F8 F8 P'
-	'loadimg'	⎕NA (BSO S), '|loadimg >PP <C[] I'
-	'saveimg'	⎕NA (BSO S), '|saveimg <PP <C[]'
+	'w_new'	⎕NA 'P ', (S, soext ⍬), '|w_new <C[]'
+	'w_close'	⎕NA 'I ', (S, soext ⍬),'|w_close P'
+	'w_del'	⎕NA (S, soext ⍬), '|w_del P'
+	'w_img'	⎕NA (S, soext ⍬), '|w_img <PP P'
+	'w_plot'	⎕NA (S, soext ⍬), '|w_plot <PP P'
+	'w_hist'	⎕NA (S, soext ⍬), '|w_hist <PP F8 F8 P'
+	'loadimg'	⎕NA (S, soext ⍬), '|loadimg >PP <C[] I'
+	'saveimg'	⎕NA (S, soext ⍬), '|saveimg <PP <C[]'
 	Z ← 0 0 ⍴ ⍬
 ∇
 	Display	← {	⍺	←	'Co-dfns' ⋄ W ← w_new ⊂⍺ ⋄ 777 :: w_del W
