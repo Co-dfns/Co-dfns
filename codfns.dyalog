@@ -328,6 +328,16 @@ gc ← {⊃,/ {0 = ⊃ t ⍵ : ⊂ 5 ⍴ ⍬ ⋄ ⊂ (⍎ (⊃ t ⍵), ⍕ ⊃ k
 	Image	← {~ 2 3 ∨.= ≢⍴⍵ : ⎕SIGNAL 4 ⋄ (3 ≠ 2 ⊃ 3 ↑ ⍴⍵) ∧ 3 = ≢⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_img (⍉⍵) ⍺}
 	Plot	← {2 ≠ ≢⍴⍵ : ⎕SIGNAL 4 ⋄ ~ 2 3 ∨.= 1 ⊃ ⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_plot (⍉⍵) ⍺}
 	Histogram	← {⍵ ⊣ w_hist ⍵, ⍺}
+∇	r	← List
+	r	← ⎕NS¨ 1 ⍴ ⊂⍬ ⋄ r.Name ← ,¨ ⊂'Compile' ⋄ r.Group←⊂ 'CODFNS' 
+ 	r[0].Desc	← 'Compile an object using Co-dfns'
+	r.Parse	← ⊂ '2S -af=cpu opencl cuda ' 
+∇
+Convert	← {⍺ (⎕SE.SALT.Load '[SALT]/lib/NStoScript -noname').ntgennscode ⍵}
+Run	← {	C I	 ← ⍵ ⋄ in out ← I.Arguments ⋄ AF∆LIB ∘← I.af '' ⊃⍨ I.af ≡ 0
+		S ← (⊂ ':Namespace ', out), 2 ↓ 0 0 0 out Convert ##.THIS.⍎ in
+		'Compile' ≡ C : {} {##.THIS.⍎ out, '←⍵'} out Fix S}
+Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
 
 rth ← {⊃,/ (⊂nl) ,¨⍨ 2 ↓¨ ¯2 ↓ c ↓⍨ 1 + (⊂'rth') ⍳⍨ 3 ↑¨ c ← ⎕SRC ⎕THIS}
