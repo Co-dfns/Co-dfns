@@ -150,32 +150,6 @@ to the Co-dfns array.
 
 Frees a Co-dfns array pointer obtained from `MKA`. 
 
-## Configuration
-
-There are a few global settings that should be examined or set based on your 
-local environment. The values given below are their default values.
-
-### AF∆PREFIX
-
-    AF∆PREFIX←'/usr/local'
-
-This path should point to the prefix for your ArrayFire installation on Linux/Mac.
-
-### AF∆LIB
-
-    AF∆LIB←''
-
-This is used to select the specific backend that you want to use, and can be one 
-of `cuda`, `opencl`, or `cpu`. 
-
-### VERSION
-
-    Major Minor Patch ← VERSION
-
-This is not designed to be set by the user, but indicates the version of the 
-compiler. Version numbers are only valid as releases, and are subject to change 
-during development in the repository. 
-
 ## System Requirements
 
 The Co-dfns compiler is fairly self-contained. You will need the following 
