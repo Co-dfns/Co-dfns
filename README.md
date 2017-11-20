@@ -19,46 +19,25 @@ Co-dfns follows a rapid release cycle. Releases can be found here:
 
 https://github.com/arcfide/Co-dfns/releases
 
-## Using the Compiler
+## Installing Co-dfns
 
-The compiler is designed around a simple public interface that can be 
-directly and simply used to replace or enhance traditional funtionality. 
+It is recommended that you install Co-dfns as an User Command. This will 
+give you the most convenient access to the compiler functionality no 
+matter where you are or what workspace you are using. This also eliminates 
+the need for you to copy the codfns namespace into your local workspace 
+unless you want some of the specific access to specialized functionality.
 
-### codfns.Fix
+Simply copy the `codfns.dyalog` file into your User Commands directory. 
+See the User Command documentation in your Dyalog installation for more 
+information on using User Commands.
 
-    Namespace ← Name codfns.Fix Namspace_Script
+## Runtime Compiler APIs
 
-This is the primary interface into the compiler. It serves as a drop-in 
-replacement for the ⎕FIX function. The `Name` should be some name that 
-will serve as a prefix identifier for extra files that the compiler 
-needs to generate in the build directory to create the namespace. It 
-will compile the namespace and return the accessible functions as a 
-Dyalog Namespace object.
-
-### codfns.Cmp
-
-    Exports ← Name codfns.Cmp Namespace_Script
-
-This is used as a part of fixing, and allows you to run the compiler without 
-building the namespace object. It will return a list of the exports of 
-the namespace.
-
-### codfns.MkNS
-
-    Namespace ← Name codfns.MkNS Exports
-
-This will take a list of exports and the compiler prefix name and fix a 
-Dyalog namespace object with functions coming from the compiled code given 
-by `Name`. 
-
-### codfns.Xml
-
-    String ← codfns.Xml AST
-
-If you need to see the AST of the compiler, or work with it, this function 
-allows you to serialize your code in the form of XML, rather than as a 
-Namespace Script. It does require that you use either the parser or 
-your own hacking skills to extract out a Co-dfns AST. 
+Normal use of the compiler can be accessed through the User Command 
+functionality, and documentation for the User commands is available using 
+the `]?codfns`. There are some specific features that require you to have 
+a copy of the Co-dfns namespace in your local workspace. These APIs are 
+described in this section. 
 
 ### Graphics API
 
