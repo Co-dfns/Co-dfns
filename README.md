@@ -178,7 +178,7 @@ user and patron contributions. You can support the project by contributing code,
 feedback, benchmarks, and so forth, but you can also directly support the 
 Co-dfns project by funding the author: 
 
-https://www.paypal.me/arcfide
+https://www.patreon.com/arcfde
 
 ## Publications
 
