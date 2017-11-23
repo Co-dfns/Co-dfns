@@ -13,6 +13,15 @@ Our mission is to deliver scalable APL programming to information and domain
 experts across many fields, expanding the scope and capabilities of what
 you can effectively accomplish with APL.
 
+## Contributing and Helping
+
+We are seeking to create an open funding model for Co-dfns research through 
+user and patron contributions. You can support the project by contributing code, 
+feedback, benchmarks, and so forth, but you can also directly support the 
+Co-dfns project by funding the author: 
+
+https://www.patreon.com/arcfide
+
 ## Getting the compiler
 
 Co-dfns follows a rapid release cycle. Releases can be found here:
@@ -170,15 +179,6 @@ technology:
   a high-level, high-performance cryptographic stack
 * [apixlib](https://github.com/arcfide/apixlib): 
   programmable, easy to use image processing
-
-## Contributing and Helping
-
-We are seeking to create an open funding model for Co-dfns research through 
-user and patron contributions. You can support the project by contributing code, 
-feedback, benchmarks, and so forth, but you can also directly support the 
-Co-dfns project by funding the author: 
-
-https://www.patreon.com/arcfde
 
 ## Publications
 
