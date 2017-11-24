@@ -36,3 +36,4 @@ CONTINUE
 attic/*.pdf
 *.obj
 *.log
+*.cpp
