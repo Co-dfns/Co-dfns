@@ -336,7 +336,7 @@ gc ← {⊃,/ {0 = ⊃ t ⍵ : ⊂ 5 ⍴ ⍬ ⋄ ⊂ (⍎ (⊃ t ⍵), ⍕ ⊃ k
 Convert	← {⍺ (⎕SE.SALT.Load '[SALT]/lib/NStoScript -noname').ntgennscode ⍵}
 Run	← {	C I	 ← ⍵ ⋄ in out ← I.Arguments ⋄ AF∆LIB ∘← I.af '' ⊃⍨ I.af ≡ 0
 		S ← (⊂ ':Namespace ', out), 2 ↓ 0 0 0 out Convert ##.THIS.⍎ in
-		'Compile' ≡ C : {} {_ ← {##.THIS.⍎ out, '←⍵'} out Fix S
+		'Compile' ≡ C : {} {_ ← {##.THIS.⍎ out, '←⍵'} out Fix S ⊣ ⎕EX '##.THIS.', out
 			⎕CMD 'copy "%CUDA_PATH%\nvvm\bin\nvvm64*" /Y' /⍨ (I.af ≡ 'cuda') ∧ opsys 1 0 0} ⍬}
 Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
