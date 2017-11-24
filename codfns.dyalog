@@ -41,7 +41,7 @@ opsys	← {⍵ ⊃⍨ 'Win' 'Lin' 'Mac' ⍳ ⊂ 3 ↑ ⊃ '.' ⎕WG 'APLVersion'
 					f, '0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
 
 
-	ccf	← {' -o ''', ⍵, '.', ⍺⍺, ''' ''', ⍵, '.cpp'' -laf', AF∆LIB, ' > ', ⍵, '.log 2>&1'}
+	ccf	← {' -o ''', ⍵, '.', ⍺, ''' ''', ⍵, '.cpp'' -laf', AF∆LIB, ' > ', ⍵, '.log 2>&1'}
 	cci	← {'-I''', AF∆PREFIX, '/include'' -L''', AF∆PREFIX, '/lib'' '}
 	cco	← '-std=c++11 -Ofast -g -Wall -fPIC -shared '
 	ucc	← {⍵⍵ (⎕SH ⍺⍺, ' ', cco, cci, ccf ) ⍵}
