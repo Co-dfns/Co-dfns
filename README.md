@@ -154,12 +154,8 @@ software in order to use the compiler:
 3. ArrayFire (3.5.1+)
 
 You should be able to find the appropriate ArrayFire installer included 
-in the release page for a given Co-dfns release. On Windows, if you want 
-to use the CUDA backend you will need to make sure that the appropriate 
-nvvm64 dll (something like `nvvm64_31_0.dll`) is copied into the directory 
-from which you will launch the compiler.
-
-You can find the appropriate installation instructions for your operating
+in the release page for a given Co-dfns release. You can find the 
+appropriate installation instructions for your operating
 system here:
 
 http://arrayfire.org/docs/installing.htm
