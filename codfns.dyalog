@@ -357,6 +357,9 @@ rth ← {⊃,/ (⊂nl) ,¨⍨ 2 ↓¨ ¯2 ↓ c ↓⍨ 1 + (⊂'rth') ⍳⍨ 3 �
 ⍝ #include <arrayfire.h>
 ⍝ using namespace af;
 ⍝
+⍝ #if AF_API_VERSION < 35
+⍝ #error "Your ArrayFire version is too old."
+⍝ #endif
 ⍝ #ifdef _WIN32
 ⍝  #define EXPORT extern "C" __declspec(dllexport)
 ⍝ #elif defined(__GNUC__)
@@ -383,10 +386,9 @@ rth ← {⊃,/ (⊂nl) ,¨⍨ 2 ↓¨ ¯2 ↓ c ↓⍨ 1 + (⊂'rth') ⍳⍨ 3 �
 ⍝
 ⍝ typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD,APLP,APLU,APLV,APLW,APLZ,
 ⍝  APLR,APLF,APLQ}APLTYPE;
-⍝ typedef long long L;typedef int I;typedef int16_t S16;
-⍝ typedef int8_t S8;typedef double D;typedef unsigned char U8;
-⍝ typedef dim_t B;typedef unsigned U;typedef cdouble DZ;
-⍝ typedef void V;typedef std::string STR;
+⍝ typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;
+⍝ typedef double D;typedef unsigned char U8;typedef unsigned U;
+⍝ typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;
 ⍝
 ⍝ S{U f=3;U n;U x=0;wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 ⍝ S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};
@@ -398,8 +400,6 @@ rth ← {⊃,/ (⊂nl) ,¨⍨ 2 ↓¨ ¯2 ↓ c ↓⍨ 1 + (⊂'rth') ⍳⍨ 3 �
 ⍝ S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}
 ⍝  A():r(0),s(dim4()),v(array()){}};
 ⍝ int isinit=0;dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;
-⍝
-
 
 ⍝ #define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
 ⍝  n##_f(STR s,I m,I d):FN(s,m,d){}} n##fn(nm,sm,sd);
