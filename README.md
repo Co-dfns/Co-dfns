@@ -160,11 +160,11 @@ system here:
 
 http://arrayfire.org/docs/installing.htm
 
-4. [Optional] CUDA 8+
+4. [Optional] CUDA
 
 If you intend to use the CUDA backend with ArrayFire, you will need to have 
-CUDA 8 or greater installed. This will also be necessary if you would like to 
-analyze performance of the generated code. 
+CUDA installed. Please make sure that the version of CUDA that you install is 
+the same as the version of CUDA used by the ArrayFire package you installed.
 
 ## Related Projects
 
