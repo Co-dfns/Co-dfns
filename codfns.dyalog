@@ -14,7 +14,7 @@
 ⍝ If not, see http://www.gnu.org/licenses/
 :Namespace CODFNS
 	⎕IO ⎕ML ⎕WX	←	0 1 3
-	VERSION	←	2017 12 0
+	VERSION	←	2017 12 1
 	AF∆PREFIX	←	'/usr/local'
 	AF∆LIB	←	''
 	VS∆PS	←	'\2017\'∘,¨ 'Enterprise' 'Professional' 'Community' ,¨ ⊂'\VC\Auxiliary\Build'
