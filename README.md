@@ -178,6 +178,8 @@ technology:
 
 ## Publications
 
+[APL Patterns vs. Anti-Patterns @ FunctionalConf 2017](https://youtu.be/v7Mt0GYHU9A)
+
 [Co-dfns 2017 Report](https://sway.com/mJg0M7qakrJBwP6G?ref=Link)
 
 [APL Style: Patterns and Anti-patterns](https://sway.com/b1pRwmzuGjqB30On?ref=Link)
