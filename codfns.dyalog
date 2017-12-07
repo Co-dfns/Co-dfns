@@ -57,28 +57,44 @@ opsys	← {⍵ ⊃⍨ 'Win' 'Lin' 'Mac' ⍳ ⊂ 3 ↑ ⊃ '.' ⎕WG 'APLVersion'
 	vsc1	← {' && cd "', (⊃ ⎕CMD 'echo %CD%'), '" && cl ', (vsco ⍵), '/fast "', ⍵, '.cpp" '}
 	vsc2	← {(vslo ⍵), '/OUT:"', ⍵, '.dll" > "', ⍵, '.log""'}
 	vsc	← {⎕CMD ('%comspec% /C ', vsc0, vsc1, vsc2) ⍵}
-	get	← {⍺⍺ ⌷ ⍉⍵}
-	wrap	← ⍪∘(⍉ (1 + 1 ↑ ⍉) ⍪ 1 ↓ ⍉)
-	bind	← {n _ e ← ⍵ ⋄ (0 n_ ⌷ e) ← ⊂n ⋄ e}
-	at	← {⍺ ← ⊢ ⋄ A ⊣ ((,B) ⌿ (r A) ⍴ A) ← ⍺ ⍺⍺ (,B) ⌿ ((r ← (≢⍴ B ← ⍵⍵ ⍵) ((×/ ↑) , ↓) ⍴) A) ⍴ (A ← ⍵)}
-d_ t_ k_ n_ r_ s_ g_ v_ y_ e_ l_ ← ⍳ 7 + f∆ ← 4
-	d	← d_ get	⋄	t	← t_ get	⋄	k	← k_ get	⋄	n	← n_ get	⋄	r	← r_ get	⋄	s	← s_ get 
-	g	← g_ get	⋄	v	← v_ get	⋄	y	← y_ get	⋄	e	← e_ get	⋄	l	← l_ get
-	new	← {⍉⍪ f∆ ↑ 0 ⍺, ⍵}	⋄	msk	← {(t ⍵) ∊ ⊂⍺⍺}	⋄	sel	← {(⍺⍺ msk ⍵)⌿ ⍵}
-	A	← {('A' new ⍺⍺) wrap ⊃⍪/ ⍵}	⋄	Am	← 'A' msk	⋄	As	← 'A' sel
-	E	← {('E' new ⍺⍺) wrap ⊃⍪/ ⍵}	⋄	Em	← 'E' msk	⋄	Es	← 'E' sel
-	F	← {('F' new ⍺⍺) wrap ⊃⍪/ (⊂ 0 f∆ ⍴ ⍬), ⍵}	⋄	Fm	← 'F' msk	⋄	Fs	← 'F' sel
-	G	← {('G' new 0) wrap ⊃⍪/ ⍵}	⋄	Gm	← 'G' msk	⋄	Gs	← 'G' sel
-	L	← {('L' new 0) wrap ⊃⍪/ ⍵}	⋄	Lm	← 'L' msk	⋄	Ls	← 'L' sel
-	M	← {('M' new 0 '') wrap ⊃⍪/ (⊂ 0 f∆ ⍴ ⍬), ⍵}	⋄	Mm	← 'M' msk	⋄	Ms	← 'M' sel
-	N	← {'N' new 0 (⍎⍵)}	⋄	Nm	← 'N' msk	⋄	Ns	← 'N' sel
-	O	← {('O' new ⍺⍺) wrap ⊃⍪/ ⍵}	⋄	Om	← 'O' msk	⋄	Os	← 'O' sel
-	P	← {'P' new 0 ⍵}	⋄	Pm	← 'P' msk	⋄	Ps	← 'P' sel
-	S	← {'S' new 0 ⍵}	⋄	Sm	← 'S' msk	⋄	Ss	← 'S' sel
-	V	← {'V' new ⍺⍺ ⍵}	⋄	Vm	← 'V' msk	⋄	Vs	← 'V' sel
-	Y	← {'Y' new 0 ⍵}	⋄	Ym	← 'Y' msk	⋄	Ys	← 'Y' sel
-	Z	← {'Z' new 1 ⍵}	⋄	Zm	← 'Z' msk	⋄	Zs	← 'Z' sel
-
+f∆ ← 'ptknrsgvyeld' ⋄ N∆ ← 'AEFOGLMNPVZ'
+⎕FX∘⍉∘⍪¨ f∆ ,¨ '←{'∘,¨ (⍕¨ ⍳≢f∆) ,¨ ⊂'⊃⍵}'
+⎕FX∘⍉∘⍪¨ N∆ ,¨ 'm←{'∘,¨ (⍕¨ ⍳≢N∆) ,¨ ⊂'=t⍵}'
+⎕FX∘⍉∘⍪¨ 'GLM' ,¨ '←{(0 '''∘,¨ 'GLM' ,¨ ⊂''' 0 0) wrap catv ⍵}'
+⎕FX∘⍉∘⍪¨ 'AEFO' ,¨ '←{(0 '''∘,¨ 'AEFO' ,¨ ⊂''' ⍺⍺ 0) wrap catv ⍵}'
+N ← {0 'N' 0 (⍎⍵)} ⋄ P ← {0 'P' 0 ⍵} ⋄ V ← {0 'V' ⍺⍺ (⊂⍵)} ⋄ Z ← {0 'Z' 1 (⊂⍵)}
+⎕FX∘⍉∘⍪¨ N∆ ,¨ ⊂'s←{⍵}' ⋄ at ← {⍺ ⍺⍺ ⍵⍵ ⍵} ⋄ new ← {⍵}
+	wrap	← ⊣ ⍪¨ {⍵ (⊢+×) ⍵ ≠ ⍳∘≢¨ ⍵}@0
+	catv	← (≢⊃)¨ {⊂ (⊃⍵) + ⍺ ⌿ +⍀ 0, ¯1 ↓ ⍺}@0∘(⊃ ⍪¨⌿) (⊂ 4 ⍴ ⊂⍬), ⊢
+	Display	← {	⍺	←	'Co-dfns' ⋄ W ← w_new ⊂⍺ ⋄ 777 :: w_del W
+					w_del W ⊣ W ⍺⍺{w_close ⍺ : ⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵ ⊢ ⍵}
+	LoadImage	← {⍺ ← 1 ⋄ ⍉ loadimg ⍬ ⍵ ⍺}
+	SaveImage	← {⍺ ← 'image.png' ⋄ saveimg (⍉⍵) ⍺}
+	Image	← {~ 2 3 ∨.= ≢⍴⍵ : ⎕SIGNAL 4 ⋄ (3 ≠ 2 ⊃ 3 ↑ ⍴⍵) ∧ 3 = ≢⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_img (⍉⍵) ⍺}
+	Plot	← {2 ≠ ≢⍴⍵ : ⎕SIGNAL 4 ⋄ ~ 2 3 ∨.= 1 ⊃ ⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_plot (⍉⍵) ⍺}
+	Histogram	← {⍵ ⊣ w_hist ⍵, ⍺}
+∇	r	← List
+	r	← ⎕NS¨ 1 ⍴ ⊂⍬ ⋄ r.Name ← ,¨ ⊂'Compile' ⋄ r.Group←⊂ 'CODFNS' 
+ 	r[0].Desc	← 'Compile an object using Co-dfns'
+	r.Parse	← ⊂ '2S -af=cpu opencl cuda ' 
+∇
+Convert	← {⍺ (⎕SE.SALT.Load '[SALT]/lib/NStoScript -noname').ntgennscode ⍵}
+Run	← {	C I	 ← ⍵ ⋄ in out ← I.Arguments ⋄ AF∆LIB ∘← I.af '' ⊃⍨ I.af ≡ 0
+		S ← (⊂ ':Namespace ', out), 2 ↓ 0 0 0 out Convert ##.THIS.⍎ in
+		'Compile' ≡ C : {} {_ ← {##.THIS.⍎ out, '←⍵'} out Fix S ⊣ ⎕EX '##.THIS.', out
+			⎕CMD 'copy "%CUDA_PATH%\nvvm\bin\nvvm64*" /Y' /⍨ (I.af ≡ 'cuda') ∧ opsys 1 0 0} ⍬}
+Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
+∇	Z ← Gfx∆Init S
+	'w_new'	⎕NA 'P ', (S, soext ⍬), '|w_new <C[]'
+	'w_close'	⎕NA 'I ', (S, soext ⍬),'|w_close P'
+	'w_del'	⎕NA (S, soext ⍬), '|w_del P'
+	'w_img'	⎕NA (S, soext ⍬), '|w_img <PP P'
+	'w_plot'	⎕NA (S, soext ⍬), '|w_plot <PP P'
+	'w_hist'	⎕NA (S, soext ⍬), '|w_hist <PP F8 F8 P'
+	'loadimg'	⎕NA (S, soext ⍬), '|loadimg >PP <C[] I'
+	'saveimg'	⎕NA (S, soext ⍬), '|saveimg <PP <C[]'
+	Z ← 0 0 ⍴ ⍬
+∇
 
 	_o	← {0 ≥ ⊃ c a e r ← p ← ⍺ ⍺⍺ ⍵ : p ⋄ 0 ≥ ⊃ c a e r2 ← p ← ⍺ ⍵⍵ ⍵ : p ⋄ c a e (r ↑⍨ - ⌊/ ≢¨ r r2)}
 	_s	← {0 < ⊃ c a e r ← p ← ⍺ ⍺⍺ ⍵ : p ⋄ 0 < ⊃ c2 a2 e r ← p ← e ⍵⍵ r : p ⋄ (c ⌈ c2)(a, a2) e r}
@@ -254,16 +270,9 @@ d_ t_ k_ n_ r_ s_ g_ v_ y_ e_ l_ ← ⍳ 7 + f∆ ← 4
 	fg	← (⊃⍪/) (fgz¨ at (Gm∘(⊃⍪/) 1 ↑¨ ⊢) ⊢ ⊂[0]⍨ d = 2 ⌊ g)
 	fft	← (, 1 ↑ ⊢) (1 'Z', (2 ↓ ¯5 ↓ ⊣), (v⊣), n, y, (⊂ 2 ↑∘,∘⊃∘⊃ e), l) (¯1 ↑ Es)
 	ff	← ((⊃⍪/) (1 ↑ ⊢), (((1 ↑ ⊢) ⍪ (((¯1 + d), 1 ↓⍤1 ⊢) 1 ↓ ⊢) ⍪ fft)¨ 1 ↓ ⊢)) scp
-	fzh	← ((∪n) ∩ (⊃∘l ⊣)) (¯1 ⌽ (⊂⊣), ((≢⊢) - 1 + (⌽n) ⍳ ⊣) ((⊂ ⊣ ⊃¨∘⊂ (⊃¨e)), (⊂ ⊣ ⊃¨∘⊂ (⊃¨y)) ,∘⊂ ⊣) ⊢) ⊢
-	fzf	← 0 ≠ (≢∘⍴¨∘⊃∘v ⊣)
-	fzb	← (((⊃∘v ⊣) (⌿⍨) fzf), n) ,∘⍪ ('f'∘,∘⍕¨∘⍳ (+/fzf)), ('s'∘,∘⍕¨∘⍳∘≢ ⊢)
-	fzv	← ((⊂⊣) (⊖↑)⍨¨ (≢⊣) (- +∘⍳ ⊢) (≢⊢)) ((⊢ ,⍨ 1 ⌷∘⍉ ⊣) ⌷⍨ (0 ⌷∘⍉ ⊣) ⍳ ⊢)⍤2 0¨ v
-	fze	← (¯1 + d), t, k, fzb ((⊢/ (-∘≢ ⊢) ↑ ⊣), r, s, g, fzv, y, e ,∘⍪ l) ⊢
-	fzs	← (, 1 ↑ ⊢) (1 ⊖ (⊣ ((1 'Y', (2 ⌷ ⊣), ⊢) ⍪∘⍉∘⍪ (3 ↑ ⊣), ⊢) 1 ⌽ fzh, ¯1 ↓ 6 ↓ ⊣) ⍪ fze) (⌿∘⊢)
-	fz	← ((⊃⍪/) (1 ↑ ⊢), (((2 = d) (fzs ⍪ (1 ↓∘~ ⊣) (⌿∘⊢) 1 ↓ ⊢) ⊢)¨ 1 ↓ ⊢)) (1, 1 ↓ Sm) ⊂[0] ⊢
 	fd	← (1 ↑ ⊢) ⍪ ((1, 'Fd', 3 ↓ ⊢)⍤1 Fs) ⍪ 1 ↓ ⊢
 	tta	← (fc∘da∘(pc⍣≡)∘mr⍣≡)∘in⍣3∘sd∘lj∘ca∘fe∘lg∘nm∘rt∘mr∘dn∘lf∘du∘df∘rd∘rn
-	tt	← fd∘fz∘ff∘fg∘if∘ef∘vc∘rl∘av∘va∘lt∘nv∘fv∘ll∘ce∘ur∘tta
+	tt	← fd∘ff∘fg∘if∘ef∘vc∘rl∘av∘va∘lt∘nv∘fv∘ll∘ce∘ur∘tta
 
 
 	E1	← {'fn' gcl ((⊂ n ,∘⊃ v), e, y) ⍵}
@@ -308,37 +317,6 @@ gc ← {⊃,/ {0 = ⊃ t ⍵ : ⊂ 5 ⍴ ⍬ ⋄ ⊂ (⍎ (⊃ t ⍵), ⍕ ⊃ k
 	dnv	← {(0 ≡ z) ⊃ ('A ', ⍺, '[', (⍕ z ← ⊃ v ⍵), '];') ('A*', ⍺, '=NULL;')}
 	fnv	← {z ← 'A*env[', (⍕ 1 + ⊃ s ⍵), ']={', (⊃,/ (⊂'env0'), {',p[', (⍕⍵), ']'}¨ ⍳ ⊃ s ⍵), '};', nl}
 	gcl	← {z r l n ← ((3 ⍴ ⊂'fn'), ⊂⍺) {⊃ ⍺ var/ ⍵}¨ ↓ (⊃⍵), ⍪ 1 ⊃ ⍵ ⋄ n, '(', (⊃{⍺, ',', ⍵}/ z l r ~ ⊂'fn'), ',env);', nl}
-
-
-∇	Z ← Gfx∆Init S
-	'w_new'	⎕NA 'P ', (S, soext ⍬), '|w_new <C[]'
-	'w_close'	⎕NA 'I ', (S, soext ⍬),'|w_close P'
-	'w_del'	⎕NA (S, soext ⍬), '|w_del P'
-	'w_img'	⎕NA (S, soext ⍬), '|w_img <PP P'
-	'w_plot'	⎕NA (S, soext ⍬), '|w_plot <PP P'
-	'w_hist'	⎕NA (S, soext ⍬), '|w_hist <PP F8 F8 P'
-	'loadimg'	⎕NA (S, soext ⍬), '|loadimg >PP <C[] I'
-	'saveimg'	⎕NA (S, soext ⍬), '|saveimg <PP <C[]'
-	Z ← 0 0 ⍴ ⍬
-∇
-	Display	← {	⍺	←	'Co-dfns' ⋄ W ← w_new ⊂⍺ ⋄ 777 :: w_del W
-					w_del W ⊣ W ⍺⍺{w_close ⍺ : ⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵ ⊢ ⍵}
-	LoadImage	← {⍺ ← 1 ⋄ ⍉ loadimg ⍬ ⍵ ⍺}
-	SaveImage	← {⍺ ← 'image.png' ⋄ saveimg (⍉⍵) ⍺}
-	Image	← {~ 2 3 ∨.= ≢⍴⍵ : ⎕SIGNAL 4 ⋄ (3 ≠ 2 ⊃ 3 ↑ ⍴⍵) ∧ 3 = ≢⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_img (⍉⍵) ⍺}
-	Plot	← {2 ≠ ≢⍴⍵ : ⎕SIGNAL 4 ⋄ ~ 2 3 ∨.= 1 ⊃ ⍴⍵ : ⎕SIGNAL 5 ⋄ ⍵ ⊣ w_plot (⍉⍵) ⍺}
-	Histogram	← {⍵ ⊣ w_hist ⍵, ⍺}
-∇	r	← List
-	r	← ⎕NS¨ 1 ⍴ ⊂⍬ ⋄ r.Name ← ,¨ ⊂'Compile' ⋄ r.Group←⊂ 'CODFNS' 
- 	r[0].Desc	← 'Compile an object using Co-dfns'
-	r.Parse	← ⊂ '2S -af=cpu opencl cuda ' 
-∇
-Convert	← {⍺ (⎕SE.SALT.Load '[SALT]/lib/NStoScript -noname').ntgennscode ⍵}
-Run	← {	C I	 ← ⍵ ⋄ in out ← I.Arguments ⋄ AF∆LIB ∘← I.af '' ⊃⍨ I.af ≡ 0
-		S ← (⊂ ':Namespace ', out), 2 ↓ 0 0 0 out Convert ##.THIS.⍎ in
-		'Compile' ≡ C : {} {_ ← {##.THIS.⍎ out, '←⍵'} out Fix S ⊣ ⎕EX '##.THIS.', out
-			⎕CMD 'copy "%CUDA_PATH%\nvvm\bin\nvvm64*" /Y' /⍨ (I.af ≡ 'cuda') ∧ opsys 1 0 0} ⍬}
-Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
 
 rth ← {⊃,/ (⊂nl) ,¨⍨ 2 ↓¨ ¯2 ↓ c ↓⍨ 1 + (⊂'rth') ⍳⍨ 3 ↑¨ c ← ⎕SRC ⎕THIS}
