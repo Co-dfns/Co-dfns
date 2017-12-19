@@ -26,7 +26,7 @@ https://www.patreon.com/arcfide
 
 Co-dfns follows a rapid release cycle. Releases can be found here:
 
-https://github.com/arcfide/Co-dfns/releases
+https://github.com/Co-dfns/Co-dfns/releases
 
 ## Installing Co-dfns
 
@@ -171,9 +171,9 @@ the same as the version of CUDA used by the ArrayFire package you installed.
 There are a number of related initiatives that are based on the Co-dfns 
 technology:
 
-* [Mystika](https://github.com/arcfide/mystika):
+* [Mystika](https://github.com/Co-dfns/mystika):
   a high-level, high-performance cryptographic stack
-* [apixlib](https://github.com/arcfide/apixlib): 
+* [apixlib](https://github.com/Co-dfns/apixlib): 
   programmable, easy to use image processing
 
 ## Publications
