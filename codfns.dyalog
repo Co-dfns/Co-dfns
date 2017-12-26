@@ -57,15 +57,13 @@ opsys	← {⍵ ⊃⍨ 'Win' 'Lin' 'Mac' ⍳ ⊂ 3 ↑ ⊃ '.' ⎕WG 'APLVersion'
 	vsc1	← {' && cd "', (⊃ ⎕CMD 'echo %CD%'), '" && cl ', (vsco ⍵), '/fast "', ⍵, '.cpp" '}
 	vsc2	← {(vslo ⍵), '/OUT:"', ⍵, '.dll" > "', ⍵, '.log""'}
 	vsc	← {⎕CMD ('%comspec% /C ', vsc0, vsc1, vsc2) ⍵}
-f∆ ← 'ptknrsgvyeld' ⋄ N∆ ← 'AEFOGLMNPVZ'
+f∆ ← 'ptknrsgvyeld' ⋄ N∆ ← 'ABEFOGLMNPVZ'
 ⎕FX∘⍉∘⍪¨ f∆ ,¨ '←{'∘,¨ (⍕¨ ⍳≢f∆) ,¨ ⊂'⊃⍵}'
 ⎕FX∘⍉∘⍪¨ N∆ ,¨ 'm←{'∘,¨ (⍕¨ ⍳≢N∆) ,¨ ⊂'=t⍵}'
-⎕FX∘⍉∘⍪¨ 'GLM' ,¨ '←{(0 '''∘,¨ 'GLM' ,¨ ⊂''' 0 0) wrap catv ⍵}'
-⎕FX∘⍉∘⍪¨ 'AEFO' ,¨ '←{(0 '''∘,¨ 'AEFO' ,¨ ⊂''' ⍺⍺ 0) wrap catv ⍵}'
-N ← {0 'N' 0 (⍎⍵)} ⋄ P ← {0 'P' 0 ⍵} ⋄ V ← {0 'V' ⍺⍺ (⊂⍵)} ⋄ Z ← {0 'Z' 1 (⊂⍵)}
-⎕FX∘⍉∘⍪¨ N∆ ,¨ ⊂'s←{⍵}' ⋄ at ← {⍺ ⍺⍺ ⍵⍵ ⍵} ⋄ new ← {⍵}
-	wrap	← ⊣ ⍪¨ {⍵ (⊢+×) ⍵ ≠ ⍳∘≢¨ ⍵}@0
-	catv	← (≢⊃)¨ {⊂ (⊃⍵) + ⍺ ⌿ +⍀ 0, ¯1 ↓ ⍺}@0∘(⊃ ⍪¨⌿) (⊂ 4 ⍴ ⊂⍬), ⊢
+⎕FX∘⍉∘⍪¨ 'GLM' ,¨ '←{⍪/(0 '∘,¨ (⍕¨ N∆ ⍳ 'GLM') ,¨ ⊂' 0 0),1+@0⍉↑⍵}'
+⎕FX∘⍉∘⍪¨ 'ABEFO' ,¨ '←{⍪/(0 '∘,¨ (⍕¨ N∆ ⍳ 'ABEFO') ,¨ ⊂' ⍺⍺ 0),1+@0⍉↑⍵}'
+⎕FX∘⍉∘⍪¨ 'NPVZ' ,¨ '←{0(N∆⍳'''∘,¨ 'NPVZ' ,¨ ''')'∘,¨ '0(⍎⍵)' '0(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)' ,¨ '}'
+⎕FX∘⍉∘⍪¨ N∆ ,¨ ⊂'s←{⍵}' ⋄ at ← {⍺ ⍺⍺ ⍵⍵ ⍵} ⋄ new ← {⍵} ⋄ wrap ← {⍵}
 	Display	← {	⍺	←	'Co-dfns' ⋄ W ← w_new ⊂⍺ ⋄ 777 :: w_del W
 					w_del W ⊣ W ⍺⍺{w_close ⍺ : ⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵ ⊢ ⍵}
 	LoadImage	← {⍺ ← 1 ⋄ ⍉ loadimg ⍬ ⍵ ⍺}
@@ -151,46 +149,48 @@ Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
 	Sfn	← aws _s (('TFF⎕' _tk) _o ('TFFI⎕' _tk)) _s aws _as {P ⌽∊⍵}
 	Prim	← prim _as P
-	Vt	← {((0 ⌷ ⍉⍺) ⍳ ⍵) 1 ⌷ ⍺ ⍪ '' ¯1}
-	Var	← {⍺ (aaww _o aw _o (name _as ⌽) _t (⍺⍺ = Vt) _as (⍵⍵ V∘,∘⊃)) ⍵}
+	Vt	← (⊢ ⍳⍨ 0 ⊃ ⊣) ⊃ ¯1 ,⍨ 1 ⊃ ⊣
+	Var	← {⍺ (aaww _o aw _o (name _as ⌽) _t (⍺⍺ = Vt) _as (⍺⍺ V∘,∘⊃)) ⍵}
 	Num	← float _o int _as (N∘⌽)
-	Strand	← 0 Var 'a'  _s (0 Var 'a' _some) _as ('s' A∘⌽)
+	Strand	← 0 Var  _s (0 Var _some) _as (3 A∘⌽)
 	Pex	← {⍺ (rpar _s Ex _s lpar) ⍵}
-	Atom	← Strand _o (0 Var 'a' _as ('v'A)) _o (Num _some _as ('n' A∘⌽)) _o Pex
-	Brk	← rbrk _s {⍺ (Ex _opt _s (semi _s (Ex _opt) _any)) ⍵} _s lbrk _as ('i' E∘⌽)
+	Atom	← Strand _o (0 Var _as (1 A)) _o (Num _some _as (0 A∘⌽)) _o Pex
+	Brk	← rbrk _s {⍺ (Ex _opt _s (semi _s (Ex _opt) _any)) ⍵} _s lbrk _as (3 E∘⌽)
 	Idx	← Brk _s (_yes _as {P ,'['}) _s Atom _as (2 E∘⌽)
 	Blrp	← {⍺ (⍺⍺ _s (⍵⍵ Slrp ∇)) ⍵}
 	Slrp	← {⍺ (⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇)) ⍵}
-	Fa	← {	e	←	('⍵⍵' '⍺⍺', '⍺⍵') ,∘⍪⍤1 ⍉ ¯1 + 3 3 2 2 ⊤ (6 4 4 ⌿ 1 5 9) + 2 × ⍳ 14
-			a	←	e (⍺{⍵ Gex _o Ex _o Fex Stmts _then Fn⍨ ⍺⍺ ⍪ ⍺})⍤2 1 ⊢ ⍵
-			m	←	(0 = 0 ⌷ ⍉a) ∧ ∧⌿ (∨⍀ ∘.=⍨ ⍳14) ∨ ∘.≢⍨ 1 ⌷ ⍉a
-			~∨⌿ m	:	(⌈⌿ 0 ⌷ ⍉a) ⍬ ⍺ ⍵
-			(1 = +⌿ m) ∧ 2 > m ⍳ 1	:	0 (,⊂('F' new 1) wrap ⊃⊃ m ⌿ 1 ⌷ ⍉a) ⍺ ⍵
-			z	←	('F' new 'a') wrap ⊃ (m ⌿ 'F' new¨ 1 + ⍳14) ⍪.(wrap∘⊃) m ⌿ 1 ⌷ ⍉a
+	Fa	← {	e	←	(⊂ '⍵⍵' '⍺⍺', '⍺⍵')∘,∘⊂¨ ↓⍉ ¯1 + 3 3 2 2 ⊤ (6 4 4 ⌿ 1 5 9) + 2 × ⍳ 14
+			a	←	↓⍉↑ (e ,¨¨ ⊂⍺) Gex _o Ex _o Fex Stmts _then Fn¨ ⊂⍵
+			m	←	(0 = ⊃ a) ∧ ∧⌿ (∨⍀ ∘.=⍨ ⍳14) ∨ ∘.≢⍨ 1 ⊃ a
+			~∨⌿ m	:	(⌈⌿ ⊃a) ⍬ ⍺ ⍵
+			(1 = +⌿ m) ∧ 2 > m ⍳ 1	:	0 (,⊂ 0 (N∆ ⍳ 'F') 1 0 ⍪¨ 1 +@0 ⊃⊃ m ⌿ 1 ⊃ a) ⍺ ⍵
+			z	←	⍪⌿↑ (⊂ 0 (N∆ ⍳ 'F') ¯1 0), ({1 (N∆ ⍳ 'F') ⍵ 0}¨ 1 + m ⌿ ⍳14) ⍪¨ (2 +@0 ⊃)¨ m ⌿ 1 ⊃ a 
 					0 (,⊂z) ⍺ ⍵}
-	Fn	← {	ns	←	n z ⌿⍨ m ← {(Fm ⍵) ∧ ¯1 ∊⍨ k ⍵} z ← ⊃⍪/ ⍵ ⋄ 0 = ≢ns : 0 (,⊂z) ⍺ ''
- 			p	←	⍺∘Fa¨ ns ⋄ 0 < c ← ⌈/ ⊃¨p : c ⍬ ⍺ ⍵
- 					0 (⍪/ (⊂ 0 4 ⍴ ⍬) ,⍨ p {⍵ ((d +∘⊃ ⊣), 1 ↓⍤1 ⊢) ⊃⍪/ 1 ⊃ ⍺}¨at{m} ↓z) ⍺ ''}
+	Fn	← {	ns	←	(n z) ⌿⍨ m ← (Fm ∧ ¯1 ∊⍨ k) ⊢ z ← ⍪⌿↑⍵ ⋄ 0 = ≢ns : 0 (,⊂z) ⍺ ''
+			r	←	↓⍉↑ ⍺∘Fa¨ ns ⋄ 0 < c ← ⌈⌿⊃r : c ⍬ ⍺ ⍵
+			z	←	(⊂¨¨ z) ((⊃⍪⌿) ⊣@{m})¨⍨ ↓ (m ⌿ p z) +@0 ⍉↑ ⊃¨ 1 ⊃ r
+ 					0 (,⊂z) ⍺ ''}
 	Pfe	← {⍺ (rpar _s Fex _s lpar) ⍵}
-	Bfn	← rbrc Blrp lbrc _as ('F' new ¯1 ,∘⊂∘⌽ 1 ↓ ¯1 ↓ ⊢)
-	Fnp	← Prim _o (1 Var 'f') _o Sfn _o Bfn _o Pfe
+	Bfn	← rbrc Blrp lbrc _as {0 (N∆ ⍳ 'F') ¯1 (,⊂⌽ 1 ↓ ¯1 ↓ ⍵)}
+	Fnp	← Prim _o (1 Var) _o Sfn _o Bfn _o Pfe
 	Mop	← {⍺ ((mop _as P) _s Afx _as (1 O)) ⍵}
 	Dop1	← {⍺ ((dop1 _as P) _s Afx _as (2 O∘⌽)) ⍵}
 	Dop2	← {⍺ (Atom _s (dop2 _as P) _s Afx _as (2 O∘⌽)) ⍵}
 	Dop3	← (dop3 _as P) _s Atom _as (2 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (1 O))
 	Bop	← {⍺ (rbrk _s Ex _s lbrk _s (_yes _as {P ,'['}) _s Afx _as (2 O∘⌽)) ⍵}
-	Afx	← Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⊃wrap/∘⌽)) _o Dop2 _o Bop
-	Trn	← {⍺ (Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt)) ⍵} _as ('t' F∘⌽)
-	Bind	← {⍺ (gets _s (name _as ⌽) _env (⍺⍺{(⊃⌽⍵) ⍺⍺ ⍪ ⍺}) _as (⍵⍵ new 'b', ⊢)) ⍵}
-	Asgn	← gets _s Brk _s (name _as ⌽ _t (0 = Vt) _as ('a' V∘,∘⊃)) _as ('a' E∘⌽)
-	Fex	← Afx _s (Trn _opt) _s (1 Bind 'F' _any) _as (⊃wrap/∘⌽)
+	Afx	← Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/ ⍳∘≢ +@0 ⍉∘↑∘⌽)) _o Dop2 _o Bop
+	Trn	← {⍺ (Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt)) ⍵} _as (3 F∘⌽)
+	Bind	← {⍺ (gets _s (name _as ⌽) _env (⊣ ⍪¨⍨ ⍺⍺ ,⍨∘⊂ ⊢) _as (0 (N∆ ⍳ 'B') ⍺⍺ ,∘⊂ ⊢)) ⍵}
+	Asgn	← gets _s Brk _s (name _as ⌽ _t (0 = Vt) _as (0 V∘,∘⊃)) _as (4 E∘⌽)
+	Fex	← Afx _s (Trn _opt) _s (1 Bind _any) _as (⍪/ ⍳∘≢ +@0 ⍉∘↑∘⌽)
 	App	← Afx _s (Idx _o Atom _s (dop2 _not) _opt) _as {(≢⍵) E ⌽⍵}
-	Ex	← Idx _o Atom _s {⍺ (0 Bind 'E' _o Asgn _o App _s ∇ _opt) ⍵} _as (⊃wrap/∘⌽)
+	Ex	← Idx _o Atom _s {⍺ (0 Bind _o Asgn _o App _s ∇ _opt) ⍵} _as (⍪/ ⍳∘≢ +@0 ⍉∘↑∘⌽)
 	Gex	← Ex _s grd _s Ex _as (G∘⌽)
 	Nlrp	← sep _o eot Slrp (lbrc Blrp rbrc)
 	Stmts	← {⍺ (sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot) ⍵}
 	Ns	← nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as M
-	ps	← {0 ≠ ⊃ c a e r ← (0 2 ⍴ ⍬) Ns ∊{⍵ /⍨ ∧\ '⍝' ≠ ⍵}¨⍵ ,¨ ⎕UCS 10 : ⎕SIGNAL c ⋄ (⊃a) e}
+	ps	← {	0 ≠ ⊃ c a e r ← ⍬ ⍬ Ns ∊{⍵ /⍨ ∧\ '⍝' ≠ ⍵}¨⍵ ,¨ ⎕UCS 10 : ⎕SIGNAL c
+			(↓ s ⍳@3 ↑⊃a) e (s ← 0 (,'⍵') (,'⍺') '⍺⍺' '⍵⍵' (⊣, n ~ ⊣) ⊃a)}
 
 	scp	← (+⍀ Fm) ⊢∘⊂⌸ ⊢
 	prf	← ((≢ ↑ ¯1 ↓ ⊢ (⌿⍨) 0 ≠ ⊢)⍤1 ↑∘r) ⊢
