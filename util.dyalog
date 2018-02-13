@@ -57,10 +57,6 @@ split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
 ##.UT.run './tests'
 ∇
 
-∇LBT
-#.LOAD ⋄ BUILD ⋄ TEST
-∇
-
 test←{##.UT.(print_passed print_summary)←1
  ##.UT.run './tests/',⍵,'_tests.dyalog'}
 
