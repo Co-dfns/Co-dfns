@@ -370,7 +370,7 @@ rth ← {⊃,/ (⊂nl) ,¨⍨ 2 ↓¨ ¯2 ↓ c ↓⍨ 1 + (⊂'rth') ⍳⍨ 3 �
 ⍝
 ⍝ S{U f=3;U n;U x=0;wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 ⍝ S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};
-⍝ S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])(V);V(*er)(V*);}*ws;V*p[4];};
+⍝ S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
 ⍝ S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
 ⍝ EXPORT I DyalogGetInterpreterFunctions(dwa*p){
 ⍝  if(p)dwafns=p;else R 0;if(dwafns->z<sizeof(S dwa))R 16;R 0;}
@@ -1034,7 +1034,7 @@ rth ← {⊃,/ (⊂nl) ,¨⍨ 2 ↓¨ ¯2 ↓ c ↓⍨ 1 + (⊂'rth') ⍳⍨ 3 �
 ⍝ EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}
 ⍝ EXPORT V frea(A*a){delete a;}
 ⍝ EXPORT V exarray(lp*d,A*a){cpad(d,*a);}
-⍝ EXPORT V afsync(V){sync();}
+⍝ EXPORT V afsync(){sync();}
 ⍝ EXPORT Window *w_new(char *k){R new Window(k);}
 ⍝ EXPORT I w_close(Window*w){R w->close();}
 ⍝ EXPORT V w_del(Window*w){delete w;}
