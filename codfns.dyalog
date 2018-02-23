@@ -57,7 +57,7 @@ opsys	← {⍵ ⊃⍨ 'Win' 'Lin' 'Mac' ⍳ ⊂ 3 ↑ ⊃ '.' ⎕WG 'APLVersion'
 	vsc1	← {' && cd "', (⊃ ⎕CMD 'echo %CD%'), '" && cl ', (vsco ⍵), '/fast "', ⍵, '.cpp" '}
 	vsc2	← {(vslo ⍵), '/OUT:"', ⍵, '.dll" > "', ⍵, '.log""'}
 	vsc	← {⎕CMD ('%comspec% /C ', vsc0, vsc1, vsc2) ⍵}
-f∆ ← 'ptknrsgvyeld' ⋄ N∆ ← 'ABEFOGLMNPVZ'
+f∆ ← 'ptknrsgvyeld' ⋄ N∆ ← 'ABEFGLMNOPVZ'
 ⎕FX∘⍉∘⍪¨ f∆ ,¨ '←{'∘,¨ (⍕¨ ⍳≢f∆) ,¨ ⊂'⊃⍵}'
 ⎕FX∘⍉∘⍪¨ N∆ ,¨ 'm←{'∘,¨ (⍕¨ ⍳≢N∆) ,¨ ⊂'=t⍵}'
 ⎕FX∘⍉∘⍪¨ 'GLM' ,¨ '←{⍪/(0 '∘,¨ (⍕¨ N∆ ⍳ 'GLM') ,¨ ⊂' 0 0),1+@0⍉↑⍵}'
@@ -190,90 +190,35 @@ Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 	Stmts	← {⍺ (sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot) ⍵}
 	Ns	← nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as M
 	ps	← {	0 ≠ ⊃ c a e r ← ⍬ ⍬ Ns ∊{⍵ /⍨ ∧\ '⍝' ≠ ⍵}¨⍵ ,¨ ⎕UCS 10 : ⎕SIGNAL c
-			(↓ s ⍳@3 ↑⊃a) e (s ← 0 (,'⍵') (,'⍺') '⍺⍺' '⍵⍵' (⊣, n ~ ⊣) ⊃a)}
+			(↓ s (-⍳)@3 ↑⊃a) e (s ← 0 (,'⍵') (,'⍺') '⍺⍺' '⍵⍵' (⊣, n ~ ⊣) ⊃a)}
 
-	scp	← (+⍀ Fm) ⊢∘⊂⌸ ⊢
-	prf	← ((≢ ↑ ¯1 ↓ ⊢ (⌿⍨) 0 ≠ ⊢)⍤1 ↑∘r) ⊢
-	blg	← {⍺ ← ⊢ ⋄ ⍺((prf (⌈/ (⍳∘≢⊢) ×⍤1 (1 ↓ ⊣) ∧.(= ∨ 0 = ⊢)∘⍉ ⊢) ⍺⍺ (⌿∘↑) r)⌷⍤0 2 ⍵⍵ (⌿⍨) ⍺⍺)⍵}
-	enc	← ⊂ ⊣ ,∘⊃ ((⊣, '_', ⊢)/ (⊂''), (⍕¨ ⊢ (/⍨) 0 ≠ ⊢))
-	veo	← ∪ ((⊂'%u'), (,¨prims), ⊣) ~⍨∘{⊃,/ {⊂⍣(1 ≡ ≡⍵) ⊢ ⍵}¨⍵} ¯1 ↓ ⊢ (/⍨) (∧/¨ 0 ≠ ((⊃ 0 ⍴ ⊢)¨⊢))
-	ndo	← {⍺ ← ⊢ ⋄ m ⊃∘(⊂, ⊢)¨ ⍺∘⍺⍺¨¨ ⍵ ⊃∘(,∘⊂⍨⊂)¨⍨ m ← 1 ≥ ≡¨⍵}
-	n2f	← (⊃,/) ((1 = ≡) ⊃ ,∘⊂⍨∘⊂)¨
-	rn	← ⊢ ,∘↓ (1 + d) ↑⍤¯1 (+⍀ d ∘.=∘⍳ 1 + (⌈/ 0, d))
-	rd	← ⊢ , (+/ ↑∘r ∧.(= ∨ 0 = ⊢)∘⍉∘↑∘r ⊢ (⌿⍨) Fm ∧ 1 ∊⍨ k)
-	df	← ⊢ (⌿⍨) (+\ 1 = d) (~ ⊣ ∊ ⊣ (/⍨) (1 = d) ∧ (~ 'b' ∊⍨ k) ∧ Om ∨ Fm) ⊢
-	dua	← ((~Gm) ∧ Fm ∨ ↓∘prf ∊ r∘Fs) (⊣ (⍀∘⊢) (d (⌿⍨) ⊣) (0, 1 ↓ (¯1 ⌽ ⊢) ∧ ⊣ = ¯1 ⌽ ⊣) ⊣ (⌿∘⊢) 0 ∊⍨ n) ⊢
-	du	← ⊢ (⌿⍨∘~) dua ∨∘(∨/) (prf ∧.(= ∨ 0 = ⊢)∘⍉ prf (⌿⍨) dua) ∧ ↑∘r ∧.≥∘⍉ dua (⌿∘⊢) ↑∘r × 0 = prf
-	lfh	← (0 ≠ 1 ⌷ ⊣) ⊃ (⊂∘⍉∘⍪ 0 'M' 0 '', 0 ,⍨ (⊂⊣)) ,∘⊂∘⍉∘⍪ 1 'F' 1, ('fn' enc ⊣), (⊂⊣), 5 ↓∘, 1 ↑ ⊢
-	lfn	← (d, 'Of', 3 ↓ ⊢)⍤1 at (Fm ∧ 'b' ∊⍨ k) (d, 'Vf', ('fn' enc∘⊃ r), 4 ↓ ⊢)⍤1 at (Fm ∧ 1 ∊⍨ k)
-	lf	← (⊃⍪/) (1, 1 ↓ Fm ∧ 1 ∊⍨ k) blg (↑r) (⊂ lfh ⍪∘(((⊢ - (⊃ - 2 ⌊ ⊃)) d), 1 ↓⍤1 ⊢) lfn)⌸ 1 ↓ ⊢
-	dn	← ((0 ∊⍨ n) ∧ (Am ∧ 'v' ∊⍨ k) ∨ Om ∧ 'f' ∊⍨ k) ((~⊣) (⌿∘⊢) (d - ¯1 ⌽ ⊣), 1 ↓[1] ⊢) ⊢
-	mrep	← (1 + ⊃), 'P' 0 (,'⊢'), (⊂'') ,⍨ ¯1 ↓ 4 ↓∘, 1 ↑ ⊢
-	mreu	← ⊃, 'E' 'u', (⊂'') ,⍨ ¯1 ↓ 3 ↓∘, 1 ↑ ⊢
-	mre	← (⊃⍪/) (-∘⊃ Vm ∨ Am)∘⊃∘⌽ (↓, (((⊢ ⍴⍨ (≢⍉) ,⍨ ≢ × 2 < ≢) mreu ⍪ mrep ⍪ (1 + d), 1 ↓⍤1 ⊢)¨ ↑)) ⊢
-	mrs	← ⊢ ⊂[0]⍨ 1, 1 ↓ d = 1 +∘⊃ d
-	mrk	← (-∘(+/ ∧\)∘⌽ Lm) (↑ ⍪⍨∘(mre (mre mrs)¨ at (Gm∘(⊃⍪/) 1 ↑¨ ⊢)∘mrs) ↓) ⊢
-	mr	← (⊃⍪/) ((1 ↑ ⊢), (mrk¨ 1 ↓ ⊢))∘scp
-	ur	← ((2 ↑ ⊢), 1, ('um' enc∘⊃ r), 4 ↓ ⊢)⍤1 at (Em ∧ 'u' ∊⍨ k)
-	rt	← ⊢, (∨\ Fm) + (+⌿ prf ∧.(= ∨ 0 = ⊣)∘⍉⍨∘↑∘r Ms ⍪ Gs) - Fm
-	nm	← ((3 ↑ ⊢), ('fe' enc∘⊃ r), 4 ↓ ⊢)⍤1 at ((0 ∊⍨ n) ∧ Em ∨ Om ∨ Am)
-	lgg	← (⍪/ 1 ↓ ⊢) ⍪∘⊃⍨ ⊣ (((¯1 + d), 2 ,⍨ t, k, n, r ,∘⍪ s) ⍪ ⊣ ⍪ 3, 'V', 'a', 3 (↓⍤1) 1 ↑ ⊢)∘⊃ 1 ↑ ⊢
-	lg	← (⊃⍪/) ⊢ ((⊂ ⊣ (⌿⍨∘~) (∨\ ⊢)), (((1 ↑ ⊢) lgg ⊢ ⊂[0]⍨ d = 1 + ⊃)¨ ⊂[0]⍨)) Gm ∧ 1 ⌽ Em
-	fet	← (d, 'V' 0, 3 ↓ ⊢)⍤1 at (0, 1 ↓ Em ∨ Om ∨ Am) (d, 'Av', 3 ↓ ⊢)⍤1 at (Em ∧ 'b' ∊⍨ k)
-	fee	← (⍪/⌽) (Mm ∨ Em ∨ Om ∨ Am) blg ⊢ ((⊃∘⌽ ⊢) (⊂ (d - -⍨∘ ⊃), 1 ↓⍤1 ⊢)∘fet ⊣ ⍪ ¯1 ↓⍤1 ⊢)⌸ ⊃ ,⍨ 1 ↓ ⊢
-	fe	← (⊃⍪/) (+⍀ d ≤ g) (⊂ (⊢ ↑⍨ 1 =∘≢ ⊢) ⍪∘⊃∘fee ⊢)⌸ ⊢
-	can	← (+\ Am ∨ Om) ((, 1 ↑ ⊢) ,∘(⊂ (¯1 + 2 ⌊ ≢) ⊃ (⊂∘⊂ ⊃), ⊂)∘n 1 ↓ ⊢)⌸ ⊢
-	cas	← (¯1 ⌽ (Am ∨ Om) ∧ 'vf' ∊⍨ k) ∨ (↓prf) ∊∘r ⊢ (⌿⍨) Am ∧ 'n' ∊⍨ k
-	ca	← (can ⊢ (⌿⍨) cas ∨ Am ∨ Om ∧ 'f' ∊⍨ k) ⊣ at (Am ∨ Om ∧ 'f' ∊⍨ k) ⍬ ,∘⊂⍨ ⊢ (⌿⍨∘~) cas
-	lj	← (⊃⍪/) (1 ↑ scp), ((⊢ ⍪ 2 'L' 0 0, 2 '' ,⍨ ¯2 ↓ 4 ↓∘, 1 ↑ ⊢)¨ 1 ↓ scp)
-	sd	← (⊃⍪/) (1 ↑ scp), (n Fs) (d, 'Vf', (⊂⊣), 4 ↓ ⊢)⍤1 at ((⊂, '∇') ∊⍨ n)¨ 1 ↓ scp
-	inm	← ∨⌿ ¯1 (⌽ ∨ ⊢) 1 2 (⌽ ∨ ⊢) (¯1 ¯2 ⌽ Em ∧[1] 1 2 ∘.= k) ∧⍤1 Vm ∧ n ∊∘n Fs
-	inp	← (Em ∧ ⊣) ∨ 1, 2 ≠/ ⊣
-	inza	← (1 ↑ 1 ↓ ⊣) (⌿⍨∘≢) at ((⊂, '⍺') ∊⍨ n) (¯1 ↑ ⊣) (⌿⍨∘≢) at ((⊂, '⍵') ∊⍨ n) ⊢
-	inz	← (1 ↑ ⊣) (d, t, k, 3 ↓⍤1 (⌿⍨∘≢)) at (0 ,⍨ 2 ≠/∘⌽ (∨\∘⌽ Em)) inza
-	inn	← (3 ↑⍤1 ⊢), ((⊣ ⍴¨⍨ 1 + 0 ⌈ (⌈/∘n Gs)) (('fe' ≡ 2 ↑ ⊢) ⊃ (⊂⊢) ,∘⊂ 'fe', (⍕⊣), 2 ↓ ⊢)¨ n), (4 ↓⍤1 ⊢)
-	ins	← ⊣ (d, t, k, ((1000 × 1 + ⊣) + 1 + n + (⌈/n)), 4 ↓⍤1 ⊢) at (Lm ∨ Gm) inn
-	inr	← 1 ,∘⍪ ⊢ inz¨ (⍳∘≢ ⊢) ins¨ ((⊃∘n¨ ⊣) ⍳ ((⊃ n (⌿⍨) Vm ∧ 'f' ∊⍨ k)¨ ⊢)) ⊃¨ (⊂ 1 ↓¨ ⊣) ,∘⊂¨ ⊢
-	in	← (⊃⍪/)∘(⊢/) (1 ↓ scp) inr∘((0 ⍴ ⊂ 0 8 ⍴ 0), ⊢/) at (⊣/) inm ((⊃¨ inp ⊂ Em ∧ ⊣) ,∘⍪ inp ⊂[0] ⊢) ⊢
-
-
-	pcc	← (⊂ ⊢ (⌿⍨) Am ∨ Om ∧ 'f' ∊⍨ k)∘((⍳∘∪⍨ n) ⌷⍤0 2 (1 ⌈ ≢) ↑ ⊢)∘(⊃⍪⌿)∘⌽ (⌿∘⊢)
-	pcb	← ((, ∧.(= ∨ 0 = ⊣)∘⍪)⍤2 1⍨∘↑∘r Ms ⍪ Fs) pcc⍤1 ((⊢ (⌿⍨) (d = g) ∧ Am ∨ Em ∨ Om)¨ scp)
-	pcv	← (d, 'V', ('af' ⊃¨∘⊂⍨ Om), (⊃¨v), r, s, (⊂⍬) ,⍨∘⍪ g) at (Om ∨ Am ∧ 'v' ∊⍨ k)
-	pc	← (⊃⍪/) pcb {(pcv d (⊣, 1 ↓⍤1 ⊢)(⍺ ↑⍨ 1 ⌈ ≢⍺) ⌷⍤0 2⍨ (n ⍺) ⍳ n) at (Vm ∧ (n ⍺) ∊⍨ n) ⍵}¨ scp
-	da	← ⊢ (⌿⍨∘~) (Am ∧ d = g) ∨ (0 ,⍨ 2 ∧/ Lm) ∨ (Lm ∧ ¯1 ⌽ Am ∧ d = g) ∨ Om ∧ ('f' ∊⍨ k) ∧ 1 ≠ d
-	fce	← (⊃∘n Ps) {⊂⍎ ' ⍵' ,⍨ (≢⍵) ⊃ '' (⍺, '⊃') ('⊃', ⍺, '/')} (v As)
-	fcm	← (∧/ Em ∨ Am ∨ Pm) ∧∘~ 'ui' ∊⍨∘⊃∘⊃ k
-	fc	← ((⊃⍪/) (((d, 'An', 3 ↓ ¯1 ↓ ,) 1 ↑ ⊢), fce)¨ at (fcm¨)) ('MFOEL' ∊⍨ t) ⊂[0] ⊢
-	ce	← (+\ Fm ∨ Gm ∨ Em ∨ Om ∨ Lm) ((¯1 ↓∘, 1 ↑ ⊢) ,∘⊂ (⊃∘v 1 ↑ ⊢) ,∘(Am ⊃¨∘↓ n ,∘⍪∘n2f v) 1 ↓ ⊢)⌸ ⊢
-	ll	← (⊢ (⌿⍨) 1 ⌽ Lm) (((⊂⊂'%l') ,∘⊂¨∘n ⊣) ,⍨ ¯1 ↓⍤1 ⊢) at Lm ⊢
-	fv	← (⊃⍪/) (((1 ↓ ⊢) ⍪⍨ (, 1 7 ↑ ⊢) ,∘⊂∘n ¯1 ↑ ⊢)¨ scp)
-	nv	← (¯1 ↓⍤1 ⊢), (¯1 ⊖ ≢ ⊃ ⊢ ,∘⊂⍨ (⊂'%u' '%f' '%u'), (⊂ '%u' '%i', ⊢), (⊂ (⊂'%u'), ⊢))¨∘v
-	lt	← (⊂⍬) ,⍨ ⊢
-	val	← (n ⍳∘∪ n) ,¨ ⊢ (⊢ + (≢⊣) × 0 = ⊢) (⌈/ (⍳≢) ×⍤1 (∪n) ∘.((⊂⊣) ∊ ⊢) (n2f¨ v))
-	vag	← ∧∘~∘(∘.=⍨∘⍳ ≢)⍨ (∘.(((1 ⌷ ⊢) > 0 ⌷ ⊣) ∧ (0 ⌷ ⊢) < 1 ⌷ ⊣)⍨ val)
-	vae	← (∪n) (⊣ ,⍤0 ⊣ (⌷⍨⍤1 0)∘⊃ ((⊢ ,∘⊃ (⍳∘≢ ⊣) ~ ⊢ (⌿⍨) (≢⊢) ↑ ⊣)/∘⌽ (⊂⍬) ,∘↓ ⊢)) vag
-	vac	← (((0 ⌷∘⍉ ⊣) ⍳∘⊂ ⊢) ⊃ (1 ⌷∘⍉ ⊣) ,∘⊂ ⊢) ndo
-	va	← ((⊃⍪/) (1 ↑ ⊢), (((vae Es) (d, t, k, (⊣ vac n), r, s, g, y ,∘⍪⍨ (⊂⊣) vac¨ v) ⊢)¨ 1 ↓ ⊢)) scp
-	avb	← {(((,¨'⍺⍵') ↑⍨ 1 ↓ ⍴) ⍪ ⊢) ⍺ ⌷⍨⍤2 0 ⊢ ⍺⍺ ⍳ ⍺⍺ ∩⍨ (↓ (⌽ 1 +∘⍳ 0 ⍳⍨ ⊢) ((≢⊢) ↑ ↑)⍤0 1 ⊢) ⊃ r ⍵}
-	avi	← ¯1 0 + (⍴⊣) ⊤ (,⊣) ⍳ (⊂⊢)
-	avh	← {⊂ ⍵, (n⍵) ((⍺⍺ (⍵⍵ avb) ⍵) {⍺⍺ avi ndo (⊂⍺), ⍵})¨ v ⍵}
-	av	← (⊃⍪/) (+\ Fm) {⍺((⍺ ((∪∘⌽ (0 ⍴ ⊂''), n) Es)⌸ ⍵) avh (r (1 ↑ ⍵) ⍪ Fs ⍵))⌸ ⍵} ⊢
-	rlf	← (⌽ ↓ (((1 ⊃ ⊣) ∪ ⊢ ~ 0 ⌷ ⊣)/∘⌽ (⊂⍬), ↑)⍤0 1⍨ 1 +∘⍳ ≢) (⊖ 1 ⊖ n ,⍤0 (⊂⊣) veo¨ v)
-	rl	← ⊢ ,∘(⊃,/) (⊂∘n Os ⍪ Fs) rlf¨ scp
-	vc	← (⊃⍪/) (((1 ↓ ⊢) ⍪⍨ (1 7 ↑ ⊢), (≢∘∪∘n Es), 1 ¯3 ↑ ⊢)¨ scp)
-	eff	← (⊃⍪/) ⊢ (((⊂∘⍉∘⍪ d, 'Fe', 3 ↓ ,) 1 ↑ ⊣), 1 ↓ ⊢) (d =∘⊃ d) ⊂[0] ⊢
-	ef	← (Fm ∧ ¯1 =∘×∘⊃¨ y) ((⊃⍪/) (⊂ ⊢ (⌿⍨)∘~ (∨\ ⊣)), (eff¨ ⊂[0])) ⊢
-	ifn	← 1 'F' 0 'Init' ⍬ 0 1, (4 ⍴ 0) ⍬ ⍬ ,⍨ ⊢
-	if	← (1 ↑ ⊢) ⍪ (⊢ (⌿⍨) Om ∧ 1 = d) ⍪ ((⊢ wrap⍨∘ifn∘≢∘∪ n) ⊢ (⌿⍨) Em ∧ 1 = d) ⍪ (∨\ Fm) (⌿∘⊢) ⊢
-	fgz	← (1 ↑ ⊢) ⍪ (((¯1 + d), 1 ↓⍤1 ⊢) 1 ↓ ⊢) ⍪ 2, 'G', 1, 3 ↓⍤1 (¯1 ↑ ¯1 ↓⍤1 ⊢) ,∘n 1 ↑ ⊢
-	fg	← (⊃⍪/) (fgz¨ at (Gm∘(⊃⍪/) 1 ↑¨ ⊢) ⊢ ⊂[0]⍨ d = 2 ⌊ g)
-	fft	← (, 1 ↑ ⊢) (1 'Z', (2 ↓ ¯5 ↓ ⊣), (v⊣), n, y, (⊂ 2 ↑∘,∘⊃∘⊃ e), l) (¯1 ↑ Es)
-	ff	← ((⊃⍪/) (1 ↑ ⊢), (((1 ↑ ⊢) ⍪ (((¯1 + d), 1 ↓⍤1 ⊢) 1 ↓ ⊢) ⍪ fft)¨ 1 ↓ ⊢)) scp
-	fd	← (1 ↑ ⊢) ⍪ ((1, 'Fd', 3 ↓ ⊢)⍤1 Fs) ⍪ 1 ↓ ⊢
-	tta	← (fc∘da∘(pc⍣≡)∘mr⍣≡)∘in⍣3∘sd∘lj∘ca∘fe∘lg∘nm∘rt∘mr∘dn∘lf∘du∘df∘rd∘rn
-	tt	← fd∘ff∘fg∘if∘ef∘vc∘rl∘av∘va∘lt∘nv∘fv∘ll∘ce∘ur∘tta
-
+⍝ A  B  E  F  G  L  M  N  O  P  V  Z
+⍝ 0  1  2  3  4  5  6  7  8  9 10 11
+tt ← {p t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ W ← {⍵ ⌿ ⍳≢⍵} ⋄ U ← {⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ D ← {⍵ (⊢ - 1 + ⍸) ⍺ I (⍳≢⍺) ~ ⍵}
+		⍝ Drop unnamed top-level functions
+		⍝ Box mutated names
+		⍝ Resolve names
+	bi	← W t = 1 ⊣ vi ← W t = 10
+	gf	← (p I@(3 ≠ t I ⊢) ⊢)⍣≡ p I ⊢
+	bv	← (⊢ I bi ⍳ ⊢)@(1 = t I ⊢)⍣≡ p (⊢ I∘⍋ I) W 1 = t I p
+	gn	← {(i I b) (gf f I b) ((bv I v I a)@a ⊢ n) ⊣ a b ← W¨ {⍵(~⍵)} (≢bi) > v ← 1 ⍳⍤1⍨ ⊃ (n I i) f ∧.(∘.=) ⍺ ⊣ i f n ← ⍵}
+	n	← bi D⍨ 2 ⊃ (n I bi) (gf bi) gn⍣{0 = ≢⊃⍺} vi (gf vi) n
+	p	← bi D⍨ I@(1 = t I ⊢)⍣≡⍨ p
+	t	← t I nb ⊣ k ← k I ⊢ nb ← W t ≠ 1
+		⍝ Lift guard test expressions
+		⍝ Flatten expressions
+		⍝ Label jumps
+		⍝ Lift functions
+		⍝ Inline functions
+		⍝ Propagate constants
+		⍝ Fold constants
+		⍝ Dead, useless code elimination
+		⍝ Allocate frames
+		⍝ Create Init function
+		⍝ Declare functions
+		⍝ Sort AST
+		⍝ Flatten AST
+}
 
 	E1	← {'fn' gcl ((⊂ n ,∘⊃ v), e, y) ⍵}
 	E2	← {'fn' gcl ((⊂ n ,∘⊃ v), e, y) ⍵}
