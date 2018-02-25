@@ -194,13 +194,14 @@ Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt ← {p t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ W ← {⍵ ⌿ ⍳≢⍵} ⋄ U ← {⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ D ← {⍵ (⊢ - 1 + ⍸) ⍺ I (⍳≢⍺) ~ ⍵}
+tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ W ← {⍵ ⌿ ⍳≢⍵} ⋄ U ← {⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ D ← {⍵ (⊢ - 1 + ⍸) ⍺ I (⍳≢⍺) ~ ⍵}
+	_	← 2 {0 ⊣ l[⍵[i]] ← ⍵[¯1 + i ← (0, 2 =⌿ i) ⌿ ⍳≢ i] ⊣ p[⍵] ← ⍺[i ← ⍺ ⍸ ⍵]} ⌿ ⊢∘⊂⌸ d ⊣ p ← l ← ⍳≢ d
 		⍝ Drop unnamed top-level functions
 		⍝ Box mutated names
 		⍝ Resolve names
-	bi	← W t = 1 ⊣ vi ← W t = 10
-	gf	← (p I@(3 ≠ t I ⊢) ⊢)⍣≡ p I ⊢
-	bv	← (⊢ I bi ⍳ ⊢)@(1 = t I ⊢)⍣≡ p (⊢ I∘⍋ I) W 1 = t I p
+	bi	← (t = 1) ⌿ ⍳≢ t ⊣ vi ← (t = 10) ⌿ ⍳≢ t
+	gf	← {p I@{3 ≠ t[⍵]}⍣≡ p[⍵]}
+	bv	← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} (1 = t[p]) ⌿ ⍳≢ p
 	gn	← {(i I b) (gf f I b) ((bv I v I a)@a ⊢ n) ⊣ a b ← W¨ {⍵(~⍵)} (≢bi) > v ← 1 ⍳⍤1⍨ ⊃ (n I i) f ∧.(∘.=) ⍺ ⊣ i f n ← ⍵}
 	n	← bi D⍨ 2 ⊃ (n I bi) (gf bi) gn⍣{0 = ≢⊃⍺} vi (gf vi) n
 	p	← bi D⍨ I@(1 = t I ⊢)⍣≡⍨ p
