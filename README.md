@@ -1,4 +1,4 @@
-﻿# Co-dfns Compiler
+# Co-dfns Compiler
 
 The Co-dfns project aims to provide a high-performance, high-reliability
 compiler for a parallel extension of the Dyalog dfns programming language.
@@ -177,6 +177,8 @@ technology:
   programmable, easy to use image processing
 
 ## Publications
+
+[User Command for Co-dfns](https://youtu.be/BBaCKf7Od6I)
 
 [APL Patterns vs. Anti-Patterns @ FunctionalConf 2017](https://youtu.be/v7Mt0GYHU9A)
 
