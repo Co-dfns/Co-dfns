@@ -194,18 +194,18 @@ Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ W ← {⍵ ⌿ ⍳≢⍵} ⋄ U ← {⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ D ← {⍵ (⊢ - 1 + ⍸) ⍺ I (⍳≢⍺) ~ ⍵}
-	_	← 2 {0 ⊣ l[⍵[i]] ← ⍵[¯1 + i ← (0, 2 =⌿ i) ⌿ ⍳≢ i] ⊣ p[⍵] ← ⍺[i ← ⍺ ⍸ ⍵]} ⌿ ⊢∘⊂⌸ d ⊣ p ← l ← ⍳≢ d
+tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ U ← {⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ D ← {⍵ (⊢ - 1 + ⍸) ⍺[(⍳≢⍺) ~ ⍵]}
+	_	← 2 {0 ⊣ l[⍵[i]] ← ⍵[¯1 + i ← ⍸ 0, 2 =⌿ i] ⊣ p[⍵] ← ⍺[i ← ⍺ ⍸ ⍵]} ⌿ ⊢∘⊂⌸ d ⊣ p ← l ← ⍳≢ d
 		⍝ Drop unnamed top-level functions
 		⍝ Box mutated names
 		⍝ Resolve names
-	bi	← (t = 1) ⌿ ⍳≢ t ⊣ vi ← (t = 10) ⌿ ⍳≢ t
+	bi	← ⍸ t = 1 ⊣ vi ← ⍸ t = 10 
 	gf	← {p I@{3 ≠ t[⍵]}⍣≡ p[⍵]}
-	bv	← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} (1 = t[p]) ⌿ ⍳≢ p
-	gn	← {(i I b) (gf f I b) ((bv I v I a)@a ⊢ n) ⊣ a b ← W¨ {⍵(~⍵)} (≢bi) > v ← 1 ⍳⍤1⍨ ⊃ (n I i) f ∧.(∘.=) ⍺ ⊣ i f n ← ⍵}
-	n	← bi D⍨ 2 ⊃ (n I bi) (gf bi) gn⍣{0 = ≢⊃⍺} vi (gf vi) n
-	p	← bi D⍨ I@(1 = t I ⊢)⍣≡⍨ p
-	t	← t I nb ⊣ k ← k I ⊢ nb ← W t ≠ 1
+	bv	← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} ⍸ 1 = t[p] 
+	gn	← {(i[b]) ((gf f)[b]) ⊣ n[a] ← bv[v[a]] ⊣ a b ← ⍸¨ {⍵(~⍵)} (≢bi) > v ← 1 ⍳⍤1⍨ ⊃ n[i] f ∧.(∘.=) ⍺ ⊣ i f ← ⍵}
+	n	← bi D⍨ n ⊣ (n[bi]) (gf bi) gn⍣{0 = ≢⊃⍺} vi (gf vi)
+	p	← bi D⍨ I@{1 = t[⍵]}⍣≡⍨ p
+	t	← t[nb] ⊣ k ← k[nb ← ⍸ t ≠ 1]
 		⍝ Lift guard test expressions
 		⍝ Flatten expressions
 		⍝ Label jumps
