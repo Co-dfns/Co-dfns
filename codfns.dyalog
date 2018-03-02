@@ -199,13 +199,13 @@ tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ U ← {⍵⍵⍣¯1 ⍺
 		⍝ Drop unnamed top-level functions
 		⍝ Box mutated names
 		⍝ Resolve names
-	bi	← ⍸ t = 1 ⊣ vi ← ⍸ t = 10 
+	bi	← ⍸ t = 1 
 	gf	← {p I@{3 ≠ t[⍵]}⍣≡ p[⍵]}
 	bv	← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} ⍸ 1 = t[p] 
-	gn	← {(i[b]) ((gf f)[b]) ⊣ n[a] ← bv[v[a]] ⊣ a b ← ⍸¨ {⍵(~⍵)} (≢bi) > v ← 1 ⍳⍤1⍨ ⊃ n[i] f ∧.(∘.=) ⍺ ⊣ i f ← ⍵}
-	n	← bi D⍨ n ⊣ (n[bi]) (gf bi) gn⍣{0 = ≢⊃⍺} vi (gf vi)
+	gn	← {i (gf f) I¨ ⊂ (⍳≢i) ~ a ⊣ n[i[a ← ⌊ v ÷ ≢bv]] ← bv[(≢bv) | v] ⊣ v ← ⍸,⊃ n[i] f ∧.(∘.=) ⍺ ⊣ i f ← ⍵}
+	n	← bi D⍨ n ⊣ (n[bi]) (gf bi) gn⍣{0 = ≢⊃⍺} {⍵ (gf ⍵)} ⍸ (n < ¯4) ∧ t = 10
 	p	← bi D⍨ I@{1 = t[⍵]}⍣≡⍨ p 
-	l	← bi D⍨ {bv[bi ⍳ ⍵]}@{1 = t[⍵]} l[bi[i]]@bv[i] ⊢ l ⊣ i ← ⍸ l[bi] ≠ bi
+	l	← bi D⍨ {bv[bi ⍳ ⍵]}@{1 = t[⍵]} l[bi[i]]@(bv[i]) ⊢ l ⊣ i ← ⍸ l[bi] ≠ bi
 	t	← t[nb] ⊣ k ← k[nb ← ⍸ t ≠ 1]
 		⍝ Lift guard test expressions
 		⍝ Flatten expressions
@@ -220,6 +220,7 @@ tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ U ← {⍵⍵⍣¯1 ⍺
 		⍝ Declare functions
 		⍝ Sort AST
 		⍝ Flatten AST
+		p t k n l
 }
 
 	E1	← {'fn' gcl ((⊂ n ,∘⊃ v), e, y) ⍵}
