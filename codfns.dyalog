@@ -194,19 +194,20 @@ Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ U ← {⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ D ← {⍵ (⊢ - 1 + ⍸) ⍺[(⍳≢⍺) ~ ⍵]}
+tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺}
 	_	← 2 {0 ⊣ l[⍵[i]] ← ⍵[¯1 + i ← ⍸ 0, 2 =⌿ i] ⊣ p[⍵] ← ⍺[i ← ⍺ ⍸ ⍵]} ⌿ ⊢∘⊂⌸ d ⊣ p ← l ← ⍳≢ d
 		⍝ Drop unnamed top-level functions
 		⍝ Box mutated names
 		⍝ Resolve names
-	bi	← ⍸ t = 1 
 	gf	← {p I@{3 ≠ t[⍵]}⍣≡ p[⍵]}
-	bv	← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} ⍸ 1 = t[p] 
-	gn	← {i (gf f) I¨ ⊂ (⍳≢i) ~ a ⊣ n[i[a ← ⌊ v ÷ ≢bv]] ← bv[(≢bv) | v] ⊣ v ← ⍸,⊃ n[i] f ∧.(∘.=) ⍺ ⊣ i f ← ⍵}
-	n	← bi D⍨ n ⊣ (n[bi]) (gf bi) gn⍣{0 = ≢⊃⍺} {⍵ (gf ⍵)} ⍸ (n < ¯4) ∧ t = 10
-	p	← bi D⍨ I@{1 = t[⍵]}⍣≡⍨ p 
-	l	← bi D⍨ {bv[bi ⍳ ⍵]}@{1 = t[⍵]} l[bi[i]]@(bv[i]) ⊢ l ⊣ i ← ⍸ l[bi] ≠ bi
-	t	← t[nb] ⊣ k ← k[nb ← ⍸ t ≠ 1]
+	bi	← ⍸ t = 1 ⋄ bv ← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} ⍸ 1 = t[p]
+	xi	← ⍸ 3 ≠ t[bf ← gf bi] ⋄ xv ← bv[xi] ⋄ xn ← n[bi[xi]]
+	gn	← { i f ← ⍵ ⋄ v ← ⍸,⊃ n[i] f ∧.(∘.=) n[bi] bf ⋄ n[i[a ← ⌊ v ÷ ≢bv]] ← bv[(≢bv) | v] ⋄ i (gf f) I¨ ⊂ (⍳≢i) ~ a}
+	_	← gn⍣{0 = ≢⊃⍺} {⍵ (gf ⍵)} ⍸ (n < ¯4) ∧ t = 10
+	n	← bi (⊢ - 1 + ⍸) n[nb ← ⍸ t ≠ 1]
+	p	← bi (⊢ - 1 + ⍸) p I@{1 = t[⍵]}⍣≡ p[nb]
+	l	← bi (⊢ - 1 + ⍸) nb I⍨ {bv[bi ⍳ ⍵]}@{1 = t[⍵]} l[bi[i]]@(bv[i]) ⊢ l ⊣ i ← ⍸ l[bi] ≠ bi
+	t	← t[nb] ⋄ k ← k[nb] ⋄ xv ← xv - 1 + bi ⍸ xv
 		⍝ Lift guard test expressions
 		⍝ Flatten expressions
 		⍝ Label jumps
@@ -220,7 +221,7 @@ tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ U ← {⍵⍵⍣¯1 ⍺
 		⍝ Declare functions
 		⍝ Sort AST
 		⍝ Flatten AST
-		p t k n l
+		p t k n l xn xv
 }
 
 	E1	← {'fn' gcl ((⊂ n ,∘⊃ v), e, y) ⍵}
