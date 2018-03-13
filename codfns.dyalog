@@ -209,6 +209,9 @@ tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺}
 	l	← bi (⊢ - 1 + ⍸) nb I⍨ {bv[bi ⍳ ⍵]}@{1 = t[⍵]} l[bi[i]]@(bv[i]) ⊢ l ⊣ i ← ⍸ l[bi] ≠ bi
 	t	← t[nb] ⋄ k ← k[nb] ⋄ xv ← xv - 1 + bi ⍸ xv
 		⍝ Lift guard test expressions
+	l[gr]	← gr ← ⍸ (l[l] = ⍳≢l) ∧ gm ← 4 = t[p] ⋄ n[p[gv]] ← n[gv ← ⍸ (10 = t) ∧ gk ← gm ∧ l = ⍳≢l]
+	p[ge]	← p[pg ← p[ge ← ⍸ gk ∧ 2 = t]] ⋄ l[ge] ← l[pg] ⋄ l[pg] ← n[pg] ← ge
+	gn	← ⍸ ~ gk ∧ 10 = t ⋄ p l n xv ← (⊢ - 1 + gv ⍸ ⊢)¨ (p[gn]) (l[gn]) (n[gn]) xv ⋄ t ← t[gn] ⋄ k ← k[gn]
 		⍝ Flatten expressions
 		⍝ Label jumps
 		⍝ Lift functions
