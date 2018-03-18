@@ -194,16 +194,15 @@ Help	← {'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
 
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺}
+tt ← {d t k n ← ⍵ ⋄ I ← {(⊂⍵) ⌷ ⍺} ⋄ U ← {⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} 
 	_	← 2 {0 ⊣ l[⍵[i]] ← ⍵[¯1 + i ← ⍸ 0, 2 =⌿ i] ⊣ p[⍵] ← ⍺[i ← ⍺ ⍸ ⍵]} ⌿ ⊢∘⊂⌸ d ⊣ p ← l ← ⍳≢ d
 		⍝ Drop unnamed top-level functions
 		⍝ Box mutated names
 		⍝ Resolve names
-	gf	← {p I@{3 ≠ t[⍵]}⍣≡ p[⍵]}
-	bi	← ⍸ t = 1 ⋄ bv ← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} ⍸ 1 = t[p]
-	xi	← ⍸ 3 ≠ t[bf ← gf bi] ⋄ xv ← bv[xi] ⋄ xn ← n[bi[xi]]
-	gn	← { i f ← ⍵ ⋄ v ← ⍸,⊃ n[i] f ∧.(∘.=) n[bi] bf ⋄ n[i[a ← ⌊ v ÷ ≢bv]] ← bv[(≢bv) | v] ⋄ i (gf f) I¨ ⊂ (⍳≢i) ~ a}
-	_	← gn⍣{0 = ≢⊃⍺} {⍵ (gf ⍵)} ⍸ (n < ¯4) ∧ t = 10
+	gf	← {p I@{3 ≠ t[⍵]}⍣≡ p[⍵]}@1 U ⍉
+	bi	← ⍸ t = 1 ⋄ bv ← {⍵[bi ⍳ ⍵]}@{1 = t[⍵]}⍣≡ {⍵[⍋p[⍵]]} ⍸ 1 = t[p] ⋄ bid ← (bt ← gf n[bi], ⍪ bi)∘⍳ n∘I@0 U ⍉
+	xi	← ⍸ 3 ≠ t[bt[;1]] ⋄ xv ← bv[xi] ⋄ xn ← n[bi[xi]]
+	_	← {x ← ⍸ ~m ← (≢bi) = v ← bid ⍵ ⋄ n[⍵[x;0]] ← bv[v[x]] ⋄ gf m ⌿ ⍵}⍣{0 = ≢⍺} gf ,⍨ ⍪ ⍸ (n < ¯4) ∧ t = 10
 	n	← bi (⊢ - 1 + ⍸) n[nb ← ⍸ t ≠ 1]
 	p	← bi (⊢ - 1 + ⍸) p I@{1 = t[⍵]}⍣≡ p[nb]
 	l	← bi (⊢ - 1 + ⍸) nb I⍨ {bv[bi ⍳ ⍵]}@{1 = t[⍵]} l[bi[i]]@(bv[i]) ⊢ l ⊣ i ← ⍸ l[bi] ≠ bi
