@@ -1,0 +1,35 @@
+﻿⍝ A  B  E  F  G  L  M  N  O  P  V  Z
+⍝ 0  1  2  3  4  5  6  7  8  9 10 11
+tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} 
+ _←2{0⊣l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
+ ⍝ Drop unnamed top-level functions
+ ⍝ Export Top-level Bindings
+ ⍝ Normalize Module → Function
+ ⍝ Resolve names
+ gf←{p I@{3≠t[⍵]}⍣≡p[⍵]}@1 U ⍉
+ bi←⍸t=1 ⋄ bv←{⍵[bi⍳⍵]}@{1=t[⍵]}⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
+ bid←(≢bi)-1+((bt←⊖gfn[bi],⍪bi)∘⍳n∘I@0 U ⍉)
+ xi←⍸3≠t[⊖bt[;1]] ⋄ xv←bv[xi] ⋄ xn←n[bi[xi]]
+ _←{x←⍸~m←0>v←bid⍵ ⋄ n[⍵[x;0]]←bv[v[x]] ⋄ gf m⌿⍵}⍣{0=≢⍺}gf,⍨⍪⍸(n<¯4)∧t=10
+ n←bi(⊢-1+⍸)n[nb←⍸t≠1]
+ p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb]
+ l←bi(⊢-1+⍸)nb I⍨{bv[bi⍳⍵]}@{1=t[⍵]}l[bi[i]]@(bv[i])⊢l⊣i←⍸l[bi]≠bi
+ t←t[nb] ⋄ k←k[nb] ⋄ xv←xv-1+bi⍸xv
+ p t k n l
+ ⍝ Lift guard test expressions
+ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
+ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
+ gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨(p[gn])(l[gn])(n[gn])xv ⋄ t←t[gn] ⋄ k←k[gn]
+ ⍝ Flatten expressions
+ ⍝ Label jumps
+ ⍝ Lift functions
+ ⍝ Inline functions
+ ⍝ Propagate constants
+ ⍝ Fold constants
+ ⍝ Dead, useless code elimination
+ ⍝ Allocate frames
+ ⍝ Create Init function
+ ⍝ Declare functions
+ ⍝ Sort AST
+ ⍝ Flatten AST
+ p t k n l}

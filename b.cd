@@ -1,0 +1,29 @@
+﻿Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
+ w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
+LoadImage←{⍺←1 ⋄ ⍉loadimg ⍬ ⍵ ⍺}
+SaveImage←{⍺←'image.png' ⋄ saveimg (⍉⍵) ⍺}
+Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠2⊃3↑⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img (⍉⍵) ⍺}
+Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot (⍉⍵) ⍺}
+Histogram←{⍵⊣w_hist ⍵,⍺}
+∇r←List
+ r←⎕NS¨1⍴⊂⍬ ⋄ r.Name←,¨⊂'Compile' ⋄ r.Group←⊂'CODFNS' 
+ r[0].Desc←'Compile an object using Co-dfns'
+ r.Parse←⊂'2S -af=cpu opencl cuda ' 
+∇
+Convert←{⍺(⎕SE.SALT.Load '[SALT]/lib/NStoScript -noname').ntgennscode ⍵}
+Run←{C I←⍵ ⋄ in out←I.Arguments ⋄ AF∆LIB∘←I.af ''⊃⍨I.af≡0
+ S←(⊂':Namespace ',out),2↓0 0 0 out Convert ##.THIS.⍎in
+ 'Compile'≡C:{}{_←{##.THIS.⍎out,'←⍵'}out Fix S⊣⎕EX'##.THIS.',out
+  ⎕CMD'copy "%CUDA_PATH%\nvvm\bin\nvvm64*" /Y'/⍨(I.af≡'cuda')∧opsys 1 0 0}⍬}
+Help←{'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
+∇Z←Gfx∆Init S
+ 'w_new'⎕NA'P ',(S,soext⍬),'|w_new <C[]'
+ 'w_close'⎕NA'I ',(S,soext ⍬),'|w_close P'
+ 'w_del'⎕NA(S,soext⍬),'|w_del P'
+ 'w_img'⎕NA(S,soext⍬),'|w_img <PP P'
+ 'w_plot'⎕NA(S,soext⍬),'|w_plot <PP P'
+ 'w_hist'⎕NA(S,soext⍬),'|w_hist <PP F8 F8 P'
+ 'loadimg'⎕NA(S,soext⍬),'|loadimg >PP <C[] I'
+ 'saveimg'⎕NA(S,soext⍬),'|saveimg <PP <C[]'
+ Z ← 0 0 ⍴ ⍬
+∇
