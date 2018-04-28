@@ -119,8 +119,6 @@ aaww←aws _s (('⍺⍺'_tk) _o ('⍵⍵'_tk)) _s aws
 sep←aws _s (('⋄',⎕UCS 10 13) _set _ign) _s aws
 nss←awslf _s (':Namespace'_tk) _s aws _s (name _opt) _s awslf _ign
 nse←awslf _s (':EndNamespace'_tk) _s awslf _ign
-
-
 Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {P⌽∊⍵}
 Prim←prim _as P
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
