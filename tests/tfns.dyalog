@@ -70,7 +70,7 @@ depth∆Run←{≡⍵}
 
 drop∆R1←{⍺↓⍵} ⋄ drop∆R2←{(1⌷⍺)↓⍵} ⋄ drop∆R3←{5↓⍵}
 
-dupnames∆Run←{y←⍵ ⋄ x←⍵+⍵ ⋄ y←⍵×⍵ ⋄ y+y}
+dupnames∆Run←{y←⍵ ⋄ x←⍵+y ⋄ y←⍵×⍵ ⋄ y+y}
 
 each∆R1←{⍺-¨⍵} ⋄ each∆R2←{⍺{⍺-⍵}¨⍵} ⋄ each∆R3←{{÷⍵}¨⍵} ⋄ each∆R4←{÷¨⍵}
 each∆R5←{×¨⍵} ⋄ each∆R6←{{×⍵}¨⍵} ⋄ each∆R7←{X←0⌷⍵ ⋄ ⍺{⍺-⍵}¨X}
