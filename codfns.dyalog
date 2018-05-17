@@ -165,29 +165,32 @@ ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:�
  (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,n~⊣)⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} 
+tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ gf←{p I@{3≠t[⍵]}⍣≡p[⍵]}
  _←2{0⊣l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
- ⍝ Drop unnamed top-level functions
- ⍝ Export Top-level Bindings
- ⍝ Normalize Module → Function
- ⍝ Resolve names
- gf←{p I@{3≠t[⍵]}⍣≡p[⍵]}@1 U ⍉
- bi←⍸t=1 ⋄ bv←{⍵[bi⍳⍵]}@{1=t[⍵]}⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
- bid←(≢bi)-1+((bt←⊖gfn[bi],⍪bi)∘⍳n∘I@0 U ⍉)
- xi←⍸3≠t[⊖bt[;1]] ⋄ xv←bv[xi] ⋄ xn←n[bi[xi]]
- _←{x←⍸~m←0>v←bid⍵ ⋄ n[⍵[x;0]]←bv[v[x]] ⋄ gf m⌿⍵}⍣{0=≢⍺}gf,⍨⍪⍸(n<¯4)∧t=10
- n←bi(⊢-1+⍸)n[nb←⍸t≠1]
- p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb]
- l←bi(⊢-1+⍸)nb I⍨{bv[bi⍳⍵]}@{1=t[⍵]}l[bi[i]]@(bv[i])⊢l⊣i←⍸l[bi]≠bi
- t←t[nb] ⋄ k←k[nb] ⋄ xv←xv-1+bi⍸xv
- p t k n l
+ ⍝ Convert Modules to Functions
+ bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍵[bi⍳⍵]}@{1⊃t[⍵]}⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
+ p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb←⍸t≠1]
+ l←bi(⊢-1+⍸)nb I⍨{bv[bi⍳⍵]}@{1=t[⍵]}l[bi[i]]@(bv[i])⊢l⊣i←⍸bi≠l[bi]
+ t k n x I¨←⊂nb ⋄ bv←bi(⊢-1+⍸)bv ⋄ bx,←x⌿⍨3=t ⋄ bo←⍋bx ⋄ bx I←bo
+ bn bv←I∘bo¨(≢bo)↑¨bn bv
+ ⍝ Lift Functions
+ _←{lv←⍵⌿⍨~fm←¯4>n[⍵] ⋄ fv←fm⌿⍵ ⋄ rv←bv I n[fv]{⍵-⍺ 0∧.≠⊂bn[⍵]}⍣≡bx⍸x[fv]
+  n[lv,←fv[ri]]←rv[ri←⍸0≠rv] ⋄ fv⌿⍨←0=rv
+  _←{i⊣t[i]←2⊣k[i]←6⊣i←⍸(t[p]=2)∧t=8}⍣{0=≢⍺}⍬
+  _←{i←(t[p[⍵]]=2)∧t[n[⍵]]=8)/⍵ ⋄ m←n[i]∘.=p ⋄ s←≢p
+   x,←x I p,←p∆←i⌿⍨+/m ⋄ n,←c←s|⍳,m ⋄ t,←10⍴⍨≢c ⋄ l,←s+(p∆,⍪c)⍳p∆,⍪l[c]
+   k,←(∊∘3 8 9∨k[c]∧10=⊢)t[c] ⋄ t[i]←2 ⋄ k[i]←6 ⋄ n[i]←0 ⋄ s+⍳≢c}⍣{0=≢⍺}lv
+  _←{⍵⌿10=t[n[⍵]]⊣n[⍵]←n[n[⍵]]}⍣{0=≢⍺}⍸10=t[n[lv]]
+  _←{t[⍵]←9⊣k[⍵]←0⊣n[⍵]←n[n[⍵]]}⍸t[n[lv]]=9
+  {t[⍵]←2⊣k[⍵]←5}lv⌿⍨(t[p[lv]]=2)∧k[lv]=1 ⋄ e5←⍸(t=2)∧k=5 ⋄ m←n[e5]∘.=gv fv
+  c←fv[(≢fv)|⍸,m] ⋄ s←≢p ⋄ x,←x I p,←e5⌿⍨+/m ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
+  k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍸t=10
  ⍝ Lift guard test expressions
  l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
  p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
  gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨(p[gn])(l[gn])(n[gn])xv ⋄ t←t[gn] ⋄ k←k[gn]
  ⍝ Flatten expressions
  ⍝ Label jumps
- ⍝ Lift functions
  ⍝ Inline functions
  ⍝ Propagate constants
  ⍝ Fold constants
