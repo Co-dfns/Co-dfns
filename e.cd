@@ -3,7 +3,7 @@
 tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ gf←{p I@{3≠t[⍵]}⍣≡p[⍵]}
  _←2{0⊣l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
  ⍝ Convert Modules to Functions
- bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍵[bi⍳⍵]}@{1⊃t[⍵]}⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
+ bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍺[bi⍳⍵]}@{1=t[⍵]}⍨⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
  p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb←⍸t≠1]
  l←bi(⊢-1+⍸)nb I⍨{bv[bi⍳⍵]}@{1=t[⍵]}l[bi[i]]@(bv[i])⊢l⊣i←⍸bi≠l[bi]
  t k n x I¨←⊂nb ⋄ bv←bi(⊢-1+⍸)bv ⋄ bx,←x⌿⍨3=t ⋄ bo←⍋bx ⋄ bx I←bo
