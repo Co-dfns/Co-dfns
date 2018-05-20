@@ -171,8 +171,7 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵
  bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍺[bi⍳⍵]}@{1=t[⍵]}⍨⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
  p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb←⍸t≠1]
  l←bi(⊢-1+⍸)nb I⍨{bv[bi⍳⍵]}@{1=t[⍵]}l[bi[i]]@(bv[i])⊢l⊣i←⍸bi≠l[bi]
- t k n x I¨←⊂nb ⋄ bv←bi(⊢-1+⍸)bv ⋄ bx,←x⌿⍨3=t ⋄ bo←⍋bx ⋄ bx I←bo
- bn bv←I∘bo¨(≢bo)↑¨bn bv
+ t k n x I¨←⊂nb ⋄ bx,←x⌿⍨3=t ⋄ bn bv bx←(⊂⍋bx)I⍨¨(≢bx)↑¨bn(bi(⊢-1+⍸)bv)bx
  ⍝ Lift Functions
  _←{lv←⍵⌿⍨~fm←¯4>n[⍵] ⋄ fv←fm⌿⍵ ⋄ rv←bv I n[fv]{⍵-⍺ 0∧.≠⊂bn[⍵]}⍣≡bx⍸x[fv]
   n[lv,←fv[ri]]←rv[ri←⍸0≠rv] ⋄ fv⌿⍨←0=rv
