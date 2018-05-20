@@ -51,6 +51,9 @@ to be implemented in the near future.
 * Nested namespaces are not supported
 * 128-bit floating point values are not supported
 * Variant (⍠) is not supported
+* Mixed arrays are not supported
+* Stencil (⌺) is not supported
+* Inverse (⍣¯1) is not supported
 
 ## Fundamental Limitations
 
