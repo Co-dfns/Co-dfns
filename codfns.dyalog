@@ -173,7 +173,7 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵
  l←bi(⊢-1+⍸)nb I⍨{bv[bi⍳⍵]}@{1=t[⍵]}l[bi[i]]@(bv[i])⊢l⊣i←⍸bi≠l[bi]
  t k n x I¨←⊂nb ⋄ bx,←x⌿⍨3=t ⋄ bn bv bx←(⊂⍋bx)I⍨¨(≢bx)↑¨bn(bi(⊢-1+⍸)bv)bx
  ⍝ Lift Functions
- _←{lv←⍵⌿⍨~fm←¯4>n[⍵] ⋄ fv←fm⌿⍵ ⋄ rv←bv I n[fv]{⍵-⍺ 0∧.≠⊂bn[⍵]}⍣≡bx⍸x[fv]
+ _←{lv←⍵⌿⍨0≤n[⍵] ⋄ fv←⍵⌿⍨¯4>n[⍵] ⋄ rv←bv I n[fv]{⍵-⍺ 0∧.≠⊂bn[⍵]}⍣≡bx⍸x[fv]
   n[lv,←fv[ri]]←rv[ri←⍸0≠rv] ⋄ fv⌿⍨←0=rv
   _←{i⊣t[i]←2⊣k[i]←6⊣i←⍸(t[p]=2)∧t=8}⍣{0=≢⍺}⍬
   _←{i←(t[p[⍵]]=2)∧t[n[⍵]]=8)/⍵ ⋄ m←n[i]∘.=p ⋄ s←≢p
@@ -199,7 +199,7 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵
  ⍝ Declare functions
  ⍝ Sort AST
  ⍝ Flatten AST
- p t k n l}
+ p l t k n x}
 E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}

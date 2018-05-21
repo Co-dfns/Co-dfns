@@ -34,4 +34,4 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵
  ⍝ Declare functions
  ⍝ Sort AST
  ⍝ Flatten AST
- p t k n l}
+ p l t k n x}
