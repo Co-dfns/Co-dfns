@@ -179,22 +179,23 @@ ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:�
 tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ gf←{p I@{3≠t[⍵]}⍣≡p[⍵]}
  _←2{0⊣l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
  ⍝ Convert Modules to Functions
+ ⍝ Compute Execution Order
  bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍺[bi⍳⍵]}@{1=t[⍵]}⍨⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
  p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb←⍸t≠1]
  l←bi(⊢-1+⍸)nb I⍨{bv[bi⍳⍵]}@{1=t[⍵]}l[bi[i]]@(bv[i])⊢l⊣i←⍸bi≠l[bi]
  t k n x I¨←⊂nb ⋄ bx,←x⌿⍨3=t ⋄ bn bv bx←(⊂⍋bx)I⍨¨(≢bx)↑¨bn(bi(⊢-1+⍸)bv)bx
  ⍝ Lift Functions
- _←{lv←⍵⌿⍨0≤n[⍵] ⋄ fv←⍵⌿⍨¯4>n[⍵] ⋄ rv←bv I n[fv]{⍵-⍺ 0∧.≠⊂bn[⍵]}⍣≡bx⍸x[fv]
-  n[lv,←fv[ri]]←rv[ri←⍸0≠rv] ⋄ fv⌿⍨←0=rv
+ _←{lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4}
+  n[i](⊢+⊣×0=⊢)←bv[n[i]{⍵-⊃⍺ 0∧.≠⊂bn[⍵]}⍣≡bx⍸x[i←fv 1]]
   _←{i⊣t[i]←2⊣k[i]←6⊣i←⍸(t[p]=2)∧t=8}⍣{0=≢⍺}⍬
-  _←{i←(t[p[⍵]]=2)∧t[n[⍵]]=8)/⍵ ⋄ m←n[i]∘.=p ⋄ s←≢p
-   x,←x I p,←p∆←i⌿⍨+/m ⋄ n,←c←s|⍳,m ⋄ t,←10⍴⍨≢c ⋄ l,←s+(p∆,⍪c)⍳p∆,⍪l[c]
-   k,←(∊∘3 8 9∨k[c]∧10=⊢)t[c] ⋄ t[i]←2 ⋄ k[i]←6 ⋄ n[i]←0 ⋄ s+⍳≢c}⍣{0=≢⍺}lv
-  _←{⍵⌿10=t[n[⍵]]⊣n[⍵]←n[n[⍵]]}⍣{0=≢⍺}⍸10=t[n[lv]]
-  _←{t[⍵]←9⊣k[⍵]←0⊣n[⍵]←n[n[⍵]]}⍸t[n[lv]]=9
-  {t[⍵]←2⊣k[⍵]←5}lv⌿⍨(t[p[lv]]=2)∧k[lv]=1 ⋄ e5←⍸(t=2)∧k=5 ⋄ m←n[e5]∘.=gv fv
-  c←fv[(≢fv)|⍸,m] ⋄ s←≢p ⋄ x,←x I p,←e5⌿⍨+/m ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
-  k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍸t=10
+  _←{_←{⍵⌿10=t[n[⍵]]⊣n[⍵]←n[n[⍵]]}⍣{0=≢⍺}⍸10=t[n[⍵]]
+   i←(t[p[i]]=2)∧t[n[i]]=8)⌿i←⍵⌿⍨0≤n[⍵] ⋄ m←n[i]∘.=p ⋄ s←≢p
+   x,←x I p,←p∆←i⌿⍨+/m ⋄ n,←c←s|⍸,m ⋄ t,←10⍴⍨≢c ⋄ l,←s+(p∆,⍪c)⍳p∆,⍪l[c]
+   k,←(∊∘3 8 9∨k[c]∧10=⊢)t[c] ⋄ t[i]←2 ⋄ k[i]←6 ⋄ n[i]←0 ⋄ s+⍳≢c}⍣{0=≢⍺}lv 1
+  _←{t[⍵]←9⊣k[⍵]←0⊣n[⍵]←n[n[⍵]]}⍸t[n[lv 1]]=9
+  {t[⍵]←2⊣k[⍵]←5}lv(t[p]=2)∧k=1 ⋄ e5←⍸(t=2)∧k=5 ⋄ m←n[e5]∘.=gf⊢i←fv 1
+  c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x I p,←e5⌿⍨+/m ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
+  k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍬
  ⍝ Lift guard test expressions
  l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
  p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
