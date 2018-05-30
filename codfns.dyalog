@@ -175,7 +175,11 @@ ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:�
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
 tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵} ⋄ gf←{p I@{3≠t[⍵]}⍣≡p[⍵]}
  _←2{0⊣l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
- ⍝ Convert Modules to Functions
+ i←⍸p=⍳s←≢p ⋄ l,←⍸(p[p]=p)∧~l∊⍨⍳≢l ⋄ p,←i ⋄ t k n,←2 0 0⍴⍨¨⊂≢i
+ j←⍸(t=1)∧(k=1)∧p[p]=p ⋄ g←p[j]⊢∘⊂⌸v←s+(≢i)+⍳≢j ⋄ p,←(≢¨g)⌿s+⍳≢i
+ l,←∊(⊃,¯1↓⊢)¨g ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←n[j] ⋄ t[⍸p=⍳≢p]←3
+ ⎕←p
+ p t k n l
  ⍝ Compute Execution Order
  bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍺[bi⍳⍵]}@{1=t[⍵]}⍨⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
  p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb←⍸t≠1]
