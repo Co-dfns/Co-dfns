@@ -1,14 +1,23 @@
 ﻿⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ gf←{p I@{3≠t[⍵]}⍣≡p[⍵]}
- _←2{0⊣l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⎕WA⊢⊢∘⊂⌸d⊣p←l←⍳≢d
+tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} 
+ _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⎕WA⊢⊢∘⊂⌸d⊣p←l←⍳≢d
  i←⍸p=⍳s←≢p ⋄ l,←⍸(p≠⍳≢p)∧(p[p]=p)∧~l(⊢∊⊣(⌿⍨)≠)⍳≢l
  p,←i ⋄ t k n,←2 0 0⍴⍨¨⊂≢i ⋄ j←⍸(t=1)∧(k=1)∧p[p]=p ⋄ g←p[j]⊢∘⊂⌸v←s+(≢i)+⍳≢j
  p,←(≢¨g)⌿s+⍳≢i ⋄ l,←∊(⊃,¯1↓⊢)¨g ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←n[j] ⋄ t[⍸p=⍳≢p]←3
- i←(⍸(l=⍳s)∧p[p]=p),j←⍸(t=3)∧p≠⍳s←≢p ⋄ l←l×(~m)+(m←x<≢j)×x←j⍳l
+ i←(⍸(l=⍳s)∧(p≠⍳≢p)∧p[p]=p),j←⍸(t=3)∧p≠⍳s←≢p ⋄ l←(l×~m)+(m←x<≢j)×s+x←j⍳l
  p l(⊣,I)←⊂j ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←j
- p[j]←(-≢j)↑p∆←p I⍣≡i ⋄ _←p∆{l[⍵]←¯1⌽(⊃,⊢)1↓⍵}⌸i
- ⎕←(2 3 4 lb3(⊂p l t k n),#.(exports symbols))(dwh pp3) p l
+ p[j]←(-≢j)↑p∆←p I⍣≡i ⋄ l[∊0⌷⍉x]←∊1⌷⍉x←p∆{⍵(¯1⌽(⊃,⊢)1↓⍵)}⌸i
+ ⎕←(5 1 2 4 lb3(⊂p l t k n,⊂⍳≢p),#.(exports symbols))(dwh pp3) p l
+ p l t k n
+ z←¯1@(⊢=⍳∘≢)l
+ l∆←⊃{({(p[⍵]×~m)+(m←⍵∊z)×z⍳⍵}@(⍸((t[x]≠3)∧p[1⊃⍵]=x)∨~t[x]∊8,⍳5)⊢x)(x←⊃⍵)
+  }⍣≡2⍴⊂{⍵[⍋p[⍵]]}⍸(t[p]∊0 1 2 8)∧l=⍳≢l
+ i←⍸(t[p]≠3)∧t∊0 1 2 8 ⋄ p∆←p I@{3≠t[p[⍵]]}⍣≡j←⍸t∊0 1 2 8
+ l∆[x]←(lp×~m)+(m←px=lp←l[px←p∆[x]])×j[x←⍸t[l∆]=3]
+ l←(l×~m)+(m←x<≢i)×(s←≢p)+x←i⍳l ⋄ p l(⊣,I)←⊂i ⋄ t,←10⍴⍨≢i
+ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i ⋄ p[j]←p[p∆] ⋄ l[j]←l∆
+ ⍝ ⎕←(5 1 2 4 lb3(⊂p l t k n,⊂⍳≢p),#.(exports symbols))(dwh pp3) p l
  p l t k n
  bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍺[bi⍳⍵]}@{1=t[⍵]}⍨⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
  p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb←⍸t≠1]
@@ -22,13 +31,13 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ gf←{p I@{3≠t[⍵]}⍣≡p[�
    x,←x[p,←p∆←i⌿⍨+/m] ⋄ n,←c←s|⍸,m ⋄ t,←10⍴⍨≢c ⋄ l,←s+(p∆,⍪c)⍳p∆,⍪l[c]
    k,←(∊∘3 8 9∨k[c]∧10=⊢)t[c] ⋄ t[i]←2 ⋄ k[i]←6 ⋄ n[i]←0 ⋄ s+⍳≢c}⍣{0=≢⍺}lv 1
   _←{t[⍵]←9⊣k[⍵]←0⊣n[⍵]←n[n[⍵]]}⍸t[n[lv 1]]=9
-  {t[⍵]←2⊣k[⍵]←5}lv(t[p]=2)∧k=1 ⋄ e5←⍸(t=2)∧k=5 ⋄ m←n[e5]∘.=gf⊢i←fv 1
+  {t[⍵]←2⊣k[⍵]←5}lv(t[p]=2)∧k=1 ⋄ e5←⍸(t=2)∧k=5
+  m←n[e5]∘.=p I@{3≠t[⍵]}⍣≡p[i←fv 1]
   c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
   k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍬
  l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
  p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
  gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨(p[gn])(l[gn])(n[gn])xv ⋄ t←t[gn] ⋄ k←k[gn]
- ⍝ Flatten expressions
  ⍝ Label jumps
  ⍝ Inline functions
  ⍝ Propagate constants
@@ -39,4 +48,4 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ gf←{p I@{3≠t[⍵]}⍣≡p[�
  ⍝ Declare functions
  ⍝ Sort AST
  ⍝ Flatten AST
- p l t k n x}
+ p l t k n}
