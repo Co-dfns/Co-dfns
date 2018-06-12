@@ -180,19 +180,16 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸p=⍳s←≢p ⋄ l,←⍸(p≠⍳≢p)∧(p[p]=p)∧~l(⊢∊⊣(⌿⍨)≠)⍳≢l
  p,←i ⋄ t k n,←2 0 0⍴⍨¨⊂≢i ⋄ j←⍸(t=1)∧(k=1)∧p[p]=p ⋄ g←p[j]⊢∘⊂⌸v←s+(≢i)+⍳≢j
  p,←(≢¨g)⌿s+⍳≢i ⋄ l,←∊(⊃,¯1↓⊢)¨g ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←n[j] ⋄ t[⍸p=⍳≢p]←3
- i←(⍸(l=⍳s)∧(p≠⍳≢p)∧p[p]=p),j←⍸(t=3)∧p≠⍳s←≢p ⋄ l←(l×~m)+(m←x<≢j)×s+x←j⍳l
+ i←(⍸(l=⍳s)∧(p≠⍳≢p)∧p[p]=p),j←⍸(t=3)∧p≠⍳s←≢p ⋄ l←j(s+⍳)@{⍵∊j}l
  p l(⊣,I)←⊂j ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←j
  p[j]←(-≢j)↑p∆←p I⍣≡i ⋄ l[∊0⌷⍉x]←∊1⌷⍉x←p∆{⍵(¯1⌽(⊃,⊢)1↓⍵)}⌸i
  ⎕←(5 1 2 4 lb3(⊂p l t k n,⊂⍳≢p),#.(exports symbols))(dwh pp3) p l
- p l t k n
- z←¯1@(⊢=⍳∘≢)l
- l∆←⊃{({(p[⍵]×~m)+(m←⍵∊z)×z⍳⍵}@(⍸((t[x]≠3)∧p[1⊃⍵]=x)∨~t[x]∊8,⍳5)⊢x)(x←⊃⍵)
-  }⍣≡2⍴⊂{⍵[⍋p[⍵]]}⍸(t[p]∊0 1 2 8)∧l=⍳≢l
- i←⍸(t[p]≠3)∧t∊0 1 2 8 ⋄ p∆←p I@{3≠t[p[⍵]]}⍣≡j←⍸t∊0 1 2 8
- l∆[x]←(lp×~m)+(m←px=lp←l[px←p∆[x]])×j[x←⍸t[l∆]=3]
- l←(l×~m)+(m←x<≢i)×(s←≢p)+x←i⍳l ⋄ p l(⊣,I)←⊂i ⋄ t,←10⍴⍨≢i
- k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i ⋄ p[j]←p[p∆] ⋄ l[j]←l∆
- ⍝ ⎕←(5 1 2 4 lb3(⊂p l t k n,⊂⍳≢p),#.(exports symbols))(dwh pp3) p l
+ m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
+ l←i((≢p)+⍳)@{⍵∊i}l ⋄ net←{~t[⍵]∊8,⍳5} ⋄ up←p∘I@{(xw[⍵]=⍵)∧p[⍵]≠3}⍣≡
+ p,←p∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
+ l[∪p∆]←p∆⊢∘⊃⌸i ⋄ l[j]←{xw∘I∘up@net xw I@net⍣≡⍵}⍣≡xw[up⊢j←i~p∆]
+ p[i]←p I@{3≠t[⍵]}⍣≡p∆
+ ⎕←(5 1 2 4 lb3(⊂p l t k n,⊂⍳≢p),#.(exports symbols))(dwh pp3) p l
  p l t k n
  bi←⍸1=t ⋄ bn←n[bi] ⋄ bx←x[bi] ⋄ bv←{⍺[bi⍳⍵]}@{1=t[⍵]}⍨⍣≡{⍵[⍋p[⍵]]}⍸1=t[p]
  p←bi(⊢-1+⍸)p I@{1=t[⍵]}⍣≡p[nb←⍸t≠1]
