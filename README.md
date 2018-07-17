@@ -1,4 +1,4 @@
-# Co-dfns Compiler
+﻿# Co-dfns Compiler
 
 The Co-dfns project aims to provide a high-performance, high-reliability
 compiler for a parallel extension of the Dyalog dfns programming language.
@@ -151,7 +151,7 @@ software in order to use the compiler:
     * GCC (Linux)
     * Clang (Mac OS X)
 
-3. ArrayFire (3.5.1+)
+3. ArrayFire (3.6+)
 
 You should be able to find the appropriate ArrayFire installer included 
 in the release page for a given Co-dfns release. You can find the 
@@ -160,7 +160,7 @@ system here:
 
 http://arrayfire.org/docs/installing.htm
 
-4. [Optional] CUDA
+4. [Optional] CUDA 9.2+
 
 If you intend to use the CUDA backend with ArrayFire, you will need to have 
 CUDA installed. Please make sure that the version of CUDA that you install is 

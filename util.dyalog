@@ -44,25 +44,18 @@ utf8get←{
 
 split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
 
-∇BUILD
-⎕←'Building test functions...'
-⎕EX¨'#.tfns∆dya' '#.tfns∆cdf' ⋄ _←⎕WA
-#.tfns∆dya←#.⎕SE.SALT.Load'./tests/tfns -target=#'
-#.tfns∆cdf←'tfns_cdf'##.codfns.Fix ⎕SRC #.tfns∆dya
-∇
-
 ∇TEST
 ##.UT.print_passed←1
 ##.UT.print_summary←1
-##.UT.run './tests'
+##.UT.run './'
 ∇
 
 test←{##.UT.(print_passed print_summary)←1
- ##.UT.run './tests/',⍵,'_tests.dyalog'}
+ ##.UT.run './t',(1 0⍕(4⍴10)⊤⍵),'_tests.dyalog'}
 
-MK∆T1←{##.UT.expect←(⍎'##.tfns∆dya.',⍺⍺)⍵⍵ ⋄ (⍎'##.tfns∆cdf.',⍺⍺)⍵⍵}
-MK∆T2←{##.UT.expect←⊃(⍎'##.tfns∆dya.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'##.tfns∆cdf.',⍺⍺)/⍵⍵}
-MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'##.tfns∆dya.',fn)/⍵⍵ ⋄ cv←⊃(⍎'##.tfns∆cdf.',fn)/⍵⍵
+MK∆T1←{##.UT.expect←(⍎'##.t',⍺⍺)⍵⍵ ⋄ (⍎'##.c',⍺⍺)⍵⍵}
+MK∆T2←{##.UT.expect←⊃(⍎'##.t',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'##.c',⍺⍺)/⍵⍵}
+MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'##.t',fn)/⍵⍵ ⋄ cv←⊃(⍎'##.c',fn)/⍵⍵
  ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 
 :EndNamespace

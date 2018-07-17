@@ -5,7 +5,7 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
 VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊃a n←ps ⍵
+Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS ⍬}
 Fix←{⍺ MkNS ⍺ Cmp ⍵}
@@ -175,7 +175,7 @@ ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:�
  (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,n~⊣)⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺} 
+tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺} 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
  i←⍸p=⍳s←≢p ⋄ l,←⍸(p≠⍳≢p)∧(p[p]=p)∧~l(⊢∊⊣(⌿⍨)≠)⍳≢l
  p,←i ⋄ t k n,←2 0 0⍴⍨¨⊂≢i ⋄ j←⍸(t=1)∧(k=1)∧p[p]=p ⋄ g←p[j]⊢∘⊂⌸v←s+(≢i)+⍳≢j
@@ -188,16 +188,17 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  p,←p∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
  l[∪p∆]←p∆⊢∘⊃⌸i ⋄ l[j]←{xw∘I∘up@net xw I@net⍣≡⍵}⍣≡xw[up⊢j←i~p∆]
  p[i]←p I@{3≠t[⍵]}⍣≡p∆ ⋄ bv←I@{1=t[⍵]}⍣≡⍨n[i]@(p[i←⍸1=t[p]])⍳≢p
- ⎕←(5 2 4 lb3(⊂p l t k n,⊂⍳≢p),#.(exports symbols))(dwh pp3) p l
  _←{lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4} ⋄ bm←{(t[⍵]=1)∧n[⍵]=⍺}
   n[i](⊢+⊣×0=⊢)←bv[{⍵×n[i]bm ⍵}l I@{~n[i]bm ⍵}⍣≡l[p[i←fv 1]]]
   _←{⍵⌿10=t[n[⍵]]⊣n[⍵]←n[n[⍵]]}⍣{0=≢⍺}lv 10=t[0⌈n]
   i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]]
-  _←{s←≢p ⋄ h←≢¨c←(⊢∘⊂⌸p)[n[⍵]⍳⍨∪p] ⋄ c←∊c ⋄ p,←(p[p[⍵]]⍴⍨≢⍵),∆←h⌿s+⍳≢⍵
+  _←{s←≢p ⋄ h←≢¨c←(⊢∘⊂⌸p)[n[⍵]⍳⍨∪p] ⋄ c←∊c ⋄ p,←p[p[⍵]],∆←h⌿s+⍳≢⍵
    l,←(0⍴⍨≢⍵),s+(≢⍵)+(∆,⍪c)⍳∆,⍪l[c] ⋄ _←{l[⍺]←⍵}/p[⍵]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢⍵
    t,←t[c],⍨2⍴⍨≢⍵ ⋄ k,←k[c],⍨6⍴⍨≢⍵ ⋄ n,←n[c],⍨0⍴⍨≢⍵ ⋄ n[⍵]←s+⍳≢⍵
    lv(t[p]=2)∧t[0⌈n]=8}⍣{0=≢⍺}lv(t[p]=2)∧t[0⌈n]=8
-  {t[⍵]←2⊣k[⍵]←5}lv(t[p]=2)∧k=1 ⋄ e5←⍸(t=2)∧k=5
+  i←lv(t[p]=2)∧t[0⌈n]=3 ⋄ s←≢p ⋄ p,←p[p[i]] ⋄ t,←2⍴⍨≢i ⋄ k,←5⍴⍨≢i ⋄ n,←n[i]
+  l,←0⍴⍨≢i ⋄ _←{l[⍺]←⍵}/p[i]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢i ⋄ n[i]←s+⍳≢i
+  e5←⍸(t=2)∧k=5
   m←n[e5]∘.=p I@{3≠t[⍵]}⍣≡p[i←fv 1]
   c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
   k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍬
@@ -214,7 +215,7 @@ tt←{d t k n←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Declare functions
  ⍝ Sort AST
  ⍝ Flatten AST
- p l t k n}
+ (t k n)exp sym}
 E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}

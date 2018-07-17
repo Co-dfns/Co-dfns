@@ -4,7 +4,7 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
 VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊃a n←ps ⍵
+Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS ⍬}
 Fix←{⍺ MkNS ⍺ Cmp ⍵}
