@@ -27,9 +27,9 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
   m←n[e5]∘.=p I@{3≠t[⍵]}⍣≡p[i←fv 1]
   c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
   k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍬
- l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
- p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
- gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨(p[gn])(l[gn])(n[gn])xv ⋄ t←t[gn] ⋄ k←k[gn]
+ ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
+ ⍝ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
+ ⍝ gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨gn∘I¨p l n ⋄ t←t[gn] ⋄ k←k[gn]
  ⍝ Label jumps
  ⍝ Inline functions
  ⍝ Propagate constants

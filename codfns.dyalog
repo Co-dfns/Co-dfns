@@ -40,8 +40,8 @@ vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
 f∆ N∆←'ptknrsgvyeld' 'ABEFGLMNOPVZ'
 ⎕FX∘⍉∘⍪¨f∆,¨'←{'∘,¨(⍕¨⍳≢f∆),¨⊂'⊃⍵}'
 ⎕FX∘⍉∘⍪¨N∆,¨'m←{'∘,¨(⍕¨⍳≢N∆),¨⊂'=t⍵}'
-⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑⍵}'
-⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑⍵}'
+⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
 ⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '0(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
 ⎕FX∘⍉∘⍪¨N∆,¨⊂'s←{⍵}' ⋄ at←{⍺ ⍺⍺ ⍵⍵ ⍵} ⋄ new←{⍵} ⋄ wrap←{⍵}
 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
@@ -118,7 +118,7 @@ mop←'¨/⌿⍀\⍨'_set
 dop1←'.⍣∘'_set
 dop2←'⍤⍣∘'_set
 dop3←'∘'_set
-eot←aws _s {''≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
+eot←aws _s {(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs←digits _some
 odigs←digits _any
 int←aws _s digs _s (him _opt) _s aws
@@ -127,7 +127,8 @@ name←aws _s (alpha _o (digits _some _s alpha) _some) _s aws
 aw←aws _s ('⍺⍵'_set) _s aws
 aaww←aws _s (('⍺⍺'_tk) _o ('⍵⍵'_tk)) _s aws
 sep←aws _s (('⋄',⎕UCS 10 13) _set _ign) _s aws
-nss←awslf _s (':Namespace'_tk) _s aws _s (name _opt) _s awslf _ign
+nssn←alpha _s (alpha _o digits _any)
+nss←awslf _s (':Namespace'_tk) _s aws _s (nssn _opt) _s awslf _ign
 nse←awslf _s (':EndNamespace'_tk) _s awslf _ign
 Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {P⌽∊⍵}
 Prim←prim _as P
@@ -148,7 +149,7 @@ Fa←{e←(⊂'⍵⍵' '⍺⍺','⍺⍵')∘,∘⊂¨↓⍉¯1+3 3 2 2⊤(6 4 4�
  (1=+⌿m)∧2>m⍳1:0(,⊂0(N∆⍳'F')1 0⍪¨1+@0⊃⊃m⌿1⊃a)⍺ ⍵
  z←⍪⌿↑(⊂0(N∆⍳'F')¯1 0),({1(N∆⍳'F')⍵ 0}¨1+m⌿⍳14)⍪¨(2+@0⊃)¨m⌿1⊃a 
  0(,⊂z)⍺ ⍵}
-Fn←{ns←(n z)⌿⍨m←(Fm∧¯1∊⍨k)⊢z←⍪⌿↑⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
+Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(n z)⌿⍨m←(Fm∧¯1∊⍨k)⊢z←⍪⌿↑⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
  r←↓⍉↑⍺∘Fa¨ns ⋄ 0<c←⌈⌿⊃r:c ⍬ ⍺ ⍵
  z←(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿p z)+@0⍉↑⊃¨1⊃r
  0(,⊂z)⍺ ''}
@@ -202,9 +203,9 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
   m←n[e5]∘.=p I@{3≠t[⍵]}⍣≡p[i←fv 1]
   c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
   k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍬
- l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
- p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
- gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨(p[gn])(l[gn])(n[gn])xv ⋄ t←t[gn] ⋄ k←k[gn]
+ ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
+ ⍝ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
+ ⍝ gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨gn∘I¨p l n ⋄ t←t[gn] ⋄ k←k[gn]
  ⍝ Label jumps
  ⍝ Inline functions
  ⍝ Propagate constants
