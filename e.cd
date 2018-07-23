@@ -5,14 +5,8 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
 
- ⍝ Declare Top-level variables
+ ⍝ Function Exports
  
-
- ⍝ Functionalize Modules, export functions
- i←⍸p=⍳s←≢p ⋄ l,←⍸(p≠⍳≢p)∧(p[p]=p)∧~l(⊢∊⊣(⌿⍨)≠)⍳≢l
- p,←i ⋄ t k n,←2 0 0⍴⍨¨⊂≢i ⋄ j←⍸(t=1)∧(k=1)∧p[p]=p ⋄ g←p[j]⊢∘⊂⌸v←s+(≢i)+⍳≢j
- p,←(≢¨g)⌿s+⍳≢i ⋄ l,←∊(⊃,¯1↓⊢)¨g ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←n[j] ⋄ t[⍸p=⍳≢p]←3
-
  ⍝ Lift Functions
  i←(⍸(l=⍳s)∧(p≠⍳≢p)∧p[p]=p),j←⍸(t=3)∧p≠⍳s←≢p ⋄ l←j(s+⍳)@{⍵∊j}l
  p l(⊣,I)←⊂j ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←j
@@ -60,8 +54,6 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Fold constants
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
- ⍝ Create Init function
- ⍝ Declare functions
- ⍝ Sort AST
- ⍝ Flatten AST
+ ⍝ Function prototypes
+ ⍝ Add nested node terminators
  (p l t k n)exp sym}

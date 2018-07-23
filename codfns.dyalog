@@ -171,38 +171,56 @@ Ex←Idx _o Atom _s {⍺(0 Bind _o Asgn _o App _s ∇ _opt)⍵} _as (⍪/⍳∘�
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
 Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
-Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as M
+Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (0 F)
 ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
  (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,n~⊣)⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺} 
+tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+
+ ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
- i←⍸p=⍳s←≢p ⋄ l,←⍸(p≠⍳≢p)∧(p[p]=p)∧~l(⊢∊⊣(⌿⍨)≠)⍳≢l
- p,←i ⋄ t k n,←2 0 0⍴⍨¨⊂≢i ⋄ j←⍸(t=1)∧(k=1)∧p[p]=p ⋄ g←p[j]⊢∘⊂⌸v←s+(≢i)+⍳≢j
- p,←(≢¨g)⌿s+⍳≢i ⋄ l,←∊(⊃,¯1↓⊢)¨g ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←n[j] ⋄ t[⍸p=⍳≢p]←3
+
+ ⍝ Function Exports
+ 
+ ⍝ Lift Functions
  i←(⍸(l=⍳s)∧(p≠⍳≢p)∧p[p]=p),j←⍸(t=3)∧p≠⍳s←≢p ⋄ l←j(s+⍳)@{⍵∊j}l
  p l(⊣,I)←⊂j ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←j
  p[j]←(-≢j)↑p∆←p I⍣≡i ⋄ l[∊0⌷⍉x]←∊1⌷⍉x←p∆{⍵(¯1⌽(⊃,⊢)1↓⍵)}⌸i
+
+ ⍝ Lift Expressions
  m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
  l←i((≢p)+⍳)@{⍵∊i}l ⋄ net←{~t[⍵]∊8,⍳5} ⋄ up←p∘I@{(xw[⍵]=⍵)∧p[⍵]≠3}⍣≡
  p,←p∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
  l[∪p∆]←p∆⊢∘⊃⌸i ⋄ l[j]←{xw∘I∘up@net xw I@net⍣≡⍵}⍣≡xw[up⊢j←i~p∆]
  p[i]←p I@{3≠t[⍵]}⍣≡p∆ ⋄ bv←I@{1=t[⍵]}⍣≡⍨n[i]@(p[i←⍸1=t[p]])⍳≢p
+
+ ⍝ Resolve Names
  _←{lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4} ⋄ bm←{(t[⍵]=1)∧n[⍵]=⍺}
+
+  ⍝ Resolve Local Names
   n[i](⊢+⊣×0=⊢)←bv[{⍵×n[i]bm ⍵}l I@{~n[i]bm ⍵}⍣≡l[p[i←fv 1]]]
+
+  ⍝ Inline variable chains
   _←{⍵⌿10=t[n[⍵]]⊣n[⍵]←n[n[⍵]]}⍣{0=≢⍺}lv 10=t[0⌈n]
+
+  ⍝ Inline primitive references
   i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]]
+
+  ⍝ Inline operator references
   _←{s←≢p ⋄ h←≢¨c←(⊢∘⊂⌸p)[n[⍵]⍳⍨∪p] ⋄ c←∊c ⋄ p,←p[p[⍵]],∆←h⌿s+⍳≢⍵
    l,←(0⍴⍨≢⍵),s+(≢⍵)+(∆,⍪c)⍳∆,⍪l[c] ⋄ _←{l[⍺]←⍵}/p[⍵]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢⍵
    t,←t[c],⍨2⍴⍨≢⍵ ⋄ k,←k[c],⍨6⍴⍨≢⍵ ⋄ n,←n[c],⍨0⍴⍨≢⍵ ⋄ n[⍵]←s+⍳≢⍵
    lv(t[p]=2)∧t[0⌈n]=8}⍣{0=≢⍺}lv(t[p]=2)∧t[0⌈n]=8
+
+  ⍝ Propagate free variable references
   i←lv(t[p]=2)∧t[0⌈n]=3 ⋄ s←≢p ⋄ p,←p[p[i]] ⋄ t,←2⍴⍨≢i ⋄ k,←5⍴⍨≢i ⋄ n,←n[i]
   l,←0⍴⍨≢i ⋄ _←{l[⍺]←⍵}/p[i]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢i ⋄ n[i]←s+⍳≢i
   e5←⍸(t=2)∧k=5
   m←n[e5]∘.=p I@{3≠t[⍵]}⍣≡p[i←fv 1]
   c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
   k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍬
+
  ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
  ⍝ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
  ⍝ gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨gn∘I¨p l n ⋄ t←t[gn] ⋄ k←k[gn]
@@ -212,11 +230,9 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Fold constants
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
- ⍝ Create Init function
- ⍝ Declare functions
- ⍝ Sort AST
- ⍝ Flatten AST
- (t k n)exp sym}
+ ⍝ Function prototypes
+ ⍝ Add nested node terminators
+ (p l t k n)exp sym}
 E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}
