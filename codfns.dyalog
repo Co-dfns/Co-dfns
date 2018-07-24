@@ -5,7 +5,7 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
 VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
+Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨tt ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS ⍬}
 Fix←{⍺ MkNS ⍺ Cmp ⍵}
@@ -171,12 +171,12 @@ Ex←Idx _o Atom _s {⍺(0 Bind _o Asgn _o App _s ∇ _opt)⍵} _as (⍪/⍳∘�
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
 Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
-Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (0 F)
+Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (1 F)
 ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
  (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,n~⊣)⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+tt←{((d t k n)exp sym)←ps ⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
@@ -231,29 +231,37 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
  ⍝ Function prototypes
+ ⍝ Serialize n field
+ n←'fn'∘,¨⍕¨n
+
  ⍝ Add nested node terminators
- (p l t k n)exp sym}
-E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
-E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
-Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}
-O1←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
-O2←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
-O0←{''}
-Of←{'EF(',('∆'⎕R'__'⊃n ⍵),',',(⊃⊃v ⍵),');',nl}
-Fd←{'FP(',(⊃n ⍵),');',nl}
-F0←{'DF(',(⊃n ⍵),'_f){',nl,'A*env[]={tenv};',nl}
-F1←{'DF(',(⊃n ⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
-G0←{v←(⊃⊃v ⍵)(''var)1⊃⊃e ⍵
- 'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
-G1←{'z=',((⊃n ⍵)(''var)⊃⊃e ⍵),';goto L',(⍕⊃l ⍵),';}',nl}
-L0←{'z=',a,';L',(⍕⊃n ⍵),':',(a←(1⊃⊃v ⍵)(''var)1⊃⊃e ⍵),'=z;',nl}
-Z0←{'}', nl,nl}
-Z1←{'}', nl,nl}
-Ze←{'}', nl,nl}
-M0←{(rth⍬),('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
-S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
-Y0←{⊃,/((⍳≢⊃n ⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
-gc←{⊃,/{0=⊃t ⍵:⊂5⍴⍬ ⋄ ⊂(⍎(⊃t ⍵),⍕⊃k ⍵)⍵}⍤1⊢⍵}
+ l←(i((≢p)+⍳)@{⍵∊i}l),i←⍸t=3 ⋄ p,←p[i] ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+ ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}
+gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
+gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
+gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
+
+⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}
+⍝ O1←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ O2←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ O0←{''}
+⍝ Of←{'EF(',('∆'⎕R'__'⊃n ⍵),',',(⊃⊃v ⍵),');',nl}
+⍝ Fd←{'FP(',(⊃n ⍵),');',nl}
+⍝ F0←{'DF(',(⊃n ⍵),'_f){',nl,'A*env[]={tenv};',nl}
+⍝ F1←{'DF(',(⊃n ⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
+⍝ G0←{v←(⊃⊃v ⍵)(''var)1⊃⊃e ⍵
+⍝  'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
+⍝ G1←{'z=',((⊃n ⍵)(''var)⊃⊃e ⍵),';goto L',(⍕⊃l ⍵),';}',nl}
+⍝ L0←{'z=',a,';L',(⍕⊃n ⍵),':',(a←(1⊃⊃v ⍵)(''var)1⊃⊃e ⍵),'=z;',nl}
+⍝ Z0←{'}', nl,nl}
+⍝ Z1←{'}', nl,nl}
+⍝ Ze←{'}', nl,nl}
+⍝ M0←{(rth⍬),('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
+⍝ S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
+⍝ Y0←{⊃,/((⍳≢⊃n ⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
+⍝ gc←{⊃,/{0=⊃t ⍵:⊂5⍴⍬ ⋄ ⊂(⍎(⊃t ⍵),⍕⊃k ⍵)⍵}⍤1⊢⍵}
 syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'   '⌈'   '!'
 nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min' 'max' 'fac'
 syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'   '⍲'   '⍱'
@@ -266,7 +274,7 @@ syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq' 'int'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%u' 
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   ''
-nl←⎕UCS 13 10 ⋄ fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣) ⋄ cln←'¯'⎕R'-' ⋄ cnm←(syms⍳⊂)⊃(nams,⊂)
+fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣) ⋄ cln←'¯'⎕R'-' ⋄ cnm←(syms⍳⊂)⊃(nams,⊂)
 lits←{'A(0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'))'}
 litv←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
 lita←{'A(1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),'))'}
@@ -276,7 +284,7 @@ dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v ⍵),'];')('A*',⍺,'=NULL;')}
 fnv←{z←'A*env[',(⍕1+⊃s ⍵),']={',(⊃,/(⊂'env0'),{',p[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 gcl←{z r l n←((3⍴⊂'fn'),⊂⍺){⊃⍺ var/⍵}¨↓(⊃⍵),⍪1⊃⍵ ⋄ n,'(',(⊃{⍺,',',⍵}/z l r~⊂'fn'),',env);',nl}
 
-rth←{⊃,/(⊂nl),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC ⎕THIS}
+rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC ⎕THIS}
 ⍝ #include <time.h>
 ⍝ #include <stdint.h>
 ⍝ #include <inttypes.h>

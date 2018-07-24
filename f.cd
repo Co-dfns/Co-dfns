@@ -1,24 +1,28 @@
-﻿E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
-E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
-Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}
-O1←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
-O2←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
-O0←{''}
-Of←{'EF(',('∆'⎕R'__'⊃n ⍵),',',(⊃⊃v ⍵),');',nl}
-Fd←{'FP(',(⊃n ⍵),');',nl}
-F0←{'DF(',(⊃n ⍵),'_f){',nl,'A*env[]={tenv};',nl}
-F1←{'DF(',(⊃n ⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
-G0←{v←(⊃⊃v ⍵)(''var)1⊃⊃e ⍵
- 'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
-G1←{'z=',((⊃n ⍵)(''var)⊃⊃e ⍵),';goto L',(⍕⊃l ⍵),';}',nl}
-L0←{'z=',a,';L',(⍕⊃n ⍵),':',(a←(1⊃⊃v ⍵)(''var)1⊃⊃e ⍵),'=z;',nl}
-Z0←{'}', nl,nl}
-Z1←{'}', nl,nl}
-Ze←{'}', nl,nl}
-M0←{(rth⍬),('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
-S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
-Y0←{⊃,/((⍳≢⊃n ⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
-gc←{⊃,/{0=⊃t ⍵:⊂5⍴⍬ ⋄ ⊂(⍎(⊃t ⍵),⍕⊃k ⍵)⍵}⍤1⊢⍵}
+﻿gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
+gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
+gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
+
+⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}
+⍝ O1←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ O2←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
+⍝ O0←{''}
+⍝ Of←{'EF(',('∆'⎕R'__'⊃n ⍵),',',(⊃⊃v ⍵),');',nl}
+⍝ Fd←{'FP(',(⊃n ⍵),');',nl}
+⍝ F0←{'DF(',(⊃n ⍵),'_f){',nl,'A*env[]={tenv};',nl}
+⍝ F1←{'DF(',(⊃n ⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
+⍝ G0←{v←(⊃⊃v ⍵)(''var)1⊃⊃e ⍵
+⍝  'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
+⍝ G1←{'z=',((⊃n ⍵)(''var)⊃⊃e ⍵),';goto L',(⍕⊃l ⍵),';}',nl}
+⍝ L0←{'z=',a,';L',(⍕⊃n ⍵),':',(a←(1⊃⊃v ⍵)(''var)1⊃⊃e ⍵),'=z;',nl}
+⍝ Z0←{'}', nl,nl}
+⍝ Z1←{'}', nl,nl}
+⍝ Ze←{'}', nl,nl}
+⍝ M0←{(rth⍬),('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
+⍝ S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
+⍝ Y0←{⊃,/((⍳≢⊃n ⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
+⍝ gc←{⊃,/{0=⊃t ⍵:⊂5⍴⍬ ⋄ ⊂(⍎(⊃t ⍵),⍕⊃k ⍵)⍵}⍤1⊢⍵}
 syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'   '⌈'   '!'
 nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min' 'max' 'fac'
 syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'   '⍲'   '⍱'
@@ -31,7 +35,7 @@ syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq' 'int'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%u' 
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   ''
-nl←⎕UCS 13 10 ⋄ fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣) ⋄ cln←'¯'⎕R'-' ⋄ cnm←(syms⍳⊂)⊃(nams,⊂)
+fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣) ⋄ cln←'¯'⎕R'-' ⋄ cnm←(syms⍳⊂)⊃(nams,⊂)
 lits←{'A(0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'))'}
 litv←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
 lita←{'A(1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),'))'}
@@ -41,4 +45,4 @@ dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v ⍵),'];')('A*',⍺,'=NULL;')}
 fnv←{z←'A*env[',(⍕1+⊃s ⍵),']={',(⊃,/(⊂'env0'),{',p[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 gcl←{z r l n←((3⍴⊂'fn'),⊂⍺){⊃⍺ var/⍵}¨↓(⊃⍵),⍪1⊃⍵ ⋄ n,'(',(⊃{⍺,',',⍵}/z l r~⊂'fn'),',env);',nl}
 
-rth←{⊃,/(⊂nl),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC ⎕THIS}
+rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC ⎕THIS}

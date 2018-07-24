@@ -1,6 +1,6 @@
 ﻿⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+tt←{((d t k n)exp sym)←ps ⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
@@ -55,5 +55,9 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
  ⍝ Function prototypes
+ ⍝ Serialize n field
+ n←'fn'∘,¨⍕¨n
+
  ⍝ Add nested node terminators
- (p l t k n)exp sym}
+ l←(i((≢p)+⍳)@{⍵∊i}l),i←⍸t=3 ⋄ p,←p[i] ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+ ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}
