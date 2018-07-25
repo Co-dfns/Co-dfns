@@ -14,3 +14,4 @@ EXPORT V loadimg(lp*z,char*p,I c){array a=loadImage(p,c);
  A b(a.numdims(),a.dims(),a.as(s16));cpad(z,b);}
 EXPORT V saveimg(lp*im,char*p){A a;cpda(a,im);
  saveImageNative(p,a.v.as(a.v.type()==s32?u16:u8));}
+

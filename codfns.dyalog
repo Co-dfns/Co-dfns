@@ -5,9 +5,9 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
 VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨tt ⍵
+Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨tt⊢a n s←ps ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
-MkNS←{ns⊣⍺∘{ns.⍎⍺ mkf ⍵}¨(1=1⌷⍉⍵)⌿0⌷⍉⍵⊣ns←#.⎕NS ⍬}
+MkNS←{ns⊣ns.⍎¨(⊂'0'),⍺∘mkf¨(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵⊣ns←#.⎕NS ⍬}
 Fix←{⍺ MkNS ⍺ Cmp ⍵}
 Xml←{⎕XML(0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
 MKA←{mka⊂⍵⊣'mka'⎕NA'P ',(⍺,soext⍬),'|mkarray <PP'}
@@ -176,7 +176,7 @@ ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:�
  (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,n~⊣)⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{((d t k n)exp sym)←ps ⍵ ⋄ I←{(⊂⍵)⌷⍺}
+tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
@@ -236,15 +236,19 @@ tt←{((d t k n)exp sym)←ps ⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Allocate frames
  ⍝ Function prototypes
  ⍝ Serialize n field
- n←'fn'∘,¨⍕¨n
+ n←('' 'fn')[t=3],¨(⍕¨n),¨('' '_f')[(t=3)∧k>0]
 
  ⍝ Add nested node terminators
- l←(i((≢p)+⍳)@{⍵∊i}l),i←⍸t=3 ⋄ p,←p[i] ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+ l←(i((≢p)+⍳)@{⍵∊i}l),i←⍸(t=3)∧k>0 ⋄ p,←p[i] ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+
+ ⍝ Sort Nodes
+ o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ i←⍋o ⋄ p l t k n{⍺[⍵]}←⊂i
+
  ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}
 gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
 gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
 gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
-gck⍪←3 ¯1 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');'
+gck⍪←3 ¯1 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
 
 ⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 ⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
@@ -992,4 +996,5 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  A b(a.numdims(),a.dims(),a.as(s16));cpad(z,b);}
 ⍝ EXPORT V saveimg(lp*im,char*p){A a;cpda(a,im);
 ⍝  saveImageNative(p,a.v.as(a.v.type()==s32?u16:u8));}
+⍝ 
 :EndNamespace
