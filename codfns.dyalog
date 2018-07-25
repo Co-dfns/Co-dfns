@@ -188,6 +188,10 @@ tt←{((d t k n)exp sym)←ps ⍵ ⋄ I←{(⊂⍵)⌷⍺}
  p l(⊣,I)←⊂j ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←j
  p[j]←(-≢j)↑p∆←p I⍣≡i ⋄ l[∊0⌷⍉x]←∊1⌷⍉x←p∆{⍵(¯1⌽(⊃,⊢)1↓⍵)}⌸i
 
+ ⍝ Function Declarations
+ i←⍸(t=3)∧k>0 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
+ t k,←3 ¯1⍴⍨¨≢i ⋄ n,←i
+
  ⍝ Lift Expressions
  m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
  l←i((≢p)+⍳)@{⍵∊i}l ⋄ net←{~t[⍵]∊8,⍳5} ⋄ up←p∘I@{(xw[⍵]=⍵)∧p[⍵]≠3}⍣≡
@@ -240,6 +244,7 @@ tt←{((d t k n)exp sym)←ps ⍵ ⋄ I←{(⊂⍵)⌷⍺}
 gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
 gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
 gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
+gck⍪←3 ¯1 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');'
 
 ⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 ⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}

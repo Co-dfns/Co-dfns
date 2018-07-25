@@ -12,6 +12,10 @@ tt←{((d t k n)exp sym)←ps ⍵ ⋄ I←{(⊂⍵)⌷⍺}
  p l(⊣,I)←⊂j ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←j
  p[j]←(-≢j)↑p∆←p I⍣≡i ⋄ l[∊0⌷⍉x]←∊1⌷⍉x←p∆{⍵(¯1⌽(⊃,⊢)1↓⍵)}⌸i
 
+ ⍝ Function Declarations
+ i←⍸(t=3)∧k>0 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
+ t k,←3 ¯1⍴⍨¨≢i ⋄ n,←i
+
  ⍝ Lift Expressions
  m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
  l←i((≢p)+⍳)@{⍵∊i}l ⋄ net←{~t[⍵]∊8,⍳5} ⋄ up←p∘I@{(xw[⍵]=⍵)∧p[⍵]≠3}⍣≡
