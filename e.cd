@@ -63,7 +63,8 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  n←('' 'fn')[t=3],¨(⍕¨n),¨('' '_f')[(t=3)∧k>0]
 
  ⍝ Add nested node terminators
- l←(i((≢p)+⍳)@{(⍵∊i)∧⍵≠⍳≢⍵}l),i←⍸(t=3)∧k>0 ⋄ p,←p[i] ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+ l←(i((≢p)+⍳)@{(⍵∊i)∧⍵≠⍳≢⍵}l),i←⍸(t=3)∧k>0 ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+ p,←(m×(≢p)+⍳≢i)+p[i]×~m←p[i]=i
 
  ⍝ Sort Nodes
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
