@@ -184,9 +184,8 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Function Exports
  
  ⍝ Lift Functions
- i←(⍸(l=⍳s)∧(p≠⍳≢p)∧p[p]=p),j←⍸(t=3)∧p≠⍳s←≢p ⋄ l←j(s+⍳)@{⍵∊j}l
- p l(⊣,I)←⊂j ⋄ t k,←10 1⍴⍨¨≢j ⋄ n,←j
- p[j]←(-≢j)↑p∆←p I⍣≡i ⋄ l[∊0⌷⍉x]←∊1⌷⍉x←p∆{⍵(¯1⌽(⊃,⊢)1↓⍵)}⌸i
+ i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨≢i ⋄ n,←i
+ p[i]←i ⋄ l[i,0]←(⊃i),i
 
  ⍝ Function Declarations
  i←⍸(t=3)∧k>0 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
@@ -235,6 +234,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
  ⍝ Function prototypes
+
  ⍝ Serialize n field
  n←('' 'fn')[t=3],¨(⍕¨n),¨('' '_f')[(t=3)∧k>0]
 
@@ -244,7 +244,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Sort Nodes
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
- z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z ⋄ p l t k n{⍺[⍵]}←⊂i
+ z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z ⋄ d p l t k n{⍺[⍵]}←⊂i
 
  ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}
 gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
