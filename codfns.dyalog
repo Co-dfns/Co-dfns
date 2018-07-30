@@ -181,22 +181,21 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
 
- ⍝ Function Exports
+ ⍝ Construct Binding Lookup Table
+ bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
  
- ⍝ Lift Functions
- i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨≢i ⋄ n,←i
- p[i]←i ⋄ l[i,0]←(⊃i),i
+ ⍝ Top-level Exports
 
- ⍝ Function Declarations
- i←⍸(t=3)∧k>0 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
- t k,←3 ¯1⍴⍨¨≢i ⋄ n,←i
+ ⍝ Lift Functions
+ i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←i
+ p[i]←i ⋄ l[i,0]←(⊃i),i
 
  ⍝ Lift Expressions
  m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
  l←i((≢p)+⍳)@{⍵∊i}l ⋄ net←{~t[⍵]∊8,⍳5} ⋄ up←p∘I@{(xw[⍵]=⍵)∧p[⍵]≠3}⍣≡
  p,←p∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
  l[∪p∆]←p∆⊢∘⊃⌸i ⋄ l[j]←{xw∘I∘up@net xw I@net⍣≡⍵}⍣≡xw[up⊢j←i~p∆]
- p[i]←p I@{3≠t[⍵]}⍣≡p∆ ⋄ bv←I@{1=t[⍵]}⍣≡⍨n[i]@(p[i←⍸1=t[p]])⍳≢p
+ p[i]←p I@{3≠t[⍵]}⍣≡p∆
 
  ⍝ Resolve Names
  _←{lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4} ⋄ bm←{(t[⍵]=1)∧n[⍵]=⍺}
@@ -216,7 +215,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
    t,←t[c],⍨2⍴⍨≢⍵ ⋄ k,←k[c],⍨6⍴⍨≢⍵ ⋄ n,←n[c],⍨0⍴⍨≢⍵ ⋄ n[⍵]←s+⍳≢⍵
    lv(t[p]=2)∧t[0⌈n]=8}⍣{0=≢⍺}lv(t[p]=2)∧t[0⌈n]=8
 
-  ⍝ Propagate free variable references
+  ⍝ Propagate free variable references XXX
   i←lv(t[p]=2)∧t[0⌈n]=3 ⋄ s←≢p ⋄ p,←p[p[i]] ⋄ t,←2⍴⍨≢i ⋄ k,←5⍴⍨≢i ⋄ n,←n[i]
   l,←0⍴⍨≢i ⋄ _←{l[⍺]←⍵}/p[i]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢i ⋄ n[i]←s+⍳≢i
   e5←⍸(t=2)∧k=5
@@ -224,6 +223,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
   c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
   k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c}⍣{0=≢⍺}⍬
 
+ ⍝ Lift Guard Expressions
  ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
  ⍝ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
  ⍝ gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨gn∘I¨p l n ⋄ t←t[gn] ⋄ k←k[gn]
@@ -233,7 +233,10 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Fold constants
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
- ⍝ Function prototypes
+
+ ⍝ Function Declarations
+ i←⍸(t=3)∧k>0 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
+ t k,←3 ¯1⍴⍨¨≢i ⋄ n,←i
 
  ⍝ Serialize n field
  n←('' 'fn')[t=3],¨(⍕¨n),¨('' '_f')[(t=3)∧k>0]
