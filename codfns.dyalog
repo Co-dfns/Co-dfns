@@ -181,14 +181,17 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
 
- ⍝ Construct Binding Lookup Table
- bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
+ ⍝ Binding Table and Top-level Table
+ bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p ⋄ rn←p I⍣≡⍳≢p
  
  ⍝ Top-level Exports
+ i←⍸(1=t)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ p,←∆←(s←≢p)+⍳≢i ⋄ l,←(≢∆)⍴s,¯1↓∆
+ l[0]←⊃⌽∆ ⋄ t k,←11 0⍴⍨¨≢i ⋄ n,←n[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t,←10⍴⍨≢i
+ k,←k[i] ⋄ n,←bv[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←rn[i]
 
  ⍝ Lift Functions
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←i
- p[i]←i ⋄ l[i,0]←(⊃i),i
+ p[i]←i ⋄ l[i,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃i),i
 
  ⍝ Lift Expressions
  m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
@@ -235,14 +238,14 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Allocate frames
 
  ⍝ Function Declarations
- i←⍸(t=3)∧k>0 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
- t k,←3 ¯1⍴⍨¨≢i ⋄ n,←i
+ i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
+ t k,←11 1⍴⍨¨≢i ⋄ n,←i
 
  ⍝ Serialize n field
- n←('' 'fn')[t=3],¨(⍕¨n),¨('' '_f')[(t=3)∧k>0]
+ n←('' 'fn')[t∊3 11],¨(⍕¨n),¨('' '_f')[t=3]
 
  ⍝ Add nested node terminators
- l←(i((≢p)+⍳)@{(⍵∊i)∧⍵≠⍳≢⍵}l),i←⍸(t=3)∧k>0 ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+ l←(i((≢p)+⍳)@{(⍵∊i)∧⍵≠⍳≢⍵}l),i←⍸t=3 ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
  p,←(m×(≢p)+⍳≢i)+p[i]×~m←p[i]=i
 
  ⍝ Sort Nodes
@@ -253,7 +256,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
 gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
 gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
-gck⍪←3 ¯1 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
+gck⍪←11 1 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
 
 ⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 ⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
