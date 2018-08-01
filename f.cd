@@ -1,7 +1,7 @@
 ﻿gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
 gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
 gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
-gck⍪←11 1 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
+gck⍪←11 0 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
 
 ⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 ⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
