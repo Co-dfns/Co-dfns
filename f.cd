@@ -1,24 +1,19 @@
-﻿gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
-gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
-gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
-gck⍪←11 0 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
-gck⍪←11 1 ⋄ gca,←⊂'EF(' ⋄ gcw,←⊂''
-gck⍪←10 1 ⋄ gca,←⊂''    ⋄ gcw,←⊂''
-gck⍪←1  1 ⋄ gca,←⊂''    ⋄ gcw,←⊂'='
+﻿gck←(3 1)(11 1)(11 0)(10 1)(1 1)
+gcv←'Fn' 'Zx'  'Zp'  'Vf'  'Bf' '{''''}'
+NL←⎕UCS 13 10
 
-gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
- ⍝ Serialize n field
- n←('' 'fn')[t∊3 11],¨(⍕¨n),¨('' '_f')[t=3]
-
- ⍝ Add nested node terminators
- l←(i((≢p)+⍳)@{(⍵∊i)∧⍵≠⍳≢⍵}l),i←⍸t=3 ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
- p,←(m×(≢p)+⍳≢i)+p[i]×~m←p[i]=i
-
- ⍝ Sort Nodes
+gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
- z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z ⋄ d p l t k n{⍺[⍵]}←⊂i
-
- ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}
+ z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
+ ast←(⍉↑d p l t k n)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
+ rfn←{'fn',⍕5⊃⍵} ⋄ rsy←{sym⊃⍨|5⊃⍵}
+ Bf←{''}
+ Fn←{NL,'DF(',(rfn ⍺),'_f){',NL,(⊃,/' '∘,¨(dis¨⍵),¨⊂NL),'}',NL}
+ Zx←{'EF(',(com(⊂rsy ⍺),dis¨⍵),');',NL}
+ Zp←{'FP(',(rfn ⍺),');',NL}
+ Vf←{rfn ⍺}
+ dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
+ ⊃,/(⊂rth⍬),NL,NL,dis¨ks ast}
 
 ⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 ⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
