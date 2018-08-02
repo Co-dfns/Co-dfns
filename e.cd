@@ -65,15 +65,5 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
- ⍝ Serialize n field
- n←('' 'fn')[t∊3 11],¨(⍕¨n),¨('' '_f')[t=3]
+ p l t k n exp sym}
 
- ⍝ Add nested node terminators
- l←(i((≢p)+⍳)@{(⍵∊i)∧⍵≠⍳≢⍵}l),i←⍸t=3 ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
- p,←(m×(≢p)+⍳≢i)+p[i]×~m←p[i]=i
-
- ⍝ Sort Nodes
- o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
- z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z ⋄ d p l t k n{⍺[⍵]}←⊂i
-
- ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}

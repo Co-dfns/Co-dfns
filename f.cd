@@ -2,6 +2,23 @@
 gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
 gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
 gck⍪←11 0 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
+gck⍪←11 1 ⋄ gca,←⊂'EF(' ⋄ gcw,←⊂''
+gck⍪←10 1 ⋄ gca,←⊂''    ⋄ gcw,←⊂''
+gck⍪←1  1 ⋄ gca,←⊂''    ⋄ gcw,←⊂'='
+
+gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+ ⍝ Serialize n field
+ n←('' 'fn')[t∊3 11],¨(⍕¨n),¨('' '_f')[t=3]
+
+ ⍝ Add nested node terminators
+ l←(i((≢p)+⍳)@{(⍵∊i)∧⍵≠⍳≢⍵}l),i←⍸t=3 ⋄ t k n,←3 0 (⊂'')⍴⍨¨≢i
+ p,←(m×(≢p)+⍳≢i)+p[i]×~m←p[i]=i
+
+ ⍝ Sort Nodes
+ o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
+ z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z ⋄ d p l t k n{⍺[⍵]}←⊂i
+
+ ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}
 
 ⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 ⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}

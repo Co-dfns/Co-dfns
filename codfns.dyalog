@@ -5,7 +5,7 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
 VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨tt⊢a n s←ps ⍵
+Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns⊣ns.⍎¨(⊂'0'),⍺∘mkf¨(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵⊣ns←#.⎕NS ⍬}
 Fix←{⍺ MkNS ⍺ Cmp ⍵}
@@ -241,6 +241,17 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
+ p l t k n exp sym}
+
+gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
+gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
+gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
+gck⍪←11 0 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
+gck⍪←11 1 ⋄ gca,←⊂'EF(' ⋄ gcw,←⊂''
+gck⍪←10 1 ⋄ gca,←⊂''    ⋄ gcw,←⊂''
+gck⍪←1  1 ⋄ gca,←⊂''    ⋄ gcw,←⊂'='
+
+gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Serialize n field
  n←('' 'fn')[t∊3 11],¨(⍕¨n),¨('' '_f')[t=3]
 
@@ -253,10 +264,6 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z ⋄ d p l t k n{⍺[⍵]}←⊂i
 
  ⊃,/(⊂rth⍬),gca[i],¨n,¨gcw[i←gck⍳t,⍤0⊢k]}
-gck←0 2⍴⍬ ⋄ gca←0⍴⊂''   ⋄ gcw←0⍴⊂''
-gck⍪←3  1 ⋄ gca,←⊂'DF(' ⋄ gcw,←⊂'){',NL←⎕UCS 13 10
-gck⍪←3  0 ⋄ gca,←⊂'}'   ⋄ gcw,←⊂NL,NL
-gck⍪←11 0 ⋄ gca,←⊂'FP(' ⋄ gcw,←⊂');',NL
 
 ⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
 ⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
