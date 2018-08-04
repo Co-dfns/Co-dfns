@@ -38,10 +38,10 @@ int isinit=0;dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
 #define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##fn(z,A(),r,p);}
-#define EF(n,m) EXPORT V n##_dwa(lp*z,lp*l,lp*r){try{\
-  A cl,cr,za;if(!isinit){Initfn(za,cl,cr,NULL);isinit=1;}\
-  cpda(cr,r);if(l!=NULL)cpda(cl,l);m##fn(za,cl,cr,env);cpad(z,za);}\
+#define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
+  A cl,cr,za;if(!is##init){init##fn(za,cl,cr,NULL);is##init=1;}\
+  cpda(cr,r);if(l!=NULL)cpda(cl,l);fun##fn(za,cl,cr);cpad(z,za);}\
  catch(U n){derr(n);}\
  catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
-EXPORT V n##_cdf(A*z,A*l,A*r){try{m##fn(*z,*l,*r,env);}catch(U n){derr(n);}\
+EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##fn(*z,*l,*r);}catch(U n){derr(n);}\
  catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}
