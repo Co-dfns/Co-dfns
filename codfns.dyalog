@@ -250,13 +250,12 @@ NL←⎕UCS 13 10
 gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
- ast←(⍉↑d p l t k n)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
- rfn←{'fn',⍕5⊃⍵} ⋄ rsy←{sym⊃⍨|5⊃⍵}
+ ast←(⍉↑d p l t k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]} 
  Bf←{''}
- Fn←{NL,'DF(',(rfn ⍺),'_f){',NL,(⊃,/' '∘,¨(dis¨⍵),¨⊂NL),'}',NL}
- Zx←{'EF(',(com(⊂rsy ⍺),dis¨⍵),');',NL}
- Zp←{'FP(',(rfn ⍺),');',NL}
- Vf←{rfn ⍺}
+ Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' '∘,¨(dis¨⍵),¨⊂NL),'}',NL}
+ Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
+ Zp←{'FP(',('fn',⍕5⊃⍺),');',NL}
+ Vf←{'fn',⍕5⊃⍺}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
  ⊃,/(⊂rth⍬),NL,NL,dis¨ks ast}
 
