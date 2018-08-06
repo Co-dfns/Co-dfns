@@ -189,9 +189,13 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[0]←⊃⌽∆ ⋄ t k,←11 1⍴⍨¨≢i ⋄ n,←n[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t,←10⍴⍨≢i
  k,←k[i] ⋄ n,←bv[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←rn[i]
 
+ ⍝ Init Flags
+ i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
+ l[∆,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃∆),∆
+
  ⍝ Lift Functions
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←i
- p[i]←i ⋄ l[i,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃i),i
+ p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
 
  ⍝ Lift Expressions
  m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
@@ -243,8 +247,8 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  p l t k n exp sym}
 
-gck←(3 1)(11 1)(11 0)(10 1)(1 1)
-gcv←'Fn' 'Zx'  'Zp'  'Vf'  'Bf' '{''''}'
+gck←(1 1)(3 1)(10 1)(11 0)(11 1)(11 2)
+gcv←'Bf' 'Fn' 'Vf'  'Zp'  'Zx'  'Zi'  '{''''}'
 NL←⎕UCS 13 10
 
 gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
@@ -253,8 +257,9 @@ gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',�
  ast←(⍉↑d p l t k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]} 
  Bf←{''}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' '∘,¨(dis¨⍵),¨⊂NL),'}',NL}
- Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
+ Zi←{'I isfn',(⍕5⊃⍺),'=0;',NL}
  Zp←{'FP(',('fn',⍕5⊃⍺),');',NL}
+ Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
  Vf←{'fn',⍕5⊃⍺}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
  ⊃,/(⊂rth⍬),NL,NL,dis¨ks ast}

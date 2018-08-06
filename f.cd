@@ -1,5 +1,5 @@
-﻿gck←(3 1)(11 1)(11 0)(10 1)(1 1)
-gcv←'Fn' 'Zx'  'Zp'  'Vf'  'Bf' '{''''}'
+﻿gck←(1 1)(3 1)(10 1)(11 0)(11 1)(11 2)
+gcv←'Bf' 'Fn' 'Vf'  'Zp'  'Zx'  'Zi'  '{''''}'
 NL←⎕UCS 13 10
 
 gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
@@ -8,8 +8,9 @@ gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',�
  ast←(⍉↑d p l t k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]} 
  Bf←{''}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' '∘,¨(dis¨⍵),¨⊂NL),'}',NL}
- Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
+ Zi←{'I isfn',(⍕5⊃⍺),'=0;',NL}
  Zp←{'FP(',('fn',⍕5⊃⍺),');',NL}
+ Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
  Vf←{'fn',⍕5⊃⍺}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
  ⊃,/(⊂rth⍬),NL,NL,dis¨ks ast}
