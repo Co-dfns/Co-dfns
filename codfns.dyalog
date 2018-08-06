@@ -365,24 +365,24 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝ #define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
 ⍝  n##_f(STR s,I m,I d):FN(s,m,d){}} n##fn(nm,sm,sd);
 ⍝ #define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf;df;\
-⍝  n##_o(FN&l,A*p[]):MOP(nm,sm,sd,l,p){}};
+⍝  n##_o(FN&l):MOP(nm,sm,sd,l){}};
 ⍝ #define OD(n,nm,sm,sd,mf,df) S n##_o:DOP{mf;df;\
-⍝  n##_o(FN&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\
-⍝  n##_o(const A&l,FN&r,A*p[]):DOP(nm,sm,sd,l,r,p){}\
-⍝  n##_o(FN&l,const A&r,A*p[]):DOP(nm,sm,sd,l,r,p){}};
+⍝  n##_o(FN&l,FN&r):DOP(nm,sm,sd,l,r){}\
+⍝  n##_o(const A&l,FN&r):DOP(nm,sm,sd,l,r){}\
+⍝  n##_o(FN&l,const A&r):DOP(nm,sm,sd,l,r){}};
 ⍝ #define MT
 ⍝ #define DID inline array id(dim4)
-⍝ #define MFD inline V operator()(A&,const A&,A*[])
-⍝ #define MAD inline V operator()(A&,const A&,D,A*[])
-⍝ #define DFD inline V operator()(A&,const A&,const A&,A*[])
-⍝ #define DAD inline V operator()(A&,const A&,const A&,D,A*[])
+⍝ #define MFD inline V operator()(A&,const A&)
+⍝ #define MAD inline V operator()(A&,const A&,D)
+⍝ #define DFD inline V operator()(A&,const A&,const A&)
+⍝ #define DAD inline V operator()(A&,const A&,const A&,D)
 ⍝ #define DI(n) inline array n::id(dim4 s)
 ⍝ #define ID(n,x,t) DI(n##_f){R constant(x,s,t);}
-⍝ #define MF(n) inline V n::operator()(A&z,const A&r,A*p[])
-⍝ #define MA(n) inline V n::operator()(A&z,const A&r,D ax,A*p[])
-⍝ #define DF(n) inline V n::operator()(A&z,const A&l,const A&r,A*p[])
-⍝ #define DA(n) inline V n::operator()(A&z,const A&l,const A&r,D ax,A*p[])
-⍝ #define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r,A*p[]){\
+⍝ #define MF(n) inline V n::operator()(A&z,const A&r)
+⍝ #define MA(n) inline V n::operator()(A&z,const A&r,D ax)
+⍝ #define DF(n) inline V n::operator()(A&z,const A&l,const A&r)
+⍝ #define DA(n) inline V n::operator()(A&z,const A&l,const A&r,D ax)
+⍝ #define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r){\
 ⍝  if(l.r==r.r&&l.s==r.s){\
 ⍝   z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\
 ⍝  if(!l.r){\
@@ -390,9 +390,9 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  if(!r.r){\
 ⍝   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
 ⍝  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
-⍝ #define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##fn(z,A(),r,p);}
+⍝ #define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##fn(z,A(),r);}
 ⍝ #define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
-⍝   A cl,cr,za;if(!is##init){init##fn(za,cl,cr,NULL);is##init=1;}\
+⍝   A cl,cr,za;if(!is##init){init##fn(za,cl,cr);is##init=1;}\
 ⍝   cpda(cr,r);if(l!=NULL)cpda(cl,l);fun##fn(za,cl,cr);cpad(z,za);}\
 ⍝  catch(U n){derr(n);}\
 ⍝  catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
@@ -401,20 +401,20 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝ S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
 ⍝  FN():nm(""),sm(0),sd(0){}
 ⍝  virtual array id(dim4 s){err(16);R array();}
-⍝  virtual V operator()(A&z,const A&r,A*p[]){err(99);}
-⍝  virtual V operator()(A&z,const A&r,D ax,A*p[]){err(99);}
-⍝  virtual V operator()(A&z,const A&l,const A&r,A*p[]){err(99);}
-⍝  virtual V operator()(A&z,const A&l,const A&r,D ax,A*p[]){err(99);}};
+⍝  virtual V operator()(A&z,const A&r){err(99);}
+⍝  virtual V operator()(A&z,const A&r,D ax){err(99);}
+⍝  virtual V operator()(A&z,const A&l,const A&r){err(99);}
+⍝  virtual V operator()(A&z,const A&l,const A&r,D ax){err(99);}};
 ⍝ FN MTFN;
-⍝ S MOP:FN{FN&ll;A**pp;
-⍝  MOP(STR nm,I sm,I sd,FN&ll,A*pp[]):FN(nm,sm,sd),ll(ll),pp(pp){}};
-⍝ S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;A**pp;
-⍝  DOP(STR nm,I sm,I sd,FN&l,FN&r,A*p[])
-⍝   :FN(nm,sm,sd),fl(1),fr(1),ll(l),aa(A()),rr(r),ww(A()),pp(p){}
-⍝  DOP(STR nm,I sm,I sd,A l,FN&r,A*p[])
-⍝   :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()),pp(p){}
-⍝  DOP(STR nm,I sm,I sd,FN&l,A r,A*p[])
-⍝   :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r),pp(p){}};
+⍝ S MOP:FN{FN&ll;
+⍝  MOP(STR nm,I sm,I sd,FN&ll):FN(nm,sm,sd),ll(ll){}};
+⍝ S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;
+⍝  DOP(STR nm,I sm,I sd,FN&l,FN&r)
+⍝   :FN(nm,sm,sd),fl(1),fr(1),ll(l),aa(A()),rr(r),ww(A()){}
+⍝  DOP(STR nm,I sm,I sd,A l,FN&r)
+⍝   :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}
+⍝  DOP(STR nm,I sm,I sd,FN&l,A r)
+⍝   :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};
 ⍝ std::wstring mkstr(const char*s){B c=std::strlen(s);std::wstring t(c,L' ');
 ⍝  mbstowcs(&t[0],s,c);R t;}
 ⍝ I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}
@@ -503,7 +503,7 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝ SF(and_f,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;
 ⍝  else if(allTrue<I>(lv>=0&&lv<=1&&rv>0&&rv<=1))z.v=lv&&rv;
 ⍝  else{A a(z.r,z.s,lv);A b(z.r,z.s,rv);
-⍝   lorfn(a,a,b,p);z.v=lv*(rv/((!a.v)+a.v));})
+⍝   lorfn(a,a,b);z.v=lv*(rv/((!a.v)+a.v));})
 ⍝ MF(brk_f){err(16);}
 ⍝ DF(brk_f){if(l.r!=1)err(16);
 ⍝  z.r=r.r;z.s=r.s;z.v=l.v(r.v.as(s32));}
@@ -514,7 +514,7 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝   if(nl.r){nl.r++;DO(3-fx,nl.s[3-i]=nl.s[3-(i+1)]);nl.s[fx]=1;}
 ⍝   if(nr.r){nr.r++;DO(3-fx,nr.s[3-i]=nr.s[3-(i+1)]);nr.s[fx]=1;}
 ⍝   if(nl.r)nl.v=moddims(nl.v,nl.s);if(nr.r)nr.v=moddims(nr.v,nr.s);
-⍝   catfn(z,nl,nr,fx,p);R;}
+⍝   catfn(z,nl,nr,fx);R;}
 ⍝  if(fx>=r.r&&fx>=l.r)err(4);
 ⍝  if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);
 ⍝  z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);
@@ -529,8 +529,8 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);
 ⍝  array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);
 ⍝  z.v=join(fx,lv,rv);}
-⍝ DF(cat_f){if(l.r||r.r){catfn(z,l,r,0,p);R;}
-⍝  A a,b;catfn(a,l,p);catfn(b,r,p);catfn(z,a,b,0,p);}
+⍝ DF(cat_f){if(l.r||r.r){catfn(z,l,r,0);R;}
+⍝  A a,b;catfn(a,l);catfn(b,r);catfn(z,a,b,0);}
 ⍝ MF(cir_f){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}
 ⍝ SF(cir_f,array fv=rv.as(f64);
 ⍝  if(!l.r){I x=l.v.as(s32).scalar<I>();if(abs(x)>10)err(16);
@@ -555,8 +555,8 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  z.v=array(z.s,zv.data());)
 ⍝ MF(ctf_f){dim4 sp=z.s;sp[1]=r.r?r.s[r.r-1]:1;sp[0]=sp[1]?cnt(r)/sp[1]:1;
 ⍝  sp[2]=sp[3]=1;z.r=2;z.s=sp;z.v=!cnt(z)?scl(0):array(r.v,z.s);}
-⍝ DF(ctf_f){I x=l.r>r.r?l.r:r.r;if(l.r||r.r){catfn(z,l,r,x-1,p);R;}
-⍝  A a,b;catfn(a,l,p);catfn(b,r,p);catfn(z,a,b,0,p);}
+⍝ DF(ctf_f){I x=l.r>r.r?l.r:r.r;if(l.r||r.r){catfn(z,l,r,x-1);R;}
+⍝  A a,b;catfn(a,l);catfn(b,r);catfn(z,a,b,0);}
 ⍝ DF(dec_f){I ra=r.r?r.r-1:0;I la=l.r?l.r-1:0;z.r=ra+la;z.s=dim4(1);
 ⍝  if(l.s[0]!=1&&l.s[0]!=r.s[ra]&&r.s[ra]!=1)err(5);
 ⍝  DO(ra,z.s[i]=r.s[i])DO(la,z.s[i+ra]=l.s[i+1])
@@ -816,22 +816,22 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  z.v=!anyTrue(tile(r.v,1,(U)c)==tile(array(x,1,c),(U)r.s[0],1),1);
 ⍝  z.v=join(0,l.v.as(mt),r.v(where(z.v)).as(mt));
 ⍝  z.s=dim4(z.v.elements());}
-⍝ #define brkop(zz,ll,rr,pp) brk_o zz(ll,rr,pp)
-⍝ #define comop(zz,rr,pp) com_o zz(rr,pp)
-⍝ #define dotop(zz,ll,rr,pp) dot_o zz(ll,rr,pp)
-⍝ #define mapop(zz,rr,pp) map_o zz(rr,pp)
-⍝ #define redop(zz,rr,pp) red_o zz(rr,pp)
-⍝ #define jotop(zz,ll,rr,pp) jot_o zz(ll,rr,pp)
-⍝ #define oupop(zz,rr,pp) oup_o zz(rr,pp)
-⍝ #define powop(zz,ll,rr,pp) pow_o zz(ll,rr,pp)
-⍝ #define rdfop(zz,rr,pp) rdf_o zz(rr,pp)
-⍝ #define rnkop(zz,ll,rr,pp) rnk_o zz(ll,rr,pp)
-⍝ #define scnop(zz,rr,pp) scn_o zz(rr,pp)
-⍝ #define scfop(zz,rr,pp) scf_o zz(rr,pp)
-⍝ MF(brk_o){ll(z,r,(r.r?r.r-1:0)-ww.v.as(f64).scalar<D>(),p);}
+⍝ #define brkop(zz,ll,rr) brk_o zz(ll,rr)
+⍝ #define comop(zz,rr) com_o zz(rr)
+⍝ #define dotop(zz,ll,rr) dot_o zz(ll,rr)
+⍝ #define mapop(zz,rr) map_o zz(rr)
+⍝ #define redop(zz,rr) red_o zz(rr)
+⍝ #define jotop(zz,ll,rr) jot_o zz(ll,rr)
+⍝ #define oupop(zz,rr) oup_o zz(rr)
+⍝ #define powop(zz,ll,rr) pow_o zz(ll,rr)
+⍝ #define rdfop(zz,rr) rdf_o zz(rr)
+⍝ #define rnkop(zz,ll,rr) rnk_o zz(ll,rr)
+⍝ #define scnop(zz,rr) scn_o zz(rr)
+⍝ #define scfop(zz,rr) scf_o zz(rr)
+⍝ MF(brk_o){ll(z,r,(r.r?r.r-1:0)-ww.v.as(f64).scalar<D>());}
 ⍝ DF(brk_o){D ax=l.r;if(r.r>l.r)ax=r.r;if(ax)ax--;
-⍝  ll(z,l,r,ax-ww.v.as(f64).scalar<D>(),p);}
-⍝ MF(com_o){ll(z,r,r,p);}DF(com_o){ll(z,r,l,p);}
+⍝  ll(z,l,r,ax-ww.v.as(f64).scalar<D>());}
+⍝ MF(com_o){ll(z,r,r);}DF(com_o){ll(z,r,l);}
 ⍝ DF(dot_o){I ra=r.r?r.r-1:0;if(r.r&&l.r&&l.s[0]!=r.s[ra])err(5);
 ⍝  I la=l.r?l.r-1:0;A t(la+ra,r.s,r.v(0));if(t.r>4)err(10);
 ⍝  t.s[ra]=1;DO(la,t.s[i+ra]=l.s[i+1])if(!cnt(t)){t.v=scl(0);z=t;R;}
@@ -844,48 +844,48 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝   t.v=array(matmul(y.as(f64),x.as(f64)),t.s);z=t;R;}
 ⍝  x=tile(array(x,c,1,lc),1,rc,1);y=tile(y.T(),1,1,lc);
 ⍝  A X(3,dim4(c,rc,lc),x.as(f64));A Y(3,dim4(c,rc,lc),y.as(f64));
-⍝  mapop(mfn,rr,p);redop(rfn,ll,p);mfn(X,X,Y,p);rfn(X,X,p);
+⍝  mapop(mfn,rr);redop(rfn,ll);mfn(X,X,Y);rfn(X,X);
 ⍝  t.v=array(X.v,t.s);z=t;}
-⍝ MF(jot_o){if(!fl){rr(z,aa,r,p);R;}if(!fr){ll(z,r,ww,p);R;}
-⍝  rr(z,r,p);ll(z,z,p);}
-⍝ DF(jot_o){if(!fl||!fr){err(2);}rr(z,r,p);ll(z,l,z,p);}
-⍝ MF(map_o){if(scm(ll)){ll(z,r,p);R;}
+⍝ MF(jot_o){if(!fl){rr(z,aa,r);R;}if(!fr){ll(z,r,ww);R;}
+⍝  rr(z,r);ll(z,z);}
+⍝ DF(jot_o){if(!fl||!fr){err(2);}rr(z,r);ll(z,l,z);}
+⍝ MF(map_o){if(scm(ll)){ll(z,r);R;}
 ⍝  z.r=r.r;z.s=r.s;I c=(I)cnt(z);if(!c){z.v=scl(0);R;}
-⍝  A zs;A rs=scl(r.v(0));ll(zs,rs,p);if(c==1){z.v=zs.v;R;}
+⍝  A zs;A rs=scl(r.v(0));ll(zs,rs);if(c==1){z.v=zs.v;R;}
 ⍝  array v=array(z.s,zs.v.type());v(0)=zs.v(0);
-⍝  DO(c-1,rs.v=r.v(i+1);ll(zs,rs,p);v(i+1)=zs.v(0))z.v=v;}
-⍝ DF(map_o){if(scd(ll)){ll(z,l,r,p);R;}
+⍝  DO(c-1,rs.v=r.v(i+1);ll(zs,rs);v(i+1)=zs.v(0))z.v=v;}
+⍝ DF(map_o){if(scd(ll)){ll(z,l,r);R;}
 ⍝  if((l.r==r.r&&l.s==r.s)||!l.r){z.r=r.r;z.s=r.s;}
 ⍝  else if(!r.r){z.r=l.r;z.s=l.s;}else if(l.r!=r.r)err(4);
 ⍝  else if(l.s!=r.s)err(5);else err(99);I c=(I)cnt(z);
 ⍝  if(!c){z.v=scl(0);R;}A zs;A rs=scl(r.v(0));A ls=scl(l.v(0));
-⍝  ll(zs,ls,rs,p);if(c==1){z.v=zs.v;R;}
+⍝  ll(zs,ls,rs);if(c==1){z.v=zs.v;R;}
 ⍝  array v=array(z.s,zs.v.type());v(0)=zs.v(0);
 ⍝  if(!r.r){rs.v=r.v;
-⍝   DO(c-1,ls.v=l.v(i+1);ll(zs,ls,rs,p);v(i+1)=zs.v(0);)
+⍝   DO(c-1,ls.v=l.v(i+1);ll(zs,ls,rs);v(i+1)=zs.v(0);)
 ⍝   z.v=v;R;}
 ⍝  if(!l.r){ls.v=l.v;
-⍝   DO(c-1,rs.v=r.v(i+1);ll(zs,ls,rs,p);v(i+1)=zs.v(0);)
+⍝   DO(c-1,rs.v=r.v(i+1);ll(zs,ls,rs);v(i+1)=zs.v(0);)
 ⍝   z.v=v;R;}
-⍝  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);ll(zs,ls,rs,p);
+⍝  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);ll(zs,ls,rs);
 ⍝   v(i+1)=zs.v(0))z.v=v;}
 ⍝ DF(oup_o){A t(l.r+r.r,r.s,r.v(0));if(t.r>4)err(10);
 ⍝  DO(l.r,t.s[i+r.r]=l.s[i])if(!cnt(t)){t.v=scl(0);z=t;R;}
 ⍝  array x(flat(l.v),1,cnt(l));array y(flat(r.v),cnt(r),1);
 ⍝  dim4 ts(cnt(r),cnt(l));x=tile(x,(I)ts[0],1);y=tile(y,1,(I)ts[1]);
-⍝  mapop(mfn,ll,p);A xa(2,ts,x);A ya(2,ts,y);mfn(xa,xa,ya,p);
+⍝  mapop(mfn,ll);A xa(2,ts,x);A ya(2,ts,y);mfn(xa,xa,ya);
 ⍝  t.v=array(xa.v,t.s);z=t;}
 ⍝ MF(pow_o){if(fr){A t;A v=r;
-⍝   do{A u;ll(u,v,p);rr(t,u,v,p);if(t.r)err(5);v=u;}
+⍝   do{A u;ll(u,v);rr(t,u,v);if(t.r)err(5);v=u;}
 ⍝   while(!t.v.as(s32).scalar<I>());z=v;R;}
-⍝  if(ww.r)err(4);I c=ww.v.as(s32).scalar<I>();z=r;DO(c,ll(z,z,p))}
+⍝  if(ww.r)err(4);I c=ww.v.as(s32).scalar<I>();z=r;DO(c,ll(z,z))}
 ⍝ DF(pow_o){if(fr){A t;A v=r;
-⍝   do{A u;ll(u,l,v,p);rr(t,u,v,p);if(t.r)err(5);v=u;}
+⍝   do{A u;ll(u,l,v);rr(t,u,v);if(t.r)err(5);v=u;}
 ⍝   while(!t.v.as(s32).scalar<I>());z=v;R;}
 ⍝  if(ww.r)err(4);I c=ww.v.as(s32).scalar<I>();
-⍝  A t=r;DO(c,ll(t,l,t,p))z=t;}
+⍝  A t=r;DO(c,ll(t,l,t))z=t;}
 ⍝ MF(rdf_o){A t(r.r?r.r-1:0,dim4(1),r.v(0));DO(t.r,t.s[i]=r.s[i])
-⍝  I rc=(I)r.s[t.r];I zc=(I)cnt(t);mapop(mfn,ll,p);
+⍝  I rc=(I)r.s[t.r];I zc=(I)cnt(t);mapop(mfn,ll);
 ⍝  if(!zc){t.v=scl(0);z=t;R;}if(!rc){t.v=ll.id(t.s);z=t;R;}
 ⍝  if(1==rc){t.v=array(r.v,t.s);z=t;R;}
 ⍝  if("add"==ll.nm){if(r.v.isbool())t.v=count(r.v,t.r).as(s32);
@@ -897,18 +897,18 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  if("lor"==ll.nm){t.v=anyTrue(r.v,t.r);z=t;R;}
 ⍝  af::index x[4];x[t.r]=rc-1;t.v=r.v(x[0],x[1],x[2],x[3]);
 ⍝  DO(rc-1,x[t.r]=rc-(i+2);
-⍝   mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,p));z=t;}
+⍝   mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t));z=t;}
 ⍝ DF(rdf_o){if(l.r!=0&&(l.r!=1||l.s[0]!=1))err(5);if(!r.r)err(4);
 ⍝  I lv=l.v.as(s32).scalar<I>();I ra=r.r-1;
 ⍝   if((r.s[ra]+1)<lv)err(5);I rc=(I)((1+r.s[ra])-abs(lv));
-⍝  mapop(mfn,ll,p);A t(r.r,r.s,scl(0));t.s[ra]=rc;if(!cnt(t)){z=t;R;}
+⍝  mapop(mfn,ll);A t(r.r,r.s,scl(0));t.s[ra]=rc;if(!cnt(t)){z=t;R;}
 ⍝  if(!lv){t.v=ll.id(t.s);z=t;R;}seq rng(rc);af::index x[4];
 ⍝  if(lv>=0){x[ra]=rng+((D)lv-1);t.v=r.v(x[0],x[1],x[2],x[3]);
 ⍝   DO(lv-1,x[ra]=rng+((D)lv-(i+2));
-⍝    mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,p))
+⍝    mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t))
 ⍝  }else{x[ra]=rng;t.v=r.v(x[0],x[1],x[2],x[3]);
 ⍝   DO(abs(lv)-1,x[ra]=rng+(D)(i+1);
-⍝    mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,p))}
+⍝    mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t))}
 ⍝  z=t;}
 ⍝ MF(red_o){A t(r.r?r.r-1:0,dim4(1),z.v);DO(t.r,t.s[i]=r.s[i+1])
 ⍝  I rc=(I)r.s[0];I zc=(I)cnt(t);if(!zc){t.v=scl(0);z=t;R;}
@@ -921,25 +921,25 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  if("max"==ll.nm){t.v=max(r.v,0);z=t;R;}
 ⍝  if("and"==ll.nm){t.v=allTrue(r.v,0);z=t;R;}
 ⍝  if("lor"==ll.nm){t.v=anyTrue(r.v,0);z=t;R;}
-⍝  t.v=r.v(rc-1,span);mapop(mfn,ll,p);
-⍝  DO(rc-1,mfn(t,A(t.r,t.s,r.v(rc-(i+2),span)),t,p))z=t;}
+⍝  t.v=r.v(rc-1,span);mapop(mfn,ll);
+⍝  DO(rc-1,mfn(t,A(t.r,t.s,r.v(rc-(i+2),span)),t))z=t;}
 ⍝ DF(red_o){if(l.r!=0&&(l.r!=1||l.s[0]!=1))err(5);if(!r.r)err(4);
 ⍝  I lv=l.v.as(s32).scalar<I>();if((r.s[0]+1)<lv)err(5);
-⍝  I rc=(I)((1+r.s[0])-abs(lv));mapop(mfn,ll,p);
+⍝  I rc=(I)((1+r.s[0])-abs(lv));mapop(mfn,ll);
 ⍝  A t(r.r,r.s,scl(0));t.s[0]=rc;if(!cnt(t)){z=t;R;}
 ⍝  if(!lv){t.v=ll.id(t.s);z=t;R;}seq rng(rc);
 ⍝  if(lv>=0){t.v=r.v(rng+((D)lv-1),span);
-⍝   DO(lv-1,mfn(t,A(t.r,t.s,r.v(rng+((D)lv-(i+2)),span)),t,p))
+⍝   DO(lv-1,mfn(t,A(t.r,t.s,r.v(rng+((D)lv-(i+2)),span)),t))
 ⍝  }else{t.v=r.v(rng,span);
-⍝   DO(abs(lv)-1,mfn(t,A(t.r,t.s,r.v(rng+(D)(i+1),span)),t,p))}
+⍝   DO(abs(lv)-1,mfn(t,A(t.r,t.s,r.v(rng+(D)(i+1),span)),t))}
 ⍝  z=t;}
 ⍝ MF(rnk_o){if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
-⍝  if(scm(ll)||cr>=r.r){ll(z,r,p);R;}
-⍝  if(cr<=-r.r||!cr){mapop(f,ll,p);f(z,r,p);R;}
+⍝  if(scm(ll)||cr>=r.r){ll(z,r);R;}
+⍝  if(cr<=-r.r||!cr){mapop(f,ll);f(z,r);R;}
 ⍝  if(cr<0)cr=r.r+cr;if(cr>3)err(10);I dr=r.r-cr;
 ⍝  dim4 sp(1);DO(dr,sp[cr]*=r.s[i+cr])DO(cr,sp[i]=r.s[i])
 ⍝  std::vector<A> tv(sp[cr]);A b(cr+1,sp,array(r.v,sp));
-⍝  DO((I)sp[cr],sqdfn(tv[i],scl(scl(i)),b,p);ll(tv[i],tv[i],p))
+⍝  DO((I)sp[cr],sqdfn(tv[i],scl(scl(i)),b);ll(tv[i],tv[i]))
 ⍝  I mr=0;dim4 ms(1);dtype mt=b8;if(mr>3)err(10);
 ⍝  DO((I)sp[cr],if(mr<tv[i].r)mr=tv[i].r;mt=mxt(mt,tv[i]);I si=i;
 ⍝   DO(4,if(ms[3-i]<tv[si].s[3-i]){ms=tv[si].s;break;}))
@@ -960,7 +960,7 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  A a(cl+1,sl,array(l.v,sl));A b(cr+1,sr,array(r.v,sr));
 ⍝  I mr=0;dim4 ms(1);dtype mt=b8;
 ⍝  DO((I)sz,A ta;A tb;A ai=scl(scl(i%sl[cl]));A bi=scl(scl(i%sr[cr]));
-⍝   sqdfn(ta,ai,a,p);sqdfn(tb,bi,b,p);ll(tv[i],ta,tb,p);
+⍝   sqdfn(ta,ai,a);sqdfn(tb,bi,b);ll(tv[i],ta,tb);
 ⍝   if(mr<tv[i].r)mr=tv[i].r;mt=mxt(mt,tv[i]);A t=tv[i];
 ⍝   DO(4,if(ms[i]<t.s[i])ms[i]=t.s[i]))
 ⍝  B mc=cnt(ms);array v(mc*sz,mt);v=0;
@@ -972,10 +972,10 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  if("mul"==ll.nm){z.v=scan(r.v.as(f64),0,AF_BINARY_MUL);R;}
 ⍝  if("min"==ll.nm){z.v=scan(r.v.as(f64),0,AF_BINARY_MIN);R;}
 ⍝  if("max"==ll.nm){z.v=scan(r.v.as(f64),0,AF_BINARY_MAX);R;}
-⍝  mapop(mfn,ll,p);z.v=array(z.s,f64);A t(z.r?z.r-1:0,z.s,r.v(0));
+⍝  mapop(mfn,ll);z.v=array(z.s,f64);A t(z.r?z.r-1:0,z.s,r.v(0));
 ⍝  DO(t.r,t.s[i]=t.s[i+1]);t.s[t.r]=1;I tc=(I)cnt(t);
 ⍝  DO(rc,t.v=r.v(i,span).as(f64);I c=i;
-⍝   DO(c,mfn(t,A(t.r,t.s,r.v(c-(i+1),span)),t,p))
+⍝   DO(c,mfn(t,A(t.r,t.s,r.v(c-(i+1),span)),t))
 ⍝   z.v(i,span)=t.v)}
 ⍝ MF(scf_o){z.r=r.r;z.s=r.s;I ra=r.r?r.r-1:0;I rc=(I)r.s[ra];
 ⍝  if(1==rc){z.v=r.v;R;}if(!cnt(z)){z.v=scl(0);R;}
@@ -984,10 +984,10 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝  if("min"==ll.nm){z.v=scan(r.v.as(f64),ra,AF_BINARY_MIN);R;}
 ⍝  if("max"==ll.nm){z.v=scan(r.v.as(f64),ra,AF_BINARY_MAX);R;}
 ⍝  z.v=array(z.s,f64);A t(z.r?z.r-1:0,z.s,r.v(0));t.s[ra]=1;
-⍝  I tc=(I)cnt(t);af::index x[4];mapop(mfn,ll,p);
+⍝  I tc=(I)cnt(t);af::index x[4];mapop(mfn,ll);
 ⍝  DO(rc,x[ra]=i;t.v=r.v(x[0],x[1],x[2],x[3]).as(f64);I c=i;
 ⍝   DO(c,x[ra]=c-(i+1);
-⍝    mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,p))
+⍝    mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t))
 ⍝   x[ra]=i;z.v(x[0],x[1],x[2],x[3])=t.v)}
 ⍝ EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}
 ⍝ EXPORT V frea(A*a){delete a;}
