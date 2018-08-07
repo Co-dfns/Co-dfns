@@ -18,13 +18,13 @@ Z array da16(B c,dim4 s,lp*d){std::vector<S16>b(c);
 Z array da8(B c,dim4 s,lp*d){std::vector<char>b(c);
  U8*v=(U8*)DATA(d);DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))
  R array(s,b.data());}
-V cpad(lp*d,A&a){I t;B c=cnt(a);
+V cpad(lp*d,A&a){I t;B c=cnt(a);if(!a.f){d->p=NULL;R;}
  switch(a.v.type()){CS(c64,t=APLZ);
   CS(s32,t=APLI);CS(s16,t=APLSI);CS(b8,t=APLTI);CS(f64,t=APLD);
   default:if(c)err(16);t=APLI;}
  B s[4];DO(a.r,s[a.r-(i+1)]=a.s[i]);dwafns->ws->ga(t,a.r,s,d);
  if(c)a.v.host(DATA(d));}
-V cpda(A&a,lp*d){if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
+V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
  dim4 s(1);DO(RANK(d),s[RANK(d)-(i+1)]=SHAPE(d)[i]);B c=cnt(d);
  switch(ETYPE(d)){
   CS(APLZ,a=A(RANK(d),s,c?array(s,(DZ*)DATA(d)):scl(0)))

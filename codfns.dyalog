@@ -363,8 +363,8 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝ EXPORT I DyalogGetInterpreterFunctions(dwa*p){
 ⍝  if(p)dwafns=p;else R 0;if(dwafns->z<sizeof(S dwa))R 16;R 0;}
 ⍝ Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
-⍝ S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}
-⍝  A():r(0),s(dim4()),v(array()){}};
+⍝ S A{I r,f;dim4 s;array v;A(I r,dim4 s,array v):r(r),f(1),s(s),v(v){}
+⍝  A():r(0),f(0),s(dim4()),v(array()){}};
 ⍝ int isinit=0;dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;
 ⍝ 
 ⍝ #define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
@@ -398,7 +398,7 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝ #define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##fn(z,A(),r);}
 ⍝ #define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
 ⍝   A cl,cr,za;if(!is##init){init##fn(za,cl,cr);is##init=1;}\
-⍝   cpda(cr,r);if(l!=NULL)cpda(cl,l);fun##fn(za,cl,cr);cpad(z,za);}\
+⍝   cpda(cr,r);cpda(cl,l);fun##fn(za,cl,cr);cpad(z,za);}\
 ⍝  catch(U n){derr(n);}\
 ⍝  catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
 ⍝ EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##fn(*z,*l,*r);}catch(U n){derr(n);}\
@@ -440,13 +440,13 @@ rth←{⊃,/(⊂NL),¨⍨2↓¨¯2↓c↓⍨1+(⊂'rth')⍳⍨3↑¨c←⎕SRC �
 ⍝ Z array da8(B c,dim4 s,lp*d){std::vector<char>b(c);
 ⍝  U8*v=(U8*)DATA(d);DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))
 ⍝  R array(s,b.data());}
-⍝ V cpad(lp*d,A&a){I t;B c=cnt(a);
+⍝ V cpad(lp*d,A&a){I t;B c=cnt(a);if(!a.f){d->p=NULL;R;}
 ⍝  switch(a.v.type()){CS(c64,t=APLZ);
 ⍝   CS(s32,t=APLI);CS(s16,t=APLSI);CS(b8,t=APLTI);CS(f64,t=APLD);
 ⍝   default:if(c)err(16);t=APLI;}
 ⍝  B s[4];DO(a.r,s[a.r-(i+1)]=a.s[i]);dwafns->ws->ga(t,a.r,s,d);
 ⍝  if(c)a.v.host(DATA(d));}
-⍝ V cpda(A&a,lp*d){if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
+⍝ V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
 ⍝  dim4 s(1);DO(RANK(d),s[RANK(d)-(i+1)]=SHAPE(d)[i]);B c=cnt(d);
 ⍝  switch(ETYPE(d)){
 ⍝   CS(APLZ,a=A(RANK(d),s,c?array(s,(DZ*)DATA(d)):scl(0)))

@@ -5,8 +5,8 @@ S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
 EXPORT I DyalogGetInterpreterFunctions(dwa*p){
  if(p)dwafns=p;else R 0;if(dwafns->z<sizeof(S dwa))R 16;R 0;}
 Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
-S A{I r;dim4 s;array v;A(I r,dim4 s,array v):r(r),s(s),v(v){}
- A():r(0),s(dim4()),v(array()){}};
+S A{I r,f;dim4 s;array v;A(I r,dim4 s,array v):r(r),f(1),s(s),v(v){}
+ A():r(0),f(0),s(dim4()),v(array()){}};
 int isinit=0;dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;
 
 #define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
@@ -40,7 +40,7 @@ int isinit=0;dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;
 #define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##fn(z,A(),r);}
 #define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
   A cl,cr,za;if(!is##init){init##fn(za,cl,cr);is##init=1;}\
-  cpda(cr,r);if(l!=NULL)cpda(cl,l);fun##fn(za,cl,cr);cpad(z,za);}\
+  cpda(cr,r);cpda(cl,l);fun##fn(za,cl,cr);cpad(z,za);}\
  catch(U n){derr(n);}\
  catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
 EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##fn(*z,*l,*r);}catch(U n){derr(n);}\
