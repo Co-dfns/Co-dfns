@@ -6,4 +6,5 @@
  t0003∆3_TEST←{#.UT.expect←3 ⋄ 3 #.c0003.left   5}
  t0003∆4_TEST←{#.UT.expect←5 ⋄ 3 #.c0003.right2 5}
  t0003∆5_TEST←{#.UT.expect←3 ⋄ 3 #.c0003.left2  5}
+ t0003∆6_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨n←'c0003' 't0003' ⋄ #.⎕NC¨n}
 :EndNamespace
