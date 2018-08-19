@@ -197,6 +197,10 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←i
  p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
 
+ ⍝ Wrap Return Expressions
+ i←⍸(t[p]∊3 4)∧(t∊0 2)∨(t=1)∧(⍳≢l)∊¯1@{⍵=⍳≢⍵}l ⋄ p,←p[i] ⋄ p[i]←(≢l)+⍳≢i 
+ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i ⋄ t k n,←2 0 0⍴⍨¨≢i
+
  ⍝ Lift Expressions
  m←t∊8,⍳3 ⋄ i←⍸m∧t[p]≠3 ⋄ xw[l[x]]←x←⍸m⊣xw←(m×⍳≢l)+l×~m←t[p]≠3
  l←i((≢p)+⍳)@{⍵∊i}l ⋄ net←{~t[⍵]∊8,⍳5} ⋄ up←p∘I@{(xw[⍵]=⍵)∧p[⍵]≠3}⍣≡
@@ -247,8 +251,8 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  p l t k n exp sym}
 
-gck←(0 1)(1 1)(2 1)(3 1)(9 0)(10 0)(10 1)(11 0)(11 1)(11 2)
-gcv←'Av' 'Bf' 'Em' 'Fn' 'Pm' 'Va'  'Vf'  'Zp'  'Zx'  'Zi' 
+gck←(0 1)(1 1)(2 0)(2 1)(3 1)(9 0)(10 0)(10 1)(11 0)(11 1)(11 2)
+gcv←'Av' 'Bf' 'Er' 'Em' 'Fn' 'Pm' 'Va'  'Vf'  'Zp'  'Zx'  'Zi' 
 gcv,←⊂'{''/* Unhandled */'',NL}'
 NL←⎕UCS 13 10
 
@@ -259,6 +263,7 @@ gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',�
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
  Bf←{''}
  Em←{f v←dis¨⍵ ⋄ 'A va',(⍕6⊃⍺),';',f,'fn(',('va',⍕6⊃⍺),',',v,');',NL}
+ Er←{'z=',(⊃dis¨⍵),';',NL}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
  Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
  Zi←{'I isfn',(⍕5⊃⍺),'=0;',NL}
