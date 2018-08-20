@@ -261,8 +261,8 @@ gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',�
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  ast←(⍉↑d p l t k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
- Bf←{fn,'_c=',(fn←⊃dis¨⍵),'_f("",0,0);',NL}
- Em←{f v←dis¨⍵ ⋄ 'A va',(⍕6⊃⍺),';',f,'fn(',('va',⍕6⊃⍺),',',v,');',NL}
+ Bf←{fn,'_c=',(fn←⊃dis¨⍵),'_f();',NL}
+ Em←{f v←dis¨⍵ ⋄ 'A va',(⍕6⊃⍺),';',f,'_c(',('va',⍕6⊃⍺),',',v,');',NL}
  Er←{'z=',(⊃dis¨⍵),';R;',NL}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
  Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
@@ -364,7 +364,7 @@ rth,←'#define CS(n,x) case n:x;break;',NL
 rth,←'#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}',NL
 rth,←'#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}',NL
 rth,←'#define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\',NL
-rth,←' n##_f():FN(){}n##_f(STR s,I m,I d):FN(s,m,d){}} n##_c;',NL
+rth,←' n##_f():FN(nm,sm,sd){}};',NL
 rth,←'#define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf;df;\',NL
 rth,←' n##_o(FN&l):MOP(nm,sm,sd,l){}};',NL
 rth,←'#define OD(n,nm,sm,sd,mf,df) S n##_o:DOP{mf;df;\',NL
@@ -391,7 +391,8 @@ rth,←'  z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',NL
 rth,←' if(!r.r){\',NL
 rth,←'  z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\',NL
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',NL
-rth,←'#define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##_c(z,A(),r);}',NL
+rth,←'#define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);n##_f n##_c;\',NL
+rth,←' MF(n##_f){n##_c(z,A(),r);}',NL
 rth,←'#define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\',NL
@@ -741,6 +742,7 @@ rtn[34],←⊂'DF(nqv_f){z.r=0;z.s=eshp;I t=l.r==r.r&&l.s==r.s;',NL
 rtn[34],←⊂' if(t)t=allTrue<I>(l.v==r.v);z.v=scl(!t);}',NL
 rtn[34],←⊂'',NL
 rtn[35],←⊂'NM(rgt,"rgt",0,0,MT ,MFD,DFD,MT ,MT )',NL
+rtn[35],←⊂'rgt_f rgt_c;',NL
 rtn[35],←⊂'MF(rgt_f){z=r;}',NL
 rtn[35],←⊂'DF(rgt_f){z=r;}',NL
 rtn[35],←⊂'',NL
