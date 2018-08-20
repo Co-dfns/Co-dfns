@@ -40,7 +40,7 @@ using namespace af;
 #define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}
 #define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}
 #define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
- n##_f(STR s,I m,I d):FN(s,m,d){}} n##fn(nm,sm,sd);
+ n##_f():FN(){}n##_f(STR s,I m,I d):FN(s,m,d){}} n##_c;
 #define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf;df;\
  n##_o(FN&l):MOP(nm,sm,sd,l){}};
 #define OD(n,nm,sm,sd,mf,df) S n##_o:DOP{mf;df;\
@@ -67,12 +67,12 @@ using namespace af;
  if(!r.r){\
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
-#define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##fn(z,A(),r);}
+#define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);MF(n##_f){n##_c(z,A(),r);}
 #define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
-  A cl,cr,za;if(!is##init){init##fn(za,cl,cr);is##init=1;}\
-  cpda(cr,r);cpda(cl,l);fun##fn(za,cl,cr);cpad(z,za);}\
+  A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\
+  cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\
  catch(U n){derr(n);}\
  catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
-EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##fn(*z,*l,*r);}catch(U n){derr(n);}\
+EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##_c(*z,*l,*r);}catch(U n){derr(n);}\
  catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}
 
