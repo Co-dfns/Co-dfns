@@ -3,6 +3,8 @@
 #include <inttypes.h>
 #include <limits.h>
 #include <float.h>
+#include <locale>
+#include <codecvt>
 #include <math.h>
 #include <memory>
 #include <algorithm>
@@ -72,7 +74,7 @@ using namespace af;
   A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\
   cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\
  catch(U n){derr(n);}\
- catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
+ catch(exception e){dmx.e=mkstr.from_bytes(e.what()).c_str();derr(500);}}\
 EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##_c(*z,*l,*r);}catch(U n){derr(n);}\
- catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}
+ catch(exception x){dmx.e=mkstr.from_bytes(x.what()).c_str();derr(500);}}
 

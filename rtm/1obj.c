@@ -13,7 +13,8 @@ EXPORT I DyalogGetInterpreterFunctions(dwa*p){
 Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
 S A{I r,f;dim4 s;array v;A(I r,dim4 s,array v):r(r),f(1),s(s),v(v){}
  A():r(0),f(0),s(dim4()),v(array()){}};
-dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;
+dim4 eshp=dim4(0,(B*)NULL);
+std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> mkstr;
 
 S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
  FN():nm(""),sm(0),sd(0){}

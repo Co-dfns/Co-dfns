@@ -325,6 +325,8 @@ rth,←'#include <stdint.h>',NL
 rth,←'#include <inttypes.h>',NL
 rth,←'#include <limits.h>',NL
 rth,←'#include <float.h>',NL
+rth,←'#include <locale>',NL
+rth,←'#include <codecvt>',NL
 rth,←'#include <math.h>',NL
 rth,←'#include <memory>',NL
 rth,←'#include <algorithm>',NL
@@ -394,9 +396,9 @@ rth,←'#define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\',NL
 rth,←' catch(U n){derr(n);}\',NL
-rth,←' catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\',NL
+rth,←' catch(exception e){dmx.e=mkstr.from_bytes(e.what()).c_str();derr(500);}}\',NL
 rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##_c(*z,*l,*r);}catch(U n){derr(n);}\',NL
-rth,←' catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}',NL
+rth,←' catch(exception x){dmx.e=mkstr.from_bytes(x.what()).c_str();derr(500);}}',NL
 rth,←'',NL
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD,APLP,APLU,APLV,APLW,APLZ,',NL
 rth,←' APLR,APLF,APLQ}APLTYPE;',NL
@@ -413,7 +415,8 @@ rth,←' if(p)dwafns=p;else R 0;if(dwafns->z<sizeof(S dwa))R 16;R 0;}',NL
 rth,←'Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}',NL
 rth,←'S A{I r,f;dim4 s;array v;A(I r,dim4 s,array v):r(r),f(1),s(s),v(v){}',NL
 rth,←' A():r(0),f(0),s(dim4()),v(array()){}};',NL
-rth,←'dim4 eshp=dim4(0,(B*)NULL);std::wstring msg;',NL
+rth,←'dim4 eshp=dim4(0,(B*)NULL);',NL
+rth,←'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> mkstr;',NL
 rth,←'',NL
 rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',NL
 rth,←' FN():nm(""),sm(0),sd(0){}',NL
@@ -432,8 +435,6 @@ rth,←' DOP(STR nm,I sm,I sd,A l,FN&r)',NL
 rth,←'  :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}',NL
 rth,←' DOP(STR nm,I sm,I sd,FN&l,A r)',NL
 rth,←'  :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};',NL
-rth,←'std::wstring mkstr(const char*s){B c=std::strlen(s);std::wstring t(c,L'' '');',NL
-rth,←' mbstowcs(&t[0],s,c);R t;}',NL
 rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}',NL
 rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}',NL
 rth,←'B cnt(dim4 s){B c=1;DO(4,c*=s[i]);R c;}',NL

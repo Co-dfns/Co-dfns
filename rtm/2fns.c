@@ -1,6 +1,4 @@
-﻿std::wstring mkstr(const char*s){B c=std::strlen(s);std::wstring t(c,L' ');
- mbstowcs(&t[0],s,c);R t;}
-I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}
+﻿I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}
 I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}
 B cnt(dim4 s){B c=1;DO(4,c*=s[i]);R c;}
 B cnt(const A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}
