@@ -1,18 +1,26 @@
-﻿gck←(0 1)(1 1)(2 0)(2 1)(2 2)(3 1)(9 0)(10 0)(10 1)(11 0)(11 1)(11 2)
-gcv←'Av' 'Bf' 'Er' 'Em' 'Ed' 'Fn' 'Pm' 'Va'  'Vf'  'Zp'  'Zx'  'Zi' 
+﻿gck←(0 0)(0 1)(1 1)(2 0)(2 1)(2 2)(3 1)(7 0)(9 0)(10 0)(10 1)
+gcv←'Aa' 'Av' 'Bf' 'Er' 'Em' 'Ed' 'Fn' 'Na' 'Pm' 'Va'  'Vf'  
+gck,←(11 0)(11 1)(11 2)
+gcv,←'Zp'  'Zx'  'Zi' 
+gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled */'',NL}'
 NL←⎕UCS 13 10
 
 gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
- ast←(⍉↑d p l t k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
+ ast←(⍉↑d p l(1+t)k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
+ Aaa←{'(1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(Aav ⍵),'));',NL}
+ Aas←{'(0,eshp,constant(',('¯'⎕R'-'⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'));',NL}
+ Aav←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',('¯'⎕R'-'com⍕¨⍵),'}.data()'}
+ Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
  Bf←{fn,'_c=',(fn←⊃dis¨⍵),'_f();',NL}
  Ed←{x f y←dis¨⍵ ⋄ 'A va',(⍕6⊃⍺),';',f,'_c(',(com('va',⍕6⊃⍺)x y),');',NL}
  Em←{f v←dis¨⍵ ⋄ 'A va',(⍕6⊃⍺),';',f,'_c(',('va',⍕6⊃⍺),',',v,');',NL}
- Er←{'z=',(⊃dis¨⍵),';R;',NL}
+ Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
+ Na←{sym⌷⍨|5⊃⍺}
  Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
  Zi←{'I isfn',(⍕5⊃⍺),'=0;',NL}
  Zp←{'FP(',('fn',⍕5⊃⍺),');',NL}

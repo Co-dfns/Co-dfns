@@ -10,7 +10,7 @@
  ∆04_TEST←{#.UT.expect←dy.literal⍬ ⋄ cd.literal⍬}
  ∆05_TEST←{#.UT.expect←dy.litvar ⍳5 ⋄ cd.litvar ⍳5}
  ∆06_TEST←{#.UT.expect←dy.multi⍨⍳5 ⋄ cd.multi⍨⍳5}
- ∆07_TEST←{#.UT.expect←dy.parens 1+⍳5 ⋄ cd.parens 1+⍳5}
+ ∆07_TEST←{#.UT.expect←dy.parens⍨1+⍳5 ⋄ cd.parens⍨1+⍳5}
  ∆08_TEST←{#.UT.expect←dy.lists ⍳5 ⋄ cd.lists ⍳5}
  ∆09_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 :EndNamespace
