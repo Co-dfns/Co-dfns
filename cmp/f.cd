@@ -30,7 +30,7 @@ gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',�
  Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' 'fv'⊃⍨x<0),⍕|x}
  Vf←{'fn',⍕5⊃⍺}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
- ⊃,/(⊂rth),(rtn⌿⍨syms∊sym),dis¨ks ast}
+ ⊃,/(⊂rth),(rtn⌷⍨syms⍳,¨'¨'),(rtn⌿⍨syms∊sym),dis¨ks ast}
 
 syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'   '⌈'   '!'
 nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min' 'max' 'fac'

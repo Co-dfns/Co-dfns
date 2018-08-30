@@ -1,6 +1,4 @@
 ﻿OM(map,"map",1,1,MFD,DFD)
-#define mapop(zz,rr) map_o zz(rr)
-
 MF(map_o){if(scm(ll)){ll(z,r);R;}
  z.r=r.r;z.s=r.s;I c=(I)cnt(z);if(!c){z.v=scl(0);R;}
  A zs;A rs=scl(r.v(0));ll(zs,rs);if(c==1){z.v=zs.v;R;}
@@ -21,4 +19,3 @@ DF(map_o){if(scd(ll)){ll(z,l,r);R;}
   z.v=v;R;}
  DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);ll(zs,ls,rs);
   v(i+1)=zs.v(0))z.v=v;}
-

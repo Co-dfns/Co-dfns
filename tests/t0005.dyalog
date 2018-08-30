@@ -1,7 +1,7 @@
 ﻿:Namespace t0005
 
 mmop←{+⌿⍵}
-⍝ dmop←{⍺+⌿⍵}
+dmop←{⍺+⌿⍵}
 ⍝ dop←{⍺+.×⍵}
 ⍝ mdop←{*⍣2⊢⍵}
 ⍝ umop←{{5+⍺+⍵}⌿⍵}
