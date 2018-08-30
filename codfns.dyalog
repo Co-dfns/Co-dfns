@@ -521,6 +521,7 @@ rtn[3],←⊂'MF(div_f){z.r=r.r;z.s=r.s;z.v=1.0/r.v.as(f64);}',NL
 rtn[3],←⊂'SF(div_f,z.v=lv.as(f64)/rv.as(f64))',NL
 rtn[4],←⊂'NM(exp,"exp",1,1,DID,MFD,DFD,MT ,MT )',NL
 rtn[4],←⊂'ID(exp,1,s32)',NL
+rtn[4],←⊂'exp_f exp_c;',NL
 rtn[4],←⊂'MF(exp_f){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}',NL
 rtn[4],←⊂'SF(exp_f,z.v=pow(lv.as(f64),rv.as(f64)))',NL
 rtn[4],←⊂'',NL
