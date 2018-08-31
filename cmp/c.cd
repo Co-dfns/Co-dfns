@@ -28,11 +28,12 @@ grd←aws _s (':'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
 digits←'0123456789'_set
-prim←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹')_set
-mop←'¨/⌿⍀\⍨'_set
-dop1←'.⍣∘'_set
-dop2←'⍤⍣∘'_set
-dop3←'∘'_set
+prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
+prim←aws _s (prims _set) _s aws
+mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
+dop1←aws _s ('.⍣∘'_set) _s aws
+dop2←aws _s ('⍤⍣∘'_set) _s aws
+dop3←aws _s ('∘'_set) _s aws
 eot←aws _s {(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs←digits _some
 odigs←digits _any

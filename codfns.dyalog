@@ -113,11 +113,12 @@ grd←aws _s (':'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
 digits←'0123456789'_set
-prim←(prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹')_set
-mop←'¨/⌿⍀\⍨'_set
-dop1←'.⍣∘'_set
-dop2←'⍤⍣∘'_set
-dop3←'∘'_set
+prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
+prim←aws _s (prims _set) _s aws
+mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
+dop1←aws _s ('.⍣∘'_set) _s aws
+dop2←aws _s ('⍤⍣∘'_set) _s aws
+dop3←aws _s ('∘'_set) _s aws
 eot←aws _s {(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs←digits _some
 odigs←digits _any
@@ -646,6 +647,7 @@ rtn[23],←⊂'MF(brk_o){ll(z,r,(r.r?r.r-1:0)-ww.v.as(f64).scalar<D>());}',NL
 rtn[23],←⊂'DF(brk_o){D ax=l.r;if(r.r>l.r)ax=r.r;if(ax)ax--;',NL
 rtn[23],←⊂' ll(z,l,r,ax-ww.v.as(f64).scalar<D>());}',NL
 rtn[24],←⊂'NM(iot,"iot",0,0,MT ,MFD,DFD,MT ,MT )',NL
+rtn[24],←⊂'iot_f iot_c;',NL
 rtn[24],←⊂'MF(iot_f){if(r.r>1)err(4);B c=cnt(r);if(c>4)err(10);',NL
 rtn[24],←⊂' if(c>1)err(16);',NL
 rtn[24],←⊂' z.r=1;z.s=dim4(r.v.as(s32).scalar<I>());',NL
