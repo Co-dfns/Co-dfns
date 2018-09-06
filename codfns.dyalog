@@ -586,6 +586,7 @@ rtn[12],←⊂'ID(lte,1,s32)',NL
 rtn[12],←⊂'SF(lte_f,z.v=lv<=rv)',NL
 rtn[12],←⊂'',NL
 rtn[13],←⊂'NM(eql,"eql",1,1,DID,MT ,DFD,MT ,MT )',NL
+rtn[13],←⊂'eql_f eql_c;',NL
 rtn[13],←⊂'ID(eql,1,s32)',NL
 rtn[13],←⊂'SF(eql_f,z.v=lv==rv)',NL
 rtn[14],←⊂'NM(gte,"gte",1,1,DID,MT ,DFD,MT ,MT )',NL
@@ -767,6 +768,7 @@ rtn[35],←⊂'MF(rgt_f){z=r;}',NL
 rtn[35],←⊂'DF(rgt_f){z=r;}',NL
 rtn[35],←⊂'',NL
 rtn[36],←⊂'NM(lft,"lft",0,0,MT ,MFD,DFD,MT ,MT )',NL
+rtn[36],←⊂'lft_f lft_c;',NL
 rtn[36],←⊂'MF(lft_f){z=r;}',NL
 rtn[36],←⊂'DF(lft_f){z=l;}',NL
 rtn[36],←⊂'',NL
