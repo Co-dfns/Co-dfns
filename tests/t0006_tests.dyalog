@@ -12,5 +12,8 @@
  ⍝ ∆06_TEST←{#.UT.expect←dy.f5 0 ⋄ cd.f5 0}
  ⍝ ∆07_TEST←{#.UT.expect←dy.f6 0 ⋄ cd.f6 0}
  ⍝ ∆08_TEST←{#.UT.expect←3 dy.f7 1 2 3 1 2 3 ⋄ 3 cd.f7 1 2 3 1 2 3}
- ∆09_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
+ ⍝ ∆09_TEST←{#.UT.expect←... f8 ...}
+ ⍝ ∆10_TEST←{#.UT.expect←... f9 ...}
+ ⍝ ∆11_TEST←{#.UT.expect←dy.f10 ⍬ ⋄ cd.f10 ⍬}
+ ∆12_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 :EndNamespace
