@@ -1,0 +1,45 @@
+﻿⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 1 0) '/usr/local' 'cuda'
+VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC'
+VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC'
+VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
+VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
+VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
+ _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
+MkNS←{ns⊣ns.⍎¨(⊂'0'),⍺∘mkf¨(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵⊣ns←#.⎕NS ⍬}
+Fix←{⍺ MkNS ⍺ Cmp ⍵}
+Xml←{⎕XML(0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
+MKA←{mka⊂⍵⊣'mka'⎕NA'P ',(⍺,soext⍬),'|mkarray <PP'}
+EXA←{exa ⍬ ⍵⊣'exa'⎕NA(⍺,soext⍬),'|exarray >PP P'}
+FREA←{frea ⍵⊣'frea'⎕NA(⍺,soext⍬),'|frea P'}
+opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+soext←{opsys'.dll' '.so' '.dylib'}
+tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+mkf←{fn←(⍺,soext⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa '
+ f←⍵,'←{_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
+ f,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
+ f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
+ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
+cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'' '}
+cco←'-std=c++11 -Ofast -g -Wall -fPIC -shared '
+ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
+gcc←'g++'ucc'so'
+clang←'clang++'ucc'dylib'
+vsco←{z←'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /Fd"',⍵,'.pdb" '
+ z,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+ z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
+vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+ z,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af', AF∆LIB, '.lib" '
+ z,'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '}
+vsc0←{~∨⌿b←⎕NEXISTS¨VS∆PS:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿VS∆PS}
+vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),'/fast "',⍵,'.cpp" '}
+vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
+vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
+f∆ N∆←'ptknrsgvyeld' 'ABEFGLMNOPVZ'
+⎕FX∘⍉∘⍪¨f∆,¨'←{'∘,¨(⍕¨⍳≢f∆),¨⊂'⊃⍵}'
+⎕FX∘⍉∘⍪¨N∆,¨'m←{'∘,¨(⍕¨⍳≢N∆),¨⊂'=t⍵}'
+⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '0(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
+⎕FX∘⍉∘⍪¨N∆,¨⊂'s←{⍵}' ⋄ at←{⍺ ⍺⍺ ⍵⍵ ⍵} ⋄ new←{⍵} ⋄ wrap←{⍵}

@@ -44,7 +44,6 @@ f∆ N∆←'ptknrsgvyeld' 'ABEFGLMNOPVZ'
 ⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
 ⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '0(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
 ⎕FX∘⍉∘⍪¨N∆,¨⊂'s←{⍵}' ⋄ at←{⍺ ⍺⍺ ⍵⍵ ⍵} ⋄ new←{⍵} ⋄ wrap←{⍵}
-
 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
  w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
 LoadImage←{⍺←1 ⋄ ⍉loadimg ⍬ ⍵ ⍺}
@@ -84,8 +83,7 @@ pp3←{⍺←'○' ⋄ p l←⍵ ⋄ o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z�
  (p=⍳≢p)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}                                     
 lb3←{⍺←⍳≢⊃⍵
  '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
-
-_o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e(r↑⍨-⌊/≢¨r r2)}
+_o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e (r↑⍨-⌊/≢¨r r2)}
 _s←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e r←p←e ⍵⍵ r:p ⋄ (c⌈c2)(a,a2)e r}
 _noenv←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ r}
 _env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}
@@ -133,7 +131,6 @@ sep←aws _s (('⋄',⎕UCS 10 13) _set _ign) _s aws
 nssn←alpha _s (alpha _o digits _any)
 nss←awslf _s (':Namespace'_tk) _s aws _s (nssn _opt) _s awslf _ign
 nse←awslf _s (':EndNamespace'_tk) _s awslf _ign
-
 Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {P⌽∊⍵}
 Prim←prim _as P
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
@@ -179,7 +176,6 @@ Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
 Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (1 F)
 ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
  (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,n~⊣)⊃a)}
-
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
 tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
@@ -235,10 +231,12 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
   i←lv(t[p]=2)∧t[0⌈n]=3 ⋄ s←≢p ⋄ p,←p[p[i]] ⋄ t,←2⍴⍨≢i ⋄ k,←5⍴⍨≢i ⋄ n,←n[i]
   l,←0⍴⍨≢i ⋄ _←{l[⍺]←⍵}/p[i]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢i ⋄ n[i]←s+⍳≢i
 
-  ⍝ Propagate free variables to E5's
-  i←⍸(t=2)∧k=5 ⋄ ∆←p I@{3≠t[⍵]}⍣≡p[f←fv 1] ⋄ c←f[∊(g←(⊢∘⊂⌸∆),⊂⍬)[j←(∪∆)⍳i]]
-  s←≢p ⋄ p,←(≢¨g)[j]⌿i ⋄ l,←s+⍳≢c ⋄ t,←t[c] ⋄ k,←k[c] ⋄ n,←n[c]
-  s+⍳≢c}⍣{0=≢⍺}⍬
+  ⍝ Propagate free variable references
+  ⍝e5←⍸(t=2)∧k=5
+  ⍝m←n[e5]∘.=p I@{3≠t[⍵]}⍣≡p[i←fv 1]
+  ⍝c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
+  ⍝k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c
+  ⍬}⍣{0=≢⍺}⍬
 
  ⍝ Lift Guard Expressions
  ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
@@ -338,7 +336,6 @@ var←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:⍺⍺ lit,⍺ �
 dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v ⍵),'];')('A*',⍺,'=NULL;')}
 fnv←{z←'A*env[',(⍕1+⊃s ⍵),']={',(⊃,/(⊂'env0'),{',p[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 gcl←{z r l n←((3⍴⊂'fn'),⊂⍺){⊃⍺ var/⍵}¨↓(⊃⍵),⍪1⊃⍵ ⋄ n,'(',(⊃{⍺,',',⍵}/z l r~⊂'fn'),',env);',nl}
-
 rth,←'#include <time.h>',NL
 rth,←'#include <stdint.h>',NL
 rth,←'#include <inttypes.h>',NL

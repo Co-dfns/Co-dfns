@@ -1,0 +1,77 @@
+﻿⍝ A  B  E  F  G  L  M  N  O  P  V  Z
+⍝ 0  1  2  3  4  5  6  7  8  9 10 11
+tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+
+ ⍝ Convert to Parent Vector 
+ _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
+
+ ⍝ Binding Table and Top-level Table
+ bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p ⋄ rn←p I⍣≡⍳≢p
+ 
+ ⍝ Top-level Exports
+ i←⍸(1=t)∧(1=k)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ p,←∆←(s←≢p)+⍳≢i ⋄ l,←(≢∆)⍴s,¯1↓∆
+ l[0]←⊃⌽∆ ⋄ t k,←11 1⍴⍨¨≢i ⋄ n,←n[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t,←10⍴⍨≢i ⋄ k,←k[i]
+ n,←bv[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←rn[i] ⋄ k[i]←2
+
+ ⍝ Init Flags
+ i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
+ l[∆,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃∆),∆
+
+ ⍝ Lift Functions
+ i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←i
+ p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
+
+ ⍝ Wrap Return Expressions
+ i←⍸(t[p]∊3 4)∧(t∊0 2)∨(t=1)∧(k=0)∧~(⍳≢l)∊¯1@{⍵=⍳≢⍵}l ⋄ p,←p[i]
+ p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i ⋄ t k n,←2 0 0⍴⍨¨≢i
+
+ ⍝ Lift Expressions
+ i←⍸(t∊8,⍳3)∧m←t[p]≠3 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ l←i((≢l)+⍳)@{⍵∊i}l
+ p,←∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
+ l[∪∆]←∆⊢∘⊃⌸i ⋄ net←{~t[⍵]∊8,⍳5} ⋄ wk←xw I p∘I@(xw∘I=⊢)⍣≡
+ l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(3≠t∘I)⍣≡∆
+
+ ⍝ Resolve Names
+ _←{lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4} ⋄ bm←{(t[⍵]=1)∧n[⍵]=⍺}
+
+  ⍝ Resolve Local Names
+  n[i](⊢+⊣×0=⊢)←bv[{⍵×n[i]bm ⍵}l I@{~n[i]bm ⍵}⍣≡l[p[i←fv 1]]]
+
+  ⍝ Inline variable chains
+  _←{⍵⌿10=t[n[⍵]]⊣n[⍵]←n[n[⍵]]}⍣{0=≢⍺}lv 10=t[0⌈n]
+
+  ⍝ Inline primitive references
+  i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]]
+
+  ⍝ Inline operator references
+  _←{s←≢p ⋄ h←≢¨c←(⊢∘⊂⌸p)[n[⍵]⍳⍨∪p] ⋄ c←∊c ⋄ p,←p[p[⍵]],∆←h⌿s+⍳≢⍵
+   l,←(0⍴⍨≢⍵),s+(≢⍵)+(∆,⍪c)⍳∆,⍪l[c] ⋄ _←{l[⍺]←⍵}/p[⍵]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢⍵
+   t,←t[c],⍨2⍴⍨≢⍵ ⋄ k,←k[c],⍨6⍴⍨≢⍵ ⋄ n,←n[c],⍨0⍴⍨≢⍵ ⋄ n[⍵]←s+⍳≢⍵
+   lv(t[p]=2)∧t[0⌈n]=8}⍣{0=≢⍺}lv(t[p]=2)∧t[0⌈n]=8
+
+  ⍝ Convert raw F calls into E5 closure calls
+  i←lv(t[p]=2)∧t[0⌈n]=3 ⋄ s←≢p ⋄ p,←p[p[i]] ⋄ t,←2⍴⍨≢i ⋄ k,←5⍴⍨≢i ⋄ n,←n[i]
+  l,←0⍴⍨≢i ⋄ _←{l[⍺]←⍵}/p[i]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢i ⋄ n[i]←s+⍳≢i
+
+  ⍝ Propagate free variables to E5's
+  i←⍸(t=2)∧k=5 ⋄ ∆←p I@{3≠t[⍵]}⍣≡p[f←fv 1] ⋄ c←f[∊(g←(⊢∘⊂⌸∆),⊂⍬)[j←(∪∆)⍳i]]
+  s←≢p ⋄ p,←(≢¨g)[j]⌿i ⋄ l,←s+⍳≢c ⋄ t,←t[c] ⋄ k,←k[c] ⋄ n,←n[c]
+  s+⍳≢c}⍣{0=≢⍺}⍬
+
+ ⍝ Lift Guard Expressions
+ ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
+ ⍝ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
+ ⍝ gn←⍸~gk∧10=t ⋄ p l n←(⊢-1+gv⍸⊢)¨gn∘I¨p l n ⋄ t←t[gn] ⋄ k←k[gn]
+ ⍝ Label jumps
+ ⍝ Inline functions
+ ⍝ Propagate constants
+ ⍝ Fold constants
+ ⍝ Dead, useless code elimination
+ ⍝ Allocate frames
+
+ ⍝ Function Declarations
+ i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
+ t k,←11 0⍴⍨¨≢i ⋄ n,←i
+
+ p l t k n exp sym}
+

@@ -1,0 +1,48 @@
+﻿_o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e (r↑⍨-⌊/≢¨r r2)}
+_s←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e r←p←e ⍵⍵ r:p ⋄ (c⌈c2)(a,a2)e r}
+_noenv←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ r}
+_env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}
+_then←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c a e _←p←e(⍵⍵ _s eot)a:p ⋄ c a e r}
+_not←{0<⊃c a e r←⍺ ⍺⍺ ⍵:0 a ⍺ ⍵ ⋄ 2 a ⍺ ⍵}
+_as←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ c (,⊂⍵⍵ a) e r}
+_t←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ e ⍵⍵ a:c a e r ⋄ 2 ⍬ ⍺ ⍵}
+_ign←{c a e r←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e r}
+_peek←{0<p←⊃⍺ ⍺⍺ ⍵:p ⋄ 0 ⍬ ⍺ ⍵}
+_yes←{0 ⍬ ⍺ ⍵}
+_opt←{⍺(⍺⍺ _o _yes)⍵}
+_any←{⍺(⍺⍺ _s ∇ _o _yes)⍵}
+_some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
+_set←{(0≠≢⍵)∧(⊃⍵)∊⍺⍺:0(,⊃⍵)⍺(1↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
+_tk←{((≢,⍺⍺)↑⍵)≡,⍺⍺:0(⊂,⍺⍺)⍺((≢,⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
+_eat←{0=≢⍵:2 ⍬ ⍺ ⍵ ⋄ 0(⍺⍺↑⍵)⍺(⍺⍺↓⍵)}
+ws←(' ',⎕UCS 9)_set
+aws←ws _any _ign
+awslf←(⎕UCS 10 13) _set _o ws _any _ign
+gets←aws _s ('←'_tk) _s aws _ign
+him←'¯' _set ⋄ dot←'.' _set ⋄ jot←'∘' _set
+lbrc←aws _s ('{'_set) _s aws ⋄ rbrc←aws _s ('}'_set) _s aws
+lpar←aws _s ('('_tk) _s aws _ign ⋄ rpar←aws _s (')'_tk) _s aws _ign
+lbrk←aws _s ('['_tk) _s aws _ign ⋄ rbrk←aws _s (']'_tk) _s aws _ign
+semi←aws _s (';'_tk _as ('a'V∘,∘⊃)) _s aws
+grd←aws _s (':'_tk) _s aws _ign
+egrd←aws _s ('::'_tk) _s aws _ign
+alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
+digits←'0123456789'_set
+prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
+prim←aws _s (prims _set) _s aws
+mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
+dop1←aws _s ('.⍣∘'_set) _s aws
+dop2←aws _s ('⍤⍣∘'_set) _s aws
+dop3←aws _s ('∘'_set) _s aws
+eot←aws _s {(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
+digs←digits _some
+odigs←digits _any
+int←aws _s digs _s (him _opt) _s aws
+float←aws _s (odigs _s dot _s int _o (digs _s dot)) _s aws
+name←aws _s (alpha _o (digits _some _s alpha) _some) _s aws
+aw←aws _s ('⍺⍵'_set) _s aws
+aaww←aws _s (('⍺⍺'_tk) _o ('⍵⍵'_tk)) _s aws
+sep←aws _s (('⋄',⎕UCS 10 13) _set _ign) _s aws
+nssn←alpha _s (alpha _o digits _any)
+nss←awslf _s (':Namespace'_tk) _s aws _s (nssn _opt) _s awslf _ign
+nse←awslf _s (':EndNamespace'_tk) _s awslf _ign
