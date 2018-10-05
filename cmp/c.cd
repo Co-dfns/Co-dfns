@@ -1,4 +1,4 @@
-﻿_o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e (r↑⍨-⌊/≢¨r r2)}
+﻿_o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e(r↑⍨-⌊/≢¨r r2)}
 _s←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e r←p←e ⍵⍵ r:p ⋄ (c⌈c2)(a,a2)e r}
 _noenv←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ r}
 _env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}

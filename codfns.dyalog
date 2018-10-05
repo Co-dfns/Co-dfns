@@ -38,12 +38,9 @@ vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),'/fast "',⍵,'.
 vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
 vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
 f∆ N∆←'ptknrsgvyeld' 'ABEFGLMNOPVZ'
-⎕FX∘⍉∘⍪¨f∆,¨'←{'∘,¨(⍕¨⍳≢f∆),¨⊂'⊃⍵}'
-⎕FX∘⍉∘⍪¨N∆,¨'m←{'∘,¨(⍕¨⍳≢N∆),¨⊂'=t⍵}'
 ⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
 ⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
 ⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '0(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
-⎕FX∘⍉∘⍪¨N∆,¨⊂'s←{⍵}' ⋄ at←{⍺ ⍺⍺ ⍵⍵ ⍵} ⋄ new←{⍵} ⋄ wrap←{⍵}
 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
  w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
 LoadImage←{⍺←1 ⋄ ⍉loadimg ⍬ ⍵ ⍺}
@@ -83,7 +80,7 @@ pp3←{⍺←'○' ⋄ p l←⍵ ⋄ o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z�
  (p=⍳≢p)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}                                     
 lb3←{⍺←⍳≢⊃⍵
  '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
-_o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e (r↑⍨-⌊/≢¨r r2)}
+_o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e(r↑⍨-⌊/≢¨r r2)}
 _s←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e r←p←e ⍵⍵ r:p ⋄ (c⌈c2)(a,a2)e r}
 _noenv←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ r}
 _env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}
@@ -150,9 +147,9 @@ Fa←{e←(⊂'⍵⍵' '⍺⍺','⍺⍵')∘,∘⊂¨↓⍉¯1+3 3 2 2⊤(6 4 4�
  (1=+⌿m)∧2>m⍳1:0(,⊂0(N∆⍳'F')1 0⍪¨1+@0⊃(0⍴⊂4⍴⊂⍬),⊃m⌿1⊃a)⍺ ⍵
  z←⍪⌿↑(⊂0(N∆⍳'F')¯1 0),({1(N∆⍳'F')⍵ 0}¨1+m⌿⍳14)⍪¨(2+@0⊃)¨m⌿1⊃a 
  0(,⊂z)⍺ ⍵}
-Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(n z)⌿⍨m←(Fm∧¯1∊⍨k)⊢z←⍪⌿↑⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
+Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
  r←↓⍉↑⍺∘Fa¨ns ⋄ 0<c←⌈⌿⊃r:c ⍬ ⍺ ⍵
- z←(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿p z)+@0⍉↑⊃¨1⊃r
+ z←(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿0⊃z)+@0⍉↑⊃¨1⊃r
  0(,⊂z)⍺ ''}
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
 Bfn←rbrc Blrp lbrc _as {0(N∆⍳'F')¯1(,⊂⌽1↓¯1↓⍵)}
@@ -175,7 +172,7 @@ Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
 Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
 Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (1 F)
 ps←{0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
- (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,n~⊣)⊃a)}
+ (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,(3⊃⊢)~⊣)⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
 tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
@@ -187,21 +184,23 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p ⋄ rn←p I⍣≡⍳≢p
  
  ⍝ Top-level Exports
- i←⍸(1=t)∧(1=k)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ p,←∆←(s←≢p)+⍳≢i ⋄ l,←(≢∆)⍴s,¯1↓∆
- l[0]←⊃⌽∆ ⋄ t k,←11 1⍴⍨¨≢i ⋄ n,←n[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t,←10⍴⍨≢i ⋄ k,←k[i]
- n,←bv[i] ⋄ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←rn[i] ⋄ k[i]←2
+ i←⍸(1=t)∧(1=k)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p
+ p,←∆←(s←≢p)+⍳≢i ⋄ l,←(≢∆)⍴s,¯1↓∆ ⋄ l[0]←⊃⌽∆ ⋄ t k,←11 1⍴⍨¨≢i ⋄ n,←n[i]
+ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t,←10⍴⍨≢i ⋄ k,←k[i] ⋄ n,←bv[i]
+ p,←∆ ⋄ l,←(≢i)+∆ ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←rn[i] ⋄ k[i]←2
 
  ⍝ Init Flags
  i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
  l[∆,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃∆),∆
 
  ⍝ Lift Functions
- i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←i
- p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
+ i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i 
+ n,←i ⋄ p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
 
  ⍝ Wrap Return Expressions
  i←⍸(t[p]∊3 4)∧(t∊0 2)∨(t=1)∧(k=0)∧~(⍳≢l)∊¯1@{⍵=⍳≢⍵}l ⋄ p,←p[i]
- p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i ⋄ t k n,←2 0 0⍴⍨¨≢i
+ p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i
+ t k n,←2 0 0⍴⍨¨≢i
 
  ⍝ Lift Expressions
  i←⍸(t∊8,⍳3)∧m←t[p]≠3 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ l←i((≢l)+⍳)@{⍵∊i}l
@@ -210,33 +209,20 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(3≠t∘I)⍣≡∆
 
  ⍝ Resolve Names
- _←{lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4} ⋄ bm←{(t[⍵]=1)∧n[⍵]=⍺}
+ lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4}
+ loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[p[⍵]]]}
+ rf←I@{t[⍵]≠3}⍣≡⍨p ⋄ n[i]←n[i]loc⊢i←fv 1 ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n
+ ov←lv(t[p]=8)∧(t[0⌈n]=3)∧((k[p]=2)∧m[l])∨(k[p]=1)∧m←l=⍳≢l
+ of←n[ov] ⋄ os←p[ov] ⋄ cs←lv(t[p]=2)∧(t=3)∨n∊os ⋄ ns←n[cs] 
+ fi←⍬ ⋄ fn←⍬ ⋄ ci←⍬ ⋄ cr←⍬
+ _←{fi fn,←cf cn←⍵ ⋄ g←(cf⊢∘⊂⌸cn),⊂⍬ ⋄ cfi←(∪cf)∘⍳
+  fi fn,←((≢¨g)[i]⌿os)(∊g[i←cfi of])
+  r←n I@{t[0⌈⍵]=10}(∊g[i])loc⊢s←(≢¨g)[i←cfi cr,ns]⌿cs,cs
+  ci cr,←s r ⋄ (rf[s[i]])(r[i←⍸r<0])}⍣{(0=≢⊃⍺)∨⍺≡⍵}(rf[i])(n[i←fv 1])
+ fin←∪fi,⍪fn ⋄ cir←∪ci,⍪cr
 
-  ⍝ Resolve Local Names
-  n[i](⊢+⊣×0=⊢)←bv[{⍵×n[i]bm ⍵}l I@{~n[i]bm ⍵}⍣≡l[p[i←fv 1]]]
-
-  ⍝ Inline variable chains
-  _←{⍵⌿10=t[n[⍵]]⊣n[⍵]←n[n[⍵]]}⍣{0=≢⍺}lv 10=t[0⌈n]
-
-  ⍝ Inline primitive references
-  i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]]
-
-  ⍝ Inline operator references
-  _←{s←≢p ⋄ h←≢¨c←(⊢∘⊂⌸p)[n[⍵]⍳⍨∪p] ⋄ c←∊c ⋄ p,←p[p[⍵]],∆←h⌿s+⍳≢⍵
-   l,←(0⍴⍨≢⍵),s+(≢⍵)+(∆,⍪c)⍳∆,⍪l[c] ⋄ _←{l[⍺]←⍵}/p[⍵]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢⍵
-   t,←t[c],⍨2⍴⍨≢⍵ ⋄ k,←k[c],⍨6⍴⍨≢⍵ ⋄ n,←n[c],⍨0⍴⍨≢⍵ ⋄ n[⍵]←s+⍳≢⍵
-   lv(t[p]=2)∧t[0⌈n]=8}⍣{0=≢⍺}lv(t[p]=2)∧t[0⌈n]=8
-
-  ⍝ Convert raw F calls into E5 closure calls
-  i←lv(t[p]=2)∧t[0⌈n]=3 ⋄ s←≢p ⋄ p,←p[p[i]] ⋄ t,←2⍴⍨≢i ⋄ k,←5⍴⍨≢i ⋄ n,←n[i]
-  l,←0⍴⍨≢i ⋄ _←{l[⍺]←⍵}/p[i]{(⍵,⍺)(l[⍺],⍵)}⌸s+⍳≢i ⋄ n[i]←s+⍳≢i
-
-  ⍝ Propagate free variable references
-  ⍝e5←⍸(t=2)∧k=5
-  ⍝m←n[e5]∘.=p I@{3≠t[⍵]}⍣≡p[i←fv 1]
-  ⍝c←i[(≢i)|⍸,m] ⋄ s←≢p ⋄ x,←x[p,←e5⌿⍨+/m] ⋄ l,←s+⍳≢c ⋄ t,←10⍴⍨≢c
-  ⍝k,←k[c] ⋄ n,←n[c] ⋄ s+⍳≢c
-  ⍬}⍣{0=≢⍺}⍬
+ ⍝ Inline Primitive References
+ i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
 
  ⍝ Lift Guard Expressions
  ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
@@ -253,8 +239,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
- p l t k n exp sym}
-
+ p l t k n exp sym fin cir}
 gck←(0 0)(0 1)(1 2)(2 0)(2 1)(2 2)(2 5)(2 6)(3 1)(7 0)(9 0)(10 0)(10 1)
 gcv←'Aa' 'Av' 'Bx' 'Er' 'Em' 'Ed' 'Ec' 'Eo' 'Fn' 'Na' 'Pm' 'Va'  'Vf'  
 gck,←(11 0)(11 1)(11 2)
@@ -263,7 +248,7 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{p l t k n exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+gc←{p l t k n exp sym fin cir←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  ast←(⍉↑d p l(1+t)k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
@@ -336,6 +321,7 @@ var←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:⍺⍺ lit,⍺ �
 dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v ⍵),'];')('A*',⍺,'=NULL;')}
 fnv←{z←'A*env[',(⍕1+⊃s ⍵),']={',(⊃,/(⊂'env0'),{',p[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
 gcl←{z r l n←((3⍴⊂'fn'),⊂⍺){⊃⍺ var/⍵}¨↓(⊃⍵),⍪1⊃⍵ ⋄ n,'(',(⊃{⍺,',',⍵}/z l r~⊂'fn'),',env);',nl}
+
 rth,←'#include <time.h>',NL
 rth,←'#include <stdint.h>',NL
 rth,←'#include <inttypes.h>',NL
