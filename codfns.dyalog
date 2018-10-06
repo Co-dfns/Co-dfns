@@ -268,7 +268,8 @@ gc←{p l t k n exp sym fin cir←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{�
  Od←{x f y←dis¨⍵ ⋄ f,'_o fn',(⍕6⊃⍺),'_c(',(Oc x y),');',NL}
  Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
  Zi←{'I isfn',(⍕5⊃⍺),'=0;',NL}
- Zp←{'FP(',('fn',⍕5⊃⍺),');',NL}
+ Zp←{n←'fn',⍕5⊃⍺ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};};',NL
+  z,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r);}',NL}
  Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
  Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' 'fv'⊃⍨x<0),⍕|x}
  Vf←{'fn',⍕5⊃⍺}
@@ -393,8 +394,6 @@ rth,←'  z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',NL
 rth,←' if(!r.r){\',NL
 rth,←'  z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\',NL
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',NL
-rth,←'#define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);n##_f n##_c;\',NL
-rth,←' MF(n##_f){n##_c(z,A(),r);}',NL
 rth,←'#define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\',NL

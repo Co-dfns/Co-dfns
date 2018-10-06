@@ -69,8 +69,6 @@ using namespace af;
  if(!r.r){\
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
-#define FP(n) NM(n,"",0,0,MT,MFD,DFD,MT,MT);n##_f n##_c;\
- MF(n##_f){n##_c(z,A(),r);}
 #define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
   A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\
   cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\
