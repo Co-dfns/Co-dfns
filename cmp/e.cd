@@ -34,17 +34,25 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(3≠t∘I)⍣≡∆
 
  ⍝ Resolve Names
- lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4}
  loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[p[⍵]]]}
- rf←I@{t[⍵]≠3}⍣≡⍨p ⋄ n[i]←n[i]loc⊢i←fv 1 ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n
- ov←lv(t[p]=8)∧(t[0⌈n]=3)∧((k[p]=2)∧m[l])∨(k[p]=1)∧m←l=⍳≢l
- of←n[ov] ⋄ os←p[ov] ⋄ cs←lv(t[p]=2)∧(t=3)∨n∊os ⋄ ns←n[cs] 
- fi←⍬ ⋄ fn←⍬ ⋄ ci←⍬ ⋄ cr←⍬
- _←{fi fn,←cf cn←⍵ ⋄ g←(cf⊢∘⊂⌸cn),⊂⍬ ⋄ cfi←(∪cf)∘⍳
-  fi fn,←((≢¨g)[i]⌿os)(∊g[i←cfi of])
-  r←n I@{t[0⌈⍵]=10}(∊g[i])loc⊢s←(≢¨g)[i←cfi cr,ns]⌿cs,cs
-  ci cr,←s r ⋄ (rf[s[i]])(r[i←⍸r<0])}⍣{(0=≢⊃⍺)∨⍺≡⍵}(rf[i])(n[i←fv 1])
- fin←∪fi,⍪fn ⋄ cir←∪ci,⍪cr
+ n[i]←n[i]loc⊢i←⍸(t=10)∧n<¯4 ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n
+ oc←k[p]((m[l]∧2=⊣)∨m∧1=⊣)m←l=⍳≢l ⋄ ox←(lvm←(t=10)∧n≥0)∧(t[p]=8)∧t[0⌈n]=3
+ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm ⋄ oa←⍸oam ⋄ of←n[ov] ⋄ os←p[ov]
+ cs←⍸lvm∧(t[p]=2)∧(t[0⌈n]=3)∨n∊os ⋄ ns←n[cs]
+ oag←p[oa]⊢∘⊂⌸n[oa]
+ oas←⍸lvm∧(t[p]=2)∧n∊p[oa]
+ i←(∪p[oa])⍳n[oas]
+ cs,←(≢¨oag)[i]⌿oas
+ ns,←∊oag[i]
+
+ ⍝ Core problem: How to propagate operator references to the correct call
+ ⍝ sites. 
+
+ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬ ⋄ rf←I@{t[⍵]≠3}⍣≡⍨p
+ _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂0 2⍴⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
+  ci,←s←(≢¨g)[i←x ctvr[;2],ns]⌿ci,cs
+  ctvr⍪←tv,r←n I@{t[0⌈⍵]=10}(1⌷⍉tv←⊃⍪⌿g[i])loc s
+  (rf[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}rf[i](k[i],⍪n[i←⍸(t=10)∧n<¯4])
 
  ⍝ Inline Primitive References
  i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
@@ -64,4 +72,4 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
- p l t k n exp sym fin cir}
+ p l t k n exp sym fi ftn ci ctvr}

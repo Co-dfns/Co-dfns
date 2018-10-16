@@ -210,16 +210,15 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Resolve Names
  lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4}
- loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[p[⍵]]]}
- rf←I@{t[⍵]≠3}⍣≡⍨p ⋄ n[i]←n[i]loc⊢i←fv 1 ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n
- ov←lv(t[p]=8)∧(t[0⌈n]=3)∧((k[p]=2)∧m[l])∨(k[p]=1)∧m←l=⍳≢l
- of←n[ov] ⋄ os←p[ov] ⋄ cs←lv(t[p]=2)∧(t=3)∨n∊os ⋄ ns←n[cs] 
- fi←⍬ ⋄ fn←⍬ ⋄ ci←⍬ ⋄ cr←⍬
- _←{fi fn,←cf cn←⍵ ⋄ g←(cf⊢∘⊂⌸cn),⊂⍬ ⋄ cfi←(∪cf)∘⍳
-  fi fn,←((≢¨g)[i]⌿os)(∊g[i←cfi of])
-  r←n I@{t[0⌈⍵]=10}(∊g[i])loc⊢s←(≢¨g)[i←cfi cr,ns]⌿cs,cs
-  ci cr,←s r ⋄ (rf[s[i]])(r[i←⍸r<0])}⍣{(0=≢⊃⍺)∨⍺≡⍵}(rf[i])(n[i←fv 1])
- fin←∪fi,⍪fn ⋄ cir←∪ci,⍪cr
+ loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[⍵]]}
+ rf←I@{t[⍵]≠3}⍣≡⍨p ⋄ n[i]←n[i]loc p[i←fv 1] ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n
+ ov←lv(ox←(t[p]=8)∧(t[0⌈n]=3))∧oc←((k[p]=2)∧m[l])∨(k[p]=1)∧m←l=⍳≢l
+ oa←lv ox∧~oc ⋄ of←n[ov] ⋄ os←p[ov] ⋄ cs←lv(t[p]=2)∧(t[0⌈n]=3)∨n∊os
+ ns←n[cs] ⋄ ci←p[oa] ⋄ ctvr←1,(-4-m[oa]),⍪n[oa] ⋄ fi←⍬ ⋄ ftn←0 2⍴⍬
+ _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂0 2⍴⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
+  ci,←s←(≢¨g)[i←x ctvr[;2],ns]⌿ci,cs
+  ctvr⍪←tv,r←n I@{t[0⌈⍵]=10}(1⌷⍉tv←⊃⍪⌿g[i])loc s
+  (rf[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}rf[i](k[i],⍪n[i←fv 1])
 
  ⍝ Inline Primitive References
  i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
@@ -239,7 +238,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
- p l t k n exp sym fin cir}
+ p l t k n exp sym fi ftn ci ctvr}
 gck←(0 0)(0 1)(1 2)(2 0)(2 1)(2 2)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
 gcv←'Aa' 'Av' 'Bx' 'Er' 'Em' 'Ed' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
 gck,←(11 0)(11 1)(11 2)
@@ -248,9 +247,12 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{p l t k n exp sym fin cir←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+gc←{p l t k n exp sym fi ftn ci ctvr←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+ fx←(∪fi)∘⍳ ⋄ ftn←(fi{⊂∪⍵}⌸ftn),⊂0 2⍴⍬
+ cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
+ var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
  ast←(⍉↑d p l(1+t)k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
  Aaa←{'(1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(Aav ⍵),'));',NL}
  Aas←{'(0,eshp,constant(',('¯'⎕R'-'⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'));',NL}
@@ -258,8 +260,15 @@ gc←{p l t k n exp sym fin cir←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{�
  Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
  Bx←{fn,'_c=',(fn←⊃dis¨⍵),'_f();',NL}
- Ed←{x f y←dis¨⍵ ⋄ 'A va',(⍕6⊃⍺),';',f,'_c(',(com('va',⍕6⊃⍺)x y),');',NL}
- Em←{f v←dis¨⍵ ⋄ 'A va',(⍕6⊃⍺),';',f,'_c(',('va',⍕6⊃⍺),',',v,');',NL}
+ Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'va' 'fn' 'fv'⊃⍨2⌊t+2×r<0
+  ts,' fv',(⍕|v),'=',vp,(⍕|r),('' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
+ Ecf←{⊃,/⍺{'fn',(⍕⍺),'_c.fv',⍵,'=fv',⍵,';',NL,'  '}¨⍕¨|⍵[;1]}
+ Ecz←{i←fx⊢x←⍵,{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍵
+  ⊃,/((⊂Ecv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
+ Ed←{x f y←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
+  z,' {',(Ecz 1(0 5)⊃⍵),f,'_c(',(com('va',⍕6⊃⍺)x y),');}',NL}
+ Em←{f v←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
+  z,' {',(Ecz 0(0 5)⊃⍵),f,'_c(',('va',⍕6⊃⍺),',',v,');}',NL}
  Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
  Na←{sym⌷⍨|5⊃⍺}
@@ -268,10 +277,11 @@ gc←{p l t k n exp sym fin cir←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{�
  Od←{x f y←dis¨⍵ ⋄ f,'_o fn',(⍕6⊃⍺),'_c(',(Oc x y),');',NL}
  Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
  Zi←{'I isfn',(⍕5⊃⍺),'=0;',NL}
- Zp←{n←'fn',⍕5⊃⍺ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};};',NL
-  z,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r);}',NL}
+ Zp←{n←'fn',⍕5⊃⍺ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};'
+  z,←⊃,/{NL,' ',(⍺⊃'A' 'FN'),' fv',(⍕|⍵),';'}/ftn⊃⍨fx 5⊃⍺
+  z,'};',NL,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r);}',NL}
  Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
- Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' 'fv'⊃⍨x<0),⍕|x}
+ Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ var x}
  Vf←{'fn',⍕5⊃⍺}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
  ⊃,/(⊂rth),(rtn⌷⍨⊂syms⍳,¨'¨/'),(rtn⌿⍨syms∊sym),dis¨ks ast}
