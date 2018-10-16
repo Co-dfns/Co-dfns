@@ -40,11 +40,11 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm ⋄ oa←⍸oam ⋄ of←n[ov] ⋄ os←p[ov]
  cv←⍸lm∧(t[p]=2)∧(t[0⌈n]=3)∨n∊os ⋄ cf←n[cv] ⋄ cs←p[cv]
  oas←⍬ ⋄ oaf←⍬
- fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬ ⋄ rf←I@{t[⍵]≠3}⍣≡⍨p
+ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
  _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂0 2⍴⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
   ci,←s←(≢¨g)[i←x ctvr[;2],cf,oaf]⌿ci,cs,oas
   ctvr⍪←tv,r←n I@{t[0⌈⍵]=10}(1⌷⍉tv←⊃⍪⌿g[i])loc s
-  (rf[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}rf[i](k[i],⍪n[i←⍸(t=10)∧n<¯4])
+  (p[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}p[p[i]](k[i],⍪n[i←⍸(t=10)∧n<¯4])
 
  ⍝ Inline Primitive References
  i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
