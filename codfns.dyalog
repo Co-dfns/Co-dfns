@@ -209,19 +209,20 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(3≠t∘I)⍣≡∆
 
  ⍝ Resolve Names
- lv←{⍸⍵∧(t=10)∧n≥0} ⋄ fv←{⍸⍵∧(t=10)∧n<¯4}
  loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[⍵]]}
- rf←I@{t[⍵]≠3}⍣≡⍨p ⋄ n[i]←n[i]loc p[i←fv 1] ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n
- ov←lv(ox←(t[p]=8)∧(t[0⌈n]=3))∧oc←((k[p]=2)∧m[l])∨(k[p]=1)∧m←l=⍳≢l
- oa←lv ox∧~oc ⋄ of←n[ov] ⋄ os←p[ov] ⋄ cs←lv(t[p]=2)∧(t[0⌈n]=3)∨n∊os
- ns←n[cs] ⋄ ci←p[oa] ⋄ ctvr←1,(-4-m[oa]),⍪n[oa] ⋄ fi←⍬ ⋄ ftn←0 2⍴⍬
+ n[i]←n[i]loc p[i←⍸(t=10)∧n<¯4] ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n ⋄ m←l=⍳≢l
+ oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p] ⋄ ox←(lm←(t=10)∧n≥0)∧(t[p]=8)∧t[0⌈n]=3
+ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm ⋄ oa←⍸oam ⋄ of←n[ov] ⋄ os←p[ov]
+ cv←⍸lm∧(t[p]=2)∧(t[0⌈n]=3)∨n∊os ⋄ cf←n[cv] ⋄ cs←p[cv]
+ oas←⍬ ⋄ oaf←⍬
+ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬ ⋄ rf←I@{t[⍵]≠3}⍣≡⍨p
  _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂0 2⍴⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
-  ci,←s←(≢¨g)[i←x ctvr[;2],ns]⌿ci,cs
+  ci,←s←(≢¨g)[i←x ctvr[;2],cf,oaf]⌿ci,cs,oas
   ctvr⍪←tv,r←n I@{t[0⌈⍵]=10}(1⌷⍉tv←⊃⍪⌿g[i])loc s
-  (rf[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}rf[i](k[i],⍪n[i←fv 1])
+  (rf[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}rf[i](k[i],⍪n[i←⍸(t=10)∧n<¯4])
 
  ⍝ Inline Primitive References
- i←lv t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
+ i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
 
  ⍝ Lift Guard Expressions
  ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
@@ -238,7 +239,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
- p l t k n exp sym fi ftn ci ctvr}
+ p l t k n exp sym fi ftn ci ctvr oas oaf}
 gck←(0 0)(0 1)(1 2)(2 0)(2 1)(2 2)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
 gcv←'Aa' 'Av' 'Bx' 'Er' 'Em' 'Ed' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
 gck,←(11 0)(11 1)(11 2)
@@ -247,9 +248,11 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{p l t k n exp sym fi ftn ci ctvr←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+gc←{p l t k n exp sym fi ftn ci ctvr oas oaf←⍵
+ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  fx←(∪fi)∘⍳ ⋄ ftn←(fi{⊂∪⍵}⌸ftn),⊂0 2⍴⍬
  cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
+ ox←(∪oas)∘⍳ ⋄ oaf←(oas{⊂∪⍵}⌸oaf),⊂⍬
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}

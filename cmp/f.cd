@@ -6,9 +6,11 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{p l t k n exp sym fi ftn ci ctvr←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+gc←{p l t k n exp sym fi ftn ci ctvr oas oaf←⍵
+ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  fx←(∪fi)∘⍳ ⋄ ftn←(fi{⊂∪⍵}⌸ftn),⊂0 2⍴⍬
  cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
+ ox←(∪oas)∘⍳ ⋄ oaf←(oas{⊂∪⍵}⌸oaf),⊂⍬
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
