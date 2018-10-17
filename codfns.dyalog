@@ -211,13 +211,15 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Resolve Names
  loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[⍵]]}
  n[i]←n[i]loc p[i←⍸(t=10)∧n<¯4] ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n ⋄ m←l=⍳≢l
- oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p] ⋄ ox←(lm←(t=10)∧n≥0)∧(t[p]=8)∧t[0⌈n]=3
- ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm ⋄ oa←⍸oam ⋄ of←n[ov] ⋄ os←p[ov]
- cv←⍸lm∧(t[p]=2)∧(t[0⌈n]=3)∨n∊os ⋄ cf←n[cv] ⋄ cs←p[cv]
- oas←⍬ ⋄ oaf←⍬
- fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
- _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂0 2⍴⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
-  ci,←s←(≢¨g)[i←x ctvr[;2],cf,oaf]⌿ci,cs,oas
+ oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p] ⋄ ox←(t3←t[0⌈n]=3)∧om←(t[p]=8)∧lm←(t=10)∧n≥0
+ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm ⋄ of←n[ov] ⋄ os←p[ov]
+ cv←(t3∨nos←n∊os)∧t2←lm∧t[p]=2 ⋄ oa←oam∨om∧nos ⋄ cv←⍸cv ⋄ x←⍸t2
+ oi←p[i←⍸oa] ⋄ on←n[i] ⋄ pom←p[i←⍸om] ⋄ nom←n[i]
+ _←{(oi,←(≢¨g)[i]⌿pom)(on,←∊(g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom])}⍣≡oi on
+ i←(∪oi)⍳n[x] ⋄ g←(oi⊢∘⊂⌸on),⊂⍬ ⋄ on←∊g[i] ⋄ oi←(≢¨g)[i]⌿p[x]
+ cf←n[cv] ⋄ cs←p[cv] ⋄ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
+ _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂2/⍪⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
+  ci,←s←(≢¨g)[i←x ctvr[;2],cf,on]⌿ci,cs,oi
   ctvr⍪←tv,r←n I@{t[0⌈⍵]=10}(1⌷⍉tv←⊃⍪⌿g[i])loc s
   (p[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}p[p[i]](k[i],⍪n[i←⍸(t=10)∧n<¯4])
 
@@ -239,7 +241,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
- p l t k n exp sym fi ftn ci ctvr oas oaf}
+ p l t k n exp sym fi ftn ci ctvr oi on}
 gck←(0 0)(0 1)(1 2)(2 0)(2 1)(2 2)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
 gcv←'Aa' 'Av' 'Bx' 'Er' 'Em' 'Ed' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
 gck,←(11 0)(11 1)(11 2)
@@ -248,11 +250,11 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{p l t k n exp sym fi ftn ci ctvr oas oaf←⍵
+gc←{p l t k n exp sym fi ftn ci ctvr oi on←⍵
  I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  fx←(∪fi)∘⍳ ⋄ ftn←(fi{⊂∪⍵}⌸ftn),⊂0 2⍴⍬
  cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
- ox←(∪oas)∘⍳ ⋄ oaf←(oas{⊂∪⍵}⌸oaf),⊂⍬
+ ox←(∪oi)∘⍳ ⋄ on←(oi{⊂∪⍵}⌸on),⊂⍬
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
@@ -266,12 +268,12 @@ gc←{p l t k n exp sym fi ftn ci ctvr oas oaf←⍵
  Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'va' 'fn' 'fv'⊃⍨2⌊t+2×r<0
   ts,' fv',(⍕|v),'=',vp,(⍕|r),('' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
  Ecf←{⊃,/⍺{'fn',(⍕⍺),'_c.fv',⍵,'=fv',⍵,';',NL,'  '}¨⍕¨|⍵[;1]}
- Ecz←{i←fx⊢x←⍵,{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍵
+ Ecz←{i←fx⊢x←⍵,(on⊃⍨ox ⍺),{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍺
   ⊃,/((⊂Ecv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
  Ed←{x f y←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
-  z,' {',(Ecz 1(0 5)⊃⍵),f,'_c(',(com('va',⍕6⊃⍺)x y),');}',NL}
+  z,' {',((6⊃⍺)Ecz 1(0 5)⊃⍵),f,'_c(',(com('va',⍕6⊃⍺)x y),');}',NL}
  Em←{f v←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
-  z,' {',(Ecz 0(0 5)⊃⍵),f,'_c(',('va',⍕6⊃⍺),',',v,');}',NL}
+  z,' {',((6⊃⍺)Ecz 0(0 5)⊃⍵),f,'_c(',('va',⍕6⊃⍺),',',v,');}',NL}
  Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
  Na←{sym⌷⍨|5⊃⍺}

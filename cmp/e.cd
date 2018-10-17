@@ -36,13 +36,15 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Resolve Names
  loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[⍵]]}
  n[i]←n[i]loc p[i←⍸(t=10)∧n<¯4] ⋄ n←I@{t[0⌈⍵]=10}⍣≡⍨n ⋄ m←l=⍳≢l
- oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p] ⋄ ox←(lm←(t=10)∧n≥0)∧(t[p]=8)∧t[0⌈n]=3
- ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm ⋄ oa←⍸oam ⋄ of←n[ov] ⋄ os←p[ov]
- cv←⍸lm∧(t[p]=2)∧(t[0⌈n]=3)∨n∊os ⋄ cf←n[cv] ⋄ cs←p[cv]
- oas←⍬ ⋄ oaf←⍬
- fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
- _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂0 2⍴⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
-  ci,←s←(≢¨g)[i←x ctvr[;2],cf,oaf]⌿ci,cs,oas
+ oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p] ⋄ ox←(t3←t[0⌈n]=3)∧om←(t[p]=8)∧lm←(t=10)∧n≥0
+ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm ⋄ of←n[ov] ⋄ os←p[ov]
+ cv←(t3∨nos←n∊os)∧t2←lm∧t[p]=2 ⋄ oa←oam∨om∧nos ⋄ cv←⍸cv ⋄ x←⍸t2
+ oi←p[i←⍸oa] ⋄ on←n[i] ⋄ pom←p[i←⍸om] ⋄ nom←n[i]
+ _←{(oi,←(≢¨g)[i]⌿pom)(on,←∊(g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom])}⍣≡oi on
+ i←(∪oi)⍳n[x] ⋄ g←(oi⊢∘⊂⌸on),⊂⍬ ⋄ on←∊g[i] ⋄ oi←(≢¨g)[i]⌿p[x]
+ cf←n[cv] ⋄ cs←p[cv] ⋄ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
+ _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂2/⍪⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
+  ci,←s←(≢¨g)[i←x ctvr[;2],cf,on]⌿ci,cs,oi
   ctvr⍪←tv,r←n I@{t[0⌈⍵]=10}(1⌷⍉tv←⊃⍪⌿g[i])loc s
   (p[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}p[p[i]](k[i],⍪n[i←⍸(t=10)∧n<¯4])
 
@@ -64,4 +66,4 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
 
- p l t k n exp sym fi ftn ci ctvr oas oaf}
+ p l t k n exp sym fi ftn ci ctvr oi on}
