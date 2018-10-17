@@ -9,8 +9,8 @@
  ∆03_TEST←{#.UT.expect←dy.f2 ⍳5 ⋄ cd.f2 ⍳5}
  ∆04_TEST←{#.UT.expect←dy.f3 5 ⋄ cd.f3 5}
  ∆05_TEST←{#.UT.expect←dy.f4 0 ⋄ cd.f4 0}
- ⍝ ∆06_TEST←{#.UT.expect←dy.f5 0 ⋄ cd.f5 0}
- ⍝ ∆07_TEST←{#.UT.expect←dy.f6 0 ⋄ cd.f6 0}
+ ∆06_TEST←{#.UT.expect←dy.f5 0 ⋄ cd.f5 0}
+ ∆07_TEST←{#.UT.expect←dy.f6 0 ⋄ cd.f6 0}
  ⍝ ∆08_TEST←{#.UT.expect←3 dy.f7 1 2 3 1 2 3 ⋄ 3 cd.f7 1 2 3 1 2 3}
  ⍝ ∆09_TEST←{#.UT.expect←... f8 ...}
  ⍝ ∆10_TEST←{#.UT.expect←... f9 ...}
