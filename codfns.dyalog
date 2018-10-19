@@ -226,8 +226,10 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Propagate and ground free references up the lexical stack
  _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂2/⍪⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
-  ci,←s←(≢¨g)[i←x ctvr[;2],cf,on]⌿ci,cs,oi
-  ctvr⍪←tv,r←n I@{t[0⌈⍵]=10}(1⌷⍉tv←⊃⍪⌿g[i])loc s
+  s←⍬ ⋄ tv←2/⍪⍬ ⋄ r←⍬
+  _←{ci,←s,←ns←(≢¨g)[i←x⊃⍵]⌿1⊃⍵
+   ctvr⍪←ntv,r,←nr←n I@{t[0⌈⍵]=10}(⊢/tv⍪←ntv←⊃⍪/g[i])loc ns
+   (nr[i])(ns[i←⍸(nr≥0)∧1=⊣/ntv])}⍣{0=≢⊃⍺}(cf,on,⊢/ctvr)(cs,oi,ci)
   (p[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}p[p[i]](k[i],⍪n[i←⍸(t=10)∧n<¯4])
 
  ⍝ Inline Primitive References
