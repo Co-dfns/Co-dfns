@@ -21,15 +21,15 @@ gc←{p l t k n exp sym fi ftn ci ctvr oi on←⍵
  Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
  Bx←{fn,'_c=',(fn←⊃dis¨⍵),'_f();',NL}
- Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'va' 'fn' 'fv'⊃⍨2⌊t+2×r<0
-  ts,' fv',(⍕|v),x,'=',vp,(⍕|r),(x←'' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
+ Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&va' '&fn' 'fv'⊃⍨2⌊t+2×r<0
+  ts,'*fv',(⍕|v),x,'=',vp,(⍕|r),(x←'' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
  Ecf←{⊃,/⍺{'fn',(⍕⍺⍺),'_c.fv',x,'=fv',(x←(⍕|⍵),⍺⊃'' '_c'),';',NL,'  '}/⍵}
  Ecz←{i←fx⊢x←⍵,(on⊃⍨ox ⍺),{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍺
   ⊃,/((⊂Ecv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
  Ed←{x f y←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
-  z,' {',((6⊃⍺)Ecz 1(0 5)⊃⍵),f,'_c(',(com('va',⍕6⊃⍺)x y),');}',NL}
+  z,' {',((6⊃⍺)Ecz 1(0 5)⊃⍵),'(',f,'_c)(',(com('va',⍕6⊃⍺)x y),');}',NL}
  Em←{f v←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
-  z,' {',((6⊃⍺)Ecz 0(0 5)⊃⍵),f,'_c(',('va',⍕6⊃⍺),',',v,');}',NL}
+  z,' {',((6⊃⍺)Ecz 0(0 5)⊃⍵),'(',f,'_c)(',('va',⍕6⊃⍺),',',v,');}',NL}
  Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
  Na←{sym⌷⍨|5⊃⍺}
@@ -39,11 +39,11 @@ gc←{p l t k n exp sym fi ftn ci ctvr oi on←⍵
  Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
  Zi←{'I isfn',(⍕5⊃⍺),'=0;',NL}
  Zp←{n←'fn',⍕5⊃⍺ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};'
-  z,←⊃,/{NL,' ',(⍺⊃'A' 'FN'),' fv',(⍕|⍵),(⍺⊃'' '_c'),';'}/ftn⊃⍨fx 5⊃⍺
+  z,←⊃,/{NL,' ',(⍺⊃'A' 'FN'),'*fv',(⍕|⍵),(⍺⊃'' '_c'),';'}/ftn⊃⍨fx 5⊃⍺
   z,'};',NL,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r);}',NL}
  Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
- Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' 'fv'⊃⍨x<0),⍕|x}
- Vf←{('fn' 'fv'⊃⍨x<0),⍕|x←5⊃⍺}
+ Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' '*fv'⊃⍨x<0),⍕|x}
+ Vf←{('fn' '*fv'⊃⍨x<0),⍕|x←5⊃⍺}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
  ⊃,/(⊂rth),(rtn⌷⍨⊂syms⍳,¨'¨/'),(rtn⌿⍨syms∊sym),dis¨ks ast}
 
