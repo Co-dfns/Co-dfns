@@ -1,4 +1,5 @@
 ﻿NM(trn,"trn",0,0,MT ,MFD,DFD,MT ,MT )
+trn_f trn_c;
 MF(trn_f){z.r=r.r;DO(r.r,z.s[i]=r.s[r.r-(i+1)])
  switch(r.r){CS(0,z.v=r.v)CS(1,z.v=r.v)CS(2,z.v=r.v.T())
   CS(3,z.v=reorder(r.v,2,1,0))CS(4,z.v=reorder(r.v,3,2,1,0))}}

@@ -1,4 +1,5 @@
 ﻿NM(rtf,"rtf",0,0,DID,MFD,DFD,MT ,MT )
+rtf_f rtf_c;
 ID(rtf,0,s32)
 MF(rtf_f){z.r=r.r;z.s=r.s;z.v=r.r?flip(r.v,r.r-1):r.v;}
 DF(rtf_f){I lc=(I)cnt(l);I ra=r.r?r.r-1:0;I ix[]={0,0,0,0};

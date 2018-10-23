@@ -1,6 +1,4 @@
 ﻿OM(oup,"oup",0,0,MT,DFD)
-#define oupop(zz,rr) oup_o zz(rr)
-
 DF(oup_o){A t(l.r+r.r,r.s,r.v(0));if(t.r>4)err(10);
  DO(l.r,t.s[i+r.r]=l.s[i])if(!cnt(t)){t.v=scl(0);z=t;R;}
  array x(flat(l.v),1,cnt(l));array y(flat(r.v),cnt(r),1);

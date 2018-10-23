@@ -1,45 +1,45 @@
 ﻿⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
-
+tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+ ⍞←'.'
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
-
+ ⍞←'.'
  ⍝ Binding Table
  bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
- 
+ ⍞←'.'
  ⍝ Top-level Exports
  i←⍸(1=t)∧(1=k)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p
  p,←∆←(s←≢p)+⍳≢i ⋄ l,←(≢∆)⍴s,¯1↓∆ ⋄ l[0]←⊃⌽∆ ⋄ t k,←11 1⍴⍨¨≢i ⋄ n,←n[i]
  p,←∆ ⋄ l,←(≢i)+∆ ⋄ t,←10⍴⍨≢i ⋄ k,←k[i] ⋄ n,←bv[i]
  p,←∆ ⋄ l,←(≢i)+∆ ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←(p I⍣≡⍳≢p)[i] ⋄ k[i]←2
-
+ ⍞←'.'
  ⍝ Init Flags
  i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
  l[∆,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃∆),∆
-
+ ⍞←'.'
  ⍝ Lift Functions
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i 
  n,←i ⋄ p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
-
+ ⍞←'.'
  ⍝ Wrap Return Expressions
  i←⍸(t[p]∊3 4)∧(t∊0 2)∨(t=1)∧(k=0)∧~(⍳≢l)∊¯1@{⍵=⍳≢⍵}l ⋄ p,←p[i]
  p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i
  t k n,←2 0 0⍴⍨¨≢i
-
+ ⍞←'.'
  ⍝ Lift Expressions
  i←⍸(t∊8,⍳3)∧m←t[p]≠3 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ l←i((≢l)+⍳)@{⍵∊i}l
  p,←∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
  l[∪∆]←∆⊢∘⊃⌸i ⋄ net←{~t[⍵]∊8,⍳5} ⋄ wk←xw I p∘I@(xw∘I=⊢)⍣≡
  l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(3≠t∘I)⍣≡∆
-
+ ⍞←'.'
  ⍝ Resolve Local Names
  loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[⍵]]}
  n[i]←n[i]loc p[i←⍸(t=10)∧n<¯4]
- 
+ ⍞←'.'
  ⍝ Collapse Variable and Binding Reference Chains
  n←bv I@{t[0⌈⍵]=1}I@{t[0⌈⍵]=10}⍣≡⍨n
-
+ ⍞←'.'
  ⍝ Build call sites, operator reference, closure, and free variable tables
  ox←(t3←t[0⌈n]=3)∧om←(t[p]=8)∧lm←(t=10)∧n≥0
  oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm
@@ -48,7 +48,7 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  _←{(oi,←(≢¨g)[i]⌿pom)(on,←∊(g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom])}⍣≡oi on
  i←(∪oi)⍳n[x] ⋄ g←(oi⊢∘⊂⌸on),⊂⍬ ⋄ on←∊g[i] ⋄ oi←(≢¨g)[i]⌿p[x]
  cf←n[cv] ⋄ cs←p[cv] ⋄ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
-
+ ⍞←'.'
  ⍝ Propagate and ground free references up the lexical stack
  _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂2/⍪⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
   s←⍬ ⋄ tv←2/⍪⍬ ⋄ r←⍬
@@ -56,10 +56,10 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
    ctvr⍪←ntv,r,←nr←n I@{t[0⌈⍵]=10}(⊢/tv⍪←ntv←⊃⍪/g[i])loc ns
    (nr[i])(ns[i←⍸(nr≥0)∧1=⊣/ntv])}⍣{(0=≢⊃⍺)∨⍺≡⍵}(cf,on,⊢/ctvr)(cs,oi,ci)
   (p[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}p[p[i]](k[i],⍪n[i←⍸(t=10)∧n<¯4])
-
+ ⍞←'.'
  ⍝ Inline Primitive References
  i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
-
+ ⍞←'.'
  ⍝ Lift Guard Expressions
  ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
  ⍝ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
@@ -74,5 +74,5 @@ tt←{((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Function Declarations
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
-
- p l t k n exp sym fi ftn ci ctvr oi on}
+ ⍞←'.'
+ (⍞←⎕UCS 10)⊢p l t k n exp sym fi ftn ci ctvr oi on}

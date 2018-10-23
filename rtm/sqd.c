@@ -1,4 +1,5 @@
 ﻿NM(sqd,"sqd",0,0,MT ,MFD,DFD,MT ,MT )
+sqd_f sqd_c;
 MF(sqd_f){z=r;}
 DF(sqd_f){if(l.r>1)err(4);B s=!l.r?1:l.s[l.r-1];
  if(s>r.r)err(5);if(!cnt(l)){z=r;R;}

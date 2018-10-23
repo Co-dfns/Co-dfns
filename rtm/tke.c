@@ -1,4 +1,5 @@
 ﻿NM(tke,"tke",0,0,MT ,MFD,DFD,MT ,MT )
+tke_f tke_c;
 MF(tke_f){z=r;}
 DF(tke_f){I lv[4];seq it[4];seq ix[4];B c=cnt(l);
  if(l.r>1||(c>r.r&&r.r))err(4);if(!c){z=r;R;}

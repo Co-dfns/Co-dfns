@@ -1,4 +1,5 @@
 ﻿NM(cat,"cat",0,0,MT ,MFD,DFD,MT ,DAD)
+cat_f cat_c;
 MF(cat_f){z.r=1;z.s[0]=cnt(r);z.v=flat(r.v);}
 DA(cat_f){A nl=l,nr=r;I fx=(I)ceil(ax);
  if(fx<0||(fx>r.r&&fx>l.r))err(4);

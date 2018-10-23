@@ -6,7 +6,7 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{p l t k n exp sym fi ftn ci ctvr oi on←⍵
+gc←{⍞←'G' ⋄ p l t k n exp sym fi ftn ci ctvr oi on←⍵
  I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  fx←(∪fi)∘⍳ ⋄ ftn←(fi{⊂∪⍵}⌸ftn),⊂0 2⍴⍬
  cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
@@ -44,8 +44,8 @@ gc←{p l t k n exp sym fi ftn ci ctvr oi on←⍵
  Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
  Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' '*fv'⊃⍨x<0),⍕|x}
  Vf←{('fn' '*fv'⊃⍨x<0),⍕|x←5⊃⍺}
- dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
- ⊃,/(⊂rth),(rtn⌷⍨⊂syms⍳,¨'¨/'),(rtn⌿⍨syms∊sym),dis¨ks ast}
+ dis←{⍞←'.' ⋄ h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
+ (⍞←⎕UCS 10)⊢⊃,/(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),dis¨ks ast}
 
 syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'   '⌈'   '!'
 nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min' 'max' 'fac'
@@ -59,6 +59,7 @@ syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq' 'int'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%u' 
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   ''
+deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.'
 rth←''
 rtn←(⍴nams)⍴⊂''
 

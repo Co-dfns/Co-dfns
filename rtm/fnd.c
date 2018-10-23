@@ -1,4 +1,5 @@
 ﻿NM(fnd,"fnd",0,0,MT ,MT ,DFD,MT ,MT )
+fnd_f fnd_c;
 DF(fnd_f){A t(r.r,r.s,array(r.s,b8));if(!cnt(t)){t.v=scl(0);z=t;R;}
  t.v=0;if(l.r>r.r){z=t;R;}DO(4,if(l.s[i]>r.s[i]){z=t;R;})
  if(!cnt(l)){t.v=1;z=t;R;}dim4 sp;DO(4,sp[i]=1+(t.s[i]-l.s[i]))

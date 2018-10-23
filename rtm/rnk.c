@@ -1,6 +1,4 @@
 ﻿OD(rnk,"rnk",scm(l),0,MFD,DFD)
-#define rnkop(zz,ll,rr) rnk_o zz(ll,rr)
-
 MF(rnk_o){if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
  if(scm(ll)||cr>=r.r){ll(z,r);R;}
  if(cr<=-r.r||!cr){mapop(f,ll);f(z,r);R;}

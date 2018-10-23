@@ -1,4 +1,5 @@
 ﻿NM(scf,"scf",0,0,DID,MT ,DFD,MT ,MT )
+scf_f scf_c;
 ID(scf,1,s32)
 OM(scf,"scf",1,1,MFD,MT)
 DF(scf_f){I ra=r.r?r.r-1:0;af::index sx[4];af::index tx[4];
@@ -12,8 +13,6 @@ DF(scf_f){I ra=r.r?r.r-1:0;af::index sx[4];af::index tx[4];
  array ti(pc,s32);ti=1;ti(pa)=scan(ca,0,AF_BINARY_ADD,false)(pw);
  ti=scanByKey(si,ti);tx[ra]=ti;
  t.v(tx[0],tx[1],tx[2],tx[3])=r.v(sx[0],sx[1],sx[2],sx[3]);z=t;}
-
-#define scfop(zz,rr) scf_o zz(rr)
 
 MF(scf_o){z.r=r.r;z.s=r.s;I ra=r.r?r.r-1:0;I rc=(I)r.s[ra];
  if(1==rc){z.v=r.v;R;}if(!cnt(z)){z.v=scl(0);R;}

@@ -1,4 +1,5 @@
 ﻿NM(cir,"cir",1,1,MT,MFD,DFD,MT,MT)
+cir_f cir_c;
 MF(cir_f){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}
 SF(cir_f,array fv=rv.as(f64);
  if(!l.r){I x=l.v.as(s32).scalar<I>();if(abs(x)>10)err(16);

@@ -1,4 +1,5 @@
 ﻿NM(unq,"unq",0,0,MT ,MFD,DFD,MT ,MT )
+unq_f unq_c;
 MF(unq_f){if(r.r>1)err(4);z.r=1;if(!cnt(r)){z.s=r.s;z.v=r.v;R;}
  array a,b;sort(a,b,r.v);z.v=a!=shift(a,1);z.v(0)=1;
  z.v=where(z.v);sort(b,z.v,b(z.v),a(z.v));

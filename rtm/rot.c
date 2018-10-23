@@ -1,4 +1,5 @@
 ﻿NM(rot,"rot",0,0,DID,MFD,DFD,MT ,MT )
+rot_f rot_c;
 ID(rot,0,s32)
 MF(rot_f){z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}
 DF(rot_f){I lc=(I)cnt(l);if(lc==1){z.r=r.r;z.s=r.s;

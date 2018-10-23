@@ -1,4 +1,5 @@
 ﻿NM(rol,"rol",1,0,MT ,MFD,DFD,MT ,MT )
+rol_f rol_c;
 MF(rol_f){z.r=r.r;z.s=r.s;if(!cnt(r)){z.v=r.v;R;}
  array rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}
 DF(rol_f){if(cnt(r)!=1||cnt(l)!=1)err(5);

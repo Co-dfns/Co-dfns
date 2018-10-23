@@ -1,6 +1,4 @@
 ﻿OD(pow,"pow",scm(l),scd(l),MFD,DFD)
-#define powop(zz,ll,rr) pow_o zz(ll,rr)
-
 MF(pow_o){if(fr){A t;A v=r;
   do{A u;ll(u,v);rr(t,u,v);if(t.r)err(5);v=u;}
   while(!t.v.as(s32).scalar<I>());z=v;R;}

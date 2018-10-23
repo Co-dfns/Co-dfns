@@ -1,4 +1,5 @@
 ﻿NM(mdv,"mdv",1,0,MT ,MFD,DFD,MT ,MT )
+mdv_f mdv_c;
 MF(mdv_f){if(r.r>2)err(4);if(r.r==2&&r.s[1]<r.s[0])err(5);if(!cnt(r))err(5);
  if(r.s[0]==r.s[1]){z.r=r.r;z.s=r.s;z.v=inverse(r.v);R;}
  if(r.r==1){z.v=matmulNT(inverse(matmulTN(r.v,r.v)),r.v);z.r=r.r;z.s=r.s;R;}

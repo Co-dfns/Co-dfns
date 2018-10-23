@@ -1,4 +1,5 @@
 ﻿NM(scn,"scn",0,0,DID,MT ,DFD,MT ,MT )
+scn_f scn_c;
 ID(scn,1,s32)
 OM(scn,"scn",1,1,MFD,MT)
 DF(scn_f){if(r.s[0]!=1&&r.s[0]!=sum<I>(l.v>0))err(5);
@@ -10,8 +11,6 @@ DF(scn_f){if(r.s[0]!=1&&r.s[0]!=sum<I>(l.v>0))err(5);
  array si(pc,s32);si=0;si(pa)=1;si=accum(si)-1;
  array ti(pc,s32);ti=1;ti(pa)=scan(ca,0,AF_BINARY_ADD,false)(pw);
  ti=scanByKey(si,ti);t.v(ti,span)=r.v(si,span);z=t;}
-
-#define scnop(zz,rr) scn_o zz(rr)
 
 MF(scn_o){z.r=r.r;z.s=r.s;I rc=(I)r.s[0];
  if(1==rc){z.v=r.v;R;}if(!cnt(z)){z.v=scl(0);R;}

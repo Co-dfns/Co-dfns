@@ -1,4 +1,5 @@
 ﻿NM(drp,"drp",0,0,MT ,MFD,DFD,MT ,MT )
+drp_f drp_c;
 MF(drp_f){if(r.r)err(16);z=r;}
 DF(drp_f){I lv[4];seq it[4];seq ix[4];B c=cnt(l);
  if(l.r>1||(c>r.r&&r.r))err(4);if(!c){z=r;R;}
