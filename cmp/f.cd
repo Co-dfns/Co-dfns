@@ -24,7 +24,7 @@ gc←{p l t k n exp sym fi ftn ci ctvr oi on←⍵
  Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&va' '&fn' 'fv'⊃⍨2⌊t+2×r<0
   ts,'*fv',(⍕|v),x,'=',vp,(⍕|r),(x←'' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
  Ecf←{⊃,/⍺{'fn',(⍕⍺⍺),'_c.fv',x,'=fv',(x←(⍕|⍵),⍺⊃'' '_c'),';',NL,'  '}/⍵}
- Ecz←{i←fx⊢x←⍵,(on⊃⍨ox ⍺),{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍺
+ Ecz←{i←fx⊢x←∪⍵,(on⊃⍨ox ⍺),{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍺
   ⊃,/((⊂Ecv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
  Ed←{x f y←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
   z,' {',((6⊃⍺)Ecz 1(0 5)⊃⍵),'(',f,'_c)(',(com('va',⍕6⊃⍺)x y),');}',NL}
