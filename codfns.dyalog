@@ -274,7 +274,7 @@ gc←{p l t k n exp sym fi ftn ci ctvr oi on←⍵
  Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
  Bx←{fn,'_c=',(fn←⊃dis¨⍵),'_f();',NL}
- Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&va' '&fn' 'fv'⊃⍨2⌊t+2×r<0
+ Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&va' '&fn' 'this->fv'⊃⍨2⌊t+2×r<0
   ts,'*fv',(⍕|v),x,'=',vp,(⍕|r),(x←'' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
  Ecf←{⊃,/⍺{'fn',(⍕⍺⍺),'_c.fv',x,'=fv',(x←(⍕|⍵),⍺⊃'' '_c'),';',NL,'  '}/⍵}
  Ecz←{i←fx⊢x←∪⍵,(on⊃⍨ox ⍺),{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍺
