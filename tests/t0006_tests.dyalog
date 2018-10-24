@@ -1,7 +1,7 @@
 ﻿:Require file://t0006.dyalog
 :Namespace t0006_tests
  tn←'t0006' ⋄ cn←'c0006'
- bindings←'f1' 'f10' 'f11' 'f2' 'f3' 'f4' 'f5' 'f6' 'f7' 'f8' 'f9'
+ bindings←'f1' 'f10' 'f11' 'f12' 'f2' 'f3' 'f4' 'f5' 'f6' 'f7' 'f8' 'f9'
  cd←⎕NS⍬ ⋄ dy←#.⍎tn
  ∆00_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0006←tn #.codfns.Fix ⎕SRC dy}
  ∆01_TEST←{#.UT.expect←↑bindings ⋄ cd.⎕NL 3}
