@@ -16,5 +16,6 @@
  ∆10_TEST←{#.UT.expect←dy.f9 5 ⋄ cd.f9 5}
  ∆11_TEST←{#.UT.expect←dy.f10 ⍬ ⋄ cd.f10 ⍬}
  ∆12_TEST←{#.UT.expect←dy.f11 0 ⋄ cd.f11 0}
- ∆13_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
+ ∆13_TEST←{#.UT.expect←dy.f12 10 ⋄ cd.f12 10}
+ ∆14_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 :EndNamespace
