@@ -180,8 +180,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
 
- ⍝ Binding Table
- bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
+ ⍝ Binding Table, Top-level Bindings
+ bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p ⋄ tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p
 
  ⍝ Init Flags
  i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
@@ -242,7 +242,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Allocate frames
 
  ⍝ Top-level Exports
- i←⍸(t=1)∧p[p]=p ⋄ tlx←k[i],n[i],bv[i],⍪(p I⍣≡⍳≢p)[i] ⋄ k[i]×←2
+ tlx←k[tlb],n[tlb],bv[tlb],⍪p I⍣≡tlb ⋄ k[tlb]×←2
 
  ⍝ Function Declarations
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
