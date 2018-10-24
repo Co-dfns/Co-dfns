@@ -1,16 +1,16 @@
 ﻿:Require file://t0007.dyalog
 :Namespace t0007_tests
- tn←'t0007' ⋄ cn←'t0007'
+ tn←'t0007' ⋄ cn←'c0007'
 
  _← 'add' 'sub' 'mul' 'div' 'pow' 'log' 'res' 'min' 'max' 'leq' 'let' 'eql'
  _,←'geq' 'get' 'neq' 'and' 'lor' 'nor' 'nan' 'cir' 'bin' 'con' 'neg' 'dir'
- _,←'rec' 'exp' 'nlg' 'mag' 'pit' 'flr' 'cel' 'not' 'mat' 'fac' 'Run'
+ _,←'rec' 'exp' 'nlg' 'mag' 'pit' 'flr' 'cel' 'not' 'mat' 'fac'
  bindings←{⍵[⍋⍵;]}↑_
 
  cd←⎕NS⍬ ⋄ dy←#.⍎tn
 
  ∆000_TEST←{#.UT.expect←0
-  _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0006←tn #.codfns.Fix ⎕SRC dy}
+  _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0007←tn #.codfns.Fix ⎕SRC dy}
  ∆001_TEST←{#.UT.expect←bindings ⋄ cd.⎕NL 3}
 
  I←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)323)⎕DR ⍵}0,¯50+?9⍴100
@@ -108,9 +108,6 @@
  'materialize' SCL∆TST∆MONADIC 'mat' I   F   B
  'factorial'   SCL∆TST∆MONADIC 'fac' IPS FPS B
 
- D←{⍉1+?⍵ 3⍴1000}25 ⋄ L←,¯1↑D ⋄ R←2↑D
-
- ∆998∆BS_TEST←'Run' 1e¯10 MK∆T3 L R
  ∆999_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace

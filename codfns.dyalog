@@ -169,61 +169,56 @@ App←Afx _s (IAx _opt) _as {(≢⍵)E⌽⍵}
 Ex←IAx _s {⍺(0 Bind _o Asgn _o App _s ∇ _opt)⍵} _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
-Stmts←{⍞←'.' ⋄ ⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
+Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
 Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (1 F)
 ps←{⍞←'P' ⋄ 0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
- (⍞←⎕UCS 10)⊢(↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,(3⊃⊢)~⊣)⊃a)}
+ (↓s(-⍳)@3↑⊃a)e(s←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,(3⊃⊢)~⊣)⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
 tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
- ⍞←'.'
+
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
- ⍞←'.'
+
  ⍝ Binding Table
  bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
- ⍞←'.'
- ⍝ Top-level Exports
- i←⍸(1=t)∧(1=k)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p
- p,←∆←(s←≢p)+⍳≢i ⋄ l,←(≢∆)⍴s,¯1↓∆ ⋄ l[0]←⊃⌽∆ ⋄ t k,←11 1⍴⍨¨≢i ⋄ n,←n[i]
- p,←∆ ⋄ l,←(≢i)+∆ ⋄ t,←10⍴⍨≢i ⋄ k,←k[i] ⋄ n,←bv[i]
- p,←∆ ⋄ l,←(≢i)+∆ ⋄ t k,←10 1⍴⍨¨≢i ⋄ n,←(p I⍣≡⍳≢p)[i] ⋄ k[i]←2
- ⍞←'.'
+
  ⍝ Init Flags
  i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
  l[∆,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃∆),∆
- ⍞←'.'
+
  ⍝ Lift Functions
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i 
  n,←i ⋄ p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
- ⍞←'.'
+
  ⍝ Wrap Return Expressions
  i←⍸(t[p]∊3 4)∧(t∊0 2)∨(t=1)∧(k=0)∧~(⍳≢l)∊¯1@{⍵=⍳≢⍵}l ⋄ p,←p[i]
  p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i
  t k n,←2 0 0⍴⍨¨≢i
- ⍞←'.'
+
  ⍝ Lift Expressions
  i←⍸(t∊8,⍳3)∧m←t[p]≠3 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ l←i((≢l)+⍳)@{⍵∊i}l
  p,←∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
  l[∪∆]←∆⊢∘⊃⌸i ⋄ net←{~t[⍵]∊8,⍳5} ⋄ wk←xw I p∘I@(xw∘I=⊢)⍣≡
  l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(3≠t∘I)⍣≡∆
- ⍞←'.'
+
  ⍝ Resolve Local Names
  loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[⍵]]}
  n[i]←n[i]loc p[i←⍸(t=10)∧n<¯4]
- ⍞←'.'
+
  ⍝ Collapse Variable and Binding Reference Chains
  n←bv I@{t[0⌈⍵]=1}I@{t[0⌈⍵]=10}⍣≡⍨n
- ⍞←'.'
+
  ⍝ Build call sites, operator reference, closure, and free variable tables
- ox←(t3←t[0⌈n]=3)∧om←(t[p]=8)∧lm←(t=10)∧n≥0
+ ox←(t3←t[0⌈n]=3)∧om←(t[p]=8)∧lm←(t=10)∧n≥0 ⋄ tp←t[p]
  oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm
- of←n[ov] ⋄ os←p[ov] ⋄ cv←(t3∨nos←n∊os)∧t2←lm∧t[p]=2 ⋄ oa←oam∨om∧nos
+ of←n[ov] ⋄ os←p[ov] ⋄ cv←(t3∨nos←n∊os)∧t2←lm∧tp=2∨tp=1∧k[p]=2
+ oa←oam∨om∧nos
  cv←⍸cv ⋄ x←⍸t2 ⋄ oi←p[i←⍸oa] ⋄ on←n[i] ⋄ pom←p[i←⍸om] ⋄ nom←n[i]
  _←{(oi,←(≢¨g)[i]⌿pom)(on,←∊(g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom])}⍣≡oi on
  i←(∪oi)⍳n[x] ⋄ g←(oi⊢∘⊂⌸on),⊂⍬ ⋄ on←∊g[i] ⋄ oi←(≢¨g)[i]⌿p[x]
  cf←n[cv] ⋄ cs←p[cv] ⋄ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
- ⍞←'.'
+
  ⍝ Propagate and ground free references up the lexical stack
  _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂2/⍪⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
   s←⍬ ⋄ tv←2/⍪⍬ ⋄ r←⍬
@@ -231,10 +226,10 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
    ctvr⍪←ntv,r,←nr←n I@{t[0⌈⍵]=10}(⊢/tv⍪←ntv←⊃⍪/g[i])loc ns
    (nr[i])(ns[i←⍸(nr≥0)∧1=⊣/ntv])}⍣{(0=≢⊃⍺)∨⍺≡⍵}(cf,on,⊢/ctvr)(cs,oi,ci)
   (p[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}p[p[i]](k[i],⍪n[i←⍸(t=10)∧n<¯4])
- ⍞←'.'
+
  ⍝ Inline Primitive References
  i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
- ⍞←'.'
+
  ⍝ Lift Guard Expressions
  ⍝ l[gr]←gr←⍸(l[l]=⍳≢l)∧gm←4=t[p] ⋄ n[p[gv]]←n[gv←⍸(10=t)∧gk←gm∧l=⍳≢l]
  ⍝ p[ge]←p[pg←p[ge←⍸gk∧2=t]] ⋄ l[ge]←l[pg] ⋄ l[pg]←n[pg]←ge
@@ -246,11 +241,14 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
+ ⍝ Top-level Exports
+ i←⍸(t=1)∧p[p]=p ⋄ tlx←k[i],n[i],bv[i],⍪(p I⍣≡⍳≢p)[i] ⋄ k[i]×←2
+
  ⍝ Function Declarations
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
  t k,←11 0⍴⍨¨≢i ⋄ n,←i
- ⍞←'.'
- (⍞←⎕UCS 10)⊢p l t k n exp sym fi ftn ci ctvr oi on}
+
+ p l t k n exp sym tlx fi ftn ci ctvr oi on}
 gck←(0 0)(0 1)(1 2)(2 0)(2 1)(2 2)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
 gcv←'Aa' 'Av' 'Bx' 'Er' 'Em' 'Ed' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
 gck,←(11 0)(11 1)(11 2)
@@ -259,7 +257,7 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{⍞←'G' ⋄ p l t k n exp sym fi ftn ci ctvr oi on←⍵
+gc←{⍞←'G' ⋄ p l t k n exp sym tlx fi ftn ci ctvr oi on←⍵
  I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
  fx←(∪fi)∘⍳ ⋄ ftn←(fi{⊂∪⍵}⌸ftn),⊂0 2⍴⍬
  cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
@@ -273,7 +271,7 @@ gc←{⍞←'G' ⋄ p l t k n exp sym fi ftn ci ctvr oi on←⍵
  Aav←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',('¯'⎕R'-'com⍕¨⍵),'}.data()'}
  Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
- Bx←{fn,'_c=',(fn←⊃dis¨⍵),'_f();',NL}
+ Bx←{(6⊃⍺)Ecz 0(0 5)⊃⍵}
  Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&va' '&fn' 'this->fv'⊃⍨2⌊t+2×r<0
   ts,'*fv',(⍕|v),x,'=',vp,(⍕|r),(x←'' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
  Ecf←{⊃,/⍺{'fn',(⍕⍺⍺),'_c.fv',x,'=fv',(x←(⍕|⍵),⍺⊃'' '_c'),';',NL,'  '}/⍵}
@@ -294,11 +292,14 @@ gc←{⍞←'G' ⋄ p l t k n exp sym fi ftn ci ctvr oi on←⍵
  Zp←{n←'fn',⍕5⊃⍺ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};'
   z,←⊃,/{NL,' ',(⍺⊃'A' 'FN'),'*fv',(⍕|⍵),(⍺⊃'' '_c'),';'}/ftn⊃⍨fx 5⊃⍺
   z,'};',NL,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r);}',NL}
- Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
+ gx←{⊃t n v p←⍵:'EF(',(com(sym⌷⍨|n),'fn'∘,¨(⍕v)(⍕p)),');',NL
+  'A va',(⍕v),';',NL}
+ ⍝ Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
  Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' '*fv'⊃⍨x<0),⍕|x}
  Vf←{('fn' '*fv'⊃⍨x<0),⍕|x←5⊃⍺}
- dis←{⍞←'.' ⋄ h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
- (⍞←⎕UCS 10)⊢⊃,/(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),dis¨ks ast}
+ dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
+ z←⊃,/(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(dis¨ks ast),(⊂gx)⍤1⊢tlx
+ z⊣⍞←⎕UCS 10}
 
 syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'   '⌈'   '!'
 nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min' 'max' 'fac'
@@ -316,37 +317,10 @@ deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.']←,¨¨'∨∧' '¨⌿' '¨/' '�
 rth←''
 rtn←(⍴nams)⍴⊂''
 
-⍝ E1←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
-⍝ E2←{'fn'gcl((⊂n,∘⊃v),e,y)⍵}
-⍝ Ei←{r l f←⊃v ⍵ ⋄ ((⊃n ⍵)('fn'var)⊃⊃e ⍵),'=',((⊃⊃v ⍵)('fn'var)1⊃⊃e ⍵),';',nl}
-⍝ O1←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
-⍝ O2←{'op'gcl((⊂n,∘⊃v),e,y)⍵}
-⍝ O0←{''}
-⍝ Of←{'EF(',('∆'⎕R'__'⊃n ⍵),',',(⊃⊃v ⍵),');',nl}
-⍝ Fd←{'FP(',(⊃n ⍵),');',nl}
-⍝ F0←{'DF(',(⊃n ⍵),'_f){',nl,'A*env[]={tenv};',nl}
-⍝ F1←{'DF(',(⊃n ⍵),'_f){',nl,('env0'dnv ⍵),(fnv ⍵)}
 ⍝ G0←{v←(⊃⊃v ⍵)(''var)1⊃⊃e ⍵
 ⍝  'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
 ⍝ G1←{'z=',((⊃n ⍵)(''var)⊃⊃e ⍵),';goto L',(⍕⊃l ⍵),';}',nl}
 ⍝ L0←{'z=',a,';L',(⍕⊃n ⍵),':',(a←(1⊃⊃v ⍵)(''var)1⊃⊃e ⍵),'=z;',nl}
-⍝ Z0←{'}', nl,nl}
-⍝ Z1←{'}', nl,nl}
-⍝ Ze←{'}', nl,nl}
-⍝ M0←{(rth⍬),('tenv'dnv ⍵),nl,'A*env[]={',((0≡⊃⍵)⊃'tenv' 'NULL'),'};',nl,nl}
-⍝ S0←{(('{',rk0,srk,'DO(i,prk)cnt*=sp[i];',spp,sfv,slp)⍵)}
-⍝ Y0←{⊃,/((⍳≢⊃n ⍵)((⊣sts¨(⊃l),¨∘⊃s),'}',nl,⊣ste¨(⊃n)var¨∘⊃r)⍵),'}',nl}
-⍝ gc←{⊃,/{0=⊃t ⍵:⊂5⍴⍬ ⋄ ⊂(⍎(⊃t ⍵),⍕⊃k ⍵)⍵}⍤1⊢⍵}
-
-fvs←,⍤0(⌿⍨)0≠(≢∘⍴¨⊣) ⋄ cln←'¯'⎕R'-' ⋄ cnm←(syms⍳⊂)⊃(nams,⊂)
-lits←{'A(0,eshp,constant(',(cln⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'))'}
-litv←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',(cln⊃{⍺,',',⍵}/⍕¨⍵),'}.data()'}
-lita←{'A(1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(litv ⍵),'))'}
-lit←{' '=⊃0⍴⍵:(cnm ⍵),⍺ ⋄ 1=≢⍵:lits ⍵ ⋄ lita ⍵}
-var←{⍺≡,'⍺':,'l' ⋄ ⍺≡,'⍵':,'r' ⋄ ¯1≥⊃⍵:⍺⍺ lit,⍺ ⋄ 'env[',(⍕⊃⍵),'][',(⍕⊃⌽⍵),']'}
-dnv←{(0≡z)⊃('A ',⍺,'[',(⍕z←⊃v ⍵),'];')('A*',⍺,'=NULL;')}
-fnv←{z←'A*env[',(⍕1+⊃s ⍵),']={',(⊃,/(⊂'env0'),{',p[',(⍕⍵),']'}¨⍳⊃s ⍵),'};',nl}
-gcl←{z r l n←((3⍴⊂'fn'),⊂⍺){⊃⍺ var/⍵}¨↓(⊃⍵),⍪1⊃⍵ ⋄ n,'(',(⊃{⍺,',',⍵}/z l r~⊂'fn'),',env);',nl}
 
 rth,←'#include <time.h>',NL
 rth,←'#include <stdint.h>',NL
@@ -595,6 +569,9 @@ rtn[10],←⊂'fac_f fac_c;',NL
 rtn[10],←⊂'ID(fac,1,s32)',NL
 rtn[10],←⊂'MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',NL
 rtn[10],←⊂'SF(fac_f,array lvf=lv.as(f64);array rvf=rv.as(f64);',NL
+rtn[10],←⊂' if(rv.isinteger()&&lv.isinteger()&&',NL
+rtn[10],←⊂'   !anyTrue<I>(sign(lv))&&!anyTrue<I>(sign(rv))){',NL
+rtn[10],←⊂'  z.v=factorial(rvf)/(factorial(lvf)*factorial(rvf-lvf));R;}',NL
 rtn[10],←⊂' z.v=exp(log(tgamma(lvf))+log(tgamma(rvf))-log(tgamma(lvf+rvf))))',NL
 rtn[10],←⊂'',NL
 rtn[11],←⊂'NM(lth,"lth",1,1,DID,MT ,DFD,MT ,MT )',NL
