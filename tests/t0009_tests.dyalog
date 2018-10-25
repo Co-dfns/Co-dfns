@@ -1,7 +1,7 @@
 ﻿:Require file://t0009.dyalog
 :Namespace t0009_tests
 
- tn←'t0009' ⋄ cn←'t0009'
+ tn←'t0009' ⋄ cn←'c0009'
  cd←⎕NS⍬ ⋄ dy←#.⍎tn
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0009←tn #.codfns.Fix ⎕SRC dy}

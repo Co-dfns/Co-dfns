@@ -245,8 +245,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  tlx,←bv[tlb] ⋄ k[tlb](⊣+⊢×0=⊣)←3
 
  p l t k n exp sym tlx rn fi ftn ci ctvr oi on}
-gck←(0 0)(0 1)(1 2)(1 3)(2 0)(2 1)(2 2)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
-gcv←'Aa' 'Av' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
+gck←(0 0)(0 1)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
+gcv←'Aa' 'Av' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
 gck,←(11 0)(11 1)(11 2)
 gcv,←'Zp'  'Zx'  'Zi' 
 gck+←⊂1 0
@@ -281,6 +281,7 @@ gc←{⍞←'G' ⋄ p l t k n exp sym tlx rn fi ftn ci ctvr oi on←⍵
   ⊃,/((⊂Ecv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
  Ed←{x f y←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
   z,' {',((6⊃⍺)Ecz 1(0 5)⊃⍵),'(',f,'_c)(',(com('va',⍕6⊃⍺)x y),');}',NL}
+ Ei←{'std::vector<A> va',(⍕6⊃⍺),'={',(com dis¨⍵),'};',NL}
  Em←{f v←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
   z,' {',((6⊃⍺)Ecz 0(0 5)⊃⍵),'(',f,'_c)(',('va',⍕6⊃⍺),',',v,');}',NL}
  Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
@@ -650,16 +651,15 @@ rtn[22],←⊂' DO((I)s,if(sv[i]<0||sv[i]>=r.s[i])err(3));',NL
 rtn[22],←⊂' DO((I)s,x[r.r-(i+1)]=sv[i]);z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());',NL
 rtn[22],←⊂' z.v=r.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[22],←⊂'',NL
-rtn[23],←⊂'NM(brk,"brk",0,0,MT ,MFD,DFD,MT ,MT )',NL
-rtn[23],←⊂'brk_f brk_c;',NL
-rtn[23],←⊂'MF(brk_f){err(16);}',NL
-rtn[23],←⊂'DF(brk_f){if(l.r!=1)err(16);',NL
-rtn[23],←⊂' z.r=r.r;z.s=r.s;z.v=l.v(r.v.as(s32));}',NL
+rtn[23],←⊂'void brk_c(A&z,const A&l,const std::vector<A>&r){I rl=(I)r.size();',NL
+rtn[23],←⊂' if(l.r!=1||rl!=1)err(16);z.r=r[0].r;z.s=r[0].s;z.v=l.v(r[0].v.as(s32));}',NL
 rtn[23],←⊂'',NL
 rtn[23],←⊂'OD(brk,"brk",scm(l),scd(l),MFD,DFD)',NL
 rtn[23],←⊂'MF(brk_o){ll(z,r,(r.r?r.r-1:0)-ww.v.as(f64).scalar<D>());}',NL
 rtn[23],←⊂'DF(brk_o){D ax=l.r;if(r.r>l.r)ax=r.r;if(ax)ax--;',NL
 rtn[23],←⊂' ll(z,l,r,ax-ww.v.as(f64).scalar<D>());}',NL
+rtn[23],←⊂'',NL
+rtn[23],←⊂' ',NL
 rtn[24],←⊂'NM(iot,"iot",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[24],←⊂'iot_f iot_c;',NL
 rtn[24],←⊂'MF(iot_f){if(r.r>1)err(4);B c=cnt(r);if(c>4)err(10);',NL

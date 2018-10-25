@@ -1,5 +1,5 @@
-﻿gck←(0 0)(0 1)(1 2)(1 3)(2 0)(2 1)(2 2)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
-gcv←'Aa' 'Av' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
+﻿gck←(0 0)(0 1)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(7 0)(8 1)(8 2)(9 0)(10 0)(10 1)
+gcv←'Aa' 'Av' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Na' 'Om' 'Od' 'Pm' 'Va'  'Vf'  
 gck,←(11 0)(11 1)(11 2)
 gcv,←'Zp'  'Zx'  'Zi' 
 gck+←⊂1 0
@@ -34,6 +34,7 @@ gc←{⍞←'G' ⋄ p l t k n exp sym tlx rn fi ftn ci ctvr oi on←⍵
   ⊃,/((⊂Ecv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
  Ed←{x f y←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
   z,' {',((6⊃⍺)Ecz 1(0 5)⊃⍵),'(',f,'_c)(',(com('va',⍕6⊃⍺)x y),');}',NL}
+ Ei←{'std::vector<A> va',(⍕6⊃⍺),'={',(com dis¨⍵),'};',NL}
  Em←{f v←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
   z,' {',((6⊃⍺)Ecz 0(0 5)⊃⍵),'(',f,'_c)(',('va',⍕6⊃⍺),',',v,');}',NL}
  Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
