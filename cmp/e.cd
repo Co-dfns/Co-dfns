@@ -9,11 +9,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p 
 
  ⍝ Mark and record top-level bindings
- tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ tlx←k[tlb],n[tlb],⍪p I⍣≡tlb ⋄ k[tlb]×←2
-
- ⍝ Init Flags
- i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
- l[∆,⍸(p=⍳≢p)∧l=⍳≢l]←(⊃∆),∆
+ tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ rn←⍸(t=3)∧p=⍳≢p
+ tlx←k[tlb],n[tlb],⍪p I⍣≡tlb ⋄ k[tlb]×←2
 
  ⍝ Lift Functions
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i 
@@ -72,8 +69,4 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Extend top-level exports with their bindings
  tlx,←bv[tlb] ⋄ k[tlb](⊣+⊢×0=⊣)←3
 
- ⍝ Function Declarations
- i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
- t k,←11 0⍴⍨¨≢i ⋄ n,←i
-
- p l t k n exp sym tlx fi ftn ci ctvr oi on}
+ p l t k n exp sym tlx rn fi ftn ci ctvr oi on}
