@@ -5,8 +5,11 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Convert to Parent Vector 
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
 
- ⍝ Binding Table, Top-level Bindings
- bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p ⋄ tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p
+ ⍝ Binding Table
+ bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p 
+
+ ⍝ Mark and record top-level bindings
+ tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ tlx←k[tlb],n[tlb],⍪p I⍣≡tlb ⋄ k[tlb]×←2
 
  ⍝ Init Flags
  i←⍸(t=3)∧p=⍳s←≢p ⋄ p,←∆←s+⍳≢i ⋄ l,←¯1⍴⍨≢i ⋄ t k,←11 2⍴⍨¨≢i ⋄ n,←i
@@ -66,8 +69,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
- ⍝ Top-level Exports
- tlx←k[tlb],n[tlb],bv[tlb],⍪p I⍣≡tlb ⋄ k[tlb]×←2
+ ⍝ Extend top-level exports with their bindings
+ tlx,←bv[tlb] ⋄ k[tlb](⊣+⊢×0=⊣)←3
 
  ⍝ Function Declarations
  i←⍸t=3 ⋄ l[⍸((p=⊢)∧l=⊢)⍳s]←¯1+(≢i)+s←≢l ⋄ p,←j←s+⍳≢i ⋄ l,←s,¯1↓j
