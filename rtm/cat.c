@@ -7,7 +7,7 @@ DA(cat_f){A nl=l,nr=r;I fx=(I)ceil(ax);
   if(nl.r){nl.r++;DO(3-fx,nl.s[3-i]=nl.s[3-(i+1)]);nl.s[fx]=1;}
   if(nr.r){nr.r++;DO(3-fx,nr.s[3-i]=nr.s[3-(i+1)]);nr.s[fx]=1;}
   if(nl.r)nl.v=moddims(nl.v,nl.s);if(nr.r)nr.v=moddims(nr.v,nr.s);
-  catfn(z,nl,nr,fx);R;}
+  cat_c(z,nl,nr,fx);R;}
  if(fx>=r.r&&fx>=l.r)err(4);
  if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);
  z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);
@@ -22,5 +22,5 @@ DA(cat_f){A nl=l,nr=r;I fx=(I)ceil(ax);
  array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);
  array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);
  z.v=join(fx,lv,rv);}
-DF(cat_f){if(l.r||r.r){catfn(z,l,r,0);R;}
- A a,b;catfn(a,l);catfn(b,r);catfn(z,a,b,0);}
+DF(cat_f){if(l.r||r.r){cat_c(z,l,r,0);R;}
+ A a,b;cat_c(a,l);cat_c(b,r);cat_c(z,a,b,0);}

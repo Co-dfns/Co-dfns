@@ -689,7 +689,7 @@ rtn[26],←⊂' if(ax!=fx){if(r.r>3||l.r>3)err(10);',NL
 rtn[26],←⊂'  if(nl.r){nl.r++;DO(3-fx,nl.s[3-i]=nl.s[3-(i+1)]);nl.s[fx]=1;}',NL
 rtn[26],←⊂'  if(nr.r){nr.r++;DO(3-fx,nr.s[3-i]=nr.s[3-(i+1)]);nr.s[fx]=1;}',NL
 rtn[26],←⊂'  if(nl.r)nl.v=moddims(nl.v,nl.s);if(nr.r)nr.v=moddims(nr.v,nr.s);',NL
-rtn[26],←⊂'  catfn(z,nl,nr,fx);R;}',NL
+rtn[26],←⊂'  cat_c(z,nl,nr,fx);R;}',NL
 rtn[26],←⊂' if(fx>=r.r&&fx>=l.r)err(4);',NL
 rtn[26],←⊂' if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);',NL
 rtn[26],←⊂' z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);',NL
@@ -704,8 +704,8 @@ rtn[26],←⊂' dtype mt=mxt(r.v,l.v);',NL
 rtn[26],←⊂' array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);',NL
 rtn[26],←⊂' array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);',NL
 rtn[26],←⊂' z.v=join(fx,lv,rv);}',NL
-rtn[26],←⊂'DF(cat_f){if(l.r||r.r){catfn(z,l,r,0);R;}',NL
-rtn[26],←⊂' A a,b;catfn(a,l);catfn(b,r);catfn(z,a,b,0);}',NL
+rtn[26],←⊂'DF(cat_f){if(l.r||r.r){cat_c(z,l,r,0);R;}',NL
+rtn[26],←⊂' A a,b;cat_c(a,l);cat_c(b,r);cat_c(z,a,b,0);}',NL
 rtn[27],←⊂'NM(ctf,"ctf",0,0,MT,MFD,DFD,MT,MT)',NL
 rtn[27],←⊂'ctf_f ctf_c;',NL
 rtn[27],←⊂'MF(ctf_f){dim4 sp=z.s;sp[1]=r.r?r.s[r.r-1]:1;sp[0]=sp[1]?cnt(r)/sp[1]:1;',NL
