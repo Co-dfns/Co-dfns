@@ -6,7 +6,7 @@
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0009←tn #.codfns.Fix ⎕SRC dy}
 
- bindings←{⍵[⍋⍵;]}⍉⍪'Run' 'blackscholes','bs'∘,∘⍕¨1+⍳9
+ bindings←{⍵[⍋⍵;]}↑'Run' 'bs' 'CNDP2',('CNDP2∆'∘,∘⍕¨1+⍳5),'bs'∘,∘⍕¨1+⍳9
  ∆01_TEST←{#.UT.expect←bindings ⋄ cd.⎕NL 3}
 
  MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
@@ -28,7 +28,7 @@
  ∆10_TEST←{#.UT.expect←dy.bs7 coeff ⋄ L cd.bs7 coeff}
  ∆11_TEST←{#.UT.expect←L dy.bs8 R ⋄ L cd.bs8 R}
  ∆12_TEST←'bs9' 1e¯10 MK∆T3 L R
- ∆13_TEST←{#.UT.expect←L dy.blackscholes R ⋄ L cd.blackscholes R}
+ ∆13_TEST←'bs' 1e¯10 MK∆T3 L R
  ∆14_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace
