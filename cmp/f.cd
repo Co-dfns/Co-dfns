@@ -41,7 +41,7 @@ gc←{⍞←'G' ⋄ p l t k n exp sym tlx fi ftn ci ctvr oi on←⍵
  Zp←{n←'fn',⍕5⊃⍺ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};'
   z,←⊃,/{NL,' ',(⍺⊃'A' 'FN'),'*fv',(⍕|⍵),(⍺⊃'' '_c'),';'}/ftn⊃⍨fx 5⊃⍺
   z,'};',NL,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r);}',NL}
- gx←{⊃t n v p←⍵:'EF(',(com(sym⌷⍨|n),'fn'∘,¨(⍕v)(⍕p)),');',NL
+ gx←{⊃t n v p←⍵:'EF(',(com('∆'⎕R'__'⊢sym⌷⍨|n),'fn'∘,¨(⍕v)(⍕p)),');',NL
   'A va',(⍕v),';',NL}
  ⍝ Zx←{'EF(',(com(sym⌷⍨|5⊃⍺),dis¨⍵),');',NL}
  Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' '*fv'⊃⍨x<0),⍕|x}
