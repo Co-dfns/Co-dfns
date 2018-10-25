@@ -574,8 +574,7 @@ rtn[10],←⊂'SF(fac_f,array lvf=lv.as(f64);array rvf=rv.as(f64);',NL
 rtn[10],←⊂' if(allTrue<I>(floor(rvf)==rvf&&rvf>=0&&floor(lvf)==lvf&&lvf>=0)){',NL
 rtn[10],←⊂'  z.v=factorial(rvf)/(factorial(lvf)*factorial(max(0,rvf-lvf)));',NL
 rtn[10],←⊂'  z.v=(lvf<=rvf)*floor(z.v);R;}',NL
-rtn[10],←⊂' z.v=exp(lgamma(rvf)+lgamma(lvf)-lgamma(lvf+rvf)))',NL
-rtn[10],←⊂'',NL
+rtn[10],←⊂' z.v=exp(lgamma(1+rvf)-(lgamma(1+lvf)+lgamma(1+rvf-lvf))))',NL
 rtn[11],←⊂'NM(lth,"lth",1,1,DID,MT ,DFD,MT ,MT )',NL
 rtn[11],←⊂'lth_f lth_c;',NL
 rtn[11],←⊂'ID(lth,0,s32)',NL
