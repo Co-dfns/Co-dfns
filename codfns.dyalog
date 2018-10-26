@@ -196,11 +196,15 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i
  t k n,←2 0 0⍴⍨¨≢i
 
+ ⍝ Lift Guard Tests
+ fi←p[i←⍸(t∊⍳3)∧(l=⍳≢l)∧t[p]=4] ⋄ l←j@(j←⍸l∊i)⊢l 
+ l[i]←fl[j]@(j←⍸fi≠fl←l[fi])⊢i ⋄ l[fi]←i ⋄ n[fi]←i ⋄ p[i]←p[fi]
+
  ⍝ Lift Expressions
- i←⍸(t∊8,⍳3)∧m←t[p]≠3 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ l←i((≢l)+⍳)@{⍵∊i}l
+ i←⍸(t∊8,⍳3)∧m←~t[p]∊3 4 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ l←i((≢l)+⍳)@{⍵∊i}l
  p,←∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
  l[∪∆]←∆⊢∘⊃⌸i ⋄ net←{~t[⍵]∊8,⍳5} ⋄ wk←xw I p∘I@(xw∘I=⊢)⍣≡
- l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(3≠t∘I)⍣≡∆
+ l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(~3 4∊⍨t∘I)⍣≡∆
 
  ⍝ Resolve Local Names
  loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨l I@(~m)⍣≡l[⍵]]}
@@ -571,9 +575,6 @@ rtn[10],←⊂'fac_f fac_c;',NL
 rtn[10],←⊂'ID(fac,1,s32)',NL
 rtn[10],←⊂'MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',NL
 rtn[10],←⊂'SF(fac_f,array lvf=lv.as(f64);array rvf=rv.as(f64);',NL
-rtn[10],←⊂' if(allTrue<I>(floor(rvf)==rvf&&rvf>=0&&floor(lvf)==lvf&&lvf>=0)){',NL
-rtn[10],←⊂'  z.v=factorial(rvf)/(factorial(lvf)*factorial(max(0,rvf-lvf)));',NL
-rtn[10],←⊂'  z.v=(lvf<=rvf)*floor(z.v);R;}',NL
 rtn[10],←⊂' z.v=exp(lgamma(1+rvf)-(lgamma(1+lvf)+lgamma(1+rvf-lvf))))',NL
 rtn[11],←⊂'NM(lth,"lth",1,1,DID,MT ,DFD,MT ,MT )',NL
 rtn[11],←⊂'lth_f lth_c;',NL
