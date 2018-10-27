@@ -249,8 +249,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  tlx,←bv[tlb] ⋄ k[tlb](⊣+⊢×0=⊣)←3
 
  p l t k n exp sym tlx rn fi ftn ci ctvr oi on}
-gck← (0 0)(0 1)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(7 0)(8 1)(8 2)(9 0)
-gcv← 'Aa' 'Av' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Na' 'Om' 'Od' 'Pm' 
+gck← (0 0)(0 1)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)(9 0)
+gcv← 'Aa' 'Av' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Om' 'Od' 'Pm' 
 gck,←(10 0)(10 1)
 gcv,←'Va'  'Vf'  
 gck+←⊂1 0
@@ -290,6 +290,10 @@ gc←{⍞←'G' ⋄ p l t k n exp sym tlx rn fi ftn ci ctvr oi on←⍵
   z,' {',((6⊃⍺)Ecz 0(0 5)⊃⍵),'(',f,'_c)(',('va',⍕6⊃⍺),',',v,');}',NL}
  Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
  Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
+ Gd←{t←⍺ Va ⍬ ⋄ z←'{if(cnt(',t,')!=1)err(5);',NL
+  z,←' if(!(',t,'.v.isinteger()||',t,'.v.isbool()))err(11);',NL
+  z,←' I t=',t,'.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
+  z,' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}',NL}
  Na←{sym⌷⍨|5⊃⍺}
  Oc←{com{'_c',⍨⍣('va'≢2↑⍵)⊢⍵}¨⍵}
  Om←{f v←dis¨⍵ ⋄ f,'_o fn',(⍕6⊃⍺),'_c(',(Oc⊂v),');',NL}
