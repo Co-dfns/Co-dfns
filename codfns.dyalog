@@ -321,8 +321,8 @@ syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\' 
 nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn' 'scf' 'rol'
 syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'   '∩'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq' 'int'
-syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%u' 
-nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   ''
+syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'   '%u' 
+nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' ''
 deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.'
 rth←''
 rtn←(⍴nams)⍴⊂''
@@ -367,6 +367,7 @@ rth,←'#endif',NL
 rth,←'#define S struct',NL
 rth,←'#define Z static',NL
 rth,←'#define R return',NL
+rth,←'#define this_c *this',NL
 rth,←'#define RANK(lp) ((lp)->p->r)',NL
 rth,←'#define TYPE(lp) ((lp)->p->t)',NL
 rth,←'#define SHAPE(lp) ((lp)->p->s)',NL

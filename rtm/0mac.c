@@ -33,6 +33,7 @@ using namespace af;
 #define S struct
 #define Z static
 #define R return
+#define this_c *this
 #define RANK(lp) ((lp)->p->r)
 #define TYPE(lp) ((lp)->p->t)
 #define SHAPE(lp) ((lp)->p->s)
