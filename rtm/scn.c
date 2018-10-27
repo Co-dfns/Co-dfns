@@ -18,7 +18,7 @@ MF(scn_o){z.r=r.r;z.s=r.s;I rc=(I)r.s[0];
  if("mul"==ll.nm){z.v=scan(r.v.as(f64),0,AF_BINARY_MUL);R;}
  if("min"==ll.nm){z.v=scan(r.v.as(f64),0,AF_BINARY_MIN);R;}
  if("max"==ll.nm){z.v=scan(r.v.as(f64),0,AF_BINARY_MAX);R;}
- mapop(mfn,ll);z.v=array(z.s,f64);A t(z.r?z.r-1:0,z.s,r.v(0));
+ map_o mfn(ll);z.v=array(z.s,f64);A t(z.r?z.r-1:0,z.s,r.v(0));
  DO(t.r,t.s[i]=t.s[i+1]);t.s[t.r]=1;I tc=(I)cnt(t);
  DO(rc,t.v=r.v(i,span).as(f64);I c=i;
   DO(c,mfn(t,A(t.r,t.s,r.v(c-(i+1),span)),t))
