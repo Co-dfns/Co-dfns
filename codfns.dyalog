@@ -230,7 +230,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
   _←{ci,←s,←ns←(≢¨g)[i←x⊃⍵]⌿1⊃⍵
    ctvr⍪←ntv,r,←nr←n I@{t[0⌈⍵]=10}(⊢/tv⍪←ntv←⊃⍪/g[i])loc ns
    (nr[i])(ns[i←⍸(nr≥0)∧1=⊣/ntv])}⍣{(0=≢⊃⍺)∨⍺≡⍵}(cf,on,⊢/ctvr)(cs,oi,ci)
-  (p[s[i]])(tv[i←⍸r<0;])}⍣{(0=≢⊃⍺)∨⍺≡⍵}p[p[i]](k[i],⍪n[i←⍸(t=10)∧n<¯4])
+  (p[s[i]])(tv[i←⍸r<0;])
+ }⍣{(0=≢⊃⍺)∨⍺≡⍵}(p I@{t[⍵]≠3}⍣≡i)(k[i],⍪n[i←⍸(t=10)∧n<¯4])
 
  ⍝ Inline Primitive References
  i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
