@@ -105,7 +105,7 @@ him←'¯' _set ⋄ dot←'.' _set ⋄ jot←'∘' _set
 lbrc←aws _s ('{'_set) _s aws ⋄ rbrc←aws _s ('}'_set) _s aws
 lpar←aws _s ('('_tk) _s aws _ign ⋄ rpar←aws _s (')'_tk) _s aws _ign
 lbrk←aws _s ('['_tk) _s aws _ign ⋄ rbrk←aws _s (']'_tk) _s aws _ign
-semi←aws _s (';'_tk _as ('a'V∘,∘⊃)) _s aws
+semi←aws _s (';' _tk) _s aws _ign
 grd←aws _s (':'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
@@ -659,7 +659,16 @@ rtn[22],←⊂' DO((I)s,x[r.r-(i+1)]=sv[i]);z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get())
 rtn[22],←⊂' z.v=r.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[22],←⊂'',NL
 rtn[23],←⊂'void brk_c(A&z,const A&l,const std::vector<A>&r){I rl=(I)r.size();',NL
-rtn[23],←⊂' if(l.r!=1||rl!=1)err(16);z.r=r[0].r;z.s=r[0].s;z.v=l.v(r[0].v.as(s32));}',NL
+rtn[23],←⊂' I rk=rl;rk+=rl==0;if(rk!=l.r)err(4);',NL
+rtn[23],←⊂' I rks[4]={0,0,0,0};DO(rl,rks[i]=r[i].r;rks[i]+=r[i].r==0);',NL
+rtn[23],←⊂' z.r=0;DO(4,z.r+=rks[i]);if(z.r>4)err(16);',NL
+rtn[23],←⊂' I x=0;',NL
+rtn[23],←⊂' DO(rl,I j=i;',NL
+rtn[23],←⊂'  DO(r[j].r,z.s[x+i]=r[j].s[i])z.s[x]+=r[j].r==0;x+=rks[j])',NL
+rtn[23],←⊂' array vs[4];DO(rl,vs[i]=r[i].v.as(s32))',NL
+rtn[23],←⊂' switch(rk){',NL
+rtn[23],←⊂'  CS(1,z.v=l.v(vs[0]);if(!r[0].r)z.r=0;)CS(2,z.v=l.v(vs[1],vs[0]))',NL
+rtn[23],←⊂'  CS(3,z.v=l.v(vs[2],vs[1],vs[0]))CS(4,z.v=l.v(vs[3],vs[2],vs[1],vs[0]))}}',NL
 rtn[23],←⊂'',NL
 rtn[23],←⊂'OD(brk,"brk",scm(l),scd(l),MFD,DFD)',NL
 rtn[23],←⊂'MF(brk_o){ll(z,r,(r.r?r.r-1:0)-ww.v.as(f64).scalar<D>());}',NL

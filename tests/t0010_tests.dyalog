@@ -6,7 +6,7 @@
 
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0010←tn #.codfns.Fix ⎕SRC dy}
- ∆01_TEST←{#.UT.expect←↑'Lit' 'Run' ⋄ cd.⎕NL 3}
+ ∆01_TEST←{#.UT.expect←↑'Lit' 'R1' 'R2' 'R3' 'R4' 'Run' ⋄ cd.⎕NL 3}
 
  MK∆T1←{##.UT.expect←(⍎'dy.',⍺⍺)⍵⍵ ⋄ (⍎'cd.',⍺⍺)⍵⍵}
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
