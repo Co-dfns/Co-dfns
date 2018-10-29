@@ -16,7 +16,11 @@
  ∆04_TEST←'Run'MK∆T2 (,1)  (0)
  ∆05_TEST←'Lit'MK∆T1 (⍳5)
  ∆06_TEST←'Run'MK∆T2 (7 5) (0 1 0 0 1 1)
+ ∆07_TEST←{#.UT.expect←(5 5⍴⍳25)dy.R1 ⍳3 ⋄ (5 5⍴⍳25)cd.R1 ⍳3}
+ ∆08_TEST←{#.UT.expect←dy.R2 5 5⍴⍳25 ⋄ cd.R2 5 5⍴⍳25}
+ ∆09_TEST←{#.UT.expect←dy.R3 3 3 3⍴⍳27 ⋄ cd.R3 3 3 3⍴⍳27}
+ ∆10_TEST←{#.UT.expect←dy.R4 5 5⍴⍳25 ⋄ cd.R4 5 5⍴⍳25}
 
- ∆07_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
+ ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace

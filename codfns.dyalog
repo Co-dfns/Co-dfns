@@ -216,7 +216,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Build call sites, operator reference, closure, and free variable tables
  ox←(t3←t[0⌈n]=3)∧om←(t[p]=8)∧lm←(t=10)∧n≥0 ⋄ tp←t[p]
- oc←((m[l]∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm
+ oc←((m[l]∧(~m)∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm
  of←n[ov] ⋄ os←p[ov] ⋄ cv←(t3∨nos←n∊os)∧t2←lm∧tp=2∨tp=1∧k[p]=2
  oa←oam∨om∧nos
  cv←⍸cv ⋄ x←⍸t2 ⋄ oi←p[i←⍸oa] ⋄ on←n[i] ⋄ pom←p[i←⍸om] ⋄ nom←n[i]
