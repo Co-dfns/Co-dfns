@@ -265,7 +265,7 @@ gc←{⍞←'G' ⋄ p l t k n exp sym tlx rn fi ftn ci ctvr oi on←⍵
  cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
  ox←(∪oi)∘⍳ ⋄ on←(oi{⊂∪⍵}⌸on),⊂⍬
  nam←{'∆'⎕R'__'⊢⍕sym⊃⍨|⍵}
- o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←p{z⊣d+←⍵≠z←⍺[⍵]}⍣≡p
+ o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
  ast←(⍉↑d p l(1+t)k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
@@ -661,7 +661,7 @@ rtn[22],←⊂'',NL
 rtn[23],←⊂'void brk_c(A&z,const A&l,const std::vector<A>&r){I rl=(I)r.size();',NL
 rtn[23],←⊂' if(!rl){if(l.r!=1)err(4);z=l;R;}',NL
 rtn[23],←⊂' if(rl!=l.r)err(4);z.r=0;DO(rl,z.r+=r[i].r)if(z.r>4)err(16);',NL
-rtn[23],←⊂' I s=z.r-1;DO(rl,I j=i;DO(r[j].r,z.s[s+i]=r[j].s[i])s-=r[j].r)',NL
+rtn[23],←⊂' I s=z.r;DO(rl,I j=i;s-=r[j].r;DO(r[j].r,z.s[s+i]=r[j].s[i]))',NL
 rtn[23],←⊂' af::index x[4];DO(rl,x[rl-(i+1)]=r[i].v.as(s32))',NL
 rtn[23],←⊂' z.v=l.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[23],←⊂'',NL
