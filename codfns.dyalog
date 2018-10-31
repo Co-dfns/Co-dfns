@@ -192,8 +192,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  n,←i ⋄ p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
 
  ⍝ Wrap Return Expressions
- i←⍸(t[p]∊3 4)∧(~(⍳≢l)∊¯1@{⍵=⍳≢⍵}l)∧(t∊0 2)∨(t=1)∧k=0 ⋄ p,←p[i]
- p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i
+ i←⍸((t∊0 2)∧t[p]=3)∨(t[p]∊3 4)∧(~(⍳≢l)∊¯1@{⍵=⍳≢⍵}l)∧(t∊0 2)∨(t=1)∧k=0
+ p,←p[i] ⋄ p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i
  t k n,←2 0 0⍴⍨¨≢i
 
  ⍝ Lift Guard Tests
