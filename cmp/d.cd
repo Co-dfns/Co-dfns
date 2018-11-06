@@ -6,7 +6,8 @@ Num←float _o int _as (N∘⌽)
 Strand←0 Var _s (0 Var _some) _as (3 A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Atom←Strand _o (0 Var _as (1 A)) _o (Num _some _as (0 A∘⌽)) _o Pex
-Brk←rbrk _s {⍺(Ex _opt _s (semi _s (Ex _opt) _any))⍵} _s lbrk _as (3 E∘⌽)
+Semx←{⍺(Ex _o (_yes _as {3 A,⊂P,';'}))⍵}
+Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {P,'['}) _s Atom _as (2 E∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
 Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}

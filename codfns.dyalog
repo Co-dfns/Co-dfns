@@ -136,7 +136,8 @@ Num←float _o int _as (N∘⌽)
 Strand←0 Var _s (0 Var _some) _as (3 A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Atom←Strand _o (0 Var _as (1 A)) _o (Num _some _as (0 A∘⌽)) _o Pex
-Brk←rbrk _s {⍺(Ex _opt _s (semi _s (Ex _opt) _any))⍵} _s lbrk _as (3 E∘⌽)
+Semx←{⍺(Ex _o (_yes _as {3 A,⊂P,';'}))⍵}
+Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {P,'['}) _s Atom _as (2 E∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
 Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
@@ -251,10 +252,10 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  tlx,←bv[tlb] ⋄ k[tlb](⊣+⊢×0=⊣)←3
 
  p l t k n exp sym tlx rn fi ftn ci ctvr oi on}
-gck← (0 0)(0 1)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)(9 0)
-gcv← 'Aa' 'Av' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Om' 'Od' 'Pm' 
-gck,←(10 0)(10 1)
-gcv,←'Va'  'Vf'  
+gck← (0 0)(0 1)(0 3)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)
+gcv← 'Aa' 'Av' 'As' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Om' 'Od' 
+gck,←(9 0)(10 0)(10 1)
+gcv,←'Pm' 'Va'  'Vf'  
 gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
@@ -273,6 +274,7 @@ gc←{⍞←'G' ⋄ p l t k n exp sym tlx rn fi ftn ci ctvr oi on←⍵
  Aas←{'(0,eshp,constant(',('¯'⎕R'-'⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'));',NL}
  Aav←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',('¯'⎕R'-'com⍕¨⍵),'}.data()'}
  Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
+ As←{'A va',(⍕6⊃⍺),'(-1,eshp,array());',NL}
  Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
  Bv←{('gv_',nam 5⊃⍺),'=',(⊃dis¨⍵),';',NL}
  Bcv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&' '&fn' 'this->fv'⊃⍨2⌊t+2×r<0
@@ -313,18 +315,19 @@ gc←{⍞←'G' ⋄ p l t k n exp sym tlx rn fi ftn ci ctvr oi on←⍵
  z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3),(,/Zi¨rn),(⊂gx)⍤1⊢tlx
  ⊃,/z,dis¨ks ast⊣⍞←⎕UCS 10}
 
-syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'   '⌈'   '!'
-nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min' 'max' 'fac'
-syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'   '⍲'   '⍱'
-nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor' 'nan' 'nor'
-syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'   '∊'   '⊃'
-nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf' 'mem' 'dis'
-syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'   '⍀'   '?'
-nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn' 'scf' 'rol'
-syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'   '∩'
-nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq' 'int'
-syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'   '%u' 
-nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' ''
+syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
+nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
+syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'    '⍲'   '⍱'
+nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor'  'nan' 'nor'
+syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'    '∊'   '⊃'
+nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf'  'mem' 'dis'
+syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'    '⍀'   '?'
+nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
+syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'
+nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int'
+syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'    ';'  
+nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
+syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.'
 rth←''
 rtn←(⍴nams)⍴⊂''
@@ -660,9 +663,11 @@ rtn[22],←⊂' z.v=r.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[22],←⊂'',NL
 rtn[23],←⊂'void brk_c(A&z,const A&l,const std::vector<A>&r){I rl=(I)r.size();',NL
 rtn[23],←⊂' if(!rl){if(l.r!=1)err(4);z=l;R;}',NL
-rtn[23],←⊂' if(rl!=l.r)err(4);z.r=0;DO(rl,z.r+=r[i].r)if(z.r>4)err(16);',NL
-rtn[23],←⊂' I s=z.r;DO(rl,I j=i;s-=r[j].r;DO(r[j].r,z.s[s+i]=r[j].s[i]))',NL
-rtn[23],←⊂' af::index x[4];DO(rl,x[rl-(i+1)]=r[i].v.as(s32))',NL
+rtn[23],←⊂' if(rl!=l.r)err(4);z.r=0;DO(rl,z.r+=abs(r[i].r))if(z.r>4)err(16);',NL
+rtn[23],←⊂' I s=z.r;',NL
+rtn[23],←⊂' DO(rl,I j=i;I k=abs(r[j].r);s-=k;',NL
+rtn[23],←⊂'  DO(k,z.s[s+i]=(k==r[j].r)?r[j].s[i]:l.s[j]))',NL
+rtn[23],←⊂' af::index x[4];DO(rl,if(r[i].r>=0)x[rl-(i+1)]=r[i].v.as(s32))',NL
 rtn[23],←⊂' z.v=l.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[23],←⊂'',NL
 rtn[23],←⊂'OD(brk,"brk",scm(l),scd(l),MFD,DFD)',NL
