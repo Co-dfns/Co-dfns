@@ -44,7 +44,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  xc←((m[l]∧(~m)∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ i←⍸ov∧t3∧xc ⋄ of←n[i] ⋄ os←p[i]
  i←⍸ov∧(nos←n∊os)∨t3∧~xc ⋄ on←n[i] ⋄ oi←p[i] ⋄ i←⍸ov ⋄ pom←p[i] ⋄ nom←n[i]
  i←⍸ev∧t3∨nos ⋄ cf←n[i] ⋄ cs←p[i] ⋄ x←⍸ev
- _←{(oi,←(≢¨g)[i]⌿pom)(on,←∊(g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom])}⍣≡oi on
+ _←{(on,←∊g[i])(oi,←(≢¨g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom]⌿pom)}⍣≡on oi
  i←(∪oi)⍳n[x] ⋄ g←(oi⊢∘⊂⌸on),⊂⍬ ⋄ on←∊g[i] ⋄ oi←(≢¨g)[i]⌿p[x]
  fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
 
