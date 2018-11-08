@@ -1,5 +1,5 @@
 :Namespace codfns
-⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 11 1) '/usr/local' 'cuda'
+⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 12 0) '/usr/local' 'cuda'
 VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
@@ -216,14 +216,13 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  n←bv I@{t[0⌈⍵]=1}I@{t[0⌈⍵]=10}⍣≡⍨n
 
  ⍝ Build call sites, operator reference, closure, and free variable tables
- ox←(t3←t[0⌈n]=3)∧om←(t[p]=8)∧lm←(t=10)∧n≥0 ⋄ tp←t[p]
- oc←((m[l]∧(~m)∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ ovm←ox∧oc ⋄ oam←ox∧~oc ⋄ ov←⍸ovm
- of←n[ov] ⋄ os←p[ov] ⋄ cv←(t3∨nos←n∊os)∧t2←lm∧tp=2∨tp=1∧k[p]=2
- oa←oam∨om∧nos
- cv←⍸cv ⋄ x←⍸t2 ⋄ oi←p[i←⍸oa] ⋄ on←n[i] ⋄ pom←p[i←⍸om] ⋄ nom←n[i]
+ t3←t[0⌈n]=3 ⋄ ov←(8=tp←t[p])∧lv←(t=10)∧n≥0 ⋄ ev←lv∧(tp=2)∨(tp=1)∧k[p]=2
+ xc←((m[l]∧(~m)∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ i←⍸ov∧t3∧xc ⋄ of←n[i] ⋄ os←p[i]
+ i←⍸ov∧(nos←n∊os)∨t3∧~xc ⋄ on←n[i] ⋄ oi←p[i] ⋄ i←⍸ov ⋄ pom←p[i] ⋄ nom←n[i]
+ i←⍸ev∧t3∨nos ⋄ cf←n[i] ⋄ cs←p[i] ⋄ x←⍸ev
  _←{(oi,←(≢¨g)[i]⌿pom)(on,←∊(g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom])}⍣≡oi on
  i←(∪oi)⍳n[x] ⋄ g←(oi⊢∘⊂⌸on),⊂⍬ ⋄ on←∊g[i] ⋄ oi←(≢¨g)[i]⌿p[x]
- cf←n[cv] ⋄ cs←p[cv] ⋄ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
+ fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
 
  ⍝ Propagate and ground free references up the lexical stack
  _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂2/⍪⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
