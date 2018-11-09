@@ -39,6 +39,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Collapse Variable and Binding Reference Chains
  n←bv I@{t[0⌈⍵]=1}I@{t[0⌈⍵]=10}⍣≡⍨n
 
+ ⍝ Inline Functions
+
  ⍝ Build call sites, operator reference, closure, and free variable tables
  t3←t[0⌈n]=3 ⋄ ov←(8=tp←t[p])∧lv←(t=10)∧n≥0 ⋄ ev←lv∧(tp=2)∨(tp=1)∧k[p]=2
  xc←((m[l]∧(~m)∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ i←⍸ov∧t3∧xc ⋄ of←n[i] ⋄ os←p[i]
@@ -60,7 +62,6 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Inline Primitive References
  i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
 
- ⍝ Inline functions
  ⍝ Propagate constants
  ⍝ Fold constants
  ⍝ Dead, useless code elimination
