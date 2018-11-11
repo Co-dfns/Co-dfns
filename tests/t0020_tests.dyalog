@@ -7,9 +7,8 @@
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0020←tn #.codfns.Fix ⎕SRC dy}
 
- ∆01_TEST←{#.UT.expect←⍳5
-  ptr←tn #.codfns.MKA ⍳5 ⋄ z←tn #.codfns.EXA ptr
-  z⊣_←tn #.codfns.FREA ptr}
+ ∆01_TEST←{#.UT.expect←⍳5 ⋄ _←cd.∆.Init
+  ptr←cd.∆.MKA ⍳5 ⋄ z←cd.∆.EXA ptr ⋄ z⊣_←cd.∆.FREA ptr}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

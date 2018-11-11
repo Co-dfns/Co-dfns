@@ -40,30 +40,35 @@ Simply copy the `codfns.dyalog` file into your User Commands directory.
 See the User Command documentation in your Dyalog installation for more 
 information on using User Commands.
 
-## Runtime Compiler APIs
+## Using the Compiler
 
-Normal use of the compiler can be accessed through the User Command 
-functionality, and documentation for the User commands is available using 
-the `]?codfns`. There are some specific features that require you to have 
-a copy of the Co-dfns namespace in your local workspace. These APIs are 
-described in this section. 
+The normal use of the compiler is through the Fix function or the user
+command functionality. Documentaation for the user command can be found 
+after installing the `codfns.dyalog` file in your user commands directory.
 
-### Graphics API
+	]?codfns.compiler
 
-The graphics API permits the high-performance display of graphics data, 
-including plots, images, and animations. It integrates with the Co-dfns 
-compiler to produce good code and utilizes the GPU where possible.
+The `Fix` function is a replacement for the `⎕FIX` functionality. 
 
-#### codfns.Gfx∆Init
+	'yourmodulename'codfns.Fix <namespace Script>
 
-    {} ← codfns.Gfx∆Init Name
+The `<namespace Script>` should be a vector of character vectors containing 
+the namespace script you wish to fix. See the `⎕FIX` documentation for more
+information.
 
-Given the `Name` used as the left argument to a `Fix` call, initialize the 
-graphics library.
+### Runtime APIs
 
-#### codfns.Display
+A compiled Co-dfns module has an internal namespace callled `∆` that contains 
+the runtime APIs for caching and graphics. Once you run `∆.Init` you will be 
+able to access this functionality.
 
-    Z ← WName (F codfns.Display T) Initial
+	{} ← ∆.Init ⍝ Initialize the runtime system
+
+The following commands are available through the runtime system.
+
+#### Graphics 
+
+    Z ← [WName] (F ∆.Display T) Initial
 
 Works like the Power (`⍣`) operator. Derives a function that takes a window 
 name as the left hand argument and an initial value as the right hand argument. 
@@ -72,18 +77,14 @@ until T is true when T is a function. As a side-effect it will display a new
 window names `WName` and will pass the handle to this window as the left argument
 to F.
 
-#### codfns.Image
-
-    Z ← WHandle codfns.Image Z
+    Z ← WHandle ∆.Image Z
 
 Takes a window handle and an image value that is either a rank 2 or rank 3 
 array and displays the image to the given window handle. A rank 3 array 
 must have it's last axis of size 3, and should be a set of color values in 
 the RGB scale.
 
-#### codfns.Plot
-
-    Z ← WHandle codfns.Plot Z
+    Z ← WHandle ∆.Plot Z
 
 Takes a window handle and a plot array. It displays the plot in the given 
 window referenced by the window handle. The plot can be either a 2-D or 3-D
@@ -92,15 +93,13 @@ plot array must be a matrix whose column count is either 2 or 3. Each row
 corresponds to a specific point to plot, given by X, Y, and optionally, Z 
 values.
 
-#### codfns.Histogram
-
-    Z ← WHandle codfns.Histogram Freq Min Max 
+    Z ← WHandle ∆.Histogram Freq Min Max 
 
 Takes a window handle and a triple containing a vector of frequencies, 
 the minimum value, and the maximum value referenced by the frequency vector.
 It displays the histogram of the values to the given Window Handle.
 
-### Caching API
+#### Caching API
 
 The caching api allows you to call directly into the Co-dfns compiled 
 namespace without using DWA to convert values. You do this by explicitly 
@@ -117,24 +116,18 @@ of the right and left inputs, respectively.
 These specialized functions return the type of the resulting array computation 
 as their return value.
 
-#### codfns.MKA
-
-    Codfns_Array ← Name codfns.MKA Array
+    Codfns_Array ← ∆.MKA Array
 
 This allows you to manually obtain a pointer to a Co-dfns array created from 
 a given Dyalog DWA Array. 
 
-#### codfns.EXA
-
-    Array ← Name codfns.EXA Codfns_Array
+    Array ← ∆.EXA Codfns_Array
 
 Used to extract an array from Co-dfns. It takes a pointer to a Co-dfns array 
 and the type of that array. It returns a normal Dyalog array that is equivalent
 to the Co-dfns array.
 
-#### codfns.FREA
-
-    {} ← Name codfns.FREA Codfns_Array
+    {} ← ∆.FREA Codfns_Array
 
 Frees a Co-dfns array pointer obtained from `MKA`. 
 

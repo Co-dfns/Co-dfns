@@ -7,11 +7,9 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.ba
 Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns⊣ns.⍎¨(⊂'0'),⍺∘mkf¨(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵⊣ns←#.⎕NS ⍬}
-Fix←{⍺ MkNS ⍺ Cmp ⍵}
+Fix←{⍺ Lnk∆Rtm ⍺ MkNS ⍺ Cmp ⍵}
 Xml←{⎕XML(0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
-MKA←{mka⊂⍵⊣'mka'⎕NA'P ',(⍺,soext⍬),'|mkarray <PP'}
-EXA←{exa ⍬ ⍵⊣'exa'⎕NA(⍺,soext⍬),'|exarray >PP P'}
-FREA←{frea ⍵⊣'frea'⎕NA(⍺,soext⍬),'|frea P'}
+MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵} ⋄ FREA←{frea ⍵}
 opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
 soext←{opsys'.dll' '.so' '.dylib'}
 tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}

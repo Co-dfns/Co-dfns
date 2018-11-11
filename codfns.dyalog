@@ -8,11 +8,9 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.ba
 Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns⊣ns.⍎¨(⊂'0'),⍺∘mkf¨(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵⊣ns←#.⎕NS ⍬}
-Fix←{⍺ MkNS ⍺ Cmp ⍵}
+Fix←{⍺ Lnk∆Rtm ⍺ MkNS ⍺ Cmp ⍵}
 Xml←{⎕XML(0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
-MKA←{mka⊂⍵⊣'mka'⎕NA'P ',(⍺,soext⍬),'|mkarray <PP'}
-EXA←{exa ⍬ ⍵⊣'exa'⎕NA(⍺,soext⍬),'|exarray >PP P'}
-FREA←{frea ⍵⊣'frea'⎕NA(⍺,soext⍬),'|frea P'}
+MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵} ⋄ FREA←{frea ⍵}
 opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
 soext←{opsys'.dll' '.so' '.dylib'}
 tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
@@ -59,7 +57,7 @@ Run←{C I←⍵ ⋄ in out←I.Arguments ⋄ AF∆LIB∘←I.af ''⊃⍨I.af≡
  'Compile'≡C:{}{_←{##.THIS.⍎out,'←⍵'}out Fix S⊣⎕EX'##.THIS.',out
   ⎕CMD'copy "%CUDA_PATH%\nvvm\bin\nvvm64*" /Y'/⍨(I.af≡'cuda')∧opsys 1 0 0}⍬}
 Help←{'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
-∇Z←Gfx∆Init S
+∇Z←Rtm∆Init S
  'w_new'⎕NA'P ',(S,soext⍬),'|w_new <C[]'
  'w_close'⎕NA'I ',(S,soext ⍬),'|w_close P'
  'w_del'⎕NA(S,soext⍬),'|w_del P'
@@ -68,8 +66,14 @@ Help←{'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
  'w_hist'⎕NA(S,soext⍬),'|w_hist <PP F8 F8 P'
  'loadimg'⎕NA(S,soext⍬),'|loadimg >PP <C[] I'
  'saveimg'⎕NA(S,soext⍬),'|saveimg <PP <C[]'
+ 'exa'⎕NA(S,soext⍬),'|exarray >PP P'
+ 'mka'⎕NA'P ',(S,soext⍬),'|mkarray <PP'
+ 'frea'⎕NA(S,soext⍬),'|frea P'
  Z ← 0 0 ⍴ ⍬
 ∇
+Lnk∆Rtm←{f←'Rtm∆Init' 'MKA' 'EXA' 'FREA' 'Display' 'LoadImage' 'SaveImage'
+ f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' ⋄ ⍵.∆←⎕NS ↑f
+ _←⍵.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''') ⋄ ⍵}
 dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
 dlk←{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵}
 dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}
@@ -215,6 +219,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Collapse Variable and Binding Reference Chains
  n←bv I@{t[0⌈⍵]=1}I@{t[0⌈⍵]=10}⍣≡⍨n
 
+ ⍝ Inline Functions
+
  ⍝ Build call sites, operator reference, closure, and free variable tables
  t3←t[0⌈n]=3 ⋄ ov←(8=tp←t[p])∧lv←(t=10)∧n≥0 ⋄ ev←lv∧(tp=2)∨(tp=1)∧k[p]=2
  xc←((m[l]∧(~m)∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ i←⍸ov∧t3∧xc ⋄ of←n[i] ⋄ os←p[i]
@@ -236,7 +242,6 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Inline Primitive References
  i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
 
- ⍝ Inline functions
  ⍝ Propagate constants
  ⍝ Fold constants
  ⍝ Dead, useless code elimination
