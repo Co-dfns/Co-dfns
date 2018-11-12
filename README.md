@@ -42,9 +42,13 @@ information on using User Commands.
 
 ## Using the Compiler
 
-The normal use of the compiler is through the Fix function or the user
-command functionality. Documentaation for the user command can be found 
-after installing the `codfns.dyalog` file in your user commands directory.
+The Co-dfns compiler should be used normally as a "drop-in" replacement for
+the `⎕FIX` function. This functionality can be accessed either through the 
+`Fix` function of the `codfns` namespace or the user-command functionality.
+
+Documentation for the user-command, after installing `codfns.dyalog` to the 
+user-command directory of your choice, can be obtained with the following 
+command.
 
 	]?codfns.compiler
 
@@ -136,7 +140,7 @@ Frees a Co-dfns array pointer obtained from `MKA`.
 The Co-dfns compiler is fairly self-contained. You will need the following 
 software in order to use the compiler:
 
-1. Dyalog APL 16.0 or later 64-bit Unicode edition
+1. Dyalog APL 17.0 or later 64-bit Unicode edition
 
 2. Your Operating System's host compiler:
 
@@ -155,8 +159,7 @@ http://arrayfire.org/docs/installing.htm
 
 4. [Optional] CUDA 9.2+
 
-If you intend to use the CUDA backend with ArrayFire, you will need to have 
-CUDA installed. Please make sure that the version of CUDA that you install is 
+Please make sure that the version of CUDA that you install is 
 the same as the version of CUDA used by the ArrayFire package you installed.
 
 ## Related Projects
