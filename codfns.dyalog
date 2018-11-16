@@ -1,5 +1,5 @@
 :Namespace codfns
-⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 12 0) '/usr/local' 'cuda'
+⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 11 16) '/usr/local' 'cuda'
 VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
@@ -330,12 +330,6 @@ syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.⍪']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪'
 rth←''
 rtn←(⍴nams)⍴⊂''
-
-⍝ G0←{v←(⊃⊃v ⍵)(''var)1⊃⊃e ⍵
-⍝  'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
-⍝ G1←{'z=',((⊃n ⍵)(''var)⊃⊃e ⍵),';goto L',(⍕⊃l ⍵),';}',nl}
-⍝ L0←{'z=',a,';L',(⍕⊃n ⍵),':',(a←(1⊃⊃v ⍵)(''var)1⊃⊃e ⍵),'=z;',nl}
-
 rth,←'#include <time.h>',NL
 rth,←'#include <stdint.h>',NL
 rth,←'#include <inttypes.h>',NL
