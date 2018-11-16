@@ -327,7 +327,7 @@ nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'    ';'  
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
-deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.'
+deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.⍪']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪'
 rth←''
 rtn←(⍴nams)⍴⊂''
 

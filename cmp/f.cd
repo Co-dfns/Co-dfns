@@ -74,12 +74,6 @@ nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'    ';'  
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
-deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.'
+deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.⍪']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪'
 rth←''
 rtn←(⍴nams)⍴⊂''
-
-⍝ G0←{v←(⊃⊃v ⍵)(''var)1⊃⊃e ⍵
-⍝  'if(1!=cnt(',v,'))err(5);if(',v,'.v.as(s32).scalar<I>()){',nl}
-⍝ G1←{'z=',((⊃n ⍵)(''var)⊃⊃e ⍵),';goto L',(⍕⊃l ⍵),';}',nl}
-⍝ L0←{'z=',a,';L',(⍕⊃n ⍵),':',(a←(1⊃⊃v ⍵)(''var)1⊃⊃e ⍵),'=z;',nl}
-
