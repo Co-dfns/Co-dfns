@@ -177,7 +177,7 @@ Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
 Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
 Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (1 F)
 ps←{⍞←'P' ⋄ 0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
- (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(⊣,(3⊃⊢)~⊣)⊃a)}
+ (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
 tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
