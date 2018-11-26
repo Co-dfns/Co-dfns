@@ -47,14 +47,11 @@ FREA ptr                      | Frees the Co-dfns allocated array pointed to by 
 
 The compiler produces a set of files for each compiled module. The specific files that are generated my differ based on platform, but the following files wil always exist:
 
-module.log
-: A log of the backend messages and compiler output, indicating any issues encountered during the compilation of the bakend code.
-
-module.{so,dll,dylib}
-: The shared object of the module.
-
-module.cpp
-: The generated intermediate source code for the module.
+File                  | Description
+--------------------- | -----------
+module.log            | A log of the backend messages and compiler output, indicating any issues encountered during the compilation of the bakend code.
+module.{so,dll,dylib} | The shared object of the module.
+module.cpp            | The generated intermediate source code for the module.
 
 ## Examples
 
@@ -69,20 +66,13 @@ Compile a namespace for CUDA only using the user-command:
 
 ## See Also
 
-help.dyalog.com
-: Documentation for the Dyalog language and systems.
-
-FAQ.md
-: Frequently asked questions about the compiler.
-
-LIMITATIONS.md
-: Current known limitations of the compiler.
-
-PERFORMANCE.md
-: Suggestions for understanding the performance of Co-dfns compiled code.
-
-WISHLIST.md
-: A current wishlist of features for the compiler.
+Reference       | Description
+--------------- | -----------
+help.dyalog.com | Documentation for the Dyalog language and systems.
+FAQ.md          | Frequently asked questions about the compiler.
+LIMITATIONS.md  | Current known limitations of the compiler.
+PERFORMANCE.md  | Suggestions for understanding the performance of Co-dfns compiled code.
+WISHLIST.md     | A current wishlist of features for the compiler.
 
 ## Authors
 
