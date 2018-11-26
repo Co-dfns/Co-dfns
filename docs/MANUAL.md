@@ -32,9 +32,9 @@ VERSION    | The version of the compiler. Do not modify this value.
 
 Every module that is compiled also exposes additional functionality in the Co-dfns runtime through the Runtime API. This functionality is available inside the `module.∆` namespace, where `module` is the name of the namespace linked to the compiled module.
 
-Expression                    | Description
------------------------------ | -----------
-Init                          | A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
+Expression               | Description
+------------------------ | -----------
+Init                     | A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
 [Wn] (Fn Display Tst) Z  | Enters a display loop for a newly created graphical window named `Wn`. The operator `Display` has the same basic interface as the `⍣` operator, except that the left-argument to `Fn` will always be the window id. The event loop will continue until either the window is closed, the iteration count has been reached, or the termination condition is true.
 Wh Image Z               | Takes a window handle and an image value that is either a rank 2 or rank 3 array and displays the image to the given window handle. A rank 3 array must have it's last axis of size 3, and should be a set of color values in the RGB scale. Returns `Z`.
 Wh Plot Z                | Takes a window handle and a plot array. It displays the plot in the given window referenced by the window handle. The plot can be either a 2-D or 3-D plot, indicated by the size of the second axis in the given matrix. A plot array must be a matrix whose column count is either 2 or 3. Each row corresponds to a specific point to plot, given by X, Y, and optionally, Z values. Returns `Z`.
@@ -66,13 +66,13 @@ Compile a namespace for CUDA only using the user-command:
 
 ## See Also
 
-Reference       | Description
---------------- | -----------
-help.dyalog.com | Documentation for the Dyalog language and systems.
-[FAQ.md](FAQ.md) | Frequently asked questions about the compiler.
-LIMITATIONS.md  | Current known limitations of the compiler.
-PERFORMANCE.md  | Suggestions for understanding the performance of Co-dfns compiled code.
-WISHLIST.md     | A current wishlist of features for the compiler.
+Reference                                 | Description
+----------------------------------------- | -----------
+[help.dyalog.com](http://help.dyalog.com) | Documentation for the Dyalog language and systems.
+[FAQ.md](FAQ.md)                          | Frequently asked questions about the compiler.
+[LIMITATIONS.md](LIMITATIONS.md)          | Current known limitations of the compiler.
+[PERFORMANCE.md](PERFORMANCE.md)          | Suggestions for understanding the performance of Co-dfns compiled code.
+[WISHLIST.md](WISHLIST.md)                | A current wishlist of features for the compiler.
 
 ## Authors
 
