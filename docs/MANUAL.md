@@ -21,47 +21,37 @@ target    | The name the compiler should give to the compiled Co-dfns module. Up
 
 ### Namespace Options and Functions
 
-target←module Fix script | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
-
-AF∆LIB    | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
-AF∆PREFIX | The location of the ArrayFire library installation for Linux/Mac platforms.
-VERSION   | The version of the compiler. Do not modify this value.
+Expression                 | Description
+-------------------------- | -----------
+`target←module Fix script` | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
+AF∆LIB                     | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
+AF∆PREFIX                  | The location of the ArrayFire library installation for Linux/Mac platforms.
+VERSION                    | The version of the compiler. Do not modify this value.
 
 ## Runtime API
 
 Every module that is compiled also exposes additional functionality in the Co-dfns runtime through the Runtime API. This functionality is available inside the `module.∆` namespace, where `module` is the name of the namespace linked to the compiled module.
 
-Init | A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
-[WName] (Fn Display Tst) Initial
-: Enters a display loop for a newly created graphical window named `WName`. The operator `Display` has the same basic interface as the `⍣` operator, except that the left-argument to `Fn` will always be the window id. The event loop will continue until either the window is closed, the iteration count has been reached, or the termination condition is true.
-
-WHandle Image Z
-: Takes a window handle and an image value that is either a rank 2 or rank 3 
+Expression                       | Description
+-------------------------------- | -----------
+Init                             | A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
+[WName] (Fn Display Tst) Initial | Enters a display loop for a newly created graphical window named `WName`. The operator `Display` has the same basic interface as the `⍣` operator, except that the left-argument to `Fn` will always be the window id. The event loop will continue until either the window is closed, the iteration count has been reached, or the termination condition is true.
+WHandle Image Z                  | Takes a window handle and an image value that is either a rank 2 or rank 3 
 array and displays the image to the given window handle. A rank 3 array 
 must have it's last axis of size 3, and should be a set of color values in 
 the RGB scale. Returns `Z`.
-
-WHandle Plot Z
-: Takes a window handle and a plot array. It displays the plot in the given 
+WHandle Plot Z                   | Takes a window handle and a plot array. It displays the plot in the given 
 window referenced by the window handle. The plot can be either a 2-D or 3-D
 plot, indicated by the size of the second axis in the given matrix. A 
 plot array must be a matrix whose column count is either 2 or 3. Each row 
 corresponds to a specific point to plot, given by X, Y, and optionally, Z 
 values. Returns `Z`.
-
-WHandle Histogram Freq Min Max
-: Takes a window handle and a triple containing a vector of frequencies, 
+WHandle Histogram Freq Min Max   | Takes a window handle and a triple containing a vector of frequencies, 
 the minimum value, and the maximum value referenced by the frequency vector.
 It displays the histogram of the values to the given Window Handle.
-
-MKA array
-: Returns a pointer to a Co-dfns allocated array that is equivalent to `array`. 
-
-EXA ptr
-: Returns a Dyalog APL array that is equivalent to the Co-dfns allocated array pointed to by `ptr`.
-
-FREA ptr
-: Frees the Co-dfns allocated array pointed to by `ptr`.
+MKA array                        | Returns a pointer to a Co-dfns allocated array that is equivalent to `array`. 
+EXA ptr                          | Returns a Dyalog APL array that is equivalent to the Co-dfns allocated array pointed to by `ptr`.
+FREA ptr                         | Frees the Co-dfns allocated array pointed to by `ptr`.
 
 ## Files
 
