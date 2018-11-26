@@ -69,7 +69,7 @@ Compile a namespace for CUDA only using the user-command:
 Reference       | Description
 --------------- | -----------
 help.dyalog.com | Documentation for the Dyalog language and systems.
-[FAQ.md]        | Frequently asked questions about the compiler.
+[FAQ.md](FAQ.md) | Frequently asked questions about the compiler.
 LIMITATIONS.md  | Current known limitations of the compiler.
 PERFORMANCE.md  | Suggestions for understanding the performance of Co-dfns compiled code.
 WISHLIST.md     | A current wishlist of features for the compiler.
