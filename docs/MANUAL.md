@@ -21,12 +21,12 @@ target    | The name the compiler should give to the compiled Co-dfns module. Up
 
 ### Namespace Options and Functions
 
-Expression                 | Description
--------------------------- | -----------
-`target←module Fix script` | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
-AF∆LIB                     | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
-AF∆PREFIX                  | The location of the ArrayFire library installation for Linux/Mac platforms.
-VERSION                    | The version of the compiler. Do not modify this value.
+Expression | Description
+---------- | -----------
+Fix        | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
+AF∆LIB     | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
+AF∆PREFIX  | The location of the ArrayFire library installation for Linux/Mac platforms.
+VERSION    | The version of the compiler. Do not modify this value.
 
 ## Runtime API
 
