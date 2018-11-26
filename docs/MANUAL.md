@@ -36,19 +36,9 @@ Expression                       | Description
 -------------------------------- | -----------
 Init                             | A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
 [WName] (Fn Display Tst) Initial | Enters a display loop for a newly created graphical window named `WName`. The operator `Display` has the same basic interface as the `⍣` operator, except that the left-argument to `Fn` will always be the window id. The event loop will continue until either the window is closed, the iteration count has been reached, or the termination condition is true.
-WHandle Image Z                  | Takes a window handle and an image value that is either a rank 2 or rank 3 
-array and displays the image to the given window handle. A rank 3 array 
-must have it's last axis of size 3, and should be a set of color values in 
-the RGB scale. Returns `Z`.
-WHandle Plot Z                   | Takes a window handle and a plot array. It displays the plot in the given 
-window referenced by the window handle. The plot can be either a 2-D or 3-D
-plot, indicated by the size of the second axis in the given matrix. A 
-plot array must be a matrix whose column count is either 2 or 3. Each row 
-corresponds to a specific point to plot, given by X, Y, and optionally, Z 
-values. Returns `Z`.
-WHandle Histogram Freq Min Max   | Takes a window handle and a triple containing a vector of frequencies, 
-the minimum value, and the maximum value referenced by the frequency vector.
-It displays the histogram of the values to the given Window Handle.
+WHandle Image Z                  | Takes a window handle and an image value that is either a rank 2 or rank 3 array and displays the image to the given window handle. A rank 3 array must have it's last axis of size 3, and should be a set of color values in the RGB scale. Returns `Z`.
+WHandle Plot Z                   | Takes a window handle and a plot array. It displays the plot in the given window referenced by the window handle. The plot can be either a 2-D or 3-D plot, indicated by the size of the second axis in the given matrix. A plot array must be a matrix whose column count is either 2 or 3. Each row corresponds to a specific point to plot, given by X, Y, and optionally, Z values. Returns `Z`.
+WHandle Histogram Freq Min Max   | Takes a window handle and a triple containing a vector of frequencies, the minimum value, and the maximum value referenced by the frequency vector. It displays the histogram of the values to the given Window Handle.
 MKA array                        | Returns a pointer to a Co-dfns allocated array that is equivalent to `array`. 
 EXA ptr                          | Returns a Dyalog APL array that is equivalent to the Co-dfns allocated array pointed to by `ptr`.
 FREA ptr                         | Frees the Co-dfns allocated array pointed to by `ptr`.
