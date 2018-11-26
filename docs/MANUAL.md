@@ -13,36 +13,23 @@ The compiler may be accessed either through the user-command functionality of Dy
 
 ### User-Command Options
 
-<namespace>
-: The name of a compilable namespace defined in the current workspace. The compiler will attempt to compile this namespace.
-
-<target>
-: The name the compiler should give to the compiled Co-dfns module. Upon compilation, a namespace called <target> will be created and linked to the compiled module.
-
--af
-: Specify a specific backend to use. Valid options are: cpu, cuda, opencl. If this option is omitted, then the Co-dfns compiled object will attempt to auto-detect the fastest backend to use at runtime.
+namespace | The name of a compilable namespace defined in the current workspace. The compiler will attempt to compile this namespace.
+target    | The name the compiler should give to the compiled Co-dfns module. Upon compilation, a namespace called <target> will be created and linked to the compiled module.
+-af       | Specify a specific backend to use. Valid options are: cpu, cuda, opencl. If this option is omitted, then the Co-dfns compiled object will attempt to auto-detect the fastest backend to use at runtime.
 
 ### Namespace Options and Functions
 
-target←module Fix script
-: The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
+target←module Fix script | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
 
-AF∆LIB
-: The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
-
-AF∆PREFIX
-: The location of the ArrayFire library installation for Linux/Mac platforms.
-
-VERSION
-: The version of the compiler. Do not modify this value.
+AF∆LIB    | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
+AF∆PREFIX | The location of the ArrayFire library installation for Linux/Mac platforms.
+VERSION   | The version of the compiler. Do not modify this value.
 
 ## Runtime API
 
 Every module that is compiled also exposes additional functionality in the Co-dfns runtime through the Runtime API. This functionality is available inside the `module.∆` namespace, where `module` is the name of the namespace linked to the compiled module.
 
-Init
-: A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
-
+Init | A niladic function to initialize the runtime system. This must be done every time the linked namespace is reloaded.
 [WName] (Fn Display Tst) Initial
 : Enters a display loop for a newly created graphical window named `WName`. The operator `Display` has the same basic interface as the `⍣` operator, except that the left-argument to `Fn` will always be the window id. The event loop will continue until either the window is closed, the iteration count has been reached, or the termination condition is true.
 
