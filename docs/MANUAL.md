@@ -42,6 +42,7 @@ Wh Histogram Frq Min Max | Takes a window handle and a triple containing a vecto
 MKA array                | Returns a pointer to a Co-dfns allocated array that is equivalent to `array`. 
 EXA ptr                  | Returns a Dyalog APL array that is equivalent to the Co-dfns allocated array pointed to by `ptr`.
 FREA ptr                 | Frees the Co-dfns allocated array pointed to by `ptr`.
+Sync                     | Waits until all computation on the GPU is complete before returning
 
 ## Files
 

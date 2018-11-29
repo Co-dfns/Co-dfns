@@ -1,5 +1,5 @@
 :Namespace codfns
-⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 11 29) '/usr/local' 'cuda'
+⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 12 0) '/usr/local' 'cuda'
 VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
@@ -9,8 +9,10 @@ Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns⊣ns.⍎¨(⊂'0'),⍺∘mkf¨(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵⊣ns←#.⎕NS ⍬}
 Fix←{⍺ Lnk∆Rtm ⍺ MkNS ⍺ Cmp ⍵}
+Lnk∆Rtm←{f←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage'
+ f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' ⋄ ⍵.∆←⎕NS ↑f
+ _←⍵.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''') ⋄ ⍵}
 Xml←{⎕XML(0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
-MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵} ⋄ FREA←{frea ⍵}
 opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
 soext←{opsys'.dll' '.so' '.dylib'}
 tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
@@ -39,6 +41,7 @@ f∆ N∆←'ptknrsgvyeld' 'ABEFGLMNOPVZ'
 ⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
 ⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
 ⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '0(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
+MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
  w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
 LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ ⍉loadimg ⍬ ⍵ ⍺}
@@ -68,12 +71,10 @@ Help←{'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
  'saveimg'⎕NA(S,soext⍬),'|saveimg <PP <C[]'
  'exa'⎕NA(S,soext⍬),'|exarray >PP P'
  'mka'⎕NA'P ',(S,soext⍬),'|mkarray <PP'
- 'frea'⎕NA(S,soext⍬),'|frea P'
+ 'FREA'⎕NA(S,soext⍬),'|frea P'
+ 'Sync'⎕NA(S,soext⍬),'|cd_sync'
  Z ← 0 0 ⍴ ⍬
 ∇
-Lnk∆Rtm←{f←'Rtm∆Init' 'MKA' 'EXA' 'FREA' 'Display' 'LoadImage' 'SaveImage'
- f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' ⋄ ⍵.∆←⎕NS ↑f
- _←⍵.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''') ⋄ ⍵}
 dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
 dlk←{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵}
 dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}
@@ -500,7 +501,7 @@ rth,←'EXPORT V loadimg(lp*z,char*p,I c){array a=loadImage(p,c);',NL
 rth,←' A b(a.numdims(),a.dims(),a.as(s16));cpad(z,b);}',NL
 rth,←'EXPORT V saveimg(lp*im,char*p){A a;cpda(a,im);',NL
 rth,←' saveImageNative(p,a.v.as(a.v.type()==s32?u16:u8));}',NL
-rth,←'',NL
+rth,←'EXPORT V cd_sync(V){sync();}',NL
 rtn[0],←⊂'NM(add,"add",1,1,DID,MFD,DFD,MT,MT)',NL
 rtn[0],←⊂'add_f add_c;',NL
 rtn[0],←⊂'ID(add,0,s32)',NL

@@ -1,4 +1,5 @@
-﻿Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
+﻿MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
+Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
  w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
 LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ ⍉loadimg ⍬ ⍵ ⍺}
 SaveImage←{⍺←'image.png' ⋄ saveimg (⍉⍵) ⍺}
@@ -27,12 +28,10 @@ Help←{'Usage: <object> <target> [-af={cpu,opencl,cuda}]'}
  'saveimg'⎕NA(S,soext⍬),'|saveimg <PP <C[]'
  'exa'⎕NA(S,soext⍬),'|exarray >PP P'
  'mka'⎕NA'P ',(S,soext⍬),'|mkarray <PP'
- 'frea'⎕NA(S,soext⍬),'|frea P'
+ 'FREA'⎕NA(S,soext⍬),'|frea P'
+ 'Sync'⎕NA(S,soext⍬),'|cd_sync'
  Z ← 0 0 ⍴ ⍬
 ∇
-Lnk∆Rtm←{f←'Rtm∆Init' 'MKA' 'EXA' 'FREA' 'Display' 'LoadImage' 'SaveImage'
- f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' ⋄ ⍵.∆←⎕NS ↑f
- _←⍵.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''') ⋄ ⍵}
 dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
 dlk←{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵}
 dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}

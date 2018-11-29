@@ -10,6 +10,8 @@
  ∆01_TEST←{#.UT.expect←⍳5 ⋄ _←cd.∆.Init
   ptr←cd.∆.MKA ⍳5 ⋄ z←cd.∆.EXA ptr ⋄ z⊣_←cd.∆.FREA ptr}
 
+ ∆02_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣cd.∆.Sync}
+
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace
