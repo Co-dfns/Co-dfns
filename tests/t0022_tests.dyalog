@@ -4,5 +4,6 @@
 
  ∆00_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣'c0022'#.codfns.Fix ns'⍪'}
  ∆01_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣'c0022'#.codfns.Fix ns'⌿'}
+ ∆02_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣'c0022'#.codfns.Fix ns'(,⍤1)'}
 
 :EndNamespace
