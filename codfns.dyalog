@@ -1,5 +1,5 @@
 :Namespace codfns
-⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 11 28) '/usr/local' 'cuda'
+⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (2018 11 29) '/usr/local' 'cuda'
 VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
@@ -186,7 +186,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
 
  ⍝ Binding Table
- bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p 
+ bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
 
  ⍝ Mark and record top-level bindings
  tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ rn←⍸(t=3)∧p=⍳≢p
@@ -327,7 +327,10 @@ nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'    ';'  
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
-deps←⊂¨syms ⋄ deps[syms⍳,¨'∧⌿/.⍪⍤']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪' '¨⌷⍤'
+deps←⊂¨syms
+deps[syms⍳,¨'∧⌿/.⍪⍤\⍀']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪' '¨⌷⍤' '¨\' '¨⍀'
+deps[syms⍳⊂'∘.']←⊂(,'¨')'∘.'
+
 rth←''
 rtn←(⍴nams)⍴⊂''
 rth,←'#include <time.h>',NL

@@ -6,7 +6,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
 
  ⍝ Binding Table
- bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p 
+ bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
 
  ⍝ Mark and record top-level bindings
  tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ rn←⍸(t=3)∧p=⍳≢p
