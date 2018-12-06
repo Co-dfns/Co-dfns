@@ -36,11 +36,10 @@ units able to compute in parallel. This comes at a cost.
 
 The GPU does not have fancy prediction circuitry that allows it to do 
 branch predicting or memory readahead, making sequential code with branching 
-such as an "if" statement very costly. In order to hide the cost of reading
-from memory, the GPU instead relies on being able to do a great deal of 
-work in parallel to hide the cost of reading data in from memory. This 
-means that you need to have enough work for the GPU to do with the data 
-that it receives.
+such as an "if" statement very costly. The GPU instead relies on being able 
+to do a great deal of work in parallel to hide the cost of reading data in 
+from memory. This means that you need to have enough work for the GPU to do 
+with the data that it receives.
 
 The GPU also relies on parallel execution to achieve its execution speed. 
 This means that read dependencies in the code (such as with a Scan) 
