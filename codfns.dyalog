@@ -12,7 +12,7 @@ MkNS←{f←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage'
  ns←#.⎕NS ⍬ ⋄ ns.∆←⎕NS ↑f ⋄ ns.∆._←ns ⋄ _←ns.(⍙←⎕NS ⍬)
  ns.∆.names←(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵ ⋄ ns.∆.decls←⍺∘mkna¨ns.∆.names
  _←ns.⍎¨(⊂'0'),⍺∘mkf¨ns.∆.names
- _←ns.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''')('names _.⍙.⎕NA¨ decls')
+ _←ns.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''')'→0⌿⍨0=≢names'('names _.⍙.⎕NA¨ decls')
  ns}
 Fix←{⍺ MkNS ⍺ Cmp ⍵}
 Xml←{⎕XML(0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
@@ -48,9 +48,9 @@ f∆ N∆←'ptknrsgvyeld' 'ABEFGLMNOPVZ'
 MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
  w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
-LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ ⍉loadimg ⍬ ⍵ ⍺}
-SaveImage←{⍺←'image.png' ⋄ saveimg (⍉⍵) ⍺}
-Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠2⊃3↑⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img (⍉⍵) ⍺}
+LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺}
+SaveImage←{⍺←'image.png' ⋄ saveimg ⍵ ⍺}
+Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺}
 Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot (⍉⍵) ⍺}
 Histogram←{⍵⊣w_hist ⍵,⍺}
 ∇r←List
