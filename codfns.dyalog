@@ -7,20 +7,24 @@ VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
 Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
-MkNS←{ns⊣ns.⍎¨(⊂'0'),⍺∘mkf¨(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵⊣ns←#.⎕NS ⍬}
-Fix←{⍺ Lnk∆Rtm ⍺ MkNS ⍺ Cmp ⍵}
-Lnk∆Rtm←{f←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage'
- f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' ⋄ ⍵.∆←⎕NS ↑f
- _←⍵.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''') ⋄ ⍵}
+MkNS←{f←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage'
+ f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' 'mkna'
+ ns←#.⎕NS ⍬ ⋄ ns.∆←⎕NS ↑f ⋄ ns.∆._←ns ⋄ _←ns.(⍙←⎕NS ⍬)
+ ns.∆.names←(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵ ⋄ ns.∆.decls←⍺∘mkna¨ns.∆.names
+ _←ns.⍎¨(⊂'0'),⍺∘mkf¨ns.∆.names
+ _←ns.∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''')('names _.⍙.⎕NA¨ decls')
+ ns}
+Fix←{⍺ MkNS ⍺ Cmp ⍵}
 Xml←{⎕XML(0⌷⍉⍵),(,∘⍕⌿2↑1↓⍉⍵),(⊂''),⍪(⊂(¯3+≢⍉⍵)↑,¨'nrsgvyel'),∘⍪¨↓⍕∘,¨⍉3↓⍉⍵}
 opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
 soext←{opsys'.dll' '.so' '.dylib'}
-tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
-put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+mkna←{(⍺,soext⍬),'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
 mkf←{fn←(⍺,soext⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa '
  f←⍵,'←{_←''dya''⎕NA''',fn,'>PP <PP <PP'' ⋄ '
  f,←'_←''mon''⎕NA''',fn,'>PP P <PP'' ⋄ '
  f,'0=⎕NC''⍺'':mon 0 0 ⍵ ⋄ dya 0 ⍺ ⍵} ⋄ 0'}
+tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
 ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
 cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib'' '}
 cco←'-std=c++11 -Ofast -g -Wall -fPIC -shared '
