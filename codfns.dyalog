@@ -6,7 +6,8 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
 VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
 Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
- _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕NEXISTS f:n ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
+ _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕←⊃⎕NGET ⍺,'.log' ⋄ ⎕NEXISTS f:n
+ 'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{f←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage'
  f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' 'mkna'
  ns←#.⎕NS ⍬ ⋄ ns.∆←⎕NS ↑f ⋄ ns.∆._←ns ⋄ _←ns.(⍙←⎕NS ⍬)
