@@ -32,6 +32,8 @@ technology:
 
 ## Publications
 
+[Tree Manipulation Workshop and Dyalog '18 Talk](https://www.sacrideo.us/lambdaconf-tree-manipulation-workshop-videos/)
+
 [User Command for Co-dfns](https://youtu.be/BBaCKf7Od6I)
 
 [APL Patterns vs. Anti-Patterns @ FunctionalConf 2017](https://youtu.be/v7Mt0GYHU9A)
