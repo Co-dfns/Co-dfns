@@ -145,7 +145,7 @@ Var←{⍺(aaww _o aw _o (name _as ⌽) _t (⍺⍺=Vt) _as (⍺⍺V∘,∘⊃))�
 Num←float _o int _as (N∘⌽)
 Strand←0 Var _s (0 Var _some) _as (3 A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
-Atom←Strand _o (0 Var _as (1 A)) _o (Num _some _as (0 A∘⌽)) _o Pex
+Atom←Strand _o (0 Var) _o (Num _some _as (0 A∘⌽)) _o Pex
 Semx←{⍺(Ex _o (_yes _as {3 A,⊂P,';'}))⍵}
 Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {P,'['}) _s Atom _as (2 E∘⌽)
@@ -188,75 +188,44 @@ ps←{⍞←'P' ⋄ 0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
 tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
- ⍝ Convert to Parent Vector 
+ ⍝ Convert to Parent Vector, record scopes
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
-
- ⍝ Binding Table
- bv←I@{1=t[⍵]}⍣≡⍨i@(p[i←⍸1=t[p]])⍳≢p
-
- ⍝ Mark and record top-level bindings
- tlb←⍸(t=1)∧{⍵=p[⍵]}p I@{3≠t[⍵]}⍣≡⍳≢p ⋄ rn←⍸(t=3)∧p=⍳≢p
- tlx←k[tlb],n[tlb],⍪p I⍣≡tlb ⋄ k[tlb]×←2
+ rf←I@{t[⍵]≠3}⍣≡⍨p
 
  ⍝ Lift Functions
- i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ p l(⊣,I)←⊂i ⋄ t k,←10 1⍴⍨¨≢i 
- n,←i ⋄ p[i]←i ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳≢p)∧l=⍳≢l ⋄ l[i]←(≢i)↑(⊃i),i
+ i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳s)∧l=⍳s
+ p l t k n,←(p[i])(l[i])10 1 i⍴⍨¨≢i ⋄ p[i]←i ⋄ l[i]←(≢i)↑(⊃i),i
 
  ⍝ Wrap Return Expressions
- i←⍸((t∊0 2)∧t[p]=3)∨(t[p]∊3 4)∧(~(⍳≢l)∊¯1@{⍵=⍳≢⍵}l)∧(t∊0 2)∨(t=1)∧k=0
- p,←p[i] ⋄ p[i]←(≢l)+⍳≢i ⋄ l←i((≢l)+⍳)@{⍵∊i}l ⋄ l,←l[i] ⋄ l[i]←i
- t k n,←2 0 0⍴⍨¨≢i
+ i←⍸((t∊0 2 10)∧t[p]=3)∨(t[p]∊3 4)∧(0@(l⌿⍨l≠⍳s)⊢1⍴⍨s←≢l)∧(t∊0 2 10)∨(t=1)∧k=0
+ l←i(s+⍳)@{⍵∊i}l ⋄ p l t k n,←(p[i])(l[i])2 0 0⍴⍨¨≢i ⋄ p[i]←s+⍳≢i ⋄ l[i]←i
 
  ⍝ Lift Guard Tests
- fi←p[i←⍸(t∊⍳3)∧(l=⍳≢l)∧t[p]=4] ⋄ l←j@(j←⍸l∊i)⊢l 
- l[i]←fl[j]@(j←⍸fi≠fl←l[fi])⊢i ⋄ l[fi]←i ⋄ n[fi]←i ⋄ p[i]←p[fi]
+ gi←p[i←⍸(t∊10,⍳3)∧(l=⍳≢l)∧t[p]=4] ⋄ l[j]←j←⍸l∊i
+ l[i]←gl[j]@(j←⍸gi≠gl←l[gi])⊢i ⋄ l[gi]←i ⋄ n[gi]←i ⋄ p[i]←p[gi]
 
- ⍝ Lift Expressions
- i←⍸(t∊8,⍳3)∧m←~t[p]∊3 4 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ l←i((≢l)+⍳)@{⍵∊i}l
- p,←∆←p[i] ⋄ l,←l[i] ⋄ t,←10⍴⍨≢i ⋄ k,←(8∘=∨k[i]∧1∘=)t[i] ⋄ n,←i
- l[∪∆]←∆⊢∘⊃⌸i ⋄ net←{~t[⍵]∊8,⍳5} ⋄ wk←xw I p∘I@(xw∘I=⊢)⍣≡
- l[j]←((j×⊢)+×∘~)∘net⍨wk@net⍣≡wk⊢j←i~∆ ⋄ p[i]←p I@(~3 4∊⍨t∘I)⍣≡∆
+ ⍝ Lift Expressions (Shift to RPN)
+ i←⍸(t∊(⍳3),8+⍳3)∧m←~t[p]∊3 4 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ x←i⌿⍨i=l[i]
+ l[p[x]]←x ⋄ l[j]←xw I p I@(xw∘I=⊢)⍣≡j←i~p[i] ⋄ p[i]←p I@{~t[⍵]∊3 4}⍣≡p[i]
+ l[x]←x←j⌿⍨p[l[j]]≠p[j]
 
- ⍝ Resolve Local Names
- vl←p I@{(l=⍳≢l)∧t[p]=4}l
- loc←{m←⍺{(t[⍵]=1)∧n[⍵]=⍺⍺} ⋄ b+⍺×0=b←bv[×∘m⍨vl I@(~m)⍣≡l[⍵]]}
- n[i]←n[i]loc p[i←⍸(t=10)∧n<¯4]
-
- ⍝ Collapse Variable and Binding Reference Chains
- n←bv I@{t[0⌈⍵]=1}I@{t[0⌈⍵]=10}⍣≡⍨n
+ ⍝ Anchor Variables to Frame and Slot
+ sl←¯1,⍨(⍳∘≢-+⍀I⍨0,⍸)0,2≠⌿0⌷⍉fe←∪I∘⍋⍨rf[i],⍪n[i←⍸t=1] ⋄ vi←⍸t=10 ⋄ bi←⍸t=1
+ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1
+ fs←(+⌿≢¨vi bi)⍴≢fe ⋄ x←n[y←vi,bi] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf
+ _←{
+  _←fs[⊃⌽⍵]←fe⍳⊃rf x,.I ⍵
+  ⍵ I¨⊂⍸(≢fe)=_
+ }⍣≡(⍪vi,rf[bi])(⍪⍳≢fs)
+ f s←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1
 
  ⍝ Inline Functions
-
- ⍝ Build call sites, operator reference, closure, and free variable tables
- t3←t[0⌈n]=3 ⋄ ov←(8=tp←t[p])∧lv←(t=10)∧n≥0 ⋄ ev←lv∧(tp=2)∨(tp=1)∧k[p]=2
- xc←((m[l]∧(~m)∧2=⊢)∨m∧1=⊢)k[p]⊣m←l=⍳≢l ⋄ i←⍸ov∧t3∧xc ⋄ of←n[i] ⋄ os←p[i]
- i←⍸ov∧(nos←n∊os)∨t3∧~xc ⋄ on←n[i] ⋄ oi←p[i] ⋄ i←⍸ov ⋄ pom←p[i] ⋄ nom←n[i]
- i←⍸ev∧t3∨nos ⋄ cf←n[i] ⋄ cs←p[i] ⋄ x←⍸ev
- _←{(oi,←(≢¨g)[i]⌿pom)(on,←∊(g←(⊃⊢∘⊂⌸⌿⍵),⊂⍬)[i←(∪⊃⍵)⍳nom])}⍣≡oi on
- i←(∪oi)⍳n[x] ⋄ g←(oi⊢∘⊂⌸on),⊂⍬ ⋄ on←∊g[i] ⋄ oi←(≢¨g)[i]⌿p[x]
- fi←⍬ ⋄ ftn←0 2⍴⍬ ⋄ ci←⍬ ⋄ ctvr←0 3⍴⍬
-
- ⍝ Propagate and ground free references up the lexical stack
- _←{g←(⊃⊢∘⊂⌸⌿⍵),⊂2/⍪⍬ ⋄ x←(∪⊃⍵)∘⍳ ⋄ fi ftn⍪←⍵⍪¨((≢¨g)[i]⌿os)(⊃⍪⌿g[i←x of])
-  s←⍬ ⋄ tv←2/⍪⍬ ⋄ r←⍬
-  _←{ci,←s,←ns←(≢¨g)[i←x⊃⍵]⌿1⊃⍵
-   ctvr⍪←ntv,r,←nr←n I@{t[0⌈⍵]=10}(⊢/tv⍪←ntv←⊃⍪/g[i])loc ns
-   (nr[i])(ns[i←⍸(nr≥0)∧1=⊣/ntv])}⍣{(0=≢⊃⍺)∨⍺≡⍵}(cf,on,⊢/ctvr)(cs,oi,ci)
-  (p[s[i]])(tv[i←⍸r<0;])
- }⍣{(0=≢⊃⍺)∨⍺≡⍵}(p I@{t[⍵]≠3}⍣≡i)(k[i],⍪n[i←⍸(t=10)∧n<¯4])
-
- ⍝ Inline Primitive References
- i←⍸(t=10)∧(n≥0)∧t[0⌈n]=9 ⋄ t[i]←9 ⋄ k[i]←0 ⋄ n[i]←n[n[i]] 
-
  ⍝ Propagate constants
  ⍝ Fold constants
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
- ⍝ Extend top-level exports with their bindings
- tlx,←bv[tlb] ⋄ k[tlb](⊣+⊢×0=⊣)←3
-
- p l t k n exp sym tlx rn fi ftn ci ctvr oi on}
+ p l t k n f s exp sym}
 gck← (0 0)(0 1)(0 3)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)
 gcv← 'Aa' 'Av' 'As' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Om' 'Od' 
 gck,←(9 0)(10 0)(10 1)
