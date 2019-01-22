@@ -24,11 +24,11 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[x]←x←j⌿⍨p[l[j]]≠p[j]
 
  ⍝ Anchor Variables to Frame and Slot
- sl←¯1,⍨(⍳∘≢-+⍀I⍨0,⍸)0,2≠⌿0⌷⍉fe←∪I∘⍋⍨rf[i],⍪n[i←⍸t=1] ⋄ vi←⍸t=10 ⋄ bi←⍸t=1
- d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ fs←(+⌿≢¨vi bi)⍴≢fe
- x←n[y←vi,bi] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ _←(⍪vi,rf[bi])(⍪⍳≢fs)
- f s←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1⊣{⍵ I¨⊂⍸(≢fe)=fs[⊃⌽⍵]←fe⍳⊃rf x,.I ⍵}⍣≡_
-
+ sl←¯1,⍨∊⍳∘≢¨(1∘+⊆⊢)0⌷⍉fe←∪I∘⍋⍨rf[i],⍪n[i←⍸t=1] ⋄ bi←⍸t=1 ⋄ vi←⍸(t=10)∧n<¯4
+ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi] 
+ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe ⋄ _←(vi,rf[bi])⍪⍉⍪⍳≢x
+ fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1⊣{z/⍨c=fs[1⌷z]←fe⍳⍉z←x I@1⊢rf I@0⊢⍵}⍣≡_
+                                
  ⍝ Inline Functions
  ⍝ Propagate constants
  ⍝ Fold constants
