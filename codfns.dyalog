@@ -213,7 +213,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  sl←¯1,⍨∊⍳∘≢¨(1∘+⊆⊢)0⌷⍉fe←∪I∘⍋⍨rf[i],⍪n[i←⍸t=1] ⋄ bi←⍸t=1 ⋄ vi←⍸(t=10)∧n<¯4
  d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi] 
  rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe ⋄ _←(vi,rf[bi])⍪⍉⍪⍳≢x
- fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1⊣{z/⍨c=fs[1⌷z]←fe⍳⍉z←x I@1⊢rf I@0⊢⍵}⍣≡_
+ fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1⊣{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡_
                                 
  ⍝ Inline Functions
  ⍝ Propagate constants
@@ -221,7 +221,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
- p l t k n f s exp sym}
+ p l t k n fr sl exp sym}
 gck← (0 0)(0 1)(0 3)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)
 gcv← 'Aa' 'Av' 'As' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Om' 'Od' 
 gck,←(9 0)(10 0)(10 1)
@@ -230,16 +230,11 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{⍞←'G' ⋄ p l t k n exp sym tlx rn fi ftn ci ctvr oi on←⍵
- I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
- fx←(∪fi)∘⍳ ⋄ ftn←(fi{⊂∪⍵}⌸ftn),⊂0 2⍴⍬
- cx←(∪ci)∘⍳ ⋄ ctvr←(ci{⊂∪⍵}⌸ctvr),⊂0 3⍴⍬
- ox←(∪oi)∘⍳ ⋄ on←(oi{⊂∪⍵}⌸on),⊂⍬
- nam←{'∆'⎕R'__'⊢⍕sym⊃⍨|⍵}
+gc←{⍞←'G' ⋄ p l t k n fr sl exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+ com←{⊃{⍺,',',⍵}/⍵} ⋄ nam←{'∆'⎕R'__'⊢⍕sym⊃⍨|⍵} ⋄ var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
- var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
- ast←(⍉↑d p l(1+t)k n(⍳≢p))[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
+ ast←(⍉↑d p l(1+t)k n(⍳≢p)fr sl)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
  Aaa←{'(1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(Aav ⍵),'));',NL}
  Aas←{'(0,eshp,constant(',('¯'⎕R'-'⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'));',NL}
  Aav←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',('¯'⎕R'-'com⍕¨⍵),'}.data()'}

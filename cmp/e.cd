@@ -27,7 +27,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  sl←¯1,⍨∊⍳∘≢¨(1∘+⊆⊢)0⌷⍉fe←∪I∘⍋⍨rf[i],⍪n[i←⍸t=1] ⋄ bi←⍸t=1 ⋄ vi←⍸(t=10)∧n<¯4
  d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi] 
  rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe ⋄ _←(vi,rf[bi])⍪⍉⍪⍳≢x
- fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1⊣{z/⍨c=fs[1⌷z]←fe⍳⍉z←x I@1⊢rf I@0⊢⍵}⍣≡_
+ fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1⊣{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡_
                                 
  ⍝ Inline Functions
  ⍝ Propagate constants
@@ -35,4 +35,4 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
- p l t k n f s exp sym}
+ p l t k n fr sl exp sym}
