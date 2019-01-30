@@ -17,7 +17,7 @@ dim4 eshp=dim4(0,(B*)NULL);
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
 std::wstring msg;
 
-S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
+S FN{STR nm;I sm;I sd;FN&init;FN(STR nm,I sm,I sd,FN&init):nm(nm),sm(sm),sd(sd){}
  FN():nm(""),sm(0),sd(0){}
  virtual array id(dim4 s){err(16);R array();}
  virtual V operator()(A&z,const A&r){err(99);}

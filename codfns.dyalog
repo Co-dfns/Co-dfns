@@ -221,7 +221,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
- p l t k n fr sl exp sym}
+ p l t k n fr sl rf exp sym}
 gck← (0 0)(0 1)(0 3)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)
 gcv← 'Aa' 'Av' 'As' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Om' 'Od' 
 gck,←(9 0)(10 0)(10 1)
@@ -230,7 +230,7 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{⍞←'G' ⋄ p l t k n fr sl exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
+gc←{⍞←'G' ⋄ p l t k n fr sl rf(xn xt)sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  com←{⊃{⍺,',',⍵}/⍵} ⋄ nam←{'∆'⎕R'__'⊢⍕sym⊃⍨|⍵} ⋄ var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
@@ -240,7 +240,7 @@ gc←{⍞←'G' ⋄ p l t k n fr sl exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  Aav←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',('¯'⎕R'-'com⍕¨⍵),'}.data()'}
  Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
  As←{'A va',(⍕6⊃⍺),'(-1,eshp,array());',NL}
- Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
+ ⍝ Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
  Bv←{('gv_',nam 5⊃⍺),'=',(⊃dis¨⍵),';',NL}
  Bcv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&' '&fn' 'this->fv'⊃⍨2⌊t+2×r<0
   rn←t⊃('gv_',nam v)(⍕|r) ⋄ x←'' '_c'⊃⍨(t=1)∧r>0
@@ -269,15 +269,14 @@ gc←{⍞←'G' ⋄ p l t k n fr sl exp sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  Od←{x f y←dis¨⍵ ⋄ f,'_o fn',(⍕6⊃⍺),'_c(',(Oc x y),');',NL}
  Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
  Zi←{'I isfn',(⍕⍵),'=0;',NL}
- Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};'
-  z,←⊃,/{NL,' ',(⍺⊃'A' 'FN'),'*fv',(⍕|⍵),(⍺⊃'' '_c'),';'}/ftn⊃⍨fx ⍵
-  z,'};',NL,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r);}',NL}
+ Zp←{z←'V fn',(⍕⍵),'(A&,A&,A&,std:stack<A&>&);',NL
+  z,←'V fn',(⍕⍵),'(A&z,A&r,std:stack<A&>&e){fn',(⍕⍵),'(z,A(),r,e);',NL}
  gx←{⊃t n p v←⍵:'EF(',(com(⊂nam n),'fn'∘,¨(⍕v)(⍕p)),');',NL
   'A gv_',(nam n),';',NL}
  Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' '*fv'⊃⍨x<0),⍕|x}
  Vf←{('fn' '*fv'⊃⍨x<0),⍕|x←5⊃⍺}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
- z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3),(,/Zi¨rn),(⊂gx)⍤1⊢tlx
+ z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3)⍝,(,/Zi¨rn),(⊂gx)⍤1⊢tlx
  ⊃,/z,dis¨ks ast⊣⍞←⎕UCS 10}
 
 syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
@@ -398,7 +397,7 @@ rth,←'dim4 eshp=dim4(0,(B*)NULL);',NL
 rth,←'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',NL
 rth,←'std::wstring msg;',NL
 rth,←'',NL
-rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',NL
+rth,←'S FN{STR nm;I sm;I sd;FN&init;FN(STR nm,I sm,I sd,FN&init):nm(nm),sm(sm),sd(sd){}',NL
 rth,←' FN():nm(""),sm(0),sd(0){}',NL
 rth,←' virtual array id(dim4 s){err(16);R array();}',NL
 rth,←' virtual V operator()(A&z,const A&r){err(99);}',NL

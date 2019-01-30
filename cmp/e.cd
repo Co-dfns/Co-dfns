@@ -35,4 +35,4 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
- p l t k n fr sl exp sym}
+ p l t k n fr sl rf exp sym}
