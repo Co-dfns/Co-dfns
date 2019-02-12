@@ -4,6 +4,7 @@ I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}
 B cnt(dim4 s){B c=1;DO(4,c*=s[i]);R c;}
 B cnt(const A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}
 B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
+array scl(D x){R constant(x,dim4(1),f64);}
 array scl(I x){R constant(x,dim4(1),s32);}
 A scl(array v){R A(0,dim4(1),v);}
 dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;
