@@ -8,6 +8,7 @@
 #include <math.h>
 #include <memory>
 #include <algorithm>
+#include <stack>
 #include <string>
 #include <cstring>
 #include <vector>
@@ -15,7 +16,7 @@
 #include <arrayfire.h>
 using namespace af;
 
-#if AF_API_VERSION < 35
+#if AF_API_VERSION < 36
 #error "Your ArrayFire version is too old."
 #endif
 #ifdef _WIN32
@@ -52,17 +53,17 @@ using namespace af;
  n##_o(FN&l,const A&r):DOP(nm,sm,sd,l,r){}};
 #define MT
 #define DID inline array id(dim4)
-#define MFD inline V operator()(A&,const A&)
-#define MAD inline V operator()(A&,const A&,D)
-#define DFD inline V operator()(A&,const A&,const A&)
-#define DAD inline V operator()(A&,const A&,const A&,D)
+#define MFD inline V operator()(A&,const A&,ENV&)
+#define MAD inline V operator()(A&,const A&,D,ENV&)
+#define DFD inline V operator()(A&,const A&,const A&,ENV&)
+#define DAD inline V operator()(A&,const A&,const A&,D,ENV&)
 #define DI(n) inline array n::id(dim4 s)
 #define ID(n,x,t) DI(n##_f){R constant(x,s,t);}
-#define MF(n) inline V n::operator()(A&z,const A&r)
-#define MA(n) inline V n::operator()(A&z,const A&r,D ax)
-#define DF(n) inline V n::operator()(A&z,const A&l,const A&r)
-#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,D ax)
-#define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r){\
+#define MF(n) inline V n::operator()(A&z,const A&r,ENV&e)
+#define MA(n) inline V n::operator()(A&z,const A&r,D ax,ENV&e)
+#define DF(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e)
+#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,D ax,ENV&e)
+#define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r,ENV&e){\
  if(l.r==r.r&&l.s==r.s){\
   z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\
  if(!l.r){\
@@ -70,6 +71,9 @@ using namespace af;
  if(!r.r){\
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
+#define PUSH(x) s.emplace(BX(x))
+#define POPF(x) x=s.top().f;s.pop()
+#define POPV(x) x=s.top().v;s.pop()
 #define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
   A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\
   cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\
