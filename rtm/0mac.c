@@ -72,6 +72,7 @@ using namespace af;
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
 #define PUSH(x) s.emplace(BX(x))
+#define POP(x) x=s.top();s.pop()
 #define POPF(x) x=s.top().f;s.pop()
 #define POPV(x) x=s.top().v;s.pop()
 #define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
