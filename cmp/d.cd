@@ -25,11 +25,11 @@ Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
 Bfn←rbrc Blrp lbrc _as {0(N∆⍳'F')¯1(,⊂⌽1↓¯1↓⍵)}
 Fnp←Prim _o (1 Var) _o Sfn _o Bfn _o Pfe
-Mop←{⍺((mop _as P) _s Afx _as (1 O))⍵}
-Dop1←{⍺((dop1 _as P) _s Afx _as (2 O∘⌽))⍵}
-Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (2 O∘⌽))⍵}
-Dop3←(dop3 _as P) _s Atom _as (2 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (1 O))
-Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {P,'['}) _s Afx _as (2 O∘⌽))⍵}
+Mop←{⍺((mop _as P) _s Afx _as (2 O))⍵}
+Dop1←{⍺((dop1 _as P) _s Afx _as (8 O∘⌽))⍵}
+Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (7 O∘⌽))⍵}
+Dop3←(dop3 _as P) _s Atom _as (5 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (2 O))
+Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {P,'['}) _s Afx _as (7 O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) _o Dop2 _o Bop
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
 Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (0(N∆⍳'B')⍺⍺,∘⊂⊢))⍵}
