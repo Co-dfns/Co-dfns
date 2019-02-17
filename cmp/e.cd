@@ -24,7 +24,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[x]←x←j⌿⍨p[l[j]]≠p[j]
 
  ⍝ Anchor Variables to Frame and Slot
- sl←¯1,⍨∊⍳∘≢¨(1∘+⊆⊢)0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1] ⋄ vi←⍸(t=10)∧n<¯4
+ sl←¯1,⍨∊⍳¨n[∪rb]←⊢∘≢⌸rb←0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1] ⋄ vi←⍸(t=10)∧n<¯4
  d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi]
  n[bi]←sl[fe⍳rn] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe
  _←{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡(vi,rf[bi])⍪⍉⍪⍳≢x
