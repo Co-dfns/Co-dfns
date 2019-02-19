@@ -12,7 +12,7 @@ EXPORT I DyalogGetInterpreterFunctions(dwa*p){
 Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
 dim4 eshp=dim4(0,(B*)NULL);
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
-std::wstring msg;union BX;
+std::wstring msg;S BX;
 typedef std::vector<BX> FRM;typedef std::vector<FRM> ENV;
 typedef std::stack<BX> STK;
 S A{I r,f;dim4 s;array v;A(I r,dim4 s,array v):r(r),f(1),s(s),v(v){}
@@ -34,4 +34,7 @@ S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;
   :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}
  DOP(STR nm,I sm,I sd,FN&l,A r)
   :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};
-union BX{A v;FN f;BX(const FN&f):f(f){}BX(const A&v):v(v){}public:~BX();};
+S BX{I t;union {A v;FN f;};BX(const FN&f):f(f),t(1){}BX(const A&v):v(v),t(0){}
+ BX():t(0),v(A()){}BX(const BX&x):t(x.t){if(t){f=x.f;}else{v=x.v;}}
+ BX&operator=(const BX&x){t=x.t;if(t){f=x.f;}else{v=x.v;};R*this;}
+ ~BX(){}};

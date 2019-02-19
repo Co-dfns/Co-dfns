@@ -6,7 +6,7 @@ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC'
 VS∆PS,¨←⊂'\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
 Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
- _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕←⊃⎕NGET ⍺,'.log' ⋄ ⎕NEXISTS f:n
+ _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕←⍪⊃⎕NGET(⍺,'.log')1 ⋄ ⎕NEXISTS f:n
  'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{f←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage'
  f,←'Image' 'Plot' 'Histogram' 'soext' 'opsys' 'mkna'
@@ -165,11 +165,11 @@ Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
 Bfn←rbrc Blrp lbrc _as {0(N∆⍳'F')¯1(,⊂⌽1↓¯1↓⍵)}
 Fnp←Prim _o (1 Var) _o Sfn _o Bfn _o Pfe
-Mop←{⍺((mop _as P) _s Afx _as (1 O))⍵}
-Dop1←{⍺((dop1 _as P) _s Afx _as (2 O∘⌽))⍵}
-Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (2 O∘⌽))⍵}
-Dop3←(dop3 _as P) _s Atom _as (2 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (1 O))
-Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {P,'['}) _s Afx _as (2 O∘⌽))⍵}
+Mop←{⍺((mop _as P) _s Afx _as (2 O))⍵}
+Dop1←{⍺((dop1 _as P) _s Afx _as (8 O∘⌽))⍵}
+Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (7 O∘⌽))⍵}
+Dop3←(dop3 _as P) _s Atom _as (5 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (2 O))
+Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {P,'['}) _s Afx _as (7 O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) _o Dop2 _o Bop
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
 Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (0(N∆⍳'B')⍺⍺,∘⊂⊢))⍵}
@@ -210,10 +210,11 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[x]←x←j⌿⍨p[l[j]]≠p[j]
 
  ⍝ Anchor Variables to Frame and Slot
- sl←¯1,⍨∊⍳∘≢¨(1∘+⊆⊢)0⌷⍉fe←∪I∘⍋⍨rf[i],⍪n[i←⍸t=1] ⋄ bi←⍸t=1 ⋄ vi←⍸(t=10)∧n<¯4
- d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi] 
- rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe ⋄ _←(vi,rf[bi])⍪⍉⍪⍳≢x
- fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1⊣{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡_
+ sl←¯1,⍨∊⍳¨n[∪rb]←⊢∘≢⌸rb←0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1] ⋄ vi←⍸(t=10)∧n<¯4
+ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi]
+ n[bi]←sl[fe⍳rn] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe
+ _←{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡(vi,rf[bi])⍪⍉⍪⍳≢x
+ fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1
                                 
  ⍝ Inline Functions
  ⍝ Propagate constants
@@ -222,59 +223,49 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Allocate frames
 
  p l t k n fr sl rf exp sym}
-gck← (0 0)(0 1)(0 3)(1 2)(1 3)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)
-gcv← 'Aa' 'Av' 'As' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Om' 'Od' 
-gck,←(9 0)(10 0)(10 1)
-gcv,←'Pm' 'Va'  'Vf'  
+gck← (0 0)(0 1)(0 3)(1 1)(1 0)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)
+gcv← 'Aa' 'Av' 'As' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Ov' 'Of' 
+gck,←(8 4) (8 5) (8 7) (8 8) (9 0)(10 0)(10 1)
+gcv,←'Ovv' 'Ovf' 'Ofv' 'Off' 'Pm' 'Va'  'Vf'  
 gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{⍞←'G' ⋄ p l t k n fr sl rf(xn xt)sym←⍵ ⋄ I←{(⊂⍵)⌷⍺}
- com←{⊃{⍺,',',⍵}/⍵} ⋄ nam←{'∆'⎕R'__'⊢⍕sym⊃⍨|⍵} ⋄ var←{('va' 'fv'⊃⍨⍵<0),⍕|⍵}
+gc←{⍞←'G' ⋄ p l t k n fr sl rf(xn xt)sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+ nam←{'∆'⎕R'__'⊢⍕sym⊃⍨|⍵} ⋄ slt←{'e[',(⍕7⊃⍵),'][',(⍕8⊃⍵),']'}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  ast←(⍉↑d p l(1+t)k n(⍳≢p)fr sl)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
- Aaa←{'(1,dim4(',(⍕≢⍵),'),array(',(⍕≢⍵),',',(Aav ⍵),'));',NL}
- Aas←{'(0,eshp,constant(',('¯'⎕R'-'⍕⍵),',eshp,',('f64' 's32'⊃⍨⍵=⌊⍵),'));',NL}
- Aav←{'std::vector<',('DI'⊃⍨∧/⍵=⌊⍵),'>{',('¯'⎕R'-'com⍕¨⍵),'}.data()'}
- Aa←{h←'A va',⍕6⊃⍺ ⋄ 1=≢ns←dis¨⍵:h,Aas⊃ns ⋄ h,Aaa ns}
- As←{'A va',(⍕6⊃⍺),'(-1,eshp,array());',NL}
- ⍝ Av←{'A va',(⍕6⊃⍺),'=',(⊃,/dis¨⍵),';',NL}
- Bv←{('gv_',nam 5⊃⍺),'=',(⊃dis¨⍵),';',NL}
- Bcv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&' '&fn' 'this->fv'⊃⍨2⌊t+2×r<0
-  rn←t⊃('gv_',nam v)(⍕|r) ⋄ x←'' '_c'⊃⍨(t=1)∧r>0
-  ts,'*fv',(⍕|v),x,'=',vp,rn,x,';',NL,' '}
- Bf←{i←fx⊢x←∪(0(0 5)⊃⍵),(on⊃⍨ox 6⊃⍺),{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx 6⊃⍺
-  '{',NL,⍨'}',⍨⊃,/((⊂Bcv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
- Ecv←{t v r←⍵ ⋄ ts←t⊃'A' 'FN' ⋄ vp←'&va' '&fn' 'this->fv'⊃⍨2⌊t+2×r<0
-  ts,'*fv',(⍕|v),x,'=',vp,(⍕|r),(x←'' '_c'⊃⍨(t=1)∧r>0),';',NL,'  '}
- Ecf←{⊃,/⍺{'fn',(⍕⍺⍺),'_c.fv',x,'=fv',(x←(⍕|⍵),⍺⊃'' '_c'),';',NL,'  '}/⍵}
- Ecz←{i←fx⊢x←∪⍵,(on⊃⍨ox ⍺),{r⌿⍨(1=0⌷⍉⍵)∧0<r←2⌷⍉⍵}tvr←ctvr⊃⍨cx ⍺
-  ⊃,/((⊂Ecv)⍤1⊢tvr),⊃,/x Ecf¨ftn[i]}
- Ed←{x f y←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
-  z,' {',((6⊃⍺)Ecz 1(0 5)⊃⍵),'(',f,'_c)(',(com('va',⍕6⊃⍺)x y),');}',NL}
- Ei←{'std::vector<A> va',(⍕6⊃⍺),'={',(com dis¨⍵),'};',NL}
- Em←{f v←dis¨⍵ ⋄ z←'A va',(⍕6⊃⍺),';',NL
-  z,' {',((6⊃⍺)Ecz 0(0 5)⊃⍵),'(',f,'_c)(',('va',⍕6⊃⍺),',',v,');}',NL}
- Er←{'z=',(⊃dis¨⍵),';z.f=1;R;',NL}
- Fn←{NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL,(⊃,/' ',¨dis¨⍵),'}',NL}
- Gd←{t←⍺ Va ⍬ ⋄ z←'{if(cnt(',t,')!=1)err(5);',NL
-  z,←' if(!(',t,'.v.isinteger()||',t,'.v.isbool()))err(11);',NL
-  z,←' I t=',t,'.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
-  z,' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}',NL}
- Na←{sym⌷⍨|5⊃⍺}
- Oc←{com{'_c',⍨⍣('va'≢2↑⍵)⊢⍵}¨⍵}
- Om←{f v←dis¨⍵ ⋄ f,'_o fn',(⍕6⊃⍺),'_c(',(Oc⊂v),');',NL}
- Od←{x f y←dis¨⍵ ⋄ f,'_o fn',(⍕6⊃⍺),'_c(',(Oc x y),');',NL}
- Pm←{nams⊃⍨syms⍳sym⌷⍨|5⊃⍺}
- Zi←{'I isfn',(⍕⍵),'=0;',NL}
- Zp←{z←'V fn',(⍕⍵),'(A&,A&,A&,std:stack<A&>&);',NL
-  z,←'V fn',(⍕⍵),'(A&z,A&r,std:stack<A&>&e){fn',(⍕⍵),'(z,A(),r,e);',NL}
- gx←{⊃t n p v←⍵:'EF(',(com(⊂nam n),'fn'∘,¨(⍕v)(⍕p)),');',NL
-  'A gv_',(nam n),';',NL}
- Va←{(x←5⊃⍺)∊-1+⍳4:,'r' 'l' 'll' 'rr'⊃⍨¯1+|x ⋄ ('va' '*fv'⊃⍨x<0),⍕|x}
- Vf←{('fn' '*fv'⊃⍨x<0),⍕|x←5⊃⍺}
+ Aa←{1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
+  c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨⍵),'>{',(com ⍵),'}.data()'
+  'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
+ As←{'PUSH(A(-1,eshp,array());',NL}
+ Bf←{'POP(e.back()[',(⍕5⊃⍺),']);',NL}
+ Bv←{'POP(e.back()[',(⍕5⊃⍺),']);',NL}
+ Ed←{'{A z,x,y;FN f;POPV(x);POPF(f);POPV(y);f(z,x,y,e);PUSH(z);}',NL}
+ Ei←{'{std::vector<A> ix(',(⍕5⊃⍺),');DO(somesize,POPV(ix[i]));PUSH(ix);',NL}
+ Em←{'{A z,x;FN f;POPF(f);POPV(y);f(z,y,e);PUSH(z);}',NL}
+ Er←{'POPV(z);z.f=1;e.pop_back();R;',NL}
+ Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL
+  z,←' STK s;FRM mem(',(⍕5⊃⍺),');e.push_back(mem);',NL
+  z,(⊃,/' ',¨dis¨⍵),'}',NL}
+ Gd←{z←'{A x;POPV(x);if(cnt(x)!=1)err(5);',NL
+  z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
+  z,←' I t=x.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
+  z,←' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}}',NL}
+ Na←{'¯'⎕R'-'⍕sym⌷⍨|5⊃⍺}
+ Ov←{'{A x;FN f;OP o;POPO(o);POPV(x);o(f,x);PUSH(f);}',NL}
+ Of←{'{FN f;OP o;POPO(o);POPF(f);o(f,f);PUSH(f);}',NL}
+ Ovv←{'{A x,y;FN f;OP o;POPV(x);POPO(o);POPV(y);o(f,x,y);PUSH(f);}',NL}
+ Ovf←{'{A x;FN f,g;OP o;POPV(x);POPO(o);POPF(g);o(f,x,g);PUSH(f);}',NL}
+ Ofv←{'{A x;FN f,g;OP o;POPF(g);POPO(o);POPV(x);o(f,g,x);PUSH(f);}',NL}
+ Off←{'{FN f,g,h;OP o;POPF(g);POPO(o);POPF(h);o(f,g,h);PUSH(f);}',NL}
+ Pm←{'PUSH(',(nams⊃⍨syms⍳sym⌷⍨|5⊃⍺),'_c);',NL}
+ Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};};',NL
+  z,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r,e);}',NL}
+ Va←{(x←5⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'll' 'rr'⊃⍨¯1+|x),');',NL
+  'PUSH(',(slt ⍺),');',NL}
+ Vf←{0>x←5⊃⍺:'PUSH(',(slt ⍺),');',NL ⋄ 'PUSH(fn',(⍕x),'_c);',NL}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
  z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3)⍝,(,/Zi¨rn),(⊂gx)⍤1⊢tlx
  ⊃,/z,dis¨ks ast⊣⍞←⎕UCS 10}
@@ -308,6 +299,7 @@ rth,←'#include <codecvt>',NL
 rth,←'#include <math.h>',NL
 rth,←'#include <memory>',NL
 rth,←'#include <algorithm>',NL
+rth,←'#include <stack>',NL
 rth,←'#include <string>',NL
 rth,←'#include <cstring>',NL
 rth,←'#include <vector>',NL
@@ -315,7 +307,7 @@ rth,←'#include <unordered_map>',NL
 rth,←'#include <arrayfire.h>',NL
 rth,←'using namespace af;',NL
 rth,←'',NL
-rth,←'#if AF_API_VERSION < 35',NL
+rth,←'#if AF_API_VERSION < 36',NL
 rth,←'#error "Your ArrayFire version is too old."',NL
 rth,←'#endif',NL
 rth,←'#ifdef _WIN32',NL
@@ -352,17 +344,17 @@ rth,←' n##_o(const A&l,FN&r):DOP(nm,sm,sd,l,r){}\',NL
 rth,←' n##_o(FN&l,const A&r):DOP(nm,sm,sd,l,r){}};',NL
 rth,←'#define MT',NL
 rth,←'#define DID inline array id(dim4)',NL
-rth,←'#define MFD inline V operator()(A&,const A&)',NL
-rth,←'#define MAD inline V operator()(A&,const A&,D)',NL
-rth,←'#define DFD inline V operator()(A&,const A&,const A&)',NL
-rth,←'#define DAD inline V operator()(A&,const A&,const A&,D)',NL
+rth,←'#define MFD inline V operator()(A&,const A&,ENV&)',NL
+rth,←'#define MAD inline V operator()(A&,const A&,D,ENV&)',NL
+rth,←'#define DFD inline V operator()(A&,const A&,const A&,ENV&)',NL
+rth,←'#define DAD inline V operator()(A&,const A&,const A&,D,ENV&)',NL
 rth,←'#define DI(n) inline array n::id(dim4 s)',NL
 rth,←'#define ID(n,x,t) DI(n##_f){R constant(x,s,t);}',NL
-rth,←'#define MF(n) inline V n::operator()(A&z,const A&r)',NL
-rth,←'#define MA(n) inline V n::operator()(A&z,const A&r,D ax)',NL
-rth,←'#define DF(n) inline V n::operator()(A&z,const A&l,const A&r)',NL
-rth,←'#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,D ax)',NL
-rth,←'#define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r){\',NL
+rth,←'#define MF(n) inline V n::operator()(A&z,const A&r,ENV&e)',NL
+rth,←'#define MA(n) inline V n::operator()(A&z,const A&r,D ax,ENV&e)',NL
+rth,←'#define DF(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e)',NL
+rth,←'#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,D ax,ENV&e)',NL
+rth,←'#define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r,ENV&e){\',NL
 rth,←' if(l.r==r.r&&l.s==r.s){\',NL
 rth,←'  z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\',NL
 rth,←' if(!l.r){\',NL
@@ -370,6 +362,10 @@ rth,←'  z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',NL
 rth,←' if(!r.r){\',NL
 rth,←'  z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\',NL
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',NL
+rth,←'#define PUSH(x) s.emplace(BX(x))',NL
+rth,←'#define POP(x) x=s.top();s.pop()',NL
+rth,←'#define POPF(x) x=s.top().f;s.pop()',NL
+rth,←'#define POPV(x) x=s.top().v;s.pop()',NL
 rth,←'#define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\',NL
@@ -383,7 +379,6 @@ rth,←' APLR,APLF,APLQ}APLTYPE;',NL
 rth,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',NL
 rth,←'typedef double D;typedef unsigned char U8;typedef unsigned U;',NL
 rth,←'typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;',NL
-rth,←'',NL
 rth,←'S{U f=3;U n;U x=0;wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',NL
 rth,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',NL
 rth,←'S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',NL
@@ -391,19 +386,20 @@ rth,←'S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}',NL
 rth,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',NL
 rth,←' if(p)dwafns=p;else R 0;if(dwafns->z<sizeof(S dwa))R 16;R 0;}',NL
 rth,←'Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}',NL
-rth,←'S A{I r,f;dim4 s;array v;A(I r,dim4 s,array v):r(r),f(1),s(s),v(v){}',NL
-rth,←' A():r(0),f(0),s(dim4()),v(array()){}};',NL
 rth,←'dim4 eshp=dim4(0,(B*)NULL);',NL
 rth,←'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',NL
-rth,←'std::wstring msg;',NL
-rth,←'',NL
-rth,←'S FN{STR nm;I sm;I sd;FN&init;FN(STR nm,I sm,I sd,FN&init):nm(nm),sm(sm),sd(sd){}',NL
+rth,←'std::wstring msg;S BX;',NL
+rth,←'typedef std::vector<BX> FRM;typedef std::vector<FRM> ENV;',NL
+rth,←'typedef std::stack<BX> STK;',NL
+rth,←'S A{I r,f;dim4 s;array v;A(I r,dim4 s,array v):r(r),f(1),s(s),v(v){}',NL
+rth,←' A():r(0),f(0),s(dim4()),v(array()){}};',NL
+rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',NL
 rth,←' FN():nm(""),sm(0),sd(0){}',NL
 rth,←' virtual array id(dim4 s){err(16);R array();}',NL
-rth,←' virtual V operator()(A&z,const A&r){err(99);}',NL
-rth,←' virtual V operator()(A&z,const A&r,D ax){err(99);}',NL
-rth,←' virtual V operator()(A&z,const A&l,const A&r){err(99);}',NL
-rth,←' virtual V operator()(A&z,const A&l,const A&r,D ax){err(99);}};',NL
+rth,←' virtual V operator()(A&z,const A&r,ENV&e){err(99);}',NL
+rth,←' virtual V operator()(A&z,const A&r,D ax,ENV&e){err(99);}',NL
+rth,←' virtual V operator()(A&z,const A&l,const A&r,ENV&e){err(99);}',NL
+rth,←' virtual V operator()(A&z,const A&l,const A&r,D ax,ENV&e){err(99);}};',NL
 rth,←'FN MTFN;',NL
 rth,←'S MOP:FN{FN&ll;',NL
 rth,←' MOP(STR nm,I sm,I sd,FN&ll):FN(nm,sm,sd),ll(ll){}};',NL
@@ -414,12 +410,17 @@ rth,←' DOP(STR nm,I sm,I sd,A l,FN&r)',NL
 rth,←'  :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}',NL
 rth,←' DOP(STR nm,I sm,I sd,FN&l,A r)',NL
 rth,←'  :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};',NL
+rth,←'S BX{I t;union {A v;FN f;};BX(const FN&f):f(f),t(1){}BX(const A&v):v(v),t(0){}',NL
+rth,←' BX():t(0),v(A()){}BX(const BX&x):t(x.t){if(t){f=x.f;}else{v=x.v;}}',NL
+rth,←' BX&operator=(const BX&x){t=x.t;if(t){f=x.f;}else{v=x.v;};R*this;}',NL
+rth,←' ~BX(){}};',NL
 rth,←'std::wstring mkstr(const char*s){R strconv.from_bytes(s);}',NL
 rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}',NL
 rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}',NL
 rth,←'B cnt(dim4 s){B c=1;DO(4,c*=s[i]);R c;}',NL
 rth,←'B cnt(const A&a){B c=1;DO(a.r,c*=a.s[i]);R c;}',NL
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',NL
+rth,←'array scl(D x){R constant(x,dim4(1),f64);}',NL
 rth,←'array scl(I x){R constant(x,dim4(1),s32);}',NL
 rth,←'A scl(array v){R A(0,dim4(1),v);}',NL
 rth,←'dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;',NL
