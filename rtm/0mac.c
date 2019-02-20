@@ -75,11 +75,12 @@ using namespace af;
 #define POP(x) x=s.top();s.pop()
 #define POPF(x) x=s.top().f;s.pop()
 #define POPV(x) x=s.top().v;s.pop()
-#define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
-  A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\
-  cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\
+#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
+  A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\
+  cpda(cr,r);cpda(cl,l);(e##init[0][fun].f)(za,cl,cr,e##init);cpad(z,za);}\
  catch(U n){derr(n);}\
  catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
-EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##_c(*z,*l,*r);}catch(U n){derr(n);}\
+EXPORT V ex##_cdf(A*z,A*l,A*r){try{(e##init[0][fun].f)(*z,*l,*r,e##init);}\
+ catch(U n){derr(n);}\
  catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}
 

@@ -181,7 +181,7 @@ Ex←IAx _s {⍺(0 Bind _o Asgn _o App _s ∇ _opt)⍵} _as (⍪/⍳∘≢+@0⍉
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
 Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
-Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (1 F)
+Ns←nss Blrp nse _then (Ex _o Fex Stmts _then Fn) _s eot _as (0 F)
 ps←{⍞←'P' ⋄ 0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
  (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)}
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
@@ -190,7 +190,9 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Convert to Parent Vector, record scopes
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
- rf←I@{t[⍵]≠3}⍣≡⍨p
+
+ ⍝ Function Roots and Exports
+ rf←I@{t[⍵]≠3}⍣≡⍨p ⋄ exp←(rf[i])(n[i])(t[i])(i←⍸(t=1)∧p[rf]=rf)
 
  ⍝ Lift Functions
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳s)∧l=⍳s
@@ -209,11 +211,13 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[p[x]]←x ⋄ l[j]←xw I p I@(xw∘I=⊢)⍣≡j←i~p[i] ⋄ p[i]←p I@{~t[⍵]∊3 4}⍣≡p[i]
  l[x]←x←j⌿⍨p[l[j]]≠p[j]
 
+ ⍝ Compute Frames and Slots
+ sl←¯1,⍨∊⍳¨n[∪rb]←⊢∘≢⌸rb←0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1]
+ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1
+
  ⍝ Anchor Variables to Frame and Slot
- sl←¯1,⍨∊⍳¨n[∪rb]←⊢∘≢⌸rb←0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1] ⋄ vi←⍸(t=10)∧n<¯4
- d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi]
- n[bi]←sl[fe⍳rn] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe
- _←{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡(vi,rf[bi])⍪⍉⍪⍳≢x
+ vi←⍸(t=10)∧n<¯4 ⋄ x←n[y←vi,bi] ⋄ n[bi]←sl[fe⍳rn] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf
+ fs←(≢x)⍴c←≢fe ⋄ _←{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡(vi,rf[bi])⍪⍉⍪⍳≢x
  fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1
                                 
  ⍝ Inline Functions
@@ -223,16 +227,17 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Allocate frames
 
  p l t k n fr sl rf exp sym}
-gck← (0 0)(0 1)(0 3)(1 1)(1 0)(2 0)(2 1)(2 2)(2 3)(3 1)(4 0)(7 0)(8 1)(8 2)
-gcv← 'Aa' 'Av' 'As' 'Bf' 'Bv' 'Er' 'Em' 'Ed' 'Ei' 'Fn' 'Gd' 'Na' 'Ov' 'Of' 
-gck,←(8 4) (8 5) (8 7) (8 8) (9 0)(10 0)(10 1)
-gcv,←'Ovv' 'Ovf' 'Ofv' 'Off' 'Pm' 'Va'  'Vf'  
+gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
+gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
+gck,←(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(10 0)(10 1)
+gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pm' 'Va'  'Vf'  
 gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{⍞←'G' ⋄ p l t k n fr sl rf(xn xt)sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
- nam←{'∆'⎕R'__'⊢⍕sym⊃⍨|⍵} ⋄ slt←{'e[',(⍕7⊃⍵),'][',(⍕8⊃⍵),']'}
+gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
+ I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+ nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'e[',(⍕7⊃⍵),'][',(⍕8⊃⍵),']'}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
  ast←(⍉↑d p l(1+t)k n(⍳≢p)fr sl)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
@@ -249,6 +254,9 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xn xt)sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} 
  Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL
   z,←' STK s;FRM mem(',(⍕5⊃⍺),');e.push_back(mem);',NL
   z,(⊃,/' ',¨dis¨⍵),'}',NL}
+ Fz←{z←NL,'FRM mem(',(⍕5⊃⍺),');ENV e',(⍕6⊃⍺),'{mem};I is',(⍕6⊃⍺),'=0;',NL
+  z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;',NL
+  z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POPV(x);if(cnt(x)!=1)err(5);',NL
   z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
   z,←' I t=x.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
@@ -267,8 +275,10 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xn xt)sym←⍵ ⋄ I←{(⊂⍵)⌷⍺} 
   'PUSH(',(slt ⍺),');',NL}
  Vf←{0>x←5⊃⍺:'PUSH(',(slt ⍺),');',NL ⋄ 'PUSH(fn',(⍕x),'_c);',NL}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
- z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3)⍝,(,/Zi¨rn),(⊂gx)⍤1⊢tlx
- ⊃,/z,dis¨ks ast⊣⍞←⎕UCS 10}
+ z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3)
+ z,←dis¨ks ast
+ z,←'E',¨('VF'[xt]),¨'(',¨(⍕¨xr),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
+ ⊃,⌿z⊣⍞←⎕UCS 10}
 
 syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
 nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
@@ -366,12 +376,13 @@ rth,←'#define PUSH(x) s.emplace(BX(x))',NL
 rth,←'#define POP(x) x=s.top();s.pop()',NL
 rth,←'#define POPF(x) x=s.top().f;s.pop()',NL
 rth,←'#define POPV(x) x=s.top().v;s.pop()',NL
-rth,←'#define EF(ex,fun,init) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
-rth,←'  A cl,cr,za;if(!is##init){init##_c(za,cl,cr);is##init=1;}\',NL
-rth,←'  cpda(cr,r);cpda(cl,l);fun##_c(za,cl,cr);cpad(z,za);}\',NL
+rth,←'#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
+rth,←'  A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\',NL
+rth,←'  cpda(cr,r);cpda(cl,l);(e##init[0][fun].f)(za,cl,cr,e##init);cpad(z,za);}\',NL
 rth,←' catch(U n){derr(n);}\',NL
 rth,←' catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\',NL
-rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){try{fun##_c(*z,*l,*r);}catch(U n){derr(n);}\',NL
+rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){try{(e##init[0][fun].f)(*z,*l,*r,e##init);}\',NL
+rth,←' catch(U n){derr(n);}\',NL
 rth,←' catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}',NL
 rth,←'',NL
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD,APLP,APLU,APLV,APLW,APLZ,',NL

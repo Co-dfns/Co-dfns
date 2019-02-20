@@ -4,7 +4,9 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 
  ⍝ Convert to Parent Vector, record scopes
  _←2{l[⍵[i]]←⍵[¯1+i←⍸0,2=⌿i]⊣p[⍵]←⍺[i←⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←l←⍳≢d
- rf←I@{t[⍵]≠3}⍣≡⍨p
+
+ ⍝ Function Roots and Exports
+ rf←I@{t[⍵]≠3}⍣≡⍨p ⋄ exp←(rf[i])(n[i])(t[i])(i←⍸(t=1)∧p[rf]=rf)
 
  ⍝ Lift Functions
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳s)∧l=⍳s
@@ -23,11 +25,13 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  l[p[x]]←x ⋄ l[j]←xw I p I@(xw∘I=⊢)⍣≡j←i~p[i] ⋄ p[i]←p I@{~t[⍵]∊3 4}⍣≡p[i]
  l[x]←x←j⌿⍨p[l[j]]≠p[j]
 
+ ⍝ Compute Frames and Slots
+ sl←¯1,⍨∊⍳¨n[∪rb]←⊢∘≢⌸rb←0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1]
+ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1
+
  ⍝ Anchor Variables to Frame and Slot
- sl←¯1,⍨∊⍳¨n[∪rb]←⊢∘≢⌸rb←0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1] ⋄ vi←⍸(t=10)∧n<¯4
- d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ x←n[y←vi,bi]
- n[bi]←sl[fe⍳rn] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf ⋄ fs←(≢x)⍴c←≢fe
- _←{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡(vi,rf[bi])⍪⍉⍪⍳≢x
+ vi←⍸(t=10)∧n<¯4 ⋄ x←n[y←vi,bi] ⋄ n[bi]←sl[fe⍳rn] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf
+ fs←(≢x)⍴c←≢fe ⋄ _←{z/⍨c=fs[1⌷z]←fe⍳⍉x I@1⊢z←rf I@0⊢⍵}⍣≡(vi,rf[bi])⍪⍉⍪⍳≢x
  fr sl←(fr sl I¨⊂fs)⊣@y¨⊂(≢rf)⍴¯1
                                 
  ⍝ Inline Functions
