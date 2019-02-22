@@ -247,9 +247,9 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
  As←{'PUSH(A(-1,eshp,array());',NL}
  Bf←{'POP(e.back()[',(⍕5⊃⍺),']);',NL}
  Bv←{'POP(e.back()[',(⍕5⊃⍺),']);',NL}
- Ed←{'{A z,x,y;FN f;POPV(x);POPF(f);POPV(y);f(z,x,y,e);PUSH(z);}',NL}
+ Ed←{'{A z,x,y;FN*f;POPV(x);POPF(f);POPV(y);(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{'{std::vector<A> ix(',(⍕5⊃⍺),');DO(somesize,POPV(ix[i]));PUSH(ix);',NL}
- Em←{'{A z,x;FN f;POPF(f);POPV(y);f(z,y,e);PUSH(z);}',NL}
+ Em←{'{A z,x;FN*f;POPF(f);POPV(y);(*f)(z,y,e);PUSH(z);}',NL}
  Er←{'POPV(z);z.f=1;e.pop_back();R;',NL}
  Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
   z,(⊃,/' ',¨dis¨⍵),'}',NL}
@@ -261,18 +261,18 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
   z,←' I t=x.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
   z,←' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}}',NL}
  Na←{'¯'⎕R'-'⍕sym⌷⍨|5⊃⍺}
- Ov←{'{A x;FN f;OP o;POPO(o);POPV(x);o(f,x);PUSH(f);}',NL}
- Of←{'{FN f;OP o;POPO(o);POPF(f);o(f,f);PUSH(f);}',NL}
- Ovv←{'{A x,y;FN f;OP o;POPV(x);POPO(o);POPV(y);o(f,x,y);PUSH(f);}',NL}
- Ovf←{'{A x;FN f,g;OP o;POPV(x);POPO(o);POPF(g);o(f,x,g);PUSH(f);}',NL}
- Ofv←{'{A x;FN f,g;OP o;POPF(g);POPO(o);POPV(x);o(f,g,x);PUSH(f);}',NL}
- Off←{'{FN f,g,h;OP o;POPF(g);POPO(o);POPF(h);o(f,g,h);PUSH(f);}',NL}
- Pm←{'PUSH(',(nams⊃⍨syms⍳sym⌷⍨|5⊃⍺),'_c);',NL}
+ Ov←{'{A x;FN*f;OP*o;POPO(o);POPV(x);(*o)(*f,x);PUSH(f);}',NL}
+ Of←{'{FN*f;OP*o;POPO(o);POPF(f);(*o)(*f,*f);PUSH(f);}',NL}
+ Ovv←{'{A x,y;FN*f;OP*o;POPV(x);POPO(o);POPV(y);(*o)(*f,x,y);PUSH(f);}',NL}
+ Ovf←{'{A x;FN*f,*g;OP*o;POPV(x);POPO(o);POPF(g);(*o)(*f,x,*g);PUSH(f);}',NL}
+ Ofv←{'{A x;FN*f,*g;OP*o;POPF(g);POPO(o);POPV(x);(*o)(*f,*g,x);PUSH(f);}',NL}
+ Off←{'{FN*f,*g,*h;OP*o;POPF(g);POPO(o);POPF(h);(*o)(*f,*g,*h);PUSH(f);}',NL}
+ Pm←{'PUSH(&',(nams⊃⍨syms⍳sym⌷⍨|5⊃⍺),'_c);',NL}
  Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("",0,0){};};',NL
   z,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r,e);}',NL}
  Va←{(x←5⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'll' 'rr'⊃⍨¯1+|x),');',NL
-  'PUSH(',(slt ⍺),');',NL}
- Vf←{0>x←5⊃⍺:'PUSH(',(slt ⍺),');',NL ⋄ 'PUSH(fn',(⍕x),'_c);',NL}
+  'PUSH(',(slt ⍺),'.v);',NL}
+ Vf←{0>x←5⊃⍺:'PUSH(',(slt ⍺),'.f);',NL ⋄ 'PUSH(&fn',(⍕x),'_c);',NL}
  dis←{h←,1↑⍵ ⋄ c←ks 1↓⍵ ⋄ h(⍎gcv⊃⍨gck⍳⊂h[3 4])c}
  z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3)
  z,←dis¨ks ast
@@ -377,10 +377,10 @@ rth,←'#define POPF(x) x=s.top().f;s.pop()',NL
 rth,←'#define POPV(x) x=s.top().v;s.pop()',NL
 rth,←'#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\',NL
-rth,←'  cpda(cr,r);cpda(cl,l);(e##init[0][fun].f)(za,cl,cr,e##init);cpad(z,za);}\',NL
+rth,←'  cpda(cr,r);cpda(cl,l);(*e##init[0][fun].f)(za,cl,cr,e##init);cpad(z,za);}\',NL
 rth,←' catch(U n){derr(n);}\',NL
 rth,←' catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\',NL
-rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){(e##init[0][fun].f)(*z,*l,*r,e##init);}',NL
+rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){(*e##init[0][fun].f)(*z,*l,*r,e##init);}',NL
 rth,←'',NL
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD,APLP,APLU,APLV,APLW,APLZ,',NL
 rth,←' APLR,APLF,APLQ}APLTYPE;',NL
@@ -418,8 +418,7 @@ rth,←' DOP(STR nm,I sm,I sd,A l,FN&r)',NL
 rth,←'  :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}',NL
 rth,←' DOP(STR nm,I sm,I sd,FN&l,A r)',NL
 rth,←'  :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};',NL
-rth,←'S BX{A v;FN f;BX(const FN&f):f(f),v(A()){}BX(const A&v):v(v),f(FN()){}',NL
-rth,←' BX():f(FN()),v(A()){}};',NL
+rth,←'S BX{A v;FN*f;BX(){}BX(FN*f):f(f){}BX(const A&v):v(v){}};',NL
 rth,←'std::wstring mkstr(const char*s){R strconv.from_bytes(s);}',NL
 rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}',NL
 rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}',NL

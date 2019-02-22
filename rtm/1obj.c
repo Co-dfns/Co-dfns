@@ -34,5 +34,4 @@ S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;
   :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}
  DOP(STR nm,I sm,I sd,FN&l,A r)
   :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};
-S BX{A v;FN f;BX(const FN&f):f(f),v(A()){}BX(const A&v):v(v),f(FN()){}
- BX():f(FN()),v(A()){}};
+S BX{A v;FN*f;BX(){}BX(FN*f):f(f){}BX(const A&v):v(v){}};
