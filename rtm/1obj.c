@@ -3,7 +3,7 @@
 typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;
 typedef double D;typedef unsigned char U8;typedef unsigned U;
 typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;
-S{U f=3;U n;U x=0;wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
+S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};
 S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
 S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
@@ -34,7 +34,5 @@ S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;
   :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}
  DOP(STR nm,I sm,I sd,FN&l,A r)
   :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};
-S BX{I t;union {A v;FN f;};BX(const FN&f):f(f),t(1){}BX(const A&v):v(v),t(0){}
- BX():t(0),v(A()){}BX(const BX&x):t(x.t){if(t){f=x.f;}else{v=x.v;}}
- BX&operator=(const BX&x){t=x.t;if(t){f=x.f;}else{v=x.v;};R*this;}
- ~BX(){}};
+S BX{A v;FN f;BX(const FN&f):f(f),v(A()){}BX(const A&v):v(v),f(FN()){}
+ BX():f(FN()),v(A()){}};

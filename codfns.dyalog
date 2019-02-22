@@ -251,11 +251,10 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
  Ei←{'{std::vector<A> ix(',(⍕5⊃⍺),');DO(somesize,POPV(ix[i]));PUSH(ix);',NL}
  Em←{'{A z,x;FN f;POPF(f);POPV(y);f(z,y,e);PUSH(z);}',NL}
  Er←{'POPV(z);z.f=1;e.pop_back();R;',NL}
- Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL
-  z,←' STK s;FRM mem(',(⍕5⊃⍺),');e.push_back(mem);',NL
+ Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
   z,(⊃,/' ',¨dis¨⍵),'}',NL}
- Fz←{z←NL,'FRM mem(',(⍕5⊃⍺),');ENV e',(⍕6⊃⍺),'{mem};I is',(⍕6⊃⍺),'=0;',NL
-  z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;',NL
+ Fz←{z←NL,'ENV e',(⍕6⊃⍺),';I is',(⍕6⊃⍺),'=0;',NL
+  z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POPV(x);if(cnt(x)!=1)err(5);',NL
   z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
@@ -381,16 +380,14 @@ rth,←'  A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);(e##init[0][fun].f)(za,cl,cr,e##init);cpad(z,za);}\',NL
 rth,←' catch(U n){derr(n);}\',NL
 rth,←' catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\',NL
-rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){try{(e##init[0][fun].f)(*z,*l,*r,e##init);}\',NL
-rth,←' catch(U n){derr(n);}\',NL
-rth,←' catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}',NL
+rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){(e##init[0][fun].f)(*z,*l,*r,e##init);}',NL
 rth,←'',NL
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD,APLP,APLU,APLV,APLW,APLZ,',NL
 rth,←' APLR,APLF,APLQ}APLTYPE;',NL
 rth,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',NL
 rth,←'typedef double D;typedef unsigned char U8;typedef unsigned U;',NL
 rth,←'typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;',NL
-rth,←'S{U f=3;U n;U x=0;wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',NL
+rth,←'S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',NL
 rth,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',NL
 rth,←'S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',NL
 rth,←'S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}',NL
@@ -421,10 +418,8 @@ rth,←' DOP(STR nm,I sm,I sd,A l,FN&r)',NL
 rth,←'  :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}',NL
 rth,←' DOP(STR nm,I sm,I sd,FN&l,A r)',NL
 rth,←'  :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};',NL
-rth,←'S BX{I t;union {A v;FN f;};BX(const FN&f):f(f),t(1){}BX(const A&v):v(v),t(0){}',NL
-rth,←' BX():t(0),v(A()){}BX(const BX&x):t(x.t){if(t){f=x.f;}else{v=x.v;}}',NL
-rth,←' BX&operator=(const BX&x){t=x.t;if(t){f=x.f;}else{v=x.v;};R*this;}',NL
-rth,←' ~BX(){}};',NL
+rth,←'S BX{A v;FN f;BX(const FN&f):f(f),v(A()){}BX(const A&v):v(v),f(FN()){}',NL
+rth,←' BX():f(FN()),v(A()){}};',NL
 rth,←'std::wstring mkstr(const char*s){R strconv.from_bytes(s);}',NL
 rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}',NL
 rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}',NL

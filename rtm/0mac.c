@@ -80,7 +80,5 @@ using namespace af;
   cpda(cr,r);cpda(cl,l);(e##init[0][fun].f)(za,cl,cr,e##init);cpad(z,za);}\
  catch(U n){derr(n);}\
  catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
-EXPORT V ex##_cdf(A*z,A*l,A*r){try{(e##init[0][fun].f)(*z,*l,*r,e##init);}\
- catch(U n){derr(n);}\
- catch(exception x){msg=mkstr(x.what());dmx.e=msg.c_str();derr(500);}}
+EXPORT V ex##_cdf(A*z,A*l,A*r){(e##init[0][fun].f)(*z,*l,*r,e##init);}
 

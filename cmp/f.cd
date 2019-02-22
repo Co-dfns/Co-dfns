@@ -22,11 +22,10 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
  Ei←{'{std::vector<A> ix(',(⍕5⊃⍺),');DO(somesize,POPV(ix[i]));PUSH(ix);',NL}
  Em←{'{A z,x;FN f;POPF(f);POPV(y);f(z,y,e);PUSH(z);}',NL}
  Er←{'POPV(z);z.f=1;e.pop_back();R;',NL}
- Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){',NL
-  z,←' STK s;FRM mem(',(⍕5⊃⍺),');e.push_back(mem);',NL
+ Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
   z,(⊃,/' ',¨dis¨⍵),'}',NL}
- Fz←{z←NL,'FRM mem(',(⍕5⊃⍺),');ENV e',(⍕6⊃⍺),'{mem};I is',(⍕6⊃⍺),'=0;',NL
-  z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;',NL
+ Fz←{z←NL,'ENV e',(⍕6⊃⍺),';I is',(⍕6⊃⍺),'=0;',NL
+  z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POPV(x);if(cnt(x)!=1)err(5);',NL
   z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
