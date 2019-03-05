@@ -11,6 +11,6 @@ DF(dot_o){I ra=r.r?r.r-1:0;if(r.r&&l.r&&l.s[0]!=r.s[ra])err(5);
   t.v=array(matmul(y.as(f64),x.as(f64)),t.s);z=t;R;}
  x=tile(array(x,c,1,lc),1,rc,1);y=tile(y.T(),1,1,lc);
  A X(3,dim4(c,rc,lc),x.as(f64));A Y(3,dim4(c,rc,lc),y.as(f64));
- map_o mfn_c(rr);red_o rfn_c(ll);mfn_c(X,X,Y);rfn_c(X,X);
+ map_o mfn_c(rr);red_o rfn_c(ll);mfn_c(X,X,Y,e);rfn_c(X,X,e);
  t.v=array(X.v,t.s);z=t;}
 

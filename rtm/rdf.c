@@ -28,7 +28,7 @@ MF(rdf_o){A t(r.r?r.r-1:0,dim4(1),r.v(0));DO(t.r,t.s[i]=r.s[i])
  if("lor"==ll.nm){t.v=anyTrue(r.v,t.r);z=t;R;}
  af::index x[4];x[t.r]=rc-1;t.v=r.v(x[0],x[1],x[2],x[3]);
  DO(rc-1,x[t.r]=rc-(i+2);
-  mfn_c(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t));z=t;}
+  mfn_c(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,e));z=t;}
 DF(rdf_o){if(l.r!=0&&(l.r!=1||l.s[0]!=1))err(5);if(!r.r)err(4);
  I lv=l.v.as(s32).scalar<I>();I ra=r.r-1;
   if((r.s[ra]+1)<lv)err(5);I rc=(I)((1+r.s[ra])-abs(lv));
@@ -36,9 +36,9 @@ DF(rdf_o){if(l.r!=0&&(l.r!=1||l.s[0]!=1))err(5);if(!r.r)err(4);
  if(!lv){t.v=ll.id(t.s);z=t;R;}seq rng(rc);af::index x[4];
  if(lv>=0){x[ra]=rng+((D)lv-1);t.v=r.v(x[0],x[1],x[2],x[3]);
   DO(lv-1,x[ra]=rng+((D)lv-(i+2));
-   mfn_c(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t))
+   mfn_c(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,e))
  }else{x[ra]=rng;t.v=r.v(x[0],x[1],x[2],x[3]);
   DO(abs(lv)-1,x[ra]=rng+(D)(i+1);
-   mfn_c(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t))}
+   mfn_c(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,e))}
  z=t;}
 

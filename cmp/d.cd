@@ -1,5 +1,5 @@
 ﻿Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {P⌽∊⍵}
-Prim←prim _as P
+Prim←prim _as(1P)
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 Var←{⍺(aaww _o aw _o (name _as ⌽) _t (⍺⍺=Vt) _as (⍺⍺V∘,∘⊃))⍵}
 Num←float _o int _as (N∘⌽)
@@ -8,7 +8,7 @@ Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Atom←Strand _o (0 Var) _o (Num _some _as (0 A∘⌽)) _o Pex
 Semx←{⍺(Ex _o (_yes _as {3 A,⊂P,';'}))⍵}
 Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
-Idx←Brk _s (_yes _as {P,'['}) _s Atom _as (2 E∘⌽)
+Idx←Brk _s (_yes _as {1P,'['}) _s Atom _as (2 E∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
 Slrp←{⍺(⍺⍺ _o (⍵⍵ _s ∇) _o ((1 _eat) _s ∇))⍵}
 Fa←{e←(⊂'⍵⍵' '⍺⍺','⍺⍵')∘,∘⊂¨↓⍉¯1+3 3 2 2⊤(6 4 4⌿1 5 9)+2×⍳14
@@ -25,11 +25,11 @@ Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢
 Pfe←{⍺(rpar _s Fex _s lpar)⍵}
 Bfn←rbrc Blrp lbrc _as {0(N∆⍳'F')¯1(,⊂⌽1↓¯1↓⍵)}
 Fnp←Prim _o (1 Var) _o Sfn _o Bfn _o Pfe
-Mop←{⍺((mop _as P) _s Afx _as (2 O))⍵}
-Dop1←{⍺((dop1 _as P) _s Afx _as (8 O∘⌽))⍵}
-Dop2←{⍺(Atom _s (dop2 _as P) _s Afx _as (7 O∘⌽))⍵}
-Dop3←(dop3 _as P) _s Atom _as (5 O∘⌽) _o (dot _s jot _as (P∘⌽) _as (2 O))
-Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {P,'['}) _s Afx _as (7 O∘⌽))⍵}
+Mop←{⍺((mop _as(2P)) _s Afx _as (2 O))⍵}
+Dop1←{⍺((dop1 _as(2P)) _s Afx _as (8 O∘⌽))⍵}
+Dop2←{⍺(Atom _s (dop2 _as(2P)) _s Afx _as (7 O∘⌽))⍵}
+Dop3←(dop3 _as(2P)) _s Atom _as (5 O∘⌽) _o (dot _s jot _as (2P∘⌽) _as (2 O))
+Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {2P,'['}) _s Afx _as (7 O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) _o Dop2 _o Bop
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
 Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (0(N∆⍳'B')⍺⍺,∘⊂⊢))⍵}

@@ -46,11 +46,15 @@ using namespace af;
 #define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
  n##_f():FN(nm,sm,sd){}};
 #define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf;df;\
- n##_o(FN&l):MOP(nm,sm,sd,l){}};
+ n##_o(FN&l):MOP(nm,sm,sd,l){}};\
+ S n##_k:MOK{V operator()(FN*&f,FN&l){f=new n##_o(l);}};
 #define OD(n,nm,sm,sd,mf,df) S n##_o:DOP{mf;df;\
  n##_o(FN&l,FN&r):DOP(nm,sm,sd,l,r){}\
  n##_o(const A&l,FN&r):DOP(nm,sm,sd,l,r){}\
- n##_o(FN&l,const A&r):DOP(nm,sm,sd,l,r){}};
+ n##_o(FN&l,const A&r):DOP(nm,sm,sd,l,r){}};\
+ S n##_k:DOK{V operator()(FN*&f,FN&l,FN&r){f=new n##_o(l,r);}\
+  V operator()(FN*&f,const A&l,FN&r){f=new n##_o(l,r);}\
+  V operator()(FN*&f,FN&l,const A&r){f=new n##_o(l,r);}};
 #define MT
 #define DID inline array id(dim4)
 #define MFD inline V operator()(A&,const A&,ENV&)
@@ -72,9 +76,9 @@ using namespace af;
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
 #define PUSH(x) s.emplace(BX(x))
-#define POP(x) x=s.top();s.pop()
-#define POPF(x) x=s.top().f;s.pop()
-#define POPV(x) x=s.top().v;s.pop()
+#define POPB(x) x=s.top();s.pop()
+#define POP(f,x) x=s.top().f;s.pop()
+#define EX(x) delete x
 #define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
   A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\
   cpda(cr,r);cpda(cl,l);(*e##init[0][fun].f)(za,cl,cr,e##init);cpad(z,za);}\
