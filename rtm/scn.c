@@ -21,6 +21,6 @@ MF(scn_o){z.r=r.r;z.s=r.s;I rc=(I)r.s[0];
  map_o mfn(ll);z.v=array(z.s,f64);A t(z.r?z.r-1:0,z.s,r.v(0));
  DO(t.r,t.s[i]=t.s[i+1]);t.s[t.r]=1;I tc=(I)cnt(t);
  DO(rc,t.v=r.v(i,span).as(f64);I c=i;
-  DO(c,mfn(t,A(t.r,t.s,r.v(c-(i+1),span)),t))
+  DO(c,mfn(t,A(t.r,t.s,r.v(c-(i+1),span)),t,e))
   z.v(i,span)=t.v)}
 

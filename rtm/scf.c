@@ -24,6 +24,6 @@ MF(scf_o){z.r=r.r;z.s=r.s;I ra=r.r?r.r-1:0;I rc=(I)r.s[ra];
  I tc=(I)cnt(t);af::index x[4];map_o mfn(ll);
  DO(rc,x[ra]=i;t.v=r.v(x[0],x[1],x[2],x[3]).as(f64);I c=i;
   DO(c,x[ra]=c-(i+1);
-   mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t))
+   mfn(t,A(t.r,t.s,r.v(x[0],x[1],x[2],x[3])),t,e))
   x[ra]=i;z.v(x[0],x[1],x[2],x[3])=t.v)}
 
