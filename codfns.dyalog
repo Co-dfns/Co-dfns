@@ -198,9 +198,9 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳s)∧l=⍳s
  p l t k n,←(p[i])(l[i])10 1 i⍴⍨¨≢i ⋄ p[i]←i ⋄ l[i]←(≢i)↑(⊃i),i
 
- ⍝ Wrap Return Expressions
- i←⍸((t∊0 2 10)∧t[p]=3)∨(t[p]∊3 4)∧(0@(l⌿⍨l≠⍳s)⊢1⍴⍨s←≢l)∧(t∊0 2 10)∨(t=1)∧k=0
- l←i(s+⍳)@{⍵∊i}l ⋄ p l t k n,←(p[i])(l[i])2 0 0⍴⍨¨≢i ⋄ p[i]←s+⍳≢i ⋄ l[i]←i
+ ⍝ Wrap Statements
+ i←⍸(t∊0 1 2 10)∧(t[p]=3)∨(t[p]=4)∧(0@(l⌿⍨l≠⍳s)⊢1⍴⍨s←≢l) ⋄ l←i(s+⍳)@{⍵∊i}l
+ p l t k n,←(p[i])(l[i])2(-(t[i]=1)∧t[p[i]]=3)0⍴⍨¨≢i ⋄ p[i]←s+⍳≢i ⋄ l[i]←i
 
  ⍝ Lift Guard Tests
  gi←p[i←⍸(t∊10,⍳3)∧(l=⍳≢l)∧t[p]=4] ⋄ l[j]←j←⍸l∊i
@@ -227,8 +227,8 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Allocate frames
 
  p l t k n fr sl rf exp sym}
-gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
-gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
+gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
+gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
 gck,←(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
 gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pa' 'Pf' 'Po' 'Va'  'Vf'  
 gck+←⊂1 0
@@ -245,16 +245,17 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
   c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
   'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
  As←{'PUSH(A(-1,eshp,array());',NL}
- Bf←{'POPB(e.back()[',(⍕5⊃⍺),']);',NL}
- Bv←{'POPB(e.back()[',(⍕5⊃⍺),']);',NL}
+ Bf←{'e.back()[',(⍕5⊃⍺),']=s.top();',NL}
+ Bv←{'e.back()[',(⍕5⊃⍺),']=s.top();',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{'{std::vector<A> ix(',(⍕5⊃⍺),');DO(somesize,POP(v,ix[i]));PUSH(ix);',NL}
+ Ek←{'s.pop();',NL}
  Em←{'{A z,x;FN*f;POP(f,f);POP(v,x);(*f)(z,x,e);PUSH(z);}',NL}
  Er←{'POP(v,z);z.f=1;e.pop_back();R;',NL}
  Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){try{STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
-  z,←(⊃,/' ',¨dis¨⍵),'}',NL
-  z,←'catch(U x){e.pop_back();throw x;}',NL
-  z,'catch(exception x){e.pop_back();throw x;}}',NL}
+  z,←⊃,/' ',¨dis¨⍵
+  z,←' }catch(U x){e.pop_back();throw x;}',NL
+  z,' catch(exception x){e.pop_back();throw x;}}',NL}
  Fz←{z←NL,'ENV e',(⍕6⊃⍺),';I is',(⍕6⊃⍺),'=0;',NL
   z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
@@ -379,7 +380,6 @@ rth,←' if(!r.r){\',NL
 rth,←'  z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\',NL
 rth,←' if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}',NL
 rth,←'#define PUSH(x) s.emplace(BX(x))',NL
-rth,←'#define POPB(x) x=s.top();s.pop()',NL
 rth,←'#define POP(f,x) x=s.top().f;s.pop()',NL
 rth,←'#define EX(x) delete x',NL
 rth,←'#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL

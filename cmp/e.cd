@@ -12,9 +12,9 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←⍸(t=3)∧p≠⍳s←≢p ⋄ l←i(s+⍳)@{⍵∊i}l ⋄ l[j]←⊃(⌽i),j←⍸(p=⍳s)∧l=⍳s
  p l t k n,←(p[i])(l[i])10 1 i⍴⍨¨≢i ⋄ p[i]←i ⋄ l[i]←(≢i)↑(⊃i),i
 
- ⍝ Wrap Return Expressions
- i←⍸((t∊0 2 10)∧t[p]=3)∨(t[p]∊3 4)∧(0@(l⌿⍨l≠⍳s)⊢1⍴⍨s←≢l)∧(t∊0 2 10)∨(t=1)∧k=0
- l←i(s+⍳)@{⍵∊i}l ⋄ p l t k n,←(p[i])(l[i])2 0 0⍴⍨¨≢i ⋄ p[i]←s+⍳≢i ⋄ l[i]←i
+ ⍝ Wrap Statements
+ i←⍸(t∊0 1 2 10)∧(t[p]=3)∨(t[p]=4)∧(0@(l⌿⍨l≠⍳s)⊢1⍴⍨s←≢l) ⋄ l←i(s+⍳)@{⍵∊i}l
+ p l t k n,←(p[i])(l[i])2(-(t[i]=1)∧t[p[i]]=3)0⍴⍨¨≢i ⋄ p[i]←s+⍳≢i ⋄ l[i]←i
 
  ⍝ Lift Guard Tests
  gi←p[i←⍸(t∊10,⍳3)∧(l=⍳≢l)∧t[p]=4] ⋄ l[j]←j←⍸l∊i

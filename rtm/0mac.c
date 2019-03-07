@@ -76,7 +76,6 @@ using namespace af;
   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
 #define PUSH(x) s.emplace(BX(x))
-#define POPB(x) x=s.top();s.pop()
 #define POP(f,x) x=s.top().f;s.pop()
 #define EX(x) delete x
 #define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\

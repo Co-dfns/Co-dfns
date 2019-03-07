@@ -1,5 +1,5 @@
-﻿gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
-gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
+﻿gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
+gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
 gck,←(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
 gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pa' 'Pf' 'Po' 'Va'  'Vf'  
 gck+←⊂1 0
@@ -16,16 +16,17 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
   c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
   'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
  As←{'PUSH(A(-1,eshp,array());',NL}
- Bf←{'POPB(e.back()[',(⍕5⊃⍺),']);',NL}
- Bv←{'POPB(e.back()[',(⍕5⊃⍺),']);',NL}
+ Bf←{'e.back()[',(⍕5⊃⍺),']=s.top();',NL}
+ Bv←{'e.back()[',(⍕5⊃⍺),']=s.top();',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{'{std::vector<A> ix(',(⍕5⊃⍺),');DO(somesize,POP(v,ix[i]));PUSH(ix);',NL}
+ Ek←{'s.pop();',NL}
  Em←{'{A z,x;FN*f;POP(f,f);POP(v,x);(*f)(z,x,e);PUSH(z);}',NL}
  Er←{'POP(v,z);z.f=1;e.pop_back();R;',NL}
  Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){try{STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
-  z,←(⊃,/' ',¨dis¨⍵),'}',NL
-  z,←'catch(U x){e.pop_back();throw x;}',NL
-  z,'catch(exception x){e.pop_back();throw x;}}',NL}
+  z,←⊃,/' ',¨dis¨⍵
+  z,←' }catch(U x){e.pop_back();throw x;}',NL
+  z,' catch(exception x){e.pop_back();throw x;}}',NL}
  Fz←{z←NL,'ENV e',(⍕6⊃⍺),';I is',(⍕6⊃⍺),'=0;',NL
   z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
