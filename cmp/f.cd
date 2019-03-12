@@ -6,37 +6,38 @@ gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
 
-gc←{⍞←'G' ⋄ p l t k n fr sl rf(xr xn xt xi)sym←⍵
+gc←{⍞←'G' ⋄ p l t k n fr sl rf fd(xr xn xt xi)sym←⍵
  I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
- nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'e[',(⍕7⊃⍵),'][',(⍕8⊃⍵),']'}
+ nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'(*e[',(⍕7⊃⍵),'])[',(⍕8⊃⍵),']'}
  o←0⍴⍨≢p ⋄ _←l{z⊣o+←⍵≠z←⍺[⍵]}⍣≡⍳≢l ⋄ d←(⍳≢p)≠p ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨p
  z←⍪⍳≢p ⋄ _←p{z,←p[⍵]}⍣≡z ⋄ i←⍋(-1+d)(1+o I ↑)⍤0 1⊢⌽z
- ast←(⍉↑d p l(1+t)k n(⍳≢p)fr sl)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
+ ast←(⍉↑d p l(1+t)k n(⍳≢p)fr sl fd)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
  Aa←{1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
   c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
   'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
  As←{'PUSH(A(-1,eshp,array());',NL}
- Bf←{'e.back()[',(⍕5⊃⍺),']=s.top();',NL}
- Bv←{'e.back()[',(⍕5⊃⍺),']=s.top();',NL}
+ Bf←{'(*e[fd])[',(⍕5⊃⍺),']=s.top();',NL}
+ Bv←{'(*e[fd])[',(⍕5⊃⍺),']=s.top();',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
- Ei←{'{std::vector<A> ix(',(⍕5⊃⍺),');DO(somesize,POP(v,ix[i]));PUSH(ix);',NL}
+ Ei←{'{A x;x.nv.resize(',(⍕5⊃⍺),');DO(',(⍕5⊃⍺),',POP(v,x.nv[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}
  Em←{'{A z,x;FN*f;POP(f,f);POP(v,x);(*f)(z,x,e);PUSH(z);}',NL}
- Er←{'POP(v,z);z.f=1;e.pop_back();R;',NL}
- Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){try{STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
-  B←{'e.back()[',(⍕n[⍵]),']=e[',(⍕fr[⍵]),'][',(⍕sl[⍵]),'];',NL}
+ Er←{'POP(v,z);z.f=1;e[fd]=of;R;',NL}
+ Fn←{z←NL,'DF(',('fn',⍕6⊃⍺),'_f){FRM*of;I fd=',(⍕9⊃⍺),';try{STK s;',NL
+  z,←'FRM f(',(⍕5⊃⍺),');if(e.size()<=fd)e.resize(fd+1);of=e[fd];e[fd]=&f;',NL
+  B←{'(*e[fd])[',(⍕n[⍵]),']=(*e[',(⍕fr[⍵]),'])[',(⍕sl[⍵]),'];',NL}
   z,←⊃,⌿(B¨⍸(p=6⊃⍺)∧(t=1)∧fr≠¯1),' ',¨dis¨⍵
-  z,←' }catch(U x){e.pop_back();throw x;}',NL
-  z,' catch(exception x){e.pop_back();throw x;}}',NL}
- Fz←{z←NL,'ENV e',(⍕6⊃⍺),';I is',(⍕6⊃⍺),'=0;',NL
-  z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;STK s;e.push_back(FRM(',(⍕5⊃⍺),'));',NL
+  z,←' }catch(U x){e[fd]=of;throw x;}',NL
+  z,' catch(exception x){e[fd]=of;throw x;}}',NL}
+ Fz←{z←NL,'ENV e',(⍕6⊃⍺),'(1);I is',(⍕6⊃⍺),'=0;',NL
+  z,←'DF(',('fn',⍕6⊃⍺),'_f){if(is0)R;I fd=0;STK s;e[0]=new FRM(',(⍕5⊃⍺),');',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POP(v,x);if(cnt(x)!=1)err(5);',NL
   z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
   z,←' I t=x.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
   z,←' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}}',NL}
  Na←{'¯'⎕R'-'⍕sym⌷⍨|5⊃⍺}
- Ov←{'{A x;FN*f;MOK*o;POP(m,o);POP(v,x);(*o)(f,x);EX(o);PUSH(f);}',NL}
+ Ov←{'{A x;FN*f;MOK*o;POP(m,o);POP(v,x);(*o)s(f,x);EX(o);PUSH(f);}',NL}
  Of←{'{FN*f,*g;MOK*o;POP(m,o);POP(f,g);(*o)(f,*g);EX(o);PUSH(f);}',NL}
  Ovv←{'{A x,y;FN*f;DOK*o;POP(v,x);POP(d,o);POP(v,y);(*o)(f,x,y);EX(o);PUSH(f);}',NL}
  Ovf←{'{A x;FN*f,*g;DOK*o;POP(v,x);POP(d,o);POP(f,g);(*o)(f,x,*g);EX(o);PUSH(f);}',NL}

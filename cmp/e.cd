@@ -20,14 +20,15 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  gi←p[i←⍸(t∊10,⍳3)∧(l=⍳≢l)∧t[p]=4] ⋄ l[j]←j←⍸l∊i
  l[i]←gl[j]@(j←⍸gi≠gl←l[gi])⊢i ⋄ l[gi]←i ⋄ n[gi]←i ⋄ p[i]←p[gi]
 
- ⍝ Lift Expressions (Shift to RPN)
+ ⍝ Lift Expressions
+ _←{n[⍺]←⍵}⌿↓⍉p[i],∘≢⌸i←⍸(t[p]=2)∧k[p]=3
  i←⍸(t∊(⍳3),8+⍳3)∧m←~t[p]∊3 4 ⋄ xw←x@(l[x])⊢x@(x←⍸m)⊢l ⋄ x←i⌿⍨i=l[i]
  l[p[x]]←x ⋄ l[j]←xw I p I@(xw∘I=⊢)⍣≡j←i~p[i] ⋄ p[i]←p I@{~t[⍵]∊3 4}⍣≡p[i]
  l[x]←x←j⌿⍨p[l[j]]≠p[j]
 
  ⍝ Compute Frames and Slots
  sl←¯1,⍨∊⍳¨n[∪rb]←⊢∘≢⌸rb←0⌷⍉fe←∪I∘⍋⍨rn←rf[bi],⍪n[bi←⍸t=1]
- d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1
+ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←rf[⍵]}⍣≡i ⋄ fr←d[fe[;0]],¯1 ⋄ d←(≢p)↑d
 
  ⍝ Anchor Variables to Frame and Slot
  vi←⍸(t=10)∧n<¯4 ⋄ x←n[y←vi,bi] ⋄ n[bi]←sl[fe⍳rn] ⋄ rf,←p I@{t[⍵]≠3}⍣≡p↓⍨≢rf
@@ -40,4 +41,4 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  ⍝ Dead, useless code elimination
  ⍝ Allocate frames
 
- p l t k n fr sl rf exp sym}
+ p l t k n fr sl rf d exp sym}
