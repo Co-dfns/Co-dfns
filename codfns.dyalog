@@ -138,7 +138,7 @@ sep←aws _s (('⋄',⎕UCS 10 13) _set _ign) _s aws
 nssn←alpha _s (alpha _o digits _any)
 nss←awslf _s (':Namespace'_tk) _s aws _s (nssn _opt) _s awslf _ign
 nse←awslf _s (':EndNamespace'_tk) _s awslf _ign
-Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {P⌽∊⍵}
+Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {1P⌽∊⍵}
 Prim←prim _as(1P)
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 Var←{⍺(aaww _o aw _o (name _as ⌽) _t (⍺⍺=Vt) _as (⍺⍺V∘,∘⊃))⍵}
@@ -146,7 +146,7 @@ Num←float _o int _as (N∘⌽)
 Strand←0 Var _s (0 Var _some) _as (3 A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Atom←Strand _o (0 Var) _o (Num _some _as (0 A∘⌽)) _o Pex
-Semx←{⍺(Ex _o (_yes _as {3 A,⊂P,';'}))⍵}
+Semx←{⍺(Ex _o (_yes _as {3 A,⊂0P,';'}))⍵}
 Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {1P,'['}) _s Atom _as (2 E∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
@@ -231,7 +231,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
 gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
 gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
 gck,←(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
-gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pa' 'Pf' 'Po' 'Va'  'Vf'  
+gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pv' 'Pf' 'Po' 'Va'  'Vf'  
 gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
@@ -245,7 +245,7 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf fd(xr xn xt xi)sym←⍵
  Aa←{1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
   c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
   'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
- As←{'PUSH(A(-1,eshp,array());',NL}
+ As←{'PUSH(A(-1,eshp,array()));',NL}
  Bf←{'(*e[fd])[',(⍕5⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕5⊃⍺),']=s.top();',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
@@ -275,6 +275,7 @@ gc←{⍞←'G' ⋄ p l t k n fr sl rf fd(xr xn xt xi)sym←⍵
  Off←{'{FN*f,*g,*h;DOK*o;POP(f,g);POP(d,o);POP(f,h);(*o)(f,*g,*h);EX(o);PUSH(f);}',NL}
  Pf←{'PUSH(&',(nams⊃⍨syms⍳sym⌷⍨|5⊃⍺),'_c);',NL}
  Po←{'PUSH(new ',(nams⊃⍨syms⍳sym⌷⍨|5⊃⍺),'_k());',NL}
+ Pv←{'/* Span */',NL}
  Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("fn',n,'",0,0){};};',NL
   z,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r,e);}',NL}
  Va←{(x←5⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'll' 'rr'⊃⍨¯1+|x),');',NL

@@ -1,4 +1,4 @@
-﻿Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {P⌽∊⍵}
+﻿Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {1P⌽∊⍵}
 Prim←prim _as(1P)
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 Var←{⍺(aaww _o aw _o (name _as ⌽) _t (⍺⍺=Vt) _as (⍺⍺V∘,∘⊃))⍵}
@@ -6,7 +6,7 @@ Num←float _o int _as (N∘⌽)
 Strand←0 Var _s (0 Var _some) _as (3 A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Atom←Strand _o (0 Var) _o (Num _some _as (0 A∘⌽)) _o Pex
-Semx←{⍺(Ex _o (_yes _as {3 A,⊂P,';'}))⍵}
+Semx←{⍺(Ex _o (_yes _as {3 A,⊂0P,';'}))⍵}
 Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {1P,'['}) _s Atom _as (2 E∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
