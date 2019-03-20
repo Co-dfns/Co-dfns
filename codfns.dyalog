@@ -992,7 +992,7 @@ rtn[46],←⊂'  z.v=v;R;}',NL
 rtn[46],←⊂' DO(c-1,ls.v=l.v(i+1);rs.v=r.v(i+1);ll(zs,ls,rs,e);',NL
 rtn[46],←⊂'  v(i+1)=zs.v(0))z.v=v;}',NL
 rtn[47],←⊂'OM(com,"com",scm(l),scd(l),MFD,DFD)',NL
-rtn[47],←⊂'MF(com_o){ll(z,r,r);}DF(com_o){ll(z,r,l);}',NL
+rtn[47],←⊂'MF(com_o){ll(z,r,r,e);}DF(com_o){ll(z,r,l,e);}',NL
 rtn[47],←⊂'',NL
 rtn[48],←⊂'OD(dot,"dot",0,0,MT,DFD)',NL
 rtn[48],←⊂'DF(dot_o){I ra=r.r?r.r-1:0;if(r.r&&l.r&&l.s[0]!=r.s[ra])err(5);',NL
