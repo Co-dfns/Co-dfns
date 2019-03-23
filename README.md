@@ -32,6 +32,8 @@ technology:
 
 ## Publications
 
+[Does APL Need a Type System? (FnConf '18)](https://youtu.be/z8MVKianh54)
+
 [Tree Manipulation Workshop and Dyalog '18 Talk](https://www.sacrideo.us/lambdaconf-tree-manipulation-workshop-videos/)
 
 [User Command for Co-dfns](https://youtu.be/BBaCKf7Od6I)
