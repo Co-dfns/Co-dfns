@@ -193,7 +193,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  i←(⍸(~t∊3 4)∧t[p]=3),p[i]{⊃⌽⍵}⌸i←⍸t[p]=4 ⋄ p t k n r⌿⍨←⊂m←1+@i⊢1⍴⍨≢p    ⍝ WX
  p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n
  t k(⊣@(i-1)⍨)←2(-(t[i]=1)∧t[p[i]]=3) ⋄ p[i]←i-1
- p[i]←p[x←p[⊃i j←2↑↓⍉p[i]{⍵}⌸i←⍸t[p]=4]] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i] ⍝ LG
+ p[i]←p[x←p[⊃i j←2↑↓⍉p[i]⊢⌸i←⍸t[p]=4]] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]   ⍝ LG
  n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
  _←{n[⍺]←⍵}⌿↓⍉p[i],∘≢⌸i←⍸(t[p]=2)∧k[p]=3                                 ⍝ CI
  p[i]←p[x←p I@{~t[p[⍵]]∊3 4}⍣≡i←⍸t∊4,(⍳3),8+⍳3] ⋄ j←⊃,⌿x{⊂⌽⍵}⌸i          ⍝ LX
