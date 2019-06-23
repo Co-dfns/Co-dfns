@@ -1018,11 +1018,11 @@ rtn[49],←⊂' if(cr<=-r.r||!cr){map_o f(ll);f(z,r,e);R;}',NL
 rtn[49],←⊂' if(cr<0)cr=r.r+cr;if(cr>3)err(10);I dr=r.r-cr;',NL
 rtn[49],←⊂' dim4 sp(1);DO(dr,sp[cr]*=r.s[i+cr])DO(cr,sp[i]=r.s[i])',NL
 rtn[49],←⊂' std::vector<A> tv(sp[cr]);A b(cr+1,sp,array(r.v,sp));',NL
-rtn[49],←⊂' DO((I)sp[cr],sqd_c(tv[i],scl(scl(i)),b,e);ll(tv[i],tv[i],e))',NL
-rtn[49],←⊂' I mr=0;dim4 ms(1);dtype mt=b8;if(mr>3)err(10);',NL
-rtn[49],←⊂' DO((I)sp[cr],if(mr<tv[i].r)mr=tv[i].r;mt=mxt(mt,tv[i]);I si=i;',NL
-rtn[49],←⊂'  DO(4,if(ms[3-i]<tv[si].s[3-i]){ms=tv[si].s;break;}))',NL
-rtn[49],←⊂' I mc=(I)cnt(ms);array v(mc*sp[cr],mt);v=0;',NL
+rtn[49],←⊂' I mr=0;dim4 ms(1);dtype mt=b8;',NL
+rtn[49],←⊂' DO((I)sp[cr],A t;sqd_c(t,scl(scl(i)),b,e);ll(tv[i],t,e);',NL
+rtn[49],←⊂'  t=tv[i];if(mr<t.r)mr=t.r;if(mr>3)err(10);mt=mxt(mt,t);',NL
+rtn[49],←⊂'  DO(4,if(ms[i]<t.s[i])ms[i]=t.s[i]))',NL
+rtn[49],←⊂' B mc=cnt(ms);array v(mc*sp[cr],mt);v=0;',NL
 rtn[49],←⊂' DO((I)sp[cr],seq ix((D)cnt(tv[i]));v(ix+(D)(i*mc))=flat(tv[i].v))',NL
 rtn[49],←⊂' z.r=mr+dr;z.s=ms;z.s[mr]=sp[cr];z.v=array(v,z.s);}',NL
 rtn[49],←⊂'DF(rnk_o){I cl,cr,dl,dr;dim4 sl(1),sr(1);array wwv=ww.v.as(s32);',NL
