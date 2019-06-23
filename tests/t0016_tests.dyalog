@@ -110,6 +110,8 @@
 ∆catfirst∆81_TEST←'catfirst' MK∆T2 (⍬⍴1 0 0 0)   (?5 196⍴2)
 ∆catfirst∆82_TEST←'catfirst' MK∆T2 (?5 200⍴2)    (⍬⍴1 0 0 0)
 ∆catfirst∆83_TEST←'catfirst' MK∆T2 (?5 196⍴2)    (⍬⍴1 0 0 0)
+∆catfirst∆84_TEST←'catfirst' MK∆T2 3             (0 5⍴⍬)
+∆catfirst∆85_TEST←'catfirst' MK∆T2 (0 5⍴⍬)       3
 
 ∆deal∆01_TEST←'deal' MK∆T2 (0)(0)
 ∆deal∆02_TEST←'deal' MK∆T2 (0)(5)

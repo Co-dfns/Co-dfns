@@ -679,10 +679,10 @@ rtn[26],←⊂' if(r.r&&l.r>r.r){DO(3-fx,rs[3-i]=rs[3-(i+1)]);rs[fx]=1;}',NL
 rtn[26],←⊂' if(l.r&&r.r>l.r){DO(3-fx,ls[3-i]=ls[3-(i+1)]);ls[fx]=1;}',NL
 rtn[26],←⊂' DO(4,if(i!=fx&&rs[i]!=ls[i])err(5));',NL
 rtn[26],←⊂' DO(4,z.s[i]=(l.r>=r.r||i==fx)*ls[i]+(r.r>l.r||i==fx)*rs[i]);',NL
-rtn[26],←⊂' if(!cnt(l)){z.v=r.v;R;}if(!cnt(r)){z.v=l.v;R;}',NL
 rtn[26],←⊂' dtype mt=mxt(r.v,l.v);',NL
 rtn[26],←⊂' array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);',NL
 rtn[26],←⊂' array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);',NL
+rtn[26],←⊂' if(!cnt(l)){z.v=rv;R;}if(!cnt(r)){z.v=lv;R;}',NL
 rtn[26],←⊂' z.v=join(fx,lv,rv);}',NL
 rtn[26],←⊂'DF(cat_f){if(l.r||r.r){cat_c(z,l,r,0,e);R;}',NL
 rtn[26],←⊂' A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,0,e);}',NL

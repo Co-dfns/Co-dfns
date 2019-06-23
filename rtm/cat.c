@@ -17,10 +17,10 @@ DA(cat_f){A nl=l,nr=r;I fx=(I)ceil(ax);
  if(l.r&&r.r>l.r){DO(3-fx,ls[3-i]=ls[3-(i+1)]);ls[fx]=1;}
  DO(4,if(i!=fx&&rs[i]!=ls[i])err(5));
  DO(4,z.s[i]=(l.r>=r.r||i==fx)*ls[i]+(r.r>l.r||i==fx)*rs[i]);
- if(!cnt(l)){z.v=r.v;R;}if(!cnt(r)){z.v=l.v;R;}
  dtype mt=mxt(r.v,l.v);
  array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);
  array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);
+ if(!cnt(l)){z.v=rv;R;}if(!cnt(r)){z.v=lv;R;}
  z.v=join(fx,lv,rv);}
 DF(cat_f){if(l.r||r.r){cat_c(z,l,r,0,e);R;}
  A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,0,e);}
