@@ -118,6 +118,7 @@ lpar←aws _s ('('_tk) _s aws _ign ⋄ rpar←aws _s (')'_tk) _s aws _ign
 lbrk←aws _s ('['_tk) _s aws _ign ⋄ rbrk←aws _s (']'_tk) _s aws _ign
 semi←aws _s (';' _tk) _s aws _ign
 grd←aws _s (':'_tk) _s aws _ign
+zil←aws _s ('⍬'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
 digits←'0123456789'_set
@@ -146,7 +147,7 @@ Var←{⍺(aaww _o aw _o (name _as ⌽) _t (⍺⍺=Vt) _as (⍺⍺V∘,∘⊃))�
 Num←float _o int _as (N∘⌽)
 Strand←0 Var _s (0 Var _some) _as (3 A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
-Atom←Strand _o (0 Var) _o (Num _some _as (0 A∘⌽)) _o Pex
+Atom←Strand _o (0 Var) _o (zil _as (0 A)) _o (Num _some _as (0 A∘⌽)) _o Pex
 Semx←{⍺(Ex _o (_yes _as {3 A,⊂0P,';'}))⍵}
 Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {1P,'['}) _s Atom _as (2 E∘⌽)

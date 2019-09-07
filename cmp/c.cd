@@ -25,6 +25,7 @@ lpar←aws _s ('('_tk) _s aws _ign ⋄ rpar←aws _s (')'_tk) _s aws _ign
 lbrk←aws _s ('['_tk) _s aws _ign ⋄ rbrk←aws _s (']'_tk) _s aws _ign
 semi←aws _s (';' _tk) _s aws _ign
 grd←aws _s (':'_tk) _s aws _ign
+zil←aws _s ('⍬'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
 digits←'0123456789'_set
