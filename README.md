@@ -32,7 +32,11 @@ technology:
 
 ## Publications
 
+[Live Reading/Writing Co-dfns, The Way of APL](https://www.youtube.com/watch?v=ABG5eSCZPrE)
+
 [Does APL Need a Type System? (FnConf '18)](https://youtu.be/z8MVKianh54)
+
+[Array-oriented Functional Programming](https://youtu.be/Gsj_7tFtODk)
 
 [Tree Manipulation Workshop and Dyalog '18 Talk](https://www.sacrideo.us/lambdaconf-tree-manipulation-workshop-videos/)
 
