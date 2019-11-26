@@ -48,7 +48,7 @@ Dyalog would be more than happy to release Dyalog APL as an open source product 
 
 If the open source community demonstrated that they were willing to pay for the growth of the Dyalog APL system and those who work on it, I'm sure things would look different. 
 
-The Co-dfns compiler is Free Software, but releasing Co-dfns under terms that many of the open-source community would expect, would instantly mean that the Co-dfns copmiler would cease to exist in any meaningful way, because I couldn't afford to work on it anymore. 
+The Co-dfns compiler is Free Software, but releasing Co-dfns under terms that many of the open-source community would expect, would instantly mean that the Co-dfns compiler would cease to exist in any meaningful way, because I couldn't afford to work on it anymore. 
 
 Let's not bite the hand that feeds us, and even better, as an open-source community, let's find ways of better making our own food instead of relying on the charity of others to feed us. 
 
