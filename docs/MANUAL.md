@@ -46,11 +46,11 @@ Sync                     | Waits until all computation on the GPU is complete be
 
 ## Files
 
-The compiler produces a set of files for each compiled module. The specific files that are generated my differ based on platform, but the following files wil always exist:
+The compiler produces a set of files for each compiled module. The specific files that are generated my differ based on platform, but the following files will always exist:
 
 File                  | Description
 --------------------- | -----------
-module.log            | A log of the backend messages and compiler output, indicating any issues encountered during the compilation of the bakend code.
+module.log            | A log of the backend messages and compiler output, indicating any issues encountered during the compilation of the backend code.
 module.{so,dll,dylib} | The shared object of the module.
 module.cpp            | The generated intermediate source code for the module.
 
