@@ -50,6 +50,7 @@ to be implemented in the near future.
 * Mixed arrays are not supported
 * Stencil (⌺) is not supported
 * Inverse (⍣¯1) is not supported
+* Execute (⍎) is not supported
 
 ## Fundamental Limitations
 
@@ -57,7 +58,6 @@ The following are some current "fundamental" limitations that represent
 current design decisions that are likely to remain this way for the 
 foreseeable future and can be thought of as hard lines around the project.
 
-* Execute (⍎) is not supported and likely will not be supported
 * The compiler does not support any Dyalog system functions or commands
   and will probably try to avoid providing these
 * Objects/Classes are not supported in the system
