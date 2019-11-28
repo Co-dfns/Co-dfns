@@ -22,13 +22,14 @@ things on which we are working.
 
 * Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented correctly for some values
-* Indexed assignment and selective assignment are not supported yet
-* User-defined operators are not supported yet
-* Lexically scoped trad-fns are not supported yet
+* Arrays of rank > 4 are not supported
+* Character types are not supported
 * Nested arrays are not yet supported
 * Enclose (⊂) is not supported
 * Partitioned Enclose (⊂) is not supported
-* Character types are not supported
+* Indexed assignment and selective assignment are not supported yet
+* User-defined operators are not supported yet
+* Lexically scoped trad-fns are not supported yet
 * Error Guards are not supported yet
 * Namespaces with free references are not supported yet
 
@@ -38,7 +39,6 @@ These limitations are considered to be of little importance or very
 difficult to implement with little benefit/gain and thus are not likely 
 to be implemented in the near future.
 
-* Arrays of rank > 4 are not supported
 * Arbitrary precision integers are not supported
 * Sparse arrays are not supported yet
 * Format (⍕) is not supported
