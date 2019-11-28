@@ -1074,6 +1074,10 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆transpose∆16_TEST←'transpose∆R2' MK∆T2 (2 3 1 0)(÷2 3 4 1⍴1+⍳24)
 ∆transpose∆17_TEST←'transpose∆R2' MK∆T2 (1 0)(7 5⍴0 1 1)
 ∆transpose∆18_TEST←'transpose∆R2' MK∆T2 (0 1 2 3)(2 3 4 1⍴0 1 1)
+∆transpose∆19_TEST←'transpose∆R2' MK∆T2 (0 0 1 1)(2 3 4 1⍴⍳24)
+∆transpose∆20_TEST←'transpose∆R2' MK∆T2 (0 2 2 1)(2 3 4 2⍴⍳48)
+∆transpose∆21_TEST←'transpose∆R2' MK∆T2 (2 1 0 2)(2 3 4 5⍴⍳120)
+∆transpose∆22_TEST←'transpose∆R2' MK∆T2 (2 1 1 0)(2 3 4 5⍴⍳120)
 
 ∆union∆01_TEST←'union' MK∆T2 (⍬)(⍬)
 ∆union∆02_TEST←'union' MK∆T2 (1)(⍬)
