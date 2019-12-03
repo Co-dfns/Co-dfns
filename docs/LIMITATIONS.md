@@ -32,6 +32,8 @@ things on which we are working.
 * Lexically scoped trad-fns are not supported yet
 * Error Guards are not supported yet
 * Namespaces with free references are not supported yet
+* Colon Statements are not supported
+* Branch (→) is not supported
 
 ## Low Priority Limitations
 
