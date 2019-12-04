@@ -190,21 +190,21 @@ ps←{⍞←'P' ⋄ 0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,
 ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
 ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
 tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
- r←I@{t[⍵]≠3}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d                           ⍝ PV
- p,←n[i]←(≢p)+⍳≢i←⍸(t=3)∧p≠⍳≢p ⋄ t k n r,←3 1 0(r[i])⍴⍨¨≢i             ⍝ LF
+ r←I@{t[⍵]≠3}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d				⍝ PV
+ p,←n[i]←(≢p)+⍳≢i←⍸(t=3)∧p≠⍳≢p ⋄ t k n r,←3 1 0(r[i])⍴⍨¨≢i		⍝ LF
  p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t k(⊣@i⍨)←10 1
- i←(⍸(~t∊3 4)∧t[p]=3),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=4 ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p     ⍝ WX
+ i←(⍸(~t∊3 4)∧t[p]=3),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=4 ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p	⍝ WX
  p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
  k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢t[j]=1 ⋄ t[j]←2
- p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=4] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]     ⍝ LG
+ p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=4] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]	⍝ LG
  n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
- n[p⌿⍨(t[p]=2)∧k[p]=3]+←1                                              ⍝ CI
- p[i]←p[x←p I@{~t[p[⍵]]∊3 4}⍣≡i←⍸t∊4,(⍳3),8+⍳3] ⋄ j←(⌽i)[⍋⌽x]          ⍝ LX
+ n[p⌿⍨(t[p]=2)∧k[p]=3]+←1						⍝ CI
+ p[i]←p[x←p I@{~t[p[⍵]]∊3 4}⍣≡i←⍸t∊4,(⍳3),8+⍳3] ⋄ j←(⌽i)[⍋⌽x]	⍝ LX
  p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
- s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=1]                     ⍝ SL
- d←(≢p)↑d ⋄ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1       ⍝ FR
- xn←n⌿⍨(t=1)∧k[r]=0                                                    ⍝ XN
- v←⍸(t=10)∧n<¯4 ⋄ x←n[y←v,b] ⋄ n[b]←s[e⍳rn] ⋄ i←(≢x)⍴c←≢e              ⍝ AV
+ s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=1]			⍝ SL
+ d←(≢p)↑d ⋄ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1	⍝ FR
+ xn←n⌿⍨(t=1)∧k[r]=0							⍝ XN
+ v←⍸(t=10)∧n<¯4 ⋄ x←n[y←v,b] ⋄ n[b]←s[e⍳rn] ⋄ i←(≢x)⍴c←≢e		⍝ AV
  _←{z/⍨c=i[1⌷z]←e⍳⍉x I@1⊢z←r I@0⊢⍵}⍣≡(v,r[b])⍪⍉⍪⍳≢x
  f s←(f s I¨⊂i)⊣@y¨⊂¯1⍴⍨≢r ⋄ p t k n f s r d xn sym}
 gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
@@ -713,13 +713,18 @@ rtn[29],←⊂'DF(trn_f){I lv[4];if(l.r>1||cnt(l)!=r.r)err(5);',NL
 rtn[29],←⊂' l.v.as(s32).host(lv);DO(r.r,if(lv[i]<0||lv[i]>=r.r)err(4))',NL
 rtn[29],←⊂' U8 f[]={0,0,0,0};DO(r.r,f[lv[i]]=1)',NL
 rtn[29],←⊂' U8 t=1;DO(r.r,if(t&&!f[i])t=0;else if(!t&&f[i])err(5))',NL
-rtn[29],←⊂' DO(r.r,if(!f[i])err(16))',NL
-rtn[29],←⊂' z.r=r.r;DO(r.r,z.s[r.r-(lv[i]+1)]=r.s[r.r-(i+1)])',NL
-rtn[29],←⊂' I s[4];DO(r.r,s[r.r-(lv[i]+1)]=r.r-(i+1))',NL
-rtn[29],←⊂' switch(r.r){CS(0,z.v=r.v)CS(1,z.v=r.v)',NL
-rtn[29],←⊂'  CS(2,z.v=reorder(r.v,s[0],s[1]))',NL
-rtn[29],←⊂'  CS(3,z.v=reorder(r.v,s[0],s[1],s[2]))',NL
-rtn[29],←⊂'  CS(4,z.v=reorder(r.v,s[0],s[1],s[2],s[3]))}}',NL
+rtn[29],←⊂' if(t){z.r=r.r;DO(r.r,z.s[r.r-(lv[i]+1)]=r.s[r.r-(i+1)])',NL
+rtn[29],←⊂'  I s[4];DO(r.r,s[r.r-(lv[i]+1)]=r.r-(i+1))',NL
+rtn[29],←⊂'  switch(r.r){CS(0,z.v=r.v)CS(1,z.v=r.v)',NL
+rtn[29],←⊂'   CS(2,z.v=reorder(r.v,s[0],s[1]))',NL
+rtn[29],←⊂'   CS(3,z.v=reorder(r.v,s[0],s[1],s[2]))',NL
+rtn[29],←⊂'   CS(4,z.v=reorder(r.v,s[0],s[1],s[2],s[3]))}}',NL
+rtn[29],←⊂' else{z.r=0;DO(r.r,if(z.r<lv[i])z.r=lv[i])z.r++;DO(z.r,z.s[i]=LLONG_MAX)',NL
+rtn[29],←⊂'  DO(r.r,I j=z.r-(lv[i]+1);I k=r.r-(i+1);if(z.s[j]>r.s[k])z.s[j]=r.s[k])',NL
+rtn[29],←⊂'  B zs[4],rs[4];B c=1;DO(z.r,zs[i]=c;c*=z.s[i])c=1;DO(r.r,rs[i]=c;c*=r.s[i])',NL
+rtn[29],←⊂'  c=cnt(z);array ix=iota(dim4(c),dim4(1),s32),jx=constant(0,dim4(c),s32);',NL
+rtn[29],←⊂'  DO(r.r,I j=z.r-(lv[i]+1);I k=r.r-(i+1);jx+=rs[k]*((ix/zs[j])%z.s[j]))',NL
+rtn[29],←⊂'  z.v=r.v(jx);}}',NL
 rtn[29],←⊂'',NL
 rtn[30],←⊂'NM(rtf,"rtf",0,0,DID,MFD,DFD,MT ,MT )',NL
 rtn[30],←⊂'rtf_f rtf_c;',NL
