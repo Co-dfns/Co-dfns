@@ -20,7 +20,6 @@ or outstanding implementation or engineering work that has some recognizable
 and immediate benefit and thus will be considered part of the active set of 
 things on which we are working.
 
-* Dyadic Transpose does not permit duplicate axes
 * Binomial is not implemented correctly for some values
 * Arrays of rank > 4 are not supported
 * Character types are not supported
