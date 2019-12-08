@@ -21,9 +21,10 @@ Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺�
 opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
 soext←{opsys'.dll' '.so' '.dylib'}
 mkna←{(⍺,soext⍬),'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
-mkf←{fn←(⍺,soext⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa ' ⋄ z←⊂'Z←{A}',⍵,' W;dya;mon'
- z,←('''dya''⎕NA''',fn,'>PP <PP <PP''')('''mon''⎕NA''',fn,'>PP P <PP''')
- z,':If 0=⎕NC''A''' 'Z←mon 0 0 W' ':Else' 'Z←dya 0 A W' ':EndIf'}
+mkf←{fn←(⍺,soext⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa ' ⋄ mon dya←⍵∘,¨'_mon' '_dya'
+ z←('Z←{A}',⍵,' W')(':If 0=⎕NC''⍙.',mon,'''')
+ z,←(mon dya{'''',⍺,'''⍙.⎕NA''',fn,⍵,' <PP'''}¨'>PP P' '>PP <PP'),⊂':EndIf'
+ z,':If 0=⎕NC''A'''('Z←⍙.',mon,' 0 0 W')':Else'('Z←⍙.',dya,' 0 A W')':EndIf'}
 tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
 put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
 ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
