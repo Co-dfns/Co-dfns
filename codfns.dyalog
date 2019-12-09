@@ -1085,8 +1085,10 @@ rtn[53],←⊂'NM(int,"int",0,0,MT ,MT ,DFD,MT ,MT )',NL
 rtn[53],←⊂'int_f int_c;',NL
 rtn[53],←⊂'DF(int_f){if(r.r>1||l.r>1)err(4);',NL
 rtn[53],←⊂' if(!cnt(r)||!cnt(l)){z.v=scl(0);z.s=dim4(0);z.r=1;R;}',NL
-rtn[53],←⊂' dtype mt=mxt(l.v,r.v);z.v=setIntersect(l.v.as(mt),r.v.as(mt));',NL
-rtn[53],←⊂' z.r=1;z.s=dim4(z.v.elements());}',NL
+rtn[53],←⊂' array pv=setUnique(r.v);B pc=pv.elements();z.v=constant(0,cnt(l),s64);',NL
+rtn[53],←⊂' for(B h;h=pc/2;pc-=h){array t=z.v+h;replace(z.v,pv(t)>l.v,t);}',NL
+rtn[53],←⊂' array ix=where(pv(z.v)==l.v);z.r=1;z.s=dim4(ix.elements());',NL
+rtn[53],←⊂' z.v=z.s[0]?l.v(ix):scl(0);}',NL
 rtn[53],←⊂'',NL
 rtn[54],←⊂'NM(gdu,"gdu",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[54],←⊂'gdu_f gdu_c;',NL
