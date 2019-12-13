@@ -367,7 +367,8 @@ rth,←'  A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);(*(*e##init[0])[fun].f)(za,cl,cr,e##init);cpad(z,za);}\',NL
 rth,←' catch(U n){derr(n);}\',NL
 rth,←' catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\',NL
-rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){(*(*e##init[0])[fun].f)(*z,*l,*r,e##init);}',NL
+rth,←'EXPORT V ex##_cdf(A*z,A*l,A*r){{A il,ir,iz;fn##init##_c(iz,il,ir,e##init);}\',NL
+rth,←' (*(*e##init[0])[fun].f)(*z,*l,*r,e##init);}',NL
 rth,←'#define EV(init,ex,slt)',NL
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD,APLP,APLU,APLV,APLW,APLZ,',NL
 rth,←' APLR,APLF,APLQ}APLTYPE;',NL
