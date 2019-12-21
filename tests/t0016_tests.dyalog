@@ -425,6 +425,8 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆index∆11_TEST←'index∆R1' MK∆T2 (0)	(20 20⍴⍳400)
 ∆index∆12_TEST←'index∆R2' MK∆T1  	(20 20⍴⍳400)
 ∆index∆13_TEST←'index∆R1' MK∆T2 (0)	(?3 20⍴1000)
+∆index∆14_TEST←'index∆R1' MK∆T2 (5 9)  (?6 10⍴1000)
+∆index∆15_TEST←'index∆R1' MK∆T2 (9 5)  (?10 6⍴1000)
 
 ∆indexgen∆0_TEST←'indexgen' MK∆T1 0
 ∆indexgen∆1_TEST←'indexgen' MK∆T1 1

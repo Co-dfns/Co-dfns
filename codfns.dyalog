@@ -616,10 +616,9 @@ rtn[21],←⊂'SF(nor_f,z.v=!(lv||rv))',NL
 rtn[22],←⊂'NM(sqd,"sqd",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[22],←⊂'sqd_f sqd_c;',NL
 rtn[22],←⊂'MF(sqd_f){z=r;}',NL
-rtn[22],←⊂'DF(sqd_f){if(l.r>1)err(4);B s=!l.r?1:l.s[l.r-1];',NL
-rtn[22],←⊂' if(s>r.r)err(5);if(!cnt(l)){z=r;R;}',NL
-rtn[22],←⊂' I sv[4];af::index x[4];l.v.as(s32).host(sv);',NL
-rtn[22],←⊂' DO((I)s,if(sv[i]<0||sv[i]>=r.s[i])err(3));',NL
+rtn[22],←⊂'DF(sqd_f){if(l.r>1)err(4);B s=l.r?l.s[0]:1;if(s>r.r)err(5);if(!s){z=r;R;}',NL
+rtn[22],←⊂' I sv[4];l.v.as(s32).host(sv);af::index x[4];',NL
+rtn[22],←⊂' DO((I)s,if(sv[i]<0||sv[i]>=r.s[r.r-(i+1)])err(3));',NL
 rtn[22],←⊂' DO((I)s,x[r.r-(i+1)]=sv[i]);z.r=r.r-(U)s;z.s=dim4(z.r,r.s.get());',NL
 rtn[22],←⊂' z.v=r.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[22],←⊂'',NL
@@ -819,13 +818,14 @@ rtn[39],←⊂' I rc=(I)r.s[0];I zc=(I)cnt(t);if(!zc){t.v=scl(0);z=t;R;}',NL
 rtn[39],←⊂' if(!rc){t.v=ll.id(t.s);z=t;R;}',NL
 rtn[39],←⊂' if(1==rc){t.v=array(r.v,t.s);z=t;R;}',NL
 rtn[39],←⊂' if("add"==ll.nm){if(r.v.isbool())t.v=count(r.v,0).as(s32);',NL
-rtn[39],←⊂'  else t.v=sum(r.v.as(f64),0);z=t;R;}',NL
-rtn[39],←⊂' if("mul"==ll.nm){t.v=product(r.v.as(f64),0);z=t;R;}',NL
-rtn[39],←⊂' if("min"==ll.nm){t.v=min(r.v,0);z=t;R;}',NL
-rtn[39],←⊂' if("max"==ll.nm){t.v=max(r.v,0);z=t;R;}',NL
-rtn[39],←⊂' if("and"==ll.nm){t.v=allTrue(r.v,0);z=t;R;}',NL
-rtn[39],←⊂' if("lor"==ll.nm){t.v=anyTrue(r.v,0);z=t;R;}',NL
-rtn[39],←⊂' if(("neq"==ll.nm)&&r.v.isbool()){t.v=(1&sum(r.v,0)).as(b8);z=t;R;}',NL
+rtn[39],←⊂'  else t.v=moddims(sum(r.v.as(f64),0),t.s);z=t;R;}',NL
+rtn[39],←⊂' if("mul"==ll.nm){t.v=moddims(product(r.v.as(f64),0),t.s);z=t;R;}',NL
+rtn[39],←⊂' if("min"==ll.nm){t.v=moddims(min(r.v,0),t.s);z=t;R;}',NL
+rtn[39],←⊂' if("max"==ll.nm){t.v=moddims(max(r.v,0),t.s);z=t;R;}',NL
+rtn[39],←⊂' if("and"==ll.nm){t.v=moddims(allTrue(r.v,0),t.s);z=t;R;}',NL
+rtn[39],←⊂' if("lor"==ll.nm){t.v=moddims(anyTrue(r.v,0),t.s);z=t;R;}',NL
+rtn[39],←⊂' if(("neq"==ll.nm)&&r.v.isbool()){',NL
+rtn[39],←⊂'  t.v=moddims((1&sum(r.v,0)).as(b8),t.s);z=t;R;}',NL
 rtn[39],←⊂' t.v=r.v(rc-1,span);map_o mfn_c(ll);',NL
 rtn[39],←⊂' DO(rc-1,mfn_c(t,A(t.r,t.s,r.v(rc-(i+2),span)),t,e))z=t;}',NL
 rtn[39],←⊂'DF(red_o){if(l.r!=0&&(l.r!=1||l.s[0]!=1))err(5);if(!r.r)err(4);',NL
