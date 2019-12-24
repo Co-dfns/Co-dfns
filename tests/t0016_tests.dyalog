@@ -887,6 +887,7 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆reshape∆25_TEST←'reshape∆Rs' MK∆T2 (⍉⍪5 5)   (5 5⍴⍳30)
 ∆reshape∆26_TEST←'reshape∆Rs' MK∆T2 (⍉⍪0)     (5 5⍴5)
 ∆reshape∆27_TEST←'reshape∆Rs' MK∆T2 (⍉⍪1 2 3) (5 5⍴⍳10)
+∆reshape∆28_TEST←'reshape∆Rv' MK∆T2 ⍬         (1 2 3)
 
 ∆reverse∆01_TEST←'reverse∆R1' MK∆T1 (⍬)
 ∆reverse∆02_TEST←'reverse∆R1' MK∆T1 (0)

@@ -218,7 +218,8 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵} ⋄  ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
  nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'(*e[',(⍕6⊃⍵),'])[',(⍕7⊃⍵),']'}
  ast←(⍉↑d p (1+t)k n(⍳≢p)fr sl fd)[i;]
- Aa←{1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
+ Aa←{0=≢ns←dis¨⍵:'PUSH(A(1,dim4(0),scl(0)));',NL
+  1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
   c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
   'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
  As←{'PUSH(A(-1,eshp,array()));',NL}
