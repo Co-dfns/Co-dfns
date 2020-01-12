@@ -32,6 +32,8 @@ technology:
 
 ## Publications
 
+[Programming Obesity: A Code Health Epidemic](https://youtu.be/UDqx1afGtQc)
+
 [A Data Parallel Compiler Hosted on the GPU](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C26&q=%22A+data+parallel+compiler+hosted+on+the+gpu%22+Aaron+Hsu&btnG=)
 
 [Pragmatic Array Oriented Functional Programming](https://jiotalks.com/watch/204/home/Morten_Kromberg_&_Aaron_Hsu/Pragmatic_Array_Oriented_Functional_Programming)
