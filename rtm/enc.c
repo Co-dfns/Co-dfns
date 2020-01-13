@@ -8,4 +8,6 @@ DF(enc_f){I rk=r.r+l.r;if(rk>4)err(16);dim4 sp=r.s;DO(l.r,sp[i+r.r]=l.s[i])
  array lv=tile(array(sv,rt),lt);af::index x[4];x[k]=0;
  array dv=sv;dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;
  dv=shift(dv,s[0],s[1],s[2],s[3]);dv=tile(array(dv,rt),lt);
- z.v=(lv!=0)*rem(rv,lv)+(lv==0)*rv;z.v=(dv!=0)*(z.v/dv).as(s32);}
+ array ix=where(lv);z.v=rv;z.v(ix)=rem(rv(ix),lv(ix));
+ ix=where(dv);z.v(ix)=(z.v(ix)/dv(ix)).as(s32);}
+

@@ -785,7 +785,9 @@ rtn[37],←⊂' array sv=flip(scan(flip(l.v,k),k,AF_BINARY_MUL),k);',NL
 rtn[37],←⊂' array lv=tile(array(sv,rt),lt);af::index x[4];x[k]=0;',NL
 rtn[37],←⊂' array dv=sv;dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;',NL
 rtn[37],←⊂' dv=shift(dv,s[0],s[1],s[2],s[3]);dv=tile(array(dv,rt),lt);',NL
-rtn[37],←⊂' z.v=(lv!=0)*rem(rv,lv)+(lv==0)*rv;z.v=(dv!=0)*(z.v/dv).as(s32);}',NL
+rtn[37],←⊂' array ix=where(lv);z.v=rv;z.v(ix)=rem(rv(ix),lv(ix));',NL
+rtn[37],←⊂' ix=where(dv);z.v(ix)=(z.v(ix)/dv(ix)).as(s32);}',NL
+rtn[37],←⊂'',NL
 rtn[38],←⊂'NM(dec,"dec",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[38],←⊂'dec_f dec_c;',NL
 rtn[38],←⊂'DF(dec_f){I ra=r.r?r.r-1:0;I la=l.r?l.r-1:0;z.r=ra+la;z.s=dim4(1);',NL
