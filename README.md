@@ -36,7 +36,7 @@ technology:
 
 [A Data Parallel Compiler Hosted on the GPU](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C26&q=%22A+data+parallel+compiler+hosted+on+the+gpu%22+Aaron+Hsu&btnG=)
 
-[Pragmatic Array Oriented Functional Programming](https://jiotalks.com/watch/204/home/Morten_Kromberg_&_Aaron_Hsu/Pragmatic_Array_Oriented_Functional_Programming)
+[Pragmatic Array Oriented Functional Programming @ JIO Talks](https://jiotalks.com/watch/204/home/Morten_Kromberg_&_Aaron_Hsu/Pragmatic_Array_Oriented_Functional_Programming)
 
 [Live Reading/Writing Co-dfns, The Way of APL](https://www.youtube.com/watch?v=ABG5eSCZPrE)
 
