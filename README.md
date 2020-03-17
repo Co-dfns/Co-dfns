@@ -13,6 +13,14 @@ Our mission is to deliver scalable APL programming to information and domain
 experts across many fields, expanding the scope and capabilities of what
 you can effectively accomplish with APL.
 
+## Getting Help
+
+APL and Co-dfns can be a little different at first. I encourage you to contact 
+me (arcfide@sacrideo.us) for any questions you may have regarding either APL or Co-dfns. 
+
+Additionally, if you have general Dyalog APL inquiries, please do not hesitate to 
+email Dyalog's support email: support@dyalog.com.
+
 ## Contributing and Helping
 
 We are seeking to create an open funding model for Co-dfns research through 
