@@ -31,8 +31,9 @@
 
  MK∆T1←{##.UT.expect←(⍎'dy.',⍺⍺)⍵⍵ ⋄ (⍎'cd.',⍺⍺)⍵⍵}
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
- MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
-  ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
+ MK∆T3←{fn tl←⍺⍺ ⋄ in←⍵⍵ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
+  ##.UT.expect←(≢,nv)⍴1 ⋄ Z←,tl>|nv-cv
+  Z⊣{⎕←↑(↑in)(-⌿↑in)(↑nv cv)}⍣(~∧⌿Z)⊢Z}
 
  i←1 ⋄ idx←{∊'ZI3'⎕FMT i⊣i+←1}
 
