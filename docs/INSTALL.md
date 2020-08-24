@@ -36,8 +36,6 @@ system here:
 
 http://arrayfire.org/docs/installing.htm
 
-4. [Optional] CUDA 9.2+
-
 Please make sure that the version of CUDA that you install is 
 the same as the version of CUDA used by the ArrayFire package you installed.
 
