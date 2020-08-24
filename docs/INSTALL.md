@@ -2,9 +2,9 @@
 
 ## Release Cycle, Versioning
 
-The Co-dfns compiler follows a rapid release cycle. That means there is only one currently supported release, which is the latest version. Compiler versions follow a date of release versioning scheme rather than a semantic or Major.Minor release pattern. 
+The Co-dfns compiler follows a rapid release cycle. That means there is only one currently supported release, which is the latest version. Compiler versions follow semantic versioning, but without the typical expectations that major versions are released less frequently.
 
-The master branch of the compiler is not expected to be stable and should not be expected to always be in a working state. 
+The `master` branch is expected to track the versioning closely, and so the compiler can also be thought of as operating on a running release cycle/deployment model. 
 
 ## Obtaining a copy of the compiler
 
