@@ -17,17 +17,17 @@ It may also be possible to use the master branch of the repository, but as noted
 ## System Requirements
 
 The Co-dfns compiler is fairly self-contained. You will need the following 
-software in order to use the compiler:
+software at their latest versions:
 
-1. Dyalog APL 17.0 or later 64-bit Unicode edition
+1. Dyalog APL 64-bit Unicode edition
 
 2. Your Operating System's host compiler:
 
-    * Visual Studio 2017 (Windows)
+    * Visual Studio (Windows)
     * GCC (Linux)
     * Clang (Mac OS X)
 
-3. ArrayFire (3.6+)
+3. ArrayFire
 
 You should be able to find the appropriate ArrayFire installer included 
 in the release page for a given Co-dfns release. You can find the 
