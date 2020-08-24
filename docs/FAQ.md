@@ -20,6 +20,10 @@ Keep in mind that some code that people write will simply not perform well on a 
 
 The Co-dfns compiler, and any objects that are compiled by Co-dfns, are dual-licensed. You can use the compiled objects and the compiler itself in accordance with the terms of the AGPL if that works for you. Additionally, if you have a Dyalog APL license, then you may also use the Co-dfns compiler and objects compiled by the Co-dfns compiler under the terms of your license agreement with Dyalog, as if Co-dfns were an integral component of Dyalog APL.
 
+** How is Co-dfns released?**
+
+The Co-dfns will soon be transitioning to a semantic versioning model with a rapid deployment cycle. We will not shy away from breaking backwards compatibility, and will freely increment the major version number when appropriate. Please take this into consideration and make sure to plan accordingly. 
+
 **Will Co-dfns be self-hosting?**
 
 Yes. It is not currently, but it will be.
