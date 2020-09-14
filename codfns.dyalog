@@ -45,7 +45,7 @@ vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
 vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
 f∆ N∆←'ptknfsrdx' 'ABEFGLMNOPVZ'
 ⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
-⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍺←0 ⋄ ⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ ⍺),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
 ⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
 MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
@@ -174,9 +174,9 @@ Dop3←(dop3 _as(2P)) _s Atom _as (5 O∘⌽) _o (dot _s jot _as (2P∘⌽) _as 
 Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {2P,'['}) _s Afx _as (7 O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) _o Dop2 _o Bop
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
-Mget←gets _s Afx _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (4 E∘⌽)
-Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (0(N∆⍳'B')⍺⍺,∘⊂⊢))⍵}
-Asgn←gets _s Brk _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (4 E∘⌽)
+Mget←gets _s Afx _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (1 3∘⊃4 E 1↑⊢)
+Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (⍺⍺ B∘⍬))⍵}
+Asgn←gets _s Brk _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (1 3∘⊃4 E 1↑⊢)
 Fex←Afx _s (Trn _opt) _s (1 Bind _any) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)
 IAx←Idx _o Atom _s (dop2 _not)
 App←Afx _s (IAx _opt) _as {(≢⍵)E⌽⍵}
@@ -195,22 +195,23 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t k(⊣@i⍨)←10 1
  i←(⍸(~t∊3 4)∧t[p]=3),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=4 ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p	⍝ WX
  p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
- k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢t[j]=1 ⋄ t[j]←2
+ k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=1)∨(t[j]=2)∧k[j]=4 ⋄ t[j]←2
  p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=4] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]	⍝ LG
  n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
  n[p⌿⍨(t[p]=2)∧k[p]=3]+←1						⍝ CI
- p[i]←p[x←p I@{~t[p[⍵]]∊3 4}⍣≡i←⍸t∊4,(⍳3),8+⍳3] ⋄ j←(⌽i)[⍋⌽x]	⍝ LX
+ p[i]←p[x←p I@{~t[p[⍵]]∊3 4}⍣≡i←⍸t∊4,(⍳3),8+⍳3] ⋄ j←(⌽i)[⍋⌽x]		⍝ LX
  p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
  s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=1]			⍝ SL
  d←(≢p)↑d ⋄ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1	⍝ FR
  xn←n⌿⍨(t=1)∧k[r]=0							⍝ XN
- v←⍸(t=10)∧n<¯4 ⋄ x←n[y←v,b] ⋄ n[b]←s[e⍳rn] ⋄ i←(≢x)⍴c←≢e		⍝ AV
+ v←⍸(n<¯4)∧(t=10)∨(t=2)∧k=4 ⋄ x←n[y←v,b] ⋄ n[b]←s[e⍳rn] ⋄ i←(≢x)⍴c←≢e	⍝ AV
  _←{z/⍨c=i[1⌷z]←e⍳⍉x I@1⊢z←r I@0⊢⍵}⍣≡(v,r[b])⍪⍉⍪⍳≢x
- f s←(f s I¨⊂i)⊣@y¨⊂¯1⍴⍨≢r ⋄ p t k n f s r d xn sym}
-gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
-gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
-gck,←(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
-gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pv' 'Pf' 'Po' 'Va'  'Vf'  
+ f s←(f s I¨⊂i)⊣@y¨⊂¯1⍴⍨≢r
+ p t k n f s r d xn sym}
+gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)(3 0)(3 1)(4 0)
+gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb' 'Fz' 'Fn' 'Gd' 
+gck,←(7 0)(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
+gcv,←'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pv' 'Pf' 'Po' 'Va'  'Vf'  
 gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
@@ -226,6 +227,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  As←{'PUSH(A(-1,eshp,array()));',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
+ Eb←{x←'.v',⍨slt ⍺ ⋄ '{A y;FN*f;POP(f,f);POP(v,y);(*f)(',x,',',x,',y,e);PUSH(y);}',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{'{A x;x.nv.resize(',(⍕4⊃⍺),');DO(',(⍕4⊃⍺),',POP(v,x.nv[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}

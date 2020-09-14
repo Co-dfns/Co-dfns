@@ -1,7 +1,7 @@
-﻿gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(3 0)(3 1)(4 0)(7 0)
-gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Fz' 'Fn' 'Gd' 'Na' 
-gck,←(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
-gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pv' 'Pf' 'Po' 'Va'  'Vf'  
+﻿gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)(3 0)(3 1)(4 0)
+gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb' 'Fz' 'Fn' 'Gd' 
+gck,←(7 0)(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
+gcv,←'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pv' 'Pf' 'Po' 'Va'  'Vf'  
 gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
@@ -17,6 +17,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  As←{'PUSH(A(-1,eshp,array()));',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
+ Eb←{x←'.v',⍨slt ⍺ ⋄ '{A y;FN*f;POP(f,f);POP(v,y);(*f)(',x,',',x,',y,e);PUSH(y);}',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{'{A x;x.nv.resize(',(⍕4⊃⍺),');DO(',(⍕4⊃⍺),',POP(v,x.nv[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}

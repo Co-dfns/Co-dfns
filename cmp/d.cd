@@ -33,9 +33,9 @@ Dop3←(dop3 _as(2P)) _s Atom _as (5 O∘⌽) _o (dot _s jot _as (2P∘⌽) _as 
 Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {2P,'['}) _s Afx _as (7 O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) _o Dop2 _o Bop
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
-Mget←gets _s Afx _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (4 E∘⌽)
-Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (0(N∆⍳'B')⍺⍺,∘⊂⊢))⍵}
-Asgn←gets _s Brk _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (4 E∘⌽)
+Mget←gets _s Afx _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (1 3∘⊃4 E 1↑⊢)
+Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (⍺⍺ B∘⍬))⍵}
+Asgn←gets _s Brk _s (name _as ⌽ _t (0=Vt) _as (0 V∘,∘⊃)) _as (1 3∘⊃4 E 1↑⊢)
 Fex←Afx _s (Trn _opt) _s (1 Bind _any) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)
 IAx←Idx _o Atom _s (dop2 _not)
 App←Afx _s (IAx _opt) _as {(≢⍵)E⌽⍵}
