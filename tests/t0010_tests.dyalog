@@ -7,7 +7,8 @@
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0010←tn #.codfns.Fix ⎕SRC dy}
  
- bindings←'Lit' 'R1' 'R10' 'R2' 'R3' 'R4' 'R5' 'R6' 'R7' 'R8' 'R9' 'Run'
+ bindings← 'Lit' 'R1' 'R10' 'R11' 'R12' 'R13'
+ bindings,←'R2' 'R3' 'R4' 'R5' 'R6' 'R7' 'R8' 'R9' 'Run'
  ∆01_TEST←{#.UT.expect←↑bindings ⋄ cd.⎕NL 3}
 
  MK∆T1←{##.UT.expect←(⍎'dy.',⍺⍺)⍵⍵ ⋄ (⍎'cd.',⍺⍺)⍵⍵}
@@ -39,6 +40,9 @@
  ∆25_TEST←{#.UT.expect←(5 5 5⍴⍳125)dy.R9 1 ⋄ (5 5 5⍴⍳125)cd.R9 1}
  ∆26_TEST←{#.UT.expect←(5 5 5⍴⍳125)dy.R9 1 3 ⋄ (5 5 5⍴⍳125)cd.R9 1 3}
  ∆27_TEST←{#.UT.expect←1 ¯1 dy.R10 (V←¯.5+?100⍴0) ⋄ 1 ¯1 cd.R10 V}
+ ∆28_TEST←{#.UT.expect←⍳5 ⋄ cd.R11⍬}
+ ∆29_TEST←{#.UT.expect←1 ⋄ 4::1 ⋄ 0⊣cd.R12⍬}
+ ∆30_TEST←{#.UT.expect←dy.R13⍬ ⋄ cd.R13⍬}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

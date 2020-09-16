@@ -255,7 +255,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  Off←{'{FN*f,*g,*h;DOK*o;POP(f,g);POP(d,o);POP(f,h);(*o)(f,*g,*h);EX(o);PUSH(f);}',NL}
  Pf←{'PUSH(&',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_c);',NL}
  Po←{'PUSH(new ',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_k());',NL}
- Pv←{'/* Span */',NL}
+ Pv←{''}
  Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("fn',n,'",0,0){};};',NL
   z,n,'_f ',n,'_c;MF(',n,'_f){',n,'_c(z,A(),r,e);}',NL}
  Va←{(x←4⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'll' 'rr'⊃⍨¯1+|x),');',NL
@@ -633,7 +633,7 @@ rtn[23],←⊂' if(!rl){if(l.r!=1)err(4);z=l;R;}',NL
 rtn[23],←⊂' if(rl!=l.r)err(4);z.r=0;DO(rl,z.r+=abs(rv[i].r))if(z.r>4)err(16);',NL
 rtn[23],←⊂' I s=z.r;DO(4,z.s[i]=1)',NL
 rtn[23],←⊂' DO(rl,I j=i;I k=abs(rv[j].r);s-=k;',NL
-rtn[23],←⊂'  DO(k,z.s[s+i]=(k==rv[j].r)?rv[j].s[i]:l.s[j]))',NL
+rtn[23],←⊂'  DO(k,z.s[s+i]=(k==rv[j].r)?rv[j].s[i]:l.s[rl-(j+1)]))',NL
 rtn[23],←⊂' af::index x[4];DO(rl,if(rv[i].r>=0)x[rl-(i+1)]=rv[i].v.as(s32))',NL
 rtn[23],←⊂' z.v=l.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[23],←⊂'',NL
