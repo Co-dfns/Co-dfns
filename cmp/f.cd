@@ -17,7 +17,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  As←{'PUSH(A(-1,eshp,array()));',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
- Eb←{'{A y;FN*f;POP(f,f);POP(v,y);(*f)(',x,',',x,',y,e);PUSH(y);}',NL⊣x←'.v',⍨slt ⍺}
+ Eb←{'{A x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(',(slt⍺),'.v,x,y,e);PUSH(y);}',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{'{A x;x.nv.resize(',(⍕4⊃⍺),');DO(',(⍕4⊃⍺),',POP(v,x.nv[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}

@@ -176,13 +176,16 @@ Dop3←(dop3 _as(2P)) _s Atom _as (5 O∘⌽) _o (dot _s jot _as (2P∘⌽) _as 
 Bop←{⍺(rbrk _s Ex _s lbrk _s (_yes _as {2P,'['}) _s Afx _as (7 O∘⌽))⍵}
 Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) _o Dop2 _o Bop
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
-Mget←gets _s Afx _s (0 Name) _as (1 3∘⊃4 E 1↑⊢)
 Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (⍺⍺ B∘⍬))⍵}
-Asgn←gets _as {1P,'←'} _s Brk _as (1 O) _s (0 Name) _as (1 3∘⊃4 E 1↑⊢)
+Mname←(0 Name) _as (0 3∘⊃4 E⊢)
+Mbrk←Brk _s (_yes _as {2P,'←'}) _as (5 O) _s (0 Name) _as (1 3∘⊃4 E⌽)
+Mget←Afx _s (Mname _o Mbrk) _as {⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
+Bget←_yes _as {1P,'←'} _s Brk _s (0 Name) _as (2 3∘⊃4 E∘⌽2↑⊢)
+Asgn←gets _s (Bget _o Mget)
 Fex←Afx _s (Trn _opt) _s (1 Bind _any) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)
 IAx←Idx _o Atom _s (dop2 _not)
 App←Afx _s (IAx _opt) _as {(≢⍵)E⌽⍵}
-Ex←IAx _s {⍺(Mget _o (0 Bind) _o Asgn _o App _s ∇ _opt)⍵} _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)
+Ex←IAx _s {⍺(Asgn _o (0 Bind) _o App _s ∇ _opt)⍵} _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)
 Gex←Ex _s grd _s Ex _as (G∘⌽)
 Nlrp←sep _o eot Slrp (lbrc Blrp rbrc)
 Stmts←{⍺(sep _any _s (Nlrp _then (⍺⍺ _s eot∘⌽)) _any _s eot)⍵}
@@ -229,7 +232,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  As←{'PUSH(A(-1,eshp,array()));',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
- Eb←{'{A y;FN*f;POP(f,f);POP(v,y);(*f)(',x,',',x,',y,e);PUSH(y);}',NL⊣x←'.v',⍨slt ⍺}
+ Eb←{'{A x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(',(slt⍺),'.v,x,y,e);PUSH(y);}',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{'{A x;x.nv.resize(',(⍕4⊃⍺),');DO(',(⍕4⊃⍺),',POP(v,x.nv[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}
