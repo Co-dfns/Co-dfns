@@ -178,7 +178,7 @@ Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) 
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
 Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (⍺⍺ B∘⍬))⍵}
 Mname←(0 Name) _as (0 3∘⊃4 E⊢)
-Mbrk←Brk _s (_yes _as {2P,'←'}) _as (5 O) _s (0 Name) _as (1 3∘⊃4 E⌽)
+Mbrk←_yes _as {2P,'←'} _as (2 O∘⌽) _s Brk _s (0 Name) _as (2 3∘⊃4 E∘⌽2↑⊢)
 Mget←Afx _s (Mname _o Mbrk) _as {⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
 Bget←_yes _as {1P,'←'} _s Brk _s (0 Name) _as (2 3∘⊃4 E∘⌽2↑⊢)
 Asgn←gets _s (Bget _o Mget)
@@ -286,7 +286,7 @@ syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '�
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms
-deps[syms⍳,¨'∧⌿/.⍪⍤\⍀']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪' '¨⌷⍤' '¨\' '¨⍀'
+deps[syms⍳,¨'∧⌿/.⍪⍤\⍀←']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪' '¨⌷⍤' '¨\' '¨⍀' '[¨←'
 deps[syms⍳⊂'∘.']←⊂(,'¨')'∘.'
 
 rth←''
@@ -1105,6 +1105,20 @@ rtn[53],←⊂' for(B h;h=pc/2;pc-=h){array t=z.v+h;replace(z.v,pv(t)>l.v,t);}',
 rtn[53],←⊂' array ix=where(pv(z.v)==l.v);z.r=1;z.s=dim4(ix.elements());',NL
 rtn[53],←⊂' z.v=z.s[0]?l.v(ix):scl(0);}',NL
 rtn[53],←⊂'',NL
+rtn[54],←⊂'NM(get,"get",0,0,MT,MT,DFD,MT,MT)',NL
+rtn[54],←⊂'get_f get_c;',NL
+rtn[54],←⊂'DF(get_f){const std::vector<A>&lv=l.nv;I ll=(I)lv.size();',NL
+rtn[54],←⊂' if(!ll){if(z.r!=1)err(4);if(r.r!=1)err(5);DO(4,if(z.s[i]!=r.s[i])err(5));z=r;R;}',NL
+rtn[54],←⊂' if(ll!=z.r)err(4);I rk=0;DO(ll,rk+=abs(lv[i].r))if(r.r>0&&rk!=r.r)err(5);',NL
+rtn[54],←⊂' const B*rs=r.s.get();af::index x[4];',NL
+rtn[54],←⊂' if(!r.r)DO(ll,A v=lv[ll-(i+1)];I r=v.r;if(r>=0)x[i]=v.v.as(s32))',NL
+rtn[54],←⊂' if(r.r>0)',NL
+rtn[54],←⊂'  DO(ll,A v=lv[ll-(i+1)];I r=v.r;if(r<0)if(z.s[i]!=*rs++)err(5);',NL
+rtn[54],←⊂'   if(r>=0){DO(r,if(v.s[i]!=*rs++)err(5))x[i]=v.v.as(s32);})',NL
+rtn[54],←⊂' z.v(x[0],x[1],x[2],x[3])=r.v;}',NL
+rtn[54],←⊂'',NL
+rtn[54],←⊂'OM(get,"get",0,0,MT,DFD)',NL
+rtn[54],←⊂'DF(get_o){A t;brk_c(t,z,l,e);map_o mfn_c(ll);mfn_c(t,t,r,e);get_c(z,l,t,e);}',NL
 rtn[55],←⊂'NM(gdu,"gdu",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[55],←⊂'gdu_f gdu_c;',NL
 rtn[55],←⊂'MF(gdu_f){if(r.r<1)err(4);z.r=1;z.s=dim4(r.s[r.r-1]);',NL

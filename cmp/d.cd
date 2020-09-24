@@ -37,7 +37,7 @@ Afx←Mop _o (Fnp _s (Dop1 _o Dop3 _opt) _as (⍪/⍳∘≢+@0⍉∘↑∘⌽)) 
 Trn←{⍺(Afx _s ((Afx _o Idx _o Atom) _s (∇ _opt) _opt))⍵} _as (3 F∘⌽)
 Bind←{⍺(gets _s (name _as ⌽) _env (⊣⍪¨⍨⍺⍺,⍨∘⊂⊢) _as (⍺⍺ B∘⍬))⍵}
 Mname←(0 Name) _as (0 3∘⊃4 E⊢)
-Mbrk←Brk _s (_yes _as {2P,'←'}) _as (5 O) _s (0 Name) _as (1 3∘⊃4 E⌽)
+Mbrk←_yes _as {2P,'←'} _as (2 O∘⌽) _s Brk _s (0 Name) _as (2 3∘⊃4 E∘⌽2↑⊢)
 Mget←Afx _s (Mname _o Mbrk) _as {⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
 Bget←_yes _as {1P,'←'} _s Brk _s (0 Name) _as (2 3∘⊃4 E∘⌽2↑⊢)
 Asgn←gets _s (Bget _o Mget)

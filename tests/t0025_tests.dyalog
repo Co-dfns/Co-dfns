@@ -13,7 +13,7 @@
  ∆04_TEST←{#.UT.expect←dy.f4⍬ ⋄ cd.f4⍬}
  ∆05_TEST←{#.UT.expect←dy.f5⍬ ⋄ cd.f5⍬}
  ∆06_TEST←{#.UT.expect←dy.f6⍬ ⋄ cd.f6⍬}
- ∆07_TEST←{#.UT.expect←dy.f7⍬ ⋄ cd.f7⍬}
+ ∆07_TEST←{#.UT.expect←'RANK ERROR' ⋄ 4::'RANK ERROR' ⋄ cd.f7⍬}
  ∆08_TEST←{#.UT.expect←dy.f8⍬ ⋄ cd.f8⍬}
  ∆09_TEST←{#.UT.expect←dy.f9⍬ ⋄ cd.f9⍬}
  ∆10_TEST←{#.UT.expect←dy.f10⍬ ⋄ cd.f10⍬}
