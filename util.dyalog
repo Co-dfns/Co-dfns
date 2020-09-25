@@ -51,7 +51,7 @@ split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
 ∇
 
 test←{##.UT.(print_passed print_summary)←1
- ##.UT.run './t',(1 0⍕(4⍴10)⊤⍵),'_tests.dyalog'}
+ ##.UT.run ⊃⊃0⎕NINFO⍠1⊢'./t',(1 0⍕(4⍴10)⊤⍵),'_*_tests.dyalog'}
 
 MK∆T1←{##.UT.expect←(⍎'##.t',⍺⍺)⍵⍵ ⋄ (⍎'##.c',⍺⍺)⍵⍵}
 MK∆T2←{##.UT.expect←⊃(⍎'##.t',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'##.c',⍺⍺)/⍵⍵}
