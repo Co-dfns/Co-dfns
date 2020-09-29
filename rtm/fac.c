@@ -1,4 +1,4 @@
-﻿NM(fac,"fac",1,1,DID,MFD,DFD,MT ,MT )
+﻿NM(fac,"fac",1,1,DID,MFD,DFD,MT ,DAD)
 fac_f fac_c;
 ID(fac,1,s32)
 MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}

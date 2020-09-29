@@ -1,4 +1,4 @@
-﻿NM(lor,"lor",1,1,DID,MT ,DFD,MT ,MT )
+﻿NM(lor,"lor",1,1,DID,MT ,DFD,MT ,DAD)
 lor_f lor_c;
 ID(lor,0,s32)
 SF(lor_f,if(rv.isbool()&&lv.isbool())z.v=lv||rv;

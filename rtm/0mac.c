@@ -58,23 +58,25 @@ using namespace af;
 #define MT
 #define DID inline array id(dim4)
 #define MFD inline V operator()(A&,const A&,ENV&)
-#define MAD inline V operator()(A&,const A&,D,ENV&)
+#define MAD inline V operator()(A&,const A&,ENV&,const array&)
 #define DFD inline V operator()(A&,const A&,const A&,ENV&)
-#define DAD inline V operator()(A&,const A&,const A&,D,ENV&)
+#define DAD inline V operator()(A&,const A&,const A&,ENV&,const array&)
 #define DI(n) inline array n::id(dim4 s)
 #define ID(n,x,t) DI(n##_f){R constant(x,s,t);}
 #define MF(n) inline V n::operator()(A&z,const A&r,ENV&e)
-#define MA(n) inline V n::operator()(A&z,const A&r,D ax,ENV&e)
+#define MA(n) inline V n::operator()(A&z,const A&r,ENV&e,const array&ax)
 #define DF(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e)
-#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,D ax,ENV&e)
-#define SF(n,x) inline V n::operator()(A&z,const A&l,const A&r,ENV&e){\
- if(l.r==r.r&&l.s==r.s){\
-  z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\
- if(!l.r){\
-  z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\
- if(!r.r){\
-  z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
- if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}
+#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e,const array&ax)
+#define SF(n,x) \
+ DF(n){\
+  if(l.r==r.r&&l.s==r.s){\
+   z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\
+  if(!l.r){\
+   z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\
+  if(!r.r){\
+   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
+  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}\
+ DA(n){err(16);}
 #define PUSH(x) s.emplace(BX(x))
 #define POP(f,x) x=s.top().f;s.pop()
 #define EX(x) delete x

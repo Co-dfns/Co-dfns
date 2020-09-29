@@ -1,4 +1,4 @@
-﻿NM(cir,"cir",1,1,MT,MFD,DFD,MT,MT)
+﻿NM(cir,"cir",1,1,MT,MFD,DFD,MT,DAD)
 cir_f cir_c;
 MF(cir_f){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}
 SF(cir_f,array fv=rv.as(f64);

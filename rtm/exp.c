@@ -1,4 +1,4 @@
-﻿NM(exp,"exp",1,1,DID,MFD,DFD,MT ,MT )
+﻿NM(exp,"exp",1,1,DID,MFD,DFD,MT ,DAD)
 ID(exp,1,s32)
 exp_f exp_c;
 MF(exp_f){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}

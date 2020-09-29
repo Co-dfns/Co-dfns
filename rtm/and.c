@@ -1,4 +1,4 @@
-﻿NM(and,"and",1,1,DID,MT,DFD,MT,MT)
+﻿NM(and,"and",1,1,DID,MT,DFD,MT,DAD)
 and_f and_c;
 ID(and,1,s32)
 SF(and_f,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;
