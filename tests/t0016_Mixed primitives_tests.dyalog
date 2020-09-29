@@ -10,6 +10,7 @@
  _← 'catenate' 'catfirst' 'deal' 'decode' 'depth' 'drop∆R1' 'drop∆R2'
  _,←'drop∆R3' 'encode' 'encode∆Ovr' 'enlist' 'expand' 'expandfirst' 
  _,←'find' 'first' 'gradedown' 'gradeup' 'identity' 'index∆R1' 'index∆R2'
+ _,←'index∆R3' 'index∆R4'
  _,←'indexgen' 'indexof' 'intersection' 'left' 'match' 'matinv' 'matdiv'
  _,←'membership' 'mix' 'notmatch' 'pick' 'random' 'ravel' 'replicate' 
  _,←'replicatefirst' 'reshape∆Rv' 'reshape∆Rl' 'reshape∆Rr' 'reshape∆Rs'
