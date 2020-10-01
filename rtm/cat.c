@@ -7,7 +7,7 @@ DA(cat_f){A nl=l,nr=r;I rk=l.r>r.r?l.r:r.r;if(rk)rk--;
   if(nl.r){nl.r++;DO(3-fx,nl.s[3-i]=nl.s[3-(i+1)]);nl.s[fx]=1;}
   if(nr.r){nr.r++;DO(3-fx,nr.s[3-i]=nr.s[3-(i+1)]);nr.s[fx]=1;}
   if(nl.r)nl.v=moddims(nl.v,nl.s);if(nr.r)nr.v=moddims(nr.v,nr.s);
-  cat_c(z,nl,nr,e,scl(scl(rk-fx)));R;}
+  cat_c(z,nl,nr,e,scl(scl((rk+1)-fx)));R;}
  if(fx<0||(fx>r.r&&fx>l.r))err(4);
  if(fx>=r.r&&fx>=l.r)err(4);
  if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);

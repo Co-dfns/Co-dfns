@@ -688,7 +688,7 @@ rtn[26],←⊂' if(axv!=fx){if(r.r>3||l.r>3)err(10);',NL
 rtn[26],←⊂'  if(nl.r){nl.r++;DO(3-fx,nl.s[3-i]=nl.s[3-(i+1)]);nl.s[fx]=1;}',NL
 rtn[26],←⊂'  if(nr.r){nr.r++;DO(3-fx,nr.s[3-i]=nr.s[3-(i+1)]);nr.s[fx]=1;}',NL
 rtn[26],←⊂'  if(nl.r)nl.v=moddims(nl.v,nl.s);if(nr.r)nr.v=moddims(nr.v,nr.s);',NL
-rtn[26],←⊂'  cat_c(z,nl,nr,e,scl(scl(rk-fx)));R;}',NL
+rtn[26],←⊂'  cat_c(z,nl,nr,e,scl(scl((rk+1)-fx)));R;}',NL
 rtn[26],←⊂' if(fx<0||(fx>r.r&&fx>l.r))err(4);',NL
 rtn[26],←⊂' if(fx>=r.r&&fx>=l.r)err(4);',NL
 rtn[26],←⊂' if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);',NL
