@@ -13,7 +13,8 @@
  _,←'index∆R3' 'index∆R4'
  _,←'indexgen' 'indexof' 'intersection' 'left' 'match' 'matinv' 'matdiv'
  _,←'membership' 'mix' 'notmatch' 'pick' 'random' 'ravel' 'replicate' 
- _,←'replicatefirst' 'reshape∆Rv' 'reshape∆Rl' 'reshape∆Rr' 'reshape∆Rs'
+ _,←⊂'replicatefirst' 
+ _,←'reshape∆R0' 'reshape∆Rv' 'reshape∆Rl' 'reshape∆Rr' 'reshape∆Rs'
  _,←'reverse∆R1' 'reverse∆R2' 'revfirst∆R1' 'revfirst∆R2' 'right' 
  _,←'rotate∆S' 'rotate∆R' 'rotate∆T' 'rotate∆U' 'rotfirst∆S'
  _,←'rotfirst∆R' 'rotfirst∆T' 'rotfirst∆U' 'same' 'shape' 'shape∆R2' 
@@ -889,6 +890,7 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆reshape∆26_TEST←'reshape∆Rs' MK∆T2 (⍉⍪0)     (5 5⍴5)
 ∆reshape∆27_TEST←'reshape∆Rs' MK∆T2 (⍉⍪1 2 3) (5 5⍴⍳10)
 ∆reshape∆28_TEST←'reshape∆Rv' MK∆T2 ⍬         (1 2 3)
+∆reshape∆29_TEST←'reshape∆R0' MK∆T2 ⍬         ⍬
 
 ∆reverse∆01_TEST←'reverse∆R1' MK∆T1 (⍬)
 ∆reverse∆02_TEST←'reverse∆R1' MK∆T1 (0)

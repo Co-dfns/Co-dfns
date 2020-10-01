@@ -1,7 +1,7 @@
 ﻿NM(cir,"cir",1,1,MT,MFD,DFD,MT,DAD)
 cir_f cir_c;
 MF(cir_f){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}
-SF(cir_f,array fv=rv.as(f64);
+SF(cir,array fv=rv.as(f64);
  if(!l.r){I x=l.v.as(s32).scalar<I>();if(abs(x)>10)err(16);
   switch(x){CS(0,z.v=sqrt(1-fv*fv))CS(1,z.v=sin(fv))CS(2,z.v=cos(fv))
    CS(3,z.v=tan(fv))CS(4,z.v=sqrt(1+fv*fv))CS(5,z.v=sinh(fv))

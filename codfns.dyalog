@@ -33,7 +33,7 @@ cco←'-std=c++11 -Ofast -g -Wall -fPIC -shared '
 ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
 gcc←'g++'ucc'so'
 clang←'clang++'ucc'dylib'
-vsco←{z←'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /Fd"',⍵,'.pdb" '
+vsco←{z←'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
  z,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
  z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
 vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
@@ -286,13 +286,15 @@ syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '�
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms
-deps[syms⍳,¨'∧⌿/.⍪⍤\⍀←']←,¨¨'∨∧' '¨⌿' '¨/' '¨/.' ',⍪' '¨⌷⍤' '¨\' '¨⍀' '[¨←'
+deps[syms⍳,¨sclsyms]←,¨¨'⍉⍴⍋'∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲'
+deps[syms⍳,¨'∧⌿/.⍪⍤\⍀←']←,¨¨'⍉⍴⍋∨∧' '¨⌿' '¨/' '¨/.' ',⍪' '¨⌷⍤' '¨\' '¨⍀' '[¨←'
 deps[syms⍳⊂'∘.']←⊂(,'¨')'∘.'
 
 rth←''
 rtn←(⍴nams)⍴⊂''
 rth,←'#include <time.h>',NL
 rth,←'#include <stdint.h>',NL
+rth,←'#include <stdio.h>',NL
 rth,←'#include <inttypes.h>',NL
 rth,←'#include <limits.h>',NL
 rth,←'#include <float.h>',NL
@@ -351,25 +353,34 @@ rth,←'  V operator()(FN*&f,FN&l,const A&r){f=new n##_o(l,r);}};',NL
 rth,←'#define MT',NL
 rth,←'#define DID inline array id(dim4)',NL
 rth,←'#define MFD inline V operator()(A&,const A&,ENV&)',NL
-rth,←'#define MAD inline V operator()(A&,const A&,ENV&,const array&)',NL
+rth,←'#define MAD inline V operator()(A&,const A&,ENV&,const A&)',NL
 rth,←'#define DFD inline V operator()(A&,const A&,const A&,ENV&)',NL
-rth,←'#define DAD inline V operator()(A&,const A&,const A&,ENV&,const array&)',NL
+rth,←'#define DAD inline V operator()(A&,const A&,const A&,ENV&,const A&)',NL
 rth,←'#define DI(n) inline array n::id(dim4 s)',NL
 rth,←'#define ID(n,x,t) DI(n##_f){R constant(x,s,t);}',NL
 rth,←'#define MF(n) inline V n::operator()(A&z,const A&r,ENV&e)',NL
-rth,←'#define MA(n) inline V n::operator()(A&z,const A&r,ENV&e,const array&ax)',NL
+rth,←'#define MA(n) inline V n::operator()(A&z,const A&r,ENV&e,const A&ax)',NL
 rth,←'#define DF(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e)',NL
-rth,←'#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e,const array&ax)',NL
+rth,←'#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e,const A&ax)',NL
 rth,←'#define SF(n,x) \',NL
-rth,←' DF(n){\',NL
-rth,←'  if(l.r==r.r&&l.s==r.s){\',NL
+rth,←' DF(n##_f){\',NL
+rth,←'  if(l.r==r.r){\',NL
+rth,←'   DO(r.r,if(l.s[i]!=r.s[i])err(5))\',NL
 rth,←'   z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\',NL
 rth,←'  if(!l.r){\',NL
 rth,←'   z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\',NL
 rth,←'  if(!r.r){\',NL
 rth,←'   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\',NL
-rth,←'  if(l.r!=r.r)err(4);if(l.s!=r.s)err(5);err(99);}\',NL
-rth,←' DA(n){err(16);}',NL
+rth,←'  if(l.r!=r.r)err(4);err(99);}\',NL
+rth,←' DA(n##_f){A a=l,b=r;I f=l.r>r.r;if(f){a=r;b=l;}I d=b.r-a.r;I rk=(I)cnt(ax);\',NL
+rth,←'  if(rk>4)err(16);if(rk!=a.r)err(5000);D axd[4];I axv[4];ax.v.as(f64).host(axd);\',NL
+rth,←'  DO(rk,if(axd[i]!=rint(axd[i]))err(11))DO(rk,axv[i]=(I)axd[i])\',NL
+rth,←'  DO(rk,if(axv[i]<0||b.r<=axv[i])err(11))\',NL
+rth,←'  I t[4];U8 tf[]={1,1,1,1};DO(rk,I j=axv[i];tf[j]=0;t[j]=d+i)\',NL
+rth,←'  I c=0;DO(b.r,if(tf[i])t[i]=c++)A ta(1,dim4(b.r),array(b.r,t));\',NL
+rth,←'  trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\',NL
+rth,←'  if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\',NL
+rth,←'  gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',NL
 rth,←'#define PUSH(x) s.emplace(BX(x))',NL
 rth,←'#define POP(f,x) x=s.top().f;s.pop()',NL
 rth,←'#define EX(x) delete x',NL
@@ -405,9 +416,9 @@ rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',NL
 rth,←' FN():nm(""),sm(0),sd(0){}',NL
 rth,←' virtual array id(dim4 s){err(16);R array();}',NL
 rth,←' virtual V operator()(A&z,const A&r,ENV&e){err(99);}',NL
-rth,←' virtual V operator()(A&z,const A&r,ENV&e,const array&ax){err(99);}',NL
+rth,←' virtual V operator()(A&z,const A&r,ENV&e,const A&ax){err(99);}',NL
 rth,←' virtual V operator()(A&z,const A&l,const A&r,ENV&e){err(99);}',NL
-rth,←' virtual V operator()(A&z,const A&l,const A&r,ENV&e,const array&ax){err(99);}};',NL
+rth,←' virtual V operator()(A&z,const A&l,const A&r,ENV&e,const A&ax){err(99);}};',NL
 rth,←'FN MTFN;',NL
 rth,←'S MOP:FN{FN&ll;',NL
 rth,←' MOP(STR nm,I sm,I sd,FN&ll):FN(nm,sm,sd),ll(ll){}};',NL
@@ -482,45 +493,45 @@ rtn[0],←⊂'NM(add,"add",1,1,DID,MFD,DFD,MT,DAD)',NL
 rtn[0],←⊂'add_f add_c;',NL
 rtn[0],←⊂'ID(add,0,s32)',NL
 rtn[0],←⊂'MF(add_f){z=r;}',NL
-rtn[0],←⊂'SF(add_f,z.v=lv+rv)',NL
+rtn[0],←⊂'SF(add,z.v=lv+rv)',NL
 rtn[1],←⊂'NM(sub,"sub",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[1],←⊂'sub_f sub_c;',NL
 rtn[1],←⊂'ID(sub,0,s32)',NL
 rtn[1],←⊂'MF(sub_f){z.r=r.r;z.s=r.s;z.v=-r.v;}',NL
-rtn[1],←⊂'SF(sub_f,z.v=lv-rv)',NL
+rtn[1],←⊂'SF(sub,z.v=lv-rv)',NL
 rtn[1],←⊂'',NL
 rtn[2],←⊂'NM(mul,"mul",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[2],←⊂'mul_f mul_c;',NL
 rtn[2],←⊂'ID(mul,1,s32)',NL
 rtn[2],←⊂'MF(mul_f){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',NL
-rtn[2],←⊂'SF(mul_f,z.v=lv*rv)',NL
+rtn[2],←⊂'SF(mul,z.v=lv*rv)',NL
 rtn[2],←⊂'',NL
 rtn[3],←⊂'NM(div,"div",1,1,DID,MFD,DFD,MT,DAD)',NL
 rtn[3],←⊂'div_f div_c;',NL
 rtn[3],←⊂'ID(div,1,s32)',NL
 rtn[3],←⊂'MF(div_f){z.r=r.r;z.s=r.s;z.v=1.0/r.v.as(f64);}',NL
-rtn[3],←⊂'SF(div_f,z.v=lv.as(f64)/rv.as(f64))',NL
+rtn[3],←⊂'SF(div,z.v=lv.as(f64)/rv.as(f64))',NL
 rtn[4],←⊂'NM(exp,"exp",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[4],←⊂'ID(exp,1,s32)',NL
 rtn[4],←⊂'exp_f exp_c;',NL
 rtn[4],←⊂'MF(exp_f){z.r=r.r;z.s=r.s;z.v=exp(r.v.as(f64));}',NL
-rtn[4],←⊂'SF(exp_f,z.v=pow(lv.as(f64),rv.as(f64)))',NL
+rtn[4],←⊂'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',NL
 rtn[4],←⊂'',NL
 rtn[5],←⊂'NM(log,"log",1,1,MT ,MFD,DFD,MT ,DAD)',NL
 rtn[5],←⊂'log_f log_c;',NL
 rtn[5],←⊂'MF(log_f){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',NL
-rtn[5],←⊂'SF(log_f,z.v=log(rv.as(f64))/log(lv.as(f64)))',NL
+rtn[5],←⊂'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',NL
 rtn[5],←⊂'',NL
 rtn[6],←⊂'NM(res,"res",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[6],←⊂'res_f res_c;',NL
 rtn[6],←⊂'ID(res,0,s32)',NL
 rtn[6],←⊂'MF(res_f){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',NL
-rtn[6],←⊂'SF(res_f,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',NL
+rtn[6],←⊂'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',NL
 rtn[6],←⊂'',NL
 rtn[7],←⊂'NM(cir,"cir",1,1,MT,MFD,DFD,MT,DAD)',NL
 rtn[7],←⊂'cir_f cir_c;',NL
 rtn[7],←⊂'MF(cir_f){z.r=r.r;z.s=r.s;z.v=Pi*r.v.as(f64);}',NL
-rtn[7],←⊂'SF(cir_f,array fv=rv.as(f64);',NL
+rtn[7],←⊂'SF(cir,array fv=rv.as(f64);',NL
 rtn[7],←⊂' if(!l.r){I x=l.v.as(s32).scalar<I>();if(abs(x)>10)err(16);',NL
 rtn[7],←⊂'  switch(x){CS(0,z.v=sqrt(1-fv*fv))CS(1,z.v=sin(fv))CS(2,z.v=cos(fv))',NL
 rtn[7],←⊂'   CS(3,z.v=tan(fv))CS(4,z.v=sqrt(1+fv*fv))CS(5,z.v=sinh(fv))',NL
@@ -545,48 +556,48 @@ rtn[8],←⊂'NM(min,"min",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[8],←⊂'min_f min_c;',NL
 rtn[8],←⊂'ID(min,DBL_MAX,f64)',NL
 rtn[8],←⊂'MF(min_f){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',NL
-rtn[8],←⊂'SF(min_f,z.v=min(lv,rv))',NL
+rtn[8],←⊂'SF(min,z.v=min(lv,rv))',NL
 rtn[8],←⊂'',NL
 rtn[9],←⊂'NM(max,"max",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[9],←⊂'max_f max_c;',NL
 rtn[9],←⊂'ID(max,-DBL_MAX,f64)',NL
 rtn[9],←⊂'MF(max_f){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',NL
-rtn[9],←⊂'SF(max_f,z.v=max(lv,rv))',NL
+rtn[9],←⊂'SF(max,z.v=max(lv,rv))',NL
 rtn[9],←⊂'',NL
 rtn[10],←⊂'NM(fac,"fac",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[10],←⊂'fac_f fac_c;',NL
 rtn[10],←⊂'ID(fac,1,s32)',NL
 rtn[10],←⊂'MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',NL
-rtn[10],←⊂'SF(fac_f,array lvf=lv.as(f64);array rvf=rv.as(f64);',NL
+rtn[10],←⊂'SF(fac,array lvf=lv.as(f64);array rvf=rv.as(f64);',NL
 rtn[10],←⊂' z.v=exp(lgamma(1+rvf)-(lgamma(1+lvf)+lgamma(1+rvf-lvf))))',NL
 rtn[11],←⊂'NM(lth,"lth",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[11],←⊂'lth_f lth_c;',NL
 rtn[11],←⊂'ID(lth,0,s32)',NL
-rtn[11],←⊂'SF(lth_f,z.v=lv<rv)',NL
+rtn[11],←⊂'SF(lth,z.v=lv<rv)',NL
 rtn[11],←⊂'',NL
 rtn[12],←⊂'NM(lte,"lte",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[12],←⊂'lte_f lte_c;',NL
 rtn[12],←⊂'ID(lte,1,s32)',NL
-rtn[12],←⊂'SF(lte_f,z.v=lv<=rv)',NL
+rtn[12],←⊂'SF(lte,z.v=lv<=rv)',NL
 rtn[12],←⊂'',NL
 rtn[13],←⊂'NM(eql,"eql",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[13],←⊂'eql_f eql_c;',NL
 rtn[13],←⊂'ID(eql,1,s32)',NL
-rtn[13],←⊂'SF(eql_f,z.v=lv==rv)',NL
+rtn[13],←⊂'SF(eql,z.v=lv==rv)',NL
 rtn[14],←⊂'NM(gte,"gte",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[14],←⊂'gte_f gte_c;',NL
 rtn[14],←⊂'ID(gte,1,s32)',NL
-rtn[14],←⊂'SF(gte_f,z.v=lv>=rv)',NL
+rtn[14],←⊂'SF(gte,z.v=lv>=rv)',NL
 rtn[14],←⊂'',NL
 rtn[15],←⊂'NM(gth,"gth",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[15],←⊂'gth_f gth_c;',NL
 rtn[15],←⊂'ID(gth,0,s32)',NL
-rtn[15],←⊂'SF(gth_f,z.v=lv>rv)',NL
+rtn[15],←⊂'SF(gth,z.v=lv>rv)',NL
 rtn[15],←⊂'',NL
 rtn[16],←⊂'NM(neq,"neq",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[16],←⊂'neq_f neq_c;',NL
 rtn[16],←⊂'ID(neq,0,s32)',NL
-rtn[16],←⊂'SF(neq_f,z.v=lv!=rv)',NL
+rtn[16],←⊂'SF(neq,z.v=lv!=rv)',NL
 rtn[16],←⊂'',NL
 rtn[17],←⊂'NM(not,"not",1,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[17],←⊂'not_f not_c;',NL
@@ -596,14 +607,14 @@ rtn[17],←⊂'',NL
 rtn[18],←⊂'NM(and,"and",1,1,DID,MT,DFD,MT,DAD)',NL
 rtn[18],←⊂'and_f and_c;',NL
 rtn[18],←⊂'ID(and,1,s32)',NL
-rtn[18],←⊂'SF(and_f,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;',NL
+rtn[18],←⊂'SF(and,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;',NL
 rtn[18],←⊂' else if(allTrue<I>(lv>=0&&lv<=1&&rv>0&&rv<=1))z.v=lv&&rv;',NL
 rtn[18],←⊂' else{A a(z.r,z.s,lv);A b(z.r,z.s,rv);',NL
 rtn[18],←⊂'  lor_c(a,a,b,e);z.v=lv*(rv/((!a.v)+a.v));})',NL
 rtn[19],←⊂'NM(lor,"lor",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[19],←⊂'lor_f lor_c;',NL
 rtn[19],←⊂'ID(lor,0,s32)',NL
-rtn[19],←⊂'SF(lor_f,if(rv.isbool()&&lv.isbool())z.v=lv||rv;',NL
+rtn[19],←⊂'SF(lor,if(rv.isbool()&&lv.isbool())z.v=lv||rv;',NL
 rtn[19],←⊂' else if(lv.isbool()&&rv.isinteger())z.v=lv+(!lv)*abs(rv).as(rv.type());',NL
 rtn[19],←⊂' else if(rv.isbool()&&lv.isinteger())z.v=rv+(!rv)*abs(lv).as(lv.type());',NL
 rtn[19],←⊂' else if(lv.isinteger()&&rv.isinteger()){B c=cnt(z);',NL
@@ -619,11 +630,11 @@ rtn[19],←⊂'  z.v=array(z.s,a.data());})',NL
 rtn[19],←⊂'',NL
 rtn[20],←⊂'NM(nan,"nan",1,1,MT ,MT ,DFD,MT ,DAD)',NL
 rtn[20],←⊂'nan_f nan_c;',NL
-rtn[20],←⊂'SF(nan_f,z.v=!(lv&&rv))',NL
+rtn[20],←⊂'SF(nan,z.v=!(lv&&rv))',NL
 rtn[20],←⊂'',NL
 rtn[21],←⊂'NM(nor,"nor",1,1,MT ,MT ,DFD,MT ,DAD)',NL
 rtn[21],←⊂'nor_f nor_c;',NL
-rtn[21],←⊂'SF(nor_f,z.v=!(lv||rv))',NL
+rtn[21],←⊂'SF(nor,z.v=!(lv||rv))',NL
 rtn[22],←⊂'NM(sqd,"sqd",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[22],←⊂'sqd_f sqd_c;',NL
 rtn[22],←⊂'MF(sqd_f){z=r;}',NL
@@ -645,9 +656,8 @@ rtn[23],←⊂' af::index x[4];DO(rl,if(rv[i].r>=0)x[rl-(i+1)]=rv[i].v.as(s32))'
 rtn[23],←⊂' z.v=l.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[23],←⊂'',NL
 rtn[23],←⊂'OD(brk,"brk",scm(l),scd(l),MFD,DFD)',NL
-rtn[23],←⊂'MF(brk_o){if(ww.r>1)err(4);ll(z,r,e,(r.r?r.r-1:0)-ww.v);}',NL
-rtn[23],←⊂'DF(brk_o){if(ww.r>1)err(4);D ax=l.r>r.r?l.r:r.r;if(ax)ax--;',NL
-rtn[23],←⊂' ll(z,l,r,e,ax-ww.v);}',NL
+rtn[23],←⊂'MF(brk_o){if(ww.r>1)err(4);ll(z,r,e,ww);}',NL
+rtn[23],←⊂'DF(brk_o){if(ww.r>1)err(4);ll(z,l,r,e,ww);}',NL
 rtn[23],←⊂'',NL
 rtn[23],←⊂' ',NL
 rtn[24],←⊂'NM(iot,"iot",0,0,MT ,MFD,DFD,MT ,MT )',NL
@@ -672,12 +682,13 @@ rtn[25],←⊂'',NL
 rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MT ,DAD)',NL
 rtn[26],←⊂'cat_f cat_c;',NL
 rtn[26],←⊂'MF(cat_f){z.r=1;z.s[0]=cnt(r);z.v=flat(r.v);}',NL
-rtn[26],←⊂'DA(cat_f){A nl=l,nr=r;D axv=ax.as(f64).scalar<D>();I fx=(I)ceil(axv);',NL
+rtn[26],←⊂'DA(cat_f){A nl=l,nr=r;I rk=l.r>r.r?l.r:r.r;if(rk)rk--;',NL
+rtn[26],←⊂' D axv=rk-ax.v.as(f64).scalar<D>();I fx=(I)ceil(axv);',NL
 rtn[26],←⊂' if(axv!=fx){if(r.r>3||l.r>3)err(10);',NL
 rtn[26],←⊂'  if(nl.r){nl.r++;DO(3-fx,nl.s[3-i]=nl.s[3-(i+1)]);nl.s[fx]=1;}',NL
 rtn[26],←⊂'  if(nr.r){nr.r++;DO(3-fx,nr.s[3-i]=nr.s[3-(i+1)]);nr.s[fx]=1;}',NL
 rtn[26],←⊂'  if(nl.r)nl.v=moddims(nl.v,nl.s);if(nr.r)nr.v=moddims(nr.v,nr.s);',NL
-rtn[26],←⊂'  cat_c(z,nl,nr,e,scl(fx));R;}',NL
+rtn[26],←⊂'  cat_c(z,nl,nr,e,scl(scl(rk-fx)));R;}',NL
 rtn[26],←⊂' if(fx<0||(fx>r.r&&fx>l.r))err(4);',NL
 rtn[26],←⊂' if(fx>=r.r&&fx>=l.r)err(4);',NL
 rtn[26],←⊂' if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);',NL
@@ -693,13 +704,13 @@ rtn[26],←⊂' array lv=(l.r?moddims(l.v,ls):tile(l.v,ls)).as(mt);',NL
 rtn[26],←⊂' array rv=(r.r?moddims(r.v,rs):tile(r.v,rs)).as(mt);',NL
 rtn[26],←⊂' if(!cnt(l)){z.v=rv;R;}if(!cnt(r)){z.v=lv;R;}',NL
 rtn[26],←⊂' z.v=join(fx,lv,rv);}',NL
-rtn[26],←⊂'DF(cat_f){if(l.r||r.r){cat_c(z,l,r,e,scl(0));R;}',NL
+rtn[26],←⊂'DF(cat_f){if(l.r||r.r){cat_c(z,l,r,e,scl(scl((l.r>r.r?l.r:r.r)-1)));R;}',NL
 rtn[26],←⊂' A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,e);}',NL
 rtn[27],←⊂'NM(ctf,"ctf",0,0,MT,MFD,DFD,MT,MT)',NL
 rtn[27],←⊂'ctf_f ctf_c;',NL
 rtn[27],←⊂'MF(ctf_f){dim4 sp=z.s;sp[1]=r.r?r.s[r.r-1]:1;sp[0]=sp[1]?cnt(r)/sp[1]:1;',NL
 rtn[27],←⊂' sp[2]=sp[3]=1;z.r=2;z.s=sp;z.v=!cnt(z)?scl(0):array(r.v,z.s);}',NL
-rtn[27],←⊂'DF(ctf_f){I x=l.r>r.r?l.r:r.r;if(l.r||r.r){cat_c(z,l,r,e,scl(x-1));R;}',NL
+rtn[27],←⊂'DF(ctf_f){if(l.r||r.r){cat_c(z,l,r,e,scl(scl(0)));R;}',NL
 rtn[27],←⊂' A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,e);}',NL
 rtn[28],←⊂'NM(rot,"rot",0,0,DID,MFD,DFD,MT ,MT )',NL
 rtn[28],←⊂'rot_f rot_c;',NL
