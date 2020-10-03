@@ -982,9 +982,10 @@ rtn[43],←⊂' I s=(I)lv;I t=(I)rv;z.r=1;z.s=dim4(s);if(!s){z.v=scl(0);R;}',NL
 rtn[43],←⊂' std::vector<I> g(t);std::vector<I> d(t);',NL
 rtn[43],←⊂' ((1+range(t))*randu(t)).as(s32).host(g.data());',NL
 rtn[43],←⊂' DO(t,I j=g[i];if(i!=j)d[i]=d[j];d[j]=i)z.v=array(z.s,d.data());}',NL
-rtn[44],←⊂'NM(tke,"tke",0,0,MT ,MFD,DFD,MT ,MT )',NL
+rtn[44],←⊂'NM(tke,"tke",0,0,MT ,MFD,DFD,MAD,MT )',NL
 rtn[44],←⊂'tke_f tke_c;',NL
 rtn[44],←⊂'MF(tke_f){z=r;}',NL
+rtn[44],←⊂'MA(tke_f){err(16);}',NL
 rtn[44],←⊂'DF(tke_f){I lv[4];seq it[4];seq ix[4];B c=cnt(l);',NL
 rtn[44],←⊂' if(l.r>1||(c>r.r&&r.r))err(4);if(!c){z=r;R;}',NL
 rtn[44],←⊂' U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',NL
@@ -996,9 +997,10 @@ rtn[44],←⊂'  it[j]=ix[j]+(lv[i]<0)*(a-(D)r.s[j]);})',NL
 rtn[44],←⊂' if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,r.v.type());z.v=0;',NL
 rtn[44],←⊂' z.v(it[0],it[1],it[2],it[3])=r.v(ix[0],ix[1],ix[2],ix[3]);}',NL
 rtn[44],←⊂'',NL
-rtn[45],←⊂'NM(drp,"drp",0,0,MT ,MFD,DFD,MT ,MT )',NL
+rtn[45],←⊂'NM(drp,"drp",0,0,MT ,MFD,DFD,MAD,MT )',NL
 rtn[45],←⊂'drp_f drp_c;',NL
 rtn[45],←⊂'MF(drp_f){if(r.r)err(16);z=r;}',NL
+rtn[45],←⊂'MA(drp_f){err(16);}',NL
 rtn[45],←⊂'DF(drp_f){I lv[4];seq it[4];seq ix[4];B c=cnt(l);',NL
 rtn[45],←⊂' if(l.r>1||(c>r.r&&r.r))err(4);if(!c){z=r;R;}',NL
 rtn[45],←⊂' U rk=r.r?r.r:(U)l.s[0];z.r=rk;z.s=r.s;l.v.as(s32).host(lv);',NL
