@@ -688,12 +688,12 @@ rtn[26],←⊂' if(ac==1&&(*axv<=-1||r.r<=*axv))err(4);',NL
 rtn[26],←⊂' if(ac>1){I c=(I)axv[0];if(c<0)err(11);DO((I)ac,if(axv[i]!=c++)err(11))',NL
 rtn[26],←⊂'  if(c>r.r)err(4);}',NL
 rtn[26],←⊂' I xt=(!ac||(ac==1&&isint(axv[0])));if(r.r==4&&xt)err(16);',NL
-rtn[26],←⊂' if(!xt&&ac==1){z=r;R;}',NL
-rtn[26],←⊂' if(xt){',NL
-rtn[26],←⊂'  if(!ac){z=r;DO(3,z.s[3-i]=z.s[2-i])z.s[0]=1;z.r++;z.v=moddims(z.v,z.s);R;}',NL
-rtn[26],←⊂'  err(16);}',NL
-rtn[26],←⊂' err(16);',NL
-rtn[26],←⊂' }',NL
+rtn[26],←⊂' z=r;if(!xt&&ac==1)R;DO((I)ac,axv[i]=ceil(z.r-axv[i]-1))',NL
+rtn[26],←⊂' if(xt){z.r++;I pt=ac?(I)axv[0]:0;DO(3-pt,z.s[3-i]=z.s[2-i])z.s[pt]=1;',NL
+rtn[26],←⊂'  z.v=moddims(z.v,z.s);R;}',NL
+rtn[26],←⊂' I s=(I)axv[ac-1],ei=(I)axv[0],c=1;',NL
+rtn[26],←⊂' DO((I)ac-1,z.s[s]*=z.s[s+i+1])DO(z.r-ei-1,z.s[s+i+1]=z.s[ei+i+1])',NL
+rtn[26],←⊂' z.r-=(I)ac-1;DO(4-z.r,z.s[z.r+i]=1)z.v=moddims(z.v,z.s);}',NL
 rtn[26],←⊂'DA(cat_f){A nl=l,nr=r;I rk=l.r>r.r?l.r:r.r;if(rk)rk--;',NL
 rtn[26],←⊂' D axv=rk-ax.v.as(f64).scalar<D>();I fx=(I)ceil(axv);',NL
 rtn[26],←⊂' if(axv!=fx){if(r.r>3||l.r>3)err(10);',NL

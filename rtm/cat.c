@@ -6,12 +6,12 @@ MA(cat_f){B ac=cnt(ax);if(ac>1&&ax.r>1)err(4);D axv[4];ax.v.as(f64).host(axv);
  if(ac>1){I c=(I)axv[0];if(c<0)err(11);DO((I)ac,if(axv[i]!=c++)err(11))
   if(c>r.r)err(4);}
  I xt=(!ac||(ac==1&&isint(axv[0])));if(r.r==4&&xt)err(16);
- if(!xt&&ac==1){z=r;R;}
- if(xt){
-  if(!ac){z=r;DO(3,z.s[3-i]=z.s[2-i])z.s[0]=1;z.r++;z.v=moddims(z.v,z.s);R;}
-  err(16);}
- err(16);
- }
+ z=r;if(!xt&&ac==1)R;DO((I)ac,axv[i]=ceil(z.r-axv[i]-1))
+ if(xt){z.r++;I pt=ac?(I)axv[0]:0;DO(3-pt,z.s[3-i]=z.s[2-i])z.s[pt]=1;
+  z.v=moddims(z.v,z.s);R;}
+ I s=(I)axv[ac-1],ei=(I)axv[0],c=1;
+ DO((I)ac-1,z.s[s]*=z.s[s+i+1])DO(z.r-ei-1,z.s[s+i+1]=z.s[ei+i+1])
+ z.r-=(I)ac-1;DO(4-z.r,z.s[z.r+i]=1)z.v=moddims(z.v,z.s);}
 DA(cat_f){A nl=l,nr=r;I rk=l.r>r.r?l.r:r.r;if(rk)rk--;
  D axv=rk-ax.v.as(f64).scalar<D>();I fx=(I)ceil(axv);
  if(axv!=fx){if(r.r>3||l.r>3)err(10);
