@@ -34,3 +34,4 @@ V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
   CS(APLTI,a=A(RANK(d),s,c?da16(c,s,d):scl(0)))
   CS(APLU8,a=A(RANK(d),s,c?da8(c,s,d):scl(0)))
   default:err(16);}}
+inline I isint(D x){R x!=nearbyint(x);}
