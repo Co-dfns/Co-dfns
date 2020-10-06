@@ -9,4 +9,7 @@
  rev0←{⌽[⍺]⍵}
  rev1←{⊖[⍺]⍵}
 
+ cat0←{,[⍺]⍵}
+ cat1←{⍪[⍺]⍵}
+
 :EndNamespace

@@ -73,6 +73,31 @@
  ∆56_TEST←{A←2 ⋄ X←2 3 5 6⍴⍳180 ⋄ #.UT.expect←A dy.rev0 X ⋄ A cd.rev1 X}
  ∆57_TEST←{A←3 ⋄ X←2 3 5 6⍴⍳180 ⋄ #.UT.expect←A dy.rev0 X ⋄ A cd.rev1 X}
 
+ ∆58_TEST←{A←1 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 ⍳5}
+ ∆59_TEST←{A←0 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 5}
+ ∆60_TEST←{A←1 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 ⍳5}
+ ∆61_TEST←{A←0 1 2 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 2 3⍴⍳6}
+ ∆62_TEST←{A←0 2 ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.cat0 2 3 5⍴⍳30}
+ ∆63_TEST←{A←1.5 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 ⍳5}
+ ∆64_TEST←{A←0.5 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 5}
+ ∆65_TEST←{A←2.5 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 2 3⍴⍳6}
+ ∆66_TEST←{A←0.5 0.5 ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.cat0 ⍳5}
+ ∆67_TEST←{A←1 2⍴⍳2 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 2 3⍴⍳5}
+ ∆68_TEST←{A←⍬ ⋄ #.UT.expect←x←'NONCE ERROR' ⋄ 16::x ⋄ A cd.cat0 1 2 3 4⍴⍳24}
+ ∆69_TEST←{A←1 0 1⍴0 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 ⍳5}
+ ∆70_TEST←{A←1 1 1⍴0 ⋄ #.UT.expect←x←'RANK ERROR' ⋄ 4::x ⋄ A cd.cat0 ⍳5}
+ ∆71_TEST←{A←¯1 0 ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.cat0 ⍳5}
+
+ ∆72_TEST←{A←0 ⋄ X←⍳5        ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆73_TEST←{A←0 ⋄ X←2 3⍴⍳6    ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆74_TEST←{A←1 ⋄ X←2 3⍴⍳6    ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆75_TEST←{A←0 ⋄ X←1 2 3⍴⍳6  ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆76_TEST←{A←1 ⋄ X←1 2 3⍴⍳6  ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆77_TEST←{A←2 ⋄ X←1 2 3⍴⍳6  ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆78_TEST←{A←⍬ ⋄ X←0         ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆79_TEST←{A←⍬ ⋄ X←⍳5        ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆80_TEST←{A←⍬ ⋄ X←2 3⍴⍳6    ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆81_TEST←{A←⍬ ⋄ X←2 3 5⍴⍳30 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
 
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}

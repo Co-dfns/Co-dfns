@@ -472,6 +472,7 @@ rth,←'  CS(APLSI,a=A(RANK(d),s,c?array(s,(S16*)DATA(d)):scl(0)))',NL
 rth,←'  CS(APLTI,a=A(RANK(d),s,c?da16(c,s,d):scl(0)))',NL
 rth,←'  CS(APLU8,a=A(RANK(d),s,c?da8(c,s,d):scl(0)))',NL
 rth,←'  default:err(16);}}',NL
+rth,←'inline I isint(D x){R x!=nearbyint(x);}',NL
 rth,←'EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}',NL
 rth,←'EXPORT V frea(A*a){delete a;}',NL
 rth,←'EXPORT V exarray(lp*d,A*a){cpad(d,*a);}',NL
@@ -679,9 +680,20 @@ rtn[25],←⊂'DF(rho_f){B cr=cnt(r);B cl=cnt(l);B s[4];if(l.r>1)err(11);if(cl>4
 rtn[25],←⊂' l.v.as(s64).host(s);z.r=(I)cl;DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)])B cz=cnt(z);',NL
 rtn[25],←⊂' if(!cz){z.v=scl(0);R;}z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',NL
 rtn[25],←⊂'',NL
-rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MT ,DAD)',NL
+rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[26],←⊂'cat_f cat_c;',NL
 rtn[26],←⊂'MF(cat_f){z.r=1;z.s[0]=cnt(r);z.v=flat(r.v);}',NL
+rtn[26],←⊂'MA(cat_f){B ac=cnt(ax);if(ac>1&&ax.r>1)err(4);D axv[4];ax.v.as(f64).host(axv);',NL
+rtn[26],←⊂' if(ac==1&&(*axv<=-1||r.r<=*axv))err(4);',NL
+rtn[26],←⊂' if(ac>1){I c=(I)axv[0];if(c<0)err(11);DO((I)ac,if(axv[i]!=c++)err(11))',NL
+rtn[26],←⊂'  if(c>r.r)err(4);}',NL
+rtn[26],←⊂' I xt=(!ac||(ac==1&&isint(axv[0])));if(r.r==4&&xt)err(16);',NL
+rtn[26],←⊂' if(!xt&&ac==1){z=r;R;}',NL
+rtn[26],←⊂' if(xt){',NL
+rtn[26],←⊂'  if(!ac){z=r;DO(3,z.s[3-i]=z.s[2-i])z.s[0]=1;z.r++;z.v=moddims(z.v,z.s);R;}',NL
+rtn[26],←⊂'  err(16);}',NL
+rtn[26],←⊂' err(16);',NL
+rtn[26],←⊂' }',NL
 rtn[26],←⊂'DA(cat_f){A nl=l,nr=r;I rk=l.r>r.r?l.r:r.r;if(rk)rk--;',NL
 rtn[26],←⊂' D axv=rk-ax.v.as(f64).scalar<D>();I fx=(I)ceil(axv);',NL
 rtn[26],←⊂' if(axv!=fx){if(r.r>3||l.r>3)err(10);',NL
