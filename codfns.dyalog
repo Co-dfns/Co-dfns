@@ -416,9 +416,9 @@ rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',NL
 rth,←' FN():nm(""),sm(0),sd(0){}',NL
 rth,←' virtual array id(dim4 s){err(16);R array();}',NL
 rth,←' virtual V operator()(A&z,const A&r,ENV&e){err(99);}',NL
-rth,←' virtual V operator()(A&z,const A&r,ENV&e,const A&ax){err(99);}',NL
+rth,←' virtual V operator()(A&z,const A&r,ENV&e,const A&ax){err(2);}',NL
 rth,←' virtual V operator()(A&z,const A&l,const A&r,ENV&e){err(99);}',NL
-rth,←' virtual V operator()(A&z,const A&l,const A&r,ENV&e,const A&ax){err(99);}};',NL
+rth,←' virtual V operator()(A&z,const A&l,const A&r,ENV&e,const A&ax){err(2);}};',NL
 rth,←'FN MTFN;',NL
 rth,←'S MOP:FN{FN&ll;',NL
 rth,←' MOP(STR nm,I sm,I sd,FN&ll):FN(nm,sm,sd),ll(ll){}};',NL

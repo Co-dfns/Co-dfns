@@ -22,9 +22,9 @@ S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
  FN():nm(""),sm(0),sd(0){}
  virtual array id(dim4 s){err(16);R array();}
  virtual V operator()(A&z,const A&r,ENV&e){err(99);}
- virtual V operator()(A&z,const A&r,ENV&e,const A&ax){err(99);}
+ virtual V operator()(A&z,const A&r,ENV&e,const A&ax){err(2);}
  virtual V operator()(A&z,const A&l,const A&r,ENV&e){err(99);}
- virtual V operator()(A&z,const A&l,const A&r,ENV&e,const A&ax){err(99);}};
+ virtual V operator()(A&z,const A&l,const A&r,ENV&e,const A&ax){err(2);}};
 FN MTFN;
 S MOP:FN{FN&ll;
  MOP(STR nm,I sm,I sd,FN&ll):FN(nm,sm,sd),ll(ll){}};
