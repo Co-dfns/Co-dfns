@@ -118,6 +118,47 @@
  ∆099_TEST←{A←1 2 3   ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
  ∆100_TEST←{A←0 1 2 3 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
 
+ ∆101_TEST←{A←  ⍬ ⋄ X←1    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.red0 X}
+ ∆102_TEST←{A← ¯1 ⋄ X←1    ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.red0 X}
+ ∆103_TEST←{A←  0 ⋄ X←1    ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.red0 X}
+ ∆104_TEST←{A←0.5 ⋄ X←1    ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.red0 X}
+ ∆105_TEST←{A←0 ⋄ X←0 0 0  ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.red1 X}
+ ∆106_TEST←{A←0 ⋄ X←1 5⍴⍳5 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.red1 X}
+
+ ∆107_TEST←{A←0 ⋄ X←⍳5         ⋄ #.UT.expect←A dy.red1 X ⋄ A cd.red1 X}
+ ∆108_TEST←{A←0 ⋄ X←2|⍳5       ⋄ #.UT.expect←A dy.red1 X ⋄ A cd.red1 X}
+ ∆109_TEST←{A←0 ⋄ X←(-2|⍳5)×⍳5 ⋄ #.UT.expect←A dy.red1 X ⋄ A cd.red1 X}
+ ∆110_TEST←{A←0 ⋄ X←⍳2         ⋄ #.UT.expect←A dy.red2 X ⋄ A cd.red2 X}
+ ∆111_TEST←{A←0 ⋄ X←2|⍳2       ⋄ #.UT.expect←A dy.red2 X ⋄ A cd.red2 X}
+ ∆112_TEST←{A←0 ⋄ X←(-2|⍳2)×⍳2 ⋄ #.UT.expect←A dy.red2 X ⋄ A cd.red2 X}
+ ∆113_TEST←{A←1 ⋄ X←⍳3         ⋄ #.UT.expect←A dy.red2 X ⋄ A cd.red2 X}
+ ∆114_TEST←{A←1 ⋄ X←2|⍳3       ⋄ #.UT.expect←A dy.red2 X ⋄ A cd.red2 X}
+ ∆115_TEST←{A←1 ⋄ X←(-2|⍳3)×⍳3 ⋄ #.UT.expect←A dy.red2 X ⋄ A cd.red2 X}
+ ∆116_TEST←{A←0 ⋄ X←⍳2         ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆117_TEST←{A←0 ⋄ X←2|⍳2       ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆118_TEST←{A←0 ⋄ X←(-2|⍳2)×⍳2 ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆119_TEST←{A←1 ⋄ X←⍳3         ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆120_TEST←{A←1 ⋄ X←2|⍳3       ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆121_TEST←{A←1 ⋄ X←(-2|⍳3)×⍳3 ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆122_TEST←{A←2 ⋄ X←⍳4         ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆123_TEST←{A←2 ⋄ X←2|⍳4       ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆124_TEST←{A←2 ⋄ X←(-2|⍳4)×⍳4 ⋄ #.UT.expect←A dy.red3 X ⋄ A cd.red3 X}
+ ∆125_TEST←{A←0 ⋄ X←⍳2         ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆126_TEST←{A←0 ⋄ X←2|⍳2       ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆127_TEST←{A←0 ⋄ X←(-2|⍳2)×⍳2 ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆128_TEST←{A←1 ⋄ X←⍳3         ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆129_TEST←{A←1 ⋄ X←2|⍳3       ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆130_TEST←{A←1 ⋄ X←(-2|⍳3)×⍳3 ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆131_TEST←{A←2 ⋄ X←⍳4         ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆132_TEST←{A←2 ⋄ X←2|⍳4       ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆133_TEST←{A←2 ⋄ X←(-2|⍳4)×⍳4 ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆134_TEST←{A←3 ⋄ X←⍳5         ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆135_TEST←{A←3 ⋄ X←2|⍳5       ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆136_TEST←{A←3 ⋄ X←(-2|⍳5)×⍳5 ⋄ #.UT.expect←A dy.red4 X ⋄ A cd.red4 X}
+ ∆137_TEST←{A←0 ⋄ X←⍳5         ⋄ #.UT.expect←A dy.red5 X ⋄ A cd.red5 X}
+ ∆138_TEST←{A←0 ⋄ X←2|⍳5       ⋄ #.UT.expect←A dy.red5 X ⋄ A cd.red5 X}
+ ∆139_TEST←{A←0 ⋄ X←(-2|⍳5)×⍳5 ⋄ #.UT.expect←A dy.red5 X ⋄ A cd.red5 X}
+
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
 :EndNamespace
