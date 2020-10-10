@@ -885,10 +885,11 @@ rtn[39],←⊂' }else{t.v=r.v(rng,span);',NL
 rtn[39],←⊂'  DO(abs(lv)-1,mfn_c(t,A(t.r,t.s,r.v(rng+(D)(i+1),span)),t,e))}',NL
 rtn[39],←⊂' z=t;}',NL
 rtn[39],←⊂'',NL
-rtn[40],←⊂'NM(rdf,"rdf",0,0,DID,MT ,DFD,MT ,MT )',NL
+rtn[40],←⊂'NM(rdf,"rdf",0,0,DID,MT ,DFD,MT,DAD)',NL
 rtn[40],←⊂'ID(rdf,1,s32)',NL
 rtn[40],←⊂'OM(rdf,"rdf",0,0,MFD,DFD)',NL
 rtn[40],←⊂'rdf_f rdf_c;',NL
+rtn[40],←⊂'DA(rdf_f){red_c(z,l,r,e,ax);}',NL
 rtn[40],←⊂'DF(rdf_f){A x=r;if(!r.r)cat_c(x,r,e);red_c(z,l,x,e,scl(scl(0)));}',NL
 rtn[40],←⊂'MF(rdf_o){A t(r.r?r.r-1:0,dim4(1),r.v(0));DO(t.r,t.s[i]=r.s[i])',NL
 rtn[40],←⊂' I rc=(I)r.s[t.r];I zc=(I)cnt(t);map_o mfn_c(ll);',NL

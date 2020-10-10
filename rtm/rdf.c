@@ -1,7 +1,8 @@
-﻿NM(rdf,"rdf",0,0,DID,MT ,DFD,MT ,MT )
+﻿NM(rdf,"rdf",0,0,DID,MT ,DFD,MT,DAD)
 ID(rdf,1,s32)
 OM(rdf,"rdf",0,0,MFD,DFD)
 rdf_f rdf_c;
+DA(rdf_f){red_c(z,l,r,e,ax);}
 DF(rdf_f){A x=r;if(!r.r)cat_c(x,r,e);red_c(z,l,x,e,scl(scl(0)));}
 MF(rdf_o){A t(r.r?r.r-1:0,dim4(1),r.v(0));DO(t.r,t.s[i]=r.s[i])
  I rc=(I)r.s[t.r];I zc=(I)cnt(t);map_o mfn_c(ll);
