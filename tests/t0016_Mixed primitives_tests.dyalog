@@ -614,7 +614,7 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆match∆12_TEST←'match' MK∆T2 (,0)	(2 2⍴⍳4)
 ∆match∆13_TEST←'match' MK∆T2 (,0)	(,0)
 
-∆matdiv∆1_TEST←'matdiv' 1e¯13  MK∆T3 (?5 5⍴0) (?5 5⍴0)
+∆matdiv∆1_TEST←'matdiv' 1e¯12  MK∆T3 (?5 5⍴0) (?5 5⍴0)
 ∆matdiv∆2_TEST←'matdiv'  MK∆T2 (?5⍴0) (?5⍴0)
 ∆matdiv∆3_TEST←'matdiv'  MK∆T2 (?5 5⍴0) (?5⍴0)
 ∆matdiv∆4_TEST←'matdiv' 1e¯13 MK∆T3 (?5⍴0) (?5 5⍴0)
@@ -843,6 +843,8 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆replicate∆19_TEST←'replicate' MK∆T2 (14⍴0 1 0 1 1 1 0)	(⍳14)
 ∆replicate∆20_TEST←'replicate' MK∆T2 (0 ¯1 0)           (2 3⍴⍳6)
 ∆replicate∆21_TEST←'replicate' MK∆T2 (¯1 0 0)           (2 3⍴⍳6)
+∆replicate∆22_TEST←'replicate' MK∆T2 (1 1 1)            (,5)
+∆replicate∆23_TEST←'replicate' MK∆T2 (⍳5)               (,5)
 
 ∆replicatefirst∆01_TEST←'replicatefirst' MK∆T2 (⍬)                (⍬)
 ∆replicatefirst∆02_TEST←'replicatefirst' MK∆T2 (I 0)              (5)
@@ -865,6 +867,8 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆replicatefirst∆19_TEST←'replicatefirst' MK∆T2 (14⍴0 1 0 1 1 1 0) (⍳14)
 ∆replicatefirst∆20_TEST←'replicatefirst' MK∆T2 (0 ¯1)             (2 3⍴⍳6)
 ∆replicatefirst∆21_TEST←'replicatefirst' MK∆T2 (¯1 0)             (2 3⍴⍳6)
+∆replicatefirst∆22_TEST←'replicatefirst' MK∆T2 (1 1 1)            (,5)
+∆replicatefirst∆23_TEST←'replicatefirst' MK∆T2 (⍳5)               (,5)
 
 ∆reshape∆01_TEST←'reshape∆Rv' MK∆T2 (2 2)     (⍳4)
 ∆reshape∆02_TEST←'reshape∆Rv' MK∆T2 (2 2)     (1+⍳2)

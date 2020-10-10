@@ -2,19 +2,7 @@
 ID(rdf,1,s32)
 OM(rdf,"rdf",0,0,MFD,DFD)
 rdf_f rdf_c;
-DF(rdf_f){if(l.r>1)err(4);I ra=r.r?r.r-1:0;z.r=ra+1;z.s=r.s;
- if(l.r!=0&&l.s[0]!=1&&r.r!=0&&r.s[ra]!=1&&l.s[0]!=r.s[ra])err(5);
- array x=l.v;array y=r.v;if(cnt(l)==1)x=tile(x,(I)r.s[ra]);
- if(r.s[ra]==1){dim4 s(1);s[ra]=cnt(l);y=tile(y,s);}
- z.s[ra]=sum<B>(abs(x));if(!cnt(z)){z.v=scl(0);R;}
- array w=where(x).as(s32);af::index ix[4];if(z.s[ra]==w.elements()){
-  ix[ra]=w;z.v=y(ix[0],ix[1],ix[2],ix[3]);R;}
- array i=shift(accum(abs(x(w))),1),d=shift(w,1);i(0)=0;d(0)=0;
- array v=array(z.s[ra],s32),u=array(z.s[ra],s32);v=0;u=0;
- array s=(!sign(x(w))).as(s32);array t=shift(s,1);t(0)=0;
- v(i)=w-d;u(i)=s-t;ix[ra]=accum(v);z.v=y(ix[0],ix[1],ix[2],ix[3]);
- dim4 s1(1),s2(z.s);s1[ra]=z.s[ra];s2[ra]=1;u=array(accum(u),s1);
- z.v*=tile(u,(I)s2[0],(I)s2[1],(I)s2[2],(I)s2[3]);}
+DF(rdf_f){A x=r;if(!r.r)cat_c(x,r,e);red_c(z,l,x,e,scl(scl(0)));}
 MF(rdf_o){A t(r.r?r.r-1:0,dim4(1),r.v(0));DO(t.r,t.s[i]=r.s[i])
  I rc=(I)r.s[t.r];I zc=(I)cnt(t);map_o mfn_c(ll);
  if(!zc){t.v=scl(0);z=t;R;}if(!rc){t.v=ll.id(t.s);z=t;R;}

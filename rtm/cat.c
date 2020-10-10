@@ -1,6 +1,6 @@
 ﻿NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)
 cat_f cat_c;
-MF(cat_f){z.r=1;z.s[0]=cnt(r);z.v=flat(r.v);}
+MF(cat_f){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}
 MA(cat_f){B ac=cnt(ax);if(ac>1&&ax.r>1)err(4);D axv[4];ax.v.as(f64).host(axv);
  if(ac==1&&(*axv<=-1||r.r<=*axv))err(4);
  if(ac>1){I c=(I)axv[0];if(c<0)err(11);DO((I)ac,if(axv[i]!=c++)err(11))
