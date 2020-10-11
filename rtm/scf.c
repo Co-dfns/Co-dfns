@@ -1,18 +1,9 @@
-﻿NM(scf,"scf",0,0,DID,MT ,DFD,MT ,MT )
+﻿NM(scf,"scf",0,0,DID,MT ,DFD,MT ,DAD)
 scf_f scf_c;
 ID(scf,1,s32)
 OM(scf,"scf",1,1,MFD,MT)
-DF(scf_f){I ra=r.r?r.r-1:0;af::index sx[4];af::index tx[4];
- if(r.s[ra]!=1&&r.s[ra]!=sum<I>(l.v>0))err(5);
- if(l.r>1)err(5);array ca=max(1,abs(l.v)).as(s32);I c=sum<I>(ca);
- if(!cnt(l))c=0;A t(ra+1,r.s,scl(0));t.s[ra]=c;
- if(!cnt(t)){z=t;R;}t.v=array(t.s,r.v.type());t.v=0;
- array pw=0<l.v;array pa=pw*l.v;I pc=sum<I>(pa);if(!pc){z=t;R;}
- pw=where(pw);pa=scan(pa(pw),0,AF_BINARY_ADD,false);
- array si(pc,s32);si=0;si(pa)=1;si=accum(si)-1;sx[ra]=si;
- array ti(pc,s32);ti=1;ti(pa)=scan(ca,0,AF_BINARY_ADD,false)(pw);
- ti=scanByKey(si,ti);tx[ra]=ti;
- t.v(tx[0],tx[1],tx[2],tx[3])=r.v(sx[0],sx[1],sx[2],sx[3]);z=t;}
+DA(scf_f){scn_c(z,l,r,e,ax);}
+DF(scf_f){A x=r;if(!x.r)cat_c(x,r,e);scn_c(z,l,x,e,scl(scl(0)));}
 
 MF(scf_o){z.r=r.r;z.s=r.s;I ra=r.r?r.r-1:0;I rc=(I)r.s[ra];
  if(1==rc){z.v=r.v;R;}if(!cnt(z)){z.v=scl(0);R;}
