@@ -744,13 +744,8 @@ rtn[28],←⊂' z.v=tile(z.v,ix[0],ix[1],ix[2],ix[3]);z.s[ra]=r.s[ra];',NL
 rtn[28],←⊂' dim4 s1(1),s2(1);DO(ra+1,s1[i]=r.s[i])DO(r.r-ra-1,s2[ra+i+1]=r.s[ra+i+1])',NL
 rtn[28],←⊂' z.v+=iota(s1,s2);res_c(z,scl(scl((D)tc*r.s[ra])),z,e);',NL
 rtn[28],←⊂' z.v=r.v(z.v+(tc*r.s[ra])*iota(s2,s1));}',NL
-rtn[28],←⊂'DF(rot_f){I lc=(I)cnt(l);if(lc==1){z.r=r.r;z.s=r.s;',NL
-rtn[28],←⊂'  z.v=shift(r.v,-l.v.as(s32).scalar<I>());R;}',NL
-rtn[28],←⊂' if(l.r!=r.r-1)err(5);DO(l.r,if(l.s[i]!=r.s[i+1])err(5))',NL
-rtn[28],←⊂' std::vector<I> x(lc);l.v.as(s32).host(x.data());',NL
-rtn[28],←⊂' z.v=array(r.v,r.s[0],lc);z.r=r.r;z.s=r.s;',NL
-rtn[28],←⊂' DO(lc,z.v(span,i)=shift(z.v(span,i),-x[i]))z.v=array(z.v,z.s);}',NL
-rtn[28],←⊂'',NL
+rtn[28],←⊂'DF(rot_f){if(!r.r){B lc=cnt(l);if(lc!=1&&l.r)err(4);z=r;R;}',NL
+rtn[28],←⊂' rot_c(z,l,r,e,scl(scl(r.r-1)));}',NL
 rtn[29],←⊂'NM(trn,"trn",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[29],←⊂'trn_f trn_c;',NL
 rtn[29],←⊂'MF(trn_f){z.r=r.r;DO(r.r,z.s[i]=r.s[r.r-(i+1)])',NL
@@ -781,15 +776,8 @@ rtn[30],←⊂'MA(rtf_f){if(1!=cnt(ax))err(5);if(!ax.v.isinteger())err(11);',NL
 rtn[30],←⊂' I axv=ax.v.as(s32).scalar<I>();if(axv<0||r.r<=axv)err(4);',NL
 rtn[30],←⊂' z.r=r.r;z.s=r.s;z.v=flip(r.v,r.r-(1+axv));}',NL
 rtn[30],←⊂'DA(rtf_f){rot_c(z,l,r,e,ax);}',NL
-rtn[30],←⊂'DF(rtf_f){I lc=(I)cnt(l);I ra=r.r?r.r-1:0;I ix[]={0,0,0,0};',NL
-rtn[30],←⊂' if(lc==1){z.r=r.r;z.s=r.s;ix[ra]=-l.v.as(s32).scalar<I>();',NL
-rtn[30],←⊂'  z.v=shift(r.v,ix[0],ix[1],ix[2],ix[3]);R;}',NL
-rtn[30],←⊂' if(l.r!=r.r-1)err(5);DO(l.r,if(l.s[i]!=r.s[i])err(5))',NL
-rtn[30],←⊂' std::vector<I> x(lc);l.v.as(s32).host(x.data());',NL
-rtn[30],←⊂' z.v=array(r.v,lc,r.s[ra]);z.r=r.r;z.s=r.s;',NL
-rtn[30],←⊂' DO(lc,z.v(i,span)=shift(z.v(i,span),0,-x[i]))',NL
-rtn[30],←⊂' z.v=array(z.v,z.s);}',NL
-rtn[30],←⊂'',NL
+rtn[30],←⊂'DF(rtf_f){if(!r.r){B lc=cnt(l);if(lc!=1&&l.r)err(4);z=r;R;}',NL
+rtn[30],←⊂' rot_c(z,l,r,e,scl(scl(0)));}',NL
 rtn[31],←⊂'NM(mem,"mem",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[31],←⊂'mem_f mem_c;',NL
 rtn[31],←⊂'MF(mem_f){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}',NL

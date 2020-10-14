@@ -17,10 +17,5 @@ DA(rot_f){if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
  dim4 s1(1),s2(1);DO(ra+1,s1[i]=r.s[i])DO(r.r-ra-1,s2[ra+i+1]=r.s[ra+i+1])
  z.v+=iota(s1,s2);res_c(z,scl(scl((D)tc*r.s[ra])),z,e);
  z.v=r.v(z.v+(tc*r.s[ra])*iota(s2,s1));}
-DF(rot_f){I lc=(I)cnt(l);if(lc==1){z.r=r.r;z.s=r.s;
-  z.v=shift(r.v,-l.v.as(s32).scalar<I>());R;}
- if(l.r!=r.r-1)err(5);DO(l.r,if(l.s[i]!=r.s[i+1])err(5))
- std::vector<I> x(lc);l.v.as(s32).host(x.data());
- z.v=array(r.v,r.s[0],lc);z.r=r.r;z.s=r.s;
- DO(lc,z.v(span,i)=shift(z.v(span,i),-x[i]))z.v=array(z.v,z.s);}
-
+DF(rot_f){if(!r.r){B lc=cnt(l);if(lc!=1&&l.r)err(4);z=r;R;}
+ rot_c(z,l,r,e,scl(scl(r.r-1)));}
