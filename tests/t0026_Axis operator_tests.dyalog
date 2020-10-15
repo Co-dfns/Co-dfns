@@ -73,50 +73,50 @@
  ∆056_TEST←{A←2 ⋄ X←2 3 5 6⍴⍳180 ⋄ #.UT.expect←A dy.rev0 X ⋄ A cd.rev1 X}
  ∆057_TEST←{A←3 ⋄ X←2 3 5 6⍴⍳180 ⋄ #.UT.expect←A dy.rev0 X ⋄ A cd.rev1 X}
 
- ∆058_TEST←{A←1       ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 ⍳5}
- ∆059_TEST←{A←0       ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 5}
- ∆060_TEST←{A←1       ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 ⍳5}
- ∆061_TEST←{A←0 1 2   ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 2 3⍴⍳6}
- ∆062_TEST←{A←0 2     ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.cat0 2 3 5⍴⍳30}
- ∆063_TEST←{A←1.5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 ⍳5}
- ∆064_TEST←{A←0.5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 5}
- ∆065_TEST←{A←2.5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 2 3⍴⍳6}
- ∆066_TEST←{A←0.5 0.5 ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.cat0 ⍳5}
- ∆067_TEST←{A←1 2⍴⍳2  ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 2 3⍴⍳5}
- ∆068_TEST←{A←⍬       ⋄ #.UT.expect←x←'NONCE ERROR'  ⋄ 16::x ⋄ A cd.cat0 1 2 3 4⍴⍳24}
- ∆069_TEST←{A←1 0 1⍴0 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 ⍳5}
- ∆070_TEST←{A←1 1 1⍴0 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 ⍳5}
- ∆071_TEST←{A←¯1 0    ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.cat0 ⍳5}
+ ∆058_TEST←{A←1       ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 ⍳5}
+ ∆059_TEST←{A←0       ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 5}
+ ∆060_TEST←{A←1       ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 ⍳5}
+ ∆061_TEST←{A←0 1 2   ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 2 3⍴⍳6}
+ ∆062_TEST←{A←0 2     ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.rav0 2 3 5⍴⍳30}
+ ∆063_TEST←{A←1.5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 ⍳5}
+ ∆064_TEST←{A←0.5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 5}
+ ∆065_TEST←{A←2.5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 2 3⍴⍳6}
+ ∆066_TEST←{A←0.5 0.5 ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.rav0 ⍳5}
+ ∆067_TEST←{A←1 2⍴⍳2  ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 2 3⍴⍳5}
+ ∆068_TEST←{A←⍬       ⋄ #.UT.expect←x←'NONCE ERROR'  ⋄ 16::x ⋄ A cd.rav0 1 2 3 4⍴⍳24}
+ ∆069_TEST←{A←1 0 1⍴0 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 ⍳5}
+ ∆070_TEST←{A←1 1 1⍴0 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.rav0 ⍳5}
+ ∆071_TEST←{A←¯1 0    ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.rav0 ⍳5}
 
- ∆072_TEST←{A←0       ⋄ X←⍳5           ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆073_TEST←{A←0       ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆074_TEST←{A←1       ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆075_TEST←{A←0       ⋄ X←1 2 3⍴⍳6     ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆076_TEST←{A←1       ⋄ X←1 2 3⍴⍳6     ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆077_TEST←{A←2       ⋄ X←1 2 3⍴⍳6     ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆078_TEST←{A←⍬       ⋄ X←0            ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆079_TEST←{A←⍬       ⋄ X←⍳5           ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆080_TEST←{A←⍬       ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆081_TEST←{A←⍬       ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆082_TEST←{A←¯0.5    ⋄ X←0            ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆083_TEST←{A←¯0.5    ⋄ X←⍳5           ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆084_TEST←{A← 0.5    ⋄ X←⍳5           ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆085_TEST←{A←¯0.5    ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆086_TEST←{A← 0.5    ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆087_TEST←{A← 1.5    ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆088_TEST←{A←¯0.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆089_TEST←{A← 0.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆090_TEST←{A← 1.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆091_TEST←{A← 2.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆092_TEST←{A←0 1     ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆093_TEST←{A←1 2     ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆094_TEST←{A←0 1 2   ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆095_TEST←{A←0 1     ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆096_TEST←{A←1 2     ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆097_TEST←{A←2 3     ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆098_TEST←{A←0 1 2   ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆099_TEST←{A←1 2 3   ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
- ∆100_TEST←{A←0 1 2 3 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat0 X ⋄ A cd.cat0 X}
+ ∆072_TEST←{A←0       ⋄ X←⍳5           ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆073_TEST←{A←0       ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆074_TEST←{A←1       ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆075_TEST←{A←0       ⋄ X←1 2 3⍴⍳6     ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆076_TEST←{A←1       ⋄ X←1 2 3⍴⍳6     ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆077_TEST←{A←2       ⋄ X←1 2 3⍴⍳6     ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆078_TEST←{A←⍬       ⋄ X←0            ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆079_TEST←{A←⍬       ⋄ X←⍳5           ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆080_TEST←{A←⍬       ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆081_TEST←{A←⍬       ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆082_TEST←{A←¯0.5    ⋄ X←0            ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆083_TEST←{A←¯0.5    ⋄ X←⍳5           ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆084_TEST←{A← 0.5    ⋄ X←⍳5           ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆085_TEST←{A←¯0.5    ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆086_TEST←{A← 0.5    ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆087_TEST←{A← 1.5    ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆088_TEST←{A←¯0.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆089_TEST←{A← 0.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆090_TEST←{A← 1.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆091_TEST←{A← 2.5    ⋄ X←2 3 5⍴⍳6     ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆092_TEST←{A←0 1     ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆093_TEST←{A←1 2     ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆094_TEST←{A←0 1 2   ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆095_TEST←{A←0 1     ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆096_TEST←{A←1 2     ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆097_TEST←{A←2 3     ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆098_TEST←{A←0 1 2   ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆099_TEST←{A←1 2 3   ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
+ ∆100_TEST←{A←0 1 2 3 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.rav0 X ⋄ A cd.rav0 X}
 
  ∆101_TEST←{A←  ⍬ ⋄ X←1    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.red0 X}
  ∆102_TEST←{A← ¯1 ⋄ X←1    ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.red0 X}
@@ -625,6 +625,160 @@
  ∆619_TEST←{A←3 ⋄ X←1 1 1 1⍴3  ⋄ #.UT.expect←A dy.rtf4 X ⋄ A cd.rtf4 X}
  ∆622_TEST←{A←3 ⋄ X← 2 3 4⍴⍳24 ⋄ #.UT.expect←A dy.rtf4 X ⋄ A cd.rtf4 X}
  ∆623_TEST←{A←3 ⋄ X←-2 3 4⍴⍳24 ⋄ #.UT.expect←A dy.rtf4 X ⋄ A cd.rtf4 X}
+
+ ∆624_TEST←{A←  ⍬ ⋄ X←1           ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat0 X}
+ ∆625_TEST←{A←  0 ⋄ X←1           ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 X}
+ ∆626_TEST←{A← ¯1 ⋄ X←1           ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.cat0 X}
+ ∆627_TEST←{A←0.5 ⋄ X←1           ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat0 X}
+ ∆628_TEST←{A←  0 ⋄ X←5 1⍴⍳5      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat1 X}
+ ∆629_TEST←{A←  0 ⋄ X←1 3 4⍴⍳5    ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat1 X}
+ ∆630_TEST←{A←  0 ⋄ X←3 1⍴⍳3      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat2 X}
+ ∆631_TEST←{A←  0 ⋄ X←⍳2          ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat2 X}
+ ∆632_TEST←{A←  0 ⋄ X←2 3 1⍴⍳6    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat2 X}
+ ∆633_TEST←{A←  0 ⋄ X←2 3 4 1⍴⍳12 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat2 X}
+ ∆634_TEST←{A←  1 ⋄ X←1 3⍴⍳3      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat2 X}
+ ∆635_TEST←{A←  1 ⋄ X←⍳3          ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat2 X}
+ ∆636_TEST←{A←  1 ⋄ X←2 3 1⍴⍳6    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat2 X}
+ ∆637_TEST←{A←  1 ⋄ X←2 3 4 1⍴⍳12 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat2 X}
+ ∆638_TEST←{A←  0 ⋄ X←3 4 5⍴⍳60   ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆639_TEST←{A←  0 ⋄ X←2 1⍴⍳2      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆640_TEST←{A←  0 ⋄ X←2 3 1 5⍴⍳30 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆641_TEST←{A←  0 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat3 X}
+ ∆642_TEST←{A←  1 ⋄ X←3 4 5⍴⍳60   ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆643_TEST←{A←  1 ⋄ X←1 3⍴⍳2      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆644_TEST←{A←  1 ⋄ X←2 3 1 5⍴⍳30 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆645_TEST←{A←  1 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat3 X}
+ ∆646_TEST←{A←  2 ⋄ X←3 4 5⍴⍳60   ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆647_TEST←{A←  2 ⋄ X←1 3⍴⍳2      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆648_TEST←{A←  2 ⋄ X←2 3 1 5⍴⍳30 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat3 X}
+ ∆649_TEST←{A←  2 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat3 X}
+ ∆650_TEST←{A←  0 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆651_TEST←{A←  0 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆652_TEST←{A←  0 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat4 X}
+ ∆653_TEST←{A←  1 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆654_TEST←{A←  1 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆655_TEST←{A←  1 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat4 X}
+ ∆656_TEST←{A←  2 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆657_TEST←{A←  2 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆658_TEST←{A←  2 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat4 X}
+ ∆659_TEST←{A←  3 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆660_TEST←{A←  3 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat4 X}
+ ∆661_TEST←{A←  3 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat4 X}
+ ∆662_TEST←{A←  0 ⋄ X←1 5⍴⍳5      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.cat5 X}
+ ∆663_TEST←{A←  0 ⋄ X←3 1 4⍴⍳5    ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.cat5 X}
+
+ ∆664_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.cat1 X ⋄ A cd.cat1 X}
+ ∆665_TEST←{A←0 ⋄ X←⍳5           ⋄ #.UT.expect←A dy.cat1 X ⋄ A cd.cat1 X}
+ ∆666_TEST←{A←0 ⋄ X←2 5⍴⍳10      ⋄ #.UT.expect←A dy.cat1 X ⋄ A cd.cat1 X}
+ ∆667_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆668_TEST←{A←0 ⋄ X←⍳3           ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆669_TEST←{A←0 ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆670_TEST←{A←0 ⋄ X←4 2 3⍴⍳24    ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆671_TEST←{A←1 ⋄ X←5            ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆672_TEST←{A←1 ⋄ X←⍳2           ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆673_TEST←{A←1 ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆674_TEST←{A←1 ⋄ X←2 4 3⍴⍳24    ⋄ #.UT.expect←A dy.cat2 X ⋄ A cd.cat2 X}
+ ∆675_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆676_TEST←{A←0 ⋄ X←3 4⍴⍳6       ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆677_TEST←{A←0 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆678_TEST←{A←0 ⋄ X←5 2 3 4⍴⍳120 ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆679_TEST←{A←1 ⋄ X←5            ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆680_TEST←{A←1 ⋄ X←2 4⍴⍳8       ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆681_TEST←{A←1 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆682_TEST←{A←1 ⋄ X←2 5 3 4⍴⍳120 ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆683_TEST←{A←2 ⋄ X←5            ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆684_TEST←{A←2 ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆685_TEST←{A←2 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆686_TEST←{A←2 ⋄ X←2 3 5 4⍴⍳120 ⋄ #.UT.expect←A dy.cat3 X ⋄ A cd.cat3 X}
+ ∆687_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆688_TEST←{A←0 ⋄ X←3 4 5⍴⍳60    ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆689_TEST←{A←0 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆690_TEST←{A←1 ⋄ X←5            ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆691_TEST←{A←1 ⋄ X←2 4 5⍴⍳40    ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆692_TEST←{A←1 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆693_TEST←{A←2 ⋄ X←5            ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆694_TEST←{A←2 ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆695_TEST←{A←2 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆696_TEST←{A←3 ⋄ X←5            ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆697_TEST←{A←3 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+ ∆698_TEST←{A←3 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.cat4 X ⋄ A cd.cat4 X}
+
+ ∆699_TEST←{A←  ⍬ ⋄ X←1           ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf0 X}
+ ∆700_TEST←{A←  0 ⋄ X←1           ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf0 X}
+ ∆701_TEST←{A← ¯1 ⋄ X←1           ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.ctf0 X}
+ ∆702_TEST←{A←0.5 ⋄ X←1           ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf0 X}
+ ∆703_TEST←{A←  0 ⋄ X←5 1⍴⍳5      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf1 X}
+ ∆704_TEST←{A←  0 ⋄ X←1 3 4⍴⍳5    ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf1 X}
+ ∆705_TEST←{A←  0 ⋄ X←3 1⍴⍳3      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf2 X}
+ ∆706_TEST←{A←  0 ⋄ X←⍳2          ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf2 X}
+ ∆707_TEST←{A←  0 ⋄ X←2 3 1⍴⍳6    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf2 X}
+ ∆708_TEST←{A←  0 ⋄ X←2 3 4 1⍴⍳12 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf2 X}
+ ∆709_TEST←{A←  1 ⋄ X←1 3⍴⍳3      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf2 X}
+ ∆710_TEST←{A←  1 ⋄ X←⍳3          ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf2 X}
+ ∆711_TEST←{A←  1 ⋄ X←2 3 1⍴⍳6    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf2 X}
+ ∆712_TEST←{A←  1 ⋄ X←2 3 4 1⍴⍳12 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf2 X}
+ ∆713_TEST←{A←  0 ⋄ X←3 4 5⍴⍳60   ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆714_TEST←{A←  0 ⋄ X←2 1⍴⍳2      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆715_TEST←{A←  0 ⋄ X←2 3 1 5⍴⍳30 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆716_TEST←{A←  0 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf3 X}
+ ∆717_TEST←{A←  1 ⋄ X←3 4 5⍴⍳60   ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆718_TEST←{A←  1 ⋄ X←1 3⍴⍳2      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆719_TEST←{A←  1 ⋄ X←2 3 1 5⍴⍳30 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆720_TEST←{A←  1 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf3 X}
+ ∆721_TEST←{A←  2 ⋄ X←3 4 5⍴⍳60   ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆722_TEST←{A←  2 ⋄ X←1 3⍴⍳2      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆723_TEST←{A←  2 ⋄ X←2 3 1 5⍴⍳30 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf3 X}
+ ∆724_TEST←{A←  2 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf3 X}
+ ∆725_TEST←{A←  0 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆726_TEST←{A←  0 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆727_TEST←{A←  0 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf4 X}
+ ∆728_TEST←{A←  1 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆729_TEST←{A←  1 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆730_TEST←{A←  1 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf4 X}
+ ∆731_TEST←{A←  2 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆732_TEST←{A←  2 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆733_TEST←{A←  2 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf4 X}
+ ∆734_TEST←{A←  3 ⋄ X←3 4 5 1⍴⍳60 ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆735_TEST←{A←  3 ⋄ X←2 3 1⍴⍳2    ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf4 X}
+ ∆736_TEST←{A←  3 ⋄ X←⍳12         ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf4 X}
+ ∆737_TEST←{A←  0 ⋄ X←1 5⍴⍳5      ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.ctf5 X}
+ ∆738_TEST←{A←  0 ⋄ X←3 1 4⍴⍳5    ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.ctf5 X}
+
+ ∆739_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf1 X ⋄ A cd.ctf1 X}
+ ∆740_TEST←{A←0 ⋄ X←⍳5           ⋄ #.UT.expect←A dy.ctf1 X ⋄ A cd.ctf1 X}
+ ∆741_TEST←{A←0 ⋄ X←2 5⍴⍳10      ⋄ #.UT.expect←A dy.ctf1 X ⋄ A cd.ctf1 X}
+ ∆742_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆743_TEST←{A←0 ⋄ X←⍳3           ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆744_TEST←{A←0 ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆745_TEST←{A←0 ⋄ X←4 2 3⍴⍳24    ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆746_TEST←{A←1 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆747_TEST←{A←1 ⋄ X←⍳2           ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆748_TEST←{A←1 ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆749_TEST←{A←1 ⋄ X←2 4 3⍴⍳24    ⋄ #.UT.expect←A dy.ctf2 X ⋄ A cd.ctf2 X}
+ ∆750_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆751_TEST←{A←0 ⋄ X←3 4⍴⍳6       ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆752_TEST←{A←0 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆753_TEST←{A←0 ⋄ X←5 2 3 4⍴⍳120 ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆754_TEST←{A←1 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆755_TEST←{A←1 ⋄ X←2 4⍴⍳8       ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆756_TEST←{A←1 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆757_TEST←{A←1 ⋄ X←2 5 3 4⍴⍳120 ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆758_TEST←{A←2 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆759_TEST←{A←2 ⋄ X←2 3⍴⍳6       ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆760_TEST←{A←2 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆761_TEST←{A←2 ⋄ X←2 3 5 4⍴⍳120 ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
+ ∆762_TEST←{A←0 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆763_TEST←{A←0 ⋄ X←3 4 5⍴⍳60    ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆764_TEST←{A←0 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆765_TEST←{A←1 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆766_TEST←{A←1 ⋄ X←2 4 5⍴⍳40    ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆767_TEST←{A←1 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆768_TEST←{A←2 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆769_TEST←{A←2 ⋄ X←2 3 5⍴⍳30    ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆770_TEST←{A←2 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆771_TEST←{A←3 ⋄ X←5            ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆772_TEST←{A←3 ⋄ X←2 3 4⍴⍳24    ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
+ ∆773_TEST←{A←3 ⋄ X←2 3 4 5⍴⍳120 ⋄ #.UT.expect←A dy.ctf4 X ⋄ A cd.ctf4 X}
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
