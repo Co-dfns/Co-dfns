@@ -16,10 +16,9 @@ DA(cat_f){if(ax.r>1)err(4);if(cnt(ax)!=1)err(5);D ox=ax.v.as(f64).scalar<D>();
  I rk=l.r>r.r?l.r:r.r;if(ox<=-1)err(11);if(ox>=rk)err(4);
  if(l.r&&r.r&&std::abs((I)l.r-(I)r.r)>1)err(4);
  A nl=l,nr=r;D axv=rk-ox-1;I fx=(I)ceil(axv);
- if(axv!=fx){if(r.r>3||l.r>3)err(16);
-  if(nl.r){nl.r++;DO(3-fx,nl.s[3-i]=nl.s[3-(i+1)]);nl.s[fx]=1;}
-  if(nr.r){nr.r++;DO(3-fx,nr.s[3-i]=nr.s[3-(i+1)]);nr.s[fx]=1;}
-  if(nl.r)nl.v=moddims(nl.v,nl.s);if(nr.r)nr.v=moddims(nr.v,nr.s);
+ if(axv!=fx){if(r.r>3||l.r>3)err(16);if(r.r&&l.r&&l.r!=r.r)err(4);
+  if(l.r)cat_c(nl,l,e,ax);if(r.r)cat_c(nr,r,e,ax);
+  if(!l.r&&!r.r)cat_c(nl,l,e,ax);cat_c(nr,r,e,ax);
   cat_c(z,nl,nr,e,scl(scl((I)ceil(ox))));R;}
  z.r=(l.r>=r.r)*l.r+(r.r>l.r)*r.r+(!r.r&&!l.r);
  dim4 ls=l.s;dim4 rs=r.s;
