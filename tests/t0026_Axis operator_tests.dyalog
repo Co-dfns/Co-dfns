@@ -840,6 +840,75 @@
  ∆828_TEST←{A←1.5 ⋄ X←2 3 4⍴⍳24 ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
  ∆829_TEST←{A←2.5 ⋄ X←2 3 4⍴⍳24 ⋄ #.UT.expect←A dy.ctf3 X ⋄ A cd.ctf3 X}
 
+ ∆830_TEST←{A← 0    ⋄ X←5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.tke0 X}
+ ∆831_TEST←{A←¯1    ⋄ X←5     ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.tke0 X}
+ ∆832_TEST←{A← 1    ⋄ X←5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.tke1 X}
+ ∆833_TEST←{A←1 1⍴0 ⋄ X←5     ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.tke1 X}
+ ∆834_TEST←{A←0     ⋄ X←1 1⍴5 ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.tke1 X}
+ ∆835_TEST←{A←0     ⋄ X←5 5   ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.tke1 X}
+ ∆836_TEST←{A←0 1   ⋄ X←5     ⋄ #.UT.expect←x←'LENGTH ERROR' ⋄  5::x ⋄ A cd.tke2 X}
+ ∆837_TEST←{A←0 1   ⋄ X←5 5   ⋄ #.UT.expect←x←'RANK ERROR'   ⋄  4::x ⋄ A cd.tke1 X}
+
+ ∆838_TEST←{A←⍬     ⋄ X← ⍬     ⋄ #.UT.expect←A dy.tke1 X ⋄ A cd.tke1 X}
+ ∆839_TEST←{A←⍬     ⋄ X← ⍬     ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆840_TEST←{A←⍬     ⋄ X← ⍬     ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆841_TEST←{A←⍬     ⋄ X← ⍬     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆842_TEST←{A←⍬     ⋄ X← ⍬     ⋄ #.UT.expect←A dy.tke5 X ⋄ A cd.tke5 X}
+ ∆843_TEST←{A←0     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke1 X ⋄ A cd.tke1 X}
+ ∆844_TEST←{A←0     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆845_TEST←{A←0     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆846_TEST←{A←0     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆847_TEST←{A←0     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke5 X ⋄ A cd.tke5 X}
+ ∆848_TEST←{A←0     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke1 X ⋄ A cd.tke1 X}
+ ∆849_TEST←{A←0     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆850_TEST←{A←0     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆851_TEST←{A←0     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆852_TEST←{A←0     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke5 X ⋄ A cd.tke5 X}
+ ∆853_TEST←{A←1     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆854_TEST←{A←1     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆855_TEST←{A←1     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆856_TEST←{A←1     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆857_TEST←{A←1     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆858_TEST←{A←1     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆859_TEST←{A←2     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆860_TEST←{A←2     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆861_TEST←{A←2     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆862_TEST←{A←2     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆863_TEST←{A←3     ⋄ X←¯9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆864_TEST←{A←3     ⋄ X← 9     ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆865_TEST←{A←0 1   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆866_TEST←{A←0 1   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆867_TEST←{A←0 1   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆868_TEST←{A←0 1   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆869_TEST←{A←0 1   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆870_TEST←{A←0 1   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆871_TEST←{A←0 2   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆872_TEST←{A←0 2   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆873_TEST←{A←0 2   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆874_TEST←{A←0 2   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆875_TEST←{A←0 3   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆876_TEST←{A←0 3   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆877_TEST←{A←1 0   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆878_TEST←{A←1 0   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆879_TEST←{A←1 0   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆880_TEST←{A←1 0   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke2 X ⋄ A cd.tke2 X}
+ ∆881_TEST←{A←1 0   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆882_TEST←{A←1 0   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆883_TEST←{A←2 0   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆884_TEST←{A←2 0   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆885_TEST←{A←2 0   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆886_TEST←{A←2 0   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆887_TEST←{A←3 0   ⋄ X←9 ¯9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆888_TEST←{A←3 0   ⋄ X←¯9 9   ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆889_TEST←{A←2 0 1 ⋄ X←9 ¯9 7 ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆890_TEST←{A←2 0 1 ⋄ X←9 ¯9 7 ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆891_TEST←{A←2 0 1 ⋄ X←¯9 9 7 ⋄ #.UT.expect←A dy.tke3 X ⋄ A cd.tke3 X}
+ ∆892_TEST←{A←2 0 1 ⋄ X←¯9 9 7 ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆893_TEST←{A←3 0 1 ⋄ X←9 ¯9 7 ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+ ∆894_TEST←{A←3 0 1 ⋄ X←¯9 9 7 ⋄ #.UT.expect←A dy.tke4 X ⋄ A cd.tke4 X}
+
+ ∆895_TEST←{A←0 ⋄ X←5.5 ⋄ #.UT.expect←x←'DOMAIN ERROR' ⋄ 11::x ⋄ A cd.tke1 X}
+
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
 :EndNamespace
