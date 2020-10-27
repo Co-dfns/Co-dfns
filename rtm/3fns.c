@@ -1,4 +1,4 @@
-﻿std::wstring mkstr(const char*s){R strconv.from_bytes(s);}
+std::wstring mkstr(const char*s){R strconv.from_bytes(s);}
 I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}
 I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}
 B cnt(dim4 s){B c=1;DO(4,c*=s[i]);R c;}
@@ -35,4 +35,5 @@ V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
   CS(APLU8,a=A(RANK(d),s,c?da8(c,s,d):scl(0)))
   default:err(16);}}
 inline I isint(D x){R x!=nearbyint(x);}
-inline I isint(A x){R x.v.isinteger()||x.v.isbool();}
+inline I isint(A x){R x.v.isinteger()||x.v.isbool()
+  ||(x.v.isreal()&&allTrue<I>(x.v==trunc(x.v)));}

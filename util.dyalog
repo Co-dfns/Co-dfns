@@ -44,14 +44,16 @@ utf8get←{
 
 split←{lf cr←⎕UCS 10 13 ⋄ {⍵~cr lf}¨(1,¯1↓⍵=lf)⊂⍵}
 
-∇TEST
+∇{Z}←TEST∆ALL
+Z←0 0⍴⍬
 ##.UT.print_passed←1
 ##.UT.print_summary←1
 ##.UT.run './'
 ∇
 
-test←{##.UT.(print_passed print_summary)←1
- ##.UT.run ⊃⊃0⎕NINFO⍠1⊢'./t',(1 0⍕(4⍴10)⊤⍵),'_*_tests.dyalog'}
+TEST←{'ALL'≡⍵:TEST∆ALL
+  ##.UT.(print_passed print_summary)←1
+  ##.UT.run ⊃⊃0⎕NINFO⍠1⊢'./t',(1 0⍕(4⍴10)⊤⍵),'_*_tests.dyalog'}
 
 MK∆T1←{##.UT.expect←(⍎'##.t',⍺⍺)⍵⍵ ⋄ (⍎'##.c',⍺⍺)⍵⍵}
 MK∆T2←{##.UT.expect←⊃(⍎'##.t',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'##.c',⍺⍺)/⍵⍵}
