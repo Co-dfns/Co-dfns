@@ -1,4 +1,4 @@
-﻿OM(map,"map",1,1,MFD,DFD)
+﻿OM(map,"map",1,1,MFD,DFD,MT ,MT )
 MF(map_o){if(scm(ll)){ll(z,r,e);R;}
  z.r=r.r;z.s=r.s;I c=(I)cnt(z);if(!c){z.v=scl(0);R;}
  A zs;A rs=scl(r.v(0));ll(zs,rs,e);if(c==1){z.v=zs.v;R;}

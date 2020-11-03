@@ -1,6 +1,6 @@
 ﻿NM(rdf,"rdf",0,0,DID,MT ,DFD,MT,DAD)
 ID(rdf,1,s32)
-OM(rdf,"rdf",0,0,MFD,DFD)
+OM(rdf,"rdf",0,0,MFD,DFD,MT ,MT )
 rdf_f rdf_c;
 DA(rdf_f){red_c(z,l,r,e,ax);}
 DF(rdf_f){A x=r;if(!r.r)cat_c(x,r,e);red_c(z,l,x,e,scl(scl(0)));}

@@ -1,4 +1,4 @@
-﻿OD(dot,"dot",0,0,MT,DFD)
+﻿OD(dot,"dot",0,0,MT,DFD,MT ,MT )
 DF(dot_o){I ra=r.r?r.r-1:0;if(r.r&&l.r&&l.s[0]!=r.s[ra])err(5);
  I la=l.r?l.r-1:0;A t(la+ra,r.s,r.v(0));if(t.r>4)err(10);
  t.s[ra]=1;DO(la,t.s[i+ra]=l.s[i+1])if(!cnt(t)){t.v=scl(0);z=t;R;}

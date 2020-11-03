@@ -1,7 +1,7 @@
 ﻿NM(scn,"scn",0,0,DID,MT ,DFD,MT ,DAD)
 scn_f scn_c;
 ID(scn,1,s32)
-OM(scn,"scn",1,1,MFD,MT)
+OM(scn,"scn",1,1,MFD,MT,MT ,MT )
 DA(scn_f){if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
  I ra=ax.v.as(s32).scalar<I>();if(ra<0)err(11);if(ra>=r.r)err(4);
  if(l.r>1)err(4);ra=r.r-ra-1;if(r.s[ra]!=1&&r.s[ra]!=sum<I>(l.v>0))err(5);

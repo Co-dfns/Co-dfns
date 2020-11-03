@@ -1,9 +1,9 @@
 ﻿#define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
  n##_f():FN(nm,sm,sd){}};
-#define OM(n,nm,sm,sd,mf,df) S n##_o:MOP{mf;df;\
+#define OM(n,nm,sm,sd,mf,df,ma,da) S n##_o:MOP{mf;df;ma;da;\
  n##_o(FN&l):MOP(nm,sm,sd,l){}};\
  S n##_k:MOK{V operator()(FN*&f,FN&l){f=new n##_o(l);}};
-#define OD(n,nm,sm,sd,mf,df) S n##_o:DOP{mf;df;\
+#define OD(n,nm,sm,sd,mf,df,ma,da) S n##_o:DOP{mf;df;ma;da;\
  n##_o(FN&l,FN&r):DOP(nm,sm,sd,l,r){}\
  n##_o(const A&l,FN&r):DOP(nm,sm,sd,l,r){}\
  n##_o(FN&l,const A&r):DOP(nm,sm,sd,l,r){}};\

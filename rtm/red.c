@@ -1,7 +1,7 @@
 ﻿NM(red,"red",0,0,DID,MT ,DFD,MT ,DAD)
 ID(red,1,s32)
 red_f red_c;
-OM(red,"red",0,0,MFD,DFD)
+OM(red,"red",0,0,MFD,DFD,MT ,MT )
 DA(red_f){if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
  I axv=ax.v.as(s32).scalar<I>();if(axv<0)err(11);if(axv>=r.r)err(4);
  if(l.r>1)err(4);axv=r.r-axv-1;B lc=cnt(l),rsx=r.s[axv];

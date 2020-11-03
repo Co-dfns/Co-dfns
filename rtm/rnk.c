@@ -1,4 +1,4 @@
-﻿OD(rnk,"rnk",scm(l),0,MFD,DFD)
+﻿OD(rnk,"rnk",scm(l),0,MFD,DFD,MT ,MT )
 MF(rnk_o){if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
  if(scm(ll)||cr>=r.r){ll(z,r,e);R;}
  if(cr<=-r.r||!cr){map_o f(ll);f(z,r,e);R;}
