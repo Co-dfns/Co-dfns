@@ -84,4 +84,18 @@
  sqd2←{⍵⌷[⍺]2 3⍴⍳6}
  sqd3←{⍵⌷[⍺]2 3 4⍴⍳24}
 
+ redo←{-/[⍺]⍵}
+ rdfo←{-⌿[⍺]⍵}
+ redo3←{3-/[⍺]⍵}
+ redo0←{0-/[⍺]⍵}
+ rdfo3←{3-⌿[⍺]⍵}
+ rdfo0←{0-⌿[⍺]⍵}
+ redadd←{+/[⍺]⍵}
+ redmul←{×/[⍺]⍵}
+ redmin←{⌊/[⍺]⍵}
+ redmax←{⌈/[⍺]⍵}
+ redand←{∧/[⍺]⍵}
+ redlor←{∨/[⍺]⍵}
+ redneq←{≠/[⍺]⍵}
+
 :EndNamespace

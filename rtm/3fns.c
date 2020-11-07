@@ -37,3 +37,5 @@ V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);if(4<RANK(d))err(16);
 inline I isint(D x){R x!=nearbyint(x);}
 inline I isint(A x){R x.v.isinteger()||x.v.isbool()
   ||(x.v.isreal()&&allTrue<I>(x.v==trunc(x.v)));}
+inline I isbool(A x){R x.v.isbool()
+  ||(x.v.isreal()&&allTrue<I>(x.v==0||x.v==1));}
