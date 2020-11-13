@@ -7,9 +7,9 @@
 
 ## Description
 
-The Co-dfns compiler takes APL code in the dfns syntax and compiles it for use directly in the Dyalog APL interpreter or through a C API. It targets both CPU and GPU architectures and provides users with a straightforward means of running their APL as data-parallel code on vector hardware. 
+The Co-dfns compiler takes APL code in the dfns syntax and compiles it for use directly in the Dyalog APL interpreter or through a C API. It targets both CPU and GPU architectures and provides users with a straightforward means of running their APL as data-parallel code on vector hardware.
 
-The compiler may be accessed either through the user-command functionality of Dyalog APL or through the namespace interface. 
+The compiler may be accessed either through the user-command functionality of Dyalog APL or through the namespace interface.
 
 ### User-Command Options
 
@@ -39,7 +39,7 @@ Init                     | A niladic function to initialize the runtime system. 
 Wh Image Z               | Takes a window handle and an image value that is either a rank 2 or rank 3 array and displays the image to the given window handle. A rank 3 array must have it's last axis of size 3, and should be a set of color values in the RGB scale. Returns `Z`.
 Wh Plot Z                | Takes a window handle and a plot array. It displays the plot in the given window referenced by the window handle. The plot can be either a 2-D or 3-D plot, indicated by the size of the second axis in the given matrix. A plot array must be a matrix whose column count is either 2 or 3. Each row corresponds to a specific point to plot, given by X, Y, and optionally, Z values. Returns `Z`.
 Wh Histogram Frq Min Max | Takes a window handle and a triple containing a vector of frequencies, the minimum value, and the maximum value referenced by the frequency vector. It displays the histogram of the values to the given Window Handle.
-MKA array                | Returns a pointer to a Co-dfns allocated array that is equivalent to `array`. 
+MKA array                | Returns a pointer to a Co-dfns allocated array that is equivalent to `array`.
 EXA ptr                  | Returns a Dyalog APL array that is equivalent to the Co-dfns allocated array pointed to by `ptr`.
 FREA ptr                 | Frees the Co-dfns allocated array pointed to by `ptr`.
 Sync                     | Waits until all computation on the GPU is complete before returning
@@ -77,13 +77,13 @@ Reference                                 | Description
 
 ## Known Limitations
 
-Generally speaking, Co-dfns works best if you focus on writing pure, 
-functional programs written in dfns that make limited use 
-of `:` or recursion and that use classic APL primitives (/ . ∘. and 
-so forth) over simple numeric arrays working over data sizes that 
-exceed 1 - 10 MB. While recursion and guards are supported, it is best if 
-you restrict their use to outer-most functions, since they are significantly 
-less efficient on the GPU than APL primitives. 
+Generally speaking, Co-dfns works best if you focus on writing pure,
+functional programs written in dfns that make limited use
+of `:` or recursion and that use classic APL primitives (/ . ∘. and
+so forth) over simple numeric arrays working over data sizes that
+exceed 1 - 10 MB. While recursion and guards are supported, it is best if
+you restrict their use to outer-most functions, since they are significantly
+less efficient on the GPU than APL primitives.
 
 The following limitations are known to exist:
 
@@ -93,7 +93,7 @@ The following limitations are known to exist:
 * Nested arrays are not yet supported
 * Enclose (⊂) is not supported
 * Partitioned Enclose (⊂) is not supported
-* Indexed assignment and selective assignment are not supported yet
+* Selective assignment is not supported yet
 * User-defined operators are not supported yet
 * Lexically scoped trad-fns are not supported yet
 * Error Guards are not supported yet
@@ -114,21 +114,21 @@ The following limitations are known to exist:
 * Execute (⍎) is not supported
 
 The following are some current "fundamental" limitations that represent
-current design decisions that are likely to remain this way for the 
+current design decisions that are likely to remain this way for the
 foreseeable future and can be thought of as hard lines around the project.
 
 * The compiler does not support any Dyalog system functions or commands
   and will probably try to avoid providing these
 * Objects/Classes are not supported in the system
-* Type promotion on overflow is not supported; this is a design decision 
-  for performance that will not likely change. In the future we may provide 
-  some safety metrics for handling overflows or some exact numerics, 
-  but automatic type promotion in the style of Dyalog APL will not likely 
+* Type promotion on overflow is not supported; this is a design decision
+  for performance that will not likely change. In the future we may provide
+  some safety metrics for handling overflows or some exact numerics,
+  but automatic type promotion in the style of Dyalog APL will not likely
   be supported because of severe performance issues
 * Dynamically scoped trad-fns will not be supported
-* `⎕IO ⎕ML ⎕CT` is fixed at `0 1 0`; note that we are not likely to ever 
-  allow dynamic changes of these values inside of a Co-dfns computation 
-  or namespace. We may, however, be persuaded by many forces to enable 
+* `⎕IO ⎕ML ⎕CT` is fixed at `0 1 0`; note that we are not likely to ever
+  allow dynamic changes of these values inside of a Co-dfns computation
+  or namespace. We may, however, be persuaded by many forces to enable
   changing these values globally at compile time.
 
 
