@@ -98,4 +98,14 @@
  redlor←{∨/[⍺]⍵}
  redneq←{≠/[⍺]⍵}
 
+ scno←{-\[⍺]⍵}
+ scnadd←{+\[⍺]⍵}
+ scnmul←{×\[⍺]⍵}
+ scnmin←{⌊\[⍺]⍵}
+ scnmax←{⌈\[⍺]⍵}
+ scnand←{∧\[⍺]⍵}
+ scnlor←{∨\[⍺]⍵}
+ scnneq←{≠\[⍺]⍵}
+ scfo←{-⍀[⍺]⍵}
+
 :EndNamespace
