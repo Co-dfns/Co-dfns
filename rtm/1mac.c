@@ -26,15 +26,16 @@
  DF(n##_f){B lr=rnk(l),rr=rnk(r);\
   if(lr==rr){\
    DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;Carr&lv=l.v;Carr&rv=r.v;x;R;}\
-  if(!l.r){z.s=r.s;Carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\
-  if(!r.r){z.s=l.s;arr rv=tile(r.v,l.v.dims());Carr&lv=l.v;x;R;}\
-  if(l.r!=r.r)err(4);err(99);}\
- DA(n##_f){A a=l,b=r;I f=l.r>r.r;if(f){a=r;b=l;}I d=b.r-a.r;I rk=(I)cnt(ax);\
-  if(rk>4)err(16);if(rk!=a.r)err(5000);D axd[4];I axv[4];ax.v.as(f64).host(axd);\
-  DO(rk,if(axd[i]!=rint(axd[i]))err(11))DO(rk,axv[i]=(I)axd[i])\
-  DO(rk,if(axv[i]<0||b.r<=axv[i])err(11))\
-  I t[4];U8 tf[]={1,1,1,1};DO(rk,I j=axv[i];tf[j]=0;t[j]=d+i)\
-  I c=0;DO(b.r,if(tf[i])t[i]=c++)A ta(1,dim4(b.r),array(b.r,t));\
+  if(!lr){z.s=r.s;Carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\
+  if(!rr){z.s=l.s;arr rv=tile(r.v,l.v.dims());Carr&lv=l.v;x;R;}\
+  if(lr!=rr)err(4);err(99);}\
+ DA(n##_f){A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\
+  B ar=rnk(a),br=rnk(b);I d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\
+  VEC<D> axd(rk);SHP axv(rk);ax.v.as(f64).host(axd.data());\
+  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=axd[i])\
+  DOB(rk,if(axv[i]<0||b.r<=axv[i])err(11))\
+  VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)\
+  B c=0;DO(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\
   trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\
   if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\
   gdu_c(ta,ta,e);trn_c(z,ta,b,e);}

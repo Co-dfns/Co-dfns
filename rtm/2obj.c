@@ -3,7 +3,7 @@
 typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;
 typedef double D;typedef unsigned char U8;typedef unsigned U;
 typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;
-typedef array arr;typedef const array carr;typedef std::vector<dim_t> SHP;
+typedef VEC<dim_t> SHP;typedef array arr;typedef const array carr;
 S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};
 S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
@@ -14,9 +14,9 @@ Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
 SHP eshp=SHP(0);
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
 std::wstring msg;S BX;
-typedef std::vector<BX> FRM;typedef std::vector<FRM*> ENV;
+typedef VEC<BX> FRM;typedef VEC<FRM*> ENV;
 typedef std::stack<BX> STK;
-S A{I f;SHP s;arr v;std::vector<A> nv;
+S A{I f;SHP s;arr v;VEC<A> nv;
  A(SHP s,arr v):f(1),s(s),v(v){}
  A(I r,arr v):f(1),s(SHP(r)),v(v){}
  A():f(0),s(SHP()),v(arr()){}};

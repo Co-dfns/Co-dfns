@@ -10,7 +10,9 @@
  ∆0000_TEST←{#.UT.expect←'Successful compile'
   _←#.⎕EX cn ⋄ 'Successful compile'⊣cd∘←#.c0027←tn #.codfns.Fix ⎕SRC dy}
 
- ∆0001_TEST←'F' TEST1 ((5⍴2)⍴⍳32)
+ ∆0001_TEST←'F'      TEST1 ((5⍴2)⍴⍳32)
+ ∆0002_TEST←'shape'  TEST1 ((⌽1+⍳5)⍴⍳×/1+⍳5)
+ ∆0003_TEST←'reshape'TEST2 (⌽1+⍳5)(⍳×/1+⍳5)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

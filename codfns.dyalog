@@ -331,6 +331,7 @@ rth,←'#define S struct',NL
 rth,←'#define Z static',NL
 rth,←'#define R return',NL
 rth,←'#define this_c *this',NL
+rth,←'#define VEC std::vector',NL
 rth,←'#define RANK(lp) ((lp)->p->r)',NL
 rth,←'#define TYPE(lp) ((lp)->p->t)',NL
 rth,←'#define SHAPE(lp) ((lp)->p->s)',NL
@@ -367,15 +368,16 @@ rth,←'#define SF(n,x) \',NL
 rth,←' DF(n##_f){B lr=rnk(l),rr=rnk(r);\',NL
 rth,←'  if(lr==rr){\',NL
 rth,←'   DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;Carr&lv=l.v;Carr&rv=r.v;x;R;}\',NL
-rth,←'  if(!l.r){z.s=r.s;Carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\',NL
-rth,←'  if(!r.r){z.s=l.s;arr rv=tile(r.v,l.v.dims());Carr&lv=l.v;x;R;}\',NL
-rth,←'  if(l.r!=r.r)err(4);err(99);}\',NL
-rth,←' DA(n##_f){A a=l,b=r;I f=l.r>r.r;if(f){a=r;b=l;}I d=b.r-a.r;I rk=(I)cnt(ax);\',NL
-rth,←'  if(rk>4)err(16);if(rk!=a.r)err(5000);D axd[4];I axv[4];ax.v.as(f64).host(axd);\',NL
-rth,←'  DO(rk,if(axd[i]!=rint(axd[i]))err(11))DO(rk,axv[i]=(I)axd[i])\',NL
-rth,←'  DO(rk,if(axv[i]<0||b.r<=axv[i])err(11))\',NL
-rth,←'  I t[4];U8 tf[]={1,1,1,1};DO(rk,I j=axv[i];tf[j]=0;t[j]=d+i)\',NL
-rth,←'  I c=0;DO(b.r,if(tf[i])t[i]=c++)A ta(1,dim4(b.r),array(b.r,t));\',NL
+rth,←'  if(!lr){z.s=r.s;Carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\',NL
+rth,←'  if(!rr){z.s=l.s;arr rv=tile(r.v,l.v.dims());Carr&lv=l.v;x;R;}\',NL
+rth,←'  if(lr!=rr)err(4);err(99);}\',NL
+rth,←' DA(n##_f){A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\',NL
+rth,←'  B ar=rnk(a),br=rnk(b);I d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\',NL
+rth,←'  VEC<D> axd(rk);SHP axv(rk);ax.v.as(f64).host(axd.data());\',NL
+rth,←'  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=axd[i])\',NL
+rth,←'  DOB(rk,if(axv[i]<0||b.r<=axv[i])err(11))\',NL
+rth,←'  VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)\',NL
+rth,←'  B c=0;DO(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\',NL
 rth,←'  trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\',NL
 rth,←'  if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\',NL
 rth,←'  gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',NL
@@ -395,7 +397,7 @@ rth,←' APLR,APLF,APLQ}APLTYPE;',NL
 rth,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',NL
 rth,←'typedef double D;typedef unsigned char U8;typedef unsigned U;',NL
 rth,←'typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;',NL
-rth,←'typedef array arr;typedef const array carr;typedef std::vector<dim_t> SHP;',NL
+rth,←'typedef VEC<dim_t> SHP;typedef array arr;typedef const array carr;',NL
 rth,←'S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',NL
 rth,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',NL
 rth,←'S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',NL
@@ -406,9 +408,9 @@ rth,←'Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
 rth,←'SHP eshp=SHP(0);',NL
 rth,←'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',NL
 rth,←'std::wstring msg;S BX;',NL
-rth,←'typedef std::vector<BX> FRM;typedef std::vector<FRM*> ENV;',NL
+rth,←'typedef VEC<BX> FRM;typedef VEC<FRM*> ENV;',NL
 rth,←'typedef std::stack<BX> STK;',NL
-rth,←'S A{I f;SHP s;arr v;std::vector<A> nv;',NL
+rth,←'S A{I f;SHP s;arr v;VEC<A> nv;',NL
 rth,←' A(SHP s,arr v):f(1),s(s),v(v){}',NL
 rth,←' A(I r,arr v):f(1),s(SHP(r)),v(v){}',NL
 rth,←' A():f(0),s(SHP()),v(arr()){}};',NL
@@ -680,12 +682,12 @@ rtn[24],←⊂' for(I h;h=lc/2;lc-=h){array t=z.v+h;replace(z.v,lv(t)>rv,t);}',N
 rtn[24],←⊂' z.v=array(select(lv(z.v)==rv,ix(z.v).as(s32),(I)cnt(l)),z.s);}',NL
 rtn[25],←⊂'NM(rho,"rho",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[25],←⊂'rho_f rho_c;',NL
-rtn[25],←⊂'MF(rho_f){I sp[4]={1,1,1,1};DO(r.r,sp[r.r-(i+1)]=(I)r.s[i]);',NL
-rtn[25],←⊂' z.s=dim4(r.r);z.r=1;if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,sp);}',NL
-rtn[25],←⊂'DF(rho_f){B cr=cnt(r);B cl=cnt(l);B s[4];if(l.r>1)err(11);if(cl>4)err(16);',NL
-rtn[25],←⊂' l.v.as(s64).host(s);z.r=(I)cl;DO(4,z.s[i]=i>=z.r?1:s[z.r-(i+1)])B cz=cnt(z);',NL
-rtn[25],←⊂' if(!cz){z.v=scl(0);R;}z.v=array(cz==cr?r.v:flat(r.v)(iota(cz)%cr),z.s);}',NL
-rtn[25],←⊂'',NL
+rtn[25],←⊂'MF(rho_f){B rr=rnk(r);VEC<I> sp(rr);DOB(rr,sp[rr-i-1]=(I)r.s[i])',NL
+rtn[25],←⊂' z.s=SHP(1,rr);if(!cnt(z)){z.v=scl(0);R;}z.v=array(rr,sp.data());}',NL
+rtn[25],←⊂'DF(rho_f){B cr=cnt(r);B cl=cnt(l);SHP s(cl);',NL
+rtn[25],←⊂' if(rnk(l)>1)err(11);if(!isint(l))err(11);l.v.as(s64).host(s.data());',NL
+rtn[25],←⊂' z.s=SHP(cl);DOB(cl,z.s[i]=s[cl-i-1])B cz=cnt(z);if(!cz){z.v=scl(0);R;}',NL
+rtn[25],←⊂' z.v=array(cz==cr?r.v:r.v(iota(cz)%cr));}',NL
 rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[26],←⊂'cat_f cat_c;',NL
 rtn[26],←⊂'MF(cat_f){z.r=1;z.s=dim4(cnt(r));z.v=flat(r.v);}',NL
