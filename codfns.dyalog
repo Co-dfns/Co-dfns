@@ -754,26 +754,25 @@ rtn[28],←⊂'DF(rot_f){if(!r.r){B lc=cnt(l);if(lc!=1&&l.r)err(4);z=r;R;}',NL
 rtn[28],←⊂' rot_c(z,l,r,e,scl(scl(r.r-1)));}',NL
 rtn[29],←⊂'NM(trn,"trn",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[29],←⊂'trn_f trn_c;',NL
-rtn[29],←⊂'MF(trn_f){z.r=r.r;DO(r.r,z.s[i]=r.s[r.r-(i+1)])',NL
-rtn[29],←⊂' switch(r.r){CS(0,z.v=r.v)CS(1,z.v=r.v)CS(2,z.v=r.v.T())',NL
-rtn[29],←⊂'  CS(3,z.v=reorder(r.v,2,1,0))CS(4,z.v=reorder(r.v,3,2,1,0))}}',NL
-rtn[29],←⊂'DF(trn_f){I lv[4];if(l.r>1||cnt(l)!=r.r)err(5);',NL
-rtn[29],←⊂' l.v.as(s32).host(lv);DO(r.r,if(lv[i]<0||lv[i]>=r.r)err(4))',NL
-rtn[29],←⊂' U8 f[]={0,0,0,0};DO(r.r,f[lv[i]]=1)',NL
-rtn[29],←⊂' U8 t=1;DO(r.r,if(t&&!f[i])t=0;else if(!t&&f[i])err(5))',NL
-rtn[29],←⊂' if(t){z.r=r.r;DO(r.r,z.s[r.r-(lv[i]+1)]=r.s[r.r-(i+1)])',NL
-rtn[29],←⊂'  I s[4];DO(r.r,s[r.r-(lv[i]+1)]=r.r-(i+1))',NL
-rtn[29],←⊂'  switch(r.r){CS(0,z.v=r.v)CS(1,z.v=r.v)',NL
-rtn[29],←⊂'   CS(2,z.v=reorder(r.v,s[0],s[1]))',NL
-rtn[29],←⊂'   CS(3,z.v=reorder(r.v,s[0],s[1],s[2]))',NL
-rtn[29],←⊂'   CS(4,z.v=reorder(r.v,s[0],s[1],s[2],s[3]))}}',NL
-rtn[29],←⊂' else{z.r=0;DO(r.r,if(z.r<lv[i])z.r=lv[i])z.r++;DO(z.r,z.s[i]=LLONG_MAX)',NL
-rtn[29],←⊂'  DO(r.r,I j=z.r-(lv[i]+1);I k=r.r-(i+1);if(z.s[j]>r.s[k])z.s[j]=r.s[k])',NL
-rtn[29],←⊂'  B zs[4],rs[4];B c=1;DO(z.r,zs[i]=c;c*=z.s[i])c=1;DO(r.r,rs[i]=c;c*=r.s[i])',NL
-rtn[29],←⊂'  c=cnt(z);array ix=iota(dim4(c),dim4(1),s32),jx=constant(0,dim4(c),s32);',NL
-rtn[29],←⊂'  DO(r.r,I j=z.r-(lv[i]+1);I k=r.r-(i+1);jx+=rs[k]*((ix/zs[j])%z.s[j]))',NL
+rtn[29],←⊂'MF(trn_f){B rr=rnk(r);A t(SHP(1,rr),flip(range(dim4(rr),s32),0));',NL
+rtn[29],←⊂' trn_c(z,t,r,e);}',NL
+rtn[29],←⊂'DF(trn_f){B lr=rnk(l),rr=rnk(r);if(lr>1||cnt(l)!=rr)err(5);VEC<I> lv(rr);',NL
+rtn[29],←⊂' if(!isint(l))err(11);l.v.as(s32).host(lv.data());',NL
+rtn[29],←⊂' DOB(rr,if(lv[i]<0||lv[i]>=rr)err(4))VEC<U8> f(rr,0);DOB(rr,f[lv[i]]=1)',NL
+rtn[29],←⊂' U8 t=1;DOB(rr,if(t&&!f[i])t=0;else if(!t&&f[i])err(5))',NL
+rtn[29],←⊂' if(t&&rr<=4){z.s=SHP(rr);DOB(rr,z.s[rr-lv[i]-1]=r.s[rr-i-1])',NL
+rtn[29],←⊂'  switch(rr){case 0:case 1:z.v=r.v;R;}VEC<I> s;DOB(rr,s[rr-lv[i]-1]=(I)(rr-i-1))',NL
+rtn[29],←⊂'  dim4 rs;DO((I)rr,rs[i]=r.s[i])arr rv=moddims(r.v,rs);',NL
+rtn[29],←⊂'  switch(rr){CS(2,z.v=flat(reorder(rv,s[0],s[1])))',NL
+rtn[29],←⊂'   CS(3,z.v=flat(reorder(rv,s[0],s[1],s[2])))',NL
+rtn[29],←⊂'   CS(4,z.v=flat(reorder(rv,s[0],s[1],s[2],s[3])))}}',NL
+rtn[29],←⊂' else{B rk=0;DOB(rr,if(rk<lv[i])rk=lv[i])rk++;z.s=SHP(rk,LLONG_MAX);',NL
+rtn[29],←⊂'  DOB(rr,B j=rk-lv[i]-1;B k=rr-i-1;if(z.s[j]>r.s[k])z.s[j]=r.s[k])',NL
+rtn[29],←⊂'  SHP zs(rk),rs(rr);',NL
+rtn[29],←⊂'  B c=1;DOB(rk,zs[i]=c;c*=z.s[i])c=1;DOB(rr,rs[i]=c;c*=r.s[i])c=cnt(z);',NL
+rtn[29],←⊂'  arr ix=iota(dim4(c),dim4(1),s32),jx=constant(0,dim4(c),s32);',NL
+rtn[29],←⊂'  DOB(rr,B j=rk-lv[i]-1;B k=rr-i-1;jx+=rs[k]*((ix/zs[j])%z.s[j]))',NL
 rtn[29],←⊂'  z.v=r.v(jx);}}',NL
-rtn[29],←⊂'',NL
 rtn[30],←⊂'NM(rtf,"rtf",0,0,DID,MFD,DFD,MAD,DAD)',NL
 rtn[30],←⊂'rtf_f rtf_c;',NL
 rtn[30],←⊂'ID(rtf,0,s32)',NL
