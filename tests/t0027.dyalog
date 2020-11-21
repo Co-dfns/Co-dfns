@@ -5,9 +5,10 @@ shape←{⍴⍵}
 reshape←{⍺⍴⍵}
 transpose1←{⍉⍵}
 transpose2←{⍺⍉⍵}
-⍝ add←{⍺+⍵}
-⍝ neg←{-⍵}
-⍝ addax←{1 2 3+[⍺]⍵}
-⍝ negax←{-[⍺]⍵}
+bracket←{⍺[⍵]}
+gradeup1←{⍋⍵}
+add←{⍺+⍵}
+neg←{-⍵}
+addax←{1 2 3+[⍺]⍵}
 
 :EndNamespace

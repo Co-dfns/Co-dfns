@@ -2,6 +2,7 @@ std::wstring mkstr(const char*s){R strconv.from_bytes(s);}
 I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}
 I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}
 B rnk(const A&a){R a.s.size();}
+B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}
 B cnt(const A&a){B c=1;DOB(rnk(a),c*=a.s[i]);R c;}
 B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
 array scl(D x){R constant(x,dim4(1),f64);}

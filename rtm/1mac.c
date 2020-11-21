@@ -17,7 +17,7 @@
 #define DFD inline V operator()(A&,CA&,CA&,ENV&)
 #define DAD inline V operator()(A&,CA&,CA&,ENV&,CA&)
 #define DI(n) inline array n::id(SHP s)
-#define ID(n,x,t) DI(n##_f){R CTant(x,s,t);}
+#define ID(n,x,t) DI(n##_f){R constant(x,dim4(cnt(s)),t);}
 #define MF(n) inline V n::operator()(A&z,CA&r,ENV&e)
 #define MA(n) inline V n::operator()(A&z,CA&r,ENV&e,CA&ax)
 #define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)
@@ -25,17 +25,17 @@
 #define SF(n,x) \
  DF(n##_f){B lr=rnk(l),rr=rnk(r);\
   if(lr==rr){\
-   DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;Carr&lv=l.v;Carr&rv=r.v;x;R;}\
-  if(!lr){z.s=r.s;Carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\
-  if(!rr){z.s=l.s;arr rv=tile(r.v,l.v.dims());Carr&lv=l.v;x;R;}\
+   DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;carr&lv=l.v;carr&rv=r.v;x;R;}\
+  if(!lr){z.s=r.s;carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\
+  if(!rr){z.s=l.s;carr rv=tile(r.v,l.v.dims());carr&lv=l.v;x;R;}\
   if(lr!=rr)err(4);err(99);}\
  DA(n##_f){A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\
-  B ar=rnk(a),br=rnk(b);I d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\
+  B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\
   VEC<D> axd(rk);SHP axv(rk);ax.v.as(f64).host(axd.data());\
-  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=axd[i])\
-  DOB(rk,if(axv[i]<0||b.r<=axv[i])err(11))\
+  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])\
+  DOB(rk,if(axv[i]<0||br<=axv[i])err(11))\
   VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)\
-  B c=0;DO(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\
+  B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\
   trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\
   if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\
   gdu_c(ta,ta,e);trn_c(z,ta,b,e);}

@@ -228,7 +228,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  Aa←{0=≢ns←dis¨⍵:'PUSH(A(1,dim4(0),scl(0)));',NL
   1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
   c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
-  'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
+  'PUSH(A(SHP(1,',c,'),array(',c,',',v,')));',NL}
  As←{'PUSH(A(-1,eshp,array()));',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
@@ -359,7 +359,7 @@ rth,←'#define MAD inline V operator()(A&,CA&,ENV&,CA&)',NL
 rth,←'#define DFD inline V operator()(A&,CA&,CA&,ENV&)',NL
 rth,←'#define DAD inline V operator()(A&,CA&,CA&,ENV&,CA&)',NL
 rth,←'#define DI(n) inline array n::id(SHP s)',NL
-rth,←'#define ID(n,x,t) DI(n##_f){R CTant(x,s,t);}',NL
+rth,←'#define ID(n,x,t) DI(n##_f){R constant(x,dim4(cnt(s)),t);}',NL
 rth,←'#define MF(n) inline V n::operator()(A&z,CA&r,ENV&e)',NL
 rth,←'#define MA(n) inline V n::operator()(A&z,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)',NL
@@ -367,17 +367,17 @@ rth,←'#define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define SF(n,x) \',NL
 rth,←' DF(n##_f){B lr=rnk(l),rr=rnk(r);\',NL
 rth,←'  if(lr==rr){\',NL
-rth,←'   DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;Carr&lv=l.v;Carr&rv=r.v;x;R;}\',NL
-rth,←'  if(!lr){z.s=r.s;Carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\',NL
-rth,←'  if(!rr){z.s=l.s;arr rv=tile(r.v,l.v.dims());Carr&lv=l.v;x;R;}\',NL
+rth,←'   DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;carr&lv=l.v;carr&rv=r.v;x;R;}\',NL
+rth,←'  if(!lr){z.s=r.s;carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\',NL
+rth,←'  if(!rr){z.s=l.s;carr rv=tile(r.v,l.v.dims());carr&lv=l.v;x;R;}\',NL
 rth,←'  if(lr!=rr)err(4);err(99);}\',NL
 rth,←' DA(n##_f){A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\',NL
-rth,←'  B ar=rnk(a),br=rnk(b);I d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\',NL
+rth,←'  B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\',NL
 rth,←'  VEC<D> axd(rk);SHP axv(rk);ax.v.as(f64).host(axd.data());\',NL
-rth,←'  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=axd[i])\',NL
-rth,←'  DOB(rk,if(axv[i]<0||b.r<=axv[i])err(11))\',NL
+rth,←'  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])\',NL
+rth,←'  DOB(rk,if(axv[i]<0||br<=axv[i])err(11))\',NL
 rth,←'  VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)\',NL
-rth,←'  B c=0;DO(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\',NL
+rth,←'  B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\',NL
 rth,←'  trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\',NL
 rth,←'  if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\',NL
 rth,←'  gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',NL
@@ -443,6 +443,7 @@ rth,←'std::wstring mkstr(const char*s){R strconv.from_bytes(s);}',NL
 rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}',NL
 rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}',NL
 rth,←'B rnk(const A&a){R a.s.size();}',NL
+rth,←'B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}',NL
 rth,←'B cnt(const A&a){B c=1;DOB(rnk(a),c*=a.s[i]);R c;}',NL
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',NL
 rth,←'array scl(D x){R constant(x,dim4(1),f64);}',NL
@@ -503,7 +504,7 @@ rtn[0],←⊂'SF(add,z.v=lv+rv)',NL
 rtn[1],←⊂'NM(sub,"sub",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[1],←⊂'sub_f sub_c;',NL
 rtn[1],←⊂'ID(sub,0,s32)',NL
-rtn[1],←⊂'MF(sub_f){z.r=r.r;z.s=r.s;z.v=-r.v;}',NL
+rtn[1],←⊂'MF(sub_f){z.s=r.s;z.v=-r.v;}',NL
 rtn[1],←⊂'SF(sub,z.v=lv-rv)',NL
 rtn[1],←⊂'',NL
 rtn[2],←⊂'NM(mul,"mul",1,1,DID,MFD,DFD,MT ,DAD)',NL
@@ -655,20 +656,19 @@ rtn[22],←⊂' DOB(lc,x[r.r-av[i]-1]=lv[i]);z.v=r.v(x[0],x[1],x[2],x[3]);}',NL
 rtn[22],←⊂'DF(sqd_f){A ax;iot_c(ax,scl(scl((I)cnt(l))),e);sqd_c(z,l,r,e,ax);}',NL
 rtn[23],←⊂'NM(brk,"brk",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[23],←⊂'brk_f brk_c;',NL
-rtn[23],←⊂'DF(brk_f){const std::vector<A>&rv=r.nv;I rl=(I)rv.size();',NL
-rtn[23],←⊂' if(!rl){if(l.r!=1)err(4);z=l;R;}',NL
-rtn[23],←⊂' if(rl!=l.r)err(4);z.r=0;DO(rl,z.r+=abs(rv[i].r))if(z.r>4)err(16);',NL
-rtn[23],←⊂' I s=z.r;DO(4,z.s[i]=1)',NL
-rtn[23],←⊂' DO(rl,I j=i;I k=abs(rv[j].r);s-=k;',NL
-rtn[23],←⊂'  DO(k,z.s[s+i]=(k==rv[j].r)?rv[j].s[i]:l.s[rl-(j+1)]))',NL
-rtn[23],←⊂' af::index x[4];DO(rl,if(rv[i].r>=0)x[rl-(i+1)]=rv[i].v.as(s32))',NL
-rtn[23],←⊂' z.v=l.v(x[0],x[1],x[2],x[3]);}',NL
+rtn[23],←⊂'DF(brk_f){B lr=rnk(l);const std::vector<A>&rv=r.nv;B rl=rv.size();',NL
+rtn[23],←⊂' if(!rl){if(lr!=1)err(4);z=l;R;}',NL
+rtn[23],←⊂' if(rl!=lr)err(4);B zr=0;DOB(rl,zr+=rnk(rv[i]))B s=zr;z.s=SHP(zr,1);',NL
+rtn[23],←⊂' DOB(rl,B j=i;B k=rnk(rv[j]);s-=k;',NL
+rtn[23],←⊂'  DOB(k,z.s[s+i]=(k==rnk(rv[j]))?rv[j].s[i]:l.s[rl-j-1]))',NL
+rtn[23],←⊂' if(zr<=4){index x[4];DOB(rl,if(rnk(rv[i])>=0)x[rl-i-1]=rv[i].v.as(s32))',NL
+rtn[23],←⊂'  dim4 sp;DO((I)lr,sp[i]=l.s[i])z.v=moddims(l.v,sp)(x[0],x[1],x[2],x[3]);R;}',NL
+rtn[23],←⊂' err(16);}',NL
 rtn[23],←⊂'',NL
 rtn[23],←⊂'OD(brk,"brk",scm(l),scd(l),MFD,DFD,MT ,MT )',NL
-rtn[23],←⊂'MF(brk_o){if(ww.r>1)err(4);ll(z,r,e,ww);}',NL
-rtn[23],←⊂'DF(brk_o){if(ww.r>1)err(4);ll(z,l,r,e,ww);}',NL
+rtn[23],←⊂'MF(brk_o){if(rnk(ww)>1)err(4);ll(z,r,e,ww);}',NL
+rtn[23],←⊂'DF(brk_o){if(rnk(ww)>1)err(4);ll(z,l,r,e,ww);}',NL
 rtn[23],←⊂'',NL
-rtn[23],←⊂' ',NL
 rtn[24],←⊂'NM(iot,"iot",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[24],←⊂'iot_f iot_c;',NL
 rtn[24],←⊂'MF(iot_f){if(r.r>1)err(4);B c=cnt(r);if(c>4)err(10);',NL
@@ -1158,10 +1158,10 @@ rtn[54],←⊂'OM(get,"get",0,0,MT,DFD)',NL
 rtn[54],←⊂'DF(get_o){A t;brk_c(t,z,l,e);map_o mfn_c(ll);mfn_c(t,t,r,e);get_c(z,l,t,e);}',NL
 rtn[55],←⊂'NM(gdu,"gdu",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[55],←⊂'gdu_f gdu_c;',NL
-rtn[55],←⊂'MF(gdu_f){if(r.r<1)err(4);z.r=1;z.s=dim4(r.s[r.r-1]);',NL
-rtn[55],←⊂' if(!cnt(r)){z.v=r.v;R;}I c=1;DO(r.r-1,c*=(I)r.s[i]);',NL
-rtn[55],←⊂' array mt,a=array(r.v,c,r.s[r.r-1]);z.v=iota(z.s,dim4(1),s32);',NL
-rtn[55],←⊂' DO(c,sort(mt,z.v,flat(a(c-(i+1),z.v)),z.v,0,true))}',NL
+rtn[55],←⊂'MF(gdu_f){B rr=rnk(r);if(rr<1)err(4);z.s=SHP(1,r.s[rr-1]);',NL
+rtn[55],←⊂' if(!cnt(r)){z.v=r.v;R;}B c=1;DOB(rr-1,c*=r.s[i])',NL
+rtn[55],←⊂' arr mt,a=arr(r.v,c,r.s[rr-1]);z.v=iota(dim4(z.s[0]),dim4(1),s32);',NL
+rtn[55],←⊂' DOB(c,sort(mt,z.v,flat(a((I)(c-i-1),z.v)),z.v,0,true))}',NL
 rtn[55],←⊂'DF(gdu_f){err(16);}',NL
 rtn[56],←⊂'NM(gdd,"gdd",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[56],←⊂'gdd_f gdd_c;',NL
