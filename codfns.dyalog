@@ -615,7 +615,7 @@ rtn[18],←⊂'and_f and_c;',NL
 rtn[18],←⊂'ID(and,1,s32)',NL
 rtn[18],←⊂'SF(and,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;',NL
 rtn[18],←⊂' else if(allTrue<I>(lv>=0&&lv<=1&&rv>0&&rv<=1))z.v=lv&&rv;',NL
-rtn[18],←⊂' else{A a(z.r,z.s,lv);A b(z.r,z.s,rv);',NL
+rtn[18],←⊂' else{A a(z.s,lv);A b(z.s,rv);',NL
 rtn[18],←⊂'  lor_c(a,a,b,e);z.v=lv.as(f64)*(rv/((!a.v)+a.v));})',NL
 rtn[19],←⊂'NM(lor,"lor",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[19],←⊂'lor_f lor_c;',NL
