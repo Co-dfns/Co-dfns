@@ -22,5 +22,7 @@ trig←{⍺○⍵}
 fact←{!⍵}
 not←{~⍵}
 roll←{?⍵}
+enlist←{∊⍵}
+member←{⍺∊⍵}
 
 :EndNamespace
