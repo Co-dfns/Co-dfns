@@ -562,7 +562,7 @@ rtn[7],←⊂' z.v=array(z.s,zv.data());)',NL
 rtn[8],←⊂'NM(min,"min",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[8],←⊂'min_f min_c;',NL
 rtn[8],←⊂'ID(min,DBL_MAX,f64)',NL
-rtn[8],←⊂'MF(min_f){z.r=r.r;z.s=r.s;z.v=floor(r.v).as(r.v.type());}',NL
+rtn[8],←⊂'MF(min_f){z.s=r.s;z.v=floor(r.v).as(r.v.type());}',NL
 rtn[8],←⊂'SF(min,z.v=min(lv,rv))',NL
 rtn[8],←⊂'',NL
 rtn[9],←⊂'NM(max,"max",1,1,DID,MFD,DFD,MT ,DAD)',NL
