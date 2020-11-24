@@ -21,5 +21,6 @@ piti←{○⍵}
 trig←{⍺○⍵}
 fact←{!⍵}
 not←{~⍵}
+roll←{?⍵}
 
 :EndNamespace

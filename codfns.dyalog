@@ -976,15 +976,15 @@ rtn[42],←⊂'MA(scf_o){scn_o mfn_c(ll);mfn_c(z,r,e,ax);}',NL
 rtn[42],←⊂'MF(scf_o){if(!r.r){z=r;R;}scn_o mfn_c(ll);mfn_c(z,r,e,scl(scl(0)));}',NL
 rtn[43],←⊂'NM(rol,"rol",1,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[43],←⊂'rol_f rol_c;',NL
-rtn[43],←⊂'MF(rol_f){z.r=r.r;z.s=r.s;if(!cnt(r)){z.v=r.v;R;}',NL
-rtn[43],←⊂' array rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}',NL
+rtn[43],←⊂'MF(rol_f){z.s=r.s;if(!cnt(r)){z.v=r.v;R;}',NL
+rtn[43],←⊂' arr rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}',NL
 rtn[43],←⊂'DF(rol_f){if(cnt(r)!=1||cnt(l)!=1)err(5);',NL
 rtn[43],←⊂' D lv=l.v.as(f64).scalar<D>();D rv=r.v.as(f64).scalar<D>();',NL
 rtn[43],←⊂' if(lv>rv||lv!=floor(lv)||rv!=floor(rv)||lv<0||rv<0)err(11);',NL
-rtn[43],←⊂' I s=(I)lv;I t=(I)rv;z.r=1;z.s=dim4(s);if(!s){z.v=scl(0);R;}',NL
-rtn[43],←⊂' std::vector<I> g(t);std::vector<I> d(t);',NL
+rtn[43],←⊂' I s=(I)lv;I t=(I)rv;z.s=SHP(1,s);if(!s){z.v=scl(0);R;}',NL
+rtn[43],←⊂' VEC<I> g(t);VEC<I> d(t);',NL
 rtn[43],←⊂' ((1+range(t))*randu(t)).as(s32).host(g.data());',NL
-rtn[43],←⊂' DO(t,I j=g[i];if(i!=j)d[i]=d[j];d[j]=i)z.v=array(z.s,d.data());}',NL
+rtn[43],←⊂' DO(t,I j=g[i];if(i!=j)d[i]=d[j];d[j]=i)z.v=arr(s,d.data());}',NL
 rtn[44],←⊂'NM(tke,"tke",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[44],←⊂'tke_f tke_c;',NL
 rtn[44],←⊂'MF(tke_f){z=r;}',NL
