@@ -19,5 +19,6 @@ expt←{*⍵}
 loge←{⍟⍵}
 piti←{○⍵}
 trig←{⍺○⍵}
+fact←{!⍵}
 
 :EndNamespace

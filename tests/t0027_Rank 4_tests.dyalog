@@ -30,6 +30,7 @@
  ∆0018_TEST←'piti'      TEST1 (1 2 3 4 5⍴⍳120)
  ∆0019_TEST←'trig'      TEST2 (1)(1 2 3 4 5⍴⍳120)
  ∆0020_TEST←'trig'      TEST2 (1+?1 2 3 4 5⍴2)(1 2 3 4 5⍴⍳120)
+ ∆0021_TEST←'fact'      TEST1 (1 2 3 4 5⍴⍳10)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

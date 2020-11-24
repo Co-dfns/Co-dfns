@@ -573,8 +573,8 @@ rtn[9],←⊂'',NL
 rtn[10],←⊂'NM(fac,"fac",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[10],←⊂'fac_f fac_c;',NL
 rtn[10],←⊂'ID(fac,1,s32)',NL
-rtn[10],←⊂'MF(fac_f){z.r=r.r;z.s=r.s;z.v=factorial(r.v.as(f64));}',NL
-rtn[10],←⊂'SF(fac,array lvf=lv.as(f64);array rvf=rv.as(f64);',NL
+rtn[10],←⊂'MF(fac_f){z.s=r.s;z.v=factorial(r.v.as(f64));}',NL
+rtn[10],←⊂'SF(fac,arr lvf=lv.as(f64);arr rvf=rv.as(f64);',NL
 rtn[10],←⊂' z.v=exp(lgamma(1+rvf)-(lgamma(1+lvf)+lgamma(1+rvf-lvf))))',NL
 rtn[11],←⊂'NM(lth,"lth",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[11],←⊂'lth_f lth_c;',NL
