@@ -24,5 +24,6 @@ not←{~⍵}
 roll←{?⍵}
 enlist←{∊⍵}
 member←{⍺∊⍵}
+lor←{⍺∨⍵}
 
 :EndNamespace

@@ -35,6 +35,7 @@
  ∆0023_TEST←'roll'      TEST1 (1 2 3 4 5⍴⍳120)
  ∆0024_TEST←'enlist'    TEST1 (1 2 3 4 5⍴⍳120)
  ∆0025_TEST←'member'    TEST2 (1 2 3 4 5⍴⍳120)(⌊(⍳120)÷2)
+ ∆0026_TEST←'lor'       TEST2 (?1 2 3 4 5⍴2)(?1 2 3 4 5⍴2)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
