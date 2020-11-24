@@ -16,5 +16,6 @@ mag←{|⍵}
 floor←{⌊⍵}
 ceil←{⌈⍵}
 expt←{*⍵}
+loge←{⍟⍵}
 
 :EndNamespace

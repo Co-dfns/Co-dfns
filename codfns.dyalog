@@ -526,7 +526,7 @@ rtn[4],←⊂'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',NL
 rtn[4],←⊂'',NL
 rtn[5],←⊂'NM(log,"log",1,1,MT ,MFD,DFD,MT ,DAD)',NL
 rtn[5],←⊂'log_f log_c;',NL
-rtn[5],←⊂'MF(log_f){z.r=r.r;z.s=r.s;z.v=log(r.v.as(f64));}',NL
+rtn[5],←⊂'MF(log_f){z.s=r.s;z.v=log(r.v.as(f64));}',NL
 rtn[5],←⊂'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',NL
 rtn[5],←⊂'',NL
 rtn[6],←⊂'NM(res,"res",1,1,DID,MFD,DFD,MT ,DAD)',NL
