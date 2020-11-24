@@ -510,7 +510,7 @@ rtn[1],←⊂'',NL
 rtn[2],←⊂'NM(mul,"mul",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[2],←⊂'mul_f mul_c;',NL
 rtn[2],←⊂'ID(mul,1,s32)',NL
-rtn[2],←⊂'MF(mul_f){z.r=r.r;z.s=r.s;z.v=(r.v>0)-(r.v<0);}',NL
+rtn[2],←⊂'MF(mul_f){z.s=r.s;z.v=(r.v>0)-(r.v<0);}',NL
 rtn[2],←⊂'SF(mul,z.v=lv*rv)',NL
 rtn[2],←⊂'',NL
 rtn[3],←⊂'NM(div,"div",1,1,DID,MFD,DFD,MT,DAD)',NL

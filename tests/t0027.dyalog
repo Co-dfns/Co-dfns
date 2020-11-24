@@ -10,5 +10,6 @@ gradeup1←{⍋⍵}
 add←{⍺+⍵}
 neg←{-⍵}
 addax←{1 2 3+[⍺]⍵}
+sign←{×⍵}
 
 :EndNamespace
