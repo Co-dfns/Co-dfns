@@ -17,5 +17,7 @@ floor←{⌊⍵}
 ceil←{⌈⍵}
 expt←{*⍵}
 loge←{⍟⍵}
+piti←{○⍵}
+trig←{⍺○⍵}
 
 :EndNamespace

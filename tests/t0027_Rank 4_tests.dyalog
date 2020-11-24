@@ -27,6 +27,9 @@
  ∆0015_TEST←'ceil'      TEST1 (7×?1 2 3 4 5⍴0)
  ∆0016_TEST←'expt'      TEST1 (¯2+?1 2 3 4 5⍴5)
  ∆0017_TEST←'loge'      TEST1 (1+1 2 3 4 5⍴⍳120)
+ ∆0018_TEST←'piti'      TEST1 (1 2 3 4 5⍴⍳120)
+ ∆0019_TEST←'trig'      TEST2 (1)(1 2 3 4 5⍴⍳120)
+ ∆0020_TEST←'trig'      TEST2 (1+?1 2 3 4 5⍴2)(1 2 3 4 5⍴⍳120)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
