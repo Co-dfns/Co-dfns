@@ -12,5 +12,6 @@ neg←{-⍵}
 addax←{1 2 3+[⍺]⍵}
 sign←{×⍵}
 recip←{÷⍵}
+mag←{|⍵}
 
 :EndNamespace

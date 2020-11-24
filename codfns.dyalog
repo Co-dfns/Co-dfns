@@ -532,7 +532,7 @@ rtn[5],←⊂'',NL
 rtn[6],←⊂'NM(res,"res",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[6],←⊂'res_f res_c;',NL
 rtn[6],←⊂'ID(res,0,s32)',NL
-rtn[6],←⊂'MF(res_f){z.r=r.r;z.s=r.s;z.v=abs(r.v).as(r.v.type());}',NL
+rtn[6],←⊂'MF(res_f){z.s=r.s;z.v=abs(r.v).as(r.v.type());}',NL
 rtn[6],←⊂'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',NL
 rtn[6],←⊂'',NL
 rtn[7],←⊂'NM(cir,"cir",1,1,MT,MFD,DFD,MT,DAD)',NL
