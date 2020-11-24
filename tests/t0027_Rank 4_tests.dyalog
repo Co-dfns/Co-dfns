@@ -20,7 +20,8 @@
  ∆0008_TEST←'add'       TEST2 (?2⍴⊂1 2 3 4 5⍴10)
  ∆0009_TEST←'neg'       TEST1 (?1 2 3 4 5⍴10)
  ∆0010_TEST←'addax'     TEST2 (3)(1 2 4 3 5⍴⍳120)
- ∆0011_TEST←'sign'      TEST1 (¯2+?20⍴5)
+ ∆0011_TEST←'sign'      TEST1 (¯2+?20 1 1 1 1 1⍴5)
+ ∆0012_TEST←'recip'     TEST1 (1+1 5 1 5 1⍴⍳25)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

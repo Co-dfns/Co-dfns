@@ -516,7 +516,7 @@ rtn[2],←⊂'',NL
 rtn[3],←⊂'NM(div,"div",1,1,DID,MFD,DFD,MT,DAD)',NL
 rtn[3],←⊂'div_f div_c;',NL
 rtn[3],←⊂'ID(div,1,s32)',NL
-rtn[3],←⊂'MF(div_f){z.r=r.r;z.s=r.s;z.v=1.0/r.v.as(f64);}',NL
+rtn[3],←⊂'MF(div_f){z.s=r.s;z.v=1.0/r.v.as(f64);}',NL
 rtn[3],←⊂'SF(div,z.v=lv.as(f64)/rv.as(f64))',NL
 rtn[4],←⊂'NM(exp,"exp",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[4],←⊂'ID(exp,1,s32)',NL
