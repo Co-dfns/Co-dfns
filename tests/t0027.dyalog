@@ -26,5 +26,6 @@ enlist←{∊⍵}
 member←{⍺∊⍵}
 lor←{⍺∨⍵}
 and←{⍺∧⍵}
+idxof←{⍺⍳⍵}
 
 :EndNamespace

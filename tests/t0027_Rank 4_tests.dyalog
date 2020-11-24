@@ -37,6 +37,7 @@
  ∆0025_TEST←'member'    TEST2 (1 2 3 4 5⍴⍳120)(⌊(⍳120)÷2)
  ∆0026_TEST←'lor'       TEST2 (?1 2 3 4 5⍴2)(?1 2 3 4 5⍴2)
  ∆0027_TEST←'and'       TEST2 (?1 2 3 4 5⍴2)(?1 2 3 4 5⍴2)
+ ∆0028_TEST←'idxof'     TEST2 (⌽⍳75)(1 2 3 4 5⍴⍳120)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
