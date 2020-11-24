@@ -20,5 +20,6 @@ loge←{⍟⍵}
 piti←{○⍵}
 trig←{⍺○⍵}
 fact←{!⍵}
+not←{~⍵}
 
 :EndNamespace

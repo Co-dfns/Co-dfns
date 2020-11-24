@@ -607,7 +607,7 @@ rtn[16],←⊂'SF(neq,z.v=lv!=rv)',NL
 rtn[16],←⊂'',NL
 rtn[17],←⊂'NM(not,"not",1,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[17],←⊂'not_f not_c;',NL
-rtn[17],←⊂'MF(not_f){z.r=r.r;z.s=r.s;z.v=!r.v;}',NL
+rtn[17],←⊂'MF(not_f){z.s=r.s;z.v=!r.v;}',NL
 rtn[17],←⊂'DF(not_f){err(16);}',NL
 rtn[17],←⊂'',NL
 rtn[18],←⊂'NM(and,"and",1,1,DID,MT,DFD,MT,DAD)',NL
