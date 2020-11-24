@@ -14,5 +14,6 @@ sign←{×⍵}
 recip←{÷⍵}
 mag←{|⍵}
 floor←{⌊⍵}
+ceil←{⌈⍵}
 
 :EndNamespace

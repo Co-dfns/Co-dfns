@@ -24,6 +24,7 @@
  ∆0012_TEST←'recip'     TEST1 (1+1 5 1 5 1⍴⍳25)
  ∆0013_TEST←'mag'       TEST1 (¯2+?1 5 4 1 1 1⍴5)
  ∆0014_TEST←'floor'     TEST1 (7×?1 2 3 4 5⍴0)
+ ∆0015_TEST←'ceil'      TEST1 (7×?1 2 3 4 5⍴0)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

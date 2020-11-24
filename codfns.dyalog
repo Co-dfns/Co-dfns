@@ -568,7 +568,7 @@ rtn[8],←⊂'',NL
 rtn[9],←⊂'NM(max,"max",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[9],←⊂'max_f max_c;',NL
 rtn[9],←⊂'ID(max,-DBL_MAX,f64)',NL
-rtn[9],←⊂'MF(max_f){z.r=r.r;z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',NL
+rtn[9],←⊂'MF(max_f){z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',NL
 rtn[9],←⊂'SF(max,z.v=max(lv,rv))',NL
 rtn[9],←⊂'',NL
 rtn[10],←⊂'NM(fac,"fac",1,1,DID,MFD,DFD,MT ,DAD)',NL
