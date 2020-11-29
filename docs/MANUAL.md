@@ -16,7 +16,7 @@ The compiler may be accessed either through the user-command functionality of Dy
 Argument  | Description
 --------- | -----------
 namespace | The name of a compilable namespace defined in the current workspace. The compiler will attempt to compile this namespace.
-target    | The name the compiler should give to the compiled Co-dfns module. Upon compilation, a namespace called <target> will be created and linked to the compiled module.
+target    | The name the compiler should give to the compiled Co-dfns module. Upon compilation, a namespace called `<target>` will be created and linked to the compiled module.
 -af       | Specify a specific backend to use. Valid options are: cpu, cuda, opencl. If this option is omitted, then the Co-dfns compiled object will attempt to auto-detect the fastest backend to use at runtime.
 
 ### Namespace Options and Functions
