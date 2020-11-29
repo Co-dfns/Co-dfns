@@ -71,9 +71,7 @@ Reference                                 | Description
 ----------------------------------------- | -----------
 [help.dyalog.com](http://help.dyalog.com) | Documentation for the Dyalog language and systems.
 [FAQ.md](FAQ.md)                          | Frequently asked questions about the compiler.
-[LIMITATIONS.md](LIMITATIONS.md)          | Current known limitations of the compiler.
 [PERFORMANCE.md](PERFORMANCE.md)          | Suggestions for understanding the performance of Co-dfns compiled code.
-[WISHLIST.md](WISHLIST.md)                | A current wishlist of features for the compiler.
 
 ## Known Limitations
 
