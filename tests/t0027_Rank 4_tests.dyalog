@@ -3,9 +3,8 @@
 
  tn←'t0027' ⋄ cn←'c0027' ⋄ cd←⎕NS⍬ ⋄ dy←#.⍎tn
 
- EXEC←{0::⊃⎕DM ⋄ ⍺ ⍺⍺ ⍵}
- TEST1←{Y  ←⍵⍵ ⋄ #.UT.expect← dy.(⍎⍺⍺)EXEC Y ⋄   cd.(⍎⍺⍺)EXEC Y}
- TEST2←{X Y←⍵⍵ ⋄ #.UT.expect←X dy.(⍎⍺⍺)EXEC Y ⋄ X cd.(⍎⍺⍺)EXEC Y}
+ TEST1←{Y  ←⍵⍵ ⋄ #.UT.expect← dy.(⍎⍺⍺) Y ⋄   cd.(⍎⍺⍺) Y}
+ TEST2←{X Y←⍵⍵ ⋄ #.UT.expect←X dy.(⍎⍺⍺) Y ⋄ X cd.(⍎⍺⍺) Y}
 
  ∆0000_TEST←{#.UT.expect←'Successful compile'
   _←#.⎕EX cn ⋄ 'Successful compile'⊣cd∘←#.c0027←tn #.codfns.Fix ⎕SRC dy}
@@ -32,12 +31,12 @@
  ∆0020_TEST←'trig'      TEST2 (1+?1 2 3 4 5⍴2)(1 2 3 4 5⍴⍳120)
  ∆0021_TEST←'fact'      TEST1 (1 2 3 4 5⍴⍳10)
  ∆0022_TEST←'not'       TEST1 (?1 2 3 4 5⍴2)
- ∆0023_TEST←'roll'      TEST1 (1 2 3 4 5⍴⍳120)
- ∆0024_TEST←'enlist'    TEST1 (1 2 3 4 5⍴⍳120)
- ∆0025_TEST←'member'    TEST2 (1 2 3 4 5⍴⍳120)(⌊(⍳120)÷2)
- ∆0026_TEST←'lor'       TEST2 (?1 2 3 4 5⍴2)(?1 2 3 4 5⍴2)
- ∆0027_TEST←'and'       TEST2 (?1 2 3 4 5⍴2)(?1 2 3 4 5⍴2)
- ∆0028_TEST←'idxof'     TEST2 (⌽⍳75)(1 2 3 4 5⍴⍳120)
+ ∆0023_TEST←'enlist'    TEST1 (1 2 3 4 5⍴⍳120)
+ ∆0024_TEST←'member'    TEST2 (1 2 3 4 5⍴⍳120)(⌊(⍳120)÷2)
+ ∆0025_TEST←'lor'       TEST2 (?1 2 3 4 5⍴2)(?1 2 3 4 5⍴2)
+ ∆0026_TEST←'and'       TEST2 (?1 2 3 4 5⍴2)(?1 2 3 4 5⍴2)
+ ∆0027_TEST←'idxof'     TEST2 (⌽⍳75)(1 2 3 4 5⍴⍳120)
+ ∆0028_TEST←'sqd'       TEST2 (0 1 1)(1 2 3 4 5⍴⍳120)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

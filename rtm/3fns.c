@@ -5,6 +5,7 @@ B rnk(const A&a){R a.s.size();}
 B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}
 B cnt(const A&a){B c=1;DOB(rnk(a),c*=a.s[i]);R c;}
 B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
+B cnt(arr&a){R a.elements();}
 array scl(D x){R constant(x,dim4(1),f64);}
 array scl(I x){R constant(x,dim4(1),s32);}
 A scl(array v){R A(0,v);}

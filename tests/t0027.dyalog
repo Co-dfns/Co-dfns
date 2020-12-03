@@ -27,5 +27,6 @@ member←{⍺∊⍵}
 lor←{⍺∨⍵}
 and←{⍺∧⍵}
 idxof←{⍺⍳⍵}
+sqd←{⍺⌷⍵}
 
 :EndNamespace
