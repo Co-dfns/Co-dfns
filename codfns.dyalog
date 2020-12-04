@@ -475,7 +475,7 @@ rth,←'   CS(APLZ ,a.v=array(c,(DZ*)DATA(d))) CS(APLI ,a.v=array(c,(I*)DATA(d))
 rth,←'   CS(APLD ,a.v=array(c,(D*)DATA(d)))  CS(APLSI,a.v=array(c,(S16*)DATA(d)))',NL
 rth,←'   CS(APLTI,a.v=da16(c,d))             CS(APLU8,a.v=da8(c,d))',NL
 rth,←'   default:err(16);}}}',NL
-rth,←'inline I isint(D x){R x!=nearbyint(x);}',NL
+rth,←'inline I isint(D x){R x==nearbyint(x);}',NL
 rth,←'inline I isint(A x){R x.v.isinteger()||x.v.isbool()',NL
 rth,←'  ||(x.v.isreal()&&allTrue<I>(x.v==trunc(x.v)));}',NL
 rth,←'inline I isbool(A x){R x.v.isbool()',NL
@@ -654,7 +654,8 @@ rtn[22],←⊂' VEC<U8> m(rr);DOB(ac,if(m[av[i]])err(11);m[av[i]]=1)',NL
 rtn[22],←⊂' if(!isint(l))err(11);VEC<I> lv(lc);l.v.as(s32).host(lv.data());',NL
 rtn[22],←⊂' DOB(lc,if(lv[i]<0||lv[i]>=r.s[rr-av[i]-1])err(3))',NL
 rtn[22],←⊂' z.s=SHP(rr-lc);I j=0;DOB(rr,if(!m[rr-i-1])z.s[j++]=r.s[i])',NL
-rtn[22],←⊂' if(rr<5){index x[4];DOB(lc,x[rr-av[i]-1]=lv[i]);dim4 rs;DO((I)rr,rs[i]=r.s[i])',NL
+rtn[22],←⊂' if(rr<5){index x[4];DOB(lc,x[rr-av[i]-1]=lv[i]);',NL
+rtn[22],←⊂'  dim4 rs(1);DO((I)rr,rs[i]=r.s[i])',NL
 rtn[22],←⊂'  z.v=flat(moddims(r.v,rs)(x[0],x[1],x[2],x[3]));R;}',NL
 rtn[22],←⊂' VEC<seq> x(rr);arr ix=scl(0);',NL
 rtn[22],←⊂' DOB(rr,x[i]=seq((D)r.s[i]))DOB(lc,x[rr-av[i]-1]=seq(lv[i],lv[i]))',NL
@@ -699,39 +700,39 @@ rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[26],←⊂'cat_f cat_c;',NL
 rtn[26],←⊂'MF(cat_f){z.s=SHP(1,cnt(r));z.v=flat(r.v);}',NL
 rtn[26],←⊂'MA(cat_f){B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);',NL
-rtn[26],←⊂' VEC<D> axv(ar);ax.v.as(f64).host(axv.data());',NL
+rtn[26],←⊂' VEC<D> axv(ac);ax.v.as(f64).host(axv.data());',NL
 rtn[26],←⊂' if(ac==1&&(axv[0]<=-1||rr<=axv[0]))err(4);',NL
 rtn[26],←⊂' if(ac>1){I c=(I)axv[0];if(c<0)err(11);DO((I)ac,if(axv[i]!=c++)err(11))',NL
 rtn[26],←⊂'  if(c>rr)err(4);}',NL
-rtn[26],←⊂' I xt=(!ac||(ac==1&&isint(axv[0])));if(rr==4&&xt)err(16);',NL
+rtn[26],←⊂' I xt=(!ac||(ac==1&&!isint(axv[0])));if(rr==4&&xt)err(16);',NL
 rtn[26],←⊂' z=r;B zr=rr;if(!xt&&ac==1)R;DO((I)ac,axv[i]=ceil(rr-axv[i]-1))',NL
 rtn[26],←⊂' if(xt){zr++;z.s=SHP(zr);DOB(rr,z.s[i]=r.s[i])B pt=ac?(B)axv[0]:0;',NL
-rtn[26],←⊂'  DOB(zr-pt,z.s[zr-i-1]=z.s[zr-i-2])z.s[pt]=1;R;}',NL
+rtn[26],←⊂'  DOB(rr-pt,z.s[zr-i-1]=z.s[zr-i-2])z.s[pt]=1;R;}',NL
 rtn[26],←⊂' B s=(B)axv[ac-1],ei=(B)axv[0],c=1;',NL
 rtn[26],←⊂' DOB(ac-1,z.s[s]*=z.s[s+i+1])DOB(zr-ei-1,z.s[s+i+1]=z.s[ei+i+1])}',NL
 rtn[26],←⊂'DA(cat_f){B ar=rnk(ax),lr=rnk(l),rr=rnk(r);',NL
 rtn[26],←⊂' if(ar>1)err(4);if(cnt(ax)!=1)err(5);D ox=ax.v.as(f64).scalar<D>();',NL
 rtn[26],←⊂' B rk=lr>rr?lr:rr;if(ox<=-1)err(11);if(ox>=rk)err(4);',NL
-rtn[26],←⊂' if(lr&&rr&&std::abs((I)lr-(I)rr)>1)err(4);',NL
+rtn[26],←⊂' if(lr&&rr&&std::abs((I)lr-rr)>1)err(4);',NL
 rtn[26],←⊂' A nl=l,nr=r;D axv=rk-ox-1;I fx=(I)ceil(axv);',NL
 rtn[26],←⊂' if(axv!=fx){if(rr>3||lr>3)err(16);if(rr&&lr&&lr!=rr)err(4);',NL
 rtn[26],←⊂'  if(lr)cat_c(nl,l,e,ax);if(rr)cat_c(nr,r,e,ax);',NL
 rtn[26],←⊂'  if(!lr&&!rr)cat_c(nl,l,e,ax);cat_c(nr,r,e,ax);',NL
 rtn[26],←⊂'  cat_c(z,nl,nr,e,scl(scl((I)ceil(ox))));R;}',NL
 rtn[26],←⊂' z.s=SHP((lr>=rr)*lr+(rr>lr)*rr+(!rr&&!lr));',NL
-rtn[26],←⊂' dim4 ls,rs;DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])',NL
+rtn[26],←⊂' dim4 ls(1),rs(1);DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])',NL
 rtn[26],←⊂' if(!lr){ls=rs;ls[fx]=1;}if(!rr){rs=ls;rs[fx]=1;}',NL
 rtn[26],←⊂' if(rr&&lr>rr){DO(3-fx,rs[3-i]=rs[3-i-1]);rs[fx]=1;}',NL
 rtn[26],←⊂' if(lr&&rr>lr){DO(3-fx,ls[3-i]=ls[3-i-1]);ls[fx]=1;}',NL
 rtn[26],←⊂' DO(4,if(i!=fx&&rs[i]!=ls[i])err(5));',NL
-rtn[26],←⊂' DO(4,z.s[i]=(lr>=rr||i==fx)*ls[i]+(rr>lr||i==fx)*rs[i]);',NL
+rtn[26],←⊂' DO((I)rnk(z),z.s[i]=(lr>=rr||i==fx)*ls[i]+(rr>lr||i==fx)*rs[i]);',NL
 rtn[26],←⊂' dtype mt=mxt(r.v,l.v);',NL
 rtn[26],←⊂' array lv=(lr?moddims(l.v,ls):tile(l.v,ls)).as(mt);',NL
 rtn[26],←⊂' array rv=(rr?moddims(r.v,rs):tile(r.v,rs)).as(mt);',NL
 rtn[26],←⊂' if(!cnt(l)){z.v=flat(rv);R;}if(!cnt(r)){z.v=flat(lv);R;}',NL
 rtn[26],←⊂' z.v=flat(join(fx,lv,rv));}',NL
 rtn[26],←⊂'DF(cat_f){B lr=rnk(l),rr=rnk(r);',NL
-rtn[26],←⊂' if(lr||rr){cat_c(z,l,r,e,scl(scl((I)(lr>rr?lr:rr)-1)));R;}',NL
+rtn[26],←⊂' if(lr||rr){cat_c(z,l,r,e,scl(scl((lr>rr?lr:rr)-1)));R;}',NL
 rtn[26],←⊂' A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,e);}',NL
 rtn[27],←⊂'NM(ctf,"ctf",0,0,MT,MFD,DFD,MT,DAD)',NL
 rtn[27],←⊂'ctf_f ctf_c;',NL

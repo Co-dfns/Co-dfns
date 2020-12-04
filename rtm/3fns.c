@@ -34,7 +34,7 @@ V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);a.f=1;a.v=scl(0);
    CS(APLD ,a.v=array(c,(D*)DATA(d)))  CS(APLSI,a.v=array(c,(S16*)DATA(d)))
    CS(APLTI,a.v=da16(c,d))             CS(APLU8,a.v=da8(c,d))
    default:err(16);}}}
-inline I isint(D x){R x!=nearbyint(x);}
+inline I isint(D x){R x==nearbyint(x);}
 inline I isint(A x){R x.v.isinteger()||x.v.isbool()
   ||(x.v.isreal()&&allTrue<I>(x.v==trunc(x.v)));}
 inline I isbool(A x){R x.v.isbool()
