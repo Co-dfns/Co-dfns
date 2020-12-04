@@ -18,7 +18,7 @@ typedef VEC<BX> FRM;typedef VEC<FRM*> ENV;
 typedef std::stack<BX> STK;
 S A{I f;SHP s;arr v;VEC<A> nv;
  A(SHP s,arr v):f(1),s(s),v(v){}
- A(I r,arr v):f(1),s(SHP(r)),v(v){}
+ A(B r,arr v):f(1),s(SHP(r)),v(v){}
  A():f(0),s(SHP()),v(arr()){}};
 typedef const A CA;
 S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}

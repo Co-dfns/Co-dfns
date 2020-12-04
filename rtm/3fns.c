@@ -8,6 +8,7 @@ B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
 B cnt(arr&a){R a.elements();}
 array scl(D x){R constant(x,dim4(1),f64);}
 array scl(I x){R constant(x,dim4(1),s32);}
+array scl(B x){R constant(x,dim4(1),u64);}
 A scl(array v){R A(0,v);}
 dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;
  if(at==f64||bt==f64)R f64;
