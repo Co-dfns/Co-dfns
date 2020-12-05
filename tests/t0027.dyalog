@@ -28,5 +28,7 @@ lor←{⍺∨⍵}
 and←{⍺∧⍵}
 idxof←{⍺⍳⍵}
 sqd←{⍺⌷⍵}
+ravel←{,⍵}
+catenate←{⍺,⍵}
 
 :EndNamespace

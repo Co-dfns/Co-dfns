@@ -43,5 +43,5 @@ using namespace af;
 #define ETYPE(lp) ((lp)->p->e)
 #define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])
 #define CS(n,x) case n:x;break;
-#define DO(n,x) {I i=0,_i=(n);for(;i<_i;++i){x;}}
-#define DOB(n,x) {B i=0,_i=(n);for(;i<_i;++i){x;}}
+#define DO(n,x) {I _i=(n),i=0;for(;i<_i;++i){x;}}
+#define DOB(n,x) {B _i=(n),i=0;for(;i<_i;++i){x;}}

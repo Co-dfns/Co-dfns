@@ -23,13 +23,13 @@
 #define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)
 #define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)
 #define SF(n,x) \
- DF(n##_f){B lr=rnk(l),rr=rnk(r);\
+ DF(n##_f){z.f=1;B lr=rnk(l),rr=rnk(r);\
   if(lr==rr){\
    DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;carr&lv=l.v;carr&rv=r.v;x;R;}\
   if(!lr){z.s=r.s;carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\
   if(!rr){z.s=l.s;carr rv=tile(r.v,l.v.dims());carr&lv=l.v;x;R;}\
   if(lr!=rr)err(4);err(99);}\
- DA(n##_f){A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\
+ DA(n##_f){z.f=1;A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\
   B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\
   VEC<D> axd(rk);SHP axv(rk);ax.v.as(f64).host(axd.data());\
   DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])\

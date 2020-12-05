@@ -1,7 +1,7 @@
 ﻿NM(enc,"enc",0,0,DID,MT ,DFD,MT ,MT )
 enc_f enc_c;
 ID(enc,0,s32)
-DF(enc_f){I rk=r.r+l.r;if(rk>4)err(16);dim4 sp=r.s;DO(l.r,sp[i+r.r]=l.s[i])
+DF(enc_f){z.f=1;I rk=r.r+l.r;if(rk>4)err(16);dim4 sp=r.s;DO(l.r,sp[i+r.r]=l.s[i])
  if(!cnt(sp)){z.r=rk;z.s=sp;z.v=scl(0);R;}dim4 lt=sp,rt=sp;I k=l.r?l.r-1:0;
  DO(r.r,rt[i]=1)DO(l.r,lt[i+r.r]=1)array rv=tile(r.v,rt);z.r=rk;z.s=sp;
  array sv=flip(scan(flip(l.v,k),k,AF_BINARY_MUL),k);

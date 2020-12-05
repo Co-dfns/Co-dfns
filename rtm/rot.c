@@ -1,11 +1,11 @@
 ﻿NM(rot,"rot",0,0,DID,MFD,DFD,MAD,DAD)
 rot_f rot_c;
 ID(rot,0,s32)
-MF(rot_f){z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}
-MA(rot_f){if(1!=cnt(ax))err(5);if(!ax.v.isinteger())err(11);
+MF(rot_f){z.f=1;z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}
+MA(rot_f){z.f=1;if(1!=cnt(ax))err(5);if(!ax.v.isinteger())err(11);
  I axv=ax.v.as(s32).scalar<I>();if(axv<0||r.r<=axv)err(4);
  z.r=r.r;z.s=r.s;z.v=flip(r.v,r.r-(1+axv));}
-DA(rot_f){if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
+DA(rot_f){z.f=1;if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
  I ra=ax.v.as(s32).scalar<I>();if(ra<0)err(11);if(ra>=r.r)err(4);
  B lc=cnt(l);I aa=ra;ra=r.r-ra-1;if(lc!=1&&l.r!=r.r-1)err(4);
  if(lc==1){I ix[]={0,0,0,0};z.r=r.r;z.s=r.s;ix[ra]=-l.v.as(s32).scalar<I>();

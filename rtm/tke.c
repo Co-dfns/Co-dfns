@@ -2,9 +2,9 @@
 tke_f tke_c;
 MF(tke_f){z=r;}
 MA(tke_f){err(16);}
-DA(tke_f){B c=cnt(l),ac=cnt(ax);if(ax.r>1||l.r>1)err(4);if(ac!=c)err(5);
- if(c>4)err(16);
- if(!isint(ax))err(11);I m[4]={0,0,0,0},av[4];ax.v.as(s32).host(av);
+DA(tke_f){z.f=1;B c=cnt(l),ac=cnt(ax);if(ax.r>1||l.r>1)err(4);
+ if(ac!=c)err(5);if(c>4)err(16);if(!isint(ax))err(11);
+ I m[4]={0,0,0,0},av[4];ax.v.as(s32).host(av);
  DOB(ac,if(av[i]<0)err(11);if(av[i]>=r.r)err(4))
  DOB(ac,if(m[av[i]])err(11);m[av[i]]=1)
  if(!c){z=r;R;}if(!isint(l))err(11);I lv[4];l.v.as(s32).host(lv);

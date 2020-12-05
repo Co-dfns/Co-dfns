@@ -1,5 +1,5 @@
 ﻿OD(rnk,"rnk",scm(l),0,MFD,DFD,MT ,MT )
-MF(rnk_o){if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
+MF(rnk_o){z.f=1;if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
  if(scm(ll)||cr>=r.r){ll(z,r,e);R;}
  if(cr<=-r.r||!cr){map_o f(ll);f(z,r,e);R;}
  if(cr<0)cr=r.r+cr;if(cr>3)err(10);I dr=r.r-cr;
@@ -12,7 +12,7 @@ MF(rnk_o){if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
  B mc=cnt(ms);array v(mc*sp[cr],mt);v=0;
  DO((I)sp[cr],seq ix((D)cnt(tv[i]));v(ix+(D)(i*mc))=flat(tv[i].v))
  z.r=mr+dr;z.s=ms;z.s[mr]=sp[cr];z.v=array(v,z.s);}
-DF(rnk_o){I cl,cr,dl,dr;dim4 sl(1),sr(1);array wwv=ww.v.as(s32);
+DF(rnk_o){z.f=1;I cl,cr,dl,dr;dim4 sl(1),sr(1);array wwv=ww.v.as(s32);
  if(cnt(ww)==1)cl=cr=wwv.scalar<I>();
  else if(cnt(ww)==2){cl=wwv.scalar<I>();cr=wwv(1).scalar<I>();}
  else err(4);

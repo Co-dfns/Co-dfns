@@ -1,5 +1,5 @@
 ﻿OD(dot,"dot",0,0,MT,DFD,MT ,MT )
-DF(dot_o){I lr=(I)rnk(l),rrk=(I)rnk(r);if(lr>4||rrk>4)err(16);
+DF(dot_o){z.f=1;I lr=(I)rnk(l),rrk=(I)rnk(r);if(lr>4||rrk>4)err(16);
  dim4 ls,rs;DO(lr,ls[i]=l.s[i])DO(rrk,rs[i]=r.s[i])
  arr lv=moddims(l.v,ls),rv=moddims(r.v,rs);
  I ra=rrk?rrk-1:0;if(rrk&&lr&&l.s[0]!=r.s[ra])err(5);

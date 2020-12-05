@@ -2,7 +2,7 @@
 scn_f scn_c;
 ID(scn,1,s32)
 OM(scn,"scn",1,1,MFD,MT,MAD,MT )
-DA(scn_f){if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
+DA(scn_f){z.f=1;if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
  I ra=ax.v.as(s32).scalar<I>();if(ra<0)err(11);if(ra>=r.r)err(4);
  if(l.r>1)err(4);ra=r.r-ra-1;if(r.s[ra]!=1&&r.s[ra]!=sum<I>(l.v>0))err(5);
  index sx[4],tx[4];array ca=max(1,abs(l.v)).as(s32);I c=sum<I>(ca);
@@ -17,7 +17,7 @@ DA(scn_f){if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
 }
 DF(scn_f){A x=r;if(!x.r)cat_c(x,r,e);scn_c(z,l,x,e,scl(scl(x.r-1)));}
 
-MA(scn_o){if(ax.r>1)err(4);if(cnt(ax)!=1)err(5);
+MA(scn_o){z.f=1;if(ax.r>1)err(4);if(cnt(ax)!=1)err(5);
  if(!isint(ax))err(11);I av;ax.v.as(s32).host(&av);
  if(av<0)err(11);if(av>=r.r)err(4);av=r.r-av-1;
  z.r=r.r;z.s=r.s;I rc=(I)r.s[av];I ib=isbool(r);
