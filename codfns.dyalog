@@ -330,7 +330,7 @@ rth,←'#endif',NL
 rth,←'#define S struct',NL
 rth,←'#define Z static',NL
 rth,←'#define R return',NL
-rth,←'#define this_c *this',NL
+rth,←'#define this_c (*this)',NL
 rth,←'#define VEC std::vector',NL
 rth,←'#define RANK(lp) ((lp)->p->r)',NL
 rth,←'#define TYPE(lp) ((lp)->p->t)',NL
@@ -449,20 +449,28 @@ rth,←'B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}',NL
 rth,←'B cnt(const A&a){B c=1;DOB(rnk(a),c*=a.s[i]);R c;}',NL
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',NL
 rth,←'B cnt(arr&a){R a.elements();}',NL
-rth,←'array scl(D x){R constant(x,dim4(1),f64);}',NL
-rth,←'array scl(I x){R constant(x,dim4(1),s32);}',NL
-rth,←'array scl(B x){R constant(x,dim4(1),u64);}',NL
-rth,←'A scl(array v){R A(0,v);}',NL
+rth,←'arr scl(D x){R constant(x,dim4(1),f64);}',NL
+rth,←'arr scl(I x){R constant(x,dim4(1),s32);}',NL
+rth,←'arr scl(B x){R constant(x,dim4(1),u64);}',NL
+rth,←'A scl(arr v){R A(0,v);}',NL
+rth,←'arr axis(CA&a,B ax){B l=1,m=1,r=1;if(ax>=rnk(a))R a.v;m=a.s[ax];',NL
+rth,←' DOB(ax,l*=a.s[i])DOB(rnk(a)-ax-1,r*=a.s[ax+i+1])',NL
+rth,←' R moddims(a.v,l,m,r);}',NL
+rth,←'arr table(CA&a,B ax){B l=1,r=1;if(ax>=rnk(a))R a.v;',NL
+rth,←' DOB(ax,l*=a.s[i])DOB(rnk(a)-ax,r*=a.s[ax+i])',NL
+rth,←' R moddims(a.v,l,r);}',NL
+rth,←'arr unrav(CA&a){if(rnk(a)>4)err(99);dim4 s(1);DO((I)rnk(a),s[i]=a.s[i])',NL
+rth,←' R moddims(a.v,s);}',NL
 rth,←'dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;',NL
 rth,←' if(at==f64||bt==f64)R f64;',NL
 rth,←' if(at==s32||bt==s32)R s32;if(at==s16||bt==s16)R s16;',NL
 rth,←' if(at==b8||bt==b8)R b8;err(16);R f64;}',NL
-rth,←'dtype mxt(const array&a,const array&b){R mxt(a.type(),b.type());}',NL
+rth,←'dtype mxt(carr&a,carr&b){R mxt(a.type(),b.type());}',NL
 rth,←'dtype mxt(dtype at,const A&b){R mxt(at,b.v.type());}',NL
-rth,←'Z array da16(B c,lp*d){std::vector<S16>b(c);S8*v=(S8*)DATA(d);',NL
-rth,←' DOB(c,b[i]=v[i]);R array(c,b.data());}',NL
-rth,←'Z array da8(B c,lp*d){std::vector<char>b(c);U8*v=(U8*)DATA(d);',NL
-rth,←' DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))R array(c,b.data());}',NL
+rth,←'Z arr da16(B c,lp*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);',NL
+rth,←' DOB(c,b[i]=v[i]);R arr(c,b.data());}',NL
+rth,←'Z arr da8(B c,lp*d){VEC<char>b(c);U8*v=(U8*)DATA(d);',NL
+rth,←' DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))R arr(c,b.data());}',NL
 rth,←'V cpad(lp*d,A&a){I t;B c=cnt(a),ar=rnk(a);if(!a.f){d->p=NULL;R;}',NL
 rth,←' switch(a.v.type()){CS(c64,t=APLZ);',NL
 rth,←'  CS(s32,t=APLI);CS(s16,t=APLSI);CS(b8,t=APLTI);CS(f64,t=APLD);',NL
@@ -473,8 +481,8 @@ rth,←'V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);a.f=1;a.v=scl(0);',
 rth,←' a.s=SHP(RANK(d));DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);B c=cnt(d);',NL
 rth,←' if(c){',NL
 rth,←'  switch(ETYPE(d)){',NL
-rth,←'   CS(APLZ ,a.v=array(c,(DZ*)DATA(d))) CS(APLI ,a.v=array(c,(I*)DATA(d)))',NL
-rth,←'   CS(APLD ,a.v=array(c,(D*)DATA(d)))  CS(APLSI,a.v=array(c,(S16*)DATA(d)))',NL
+rth,←'   CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))',NL
+rth,←'   CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))',NL
 rth,←'   CS(APLTI,a.v=da16(c,d))             CS(APLU8,a.v=da8(c,d))',NL
 rth,←'   default:err(16);}}}',NL
 rth,←'inline I isint(D x){R x==nearbyint(x);}',NL
@@ -739,32 +747,33 @@ rtn[26],←⊂' if(lr||rr){cat_c(z,l,r,e,scl(scl((lr>rr?lr:rr)-1)));R;}',NL
 rtn[26],←⊂' A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,e);}',NL
 rtn[27],←⊂'NM(ctf,"ctf",0,0,MT,MFD,DFD,MT,DAD)',NL
 rtn[27],←⊂'ctf_f ctf_c;',NL
-rtn[27],←⊂'MF(ctf_f){z.f=1;dim4 sp=z.s;sp[1]=r.r?r.s[r.r-1]:1;sp[0]=sp[1]?cnt(r)/sp[1]:1;',NL
-rtn[27],←⊂' sp[2]=sp[3]=1;z.r=2;z.s=sp;z.v=!cnt(z)?scl(0):array(r.v,z.s);}',NL
+rtn[27],←⊂'MF(ctf_f){z.f=1;B rr=rnk(r);z.s=SHP(2,1);z.v=r.v;',NL
+rtn[27],←⊂' if(rr)z.s[1]=r.s[rr-1];if(z.s[1])z.s[0]=cnt(r)/z.s[1];}',NL
 rtn[27],←⊂'DA(ctf_f){cat_c(z,l,r,e,ax);}',NL
-rtn[27],←⊂'DF(ctf_f){z.f=1;if(l.r||r.r){cat_c(z,l,r,e,scl(scl(0)));R;}',NL
+rtn[27],←⊂'DF(ctf_f){z.f=1;if(rnk(l)||rnk(r)){cat_c(z,l,r,e,scl(scl(0)));R;}',NL
 rtn[27],←⊂' A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,e);}',NL
 rtn[28],←⊂'NM(rot,"rot",0,0,DID,MFD,DFD,MAD,DAD)',NL
 rtn[28],←⊂'rot_f rot_c;',NL
 rtn[28],←⊂'ID(rot,0,s32)',NL
-rtn[28],←⊂'MF(rot_f){z.f=1;z.r=r.r;z.s=r.s;z.v=flip(r.v,0);}',NL
-rtn[28],←⊂'MA(rot_f){z.f=1;if(1!=cnt(ax))err(5);if(!ax.v.isinteger())err(11);',NL
-rtn[28],←⊂' I axv=ax.v.as(s32).scalar<I>();if(axv<0||r.r<=axv)err(4);',NL
-rtn[28],←⊂' z.r=r.r;z.s=r.s;z.v=flip(r.v,r.r-(1+axv));}',NL
-rtn[28],←⊂'DA(rot_f){z.f=1;if(ax.r>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);',NL
-rtn[28],←⊂' I ra=ax.v.as(s32).scalar<I>();if(ra<0)err(11);if(ra>=r.r)err(4);',NL
-rtn[28],←⊂' B lc=cnt(l);I aa=ra;ra=r.r-ra-1;if(lc!=1&&l.r!=r.r-1)err(4);',NL
-rtn[28],←⊂' if(lc==1){I ix[]={0,0,0,0};z.r=r.r;z.s=r.s;ix[ra]=-l.v.as(s32).scalar<I>();',NL
-rtn[28],←⊂'  z.v=shift(r.v,ix[0],ix[1],ix[2],ix[3]);R;}',NL
-rtn[28],←⊂' I j=0;DO(l.r,if(i==ra)j++;if(l.s[i]!=r.s[j++])err(5))',NL
-rtn[28],←⊂' res_c(z,scl(scl((D)r.s[ra])),l,e);B tc=1;DO(ra,tc*=r.s[i])z.v*=tc;',NL
+rtn[28],←⊂'MF(rot_f){rot_c(z,r,e,scl(scl(rnk(r)-1)));}',NL
+rtn[28],←⊂'MA(rot_f){z.f=1;if(1!=cnt(ax))err(5);if(!isint(ax))err(11);',NL
+rtn[28],←⊂' I axv=ax.v.as(s32).scalar<I>();B rr=rnk(r);if(axv<0||rr<=axv)err(4);',NL
+rtn[28],←⊂' z.s=r.s;z.v=flat(flip(axis(r,rr-axv-1),1));}',NL
+rtn[28],←⊂'DA(rot_f){z.f=1;B rr=rnk(r),lr=rnk(l);if(rr>4)err(16);',NL
+rtn[28],←⊂' if(rnk(ax)>1||cnt(ax)!=1)err(5);if(!isint(ax))err(11);',NL
+rtn[28],←⊂' I ra=ax.v.as(s32).scalar<I>();if(ra<0)err(11);if(ra>=rr)err(4);',NL
+rtn[28],←⊂' B lc=cnt(l);I aa=ra;ra=(I)rr-ra-1;if(lc!=1&&lr!=rr-1)err(4);',NL
+rtn[28],←⊂' if(lc==1){I ix[]={0,0,0,0};z.s=r.s;ix[ra]=-l.v.as(s32).scalar<I>();',NL
+rtn[28],←⊂'  z.v=flat(shift(unrav(r),ix[0],ix[1],ix[2],ix[3]));R;}',NL
+rtn[28],←⊂' I j=0;DOB(lr,if(i==ra)j++;if(l.s[i]!=r.s[j++])err(5))',NL
+rtn[28],←⊂' res_c(z,scl(scl(r.s[ra])),l,e);B tc=1;DO(ra,tc*=r.s[i])z.v*=tc;',NL
 rtn[28],←⊂' cat_c(z,z,e,scl(scl(aa-.5)));I ix[]={1,1,1,1};ix[ra]=(I)r.s[ra];',NL
-rtn[28],←⊂' z.v=tile(z.v,ix[0],ix[1],ix[2],ix[3]);z.s[ra]=r.s[ra];',NL
-rtn[28],←⊂' dim4 s1(1),s2(1);DO(ra+1,s1[i]=r.s[i])DO(r.r-ra-1,s2[ra+i+1]=r.s[ra+i+1])',NL
-rtn[28],←⊂' z.v+=iota(s1,s2);res_c(z,scl(scl((D)tc*r.s[ra])),z,e);',NL
-rtn[28],←⊂' z.v=r.v(z.v+(tc*r.s[ra])*iota(s2,s1));}',NL
-rtn[28],←⊂'DF(rot_f){if(!r.r){B lc=cnt(l);if(lc!=1&&l.r)err(4);z=r;R;}',NL
-rtn[28],←⊂' rot_c(z,l,r,e,scl(scl(r.r-1)));}',NL
+rtn[28],←⊂' z.v=tile(unrav(z),ix[0],ix[1],ix[2],ix[3]);z.s[ra]=r.s[ra];',NL
+rtn[28],←⊂' dim4 s1(1),s2(1);DO(ra+1,s1[i]=r.s[i])DO((I)rr-ra-1,s2[ra+i+1]=r.s[ra+i+1])',NL
+rtn[28],←⊂' z.v+=iota(s1,s2);res_c(z,scl(scl(tc*r.s[ra])),z,e);',NL
+rtn[28],←⊂' z.v=flat(r.v(z.v+(tc*r.s[ra])*iota(s2,s1)));}',NL
+rtn[28],←⊂'DF(rot_f){B rr=rnk(r),lr=rnk(l);if(!rr){B lc=cnt(l);if(lc!=1&&lr)err(4);z=r;R;}',NL
+rtn[28],←⊂' rot_c(z,l,r,e,scl(scl(rr-1)));}',NL
 rtn[29],←⊂'NM(trn,"trn",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[29],←⊂'trn_f trn_c;',NL
 rtn[29],←⊂'MF(trn_f){B rr=rnk(r);A t(SHP(1,rr),seq((D)rr-1,0,-1));trn_c(z,t,r,e);}',NL
@@ -773,8 +782,8 @@ rtn[29],←⊂' VEC<I> lv(rr);if(!isint(l))err(11);l.v.as(s32).host(lv.data());'
 rtn[29],←⊂' DOB(rr,if(lv[i]<0||lv[i]>=rr)err(4))VEC<U8> f(rr,0);DOB(rr,f[lv[i]]=1)',NL
 rtn[29],←⊂' U8 t=1;DOB(rr,if(t&&!f[i])t=0;else if(!t&&f[i])err(5))',NL
 rtn[29],←⊂' if(t&&rr<=4){z.s=SHP(rr);DOB(rr,z.s[rr-lv[i]-1]=r.s[rr-i-1])',NL
-rtn[29],←⊂'  switch(rr){case 0:case 1:z.v=r.v;R;}VEC<I> s;DOB(rr,s[rr-lv[i]-1]=(I)(rr-i-1))',NL
-rtn[29],←⊂'  dim4 rs;DO((I)rr,rs[i]=r.s[i])arr rv=moddims(r.v,rs);',NL
+rtn[29],←⊂'  switch(rr){case 0:case 1:z.v=r.v;R;}',NL
+rtn[29],←⊂'  VEC<I> s(rr);DOB(rr,s[rr-lv[i]-1]=(I)(rr-i-1))arr rv=unrav(r);',NL
 rtn[29],←⊂'  switch(rr){CS(2,z.v=flat(reorder(rv,s[0],s[1])))',NL
 rtn[29],←⊂'   CS(3,z.v=flat(reorder(rv,s[0],s[1],s[2])))',NL
 rtn[29],←⊂'   CS(4,z.v=flat(reorder(rv,s[0],s[1],s[2],s[3])))}}',NL
@@ -788,12 +797,10 @@ rtn[29],←⊂'  z.v=r.v(jx);}}',NL
 rtn[30],←⊂'NM(rtf,"rtf",0,0,DID,MFD,DFD,MAD,DAD)',NL
 rtn[30],←⊂'rtf_f rtf_c;',NL
 rtn[30],←⊂'ID(rtf,0,s32)',NL
-rtn[30],←⊂'MF(rtf_f){z.f=1;z.r=r.r;z.s=r.s;z.v=r.r?flip(r.v,r.r-1):r.v;}',NL
-rtn[30],←⊂'MA(rtf_f){z.f=1;if(1!=cnt(ax))err(5);if(!ax.v.isinteger())err(11);',NL
-rtn[30],←⊂' I axv=ax.v.as(s32).scalar<I>();if(axv<0||r.r<=axv)err(4);',NL
-rtn[30],←⊂' z.r=r.r;z.s=r.s;z.v=flip(r.v,r.r-(1+axv));}',NL
+rtn[30],←⊂'MF(rtf_f){rot_c(z,r,e,scl(scl(0)));}',NL
+rtn[30],←⊂'MA(rtf_f){rot_c(z,r,e,ax);}',NL
 rtn[30],←⊂'DA(rtf_f){rot_c(z,l,r,e,ax);}',NL
-rtn[30],←⊂'DF(rtf_f){if(!r.r){B lc=cnt(l);if(lc!=1&&l.r)err(4);z=r;R;}',NL
+rtn[30],←⊂'DF(rtf_f){if(!rnk(r)){B lc=cnt(l);if(lc!=1&&rnk(l))err(4);z=r;R;}',NL
 rtn[30],←⊂' rot_c(z,l,r,e,scl(scl(0)));}',NL
 rtn[31],←⊂'NM(mem,"mem",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[31],←⊂'mem_f mem_c;',NL
@@ -836,27 +843,30 @@ rtn[36],←⊂'',NL
 rtn[37],←⊂'NM(enc,"enc",0,0,DID,MT ,DFD,MT ,MT )',NL
 rtn[37],←⊂'enc_f enc_c;',NL
 rtn[37],←⊂'ID(enc,0,s32)',NL
-rtn[37],←⊂'DF(enc_f){z.f=1;I rk=r.r+l.r;if(rk>4)err(16);dim4 sp=r.s;DO(l.r,sp[i+r.r]=l.s[i])',NL
-rtn[37],←⊂' if(!cnt(sp)){z.r=rk;z.s=sp;z.v=scl(0);R;}dim4 lt=sp,rt=sp;I k=l.r?l.r-1:0;',NL
-rtn[37],←⊂' DO(r.r,rt[i]=1)DO(l.r,lt[i+r.r]=1)array rv=tile(r.v,rt);z.r=rk;z.s=sp;',NL
-rtn[37],←⊂' array sv=flip(scan(flip(l.v,k),k,AF_BINARY_MUL),k);',NL
-rtn[37],←⊂' array lv=tile(array(sv,rt),lt);af::index x[4];x[k]=0;',NL
-rtn[37],←⊂' array dv=sv;dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;',NL
-rtn[37],←⊂' dv=shift(dv,s[0],s[1],s[2],s[3]);dv=tile(array(dv,rt),lt);',NL
-rtn[37],←⊂' array ix=where(lv);z.v=rv.as(s32);z.v(ix)=rem(rv(ix),lv(ix)).as(s32);',NL
-rtn[37],←⊂' ix=where(dv);z.v*=dv!=0;z.v(ix)=(z.v(ix)/dv(ix)).as(s32);}',NL
+rtn[37],←⊂'DF(enc_f){z.f=1;B rr=rnk(r),lr=rnk(l),rk=rr+lr;if(rk>4)err(16);',NL
+rtn[37],←⊂' SHP sp(rk);DOB(rr,sp[i]=r.s[i])DOB(lr,sp[i+rr]=l.s[i])',NL
+rtn[37],←⊂' if(!cnt(sp)){z.s=sp;z.v=scl(0);R;}',NL
+rtn[37],←⊂' dim4 lt(1),rt(1);DO((I)rk,lt[i]=rt[i]=sp[i])I k=lr?(I)lr-1:0;',NL
+rtn[37],←⊂' DO((I)rr,rt[i]=1)DO((I)lr,lt[i+(I)rr]=1)arr rv=tile(unrav(r),rt);z.s=sp;',NL
+rtn[37],←⊂' arr sv=flip(scan(flip(unrav(l),k),k,AF_BINARY_MUL),k);',NL
+rtn[37],←⊂' arr lv=tile(arr(sv,rt),lt);index x[4];x[k]=0;',NL
+rtn[37],←⊂' arr dv=sv;dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;',NL
+rtn[37],←⊂' dv=shift(dv,s[0],s[1],s[2],s[3]);dv=tile(arr(dv,rt),lt);',NL
+rtn[37],←⊂' arr ix=where(lv);z.v=rv.as(s32);z.v(ix)=rem(rv(ix),lv(ix)).as(s32);',NL
+rtn[37],←⊂' ix=where(dv);z.v*=dv!=0;z.v(ix)=(z.v(ix)/dv(ix)).as(s32);',NL
+rtn[37],←⊂' z.v=flat(z.v);}',NL
 rtn[38],←⊂'NM(dec,"dec",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[38],←⊂'dec_f dec_c;',NL
-rtn[38],←⊂'DF(dec_f){z.f=1;I ra=r.r?r.r-1:0;I la=l.r?l.r-1:0;z.r=ra+la;z.s=dim4(1);',NL
-rtn[38],←⊂' if(l.s[0]!=1&&l.s[0]!=r.s[ra]&&r.s[ra]!=1)err(5);',NL
-rtn[38],←⊂' DO(ra,z.s[i]=r.s[i])DO(la,z.s[i+ra]=l.s[i+1])',NL
+rtn[38],←⊂'DF(dec_f){z.f=1;B rr=rnk(r),lr=rnk(l),ra=rr?rr-1:0,la=lr?lr-1:0;z.s=SHP(ra+la);',NL
+rtn[38],←⊂' if(rr&&lr)if(l.s[0]!=1&&l.s[0]!=r.s[ra]&&r.s[ra]!=1)err(5);',NL
+rtn[38],←⊂' DOB(ra,z.s[i]=r.s[i])DOB(la,z.s[i+ra]=l.s[i+1])',NL
 rtn[38],←⊂' if(!cnt(z)){z.v=scl(0);R;}',NL
-rtn[38],←⊂' if(!cnt(r)||!cnt(l)){z.v=constant(0,z.s,s32);R;}',NL
-rtn[38],←⊂' B lc=l.s[0];array x=l.v;if(lc==1){lc=r.s[ra];x=tile(x,(I)lc);}',NL
+rtn[38],←⊂' if(!cnt(r)||!cnt(l)){z.v=constant(0,cnt(z),s32);R;}',NL
+rtn[38],←⊂' B lc=lr?l.s[0]:1;arr x=unrav(l);if(lc==1){lc=r.s[ra];x=tile(x,(I)lc);}',NL
 rtn[38],←⊂' x=flip(scan(x,0,AF_BINARY_MUL,false),0);',NL
-rtn[38],←⊂' x=array(x,lc,x.elements()/lc).as(f64);',NL
-rtn[38],←⊂' array y=array(r.v,cnt(r)/r.s[ra],r.s[ra]).as(f64);',NL
-rtn[38],←⊂' z.v=array(matmul(r.s[ra]==1?tile(y,1,(I)l.s[0]):y,x),z.s);}',NL
+rtn[38],←⊂' x=arr(x,lc,x.elements()/lc).as(f64);',NL
+rtn[38],←⊂' arr y=arr(r.v,cnt(r)/r.s[ra],r.s[ra]).as(f64);',NL
+rtn[38],←⊂' z.v=flat(matmul(r.s[ra]==1?tile(y,1,(I)lc):y,x));}',NL
 rtn[39],←⊂'NM(red,"red",0,0,DID,MT ,DFD,MT ,DAD)',NL
 rtn[39],←⊂'ID(red,1,s32)',NL
 rtn[39],←⊂'red_f red_c;',NL
@@ -885,32 +895,28 @@ rtn[39],←⊂' z.v*=tile(u,(I)s2[0],(I)s2[1],(I)s2[2],(I)s2[3]);',NL
 rtn[39],←⊂' z.v=flat(z.v);}',NL
 rtn[39],←⊂'DF(red_f){A x=r;if(!rnk(r))cat_c(x,r,e);red_c(z,l,x,e,scl(scl(rnk(x)-1)));}',NL
 rtn[39],←⊂'MA(red_o){z.f=1;B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);',NL
-rtn[39],←⊂' dim4 rs;DO((I)rr,rs[i]=r.s[i])',NL
-rtn[39],←⊂' arr rv=moddims(r.v,rs);',NL
 rtn[39],←⊂' if(ar>1)err(4);if(cnt(ax)!=1)err(5);',NL
 rtn[39],←⊂' if(!isint(ax))err(11);I av;ax.v.as(s32).host(&av);',NL
-rtn[39],←⊂' if(av<0)err(11);if(av>=rr)err(4);av=(I)rr-av-1;I rc=(I)rs[av];',NL
-rtn[39],←⊂' A t(rr-1,rv(0));I ib=isbool(r);',NL
-rtn[39],←⊂' DO(av,t.s[i]=rs[i])DO((I)rr-av-1,t.s[av+i]=rs[av+i+1])',NL
-rtn[39],←⊂' dim4 ts;DO((I)rnk(t),ts[i]=t.s[i])',NL
-rtn[39],←⊂' if(!cnt(t)){t.v=scl(0);z=t;R;}',NL
-rtn[39],←⊂' if(!rc){t.v=ll.id(t.s);z=t;R;}',NL
-rtn[39],←⊂' if(1==rc){t.v=r.v;z=t;R;}',NL
-rtn[39],←⊂' if("add"==ll.nm&&ib){t.v=count(rv,av).as(s32);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' if("add"==ll.nm){t.v=moddims(sum(rv.as(f64),av),ts);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' if("mul"==ll.nm){t.v=moddims(product(rv.as(f64),av),ts);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' if("min"==ll.nm){t.v=moddims(min(rv,av),ts);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' if("max"==ll.nm){t.v=moddims(max(rv,av),ts);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' if("and"==ll.nm&&ib){t.v=moddims(allTrue(rv,av),ts);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' if("lor"==ll.nm&&ib){t.v=moddims(anyTrue(rv,av),ts);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' if("neq"==ll.nm&&ib){t.v=moddims((1&sum(rv,0)).as(b8),ts);z=t;z.v=flat(z.v);R;}',NL
-rtn[39],←⊂' map_o mfn_c(ll);af::index x[4];x[av]=rc-1;',NL
-rtn[39],←⊂' t.v=moddims(rv(x[0],x[1],x[2],x[3]),ts);',NL
-rtn[39],←⊂' DO(rc-1,x[av]=rc-i-2;',NL
-rtn[39],←⊂'  mfn_c(t,A(t.s,flat(moddims(rv(x[0],x[1],x[2],x[3]),ts))),t,e))',NL
-rtn[39],←⊂' z=t;z.v=flat(z.v);}',NL
+rtn[39],←⊂' if(av<0)err(11);if(av>=rr)err(4);av=(I)rr-av-1;I rc=(I)r.s[av];',NL
+rtn[39],←⊂' z.s=SHP(rr-1);I ib=isbool(r);',NL
+rtn[39],←⊂' DO(av,z.s[i]=r.s[i])DO((I)rr-av-1,z.s[av+i]=r.s[av+i+1])',NL
+rtn[39],←⊂' if(!cnt(z)){z.v=scl(0);R;}',NL
+rtn[39],←⊂' if(!rc){z.v=ll.id(z.s);R;}',NL
+rtn[39],←⊂' if(1==rc){z.v=r.v;R;}',NL
+rtn[39],←⊂' arr rv=axis(r,av);',NL
+rtn[39],←⊂' if("add"==ll.nm&&ib){z.v=flat(count(rv,1).as(s32));R;}',NL
+rtn[39],←⊂' if("add"==ll.nm){z.v=flat(sum(rv.as(f64),1));R;}',NL
+rtn[39],←⊂' if("mul"==ll.nm){z.v=flat(product(rv.as(f64),1));R;}',NL
+rtn[39],←⊂' if("min"==ll.nm){z.v=flat(min(rv,1));R;}',NL
+rtn[39],←⊂' if("max"==ll.nm){z.v=flat(max(rv,1));R;}',NL
+rtn[39],←⊂' if("and"==ll.nm&&ib){z.v=flat(allTrue(rv,1));R;}',NL
+rtn[39],←⊂' if("lor"==ll.nm&&ib){z.v=flat(anyTrue(rv,1));R;}',NL
+rtn[39],←⊂' if("neq"==ll.nm&&ib){z.v=flat((1&sum(rv,1)).as(b8));R;}',NL
+rtn[39],←⊂' map_o mfn_c(ll);dim4 zs;DO((I)rnk(z),zs[i]=z.s[i])',NL
+rtn[39],←⊂' z.v=flat(rv(span,rc-1,span));',NL
+rtn[39],←⊂' DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))}',NL
 rtn[39],←⊂'MF(red_o){z.f=1;A x=r;if(!rnk(r))cat_c(x,r,e);',NL
-rtn[39],←⊂' red_o mfn(ll);mfn(z,x,e,scl(scl((I)rnk(x)-1)));}',NL
+rtn[39],←⊂' this_c(z,x,e,scl(scl(rnk(x)-1)));}',NL
 rtn[39],←⊂'DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);',NL
 rtn[39],←⊂' dim4 ls,rs;DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])',NL
 rtn[39],←⊂' arr rv=moddims(r.v,rs);',NL
@@ -1038,23 +1044,24 @@ rtn[44],←⊂' A nr=r;if(!nr.r){nr.r=c;nr.s=dim4(1);}',NL
 rtn[44],←⊂' A ax;iot_c(ax,scl(scl(c)),e);tke_c(z,l,nr,e,ax);}',NL
 rtn[45],←⊂'NM(drp,"drp",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[45],←⊂'drp_f drp_c;',NL
-rtn[45],←⊂'MF(drp_f){z.f=1;if(r.r)err(16);z=r;}',NL
+rtn[45],←⊂'MF(drp_f){z.f=1;if(rnk(r))err(16);z=r;}',NL
 rtn[45],←⊂'MA(drp_f){err(16);}',NL
-rtn[45],←⊂'DA(drp_f){z.f=1;B c=cnt(l),ac=cnt(ax);if(ax.r>1||l.r>1)err(4);if(ac!=c)err(5);',NL
-rtn[45],←⊂' if(c>4)err(16);',NL
-rtn[45],←⊂' if(!isint(ax))err(11);I m[4]={0,0,0,0},av[4];ax.v.as(s32).host(av);',NL
-rtn[45],←⊂' DOB(ac,if(av[i]<0)err(11);if(av[i]>=r.r)err(4))',NL
+rtn[45],←⊂'DA(drp_f){z.f=1;B c=cnt(l),ac=cnt(ax),rr=rnk(r),lr=rnk(l),axr=rnk(ax);',NL
+rtn[45],←⊂' if(axr>1||lr>1)err(4);if(ac!=c)err(5);if(c>4)err(16);if(!isint(ax))err(11);',NL
+rtn[45],←⊂' I m[4]={0,0,0,0},av[4];ax.v.as(s32).host(av);',NL
+rtn[45],←⊂' DOB(ac,if(av[i]<0)err(11);if(av[i]>=rr)err(4))',NL
 rtn[45],←⊂' DOB(ac,if(m[av[i]])err(11);m[av[i]]=1)',NL
 rtn[45],←⊂' if(!c){z=r;R;}if(!isint(l))err(11);I lv[4];l.v.as(s32).host(lv);',NL
-rtn[45],←⊂' seq it[4],ix[4];z.r=r.r;z.s=r.s;',NL
-rtn[45],←⊂' DO((I)c,{U j=z.r-av[i]-1;I a=std::abs(lv[i]);z.s[j]=r.s[j]-a;',NL
+rtn[45],←⊂' seq it[4],ix[4];z.s=r.s;',NL
+rtn[45],←⊂' DO((I)c,{B j=rr-av[i]-1;I a=std::abs(lv[i]);z.s[j]=r.s[j]-a;',NL
 rtn[45],←⊂'  if(a>=r.s[j]){z.s[j]=0;ix[j]=seq(0);it[j]=seq(0);}',NL
 rtn[45],←⊂'  else if(lv[i]<0){ix[j]=seq((D)z.s[j]);it[j]=ix[j];}',NL
 rtn[45],←⊂'  else{ix[j]=seq(a,(D)r.s[j]-1);it[j]=ix[j]-(D)a;}})',NL
-rtn[45],←⊂' if(!cnt(z)){z.v=scl(0);R;}z.v=array(z.s,r.v.type());z.v=0;',NL
-rtn[45],←⊂' z.v(it[0],it[1],it[2],it[3])=r.v(ix[0],ix[1],ix[2],ix[3]);}',NL
-rtn[45],←⊂'DF(drp_f){z.f=1;I c=(I)cnt(l);if(c>4)err(16);',NL
-rtn[45],←⊂' A nr=r;if(!nr.r){nr.r=c;nr.s=dim4(1);}',NL
+rtn[45],←⊂' if(!cnt(z)){z.v=scl(0);R;}z.v=arr(cnt(z),r.v.type());z.v=0;arr zv=unrav(z);',NL
+rtn[45],←⊂' zv(it[0],it[1],it[2],it[3])=unrav(r)(ix[0],ix[1],ix[2],ix[3]);',NL
+rtn[45],←⊂' z.v=flat(zv);}',NL
+rtn[45],←⊂'DF(drp_f){z.f=1;B c=cnt(l);if(c>4)err(16);',NL
+rtn[45],←⊂' A nr=r;if(!rnk(nr)){nr.s=SHP(c,1);}',NL
 rtn[45],←⊂' A ax;iot_c(ax,scl(scl(c)),e);drp_c(z,l,nr,e,ax);}',NL
 rtn[46],←⊂'OM(map,"map",1,1,MFD,DFD,MT ,MT )',NL
 rtn[46],←⊂'MF(map_o){z.f=1;if(scm(ll)){ll(z,r,e);R;}',NL
@@ -1104,40 +1111,44 @@ rtn[48],←⊂' map_o mfn_c(rr);red_o rfn_c(ll);mfn_c(X,X,Y,e);rfn_c(X,X,e);',NL
 rtn[48],←⊂' t.v=X.v;z=t;}',NL
 rtn[48],←⊂'',NL
 rtn[49],←⊂'OD(rnk,"rnk",scm(l),0,MFD,DFD,MT ,MT )',NL
-rtn[49],←⊂'MF(rnk_o){z.f=1;if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();',NL
-rtn[49],←⊂' if(scm(ll)||cr>=r.r){ll(z,r,e);R;}',NL
-rtn[49],←⊂' if(cr<=-r.r||!cr){map_o f(ll);f(z,r,e);R;}',NL
-rtn[49],←⊂' if(cr<0)cr=r.r+cr;if(cr>3)err(10);I dr=r.r-cr;',NL
-rtn[49],←⊂' dim4 sp(1);DO(dr,sp[cr]*=r.s[i+cr])DO(cr,sp[i]=r.s[i])',NL
-rtn[49],←⊂' std::vector<A> tv(sp[cr]);A b(cr+1,sp,array(r.v,sp));',NL
-rtn[49],←⊂' I mr=0;dim4 ms(1);dtype mt=b8;',NL
-rtn[49],←⊂' DO((I)sp[cr],A t;sqd_c(t,scl(scl(i)),b,e);ll(tv[i],t,e);',NL
-rtn[49],←⊂'  t=tv[i];if(mr<t.r)mr=t.r;if(mr>3)err(10);mt=mxt(mt,t);',NL
-rtn[49],←⊂'  DO(4,if(ms[i]<t.s[i])ms[i]=t.s[i]))',NL
-rtn[49],←⊂' B mc=cnt(ms);array v(mc*sp[cr],mt);v=0;',NL
-rtn[49],←⊂' DO((I)sp[cr],seq ix((D)cnt(tv[i]));v(ix+(D)(i*mc))=flat(tv[i].v))',NL
-rtn[49],←⊂' z.r=mr+dr;z.s=ms;z.s[mr]=sp[cr];z.v=array(v,z.s);}',NL
-rtn[49],←⊂'DF(rnk_o){z.f=1;I cl,cr,dl,dr;dim4 sl(1),sr(1);array wwv=ww.v.as(s32);',NL
-rtn[49],←⊂' if(cnt(ww)==1)cl=cr=wwv.scalar<I>();',NL
+rtn[49],←⊂'MF(rnk_o){z.f=1;I rr=(I)rnk(r);',NL
+rtn[49],←⊂' if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();',NL
+rtn[49],←⊂' if(scm(ll)||cr>=rr){ll(z,r,e);R;}',NL
+rtn[49],←⊂' if(cr<=-rr||!cr){map_o f(ll);f(z,r,e);R;}',NL
+rtn[49],←⊂' if(cr<0)cr=rr+cr;if(cr>3)err(10);I dr=rr-cr;',NL
+rtn[49],←⊂' A b(cr+1,r.v);DO(dr,b.s[cr]*=r.s[i+cr])DO(cr,b.s[i]=r.s[i])',NL
+rtn[49],←⊂' VEC<A> tv(b.s[cr]);I mr=0;SHP ms;dtype mt=b8;',NL
+rtn[49],←⊂' DO((I)b.s[cr],A t;sqd_c(t,scl(scl(i)),b,e);ll(tv[i],t,e);',NL
+rtn[49],←⊂'  t=tv[i];I tr=(I)rnk(t);if(tr>mr)mr=tr;if(mr>3)err(10);mt=mxt(mt,t);',NL
+rtn[49],←⊂'  ms.resize(mr,1);',NL
+rtn[49],←⊂'  DO(tr<mr?tr:mr,B mi=mr-i-1;B ti=tr-i-1;if(ms[mi]<t.s[ti])ms[mi]=t.s[ti]))',NL
+rtn[49],←⊂' B mc=cnt(ms);array v(mc*b.s[cr],mt);v=0;',NL
+rtn[49],←⊂' DO((I)b.s[cr],seq ix((D)cnt(tv[i]));v(ix+(D)(i*mc))=flat(tv[i].v))',NL
+rtn[49],←⊂' z.s=SHP(mr+dr);DO(dr,z.s[mr+i]=r.s[cr+i])DO(mr,z.s[i]=ms[i])',NL
+rtn[49],←⊂' z.v=v;}',NL
+rtn[49],←⊂'DF(rnk_o){z.f=1;I rr=(I)rnk(r),lr=(I)rnk(l),cl,cr,dl,dr;dim4 sl(1),sr(1);',NL
+rtn[49],←⊂' arr wwv=ww.v.as(s32);if(cnt(ww)==1)cl=cr=wwv.scalar<I>();',NL
 rtn[49],←⊂' else if(cnt(ww)==2){cl=wwv.scalar<I>();cr=wwv(1).scalar<I>();}',NL
 rtn[49],←⊂' else err(4);',NL
-rtn[49],←⊂' if(cl>l.r)cl=l.r;if(cr>r.r)cr=r.r;if(cl<-l.r)cl=0;if(cr<-r.r)cr=0;',NL
-rtn[49],←⊂' if(cl<0)cl=l.r+cl;if(cr<0)cr=r.r+cr;if(cr>3||cl>3)err(10);',NL
-rtn[49],←⊂' dl=l.r-cl;dr=r.r-cr;if(dl!=dr&&dl&&dr)err(4);',NL
+rtn[49],←⊂' if(cl>lr)cl=lr;if(cr>rr)cr=rr;if(cl<-lr)cl=0;if(cr<-rr)cr=0;',NL
+rtn[49],←⊂' if(cl<0)cl=lr+cl;if(cr<0)cr=rr+cr;if(cr>3||cl>3)err(10);',NL
+rtn[49],←⊂' dl=lr-cl;dr=rr-cr;if(dl!=dr&&dl&&dr)err(4);',NL
 rtn[49],←⊂' if(dl==dr)DO(dr,if(l.s[i+cl]!=r.s[i+cr])err(5))',NL
 rtn[49],←⊂' DO(dl,sl[cl]*=l.s[i+cl])DO(cl,sl[i]=l.s[i])',NL
 rtn[49],←⊂' DO(dr,sr[cr]*=r.s[i+cr])DO(cr,sr[i]=r.s[i])',NL
-rtn[49],←⊂' B sz=dl>dr?sl[cl]:sr[cr];std::vector<A> tv(sz);',NL
-rtn[49],←⊂' A a(cl+1,sl,array(l.v,sl));A b(cr+1,sr,array(r.v,sr));',NL
-rtn[49],←⊂' I mr=0;dim4 ms(1);dtype mt=b8;',NL
+rtn[49],←⊂' B sz=dl>dr?sl[cl]:sr[cr];VEC<A> tv(sz);',NL
+rtn[49],←⊂' A a(cl+1,l.v);DO(cl+1,a.s[i]=sl[i])A b(cr+1,r.v);DO(cr+1,b.s[i]=sr[i])',NL
+rtn[49],←⊂' I mr=0;SHP ms;dtype mt=b8;',NL
 rtn[49],←⊂' DO((I)sz,A ta;A tb;A ai=scl(scl((I)(i%sl[cl])));A bi=scl(scl((I)(i%sr[cr])));',NL
 rtn[49],←⊂'  sqd_c(ta,ai,a,e);sqd_c(tb,bi,b,e);ll(tv[i],ta,tb,e);',NL
-rtn[49],←⊂'  if(mr<tv[i].r)mr=tv[i].r;mt=mxt(mt,tv[i]);A t=tv[i];',NL
-rtn[49],←⊂'  DO(4,if(ms[i]<t.s[i])ms[i]=t.s[i]))',NL
-rtn[49],←⊂' B mc=cnt(ms);array v(mc*sz,mt);v=0;',NL
+rtn[49],←⊂'  I tr=(I)rnk(tv[i]);if(mr<tr)mr=rr;mt=mxt(mt,tv[i]);A t=tv[i];',NL
+rtn[49],←⊂'  ms.resize(mr,1);',NL
+rtn[49],←⊂'  DO(tr<mr?tr:mr,B mi=mr-i-1;B ti=tr-i-1;if(ms[mi]<t.s[ti])ms[mi]=t.s[ti]))',NL
+rtn[49],←⊂' B mc=cnt(ms);arr v(mc*sz,mt);v=0;',NL
 rtn[49],←⊂' DOB(sz,seq ix((D)cnt(tv[i]));v(ix+(D)(i*mc))=flat(tv[i].v))',NL
-rtn[49],←⊂' z.r=mr+(dr>dl?dr:dl);z.s=ms;z.s[mr]=sz;z.v=array(v,z.s);}',NL
-rtn[49],←⊂'',NL
+rtn[49],←⊂' if(dr>dl){z.s=SHP(mr+dr);DO(dr,z.s[mr+i]=r.s[cr+i])}',NL
+rtn[49],←⊂' else{z.s=SHP(mr+dl);DO(dl,z.s[mr+i]=l.s[cl+i])}',NL
+rtn[49],←⊂' DO(mr,z.s[i]=ms[i])z.v=v;}',NL
 rtn[50],←⊂'OD(pow,"pow",scm(l),scd(l),MFD,DFD,MT ,MT )',NL
 rtn[50],←⊂'MF(pow_o){z.f=1;if(fr){A t;A v=r;',NL
 rtn[50],←⊂'  do{A u;ll(u,v,e);rr(t,u,v,e);if(rnk(t))err(5);v=u;}',NL

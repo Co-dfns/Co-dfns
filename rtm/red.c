@@ -26,32 +26,28 @@ DA(red_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r),zr;if(lr>4||rr>4)err(16);
  z.v=flat(z.v);}
 DF(red_f){A x=r;if(!rnk(r))cat_c(x,r,e);red_c(z,l,x,e,scl(scl(rnk(x)-1)));}
 MA(red_o){z.f=1;B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
- dim4 rs;DO((I)rr,rs[i]=r.s[i])
- arr rv=moddims(r.v,rs);
  if(ar>1)err(4);if(cnt(ax)!=1)err(5);
  if(!isint(ax))err(11);I av;ax.v.as(s32).host(&av);
- if(av<0)err(11);if(av>=rr)err(4);av=(I)rr-av-1;I rc=(I)rs[av];
- A t(rr-1,rv(0));I ib=isbool(r);
- DO(av,t.s[i]=rs[i])DO((I)rr-av-1,t.s[av+i]=rs[av+i+1])
- dim4 ts;DO((I)rnk(t),ts[i]=t.s[i])
- if(!cnt(t)){t.v=scl(0);z=t;R;}
- if(!rc){t.v=ll.id(t.s);z=t;R;}
- if(1==rc){t.v=r.v;z=t;R;}
- if("add"==ll.nm&&ib){t.v=count(rv,av).as(s32);z=t;z.v=flat(z.v);R;}
- if("add"==ll.nm){t.v=moddims(sum(rv.as(f64),av),ts);z=t;z.v=flat(z.v);R;}
- if("mul"==ll.nm){t.v=moddims(product(rv.as(f64),av),ts);z=t;z.v=flat(z.v);R;}
- if("min"==ll.nm){t.v=moddims(min(rv,av),ts);z=t;z.v=flat(z.v);R;}
- if("max"==ll.nm){t.v=moddims(max(rv,av),ts);z=t;z.v=flat(z.v);R;}
- if("and"==ll.nm&&ib){t.v=moddims(allTrue(rv,av),ts);z=t;z.v=flat(z.v);R;}
- if("lor"==ll.nm&&ib){t.v=moddims(anyTrue(rv,av),ts);z=t;z.v=flat(z.v);R;}
- if("neq"==ll.nm&&ib){t.v=moddims((1&sum(rv,0)).as(b8),ts);z=t;z.v=flat(z.v);R;}
- map_o mfn_c(ll);af::index x[4];x[av]=rc-1;
- t.v=moddims(rv(x[0],x[1],x[2],x[3]),ts);
- DO(rc-1,x[av]=rc-i-2;
-  mfn_c(t,A(t.s,flat(moddims(rv(x[0],x[1],x[2],x[3]),ts))),t,e))
- z=t;z.v=flat(z.v);}
+ if(av<0)err(11);if(av>=rr)err(4);av=(I)rr-av-1;I rc=(I)r.s[av];
+ z.s=SHP(rr-1);I ib=isbool(r);
+ DO(av,z.s[i]=r.s[i])DO((I)rr-av-1,z.s[av+i]=r.s[av+i+1])
+ if(!cnt(z)){z.v=scl(0);R;}
+ if(!rc){z.v=ll.id(z.s);R;}
+ if(1==rc){z.v=r.v;R;}
+ arr rv=axis(r,av);
+ if("add"==ll.nm&&ib){z.v=flat(count(rv,1).as(s32));R;}
+ if("add"==ll.nm){z.v=flat(sum(rv.as(f64),1));R;}
+ if("mul"==ll.nm){z.v=flat(product(rv.as(f64),1));R;}
+ if("min"==ll.nm){z.v=flat(min(rv,1));R;}
+ if("max"==ll.nm){z.v=flat(max(rv,1));R;}
+ if("and"==ll.nm&&ib){z.v=flat(allTrue(rv,1));R;}
+ if("lor"==ll.nm&&ib){z.v=flat(anyTrue(rv,1));R;}
+ if("neq"==ll.nm&&ib){z.v=flat((1&sum(rv,1)).as(b8));R;}
+ map_o mfn_c(ll);dim4 zs;DO((I)rnk(z),zs[i]=z.s[i])
+ z.v=flat(rv(span,rc-1,span));
+ DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))}
 MF(red_o){z.f=1;A x=r;if(!rnk(r))cat_c(x,r,e);
- red_o mfn(ll);mfn(z,x,e,scl(scl((I)rnk(x)-1)));}
+ this_c(z,x,e,scl(scl(rnk(x)-1)));}
 DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
  dim4 ls,rs;DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])
  arr rv=moddims(r.v,rs);

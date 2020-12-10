@@ -35,7 +35,7 @@ using namespace af;
 #define S struct
 #define Z static
 #define R return
-#define this_c *this
+#define this_c (*this)
 #define VEC std::vector
 #define RANK(lp) ((lp)->p->r)
 #define TYPE(lp) ((lp)->p->t)

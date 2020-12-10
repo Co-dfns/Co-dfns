@@ -6,8 +6,8 @@ DF(trn_f){z.f=1;B lr=rnk(l),rr=rnk(r);if(lr>1||cnt(l)!=rr)err(5);
  DOB(rr,if(lv[i]<0||lv[i]>=rr)err(4))VEC<U8> f(rr,0);DOB(rr,f[lv[i]]=1)
  U8 t=1;DOB(rr,if(t&&!f[i])t=0;else if(!t&&f[i])err(5))
  if(t&&rr<=4){z.s=SHP(rr);DOB(rr,z.s[rr-lv[i]-1]=r.s[rr-i-1])
-  switch(rr){case 0:case 1:z.v=r.v;R;}VEC<I> s;DOB(rr,s[rr-lv[i]-1]=(I)(rr-i-1))
-  dim4 rs;DO((I)rr,rs[i]=r.s[i])arr rv=moddims(r.v,rs);
+  switch(rr){case 0:case 1:z.v=r.v;R;}
+  VEC<I> s(rr);DOB(rr,s[rr-lv[i]-1]=(I)(rr-i-1))arr rv=unrav(r);
   switch(rr){CS(2,z.v=flat(reorder(rv,s[0],s[1])))
    CS(3,z.v=flat(reorder(rv,s[0],s[1],s[2])))
    CS(4,z.v=flat(reorder(rv,s[0],s[1],s[2],s[3])))}}
