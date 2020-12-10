@@ -46,8 +46,7 @@ MA(red_o){z.f=1;B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
  map_o mfn_c(ll);dim4 zs;DO((I)rnk(z),zs[i]=z.s[i])
  z.v=flat(rv(span,rc-1,span));
  DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))}
-MF(red_o){z.f=1;A x=r;if(!rnk(r))cat_c(x,r,e);
- this_c(z,x,e,scl(scl(rnk(x)-1)));}
+MF(red_o){A x=r;if(!rnk(r))cat_c(x,r,e);this_c(z,x,e,scl(scl(rnk(x)-1)));}
 DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
  dim4 ls,rs;DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])
  arr rv=moddims(r.v,rs);

@@ -915,8 +915,7 @@ rtn[39],←⊂' if("neq"==ll.nm&&ib){z.v=flat((1&sum(rv,1)).as(b8));R;}',NL
 rtn[39],←⊂' map_o mfn_c(ll);dim4 zs;DO((I)rnk(z),zs[i]=z.s[i])',NL
 rtn[39],←⊂' z.v=flat(rv(span,rc-1,span));',NL
 rtn[39],←⊂' DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))}',NL
-rtn[39],←⊂'MF(red_o){z.f=1;A x=r;if(!rnk(r))cat_c(x,r,e);',NL
-rtn[39],←⊂' this_c(z,x,e,scl(scl(rnk(x)-1)));}',NL
+rtn[39],←⊂'MF(red_o){A x=r;if(!rnk(r))cat_c(x,r,e);this_c(z,x,e,scl(scl(rnk(x)-1)));}',NL
 rtn[39],←⊂'DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);',NL
 rtn[39],←⊂' dim4 ls,rs;DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])',NL
 rtn[39],←⊂' arr rv=moddims(r.v,rs);',NL
@@ -945,23 +944,7 @@ rtn[40],←⊂'rdf_f rdf_c;',NL
 rtn[40],←⊂'DA(rdf_f){red_c(z,l,r,e,ax);}',NL
 rtn[40],←⊂'DF(rdf_f){A x=r;if(!rnk(r))cat_c(x,r,e);red_c(z,l,x,e,scl(scl(0)));}',NL
 rtn[40],←⊂'MA(rdf_o){red_o mfn_c(ll);mfn_c(z,r,e,ax);}',NL
-rtn[40],←⊂'MF(rdf_o){z.f=1;B rr=rnk(r);if(rr>4)err(16);',NL
-rtn[40],←⊂' dim4 rs;DO((I)rr,rs[i]=r.s[i])',NL
-rtn[40],←⊂' arr rv=moddims(r.v,rs);',NL
-rtn[40],←⊂' A t(rr?rr-1:0,rv(0));I tr=(I)rnk(t);DO((I)tr,t.s[i]=r.s[i])',NL
-rtn[40],←⊂' I rc=(I)r.s[tr];I zc=(I)cnt(t);map_o mfn_c(ll);',NL
-rtn[40],←⊂' if(!zc){t.v=scl(0);z=t;R;}if(!rc){t.v=ll.id(t.s);z=t;R;}',NL
-rtn[40],←⊂' if(1==rc){t.v=r.v;z=t;R;}',NL
-rtn[40],←⊂' if("add"==ll.nm){if(r.v.isbool())t.v=count(rv,tr).as(s32);',NL
-rtn[40],←⊂'  else t.v=sum(rv.as(f64),tr);z=t;z.v=flat(z.v);R;}',NL
-rtn[40],←⊂' if("mul"==ll.nm){t.v=product(rv.as(f64),tr);z=t;z.v=flat(z.v);R;}',NL
-rtn[40],←⊂' if("min"==ll.nm){t.v=min(rv,tr);z=t;z.v=flat(z.v);R;}',NL
-rtn[40],←⊂' if("max"==ll.nm){t.v=max(rv,tr);z=t;z.v=flat(z.v);R;}',NL
-rtn[40],←⊂' if("and"==ll.nm){t.v=allTrue(rv,tr);z=t;z.v=flat(z.v);R;}',NL
-rtn[40],←⊂' if("lor"==ll.nm){t.v=anyTrue(rv,tr);z=t;z.v=flat(z.v);R;}',NL
-rtn[40],←⊂' af::index x[4];x[tr]=rc-1;t.v=flat(rv(x[0],x[1],x[2],x[3]));',NL
-rtn[40],←⊂' DO(rc-1,x[tr]=rc-(i+2);',NL
-rtn[40],←⊂'  mfn_c(t,A(t.s,flat(rv(x[0],x[1],x[2],x[3]))),t,e));z=t;}',NL
+rtn[40],←⊂'MF(rdf_o){A x=r;if(!rnk(r))cat_c(x,r,e);this_c(z,x,e,scl(scl(0)));}',NL
 rtn[40],←⊂'DA(rdf_o){red_o mfn_c(ll);mfn_c(z,l,r,e,ax);}',NL
 rtn[40],←⊂'DF(rdf_o){if(!rnk(r))err(4);red_o mfn_c(ll);mfn_c(z,l,r,e,scl(scl(0)));}',NL
 rtn[41],←⊂'NM(scn,"scn",0,0,DID,MT ,DFD,MT ,DAD)',NL
