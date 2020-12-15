@@ -8,8 +8,8 @@ MA(cat_f){z.f=1;B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);
   if(c>rr)err(4);}
  I xt=(!ac||(ac==1&&!isint(axv[0])));if(rr==4&&xt)err(16);
  z=r;B zr=rr;if(!xt&&ac==1)R;DO((I)ac,axv[i]=ceil(rr-axv[i]-1))
- if(xt){zr++;z.s=SHP(zr);DOB(rr,z.s[i]=r.s[i])B pt=ac?(B)axv[0]:0;
-  DOB(rr-pt,z.s[zr-i-1]=z.s[zr-i-2])z.s[pt]=1;R;}
+ if(xt){zr++;SHP sp(zr);DOB(rr,sp[i]=r.s[i])B pt=ac?(B)axv[0]:0;
+  DOB(rr-pt,sp[zr-i-1]=sp[zr-i-2])sp[pt]=1;z.s=sp;R;}
  B s=(B)axv[ac-1],ei=(B)axv[0],c=1;
  DOB(ac-1,z.s[s]*=z.s[s+i+1])DOB(zr-ei-1,z.s[s+i+1]=z.s[ei+i+1])}
 DA(cat_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);

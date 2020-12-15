@@ -1,14 +1,16 @@
 ﻿NM(fnd,"fnd",0,0,MT ,MT ,DFD,MT ,MT )
 fnd_f fnd_c;
-DF(fnd_f){z.f=1;A t(r.r,r.s,array(r.s,b8));if(!cnt(t)){t.v=scl(0);z=t;R;}
- t.v=0;if(l.r>r.r){z=t;R;}DO(4,if(l.s[i]>r.s[i]){z=t;R;})
- if(!cnt(l)){t.v=1;z=t;R;}dim4 sp;DO(4,sp[i]=1+(t.s[i]-l.s[i]))
- seq x[4];DO(4,x[i]=seq((D)sp[i]))t.v(x[0],x[1],x[2],x[3])=1;
- DO((I)l.s[0],I m=i;
-  DO((I)l.s[1],I k=i;
-   DO((I)l.s[2],I j=i;
-    DO((I)l.s[3],t.v(x[0],x[1],x[2],x[3])=t.v(x[0],x[1],x[2],x[3])
-     &(tile(l.v(m,k,j,i),sp)
-      ==r.v(x[0]+(D)m,x[1]+(D)k,x[2]+(D)j,x[3]+(D)i))))))
- z=t;}
-
+DF(fnd_f){z.f=1;B lr=rnk(l),rr=rnk(r),rc=cnt(r),lc=cnt(l);
+ if(!rc){z=r;R;}z=r;z.v=arr(rc,b8);z.v=0;
+ if(lr>rr)R;DOB(lr,if(l.s[i]>r.s[i])R;)if(!lc){z.v=1;R;}
+ if(lr>4||rr>4)err(16);
+ dim4 sp(1);DO((I)lr,sp[i]=r.s[i]-l.s[i]+1)
+ dim4 ls(1);DO((I)lr,ls[i]=l.s[i])
+ seq x[4];DO(4,x[i]=seq((D)sp[i]))
+ z.v=unrav(z);z.v(x[0],x[1],x[2],x[3])=1;arr lv=unrav(l),rv=unrav(r);
+ DO((I)ls[0],I m=i;
+  DO((I)ls[1],I k=i;
+   DO((I)ls[2],I j=i;
+    DO((I)ls[3],z.v(x[0],x[1],x[2],x[3])=z.v(x[0],x[1],x[2],x[3])
+     &(tile(lv(m,k,j,i),sp)
+      ==rv(x[0]+(D)m,x[1]+(D)k,x[2]+(D)j,x[3]+(D)i))))))}

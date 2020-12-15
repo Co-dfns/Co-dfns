@@ -3,7 +3,7 @@ ID(red,1,s32)
 red_f red_c;
 OM(red,"red",0,0,MFD,DFD,MAD,DAD)
 DA(red_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r),zr;if(lr>4||rr>4)err(16);
- dim4 zs,ls,rs;DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])
+ dim4 zs(1),ls(1),rs(1);DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])
  array lv=moddims(l.v,ls),rv=moddims(r.v,rs);
  if(ar>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
  I axv=ax.v.as(s32).scalar<I>();if(axv<0)err(11);if(axv>=rr)err(4);

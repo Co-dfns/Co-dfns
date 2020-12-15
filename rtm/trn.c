@@ -1,7 +1,9 @@
 ﻿NM(trn,"trn",0,0,MT ,MFD,DFD,MT ,MT )
 trn_f trn_c;
-MF(trn_f){B rr=rnk(r);A t(SHP(1,rr),seq((D)rr-1,0,-1));trn_c(z,t,r,e);}
+MF(trn_f){B rr=rnk(r);if(rr<=1){z=r;R;}
+ A t(SHP(1,rr),seq((D)rr-1,0,-1));trn_c(z,t,r,e);}
 DF(trn_f){z.f=1;B lr=rnk(l),rr=rnk(r);if(lr>1||cnt(l)!=rr)err(5);
+ if(rr<=1){z=r;R;}
  VEC<I> lv(rr);if(!isint(l))err(11);l.v.as(s32).host(lv.data());
  DOB(rr,if(lv[i]<0||lv[i]>=rr)err(4))VEC<U8> f(rr,0);DOB(rr,f[lv[i]]=1)
  U8 t=1;DOB(rr,if(t&&!f[i])t=0;else if(!t&&f[i])err(5))
