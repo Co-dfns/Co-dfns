@@ -1,8 +1,6 @@
 ﻿OM(oup,"oup",0,0,MT,DFD,MT ,MT )
-DF(oup_o){z.f=1;A t(l.r+r.r,r.s,r.v(0));if(t.r>4)err(10);
- DO(l.r,t.s[i+r.r]=l.s[i])if(!cnt(t)){t.v=scl(0);z=t;R;}
- array x(flat(l.v),1,cnt(l));array y(flat(r.v),cnt(r),1);
- dim4 ts(cnt(r),cnt(l));x=tile(x,(I)ts[0],1);y=tile(y,1,(I)ts[1]);
- map_o mfn(ll);A xa(2,ts,x);A ya(2,ts,y);mfn(xa,xa,ya,e);
- t.v=array(xa.v,t.s);z=t;}
-
+DF(oup_o){z.f=1;B lr=rnk(l),rr=rnk(r),lc=cnt(l),rc=cnt(r);
+ SHP sp(lr+rr);DO((I)rr,sp[i]=r.s[i])DO((I)lr,sp[i+rr]=l.s[i])
+ if(!cnt(sp)){z.s=sp;z.v=scl(0);R;}
+ arr x(l.v,1,lc),y(r.v,rc,1);x=flat(tile(x,(I)rc,1));y=flat(tile(y,1,(I)lc));
+ map_o mfn_c(ll);A xa(sp,x),ya(sp,y);mfn_c(z,xa,ya,e);}
