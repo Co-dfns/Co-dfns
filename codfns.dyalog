@@ -1,5 +1,5 @@
 :Namespace codfns
-⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (1 3 0) '/opt/arrayfire' 'cuda'
+⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (1 4 0) '/opt/arrayfire' 'cuda'
 VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
 VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
 VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
