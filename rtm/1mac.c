@@ -31,7 +31,7 @@
   if(lr!=rr)err(4);err(99);}\
  DA(n##_f){z.f=1;A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\
   B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\
-  VEC<D> axd(rk);SHP axv(rk);ax.v.as(f64).host(axd.data());\
+  VEC<D> axd(rk);SHP axv(rk);if(rk)ax.v.as(f64).host(axd.data());\
   DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])\
   DOB(rk,if(axv[i]<0||br<=axv[i])err(11))\
   VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)\

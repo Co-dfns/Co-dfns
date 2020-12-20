@@ -2,7 +2,7 @@
 cat_f cat_c;
 MF(cat_f){z.f=1;z.s=SHP(1,cnt(r));z.v=flat(r.v);}
 MA(cat_f){z.f=1;B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);
- VEC<D> axv(ac);ax.v.as(f64).host(axv.data());
+ VEC<D> axv(ac);if(ac)ax.v.as(f64).host(axv.data());
  if(ac==1&&(axv[0]<=-1||rr<=axv[0]))err(4);
  if(ac>1){I c=(I)axv[0];if(c<0)err(11);DO((I)ac,if(axv[i]!=c++)err(11))
   if(c>rr)err(4);}
@@ -10,9 +10,11 @@ MA(cat_f){z.f=1;B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);
  z=r;B zr=rr;if(!xt&&ac==1)R;DO((I)ac,axv[i]=ceil(rr-axv[i]-1))
  if(xt){zr++;SHP sp(zr);DOB(rr,sp[i]=r.s[i])B pt=ac?(B)axv[0]:0;
   DOB(rr-pt,sp[zr-i-1]=sp[zr-i-2])sp[pt]=1;z.s=sp;R;}
- B s=(B)axv[ac-1],ei=(B)axv[0],c=1;
- DOB(ac-1,z.s[s]*=z.s[s+i+1])DOB(zr-ei-1,z.s[s+i+1]=z.s[ei+i+1])}
+ B s=(B)axv[ac-1],ei=(B)axv[0];
+ zr=rr-ac+1;z.s=SHP(zr,1);DOB(s,z.s[i]=r.s[i])
+ DOB(ac,z.s[s]*=r.s[s+i])DOB(rr-ei-1,z.s[s+i+1]=r.s[ei+i+1])}
 DA(cat_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);
+ if(lr>4||rr>4)err(16);
  if(ar>1)err(4);if(cnt(ax)!=1)err(5);D ox=ax.v.as(f64).scalar<D>();
  B rk=lr>rr?lr:rr;if(ox<=-1)err(11);if(ox>=rk)err(4);
  if(lr&&rr&&std::abs((I)lr-rr)>1)err(4);
