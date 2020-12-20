@@ -5,39 +5,37 @@
  S n##_k:MOK{V operator()(FN*&f,FN&l){f=new n##_o(l);}};
 #define OD(n,nm,sm,sd,mf,df,ma,da) S n##_o:DOP{mf;df;ma;da;\
  n##_o(FN&l,FN&r):DOP(nm,sm,sd,l,r){}\
- n##_o(const A&l,FN&r):DOP(nm,sm,sd,l,r){}\
- n##_o(FN&l,const A&r):DOP(nm,sm,sd,l,r){}};\
+ n##_o(CA&l,FN&r):DOP(nm,sm,sd,l,r){}\
+ n##_o(FN&l,CA&r):DOP(nm,sm,sd,l,r){}};\
  S n##_k:DOK{V operator()(FN*&f,FN&l,FN&r){f=new n##_o(l,r);}\
-  V operator()(FN*&f,const A&l,FN&r){f=new n##_o(l,r);}\
-  V operator()(FN*&f,FN&l,const A&r){f=new n##_o(l,r);}};
+  V operator()(FN*&f,CA&l,FN&r){f=new n##_o(l,r);}\
+  V operator()(FN*&f,FN&l,CA&r){f=new n##_o(l,r);}};
 #define MT
-#define DID inline array id(dim4)
-#define MFD inline V operator()(A&,const A&,ENV&)
-#define MAD inline V operator()(A&,const A&,ENV&,const A&)
-#define DFD inline V operator()(A&,const A&,const A&,ENV&)
-#define DAD inline V operator()(A&,const A&,const A&,ENV&,const A&)
-#define DI(n) inline array n::id(dim4 s)
-#define ID(n,x,t) DI(n##_f){R constant(x,s,t);}
-#define MF(n) inline V n::operator()(A&z,const A&r,ENV&e)
-#define MA(n) inline V n::operator()(A&z,const A&r,ENV&e,const A&ax)
-#define DF(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e)
-#define DA(n) inline V n::operator()(A&z,const A&l,const A&r,ENV&e,const A&ax)
+#define DID inline array id(SHP)
+#define MFD inline V operator()(A&,CA&,ENV&)
+#define MAD inline V operator()(A&,CA&,ENV&,CA&)
+#define DFD inline V operator()(A&,CA&,CA&,ENV&)
+#define DAD inline V operator()(A&,CA&,CA&,ENV&,CA&)
+#define DI(n) inline array n::id(SHP s)
+#define ID(n,x,t) DI(n##_f){R constant(x,dim4(cnt(s)),t);}
+#define MF(n) inline V n::operator()(A&z,CA&r,ENV&e)
+#define MA(n) inline V n::operator()(A&z,CA&r,ENV&e,CA&ax)
+#define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)
+#define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)
 #define SF(n,x) \
- DF(n##_f){\
-  if(l.r==r.r){\
-   DO(r.r,if(l.s[i]!=r.s[i])err(5))\
-   z.r=l.r;z.s=l.s;const array&lv=l.v;const array&rv=r.v;x;R;}\
-  if(!l.r){\
-   z.r=r.r;z.s=r.s;const array&rv=r.v;array lv=tile(l.v,r.s);x;R;}\
-  if(!r.r){\
-   z.r=l.r;z.s=l.s;array rv=tile(r.v,l.s);const array&lv=l.v;x;R;}\
-  if(l.r!=r.r)err(4);err(99);}\
- DA(n##_f){A a=l,b=r;I f=l.r>r.r;if(f){a=r;b=l;}I d=b.r-a.r;I rk=(I)cnt(ax);\
-  if(rk>4)err(16);if(rk!=a.r)err(5000);D axd[4];I axv[4];ax.v.as(f64).host(axd);\
-  DO(rk,if(axd[i]!=rint(axd[i]))err(11))DO(rk,axv[i]=(I)axd[i])\
-  DO(rk,if(axv[i]<0||b.r<=axv[i])err(11))\
-  I t[4];U8 tf[]={1,1,1,1};DO(rk,I j=axv[i];tf[j]=0;t[j]=d+i)\
-  I c=0;DO(b.r,if(tf[i])t[i]=c++)A ta(1,dim4(b.r),array(b.r,t));\
+ DF(n##_f){z.f=1;B lr=rnk(l),rr=rnk(r);\
+  if(lr==rr){\
+   DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;carr&lv=l.v;carr&rv=r.v;x;R;}\
+  if(!lr){z.s=r.s;carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\
+  if(!rr){z.s=l.s;carr rv=tile(r.v,l.v.dims());carr&lv=l.v;x;R;}\
+  if(lr!=rr)err(4);err(99);}\
+ DA(n##_f){z.f=1;A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\
+  B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\
+  VEC<D> axd(rk);SHP axv(rk);if(rk)ax.v.as(f64).host(axd.data());\
+  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])\
+  DOB(rk,if(axv[i]<0||br<=axv[i])err(11))\
+  VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)\
+  B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\
   trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\
   if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\
   gdu_c(ta,ta,e);trn_c(z,ta,b,e);}

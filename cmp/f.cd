@@ -10,16 +10,16 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵} ⋄  ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
  nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'(*e[',(⍕6⊃⍵),'])[',(⍕7⊃⍵),']'}
  ast←(⍉↑d p (1+t)k n(⍳≢p)fr sl fd)[i;]
- Aa←{0=≢ns←dis¨⍵:'PUSH(A(1,dim4(0),scl(0)));',NL
+ Aa←{0=≢ns←dis¨⍵:'PUSH(A(SHP(1,0),scl(0)));',NL
   1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
-  c←⍕≢⍵ ⋄ v←'std::vector<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
-  'PUSH(A(1,dim4(',c,'),array(',c,',',v,')));',NL}
- As←{'PUSH(A(-1,eshp,array()));',NL}
+  c←⍕≢⍵ ⋄ v←'VEC<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
+  'PUSH(A(SHP(1,',c,'),arr(',c,',',v,')));',NL}
+ As←{'PUSH(A());',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Eb←{'{A x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(',(slt⍺),'.v,x,y,e);PUSH(y);}',NL}
  Ed←{'{A z,x,y;FN*f;POP(v,x);POP(f,f);POP(v,y);(*f)(z,x,y,e);PUSH(z);}',NL}
- Ei←{'{A x;x.nv.resize(',(⍕4⊃⍺),');DO(',(⍕4⊃⍺),',POP(v,x.nv[i]));PUSH(x);}',NL}
+ Ei←{c←⍕4⊃⍺ ⋄ '{A x(SHP(1,',c,'),VEC<A>(',c,'));DO(',c,',POP(v,x.nv[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}
  Em←{'{A z,x;FN*f;POP(f,f);POP(v,x);(*f)(z,x,e);PUSH(z);}',NL}
  Er←{'POP(v,z);z.f=1;e[fd]=of;R;',NL}
