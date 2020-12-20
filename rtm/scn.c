@@ -29,7 +29,8 @@ MA(scn_o){z.f=1;if(rnk(ax)>1)err(4);if(cnt(ax)!=1)err(5);
  if("max"==ll.nm){z.v=flat(scan(rv.as(f64),1,AF_BINARY_MAX));R;}
  if("and"==ll.nm&&ib){z.v=flat(scan(rv,1,AF_BINARY_MIN));R;}
  if("lor"==ll.nm&&ib){z.v=flat(scan(rv,1,AF_BINARY_MAX));R;}
- map_o mfn_c(ll);A t(rnk(z)-1,scl(0));rv=rv.as(f64);z.v=axis(z,av).as(f64);
+ map_o mfn_c(ll);A t(rnk(z)-1,scl(0));rv=rv.as(f64);
+ z.v=arr(cnt(z),f64);z.v=axis(z,av);
  DOB(av,t.s[i]=r.s[i])DOB(rnk(t)-av,t.s[av+i]=r.s[av+i+1])
  DO(rc,t.v=flat(rv(span,i,span));I c=i;
   DO(c,A y(t.s,flat(rv(span,c-i-1,span)));mfn_c(t,y,t,e))

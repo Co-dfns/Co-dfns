@@ -413,8 +413,8 @@ rth,←'typedef std::stack<BX> STK;',NL
 rth,←'S A{I f;SHP s;arr v;VEC<A> nv;',NL
 rth,←' A(SHP s,arr v):f(1),s(s),v(v){}',NL
 rth,←' A(SHP s,VEC<A> nv):f(1),s(s),nv(nv){}',NL
-rth,←' A(B r,arr v):f(1),s(SHP(r)),v(v){}',NL
-rth,←' A(B r,VEC<A> nv):f(1),s(SHP(r)),nv(nv){}',NL
+rth,←' A(B r,arr v):f(1),s(SHP(r,1)),v(v){}',NL
+rth,←' A(B r,VEC<A> nv):f(1),s(SHP(r,1)),nv(nv){}',NL
 rth,←' A():f(0){}};',NL
 rth,←'typedef const A CA;',NL
 rth,←'S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',NL
@@ -982,7 +982,8 @@ rtn[41],←⊂' if("min"==ll.nm){z.v=flat(scan(rv.as(f64),1,AF_BINARY_MIN));R;}'
 rtn[41],←⊂' if("max"==ll.nm){z.v=flat(scan(rv.as(f64),1,AF_BINARY_MAX));R;}',NL
 rtn[41],←⊂' if("and"==ll.nm&&ib){z.v=flat(scan(rv,1,AF_BINARY_MIN));R;}',NL
 rtn[41],←⊂' if("lor"==ll.nm&&ib){z.v=flat(scan(rv,1,AF_BINARY_MAX));R;}',NL
-rtn[41],←⊂' map_o mfn_c(ll);A t(rnk(z)-1,scl(0));rv=rv.as(f64);z.v=axis(z,av).as(f64);',NL
+rtn[41],←⊂' map_o mfn_c(ll);A t(rnk(z)-1,scl(0));rv=rv.as(f64);',NL
+rtn[41],←⊂' z.v=arr(cnt(z),f64);z.v=axis(z,av);',NL
 rtn[41],←⊂' DOB(av,t.s[i]=r.s[i])DOB(rnk(t)-av,t.s[av+i]=r.s[av+i+1])',NL
 rtn[41],←⊂' DO(rc,t.v=flat(rv(span,i,span));I c=i;',NL
 rtn[41],←⊂'  DO(c,A y(t.s,flat(rv(span,c-i-1,span)));mfn_c(t,y,t,e))',NL
