@@ -48,15 +48,14 @@ MA(red_o){z.f=1;B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
  DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))}
 MF(red_o){A x=r;if(!rnk(r))cat_c(x,r,e);this_c(z,x,e,scl(scl(rnk(x)-1)));}
 DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
- dim4 ls,rs;DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])
- arr rv=moddims(r.v,rs);
+ arr rv=unrav(r);
  if(ar>1)err(4);if(cnt(ax)!=1)err(5);
- if(!isint(ax))err(11);I av;ax.v.as(s32).host(&av);
+ if(!isint(ax))err(11);I av=ax.v.as(s32).scalar<I>();
  if(av<0)err(11);if(av>=rr)err(4);av=(I)rr-av-1;
  if(lr>1)err(4);if(cnt(l)!=1)err(5);
- if(!isint(l))err(11);I lv=l.v.as(s32).scalar<I>();I rc=(I)rs[av]+1;
+ if(!isint(l))err(11);I lv=l.v.as(s32).scalar<I>();I rc=(I)r.s[av]+1;
  if(rc<lv)err(5);rc=(I)(rc-abs(lv));map_o mfn_c(ll);
- A t(rr,scl(0));t.s[av]=rc;if(!cnt(t)){z=t;R;}
+ A t(r.s,scl(0));t.s[av]=rc;if(!cnt(t)){z=t;R;}
  dim4 ts;DO((I)rnk(t),ts[i]=t.s[i])
  if(!lv){t.v=ll.id(t.s);z=t;z.v=flat(z.v);R;}seq rng(rc);af::index x[4];
  if(lv>=0){x[av]=rng+((D)lv-1);t.v=flat(rv(x[0],x[1],x[2],x[3]));
