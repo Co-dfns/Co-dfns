@@ -46,7 +46,7 @@
   A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\
   cpda(cr,r);cpda(cl,l);(*(*e##init[0])[fun].f)(za,cl,cr,e##init);cpad(z,za);}\
  catch(U n){derr(n);}\
- catch(exception e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
+ catch(exception&e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
 EXPORT V ex##_cdf(A*z,A*l,A*r){{A il,ir,iz;fn##init##_c(iz,il,ir,e##init);}\
  (*(*e##init[0])[fun].f)(*z,*l,*r,e##init);}
 #define EV(init,ex,slt)

@@ -23,7 +23,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  Ek←{'s.pop();',NL}
  Em←{'{A z,x;FN*f;POP(f,f);POP(v,x);(*f)(z,x,e);PUSH(z);}',NL}
  Er←{'POP(v,z);z.f=1;e[fd]=of;R;',NL}
- Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_f){FRM*of=NULL;I fd=',(⍕8⊃⍺),';try{STK s;',NL
+ Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_f){FRM*of=NULL;U fd=',(⍕8⊃⍺),';try{STK s;',NL
   z,←'FRM f(',(⍕4⊃⍺),');if(e.size()<=fd)e.resize(fd+1);of=e[fd];e[fd]=&f;',NL
   B←{'(*e[fd])[',(⍕n[⍵]),']=(*e[',(⍕fr[⍵]),'])[',(⍕sl[⍵]),'];',NL}
   z,←⊃,⌿(B¨⍸(p=5⊃⍺)∧(t=1)∧fr≠¯1),' ',¨dis¨⍵
