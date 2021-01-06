@@ -12,7 +12,7 @@ DA(red_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r),zr;if(lr>4||rr>4)err(16);
  array x=lc==1?tile(lv,(I)rsx):lv,y=rsx==1?tile(rv,(I)lc):rv;
  B zc=sum<B>(abs(x));zr=rr?rr:1;zs=rs;zs[axv]=zc;
  z.s=SHP(zr);DO((I)zr,z.s[i]=zs[i])
- if(!cnt(z)){z.v=scl(0);R;}array w=where(x).as(s32);index ix[4];
+ if(!cnt(z)){z.v=scl(0);R;}array w=where(x).as(s32);IDX ix[4];     //+1106R~
  if(zc==w.elements()){ix[axv]=w;z.v=y(ix[0],ix[1],ix[2],ix[3]);
   if(zc==sum<B>(x(w)))R;dim4 sp(zs);sp[axv]=1;
   z.v*=tile(x(w)>0,(I)sp[0],(I)sp[1],(I)sp[2],(I)sp[3]);
@@ -57,7 +57,7 @@ DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
  if(rc<lv)err(5);rc=(I)(rc-abs(lv));map_o mfn_c(ll);
  A t(r.s,scl(0));t.s[av]=rc;if(!cnt(t)){z=t;R;}
  dim4 ts;DO((I)rnk(t),ts[i]=t.s[i])
- if(!lv){t.v=ll.id(t.s);z=t;z.v=flat(z.v);R;}seq rng(rc);af::index x[4];
+ if(!lv){t.v=ll.id(t.s);z=t;z.v=flat(z.v);R;}seq rng(rc);IDX x[4]; //+1106R~
  if(lv>=0){x[av]=rng+((D)lv-1);t.v=flat(rv(x[0],x[1],x[2],x[3]));
   DO(lv-1,x[av]=rng+(D)(lv-i-2);
    mfn_c(t,A(t.s,flat(rv(x[0],x[1],x[2],x[3]))),t,e))

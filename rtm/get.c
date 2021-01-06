@@ -4,7 +4,7 @@ DF(get_f){z.f=1;const VEC<A>&lv=l.nv;I ll=(I)lv.size();B zr=rnk(z),rr=rnk(r);
  if(!ll){if(zr!=1)err(4);if(rr!=1)err(5);if(z.s[0]!=r.s[0])err(5);z=r;R;}
  if(ll!=zr)err(4);B rk=0;DO(ll,rk+=lv[i].f?rnk(lv[i]):1)
  if(rr>0&&rk!=rr)err(5);
- const B*rs=r.s.data();index x[4];
+ const B*rs=r.s.data();IDX x[4];                                   //+1106R~
  if(!rr)DO(ll,A v=lv[ll-i-1];if(v.f)x[i]=v.v.as(s32))
  if(rr>0)
   DO(ll,A v=lv[ll-i-1];if(!v.f)if(z.s[i]!=*rs++)err(5);
