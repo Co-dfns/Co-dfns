@@ -1,4 +1,4 @@
-﻿gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)(3 0)(3 1)(4 0)
+gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)(3 0)(3 1)(4 0)
 gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb' 'Fz' 'Fn' 'Gd'
 gck,←(7 0)(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
 gcv,←'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pv' 'Pf' 'Po' 'Va'  'Vf'
@@ -30,7 +30,8 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
   z,←' }catch(U x){e[fd]=of;throw x;}',NL
   z,' catch(exception x){e[fd]=of;throw x;}}',NL}
  Fz←{z←NL,'ENV e',(⍕5⊃⍺),'(1);I is',(⍕5⊃⍺),'=0;',NL
-  z,←'DF(',('fn',⍕5⊃⍺),'_f){if(is0)R;I fd=0;STK s;e[0]=new FRM(',(⍕4⊃⍺),');',NL
+  z,←'DF(',('fn',⍕5⊃⍺),'_f){if(is0)R;','' 'I fd=0;'⊃⍨×≢⍵
+  z,←'STK s;e[0]=new FRM(',(⍕4⊃⍺),');',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POP(v,x);if(cnt(x)!=1)err(5);',NL
   z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL

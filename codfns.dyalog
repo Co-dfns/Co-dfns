@@ -246,7 +246,8 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
   z,←' }catch(U x){e[fd]=of;throw x;}',NL
   z,' catch(exception x){e[fd]=of;throw x;}}',NL}
  Fz←{z←NL,'ENV e',(⍕5⊃⍺),'(1);I is',(⍕5⊃⍺),'=0;',NL
-  z,←'DF(',('fn',⍕5⊃⍺),'_f){if(is0)R;I fd=0;STK s;e[0]=new FRM(',(⍕4⊃⍺),');',NL
+  z,←'DF(',('fn',⍕5⊃⍺),'_f){if(is0)R;','' 'I fd=0;'⊃⍨×≢⍵
+  z,←'STK s;e[0]=new FRM(',(⍕4⊃⍺),');',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POP(v,x);if(cnt(x)!=1)err(5);',NL
   z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
