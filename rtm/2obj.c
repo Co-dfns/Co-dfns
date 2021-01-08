@@ -10,7 +10,7 @@ S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};
 S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
 S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
 EXPORT I DyalogGetInterpreterFunctions(dwa*p){
- if(p)dwafns=p;else R 0;if(dwafns->z<sizeof(S dwa))R 16;R 0;}
+ if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}   //+1106R~
 Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
 SHP eshp=SHP(0);
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
