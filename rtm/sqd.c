@@ -7,9 +7,9 @@ DA(sqd_f){z.f=1;if(rnk(ax)>1)err(4);if(!isint(ax))err(11);
  B lc=cnt(l);if(rnk(l)>1)err(4);if(lc!=ac)err(5);if(!lc){z=r;R;}
  VEC<U8> m(rr);DOB(ac,if(m[av[i]])err(11);m[av[i]]=1)
  if(!isint(l))err(11);VEC<I> lv(lc);l.v.as(s32).host(lv.data());
- DOB(lc,if(lv[i]<0||lv[i]>=r.s[rr-av[i]-1])err(3))
+ DOB(lc,if(lv[i]<0||lv[i]>=r.s[rr-av[i]-1])err(3))                 //+1106R~
  z.s=SHP(rr-lc);I j=0;DOB(rr,if(!m[rr-i-1])z.s[j++]=r.s[i])
- if(rr<5){index x[4];DOB(lc,x[rr-av[i]-1]=lv[i]);
+ if(rr<5){IDX x[4];DOB(lc,x[rr-av[i]-1]=lv[i]);                    //+1106R~
   dim4 rs(1);DO((I)rr,rs[i]=r.s[i])
   z.v=flat(moddims(r.v,rs)(x[0],x[1],x[2],x[3]));R;}
  VEC<seq> x(rr);arr ix=scl(0);
