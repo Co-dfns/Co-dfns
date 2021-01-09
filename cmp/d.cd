@@ -1,4 +1,4 @@
-﻿Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {1P⌽∊⍵}
+Sfn←aws _s (('TFF⎕'_tk) _o ('TFFI⎕'_tk)) _s aws _as {1P⌽∊⍵}
 Prim←prim _as(1P)
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 Name←{⍺((name _as ⌽) _t (⍺⍺=Vt) _as (⍺⍺ V∘,∘⊃))⍵}
