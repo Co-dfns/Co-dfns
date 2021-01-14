@@ -1,5 +1,5 @@
 ﻿NM(mem,"mem",0,0,MT ,MFD,DFD,MT ,MT )
-mem_f mem_c;
+DEFN(mem)
 MF(mem_f){z.f=1;z.s=SHP(1,cnt(r));z.v=r.v;}
 DF(mem_f){z.f=1;z.s=l.s;B lc=cnt(z);if(!lc){z.v=scl(0);R;}
  if(!cnt(r)){z.v=arr(lc,b8);z.v=0;R;}

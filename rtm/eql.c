@@ -1,4 +1,4 @@
 ﻿NM(eql,"eql",1,1,DID,MT ,DFD,MT ,DAD)
-eql_f eql_c;
+DEFN(eql)
 ID(eql,1,s32)
 SF(eql,z.v=lv==rv)

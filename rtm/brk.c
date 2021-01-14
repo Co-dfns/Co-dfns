@@ -1,5 +1,5 @@
 ﻿NM(brk,"brk",0,0,MT,MT,DFD,MT,MT)
-brk_f brk_c;
+DEFN(brk)
 DF(brk_f){z.f=1;B lr=rnk(l);const VEC<A>&rv=r.nv;B rc=cnt(r);
  if(!rc){if(lr!=1)err(4);z=l;R;}if(rc!=lr)err(4);
  VEC<B> rm(rc,1);DOB(rc,if(rv[i].f)rm[i]=rnk(rv[i]))

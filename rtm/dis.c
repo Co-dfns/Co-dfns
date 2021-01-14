@@ -1,5 +1,5 @@
 ﻿NM(dis,"dis",0,0,MT,MFD,DFD,MT,MT)
-dis_f dis_c;
+DEFN(dis)
 MF(dis_f){z.f=1;z.s=eshp;z.v=r.v(0);}
 DF(dis_f){z.f=1;if(!isint(l))err(11);if(rnk(l)>1)err(4);
  B lc=cnt(l);if(!lc){z=r;R;}if(lc!=1||rnk(r)!=1)err(16);

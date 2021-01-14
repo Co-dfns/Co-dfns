@@ -13,6 +13,6 @@ DF(dot_o){z.f=1;B lr=rnk(l),rrk=rnk(r),ra=rrk?rrk-1:0,la=lr?lr-1:0;
  B rc=1,lc=1;if(rrk)rc=cnt(r)/r.s[ra];if(lr)lc=cnt(l)/l.s[0];
  x=tile(arr(x,c,1,lc),1,(U)rc,1);y=tile(y.T(),1,1,(U)lc);
  A X(SHP{c,rc,lc},flat(x.as(f64)));A Y(SHP{c,rc,lc},flat(y.as(f64)));
- map_o mfn_c(rr);red_o rfn_c(ll);mfn_c(X,X,Y,e);rfn_c(X,X,e);
+ map_o mfn_c(rrp);red_o rfn_c(llp);mfn_c(X,X,Y,e);rfn_c(X,X,e);
  t.v=X.v;z=t;}
 

@@ -1,5 +1,5 @@
 ﻿NM(ctf,"ctf",0,0,MT,MFD,DFD,MT,DAD)
-ctf_f ctf_c;
+DEFN(ctf)
 MF(ctf_f){z.f=1;B rr=rnk(r);z.s=SHP(2,1);z.v=r.v;
  if(rr)z.s[1]=r.s[rr-1];if(z.s[1])z.s[0]=cnt(r)/z.s[1];}
 DA(ctf_f){cat_c(z,l,r,e,ax);}

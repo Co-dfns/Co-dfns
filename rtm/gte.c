@@ -1,5 +1,5 @@
 ﻿NM(gte,"gte",1,1,DID,MT ,DFD,MT ,DAD)
-gte_f gte_c;
+DEFN(gte)
 ID(gte,1,s32)
 SF(gte,z.v=lv>=rv)
 

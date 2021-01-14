@@ -1,5 +1,5 @@
 ﻿NM(trn,"trn",0,0,MT ,MFD,DFD,MT ,MT )
-trn_f trn_c;
+DEFN(trn)
 MF(trn_f){B rr=rnk(r);if(rr<=1){z=r;R;}
  A t(SHP(1,rr),seq((D)rr-1,0,-1));trn_c(z,t,r,e);}
 DF(trn_f){z.f=1;B lr=rnk(l),rr=rnk(r);if(lr>1||cnt(l)!=rr)err(5);

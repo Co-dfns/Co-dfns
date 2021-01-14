@@ -2,7 +2,7 @@
 MF(rnk_o){z.f=1;I rr=(I)rnk(r);
  if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
  if(scm(ll)||cr>=rr){ll(z,r,e);R;}
- if(cr<=-rr||!cr){map_o f(ll);f(z,r,e);R;}
+ if(cr<=-rr||!cr){map_o f(llp);f(z,r,e);R;}
  if(cr<0)cr=rr+cr;if(cr>3)err(10);I dr=rr-cr;
  A b(cr+1,r.v);DO(dr,b.s[cr]*=r.s[i+cr])DO(cr,b.s[i]=r.s[i])
  VEC<A> tv(b.s[cr]);I mr=0;SHP ms;dtype mt=b8;

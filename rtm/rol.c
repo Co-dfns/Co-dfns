@@ -1,5 +1,5 @@
 ﻿NM(rol,"rol",1,0,MT ,MFD,DFD,MT ,MT )
-rol_f rol_c;
+DEFN(rol)
 MF(rol_f){z.f=1;z.s=r.s;if(!cnt(r)){z.v=r.v;R;}
  arr rnd=randu(r.v.dims(),f64);z.v=(0==r.v)*rnd+trunc(r.v*rnd);}
 DF(rol_f){z.f=1;if(cnt(r)!=1||cnt(l)!=1)err(5);

@@ -1,16 +1,22 @@
-﻿#define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
+﻿#define DEFN(n) FNP n##_p=std::make_shared<n##_f>();FN&n##_c=*n##_p;
+#define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
  n##_f():FN(nm,sm,sd){}};
 #define OM(n,nm,sm,sd,mf,df,ma,da) S n##_o:MOP{mf;df;ma;da;\
- n##_o(FN&l):MOP(nm,sm,sd,l){}};\
- S n##_k:MOK{V operator()(FN*&f,FN&l){f=new n##_o(l);}};
+ n##_o(FNP l):MOP(nm,sm,sd,l){}\
+ n##_o(CA&l):MOP(nm,sm,sd,l){}};\
+ S n##_k:MOK{\
+  FNP operator()(FNP l){R std::make_shared<n##_o>(l);}\
+  FNP operator()(CA&l){R std::make_shared<n##_o>(l);}};
 #define OD(n,nm,sm,sd,mf,df,ma,da) S n##_o:DOP{mf;df;ma;da;\
- n##_o(FN&l,FN&r):DOP(nm,sm,sd,l,r){}\
- n##_o(CA&l,FN&r):DOP(nm,sm,sd,l,r){}\
- n##_o(FN&l,CA&r):DOP(nm,sm,sd,l,r){}};\
- S n##_k:DOK{V operator()(FN*&f,FN&l,FN&r){f=new n##_o(l,r);}\
-  V operator()(FN*&f,CA&l,FN&r){f=new n##_o(l,r);}\
-  V operator()(FN*&f,FN&l,CA&r){f=new n##_o(l,r);}};
-#define MT
+ n##_o(FNP l,FNP r):DOP(nm,sm,sd,l,r){}\
+ n##_o(CA&l,FNP r):DOP(nm,sm,sd,l,r){}\
+ n##_o(FNP l,CA&r):DOP(nm,sm,sd,l,r){}\
+ n##_o(CA&l,CA&r):DOP(nm,sm,sd,l,r){}};\
+ S n##_k:DOK{\
+  FNP operator()(FNP l,FNP r){R std::make_shared<n##_o>(l,r);}\
+  FNP operator()(CA&l,CA&r){R std::make_shared<n##_o>(l,r);}\
+  FNP operator()(FNP l,CA&r){R std::make_shared<n##_o>(l,r);}\
+  FNP operator()(CA&l,FNP r){R std::make_shared<n##_o>(l,r);}};
 #define DID inline array id(SHP)
 #define MFD inline V operator()(A&,CA&,ENV&)
 #define MAD inline V operator()(A&,CA&,ENV&,CA&)
@@ -39,14 +45,14 @@
   trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\
   if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\
   gdu_c(ta,ta,e);trn_c(z,ta,b,e);}
-#define PUSH(x) s.emplace(BX(x))
-#define POP(f,x) x=s.top().f;s.pop()
-#define EX(x) delete x
 #define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
-  A cl,cr,za;fn##init##_c(za,cl,cr,e##init);\
-  cpda(cr,r);cpda(cl,l);(*(*e##init[0])[fun].f)(za,cl,cr,e##init);cpad(z,za);}\
+  A cl,cr,za;fn##init##_f fn_c;fn_c(za,cl,cr,e##init);\
+  cpda(cr,r);cpda(cl,l);\
+  (*std::get<FNP>((*e##init[0])[fun]))(za,cl,cr,e##init);\
+  cpad(z,za);}\
  catch(U n){derr(n);}\
  catch(exception&e){msg=mkstr(e.what());dmx.e=msg.c_str();derr(500);}}\
-EXPORT V ex##_cdf(A*z,A*l,A*r){{A il,ir,iz;fn##init##_c(iz,il,ir,e##init);}\
- (*(*e##init[0])[fun].f)(*z,*l,*r,e##init);}
+EXPORT V ex##_cdf(A*z,A*l,A*r){{A il,ir,iz;\
+ fn##init##_f fn_c;fn_c(iz,il,ir,e##init);}\
+ (*std::get<FNP>((*e##init[0])[fun]))(*z,*l,*r,e##init);}
 #define EV(init,ex,slt)

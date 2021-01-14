@@ -1,5 +1,5 @@
 ﻿NM(rtf,"rtf",0,0,DID,MFD,DFD,MAD,DAD)
-rtf_f rtf_c;
+DEFN(rtf)
 ID(rtf,0,s32)
 MF(rtf_f){if(!rnk(r)){z=r;R;}rot_c(z,r,e,scl(scl(0)));}
 MA(rtf_f){rot_c(z,r,e,ax);}

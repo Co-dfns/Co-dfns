@@ -1,5 +1,5 @@
 ﻿NM(enc,"enc",0,0,DID,MT ,DFD,MT ,MT )
-enc_f enc_c;
+DEFN(enc)
 ID(enc,0,s32)
 DF(enc_f){z.f=1;B rr=rnk(r),lr=rnk(l),rk=rr+lr;if(rk>4)err(16);
  SHP sp(rk);DOB(rr,sp[i]=r.s[i])DOB(lr,sp[i+rr]=l.s[i])

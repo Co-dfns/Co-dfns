@@ -1,5 +1,5 @@
 ﻿NM(rot,"rot",0,0,DID,MFD,DFD,MAD,DAD)
-rot_f rot_c;
+DEFN(rot)
 ID(rot,0,s32)
 MF(rot_f){if(!rnk(r)){z=r;R;}rot_c(z,r,e,scl(scl(rnk(r)-1)));}
 MA(rot_f){z.f=1;if(1!=cnt(ax))err(5);if(!isint(ax))err(11);

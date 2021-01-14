@@ -1,5 +1,5 @@
 ﻿NM(drp,"drp",0,0,MT ,MFD,DFD,MAD,DAD)
-drp_f drp_c;
+DEFN(drp)
 MF(drp_f){z.f=1;if(rnk(r))err(16);z=r;}
 MA(drp_f){err(16);}
 DA(drp_f){z.f=1;B c=cnt(l),ac=cnt(ax),rr=rnk(r),lr=rnk(l),axr=rnk(ax);

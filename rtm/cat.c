@@ -1,5 +1,5 @@
 ﻿NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)
-cat_f cat_c;
+DEFN(cat)
 MF(cat_f){z.f=1;z.s=SHP(1,cnt(r));z.v=flat(r.v);}
 MA(cat_f){z.f=1;B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);
  VEC<D> axv(ac);if(ac)ax.v.as(f64).host(axv.data());

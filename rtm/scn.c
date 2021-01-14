@@ -1,5 +1,5 @@
 ﻿NM(scn,"scn",0,0,DID,MT ,DFD,MT ,DAD)
-scn_f scn_c;
+DEFN(scn)
 ID(scn,1,s32)
 OM(scn,"scn",1,1,MFD,MT,MAD,MT )
 DA(scn_f){z.f=1;if(rnk(ax)>1||cnt(ax)!=1)err(5);if(!isint(ax))err(11);
@@ -29,7 +29,7 @@ MA(scn_o){z.f=1;if(rnk(ax)>1)err(4);if(cnt(ax)!=1)err(5);
  if("max"==ll.nm){z.v=flat(scan(rv.as(f64),1,AF_BINARY_MAX));R;}
  if("and"==ll.nm&&ib){z.v=flat(scan(rv,1,AF_BINARY_MIN));R;}
  if("lor"==ll.nm&&ib){z.v=flat(scan(rv,1,AF_BINARY_MAX));R;}
- map_o mfn_c(ll);B tr=rnk(z)-1;SHP ts(tr,1);
+ map_o mfn_c(llp);B tr=rnk(z)-1;SHP ts(tr,1);
  DOB(av,ts[i]=r.s[i])DOB(tr-av,ts[av+i]=r.s[av+i+1])
  rv=rv.as(f64);z.v=arr(cnt(z),f64);z.v=axis(z,av);
  DO(rc,arr rvi=rv(span,i,span);dim4 rvs=rvi.dims();
@@ -38,4 +38,4 @@ MA(scn_o){z.f=1;if(rnk(ax)>1)err(4);if(cnt(ax)!=1)err(5);
   z.v(span,i,span)=moddims(t.v,rvs))
  z.v=flat(z.v);}
 MF(scn_o){B rr=rnk(r);if(!rr){z=r;R;}
- scn_o mfn_c(ll);mfn_c(z,r,e,scl(scl(rr-1)));}
+ scn_o mfn_c(llp);mfn_c(z,r,e,scl(scl(rr-1)));}

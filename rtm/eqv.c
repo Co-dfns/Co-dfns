@@ -1,5 +1,5 @@
 ﻿NM(eqv,"eqv",0,0,MT ,MFD,DFD,MT ,MT )
-eqv_f eqv_c;
+DEFN(eqv)
 MF(eqv_f){z.f=1;z.s=eshp;z.v=scl(rnk(r)!=0);}
 DF(eqv_f){z.s=eshp;B lr=rnk(l),rr=rnk(r);if(lr!=rr){z.v=scl(0);R;}
  DOB(lr,if(l.s[i]!=r.s[i]){z.v=scl(0);R;})

@@ -1,3 +1,5 @@
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+
 #include <time.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -12,6 +14,7 @@
 #include <stack>
 #include <string>
 #include <cstring>
+#include <variant>
 #include <vector>
 #include <unordered_map>
 #include <arrayfire.h>
@@ -45,3 +48,6 @@ using namespace af;
 #define CS(n,x) case n:x;break;
 #define DO(n,x) {I _i=(n),i=0;for(;i<_i;++i){x;}}
 #define DOB(n,x) {B _i=(n),i=0;for(;i<_i;++i){x;}}
+#define MT
+#define PUSH(x) s.emplace(x)
+#define POP(f,x) x=std::get<f>(s.top());s.pop()

@@ -1,5 +1,5 @@
 ﻿NM(rho,"rho",0,0,MT ,MFD,DFD,MT ,MT )
-rho_f rho_c;
+DEFN(rho)
 MF(rho_f){z.f=1;B rr=rnk(r);VEC<I> sp(rr);DOB(rr,sp[rr-i-1]=(I)r.s[i])
  z.s=SHP(1,rr);if(!cnt(z)){z.v=scl(0);R;}z.v=array(rr,sp.data());}
 DF(rho_f){z.f=1;B cr=cnt(r),cl=cnt(l);VEC<I> s(cl);

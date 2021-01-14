@@ -11,40 +11,46 @@ S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
 S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
 EXPORT I DyalogGetInterpreterFunctions(dwa*p){
  if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}
-Z V err(U n,wchar_t*e){dmx.e=e;throw n;}Z V err(U n){dmx.e=L"";throw n;}
-SHP eshp=SHP(0);
+Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}Z V err(U n){err(n,L"");}
+SHP eshp=SHP(0);std::wstring msg;
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
-std::wstring msg;S BX;
-typedef VEC<BX> FRM;typedef VEC<FRM*> ENV;
-typedef std::stack<BX> STK;
 S A{I f;SHP s;arr v;VEC<A> nv;
  A(SHP s,arr v):f(1),s(s),v(v){}
  A(SHP s,VEC<A> nv):f(1),s(s),nv(nv){}
  A(B r,arr v):f(1),s(SHP(r,1)),v(v){}
  A(B r,VEC<A> nv):f(1),s(SHP(r,1)),nv(nv){}
  A():f(0){}};
-typedef const A CA;
-S FN{STR nm;I sm;I sd;FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
+typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;
+typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;
+typedef std::variant<A,FNP,MOKP,DOKP> BX;
+typedef VEC<BX> FRM;typedef std::unique_ptr<FRM> FRMP;
+typedef VEC<FRMP> ENV;typedef std::stack<BX> STK;
+S FN{STR nm;I sm;I sd;FNP this_p;virtual ~FN() = default;
+ FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
  FN():nm(""),sm(0),sd(0){}
  virtual arr id(SHP s){err(16);R arr();}
  virtual V operator()(A&z,CA&r,ENV&e){err(99);}
  virtual V operator()(A&z,CA&r,ENV&e,CA&ax){err(2);}
  virtual V operator()(A&z,CA&l,CA&r,ENV&e){err(99);}
  virtual V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax){err(2);}};
-FN MTFN;
-S MOP:FN{FN&ll;
- MOP(STR nm,I sm,I sd,FN&ll):FN(nm,sm,sd),ll(ll){}};
-S DOP:FN{I fl;I fr;FN&ll;A aa;FN&rr;A ww;
- DOP(STR nm,I sm,I sd,FN&l,FN&r)
-  :FN(nm,sm,sd),fl(1),fr(1),ll(l),aa(A()),rr(r),ww(A()){}
- DOP(STR nm,I sm,I sd,A l,FN&r)
-  :FN(nm,sm,sd),fl(0),fr(1),ll(MTFN),aa(l),rr(r),ww(A()){}
- DOP(STR nm,I sm,I sd,FN&l,A r)
-  :FN(nm,sm,sd),fl(1),fr(0),ll(l),aa(A()),rr(MTFN),ww(r){}};
-S MOK{virtual V operator()(FN*&f,FN&l){err(99);}};
-S DOK{virtual V operator()(FN*&f,FN&l,FN&r){err(99);}
- virtual V operator()(FN*&f,CA&l,FN&r){err(99);}
- virtual V operator()(FN*&f,FN&l,CA&r){err(99);}};
-S BX{A v;union{FN*f;MOK*m;DOK*d;};
- BX(){}BX(FN*f):f(f){}BX(CA&v):v(v){}BX(MOK*m):m(m){}BX(DOK*d):d(d){}};
-
+FNP MTFN = std::make_shared<FN>();
+S MOP:FN{FNP llp=MTFN;CA aa;FN&ll=*llp;
+ MOP(STR nm,I sm,I sd,CA&l):FN(nm,sm,sd),aa(l),llp(MTFN){ll=*llp;}
+ MOP(STR nm,I sm,I sd,FNP llp):FN(nm,sm,sd),llp(llp){ll=*llp;}};
+S DOP:FN{I fl;I fr;CA aa;CA ww;FNP llp=MTFN;FNP rrp=MTFN;FN&ll=*llp;FN&rr=*rrp;
+ DOP(STR nm,I sm,I sd,FNP l,FNP r)
+  :FN(nm,sm,sd),fl(1),fr(1),llp(l),rrp(r){ll=*llp;rr=*rrp;}
+ DOP(STR nm,I sm,I sd,CA&l,FNP r)
+  :FN(nm,sm,sd),fl(0),fr(1),aa(l),rrp(r){rr=*rrp;}
+ DOP(STR nm,I sm,I sd,FNP l,CA&r)
+  :FN(nm,sm,sd),fl(1),fr(0),llp(l),ww(r){ll=*llp;}
+ DOP(STR nm,I sm,I sd,CA&l,CA&r)
+  :FN(nm,sm,sd),fl(0),fr(0),aa(l),ww(r){}};
+S MOK{virtual ~MOK() = default;
+ virtual FNP operator()(FNP l){err(99);}
+ virtual FNP operator()(CA&l){err(99);}};
+S DOK{virtual ~DOK() = default;
+ virtual FNP operator()(FNP l,FNP r){err(99);}
+ virtual FNP operator()(CA&l,CA&r){err(99);}
+ virtual FNP operator()(FNP l,CA&r){err(99);}
+ virtual FNP operator()(CA&l,FNP r){err(99);}};

@@ -1,5 +1,5 @@
 ﻿NM(cir,"cir",1,1,MT,MFD,DFD,MT,DAD)
-cir_f cir_c;
+DEFN(cir)
 MF(cir_f){z.f=1;z.s=r.s;z.v=Pi*r.v.as(f64);}
 SF(cir,arr fv=rv.as(f64);
  if(!lr){I x=l.v.as(s32).scalar<I>();if(abs(x)>10)err(16);

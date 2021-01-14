@@ -1,5 +1,5 @@
 ﻿NM(sqd,"sqd",0,0,MT ,MFD,DFD,MT ,DAD)
-sqd_f sqd_c;
+DEFN(sqd)
 MF(sqd_f){z=r;}
 DA(sqd_f){z.f=1;if(rnk(ax)>1)err(4);if(!isint(ax))err(11);
  VEC<I> av(4);ax.v.as(s32).host(av.data());

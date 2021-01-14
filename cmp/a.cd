@@ -34,7 +34,7 @@ ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
 gcc←'g++'ucc'so'
 clang←'clang++'ucc'dylib'
 vsco←{z←'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
- z,←'/errorReport:prompt /WX- /MD /EHsc /nologo '
+ z,←'/errorReport:prompt /WX- /MD /EHsc /nologo /std:c++latest '
  z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
 vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
  z,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af', AF∆LIB, '.lib" '

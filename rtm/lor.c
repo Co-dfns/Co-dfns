@@ -1,5 +1,5 @@
 ﻿NM(lor,"lor",1,1,DID,MT ,DFD,MT ,DAD)
-lor_f lor_c;
+DEFN(lor)
 ID(lor,0,s32)
 SF(lor,if(rv.isbool()&&lv.isbool())z.v=lv||rv;
  else if(lv.isbool()&&rv.isinteger())z.v=lv+(!lv)*abs(rv).as(rv.type());

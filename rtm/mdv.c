@@ -1,5 +1,5 @@
 ﻿NM(mdv,"mdv",1,0,MT ,MFD,DFD,MT ,MT )
-mdv_f mdv_c;
+DEFN(mdv)
 MF(mdv_f){z.f=1;B rr=rnk(r),rc=cnt(r);arr rv=unrav(r);
  if(rr>2)err(4);if(rr==2&&r.s[1]<r.s[0])err(5);if(!rc)err(5);
  if(!rr||rc==1||r.s[0]==r.s[1]){z.s=r.s;z.v=flat(inverse(rv));R;}

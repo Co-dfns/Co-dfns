@@ -1,5 +1,5 @@
 ﻿NM(fnd,"fnd",0,0,MT ,MT ,DFD,MT ,MT )
-fnd_f fnd_c;
+DEFN(fnd)
 DF(fnd_f){z.f=1;B lr=rnk(l),rr=rnk(r),rc=cnt(r),lc=cnt(l);
  if(!rc){z=r;R;}z=r;z.v=arr(rc,b8);z.v=0;
  if(lr>rr)R;DOB(lr,if(l.s[i]>r.s[i])R)if(!lc){z.v=1;R;}

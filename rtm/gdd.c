@@ -1,5 +1,5 @@
 ﻿NM(gdd,"gdd",0,0,MT ,MFD,DFD,MT ,MT )
-gdd_f gdd_c;
+DEFN(gdd)
 MF(gdd_f){z.f=1;B rr=rnk(r);if(rr<1)err(4);z.s=SHP(1,r.s[rr-1]);
  if(!cnt(r)){z.v=r.v;R;}I c=1;DOB(rr-1,c*=(I)r.s[i]);
  arr mt,a(r.v,c,r.s[rr-1]);z.v=iota(dim4(z.s[0]),dim4(1),s32);

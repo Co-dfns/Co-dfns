@@ -1,5 +1,5 @@
 ﻿NM(tke,"tke",0,0,MT ,MFD,DFD,MAD,DAD)
-tke_f tke_c;
+DEFN(tke)
 MF(tke_f){z=r;}
 MA(tke_f){err(16);}
 DA(tke_f){z.f=1;B c=cnt(l),ac=cnt(ax),axr=rnk(ax),lr=rnk(l),rr=rnk(r);

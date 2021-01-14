@@ -1,6 +1,6 @@
 ﻿NM(red,"red",0,0,DID,MT ,DFD,MT ,DAD)
 ID(red,1,s32)
-red_f red_c;
+DEFN(red)
 OM(red,"red",0,0,MFD,DFD,MAD,DAD)
 DA(red_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r),zr;if(lr>4||rr>4)err(16);
  dim4 zs(1),ls(1),rs(1);DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])
@@ -43,7 +43,7 @@ MA(red_o){z.f=1;B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
  if("and"==ll.nm&&ib){z.v=flat(allTrue(rv,1));R;}
  if("lor"==ll.nm&&ib){z.v=flat(anyTrue(rv,1));R;}
  if("neq"==ll.nm&&ib){z.v=flat((1&sum(rv,1)).as(b8));R;}
- map_o mfn_c(ll);dim4 zs;DO((I)rnk(z),zs[i]=z.s[i])
+ map_o mfn_c(llp);dim4 zs;DO((I)rnk(z),zs[i]=z.s[i])
  z.v=flat(rv(span,rc-1,span));
  DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))}
 MF(red_o){A x=r;if(!rnk(r))cat_c(x,r,e);this_c(z,x,e,scl(scl(rnk(x)-1)));}
@@ -54,7 +54,7 @@ DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
  if(av<0)err(11);if(av>=rr)err(4);av=(I)rr-av-1;
  if(lr>1)err(4);if(cnt(l)!=1)err(5);
  if(!isint(l))err(11);I lv=l.v.as(s32).scalar<I>();I rc=(I)r.s[av]+1;
- if(rc<lv)err(5);rc=(I)(rc-abs(lv));map_o mfn_c(ll);
+ if(rc<lv)err(5);rc=(I)(rc-abs(lv));map_o mfn_c(llp);
  A t(r.s,scl(0));t.s[av]=rc;if(!cnt(t)){z=t;R;}
  dim4 ts;DO((I)rnk(t),ts[i]=t.s[i])
  if(!lv){t.v=ll.id(t.s);z=t;z.v=flat(z.v);R;}seq rng(rc);IDX x[4]; //+1106R~
@@ -66,4 +66,4 @@ DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
    mfn_c(t,A(t.s,flat(rv(x[0],x[1],x[2],x[3]))),t,e))}
  z=t;z.v=flat(z.v);}
 DF(red_o){if(!rnk(r))err(4);
- red_o mfn_c(ll);mfn_c(z,l,r,e,scl(scl((I)rnk(r)-1)));}
+ red_o mfn_c(llp);mfn_c(z,l,r,e,scl(scl((I)rnk(r)-1)));}
