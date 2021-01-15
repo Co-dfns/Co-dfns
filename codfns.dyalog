@@ -455,7 +455,7 @@ rth,←' virtual V operator()(A&z,CA&r,ENV&e,CA&ax){err(2);}',NL
 rth,←' virtual V operator()(A&z,CA&l,CA&r,ENV&e){err(99);}',NL
 rth,←' virtual V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax){err(2);}};',NL
 rth,←'FNP MTFN = std::make_shared<FN>();',NL
-rth,←'S MOP:FN{FNP llp=MTFN;CA aa;FN&ll=*llp;',NL
+rth,←'S MOP:FN{CA aa;FNP llp=MTFN;FN&ll=*llp;',NL
 rth,←' MOP(STR nm,I sm,I sd,CA&l):FN(nm,sm,sd),aa(l),llp(MTFN){ll=*llp;}',NL
 rth,←' MOP(STR nm,I sm,I sd,FNP llp):FN(nm,sm,sd),llp(llp){ll=*llp;}};',NL
 rth,←'S DOP:FN{I fl;I fr;CA aa;CA ww;FNP llp=MTFN;FNP rrp=MTFN;FN&ll=*llp;FN&rr=*rrp;',NL
@@ -464,17 +464,17 @@ rth,←'  :FN(nm,sm,sd),fl(1),fr(1),llp(l),rrp(r){ll=*llp;rr=*rrp;}',NL
 rth,←' DOP(STR nm,I sm,I sd,CA&l,FNP r)',NL
 rth,←'  :FN(nm,sm,sd),fl(0),fr(1),aa(l),rrp(r){rr=*rrp;}',NL
 rth,←' DOP(STR nm,I sm,I sd,FNP l,CA&r)',NL
-rth,←'  :FN(nm,sm,sd),fl(1),fr(0),llp(l),ww(r){ll=*llp;}',NL
+rth,←'  :FN(nm,sm,sd),fl(1),fr(0),ww(r),llp(l){ll=*llp;}',NL
 rth,←' DOP(STR nm,I sm,I sd,CA&l,CA&r)',NL
 rth,←'  :FN(nm,sm,sd),fl(0),fr(0),aa(l),ww(r){}};',NL
 rth,←'S MOK{virtual ~MOK() = default;',NL
-rth,←' virtual FNP operator()(FNP l){err(99);}',NL
-rth,←' virtual FNP operator()(CA&l){err(99);}};',NL
+rth,←' virtual FNP operator()(FNP l){err(99);R MTFN;}',NL
+rth,←' virtual FNP operator()(CA&l){err(99);R MTFN;}};',NL
 rth,←'S DOK{virtual ~DOK() = default;',NL
-rth,←' virtual FNP operator()(FNP l,FNP r){err(99);}',NL
-rth,←' virtual FNP operator()(CA&l,CA&r){err(99);}',NL
-rth,←' virtual FNP operator()(FNP l,CA&r){err(99);}',NL
-rth,←' virtual FNP operator()(CA&l,FNP r){err(99);}};',NL
+rth,←' virtual FNP operator()(FNP l,FNP r){err(99);R MTFN;}',NL
+rth,←' virtual FNP operator()(CA&l,CA&r){err(99);R MTFN;}',NL
+rth,←' virtual FNP operator()(FNP l,CA&r){err(99);R MTFN;}',NL
+rth,←' virtual FNP operator()(CA&l,FNP r){err(99);R MTFN;}};',NL
 rth,←'std::wstring mkstr(const char*s){R strconv.from_bytes(s);}',NL
 rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}I scm(FNP f){R (*f).sm;}',NL
 rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}I scd(FNP f){R (*f).sd;}',NL
