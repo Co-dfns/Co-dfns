@@ -241,7 +241,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
   z,'DO(',c,',POP(A,x.nv[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}
  Em←{'{A z,x;FNP f;POP(FNP,f);POP(A,x);(*f)(z,x,e);PUSH(z);}',NL}
- Er←{'POP(A,z);z.f=1;e[fd]=std::move(of);R;',NL}
+ Er←{'POP(A,z);e[fd]=std::move(of);R;',NL}
  Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_f){U fd=',(⍕8⊃⍺),';STK s;',NL
   z,←' if(e.size()<=fd)e.resize(fd+1);',NL
   z,←' FRMP of=std::move(e[fd]);e[fd]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
@@ -299,9 +299,9 @@ syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
 syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'    ';'
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
-syms,←⊂'%u' ⋄ nams,←⊂''
+syms,←'%s' '%u' ⋄ nams,←'scl' ''
 deps←⊂¨syms
-deps[syms⍳,¨sclsyms]←,¨¨'⍉⍴⍋'∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲'
+deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲'
 deps[syms⍳,¨'∧⌿/.⍪⍤\']←,¨¨'⍉⍴⍋∨∧' '¨,/⌿' '¨,/' '¨,/.' ',⍪' '¨⍳⌷⍤' '¨,\'
 deps[syms⍳,¨'←⌽⊖⌷⍀']←,¨¨'[¨←' '⍉⍴⍋|,⌽' '⍉⍴⍋|,⌽⊖' '⍳⌷' '¨,\⍀'
 deps[syms⍳⊂'∘.']←⊂(,'¨')'∘.'
@@ -381,33 +381,19 @@ rth,←'  FNP operator()(CA&l,CA&r){R std::make_shared<n##_o>(l,r);}\',NL
 rth,←'  FNP operator()(FNP l,CA&r){R std::make_shared<n##_o>(l,r);}\',NL
 rth,←'  FNP operator()(CA&l,FNP r){R std::make_shared<n##_o>(l,r);}};',NL
 rth,←'#define DID inline array id(SHP)',NL
-rth,←'#define MFD inline V operator()(A&,CA&,ENV&)',NL
-rth,←'#define MAD inline V operator()(A&,CA&,ENV&,CA&)',NL
-rth,←'#define DFD inline V operator()(A&,CA&,CA&,ENV&)',NL
-rth,←'#define DAD inline V operator()(A&,CA&,CA&,ENV&,CA&)',NL
+rth,←'#define MFD inline V operator()(A&z,CA&r,ENV&e)',NL
+rth,←'#define MAD inline V operator()(A&z,CA&r,ENV&e,CA&ax)',NL
+rth,←'#define DFD inline V operator()(A&z,CA&l,CA&r,ENV&e)',NL
+rth,←'#define DAD inline V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define DI(n) inline array n::id(SHP s)',NL
 rth,←'#define ID(n,x,t) DI(n##_f){R constant(x,dim4(cnt(s)),t);}',NL
 rth,←'#define MF(n) inline V n::operator()(A&z,CA&r,ENV&e)',NL
 rth,←'#define MA(n) inline V n::operator()(A&z,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)',NL
 rth,←'#define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)',NL
-rth,←'#define SF(n,x) \',NL
-rth,←' DF(n##_f){z.f=1;B lr=rnk(l),rr=rnk(r);\',NL
-rth,←'  if(lr==rr){\',NL
-rth,←'   DOB(rr,if(l.s[i]!=r.s[i])err(5))z.s=l.s;carr&lv=l.v;carr&rv=r.v;x;R;}\',NL
-rth,←'  if(!lr){z.s=r.s;carr&rv=r.v;arr lv=tile(l.v,r.v.dims());x;R;}\',NL
-rth,←'  if(!rr){z.s=l.s;carr rv=tile(r.v,l.v.dims());carr&lv=l.v;x;R;}\',NL
-rth,←'  if(lr!=rr)err(4);err(99);}\',NL
-rth,←' DA(n##_f){z.f=1;A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}\',NL
-rth,←'  B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);\',NL
-rth,←'  VEC<D> axd(rk);SHP axv(rk);if(rk)ax.v.as(f64).host(axd.data());\',NL
-rth,←'  DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])\',NL
-rth,←'  DOB(rk,if(axv[i]<0||br<=axv[i])err(11))\',NL
-rth,←'  VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)\',NL
-rth,←'  B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),array(br,t.data()));\',NL
-rth,←'  trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);\',NL
-rth,←'  if(f)n##_c(b,z,a,e);else n##_c(b,a,z,e);\',NL
-rth,←'  gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',NL
+rth,←'#define SF(n,lb) \',NL
+rth,←' DF(n##_f){sclfn(z,l,r,[](carr&lv,carr&rv){lb;});}\',NL
+rth,←' DA(n##_f){sclfn(z,l,r,ax,n##_c);}',NL
 rth,←'#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;fn##init##_f fn_c;fn_c(za,cl,cr,e##init);\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);\',NL
@@ -424,8 +410,7 @@ rth,←' APLR,APLF,APLQ}APLTYPE;',NL
 rth,←'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',NL
 rth,←'typedef double D;typedef unsigned char U8;typedef unsigned U;',NL
 rth,←'typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;',NL
-rth,←'typedef VEC<dim_t> SHP;typedef array arr;typedef const array carr;',NL
-rth,←'typedef af::index IDX;',NL
+rth,←'typedef array arr;typedef const array carr;typedef af::index IDX;',NL
 rth,←'S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',NL
 rth,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',NL
 rth,←'S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',NL
@@ -433,19 +418,21 @@ rth,←'S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}',NL
 rth,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',NL
 rth,←' if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}',NL
 rth,←'Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}Z V err(U n){err(n,L"");}',NL
-rth,←'SHP eshp=SHP(0);std::wstring msg;',NL
 rth,←'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',NL
-rth,←'S A{I f;SHP s;arr v;VEC<A> nv;',NL
-rth,←' A(SHP s,arr v):f(1),s(s),v(v){}',NL
-rth,←' A(SHP s,VEC<A> nv):f(1),s(s),nv(nv){}',NL
-rth,←' A(B r,arr v):f(1),s(SHP(r,1)),v(v){}',NL
-rth,←' A(B r,VEC<A> nv):f(1),s(SHP(r,1)),nv(nv){}',NL
-rth,←' A():f(0){}};',NL
+rth,←'typedef VEC<dim_t> SHP;S A;',NL
+rth,←'typedef std::variant<std::monostate,arr,VEC<A>> VALS;',NL
+rth,←'S A{SHP s;VALS v;',NL
+rth,←' A(){}',NL
+rth,←' A(SHP s,carr v):s(s),v(v){}',NL
+rth,←' A(SHP s,VEC<A> v):s(s),v(v){}',NL
+rth,←' A(B r,carr v):s(SHP(r,1)),v(v){}',NL
+rth,←' A(B r,VEC<A> v):s(SHP(r,1)),v(v){}};',NL
 rth,←'typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;',NL
 rth,←'typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;',NL
 rth,←'typedef std::variant<A,FNP,MOKP,DOKP> BX;',NL
 rth,←'typedef VEC<BX> FRM;typedef std::unique_ptr<FRM> FRMP;',NL
 rth,←'typedef VEC<FRMP> ENV;typedef std::stack<BX> STK;',NL
+rth,←'SHP eshp=SHP(0);std::wstring msg;',NL
 rth,←'S FN{STR nm;I sm;I sd;FNP this_p;virtual ~FN() = default;',NL
 rth,←' FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',NL
 rth,←' FN():nm(""),sm(0),sd(0){}',NL
@@ -475,55 +462,89 @@ rth,←' virtual FNP operator()(FNP l,FNP r){err(99);R MTFN;}',NL
 rth,←' virtual FNP operator()(CA&l,CA&r){err(99);R MTFN;}',NL
 rth,←' virtual FNP operator()(FNP l,CA&r){err(99);R MTFN;}',NL
 rth,←' virtual FNP operator()(CA&l,FNP r){err(99);R MTFN;}};',NL
+rth,←'S DVSTR {',NL
+rth,←' V operator()(std::monostate&l,carr&r){err(6);}',NL
+rth,←' V operator()(std::monostate&l,VEC<A>&r){err(6);}',NL
+rth,←' V operator()(carr&l,std::monostate&r){err(6);}',NL
+rth,←' V operator()(VEC<A>&l,std::monostate&r){err(6);}};',NL
+rth,←'S MVSTR {V operator()(std::monostate&r){err(6);}};',NL
+rth,←'template<class... Ts> S visitor : Ts... { using Ts::operator()...; };',NL
+rth,←'template<class... Ts> visitor(Ts...) -> visitor<Ts...>;',NL
 rth,←'std::wstring mkstr(const char*s){R strconv.from_bytes(s);}',NL
 rth,←'I scm(FN&f){R f.sm;}I scm(const A&a){R 1;}I scm(FNP f){R (*f).sm;}',NL
 rth,←'I scd(FN&f){R f.sd;}I scd(const A&a){R 1;}I scd(FNP f){R (*f).sd;}',NL
-rth,←'B rnk(const A&a){R a.s.size();}',NL
+rth,←'B rnk(const SHP&s){R s.size();}',NL
+rth,←'B rnk(const A&a){R rnk(a.s);}',NL
 rth,←'B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}',NL
-rth,←'B cnt(const A&a){B c=1;DOB(rnk(a),c*=a.s[i]);R c;}',NL
+rth,←'B cnt(const A&a){R cnt(a.s);}',NL
 rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',NL
 rth,←'B cnt(arr&a){R a.elements();}',NL
 rth,←'arr scl(D x){R constant(x,dim4(1),f64);}',NL
 rth,←'arr scl(I x){R constant(x,dim4(1),s32);}',NL
 rth,←'arr scl(B x){R constant(x,dim4(1),u64);}',NL
 rth,←'A scl(arr v){R A(0,v);}',NL
-rth,←'arr axis(CA&a,B ax){B l=1,m=1,r=1;if(ax>=rnk(a))R a.v;m=a.s[ax];',NL
-rth,←' DOB(ax,l*=a.s[i])DOB(rnk(a)-ax-1,r*=a.s[ax+i+1])',NL
-rth,←' R moddims(a.v,l,m,r);}',NL
-rth,←'arr table(CA&a,B ax){B l=1,r=1;if(ax>=rnk(a))R a.v;',NL
-rth,←' DOB(ax,l*=a.s[i])DOB(rnk(a)-ax,r*=a.s[ax+i])',NL
-rth,←' R moddims(a.v,l,r);}',NL
-rth,←'arr unrav(CA&a){if(rnk(a)>4)err(99);dim4 s(1);DO((I)rnk(a),s[i]=a.s[i])',NL
-rth,←' R moddims(a.v,s);}',NL
+rth,←'arr axis(carr&a,SHP&s,B ax){B l=1,m=1,r=1;if(ax>=rnk(s))R a;m=s[ax];',NL
+rth,←' DOB(ax,l*=s[i])DOB(rnk(s)-ax-1,r*=s[ax+i+1])',NL
+rth,←' R moddims(a,l,m,r);}',NL
+rth,←'arr table(carr&a,SHP&s,B ax){B l=1,r=1;if(ax>=rnk(s))R a;',NL
+rth,←' DOB(ax,l*=s[i])DOB(rnk(s)-ax,r*=s[ax+i])',NL
+rth,←' R moddims(a,l,r);}',NL
+rth,←'arr unrav(carr&a,SHP&sp){if(rnk(sp)>4)err(99);dim4 s(1);DO((I)rnk(sp),s[i]=sp[i])',NL
+rth,←' R moddims(a,s);}',NL
 rth,←'dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;',NL
 rth,←' if(at==f64||bt==f64)R f64;',NL
 rth,←' if(at==s32||bt==s32)R s32;if(at==s16||bt==s16)R s16;',NL
 rth,←' if(at==b8||bt==b8)R b8;err(16);R f64;}',NL
 rth,←'dtype mxt(carr&a,carr&b){R mxt(a.type(),b.type());}',NL
-rth,←'dtype mxt(dtype at,const A&b){R mxt(at,b.v.type());}',NL
+rth,←'dtype mxt(dtype at,const A&b){',NL
+rth,←' R std::visit(visitor{',NL
+rth,←'   [&](std::monostate _){err(99,L"Unexpected value error.");R s32;},',NL
+rth,←'   [&](carr&v){R mxt(at,v.type());},',NL
+rth,←'   [&](const VEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},',NL
+rth,←'  b.v);}',NL
 rth,←'Z arr da16(B c,lp*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);',NL
 rth,←' DOB(c,b[i]=v[i]);R arr(c,b.data());}',NL
 rth,←'Z arr da8(B c,lp*d){VEC<char>b(c);U8*v=(U8*)DATA(d);',NL
 rth,←' DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))R arr(c,b.data());}',NL
-rth,←'V cpad(lp*d,A&a){I t;B c=cnt(a),ar=rnk(a);if(!a.f){d->p=NULL;R;}',NL
-rth,←' switch(a.v.type()){CS(c64,t=APLZ);',NL
-rth,←'  CS(s32,t=APLI);CS(s16,t=APLSI);CS(b8,t=APLTI);CS(f64,t=APLD);',NL
-rth,←'  default:if(c)err(16);t=APLI;}',NL
-rth,←' if(ar>15)err(16);B s[15];DOB(ar,s[ar-i-1]=a.s[i]);dwafns->ws->ga(t,(U)ar,s,d);',NL
-rth,←' if(c)a.v.host(DATA(d));}',NL
-rth,←'V cpda(A&a,lp*d){if(d==NULL)R;if(15!=TYPE(d))err(16);a.f=1;a.v=scl(0);',NL
-rth,←' a.s=SHP(RANK(d));DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);B c=cnt(d);',NL
-rth,←' if(c){',NL
-rth,←'  switch(ETYPE(d)){',NL
-rth,←'   CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))',NL
-rth,←'   CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))',NL
-rth,←'   CS(APLTI,a.v=da16(c,d))             CS(APLU8,a.v=da8(c,d))',NL
-rth,←'   default:err(16);}}}',NL
+rth,←'V cpad(lp*d,A&a){I t;B c=cnt(a),ar=rnk(a);',NL
+rth,←' std::visit(visitor{',NL
+rth,←'   [&](std::monostate _){d->p=NULL;},',NL
+rth,←'   [&](carr&v){',NL
+rth,←'    switch(v.type()){',NL
+rth,←'     CS(c64,t=APLZ);CS(s32,t=APLI);CS(s16,t=APLSI);',NL
+rth,←'     CS(b8,t=APLTI);CS(f64,t=APLD);',NL
+rth,←'     default:if(c)err(16);t=APLI;}',NL
+rth,←'    if(ar>15)err(16,L"Dyalog APL does not support ranks > 15.");',NL
+rth,←'    B s[15];DOB(ar,s[ar-i-1]=a.s[i]);',NL
+rth,←'    dwafns->ws->ga(t,(U)ar,s,d);if(c)v.host(DATA(d));},',NL
+rth,←'   [&](const VEC<A>&v){err(16);}},',NL
+rth,←'  a.v);}',NL
+rth,←'V cpda(A&a,lp*d){if(d==NULL)R;',NL
+rth,←' switch(TYPE(d)){',NL
+rth,←'  CS(15,{a.v=scl(0);a.s=SHP(RANK(d));B c=cnt(d);',NL
+rth,←'   DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);',NL
+rth,←'   if(c){',NL
+rth,←'    switch(ETYPE(d)){',NL
+rth,←'     CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))',NL
+rth,←'     CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))',NL
+rth,←'     CS(APLTI,a.v=da16(c,d))           CS(APLU8,a.v=da8(c,d))',NL
+rth,←'     default:err(16);}}})',NL
+rth,←'  CS(7,{a.v=scl((I)ETYPE(d));a.s=SHP(0);})',NL
+rth,←'  default:err(16);}}',NL
 rth,←'inline I isint(D x){R x==nearbyint(x);}',NL
-rth,←'inline I isint(A x){R x.v.isinteger()||x.v.isbool()',NL
-rth,←'  ||(x.v.isreal()&&allTrue<I>(x.v==trunc(x.v)));}',NL
-rth,←'inline I isbool(A x){R x.v.isbool()',NL
-rth,←'  ||(x.v.isreal()&&allTrue<I>(x.v==0||x.v==1));}',NL
+rth,←'inline I isint(CA&x){',NL
+rth,←' R std::visit(visitor{',NL
+rth,←'   [&](std::monostate _){err(99,L"Unexpected value error.");R 0;},',NL
+rth,←'   [&](carr&v)->I{R v.isinteger()||v.isbool()',NL
+rth,←'     ||(v.isreal()&&allTrue<I>(v==0||v==1));},',NL
+rth,←'   [&](const VEC<A>&v){DOB(v.size(),if(!isint(v[i]))R 0);R 1;}},',NL
+rth,←'  x.v);}',NL
+rth,←'inline I isbool(A x){',NL
+rth,←' R std::visit(visitor{',NL
+rth,←'   [&](std::monostate _){err(99,L"Unexpected value error.");R 0;},',NL
+rth,←'   [&](carr&v)->I{R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));},',NL
+rth,←'   [&](const VEC<A>&v){DOB(v.size(),if(!isbool(v[i]))R 0);R 1;}},',NL
+rth,←'  x.v);}',NL
 rth,←'EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}',NL
 rth,←'EXPORT V frea(A*a){delete a;}',NL
 rth,←'EXPORT V exarray(lp*d,A*a){cpad(d,*a);}',NL
@@ -532,21 +553,38 @@ rth,←'EXPORT Window *w_new(char *k){R new Window(k);}',NL
 rth,←'EXPORT I w_close(Window*w){R w->close();}',NL
 rth,←'EXPORT V w_del(Window*w){delete w;}',NL
 rth,←'EXPORT V w_img(lp*d,Window*w){A a;cpda(a,d);',NL
-rth,←' w->image(a.v.as(rnk(a)==2?f32:u8));}',NL
-rth,←'EXPORT V w_plot(lp*d,Window*w){A a;cpda(a,d);w->plot(a.v.as(f32));}',NL
+rth,←' std::visit(visitor{',NL
+rth,←'   [&](std::monostate&_){err(6);},',NL
+rth,←'   [&](VEC<A>&v){err(16,L"Image requires a flat array.");},',NL
+rth,←'   [&](carr&v){w->image(v.as(rnk(a)==2?f32:u8));}},',NL
+rth,←'  a.v);}',NL
+rth,←'EXPORT V w_plot(lp*d,Window*w){A a;cpda(a,d);',NL
+rth,←' std::visit(visitor{',NL
+rth,←'   [&](std::monostate&_){err(6);},',NL
+rth,←'   [&](VEC<A>&v){err(16,L"Plot requires a flat array.");},',NL
+rth,←'   [&](carr&v){w->plot(v.as(f32));}},',NL
+rth,←'  a.v);}',NL
 rth,←'EXPORT V w_hist(lp*d,D l,D h,Window*w){A a;cpda(a,d);',NL
-rth,←' w->hist(a.v.as(u32),l,h);}',NL
+rth,←' std::visit(visitor{',NL
+rth,←'   [&](std::monostate&_){err(6);},',NL
+rth,←'   [&](VEC<A>&v){err(16,L"Hist requires a flat array.");},',NL
+rth,←'   [&](carr&v){w->hist(v.as(u32),l,h);}},',NL
+rth,←'  a.v);}',NL
 rth,←'EXPORT V loadimg(lp*z,char*p,I c){array a=loadImage(p,c);',NL
 rth,←' I rk=a.numdims();dim4 s=a.dims();',NL
 rth,←' A b(rk,flat(a).as(s16));DO(rk,b.s[i]=s[i])cpad(z,b);}',NL
 rth,←'EXPORT V saveimg(lp*im,char*p){A a;cpda(a,im);',NL
-rth,←' saveImageNative(p,a.v.as(a.v.type()==s32?u16:u8));}',NL
+rth,←' std::visit(visitor{',NL
+rth,←'   [&](std::monostate&_){err(6);},',NL
+rth,←'   [&](VEC<A>&v){err(16,L"Save requires a flat array.");},',NL
+rth,←'   [&](carr&v){saveImageNative(p,v.as(v.type()==s32?u16:u8));}},',NL
+rth,←'  a.v);}',NL
 rth,←'EXPORT V cd_sync(V){sync();}',NL
 rtn[0],←⊂'NM(add,"add",1,1,DID,MFD,DFD,MT,DAD)',NL
 rtn[0],←⊂'DEFN(add)',NL
 rtn[0],←⊂'ID(add,0,s32)',NL
 rtn[0],←⊂'MF(add_f){z=r;}',NL
-rtn[0],←⊂'SF(add,z.v=lv+rv)',NL
+rtn[0],←⊂'SF(add,lv+rv)',NL
 rtn[1],←⊂'NM(sub,"sub",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[1],←⊂'DEFN(sub)',NL
 rtn[1],←⊂'ID(sub,0,s32)',NL
@@ -1289,4 +1327,35 @@ rtn[62],←⊂'NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )',NL
 rtn[62],←⊂'DEFN(ift)',NL
 rtn[62],←⊂'MF(ift_f){z.f=1;z.r=r.r;z.s=r.s;z.v=idft(r.v.type()==c64?r.v:r.v.as(c64),1,r.s);}',NL
 rtn[62],←⊂'',NL
+rtn[63],←⊂'template<class fncls> inline V sclfn(A&z,CA&l,CA&r,fncls fn){',NL
+rtn[63],←⊂' B lr=rnk(l),rr=rnk(r);',NL
+rtn[63],←⊂' if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;',NL
+rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
+rtn[63],←⊂'   [&](carr&lv,carr&rv){z.v=fn(lv,rv);}},',NL
+rtn[63],←⊂'   l,r);R;}',NL
+rtn[63],←⊂' if(!lr){z.s=r.s;',NL
+rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
+rtn[63],←⊂'   [&](carr&lv,carr&rv){z.v=fn(tile(lv,rv.dims()),rv);}},',NL
+rtn[63],←⊂'   l,r);R;}',NL
+rtn[63],←⊂' if(!rr){z.s=l.s;',NL
+rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
+rtn[63],←⊂'   [&](carr&lv,carr&rv){z.v=fn(lv,tile(rv,lv.dims()));}},',NL
+rtn[63],←⊂'   l,r);R;}',NL
+rtn[63],←⊂' if(lr!=rr)err(4);err(99);}',NL
+rtn[63],←⊂'inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){',NL
+rtn[63],←⊂' A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}',NL
+rtn[63],←⊂' B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);',NL
+rtn[63],←⊂' VEC<D> axd(rk);SHP axv(rk);',NL
+rtn[63],←⊂' if(rk)std::visit<V>(visitor{',NL
+rtn[63],←⊂'  [&](std::monostate&_){err(99,L"Unexpected value error.");},',NL
+rtn[63],←⊂'  [&](VEC<A>&v){err(99,L"Unexpected nested shape.");},',NL
+rtn[63],←⊂'  [&](carr&v){v.as(f64).host(axd.data());}},',NL
+rtn[63],←⊂'  ax.v);',NL
+rtn[63],←⊂' DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])',NL
+rtn[63],←⊂' DOB(rk,if(axv[i]<0||br<=axv[i])err(11))',NL
+rtn[63],←⊂' VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)',NL
+rtn[63],←⊂' B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),arr(br,t.data()));',NL
+rtn[63],←⊂' trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);',NL
+rtn[63],←⊂' if(f)me_c(b,z,a,e);else me_c(b,a,z,e);',NL
+rtn[63],←⊂' gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',NL
 :EndNamespace
