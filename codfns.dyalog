@@ -297,9 +297,9 @@ syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\' 
 nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
 syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
-syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'    ';'
-nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
-syms,←'%s' '%u' ⋄ nams,←'scl' ''
+syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '∇'    ';'
+nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'this' 'span'
+syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms
 deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲'
 deps[syms⍳,¨'∧⌿/.⍪⍤\']←,¨¨'⍉⍴⍋∨∧' '¨,/⌿' '¨,/' '¨,/.' ',⍪' '¨⍳⌷⍤' '¨,\'
@@ -392,8 +392,8 @@ rth,←'#define MA(n) inline V n::operator()(A&z,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)',NL
 rth,←'#define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define SF(n,lb) \',NL
-rth,←' DF(n##_f){sclfn(z,l,r,[](carr&lv,carr&rv){lb;});}\',NL
-rth,←' DA(n##_f){sclfn(z,l,r,ax,n##_c);}',NL
+rth,←' DF(n##_f){sclfn(z,l,r,e,[](A&z,carr&lv,carr&rv,ENV&e){lb;});}\',NL
+rth,←' DA(n##_f){sclfn(z,l,r,e,ax,n##_c);}',NL
 rth,←'#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;fn##init##_f fn_c;fn_c(za,cl,cr,e##init);\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);\',NL
@@ -591,7 +591,7 @@ rtn[0],←⊂'NM(add,"add",1,1,DID,MFD,DFD,MT,DAD)',NL
 rtn[0],←⊂'DEFN(add)',NL
 rtn[0],←⊂'ID(add,0,s32)',NL
 rtn[0],←⊂'MF(add_f){z=r;}',NL
-rtn[0],←⊂'SF(add,lv+rv)',NL
+rtn[0],←⊂'SF(add,z.v=lv+rv)',NL
 rtn[1],←⊂'NM(sub,"sub",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[1],←⊂'DEFN(sub)',NL
 rtn[1],←⊂'ID(sub,0,s32)',NL
@@ -707,7 +707,8 @@ rtn[18],←⊂'ID(and,1,s32)',NL
 rtn[18],←⊂'SF(and,if(lv.isbool()&&rv.isbool())z.v=lv&&rv;',NL
 rtn[18],←⊂' else if(allTrue<I>(lv>=0&&lv<=1&&rv>0&&rv<=1))z.v=lv&&rv;',NL
 rtn[18],←⊂' else{A a(z.s,lv);A b(z.s,rv);',NL
-rtn[18],←⊂'  lor_c(a,a,b,e);z.v=lv.as(f64)*(rv/((!a.v)+a.v));})',NL
+rtn[18],←⊂'  lor_c(a,a,b,e);arr&av=std::get<arr>(a.v);',NL
+rtn[18],←⊂'  z.v=lv.as(f64)*(rv/((!av)+av));})',NL
 rtn[19],←⊂'NM(lor,"lor",1,1,DID,MT ,DFD,MT ,DAD)',NL
 rtn[19],←⊂'DEFN(lor)',NL
 rtn[19],←⊂'ID(lor,0,s32)',NL
@@ -1334,19 +1335,19 @@ rtn[62],←⊂'NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )',NL
 rtn[62],←⊂'DEFN(ift)',NL
 rtn[62],←⊂'MF(ift_f){z.f=1;z.r=r.r;z.s=r.s;z.v=idft(r.v.type()==c64?r.v:r.v.as(c64),1,r.s);}',NL
 rtn[62],←⊂'',NL
-rtn[63],←⊂'template<class fncls> inline V sclfn(A&z,CA&l,CA&r,fncls fn){',NL
+rtn[63],←⊂'template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){',NL
 rtn[63],←⊂' B lr=rnk(l),rr=rnk(r);',NL
 rtn[63],←⊂' if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;',NL
 rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
-rtn[63],←⊂'   [&](carr&lv,carr&rv){z.v=fn(lv,rv);}},',NL
+rtn[63],←⊂'   [&](carr&lv,carr&rv){fn(z,lv,rv,e);}},',NL
 rtn[63],←⊂'   l,r);R;}',NL
 rtn[63],←⊂' if(!lr){z.s=r.s;',NL
 rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
-rtn[63],←⊂'   [&](carr&lv,carr&rv){z.v=fn(tile(lv,rv.dims()),rv);}},',NL
+rtn[63],←⊂'   [&](carr&lv,carr&rv){fn(z,tile(lv,rv.dims()),rv,e);}},',NL
 rtn[63],←⊂'   l,r);R;}',NL
 rtn[63],←⊂' if(!rr){z.s=l.s;',NL
 rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
-rtn[63],←⊂'   [&](carr&lv,carr&rv){z.v=fn(lv,tile(rv,lv.dims()));}},',NL
+rtn[63],←⊂'   [&](carr&lv,carr&rv){fn(z,lv,tile(rv,lv.dims()),e);}},',NL
 rtn[63],←⊂'   l,r);R;}',NL
 rtn[63],←⊂' if(lr!=rr)err(4);err(99);}',NL
 rtn[63],←⊂'inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){',NL

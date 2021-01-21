@@ -1,16 +1,16 @@
-template<class fncls> inline V sclfn(A&z,CA&l,CA&r,fncls fn){
+template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){
  B lr=rnk(l),rr=rnk(r);
  if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;
   std::visit(visitor{DVSTR(),
-   [&](carr&lv,carr&rv){z.v=fn(lv,rv);}},
+   [&](carr&lv,carr&rv){fn(z,lv,rv,e);}},
    l,r);R;}
  if(!lr){z.s=r.s;
   std::visit(visitor{DVSTR(),
-   [&](carr&lv,carr&rv){z.v=fn(tile(lv,rv.dims()),rv);}},
+   [&](carr&lv,carr&rv){fn(z,tile(lv,rv.dims()),rv,e);}},
    l,r);R;}
  if(!rr){z.s=l.s;
   std::visit(visitor{DVSTR(),
-   [&](carr&lv,carr&rv){z.v=fn(lv,tile(rv,lv.dims()));}},
+   [&](carr&lv,carr&rv){fn(z,lv,tile(rv,lv.dims()),e);}},
    l,r);R;}
  if(lr!=rr)err(4);err(99);}
 inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){

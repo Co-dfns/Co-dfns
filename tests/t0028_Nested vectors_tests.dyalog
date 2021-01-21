@@ -10,6 +10,10 @@
   _←#.⎕EX cn ⋄ 'Successful compile'⊣cd∘←#.c0028←tn #.codfns.Fix ⎕SRC dy}
 
  ∆0001_TEST←'id' TEST1 (⊂⍬)
+ ∆0002_TEST←'id' TEST1 (⊂⍳5)
+ ∆0003_TEST←'id' TEST1 (⊂2 5⍴⍳10)
+ ∆0004_TEST←'id' TEST1 (⊂2 3⍴(1 2 3)(4 5 6))
+ ∆0005_TEST←'id' TEST1 (2 3⍴(1 2 3)(4 5 6))
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
