@@ -5,8 +5,9 @@ typedef double D;typedef unsigned char U8;typedef unsigned U;
 typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;
 typedef array arr;typedef const array carr;typedef af::index IDX;
 S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
-S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};
-S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
+S pkt{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];};
+S lp{pkt*p;V*i;};
+S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
 S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
 EXPORT I DyalogGetInterpreterFunctions(dwa*p){
  if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}

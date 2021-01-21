@@ -5,7 +5,7 @@ B rnk(const SHP&s){R s.size();}
 B rnk(const A&a){R rnk(a.s);}
 B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}
 B cnt(const A&a){R cnt(a.s);}
-B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
+B cnt(pkt*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
 B cnt(arr&a){R a.elements();}
 arr scl(D x){R constant(x,dim4(1),f64);}
 arr scl(I x){R constant(x,dim4(1),s32);}
@@ -30,35 +30,41 @@ dtype mxt(dtype at,const A&b){
    [&](carr&v){R mxt(at,v.type());},
    [&](const VEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},
   b.v);}
-Z arr da16(B c,lp*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);
+Z arr da16(B c,pkt*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);
  DOB(c,b[i]=v[i]);R arr(c,b.data());}
-Z arr da8(B c,lp*d){VEC<char>b(c);U8*v=(U8*)DATA(d);
+Z arr da8(B c,pkt*d){VEC<char>b(c);U8*v=(U8*)DATA(d);
  DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))R arr(c,b.data());}
-V cpad(lp*d,A&a){I t;B c=cnt(a),ar=rnk(a);
+pkt*cpad(lp*l,CA&a){I t;B c=cnt(a),ar=rnk(a);pkt*p=NULL;
+ if(ar>15)err(16,L"Dyalog APL does not support ranks > 15.");
+ B s[15];DOB(ar,s[ar-i-1]=a.s[i]);
  std::visit(visitor{
-   [&](std::monostate _){d->p=NULL;},
+   [&](std::monostate _){if(l)l->p=NULL;},
    [&](carr&v){
     switch(v.type()){
      CS(c64,t=APLZ);CS(s32,t=APLI);CS(s16,t=APLSI);
      CS(b8,t=APLTI);CS(f64,t=APLD);
      default:if(c)err(16);t=APLI;}
-    if(ar>15)err(16,L"Dyalog APL does not support ranks > 15.");
-    B s[15];DOB(ar,s[ar-i-1]=a.s[i]);
-    dwafns->ws->ga(t,(U)ar,s,d);if(c)v.host(DATA(d));},
-   [&](const VEC<A>&v){err(16);}},
-  a.v);}
-V cpda(A&a,lp*d){if(d==NULL)R;
+    p=dwafns->ws->ga(t,(U)ar,s,l);if(c)v.host(DATA(p));},
+   [&](const VEC<A>&v){
+    p=dwafns->ws->ga(APLP,(U)ar,s,l);pkt**d=(pkt**)DATA(p);
+    DOB(c,if(!(d[i]=cpad(NULL,v[i])))err(6))}},
+  a.v);
+  R p;}
+V cpda(A&a,pkt*d){
+ B c=cnt(d);a.s=SHP(RANK(d));DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);
+ if(!c){a.v=scl(0);R;}
  switch(TYPE(d)){
-  CS(15,{a.v=scl(0);a.s=SHP(RANK(d));B c=cnt(d);
-   DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);
-   if(c){
-    switch(ETYPE(d)){
-     CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))
-     CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))
-     CS(APLTI,a.v=da16(c,d))           CS(APLU8,a.v=da8(c,d))
-     default:err(16);}}})
-  CS(7,{a.v=scl((I)ETYPE(d));a.s=SHP(0);})
+  CS(15,
+   switch(ETYPE(d)){
+    CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))
+    CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))
+    CS(APLTI,a.v=da16(c,d))           CS(APLU8,a.v=da8(c,d))
+    default:err(16);})
+  CS(7,{if(APLP!=ETYPE(d))err(16);
+   a.v=VEC<A>(c);pkt**dv=(pkt**)DATA(d);
+   DOB(c,cpda(std::get<VEC<A>>(a.v)[i],dv[i]))})
   default:err(16);}}
+V cpda(A&a,lp*d){if(d==NULL)R;cpda(a,d->p);}
 inline I isint(D x){R x==nearbyint(x);}
 inline I isint(CA&x){
  R std::visit(visitor{

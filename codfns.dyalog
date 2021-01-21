@@ -350,11 +350,11 @@ rth,←'#define Z static',NL
 rth,←'#define R return',NL
 rth,←'#define this_c (*this)',NL
 rth,←'#define VEC std::vector',NL
-rth,←'#define RANK(lp) ((lp)->p->r)',NL
-rth,←'#define TYPE(lp) ((lp)->p->t)',NL
-rth,←'#define SHAPE(lp) ((lp)->p->s)',NL
-rth,←'#define ETYPE(lp) ((lp)->p->e)',NL
-rth,←'#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])',NL
+rth,←'#define RANK(pp) ((pp)->r)',NL
+rth,←'#define TYPE(pp) ((pp)->t)',NL
+rth,←'#define SHAPE(pp) ((pp)->s)',NL
+rth,←'#define ETYPE(pp) ((pp)->e)',NL
+rth,←'#define DATA(pp) ((V*)&SHAPE(pp)[RANK(pp)])',NL
 rth,←'#define CS(n,x) case n:x;break;',NL
 rth,←'#define DO(n,x) {I _i=(n),i=0;for(;i<_i;++i){x;}}',NL
 rth,←'#define DOB(n,x) {B _i=(n),i=0;for(;i<_i;++i){x;}}',NL
@@ -412,8 +412,9 @@ rth,←'typedef double D;typedef unsigned char U8;typedef unsigned U;',NL
 rth,←'typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;',NL
 rth,←'typedef array arr;typedef const array carr;typedef af::index IDX;',NL
 rth,←'S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',NL
-rth,←'S lp{S{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];}*p;};',NL
-rth,←'S dwa{B z;S{B z;V*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',NL
+rth,←'S pkt{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];};',NL
+rth,←'S lp{pkt*p;V*i;};',NL
+rth,←'S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',NL
 rth,←'S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}',NL
 rth,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',NL
 rth,←' if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}',NL
@@ -477,7 +478,7 @@ rth,←'B rnk(const SHP&s){R s.size();}',NL
 rth,←'B rnk(const A&a){R rnk(a.s);}',NL
 rth,←'B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}',NL
 rth,←'B cnt(const A&a){R cnt(a.s);}',NL
-rth,←'B cnt(lp*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',NL
+rth,←'B cnt(pkt*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}',NL
 rth,←'B cnt(arr&a){R a.elements();}',NL
 rth,←'arr scl(D x){R constant(x,dim4(1),f64);}',NL
 rth,←'arr scl(I x){R constant(x,dim4(1),s32);}',NL
@@ -502,35 +503,41 @@ rth,←'   [&](std::monostate _){err(99,L"Unexpected value error.");R s32;},',NL
 rth,←'   [&](carr&v){R mxt(at,v.type());},',NL
 rth,←'   [&](const VEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},',NL
 rth,←'  b.v);}',NL
-rth,←'Z arr da16(B c,lp*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);',NL
+rth,←'Z arr da16(B c,pkt*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);',NL
 rth,←' DOB(c,b[i]=v[i]);R arr(c,b.data());}',NL
-rth,←'Z arr da8(B c,lp*d){VEC<char>b(c);U8*v=(U8*)DATA(d);',NL
+rth,←'Z arr da8(B c,pkt*d){VEC<char>b(c);U8*v=(U8*)DATA(d);',NL
 rth,←' DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))R arr(c,b.data());}',NL
-rth,←'V cpad(lp*d,A&a){I t;B c=cnt(a),ar=rnk(a);',NL
+rth,←'pkt*cpad(lp*l,CA&a){I t;B c=cnt(a),ar=rnk(a);pkt*p=NULL;',NL
+rth,←' if(ar>15)err(16,L"Dyalog APL does not support ranks > 15.");',NL
+rth,←' B s[15];DOB(ar,s[ar-i-1]=a.s[i]);',NL
 rth,←' std::visit(visitor{',NL
-rth,←'   [&](std::monostate _){d->p=NULL;},',NL
+rth,←'   [&](std::monostate _){if(l)l->p=NULL;},',NL
 rth,←'   [&](carr&v){',NL
 rth,←'    switch(v.type()){',NL
 rth,←'     CS(c64,t=APLZ);CS(s32,t=APLI);CS(s16,t=APLSI);',NL
 rth,←'     CS(b8,t=APLTI);CS(f64,t=APLD);',NL
 rth,←'     default:if(c)err(16);t=APLI;}',NL
-rth,←'    if(ar>15)err(16,L"Dyalog APL does not support ranks > 15.");',NL
-rth,←'    B s[15];DOB(ar,s[ar-i-1]=a.s[i]);',NL
-rth,←'    dwafns->ws->ga(t,(U)ar,s,d);if(c)v.host(DATA(d));},',NL
-rth,←'   [&](const VEC<A>&v){err(16);}},',NL
-rth,←'  a.v);}',NL
-rth,←'V cpda(A&a,lp*d){if(d==NULL)R;',NL
+rth,←'    p=dwafns->ws->ga(t,(U)ar,s,l);if(c)v.host(DATA(p));},',NL
+rth,←'   [&](const VEC<A>&v){',NL
+rth,←'    p=dwafns->ws->ga(APLP,(U)ar,s,l);pkt**d=(pkt**)DATA(p);',NL
+rth,←'    DOB(c,if(!(d[i]=cpad(NULL,v[i])))err(6))}},',NL
+rth,←'  a.v);',NL
+rth,←'  R p;}',NL
+rth,←'V cpda(A&a,pkt*d){',NL
+rth,←' B c=cnt(d);a.s=SHP(RANK(d));DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);',NL
+rth,←' if(!c){a.v=scl(0);R;}',NL
 rth,←' switch(TYPE(d)){',NL
-rth,←'  CS(15,{a.v=scl(0);a.s=SHP(RANK(d));B c=cnt(d);',NL
-rth,←'   DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);',NL
-rth,←'   if(c){',NL
-rth,←'    switch(ETYPE(d)){',NL
-rth,←'     CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))',NL
-rth,←'     CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))',NL
-rth,←'     CS(APLTI,a.v=da16(c,d))           CS(APLU8,a.v=da8(c,d))',NL
-rth,←'     default:err(16);}}})',NL
-rth,←'  CS(7,{a.v=scl((I)ETYPE(d));a.s=SHP(0);})',NL
+rth,←'  CS(15,',NL
+rth,←'   switch(ETYPE(d)){',NL
+rth,←'    CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))',NL
+rth,←'    CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))',NL
+rth,←'    CS(APLTI,a.v=da16(c,d))           CS(APLU8,a.v=da8(c,d))',NL
+rth,←'    default:err(16);})',NL
+rth,←'  CS(7,{if(APLP!=ETYPE(d))err(16);',NL
+rth,←'   a.v=VEC<A>(c);pkt**dv=(pkt**)DATA(d);',NL
+rth,←'   DOB(c,cpda(std::get<VEC<A>>(a.v)[i],dv[i]))})',NL
 rth,←'  default:err(16);}}',NL
+rth,←'V cpda(A&a,lp*d){if(d==NULL)R;cpda(a,d->p);}',NL
 rth,←'inline I isint(D x){R x==nearbyint(x);}',NL
 rth,←'inline I isint(CA&x){',NL
 rth,←' R std::visit(visitor{',NL

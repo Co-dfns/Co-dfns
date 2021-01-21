@@ -40,11 +40,11 @@ using namespace af;
 #define R return
 #define this_c (*this)
 #define VEC std::vector
-#define RANK(lp) ((lp)->p->r)
-#define TYPE(lp) ((lp)->p->t)
-#define SHAPE(lp) ((lp)->p->s)
-#define ETYPE(lp) ((lp)->p->e)
-#define DATA(lp) ((V*)&SHAPE(lp)[RANK(lp)])
+#define RANK(pp) ((pp)->r)
+#define TYPE(pp) ((pp)->t)
+#define SHAPE(pp) ((pp)->s)
+#define ETYPE(pp) ((pp)->e)
+#define DATA(pp) ((V*)&SHAPE(pp)[RANK(pp)])
 #define CS(n,x) case n:x;break;
 #define DO(n,x) {I _i=(n),i=0;for(;i<_i;++i){x;}}
 #define DOB(n,x) {B _i=(n),i=0;for(;i<_i;++i){x;}}
