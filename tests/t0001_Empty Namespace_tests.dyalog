@@ -11,6 +11,9 @@
  ∆5_TEST←{#.UT.expect←0 0⍴'' ⋄ #.c0001.⎕NL 3}
  ∆6_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX'c0001' ⋄ 0⊣#.c0001←'t0001'#.codfns.Fix mc}
  ∆7_TEST←{#.UT.expect←0 0⍴'' ⋄ #.c0001.⎕NL 3}
+ ∆8_TEST←{#.UT.expect←0 ⋄ _←#.⎕EX'c0001'
+  0⊣#.c0001←#.codfns.Compile'.\t0001.dyalog'}
+ ∆9_TEST←{#.UT.expect←0 0⍴'' ⋄ #.c0001.⎕NL 3}
  ∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨n←'c0001' 't0001' ⋄ #.⎕NC¨n}
 
 :EndNamespace

@@ -32,8 +32,10 @@ CONTINUE
 *.bin
 *.ptx
 *.gpu
-*.h
+tests/*.h
 attic/*.pdf
 *.obj
 *.log
-*.cpp
+tests/*.cpp
+.vs/
+*.aps
