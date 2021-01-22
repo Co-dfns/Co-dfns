@@ -75,9 +75,9 @@ typedef struct APL_PARAM
 static APL_PARAM _APL_PARAM_END_={AP_END};
 #define PARAM_END  (&_APL_PARAM_END_)
 
-extern "C" void  dwa_free(void*);
-extern "C" void *dwa_alloc(size_t len);
-extern "C" APL_PARAM *link_str(APL_PARAM *,...);
+extern void  dwa_free(void*);
+extern void *dwa_alloc(size_t len);
+extern APL_PARAM *link_str(APL_PARAM *,...);
 
 #include "copyfns.h"
 
@@ -166,6 +166,6 @@ extern "C" APL_PARAM *link_str(APL_PARAM *,...);
 #define APL_WCHAR_ARRAY_INOUT(	name,v,l,f) 	APL_CHARACTER_ARRAY_PARAM(wchar_t,name,v,l,f|AP_IN|AP_OUT)
 
 
-extern "C" int call_apl(const wchar_t *name,APL_PARAM *first,...);
-extern "C" int load_apl(unsigned int flags, int argc, wchar_t **argv);
+extern int call_apl(const wchar_t *name,APL_PARAM *first,...);
+extern int load_apl(unsigned int flags, int argc, wchar_t **argv);
 

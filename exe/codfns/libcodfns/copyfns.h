@@ -1,14 +1,14 @@
 #define ARRAY_FNS(type) 	\
-extern "C" void LIBCALL pf_a_##type(PP *pp,APL_PARAM *param); \
-extern "C" void LIBCALL pt_a_##type(PP *pp,APL_PARAM *param); 
+extern void LIBCALL pf_a_##type(PP *pp,APL_PARAM *param); \
+extern void LIBCALL pt_a_##type(PP *pp,APL_PARAM *param); 
 
 #define SCALAR_FNS(type) 	\
-extern "C" void LIBCALL pf_##type(PP *pp,APL_PARAM *param);  \
-extern "C" void LIBCALL pt_##type(PP *pp,APL_PARAM *param);	
+extern void LIBCALL pf_##type(PP *pp,APL_PARAM *param);  \
+extern void LIBCALL pt_##type(PP *pp,APL_PARAM *param);	
 
 #define CHAR_ARRAY_FNS(type)		\
-extern "C" void LIBCALL pf_a_##type(PP *pp,APL_PARAM *param); \
-extern "C" void LIBCALL pt_a_##type(PP *pp,APL_PARAM *param)
+extern void LIBCALL pf_a_##type(PP *pp,APL_PARAM *param); \
+extern void LIBCALL pt_a_##type(PP *pp,APL_PARAM *param)
 
 #define POCK_FNS(type) ARRAY_FNS(type); SCALAR_FNS(type)
 
@@ -29,11 +29,11 @@ POCK_FNS(wchar_t);
 //CHAR_ARRAY_FNS(char32);
 //CHAR_ARRAY_FNS(wchar_t);
 
-extern "C" void LIBCALL pf_str(PP *pp,APL_PARAM *param);
-extern "C" void LIBCALL pt_str(PP *pp,APL_PARAM *param);
+extern void LIBCALL pf_str(PP *pp,APL_PARAM *param);
+extern void LIBCALL pt_str(PP *pp,APL_PARAM *param);
 
-extern "C" void LIBCALL pf_z(PP *pp,APL_PARAM *param);
-extern "C" void LIBCALL pt_z(PP *pp,APL_PARAM *param);
+extern void LIBCALL pf_z(PP *pp,APL_PARAM *param);
+extern void LIBCALL pt_z(PP *pp,APL_PARAM *param);
 
 
 

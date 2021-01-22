@@ -12,7 +12,7 @@ static int dwa_enable_asserts(int enable)
 }
 #endif
 
-extern "C" HINSTANCE dwa_hInst;
+extern HINSTANCE dwa_hInst;
 
 BOOL APIENTRY DllMain( HMODULE h, DWORD reason, LPVOID process_termination)
 {

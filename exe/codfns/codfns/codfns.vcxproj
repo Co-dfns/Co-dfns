@@ -141,7 +141,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="codfns.cpp" />
+    <ClCompile Include="codfns.c" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libcodfns\libcodfns.vcxproj">
