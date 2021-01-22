@@ -184,9 +184,6 @@
   <ItemGroup>
     <ResourceCompile Include="libcodfns.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\codfns.dyalog" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
