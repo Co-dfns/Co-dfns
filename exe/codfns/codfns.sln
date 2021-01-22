@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "codfns", "codfns\codfns.vcxproj", "{328B1E3C-E8CB-44B8-AEEC-A3DCA7E44E38}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D78E2C4F-BDF2-4765-83DD-8C27911389DF} = {D78E2C4F-BDF2-4765-83DD-8C27911389DF}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcodfns", "libcodfns\libcodfns.vcxproj", "{D78E2C4F-BDF2-4765-83DD-8C27911389DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{328B1E3C-E8CB-44B8-AEEC-A3DCA7E44E38}.Debug|x64.ActiveCfg = Debug|x64
+		{328B1E3C-E8CB-44B8-AEEC-A3DCA7E44E38}.Debug|x64.Build.0 = Debug|x64
+		{328B1E3C-E8CB-44B8-AEEC-A3DCA7E44E38}.Release|x64.ActiveCfg = Release|x64
+		{328B1E3C-E8CB-44B8-AEEC-A3DCA7E44E38}.Release|x64.Build.0 = Release|x64
+		{D78E2C4F-BDF2-4765-83DD-8C27911389DF}.Debug|x64.ActiveCfg = Debug|x64
+		{D78E2C4F-BDF2-4765-83DD-8C27911389DF}.Debug|x64.Build.0 = Debug|x64
+		{D78E2C4F-BDF2-4765-83DD-8C27911389DF}.Release|x64.ActiveCfg = Release|x64
+		{D78E2C4F-BDF2-4765-83DD-8C27911389DF}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEB0AA46-C5B3-49D3-9ACA-74D4175C46E9}
+	EndGlobalSection
+EndGlobal
