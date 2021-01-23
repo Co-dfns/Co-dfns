@@ -4,6 +4,7 @@ typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;
 typedef double D;typedef unsigned char U8;typedef unsigned U;
 typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;
 typedef array arr;typedef const array carr;typedef af::index IDX;
+typedef std::monostate NIL;
 S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 S pkt{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];};
 S lp{pkt*p;V*i;};
@@ -14,7 +15,7 @@ EXPORT I DyalogGetInterpreterFunctions(dwa*p){
 Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}Z V err(U n){err(n,L"");}
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
 typedef VEC<dim_t> SHP;S A;
-typedef std::variant<std::monostate,arr,VEC<A>> VALS;
+typedef std::variant<NIL,arr,VEC<A>> VALS;
 S A{SHP s;VALS v;
  A(){}
  A(SHP s,carr v):s(s),v(v){}

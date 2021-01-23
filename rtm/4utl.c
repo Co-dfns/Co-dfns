@@ -26,7 +26,7 @@ dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;
 dtype mxt(carr&a,carr&b){R mxt(a.type(),b.type());}
 dtype mxt(dtype at,const A&b){
  R std::visit(visitor{
-   [&](std::monostate _){err(99,L"Unexpected value error.");R s32;},
+   [&](NIL _){err(99,L"Unexpected value error.");R s32;},
    [&](carr&v){R mxt(at,v.type());},
    [&](const VEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},
   b.v);}
@@ -38,7 +38,7 @@ pkt*cpad(lp*l,CA&a){I t;B c=cnt(a),ar=rnk(a);pkt*p=NULL;
  if(ar>15)err(16,L"Dyalog APL does not support ranks > 15.");
  B s[15];DOB(ar,s[ar-i-1]=a.s[i]);
  std::visit(visitor{
-   [&](std::monostate _){if(l)l->p=NULL;},
+   [&](NIL _){if(l)l->p=NULL;},
    [&](carr&v){
     switch(v.type()){
      CS(c64,t=APLZ);CS(s32,t=APLI);CS(s16,t=APLSI);
@@ -68,14 +68,14 @@ V cpda(A&a,lp*d){if(d==NULL)R;cpda(a,d->p);}
 inline I isint(D x){R x==nearbyint(x);}
 inline I isint(CA&x){
  R std::visit(visitor{
-   [&](std::monostate _){err(99,L"Unexpected value error.");R 0;},
+   [&](NIL _){err(99,L"Unexpected value error.");R 0;},
    [&](carr&v)->I{R v.isinteger()||v.isbool()
      ||(v.isreal()&&allTrue<I>(v==0||v==1));},
    [&](const VEC<A>&v){DOB(v.size(),if(!isint(v[i]))R 0);R 1;}},
   x.v);}
 inline I isbool(A x){
  R std::visit(visitor{
-   [&](std::monostate _){err(99,L"Unexpected value error.");R 0;},
+   [&](NIL _){err(99,L"Unexpected value error.");R 0;},
    [&](carr&v)->I{R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));},
    [&](const VEC<A>&v){DOB(v.size(),if(!isbool(v[i]))R 0);R 1;}},
   x.v);}

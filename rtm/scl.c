@@ -18,7 +18,7 @@ inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){
  B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);
  VEC<D> axd(rk);SHP axv(rk);
  if(rk)std::visit<V>(visitor{
-  [&](std::monostate&_){err(99,L"Unexpected value error.");},
+  [&](NIL&_){err(99,L"Unexpected value error.");},
   [&](VEC<A>&v){err(99,L"Unexpected nested shape.");},
   [&](carr&v){v.as(f64).host(axd.data());}},
   ax.v);

@@ -7,19 +7,19 @@ EXPORT I w_close(Window*w){R w->close();}
 EXPORT V w_del(Window*w){delete w;}
 EXPORT V w_img(lp*d,Window*w){A a;cpda(a,d);
  std::visit(visitor{
-   [&](std::monostate&_){err(6);},
+   [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Image requires a flat array.");},
    [&](carr&v){w->image(v.as(rnk(a)==2?f32:u8));}},
   a.v);}
 EXPORT V w_plot(lp*d,Window*w){A a;cpda(a,d);
  std::visit(visitor{
-   [&](std::monostate&_){err(6);},
+   [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Plot requires a flat array.");},
    [&](carr&v){w->plot(v.as(f32));}},
   a.v);}
 EXPORT V w_hist(lp*d,D l,D h,Window*w){A a;cpda(a,d);
  std::visit(visitor{
-   [&](std::monostate&_){err(6);},
+   [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Hist requires a flat array.");},
    [&](carr&v){w->hist(v.as(u32),l,h);}},
   a.v);}
@@ -28,7 +28,7 @@ EXPORT V loadimg(lp*z,char*p,I c){array a=loadImage(p,c);
  A b(rk,flat(a).as(s16));DO(rk,b.s[i]=s[i])cpad(z,b);}
 EXPORT V saveimg(lp*im,char*p){A a;cpda(a,im);
  std::visit(visitor{
-   [&](std::monostate&_){err(6);},
+   [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Save requires a flat array.");},
    [&](carr&v){saveImageNative(p,v.as(v.type()==s32?u16:u8));}},
   a.v);}

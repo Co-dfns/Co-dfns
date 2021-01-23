@@ -28,10 +28,10 @@ S DOK{virtual ~DOK() = default;
  virtual FNP operator()(FNP l,CA&r){err(99);R MTFN;}
  virtual FNP operator()(CA&l,FNP r){err(99);R MTFN;}};
 S DVSTR {
- V operator()(std::monostate&l,carr&r){err(6);}
- V operator()(std::monostate&l,VEC<A>&r){err(6);}
- V operator()(carr&l,std::monostate&r){err(6);}
- V operator()(VEC<A>&l,std::monostate&r){err(6);}};
-S MVSTR {V operator()(std::monostate&r){err(6);}};
+ V operator()(NIL&l,carr&r){err(6);}
+ V operator()(NIL&l,VEC<A>&r){err(6);}
+ V operator()(carr&l,NIL&r){err(6);}
+ V operator()(VEC<A>&l,NIL&r){err(6);}};
+S MVSTR {V operator()(NIL&r){err(6);}};
 template<class... Ts> S visitor : Ts... { using Ts::operator()...; };
 template<class... Ts> visitor(Ts...) -> visitor<Ts...>;
