@@ -2,7 +2,7 @@
 DEFN(tke)
 MF(tke_f){z=r;}
 MA(tke_f){err(16);}
-DA(tke_f){z.f=1;B c=cnt(l),ac=cnt(ax),axr=rnk(ax),lr=rnk(l),rr=rnk(r);
+DA(tke_f){B c=cnt(l),ac=cnt(ax),axr=rnk(ax),lr=rnk(l),rr=rnk(r);
  if(axr>1||lr>1)err(4);if(ac!=c)err(5);if(c>4)err(16);if(!isint(ax))err(11);
  VEC<I> av(ac),m(rr,0);if(ac)ax.v.as(s32).host(av.data());
  DOB(ac,if(av[i]<0)err(11);if(av[i]>=rr)err(4))

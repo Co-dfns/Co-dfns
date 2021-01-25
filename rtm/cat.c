@@ -1,7 +1,7 @@
 ﻿NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)
 DEFN(cat)
-MF(cat_f){z.f=1;z.s=SHP(1,cnt(r));z.v=flat(r.v);}
-MA(cat_f){z.f=1;B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);
+MF(cat_f){z.s=SHP(1,cnt(r));z.v=flat(r.v);}
+MA(cat_f){B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);
  VEC<D> axv(ac);if(ac)ax.v.as(f64).host(axv.data());
  if(ac==1&&(axv[0]<=-1||rr<=axv[0]))err(4);
  if(ac>1){I c=(I)axv[0];if(c<0)err(11);DO((I)ac,if(axv[i]!=c++)err(11))
@@ -13,7 +13,7 @@ MA(cat_f){z.f=1;B ac=cnt(ax),ar=rnk(ax),rr=rnk(r);if(ac>1&&ar>1)err(4);
  B s=(B)axv[ac-1],ei=(B)axv[0];
  zr=rr-ac+1;z.s=SHP(zr,1);DOB(s,z.s[i]=r.s[i])
  DOB(ac,z.s[s]*=r.s[s+i])DOB(rr-ei-1,z.s[s+i+1]=r.s[ei+i+1])}
-DA(cat_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);
+DA(cat_f){B ar=rnk(ax),lr=rnk(l),rr=rnk(r);
  if(lr>4||rr>4)err(16);
  if(ar>1)err(4);if(cnt(ax)!=1)err(5);D ox=ax.v.as(f64).scalar<D>();
  B rk=lr>rr?lr:rr;if(ox<=-1)err(11);if(ox>=rk)err(4);
@@ -35,6 +35,6 @@ DA(cat_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);
  array rv=(rr?moddims(r.v,rs):tile(r.v,rs)).as(mt);
  if(!cnt(l)){z.v=flat(rv);R;}if(!cnt(r)){z.v=flat(lv);R;}
  z.v=flat(join(fx,lv,rv));}
-DF(cat_f){z.f=1;B lr=rnk(l),rr=rnk(r);
+DF(cat_f){B lr=rnk(l),rr=rnk(r);
  if(lr||rr){cat_c(z,l,r,e,scl(scl((lr>rr?lr:rr)-1)));R;}
  A a,b;cat_c(a,l,e);cat_c(b,r,e);cat_c(z,a,b,e);}

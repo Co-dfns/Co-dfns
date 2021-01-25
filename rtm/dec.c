@@ -1,6 +1,6 @@
 ﻿NM(dec,"dec",0,0,MT,MT,DFD,MT,MT)
 DEFN(dec)
-DF(dec_f){z.f=1;B rr=rnk(r),lr=rnk(l),ra=rr?rr-1:0,la=lr?lr-1:0;z.s=SHP(ra+la);
+DF(dec_f){B rr=rnk(r),lr=rnk(l),ra=rr?rr-1:0,la=lr?lr-1:0;z.s=SHP(ra+la);
  if(rr&&lr)if(l.s[0]!=1&&l.s[0]!=r.s[ra]&&r.s[ra]!=1)err(5);
  DOB(ra,z.s[i]=r.s[i])DOB(la,z.s[i+ra]=l.s[i+1])
  if(!cnt(z)){z.v=scl(0);R;}

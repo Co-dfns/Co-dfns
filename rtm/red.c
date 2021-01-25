@@ -2,7 +2,7 @@
 ID(red,1,s32)
 DEFN(red)
 OM(red,"red",0,0,MFD,DFD,MAD,DAD)
-DA(red_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r),zr;if(lr>4||rr>4)err(16);
+DA(red_f){B ar=rnk(ax),lr=rnk(l),rr=rnk(r),zr;if(lr>4||rr>4)err(16);
  dim4 zs(1),ls(1),rs(1);DO((I)lr,ls[i]=l.s[i])DO((I)rr,rs[i]=r.s[i])
  array lv=moddims(l.v,ls),rv=moddims(r.v,rs);
  if(ar>1||cnt(ax)!=1)err(5);if(!ax.v.isinteger())err(11);
@@ -25,7 +25,7 @@ DA(red_f){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r),zr;if(lr>4||rr>4)err(16);
  z.v*=tile(u,(I)s2[0],(I)s2[1],(I)s2[2],(I)s2[3]);
  z.v=flat(z.v);}
 DF(red_f){A x=r;if(!rnk(r))cat_c(x,r,e);red_c(z,l,x,e,scl(scl(rnk(x)-1)));}
-MA(red_o){z.f=1;B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
+MA(red_o){B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
  if(ar>1)err(4);if(cnt(ax)!=1)err(5);
  if(!isint(ax))err(11);I av;ax.v.as(s32).host(&av);
  if(av<0)err(11);if(av>=rr)err(4);av=(I)rr-av-1;I rc=(I)r.s[av];
@@ -47,7 +47,7 @@ MA(red_o){z.f=1;B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
  z.v=flat(rv(span,rc-1,span));
  DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))}
 MF(red_o){A x=r;if(!rnk(r))cat_c(x,r,e);this_c(z,x,e,scl(scl(rnk(x)-1)));}
-DA(red_o){z.f=1;B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
+DA(red_o){B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
  arr rv=unrav(r);
  if(ar>1)err(4);if(cnt(ax)!=1)err(5);
  if(!isint(ax))err(11);I av=ax.v.as(s32).scalar<I>();

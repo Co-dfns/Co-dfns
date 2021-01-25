@@ -11,13 +11,14 @@ arr scl(D x){R constant(x,dim4(1),f64);}
 arr scl(I x){R constant(x,dim4(1),s32);}
 arr scl(B x){R constant(x,dim4(1),u64);}
 A scl(arr v){R A(0,v);}
-arr axis(carr&a,SHP&s,B ax){B l=1,m=1,r=1;if(ax>=rnk(s))R a;m=s[ax];
+arr axis(carr&a,const SHP&s,B ax){B l=1,m=1,r=1;if(ax>=rnk(s))R a;m=s[ax];
  DOB(ax,l*=s[i])DOB(rnk(s)-ax-1,r*=s[ax+i+1])
  R moddims(a,l,m,r);}
-arr table(carr&a,SHP&s,B ax){B l=1,r=1;if(ax>=rnk(s))R a;
+arr table(carr&a,const SHP&s,B ax){B l=1,r=1;if(ax>=rnk(s))R a;
  DOB(ax,l*=s[i])DOB(rnk(s)-ax,r*=s[ax+i])
  R moddims(a,l,r);}
-arr unrav(carr&a,SHP&sp){if(rnk(sp)>4)err(99);dim4 s(1);DO((I)rnk(sp),s[i]=sp[i])
+arr unrav(carr&a,const SHP&sp){if(rnk(sp)>4)err(99);
+ dim4 s(1);DO((I)rnk(sp),s[i]=sp[i])
  R moddims(a,s);}
 dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;
  if(at==f64||bt==f64)R f64;

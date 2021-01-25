@@ -1,7 +1,7 @@
 ﻿NM(enc,"enc",0,0,DID,MT ,DFD,MT ,MT )
 DEFN(enc)
 ID(enc,0,s32)
-DF(enc_f){z.f=1;B rr=rnk(r),lr=rnk(l),rk=rr+lr;if(rk>4)err(16);
+DF(enc_f){B rr=rnk(r),lr=rnk(l),rk=rr+lr;if(rk>4)err(16);
  SHP sp(rk);DOB(rr,sp[i]=r.s[i])DOB(lr,sp[i+rr]=l.s[i])
  if(!cnt(sp)){z.s=sp;z.v=scl(0);R;}
  dim4 lt(1),rt(1);DO((I)rk,lt[i]=rt[i]=sp[i])I k=lr?(I)lr-1:0;

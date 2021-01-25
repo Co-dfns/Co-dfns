@@ -1,5 +1,5 @@
 ﻿OD(rnk,"rnk",scm(l),0,MFD,DFD,MT ,MT )
-MF(rnk_o){z.f=1;I rr=(I)rnk(r);
+MF(rnk_o){I rr=(I)rnk(r);
  if(cnt(ww)!=1)err(4);I cr=ww.v.as(s32).scalar<I>();
  if(scm(ll)||cr>=rr){ll(z,r,e);R;}
  if(cr<=-rr||!cr){map_o f(llp);f(z,r,e);R;}
@@ -14,7 +14,7 @@ MF(rnk_o){z.f=1;I rr=(I)rnk(r);
  DO((I)b.s[cr],seq ix((D)cnt(tv[i]));v(ix+(D)(i*mc))=flat(tv[i].v))
  z.s=SHP(mr+dr);DO(dr,z.s[mr+i]=r.s[cr+i])DO(mr,z.s[i]=ms[i])
  z.v=v;}
-DF(rnk_o){z.f=1;I rr=(I)rnk(r),lr=(I)rnk(l),cl,cr,dl,dr;dim4 sl(1),sr(1);
+DF(rnk_o){I rr=(I)rnk(r),lr=(I)rnk(l),cl,cr,dl,dr;dim4 sl(1),sr(1);
  arr wwv=ww.v.as(s32);if(cnt(ww)==1)cl=cr=wwv.scalar<I>();
  else if(cnt(ww)==2){cl=wwv.scalar<I>();cr=wwv(1).scalar<I>();}
  else err(4);

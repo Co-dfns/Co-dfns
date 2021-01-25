@@ -2,10 +2,10 @@
 DEFN(rot)
 ID(rot,0,s32)
 MF(rot_f){if(!rnk(r)){z=r;R;}rot_c(z,r,e,scl(scl(rnk(r)-1)));}
-MA(rot_f){z.f=1;if(1!=cnt(ax))err(5);if(!isint(ax))err(11);
+MA(rot_f){if(1!=cnt(ax))err(5);if(!isint(ax))err(11);
  I axv=ax.v.as(s32).scalar<I>();B rr=rnk(r);if(axv<0||rr<=axv)err(4);
  z.s=r.s;if(!cnt(r)){z.v=r.v;R;}z.v=flat(flip(axis(r,rr-axv-1),1));}
-DA(rot_f){z.f=1;B rr=rnk(r),lr=rnk(l);if(rr>4)err(16);
+DA(rot_f){B rr=rnk(r),lr=rnk(l);if(rr>4)err(16);
  if(rnk(ax)>1||cnt(ax)!=1)err(5);if(!isint(ax))err(11);
  I ra=ax.v.as(s32).scalar<I>();if(ra<0)err(11);if(ra>=rr)err(4);
  B lc=cnt(l);I aa=ra;ra=(I)rr-ra-1;if(lc!=1&&lr!=rr-1)err(4);

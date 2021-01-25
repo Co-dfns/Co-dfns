@@ -2,7 +2,7 @@
 DEFN(scn)
 ID(scn,1,s32)
 OM(scn,"scn",1,1,MFD,MT,MAD,MT )
-DA(scn_f){z.f=1;if(rnk(ax)>1||cnt(ax)!=1)err(5);if(!isint(ax))err(11);
+DA(scn_f){if(rnk(ax)>1||cnt(ax)!=1)err(5);if(!isint(ax))err(11);
  I ra=ax.v.as(s32).scalar<I>();B rr=rnk(r),lr=rnk(l);
  if(ra<0)err(11);if(ra>=rr)err(4);if(lr>1)err(4);ra=(I)rr-ra-1;
  if(r.s[ra]!=1&&r.s[ra]!=sum<I>(l.v>0))err(5);
@@ -18,7 +18,7 @@ DA(scn_f){z.f=1;if(rnk(ax)>1||cnt(ax)!=1)err(5);if(!isint(ax))err(11);
 DF(scn_f){A x=r;if(!rnk(r))cat_c(x,r,e);
  scn_c(z,l,x,e,scl(scl(rnk(x)-1)));}
 
-MA(scn_o){z.f=1;if(rnk(ax)>1)err(4);if(cnt(ax)!=1)err(5);
+MA(scn_o){if(rnk(ax)>1)err(4);if(cnt(ax)!=1)err(5);
  if(!isint(ax))err(11);I av=ax.v.as(s32).scalar<I>();if(av<0)err(11);
  B rr=rnk(r);if(av>=rr)err(4);av=(I)rr-av-1;z.s=r.s;
  I rc=(I)r.s[av];if(rc==1){z.v=r.v;R;}if(!cnt(z)){z.v=scl(0);R;}

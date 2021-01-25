@@ -1,5 +1,5 @@
 ﻿OD(dot,"dot",0,0,MT,DFD,MT ,MT )
-DF(dot_o){z.f=1;B lr=rnk(l),rrk=rnk(r),ra=rrk?rrk-1:0,la=lr?lr-1:0;
+DF(dot_o){B lr=rnk(l),rrk=rnk(r),ra=rrk?rrk-1:0,la=lr?lr-1:0;
  if(rrk&&lr&&l.s[0]!=r.s[ra])err(5);
  A t(la+ra,r.v(0));DOB(ra,t.s[i]=r.s[i])DOB(la,t.s[i+ra]=l.s[i+1])
  if(!cnt(t)){t.v=scl(0);z=t;R;}

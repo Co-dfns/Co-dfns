@@ -1,7 +1,7 @@
 ﻿NM(sqd,"sqd",0,0,MT ,MFD,DFD,MT ,DAD)
 DEFN(sqd)
 MF(sqd_f){z=r;}
-DA(sqd_f){z.f=1;if(rnk(ax)>1)err(4);if(!isint(ax))err(11);
+DA(sqd_f){if(rnk(ax)>1)err(4);if(!isint(ax))err(11);
  VEC<I> av(4);ax.v.as(s32).host(av.data());
  B ac=cnt(ax),rr=rnk(r);DOB(ac,if(av[i]<0)err(11))DOB(ac,if(av[i]>=rr)err(4))
  B lc=cnt(l);if(rnk(l)>1)err(4);if(lc!=ac)err(5);if(!lc){z=r;R;}
