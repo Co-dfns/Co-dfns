@@ -1282,8 +1282,10 @@ rtn[55],←⊂'NM(gdu,"gdu",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[55],←⊂'DEFN(gdu)',NL
 rtn[55],←⊂'MF(gdu_f){B rr=rnk(r);if(rr<1)err(4);z.s=SHP(1,r.s[rr-1]);',NL
 rtn[55],←⊂' if(!cnt(r)){z.v=r.v;R;}B c=1;DOB(rr-1,c*=r.s[i])',NL
-rtn[55],←⊂' arr mt,a=arr(r.v,c,r.s[rr-1]);z.v=iota(dim4(z.s[0]),dim4(1),s32);',NL
-rtn[55],←⊂' DOB(c,sort(mt,z.v,flat(a((I)(c-i-1),z.v)),z.v,0,true))}',NL
+rtn[55],←⊂' VSWITCH(r.v,err(6)',NL
+rtn[55],←⊂'  ,arr mt;arr a(v,c,r.s[rr-1]);arr zv=iota(dim4(z.s[0]),dim4(1),s32);',NL
+rtn[55],←⊂'   DOB(c,sort(mt,zv,flat(a((I)(c-i-1),zv)),zv,0,true))z.v=zv',NL
+rtn[55],←⊂'  ,err(16))}',NL
 rtn[55],←⊂'DF(gdu_f){err(16);}',NL
 rtn[56],←⊂'NM(gdd,"gdd",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[56],←⊂'DEFN(gdd)',NL
