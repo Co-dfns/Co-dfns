@@ -607,7 +607,10 @@ rtn[1],←⊂'',NL
 rtn[2],←⊂'NM(mul,"mul",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[2],←⊂'DEFN(mul)',NL
 rtn[2],←⊂'ID(mul,1,s32)',NL
-rtn[2],←⊂'MF(mul_f){z.s=r.s;z.v=(r.v>0)-(r.v<0);}',NL
+rtn[2],←⊂'MF(mul_f){z.s=r.s;',NL
+rtn[2],←⊂' VSWITCH(r.v,err(6),z.v=(v>0)-(v<0)',NL
+rtn[2],←⊂'  ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
+rtn[2],←⊂'   DOB(cr,this_c(zv[i],v[i],e)))}',NL
 rtn[2],←⊂'SF(mul,z.v=lv*rv)',NL
 rtn[2],←⊂'',NL
 rtn[3],←⊂'NM(div,"div",1,1,DID,MFD,DFD,MT,DAD)',NL
