@@ -788,13 +788,14 @@ rtn[24],←⊂' z.v=arr(select(lv(z.v)==rv,ix(z.v).as(s32),(I)cnt(l)),c);}',NL
 rtn[25],←⊂'NM(rho,"rho",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[25],←⊂'DEFN(rho)',NL
 rtn[25],←⊂'MF(rho_f){B rr=rnk(r);VEC<I> sp(rr);DOB(rr,sp[rr-i-1]=(I)r.s[i])',NL
-rtn[25],←⊂' z.s=SHP(1,rr);if(!cnt(z)){z.v=scl(0);R;}z.v=array(rr,sp.data());}',NL
+rtn[25],←⊂' z.s=SHP(1,rr);if(!cnt(z)){z.v=scl(0);R;}z.v=arr(rr,sp.data());}',NL
 rtn[25],←⊂'DF(rho_f){B cr=cnt(r),cl=cnt(l);VEC<I> s(cl);',NL
 rtn[25],←⊂' if(rnk(l)>1)err(11);if(!isint(l))err(11);',NL
-rtn[25],←⊂' if(cl)l.v.as(s32).host(s.data());DOB(cl,if(s[i]<0)err(11))',NL
-rtn[25],←⊂' z.s=SHP(cl);DOB(cl,z.s[i]=(B)s[cl-i-1])',NL
+rtn[25],←⊂' VSWITCH(l.v,err(6),if(cl)v.as(s32).host(s.data()),if(cl)err(16))',NL
+rtn[25],←⊂' DOB(cl,if(s[i]<0)err(11))z.s=SHP(cl);DOB(cl,z.s[i]=(B)s[cl-i-1])',NL
 rtn[25],←⊂' B cz=cnt(z);if(!cz){z.v=scl(0);R;}if(cz==cr){z.v=r.v;R;}',NL
-rtn[25],←⊂' z.v=r.v(iota(cz)%cr);}',NL
+rtn[25],←⊂' VSWITCH(r.v,err(6),z.v=v(iota(cz%cr)),',NL
+rtn[25],←⊂'  VEC<A> zv(cz);DOB(cz,zv[i]=v[i%cr])z.v=zv)}',NL
 rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[26],←⊂'DEFN(cat)',NL
 rtn[26],←⊂'MF(cat_f){z.s=SHP(1,cnt(r));z.v=flat(r.v);}',NL

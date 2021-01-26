@@ -8,17 +8,17 @@
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0016←tn #.codfns.Fix ⎕SRC dy}
 
  _← 'catenate' 'catfirst' 'deal' 'decode' 'depth' 'drop∆R1' 'drop∆R2'
- _,←'drop∆R3' 'encode' 'encode∆Ovr' 'enlist' 'expand' 'expandfirst' 
+ _,←'drop∆R3' 'encode' 'encode∆Ovr' 'enlist' 'expand' 'expandfirst'
  _,←'find' 'first' 'gradedown' 'gradeup' 'identity' 'index∆R1' 'index∆R2'
  _,←'index∆R3' 'index∆R4'
  _,←'indexgen' 'indexof' 'intersection' 'left' 'match' 'matinv' 'matdiv'
- _,←'membership' 'mix' 'notmatch' 'pick' 'random' 'ravel' 'replicate' 
- _,←⊂'replicatefirst' 
+ _,←'membership' 'mix' 'notmatch' 'pick' 'random' 'ravel' 'replicate'
+ _,←⊂'replicatefirst'
  _,←'reshape∆R0' 'reshape∆Rv' 'reshape∆Rl' 'reshape∆Rr' 'reshape∆Rs'
- _,←'reverse∆R1' 'reverse∆R2' 'revfirst∆R1' 'revfirst∆R2' 'right' 
+ _,←'reverse∆R1' 'reverse∆R2' 'revfirst∆R1' 'revfirst∆R2' 'right'
  _,←'rotate∆S' 'rotate∆R' 'rotate∆T' 'rotate∆U' 'rotfirst∆S'
- _,←'rotfirst∆R' 'rotfirst∆T' 'rotfirst∆U' 'same' 'shape' 'shape∆R2' 
- _,←'split' 'table' 'table∆R2' 'take∆R1' 'take∆R2' 
+ _,←'rotfirst∆R' 'rotfirst∆T' 'rotfirst∆U' 'same' 'shape' 'shape∆R2'
+ _,←'split' 'table' 'table∆R2' 'take∆R1' 'take∆R2'
  _,←'tally' 'transpose∆R1' 'transpose∆R2' 'union' 'unique'
  bindings←{⍵[⍋⍵;]}↑_
 
@@ -873,17 +873,17 @@ MK∆T←{nv←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ cv←⊃(⍎'cd.',⍺⍺)/⍵⍵
 ∆reshape∆01_TEST←'reshape∆Rv' MK∆T2 (2 2)     (⍳4)
 ∆reshape∆02_TEST←'reshape∆Rv' MK∆T2 (2 2)     (1+⍳2)
 ∆reshape∆03_TEST←'reshape∆Rv' MK∆T2 (2 2)     (⍳6)
-∆reshape∆04_TEST←'reshape∆Rv' MK∆T2 (⍬)       (⍳6)
+∆reshape∆04_TEST←'reshape∆Rv' MK∆T2 (⍬)       (⌽⍳6)
 ∆reshape∆05_TEST←'reshape∆Rv' MK∆T2 (2 2)     (⍬)
 ∆reshape∆06_TEST←'reshape∆Rl' MK∆T2 (2 2)     (⍳4)
 ∆reshape∆07_TEST←'reshape∆Rl' MK∆T2 (2 2)     (1+⍳2)
 ∆reshape∆08_TEST←'reshape∆Rl' MK∆T2 (2 2)     (⍳6)
-∆reshape∆09_TEST←'reshape∆Rl' MK∆T2 (⍬)       (⍳6)
+∆reshape∆09_TEST←'reshape∆Rl' MK∆T2 (⍬)       (⌽⍳6)
 ∆reshape∆10_TEST←'reshape∆Rl' MK∆T2 (2 2)     (⍬)
 ∆reshape∆11_TEST←'reshape∆Rr' MK∆T2 (2 2)     (⍳4)
 ∆reshape∆12_TEST←'reshape∆Rr' MK∆T2 (2 2)     (1+⍳2)
 ∆reshape∆13_TEST←'reshape∆Rr' MK∆T2 (2 2)     (⍳6)
-∆reshape∆14_TEST←'reshape∆Rr' MK∆T2 (⍬)       (⍳6)
+∆reshape∆14_TEST←'reshape∆Rr' MK∆T2 (⍬)       (⌽⍳6)
 ∆reshape∆15_TEST←'reshape∆Rr' MK∆T2 (2 2)     (⍬)
 ∆reshape∆16_TEST←'reshape∆Rv' MK∆T2 5         (⍳10)
 ∆reshape∆17_TEST←'reshape∆Rv' MK∆T2 (3 7)     (0 1)
