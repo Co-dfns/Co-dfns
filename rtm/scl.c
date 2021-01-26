@@ -1,3 +1,8 @@
+template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,fncls fn){
+ z.s=r.s;
+ VSWITCH(r.v,err(6),fn(z,v,e)
+  ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);
+   DOB(cr,this_c(zv[i],v[i],e)))}
 template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){
  B lr=rnk(l),rr=rnk(r);
  if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;

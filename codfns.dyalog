@@ -394,6 +394,8 @@ rth,←'#define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define SF(n,lb) \',NL
 rth,←' DF(n##_f){sclfn(z,l,r,e,[](A&z,carr&lv,carr&rv,ENV&e){lb;});}\',NL
 rth,←' DA(n##_f){sclfn(z,l,r,e,ax,n##_c);}',NL
+rth,←'#define SMF(n,lb) \',NL
+rth,←' MF(n##_f){msclfn(z,r,e,[](A&z,carr&rv,ENV&e){lb;});}',NL
 rth,←'#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;fn##init##_f fn_c;fn_c(za,cl,cr,e##init);\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);\',NL
@@ -607,16 +609,13 @@ rtn[1],←⊂'',NL
 rtn[2],←⊂'NM(mul,"mul",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[2],←⊂'DEFN(mul)',NL
 rtn[2],←⊂'ID(mul,1,s32)',NL
-rtn[2],←⊂'MF(mul_f){z.s=r.s;',NL
-rtn[2],←⊂' VSWITCH(r.v,err(6),z.v=(v>0)-(v<0)',NL
-rtn[2],←⊂'  ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
-rtn[2],←⊂'   DOB(cr,this_c(zv[i],v[i],e)))}',NL
+rtn[2],←⊂'SMF(mul,z.v=(rv>0)-(rv<0))',NL
 rtn[2],←⊂'SF(mul,z.v=lv*rv)',NL
 rtn[2],←⊂'',NL
 rtn[3],←⊂'NM(div,"div",1,1,DID,MFD,DFD,MT,DAD)',NL
 rtn[3],←⊂'DEFN(div)',NL
 rtn[3],←⊂'ID(div,1,s32)',NL
-rtn[3],←⊂'MF(div_f){z.s=r.s;z.v=1.0/r.v.as(f64);}',NL
+rtn[3],←⊂'SMF(div,z.v=1.0/rv.as(f64))',NL
 rtn[3],←⊂'SF(div,z.v=lv.as(f64)/rv.as(f64))',NL
 rtn[4],←⊂'NM(exp,"exp",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[4],←⊂'ID(exp,1,s32)',NL
@@ -1348,6 +1347,11 @@ rtn[62],←⊂'NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )',NL
 rtn[62],←⊂'DEFN(ift)',NL
 rtn[62],←⊂'MF(ift_f){z.r=r.r;z.s=r.s;z.v=idft(r.v.type()==c64?r.v:r.v.as(c64),1,r.s);}',NL
 rtn[62],←⊂'',NL
+rtn[63],←⊂'template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,fncls fn){',NL
+rtn[63],←⊂' z.s=r.s;',NL
+rtn[63],←⊂' VSWITCH(r.v,err(6),fn(z,v,e)',NL
+rtn[63],←⊂'  ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
+rtn[63],←⊂'   DOB(cr,this_c(zv[i],v[i],e)))}',NL
 rtn[63],←⊂'template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){',NL
 rtn[63],←⊂' B lr=rnk(l),rr=rnk(r);',NL
 rtn[63],←⊂' if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;',NL

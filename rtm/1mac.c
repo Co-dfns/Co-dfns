@@ -31,6 +31,8 @@
 #define SF(n,lb) \
  DF(n##_f){sclfn(z,l,r,e,[](A&z,carr&lv,carr&rv,ENV&e){lb;});}\
  DA(n##_f){sclfn(z,l,r,e,ax,n##_c);}
+#define SMF(n,lb) \
+ MF(n##_f){msclfn(z,r,e,[](A&z,carr&rv,ENV&e){lb;});}
 #define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\
   A cl,cr,za;fn##init##_f fn_c;fn_c(za,cl,cr,e##init);\
   cpda(cr,r);cpda(cl,l);\
