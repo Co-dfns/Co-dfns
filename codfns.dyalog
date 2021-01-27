@@ -1379,11 +1379,11 @@ rtn[63],←⊂'inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){',NL
 rtn[63],←⊂' A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}',NL
 rtn[63],←⊂' B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);',NL
 rtn[63],←⊂' VEC<D> axd(rk);SHP axv(rk);',NL
-rtn[63],←⊂' if(rk)std::visit<V>(visitor{',NL
-rtn[63],←⊂'  [&](NIL _){err(99,L"Unexpected value error.");},',NL
-rtn[63],←⊂'  [&](CVEC<A>&v){err(99,L"Unexpected nested shape.");},',NL
-rtn[63],←⊂'  [&](carr&v){v.as(f64).host(axd.data());}},',NL
-rtn[63],←⊂'  ax.v);',NL
+rtn[63],←⊂' if(rk)',NL
+rtn[63],←⊂'  VSWITCH(ax.v',NL
+rtn[63],←⊂'   ,err(99,L"Unexpected value error.")',NL
+rtn[63],←⊂'   ,v.as(f64).host(axd.data())',NL
+rtn[63],←⊂'   ,err(99,L"Unexpected nested shape."))',NL
 rtn[63],←⊂' DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])',NL
 rtn[63],←⊂' DOB(rk,if(axv[i]<0||br<=axv[i])err(11))',NL
 rtn[63],←⊂' VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)',NL
