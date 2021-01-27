@@ -40,6 +40,7 @@ using namespace af;
 #define R return
 #define this_c (*this)
 #define VEC std::vector
+#define CVEC const std::vector
 #define RANK(pp) ((pp)->r)
 #define TYPE(pp) ((pp)->t)
 #define SHAPE(pp) ((pp)->s)

@@ -1,6 +1,6 @@
 NM(get,"get",0,0,MT,MT,DFD,MT,MT)
 DEFN(get)
-DF(get_f){const VEC<A>&lv=l.nv;I ll=(I)lv.size();B zr=rnk(z),rr=rnk(r);
+DF(get_f){CVEC<A>&lv=l.nv;I ll=(I)lv.size();B zr=rnk(z),rr=rnk(r);
  if(!ll){if(zr!=1)err(4);if(rr!=1)err(5);if(z.s[0]!=r.s[0])err(5);z=r;R;}
  if(ll!=zr)err(4);B rk=0;DO(ll,rk+=lv[i].f?rnk(lv[i]):1)
  if(rr>0&&rk!=rr)err(5);

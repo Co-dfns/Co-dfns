@@ -350,6 +350,7 @@ rth,←'#define Z static',NL
 rth,←'#define R return',NL
 rth,←'#define this_c (*this)',NL
 rth,←'#define VEC std::vector',NL
+rth,←'#define CVEC const std::vector',NL
 rth,←'#define RANK(pp) ((pp)->r)',NL
 rth,←'#define TYPE(pp) ((pp)->t)',NL
 rth,←'#define SHAPE(pp) ((pp)->s)',NL
@@ -395,7 +396,7 @@ rth,←'#define SF(n,lb) \',NL
 rth,←' DF(n##_f){sclfn(z,l,r,e,[](A&z,carr&lv,carr&rv,ENV&e){lb;});}\',NL
 rth,←' DA(n##_f){sclfn(z,l,r,e,ax,n##_c);}',NL
 rth,←'#define SMF(n,lb) \',NL
-rth,←' MF(n##_f){msclfn(z,r,e,[](A&z,carr&rv,ENV&e){lb;});}',NL
+rth,←' MF(n##_f){msclfn(z,r,e,n##_c,[](A&z,carr&rv,ENV&e){lb;});}',NL
 rth,←'#define EF(init,ex,fun) EXPORT V ex##_dwa(lp*z,lp*l,lp*r){try{\',NL
 rth,←'  A cl,cr,za;fn##init##_f fn_c;fn_c(za,cl,cr,e##init);\',NL
 rth,←'  cpda(cr,r);cpda(cl,l);\',NL
@@ -409,7 +410,7 @@ rth,←' (*std::get<FNP>((*e##init[0])[fun]))(*z,*l,*r,e##init);}',NL
 rth,←'#define EV(init,ex,slt)',NL
 rth,←'#define VSWITCH(x,nil,arr,vec) \',NL
 rth,←' std::visit(\',NL
-rth,←'  visitor{[&](NIL v){nil;},[&](carr&v){arr;},[&](VEC<A>&v){vec;}},\',NL
+rth,←'  visitor{[&](NIL v){nil;},[&](carr&v){arr;},[&](CVEC<A>&v){vec;}},\',NL
 rth,←'  (x));',NL
 rth,←'typedef enum{APLNC=0,APLU8,APLTI,APLSI,APLI,APLD,APLP,APLU,APLV,APLW,APLZ,',NL
 rth,←' APLR,APLF,APLQ}APLTYPE;',NL
@@ -471,11 +472,12 @@ rth,←' virtual FNP operator()(CA&l,CA&r){err(99);R MTFN;}',NL
 rth,←' virtual FNP operator()(FNP l,CA&r){err(99);R MTFN;}',NL
 rth,←' virtual FNP operator()(CA&l,FNP r){err(99);R MTFN;}};',NL
 rth,←'S DVSTR {',NL
-rth,←' V operator()(NIL&l,carr&r){err(6);}',NL
-rth,←' V operator()(NIL&l,VEC<A>&r){err(6);}',NL
-rth,←' V operator()(carr&l,NIL&r){err(6);}',NL
-rth,←' V operator()(VEC<A>&l,NIL&r){err(6);}};',NL
-rth,←'S MVSTR {V operator()(NIL&r){err(6);}};',NL
+rth,←' V operator()(NIL l,NIL r){err(6);}',NL
+rth,←' V operator()(NIL l,carr&r){err(6);}',NL
+rth,←' V operator()(NIL l,CVEC<A>&r){err(6);}',NL
+rth,←' V operator()(carr&l,NIL r){err(6);}',NL
+rth,←' V operator()(CVEC<A>&l,NIL r){err(6);}};',NL
+rth,←'S MVSTR {V operator()(NIL r){err(6);}};',NL
 rth,←'template<class... Ts> S visitor : Ts... { using Ts::operator()...; };',NL
 rth,←'template<class... Ts> visitor(Ts...) -> visitor<Ts...>;',NL
 rth,←'std::wstring mkstr(const char*s){R strconv.from_bytes(s);}',NL
@@ -509,7 +511,7 @@ rth,←'dtype mxt(dtype at,const A&b){',NL
 rth,←' R std::visit(visitor{',NL
 rth,←'   [&](NIL _){err(99,L"Unexpected value error.");R s32;},',NL
 rth,←'   [&](carr&v){R mxt(at,v.type());},',NL
-rth,←'   [&](const VEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},',NL
+rth,←'   [&](CVEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},',NL
 rth,←'  b.v);}',NL
 rth,←'Z arr da16(B c,pkt*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);',NL
 rth,←' DOB(c,b[i]=v[i]);R arr(c,b.data());}',NL
@@ -526,7 +528,7 @@ rth,←'     CS(c64,t=APLZ);CS(s32,t=APLI);CS(s16,t=APLSI);',NL
 rth,←'     CS(b8,t=APLTI);CS(f64,t=APLD);',NL
 rth,←'     default:if(c)err(16);t=APLI;}',NL
 rth,←'    p=dwafns->ws->ga(t,(U)ar,s,l);if(c)v.host(DATA(p));},',NL
-rth,←'   [&](const VEC<A>&v){',NL
+rth,←'   [&](CVEC<A>&v){',NL
 rth,←'    p=dwafns->ws->ga(APLP,(U)ar,s,l);pkt**d=(pkt**)DATA(p);',NL
 rth,←'    DOB(c,if(!(d[i]=cpad(NULL,v[i])))err(6))}},',NL
 rth,←'  a.v);',NL
@@ -552,13 +554,13 @@ rth,←' R std::visit(visitor{',NL
 rth,←'   [&](NIL _){err(99,L"Unexpected value error.");R 0;},',NL
 rth,←'   [&](carr&v)->I{R v.isinteger()||v.isbool()',NL
 rth,←'     ||(v.isreal()&&allTrue<I>(v==0||v==1));},',NL
-rth,←'   [&](const VEC<A>&v){DOB(v.size(),if(!isint(v[i]))R 0);R 1;}},',NL
+rth,←'   [&](CVEC<A>&v){DOB(v.size(),if(!isint(v[i]))R 0);R 1;}},',NL
 rth,←'  x.v);}',NL
 rth,←'inline I isbool(A x){',NL
 rth,←' R std::visit(visitor{',NL
 rth,←'   [&](NIL _){err(99,L"Unexpected value error.");R 0;},',NL
 rth,←'   [&](carr&v)->I{R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));},',NL
-rth,←'   [&](const VEC<A>&v){DOB(v.size(),if(!isbool(v[i]))R 0);R 1;}},',NL
+rth,←'   [&](CVEC<A>&v){DOB(v.size(),if(!isbool(v[i]))R 0);R 1;}},',NL
 rth,←'  x.v);}',NL
 rth,←'EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}',NL
 rth,←'EXPORT V frea(A*a){delete a;}',NL
@@ -763,7 +765,7 @@ rtn[22],←⊂' z.v=r.v(ix);}',NL
 rtn[22],←⊂'DF(sqd_f){A ax;iot_c(ax,scl(scl((I)cnt(l))),e);sqd_c(z,l,r,e,ax);}',NL
 rtn[23],←⊂'NM(brk,"brk",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[23],←⊂'DEFN(brk)',NL
-rtn[23],←⊂'DF(brk_f){B lr=rnk(l);const VEC<A>&rv=r.nv;B rc=cnt(r);',NL
+rtn[23],←⊂'DF(brk_f){B lr=rnk(l);CVEC<A>&rv=r.nv;B rc=cnt(r);',NL
 rtn[23],←⊂' if(!rc){if(lr!=1)err(4);z=l;R;}if(rc!=lr)err(4);',NL
 rtn[23],←⊂' VEC<B> rm(rc,1);DOB(rc,if(rv[i].f)rm[i]=rnk(rv[i]))',NL
 rtn[23],←⊂' B zr=0;DOB(rc,zr+=rm[i])z.s=SHP(zr);B s=zr;',NL
@@ -779,14 +781,22 @@ rtn[23],←⊂'DF(brk_o){if(rnk(ww)>1)err(4);ll(z,l,r,e,ww);}',NL
 rtn[23],←⊂'',NL
 rtn[24],←⊂'NM(iot,"iot",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[24],←⊂'DEFN(iot)',NL
-rtn[24],←⊂'MF(iot_f){if(rnk(r)>1)err(4);B c=cnt(r);if(c>4)err(10);',NL
-rtn[24],←⊂' if(c>1)err(16);I rv=r.v.as(s32).scalar<I>();',NL
-rtn[24],←⊂' z.s=SHP(1,rv);z.v=z.s[0]?iota(dim4(rv),dim4(1),s32):scl(0);}',NL
+rtn[24],←⊂'MF(iot_f){if(rnk(r)>1)err(4);B c=cnt(r);if(c>4)err(10);if(c>1)err(16);',NL
+rtn[24],←⊂' VSWITCH(r.v,err(6)',NL
+rtn[24],←⊂'  ,I rv=v.as(s32).scalar<I>();',NL
+rtn[24],←⊂'   z.s=SHP(1,rv);z.v=z.s[0]?iota(dim4(rv),dim4(1),s32):scl(0);',NL
+rtn[24],←⊂'  ,err(11))}',NL
 rtn[24],←⊂'DF(iot_f){z.s=r.s;B c=cnt(r);if(!c){z.v=scl(0);R;}',NL
 rtn[24],←⊂' I lc=(I)cnt(l)+1;if(lc==1){z.v=constant(0,cnt(r),s16);R;};if(rnk(l)>1)err(16);',NL
-rtn[24],←⊂' arr lv,ix,rv;sort(lv,ix,l.v);rv=r.v;z.v=constant(0,cnt(r),s32);',NL
-rtn[24],←⊂' for(I h;h=lc/2;lc-=h){arr t=z.v+h;replace(z.v,lv(t)>rv,t);}',NL
-rtn[24],←⊂' z.v=arr(select(lv(z.v)==rv,ix(z.v).as(s32),(I)cnt(l)),c);}',NL
+rtn[24],←⊂' std::visit(visitor{DVSTR(),',NL
+rtn[24],←⊂'   [&](carr&olv,carr&orv){arr lv=olv,rv=orv,ix;sort(lv,ix,lv);',NL
+rtn[24],←⊂'    z.v=constant(0,cnt(r),s32);arr&zv=std::get<arr>(z.v);',NL
+rtn[24],←⊂'    for(I h;h=lc/2;lc-=h){arr t=zv+h;replace(zv,lv(t)>rv,t);}',NL
+rtn[24],←⊂'    zv=arr(select(lv(zv)==rv,ix(zv).as(s32),(I)cnt(l)),c);},',NL
+rtn[24],←⊂'   [&](CVEC<A>&lv,carr&rv){err(16);},',NL
+rtn[24],←⊂'   [&](carr&lv,CVEC<A>&rv){err(16);},',NL
+rtn[24],←⊂'   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);}},',NL
+rtn[24],←⊂'  l.v,r.v);}',NL
 rtn[25],←⊂'NM(rho,"rho",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[25],←⊂'DEFN(rho)',NL
 rtn[25],←⊂'MF(rho_f){B rr=rnk(r);VEC<I> sp(rr);DOB(rr,sp[rr-i-1]=(I)r.s[i])',NL
@@ -1266,7 +1276,7 @@ rtn[53],←⊂' arr ix=where(pv(z.v)==l.v);z.s=SHP(1,ix.elements());',NL
 rtn[53],←⊂' z.v=z.s[0]?l.v(ix):scl(0);}',NL
 rtn[54],←⊂'NM(get,"get",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[54],←⊂'DEFN(get)',NL
-rtn[54],←⊂'DF(get_f){const VEC<A>&lv=l.nv;I ll=(I)lv.size();B zr=rnk(z),rr=rnk(r);',NL
+rtn[54],←⊂'DF(get_f){CVEC<A>&lv=l.nv;I ll=(I)lv.size();B zr=rnk(z),rr=rnk(r);',NL
 rtn[54],←⊂' if(!ll){if(zr!=1)err(4);if(rr!=1)err(5);if(z.s[0]!=r.s[0])err(5);z=r;R;}',NL
 rtn[54],←⊂' if(ll!=zr)err(4);B rk=0;DO(ll,rk+=lv[i].f?rnk(lv[i]):1)',NL
 rtn[54],←⊂' if(rr>0&&rk!=rr)err(5);',NL
@@ -1347,33 +1357,31 @@ rtn[62],←⊂'NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )',NL
 rtn[62],←⊂'DEFN(ift)',NL
 rtn[62],←⊂'MF(ift_f){z.r=r.r;z.s=r.s;z.v=idft(r.v.type()==c64?r.v:r.v.as(c64),1,r.s);}',NL
 rtn[62],←⊂'',NL
-rtn[63],←⊂'template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,fncls fn){',NL
+rtn[63],←⊂'template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,FN&rec_c,fncls fn){',NL
 rtn[63],←⊂' z.s=r.s;',NL
 rtn[63],←⊂' VSWITCH(r.v,err(6),fn(z,v,e)',NL
 rtn[63],←⊂'  ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
-rtn[63],←⊂'   DOB(cr,this_c(zv[i],v[i],e)))}',NL
+rtn[63],←⊂'   DOB(cr,rec_c(zv[i],v[i],e)))}',NL
 rtn[63],←⊂'template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){',NL
 rtn[63],←⊂' B lr=rnk(l),rr=rnk(r);',NL
-rtn[63],←⊂' if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;',NL
-rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
-rtn[63],←⊂'   [&](carr&lv,carr&rv){fn(z,lv,rv,e);}},',NL
-rtn[63],←⊂'   l,r);R;}',NL
-rtn[63],←⊂' if(!lr){z.s=r.s;',NL
-rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
-rtn[63],←⊂'   [&](carr&lv,carr&rv){fn(z,tile(lv,rv.dims()),rv,e);}},',NL
-rtn[63],←⊂'   l,r);R;}',NL
-rtn[63],←⊂' if(!rr){z.s=l.s;',NL
-rtn[63],←⊂'  std::visit(visitor{DVSTR(),',NL
-rtn[63],←⊂'   [&](carr&lv,carr&rv){fn(z,lv,tile(rv,lv.dims()),e);}},',NL
-rtn[63],←⊂'   l,r);R;}',NL
-rtn[63],←⊂' if(lr!=rr)err(4);err(99);}',NL
+rtn[63],←⊂' if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;}',NL
+rtn[63],←⊂' else if(!lr){z.s=r.s;}else if(!rr){z.s=l.s;}else if(lr!=rr)err(4);',NL
+rtn[63],←⊂' std::visit(visitor{DVSTR(),',NL
+rtn[63],←⊂'   [&](CVEC<A>&lv,carr&rv){err(16);},',NL
+rtn[63],←⊂'   [&](carr&lv,CVEC<A>&rv){err(16);},',NL
+rtn[63],←⊂'   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},',NL
+rtn[63],←⊂'   [&](carr&lv,carr&rv){',NL
+rtn[63],←⊂'    if(lr==rr){fn(z,lv,rv,e);}',NL
+rtn[63],←⊂'    if(!lr){fn(z,tile(lv,rv.dims()),rv,e);}',NL
+rtn[63],←⊂'    if(!rr){fn(z,lv,tile(rv,lv.dims()),e);}}},',NL
+rtn[63],←⊂'  l.v,r.v);}',NL
 rtn[63],←⊂'inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){',NL
 rtn[63],←⊂' A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}',NL
 rtn[63],←⊂' B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);',NL
 rtn[63],←⊂' VEC<D> axd(rk);SHP axv(rk);',NL
 rtn[63],←⊂' if(rk)std::visit<V>(visitor{',NL
-rtn[63],←⊂'  [&](NIL&_){err(99,L"Unexpected value error.");},',NL
-rtn[63],←⊂'  [&](VEC<A>&v){err(99,L"Unexpected nested shape.");},',NL
+rtn[63],←⊂'  [&](NIL _){err(99,L"Unexpected value error.");},',NL
+rtn[63],←⊂'  [&](CVEC<A>&v){err(99,L"Unexpected nested shape.");},',NL
 rtn[63],←⊂'  [&](carr&v){v.as(f64).host(axd.data());}},',NL
 rtn[63],←⊂'  ax.v);',NL
 rtn[63],←⊂' DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])',NL

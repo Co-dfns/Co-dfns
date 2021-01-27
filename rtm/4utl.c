@@ -29,7 +29,7 @@ dtype mxt(dtype at,const A&b){
  R std::visit(visitor{
    [&](NIL _){err(99,L"Unexpected value error.");R s32;},
    [&](carr&v){R mxt(at,v.type());},
-   [&](const VEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},
+   [&](CVEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},
   b.v);}
 Z arr da16(B c,pkt*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);
  DOB(c,b[i]=v[i]);R arr(c,b.data());}
@@ -46,7 +46,7 @@ pkt*cpad(lp*l,CA&a){I t;B c=cnt(a),ar=rnk(a);pkt*p=NULL;
      CS(b8,t=APLTI);CS(f64,t=APLD);
      default:if(c)err(16);t=APLI;}
     p=dwafns->ws->ga(t,(U)ar,s,l);if(c)v.host(DATA(p));},
-   [&](const VEC<A>&v){
+   [&](CVEC<A>&v){
     p=dwafns->ws->ga(APLP,(U)ar,s,l);pkt**d=(pkt**)DATA(p);
     DOB(c,if(!(d[i]=cpad(NULL,v[i])))err(6))}},
   a.v);
@@ -72,11 +72,11 @@ inline I isint(CA&x){
    [&](NIL _){err(99,L"Unexpected value error.");R 0;},
    [&](carr&v)->I{R v.isinteger()||v.isbool()
      ||(v.isreal()&&allTrue<I>(v==0||v==1));},
-   [&](const VEC<A>&v){DOB(v.size(),if(!isint(v[i]))R 0);R 1;}},
+   [&](CVEC<A>&v){DOB(v.size(),if(!isint(v[i]))R 0);R 1;}},
   x.v);}
 inline I isbool(A x){
  R std::visit(visitor{
    [&](NIL _){err(99,L"Unexpected value error.");R 0;},
    [&](carr&v)->I{R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));},
-   [&](const VEC<A>&v){DOB(v.size(),if(!isbool(v[i]))R 0);R 1;}},
+   [&](CVEC<A>&v){DOB(v.size(),if(!isbool(v[i]))R 0);R 1;}},
   x.v);}
