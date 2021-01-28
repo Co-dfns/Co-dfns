@@ -1,6 +1,6 @@
 template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,FN&rec_c,fncls fn){
  z.s=r.s;
- VSWITCH(r.v,err(6),fn(z,v,e)
+ CVSWITCH(r.v,err(6),fn(z,v,e)
   ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);
    DOB(cr,rec_c(zv[i],v[i],e)))}
 template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){
@@ -21,7 +21,7 @@ inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){
  B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);
  VEC<D> axd(rk);SHP axv(rk);
  if(rk)
-  VSWITCH(ax.v
+  CVSWITCH(ax.v
    ,err(99,L"Unexpected value error.")
    ,v.as(f64).host(axd.data())
    ,err(99,L"Unexpected nested shape."))

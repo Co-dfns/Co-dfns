@@ -1,7 +1,7 @@
 ﻿NM(iot,"iot",0,0,MT ,MFD,DFD,MT ,MT )
 DEFN(iot)
 MF(iot_f){if(rnk(r)>1)err(4);B c=cnt(r);if(c>4)err(10);if(c>1)err(16);
- VSWITCH(r.v,err(6)
+ CVSWITCH(r.v,err(6)
   ,I rv=v.as(s32).scalar<I>();
    z.s=SHP(1,rv);z.v=z.s[0]?iota(dim4(rv),dim4(1),s32):scl(0);
   ,err(11))}
