@@ -854,8 +854,9 @@ rtn[26],←⊂' if(lr&&rr>lr){DO(3-fx,ls[3-i]=ls[3-i-1]);ls[fx]=1;}',NL
 rtn[26],←⊂' DO(4,if(i!=fx&&rs[i]!=ls[i])err(5));',NL
 rtn[26],←⊂' DO((I)rnk(z),z.s[i]=(lr>=rr||i==fx)*ls[i]+(rr>lr||i==fx)*rs[i]);',NL
 rtn[26],←⊂' std::visit(visitor{DVSTR(),',NL
-rtn[26],←⊂'   [&](CVEC<A>&lv,auto&rv){err(16);},',NL
-rtn[26],←⊂'   [&](auto&lv,CVEC<A>&rv){err(16);},',NL
+rtn[26],←⊂'   [&](CVEC<A>&lv,carr&rv){err(16);},',NL
+rtn[26],←⊂'   [&](carr&lv,CVEC<A>&rv){err(16);},',NL
+rtn[26],←⊂'   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},',NL
 rtn[26],←⊂'   [&](carr&olv,carr&orv){dtype mt=mxt(orv,olv);',NL
 rtn[26],←⊂'    array lv=(lr?moddims(olv,ls):tile(olv,ls)).as(mt);',NL
 rtn[26],←⊂'    array rv=(rr?moddims(orv,rs):tile(orv,rs)).as(mt);',NL

@@ -32,8 +32,9 @@ DA(cat_f){B ar=rnk(ax),lr=rnk(l),rr=rnk(r);
  DO(4,if(i!=fx&&rs[i]!=ls[i])err(5));
  DO((I)rnk(z),z.s[i]=(lr>=rr||i==fx)*ls[i]+(rr>lr||i==fx)*rs[i]);
  std::visit(visitor{DVSTR(),
-   [&](CVEC<A>&lv,auto&rv){err(16);},
-   [&](auto&lv,CVEC<A>&rv){err(16);},
+   [&](CVEC<A>&lv,carr&rv){err(16);},
+   [&](carr&lv,CVEC<A>&rv){err(16);},
+   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},
    [&](carr&olv,carr&orv){dtype mt=mxt(orv,olv);
     array lv=(lr?moddims(olv,ls):tile(olv,ls)).as(mt);
     array rv=(rr?moddims(orv,rs):tile(orv,rs)).as(mt);
