@@ -29,7 +29,7 @@
 #define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)
 #define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)
 #define SF(n,lb) \
- DF(n##_f){sclfn(z,l,r,e,[](A&z,carr&lv,carr&rv,ENV&e){lb;});}\
+ DF(n##_f){sclfn(z,l,r,e,[&](A&z,carr&lv,carr&rv,ENV&e){lb;});}\
  DA(n##_f){sclfn(z,l,r,e,ax,n##_c);}
 #define SMF(n,lb) \
  MF(n##_f){msclfn(z,r,e,n##_c,[](A&z,carr&rv,ENV&e){lb;});}

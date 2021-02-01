@@ -393,7 +393,7 @@ rth,←'#define MA(n) inline V n::operator()(A&z,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)',NL
 rth,←'#define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)',NL
 rth,←'#define SF(n,lb) \',NL
-rth,←' DF(n##_f){sclfn(z,l,r,e,[](A&z,carr&lv,carr&rv,ENV&e){lb;});}\',NL
+rth,←' DF(n##_f){sclfn(z,l,r,e,[&](A&z,carr&lv,carr&rv,ENV&e){lb;});}\',NL
 rth,←' DA(n##_f){sclfn(z,l,r,e,ax,n##_c);}',NL
 rth,←'#define SMF(n,lb) \',NL
 rth,←' MF(n##_f){msclfn(z,r,e,n##_c,[](A&z,carr&rv,ENV&e){lb;});}',NL
@@ -618,7 +618,7 @@ rtn[0],←⊂'SF(add,z.v=lv+rv)',NL
 rtn[1],←⊂'NM(sub,"sub",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[1],←⊂'DEFN(sub)',NL
 rtn[1],←⊂'ID(sub,0,s32)',NL
-rtn[1],←⊂'MF(sub_f){z.s=r.s;z.v=-r.v;}',NL
+rtn[1],←⊂'SMF(sub,z.v=-rv)',NL
 rtn[1],←⊂'SF(sub,z.v=lv-rv)',NL
 rtn[1],←⊂'',NL
 rtn[2],←⊂'NM(mul,"mul",1,1,DID,MFD,DFD,MT ,DAD)',NL
@@ -639,20 +639,20 @@ rtn[4],←⊂'SMF(exp,z.v=exp(rv.as(f64)))',NL
 rtn[4],←⊂'SF(exp,z.v=pow(lv.as(f64),rv.as(f64)))',NL
 rtn[5],←⊂'NM(log,"log",1,1,MT ,MFD,DFD,MT ,DAD)',NL
 rtn[5],←⊂'DEFN(log)',NL
-rtn[5],←⊂'MF(log_f){z.s=r.s;z.v=log(r.v.as(f64));}',NL
+rtn[5],←⊂'SMF(log,z.v=log(rv.as(f64)))',NL
 rtn[5],←⊂'SF(log,z.v=log(rv.as(f64))/log(lv.as(f64)))',NL
 rtn[5],←⊂'',NL
 rtn[6],←⊂'NM(res,"res",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[6],←⊂'DEFN(res)',NL
 rtn[6],←⊂'ID(res,0,s32)',NL
-rtn[6],←⊂'MF(res_f){z.s=r.s;z.v=abs(r.v).as(r.v.type());}',NL
+rtn[6],←⊂'SMF(res,z.v=abs(rv).as(rv.type()))',NL
 rtn[6],←⊂'SF(res,z.v=rv-lv*floor(rv.as(f64)/(lv+(0==lv))))',NL
 rtn[6],←⊂'',NL
 rtn[7],←⊂'NM(cir,"cir",1,1,MT,MFD,DFD,MT,DAD)',NL
 rtn[7],←⊂'DEFN(cir)',NL
-rtn[7],←⊂'MF(cir_f){z.s=r.s;z.v=Pi*r.v.as(f64);}',NL
-rtn[7],←⊂'SF(cir,arr fv=rv.as(f64);',NL
-rtn[7],←⊂' if(!lr){I x=l.v.as(s32).scalar<I>();if(abs(x)>10)err(16);',NL
+rtn[7],←⊂'SMF(cir,z.v=Pi*rv.as(f64))',NL
+rtn[7],←⊂'SF(cir,arr fv=rv.as(f64);B lr=rnk(l);',NL
+rtn[7],←⊂' if(!lr){I x=lv.as(s32).scalar<I>();if(abs(x)>10)err(16);',NL
 rtn[7],←⊂'  switch(x){CS(0,z.v=sqrt(1-fv*fv))CS(1,z.v=sin(fv))CS(2,z.v=cos(fv))',NL
 rtn[7],←⊂'   CS(3,z.v=tan(fv))CS(4,z.v=sqrt(1+fv*fv))CS(5,z.v=sinh(fv))',NL
 rtn[7],←⊂'   CS(6,z.v=cosh(fv))CS(7,z.v=tanh(fv))CS(8,z.v=sqrt(fv*fv-1))CS(9,z.v=fv)',NL
@@ -674,19 +674,19 @@ rtn[7],←⊂' z.v=arr(c,zv.data());)',NL
 rtn[8],←⊂'NM(min,"min",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[8],←⊂'DEFN(min)',NL
 rtn[8],←⊂'ID(min,DBL_MAX,f64)',NL
-rtn[8],←⊂'MF(min_f){z.s=r.s;z.v=floor(r.v).as(r.v.type());}',NL
+rtn[8],←⊂'SMF(min,z.v=floor(rv).as(rv.type()))',NL
 rtn[8],←⊂'SF(min,z.v=min(lv,rv))',NL
 rtn[8],←⊂'',NL
 rtn[9],←⊂'NM(max,"max",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[9],←⊂'DEFN(max)',NL
 rtn[9],←⊂'ID(max,-DBL_MAX,f64)',NL
-rtn[9],←⊂'MF(max_f){z.s=r.s;z.v=ceil(r.v).as(r.v.type());}',NL
+rtn[9],←⊂'SMF(max,z.v=ceil(rv).as(rv.type()))',NL
 rtn[9],←⊂'SF(max,z.v=max(lv,rv))',NL
 rtn[9],←⊂'',NL
 rtn[10],←⊂'NM(fac,"fac",1,1,DID,MFD,DFD,MT ,DAD)',NL
 rtn[10],←⊂'DEFN(fac)',NL
 rtn[10],←⊂'ID(fac,1,s32)',NL
-rtn[10],←⊂'MF(fac_f){z.s=r.s;z.v=factorial(r.v.as(f64));}',NL
+rtn[10],←⊂'SMF(fac,z.v=factorial(rv.as(f64)))',NL
 rtn[10],←⊂'SF(fac,arr lvf=lv.as(f64);arr rvf=rv.as(f64);',NL
 rtn[10],←⊂' z.v=exp(lgamma(1+rvf)-(lgamma(1+lvf)+lgamma(1+rvf-lvf))))',NL
 rtn[11],←⊂'NM(lth,"lth",1,1,DID,MT ,DFD,MT ,DAD)',NL
@@ -720,7 +720,7 @@ rtn[16],←⊂'SF(neq,z.v=lv!=rv)',NL
 rtn[16],←⊂'',NL
 rtn[17],←⊂'NM(not,"not",1,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[17],←⊂'DEFN(not)',NL
-rtn[17],←⊂'MF(not_f){z.s=r.s;z.v=!r.v;}',NL
+rtn[17],←⊂'SMF(not,z.v=!rv)',NL
 rtn[17],←⊂'DF(not_f){err(16);}',NL
 rtn[17],←⊂'',NL
 rtn[18],←⊂'NM(and,"and",1,1,DID,MT,DFD,MT,DAD)',NL
@@ -759,21 +759,24 @@ rtn[22],←⊂'NM(sqd,"sqd",0,0,MT ,MFD,DFD,MT ,DAD)',NL
 rtn[22],←⊂'DEFN(sqd)',NL
 rtn[22],←⊂'MF(sqd_f){z=r;}',NL
 rtn[22],←⊂'DA(sqd_f){if(rnk(ax)>1)err(4);if(!isint(ax))err(11);',NL
-rtn[22],←⊂' VEC<I> av(4);ax.v.as(s32).host(av.data());',NL
-rtn[22],←⊂' B ac=cnt(ax),rr=rnk(r);DOB(ac,if(av[i]<0)err(11))DOB(ac,if(av[i]>=rr)err(4))',NL
+rtn[22],←⊂' B ac=cnt(ax);VEC<I> av(ac);',NL
+rtn[22],←⊂' if(ac)CVSWITCH(ax.v,err(6),v.as(s32).host(av.data()),err(11))',NL
+rtn[22],←⊂' B rr=rnk(r);DOB(ac,if(av[i]<0)err(11))DOB(ac,if(av[i]>=rr)err(4))',NL
 rtn[22],←⊂' B lc=cnt(l);if(rnk(l)>1)err(4);if(lc!=ac)err(5);if(!lc){z=r;R;}',NL
-rtn[22],←⊂' VEC<U8> m(rr);DOB(ac,if(m[av[i]])err(11);m[av[i]]=1)',NL
-rtn[22],←⊂' if(!isint(l))err(11);VEC<I> lv(lc);l.v.as(s32).host(lv.data());',NL
-rtn[22],←⊂' DOB(lc,if(lv[i]<0||lv[i]>=r.s[rr-av[i]-1])err(3))                 //+1106R~',NL
+rtn[22],←⊂' VEC<U8> m(rr);DOB(ac,if(m[av[i]])err(11);m[av[i]]=1)if(!isint(l))err(11);',NL
+rtn[22],←⊂' VEC<I> lv(lc);CVSWITCH(l.v,err(6),v.as(s32).host(lv.data()),err(16))',NL
+rtn[22],←⊂' DOB(lc,if(lv[i]<0||lv[i]>=r.s[rr-av[i]-1])err(3))',NL
 rtn[22],←⊂' z.s=SHP(rr-lc);I j=0;DOB(rr,if(!m[rr-i-1])z.s[j++]=r.s[i])',NL
-rtn[22],←⊂' if(rr<5){IDX x[4];DOB(lc,x[rr-av[i]-1]=lv[i]);                    //+1106R~',NL
-rtn[22],←⊂'  dim4 rs(1);DO((I)rr,rs[i]=r.s[i])',NL
-rtn[22],←⊂'  z.v=flat(moddims(r.v,rs)(x[0],x[1],x[2],x[3]));R;}',NL
-rtn[22],←⊂' VEC<seq> x(rr);arr ix=scl(0);',NL
-rtn[22],←⊂' DOB(rr,x[i]=seq((D)r.s[i]))DOB(lc,x[rr-av[i]-1]=seq(lv[i],lv[i]))',NL
-rtn[22],←⊂' DOB(rr,B j=rr-i-1;ix=moddims(ix*r.s[j],1,(U)cnt(ix));',NL
-rtn[22],←⊂'  ix=flat(tile(ix,(U)x[j].size,1)+tile(x[j],1,(U)cnt(ix))))',NL
-rtn[22],←⊂' z.v=r.v(ix);}',NL
+rtn[22],←⊂' CVSWITCH(r.v,err(6)',NL
+rtn[22],←⊂'  ,if(rr<5){IDX x[4];DOB(lc,x[rr-av[i]-1]=lv[i]);',NL
+rtn[22],←⊂'    dim4 rs(1);DO((I)rr,rs[i]=r.s[i])',NL
+rtn[22],←⊂'    z.v=flat(moddims(v,rs)(x[0],x[1],x[2],x[3]));R;}',NL
+rtn[22],←⊂'   VEC<seq> x(rr);arr ix=scl(0);',NL
+rtn[22],←⊂'   DOB(rr,x[i]=seq((D)r.s[i]))DOB(lc,x[rr-av[i]-1]=seq(lv[i],lv[i]))',NL
+rtn[22],←⊂'   DOB(rr,B j=rr-i-1;ix=moddims(ix*r.s[j],1,(U)cnt(ix));',NL
+rtn[22],←⊂'    ix=flat(tile(ix,(U)x[j].size,1)+tile(x[j],1,(U)cnt(ix))))',NL
+rtn[22],←⊂'   z.v=v(ix)',NL
+rtn[22],←⊂'  ,err(16))}',NL
 rtn[22],←⊂'DF(sqd_f){A ax;iot_c(ax,scl(scl((I)cnt(l))),e);sqd_c(z,l,r,e,ax);}',NL
 rtn[23],←⊂'NM(brk,"brk",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[23],←⊂'DEFN(brk)',NL
