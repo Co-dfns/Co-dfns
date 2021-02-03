@@ -7,5 +7,5 @@ DF(rho_f){B cr=cnt(r),cl=cnt(l);VEC<I> s(cl);
  CVSWITCH(l.v,err(6),if(cl)v.as(s32).host(s.data()),if(cl)err(16))
  DOB(cl,if(s[i]<0)err(11))z.s=SHP(cl);DOB(cl,z.s[i]=(B)s[cl-i-1])
  B cz=cnt(z);if(!cz){z.v=scl(0);R;}if(cz==cr){z.v=r.v;R;}
- CVSWITCH(r.v,err(6),z.v=v(iota(cz%cr)),
-  VEC<A> zv(cz);DOB(cz,zv[i]=v[i%cr])z.v=zv)}
+ CVSWITCH(r.v,err(6),z.v=v(iota(cz)%cr),
+  z.v=VEC<A>(cz);VEC<A>&zv=std::get<VEC<A>>(z.v);DOB(cz,zv[i]=v[i%cr]))}

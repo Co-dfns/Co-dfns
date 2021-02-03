@@ -828,8 +828,8 @@ rtn[25],←⊂' if(rnk(l)>1)err(11);if(!isint(l))err(11);',NL
 rtn[25],←⊂' CVSWITCH(l.v,err(6),if(cl)v.as(s32).host(s.data()),if(cl)err(16))',NL
 rtn[25],←⊂' DOB(cl,if(s[i]<0)err(11))z.s=SHP(cl);DOB(cl,z.s[i]=(B)s[cl-i-1])',NL
 rtn[25],←⊂' B cz=cnt(z);if(!cz){z.v=scl(0);R;}if(cz==cr){z.v=r.v;R;}',NL
-rtn[25],←⊂' CVSWITCH(r.v,err(6),z.v=v(iota(cz%cr)),',NL
-rtn[25],←⊂'  VEC<A> zv(cz);DOB(cz,zv[i]=v[i%cr])z.v=zv)}',NL
+rtn[25],←⊂' CVSWITCH(r.v,err(6),z.v=v(iota(cz)%cr),',NL
+rtn[25],←⊂'  z.v=VEC<A>(cz);VEC<A>&zv=std::get<VEC<A>>(z.v);DOB(cz,zv[i]=v[i%cr]))}',NL
 rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[26],←⊂'DEFN(cat)',NL
 rtn[26],←⊂'MF(cat_f){z.s=SHP(1,cnt(r));z.v=r.v;}',NL
