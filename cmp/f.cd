@@ -40,8 +40,9 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
   z,←'STK s;e[0]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POP(A,x);if(cnt(x)!=1)err(5);',NL
-  z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
-  z,←' I t=x.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
+  z,←' if(!(isint(x)||isbool(x)))err(11);',NL
+  z,←' I t;CVSWITCH(x.v,err(6),t=v.as(s32).scalar<I>(),err(11))',NL
+  z,←' if(t!=0&&t!=1)err(11);',NL
   z,' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}',NL}
  Na←{'¯'⎕R'-'⍕sym⌷⍨|4⊃⍺}
  Ov←{z←'{A x;MOKP o;POP(MOKP,o);POP(A,x);'
@@ -85,7 +86,7 @@ syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms
-deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲'
+deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲~'
 deps[syms⍳,¨'∧⌿/.⍪⍤\']←,¨¨'⍉⍴⍋∨∧' '⊃,¨/⌿' '⊃,¨/' '⊃,¨/.' ',⍪' '⊃,¨⍳⌷⍤' '⊃,¨\'
 deps[syms⍳,¨'←⌽⊖⌷⍀¨']←,¨¨'[⊃,¨←' '⍉⍴⍋|,⌽' '⍉⍴⍋|,⌽⊖' '⍳⌷' '⊃,¨\⍀' '⊃,¨'
 deps[syms⍳⊂'∘.']←⊂(,¨'⊃,¨'),⊂'∘.'
