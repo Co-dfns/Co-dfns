@@ -238,7 +238,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  Ed←{z←'{A z,x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
   z,'(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{c←⍕4⊃⍺ ⋄ z←'{A x(SHP(1,',c,'),VEC<A>(',c,'));'
-  z,'DO(',c,',POP(A,x.nv[i]));PUSH(x);}',NL}
+  z,'VEC<A>&v=std::get<VEC<A>>(x.v);DO(',c,',POP(A,v[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}
  Em←{'{A z,x;FNP f;POP(FNP,f);POP(A,x);(*f)(z,x,e);PUSH(z);}',NL}
  Er←{'POP(A,z);e[fd]=std::move(of);R;',NL}
@@ -780,15 +780,22 @@ rtn[22],←⊂'  ,err(16))}',NL
 rtn[22],←⊂'DF(sqd_f){A ax;iot_c(ax,scl(scl((I)cnt(l))),e);sqd_c(z,l,r,e,ax);}',NL
 rtn[23],←⊂'NM(brk,"brk",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[23],←⊂'DEFN(brk)',NL
-rtn[23],←⊂'DF(brk_f){B lr=rnk(l);CVEC<A>&rv=r.nv;B rc=cnt(r);',NL
+rtn[23],←⊂'DF(brk_f){B lr=rnk(l);B rc=cnt(r);',NL
 rtn[23],←⊂' if(!rc){if(lr!=1)err(4);z=l;R;}if(rc!=lr)err(4);',NL
-rtn[23],←⊂' VEC<B> rm(rc,1);DOB(rc,if(rv[i].f)rm[i]=rnk(rv[i]))',NL
-rtn[23],←⊂' B zr=0;DOB(rc,zr+=rm[i])z.s=SHP(zr);B s=zr;',NL
-rtn[23],←⊂' DOB(rc,B j=i;s-=rm[j];DOB(rm[j],z.s[s+i]=rv[j].f?rv[j].s[i]:l.s[rc-j-1]))',NL
-rtn[23],←⊂' if(zr<=4){IDX x[4];DOB(rc,if(rv[i].f)x[rc-i-1]=rv[i].v.as(s32))   //+1106R~',NL
-rtn[23],←⊂'  dim4 sp(1);DO((I)lr,sp[i]=l.s[i])',NL
-rtn[23],←⊂'  z.v=flat(moddims(l.v,sp)(x[0],x[1],x[2],x[3]));R;}',NL
-rtn[23],←⊂' err(16);}',NL
+rtn[23],←⊂' CVSWITCH(r.v,err(6),err(99,L"Unexpected bracket index set."),',NL
+rtn[23],←⊂'  VEC<B> rm(rc);CVEC<A>&rv=v;',NL
+rtn[23],←⊂'  DOB(rc,CVSWITCH(rv[i].v,rm[i]=1,rm[i]=rnk(rv[i]),err(11)))',NL
+rtn[23],←⊂'  B zr=0;DOB(rc,zr+=rm[i])z.s=SHP(zr);B s=zr;',NL
+rtn[23],←⊂'  DOB(rc,B j=i;s-=rm[j];',NL
+rtn[23],←⊂'   DOB(rm[j],B&x=z.s[s+i];',NL
+rtn[23],←⊂'    CVSWITCH(rv[j].v,x=l.s[rc-j-1],x=rv[j].s[i],err(99))))',NL
+rtn[23],←⊂'  if(zr<=4){IDX x[4];',NL
+rtn[23],←⊂'   DOB(rc,CVSWITCH(rv[i].v,,x[rc-i-1]=v.as(s32),err(99)))',NL
+rtn[23],←⊂'   dim4 sp(1);DO((I)lr,sp[i]=l.s[i])',NL
+rtn[23],←⊂'   CVSWITCH(l.v,err(6)',NL
+rtn[23],←⊂'    ,z.v=flat(moddims(v,sp)(x[0],x[1],x[2],x[3]))',NL
+rtn[23],←⊂'    ,err(16))}',NL
+rtn[23],←⊂'  else err(16))}',NL
 rtn[23],←⊂'',NL
 rtn[23],←⊂'OD(brk,"brk",scm(l),scd(l),MFD,DFD,MT ,MT )',NL
 rtn[23],←⊂'MF(brk_o){if(rnk(ww)>1)err(4);ll(z,r,e,ww);}',NL
