@@ -18,10 +18,8 @@ typedef VEC<dim_t> SHP;S A;
 typedef std::variant<NIL,arr,VEC<A>> VALS;
 S A{SHP s;VALS v;
  A(){}
- A(SHP s,carr v):s(s),v(v){}
- A(SHP s,VEC<A> v):s(s),v(v){}
- A(B r,carr v):s(SHP(r,1)),v(v){}
- A(B r,VEC<A> v):s(SHP(r,1)),v(v){}};
+ A(SHP s,VALS v):s(s),v(v){}
+ A(B r,VALS v):s(SHP(r,1)),v(v){}};
 typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;
 typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;
 typedef std::variant<A,FNP,MOKP,DOKP> BX;
