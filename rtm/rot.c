@@ -20,14 +20,14 @@ DA(rot_f){B rr=rnk(r),lr=rnk(l);if(rr>4)err(16);
    ,err(16))
   R;}
  I j=0;DOB(lr,if(i==ra)j++;if(l.s[i]!=r.s[j++])err(5))
- CVSWITCH(r.v,err(6)
-  ,z.s=r.s;z.v=v;arr&zv=std::get<arr>(z.v);zv=zv%r.s[ra];
-   B tc=1;DO(ra,tc*=r.s[i])zv*=tc;cat_c(z,z,e,scl(scl(aa-.5)));
-   zv=flat(tile(axis(zv,z.s,ra),1,(U)r.s[ra],1));z.s[ra]=r.s[ra];
-   dim4 s1(1);dim4 s2(1);
-   DO(ra+1,s1[i]=r.s[i])DO((I)rr-ra-1,s2[ra+i+1]=r.s[ra+i+1])
-   zv+=flat(iota(s1,s2));zv=zv%(tc*r.s[ra]);
-   zv=flat(v(zv+(tc*r.s[ra])*flat(iota(s2,s1))))
-  ,err(16))}
+ z.s=l.s;CVSWITCH(l.v,err(6),z.v=v%r.s[ra],err(11))
+ arr&zv=std::get<arr>(z.v);B tc=1;DO(ra,tc*=r.s[i])zv*=tc;
+ cat_c(z,z,e,scl(scl(aa-.5)));
+ zv=flat(tile(axis(zv,z.s,ra),1,(U)r.s[ra],1));z.s[ra]=r.s[ra];
+ dim4 s1(1);dim4 s2(1);
+ DO(ra+1,s1[i]=r.s[i])DO((I)rr-ra-1,s2[ra+i+1]=r.s[ra+i+1])
+ zv+=flat(iota(s1,s2));zv=zv%(tc*r.s[ra]);
+ arr rv;CVSWITCH(r.v,err(6),rv=v,err(16))
+ zv=flat(rv(zv+(tc*r.s[ra])*flat(iota(s2,s1))));}
 DF(rot_f){B rr=rnk(r),lr=rnk(l);if(!rr){B lc=cnt(l);if(lc!=1&&lr)err(4);z=r;R;}
  rot_c(z,l,r,e,scl(scl(rr-1)));}
