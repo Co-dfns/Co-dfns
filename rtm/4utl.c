@@ -25,23 +25,23 @@ dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;
  if(at==s32||bt==s32)R s32;if(at==s16||bt==s16)R s16;
  if(at==b8||bt==b8)R b8;err(16);R f64;}
 dtype mxt(carr&a,carr&b){R mxt(a.type(),b.type());}
-dtype mxt(dtype at,const A&b){
+dtype mxt(dtype at,CA&b){
  R std::visit(visitor{
    [&](NIL _){err(99,L"Unexpected value error.");R s32;},
    [&](carr&v){R mxt(at,v.type());},
    [&](CVEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},
   b.v);}
+dtype mxt(CA&a,CA&b){R mxt(mxt(b8,a),mxt(b8,b));}
 inline I isint(D x){R x==nearbyint(x);}
-inline I isint(CA&x){
- R std::visit(visitor{
-   [&](NIL _){err(99,L"Unexpected value error.");R 0;},
-   [&](carr&v)->I{R v.isinteger()||v.isbool()
-     ||(v.isreal()&&allTrue<I>(v==0||v==1));},
-   [&](CVEC<A>&v){DOB(v.size(),if(!isint(v[i]))R 0);R 1;}},
-  x.v);}
-inline I isbool(A x){
- R std::visit(visitor{
-   [&](NIL _){err(99,L"Unexpected value error.");R 0;},
-   [&](carr&v)->I{R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));},
-   [&](CVEC<A>&v){DOB(v.size(),if(!isbool(v[i]))R 0);R 1;}},
-  x.v);}
+inline I isint(CA&x){I res=1;
+ CVSWITCH(x.v
+  ,err(99,L"Unexpected value error.")
+  ,res=v.isinteger()||v.isbool()||(v.isreal()&&allTrue<I>(v==trunc(v)))
+  ,DOB(v.size(),if(!isint(v[i])){res=0;R;}))
+ R res;}
+inline I isbool(CA&x){I res=1;
+ CVSWITCH(x.v
+  ,err(99,L"Unexpected value error.")
+  ,res=v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1))
+  ,DOB(v.size(),if(!isbool(v[i])){res=0;R;}))
+ R res;}
