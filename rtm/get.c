@@ -1,15 +1,21 @@
 NM(get,"get",0,0,MT,MT,DFD,MT,MT)
 DEFN(get)
-DF(get_f){CVEC<A>&lv=l.nv;I ll=(I)lv.size();B zr=rnk(z),rr=rnk(r);
+DF(get_f){CVSWITCH(l.v,err(6),err(99,L"Unexpected simple array"),)
+ CVEC<A>&lv=std::get<VEC<A>>(l.v);B ll=lv.size();B zr=rnk(z),rr=rnk(r);
  if(!ll){if(zr!=1)err(4);if(rr!=1)err(5);if(z.s[0]!=r.s[0])err(5);z=r;R;}
- if(ll!=zr)err(4);B rk=0;DO(ll,rk+=lv[i].f?rnk(lv[i]):1)
+ if(ll!=zr)err(4);B rk=0;DOB(ll,CVSWITCH(lv[i].v,rk+=1,rk+=rnk(lv[i]),err(11)))
  if(rr>0&&rk!=rr)err(5);
  const B*rs=r.s.data();IDX x[4];
- if(!rr)DO(ll,A v=lv[ll-i-1];if(v.f)x[i]=v.v.as(s32))
+ if(!rr)DOB(ll,A v=lv[ll-i-1];CVSWITCH(v.v,,x[i]=v.as(s32),err(11)))
  if(rr>0)
-  DO(ll,A v=lv[ll-i-1];if(!v.f)if(z.s[i]!=*rs++)err(5);
-   if(v.f){DOB(rnk(v),if(v.s[i]!=*rs++)err(5))x[i]=v.v.as(s32);})
- arr zv=unrav(z),rv=unrav(r);zv(x[0],x[1],x[2],x[3])=rv;z.v=flat(zv);}
+  DOB(ll,A u=lv[ll-i-1];
+   CVSWITCH(u.v
+    ,if(z.s[i]!=*rs++)err(5)
+    ,DOB(rnk(u),if(u.s[i]!=*rs++)err(5))x[i]=v.as(s32)
+    ,err(11)))
+ arr rv;CVSWITCH(r.v,err(6),rv=unrav(v,r.s),err(16))
+ arr zv;CVSWITCH(z.v,err(6),zv=unrav(v,z.s),err(16))
+ zv(x[0],x[1],x[2],x[3])=rv;z.v=flat(zv);}
 
 OM(get,"get",0,0,MT,DFD,MT,MT)
 DF(get_o){A t;brk_c(t,z,l,e);map_o mfn_c(llp);mfn_c(t,t,r,e);
