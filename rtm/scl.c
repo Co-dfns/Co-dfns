@@ -13,8 +13,8 @@ template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){
    [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},
    [&](carr&lv,carr&rv){
     if(lr==rr){fn(z,lv,rv,e);}
-    if(!lr){fn(z,tile(lv,rv.dims()),rv,e);}
-    if(!rr){fn(z,lv,tile(rv,lv.dims()),e);}}},
+    else if(!lr){fn(z,tile(lv,rv.dims()),rv,e);}
+    else if(!rr){fn(z,lv,tile(rv,lv.dims()),e);}}},
   l.v,r.v);}
 inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){
  A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}
