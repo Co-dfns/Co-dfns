@@ -529,8 +529,9 @@ rth,←'  ,err(99,L"Unexpected value error.")',NL
 rth,←'  ,res=v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1))',NL
 rth,←'  ,DOB(v.size(),if(!isbool(v[i])){res=0;R;}))',NL
 rth,←' R res;}',NL
-rth,←'V coal(A&a){B c=cnt(a);I can=1;',NL
+rth,←'V coal(A&a){',NL
 rth,←' VSWITCH(a.v,,,',NL
+rth,←'  B c=cnt(a);I can=1;',NL
 rth,←'  DOB(c,A&b=v[i];',NL
 rth,←'   coal(b);if(rnk(b))can=0;CVSWITCH(b.v,can=0,,can=0)',NL
 rth,←'   if(!can)break)',NL
@@ -1329,7 +1330,8 @@ rtn[50],←⊂'   v=u;}while(!flg);',NL
 rtn[50],←⊂'  z=v;R;}',NL
 rtn[50],←⊂' if(rnk(ww))err(4);I c;CVSWITCH(ww.v,err(6),c=v.as(s32).scalar<I>(),err(11))',NL
 rtn[50],←⊂' z=r;DO(c,ll(z,z,e))}',NL
-rtn[50],←⊂'DF(pow_o){if(fr){A t;A v=r;I flg;',NL
+rtn[50],←⊂'DF(pow_o){if(!fl)err(2);',NL
+rtn[50],←⊂' if(fr){A t;A v=r;I flg;',NL
 rtn[50],←⊂'  do{A u;ll(u,l,v,e);rr(t,u,v,e);',NL
 rtn[50],←⊂'   if(cnt(t)!=1)err(5);CVSWITCH(t.v,err(6),flg=v.as(s32).scalar<I>(),err(11))',NL
 rtn[50],←⊂'   v=u;}while(!flg);',NL
@@ -1403,10 +1405,22 @@ rtn[56],←⊂'DF(gdd_f){err(16);}',NL
 rtn[56],←⊂'',NL
 rtn[57],←⊂'OM(oup,"oup",0,0,MT,DFD,MT ,MT )',NL
 rtn[57],←⊂'DF(oup_o){B lr=rnk(l),rr=rnk(r),lc=cnt(l),rc=cnt(r);',NL
-rtn[57],←⊂' SHP sp(lr+rr);DO((I)rr,sp[i]=r.s[i])DO((I)lr,sp[i+rr]=l.s[i])',NL
+rtn[57],←⊂' SHP sp(lr+rr);DOB(rr,sp[i]=r.s[i])DOB(lr,sp[i+rr]=l.s[i])',NL
 rtn[57],←⊂' if(!cnt(sp)){z.s=sp;z.v=scl(0);R;}',NL
-rtn[57],←⊂' arr x(l.v,1,lc),y(r.v,rc,1);x=flat(tile(x,(I)rc,1));y=flat(tile(y,1,(I)lc));',NL
-rtn[57],←⊂' map_o mfn_c(llp);A xa(sp,x),ya(sp,y);mfn_c(z,xa,ya,e);}',NL
+rtn[57],←⊂' std::visit(visitor{DVSTR(),',NL
+rtn[57],←⊂'   [&](carr&lv,carr&rv){arr x(lv,1,lc),y(rv,rc,1);',NL
+rtn[57],←⊂'    x=flat(tile(x,(I)rc,1));y=flat(tile(y,1,(I)lc));',NL
+rtn[57],←⊂'    map_o mfn_c(llp);A xa(sp,x),ya(sp,y);mfn_c(z,xa,ya,e);},',NL
+rtn[57],←⊂'   [&](CVEC<A>&lv,CVEC<A>&rv){z.s=sp;z.v=VEC<A>(lc*rc);',NL
+rtn[57],←⊂'    VEC<A>&zv=std::get<VEC<A>>(z.v);DOB(lc*rc,ll(zv[i],lv[i],rv[i],e))',NL
+rtn[57],←⊂'    coal(z);},',NL
+rtn[57],←⊂'   [&](CVEC<A>&lv,carr&rv){z.s=sp;z.v=VEC<A>(lc*rc);',NL
+rtn[57],←⊂'    VEC<A>&zv=std::get<VEC<A>>(z.v);DOB(lc*rc,ll(zv[i],lv[i],A(0,rv((I)i)),e))',NL
+rtn[57],←⊂'    coal(z);},',NL
+rtn[57],←⊂'   [&](carr&lv,CVEC<A>&rv){z.s=sp;z.v=VEC<A>(lc*rc);',NL
+rtn[57],←⊂'    VEC<A>&zv=std::get<VEC<A>>(z.v);DOB(lc*rc,ll(zv[i],A(0,lv((I)i)),rv[i],e))',NL
+rtn[57],←⊂'    coal(z);}},',NL
+rtn[57],←⊂'  l.v,r.v);}',NL
 rtn[58],←⊂'NM(fnd,"fnd",0,0,MT ,MT ,DFD,MT ,MT )',NL
 rtn[58],←⊂'DEFN(fnd)',NL
 rtn[58],←⊂'DF(fnd_f){B lr=rnk(l),rr=rnk(r),rc=cnt(r),lc=cnt(l);',NL
@@ -1473,8 +1487,8 @@ rtn[63],←⊂'   [&](carr&lv,CVEC<A>&rv){err(16);},',NL
 rtn[63],←⊂'   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},',NL
 rtn[63],←⊂'   [&](carr&lv,carr&rv){',NL
 rtn[63],←⊂'    if(lr==rr){fn(z,lv,rv,e);}',NL
-rtn[63],←⊂'    if(!lr){fn(z,tile(lv,rv.dims()),rv,e);}',NL
-rtn[63],←⊂'    if(!rr){fn(z,lv,tile(rv,lv.dims()),e);}}},',NL
+rtn[63],←⊂'    else if(!lr){fn(z,tile(lv,rv.dims()),rv,e);}',NL
+rtn[63],←⊂'    else if(!rr){fn(z,lv,tile(rv,lv.dims()),e);}}},',NL
 rtn[63],←⊂'  l.v,r.v);}',NL
 rtn[63],←⊂'inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){',NL
 rtn[63],←⊂' A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}',NL
