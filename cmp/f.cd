@@ -67,7 +67,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  Vf←{0>x←4⊃⍺:'PUSH(',(slt ⍺),');',NL
   'fn',(⍕x),'_p->this_p=fn',(⍕x),'_p;PUSH(fn',(⍕x),'_p);',NL}
  dis←{0=2⊃h←,1↑⍵:'' ⋄ c←ks 1↓⍵ ⋄ (≢gck)=i←gck⍳⊂h[2 3]:⎕SIGNAL 16 ⋄ h(⍎i⊃gcv)c}
- z←(⊂rth),(rtn[syms⍳{∪⊃,/deps⌿⍨syms∊⍵}⍣≡sym]),(,/Zp¨⍸t=3)
+ z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=3)
  z,←dis¨ks ast
  z,←'E',¨('VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
  ⊃,⌿z⊣⍞←⎕UCS 10}

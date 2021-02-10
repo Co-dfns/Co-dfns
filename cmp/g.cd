@@ -12,7 +12,7 @@ syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms
-deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲~'
+deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∨⍱⍲~'
 deps[syms⍳,¨'∧⌿/.⍪⍤\']←,¨¨'∨∧' '/⌿' '¨/' '/.' ',⍪' '¨⌷⍤' '¨\'
 deps[syms⍳,¨'←⌽⊖⌷⍀¨≢']←,¨¨'[⊃,¨←' '|,⌽' '⌽⊖' '⍳⌷' '\⍀' '⊃,¨' '≡≢'
 deps[syms⍳⊂'∘.']←⊂(,¨'¨' '∘.')
