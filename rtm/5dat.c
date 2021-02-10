@@ -1,5 +1,6 @@
-V coal(A&a){B c=cnt(a);I can=1;
+V coal(A&a){
  VSWITCH(a.v,,,
+  B c=cnt(a);I can=1;
   DOB(c,A&b=v[i];
    coal(b);if(rnk(b))can=0;CVSWITCH(b.v,can=0,,can=0)
    if(!can)break)
