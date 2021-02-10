@@ -301,8 +301,8 @@ syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%
 nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'this' 'span'
 syms,←⊂'%u' ⋄ nams,←⊂''
 deps←⊂¨syms
-deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∨⍱⍲~'
-deps[syms⍳,¨'∧⌿/.⍪⍤\']←,¨¨'∨∧' '/⌿' '¨/' '/.' ',⍪' '¨⌷⍤' '¨\'
+deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∨⍱⍲~?'
+deps[syms⍳,¨'∧⌿/.⍪⍤\↓↑']←,¨¨'∨∧' '/⌿' '¨/' '/.' ',⍪' '¨⌷⍤' '¨\' '⍳↓' '⍳↑'
 deps[syms⍳,¨'←⌽⊖⌷⍀¨≢']←,¨¨'[⊃,¨←' '|,⌽' '⌽⊖' '⍳⌷' '\⍀' '⊃,¨' '≡≢'
 deps[syms⍳⊂'∘.']←⊂(,¨'¨' '∘.')
 
@@ -1472,11 +1472,13 @@ rtn[60],←⊂' z.s=SHP((lr-(lr>0))+(rr-(rr>0)));',NL
 rtn[60],←⊂' if(lr>1)z.s[0]=l.s[0];if(rr>1)z.s[lr>1]=r.s[0];}',NL
 rtn[61],←⊂'NM(fft,"fft",1,0,MT ,MFD,MT ,MT ,MT )',NL
 rtn[61],←⊂'DEFN(fft)',NL
-rtn[61],←⊂'MF(fft_f){z.r=r.r;z.s=r.s;z.v=dft(r.v.type()==c64?r.v:r.v.as(c64),1,r.s);}',NL
+rtn[61],←⊂'MF(fft_f){arr rv;CVSWITCH(r.v,err(6),rv=unrav(v,r.s),err(11))',NL
+rtn[61],←⊂' z.s=r.s;z.v=dft(rv.type()==c64?rv:rv.as(c64),1,rv.dims());}',NL
 rtn[61],←⊂'',NL
 rtn[62],←⊂'NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )',NL
 rtn[62],←⊂'DEFN(ift)',NL
-rtn[62],←⊂'MF(ift_f){z.r=r.r;z.s=r.s;z.v=idft(r.v.type()==c64?r.v:r.v.as(c64),1,r.s);}',NL
+rtn[62],←⊂'MF(ift_f){arr rv;CVSWITCH(r.v,err(6),rv=unrav(v,r.s),err(11))',NL
+rtn[62],←⊂' z.s=r.s;z.v=idft(rv.type()==c64?rv:rv.as(c64),1,rv.dims());}',NL
 rtn[62],←⊂'',NL
 rtn[63],←⊂'template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,FN&rec_c,fncls fn){',NL
 rtn[63],←⊂' z.s=r.s;',NL
