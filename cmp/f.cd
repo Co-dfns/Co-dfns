@@ -22,10 +22,10 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  Ed←{z←'{A z,x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
   z,'(*f)(z,x,y,e);PUSH(z);}',NL}
  Ei←{c←⍕4⊃⍺ ⋄ z←'{A x(SHP(1,',c,'),VEC<A>(',c,'));'
-  z,'DO(',c,',POP(A,x.nv[i]));PUSH(x);}',NL}
+  z,'VEC<A>&v=std::get<VEC<A>>(x.v);DO(',c,',POP(A,v[i]));PUSH(x);}',NL}
  Ek←{'s.pop();',NL}
  Em←{'{A z,x;FNP f;POP(FNP,f);POP(A,x);(*f)(z,x,e);PUSH(z);}',NL}
- Er←{'POP(A,z);z.f=1;e[fd]=std::move(of);R;',NL}
+ Er←{'POP(A,z);e[fd]=std::move(of);R;',NL}
  Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_f){U fd=',(⍕8⊃⍺),';STK s;',NL
   z,←' if(e.size()<=fd)e.resize(fd+1);',NL
   z,←' FRMP of=std::move(e[fd]);e[fd]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
@@ -40,8 +40,9 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
   z,←'STK s;e[0]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
   z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
  Gd←{z←'{A x;POP(A,x);if(cnt(x)!=1)err(5);',NL
-  z,←' if(!(x.v.isinteger()||x.v.isbool()))err(11);',NL
-  z,←' I t=x.v.as(s32).scalar<I>();if(t!=0&&t!=1)err(11);',NL
+  z,←' if(!(isint(x)||isbool(x)))err(11);',NL
+  z,←' I t;CVSWITCH(x.v,err(6),t=v.as(s32).scalar<I>(),err(11))',NL
+  z,←' if(t!=0&&t!=1)err(11);',NL
   z,' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}',NL}
  Na←{'¯'⎕R'-'⍕sym⌷⍨|4⊃⍺}
  Ov←{z←'{A x;MOKP o;POP(MOKP,o);POP(A,x);'
@@ -66,29 +67,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  Vf←{0>x←4⊃⍺:'PUSH(',(slt ⍺),');',NL
   'fn',(⍕x),'_p->this_p=fn',(⍕x),'_p;PUSH(fn',(⍕x),'_p);',NL}
  dis←{0=2⊃h←,1↑⍵:'' ⋄ c←ks 1↓⍵ ⋄ (≢gck)=i←gck⍳⊂h[2 3]:⎕SIGNAL 16 ⋄ h(⍎i⊃gcv)c}
- z←(⊂rth),(rtn[syms⍳∪⊃,/deps⌿⍨syms∊sym]),(,/Zp¨⍸t=3)
+ z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=3)
  z,←dis¨ks ast
  z,←'E',¨('VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
  ⊃,⌿z⊣⍞←⎕UCS 10}
-
-syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
-nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
-syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'    '⍲'   '⍱'
-nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor'  'nan' 'nor'
-syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'    '∊'   '⊃'
-nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf'  'mem' 'dis'
-syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'    '⍀'   '?'
-nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
-syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
-nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
-syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '∇'    ';'
-nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'this' 'span'
-syms,←⊂'%u' ⋄ nams,←⊂''
-deps←⊂¨syms
-deps[syms⍳,¨sclsyms]←,¨¨'⍉⍴⍋'∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∧∨⍱⍲'
-deps[syms⍳,¨'∧⌿/.⍪⍤\']←,¨¨'⍉⍴⍋∨∧' '¨,/⌿' '¨,/' '¨,/.' ',⍪' '¨⍳⌷⍤' '¨,\'
-deps[syms⍳,¨'←⌽⊖⌷⍀']←,¨¨'[¨←' '⍉⍴⍋|,⌽' '⍉⍴⍋|,⌽⊖' '⍳⌷' '¨,\⍀'
-deps[syms⍳⊂'∘.']←⊂(,'¨')'∘.'
-
-rth←''
-rtn←(⍴nams)⍴⊂''

@@ -1,0 +1,5 @@
+)RESET
+BUILD
+)SAVE
+codfns.AF∆LIB←'cpu'
+TEST 26
