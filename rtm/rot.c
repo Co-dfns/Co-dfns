@@ -20,9 +20,8 @@ DA(rot_f){B rr=rnk(r),lr=rnk(l);if(rr>4)err(16);
    ,err(16))
   R;}
  I j=0;DOB(lr,if(i==ra)j++;if(l.s[i]!=r.s[j++])err(5))
- z.s=l.s;CVSWITCH(l.v,err(6),z.v=v%r.s[ra],err(11))
- arr&zv=std::get<arr>(z.v);B tc=1;DO(ra,tc*=r.s[i])zv*=tc;
- cat_c(z,z,e,scl(scl(aa-.5)));
+ res_c(z,scl(scl(r.s[ra])),l,e);arr&zv=std::get<arr>(z.v);
+ B tc=1;DO(ra,tc*=r.s[i])zv*=tc;cat_c(z,z,e,scl(scl(aa-.5)));
  zv=flat(tile(axis(zv,z.s,ra),1,(U)r.s[ra],1));z.s[ra]=r.s[ra];
  dim4 s1(1);dim4 s2(1);
  DO(ra+1,s1[i]=r.s[i])DO((I)rr-ra-1,s2[ra+i+1]=r.s[ra+i+1])
