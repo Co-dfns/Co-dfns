@@ -122,7 +122,7 @@ zil←aws _s ('⍬'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
 digits←'0123456789'_set
-prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
+prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
 prim←aws _s (prims _set) _s aws
 mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
 dop1←aws _s ('.⍣∘'_set) _s aws
@@ -1448,7 +1448,7 @@ rtn[58],←⊂'      ==rv(x[0]+(D)m,x[1]+(D)k,x[2]+(D)j,x[3]+(D)i))))))',NL
 rtn[58],←⊂' z.v=zv;}',NL
 rtn[59],←⊂'NM(par,"par",0,0,MT ,MFD,DFD,MT ,MT )',NL
 rtn[59],←⊂'DEFN(par)',NL
-rtn[59],←⊂'MF(par_f){err(16);}',NL
+rtn[59],←⊂'MF(par_f){if(!rnk(r)){z=r;R;}z=A(0,VEC<A>(1,r));}',NL
 rtn[59],←⊂'DF(par_f){err(16);}',NL
 rtn[59],←⊂'',NL
 rtn[60],←⊂'NM(mdv,"mdv",1,0,MT ,MFD,DFD,MT ,MT )',NL

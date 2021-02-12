@@ -14,6 +14,10 @@
  ∆0003_TEST←'id' TEST1 (⊂2 5⍴⍳10)
  ∆0004_TEST←'id' TEST1 (⊂2 3⍴(1 2 3)(4 5 6))
  ∆0005_TEST←'id' TEST1 (2 3⍴(1 2 3)(4 5 6))
+ ∆0006_TEST←'ncl'TEST1 5
+ ∆0007_TEST←'ncl'TEST1 (,5)
+ ∆0008_TEST←'ncl'TEST1 (⍳5)
+ ∆0009_TEST←'ncl'TEST1 (2 3⍴⍳5)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

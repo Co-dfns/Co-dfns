@@ -3,5 +3,6 @@
 id←{⍵}
 add←{⍺+⍵}
 and←{⍺∧⍵}
+ncl←{⊂⍵}
 
 :EndNamespace
