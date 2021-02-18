@@ -1,4 +1,5 @@
 )RESET
+)erase t0028 t0028_tests
 BUILD
 )SAVE
 codfns.AF∆LIB←'cpu'

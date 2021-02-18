@@ -147,9 +147,9 @@ Name←{⍺((name _as ⌽) _t (⍺⍺=Vt) _as (⍺⍺ V∘,∘⊃))⍵}
 Args←{⍺(aaww _o aw _t (⍺⍺=Vt) _as (⍺⍺ V∘,∘⊃))⍵}
 Var←{⍺(⍺⍺ Args _o (⍺⍺ Name))⍵}
 Num←float _o int _as (N∘⌽)
-Strand←0 Var _s (0 Var _some) _as (3 A∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
-Atom←Strand _o (0 Var) _o (zil _as (0 A)) _o (Num _some _as (0 A∘⌽)) _o Pex
+Unit←(0 Var) _o Num _o (zil _as (0 A)) _o Pex
+Atom←Unit _some _as {∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:0 A⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ 3 A⌽0 A∘⊂¨@{m}⍵}
 Semx←{⍺(Ex _o (_yes _as {3 A,⊂0P,';'}))⍵}
 Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {1P,'['}) _s Atom _as (2 E∘⌽)
@@ -161,7 +161,7 @@ Fa←{e←(⊂⍺),¨¨⍨(⊂'⍵⍵' '⍺⍺','⍺⍵')∘,∘⊂¨↓⍉¯1+3
  0=⊃z←(1⊃e)Fax ⍵:0(,⊂0(N∆⍳'F')1 0⍪¨1+@0⊃(0⍴⊂4⍴⊂⍬),1⊃z)⍺ ⍵
  m←(0=⊃a)∧∧⌿(∨⍀∘.=⍨⍳12)∨∘.≢⍨1⊃a←↓⍉↑(2↓e)Fax¨⊂⍵
  ~∨⌿m:(⌈⌿⊃a) ⍬ ⍺ ⍵
- z←⍪⌿↑(⊂0(N∆⍳'F')¯1 0),({1(N∆⍳'F')⍵ 0}¨2+m⌿⍳12)⍪¨(2+@0⊃)¨m⌿1⊃a 
+ z←⍪⌿↑(⊂0(N∆⍳'F')¯1 0),({1(N∆⍳'F')⍵ 0}¨2+m⌿⍳12)⍪¨(2+@0⊃)¨m⌿1⊃a
  0(,⊂z)⍺ ⍵}
 Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
  r←↓⍉↑⍺∘Fa¨ns ⋄ 0<c←⌈⌿⊃r:c ⍬ ⍺ ⍵
@@ -227,10 +227,10 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
  nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'(*e[',(⍕6⊃⍵),'])[',(⍕7⊃⍵),']'}
  ast←(⍉↑d p (1+t)k n(⍳≢p)fr sl fd)[i;]
  Aa←{0=≢ns←dis¨⍵:'PUSH(A(SHP(1,0),scl(0)));',NL
-  1=≢ns←dis¨⍵:'PUSH(scl(scl(',(⊃ns),')));',NL
+  1=≢ns:'PUSH(scl(scl(',(⊃ns),')));',NL
   c←⍕≢⍵ ⋄ v←'VEC<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
   'PUSH(A(SHP(1,',c,'),arr(',c,',',v,')));',NL}
- As←{'PUSH(A());',NL}
+ As←{'PUSH(A()); /* ',(⍕4⊃⍺),' */',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Eb←{z←'{A x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
