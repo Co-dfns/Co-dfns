@@ -204,7 +204,7 @@ tt←{⍞←'C' ⋄ ((d t k n)exp sym)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
  k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=1)∨(t[j]=2)∧k[j]=4 ⋄ t[j]←2
  p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=4] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]      ⍝ LG
  n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
- n[p⌿⍨(t[p]=2)∧k[p]=3]+←1                                               ⍝ CI
+ n[p⌿⍨(t[p]∊0 2)∧k[p]=3]+←1                                             ⍝ CI
  p[i]←p[x←p I@{~t[p[⍵]]∊3 4}⍣≡i←⍸t∊4,(⍳3),8+⍳3] ⋄ j←(⌽i)[⍋⌽x]           ⍝ LX
  p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
  s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=1]                      ⍝ SL
@@ -230,7 +230,9 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
   1=≢ns:'PUSH(scl(scl(',(⊃ns),')));',NL
   c←⍕≢⍵ ⋄ v←'VEC<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
   'PUSH(A(SHP(1,',c,'),arr(',c,',',v,')));',NL}
- As←{'PUSH(A()); /* ',(⍕4⊃⍺),' */',NL}
+ As←{c←⍕4⊃⍺ ⋄ z←'{A z(SHP(1,',c,'),VEC<A>(',c,'));',NL
+  z,←'  VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
+  z,'  DOB(',c,',POP(A,zv[i]))coal(z);PUSH(z);}',NL}
  Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
  Eb←{z←'{A x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
