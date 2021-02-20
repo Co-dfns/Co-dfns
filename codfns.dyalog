@@ -131,8 +131,9 @@ dop3←aws _s ('∘'_set) _s aws
 eot←aws _s {(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
 digs←digits _some
 odigs←digits _any
-int←aws _s digs _s (him _opt) _s aws
-float←aws _s (odigs _s dot _s int _o (digs _s dot _s (him _opt))) _s aws
+ndlm←him _o (alpha _not _peek)
+int←aws _s digs _s ndlm _s aws
+float←aws _s (odigs _s dot _s int _o (digs _s dot _s ndlm)) _s aws
 name←aws _s (alpha _o (digits _some _s alpha) _some) _s aws
 aw←aws _s ('⍺⍵'_set) _s aws
 aaww←aws _s (('⍺⍺'_tk) _o ('⍵⍵'_tk)) _s aws
