@@ -8,7 +8,7 @@ Num←float _o int _as (N∘⌽)
 Pex←{⍺(rpar _s Ex _s lpar)⍵}
 Unit←(0 Var) _o Num _o (zil _as (0 A)) _o Pex
 Atom←Unit _some _as {∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:0 A⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ 3 A⌽0 A∘⊂¨@{m}⍵}
-Semx←{⍺(Ex _o (_yes _as {3 A,⊂0P,';'}))⍵}
+Semx←{⍺(Ex _o (_yes _as {0P,';'}))⍵}
 Brk←rbrk _s (Semx _s (semi _s Semx _any)) _s lbrk _as (3 E∘⌽)
 Idx←Brk _s (_yes _as {1P,'['}) _s Atom _as (2 E∘⌽)
 Blrp←{⍺(⍺⍺ _s (⍵⍵ Slrp ∇))⍵}
