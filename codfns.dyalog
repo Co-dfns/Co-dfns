@@ -120,7 +120,7 @@ semi←aws _s (';' _tk) _s aws _ign
 grd←aws _s (':'_tk) _s aws _ign
 zil←aws _s ('⍬'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
-alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆'_set
+alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_'_set
 digits←'0123456789'_set
 prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
 prim←aws _s (prims _set) _s aws
