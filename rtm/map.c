@@ -1,8 +1,9 @@
 ﻿OM(map,"map",1,1,MFD,DFD,MT ,MT )
 MF(map_o){if(scm(ll)){ll(z,r,e);R;}
+ if("par"==ll.nm&&std::holds_alternative<arr>(r.v)){z=r;R;}
  z.s=r.s;I c=(I)cnt(z);if(!c){z.v=scl(0);R;}
- A rv;cat_c(rv,r,e);z.v=VEC<A>(c);VEC<A>&v=std::get<VEC<A>>(z.v);
- DOB(c,A t;dis_c(t,scl(scl(i)),rv,e);ll(v[i],t,e))
+ z.v=VEC<A>(c);VEC<A>&zv=std::get<VEC<A>>(z.v);
+ CVSWITCH(r.v,err(6),DOB(c,ll(zv[i],scl(v(i)),e)),DOB(c,ll(zv[i],v[i],e)))
  coal(z);}
 DF(map_o){if(scd(ll)){ll(z,l,r,e);R;}B lr=rnk(l),rr=rnk(r);
  A rv,lv,a,b;cat_c(rv,r,e);cat_c(lv,l,e);
