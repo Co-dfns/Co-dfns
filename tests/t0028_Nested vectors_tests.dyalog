@@ -24,6 +24,8 @@
  ∆0013_TEST←'strand2'TEST1 (2 3⍴⍳5)
  ∆0014_TEST←'strand3'TEST1 (2 3⍴⍳5)
  ∆0015_TEST←'strand3'TEST1 (5)
+ ∆0016_TEST←'ncla'TEST2 (⍬) (2 3⍴⍳6)
+ ∆0017_TEST←'ncla'TEST2 (⍬) (2 3⍴⍳2 3)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
