@@ -1,21 +1,12 @@
 ﻿OD(rnk,"rnk",scm(l),0,MFD,DFD,MT ,MT )
-MF(rnk_o){I rr=(I)rnk(r);
- if(cnt(ww)!=1)err(4);
- I cr;CVSWITCH(ww.v,err(6),cr=v.as(s32).scalar<I>(),err(11))
- if(scm(ll)||cr>=rr){ll(z,r,e);R;}
- if(cr<=-rr||!cr){map_o f(llp);f(z,r,e);R;}
- if(cr<0)cr=rr+cr;if(cr>3)err(10);I dr=rr-cr;
- A b(cr+1,r.v);DO(dr,b.s[cr]*=r.s[i+cr])DO(cr,b.s[i]=r.s[i])
- VEC<A> tv(b.s[cr]);I mr=0;SHP ms;dtype mt=b8;
- DO((I)b.s[cr],A t;sqd_c(t,scl(scl(i)),b,e);ll(tv[i],t,e);
-  t=tv[i];I tr=(I)rnk(t);if(tr>mr)mr=tr;if(mr>3)err(10);mt=mxt(mt,t);
-  ms.resize(mr,1);
-  DO(tr<mr?tr:mr,B mi=mr-i-1;B ti=tr-i-1;if(ms[mi]<t.s[ti])ms[mi]=t.s[ti]))
- B mc=cnt(ms);arr tva(mc*b.s[cr],mt);tva=0;
- DO((I)b.s[cr],seq ix((D)cnt(tv[i]));
-  CVSWITCH(tv[i].v,err(6),tva(ix+(D)(i*mc))=flat(v),err(16)))
- z.s=SHP(mr+dr);DO(dr,z.s[mr+i]=r.s[cr+i])DO(mr,z.s[i]=ms[i])
- z.v=tva;}
+MF(rnk_o){if(cnt(ww)!=1)err(4);B cr=geti(ww);
+ B rr=rnk(r);if(scm(ll)||cr>=rr){ll(z,r,e);R;}
+ if(cr<=-rr)cr=0;if(cr<0)cr=rr+cr;B dr=rr-cr;
+ A x(cr+1,r.v);DOB(cr,x.s[i]=r.s[i])DOB(dr,x.s[cr]*=r.s[rr-i-1])
+ B dc=x.s[cr];A y(dr,VEC<A>(dc));DOB(dr,y.s[dr-i-1]=r.s[rr-i-1])
+ VEC<A>&yv=std::get<VEC<A>>(y.v);
+ DOB(dc,A t;sqd_c(t,scl(scl(i)),x,e);ll(yv[i],t,e))
+ tke_c(z,y,e);}
 DF(rnk_o){I rr=(I)rnk(r),lr=(I)rnk(l),cl,cr,dl,dr;dim4 sl(1),sr(1);
  arr wwv;CVSWITCH(ww.v,err(6),wwv=v.as(s32),err(11))
  switch(cnt(ww)){
