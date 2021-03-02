@@ -7,6 +7,7 @@ B cnt(SHP s){B c=1;DOB(s.size(),c*=s[i]);R c;}
 B cnt(const A&a){R cnt(a.s);}
 B cnt(pkt*d){B c=1;DO(RANK(d),c*=SHAPE(d)[i]);R c;}
 B cnt(arr&a){R a.elements();}
+I geti(CA&a){I x;CVSWITCH(a.v,err(6),x=v.as(s32).scalar<I>(),err(11));R x;}
 arr scl(D x){R constant(x,dim4(1),f64);}
 arr scl(I x){R constant(x,dim4(1),s32);}
 arr scl(B x){R constant(x,dim4(1),u64);}
