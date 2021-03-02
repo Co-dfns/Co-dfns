@@ -38,6 +38,8 @@ MA(red_o){B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
  if(1==rc){z.v=r.v;R;}
  CVSWITCH(r.v,err(6)
   ,arr rv=axis(v,r.s,av);
+   if("rgt"==ll.nm){z.v=flat(rv(span,rc-1,span));R;}
+   if("lft"==ll.nm){z.v=flat(rv(span,0,span));R;}
    if("add"==ll.nm&&ib){z.v=flat(count(rv,1).as(s32));R;}
    if("add"==ll.nm){z.v=flat(sum(rv.as(f64),1));R;}
    if("mul"==ll.nm){z.v=flat(product(rv.as(f64),1));R;}
@@ -49,7 +51,14 @@ MA(red_o){B ar=rnk(ax),rr=rnk(r);if(rr>4)err(16);
    map_o mfn_c(llp);dim4 zs;DO((I)rnk(z),zs[i]=z.s[i])
    z.v=flat(rv(span,rc-1,span));
    DO(rc-1,mfn_c(z,A(z.s,flat(rv(span,rc-i-2,span))),z,e))
-  ,err(16))}
+  ,B zc=cnt(z);z.v=VEC<A>(cnt(z));VEC<A>&zv=std::get<VEC<A>>(z.v);
+   B bs=1;DOB(av,bs*=z.s[i])B as=1;DOB(rr-av-1,as*=z.s[av+i])
+   B ms=bs*rc;B mi=rc*bs-bs;
+   if("rgt"==ll.nm){DOB(as,B j=i;DOB(bs,zv[j*bs+i]=v[j*ms+mi+i]))R;}
+   if("lft"==ll.nm){DOB(as,B j=i;DOB(bs,zv[j*bs+i]=v[j*ms+i]))R;}
+   DOB(as,B k=i;DOB(bs,zv[k*bs+i]=v[k*ms+mi+i]))
+   DOB(rc-1,B j=(rc-i-2)*bs;
+    DOB(as,B k=i;DOB(bs,A&zvi=zv[k*bs+i];ll(zvi,v[k*ms+j+i],zvi,e)))))}
 MF(red_o){A x=r;if(!rnk(r))cat_c(x,r,e);this_c(z,x,e,scl(scl(rnk(x)-1)));}
 DA(red_o){B ar=rnk(ax),lr=rnk(l),rr=rnk(r);if(lr>4||rr>4)err(16);
  if(ar>1)err(4);if(cnt(ax)!=1)err(5);if(!isint(ax))err(11);
