@@ -1,6 +1,21 @@
 ﻿NM(tke,"tke",0,0,MT ,MFD,DFD,MAD,DAD)
 DEFN(tke)
-MF(tke_f){z=r;}
+MF(tke_f){
+ CVSWITCH(r.v,err(6),z=r,
+  B rc=cnt(r);B rr=rnk(r);
+  B mr=0;DOB(rc,B nr=rnk(v[i]);if(nr>mr)mr=nr)
+  U8 nv=0;DOB(rc,CVSWITCH(v[i].v,err(6),,nv=1))
+  A x(mr+rr);DOB(rr,x.s[mr+rr-i-1]=r.s[rr-i-1])DOB(mr,x.s[i]=0)
+  if(!mr){
+   if(nv){x.v=VEC<A>(rc);VEC<A>&xv=std::get<VEC<A>>(x.v);
+    DOB(rc,CVSWITCH(v[i].v,err(6),xv[i]=scl(v),xv[i]=v[0]))}
+   if(!nv){dtype tp=mxt(b8,r);x.v=arr(rc,tp);arr&xv=std::get<arr>(x.v);
+    DOB(rc,CVSWITCH(v[i].v,err(6),xv((I)i)=v(0).as(tp),err(99)))}
+   z=x;R;}
+  err(16);
+  DOB(rc,A vi=v[i];B rk=rnk(vi);
+   DOB(rk,B j=mr-i-1;B k=rk-i-1;if(x.s[j]<vi.s[k])x.s[j]=vi.s[k])))
+}
 MA(tke_f){err(16);}
 DA(tke_f){B c=cnt(l),ac=cnt(ax),axr=rnk(ax),lr=rnk(l),rr=rnk(r);
  if(axr>1||lr>1)err(4);if(ac!=c)err(5);if(c>4)err(16);if(!isint(ax))err(11);
