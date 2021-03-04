@@ -1196,20 +1196,27 @@ rtn[44],←⊂'NM(tke,"tke",0,0,MT ,MFD,DFD,MAD,DAD)',NL
 rtn[44],←⊂'DEFN(tke)',NL
 rtn[44],←⊂'MF(tke_f){',NL
 rtn[44],←⊂' CVSWITCH(r.v,err(6),z=r,',NL
-rtn[44],←⊂'  B rc=cnt(r);B rr=rnk(r);',NL
-rtn[44],←⊂'  B mr=0;DOB(rc,B nr=rnk(v[i]);if(nr>mr)mr=nr)',NL
-rtn[44],←⊂'  U8 nv=0;DOB(rc,CVSWITCH(v[i].v,err(6),,nv=1))',NL
-rtn[44],←⊂'  A x(mr+rr);DOB(rr,x.s[mr+rr-i-1]=r.s[rr-i-1])DOB(mr,x.s[i]=0)',NL
+rtn[44],←⊂'  B rc=cnt(r);if(!rc)err(16);B rr=rnk(r);B mr=rnk(v[0]);U8 speq=1;U8 nv=0;',NL
+rtn[44],←⊂'  DOB(rc,B nr=rnk(v[i]);if(nr>mr){mr=nr;speq=0;})',NL
+rtn[44],←⊂'  DOB(rc,CVSWITCH(v[i].v,err(6),,nv=1))',NL
+rtn[44],←⊂'  A x(mr+rr);DOB(rr,x.s[mr+rr-i-1]=r.s[rr-i-1])',NL
+rtn[44],←⊂'  dtype tp=b8;if(!nv)tp=mxt(b8,r);',NL
 rtn[44],←⊂'  if(!mr){',NL
 rtn[44],←⊂'   if(nv){x.v=VEC<A>(rc);VEC<A>&xv=std::get<VEC<A>>(x.v);',NL
 rtn[44],←⊂'    DOB(rc,CVSWITCH(v[i].v,err(6),xv[i]=scl(v),xv[i]=v[0]))}',NL
-rtn[44],←⊂'   if(!nv){dtype tp=mxt(b8,r);x.v=arr(rc,tp);arr&xv=std::get<arr>(x.v);',NL
+rtn[44],←⊂'   if(!nv){x.v=arr(rc,tp);arr&xv=std::get<arr>(x.v);',NL
 rtn[44],←⊂'    DOB(rc,CVSWITCH(v[i].v,err(6),xv((I)i)=v(0).as(tp),err(99)))}',NL
 rtn[44],←⊂'   z=x;R;}',NL
-rtn[44],←⊂'  err(16);',NL
-rtn[44],←⊂'  DOB(rc,A vi=v[i];B rk=rnk(vi);',NL
-rtn[44],←⊂'   DOB(rk,B j=mr-i-1;B k=rk-i-1;if(x.s[j]<vi.s[k])x.s[j]=vi.s[k])))',NL
-rtn[44],←⊂'}',NL
+rtn[44],←⊂'  DOB(mr,x.s[i]=0)B rk=rnk(v[0]);DOB(rk,x.s[mr-i-1]=v[0].s[rk-i-1])',NL
+rtn[44],←⊂'  DOB(rc,A vi=v[i];rk=rnk(vi);',NL
+rtn[44],←⊂'   DOB(rk,B j=mr-i-1;B k=rk-i-1;if(x.s[j]!=vi.s[k])speq=0;',NL
+rtn[44],←⊂'    if(x.s[j]<vi.s[k])x.s[j]=vi.s[k]))',NL
+rtn[44],←⊂'  if(!speq)err(16);',NL
+rtn[44],←⊂'  if(nv)err(16);',NL
+rtn[44],←⊂'  if(!nv){B bc=1;DOB(mr,bc*=x.s[i])seq bx((D)bc);',NL
+rtn[44],←⊂'   x.v=arr(rc*bc,tp);arr&xv=std::get<arr>(x.v);',NL
+rtn[44],←⊂'   DOB(rc,CVSWITCH(v[i].v,err(6),xv(bx+(D)i*bc)=v.as(tp),err(99)))}',NL
+rtn[44],←⊂'  z=x)}',NL
 rtn[44],←⊂'MA(tke_f){err(16);}',NL
 rtn[44],←⊂'DA(tke_f){B c=cnt(l),ac=cnt(ax),axr=rnk(ax),lr=rnk(l),rr=rnk(r);',NL
 rtn[44],←⊂' if(axr>1||lr>1)err(4);if(ac!=c)err(5);if(c>4)err(16);if(!isint(ax))err(11);',NL
