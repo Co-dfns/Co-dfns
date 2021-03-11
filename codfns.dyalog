@@ -1478,7 +1478,8 @@ rtn[58],←⊂'      ==rv(x[0]+(D)m,x[1]+(D)k,x[2]+(D)j,x[3]+(D)i))))))',NL
 rtn[58],←⊂' z.v=zv;}',NL
 rtn[59],←⊂'NM(par,"par",0,0,MT ,MFD,DFD,MAD,MT )',NL
 rtn[59],←⊂'DEFN(par)',NL
-rtn[59],←⊂'MF(par_f){if(!rnk(r)){z=r;R;}z=A(0,VEC<A>(1,r));}',NL
+rtn[59],←⊂'MF(par_f){I nv=0;CVSWITCH(r.v,err(6),,nv=1)',NL
+rtn[59],←⊂' if(!rnk(r)&&!nv){z=r;R;}z=A(0,VEC<A>(1,r));}',NL
 rtn[59],←⊂'MA(par_f){if(rnk(ax)>1)err(4);B axc=cnt(ax);',NL
 rtn[59],←⊂' if(!axc){map_o f(par_p);f(z,r,e);R;}',NL
 rtn[59],←⊂' B rr=rnk(r);VEC<I> axm(rr,0);VEC<I> axv(axc);',NL

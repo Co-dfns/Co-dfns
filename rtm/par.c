@@ -1,6 +1,7 @@
 ﻿NM(par,"par",0,0,MT ,MFD,DFD,MAD,MT )
 DEFN(par)
-MF(par_f){if(!rnk(r)){z=r;R;}z=A(0,VEC<A>(1,r));}
+MF(par_f){I nv=0;CVSWITCH(r.v,err(6),,nv=1)
+ if(!rnk(r)&&!nv){z=r;R;}z=A(0,VEC<A>(1,r));}
 MA(par_f){if(rnk(ax)>1)err(4);B axc=cnt(ax);
  if(!axc){map_o f(par_p);f(z,r,e);R;}
  B rr=rnk(r);VEC<I> axm(rr,0);VEC<I> axv(axc);
