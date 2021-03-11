@@ -1263,7 +1263,9 @@ rtn[45],←⊂' CVSWITCH(r.v,err(6)',NL
 rtn[45],←⊂'  ,arr tv(cnt(z),v.type());tv=0;tv=unrav(tv,z.s);',NL
 rtn[45],←⊂'   tv(it[0],it[1],it[2],it[3])=unrav(v,r.s)(ix[0],ix[1],ix[2],ix[3]);',NL
 rtn[45],←⊂'   z.v=flat(tv)',NL
-rtn[45],←⊂'  ,err(16))}',NL
+rtn[45],←⊂'  ,z.v=VEC<A>(cnt(z),scl(scl(0)));VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
+rtn[45],←⊂'   if(rr!=1)err(16);B shft=0;if(lv[0]>=0)shft=lv[0];',NL
+rtn[45],←⊂'   DOB(z.s[0],zv[i]=v[i+shft]))}',NL
 rtn[45],←⊂'DF(drp_f){B c=cnt(l);if(c>4)err(16);',NL
 rtn[45],←⊂' A nr=r;if(!rnk(nr)){nr.s=SHP(c,1);}',NL
 rtn[45],←⊂' A ax;iot_c(ax,scl(scl(c)),e);drp_c(z,l,nr,e,ax);}',NL

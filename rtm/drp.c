@@ -19,7 +19,9 @@ DA(drp_f){B c=cnt(l),ac=cnt(ax),rr=rnk(r),lr=rnk(l),axr=rnk(ax);
   ,arr tv(cnt(z),v.type());tv=0;tv=unrav(tv,z.s);
    tv(it[0],it[1],it[2],it[3])=unrav(v,r.s)(ix[0],ix[1],ix[2],ix[3]);
    z.v=flat(tv)
-  ,err(16))}
+  ,z.v=VEC<A>(cnt(z),scl(scl(0)));VEC<A>&zv=std::get<VEC<A>>(z.v);
+   if(rr!=1)err(16);B shft=0;if(lv[0]>=0)shft=lv[0];
+   DOB(z.s[0],zv[i]=v[i+shft]))}
 DF(drp_f){B c=cnt(l);if(c>4)err(16);
  A nr=r;if(!rnk(nr)){nr.s=SHP(c,1);}
  A ax;iot_c(ax,scl(scl(c)),e);drp_c(z,l,nr,e,ax);}

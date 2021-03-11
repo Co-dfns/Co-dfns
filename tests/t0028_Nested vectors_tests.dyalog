@@ -41,7 +41,7 @@
  ⍝ ∆0030_TEST←'ncla'TEST2 (2 1) (2 3 4⍴⍳24)
  ∆0031_TEST←'ncla'TEST2 (0 1) (2 3 4⍴⍳24)
  ∆0032_TEST←'ncla'TEST2 (0 1 2) (2 3 4⍴⍳24)
- ∆0033_TEST←'tke'TEST1 (⊂¨⍳5 5)
+ ∆0033_TEST←'mix'TEST1 (⊂¨⍳5 5)
  ∆0034_TEST←'rnk'TEST1 (2 3⍴⍳6)
  ∆0035_TEST←'rnk'TEST1 (2 3 4⍴⍳24)
  ⍝ ∆0036_TEST←'rnk'TEST1 (⍳2 3 4)
@@ -50,12 +50,13 @@
  ∆0039_TEST←'red1'TEST1 (2 3 4⍴⍳24)
  ∆0040_TEST←'red2'TEST1 (2 3 4⍴⍳24)
  ∆0041_TEST←'red3'TEST1 (⊂⍤¯1⊢2 3 4⍴⍳24)
- ∆0042_TEST←'tke'TEST1 (5)
- ∆0043_TEST←'tke'TEST1 (⍳5)
- ∆0044_TEST←'tke'TEST1 (⍳5 5)
- ∆0045_TEST←'tke'TEST1 (⊂⍤¯1⊢2 3 4⍴⍳24)
- ∆0046_TEST←'tke'TEST1 (⍳¨⍳5)
- ∆0047_TEST←'tke'TEST1 ({⍵⍴⍳×⌿⍵}¨⍳2 3)
+ ∆0042_TEST←'mix'TEST1 (5)
+ ∆0043_TEST←'mix'TEST1 (⍳5)
+ ∆0044_TEST←'mix'TEST1 (⍳5 5)
+ ∆0045_TEST←'mix'TEST1 (⊂⍤¯1⊢2 3 4⍴⍳24)
+ ⍝ ∆0046_TEST←'mix'TEST1 (⍳¨⍳5)
+ ⍝ ∆0047_TEST←'mix'TEST1 ({⍵⍴⍳×⌿⍵}¨⍳2 3)
+ ∆0048_TEST←'drp'TEST2 (3)(,⍳5 5)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
