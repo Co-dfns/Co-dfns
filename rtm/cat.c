@@ -34,7 +34,9 @@ DA(cat_f){B ar=rnk(ax),lr=rnk(l),rr=rnk(r);
  std::visit(visitor{DVSTR(),
    [&](CVEC<A>&lv,carr&rv){err(16);},
    [&](carr&lv,CVEC<A>&rv){err(16);},
-   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},
+   [&](CVEC<A>&lv,CVEC<A>&rv){if(rr>1||lr>1)err(16);B lc=cnt(l),rc=cnt(r);
+    z.v=VEC<A>(lc+rc,A());VEC<A>&zv=std::get<VEC<A>>(z.v);
+    DOB(lc,zv[i]=lv[i])DOB(rc,zv[i+lc]=rv[i])},
    [&](carr&olv,carr&orv){dtype mt=mxt(orv,olv);
     array lv=(lr?moddims(olv,ls):tile(olv,ls)).as(mt);
     array rv=(rr?moddims(orv,rs):tile(orv,rs)).as(mt);

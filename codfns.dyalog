@@ -870,7 +870,9 @@ rtn[26],←⊂' DO((I)rnk(z),z.s[i]=(lr>=rr||i==fx)*ls[i]+(rr>lr||i==fx)*rs[i]);
 rtn[26],←⊂' std::visit(visitor{DVSTR(),',NL
 rtn[26],←⊂'   [&](CVEC<A>&lv,carr&rv){err(16);},',NL
 rtn[26],←⊂'   [&](carr&lv,CVEC<A>&rv){err(16);},',NL
-rtn[26],←⊂'   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},',NL
+rtn[26],←⊂'   [&](CVEC<A>&lv,CVEC<A>&rv){if(rr>1||lr>1)err(16);B lc=cnt(l),rc=cnt(r);',NL
+rtn[26],←⊂'    z.v=VEC<A>(lc+rc,A());VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
+rtn[26],←⊂'    DOB(lc,zv[i]=lv[i])DOB(rc,zv[i+lc]=rv[i])},',NL
 rtn[26],←⊂'   [&](carr&olv,carr&orv){dtype mt=mxt(orv,olv);',NL
 rtn[26],←⊂'    array lv=(lr?moddims(olv,ls):tile(olv,ls)).as(mt);',NL
 rtn[26],←⊂'    array rv=(rr?moddims(orv,rs):tile(orv,rs)).as(mt);',NL

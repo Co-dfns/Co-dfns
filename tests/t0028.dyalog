@@ -14,5 +14,6 @@ rnk←{⊂⍤¯1⊢⍵}
 red1←{⊢/⍵}
 red2←{⊣/⍵}
 red3←{+/⍵}
+cat←{⍺,⍵}
 
 :EndNamespace

@@ -58,6 +58,7 @@
  ⍝ ∆0047_TEST←'mix'TEST1 ({⍵⍴⍳×⌿⍵}¨⍳2 3)
  ∆0048_TEST←'drp'TEST2 (3)(,⍳5 5)
  ∆0049_TEST←'ncl'TEST1 (⊂3 4⍴⍳12)
+ ∆0050_TEST←'cat'TEST2 (,¨⍳5)(⊂2 3⍴⍳6)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

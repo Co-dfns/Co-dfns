@@ -6,8 +6,8 @@
 
  aa←256⍪0⍪0⍪?2 4 8⍴256
  ba←256⍪0⍪0⍪?2 4 8⍴256
- ab←256⍪0⍪0⍪?32 512 1024⍴256
- bb←256⍪0⍪0⍪?32 512 1024⍴256
+ ab←256⍪0⍪0⍪?4 4 8⍴256
+ bb←256⍪0⍪0⍪?4 4 8⍴256
  ac←8 16∘⍴⍤0⊢¯35↑(⌽,1∘↓)(×⍨255)×-∘⍳⍨16
  ad←(¯1∘↑,∘⊂⍨¯1↓⊂⍤¯1)?14 16 8⍴2
  c←2
@@ -30,8 +30,9 @@
  ∆11_TEST←{#.UT.expect←dy.zer aa ⋄ cd.zer aa}
  ∆12_TEST←{#.UT.expect←256 0 0 dy.mta aa ⋄ 256 0 0 cd.mta aa}
  ∆13_TEST←{#.UT.expect←dy.cr1 ab-bb ⋄ cd.cr1 ab-bb}
- ∆14_TEST←{#.UT.expect←dy.cr1 ac ⋄ cd.cr1 ac}
- ∆15_TEST←{#.UT.expect←dy.aew ad ⋄ cd.aew ad}
+ ∆14_TEST←{#.UT.expect←dy.cr2 ab-bb ⋄ cd.cr2 ab-bb}
+ ⍝ ∆14_TEST←{#.UT.expect←dy.cr1 ac ⋄ cd.cr1 ac}
+ ⍝ ∆15_TEST←{#.UT.expect←dy.aew ad ⋄ cd.aew ad}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
