@@ -122,7 +122,7 @@ zil←aws _s ('⍬'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_'_set
 digits←'0123456789'_set
-prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
+prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊆⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
 prim←aws _s (prims _set) _s aws
 mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
 dop1←aws _s ('.⍣∘'_set) _s aws
@@ -300,13 +300,15 @@ syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\' 
 nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
 syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
 nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
-syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '∇'    ';'
-nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'this' 'span'
-syms,←⊂'%u' ⋄ nams,←⊂''
+syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '⊆'
+nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'nst'
+syms,←,¨'∇'    ';'    '%u'
+nams,←  'this' 'span' ''
 deps←⊂¨syms
 deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∨⍱⍲~?'
 deps[syms⍳,¨'∧⌿/.⍪⍤\↓↑']←,¨¨'∨∧' '/⌿' '¨/' '/.' ',⍪' '↑⌷⍤' '¨\' '⍳↓' '⍳↑'
 deps[syms⍳,¨'←⌽⊖⌷⍀¨≢⊂']←,¨¨'[⊃,¨←' '|,⌽' '⌽⊖' '⍳⌷' '\⍀' '⊃,¨' '≡≢' '¨⌷⊂'
+deps[syms⍳,¨'⊆']←,¨¨⊂'⊂⊆'
 deps[syms⍳⊂'∘.']←⊂(,¨'¨' '∘.')
 
 rth←''
@@ -1559,4 +1561,7 @@ rtn[63],←⊂' B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),arr(br,t.data()));
 rtn[63],←⊂' trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);',NL
 rtn[63],←⊂' if(f)me_c(b,z,a,e);else me_c(b,a,z,e);',NL
 rtn[63],←⊂' gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',NL
+rtn[64],←⊂'NM(nst,"nst",0,0,MT ,MFD,MT ,MT ,MT )',NL
+rtn[64],←⊂'DEFN(nst)',NL
+rtn[64],←⊂'MF(nst_f){CVSWITCH(r.v,err(6),par_c(z,r,e),z=r)}',NL
 :EndNamespace

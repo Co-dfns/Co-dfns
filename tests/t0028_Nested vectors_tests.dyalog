@@ -59,6 +59,11 @@
  ∆0048_TEST←'drp'TEST2 (3)(,⍳5 5)
  ∆0049_TEST←'ncl'TEST1 (⊂3 4⍴⍳12)
  ∆0050_TEST←'cat'TEST2 (,¨⍳5)(⊂2 3⍴⍳6)
+ ∆0051_TEST←'nst'TEST1 (0)
+ ∆0052_TEST←'nst'TEST1 (⍳5)
+ ∆0053_TEST←'nst'TEST1 (2 3⍴⍳4)
+ ∆0054_TEST←'nst'TEST1 (⊂2 3⍴⍳4)
+ ∆0055_TEST←'nst'TEST1 (3⍴⊂⍳4)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

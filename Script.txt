@@ -2,4 +2,4 @@
 BUILD
 )SAVE
 codfns.AF∆LIB←'cpu'
-TEST 28
+TEST 23
