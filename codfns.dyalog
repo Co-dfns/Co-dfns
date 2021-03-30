@@ -511,6 +511,8 @@ rth,←' R moddims(a,l,r);}',NL
 rth,←'arr unrav(carr&a,const SHP&sp){if(rnk(sp)>4)err(99);',NL
 rth,←' dim4 s(1);DO((I)rnk(sp),s[i]=sp[i])',NL
 rth,←' R moddims(a,s);}',NL
+rth,←'V af2cd(A&a,const arr&b){dim4 bs=b.dims();a.s=SHP(4,1);DO(4,a.s[i]=bs[i])',NL
+rth,←' a.v=flat(b);}',NL
 rth,←'dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;',NL
 rth,←' if(at==f64||bt==f64)R f64;',NL
 rth,←' if(at==s32||bt==s32)R s32;if(at==s16||bt==s16)R s16;',NL
@@ -1013,13 +1015,14 @@ rtn[37],←⊂' DO((I)rr,rt[i]=1)DO((I)lr,lt[i+(I)rr]=1)',NL
 rtn[37],←⊂' arr rv;CVSWITCH(r.v,err(6),rv=v,err(11))',NL
 rtn[37],←⊂' arr lv;CVSWITCH(l.v,err(6),lv=v,err(11))',NL
 rtn[37],←⊂' rv=tile(unrav(rv,r.s),rt);z.s=sp;',NL
-rtn[37],←⊂' arr sv=flip(scan(flip(unrav(lv,l.s),k),k,AF_BINARY_MUL),k);',NL
-rtn[37],←⊂' lv=tile(arr(sv,rt),lt);IDX x[4];x[k]=0;',NL
-rtn[37],←⊂' arr dv=sv;dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;',NL
+rtn[37],←⊂' arr dv=flip(scan(flip(unrav(lv.as(s64),l.s),k),k,AF_BINARY_MUL),k);',NL
+rtn[37],←⊂' lv=tile(arr(dv,rt),lt);IDX x[4];x[k]=0;',NL
+rtn[37],←⊂' dv(x[0],x[1],x[2],x[3])=1;I s[]={0,0,0,0};s[k]=-1;',NL
 rtn[37],←⊂' dv=shift(dv,s[0],s[1],s[2],s[3]);dv=tile(arr(dv,rt),lt);',NL
 rtn[37],←⊂' arr ix=where(lv);z.v=arr();arr&zv=std::get<arr>(z.v);',NL
-rtn[37],←⊂' zv=rv.as(s32);zv(ix)=rem(rv(ix),lv(ix)).as(s32);',NL
-rtn[37],←⊂' ix=where(dv);zv*=dv!=0;zv(ix)=(zv(ix)/dv(ix)).as(s32);',NL
+rtn[37],←⊂' zv=rv.as(s32);',NL
+rtn[37],←⊂' zv=(rv-lv*floor(rv.as(f64)/(lv+(lv==0)))).as(s32);',NL
+rtn[37],←⊂' ix=where(dv);zv*=dv!=0;zv(ix)=floor(zv(ix).as(f64)/dv(ix)).as(s32);',NL
 rtn[37],←⊂' zv=flat(zv);}',NL
 rtn[38],←⊂'NM(dec,"dec",0,0,MT,MT,DFD,MT,MT)',NL
 rtn[38],←⊂'DEFN(dec)',NL

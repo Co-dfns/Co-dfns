@@ -31,8 +31,10 @@
  ∆12_TEST←{#.UT.expect←256 0 0 dy.mta aa ⋄ 256 0 0 cd.mta aa}
  ∆13_TEST←{#.UT.expect←dy.cr1 ab-bb ⋄ cd.cr1 ab-bb}
  ∆14_TEST←{#.UT.expect←dy.cr2 ab-bb ⋄ cd.cr2 ab-bb}
- ⍝ ∆14_TEST←{#.UT.expect←dy.cr1 ac ⋄ cd.cr1 ac}
- ⍝ ∆15_TEST←{#.UT.expect←dy.aew ad ⋄ cd.aew ad}
+ ∆15_TEST←{#.UT.expect←dy.cr1 ac ⋄ cd.cr1 ac}
+ ∆16_TEST←{#.UT.expect←dy.cr2 ac ⋄ cd.cr2 ac}
+ ∆17_TEST←{#.UT.expect←dy.cr4 ac ⋄ cd.cr4 ac}
+ ∆18_TEST←{#.UT.expect←dy.aew ad ⋄ cd.aew ad}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

@@ -285,6 +285,7 @@ B←{⊃((⎕DR ⍵)11)⎕DR ⍵}
 ∆encode∆18_TEST←'encode' MK∆T2 (3 3⍴2 3 4) (⍳30)
 ∆encode∆19_TEST←'encode' MK∆T2 (32⍴2)      (3 3 3⍴⍳81)
 ∆encode∆20_TEST←'encode∆Ovr' MK∆T2 (32⍴2)      (3 3 3 3⍴⍳81)
+∆encode∆21_TEST←'encode' MK∆T2 (0 5)       (-⍳20)
 
 ∆enlist∆1_TEST←'enlist' MK∆T1 (⍳5)
 ∆enlist∆2_TEST←'enlist' MK∆T1 (0)

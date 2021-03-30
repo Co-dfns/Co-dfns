@@ -21,6 +21,8 @@ arr table(carr&a,const SHP&s,B ax){B l=1,r=1;if(ax>=rnk(s))R a;
 arr unrav(carr&a,const SHP&sp){if(rnk(sp)>4)err(99);
  dim4 s(1);DO((I)rnk(sp),s[i]=sp[i])
  R moddims(a,s);}
+V af2cd(A&a,const arr&b){dim4 bs=b.dims();a.s=SHP(4,1);DO(4,a.s[i]=bs[i])
+ a.v=flat(b);}
 dtype mxt(dtype at,dtype bt){if(at==c64||bt==c64)R c64;
  if(at==f64||bt==f64)R f64;
  if(at==s32||bt==s32)R s32;if(at==s16||bt==s16)R s16;
