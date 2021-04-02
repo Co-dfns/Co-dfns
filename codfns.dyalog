@@ -548,6 +548,10 @@ rth,←'  if(can){dtype tp=mxt(b8,a);arr nv(c,tp);',NL
 rth,←'   const wchar_t*msg=L"Unexpected non-simple array type.";',NL
 rth,←'   DOB(c,CVSWITCH(v[i].v,err(99,msg),nv((I)i)=v(0).as(tp),err(99,msg)))',NL
 rth,←'   a.v=nv;})}',NL
+rth,←'arr proto(carr&);VEC<A> proto(CVEC<A>&);A proto(CA&);',NL
+rth,←'arr proto(carr&a){arr z=a;z=0;R z;}',NL
+rth,←'VEC<A> proto(CVEC<A>&a){VEC<A> z(a.size());DOB(a.size(),z[i]=proto(a[i]));R z;}',NL
+rth,←'A proto(CA&a){A z;z.s=a.s;CVSWITCH(a.v,err(6),z.v=proto(v),z.v=proto(v));R z;}',NL
 rth,←'Z arr da16(B c,pkt*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);',NL
 rth,←' DOB(c,b[i]=v[i]);R arr(c,b.data());}',NL
 rth,←'Z arr da8(B c,pkt*d){VEC<char>b(c);U8*v=(U8*)DATA(d);',NL
@@ -835,7 +839,9 @@ rtn[25],←⊂'DF(rho_f){B cr=cnt(r),cl=cnt(l);VEC<I> s(cl);',NL
 rtn[25],←⊂' if(rnk(l)>1)err(11);if(!isint(l))err(11);',NL
 rtn[25],←⊂' CVSWITCH(l.v,err(6),if(cl)v.as(s32).host(s.data()),if(cl)err(16))',NL
 rtn[25],←⊂' DOB(cl,if(s[i]<0)err(11))z.s=SHP(cl);DOB(cl,z.s[i]=(B)s[cl-i-1])',NL
-rtn[25],←⊂' B cz=cnt(z);if(!cz){z.v=scl(0);R;}if(cz==cr){z.v=r.v;R;}',NL
+rtn[25],←⊂' B cz=cnt(z);',NL
+rtn[25],←⊂' if(!cz){CVSWITCH(r.v,err(6),z.v=proto(v(0)),z.v=VEC<A>(1,proto(v[0])))R;}',NL
+rtn[25],←⊂' if(cz==cr){z.v=r.v;R;}',NL
 rtn[25],←⊂' CVSWITCH(r.v,err(6),z.v=v(iota(cz)%cr),',NL
 rtn[25],←⊂'  z.v=VEC<A>(cz);VEC<A>&zv=std::get<VEC<A>>(z.v);DOB(cz,zv[i]=v[i%cr]))}',NL
 rtn[26],←⊂'NM(cat,"cat",0,0,MT ,MFD,DFD,MAD,DAD)',NL
