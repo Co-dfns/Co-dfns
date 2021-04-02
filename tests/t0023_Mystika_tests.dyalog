@@ -10,9 +10,12 @@
  bb←256⍪0⍪0⍪?4 4 8⍴256
  ac←8 16∘⍴⍤0⊢¯35↑(⌽,1∘↓)(×⍨255)×-∘⍳⍨16
  ad←(¯1∘↑,∘⊂⍨¯1↓⊂⍤¯1)?14 16 8⍴2
+ ae←?4 16⍴256
+ af←256⍪0⍪0⍪?4 3 2 1⍴256
  c←2
  m←3↑256+2*16
-
+ ra←8 8
+ t←3?3
 
  ∆00_TEST←{#.UT.expect←0
   _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0023←tn #.codfns.Fix ⎕SRC dy}
@@ -35,6 +38,9 @@
  ∆16_TEST←{#.UT.expect←dy.cr2 ac ⋄ cd.cr2 ac}
  ∆17_TEST←{#.UT.expect←dy.cr4 ac ⋄ cd.cr4 ac}
  ∆18_TEST←{#.UT.expect←dy.aew ad ⋄ cd.aew ad}
+ ∆19_TEST←{#.UT.expect←ra dy.rho m ⋄ ra cd.rho m}
+ ∆20_TEST←{#.UT.expect←dy.fft ae ⋄ cd.fft ae}
+ ∆21_TEST←{#.UT.expect←t dy.trn2 ae ⋄ t cd.trn2 ae}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
