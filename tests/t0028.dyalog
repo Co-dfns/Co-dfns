@@ -16,5 +16,6 @@ red2←{⊣/⍵}
 red3←{+/⍵}
 cat←{⍺,⍵}
 nst←{⊆⍵}
+reshape←{⍺⍴⍵}
 
 :EndNamespace
