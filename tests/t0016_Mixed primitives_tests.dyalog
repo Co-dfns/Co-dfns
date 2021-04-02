@@ -27,7 +27,7 @@
  MK∆T1←{##.UT.expect←(⍎'dy.',⍺⍺)⍵⍵ ⋄ (⍎'cd.',⍺⍺)⍵⍵}
  MK∆T2←{##.UT.expect←⊃(⍎'dy.',⍺⍺)/⍵⍵ ⋄ ⊃(⍎'cd.',⍺⍺)/⍵⍵}
  MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
-  ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
+  ##.UT.expect←(≢,nv)⍴tl ⋄ ,tl⌈|nv-cv}
  MK∆T4←{fn tl←⍺⍺ ⋄ nv←(⍎'dy.',fn)⍵⍵ ⋄ cv←(⍎'cd.',fn)⍵⍵
   ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 
@@ -618,15 +618,15 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆matdiv∆1_TEST←'matdiv' 1e¯12  MK∆T3 (?5 5⍴0) (?5 5⍴0)
 ∆matdiv∆2_TEST←'matdiv'  MK∆T2 (?5⍴0) (?5⍴0)
 ∆matdiv∆3_TEST←'matdiv'  MK∆T2 (?5 5⍴0) (?5⍴0)
-∆matdiv∆4_TEST←'matdiv' 1e¯13 MK∆T3 (?5⍴0) (?5 5⍴0)
-∆matdiv∆5_TEST←'matdiv' 1e¯13 MK∆T3 (?5 3⍴0) (?5 2⍴0)
+∆matdiv∆4_TEST←'matdiv' 1e¯9 MK∆T3 (?5⍴0) (?5 5⍴0)
+∆matdiv∆5_TEST←'matdiv' 1e¯12 MK∆T3 (?5 3⍴0) (?5 2⍴0)
 ∆matdiv∆6_TEST←'matdiv'  MK∆T2 (?5⍴0) (?5 2⍴0)
 ∆matdiv∆7_TEST←'matdiv'  MK∆T2 (?5 3⍴0) (?5⍴0)
 
-∆matinv∆1_TEST←'matinv' MK∆T1 (?5 5⍴0)
+∆matinv∆1_TEST←'matinv' 1e¯12 MK∆T4 (?5 5⍴0)
 ∆matinv∆2_TEST←'matinv' MK∆T1 (?5⍴0)
 ∆matinv∆3_TEST←'matinv' MK∆T1 (?0)
-∆matinv∆4_TEST←'matinv' 1e¯13 MK∆T4 (?5 3⍴0)
+∆matinv∆4_TEST←'matinv' 1e¯12 MK∆T4 (?5 3⍴0)
 
 ∆membership∆001_TEST←'membership' MK∆T2 (⍬)(⍬)
 ∆membership∆002_TEST←'membership' MK∆T2 (⍬)(1)
