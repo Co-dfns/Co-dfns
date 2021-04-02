@@ -201,6 +201,7 @@ B←?100⍴2
 ∆rank∆43_TEST←'rank∆R3' MK∆T2 (?10⍴100) (?10⍴100)
 ∆rank∆44_TEST←'rank∆R3' MK∆T2 (?10 10⍴100) (?10⍴100)
 ∆rank∆45_TEST←'rank∆R3' MK∆T2 (?10 10⍴100) (?10 10⍴100)
+∆rank∆46_TEST←'rank∆R4' MK∆T2 (?8 4⍴2) (?1 8 4⍴2)
 ∆redfirst∆01_TEST←'redfirst∆R1' MK∆T1 (⍬⍴1)
 ∆redfirst∆02_TEST←'redfirst∆R1' MK∆T1 (5⍴⍳5)
 ∆redfirst∆03_TEST←'redfirst∆R1' MK∆T1 (3 3⍴⍳9)
