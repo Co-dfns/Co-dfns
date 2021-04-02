@@ -2,9 +2,10 @@
 DEFN(tke)
 MF(tke_f){
  CVSWITCH(r.v,err(6),z=r,
-  B rc=cnt(r);if(!rc)err(16);B rr=rnk(r);B mr=rnk(v[0]);U8 speq=1;U8 nv=0;
-  DOB(rc,B nr=rnk(v[i]);if(nr>mr){mr=nr;speq=0;})
-  DOB(rc,CVSWITCH(v[i].v,err(6),,nv=1))
+  B rc=cnt(r);if(!rc&&!v.size())err(99,L"Missing prototype for nested array");
+  B rr=rnk(r);B mr=rnk(v[0]);U8 speq=1;U8 nv=0;
+  DOB(v.size(),B nr=rnk(v[i]);if(nr>mr){mr=nr;speq=0;})
+  DOB(v.size(),CVSWITCH(v[i].v,err(6),,nv=1))
   A x(mr+rr);DOB(rr,x.s[mr+rr-i-1]=r.s[rr-i-1])
   dtype tp=b8;if(!nv)tp=mxt(b8,r);
   if(!mr){
@@ -17,10 +18,11 @@ MF(tke_f){
   DOB(rc,A vi=v[i];rk=rnk(vi);
    DOB(rk,B j=mr-i-1;B k=rk-i-1;if(x.s[j]!=vi.s[k])speq=0;
     if(x.s[j]<vi.s[k])x.s[j]=vi.s[k]))
+  B bc=1;DOB(mr,bc*=x.s[i])seq bx((D)bc);B xc=rc*bc;
   if(!speq)err(16);
   if(nv)err(16);
-  if(!nv){B bc=1;DOB(mr,bc*=x.s[i])seq bx((D)bc);
-   x.v=arr(rc*bc,tp);arr&xv=std::get<arr>(x.v);
+  if(!nv&&!xc){x.v=scl(0);}
+  if(!nv&&xc){x.v=arr(xc,tp);arr&xv=std::get<arr>(x.v);
    DOB(rc,CVSWITCH(v[i].v,err(6),xv(bx+(D)i*bc)=v.as(tp),err(99)))}
   z=x)}
 MA(tke_f){err(16);}
