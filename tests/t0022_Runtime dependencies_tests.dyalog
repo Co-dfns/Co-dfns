@@ -67,6 +67,7 @@
  ∆62_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣'t0022'#.codfns.Fix ns'⎕IFFT ⍵'}
  ∆63_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣'t0022'#.codfns.Fix ns'∇⍵'}
  ∆64_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣'t0022'#.codfns.Fix ns'⍵[;]'}
+ ∆65_TEST←{#.UT.expect←0 ⋄ 0::1 ⋄ 0⊣'t0022'#.codfns.Fix ns'⍺≠[0]⍵'}
 
 
 :EndNamespace

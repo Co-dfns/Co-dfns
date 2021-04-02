@@ -305,7 +305,7 @@ nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'nst'
 syms,←,¨'∇'    ';'    '%u'
 nams,←  'this' 'span' ''
 deps←⊂¨syms
-deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≥>∨⍱⍲~?'
+deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≠≥>∨⍱⍲~?'
 deps[syms⍳,¨'∧⌿/.⍪⍤\↓↑']←,¨¨'∨∧' '/⌿' '¨/' '/.' ',⍪' '↑⌷⍤' '¨\' '⍳↓' '⍳↑'
 deps[syms⍳,¨'←⌽⊖⌷⍀¨≢⊂']←,¨¨'[⊃,¨←' '|,⌽' '⌽⊖' '⍳⌷' '\⍀' '⊃,¨' '≡≢' '¨⌷⊂'
 deps[syms⍳,¨'⊆']←,¨¨⊂'⊂⊆'
