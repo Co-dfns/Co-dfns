@@ -1,5 +1,4 @@
 )RESET
-)erase ns.F ns
 BUILD
 )SAVE
 codfns.AF∆LIB←'cpu'

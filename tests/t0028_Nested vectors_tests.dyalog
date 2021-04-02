@@ -65,6 +65,8 @@
  ∆0054_TEST←'nst'TEST1 (⊂2 3⍴⍳4)
  ∆0055_TEST←'nst'TEST1 (3⍴⊂⍳4)
  ∆0056_TEST←'reshape'TEST2 0 (⊂⍬)
+ ∆0057_TEST←'id'TEST1 (0⍴⊂⍬)
+ ∆0058_TEST←'mix'TEST1 (0⍴⊂⍬)
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 

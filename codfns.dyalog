@@ -574,16 +574,17 @@ rth,←'  a.v);',NL
 rth,←'  R p;}',NL
 rth,←'V cpda(A&a,pkt*d){',NL
 rth,←' B c=cnt(d);a.s=SHP(RANK(d));DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);',NL
-rth,←' if(!c){a.v=scl(0);R;}',NL
 rth,←' switch(TYPE(d)){',NL
 rth,←'  CS(15,',NL
+rth,←'   if(!c){a.v=scl(0);R;}',NL
 rth,←'   switch(ETYPE(d)){',NL
 rth,←'    CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))',NL
 rth,←'    CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))',NL
 rth,←'    CS(APLTI,a.v=da16(c,d))           CS(APLU8,a.v=da8(c,d))',NL
 rth,←'    default:err(16);})',NL
 rth,←'  CS(7,{if(APLP!=ETYPE(d))err(16);',NL
-rth,←'   a.v=VEC<A>(c);pkt**dv=(pkt**)DATA(d);',NL
+rth,←'   pkt**dv=(pkt**)DATA(d);',NL
+rth,←'   if(!c)c++;a.v=VEC<A>(c);',NL
 rth,←'   DOB(c,cpda(std::get<VEC<A>>(a.v)[i],dv[i]))})',NL
 rth,←'  default:err(16);}}',NL
 rth,←'V cpda(A&a,lp*d){if(d==NULL)R;cpda(a,d->p);}',NL

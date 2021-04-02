@@ -20,16 +20,17 @@ pkt*cpad(lp*l,CA&a){I t;B c=cnt(a),ar=rnk(a);pkt*p=NULL;
   R p;}
 V cpda(A&a,pkt*d){
  B c=cnt(d);a.s=SHP(RANK(d));DO(RANK(d),a.s[RANK(d)-i-1]=SHAPE(d)[i]);
- if(!c){a.v=scl(0);R;}
  switch(TYPE(d)){
   CS(15,
+   if(!c){a.v=scl(0);R;}
    switch(ETYPE(d)){
     CS(APLZ ,a.v=arr(c,(DZ*)DATA(d))) CS(APLI ,a.v=arr(c,(I*)DATA(d)))
     CS(APLD ,a.v=arr(c,(D*)DATA(d)))  CS(APLSI,a.v=arr(c,(S16*)DATA(d)))
     CS(APLTI,a.v=da16(c,d))           CS(APLU8,a.v=da8(c,d))
     default:err(16);})
   CS(7,{if(APLP!=ETYPE(d))err(16);
-   a.v=VEC<A>(c);pkt**dv=(pkt**)DATA(d);
+   pkt**dv=(pkt**)DATA(d);
+   if(!c)c++;a.v=VEC<A>(c);
    DOB(c,cpda(std::get<VEC<A>>(a.v)[i],dv[i]))})
   default:err(16);}}
 V cpda(A&a,lp*d){if(d==NULL)R;cpda(a,d->p);}
