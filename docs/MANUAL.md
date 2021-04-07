@@ -87,15 +87,15 @@ The following limitations are known to exist:
 
 * Binomial is not implemented correctly for some values
 * Only partial support for arrays of rank > 4
+* Only partial support for nested arrays, including some missing nested array primitives
 * Character types are not supported
-* Nested arrays are not yet supported
-* Enclose (⊂) is not supported
-* Partitioned Enclose (⊂) is not supported
 * Selective assignment is not supported yet
 * User-defined operators are not supported yet
+* Mixed arrays are not supported
 * Lexically scoped trad-fns are not supported yet
 * Error Guards are not supported yet
 * Namespaces with free references are not supported yet
+* Nested namespaces are not supported
 * Structured Colon Statements are not supported
 * Branch (→) is not supported
 * Arbitrary precision integers are not supported
@@ -103,10 +103,8 @@ The following limitations are known to exist:
 * Format (⍕) is not supported
 * I-Beam (⌶) is not supported
 * Spawn (&) is not supported
-* Nested namespaces are not supported
 * 128-bit floating point values are not supported
 * Variant (⍠) is not supported
-* Mixed arrays are not supported
 * Stencil (⌺) is not supported
 * Inverse (⍣¯1) is not supported
 * Execute (⍎) is not supported
