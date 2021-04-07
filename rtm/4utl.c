@@ -42,9 +42,10 @@ inline I isint(CA&x){I res=1;
   ,res=v.isinteger()||v.isbool()||(v.isreal()&&allTrue<I>(v==trunc(v)))
   ,DOB(v.size(),if(!isint(v[i])){res=0;R;}))
  R res;}
+inline I isbool(carr&v){R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));}
 inline I isbool(CA&x){I res=1;
  CVSWITCH(x.v
   ,err(99,L"Unexpected value error.")
-  ,res=v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1))
+  ,res=isbool(v)
   ,DOB(v.size(),if(!isbool(v[i])){res=0;R;}))
  R res;}

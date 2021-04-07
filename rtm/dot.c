@@ -10,7 +10,7 @@ DF(dot_o){B lr=rnk(l),rrk=rnk(r),ra=rrk?rrk-1:0,la=lr?lr-1:0;
     if(!lr||1==l.s[0])x=tile(x,(U)c,1);if(!rrk||1==r.s[ra])y=tile(y,1,(U)c);
     if("add"==ll.nm&&"mul"==rr.nm){
      t.v=flat(matmul(y.as(f64),x.as(f64)));z=t;R;}
-    if(x.isbool()&&y.isbool()&&"neq"==ll.nm&&"and"==rr.nm){
+    if(isbool(x)&&isbool(y)&&"neq"==ll.nm&&"and"==rr.nm){
      t.v=flat((1&matmul(y.as(f32),x.as(f32)).as(s16)).as(b8));z=t;R;}
     B rc=1,lc=1;if(rrk)rc=cnt(r)/r.s[ra];if(lr)lc=cnt(l)/l.s[0];
     x=tile(arr(x,c,1,lc),1,(U)rc,1);y=tile(y.T(),1,1,(U)lc);

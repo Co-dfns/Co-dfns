@@ -38,9 +38,9 @@
  ∆16_TEST←{#.UT.expect←dy.cr2 ac ⋄ cd.cr2 ac}
  ∆17_TEST←{#.UT.expect←dy.cr4 ac ⋄ cd.cr4 ac}
  ∆18_TEST←{#.UT.expect←dy.aew ad ⋄ cd.aew ad}
- ∆19_TEST←{#.UT.expect←ra dy.rho m ⋄ ra cd.rho m}
- ∆20_TEST←{#.UT.expect←dy.fft ae ⋄ cd.fft ae}
- ∆21_TEST←{#.UT.expect←t dy.trn2 ae ⋄ t cd.trn2 ae}
+ ⍝ ∆19_TEST←{#.UT.expect←ra dy.rho m ⋄ ra cd.rho m}
+ ⍝ ∆20_TEST←{#.UT.expect←dy.fft ae ⋄ cd.fft ae}
+ ⍝ ∆21_TEST←{#.UT.expect←t dy.trn2 ae ⋄ t cd.trn2 ae}
 
  ∆∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 

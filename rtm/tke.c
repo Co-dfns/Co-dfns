@@ -2,7 +2,7 @@
 DEFN(tke)
 MF(tke_f){
  CVSWITCH(r.v,err(6),z=r,
-  B rc=cnt(r);if(!rc&&!v.size())err(99,L"Missing prototype for nested array");
+  B rc=cnt(r);if(!rc&&!v.size())err(99,L"Missing prototype");
   B rr=rnk(r);B mr=rnk(v[0]);U8 speq=1;U8 nv=0;
   DOB(v.size(),B nr=rnk(v[i]);if(nr>mr){mr=nr;speq=0;})
   DOB(v.size(),CVSWITCH(v[i].v,err(6),,nv=1))

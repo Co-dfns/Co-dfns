@@ -2,5 +2,4 @@
 BUILD
 )SAVE
 codfns.AF∆LIB←'cpu'
-ns←'test'codfns.Fix ':Namespace' 'F←{⍺(≠⍤2)⍵}' ':EndNamespace'
-⍪(⍴X)(X←(?8 4⍴2)ns.F(?1 8 4⍴2))
+TEST 23
