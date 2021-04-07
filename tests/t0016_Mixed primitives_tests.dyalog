@@ -29,7 +29,7 @@
  MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
   ##.UT.expect←(≢,nv)⍴tl ⋄ ,tl⌈|nv-cv}
  MK∆T4←{fn tl←⍺⍺ ⋄ nv←(⍎'dy.',fn)⍵⍵ ⋄ cv←(⍎'cd.',fn)⍵⍵
-  ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
+  ##.UT.expect←(≢,nv)⍴tl ⋄ ,tl⌈|nv-cv}
 
 ∆catfirst∆01_TEST←'catfirst' MK∆T2 (⍬)           (⍬)
 ∆catfirst∆02_TEST←'catfirst' MK∆T2 (5)           (5)
@@ -623,7 +623,7 @@ I8←{⍬≡⍴⍵:⍵ ⋄ ⊃((⎕DR ⍵)83)⎕DR ⍵}
 ∆matdiv∆6_TEST←'matdiv'  MK∆T2 (?5⍴0) (?5 2⍴0)
 ∆matdiv∆7_TEST←'matdiv'  MK∆T2 (?5 3⍴0) (?5⍴0)
 
-∆matinv∆1_TEST←'matinv' 1e¯12 MK∆T4 (?5 5⍴0)
+∆matinv∆1_TEST←'matinv' 1e¯5 MK∆T4 (?5 5⍴0)
 ∆matinv∆2_TEST←'matinv' MK∆T1 (?5⍴0)
 ∆matinv∆3_TEST←'matinv' MK∆T1 (?0)
 ∆matinv∆4_TEST←'matinv' 1e¯12 MK∆T4 (?5 3⍴0)
