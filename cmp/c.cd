@@ -1,7 +1,7 @@
 _o←{0≥⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0≥⊃c a e r2←p←⍺ ⍵⍵ ⍵:p ⋄ c a e(r↑⍨-⌊/≢¨r r2)}
 _s←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e r←p←e ⍵⍵ r:p ⋄ (c⌈c2)(a,a2)e r}
 _noenv←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ r}
-_env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (e ⍵⍵ a) r}
+_env←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ c a (a ⍵⍵⍪¨e) r}
 _then←{0<⊃c a e r←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c a e _←p←e(⍵⍵ _s eot)a:p ⋄ c a e r}
 _not←{0<⊃c a e r←⍺ ⍺⍺ ⍵:0 a ⍺ ⍵ ⋄ 2 a ⍺ ⍵}
 _as←{0<⊃c a e r←⍺ ⍺⍺ ⍵:c a e r ⋄ c (,⊂⍵⍵ a) e r}
@@ -14,7 +14,13 @@ _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵}
 _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
 _set←{(0≠≢⍵)∧(⊃⍵)∊⍺⍺:0(,⊃⍵)⍺(1↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
 _tk←{(,⍺⍺)≡⍥⎕C(≢,⍺⍺)↑⍵:0(⊂,⍺⍺)⍺((≢,⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
-_eat←{0=≢⍵:2 ⍬ ⍺ ⍵ ⋄ 0(⍺⍺↑⍵)⍺(⍺⍺↓⍵)}
+_eat←{0=≢⍵:2 ⍬ ⍺ ⍵ ⋄ 0(1↑⍵)⍺(1↓⍵)}
+PEG←{⍺←⎕THIS
+ A←,¨'\|' ',' '→' '!' '&' '∊' '\?' '\*' '\+' '○' '⊢'
+ B←(1⌽'  _',⊢)¨'o' 's' 'then' 'not' 't' 'yes' 'opt' 'any' 'some' 'eat' 'env'
+ nm peg←1↓¨('←'∘=⊂⊢)'←',⊃nm_peg as←2↑1↓¨(':'∘=⊂⊢)':',⍵,':'
+ peg←A ⎕R B⊢peg ⋄ as←{' _as (',⍵,')'}⍣(0≠≢as)⊢as
+ ⍺.⍎nm,'←{⍺(',peg,as,')⍵} ⋄ 0'}
 ws←(' ',⎕UCS 9)_set
 aws←ws _any _ign
 awslf←(⎕UCS 10 13) _set _o ws _any _ign
@@ -29,6 +35,7 @@ zil←aws _s ('⍬'_tk) _s aws _ign
 egrd←aws _s ('::'_tk) _s aws _ign
 alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_'_set
 digits←'0123456789'_set
+sfn←aws _s (alpha _some) _s ('⎕'_set) _s aws
 prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊆⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
 prim←aws _s (prims _set) _s aws
 mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
