@@ -44,10 +44,6 @@ vsc0←{~∨⌿b←⎕NEXISTS¨VS∆PS:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd
 vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),'/fast "',⍵,'.cpp" '}
 vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
 vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
-f∆ N∆←'ptknfsrdx' 'ABEFGLMNOPVZ'
-⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
-⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍺←0 ⋄ ⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ ⍺),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
-⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
 MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
  w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
@@ -108,54 +104,64 @@ _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
 _set←{(0≠≢⍵)∧(⊃⍵)∊⍺⍺:0(,⊃⍵)⍺(1↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
 _tk←{(,⍺⍺)≡⍥⎕C(≢,⍺⍺)↑⍵:0(⊂,⍺⍺)⍺((≢,⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
 _eat←{0=≢⍵:2 ⍬ ⍺ ⍵ ⋄ 0(1↑⍵)⍺(1↓⍵)}
+_eot←{(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵}
 PEG←{⍺←⎕THIS
- A←,¨'\|' ',' '→' '!' '&' '∊' '\?' '\*' '\+' '○' '\[([^]]+)\]' '\[\]' '↓'
- B←'o' 's' 'then' 'not' 't' 'yes' 'opt' 'any' 'some' 'eat' 'env(\1)' 'noenv' 'ign'
- nm peg←1↓¨('←'∘=⊂⊢)'←',⊃nm_peg as←2↑1↓¨(':'∘=⊂⊢)':',⍵,':'
- peg←A ⎕R((1⌽'  _',⊢)¨B)⊢peg ⋄ as←{' _as (',⍵,')'}⍣(0≠≢as)⊢as
- ⍺.⍎nm,'←{⋄⍺(',peg,as,')⍵⋄} ⋄ 0'}
+ A←,¨'`([^`]*)`'    '"([^"]*)"'   '\[\]'   '\[([^]]+)\]'  '\|'  ','
+ B←  '(''\1''_set)' '(''\1''_tk)' '_noenv' '_env(\1)'     '_o'  '_s'
+ A,←,¨'→'     '!'    '&'  '∊'    '\?'   '\*'   '\+'    '⍥'    '↓'    '↑'
+ B,←  '_then' '_not' '_t' '_yes' '_opt' '_any' '_some' '_eat' '_ign' '_peek'
+ A,←⊂,'⍬'
+ B,←⊂,'_eot'
+ nm peg as←1↓¨3↑(1,1↓(0,2≠⌿∨⍀'←'=x)∨0,2≠⌿∨⍀(':'=x)∧~2|+⍀x∊'`"')⊂x←' ',⍵
+ peg←A ⎕R(' ',¨B,¨' ')⊢peg ⋄ as←{' _as (',⍵,')'}⍣(∨⌿as≠' ')⊢as
+ ⍺.⍎nm,'←{⍺(',peg,as,')⍵} ⋄ 0'}
 ws←(' ',⎕UCS 9)_set
-aws←ws _any _ign
-awslf←(⎕UCS 10 13) _set _o ws _any _ign
-gets←aws _s ('←'_tk) _s aws _ign
-him←'¯' _set ⋄ dot←'.' _set ⋄ jot←'∘' _set
-lbrc←aws _s ('{'_set) _s aws ⋄ rbrc←aws _s ('}'_set) _s aws
-lpar←aws _s ('('_tk) _s aws _ign ⋄ rpar←aws _s (')'_tk) _s aws _ign
-lbrk←aws _s ('['_tk) _s aws _ign ⋄ rbrk←aws _s (']'_tk) _s aws _ign
-semi←aws _s (';' _tk) _s aws _ign
-grd←aws _s (':'_tk) _s aws _ign
-zil←aws _s ('⍬'_tk) _s aws _ign
-egrd←aws _s ('::'_tk) _s aws _ign
-alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_'_set
-digits←'0123456789'_set
-sfn←aws _s (alpha _some) _s ('⎕'_set) _s aws
-prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊆⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
-prim←aws _s (prims _set) _s aws
-mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
-dop1←aws _s ('.⍣∘'_set) _s aws
-dop2←aws _s ('⍤⍣∘'_set) _s aws
-dop3←aws _s ('∘'_set) _s aws
-eot←aws _s {(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
-digs←digits _some
-odigs←digits _any
-ndlm←him _o (alpha _not _peek)
-int←aws _s digs _s ndlm _s aws
-float←aws _s (odigs _s dot _s int _o (digs _s dot _s ndlm)) _s aws
-name←aws _s (alpha _o (digits _some _s alpha) _some) _s aws
-aw←aws _s (('⍵'_tk) _o ('⍺'_tk)) _s aws
-aaww←aws _s (('⍺⍺'_tk) _o ('⍵⍵'_tk)) _s aws
-sep←aws _s (('⋄',⎕UCS 10 13) _set _ign) _s aws
-nssn←alpha _s (alpha _o digits _any)
-nss←awslf _s (':Namespace'_tk) _s aws _s (nssn _opt) _s awslf _ign
-nse←awslf _s (':EndNamespace'_tk) _s awslf _ign
+crlf←(⎕UCS 10 13)_set
+PEG'eot   ← aws , ⍬ ↓'
+PEG'alpha ← `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_`'
+PEG'digit ← `0123456789`'
+PEG'aws   ← ws * ↓'
+PEG'awslf ← crlf | ws * ↓'
+PEG'lbrc  ← aws , `{` , aws'
+PEG'rbrc  ← aws , `}` , aws'
+PEG'jot   ← aws , `∘` , aws'
+PEG'dot   ← aws , `.` , aws'
+PEG'zil   ← aws , "⍬" , aws ↓'
+PEG'gets  ← aws , "←" , aws ↓'
+PEG'lpar  ← aws , "(" , aws ↓'
+PEG'rpar  ← aws , ")" , aws ↓'
+PEG'lbrk  ← aws , "[" , aws ↓'
+PEG'rbrk  ← aws , "]" , aws ↓'
+PEG'semi  ← aws , ";" , aws ↓'
+PEG'grd   ← aws , ":" , aws ↓'
+PEG'egrd  ← aws , "::" , aws ↓'
+PEG'mop   ← aws , `¨/⌿\⍀⍨` , aws'
+PEG'dop1  ← aws , `.⍣∘` , aws'
+PEG'dop2  ← aws , `⍤⍣∘` , aws'
+PEG'dop3  ← aws , `∘` , aws'
+PEG'prim  ← aws,`+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊆⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹`,aws'
+PEG'ndlm  ← `¯` | (alpha! ↑)'
+PEG'int   ← aws , (digit+) , ndlm , aws'
+PEG'float ← aws , (digit* , `.` , int | (digit+ , `.` , ndlm)) , aws'
+PEG'aw    ← aws , ("⍵" | "⍺") , aws'
+PEG'aaww  ← aws , ("⍺⍺" | "⍵⍵") , aws'
+PEG'sep   ← aws , (`⋄` | crlf ↓) , aws'
+PEG'nss   ← awslf , ":Namespace" , aws , (alpha,(alpha|digit*)?) , awslf ↓'
+PEG'nse   ← awslf , ":EndNamespace" , awslf ↓'
+PEG'sfn   ← aws , (alpha+) , `⎕` , aws'
+PEG'name  ← aws , (alpha | (digit+ , alpha) +) , aws'
+f∆ N∆←'ptknfsrdx' 'ABEFGLMNOPVZ'
+⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍺←0 ⋄ ⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ ⍺),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:0 A⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ 3 A⌽0 A∘⊂¨@{m}⍵}
 MkBfn←{0(N∆⍳'F')¯1(,⊂⌽1↓¯1↓⍵)}
 MkMget←{⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
-Fn←{0=≢⍵:0 ⍬ ⍺ '' ⋄ ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑⍵ ⋄ 0=≢ns:0(,⊂z)⍺ ''
- r←↓⍉↑⍺∘Fa¨ns ⋄ 0<c←⌈⌿⊃r:c ⍬ ⍺ ⍵
- z←(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿0⊃z)+@0⍉↑⊃¨1⊃r
- 0(,⊂z)⍺ ''}
+Fn←{0=≢⍵:0 ⍬ ⍺ ''
+ 0=≢ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑⍵:0(,⊂z)⍺ ''
+ 0<c←⌈⌿⊃r←↓⍉↑⍺∘Fa¨ns:c ⍬ ⍺ ⍵
+ 0 (,⊂(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿0⊃z)+@0⍉↑⊃¨1⊃r) ⍺ ''}
 FnType←3 3 2 2⊥1+(⊂⊃⍳(,¨'⍵⍵' '⍺⍺','⍺⍵')⍨)⌷1∘⊃,¯1⍨
 PEG'Sfn    ← sfn                                              : 1P∘⌽∘∊       '
 PEG'Prim   ← prim                                             : 1P           '
@@ -174,7 +180,7 @@ PEG'Brk    ← rbrk , (Semx , (semi , Semx *)) , lbrk           : 3E∘⌽      
 PEG'Lbrk   ← ∊                                                : ⍺⍺ P{,''[''} '
 PEG'Idx    ← Brk , (1 Lbrk) , Atom                            : 2E∘⌽         '
 PEG'Blrp   ← ⍺⍺ , (⍵⍵ Slrp ∇)                                                '
-PEG'Slrp   ← ⍺⍺ | (⍵⍵ , ∇) | (○ , ∇)                                         '
+PEG'Slrp   ← ⍺⍺ | (⍵⍵ , ∇) | (⍥ , ∇)                                         '
 PEG'Pfe    ← rpar , Fex , lpar                                               '
 PEG'Bfn    ← rbrc Blrp lbrc                                   : MkBfn        '
 PEG'Fnp    ← Prim | (1 Var) | Sfn | Bfn | Pfe                                '

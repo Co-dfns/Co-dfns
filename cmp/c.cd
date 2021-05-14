@@ -15,43 +15,14 @@ _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
 _set←{(0≠≢⍵)∧(⊃⍵)∊⍺⍺:0(,⊃⍵)⍺(1↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
 _tk←{(,⍺⍺)≡⍥⎕C(≢,⍺⍺)↑⍵:0(⊂,⍺⍺)⍺((≢,⍺⍺)↓⍵) ⋄ 2 ⍬ ⍺ ⍵}
 _eat←{0=≢⍵:2 ⍬ ⍺ ⍵ ⋄ 0(1↑⍵)⍺(1↓⍵)}
+_eot←{(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵}
 PEG←{⍺←⎕THIS
- A←,¨'\|' ',' '→' '!' '&' '∊' '\?' '\*' '\+' '○' '\[([^]]+)\]' '\[\]' '↓'
- B←'o' 's' 'then' 'not' 't' 'yes' 'opt' 'any' 'some' 'eat' 'env(\1)' 'noenv' 'ign'
- nm peg←1↓¨('←'∘=⊂⊢)'←',⊃nm_peg as←2↑1↓¨(':'∘=⊂⊢)':',⍵,':'
- peg←A ⎕R((1⌽'  _',⊢)¨B)⊢peg ⋄ as←{' _as (',⍵,')'}⍣(0≠≢as)⊢as
- ⍺.⍎nm,'←{⋄⍺(',peg,as,')⍵⋄} ⋄ 0'}
-ws←(' ',⎕UCS 9)_set
-aws←ws _any _ign
-awslf←(⎕UCS 10 13) _set _o ws _any _ign
-gets←aws _s ('←'_tk) _s aws _ign
-him←'¯' _set ⋄ dot←'.' _set ⋄ jot←'∘' _set
-lbrc←aws _s ('{'_set) _s aws ⋄ rbrc←aws _s ('}'_set) _s aws
-lpar←aws _s ('('_tk) _s aws _ign ⋄ rpar←aws _s (')'_tk) _s aws _ign
-lbrk←aws _s ('['_tk) _s aws _ign ⋄ rbrk←aws _s (']'_tk) _s aws _ign
-semi←aws _s (';' _tk) _s aws _ign
-grd←aws _s (':'_tk) _s aws _ign
-zil←aws _s ('⍬'_tk) _s aws _ign
-egrd←aws _s ('::'_tk) _s aws _ign
-alpha←'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_'_set
-digits←'0123456789'_set
-sfn←aws _s (alpha _some) _s ('⎕'_set) _s aws
-prims←'+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊆⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'
-prim←aws _s (prims _set) _s aws
-mop←aws _s ('¨/⌿⍀\⍨'_set) _s aws
-dop1←aws _s ('.⍣∘'_set) _s aws
-dop2←aws _s ('⍤⍣∘'_set) _s aws
-dop3←aws _s ('∘'_set) _s aws
-eot←aws _s {(''≡⍵)∨⍬≡⍵:0 ⍬ ⍺ '' ⋄ 2 ⍬ ⍺ ⍵} _ign
-digs←digits _some
-odigs←digits _any
-ndlm←him _o (alpha _not _peek)
-int←aws _s digs _s ndlm _s aws
-float←aws _s (odigs _s dot _s int _o (digs _s dot _s ndlm)) _s aws
-name←aws _s (alpha _o (digits _some _s alpha) _some) _s aws
-aw←aws _s (('⍵'_tk) _o ('⍺'_tk)) _s aws
-aaww←aws _s (('⍺⍺'_tk) _o ('⍵⍵'_tk)) _s aws
-sep←aws _s (('⋄',⎕UCS 10 13) _set _ign) _s aws
-nssn←alpha _s (alpha _o digits _any)
-nss←awslf _s (':Namespace'_tk) _s aws _s (nssn _opt) _s awslf _ign
-nse←awslf _s (':EndNamespace'_tk) _s awslf _ign
+ A←,¨'`([^`]*)`'    '"([^"]*)"'   '\[\]'   '\[([^]]+)\]'  '\|'  ','
+ B←  '(''\1''_set)' '(''\1''_tk)' '_noenv' '_env(\1)'     '_o'  '_s'
+ A,←,¨'→'     '!'    '&'  '∊'    '\?'   '\*'   '\+'    '⍥'    '↓'    '↑'
+ B,←  '_then' '_not' '_t' '_yes' '_opt' '_any' '_some' '_eat' '_ign' '_peek'
+ A,←⊂,'⍬'
+ B,←⊂,'_eot'
+ nm peg as←1↓¨3↑(1,1↓(0,2≠⌿∨⍀'←'=x)∨0,2≠⌿∨⍀(':'=x)∧~2|+⍀x∊'`"')⊂x←' ',⍵
+ peg←A ⎕R(' ',¨B,¨' ')⊢peg ⋄ as←{' _as (',⍵,')'}⍣(∨⌿as≠' ')⊢as
+ ⍺.⍎nm,'←{⍺(',peg,as,')⍵} ⋄ 0'}
