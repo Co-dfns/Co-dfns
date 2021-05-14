@@ -1,7 +1,13 @@
-gck← (0 0)(0 1)(0 3)(1 0)(1 1)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)(3 0)(3 1)(4 0)
-gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf' 'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb' 'Fz' 'Fn' 'Gd'
-gck,←(7 0)(8 1)(8 2)(8 4) (8 5) (8 7) (8 8) (9 0)(9 1)(9 2)(10 0)(10 1)
-gcv,←'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off' 'Pv' 'Pf' 'Po' 'Va'  'Vf'
+gck← (0 0)(0 1)(0 3)(1 0)(1 1)
+gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf'
+gck,←(2 ¯2)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)
+gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb'
+gck,←(3 ¯1)(3 0)(3 1)(3 3)
+gcv,←'Fa'  'Fz' 'Fn' 'Fn'
+gck,←(4 0)(7 0)(8 1)(8 2)(8 4) (8 5) (8 7) (8 8)
+gcv,←'Gd' 'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
+gck,←(9 0)(9 1)(9 2)(10 0)(10 1)(10 3)
+gcv,←'Pv' 'Pf' 'Po' 'Va'  'Vf'  'Vf'
 gck+←⊂1 0
 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 NL←⎕UCS 13 10
@@ -68,7 +74,7 @@ gc←{⍞←'G' ⋄ p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0
   'PUSH(',(slt ⍺),');',NL}
  Vf←{0>x←4⊃⍺:'PUSH(',(slt ⍺),');',NL
   'fn',(⍕x),'_p->this_p=fn',(⍕x),'_p;PUSH(fn',(⍕x),'_p);',NL}
- dis←{0=2⊃h←,1↑⍵:'' ⋄ c←ks 1↓⍵ ⋄ (≢gck)=i←gck⍳⊂h[2 3]:⎕SIGNAL 16 ⋄ h(⍎i⊃gcv)c}
+ dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:⎕SIGNAL 16 ⋄ h(⍎i⊃gcv)ks 1↓⍵}
  z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=3)
  z,←dis¨ks ast
  z,←'E',¨('VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
