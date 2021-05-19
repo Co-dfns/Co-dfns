@@ -6,10 +6,10 @@ Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:0 A⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ 3 A⌽0 A∘⊂¨@{m}⍵}
 MkBfn←{0(N∆⍳'F')¯1(,⊂⌽1↓¯1↓⍵)}
 MkMget←{⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
-Fn←{0=≢⍵:0 ⍬ ⍺ ''
- 0=≢ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑⍵:0(,⊂z)⍺ ''
- 0<c←⌈⌿⊃r←↓⍉↑⍺∘Fa¨ns:c ⍬ ⍺ ⍵
- 0 (,⊂(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿0⊃z)+@0⍉↑⊃¨1⊃r) ⍺ ''}
+Fn←{i d←⍵ ⋄ i≥≢d:0 ⍬ ⍺(0'')
+ 0=≢ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑d:0(,⊂z)⍺(0'')
+ 0<c←r⊃⍨0,pi←⊃⍒⊃r←↓⍉↑ps←(⍺ Fa 0,⊂)¨ns:pi⊃ps
+ 0 (,⊂(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿0⊃z)+@0⍉↑⊃¨1⊃r) ⍺ (0'')}
 FnType←3 3 2 2⊥1+(⊂⊃⍳(,¨'⍵⍵' '⍺⍺','⍺⍵')⍨)⌷1∘⊃,¯1⍨
 PEG'Sfn    ← sfn                                              : 1P∘⌽∘∊       '
 PEG'Prim   ← prim                                             : 1P           '
@@ -61,7 +61,7 @@ PEG'ExHd   ← Asgn | (0 Bind) | App , ∇ ?                                    
 PEG'Ex     ← IAx , ExHd                                       : ⍪/⍳∘≢+@0⍉∘↑∘⌽'
 PEG'Gex    ← Ex , grd , Ex                                    : G∘⌽          '
 PEG'Nlrp   ← sep | eot Slrp (lbrc Blrp rbrc)                                 '
-PEG'Stmts  ← sep* , (Nlrp → (⍺⍺ , eot∘⌽))* , eot                             '
+PEG'Stmts  ← sep* , (Nlrp → (⍺⍺ , eot∘(⊂∘⌽∘⊃@1)))* , eot                     '
 PEG'Alp    ← ∊                                                : ''⍺''⍨       '
 PEG'Omg    ← ∊                                                : ''⍵''⍨       '
 PEG'ClrEnv ← (Alp[¯1]),(Alp,Alp[¯1]),(Omg[¯1]),(Omg,Omg[¯1])↓                '
@@ -77,5 +77,6 @@ PEG'FaDopF ← Omg,Omg[1]↓ , FaMop []                                         
 PEG'FaDop  ← FaDopV , (FaDopF ?) | FaDopF                                    '
 PEG'Fa     ← ClrEnv , (FaFn | FaMop | FaDop) []                              '
 PEG'Ns     ← nss Blrp nse → (Ex | Fex Stmts → Fn) , eot       : 0F           '
-ps←{⍞←'P' ⋄ 0≠⊃c a e r←⍬ ⍬ Ns∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10:⎕SIGNAL c
+ps←{⍞←'P' ⋄ ⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
+ 0≠⊃c a e(i d)←p←⍺ Ns 0,⊂src:_report p
  (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)}
