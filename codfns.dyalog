@@ -219,11 +219,10 @@ PEG'App    ← Afx , (IAx ?)                                    : {(≢⍵)E⌽�
 PEG'ExHd   ← Asgn | (0 Bind) | App , ∇ ?                                     '
 PEG'Ex     ← IAx , ExHd                                       : ⍪/⍳∘≢+@0⍉∘↑∘⌽'
 PEG'Gex    ← Ex , grd , Ex                                    : G∘⌽          '
-PEG'Nlrp   ← sep | eot Slrp (lbrc Blrp rbrc)                                 '
 PEG'Alp    ← ∊                                                : ''⍺''⍨       '
 PEG'Omg    ← ∊                                                : ''⍵''⍨       '
 PEG'ClrEnv ← (Alp[¯1]),(Alp,Alp[¯1]),(Omg[¯1]),(Omg,Omg[¯1])↓                '
-PEG'Fax    ← Gex | Ex | Fex Stmts , eot → Fn                  : (FnType ⍺)F  '
+PEG'Fax    ← Gex | Ex | Fex Stmts eot → Fn                    : (FnType ⍺)F  '
 PEG'FaFnW  ← Omg[0]↓ , Fax []                                                '
 PEG'FaFnA  ← Omg[0] , (Alp[0])↓ , Fax []                                     '
 PEG'FaFn   ← FaFnW | FaFnA                                                   '
@@ -234,8 +233,10 @@ PEG'FaDopV ← Omg,Omg[0]↓ , FaMop []                                         
 PEG'FaDopF ← Omg,Omg[1]↓ , FaMop []                                          '
 PEG'FaDop  ← FaDopV , (FaDopF ?) | FaDopF                                    '
 PEG'Fa     ← ClrEnv , (FaFn | FaMop | FaDop) []                              '
-PEG'Stmts  ← sep* , (Nlrp → (⍺⍺ , eot∘(⊂∘⌽∘⊃@1)))*                           '
-PEG'Ns     ← nss , (Ex | Fex Stmts → Fn) , nse , eot          : 0F           '
+PEG'Nlrp  ← sep | (⍺⍺ ↑) Slrp (lbrc Blrp rbrc)                               '
+PEG'Stmt  ← sep | (⍵⍵ Nlrp → (⍺⍺ , eot∘(⊂∘⌽∘⊃@1)))                           '
+PEG'Stmts ← ⍵⍵ | (⍺⍺ Stmt ⍵⍵ , ∇)                                            '
+PEG'Ns    ← nss , (Ex | Fex Stmts nse) , eot → Fn             : 0F           '
 ps←{⍞←'P' ⋄ ⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
  0≠⊃c a e(i d)←p←⍺ Ns 0,⊂src:_report p
  (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)}
