@@ -101,26 +101,28 @@ _yes←{0 ⍬ ⍺ ⍵}
 _opt←{⍺(⍺⍺ _o _yes)⍵}
 _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵}
 _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
-_set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i+1)d) ⋄ 2 ⍬ ⍺ ⍵}
-_tk←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (,⍺⍺)≡⍥⎕C d⌷⍨⊂i+⍳≢,⍺⍺:0(⊂,⍺⍺)⍺((i+≢,⍺⍺)d) ⋄ 2 ⍬ ⍺ ⍵}
-_eat←{i d←⍵ ⋄ i≥≢d:2 ⍬ ⍺ ⍵ ⋄ 0(i⌷d)⍺((i+1)d)}
-_eot←{i d←⍵ ⋄ i≥≢d:0 ⍬ ⍺ ((≢d)d) ⋄ 2 ⍬ ⍺ ⍵}
+_set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i _step 1)d) ⋄ 2 ⍬ ⍺ ⍵}
+_tk←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (,⍺⍺)≡⍥⎕C d⌷⍨⊂i _step ⍳≢,⍺⍺:0(⊂,⍺⍺)⍺((i _step ≢,⍺⍺)d) ⋄ 2 ⍬ ⍺ ⍵}
+_eat←{i d←⍵ ⋄ i≥≢d:2 ⍬ ⍺ ⍵ ⋄ 0(i⌷d)⍺((i _step 1)d)}
+_eot←{i d←⍵ ⋄ (i<0)∨i≥≢d:0 ⍬ ⍺ ((≢d)d) ⋄ 2 ⍬ ⍺ ⍵}
+_step←+
+_bkwd←{_step∘←- ⋄ i d←⍵ ⋄ c a e d←p←⍺ ⍺⍺((i-1)d) ⋄ _step∘←+ ⋄ 0<c:p ⋄ c a e ⍵}
 PEG←{⍺←⎕THIS
  A←,¨'`([^`]*)`'    '"([^"]*)"'   '\[\]'   '\[([^]]+)\]'  '\|'  ','
  B←  '(''\1''_set)' '(''\1''_tk)' '_noenv' '_env(\1)'     '_o'  '_s'
- A,←,¨'→'     '!'    '&'  '∊'    '\?'   '\*'   '\+'    '⍥'    '↓'    '↑'
- B,←  '_then' '_not' '_t' '_yes' '_opt' '_any' '_some' '_eat' '_ign' '_peek'
+ A,←,¨'→'     '!'    '&'  '∊'    '\?'   '\*'   '\+'    '⍥'    '↓'    '↑'     '⌽'
+ B,←  '_then' '_not' '_t' '_yes' '_opt' '_any' '_some' '_eat' '_ign' '_peek' '_bkwd'
  A,←⊂,'⍬'
  B,←⊂,'_eot'
  noq←' '@(∊{⍺+⍳⍵}⌿¨'`[^`]*`' '"[^"]*"'⎕S 0 1⊢x)⊢x←' ',⍵
  nm peg as←1↓¨3↑x⊂⍨1@(0,⊃∘⍸¨('←'=noq)(':'=noq))⊢0⍴⍨≢x
  peg←A ⎕R(' ',¨B,¨' ')⊢peg ⋄ as←{' _as (',⍵,')'}⍣(∨⌿as≠' ')⊢as
- ⍺.⎕FX(nm,'←{')('⍺(',peg,as,')⍵')('}')}
+ ⍺.⎕FX(nm,'←{')('Z←⍺(',peg,as,')⍵')(''⊣'⎕←''',nm,': '',⍕(0)(3 0)⊃¨⊂Z')('Z}')}
 _report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'
  0>c:('Unhandled return code: ',(⍕c))⎕SIGNAL 16
  li←⍸lm←¯1⌽lm∨(CR=d)≠1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
- ⎕←CR LF~⍨l←(ln←li⍸i)⊃lm⊂d
- ⎕←'^'@(i-ln⌷li)⊢' '⍴⍨≢l
+ ⎕←CR LF~⍨l←(ln←0⌈li⍸i)⊃lm⊂d
+ ⎕←'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
  ⎕SIGNAL c}
 ws←(' ',⎕UCS 9)_set
 crlf←(⎕UCS 10 13)_set
@@ -186,10 +188,10 @@ PEG'Semx   ← Ex | Semi                                                       '
 PEG'Brk    ← rbrk , (Semx , (semi , Semx *)) , lbrk           : 3E∘⌽         '
 PEG'Lbrk   ← ∊                                                : ⍺⍺ P{,''[''} '
 PEG'Idx    ← Brk , (1 Lbrk) , Atom                            : 2E∘⌽         '
-PEG'Blrp   ← ⍺⍺ , (⍵⍵ Slrp ∇)                                                '
 PEG'Slrp   ← ⍺⍺ | (⍵⍵ , ∇) | (⍥ , ∇)                                         '
-PEG'Pfe    ← rpar , Fex , lpar                                               '
+PEG'Blrp   ← ⍺⍺ , (⍵⍵ Slrp ∇)                                                '
 PEG'Bfn    ← rbrc Blrp lbrc                                   : MkBfn        '
+PEG'Pfe    ← rpar , Fex , lpar                                               '
 PEG'Fnp    ← Prim | (1 Var) | Sfn | Bfn | Pfe                                '
 PEG'Pmop   ← mop                                              : 2P           '
 PEG'Mop    ← Pmop , Afx                                       : 2O           '
@@ -233,10 +235,10 @@ PEG'FaDopV ← Omg,Omg[0]↓ , FaMop []                                         
 PEG'FaDopF ← Omg,Omg[1]↓ , FaMop []                                          '
 PEG'FaDop  ← FaDopV , (FaDopF ?) | FaDopF                                    '
 PEG'Fa     ← ClrEnv , (FaFn | FaMop | FaDop) []                              '
-PEG'Nlrp  ← sep | (⍺⍺ ↑) Slrp (lbrc Blrp rbrc)                               '
-PEG'Stmt  ← sep | (⍵⍵ Nlrp → (⍺⍺ , eot∘(⊂∘⌽∘⊃@1)))                           '
-PEG'Stmts ← ⍵⍵ | (⍺⍺ Stmt ⍵⍵ , ∇)                                            '
-PEG'Ns    ← nss , (Ex | Fex Stmts nse) , eot → Fn             : 0F           '
+PEG'Nlrp   ← sep | eot ↑ Slrp (lbrc Blrp rbrc)                               '
+PEG'Stmt   ← sep | (Nlrp↓ , (⍺⍺ , (sep | eot) ⌽))                            '
+PEG'Stmts  ← ⍵⍵ | (⍺⍺ Stmt , ∇)                                              '
+PEG'Ns     ← nss , (Ex | Fex Stmts nse) , eot → Fn             : 0F          '
 ps←{⍞←'P' ⋄ ⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
  0≠⊃c a e(i d)←p←⍺ Ns 0,⊂src:_report p
  (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)}
