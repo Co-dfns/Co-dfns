@@ -80,6 +80,6 @@ PEG'Nlrp   ← sep | eot ↑ Slrp (lbrc Blrp rbrc)                              
 PEG'Stmt   ← sep | (Nlrp↓ , (⍺⍺ , (sep | eot) ⌽))                            '
 PEG'Stmts  ← ⍵⍵ | (⍺⍺ Stmt , ∇)                                              '
 PEG'Ns     ← nss , (Ex | Fex Stmts nse) , eot → Fn             : 0F          '
-ps←{⍞←'P' ⋄ ⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
+ps←{⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
  0≠⊃c a e(i d)←p←⍺ Ns 0,⊂src:_report p
- (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)}
+ (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)src}

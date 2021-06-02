@@ -3,7 +3,8 @@ VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
 VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
 VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
 VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬ ⋄ _←(⍺,'.cpp')put⍨gc tt⊢a n s←ps ⍵
+Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬
+ _←(⍺,'.cpp')put⍨gc{⍵⊣⍞←'G'}tt{⍵⊣⍞←'C'}a n s src←ps ⍵⊣⍞←'P'
  _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕←⍪⊃⎕NGET(⍺,'.log')1 ⋄ ⎕NEXISTS f:n
  'COMPILE ERROR' ⎕SIGNAL 22}
 MkNS←{ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵
