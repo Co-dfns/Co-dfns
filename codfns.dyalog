@@ -93,7 +93,7 @@ _noenv←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ d}
 _env←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a ((⊆a)⍵⍵⍪¨e) d}
 _then←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c a e _←p←e(⍵⍵ _s eot)0 a:p ⋄ c a e d}
 _not←{0<⊃c a e d←⍺ ⍺⍺ ⍵:0 a ⍺ ⍵ ⋄ 2 a ⍺ ⍵}
-_as←{0<⊃c a e d←⍺ ⍺⍺ ⍵:c a e d ⋄ c (,⊂⍵⍵ a) e d}
+_as←{0<⊃c a e d←⍺ ⍺⍺ ⍵:c a e d ⋄ c (,⊂((⌊/,⌈/)⊃¨⍵ d)⍵⍵ a) e d}
 _t←{0<⊃c a e d←⍺ ⍺⍺ ⍵:c a e d ⋄ e ⍵⍵ a:c a e d ⋄ 2 ⍬ ⍺ ⍵}
 _ign←{c a e d←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e d}
 _peek←{0<p←⊃⍺ ⍺⍺ ⍵:p ⋄ 0 ⍬ ⍺ ⍵}
@@ -161,12 +161,14 @@ PEG'sfn   ← aws , (alpha+) , `⎕` , aws'
 PEG'name  ← aws , (alpha | (digit+ , alpha) +) , aws'
 f∆ N∆←'ptknfsrdx' 'ABEFGLMNOPVZ'
 ⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
-⎕FX∘⍉∘⍪¨'ABEFO',¨'←{⍺←0 ⋄ ⍪/(0 '∘,¨(⍕¨N∆⍳'ABEFO'),¨⊂' ⍺⍺ ⍺),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
-⎕FX∘⍉∘⍪¨'NPVZ',¨'←{0(N∆⍳'''∘,¨'NPVZ',¨''')'∘,¨'0(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
+⎕FX∘⍉∘⍪¨'AEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'AEFO'),¨⊂' ⍺⍺ 0),1+@0⍉↑(⊂4⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'BNPVZ',¨'←{0(N∆⍳'''∘,¨'BNPVZ',¨''')'∘,¨'⍺⍺(0⌷⍵)' '0(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨'}'
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
+MkAST←{⍪/(⍳≢⍵)+@0⍉↑⌽⍵}
 MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:0 A⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ 3 A⌽0 A∘⊂¨@{m}⍵}
 MkBfn←{0(N∆⍳'F')¯1(,⊂⌽1↓¯1↓⍵)}
 MkMget←{⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
+Atn←{(0 3⊃⍵)@(⊂3 0)⊢⍺ ⍺⍺ ⍵}
 Fn←{i d←⍵ ⋄ i≥≢d:0 ⍬ ⍺(0'')
  0=≢ns←(3⊃z)⌿⍨m←((3=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑d:0(,⊂z)⍺(0'')
  0<c←r⊃⍨0,pi←⊃⍒⊃r←↓⍉↑ps←(⍺ Fa 0,⊂)¨ns:pi⊃ps
@@ -174,7 +176,7 @@ Fn←{i d←⍵ ⋄ i≥≢d:0 ⍬ ⍺(0'')
 FnType←3 3 2 2⊥1+(⊂⊃⍳(,¨'⍵⍵' '⍺⍺','⍺⍵')⍨)⌷1∘⊃,¯1⍨
 PEG'Sfn    ← sfn                                              : 1P∘⌽∘∊       '
 PEG'Prim   ← prim                                             : 1P           '
-PEG'Symbol ← name                                             : ⌽            '
+PEG'Symbol ← name                                             : ⊢∘⌽          '
 PEG'Name   ← Symbol & (⍺⍺=Vt)                                 : ⍺⍺ V∘,∘⊃     '
 PEG'Args   ← aaww | aw & (⍺⍺=Vt)                              : ⍺⍺ V∘,∘⊃     '
 PEG'Var    ← ⍺⍺ Args | (⍺⍺ Name)                                             '
@@ -204,22 +206,22 @@ PEG'JotDot ← dot , jot                                        : 2O∘,∘⊂�
 PEG'Dop3a  ← Pdop3 , Atom                                     : 5O∘⌽         '
 PEG'Dop3   ← Dop3a | JotDot                                                  '
 PEG'Bop    ← rbrk , Ex , lbrk , (2 Lbrk) , Afx                : 7O∘⌽         '
-PEG'Fop    ← Fnp , (Dop1 | Dop3 ?)                            : ⍪/⍳∘≢+@0⍉∘↑∘⌽'
+PEG'Fop    ← Fnp , (Dop1 | Dop3 ?)                            : MkAST        '
 PEG'Afx    ← Mop | Fop | Vop | Bop                                           '
 PEG'Trn    ← Afx , (Afx | Idx | Atom , (∇ ?) ?)               : 3F∘⌽         '
-PEG'Bind   ← gets , Symbol [⍺⍺]                               : ⍺⍺ B∘⍬       '
-PEG'Mname  ← 0 Name                                           : 0 3∘⊃4E⊢     '
+PEG'Bind   ← gets , Symbol [⍺⍺]                               : ⍺⍺ B         '
+PEG'Mname  ← 0 Name                                           : 4E Atn       '
 PEG'Gets   ← ∊                                                : ⍺⍺ P{,''←''} '
 PEG'Ogets  ← 2 Gets                                           : 2O∘⌽         '
-PEG'Mbrk   ← Ogets , Brk , (0 Name)                           : 2 3∘⊃4E∘⌽2↑⊢ '
+PEG'Mbrk   ← Ogets , Brk , (0 Name)                           : (4E 1↓⊢)Atn∘⌽'
 PEG'Mget   ← Afx , (Mname | Mbrk)                             : MkMget       '
-PEG'Bget   ← 1 Gets , Brk , (0 Name)                          : 2 3∘⊃4E∘⌽2↑⊢ '
+PEG'Bget   ← 1 Gets , Brk , (0 Name)                          : (4E 1↓⊢)Atn∘⌽'
 PEG'Asgn   ← gets , (Bget | Mget)                                            '
-PEG'Fex    ← Afx , (Trn ?) , (1 Bind *)                       : ⍪/⍳∘≢+@0⍉∘↑∘⌽'
+PEG'Fex    ← Afx , (Trn ?) , (1 Bind *)                       : MkAST        '
 PEG'IAx    ← Idx | Atom , (dop2 !)                                           '
 PEG'App    ← Afx , (IAx ?)                                    : {(≢⍵)E⌽⍵}    '
 PEG'ExHd   ← Asgn | (0 Bind) | App , ∇ ?                                     '
-PEG'Ex     ← IAx , ExHd                                       : ⍪/⍳∘≢+@0⍉∘↑∘⌽'
+PEG'Ex     ← IAx , ExHd                                       : MkAST        '
 PEG'Gex    ← Ex , grd , Ex                                    : G∘⌽          '
 PEG'Alp    ← ∊                                                : ''⍺''⍨       '
 PEG'Omg    ← ∊                                                : ''⍵''⍨       '
