@@ -29,9 +29,13 @@ PEG←{⍺←⎕THIS
  nm peg as←1↓¨3↑x⊂⍨1@(0,⊃∘⍸¨('←'=noq)(':'=noq))⊢0⍴⍨≢x
  peg←A ⎕R(' ',¨B,¨' ')⊢peg ⋄ as←{' _as (',⍵,')'}⍣(∨⌿as≠' ')⊢as
  ⍺.⎕FX(nm,'←{')('Z←⍺(',peg,as,')⍵')(''⊣'⎕←''',nm,': '',⍕(0)(3 0)⊃¨⊂Z')('Z}')}
-_report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'
+EN←0 ⋄ DM←'' '' ''
+_report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'⊣EN∘←0⊣DM∘←'' '' ''
  0>c:('Unhandled return code: ',(⍕c))⎕SIGNAL 16
  li←⍸lm←¯1⌽lm∨(CR=d)≠1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
- ⎕←CR LF~⍨l←(ln←0⌈li⍸i)⊃lm⊂d
- ⎕←'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
- ⎕SIGNAL c}
+ EN∘←c
+ DM[0]←⊂'SYNTAX ERROR'
+ DM[1]←⊂(lnm←'[',(⍕1+ln),'] '),CR LF~⍨l←(ln←0⌈li⍸i)⊃lm⊂d
+ DM[2]←⊂(' '⍴⍨≢lnm),'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
+ msg←∊CR,'─'⍪⍨'─'⍪↑DM[1 2]
+ ⎕SIGNAL⊂('EN' c)('Category' 'Compiler')('Vendor' 'Co-dfns')('Message' msg)}
