@@ -16,8 +16,9 @@ _set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i _ste
 _tk←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (,⍺⍺)≡⍥⎕C d⌷⍨⊂i _step ⍳≢,⍺⍺:0(⊂,⍺⍺)⍺((i _step ≢,⍺⍺)d) ⋄ 2 ⍬ ⍺ ⍵}
 _eat←{i d←⍵ ⋄ i≥≢d:2 ⍬ ⍺ ⍵ ⋄ 0(i⌷d)⍺((i _step 1)d)}
 _eot←{i d←⍵ ⋄ (i<0)∨i≥≢d:0 ⍬ ⍺ ((≢d)d) ⋄ 2 ⍬ ⍺ ⍵}
-_step←+
-_bkwd←{_step∘←- ⋄ i d←⍵ ⋄ c a e d←p←⍺ ⍺⍺((i-1)d) ⋄ _step∘←+ ⋄ 0<c:p ⋄ c a e ⍵}
+_gof←{_step∘←+ ⋄ _less∘←< ⋄ _←0} ⋄ _gob←{_step∘←- ⋄ _less∘←> ⋄ _←0}
+_step←⊢ ⋄ _less←⊢ ⋄ _gof⍬
+_bkwd←{_gob⍬: ⋄ c a e(i d)←p←⍺ ⍺⍺ -∘1@0⊢⍵ ⋄ _gof⍬: ⋄ 0<c:p ⋄ c a e ⍵}
 PEG←{⍺←⎕THIS
  A←,¨'`([^`]*)`'    '"([^"]*)"'   '\[\]'   '\[([^]]+)\]'  '\|'  ','
  B←  '(''\1''_set)' '(''\1''_tk)' '_noenv' '_env(\1)'     '_o'  '_s'
@@ -34,8 +35,8 @@ _report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'⊣EN∘←
  0>c:('Unhandled return code: ',(⍕c))⎕SIGNAL 16
  li←⍸lm←¯1⌽lm∨(CR=d)≠1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
  EN∘←c
- DM[0]←⊂'SYNTAX ERROR'
- DM[1]←⊂(lnm←'[',(⍕1+ln),'] '),CR LF~⍨l←(ln←0⌈li⍸i)⊃lm⊂d
+ DM[0]←⊂⎕EM c
+ DM[1]←⊂(lnm←'[',(⍕ln),'] '),CR LF~⍨l←(ln←0⌈li⍸i)⊃lm⊂d
  DM[2]←⊂(' '⍴⍨≢lnm),'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
  msg←∊CR,'─'⍪⍨'─'⍪↑DM[1 2]
  ⎕SIGNAL⊂('EN' c)('Category' 'Compiler')('Vendor' 'Co-dfns')('Message' msg)}
