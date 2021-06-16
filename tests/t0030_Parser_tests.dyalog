@@ -92,7 +92,7 @@ out←2('SYNTAX ERROR' '[2] ¯ 4 ' '    ^   ')
 ∆0014_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'4)'
-out←2('SYNTAX ERROR' '[2] 4) ' '     ^ ')
+out←2('SYNTAX ERROR' '[2] 4) ' '    ^  ')
 ∆0015_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'⍬(5 4) 5[1 2 3]'
@@ -106,11 +106,11 @@ out←(d t k n ss se)(⍬ ⍬)(sym_base,5 4(,'[')1 2 3)
 ∆0016_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'⍬(5 4) 5[1 2 3'
-out←2('SYNTAX ERROR' '[2] ⍬(5 4) 5[1 2 3' '            ^     ')
+out←2('SYNTAX ERROR' '[2] ⍬(5 4) 5[1 2 3 ' '            ^      ')
 ∆0017_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'⍬(5 4) 5 1 2 3]'
-out←2('SYNTAX ERROR' '[2] ⍬(5 4) 5 1 2 3]' '                  ^')
+out←2('SYNTAX ERROR' '[2] ⍬(5 4) 5 1 2 3] ' '    ^               ')
 ∆0018_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'name'
