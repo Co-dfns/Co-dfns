@@ -33,7 +33,7 @@ PEG'Slrp   ← ⍺⍺ | (⍵⍵ , ∇) | (⍥ , ∇)                            
 PEG'Blrp   ← ⍺⍺ , (⍵⍵ Slrp ∇)                                                '
 PEG'Bfn    ← rbrc Blrp lbrc                                   : MkBfn        '
 PEG'Pfe    ← rpar , Fex , lpar                                               '
-PEG'Fnp    ← Prim | (1 Var) | Sfn | Bfn | Pfe                                '
+PEG'Fnp    ← Prim | Sfn | (1 Var) | Bfn | Pfe                                '
 PEG'Pmop   ← mop                                              : 2P           '
 PEG'Mop    ← Pmop , Afx                                       : 2O           '
 PEG'Pdop1  ← dop1                                             : 2P           '
@@ -77,7 +77,7 @@ PEG'FaDopF ← Omg,Omg[1]↓ , FaMop []                                         
 PEG'FaDop  ← FaDopV , (FaDopF ?) | FaDopF                                    '
 PEG'Fa     ← ClrEnv , (FaFn | FaMop | FaDop) []                              '
 PEG'Nlrp   ← sep | eot ↑ Slrp (lbrc Blrp rbrc)                               '
-PEG'Stmt   ← sep | (Nlrp↓ , (⍺⍺ , (sep | eot) ⌽))                            '
+PEG'Stmt   ← sep | (⍺⍺ , (sep | eot) ⌽ Nlrp)                                 '
 PEG'Stmts  ← ⍵⍵ | (⍺⍺ Stmt , ∇)                                              '
 PEG'Ns     ← nss , (Ex | Fex Stmts nse) , eot → Fn             : 0F          '
 ps←{⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10

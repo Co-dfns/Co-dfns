@@ -1,11 +1,12 @@
-_o←{0≥⊃c a e(i1 d1)←A←⍺ ⍺⍺ ⍵:A ⋄ 0≥⊃c a e(i2 d2)←B←⍺ ⍵⍵ ⍵:B ⋄ i1<i2:B ⋄ A}
+_o←{0≥⊃c1 a e(i1 d1)←A←⍺ ⍺⍺ ⍵:A ⋄ 0≥⊃c2 a e(i2 d2)←B←⍺ ⍵⍵ ⍵:B
+ (i1=i2∧c1<c2)∨i1 _less i2:B ⋄ A}
 _s←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e d←p←e ⍵⍵ d:p ⋄ (c⌈c2)(a⍪a2)e d}
 _noenv←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ d}
 _env←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a ((⊆a)⍵⍵⍪¨e) d}
 _then←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c a e _←p←e(⍵⍵ _s eot)0 a:p ⋄ c a e d}
 _not←{0<⊃c a e d←⍺ ⍺⍺ ⍵:0 a ⍺ ⍵ ⋄ 2 a ⍺ ⍵}
 _as←{0<⊃c a e d←⍺ ⍺⍺ ⍵:c a e d ⋄ c (,⊂((⌊/,⌈/)⊃¨⍵ d)⍵⍵ a) e d}
-_t←{0<⊃c a e d←⍺ ⍺⍺ ⍵:c a e d ⋄ e ⍵⍵ a:c a e d ⋄ 2 ⍬ ⍺ ⍵}
+_t←{0<⊃c a e(i d)←p←⍺ ⍺⍺ ⍵:p ⋄ e ⍵⍵ a:p ⋄ i>⊃⍵:6 ⍬ ⍺ ⍵ ⋄ 6 ⍬ ⍺(i d)}
 _ign←{c a e d←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e d}
 _peek←{0<p←⊃⍺ ⍺⍺ ⍵:p ⋄ 0 ⍬ ⍺ ⍵}
 _yes←{0 ⍬ ⍺ ⍵}
@@ -13,12 +14,14 @@ _opt←{⍺(⍺⍺ _o _yes)⍵}
 _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵}
 _some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
 _set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i _step 1)d) ⋄ 2 ⍬ ⍺ ⍵}
-_tk←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (,⍺⍺)≡⍥⎕C d⌷⍨⊂i _step ⍳≢,⍺⍺:0(⊂,⍺⍺)⍺((i _step ≢,⍺⍺)d) ⋄ 2 ⍬ ⍺ ⍵}
+_tk←{i d←⍵ ⋄ m←(,⍺⍺)=⍥⎕C c↑d⌷⍨⊂x⌿⍨(0≤x)∧(≢d)>x←i _step ⍳c←≢,⍺⍺
+ x←(i _step +⌿∧⍀m)d ⋄ ∧⌿m:0(⊂,⍺⍺)⍺ x ⋄ 2 ⍬ ⍺ x}
 _eat←{i d←⍵ ⋄ i≥≢d:2 ⍬ ⍺ ⍵ ⋄ 0(i⌷d)⍺((i _step 1)d)}
 _eot←{i d←⍵ ⋄ (i<0)∨i≥≢d:0 ⍬ ⍺ ((≢d)d) ⋄ 2 ⍬ ⍺ ⍵}
 _gof←{_step∘←+ ⋄ _less∘←< ⋄ _←0} ⋄ _gob←{_step∘←- ⋄ _less∘←> ⋄ _←0}
 _step←⊢ ⋄ _less←⊢ ⋄ _gof⍬
-_bkwd←{_gob⍬: ⋄ c a e(i d)←p←⍺ ⍺⍺ -∘1@0⊢⍵ ⋄ _gof⍬: ⋄ 0<c:p ⋄ c a e ⍵}
+_bkwd←{c a e d1←⍺ ⍵⍵ ⍵ ⋄ _gob⍬: ⋄ c a e d2←⍺ ⍺⍺ -∘1@0⊢d1 ⋄ _gof⍬:
+ 0<c:c a e((⌈⌿⊃¨⍵ d2),1↓⍵) ⋄ c a e d1}
 PEG←{⍺←⎕THIS
  A←,¨'`([^`]*)`'    '"([^"]*)"'   '\[\]'   '\[([^]]+)\]'  '\|'  ','
  B←  '(''\1''_set)' '(''\1''_tk)' '_noenv' '_env(\1)'     '_o'  '_s'
@@ -33,10 +36,10 @@ PEG←{⍺←⎕THIS
 EN←0 ⋄ DM←'' '' ''
 _report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'⊣EN∘←0⊣DM∘←'' '' ''
  0>c:('Unhandled return code: ',(⍕c))⎕SIGNAL 16
- li←⍸lm←¯1⌽lm∨(CR=d)≠1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
+ li←⍸lm←¯1⌽lm∨(CR=d)∧~1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
  EN∘←c
  DM[0]←⊂⎕EM c
- DM[1]←⊂(lnm←'[',(⍕ln),'] '),CR LF~⍨l←(ln←0⌈li⍸i)⊃lm⊂d
+ DM[1]←⊂(lnm←'[',(⍕1+ln),'] '),' '@{⍵∊CR LF}⊢l←(ln←0⌈li⍸i)⊃lm⊂d
  DM[2]←⊂(' '⍴⍨≢lnm),'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
  msg←∊CR,'─'⍪⍨'─'⍪↑DM[1 2]
  ⎕SIGNAL⊂('EN' c)('Category' 'Compiler')('Vendor' 'Co-dfns')('Message' msg)}

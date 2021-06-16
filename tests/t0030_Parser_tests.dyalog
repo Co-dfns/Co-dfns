@@ -23,7 +23,7 @@ out←(,¨0 3 0 0 0 25)(⍬ ⍬)(sym_base)
 ∆0001_TEST←out PARSE∆SUCC inp
 
 inp←':Namespace' ':End'
-out←2('SYNTAX ERROR' '[2] :End' '       ^')
+out←2('SYNTAX ERROR' '[2] :End ' '        ^')
 ∆0002_TEST←out PARSE∆FAIL inp
 
 NS←{(⊂':Namespace'),⍵,⊂':EndNamespace'}
@@ -84,15 +84,15 @@ out←(d t k n ss se)(⍬ ⍬)(sym_base,5 4)
 ∆0012_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'(4'
-out←2('SYNTAX ERROR' '[2] (4' '    ^ ')
+out←2('SYNTAX ERROR' '[2] (4 ' '    ^  ')
 ∆0013_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'¯ 4'
-out←2('SYNTAX ERROR' '[2] ¯ 4' '    ^  ')
+out←2('SYNTAX ERROR' '[2] ¯ 4 ' '    ^   ')
 ∆0014_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'4)'
-out←2('SYNTAX ERROR' '[2] 4)' '     ^')
+out←2('SYNTAX ERROR' '[2] 4) ' '     ^ ')
 ∆0015_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'⍬(5 4) 5[1 2 3]'
@@ -114,7 +114,21 @@ out←2('SYNTAX ERROR' '[2] ⍬(5 4) 5 1 2 3]' '                  ^')
 ∆0018_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'name'
-out←6('VALUE ERROR' '[2] name' '    ^   ')
+out←6('VALUE ERROR' '[2] name ' '    ^    ')
 ∆0019_TEST←out PARSE∆FAIL inp
+
+inp←NS'blah←5' '⎕blah'
+out←2('SYNTAX ERROR' '[3] ⎕blah ' '    ^     ')
+∆0020_TEST←out PARSE∆FAIL inp
+
+inp←NS'FFT←5' '⎕FFT'
+d←  0  1  2  3  1
+t←  3  1  0  7  9
+k←  0  0  0  0  1
+n←  0 ¯5  0 ¯6 ¯7
+ss← 0 10 14 14 16
+se←36 14 15 15 20
+out←(d t k n ss se)((,⊂'FFT')(,0))(sym_base,'FFT' 5 '⎕FFT')
+∆0021_TEST←out PARSE∆SUCC inp
 
 :EndNamespace
