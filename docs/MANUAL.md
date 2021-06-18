@@ -4,7 +4,7 @@
 
 	target←<module name> codfns.Fix <namespace script>
 	]codfns.compile <namespace> <target> [-af={cpu,opencl,cuda}]
- ast exports symbols source←[env] codfns.ps 'line1' 'line2' ...
+	ast exports symbols source←[env] codfns.ps 'line1' 'line2' ...
 
 ## Description
 
