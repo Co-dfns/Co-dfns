@@ -38,7 +38,7 @@ Field   | Description
 ------- | -----------
 AST     | The AST structure of the parsed tree
 Exports | The names and types of the top-level exported bindings
-Symbols | The set of unique names and values in the AST (symbols and numbers)
+Symbols | The set of unique names (character vectors) and values in the AST (symbols and numbers)
 Source  | A character vector of the original parsed source
 
 ### AST Structure
