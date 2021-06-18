@@ -131,4 +131,18 @@ se←36 14 15 15 20
 out←(d t k n ss se)((,⊂'FFT')(,0))(sym_base,'FFT' 5 '⎕FFT')
 ∆0021_TEST←out PARSE∆SUCC inp
 
+inp←NS'F←{' '4+5+' '}'
+out←2('SYNTAX ERROR' '[3] 4+5+ ' '      ^  ')
+∆0022_TEST←out PARSE∆FAIL inp
+
+inp←NS'F←{' '4+⍵' '}'
+d←  0  1  2  3  4  5  4  4
+t←  3  1  3  2  0  7  9 10
+k←  0  1  1  2  0  0  1  0
+n←  0 ¯5  0  0  0 ¯6 ¯7 ¯1
+ss← 0 10 13 14 14 14 15 16
+se←35 12 20 16 15 15 16 17
+out←(d t k n ss se)((,⊂,'F')(,1))(sym_base,(,'F')4(,'+'))
+∆0023_TEST←out PARSE∆SUCC inp
+
 :EndNamespace
