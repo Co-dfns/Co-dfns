@@ -4,6 +4,7 @@
 
 	target←<module name> codfns.Fix <namespace script>
 	]codfns.compile <namespace> <target> [-af={cpu,opencl,cuda}]
+ ast exports symbols source←[env] codfns.ps 'line1' 'line2' ...
 
 ## Description
 
@@ -24,9 +25,43 @@ target    | The name the compiler should give to the compiled Co-dfns module. Up
 Expression | Description
 ---------- | -----------
 Fix        | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
+ps         | The Co-dfns parsing function. It takes a vector of character vectors containing a namespace script and parses the code into an AST.
 AF∆LIB     | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
 AF∆PREFIX  | The location of the ArrayFire library installation for Linux/Mac platforms.
 VERSION    | The version of the compiler. Do not modify this value.
+
+## Parser Return Structure
+
+The Co-dfns parser returns a vector of 4 elements, the AST, module exports, symbol table, and the original parsed source.
+
+Field   | Description
+------- | -----------
+AST     | The AST structure of the parsed tree
+Exports | The names and types of the top-level exported bindings
+Symbols | The set of unique names and values in the AST (symbols and numbers)
+Source  | A character vector of the original parsed source
+
+### AST Structure
+
+A parsed AST is an inverted table of nodes containing the following columns. The nodes in the table are ordered according to their depth-first pre-order traversal.
+
+Name  | Description
+----- | -----------
+depth | The depth of the node in the AST. Root nodes are depth 0.
+type  | The type of the node, as an index into the `N∆` constant.
+kind  | The sub-type or kind of the node, as an integer.
+name  | A positive integer referencing another node in the table or a negative index into the symbol table.
+start | The starting index into the source corresponding to this node.
+end   | The exclusive ending index into the source corresponding to this node.
+
+### Exports structure
+
+The exports produced by the parser is a two-column inverted table containing the following fields:
+
+Name | Description
+---- | -----------
+name | The name of the export
+type | The type of the export as an integer (0: Array, 1: Function)
 
 ## Runtime API
 
