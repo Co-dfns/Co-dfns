@@ -169,9 +169,9 @@ PEG'nse   ← awslf , ":EndNamespace" , awslf ↓'
 PEG'sfn   ← aws , ("TFFI⎕" | "TFF⎕") , aws'
 PEG'name  ← aws , (alpha | (digit+ , alpha) +) , (`⎕` !) , aws'
 f∆ N∆←'ptknfsrdx' 'ABEFGLMNOPVZ'
-⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0,⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}'
-⎕FX∘⍉∘⍪¨'AEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'AEFO'),¨⊂' ⍺⍺ 0,⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}'
-⎕FX∘⍉∘⍪¨'BNPVZ',¨'←{0(N∆⍳'''∘,¨'BNPVZ',¨''')'∘,¨'⍺⍺(0⌷⍵)' '0(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨⊂',⍺}'
+⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'AEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'AEFO'),¨⊂' ⍺⍺ 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'BNPVZ',¨'←{0(N∆⍳'''∘,¨'BNPVZ',¨''')'∘,¨'⍺⍺(0⌷⍵)' '0(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '1(⊂⍵)',¨⊂',1+⍺}'
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 MkAST←{⍪/(⍳≢⍵)+@0⍉↑⌽⍵}
 MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:⍺(0A)⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ ⍺(3A)⌽({⊃¨⍵[4 5]}0A⊂)¨@{m}⍵}
@@ -200,7 +200,7 @@ PEG'Lbrk   ← ∊                                                : ⊣⍺⍺ P{
 PEG'Idx    ← Brk , (1 Lbrk) , Atom                            : 2E∘⌽         '
 PEG'Slrp   ← ⍺⍺ | (⍵⍵ , ∇) | (⍥ , ∇) ↓                                       '
 PEG'Blrp   ← ⍺⍺ , (⍵⍵ Slrp ∇) ↓                                              '
-PEG'Bfn    ← rbrc Blrp lbrc                                   : (1 0+⊣)¯1F⊢  '
+PEG'Bfn    ← rbrc Blrp lbrc                                   : ¯1F          '
 PEG'Pfe    ← rpar , Fex , lpar                                               '
 PEG'Fnp    ← Prim | Sfn | (1 Var) | Bfn | Pfe                                '
 PEG'Pmop   ← mop                                              : 2P           '
@@ -245,10 +245,10 @@ PEG'FaDopV ← Omg,Omg[0]↓ , FaMop []                                         
 PEG'FaDopF ← Omg,Omg[1]↓ , FaMop []                                          '
 PEG'FaDop  ← FaDopV , (FaDopF ?) | FaDopF                                    '
 PEG'Fa     ← ClrEnv , (FaFn | FaMop | FaDop) []                              '
-PEG'Nlrp   ← sep | rbrc ↑ Slrp (lbrc Blrp rbrc)                               '
-PEG'Stmt   ← sep | (⍺⍺ , (sep | lbrc) ⌽ Nlrp)                                 '
+PEG'Nlrp   ← sep | rbrc ↑ Slrp (lbrc Blrp rbrc)                              '
+PEG'Stmt   ← sep | (⍺⍺ , (sep | lbrc) ⌽ Nlrp)                                '
 PEG'Stmts  ← ⍵⍵ | (⍺⍺ Stmt , ∇)                                              '
-PEG'Ns     ← nss , (Ex | Fex Stmts nse) , eot → Fn             : 0F          '
+PEG'Ns     ← nss , (Ex | Fex Stmts nse) , eot → Fn             : (¯1+⊣)0F⊢   '
 ps←{⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
  0≠⊃c a e(i d)←p←⍺ Ns 0,⊂src:_report p
  (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)src}
