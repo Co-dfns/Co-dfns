@@ -56,12 +56,16 @@ end   | The exclusive ending index into the source corresponding to this node.
 
 ### Exports/Env structure
 
-The exports produced by the parser is a two-column inverted table containing the following fields. This structure is the same for the exports returned from the parser as well as for the optional environment that can be passed to the parser to seed values into the environment used by the parser to lookup variables. 
+The exports produced by the parser is a two-column inverted table containing the following fields. This structure is the same for the exports returned from the parser as well as for the optional environment that can be passed to the parser to seed values into the environment used by the parser to lookup variables.
 
 Name | Description
 ---- | -----------
 name | The name of the binding as a character vector
 type | The type of the binding as an integer (¯1: Unbound, 0: Array, 1: Function)
+
+## Error Reporting
+
+When the parser fails to successfully parse a given input source, the parser updates ⎕DMX and signals an appropriate error code. Additionally, it updates the `EN` and `DM` variables in the `codfns` namespace to reflect the error. See the official Dyalog APL documentation on `⎕EN` and `⎕DM` for information on the format of these variables.
 
 ## Runtime API
 
