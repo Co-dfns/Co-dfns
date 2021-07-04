@@ -47,7 +47,7 @@ requires using a different, parallel algorithm that handles synchronizing
 these dependencies. This can often add overhead and actually shift the 
 computational complexity of a given primitive.
 
-Finally, data must be be copied from the CPU main memory into the GPU in 
+Finally, data must be copied from the CPU main memory into the GPU in 
 order to be used. This overhead must be accounted for in a realistic way 
 in any given real application.
 
@@ -180,7 +180,7 @@ Critical Path: 1 (Rank, Each, Compose), N (Power)
 For operations like Each, Rank, Power, and Compose, these operations make 
 an attempt to optimize cases where they are given scalar function arguments. 
 In these cases, the number of kernels generated may be reduced. In the 
-case of each over scalar arguments, this is optimized down to a single 
+case of Each over scalar arguments, this is optimized down to a single 
 kernel. Depending on the options given to Rank, the computation may also 
 be reduced down to a single kernel. Power over scalars at best generates a 
 single kernel per iteration, if given a scalar argument, but generates 
@@ -203,7 +203,7 @@ unless doing very heavy computation over very small sized reductions.
 
 The scan operations (`\⍀`) are relatively difficult to parallelize, but 
 are well studied. These operations jump to `O(N×⍟N)` complexity class 
-when parallelized with associate scalar functions. With non-associative 
+when parallelized with associative scalar functions. With non-associative 
 scalar functions, then the same limitations as reductions are in force, 
 with the same complexity class. The same advice applies for non-scalar, 
 non-associative functions as applies for reductions.
@@ -229,8 +229,8 @@ The inner product operation is relatively complex. For well understood
 operations like +.×, you can generally consider this to be a single 
 optimized kernel. For less obvious cases, such as ⌊.=, these can be 
 thought of as a single scalar operation followed by a single reduction 
-operation, with the associate kernel behaviors.
+operation, with the associated kernel behaviors.
 
 For non-scalar operations as the right operand, the same limitations apply 
-as for each, and similar limitations apply for the left operand as for 
+as for Each, and similar limitations apply for the left operand as for 
 reductions.

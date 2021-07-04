@@ -69,7 +69,7 @@ When the parser fails to successfully parse a given input source, the parser upd
 
 ## Runtime API
 
-Every module that is compiled also exposes additional functionality in the Co-dfns runtime through the Runtime API. This functionality is available inside the `module.∆` namespace, where `module` is the name of the namespace linked to the compiled module. It also initializes the `module.⍙` to contain all of the exported functions declared using the raw C api, allowing for the use of the caching functions without declaring your functions manually.
+Every module that is compiled also exposes additional functionality in the Co-dfns runtime through the Runtime API. This functionality is available inside the `module.∆` namespace, where `module` is the name of the namespace linked to the compiled module. It also initializes the `module.⍙` to contain all of the exported functions declared using the raw C API, allowing for the use of the caching functions without declaring your functions manually.
 
 Expression               | Description
 ------------------------ | -----------
