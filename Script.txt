@@ -1,5 +1,5 @@
 )RESET
-BUILD
+BUILD ROOT
 )SAVE
 codfns.AF∆LIB←'cpu'
 TEST'ALL'
