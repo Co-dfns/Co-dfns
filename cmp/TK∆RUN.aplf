@@ -1,0 +1,12 @@
+ Z←{DEBUG}TK∆RUN IN;READ;SEQ;NL;ER;KW;ST;idx;stk;t;v;p
+⍝ Parameters
+⍝  TK∆RUN∆READ: Reader function for running the tokenizer
+ idx←¯1 ⋄ stk←⍬ ⋄ ⍎(0=⎕NC'DEBUG')⌿'DEBUG←0'
+ t v p←⊂⍬ ⍝ Type | Value | Position
+ ⎕FX'Z←READ' 'Z←TK∆RUN∆READ'
+ ⎕FX'NL' 't⍪←0 ⋄ v⍪←⊂'''' ⋄ p⍪←idx'
+ ⎕FX'ER N' '⎕SIGNAL N'
+ ⎕FX'KW' 't⍪←1 ⋄ v⍪←⊂1⎕C'':'',IN[stk] ⋄ p⍪←¯1+⌊⌿stk ⋄ stk←⍬'
+ ⎕FX'ST' 'stk⍪←idx'
+ TK∆SPEC
+ Z←t v p
