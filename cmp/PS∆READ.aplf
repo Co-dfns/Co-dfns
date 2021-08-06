@@ -1,0 +1,17 @@
+ Z←PS∆READ;t;v;p;f
+⍝ Parameters
+⍝  it:    Token type stream
+⍝  iv:    Token value stream
+⍝  ip:    Token position stream
+⍝  idx:   Current position in data stream
+⍝  DEBUG: Boolean, enable debugging or not
+⍝  SEQ:   Current sequence history
+ ⍎DEBUG⌿'⎕←SEQ'
+ idx+←1
+ Z←1⌿⍨f←idx≥≢it                 ⋄ →f⌿0 ⍝ ET
+ t v p←idx⊃¨it iv ip
+ Z←2⌿⍨f←(t=0)∧v≡':ENDNAMESPACE' ⋄ →f⌿0 ⍝ NE
+ Z←3⌿⍨f←t=1                     ⋄ →f⌿0 ⍝ NL
+ Z←4⌿⍨f←(t=0)∧v≡':NAMESPACE'    ⋄ →f⌿0 ⍝ NS
+ Z←5                                   ⍝ OT
+ 

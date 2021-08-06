@@ -1,0 +1,30 @@
+ PS∆SPEC
+⍝ Input
+⍝  ET: End of token stream
+⍝  NE: ":EndNamespace" token
+⍝  NL: Line separator
+⍝  NS: ":Namespace" token
+⍝  OT: Other token
+⍝ Output
+⍝  DN:   Increase AST depth by 1
+⍝  ER n: ERROR N
+⍝  F0:   Namespace root node
+⍝  UP:   Decrease AST depth by 1
+⍝ Parameter
+⍝  READ: Get the next token in stream
+⍝  SEQ:  Set to the current sequence state
+∆: SEQ←'∊' ⋄ →⎕LC+READ
+_ET:           →0
+_NE: ER 2    ⋄ →0
+_NL:           →∆
+_NS: F0 ⋄ DN ⋄ →NS∆
+_OT: ER 2    ⋄ →0
+ SEQ⎕SIGNAL 99
+
+NS∆: SEQ←'NS' ⋄ →⎕LC+READ
+NS_ET: ER 2  ⋄ →0
+NS_NE: UP    ⋄ →∆
+NS_NL:         →NS∆
+NS_NS: ER 16 ⋄ →0
+NS_OT: ER 2  ⋄ →-
+ SEQ⎕SIGNAL 99
