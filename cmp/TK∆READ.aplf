@@ -1,4 +1,4 @@
- Z←TK∆RUN∆READ;x;f
+ Z←TK∆READ;x;f
 ⍝ Parameters
 ⍝  IN:    Data stream
 ⍝  idx:   Current position in data stream
@@ -6,10 +6,10 @@
 ⍝  SEQ:   Current Sequence history
  ⍎DEBUG⌿'⎕←SEQ'
  idx+←1
- Z←4⌿⍨f←idx≥≢IN      ⋄ →f⌿0 ⍝ ET
+ Z←3⌿⍨f←idx≥≢IN      ⋄ →f⌿0 ⍝ ET
  x←IN[idx]
  Z←1⌿⍨f←(1 ⎕C x)∊⎕A  ⋄ →f⌿0 ⍝ AL
- Z←2⌿⍨f←x∊⎕ucs 10 13 ⋄ →f⌿0 ⍝ NL
- Z←3⌿⍨f←x=':'        ⋄ →f⌿0 ⍝ CO
+ Z←4⌿⍨f←x∊⎕ucs 10 13 ⋄ →f⌿0 ⍝ NL
+ Z←2⌿⍨f←x=':'        ⋄ →f⌿0 ⍝ CO
  Z←6⌿⍨f←x∊⎕UCS 9 32  ⋄ →f⌿0 ⍝ WS
  Z←5                        ⍝ OT
