@@ -1,4 +1,4 @@
- Z←{DEBUG}PS(it iv ip IN);READ;SEQ;DN;ER;F0;UP;stk;cd;d;t;k;n;ss;se;xn;xt;sym;ipx
+ Z←{DEBUG}PS(it iv ip IN);READ;SEQ;DN;ER;F0;UP;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;ipx
 ⍝ Parameters
 ⍝  PS∆READ: Reader function for running the tokenizer
  cd←0 ⋄ idx←¯1 ⋄ stk←⍬ ⋄ ⍎(0=⎕NC'DEBUG')⌿'DEBUG←0' ⋄ ipx←ip,≢IN

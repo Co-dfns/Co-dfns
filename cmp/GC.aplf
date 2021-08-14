@@ -1,18 +1,26 @@
-gck← (0 0)(0 1)(0 3)(1 0)(1 1)
-gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf'
-gck,←(2 ¯2)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)
-gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb'
-gck,←(3 ¯1)(3 0)(3 1)(3 3)
-gcv,←'Fa'  'Fz' 'Fn' 'Fn'
-gck,←(4 0)(7 0)(8 1)(8 2)(8 4) (8 5) (8 7) (8 8)
-gcv,←'Gd' 'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
-gck,←(9 0)(9 1)(9 2)(10 0)(10 1)(10 3)
-gcv,←'Pv' 'Pf' 'Po' 'Va'  'Vf'  'Vf'
-gck+←⊂1 0
-gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
-NL←⎕UCS 13 10
+ z←GC(p t k n fr sl rf fd xn sym);gck;gcv;NL;xi;d;i;I;com;ks;nam;slt;ast;Aa;As;Bf;Bv;Eb;Ed;Ei;Ek;Em;Er;Fn;Fz;Gd;Na;Ov;Of;Ovv;Ovf;Ofv;Off;Pf;Po;Pv;Zp;Va;Vf;dis
+⍝ Parameters
+⍝  deps  Dependencies for each symbol in syms
+⍝  nams  Name codes for each symbol in syms
+⍝  P2D   Converter Parent vector to depth vector
+⍝  rth   Runtime header for all modules
+⍝  rtn   Runtime code for each symbol in syms
+⍝  syms  Core instruction set of generated code
+ gck← (0 0)(0 1)(0 3)(1 0)(1 1)
+ gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf'
+ gck,←(2 ¯2)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)
+ gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb'
+ gck,←(3 ¯1)(3 0)(3 1)(3 3)
+ gcv,←'Fa'  'Fz' 'Fn' 'Fn'
+ gck,←(4 0)(7 0)(8 1)(8 2)(8 4) (8 5) (8 7) (8 8)
+ gcv,←'Gd' 'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
+ gck,←(9 0)(9 1)(9 2)(10 0)(10 1)(10 3)
+ gcv,←'Pv' 'Pf' 'Po' 'Va'  'Vf'  'Vf'
+ gck+←⊂1 0
+ gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
+ NL←⎕UCS 13 10
 
-gc←{p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0 ⋄ d i←P2D p
+ xi←⍸(t=1)∧k[rf]=0 ⋄ d i←P2D p
  I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵} ⋄  ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
  nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'(*e[',(⍕6⊃⍵),'])[',(⍕7⊃⍵),']'}
  ast←(⍉↑d p (1+t)k n(⍳≢p)fr sl fd)[i;]
@@ -78,4 +86,4 @@ gc←{p t k n fr sl rf fd xn sym←⍵ ⋄ xi←⍸(t=1)∧k[rf]=0 ⋄ d i←P2D
  z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=3)
  z,←dis¨ks ast
  z,←'E',¨('VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
- ⊃,⌿z⊣⍞←⎕UCS 10}
+ z←⊃,⌿z⊣⍞←⎕UCS 10

@@ -1,0 +1,47 @@
+﻿ BUILD ROOT;rtm;initsrc;files;sclsyms
+⍝ Parameters
+⍝  nams  Name codes for each symbol in syms
+⍝  rtn   Runtime code for each symbol in syms
+⍝  rth   Runtime header for every module
+⍝  syms  Runtime instruction set
+ ⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB←0 1 3 (3 1 0) '/opt/arrayfire' 'cuda'
+
+ P2D←{z←⍪⍳≢⍵ ⋄ d←⍵≠,z ⋄ _←{p⊣d+←⍵≠p←⍺[z,←⍵]}⍣≡⍨⍵ ⋄ d(⍋(-1+d)↑⍤0 1⊢⌽z)}
+ Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
+  cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
+  ⎕XML⍉↑d cls(⊂'')fld}
+ dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
+ dlk←{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵}
+ dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}
+ dwv←{⍵('├'dlk 0)' ─┬┌┐│'(0⌷⊢)dct(⊣⍪1↓⊢)⊃{⍺,' ',⍵}/(1+⌈/≢¨⍺){⍺↑⍵⍪⍨'│'↑⍨≢⍉⍵}¨⍺}
+ pp3←{⍺←'○' ⋄ d←(⍳≢⍵)≠⍵ ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨⍵ ⋄ lbl←⍺⍴⍨≢⍵
+  lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵                  
+  (⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}                                     
+ lb3←{⍺←⍳≢⊃⍵
+  '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
+
+ syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
+ nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
+ syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'    '⍲'   '⍱'
+ nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor'  'nan' 'nor'
+ syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'    '∊'   '⊃'
+ nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf'  'mem' 'dis'
+ syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'    '⍀'   '?'
+ nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
+ syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
+ nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
+ syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '⊆'
+ nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'nst'
+ syms,←,¨'∇'    ';'    '%u'
+ nams,←  'this' 'span' ''
+ deps←⊂¨syms
+ deps[syms⍳,¨sclsyms]←,¨¨('⍉⍴⍋',⊂'%s')∘,¨sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≠≥>∨⍱⍲~?'
+ deps[syms⍳,¨'∧⌿/.⍪⍤\↓↑']←,¨¨'∨∧' '/⌿' '¨/' '/.' ',⍪' '↑⌷⍤' '¨\' '⍳↓' '⍳↑'
+ deps[syms⍳,¨'←⌽⊖⌷⍀¨≢⊂']←,¨¨'[⊃,¨←' '|,⌽' '⌽⊖' '⍳⌷' '\⍀' '⊃,¨' '≡≢' '¨⌷⊂'
+ deps[syms⍳,¨'⊆']←,¨¨⊂'⊂⊆'
+ deps[syms⍳⊂'∘.']←⊂(,¨'¨' '∘.')
+
+ rtm←ROOT,'/rtm/'
+ initsrc←'0inc' '1mac' '2obj' '3ftp' '4utl' '5dat' '6dwa' '7api'
+ rth←∊(⎕UCS 10),⍨⍪⊃,⌿⊃¨⎕NGET¨(⊂¨rtm∘,¨initsrc,¨⊂'.c'),¨1
+ rtn←{∊(⊃⍵),¨⎕UCS 10}¨⎕NGET¨(⊂¨rtm∘,¨(nams~'this' 'span' ''),¨⊂'.c'),¨1
