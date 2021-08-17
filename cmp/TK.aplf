@@ -4,7 +4,7 @@
  idx←¯1 ⋄ stk←⍬ ⋄ ⍎(0=⎕NC'DEBUG')⌿'DEBUG←0'
  t v p←⊂⍬ ⍝ Type | Value | Position
  ⎕FX'Z←READ' 'Z←TK∆READ'
- ⎕FX'ER N' '⎕SIGNAL N'
+ ⎕FX'ER' '⎕SIGNAL 2'
  ⎕FX'KW' 't⍪←0 ⋄ v⍪←⊂1⎕C'':'',IN[stk] ⋄ p⍪←¯1+⌊⌿stk ⋄ stk←⍬'
  ⎕FX'NL' 't⍪←1 ⋄ v⍪←⊂'''' ⋄ p⍪←idx'
  ⎕FX'ST' 'stk⍪←idx'

@@ -7,7 +7,7 @@
  sym←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'
  ⎕FX'Z←READ' 'Z←PS∆READ'
  ⎕FX'DN'   'cd+←1'
- ⎕FX'ER N' '⎕SIGNAL N'
+ ⎕FX'ER'   '⎕SIGNAL 2'
  ⎕FX'F0'   'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss,←ip[idx] ⋄ se,←¯1'
  ⎕FX'UP'   'cd-←1 ⋄ se[(⌽d)⍳cd]←ipx[idx+1]'
  PS∆SPEC
