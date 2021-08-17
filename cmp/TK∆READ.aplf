@@ -1,15 +1,17 @@
- Z←TK∆READ;x;f
+ Z←TK∆READ;x;f;AL;CO;ET;NL;OT;WS
 ⍝ Parameters
 ⍝  IN:    Data stream
 ⍝  idx:   Current position in data stream
 ⍝  DEBUG: Boolean, enable debugging or not
 ⍝  SEQ:   Current Sequence history
- ⍎DEBUG⌿'⎕←SEQ'
- idx+←1
- Z←3⌿⍨f←idx≥≢IN      ⋄ →f⌿0 ⍝ ET
+ AL CO ET NL OT WS←1+⍳6
+ →START⌿⍨0=⎕NC'DEBUG'
+ ⍎DEBUG⌿'⎕←''TK: '',SEQ'
+ START:idx+←1
+ Z←ET⌿⍨f←idx≥≢IN         ⋄ →f⌿0
  x←IN[idx]
- Z←1⌿⍨f←(1 ⎕C x)∊⎕A  ⋄ →f⌿0 ⍝ AL
- Z←4⌿⍨f←x∊⎕ucs 10 13 ⋄ →f⌿0 ⍝ NL
- Z←2⌿⍨f←x=':'        ⋄ →f⌿0 ⍝ CO
- Z←6⌿⍨f←x∊⎕UCS 9 32  ⋄ →f⌿0 ⍝ WS
- Z←5                        ⍝ OT
+ Z←AL⌿⍨f←(1 ⎕C x)∊⎕A,'∆' ⋄ →f⌿0
+ Z←NL⌿⍨f←x∊⎕ucs 10 13    ⋄ →f⌿0
+ Z←CO⌿⍨f←x=':'           ⋄ →f⌿0
+ Z←WS⌿⍨f←x∊⎕UCS 9 32     ⋄ →f⌿0
+ Z←OT

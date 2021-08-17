@@ -1,14 +1,14 @@
- Z←{DEBUG}PS(it iv ip IN);READ;SEQ;DN;ER;F0;UP;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;ipx
+ Z←PS IN;READ;SEQ;DN;ER;F0;UP;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;tk;tv;tp
 ⍝ Parameters
 ⍝  PS∆READ: Reader function for running the tokenizer
- cd←0 ⋄ idx←¯1 ⋄ stk←⍬ ⋄ ⍎(0=⎕NC'DEBUG')⌿'DEBUG←0' ⋄ ipx←ip,≢IN
+ cd←0 ⋄ idx←¯1 ⋄ stk←⍬ ⋄ tk←0 ⋄ tv←0 ⋄ tp←0
 ⍝ Depth | Type | Kind | Name | Src Start | Src End | Exp Name | Exp Type
  d t k n ss se xn xt←⊂⍬
  sym←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'
  ⎕FX'Z←READ' 'Z←PS∆READ'
  ⎕FX'DN'   'cd+←1'
  ⎕FX'ER'   '⎕SIGNAL 2'
- ⎕FX'F0'   'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss,←ip[idx] ⋄ se,←¯1'
- ⎕FX'UP'   'cd-←1 ⋄ se[(⌽d)⍳cd]←ipx[idx+1]'
+ ⎕FX'F0'   'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss,←tp ⋄ se,←¯1'
+ ⎕FX'UP'   'cd-←1 ⋄ se[(⌽d)⍳cd]←idx'
  PS∆SPEC
  Z←(d t k n ss se)(xn xt)sym IN

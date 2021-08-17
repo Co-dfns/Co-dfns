@@ -2,7 +2,7 @@
 ⍝ Stimuli
 ⍝  ET: End of token stream
 ⍝  NE: ":EndNamespace" token
-⍝  NL: Line separator
+⍝  NL: Statement Separator/Newline
 ⍝  NS: ":Namespace" token
 ⍝  OT: Other token
 ⍝ Responses
@@ -13,18 +13,18 @@
 ⍝ Parameter
 ⍝  READ: Get the next token in stream
 ⍝  SEQ:  Set to the current sequence state
-∆: SEQ←'∊' ⋄ →⎕LC+READ
-_ET:           →0
+∆: SEQ←'∊'   ⋄ →⎕LC+READ
+_ET:         ⋄ →0
 _NE: ER      ⋄ →0
-_NL:           →∆
+_NL:         ⋄ →∆
 _NS: F0 ⋄ DN ⋄ →NS∆
 _OT: ER      ⋄ →0
  SEQ⎕SIGNAL 99
 
 NS∆: SEQ←'NS' ⋄ →⎕LC+READ
-NS_ET: ER    ⋄ →0
-NS_NE: UP    ⋄ →∆
-NS_NL:         →NS∆
-NS_NS: ER    ⋄ →0
-NS_OT: ER    ⋄ →-
+NS_ET: ER     ⋄ →0
+NS_NE: UP     ⋄ →∆
+NS_NL:        ⋄ →NS∆
+NS_NS: ER     ⋄ →0
+NS_OT: ER     ⋄ →0
  SEQ⎕SIGNAL 99

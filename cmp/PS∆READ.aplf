@@ -1,17 +1,19 @@
- Z←PS∆READ;t;v;p;f
+ Z←PS∆READ;f;iET;iKW;iNL;oET;oNE;oNL;oNS;oOT
 ⍝ Parameters
-⍝  it:    Token type stream
-⍝  iv:    Token value stream
-⍝  ip:    Token position stream
+⍝  tk:    Token type stream
+⍝  tv:    Token value stream
+⍝  tp:    Token position stream
 ⍝  idx:   Current position in data stream
 ⍝  DEBUG: Boolean, enable debugging or not
 ⍝  SEQ:   Current sequence history
- ⍎DEBUG⌿'⎕←SEQ'
- idx+←1
- Z←1⌿⍨f←idx≥≢it                 ⋄ →f⌿0 ⍝ ET
- t v p←idx⊃¨it iv ip
- Z←2⌿⍨f←(t=0)∧v≡':ENDNAMESPACE' ⋄ →f⌿0 ⍝ NE
- Z←3⌿⍨f←t=1                     ⋄ →f⌿0 ⍝ NL
- Z←4⌿⍨f←(t=0)∧v≡':NAMESPACE'    ⋄ →f⌿0 ⍝ NS
- Z←5                                   ⍝ OT
- 
+ iET iKW iNL←⍳3
+ oET oNE oNL oNS oOT←1+⍳5
+ →START⌿⍨0=⎕NC'DEBUG'
+ ⍎DEBUG⌿'⎕←''PS: '',SEQ'
+START:tk tv tp←TK 1
+ Z←oET⌿⍨f←tk=iET                      ⋄ →f⌿END
+ Z←oNE⌿⍨f←(tk=iKW)∧tv≡':ENDNAMESPACE' ⋄ →f⌿END
+ Z←oNL⌿⍨f←tk=iNL                      ⋄ →f⌿END
+ Z←oNS⌿⍨f←(tk=iKW)∧tv≡':NAMESPACE'    ⋄ →f⌿END
+ Z←oOT
+END:tk←Z

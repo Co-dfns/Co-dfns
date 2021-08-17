@@ -1,12 +1,17 @@
- Z←{DEBUG}TK IN;READ;SEQ;NL;ER;KW;ST;idx;stk;t;v;p
+ Z←TK KEYWORDS;READ;SEQ;NL;ER;ET;KW;RW;ST;ET∆;KW∆;NL∆;stk;t;v;p
 ⍝ Parameters
+⍝  idx:     Current reader position
+⍝  IN:      Input stream
 ⍝  TK∆READ: Reader function for running the tokenizer
- idx←¯1 ⋄ stk←⍬ ⋄ ⍎(0=⎕NC'DEBUG')⌿'DEBUG←0'
- t v p←⊂⍬ ⍝ Type | Value | Position
+ ET∆ KW∆ NL∆←⍳3
+ stk←⍬
+ t v p←0 ⍝ Type | Value | Position
  ⎕FX'Z←READ' 'Z←TK∆READ'
  ⎕FX'ER' '⎕SIGNAL 2'
- ⎕FX'KW' 't⍪←0 ⋄ v⍪←⊂1⎕C'':'',IN[stk] ⋄ p⍪←¯1+⌊⌿stk ⋄ stk←⍬'
- ⎕FX'NL' 't⍪←1 ⋄ v⍪←⊂'''' ⋄ p⍪←idx'
+ ⎕FX'ET' 't←ET∆ ⋄ v←0 ⋄ p←idx'
+ ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←¯1+⌊⌿stk ⋄ stk←⍬'
+ ⎕FX'NL' 't←NL∆ ⋄ v←'''' ⋄ p←idx'
+ ⎕FX'RW' 'idx-←1'
  ⎕FX'ST' 'stk⍪←idx'
  TK∆SPEC
- Z←t v p IN
+ Z←t v p

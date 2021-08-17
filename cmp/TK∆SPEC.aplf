@@ -8,44 +8,37 @@
 ⍝  WS: Whitespace -- Tab, space 
 ⍝ Responses
 ⍝  ER: Error
-⍝  KW: Keyword
-⍝  NL: Newline
-⍝  ST: Store data
+⍝  ET: End of Stream
+⍝  KW: Keyword Begins
+⍝  NL: Newline/Statement Separator
+⍝  RW: Rewind reader
+⍝  ST: Store Data
 ⍝ Parameters
 ⍝  READ: Get the next event/token in the sequence
 ⍝  SEQ:  Set to the current sequence state we are in
 ∆:SEQ←'∊' ⋄ →⎕LC+READ
-_AL: ER    ⋄ →0
-_CO:       ⋄ →CO∆
-_ET:       ⋄ →0
-_NL: NL    ⋄ →∆
-_OT: ER    ⋄ →0
-_WS:       ⋄ →∆
+_AL: ER   ⋄ →0
+_CO:      ⋄ →CO∆
+_ET: ET   ⋄ →0
+_NL: NL   ⋄ →0
+_OT: ER   ⋄ →0
+_WS:      ⋄ →∆
  SEQ⎕SIGNAL 99
 
 CO∆:SEQ←'CO' ⋄ →⎕LC+READ
-CO_AL: ST   ⋄ →CO_AL∆
-CO_CO: ER   ⋄ →0
-CO_ET: ER   ⋄ →0
-CO_NL: ER   ⋄ →0
-CO_OT: ER   ⋄ →0
-CO_WS: ER   ⋄ →0
+CO_AL: ST    ⋄ →CO_AL∆
+CO_CO: ER    ⋄ →0
+CO_ET: ER    ⋄ →0
+CO_NL: ER    ⋄ →0
+CO_OT: ER    ⋄ →0
+CO_WS: ER    ⋄ →0
  SEQ⎕SIGNAL 99
 
 CO_AL∆:SEQ←'CO AL' ⋄ →⎕LC+READ
 CO_AL_AL: ST       ⋄ →CO_AL∆
-CO_AL_CO: ER       ⋄ →0
+CO_AL_CO: KW ⋄ RW  ⋄ →0
 CO_AL_ET: KW       ⋄ →0
-CO_AL_NL: KW ⋄ NL  ⋄ →∆
+CO_AL_NL: KW ⋄ RW  ⋄ →0
 CO_AL_OT: ER       ⋄ →0
-CO_AL_WS: KW       ⋄ →CO_AL_WS∆
- SEQ⎕SIGNAL 99
-
-CO_AL_WS∆:SEQ←'CO AL WS' ⋄ →⎕LC+READ
-CO_AL_WS_AL: ER    ⋄ →0
-CO_AL_WS_CO: ER    ⋄ →0
-CO_AL_WS_ET:       ⋄ →0
-CO_AL_WS_NL: NL    ⋄ →∆
-CO_AL_WS_OT: ER    ⋄ →0
-CO_AL_WS_WS:       ⋄ →CO_AL_WS∆
+CO_AL_WS: KW       ⋄ →0
  SEQ⎕SIGNAL 99
