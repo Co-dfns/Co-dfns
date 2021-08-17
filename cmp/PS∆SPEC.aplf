@@ -1,11 +1,11 @@
  PS∆SPEC
-⍝ Input
+⍝ Stimuli
 ⍝  ET: End of token stream
 ⍝  NE: ":EndNamespace" token
 ⍝  NL: Line separator
 ⍝  NS: ":Namespace" token
 ⍝  OT: Other token
-⍝ Output
+⍝ Responses
 ⍝  DN:   Increase AST depth by 1
 ⍝  ER:   ERROR
 ⍝  F0:   Namespace root node

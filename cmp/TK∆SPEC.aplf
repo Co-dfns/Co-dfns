@@ -1,12 +1,12 @@
  TK∆SPEC
-⍝ Input 
+⍝ Stimuli
 ⍝  AL: Alphabetic Character
 ⍝  CO: Colon
 ⍝  ET: End of input
 ⍝  NL: CR or LF
 ⍝  OT: Other character
 ⍝  WS: Whitespace -- Tab, space 
-⍝ Output
+⍝ Responses
 ⍝  ER: Error
 ⍝  KW: Keyword
 ⍝  NL: Newline
