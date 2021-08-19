@@ -1,4 +1,4 @@
-﻿:Namespace util
+:Namespace util
 
 ⍝ Boxed display of array.
 display←{⎕IO ⎕ML←0 1

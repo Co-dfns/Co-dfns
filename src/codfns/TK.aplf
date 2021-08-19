@@ -5,7 +5,7 @@
 ⍝  TK∆READ: Reader function for running the tokenizer
  ET∆ EX∆ KW∆ NL∆←⍳4
  XDF XGT XNM←⍳3
- stk←⍬ ⋄ xt xv xp←⍬ ⍬ (0 2⍴⍬)
+ stk←⍬ ⋄ xt xv xp←⍬ ⍬(0 2⍴⍬)
  t v p←0 ⍝ Type | Value | Position
  e←⍬ ⍬   ⍝ Export Names | Exported Types
  ⎕FX'Z←READ' 'Z←TK∆READ'

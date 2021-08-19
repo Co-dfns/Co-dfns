@@ -1,4 +1,4 @@
-﻿:NameSpace UT
+:NameSpace UT
 
     ⎕IO ← 1
     sac ← 0
