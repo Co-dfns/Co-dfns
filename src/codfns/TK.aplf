@@ -1,17 +1,18 @@
- Z←TK KEYWORDS;READ;SEQ;NL;ER;ET;KW;RW;ST;ET∆;KW∆;NL∆;stk;t;v;p
+ Z←TK KEYWORDS;READ;SEQ;NL;ER;ET;KW;RW;ST;ET∆;EX∆;KW∆;NL∆;stk;t;v;p;e
 ⍝ Parameters
 ⍝  idx:     Current reader position
 ⍝  IN:      Input stream
 ⍝  TK∆READ: Reader function for running the tokenizer
- ET∆ KW∆ NL∆←⍳3
+ ET∆ EX∆ KW∆ NL∆←⍳4
  stk←⍬
  t v p←0 ⍝ Type | Value | Position
+ e←⍬ ⍬   ⍝ Export Names | Exported Types
  ⎕FX'Z←READ' 'Z←TK∆READ'
  ⎕FX'ER' '⎕SIGNAL 2'
- ⎕FX'ET' 't←ET∆ ⋄ v←0 ⋄ p←idx'
- ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←¯1+⌊⌿stk ⋄ stk←⍬'
- ⎕FX'NL' 't←NL∆ ⋄ v←'''' ⋄ p←idx'
+ ⎕FX'ET' 't←ET∆ ⋄ v←0 ⋄ p←idx,idx'
+ ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←(¯1 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬'
+ ⎕FX'NL' 't←NL∆ ⋄ v←'''' ⋄ p←idx,idx+1'
  ⎕FX'RW' 'idx-←1'
  ⎕FX'ST' 'stk⍪←idx'
  TK∆SPEC
- Z←t v p
+ Z←t v p e
