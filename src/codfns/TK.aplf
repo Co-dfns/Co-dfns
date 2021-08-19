@@ -1,18 +1,22 @@
- Z←TK KEYWORDS;READ;SEQ;NL;ER;ET;KW;RW;ST;ET∆;EX∆;KW∆;NL∆;stk;t;v;p;e
+ Z←TK KEYWORDS;READ;SEQ;DF;ER;ET;EX;GT;KW;NL;NM;ST;ET∆;EX∆;KW∆;NL∆;stk;t;v;p;e;xt;xv;xp;XDF;XGT;XNM
 ⍝ Parameters
 ⍝  idx:     Current reader position
 ⍝  IN:      Input stream
 ⍝  TK∆READ: Reader function for running the tokenizer
  ET∆ EX∆ KW∆ NL∆←⍳4
- stk←⍬
+ XDF XGT XNM←⍳3
+ stk←⍬ ⋄ xt xv xp←⍬ ⍬ (0 2⍴⍬)
  t v p←0 ⍝ Type | Value | Position
  e←⍬ ⍬   ⍝ Export Names | Exported Types
  ⎕FX'Z←READ' 'Z←TK∆READ'
+ ⎕FX'DF;ss;se' 'xt,←XDF ⋄ ss←idx ⋄ xv,←⊂PD ⋄ se←idx ⋄ xp⍪←ss se'
  ⎕FX'ER' '⎕SIGNAL 2'
  ⎕FX'ET' 't←ET∆ ⋄ v←0 ⋄ p←idx,idx'
- ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←(¯1 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬'
+ ⎕FX'EX' 't←EX∆ ⋄ v e←e PX xt xv xp ⋄ p←(⊃,⊢⌿),tp ⋄ idx-←1'
+ ⎕FX'GT' 'xt,←XGT ⋄ xv,←0 ⋄ xp⍪←idx,idx+1'
+ ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←(¯1 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬ ⋄ idx-←1'
  ⎕FX'NL' 't←NL∆ ⋄ v←'''' ⋄ p←idx,idx+1'
- ⎕FX'RW' 'idx-←1'
+ ⎕FX'NM' 'xt,←XNM ⋄ xv,←IN[stk] ⋄ xp⍪←(0 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬'
  ⎕FX'ST' 'stk⍪←idx'
  TK∆SPEC
  Z←t v p e

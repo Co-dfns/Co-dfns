@@ -1,44 +1,78 @@
  TK∆SPEC
 ⍝ Stimuli
-⍝  AL: Alphabetic Character
+⍝  AL: Alphabetic, including ∆
 ⍝  CO: Colon
+⍝  DG: Digit
 ⍝  ET: End of input
+⍝  GT: ←
+⍝  LB: {
 ⍝  NL: CR or LF
 ⍝  OT: Other character
 ⍝  WS: Whitespace -- Tab, space 
 ⍝ Responses
+⍝  DF: D-fns (launch dfns parser)
 ⍝  ER: Error
 ⍝  ET: End of Stream
-⍝  KW: Keyword Begins
+⍝  EX: Expression (launch expression parser)
+⍝  GT: Gets
+⍝  KW: Keyword
 ⍝  NL: Newline/Statement Separator
-⍝  RW: Rewind reader
+⍝  NM: Name/Symbol
 ⍝  ST: Store Data
 ⍝ Parameters
 ⍝  READ: Get the next event/token in the sequence
 ⍝  SEQ:  Set to the current sequence state we are in
 ∆:SEQ←'∊' ⋄ →⎕LC+READ
-_AL: ER   ⋄ →0
+_AL: ST   ⋄ →AL∆
 _CO:      ⋄ →CO∆
+_DG: ER   ⋄ →0
 _ET: ET   ⋄ →0
+_GT: GT   ⋄ →GT∆
+_LB: DF   ⋄ →GT∆
 _NL: NL   ⋄ →0
 _OT: ER   ⋄ →0
 _WS:      ⋄ →∆
- SEQ⎕SIGNAL 99
+
+AL∆:SEQ←'AL'        ⋄ →⎕LC+READ
+AL_AL: ST           ⋄ →AL∆
+AL_CO: NM ⋄ EX      ⋄ →0
+AL_DG: ST           ⋄ →AL∆
+AL_ET: NM ⋄ EX      ⋄ →0
+AL_GT: NM ⋄ GT      ⋄ →GT∆
+AL_LB: NM ⋄ DF      ⋄ →GT∆
+AL_NL: NM ⋄ EX      ⋄ →0
+AL_OT: ER           ⋄ →0
+AL_WS: NM           ⋄ →GT∆
 
 CO∆:SEQ←'CO' ⋄ →⎕LC+READ
 CO_AL: ST    ⋄ →CO_AL∆
 CO_CO: ER    ⋄ →0
+CO_DG: ER    ⋄ →0
 CO_ET: ER    ⋄ →0
+CO_GT: ER    ⋄ →0
+CO_LB: ER    ⋄ →0
 CO_NL: ER    ⋄ →0
 CO_OT: ER    ⋄ →0
 CO_WS: ER    ⋄ →0
- SEQ⎕SIGNAL 99
+
+GT∆:SEQ←'GT'   ⋄ →⎕LC+READ
+GT_AL: ST      ⋄ →AL∆
+GT_CO: EX      ⋄ →0
+GT_DG: ER      ⋄ →0
+GT_ET: EX      ⋄ →0
+GT_GT: GT      ⋄ →GT∆
+GT_LB: DF      ⋄ →GT∆
+GT_NL: EX      ⋄ →0
+GT_OT: ER      ⋄ →0
+GT_WS:         ⋄ →GT∆
 
 CO_AL∆:SEQ←'CO AL' ⋄ →⎕LC+READ
 CO_AL_AL: ST       ⋄ →CO_AL∆
-CO_AL_CO: KW ⋄ RW  ⋄ →0
+CO_AL_CO: KW       ⋄ →0
+CO_AL_DG: ST       ⋄ →CO_AL∆
 CO_AL_ET: KW       ⋄ →0
-CO_AL_NL: KW ⋄ RW  ⋄ →0
+CO_AL_GT: KW       ⋄ →0
+CO_AL_LB: KW       ⋄ →0
+CO_AL_NL: KW       ⋄ →0
 CO_AL_OT: ER       ⋄ →0
 CO_AL_WS: KW       ⋄ →0
- SEQ⎕SIGNAL 99
