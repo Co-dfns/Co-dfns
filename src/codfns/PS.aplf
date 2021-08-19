@@ -1,4 +1,4 @@
- Z←PS IN;READ;SEQ;DN;ER;F0;UP;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;tk;tv;tp;te
+ Z←PS IN;READ;SEQ;DN;ER;EX;F0;UP;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;tk;tv;tp;te
 ⍝ Parameters
 ⍝  PS∆READ: Reader function for running the tokenizer
  cd←0 ⋄ idx←¯1 ⋄ stk←⍬ ⋄ tk←0 ⋄ tv←0 ⋄ tp←¯1 0 ⋄ te←⍬ ⍬
