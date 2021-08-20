@@ -16,7 +16,7 @@
  ⎕FX'GT' 'xt,←XGT ⋄ xv,←0 ⋄ xp⍪←idx,idx+1'
  ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←(¯1 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬ ⋄ idx-←1'
  ⎕FX'NL' 't←NL∆ ⋄ v←'''' ⋄ p←idx,idx+1'
- ⎕FX'NM' 'xt,←XNM ⋄ xv,←IN[stk] ⋄ xp⍪←(0 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬'
+ ⎕FX'NM' 'xt,←XNM ⋄ xv,←⊂IN[stk] ⋄ xp⍪←(0 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬'
  ⎕FX'ST' 'stk⍪←idx'
  TK∆SPEC
  Z←t v p e
