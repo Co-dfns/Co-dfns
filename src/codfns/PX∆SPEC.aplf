@@ -1,0 +1,52 @@
+ PX∆SPEC
+⍝ STIMULI
+⍝  BD: ← (dfns context)
+⍝  BT: ← (trad-fns context)
+⍝  DF: User-defined dfn function
+⍝  ET: End of token stream
+⍝  VU: Unbound variable
+⍝ RESPONSES
+⍝  BF: Function binding
+⍝  DF: User-defined dfns function
+⍝  ER: ERROR
+⍝  VU: Unbound name
+⍝ PARAMETERS
+⍝  READ: Get the next event/token in the sequence
+⍝  SEQ:  Set to the current sequence state we are in 
+∆: SEQ←'∊' ⋄ →⎕LC+READ
+_BD: ER    ⋄ →0
+_BT: ER    ⋄ →0
+_DF: DF    ⋄ →DF∆
+_ET:       ⋄ →0
+_VU: VU    ⋄ →VU∆
+
+DF∆: SEQ←'DF' ⋄ →⎕LC+READ
+DF_BD: ER     ⋄ →0
+DF_BT:        ⋄ →DF_BT∆
+DF_DF: ER     ⋄ →0
+DF_ET:        ⋄ →0
+DF_VU: ER     ⋄ →0
+
+VU∆: SEQ←'VU' ⋄ →⎕LC+READ
+VU_BD: ER     ⋄ →0
+VU_BT: ER     ⋄ →0
+VU_DF: ER     ⋄ →0
+VU_ET:        ⋄ →0
+VU_VU: ER     ⋄ →0
+
+DF_BT∆: SEQ←'DF BT' ⋄ →⎕LC+READ
+DF_BT_BD: ER        ⋄ →0
+DF_BT_BT: ER        ⋄ →0
+DF_BT_DF: ER        ⋄ →0
+DF_BT_ET: ER        ⋄ →0
+DF_BT_VU: BF        ⋄ →DF_BT_VU∆
+
+DF_BT_VU∆: SEQ←'DF BT VU' ⋄ →⎕LC+READ
+DF_BT_VU_BD: ER           ⋄ →0
+DF_BT_VU_BT: ER           ⋄ →0
+DF_BT_VU_DF: ER           ⋄ →0
+DF_BT_VU_ET:              ⋄ →0
+DF_BT_VU_VU: ER           ⋄ →0
+
+
+ 
