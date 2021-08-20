@@ -1,5 +1,5 @@
  TK∆SPEC
-⍝ Stimuli
+⍝ STIMULI
 ⍝  AL: Alphabetic, including ∆
 ⍝  CO: Colon
 ⍝  DG: Digit
@@ -9,7 +9,7 @@
 ⍝  NL: CR or LF
 ⍝  OT: Other character
 ⍝  WS: Whitespace -- Tab, space 
-⍝ Responses
+⍝ RESPONSES
 ⍝  DF: D-fns (launch dfns parser)
 ⍝  ER: Error
 ⍝  ET: End of Stream
@@ -19,7 +19,7 @@
 ⍝  NL: Newline/Statement Separator
 ⍝  NM: Name/Symbol
 ⍝  ST: Store Data
-⍝ Parameters
+⍝ PARAMETERS
 ⍝  READ: Get the next event/token in the sequence
 ⍝  SEQ:  Set to the current sequence state we are in
 ∆:SEQ←'∊' ⋄ →⎕LC+READ

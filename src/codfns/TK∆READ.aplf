@@ -1,5 +1,5 @@
  Z←TK∆READ;x;f;AL;CO;DG;ET;GT;LB;NL;OT;WS
-⍝ Parameters
+⍝ PARAMETERS
 ⍝  IN:    Data stream
 ⍝  idx:   Current position in data stream
 ⍝  DEBUG: Boolean, enable debugging or not

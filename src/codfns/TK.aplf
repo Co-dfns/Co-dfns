@@ -1,5 +1,5 @@
- Z←TK KEYWORDS;READ;SEQ;DF;ER;ET;EX;GT;KW;NL;NM;ST;ET∆;EX∆;KW∆;NL∆;stk;t;v;p;e;xt;xv;xp;XDF;XGT;XNM
-⍝ Parameters
+ Z←TK ISDFN;READ;SEQ;DF;ER;ET;EX;GT;KW;NL;NM;ST;ET∆;EX∆;KW∆;NL∆;stk;t;v;p;e;xt;xv;xp;XDF;XGT;XNM
+⍝ PARAMETERS
 ⍝  idx:     Current reader position
 ⍝  IN:      Input stream
 ⍝  TK∆READ: Reader function for running the tokenizer

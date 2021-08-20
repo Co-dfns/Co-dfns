@@ -1,5 +1,5 @@
  Z←PS∆READ;f;iET;iEX;iKW;iNL;oET;oEX;oNE;oNL;oNS
-⍝ Parameters
+⍝ PARAMETERS
 ⍝  tk:    Token type
 ⍝  tv:    Token value
 ⍝  tp:    Token position

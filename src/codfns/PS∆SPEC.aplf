@@ -1,17 +1,17 @@
  PS∆SPEC
-⍝ Stimuli
+⍝ STIMULI
 ⍝  ET: End of token stream
 ⍝  EX: Expression
 ⍝  NE: ":EndNamespace" token
 ⍝  NL: Statement Separator/Newline
 ⍝  NS: ":Namespace" token
-⍝ Responses
+⍝ RESPONSES
 ⍝  DN: Increase AST depth by 1
 ⍝  ER: ERROR
 ⍝  EX: Expression
 ⍝  F0: Namespace root node
 ⍝  UP: Decrease AST depth by 1
-⍝ Parameter
+⍝ PARAMETERS
 ⍝  READ: Get the next token in stream
 ⍝  SEQ:  Set to the current sequence state
 ∆: SEQ←'∊'   ⋄ →⎕LC+READ
