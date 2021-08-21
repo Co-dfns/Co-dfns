@@ -12,7 +12,7 @@
  oET oEX oNE oNL oNS←1+⍳5
  →START⌿⍨0=⎕NC'DEBUG'
  ⍎DEBUG⌿'⎕←''PS: '',SEQ'
-START:tk tv tp te←TK 0
+START:tk tv tp te←te TK 0
  Z←oET⌿⍨f←tk=iET                      ⋄ →f⌿END
  Z←oEX⌿⍨f←tk=iEX                      ⋄ →f⌿END
  Z←oNE⌿⍨f←(tk=iKW)∧tv≡':ENDNAMESPACE' ⋄ →f⌿END

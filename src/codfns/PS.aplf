@@ -1,15 +1,15 @@
- Z←PS IN;READ;SEQ;DN;ER;EX;F0;UP;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;tk;tv;tp;te
+ Z←PS IN;READ;SEQ;ER;EX;NE;NN;NS;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;tk;tv;tp;te
 ⍝ PARAMETERS
 ⍝  PS∆READ: Reader function for running the tokenizer
- cd←0 ⋄ idx←¯1 ⋄ stk←⍬ ⋄ tk←0 ⋄ tv←0 ⋄ tp←¯1 0 ⋄ te←⍬ ⍬
+ idx←¯1 ⋄ cd←0 ⋄ stk←⍬ ⋄ tk←0 ⋄ tv←0 ⋄ tp←¯1 0 ⋄ te←⍬ ⍬
 ⍝ Depth | Type | Kind | Name | Src Start | Src End | Exp Name | Exp Type
- d t k n ss se xn xt←⊂⍬
+ d t k n ss se←⊂⍬
  sym←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'
  ⎕FX'Z←READ' 'Z←PS∆READ'
- ⎕FX'DN' 'cd+←1'
  ⎕FX'ER' '⎕SIGNAL 2'
- ⎕FX'EX' 'd t k n,←cd+@0⊢tv ⋄ ss se,←tp ⋄ xn xt,←te'
- ⎕FX'F0' 'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss se,←tp'
- ⎕FX'UP' 'cd-←1 ⋄ se[(⌽d)⍳cd]←⊃⌽tp'
+ ⎕FX'EX' 'd t k n ss se,←cd+@0⊢tv'
+ ⎕FX'NE' 'cd-←1 ⋄ se[(≢d)-1+(⌽d)⍳cd]←⊃⌽tp'
+ ⎕FX'NN;td;tt;tk;tn' 'td tt tk tn←4↑tv' '⎕SIGNAL 2⌿⍨(1≠≢td)∨0 10 0≢⊃¨td tt tk' '(⊃⌽n)←⊃tn'
+ ⎕FX'NS' 'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss se,←tp ⋄ cd+←1'
  PS∆SPEC
- Z←(d t k n ss se)(xn xt)sym IN
+ Z←(d t k n ss se)te sym IN

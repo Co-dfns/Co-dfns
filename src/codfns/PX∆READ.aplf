@@ -16,9 +16,9 @@
  ⍎DEBUG⌿'⎕←''PX: '',SEQ'
 START:idx+←1
  Z←oET⌿⍨f←idx≥≢xt          ⋄ →f⌿0
- t v p←idx⊃¨xt xv xp
+ t←idx⊃xt ⋄ v←idx⊃xv
  Z←oBD⌿⍨f←ISDFN∧t=iGT      ⋄ →f⌿0
- Z←oBt⌿⍨f←(~ISDFN)∧t=iGT   ⋄ →f⌿0
+ Z←oBT⌿⍨f←(~ISDFN)∧t=iGT   ⋄ →f⌿0
  Z←oDF⌿⍨f←t=iDF            ⋄ →f⌿0
  Z←oVU⌿⍨f←(t=iNM)∧~enm∊⍨⊂v ⋄ →f⌿0
  SEQ,←' OT' ⋄ ER

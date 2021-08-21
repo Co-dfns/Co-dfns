@@ -6,11 +6,11 @@
 ⍝  NL: Statement Separator/Newline
 ⍝  NS: ":Namespace" token
 ⍝ RESPONSES
-⍝  DN: Increase AST depth by 1
 ⍝  ER: ERROR
 ⍝  EX: Expression
-⍝  F0: Namespace root node
-⍝  UP: Decrease AST depth by 1
+⍝  NE: Namespace End
+⍝  NN: Namespace name
+⍝  NS: Namespace Begin
 ⍝ PARAMETERS
 ⍝  READ: Get the next token in stream
 ⍝  SEQ:  Set to the current sequence state
@@ -19,19 +19,26 @@ _ET:         ⋄ →0
 _EX: ER      ⋄ →0
 _NE: ER      ⋄ →0
 _NL:         ⋄ →∆
-_NS:         ⋄ →NS∆
+_NS: NS      ⋄ →NS∆
 
 NS∆: SEQ←'NS'  ⋄ →⎕LC+READ
 NS_ET: ER      ⋄ →0
-NS_EX: ER      ⋄ →0
+NS_EX: NN      ⋄ →NS_EX∆
 NS_NE: ER      ⋄ →0
-NS_NL: F0 ⋄ DN ⋄ →NS_NL∆
+NS_NL:         ⋄ →NS_NL∆
 NS_NS: ER      ⋄ →0
+
+NS_EX∆: SEQ←'NS EX' ⋄ →⎕LC+READ
+NS_EX_ET: ER        ⋄ →0
+NS_EX_EX: ER        ⋄ →0
+NS_EX_NE: ER        ⋄ →0
+NS_EX_NL:           ⋄ →NS_NL∆
+NS_EX_NS: ER        ⋄ →NS∆
 
 NS_NL∆: SEQ←'NS NL' ⋄ →⎕LC+READ
 NS_NL_ET: ER ⋄ →0
 NS_NL_EX: EX ⋄ →NS_NL_EX∆
-NS_NL_NE: UP ⋄ →∆
+NS_NL_NE: NE ⋄ →∆
 NS_NL_NL:    ⋄ →NS_NL∆
 NS_NL_NS: ER ⋄ →0
 

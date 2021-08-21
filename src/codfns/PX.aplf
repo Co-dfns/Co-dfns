@@ -1,0 +1,17 @@
+ Z←env PX(xt xv xp);idx;READ;SEQ;BF;DF;ER;stk;enm;etp;_
+⍝ PARAMETERS
+⍝  PX∆READ: Reader function
+ A∆ B∆ E∆ F∆ G∆ L∆ M∆ N∆ O∆ P∆ V∆ Z∆←⍳12
+ idx←¯1 ⋄ stk←⍬ ⋄ enm etp←env ⋄ xt xv xp←⊖¨xt xv xp
+ ⎕FX'Z←READ' 'Z←PX∆READ'
+ _ ←⊂'BF;fn;nm;vs;ve'
+ _,←⊂'(fn(_ _ _ nm vs ve))←¯2↑stk'
+ _,←⊂'stk←(¯2↓stk),⊂(0 B∆ 1(⊂nm),(⌊⌿vs,4⊃fn),⌈⌿ve,5⊃fn),¨1+@0⊢fn'
+ _,←⊂'enm←(⊂nm),enm ⋄ etp←2,etp'
+ ⎕FX _
+ ⎕FX'DF' 'stk,←⊂idx⊃xv'
+ ⎕FX'ER' '⎕SIGNAL 2'
+ ⎕FX'VU' 'stk,←⊂,¨0 V∆ 0,xv[idx],xp[idx;]'
+ PX∆SPEC
+ 'NON-SINGLETON STACK'⎕SIGNAL 99⌿⍨1≠≢stk
+ Z←(⊃stk)(enm etp)
