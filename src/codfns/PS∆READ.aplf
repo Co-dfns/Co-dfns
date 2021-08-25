@@ -1,14 +1,13 @@
- Z←PS∆READ;f;iET;iEX;iKW;iNL;oET;oEX;oNE;oNL;oNS
+ Z←PS∆READ;f;iET;iEX;iIF;iKW;iNL;iRB;oET;oEX;oNE;oNL;oNS
 ⍝ PARAMETERS
 ⍝  tk:    Token type
 ⍝  tv:    Token value
 ⍝  tp:    Token position
 ⍝  te:    Token environment
-⍝  idx:   Current position in data stream
 ⍝  DEBUG: Boolean, enable debugging or not
 ⍝  SEQ:   Current sequence history
 ⍝  ER:    ERROR
- iET iEX iKW iNL←⍳4
+ iET iEX iIF iKW iNL iRB←⍳6
  oET oEX oNE oNL oNS←1+⍳5
  →START⌿⍨0=⎕NC'DEBUG'
  ⍎DEBUG⌿'⎕←''PS: '',SEQ'
