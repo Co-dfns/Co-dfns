@@ -13,5 +13,5 @@
  ⎕FX'ER' '⎕SIGNAL 2'
  ⎕FX'VU' 'stk,←⊂,¨0 V∆ 0,xv[idx],xp[idx;]'
  PX∆SPEC
- 'NON-SINGLETON STACK'⎕SIGNAL 99⌿⍨1≠≢stk
+ 'SYSERR: NON-SINGLETON STACK'⎕SIGNAL 99⌿⍨1≠≢stk
  Z←(⊃stk)(enm etp)
