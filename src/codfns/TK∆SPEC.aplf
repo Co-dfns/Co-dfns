@@ -1,13 +1,15 @@
  TK∆SPEC
 ⍝ STIMULI
 ⍝  AL: Alphabetic, including ∆
-⍝  CO: Colon
+⍝  CO: Colon, trad-fns
 ⍝  DG: Digit
 ⍝  ET: End of input
 ⍝  GT: ←
+⍝  IF: Colon, dfns
 ⍝  LB: {
 ⍝  NL: CR or LF
 ⍝  OT: Other character
+⍝  RB: }
 ⍝  WS: Whitespace -- Tab, space 
 ⍝ RESPONSES
 ⍝  DF: D-fns (launch dfns parser)
@@ -15,9 +17,11 @@
 ⍝  ET: End of Stream
 ⍝  EX: Expression (launch expression parser)
 ⍝  GT: Gets
+⍝  IF: dfns guard token
 ⍝  KW: Keyword
 ⍝  NL: Newline/Statement Separator
 ⍝  NM: Name/Symbol
+⍝  RB: Right brace token
 ⍝  ST: Store Data
 ⍝ PARAMETERS
 ⍝  READ: Get the next event/token in the sequence
@@ -28,9 +32,11 @@ _CO:      ⋄ →CO∆
 _DG: ER   ⋄ →0
 _ET: ET   ⋄ →0
 _GT: GT   ⋄ →GT∆
+_IF: IF   ⋄ →0
 _LB: DF   ⋄ →GT∆
 _NL: NL   ⋄ →0
 _OT: ER   ⋄ →0
+_RB: RB   ⋄ →0
 _WS:      ⋄ →∆
 
 AL∆:SEQ←'AL'        ⋄ →⎕LC+READ
@@ -39,9 +45,11 @@ AL_CO: NM ⋄ EX      ⋄ →0
 AL_DG: ST           ⋄ →AL∆
 AL_ET: NM ⋄ EX      ⋄ →0
 AL_GT: NM ⋄ GT      ⋄ →GT∆
+AL_IF: NM ⋄ EX      ⋄ →0
 AL_LB: NM ⋄ DF      ⋄ →GT∆
 AL_NL: NM ⋄ EX      ⋄ →0
 AL_OT: ER           ⋄ →0
+AL_RB: NM ⋄ EX      ⋄ →0
 AL_WS: NM           ⋄ →GT∆
 
 CO∆:SEQ←'CO' ⋄ →⎕LC+READ
@@ -50,9 +58,11 @@ CO_CO: ER    ⋄ →0
 CO_DG: ER    ⋄ →0
 CO_ET: ER    ⋄ →0
 CO_GT: ER    ⋄ →0
+CO_IF: ER    ⋄ →0
 CO_LB: ER    ⋄ →0
 CO_NL: ER    ⋄ →0
 CO_OT: ER    ⋄ →0
+CO_RB: ER    ⋄ →0
 CO_WS: ER    ⋄ →0
 
 GT∆:SEQ←'GT'   ⋄ →⎕LC+READ
@@ -61,9 +71,11 @@ GT_CO: EX      ⋄ →0
 GT_DG: ER      ⋄ →0
 GT_ET: EX      ⋄ →0
 GT_GT: GT      ⋄ →GT∆
+GT_IF: EX      ⋄ →0
 GT_LB: DF      ⋄ →GT∆
 GT_NL: EX      ⋄ →0
 GT_OT: ER      ⋄ →0
+GT_RB: EX      ⋄ →0
 GT_WS:         ⋄ →GT∆
 
 CO_AL∆:SEQ←'CO AL' ⋄ →⎕LC+READ
@@ -72,7 +84,9 @@ CO_AL_CO: KW       ⋄ →0
 CO_AL_DG: ST       ⋄ →CO_AL∆
 CO_AL_ET: KW       ⋄ →0
 CO_AL_GT: KW       ⋄ →0
+CO_AL_IF: KW       ⋄ →0
 CO_AL_LB: KW       ⋄ →0
 CO_AL_NL: KW       ⋄ →0
 CO_AL_OT: ER       ⋄ →0
+CO_AL_RB: KW       ⋄ →0
 CO_AL_WS: KW       ⋄ →0
