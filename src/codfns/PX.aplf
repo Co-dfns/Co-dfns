@@ -9,11 +9,11 @@
  _,←⊂'''SYSERR: DF NOT FOUND''⎕SIGNAL 99⌿⍨(t≠3)∨(k≠1)'
  _,←⊂'bn←,∘⊂¨0 B∆ 1,xv[idx],xp[idx;0],se[0]'
  _,←⊂'stk←(¯2↓stk),⊂bn⍪¨1+@0⊢fn'
- _,←⊂'enm←xv[idx]⍪enm ⋄ etp←2⍪etp'
+ _,←⊂'enm←xv[idx]⍪enm ⋄ etp←1⍪etp'
  ⎕FX _
  ⎕FX'DF' 'stk,←⊂idx⊃xv'
  ⎕FX'ER' '⎕SIGNAL 2'
- ⎕FX'VU' 'stk,←⊂,¨0 V∆ 0,xv[idx],xp[idx;]'
+ ⎕FX'VU' 'stk,←⊂,¨0 V∆ ¯1,xv[idx],xp[idx;]'
  PX∆SPEC
  'SYSERR: NON-SINGLETON STACK'⎕SIGNAL 99⌿⍨1≠≢stk
  Z←(⊃stk)(enm etp)

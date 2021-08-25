@@ -8,7 +8,7 @@
  ⎕FX'ER' '⎕SIGNAL 2'
  ⎕FX'EX' 'd t k n ss se,←cd+@0⊢tv'
  ⎕FX'NE' 'cd-←1 ⋄ se[(≢d)-1+(⌽d)⍳cd]←⊃⌽tp'
- ⎕FX'NN;td;tt;tk;tn' 'td tt tk tn←4↑tv' '⎕SIGNAL 2⌿⍨(1≠≢td)∨0 10 0≢⊃¨td tt tk' '(⊃⌽n)←tn'
+ ⎕FX'NN;td;tt;tk;tn' 'td tt tk tn←4↑tv' '⎕SIGNAL 2⌿⍨(1≠≢td)∨0 10 ¯1≢⊃¨td tt tk' '(⊃⌽n)←tn'
  ⎕FX'NS' 'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss se,←tp ⋄ cd+←1'
  PS∆SPEC
  sym←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
