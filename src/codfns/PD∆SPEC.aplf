@@ -1,0 +1,14 @@
+ PD∆SPEC
+⍝ STIMULI
+⍝  ET: End of stream
+⍝  RB: Right Brace
+⍝ RESPONSES
+⍝  DF: Dfn node
+⍝  ER: ERROR
+⍝ PARAMETERS
+⍝  READ: Get the next token in stream
+⍝  SEQ:  Set to the current sequence state
+∆: SEQ←'∊' ⋄ →⎕LC+READ
+_ET: ER    ⋄ →0
+_RB: DF    ⋄ →0
+

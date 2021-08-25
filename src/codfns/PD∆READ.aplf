@@ -1,0 +1,20 @@
+ Z←PD∆READ;f;iCO;iET;iEX;iKW;iNL;iRB;oET;oRB
+⍝ PARAMETERS
+⍝  tk:    Token type
+⍝  tv:    Token value
+⍝  tp:    Token position
+⍝  te:    Token environment
+⍝  idx:   Current data stream position
+⍝  IN:    Data stream
+⍝  DEBUG: Boolean, enable debugging or not
+⍝  SEQ:   Current sequence history
+⍝  ER:    ERROR
+ iCO iET iEX iKW iNL iRB←⍳6
+ oET oRB←1+⍳2
+ →START⌿⍨0=⎕NC'DEBUG'
+ ⍎DEBUG⌿'⎕←''PD: '',SEQ'
+START:tk tv tp te←te TK 1
+ Z←oET⌿⍨f←tk=iET ⋄ →f⌿END
+ Z←oRB⌿⍨f←tk=iRB ⋄ →f⌿END
+ SEQ,←' OT' ⋄ ER
+END:tk←Z
