@@ -1,10 +1,10 @@
- Z←env PX(xt xv xp);idx;READ;SEQ;BF;DF;ER;stk;enm;etp;_
+ Z←env PX(xt xv xp);idx;READ;SEQ;BF;DF;ER;VU;stk;enm;etp;_;A∆;B∆;E∆;F∆;G∆;L∆;M∆;N∆;O∆;P∆;V∆;Z∆
 ⍝ PARAMETERS
 ⍝  PX∆READ: Reader function
  A∆ B∆ E∆ F∆ G∆ L∆ M∆ N∆ O∆ P∆ V∆ Z∆←⍳12
  idx←¯1 ⋄ stk←⍬ ⋄ enm etp←env ⋄ xt xv xp←⊖¨xt xv xp
  ⎕FX'Z←READ' 'Z←PX∆READ'
- _ ←⊂'BF;d;t;k;n;ss;se;nm;bn'
+ _ ←⊂'BF;d;t;k;n;ss;se;nm;bn;fn'
  _,←⊂'d t k n ss se←fn←⊃stk'
  _,←⊂'''SYSERR: DF NOT FOUND''⎕SIGNAL 99⌿⍨(t≠3)∨(k≠1)'
  _,←⊂'bn←,∘⊂¨0 B∆ 1,xv[idx],xp[idx;0],se[0]'

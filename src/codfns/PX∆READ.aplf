@@ -1,4 +1,4 @@
- Z←PX∆READ;t;v;p
+ Z←PX∆READ;t;v;p;iDF;iGT;iNM;oBD;oBT;oDF;oET;oVU
 ⍝ PARAMETERS
 ⍝  xt:    Expression token stream, token type
 ⍝  xv:    Expression token stream, token value
