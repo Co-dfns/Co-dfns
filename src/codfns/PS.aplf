@@ -4,7 +4,6 @@
  idx←¯1 ⋄ cd←0 ⋄ stk←⍬ ⋄ tk←0 ⋄ tv←0 ⋄ tp←¯1 0 ⋄ te←⍬ ⍬
 ⍝ Depth | Type | Kind | Name | Src Start | Src End | Exp Name | Exp Type
  d t k n ss se←⊂⍬
- sym←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'
  ⎕FX'Z←READ' 'Z←PS∆READ'
  ⎕FX'ER' '⎕SIGNAL 2'
  ⎕FX'EX' 'd t k n ss se,←cd+@0⊢tv'
@@ -12,4 +11,5 @@
  ⎕FX'NN;td;tt;tk;tn' 'td tt tk tn←4↑tv' '⎕SIGNAL 2⌿⍨(1≠≢td)∨0 10 0≢⊃¨td tt tk' '(⊃⌽n)←tn'
  ⎕FX'NS' 'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss se,←tp ⋄ cd+←1'
  PS∆SPEC
- Z←(d t k n ss se)te sym IN
+ sym←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
+ Z←(d t k(-sym⍳n)ss se)te sym IN
