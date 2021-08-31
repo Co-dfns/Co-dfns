@@ -1,11 +1,12 @@
- Z←PD env;stk;READ;DF;ER;tk;tv;tp;te;ox
+ Z←PD env;stk;READ;DF;ER;EX;tk;tv;tp;te;ox
 ⍝ PARAMETERS
 ⍝  idx:     Current reader position
 ⍝  IN:      Input Stream
 ⍝  PD∆READ: Reader function for calling tokenizer
- stk←⍬ ⋄ tk tv tp←¯1 ⋄ te←⍬ ⍬ ⋄ ox←idx
+ stk←0⍴⊂6⍴⍬ ⋄ tk tv tp←¯1 ⋄ te←⍬ ⍬ ⋄ ox←idx
  ⎕FX'Z←READ' 'Z←PD∆READ'
- ⎕FX'DF' 'stk,←⊂,¨0 3 1 0 ox,1↓tp'
+ ⎕FX'DF' 'stk←⊂(,¨0 3 1 0 ox,1↓tp)⍪¨1+@0⍪⌿↑stk'
  ⎕FX'ER' '⎕SIGNAL 2'
+ ⎕FX'EX' 'stk,←⊂tv'
  PD∆SPEC
  Z←⊃stk

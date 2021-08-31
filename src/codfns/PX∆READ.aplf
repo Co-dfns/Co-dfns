@@ -1,4 +1,4 @@
- Z←PX∆READ;t;v;p;iDF;iGT;iNM;oBD;oBT;oDF;oET;oVU
+ Z←PX∆READ;t;v;p;iDF;iNM;iPM;oAV;oBD;oBT;oDF;oET;oMP;oVU;oWV
 ⍝ PARAMETERS
 ⍝  xt:    Expression token stream, token type
 ⍝  xv:    Expression token stream, token value
@@ -10,15 +10,18 @@
 ⍝  ISDFN: Boolean, are we tokenizing the body of a dfn?
 ⍝  SEQ:   Current sequence history
 ⍝  ER:    ERROR
- iDF iGT iNM←⍳3
- oBD oBT oDF oET oVU←1+⍳5
+ iDF iNM iPM←⍳3
+ oAV oBD oBT oDF oET oMP oVU oWV←1+⍳8
  →START⌿⍨0=⎕NC'DEBUG'
  ⍎DEBUG⌿'⎕←''PX: '',SEQ'
 START:idx+←1
- Z←oET⌿⍨f←idx≥≢xt          ⋄ →f⌿0
+ Z←oET⌿⍨f←idx≥≢xt                 ⋄ →f⌿0
  t←idx⊃xt ⋄ v←idx⊃xv
- Z←oBD⌿⍨f←ISDFN∧t=iGT      ⋄ →f⌿0
- Z←oBT⌿⍨f←(~ISDFN)∧t=iGT   ⋄ →f⌿0
- Z←oDF⌿⍨f←t=iDF            ⋄ →f⌿0
- Z←oVU⌿⍨f←(t=iNM)∧~enm∊⍨⊂v ⋄ →f⌿0
+ Z←oAV⌿⍨f←ISDFN∧(t=iNM)∧v≡,'⍺'    ⋄ →f⌿0
+ Z←oBD⌿⍨f←ISDFN∧(t=iPM)∧v≡,'←'    ⋄ →f⌿0
+ Z←oBT⌿⍨f←(~ISDFN)∧(t=iPM)∧v≡,'←' ⋄ →f⌿0
+ Z←oDF⌿⍨f←t=iDF                   ⋄ →f⌿0
+ Z←oMP⌿⍨f←(t=iPM)∧(⊂v)∊,¨'⊢'      ⋄ →f⌿0
+ Z←oWV⌿⍨f←ISDFN∧(t=iNM)∧v≡,'⍵'    ⋄ →f⌿0
+ Z←oVU⌿⍨f←(t=iNM)∧~enm∊⍨⊂v        ⋄ →f⌿0
  SEQ,←' OT' ⋄ ER

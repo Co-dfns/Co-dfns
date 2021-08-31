@@ -1,92 +1,134 @@
  TK∆SPEC
 ⍝ STIMULI
+⍝  AA: ⍺
 ⍝  AL: Alphabetic, including ∆
 ⍝  CO: Colon, trad-fns
 ⍝  DG: Digit
 ⍝  ET: End of input
-⍝  GT: ←
 ⍝  IF: Colon, dfns
 ⍝  LB: {
 ⍝  NL: CR or LF
 ⍝  OT: Other character
+⍝  PM: Primitive
 ⍝  RB: }
-⍝  WS: Whitespace -- Tab, space 
+⍝  WS: Whitespace -- Tab, space
+⍝  WW: ⍵
 ⍝ RESPONSES
 ⍝  DF: D-fns (launch dfns parser)
 ⍝  ER: Error
 ⍝  ET: End of Stream
 ⍝  EX: Expression (launch expression parser)
-⍝  GT: Gets
 ⍝  IF: dfns guard token
 ⍝  KW: Keyword
 ⍝  NL: Newline/Statement Separator
 ⍝  NM: Name/Symbol
+⍝  PM: Primitive
 ⍝  RB: Right brace token
 ⍝  ST: Store Data
 ⍝ PARAMETERS
 ⍝  READ: Get the next event/token in the sequence
 ⍝  SEQ:  Set to the current sequence state we are in
 ∆:SEQ←'∊' ⋄ →⎕LC+READ
+_AA: ST   ⋄ →AA∆
 _AL: ST   ⋄ →AL∆
 _CO:      ⋄ →CO∆
 _DG: ER   ⋄ →0
 _ET: ET   ⋄ →0
-_GT: GT   ⋄ →GT∆
 _IF: IF   ⋄ →0
-_LB: DF   ⋄ →GT∆
+_LB: DF   ⋄ →PM∆
 _NL: NL   ⋄ →0
 _OT: ER   ⋄ →0
+_PM: PM   ⋄ →PM∆
 _RB: RB   ⋄ →0
 _WS:      ⋄ →∆
+_WW: ST   ⋄ →WW∆
 
-AL∆:SEQ←'AL'        ⋄ →⎕LC+READ
-AL_AL: ST           ⋄ →AL∆
-AL_CO: NM ⋄ EX      ⋄ →0
-AL_DG: ST           ⋄ →AL∆
-AL_ET: NM ⋄ EX      ⋄ →0
-AL_GT: NM ⋄ GT      ⋄ →GT∆
-AL_IF: NM ⋄ EX      ⋄ →0
-AL_LB: NM ⋄ DF      ⋄ →GT∆
-AL_NL: NM ⋄ EX      ⋄ →0
-AL_OT: ER           ⋄ →0
-AL_RB: NM ⋄ EX      ⋄ →0
-AL_WS: NM           ⋄ →GT∆
+AL∆:SEQ←'AL'   ⋄ →⎕LC+READ
+AL_AA: NM ⋄ ST ⋄ →AA∆
+AL_AL: ST      ⋄ →AL∆
+AL_CO: NM ⋄ EX ⋄ →0
+AL_DG: ST      ⋄ →AL∆
+AL_ET: NM ⋄ EX ⋄ →0
+AL_IF: NM ⋄ EX ⋄ →0
+AL_LB: NM ⋄ DF ⋄ →PM∆
+AL_NL: NM ⋄ EX ⋄ →0
+AL_OT: ER      ⋄ →0
+AL_PM: NM ⋄ PM ⋄ →PM∆
+AL_RB: NM ⋄ EX ⋄ →0
+AL_WS: NM      ⋄ →PM∆
+AL_WW: NM ⋄ ST ⋄ →WW∆
+
+AA∆:SEQ←'AA'   ⋄ →⎕LC+READ
+AA_AA: ST ⋄ NM ⋄ →PM∆
+AA_AL: NM ⋄ ST ⋄ →AL∆
+AA_CO: NM ⋄ EX ⋄ →0
+AA_DG: ER      ⋄ →0
+AA_ET: NM ⋄ EX ⋄ →0
+AA_IF: NM ⋄ EX ⋄ →0
+AA_LB: NM ⋄ DF ⋄ →PM∆
+AA_NL: NM ⋄ EX ⋄ →PM∆
+AA_OT: ER      ⋄ →0
+AA_PM: NM ⋄ PM ⋄ →PM∆
+AA_RB: NM ⋄ EX ⋄ →0
+AA_WS: NM      ⋄ →PM∆
+AA_WW: NM ⋄ ST ⋄ →WW∆
 
 CO∆:SEQ←'CO' ⋄ →⎕LC+READ
+CO_AA: ER    ⋄ →0
 CO_AL: ST    ⋄ →CO_AL∆
 CO_CO: ER    ⋄ →0
 CO_DG: ER    ⋄ →0
 CO_ET: ER    ⋄ →0
-CO_GT: ER    ⋄ →0
 CO_IF: ER    ⋄ →0
 CO_LB: ER    ⋄ →0
 CO_NL: ER    ⋄ →0
 CO_OT: ER    ⋄ →0
+CO_PM: ER    ⋄ →0
 CO_RB: ER    ⋄ →0
 CO_WS: ER    ⋄ →0
+CO_WW: ER    ⋄ →0
 
-GT∆:SEQ←'GT'   ⋄ →⎕LC+READ
-GT_AL: ST      ⋄ →AL∆
-GT_CO: EX      ⋄ →0
-GT_DG: ER      ⋄ →0
-GT_ET: EX      ⋄ →0
-GT_GT: GT      ⋄ →GT∆
-GT_IF: EX      ⋄ →0
-GT_LB: DF      ⋄ →GT∆
-GT_NL: EX      ⋄ →0
-GT_OT: ER      ⋄ →0
-GT_RB: EX      ⋄ →0
-GT_WS:         ⋄ →GT∆
+PM∆:SEQ←'PM' ⋄ →⎕LC+READ
+PM_AA: ST    ⋄ →AA∆
+PM_AL: ST    ⋄ →AL∆
+PM_CO: EX    ⋄ →0
+PM_DG: ER    ⋄ →0
+PM_ET: EX    ⋄ →0
+PM_IF: EX    ⋄ →0
+PM_LB: DF    ⋄ →PM∆
+PM_NL: EX    ⋄ →0
+PM_OT: ER    ⋄ →0
+PM_PM: PM    ⋄ →PM∆
+PM_RB: EX    ⋄ →0
+PM_WS:       ⋄ →PM∆
+PM_WW: ST    ⋄ →WW∆
+
+WW∆:SEQ←'WW'   ⋄ →⎕LC+READ
+WW_AA: NM ⋄ ST ⋄ →AA∆
+WW_AL: NM ⋄ ST ⋄ →AL∆
+WW_CO: NM ⋄ EX ⋄ →0
+WW_DG: ER      ⋄ →0
+WW_ET: NM ⋄ EX ⋄ →0
+WW_IF: NM ⋄ EX ⋄ →0
+WW_LB: NM ⋄ DF ⋄ →PM∆
+WW_NL: NM ⋄ EX ⋄ →PM∆
+WW_OT: ER      ⋄ →0
+WW_PM: NM ⋄ PM ⋄ →PM∆
+WW_RB: NM ⋄ EX ⋄ →0
+WW_WS: NM      ⋄ →PM∆
+WW_WW: ST ⋄ NM ⋄ →PM∆
 
 CO_AL∆:SEQ←'CO AL' ⋄ →⎕LC+READ
+CO_AL_AA: KW       ⋄ →0
 CO_AL_AL: ST       ⋄ →CO_AL∆
 CO_AL_CO: KW       ⋄ →0
 CO_AL_DG: ST       ⋄ →CO_AL∆
 CO_AL_ET: KW       ⋄ →0
-CO_AL_GT: KW       ⋄ →0
 CO_AL_IF: KW       ⋄ →0
 CO_AL_LB: KW       ⋄ →0
 CO_AL_NL: KW       ⋄ →0
 CO_AL_OT: ER       ⋄ →0
+CO_AL_PM: KW       ⋄ →0
 CO_AL_RB: KW       ⋄ →0
 CO_AL_WS: KW       ⋄ →0
+CO_AL_WW: KW       ⋄ →0

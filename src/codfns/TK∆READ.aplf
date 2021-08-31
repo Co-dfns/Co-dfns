@@ -1,23 +1,25 @@
- Z←TK∆READ;x;f;AL;CO;DG;ET;GT;IF;LB;NL;OT;RB;WS
+ Z←TK∆READ;x;f;AA;AL;CO;DG;ET;IF;LB;NL;OT;PM;RB;WS;WW
 ⍝ PARAMETERS
 ⍝  IN:    Data stream
 ⍝  idx:   Current position in data stream
 ⍝  DEBUG: Boolean, enable debugging or not
 ⍝  ISDFN: Boolean, are we tokenizing the body of a dfn?
 ⍝  SEQ:   Current Sequence history
- AL CO DG ET GT IF LB NL OT RB WS←1+⍳11
+ AA AL CO DG ET IF LB NL OT PM RB WS WW←1+⍳13
  →START⌿⍨0=⎕NC'DEBUG'
  ⍎DEBUG⌿'⎕←''TK: '',SEQ'
  START:idx+←1
  Z←ET⌿⍨f←idx≥≢IN         ⋄ →f⌿0
  x←IN[idx]
+ Z←AA⌿⍨f←x≡'⍺'           ⋄ →f⌿0
  Z←AL⌿⍨f←(1 ⎕C x)∊⎕A,'∆' ⋄ →f⌿0
  Z←CO⌿⍨f←(x=':')∧~ISDFN  ⋄ →f⌿0
  Z←DG⌿⍨f←x∊⎕D            ⋄ →f⌿0
- Z←GT⌿⍨f←x≡'←'           ⋄ →f⌿0
  Z←IF⌿⍨f←(x=':')∧ISDFN   ⋄ →f⌿0
  Z←LB⌿⍨f←x≡'{'           ⋄ →f⌿0
  Z←NL⌿⍨f←x∊⎕ucs 10 13    ⋄ →f⌿0
+ Z←PM⌿⍨f←x∊'←⊢'          ⋄ →f⌿0
  Z←RB⌿⍨f←x≡'}'           ⋄ →f⌿0
  Z←WS⌿⍨f←x∊⎕UCS 9 32     ⋄ →f⌿0
+ Z←WW⌿⍨f←x≡'⍵'           ⋄ →f⌿0
  Z←OT

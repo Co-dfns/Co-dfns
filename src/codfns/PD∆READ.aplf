@@ -1,4 +1,4 @@
- Z←PD∆READ;f;iCO;iET;iEX;iKW;iNL;iRB;oET;oRB
+ Z←PD∆READ;f;iET;iEX;iIF;iKW;iNL;iRB;oET;oEX;oRB
 ⍝ PARAMETERS
 ⍝  tk:    Token type
 ⍝  tv:    Token value
@@ -9,12 +9,13 @@
 ⍝  DEBUG: Boolean, enable debugging or not
 ⍝  SEQ:   Current sequence history
 ⍝  ER:    ERROR
- iCO iET iEX iKW iNL iRB←⍳6
- oET oRB←1+⍳2
+ iET iEX iIF iKW iNL iRB←⍳6
+ oET oEX oRB←1+⍳3
  →START⌿⍨0=⎕NC'DEBUG'
  ⍎DEBUG⌿'⎕←''PD: '',SEQ'
 START:tk tv tp te←te TK 1
  Z←oET⌿⍨f←tk=iET ⋄ →f⌿END
+ Z←oEX⌿⍨f←tk=iEX ⋄ →f⌿END
  Z←oRB⌿⍨f←tk=iRB ⋄ →f⌿END
  SEQ,←' OT' ⋄ ER
 END:tk←Z
