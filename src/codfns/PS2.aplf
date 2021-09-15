@@ -1,0 +1,59 @@
+ PS2←{IN←⍵ ⋄ A B E F G L M N O P V Z←⍳12 ⋄ I←{(⊂⍵)⌷⍺}
+   pos←(⍳≢IN)⊆⍨~IN∊CR LF←⎕UCS 13 10         ⍝ Group input into lines
+   lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos            ⍝ Identify and verify strings
+   0≠≢lin:{                                 ⍝ Check for unbalanced strings
+     nos←'[',(⍕1+⍪lin),⍤1⊢'] '
+     EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
+     EM,←∊nos,(IN∘I¨pos[lin]),CR,(⊃0⍴⊂nos),(' ▔'∘I¨msk[⍪lin]),CR
+     EM ⎕SIGNAL 2}⍬
+   pos⌿¨⍨←∧⍀¨(~msk←msk∨¯1⌽msk)⍲'⍝'=IN∘I¨pos ⍝ Remove comments
+   pos end←↓⍉↑msk{g←1,2≠⌿⍺                  ⍝ Tokenize strings
+     ⍪⌿↑(g⊂⍺){∧⌿⍺:(⊣⌿,⊢⌿)⍵ ⋄ ⍵(1+⍵)}¨g⊂⍵
+   }¨pos
+   pos end{⊃⍪⌿⍵⊆¨⍺}←⊂'⋄'≠IN∘I¨pos           ⍝ Split statements
+   typ←-4|1+'''{}'∘⍳∘(IN∘I)¨pos             ⍝ Map ', {, and }
+   typ pos end(∊,∘⍪⍨)←Z∆(⊃¨pos)(1+⊃¨pos)    ⍝ Flatten lines
+   d←+⍀1 ¯1 0[¯2 ¯3⍳typ]                    ⍝ Depths based on {}
+   0≠⊃⌽d:{                                  ⍝ Check for unbalanced {}
+     'SYNTAX ERROR: UNBALANCED DFNS'⎕SIGNAL 2
+   }⍬
+   d←¯1⌽d                                   ⍝ Shift d to cover }
+   _←2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d             ⍝ Compute parent vector
+   key←p⌿⍨msk←typ[p]=¯2                     ⍝ Children of {s
+   _←kid{end[⍺]←⊃⌽⍵}⌸msk⌿end                ⍝ Update end for {s
+   _←kid{                                   ⍝ Drop } and add Z nodes
+     typ[⍵]←Z∆,typ[¯1↓⍵]                    ⍝   Z type
+     pos[⍵]←(⊃,⊢)pos[¯1↓⍵]                  ⍝   pos ≡ first child pos
+     end[⍵]←(1+pos[⊃⍵]),end[¯1↓⍵]           ⍝   Init with length 1
+   }⌸kid←msk⌿⍳≢p
+   _←(key,msk⌿¯1){                          ⍝ Group Z nodes
+     (⍵⊆⍨~m){p[⍺]←⍵}¨⍵⌿⍨m←typ[⍵]=Z∆         ⍝   by updating parents
+   }⌸kid,(msk←d=0)⌿⍳≢p
+   msk[]←1
+   _←(kid⌿p){                               ⍝ Update Z
+     end[⍺]←end[⊃⌽⍵]                        ⍝   end points
+     msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊⎕UCS 9 32       ⍝   empty status
+   }⌸(kid←typ[p]=Z∆)⌿⍳≢p
+   typ pos end(⌿¨⍨)←⊂msk                    ⍝ Drop empty Z's
+   p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
+⍝ GUARD MAPPING
+⍝ LABEL MAPPING
+⍝ TRAD-FNS HEADER
+⍝ BRACKETS/PARENTHESES
+⍝ SEMI-COLONS
+⍝ TOKENIZE EXPRESSIONS
+⍝ SPLIT BY PRIMITIVES
+⍝ BINDABILITY
+⍝ BINDING NODES
+⍝ FREE VARIABLES
+⍝ DFNS TYPING
+⍝ INFER BINDING TYPE
+⍝ STRANDING/ATOMS
+⍝ FUNCTION EXPRESSIONS
+⍝ EXPRESSION NODES
+
+
+
+ SYM←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',N
+ (D T K(~SYM⍳N)SS SE)TE SYM IN}
