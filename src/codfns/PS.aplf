@@ -1,15 +1,171 @@
- Z←PS IN;READ;SEQ;ER;EX;NE;NN;NS;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;tk;tv;tp;te
-⍝ PARAMETERS
-⍝  PS∆READ: Reader function for running the tokenizer
- idx←¯1 ⋄ cd←0 ⋄ stk←⍬ ⋄ tk←0 ⋄ tv←0 ⋄ tp←¯1 0 ⋄ te←⍬ ⍬
-⍝ Depth | Type | Kind | Name | Src Start | Src End | Exp Name | Exp Type
- d t k n ss se←⊂⍬
- ⎕FX'Z←READ' 'Z←PS∆READ'
- ⎕FX'ER' '⎕SIGNAL 2'
- ⎕FX'EX' 'd t k n ss se,←cd+@0⊢tv'
- ⎕FX'NE' 'cd-←1 ⋄ se[(≢d)-1+(⌽d)⍳cd]←⊃⌽tp'
- ⎕FX'NN;td;tt;tk;tn' 'td tt tk tn←4↑tv' '⎕SIGNAL 2⌿⍨(1≠≢td)∨0 10 ¯1≢⊃¨td tt tk' '(⊃⌽n)←tn'
- ⎕FX'NS' 'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss se,←tp ⋄ cd+←1'
- PS∆SPEC
- sym←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
- Z←(d t k(-sym⍳n)ss se)te sym IN
+ PS←{IN←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15 ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵}
+   assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
+
+⍝ Group input into lines as a nested vector 
+   pos←(⍳≢IN)⊆⍨~IN∊CR LF
+
+⍝ Identify strings to tokenize them early
+   lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos
+
+⍝ Make a nice error message if the strings are unbalanced on a line
+   0≠≢lin:{
+     nos←'[',(⍕1+⍪lin),⍤1⊢'] '
+     EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
+     EM,←∊nos,(IN∘I¨pos[lin]),CR,(⊃0⍴⊂nos),(' ▔'∘I¨msk[⍪lin]),CR
+     EM ⎕SIGNAL 2}⍬
+
+⍝ Comments need to be removed before we tokenize any strings
+   pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽msk)⍲'⍝'=IN∘I¨pos
+
+⍝ Remove leading and trailing whitespace
+   WS←⎕UCS 9 32
+   pos msk⌿¨⍨←⊂(∧⍀∨∧⍀U⌽)∘(WS∊⍨IN∘I)¨pos
+
+⍝ We can safely tokenize strings now, introducing pos and end
+   pos end←↓⍉↑msk{g←1,2≠⌿⍺ ⋄ ⍪⌿↑(g⊂⍺){∧⌿⍺:(⊣⌿,⊢⌿)⍵ ⋄ ⍵(1+⍵)}¨g⊂⍵}¨pos
+
+⍝ Remove the ⋄ components from lines to make them all separate lines
+   pos end{⊃⍪⌿⍵⊆¨⍺}←⊂'⋄'≠IN∘I¨pos
+   assert IN[pos]≠'⋄':
+
+⍝ Introduce typ to distinguish tokens
+   typ←{(C×⍵='''')+F×⍵='{'}IN[pos]
+
+⍝ We no longer need nested lines, so flatten and separate with Z type
+   typ pos end(∊,∘⍪⍨)←Z(⊃¨pos)(1+⊃¨pos)
+
+⍝ Verify that all open characters are part of the valid character set
+   alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'
+   alp,←'abcdefghijklmnopqrstuvwxyz'
+   alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß'
+   alp,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
+   alp,←'∆⍙alp,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
+   num←⎕D
+   synb←'¯[]{}()'':⍺⍵⋄;'
+   syna←'⍬⎕⍞∇←→#'
+   prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷/⌿\⍀∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹'
+   prmos←'¨⍨∘./⌿\⍀⍣&⌶⍠⌸⌺⍤⍥@'
+   x←' ',⍨' '@{typ≠0}IN[pos] ⍝ The spaces produce nice invariants
+   ~x∊alp,num,syn,prmfs,prmos:'INVALID CHARACTER IN SOURCE'⎕SIGNAL 2
+
+⍝ Tokenize numbers
+   _←{dm[⍵]←∧⍀dm[⍵]}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
+   dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
+   dm∨←('¯'=x)∧1⌽dm
+   dm∨←(x∊'EeJj')∧(¯1⌽dm)∧1⌽dm
+   ∨⌿(typ=0)∧IN[pos]='¯':'ORPHANED ¯'⎕SIGNAL 2
+   ∨⌿{1<+⌿⍵='j'}¨dp←⎕C¨dm⊆x:'MULTIPLE J IN NUMBER'⎕SIGNAL 2
+   ∨⌿{1<+⌿⍵='e'}¨dp←⊃⍪/{⍵⊆⍨⍵≠'j'}¨dp:'MULTIPLE E IN NUMBER'⎕SIGNAL 2
+   ∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕SIGNAL 2
+   ∨⌿'e'=⊃∘⌽¨dp:'MISSING EXPONENT'⎕SIGNAL 2
+   mn ex←↓⍉↑{2↑(⍵⊆⍵≠'e'),⊂''}¨dp
+   ∨⌿{1<+⌿'.'=⍵}¨mn,ex:'MULTIPLE . IN NUMBER'⎕SIGNAL 2
+   ∨⌿'.'∊¨ex:'REAL NUMBER IN EXPONENT'⎕SIGNAL 2
+   ∨⌿{('¯'∊⍵)∧'¯'≠⊃⍵}¨mn,ex:'MISPLACED ¯'⎕SIGNAL 2
+   typ[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
+
+⍝ Tokenize Variables
+   typ[i←⍸2<⌿0⍪vm←(~dm)∧x∊alp,num]←V ⋄ end[i]←end⌿⍨2>⌿vm⍪0
+
+⍝ Tokenize ⍺, ⍵ formals
+   fm←{mm←⌽⊃(>∘⊃,⊢)⌿⌽m←⍺=' ',⍵ ⋄ 1↓¨(mm∧~m1)(mm∧m1←1⌽m)}
+   am aam←'⍺'fm x ⋄ wm wwm←'⍵'fm x
+   (am∨aam∨wm∨wwm⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
+
+⍝ Tokenize Primitives
+   pm←(~dm)∧x∊primfs,primos,syna
+   (pm⌿typ)←P
+
+⍝ Compute the depth vector based on { and } dfns, include } as a child
+   0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳IN[pos]]:'UNBALANCED DFNS'⎕SIGNAL 2
+
+⍝ Check for out of context dfns formals
+   (d=0)∧(typ=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
+
+⍝ Compute trad-fns regions
+   ∨⌿Z≠typ⌿⍨1⌽msk←(d=0)∧'∇'=x:'TRAD-FNS START/END LINES MUST BEGIN WITH ∇'⎕SIGNAL 2
+   0≠⊃tm←¯1⌽≠⍀(d=0)∧'∇'=x:'UNBALANCED TRAD-FNS'⎕SIGNAL 2
+   ∨⌿Z≠typ⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'⎕SIGNAL 2
+
+⍝ Identify Label colons versus others
+   typ[⍸tm∧(d=0)∧∊((~⊃)∧(<⍀∨⍀))¨':'=(typ=Z)⊂IN[pos]]←L
+
+⍝ Tokenize Keywords
+   ki←⍸(typ=0)∧(d=0)∧(':'=IN[pos])∧1⌽typ=V
+   typ[ki]←K ⋄ end[ki]←end[ki+1] ⋄ typ[ki+1]←0
+   ERR←'EMPTY COLON IN NON-DFNS CONTEXT, EXPECTED LABEL OR KEYWORD'
+   ∨⌿(typ=0)∧(d=0)∧':'=IN[pos]:ERR ⎕SIGNAL 2
+
+⍝ Tokenize System Variables
+   si←⍸('⎕'=IN[pos])∧1⌽typ=V
+   typ[si]←S ⋄ end[si]←end[si+1] ⋄ typ[si+1]←0
+
+⍝ Delete all characters we no longer need from the tree
+   d tm typ pos end(⌿⍨)←⊂(typ≠0)∨x∊'()[]{}:;'
+
+⍝ Tokenize Labels
+   ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
+   ∨⌿(Z≠typ[li-1])∨(V≠typ[li←⍸1⌽msk←typ=L]):ERR ⎕SIGNAL 2
+   typ[li]←L ⋄ end[li]←end[li+1]
+   d tm typ pos end(⌿⍨)←⊂~msk
+
+⍝ We will be doing a few parent computations
+   d2p←{⍺←⍳≢⍵ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←(≢⍵)⍴⍺}
+
+⍝ Compute parent vector from d
+   p←d2p d
+
+⍝ We will often wrap a set of nodes as children under a Z node
+   gz←{typ[⍺]←Z ⋄ p[⍵]←⍺ ⋄ pos[⍺]←pos[⊃⍵,⍺] ⋄ end[⍺]←end[⊃⌽⍺,⍵] ⋄ 0}
+
+⍝ Nest top-level root lines as Z nodes
+   _←(⊃gz 1↓⊢)¨(typ[i]=Z)⊂i←⍸d=0
+   assert typ[⍸p=⍳≢p]=Z:
+
+⍝ Nest all dfns expression bodies as Z nodes
+   _←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ (⊃∘⌽gz ¯1↓⊢)¨⍵⊂⍨1,¯1↓typ[⍵]=Z}⌸i←⍸typ[p]=F
+  assert typ[⍸typ[p]=F]=Z:
+
+⍝ Drop/eliminate any Z nodes that are empty or blank
+   _←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊⎕UCS 9 32}⌸i←⍸(typ[p]=Z)∧p≠⍸≢p⊣msk←typ≠Z
+   typ pos end(⌿⍨)←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
+⍝ Map guard statements to (G (Z ...) (Z ...))
+   _←p[i]{
+     0=+⌿m←':'=IN[pos[⍵]]:⍬
+     ⊃m:'EMPTY GUARD TEST'⎕SIGNAL 2
+     1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
+     typ[⍺]←G
+     t g c←3↑(⊂⍬)⍪⍨⍵⊂⍨1,m∨¯1⌽m
+     g gz t:
+     ci←≢p ⋄ typ pos end⍪←0 ⋄ _←ci gz c
+   }⌸i←⍸typ[p[p]]=F
+
+⍝ Parse brackets and parentheses into ¯1 and Z nodes
+   _←p[i]{
+     x←IN[pos[⍵]] ⋄ bd←+⍀bm←(bo←'['=x)+-bc←']'=x ⋄ pd←+⍀pm←(po←'('=x)+-pc←')'=x
+     0≠⊃⌽bd:'UNBALANCED BRACKETS'⎕SIGNAL 2
+     0≠⊃⌽pd:'UNBALANCED PARENTHESES'⎕SIGNAL 2
+     (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
+     p[⍵]←(⍺,⍵)[1+¯1 d2p+⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
+     end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
+   }⌸i←⍸typ[p]=Z
+   typ pos end(⌿⍨)←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
+⍝ Convert semi-colon indexing into Z nodes in the ¯1 nodes
+   _←p[i]{(⊃∘⌽gz ¯1↓⊢)¨⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]'}⌸i←⍸typ[p]=¯1
+
+⍝ BINDING NODES (NODES THAT INTRODUCE NEW BINDINGS)
+⍝ BINDABILITY 
+⍝ BINDING TARGETS AND CHILDREN
+⍝ FREE VARIABLES
+⍝ DFNS TYPING
+⍝ INFER BINDING TYPE
+⍝ STRANDING/ATOMS
+⍝ BRACKET INDEXING
+⍝ MUTATION/ASSIGNMENTS
+⍝ FUNCTION EXPRESSIONS
+⍝ EXPRESSION NODES
+
+ SYM←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',N
+ (D T K(~SYM⍳N)SS SE)TE SYM IN}
