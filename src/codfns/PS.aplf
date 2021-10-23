@@ -1,8 +1,12 @@
  PS←{IN←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15 ⋄ I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵}
    assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
 
-⍝ Group input into lines as a nested vector 
-   pos←(⍳≢IN)⊆⍨~IN∊CR LF
+   1<≢⍴IN:'PARSER REQUIRES A SCALAR/VECTOR INPUT'⎕SIGNAL 11
+   1<≡IN:'PARSER REQUIRES A SIMPLE ARRAY'⎕SIGNAL 11
+   0≠10|⎕DR IN:'PARSER REQUIRES A CHARACTER ARRAY'⎕SIGNAL 11
+
+⍝ Group input into lines as a nested vector
+   pos←(⍳≢IN)⊆⍨~IN∊CR LF←⎕UCS 13 10
 
 ⍝ Identify strings to tokenize them early
    lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos
@@ -26,7 +30,6 @@
 
 ⍝ Remove the ⋄ components from lines to make them all separate lines
    pos end{⊃⍪⌿⍵⊆¨⍺}←⊂'⋄'≠IN∘I¨pos
-   assert IN[pos]≠'⋄':
 
 ⍝ Introduce typ to distinguish tokens
    typ←{(C×⍵='''')+F×⍵='{'}IN[pos]
@@ -70,7 +73,7 @@
 ⍝ Tokenize ⍺, ⍵ formals
    fm←{mm←⌽⊃(>∘⊃,⊢)⌿⌽m←⍺=' ',⍵ ⋄ 1↓¨(mm∧~m1)(mm∧m1←1⌽m)}
    am aam←'⍺'fm x ⋄ wm wwm←'⍵'fm x
-   (am∨aam∨wm∨wwm⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
+   ((am∨aam∨wm∨wwm)⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
 
 ⍝ Tokenize Primitives
    pm←(~dm)∧x∊primfs,primos,syna
@@ -109,11 +112,28 @@
    typ[li]←L ⋄ end[li]←end[li+1]
    d tm typ pos end(⌿⍨)←⊂~msk
 
-⍝ We will be doing a few parent computations
-   d2p←{⍺←⍳≢⍵ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←(≢⍵)⍴⍺}
+⍝ Now that all compound data is tokenized, reify n field before tree-building
+   n←IN∘I¨pos+⍳¨end-pos
+
+⍝ Keywords are case-insensitive
+   n←(⊂'')@{typ=Z}1 ⎕C@{typ=K}n
+
+⍝ Verify that keywords and system variables are defined and scoped correctly
+   KW←'NAMESPACE' 'ENDNAMESPACE' 'END' 'IF' 'ELSEIF' 'ANDIF' 'ORIF' 'ENDIF'
+   KW,←'WHILE' 'ENDWHILE' 'UNTIL' 'REPEAT' 'ENDREPEAT' 'LEAVE' 'FOR' 'ENDFOR'
+   KW,←'IN' 'INEACH' 'SELECT' 'ENDSELECT' 'CASE' 'CASELIST' 'ELSE' 'WITH'
+   KW,←'ENDWITH' 'HOLD' 'ENDHOLD' 'TRAP' 'ENDTRAP' 'GOTO' 'RETURN' 'CONTINUE'
+   KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE'
+   KW,¨⍨←':'
+   msk←~KW∊⍨kws←n⌿⍨km←typ=K
+   ∨⌿msk:('UNRECOGNIZED KEYWORD ',kws⊃⍨⊃⍸msk)⎕SIGNAL 2
+   msk←kws∊':NAMESPACE' ':ENDNAMESPACE'
+   ∨⌿msk∧km⌿tm:'NAMESPACE SCRIPTS MUST APPEAR AT THE TOP LEVEL'⎕SIGNAL 2
+   msk←kws∊KW~':NAMESPACE' ':ENDNAMESPACE' ':SECTION' ':ENDSECTION'
+   ∨⌿msk∧~km⌿tm:'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS'⎕SIGNAL 2
 
 ⍝ Compute parent vector from d
-   p←d2p d
+   p←D2P d
 
 ⍝ We will often wrap a set of nodes as children under a Z node
    gz←{typ[⍺]←Z ⋄ p[⍵]←⍺ ⋄ pos[⍺]←pos[⊃⍵,⍺] ⋄ end[⍺]←end[⊃⌽⍺,⍵] ⋄ 0}
@@ -124,11 +144,31 @@
 
 ⍝ Nest all dfns expression bodies as Z nodes
    _←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ (⊃∘⌽gz ¯1↓⊢)¨⍵⊂⍨1,¯1↓typ[⍵]=Z}⌸i←⍸typ[p]=F
-  assert typ[⍸typ[p]=F]=Z:
+   assert typ[⍸typ[p]=F]=Z:
 
 ⍝ Drop/eliminate any Z nodes that are empty or blank
-   _←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊⎕UCS 9 32}⌸i←⍸(typ[p]=Z)∧p≠⍸≢p⊣msk←typ≠Z
-   typ pos end(⌿⍨)←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+   _←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(typ[p]=Z)∧p≠⍸≢p⊣msk←typ≠Z
+   tm n typ pos end(⌿⍨)←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
+⍝ Parse Keyword structures
+   nss←n∊⊂':NAMESPACE' ⋄ nse←n∊⊂':ENDNAMESPACE'
+   ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE
+   Z∨.≠typ⌿⍨1⌽nss:ERR ⎕SIGNAL 2
+   ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
+   ∨⌿(Z≠typ⌿⍨¯1⌽nss)∧(V≠typ⌿⍨¯1⌽nss)∨Z≠typ⌿⍨¯2⌽nss:ERR ⎕SIGNAL 2
+   ERR←':ENDNAMESPACE KEYWORD MUST APPEAR ALONE ON A LINE'
+   ∨⌿Z≠typ⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR ⎕SIGNAL 2
+   typ[nsi←⍸1⌽nss]←M ⋄ typ[nei←⍸1⌽nse]←-M
+   n[i]←n[1+i←⍸(typ=M)∧V=1⌽typ] ⋄ end[nsi]←end[nei]
+   x←⍸p=⍳≢p ⋄ d←+⍀(typ[x]=M)+-typ[x]=-M
+   0≠⊃⌽d:':NAMESPACE KEYWORD MISSING :ENDNAMESPACE PAIR'⎕SIGNAL 2
+   p[x]←x[D2P ¯1⌽d]
+
+⍝ Delete unnecessary namespace nodes from the tree, leave only M's
+   msk←~nss∨((¯1⌽nss)∧typ=V)∨nse∨1⌽nse
+   tm n typ pos end(⌿⍨)←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
+⍝ Parse Labels ∘∘∘
 
 ⍝ Map guard statements to (G (Z ...) (Z ...))
    _←p[i]{
@@ -147,7 +187,7 @@
      0≠⊃⌽bd:'UNBALANCED BRACKETS'⎕SIGNAL 2
      0≠⊃⌽pd:'UNBALANCED PARENTHESES'⎕SIGNAL 2
      (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
-     p[⍵]←(⍺,⍵)[1+¯1 d2p+⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
+     p[⍵]←(⍺,⍵)[1+¯1 D2P +⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
      end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
    }⌸i←⍸typ[p]=Z
    typ pos end(⌿⍨)←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
@@ -167,5 +207,7 @@
 ⍝ FUNCTION EXPRESSIONS
 ⍝ EXPRESSION NODES
 
- SYM←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',N
- (D T K(~SYM⍳N)SS SE)TE SYM IN}
+   d i←P2D p
+   d←d[i] ⋄ t←(F@{typ=M}typ)[i] ⋄ k←(0⍴⍨≢typ)[i] ⋄ pos←pos[i] ⋄ end←end[i]
+   sym←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n[i]
+   (d t k(~sym⍳n)pos end)(⍬⍬)sym IN}
