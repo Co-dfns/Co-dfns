@@ -38,11 +38,9 @@
    typ pos end(∊,∘⍪⍨)←Z(⊃¨pos)(1+⊃¨pos)
 
 ⍝ Verify that all open characters are part of the valid character set
-   alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_'
-   alp,←'abcdefghijklmnopqrstuvwxyz'
-   alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß'
-   alp,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
-   alp,←'∆⍙alp,←'ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
+   alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
+   alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
+   alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
    num←⎕D
    synb←'¯[]{}()'':⍺⍵⋄;'
    syna←'⍬⎕⍞∇←→#'
