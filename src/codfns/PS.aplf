@@ -5,37 +5,37 @@
    1<≡IN:'PARSER REQUIRES A SIMPLE ARRAY'⎕SIGNAL 11
    0≠10|⎕DR IN:'PARSER REQUIRES A CHARACTER ARRAY'⎕SIGNAL 11
 
+⍝ Identify beginnings of lines
+   CR LF←⎕UCS 13 10
+   linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
+   quotelines←{
+     lines←∪linestarts⍸⍵
+     nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
+     beg←linestarts[lines] ⋄ end←linestarts[lines+1]
+     m←∊∘⍵¨i←beg+⍳¨end-beg
+     ∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR}
+
 ⍝ Group input into lines as a nested vector
-   pos←(⍳≢IN)⊆⍨~IN∊CR LF←⎕UCS 13 10
+   pos←(⍳≢IN)⊆⍨~IN∊CR LF
 
-⍝ Identify strings to tokenize them early
-   lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos
-
-⍝ Make a nice error message if the strings are unbalanced on a line
-   0≠≢lin:{
-     nos←'[',(⍕1+⍪lin),⍤1⊢'] '
+⍝ Mask strings
+   0≠≢lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos:{
      EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
-     EM,←∊nos,(IN∘I¨pos[lin]),CR,(⊃0⍴⊂nos),(' ▔'∘I¨msk[⍪lin]),CR
+     EM,←quotelines ∊(msk⌿¨pos)[lin]
      EM ⎕SIGNAL 2}⍬
 
 ⍝ Remove comments
    pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽¨msk)⍲'⍝'=IN∘I¨pos
 
 ⍝ Remove leading and trailing whitespace
-   WS←⎕UCS 9 32
-   pos msk⌿¨⍨←⊂(∧⍀∨∧⍀U⌽)∘(WS∊⍨IN∘I)¨pos
+   WS←⎕UCS 9 32 ⋄ pos msk⌿¨⍨←⊂~(∧⍀∨∧⍀U⌽)∘(WS∊⍨IN∘I)¨pos
 
-⍝ We can safely tokenize strings now, introducing pos and end
-   pos end←↓⍉↑msk{g←1,2≠⌿⍺ ⋄ ⍪⌿↑(g⊂⍺){∧⌿⍺:(⊣⌿,⊢⌿)⍵ ⋄ ⍵(1+⍵)}¨g⊂⍵}¨pos
+⍝ Flatten and separate lines and ⋄ with Z type
+   typ←⊃0⍴⊂pos ⋄ typ pos msk(∊,∘⍪⍨)←Z(⊃¨pos)0 ⋄ typ[⍸'⋄'=IN[pos]]←Z
 
-⍝ Remove the ⋄ components from lines to make them all separate lines
-   pos end{⊃⍪⌿⍵⊆¨⍺}←⊂'⋄'≠IN∘I¨pos
-
-⍝ Introduce typ to distinguish tokens
-   typ←{(C×⍵='''')+F×⍵='{'}IN[pos]
-
-⍝ We no longer need nested lines, so flatten and separate with Z type
-   typ pos end(∊,∘⍪⍨)←Z(⊃¨pos)(1+⊃¨pos)
+⍝ Tokenize Strings
+   end←1+pos ⋄ typ[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←end[⍸2>⌿msk⍪0]
+   typ pos end⌿⍨←⊂(typ≠0)∨~msk
 
 ⍝ Verify that all open characters are part of the valid character set
    alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
@@ -47,7 +47,10 @@
    prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷/⌿\⍀∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹'
    prmos←'¨⍨∘./⌿\⍀⍣&⌶⍠⌸⌺⍤⍥@'
    x←' ',⍨' '@{typ≠0}IN[pos] ⍝ The spaces produce nice invariants
-   ~x∊alp,num,syn,prmfs,prmos:'INVALID CHARACTER IN SOURCE'⎕SIGNAL 2
+   ∨⌿msk←~x∊alp,num,syna,synb,prmfs,prmos,WS:{
+     EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
+     EM,←quotelines ⍸msk
+     EM ⎕SIGNAL 2}⍬
 
 ⍝ Tokenize numbers
    _←{dm[⍵]←∧⍀dm[⍵]}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
@@ -76,8 +79,8 @@
 ⍝ Tokenize Primitives
    pm←(~dm)∧x∊primfs,primos,syna ⋄ (pm⌿typ)←P
 
-⍝ Compute the depth vector based on { and } dfns, include } as a child
-   0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳IN[pos]]:'UNBALANCED DFNS'⎕SIGNAL 2
+⍝ Compute dfns regions and type, include } as a child
+   typ[⍸'{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
 
 ⍝ Check for out of context dfns formals
    (d=0)∧(typ=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
