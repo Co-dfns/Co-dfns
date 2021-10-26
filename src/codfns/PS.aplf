@@ -18,8 +18,8 @@
      EM,←∊nos,(IN∘I¨pos[lin]),CR,(⊃0⍴⊂nos),(' ▔'∘I¨msk[⍪lin]),CR
      EM ⎕SIGNAL 2}⍬
 
-⍝ Comments need to be removed before we tokenize any strings
-   pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽msk)⍲'⍝'=IN∘I¨pos
+⍝ Remove comments
+   pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽¨msk)⍲'⍝'=IN∘I¨pos
 
 ⍝ Remove leading and trailing whitespace
    WS←⎕UCS 9 32
