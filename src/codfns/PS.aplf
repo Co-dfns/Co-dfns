@@ -46,7 +46,7 @@
    syna←'⍬⎕⍞∇←→#'
    prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷/⌿\⍀∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹'
    prmos←'¨⍨∘./⌿\⍀⍣&⌶⍠⌸⌺⍤⍥@'
-   x←' ',⍨' '@{typ≠0}IN[pos] ⍝ The spaces produce nice invariants
+   x←' '@{typ≠0}IN[pos] ⍝ The spaces produce nice invariants
    ∨⌿msk←~x∊alp,num,syna,synb,prmfs,prmos,WS:{
      EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
      EM,←quotelines ⍸msk
@@ -77,13 +77,13 @@
    ((am∨aam∨wm∨wwm)⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
 
 ⍝ Tokenize Primitives
-   pm←(~dm)∧x∊primfs,primos,syna ⋄ (pm⌿typ)←P
+   pm←(~dm)∧x∊prmfs,prmos,syna ⋄ (pm⌿typ)←P
 
 ⍝ Compute dfns regions and type, include } as a child
    typ[⍸'{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
 
 ⍝ Check for out of context dfns formals
-   (d=0)∧(typ=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
+   ∨⌿(d=0)∧(typ=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
 
 ⍝ Compute trad-fns regions
    ∨⌿Z≠typ⌿⍨1⌽msk←(d=0)∧'∇'=x:'TRAD-FNS START/END LINES MUST BEGIN WITH ∇'⎕SIGNAL 2
@@ -136,7 +136,7 @@
    p←D2P d
 
 ⍝ We will often wrap a set of nodes as children under a Z node
-   gz←{typ[⍺]←Z ⋄ p[⍵]←⍺ ⋄ pos[⍺]←pos[⊃⍵,⍺] ⋄ end[⍺]←end[⊃⌽⍺,⍵] ⋄ 0}
+   gz←{z←⍺↑⍨0≠≢⍵ ⋄ typ[z]←Z ⋄ p[⍵]←z ⋄ pos[z]←pos[⊃⍵,z] ⋄ end[z]←end[⊃⌽z,⍵] ⋄ 0}
 
 ⍝ Nest top-level root lines as Z nodes
    _←(⊃gz 1↓⊢)¨(typ[i]=Z)⊂i←⍸d=0
@@ -147,12 +147,12 @@
    assert typ[⍸typ[p]=F]=Z:
 
 ⍝ Drop/eliminate any Z nodes that are empty or blank
-   _←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(typ[p]=Z)∧p≠⍸≢p⊣msk←typ≠Z
+   _←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(typ[p]=Z)∧p≠⍳≢p⊣msk←typ≠Z
    tm n typ pos end(⌿⍨)←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Parse Keyword structures
    nss←n∊⊂':NAMESPACE' ⋄ nse←n∊⊂':ENDNAMESPACE'
-   ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE
+   ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE'
    Z∨.≠typ⌿⍨1⌽nss:ERR ⎕SIGNAL 2
    ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
    ∨⌿(Z≠typ⌿⍨¯1⌽nss)∧(V≠typ⌿⍨¯1⌽nss)∨Z≠typ⌿⍨¯2⌽nss:ERR ⎕SIGNAL 2
@@ -178,8 +178,8 @@
      typ[⍺]←G
      t g c←3↑(⊂⍬)⍪⍨⍵⊂⍨1,m∨¯1⌽m
      g gz t:
-     ci←≢p ⋄ typ pos end⍪←0 ⋄ _←ci gz c
-   }⌸i←⍸typ[p[p]]=F
+     ci←≢p ⋄ typ pos end⍪←0 ⋄ ci gz c:
+   0}⌸i←⍸typ[p[p]]=F
 
 ⍝ Parse brackets and parentheses into ¯1 and Z nodes
    _←p[i]{
@@ -189,7 +189,7 @@
      (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
      p[⍵]←(⍺,⍵)[1+¯1 D2P +⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
      end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
-   }⌸i←⍸typ[p]=Z
+   0}⌸i←⍸typ[p]=Z
    typ pos end(⌿⍨)←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Convert semi-colon indexing into Z nodes in the ¯1 nodes
@@ -209,5 +209,5 @@
 
    d i←P2D p
    d←d[i] ⋄ t←(F@{typ=M}typ)[i] ⋄ k←(0⍴⍨≢typ)[i] ⋄ pos←pos[i] ⋄ end←end[i]
-   sym←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n[i]
-   (d t k(~sym⍳n)pos end)(⍬⍬)sym IN}
+   sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n[i]
+   (d t k(-sym⍳n)pos end)(⍬⍬)sym IN}
