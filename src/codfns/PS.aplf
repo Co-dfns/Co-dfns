@@ -74,8 +74,7 @@
    ((am∨aam∨wm∨wwm)⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
 
 ⍝ Tokenize Primitives
-   pm←(~dm)∧x∊primfs,primos,syna
-   (pm⌿typ)←P
+   pm←(~dm)∧x∊primfs,primos,syna ⋄ (pm⌿typ)←P
 
 ⍝ Compute the depth vector based on { and } dfns, include } as a child
    0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳IN[pos]]:'UNBALANCED DFNS'⎕SIGNAL 2
