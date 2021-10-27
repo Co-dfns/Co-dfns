@@ -43,8 +43,8 @@
    alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
    num←⎕D
    synb←'¯[]{}()'':⍺⍵⋄;'
-   syna←'⍬⎕⍞∇←→#'
-   prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷/⌿\⍀∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹'
+   syna←'⍬⎕⍞#'
+   prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷/⌿\⍀∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
    prmos←'¨⍨∘./⌿\⍀⍣&⌶⍠⌸⌺⍤⍥@'
    x←' '@{typ≠0}IN[pos] ⍝ The spaces produce nice invariants
    ∨⌿msk←~x∊alp,num,syna,synb,prmfs,prmos,WS:{
@@ -76,8 +76,8 @@
    am aam←'⍺'fm x ⋄ wm wwm←'⍵'fm x
    ((am∨aam∨wm∨wwm)⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
 
-⍝ Tokenize Primitives
-   pm←(~dm)∧x∊prmfs,prmos,syna ⋄ (pm⌿typ)←P
+⍝ Tokenize Primitives, Atoms
+   pm←(~dm)∧x∊prmfs,prmos ⋄ (pm⌿typ)←P ⋄ typ[⍸x∊syna]←A
 
 ⍝ Compute dfns regions and type, include } as a child
    typ[⍸'{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
@@ -137,14 +137,16 @@
 
 ⍝ We will often wrap a set of nodes as children under a Z node
    gz←{z←⍺↑⍨0≠≢⍵ ⋄ typ[z]←Z ⋄ p[⍵]←z ⋄ pos[z]←pos[⊃⍵,z] ⋄ end[z]←end[⊃⌽z,⍵] ⋄ 0}
+   gz←{z←⍵↑⍨-0≠≢⍵ ⋄ k←¯1↓⍵
+     typ[z]←Z ⋄ p[k]←⊃z ⋄ pos[z]←pos[⊃⍵] ⋄ end[z]←end[⊃⌽z,k] ⋄ 0}
 
 ⍝ Nest top-level root lines as Z nodes
-   _←(⊃gz 1↓⊢)¨(typ[i]=Z)⊂i←⍸d=0
-   assert typ[⍸p=⍳≢p]=Z:
+   _←(gz 1⌽⊢)¨(typ[i]=Z)⊂i←⍸d=0
+   'Non-Z top-level node'assert typ[⍸p=⍳≢p]=Z:
 
 ⍝ Nest all dfns expression bodies as Z nodes
-   _←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ (⊃∘⌽gz ¯1↓⊢)¨⍵⊂⍨1,¯1↓typ[⍵]=Z}⌸i←⍸typ[p]=F
-   assert typ[⍸typ[p]=F]=Z:
+   _←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓typ[⍵]=Z}⌸i←⍸typ[p]=F
+   'Non-Z dfns body node'assert typ[⍸typ[p]=F]=Z:
 
 ⍝ Drop/eliminate any Z nodes that are empty or blank
    _←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(typ[p]=Z)∧p≠⍳≢p⊣msk←typ≠Z
@@ -166,7 +168,7 @@
 
 ⍝ Delete unnecessary namespace nodes from the tree, leave only M's
    msk←~nss∨((¯1⌽nss)∧typ=V)∨nse∨1⌽nse
-   tm n typ pos end(⌿⍨)←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+   typ n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Parse Labels ∘∘∘
 
@@ -176,9 +178,10 @@
      ⊃m:'EMPTY GUARD TEST'⎕SIGNAL 2
      1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
      typ[⍺]←G
-     t g c←3↑(⊂⍬)⍪⍨⍵⊂⍨1,m∨¯1⌽m
-     g gz t:
-     ci←≢p ⋄ typ pos end⍪←0 ⋄ ci gz c:
+     t g c←3↑(⊂⍬)⍪⍨⍵⊂⍨1,1↓m∨¯1⌽m
+     t c←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m
+     gz t:
+     p,←ci←≢p ⋄ typ pos end⍪←0 ⋄ gz c,ci:
    0}⌸i←⍸typ[p[p]]=F
 
 ⍝ Parse brackets and parentheses into ¯1 and Z nodes
@@ -187,27 +190,48 @@
      0≠⊃⌽bd:'UNBALANCED BRACKETS'⎕SIGNAL 2
      0≠⊃⌽pd:'UNBALANCED PARENTHESES'⎕SIGNAL 2
      (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
-     p[⍵]←(⍺,⍵)[1+¯1 D2P +⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
+     p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}D2P +⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
      end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
    0}⌸i←⍸typ[p]=Z
-   typ pos end(⌿⍨)←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+   typ n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Convert semi-colon indexing into Z nodes in the ¯1 nodes
-   _←p[i]{(⊃∘⌽gz ¯1↓⊢)¨⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]'}⌸i←⍸typ[p]=¯1
+   _←p[i]{gz¨⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]'}⌸i←⍸typ[p]=¯1
 
-⍝ BINDING NODES (NODES THAT INTRODUCE NEW BINDINGS)
-⍝ BINDABILITY 
-⍝ BINDING TARGETS AND CHILDREN
+⍝ Mark bindable nodes
+   bm←(typ=V)∨(typ=A)∧n∊,¨'⎕⍞'
+   bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡typ[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧typ[p]=Z}⍣≡bm
+
+⍝ Binding nodes
+   _←p[i]{
+     typ[⍵⌿⍨(n[⍵]∊⊂,'←')∧0,¯1↓bm[⍵]]←B
+     b t←{(⊃¨x)(1↓¨x←⍵⌿⍨{typ[⊃⍵]=B}¨⍵)}¯1⌽¨⍵⊂⍨1,¯1↓typ[⍵]∊P B
+     ∨⌿~bm[∊t]:'CANNOT BIND ASSIGNMENT TARGET'⎕SIGNAL 2
+     p[⍵]←(⍺,b)[0,¯1↓+⍀typ[⍵]=B]
+     n[b]←n[∊t] ⋄ typ[∊t]←¯7
+   0}⌸i←⍸typ[p]=Z
+
+   typ n pos end⌿⍨←⊂msk←typ≠¯7 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
 ⍝ FREE VARIABLES
 ⍝ DFNS TYPING
-⍝ INFER BINDING TYPE
+
+⍝ Infer binding type
+  knd←0⍴⍨≢typ ⋄ _←p[i]{knd[⍺]←typ[⊃⌽⍵]∊P F}⌸i←⍸typ[p]=B
+  knd←1@{typ=F}knd ⋄ typ←F@{typ=M}typ
+
 ⍝ STRANDING/ATOMS
 ⍝ BRACKET INDEXING
 ⍝ MUTATION/ASSIGNMENTS
 ⍝ FUNCTION EXPRESSIONS
 ⍝ EXPRESSION NODES
 
-   d i←P2D p
-   d←d[i] ⋄ t←(F@{typ=M}typ)[i] ⋄ k←(0⍴⍨≢typ)[i] ⋄ pos←pos[i] ⋄ end←end[i]
-   sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n[i]
-   (d t k(-sym⍳n)pos end)(⍬⍬)sym IN}
+⍝ Drop unnecessary Z nodes
+   typ knd n pos end⌿⍨←⊂msk←typ≠Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
+⍝ Compute Exports
+   msk←(typ=B)∧knd[I@{typ[⍵]≠F}⍣≡⍨p]=0
+   xn←msk⌿n ⋄ xt←msk⌿knd
+
+   d i←P2D p ⋄ d n typ knd pos end I∘⊢←⊂i ⋄ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
+   (d typ knd(-sym⍳n)pos end)(xn xt)sym IN}
