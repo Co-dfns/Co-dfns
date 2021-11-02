@@ -225,7 +225,8 @@
 ⍝ FUNCTION EXPRESSIONS
 ⍝ EXPRESSION NODES
 
-⍝ Drop unnecessary Z nodes
+⍝ Eliminate Z nodes from the tree
+   p[i]←i←⍸(typ[p]=Z)∧p[p]=p ⋄ p[i]←p[p[i←⍸typ[p]=Z]]
    typ knd n pos end⌿⍨←⊂msk←typ≠Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Compute Exports
