@@ -62,7 +62,7 @@
    ∨⌿{1<+⌿⍵='e'}¨dp←⊃⍪/{⍵⊆⍨⍵≠'j'}¨dp:'MULTIPLE E IN NUMBER'⎕SIGNAL 2
    ∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕SIGNAL 2
    ∨⌿'e'=⊃∘⌽¨dp:'MISSING EXPONENT'⎕SIGNAL 2
-   mn ex←↓⍉↑{2↑(⍵⊆⍵≠'e'),⊂''}¨dp
+   mn ex←↓⍉↑{2↑(⍵⊆⍨⍵≠'e'),⊂''}¨dp
    ∨⌿{1<+⌿'.'=⍵}¨mn,ex:'MULTIPLE . IN NUMBER'⎕SIGNAL 2
    ∨⌿'.'∊¨ex:'REAL NUMBER IN EXPONENT'⎕SIGNAL 2
    ∨⌿{('¯'∊⍵)∧'¯'≠⊃⍵}¨mn,ex:'MISPLACED ¯'⎕SIGNAL 2
@@ -74,7 +74,7 @@
 ⍝ Tokenize ⍺, ⍵ formals
    fm←{mm←⌽⊃(>∘⊃,⊢)⌿⌽m←⍺=' ',⍵ ⋄ 1↓¨(mm∧~m1)(mm∧m1←1⌽m)}
    am aam←'⍺'fm x ⋄ wm wwm←'⍵'fm x
-   ((am∨aam∨wm∨wwm)⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
+   ((am∨wm)⌿typ)←A ⋄ ((aam∨wwm)⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
 
 ⍝ Tokenize Primitives, Atoms
    pm←(~dm)∧x∊prmfs,prmos ⋄ (pm⌿typ)←P ⋄ typ[⍸x∊syna]←A
@@ -210,7 +210,6 @@
      p[⍵]←(⍺,b)[0,¯1↓+⍀typ[⍵]=B]
      n[b]←n[∊t] ⋄ typ[∊t]←¯7
    0}⌸i←⍸typ[p]=Z
-
    typ n pos end⌿⍨←⊂msk←typ≠¯7 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ FREE VARIABLES
