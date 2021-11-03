@@ -216,8 +216,8 @@
 ⍝ DFNS TYPING
 
 ⍝ Infer binding type
-  knd←0⍴⍨≢typ ⋄ _←p[i]{knd[⍺]←typ[⊃⌽⍵]∊P F}⌸i←⍸typ[p]=B
-  knd←1@{typ=F}knd ⋄ typ←F@{typ=M}typ
+   knd←typ∊F P ⋄ _←{knd[x]←knd[y]}⍣{∧⌿=/knd[i]}x y←↓⍉i←p[i],∘⊃∘⌽⌸i←⍸typ[p]∊B Z
+   typ←V@{(typ=A)∧n∊,¨'⍺⍵'}F@{typ=M}typ
 
 ⍝ STRANDING/ATOMS
 ⍝ BRACKET INDEXING
