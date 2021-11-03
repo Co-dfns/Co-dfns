@@ -224,7 +224,14 @@
 ⍝ BRACKET INDEXING
 ⍝ MUTATION/ASSIGNMENTS
 ⍝ FUNCTION EXPRESSIONS
-⍝ EXPRESSION NODES
+
+⍝ Parse expression sequences
+   i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(typ[p]=Z)∧knd[p]=0]]
+   km←km∧⊃1 ¯1∨.⌽⊂km←0<i ⋄ i←|i
+   msk←m2∨(knd[i]=1)∧~¯1⌽m2←km∧(1⌽km)∧knd[i]=0
+   typ,←E⍴⍨xc←+⌿msk ⋄ knd,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
+   pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
+   p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
 
 ⍝ Eliminate Z nodes from the tree
    p[i]←i←⍸(typ[p]=Z)∧p[p]=p ⋄ p[i]←p[p[i←⍸typ[p]=Z]]
