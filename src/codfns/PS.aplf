@@ -114,10 +114,7 @@
    d tm typ pos end(⌿⍨)←⊂~msk
 
 ⍝ Now that all compound data is tokenized, reify n field before tree-building
-   n←IN∘I¨pos+⍳¨end-pos
-
-⍝ Keywords are case-insensitive
-   n←(⊂'')@{typ=Z}1 ⎕C@{typ=K}n
+   n←{1↓⍎¨'0',⍵}@{typ=N}(⊂'')@{typ=Z}1 ⎕C@{typ=K}IN∘I¨pos+⍳¨end-pos
 
 ⍝ Verify that keywords and system variables are defined and scoped correctly
    KW←'NAMESPACE' 'ENDNAMESPACE' 'END' 'IF' 'ELSEIF' 'ANDIF' 'ORIF' 'ENDIF'
@@ -220,7 +217,15 @@
    knd←typ∊F P ⋄ _←{knd[x]←knd[y]}⍣{∧⌿=/knd[i]}x y←↓⍉i←p[i],∘⊃∘⌽⌸i←⍸typ[p]∊B Z
    typ←V@{(typ=A)∧n∊,¨'⍺⍵'}F@{typ=M}typ
 
-⍝ STRANDING/ATOMS
+⍝ Strand arrays into atoms
+   i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸typ[p]∊B Z]]
+   msk←(typ[i]∊C N)∨msk∧⊃1 ¯1∨.⌽⊂msk←km∧(typ[i]∊A C N V Z)∧knd[i]=0
+   np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⊢⍳≢p)[p] ⋄ p,←ai ⋄ km←2<⌿0⍪msk
+   typ knd n pos end(⊣,I)←⊂ai ⋄ knd[ai]←3×∨⌿¨msk⊆typ[i]≠N
+   typ n pos(⊣@ai⍨)←A(⊂'')(pos[km⌿i]) ⋄ p[msk⌿i]←ai[(msk←msk∧~am)⌿¯1++⍀km]
+   i←⍸(typ[p]=A)∧(knd[p]=3)∧typ=N
+   p,←i ⋄ typ knd n pos end(⊣,I)←⊂i ⋄ typ knd n(⊣@i⍨)←A 0(⊂'')
+
 ⍝ BRACKET INDEXING
 ⍝ MUTATION/ASSIGNMENTS
 ⍝ FUNCTION EXPRESSIONS
@@ -228,7 +233,7 @@
 ⍝ Parse expression sequences
    i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(typ[p]=Z)∧knd[p]=0]]
    km←km∧⊃1 ¯1∨.⌽⊂km←0<i ⋄ i←|i
-   msk←m2∨(knd[i]=1)∧~¯1⌽m2←km∧(1⌽km)∧knd[i]=0
+   msk←m2∨(knd[i]=1)∧~¯1⌽m2←km∧(1⌽km)∧(knd[i]=0)∨typ[i]=A
    typ,←E⍴⍨xc←+⌿msk ⋄ knd,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
    pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
    p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
