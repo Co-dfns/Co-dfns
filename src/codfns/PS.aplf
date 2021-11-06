@@ -220,7 +220,7 @@
 ⍝ Strand arrays into atoms
    i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸typ[p]∊B Z]]
    msk←(typ[i]∊C N)∨msk∧⊃1 ¯1∨.⌽⊂msk←km∧(typ[i]∊A C N V Z)∧knd[i]=0
-   np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⊢⍳≢p)[p] ⋄ p,←ai ⋄ km←2<⌿0⍪msk
+   np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai ⋄ km←2<⌿0⍪msk
    typ knd n pos end(⊣,I)←⊂ai ⋄ knd[ai]←3×∨⌿¨msk⊆typ[i]≠N
    typ n pos(⊣@ai⍨)←A(⊂'')(pos[km⌿i]) ⋄ p[msk⌿i]←ai[(msk←msk∧~am)⌿¯1++⍀km]
    i←⍸(typ[p]=A)∧(knd[p]=3)∧typ=N
@@ -231,8 +231,7 @@
 ⍝ FUNCTION EXPRESSIONS
 
 ⍝ Parse expression sequences
-   i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(typ[p]=Z)∧knd[p]=0]]
-   km←km∧⊃1 ¯1∨.⌽⊂km←0<i ⋄ i←|i
+   i←|i⊣km←km∧⊃1 ¯1∨.⌽⊂km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(typ[p]=Z)∧knd[p]=0]]
    msk←m2∨(knd[i]=1)∧~¯1⌽m2←km∧(1⌽km)∧(knd[i]=0)∨typ[i]=A
    typ,←E⍴⍨xc←+⌿msk ⋄ knd,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
    pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
