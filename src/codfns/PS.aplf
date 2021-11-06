@@ -190,7 +190,7 @@
      (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
      p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}D2P +⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
      end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
-   0}⌸i←⍸typ[p]=Z
+   0}⌸i←⍸(typ[p]=Z)∧p≠⍳≢p
    typ n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Convert semi-colon indexing into Z nodes in the ¯1 nodes
@@ -207,7 +207,7 @@
      ∨⌿~bm[∊t]:'CANNOT BIND ASSIGNMENT TARGET'⎕SIGNAL 2
      p[⍵]←(⍺,b)[0,¯1↓+⍀typ[⍵]=B]
      n[b]←n[∊t] ⋄ typ[∊t]←¯7
-   0}⌸i←⍸typ[p]=Z
+   0}⌸i←⍸(typ[p]=Z)∧p≠⍳≢p
    typ n pos end⌿⍨←⊂msk←typ≠¯7 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ FREE VARIABLES
