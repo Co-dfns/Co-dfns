@@ -238,8 +238,11 @@
    p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
 
 ⍝ Eliminate Z nodes from the tree
-   p[i]←i←⍸(typ[p]=Z)∧p[p]=p ⋄ p[i]←p[p[i←⍸typ[p]=Z]]
-   typ knd n pos end⌿⍨←⊂msk←typ≠Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+   ERR←'INVARIANT ERROR: Z node with multiple children'
+   ERR assert(+⌿(typ[p]=Z)∧p≠⍳≢p)=+⌿typ=Z:
+   zi←p I@{typ[p[⍵]]=Z}⍣≡ki←⍸msk←(typ[p]=Z)∧typ≠Z
+   p←(zi@ki⍳≢p)[p] ⋄ typ knd n pos end(⊣@zi⍨)←typ knd n pos end I¨⊂ki
+   typ knd n pos end⌿⍨←⊂msk←~msk∨typ=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Compute Exports
    msk←(typ=B)∧knd[I@{typ[⍵]≠F}⍣≡⍨p]=0
