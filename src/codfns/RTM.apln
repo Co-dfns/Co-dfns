@@ -25,6 +25,7 @@
  initsrc←'0inc' '1mac' '2obj' '3ftp' '4utl' '5dat' '6dwa' '7api'
  rth←∊(⎕UCS 10),⍨⍪⊃,⌿⊃¨⎕NGET¨(⊂¨rtm∘,¨initsrc,¨⊂'.c'),¨1
  rtn←{∊(⊃⍵),¨⎕UCS 10}¨⎕NGET¨(⊂¨rtm∘,¨(nams~'this' 'span' ''),¨⊂'.c'),¨1
+ rtn,←3⍴⊂''
 
  ##.(syms nams deps rth rtn)←syms nams deps rth rtn
 
