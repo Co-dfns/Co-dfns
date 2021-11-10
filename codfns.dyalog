@@ -7,9 +7,9 @@ AF∆PREFIX←'/opt/arrayfire'
 
 DEBUG←0
 
-DM←'SYNTAX ERROR' '[3] 4+5+ ' '      ^  '
+DM←3⍴⊂''
 
-EN←2
+EN←0
 
 N∆←'ABEFGLMNOPVZ'
 
@@ -250,7 +250,7 @@ syms←_
    tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
    put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
    ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
-   cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'' '}
+   cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,opsys'' '/lib64' '/lib'}
    cco←'-std=c++17 -Ofast -g -Wall -fPIC -shared -Wno-parentheses '
    cco,←'-Wno-misleading-indentation '
    ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
