@@ -4,7 +4,7 @@
    VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
    VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
    Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬
-    out←GC{⍵⊣⍞←'G'}ir←TT{⍵⊣⍞←'C'}a n s src←PS ∊⍵,¨⎕UCS 10⊣⍞←'P'
+    out←GC{⍵⊣⍞←'G'}ir←TT{⍵⊣⍞←'C'}a n s src←PS ⍵⊣⍞←'P'
     _←out put ⍺,'.cpp'
     _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕←⍪⊃⎕NGET(⍺,'.log')1 ⋄ ⎕NEXISTS f:n
     'COMPILE ERROR' ⎕SIGNAL 22}
