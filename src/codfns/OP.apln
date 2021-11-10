@@ -1,5 +1,7 @@
 :Namespace OP
 
+⎕IO←0
+
 _o←{0≥⊃c1 a e(i1 d1)←A←⍺ ⍺⍺ ⍵:A ⋄ 0≥⊃c2 a e(i2 d2)←B←⍺ ⍵⍵ ⍵:B
  (i1=i2∧c1<c2)∨i1 _less i2:B ⋄ A}
 _s←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e d←p←e ⍵⍵ d:p ⋄ (c⌈c2)(a⍪a2)e d}
@@ -35,15 +37,15 @@ PEG←{⍺←⎕THIS
  nm peg as←1↓¨3↑x⊂⍨1@(0,⊃∘⍸¨('←'=noq)(':'=noq))⊢0⍴⍨≢x
  peg←A ⎕R(' ',¨B,¨' ')⊢peg ⋄ as←{' _as (',⍵,')'}⍣(∨⌿as≠' ')⊢as
  ⍺.⎕FX(nm,'←{')('Z←⍺(',peg,as,')⍵')(''⊣'⎕←''',nm,': '',⍕(0)(3 0)⊃¨⊂Z')('Z}')}
-EN←0 ⋄ DM←'' '' ''
-_report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'⊣EN∘←0⊣DM∘←'' '' ''
+##.EN←0 ⋄ ##.DM←'' '' ''
+_report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'⊣##.EN←0⊣##.DM←'' '' ''
  0>c:('Unhandled return code: ',(⍕c))⎕SIGNAL 16
  li←⍸lm←¯1⌽lm∨(CR=d)∧~1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
- EN∘←c
- DM[0]←⊂⎕EM c
- DM[1]←⊂(lnm←'[',(⍕1+ln),'] '),' '@{⍵∊CR LF}⊢l←(ln←0⌈li⍸i)⊃lm⊂d
- DM[2]←⊂(' '⍴⍨≢lnm),'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
- msg←∊CR,'─'⍪⍨'─'⍪↑DM[1 2]
+ ##.EN←c
+ ##.DM[0]←⊂⎕EM c
+ ##.DM[1]←⊂(lnm←'[',(⍕1+ln),'] '),' '@{⍵∊CR LF}⊢l←(ln←0⌈li⍸i)⊃lm⊂d
+ ##.DM[2]←⊂(' '⍴⍨≢lnm),'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
+ msg←∊CR,'─'⍪⍨'─'⍪↑##.DM[1 2]
  ⎕SIGNAL⊂('EN' c)('Category' 'Compiler')('Vendor' 'Co-dfns')('Message' msg)}
 
 ws←(' ',⎕UCS 9)_set
