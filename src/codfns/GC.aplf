@@ -14,8 +14,8 @@
    gcv,←'Fa'  'Fz' 'Fn' 'Fn'
    gck,←(G 0)(N 0)(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
    gcv,←'Gd' 'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
-   gck,←(P 0)(P 1)(P 2)(V 0)(V 1)(V 2)
-   gcv,←'Pv' 'Pf' 'Po' 'Va' 'Vf' 'Vf'
+   gck,←(P 0)(P 1)(P 2)(V 0)(V 1)(V 2)(V 3)
+   gcv,←'Pv' 'Pf' 'Po' 'Va' 'Vf' 'Vf' 'Vf'
    gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
    NL←⎕UCS 13 10
 
