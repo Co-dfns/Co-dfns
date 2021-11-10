@@ -5,9 +5,19 @@ AF∆LIB←'cuda'
 
 AF∆PREFIX←'/opt/arrayfire'
 
+DEBUG←0
+
+DM←'SYNTAX ERROR' '[3] 4+5+ ' '      ^  '
+
+EN←2
+
+N∆←'ABEFGLMNOPVZ'
+
 VERSION←3 1 0
 
 deps←((,'⍉') (,'⍴') (,'⍋') '%s' (,'+')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'-')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'×')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'÷')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'*')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⍟')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'|')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'○')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⌊')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⌈')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'!')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'<')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'≤')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'=')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'≥')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'>')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'≠')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'~')) ((,'∨') (,'∧')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'∨')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⍲')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⍱')) ((,'⍳') (,'⌷')) (⊂,'[') (⊂,'⍳') (⊂,'⍴') (⊂,',') ((,',') (,'⍪')) ((,'|') (,',') (,'⌽')) (⊂,'⍉') ((,'⌽') (,'⊖')) (⊂,'∊') (⊂,'⊃') (⊂,'≡') ((,'≡') (,'≢')) (⊂,'⊢') (⊂,'⊣') (⊂,'⊤') (⊂,'⊥') ((,'¨') (,'/')) ((,'/') (,'⌿')) ((,'¨') (,'\')) ((,'\') (,'⍀')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'?')) ((,'⍳') (,'↑')) ((,'⍳') (,'↓')) ((,'⊃') (,',') (,'¨')) (⊂,'⍨') ((,'/') (,'.')) ((,'↑') (,'⌷') (,'⍤')) (⊂,'⍣') (⊂,'∘') (⊂,'∪') (⊂,'∩') ((,'[') (,'⊃') (,',') (,'¨') (,'←')) (⊂,'⍋') (⊂,'⍒') ((,'¨') '∘.') (⊂,'⍷') ((,'¨') (,'⌷') (,'⊂')) (⊂,'⌹') (⊂'⎕FFT') (⊂'⎕IFFT') (⊂'%s') ((,'⊂') (,'⊆')) (⊂,'∇') (⊂,';') (⊂'%u')
+
+f∆←'ptknfsrdx'
 
 _←⍬
 _,←'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min' 'max' 'fac' 'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not' 'and'
@@ -175,6 +185,7 @@ _,←,⊂('NM(fft,"fft",1,0,MT ,MFD,MT ,MT ,MT )',(⎕ucs 10),'DEFN(fft)',(⎕uc
 _,←,⊂('NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )',(⎕ucs 10),'DEFN(ift)',(⎕ucs 10),'MF(ift_f){arr rv;CVSWITCH(r.v,err(6),rv=unrav(v,r.s),err(11))',(⎕ucs 10),' z.s=r.s;z.v=idft(rv.type()==c64?rv:rv.as(c64),1,rv.dims());}',(⎕ucs 10 10))
 _,←,⊂('template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,FN&rec_c,fncls fn){',(⎕ucs 10),' z.s=r.s;',(⎕ucs 10),' CVSWITCH(r.v,err(6),fn(z,v,e)',(⎕ucs 10),'  ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);',(⎕ucs 10),'   DOB(cr,rec_c(zv[i],v[i],e)))}',(⎕ucs 10),'template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){',(⎕ucs 10),' B lr=rnk(l),rr=rnk(r);',(⎕ucs 10),' if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;}',(⎕ucs 10),' else if(!lr){z.s=r.s;}else if(!rr){z.s=l.s;}else if(lr!=rr)err(4);',(⎕ucs 10),' std::visit(visitor{DVSTR(),',(⎕ucs 10),'   [&](CVEC<A>&lv,carr&rv){err(16);},',(⎕ucs 10),'   [&](carr&lv,CVEC<A>&rv){err(16);},',(⎕ucs 10),'   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},',(⎕ucs 10),'   [&](carr&lv,carr&rv){',(⎕ucs 10),'    if(lr==rr){fn(z,lv,rv,e);}',(⎕ucs 10),'    else if(!lr){fn(z,tile(lv,rv.dims()),rv,e);}',(⎕ucs 10),'    else if(!rr){fn(z,lv,tile(rv,lv.dims()),e);}}},',(⎕ucs 10),'  l.v,r.v);}',(⎕ucs 10),'inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){',(⎕ucs 10),' A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}',(⎕ucs 10),' B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);',(⎕ucs 10),' VEC<D> axd(rk);SHP axv(rk);',(⎕ucs 10),' if(rk)',(⎕ucs 10),'  CVSWITCH(ax.v',(⎕ucs 10),'   ,err(99,L"Unexpected value error.")',(⎕ucs 10),'   ,v.as(f64).host(axd.data())',(⎕ucs 10),'   ,err(99,L"Unexpected nested shape."))',(⎕ucs 10),' DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])',(⎕ucs 10),' DOB(rk,if(axv[i]<0||br<=axv[i])err(11))',(⎕ucs 10),' VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)',(⎕ucs 10),' B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),arr(br,t.data()));',(⎕ucs 10),' trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);',(⎕ucs 10),' if(f)me_c(b,z,a,e);else me_c(b,a,z,e);',(⎕ucs 10),' gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',(⎕ucs 10))
 _,←,⊂('NM(nst,"nst",0,0,MT ,MFD,MT ,MT ,MT )',(⎕ucs 10),'DEFN(nst)',(⎕ucs 10),'MF(nst_f){CVSWITCH(r.v,err(6),par_c(z,r,e),z=r)}',(⎕ucs 10))
+_,←3⍴⊂''
 rtn←_
 
 _←⍬
@@ -189,28 +200,30 @@ syms←_
 
 (⎕IO ⎕ML ⎕WX)←0 1 3
 
-∇ Z←name Fix src;VS∆PS;Cmp;MKA;EXA;Display;LoadImage;SaveImage;Image;Plot;Histogram;Rtm∆Init;MkNS;opsys;soext;mkna;mkf;tie;put;ccf;cci;cco;ucc;gcc;clang;vsco;vslo;vsc0;vsc1;vsc2;vsc
- VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
- VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
- VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
- VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
- Cmp←{_←1 ⎕NDELETE f←⍺,soext ⍬
-     out←GC{⍵⊣⍞←'G'}ir←TT{⍵⊣⍞←'C'}a n s src←PS∊⍵,¨⎕UCS 10⊣⍞←'P'
+ D2P←{0=≢⍵:⍬ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←⍳≢⍵}
+
+ Fix←{name←⍺ ⋄ src←⍵
+   VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
+   VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
+   VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
+   VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+   Cmp←{_←1 ⎕NDELETE f←⍺,soext ⍬
+     out←GC{⍵⊣⍞←'G'}ir←TT{⍵⊣⍞←'C'}a n s src←PS ⍵⊣⍞←'P'
      _←out put ⍺,'.cpp'
      _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕←⍪⊃⎕NGET(⍺,'.log')1 ⋄ ⎕NEXISTS f:n
      'COMPILE ERROR'⎕SIGNAL 22}
- MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
- Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
+   MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
+   Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
      w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
- LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺}
- SaveImage←{⍺←'image.png' ⋄ saveimg ⍵ ⍺}
- Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺}
- Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot(⍉⍵)⍺}
- Histogram←{⍵⊣w_hist ⍵,⍺}
- opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
- soext←{opsys'.dll' '.so' '.dylib'}
- mkna←{(⍺,soext ⍬),'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
- Rtm∆Init←{
+   LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺}
+   SaveImage←{⍺←'image.png' ⋄ saveimg ⍵ ⍺}
+   Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺}
+   Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot(⍉⍵)⍺}
+   Histogram←{⍵⊣w_hist ⍵,⍺}
+   opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+   soext←{opsys'.dll' '.so' '.dylib'}
+   mkna←{(⍺,soext ⍬),'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
+   Rtm∆Init←{
      _←'w_new'⎕NA'P ',(⍵,soext ⍬),'|w_new <C[]'
      _←'w_close'⎕NA'I ',(⍵,soext ⍬),'|w_close P'
      _←'w_del'⎕NA(⍵,soext ⍬),'|w_del P'
@@ -224,39 +237,38 @@ syms←_
      _←'FREA'⎕NA(⍵,soext ⍬),'|frea P'
      _←'Sync'⎕NA(⍵,soext ⍬),'|cd_sync'
      0 0⍴⍬}
- MkNS←{ns←#.⎕NS ⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵
+   MkNS←{ns←#.⎕NS ⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵
      fns←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage' 'Image' 'Plot'
      fns,←'Histogram' 'soext' 'opsys' 'mkna'
      _←∆.⎕FX∘⎕CR¨fns ⋄ ∆.(decls←⍺∘mkna¨names) ⋄ _←ns.⎕FX¨(⊂''),⍺∘mkf¨∆.names
      _←∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''')'→0⌿⍨0=≢names' 'names ##.⍙.⎕NA¨decls'
      ns}
- mkf←{fn←(⍺,soext ⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa ' ⋄ mon dya←⍵∘,¨'_mon' '_dya'
+   mkf←{fn←(⍺,soext ⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa ' ⋄ mon dya←⍵∘,¨'_mon' '_dya'
      z←('Z←{A}',⍵,' W')(':If 0=⎕NC''⍙.',mon,'''')
      z,←(mon dya{'''',⍺,'''⍙.⎕NA''',fn,⍵,' <PP'''}¨'>PP P' '>PP <PP'),⊂':EndIf'
      z,':If 0=⎕NC''A'''('Z←⍙.',mon,' 0 0 W')':Else'('Z←⍙.',dya,' 0 A W')':EndIf'}
- tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
- put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
- ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
- cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'' '}
- cco←'-std=c++17 -Ofast -g -Wall -fPIC -shared -Wno-parentheses '
- cco,←'-Wno-misleading-indentation '
- ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
- gcc←'g++'ucc'so'
- clang←'clang++'ucc'dylib'
- vsco←{z←'/W3 /wd4102 /wd4275 /Gm- /O2 /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
-     z,←'/errorReport:prompt /WX- /MD /EHsc /nologo /std:c++latest '
+   tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+   put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+   ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
+   cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,'/lib64'' '}
+   cco←'-std=c++17 -Ofast -g -Wall -fPIC -shared -Wno-parentheses '
+   cco,←'-Wno-misleading-indentation '
+   ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
+   gcc←'g++'ucc'so'
+   clang←'clang++'ucc'dylib'
+   vsco←{z←'/W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
+     z,←'/WX /MD /EHsc /nologo /std:c++latest '
      z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
- vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+   vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
      z,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af',AF∆LIB,'.lib" '
      z,'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '}
- vsc0←{~∨⌿b←⎕NEXISTS¨VS∆PS:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿VS∆PS}
- vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),'/fast "',⍵,'.cpp" '}
- vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
- vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
- Z←name MkNS name Cmp src
-∇
+   vsc0←{~∨⌿b←⎕NEXISTS¨VS∆PS:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿VS∆PS}
+   vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),'/fast "',⍵,'.cpp" '}
+   vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
+   vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
+   name MkNS name Cmp src}
 
-∇ z←GC(p t k n fr sl rf fd xn sym);gck;gcv;NL;xi;d;i;I;com;ks;nam;slt;ast;Aa;As;Bf;Bv;Eb;Ed;Ei;Ek;Em;Er;Fn;Fz;Gd;Na;Ov;Of;Ovv;Ovf;Ofv;Off;Pf;Po;Pv;Zp;Va;Vf;dis
+ GC←{p t k n fr sl rf fd xn sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
      ⍝ Parameters
      ⍝  deps  Dependencies for each symbol in syms
      ⍝  nams  Name codes for each symbol in syms
@@ -264,88 +276,86 @@ syms←_
      ⍝  rth   Runtime header for all modules
      ⍝  rtn   Runtime code for each symbol in syms
      ⍝  syms  Core instruction set of generated code
- gck←(0 0)(0 1)(0 3)(1 0)(1 1)
- gcv←'Aa' 'Av' 'As' 'Bv' 'Bf'
- gck,←(2 ¯2)(2 ¯1)(2 0)(2 1)(2 2)(2 3)(2 4)
- gcv,←'Ec' 'Ek' 'Er' 'Em' 'Ed' 'Ei' 'Eb'
- gck,←(3 ¯1)(3 0)(3 1)(3 3)
- gcv,←'Fa' 'Fz' 'Fn' 'Fn'
- gck,←(4 0)(7 0)(8 1)(8 2)(8 4)(8 5)(8 7)(8 8)
- gcv,←'Gd' 'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
- gck,←(9 0)(9 1)(9 2)(10 0)(10 1)(10 3)
- gcv,←'Pv' 'Pf' 'Po' 'Va' 'Vf' 'Vf'
- gck+←⊂1 0
- gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
- NL←⎕UCS 13 10
+   gck←(A 0)(A 1)(A 3)(B 0)(B 1)
+   gcv←'Aa' 'Av' 'As' 'Bv' 'Bf'
+   gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 3)(E 4)
+   gcv,←'Ec' 'Ek' 'Er' 'Em' 'Ed' 'Ei' 'Eb'
+   gck,←(F ¯1)(F 0)(F 1)(F 3)
+   gcv,←'Fa' 'Fz' 'Fn' 'Fn'
+   gck,←(G 0)(N 0)(O 1)(O 2)(O 4)(O 5)(O 7)(O 8)
+   gcv,←'Gd' 'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
+   gck,←(P 0)(P 1)(P 2)(V 0)(V 1)(V 2)(V 3)
+   gcv,←'Pv' 'Pf' 'Po' 'Va' 'Vf' 'Vf' 'Vf'
+   gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
+   NL←⎕UCS 13 10
      
- xi←⍸(t=1)∧k[rf]=0 ⋄ d i←P2D p
- I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵} ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
- nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'(*e[',(⍕6⊃⍵),'])[',(⍕7⊃⍵),']'}
- ast←(⍉↑d p(1+t)k n(⍳≢p)fr sl fd)[i;]
- Aa←{0=≢ns←dis¨⍵:'PUSH(A(SHP(1,0),scl(0)));',NL
+   xi←⍸(t=B)∧k[rf]=0 ⋄ d i←P2D p
+   I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵} ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
+   nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]} ⋄ slt←{'(*e[',(⍕6⊃⍵),'])[',(⍕7⊃⍵),']'}
+   ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;]
+   Aa←{0=≢ns←dis¨⍵:'PUSH(A(SHP(1,0),scl(0)));',NL
      1=≢ns:'PUSH(scl(scl(',(⊃ns),')));',NL
      c←⍕≢⍵ ⋄ v←'VEC<',('DI'⊃⍨∧.=∘⌊⍨⍎¨ns),'>{',(com ns),'}.data()'
      'PUSH(A(SHP(1,',c,'),arr(',c,',',v,')));',NL}
- As←{c←⍕4⊃⍺ ⋄ z←'{A z(SHP(1,',c,'),VEC<A>(',c,'));',NL
+   As←{c←⍕4⊃⍺ ⋄ z←'{A z(SHP(1,',c,'),VEC<A>(',c,'));',NL
      z,←'  VEC<A>&zv=std::get<VEC<A>>(z.v);',NL
      z,'  DOB(',c,',POP(A,zv[i]))coal(z);PUSH(z);}',NL}
- Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
- Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
- Eb←{z←'{A x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
+   Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
+   Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
+   Eb←{z←'{A x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
      z,'(*f)(std::get<A>(',(slt ⍺),'),x,y,e);PUSH(y);}',NL}
- Ed←{z←'{A z,x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
+   Ed←{z←'{A z,x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
      z,'(*f)(z,x,y,e);PUSH(z);}',NL}
- Ei←{c←⍕4⊃⍺ ⋄ z←'{A x(SHP(1,',c,'),VEC<A>(',c,'));'
+   Ei←{c←⍕4⊃⍺ ⋄ z←'{A x(SHP(1,',c,'),VEC<A>(',c,'));'
      z,'VEC<A>&v=std::get<VEC<A>>(x.v);DOB(',c,',POP(A,v[i]));PUSH(x);}',NL}
- Ek←{'s.pop();',NL}
- Em←{'{A z,x;FNP f;POP(FNP,f);POP(A,x);(*f)(z,x,e);PUSH(z);}',NL}
- Er←{'POP(A,z);e[fd]=std::move(of);R;',NL}
- Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_f){U fd=',(⍕8⊃⍺),';STK s;',NL
+   Ek←{'s.pop();',NL}
+   Em←{'{A z,x;FNP f;POP(FNP,f);POP(A,x);(*f)(z,x,e);PUSH(z);}',NL}
+   Er←{'POP(A,z);e[fd]=std::move(of);R;',NL}
+   Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_f){U fd=',(⍕8⊃⍺),';STK s;',NL
      z,←' if(e.size()<=fd)e.resize(fd+1);',NL
      z,←' FRMP of=std::move(e[fd]);e[fd]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
      z,←' try{',NL
-     B←{'(*e[fd])[',(⍕n[⍵]),']=(*e[',(⍕fr[⍵]),'])[',(⍕sl[⍵]),'];',NL}
-     z,←⊃,⌿(B¨⍸(p=5⊃⍺)∧(t=1)∧fr≠¯1),' ',¨dis¨⍵
+     do←{'(*e[fd])[',(⍕n[⍵]),']=(*e[',(⍕fr[⍵]),'])[',(⍕sl[⍵]),'];',NL}
+     z,←⊃,⌿(do¨⍸(p=5⊃⍺)∧(t=B)∧fr≠¯1),' ',¨dis¨⍵
      z,←' }catch(U x){e[fd]=std::move(of);throw x;}',NL
      z,←' catch(exception&x){e[fd]=std::move(of);throw x;}',NL
      z,' e[fd]=std::move(of);}',NL}
- Fz←{z←NL,'ENV e',(⍕5⊃⍺),'(1);I is',(⍕5⊃⍺),'=0;',NL
+   Fz←{z←NL,'ENV e',(⍕5⊃⍺),'(1);I is',(⍕5⊃⍺),'=0;',NL
      z,←'DF(',('fn',⍕5⊃⍺),'_f){if(is0)R;','' 'I fd=0;'⊃⍨×≢⍵
      z,←'STK s;e[0]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
      z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
- Gd←{z←'{A x;POP(A,x);if(cnt(x)!=1)err(5);',NL
+   Gd←{z←'{A x;POP(A,x);if(cnt(x)!=1)err(5);',NL
      z,←' if(!(isint(x)||isbool(x)))err(11);',NL
      z,←' I t;CVSWITCH(x.v,err(6),t=v.as(s32).scalar<I>(),err(11))',NL
      z,←' if(t!=0&&t!=1)err(11);',NL
      z,' if(t){',NL,(⊃,/' ',¨dis¨⍵),' }}',NL}
- Na←{'¯'⎕R'-'⍕sym⌷⍨|4⊃⍺}
- Ov←{z←'{A x;MOKP o;POP(MOKP,o);POP(A,x);'
+   Na←{'¯'⎕R'-'⍕sym⌷⍨|4⊃⍺}
+   Ov←{z←'{A x;MOKP o;POP(MOKP,o);POP(A,x);'
      z,'FNP f=(*o)(x);f->this_p=f;PUSH(f);}',NL}
- Of←{z←'{FNP f,g;MOKP o;POP(MOKP,o);POP(FNP,g);'
+   Of←{z←'{FNP f,g;MOKP o;POP(MOKP,o);POP(FNP,g);'
      z,'f=(*o)(g);f->this_p=f;PUSH(f);}',NL}
- Ovv←{z←'{A x,y;DOKP o;POP(A,x);POP(DOKP,o);POP(A,y);'
+   Ovv←{z←'{A x,y;DOKP o;POP(A,x);POP(DOKP,o);POP(A,y);'
      z,'FNP f=(*o)(x,y);f->this_p=f;PUSH(f);}',NL}
- Ovf←{z←'{A x;FNP f,g;DOKP o;POP(A,x);POP(DOKP,o);POP(FNP,g);'
+   Ovf←{z←'{A x;FNP f,g;DOKP o;POP(A,x);POP(DOKP,o);POP(FNP,g);'
      z,'f=(*o)(x,g);f->this_p=f;PUSH(f);}',NL}
- Ofv←{z←'{A x;FNP f,g;DOKP o;POP(FNP,g);POP(DOKP,o);POP(A,x);'
+   Ofv←{z←'{A x;FNP f,g;DOKP o;POP(FNP,g);POP(DOKP,o);POP(A,x);'
      z,'f=(*o)(g,x);f->this_p=f;PUSH(f);}',NL}
- Off←{z←'{FNP f,g,h;DOKP o;POP(FNP,g);POP(DOKP,o);POP(FNP,h);'
+   Off←{z←'{FNP f,g,h;DOKP o;POP(FNP,g);POP(DOKP,o);POP(FNP,h);'
      z,'f=(*o)(g,h);f->this_p=f;PUSH(f);}',NL}
- Pf←{'PUSH(',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_p);',NL}
- Po←{'PUSH(std::make_shared<',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_k>());',NL}
- Pv←{'PUSH(A());',NL}
- Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("',n,'",0,0){};};',NL
+   Pf←{'PUSH(',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_p);',NL}
+   Po←{'PUSH(std::make_shared<',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_k>());',NL}
+   Pv←{'PUSH(A());',NL}
+   Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("',n,'",0,0){};};',NL
      z,'DEFN(',n,')',NL,'MF(',n,'_f){this_c(z,A(),r,e);}',NL}
- Va←{(x←4⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'll' 'rr'⊃⍨¯1+|x),');',NL
+   Va←{(x←4⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'll' 'rr'⊃⍨¯1+|x),');',NL
      'PUSH(',(slt ⍺),');',NL}
- Vf←{0>x←4⊃⍺:'PUSH(',(slt ⍺),');',NL
+   Vf←{0>x←4⊃⍺:'PUSH(',(slt ⍺),');',NL
      'fn',(⍕x),'_p->this_p=fn',(⍕x),'_p;PUSH(fn',(⍕x),'_p);',NL}
- dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:⎕SIGNAL 16 ⋄ h(⍎i⊃gcv)ks 1↓⍵}
- z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=3)
- z,←dis¨ks ast
- z,←'E',¨('VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
- z←⊃,⌿z⊣⍞←⎕UCS 10
-∇
+   dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:⎕SIGNAL 16 ⋄ h(⍎i⊃gcv)ks 1↓⍵}
+   z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=F)
+   z,←dis¨ks ast
+   z,←'E',¨('VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
+   ⊃,⌿z⊣⍞←⎕UCS 10}
 
 ∇ Z←Help _
  Z←'Usage: <object> <target> [-af={cpu,opencl,cuda}]'
@@ -359,73 +369,546 @@ syms←_
 
  P2D←{z←⍪⍳≢⍵ ⋄ d←⍵≠,z ⋄ _←{p⊣d+←⍵≠p←⍺[z,←⍵]}⍣≡⍨⍵ ⋄ d(⍋(-1+d)↑⍤0 1⊢⌽z)}
 
-∇ Z←PS IN;READ;SEQ;DN;ER;F0;UP;stk;cd;idx;d;t;k;n;ss;se;xn;xt;sym;tk;tv;tp
-     ⍝ Parameters
-     ⍝  PS∆READ: Reader function for running the tokenizer
- cd←0 ⋄ idx←¯1 ⋄ stk←⍬ ⋄ tk←0 ⋄ tv←0 ⋄ tp←0
-     ⍝ Depth | Type | Kind | Name | Src Start | Src End | Exp Name | Exp Type
- d t k n ss se xn xt←⊂⍬
- sym←0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'
- ⎕FX'Z←READ' 'Z←PS∆READ'
- ⎕FX'DN' 'cd+←1'
+∇ Z←PD env;stk;READ;DF;ER;EX;tk;tv;tp;te;ox
+     ⍝ PARAMETERS
+     ⍝  idx:     Current reader position
+     ⍝  IN:      Input Stream
+     ⍝  PD∆READ: Reader function for calling tokenizer
+ stk←0⍴⊂6⍴⍬ ⋄ tk tv tp←¯1 ⋄ te←⍬ ⍬ ⋄ ox←idx
+ ⎕FX'Z←READ' 'Z←PD∆READ'
+ ⎕FX'DF' 'stk←⊂(,¨0 3 1 0 ox,1↓tp)⍪¨1+@0⍪⌿↑stk'
  ⎕FX'ER' '⎕SIGNAL 2'
- ⎕FX'F0' 'd,←cd ⋄ t,←3 ⋄ k,←0 ⋄ n,←0 ⋄ ss,←tp ⋄ se,←¯1'
- ⎕FX'UP' 'cd-←1 ⋄ se[(⌽d)⍳cd]←idx'
- PS∆SPEC
- Z←(d t k n ss se)(xn xt)sym IN
+ ⎕FX'EX' 'stk,←⊂tv'
+ PD∆SPEC
+ Z←⊃stk
 ∇
 
-∇ Z←PS∆READ;f;iET;iKW;iNL;oET;oNE;oNL;oNS;oOT
-     ⍝ Parameters
-     ⍝  tk:    Token type stream
-     ⍝  tv:    Token value stream
-     ⍝  tp:    Token position stream
-     ⍝  idx:   Current position in data stream
+∇ Z←PD∆READ;f;iET;iEX;iIF;iKW;iNL;iRB;oET;oEX;oRB
+     ⍝ PARAMETERS
+     ⍝  tk:    Token type
+     ⍝  tv:    Token value
+     ⍝  tp:    Token position
+     ⍝  te:    Token environment
+     ⍝  idx:   Current data stream position
+     ⍝  IN:    Data stream
      ⍝  DEBUG: Boolean, enable debugging or not
      ⍝  SEQ:   Current sequence history
- iET iKW iNL←⍳3
- oET oNE oNL oNS oOT←1+⍳5
+     ⍝  ER:    ERROR
+ iET iEX iIF iKW iNL iRB←⍳6
+ oET oEX oRB←1+⍳3
+ →START⌿⍨0=⎕NC'DEBUG'
+ ⍎DEBUG⌿'⎕←''PD: '',SEQ'
+START:tk tv tp te←te TK 1
+ Z←oET⌿⍨f←tk=iET ⋄ →f⌿END
+ Z←oEX⌿⍨f←tk=iEX ⋄ →f⌿END
+ Z←oRB⌿⍨f←tk=iRB ⋄ →f⌿END
+ SEQ,←' OT' ⋄ ER
+END:tk←Z
+∇
+
+∇ PD∆SPEC
+     ⍝ STIMULI
+     ⍝  ET: End of stream
+     ⍝  EX: Expression
+     ⍝  RB: Right Brace
+     ⍝ RESPONSES
+     ⍝  DF: Dfn node
+     ⍝  ER: ERROR
+     ⍝  EX: Expression
+     ⍝ PARAMETERS
+     ⍝  READ: Get the next token in stream
+     ⍝  SEQ:  Set to the current sequence state
+∆:SEQ←'∊' ⋄ →⎕LC+READ
+_ET:ER ⋄ →0
+_EX:EX ⋄ →EX∆
+_RB:DF ⋄ →0
+     
+EX∆:SEQ←'EX' ⋄ →⎕LC+READ
+EX_ET:ER ⋄ →0
+EX_EX:ER ⋄ →0
+EX_RB:DF ⋄ →0
+∇
+
+ PS←{IN←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15 ⋄ types←' ABCEFGKLMNOPSVZ'
+   I←{(⊂⍵)⌷⍺} ⋄ U←{⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵}
+   assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
+     
+   OP.ps ⍵
+     
+   1<≢⍴IN:'PARSER REQUIRES A SCALAR/VECTOR INPUT'⎕SIGNAL 11
+   2<|≡IN:'PARSER REQUIRES A SIMPLE OR VECTOR OF VECTOR INPUT'⎕SIGNAL 11
+   IN←{∊⍵,¨⎕UCS 10}⍣(1<|≡IN)⊢IN
+   0≠10|⎕DR IN:'PARSER REQUIRES A CHARACTER ARRAY'⎕SIGNAL 11
+     
+     ⍝ Identify beginnings of lines
+   CR LF←⎕UCS 13 10
+   linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
+   quotelines←{
+     lines←∪linestarts⍸⍵
+     nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
+     beg←linestarts[lines] ⋄ end←linestarts[lines+1]
+     m←∊∘⍵¨i←beg+⍳¨end-beg
+     ∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR}
+     
+     ⍝ Group input into lines as a nested vector
+   pos←(⍳≢IN)⊆⍨~IN∊CR LF
+     
+     ⍝ Mask strings
+   0≠≢lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos:{
+     EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
+     EM,←quotelines∊(msk⌿¨pos)[lin]
+     EM ⎕SIGNAL 2}⍬
+     
+     ⍝ Remove comments
+   pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽¨msk)⍲'⍝'=IN∘I¨pos
+     
+     ⍝ Remove leading and trailing whitespace
+   WS←⎕UCS 9 32 ⋄ pos msk⌿¨⍨←⊂~(∧⍀∨∧⍀U⌽)∘(WS∊⍨IN∘I)¨pos
+     
+     ⍝ Flatten and separate lines and ⋄ with Z type
+   typ←⊃0⍴⊂pos ⋄ typ pos msk(∊,∘⍪⍨)←Z(⊃¨pos)0 ⋄ typ[⍸'⋄'=IN[pos]]←Z
+     
+     ⍝ Tokenize Strings
+   end←1+pos ⋄ typ[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←end[⍸2>⌿msk⍪0]
+   typ pos end⌿⍨←⊂(typ≠0)∨~msk
+     
+     ⍝ Verify that all open characters are part of the valid character set
+   alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
+   alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
+   alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
+   num←⎕D
+   synb←'¯[]{}()'':⍺⍵⋄;'
+   syna←'⍬⎕⍞#'
+   prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷/⌿\⍀∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
+   prmos←'¨⍨∘./⌿\⍀⍣&⌶⍠⌸⌺⍤⍥@'
+   x←' '@{typ≠0}IN[pos] ⍝ The spaces produce nice invariants
+   ∨⌿msk←~x∊alp,num,syna,synb,prmfs,prmos,WS:{
+     EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
+     EM,←quotelines⍸msk
+     EM ⎕SIGNAL 2}⍬
+     
+     ⍝ Tokenize numbers
+   _←{dm[⍵]←∧⍀dm[⍵]}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
+   dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
+   dm∨←('¯'=x)∧1⌽dm
+   dm∨←(x∊'EeJj')∧(¯1⌽dm)∧1⌽dm
+   ∨⌿(typ=0)∧IN[pos]='¯':'ORPHANED ¯'⎕SIGNAL 2
+   ∨⌿{1<+⌿⍵='j'}¨dp←⎕C¨dm⊆x:'MULTIPLE J IN NUMBER'⎕SIGNAL 2
+   ∨⌿{1<+⌿⍵='e'}¨dp←⊃⍪/{⍵⊆⍨⍵≠'j'}¨dp:'MULTIPLE E IN NUMBER'⎕SIGNAL 2
+   ∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕SIGNAL 2
+   ∨⌿'e'=⊃∘⌽¨dp:'MISSING EXPONENT'⎕SIGNAL 2
+   mn ex←↓⍉↑{2↑(⍵⊆⍨⍵≠'e'),⊂''}¨dp
+   ∨⌿{1<+⌿'.'=⍵}¨mn,ex:'MULTIPLE . IN NUMBER'⎕SIGNAL 2
+   ∨⌿'.'∊¨ex:'REAL NUMBER IN EXPONENT'⎕SIGNAL 2
+   ∨⌿{('¯'∊⍵)∧'¯'≠⊃⍵}¨mn,ex:'MISPLACED ¯'⎕SIGNAL 2
+   typ[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
+     
+     ⍝ Tokenize Variables
+   typ[i←⍸2<⌿0⍪vm←(~dm)∧x∊alp,num]←V ⋄ end[i]←end⌿⍨2>⌿vm⍪0
+     
+     ⍝ Tokenize ⍺, ⍵ formals
+   fm←{mm←⌽⊃(>∘⊃,⊢)⌿⌽m←⍺=' ',⍵ ⋄ 1↓¨(mm∧~m1)(mm∧m1←1⌽m)}
+   am aam←'⍺'fm x ⋄ wm wwm←'⍵'fm x
+   ((am∨wm)⌿typ)←A ⋄ ((aam∨wwm)⌿typ)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
+     
+     ⍝ Tokenize Primitives, Atoms
+   pm←(~dm)∧x∊prmfs,prmos ⋄ (pm⌿typ)←P ⋄ typ[⍸x∊syna]←A
+     
+     ⍝ Compute dfns regions and type, include } as a child
+   typ[⍸'{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
+     
+     ⍝ Check for out of context dfns formals
+   ∨⌿(d=0)∧(typ=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
+     
+     ⍝ Compute trad-fns regions
+   ∨⌿Z≠typ⌿⍨1⌽msk←(d=0)∧'∇'=x:'TRAD-FNS START/END LINES MUST BEGIN WITH ∇'⎕SIGNAL 2
+   0≠⊃tm←¯1⌽≠⍀(d=0)∧'∇'=x:'UNBALANCED TRAD-FNS'⎕SIGNAL 2
+   ∨⌿Z≠typ⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'⎕SIGNAL 2
+     
+     ⍝ Identify Label colons versus others
+   typ[⍸tm∧(d=0)∧∊((~⊃)∧(<⍀∨⍀))¨':'=(typ=Z)⊂IN[pos]]←L
+     
+     ⍝ Tokenize Keywords
+   ki←⍸(typ=0)∧(d=0)∧(':'=IN[pos])∧1⌽typ=V
+   typ[ki]←K ⋄ end[ki]←end[ki+1] ⋄ typ[ki+1]←0
+   ERR←'EMPTY COLON IN NON-DFNS CONTEXT, EXPECTED LABEL OR KEYWORD'
+   ∨⌿(typ=0)∧(d=0)∧':'=IN[pos]:ERR ⎕SIGNAL 2
+     
+     ⍝ Tokenize System Variables
+   si←⍸('⎕'=IN[pos])∧1⌽typ=V
+   typ[si]←S ⋄ end[si]←end[si+1] ⋄ typ[si+1]←0
+     
+     ⍝ Delete all characters we no longer need from the tree
+   d tm typ pos end(⌿⍨)←⊂(typ≠0)∨x∊'()[]{}:;'
+     
+     ⍝ Tokenize Labels
+   ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
+   ∨⌿(Z≠typ[li-1])∨(V≠typ[li←⍸1⌽msk←typ=L]):ERR ⎕SIGNAL 2
+   typ[li]←L ⋄ end[li]←end[li+1]
+   d tm typ pos end(⌿⍨)←⊂~msk
+     
+     ⍝ Now that all compound data is tokenized, reify n field before tree-building
+   n←{1↓⍎¨'0',⍵}@{typ=N}(⊂'')@{typ=Z}1 ⎕C@{typ=K}IN∘I¨pos+⍳¨end-pos
+     
+     ⍝ Verify that keywords and system variables are defined and scoped correctly
+   KW←'NAMESPACE' 'ENDNAMESPACE' 'END' 'IF' 'ELSEIF' 'ANDIF' 'ORIF' 'ENDIF'
+   KW,←'WHILE' 'ENDWHILE' 'UNTIL' 'REPEAT' 'ENDREPEAT' 'LEAVE' 'FOR' 'ENDFOR'
+   KW,←'IN' 'INEACH' 'SELECT' 'ENDSELECT' 'CASE' 'CASELIST' 'ELSE' 'WITH'
+   KW,←'ENDWITH' 'HOLD' 'ENDHOLD' 'TRAP' 'ENDTRAP' 'GOTO' 'RETURN' 'CONTINUE'
+   KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE'
+   KW,¨⍨←':'
+   msk←~KW∊⍨kws←n⌿⍨km←typ=K
+   ∨⌿msk:('UNRECOGNIZED KEYWORD ',kws⊃⍨⊃⍸msk)⎕SIGNAL 2
+   msk←kws∊':NAMESPACE' ':ENDNAMESPACE'
+   ∨⌿msk∧km⌿tm:'NAMESPACE SCRIPTS MUST APPEAR AT THE TOP LEVEL'⎕SIGNAL 2
+   msk←kws∊KW~':NAMESPACE' ':ENDNAMESPACE' ':SECTION' ':ENDSECTION'
+   ∨⌿msk∧~km⌿tm:'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS'⎕SIGNAL 2
+     
+     ⍝ Compute parent vector from d
+   p←D2P d
+     
+     ⍝ We will often wrap a set of nodes as children under a Z node
+   gz←{z←⍺↑⍨0≠≢⍵ ⋄ typ[z]←Z ⋄ p[⍵]←z ⋄ pos[z]←pos[⊃⍵,z] ⋄ end[z]←end[⊃⌽z,⍵] ⋄ 0}
+   gz←{z←⍵↑⍨-0≠≢⍵ ⋄ k←¯1↓⍵
+     typ[z]←Z ⋄ p[k]←⊃z ⋄ pos[z]←pos[⊃⍵] ⋄ end[z]←end[⊃⌽z,k] ⋄ 0}
+     
+     ⍝ Nest top-level root lines as Z nodes
+   _←(gz 1⌽⊢)¨(typ[i]=Z)⊂i←⍸d=0
+   'Non-Z top-level node'assert typ[⍸p=⍳≢p]=Z:
+     
+     ⍝ Nest all dfns expression bodies as Z nodes
+   _←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓typ[⍵]=Z}⌸i←⍸typ[p]=F
+   'Non-Z dfns body node'assert typ[⍸typ[p]=F]=Z:
+     
+     ⍝ Drop/eliminate any Z nodes that are empty or blank
+   _←p[i]{msk[⍺,⍵]←~∧⌿IN[pos[⍵]]∊WS}⌸i←⍸(typ[p]=Z)∧p≠⍳≢p⊣msk←typ≠Z
+   tm n typ pos end(⌿⍨)←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+     
+     ⍝ Parse Keyword structures
+   nss←n∊⊂':NAMESPACE' ⋄ nse←n∊⊂':ENDNAMESPACE'
+   ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE'
+   Z∨.≠typ⌿⍨1⌽nss:ERR ⎕SIGNAL 2
+   ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
+   ∨⌿(Z≠typ⌿⍨¯1⌽nss)∧(V≠typ⌿⍨¯1⌽nss)∨Z≠typ⌿⍨¯2⌽nss:ERR ⎕SIGNAL 2
+   ERR←':ENDNAMESPACE KEYWORD MUST APPEAR ALONE ON A LINE'
+   ∨⌿Z≠typ⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR ⎕SIGNAL 2
+   typ[nsi←⍸1⌽nss]←M ⋄ typ[nei←⍸1⌽nse]←-M
+   n[i]←n[1+i←⍸(typ=M)∧V=1⌽typ] ⋄ end[nsi]←end[nei]
+   x←⍸p=⍳≢p ⋄ d←+⍀(typ[x]=M)+-typ[x]=-M
+   0≠⊃⌽d:':NAMESPACE KEYWORD MISSING :ENDNAMESPACE PAIR'⎕SIGNAL 2
+   p[x]←x[D2P ¯1⌽d]
+     
+     ⍝ Delete unnecessary namespace nodes from the tree, leave only M's
+   msk←~nss∨((¯1⌽nss)∧typ=V)∨nse∨1⌽nse
+   typ n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+     
+     ⍝ Parse Labels ∘∘∘
+     
+     ⍝ Map guard statements to (G (Z ...) (Z ...))
+   _←p[i]{
+     0=+⌿m←':'=IN[pos[⍵]]:⍬
+     ⊃m:'EMPTY GUARD TEST'⎕SIGNAL 2
+     1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
+     typ[⍺]←G
+     t g c←3↑(⊂⍬)⍪⍨⍵⊂⍨1,1↓m∨¯1⌽m
+     t c←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m
+     gz t:
+     p,←ci←≢p ⋄ typ pos end⍪←0 ⋄ gz c,ci:
+     0}⌸i←⍸typ[p[p]]=F
+     
+     ⍝ Parse brackets and parentheses into ¯1 and Z nodes
+   _←p[i]{
+     x←IN[pos[⍵]] ⋄ bd←+⍀bm←(bo←'['=x)+-bc←']'=x ⋄ pd←+⍀pm←(po←'('=x)+-pc←')'=x
+     0≠⊃⌽bd:'UNBALANCED BRACKETS'⎕SIGNAL 2
+     0≠⊃⌽pd:'UNBALANCED PARENTHESES'⎕SIGNAL 2
+     (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
+     p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}D2P+⍀¯1⌽bm+pm] ⋄ typ[bo⌿⍵]←¯1 ⋄ typ[po⌿⍵]←Z
+     end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
+     0}⌸i←⍸(typ[p]=Z)∧p≠⍳≢p
+   typ n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+     
+     ⍝ Convert semi-colon indexing into Z nodes in the ¯1 nodes
+   _←p[i]{gz¨⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]'}⌸i←⍸typ[p]=¯1
+     
+     ⍝ Mark bindable nodes
+   bm←(typ=V)∨(typ=A)∧n∊,¨'⎕⍞'
+   bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡typ[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧typ[p]=Z}⍣≡bm
+     
+     ⍝ Binding nodes
+   _←p[i]{
+     typ[⍵⌿⍨(n[⍵]∊⊂,'←')∧0,¯1↓bm[⍵]]←B
+     b t←{(⊃¨x)(1↓¨x←⍵⌿⍨{typ[⊃⍵]=B}¨⍵)}¯1⌽¨⍵⊂⍨1,¯1↓typ[⍵]∊P B
+     ∨⌿~bm[∊t]:'CANNOT BIND ASSIGNMENT TARGET'⎕SIGNAL 2
+     p[⍵]←(⍺,b)[0,¯1↓+⍀typ[⍵]=B]
+     n[b]←n[∊t] ⋄ typ[∊t]←¯7
+     0}⌸i←⍸(typ[p]=Z)∧p≠⍳≢p
+   typ n pos end⌿⍨←⊂msk←typ≠¯7 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+     
+     ⍝ FREE VARIABLES
+     ⍝ DFNS TYPING
+     
+     ⍝ Infer binding type
+   knd←typ∊F P ⋄ _←{knd[x]←knd[y]}⍣{∧⌿=/knd[i]}x y←↓⍉i←p[i],∘⊃∘⌽⌸i←⍸typ[p]∊B Z
+   typ←V@{(typ=A)∧n∊,¨'⍺⍵'}F@{typ=M}typ
+     
+     ⍝ Strand arrays into atoms
+   i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸typ[p]∊B Z]]
+   msk←(typ[i]∊C N)∨msk∧⊃1 ¯1∨.⌽⊂msk←km∧(typ[i]∊A C N V Z)∧knd[i]=0
+   np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai ⋄ km←2<⌿0⍪msk
+   typ knd n pos end(⊣,I)←⊂ai ⋄ knd[ai]←3×∨⌿¨msk⊆typ[i]≠N
+   typ n pos(⊣@ai⍨)←A(⊂'')(pos[km⌿i]) ⋄ p[msk⌿i]←ai[(msk←msk∧~am)⌿¯1++⍀km]
+   i←⍸(typ[p]=A)∧(knd[p]=3)∧typ=N
+   p,←i ⋄ typ knd n pos end(⊣,I)←⊂i ⋄ typ knd n(⊣@i⍨)←A 0(⊂'')
+     
+     ⍝ BRACKET INDEXING
+     ⍝ MUTATION/ASSIGNMENTS
+     ⍝ FUNCTION EXPRESSIONS
+     
+     ⍝ Parse expression sequences
+   i←|i⊣km←km∧⊃1 ¯1∨.⌽⊂km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(typ[p]=Z)∧knd[p]=0]]
+   msk←m2∨(knd[i]=1)∧~¯1⌽m2←km∧(1⌽km)∧(knd[i]=0)∨typ[i]=A
+   typ,←E⍴⍨xc←+⌿msk ⋄ knd,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
+   pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
+   p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
+     
+     ⍝ Eliminate Z nodes from the tree
+   ERR←'INVARIANT ERROR: Z node with multiple children'
+   ERR assert(+⌿(typ[p]=Z)∧p≠⍳≢p)=+⌿typ=Z:
+   zi←p I@{typ[p[⍵]]=Z}⍣≡ki←⍸msk←(typ[p]=Z)∧typ≠Z
+   p←(zi@ki⍳≢p)[p] ⋄ typ knd n pos end(⊣@zi⍨)←typ knd n pos end I¨⊂ki
+   typ knd n pos end⌿⍨←⊂msk←~msk∨typ=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+     
+     ⍝ Compute Exports
+   msk←(typ=B)∧knd[I@{typ[⍵]≠F}⍣≡⍨p]=0
+   xn←msk⌿n ⋄ xt←msk⌿knd
+     
+   d i←P2D p ⋄ d n typ knd pos end I∘⊢←⊂i ⋄ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
+   (d typ knd(-sym⍳n)pos end)(xn xt)sym IN}
+
+∇ Z←PS∆READ;f;iET;iEX;iIF;iKW;iNL;iRB;oET;oEX;oNE;oNL;oNS
+     ⍝ PARAMETERS
+     ⍝  tk:    Token type
+     ⍝  tv:    Token value
+     ⍝  tp:    Token position
+     ⍝  te:    Token environment
+     ⍝  DEBUG: Boolean, enable debugging or not
+     ⍝  SEQ:   Current sequence history
+     ⍝  ER:    ERROR
+ iET iEX iIF iKW iNL iRB←⍳6
+ oET oEX oNE oNL oNS←1+⍳5
  →START⌿⍨0=⎕NC'DEBUG'
  ⍎DEBUG⌿'⎕←''PS: '',SEQ'
-START:tk tv tp←TK 1
+START:tk tv tp te←te TK 0
  Z←oET⌿⍨f←tk=iET ⋄ →f⌿END
+ Z←oEX⌿⍨f←tk=iEX ⋄ →f⌿END
  Z←oNE⌿⍨f←(tk=iKW)∧tv≡':ENDNAMESPACE' ⋄ →f⌿END
  Z←oNL⌿⍨f←tk=iNL ⋄ →f⌿END
  Z←oNS⌿⍨f←(tk=iKW)∧tv≡':NAMESPACE' ⋄ →f⌿END
- Z←oOT
+ SEQ,←' ','OT' 'KW'⊃⍨tk=iKW ⋄ ER
 END:tk←Z
 ∇
 
 ∇ PS∆SPEC
-     ⍝ Stimuli
+     ⍝ STIMULI
      ⍝  ET: End of token stream
+     ⍝  EX: Expression
      ⍝  NE: ":EndNamespace" token
      ⍝  NL: Statement Separator/Newline
      ⍝  NS: ":Namespace" token
-     ⍝  OT: Other token
-     ⍝ Responses
-     ⍝  DN:   Increase AST depth by 1
-     ⍝  ER:   ERROR
-     ⍝  F0:   Namespace root node
-     ⍝  UP:   Decrease AST depth by 1
-     ⍝ Parameter
+     ⍝ RESPONSES
+     ⍝  ER: ERROR
+     ⍝  EX: Expression
+     ⍝  NE: Namespace End
+     ⍝  NN: Namespace name
+     ⍝  NS: Namespace Begin
+     ⍝ PARAMETERS
      ⍝  READ: Get the next token in stream
      ⍝  SEQ:  Set to the current sequence state
 ∆:SEQ←'∊' ⋄ →⎕LC+READ
 _ET: ⋄ →0
+_EX:ER ⋄ →0
 _NE:ER ⋄ →0
 _NL: ⋄ →∆
-_NS:F0 ⋄ DN ⋄ →NS∆
-_OT:ER ⋄ →0
- SEQ ⎕SIGNAL 99
+_NS:NS ⋄ →NS∆
      
 NS∆:SEQ←'NS' ⋄ →⎕LC+READ
 NS_ET:ER ⋄ →0
-NS_NE:UP ⋄ →∆
-NS_NL: ⋄ →NS∆
+NS_EX:NN ⋄ →NS_EX∆
+NS_NE:ER ⋄ →0
+NS_NL: ⋄ →NS_NL∆
 NS_NS:ER ⋄ →0
-NS_OT:ER ⋄ →0
- SEQ ⎕SIGNAL 99
+     
+NS_EX∆:SEQ←'NS EX' ⋄ →⎕LC+READ
+NS_EX_ET:ER ⋄ →0
+NS_EX_EX:ER ⋄ →0
+NS_EX_NE:ER ⋄ →0
+NS_EX_NL: ⋄ →NS_NL∆
+NS_EX_NS:ER ⋄ →NS∆
+     
+NS_NL∆:SEQ←'NS NL' ⋄ →⎕LC+READ
+NS_NL_ET:ER ⋄ →0
+NS_NL_EX:EX ⋄ →NS_NL_EX∆
+NS_NL_NE:NE ⋄ →∆
+NS_NL_NL: ⋄ →NS_NL∆
+NS_NL_NS:ER ⋄ →0
+     
+NS_NL_EX∆:SEQ←'NS NL EX' ⋄ →⎕LC+READ
+NS_NL_EX_ET:ER ⋄ →0
+NS_NL_EX_EX:ER ⋄ →0
+NS_NL_EX_NE:ER ⋄ →0
+NS_NL_EX_NL: ⋄ →NS_NL∆
+NS_NL_EX_NS:ER ⋄ →0
+∇
+
+∇ Z←env PX(xt xv xp);idx;READ;SEQ;BF;DF;ER;MX;PM;VA;VU;stk;enm;etp;_;A∆;B∆;E∆;F∆;G∆;L∆;M∆;N∆;O∆;P∆;V∆;Z∆
+     ⍝ PARAMETERS
+     ⍝  PX∆READ: Reader function
+ A∆ B∆ E∆ F∆ G∆ L∆ M∆ N∆ O∆ P∆ V∆ Z∆←⍳12
+ idx←¯1 ⋄ stk←⍬ ⋄ enm etp←env ⋄ xt xv xp←⊖¨xt xv xp
+ ⎕FX'Z←READ' 'Z←PX∆READ'
+ _←⊂'BF;d;t;k;n;ss;se;nm;bn;fn'
+ _,←⊂'d t k n ss se←fn←⊃⌽stk'
+ _,←⊂'bn←,∘⊂¨0 B∆ 1,xv[idx],xp[idx;0],se[0]'
+ _,←⊂'stk←(¯2↓stk),⊂bn⍪¨1+@0⊢fn'
+ _,←⊂'enm←xv[idx]⍪enm ⋄ etp←1⍪etp'
+ ⎕FX _
+ ⎕FX'DF' 'stk,←⊂idx⊃xv'
+ ⎕FX'ER' '⎕SIGNAL 2'
+ _←⊂'MX;fn;vl;mx'
+ _,←⊂'vl fn←¯2↑stk'
+ _,←⊂'mx←,∘⊂¨0 E∆ 1 0,(⊃4⊃fn),⊃5⊃vl'
+ _,←⊂'stk←(¯2↓stk),⊂mx⍪¨1+@0⊢fn⍪¨vl'
+ ⎕FX _
+ ⎕FX'PM' 'stk,←⊂,∘⊂¨0 P∆  1,xv[idx],xp[idx;]'
+ ⎕FX'VA' 'stk,←⊂,∘⊂¨0 V∆  0,xv[idx],xp[idx;]'
+ ⎕FX'VU' 'stk,←⊂,∘⊂¨0 V∆ ¯1,xv[idx],xp[idx;]'
+ PX∆SPEC
+ 'SYSERR: NON-SINGLETON STACK'⎕SIGNAL 99⌿⍨1≠≢stk
+ Z←(⊃stk)(enm etp)
+∇
+
+∇ Z←PX∆READ;t;v;p;iDF;iNM;iPM;oAV;oBD;oBT;oDF;oET;oMP;oVU;oWV
+     ⍝ PARAMETERS
+     ⍝  xt:    Expression token stream, token type
+     ⍝  xv:    Expression token stream, token value
+     ⍝  xp:    Expression token stream, token position
+     ⍝  enm:   Environment variable name
+     ⍝  etp:   Environment variable type
+     ⍝  idx:   Current position in the token stream
+     ⍝  DEBUG: Boolean, enable debugging or not
+     ⍝  ISDFN: Boolean, are we tokenizing the body of a dfn?
+     ⍝  SEQ:   Current sequence history
+     ⍝  ER:    ERROR
+ iDF iNM iPM←⍳3
+ oAV oBD oBT oDF oET oMP oVU oWV←1+⍳8
+ →START⌿⍨0=⎕NC'DEBUG'
+ ⍎DEBUG⌿'⎕←''PX: '',SEQ'
+START:idx+←1
+ Z←oET⌿⍨f←idx≥≢xt ⋄ →f⌿0
+ t←idx⊃xt ⋄ v←idx⊃xv
+ Z←oAV⌿⍨f←ISDFN∧(t=iNM)∧v≡,'⍺' ⋄ →f⌿0
+ Z←oBD⌿⍨f←ISDFN∧(t=iPM)∧v≡,'←' ⋄ →f⌿0
+ Z←oBT⌿⍨f←(~ISDFN)∧(t=iPM)∧v≡,'←' ⋄ →f⌿0
+ Z←oDF⌿⍨f←t=iDF ⋄ →f⌿0
+ Z←oMP⌿⍨f←(t=iPM)∧(⊂v)∊,¨'⊢' ⋄ →f⌿0
+ Z←oWV⌿⍨f←ISDFN∧(t=iNM)∧v≡,'⍵' ⋄ →f⌿0
+ Z←oVU⌿⍨f←(t=iNM)∧~enm∊⍨⊂v ⋄ →f⌿0
+ SEQ,←' OT' ⋄ ER
+∇
+
+∇ PX∆SPEC
+     ⍝ STIMULI
+     ⍝  AV: ⍺
+     ⍝  BD: ← (dfns context)
+     ⍝  BT: ← (trad-fns context)
+     ⍝  DF: User-defined dfn function
+     ⍝  ET: End of token stream
+     ⍝  MP: Monadic-capable Primitive
+     ⍝  VU: Unbound variable
+     ⍝  WV: ⍵
+     ⍝ RESPONSES
+     ⍝  BF: Function binding
+     ⍝  DF: User-defined dfns function
+     ⍝  ER: ERROR
+     ⍝  MX: Monadic Expression
+     ⍝  PM: Primitive Function
+     ⍝  VA: Array Variable
+     ⍝  VU: Unbound name
+     ⍝ PARAMETERS
+     ⍝  READ: Get the next event/token in the sequence
+     ⍝  SEQ:  Set to the current sequence state we are in
+∆:SEQ←'∊' ⋄ →⎕LC+READ
+_AV:VA ⋄ →AV∆
+_BD:ER ⋄ →0
+_BT:ER ⋄ →0
+_DF:DF ⋄ →DF∆
+_ET: ⋄ →0
+_MP:ER ⋄ →0
+_VU:VU ⋄ →VU∆
+_WV:VA ⋄ →AV∆
+     
+AV∆:SEQ←'AV' ⋄ →⎕LC+READ
+AV_AV:ER ⋄ →0
+AV_BD:ER ⋄ →0
+AV_BT:ER ⋄ →0
+AV_DF:ER ⋄ →0
+AV_ET: ⋄ →0
+AV_MP:PM ⋄ →AV_MP∆
+AV_VU:ER ⋄ →0
+AV_WV:ER ⋄ →0
+     
+DF∆:SEQ←'DF' ⋄ →⎕LC+READ
+DF_AV:ER ⋄ →0
+DF_BD:ER ⋄ →0
+DF_BT: ⋄ →DF_BT∆
+DF_DF:ER ⋄ →0
+DF_ET: ⋄ →0
+DF_MP:ER ⋄ →0
+DF_VU:ER ⋄ →0
+DF_WV:ER ⋄ →0
+     
+VU∆:SEQ←'VU' ⋄ →⎕LC+READ
+VU_AV:ER ⋄ →0
+VU_BD:ER ⋄ →0
+VU_BT:ER ⋄ →0
+VU_DF:ER ⋄ →0
+VU_ET: ⋄ →0
+VU_MP:ER ⋄ →0
+VU_VU:ER ⋄ →0
+VU_WV:ER ⋄ →0
+     
+AV_MP∆:SEQ←'AV MP' ⋄ →⎕LC+READ
+AV_MP_AV:ER ⋄ →0
+AV_MP_BD:ER ⋄ →0
+AV_MP_BT:ER ⋄ →0
+AV_MP_DF:ER ⋄ →0
+AV_MP_ET:MX ⋄ →0
+AV_MP_MP:ER ⋄ →0
+AV_MP_VU:ER ⋄ →0
+AV_MP_WV:ER ⋄ →0
+     
+DF_BT∆:SEQ←'DF BT' ⋄ →⎕LC+READ
+DF_BT_AV:ER ⋄ →0
+DF_BT_BD:ER ⋄ →0
+DF_BT_BT:ER ⋄ →0
+DF_BT_DF:ER ⋄ →0
+DF_BT_ET:ER ⋄ →0
+DF_BT_MP:ER ⋄ →0
+DF_BT_VU:BF ⋄ →DF_BT_VU∆
+DF_BT_WV:ER ⋄ →0
+     
+DF_BT_VU∆:SEQ←'DF BT VU' ⋄ →⎕LC+READ
+DF_BT_VU_AV:ER ⋄ →0
+DF_BT_VU_BD:ER ⋄ →0
+DF_BT_VU_BT:ER ⋄ →0
+DF_BT_VU_DF:ER ⋄ →0
+DF_BT_VU_ET: ⋄ →0
+DF_BT_VU_MP:ER ⋄ →0
+DF_BT_VU_VU:ER ⋄ →0
+DF_BT_VU_WV:ER ⋄ →0
+     
+     
+     
 ∇
 
 ∇ Run(C I);Convert;in;out
@@ -439,122 +922,226 @@ NS_OT:ER ⋄ →0
  ⎕CMD'copy "%CUDA_PATH%\nvvm\bin\nvvm64*" /Y'/⍨(I.af≡'cuda')∧opsys 1 0 0
 ∇
 
-∇ Z←TK KEYWORDS;READ;SEQ;NL;ER;ET;KW;RW;ST;ET∆;KW∆;NL∆;stk;t;v;p
-     ⍝ Parameters
+∇ Z←e TK ISDFN;READ;SEQ;DF;ER;ET;EX;IF;KW;NL;NM;PM;RB;ST;ET∆;EX∆;IF∆;KW∆;NL∆;RB∆;stk;t;v;p;xt;xv;xp;XDF;XNM;XPM
+     ⍝ PARAMETERS
      ⍝  idx:     Current reader position
      ⍝  IN:      Input stream
      ⍝  TK∆READ: Reader function for running the tokenizer
- ET∆ KW∆ NL∆←⍳3
- stk←⍬
+ ET∆ EX∆ IF∆ KW∆ NL∆ RB∆←⍳6
+ XDF XNM XPM←⍳3
+ stk←⍬ ⋄ xt xv xp←⍬ ⍬(0 2⍴⍬)
  t v p←0 ⍝ Type | Value | Position
  ⎕FX'Z←READ' 'Z←TK∆READ'
+ ⎕FX'DF;ss;se' 'xt,←XDF ⋄ ss←idx ⋄ xv,←⊂PD e ⋄ se←idx ⋄ xp⍪←ss se'
  ⎕FX'ER' '⎕SIGNAL 2'
- ⎕FX'ET' 't←ET∆ ⋄ v←0 ⋄ p←idx'
- ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←¯1+⌊⌿stk ⋄ stk←⍬'
- ⎕FX'NL' 't←NL∆ ⋄ v←'''' ⋄ p←idx'
- ⎕FX'RW' 'idx-←1'
+ ⎕FX'ET' 't←ET∆ ⋄ v←0 ⋄ p←idx,idx'
+ ⎕FX'EX' 't←EX∆ ⋄ v e←e PX xt xv xp ⋄ p←(⊃,⊢⌿),xp ⋄ idx-←1 ⋄ xt xv xp←⍬ ⍬(0 2⍴⍬)'
+ ⎕FX'IF' 't←IF∆ ⋄ v←0 ⋄ p←idx,idx+1'
+ ⎕FX'KW' 't←KW∆ ⋄ v←1⎕C'':'',IN[stk] ⋄ p←(¯1 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬ ⋄ idx-←1'
+ ⎕FX'NL' 't←NL∆ ⋄ v←'''' ⋄ p←idx,idx+1'
+ ⎕FX'NM' 'xt,←XNM ⋄ xv,←⊂,IN[stk] ⋄ xp⍪←(0 1+⌊⌿,⌈⌿)stk ⋄ stk←⍬'
+ ⎕FX'PM' 'xt,←XPM ⋄ xv,←⊂,IN[idx] ⋄ xp⍪←idx,idx+1'
+ ⎕FX'RB' 't←RB∆ ⋄ v←0 ⋄ p←idx,idx+1'
  ⎕FX'ST' 'stk⍪←idx'
  TK∆SPEC
- Z←t v p
+ 'NON-EMPTY EXPR STACK'⎕SIGNAL 99⌿⍨0≠≢xt
+ Z←t v p e
 ∇
 
-∇ Z←TK∆READ;x;f;AL;CO;ET;NL;OT;WS
-     ⍝ Parameters
+∇ Z←TK∆READ;x;f;AA;AL;CO;DG;ET;IF;LB;NL;OT;PM;RB;WS;WW
+     ⍝ PARAMETERS
      ⍝  IN:    Data stream
      ⍝  idx:   Current position in data stream
      ⍝  DEBUG: Boolean, enable debugging or not
+     ⍝  ISDFN: Boolean, are we tokenizing the body of a dfn?
      ⍝  SEQ:   Current Sequence history
- AL CO ET NL OT WS←1+⍳6
+ AA AL CO DG ET IF LB NL OT PM RB WS WW←1+⍳13
  →START⌿⍨0=⎕NC'DEBUG'
  ⍎DEBUG⌿'⎕←''TK: '',SEQ'
 START:idx+←1
  Z←ET⌿⍨f←idx≥≢IN ⋄ →f⌿0
  x←IN[idx]
+ Z←AA⌿⍨f←x≡'⍺' ⋄ →f⌿0
  Z←AL⌿⍨f←(1 ⎕C x)∊⎕A,'∆' ⋄ →f⌿0
+ Z←CO⌿⍨f←(x=':')∧~ISDFN ⋄ →f⌿0
+ Z←DG⌿⍨f←x∊⎕D ⋄ →f⌿0
+ Z←IF⌿⍨f←(x=':')∧ISDFN ⋄ →f⌿0
+ Z←LB⌿⍨f←x≡'{' ⋄ →f⌿0
  Z←NL⌿⍨f←x∊⎕UCS 10 13 ⋄ →f⌿0
- Z←CO⌿⍨f←x=':' ⋄ →f⌿0
+ Z←PM⌿⍨f←x∊'←⊢' ⋄ →f⌿0
+ Z←RB⌿⍨f←x≡'}' ⋄ →f⌿0
  Z←WS⌿⍨f←x∊⎕UCS 9 32 ⋄ →f⌿0
+ Z←WW⌿⍨f←x≡'⍵' ⋄ →f⌿0
  Z←OT
 ∇
 
 ∇ TK∆SPEC
-     ⍝ Stimuli
-     ⍝  AL: Alphabetic Character
-     ⍝  CO: Colon
+     ⍝ STIMULI
+     ⍝  AA: ⍺
+     ⍝  AL: Alphabetic, including ∆
+     ⍝  CO: Colon, trad-fns
+     ⍝  DG: Digit
      ⍝  ET: End of input
+     ⍝  IF: Colon, dfns
+     ⍝  LB: {
      ⍝  NL: CR or LF
      ⍝  OT: Other character
+     ⍝  PM: Primitive
+     ⍝  RB: }
      ⍝  WS: Whitespace -- Tab, space
-     ⍝ Responses
+     ⍝  WW: ⍵
+     ⍝ RESPONSES
+     ⍝  DF: D-fns (launch dfns parser)
      ⍝  ER: Error
      ⍝  ET: End of Stream
-     ⍝  KW: Keyword Begins
+     ⍝  EX: Expression (launch expression parser)
+     ⍝  IF: dfns guard token
+     ⍝  KW: Keyword
      ⍝  NL: Newline/Statement Separator
-     ⍝  RW: Rewind reader
+     ⍝  NM: Name/Symbol
+     ⍝  PM: Primitive
+     ⍝  RB: Right brace token
      ⍝  ST: Store Data
-     ⍝ Parameters
+     ⍝ PARAMETERS
      ⍝  READ: Get the next event/token in the sequence
      ⍝  SEQ:  Set to the current sequence state we are in
 ∆:SEQ←'∊' ⋄ →⎕LC+READ
-_AL:ER ⋄ →0
+_AA:ST ⋄ →AA∆
+_AL:ST ⋄ →AL∆
 _CO: ⋄ →CO∆
+_DG:ER ⋄ →0
 _ET:ET ⋄ →0
+_IF:IF ⋄ →0
+_LB:DF ⋄ →PM∆
 _NL:NL ⋄ →0
 _OT:ER ⋄ →0
+_PM:PM ⋄ →PM∆
+_RB:RB ⋄ →0
 _WS: ⋄ →∆
- SEQ ⎕SIGNAL 99
+_WW:ST ⋄ →WW∆
+     
+AL∆:SEQ←'AL' ⋄ →⎕LC+READ
+AL_AA:NM ⋄ ST ⋄ →AA∆
+AL_AL:ST ⋄ →AL∆
+AL_CO:NM ⋄ EX ⋄ →0
+AL_DG:ST ⋄ →AL∆
+AL_ET:NM ⋄ EX ⋄ →0
+AL_IF:NM ⋄ EX ⋄ →0
+AL_LB:NM ⋄ DF ⋄ →PM∆
+AL_NL:NM ⋄ EX ⋄ →0
+AL_OT:ER ⋄ →0
+AL_PM:NM ⋄ PM ⋄ →PM∆
+AL_RB:NM ⋄ EX ⋄ →0
+AL_WS:NM ⋄ →PM∆
+AL_WW:NM ⋄ ST ⋄ →WW∆
+     
+AA∆:SEQ←'AA' ⋄ →⎕LC+READ
+AA_AA:ST ⋄ NM ⋄ →PM∆
+AA_AL:NM ⋄ ST ⋄ →AL∆
+AA_CO:NM ⋄ EX ⋄ →0
+AA_DG:ER ⋄ →0
+AA_ET:NM ⋄ EX ⋄ →0
+AA_IF:NM ⋄ EX ⋄ →0
+AA_LB:NM ⋄ DF ⋄ →PM∆
+AA_NL:NM ⋄ EX ⋄ →PM∆
+AA_OT:ER ⋄ →0
+AA_PM:NM ⋄ PM ⋄ →PM∆
+AA_RB:NM ⋄ EX ⋄ →0
+AA_WS:NM ⋄ →PM∆
+AA_WW:NM ⋄ ST ⋄ →WW∆
      
 CO∆:SEQ←'CO' ⋄ →⎕LC+READ
+CO_AA:ER ⋄ →0
 CO_AL:ST ⋄ →CO_AL∆
 CO_CO:ER ⋄ →0
+CO_DG:ER ⋄ →0
 CO_ET:ER ⋄ →0
+CO_IF:ER ⋄ →0
+CO_LB:ER ⋄ →0
 CO_NL:ER ⋄ →0
 CO_OT:ER ⋄ →0
+CO_PM:ER ⋄ →0
+CO_RB:ER ⋄ →0
 CO_WS:ER ⋄ →0
- SEQ ⎕SIGNAL 99
+CO_WW:ER ⋄ →0
+     
+PM∆:SEQ←'PM' ⋄ →⎕LC+READ
+PM_AA:ST ⋄ →AA∆
+PM_AL:ST ⋄ →AL∆
+PM_CO:EX ⋄ →0
+PM_DG:ER ⋄ →0
+PM_ET:EX ⋄ →0
+PM_IF:EX ⋄ →0
+PM_LB:DF ⋄ →PM∆
+PM_NL:EX ⋄ →0
+PM_OT:ER ⋄ →0
+PM_PM:PM ⋄ →PM∆
+PM_RB:EX ⋄ →0
+PM_WS: ⋄ →PM∆
+PM_WW:ST ⋄ →WW∆
+     
+WW∆:SEQ←'WW' ⋄ →⎕LC+READ
+WW_AA:NM ⋄ ST ⋄ →AA∆
+WW_AL:NM ⋄ ST ⋄ →AL∆
+WW_CO:NM ⋄ EX ⋄ →0
+WW_DG:ER ⋄ →0
+WW_ET:NM ⋄ EX ⋄ →0
+WW_IF:NM ⋄ EX ⋄ →0
+WW_LB:NM ⋄ DF ⋄ →PM∆
+WW_NL:NM ⋄ EX ⋄ →PM∆
+WW_OT:ER ⋄ →0
+WW_PM:NM ⋄ PM ⋄ →PM∆
+WW_RB:NM ⋄ EX ⋄ →0
+WW_WS:NM ⋄ →PM∆
+WW_WW:ST ⋄ NM ⋄ →PM∆
      
 CO_AL∆:SEQ←'CO AL' ⋄ →⎕LC+READ
+CO_AL_AA:KW ⋄ →0
 CO_AL_AL:ST ⋄ →CO_AL∆
-CO_AL_CO:KW ⋄ RW ⋄ →0
+CO_AL_CO:KW ⋄ →0
+CO_AL_DG:ST ⋄ →CO_AL∆
 CO_AL_ET:KW ⋄ →0
-CO_AL_NL:KW ⋄ RW ⋄ →0
+CO_AL_IF:KW ⋄ →0
+CO_AL_LB:KW ⋄ →0
+CO_AL_NL:KW ⋄ →0
 CO_AL_OT:ER ⋄ →0
+CO_AL_PM:KW ⋄ →0
+CO_AL_RB:KW ⋄ →0
 CO_AL_WS:KW ⋄ →0
- SEQ ⎕SIGNAL 99
+CO_AL_WW:KW ⋄ →0
 ∇
 
  TT←{((d t k n ss se)exp sym src)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
-     ⍝ A  B  E  F  G  L  M  N  O  P  V  Z
-     ⍝ 0  1  2  3  4  5  6  7  8  9 10 11
-     r←I@{t[⍵]≠3}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d                            ⍝ PV
-     p,←n[i]←(≢p)+⍳≢i←⍸(t=3)∧p≠⍳≢p ⋄ t k n r(⊣,I)←⊂i ⋄ p r I⍨←⊂n[i]@i⊢⍳≢p   ⍝ LF
-     t[i]←10
-     i←(⍸(~t∊3 4)∧t[p]=3),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=4 ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p      ⍝ WX
-     p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
-     k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=1)∨(t[j]=2)∧k[j]=4 ⋄ t[j]←2
-     p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=4] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]      ⍝ LG
-     n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
-     n[p⌿⍨(t[p]∊0 2)∧k[p]=3]+←1                                             ⍝ CI
-     p[i]←p[x←p I@{~t[p[⍵]]∊3 4}⍣≡i←⍸t∊4,(⍳3),8+⍳3] ⋄ j←(⌽i)[⍋⌽x]           ⍝ LX
-     p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
-     s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=1]                      ⍝ SL
-     d←(≢p)↑d ⋄ d[i←⍸t=3]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1        ⍝ FR
-     xn←n⌿⍨(t=1)∧k[r]=0                                                     ⍝ XN
-     v←⍸(n<¯4)∧(t=10)∨(t=2)∧k=4 ⋄ x←n[y←v,b] ⋄ n[b]←s[e⍳rn] ⋄ i←(≢x)⍴c←≢e   ⍝ AV
-     _←{z/⍨c=i[1⌷z]←e⍳⍉x I@1⊢z←r I@0⊢⍵}⍣≡(v,r[b])⍪⍉⍪⍳≢x
-     f s←(f s I¨⊂i)⊣@y¨⊂¯1⍴⍨≢r
-     p t k n f s r d xn sym}
+   A B C E F G K L M N O P S V Z←1+⍳15
+   r←I@{t[⍵]≠F}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d                            ⍝ PV
+   p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n r(⊣,I)←⊂i ⋄ p r I⍨←⊂n[i]@i⊢⍳≢p   ⍝ LF
+   t[i]←V
+   i←(⍸(~t∊F G)∧t[p]=F),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=G ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p      ⍝ WX
+   p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
+   k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4 ⋄ t[j]←E
+   p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]      ⍝ LG
+   n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
+   n[p⌿⍨(t[p]∊A E)∧k[p]=3]+←1                                             ⍝ CI
+   p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B E O P V] ⋄ j←(⌽i)[⍋⌽x]         ⍝ LX
+   p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
+   s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=B]                      ⍝ SL
+   d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1        ⍝ FR
+   xn←n⌿⍨(t=B)∧k[r]=0                                                     ⍝ XN
+   v←⍸(n<¯4)∧(t=V)∨(t=E)∧k=4 ⋄ x←n[y←v,b] ⋄ n[b]←s[e⍳rn] ⋄ i←(≢x)⍴c←≢e    ⍝ AV
+   _←{z/⍨c=i[1⌷z]←e⍳⍉x I@1⊢z←r I@0⊢⍵}⍣≡(v,r[b])⍪⍉⍪⍳≢x
+   f s←(f s I¨⊂i)⊣@y¨⊂¯1⍴⍨≢r
+   p t k n f s r d xn sym}
 
  Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
-     cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
-     ⎕XML⍉↑d cls(⊂'')fld}
+   cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
+   ⎕XML⍉↑d cls(⊂'')fld}
 
  dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}
 
  dwv←{⍵('├'dlk 0)' ─┬┌┐│'(0⌷⊢)dct(⊣⍪1↓⊢)⊃{⍺,' ',⍵}/(1+⌈/≢¨⍺){⍺↑⍵⍪⍨'│'↑⍨≢⍉⍵}¨⍺}
 
  lb3←{⍺←⍳≢⊃⍵
-     '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
+   '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
 
  dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
 
@@ -563,28 +1150,695 @@ CO_AL_WS:KW ⋄ →0
 
 
  pp3←{⍺←'○' ⋄ d←(⍳≢⍵)≠⍵ ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨⍵ ⋄ lbl←⍺⍴⍨≢⍵
-     lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵
-     (⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}
+   lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵
+   (⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}
 
 
 :Namespace FNS
 (⎕IO ⎕ML ⎕WX)←0 1 3
 
  Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
-     cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
-     ⎕XML⍉↑d cls(⊂'')fld}
+   cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
+   ⎕XML⍉↑d cls(⊂'')fld}
 
  lb3←{⍺←⍳≢⊃⍵
-     '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
+   '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
 
  pp3←{⍺←'○' ⋄ d←(⍳≢⍵)≠⍵ ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨⍵ ⋄ lbl←⍺⍴⍨≢⍵
-     lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵
-     (⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}
+   lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵
+   (⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}
 
 
 :EndNamespace 
 :Namespace GLOBAL
 (⎕IO ⎕ML ⎕WX)←0 1 3
+
+:EndNamespace 
+:Namespace OP
+⍝ === VARIABLES ===
+
+N∆←' ABCEFGKLMNOPSVZ'
+
+f∆←'ptknfsrdx'
+
+
+⍝ === End of variables definition ===
+
+(⎕IO ⎕ML ⎕WX)←0 1 3
+
+ Afx←{
+   Z←⍺(Mop _o Fop _o Vop _o Bop)⍵
+     
+   Z}
+
+ Alp←{
+   Z←⍺(_yes _as('⍺'⍨))⍵
+     
+   Z}
+
+ App←{
+   Z←⍺(Afx _s(IAx _opt)_as({⍺((≢⍵)E)⌽⍵}))⍵
+     
+   Z}
+
+ Asgn←{
+   Z←⍺(gets _s(Bget _o Mget))⍵
+     
+   Z}
+
+ Atom←{
+   Z←⍺(Unit _some _as(MkAtom))⍵
+     
+   Z}
+
+ Bfn←{
+   Z←⍺(rbrc Blrp lbrc _as(¯1 F))⍵
+     
+   Z}
+
+ Bget←{
+   Z←⍺(1 Gets _s Brk _s(0 Name)_as(4 E∘(1∘↓)Atn∘⌽))⍵
+     
+   Z}
+
+ Bop←{
+   Z←⍺(rbrk _s Ex _s lbrk _s(2 Lbrk)_s Afx _as(7 O∘⌽))⍵
+     
+   Z}
+
+ Brk←{
+   Z←⍺(rbrk _s(Semx _s(semi _s Semx _any))_s lbrk _as(3 E∘⌽))⍵
+     
+   Z}
+
+ ClrEnv←{
+   Z←⍺((Alp _env(¯1))_s(Alp _s Alp _env(¯1))_s(Omg _env(¯1))_s(Omg _s Omg _env(¯1))_ign)⍵
+     
+   Z}
+
+ Dop1←{
+   Z←⍺(Pdop1 _s Afx _as(8 O∘⌽))⍵
+     
+   Z}
+
+ Dop3←{
+   Z←⍺(Dop3a _o JotDot)⍵
+     
+   Z}
+
+ Dop3a←{
+   Z←⍺(Pdop3 _s Atom _as(5 O∘⌽))⍵
+     
+   Z}
+
+ Ex←{
+   Z←⍺(IAx _s ExHd _as(MkAST))⍵
+     
+   Z}
+
+ ExHd←{
+   Z←⍺(Asgn _o(0 Bind)_o App _s ∇ _opt)⍵
+     
+   Z}
+
+ Fa←{
+   Z←⍺(ClrEnv _s(FaFn _o FaMop _o FaDop)_noenv)⍵
+     
+   Z}
+
+ FaDop←{
+   Z←⍺(FaDopV _s(FaDopF _opt)_o FaDopF)⍵
+     
+   Z}
+
+ FaDopF←{
+   Z←⍺(Omg _s Omg _env(1)_ign _s FaMop _noenv)⍵
+     
+   Z}
+
+ FaDopV←{
+   Z←⍺(Omg _s Omg _env(0)_ign _s FaMop _noenv)⍵
+     
+   Z}
+
+ FaFn←{
+   Z←⍺(FaFnW _o FaFnA)⍵
+     
+   Z}
+
+ FaFnA←{
+   Z←⍺(Omg _env(0)_s(Alp _env(0))_ign _s Fax _noenv)⍵
+     
+   Z}
+
+ FaFnW←{
+   Z←⍺(Omg _env(0)_ign _s Fax _noenv)⍵
+     
+   Z}
+
+ FaMop←{
+   Z←⍺(FaMopV _s(FaMopF _opt)_o FaMopF)⍵
+     
+   Z}
+
+ FaMopF←{
+   Z←⍺(Alp _s Alp _env(1)_ign _s FaFn _noenv)⍵
+     
+   Z}
+
+ FaMopV←{
+   Z←⍺(Alp _s Alp _env(0)_ign _s FaFn _noenv)⍵
+     
+   Z}
+
+ Fax←{
+   Z←⍺(lbrc _s(Gex _o Ex _o Fex Stmts rbrc)_then Fn _as((FnType ⍺)F))⍵
+     
+   Z}
+
+ Fex←{
+   Z←⍺(Afx _s(Trn _opt)_s(1 Bind _any)_as(MkAST))⍵
+     
+   Z}
+
+ Fn←{a(i d)←⍵ ⋄ 0=≢a:0 ⍬ ⍺(i d)
+   0=≢ss←(4⊃z)⌿⍨m←(((N∆⍳'F')=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑a:0(,⊂z)⍺(i d)
+   0<c←r⊃⍨0,pi←⊃⍒⊃r←↓⍉↑ps←⍺∘Fa¨ss,¨⊂⊂d:pi⊃ps
+   0(,⊂(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿0⊃z)+@0⍉↑⊃¨1⊃r)⍺(i d)}
+
+FnType←(3 3 2 2) '⊥' (1 '+' (('⊂' ('⊃' '⍳' (('⍵⍵' '⍺⍺' (,'⍺') (,'⍵')) '⍨'))) '⌷' ((1 '∘' '⊃') ',' (¯1 '⍨'))))
+
+ Fnp←{
+   Z←⍺(Prim _o Sfn _o(1 Var)_o Bfn _o Pfe)⍵
+     
+   Z}
+
+ Fop←{
+   Z←⍺(Fnp _s(Dop1 _o Dop3 _opt)_as(MkAST))⍵
+     
+   Z}
+
+ G←{⍪/(0 6 0 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}
+
+ Gex←{
+   Z←⍺(Ex _s grd _s Ex _as(G∘⌽))⍵
+     
+   Z}
+
+ IAx←{
+   Z←⍺(Idx _o Atom _s(dop2 _not))⍵
+     
+   Z}
+
+ Idx←{
+   Z←⍺(Brk _s(1 Lbrk)_s Atom _as(2 E∘⌽))⍵
+     
+   Z}
+
+ JotDot←{
+   Z←⍺(dot _s jot _as(⊣2 O∘,∘⊂2 P∘⌽))⍵
+     
+   Z}
+
+ L←{⍪/(0 8 0 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}
+
+ M←{⍪/(0 9 0 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}
+
+ Mbrk←{
+   Z←⍺(Ogets _s Brk _s(0 Name)_as(4 E∘(1∘↓)Atn∘⌽))⍵
+     
+   Z}
+
+ Mget←{
+   Z←⍺(Afx _s(Mname _o Mbrk)_as(MkMget))⍵
+     
+   Z}
+
+ MkAST←{⍪/(⍳≢⍵)+@0⍉↑⌽⍵}
+
+ MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:⍺(0 A)⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ ⍺(3 A)⌽({⊃¨⍵[4 5]}0 A⊂)¨@{m}⍵}
+
+ MkMget←{⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
+
+ Mname←{
+   Z←⍺(0 Name _as(4 E Atn))⍵
+     
+   Z}
+
+ Mop←{
+   Z←⍺(Pmop _s Afx _as(2 O))⍵
+     
+   Z}
+
+ N←{0(N∆⍳'N')0(⍎⍵),1+⍺}
+
+ Nlrp←{
+   Z←⍺(sep _o rbrc _peek Slrp(lbrc Blrp rbrc))⍵
+     
+   Z}
+
+ Ns←{
+   Z←⍺(nss _s(Ex _o Fex Stmts nse)_s eot _then Fn _as((¯1+⊣)0 F⊢))⍵
+     
+   Z}
+
+ Num←{
+   Z←⍺(float _o int _as(N∘⌽))⍵
+     
+   Z}
+
+ Ogets←{
+   Z←⍺(2 Gets _as(2 O∘⌽))⍵
+     
+   Z}
+
+ Omg←{
+   Z←⍺(_yes _as('⍵'⍨))⍵
+     
+   Z}
+
+ PEG←{⍺←⎕THIS
+   A←,¨'`([^`]*)`' '"([^"]*)"' '\[\]' '\[([^]]+)\]' '\|' ','
+   B←'(''\1''_set)' '(''\1''_tk)' '_noenv' '_env(\1)' '_o' '_s'
+   A,←,¨'→' '!' '&' '∊' '\?' '\*' '\+' '⍥' '↓' '↑' '⌽'
+   B,←'_then' '_not' '_t' '_yes' '_opt' '_any' '_some' '_eat' '_ign' '_peek' '_bkwd'
+   A,←⊂,'⍬'
+   B,←⊂,'_eot'
+   noq←' '@(∊{⍺+⍳⍵}⌿¨'`[^`]*`' '"[^"]*"'⎕S 0 1⊢x)⊢x←' ',⍵
+   nm peg as←1↓¨3↑x⊂⍨1@(0,⊃∘⍸¨('←'=noq)(':'=noq))⊢0⍴⍨≢x
+   peg←A ⎕R(' ',¨B,¨' ')⊢peg ⋄ as←{' _as (',⍵,')'}⍣(∨⌿as≠' ')⊢as
+   ⍺.⎕FX(nm,'←{')('Z←⍺(',peg,as,')⍵')(''⊣'⎕←''',nm,': '',⍕(0)(3 0)⊃¨⊂Z')('Z}')}
+
+ Pdop1←{
+   Z←⍺(dop1 _as(2 P))⍵
+     
+   Z}
+
+ Pdop2←{
+   Z←⍺(dop2 _as(2 P))⍵
+     
+   Z}
+
+ Pdop3←{
+   Z←⍺(dop3 _as(2 P))⍵
+     
+   Z}
+
+ Pex←{
+   Z←⍺(rpar _s Ex _s lpar)⍵
+     
+   Z}
+
+ Pfe←{
+   Z←⍺(rpar _s Fex _s lpar)⍵
+     
+   Z}
+
+ Pmop←{
+   Z←⍺(mop _as(2 P))⍵
+     
+   Z}
+
+ Prim←{
+   Z←⍺(prim _as(1 P))⍵
+     
+   Z}
+
+ Semi←{
+   Z←⍺(_yes _as(⊣0 P{,';'}))⍵
+     
+   Z}
+
+ Semx←{
+   Z←⍺(Ex _o Semi)⍵
+     
+   Z}
+
+ Sfn←{
+   Z←⍺(sfn _as(1 P∘⌽∘∊))⍵
+     
+   Z}
+
+ Symbol←{
+   Z←⍺(name _as(⊢∘⌽))⍵
+     
+   Z}
+
+ Trn←{
+   Z←⍺(Afx _s(Afx _o Idx _o Atom _s(∇ _opt)_opt)_as(3 F∘⌽))⍵
+     
+   Z}
+
+ Unit←{
+   Z←⍺((0 Var)_o Num _o Zil _o Pex)⍵
+     
+   Z}
+
+ Vop←{
+   Z←⍺(Atom _s Pdop2 _s Afx _as(7 O∘⌽))⍵
+     
+   Z}
+
+Vt←('⊢' '⍳⍨' (0 '⊃' '⊣')) '⊃' (¯1 ',⍨' (1 '⊃' '⊣'))
+
+ Z←{0(N∆⍳'Z')1(⊂⍵),1+⍺}
+
+ Zil←{
+   Z←⍺(zil _as(0 A))⍵
+     
+   Z}
+
+ _eat←{i d←⍵ ⋄ i≥≢d:2 ⍬ ⍺ ⍵ ⋄ 0(i⌷d)⍺((i _step 1)d)}
+
+ _eot←{i d←⍵ ⋄ (i<0)∨i≥≢d:0 ⍬ ⍺((≢d)d) ⋄ 2 ⍬ ⍺ ⍵}
+
+ _gob←{_step∘←- ⋄ _less∘←> ⋄ _←0}
+
+ _gof←{_step∘←+ ⋄ _less∘←< ⋄ _←0}
+
+_less←<
+
+ _report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'⊣##.EN←0⊣##.DM←'' '' ''
+   0>c:('Unhandled return code: ',(⍕c))⎕SIGNAL 16
+   li←⍸lm←¯1⌽lm∨(CR=d)∧~1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
+   ##.EN←c
+   ##.DM[0]←⊂⎕EM c
+   ##.DM[1]←⊂(lnm←'[',(⍕1+ln),'] '),' '@{⍵∊CR LF}⊢l←(ln←0⌈li⍸i)⊃lm⊂d
+   ##.DM[2]←⊂(' '⍴⍨≢lnm),'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
+   msg←∊CR,'─'⍪⍨'─'⍪↑##.DM[1 2]
+   ⎕SIGNAL⊂('EN'c)('Category' 'Compiler')('Vendor' 'Co-dfns')('Message'msg)}
+
+_step←+
+
+ _yes←{0 ⍬ ⍺ ⍵}
+
+ aaww←{
+   Z←⍺(aws _s(('⍺⍺'_tk)_o('⍵⍵'_tk))_s aws)⍵
+     
+   Z}
+
+ alpha←{
+   Z←⍺(('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_'_set))⍵
+     
+   Z}
+
+ aw←{
+   Z←⍺(aws _s(('⍵'_tk)_o('⍺'_tk))_s aws)⍵
+     
+   Z}
+
+ aws←{
+   Z←⍺(ws _any _ign)⍵
+     
+   Z}
+
+ awslf←{
+   Z←⍺(crlf _o ws _any _ign)⍵
+     
+   Z}
+
+crlf←((⎕ucs 10 13)) (,⊂' _set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i _step 1)d) ⋄ 2 ⍬ ⍺ ⍵}')
+
+ digit←{
+   Z←⍺(('0123456789'_set))⍵
+     
+   Z}
+
+ dop1←{
+   Z←⍺(aws _s('.⍣∘'_set)_s aws)⍵
+     
+   Z}
+
+ dop2←{
+   Z←⍺(aws _s('⍤⍣∘'_set)_s aws)⍵
+     
+   Z}
+
+ dop3←{
+   Z←⍺(aws _s('∘'_set)_s aws)⍵
+     
+   Z}
+
+ dot←{
+   Z←⍺(aws _s('.'_set)_s aws)⍵
+     
+   Z}
+
+ egrd←{
+   Z←⍺(aws _s('::'_tk)_s aws _ign)⍵
+     
+   Z}
+
+ eot←{
+   Z←⍺(aws _s _eot _ign)⍵
+     
+   Z}
+
+ float←{
+   Z←⍺(aws _s(digit _any _s('.'_set)_s int _o(digit _some _s('.'_set)_s ndlm))_s aws)⍵
+     
+   Z}
+
+ gets←{
+   Z←⍺(aws _s('←'_tk)_s aws _ign)⍵
+     
+   Z}
+
+ grd←{
+   Z←⍺(aws _s(':'_tk)_s aws _ign)⍵
+     
+   Z}
+
+ int←{
+   Z←⍺(aws _s(digit _some)_s ndlm _s aws)⍵
+     
+   Z}
+
+ jot←{
+   Z←⍺(aws _s('∘'_set)_s aws)⍵
+     
+   Z}
+
+ lbrc←{
+   Z←⍺(aws _s('{'_set)_s aws _ign)⍵
+     
+   Z}
+
+ lbrk←{
+   Z←⍺(aws _s('['_tk)_s aws _ign)⍵
+     
+   Z}
+
+ lpar←{
+   Z←⍺(aws _s('('_tk)_s aws _ign)⍵
+     
+   Z}
+
+ mop←{
+   Z←⍺(aws _s('¨/⌿\⍀⍨'_set)_s aws)⍵
+     
+   Z}
+
+ name←{
+   Z←⍺(aws _s(alpha _o(digit _some _s alpha)_some)_s(('⎕'_set)_not)_s aws)⍵
+     
+   Z}
+
+ ndlm←{
+   Z←⍺(('¯'_set)_o(alpha _not _peek))⍵
+     
+   Z}
+
+ nse←{
+   Z←⍺(awslf _s(':EndNamespace'_tk)_s awslf _ign)⍵
+     
+   Z}
+
+ nss←{
+   Z←⍺(awslf _s(':Namespace'_tk)_s aws _s(alpha _s(alpha _o digit _any)_opt)_s awslf _ign)⍵
+     
+   Z}
+
+ prim←{
+   Z←⍺(aws _s('+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊆⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹'_set)_s aws)⍵
+     
+   Z}
+
+ ps←{⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
+   0≠⊃c a e(i d)←p←⍺ Ns 0,⊂src:_report p
+   (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)src}
+
+ rbrc←{
+   Z←⍺(aws _s('}'_set)_s aws _ign)⍵
+     
+   Z}
+
+ rbrk←{
+   Z←⍺(aws _s(']'_tk)_s aws _ign)⍵
+     
+   Z}
+
+ rpar←{
+   Z←⍺(aws _s(')'_tk)_s aws _ign)⍵
+     
+   Z}
+
+ semi←{
+   Z←⍺(aws _s(';'_tk)_s aws _ign)⍵
+     
+   Z}
+
+ sep←{
+   Z←⍺(aws _s(('⋄'_set)_o crlf _ign)_s aws)⍵
+     
+   Z}
+
+ sfn←{
+   Z←⍺(aws _s(('TFFI⎕'_tk)_o('TFF⎕'_tk))_s aws)⍵
+     
+   Z}
+
+ws←(⎕ucs 32 9) (,⊂' _set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i _step 1)d) ⋄ 2 ⍬ ⍺ ⍵}')
+
+ zil←{
+   Z←⍺(aws _s('⍬'_tk)_s aws _ign)⍵
+     
+   Z}
+
+ A←{⍪/(0 1 ⍺⍺ 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}
+
+
+ Args←{
+   Z←⍺(aaww _o aw _t(⍺⍺=Vt)_as(⍺⍺ V∘,∘⊃))⍵
+
+   Z}
+
+
+ Atn←{(0 3⊃⍵)@(⊂3 0)⊢⍺ ⍺⍺ ⍵}
+
+
+ B←{0(N∆⍳'B')⍺⍺(0⌷⍵),1+⍺}
+
+
+ Bind←{
+   Z←⍺(gets _s Symbol _env(⍺⍺)_as(⍺⍺ B))⍵
+
+   Z}
+
+
+ Blrp←{
+   Z←⍺(⍺⍺ _s(⍵⍵ Slrp ∇)_ign)⍵
+
+   Z}
+
+
+ E←{⍪/(0 4 ⍺⍺ 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}
+
+
+ F←{⍪/(0 5 ⍺⍺ 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}
+
+
+ Gets←{
+   Z←⍺(_yes _as(⊣⍺⍺ P{,'←'}))⍵
+
+   Z}
+
+
+ Lbrk←{
+   Z←⍺(_yes _as(⊣⍺⍺ P{,'['}))⍵
+
+   Z}
+
+
+ Name←{
+   Z←⍺(Symbol _t(⍺⍺=Vt)_as(⍺⍺ V∘,∘⊃))⍵
+
+   Z}
+
+
+ O←{⍪/(0 11 ⍺⍺ 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}
+
+
+ P←{0(N∆⍳'P')⍺⍺(⊂⍵),1+⍺}
+
+
+ Slrp←{
+   Z←⍺(⍺⍺ _o(⍵⍵ _s ∇)_o(_eat _s ∇)_ign)⍵
+
+   Z}
+
+
+ Stmt←{
+   Z←⍺(sep _o(⍺⍺ _s(sep _o lbrc)_bkwd Nlrp))⍵
+
+   Z}
+
+
+ Stmts←{
+   Z←⍺(⍵⍵ _o(⍺⍺ Stmt _s ∇))⍵
+
+   Z}
+
+
+ V←{0(N∆⍳'V')⍺⍺(⊂⍵),1+⍺}
+
+
+ Var←{
+   Z←⍺(⍺⍺ Args _o(⍺⍺ Name))⍵
+
+   Z}
+
+
+ _any←{⍺(⍺⍺ _s ∇ _o _yes)⍵}
+
+
+ _as←{0<⊃c a e d←⍺ ⍺⍺ ⍵:c a e d ⋄ c(,⊂((⌊/,⌈/)⊃¨⍵ d)⍵⍵ a)e d}
+
+
+ _bkwd←{c a e d1←⍺ ⍵⍵ ⍵ ⋄ _gob ⍬: ⋄ c a e d2←⍺ ⍺⍺-∘1@0⊢d1 ⋄ _gof ⍬:
+   0<c:c a e((⌈⌿⊃¨⍵ d2),1↓⍵) ⋄ c a e d1}
+
+
+ _env←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a((⊆a)⍵⍵⍪¨e)d}
+
+
+ _ign←{c a e d←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e d}
+
+
+ _noenv←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ d}
+
+
+ _not←{0<⊃c a e d←⍺ ⍺⍺ ⍵:0 a ⍺ ⍵ ⋄ 2 a ⍺ ⍵}
+
+
+ _o←{0≥⊃c1 a e(i1 d1)←A←⍺ ⍺⍺ ⍵:A ⋄ 0≥⊃c2 a e(i2 d2)←B←⍺ ⍵⍵ ⍵:B
+   (i1=i2∧c1<c2)∨i1 _less i2:B ⋄ A}
+
+
+ _opt←{⍺(⍺⍺ _o _yes)⍵}
+
+
+ _peek←{0<p←⊃⍺ ⍺⍺ ⍵:p ⋄ 0 ⍬ ⍺ ⍵}
+
+
+ _s←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e d←p←e ⍵⍵ d:p ⋄ (c⌈c2)(a⍪a2)e d}
+
+
+ _set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i _step 1)d) ⋄ 2 ⍬ ⍺ ⍵}
+
+
+ _some←{⍺(⍺⍺ _s(⍺⍺ _any))⍵}
+
+
+ _t←{0<⊃c a e(i d)←p←⍺ ⍺⍺ ⍵:p ⋄ e ⍵⍵ a:p ⋄ i>⊃⍵:6 ⍬ ⍺ ⍵ ⋄ 6 ⍬ ⍺(i d)}
+
+
+ _then←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c a e _←p←e ⍵⍵ a d:p ⋄ c a e d}
+
+
+ _tk←{i d←⍵ ⋄ m←(,⍺⍺)=⍥⎕C c↑d⌷⍨⊂x⌿⍨(0≤x)∧(≢d)>x←i _step⍳c←≢,⍺⍺
+   x←(i _step+⌿∧⍀m)d ⋄ ∧⌿m:0(⊂,⍺⍺)⍺ x ⋄ 2 ⍬ ⍺ x}
+
 
 :EndNamespace 
 :Namespace RTM
@@ -694,7 +1948,7 @@ _,←'EXPORT V saveimg(lp*im,char*p){A a;cpda(a,im);',(⎕ucs 10),' std::visit(v
 _,←'   [&](carr&v){saveImageNative(p,v.as(v.type()==s32?u16:u8));}},',(⎕ucs 10),'  a.v);}',(⎕ucs 10),'EXPORT V cd_sync(V){sync();}',(⎕ucs 10)
 rth←_
 
-rtm←'C:\Users\arcfi\OneDrive\Documents\Co-dfns\Source\src/rtm/'
+rtm←'C:\Users\arcfi\OneDrive\Documents\Co-dfns\Source\rtm/'
 
 _←⍬
 _,←,⊂('NM(add,"add",1,1,DID,MFD,DFD,MT,DAD)',(⎕ucs 10),'DEFN(add)',(⎕ucs 10),'ID(add,0,s32)',(⎕ucs 10),'MF(add_f){z=r;}',(⎕ucs 10),'SF(add,z.v=lv+rv)',(⎕ucs 10))
@@ -762,6 +2016,7 @@ _,←,⊂('NM(fft,"fft",1,0,MT ,MFD,MT ,MT ,MT )',(⎕ucs 10),'DEFN(fft)',(⎕uc
 _,←,⊂('NM(ift,"ift",1,0,MT ,MFD,MT ,MT ,MT )',(⎕ucs 10),'DEFN(ift)',(⎕ucs 10),'MF(ift_f){arr rv;CVSWITCH(r.v,err(6),rv=unrav(v,r.s),err(11))',(⎕ucs 10),' z.s=r.s;z.v=idft(rv.type()==c64?rv:rv.as(c64),1,rv.dims());}',(⎕ucs 10 10))
 _,←,⊂('template<class fncls> inline V msclfn(A&z,CA&r,ENV&e,FN&rec_c,fncls fn){',(⎕ucs 10),' z.s=r.s;',(⎕ucs 10),' CVSWITCH(r.v,err(6),fn(z,v,e)',(⎕ucs 10),'  ,B cr=cnt(r);z.v=VEC<A>(cr);VEC<A>&zv=std::get<VEC<A>>(z.v);',(⎕ucs 10),'   DOB(cr,rec_c(zv[i],v[i],e)))}',(⎕ucs 10),'template<class fncls> inline V sclfn(A&z,CA&l,CA&r,ENV&e,fncls fn){',(⎕ucs 10),' B lr=rnk(l),rr=rnk(r);',(⎕ucs 10),' if(lr==rr){DOB(rr,if(l.s[i]!=r.s[i])err(5));z.s=l.s;}',(⎕ucs 10),' else if(!lr){z.s=r.s;}else if(!rr){z.s=l.s;}else if(lr!=rr)err(4);',(⎕ucs 10),' std::visit(visitor{DVSTR(),',(⎕ucs 10),'   [&](CVEC<A>&lv,carr&rv){err(16);},',(⎕ucs 10),'   [&](carr&lv,CVEC<A>&rv){err(16);},',(⎕ucs 10),'   [&](CVEC<A>&lv,CVEC<A>&rv){err(16);},',(⎕ucs 10),'   [&](carr&lv,carr&rv){',(⎕ucs 10),'    if(lr==rr){fn(z,lv,rv,e);}',(⎕ucs 10),'    else if(!lr){fn(z,tile(lv,rv.dims()),rv,e);}',(⎕ucs 10),'    else if(!rr){fn(z,lv,tile(rv,lv.dims()),e);}}},',(⎕ucs 10),'  l.v,r.v);}',(⎕ucs 10),'inline V sclfn(A&z,CA&l,CA&r,ENV&e,CA&ax,FN&me_c){',(⎕ucs 10),' A a=l,b=r;I f=rnk(l)>rnk(r);if(f){a=r;b=l;}',(⎕ucs 10),' B ar=rnk(a),br=rnk(b);B d=br-ar;B rk=cnt(ax);if(rk!=ar)err(5);',(⎕ucs 10),' VEC<D> axd(rk);SHP axv(rk);',(⎕ucs 10),' if(rk)',(⎕ucs 10),'  CVSWITCH(ax.v',(⎕ucs 10),'   ,err(99,L"Unexpected value error.")',(⎕ucs 10),'   ,v.as(f64).host(axd.data())',(⎕ucs 10),'   ,err(99,L"Unexpected nested shape."))',(⎕ucs 10),' DOB(rk,if(axd[i]!=rint(axd[i]))err(11))DOB(rk,axv[i]=(B)axd[i])',(⎕ucs 10),' DOB(rk,if(axv[i]<0||br<=axv[i])err(11))',(⎕ucs 10),' VEC<B> t(br);VEC<U8> tf(br,1);DOB(rk,B j=axv[i];tf[j]=0;t[j]=d+i)',(⎕ucs 10),' B c=0;DOB(br,if(tf[i])t[i]=c++)A ta(SHP(1,br),arr(br,t.data()));',(⎕ucs 10),' trn_c(z,ta,b,e);rho_c(b,z,e);rho_c(a,b,a,e);',(⎕ucs 10),' if(f)me_c(b,z,a,e);else me_c(b,a,z,e);',(⎕ucs 10),' gdu_c(ta,ta,e);trn_c(z,ta,b,e);}',(⎕ucs 10))
 _,←,⊂('NM(nst,"nst",0,0,MT ,MFD,MT ,MT ,MT )',(⎕ucs 10),'DEFN(nst)',(⎕ucs 10),'MF(nst_f){CVSWITCH(r.v,err(6),par_c(z,r,e),z=r)}',(⎕ucs 10))
+_,←3⍴⊂''
 rtn←_
 
 sclsyms←'+-×÷*⍟|○⌊⌈!<≤=≠≥>∨⍱⍲~?'
