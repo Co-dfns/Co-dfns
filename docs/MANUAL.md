@@ -112,7 +112,7 @@ Reference                                 | Description
 [FAQ.md](FAQ.md)                          | Frequently asked questions about the compiler.
 [PERFORMANCE.md](PERFORMANCE.md)          | Suggestions for understanding the performance of Co-dfns compiled code.
 
-## Known Limitations
+## Language Support
 
 Generally speaking, Co-dfns works best if you focus on writing pure,
 functional programs written in dfns that make limited use
@@ -121,6 +121,29 @@ so forth) over simple numeric arrays working over data sizes that
 exceed 1 - 10 MB. While recursion and guards are supported, it is best if
 you restrict their use to outer-most functions, since they are significantly
 less efficient on the GPU than APL primitives.
+
+### Primitive Support
+
+The following table indicates what features are supported for what primitives:
+
+Primitive | Numeric | Numeric Rank > 4 | Nested Vectors | Nested Rank > 4 | Nested Depth > 2 | Character
+--------- | ------- | ---------------- | -------------- | --------------- | ---------------- | ---------
+Conjugate |         |                  |                |                 |                  |
+Add       |         |                  |                |                 |                  |
+
+### Syntax Support
+
+The following table indicates language/syntactic features that are supported for which parts of the Co-dfns system, as follows:
+
+ * Parser support means that the syntax will be parsed and that you can use the Parser API to work with APL source containing these features
+ * Compiler support means that the underlying compiler and code generator will be able to compile/generate the code into the backend representation
+ * Runtime support means that the underlying Co-dfns runtime support has been implemented for this syntax and code can be executed natively that uses these syntaxes
+
+Syntax | Parser | Compiler | Runtime
+------ | ------ | -------- | -------
+       |        |          | 
+
+### Known limitations
 
 The following limitations are known to exist:
 
