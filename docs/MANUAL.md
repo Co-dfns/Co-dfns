@@ -126,10 +126,10 @@ less efficient on the GPU than APL primitives.
 
 The following table indicates what features are supported for what primitives:
 
-Primitive | Numeric | Numeric Rank > 4 | Nested Vectors | Nested Rank > 4 | Nested Depth > 2 | Character
---------- | ------- | ---------------- | -------------- | --------------- | ---------------- | ---------
-Conjugate |         |                  |                |                 |                  |
-Add       |         |                  |                |                 |                  |
+Primitive | Integer | Real | Complex | Numeric Rank > 4 | Nested Vectors | Nested Rank > 4 | Nested Depth > 2 | Character
+--------- | ------- | ---- | ------- | ---------------- | -------------- | --------------- | ---------------- | ---------
+Conjugate |         |      |         |                  |                |                 |                  |
+Add       |         |      |         |                  |                |                 |                  |
 
 ### Syntax Support
 
@@ -139,9 +139,9 @@ The following table indicates language/syntactic features that are supported for
  * Compiler support means that the underlying compiler and code generator will be able to compile/generate the code into the backend representation
  * Runtime support means that the underlying Co-dfns runtime support has been implemented for this syntax and code can be executed natively that uses these syntaxes
 
-Syntax | Parser | Compiler | Runtime
------- | ------ | -------- | -------
-       |        |          | 
+Syntax      | Parser | Compiler | Runtime
+----------- | ------ | -------- | -------
+Namespaces  |        |          | 
 
 ### Known limitations
 
