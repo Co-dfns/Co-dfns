@@ -138,8 +138,8 @@
 
 ⍝ We will often wrap a set of nodes as children under a Z node
    gz←{z←⍺↑⍨0≠≢⍵ ⋄ t[z]←Z ⋄ p[⍵]←z ⋄ pos[z]←pos[⊃⍵,z] ⋄ end[z]←end[⊃⌽z,⍵] ⋄ 0}
-   gz←{z←⍵↑⍨-0≠≢⍵ ⋄ k←¯1↓⍵
-     t[z]←Z ⋄ p[k]←⊃z ⋄ pos[z]←pos[⊃⍵] ⋄ end[z]←end[⊃⌽z,k] ⋄ 0}
+   gz←{z←⍵↑⍨-0≠≢⍵ ⋄ ks←¯1↓⍵
+     t[z]←Z ⋄ p[ks]←⊃z ⋄ pos[z]←pos[⊃⍵] ⋄ end[z]←end[⊃⌽z,ks] ⋄ 0}
 
 ⍝ Nest top-level root lines as Z nodes
    _←(gz 1⌽⊢)¨(t[i]=Z)⊂i←⍸d=0
@@ -217,28 +217,28 @@
 ⍝ DFNS TYPING
 
 ⍝ Infer binding type
-   knd←t∊F P
-   _←{knd[x]←knd[y]}⍣{∧⌿=/knd[i]}x y←↓⍉i←p[i],∘⊃∘⌽⌸i←⍸t[p]∊B Z
+   k←t∊F P
+   _←{k[x]←k[y]}⍣{∧⌿=/k[i]}x y←↓⍉i←p[i],∘⊃∘⌽⌸i←⍸t[p]∊B Z
    t←V@{(t=A)∧n∊,¨'⍺⍵'}F@{t=M}t
    ⍝ What about /⌿\⍀?
 
 ⍝ Strand arrays into atoms
    i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸t[p]∊B Z]]
-   msk←(t[i]∊C N)∨msk∧⊃1 ¯1∨.⌽⊂msk←km∧(t[i]∊A C N V Z)∧knd[i]=0
+   msk←(t[i]∊C N)∨msk∧⊃1 ¯1∨.⌽⊂msk←km∧(t[i]∊A C N V Z)∧k[i]=0
    np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai ⋄ km←2<⌿0⍪msk
-   t knd n pos end(⊣,I)←⊂ai ⋄ knd[ai]←3×∨⌿¨msk⊆t[i]≠N
+   t k n pos end(⊣,I)←⊂ai ⋄ k[ai]←3×∨⌿¨msk⊆t[i]≠N
    t n pos(⊣@ai⍨)←A(⊂'')(pos[km⌿i]) ⋄ p[msk⌿i]←ai[(msk←msk∧~am)⌿¯1++⍀km]
-   i←⍸(t[p]=A)∧(knd[p]=3)∧t=N
-   p,←i ⋄ t knd n pos end(⊣,I)←⊂i ⋄ t knd n(⊣@i⍨)←A 0(⊂'')
+   i←⍸(t[p]=A)∧(k[p]=3)∧t=N
+   p,←i ⋄ t k n pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 0(⊂'')
 
 ⍝ BRACKET INDEXING
 ⍝ MUTATION/ASSIGNMENTS
 ⍝ FUNCTION EXPRESSIONS
 
 ⍝ Parse expression sequences
-   i←|i⊣km←km∧⊃1 ¯1∨.⌽⊂km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(t[p]=Z)∧knd[p]=0]]
-   msk←m2∨(knd[i]=1)∧~¯1⌽m2←km∧(1⌽km)∧(knd[i]=0)∨t[i]=A
-   t,←E⍴⍨xc←+⌿msk ⋄ knd,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
+   i←|i⊣km←km∧⊃1 ¯1∨.⌽⊂km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(t[p]=Z)∧k[p]=0]]
+   msk←m2∨(k[i]=1)∧~¯1⌽m2←km∧(1⌽km)∧(k[i]=0)∨t[i]=A
+   t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
    pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
    p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
 
@@ -246,12 +246,12 @@
    ERR←'INVARIANT ERROR: Z node with multiple children'
    ERR assert(+⌿(t[p]=Z)∧p≠⍳≢p)=+⌿t=Z:
    zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
-   p←(zi@ki⍳≢p)[p] ⋄ t knd n pos end(⊣@zi⍨)←t knd n pos end I¨⊂ki
-   t knd n pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+   p←(zi@ki⍳≢p)[p] ⋄ t k n pos end(⊣@zi⍨)←t k n pos end I¨⊂ki
+   t k n pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Compute Exports
-   msk←(t=B)∧knd[I@{t[⍵]≠F}⍣≡⍨p]=0
-   xn←msk⌿n ⋄ xt←msk⌿knd
+   msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
+   xn←msk⌿n ⋄ xt←msk⌿k
 
-   d i←P2D p ⋄ d n t knd pos end I∘⊢←⊂i ⋄ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
-   (d t knd(-sym⍳n)pos end)(xn xt)sym IN}
+   d i←P2D p ⋄ d n t k pos end I∘⊢←⊂i ⋄ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
+   (d t k(-sym⍳n)pos end)(xn xt)sym IN}
