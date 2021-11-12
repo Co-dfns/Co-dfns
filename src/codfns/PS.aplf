@@ -49,9 +49,9 @@
    synb←'¯[]{}()'':⍺⍵⋄;'
    syna←'⍬⎕⍞#'
    prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷/⌿\⍀∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
-   prmos←'¨⍨∘./⌿\⍀⍣&⌶⍠⌸⌺⍤⍥@'
+   prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmmo←'¨⍨/⌿\⍀&⌶⌸'
    x←' '@{t≠0}IN[pos] ⍝ The spaces produce nice invariants
-   ∨⌿msk←~x∊alp,num,syna,synb,prmfs,prmos,WS:{
+   ∨⌿msk←~x∊alp,num,syna,synb,prmfs,prmdo,prmmo,WS:{
      EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
      EM,←quotelines ⍸msk
      EM ⎕SIGNAL 2}⍬
@@ -81,7 +81,7 @@
    ((am∨wm)⌿t)←A ⋄ ((aam∨wwm)⌿t)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
 
 ⍝ Tokenize Primitives, Atoms
-   pm←(~dm)∧x∊prmfs,prmos ⋄ (pm⌿t)←P ⋄ t[⍸x∊syna]←A
+   t[⍸(~dm)∧x∊prmfs,prmdo,prmmo]←P ⋄ t[⍸x∊syna]←A
 
 ⍝ Compute dfns regions and type, include } as a child
    t[⍸'{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
