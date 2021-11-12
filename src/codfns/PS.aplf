@@ -49,8 +49,8 @@
    synb←'¯[]{}()'':⍺⍵⋄;'
    syna←'⍬⎕⍞#'
    prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
-   prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmmo←'¨⍨&⌶⌸' ⋄ prmfd←'/⌿\⍀'
-   prms←prmfs,prmdo,prmmo,prmfd
+   prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmmo←'¨⍨&⌶⌸' ⋄ prmfo←'/⌿\⍀'
+   prms←prmfs,prmdo,prmmo,prmfo
    x←' '@{t≠0}IN[pos] ⍝ The spaces produce nice invariants
    ∨⌿msk←~x∊alp,num,syna,synb,prms,WS:{
      EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
@@ -218,10 +218,20 @@
 ⍝ DFNS TYPING
 
 ⍝ Infer binding type
-   k[⍸n∊,¨prmfs]←1 ⋄ k[⍸n∊,¨prmmo]←2 ⋄ k[⍸n∊,¨prmdo]←3
+   k[⍸n∊,¨prmfs]←1 ⋄ k[⍸n∊,¨prmmo,prmfo]←2 ⋄ k[⍸n∊,¨prmdo]←3
+   k[i←⍸msk←(n∊⊂,'∘')∧1⌽n∊⊂,'.']←2 ⋄ end[i]←end[i+1] ⋄ n[i]←⊂,'∘.'
+   t k n pos end⌿⍨←⊂msk←~¯1⌽msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+   k[⍸(n∊,¨prmfo)∧¯1⌽k∊0 3]←1
+   z x y←↓⍉i←p[i],∘(⊃,⊃∘⌽)⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p
+
+   3×(x=y)∧k[x]=3
+   2×k[x]=3
+   
+
+   {k[z]←(2×k[x]=3)⌈k[y]=1}⍣{∧⌿k[z]=}v←⍬
+
    _←{k[x]←k[y]}⍣{∧⌿=/k[i]}x y←↓⍉i←p[i],∘⊃∘⌽⌸i←⍸t[p]∊B Z
    t←V@{(t=A)∧n∊,¨'⍺⍵'}F@{t=M}t
-   ⍝ What about /⌿\⍀?
 
 ⍝ Strand arrays into atoms
    i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸t[p]∊B Z]]
@@ -234,6 +244,12 @@
 
 ⍝ BRACKET INDEXING
 ⍝ MUTATION/ASSIGNMENTS
+
+⍝ Parse function expression sequences
+   ⍝ i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸t[p]∊B Z]]
+   
+   ⍝ (t∊F P V)∧k>1
+
 ⍝ FUNCTION EXPRESSIONS
 
 ⍝ Parse expression sequences
