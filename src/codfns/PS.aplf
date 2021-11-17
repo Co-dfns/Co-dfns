@@ -254,6 +254,7 @@
      k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=k⌿⍨2<⌿1,~∧⍀k[⍵]=1}∘⌽¨x]←2 ⋄ z x⌿⍨←⊂~msk
      k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1 ⋄ z x⌿⍨←⊂~msk
    ≢z}⍣(=∨0=⊣)≢z
+   'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
 
 ⍝ SET TYPES FOR VARIABLES
 
