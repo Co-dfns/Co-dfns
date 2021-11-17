@@ -6,16 +6,22 @@
 ⍝  rth   Runtime header for all modules
 ⍝  rtn   Runtime code for each symbol in syms
 ⍝  syms  Core instruction set of generated code
-   gck← (A 0)(A 1)(A 3)(B 0)(B 1)
-   gcv← 'Aa' 'Av' 'As' 'Bv' 'Bf'
-   gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 3)(E 4)
-   gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Ei' 'Eb'
-   gck,←(F ¯1)(F 0)(F 1)(F 3)
-   gcv,←'Fa'  'Fz' 'Fn' 'Fn'
-   gck,←(G 0)(N 0)(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
-   gcv,←'Gd' 'Na' 'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
-   gck,←(P 0)(P 1)(P 2)(V 0)(V 1)(V 2)(V 3)
-   gcv,←'Pv' 'Pf' 'Po' 'Va' 'Vf' 'Vf' 'Vf'
+   gck← (A 1)(A 5)
+   gcv← 'Aa' 'As'
+   gck,←(B 1)(B 2)
+   gcv,←'Bv' 'Bf'
+   gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 5)
+   gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Eb' 'Ei'
+   gck,←(F 0)(F 1)(F 2)(F 3)
+   gcv,←'Fz' 'Fn' 'Fn' 'Fn'
+   gck,←(G 0)(N 1)
+   gcv,←'Gd' 'Na'
+   gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
+   gcv,←'Ov' 'Of' 'Ovv' 'Ovf' 'Ofv' 'Off'
+   gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
+   gcv,←'Pv' 'Pv' 'Pf' 'Po' 'Po' 
+   gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
+   gcv,←'Va' 'Va' 'Vf' 'Vf' 'Vf'
    gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
    NL←⎕UCS 13 10
 
@@ -84,5 +90,5 @@
    dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:⎕SIGNAL 16 ⋄ h(⍎i⊃gcv)ks 1↓⍵}
    z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=F)
    z,←dis¨ks ast
-   z,←'E',¨('VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
+   z,←'E',¨('?VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
    ⊃,⌿z⊣⍞←⎕UCS 10}

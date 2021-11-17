@@ -33,7 +33,7 @@
     _←'FREA'⎕NA(⍵,soext⍬),'|frea P'
     _←'Sync'⎕NA(⍵,soext⍬),'|cd_sync'
     0 0 ⍴ ⍬}
-   MkNS←{ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(1=1⊃⍵)⌿0⊃⍵
+   MkNS←{ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(2=1⊃⍵)⌿0⊃⍵
     fns←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage' 'Image' 'Plot'
     fns,←'Histogram' 'soext' 'opsys' 'mkna'
     _←∆.⎕FX∘⎕CR¨fns ⋄ ∆.(decls←⍺∘mkna¨names) ⋄ _←ns.⎕FX¨(⊂''),⍺∘mkf¨∆.names
