@@ -239,27 +239,23 @@
    SYSD←,¨'OPT' 'R' 'S'
    k[⍸(t=S)∧n∊'⎕',¨SYSV]←1 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSF]←2 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSD]←4
    k[⍸t∊A C N]←1 ⋄ k[⍸n∊,¨prmfs]←2 ⋄ k[⍸n∊,¨prmmo]←3 ⋄ k[⍸n∊,¨prmdo]←4
+   k[⍸n∊,¨prmfo]←5
    k[i←⍸msk←(n∊⊂,'∘')∧1⌽n∊⊂,'.']←3 ⋄ end[i]←end[i+1] ⋄ n[i]←⊂,'∘.'
    t k n pos end⌿⍨←⊂msk←~¯1⌽msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
-
-⍝ Infer binding types
-   ⍝ z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p
-   ⍝ x←{⍵⌿⍨~∧⍀(t[⍵]=¯1)∨n∊,¨'/⌿\⍀'}U⌽¨x
-   ⍝ kx←k∘I¨x
-   ⍝ k[z⌿⍨msk]←kx⌿⍨msk←
-   ⍝ B←O
-   ⍝ B←D...
-   ⍝ B←...F
-   ⍝ B←...M
-   ⍝ B←...D A+
-   ⍝ B←...A
-
-   ⍝ {k[z]←(2×k[x]=3)⌈k[y]=1}⍣{∧⌿k[z]=}v←⍬
-
-   ⍝ k[⍸(n∊,¨prmfo)∧¯1⌽k∊0 3]←1
-
-   _←{k[x]←k[y]}⍣{∧⌿=/k[i]}x y←↓⍉i←p[i],∘⊃∘⌽⌸i←⍸t[p]∊B Z
    t←V@{(t=A)∧n∊,¨'⍺⍵'}F@{t=M}t
+
+⍝ Infer types of bindings, groups
+   z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p
+   x←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x
+   0∨.=≢¨x:'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'⎕SIGNAL 2
+   _←{
+     k[msk⌿z]←k[x⌿⍨msk←(k[⊃¨x]≠0)∧1=≢¨x] ⋄ z x⌿⍨←⊂~msk
+     k[z⌿⍨msk←k[⊃¨x]=4]←3 ⋄ z x⌿⍨←⊂~msk
+     k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=k⌿⍨2<⌿1,~∧⍀k[⍵]=1}∘⌽¨x]←2 ⋄ z x⌿⍨←⊂~msk
+     k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1 ⋄ z x⌿⍨←⊂~msk
+   ≢z}⍣(=∨0=⊣)≢z
+
+⍝ SET TYPES FOR VARIABLES
 
 ⍝ Strand arrays into atoms
    i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸t[p]∊B Z]]
@@ -270,15 +266,14 @@
    i←⍸(t[p]=A)∧(k[p]=5)∧t=N
    p,←i ⋄ t k n pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 1(⊂'')
 
-⍝ BRACKET INDEXING
-⍝ MUTATION/ASSIGNMENTS
-
 ⍝ Parse function expression sequences
    ⍝ i←|i⊣km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸t[p]∊B Z]]
    
    ⍝ (t∊F P V)∧k>1
 
 ⍝ FUNCTION EXPRESSIONS
+⍝ BRACKET INDEXING
+⍝ MUTATION/ASSIGNMENTS
 
 ⍝ Parse expression sequences
    i←|i⊣km←km∧⊃1 ¯1∨.⌽⊂km←0<i←i[⍋|(i,⍨←-∪p[i]),p[i←⍸(t[p]=Z)∧k[p]=1]]
