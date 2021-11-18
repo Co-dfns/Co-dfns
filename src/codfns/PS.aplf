@@ -251,7 +251,7 @@
    _←{
      k[msk⌿z]←k[x⌿⍨msk←(k[⊃¨x]≠0)∧1=≢¨x] ⋄ z x⌿⍨←⊂~msk
      k[z⌿⍨msk←k[⊃¨x]=4]←3 ⋄ z x⌿⍨←⊂~msk
-     k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=k⌿⍨2<⌿1,~∧⍀k[⍵]=1}∘⌽¨x]←2 ⋄ z x⌿⍨←⊂~msk
+     k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=(0⍳⍨∧⍀k[⍵]=1)⌷k,0}∘⌽¨x]←2 ⋄ z x⌿⍨←⊂~msk
      k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1 ⋄ z x⌿⍨←⊂~msk
    ≢z}⍣(=∨0=⊣)≢z
    'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
@@ -282,6 +282,8 @@
    t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
    pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
    p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
+
+⍝ VERIFY Z/B NODE TYPES MATCH ACTUAL TYPE
 
 ⍝ Eliminate Z nodes from the tree
    ERR←'INVARIANT ERROR: Z node with multiple children'
