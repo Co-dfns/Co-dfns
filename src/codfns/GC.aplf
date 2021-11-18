@@ -6,11 +6,11 @@
 ⍝  rth   Runtime header for all modules
 ⍝  rtn   Runtime code for each symbol in syms
 ⍝  syms  Core instruction set of generated code
-   gck← (A 1)(A 5)
+   gck← (A 1)(A 6)
    gcv← 'Aa' 'As'
    gck,←(B 1)(B 2)
    gcv,←'Bv' 'Bf'
-   gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 5)
+   gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 6)
    gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Eb' 'Ei'
    gck,←(F 0)(F 1)(F 2)(F 3)
    gcv,←'Fz' 'Fn' 'Fn' 'Fn'

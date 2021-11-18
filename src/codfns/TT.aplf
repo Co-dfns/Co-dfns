@@ -8,7 +8,7 @@
    k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4 ⋄ t[j]←E
    p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]      ⍝ LG
    n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
-   n[p⌿⍨(t[p]∊A E)∧k[p]=5]+←1                                             ⍝ CI
+   n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1                                             ⍝ CI
    p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B E O P V] ⋄ j←(⌽i)[⍋⌽x]         ⍝ LX
    p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
    s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=B]                      ⍝ SL

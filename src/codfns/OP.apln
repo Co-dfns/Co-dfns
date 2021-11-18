@@ -90,7 +90,7 @@ f∆ N∆←'ptknfsrdx' ' ABCEFGKLMNOPSVZ'
 ⎕FX∘⍉∘⍪¨'BNPVZ',¨'←{0(N∆⍳'''∘,¨'BNPVZ',¨''')'∘,¨'⍺⍺(0⌷⍵)' '1(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '0(⊂⍵)',¨⊂',1+⍺}'
 Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
 MkAST←{⍪/(⍳≢⍵)+@0⍉↑⌽⍵}
-MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:⍺(1A)⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ ⍺(5A)⌽({⊃¨⍵[4 5]}1A⊂)¨@{m}⍵}
+MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:⍺(1A)⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ ⍺(6A)⌽({⊃¨⍵[4 5]}1A⊂)¨@{m}⍵}
 MkMget←{⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
 Atn←{(0 3⊃⍵)@(⊂3 0)⊢⍺ ⍺⍺ ⍵}
 Fn←{a(i d)←⍵ ⋄ 0=≢a:0 ⍬ ⍺(i d)
@@ -111,7 +111,7 @@ PEG'Unit   ← (1 Var) | Num | Zil | Pex                                       '
 PEG'Atom   ← Unit+                                            : MkAtom       '
 PEG'Semi   ← ∊                                                : ⊣1 P{,'';''} '
 PEG'Semx   ← Ex | Semi                                                       '
-PEG'Brk    ← rbrk , (Semx , (semi , Semx *)) , lbrk           : 5E∘⌽         '
+PEG'Brk    ← rbrk , (Semx , (semi , Semx *)) , lbrk           : 6E∘⌽         '
 PEG'Lbrk   ← ∊                                                : ⊣⍺⍺ P{,''[''}'
 PEG'Idx    ← Brk , (2 Lbrk) , Atom                            : 2E∘⌽         '
 PEG'Slrp   ← ⍺⍺ | (⍵⍵ , ∇) | (⍥ , ∇) ↓                                       '
