@@ -298,7 +298,7 @@
    np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p] ⋄ p,←oi ⋄ t k n pos end(⊣,I)←⊂oi
    p[g⌿i]←oi[(g←(~msk)∧(1⌽msk)∨2⌽dm)⌿xc-⌽+⍀⌽msk]
    p[g⌿oi]←(g←msk⌿(1⌽mm)∨2⌽dm)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←⊂''
-   pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←(1⌽msk)∧~msk∨1⌽dm]
+   pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←(~msk)∧(1⌽mm)∨2⌽dm]
    k[oi]←3 3⊥↑((msk⌿dm)⍀1+k[dm⌿i]=2)(1+(msk⌿¯1⌽dm)∨k[i⌿⍨(1⌽mm)∨2⌽dm]∊2 3)
 
 ⍝ BRACKET INDEXING
