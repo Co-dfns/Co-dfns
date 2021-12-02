@@ -249,11 +249,12 @@
    t k n pos end⌿⍨←⊂msk←~¯1⌽msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
    t←V@(i←⍸(t=A)∧n∊,¨'⍺⍵')⊢F@{t=M}t ⋄ vb[i]←i
 
-⍝ Infer types of bindings, groups
+⍝ Infer types of bindings, groups, and variables
    z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p
    x←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x
    0∨.=≢¨x:'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'⎕SIGNAL 2
    _←{
+     k[i]←k[vb[i←⍸t=V]]
      k[msk⌿z]←k[x⌿⍨msk←(k[⊃¨x]≠0)∧1=≢¨x] ⋄ z x⌿⍨←⊂~msk
      k[z⌿⍨msk←k[⊃¨x]=4]←3 ⋄ z x⌿⍨←⊂~msk
      k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=(0⍳⍨∧⍀k[⍵]=1)⌷k,0}∘⌽¨x]←2 ⋄ z x⌿⍨←⊂~msk
