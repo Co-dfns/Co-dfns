@@ -306,7 +306,7 @@
 ⍝ TRAINS
 
 ⍝ Parse expression sequences
-   i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p
+   i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(k[p]=1)∧p≠⍳≢p
    msk←m2∨fm∧~¯1⌽m2←km∧(1⌽km)∧~fm←(t[i]=O)∨(t[i]≠A)∧k[i]=2
    t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
    pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
