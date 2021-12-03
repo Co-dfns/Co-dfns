@@ -257,7 +257,7 @@
      k[i]←k[vb[i←⍸t=V]]
      k[msk⌿z]←k[x⌿⍨msk←(k[⊃¨x]≠0)∧1=≢¨x] ⋄ z x⌿⍨←⊂~msk
      k[z⌿⍨msk←k[⊃¨x]=4]←3 ⋄ z x⌿⍨←⊂~msk
-     k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=(0⍳⍨∧⍀k[⍵]=1)⌷k,0}∘⌽¨x]←2 ⋄ z x⌿⍨←⊂~msk
+     k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=(⍵,≢k)[0⍳⍨∧⍀k[⍵]=1]⌷k,0}∘⌽¨x]←2 ⋄ z x⌿⍨←⊂~msk
      k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1 ⋄ z x⌿⍨←⊂~msk
    ≢z}⍣(=∨0=⊣)≢z
    'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
