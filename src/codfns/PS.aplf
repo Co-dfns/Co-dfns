@@ -274,6 +274,12 @@
 ⍝ PARSE B←D...
 ⍝ PARSE B←...D
 
+⍝ Rationalize F[X]
+   _←p[i]{
+     k[⍵⌿⍨(t[⍵]=¯1)∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
+   0}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
+   i←⍸(t=¯1)∧k=4 ⋄ p[⍸(t[p]=¯1)∧k[p]=4]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
+
 ⍝ Group function and value expressions
    i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
 
