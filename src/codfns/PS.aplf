@@ -62,7 +62,7 @@
    dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
    dm∨←('¯'=x)∧1⌽dm
    dm∨←(x∊'EeJj')∧(¯1⌽dm)∧1⌽dm
-   ∨⌿(t=0)∧IN[pos]='¯':'ORPHANED ¯'⎕SIGNAL 2
+   ∨⌿(dm=0)∧IN[pos]='¯':'ORPHANED ¯'⎕SIGNAL 2
    ∨⌿{1<+⌿⍵='j'}¨dp←⎕C¨dm⊆x:'MULTIPLE J IN NUMBER'⎕SIGNAL 2
    ∨⌿{1<+⌿⍵='e'}¨dp←⊃⍪/{⍵⊆⍨⍵≠'j'}¨dp:'MULTIPLE E IN NUMBER'⎕SIGNAL 2
    ∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕SIGNAL 2
@@ -70,7 +70,7 @@
    mn ex←↓⍉↑{2↑(⍵⊆⍨⍵≠'e'),⊂''}¨dp
    ∨⌿{1<+⌿'.'=⍵}¨mn,ex:'MULTIPLE . IN NUMBER'⎕SIGNAL 2
    ∨⌿'.'∊¨ex:'REAL NUMBER IN EXPONENT'⎕SIGNAL 2
-   ∨⌿{('¯'∊⍵)∧'¯'≠⊃⍵}¨mn,ex:'MISPLACED ¯'⎕SIGNAL 2
+   ∨⌿{∨⌿1↓⍵∊'¯'}¨mn,ex:'MISPLACED ¯'⎕SIGNAL 2
    t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 
 ⍝ Tokenize Variables
