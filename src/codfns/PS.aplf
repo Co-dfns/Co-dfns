@@ -283,7 +283,7 @@
 ⍝ Refine schizophrenic types
    k[i⌿⍨(k[i]=5)∧dm∨¯1⌽(~km)∨(~dm)∧k[i]∊1 6]←2 ⋄ k[i⌿⍨k[i]=5]←3
 
-⍝ Normalize ∘.
+⍝ Rationalize ∘.
    jm←(t[i]=P)∧n[i]∊⊂,'∘.'
    jm∨.∧1⌽(~km)∨k[i]∊3 4:'MISSING OPERAND TO ∘.'⎕SIGNAL 2
    p←((ji←jm⌿i)@(jj←i⌿⍨¯1⌽jm)⍳≢p)[p] ⋄ t[ji,jj]←t[jj,ji] ⋄ k[ji,jj]←k[jj,ji]
