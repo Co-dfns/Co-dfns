@@ -276,7 +276,8 @@
 
 ⍝ Rationalize F[X]
    _←p[i]{
-     k[⍵⌿⍨(t[⍵]=¯1)∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
+     ⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX'⎕SIGNAL 2
+     k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
    0}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
    i←⍸(t=¯1)∧k=4 ⋄ p[⍸(t[p]=¯1)∧k[p]=4]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
 
@@ -305,7 +306,10 @@
    pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←(~msk)∧(1⌽mm)∨2⌽dm]
    k[oi]←3 3⊥↑((msk⌿dm)⍀1+k[dm⌿i]=2)(1+(msk⌿¯1⌽dm)∨k[i⌿⍨(1⌽mm)∨2⌽dm]∊2 3)
 
-⍝ BRACKET INDEXING
+⍝ Enclose V[X;...] for expression parsing
+   i←i[⍋p[i←⍸(t[p]∊B Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
+   t[j]←A ⋄ k[j]←¯1 ⋄ p[i⌿⍨1⌽jm]←j
+
 ⍝ MUTATION/ASSIGNMENTS
 ⍝ TRAINS
 
@@ -315,6 +319,12 @@
    t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
    pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
    p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
+
+⍝ Rationalize V[X;...]
+   i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
+   t[ip]←E ⋄ k[ip]←2 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
+   p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴,¨'[' ⍬
+   pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip]
 
 ⍝ VERIFY Z/B NODE TYPES MATCH ACTUAL TYPE
 
