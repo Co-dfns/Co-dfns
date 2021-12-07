@@ -323,7 +323,7 @@
 ⍝ Rationalize V[X;...]
    i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
    t[ip]←E ⋄ k[ip]←2 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
-   p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴,¨'[' ⍬
+   p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴,¨'[' ''
    pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip]
 
 ⍝ VERIFY Z/B NODE TYPES MATCH ACTUAL TYPE
