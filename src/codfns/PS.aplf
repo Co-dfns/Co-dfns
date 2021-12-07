@@ -177,14 +177,13 @@
 ⍝ Parse Labels ∘∘∘
 
 ⍝ Map guard statements to (G (Z ...) (Z ...))
-   ⍝ _←p[i]{
-   ⍝   0=+⌿m←':'=IN[pos[⍵]]:⍬
-   ⍝   ⊃m:'EMPTY GUARD TEST'⎕SIGNAL 2
-   ⍝   1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
-   ⍝   t[⍺]←G
-   ⍝   gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m:
-   ⍝   p,←ci←≢p ⋄ t k pos end⍪←0 ⋄ gz cq,ci:
-   ⍝ 0}⌸i←⍸t[p[p]]=F
+   _←p[i]{
+     0=+⌿m←':'=IN[pos[⍵]]:⍬
+     ⊃m:'EMPTY GUARD TEST EXPRESSION'⎕SIGNAL 2
+     1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
+     t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
+     ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←⊂'' ⋄ k[gz cq,ci]←1
+   0}⌸i←⍸t[p[p]]=F
 
 ⍝ Parse brackets and parentheses into ¯1 and Z nodes
    _←p[i]{
