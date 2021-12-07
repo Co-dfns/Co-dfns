@@ -142,7 +142,7 @@
 
 ⍝ We will often wrap a set of nodes as children under a Z node
    gz←{z←⍵↑⍨-0≠≢⍵ ⋄ ks←¯1↓⍵
-     t[z]←Z ⋄ p[ks]←⊃z ⋄ pos[z]←pos[⊃⍵] ⋄ end[z]←end[⊃⌽z,ks] ⋄ 0}
+     t[z]←Z ⋄ p[ks]←⊃z ⋄ pos[z]←pos[⊃⍵] ⋄ end[z]←end[⊃⌽z,ks] ⋄ z}
 
 ⍝ Nest top-level root lines as Z nodes
    _←(gz 1⌽⊢)¨(t[i]=Z)⊂i←⍸d=0
@@ -198,7 +198,7 @@
    t k n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Convert semi-colon indexing into Z nodes in the ¯1 nodes
-   _←p[i]{gz¨⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]'}⌸i←⍸t[p]=¯1
+   _←p[i]{k[z←⊃⍪⌿gz¨g←⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]']←1 ⋄ t[z]←Z P[1=≢¨g]}⌸i←⍸t[p]=¯1
 
 ⍝ Mark bindable nodes
    bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
