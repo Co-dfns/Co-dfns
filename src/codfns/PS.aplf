@@ -240,7 +240,9 @@
    t k n pos end⌿⍨←⊂msk←~¯1⌽msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 ⍝ Anchor variables to earliest binding in matching frame
-   rf←p[rz←I@{~(t[⍵]=Z)∧(t[p[⍵]]∊F M)∨p[⍵]=⍵}⍣≡⍨p] ⋄ mk←{⍺[⍵],⍪n[⍵]}
+   rf←p[rz←I@{~(t[⍵]=Z)∧(t[p[⍵]]∊F G M)∨p[⍵]=⍵}⍣≡⍨p]
+   rf[i]←p[i←⍸t=G] ⋄ rz[i]←i ⋄ rf←rf I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}rf
+   mk←{⍺[⍵],⍪n[⍵]}
    fr←rf mk⊢fb←fb[⍳⍨rf mk⊢fb←fb I∘(⍳⍨)U⊖rz mk⊢fb←⍸t=B] ⋄ fb,←¯1
    vb←fb[fr⍳rf mk i]@(i←⍸t=V)⊢¯1⍴⍨≢p
    vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b←vb[i←i⌿⍨vb[i]≠¯1]]←¯1
