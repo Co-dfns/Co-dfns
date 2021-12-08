@@ -305,7 +305,9 @@
    p[g⌿i]←oi[(g←(~msk)∧(1⌽msk)∨2⌽dm)⌿xc-⌽+⍀⌽msk]
    p[g⌿oi]←(g←msk⌿(1⌽mm)∨2⌽dm)⌿1⌽oi ⋄ t[oi]←O ⋄ n[oi]←⊂''
    pos[oi]←pos[g⌿i][msk⌿¯1++⍀g←(~msk)∧(1⌽mm)∨2⌽dm]
-   k[oi]←3 3⊥↑((msk⌿dm)⍀1+k[dm⌿i]=2)(1+(msk⌿¯1⌽dm)∨k[i⌿⍨(1⌽mm)∨2⌽dm]∊2 3)
+   ol←1+(k[i⌿⍨(2⌽mm)∨3⌽dm]=4)∨k[i⌿⍨(1⌽mm)∨2⌽dm]∊2 3
+   or←(msk⌿dm)⍀1+k[dm⌿i]=2
+   k[oi]←3 3⊥↑or ol
 
 ⍝ Enclose V[X;...] for expression parsing
    i←i[⍋p[i←⍸(t[p]∊B Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
