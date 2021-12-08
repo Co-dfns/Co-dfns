@@ -311,11 +311,29 @@
    or←(msk⌿dm)⍀1+k[dm⌿i]=2
    k[oi]←3 3⊥↑or ol
 
+⍝ Parse modified assignment to E4(V, F, Z)
+   i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1
+   j←i⌿⍨msk←(¯2⌽(t[i]=V)∧k[i]=1)∧(¯1⌽k[i]=2)∧(t[i]=P)∧n[i]∊⊂,'←'
+   nz←(≢p)+⍳zc←+⌿msk ⋄ p,←j ⋄ t k n,←zc⍴¨Z 1(⊂'')
+   pos,←1+pos[j] ⋄ end,←end[p[j]]
+   vm fm zm←2 1 ¯1⌽¨⊂msk ⋄ p[km⌿i]←(zpm⌿(i×~km)+zm⍀nz)[km⌿¯1++⍀zpm←zm∨~km]
+   p[i⌿⍨vm∨fm]←2⌿j ⋄ t[j]←E ⋄ k[j]←4 ⋄ n[j]←n[vi←vm⌿i]
+   pos[j]←pos[vi] ⋄ end[j]←end[nz]
+
+⍝ Parse bracket modified assignment to E4(E6, O2(F, P3(←)), Z)
+
+⍝ Parse bracket assignment to E4(E6, P2(←), Z)
+
+⍝ Parse modified strand assignment
+⍝ Parse strand assignment
+
+⍝ SELECTIVE MODIFIED ASSIGNMENT
+⍝ SELECTIVE ASSIGNMENT
+
 ⍝ Enclose V[X;...] for expression parsing
    i←i[⍋p[i←⍸(t[p]∊B Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
    t[j]←A ⋄ k[j]←¯1 ⋄ p[i⌿⍨1⌽jm]←j
 
-⍝ MUTATION/ASSIGNMENTS
 ⍝ TRAINS
 
 ⍝ Parse expression sequences
