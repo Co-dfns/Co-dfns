@@ -1,6 +1,6 @@
  PS←{IN←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
    I←{(⊂⍵)⌷⍺} ⋄ U←{0=⎕NC'⍺':⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵ ⋄ ⍵⍵⍣¯1⊢(⍵⍵ ⍺) ⍺⍺ ⍵⍵ ⍵}
-   assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍺ ⎕SIGNAL 8 ⋄ shy←0}
+   assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍎'⍺ ⎕SIGNAL 8' ⋄ shy←0}
 
    OP.ps ⍵
 
