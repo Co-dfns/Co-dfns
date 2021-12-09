@@ -313,7 +313,8 @@
 
 ⍝ Parse modified assignment to E4(V, F, Z)
    i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1
-   j←i⌿⍨msk←(¯2⌽(t[i]=V)∧k[i]=1)∧(¯1⌽k[i]=2)∧(t[i]=P)∧n[i]∊⊂,'←'
+   isfn←{(t[⍵]∊O F)∨(t[⍵]∊B P V Z)∧k[⍵]=2}
+   j←i⌿⍨msk←(¯2⌽(t[i]=V)∧k[i]=1)∧(¯1⌽isfn i)∧(t[i]=P)∧n[i]∊⊂,'←'
    nz←(≢p)+⍳zc←+⌿msk ⋄ p,←j ⋄ t k n,←zc⍴¨Z 1(⊂'')
    pos,←1+pos[j] ⋄ end,←end[p[j]]
    vm fm zm←2 1 ¯1⌽¨⊂msk ⋄ p[km⌿i]←(zpm⌿(i×~km)+zm⍀nz)[km⌿¯1++⍀zpm←zm∨~km]
