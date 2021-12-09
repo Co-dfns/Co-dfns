@@ -2,8 +2,6 @@
    I←{(⊂⍵)⌷⍺} ⋄ U←{0=⎕NC'⍺':⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵ ⋄ ⍵⍵⍣¯1⊢(⍵⍵ ⍺) ⍺⍺ ⍵⍵ ⍵}
    assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍎'⍺ ⎕SIGNAL 8' ⋄ shy←0}
 
-   OP.ps ⍵
-
    1<≢⍴IN:'PARSER REQUIRES A SCALAR/VECTOR INPUT'⎕SIGNAL 11
    2<|≡IN:'PARSER REQUIRES A SIMPLE OR VECTOR OF VECTOR INPUT'⎕SIGNAL 11
    IN←{∊⍵,¨⎕UCS 10}⍣(1<|≡IN)⊢IN
@@ -174,7 +172,7 @@
    msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
    t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
-⍝ Parse Labels ∘∘∘
+⍝ PARSE LABELS ∘∘∘
 
 ⍝ Map guard statements to (G (Z ...) (Z ...))
    _←p[i]{
@@ -311,19 +309,30 @@
    or←(msk⌿dm)⍀1+k[dm⌿i]=2
    k[oi]←3 3⊥↑or ol
 
-⍝ Parse modified assignment to E4(V, F, Z)
+⍝ Wrap all assignment values as Z nodes
    i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1
+   j←i⌿⍨msk←(t[i]=P)∧n[i]∊⊂,'←' ⋄ nz←(≢p)+⍳zc←+⌿msk
+   p,←nz ⋄ t k n,←zc⍴¨Z 1(⊂'') ⋄ pos,←1+pos[j] ⋄ end,←end[p[j]]
+   zm←¯1⌽msk ⋄ p[km⌿i]←(zpm⌿(i×~km)+zm⍀nz)[km⌿¯1++⍀zpm←zm∨~km]
+
+⍝ This is the definition of a function value at this point
    isfn←{(t[⍵]∊O F)∨(t[⍵]∊B P V Z)∧k[⍵]=2}
-   j←i⌿⍨msk←(¯2⌽(t[i]=V)∧k[i]=1)∧(¯1⌽isfn i)∧(t[i]=P)∧n[i]∊⊂,'←'
-   nz←(≢p)+⍳zc←+⌿msk ⋄ p,←j ⋄ t k n,←zc⍴¨Z 1(⊂'')
-   pos,←1+pos[j] ⋄ end,←end[p[j]]
-   vm fm zm←2 1 ¯1⌽¨⊂msk ⋄ p[km⌿i]←(zpm⌿(i×~km)+zm⍀nz)[km⌿¯1++⍀zpm←zm∨~km]
-   p[i⌿⍨vm∨fm]←2⌿j ⋄ t[j]←E ⋄ k[j]←4 ⋄ n[j]←n[vi←vm⌿i]
-   pos[j]←pos[vi] ⋄ end[j]←end[nz]
+
+⍝ Parse modified assignment to E4(V, F, Z)
+   j←i⌿⍨m←msk∧(¯1⌽isfn i)∧¯2⌽(t[i]=V)∧k[i]=1 ⋄ p[zi←nz⌿⍨msk⌿m]←j
+   p[i⌿⍨(1⌽m)∨2⌽m]←2⌿j ⋄ t k(⊣@j⍨)←E 4 ⋄ pos end n{⍺[⍵]@j⊢⍺}←vi zi,⊂vi←i⌿⍨2⌽m
 
 ⍝ Parse bracket modified assignment to E4(E6, O2(F, P3(←)), Z)
+   j←i⌿⍨m←msk∧(¯1⌽isfn i)∧(¯2⌽t[i]=¯1)∧¯3⌽(t[i]=V)∧k[i]=1
+   p[zi←nz⌿⍨msk⌿m]←ei←i⌿⍨3⌽m ⋄ t k end(⊣@ei⍨)←E 4(end[zi])
+   p t k n(⊣@(i⌿⍨2⌽m)⍨)←ei E 6(⊂'')
+   p,←j ⋄ t,←P⍴⍨≢j ⋄ k,←3⍴⍨≢j ⋄ n,←(≢j)⍴⊂,'←' ⋄ pos,←pos[j] ⋄ end,←end[j]
+   p t k n pos(⊣@j⍨)←ei O 2(⊂'')(pos[fi←i⌿⍨1⌽m]) ⋄ p[fi]←j
 
 ⍝ Parse bracket assignment to E4(E6, P2(←), Z)
+   j←i⌿⍨m←msk∧(¯1⌽t[i]=¯1)∧¯2⌽(t[i]=V)∧k[i]=1 ⋄ p[zi←nz⌿⍨msk⌿m]←ei←i⌿⍨2⌽m
+   t k end(⊣@ei⍨)←E 4(end[zi]) ⋄ p t k n(⊣@(i⌿⍨1⌽m)⍨)←ei E 6(⊂'')
+   p t k(⊣@j⍨)←ei P 2
 
 ⍝ Parse modified strand assignment
 ⍝ Parse strand assignment
