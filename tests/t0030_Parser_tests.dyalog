@@ -5,7 +5,7 @@
 
 A B C E F G K L M N O P S V Z←1+⍳15
 
-sym_base←0,,¨'⍵' '⍺' '⍺⍺' '⍵⍵'
+sym_base←,¨'' '⍵' '⍺' '⍺⍺' '⍵⍵' ⋄ mt_env←(0⍴⊂'')⍬
 CR LF←⎕UCS 13 10
 LFZ←∊LF,⍨⍪
 EPR←{∊CR,'─'⍪⍨'─'⍪↑⍵[1 2]}
@@ -17,11 +17,11 @@ PARSE∆FAIL←{in←⍵⍵ ⋄ EN DM←⍺⍺ ⋄ ##.UT.expect←EN DM (EPR DM)
  ##.codfns.PS in}
 
 inp←':Namespace' ':EndNamespace'
-out←(,¨0 F 0 0 0 25)(⍬ ⍬)(sym_base)
+out←(,¨0 F 0 0 0 24)mt_env sym_base
 ∆0000_TEST←out PARSE∆SUCC inp
 
 inp←':NamespAce' ':EnDnamespace'
-out←(,¨0 F 0 0 0 25)(⍬ ⍬)(sym_base)
+out←(,¨0 F 0 0 0 24)mt_env sym_base
 ∆0001_TEST←out PARSE∆SUCC inp
 
 inp←':Namespace' ':End'
