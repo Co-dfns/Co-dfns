@@ -31,23 +31,23 @@ out←2('SYNTAX ERROR' '[2] :End ' '        ^')
 NS←{(⊂':Namespace'),⍵,⊂':EndNamespace'}
 
 inp←NS⊂'5'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 11 11)(27 12 12)
-out←ast(⍬ ⍬)(sym_base,5)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 11)(26 12 12)
+out←ast mt_env(sym_base,5)
 ∆0003_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'123'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 11 11)(29 14 14)
-out←ast(⍬ ⍬)(sym_base,123)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 11)(28 14 14)
+out←ast mt_env(sym_base,123)
 ∆0004_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'.5'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 11 11)(28 13 13)
-out←ast(⍬ ⍬)(sym_base,.5)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 11)(27 13 13)
+out←ast mt_env(sym_base,.5)
 ∆0005_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'05.123'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 11 11)(32 17 17)
-out←ast(⍬ ⍬)(sym_base,5.123)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 11)(31 17 17)
+out←ast mt_env(sym_base,5.123)
 ∆0006_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'¯05'
