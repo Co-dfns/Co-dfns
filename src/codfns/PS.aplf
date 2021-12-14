@@ -7,15 +7,22 @@
    IN←{∊⍵,¨⎕UCS 10}⍣(1<|≡IN)⊢IN
    0≠10|⎕DR IN:'PARSER REQUIRES A CHARACTER ARRAY'⎕SIGNAL 11
 
-⍝ Identify beginnings of lines
+⍝ Line and error reporting utilities
    CR LF←⎕UCS 13 10
    linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
+   mkdm←{⍺←2 ⋄ line←linestarts⍸⍵ ⋄ no←'[',(⍕1+line),'] '
+     i←beg+⍳linestarts[line+1]-beg←linestarts[line]
+     (⎕EM ⍺)(no,IN[i]~CR LF)(' ^'[⍵∊i],⍨' '⍴⍨≢no)}
    quotelines←{
      lines←∪linestarts⍸⍵
      nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
      beg←linestarts[lines] ⋄ end←linestarts[lines+1]
      m←∊∘⍵¨i←beg+⍳¨end-beg
      ∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR}
+   SIGNAL←{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en mkdm ⊃⍵
+     dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
+     dmx,←⊂'Message'(msg,CR,quotelines ⍵)
+     ⎕SIGNAL⊂dmx}     
 
 ⍝ Group input into lines as a nested vector
    pos←(⍳≢IN)⊆⍨~IN∊CR LF
@@ -130,7 +137,8 @@
    msk←kws∊':NAMESPACE' ':ENDNAMESPACE'
    ∨⌿msk∧km⌿tm:'NAMESPACE SCRIPTS MUST APPEAR AT THE TOP LEVEL'⎕SIGNAL 2
    msk←kws∊KW~':NAMESPACE' ':ENDNAMESPACE' ':SECTION' ':ENDSECTION'
-   ∨⌿msk∧~km⌿tm:'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS'⎕SIGNAL 2
+   ∨⌿msk←msk∧~km⌿tm:{msg←2'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS'
+     msg SIGNAL ∊{x+⍳end[⍵]-x←pos[⍵]}¨⍸km⍀msk}⍬
 
 ⍝ Compute parent vector from d
    p←D2P d

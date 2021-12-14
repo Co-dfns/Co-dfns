@@ -8,12 +8,12 @@ A B C E F G K L M N O P S V Z←1+⍳15
 sym_base←,¨'' '⍵' '⍺' '⍺⍺' '⍵⍵' ⋄ mt_env←(0⍴⊂'')⍬
 CR LF←⎕UCS 13 10
 LFZ←∊LF,⍨⍪
-EPR←{∊CR,'─'⍪⍨'─'⍪↑⍵[1 2]}
 
 PARSE∆SUCC←{in←⍵⍵ ⋄ exp←⍺⍺ ⋄ ##.codfns.PS ⍵⍵⊣##.UT.expect←⍺⍺,⊂LFZ in}
-PARSE∆FAIL←{in←⍵⍵ ⋄ EN DM←⍺⍺ ⋄ ##.UT.expect←EN DM (EPR DM)
+PARSE∆FAIL←{in←⍵⍵ ⋄ EN DM MSG←⍺⍺
+ ##.UT.expect←EN DM EN 'Compiler' 'Co-dfns' MSG
  0::'Failure to execute ##.codfns.(EN DM)'
- 0::##.codfns.(EN DM),⊂⎕DMX.Message
+ 0::##.codfns.(EN DM),⎕DMX.(EN Category Vendor Message)
  ##.codfns.PS in}
 
 inp←':Namespace' ':EndNamespace'
@@ -25,7 +25,10 @@ out←(,¨0 F 0 0 0 24)mt_env sym_base
 ∆0001_TEST←out PARSE∆SUCC inp
 
 inp←':Namespace' ':End'
-out←2('SYNTAX ERROR' '[2] :End ' '        ^')
+msg←'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS',CR
+msg,←'[2] :End',CR
+msg,←'    ▔▔▔▔ ',CR
+out←2('SYNTAX ERROR' '[2] :End' '    ^')msg
 ∆0002_TEST←out PARSE∆FAIL inp
 
 NS←{(⊂':Namespace'),⍵,⊂':EndNamespace'}
