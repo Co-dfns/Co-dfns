@@ -11,8 +11,8 @@
    CR LF←⎕UCS 13 10
    linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
    mkdm←{⍺←2 ⋄ line←linestarts⍸⍵ ⋄ no←'[',(⍕1+line),'] '
-     i←beg+⍳linestarts[line+1]-beg←linestarts[line]
-     (⎕EM ⍺)(no,IN[i]~CR LF)(' ^'[⍵∊i],⍨' '⍴⍨≢no)}
+     i←(~IN[i]∊CR LF)⌿i←beg+⍳linestarts[line+1]-beg←linestarts[line]
+     (⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)}
    quotelines←{
      lines←∪linestarts⍸⍵
      nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
