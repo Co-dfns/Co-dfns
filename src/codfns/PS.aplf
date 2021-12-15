@@ -67,7 +67,7 @@
    dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
    dm∨←('¯'=x)∧1⌽dm
    dm∨←(x∊'EeJj')∧(¯1⌽dm)∧1⌽dm
-   ∨⌿(dm=0)∧IN[pos]='¯':'ORPHANED ¯'⎕SIGNAL 2
+   ∨⌿msk←(dm=0)∧x='¯':2'ORPHANED ¯'SIGNAL pos⌿⍨msk
    ∨⌿{1<+⌿⍵='j'}¨dp←⎕C¨dm⊆x:'MULTIPLE J IN NUMBER'⎕SIGNAL 2
    ∨⌿{1<+⌿⍵='e'}¨dp←⊃⍪/{⍵⊆⍨⍵≠'j'}¨dp:'MULTIPLE E IN NUMBER'⎕SIGNAL 2
    ∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕SIGNAL 2
@@ -194,8 +194,8 @@
 ⍝ Parse brackets and parentheses into ¯1 and Z nodes
    _←p[i]{
      x←IN[pos[⍵]] ⋄ bd←+⍀bm←(bo←'['=x)+-bc←']'=x ⋄ pd←+⍀pm←(po←'('=x)+-pc←')'=x
-     0≠⊃⌽bd:'UNBALANCED BRACKETS'⎕SIGNAL 2
-     0≠⊃⌽pd:'UNBALANCED PARENTHESES'⎕SIGNAL 2
+     0≠⊃⌽bd:2'UNBALANCED BRACKETS'SIGNAL pos[⍵]{x+⍳(⌈⌿⍵)-x←⌊⌿⍺}⍥{⍵⌿⍨0≠bd}end[⍵]
+     0≠⊃⌽pd:2'UNBALANCED PARENTHESES'SIGNAL pos[⍵]{x+⍳(⌈⌿⍵)-x←⌊⌿⍺}⍥{⍵⌿⍨0≠pd}end[⍵]
      (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
      p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}D2P +⍀¯1⌽bm+pm] ⋄ t[bo⌿⍵]←¯1 ⋄ t[po⌿⍵]←Z
      end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
