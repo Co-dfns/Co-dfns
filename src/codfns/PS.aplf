@@ -18,7 +18,7 @@
      nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
      beg←linestarts[lines] ⋄ end←linestarts[lines+1]
      m←∊∘⍵¨i←beg+⍳¨end-beg
-     ∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR}
+     ¯1↓∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR}
    SIGNAL←{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en mkdm ⊃⍵
      dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
      dmx,←⊂'Message'(msg,CR,quotelines ⍵)
