@@ -27,7 +27,7 @@ out←(,¨0 F 0 0 0 24)mt_env sym_base
 inp←':Namespace' ':End'
 msg←'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS',CR
 msg,←'[2] :End',CR
-msg,←'    ▔▔▔▔ ',CR
+msg,←'    ▔▔▔▔ '
 out←2('SYNTAX ERROR' '[2] :End' '    ^')msg
 ∆0002_TEST←out PARSE∆FAIL inp
 
@@ -54,64 +54,76 @@ out←ast mt_env(sym_base,5.123)
 ∆0006_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'¯05'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 11 11)(29 14 14)
-out←ast(⍬ ⍬)(sym_base,¯5)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 11)(28 14 14)
+out←ast mt_env(sym_base,¯5)
 ∆0007_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'¯05.123'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 11 11)(33 18 18)
-out←ast(⍬ ⍬)(sym_base,¯5.123)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 11)(32 18 18)
+out←ast mt_env(sym_base,¯5.123)
 ∆0008_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'¯05.'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 11 11)(30 15 15)
-out←ast(⍬ ⍬)(sym_base,¯5)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 11)(29 15 15)
+out←ast mt_env(sym_base,¯5)
 ∆0009_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'(¯05.)'
-ast←(0 1 2)(F A N)(0 0 0)(0 0 ¯5)(0 12 12)(32 16 16)
-out←ast(⍬ ⍬)(sym_base,¯5)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 12 12)(31 16 16)
+out←ast mt_env(sym_base,¯5)
 ∆0010_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'⍬'
-ast←(0 1)(F A)(0 0)(0 0)(0 11)(27 12)
-out←ast(⍬ ⍬)(sym_base)
+ast←(0 1)(F A)(0 1)(0 ¯5)(0 11)(26 12)
+out←ast mt_env(sym_base,⊂,'⍬')
 ∆0011_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'⍬(5 4) 5'
 d←  0  1  2  2  3  3  2  3
 t←  F  A  A  A  N  N  A  N
-k←  0  3  0  0  0  0  0  0
-n←  0  0  0  0 ¯5 ¯6  0 ¯5
-ss← 0 11 11 13 13 14 18 17
-se←34 19 12 16 14 16 20 19
-out←(d t k n ss se)(⍬ ⍬)(sym_base,5 4)
+k←  0  6  1  1  1  1  1  1
+n←  0  0 ¯5  0 ¯6 ¯7  0 ¯6
+ss← 0 11 11 13 13 15 18 18
+se←33 19 12 16 14 16 19 19
+out←(d t k n ss se)mt_env(sym_base,(,'⍬')5 4)
 ∆0012_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'(4'
-out←2('SYNTAX ERROR' '[2] (4 ' '    ^  ')
+msg←'UNBALANCED PARENTHESES',CR
+msg,←'[2] (4',CR
+msg,←'    ▔▔ '
+out←2('SYNTAX ERROR' '[2] (4' '    ^ ') msg
 ∆0013_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'¯ 4'
-out←2('SYNTAX ERROR' '[2] ¯ 4 ' '    ^   ')
+msg←'ORPHANED ¯',CR
+msg,←'[2] ¯ 4',CR
+msg,←'    ▔   '
+out←2('SYNTAX ERROR' '[2] ¯ 4' '    ^  ') msg
 ∆0014_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'4)'
-out←2('SYNTAX ERROR' '[2] 4) ' '    ^  ')
+msg←'UNBALANCED PARENTHESES',CR
+msg,←'[2] 4)',CR
+msg,←'     ▔ '
+out←2('SYNTAX ERROR' '[2] 4)' '     ^') msg
 ∆0015_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'⍬(5 4) 5[1 2 3]'
-d←  0  1  2  3  3  4  4  3  4  2  2  3  4  4   4
-t←  F  E  A  A  A  N  N  A  N  P  E  A  N  N   N
-k←  0  2  3  0  0  0  0  0  0  1  3  0  0  0   0
-n←  0  0  0  0  0 ¯5 ¯6  0 ¯5 ¯7  0  0 ¯8 ¯9 ¯10
-ss← 0 11 11 11 13 13 14 18 17 19 19 20 20 21  23
-se←41 26 19 12 16 14 16 20 19 19 26 25 21 23  25
-out←(d t k n ss se)(⍬ ⍬)(sym_base,5 4(,'[')1 2 3)
+d←  0  1  2  3 3  4   4  3  4  2  2  3  4   4   4
+t←  F  E  A  A A  N   N  A  N  P  E  A  N   N   N
+k←  0  2  6  1 1  1   1  1  1  2  6  1  1   1   1
+n←  0  0  0 ¯6 0 ¯7  ¯8  0 ¯7 ¯5  0  0 ¯9 ¯10 ¯11
+ss← 0 11 11 11 13 13 15 18 18 19 19 20 20  22  24
+se←40 26 19 12 16 14 16 19 19 20 26 25 21  23  25
+out←(d t k n ss se)mt_env(sym_base,(,'[')(,'⍬')5 4 1 2 3)
 ∆0016_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'⍬(5 4) 5[1 2 3'
-out←2('SYNTAX ERROR' '[2] ⍬(5 4) 5[1 2 3 ' '            ^      ')
+msg←'UNBALANCED BRACKETS',CR
+msg,←'[2] ⍬(5 4) 5[1 2 3',CR
+msg,←'            ▔▔▔▔▔▔ '
+out←2('SYNTAX ERROR' '[2] ⍬(5 4) 5[1 2 3' '            ^     ')msg
 ∆0017_TEST←out PARSE∆FAIL inp
 
 inp←NS⊂'⍬(5 4) 5 1 2 3]'
