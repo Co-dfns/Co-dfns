@@ -198,7 +198,7 @@
      0≠⊃⌽pd:2'UNBALANCED PARENTHESES'SIGNAL pos[⍵]{x+⍳(⌈⌿⍵)-x←⌊⌿⍺}⍥{⍵⌿⍨0≠pd}end[⍵]
      (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
      p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}D2P +⍀¯1⌽bm+pm] ⋄ t[bo⌿⍵]←¯1 ⋄ t[po⌿⍵]←Z
-     end[⍵⌿⍨po+bo]←end[⌽⍵⌿⍨pc+bc]
+     end[po⌿⍵]←end[⌽pc⌿⍵] ⋄ end[bo⌿⍵]←end[⌽bc⌿⍵]
    0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
    t k n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
@@ -363,15 +363,20 @@
 
 ⍝ Rationalize V[X;...]
    i←i[⍋p[i←⍸(t[p]=A)∧k[p]=¯1]] ⋄ msk←~2≠⌿¯1,ip←p[i] ⋄ ip←∪ip ⋄ nc←2×≢ip
-   t[ip]←E ⋄ k[ip]←2 ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
+   t[ip]←E ⋄ k[ip]←2 ⋄ n[ip]←⊂'' ⋄ p[msk⌿i]←msk⌿(≢p)+1+2×¯1++⍀~msk
    p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴,¨'[' ''
-   pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip]
+   pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
+
+⍝ Sanity check
+   ERR←'INVARIANT ERROR: Z node with multiple children'
+   ERR assert(+⌿(t[p]=Z)∧p≠⍳≢p)=+⌿t=Z:
+
+⍝ Count parentheses in source information
+   ip←p[i←⍸(t[p]=Z)∧n[p]∊⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
 
 ⍝ VERIFY Z/B NODE TYPES MATCH ACTUAL TYPE
 
 ⍝ Eliminate Z nodes from the tree
-   ERR←'INVARIANT ERROR: Z node with multiple children'
-   ERR assert(+⌿(t[p]=Z)∧p≠⍳≢p)=+⌿t=Z:
    zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
    p←(zi@ki⍳≢p)[p] ⋄ t k n pos end(⊣@zi⍨)←t k n pos end I¨⊂ki
    t k n pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p

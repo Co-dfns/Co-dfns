@@ -28,7 +28,7 @@ inp←':Namespace' ':End'
 msg←'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS',CR
 msg,←'[2] :End',CR
 msg,←'    ▔▔▔▔ '
-out←2('SYNTAX ERROR' '[2] :End' '    ^')msg
+out←2('SYNTAX ERROR' '[2] :End' '    ^   ')msg
 ∆0002_TEST←out PARSE∆FAIL inp
 
 NS←{(⊂':Namespace'),⍵,⊂':EndNamespace'}
@@ -69,7 +69,7 @@ out←ast mt_env(sym_base,¯5)
 ∆0009_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'(¯05.)'
-ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 12 12)(31 16 16)
+ast←(0 1 2)(F A N)(0 1 1)(0 0 ¯5)(0 11 12)(31 17 16)
 out←ast mt_env(sym_base,¯5)
 ∆0010_TEST←out PARSE∆SUCC inp
 
@@ -83,8 +83,8 @@ d←  0  1  2  2  3  3  2  3
 t←  F  A  A  A  N  N  A  N
 k←  0  6  1  1  1  1  1  1
 n←  0  0 ¯5  0 ¯6 ¯7  0 ¯6
-ss← 0 11 11 13 13 15 18 18
-se←33 19 12 16 14 16 19 19
+ss← 0 11 11 12 13 15 18 18
+se←33 19 12 17 14 16 19 19
 out←(d t k n ss se)mt_env(sym_base,(,'⍬')5 4)
 ∆0012_TEST←out PARSE∆SUCC inp
 
@@ -113,10 +113,10 @@ inp←NS⊂'⍬(5 4) 5[1 2 3]'
 d←  0  1  2  3 3  4   4  3  4  2  2  3  4   4   4
 t←  F  E  A  A A  N   N  A  N  P  E  A  N   N   N
 k←  0  2  6  1 1  1   1  1  1  2  6  1  1   1   1
-n←  0  0  0 ¯6 0 ¯7  ¯8  0 ¯7 ¯5  0  0 ¯9 ¯10 ¯11
-ss← 0 11 11 11 13 13 15 18 18 19 19 20 20  22  24
-se←40 26 19 12 16 14 16 19 19 20 26 25 21  23  25
-out←(d t k n ss se)mt_env(sym_base,(,'[')(,'⍬')5 4 1 2 3)
+n←  0  0  0 ¯5 0 ¯6  ¯7  0 ¯6 ¯8  0  0 ¯9 ¯10 ¯11
+ss← 0 11 11 11 12 13 15 18 18 19 19 20 20  22  24
+se←40 26 19 12 17 14 16 19 19 20 26 25 21  23  25
+out←(d t k n ss se)mt_env(sym_base,(,'⍬')5 4(,'[')1 2 3)
 ∆0016_TEST←out PARSE∆SUCC inp
 
 inp←NS⊂'⍬(5 4) 5[1 2 3'
