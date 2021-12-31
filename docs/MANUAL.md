@@ -4,7 +4,8 @@
 
 	target←<module name> codfns.Fix <namespace script>
 	]codfns.compile <namespace> <target> [-af={cpu,opencl,cuda}]
-	ast exports symbols source←[env] codfns.ps 'line1' 'line2' ...
+	(depth type kind name src_start src_end) exports symbols source←[env] codfns.PS 'line1' 'line2' ...
+        (depth type kind name src_start src_end) exports symbols source←[env] codfns.PS 'source code ...'
 
 ## Description
 
@@ -61,7 +62,7 @@ The exports produced by the parser is a two-column inverted table containing the
 Name | Description
 ---- | -----------
 name | The name of the binding as a character vector
-type | The type of the binding as an integer (¯1: Unbound, 0: Array, 1: Function)
+type | The type of the binding as an integer (¯1: Unbound, 0: Ambiguous, 1: Array, 2: Function)
 
 ## Error Reporting
 
