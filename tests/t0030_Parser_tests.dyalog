@@ -7,7 +7,7 @@ A B C E F G K L M N O P S V Z←1+⍳15
 
 sym_base←,¨'' '⍵' '⍺' '⍺⍺' '⍵⍵' ⋄ mt_env←(0⍴⊂'')⍬
 CR LF←⎕UCS 13 10
-LFZ←∊LF,⍨⍪
+LFZ←∊LF,⍨⍪∘⊆
 
 PARSE∆SUCC←{in←⍵⍵ ⋄ exp←⍺⍺ ⋄ ##.UT.expect←⍺⍺,⊂LFZ in
   (d t k n ss se)env sym src←##.codfns.PS ⍵⍵
@@ -166,10 +166,10 @@ s←,¨oup 'FFT←5' '5' '5' '⎕FFT'
 out←(d t k n s)((,⊂'FFT')(,1))(sym_base,'FFT' 5 '⎕FFT')
 ∆0021_TEST←out PARSE∆SUCC inp
 
-inp←NS'F←{' '4+5+' '}'
-msg←'',CR
-out←2('SYNTAX ERROR' '[3] 4+5+ ' '      ^  ')msg
-∆0022_TEST←out PARSE∆FAIL inp
+⍝ inp←NS'F←{' '4+5+' '}'
+⍝ msg←'',CR
+⍝ out←2('SYNTAX ERROR' '[3] 4+5+ ' '      ^  ')msg
+⍝ ∆0022_TEST←out PARSE∆FAIL inp
 
 oup←¯1↓LFZ⊢inp←NS'F←{' '4+⍵' '}' ⋄ d t k n s←⊂⍬
 d t k n s,←⊂¨0 F 0 ''   oup
@@ -182,5 +182,9 @@ d t k n s,←⊂¨4 P 2(,'+')(,'+')
 d t k n s,←⊂¨4 V 1(,'⍵')(,'⍵')
 out←(d t k n s)((,⊂,'F')(,2))(sym_base,(,'F')4(,'+'))
 ∆0023_TEST←out PARSE∆SUCC inp
+
+inp←'{⍵}'
+out←((0 1)(F V)(2 1)(''(,'⍵'))('{⍵}'(,'⍵')))mt_env sym_base
+∆0024_TEST←out PARSE∆SUCC inp
 
 :EndNamespace
