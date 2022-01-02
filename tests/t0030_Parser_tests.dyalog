@@ -199,4 +199,19 @@ inp←'{⍵⍵ ⍵}'
 ast←(0 1 2 2)(F E P V)(4 1 2 1)('' '' '⍵⍵'(,'⍵'))('{⍵⍵ ⍵}' '⍵⍵ ⍵' '⍵⍵'(,'⍵'))
 ∆0027_TEST←ast mt_env sym_base PARSE∆SUCC inp
 
+inp←'Op←{⍺⍺ ⍵}' '+ Op 5' ⋄ d t k n s←⊂⍬
+d t k n s,←⊂¨0 B 3 'Op' 'Op←{⍺⍺ ⍵}'
+d t k n s,←⊂¨1 F 3 ''   '{⍺⍺ ⍵}'
+d t k n s,←⊂¨2 E 1 ''   '⍺⍺ ⍵'
+d t k n s,←⊂¨3 P 2 '⍺⍺' '⍺⍺'
+d t k n s,←⊂¨3 V 1(,'⍵')(,'⍵')
+d t k n s,←⊂¨0 E 1 ''   '+ Op 5'
+d t k n s,←⊂¨1 O 2 ''   '+ Op'
+d t k n s,←⊂¨2 P 2(,'+')(,'+')
+d t k n s,←⊂¨2 V 3 'Op' 'Op'
+d t k n s,←⊂¨1 A 1 ''   (,'5')
+d t k n s,←⊂¨2 N 1 5    (,'5')
+∆0028_TEST←(d t k n s)mt_env(sym_base,,¨'Op' '+' 5) PARSE∆SUCC inp
+
+
 :EndNamespace
