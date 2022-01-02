@@ -264,8 +264,8 @@
      6'ALL VARIABLES MUST REFERENCE A BINDING'SIGNAL∊pos[⍵]{⍺+⍳⍵-⍺}¨end[⍵]
    }⍸msk
 
-⍝ ⍺/⍵ → V ; M → F0
-   t←V@(i←⍸(t=A)∧n∊,¨'⍺⍵')⊢F@{t=M}t ⋄ vb[i]←i
+⍝ ⍺/⍵ → V ; M → F0 ; ⍺⍺/⍵⍵ → P2
+   t←V@(i←⍸(t=A)∧n∊,¨'⍺⍵')⊢F@{t=M}t ⋄ vb[i]←i ⋄ k[⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2
 
 ⍝ Infer types of bindings, groups, and variables
    z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p

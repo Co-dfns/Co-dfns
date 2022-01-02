@@ -187,4 +187,16 @@ inp←'{⍵}'
 out←((0 1)(F V)(2 1)(''(,'⍵'))('{⍵}'(,'⍵')))mt_env sym_base
 ∆0024_TEST←out PARSE∆SUCC inp
 
+inp←'{+ ⍵}'
+ast←(0 1 2 2)(F E P V)(2 1 2 1)('' ''(,'+')(,'⍵'))('{+ ⍵}' '+ ⍵'(,'+')(,'⍵'))
+∆0025_TEST←ast mt_env(sym_base,⊂,'+') PARSE∆SUCC inp
+
+inp←'{⍺⍺ ⍵}'
+ast←(0 1 2 2)(F E P V)(3 1 2 1)('' '' '⍺⍺'(,'⍵'))('{⍺⍺ ⍵}' '⍺⍺ ⍵' '⍺⍺'(,'⍵'))
+∆0026_TEST←ast mt_env sym_base PARSE∆SUCC inp
+
+inp←'{⍵⍵ ⍵}'
+ast←(0 1 2 2)(F E P V)(4 1 2 1)('' '' '⍵⍵'(,'⍵'))('{⍵⍵ ⍵}' '⍵⍵ ⍵' '⍵⍵'(,'⍵'))
+∆0027_TEST←ast mt_env sym_base PARSE∆SUCC inp
+
 :EndNamespace
