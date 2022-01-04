@@ -315,7 +315,10 @@
    n[ji,jj]←n[jj,ji] ⋄ pos[ji,jj]←pos[ji,ji] ⋄ end[ji,jj]←end[jj,jj]
 
 ⍝ Mask and verify monadic and dyadic operator left operands
-   ((2⌽dm)∨1⌽msk←dm∨mm←k[i]=3)∨.∧~km:'MISSING LEFT OPERAND'⎕SIGNAL 2
+   ∨⌿msk←(dm∧¯2⌽~km)∨(¯1⌽~km)∧mm←k[i]=3:{
+     2'MISSING LEFT OPERAND'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
+   }i⌿⍨msk
+   msk←dm∨mm
 
 ⍝ Parse function expressions
    np←(≢p)+⍳xc←≢oi←msk⌿i ⋄ p←(np@oi⍳≢p)[p] ⋄ p,←oi ⋄ t k n pos end(⊣,I)←⊂oi
