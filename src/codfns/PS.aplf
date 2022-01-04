@@ -297,7 +297,14 @@
      ⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX'⎕SIGNAL 2
      k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
    0}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
-   i←⍸(t=¯1)∧k=4 ⋄ p[⍸(t[p]=¯1)∧k[p]=4]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
+   i←⍸(t=¯1)∧k=4 ⋄ j←⍸(t[p]=¯1)∧k[p]=4
+   (≢i)≠≢j:{
+     2'AXIS REQUIRES SINGLE AXIS EXPRESSION'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
+   }⊃⍪⌿{⊂⍺⌿⍨1<≢⍵}⌸p[j]
+   ∨⌿msk←t[j]≠Z:{
+     2'AXIS REQUIRES NON-EMPTY AXIS EXPRESSION'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
+   }msk⌿p[j]
+   p[j]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
 
 ⍝ Group function and value expressions
    i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
