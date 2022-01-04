@@ -303,7 +303,9 @@
    i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
 
 ⍝ Mask and verify dyadic operator right operands
-   (dm←¯1⌽k[i]=4)∨.∧(~km)∨k[i]∊0 3 4:'MISSING RIGHT OPERAND'⎕SIGNAL 2
+   (dm←¯1⌽(k[i]=4)∧t[i]∊F P V Z)∨.∧(~km)∨k[i]∊0 3 4:{
+     'MISSING RIGHT OPERAND'⎕SIGNAL 2
+   }⍬
 
 ⍝ Refine schizophrenic types
    k[i⌿⍨(k[i]=5)∧dm∨¯1⌽(~km)∨(~dm)∧k[i]∊1 6]←2 ⋄ k[i⌿⍨k[i]=5]←3
@@ -315,7 +317,7 @@
    n[ji,jj]←n[jj,ji] ⋄ pos[ji,jj]←pos[ji,ji] ⋄ end[ji,jj]←end[jj,jj]
 
 ⍝ Mask and verify monadic and dyadic operator left operands
-   ∨⌿msk←(dm∧¯2⌽~km)∨(¯1⌽~km)∧mm←k[i]=3:{
+   ∨⌿msk←(dm∧¯2⌽~km)∨(¯1⌽~km)∧mm←(k[i]=3)∧t[i]∊F P V Z:{
      2'MISSING LEFT OPERAND'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
    }i⌿⍨msk
    msk←dm∨mm
