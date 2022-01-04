@@ -395,7 +395,7 @@
 
 ⍝ Compute Exports
    msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
-   xn←msk⌿n ⋄ xt←msk⌿k
+   xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
 
    d i←P2D p ⋄ d n t k pos end I∘⊢←⊂i ⋄ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
    (d t k(-sym⍳n)pos end)(xn xt)sym IN}

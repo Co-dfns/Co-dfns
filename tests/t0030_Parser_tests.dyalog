@@ -211,7 +211,7 @@ d t k n s,←⊂¨2 P 2(,'+')(,'+')
 d t k n s,←⊂¨2 V 3 'Op' 'Op'
 d t k n s,←⊂¨1 A 1 ''   (,'5')
 d t k n s,←⊂¨2 N 1 5    (,'5')
-∆0028_TEST←(d t k n s)mt_env(sym_base,,¨'Op' '+' 5) PARSE∆SUCC inp
+∆0028_TEST←(d t k n s)mt_env(sym_base,'Op'(,'+')5) PARSE∆SUCC inp
 
 
 :EndNamespace
