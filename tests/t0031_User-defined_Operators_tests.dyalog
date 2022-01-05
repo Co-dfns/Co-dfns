@@ -9,7 +9,10 @@
  ∆0000_TEST←{#.UT.expect←'Successful compile'
   _←#.⎕EX cn ⋄ 'Successful compile'⊣cd∘←#.c0031←tn #.codfns.Fix ⎕SRC dy}
 
- ∆0001_TEST←'Op1' TEST1 5
+ ∆0001_TEST←'Fn1' TEST1 5
+ ∆0002_TEST←'Fn1' TEST2 5 3
+ ∆0003_TEST←'Fn2' TEST1 7
+ ∆0004_TEST←'Fn2' TEST2 7 13
 
  ∆∆∆_TEST←{#.UT.expect←0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC cn tn}
 
