@@ -9,11 +9,11 @@
    gck← (A 1)(A 6)
    gcv← 'Aa' 'As'
    gck,←(B 1)(B 2)(B 3)(B 4)
-   gcv,←'Bv' 'Bf' 'Bm' 'Bd'
+   gcv,←'Bv' 'Bf' 'Bo' 'Bo'
    gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 6)
    gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Eb' 'Ei'
    gck,←(F 0)(F 2)(F 3)(F 4)
-   gcv,←'Fz' 'Fn' 'Fm' 'Fd'
+   gcv,←'Fz' 'Fn' 'Fn' 'Fn'
    gck,←(G 0)(N 1)
    gcv,←'Gd' 'Na'
    gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
@@ -21,7 +21,7 @@
    gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
    gcv,←'Pv' 'Pv' 'Pf' 'Po' 'Po' 
    gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
-   gcv,←'Va' 'Va' 'Vf' 'Vm' 'Vd'
+   gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
    gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
    NL←⎕UCS 13 10
 
@@ -38,12 +38,7 @@
      z,'  DOB(',c,',POP(A,zv[i]))coal(z);PUSH(z);}',NL}
    Bf←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
    Bv←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
-   Bm←{
-     ∘∘∘
-   }
-   Bd←{
-     ∘∘∘
-   }
+   Bo←{'(*e[fd])[',(⍕4⊃⍺),']=s.top();',NL}
    Eb←{z←'{A x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
      z,'(*f)(std::get<A>(',(slt⍺),'),x,y,e);PUSH(y);}',NL}
    Ed←{z←'{A z,x,y;FNP f;POP(A,x);POP(FNP,f);POP(A,y);'
@@ -53,7 +48,7 @@
    Ek←{'s.pop();',NL}
    Em←{'{A z,x;FNP f;POP(FNP,f);POP(A,x);(*f)(z,x,e);PUSH(z);}',NL}
    Er←{'POP(A,z);e[fd]=std::move(of);R;',NL}
-   Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_f){U fd=',(⍕8⊃⍺),';STK s;',NL
+   Fn←{z←NL,'DF(',('fn',⍕5⊃⍺),'_','fffoo'[3⊃⍺],'){U fd=',(⍕8⊃⍺),';STK s;',NL
      z,←' if(e.size()<=fd)e.resize(fd+1);',NL
      z,←' FRMP of=std::move(e[fd]);e[fd]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
      z,←' try{',NL
@@ -66,12 +61,6 @@
      z,←'DF(',('fn',⍕5⊃⍺),'_f){if(is0)R;','' 'I fd=0;'⊃⍨×≢⍵
      z,←'STK s;e[0]=std::make_unique<FRM>(',(⍕4⊃⍺),');',NL
      z,(⊃,⌿' ',¨dis¨⍵),' is0=1;}',NL,NL}
-   Fm←{
-     ∘∘∘
-   }
-   Fd←{
-     ∘∘∘
-   }
    Gd←{z←'{A x;POP(A,x);if(cnt(x)!=1)err(5);',NL
      z,←' if(!(isint(x)||isbool(x)))err(11);',NL
      z,←' I t;CVSWITCH(x.v,err(6),t=v.as(s32).scalar<I>(),err(11))',NL
@@ -90,24 +79,27 @@
      z,'f=(*o)(g,x);f->this_p=f;PUSH(f);}',NL}
    Off←{z←'{FNP f,g,h;DOKP o;POP(FNP,g);POP(DOKP,o);POP(FNP,h);'
      z,'f=(*o)(g,h);f->this_p=f;PUSH(f);}',NL}
-   Pf←{'PUSH(',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_p);',NL}
+   Pf←{(x←4⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'llp' 'rrp'⊃⍨¯1+|x),');',NL
+     'PUSH(',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_p);',NL}
    Po←{'PUSH(std::make_shared<',(nams⊃⍨syms⍳sym⌷⍨|4⊃⍺),'_k>());',NL}
    Pv←{'PUSH(A());',NL}
-   Zp←{n←'fn',⍕⍵ ⋄ z←'S ',n,'_f:FN{MFD;DFD;',n,'_f():FN("',n,'",0,0){};};',NL
-     z,'DEFN(',n,')',NL,'MF(',n,'_f){this_c(z,A(),r,e);}',NL}
-   Va←{(x←4⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'll' 'rr'⊃⍨¯1+|x),');',NL
+   Va←{(x←4⊃⍺)∊-1+⍳4:'PUSH(',(,'r' 'l' 'aa' 'ww'⊃⍨¯1+|x),');',NL
      'PUSH(',(slt ⍺),');',NL}
    Vf←{0>x←4⊃⍺:'PUSH(',(slt ⍺),');',NL
      'fn',(⍕x),'_p->this_p=fn',(⍕x),'_p;PUSH(fn',(⍕x),'_p);',NL}
-   Vm←{
-     ∘∘∘
-   }
-   Vd←{
-     ∘∘∘
-   }
+   Vo←{0>x←4⊃⍺:'PUSH(',(slt ⍺),');',NL
+     'PUSH(std::make_shared<fn',(⍕x),'_k>());',NL}
+   Zf←{z←'NM(',⍵,',"',⍵,'",0,0,MT,MFD,DFD,MT,MT)',NL
+     z,'DEFN(',⍵,')',NL,'MF(',⍵,'_f){this_c(z,A(),r,e);}',NL}
+   Zm←{z←'OM(',⍵,',"',⍵,'",0,0,MFD,DFD,MT,MT)',NL
+     z,'MF(',⍵,'_o){this_c(z,A(),r,e);}',NL}
+   Zd←{z←'OD(',⍵,',"',⍵,'",0,0,MFD,DFD,MT,MT)',NL
+     z,'MF(',⍵,'_o){this_c(z,A(),r,e);}',NL}
+   Zp←{n←'fn',⍕⍵ ⋄ k[⍵]∊0 2:Zf n ⋄ k[⍵]=3:Zm n ⋄ k[⍵]=4:Zd n
+     NOTFOUND t[⍵],k[⍵]}
    NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
    dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
-   z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),(,/Zp¨⍸t=F)
+   z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),,/Zp¨⍸t=F
    z,←dis¨ks ast
-   z,←'E',¨('?VF'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
+   z,←'E',¨('?VFOO'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
    ⊃,⌿z⊣⍞←⎕UCS 10}

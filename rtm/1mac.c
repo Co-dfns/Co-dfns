@@ -44,6 +44,7 @@ EXPORT V ex##_cdf(A*z,A*l,A*r){{A il,ir,iz;\
  fn##init##_f fn_c;fn_c(iz,il,ir,e##init);}\
  (*std::get<FNP>((*e##init[0])[fun]))(*z,*l,*r,e##init);}
 #define EV(init,ex,slt)
+#define EO(init,ex,slt)
 #define VSWITCH(x,nil,arry,vec) \
  std::visit(\
   visitor{[&](NIL v){nil;},[&](arr&v){arry;},[&](VEC<A>&v){vec;}},\
