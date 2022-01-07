@@ -148,12 +148,14 @@ Namespaces  |        |          |
 
 The following limitations are known to exist:
 
+* User-command interface does not work with namespace global variables
+* User-defined operators must use function types for ⍺⍺ and ⍵⍵ only
+* User-defined operators are not exported
 * Binomial is not implemented correctly for some values
 * Only partial support for arrays of rank > 4
 * Only partial support for nested arrays, including some missing nested array primitives
 * Character types are not supported
 * Selective assignment is not supported yet
-* User-defined operators are not supported yet
 * Mixed arrays are not supported
 * Lexically scoped trad-fns are not supported yet
 * Error Guards are not supported yet
