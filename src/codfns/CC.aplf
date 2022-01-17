@@ -1,0 +1,29 @@
+ CC←{
+   VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
+   VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
+   VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
+   VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+   tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+   put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+   opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+   soext←{opsys'.dll' '.so' '.dylib'}
+   ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
+   cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,opsys''' ' '/lib64'' ' '/lib'' '}
+   cco←'-std=c++17 -Ofast -g -Wall -fPIC -shared -Wno-parentheses '
+   cco,←'-Wno-misleading-indentation '
+   ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
+   gcc←'g++'ucc'so'
+   clang←'clang++'ucc'dylib'
+   vsco←{z←'/W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
+    z,←'/WX /MD /EHsc /nologo /std:c++latest '
+    z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
+   vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+    z,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af', AF∆LIB, '.lib" '
+    z,'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '}
+   vsc0←{~∨⌿b←⎕NEXISTS¨VS∆PS:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿VS∆PS}
+   vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),'/fast "',⍵,'.cpp" '}
+   vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
+   vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
+   _←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣⍵ put ⍺,'.cpp'⊣1 ⎕NDELETE f←⍺,soext⍬
+   ⎕←⍪⊃⎕NGET(⍺,'.log')1
+   ⎕NEXISTS f:f ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}

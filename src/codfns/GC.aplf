@@ -102,4 +102,4 @@
    z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),,/Zp¨⍸t=F
    z,←dis¨ks ast
    z,←'E',¨('?VFOO'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
-   ⊃,⌿z⊣⍞←⎕UCS 10}
+   ⊃,⌿z}
