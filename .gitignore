@@ -32,8 +32,6 @@ CONTINUE
 *.bin
 *.ptx
 *.gpu
-*.h
 attic/*.pdf
 *.obj
 *.log
-*.cpp
