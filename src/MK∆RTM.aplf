@@ -1,0 +1,19 @@
+ MK∆RTM;VS∆PS;vsc
+ VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
+ VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
+ VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
+ VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+
+ vsc←'%comspec% /C ""',(⊃VS∆PS⌿⍨⎕NEXISTS¨VS∆PS),'" amd64'
+ vsc,←' && cd "',(⊃⎕CMD'echo %CD%'),'"'
+ vsc,←' && cl /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
+ vsc,←'  /Fo"rtm\\" /Fd"libcodfns.pdb"'
+ vsc,←'  /WX /MD /EHsc /nologo /std:c++latest /I"%AF_PATH%\include"'
+ vsc,←'  /D "NOMINMAX" /D "AF_DEBUG" "rtm\*.cpp" /link /DLL /OPT:REF'
+ vsc,←'  /INCREMENTAL:NO /SUBSYSTEM:WINDOWS /LIBPATH:"%AF_PATH%\lib"'
+ vsc,←'  /DYNAMICBASE "af',codfns.AF∆LIB,'.lib" /OPT:ICF /ERRORREPORT:PROMPT'
+ vsc,←'  /TLBID:1 /OUT:"libcodfns.dll" > "libcodfns.log""'
+
+ _←⎕CMD ⎕←vsc
+ ⎕←⍪⊃⎕NGET('libcodfns.log')1
+
