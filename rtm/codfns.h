@@ -57,6 +57,7 @@ using namespace af;
 #define POP(f,x) x=std::get<f>(s.top());s.pop()
 
 #define DEFN(n) FNP n##_p=std::make_shared<n##_f>();FN&n##_c=*n##_p;
+#define DECLF(n) EXPORT FN& n##_c;
 #define NM(n,nm,sm,sd,di,mf,df,ma,da) S n##_f:FN{di;mf;df;ma;da;\
  n##_f():FN(nm,sm,sd){}};
 #define OM(n,nm,sm,sd,mf,df,ma,da) S n##_o:MOP{mf;df;ma;da;\
@@ -76,16 +77,16 @@ using namespace af;
   FNP operator()(FNP l,CA&r){R std::make_shared<n##_o>(l,r);}\
   FNP operator()(CA&l,FNP r){R std::make_shared<n##_o>(l,r);}};
 #define DID inline array id(SHP)
-#define MFD inline V operator()(A&z,CA&r,ENV&e)
-#define MAD inline V operator()(A&z,CA&r,ENV&e,CA&ax)
-#define DFD inline V operator()(A&z,CA&l,CA&r,ENV&e)
-#define DAD inline V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)
-#define DI(n) inline array n::id(SHP s)
+#define MFD V operator()(A&z,CA&r,ENV&e)
+#define MAD V operator()(A&z,CA&r,ENV&e,CA&ax)
+#define DFD V operator()(A&z,CA&l,CA&r,ENV&e)
+#define DAD V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)
+#define DI(n) array n::id(SHP s)
 #define ID(n,x,t) DI(n##_f){R constant(x,dim4(cnt(s)),t);}
-#define MF(n) inline V n::operator()(A&z,CA&r,ENV&e)
-#define MA(n) inline V n::operator()(A&z,CA&r,ENV&e,CA&ax)
-#define DF(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e)
-#define DA(n) inline V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)
+#define MF(n) V n::operator()(A&z,CA&r,ENV&e)
+#define MA(n) V n::operator()(A&z,CA&r,ENV&e,CA&ax)
+#define DF(n) V n::operator()(A&z,CA&l,CA&r,ENV&e)
+#define DA(n) V n::operator()(A&z,CA&l,CA&r,ENV&e,CA&ax)
 #define SF(n,lb) \
  DF(n##_f){sclfn(z,l,r,e,[&](A&z,carr&lv,carr&rv,ENV&e){lb;});}\
  DA(n##_f){sclfn(z,l,r,e,ax,n##_c);}
@@ -111,14 +112,11 @@ typedef double D;typedef unsigned char U8;typedef unsigned U;
 typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;
 typedef array arr;typedef const array carr;typedef af::index IDX;
 typedef std::monostate NIL;
-S dmx_t{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;};
 S pkt{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];};
 S lp{pkt*p;V*i;};
-S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
-S dwa*dwafns;Z V derr(U n);Z V err(U n,const wchar_t*e);Z V err(U n);
 typedef VEC<dim_t> SHP;S A;
 typedef std::variant<NIL,arr,VEC<A>> VALS;
-S A{SHP s;VALS v;A();A(B);A(B,VALS);};
+S A{SHP s;VALS v;A();A(B);A(SHP,VALS);A(B,VALS);};
 typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;
 typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;
 typedef std::variant<A,FNP,MOKP,DOKP> BX;
@@ -159,3 +157,81 @@ EXPORT V loadimg(lp*,char*,I);
 EXPORT V saveimg(lp*,char*);
 EXPORT V cd_sync(V);
 
+I scm(FN&);
+I scm(const A&);
+I scm(FNP);
+I scd(FN&);
+I scd(const A&);
+I scd(FNP);
+
+DECLF(add);
+DECLF(and);
+DECLF(brk);
+DECLF(cat);
+DECLF(cir);
+DECLF(ctf);
+DECLF(dec);
+DECLF(dis);
+DECLF(div);
+DECLF(drp);
+DECLF(enc);
+DECLF(eql);
+DECLF(eqv);
+DECLF(exp);
+DECLF(fac);
+DECLF(fft);
+DECLF(fnd);
+DECLF(gdd);
+DECLF(gdu);
+DECLF(get);
+DECLF(gte);
+DECLF(gth);
+DECLF(ift);
+DECLF(int);
+DECLF(iot);
+DECLF(lft);
+DECLF(log);
+DECLF(lor);
+DECLF(lte);
+DECLF(lth);
+DECLF(max);
+DECLF(mdv);
+DECLF(mem);
+DECLF(min);
+DECLF(mul);
+DECLF(nan);
+DECLF(neq);
+DECLF(nor);
+DECLF(not);
+DECLF(nqv);
+DECLF(nst);
+DECLF(par);
+DECLF(rdf);
+DECLF(red);
+DECLF(res);
+DECLF(rgt);
+DECLF(rho);
+DECLF(rol);
+DECLF(rot);
+DECLF(rtf);
+DECLF(scf);
+DECLF(scn);
+DECLF(sqd);
+DECLF(sub);
+DECLF(tke);
+DECLF(trn);
+DECLF(unq);
+
+OD(brk,"brk",scm(l),scd(l),MFD,DFD,MT ,MT );
+OM(com,"com",scm(l),scd(l),MFD,DFD,MT ,MT )
+OD(dot,"dot",0,0,MT,DFD,MT ,MT )
+OM(get,"get",0,0,MT,DFD,MT,MT)
+OD(jot,"jot",(scm(l)&&scm(r)),(scd(l)&&scd(r)),MFD,DFD,MT ,MT )
+OM(map,"map",1,1,MFD,DFD,MT ,MT )
+OM(oup,"oup",0,0,MT,DFD,MT ,MT )
+OD(pow,"pow",scm(l),scd(l),MFD,DFD,MT ,MT )
+OM(rdf,"rdf",0,0,MFD,DFD,MAD,DAD)
+OM(red,"red",0,0,MFD,DFD,MAD,DAD)
+OD(rnk,"rnk",scm(l),0,MFD,DFD,MT ,MT )
+OM(scf,"scf",1,1,MFD,MT,MAD,MT )
+OM(scn,"scn",1,1,MFD,MT,MAD,MT )

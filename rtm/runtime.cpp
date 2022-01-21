@@ -1,19 +1,22 @@
 #include "codfns.h"
 #include "internal.h"
 
-dmx_t dmx;
+S {U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
 std::wstring msg;
 
+S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
+S dwa*dwafns;
 EXPORT I DyalogGetInterpreterFunctions(dwa*p){
  if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}
 
-Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
-Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}
-Z V err(U n){err(n,L"");}
+V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
+V err(U n,const wchar_t*e){dmx.e=e;throw n;}
+V err(U n){err(n,L"");}
 
 A::A(){}
 A::A(B r):s(SHP(r,1)){}
+A::A(SHP s,VALS v):s(s),v(v){}
 A::A(B r,VALS v):s(SHP(r,1)),v(v){}
 
 FN::FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}
@@ -89,19 +92,30 @@ dtype mxt(dtype at,CA&b){
    [&](CVEC<A>&v){dtype zt=at;DOB(v.size(),zt=mxt(zt,v[i]));R zt;}},
   b.v);}
 dtype mxt(CA&a,CA&b){R mxt(mxt(b8,a),mxt(b8,b));}
-inline I isint(D x){R x==nearbyint(x);}
-inline I isint(CA&x){I res=1;
+I isint(D x){R x==nearbyint(x);}
+I isint(CA&x){I res=1;
  CVSWITCH(x.v
   ,err(99,L"Unexpected value error.")
   ,res=v.isinteger()||v.isbool()||(v.isreal()&&allTrue<I>(v==trunc(v)))
   ,DOB(v.size(),if(!isint(v[i])){res=0;R;}))
  R res;}
-inline I isbool(carr&v){R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));}
-inline I isbool(CA&x){I res=1;
+I isbool(carr&v){R v.isbool()||(v.isreal()&&allTrue<I>(v==0||v==1));}
+I isbool(CA&x){I res=1;
  CVSWITCH(x.v
   ,err(99,L"Unexpected value error.")
   ,res=isbool(v)
   ,DOB(v.size(),if(!isbool(v[i])){res=0;R;}))
+ R res;}
+I is_eqv(CA&l,CA&r){B lr=rnk(l),rr=rnk(r);if(lr!=rr)R 0;
+ DOB(lr,if(l.s[i]!=r.s[i])R 0)
+ I res=1;
+ std::visit(visitor{DVSTR(),
+   [&](carr&lv,carr&rv){res=allTrue<I>(lv==rv);},
+   [&](CVEC<A>&lv,carr&rv){res=0;},
+   [&](carr&lv,CVEC<A>&rv){res=0;},
+   [&](CVEC<A>&lv,CVEC<A>&rv){B c=cnt(l);
+    DOB(c,if(!is_eqv(lv[i],rv[i])){res=0;R;})}},
+  l.v,r.v);
  R res;}
 V coal(A&a){
  VSWITCH(a.v,,,
