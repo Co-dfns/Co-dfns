@@ -99,7 +99,8 @@
      NOTFOUND t[⍵],k[⍵]}
    NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
    dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
-   z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),,/Zp¨⍸t=F
+   z←'#include "codfns.h"',NL,,/Zp¨⍸t=F
+   ⍝ z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),,/Zp¨⍸t=F
    z,←dis¨ks ast
    z,←'E',¨('?VFOO'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
    ⊃,⌿z}

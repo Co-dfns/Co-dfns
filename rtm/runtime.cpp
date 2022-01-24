@@ -1,13 +1,12 @@
 #include "codfns.h"
-#include "internal.h"
 
-S {U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
+dmx_t dmx;
 std::wstring msg;
 
 S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
 S dwa*dwafns;
-EXPORT I DyalogGetInterpreterFunctions(dwa*p){
+DECLSPEC I DyalogGetInterpreterFunctions(dwa*p){
  if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}
 
 V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
@@ -131,9 +130,9 @@ arr proto(carr&a){arr z=a;z=0;R z;}
 VEC<A> proto(CVEC<A>&a){VEC<A> z(a.size());DOB(a.size(),z[i]=proto(a[i]));R z;}
 A proto(CA&a){A z;z.s=a.s;CVSWITCH(a.v,err(6),z.v=proto(v),z.v=proto(v));R z;}
 
-Z arr da16(B c,pkt*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);
+arr da16(B c,pkt*d){VEC<S16>b(c);S8*v=(S8*)DATA(d);
  DOB(c,b[i]=v[i]);R arr(c,b.data());}
-Z arr da8(B c,pkt*d){VEC<char>b(c);U8*v=(U8*)DATA(d);
+arr da8(B c,pkt*d){VEC<char>b(c);U8*v=(U8*)DATA(d);
  DOB(c,b[i]=1&(v[i/8]>>(7-(i%8))))R arr(c,b.data());}
 pkt*cpad(lp*l,CA&a){I t;B c=cnt(a),ar=rnk(a);pkt*p=NULL;
  if(ar>15)err(16,L"Dyalog APL does not support ranks > 15.");
@@ -168,38 +167,38 @@ V cpda(A&a,pkt*d){
   default:err(16);}}
 V cpda(A&a,lp*d){if(d==NULL)R;cpda(a,d->p);}
 
-EXPORT A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}
-EXPORT V frea(A*a){delete a;}
-EXPORT V exarray(lp*d,A*a){cpad(d,*a);}
-EXPORT V afsync(){sync();}
-EXPORT Window *w_new(char *k){R new Window(k);}
-EXPORT I w_close(Window*w){R w->close();}
-EXPORT V w_del(Window*w){delete w;}
-EXPORT V w_img(lp*d,Window*w){A a;cpda(a,d);
+A*mkarray(lp*d){A*z=new A;cpda(*z,d);R z;}
+V frea(A*a){delete a;}
+V exarray(lp*d,A*a){cpad(d,*a);}
+V afsync(){sync();}
+Window *w_new(char *k){R new Window(k);}
+I w_close(Window*w){R w->close();}
+V w_del(Window*w){delete w;}
+V w_img(lp*d,Window*w){A a;cpda(a,d);
  std::visit(visitor{
    [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Image requires a flat array.");},
    [&](carr&v){w->image(v.as(rnk(a)==2?f32:u8));}},
   a.v);}
-EXPORT V w_plot(lp*d,Window*w){A a;cpda(a,d);
+V w_plot(lp*d,Window*w){A a;cpda(a,d);
  std::visit(visitor{
    [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Plot requires a flat array.");},
    [&](carr&v){w->plot(v.as(f32));}},
   a.v);}
-EXPORT V w_hist(lp*d,D l,D h,Window*w){A a;cpda(a,d);
+V w_hist(lp*d,D l,D h,Window*w){A a;cpda(a,d);
  std::visit(visitor{
    [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Hist requires a flat array.");},
    [&](carr&v){w->hist(v.as(u32),l,h);}},
   a.v);}
-EXPORT V loadimg(lp*z,char*p,I c){array a=loadImage(p,c);
+V loadimg(lp*z,char*p,I c){array a=loadImage(p,c);
  I rk=a.numdims();dim4 s=a.dims();
  A b(rk,flat(a).as(s16));DO(rk,b.s[i]=s[i])cpad(z,b);}
-EXPORT V saveimg(lp*im,char*p){A a;cpda(a,im);
+V saveimg(lp*im,char*p){A a;cpda(a,im);
  std::visit(visitor{
    [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Save requires a flat array.");},
    [&](carr&v){saveImageNative(p,v.as(v.type()==s32?u16:u8));}},
   a.v);}
-EXPORT V cd_sync(V){sync();}
+V cd_sync(V){sync();}

@@ -6,14 +6,20 @@
 
  vsc←'%comspec% /C ""',(⊃VS∆PS⌿⍨⎕NEXISTS¨VS∆PS),'" amd64'
  vsc,←' && cd "',(⊃⎕CMD'echo %CD%'),'"'
- vsc,←' && cl /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
- vsc,←'  /Fo"rtm\\" /Fd"libcodfns.pdb"'
+ vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
+ vsc,←'  /Fo"rtm\\" /Fd"codfns.pdb"'
  vsc,←'  /WX /MD /EHsc /nologo /std:c++latest /I"%AF_PATH%\include"'
- vsc,←'  /D "NOMINMAX" /D "AF_DEBUG" "rtm\*.cpp" /link /DLL /OPT:REF'
+ vsc,←'  /D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
+ vsc,←'  "rtm\*.cpp" /link /DLL /OPT:REF'
  vsc,←'  /INCREMENTAL:NO /SUBSYSTEM:WINDOWS /LIBPATH:"%AF_PATH%\lib"'
  vsc,←'  /DYNAMICBASE "af',codfns.AF∆LIB,'.lib" /OPT:ICF /ERRORREPORT:PROMPT'
- vsc,←'  /TLBID:1 /OUT:"libcodfns.dll" > "libcodfns.log""'
+ vsc,←'  /TLBID:1 /OUT:"codfns.dll""'
 
- _←⎕CMD ⎕←vsc
- ⎕←⍪⊃⎕NGET('libcodfns.log')1
-
+ ⎕CMD ⎕←vsc
+ ⍝ ⎕←⍪⊃⎕NGET('codfns.log')1
+ ⎕CMD ⎕←'copy rtm\codfns.h codfns.h'
+ ⎕CMD ⎕←'copy codfns.h tests'
+ ⎕CMD ⎕←'copy codfns.exp tests'
+ ⎕CMD ⎕←'copy codfns.lib tests'
+ ⎕CMD ⎕←'copy codfns.pdb tests'
+ ⎕CMD ⎕←'copy codfns.dll tests'
