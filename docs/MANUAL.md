@@ -30,6 +30,7 @@ ps         | The Co-dfns parsing function. It takes a vector of character vector
 AF∆LIB     | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
 AF∆PREFIX  | The location of the ArrayFire library installation for Linux/Mac platforms.
 VERSION    | The version of the compiler. Do not modify this value.
+VS∆PATH    | The path to your Microsoft Visual Studio installation
 
 ## Parser Return Structure
 

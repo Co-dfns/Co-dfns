@@ -1,8 +1,5 @@
  CC←{
-   VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
-   VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
-   VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
-   VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+   vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
    tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
    put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
    opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
@@ -20,7 +17,7 @@
    vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
     z,←'/LIBPATH:"%AF_PATH%\lib" /OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
     z,'/DYNAMICBASE "af', AF∆LIB, '.lib" "codfns.lib" '}
-   vsc0←{~∨⌿b←⎕NEXISTS¨VS∆PS:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿VS∆PS}
+   vsc0←{~∨⌿b←⎕NEXISTS¨vsbat:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿vsbat}
    vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),' "',⍵,'.cpp" '}
    vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
    vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}

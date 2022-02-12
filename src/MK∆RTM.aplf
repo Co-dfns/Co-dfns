@@ -1,11 +1,9 @@
- MK∆RTM;VS∆PS;vsc
- VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
- VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
- VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
- VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
+ MK∆RTM;vsbat;vsc;wsd
+ vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 
- vsc←'%comspec% /C ""',(⊃VS∆PS⌿⍨⎕NEXISTS¨VS∆PS),'" amd64'
- vsc,←' && cd "',(⊃⎕CMD'echo %CD%'),'"'
+ wsd←⊃⎕NPARTS ⎕WSID
+ vsc←'%comspec% /C ""',(⊃vsbat⌿⍨⎕NEXISTS¨vsbat),'" amd64'
+ vsc,←' && cd "',wsd,'"'
  vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
  vsc,←'  /Fo"rtm\\" /Fd"codfns.pdb"'
  vsc,←'  /WX /MD /EHsc /nologo /std:c++latest /I"%AF_PATH%\include"'
@@ -16,10 +14,9 @@
  vsc,←'  /TLBID:1 /OUT:"codfns.dll""'
 
  ⎕CMD ⎕←vsc
- ⍝ ⎕←⍪⊃⎕NGET('codfns.log')1
- ⎕CMD ⎕←'copy rtm\codfns.h codfns.h'
- ⎕CMD ⎕←'copy codfns.h tests'
- ⎕CMD ⎕←'copy codfns.exp tests'
- ⎕CMD ⎕←'copy codfns.lib tests'
- ⎕CMD ⎕←'copy codfns.pdb tests'
- ⎕CMD ⎕←'copy codfns.dll tests'
+ ⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'codfns.h"'
+ ⎕CMD ⎕←'copy "',wsd,'codfns.h" "',wsd,'tests\"'
+ ⎕CMD ⎕←'copy "',wsd,'codfns.exp" "',wsd,'tests\"'
+ ⎕CMD ⎕←'copy "',wsd,'codfns.lib" "',wsd,'tests\"'
+ ⎕CMD ⎕←'copy "',wsd,'codfns.pdb" "',wsd,'tests\"'
+ ⎕CMD ⎕←'copy "',wsd,'codfns.dll" "',wsd,'tests\"'
