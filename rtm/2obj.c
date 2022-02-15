@@ -9,10 +9,14 @@ S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;
 S pkt{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];};
 S lp{pkt*p;V*i;};
 S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};
-S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}
+S dwa*dwafns;
+extern "C" int set_dwa(void*);
+extern "C" void dwaerror(unsigned int, const wchar_t *);
 EXPORT I DyalogGetInterpreterFunctions(dwa*p){
- if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}
-Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}Z V err(U n){err(n,L"");}
+ if(p){dwafns=p;set_dwa(p);}else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}
+Z V derr(U n){dwaerror(n,dmx.e);}
+Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}
+Z V err(U n){err(n,L"");}
 std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;
 typedef VEC<dim_t> SHP;S A;
 typedef std::variant<NIL,arr,VEC<A>> VALS;

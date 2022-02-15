@@ -58,7 +58,7 @@ struct dwafns {
 struct dwafns *dwa = NULL;
 
 DECLSPEC int 
-DyalogGetInterpreterFunctions(struct dwafns *fns)
+set_dwa(struct dwafns *fns)
 {
 	if (fns)
 		dwa = fns;
@@ -71,7 +71,7 @@ DyalogGetInterpreterFunctions(struct dwafns *fns)
 	return 0;
 }
 
-static void
+DECLSPEC void
 dwaerror(unsigned int n, wchar_t *msg)
 {
 	dmx.flags	= 3;
