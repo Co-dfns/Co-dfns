@@ -2,19 +2,19 @@
  vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 
  wsd←⊃⎕NPARTS ⎕WSID
- vsc←'%comspec% /C ""',(⊃vsbat⌿⍨⎕NEXISTS¨vsbat),'" amd64'
+ vsc←'%comspec% /C ""',vsbat,'" amd64'
  vsc,←' && cd "',wsd,'"'
  vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
- vsc,←'  /Fo"rtm\\" /Fd"codfns.pdb"'
- vsc,←'  /WX /MD /EHsc /nologo /std:c++latest /I"%AF_PATH%\include"'
+ vsc,←'  /Fo"rtm_new\\" /Fd"codfns.pdb"'
+ vsc,←'  /WX /MD /EHsc /nologo /I"%AF_PATH%\include"'
  vsc,←'  /D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
- vsc,←'  "rtm\*.cpp" /link /DLL /OPT:REF'
+ vsc,←'  "rtm_new\*.c" /link /DLL /OPT:REF'
  vsc,←'  /INCREMENTAL:NO /SUBSYSTEM:WINDOWS /LIBPATH:"%AF_PATH%\lib"'
  vsc,←'  /DYNAMICBASE "af',codfns.AF∆LIB,'.lib" /OPT:ICF /ERRORREPORT:PROMPT'
  vsc,←'  /TLBID:1 /OUT:"codfns.dll""'
 
  ⎕CMD ⎕←vsc
- ⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'codfns.h"'
+ ⎕CMD ⎕←'copy "',wsd,'rtm_new\codfns.h" "',wsd,'codfns.h"'
  ⎕CMD ⎕←'copy "',wsd,'codfns.h" "',wsd,'tests\"'
  ⎕CMD ⎕←'copy "',wsd,'codfns.exp" "',wsd,'tests\"'
  ⎕CMD ⎕←'copy "',wsd,'codfns.lib" "',wsd,'tests\"'

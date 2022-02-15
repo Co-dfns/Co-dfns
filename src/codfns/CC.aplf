@@ -17,10 +17,10 @@
    vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
     z,←'/LIBPATH:"%AF_PATH%\lib" /OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
     z,'/DYNAMICBASE "af', AF∆LIB, '.lib" "codfns.lib" '}
-   vsc0←{~∨⌿b←⎕NEXISTS¨vsbat:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿vsbat}
+   vsc0←{~⎕NEXISTS vsbat:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""',vsbat,'" amd64'}
    vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),' "',⍵,'.cpp" '}
    vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
-   vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
+   vsc←{⎕CMD ('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
    _←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣⍵ put ⍺,'.cpp'⊣1 ⎕NDELETE f←⍺,soext⍬
    ⎕←⍪⊃⎕NGET(⍺,'.log')1
    ⎕NEXISTS f:f ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
