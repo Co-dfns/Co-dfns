@@ -13,6 +13,8 @@ N∆←' ABCEFGKLMNOPSVZ'
 
 VERSION←4 1 0
 
+VS∆PATH←'\Program Files\Microsoft Visual Studio\2022\Community'
+
 deps←((,'⍉') (,'⍴') (,'⍋') '%s' (,'+')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'-')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'×')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'÷')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'*')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⍟')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'|')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'○')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⌊')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⌈')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'!')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'<')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'≤')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'=')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'≥')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'>')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'≠')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'~')) ((,'∨') (,'∧')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'∨')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⍲')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'⍱')) ((,'⍳') (,'⌷')) (⊂,'[') (⊂,'⍳') (⊂,'⍴') (⊂,',') ((,',') (,'⍪')) ((,'|') (,',') (,'⌽')) (⊂,'⍉') ((,'⌽') (,'⊖')) (⊂,'∊') (⊂,'⊃') (⊂,'≡') ((,'≡') (,'≢')) (⊂,'⊢') (⊂,'⊣') (⊂,'⊤') (⊂,'⊥') ((,'¨') (,'/')) ((,'/') (,'⌿')) ((,'¨') (,'\')) ((,'\') (,'⍀')) ((,'⍉') (,'⍴') (,'⍋') '%s' (,'?')) ((,'⍳') (,'↑')) ((,'⍳') (,'↓')) ((,'⊃') (,',') (,'¨')) (⊂,'⍨') ((,'/') (,'.')) ((,'↑') (,'⌷') (,'⍤')) (⊂,'⍣') (⊂,'∘') (⊂,'∪') (⊂,'∩') ((,'[') (,'⊃') (,',') (,'¨') (,'←')) (⊂,'⍋') (⊂,'⍒') ((,'¨') '∘.') (⊂,'⍷') ((,'¨') (,'⌷') (,'⊂')) (⊂,'⌹') (⊂'⎕FFT') (⊂'⎕IFFT') (⊂'%s') ((,'⊂') (,'⊆')) (⊂,'∇') (⊂,';') (⊂'%u')
 
 f∆←'ptknfsrdx'
@@ -56,22 +58,22 @@ _,←'  visitor{[&](NIL v){nil;},[&](carr&v){arr;},[&](CVEC<A>&v){vec;}},\',(⎕
 _,←' APLR,APLF,APLQ}APLTYPE;',(⎕ucs 10),'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',(⎕ucs 10),'typedef double D;typedef unsigned char U8;typedef unsigned U;',(⎕ucs 10)
 _,←'typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;',(⎕ucs 10),'typedef array arr;typedef const array carr;typedef af::index IDX;',(⎕ucs 10),'typedef std::monostate NIL;'
 _,←(⎕ucs 10),'S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',(⎕ucs 10),'S pkt{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];};',(⎕ucs 10),'S lp{pkt*p;V*i;};'
-_,←(⎕ucs 10),'S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',(⎕ucs 10),'S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}',(⎕ucs 10)
-_,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',(⎕ucs 10),' if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}',(⎕ucs 10)
-_,←'Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}Z V err(U n){err(n,L"");}',(⎕ucs 10),'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',(⎕ucs 10),'typedef VEC<dim_t> SHP;S A;'
-_,←(⎕ucs 10),'typedef std::variant<NIL,arr,VEC<A>> VALS;',(⎕ucs 10),'S A{SHP s;VALS v;',(⎕ucs 10),' A(){}',(⎕ucs 10),' A(B r):s(SHP(r,1)){}',(⎕ucs 10),' A(SHP s,VALS v):s(s),v(v){}',(⎕ucs 10)
-_,←' A(B r,VALS v):s(SHP(r,1)),v(v){}};',(⎕ucs 10),'typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;',(⎕ucs 10)
-_,←'typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;',(⎕ucs 10),'typedef std::variant<A,FNP,MOKP,DOKP> BX;',(⎕ucs 10),'typedef VEC<BX> FRM;typedef std::unique_ptr<FRM> FRMP;'
-_,←(⎕ucs 10),'typedef VEC<FRMP> ENV;typedef std::stack<BX> STK;',(⎕ucs 10),'SHP eshp=SHP(0);std::wstring msg;',(⎕ucs 10),'S FN{STR nm;I sm;I sd;FNP this_p;virtual ~FN() = default;',(⎕ucs 10)
-_,←' FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',(⎕ucs 10),' FN():nm(""),sm(0),sd(0){}',(⎕ucs 10),' virtual arr id(SHP s){err(16);R arr();}',(⎕ucs 10),' virtual V operator()(A&z,CA&r,ENV&e){err(99);}'
-_,←(⎕ucs 10),' virtual V operator()(A&z,CA&r,ENV&e,CA&ax){err(2);}',(⎕ucs 10),' virtual V operator()(A&z,CA&l,CA&r,ENV&e){err(99);}',(⎕ucs 10)
-_,←' virtual V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax){err(2);}};',(⎕ucs 10),'FNP MTFN = std::make_shared<FN>();',(⎕ucs 10),'S MOP:FN{CA aa;FNP llp=MTFN;FN&ll=*llp;',(⎕ucs 10)
-_,←' MOP(STR nm,I sm,I sd,CA&l):FN(nm,sm,sd),aa(l),llp(MTFN){ll=*llp;}',(⎕ucs 10),' MOP(STR nm,I sm,I sd,FNP llp):FN(nm,sm,sd),llp(llp){ll=*llp;}};',(⎕ucs 10)
-_,←'S DOP:FN{I fl;I fr;CA aa;CA ww;FNP llp=MTFN;FNP rrp=MTFN;FN&ll=*llp;FN&rr=*rrp;',(⎕ucs 10),' DOP(STR nm,I sm,I sd,FNP l,FNP r)',(⎕ucs 10)
-_,←'  :FN(nm,sm,sd),fl(1),fr(1),llp(l),rrp(r){ll=*llp;rr=*rrp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,CA&l,FNP r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(0),fr(1),aa(l),rrp(r){rr=*rrp;}',(⎕ucs 10)
-_,←' DOP(STR nm,I sm,I sd,FNP l,CA&r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(1),fr(0),ww(r),llp(l){ll=*llp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,CA&l,CA&r)',(⎕ucs 10)
-_,←'  :FN(nm,sm,sd),fl(0),fr(0),aa(l),ww(r){}};',(⎕ucs 10),'S MOK{virtual ~MOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l){err(99);R MTFN;}',(⎕ucs 10)
-_,←' virtual FNP operator()(CA&l){err(99);R MTFN;}};',(⎕ucs 10),'S DOK{virtual ~DOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l,FNP r){err(99);R MTFN;}',(⎕ucs 10)
+_,←(⎕ucs 10),'S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',(⎕ucs 10),'S dwa*dwafns;',(⎕ucs 10),'extern "C" int set_dwa(void*);',(⎕ucs 10)
+_,←'extern "C" void dwaerror(unsigned int, const wchar_t *);',(⎕ucs 10),'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',(⎕ucs 10)
+_,←' if(p){dwafns=p;set_dwa(p);}else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}',(⎕ucs 10),'Z V derr(U n){dwaerror(n,dmx.e);}',(⎕ucs 10),'Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}',(⎕ucs 10)
+_,←'Z V err(U n){err(n,L"");}',(⎕ucs 10),'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',(⎕ucs 10),'typedef VEC<dim_t> SHP;S A;',(⎕ucs 10),'typedef std::variant<NIL,arr,VEC<A>> VALS;'
+_,←(⎕ucs 10),'S A{SHP s;VALS v;',(⎕ucs 10),' A(){}',(⎕ucs 10),' A(B r):s(SHP(r,1)){}',(⎕ucs 10),' A(SHP s,VALS v):s(s),v(v){}',(⎕ucs 10),' A(B r,VALS v):s(SHP(r,1)),v(v){}};',(⎕ucs 10)
+_,←'typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;',(⎕ucs 10),'typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;',(⎕ucs 10)
+_,←'typedef std::variant<A,FNP,MOKP,DOKP> BX;',(⎕ucs 10),'typedef VEC<BX> FRM;typedef std::unique_ptr<FRM> FRMP;',(⎕ucs 10),'typedef VEC<FRMP> ENV;typedef std::stack<BX> STK;',(⎕ucs 10)
+_,←'SHP eshp=SHP(0);std::wstring msg;',(⎕ucs 10),'S FN{STR nm;I sm;I sd;FNP this_p;virtual ~FN() = default;',(⎕ucs 10),' FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',(⎕ucs 10)
+_,←' FN():nm(""),sm(0),sd(0){}',(⎕ucs 10),' virtual arr id(SHP s){err(16);R arr();}',(⎕ucs 10),' virtual V operator()(A&z,CA&r,ENV&e){err(99);}',(⎕ucs 10)
+_,←' virtual V operator()(A&z,CA&r,ENV&e,CA&ax){err(2);}',(⎕ucs 10),' virtual V operator()(A&z,CA&l,CA&r,ENV&e){err(99);}',(⎕ucs 10),' virtual V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax){err(2);}};'
+_,←(⎕ucs 10),'FNP MTFN = std::make_shared<FN>();',(⎕ucs 10),'S MOP:FN{CA aa;FNP llp=MTFN;FN&ll=*llp;',(⎕ucs 10),' MOP(STR nm,I sm,I sd,CA&l):FN(nm,sm,sd),aa(l),llp(MTFN){ll=*llp;}',(⎕ucs 10)
+_,←' MOP(STR nm,I sm,I sd,FNP llp):FN(nm,sm,sd),llp(llp){ll=*llp;}};',(⎕ucs 10),'S DOP:FN{I fl;I fr;CA aa;CA ww;FNP llp=MTFN;FNP rrp=MTFN;FN&ll=*llp;FN&rr=*rrp;',(⎕ucs 10)
+_,←' DOP(STR nm,I sm,I sd,FNP l,FNP r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(1),fr(1),llp(l),rrp(r){ll=*llp;rr=*rrp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,CA&l,FNP r)',(⎕ucs 10)
+_,←'  :FN(nm,sm,sd),fl(0),fr(1),aa(l),rrp(r){rr=*rrp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,FNP l,CA&r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(1),fr(0),ww(r),llp(l){ll=*llp;}',(⎕ucs 10)
+_,←' DOP(STR nm,I sm,I sd,CA&l,CA&r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(0),fr(0),aa(l),ww(r){}};',(⎕ucs 10),'S MOK{virtual ~MOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l){err(99);R MTFN;}'
+_,←(⎕ucs 10),' virtual FNP operator()(CA&l){err(99);R MTFN;}};',(⎕ucs 10),'S DOK{virtual ~DOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l,FNP r){err(99);R MTFN;}',(⎕ucs 10)
 _,←' virtual FNP operator()(CA&l,CA&r){err(99);R MTFN;}',(⎕ucs 10),' virtual FNP operator()(FNP l,CA&r){err(99);R MTFN;}',(⎕ucs 10),' virtual FNP operator()(CA&l,FNP r){err(99);R MTFN;}};',(⎕ucs 10)
 _,←'S DVSTR {',(⎕ucs 10),' V operator()(NIL l,NIL r){err(6);}',(⎕ucs 10),' V operator()(NIL l,carr&r){err(6);}',(⎕ucs 10),' V operator()(NIL l,CVEC<A>&r){err(6);}',(⎕ucs 10)
 _,←' V operator()(carr&l,NIL r){err(6);}',(⎕ucs 10),' V operator()(CVEC<A>&l,NIL r){err(6);}};',(⎕ucs 10),'S MVSTR {V operator()(NIL r){err(6);}};',(⎕ucs 10)
@@ -198,55 +200,12 @@ syms←_
 
 (⎕IO ⎕ML ⎕WX)←0 1 3
 
- D2P←{0=≢⍵:⍬ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←⍳≢⍵}
-
- Fix←{name←⍺ ⋄ src←⍵
-   VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
-   VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
-   VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
-   VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
-   Cmp←{_←1 ⎕NDELETE f←⍺,soext ⍬
-     out←GC{⍵⊣⍞←'G'}ir←TT{⍵⊣⍞←'C'}a n s src←PS ⍵⊣⍞←'P'
-     _←out put ⍺,'.cpp'
-     _←(⍎opsys'vsc' 'gcc' 'clang')⍺ ⋄ ⎕←⍪⊃⎕NGET(⍺,'.log')1 ⋄ ⎕NEXISTS f:n
-     'COMPILE ERROR'⎕SIGNAL 22}
-   MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
-   Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
-     w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
-   LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺}
-   SaveImage←{⍺←'image.png' ⋄ saveimg ⍵ ⍺}
-   Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺}
-   Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot(⍉⍵)⍺}
-   Histogram←{⍵⊣w_hist ⍵,⍺}
-   opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
-   soext←{opsys'.dll' '.so' '.dylib'}
-   mkna←{(⍺,soext ⍬),'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
-   Rtm∆Init←{
-     _←'w_new'⎕NA'P ',(⍵,soext ⍬),'|w_new <C[]'
-     _←'w_close'⎕NA'I ',(⍵,soext ⍬),'|w_close P'
-     _←'w_del'⎕NA(⍵,soext ⍬),'|w_del P'
-     _←'w_img'⎕NA(⍵,soext ⍬),'|w_img <PP P'
-     _←'w_plot'⎕NA(⍵,soext ⍬),'|w_plot <PP P'
-     _←'w_hist'⎕NA(⍵,soext ⍬),'|w_hist <PP F8 F8 P'
-     _←'loadimg'⎕NA(⍵,soext ⍬),'|loadimg >PP <C[] I'
-     _←'saveimg'⎕NA(⍵,soext ⍬),'|saveimg <PP <C[]'
-     _←'exa'⎕NA(⍵,soext ⍬),'|exarray >PP P'
-     _←'mka'⎕NA'P ',(⍵,soext ⍬),'|mkarray <PP'
-     _←'FREA'⎕NA(⍵,soext ⍬),'|frea P'
-     _←'Sync'⎕NA(⍵,soext ⍬),'|cd_sync'
-     0 0⍴⍬}
-   MkNS←{ns←#.⎕NS ⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(2=1⊃⍵)⌿0⊃⍵
-     fns←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage' 'Image' 'Plot'
-     fns,←'Histogram' 'soext' 'opsys' 'mkna'
-     _←∆.⎕FX∘⎕CR¨fns ⋄ ∆.(decls←⍺∘mkna¨names) ⋄ _←ns.⎕FX¨(⊂''),⍺∘mkf¨∆.names
-     _←∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍺,'''')'→0⌿⍨0=≢names' 'names ##.⍙.⎕NA¨decls'
-     ns}
-   mkf←{fn←(⍺,soext ⍬),'|',('∆'⎕R'__'⊢⍵),'_dwa ' ⋄ mon dya←⍵∘,¨'_mon' '_dya'
-     z←('Z←{A}',⍵,' W')(':If 0=⎕NC''⍙.',mon,'''')
-     z,←(mon dya{'''',⍺,'''⍙.⎕NA''',fn,⍵,' <PP'''}¨'>PP P' '>PP <PP'),⊂':EndIf'
-     z,':If 0=⎕NC''A'''('Z←⍙.',mon,' 0 0 W')':Else'('Z←⍙.',dya,' 0 A W')':EndIf'}
+ CC←{
+   vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
    tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
    put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+   opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+   soext←{opsys'.dll' '.so' '.dylib'}
    ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.cpp'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
    cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,opsys''' ' '/lib64'' ' '/lib'' '}
    cco←'-std=c++17 -Ofast -g -Wall -fPIC -shared -Wno-parentheses '
@@ -254,17 +213,23 @@ syms←_
    ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
    gcc←'g++'ucc'so'
    clang←'clang++'ucc'dylib'
-   vsco←{z←'/W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
+   vsco←{z←'/W3 /wd4102 /wd4275 /O2 /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
      z,←'/WX /MD /EHsc /nologo /std:c++latest '
      z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
    vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
-     z,←'/LIBPATH:"%AF_PATH%\lib" /DYNAMICBASE "af',AF∆LIB,'.lib" '
-     z,'/OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '}
-   vsc0←{~∨⌿b←⎕NEXISTS¨VS∆PS:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""','" amd64',⍨⊃b⌿VS∆PS}
-   vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),'/fast "',⍵,'.cpp" '}
+     z,←'/LIBPATH:"%AF_PATH%\lib" /OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
+     z,'/DYNAMICBASE "af',AF∆LIB,'.lib" "codfns.lib" '}
+   vsc0←{~⎕NEXISTS vsbat:'VISUAL C++?'⎕SIGNAL 99 ⋄ '""',vsbat,'" amd64'}
+   vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),' "',⍵,'.cpp" '}
    vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
    vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
-   name MkNS name Cmp src}
+   _←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣⍵ put ⍺,'.cpp'⊣1 ⎕NDELETE f←⍺,soext ⍬
+   ⎕←⍪⊃⎕NGET(⍺,'.log')1
+   ⎕NEXISTS f:f ⋄ 'COMPILE ERROR'⎕SIGNAL 22}
+
+ D2P←{0=≢⍵:⍬ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←⍳≢⍵}
+
+ Fix←{n NS{⍵⊣⍞←'L'}⍺ CC{⍵⊣⍞←'B'}GC{⍵⊣⍞←'G'}TT{⍵⊣⍞←'C'}a n s src←PS ⍵⊣⍞←'P'}
 
  GC←{p t k n fr sl rf fd xn sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
      ⍝ Parameters
@@ -367,10 +332,11 @@ syms←_
      NOTFOUND t[⍵],k[⍵]}
    NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
    dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
+   z←'#include "codfns.h"',NL,,/Zp¨⍸t=F
    z←(⊂rth),(rtn[syms⍳{∪⊃,/(deps,⊂⍬)[syms⍳⍵]}⍣≡sym]),,/Zp¨⍸t=F
    z,←dis¨ks ast
    z,←'E',¨('?VFOO'[k[xi]]),¨'(',¨(⍕¨rf[xi]),¨',',¨(nam xn),¨',',¨(⍕¨n[xi]),¨')',¨⊂NL
-   ⊃,⌿z⊣⍞←⎕UCS 10}
+   ⊃,⌿z}
 
 ∇ Z←Help _
  Z←'Usage: <object> <target> [-af={cpu,opencl,cuda}]'
@@ -381,6 +347,41 @@ syms←_
  r[0].Desc←'Compile an object using Co-dfns'
  r.Parse←⊂'2S -af=cpu opencl cuda '
 ∇
+
+ NS←{
+   MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
+   Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
+     w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
+   LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺}
+   SaveImage←{⍺←'image.png' ⋄ saveimg ⍵ ⍺}
+   Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺}
+   Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot(⍉⍵)⍺}
+   Histogram←{⍵⊣w_hist ⍵,⍺}
+   Rtm∆Init←{
+     _←'w_new'⎕NA'P ',⍵,'|w_new   <C[]'
+     _←'w_close'⎕NA'I ',⍵,'|w_close P'
+     _←'w_del'⎕NA ⍵,'|w_del   P'
+     _←'w_img'⎕NA ⍵,'|w_img   <PP P'
+     _←'w_plot'⎕NA ⍵,'|w_plot  <PP P'
+     _←'w_hist'⎕NA ⍵,'|w_hist  <PP F8   F8 P'
+     _←'loadimg'⎕NA ⍵,'|loadimg >PP <C[] I'
+     _←'saveimg'⎕NA ⍵,'|saveimg <PP <C[]'
+     _←'exa'⎕NA ⍵,'|exarray >PP P'
+     _←'mka'⎕NA'P ',⍵,'|mkarray <PP'
+     _←'FREA'⎕NA ⍵,'|frea    P'
+     _←'Sync'⎕NA ⍵,'|cd_sync'
+     0 0⍴⍬}
+   mkna←{⍺,'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
+   mkf←{fn←⍺,'|',('∆'⎕R'__'⊢⍵),'_dwa ' ⋄ mon dya←⍵∘,¨'_mon' '_dya'
+     z←('Z←{A}',⍵,' W')(':If 0=⎕NC''⍙.',mon,'''')
+     z,←(mon dya{'''',⍺,'''⍙.⎕NA''',fn,⍵,' <PP'''}¨'>PP P' '>PP <PP'),⊂':EndIf'
+     z,':If 0=⎕NC''A'''('Z←⍙.',mon,' 0 0 W')':Else'('Z←⍙.',dya,' 0 A W')':EndIf'}
+   ns←#.⎕NS ⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(2=1⊃⍺)⌿0⊃⍺
+   fns←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage' 'Image' 'Plot'
+   fns,←'Histogram' 'soext' 'opsys' 'mkna'
+   _←∆.⎕FX∘⎕CR¨fns ⋄ ∆.(decls←⍵∘mkna¨names) ⋄ _←ns.⎕FX¨(⊂''),⍵∘mkf¨∆.names
+   _←∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍵,'''')'→0⌿⍨0=≢names' 'names ##.⍙.⎕NA¨decls'
+   ns}
 
  P2D←{z←⍪⍳≢⍵ ⋄ d←⍵≠,z ⋄ _←{p⊣d+←⍵≠p←⍺[z,←⍵]}⍣≡⍨⍵ ⋄ d(⍋(-1+d)↑⍤0 1⊢⌽z)}
 
@@ -1602,22 +1603,22 @@ _,←'  visitor{[&](NIL v){nil;},[&](carr&v){arr;},[&](CVEC<A>&v){vec;}},\',(⎕
 _,←' APLR,APLF,APLQ}APLTYPE;',(⎕ucs 10),'typedef long long L;typedef int I;typedef int16_t S16;typedef int8_t S8;',(⎕ucs 10),'typedef double D;typedef unsigned char U8;typedef unsigned U;',(⎕ucs 10)
 _,←'typedef dim_t B;typedef cdouble DZ;typedef void V;typedef std::string STR;',(⎕ucs 10),'typedef array arr;typedef const array carr;typedef af::index IDX;',(⎕ucs 10),'typedef std::monostate NIL;'
 _,←(⎕ucs 10),'S{U f=3;U n;U x=0;const wchar_t*v=L"Co-dfns";const wchar_t*e;V*c;}dmx;',(⎕ucs 10),'S pkt{L l;B c;U t:4;U r:4;U e:4;U _:13;U _1:16;U _2:16;B s[1];};',(⎕ucs 10),'S lp{pkt*p;V*i;};'
-_,←(⎕ucs 10),'S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',(⎕ucs 10),'S dwa*dwafns;Z V derr(U n){dmx.n=n;dwafns->ws->er(&dmx);}',(⎕ucs 10)
-_,←'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',(⎕ucs 10),' if(p)dwafns=p;else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}',(⎕ucs 10)
-_,←'Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}Z V err(U n){err(n,L"");}',(⎕ucs 10),'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',(⎕ucs 10),'typedef VEC<dim_t> SHP;S A;'
-_,←(⎕ucs 10),'typedef std::variant<NIL,arr,VEC<A>> VALS;',(⎕ucs 10),'S A{SHP s;VALS v;',(⎕ucs 10),' A(){}',(⎕ucs 10),' A(B r):s(SHP(r,1)){}',(⎕ucs 10),' A(SHP s,VALS v):s(s),v(v){}',(⎕ucs 10)
-_,←' A(B r,VALS v):s(SHP(r,1)),v(v){}};',(⎕ucs 10),'typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;',(⎕ucs 10)
-_,←'typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;',(⎕ucs 10),'typedef std::variant<A,FNP,MOKP,DOKP> BX;',(⎕ucs 10),'typedef VEC<BX> FRM;typedef std::unique_ptr<FRM> FRMP;'
-_,←(⎕ucs 10),'typedef VEC<FRMP> ENV;typedef std::stack<BX> STK;',(⎕ucs 10),'SHP eshp=SHP(0);std::wstring msg;',(⎕ucs 10),'S FN{STR nm;I sm;I sd;FNP this_p;virtual ~FN() = default;',(⎕ucs 10)
-_,←' FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',(⎕ucs 10),' FN():nm(""),sm(0),sd(0){}',(⎕ucs 10),' virtual arr id(SHP s){err(16);R arr();}',(⎕ucs 10),' virtual V operator()(A&z,CA&r,ENV&e){err(99);}'
-_,←(⎕ucs 10),' virtual V operator()(A&z,CA&r,ENV&e,CA&ax){err(2);}',(⎕ucs 10),' virtual V operator()(A&z,CA&l,CA&r,ENV&e){err(99);}',(⎕ucs 10)
-_,←' virtual V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax){err(2);}};',(⎕ucs 10),'FNP MTFN = std::make_shared<FN>();',(⎕ucs 10),'S MOP:FN{CA aa;FNP llp=MTFN;FN&ll=*llp;',(⎕ucs 10)
-_,←' MOP(STR nm,I sm,I sd,CA&l):FN(nm,sm,sd),aa(l),llp(MTFN){ll=*llp;}',(⎕ucs 10),' MOP(STR nm,I sm,I sd,FNP llp):FN(nm,sm,sd),llp(llp){ll=*llp;}};',(⎕ucs 10)
-_,←'S DOP:FN{I fl;I fr;CA aa;CA ww;FNP llp=MTFN;FNP rrp=MTFN;FN&ll=*llp;FN&rr=*rrp;',(⎕ucs 10),' DOP(STR nm,I sm,I sd,FNP l,FNP r)',(⎕ucs 10)
-_,←'  :FN(nm,sm,sd),fl(1),fr(1),llp(l),rrp(r){ll=*llp;rr=*rrp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,CA&l,FNP r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(0),fr(1),aa(l),rrp(r){rr=*rrp;}',(⎕ucs 10)
-_,←' DOP(STR nm,I sm,I sd,FNP l,CA&r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(1),fr(0),ww(r),llp(l){ll=*llp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,CA&l,CA&r)',(⎕ucs 10)
-_,←'  :FN(nm,sm,sd),fl(0),fr(0),aa(l),ww(r){}};',(⎕ucs 10),'S MOK{virtual ~MOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l){err(99);R MTFN;}',(⎕ucs 10)
-_,←' virtual FNP operator()(CA&l){err(99);R MTFN;}};',(⎕ucs 10),'S DOK{virtual ~DOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l,FNP r){err(99);R MTFN;}',(⎕ucs 10)
+_,←(⎕ucs 10),'S dwa{B z;S{B z;pkt*(*ga)(U,U,B*,S lp*);V(*p[16])();V(*er)(V*);}*ws;V*p[4];};',(⎕ucs 10),'S dwa*dwafns;',(⎕ucs 10),'extern "C" int set_dwa(void*);',(⎕ucs 10)
+_,←'extern "C" void dwaerror(unsigned int, const wchar_t *);',(⎕ucs 10),'EXPORT I DyalogGetInterpreterFunctions(dwa*p){',(⎕ucs 10)
+_,←' if(p){dwafns=p;set_dwa(p);}else R 0;if(dwafns->z<(B)sizeof(S dwa))R 16;R 0;}',(⎕ucs 10),'Z V derr(U n){dwaerror(n,dmx.e);}',(⎕ucs 10),'Z V err(U n,const wchar_t*e){dmx.e=e;throw n;}',(⎕ucs 10)
+_,←'Z V err(U n){err(n,L"");}',(⎕ucs 10),'std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> strconv;',(⎕ucs 10),'typedef VEC<dim_t> SHP;S A;',(⎕ucs 10),'typedef std::variant<NIL,arr,VEC<A>> VALS;'
+_,←(⎕ucs 10),'S A{SHP s;VALS v;',(⎕ucs 10),' A(){}',(⎕ucs 10),' A(B r):s(SHP(r,1)){}',(⎕ucs 10),' A(SHP s,VALS v):s(s),v(v){}',(⎕ucs 10),' A(B r,VALS v):s(SHP(r,1)),v(v){}};',(⎕ucs 10)
+_,←'typedef const A CA;S FN;S MOK;S DOK;typedef std::shared_ptr<FN> FNP;',(⎕ucs 10),'typedef std::shared_ptr<MOK> MOKP;typedef std::shared_ptr<DOK> DOKP;',(⎕ucs 10)
+_,←'typedef std::variant<A,FNP,MOKP,DOKP> BX;',(⎕ucs 10),'typedef VEC<BX> FRM;typedef std::unique_ptr<FRM> FRMP;',(⎕ucs 10),'typedef VEC<FRMP> ENV;typedef std::stack<BX> STK;',(⎕ucs 10)
+_,←'SHP eshp=SHP(0);std::wstring msg;',(⎕ucs 10),'S FN{STR nm;I sm;I sd;FNP this_p;virtual ~FN() = default;',(⎕ucs 10),' FN(STR nm,I sm,I sd):nm(nm),sm(sm),sd(sd){}',(⎕ucs 10)
+_,←' FN():nm(""),sm(0),sd(0){}',(⎕ucs 10),' virtual arr id(SHP s){err(16);R arr();}',(⎕ucs 10),' virtual V operator()(A&z,CA&r,ENV&e){err(99);}',(⎕ucs 10)
+_,←' virtual V operator()(A&z,CA&r,ENV&e,CA&ax){err(2);}',(⎕ucs 10),' virtual V operator()(A&z,CA&l,CA&r,ENV&e){err(99);}',(⎕ucs 10),' virtual V operator()(A&z,CA&l,CA&r,ENV&e,CA&ax){err(2);}};'
+_,←(⎕ucs 10),'FNP MTFN = std::make_shared<FN>();',(⎕ucs 10),'S MOP:FN{CA aa;FNP llp=MTFN;FN&ll=*llp;',(⎕ucs 10),' MOP(STR nm,I sm,I sd,CA&l):FN(nm,sm,sd),aa(l),llp(MTFN){ll=*llp;}',(⎕ucs 10)
+_,←' MOP(STR nm,I sm,I sd,FNP llp):FN(nm,sm,sd),llp(llp){ll=*llp;}};',(⎕ucs 10),'S DOP:FN{I fl;I fr;CA aa;CA ww;FNP llp=MTFN;FNP rrp=MTFN;FN&ll=*llp;FN&rr=*rrp;',(⎕ucs 10)
+_,←' DOP(STR nm,I sm,I sd,FNP l,FNP r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(1),fr(1),llp(l),rrp(r){ll=*llp;rr=*rrp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,CA&l,FNP r)',(⎕ucs 10)
+_,←'  :FN(nm,sm,sd),fl(0),fr(1),aa(l),rrp(r){rr=*rrp;}',(⎕ucs 10),' DOP(STR nm,I sm,I sd,FNP l,CA&r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(1),fr(0),ww(r),llp(l){ll=*llp;}',(⎕ucs 10)
+_,←' DOP(STR nm,I sm,I sd,CA&l,CA&r)',(⎕ucs 10),'  :FN(nm,sm,sd),fl(0),fr(0),aa(l),ww(r){}};',(⎕ucs 10),'S MOK{virtual ~MOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l){err(99);R MTFN;}'
+_,←(⎕ucs 10),' virtual FNP operator()(CA&l){err(99);R MTFN;}};',(⎕ucs 10),'S DOK{virtual ~DOK() = default;',(⎕ucs 10),' virtual FNP operator()(FNP l,FNP r){err(99);R MTFN;}',(⎕ucs 10)
 _,←' virtual FNP operator()(CA&l,CA&r){err(99);R MTFN;}',(⎕ucs 10),' virtual FNP operator()(FNP l,CA&r){err(99);R MTFN;}',(⎕ucs 10),' virtual FNP operator()(CA&l,FNP r){err(99);R MTFN;}};',(⎕ucs 10)
 _,←'S DVSTR {',(⎕ucs 10),' V operator()(NIL l,NIL r){err(6);}',(⎕ucs 10),' V operator()(NIL l,carr&r){err(6);}',(⎕ucs 10),' V operator()(NIL l,CVEC<A>&r){err(6);}',(⎕ucs 10)
 _,←' V operator()(carr&l,NIL r){err(6);}',(⎕ucs 10),' V operator()(CVEC<A>&l,NIL r){err(6);}};',(⎕ucs 10),'S MVSTR {V operator()(NIL r){err(6);}};',(⎕ucs 10)
