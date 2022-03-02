@@ -18,5 +18,6 @@ cat←{⍺,⍵}
 nst←{⊆⍵}
 reshape←{⍺⍴⍵}
 get←{X←2⍴⊂⍺ ⋄ X,X[0]←⊂⍵}
+brk←{⍺[⍵]}
 
 :EndNamespace
