@@ -22,7 +22,7 @@
    SIGNAL←{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en mkdm ⊃⍵
      dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
      dmx,←⊂'Message'(msg,CR,quotelines ⍵)
-     ⎕SIGNAL⊂dmx}     
+     ⎕SIGNAL⊂dmx}
 
 ⍝ Group input into lines as a nested vector
    pos←(⍳≢IN)⊆⍨~IN∊CR LF
