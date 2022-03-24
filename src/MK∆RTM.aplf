@@ -1,7 +1,7 @@
- MK∆RTM;vsbat;vsc;wsd
+ MK∆RTM path;vsbat;vsc;wsd
  vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 
- wsd←⊃⎕NPARTS ⎕WSID
+ wsd←path,'\'
  vsc←'%comspec% /C ""',vsbat,'" amd64'
  vsc,←' && cd "',wsd,'"'
  vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'

@@ -1,3 +1,0 @@
-)RESET
-codfns.AF∆LIB←'cpu'
-TEST'ALL'

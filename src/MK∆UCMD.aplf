@@ -1,4 +1,2 @@
- MK∆UCMD
- UNLINK
- ⎕SE.SALT.Save'codfns ',(⊃⎕NPARTS ⎕WSID),'\codfns.dyalog'
- LINK
+ MK∆UCMD path
+ ⎕SE.SALT.Save'codfns ',path,'\codfns.dyalog'
