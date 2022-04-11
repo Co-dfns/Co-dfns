@@ -42,6 +42,8 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[DSLs, Architecture, & Structural Design in APL, 3 ways by Aaron W Hsu #FnConf 2022](https://youtu.be/fH4kxG5zR1Y)
+
 [A Taste of GPU Compute, mentions Co-dfns](https://www.youtube.com/watch?v=eqkAaplKBc4)
 
 [Programming Obesity: A Code Health Epidemic](https://youtu.be/UDqx1afGtQc)
