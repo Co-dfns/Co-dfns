@@ -1,5 +1,7 @@
  GC←{
-   p t k n fr sl rf fd xn sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
+   p t k n fr sl rf fd xi sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
+   I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
+   ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]} ⋄ nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]}
 
    syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
    nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
@@ -20,10 +22,12 @@
    gcv← 'Aa' 'As'
    gck,←(B 1)(B 2)(B 3)(B 4)
    gcv,←'Bv' 'Bf' 'Bo' 'Bo'
+   gck,←(C 1)(C 2)
+   gcv,←'Ca' 'Cf'
    gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 6)
    gcv,←'Ec'  'Ek'  'Er' 'Em' 'Ed' 'Eb' 'Ei'
    gck,←(F 0)(F 2)(F 3)(F 4)
-   gcv,←'Fz' 'Fn' 'Fn' 'Fn'
+   gcv,←'Fz' 'Fn' 'Fm' 'Fd'
    gck,←(G 0)(N 1)
    gcv,←'Gd' 'Na'
    gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
@@ -35,11 +39,97 @@
    gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
    NL←⎕UCS 13 10
 
-   xi←⍸(t=B)∧k[rf]=0 ⋄ d i←P2D p
-   I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵} ⋄  ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
-   nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]}
-   ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;]
+   pref ←⊂'#include "codfns.h"'
+   pref,←⊂''
+   pref,←⊂'EXPORT int'
+   pref,←⊂'DyalogGetInterpreterFunctions(void *p)'
+   pref,←⊂'{'
+   pref,←⊂'	return set_dwafns(p);'
+   pref,←⊂'}'
+   pref,←⊂''
+
+   Bf←{id←sym⊃⍨|4⊃⍺
+     z ←⊂id,' = *--stkhd;'
+   z}
+
+   Cf←{id←⍕4⊃⍺
+     z ←⊂'mk_closure((struct closure **)stkhd++, fn',id,', 0);'
+   z}
+
+   Ek←{⊂''}
+
+   Fn←{id←⍕5⊃⍺
+     z ←⊂'int'
+     z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+     z,←⊂'{'
+     z,← '	',¨⊃,⌿dis¨⍵
+     z,←⊂'	*z = NULL;'
+     z,←⊂'	return 0;'
+     z,←⊂'}'
+     z,←⊂''
+   z}
+
+   Fz←{id←⍕5⊃⍺
+     z ←⊂'int init',id,' = 0;'
+     z,←⊂''
+     z,←⊂'int'
+     z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+     z,←⊂'{'
+     z,←⊂'	void	*stk[128];'
+     z,←⊂'	void	**stkhd;'
+     z,←⊂''
+     z,←⊂'	if (init',id,')'
+     z,←⊂'		return 0;'
+     z,←⊂''
+     z,←⊂'	stkhd = &stk[0];'
+     z,←⊂''
+     z,← '	',¨⊃,⌿dis¨⍵
+     z,←⊂'	init',id,' = 1;'
+     z,←⊂'	return 0;'
+     z,←⊂'}'
+     z,←⊂''
+   z}
+
+   Zp←{n←'fn',⍕⍵
+     k[⍵]∊0 2:{
+       z ←⊂'int'
+       z,←⊂n,'(struct array **z, struct array *l, struct array *r, void *fv[]);'
+       z,←⊂''
+     z}⍵
+     'UNKNOWN FUNCTION TYPE'⎕SIGNAL 16
+   }
+
+   Zx←{n←sym⊃⍨|n[⍵] ⋄ rid←⍕rf[⍵]
+     k[⍵]=1:{
+       z ←⊂'struct array *',n,';'
+     z}⍵
+     k[⍵]=2:{
+       z ←⊂'struct closure *',n,';'
+       z,←⊂''
+       z,←⊂'EXPORT int'
+       z,←⊂n,'_dwa(struct localp *zp, struct localp *lp, struct localp *rp)'
+       z,←⊂'{'
+       z,←⊂'	struct array *z;'
+       z,←⊂'	int err;'
+       z,←⊂''
+       z,←⊂'	fn',rid,'(NULL, NULL, NULL, NULL);'
+       z,←⊂''
+       z,←⊂'	err = (',n,'->fn)(&z, NULL, NULL, ',n,'->fv);'
+       z,←⊂''
+       z,←⊂'	if (err)'
+       z,←⊂'		dwa_error(err, L"");'
+       z,←⊂''
+       z,←⊂'	array2dwa(zp, z);'
+       z,←⊂''
+       z,←⊂'	return err;'
+       z,←⊂'}'
+       z,←⊂''
+     z}⍵
+     'UNKNOWN EXPORT TYPE'⎕SIGNAL 16
+   }
+
+   d i←P2D p ⋄ ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;]
    NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
    dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
-   z←'#include "codfns.h"',NL
+   z←∊,∘NL¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
    z}

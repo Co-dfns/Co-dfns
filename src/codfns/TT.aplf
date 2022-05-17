@@ -6,7 +6,7 @@
 
 ⍝ Lift Functions to top-level
    p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n r(⊣,I)←⊂i ⋄ p r I⍨←⊂n[i]@i⊢⍳≢p
-   t[i]←V
+   t[i]←C
 
 ⍝ Wrap expressions as binding or return statements
    i←(⍸(~t∊F G)∧t[p]=F),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=G ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p
@@ -21,7 +21,7 @@
    n[⍸(t∊A E)∧k=6]←0 ⋄ n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1
 
 ⍝ Lift and flatten expressions
-   p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B E O P V] ⋄ j←(⌽i)[⍋⌽x]
+   p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O P V] ⋄ j←(⌽i)[⍋⌽x]
    p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
 
 ⍝ Compute slots for each frame
@@ -31,11 +31,6 @@
    d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1
 
 ⍝ Record exported top-level bindings
-   xn←n⌿⍨(t=B)∧k[r]=0
+   xi←⍸(t=B)∧k[r]=0
 
-⍝ Anchor variables to appropriate frame depth and slot
-   v←⍸(n<¯4)∧(t=V)∨(t=E)∧k=4 ⋄ x←n[y←v,b] ⋄ n[b]←s[e⍳rn] ⋄ i←(≢x)⍴c←≢e
-   _←{z/⍨c=i[1⌷z]←e⍳⍉x I@1⊢z←r I@0⊢⍵}⍣≡(v,r[b])⍪⍉⍪⍳≢x
-   f s←(f s I¨⊂i)⊣@y¨⊂¯1⍴⍨≢r
-
-   p t k n f s r d xn sym}
+   p t k n f s r d xi sym}
