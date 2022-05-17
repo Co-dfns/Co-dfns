@@ -26,6 +26,28 @@ struct localp {
 	void	*item;
 };
 
+struct dwa_dmx {
+	unsigned	int flags;
+	unsigned	int en;
+	unsigned	int enx;
+	const	wchar_t *vendor;
+	const	wchar_t *message;
+	const	wchar_t *category;
+};
+
+struct dwa_wsfns {
+	long	long size;
+	struct	pocket *
+	    (*getarr)(enum dwa_type, unsigned, long long *, struct localp *);
+	void	(*_0[16])(void);
+	void	(*error)(struct dwa_dmx *);
+};
+
+struct dwa_fns {
+	long	long size;
+	struct	dwa_wsfns *ws;
+};
+
 struct dwa_dmx dmx;	
 struct dwa_fns *dwa = NULL;
 
@@ -59,9 +81,13 @@ dwa_error(unsigned int n, wchar_t *msg)
 struct pocket *
 getarray(enum dwa_type type, unsigned a, long long *b, struct localp *c)
 {
-	struct pocket *(*ga)(enum dwa_type, unsigned, long long *, struct localp *);
+	return (dwa->ws->getarr)(type, a, b, c);
+}
 
-	ga = dwa->ws->getarray;
+DECLSPEC struct pocket *
+array2dwa(struct localp *lp, struct array *arr)
+{
+	lp->pocket = NULL;
 
-	return ga(type, a, b, c);
+	return NULL;
 }

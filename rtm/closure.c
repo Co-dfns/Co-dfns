@@ -3,17 +3,9 @@
 
 #include "codfns.h"
 
-struct closure {
-	enum	cell_type ctyp;
-	unsigned	int refc;
-	unsigned	int fs;
-	int	(*fn)(void **, void *, void *, void **);
-	void	*fv[];
-};
-
 DECLSPEC int
 mk_closure(struct closure **clr,
-    int (*fn)(void **, void *, void *, void **), 
+    int (*fn)(struct array **, struct array *, struct array *, void **), 
     unsigned int fs)
 {
 	*clr = malloc(sizeof(struct closure) + fs * sizeof(void *));
