@@ -1,4 +1,10 @@
- MK∆RTM path;vsbat;vsc;wsd
+ MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
+
+ tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
+ put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83 ⋄ 1:r←s⊣⎕NUNTIE t}
+ src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
+ (path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
+
  vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 
  wsd←path,'\'

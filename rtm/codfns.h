@@ -28,10 +28,23 @@ enum array_storage {
 	STG_HOST, STG_DEVICE
 };
 
-struct localp;
 struct pocket;
-struct array;
 struct mcell;
+
+struct localp {
+	struct	pocket *pocket;
+	void	*item;
+};
+
+struct array {
+	enum	cell_type ctyp;
+	unsigned	int refc;
+	void	*values;
+	enum	array_storage storage;
+	enum	array_type type;
+	unsigned	int rank;
+	unsigned	long long shape[];
+};
 
 struct closure {
 	enum	cell_type ctyp;
@@ -41,24 +54,33 @@ struct closure {
 	void	*fv[];
 };
 
+DECLSPEC int
+cdf_init(void);
+
 DECLSPEC int 
 set_dwafns(void *);
 
 DECLSPEC void
-dwa_error(unsigned int, wchar_t *);
+set_dmx_message(wchar_t *);
 
-DECLSPEC struct pocket *
-array2dwa(struct localp *, struct array *);
+DECLSPEC void
+dwa_error(unsigned int);
+
+DECLSPEC int
+dwa2array(struct array **, struct pocket *);
+
+DECLSPEC int
+array2dwa(struct pocket **, struct array *, struct localp *);
 
 DECLSPEC void
 release_cell(void *);
 
-DECLSPEC void
+DECLSPEC void *
 retain_cell(void *);
 
 DECLSPEC int 
 mk_array(struct array **, enum array_type, enum array_storage, 
-    unsigned int, unsigned long long *);
+    unsigned int, unsigned long long *, void *);
 
 DECLSPEC void
 release_array(struct array *);
@@ -79,3 +101,5 @@ release_closure(struct closure *);
 
 DECLSPEC int
 apply_oper(struct closure **, struct closure *, void *, void *);
+
+DECLSPEC extern struct closure *rgt;

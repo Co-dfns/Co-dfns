@@ -8,89 +8,139 @@
 #error "Your ArrayFire version is too old."
 #endif
 
-struct array {
-	enum	cell_type ctyp;
-	unsigned	int refc;
-	void	*values;
-	enum	cdf_storage storage;
-	enum	cdf_type type;
-	unsigned	int rank;
-	unsigned	long long shape[];
-};
-
-DECLSPEC int
-mk_array(struct array **arr, enum array_type type, enum array_storage storage,
-    unsigned int rank, unsigned long long *shape)
+int
+fill_device_array(struct array *arr, void *vals, size_t size, enum array_type typ)
 {
-	af_err		aferr;
 	af_dtype	aftyp;
-	size_t		size;
 
-	if (storage != STG_DEVICE)
+	arr->values = NULL;
+
+	switch (typ) {
+	case ARR_BOOL:
+		aftyp = b8;
+		break;
+
+	case ARR_SINT:
+		aftyp = s16;
+		break;
+
+	case ARR_INT:
+		aftyp = s32;
+		break;
+
+	case ARR_DBL:
+		aftyp = f64;
+		break;
+
+	case ARR_CMP:
+		aftyp = c64;
+		break;
+
+	case ARR_NESTED:
+	case ARR_CHAR:
+	case ARR_MIXED:
+	default:
+		return 16;
+	}
+
+	if (!size) {
+		size = 1;
+
+		return af_constant(&arr->values, 0, 1, &size, aftyp);
+	}
+
+	return af_create_array(&arr->values, vals, 1, &size, aftyp);
+}
+
+int
+fill_host_array(struct array *arr, void *vals, size_t size, enum array_type typ)
+{
+	struct array **data;
+	struct pocket **pkts;
+	int	err;
+
+	if (typ != ARR_NESTED)
 		return 16;
 
-	size = sizeof(struct array) + rank * sizeof(unsigned long long);
-	*arr = malloc(size);
+	arr->values = NULL;
 
-	if (*arr == NULL)
+	if (!size)
+		size++;
+
+	pkts = vals;
+	data = calloc(size, sizeof(struct array *));
+
+	if (data == NULL)
 		return 1;
 
-	(*arr)->ctyp	= CELL_ARRAY;
-	(*arr)->refc	= 1;
-	(*arr)->type	= type;
-	(*arr)->storage	= storage;
-	(*arr)->rank	= rank;
+	for (size_t i = 0; i < size; i++) {
+		err = dwa2array(&data[i], pkts[i]);
+
+		if (err) {
+			free(data);
+			return err;
+		}
+	}
+
+	arr->values = data;
+
+	return 0;
+}
+
+DECLSPEC int
+mk_array(struct array **dest, enum array_type type, enum array_storage storage,
+    unsigned int rank, unsigned long long *shape, void *values)
+{
+	struct	array *arr;
+	size_t	size;
+	int	err;
+
+	size = sizeof(struct array) + rank * sizeof(unsigned long long);
+	arr = malloc(size);
+
+	if (arr == NULL)
+		return 1;
+
+	arr->ctyp	= CELL_ARRAY;
+	arr->refc	= 1;
+	arr->type	= type;
+	arr->storage	= storage;
+	arr->rank	= rank;
+	arr->values	= NULL;
 
 	size = 1;
 
 	for (unsigned i = 0; i < rank; ++i) {
-		(*arr)->shape[i] = shape[i];
+		arr->shape[i] = shape[i];
 		size *= shape[i];
 	}
 
-	if (type == ARR_NESTED) {
-		(*arr)->values = calloc(size, sizeof(struct array *));
+	err = 0;
 
-		if ((*arr)->values == NULL) {
-			free(*arr);
-			return 1;
-		}
+	switch (storage) {
+	case STG_DEVICE:
+		err = fill_device_array(arr, values, size, type);
+		break;
 
-		return 0;
-	}
+	case STG_HOST:
+		err = fill_host_array(arr, values, size, type);
+		break;
 
-	switch (type) {
-	case ARR_BOOL:
-		aftyp = b8;
-		break;
-	case ARR_SINT:
-		aftyp = s16;
-		break;
-	case ARR_INT:
-		aftyp = s32;
-		break;
-	case ARR_DBL:
-		aftyp = f64;
-		break;
-	case ARR_CMP:
-		aftyp = c64;
-		break;
-	case ARR_CHAR:
-	case ARR_MIXED:
 	default:
-		free(*arr);
-		return 16;
+		err = 16;
 	}
 
-	aferr = af_create_handle(&(*arr)->values, rank, shape, aftyp);
-
-	if (aferr != AF_SUCCESS) {
-		free(*arr);
-		return 99;
+	if (err) {
+		free(arr);
+		return err;
 	}
+
+	*dest = arr;
 
 	return 0;
 }
+	
+
 
 DECLSPEC void
 release_array(struct array *arr)
@@ -119,7 +169,7 @@ release_array(struct array *arr)
 			af_release_array(arr->values);
 			break;
 		default:
-			dwa_error(999, L"Unknown storage type.");
+			dwa_error(999);
 		}
 
 	free(arr);

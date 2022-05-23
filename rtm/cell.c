@@ -24,13 +24,15 @@ release_cell(void *val)
 		release_closure(val);
 		break;
 	default:
-		dwa_error(999, L"Unknown cell type.");
+		dwa_error(999);
 	}
 }
 
-DECLSPEC void
+DECLSPEC void *
 retain_cell(void *val)
 {
 	if (val != NULL)
 		((struct cell *)val)->refc++;
+
+	return val;
 }
