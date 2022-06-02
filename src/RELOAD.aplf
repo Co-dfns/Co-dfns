@@ -1,4 +1,0 @@
- RELOAD
- UNLINK
- ⎕EX'codfns'
- LINK

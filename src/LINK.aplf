@@ -1,3 +1,0 @@
- LINK;opts;root
- root←(⊃⎕NPARTS ⎕WSID),'src'
- '#'root ⎕SE.Link.Create⍨opts⊣opts.(source watch)←⊂'dir'⊣opts←⎕NS ⍬
