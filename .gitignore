@@ -35,3 +35,4 @@ CONTINUE
 attic/*.pdf
 *.obj
 *.log
+dist/
