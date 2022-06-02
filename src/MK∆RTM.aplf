@@ -1,28 +1,35 @@
- MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
+MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
 
- tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
- put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83 ⋄ 1:r←s⊣⎕NUNTIE t}
- src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
- (path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
+tie←{
+  0::⎕SIGNAL ⎕EN
+  22::⍵ ⎕NCREATE 0
+  0 ⎕NRESIZE ⍵ ⎕NTIE 0
+}
 
- vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
+put←{
+  s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83
+  1:r←s⊣⎕NUNTIE t
+}
+src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
+(path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
+vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
+wsd←path,'\'
 
- wsd←path,'\'
- vsc←'%comspec% /C ""',vsbat,'" amd64'
- vsc,←' && cd "',wsd,'"'
- vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
- vsc,←'  /Fo"rtm\\" /Fd"codfns.pdb"'
- vsc,←'  /WX /MD /EHsc /nologo /I"%AF_PATH%\include"'
- vsc,←'  /D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
- vsc,←'  "rtm\*.c" /link /DLL /OPT:REF'
- vsc,←'  /INCREMENTAL:NO /SUBSYSTEM:WINDOWS /LIBPATH:"%AF_PATH%\lib"'
- vsc,←'  /DYNAMICBASE "af',codfns.AF∆LIB,'.lib" /OPT:ICF /ERRORREPORT:PROMPT'
- vsc,←'  /TLBID:1 /OUT:"codfns.dll""'
-
- ⎕CMD ⎕←vsc
- ⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'codfns.h"'
- ⎕CMD ⎕←'copy "',wsd,'codfns.h" "',wsd,'tests\"'
- ⎕CMD ⎕←'copy "',wsd,'codfns.exp" "',wsd,'tests\"'
- ⎕CMD ⎕←'copy "',wsd,'codfns.lib" "',wsd,'tests\"'
- ⎕CMD ⎕←'copy "',wsd,'codfns.pdb" "',wsd,'tests\"'
- ⎕CMD ⎕←'copy "',wsd,'codfns.dll" "',wsd,'tests\"'
+vsc←'%comspec% /C ""',vsbat,'" amd64'
+vsc,←' && cd "',wsd,'\rtm"'
+vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
+vsc,←'  /Fo".\\" /Fd"codfns.pdb"'
+vsc,←'  /WX /MD /EHsc /nologo /I"%AF_PATH%\include"'
+vsc,←'  /D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
+vsc,←'  "*.c" /link /DLL /OPT:REF'
+vsc,←'  /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
+vsc,←'  /LIBPATH:"%AF_PATH%\lib"'
+vsc,←'  /DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
+vsc,←'  /OPT:ICF /ERRORREPORT:PROMPT'
+vsc,←'  /TLBID:1 /OUT:"codfns.dll""'
+⎕CMD ⎕←vsc
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.exp" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.lib" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.pdb" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.dll" "',wsd,'tests\"' 
