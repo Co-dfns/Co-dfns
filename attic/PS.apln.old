@@ -1,0 +1,172 @@
+:Namespace OP
+
+⎕IO←0
+
+_o←{0≥⊃c1 a e(i1 d1)←A←⍺ ⍺⍺ ⍵:A ⋄ 0≥⊃c2 a e(i2 d2)←B←⍺ ⍵⍵ ⍵:B
+ (i1=i2∧c1<c2)∨i1 _less i2:B ⋄ A}
+_s←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c2 a2 e d←p←e ⍵⍵ d:p ⋄ (c⌈c2)(a⍪a2)e d}
+_noenv←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a ⍺ d}
+_env←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ c a ((⊆a)⍵⍵⍪¨e) d}
+_then←{0<⊃c a e d←p←⍺ ⍺⍺ ⍵:p ⋄ 0<⊃c a e _←p←e ⍵⍵ a d:p ⋄ c a e d}
+_not←{0<⊃c a e d←⍺ ⍺⍺ ⍵:0 a ⍺ ⍵ ⋄ 2 a ⍺ ⍵}
+_as←{0<⊃c a e d←⍺ ⍺⍺ ⍵:c a e d ⋄ c (,⊂((⌊/,⌈/)⊃¨⍵ d)⍵⍵ a) e d}
+_t←{0<⊃c a e(i d)←p←⍺ ⍺⍺ ⍵:p ⋄ e ⍵⍵ a:p ⋄ i>⊃⍵:6 ⍬ ⍺ ⍵ ⋄ 6 ⍬ ⍺(i d)}
+_ign←{c a e d←⍺ ⍺⍺ ⍵ ⋄ c ⍬ e d}
+_peek←{0<p←⊃⍺ ⍺⍺ ⍵:p ⋄ 0 ⍬ ⍺ ⍵}
+_yes←{0 ⍬ ⍺ ⍵}
+_opt←{⍺(⍺⍺ _o _yes)⍵}
+_any←{⍺(⍺⍺ _s ∇ _o _yes)⍵}
+_some←{⍺(⍺⍺ _s (⍺⍺ _any))⍵}
+_set←{i d←⍵ ⋄ 3::2 ⍬ ⍺ ⍵ ⋄ (i⌷d)∊⍺⍺:0(,i⌷d)⍺((i _step 1)d) ⋄ 2 ⍬ ⍺ ⍵}
+_tk←{i d←⍵ ⋄ m←(,⍺⍺)=⍥⎕C c↑d⌷⍨⊂x⌿⍨(0≤x)∧(≢d)>x←i _step ⍳c←≢,⍺⍺
+ x←(i _step +⌿∧⍀m)d ⋄ ∧⌿m:0(⊂,⍺⍺)⍺ x ⋄ 2 ⍬ ⍺ x}
+_eat←{i d←⍵ ⋄ i≥≢d:2 ⍬ ⍺ ⍵ ⋄ 0(i⌷d)⍺((i _step 1)d)}
+_eot←{i d←⍵ ⋄ (i<0)∨i≥≢d:0 ⍬ ⍺ ((≢d)d) ⋄ 2 ⍬ ⍺ ⍵}
+_gof←{_step∘←+ ⋄ _less∘←< ⋄ _←0} ⋄ _gob←{_step∘←- ⋄ _less∘←> ⋄ _←0}
+_step←⊢ ⋄ _less←⊢ ⋄ _gof⍬
+_bkwd←{c a e d1←⍺ ⍵⍵ ⍵ ⋄ _gob⍬: ⋄ c a e d2←⍺ ⍺⍺ -∘1@0⊢d1 ⋄ _gof⍬:
+ 0<c:c a e((⌈⌿⊃¨⍵ d2),1↓⍵) ⋄ c a e d1}
+PEG←{⍺←⎕THIS
+ A←,¨'`([^`]*)`'    '"([^"]*)"'   '\[\]'   '\[([^]]+)\]'  '\|'  ','
+ B←  '(''\1''_set)' '(''\1''_tk)' '_noenv' '_env(\1)'     '_o'  '_s'
+ A,←,¨'→'     '!'    '&'  '∊'    '\?'   '\*'   '\+'    '⍥'    '↓'    '↑'     '⌽'
+ B,←  '_then' '_not' '_t' '_yes' '_opt' '_any' '_some' '_eat' '_ign' '_peek' '_bkwd'
+ A,←⊂,'⍬'
+ B,←⊂,'_eot'
+ noq←' '@(∊{⍺+⍳⍵}⌿¨'`[^`]*`' '"[^"]*"'⎕S 0 1⊢x)⊢x←' ',⍵
+ nm peg as←1↓¨3↑x⊂⍨1@(0,⊃∘⍸¨('←'=noq)(':'=noq))⊢0⍴⍨≢x
+ peg←A ⎕R(' ',¨B,¨' ')⊢peg ⋄ as←{' _as (',⍵,')'}⍣(∨⌿as≠' ')⊢as
+ ⍺.⎕FX(nm,'←{')('Z←⍺(',peg,as,')⍵')(''⊣'⎕←''',nm,': '',⍕(0)(3 0)⊃¨⊂Z')('Z}')}
+##.EN←0 ⋄ ##.DM←'' '' ''
+_report←{c a e(i d)←⍵ ⋄ 0=c:⍵⊣⎕←'Parsing successful.'⊣##.EN←0⊣##.DM←'' '' ''
+ 0>c:('Unhandled return code: ',(⍕c))⎕SIGNAL 16
+ li←⍸lm←¯1⌽lm∨(CR=d)∧~1⌽lm←LF=d←d,LF⊣CR LF←⎕UCS 13 10
+ ##.EN←c
+ ##.DM[0]←⊂⎕EM c
+ ##.DM[1]←⊂(lnm←'[',(⍕1+ln),'] '),' '@{⍵∊CR LF}⊢l←(ln←0⌈li⍸i)⊃lm⊂d
+ ##.DM[2]←⊂(' '⍴⍨≢lnm),'^'@(0⌈i-ln⌷li)⊢' '⍴⍨≢l
+ msg←∊CR,'─'⍪⍨'─'⍪↑##.DM[1 2]
+ ⎕SIGNAL⊂('EN' c)('Category' 'Compiler')('Vendor' 'Co-dfns')('Message' msg)}
+
+ws←(' ',⎕UCS 9)_set
+crlf←(⎕UCS 10 13)_set
+PEG'aws   ← ws * ↓'
+PEG'awslf ← crlf | ws * ↓'
+PEG'eot   ← aws , ⍬ ↓'
+PEG'alpha ← `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz∆_`'
+PEG'digit ← `0123456789`'
+PEG'jot   ← aws , `∘` , aws'
+PEG'dot   ← aws , `.` , aws'
+PEG'lbrc  ← aws , `{` , aws ↓'
+PEG'rbrc  ← aws , `}` , aws ↓'
+PEG'zil   ← aws , "⍬" , aws ↓'
+PEG'gets  ← aws , "←" , aws ↓'
+PEG'lpar  ← aws , "(" , aws ↓'
+PEG'rpar  ← aws , ")" , aws ↓'
+PEG'lbrk  ← aws , "[" , aws ↓'
+PEG'rbrk  ← aws , "]" , aws ↓'
+PEG'semi  ← aws , ";" , aws ↓'
+PEG'grd   ← aws , ":" , aws ↓'
+PEG'egrd  ← aws , "::" , aws ↓'
+PEG'mop   ← aws , `¨/⌿\⍀⍨` , aws'
+PEG'dop1  ← aws , `.⍣∘` , aws'
+PEG'dop2  ← aws , `⍤⍣∘` , aws'
+PEG'dop3  ← aws , `∘` , aws'
+PEG'prim  ← aws,`+-÷×|*⍟⌈⌊!<≤=≠≥>∧∨⍲⍱⌷?⍴,⍪⌽⊖⍉∊⍷⊂⊆⊃⍳○~≡≢⊢⊣/⌿\⍀⊤⊥↑↓∪∩⍋⍒∇⌹`,aws'
+PEG'ndlm  ← `¯` | (alpha! ↑)'
+PEG'int   ← aws , (digit+) , ndlm , aws'
+PEG'float ← aws , (digit* , `.` , int | (digit+ , `.` , ndlm)) , aws'
+PEG'aw    ← aws , ("⍵" | "⍺") , aws'
+PEG'aaww  ← aws , ("⍺⍺" | "⍵⍵") , aws'
+PEG'sep   ← aws , (`⋄` | crlf ↓) , aws'
+PEG'nss   ← awslf , ":Namespace" , aws , (alpha,(alpha|digit*)?) , awslf ↓'
+PEG'nse   ← awslf , ":EndNamespace" , awslf ↓'
+PEG'sfn   ← aws , ("TFFI⎕" | "TFF⎕") , aws'
+PEG'name  ← aws , (alpha | (digit+ , alpha) +) , (`⎕` !) , aws'
+
+f∆ N∆←'ptknfsrdx' ' ABCEFGKLMNOPSVZ'
+⎕FX∘⍉∘⍪¨'GLM',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'GLM'),¨⊂' 0 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'AEFO',¨'←{⍪/(0 '∘,¨(⍕¨N∆⍳'AEFO'),¨⊂' ⍺⍺ 0,1+⍺),1+@0⍉↑(⊂6⍴⊂⍬),⍵}'
+⎕FX∘⍉∘⍪¨'BNPVZ',¨'←{0(N∆⍳'''∘,¨'BNPVZ',¨''')'∘,¨'⍺⍺(0⌷⍵)' '1(⍎⍵)' '⍺⍺(⊂⍵)' '⍺⍺(⊂⍵)' '0(⊂⍵)',¨⊂',1+⍺}'
+Vt←(⊢⍳⍨0⊃⊣)⊃¯1,⍨1⊃⊣
+MkAST←{⍪/(⍳≢⍵)+@0⍉↑⌽⍵}
+MkAtom←{∧⌿m←(N∆⍳'N')=⊃¨1⊃¨⍵:⍺(1A)⌽⍵ ⋄ 1=≢⍵:0⊃⍵ ⋄ ⍺(6A)⌽({⊃¨⍵[4 5]}1A⊂)¨@{m}⍵}
+MkMget←{⍪/(0,1+2<≢⊃z)+@0⊢z←⍉↑⌽⍵}
+Atn←{(0 3⊃⍵)@(⊂3 0)⊢⍺ ⍺⍺ ⍵}
+Fn←{a(i d)←⍵ ⋄ 0=≢a:0 ⍬ ⍺(i d)
+ 0=≢ss←(4⊃z)⌿⍨m←(((N∆⍳'F')=1⊃⊢)∧¯1=2⊃⊢)⊢z←⍪⌿↑a:0(,⊂z)⍺(i d)
+ 0<c←r⊃⍨0,pi←⊃⍒⊃r←↓⍉↑ps←⍺∘Fa¨ss,¨⊂⊂d:pi⊃ps
+ 0(,⊂(⊂¨¨z)((⊃⍪⌿)⊣@{m})¨⍨↓(m⌿0⊃z)+@0⍉↑⊃¨1⊃r)⍺(i d)}
+FnType←{⌈⌿2,3 4×¯1≠(¯1,⍨1⊃⍵)['⍺⍺' '⍵⍵'⍳⍨⊃⍵]}
+PEG'Sfn    ← sfn                                              : 2P∘⌽∘∊       '
+PEG'Prim   ← prim                                             : 2P           '
+PEG'Symbol ← name                                             : ⊢∘⌽          '
+PEG'Name   ← Symbol & (⍺⍺=Vt)                                 : ⍺⍺ V∘,∘⊃     '
+PEG'Args   ← aaww | aw & (⍺⍺=Vt)                              : ⍺⍺ V∘,∘⊃     '
+PEG'Var    ← ⍺⍺ Args | (⍺⍺ Name)                                             '
+PEG'Num    ← float | int                                      : N∘⌽          '
+PEG'Pex    ← rpar , Ex , lpar                                                '
+PEG'Zil    ← zil                                              : 1A           '
+PEG'Unit   ← (1 Var) | Num | Zil | Pex                                       '
+PEG'Atom   ← Unit+                                            : MkAtom       '
+PEG'Semi   ← ∊                                                : ⊣1 P{,'';''} '
+PEG'Semx   ← Ex | Semi                                                       '
+PEG'Brk    ← rbrk , (Semx , (semi , Semx *)) , lbrk           : 6E∘⌽         '
+PEG'Lbrk   ← ∊                                                : ⊣⍺⍺ P{,''[''}'
+PEG'Idx    ← Brk , (2 Lbrk) , Atom                            : 2E∘⌽         '
+PEG'Slrp   ← ⍺⍺ | (⍵⍵ , ∇) | (⍥ , ∇) ↓                                       '
+PEG'Blrp   ← ⍺⍺ , (⍵⍵ Slrp ∇) ↓                                              '
+PEG'Bfn    ← rbrc Blrp lbrc                                   : ¯1F          '
+PEG'Pfe    ← rpar , Fex , lpar                                               '
+PEG'Fnp    ← Prim | Sfn | (2 Var) | Bfn | Pfe                                '
+PEG'Pmop   ← mop                                              : 3P           '
+PEG'Mop    ← Pmop , Afx                                       : 2O∘⌽         '
+PEG'Pdop1  ← dop1                                             : 3P           '
+PEG'Dop1   ← Pdop1 , Afx                                      : 8O∘⌽         '
+PEG'Pdop2  ← dop2                                             : 3P           '
+PEG'Vop    ← Atom , Pdop2 , Afx                               : 5O∘⌽         '
+PEG'Pdop3  ← dop3                                             : 3P           '
+PEG'Dop3   ← Pdop3 , Atom                                     : 7O∘⌽         '
+PEG'Bop    ← rbrk , Ex , lbrk , (4 Lbrk) , Afx                : 5O∘⌽         '
+PEG'JotDP  ← dot , jot                                        : 3P∘⌽         '
+PEG'JotDot ← Fnp , JotDP                                      : 2O           '
+PEG'Fop    ← Fnp , (Dop1 | Dop3 ?)                            : MkAST        '
+PEG'Afx    ← Mop | JotDot | Fop | Vop | Bop                                  '
+PEG'Trn    ← Afx , (Afx | Idx | Atom , (∇ ?) ?)               : 5F∘⌽         '
+PEG'Bind   ← gets , Symbol [⍺⍺]                               : ⍺⍺ B         '
+PEG'Gets   ← ∊                                                : ⊣⍺⍺ P{,''←''}'
+PEG'Mname  ← Afx , (1 Name)                                   : 4E Atn∘⌽     '
+PEG'Ogets  ← Afx , (3 Gets)                                   : 2O           '
+PEG'Mbrk   ← Ogets , Brk , (1 Name)                           : 4E∘(1∘↓)Atn∘⌽'
+PEG'Mget   ← Mname | Mbrk                                                    '
+PEG'Bget   ← 2 Gets , Brk , (1 Name)                          : 4E∘(1∘↓)Atn∘⌽'
+PEG'Asgn   ← gets , (Bget | Mget)                                            '
+PEG'Fex    ← Afx , (Trn ?) , (2 Bind *)                       : MkAST        '
+PEG'IAx    ← Idx | Atom , (dop2 !)                                           '
+PEG'App    ← Afx , (IAx ?)                                    : {⍺((≢⍵)E)⌽⍵} '
+PEG'ExHd   ← Asgn | (1 Bind) | App , ∇ ?                                     '
+PEG'Ex     ← IAx , ExHd                                       : MkAST        '
+PEG'Gex    ← Ex , grd , Ex                                    : G∘⌽          '
+PEG'Alp    ← ∊                                                : ''⍺''⍨       '
+PEG'Omg    ← ∊                                                : ''⍵''⍨       '
+PEG'ClrEnv ← (Alp[¯1]),(Alp,Alp[¯1]),(Omg[¯1]),(Omg,Omg[¯1])↓                '
+PEG'Fax    ← lbrc , (Gex | Ex | Fex Stmts rbrc) → Fn          : (FnType ⍺)F  '
+PEG'FaFnW  ← Omg[1]↓ , Fax []                                                '
+PEG'FaFnA  ← Omg[1] , (Alp[1])↓ , Fax []                                     '
+PEG'FaFn   ← FaFnW | FaFnA                                                   '
+PEG'FaMopV ← Alp,Alp[1]↓ , FaFn []                                           '
+PEG'FaMopF ← Alp,Alp[2]↓ , FaFn []                                           '
+PEG'FaMop  ← FaMopV , (FaMopF ?) | FaMopF                                    '
+PEG'FaDopV ← Omg,Omg[1]↓ , FaMop []                                          '
+PEG'FaDopF ← Omg,Omg[2]↓ , FaMop []                                          '
+PEG'FaDop  ← FaDopV , (FaDopF ?) | FaDopF                                    '
+PEG'Fa     ← ClrEnv , (FaFn | FaMop | FaDop) []                              '
+PEG'Nlrp   ← sep | rbrc ↑ Slrp (lbrc Blrp rbrc)                              '
+PEG'Stmt   ← sep | (⍺⍺ , (sep | lbrc) ⌽ Nlrp)                                '
+PEG'Stmts  ← ⍵⍵ | (⍺⍺ Stmt , ∇)                                              '
+PEG'Ns     ← nss , (Ex | Fex Stmts nse) , eot → Fn             : (¯1+⊣)0F⊢   '
+ps←{⍺←⍬ ⍬ ⋄ src←∊{⍵/⍨∧\'⍝'≠⍵}¨⍵,¨⎕UCS 10
+ 0≠⊃c a e(i d)←p←⍺ Ns 0,⊂src:_report p
+ (↓s(-⍳)@3↑⊃a)e(s←∪0(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',3⊃⊃a)src}
+
+:EndNamespace
