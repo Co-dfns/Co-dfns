@@ -36,4 +36,7 @@ attic/*.pdf
 *.obj
 *.log
 dist/
-woven/
+woven/*.aux
+woven/*.log
+woven/*.out
+woven/*.toc
