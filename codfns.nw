@@ -719,8 +719,8 @@ GC←{
     z,←⊂'{'
     z,←⊂'	void	*stk[128];'
     z,←⊂'	void	**stkhd;'
-    z,←awc⌿⊂'	void	*a, *w;'
-    z,←awc⌿⊂'	struct	closure *c;'
+    z,← awc⌿⊂'	void	*a, *w;'
+    z,← awc⌿⊂'	struct	closure *c;'
     z,←⊂''
     z,←⊂'	if (init',id,')'
     z,←⊂'		return 0;'
@@ -905,16 +905,16 @@ CC←{
 
 \subsubsection{Tangling and Weaving the Literate Source}
 
-The Co-dfns compiler is written, developed, and distributed as a 
-literate program. 
+The Co-dfns compiler is written, developed, and distributed as a
+literate program.
 For more information about literate programming,
 see the resources available at \url{http://literateprogramming.com/}.
-We use \href{https://www.cs.tufts.edu/~nr/noweb/}{noweb} as our 
-preferred literate programming tool because it is eminently simple, 
-while still handling the majority of our needs and producing high 
-quality output in \LaTeX\ format with all the important elements of 
+We use \href{https://www.cs.tufts.edu/~nr/noweb/}{noweb} as our
+preferred literate programming tool because it is eminently simple,
+while still handling the majority of our needs and producing high
+quality output in \LaTeX\ format with all the important elements of
 literate programming, including live hyperlinking and cross-references.
-We intend [[codfns.nw]] to tangle into the following files based on 
+We intend [[codfns.nw]] to tangle into the following files based on
 specific chunks that have been provided in this document.
 
 \begin{center}
@@ -954,27 +954,27 @@ notangle -R'Tangle Script' codfns.nw > TANGLE.sh
 notangle -R'Weave Script' codfns.nw > WEAVE.sh
 @
 
-On Windows, the best way that we have found to do this is 
-via the \href{https://www.cygwin.com/}{Cygwin project}. 
-This document assumes that you have already successfully built and 
+On Windows, the best way that we have found to do this is
+via the \href{https://www.cygwin.com/}{Cygwin project}.
+This document assumes that you have already successfully built and
 installed via Cygwin a working Icon-driven noweb installation.
 
-Users who prefer to work in a UNIX fashion via Cygwin or some other 
+Users who prefer to work in a UNIX fashion via Cygwin or some other
 subsystem on Windows can follow the build scripts directly.
 For developers who prefer to work in a primarily Windows environment,
-the following build scripts assist in handling the calls into Cygwin 
-so that you do not need to have a Cygwin terminal open all the time. 
+the following build scripts assist in handling the calls into Cygwin
+so that you do not need to have a Cygwin terminal open all the time.
 
-When tangled to the [[TANGLE.aplf]] file, this script will enable the 
-user simply type [[TANGLE]] to update the code tree from within a 
+When tangled to the [[TANGLE.aplf]] file, this script will enable the
+user simply type [[TANGLE]] to update the code tree from within a
 Dyalog APL Session.
-This is much more convenient than keeping a Cygwin Terminal 
+This is much more convenient than keeping a Cygwin Terminal
 session open along with a Dyalog APL session while programming.
-At the moment, this file is only designed to work on Windows with 
-Cygwin, but we should in principle extend this to work on Linux 
+At the moment, this file is only designed to work on Windows with
+Cygwin, but we should in principle extend this to work on Linux
 and Mac OS X style machines as well.
 
-\emph{Note: this command expects to be run from within the root of 
+\emph{Note: this command expects to be run from within the root of
 the repository, not from, say, within the [[testing]] directory.}
 
 <<[[TANGLE]] Command>>=
@@ -982,29 +982,29 @@ TANGLE;SH;CWD;CD
 SH←'C:\cygwin64\bin\bash.exe -l -c '
 CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
 CD←'cd ''',CWD,''''
-  
+
 ⎕CMD SH,'"',CD,' && ./TANGLE.sh"'
 @ %def TANGLE
 
-Weaving is the process by which we produce the final printed output 
+Weaving is the process by which we produce the final printed output
 of this document,
 intended for reading and general human consumption.
 We rely on the \LaTeX\ typesetting system to do this.
 Moreover, because we make heavy use of UTF-8 and prefer to have our
-own fonts installed and used, 
-it is necessary to use the [[xelatex]] system instead of the typical 
-\LaTeX\ engine. 
-In order to get the indexing right, we must run the engine twice. 
-The first run will update the indexing files that will be picked 
+own fonts installed and used,
+it is necessary to use the [[xelatex]] system instead of the typical
+\LaTeX\ engine.
+In order to get the indexing right, we must run the engine twice.
+The first run will update the indexing files that will be picked
 up on the second run and incorporated into the final document.
-Note, we have tried to use the [[lualatex]] engine, which in theory 
-should work just as well as the [[xelatex]] engine, but we get a 
-strange error relating to noweb's style file, so we stick with 
+Note, we have tried to use the [[lualatex]] engine, which in theory
+should work just as well as the [[xelatex]] engine, but we get a
+strange error relating to noweb's style file, so we stick with
 [[xelatex]] for now.
 
-Running this script also depends on having the appropriate fonts 
-installed. 
-In this case, please ensure that the following fonts are installed 
+Running this script also depends on having the appropriate fonts
+installed.
+In this case, please ensure that the following fonts are installed
 in your Windows font system so that they can be picked up by the \TeX\
 engine.
 
@@ -1016,15 +1016,15 @@ engine.
 \end{itemize}
 
 \noindent
-If you do not wish to use these fonts, then see the top of the 
-[[codfns.nw]] file and edit the font specifications to the fonts that 
-you do wish to use. 
+If you do not wish to use these fonts, then see the top of the
+[[codfns.nw]] file and edit the font specifications to the fonts that
+you do wish to use.
 
-Note the use of [[-delay -index]] for options. We want to generate 
-indexing, but we also need to make sure that we can use some of our 
-own packages in the system, 
+Note the use of [[-delay -index]] for options. We want to generate
+indexing, but we also need to make sure that we can use some of our
+own packages in the system,
 
-\emph{Note: this command expects to be run from within the root of 
+\emph{Note: this command expects to be run from within the root of
 the repository, not from, say, within the [[testing]] directory.}
 
 <<Weave Script>>=
@@ -1036,9 +1036,9 @@ xelatex codfns
 xelatex codfns
 @
 
-Like the [[<<[[TANGLE]] Command>>]], the following command, 
+Like the [[<<[[TANGLE]] Command>>]], the following command,
 when tangled to the [[WEAVE.aplf]]
-file permits the Windows programmer to simply execute [[WEAVE]] in a 
+file permits the Windows programmer to simply execute [[WEAVE]] in a
 the Dyalog APL session and weave the documents together.
 
 <<[[WEAVE]] Command>>=
@@ -1046,23 +1046,23 @@ WEAVE;SH;CWD;CD
 SH←'C:\cygwin64\bin\bash.exe -l -c '
 CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
 CD←'cd ''',CWD,''''
-  
+
 ⎕CMD SH,'"',CD,' && ./WEAVE.sh"'
 @ %def WEAVE
 
 \subsection{Loading the Compiler}
 
-In order to load the compiler into an APL session as well as all the 
-development utilities, 
-we assume that you have first managed to either load up a session 
-with a bootstrapped version of the [[TANGLE]] command or that you 
-already have a tangled [[src\]] directory. 
-If the [[src\]] directory has not yet been created by running the 
-[[TANGLE]] command, 
+In order to load the compiler into an APL session as well as all the
+development utilities,
+we assume that you have first managed to either load up a session
+with a bootstrapped version of the [[TANGLE]] command or that you
+already have a tangled [[src\]] directory.
+If the [[src\]] directory has not yet been created by running the
+[[TANGLE]] command,
 then this must be done before loading the compiler system.
-After tangling, 
+After tangling,
 the compiler can be loaded using the provided [[LOAD]] shortcut.
-This shortcut is meant to use the 
+This shortcut is meant to use the
 \href{https://github.com/Dyalog/link}{Dyalog Link}
 system for hot-loading the files in [[src\]] into the root namespace.
 We do so through the following link command:
@@ -1071,32 +1071,32 @@ We do so through the following link command:
 Link.Create # src -source=dir -watch=dir
 \end{verbatim}
 
-\noindent 
+\noindent
 This means that we want to link the [[src\]] directory into the [[#]]
 namespace,
-but we also want to make sure that we only pull changes that come 
-from the filesystem. 
+but we also want to make sure that we only pull changes that come
+from the filesystem.
 This is because we are editing the code via the WEB document,
-and we do not want to risk having some intermediate representation 
+and we do not want to risk having some intermediate representation
 that isn't accurate and that doesn't flow the right way;
 we want all appropriate changes to begin in the WEB document
 and then, and only then, flow into the session.
 This also allows us to make some modifications to the code for testing
-and experimentation inside of the session without consideration 
+and experimentation inside of the session without consideration
 for the code outside of the session,
 and such changes will be removed or forgotten on the next [[TANGLE]]
 command.
 
-To set this up, we also ensure that we begin our work within the 
-root Co-dfns repository directory, as this is where we expect to run 
+To set this up, we also ensure that we begin our work within the
+root Co-dfns repository directory, as this is where we expect to run
 the [[TANGLE]] and [[WEAVE]] commands.
 
-There is unfortunately only a limited range of possibilities for 
-linking in a new directory as we wish to do. 
+There is unfortunately only a limited range of possibilities for
+linking in a new directory as we wish to do.
 The method we choose to use is launching a fresh Dyalog APL session
 and then using an [[LX]] expression from the command line
 to do the actual linking using the [[⎕SE.UCMD]] functionality.
-I personally find this to be rather hackish, and I hope that an 
+I personally find this to be rather hackish, and I hope that an
 alternative approach to doing this will show up in the near future.
 Nonetheless, the arguments that we pass to [[dyalog.exe]]
 look something like this:
@@ -1105,17 +1105,17 @@ look something like this:
 LX="⎕SE.UCMD'Link.Create # src -source=dir -watch=dir'"
 \end{verbatim}
 
-If you do not use the [[LOAD]] shortcut, you can use the above 
+If you do not use the [[LOAD]] shortcut, you can use the above
 command to do the linking manually.
 
 \subsection{Building the Runtime}
 
 One of our goals with the Co-dfns runtime is to write as much of it
 as possible in APL.
-This means that we want to have at minimum a very small kernel that 
+This means that we want to have at minimum a very small kernel that
 has been written in C,
 while most of the rest of the code is implemented in some APL files.
-This leads to a three part breakdown of the process to 
+This leads to a three part breakdown of the process to
 build the runtime.
 
 <<Build the runtime>>=
@@ -1133,22 +1133,22 @@ in the system if we so choose.
 MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
 
 <<Basic [[tie]] and [[put]] utilities>>
-<<Build the runtime>> 
+<<Build the runtime>>
 @ %def MK∆RTM
 
-The first step we must take is producing an appropriate C file that 
+The first step we must take is producing an appropriate C file that
 contains the primitives that we have defined in [[prim.apln]].
-This means that we want to only compile the code in [[prim.apln]] 
-as far as producing the C code. 
+This means that we want to only compile the code in [[prim.apln]]
+as far as producing the C code.
 Since we do not have a full blown runtime yet,
-we will be compiling the [[prim.c]] file along with the rest of the 
-runtime code, 
+we will be compiling the [[prim.c]] file along with the rest of the
+runtime code,
 instead of the normal build process,
 which assumes that we already have a working runtime.
-This means that we only invoke the [[GC TT PS]] passes of the 
+This means that we only invoke the [[GC TT PS]] passes of the
 compiler pipeline, while avoiding the [[CC]] pass.
-We use the SALT system to load the source from [[prim.apln]] and then 
-run the compiler passes that we want before storing the resulting 
+We use the SALT system to load the source from [[prim.apln]] and then
+run the compiler passes that we want before storing the resulting
 code in the [[rtm\prim.c]] file.
 
 <<Compile the primitives in [[prim.apln]]>>=
@@ -1156,10 +1156,10 @@ src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
 (path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
 @ %def src
 
-Once we have the [[rtm\prim.c]] file written appropriately, 
+Once we have the [[rtm\prim.c]] file written appropriately,
 we can run the main compiler process.
-For simplicity, we just compile all of the [[.c]] files that 
-are found in the [[rtm\]] subdirectory. 
+For simplicity, we just compile all of the [[.c]] files that
+are found in the [[rtm\]] subdirectory.
 We must ensure that we are appropriatelly invoking our ArrayFire
 dependencies as well as producing the appropriate debugging symbols
 most of the time.
@@ -1182,9 +1182,9 @@ vsc,←'  /OPT:ICF /ERRORREPORT:PROMPT'
 vsc,←'  /TLBID:1 /OUT:"codfns.dll""'
 @ %def vsbat wsd
 
-Finally, in order to write up the test harness to work right, 
-we must copy the appropriate runtime files into the [[tests\]] 
-directory so that we can find them when we finally start running 
+Finally, in order to write up the test harness to work right,
+we must copy the appropriate runtime files into the [[tests\]]
+directory so that we can find them when we finally start running
 our code there.
 
 <<Copy the runtime files into [[tests\]]>>=
@@ -1201,37 +1201,37 @@ our code there.
 We use the \href{https://github.com/Co-dfns/APLUnit}{APLUnit}
 testing framework to facilitate our testing of the Co-dfns compiler.
 The test harness is designed around a testing philosophy in which we
-ever only write black-box tests that work on the whole compiler 
-using inputs that could be created or are expected to be creatable 
-by end-users. 
+ever only write black-box tests that work on the whole compiler
+using inputs that could be created or are expected to be creatable
+by end-users.
 That is, we do no ``unit testing'' of our source code,
 but only whole program testing.
 
 The testing framework is provided by the [[ut.apln]] file,
-which is not part of this literate program and so is not included in 
-this document. 
-In order to make some of the testing more convenient, 
-we define the function [[TEST]] to run the tests 
+which is not part of this literate program and so is not included in
+this document.
+In order to make some of the testing more convenient,
+we define the function [[TEST]] to run the tests
 that exist in the [[tests\]] subdirectory.
 Each of these tests has a specific number which defines the test,
 and we refer to the tests by number when running them.
-Both of these testing functions assume that we are running inside 
+Both of these testing functions assume that we are running inside
 of the [[tests\]] directory or one configured identically to it.
 
-The [[TEST]] function takes either [['ALL']] as its input or a test 
-number in the form of an integer. 
-Given an integer, we call the test matching that number in the 
+The [[TEST]] function takes either [['ALL']] as its input or a test
+number in the form of an integer.
+Given an integer, we call the test matching that number in the
 current working directory.
 
-The [['ALL']] option causes [[TEST]] to run all of the tests that are 
+The [['ALL']] option causes [[TEST]] to run all of the tests that are
 defined in the current working directory.
-This command is a nicety, since we can technically do all of this 
+This command is a nicety, since we can technically do all of this
 by iterating the [[TEST]] function over the range of test numbers,
-but this would not create the aggregate statistics that we would 
-like to see at the end of the testing report. 
-By using [['ALL']] we get to see a complete summary of the 
+but this would not create the aggregate statistics that we would
+like to see at the end of the testing report.
+By using [['ALL']] we get to see a complete summary of the
 results of testing all the code,
-rather than just the individual testing results on a per testing 
+rather than just the individual testing results on a per testing
 group/number basis.
 
 <<[[TEST]] Function>>=
@@ -1269,10 +1269,10 @@ lb3←{⍺←⍳≢⊃⍵
 
 \subsection{Reading and Writing Files}
 
-It is helpful to be able to easily write files to disk, and the 
-following [[put]] and [[tie]] utilities help us to do so when we 
+It is helpful to be able to easily write files to disk, and the
+following [[put]] and [[tie]] utilities help us to do so when we
 want to.
-These are pretty standard, but they could maybe be replaced by 
+These are pretty standard, but they could maybe be replaced by
 [[⎕NPUT]] or something like that.
 
 <<Basic [[tie]] and [[put]] utilities>>=
@@ -1291,12 +1291,12 @@ put←{
 
 \subsection{Debugging utilities}
 
-The following utilities help to improve quality of life when working 
-with the Co-dfns source code. 
+The following utilities help to improve quality of life when working
+with the Co-dfns source code.
 
-The [[DISPLAY]] function is taken from \url{https://dfns.dyalog.com} 
-and helps to make debugging easier by allowing us to thread 
-[[DISPLAY]] calls into expressions. I prefer to do something like 
+The [[DISPLAY]] function is taken from \url{https://dfns.dyalog.com}
+and helps to make debugging easier by allowing us to thread
+[[DISPLAY]] calls into expressions. I prefer to do something like
 this:
 
 \begin{verbatim}
@@ -1305,16 +1305,16 @@ this:
 
 \noindent
 The function itself returns the character rendering of the code,
-so the above little expression is one that I use to insert and do 
+so the above little expression is one that I use to insert and do
 debugging within an expression.
 
 <<[[DISPLAY]] Utility>>=
 DISPLAY←{⎕IO ⎕ML←0                      ⍝ Boxed display of array.
-										  
+
   ⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'     ⍝ ⍺: 0-clunky, 1-smooth.
-                    
+
   tl tr bl br vt hz←chars               ⍝ Top left, top right, ...
-                    
+
   box←{                                 ⍝ Box with type and axes.
     vrt hrz←(¯1+⍴⍵)⍴¨vt hz              ⍝ Vert. and horiz. lines.
     top←(hz,'⊖→')[¯1↑⍺],hrz             ⍝ Upper border with axis.
@@ -1323,8 +1323,8 @@ DISPLAY←{⎕IO ⎕ML←0                      ⍝ Boxed display of array.
     lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt         ⍝ Left side(s) with axes,
     lft←⍉tl,(↑lax),bl                   ⍝ ... and corners.
     lft,(top⍪⍵⍪bot),rgt                 ⍝ Fully boxed array.
-  }                                     
-                    
+  }
+
   deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}       ⍝ Type and axes vector.
   axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}                 ⍝ Array axis types.
   open←{(1⌈⍴⍵)⍴⍵}                       ⍝ Expose null axes.
@@ -1332,7 +1332,7 @@ DISPLAY←{⎕IO ⎕ML←0                      ⍝ Boxed display of array.
   type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}          ⍝ Simple array type.
   char←{⍬≡⍴⍵:hz ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕   ⍝ Simple scalar type.
   line←{(6≠10|⎕DR' '⍵)⊃' -'}            ⍝ underline for atom.
-                    
+
   {                                     ⍝ Recursively box arrays:
     0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵       ⍝ Simple scalar.
     1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵     ⍝ Object rep: ⎕OR.
@@ -1342,8 +1342,8 @@ DISPLAY←{⎕IO ⎕ML←0                      ⍝ Boxed display of array.
 }
 @ %def DISPLAY
 
-I also define a function [[PP]] that encapsulates the above usage 
-pattern that I like to use, making the whole thing less verbose and 
+I also define a function [[PP]] that encapsulates the above usage
+pattern that I like to use, making the whole thing less verbose and
 a little more convenient.
 
 <<[[PP]] Utility>>=
