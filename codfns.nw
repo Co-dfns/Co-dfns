@@ -231,13 +231,120 @@ this code to a high degree.
 
 @ \subsection{Global Settings}
 
+There are some global options that we assume to exist throughout
+the compiler.
+These set the standard behaviors as well as serve as knobs that 
+can be tweaked in some cases to identify what behaviors we want 
+from the rest of the compiler.
+
+First, we have a set of read-only global constants that are defined
+to configure our APL environment.
+These are the typical ones, and we try to stick to the defaults,
+except that we are sane, and thus we use [[⎕IO]] set to [[0]].
+
 <<Global Settings>>=
 ⎕IO ⎕ML ⎕WX←0 1 3
+@ %def ⎕IO ⎕ML ⎕WX
+
+\noindent
+Additionally, we set a [[VERSION]] constant to track changes to the 
+system through the distributions.
+We use semantic versioning%
+\footnote{\href{https://semver.org/}{https://semver.org/}}
+as our versioning scheme.
+That being said, we also do not have particular qualms about changing
+the public API at a rapid pace, provided that we document this.
+
+<<Global Settings>>=
 VERSION←4 1 0
+@ %def VERSION
+
+\noindent
+We depend on ArrayFire%
+\footnote{\href{https://arrayfire.com/}{https://arrayfire.com/}}
+for much of our GPU backend functionality.
+This means we need to know two things,
+where ArrayFire is installed
+and which ArrayFire backend we should use when compiling.
+We only really need to know where ArrayFire is installed on UNIX
+style systems, as these systems seem to be much more variable in 
+this regard, and there is an environment variable that we can use 
+in Windows to find out where ArrayFire is installed more conveniently
+on that platform.
+We default to using [['cuda']] as our main option, but we also 
+support the following options for [[AF∆LIB]]:
+
+\begin{verbatim}
+cuda opencl cpu
+\end{verbatim}
+
+\noindent
+Using [['']] for [[AF∆LIB]] will use ArrayFire's unified backend,
+but we don't default to this because we have seen some issues on 
+some platforms with reliability problems.
+To avoid this, we choose to use [[cuda]] as the default,
+which tends to either work or fail explicitly, 
+which allows the user to respond rather than crashing 
+ungracefully in the case of the unified backend.
+
+The least reliable backend we have seen is the [[opencl]] one, 
+which seems to be more hit or miss depending on the underlying
+stability of the OpenCL drivers that are installed on the user's
+system.
+In particular, some Linux OpenCL installations seem to be 
+particularly fragile.
+In such cases, always make sure that a good, solid OpenCL library
+is being used.
+
+<<Global Settings>>=
 AF∆PREFIX←'/opt/arrayfire'
 AF∆LIB←'cuda'
-VS∆PATH←'\Program Files\Microsoft Visual Studio\2022\Community'
-@ %def ⎕IO ⎕ML ⎕WX VERSION AF∆PREFIX AF∆LIB VS∆PATH
+@ %def AF∆PREFIX AF∆LIB
+
+\noindent
+On Windows, we rely on the Visual Studio C/C++ compiler to build
+our runtime and user code.
+We have settled on trying to stay as up to date with this as 
+possible. 
+However, there are many different installation paths used by 
+Visual Studio, which can make it difficult to know where to look
+unless we hardcode each location.
+Instead, we assume that Visual Studio will not be a primary 
+interest to our users,
+making it likely that they will be installing Visual Studio 
+only as a dependency for using Co-dfns.
+In this case, it is likely that they will be using the Community 
+version.
+Thus, we default to using the latest version of Visual Studio 
+of which we are aware and using the Community version of this,
+which Microsoft does not charge for.
+
+If a different version of Visual Studio is installed, then it is 
+important to figure out what the right path should be to locate 
+the Visual Studio installation. 
+The main thing we need to get from this path is access 
+to the [[vcvarsall.bat]] batch file.
+This file configures the [[cmd.exe]] environment to be able to 
+find the Visual Studio compiler and work in the right way.
+In the 2002 Community addition, and apparently most new versions 
+of Visual Studio, this is located in the [[VC\Auxiliary\Build\]]
+subdirectory of the main installation folder.
+When changing this path, we want to make sure that the following
+path points to the correct [[vcvarsall.bat]] file:
+
+\begin{verbatim}
+VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
+\end{verbatim}
+
+\noindent
+Most users will simply need to alter [[Community]] to match the 
+edition of Visual Studio 2022 that they have installed on their 
+system.
+
+<<Global Settings>>=
+VS∆PATH←'\Program Files\Microsoft Visual Studio'
+VS∆PATH,←'\2022\Community'
+@ %def VS∆PATH
 
 \subsection{The Fix API}
 
@@ -374,430 +481,7 @@ P2D←{z←⍪⍳≢⍵ ⋄ d←⍵≠,z ⋄ _←{p⊣d+←⍵≠p←⍺[z,←�
 D2P←{0=≢⍵:⍬ ⋄ p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸⍵⊣p←⍳≢⍵}
 @
 
-\section{Developer Infrastructure}
-
-\subsection{Building the Compiler}
-
-\subsubsection{Tangling and Weaving the Literate Source}
-
-The Co-dfns compiler is written, developed, and distributed as a
-literate program.
-For more information about literate programming,
-see the resources available at \url{http://literateprogramming.com/}.
-We use \href{https://www.cs.tufts.edu/~nr/noweb/}{noweb} as our
-preferred literate programming tool because it is eminently simple,
-while still handling the majority of our needs and producing high
-quality output in \LaTeX\ format with all the important elements of
-literate programming, including live hyperlinking and cross-references.
-We intend [[codfns.nw]] to tangle into the following files based on
-specific chunks that have been provided in this document.
-
-\begin{center}
-\begin{tabular}{ll}
-\toprule
-Chunk & File Output\\
-\midrule
-[[<<*>>]] & [[src\codfns.apln]]\\
-[[<<C Runtime Support>>]] & [[rtm\runtime.c]]\\
-[[<<C Runtime Header>>]] & [[rtm\codfns.h]]\\
-[[<<Implementation of APL Primitives>>]] & [[rtm\prim.apln]]\\
-[[<<[[DISPLAY]] Utility>>]] & [[src\DISPLAY.aplf]]\\
-[[<<[[MK∆RTM]] Command>>]] & [[src\MK∆RTM.aplf]]\\
-[[<<[[PP]] Utility>>]] & [[src\PP.aplf]]\\
-[[<<[[TANGLE]] Command>>]] & [[src\TANGLE.aplf]]\\
-[[<<[[TEST]] Function>>]] & [[src\TEST.aplf]]\\
-[[<<[[WEAVE]] Command>>]] & [[src\WEAVE.aplf]]\\
-[[<<Tangle Script>>]] & [[TANGLE.sh]]\\
-[[<<Weave Script>>]] & [[WEAVE.sh]]\\
-\bottomrule
-\end{tabular}
-\par\end{center}
-
-\noindent
-The following bash script will create these files.
-
-<<Tangle Script>>=
-#!/bin/bash
-echo "Tangling src/codfns.apln..."
-notangle codfns.nw > src/codfns.apln
-
-echo "Tangling src/DISPLAY.aplf..."
-notangle -R'[[DISPLAY]] Utility' codfns.nw > src/DISPLAY.aplf
-
-echo "Tangling src/MK∆RTM.aplf..."
-notangle -R'[[MK∆RTM]] Command' codfns.nw > src/MK∆RTM.aplf
-
-echo "Tangling src/PP.aplf..."
-notangle -R'[[PP]] Utility' codfns.nw > src/PP.aplf
-
-echo "Tangling src/TANGLE.aplf..."
-notangle -R'[[TANGLE]] Command' codfns.nw > src/TANGLE.aplf
-
-echo "Tangling src/TEST.aplf..."
-notangle -R'[[TEST]] Function' codfns.nw > src/TEST.aplf
-
-echo "Tangling src/WEAVE.aplf..."
-notangle -R'[[WEAVE]] Command' codfns.nw > src/WEAVE.aplf
-
-echo "Tangling TANGLE.sh..."
-notangle -R'Tangle Script' codfns.nw > TANGLE.sh
-
-echo "Tangling WEAVE.sh..."
-notangle -R'Weave Script' codfns.nw > WEAVE.sh
-@
-
-On Windows, the best way that we have found to do this is
-via the \href{https://www.cygwin.com/}{Cygwin project}.
-This document assumes that you have already successfully built and
-installed via Cygwin a working Icon-driven noweb installation.
-
-Users who prefer to work in a UNIX fashion via Cygwin or some other
-subsystem on Windows can follow the build scripts directly.
-For developers who prefer to work in a primarily Windows environment,
-the following build scripts assist in handling the calls into Cygwin
-so that you do not need to have a Cygwin terminal open all the time.
-
-When tangled to the [[TANGLE.aplf]] file, this script will enable the
-user simply type [[TANGLE]] to update the code tree from within a
-Dyalog APL Session.
-This is much more convenient than keeping a Cygwin Terminal
-session open along with a Dyalog APL session while programming.
-At the moment, this file is only designed to work on Windows with
-Cygwin, but we should in principle extend this to work on Linux
-and Mac OS X style machines as well.
-
-\emph{Note: this command expects to be run from within the root of
-the repository, not from, say, within the [[testing]] directory.}
-
-<<[[TANGLE]] Command>>=
-TANGLE;SH;CWD;CD
-SH←'C:\cygwin64\bin\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
-
-⎕CMD SH,'"',CD,' && ./TANGLE.sh"'
-@ %def TANGLE
-
-Weaving is the process by which we produce the final printed output
-of this document,
-intended for reading and general human consumption.
-We rely on the \LaTeX\ typesetting system to do this.
-Moreover, because we make heavy use of UTF-8 and prefer to have our
-own fonts installed and used,
-it is necessary to use the [[xelatex]] system instead of the typical
-\LaTeX\ engine.
-In order to get the indexing right, we must run the engine twice.
-The first run will update the indexing files that will be picked
-up on the second run and incorporated into the final document.
-Note, we have tried to use the [[lualatex]] engine, which in theory
-should work just as well as the [[xelatex]] engine, but we get a
-strange error relating to noweb's style file, so we stick with
-[[xelatex]] for now.
-
-Running this script also depends on having the appropriate fonts
-installed.
-In this case, please ensure that the following fonts are installed
-in your Windows font system so that they can be picked up by the \TeX\
-engine.
-
-\begin{itemize}
-	\item Libre Baskerville (Regular, Italic, Bold)
-	\item APL385 Unicode
-	\item Lucida Sans Unicode
-	\item Cambria Math
-\end{itemize}
-
-\noindent
-If you do not wish to use these fonts, then see the top of the
-[[codfns.nw]] file and edit the font specifications to the fonts that
-you do wish to use.
-
-Note the use of [[-delay -index]] for options. We want to generate
-indexing, but we also need to make sure that we can use some of our
-own packages in the system,
-
-\emph{Note: this command expects to be run from within the root of
-the repository, not from, say, within the [[testing]] directory.}
-
-<<Weave Script>>=
-#!/bin/bash
-mkdir -p woven
-noweave -delay -index codfns.nw > woven/codfns.tex
-cd woven
-xelatex codfns
-xelatex codfns
-@
-
-Like the [[<<[[TANGLE]] Command>>]], the following command,
-when tangled to the [[WEAVE.aplf]]
-file permits the Windows programmer to simply execute [[WEAVE]] in a
-the Dyalog APL session and weave the documents together.
-
-<<[[WEAVE]] Command>>=
-WEAVE;SH;CWD;CD
-SH←'C:\cygwin64\bin\mintty.exe -e C:\cygwin64\bin\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
-
-⎕CMD SH,'"',CD,' && ./WEAVE.sh"'
-@ %def WEAVE
-
-\subsection{Loading the Compiler}
-
-In order to load the compiler into an APL session as well as all the
-development utilities,
-we assume that you have first managed to either load up a session
-with a bootstrapped version of the [[TANGLE]] command or that you
-already have a tangled [[src\]] directory.
-If the [[src\]] directory has not yet been created by running the
-[[TANGLE]] command,
-then this must be done before loading the compiler system.
-After tangling,
-the compiler can be loaded using the provided [[LOAD]] shortcut.
-This shortcut is meant to use the
-\href{https://github.com/Dyalog/link}{Dyalog Link}
-system for hot-loading the files in [[src\]] into the root namespace.
-We do so through the following link command:
-
-\begin{verbatim}
-Link.Create # src -source=dir -watch=dir
-\end{verbatim}
-
-\noindent
-This means that we want to link the [[src\]] directory into the [[#]]
-namespace,
-but we also want to make sure that we only pull changes that come
-from the filesystem.
-This is because we are editing the code via the WEB document,
-and we do not want to risk having some intermediate representation
-that isn't accurate and that doesn't flow the right way;
-we want all appropriate changes to begin in the WEB document
-and then, and only then, flow into the session.
-This also allows us to make some modifications to the code for testing
-and experimentation inside of the session without consideration
-for the code outside of the session,
-and such changes will be removed or forgotten on the next [[TANGLE]]
-command.
-
-To set this up, we also ensure that we begin our work within the
-root Co-dfns repository directory, as this is where we expect to run
-the [[TANGLE]] and [[WEAVE]] commands.
-
-There is unfortunately only a limited range of possibilities for
-linking in a new directory as we wish to do.
-The method we choose to use is launching a fresh Dyalog APL session
-and then using an [[LX]] expression from the command line
-to do the actual linking using the [[⎕SE.UCMD]] functionality.
-I personally find this to be rather hackish, and I hope that an
-alternative approach to doing this will show up in the near future.
-Nonetheless, the arguments that we pass to [[dyalog.exe]]
-look something like this:
-
-\begin{verbatim}
-LX="⎕SE.UCMD'Link.Create # src -source=dir -watch=dir'"
-\end{verbatim}
-
-If you do not use the [[LOAD]] shortcut, you can use the above
-command to do the linking manually.
-
-\subsection{Building the Runtime}
-
-One of our goals with the Co-dfns runtime is to write as much of it
-as possible in APL.
-This means that we want to have at minimum a very small kernel that
-has been written in C,
-while most of the rest of the code is implemented in some APL files.
-This leads to a three part breakdown of the process to
-build the runtime.
-
-<<Build the runtime>>=
-<<Compile the primitives in [[prim.apln]]>>
-<<Build [[codfns.dll]] DLL>>
-<<Copy the runtime files into [[tests\]]>>
-@
-
-We define the command [[MK∆RTM]] to build the runtime.
-This command takes a path to the root directory of the Co-dfns
-repository; this is to allow us to rebuild the runtime from anywhere
-in the system if we so choose.
-
-<<[[MK∆RTM]] Command>>=
-MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
-
-<<Basic [[tie]] and [[put]] utilities>>
-<<Build the runtime>>
-@ %def MK∆RTM
-
-The first step we must take is producing an appropriate C file that
-contains the primitives that we have defined in [[prim.apln]].
-This means that we want to only compile the code in [[prim.apln]]
-as far as producing the C code.
-Since we do not have a full blown runtime yet,
-we will be compiling the [[prim.c]] file along with the rest of the
-runtime code,
-instead of the normal build process,
-which assumes that we already have a working runtime.
-This means that we only invoke the [[GC TT PS]] passes of the
-compiler pipeline, while avoiding the [[CC]] pass.
-We use the SALT system to load the source from [[prim.apln]] and then
-run the compiler passes that we want before storing the resulting
-code in the [[rtm\prim.c]] file.
-
-<<Compile the primitives in [[prim.apln]]>>=
-src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
-(path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
-@ %def src
-
-Once we have the [[rtm\prim.c]] file written appropriately,
-we can run the main compiler process.
-For simplicity, we just compile all of the [[.c]] files that
-are found in the [[rtm\]] subdirectory.
-We must ensure that we are appropriatelly invoking our ArrayFire
-dependencies as well as producing the appropriate debugging symbols
-most of the time.
-
-<<Build [[codfns.dll]] DLL>>=
-vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
-wsd←path,'\'
-
-vsc←'%comspec% /C ""',vsbat,'" amd64'
-vsc,←' && cd "',wsd,'\rtm"'
-vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
-vsc,←'	/Fo".\\" /Fd"codfns.pdb"'
-vsc,←'	/WX /MD /EHsc /nologo /I"%AF_PATH%\include"'
-vsc,←'	/D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
-vsc,←'	"*.c" /link /DLL /OPT:REF'
-vsc,←'	/INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
-vsc,←'	/LIBPATH:"%AF_PATH%\lib"'
-vsc,←'	/DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
-vsc,←'	/OPT:ICF /ERRORREPORT:PROMPT'
-vsc,←'	/TLBID:1 /OUT:"codfns.dll""'
-@ %def vsbat wsd
-
-Finally, in order to write up the test harness to work right,
-we must copy the appropriate runtime files into the [[tests\]]
-directory so that we can find them when we finally start running
-our code there.
-
-<<Copy the runtime files into [[tests\]]>>=
-⎕CMD ⎕←vsc
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.exp" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.lib" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.pdb" "',wsd,'tests\"'
-⎕CMD ⎕←'copy "',wsd,'rtm\codfns.dll" "',wsd,'tests\"'
-@
-
-\subsection{XML Rendering}
-
-<<XML Rendering>>=
-Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
-	cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
-	⎕XML⍉↑d cls(⊂'')fld}
-@
-
-\subsection{AST Pretty-printing}
-
-<<Pretty-printing AST trees>>=
-dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
-dlk←{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵}
-dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}
-dwv←{⍵('├'dlk 0)' ─┬┌┐│'(0⌷⊢)dct(⊣⍪1↓⊢)⊃{⍺,' ',⍵}/(1+⌈/≢¨⍺){⍺↑⍵⍪⍨'│'↑⍨≢⍉⍵}¨⍺}
-
-pp3←{⍺←'○' ⋄ d←(⍳≢⍵)≠⍵ ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨⍵ ⋄ lbl←⍺⍴⍨≢⍵
-	lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵
-	(⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}
-
-lb3←{⍺←⍳≢⊃⍵
-	'(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
-@ %def dct dlk dwh dwv pp3 lb3
-
-\subsection{Debugging utilities}
-
-The following utilities help to improve quality of life when working
-with the Co-dfns source code.
-
-The [[DISPLAY]] function is taken from \url{https://dfns.dyalog.com}
-and helps to make debugging easier by allowing us to thread
-[[DISPLAY]] calls into expressions. I prefer to do something like
-this:
-
-\begin{verbatim}
-... {⍵⊣⎕←#.DISPLAY ⍵} ...
-\end{verbatim}
-
-\noindent
-The function itself returns the character rendering of the code,
-so the above little expression is one that I use to insert and do
-debugging within an expression.
-
-<<[[DISPLAY]] Utility>>=
-DISPLAY←{⎕IO ⎕ML←0											⍝ Boxed display of array.
-
-	⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'			⍝ ⍺: 0-clunky, 1-smooth.
-
-	tl tr bl br vt hz←chars								⍝ Top left, top right, ...
-
-	box←{																	⍝ Box with type and axes.
-		vrt hrz←(¯1+⍴⍵)⍴¨vt hz							⍝ Vert. and horiz. lines.
-		top←(hz,'⊖→')[¯1↑⍺],hrz							⍝ Upper border with axis.
-		bot←(⊃⍺),hrz												⍝ Lower border with type.
-		rgt←tr,vt,vrt,br										⍝ Right side with corners.
-		lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt					⍝ Left side(s) with axes,
-		lft←⍉tl,(↑lax),bl										⍝ ... and corners.
-		lft,(top⍪⍵⍪bot),rgt									⍝ Fully boxed array.
-	}
-
-	deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}				⍝ Type and axes vector.
-	axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}									⍝ Array axis types.
-	open←{(1⌈⍴⍵)⍴⍵}												⍝ Expose null axes.
-	trim←{(~1 1⍷∧⌿⍵=' ')/⍵}								⍝ Remove extra blank cols.
-	type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}					⍝ Simple array type.
-	char←{⍬≡⍴⍵:hz ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕		⍝ Simple scalar type.
-	line←{(6≠10|⎕DR' '⍵)⊃' -'}						⍝ underline for atom.
-
-	{																			⍝ Recursively box arrays:
-		0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵				⍝ Simple scalar.
-		1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵			⍝ Object rep: ⎕OR.
-		1=≡⍵:(deco ⍵)box open ⎕FMT open ⍵		⍝ Simple array.
-		('∊'deco ⍵)box trim ⎕FMT ∇¨open ⍵		⍝ Nested array.
-	}⍵
-}
-@ %def DISPLAY
-
-I also define a function [[PP]] that encapsulates the above usage
-pattern that I like to use, making the whole thing less verbose and
-a little more convenient.
-
-<<[[PP]] Utility>>=
-PP←{⍵⊣⎕←#.DISPLAY ⍵}
-@ %def PP
-
-
-
-\subsection{Reading and Writing Files}
-
-It is helpful to be able to easily write files to disk, and the
-following [[put]] and [[tie]] utilities help us to do so when we
-want to.
-These are pretty standard, but they could maybe be replaced by
-[[⎕NPUT]] or something like that.
-
-<<Basic [[tie]] and [[put]] utilities>>=
-tie←{
-	0::⎕SIGNAL ⎕EN
-	22::⍵ ⎕NCREATE 0
-	0 ⎕NRESIZE ⍵ ⎕NTIE 0
-}
-
-put←{
-	s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83
-	1:r←s⊣⎕NUNTIE t
-}
-@ %def tie put
-
-
-\subsection{Testing Harness}
+\section{Testing}
 
 We use the \href{https://github.com/Co-dfns/APLUnit}{APLUnit}
 testing framework to facilitate our testing of the Co-dfns compiler.
@@ -1594,6 +1278,439 @@ CC←{
 <<C Runtime Header>>=
 /* TBW */
 @
+
+\section{Utilities}
+
+\subsection{AST Pretty-printing}
+
+<<Pretty-printing AST trees>>=
+dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
+dlk←{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵}
+dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}
+dwv←{⍵('├'dlk 0)' ─┬┌┐│'(0⌷⊢)dct(⊣⍪1↓⊢)⊃{⍺,' ',⍵}/(1+⌈/≢¨⍺){⍺↑⍵⍪⍨'│'↑⍨≢⍉⍵}¨⍺}
+
+pp3←{⍺←'○' ⋄ d←(⍳≢⍵)≠⍵ ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨⍵ ⋄ lbl←⍺⍴⍨≢⍵
+	lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵
+	(⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}
+
+lb3←{⍺←⍳≢⊃⍵
+	'(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
+@ %def dct dlk dwh dwv pp3 lb3
+
+\subsection{Debugging utilities}
+
+The following utilities help to improve quality of life when working
+with the Co-dfns source code.
+
+The [[DISPLAY]] function is taken from \url{https://dfns.dyalog.com}
+and helps to make debugging easier by allowing us to thread
+[[DISPLAY]] calls into expressions. I prefer to do something like
+this:
+
+\begin{verbatim}
+... {⍵⊣⎕←#.DISPLAY ⍵} ...
+\end{verbatim}
+
+\noindent
+The function itself returns the character rendering of the code,
+so the above little expression is one that I use to insert and do
+debugging within an expression.
+
+<<[[DISPLAY]] Utility>>=
+DISPLAY←{⎕IO ⎕ML←0											⍝ Boxed display of array.
+
+	⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'			⍝ ⍺: 0-clunky, 1-smooth.
+
+	tl tr bl br vt hz←chars								⍝ Top left, top right, ...
+
+	box←{																	⍝ Box with type and axes.
+		vrt hrz←(¯1+⍴⍵)⍴¨vt hz							⍝ Vert. and horiz. lines.
+		top←(hz,'⊖→')[¯1↑⍺],hrz							⍝ Upper border with axis.
+		bot←(⊃⍺),hrz												⍝ Lower border with type.
+		rgt←tr,vt,vrt,br										⍝ Right side with corners.
+		lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt					⍝ Left side(s) with axes,
+		lft←⍉tl,(↑lax),bl										⍝ ... and corners.
+		lft,(top⍪⍵⍪bot),rgt									⍝ Fully boxed array.
+	}
+
+	deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}				⍝ Type and axes vector.
+	axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}									⍝ Array axis types.
+	open←{(1⌈⍴⍵)⍴⍵}												⍝ Expose null axes.
+	trim←{(~1 1⍷∧⌿⍵=' ')/⍵}								⍝ Remove extra blank cols.
+	type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}					⍝ Simple array type.
+	char←{⍬≡⍴⍵:hz ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕		⍝ Simple scalar type.
+	line←{(6≠10|⎕DR' '⍵)⊃' -'}						⍝ underline for atom.
+
+	{																			⍝ Recursively box arrays:
+		0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵				⍝ Simple scalar.
+		1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵			⍝ Object rep: ⎕OR.
+		1=≡⍵:(deco ⍵)box open ⎕FMT open ⍵		⍝ Simple array.
+		('∊'deco ⍵)box trim ⎕FMT ∇¨open ⍵		⍝ Nested array.
+	}⍵
+}
+@ %def DISPLAY
+
+I also define a function [[PP]] that encapsulates the above usage
+pattern that I like to use, making the whole thing less verbose and
+a little more convenient.
+
+<<[[PP]] Utility>>=
+PP←{⍵⊣⎕←#.DISPLAY ⍵}
+@ %def PP
+
+
+
+\subsection{Reading and Writing Files}
+
+It is helpful to be able to easily write files to disk, and the
+following [[put]] and [[tie]] utilities help us to do so when we
+want to.
+These are pretty standard, but they could maybe be replaced by
+[[⎕NPUT]] or something like that.
+
+<<Basic [[tie]] and [[put]] utilities>>=
+tie←{
+	0::⎕SIGNAL ⎕EN
+	22::⍵ ⎕NCREATE 0
+	0 ⎕NRESIZE ⍵ ⎕NTIE 0
+}
+
+put←{
+	s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83
+	1:r←s⊣⎕NUNTIE t
+}
+@ %def tie put
+
+\subsection{XML Rendering}
+
+<<XML Rendering>>=
+Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
+	cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
+	⎕XML⍉↑d cls(⊂'')fld}
+@
+
+\section{Developer Infrastructure}
+
+\subsection{Building the Compiler}
+
+The Co-dfns compiler is written, developed, and distributed as a
+literate program.
+For more information about literate programming,
+see the resources available at \url{http://literateprogramming.com/}.
+We use \href{https://www.cs.tufts.edu/~nr/noweb/}{noweb} as our
+preferred literate programming tool because it is eminently simple,
+while still handling the majority of our needs and producing high
+quality output in \LaTeX\ format with all the important elements of
+literate programming, including live hyperlinking and cross-references.
+
+\subsubsection{Tangling the Source}
+
+The process of tangling produces the executable source code 
+for the compiler.
+Importantly, the tangled output is \emph{not} meant to be used 
+as the primary means of reading or debugging the source.
+Instead, it is meant primarily as the machine readable version
+of the code only.
+We intend [[codfns.nw]] to tangle into the following files based on
+specific chunks that have been provided in this document.
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Chunk & File Output\\
+\midrule
+[[<<*>>]] & [[src\codfns.apln]]\\
+[[<<C Runtime Support>>]] & [[rtm\runtime.c]]\\
+[[<<C Runtime Header>>]] & [[rtm\codfns.h]]\\
+[[<<Implementation of APL Primitives>>]] & [[rtm\prim.apln]]\\
+[[<<[[DISPLAY]] Utility>>]] & [[src\DISPLAY.aplf]]\\
+[[<<[[MK∆RTM]] Command>>]] & [[src\MK∆RTM.aplf]]\\
+[[<<[[PP]] Utility>>]] & [[src\PP.aplf]]\\
+[[<<[[TANGLE]] Command>>]] & [[src\TANGLE.aplf]]\\
+[[<<[[TEST]] Function>>]] & [[src\TEST.aplf]]\\
+[[<<[[WEAVE]] Command>>]] & [[src\WEAVE.aplf]]\\
+[[<<Tangle Script>>]] & [[TANGLE.sh]]\\
+[[<<Weave Script>>]] & [[WEAVE.sh]]\\
+\bottomrule
+\end{tabular}
+\par\end{center}
+
+\noindent
+The following bash script creates these files.
+
+<<Tangle Script>>=
+#!/bin/bash
+echo "Tangling src/codfns.apln..."
+notangle codfns.nw > src/codfns.apln
+
+echo "Tangling src/DISPLAY.aplf..."
+notangle -R'[[DISPLAY]] Utility' codfns.nw > src/DISPLAY.aplf
+
+echo "Tangling src/MK∆RTM.aplf..."
+notangle -R'[[MK∆RTM]] Command' codfns.nw > src/MK∆RTM.aplf
+
+echo "Tangling src/PP.aplf..."
+notangle -R'[[PP]] Utility' codfns.nw > src/PP.aplf
+
+echo "Tangling src/TANGLE.aplf..."
+notangle -R'[[TANGLE]] Command' codfns.nw > src/TANGLE.aplf
+
+echo "Tangling src/TEST.aplf..."
+notangle -R'[[TEST]] Function' codfns.nw > src/TEST.aplf
+
+echo "Tangling src/WEAVE.aplf..."
+notangle -R'[[WEAVE]] Command' codfns.nw > src/WEAVE.aplf
+
+echo "Tangling TANGLE.sh..."
+notangle -R'Tangle Script' codfns.nw > TANGLE.sh
+
+echo "Tangling WEAVE.sh..."
+notangle -R'Weave Script' codfns.nw > WEAVE.sh
+@
+
+On Windows, the best way that we have found to do this is
+via the \href{https://www.cygwin.com/}{Cygwin project}.
+This document assumes that you have already successfully built and
+installed via Cygwin a working Icon-driven noweb installation.
+
+Users who prefer to work in a UNIX fashion via Cygwin or some other
+subsystem on Windows can follow the build scripts directly.
+For developers who prefer to work in a primarily Windows environment,
+the following build scripts assist in handling the calls into Cygwin
+so that you do not need to have a Cygwin terminal open all the time.
+
+When tangled to the [[TANGLE.aplf]] file, this script will enable the
+user simply type [[TANGLE]] to update the code tree from within a
+Dyalog APL Session.
+This is much more convenient than keeping a Cygwin Terminal
+session open along with a Dyalog APL session while programming.
+At the moment, this file is only designed to work on Windows with
+Cygwin, but we should in principle extend this to work on Linux
+and Mac OS X style machines as well.
+
+\emph{Note: this command expects to be run from within the root of
+the repository, not from, say, within the [[testing]] directory.}
+
+<<[[TANGLE]] Command>>=
+TANGLE;SH;CWD;CD
+SH←'C:\cygwin64\bin\bash.exe -l -c '
+CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
+CD←'cd ''',CWD,''''
+
+⎕CMD SH,'"',CD,' && ./TANGLE.sh"'
+@ %def TANGLE
+
+\subsubsection{Weaving the Source}
+
+Weaving is the process by which we produce the final printed output
+of this document,
+intended for reading and general human consumption.
+We rely on the \LaTeX\ typesetting system to do this.
+Moreover, because we make heavy use of UTF-8 and prefer to have our
+own fonts installed and used,
+it is necessary to use the [[xelatex]] system instead of the typical
+\LaTeX\ engine.
+In order to get the indexing right, we must run the engine twice.
+The first run will update the indexing files that will be picked
+up on the second run and incorporated into the final document.
+Note, we have tried to use the [[lualatex]] engine, which in theory
+should work just as well as the [[xelatex]] engine, but we get a
+strange error relating to noweb's style file, so we stick with
+[[xelatex]] for now.
+
+Running this script also depends on having the appropriate fonts
+installed.
+In this case, please ensure that the following fonts are installed
+in your Windows font system so that they can be picked up by the \TeX\
+engine.
+
+\begin{itemize}
+	\item Libre Baskerville (Regular, Italic, Bold)
+	\item APL385 Unicode
+	\item Lucida Sans Unicode
+	\item Cambria Math
+\end{itemize}
+
+\noindent
+If you do not wish to use these fonts, then see the top of the
+[[codfns.nw]] file and edit the font specifications to the fonts that
+you do wish to use.
+
+Note the use of [[-delay -index]] for options. We want to generate
+indexing, but we also need to make sure that we can use some of our
+own packages in the system,
+
+\emph{Note: this command expects to be run from within the root of
+the repository, not from, say, within the [[testing]] directory.}
+
+<<Weave Script>>=
+#!/bin/bash
+mkdir -p woven
+noweave -delay -index codfns.nw > woven/codfns.tex
+cd woven
+xelatex codfns
+xelatex codfns
+@
+
+Like the [[<<[[TANGLE]] Command>>]], the following command,
+when tangled to the [[WEAVE.aplf]]
+file permits the Windows programmer to simply execute [[WEAVE]] in a
+the Dyalog APL session and weave the documents together.
+
+<<[[WEAVE]] Command>>=
+WEAVE;SH;CWD;CD
+SH←'C:\cygwin64\bin\mintty.exe -e C:\cygwin64\bin\bash.exe -l -c '
+CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
+CD←'cd ''',CWD,''''
+
+⎕CMD SH,'"',CD,' && ./WEAVE.sh"'
+@ %def WEAVE
+
+\subsection{Building the Runtime}
+
+One of our goals with the Co-dfns runtime is to write as much of it
+as possible in APL.
+This means that we want to have at minimum a very small kernel that
+has been written in C,
+while most of the rest of the code is implemented in some APL files.
+This leads to a three part breakdown of the process to
+build the runtime.
+
+<<Build the runtime>>=
+<<Compile the primitives in [[prim.apln]]>>
+<<Build [[codfns.dll]] DLL>>
+<<Copy the runtime files into [[tests\]]>>
+@
+
+We define the command [[MK∆RTM]] to build the runtime.
+This command takes a path to the root directory of the Co-dfns
+repository; this is to allow us to rebuild the runtime from anywhere
+in the system if we so choose.
+
+<<[[MK∆RTM]] Command>>=
+MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
+
+<<Basic [[tie]] and [[put]] utilities>>
+<<Build the runtime>>
+@ %def MK∆RTM
+
+The first step we must take is producing an appropriate C file that
+contains the primitives that we have defined in [[prim.apln]].
+This means that we want to only compile the code in [[prim.apln]]
+as far as producing the C code.
+Since we do not have a full blown runtime yet,
+we will be compiling the [[prim.c]] file along with the rest of the
+runtime code,
+instead of the normal build process,
+which assumes that we already have a working runtime.
+This means that we only invoke the [[GC TT PS]] passes of the
+compiler pipeline, while avoiding the [[CC]] pass.
+We use the SALT system to load the source from [[prim.apln]] and then
+run the compiler passes that we want before storing the resulting
+code in the [[rtm\prim.c]] file.
+
+<<Compile the primitives in [[prim.apln]]>>=
+src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
+(path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
+@ %def src
+
+Once we have the [[rtm\prim.c]] file written appropriately,
+we can run the main compiler process.
+For simplicity, we just compile all of the [[.c]] files that
+are found in the [[rtm\]] subdirectory.
+We must ensure that we are appropriatelly invoking our ArrayFire
+dependencies as well as producing the appropriate debugging symbols
+most of the time.
+
+<<Build [[codfns.dll]] DLL>>=
+vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
+wsd←path,'\'
+
+vsc←'%comspec% /C ""',vsbat,'" amd64'
+vsc,←' && cd "',wsd,'\rtm"'
+vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
+vsc,←'	/Fo".\\" /Fd"codfns.pdb"'
+vsc,←'	/WX /MD /EHsc /nologo /I"%AF_PATH%\include"'
+vsc,←'	/D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
+vsc,←'	"*.c" /link /DLL /OPT:REF'
+vsc,←'	/INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
+vsc,←'	/LIBPATH:"%AF_PATH%\lib"'
+vsc,←'	/DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
+vsc,←'	/OPT:ICF /ERRORREPORT:PROMPT'
+vsc,←'	/TLBID:1 /OUT:"codfns.dll""'
+@ %def vsbat wsd
+
+Finally, in order to write up the test harness to work right,
+we must copy the appropriate runtime files into the [[tests\]]
+directory so that we can find them when we finally start running
+our code there.
+
+<<Copy the runtime files into [[tests\]]>>=
+⎕CMD ⎕←vsc
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.exp" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.lib" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.pdb" "',wsd,'tests\"'
+⎕CMD ⎕←'copy "',wsd,'rtm\codfns.dll" "',wsd,'tests\"'
+@
+
+\subsection{Loading the Compiler}
+
+In order to load the compiler into an APL session as well as all the
+development utilities,
+we assume that you have first managed to either load up a session
+with a bootstrapped version of the [[TANGLE]] command or that you
+already have a tangled [[src\]] directory.
+If the [[src\]] directory has not yet been created by running the
+[[TANGLE]] command,
+then this must be done before loading the compiler system.
+After tangling,
+the compiler can be loaded using the provided [[LOAD]] shortcut.
+This shortcut is meant to use the
+\href{https://github.com/Dyalog/link}{Dyalog Link}
+system for hot-loading the files in [[src\]] into the root namespace.
+We do so through the following link command:
+
+\begin{verbatim}
+Link.Create # src -source=dir -watch=dir
+\end{verbatim}
+
+\noindent
+This means that we want to link the [[src\]] directory into the [[#]]
+namespace,
+but we also want to make sure that we only pull changes that come
+from the filesystem.
+This is because we are editing the code via the WEB document,
+and we do not want to risk having some intermediate representation
+that isn't accurate and that doesn't flow the right way;
+we want all appropriate changes to begin in the WEB document
+and then, and only then, flow into the session.
+This also allows us to make some modifications to the code for testing
+and experimentation inside of the session without consideration
+for the code outside of the session,
+and such changes will be removed or forgotten on the next [[TANGLE]]
+command.
+
+To set this up, we also ensure that we begin our work within the
+root Co-dfns repository directory, as this is where we expect to run
+the [[TANGLE]] and [[WEAVE]] commands.
+
+There is unfortunately only a limited range of possibilities for
+linking in a new directory as we wish to do.
+The method we choose to use is launching a fresh Dyalog APL session
+and then using an [[LX]] expression from the command line
+to do the actual linking using the [[⎕SE.UCMD]] functionality.
+I personally find this to be rather hackish, and I hope that an
+alternative approach to doing this will show up in the near future.
+Nonetheless, the arguments that we pass to [[dyalog.exe]]
+look something like this:
+
+\begin{verbatim}
+LX="⎕SE.UCMD'Link.Create # src -source=dir -watch=dir'"
+\end{verbatim}
+
+If you do not use the [[LOAD]] shortcut, you can use the above
+command to do the linking manually.
 
 \section{Index}
 
