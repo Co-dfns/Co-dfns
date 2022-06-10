@@ -158,6 +158,7 @@ This gives use the following code outline.
 	<<Interface to the backend C compiler>>
 	<<Linking with Dyalog>>
 
+	<<Must Have APL Utilities>>
 	<<AST Record Structure>>
 	<<Converters between parent and depth vectors>>
 	<<XML Rendering>>
@@ -165,6 +166,20 @@ This gives use the following code outline.
 
 :EndNamespace
 @ %def codfns
+
+This [[<<*>>]] chunk is meant to be stored to a file. 
+We have a build system for doing this that depends
+on the contents of the [[<<Tangle Commands>>]] chunk. 
+Thus, we follow the convention here of updating the contents of 
+the [[<<Tangle Commands>>]] chunk each time that we initially define
+a new chunk that is intended to be output to a file during the 
+tangling process. 
+See more about the build infrastructure later in this document.
+
+<<Tangle Commands>>=
+echo "Tangling codfns.apln..."
+notangle codfns.nw > src/codfns.apln
+@ %def codfns.apln
 
 The primary user-facing interfaces into the compiler are 
 [[<<The Fix API>>]] and the [[<<User-command API>>]]. 
@@ -403,7 +418,9 @@ The requirements are as follows:
 \noindent
 We generate a [[DOMAIN ERROR]] if the inputs are not well-formed.
 
-<<Verify input from [[IN]]>>=
+<<Verify source input [[⍵]], set [[IN]]>>=
+IN←⍵
+
 err←'PARSER EXPECTS SCALAR OR VECTOR INPUT'
 1<≢⍴IN:err ⎕SIGNAL 11
 
@@ -472,6 +489,7 @@ IN←∊(⊆IN),¨⎕UCS 10
 <<AST Record Structure>>=
 f∆←'ptknfsrdx'
 N∆←'ABCEFGKLMNOPSVZ'
+A B C E F G K L M N O P S V Z←1+⍳15
 @
 
 \subsection{Converters between parent and depth vectors}
@@ -519,7 +537,7 @@ results of testing all the code,
 rather than just the individual testing results on a per testing
 group/number basis.
 
-<<[[TEST]] Function>>=
+<<[[TEST]]>>=
 TEST←{
 	#.UT.(print_passed print_summary)←1
 	'ALL'≡⍵:#.UT.run './'
@@ -528,34 +546,257 @@ TEST←{
 }
 @ %def TEST
 
+The [[TEST]] function is part of the utilities that exist outside
+of the [[codfns]] namespace, 
+so we define a file for it.
+
+<<Tangle Commands>>=
+echo "Tangling src/TEST.aplf..."
+notangle -R'[[TEST]]' codfns.nw > src/TEST.aplf
+@ %def TEST.aplf
+
 \section{Co-dfns Compiler}
 
 \subsection{Parser}
 
+The first, and in many ways, the most complex element of the 
+compiler is the parser.
+APL has a number of unique issues when it comes to adequately 
+parsing the language,
+but the most important is handling the context-sensitive 
+nature of parsing variables: depending on the type of a variable,
+the parse tree can look very different.
+To manage this, we make use of a linear, multi-pass style of 
+parser in which the parsing process consists of numerous small 
+passes over the input, each time refining the input into something
+more like the final result.
+The parser should take some input that matches the input requirements
+of the [[Fix]] function and produce a suitable output AST.
+
+$$PS :: Source → AST × ExportTypes × SymbolTable × Source$$
+
+\noindent
+We can think of the parser as starting with a forest of trees, 
+each of which contains a single root node that represents a single
+character in from the input source,
+with all trees arranged in the source order.
+During each pass of the parser, we progressively combine these 
+trees into more complex trees until we end up at the end with a 
+single tree per parsed module.
+In other words, we take a fully flat forest of single-node trees 
+and progressively increase the depth while reducing the number of 
+root-nodes until we have our desired AST structure.
+
+We divide the parsing roughly into two main phases,
+the tokenization phase and the parsing phase. 
+Unlike most compilers, we don't have a strict division in these 
+two phases, so, as they say, think of them more like guidelines
+than actual rules%
+\footnote{
+	\href{https://www.youtube.com/watch?v=WJVBvvS57j0}
+		{https://www.youtube.com/watch?v=WJVBvvS57j0}
+}.
+
 <<Parser>>=
- PS←{IN←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
-	 I←{(⊂⍵)⌷⍺} ⋄ U←{0=⎕NC'⍺':⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵ ⋄ ⍵⍵⍣¯1⊢(⍵⍵ ⍺) ⍺⍺ ⍵⍵ ⍵}
-	 assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍎'⍺ ⎕SIGNAL 8' ⋄ shy←0}
+PS←{
+	<<Verify source input [[⍵]], set [[IN]]>>
+	
+	<<Parsing Constants>>
+	<<Line and error reporting utilities>>
 
-	 <<Verify input from [[IN]]>>
+	<<Tokenize input>>
+	<<Parse token stream>>
+	
+	<<Adjust AST for output>>
+}
+@ %def PS
 
-⍝ Line and error reporting utilities
-	 CR LF←⎕UCS 13 10
-	 linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
-	 mkdm←{⍺←2 ⋄ line←linestarts⍸⍵ ⋄ no←'[',(⍕1+line),'] '
-		 i←(~IN[i]∊CR LF)⌿i←beg+⍳linestarts[line+1]-beg←linestarts[line]
-		 (⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)}
-	 quotelines←{
-		 lines←∪linestarts⍸⍵
-		 nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
-		 beg←linestarts[lines] ⋄ end←linestarts[lines+1]
-		 m←∊∘⍵¨i←beg+⍳¨end-beg
-		 ¯1↓∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR}
-	 SIGNAL←{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en mkdm ⊃⍵
-		 dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
-		 dmx,←⊂'Message'(msg,CR,quotelines ⍵)
-		 ⎕SIGNAL⊂dmx}
+When parsing, it's very helpful to have names for line endings.
 
+<<Parsing Constants>>=
+CR LF←⎕UCS 13 10
+@
+
+\subsubsection{Output of the Parser}
+
+After we finish all of our parsing,
+we need to take the resulting AST and convert that into something
+that is suitable for output to the rest of the system.
+We do this in a few ways. 
+
+When we finish parsing, we expect the following fields:
+
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+Field & Description\\
+\midrule
+[[d]] & Depth vector\\
+[[t]] & Node type\\
+[[k]] & Node sub-class or ``kind''\\
+[[n]] & Name/value field\\
+[[pos]] & Starting index for source position\\
+[[end]] & Exclussive index for source end position\\
+[[xn]] & Names of top-level exported bindings\\
+[[xt]] & Types of top-level exported bindings\\
+[[sym]] & Symbol Table\\
+[[IN]] & Canonical source code\\
+\bottomrule
+\end{tabular}
+\par\end{center}
+
+The [[xn]] and [[xt]] fields are not part of the AST proper, 
+but form an auxiliary analysis that is exceptionally useful,
+and so we include this as a part of the output of the parser.
+After parsing a module, we want to extract out the top-level 
+bindings and what their types are,
+which we can then use to feed into things like the linker 
+and other areas that might need to know what names are available
+in a given module.
+Top-level bindings are identified as bindings that appear as a 
+part of an initialization function, also known as [[F0]].
+
+<<Adjust AST for output>>=
+msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
+xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
+@ %def xn xt
+
+We also want to convert the AST to an order that follows a 
+depth-first, preorder traversal order, 
+so that we can switch from using the parent vector to the depth
+vector.
+We use this output as our main output because it is space efficient
+for storage, and it works well as a canonical form to use.
+Because applications may want to only use the parser and not the 
+rest of the compiler, 
+we want to choose an output format that is suitable for external 
+as well as internal use.
+This has some performance overheads,
+but it is probably worth it regardless,
+as reordering at this point to allow a depth vector enables some 
+nice assumptions in the rest of the compiler.
+We use the [[P2D]] utility to reorder all of our AST columns.
+Note that things like the exported bindings and the symbol table 
+are not strictly part of the AST structure, because they are of a 
+different length and type than the other columns.
+
+<<Adjust AST for output>>=
+d i←P2D p ⋄ d n t k pos end I∘⊢←⊂i
+@
+
+There is an inefficiency in the AST representation at this point,
+where the [[n]] field contains character vectors.
+This inefficiency was necessary while building up the AST because
+we were not sure what symbols would be created
+before we parsed them,
+but at this point, we know the full set of symbols that we have in 
+the AST.
+This means that we can convert the [[n]] field to a symbol table 
+representation.
+In this case, we want the [[n]] field to pair with a [[sym]] list
+that contains all the unique symbols in the source.
+We want [[old_n≡sym[|new_n]]] to hold for this new [[n]] field.
+In other words, we want the new [[n]] field to contain negative 
+integers whose magnitudes are valid indices into the [[sym]] 
+symbol table.
+This means that there is only one character vector per unique symbol
+or numeric literal in the source code, which can greatly reduce 
+memory usage.
+Moreover, it is much faster to compare symbols that are represented by 
+numeric index rather than character vector.
+Most of the work we expect to be done on the [[n]] field, so that we 
+never have to pull in [[sym]] unless we want to know the actual value 
+of the symbol.
+This actually mimics the feature of symbols in other languages
+like Scheme,
+but it comes with an additional efficiency benefit in that we do not
+require the use of a full generalized pointer to represent a symbol
+if we have fewer symbols. 
+This means that we are very likely only going to need a single byte 
+or a couple of bytes per symbol to represent it in the [[n]] field.
+
+The choice to make all of our symbols negative in value is somewhat 
+strange, but we have a good reason for doing so.
+The [[n]] field is a single field that we use to contain general 
+data for every node, and as such, it represents a sort of union 
+type of all sorts of different data.
+In particular, we also want to be able to support using the [[n]] 
+field to point to other nodes in the AST, which is a feature we 
+rely heavily on in the compiler transformations.
+However, this feature would conflict with using the [[n]] field as an 
+index into the [[sym]] table, rather than as an index into the AST.
+By making symbol pointers negative, we put them into a separate 
+space than the positive AST node pointers, allowing us to store 
+both pointers in the same field. This may seem like a little bit of 
+a strange hack, but it actually makes reasoning about things a little 
+easier, because we can tend to think of [[n]] as a name, even if that 
+name is pointing to an AST or a symbol, and avoids needless space 
+duplication or the need to remember to update multiple fields that are 
+only relevant for some nodes.
+
+We map the $0$th index to be a null or empty symbol. 
+We also want to reserve the first four symbol slots $[1,4]$
+so that they will \emph{always} refer to the same symbols, 
+namely, [[⍵]], [[⍺]], [[⍺⍺]], and [[⍵⍵]]. 
+
+This gives us the following definitions for [[sym]] and [[n]].
+
+<<Adjust AST for output>>=
+sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
+n←-sym⍳n
+@
+
+Finally, we want to return our AST structure in a meaningful way.
+Logically, we have the AST proper, which consists of these fields:
+
+\begin{verbatim}
+d t k n pos end
+\end{verbatim}
+
+\noindent
+The above fields are returned as an inverted table,
+where each column is a vector of the same length.
+We also want to return the variable environment,
+which gives the names of our top-level bindings and their types,
+also as an inverted table.
+Finally, we must return a canonical representation of the source 
+code that is suitable as an indexing target for the [[pos]] and [[end]]
+fields, as well as the symbol table.
+Thus, we have a four element vector as the return value:
+
+\begin{verbatim}
+AST TopBindingTypes SymbolTable InputSource
+\end{verbatim}
+
+\noindent
+Which gives us the following return value.
+
+<<Adjust AST for output>>=
+(d t k n pos end)(xn xt)sym IN
+@
+
+\subsubsection{Handling Parsing Errors}
+
+<<Line and error reporting utilities>>=
+linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
+mkdm←{⍺←2 ⋄ line←linestarts⍸⍵ ⋄ no←'[',(⍕1+line),'] '
+	i←(~IN[i]∊CR LF)⌿i←beg+⍳linestarts[line+1]-beg←linestarts[line]
+	(⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)}
+quotelines←{
+	lines←∪linestarts⍸⍵
+	nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
+	beg←linestarts[lines] ⋄ end←linestarts[lines+1]
+	m←∊∘⍵¨i←beg+⍳¨end-beg
+	¯1↓∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR}
+SIGNAL←{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en mkdm ⊃⍵
+	dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
+	dmx,←⊂'Message'(msg,CR,quotelines ⍵)
+	⎕SIGNAL⊂dmx}
+@ %def SIGNAL quotelines mkdm linestarts
+
+\subsubsection{Tokenizing the Input}
+
+<<Tokenize input>>=
 ⍝ Group input into lines as a nested vector
 	 pos←(⍳≢IN)⊆⍨~IN∊CR LF
 
@@ -653,7 +894,14 @@ TEST←{
 	 ∨⌿(Z≠t[li-1])∨(V≠t[li←⍸1⌽msk←t=L]):ERR ⎕SIGNAL 2
 	 t[li]←L ⋄ end[li]←end[li+1]
 	 d tm t pos end(⌿⍨)←⊂~msk
+@
 
+
+
+
+\subsubsection{Parsing Token Stream}
+
+<<Parse token stream>>=
 ⍝ Now that all compound data is tokenized, reify n field before tree-building
 	 n←{1↓⍎¨'0',⍵}@{t=N}(⊂'')@{t∊Z F}1 ⎕C@{t∊K S}IN∘I¨pos+⍳¨end-pos
 
@@ -933,13 +1181,6 @@ TEST←{
 	 zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
 	 p←(zi@ki⍳≢p)[p] ⋄ t k n pos end(⊣@zi⍨)←t k n pos end I¨⊂ki
 	 t k n pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
-
-⍝ Compute Exports
-	 msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
-	 xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
-
-	 d i←P2D p ⋄ d n t k pos end I∘⊢←⊂i ⋄ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
-	 (d t k(-sym⍳n)pos end)(xn xt)sym IN}
 @
 
 \subsection{Compiler Transformations}
@@ -1202,7 +1443,7 @@ CC←{
 	vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 	tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
 	put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-	opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+	<<The [[opsys]] utility>>
 	soext←{opsys'.dll' '.so' '.dylib'}
 	ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.c'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
 	cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,opsys''' ' '/lib64'' ' '/lib'' '}
@@ -1281,6 +1522,23 @@ CC←{
 
 \section{Utilities}
 
+\subsection{Must haves}
+
+There are some APL functions that are so critical as to be worthy 
+of primitive status.
+
+\begin{itemize}
+	\item Indexing
+	\item Under
+	\item Assert
+\end{itemize}
+
+<<Must Have APL Utilities>>=
+I←{(⊂⍵)⌷⍺}
+U←{⍺←⊢ ⋄ ⍵⍵⍣¯1⊢⍺ ⍺⍺⍥⍵⍵ ⍵}
+assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍎'⍺ ⎕SIGNAL 8' ⋄ shy←0}
+@ %def assert
+
 \subsection{AST Pretty-printing}
 
 <<Pretty-printing AST trees>>=
@@ -1358,7 +1616,16 @@ a little more convenient.
 PP←{⍵⊣⎕←#.DISPLAY ⍵}
 @ %def PP
 
+Both of these function exist outside of the [[codfns]] namespace 
+and so they get their own files inside of the [[src\]] directory.
 
+<<Tangle Commands>>=
+echo "Tangling src/DISPLAY.aplf..."
+notangle -R'[[DISPLAY]] Utility' codfns.nw > src/DISPLAY.aplf
+
+echo "Tangling src/PP.aplf..."
+notangle -R'[[PP]] Utility' codfns.nw > src/PP.aplf
+@ %def DISPLAY.aplf PP.aplf
 
 \subsection{Reading and Writing Files}
 
@@ -1387,7 +1654,17 @@ put←{
 Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
 	cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
 	⎕XML⍉↑d cls(⊂'')fld}
-@
+@ %def Xml
+
+\subsection{Detecting the Operating System}
+
+It is quite helpful to be able to easily detect the operating system
+that we are on.
+This turns out to be helpful in more areas than just the compiler.
+
+<<The [[opsys]] utility>>=
+opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+@ %def opsys
 
 \section{Developer Infrastructure}
 
@@ -1411,94 +1688,76 @@ Importantly, the tangled output is \emph{not} meant to be used
 as the primary means of reading or debugging the source.
 Instead, it is meant primarily as the machine readable version
 of the code only.
-We intend [[codfns.nw]] to tangle into the following files based on
-specific chunks that have been provided in this document.
 
-\begin{center}
-\begin{tabular}{ll}
-\toprule
-Chunk & File Output\\
-\midrule
-[[<<*>>]] & [[src\codfns.apln]]\\
-[[<<C Runtime Support>>]] & [[rtm\runtime.c]]\\
-[[<<C Runtime Header>>]] & [[rtm\codfns.h]]\\
-[[<<Implementation of APL Primitives>>]] & [[rtm\prim.apln]]\\
-[[<<[[DISPLAY]] Utility>>]] & [[src\DISPLAY.aplf]]\\
-[[<<[[MK∆RTM]] Command>>]] & [[src\MK∆RTM.aplf]]\\
-[[<<[[PP]] Utility>>]] & [[src\PP.aplf]]\\
-[[<<[[TANGLE]] Command>>]] & [[src\TANGLE.aplf]]\\
-[[<<[[TEST]] Function>>]] & [[src\TEST.aplf]]\\
-[[<<[[WEAVE]] Command>>]] & [[src\WEAVE.aplf]]\\
-[[<<Tangle Script>>]] & [[TANGLE.sh]]\\
-[[<<Weave Script>>]] & [[WEAVE.sh]]\\
-\bottomrule
-\end{tabular}
-\par\end{center}
+With noweb, we need to invoke [[notangle]] once for each of the 
+chunks that we wish to use to produce an output file.
+To make this easy, we build up a script to do this work for us.
 
-\noindent
-The following bash script creates these files.
+For Linux and Mac, the following bash script creates these files. 
+We use a separate chunk that we build up incrementally 
+throughout the rest of this document as a record of all the chunks
+that we should create.
+Notice that we explicitly tangle the [[TANGLE.sh]] file as the last
+thing that we do;
+this helps to ensure that we are reliably executing the rest of the 
+script before changing the contents of the file,
+as some systems will be affected and change execution behavior 
+in strange ways if we change the [[TANGLE.sh]] file early on in the 
+execution of the file.
 
-<<Tangle Script>>=
+<<[[TANGLE.sh]]>>=
 #!/bin/bash
-echo "Tangling src/codfns.apln..."
-notangle codfns.nw > src/codfns.apln
 
-echo "Tangling src/DISPLAY.aplf..."
-notangle -R'[[DISPLAY]] Utility' codfns.nw > src/DISPLAY.aplf
-
-echo "Tangling src/MK∆RTM.aplf..."
-notangle -R'[[MK∆RTM]] Command' codfns.nw > src/MK∆RTM.aplf
-
-echo "Tangling src/PP.aplf..."
-notangle -R'[[PP]] Utility' codfns.nw > src/PP.aplf
-
-echo "Tangling src/TANGLE.aplf..."
-notangle -R'[[TANGLE]] Command' codfns.nw > src/TANGLE.aplf
-
-echo "Tangling src/TEST.aplf..."
-notangle -R'[[TEST]] Function' codfns.nw > src/TEST.aplf
-
-echo "Tangling src/WEAVE.aplf..."
-notangle -R'[[WEAVE]] Command' codfns.nw > src/WEAVE.aplf
+<<Tangle Commands>>
 
 echo "Tangling TANGLE.sh..."
-notangle -R'Tangle Script' codfns.nw > TANGLE.sh
-
-echo "Tangling WEAVE.sh..."
-notangle -R'Weave Script' codfns.nw > WEAVE.sh
-@
+notangle -R'[[TANGLE.sh]]' codfns.nw > TANGLE.sh
+@ %def TANGLE.sh
 
 On Windows, the best way that we have found to do this is
-via the \href{https://www.cygwin.com/}{Cygwin project}.
+by installing noweb using the
+\href{https://www.cygwin.com/}{Cygwin project}
+and then calling [[TANGLE.sh]] from a local [[TANGLE.bat]] file.
 This document assumes that you have already successfully built and
 installed via Cygwin a working Icon-driven noweb installation.
 
 Users who prefer to work in a UNIX fashion via Cygwin or some other
 subsystem on Windows can follow the build scripts directly.
 For developers who prefer to work in a primarily Windows environment,
-the following build scripts assist in handling the calls into Cygwin
+the following [[TANGLE.bat]] build script assists 
+in handling the calls into Cygwin
 so that you do not need to have a Cygwin terminal open all the time.
 
-When tangled to the [[TANGLE.aplf]] file, this script will enable the
-user simply type [[TANGLE]] to update the code tree from within a
-Dyalog APL Session.
+<<[[TANGLE.bat]]>>=
+set SH=C:\cygwin64\bin\bash.exe -l -c
+%SH% "cd $OLDPWD && ./TANGLE.sh"
+@ %def TANGLE.bat
+
+<<Tangle Commands>>=
+echo "Tangling TANGLE.bat..."
+notangle -R'[[TANGLE.bat]]' codfns.nw > TANGLE.bat
+@
+
+When tangled to the [[TANGLE.aplf]] file,
+the following script enables the
+user to simply type [[TANGLE]] within a Dyalog APL session
+to update the code tree from within Dyalog itself.
 This is much more convenient than keeping a Cygwin Terminal
 session open along with a Dyalog APL session while programming.
-At the moment, this file is only designed to work on Windows with
-Cygwin, but we should in principle extend this to work on Linux
-and Mac OS X style machines as well.
 
 \emph{Note: this command expects to be run from within the root of
 the repository, not from, say, within the [[testing]] directory.}
 
-<<[[TANGLE]] Command>>=
-TANGLE;SH;CWD;CD
-SH←'C:\cygwin64\bin\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
-
-⎕CMD SH,'"',CD,' && ./TANGLE.sh"'
+<<[[TANGLE]]>>=
+TANGLE;opsys
+<<The [[opsys]] utility>>
+⎕CMD opsys '.\TANGLE.bat' './TANGLE.sh' './TANGLE.sh'
 @ %def TANGLE
+
+<<Tangle Commands>>=
+echo "Tangling TANGLE.aplf..."
+notangle -R'[[TANGLE]]' codfns.nw > src/TANGLE.aplf
+@ %def TANGLE.aplf
 
 \subsubsection{Weaving the Source}
 
@@ -1543,28 +1802,49 @@ own packages in the system,
 \emph{Note: this command expects to be run from within the root of
 the repository, not from, say, within the [[testing]] directory.}
 
-<<Weave Script>>=
+<<[[WEAVE.sh]]>>=
 #!/bin/bash
 mkdir -p woven
 noweave -delay -index codfns.nw > woven/codfns.tex
 cd woven
 xelatex codfns
 xelatex codfns
+@ %def WEAVE.sh
+
+<<Tangle Commands>>=
+echo "Tangling WEAVE.sh..."
+notangle -R'[[WEAVE.sh]]' codfns.nw > WEAVE.sh
+@
+
+\noindent
+And just like the tangling code, we want to define a [[TANGLE.bat]]
+batch file to call the Cygwin environment from Windows.
+
+<<[[WEAVE.bat]]>>=
+set SH=C:\cygwin64\bin\bash.exe -l -c
+%SH% "cd $OLDPWD && ./WEAVE.sh"
+@ %def WEAVE.bat
+
+<<Tangle Commands>>=
+echo "Tangling WEAVE.bat..."
+notangle -R'[[WEAVE.bat]]' codfns.nw > WEAVE.bat
 @
 
 Like the [[<<[[TANGLE]] Command>>]], the following command,
 when tangled to the [[WEAVE.aplf]]
-file permits the Windows programmer to simply execute [[WEAVE]] in a
-the Dyalog APL session and weave the documents together.
+file enables weaving in a the Dyalog APL session 
+by executing the [[WEAVE]] command.
 
-<<[[WEAVE]] Command>>=
-WEAVE;SH;CWD;CD
-SH←'C:\cygwin64\bin\mintty.exe -e C:\cygwin64\bin\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
-
-⎕CMD SH,'"',CD,' && ./WEAVE.sh"'
+<<[[WEAVE]]>>=
+WEAVE;opsys
+<<The [[opsys]] utility>>
+⎕CMD opsys '.\WEAVE.bat' './WEAVE.sh' './WEAVE.sh'
 @ %def WEAVE
+
+<<Tangle Commands>>=
+echo "Tangling src/WEAVE.aplf..."
+notangle -R'[[WEAVE]]' codfns.nw > src/WEAVE.aplf
+@ %def WEAVE.aplf
 
 \subsection{Building the Runtime}
 
@@ -1587,12 +1867,20 @@ This command takes a path to the root directory of the Co-dfns
 repository; this is to allow us to rebuild the runtime from anywhere
 in the system if we so choose.
 
-<<[[MK∆RTM]] Command>>=
-MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
+<<[[MK∆RTM]]>>=
+MK∆RTM path;put;tie;src;vsbat;vsc;wsd
 
 <<Basic [[tie]] and [[put]] utilities>>
 <<Build the runtime>>
 @ %def MK∆RTM
+
+This file is another of our external utilities that exists outside 
+of the [[codfns]] namespace, so it gets its own file in [[src\]].
+
+<<Tangle Commands>>=
+echo "Tangling src/MK∆RTM.aplf..."
+notangle -R'[[MK∆RTM]]' codfns.nw > src/MK∆RTM.aplf
+@ %def MK∆RTM.aplf
 
 The first step we must take is producing an appropriate C file that
 contains the primitives that we have defined in [[prim.apln]].
@@ -1623,22 +1911,25 @@ dependencies as well as producing the appropriate debugging symbols
 most of the time.
 
 <<Build [[codfns.dll]] DLL>>=
-vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
+vsbat←#.codfns.VS∆PATH
+vsbat,'\VC\Auxiliary\Build\vcvarsall.bat'
 wsd←path,'\'
 
 vsc←'%comspec% /C ""',vsbat,'" amd64'
-vsc,←' && cd "',wsd,'\rtm"'
-vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
-vsc,←'	/Fo".\\" /Fd"codfns.pdb"'
-vsc,←'	/WX /MD /EHsc /nologo /I"%AF_PATH%\include"'
-vsc,←'	/D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
-vsc,←'	"*.c" /link /DLL /OPT:REF'
-vsc,←'	/INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
-vsc,←'	/LIBPATH:"%AF_PATH%\lib"'
-vsc,←'	/DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
-vsc,←'	/OPT:ICF /ERRORREPORT:PROMPT'
-vsc,←'	/TLBID:1 /OUT:"codfns.dll""'
-@ %def vsbat wsd
+vsc,←'  && cd "',wsd,'\rtm"'
+vsc,←'  && cl /MP /W3 /wd4102 /wd4275'
+vsc,←'    /Od /Zc:inline /Zi /FS'
+vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
+vsc,←'    /WX /MD /EHsc /nologo'
+vsc,←'    /I"%AF_PATH%\include"'
+vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"EXPORTING"'
+vsc,←'    "*.c" /link /DLL /OPT:REF'
+vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
+vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
+vsc,←'    /DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
+vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
+vsc,←'    /TLBID:1 /OUT:"codfns.dll""'
+@ %def vsbat wsd vsc
 
 Finally, in order to write up the test harness to work right,
 we must copy the appropriate runtime files into the [[tests\]]

@@ -1,4 +1,4 @@
-MK∆RTM path;prim;put;src;tie;vsbat;vsc;wsd
+MK∆RTM path;put;tie;src;vsbat;vsc;wsd
 
 tie←{
         0::⎕SIGNAL ⎕EN
@@ -12,21 +12,24 @@ put←{
 }
 src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
 (path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
-vsbat←#.codfns.VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
+vsbat←#.codfns.VS∆PATH
+vsbat,'\VC\Auxiliary\Build\vcvarsall.bat'
 wsd←path,'\'
 
 vsc←'%comspec% /C ""',vsbat,'" amd64'
-vsc,←' && cd "',wsd,'\rtm"'
-vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
-vsc,←'        /Fo".\\" /Fd"codfns.pdb"'
-vsc,←'        /WX /MD /EHsc /nologo /I"%AF_PATH%\include"'
-vsc,←'        /D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
-vsc,←'        "*.c" /link /DLL /OPT:REF'
-vsc,←'        /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
-vsc,←'        /LIBPATH:"%AF_PATH%\lib"'
-vsc,←'        /DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
-vsc,←'        /OPT:ICF /ERRORREPORT:PROMPT'
-vsc,←'        /TLBID:1 /OUT:"codfns.dll""'
+vsc,←'  && cd "',wsd,'\rtm"'
+vsc,←'  && cl /MP /W3 /wd4102 /wd4275'
+vsc,←'    /Od /Zc:inline /Zi /FS'
+vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
+vsc,←'    /WX /MD /EHsc /nologo'
+vsc,←'    /I"%AF_PATH%\include"'
+vsc,←'    /D"NOMINMAX" /D"AF_DEBUG" /D"EXPORTING"'
+vsc,←'    "*.c" /link /DLL /OPT:REF'
+vsc,←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
+vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
+vsc,←'    /DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
+vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
+vsc,←'    /TLBID:1 /OUT:"codfns.dll""'
 ⎕CMD ⎕←vsc
 ⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'tests\"'
 ⎕CMD ⎕←'copy "',wsd,'rtm\codfns.exp" "',wsd,'tests\"'

@@ -1,6 +1,3 @@
-WEAVE;SH;CWD;CD
-SH←'C:\cygwin64\bin\mintty.exe -e C:\cygwin64\bin\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
-
-⎕CMD SH,'"',CD,' && ./WEAVE.sh"'
+WEAVE;opsys
+opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+⎕CMD opsys '.\WEAVE.bat' './WEAVE.sh' './WEAVE.sh'

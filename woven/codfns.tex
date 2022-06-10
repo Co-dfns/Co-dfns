@@ -158,6 +158,7 @@ This gives use the following code outline.
         \LA{}Interface to the backend C compiler~{\nwtagstyle{}\subpageref{NW2YR5B-2LnsgP-1}}\RA{}
         \LA{}Linking with Dyalog~{\nwtagstyle{}\subpageref{NW2YR5B-zH457-1}}\RA{}
 
+        \LA{}Must Have APL Utilities~{\nwtagstyle{}\subpageref{NW2YR5B-AF6fz-1}}\RA{}
         \LA{}AST Record Structure~{\nwtagstyle{}\subpageref{NW2YR5B-1gMT0G-1}}\RA{}
         \LA{}Converters between parent and depth vectors~{\nwtagstyle{}\subpageref{NW2YR5B-3dpNce-1}}\RA{}
         \LA{}XML Rendering~{\nwtagstyle{}\subpageref{NW2YR5B-1evvdc-1}}\RA{}
@@ -166,6 +167,20 @@ This gives use the following code outline.
 :EndNamespace
 \nwindexdefn{\nwixident{codfns}}{codfns}{NW2YR5B-1p0Y9w-1}\eatline
 \nwnotused{*}\nwidentdefs{\\{{\nwixident{codfns}}{codfns}}}\nwendcode{}\nwbegindocs{3}\nwdocspar
+This {\Tt{}\LA{}*~{\nwtagstyle{}\subpageref{NW2YR5B-1p0Y9w-1}}\RA{}\nwendquote} chunk is meant to be stored to a file. 
+We have a build system for doing this that depends
+on the contents of the {\Tt{}\LA{}Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}\RA{}\nwendquote} chunk. 
+Thus, we follow the convention here of updating the contents of 
+the {\Tt{}\LA{}Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}\RA{}\nwendquote} chunk each time that we initially define
+a new chunk that is intended to be output to a file during the 
+tangling process. 
+See more about the build infrastructure later in this document.
+
+\nwenddocs{}\nwbegincode{4}\sublabel{NW2YR5B-ufqpm-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{\relax}{NW2YR5B-ufqpm-2}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}\nwlinkedidentc{.apln}{NW2YR5B-ufqpm-1}..."
+notangle \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}\nwlinkedidentc{.apln}{NW2YR5B-ufqpm-1}
+\nwindexdefn{\nwixident{codfns.apln}}{codfns.apln}{NW2YR5B-ufqpm-1}\eatline
+\nwalsodefined{\\{NW2YR5B-ufqpm-2}\\{NW2YR5B-ufqpm-3}\\{NW2YR5B-ufqpm-4}\\{NW2YR5B-ufqpm-5}\\{NW2YR5B-ufqpm-6}\\{NW2YR5B-ufqpm-7}\\{NW2YR5B-ufqpm-8}\\{NW2YR5B-ufqpm-9}}\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentdefs{\\{{\nwixident{codfns.apln}}{codfns.apln}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{src}}{src}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-1}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-ufqpm-1}\nwendcode{}\nwbegindocs{5}\nwdocspar
 The primary user-facing interfaces into the compiler are 
 {\Tt{}\LA{}The Fix API~{\nwtagstyle{}\subpageref{NW2YR5B-2o6hoR-1}}\RA{}\nwendquote} and the {\Tt{}\LA{}User-command API~{\nwtagstyle{}\subpageref{NW2YR5B-2YFL86-1}}\RA{}\nwendquote}. 
 These are the ways that you primarily drive the entire compiler.
@@ -229,7 +244,7 @@ but that impact all other elements of the compiler source code,
 and so it pays especially well to pay attention and understand
 this code to a high degree.
 
-\nwenddocs{}\nwbegindocs{4}\subsection{Global Settings}
+\nwenddocs{}\nwbegindocs{6}\subsection{Global Settings}
 
 There are some global options that we assume to exist throughout
 the compiler.
@@ -242,10 +257,10 @@ to configure our APL environment.
 These are the typical ones, and we try to stick to the defaults,
 except that we are sane, and thus we use {\Tt{}\nwlinkedidentq{⎕IO}{NW2YR5B-2z4lmm-1}\nwendquote} set to {\Tt{}0\nwendquote}.
 
-\nwenddocs{}\nwbegincode{5}\sublabel{NW2YR5B-2z4lmm-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{\relax}{NW2YR5B-2z4lmm-2}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{7}\sublabel{NW2YR5B-2z4lmm-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{\relax}{NW2YR5B-2z4lmm-2}\nwenddeflinemarkup
 \nwlinkedidentc{⎕IO}{NW2YR5B-2z4lmm-1} \nwlinkedidentc{⎕ML}{NW2YR5B-2z4lmm-1} \nwlinkedidentc{⎕WX}{NW2YR5B-2z4lmm-1}←0 1 3
 \nwindexdefn{\nwixident{⎕IO}}{⎕IO}{NW2YR5B-2z4lmm-1}\nwindexdefn{\nwixident{⎕ML}}{⎕ML}{NW2YR5B-2z4lmm-1}\nwindexdefn{\nwixident{⎕WX}}{⎕WX}{NW2YR5B-2z4lmm-1}\eatline
-\nwalsodefined{\\{NW2YR5B-2z4lmm-2}\\{NW2YR5B-2z4lmm-3}\\{NW2YR5B-2z4lmm-4}}\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{⎕IO}}{⎕IO}}\\{{\nwixident{⎕ML}}{⎕ML}}\\{{\nwixident{⎕WX}}{⎕WX}}}\nwendcode{}\nwbegindocs{6}\nwdocspar
+\nwalsodefined{\\{NW2YR5B-2z4lmm-2}\\{NW2YR5B-2z4lmm-3}\\{NW2YR5B-2z4lmm-4}}\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{⎕IO}}{⎕IO}}\\{{\nwixident{⎕ML}}{⎕ML}}\\{{\nwixident{⎕WX}}{⎕WX}}}\nwendcode{}\nwbegindocs{8}\nwdocspar
 \noindent
 Additionally, we set a {\Tt{}\nwlinkedidentq{VERSION}{NW2YR5B-2z4lmm-2}\nwendquote} constant to track changes to the 
 system through the distributions.
@@ -255,10 +270,10 @@ as our versioning scheme.
 That being said, we also do not have particular qualms about changing
 the public API at a rapid pace, provided that we document this.
 
-\nwenddocs{}\nwbegincode{7}\sublabel{NW2YR5B-2z4lmm-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-2}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{NW2YR5B-2z4lmm-1}{NW2YR5B-2z4lmm-3}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{9}\sublabel{NW2YR5B-2z4lmm-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-2}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{NW2YR5B-2z4lmm-1}{NW2YR5B-2z4lmm-3}\nwenddeflinemarkup
 \nwlinkedidentc{VERSION}{NW2YR5B-2z4lmm-2}←4 1 0
 \nwindexdefn{\nwixident{VERSION}}{VERSION}{NW2YR5B-2z4lmm-2}\eatline
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{VERSION}}{VERSION}}}\nwendcode{}\nwbegindocs{8}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{VERSION}}{VERSION}}}\nwendcode{}\nwbegindocs{10}\nwdocspar
 \noindent
 We depend on ArrayFire%
 \footnote{\href{https://arrayfire.com/}{https://arrayfire.com/}}
@@ -296,11 +311,11 @@ particularly fragile.
 In such cases, always make sure that a good, solid OpenCL library
 is being used.
 
-\nwenddocs{}\nwbegincode{9}\sublabel{NW2YR5B-2z4lmm-3}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-3}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{NW2YR5B-2z4lmm-2}{NW2YR5B-2z4lmm-4}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{11}\sublabel{NW2YR5B-2z4lmm-3}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-3}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{NW2YR5B-2z4lmm-2}{NW2YR5B-2z4lmm-4}\nwenddeflinemarkup
 \nwlinkedidentc{AF∆PREFIX}{NW2YR5B-2z4lmm-3}←'/opt/arrayfire'
 \nwlinkedidentc{AF∆LIB}{NW2YR5B-2z4lmm-3}←'cuda'
 \nwindexdefn{\nwixident{AF∆PREFIX}}{AF∆PREFIX}{NW2YR5B-2z4lmm-3}\nwindexdefn{\nwixident{AF∆LIB}}{AF∆LIB}{NW2YR5B-2z4lmm-3}\eatline
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{AF∆PREFIX}}{AF∆PREFIX}}}\nwendcode{}\nwbegindocs{10}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{AF∆PREFIX}}{AF∆PREFIX}}}\nwendcode{}\nwbegindocs{12}\nwdocspar
 \noindent
 On Windows, we rely on the Visual Studio C/C++ compiler to build
 our runtime and user code.
@@ -341,11 +356,11 @@ Most users will simply need to alter {\Tt{}Community\nwendquote} to match the
 edition of Visual Studio 2022 that they have installed on their 
 system.
 
-\nwenddocs{}\nwbegincode{11}\sublabel{NW2YR5B-2z4lmm-4}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-4}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{NW2YR5B-2z4lmm-3}{\relax}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{13}\sublabel{NW2YR5B-2z4lmm-4}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-4}}}\moddef{Global Settings~{\nwtagstyle{}\subpageref{NW2YR5B-2z4lmm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwprevnextdefs{NW2YR5B-2z4lmm-3}{\relax}\nwenddeflinemarkup
 \nwlinkedidentc{VS∆PATH}{NW2YR5B-2z4lmm-4}←'\\Program Files\\Microsoft Visual Studio'
 \nwlinkedidentc{VS∆PATH}{NW2YR5B-2z4lmm-4},←'\\2022\\Community'
 \nwindexdefn{\nwixident{VS∆PATH}}{VS∆PATH}{NW2YR5B-2z4lmm-4}\eatline
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{VS∆PATH}}{VS∆PATH}}}\nwendcode{}\nwbegindocs{12}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{VS∆PATH}}{VS∆PATH}}}\nwendcode{}\nwbegindocs{14}\nwdocspar
 \subsection{The Fix API}
 
 One of the core entry points into the compiler is through the {\Tt{}\nwlinkedidentq{Fix}{NW2YR5B-2o6hoR-1}\nwendquote}
@@ -375,18 +390,18 @@ of how fast each phase is and whether one phase is taking an
 abnormally long time or not.
 It also helps in debugging.
 
-\nwenddocs{}\nwbegincode{13}\sublabel{NW2YR5B-2o6hoR-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2o6hoR-1}}}\moddef{The Fix API~{\nwtagstyle{}\subpageref{NW2YR5B-2o6hoR-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{15}\sublabel{NW2YR5B-2o6hoR-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2o6hoR-1}}}\moddef{The Fix API~{\nwtagstyle{}\subpageref{NW2YR5B-2o6hoR-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
 \nwlinkedidentc{Fix}{NW2YR5B-2o6hoR-1}←\{
-        _←a n s \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}←PS ⍵⊣⍞←'P'
+        _←a n s \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}←\nwlinkedidentc{PS}{NW2YR5B-38DvvD-1} ⍵⊣⍞←'P'
         _←          TT _⊣⍞←'C'
         _←          GC _⊣⍞←'G'
         _←        ⍺ CC _⊣⍞←'B'
                   n NS _⊣⍞←'L'
 \}
 \nwindexdefn{\nwixident{Fix}}{Fix}{NW2YR5B-2o6hoR-1}\eatline
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{Fix}}{Fix}}}\nwidentuses{\\{{\nwixident{src}}{src}}}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-2o6hoR-1}\nwendcode{}\nwbegindocs{14}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{Fix}}{Fix}}}\nwidentuses{\\{{\nwixident{PS}}{PS}}\\{{\nwixident{src}}{src}}}\nwindexuse{\nwixident{PS}}{PS}{NW2YR5B-2o6hoR-1}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-2o6hoR-1}\nwendcode{}\nwbegindocs{16}\nwdocspar
 The input requirements for {\Tt{}\nwlinkedidentq{Fix}{NW2YR5B-2o6hoR-1}\nwendquote} are not listed in the definition
-itself, because both the parser {\Tt{}PS\nwendquote} and the {\Tt{}\nwlinkedidentq{Fix}{NW2YR5B-2o6hoR-1}\nwendquote} function
+itself, because both the parser {\Tt{}\nwlinkedidentq{PS}{NW2YR5B-38DvvD-1}\nwendquote} and the {\Tt{}\nwlinkedidentq{Fix}{NW2YR5B-2o6hoR-1}\nwendquote} function
 need to use the same basic checks,
 and since the {\Tt{}\nwlinkedidentq{Fix}{NW2YR5B-2o6hoR-1}\nwendquote} function calls the parser
 as its first entry point,
@@ -403,18 +418,20 @@ The requirements are as follows:
 \noindent
 We generate a {\Tt{}DOMAIN\ ERROR\nwendquote} if the inputs are not well-formed.
 
-\nwenddocs{}\nwbegincode{15}\sublabel{NW2YR5B-3k63Cf-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3k63Cf-1}}}\moddef{Verify input from \code{}IN\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-3k63Cf-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{17}\sublabel{NW2YR5B-13WClx-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-13WClx-1}}}\moddef{Verify source input \code{}⍵\edoc{}, set \code{}IN\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-13WClx-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwenddeflinemarkup
+IN←⍵
+
 err←'PARSER EXPECTS SCALAR OR VECTOR INPUT'
-1<≢⍴IN:err ⎕SIGNAL 11
+1<≢⍴IN:err ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 11
 
 err←'PARSER EXPECTS SIMPLE OR VECTOR OF VECTOR INPUT'
-2<|≡IN:err ⎕SIGNAL 11
+2<|≡IN:err ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 11
 
 \LA{}Normalize the input formatting~{\nwtagstyle{}\subpageref{NW2YR5B-32ArUy-1}}\RA{}
 
 err←'PARSER EXPECTS CHARACTER ARRAY'
-0≠10|⎕DR IN:err ⎕SIGNAL 11
-\nwused{\\{NW2YR5B-38DvvD-1}}\nwendcode{}\nwbegindocs{16}\nwdocspar
+0≠10|⎕DR IN:err ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 11
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwidentuses{\\{{\nwixident{SIGNAL}}{SIGNAL}}}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-13WClx-1}\nwendcode{}\nwbegindocs{18}\nwdocspar
 
 The input formatting that is accepted means that newlines could be
 denoted either with {\Tt{}LF\nwendquote}, {\Tt{}CR\nwendquote}, or {\Tt{}CRLF\nwendquote}
@@ -439,13 +456,13 @@ of something else,
 this means that future code must be aware that there could be mixed
 line endings in the file.
 
-\nwenddocs{}\nwbegincode{17}\sublabel{NW2YR5B-32ArUy-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-32ArUy-1}}}\moddef{Normalize the input formatting~{\nwtagstyle{}\subpageref{NW2YR5B-32ArUy-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-3k63Cf-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{19}\sublabel{NW2YR5B-32ArUy-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-32ArUy-1}}}\moddef{Normalize the input formatting~{\nwtagstyle{}\subpageref{NW2YR5B-32ArUy-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-13WClx-1}}\nwenddeflinemarkup
 IN←∊(⊆IN),¨⎕UCS 10
-\nwused{\\{NW2YR5B-3k63Cf-1}}\nwendcode{}\nwbegindocs{18}\nwdocspar
+\nwused{\\{NW2YR5B-13WClx-1}}\nwendcode{}\nwbegindocs{20}\nwdocspar
 
 \subsection{The User Command API}
 
-\nwenddocs{}\nwbegincode{19}\sublabel{NW2YR5B-2YFL86-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2YFL86-1}}}\moddef{User-command API~{\nwtagstyle{}\subpageref{NW2YR5B-2YFL86-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{21}\sublabel{NW2YR5B-2YFL86-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2YFL86-1}}}\moddef{User-command API~{\nwtagstyle{}\subpageref{NW2YR5B-2YFL86-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
 ∇Z←Help _
  Z←'Usage: <object> <target> [-af=\{cpu,opencl,cuda\}]'
 ∇
@@ -465,21 +482,22 @@ IN←∊(⊆IN),¨⎕UCS 10
  →0⌿⍨'Compile'≢C
  \{##.THIS.⍎out,'←⍵'\}out \nwlinkedidentc{Fix}{NW2YR5B-2o6hoR-1} S⊣⎕EX'##.THIS.',out
 ∇
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{Fix}}{Fix}}}\nwindexuse{\nwixident{AF∆LIB}}{AF∆LIB}{NW2YR5B-2YFL86-1}\nwindexuse{\nwixident{Fix}}{Fix}{NW2YR5B-2YFL86-1}\nwendcode{}\nwbegindocs{20}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{Fix}}{Fix}}}\nwindexuse{\nwixident{AF∆LIB}}{AF∆LIB}{NW2YR5B-2YFL86-1}\nwindexuse{\nwixident{Fix}}{Fix}{NW2YR5B-2YFL86-1}\nwendcode{}\nwbegindocs{22}\nwdocspar
 
 \subsection{AST Record Structure}
 
-\nwenddocs{}\nwbegincode{21}\sublabel{NW2YR5B-1gMT0G-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1gMT0G-1}}}\moddef{AST Record Structure~{\nwtagstyle{}\subpageref{NW2YR5B-1gMT0G-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{23}\sublabel{NW2YR5B-1gMT0G-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1gMT0G-1}}}\moddef{AST Record Structure~{\nwtagstyle{}\subpageref{NW2YR5B-1gMT0G-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
 f∆←'ptknfsrdx'
 N∆←'ABCEFGKLMNOPSVZ'
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwendcode{}\nwbegindocs{22}\nwdocspar
+A B C E F G K L M N O P S V Z←1+⍳15
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwendcode{}\nwbegindocs{24}\nwdocspar
 
 \subsection{Converters between parent and depth vectors}
 
-\nwenddocs{}\nwbegincode{23}\sublabel{NW2YR5B-3dpNce-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3dpNce-1}}}\moddef{Converters between parent and depth vectors~{\nwtagstyle{}\subpageref{NW2YR5B-3dpNce-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{25}\sublabel{NW2YR5B-3dpNce-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3dpNce-1}}}\moddef{Converters between parent and depth vectors~{\nwtagstyle{}\subpageref{NW2YR5B-3dpNce-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
 P2D←\{z←⍪⍳≢⍵ ⋄ d←⍵≠,z ⋄ _←\{p⊣d+←⍵≠p←⍺[z,←⍵]\}⍣≡⍨⍵ ⋄ d(⍋(-1+d)↑⍤0 1⊢⌽z)\}
 D2P←\{0=≢⍵:⍬ ⋄ p⊣2\{p[⍵]←⍺[⍺⍸⍵]\}⌿⊢∘⊂⌸⍵⊣p←⍳≢⍵\}
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwendcode{}\nwbegindocs{24}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwendcode{}\nwbegindocs{26}\nwdocspar
 
 \section{Testing}
 
@@ -496,22 +514,22 @@ The testing framework is provided by the {\Tt{}ut.apln\nwendquote} file,
 which is not part of this literate program and so is not included in
 this document.
 In order to make some of the testing more convenient,
-we define the function {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-1ODqI6-1}\nwendquote} to run the tests
+we define the function {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-4gH67U-1}\nwendquote} to run the tests
 that exist in the {\Tt{}tests{\nwbackslash}\nwendquote} subdirectory.
 Each of these tests has a specific number which defines the test,
 and we refer to the tests by number when running them.
 Both of these testing functions assume that we are running inside
 of the {\Tt{}tests{\nwbackslash}\nwendquote} directory or one configured identically to it.
 
-The {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-1ODqI6-1}\nwendquote} function takes either {\Tt{}'ALL'\nwendquote} as its input or a test
+The {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-4gH67U-1}\nwendquote} function takes either {\Tt{}'ALL'\nwendquote} as its input or a test
 number in the form of an integer.
 Given an integer, we call the test matching that number in the
 current working directory.
 
-The {\Tt{}'ALL'\nwendquote} option causes {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-1ODqI6-1}\nwendquote} to run all of the tests that are
+The {\Tt{}'ALL'\nwendquote} option causes {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-4gH67U-1}\nwendquote} to run all of the tests that are
 defined in the current working directory.
 This command is a nicety, since we can technically do all of this
-by iterating the {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-1ODqI6-1}\nwendquote} function over the range of test numbers,
+by iterating the {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-4gH67U-1}\nwendquote} function over the range of test numbers,
 but this would not create the aggregate statistics that we would
 like to see at the end of the testing report.
 By using {\Tt{}'ALL'\nwendquote} we get to see a complete summary of the
@@ -519,51 +537,274 @@ results of testing all the code,
 rather than just the individual testing results on a per testing
 group/number basis.
 
-\nwenddocs{}\nwbegincode{25}\sublabel{NW2YR5B-1ODqI6-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1ODqI6-1}}}\moddef{\code{}TEST\edoc{} Function~{\nwtagstyle{}\subpageref{NW2YR5B-1ODqI6-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-\nwlinkedidentc{TEST}{NW2YR5B-1ODqI6-1}←\{
+\nwenddocs{}\nwbegincode{27}\sublabel{NW2YR5B-4gH67U-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-4gH67U-1}}}\moddef{\code{}TEST\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-4gH67U-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwlinkedidentc{TEST}{NW2YR5B-4gH67U-1}←\{
         #.UT.(print_passed print_summary)←1
         'ALL'≡⍵:#.UT.run './'
         path←'./t',(1 0⍕(4⍴10)⊤⍵),'_*_tests.dyalog'
         #.UT.run ⊃⊃0⎕NINFO⍠1⊢path
 \}
-\nwindexdefn{\nwixident{TEST}}{TEST}{NW2YR5B-1ODqI6-1}\eatline
-\nwnotused{[[TEST]] Function}\nwidentdefs{\\{{\nwixident{TEST}}{TEST}}}\nwendcode{}\nwbegindocs{26}\nwdocspar
+\nwindexdefn{\nwixident{TEST}}{TEST}{NW2YR5B-4gH67U-1}\eatline
+\nwnotused{[[TEST]]}\nwidentdefs{\\{{\nwixident{TEST}}{TEST}}}\nwendcode{}\nwbegindocs{28}\nwdocspar
+The {\Tt{}\nwlinkedidentq{TEST}{NW2YR5B-4gH67U-1}\nwendquote} function is part of the utilities that exist outside
+of the {\Tt{}\nwlinkedidentq{codfns}{NW2YR5B-1p0Y9w-1}\nwendquote} namespace, 
+so we define a file for it.
+
+\nwenddocs{}\nwbegincode{29}\sublabel{NW2YR5B-ufqpm-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-2}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-1}{NW2YR5B-ufqpm-3}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{TEST}{NW2YR5B-4gH67U-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-2}..."
+notangle -R'[[\nwlinkedidentc{TEST}{NW2YR5B-4gH67U-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{TEST}{NW2YR5B-4gH67U-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-2}
+\nwindexdefn{\nwixident{TEST.aplf}}{TEST.aplf}{NW2YR5B-ufqpm-2}\eatline
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentdefs{\\{{\nwixident{TEST.aplf}}{TEST.aplf}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{src}}{src}}\\{{\nwixident{TEST}}{TEST}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-2}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-ufqpm-2}\nwindexuse{\nwixident{TEST}}{TEST}{NW2YR5B-ufqpm-2}\nwendcode{}\nwbegindocs{30}\nwdocspar
 \section{Co-dfns Compiler}
 
 \subsection{Parser}
 
-\nwenddocs{}\nwbegincode{27}\sublabel{NW2YR5B-38DvvD-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-38DvvD-1}}}\moddef{Parser~{\nwtagstyle{}\subpageref{NW2YR5B-38DvvD-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
- PS←\{IN←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
-         I←\{(⊂⍵)⌷⍺\} ⋄ U←\{0=⎕NC'⍺':⍵⍵⍣¯1 ⍺⍺ ⍵⍵ ⍵ ⋄ ⍵⍵⍣¯1⊢(⍵⍵ ⍺) ⍺⍺ ⍵⍵ ⍵\}
-         assert←\{⍺←'assertion failure' ⋄ 0∊⍵:⍎'⍺ ⎕SIGNAL 8' ⋄ shy←0\}
+The first, and in many ways, the most complex element of the 
+compiler is the parser.
+APL has a number of unique issues when it comes to adequately 
+parsing the language,
+but the most important is handling the context-sensitive 
+nature of parsing variables: depending on the type of a variable,
+the parse tree can look very different.
+To manage this, we make use of a linear, multi-pass style of 
+parser in which the parsing process consists of numerous small 
+passes over the input, each time refining the input into something
+more like the final result.
+The parser should take some input that matches the input requirements
+of the {\Tt{}\nwlinkedidentq{Fix}{NW2YR5B-2o6hoR-1}\nwendquote} function and produce a suitable output AST.
 
-         \LA{}Verify input from \code{}IN\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-3k63Cf-1}}\RA{}
+$$PS :: Source → AST × ExportTypes × SymbolTable × Source$$
 
-⍝ Line and error reporting utilities
-         CR LF←⎕UCS 13 10
-         linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
-         mkdm←\{⍺←2 ⋄ line←linestarts⍸⍵ ⋄ no←'[',(⍕1+line),'] '
-                 i←(~IN[i]∊CR LF)⌿i←beg+⍳linestarts[line+1]-beg←linestarts[line]
-                 (⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)\}
-         quotelines←\{
-                 lines←∪linestarts⍸⍵
-                 nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
-                 beg←linestarts[lines] ⋄ end←linestarts[lines+1]
-                 m←∊∘⍵¨i←beg+⍳¨end-beg
-                 ¯1↓∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR\}
-         SIGNAL←\{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en mkdm ⊃⍵
-                 dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
-                 dmx,←⊂'Message'(msg,CR,quotelines ⍵)
-                 ⎕SIGNAL⊂dmx\}
+\noindent
+We can think of the parser as starting with a forest of trees, 
+each of which contains a single root node that represents a single
+character in from the input source,
+with all trees arranged in the source order.
+During each pass of the parser, we progressively combine these 
+trees into more complex trees until we end up at the end with a 
+single tree per parsed module.
+In other words, we take a fully flat forest of single-node trees 
+and progressively increase the depth while reducing the number of 
+root-nodes until we have our desired AST structure.
 
+We divide the parsing roughly into two main phases,
+the tokenization phase and the parsing phase. 
+Unlike most compilers, we don't have a strict division in these 
+two phases, so, as they say, think of them more like guidelines
+than actual rules%
+\footnote{
+        \href{https://www.youtube.com/watch?v=WJVBvvS57j0}
+                {https://www.youtube.com/watch?v=WJVBvvS57j0}
+}.
+
+\nwenddocs{}\nwbegincode{31}\sublabel{NW2YR5B-38DvvD-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-38DvvD-1}}}\moddef{Parser~{\nwtagstyle{}\subpageref{NW2YR5B-38DvvD-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwlinkedidentc{PS}{NW2YR5B-38DvvD-1}←\{
+        \LA{}Verify source input \code{}⍵\edoc{}, set \code{}IN\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-13WClx-1}}\RA{}
+        
+        \LA{}Parsing Constants~{\nwtagstyle{}\subpageref{NW2YR5B-3563XI-1}}\RA{}
+        \LA{}Line and error reporting utilities~{\nwtagstyle{}\subpageref{NW2YR5B-aELRs-1}}\RA{}
+
+        \LA{}Tokenize input~{\nwtagstyle{}\subpageref{NW2YR5B-1192i8-1}}\RA{}
+        \LA{}Parse token stream~{\nwtagstyle{}\subpageref{NW2YR5B-4CIf4o-1}}\RA{}
+        
+        \LA{}Adjust AST for output~{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-1}}\RA{}
+\}
+\nwindexdefn{\nwixident{PS}}{PS}{NW2YR5B-38DvvD-1}\eatline
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{PS}}{PS}}}\nwendcode{}\nwbegindocs{32}\nwdocspar
+When parsing, it's very helpful to have names for line endings.
+
+\nwenddocs{}\nwbegincode{33}\sublabel{NW2YR5B-3563XI-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3563XI-1}}}\moddef{Parsing Constants~{\nwtagstyle{}\subpageref{NW2YR5B-3563XI-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwenddeflinemarkup
+CR LF←⎕UCS 13 10
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwendcode{}\nwbegindocs{34}\nwdocspar
+
+\subsubsection{Output of the Parser}
+
+After we finish all of our parsing,
+we need to take the resulting AST and convert that into something
+that is suitable for output to the rest of the system.
+We do this in a few ways. 
+
+When we finish parsing, we expect the following fields:
+
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+Field & Description\\
+\midrule
+{\Tt{}d\nwendquote} & Depth vector\\
+{\Tt{}t\nwendquote} & Node type\\
+{\Tt{}k\nwendquote} & Node sub-class or ``kind''\\
+{\Tt{}n\nwendquote} & Name/value field\\
+{\Tt{}pos\nwendquote} & Starting index for source position\\
+{\Tt{}end\nwendquote} & Exclussive index for source end position\\
+{\Tt{}\nwlinkedidentq{xn}{NW2YR5B-1K2n9O-1}\nwendquote} & Names of top-level exported bindings\\
+{\Tt{}\nwlinkedidentq{xt}{NW2YR5B-1K2n9O-1}\nwendquote} & Types of top-level exported bindings\\
+{\Tt{}sym\nwendquote} & Symbol Table\\
+{\Tt{}IN\nwendquote} & Canonical source code\\
+\bottomrule
+\end{tabular}
+\par\end{center}
+
+The {\Tt{}\nwlinkedidentq{xn}{NW2YR5B-1K2n9O-1}\nwendquote} and {\Tt{}\nwlinkedidentq{xt}{NW2YR5B-1K2n9O-1}\nwendquote} fields are not part of the AST proper, 
+but form an auxiliary analysis that is exceptionally useful,
+and so we include this as a part of the output of the parser.
+After parsing a module, we want to extract out the top-level 
+bindings and what their types are,
+which we can then use to feed into things like the linker 
+and other areas that might need to know what names are available
+in a given module.
+Top-level bindings are identified as bindings that appear as a 
+part of an initialization function, also known as {\Tt{}F0\nwendquote}.
+
+\nwenddocs{}\nwbegincode{35}\sublabel{NW2YR5B-1K2n9O-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-1}}}\moddef{Adjust AST for output~{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwprevnextdefs{\relax}{NW2YR5B-1K2n9O-2}\nwenddeflinemarkup
+msk←(t=B)∧k[I@\{t[⍵]≠F\}⍣≡⍨p]=0
+\nwlinkedidentc{xn}{NW2YR5B-1K2n9O-1}←(0⍴⊂''),msk⌿n ⋄ \nwlinkedidentc{xt}{NW2YR5B-1K2n9O-1}←msk⌿k
+\nwindexdefn{\nwixident{xn}}{xn}{NW2YR5B-1K2n9O-1}\nwindexdefn{\nwixident{xt}}{xt}{NW2YR5B-1K2n9O-1}\eatline
+\nwalsodefined{\\{NW2YR5B-1K2n9O-2}\\{NW2YR5B-1K2n9O-3}\\{NW2YR5B-1K2n9O-4}}\nwused{\\{NW2YR5B-38DvvD-1}}\nwidentdefs{\\{{\nwixident{xn}}{xn}}\\{{\nwixident{xt}}{xt}}}\nwendcode{}\nwbegindocs{36}\nwdocspar
+We also want to convert the AST to an order that follows a 
+depth-first, preorder traversal order, 
+so that we can switch from using the parent vector to the depth
+vector.
+We use this output as our main output because it is space efficient
+for storage, and it works well as a canonical form to use.
+Because applications may want to only use the parser and not the 
+rest of the compiler, 
+we want to choose an output format that is suitable for external 
+as well as internal use.
+This has some performance overheads,
+but it is probably worth it regardless,
+as reordering at this point to allow a depth vector enables some 
+nice assumptions in the rest of the compiler.
+We use the {\Tt{}P2D\nwendquote} utility to reorder all of our AST columns.
+Note that things like the exported bindings and the symbol table 
+are not strictly part of the AST structure, because they are of a 
+different length and type than the other columns.
+
+\nwenddocs{}\nwbegincode{37}\sublabel{NW2YR5B-1K2n9O-2}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-2}}}\moddef{Adjust AST for output~{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwprevnextdefs{NW2YR5B-1K2n9O-1}{NW2YR5B-1K2n9O-3}\nwenddeflinemarkup
+d i←P2D p ⋄ d n t k pos end I∘⊢←⊂i
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwendcode{}\nwbegindocs{38}\nwdocspar
+
+There is an inefficiency in the AST representation at this point,
+where the {\Tt{}n\nwendquote} field contains character vectors.
+This inefficiency was necessary while building up the AST because
+we were not sure what symbols would be created
+before we parsed them,
+but at this point, we know the full set of symbols that we have in 
+the AST.
+This means that we can convert the {\Tt{}n\nwendquote} field to a symbol table 
+representation.
+In this case, we want the {\Tt{}n\nwendquote} field to pair with a {\Tt{}sym\nwendquote} list
+that contains all the unique symbols in the source.
+We want {\Tt{}old{\_}n≡sym[|new{\_}n]\nwendquote} to hold for this new {\Tt{}n\nwendquote} field.
+In other words, we want the new {\Tt{}n\nwendquote} field to contain negative 
+integers whose magnitudes are valid indices into the {\Tt{}sym\nwendquote} 
+symbol table.
+This means that there is only one character vector per unique symbol
+or numeric literal in the source code, which can greatly reduce 
+memory usage.
+Moreover, it is much faster to compare symbols that are represented by 
+numeric index rather than character vector.
+Most of the work we expect to be done on the {\Tt{}n\nwendquote} field, so that we 
+never have to pull in {\Tt{}sym\nwendquote} unless we want to know the actual value 
+of the symbol.
+This actually mimics the feature of symbols in other languages
+like Scheme,
+but it comes with an additional efficiency benefit in that we do not
+require the use of a full generalized pointer to represent a symbol
+if we have fewer symbols. 
+This means that we are very likely only going to need a single byte 
+or a couple of bytes per symbol to represent it in the {\Tt{}n\nwendquote} field.
+
+The choice to make all of our symbols negative in value is somewhat 
+strange, but we have a good reason for doing so.
+The {\Tt{}n\nwendquote} field is a single field that we use to contain general 
+data for every node, and as such, it represents a sort of union 
+type of all sorts of different data.
+In particular, we also want to be able to support using the {\Tt{}n\nwendquote} 
+field to point to other nodes in the AST, which is a feature we 
+rely heavily on in the compiler transformations.
+However, this feature would conflict with using the {\Tt{}n\nwendquote} field as an 
+index into the {\Tt{}sym\nwendquote} table, rather than as an index into the AST.
+By making symbol pointers negative, we put them into a separate 
+space than the positive AST node pointers, allowing us to store 
+both pointers in the same field. This may seem like a little bit of 
+a strange hack, but it actually makes reasoning about things a little 
+easier, because we can tend to think of {\Tt{}n\nwendquote} as a name, even if that 
+name is pointing to an AST or a symbol, and avoids needless space 
+duplication or the need to remember to update multiple fields that are 
+only relevant for some nodes.
+
+We map the $0$th index to be a null or empty symbol. 
+We also want to reserve the first four symbol slots $[1,4]$
+so that they will \emph{always} refer to the same symbols, 
+namely, {\Tt{}⍵\nwendquote}, {\Tt{}⍺\nwendquote}, {\Tt{}⍺⍺\nwendquote}, and {\Tt{}⍵⍵\nwendquote}. 
+
+This gives us the following definitions for {\Tt{}sym\nwendquote} and {\Tt{}n\nwendquote}.
+
+\nwenddocs{}\nwbegincode{39}\sublabel{NW2YR5B-1K2n9O-3}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-3}}}\moddef{Adjust AST for output~{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwprevnextdefs{NW2YR5B-1K2n9O-2}{NW2YR5B-1K2n9O-4}\nwenddeflinemarkup
+sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
+n←-sym⍳n
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwendcode{}\nwbegindocs{40}\nwdocspar
+
+Finally, we want to return our AST structure in a meaningful way.
+Logically, we have the AST proper, which consists of these fields:
+
+\begin{verbatim}
+d t k n pos end
+\end{verbatim}
+
+\noindent
+The above fields are returned as an inverted table,
+where each column is a vector of the same length.
+We also want to return the variable environment,
+which gives the names of our top-level bindings and their types,
+also as an inverted table.
+Finally, we must return a canonical representation of the source 
+code that is suitable as an indexing target for the {\Tt{}pos\nwendquote} and {\Tt{}end\nwendquote}
+fields, as well as the symbol table.
+Thus, we have a four element vector as the return value:
+
+\begin{verbatim}
+AST TopBindingTypes SymbolTable InputSource
+\end{verbatim}
+
+\noindent
+Which gives us the following return value.
+
+\nwenddocs{}\nwbegincode{41}\sublabel{NW2YR5B-1K2n9O-4}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-4}}}\moddef{Adjust AST for output~{\nwtagstyle{}\subpageref{NW2YR5B-1K2n9O-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwprevnextdefs{NW2YR5B-1K2n9O-3}{\relax}\nwenddeflinemarkup
+(d t k n pos end)(\nwlinkedidentc{xn}{NW2YR5B-1K2n9O-1} \nwlinkedidentc{xt}{NW2YR5B-1K2n9O-1})sym IN
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwidentuses{\\{{\nwixident{xn}}{xn}}\\{{\nwixident{xt}}{xt}}}\nwindexuse{\nwixident{xn}}{xn}{NW2YR5B-1K2n9O-4}\nwindexuse{\nwixident{xt}}{xt}{NW2YR5B-1K2n9O-4}\nwendcode{}\nwbegindocs{42}\nwdocspar
+
+\subsubsection{Handling Parsing Errors}
+
+\nwenddocs{}\nwbegincode{43}\sublabel{NW2YR5B-aELRs-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-aELRs-1}}}\moddef{Line and error reporting utilities~{\nwtagstyle{}\subpageref{NW2YR5B-aELRs-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwenddeflinemarkup
+\nwlinkedidentc{linestarts}{NW2YR5B-aELRs-1}←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
+\nwlinkedidentc{mkdm}{NW2YR5B-aELRs-1}←\{⍺←2 ⋄ line←\nwlinkedidentc{linestarts}{NW2YR5B-aELRs-1}⍸⍵ ⋄ no←'[',(⍕1+line),'] '
+        i←(~IN[i]∊CR LF)⌿i←beg+⍳\nwlinkedidentc{linestarts}{NW2YR5B-aELRs-1}[line+1]-beg←\nwlinkedidentc{linestarts}{NW2YR5B-aELRs-1}[line]
+        (⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)\}
+\nwlinkedidentc{quotelines}{NW2YR5B-aELRs-1}←\{
+        lines←∪\nwlinkedidentc{linestarts}{NW2YR5B-aELRs-1}⍸⍵
+        nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
+        beg←\nwlinkedidentc{linestarts}{NW2YR5B-aELRs-1}[lines] ⋄ end←\nwlinkedidentc{linestarts}{NW2YR5B-aELRs-1}[lines+1]
+        m←∊∘⍵¨i←beg+⍳¨end-beg
+        ¯1↓∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR\}
+\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1}←\{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en \nwlinkedidentc{mkdm}{NW2YR5B-aELRs-1} ⊃⍵
+        dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
+        dmx,←⊂'Message'(msg,CR,\nwlinkedidentc{quotelines}{NW2YR5B-aELRs-1} ⍵)
+        ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1}⊂dmx\}
+\nwindexdefn{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-aELRs-1}\nwindexdefn{\nwixident{quotelines}}{quotelines}{NW2YR5B-aELRs-1}\nwindexdefn{\nwixident{mkdm}}{mkdm}{NW2YR5B-aELRs-1}\nwindexdefn{\nwixident{linestarts}}{linestarts}{NW2YR5B-aELRs-1}\eatline
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwidentdefs{\\{{\nwixident{linestarts}}{linestarts}}\\{{\nwixident{mkdm}}{mkdm}}\\{{\nwixident{quotelines}}{quotelines}}\\{{\nwixident{SIGNAL}}{SIGNAL}}}\nwendcode{}\nwbegindocs{44}\nwdocspar
+\subsubsection{Tokenizing the Input}
+
+\nwenddocs{}\nwbegincode{45}\sublabel{NW2YR5B-1192i8-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1192i8-1}}}\moddef{Tokenize input~{\nwtagstyle{}\subpageref{NW2YR5B-1192i8-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwenddeflinemarkup
 ⍝ Group input into lines as a nested vector
          pos←(⍳≢IN)⊆⍨~IN∊CR LF
 
 ⍝ Mask strings
          0≠≢lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos:\{
                  EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
-                 EM,←quotelines ∊(msk⌿¨pos)[lin]
-                 EM ⎕SIGNAL 2\}⍬
+                 EM,←\nwlinkedidentc{quotelines}{NW2YR5B-aELRs-1} ∊(msk⌿¨pos)[lin]
+                 EM ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2\}⍬
 
 ⍝ Remove comments
          pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽¨msk)⍲'⍝'=IN∘I¨pos
@@ -591,8 +832,8 @@ group/number basis.
          x←' '@\{t≠0\}IN[pos] ⍝ The spaces produce nice invariants
          ∨⌿msk←~x∊alp,num,syna,synb,prms,WS:\{
                  EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
-                 EM,←quotelines ⍸msk
-                 EM ⎕SIGNAL 2\}⍬
+                 EM,←\nwlinkedidentc{quotelines}{NW2YR5B-aELRs-1} ⍸msk
+                 EM ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2\}⍬
 
 ⍝ Tokenize numbers
          _←\{dm[⍵]←∧⍀dm[⍵]\}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
@@ -600,14 +841,14 @@ group/number basis.
          dm∨←('¯'=x)∧1⌽dm
          dm∨←(x∊'EeJj')∧(¯1⌽dm)∧1⌽dm
          ∨⌿msk←(dm=0)∧x='¯':2'ORPHANED ¯'SIGNAL pos⌿⍨msk
-         ∨⌿\{1<+⌿⍵='j'\}¨dp←⎕C¨dm⊆x:'MULTIPLE J IN NUMBER'⎕SIGNAL 2
-         ∨⌿\{1<+⌿⍵='e'\}¨dp←⊃⍪/\{⍵⊆⍨⍵≠'j'\}¨dp:'MULTIPLE E IN NUMBER'⎕SIGNAL 2
-         ∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕SIGNAL 2
-         ∨⌿'e'=⊃∘⌽¨dp:'MISSING EXPONENT'⎕SIGNAL 2
+         ∨⌿\{1<+⌿⍵='j'\}¨dp←⎕C¨dm⊆x:'MULTIPLE J IN NUMBER'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+         ∨⌿\{1<+⌿⍵='e'\}¨dp←⊃⍪/\{⍵⊆⍨⍵≠'j'\}¨dp:'MULTIPLE E IN NUMBER'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+         ∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+         ∨⌿'e'=⊃∘⌽¨dp:'MISSING EXPONENT'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          mn ex←↓⍉↑\{2↑(⍵⊆⍨⍵≠'e'),⊂''\}¨dp
-         ∨⌿\{1<+⌿'.'=⍵\}¨mn,ex:'MULTIPLE . IN NUMBER'⎕SIGNAL 2
-         ∨⌿'.'∊¨ex:'REAL NUMBER IN EXPONENT'⎕SIGNAL 2
-         ∨⌿\{∨⌿1↓⍵∊'¯'\}¨mn,ex:'MISPLACED ¯'⎕SIGNAL 2
+         ∨⌿\{1<+⌿'.'=⍵\}¨mn,ex:'MULTIPLE . IN NUMBER'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+         ∨⌿'.'∊¨ex:'REAL NUMBER IN EXPONENT'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+         ∨⌿\{∨⌿1↓⍵∊'¯'\}¨mn,ex:'MISPLACED ¯'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 
 ⍝ Tokenize Variables
@@ -622,15 +863,15 @@ group/number basis.
          t[⍸(~dm)∧x∊prms]←P ⋄ t[⍸x∊syna]←A
 
 ⍝ Compute dfns regions and type, include \} as a child
-         t[⍸'\{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['\{\}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
+         t[⍸'\{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['\{\}'⍳x]:'UNBALANCED DFNS'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
 
 ⍝ Check for out of context dfns formals
-         ∨⌿(d=0)∧(t=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
+         ∨⌿(d=0)∧(t=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
 
 ⍝ Compute trad-fns regions
-         ∨⌿Z≠t⌿⍨1⌽msk←(d=0)∧'∇'=x:'TRAD-FNS START/END LINES MUST BEGIN WITH ∇'⎕SIGNAL 2
-         0≠⊃tm←¯1⌽≠⍀(d=0)∧'∇'=x:'UNBALANCED TRAD-FNS'⎕SIGNAL 2
-         ∨⌿Z≠t⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'⎕SIGNAL 2
+         ∨⌿Z≠t⌿⍨1⌽msk←(d=0)∧'∇'=x:'TRAD-FNS START/END LINES MUST BEGIN WITH ∇'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+         0≠⊃tm←¯1⌽≠⍀(d=0)∧'∇'=x:'UNBALANCED TRAD-FNS'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+         ∨⌿Z≠t⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
 
 ⍝ Identify Label colons versus others
          t[⍸tm∧(d=0)∧∊((~⊃)∧(<⍀∨⍀))¨':'=(t=Z)⊂IN[pos]]←L
@@ -639,7 +880,7 @@ group/number basis.
          ki←⍸(t=0)∧(d=0)∧(':'=IN[pos])∧1⌽t=V
          t[ki]←K ⋄ end[ki]←end[ki+1] ⋄ t[ki+1]←0
          ERR←'EMPTY COLON IN NON-DFNS CONTEXT, EXPECTED LABEL OR KEYWORD'
-         ∨⌿(t=0)∧(d=0)∧':'=IN[pos]:ERR ⎕SIGNAL 2
+         ∨⌿(t=0)∧(d=0)∧':'=IN[pos]:ERR ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
 
 ⍝ Tokenize System Variables
          si←⍸('⎕'=IN[pos])∧1⌽t=V
@@ -650,10 +891,17 @@ group/number basis.
 
 ⍝ Tokenize Labels
          ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
-         ∨⌿(Z≠t[li-1])∨(V≠t[li←⍸1⌽msk←t=L]):ERR ⎕SIGNAL 2
+         ∨⌿(Z≠t[li-1])∨(V≠t[li←⍸1⌽msk←t=L]):ERR ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          t[li]←L ⋄ end[li]←end[li+1]
          d tm t pos end(⌿⍨)←⊂~msk
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwidentuses{\\{{\nwixident{quotelines}}{quotelines}}\\{{\nwixident{SIGNAL}}{SIGNAL}}}\nwindexuse{\nwixident{quotelines}}{quotelines}{NW2YR5B-1192i8-1}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-1192i8-1}\nwendcode{}\nwbegindocs{46}\nwdocspar
 
+
+
+
+\subsubsection{Parsing Token Stream}
+
+\nwenddocs{}\nwbegincode{47}\sublabel{NW2YR5B-4CIf4o-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-4CIf4o-1}}}\moddef{Parse token stream~{\nwtagstyle{}\subpageref{NW2YR5B-4CIf4o-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-38DvvD-1}}\nwenddeflinemarkup
 ⍝ Now that all compound data is tokenized, reify n field before tree-building
          n←\{1↓⍎¨'0',⍵\}@\{t=N\}(⊂'')@\{t∊Z F\}1 ⎕C@\{t∊K S\}IN∘I¨pos+⍳¨end-pos
 
@@ -665,12 +913,12 @@ group/number basis.
          KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE'
          KW,¨⍨←':'
          msk←~KW∊⍨kws←n⌿⍨km←t=K
-         ∨⌿msk:('UNRECOGNIZED KEYWORD ',kws⊃⍨⊃⍸msk)⎕SIGNAL 2
+         ∨⌿msk:('UNRECOGNIZED KEYWORD ',kws⊃⍨⊃⍸msk)⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          msk←kws∊':NAMESPACE' ':ENDNAMESPACE'
-         ∨⌿msk∧km⌿tm:'NAMESPACE SCRIPTS MUST APPEAR AT THE TOP LEVEL'⎕SIGNAL 2
+         ∨⌿msk∧km⌿tm:'NAMESPACE SCRIPTS MUST APPEAR AT THE TOP LEVEL'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          msk←kws∊KW~':NAMESPACE' ':ENDNAMESPACE' ':SECTION' ':ENDSECTION'
          ∨⌿msk←msk∧~km⌿tm:\{msg←2'STRUCTURED STATEMENTS MUST APPEAR WITHIN TRAD-FNS'
-                 msg SIGNAL ∊\{x+⍳end[⍵]-x←pos[⍵]\}¨⍸km⍀msk\}⍬
+                 msg \nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} ∊\{x+⍳end[⍵]-x←pos[⍵]\}¨⍸km⍀msk\}⍬
 
 ⍝ Verify system variables are valid
          SYSV←,¨'Á' 'A' 'AI' 'AN' 'AV' 'AVU' 'BASE' 'CT' 'D' 'DCT' 'DIV' 'DM'
@@ -694,7 +942,7 @@ group/number basis.
          SYSD←,¨'OPT' 'R' 'S'
          ∨⌿msk←(t=S)∧~n∊'⎕',¨SYSV,SYSF,SYSD:\{
                  ERR←2'INVALID SYSTEM VARIABLE, FUNCTION, OR OPERATOR'
-                 ERR SIGNAL∊pos[⍵]\{⍺+⍳⍵-⍺\}¨end[⍵]
+                 ERR \nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1}∊pos[⍵]\{⍺+⍳⍵-⍺\}¨end[⍵]
          \}⍸msk
 
 ⍝ Compute parent vector from d
@@ -722,15 +970,15 @@ group/number basis.
 ⍝ Parse Keyword structures
          nss←n∊⊂':NAMESPACE' ⋄ nse←n∊⊂':ENDNAMESPACE'
          ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE'
-         Z∨.≠t⌿⍨1⌽nss:ERR ⎕SIGNAL 2
+         Z∨.≠t⌿⍨1⌽nss:ERR ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
-         ∨⌿(Z≠t⌿⍨¯1⌽nss)∧(V≠t⌿⍨¯1⌽nss)∨Z≠t⌿⍨¯2⌽nss:ERR ⎕SIGNAL 2
+         ∨⌿(Z≠t⌿⍨¯1⌽nss)∧(V≠t⌿⍨¯1⌽nss)∨Z≠t⌿⍨¯2⌽nss:ERR ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          ERR←':ENDNAMESPACE KEYWORD MUST APPEAR ALONE ON A LINE'
-         ∨⌿Z≠t⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR ⎕SIGNAL 2
+         ∨⌿Z≠t⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          t[nsi←⍸1⌽nss]←M ⋄ t[nei←⍸1⌽nse]←-M
          n[i]←n[1+i←⍸(t=M)∧V=1⌽t] ⋄ end[nsi]←end[nei]
          x←⍸p=⍳≢p ⋄ d←+⍀(t[x]=M)+-t[x]=-M
-         0≠⊃⌽d:':NAMESPACE KEYWORD MISSING :ENDNAMESPACE PAIR'⎕SIGNAL 2
+         0≠⊃⌽d:':NAMESPACE KEYWORD MISSING :ENDNAMESPACE PAIR'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          p[x]←x[D2P ¯1⌽d]
 
 ⍝ Delete unnecessary namespace nodes from the tree, leave only M's
@@ -742,8 +990,8 @@ group/number basis.
 ⍝ Map guard statements to (G (Z ...) (Z ...))
          _←p[i]\{
                  0=+⌿m←':'=IN[pos[⍵]]:⍬
-                 ⊃m:'EMPTY GUARD \nwlinkedidentc{TEST}{NW2YR5B-1ODqI6-1} EXPRESSION'⎕SIGNAL 2
-                 1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
+                 ⊃m:'EMPTY GUARD \nwlinkedidentc{TEST}{NW2YR5B-4gH67U-1} EXPRESSION'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
+                 1<+⌿m:'TOO MANY GUARDS'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
                  t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
                  ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←⊂'' ⋄ k[gz cq,ci]←1
          0\}⌸i←⍸t[p[p]]=F
@@ -753,7 +1001,7 @@ group/number basis.
                  x←IN[pos[⍵]] ⋄ bd←+⍀bm←(bo←'['=x)+-bc←']'=x ⋄ pd←+⍀pm←(po←'('=x)+-pc←')'=x
                  0≠⊃⌽bd:2'UNBALANCED BRACKETS'SIGNAL pos[⍵]\{x+⍳(⌈⌿⍵)-x←⌊⌿⍺\}⍥\{⍵⌿⍨0≠bd\}end[⍵]
                  0≠⊃⌽pd:2'UNBALANCED PARENTHESES'SIGNAL pos[⍵]\{x+⍳(⌈⌿⍵)-x←⌊⌿⍺\}⍥\{⍵⌿⍨0≠pd\}end[⍵]
-                 (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
+                 (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
                  p[⍵]←(⍺,⍵)[1+¯1@\{⍵=⍳≢⍵\}D2P +⍀¯1⌽bm+pm] ⋄ t[bo⌿⍵]←¯1 ⋄ t[po⌿⍵]←Z
                  end[po⌿⍵]←end[⌽pc⌿⍵] ⋄ end[bo⌿⍵]←end[⌽bc⌿⍵]
          0\}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
@@ -770,7 +1018,7 @@ group/number basis.
          _←p[i]\{
                  t[⍵⌿⍨(n[⍵]∊⊂,'←')∧0,¯1↓bm[⍵]]←B
                  b v←\{(⊃¨x)(1↓¨x←⍵⌿⍨\{t[⊃⍵]=B\}¨⍵)\}¯1⌽¨⍵⊂⍨1,¯1↓t[⍵]∊P B
-                 ∨⌿~bm[∊v]:'CANNOT BIND ASSIGNMENT VALUE'⎕SIGNAL 2
+                 ∨⌿~bm[∊v]:'CANNOT BIND ASSIGNMENT VALUE'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
                  p[⍵]←(⍺,b)[0,¯1↓+⍀t[⍵]=B]
                  n[b]←n[∊v] ⋄ t[∊v]←¯7 ⋄ pos[b]←pos[∊v] ⋄ end[b]←end[⊃⌽⍵]
          0\}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
@@ -802,7 +1050,7 @@ group/number basis.
 ⍝ Infer types of bindings, groups, and variables
          z x←↓⍉p[i]\{⍺⍵\}⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p
          x←\{⍵⌿⍨~∧⍀t[⍵]=¯1\}U⌽¨x
-         0∨.=≢¨x:'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'⎕SIGNAL 2
+         0∨.=≢¨x:'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          _←\{
                  k[msk⌿z]←k[x⌿⍨msk←(k[⊃¨x]≠0)∧1=≢¨x] ⋄ z x⌿⍨←⊂~msk
                  k[z⌿⍨msk←k[⊃¨x]=4]←3 ⋄ z x⌿⍨←⊂~msk
@@ -826,7 +1074,7 @@ group/number basis.
 
 ⍝ Rationalize F[X]
          _←p[i]\{
-                 ⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX'⎕SIGNAL 2
+                 ⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
                  k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
          0\}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
          i←⍸(t=¯1)∧k=4 ⋄ j←⍸(t[p]=¯1)∧k[p]=4
@@ -843,7 +1091,7 @@ group/number basis.
 
 ⍝ Mask and verify dyadic operator right operands
          (dm←¯1⌽(k[i]=4)∧t[i]∊F P V Z)∨.∧(~km)∨k[i]∊0 3 4:\{
-                 'MISSING RIGHT OPERAND'⎕SIGNAL 2
+                 'MISSING RIGHT OPERAND'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          \}⍬
 
 ⍝ Refine schizophrenic types
@@ -851,7 +1099,7 @@ group/number basis.
 
 ⍝ Rationalize ∘.
          jm←(t[i]=P)∧n[i]∊⊂,'∘.'
-         jm∨.∧1⌽(~km)∨k[i]∊3 4:'MISSING OPERAND TO ∘.'⎕SIGNAL 2
+         jm∨.∧1⌽(~km)∨k[i]∊3 4:'MISSING OPERAND TO ∘.'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 2
          p←((ji←jm⌿i)@(jj←i⌿⍨¯1⌽jm)⍳≢p)[p] ⋄ t[ji,jj]←t[jj,ji] ⋄ k[ji,jj]←k[jj,ji]
          n[ji,jj]←n[jj,ji] ⋄ pos[ji,jj]←pos[ji,ji] ⋄ end[ji,jj]←end[jj,jj]
 
@@ -922,7 +1170,7 @@ group/number basis.
 
 ⍝ Sanity check
          ERR←'INVARIANT ERROR: Z node with multiple children'
-         ERR assert(+⌿(t[p]=Z)∧p≠⍳≢p)=+⌿t=Z:
+         ERR \nwlinkedidentc{assert}{NW2YR5B-AF6fz-1}(+⌿(t[p]=Z)∧p≠⍳≢p)=+⌿t=Z:
 
 ⍝ Count parentheses in source information
          ip←p[i←⍸(t[p]=Z)∧n[p]∊⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
@@ -933,18 +1181,11 @@ group/number basis.
          zi←p I@\{t[p[⍵]]=Z\}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
          p←(zi@ki⍳≢p)[p] ⋄ t k n pos end(⊣@zi⍨)←t k n pos end I¨⊂ki
          t k n pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
-
-⍝ Compute Exports
-         msk←(t=B)∧k[I@\{t[⍵]≠F\}⍣≡⍨p]=0
-         xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
-
-         d i←P2D p ⋄ d n t k pos end I∘⊢←⊂i ⋄ sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵',n
-         (d t k(-sym⍳n)pos end)(xn xt)sym IN\}
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{TEST}}{TEST}}}\nwindexuse{\nwixident{TEST}}{TEST}{NW2YR5B-38DvvD-1}\nwendcode{}\nwbegindocs{28}\nwdocspar
+\nwused{\\{NW2YR5B-38DvvD-1}}\nwidentuses{\\{{\nwixident{assert}}{assert}}\\{{\nwixident{SIGNAL}}{SIGNAL}}\\{{\nwixident{TEST}}{TEST}}}\nwindexuse{\nwixident{assert}}{assert}{NW2YR5B-4CIf4o-1}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-4CIf4o-1}\nwindexuse{\nwixident{TEST}}{TEST}{NW2YR5B-4CIf4o-1}\nwendcode{}\nwbegindocs{48}\nwdocspar
 
 \subsection{Compiler Transformations}
 
-\nwenddocs{}\nwbegincode{29}\sublabel{NW2YR5B-1jC2QX-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1jC2QX-1}}}\moddef{Compiler~{\nwtagstyle{}\subpageref{NW2YR5B-1jC2QX-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{49}\sublabel{NW2YR5B-1jC2QX-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1jC2QX-1}}}\moddef{Compiler~{\nwtagstyle{}\subpageref{NW2YR5B-1jC2QX-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
  TT←\{((d t k n ss se)exp sym \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1})←⍵ ⋄ I←\{(⊂⍵)⌷⍺\}
          A B C E F G K L M N O P S V Z←1+⍳15
 
@@ -981,11 +1222,11 @@ group/number basis.
          xi←⍸(t=B)∧k[r]=0
 
          p t k n f s r d xi sym\}
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{src}}{src}}}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-1jC2QX-1}\nwendcode{}\nwbegindocs{30}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{src}}{src}}}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-1jC2QX-1}\nwendcode{}\nwbegindocs{50}\nwdocspar
 
 \subsection{Code Generator}
 
-\nwenddocs{}\nwbegincode{31}\sublabel{NW2YR5B-HCURD-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-HCURD-1}}}\moddef{Code Generator~{\nwtagstyle{}\subpageref{NW2YR5B-HCURD-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{51}\sublabel{NW2YR5B-HCURD-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-HCURD-1}}}\moddef{Code Generator~{\nwtagstyle{}\subpageref{NW2YR5B-HCURD-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
 GC←\{
         p t k n fr sl rf fd xi sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
         I←\{(⊂⍵)⌷⍺\} ⋄ com←\{⊃\{⍺,',',⍵\}/⍵\}
@@ -1129,7 +1370,7 @@ GC←\{
                         z,←⊂n,'(struct array **z, struct array *l, struct array *r, void *fv[]);'
                         z,←⊂''
                 z\}⍵
-                'UNKNOWN FUNCTION TYPE'⎕SIGNAL 16
+                'UNKNOWN FUNCTION TYPE'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 16
         \}
 
         Zx←\{n←sym⊃⍨|n[⍵] ⋄ rid←⍕rf[⍵]
@@ -1185,24 +1426,24 @@ GC←\{
                         z,←⊂'\}'
                         z,←⊂''
                 z\}⍵
-                ⍎'''UNKNOWN EXPORT TYPE''⎕SIGNAL 16'
+                ⍎'''UNKNOWN EXPORT TYPE''⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 16'
         \}
 
         d i←P2D p ⋄ ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;]
-        NOTFOUND←\{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16\}
+        NOTFOUND←\{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 16\}
         dis←\{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵\}
         z←∊,∘NL¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
         z\}
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-HCURD-1}\nwendcode{}\nwbegindocs{32}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{SIGNAL}}{SIGNAL}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-HCURD-1}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-HCURD-1}\nwendcode{}\nwbegindocs{52}\nwdocspar
 
 \subsection{Backend C Compiler Interface}
 
-\nwenddocs{}\nwbegincode{33}\sublabel{NW2YR5B-2LnsgP-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2LnsgP-1}}}\moddef{Interface to the backend C compiler~{\nwtagstyle{}\subpageref{NW2YR5B-2LnsgP-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{53}\sublabel{NW2YR5B-2LnsgP-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2LnsgP-1}}}\moddef{Interface to the backend C compiler~{\nwtagstyle{}\subpageref{NW2YR5B-2LnsgP-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
 CC←\{
         \nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1}←\nwlinkedidentc{VS∆PATH}{NW2YR5B-2z4lmm-4},'\\VC\\Auxiliary\\Build\\vcvarsall.bat'
-        \nwlinkedidentc{tie}{NW2YR5B-XAz19-1}←\{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0\}
+        \nwlinkedidentc{tie}{NW2YR5B-XAz19-1}←\{0::⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0\}
         \nwlinkedidentc{put}{NW2YR5B-XAz19-1}←\{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←\nwlinkedidentc{tie}{NW2YR5B-XAz19-1} ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t\}
-        opsys←\{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'\}
+        \LA{}The \code{}opsys\edoc{} utility~{\nwtagstyle{}\subpageref{NW2YR5B-1ejEd9-1}}\RA{}
         soext←\{opsys'.dll' '.so' '.dylib'\}
         ccf←\{' -o ''',⍵,'.',⍺,''' ''',⍵,'.c'' -laf',\nwlinkedidentc{AF∆LIB}{NW2YR5B-2z4lmm-3},' > ',⍵,'.log 2>&1'\}
         cci←\{'-I''',\nwlinkedidentc{AF∆PREFIX}{NW2YR5B-2z4lmm-3},'/include'' -L''',\nwlinkedidentc{AF∆PREFIX}{NW2YR5B-2z4lmm-3},opsys''' ' '/lib64'' ' '/lib'' '\}
@@ -1217,26 +1458,26 @@ CC←\{
         vslo←\{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
                 z,←'/LIBPATH:"%AF_PATH%\\lib" /OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
                 z,'/DYNAMICBASE "af', \nwlinkedidentc{AF∆LIB}{NW2YR5B-2z4lmm-3}, '.lib" "\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.lib" '\}
-        vsc0←\{~⎕NEXISTS \nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1}:'VISUAL C?'⎕SIGNAL 99 ⋄ '""',\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1},'" amd64'\}
+        vsc0←\{~⎕NEXISTS \nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1}:'VISUAL C?'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 99 ⋄ '""',\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1},'" amd64'\}
         vsc1←\{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),' "',⍵,'.c" '\}
         vsc2←\{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'\}
-        vsc←\{⎕CMD ('%comspec% /C ',vsc0,vsc1,vsc2)⍵\}
+        \nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1}←\{⎕CMD ('%comspec% /C ',vsc0,vsc1,vsc2)⍵\}
         _←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣⍵ \nwlinkedidentc{put}{NW2YR5B-XAz19-1} ⍺,'.c'⊣1 ⎕NDELETE f←⍺,soext⍬
         ⎕←⍪⊃⎕NGET(⍺,'.log')1
-        ⎕NEXISTS f:f ⋄ 'COMPILE ERROR' ⎕SIGNAL 22\}
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{AF∆PREFIX}}{AF∆PREFIX}}\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{put}}{put}}\\{{\nwixident{tie}}{tie}}\\{{\nwixident{vsbat}}{vsbat}}\\{{\nwixident{VS∆PATH}}{VS∆PATH}}}\nwindexuse{\nwixident{AF∆LIB}}{AF∆LIB}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{AF∆PREFIX}}{AF∆PREFIX}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{put}}{put}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{tie}}{tie}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{vsbat}}{vsbat}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{VS∆PATH}}{VS∆PATH}{NW2YR5B-2LnsgP-1}\nwendcode{}\nwbegindocs{34}\nwdocspar
+        ⎕NEXISTS f:f ⋄ 'COMPILE ERROR' ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 22\}
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{AF∆PREFIX}}{AF∆PREFIX}}\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{put}}{put}}\\{{\nwixident{SIGNAL}}{SIGNAL}}\\{{\nwixident{tie}}{tie}}\\{{\nwixident{vsbat}}{vsbat}}\\{{\nwixident{vsc}}{vsc}}\\{{\nwixident{VS∆PATH}}{VS∆PATH}}}\nwindexuse{\nwixident{AF∆LIB}}{AF∆LIB}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{AF∆PREFIX}}{AF∆PREFIX}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{put}}{put}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{tie}}{tie}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{vsbat}}{vsbat}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{vsc}}{vsc}{NW2YR5B-2LnsgP-1}\nwindexuse{\nwixident{VS∆PATH}}{VS∆PATH}{NW2YR5B-2LnsgP-1}\nwendcode{}\nwbegindocs{54}\nwdocspar
 
 \subsection{Linking with Dyalog}
 
-\nwenddocs{}\nwbegincode{35}\sublabel{NW2YR5B-zH457-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-zH457-1}}}\moddef{Linking with Dyalog~{\nwtagstyle{}\subpageref{NW2YR5B-zH457-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{55}\sublabel{NW2YR5B-zH457-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-zH457-1}}}\moddef{Linking with Dyalog~{\nwtagstyle{}\subpageref{NW2YR5B-zH457-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
  NS←\{
          MKA←\{mka⊂⍵\} ⋄ EXA←\{exa ⍬ ⍵\}
          Display←\{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
-                 w_del W⊣W ⍺⍺\{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵\}⍣⍵⍵⊢⍵\}
-         LoadImage←\{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺\}
+                 w_del W⊣W ⍺⍺\{w_close ⍺:⍎'⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 777' ⋄ ⍺ ⍺⍺ ⍵\}⍣⍵⍵⊢⍵\}
+         LoadImage←\{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 22 ⋄ loadimg ⍬ ⍵ ⍺\}
          SaveImage←\{⍺←'image.png' ⋄ saveimg ⍵ ⍺\}
-         Image←\{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺\}
-         Plot←\{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot (⍉⍵) ⍺\}
+         Image←\{~2 3∨.=≢⍴⍵:⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 5 ⋄ ⍵⊣w_img ⍵ ⍺\}
+         Plot←\{2≠≢⍴⍵:⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 5 ⋄ ⍵⊣w_plot (⍉⍵) ⍺\}
          Histogram←\{⍵⊣w_hist ⍵,⍺\}
          Rtm∆Init←\{
                  _←'w_new'    ⎕NA'P ',⍵,'|w_new           <C[]'
@@ -1263,27 +1504,44 @@ CC←\{
          _←∆.⎕FX∘⎕CR¨fns ⋄ ∆.(decls←⍵∘mkna¨names) ⋄ _←ns.⎕FX¨(⊂''),⍵∘mkf¨∆.names
          _←∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍵,'''')'→0⌿⍨0=≢names' 'names ##.⍙.⎕NA¨decls'
          ns\}
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{PP}}{PP}}}\nwindexuse{\nwixident{PP}}{PP}{NW2YR5B-zH457-1}\nwendcode{}\nwbegindocs{36}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentuses{\\{{\nwixident{PP}}{PP}}\\{{\nwixident{SIGNAL}}{SIGNAL}}}\nwindexuse{\nwixident{PP}}{PP}{NW2YR5B-zH457-1}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-zH457-1}\nwendcode{}\nwbegindocs{56}\nwdocspar
 
 \section{Co-dfns Runtime}
 
-\nwenddocs{}\nwbegincode{37}\sublabel{NW2YR5B-941K7-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-941K7-1}}}\moddef{Implementation of APL Primitives~{\nwtagstyle{}\subpageref{NW2YR5B-941K7-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{57}\sublabel{NW2YR5B-941K7-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-941K7-1}}}\moddef{Implementation of APL Primitives~{\nwtagstyle{}\subpageref{NW2YR5B-941K7-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 ⍝ TBW
-\nwnotused{Implementation of APL Primitives}\nwendcode{}\nwbegindocs{38}\nwdocspar
+\nwnotused{Implementation of APL Primitives}\nwendcode{}\nwbegindocs{58}\nwdocspar
 
-\nwenddocs{}\nwbegincode{39}\sublabel{NW2YR5B-3ZoAJL-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3ZoAJL-1}}}\moddef{C Runtime Support~{\nwtagstyle{}\subpageref{NW2YR5B-3ZoAJL-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{59}\sublabel{NW2YR5B-3ZoAJL-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3ZoAJL-1}}}\moddef{C Runtime Support~{\nwtagstyle{}\subpageref{NW2YR5B-3ZoAJL-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 /* TBW */
-\nwnotused{C Runtime Support}\nwendcode{}\nwbegindocs{40}\nwdocspar
+\nwnotused{C Runtime Support}\nwendcode{}\nwbegindocs{60}\nwdocspar
 
-\nwenddocs{}\nwbegincode{41}\sublabel{NW2YR5B-2mMS19-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2mMS19-1}}}\moddef{C Runtime Header~{\nwtagstyle{}\subpageref{NW2YR5B-2mMS19-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{61}\sublabel{NW2YR5B-2mMS19-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2mMS19-1}}}\moddef{C Runtime Header~{\nwtagstyle{}\subpageref{NW2YR5B-2mMS19-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 /* TBW */
-\nwnotused{C Runtime Header}\nwendcode{}\nwbegindocs{42}\nwdocspar
+\nwnotused{C Runtime Header}\nwendcode{}\nwbegindocs{62}\nwdocspar
 
 \section{Utilities}
 
+\subsection{Must haves}
+
+There are some APL functions that are so critical as to be worthy 
+of primitive status.
+
+\begin{itemize}
+        \item Indexing
+        \item Under
+        \item Assert
+\end{itemize}
+
+\nwenddocs{}\nwbegincode{63}\sublabel{NW2YR5B-AF6fz-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-AF6fz-1}}}\moddef{Must Have APL Utilities~{\nwtagstyle{}\subpageref{NW2YR5B-AF6fz-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+I←\{(⊂⍵)⌷⍺\}
+U←\{⍺←⊢ ⋄ ⍵⍵⍣¯1⊢⍺ ⍺⍺⍥⍵⍵ ⍵\}
+\nwlinkedidentc{assert}{NW2YR5B-AF6fz-1}←\{⍺←'assertion failure' ⋄ 0∊⍵:⍎'⍺ ⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} 8' ⋄ shy←0\}
+\nwindexdefn{\nwixident{assert}}{assert}{NW2YR5B-AF6fz-1}\eatline
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{assert}}{assert}}}\nwidentuses{\\{{\nwixident{SIGNAL}}{SIGNAL}}}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-AF6fz-1}\nwendcode{}\nwbegindocs{64}\nwdocspar
 \subsection{AST Pretty-printing}
 
-\nwenddocs{}\nwbegincode{43}\sublabel{NW2YR5B-1VExi3-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1VExi3-1}}}\moddef{Pretty-printing AST trees~{\nwtagstyle{}\subpageref{NW2YR5B-1VExi3-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{65}\sublabel{NW2YR5B-1VExi3-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1VExi3-1}}}\moddef{Pretty-printing AST trees~{\nwtagstyle{}\subpageref{NW2YR5B-1VExi3-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
 \nwlinkedidentc{dct}{NW2YR5B-1VExi3-1}←\{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵\}
 \nwlinkedidentc{dlk}{NW2YR5B-1VExi3-1}←\{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵\}
 \nwlinkedidentc{dwh}{NW2YR5B-1VExi3-1}←\{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)\nwlinkedidentc{dct}{NW2YR5B-1VExi3-1},⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺\}
@@ -1296,7 +1554,7 @@ CC←\{
 \nwlinkedidentc{lb3}{NW2YR5B-1VExi3-1}←\{⍺←⍳≢⊃⍵
         '(',¨')',¨⍨\{⍺,';',⍵\}⌿⍕¨(N∆\{⍺[⍵]\}@2⊢(2⊃⍵)\{⍺[|⍵]\}@\{0>⍵\}@4↑⊃⍵)[⍺;]\}
 \nwindexdefn{\nwixident{dct}}{dct}{NW2YR5B-1VExi3-1}\nwindexdefn{\nwixident{dlk}}{dlk}{NW2YR5B-1VExi3-1}\nwindexdefn{\nwixident{dwh}}{dwh}{NW2YR5B-1VExi3-1}\nwindexdefn{\nwixident{dwv}}{dwv}{NW2YR5B-1VExi3-1}\nwindexdefn{\nwixident{pp3}}{pp3}{NW2YR5B-1VExi3-1}\nwindexdefn{\nwixident{lb3}}{lb3}{NW2YR5B-1VExi3-1}\eatline
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{dct}}{dct}}\\{{\nwixident{dlk}}{dlk}}\\{{\nwixident{dwh}}{dwh}}\\{{\nwixident{dwv}}{dwv}}\\{{\nwixident{lb3}}{lb3}}\\{{\nwixident{pp3}}{pp3}}}\nwendcode{}\nwbegindocs{44}\nwdocspar
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{dct}}{dct}}\\{{\nwixident{dlk}}{dlk}}\\{{\nwixident{dwh}}{dwh}}\\{{\nwixident{dwv}}{dwv}}\\{{\nwixident{lb3}}{lb3}}\\{{\nwixident{pp3}}{pp3}}}\nwendcode{}\nwbegindocs{66}\nwdocspar
 \subsection{Debugging utilities}
 
 The following utilities help to improve quality of life when working
@@ -1316,7 +1574,7 @@ The function itself returns the character rendering of the code,
 so the above little expression is one that I use to insert and do
 debugging within an expression.
 
-\nwenddocs{}\nwbegincode{45}\sublabel{NW2YR5B-2qLMFZ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2qLMFZ-1}}}\moddef{\code{}DISPLAY\edoc{} Utility~{\nwtagstyle{}\subpageref{NW2YR5B-2qLMFZ-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{67}\sublabel{NW2YR5B-2qLMFZ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2qLMFZ-1}}}\moddef{\code{}DISPLAY\edoc{} Utility~{\nwtagstyle{}\subpageref{NW2YR5B-2qLMFZ-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 \nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1}←\{\nwlinkedidentc{⎕IO}{NW2YR5B-2z4lmm-1} \nwlinkedidentc{⎕ML}{NW2YR5B-2z4lmm-1}←0                                                                                      ⍝ Boxed display of array.
 
         ⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'                       ⍝ ⍺: 0-clunky, 1-smooth.
@@ -1349,17 +1607,26 @@ debugging within an expression.
         \}⍵
 \}
 \nwindexdefn{\nwixident{DISPLAY}}{DISPLAY}{NW2YR5B-2qLMFZ-1}\eatline
-\nwnotused{[[DISPLAY]] Utility}\nwidentdefs{\\{{\nwixident{DISPLAY}}{DISPLAY}}}\nwidentuses{\\{{\nwixident{⎕IO}}{⎕IO}}\\{{\nwixident{⎕ML}}{⎕ML}}}\nwindexuse{\nwixident{⎕IO}}{⎕IO}{NW2YR5B-2qLMFZ-1}\nwindexuse{\nwixident{⎕ML}}{⎕ML}{NW2YR5B-2qLMFZ-1}\nwendcode{}\nwbegindocs{46}\nwdocspar
+\nwnotused{[[DISPLAY]] Utility}\nwidentdefs{\\{{\nwixident{DISPLAY}}{DISPLAY}}}\nwidentuses{\\{{\nwixident{⎕IO}}{⎕IO}}\\{{\nwixident{⎕ML}}{⎕ML}}}\nwindexuse{\nwixident{⎕IO}}{⎕IO}{NW2YR5B-2qLMFZ-1}\nwindexuse{\nwixident{⎕ML}}{⎕ML}{NW2YR5B-2qLMFZ-1}\nwendcode{}\nwbegindocs{68}\nwdocspar
 I also define a function {\Tt{}\nwlinkedidentq{PP}{NW2YR5B-39J7A7-1}\nwendquote} that encapsulates the above usage
 pattern that I like to use, making the whole thing less verbose and
 a little more convenient.
 
-\nwenddocs{}\nwbegincode{47}\sublabel{NW2YR5B-39J7A7-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-39J7A7-1}}}\moddef{\code{}PP\edoc{} Utility~{\nwtagstyle{}\subpageref{NW2YR5B-39J7A7-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{69}\sublabel{NW2YR5B-39J7A7-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-39J7A7-1}}}\moddef{\code{}PP\edoc{} Utility~{\nwtagstyle{}\subpageref{NW2YR5B-39J7A7-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 \nwlinkedidentc{PP}{NW2YR5B-39J7A7-1}←\{⍵⊣⎕←#.\nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1} ⍵\}
 \nwindexdefn{\nwixident{PP}}{PP}{NW2YR5B-39J7A7-1}\eatline
-\nwnotused{[[PP]] Utility}\nwidentdefs{\\{{\nwixident{PP}}{PP}}}\nwidentuses{\\{{\nwixident{DISPLAY}}{DISPLAY}}}\nwindexuse{\nwixident{DISPLAY}}{DISPLAY}{NW2YR5B-39J7A7-1}\nwendcode{}\nwbegindocs{48}\nwdocspar
+\nwnotused{[[PP]] Utility}\nwidentdefs{\\{{\nwixident{PP}}{PP}}}\nwidentuses{\\{{\nwixident{DISPLAY}}{DISPLAY}}}\nwindexuse{\nwixident{DISPLAY}}{DISPLAY}{NW2YR5B-39J7A7-1}\nwendcode{}\nwbegindocs{70}\nwdocspar
+Both of these function exist outside of the {\Tt{}\nwlinkedidentq{codfns}{NW2YR5B-1p0Y9w-1}\nwendquote} namespace 
+and so they get their own files inside of the {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwendquote} directory.
 
+\nwenddocs{}\nwbegincode{71}\sublabel{NW2YR5B-ufqpm-3}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-3}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-2}{NW2YR5B-ufqpm-4}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-3}..."
+notangle -R'[[\nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1}]] Utility' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-3}
 
+echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{PP}{NW2YR5B-39J7A7-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-3}..."
+notangle -R'[[\nwlinkedidentc{PP}{NW2YR5B-39J7A7-1}]] Utility' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{PP}{NW2YR5B-39J7A7-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-3}
+\nwindexdefn{\nwixident{DISPLAY.aplf}}{DISPLAY.aplf}{NW2YR5B-ufqpm-3}\nwindexdefn{\nwixident{PP.aplf}}{PP.aplf}{NW2YR5B-ufqpm-3}\eatline
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentdefs{\\{{\nwixident{DISPLAY.aplf}}{DISPLAY.aplf}}\\{{\nwixident{PP.aplf}}{PP.aplf}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{DISPLAY}}{DISPLAY}}\\{{\nwixident{PP}}{PP}}\\{{\nwixident{src}}{src}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-3}\nwindexuse{\nwixident{DISPLAY}}{DISPLAY}{NW2YR5B-ufqpm-3}\nwindexuse{\nwixident{PP}}{PP}{NW2YR5B-ufqpm-3}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-ufqpm-3}\nwendcode{}\nwbegindocs{72}\nwdocspar
 \subsection{Reading and Writing Files}
 
 It is helpful to be able to easily write files to disk, and the
@@ -1368,9 +1635,9 @@ want to.
 These are pretty standard, but they could maybe be replaced by
 {\Tt{}⎕NPUT\nwendquote} or something like that.
 
-\nwenddocs{}\nwbegincode{49}\sublabel{NW2YR5B-XAz19-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-XAz19-1}}}\moddef{Basic \code{}tie\edoc{} and \code{}put\edoc{} utilities~{\nwtagstyle{}\subpageref{NW2YR5B-XAz19-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-3NyYsr-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{73}\sublabel{NW2YR5B-XAz19-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-XAz19-1}}}\moddef{Basic \code{}tie\edoc{} and \code{}put\edoc{} utilities~{\nwtagstyle{}\subpageref{NW2YR5B-XAz19-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-66tOQ-1}}\nwenddeflinemarkup
 \nwlinkedidentc{tie}{NW2YR5B-XAz19-1}←\{
-        0::⎕SIGNAL ⎕EN
+        0::⎕\nwlinkedidentc{SIGNAL}{NW2YR5B-aELRs-1} ⎕EN
         22::⍵ ⎕NCREATE 0
         0 ⎕NRESIZE ⍵ ⎕NTIE 0
 \}
@@ -1380,15 +1647,25 @@ These are pretty standard, but they could maybe be replaced by
         1:r←s⊣⎕NUNTIE t
 \}
 \nwindexdefn{\nwixident{tie}}{tie}{NW2YR5B-XAz19-1}\nwindexdefn{\nwixident{put}}{put}{NW2YR5B-XAz19-1}\eatline
-\nwused{\\{NW2YR5B-3NyYsr-1}}\nwidentdefs{\\{{\nwixident{put}}{put}}\\{{\nwixident{tie}}{tie}}}\nwendcode{}\nwbegindocs{50}\nwdocspar
+\nwused{\\{NW2YR5B-66tOQ-1}}\nwidentdefs{\\{{\nwixident{put}}{put}}\\{{\nwixident{tie}}{tie}}}\nwidentuses{\\{{\nwixident{SIGNAL}}{SIGNAL}}}\nwindexuse{\nwixident{SIGNAL}}{SIGNAL}{NW2YR5B-XAz19-1}\nwendcode{}\nwbegindocs{74}\nwdocspar
 \subsection{XML Rendering}
 
-\nwenddocs{}\nwbegincode{51}\sublabel{NW2YR5B-1evvdc-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1evvdc-1}}}\moddef{XML Rendering~{\nwtagstyle{}\subpageref{NW2YR5B-1evvdc-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
-Xml←\{⍺←0 ⋄ ast←⍺\{d i←P2D⊃⍵ ⋄ i∘\{⍵[⍺]\}¨(⊂d),1↓⍺↓⍵\}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
+\nwenddocs{}\nwbegincode{75}\sublabel{NW2YR5B-1evvdc-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1evvdc-1}}}\moddef{XML Rendering~{\nwtagstyle{}\subpageref{NW2YR5B-1evvdc-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-1p0Y9w-1}}\nwenddeflinemarkup
+\nwlinkedidentc{Xml}{NW2YR5B-1evvdc-1}←\{⍺←0 ⋄ ast←⍺\{d i←P2D⊃⍵ ⋄ i∘\{⍵[⍺]\}¨(⊂d),1↓⍺↓⍵\}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
         cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←\{((≢⍵)↑3↓f∆),⍪⍵\}¨↓⍉↑3↓ast
         ⎕XML⍉↑d cls(⊂'')fld\}
-\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwendcode{}\nwbegindocs{52}\nwdocspar
+\nwindexdefn{\nwixident{Xml}}{Xml}{NW2YR5B-1evvdc-1}\eatline
+\nwused{\\{NW2YR5B-1p0Y9w-1}}\nwidentdefs{\\{{\nwixident{Xml}}{Xml}}}\nwendcode{}\nwbegindocs{76}\nwdocspar
+\subsection{Detecting the Operating System}
 
+It is quite helpful to be able to easily detect the operating system
+that we are on.
+This turns out to be helpful in more areas than just the compiler.
+
+\nwenddocs{}\nwbegincode{77}\sublabel{NW2YR5B-1ejEd9-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1ejEd9-1}}}\moddef{The \code{}opsys\edoc{} utility~{\nwtagstyle{}\subpageref{NW2YR5B-1ejEd9-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-2LnsgP-1}\\{NW2YR5B-4OPRT1-1}\\{NW2YR5B-2CaUHx-1}}\nwenddeflinemarkup
+\nwlinkedidentc{opsys}{NW2YR5B-1ejEd9-1}←\{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'\}
+\nwindexdefn{\nwixident{opsys}}{opsys}{NW2YR5B-1ejEd9-1}\eatline
+\nwused{\\{NW2YR5B-2LnsgP-1}\\{NW2YR5B-4OPRT1-1}\\{NW2YR5B-2CaUHx-1}}\nwidentdefs{\\{{\nwixident{opsys}}{opsys}}}\nwendcode{}\nwbegindocs{78}\nwdocspar
 \section{Developer Infrastructure}
 
 \subsection{Building the Compiler}
@@ -1411,95 +1688,77 @@ Importantly, the tangled output is \emph{not} meant to be used
 as the primary means of reading or debugging the source.
 Instead, it is meant primarily as the machine readable version
 of the code only.
-We intend {\Tt{}\nwlinkedidentq{codfns}{NW2YR5B-1p0Y9w-1}.nw\nwendquote} to tangle into the following files based on
-specific chunks that have been provided in this document.
 
-\begin{center}
-\begin{tabular}{ll}
-\toprule
-Chunk & File Output\\
-\midrule
-{\Tt{}\LA{}*~{\nwtagstyle{}\subpageref{NW2YR5B-1p0Y9w-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwlinkedidentq{codfns}{NW2YR5B-1p0Y9w-1}.apln\nwendquote}\\
-{\Tt{}\LA{}C Runtime Support~{\nwtagstyle{}\subpageref{NW2YR5B-3ZoAJL-1}}\RA{}\nwendquote} & {\Tt{}rtm{\nwbackslash}runtime.c\nwendquote}\\
-{\Tt{}\LA{}C Runtime Header~{\nwtagstyle{}\subpageref{NW2YR5B-2mMS19-1}}\RA{}\nwendquote} & {\Tt{}rtm{\nwbackslash}\nwlinkedidentq{codfns}{NW2YR5B-1p0Y9w-1}.h\nwendquote}\\
-{\Tt{}\LA{}Implementation of APL Primitives~{\nwtagstyle{}\subpageref{NW2YR5B-941K7-1}}\RA{}\nwendquote} & {\Tt{}rtm{\nwbackslash}prim.apln\nwendquote}\\
-{\Tt{}\LA{}\code{}DISPLAY\edoc{} Utility~{\nwtagstyle{}\subpageref{NW2YR5B-2qLMFZ-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwlinkedidentq{DISPLAY}{NW2YR5B-2qLMFZ-1}.aplf\nwendquote}\\
-{\Tt{}\LA{}\code{}MK∆RTM\edoc{} Command~{\nwtagstyle{}\subpageref{NW2YR5B-3NyYsr-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwlinkedidentq{MK∆RTM}{NW2YR5B-3NyYsr-1}.aplf\nwendquote}\\
-{\Tt{}\LA{}\code{}PP\edoc{} Utility~{\nwtagstyle{}\subpageref{NW2YR5B-39J7A7-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwlinkedidentq{PP}{NW2YR5B-39J7A7-1}.aplf\nwendquote}\\
-{\Tt{}\LA{}\code{}TANGLE\edoc{} Command~{\nwtagstyle{}\subpageref{NW2YR5B-4RSUUl-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}.aplf\nwendquote}\\
-{\Tt{}\LA{}\code{}TEST\edoc{} Function~{\nwtagstyle{}\subpageref{NW2YR5B-1ODqI6-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwlinkedidentq{TEST}{NW2YR5B-1ODqI6-1}.aplf\nwendquote}\\
-{\Tt{}\LA{}\code{}WEAVE\edoc{} Command~{\nwtagstyle{}\subpageref{NW2YR5B-4gLOOa-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwlinkedidentq{WEAVE}{NW2YR5B-4gLOOa-1}.aplf\nwendquote}\\
-{\Tt{}\LA{}Tangle Script~{\nwtagstyle{}\subpageref{NW2YR5B-M0NPL-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}.sh\nwendquote}\\
-{\Tt{}\LA{}Weave Script~{\nwtagstyle{}\subpageref{NW2YR5B-4INSDn-1}}\RA{}\nwendquote} & {\Tt{}\nwlinkedidentq{WEAVE}{NW2YR5B-4gLOOa-1}.sh\nwendquote}\\
-\bottomrule
-\end{tabular}
-\par\end{center}
+With noweb, we need to invoke {\Tt{}notangle\nwendquote} once for each of the 
+chunks that we wish to use to produce an output file.
+To make this easy, we build up a script to do this work for us.
 
-\noindent
-The following bash script creates these files.
+For Linux and Mac, the following bash script creates these files. 
+We use a separate chunk that we build up incrementally 
+throughout the rest of this document as a record of all the chunks
+that we should create.
+Notice that we explicitly tangle the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentq{.sh}{NW2YR5B-42EjwV-1}\nwendquote} file as the last
+thing that we do;
+this helps to ensure that we are reliably executing the rest of the 
+script before changing the contents of the file,
+as some systems will be affected and change execution behavior 
+in strange ways if we change the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentq{.sh}{NW2YR5B-42EjwV-1}\nwendquote} file early on in the 
+execution of the file.
 
-\nwenddocs{}\nwbegincode{53}\sublabel{NW2YR5B-M0NPL-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-M0NPL-1}}}\moddef{Tangle Script~{\nwtagstyle{}\subpageref{NW2YR5B-M0NPL-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{79}\sublabel{NW2YR5B-42EjwV-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-42EjwV-1}}}\moddef{\code{}TANGLE.sh\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-42EjwV-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 #!/bin/bash
-echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.apln..."
-notangle \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.apln
 
-echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1}.aplf..."
-notangle -R'[[\nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1}]] Utility' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{DISPLAY}{NW2YR5B-2qLMFZ-1}.aplf
+\LA{}Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}\RA{}
 
-echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{MK∆RTM}{NW2YR5B-3NyYsr-1}.aplf..."
-notangle -R'[[\nwlinkedidentc{MK∆RTM}{NW2YR5B-3NyYsr-1}]] Command' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{MK∆RTM}{NW2YR5B-3NyYsr-1}.aplf
-
-echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{PP}{NW2YR5B-39J7A7-1}.aplf..."
-notangle -R'[[\nwlinkedidentc{PP}{NW2YR5B-39J7A7-1}]] Utility' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{PP}{NW2YR5B-39J7A7-1}.aplf
-
-echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{TANGLE}{NW2YR5B-4RSUUl-1}.aplf..."
-notangle -R'[[\nwlinkedidentc{TANGLE}{NW2YR5B-4RSUUl-1}]] Command' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{TANGLE}{NW2YR5B-4RSUUl-1}.aplf
-
-echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{TEST}{NW2YR5B-1ODqI6-1}.aplf..."
-notangle -R'[[\nwlinkedidentc{TEST}{NW2YR5B-1ODqI6-1}]] Function' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{TEST}{NW2YR5B-1ODqI6-1}.aplf
-
-echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{WEAVE}{NW2YR5B-4gLOOa-1}.aplf..."
-notangle -R'[[\nwlinkedidentc{WEAVE}{NW2YR5B-4gLOOa-1}]] Command' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{WEAVE}{NW2YR5B-4gLOOa-1}.aplf
-
-echo "Tangling \nwlinkedidentc{TANGLE}{NW2YR5B-4RSUUl-1}.sh..."
-notangle -R'Tangle Script' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{TANGLE}{NW2YR5B-4RSUUl-1}.sh
-
-echo "Tangling \nwlinkedidentc{WEAVE}{NW2YR5B-4gLOOa-1}.sh..."
-notangle -R'Weave Script' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{WEAVE}{NW2YR5B-4gLOOa-1}.sh
-\nwnotused{Tangle Script}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{DISPLAY}}{DISPLAY}}\\{{\nwixident{MK∆RTM}}{MK∆RTM}}\\{{\nwixident{PP}}{PP}}\\{{\nwixident{src}}{src}}\\{{\nwixident{TANGLE}}{TANGLE}}\\{{\nwixident{TEST}}{TEST}}\\{{\nwixident{WEAVE}}{WEAVE}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-M0NPL-1}\nwindexuse{\nwixident{DISPLAY}}{DISPLAY}{NW2YR5B-M0NPL-1}\nwindexuse{\nwixident{MK∆RTM}}{MK∆RTM}{NW2YR5B-M0NPL-1}\nwindexuse{\nwixident{PP}}{PP}{NW2YR5B-M0NPL-1}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-M0NPL-1}\nwindexuse{\nwixident{TANGLE}}{TANGLE}{NW2YR5B-M0NPL-1}\nwindexuse{\nwixident{TEST}}{TEST}{NW2YR5B-M0NPL-1}\nwindexuse{\nwixident{WEAVE}}{WEAVE}{NW2YR5B-M0NPL-1}\nwendcode{}\nwbegindocs{54}\nwdocspar
-
+echo "Tangling \nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.sh}{NW2YR5B-42EjwV-1}..."
+notangle -R'[[\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.sh}{NW2YR5B-42EjwV-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.sh}{NW2YR5B-42EjwV-1}
+\nwindexdefn{\nwixident{TANGLE.sh}}{TANGLE.sh}{NW2YR5B-42EjwV-1}\eatline
+\nwnotused{[[TANGLE.sh]]}\nwidentdefs{\\{{\nwixident{TANGLE.sh}}{TANGLE.sh}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{TANGLE}}{TANGLE}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-42EjwV-1}\nwindexuse{\nwixident{TANGLE}}{TANGLE}{NW2YR5B-42EjwV-1}\nwendcode{}\nwbegindocs{80}\nwdocspar
 On Windows, the best way that we have found to do this is
-via the \href{https://www.cygwin.com/}{Cygwin project}.
+by installing noweb using the
+\href{https://www.cygwin.com/}{Cygwin project}
+and then calling {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentq{.sh}{NW2YR5B-42EjwV-1}\nwendquote} from a local {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentq{.bat}{NW2YR5B-YYfto-1}\nwendquote} file.
 This document assumes that you have already successfully built and
 installed via Cygwin a working Icon-driven noweb installation.
 
 Users who prefer to work in a UNIX fashion via Cygwin or some other
 subsystem on Windows can follow the build scripts directly.
 For developers who prefer to work in a primarily Windows environment,
-the following build scripts assist in handling the calls into Cygwin
+the following {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentq{.bat}{NW2YR5B-YYfto-1}\nwendquote} build script assists 
+in handling the calls into Cygwin
 so that you do not need to have a Cygwin terminal open all the time.
 
-When tangled to the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}.aplf\nwendquote} file, this script will enable the
-user simply type {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}\nwendquote} to update the code tree from within a
-Dyalog APL Session.
+\nwenddocs{}\nwbegincode{81}\sublabel{NW2YR5B-YYfto-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-YYfto-1}}}\moddef{\code{}TANGLE.bat\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-YYfto-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+set SH=C:\\cygwin64\\bin\\bash.exe -l -c
+%SH% "cd $OLDPWD && ./\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.sh}{NW2YR5B-42EjwV-1}"
+\nwindexdefn{\nwixident{TANGLE.bat}}{TANGLE.bat}{NW2YR5B-YYfto-1}\eatline
+\nwnotused{[[TANGLE.bat]]}\nwidentdefs{\\{{\nwixident{TANGLE.bat}}{TANGLE.bat}}}\nwidentuses{\\{{\nwixident{TANGLE}}{TANGLE}}\\{{\nwixident{TANGLE.sh}}{TANGLE.sh}}}\nwindexuse{\nwixident{TANGLE}}{TANGLE}{NW2YR5B-YYfto-1}\nwindexuse{\nwixident{TANGLE.sh}}{TANGLE.sh}{NW2YR5B-YYfto-1}\nwendcode{}\nwbegindocs{82}\nwdocspar
+\nwenddocs{}\nwbegincode{83}\sublabel{NW2YR5B-ufqpm-4}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-4}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-3}{NW2YR5B-ufqpm-5}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.bat}{NW2YR5B-YYfto-1}..."
+notangle -R'[[\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.bat}{NW2YR5B-YYfto-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.bat}{NW2YR5B-YYfto-1}
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{TANGLE}}{TANGLE}}\\{{\nwixident{TANGLE.bat}}{TANGLE.bat}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-4}\nwindexuse{\nwixident{TANGLE}}{TANGLE}{NW2YR5B-ufqpm-4}\nwindexuse{\nwixident{TANGLE.bat}}{TANGLE.bat}{NW2YR5B-ufqpm-4}\nwendcode{}\nwbegindocs{84}\nwdocspar
+
+When tangled to the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentq{.aplf}{NW2YR5B-ufqpm-5}\nwendquote} file,
+the following script enables the
+user to simply type {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwendquote} within a Dyalog APL session
+to update the code tree from within Dyalog itself.
 This is much more convenient than keeping a Cygwin Terminal
 session open along with a Dyalog APL session while programming.
-At the moment, this file is only designed to work on Windows with
-Cygwin, but we should in principle extend this to work on Linux
-and Mac OS X style machines as well.
 
 \emph{Note: this command expects to be run from within the root of
 the repository, not from, say, within the {\Tt{}testing\nwendquote} directory.}
 
-\nwenddocs{}\nwbegincode{55}\sublabel{NW2YR5B-4RSUUl-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-4RSUUl-1}}}\moddef{\code{}TANGLE\edoc{} Command~{\nwtagstyle{}\subpageref{NW2YR5B-4RSUUl-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-\nwlinkedidentc{TANGLE}{NW2YR5B-4RSUUl-1};SH;CWD;CD
-SH←'C:\\cygwin64\\bin\\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\\cygwin64\\bin\\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
-
-⎕CMD SH,'"',CD,' && ./\nwlinkedidentc{TANGLE}{NW2YR5B-4RSUUl-1}.sh"'
-\nwindexdefn{\nwixident{TANGLE}}{TANGLE}{NW2YR5B-4RSUUl-1}\eatline
-\nwnotused{[[TANGLE]] Command}\nwidentdefs{\\{{\nwixident{TANGLE}}{TANGLE}}}\nwendcode{}\nwbegindocs{56}\nwdocspar
+\nwenddocs{}\nwbegincode{85}\sublabel{NW2YR5B-4OPRT1-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-4OPRT1-1}}}\moddef{\code{}TANGLE\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-4OPRT1-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1};\nwlinkedidentc{opsys}{NW2YR5B-1ejEd9-1}
+\LA{}The \code{}opsys\edoc{} utility~{\nwtagstyle{}\subpageref{NW2YR5B-1ejEd9-1}}\RA{}
+⎕CMD \nwlinkedidentc{opsys}{NW2YR5B-1ejEd9-1} '.\\\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}.bat' './\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}.sh' './\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}.sh'
+\nwindexdefn{\nwixident{TANGLE}}{TANGLE}{NW2YR5B-4OPRT1-1}\eatline
+\nwnotused{[[TANGLE]]}\nwidentdefs{\\{{\nwixident{TANGLE}}{TANGLE}}}\nwidentuses{\\{{\nwixident{opsys}}{opsys}}}\nwindexuse{\nwixident{opsys}}{opsys}{NW2YR5B-4OPRT1-1}\nwendcode{}\nwbegindocs{86}\nwdocspar
+\nwenddocs{}\nwbegincode{87}\sublabel{NW2YR5B-ufqpm-5}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-5}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-4}{NW2YR5B-ufqpm-6}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-5}..."
+notangle -R'[[\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-5}
+\nwindexdefn{\nwixident{TANGLE.aplf}}{TANGLE.aplf}{NW2YR5B-ufqpm-5}\eatline
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentdefs{\\{{\nwixident{TANGLE.aplf}}{TANGLE.aplf}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{src}}{src}}\\{{\nwixident{TANGLE}}{TANGLE}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-5}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-ufqpm-5}\nwindexuse{\nwixident{TANGLE}}{TANGLE}{NW2YR5B-ufqpm-5}\nwendcode{}\nwbegindocs{88}\nwdocspar
 \subsubsection{Weaving the Source}
 
 Weaving is the process by which we produce the final printed output
@@ -1543,29 +1802,50 @@ own packages in the system,
 \emph{Note: this command expects to be run from within the root of
 the repository, not from, say, within the {\Tt{}testing\nwendquote} directory.}
 
-\nwenddocs{}\nwbegincode{57}\sublabel{NW2YR5B-4INSDn-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-4INSDn-1}}}\moddef{Weave Script~{\nwtagstyle{}\subpageref{NW2YR5B-4INSDn-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{89}\sublabel{NW2YR5B-40bMLy-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-40bMLy-1}}}\moddef{\code{}WEAVE.sh\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-40bMLy-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
 #!/bin/bash
 mkdir -p woven
 noweave -delay -index \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > woven/\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.tex
 cd woven
 xelatex \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}
 xelatex \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}
-\nwnotused{Weave Script}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-4INSDn-1}\nwendcode{}\nwbegindocs{58}\nwdocspar
+\nwindexdefn{\nwixident{WEAVE.sh}}{WEAVE.sh}{NW2YR5B-40bMLy-1}\eatline
+\nwnotused{[[WEAVE.sh]]}\nwidentdefs{\\{{\nwixident{WEAVE.sh}}{WEAVE.sh}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-40bMLy-1}\nwendcode{}\nwbegindocs{90}\nwdocspar
+\nwenddocs{}\nwbegincode{91}\sublabel{NW2YR5B-ufqpm-6}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-6}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-5}{NW2YR5B-ufqpm-7}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.sh}{NW2YR5B-40bMLy-1}..."
+notangle -R'[[\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.sh}{NW2YR5B-40bMLy-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.sh}{NW2YR5B-40bMLy-1}
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{WEAVE}}{WEAVE}}\\{{\nwixident{WEAVE.sh}}{WEAVE.sh}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-6}\nwindexuse{\nwixident{WEAVE}}{WEAVE}{NW2YR5B-ufqpm-6}\nwindexuse{\nwixident{WEAVE.sh}}{WEAVE.sh}{NW2YR5B-ufqpm-6}\nwendcode{}\nwbegindocs{92}\nwdocspar
 
-Like the {\Tt{}\LA{}\code{}TANGLE\edoc{} Command~{\nwtagstyle{}\subpageref{NW2YR5B-4RSUUl-1}}\RA{}\nwendquote}, the following command,
-when tangled to the {\Tt{}\nwlinkedidentq{WEAVE}{NW2YR5B-4gLOOa-1}.aplf\nwendquote}
-file permits the Windows programmer to simply execute {\Tt{}\nwlinkedidentq{WEAVE}{NW2YR5B-4gLOOa-1}\nwendquote} in a
-the Dyalog APL session and weave the documents together.
+\noindent
+And just like the tangling code, we want to define a {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwlinkedidentq{.bat}{NW2YR5B-YYfto-1}\nwendquote}
+batch file to call the Cygwin environment from Windows.
 
-\nwenddocs{}\nwbegincode{59}\sublabel{NW2YR5B-4gLOOa-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-4gLOOa-1}}}\moddef{\code{}WEAVE\edoc{} Command~{\nwtagstyle{}\subpageref{NW2YR5B-4gLOOa-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-\nwlinkedidentc{WEAVE}{NW2YR5B-4gLOOa-1};SH;CWD;CD
-SH←'C:\\cygwin64\\bin\\mintty.exe -e C:\\cygwin64\\bin\\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\\cygwin64\\bin\\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
+\nwenddocs{}\nwbegincode{93}\sublabel{NW2YR5B-3fkVpu-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3fkVpu-1}}}\moddef{\code{}WEAVE.bat\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-3fkVpu-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+set SH=C:\\cygwin64\\bin\\bash.exe -l -c
+%SH% "cd $OLDPWD && ./\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.sh}{NW2YR5B-40bMLy-1}"
+\nwindexdefn{\nwixident{WEAVE.bat}}{WEAVE.bat}{NW2YR5B-3fkVpu-1}\eatline
+\nwnotused{[[WEAVE.bat]]}\nwidentdefs{\\{{\nwixident{WEAVE.bat}}{WEAVE.bat}}}\nwidentuses{\\{{\nwixident{WEAVE}}{WEAVE}}\\{{\nwixident{WEAVE.sh}}{WEAVE.sh}}}\nwindexuse{\nwixident{WEAVE}}{WEAVE}{NW2YR5B-3fkVpu-1}\nwindexuse{\nwixident{WEAVE.sh}}{WEAVE.sh}{NW2YR5B-3fkVpu-1}\nwendcode{}\nwbegindocs{94}\nwdocspar
+\nwenddocs{}\nwbegincode{95}\sublabel{NW2YR5B-ufqpm-7}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-7}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-6}{NW2YR5B-ufqpm-8}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.bat}{NW2YR5B-3fkVpu-1}..."
+notangle -R'[[\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.bat}{NW2YR5B-3fkVpu-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.bat}{NW2YR5B-3fkVpu-1}
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{WEAVE}}{WEAVE}}\\{{\nwixident{WEAVE.bat}}{WEAVE.bat}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-7}\nwindexuse{\nwixident{WEAVE}}{WEAVE}{NW2YR5B-ufqpm-7}\nwindexuse{\nwixident{WEAVE.bat}}{WEAVE.bat}{NW2YR5B-ufqpm-7}\nwendcode{}\nwbegindocs{96}\nwdocspar
 
-⎕CMD SH,'"',CD,' && ./\nwlinkedidentc{WEAVE}{NW2YR5B-4gLOOa-1}.sh"'
-\nwindexdefn{\nwixident{WEAVE}}{WEAVE}{NW2YR5B-4gLOOa-1}\eatline
-\nwnotused{[[WEAVE]] Command}\nwidentdefs{\\{{\nwixident{WEAVE}}{WEAVE}}}\nwendcode{}\nwbegindocs{60}\nwdocspar
+Like the {\Tt{}\LA{}\code{}TANGLE\edoc{} Command~{\nwtagstyle{}\subpageref{nw@notdef}}\RA{}\nwendquote}, the following command,
+when tangled to the {\Tt{}\nwlinkedidentq{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentq{.aplf}{NW2YR5B-ufqpm-8}\nwendquote}
+file enables weaving in a the Dyalog APL session 
+by executing the {\Tt{}\nwlinkedidentq{WEAVE}{NW2YR5B-2CaUHx-1}\nwendquote} command.
+
+\nwenddocs{}\nwbegincode{97}\sublabel{NW2YR5B-2CaUHx-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2CaUHx-1}}}\moddef{\code{}WEAVE\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-2CaUHx-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1};\nwlinkedidentc{opsys}{NW2YR5B-1ejEd9-1}
+\LA{}The \code{}opsys\edoc{} utility~{\nwtagstyle{}\subpageref{NW2YR5B-1ejEd9-1}}\RA{}
+⎕CMD \nwlinkedidentc{opsys}{NW2YR5B-1ejEd9-1} '.\\\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}.bat' './\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}.sh' './\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}.sh'
+\nwindexdefn{\nwixident{WEAVE}}{WEAVE}{NW2YR5B-2CaUHx-1}\eatline
+\nwnotused{[[WEAVE]]}\nwidentdefs{\\{{\nwixident{WEAVE}}{WEAVE}}}\nwidentuses{\\{{\nwixident{opsys}}{opsys}}}\nwindexuse{\nwixident{opsys}}{opsys}{NW2YR5B-2CaUHx-1}\nwendcode{}\nwbegindocs{98}\nwdocspar
+\nwenddocs{}\nwbegincode{99}\sublabel{NW2YR5B-ufqpm-8}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-8}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-7}{NW2YR5B-ufqpm-9}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-8}..."
+notangle -R'[[\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{WEAVE}{NW2YR5B-2CaUHx-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-8}
+\nwindexdefn{\nwixident{WEAVE.aplf}}{WEAVE.aplf}{NW2YR5B-ufqpm-8}\eatline
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentdefs{\\{{\nwixident{WEAVE.aplf}}{WEAVE.aplf}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{src}}{src}}\\{{\nwixident{WEAVE}}{WEAVE}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-8}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-ufqpm-8}\nwindexuse{\nwixident{WEAVE}}{WEAVE}{NW2YR5B-ufqpm-8}\nwendcode{}\nwbegindocs{100}\nwdocspar
 \subsection{Building the Runtime}
 
 One of our goals with the Co-dfns runtime is to write as much of it
@@ -1576,24 +1856,32 @@ while most of the rest of the code is implemented in some APL files.
 This leads to a three part breakdown of the process to
 build the runtime.
 
-\nwenddocs{}\nwbegincode{61}\sublabel{NW2YR5B-8A0Gv-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-8A0Gv-1}}}\moddef{Build the runtime~{\nwtagstyle{}\subpageref{NW2YR5B-8A0Gv-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-3NyYsr-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{101}\sublabel{NW2YR5B-8A0Gv-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-8A0Gv-1}}}\moddef{Build the runtime~{\nwtagstyle{}\subpageref{NW2YR5B-8A0Gv-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-66tOQ-1}}\nwenddeflinemarkup
 \LA{}Compile the primitives in \code{}prim.apln\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-3C6SQT-1}}\RA{}
 \LA{}Build \code{}codfns.dll\edoc{} DLL~{\nwtagstyle{}\subpageref{NW2YR5B-2pNilx-1}}\RA{}
 \LA{}Copy the runtime files into \code{}tests{\nwbackslash}\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-1PDY4d-1}}\RA{}
-\nwused{\\{NW2YR5B-3NyYsr-1}}\nwendcode{}\nwbegindocs{62}\nwdocspar
+\nwused{\\{NW2YR5B-66tOQ-1}}\nwendcode{}\nwbegindocs{102}\nwdocspar
 
-We define the command {\Tt{}\nwlinkedidentq{MK∆RTM}{NW2YR5B-3NyYsr-1}\nwendquote} to build the runtime.
+We define the command {\Tt{}\nwlinkedidentq{MK∆RTM}{NW2YR5B-66tOQ-1}\nwendquote} to build the runtime.
 This command takes a path to the root directory of the Co-dfns
 repository; this is to allow us to rebuild the runtime from anywhere
 in the system if we so choose.
 
-\nwenddocs{}\nwbegincode{63}\sublabel{NW2YR5B-3NyYsr-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3NyYsr-1}}}\moddef{\code{}MK∆RTM\edoc{} Command~{\nwtagstyle{}\subpageref{NW2YR5B-3NyYsr-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
-\nwlinkedidentc{MK∆RTM}{NW2YR5B-3NyYsr-1} path;prim;\nwlinkedidentc{put}{NW2YR5B-XAz19-1};\nwlinkedidentc{src}{NW2YR5B-3C6SQT-1};\nwlinkedidentc{tie}{NW2YR5B-XAz19-1};\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1};vsc;\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1}
+\nwenddocs{}\nwbegincode{103}\sublabel{NW2YR5B-66tOQ-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-66tOQ-1}}}\moddef{\code{}MK∆RTM\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-66tOQ-1}}}\endmoddef\nwstartdeflinemarkup\nwenddeflinemarkup
+\nwlinkedidentc{MK∆RTM}{NW2YR5B-66tOQ-1} path;\nwlinkedidentc{put}{NW2YR5B-XAz19-1};\nwlinkedidentc{tie}{NW2YR5B-XAz19-1};\nwlinkedidentc{src}{NW2YR5B-3C6SQT-1};\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1};\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1};\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1}
 
 \LA{}Basic \code{}tie\edoc{} and \code{}put\edoc{} utilities~{\nwtagstyle{}\subpageref{NW2YR5B-XAz19-1}}\RA{}
 \LA{}Build the runtime~{\nwtagstyle{}\subpageref{NW2YR5B-8A0Gv-1}}\RA{}
-\nwindexdefn{\nwixident{MK∆RTM}}{MK∆RTM}{NW2YR5B-3NyYsr-1}\eatline
-\nwnotused{[[MK∆RTM]] Command}\nwidentdefs{\\{{\nwixident{MK∆RTM}}{MK∆RTM}}}\nwidentuses{\\{{\nwixident{put}}{put}}\\{{\nwixident{src}}{src}}\\{{\nwixident{tie}}{tie}}\\{{\nwixident{vsbat}}{vsbat}}\\{{\nwixident{wsd}}{wsd}}}\nwindexuse{\nwixident{put}}{put}{NW2YR5B-3NyYsr-1}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-3NyYsr-1}\nwindexuse{\nwixident{tie}}{tie}{NW2YR5B-3NyYsr-1}\nwindexuse{\nwixident{vsbat}}{vsbat}{NW2YR5B-3NyYsr-1}\nwindexuse{\nwixident{wsd}}{wsd}{NW2YR5B-3NyYsr-1}\nwendcode{}\nwbegindocs{64}\nwdocspar
+\nwindexdefn{\nwixident{MK∆RTM}}{MK∆RTM}{NW2YR5B-66tOQ-1}\eatline
+\nwnotused{[[MK∆RTM]]}\nwidentdefs{\\{{\nwixident{MK∆RTM}}{MK∆RTM}}}\nwidentuses{\\{{\nwixident{put}}{put}}\\{{\nwixident{src}}{src}}\\{{\nwixident{tie}}{tie}}\\{{\nwixident{vsbat}}{vsbat}}\\{{\nwixident{vsc}}{vsc}}\\{{\nwixident{wsd}}{wsd}}}\nwindexuse{\nwixident{put}}{put}{NW2YR5B-66tOQ-1}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-66tOQ-1}\nwindexuse{\nwixident{tie}}{tie}{NW2YR5B-66tOQ-1}\nwindexuse{\nwixident{vsbat}}{vsbat}{NW2YR5B-66tOQ-1}\nwindexuse{\nwixident{vsc}}{vsc}{NW2YR5B-66tOQ-1}\nwindexuse{\nwixident{wsd}}{wsd}{NW2YR5B-66tOQ-1}\nwendcode{}\nwbegindocs{104}\nwdocspar
+This file is another of our external utilities that exists outside 
+of the {\Tt{}\nwlinkedidentq{codfns}{NW2YR5B-1p0Y9w-1}\nwendquote} namespace, so it gets its own file in {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwendquote}.
+
+\nwenddocs{}\nwbegincode{105}\sublabel{NW2YR5B-ufqpm-9}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-9}}}\moddef{Tangle Commands~{\nwtagstyle{}\subpageref{NW2YR5B-ufqpm-1}}}\plusendmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-42EjwV-1}}\nwprevnextdefs{NW2YR5B-ufqpm-8}{\relax}\nwenddeflinemarkup
+echo "Tangling \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{MK∆RTM}{NW2YR5B-66tOQ-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-9}..."
+notangle -R'[[\nwlinkedidentc{MK∆RTM}{NW2YR5B-66tOQ-1}]]' \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.nw > \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}/\nwlinkedidentc{MK∆RTM}{NW2YR5B-66tOQ-1}\nwlinkedidentc{.aplf}{NW2YR5B-ufqpm-9}
+\nwindexdefn{\nwixident{MK∆RTM.aplf}}{MK∆RTM.aplf}{NW2YR5B-ufqpm-9}\eatline
+\nwused{\\{NW2YR5B-42EjwV-1}}\nwidentdefs{\\{{\nwixident{MK∆RTM.aplf}}{MK∆RTM.aplf}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{MK∆RTM}}{MK∆RTM}}\\{{\nwixident{src}}{src}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-ufqpm-9}\nwindexuse{\nwixident{MK∆RTM}}{MK∆RTM}{NW2YR5B-ufqpm-9}\nwindexuse{\nwixident{src}}{src}{NW2YR5B-ufqpm-9}\nwendcode{}\nwbegindocs{106}\nwdocspar
 The first step we must take is producing an appropriate C file that
 contains the primitives that we have defined in {\Tt{}prim.apln\nwendquote}.
 This means that we want to only compile the code in {\Tt{}prim.apln\nwendquote}
@@ -1603,17 +1891,17 @@ we will be compiling the {\Tt{}prim.c\nwendquote} file along with the rest of th
 runtime code,
 instead of the normal build process,
 which assumes that we already have a working runtime.
-This means that we only invoke the {\Tt{}GC\ TT\ PS\nwendquote} passes of the
+This means that we only invoke the {\Tt{}GC\ TT\ \nwlinkedidentq{PS}{NW2YR5B-38DvvD-1}\nwendquote} passes of the
 compiler pipeline, while avoiding the {\Tt{}CC\nwendquote} pass.
 We use the SALT system to load the source from {\Tt{}prim.apln\nwendquote} and then
 run the compiler passes that we want before storing the resulting
 code in the {\Tt{}rtm{\nwbackslash}prim.c\nwendquote} file.
 
-\nwenddocs{}\nwbegincode{65}\sublabel{NW2YR5B-3C6SQT-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3C6SQT-1}}}\moddef{Compile the primitives in \code{}prim.apln\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-3C6SQT-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-8A0Gv-1}}\nwenddeflinemarkup
+\nwenddocs{}\nwbegincode{107}\sublabel{NW2YR5B-3C6SQT-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-3C6SQT-1}}}\moddef{Compile the primitives in \code{}prim.apln\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-3C6SQT-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-8A0Gv-1}}\nwenddeflinemarkup
 \nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}←⎕SRC ⎕SE.SALT.Load path,'\\rtm\\prim.apln'
-(path,'\\rtm\\prim.c')\nwlinkedidentc{put}{NW2YR5B-XAz19-1} \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.\{GC TT PS ⍵\}\nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}
+(path,'\\rtm\\prim.c')\nwlinkedidentc{put}{NW2YR5B-XAz19-1} \nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.\{GC TT \nwlinkedidentc{PS}{NW2YR5B-38DvvD-1} ⍵\}\nwlinkedidentc{src}{NW2YR5B-3C6SQT-1}
 \nwindexdefn{\nwixident{src}}{src}{NW2YR5B-3C6SQT-1}\eatline
-\nwused{\\{NW2YR5B-8A0Gv-1}}\nwidentdefs{\\{{\nwixident{src}}{src}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{put}}{put}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-3C6SQT-1}\nwindexuse{\nwixident{put}}{put}{NW2YR5B-3C6SQT-1}\nwendcode{}\nwbegindocs{66}\nwdocspar
+\nwused{\\{NW2YR5B-8A0Gv-1}}\nwidentdefs{\\{{\nwixident{src}}{src}}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{PS}}{PS}}\\{{\nwixident{put}}{put}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-3C6SQT-1}\nwindexuse{\nwixident{PS}}{PS}{NW2YR5B-3C6SQT-1}\nwindexuse{\nwixident{put}}{put}{NW2YR5B-3C6SQT-1}\nwendcode{}\nwbegindocs{108}\nwdocspar
 Once we have the {\Tt{}rtm{\nwbackslash}prim.c\nwendquote} file written appropriately,
 we can run the main compiler process.
 For simplicity, we just compile all of the {\Tt{}.c\nwendquote} files that
@@ -1622,49 +1910,57 @@ We must ensure that we are appropriatelly invoking our ArrayFire
 dependencies as well as producing the appropriate debugging symbols
 most of the time.
 
-\nwenddocs{}\nwbegincode{67}\sublabel{NW2YR5B-2pNilx-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2pNilx-1}}}\moddef{Build \code{}codfns.dll\edoc{} DLL~{\nwtagstyle{}\subpageref{NW2YR5B-2pNilx-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-8A0Gv-1}}\nwenddeflinemarkup
-\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1}←#.\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.\nwlinkedidentc{VS∆PATH}{NW2YR5B-2z4lmm-4},'\\VC\\Auxiliary\\Build\\vcvarsall.bat'
+\nwenddocs{}\nwbegincode{109}\sublabel{NW2YR5B-2pNilx-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-2pNilx-1}}}\moddef{Build \code{}codfns.dll\edoc{} DLL~{\nwtagstyle{}\subpageref{NW2YR5B-2pNilx-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-8A0Gv-1}}\nwenddeflinemarkup
+\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1}←#.\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.\nwlinkedidentc{VS∆PATH}{NW2YR5B-2z4lmm-4}
+\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1},'\\VC\\Auxiliary\\Build\\vcvarsall.bat'
 \nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1}←path,'\\'
 
-vsc←'%comspec% /C ""',\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1},'" amd64'
-vsc,←' && cd "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'\\rtm"'
-vsc,←' && cl /MP /W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS'
-vsc,←'        /Fo".\\\\" /Fd"\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.pdb"'
-vsc,←'        /WX /MD /EHsc /nologo /I"%AF_PATH%\\include"'
-vsc,←'        /D "NOMINMAX" /D "AF_DEBUG" /D "EXPORTING"'
-vsc,←'        "*.c" /link /DLL /OPT:REF'
-vsc,←'        /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
-vsc,←'        /LIBPATH:"%AF_PATH%\\lib"'
-vsc,←'        /DYNAMICBASE "af',\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.\nwlinkedidentc{AF∆LIB}{NW2YR5B-2z4lmm-3},'.lib"'
-vsc,←'        /OPT:ICF /ERRORREPORT:PROMPT'
-vsc,←'        /TLBID:1 /OUT:"\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.dll""'
-\nwindexdefn{\nwixident{vsbat}}{vsbat}{NW2YR5B-2pNilx-1}\nwindexdefn{\nwixident{wsd}}{wsd}{NW2YR5B-2pNilx-1}\eatline
-\nwused{\\{NW2YR5B-8A0Gv-1}}\nwidentdefs{\\{{\nwixident{vsbat}}{vsbat}}\\{{\nwixident{wsd}}{wsd}}}\nwidentuses{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{VS∆PATH}}{VS∆PATH}}}\nwindexuse{\nwixident{AF∆LIB}}{AF∆LIB}{NW2YR5B-2pNilx-1}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-2pNilx-1}\nwindexuse{\nwixident{VS∆PATH}}{VS∆PATH}{NW2YR5B-2pNilx-1}\nwendcode{}\nwbegindocs{68}\nwdocspar
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1}←'%comspec% /C ""',\nwlinkedidentc{vsbat}{NW2YR5B-2pNilx-1},'" amd64'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'  && cd "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'\\rtm"'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'  && cl /MP /W3 /wd4102 /wd4275'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /Od /Zc:inline /Zi /FS'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /Fo".\\\\" /Fd"\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.pdb"'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /WX /MD /EHsc /nologo'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /I"%AF_PATH%\\include"'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /D"NOMINMAX" /D"AF_DEBUG" /D"EXPORTING"'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    "*.c" /link /DLL /OPT:REF'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /INCREMENTAL:NO /SUBSYSTEM:WINDOWS'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /LIBPATH:"%AF_PATH%\\lib"'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /DYNAMICBASE "af',\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.\nwlinkedidentc{AF∆LIB}{NW2YR5B-2z4lmm-3},'.lib"'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /OPT:ICF /ERRORREPORT:PROMPT'
+\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1},←'    /TLBID:1 /OUT:"\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.dll""'
+\nwindexdefn{\nwixident{vsbat}}{vsbat}{NW2YR5B-2pNilx-1}\nwindexdefn{\nwixident{wsd}}{wsd}{NW2YR5B-2pNilx-1}\nwindexdefn{\nwixident{vsc}}{vsc}{NW2YR5B-2pNilx-1}\eatline
+\nwused{\\{NW2YR5B-8A0Gv-1}}\nwidentdefs{\\{{\nwixident{vsbat}}{vsbat}}\\{{\nwixident{vsc}}{vsc}}\\{{\nwixident{wsd}}{wsd}}}\nwidentuses{\\{{\nwixident{AF∆LIB}}{AF∆LIB}}\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{VS∆PATH}}{VS∆PATH}}}\nwindexuse{\nwixident{AF∆LIB}}{AF∆LIB}{NW2YR5B-2pNilx-1}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-2pNilx-1}\nwindexuse{\nwixident{VS∆PATH}}{VS∆PATH}{NW2YR5B-2pNilx-1}\nwendcode{}\nwbegindocs{110}\nwdocspar
 Finally, in order to write up the test harness to work right,
 we must copy the appropriate runtime files into the {\Tt{}tests{\nwbackslash}\nwendquote}
 directory so that we can find them when we finally start running
 our code there.
 
-\nwenddocs{}\nwbegincode{69}\sublabel{NW2YR5B-1PDY4d-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1PDY4d-1}}}\moddef{Copy the runtime files into \code{}tests{\nwbackslash}\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-1PDY4d-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-8A0Gv-1}}\nwenddeflinemarkup
-⎕CMD ⎕←vsc
+\nwenddocs{}\nwbegincode{111}\sublabel{NW2YR5B-1PDY4d-1}\nwmargintag{{\nwtagstyle{}\subpageref{NW2YR5B-1PDY4d-1}}}\moddef{Copy the runtime files into \code{}tests{\nwbackslash}\edoc{}~{\nwtagstyle{}\subpageref{NW2YR5B-1PDY4d-1}}}\endmoddef\nwstartdeflinemarkup\nwusesondefline{\\{NW2YR5B-8A0Gv-1}}\nwenddeflinemarkup
+⎕CMD ⎕←\nwlinkedidentc{vsc}{NW2YR5B-2pNilx-1}
 ⎕CMD ⎕←'copy "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'rtm\\\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.h" "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'tests\\"'
 ⎕CMD ⎕←'copy "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'rtm\\\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.exp" "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'tests\\"'
 ⎕CMD ⎕←'copy "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'rtm\\\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.lib" "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'tests\\"'
 ⎕CMD ⎕←'copy "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'rtm\\\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.pdb" "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'tests\\"'
 ⎕CMD ⎕←'copy "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'rtm\\\nwlinkedidentc{codfns}{NW2YR5B-1p0Y9w-1}.dll" "',\nwlinkedidentc{wsd}{NW2YR5B-2pNilx-1},'tests\\"'
-\nwused{\\{NW2YR5B-8A0Gv-1}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{wsd}}{wsd}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-1PDY4d-1}\nwindexuse{\nwixident{wsd}}{wsd}{NW2YR5B-1PDY4d-1}\nwendcode{}
+\nwused{\\{NW2YR5B-8A0Gv-1}}\nwidentuses{\\{{\nwixident{codfns}}{codfns}}\\{{\nwixident{vsc}}{vsc}}\\{{\nwixident{wsd}}{wsd}}}\nwindexuse{\nwixident{codfns}}{codfns}{NW2YR5B-1PDY4d-1}\nwindexuse{\nwixident{vsc}}{vsc}{NW2YR5B-1PDY4d-1}\nwindexuse{\nwixident{wsd}}{wsd}{NW2YR5B-1PDY4d-1}\nwendcode{}
 
 \nwixlogsorted{c}{{*}{NW2YR5B-1p0Y9w-1}{\nwixd{NW2YR5B-1p0Y9w-1}}}%
 \nwixlogsorted{c}{{\code{}DISPLAY\edoc{} Utility}{NW2YR5B-2qLMFZ-1}{\nwixd{NW2YR5B-2qLMFZ-1}}}%
-\nwixlogsorted{c}{{\code{}MK∆RTM\edoc{} Command}{NW2YR5B-3NyYsr-1}{\nwixd{NW2YR5B-3NyYsr-1}}}%
+\nwixlogsorted{c}{{\code{}MK∆RTM\edoc{}}{NW2YR5B-66tOQ-1}{\nwixd{NW2YR5B-66tOQ-1}}}%
 \nwixlogsorted{c}{{\code{}PP\edoc{} Utility}{NW2YR5B-39J7A7-1}{\nwixd{NW2YR5B-39J7A7-1}}}%
-\nwixlogsorted{c}{{\code{}TANGLE\edoc{} Command}{NW2YR5B-4RSUUl-1}{\nwixd{NW2YR5B-4RSUUl-1}}}%
-\nwixlogsorted{c}{{\code{}TEST\edoc{} Function}{NW2YR5B-1ODqI6-1}{\nwixd{NW2YR5B-1ODqI6-1}}}%
-\nwixlogsorted{c}{{\code{}WEAVE\edoc{} Command}{NW2YR5B-4gLOOa-1}{\nwixd{NW2YR5B-4gLOOa-1}}}%
+\nwixlogsorted{c}{{\code{}TANGLE.bat\edoc{}}{NW2YR5B-YYfto-1}{\nwixd{NW2YR5B-YYfto-1}}}%
+\nwixlogsorted{c}{{\code{}TANGLE.sh\edoc{}}{NW2YR5B-42EjwV-1}{\nwixd{NW2YR5B-42EjwV-1}}}%
+\nwixlogsorted{c}{{\code{}TANGLE\edoc{}}{NW2YR5B-4OPRT1-1}{\nwixd{NW2YR5B-4OPRT1-1}}}%
+\nwixlogsorted{c}{{\code{}TEST\edoc{}}{NW2YR5B-4gH67U-1}{\nwixd{NW2YR5B-4gH67U-1}}}%
+\nwixlogsorted{c}{{\code{}WEAVE.bat\edoc{}}{NW2YR5B-3fkVpu-1}{\nwixd{NW2YR5B-3fkVpu-1}}}%
+\nwixlogsorted{c}{{\code{}WEAVE.sh\edoc{}}{NW2YR5B-40bMLy-1}{\nwixd{NW2YR5B-40bMLy-1}}}%
+\nwixlogsorted{c}{{\code{}WEAVE\edoc{}}{NW2YR5B-2CaUHx-1}{\nwixd{NW2YR5B-2CaUHx-1}}}%
+\nwixlogsorted{c}{{Adjust AST for output}{NW2YR5B-1K2n9O-1}{\nwixu{NW2YR5B-38DvvD-1}\nwixd{NW2YR5B-1K2n9O-1}\nwixd{NW2YR5B-1K2n9O-2}\nwixd{NW2YR5B-1K2n9O-3}\nwixd{NW2YR5B-1K2n9O-4}}}%
 \nwixlogsorted{c}{{AST Record Structure}{NW2YR5B-1gMT0G-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-1gMT0G-1}}}%
-\nwixlogsorted{c}{{Basic \code{}tie\edoc{} and \code{}put\edoc{} utilities}{NW2YR5B-XAz19-1}{\nwixd{NW2YR5B-XAz19-1}\nwixu{NW2YR5B-3NyYsr-1}}}%
+\nwixlogsorted{c}{{Basic \code{}tie\edoc{} and \code{}put\edoc{} utilities}{NW2YR5B-XAz19-1}{\nwixd{NW2YR5B-XAz19-1}\nwixu{NW2YR5B-66tOQ-1}}}%
 \nwixlogsorted{c}{{Build \code{}codfns.dll\edoc{} DLL}{NW2YR5B-2pNilx-1}{\nwixu{NW2YR5B-8A0Gv-1}\nwixd{NW2YR5B-2pNilx-1}}}%
-\nwixlogsorted{c}{{Build the runtime}{NW2YR5B-8A0Gv-1}{\nwixd{NW2YR5B-8A0Gv-1}\nwixu{NW2YR5B-3NyYsr-1}}}%
+\nwixlogsorted{c}{{Build the runtime}{NW2YR5B-8A0Gv-1}{\nwixd{NW2YR5B-8A0Gv-1}\nwixu{NW2YR5B-66tOQ-1}}}%
 \nwixlogsorted{c}{{C Runtime Header}{NW2YR5B-2mMS19-1}{\nwixd{NW2YR5B-2mMS19-1}}}%
 \nwixlogsorted{c}{{C Runtime Support}{NW2YR5B-3ZoAJL-1}{\nwixd{NW2YR5B-3ZoAJL-1}}}%
 \nwixlogsorted{c}{{Code Generator}{NW2YR5B-HCURD-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-HCURD-1}}}%
@@ -1675,53 +1971,80 @@ our code there.
 \nwixlogsorted{c}{{Global Settings}{NW2YR5B-2z4lmm-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-2z4lmm-1}\nwixd{NW2YR5B-2z4lmm-2}\nwixd{NW2YR5B-2z4lmm-3}\nwixd{NW2YR5B-2z4lmm-4}}}%
 \nwixlogsorted{c}{{Implementation of APL Primitives}{NW2YR5B-941K7-1}{\nwixd{NW2YR5B-941K7-1}}}%
 \nwixlogsorted{c}{{Interface to the backend C compiler}{NW2YR5B-2LnsgP-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-2LnsgP-1}}}%
+\nwixlogsorted{c}{{Line and error reporting utilities}{NW2YR5B-aELRs-1}{\nwixu{NW2YR5B-38DvvD-1}\nwixd{NW2YR5B-aELRs-1}}}%
 \nwixlogsorted{c}{{Linking with Dyalog}{NW2YR5B-zH457-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-zH457-1}}}%
-\nwixlogsorted{c}{{Normalize the input formatting}{NW2YR5B-32ArUy-1}{\nwixu{NW2YR5B-3k63Cf-1}\nwixd{NW2YR5B-32ArUy-1}}}%
+\nwixlogsorted{c}{{Must Have APL Utilities}{NW2YR5B-AF6fz-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-AF6fz-1}}}%
+\nwixlogsorted{c}{{Normalize the input formatting}{NW2YR5B-32ArUy-1}{\nwixu{NW2YR5B-13WClx-1}\nwixd{NW2YR5B-32ArUy-1}}}%
+\nwixlogsorted{c}{{Parse token stream}{NW2YR5B-4CIf4o-1}{\nwixu{NW2YR5B-38DvvD-1}\nwixd{NW2YR5B-4CIf4o-1}}}%
 \nwixlogsorted{c}{{Parser}{NW2YR5B-38DvvD-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-38DvvD-1}}}%
+\nwixlogsorted{c}{{Parsing Constants}{NW2YR5B-3563XI-1}{\nwixu{NW2YR5B-38DvvD-1}\nwixd{NW2YR5B-3563XI-1}}}%
 \nwixlogsorted{c}{{Pretty-printing AST trees}{NW2YR5B-1VExi3-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-1VExi3-1}}}%
-\nwixlogsorted{c}{{Tangle Script}{NW2YR5B-M0NPL-1}{\nwixd{NW2YR5B-M0NPL-1}}}%
+\nwixlogsorted{c}{{Tangle Commands}{NW2YR5B-ufqpm-1}{\nwixd{NW2YR5B-ufqpm-1}\nwixd{NW2YR5B-ufqpm-2}\nwixd{NW2YR5B-ufqpm-3}\nwixu{NW2YR5B-42EjwV-1}\nwixd{NW2YR5B-ufqpm-4}\nwixd{NW2YR5B-ufqpm-5}\nwixd{NW2YR5B-ufqpm-6}\nwixd{NW2YR5B-ufqpm-7}\nwixd{NW2YR5B-ufqpm-8}\nwixd{NW2YR5B-ufqpm-9}}}%
+\nwixlogsorted{c}{{The \code{}opsys\edoc{} utility}{NW2YR5B-1ejEd9-1}{\nwixu{NW2YR5B-2LnsgP-1}\nwixd{NW2YR5B-1ejEd9-1}\nwixu{NW2YR5B-4OPRT1-1}\nwixu{NW2YR5B-2CaUHx-1}}}%
 \nwixlogsorted{c}{{The Fix API}{NW2YR5B-2o6hoR-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-2o6hoR-1}}}%
+\nwixlogsorted{c}{{Tokenize input}{NW2YR5B-1192i8-1}{\nwixu{NW2YR5B-38DvvD-1}\nwixd{NW2YR5B-1192i8-1}}}%
 \nwixlogsorted{c}{{User-command API}{NW2YR5B-2YFL86-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-2YFL86-1}}}%
-\nwixlogsorted{c}{{Verify input from \code{}IN\edoc{}}{NW2YR5B-3k63Cf-1}{\nwixd{NW2YR5B-3k63Cf-1}\nwixu{NW2YR5B-38DvvD-1}}}%
-\nwixlogsorted{c}{{Weave Script}{NW2YR5B-4INSDn-1}{\nwixd{NW2YR5B-4INSDn-1}}}%
+\nwixlogsorted{c}{{Verify source input \code{}⍵\edoc{}, set \code{}IN\edoc{}}{NW2YR5B-13WClx-1}{\nwixd{NW2YR5B-13WClx-1}\nwixu{NW2YR5B-38DvvD-1}}}%
 \nwixlogsorted{c}{{XML Rendering}{NW2YR5B-1evvdc-1}{\nwixu{NW2YR5B-1p0Y9w-1}\nwixd{NW2YR5B-1evvdc-1}}}%
 \nwixlogsorted{i}{{\nwixident{AF∆LIB}}{AF∆LIB}}%
 \nwixlogsorted{i}{{\nwixident{AF∆PREFIX}}{AF∆PREFIX}}%
+\nwixlogsorted{i}{{\nwixident{assert}}{assert}}%
 \nwixlogsorted{i}{{\nwixident{codfns}}{codfns}}%
+\nwixlogsorted{i}{{\nwixident{codfns.apln}}{codfns.apln}}%
 \nwixlogsorted{i}{{\nwixident{dct}}{dct}}%
 \nwixlogsorted{i}{{\nwixident{DISPLAY}}{DISPLAY}}%
+\nwixlogsorted{i}{{\nwixident{DISPLAY.aplf}}{DISPLAY.aplf}}%
 \nwixlogsorted{i}{{\nwixident{dlk}}{dlk}}%
 \nwixlogsorted{i}{{\nwixident{dwh}}{dwh}}%
 \nwixlogsorted{i}{{\nwixident{dwv}}{dwv}}%
 \nwixlogsorted{i}{{\nwixident{Fix}}{Fix}}%
 \nwixlogsorted{i}{{\nwixident{lb3}}{lb3}}%
+\nwixlogsorted{i}{{\nwixident{linestarts}}{linestarts}}%
+\nwixlogsorted{i}{{\nwixident{mkdm}}{mkdm}}%
 \nwixlogsorted{i}{{\nwixident{MK∆RTM}}{MK∆RTM}}%
+\nwixlogsorted{i}{{\nwixident{MK∆RTM.aplf}}{MK∆RTM.aplf}}%
+\nwixlogsorted{i}{{\nwixident{opsys}}{opsys}}%
 \nwixlogsorted{i}{{\nwixident{PP}}{PP}}%
+\nwixlogsorted{i}{{\nwixident{PP.aplf}}{PP.aplf}}%
 \nwixlogsorted{i}{{\nwixident{pp3}}{pp3}}%
+\nwixlogsorted{i}{{\nwixident{PS}}{PS}}%
 \nwixlogsorted{i}{{\nwixident{put}}{put}}%
+\nwixlogsorted{i}{{\nwixident{quotelines}}{quotelines}}%
+\nwixlogsorted{i}{{\nwixident{SIGNAL}}{SIGNAL}}%
 \nwixlogsorted{i}{{\nwixident{src}}{src}}%
 \nwixlogsorted{i}{{\nwixident{TANGLE}}{TANGLE}}%
+\nwixlogsorted{i}{{\nwixident{TANGLE.aplf}}{TANGLE.aplf}}%
+\nwixlogsorted{i}{{\nwixident{TANGLE.bat}}{TANGLE.bat}}%
+\nwixlogsorted{i}{{\nwixident{TANGLE.sh}}{TANGLE.sh}}%
 \nwixlogsorted{i}{{\nwixident{TEST}}{TEST}}%
+\nwixlogsorted{i}{{\nwixident{TEST.aplf}}{TEST.aplf}}%
 \nwixlogsorted{i}{{\nwixident{tie}}{tie}}%
 \nwixlogsorted{i}{{\nwixident{VERSION}}{VERSION}}%
 \nwixlogsorted{i}{{\nwixident{vsbat}}{vsbat}}%
+\nwixlogsorted{i}{{\nwixident{vsc}}{vsc}}%
 \nwixlogsorted{i}{{\nwixident{VS∆PATH}}{VS∆PATH}}%
 \nwixlogsorted{i}{{\nwixident{WEAVE}}{WEAVE}}%
+\nwixlogsorted{i}{{\nwixident{WEAVE.aplf}}{WEAVE.aplf}}%
+\nwixlogsorted{i}{{\nwixident{WEAVE.bat}}{WEAVE.bat}}%
+\nwixlogsorted{i}{{\nwixident{WEAVE.sh}}{WEAVE.sh}}%
 \nwixlogsorted{i}{{\nwixident{wsd}}{wsd}}%
+\nwixlogsorted{i}{{\nwixident{Xml}}{Xml}}%
+\nwixlogsorted{i}{{\nwixident{xn}}{xn}}%
+\nwixlogsorted{i}{{\nwixident{xt}}{xt}}%
 \nwixlogsorted{i}{{\nwixident{⎕IO}}{⎕IO}}%
 \nwixlogsorted{i}{{\nwixident{⎕ML}}{⎕ML}}%
 \nwixlogsorted{i}{{\nwixident{⎕WX}}{⎕WX}}%
-\nwbegindocs{70}\nwdocspar
+\nwbegindocs{112}\nwdocspar
 
 \subsection{Loading the Compiler}
 
 In order to load the compiler into an APL session as well as all the
 development utilities,
 we assume that you have first managed to either load up a session
-with a bootstrapped version of the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}\nwendquote} command or that you
+with a bootstrapped version of the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwendquote} command or that you
 already have a tangled {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwendquote} directory.
 If the {\Tt{}\nwlinkedidentq{src}{NW2YR5B-3C6SQT-1}{\nwbackslash}\nwendquote} directory has not yet been created by running the
-{\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}\nwendquote} command,
+{\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwendquote} command,
 then this must be done before loading the compiler system.
 After tangling,
 the compiler can be loaded using the provided {\Tt{}LOAD\nwendquote} shortcut.
@@ -1747,12 +2070,12 @@ and then, and only then, flow into the session.
 This also allows us to make some modifications to the code for testing
 and experimentation inside of the session without consideration
 for the code outside of the session,
-and such changes will be removed or forgotten on the next {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}\nwendquote}
+and such changes will be removed or forgotten on the next {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwendquote}
 command.
 
 To set this up, we also ensure that we begin our work within the
 root Co-dfns repository directory, as this is where we expect to run
-the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4RSUUl-1}\nwendquote} and {\Tt{}\nwlinkedidentq{WEAVE}{NW2YR5B-4gLOOa-1}\nwendquote} commands.
+the {\Tt{}\nwlinkedidentq{TANGLE}{NW2YR5B-4OPRT1-1}\nwendquote} and {\Tt{}\nwlinkedidentq{WEAVE}{NW2YR5B-2CaUHx-1}\nwendquote} commands.
 
 There is unfortunately only a limited range of possibilities for
 linking in a new directory as we wish to do.

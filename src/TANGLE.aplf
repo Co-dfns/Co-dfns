@@ -1,6 +1,3 @@
-TANGLE;SH;CWD;CD
-SH←'C:\cygwin64\bin\bash.exe -l -c '
-CWD←⊃⎕CMD'C:\cygwin64\bin\bash.exe -c pwd'
-CD←'cd ''',CWD,''''
-
-⎕CMD SH,'"',CD,' && ./TANGLE.sh"'
+TANGLE;opsys
+opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
+⎕CMD opsys '.\TANGLE.bat' './TANGLE.sh' './TANGLE.sh'
