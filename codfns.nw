@@ -609,6 +609,7 @@ PS←{
 	<<Tokenize input>>
 	<<Parse token stream>>
 	
+	<<Compute parser exports>>
 	<<Adjust AST for output>>
 }
 @ %def PS
@@ -647,23 +648,8 @@ Field & Description\\
 \end{tabular}
 \par\end{center}
 
-The [[xn]] and [[xt]] fields are not part of the AST proper, 
-but form an auxiliary analysis that is exceptionally useful,
-and so we include this as a part of the output of the parser.
-After parsing a module, we want to extract out the top-level 
-bindings and what their types are,
-which we can then use to feed into things like the linker 
-and other areas that might need to know what names are available
-in a given module.
-Top-level bindings are identified as bindings that appear as a 
-part of an initialization function, also known as [[F0]].
-
-<<Adjust AST for output>>=
-msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
-xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
-@ %def xn xt
-
-We also want to convert the AST to an order that follows a 
+@ On parser output,
+we want to convert the AST to an order that follows a 
 depth-first, preorder traversal order, 
 so that we can switch from using the parent vector to the depth
 vector.
@@ -894,44 +880,24 @@ t k n pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 \subsection{Compiler Transformations}
 
 <<Compiler>>=
- TT←{((d t k n ss se)exp sym src)←⍵ ⋄ I←{(⊂⍵)⌷⍺}
-	 A B C E F G K L M N O P S V Z←1+⍳15
+TT←{
+	((d t k n ss se)exp sym src)←⍵
+	
+	⍝ Compute parent vector and reference scope
+	r←I@{t[⍵]≠F}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d
 
-⍝ Compute parent vector and reference scope
-	 r←I@{t[⍵]≠F}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d
-
-⍝ Lift Functions to top-level
-	 p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n r(⊣,I)←⊂i ⋄ p r I⍨←⊂n[i]@i⊢⍳≢p
-	 t[i]←C
-
-⍝ Wrap expressions as binding or return statements
-	 i←(⍸(~t∊F G)∧t[p]=F),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=G ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p
-	 p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
-	 k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4 ⋄ t[j]←E
-
-⍝ Lift guard tests
-	 p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
-	 n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
-
-⍝ Count strand and indexing children
-	 n[⍸(t∊A E)∧k=6]←0 ⋄ n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1
-
-⍝ Lift and flatten expressions
-	 p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O P V] ⋄ j←(⌽i)[⍋⌽x]
-	 p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
-
-⍝ Compute slots for each frame
-	 s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=B]
-
-⍝ Compute frame depths
-	 d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1
-
-⍝ Record exported top-level bindings
-	 xi←⍸(t=B)∧k[r]=0
-
-	 p t k n f s r d xi sym}
+	<<Lift dfns to the top-level>>
+	<<Wrap expressions as binding or return statements>>
+	<<Lift guard tests>>
+	<<Count strand and indexing children>>
+	<<Lift and flatten expressions>>
+	<<Compute slots and frames>>
+	<<Record exported top-level bindings>>
+	
+	p t k n f s r d xi sym
+}
 @
-
+	
 \subsection{Code Generator}
 
 <<Code Generator>>=
@@ -1336,6 +1302,10 @@ i←⍸(t[p]=A)∧(k[p]=6)∧t=N
 p,←i ⋄ t k n pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 1(⊂'')
 @
 
+<<Count strand and indexing children>>=
+n[⍸(t∊A E)∧k=6]←0 ⋄ n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1
+@
+
 \subsection{Primitives}
 
 \subsubsection{APL Primitives}
@@ -1528,6 +1498,11 @@ t k n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿
 i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
 @
 
+<<Lift and flatten expressions>>=
+p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O P V] ⋄ j←(⌽i)[⍋⌽x]
+p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
+@
+
 \subsubsection{Value Expressions}
 
 <<Parse value expressions>>=
@@ -1617,6 +1592,25 @@ _←{z/⍨¯1=vb[1⌷z]←fb[fr⍳⍉n I@1⊢z←rf I@0⊢⍵]}⍣≡⍉{rf[⍵]
 }⍸msk
 @
 
+<<Lift dfns to the top-level>>=
+p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n r(⊣,I)←⊂i ⋄ p r I⍨←⊂n[i]@i⊢⍳≢p
+t[i]←C
+@
+
+<<Wrap expressions as binding or return statements>>=
+i←(⍸(~t∊F G)∧t[p]=F),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=G ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p
+p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
+k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4 ⋄ t[j]←E
+@
+
+<<Compute slots and frames>>=
+⍝ Compute slots for each frame
+s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=B]
+
+⍝ Compute frame depths
+d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1
+@
+
 \subsubsection{Trad-fns}
 
 <<Compute trad-fns regions>>=
@@ -1624,6 +1618,15 @@ _←{z/⍨¯1=vb[1⌷z]←fb[fr⍳⍉n I@1⊢z←rf I@0⊢⍵]}⍣≡⍉{rf[⍵]
 0≠⊃tm←¯1⌽≠⍀(d=0)∧'∇'=x:'UNBALANCED TRAD-FNS'⎕SIGNAL 2
 ∨⌿Z≠t⌿⍨⊃1 ¯1∨.⌽⊂(2>⌿tm)⍪0:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'⎕SIGNAL 2
 @
+
+\subsection{Guards}
+
+<<Lift guard tests>>=
+p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
+n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
+@
+
+\subsubsection{Error Guards}
 
 \subsection{Labels}
 
@@ -1694,6 +1697,27 @@ p[x]←x[D2P ¯1⌽d]
 msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
 t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 @
+
+In the parser,
+the [[xn]] and [[xt]] fields are not part of the AST proper, 
+but form an auxiliary analysis that is exceptionally useful,
+and so we include this as a part of the output of the parser.
+After parsing a module, we want to extract out the top-level 
+bindings and what their types are,
+which we can then use to feed into things like the linker 
+and other areas that might need to know what names are available
+in a given module.
+Top-level bindings are identified as bindings that appear as a 
+part of an initialization function, also known as [[F0]].
+
+<<Compute parser exports>>=
+msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
+xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
+@ %def xn xt
+
+<<Record exported top-level bindings>>=
+xi←⍸(t=B)∧k[r]=0
+@ %def xi
 
 \subsubsection{Structured Programming Statements}
 
