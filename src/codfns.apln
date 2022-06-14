@@ -425,24 +425,78 @@
                 p t k n f s r d xi sym
         }
         GC←{
-                p t k n fr sl rf fd xi sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
-                I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
-                ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]} ⋄ nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]}
+                p t k n fr sl rf fd xi sym←⍵
 
-                syms ←,¨'+'           '-'            '×'            '÷'            '*'             '⍟'           '|'              '○'           '⌊'          '⌈'           '!'
-                nams ←        'add'    'sub'  'mul' 'div' 'exp' 'log' 'res'    'cir'   'min'  'max' 'fac'
-                syms,←,¨'<'           '≤'          '='             '≥'           '>'             '≠'           '~'              '∧'           '∨'          '⍲'           '⍱'
-                nams,←        'lth'    'lte'  'eql' 'gte' 'gth' 'neq' 'not'    'and'   'lor'  'nan' 'nor'
-                syms,←,¨'⌷'                 '['            '⍳'           '⍴'           ','             '⍪'           '⌽'            '⍉'           '⊖'          '∊'           '⊃'
-                nams,←        'sqd'    'brk'  'iot' 'rho' 'cat' 'ctf' 'rot'    'trn'   'rtf'  'mem' 'dis'
-                syms,←,¨'≡'                 '≢'          '⊢'           '⊣'           '⊤'           '⊥'           '/'              '⌿'           '\'            '⍀'           '?'
-                nams,←        'eqv'    'nqv'  'rgt' 'lft' 'enc' 'dec' 'red'    'rdf'   'scn'  'scf' 'rol'
-                syms,←,¨'↑'                 '↓'          '¨'            '⍨'           '.'             '⍤'           '⍣'            '∘'           '∪'          '∩'           '←'
-                nams,←        'tke'    'drp'  'map' 'com' 'dot' 'rnk' 'pow'    'jot'   'unq'  'int' 'get'
-                syms,←,¨'⍋'                 '⍒'          '∘.'  '⍷'           '⊂'           '⌹'           '⎕FFT' '⎕IFFT' '%s'         '⊆'           '⎕CONV'
-                nams,←        'gdu'    'gdd'  'oup' 'fnd' 'par' 'mdv' 'fft'    'ift'   'scl'  'nst' 'conv'
-                syms,←,¨'∇'                 ';'            '⍺'           '⍵'           '⍺⍺'        '⍵⍵'        '%u'
-                nams,←        'this' 'span' 'l'               'r'             'aa'    'ww'    ''
+                syms←0⍴⊂'' ⋄ nams←0⍴⊂''
+                syms,←⊂,';' ⋄ nams,←⊂'span'
+                syms,←⊂,'←' ⋄ nams,←⊂'get'
+                syms,←⊂,'∇' ⋄ nams,←⊂'this'
+                syms,←⊂,'+' ⋄ nams,←⊂'add'
+                syms,←⊂,'∧' ⋄ nams,←⊂'and'
+                syms,←⊂,'[' ⋄ nams,←⊂'brk'
+                syms,←⊂,',' ⋄ nams,←⊂'cat'
+                syms,←⊂,'⍪' ⋄ nams,←⊂'ctf'
+                syms,←⊂,'○' ⋄ nams,←⊂'cir'
+                syms,←⊂,'⍨' ⋄ nams,←⊂'com'
+                syms,←⊂,'∘' ⋄ nams,←⊂'jot'
+                syms,←⊂,'⎕CONV' ⋄ nams,←⊂'conv'
+                syms,←⊂,'⊥' ⋄ nams,←⊂'dec'
+                syms,←⊂,'⊃' ⋄ nams,←⊂'dis'
+                syms,←⊂,'÷' ⋄ nams,←⊂'div'
+                syms,←⊂,'↓' ⋄ nams,←⊂'drp'
+                syms,←⊂,'¨' ⋄ nams,←⊂'map'
+                syms,←⊂,'⊂' ⋄ nams,←⊂'par'
+                syms,←⊂,'⊤' ⋄ nams,←⊂'enc'
+                syms,←⊂,'=' ⋄ nams,←⊂'eql'
+                syms,←⊂,'*' ⋄ nams,←⊂'exp'
+                syms,←⊂,'!' ⋄ nams,←⊂'fac'
+                syms,←⊂,'⎕FFT' ⋄ nams,←⊂'fft'
+                syms,←⊂,'⎕IFFT' ⋄ nams,←⊂'ift'
+                syms,←⊂,'⍷' ⋄ nams,←⊂'fnd'
+                syms,←⊂,'⍒' ⋄ nams,←⊂'gdd'
+                syms,←⊂,'⍋' ⋄ nams,←⊂'gdu'
+                syms,←⊂,'>' ⋄ nams,←⊂'gth'
+                syms,←⊂,'≥' ⋄ nams,←⊂'gte'
+                syms,←⊂,'⌷' ⋄ nams,←⊂'sqd'
+                syms,←⊂,'⍳' ⋄ nams,←⊂'iot'
+                syms,←⊂,'.' ⋄ nams,←⊂'dot'
+                syms,←⊂,'∩' ⋄ nams,←⊂'int'
+                syms,←⊂,'⊣' ⋄ nams,←⊂'lft'
+                syms,←⊂,'<' ⋄ nams,←⊂'lth'
+                syms,←⊂,'≤' ⋄ nams,←⊂'lte'
+                syms,←⊂,'⍟' ⋄ nams,←⊂'log'
+                syms,←⊂,'≡' ⋄ nams,←⊂'eqv'
+                syms,←⊂,'⌹' ⋄ nams,←⊂'mdv'
+                syms,←⊂,'⌈' ⋄ nams,←⊂'max'
+                syms,←⊂,'∊' ⋄ nams,←⊂'mem'
+                syms,←⊂,'⌊' ⋄ nams,←⊂'min'
+                syms,←⊂,'×' ⋄ nams,←⊂'mul'
+                syms,←⊂,'⊆' ⋄ nams,←⊂'nst'
+                syms,←⊂,'~' ⋄ nams,←⊂'not'
+                syms,←⊂,'⍲' ⋄ nams,←⊂'nan'
+                syms,←⊂,'≠' ⋄ nams,←⊂'neq'
+                syms,←⊂,'≢' ⋄ nams,←⊂'nqv'
+                syms,←⊂,'⍱' ⋄ nams,←⊂'nor'
+                syms,←⊂,'∨' ⋄ nams,←⊂'lor'
+                syms,←⊂,'∘.' ⋄ nams,←⊂'oup'
+                syms,←⊂,'⍣' ⋄ nams,←⊂'pow'
+                syms,←⊂,'⍤' ⋄ nams,←⊂'rnk'
+                syms,←⊂,'/' ⋄ nams,←⊂'red'
+                syms,←⊂,'⌿' ⋄ nams,←⊂'rdf'
+                syms,←⊂,'?' ⋄ nams,←⊂'rol'
+                syms,←⊂,'⌽' ⋄ nams,←⊂'rot'
+                syms,←⊂,'⊖' ⋄ nams,←⊂'rtf'
+                syms,←⊂,'|' ⋄ nams,←⊂'res'
+                syms,←⊂,'⊢' ⋄ nams,←⊂'rgt'
+                syms,←⊂,'%s' ⋄ nams,←⊂'scl'
+                syms,←⊂,'\' ⋄ nams,←⊂'scn'
+                syms,←⊂,'⍀' ⋄ nams,←⊂'scf'
+                syms,←⊂,'⍴' ⋄ nams,←⊂'rho'
+                syms,←⊂,'-' ⋄ nams,←⊂'sub'
+                syms,←⊂,'↑' ⋄ nams,←⊂'tke'
+                syms,←⊂,'⍉' ⋄ nams,←⊂'trn'
+                syms,←⊂,'∪' ⋄ nams,←⊂'unq'
+                gck←0⍴⊂0 0 ⋄ gcv←0⍴⊂''
 
                 gck← (A 1)(A 6)
                 gcv← 'Aa' 'As'
@@ -463,7 +517,6 @@
                 gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
                 gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
                 gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
-                NL←⎕UCS 13 10
 
                 pref ←⊂'#include "codfns.h"'
                 pref,←⊂''
@@ -473,7 +526,6 @@
                 pref,←⊂'    return set_dwafns(p);'
                 pref,←⊂'}'
                 pref,←⊂''
-
                 Bf←{id←sym⊃⍨|4⊃⍺
                         z ←⊂id,' = retain_cell(stkhd[-1]);'
                 z}
@@ -626,11 +678,11 @@
                         ⍎'''UNKNOWN EXPORT TYPE''⎕SIGNAL 16'
                 }
 
-                d i←P2D p ⋄ ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;]
+                d i←P2D p ⋄ ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
                 NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
                 dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
-                z←∊,∘NL¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
-                z}
+                ∊,∘(⎕UCS 13 10)¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
+        }
         CC←{
                 vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
                 tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}

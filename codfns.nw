@@ -900,214 +900,218 @@ TT←{
 	
 \subsection{Code Generator}
 
-<<Code Generator>>=
-GC←{
-	p t k n fr sl rf fd xi sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
-	I←{(⊂⍵)⌷⍺} ⋄ com←{⊃{⍺,',',⍵}/⍵}
-	ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]} ⋄ nam←{'∆'⎕R'__'∘⍕¨sym[|⍵]}
+<<Map generators over the linearized AST; return>>=
+d i←P2D p ⋄ ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
+NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
+dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
+∊,∘(⎕UCS 13 10)¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
+@
 
-	syms ←,¨'+'		 '-'		'×'		'÷'		'*'		'⍟'		'|'		 '○'		 '⌊'		'⌈'		'!'
-	nams ←	'add'	 'sub'	'mul' 'div' 'exp' 'log' 'res'	 'cir'	 'min'	'max' 'fac'
-	syms,←,¨'<'		 '≤'		'='		'≥'		'>'		'≠'		'~'		 '∧'		 '∨'		'⍲'		'⍱'
-	nams,←	'lth'	 'lte'	'eql' 'gte' 'gth' 'neq' 'not'	 'and'	 'lor'	'nan' 'nor'
-	syms,←,¨'⌷'		 '['		'⍳'		'⍴'		','		'⍪'		'⌽'		 '⍉'		 '⊖'		'∊'		'⊃'
-	nams,←	'sqd'	 'brk'	'iot' 'rho' 'cat' 'ctf' 'rot'	 'trn'	 'rtf'	'mem' 'dis'
-	syms,←,¨'≡'		 '≢'		'⊢'		'⊣'		'⊤'		'⊥'		'/'		 '⌿'		 '\'		'⍀'		'?'
-	nams,←	'eqv'	 'nqv'	'rgt' 'lft' 'enc' 'dec' 'red'	 'rdf'	 'scn'	'scf' 'rol'
-	syms,←,¨'↑'		 '↓'		'¨'		'⍨'		'.'		'⍤'		'⍣'		 '∘'		 '∪'		'∩'		'←'
-	nams,←	'tke'	 'drp'	'map' 'com' 'dot' 'rnk' 'pow'	 'jot'	 'unq'	'int' 'get'
-	syms,←,¨'⍋'		 '⍒'		'∘.'	'⍷'		'⊂'		'⌹'		'⎕FFT' '⎕IFFT' '%s'		'⊆'		'⎕CONV'
-	nams,←	'gdu'	 'gdd'	'oup' 'fnd' 'par' 'mdv' 'fft'	 'ift'	 'scl'	'nst' 'conv'
-	syms,←,¨'∇'		 ';'		'⍺'		'⍵'		'⍺⍺'	'⍵⍵'	'%u'
-	nams,←	'this' 'span' 'l'		'r'		'aa'	'ww'	''
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms←0⍴⊂'' ⋄ nams←0⍴⊂''
+@
 
-	gck← (A 1)(A 6)
-	gcv← 'Aa' 'As'
-	gck,←(B 1)(B 2)(B 3)(B 4)
-	gcv,←'Bv' 'Bf' 'Bo' 'Bo'
-	gck,←(C 1)(C 2)
-	gcv,←'Ca' 'Cf'
-	gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 6)
-	gcv,←'Ec'	 'Ek'	 'Er' 'Em' 'Ed' 'Eb' 'Ei'
-	gck,←(F 0)(F 2)(F 3)(F 4)
-	gcv,←'Fz' 'Fn' 'Fm' 'Fd'
-	gck,←(G 0)(N 1)
-	gcv,←'Gd' 'Na'
-	gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
-	gcv,←'Ov' 'Of' 'Ovv' 'Ofv' 'Ovf' 'Off'
-	gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
-	gcv,←'Pv' 'Pv' 'Pf' 'Po' 'Po'
-	gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
-	gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
-	gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
-	NL←⎕UCS 13 10
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck←0⍴⊂0 0 ⋄ gcv←0⍴⊂''
 
-	pref ←⊂'#include "codfns.h"'
-	pref,←⊂''
-	pref,←⊂'EXPORT int'
-	pref,←⊂'DyalogGetInterpreterFunctions(void *p)'
-	pref,←⊂'{'
-	pref,←⊂'	return set_dwafns(p);'
-	pref,←⊂'}'
-	pref,←⊂''
+gck← (A 1)(A 6)
+gcv← 'Aa' 'As'
+gck,←(B 1)(B 2)(B 3)(B 4)
+gcv,←'Bv' 'Bf' 'Bo' 'Bo'
+gck,←(C 1)(C 2)
+gcv,←'Ca' 'Cf'
+gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 6)
+gcv,←'Ec'	 'Ek'	 'Er' 'Em' 'Ed' 'Eb' 'Ei'
+gck,←(F 0)(F 2)(F 3)(F 4)
+gcv,←'Fz' 'Fn' 'Fm' 'Fd'
+gck,←(G 0)(N 1)
+gcv,←'Gd' 'Na'
+gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
+gcv,←'Ov' 'Of' 'Ovv' 'Ofv' 'Ovf' 'Off'
+gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
+gcv,←'Pv' 'Pv' 'Pf' 'Po' 'Po'
+gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
+gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
+gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
+@
 
-	Bf←{id←sym⊃⍨|4⊃⍺
-		z ←⊂id,' = retain_cell(stkhd[-1]);'
-	z}
+<<Prefix code for all generated files>>=
+pref ←⊂'#include "codfns.h"'
+pref,←⊂''
+pref,←⊂'EXPORT int'
+pref,←⊂'DyalogGetInterpreterFunctions(void *p)'
+pref,←⊂'{'
+pref,←⊂'	return set_dwafns(p);'
+pref,←⊂'}'
+pref,←⊂''
+@
 
-	Cf←{id←⍕4⊃⍺
-		z ←⊂'mk_closure((struct closure **)stkhd++, fn',id,', 0);'
-	z}
+<<Node-specific code generators>>=
+Bf←{id←sym⊃⍨|4⊃⍺
+	z ←⊂id,' = retain_cell(stkhd[-1]);'
+z}
 
-	Ek←{
-		z ←⊂'release_cell(*--stkhd);'
-		z,←⊂''
-	z}
+Cf←{id←⍕4⊃⍺
+	z ←⊂'mk_closure((struct closure **)stkhd++, fn',id,', 0);'
+z}
 
-	Em←{
-		z ←⊂'c = *--stkhd;'
-		z,←⊂'w = *--stkhd;'
-		z,←⊂'(c->fn)((struct array **)stkhd++, NULL, w, c->fv);'
-		z,←⊂'release_cell(c);'
-		z,←⊂'release_cell(w);'
-	z}
+Ek←{
+	z ←⊂'release_cell(*--stkhd);'
+	z,←⊂''
+z}
 
-	Er←{
-		z ←⊂'*z = *--stkhd;'
-		z,←⊂'goto cleanup;'
-		z,←⊂''
-	z}
+Em←{
+	z ←⊂'c = *--stkhd;'
+	z,←⊂'w = *--stkhd;'
+	z,←⊂'(c->fn)((struct array **)stkhd++, NULL, w, c->fv);'
+	z,←⊂'release_cell(c);'
+	z,←⊂'release_cell(w);'
+z}
 
-	Fn←{id←⍕5⊃⍺ ⋄ x←⍉⊃⍪⌿⍵ ⋄ t←2⌷x ⋄ k←3⌷x
-		hsw←(t=O)∨(t=E)∧k∊1 2 ⋄ hsa←((t=E)∧k=2)∨(t=O)∧k∊4 5 7 8
+Er←{
+	z ←⊂'*z = *--stkhd;'
+	z,←⊂'goto cleanup;'
+	z,←⊂''
+z}
+
+Fn←{id←⍕5⊃⍺ ⋄ x←⍉⊃⍪⌿⍵ ⋄ t←2⌷x ⋄ k←3⌷x
+	hsw←(t=O)∨(t=E)∧k∊1 2 ⋄ hsa←((t=E)∧k=2)∨(t=O)∧k∊4 5 7 8
+	z ←⊂'int'
+	z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+	z,←⊂'{'
+	z,←⊂'	void	*stk[128];'
+	z,←⊂'	void	**stkhd;'
+	z,←hsw⌿⊂'	void	*w;'
+	z,←hsa⌿⊂'	void	*a;'
+	z,←hsw⌿⊂'	struct	closure *c;'
+	z,←⊂''
+	z,←⊂'	stkhd = &stk[0];'
+	z,←⊂''
+	z,← '	',¨⊃,⌿dis¨⍵
+	z,←⊂'	*z = NULL;'
+	z,←⊂''
+	z,←⊂'cleanup:'
+	z,←⊂'	return 0;'
+	z,←⊂'}'
+	z,←⊂''
+z}
+
+Fz←{id←⍕5⊃⍺ ⋄ awc←∨⌿(3⌷x){(⍵∊A O)∨(⍵=E)∧⍺>0}2⌷x←⍉⊃⍪⌿⍵
+	z ←⊂'int init',id,' = 0;'
+	z,←⊂''
+	z,←⊂'EXPORT int'
+	z,←⊂'init(void)'
+	z,←⊂'{'
+	z,←⊂' return fn',id,'(NULL, NULL, NULL, NULL);'
+	z,←⊂'}'
+	z,←⊂''
+	z,←⊂'int'
+	z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+	z,←⊂'{'
+	z,←⊂'	void	*stk[128];'
+	z,←⊂'	void	**stkhd;'
+	z,← awc⌿⊂'	void	*a, *w;'
+	z,← awc⌿⊂'	struct	closure *c;'
+	z,←⊂''
+	z,←⊂'	if (init',id,')'
+	z,←⊂'		return 0;'
+	z,←⊂''
+	z,←⊂'	stkhd = &stk[0];'
+	z,←⊂'	init',id,' = 1;'
+	z,←⊂'	cdf_init();'
+	z,←⊂''
+	z,← '	',¨⊃,⌿dis¨⍵
+	z,←⊂'	return 0;'
+	z,←⊂'}'
+	z,←⊂''
+z}
+
+Pf←{id←(syms⍳sym[|4⊃⍺])⊃nams
+	z ←⊂'*stkhd++ = retain_cell(',id,');'
+z}
+
+Va←{id←(|4⊃⍺)⊃'' 'r' 'l' 'aa' 'ww',5↓sym
+	z ←⊂'*stkhd++ = retain_cell(',id,');'
+z}
+
+Zp←{n←'fn',⍕⍵
+	k[⍵]∊0 2:{
 		z ←⊂'int'
-		z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
-		z,←⊂'{'
-		z,←⊂'	void	*stk[128];'
-		z,←⊂'	void	**stkhd;'
-		z,←hsw⌿⊂'	void	*w;'
-		z,←hsa⌿⊂'	void	*a;'
-		z,←hsw⌿⊂'	struct	closure *c;'
+		z,←⊂n,'(struct array **z, struct array *l, struct array *r, void *fv[]);'
 		z,←⊂''
-		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂''
-		z,← '	',¨⊃,⌿dis¨⍵
-		z,←⊂'	*z = NULL;'
-		z,←⊂''
-		z,←⊂'cleanup:'
-		z,←⊂'	return 0;'
-		z,←⊂'}'
-		z,←⊂''
-	z}
+	z}⍵
+	'UNKNOWN FUNCTION TYPE'⎕SIGNAL 16
+}
 
-	Fz←{id←⍕5⊃⍺ ⋄ awc←∨⌿(3⌷x){(⍵∊A O)∨(⍵=E)∧⍺>0}2⌷x←⍉⊃⍪⌿⍵
-		z ←⊂'int init',id,' = 0;'
+Zx←{n←sym⊃⍨|n[⍵] ⋄ rid←⍕rf[⍵]
+	k[⍵]=0:⊂''
+	k[⍵]=1:{
+		z ←⊂'struct array *',n,';'
+	z}⍵
+	k[⍵]=2:{
+		z ←⊂'struct closure *',n,';'
 		z,←⊂''
 		z,←⊂'EXPORT int'
-		z,←⊂'init(void)'
+		z,←⊂n,'_dwa(struct localp *zp, struct localp *lp, struct localp *rp)'
 		z,←⊂'{'
-		z,←⊂' return fn',id,'(NULL, NULL, NULL, NULL);'
-		z,←⊂'}'
+		z,←⊂'	struct array *z, *l, *r;'
+		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'int'
-		z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
-		z,←⊂'{'
-		z,←⊂'	void	*stk[128];'
-		z,←⊂'	void	**stkhd;'
-		z,← awc⌿⊂'	void	*a, *w;'
-		z,← awc⌿⊂'	struct	closure *c;'
+		z,←⊂'	l = NULL;'
+		z,←⊂'	r = NULL;'
 		z,←⊂''
-		z,←⊂'	if (init',id,')'
-		z,←⊂'		return 0;'
+		z,←⊂'	fn',rid,'(NULL, NULL, NULL, NULL);'
 		z,←⊂''
-		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	init',id,' = 1;'
-		z,←⊂'	cdf_init();'
+		z,←⊂'	err = 0;'
 		z,←⊂''
-		z,← '	',¨⊃,⌿dis¨⍵
+		z,←⊂'	if (lp)'
+		z,←⊂'		err = dwa2array(&l, lp->pocket);'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		dwa_error(err);;'
+		z,←⊂''
+		z,←⊂'	if (rp)'
+		z,←⊂'		dwa2array(&r, rp->pocket);'
+		z,←⊂''
+		z,←⊂'	if (err) {'
+		z,←⊂'		release_array(l);'
+		z,←⊂'		dwa_error(err);'
+		z,←⊂'	}'
+		z,←⊂''
+		z,←⊂'	err = (',n,'->fn)(&z, l, r, ',n,'->fv);'
+		z,←⊂''
+		z,←⊂'	release_array(l);'
+		z,←⊂'	release_array(r);'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		dwa_error(err);'
+		z,←⊂''
+		z,←⊂'	err = array2dwa(NULL, z, zp);'
+		z,←⊂'	release_array(z);'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		dwa_error(err);'
+		z,←⊂''
 		z,←⊂'	return 0;'
 		z,←⊂'}'
 		z,←⊂''
-	z}
+	z}⍵
+	⍎'''UNKNOWN EXPORT TYPE''⎕SIGNAL 16'
+}
+@
 
-	Pf←{id←(syms⍳sym[|4⊃⍺])⊃nams
-		z ←⊂'*stkhd++ = retain_cell(',id,');'
-	z}
+<<Code Generator>>=
+GC←{
+	p t k n fr sl rf fd xi sym←⍵
 
-	Va←{id←(|4⊃⍺)⊃'' 'r' 'l' 'aa' 'ww',5↓sym
-		z ←⊂'*stkhd++ = retain_cell(',id,');'
-	z}
+	<<Symbol $\longleftrightarrow$ Name mapping>>
+	<<Node $\longleftrightarrow$ Generator mapping>>
 
-	Zp←{n←'fn',⍕⍵
-		k[⍵]∊0 2:{
-			z ←⊂'int'
-			z,←⊂n,'(struct array **z, struct array *l, struct array *r, void *fv[]);'
-			z,←⊂''
-		z}⍵
-		'UNKNOWN FUNCTION TYPE'⎕SIGNAL 16
-	}
+	<<Prefix code for all generated files>>
+	<<Node-specific code generators>>
 
-	Zx←{n←sym⊃⍨|n[⍵] ⋄ rid←⍕rf[⍵]
-		k[⍵]=0:⊂''
-		k[⍵]=1:{
-			z ←⊂'struct array *',n,';'
-		z}⍵
-		k[⍵]=2:{
-			z ←⊂'struct closure *',n,';'
-			z,←⊂''
-			z,←⊂'EXPORT int'
-			z,←⊂n,'_dwa(struct localp *zp, struct localp *lp, struct localp *rp)'
-			z,←⊂'{'
-			z,←⊂'	struct array *z, *l, *r;'
-			z,←⊂'	int err;'
-			z,←⊂''
-			z,←⊂'	l = NULL;'
-			z,←⊂'	r = NULL;'
-			z,←⊂''
-			z,←⊂'	fn',rid,'(NULL, NULL, NULL, NULL);'
-			z,←⊂''
-			z,←⊂'	err = 0;'
-			z,←⊂''
-			z,←⊂'	if (lp)'
-			z,←⊂'		err = dwa2array(&l, lp->pocket);'
-			z,←⊂''
-			z,←⊂'	if (err)'
-			z,←⊂'		dwa_error(err);;'
-			z,←⊂''
-			z,←⊂'	if (rp)'
-			z,←⊂'		dwa2array(&r, rp->pocket);'
-			z,←⊂''
-			z,←⊂'	if (err) {'
-			z,←⊂'		release_array(l);'
-			z,←⊂'		dwa_error(err);'
-			z,←⊂'	}'
-			z,←⊂''
-			z,←⊂'	err = (',n,'->fn)(&z, l, r, ',n,'->fv);'
-			z,←⊂''
-			z,←⊂'	release_array(l);'
-			z,←⊂'	release_array(r);'
-			z,←⊂''
-			z,←⊂'	if (err)'
-			z,←⊂'		dwa_error(err);'
-			z,←⊂''
-			z,←⊂'	err = array2dwa(NULL, z, zp);'
-			z,←⊂'	release_array(z);'
-			z,←⊂''
-			z,←⊂'	if (err)'
-			z,←⊂'		dwa_error(err);'
-			z,←⊂''
-			z,←⊂'	return 0;'
-			z,←⊂'}'
-			z,←⊂''
-		z}⍵
-		⍎'''UNKNOWN EXPORT TYPE''⎕SIGNAL 16'
-	}
-
-	d i←P2D p ⋄ ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;]
-	NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
-	dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
-	z←∊,∘NL¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
-	z}
+	<<Map generators over the linearized AST; return>>
+}
 @
 
 \subsection{Backend C Compiler Interface}
@@ -1384,6 +1388,10 @@ p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴,¨'[' ''
 pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 @
 
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,';' ⋄ nams,←⊂'span'
+@
+
 \subsubsection{Axis Operator}
 
 <<Rationalize [[F[X]]] syntax>>=
@@ -1478,6 +1486,10 @@ p t k(⊣@j⍨)←ei P 2
 
 ⍝ SELECTIVE MODIFIED ASSIGNMENT
 ⍝ SELECTIVE ASSIGNMENT
+@
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'←' ⋄ nams,←⊂'get'
 @
 
 \subsection{Expressions}
@@ -1611,6 +1623,10 @@ s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],�
 d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1
 @
 
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∇' ⋄ nams,←⊂'this'
+@
+
 \subsubsection{Trad-fns}
 
 <<Compute trad-fns regions>>=
@@ -1734,6 +1750,380 @@ t←F@{t=M}t
 @
 
 \section{Runtime Primitives}
+
+\subsection{Addition/Identity}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'+' ⋄ nams,←⊂'add'
+@
+
+\subsection{And (Logical)}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∧' ⋄ nams,←⊂'and'
+@
+
+\subsection{Bracket}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'[' ⋄ nams,←⊂'brk'
+@
+
+\subsection{Catenate (First/Last Axis)}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,',' ⋄ nams,←⊂'cat'
+syms,←⊂,'⍪' ⋄ nams,←⊂'ctf'
+@
+
+\subsection{Circle/Trigonometrics}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'○' ⋄ nams,←⊂'cir'
+@
+
+\subsection{Commute}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍨' ⋄ nams,←⊂'com'
+@
+
+\subsection{Compose}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∘' ⋄ nams,←⊂'jot'
+@
+
+\subsection{Convolve}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⎕CONV' ⋄ nams,←⊂'conv'
+@
+
+\subsection{Decode}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⊥' ⋄ nams,←⊂'dec'
+@
+
+\subsection{Disclose}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⊃' ⋄ nams,←⊂'dis'
+@
+
+\subsection{Division/Reciprocal}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'÷' ⋄ nams,←⊂'div'
+@
+
+\subsection{Drop}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'↓' ⋄ nams,←⊂'drp'
+@
+
+\subsection{Each}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'¨' ⋄ nams,←⊂'map'
+@
+
+\subsection{Enclose}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⊂' ⋄ nams,←⊂'par'
+@
+
+\subsection{Encode}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⊤' ⋄ nams,←⊂'enc'
+@
+
+\subsection{Equal}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'=' ⋄ nams,←⊂'eql'
+@
+
+\subsection{Exponent}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'*' ⋄ nams,←⊂'exp'
+@
+
+\subsection{Factorial/Binomial}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'!' ⋄ nams,←⊂'fac'
+@
+
+\subsection{Fast Fourier Transforms}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⎕FFT' ⋄ nams,←⊂'fft'
+@
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⎕IFFT' ⋄ nams,←⊂'ift'
+@
+
+\subsection{Find}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍷' ⋄ nams,←⊂'fnd'
+@
+
+\subsection{Grade Down}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍒' ⋄ nams,←⊂'gdd'
+@
+
+\subsection{Grade Up}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍋' ⋄ nams,←⊂'gdu'
+@
+
+\subsection{Greater Than}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'>' ⋄ nams,←⊂'gth'
+@
+
+\subsection{Greater Than or Equal}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'≥' ⋄ nams,←⊂'gte'
+@
+
+\subsection{Index}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⌷' ⋄ nams,←⊂'sqd'
+@
+
+\subsection{Index Generator}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍳' ⋄ nams,←⊂'iot'
+@
+
+\subsection{Inner Product}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'.' ⋄ nams,←⊂'dot'
+@
+
+\subsection{Intersection}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∩' ⋄ nams,←⊂'int'
+@
+
+\subsection{Left}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⊣' ⋄ nams,←⊂'lft'
+@
+
+\subsection{Less Than}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'<' ⋄ nams,←⊂'lth'
+@
+
+\subsection{Less Than or Equal}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'≤' ⋄ nams,←⊂'lte'
+@
+
+\subsection{Logarithm}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍟' ⋄ nams,←⊂'log'
+@
+
+\subsection{Match}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'≡' ⋄ nams,←⊂'eqv'
+@
+
+\subsection{Matrix Division}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⌹' ⋄ nams,←⊂'mdv'
+@
+
+\subsection{Maximum/Ceiling}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⌈' ⋄ nams,←⊂'max'
+@
+
+\subsection{Membership}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∊' ⋄ nams,←⊂'mem'
+@
+
+\subsection{Minimum/Floor}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⌊' ⋄ nams,←⊂'min'
+@
+
+\subsection{Multiplication}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'×' ⋄ nams,←⊂'mul'
+@
+
+\subsection{Nest/Partition}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⊆' ⋄ nams,←⊂'nst'
+@
+
+\subsection{Not}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'~' ⋄ nams,←⊂'not'
+@
+
+\subsection{Not And (Logical)}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍲' ⋄ nams,←⊂'nan'
+@
+
+\subsection{Not Equal}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'≠' ⋄ nams,←⊂'neq'
+@
+
+\subsection{Not Match}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'≢' ⋄ nams,←⊂'nqv'
+@
+
+\subsection{Not Or (Logical)}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍱' ⋄ nams,←⊂'nor'
+@
+
+\subsection{Or (Logical)}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∨' ⋄ nams,←⊂'lor'
+@
+
+\subsection{Outer Product}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∘.' ⋄ nams,←⊂'oup'
+@
+
+\subsection{Power}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍣' ⋄ nams,←⊂'pow'
+@
+
+\subsection{Rank}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍤' ⋄ nams,←⊂'rnk'
+@
+
+\subsection{Reduce}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'/' ⋄ nams,←⊂'red'
+@
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⌿' ⋄ nams,←⊂'rdf'
+@
+
+\subsection{Roll}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'?' ⋄ nams,←⊂'rol'
+@
+
+\subsection{Rotate (First/Last Axis)}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⌽' ⋄ nams,←⊂'rot'
+syms,←⊂,'⊖' ⋄ nams,←⊂'rtf'
+@
+
+\subsection{Residue}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'|' ⋄ nams,←⊂'res'
+@
+
+\subsection{Right}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⊢' ⋄ nams,←⊂'rgt'
+@
+
+\subsection{Scalar Each}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'%s' ⋄ nams,←⊂'scl'
+@
+
+\subsection{Scan}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'\' ⋄ nams,←⊂'scn'
+@
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍀' ⋄ nams,←⊂'scf'
+@
+
+\subsection{Shape}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍴' ⋄ nams,←⊂'rho'
+@
+
+\subsection{Subtraction}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'-' ⋄ nams,←⊂'sub'
+@
+
+\subsection{Take}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'↑' ⋄ nams,←⊂'tke'
+@
+
+\subsection{Transpose}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'⍉' ⋄ nams,←⊂'trn'
+@
+
+\subsection{Union}
+
+<<Symbol $\longleftrightarrow$ Name mapping>>=
+syms,←⊂,'∪' ⋄ nams,←⊂'unq'
+@
 
 \section{Utilities}
 
