@@ -224,11 +224,22 @@
                         ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←⊂'' ⋄ k[gz cq,ci]←1
                 0}⌸i←⍸t[p[p]]=F
                 _←p[i]{
-                        x←IN[pos[⍵]] ⋄ bd←+⍀bm←(bo←'['=x)+-bc←']'=x ⋄ pd←+⍀pm←(po←'('=x)+-pc←')'=x
-                        0≠⊃⌽bd:2'UNBALANCED BRACKETS'SIGNAL pos[⍵]{x+⍳(⌈⌿⍵)-x←⌊⌿⍺}⍥{⍵⌿⍨0≠bd}end[⍵]
-                        0≠⊃⌽pd:2'UNBALANCED PARENTHESES'SIGNAL pos[⍵]{x+⍳(⌈⌿⍵)-x←⌊⌿⍺}⍥{⍵⌿⍨0≠pd}end[⍵]
-                        (po⌿bd)∨.≠⌽pc⌿bd:'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
-                        p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}D2P +⍀¯1⌽bm+pm] ⋄ t[bo⌿⍵]←¯1 ⋄ t[po⌿⍵]←Z
+                        x←IN[pos[⍵]]
+                        bd←+⍀bm←(bo←'['=x)+-bc←']'=x
+                        pd←+⍀pm←(po←'('=x)+-pc←')'=x
+                        0≠⊃⌽bd:{
+                                ix←pos[⍵]{x+⍳(⌈⌿⍵)-x←⌊⌿⍺}⍥{⍵⌿⍨0≠bd}end[⍵]
+                                2'UNBALANCED BRACKETS'SIGNAL ix
+                        }⍵
+                        0≠⊃⌽pd:{
+                                ix←pos[⍵]{x+⍳(⌈⌿⍵)-x←⌊⌿⍺}⍥{⍵⌿⍨0≠pd}end[⍵]
+                                2'UNBALANCED PARENTHESES'SIGNAL ix
+                        }⍵
+                        (po⌿bd)∨.≠⌽pc⌿bd:{
+                                'OVERLAPPING BRACKETS AND PARENTHESES'⎕SIGNAL 2
+                        }⍵
+                        p[⍵]←(⍺,⍵)[1+¯1@{⍵=⍳≢⍵}D2P +⍀¯1⌽bm+pm]
+                        t[bo⌿⍵]←¯1 ⋄ t[po⌿⍵]←Z
                         end[po⌿⍵]←end[⌽pc⌿⍵] ⋄ end[bo⌿⍵]←end[⌽bc⌿⍵]
                 0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
                 t k n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
@@ -628,7 +639,8 @@
                 Fn←{id←⍕5⊃⍺ ⋄ x←⍉⊃⍪⌿⍵ ⋄ t←2⌷x ⋄ k←3⌷x
                         hsw←(t=O)∨(t=E)∧k∊1 2 ⋄ hsa←((t=E)∧k=2)∨(t=O)∧k∊4 5 7 8
                         z ←⊂'int'
-                        z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+                        z,←⊂'fn',id,'(struct array **z, '
+                        z,←⊂'    struct array *l, struct array *r, void *fv[])'
                         z,←⊂'{'
                         z,←⊂'       void    *stk[128];'
                         z,←⊂'       void    **stkhd;'
@@ -656,7 +668,8 @@
                         z,←⊂'}'
                         z,←⊂''
                         z,←⊂'int'
-                        z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+                        z,←⊂'fn',id,'(struct array **z, '
+                        z,←⊂'    struct array *l, struct array *r, void *fv[])'
                         z,←⊂'{'
                         z,←⊂'       void    *stk[128];'
                         z,←⊂'       void    **stkhd;'
@@ -683,14 +696,12 @@
         }
         CC←{
                 vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
-                tie←{0::⎕SIGNAL ⎕EN ⋄ 22::⍵ ⎕NCREATE 0 ⋄ 0 ⎕NRESIZE ⍵ ⎕NTIE 0}
-                put←{s←(¯128+256|128+'UTF-8'⎕UCS ⍺)⎕NAPPEND(t←tie ⍵)83 ⋄ 1:r←s⊣⎕NUNTIE t}
-                opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
                 soext←{opsys'.dll' '.so' '.dylib'}
+                libdir←opsys ''' ' '/lib64'' ' '/lib'' '
                 ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.c'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
-                cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,opsys''' ' '/lib64'' ' '/lib'' '}
-                cco←'-std=c99 -Ofast -g -Wall -fPIC -shared -Wno-parentheses '
-                cco,←'-Wno-misleading-indentation '
+                cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,libdir}
+                cco←'-std=c99 -Ofast -g -Wall -fPIC -shared '
+                cco,←'-Wno-parentheses -Wno-misleading-indentation '
                 ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
                 gcc←'gcc'ucc'so'
                 clang←'clang'ucc'dylib'
@@ -708,43 +719,77 @@
                 ⎕←⍪⊃⎕NGET(⍺,'.log')1
                 ⎕NEXISTS f:f ⋄ 'COMPILE ERROR' ⎕SIGNAL 22}
          NS←{
-                 MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
-                 Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
-                         w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
-                 LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺}
-                 SaveImage←{⍺←'image.png' ⋄ saveimg ⍵ ⍺}
-                 Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺}
-                 Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot (⍉⍵) ⍺}
-                 Histogram←{⍵⊣w_hist ⍵,⍺}
-                 Rtm∆Init←{
-                         _←'w_new'    ⎕NA'P ',⍵,'|w_new           <C[]'
-                         _←'w_close'⎕NA'I ',⍵,'|w_close P'
-                         _←'w_del'    ⎕NA                   ⍵,'|w_del             P'
-                         _←'w_img'    ⎕NA                   ⍵,'|w_img             <PP P'
-                         _←'w_plot' ⎕NA                     ⍵,'|w_plot    <PP P'
-                         _←'w_hist' ⎕NA                     ⍵,'|w_hist    <PP F8   F8 P'
-                         _←'loadimg'⎕NA                     ⍵,'|loadimg >PP <C[] I'
-                         _←'saveimg'⎕NA                     ⍵,'|saveimg <PP <C[]'
-                         _←'exa'              ⎕NA                   ⍵,'|exarray >PP P'
-                         _←'mka'              ⎕NA'P ',⍵,'|mkarray <PP'
-                         _←'FREA'             ⎕NA                   ⍵,'|frea              P'
-                         _←'Sync'             ⎕NA                   ⍵,'|cd_sync'
-                         0 0 ⍴ ⍬}
-                 mkna←{⍺,'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
-                 mkf←{fn←⍺,'|',('∆'⎕R'__'⊢⍵),'_dwa ' ⋄ mon dya←⍵∘,¨'_mon' '_dya'
-                         z←('Z←{A}',⍵,' W')(':If 0=⎕NC''⍙.',mon,'''')
-                         z,←(mon dya{'''',⍺,'''⍙.⎕NA''',fn,⍵,' <PP'''}¨'>PP P' '>PP <PP'),⊂':EndIf'
-                         z,':If 0=⎕NC''A'''('Z←⍙.',mon,' 0 0 W')':Else'('Z←⍙.',dya,' 0 A W')':EndIf'}
-                 ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙) ⋄ ∆.names←(0⍴⊂''),(2=1⊃⍺)⌿0⊃⍺
-                 fns←'Rtm∆Init' 'MKA' 'EXA' 'Display' 'LoadImage' 'SaveImage' 'Image' 'Plot'
-                 fns,←'Histogram' 'soext' 'opsys' 'mkna'
-                 _←∆.⎕FX∘⎕CR¨fns ⋄ ∆.(decls←⍵∘mkna¨names) ⋄ _←ns.⎕FX¨(⊂''),⍵∘mkf¨∆.names
-                 _←∆.⎕FX'Z←Init'('Z←Rtm∆Init ''',⍵,'''')'→0⌿⍨0=≢names' 'names ##.⍙.⎕NA¨decls'
-                 ns}
+                MKA←{mka⊂⍵} ⋄ EXA←{exa ⍬ ⍵}
+                Display←{⍺←'Co-dfns' ⋄ W←w_new⊂⍺ ⋄ 777::w_del W
+                 w_del W⊣W ⍺⍺{w_close ⍺:⍎'⎕SIGNAL 777' ⋄ ⍺ ⍺⍺ ⍵}⍣⍵⍵⊢⍵}
+                LoadImage←{⍺←1 ⋄ ~⎕NEXISTS ⍵:⎕SIGNAL 22 ⋄ loadimg ⍬ ⍵ ⍺}
+                SaveImage←{⍺←'image.png' ⋄ saveimg ⍵ ⍺}
+                Image←{~2 3∨.=≢⍴⍵:⎕SIGNAL 4 ⋄ (3≠⊃⍴⍵)∧3=≢⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_img ⍵ ⍺}
+                Plot←{2≠≢⍴⍵:⎕SIGNAL 4 ⋄ ~2 3∨.=1⊃⍴⍵:⎕SIGNAL 5 ⋄ ⍵⊣w_plot (⍉⍵) ⍺}
+                Histogram←{⍵⊣w_hist ⍵,⍺}
+                Rtm∆Init←{
+                        _←'w_new'⎕NA'P ',⍵,'|w_new <C[]'
+                        _←'w_close'⎕NA'I ',⍵,'|w_close P'
+                        _←'w_del'⎕NA ⍵,'|w_del P'
+                        _←'w_img'⎕NA ⍵,'|w_img <PP P'
+                        _←'w_plot'⎕NA ⍵,'|w_plot <PP P'
+                        _←'w_hist'⎕NA ⍵,'|w_hist <PP F8 F8 P'
+                        _←'loadimg'⎕NA ⍵,'|loadimg >PP <C[] I'
+                        _←'saveimg'⎕NA ⍵,'|saveimg <PP <C[]'
+                        _←'exa'⎕NA ⍵,'|exarray >PP P'
+                        _←'mka'⎕NA'P ',⍵,'|mkarray <PP'
+                        _←'FREA'⎕NA ⍵,'|frea P'
+                        _←'Sync'⎕NA ⍵,'|cd_sync'
+                        0 0 ⍴ ⍬}
+                mkna←{⍺,'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
+                mkf←{
+                        fn←⍺,'|',('∆'⎕R'__'⊢⍵),'_dwa '
+                        z←⊂'Z←{A}',⍵,' W'
+                        z,←⊂':If 0=⎕NC''⍙.',⍵,'_mon'''
+                        z,←⊂'       ''',⍵,'_mon''⍙.⎕NA''',fn,'>PP P <PP'''
+                        z,←⊂'       ''',⍵,'_dya''⍙.⎕NA''',fn,'>PP <PP <PP'''
+                        z,←⊂':EndIf'
+                        z,←⊂':If 0=⎕NC''A'''
+                        z,←⊂'       Z←⍙.',⍵,'_mon 0 0 W'
+                        z,←⊂':Else'
+                        z,←⊂'       Z←⍙.',⍵,'_dya 0 A W'
+                        z,←⊂':EndIf'
+                        z
+                }
+                ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙)
+                ∆.names←(0⍴⊂''),(2=1⊃⍺)⌿0⊃⍺
+                fns←'Rtm∆Init' 'MKA' 'EXA' 'Display'
+                fns,←'LoadImage' 'SaveImage' 'Image' 'Plot' 'Histogram'
+                fns,←'soext' 'opsys' 'mkna'
+                _←∆.⎕FX∘⎕CR¨fns
+                ∆.(decls←⍵∘mkna¨names)
+                _←ns.⎕FX¨(⊂''),⍵∘mkf¨∆.names
+                _←'Z←Init'
+                _,←⊂'Z←Rtm∆Init ''',⍵,''''
+                _,←⊂'→0⌿⍨0=≢names'
+                _,←⊂'names ##.⍙.⎕NA¨decls'
+                _←∆.⎕FX _
+                ns
+        }
 
         I←{(⊂⍵)⌷⍺}
         U←{⍺←⊢ ⋄ ⍵⍵⍣¯1⊢⍺ ⍺⍺⍥⍵⍵ ⍵}
-        assert←{⍺←'assertion failure' ⋄ 0∊⍵:⍎'⍺ ⎕SIGNAL 8' ⋄ shy←0}
+        assert←{
+                ⍺←'assertion failure'
+                0∊⍵:⍎'⍺ ⎕SIGNAL 8'
+                1:shy←0
+        }
+        tie←{
+                0::⎕SIGNAL ⎕EN
+                22::⍵ ⎕NCREATE 0
+                0 ⎕NRESIZE ⍵ ⎕NTIE 0
+        }
+
+        put←{
+                s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83
+                1:r←s⊣⎕NUNTIE t
+        }
+        opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
         f∆←'ptknfsrdx'
         N∆←'ABCEFGKLMNOPSVZ'
         A B C E F G K L M N O P S V Z←1+⍳15
@@ -759,14 +804,31 @@
         }
         dct←{⍺[(2×2≠/n,0)+(1↑⍨≢m)+m+n←⌽∨\⌽m←' '≠⍺⍺ ⍵]⍵⍵ ⍵}
         dlk←{((x⌷⍴⍵)↑[x←2|1+⍵⍵]⍺),[⍵⍵]⍺⍺@(⊂0 0)⍣('┌'=⊃⍵)⊢⍵}
-        dwh←{⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺}
-        dwv←{⍵('├'dlk 0)' ─┬┌┐│'(0⌷⊢)dct(⊣⍪1↓⊢)⊃{⍺,' ',⍵}/(1+⌈/≢¨⍺){⍺↑⍵⍪⍨'│'↑⍨≢⍉⍵}¨⍺}
 
-        pp3←{⍺←'○' ⋄ d←(⍳≢⍵)≠⍵ ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨⍵ ⋄ lbl←⍺⍴⍨≢⍵
-                lyr←{i←⍸⍺=d ⋄ k v←↓⍉⍵⍵[i],∘⊂⌸i ⋄ (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵}⍵
-                (⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl}
+        dwh←{
+                z←⊃⍪/((≢¨⍺),¨⊂⌈/≢∘⍉¨⍺)↑¨⍺
+                ⍵('┬'dlk 1)' │├┌└─'(0⌷⍉)dct,z
+        }
+        dwv←{
+                z←⊃{⍺,' ',⍵}/(1+⌈/≢¨⍺){⍺↑⍵⍪⍨'│'↑⍨≢⍉⍵}¨⍺
+                ⍵('├'dlk 0)' ─┬┌┐│'(0⌷⊢)dct(⊣⍪1↓⊢)z
+        }
 
-        lb3←{⍺←⍳≢⊃⍵
-                '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]}
+        lb3←{
+                ⍺←⍳≢⊃⍵
+                z←(N∆{⍺[⍵]}@2⊢(2⊃⍵){⍺[|⍵]}@{0>⍵}@4↑⊃⍵)[⍺;]
+                '(',¨')',¨⍨{⍺,';',⍵}⌿⍕¨z
+        }
+
+        pp3←{
+                ⍺←'○' ⋄ lbl←⍺⍴⍨≢⍵
+                d←(⍳≢⍵)≠⍵ ⋄ _←{z⊣d+←⍵≠z←⍺[⍵]}⍣≡⍨⍵
+                lyr←{
+                        i←⍸⍺=d
+                        k v←↓⍉⍵⍵[i],∘⊂⌸i
+                        (⍵∘{⍺[⍵]}¨v)⍺⍺¨@k⊢⍵
+                }⍵
+                (⍵=⍳≢⍵)⌿⊃⍺⍺ lyr⌿(1+⍳⌈/d),⊂⍉∘⍪∘⍕¨lbl
+        }
 
 :EndNamespace
