@@ -913,26 +913,6 @@ syms←0⍴⊂'' ⋄ nams←0⍴⊂''
 
 <<Node $\longleftrightarrow$ Generator mapping>>=
 gck←0⍴⊂0 0 ⋄ gcv←0⍴⊂''
-
-gck← (A 1)(A 6)
-gcv← 'Aa' 'As'
-gck,←(B 1)(B 2)(B 3)(B 4)
-gcv,←'Bv' 'Bf' 'Bo' 'Bo'
-gck,←(C 1)(C 2)
-gcv,←'Ca' 'Cf'
-gck,←(E ¯2)(E ¯1)(E 0)(E 1)(E 2)(E 4)(E 6)
-gcv,←'Ec'	 'Ek'	 'Er' 'Em' 'Ed' 'Eb' 'Ei'
-gck,←(F 0)(F 2)(F 3)(F 4)
-gcv,←'Fz' 'Fn' 'Fm' 'Fd'
-gck,←(G 0)(N 1)
-gcv,←'Gd' 'Na'
-gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
-gcv,←'Ov' 'Of' 'Ovv' 'Ofv' 'Ovf' 'Off'
-gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
-gcv,←'Pv' 'Pv' 'Pf' 'Po' 'Po'
-gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
-gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
-gcv,←⊂'{''/* Unhandled '',(⍕⍺),'' */'',NL}'
 @
 
 <<Prefix code for all generated files>>=
@@ -947,155 +927,19 @@ pref,←⊂''
 @
 
 <<Node-specific code generators>>=
-Bf←{id←sym⊃⍨|4⊃⍺
-	z ←⊂id,' = retain_cell(stkhd[-1]);'
-z}
-
-Cf←{id←⍕4⊃⍺
-	z ←⊂'mk_closure((struct closure **)stkhd++, fn',id,', 0);'
-z}
-
-Ek←{
-	z ←⊂'release_cell(*--stkhd);'
-	z,←⊂''
-z}
-
-Em←{
-	z ←⊂'c = *--stkhd;'
-	z,←⊂'w = *--stkhd;'
-	z,←⊂'(c->fn)((struct array **)stkhd++, NULL, w, c->fv);'
-	z,←⊂'release_cell(c);'
-	z,←⊂'release_cell(w);'
-z}
-
-Er←{
-	z ←⊂'*z = *--stkhd;'
-	z,←⊂'goto cleanup;'
-	z,←⊂''
-z}
-
-Fn←{id←⍕5⊃⍺ ⋄ x←⍉⊃⍪⌿⍵ ⋄ t←2⌷x ⋄ k←3⌷x
-	hsw←(t=O)∨(t=E)∧k∊1 2 ⋄ hsa←((t=E)∧k=2)∨(t=O)∧k∊4 5 7 8
-	z ←⊂'int'
-	z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
-	z,←⊂'{'
-	z,←⊂'	void	*stk[128];'
-	z,←⊂'	void	**stkhd;'
-	z,←hsw⌿⊂'	void	*w;'
-	z,←hsa⌿⊂'	void	*a;'
-	z,←hsw⌿⊂'	struct	closure *c;'
-	z,←⊂''
-	z,←⊂'	stkhd = &stk[0];'
-	z,←⊂''
-	z,← '	',¨⊃,⌿dis¨⍵
-	z,←⊂'	*z = NULL;'
-	z,←⊂''
-	z,←⊂'cleanup:'
-	z,←⊂'	return 0;'
-	z,←⊂'}'
-	z,←⊂''
-z}
-
-Fz←{id←⍕5⊃⍺ ⋄ awc←∨⌿(3⌷x){(⍵∊A O)∨(⍵=E)∧⍺>0}2⌷x←⍉⊃⍪⌿⍵
-	z ←⊂'int init',id,' = 0;'
-	z,←⊂''
-	z,←⊂'EXPORT int'
-	z,←⊂'init(void)'
-	z,←⊂'{'
-	z,←⊂' return fn',id,'(NULL, NULL, NULL, NULL);'
-	z,←⊂'}'
-	z,←⊂''
-	z,←⊂'int'
-	z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
-	z,←⊂'{'
-	z,←⊂'	void	*stk[128];'
-	z,←⊂'	void	**stkhd;'
-	z,← awc⌿⊂'	void	*a, *w;'
-	z,← awc⌿⊂'	struct	closure *c;'
-	z,←⊂''
-	z,←⊂'	if (init',id,')'
-	z,←⊂'		return 0;'
-	z,←⊂''
-	z,←⊂'	stkhd = &stk[0];'
-	z,←⊂'	init',id,' = 1;'
-	z,←⊂'	cdf_init();'
-	z,←⊂''
-	z,← '	',¨⊃,⌿dis¨⍵
-	z,←⊂'	return 0;'
-	z,←⊂'}'
-	z,←⊂''
-z}
-
-Pf←{id←(syms⍳sym[|4⊃⍺])⊃nams
-	z ←⊂'*stkhd++ = retain_cell(',id,');'
-z}
-
-Va←{id←(|4⊃⍺)⊃'' 'r' 'l' 'aa' 'ww',5↓sym
-	z ←⊂'*stkhd++ = retain_cell(',id,');'
-z}
-
-Zp←{n←'fn',⍕⍵
-	k[⍵]∊0 2:{
-		z ←⊂'int'
-		z,←⊂n,'(struct array **z, struct array *l, struct array *r, void *fv[]);'
-		z,←⊂''
-	z}⍵
+Zp←{
+	n←'fn',⍕⍵
+	<<Declare top-level function bindings>>
 	'UNKNOWN FUNCTION TYPE'⎕SIGNAL 16
 }
+@
 
-Zx←{n←sym⊃⍨|n[⍵] ⋄ rid←⍕rf[⍵]
+<<Node-specific code generators>>=
+Zx←{
+	n←sym⊃⍨|n[⍵] ⋄ rid←⍕rf[⍵]
 	k[⍵]=0:⊂''
-	k[⍵]=1:{
-		z ←⊂'struct array *',n,';'
-	z}⍵
-	k[⍵]=2:{
-		z ←⊂'struct closure *',n,';'
-		z,←⊂''
-		z,←⊂'EXPORT int'
-		z,←⊂n,'_dwa(struct localp *zp, struct localp *lp, struct localp *rp)'
-		z,←⊂'{'
-		z,←⊂'	struct array *z, *l, *r;'
-		z,←⊂'	int err;'
-		z,←⊂''
-		z,←⊂'	l = NULL;'
-		z,←⊂'	r = NULL;'
-		z,←⊂''
-		z,←⊂'	fn',rid,'(NULL, NULL, NULL, NULL);'
-		z,←⊂''
-		z,←⊂'	err = 0;'
-		z,←⊂''
-		z,←⊂'	if (lp)'
-		z,←⊂'		err = dwa2array(&l, lp->pocket);'
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		dwa_error(err);;'
-		z,←⊂''
-		z,←⊂'	if (rp)'
-		z,←⊂'		dwa2array(&r, rp->pocket);'
-		z,←⊂''
-		z,←⊂'	if (err) {'
-		z,←⊂'		release_array(l);'
-		z,←⊂'		dwa_error(err);'
-		z,←⊂'	}'
-		z,←⊂''
-		z,←⊂'	err = (',n,'->fn)(&z, l, r, ',n,'->fv);'
-		z,←⊂''
-		z,←⊂'	release_array(l);'
-		z,←⊂'	release_array(r);'
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		dwa_error(err);'
-		z,←⊂''
-		z,←⊂'	err = array2dwa(NULL, z, zp);'
-		z,←⊂'	release_array(z);'
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		dwa_error(err);'
-		z,←⊂''
-		z,←⊂'	return 0;'
-		z,←⊂'}'
-		z,←⊂''
-	z}⍵
+	<<Declare top-level array structures>>
+	<<Declare top-level closures>>
 	⍎'''UNKNOWN EXPORT TYPE''⎕SIGNAL 16'
 }
 @
@@ -1184,6 +1028,53 @@ CC←{
 	 ns}
 @
 
+<<DWA Function Export>>=
+z,←⊂'EXPORT int'
+z,←⊂n,'_dwa(struct localp *zp, struct localp *lp, struct localp *rp)'
+z,←⊂'{'
+z,←⊂'	struct array *z, *l, *r;'
+z,←⊂'	int err;'
+z,←⊂''
+z,←⊂'	l = NULL;'
+z,←⊂'	r = NULL;'
+z,←⊂''
+z,←⊂'	fn',rid,'(NULL, NULL, NULL, NULL);'
+z,←⊂''
+z,←⊂'	err = 0;'
+z,←⊂''
+z,←⊂'	if (lp)'
+z,←⊂'		err = dwa2array(&l, lp->pocket);'
+z,←⊂''
+z,←⊂'	if (err)'
+z,←⊂'		dwa_error(err);;'
+z,←⊂''
+z,←⊂'	if (rp)'
+z,←⊂'		dwa2array(&r, rp->pocket);'
+z,←⊂''
+z,←⊂'	if (err) {'
+z,←⊂'		release_array(l);'
+z,←⊂'		dwa_error(err);'
+z,←⊂'	}'
+z,←⊂''
+z,←⊂'	err = (',n,'->fn)(&z, l, r, ',n,'->fv);'
+z,←⊂''
+z,←⊂'	release_array(l);'
+z,←⊂'	release_array(r);'
+z,←⊂''
+z,←⊂'	if (err)'
+z,←⊂'		dwa_error(err);'
+z,←⊂''
+z,←⊂'	err = array2dwa(NULL, z, zp);'
+z,←⊂'	release_array(z);'
+z,←⊂''
+z,←⊂'	if (err)'
+z,←⊂'		dwa_error(err);'
+z,←⊂''
+z,←⊂'	return 0;'
+z,←⊂'}'
+z,←⊂''
+@
+
 \subsection{Runtime}
 
 <<Implementation of APL Primitives>>=
@@ -1252,6 +1143,11 @@ mn ex←↓⍉↑{2↑(⍵⊆⍨⍵≠'e'),⊂''}¨dp
 t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←⊂N 1
+gcv,←⊂'Na'
+@
+
 \subsection{Strings and characters}
 
 <<Check and mask the strings>>=
@@ -1290,6 +1186,17 @@ t←V@(i←⍸(t=A)∧n∊,¨'⍺⍵')⊢t ⋄ vb[i]←i
 k[⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
+gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
+@
+
+<<Node-specific code generators>>=
+Va←{id←(|4⊃⍺)⊃'' 'r' 'l' 'aa' 'ww',5↓sym
+	z ←⊂'*stkhd++ = retain_cell(',id,');'
+z}
+@
+
 \subsection{Arrays}
 
 <<Mark atoms, characters, and numbers as kind [[1]]>>=
@@ -1310,7 +1217,29 @@ p,←i ⋄ t k n pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 1(⊂'')
 n[⍸(t∊A E)∧k=6]←0 ⋄ n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(A 1)(A 6)
+gcv,←'Aa' 'As'
+@
+
+<<Declare top-level array structures>>=
+k[⍵]=1:{
+	z ←⊂'struct array *',n,';'
+z}⍵
+@
+
 \subsection{Primitives}
+
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
+gcv,←'Pv' 'Pv' 'Pf' 'Po' 'Po'
+@
+
+<<Node-specific code generators>>=
+Pf←{id←(syms⍳sym[|4⊃⍺])⊃nams
+	z ←⊂'*stkhd++ = retain_cell(',id,');'
+z}
+@
 
 \subsubsection{APL Primitives}
 
@@ -1392,6 +1321,12 @@ pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿�
 syms,←⊂,';' ⋄ nams,←⊂'span'
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←⊂E 6
+gcv,←⊂'Ei'
+@
+
+
 \subsubsection{Axis Operator}
 
 <<Rationalize [[F[X]]] syntax>>=
@@ -1453,6 +1388,17 @@ _←{
 ⍝ PARSE B←...D
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(B 1)(B 2)(B 3)(B 4)
+gcv,←'Bv' 'Bf' 'Bo' 'Bo'
+@
+
+<<Node-specific code generators>>=
+Bf←{id←sym⊃⍨|4⊃⍺
+	z ←⊂id,' = retain_cell(stkhd[-1]);'
+z}
+@
+
 \subsection{Assignments}
 
 <<Parse assignments>>=
@@ -1492,6 +1438,11 @@ p t k(⊣@j⍨)←ei P 2
 syms,←⊂,'←' ⋄ nams,←⊂'get'
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←⊂E 4
+gcv,←⊂'Eb'
+@
+
 \subsection{Expressions}
 
 <<Parse brackets and parentheses into [[¯1]] and [[Z]] nodes>>=
@@ -1523,6 +1474,21 @@ msk←m2∨fm∧~¯1⌽m2←km∧(1⌽km)∧~fm←(t[i]=O)∨(t[i]≠A)∧k[i]=2
 t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴⊂''
 pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
 p,←msk⌿¯1⌽(i×~km)+km×x←¯1+(≢p)++⍀msk ⋄ p[km⌿i]←km⌿x
+@
+
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(E 1)(E 2)
+gcv,←'Em' 'Ed'
+@
+
+<<Node-specific code generators>>=
+Em←{
+	z ←⊂'c = *--stkhd;'
+	z,←⊂'w = *--stkhd;'
+	z,←⊂'(c->fn)((struct array **)stkhd++, NULL, w, c->fv);'
+	z,←⊂'release_cell(c);'
+	z,←⊂'release_cell(w);'
+z}
 @
 
 \subsubsection{Function Expressions}
@@ -1558,6 +1524,11 @@ or←(msk⌿dm)⍀1+k[dm⌿i]=2
 k[oi]←3 3⊥↑or ol
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
+gcv,←'Ov' 'Of' 'Ovv' 'Ofv' 'Ovf' 'Off'
+@
+
 \subsection{Trains}
 
 <<Parse trains>>=
@@ -1565,6 +1536,22 @@ k[oi]←3 3⊥↑or ol
 @
 
 \subsection{Functions}
+
+<<Declare top-level function bindings>>=
+k[⍵]∊0 2:{
+	z ←⊂'int'
+	z,←⊂n,'(struct array **z, struct array *l, struct array *r, void *fv[]);'
+	z,←⊂''
+z}⍵
+@
+
+<<Declare top-level closures>>=
+k[⍵]=2:{
+	z ←⊂'struct closure *',n,';'
+	z,←⊂''
+	<<DWA Function Export>>
+z}⍵
+@
 
 \subsubsection{D-fns}
 
@@ -1579,16 +1566,6 @@ k←2×t∊F ⋄ k[∪p⌿⍨(t=P)∧n∊⊂'⍺⍺']←3 ⋄ k[∪p⌿⍨(t=P)�
 <<Wrap all dfns expression bodies as [[Z]] nodes>>=
 _←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸t[p]=F
 'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
-@
-
-<<Parse guards to [[(G (Z ...) (Z ...))]]>>=
-_←p[i]{
-	0=+⌿m←':'=IN[pos[⍵]]:⍬
-	⊃m:'EMPTY GUARD TEST EXPRESSION'⎕SIGNAL 2
-	1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
-	t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
-	ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←⊂'' ⋄ k[gz cq,ci]←1
-0}⌸i←⍸t[p[p]]=F
 @
 
 <<Anchor variables to earliest binding in the matching frame>>=
@@ -1615,6 +1592,11 @@ p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4 ⋄ t[j]←E
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(E ¯1)(E 0)
+gcv,←'Ek'  'Er' 
+@
+
 <<Compute slots and frames>>=
 ⍝ Compute slots for each frame
 s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=B]
@@ -1627,6 +1609,56 @@ d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣�
 syms,←⊂,'∇' ⋄ nams,←⊂'this'
 @
 
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←(C 1)(C 2)(F 2)(F 3)(F 4)
+gcv,←'Ca' 'Cf' 'Fn' 'Fm' 'Fd'
+@
+
+<<Node-specific code generators>>=
+Cf←{id←⍕4⊃⍺
+	z ←⊂'mk_closure((struct closure **)stkhd++, fn',id,', 0);'
+z}
+@
+
+<<Node-specific code generators>>=
+Ek←{
+	z ←⊂'release_cell(*--stkhd);'
+	z,←⊂''
+z}
+@
+
+<<Node-specific code generators>>=
+Er←{
+	z ←⊂'*z = *--stkhd;'
+	z,←⊂'goto cleanup;'
+	z,←⊂''
+z}
+@
+
+<<Node-specific code generators>>=
+Fn←{id←⍕5⊃⍺ ⋄ x←⍉⊃⍪⌿⍵ ⋄ t←2⌷x ⋄ k←3⌷x
+	hsw←(t=O)∨(t=E)∧k∊1 2 ⋄ hsa←((t=E)∧k=2)∨(t=O)∧k∊4 5 7 8
+	z ←⊂'int'
+	z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+	z,←⊂'{'
+	z,←⊂'	void	*stk[128];'
+	z,←⊂'	void	**stkhd;'
+	z,←hsw⌿⊂'	void	*w;'
+	z,←hsa⌿⊂'	void	*a;'
+	z,←hsw⌿⊂'	struct	closure *c;'
+	z,←⊂''
+	z,←⊂'	stkhd = &stk[0];'
+	z,←⊂''
+	z,← '	',¨⊃,⌿dis¨⍵
+	z,←⊂'	*z = NULL;'
+	z,←⊂''
+	z,←⊂'cleanup:'
+	z,←⊂'	return 0;'
+	z,←⊂'}'
+	z,←⊂''
+z}
+@
+
 \subsubsection{Trad-fns}
 
 <<Compute trad-fns regions>>=
@@ -1637,9 +1669,24 @@ syms,←⊂,'∇' ⋄ nams,←⊂'this'
 
 \subsection{Guards}
 
+<<Parse guards to [[(G (Z ...) (Z ...))]]>>=
+_←p[i]{
+	0=+⌿m←':'=IN[pos[⍵]]:⍬
+	⊃m:'EMPTY GUARD TEST EXPRESSION'⎕SIGNAL 2
+	1<+⌿m:'TOO MANY GUARDS'⎕SIGNAL 2
+	t[⍺]←G ⋄ p[ti←gz⊃tx cq←2↑(⊂⍬)⍪⍨⍵⊂⍨1,¯1↓m]←⍺ ⋄ k[ti]←1
+	ci←≢p ⋄ p,←⍺ ⋄ t k pos end⍪←0 ⋄ n,←⊂'' ⋄ k[gz cq,ci]←1
+0}⌸i←⍸t[p[p]]=F
+@
+
 <<Lift guard tests>>=
 p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
 n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
+@
+
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←⊂G 0
+gcv,←⊂'Gd'
 @
 
 \subsubsection{Error Guards}
@@ -1734,6 +1781,43 @@ xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
 <<Record exported top-level bindings>>=
 xi←⍸(t=B)∧k[r]=0
 @ %def xi
+
+<<Node $\longleftrightarrow$ Generator mapping>>=
+gck,←⊂F 0
+gcv,←⊂'Fz'
+@
+
+<<Node-specific code generators>>=
+Fz←{id←⍕5⊃⍺ ⋄ awc←∨⌿(3⌷x){(⍵∊A O)∨(⍵=E)∧⍺>0}2⌷x←⍉⊃⍪⌿⍵
+	z ←⊂'int init',id,' = 0;'
+	z,←⊂''
+	z,←⊂'EXPORT int'
+	z,←⊂'init(void)'
+	z,←⊂'{'
+	z,←⊂' return fn',id,'(NULL, NULL, NULL, NULL);'
+	z,←⊂'}'
+	z,←⊂''
+	z,←⊂'int'
+	z,←⊂'fn',id,'(struct array **z, struct array *l, struct array *r, void *fv[])'
+	z,←⊂'{'
+	z,←⊂'	void	*stk[128];'
+	z,←⊂'	void	**stkhd;'
+	z,← awc⌿⊂'	void	*a, *w;'
+	z,← awc⌿⊂'	struct	closure *c;'
+	z,←⊂''
+	z,←⊂'	if (init',id,')'
+	z,←⊂'		return 0;'
+	z,←⊂''
+	z,←⊂'	stkhd = &stk[0];'
+	z,←⊂'	init',id,' = 1;'
+	z,←⊂'	cdf_init();'
+	z,←⊂''
+	z,← '	',¨⊃,⌿dis¨⍵
+	z,←⊂'	return 0;'
+	z,←⊂'}'
+	z,←⊂''
+z}
+@
 
 \subsubsection{Structured Programming Statements}
 
@@ -2180,35 +2264,31 @@ so the above little expression is one that I use to insert and do
 debugging within an expression.
 
 <<[[DISPLAY]] Utility>>=
-DISPLAY←{⎕IO ⎕ML←0											⍝ Boxed display of array.
-
-	⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'			⍝ ⍺: 0-clunky, 1-smooth.
-
-	tl tr bl br vt hz←chars								⍝ Top left, top right, ...
-
-	box←{																	⍝ Box with type and axes.
-		vrt hrz←(¯1+⍴⍵)⍴¨vt hz							⍝ Vert. and horiz. lines.
-		top←(hz,'⊖→')[¯1↑⍺],hrz							⍝ Upper border with axis.
-		bot←(⊃⍺),hrz												⍝ Lower border with type.
-		rgt←tr,vt,vrt,br										⍝ Right side with corners.
-		lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt					⍝ Left side(s) with axes,
-		lft←⍉tl,(↑lax),bl										⍝ ... and corners.
-		lft,(top⍪⍵⍪bot),rgt									⍝ Fully boxed array.
+DISPLAY←{
+	⎕IO ⎕ML←0
+	⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'
+	tl tr bl br vt hz←chars
+	box←{
+		vrt hrz←(¯1+⍴⍵)⍴¨vt hz
+		top←(hz,'⊖→')[¯1↑⍺],hrz
+		bot←(⊃⍺),hrz
+		rgt←tr,vt,vrt,br
+		lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt
+		lft←⍉tl,(↑lax),bl
+		lft,(top⍪⍵⍪bot),rgt
 	}
-
-	deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}				⍝ Type and axes vector.
-	axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}									⍝ Array axis types.
-	open←{(1⌈⍴⍵)⍴⍵}												⍝ Expose null axes.
-	trim←{(~1 1⍷∧⌿⍵=' ')/⍵}								⍝ Remove extra blank cols.
-	type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}					⍝ Simple array type.
-	char←{⍬≡⍴⍵:hz ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕		⍝ Simple scalar type.
-	line←{(6≠10|⎕DR' '⍵)⊃' -'}						⍝ underline for atom.
-
-	{																			⍝ Recursively box arrays:
-		0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵				⍝ Simple scalar.
-		1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵			⍝ Object rep: ⎕OR.
-		1=≡⍵:(deco ⍵)box open ⎕FMT open ⍵		⍝ Simple array.
-		('∊'deco ⍵)box trim ⎕FMT ∇¨open ⍵		⍝ Nested array.
+	deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}
+	axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}
+	open←{(1⌈⍴⍵)⍴⍵}
+	trim←{(~1 1⍷∧⌿⍵=' ')/⍵}
+	type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}
+	char←{⍬≡⍴⍵:hz ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕
+	line←{(6≠10|⎕DR' '⍵)⊃' -'}
+	{
+		0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵
+		1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵
+		1=≡⍵:(deco ⍵)box open ⎕FMT open ⍵
+		('∊'deco ⍵)box trim ⎕FMT ∇¨open ⍵
 	}⍵
 }
 @ %def DISPLAY
@@ -2256,9 +2336,13 @@ put←{
 \subsection{XML Rendering}
 
 <<XML Rendering>>=
-Xml←{⍺←0 ⋄ ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵ ⋄ d t k n←4↑ast
-	cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k ⋄ fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
-	⎕XML⍉↑d cls(⊂'')fld}
+Xml←{⍺←0
+	ast←⍺{d i←P2D⊃⍵ ⋄ i∘{⍵[⍺]}¨(⊂d),1↓⍺↓⍵}⍣(0≠⍺)⊢⍵
+	d t k n←4↑ast
+	cls←N∆[t],¨('-..'[1+×k]),¨⍕¨|k
+	fld←{((≢⍵)↑3↓f∆),⍪⍵}¨↓⍉↑3↓ast
+	⎕XML⍉↑d cls(⊂'')fld
+}
 @ %def Xml
 
 \subsection{Detecting the Operating System}

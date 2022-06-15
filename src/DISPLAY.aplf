@@ -1,31 +1,27 @@
-DISPLAY←{⎕IO ⎕ML←0                                                                                      ⍝ Boxed display of array.
-
-        ⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'                       ⍝ ⍺: 0-clunky, 1-smooth.
-
-        tl tr bl br vt hz←chars                                                               ⍝ Top left, top right, ...
-
-        box←{                                                                                                                                 ⍝ Box with type and axes.
-                vrt hrz←(¯1+⍴⍵)⍴¨vt hz                                                        ⍝ Vert. and horiz. lines.
-                top←(hz,'⊖→')[¯1↑⍺],hrz                                                      ⍝ Upper border with axis.
-                bot←(⊃⍺),hrz                                                                                              ⍝ Lower border with type.
-                rgt←tr,vt,vrt,br                                                                              ⍝ Right side with corners.
-                lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt                                     ⍝ Left side(s) with axes,
-                lft←⍉tl,(↑lax),bl                                                                         ⍝ ... and corners.
-                lft,(top⍪⍵⍪bot),rgt                                                                       ⍝ Fully boxed array.
+DISPLAY←{
+        ⎕IO ⎕ML←0
+        ⍺←1 ⋄ chars←⍺⊃'..''''|-' '┌┐└┘│─'
+        tl tr bl br vt hz←chars
+        box←{
+                vrt hrz←(¯1+⍴⍵)⍴¨vt hz
+                top←(hz,'⊖→')[¯1↑⍺],hrz
+                bot←(⊃⍺),hrz
+                rgt←tr,vt,vrt,br
+                lax←(vt,'⌽↓')[¯1↓1↓⍺],¨⊂vrt
+                lft←⍉tl,(↑lax),bl
+                lft,(top⍪⍵⍪bot),rgt
         }
-
-        deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}                           ⍝ Type and axes vector.
-        axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}                                                                  ⍝ Array axis types.
-        open←{(1⌈⍴⍵)⍴⍵}                                                                                             ⍝ Expose null axes.
-        trim←{(~1 1⍷∧⌿⍵=' ')/⍵}                                                             ⍝ Remove extra blank cols.
-        type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}                                     ⍝ Simple array type.
-        char←{⍬≡⍴⍵:hz ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕          ⍝ Simple scalar type.
-        line←{(6≠10|⎕DR' '⍵)⊃' -'}                                            ⍝ underline for atom.
-
-        {                                                                                                                                                       ⍝ Recursively box arrays:
-                0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵                             ⍝ Simple scalar.
-                1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵                       ⍝ Object rep: ⎕OR.
-                1=≡⍵:(deco ⍵)box open ⎕FMT open ⍵             ⍝ Simple array.
-                ('∊'deco ⍵)box trim ⎕FMT ∇¨open ⍵            ⍝ Nested array.
+        deco←{⍺←type open ⍵ ⋄ ⍺,axes ⍵}
+        axes←{(-2⌈⍴⍴⍵)↑1+×⍴⍵}
+        open←{(1⌈⍴⍵)⍴⍵}
+        trim←{(~1 1⍷∧⌿⍵=' ')/⍵}
+        type←{{(1=⍴⍵)⊃'+'⍵}∪,char¨⍵}
+        char←{⍬≡⍴⍵:hz ⋄ (⊃⍵∊'¯',⎕D)⊃'#~'}∘⍕
+        line←{(6≠10|⎕DR' '⍵)⊃' -'}
+        {
+                0=≡⍵:' '⍪(open ⎕FMT ⍵)⍪line ⍵
+                1 ⍬≡(≡⍵)(⍴⍵):'∇' 0 0 box ⎕FMT ⍵
+                1=≡⍵:(deco ⍵)box open ⎕FMT open ⍵
+                ('∊'deco ⍵)box trim ⎕FMT ∇¨open ⍵
         }⍵
 }
