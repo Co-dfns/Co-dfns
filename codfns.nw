@@ -1,5 +1,4 @@
 \documentclass{article}
-\usepackage[utf8]{inputenc}
 
 \usepackage{noweb}
 \pagestyle{noweb}
@@ -10,13 +9,20 @@
 \setmainfont[Ligatures=TeX]{Libre Baskerville}
 \setsansfont[Ligatures=TeX]{Lucida Sans Unicode}
 \setmonofont{APL385 Unicode}
-\setmathfont{Cambria Math}
+\setmathfont{TeX Gyre Termes Math}
 
 \usepackage{polyglossia}
 \setdefaultlanguage[variant=american]{english}
 
 \usepackage{hyperref}
 \usepackage{booktabs}
+
+\usepackage[shellescape,latex]{gmp}
+\gmpoptions{everymp={input boxes;}}
+\usempxpackage[utf8]{inputenc}
+\usempxpackage{baskervillef}
+
+\newcommand*\noun[1]{\textsf{#1}}
 
 \begin{document}
 
@@ -1096,19 +1102,787 @@ z,←⊂''
 
 \subsection{Runtime}
 
-<<Implementation of APL Primitives>>=
-⍝ TBW
+The runtime component of Co-dfns
+handles the code necessary for the output
+of the Code Generator to run.
+This includes support for all the supported language features
+as well as the runtime code for the built-in APL primitives
+and system functionality.
+The design of the runtime is meant to allow
+for as much of the runtime as possible
+to be implemented in APL.
+We also want to make it as easy as possible to target
+new languages for output from the compiler.
+
+Conceptually, the code generator produces a code module
+that links against an already built runtime module that
+provides all the language support.
+Each module has some ``backend target'' language.
+In order to make retargeting the compiler as simple as possible
+and to implement most of the runtime as APL,
+we split the runtime code into an APL namespace,
+containg all the APL code that is applicable to all backends
+and that can be implemented in APL,
+and a backend kernel that contains all the backend
+language-specific code that we must use.
+We can split the compiler into a frontend \emph{generate}
+and a backend \emph{build} step.
+The generate phase takes the input APL source
+and generates code in the backend target language
+that depends on a runtime implementation.
+The build phase takes that code and uses the backend toolchain
+to link, compile, and otherwise assemble the code
+into an appropriate redistributable ``binary''.
+The C backend, for instance, takes APL and turns it
+into C code where a C compiler then builds and links it
+against a runtime, finally producing a DLL.
+
+To build the runtime, the same basic approach is used.
+We use the compiler to generate a backend file
+from the APL runtime code.
+However, since no runtime exists for the runtime itself,
+we do \emph{not} continue in the typical manner
+and build with the standard backend pipeline,
+which assumes the existence of a runtime.
+Instead, we merge the generated code with 
+the kernel for that specific backend and build
+as its own standalone object.
+
+This workflow is illustrated by Figure \ref{fig:runtimeworkflow}
+showing how all of the pieces of the runtime interact with user code.
+
+\begin{figure}[htp]
+\centering
+\begin{mpost}
+boxjoin(a.s = b.n + (0,0.5in));
+boxit.uc(\btex User APL Code etex);
+boxit.bk(\btex Generated Code etex);
+boxit.ns(\btex Module etex);
+drawboxed(uc, bk, ns);
+boxjoin(a.s = b.n + (0,0.5in));
+boxit.ap(\btex APL Runtime Code etex);
+boxit.rc(\btex Generated Code etex);
+boxit.rtm(\btex Runtime etex);
+uc.e + (0.5in,0) = ap.w;
+drawboxed(ap, rc, rtm);
+boxjoin();
+boxit.kk(\btex Kernel etex);
+kk.w = rc.e + (1pc, 0);
+drawboxed(kk);
+drawarrow uc.s -- bk.n;
+drawarrow bk.s -- ns.n;
+drawarrow ap.s -- rc.n;
+draw rc.e -- kk.w;
+drawarrow (rc.e + (0.5pc,0))..(rc.e + (0.5pc,-0.1in))..(rtm.n + (0,0.1in))..rtm.n;
+drawdblarrow ns.e -- rtm.w;
+numeric spc, lft, rgt, mid;
+spc := 0.5 * ypart(uc.w - bk.w);
+lft := xpart bk.w;
+rgt := xpart kk.e;
+mid := ypart bk.w;
+draw (lft, mid + spc)..(rgt, mid + spc) dashed evenly;
+draw (lft, mid - spc)..(rgt, mid - spc) dashed evenly;
+label.lft(\btex{\itshape Generate} etex, (lft, mid + spc));
+label.lft(\btex{\itshape Build} etex, (lft, mid - spc));
+label.top(\btex{\itshape Link} etex, (ns.e + (0.5 * xpart(rtm.w - ns.e), 0)));
+\end{mpost}
+\caption{Process of Building and Linking the Runtime}
+\label{fig:runtimeworkflow}
+\end{figure}
+
+This architecture has some interesting advantages.
+First, most of the process for building the runtime
+is just like building any other piece of APL code.
+Second, only a small kernel and code generator need to be implemented
+for a new backend,
+with most of the work remaining in the APL runtime code.
+Third, the runtime may be implemented using a different backend language
+than that used for compiling the user code.
+All that is required is that the backend for the user code
+knows how to link to and access the code in the runtime object.
+This permits, for instance, a Scheme or Javascript backend
+to depend on a runtime implemented in C,
+thus enabling greater performance while hiding any 
+integration hassles from the interface exposed by the user module.
+In theory, any combination of suitable backend languages may be used.
+
+We put all the runtime primitives
+into a single Co-dfns namespace called [[prim.apln]].
+
+<<prim.apln>>=
+:Namespace prim
+
+	<<APL Primitives>>
+	<<System Primitives>>
+
+:EndNamespace
+@ %def prim.apln prim
+
+<<Tangle Commands>>=
+echo "Tangling rtm/prim.apln..."
+notangle -R'prim.apln' codfns.nw > rtm/prim.apln
 @
 
-<<C Runtime Support>>=
-/* TBW */
+Each primitive has its own unique considerations,
+so we leave the definition of these primitives
+to section \ref{sec:primitives}.
+
+For each backend we must have a unique kernel and code generator.
+Most of that content will be defined on a per-language feature basis below.
+The rest of this section focuses
+on the more generic and fundamental elements
+of the kernels,
+such as general organization, interface, and memory management.
+
+\subsubsection{GPU C Runtime Kernel}
+
+The main concern of a C runtime is
+managing memory and adequately handling access to the DWA system.
+Dyalog's DWA system permits us direct access to the
+underlying interpreter array format and memory manager.
+We could use this format directly
+but this will not work for GPU compute
+because the DWA interface connects
+array elements and header information
+in a way that makes GPU allocating them quite difficult,
+especially if we only want the elements on the GPU.
+
+DWA has a specific array format,
+but we will delay specifying utility code
+for array handling until section \ref{sec:langfeatarrays}.
+In this section, we handle the following issues:
+
+\begin{itemize}
+	\item DWA Initialization
+	\item Header Structure
+	\item Memory Management
+	\item Datatype Management
+	\item Error Reporting
+\end{itemize}
+
+We deal with the top-level error signalling 
+behavior in this section, but for error signalling 
+within functions, as well as arrays, module initialization
+function calls, and so forth, see the appropriate 
+sub-section of Language Features
+(section \ref{sec:langfeats}).
+
+The first order of business is the main structure
+of the C runtime files and API.
+We could attempt to put all our runtime code
+into a single [[kernel.c]] file,
+but the result would require us to maintain includes
+in a way that prevents us from easily linking
+the include statements to each language feature implementation
+without encouraging needless duplicate includes.
+Instead, we assume that each langauge feature will be given
+its own C file and then we can manage includes independently.
+We will make use of a single [[codfns.h]] file
+that contains all the public entry points into the runtime.
+
+<<codfns.h>>=
+#pragma once
+<<C runtime includes>>
+<<C runtime macros>>
+<<C runtime enumerations>>
+<<C runtime structures>>
+<<C runtime declarations>>
+@ %def codfns.h
+
+<<Tangle Commands>>=
+echo "Tangling rtm/codfns.h..."
+notangle -R'codfns.h' codfns.nw > rtm/codfns.h
 @
 
-<<C Runtime Header>>=
-/* TBW */
+Since we want to use this single header
+for the runtime code \emph{and} the generated code
+that will import the runtime,
+an interesting situation arises regarding exports.
+Both generated and runtime code must export functions
+from their respective DLLs,
+but in the case of the runtime,
+these exported functions are also the functions
+that we must import into our generated code,
+we must annotate the edeclaration of such functions
+differently if we are importing
+than when we are exporting.
+Thus, when we are building the runtime, 
+we want to export all our bindings,
+but when we are accessing the runtime from generated code
+we want to import those same bindings
+while exporting functions that we generate.
+
+To handle this, we rely on three preprocessor definitions.
+Whenwe are building the runtime,
+we will define [[EXPORTING]],
+but we expect this to be undefined when building generated code.
+Then we have an [[EXPORT]] definition
+that always maps to the platform specific export decorator,
+while [[DECLSPEC]] will be the import spec or export spec
+depending on [[EXPORTING]].
+
+It used to be the case
+that each platform handled DLL importing and exporting differently,
+but modern compilers all handle the [[__declspec]] syntax,
+so we will use that for all platforms.
+
+<<C runtime macros>>=
+#define EXPORT __declspec(dllexport)
+#ifdef EXPORTING
+	#define DECLSPEC EXPORT
+#else
+	#define DECLSPEC __declspec(dllimport)
+#endif
+@ %def EXPORT EXPORTING DECLSPEC
+
+Our next major concern is handling memory and multiple datatypes.
+Since the compiler assumes a stack machine model,
+we have a unified stack that will contain many different objects,
+such as functions and arrays,
+so we must have a way of handling the objects
+in a somewhat generic way.
+
+While some generality is desirable,
+I must curtail my Scheme-esque impulse
+towards unnecessary dynamic generality.
+This is a runtime, afterall, and experience has shown that every extra
+dynamic annotation can seriously impede scalability
+of the system and introduce many unfortunate performance gotchas.
+Rather than chase this form of programmability,
+I am taking a page from Knuth's book
+and aiming for ``re-editable'' code 
+that can be easily, but statically, extended.
+The goal is to avoid excess runtime allocation and indirection
+while at the same time making it easy to add and manage datatypes.
+
+Any such memory or type management system
+must address the following questions:
+
+\begin{itemize}
+	\item How do I make an object?
+	\item How do I free an object?
+	\item When do I free an object?
+	\item How do I keep an object alive?
+	\item How do I make new data types?
+\end{itemize}
+
+In APL, most values have a stack lifetime,
+which would encourage us to make use
+of a stack semantics in our runtime.
+However, for more involved APL,
+this assumption does not hold true.
+Instead, to manage our objects,
+we choose to make use of reference counting.%
+\footnote{\url{https://en.wikipedia.org/wiki/Reference\_counting}}
+This maintains most of the predictability and low-overhead
+of a stack semantics but gives us the additional power
+to allow object lifetimes to extend beyond the lifetime
+of their definition context.
+
+We do not have a requirement in our system for generic object creation
+(indeed, such a requirement is quite rare), 
+but we do need to generically retain a reference
+to an object and to release an object.
+We want to enable this
+without too much indirection.
+To implement this, we simply require
+that all our datatypes be structures that share
+the following common fields. 
+We call these types \noun{cells} as a convenient term.
+
+<<Common cell fields>>=
+enum cell_type ctyp;
+unsigned int refc;
+@ %def ctyp refc
+
+These fields help us to answer the two most important questions
+we must answer for any cell:
+what type of cell is it; and, is it currently referenced?
+By requiring all data structs to have these fields in common,
+we can cast them about and be basolutely sure
+that things will continue to work.
+We define a ``void'' cell type [[struct cell_void]]
+to be our minimal cell type.
+
+<<C runtime structures>>=
+struct cell_void {
+	<<Common cell fields>>
+};
+@ %def cell_void
+
+The [[enum cell_type]] keeps track of all known cell types.
+
+<<C runtime enumerations>>=
+enum cell_type {
+	<<Cell type names>>
+};
+@ %def cell_type
+
+We set the first $0th$ cell type to our void cell.
+
+<<Cell type names>>=
+CELL_VOID
+@ %def CELL_VOID
+
+We do not make or define any generic way
+to create cells; 
+you must make a constructor function suitable
+to the needs of the data type.
+At the moment, it is the responsibility of such makers
+to ensure that the common fields are 
+appropriately initialized.
+A maker should return a [[0]] on success
+and a non-zero error on failure.
+It should also take a [[struct cell_TYPE **]]
+as the first argument to store the allocated cell in.
+We expect the slot passed to a creator
+will be a possibly previously utilized slot
+on a stack or something along these lines.
+This means that it is the caller's responsibility
+to ensure that this slot has already been released.
+Failure to do this would potentially lead to a memory leak.
+However, attempting to handle this within the cell maker function
+results in an API that is much too fragile and needlessly complex.
+We expect to generally follow the stylistic guideline 
+that a function should allocate and own its own data
+and then release that data in the same function.
+
+The basic cell maker for the [[void]] cell type looks like this:
+
+<<Cell definitions>>=
+DECLSPEC int
+mk_void(struct cell_void **cell)
+{
+	struct cell_void *ptr;
+
+	ptr = malloc(sizeof(struct cell_void));
+
+	if (ptr == NULL)
+		return 1;
+
+	ptr->ctyp = CELL_VOID;
+	ptr->refc = 1;
+	*cell = ptr;
+
+	return 0;
+}
+@ %def mk_void
+
+A few points of style here.
+The error codes should try to follow the standard APL codes.
+Additionally, the target slot should not be mutated
+until we are sure that all is well 
+and that the object is well-formed.
+
+<<C runtime declarations>>=
+DECLSPEC int mk_void(struct cell_void **);
+@
+
+While we must define unique constructors
+for all the various types,
+when releasing or freeing a cell of some kind,
+we \emph{do} want to be able to generically free a cell.
+However, this must be done with a minimum of runtime overhead.
+First, we distinguish the terms ``release'' and ``free''.
+If an object is freed, that object's memory is fully returned
+to the memory manager,
+whereas releasing is about reducing the number of references
+to that object.
+When a cell has no references to it, then it is freed.
+
+Each cell type will require its own unique release function
+that manages cleanly destroying the cell.
+The release function for the [[void]] cell type looks like this:
+
+<<Cell definitions>>=
+DECLSPEC void
+release_void(struct cell_void *cell)
+{
+	if (cell == NULL)
+		return;
+
+	if (--cell->refc)
+		return;
+
+	free(cell);
+}
+@ %def release_void
+
+<<C runtime declarations>>=
+DECLSPEC void release_void(struct cell_void *);
+@
+
+To support generic cell release,
+we define the following [[release_cell]] function.
+
+<<Cell definitions>>=
+DECLSPEC void
+release_cell(void *cell)
+{
+	if (cell == NULL)
+		return;
+
+	switch (((struct cell_void *)cell)->ctyp) {
+	<<Cell release cases>>
+	default:
+		dwa_error(99);
+	}
+}
+@ %def release_cell
+
+<<C runtime declarations>>=
+DECLSPEC void release_cell(void *);
+@
+
+For each cell type, we must plug the type-specific release function
+into this [[release_cell]] switch to enable generic releasing
+for that type.
+For the [[void]] type, this looks as follows:
+
+<<Cell release cases>>=
+case CELL_VOID:
+	release_void(cell);
+	break;
+@
+
+This covers most of the needs of creating and releasing cells.
+However, it is convenient to be able to bump the reference count
+of a cell more seamlessly than explicitly setting [[refc]].
+We often encounter the case where we are assigning a cell
+to a new slot,
+thus requiring a reference count increment.
+The following function [[retain_cell]] lets us do this
+in a single statment by writing:
+
+\begin{verbatim}
+slot2 = retain_cell(slot1);
+\end{verbatim}
+
+<<Cell definitions>>=
+DECLSPEC void *
+retain_cell(void *cell)
+{
+	if (cell != NULL)
+		((struct cell_void *)cell)->refc++;
+
+	return cell;
+}
+@ %def retain_cell
+
+<<C runtime declarations>>=
+DECLSPEC void *retain_cell(void *);
+@
+
+Fortunately, this retention function requires no extra code
+as we extend the system with more data types.
+This gives us the following steps if we want
+to add a new data type to the runtime:
+
+\begin{enumerate}
+	\item Add the cell type to [[<<Cell type names>>]]
+		as [[, CELL_TYPE]].
+	\item Define the structure in [[<<C runtime structures>>]],
+		making sure that [[<<Common cell fields>>]]
+		are the first fields.
+	\item Define an [[int mk_type(struct cell_type **, ...)]]
+		function and declare it in
+		[[<<C runtime declarations>>]].
+	\item Define a [[void release_type(struct cell_type *)]]
+		function and declare it in 
+		[[<<C runtime declarations>>]].
+	\item Add a case to [[<<Cell release cases>>]] 
+		on [[CELL_TYPE]] that calls [[release_type]] on
+		[[cell]].
+\end{enumerate}
+
+The cell handling we put into a file on its own.
+
+<<cell.c>>=
+#include <stdlib.h>
+
+#include "codfns.h"
+
+<<Cell definitions>>
+@ %def cell.c
+
+<<Tangle Commands>>=
+echo "Tangling rtm/cell.c..."
+notangle -R'cell.c' codfns.nw > rtm/cell.c
+@
+
+Finally, we must handle the DWA connection
+between a Co-dfns compiled module and the interpreter.
+One constraint on this design
+is the need to make a Co-dfns module
+work with or without a DWA-driven interpreter.
+If we are interfacing solely with a foreign, C-based system, 
+we still must function somehow.
+
+A DWA module exports a [[DyalogGetInterpreterFunctions]] function
+that serves as the base link
+between the interpreter and a DWA module.
+
+\begin{figure}[htp]
+\centering
+\begin{mpost}
+boxit.interp(\btex Interpreter etex);
+boxit.getfns(\btex {\texttt DyalogGetInterpreterFunctions} etex);
+boxit.module(\btex Module etex);
+boxit.dwafns(\btex DWA Functions etex);
+interp.c + (1in, 0.5in) = getfns.c;
+getfns.c + (1in, -0.5in) = module.c;
+module.c + (-1in, -0.5in) = dwafns.c;
+drawboxed(interp, getfns, module, dwafns);
+drawarrow interp.n -- getfns.c cutbefore bpath interp cutafter bpath getfns;
+drawarrow getfns.c -- module.n cutbefore bpath getfns cutafter bpath module;
+drawarrow module.s -- dwafns.c cutbefore bpath module cutafter bpath dwafns;
+drawarrow dwafns.c -- interp.s cutbefore bpath dwafns cutafter bpath interp;
+drawarrow getfns.c -- dwafns.c cutbefore bpath getfns cutafter bpath dwafns;
+\end{mpost}
+\caption{General flow of DWA module initialization using
+	[[DyalogGetInterpreterFunctions]]}
+\label{fig:dwainit}
+\end{figure}
+
+The function receives a structure from the interpreter
+populated with function pointers
+that enable access to various interpreter features.
+A small design point comes into play here
+because we do not want to unnecessarily expose our underlying model
+to the user of the compiled module.
+In particular, if an user is not a Dyalog interpreter,
+they should not need to know about the DWA system in order to 
+function.
+For example, they should not need 
+to know or use [[DyalogGetInterpreterFunctions]]
+or the underlying functions.
+Thus, we must have a way
+to achieve similar functionality from different systems.
+
+Our approach to this is to provide more generic
+and explicit function for setting things
+we want from any system and then to layer DWA initialization 
+on top of that.
+
+Fundamentally, the main thing that we care about
+for all systems is having some means of making
+a non-local escaping error report.
+This main error reporting is meant to mimic
+the extended signalling functionality
+of the interpreter documented in the [[⎕DMX]]
+object.
+The DWA equivalent of this structure is given
+by [[struct dwa_dmx]].
+
+<<DWA structures and enumerations>>=
+struct dwa_dmx {
+	unsigned int flags;
+	unsigned int en;
+	unsigned int enx;
+	const wchar_t *vendor;
+	const wchar_t *message;
+	const wchar_t *category;
+};
+@ %def dwa_dmx
+
+In our APL model at the moment,
+there is only one main and universal [[⎕DMX]] object
+at a time, so we define a single [[dmx]] binding
+to contain the current data.
+
+<<DWA definitions>>=
+struct dwa_dmx dmx;
+@ %def dmx
+
+The reality of many FFI systems is that they
+do not do a good job of supporting C structs in the form
+of such global variables,
+so we must make sure 
+that there is a meaningful way to access
+the system using nothing but function calls.
+
+In the case of errors we have an interesting situation.
+In C, handling a long chain of errors demands that we are meticulous
+about how we handle the interaction of the call stack and
+any kind of early exit.
+In our case, this means 
+that any time we finally call the non-local error function
+that we expect to never return,
+we may be quite far removed from the original site of the error.
+Thus, passing any complex data back up a call stack
+could be quite complex.
+Instead, we populate most of [[dmx]] 
+that we care about using setter functions
+and then only have a very little to worry about passing
+up a call stack,
+namely, the error number itself.
+
+we define a setter function [[set_dmx_message]]
+to handle setting [[dmx.message]].
+
+<<DWA definitions>>=
+DECLSPEC void
+set_dmx_message(wchar_t *msg)
+{
+	dmx.message = msg;
+}
+@ %def set_dmx_message
+
+<<C runtime declarations>>=
+DECLSPEC void set_dmx_message(wchar_t *);
+@
+
+Our main non-returning function [[dwa_error]]
+handles some of the parts of [[dmx]] that we do not
+currently change,
+and then calls the internally initialized error function provided
+by whatever our interfacing system is.
+
+<<DWA definitions>>=
+DECLSPEC void
+dwa_error(unsigned int n)
+{
+	dmx.flags = 3;
+	dmx.en = n;
+	dmx.enx = n;
+	dmx.vendor = L"Co-dfns";
+	dmx.category = NULL;
+
+	dwa_error_ptr(&dmx);
+}
+@ %def dwa_error
+
+<<C runtime declarations>>=
+DECLSPEC void dwa_error(unsigned int);
+@
+
+The above requires that the calling interface be able
+to set [[dwa_error_ptr]],
+which we handle with [[set_codfns_error]].
+
+<<DWA definitions>>=
+void (*dwa_error_ptr)(struct dwa_dmx *);
+
+DECLSPEC void
+set_codfns_error(void *fn)
+{
+	dwa_error_ptr = fn;
+}
+@ %def dwa_error_ptr set_codfns_error
+
+<<C runtime declarations>>=
+DECLSPEC void set_codfns_error(void *);
+@
+
+To link this interface into the DWA functionality,
+we must extract the appropriate function pointers
+out of the structure passed to [[DyalogGetInterpreterFunctions]].
+We assume that the code generator will create a suitable definition
+for [[DyalogGetInterpreterFunctions]]
+that calls the following [[set_dwafns]], such as:
+
+\begin{verbatim}
+EXPORT int
+DyalogGetInterpreterFunctions(void *fns)
+{
+	return set_dwafns(fns);
+}
+\end{verbatim}
+
+This established a link in each compiled module
+to the runtime DWA handling and allows us
+to keep the DWA logic inside the runtime.
+The DWA structure is relatively involved 
+in its full expression,
+but we do not need the full power,
+so we can simplify our setup.
+We also want to talk about the structure
+more generically here without too much detail
+that may be more properly handled in the correct 
+language feature section.
+At its heart, the structure is a set of functions,
+which we store as an array of [[void *]] pointers.
+
+<<DWA structures and enumerations>>=
+struct dwa_wsfns {
+	long long size;
+	void *fns[18];
+};
+
+struct dwa_fns {
+	long long size;
+	struct dwa_wsfns *ws;
+};
+@ %def dwa_wsfns dwa_fns
+
+It is the job of the [[set_dwafns]] function
+to set the appropriate Co-dfns interface functions
+and follow the initialization expectations
+of the DWA system.
+On successful initialization,
+the function should return 0,
+but we must check compatibility by examining the given structure [[size]],
+return [[16]] if something is not right.
+
+<<DWA definitions>>=
+DECLSPEC int
+set_dwafns(void *p)
+{
+	struct dwa_fns *dwa;
+
+	if (p == NULL)
+		return 0;
+
+	dwa = p;
+
+	if (dwa->size < (long long)sizeof(struct dwa_fns))
+		return 16;
+
+	<<Set DWA interface functions>>
+
+	return 0;
+}
+@ %def set_dwafns
+
+Assuming that the DWA structure seems valid,
+we want to extract these functions into the appropriate
+names that we have created for them.
+An alternative would be to retain the structure
+and make indirect calls into that structure,
+but this is a little more awkward and would involve
+both more storage and more memory indirects
+for no more clarity and only more entanglement of the code.
+Instead, setting the correct names at the time
+of a [[set_dwafns]] call leads to a much cleaner dependency tree.
+At this point, only the [[dwa_error]] function
+has been designed and defined.
+
+<<Set DWA interface functions>>=
+set_codfns_error(dwa->ws->fns[17]);
+@
+
+This covers the main global DWA handling, 
+but we have more to do in other sections 
+to handle DWA arrays and function calling.
+We benefit from having a few things together in a single C file,
+so we will store our DWA code in a single C file
+with an eye to making it easy to add in the appropriate code
+in later sections.
+
+<<dwa.c>>=
+<<DWA includes>>
+<<DWA macros>>
+<<DWA structures and enumerations>>
+<<DWA definitions>>
+@ %def dwa.c
+
+<<Tangle Commands>>=
+echo "Tangling rtm/dwa.c..."
+notangle -R'dwa.c' codfns.nw > rtm/dwa.c
 @
 
 \section{Language Features}
+\label{sec:langfeats}
 
 \subsection{Valid source input character set}
 
@@ -1217,6 +1991,7 @@ z}
 @
 
 \subsection{Arrays}
+\label{sec:langfeatarrays}
 
 <<Mark atoms, characters, and numbers as kind [[1]]>>=
 k[⍸t∊A C N]←1
@@ -1866,6 +2641,7 @@ t←F@{t=M}t
 @
 
 \section{Runtime Primitives}
+\label{sec:primitives}
 
 \subsection{Addition/Identity}
 
@@ -2549,8 +3325,8 @@ the repository, not from, say, within the [[testing]] directory.}
 mkdir -p woven
 noweave -delay -index codfns.nw > woven/codfns.tex
 cd woven
-xelatex codfns
-xelatex codfns
+xelatex --shell-escape codfns
+xelatex --shell-escape codfns
 @ %def WEAVE.sh
 
 <<Tangle Commands>>=

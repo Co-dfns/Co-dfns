@@ -40,3 +40,5 @@ woven/*.aux
 woven/*.log
 woven/*.out
 woven/*.toc
+woven/codfns+mp*
+woven/mpxerr.tex

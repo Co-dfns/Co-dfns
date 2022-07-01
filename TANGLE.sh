@@ -4,6 +4,14 @@ echo "Tangling codfns.apln..."
 notangle codfns.nw > src/codfns.apln
 echo "Tangling src/TEST.aplf..."
 notangle -R'[[TEST]]' codfns.nw > src/TEST.aplf
+echo "Tangling rtm/prim.apln..."
+notangle -R'prim.apln' codfns.nw > rtm/prim.apln
+echo "Tangling rtm/codfns.h..."
+notangle -R'codfns.h' codfns.nw > rtm/codfns.h
+echo "Tangling rtm/cell.c..."
+notangle -R'cell.c' codfns.nw > rtm/cell.c
+echo "Tangling rtm/dwa.c..."
+notangle -R'dwa.c' codfns.nw > rtm/dwa.c
 echo "Tangling src/DISPLAY.aplf..."
 notangle -R'[[DISPLAY]] Utility' codfns.nw > src/DISPLAY.aplf
 
