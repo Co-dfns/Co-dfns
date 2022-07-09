@@ -1313,7 +1313,7 @@ we want to import those same bindings
 while exporting functions that we generate.
 
 To handle this, we rely on three preprocessor definitions.
-Whenwe are building the runtime,
+When we are building the runtime,
 we will define [[EXPORTING]],
 but we expect this to be undefined when building generated code.
 Then we have an [[EXPORT]] definition
@@ -1335,7 +1335,7 @@ so we will use that for all platforms.
 #endif
 @ %def EXPORT EXPORTING DECLSPEC
 
-Our next major concern is handling memory and multiple datatypes.
+Our next major concern is handling memory and multiple data types.
 Since the compiler assumes a stack machine model,
 we have a unified stack that will contain many different objects,
 such as functions and arrays,
@@ -1345,9 +1345,10 @@ in a somewhat generic way.
 While some generality is desirable,
 I must curtail my Scheme-esque impulse
 towards unnecessary dynamic generality.
-This is a runtime, afterall, and experience has shown that every extra
+This is a runtime, after all,
+and experience shows that extra
 dynamic annotation can seriously impede scalability
-of the system and introduce many unfortunate performance gotchas.
+of the system and introduce unfortunate performance gotchas.
 Rather than chase this form of programmability,
 I am taking a page from Knuth's book
 and aiming for ``re-editable'' code 
@@ -1479,7 +1480,7 @@ DECLSPEC int mk_void(struct cell_void **);
 @
 
 While we must define unique constructors
-for all the various types,
+for the various types,
 when releasing or freeing a cell of some kind,
 we \emph{do} want to be able to generically free a cell.
 However, this must be done with a minimum of runtime overhead.
@@ -1513,7 +1514,7 @@ DECLSPEC void release_void(struct cell_void *);
 @
 
 To support generic cell release,
-we define the following [[release_cell]] function.
+we define a [[release_cell]] function.
 
 <<Cell definitions>>=
 DECLSPEC void
@@ -1545,9 +1546,10 @@ case CELL_VOID:
 	break;
 @
 
-This covers most of the needs of creating and releasing cells.
-However, it is convenient to be able to bump the reference count
-of a cell more seamlessly than explicitly setting [[refc]].
+The above mostly suffices for dealing with cells.
+However, we also want to conveniently bump
+the reference count of a cell seamlessly
+without explicitly setting [[refc]].
 We often encounter the case where we are assigning a cell
 to a new slot,
 thus requiring a reference count increment.
@@ -1618,9 +1620,8 @@ work with or without a DWA-driven interpreter.
 If we are interfacing solely with a foreign, C-based system, 
 we still must function somehow.
 
-A DWA module exports a [[DyalogGetInterpreterFunctions]] function
-that serves as the base link
-between the interpreter and a DWA module.
+DWA modules export [[DyalogGetInterpreterFns]]
+as a function to link the interpreter and the module.
 
 \begin{figure}[htp]
 \centering
@@ -1639,8 +1640,7 @@ drawarrow module.s -- dwafns.c cutbefore bpath module cutafter bpath dwafns;
 drawarrow dwafns.c -- interp.s cutbefore bpath dwafns cutafter bpath interp;
 drawarrow getfns.c -- dwafns.c cutbefore bpath getfns cutafter bpath dwafns;
 \end{mpost}
-\caption{General flow of DWA module initialization using
-	[[DyalogGetInterpreterFunctions]]}
+\caption{DWA module initialization}
 \label{fig:dwainit}
 \end{figure}
 
@@ -1756,8 +1756,7 @@ dwa_error(unsigned int n)
 DECLSPEC void dwa_error(unsigned int);
 @
 
-The above requires that the calling interface be able
-to set [[dwa_error_ptr]],
+The above requires the calling interface set [[dwa_error_ptr]],
 which we handle with [[set_codfns_error]].
 
 <<DWA definitions>>=
@@ -2235,6 +2234,73 @@ syms,←⊂,'←' ⋄ nams,←⊂'get'
 <<Node $\longleftrightarrow$ Generator mapping>>=
 gck,←⊂E 4
 gcv,←⊂'Eb'
+@
+
+<<Cell type names>>=
+, CELL_BOX
+@ %def CELL_BOX
+
+<<C runtime structures>>=
+struct cell_box {
+	<<Common cell fields>>
+	void *value;
+};
+@ %def box
+
+<<Box definitions>>=
+DECLSPEC int
+mk_box(struct cell_box **box, void *value)
+{
+        *box = malloc(sizeof(struct cell_box));
+
+        if (*box == NULL)
+                return 1;
+
+        (*box)->ctyp    = CELL_BOX;
+        (*box)->refc    = 1;
+        (*box)->value   = value;
+
+        return 0;
+}
+
+DECLSPEC void
+release_box(struct cell_box *box)
+{
+        if (box == NULL)
+                return;
+
+        box->refc--;
+
+        if (box->refc)
+                return;
+
+        release_cell(box->value);
+        free(box);
+}
+@ %def mk_box release_box
+
+<<C runtime declarations>>=
+DECLSPEC int mk_box(struct cell_box **, void *);
+DECLSPEC void release_box(struct cell_box *);
+@
+
+<<Cell release cases>>=
+case CELL_BOX:
+	release_box(cell);
+	break;
+@
+
+<<box.c>>=
+#include <stdlib.h>
+
+#include "codfns.h"
+
+<<Box definitions>>
+@ %def box.c
+
+<<Tangle Commands>>=
+echo "Tangling rtm/box.c..."
+notangle -R'box.c' codfns.nw > rtm/box.c
 @
 
 \subsection{Expressions}
@@ -2970,6 +3036,10 @@ syms,←⊂,'|' ⋄ nams,←⊂'res'
 <<Symbol $\longleftrightarrow$ Name mapping>>=
 syms,←⊂,'⊢' ⋄ nams,←⊂'rgt'
 @
+
+<<APL Primitives>>=
+rgt←{⍵}
+@ %def rgt
 
 \subsection{Scalar Each}
 
