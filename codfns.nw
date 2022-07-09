@@ -2710,6 +2710,10 @@ echo "Tangling rtm/init.c..."
 notangle -R'init.c' codfns.nw > rtm/init.c
 @
 
+<<C runtime declarations>>=
+DECLSPEC int cdf_init(void);
+@
+
 \subsubsection{Structured Programming Statements}
 
 <<Verify that all structured statements appear within trad-fns>>=
