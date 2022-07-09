@@ -1,5 +1,6 @@
 :Namespace prim
 
-rgt←{⍵}
+        rgt←{⍵}
+        
 
 :EndNamespace
