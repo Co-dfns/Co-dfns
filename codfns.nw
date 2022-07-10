@@ -2424,6 +2424,119 @@ k[⍵]=2:{
 z}⍵
 @
 
+<<Cell type names>>=
+, CELL_CLOSURE
+@ %def CELL_CLOSURE
+
+<<C runtime structures>>=
+struct cell_closure {
+	<<Common cell fields>>
+	int (*fn)(struct cell_array **,
+	    struct cell_array *, struct cell_array *, void **);
+	unsigned int fs;
+	void *fv[];
+}
+@ %def cell_closure
+
+<<Closure definitions>>=
+DECLSPEC int
+mk_closure(struct cell_closure **k,
+    int (*fn)(struct cell_array **,
+        struct cell_array *, struct cell_array *, void **),
+    unsigned int fs)
+{
+	size_t sz;
+	struct cell_closure *ptr;
+
+	sz = sizeof(struct cell_closure) + fs * sizeof(void *);
+	ptr = malloc(sz);
+
+	if (ptr == NULL)
+		return 1;
+
+	ptr->ctyp = CELL_CLOSURE;
+	ptr->refc = 1;
+	ptr->fn = fn;
+	ptr->fs = fs;
+
+	*k = ptr;
+
+	return 0;
+}
+
+DECLSPEC void
+release_closure(struct cell_closure *k)
+{
+	if (k == NULL)
+		return;
+
+	k->refc--;
+
+	if (k->refc)
+		return;
+
+	for (unsigned int i = 0; i < k->fs; i++)
+		release_cell(k->fv[i]);
+	
+	free(k);
+}
+@ %def mk_closure release_closure
+
+<<C runtime declarations>>=
+DECLSPEC int mk_closure(struct cell_closure **,
+    int (*)(struct cell_array **,
+        struct cell_array *, struct cell_array *, void **),
+    unsigned int);
+DECLSPEC void release_closure(struct cell_closure *);
+@
+
+<<Cell release cases>>=
+case CELL_CLOSURE:
+	release_closure(cell);
+	break;
+@
+
+<<Closure definitions>>=
+DECLSPEC int
+apply_dop(struct cell_closure **z,
+    struct cell_closure *op, void *l, void *r)
+{
+	int err;
+
+	err = mk_closure(z, op->fn, op->fs+2);
+
+	if (err)
+		return err;
+
+	(*z)->fv[0] = l;
+	(*z)->fv[1] = r;
+
+	memcpy(&(*z)->fv[2], op->fv, op->fs * sizeof(op->fv[0]));
+
+	for (unsigned int i = 0; i < (*z)->fs; i++)
+		retain_cell((*z)->fv[i]);
+
+	return 0;
+}
+@ %def apply_dop apply_mop
+
+<<closure.c>>=
+#include <stdlib.h>
+#include <string.h>
+
+#include "codfns.h"
+
+<<Closure definitions>>
+@ %def closure.c
+
+<<Tangle Commands>>=
+echo "Tangling rtm/closure.c..."
+notangle -R'closure.c' codfns.nw > rtm/closure.c
+@
+
+<<C runtime declarations>>=
+@
+
 \subsubsection{D-fns}
 
 <<Compute dfns regions and type, with [[}]] as a child>>=

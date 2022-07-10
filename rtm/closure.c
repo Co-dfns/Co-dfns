@@ -4,57 +4,64 @@
 #include "codfns.h"
 
 DECLSPEC int
-mk_closure(struct closure **clr,
-    int (*fn)(struct array **, struct array *, struct array *, void **), 
+mk_closure(struct cell_closure **k,
+    int (*fn)(struct cell_array **,
+        struct cell_array *, struct cell_array *, void **),
     unsigned int fs)
 {
-	*clr = malloc(sizeof(struct closure) + fs * sizeof(void *));
+        size_t sz;
+        struct cell_closure *ptr;
 
-	if (*clr == NULL)
-		return 1;
+        sz = sizeof(struct cell_closure) + fs * sizeof(void *);
+        ptr = malloc(sz);
 
-	(*clr)->ctyp	= CELL_CLOSURE;
-	(*clr)->refc	= 1;
-	(*clr)->fs	= fs;
-	(*clr)->fn	= fn;
+        if (ptr == NULL)
+                return 1;
 
-	return 0;
+        ptr->ctyp = CELL_CLOSURE;
+        ptr->refc = 1;
+        ptr->fn = fn;
+        ptr->fs = fs;
+
+        *k = ptr;
+
+        return 0;
 }
 
 DECLSPEC void
-release_closure(struct closure *clr)
+release_closure(struct cell_closure *k)
 {
-	if (clr == NULL)
-		return;
+        if (k == NULL)
+                return;
 
-	clr->refc--;
+        k->refc--;
 
-	if (clr->refc)
-		return;
+        if (k->refc)
+                return;
 
-	for (unsigned int i = 0; i < clr->fs; i++)
-		release_cell(clr->fv[i]);
-	
-	free(clr);
+        for (unsigned int i = 0; i < k->fs; i++)
+                release_cell(k->fv[i]);
+        
+        free(k);
 }
-
 DECLSPEC int
-apply_oper(struct closure **z, struct closure *op, void *l, void *r)
+apply_dop(struct cell_closure **z,
+    struct cell_closure *op, void *l, void *r)
 {
-	int err;
+        int err;
 
-	err = mk_closure(z, op->fn, op->fs+2);
+        err = mk_closure(z, op->fn, op->fs+2);
 
-	if (err)
-		return err;
+        if (err)
+                return err;
 
-	(*z)->fv[0] = l;
-	(*z)->fv[1] = r;
+        (*z)->fv[0] = l;
+        (*z)->fv[1] = r;
 
-	memcpy(&(*z)->fv[2], op->fv, op->fs * sizeof(op->fv[0]));
+        memcpy(&(*z)->fv[2], op->fv, op->fs * sizeof(op->fv[0]));
 
-	for (unsigned int i = 0; i < (*z)->fs; i++)
-		retain_cell((*z)->fv[i]);
+        for (unsigned int i = 0; i < (*z)->fs; i++)
+                retain_cell((*z)->fv[i]);
 
-	return 0;
+        return 0;
 }
