@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Tangling codfns.apln..."
+echo "Tangling src/codfns.apln..."
 notangle codfns.nw > src/codfns.apln
 echo "Tangling src/TEST.aplf..."
 notangle -R'[[TEST]]' codfns.nw > src/TEST.aplf

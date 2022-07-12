@@ -188,7 +188,7 @@ tangling process.
 See more about the build infrastructure later in this document.
 
 <<Tangle Commands>>=
-echo "Tangling codfns.apln..."
+echo "Tangling src/codfns.apln..."
 notangle codfns.nw > src/codfns.apln
 @ %def codfns.apln
 
