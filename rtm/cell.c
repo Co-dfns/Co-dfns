@@ -2,37 +2,61 @@
 
 #include "codfns.h"
 
-struct cell {
-	enum	cell_type ctyp;
-	unsigned	int refc;
-};
-
-DECLSPEC void
-release_cell(void *val)
+DECLSPEC int
+mk_void(struct cell_void **cell)
 {
-	if (val == NULL)
-		return;
+        struct cell_void *ptr;
 
-	switch (((struct cell *)val)->ctyp) {
-	case CELL_ARRAY:
-		release_array(val);
-		break;
-	case CELL_MCELL:
-		release_mcell(val);
-		break;
-	case CELL_CLOSURE:
-		release_closure(val);
-		break;
-	default:
-		dwa_error(999);
-	}
+        ptr = malloc(sizeof(struct cell_void));
+
+        if (ptr == NULL)
+                return 1;
+
+        ptr->ctyp = CELL_VOID;
+        ptr->refc = 1;
+        *cell = ptr;
+
+        return 0;
 }
-
-DECLSPEC void *
-retain_cell(void *val)
+DECLSPEC void
+release_void(struct cell_void *cell)
 {
-	if (val != NULL)
-		((struct cell *)val)->refc++;
+        if (cell == NULL)
+                return;
 
-	return val;
+        if (--cell->refc)
+                return;
+
+        free(cell);
+}
+DECLSPEC void
+release_cell(void *cell)
+{
+        if (cell == NULL)
+                return;
+
+        switch (((struct cell_void *)cell)->ctyp) {
+        case CELL_VOID:
+                release_void(cell);
+                break;
+        case CELL_ARRAY:
+                release_array(cell);
+                break;
+        case CELL_BOX:
+                release_box(cell);
+                break;
+        case CELL_CLOSURE:
+                release_closure(cell);
+                break;
+        default:
+                dwa_error(99);
+        }
+}
+DECLSPEC void *
+retain_cell(void *cell)
+{
+        if (cell != NULL)
+                ((struct cell_void *)cell)->refc++;
+
+        return cell;
 }
