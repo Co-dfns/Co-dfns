@@ -12,6 +12,8 @@ echo "Tangling rtm/cell.c..."
 notangle -R'cell.c' codfns.nw > rtm/cell.c
 echo "Tangling rtm/dwa.c..."
 notangle -R'dwa.c' codfns.nw > rtm/dwa.c
+echo "Tangling rtm/array.c..."
+notangle -R'array.c' codfns.nw > rtm/array.c
 echo "Tangling rtm/box.c..."
 notangle -R'box.c' codfns.nw > rtm/box.c
 echo "Tangling rtm/closure.c..."
