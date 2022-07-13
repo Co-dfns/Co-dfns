@@ -800,6 +800,7 @@ pos←(⍳≢IN)⊆⍨~IN∊CR LF
 <<Check and mask the strings>>
 <<Unify whitespace and comments>>
 <<Tokenize strings>>
+<<Define character classes>>
 <<Verify that all open characters are valid>>
 <<Tokenize numbers>>
 <<Tokenize variables>>
@@ -1884,26 +1885,6 @@ notangle -R'dwa.c' codfns.nw > rtm/dwa.c
 \section{Language Features}
 \label{sec:langfeats}
 
-\subsection{Valid source input character set}
-
-<<Verify that all open characters are valid>>=
-alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
-alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
-alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
-num←⎕D
-synb←'¯[]{}()'':⍺⍵⋄;'
-syna←'⍬⎕⍞#'
-prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
-prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmmo←'¨⍨&⌶⌸' ⋄ prmfo←'/⌿\⍀'
-prms←prmfs,prmdo,prmmo,prmfo
-x←' '@{t≠0}IN[pos] ⍝ The spaces produce nice invariants
-∨⌿msk←~x∊alp,num,syna,synb,prms,WS:{
-	EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
-	EM,←quotelines ⍸msk
-	EM ⎕SIGNAL 2
-}⍬
-@
-
 \subsection{Comments and Whitespace}
 
 <<Unify whitespace and comments>>=
@@ -1917,9 +1898,130 @@ WS←⎕UCS 9 32 ⋄ pos msk⌿¨⍨←⊂~(∧⍀∨∧⍀U⌽)∘(WS∊⍨IN�
 t←⊃0⍴⊂pos ⋄ t pos msk(∊,∘⍪⍨)←Z(⊃¨pos)0 ⋄ t[⍸'⋄'=IN[pos]]←Z
 @
 
+\subsection{Valid source input character set}
+
+An APL source should contain
+only a limited set of valid characters
+outside of character vectors and comments.
+We want to verify this is the case as early in the parser as possible
+since this limited character set is quite useful
+in the rest of the parser.
+However, we must do this after tokenizing away
+any character vectors and comments
+to avoid false positives on their contents.
+
+While we are validating the characters,
+it is also a good time to classify various characters
+into their appropriate categories.
+We do that first.
+Most obvious is the set of alphabetic characters.
+These are the characters in addition to numeric digits
+that constitute valid characters for variable names.
+
+<<Define character classes>>=
+alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_
+alp,←'abcdefghijklmnopqrstuvwxyz'
+alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß
+alp,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
+alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
+@ %def alp
+
+\noindent
+The numbers should get their own unique class.
+
+<<Define character classes>>=
+num←⎕D
+@ %def num
+
+Next are the syntax characters.
+These are characters that exist primarily as non-primitive annotations
+mainly useful in parsing,
+they may also represent components of compound tokens.
+We split these into two classes: 
+class [[syna]] are the characters 
+that may form more compound units,
+but that generally represent atomic values absent other context;
+class [[synb]] contains the rest,
+including [[⍺]] and [[⍵]].
+
+<<Define character classes>>=
+syna←'⍬⎕⍞#'
+synb←'¯[]{}()'':⍺⍵⋄;'
+@ %def syna synb
+
+Primitives are a little more complex.
+Fortunately, all our primitives are essentially single characters%
+\footnote{Ignore [[∘.]] for the moment,
+  or imagine it as an application of [[.]]
+  if it makes you feel better.},
+but we must handle operators with more care.
+Primitives that we always treat as functions 
+present little challenge,
+but primitives that are operators or that may behave like operators
+are another story.
+The so-called schizophrenic primitives 
+actually present the least trouble;
+we must parse them uniquely so they will get their own class.
+For the more mundane operators, though,
+the legitimate design space is larger.
+Obviously, there are monadic and dyadic operators,
+but we could treat them all as a single class.
+In the case of parsing, 
+\emph{not} distinguishing monadic and dyadic strikes me
+as a grand mistake,
+especially since these two sets are exclusive to one another.
+But, there are dyadic operators that take more than one type of operand,
+that is, they accept array and function operands.
+Do we want to split this classification up
+to differentiate operand types as well as operator arity?
+
+I say no.
+The reasoning is simple.
+Operators as a class will always be exclusively divided by arity,
+but there is much less clean division of operand type classifications.
+Moreover, if we make the distinction at parse time,
+we must also handle user-defined operators somewhat uniquely.
+The end result is a vastly expanded state space for the problem
+with the only real benefit being a slightly earlier error message
+about operator type errors.
+It is not at all clear that this is even a good thing.
+We will not alter the parse tree in any way
+by choosing not to distinguish based on operand type,
+but we gain the ability to treat
+user-defined operators as the same class as primitive operators,
+greatly reducing the state space
+without loss of overall fidelity.
+
+Finally, since we will be handling assignment uniquely anyways,
+we can just treat it as a function primitive for most cases
+without much trouble.
+This gives the following definitions.
+
+<<Define character classes>>=
+prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠
+prmfs,←'≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
+prmmo←'¨⍨&⌶⌸'
+prmdo←'∘.⍣⍠⌺⍤⍥@'
+prmfo←'/⌿\⍀'
+prms←prmfs,prmmo,prmdo,prmfo
+@ %def prmfs prmmo prmdo prmfo prms
+
+With the character classes defined,
+we can verify that all characters outside of strings are valid.
+We must remember to include [[WS]] in this set.
+
+<<Verify that all open characters are valid>>=
+∨⌿msk←~IN[pos]∊alp,num,syna,synb,prms,WS:{
+	EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
+	EM,←quotelines ⍸msk
+	EM ⎕SIGNAL 2
+}⍬
+@
+
 \subsection{Numbers}
 
 <<Tokenize numbers>>=
+x←' '@{t≠0}IN[pos] ⍝ The spaces produce nice invariants
 _←{dm[⍵]←∧⍀dm[⍵]}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
 dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
 dm∨←('¯'=x)∧1⌽dm

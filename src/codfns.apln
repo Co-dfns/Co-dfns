@@ -81,21 +81,26 @@
                 t←⊃0⍴⊂pos ⋄ t pos msk(∊,∘⍪⍨)←Z(⊃¨pos)0 ⋄ t[⍸'⋄'=IN[pos]]←Z
                 end←1+pos ⋄ t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←end[⍸2>⌿msk⍪0]
                 t pos end⌿⍨←⊂(t≠0)∨~msk
-                alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
-                alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
+                alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_
+                alp,←'abcdefghijklmnopqrstuvwxyz'
+                alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß
+                alp,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
                 alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
                 num←⎕D
-                synb←'¯[]{}()'':⍺⍵⋄;'
                 syna←'⍬⎕⍞#'
-                prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
-                prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmmo←'¨⍨&⌶⌸' ⋄ prmfo←'/⌿\⍀'
-                prms←prmfs,prmdo,prmmo,prmfo
-                x←' '@{t≠0}IN[pos] ⍝ The spaces produce nice invariants
-                ∨⌿msk←~x∊alp,num,syna,synb,prms,WS:{
+                synb←'¯[]{}()'':⍺⍵⋄;'
+                prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠
+                prmfs,←'≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
+                prmmo←'¨⍨&⌶⌸'
+                prmdo←'∘.⍣⍠⌺⍤⍥@'
+                prmfo←'/⌿\⍀'
+                prms←prmfs,prmmo,prmdo,prmfo
+                ∨⌿msk←~IN[pos]∊alp,num,syna,synb,prms,WS:{
                         EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
                         EM,←quotelines ⍸msk
                         EM ⎕SIGNAL 2
                 }⍬
+                x←' '@{t≠0}IN[pos] ⍝ The spaces produce nice invariants
                 _←{dm[⍵]←∧⍀dm[⍵]}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
                 dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
                 dm∨←('¯'=x)∧1⌽dm
