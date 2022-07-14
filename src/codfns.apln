@@ -66,21 +66,19 @@
                 ⍝ Group input into lines as a nested vector
                 pos←(⍳≢IN)⊆⍨~IN∊CR LF
 
-                0≠≢lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos:{
+                msk←≠⍀¨''''=IN∘I¨pos
+                pos msk⌿¨⍨←⊂∧⍀¨(~msk)⍲'⍝'=IN∘I¨pos
+                0≠≢lin←⍸⊃∘⌽¨msk:{
                         EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
                         EM,←quotelines ∊(msk⌿¨pos)[lin]
                         EM ⎕SIGNAL 2
                 }⍬
-                ⍝ Remove comments
-                pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽¨msk)⍲'⍝'=IN∘I¨pos
-
-                ⍝ Remove leading and trailing whitespace
-                WS←⎕UCS 9 32 ⋄ pos msk⌿¨⍨←⊂~(∧⍀∨∧⍀U⌽)∘(WS∊⍨IN∘I)¨pos
-
-                ⍝ Flatten and separate lines and ⋄ with Z type
-                t←⊃0⍴⊂pos ⋄ t pos msk(∊,∘⍪⍨)←Z(⊃¨pos)0 ⋄ t[⍸'⋄'=IN[pos]]←Z
+                t←⊃0⍴⊂pos
+                t pos msk(∊,∘⍪⍨)←Z (⊃¨pos) 0
                 end←1+pos ⋄ t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←end[⍸2>⌿msk⍪0]
                 t pos end⌿⍨←⊂(t≠0)∨~msk
+                t[⍸'⋄'=IN[pos]]←Z
+                WS←⎕UCS 9 32
                 alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_
                 alp,←'abcdefghijklmnopqrstuvwxyz'
                 alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß
@@ -95,6 +93,9 @@
                 prmdo←'∘.⍣⍠⌺⍤⍥@'
                 prmfo←'/⌿\⍀'
                 prms←prmfs,prmmo,prmdo,prmfo
+                t pos end⌿⍨←⊂~(t=0)∧(¯1⌽IN[pos])∊WS
+                msk←⊃1 ¯1∧.((alp,num,'¯⍺⍵⎕.')∊⍨⌽)⊂x←IN[pos]
+                t pos end⌿⍨←⊂msk∨(t≠0)∨~x∊WS
                 ∨⌿msk←~IN[pos]∊alp,num,syna,synb,prms,WS:{
                         EM←'SYNTAX ERROR: INVALID CHARACTER(S) IN SOURCE',CR
                         EM,←quotelines ⍸msk

@@ -797,10 +797,14 @@ SIGNAL←{⍺←2 '' ⋄ en msg←⍺ ⋄ EN∘←en ⋄ DM∘←en mkdm ⊃⍵
 ⍝ Group input into lines as a nested vector
 pos←(⍳≢IN)⊆⍨~IN∊CR LF
 
-<<Check and mask the strings>>
-<<Unify whitespace and comments>>
+<<Mask potential strings>>
+<<Remove comments>>
+<<Check for balanced strings>>
+<<Flatten parser representation>>
 <<Tokenize strings>>
+<<Convert [[⋄]] to [[Z]] nodes>>
 <<Define character classes>>
+<<Remove insignificant whitespace>>
 <<Verify that all open characters are valid>>
 <<Tokenize numbers>>
 <<Tokenize variables>>
@@ -1887,15 +1891,201 @@ notangle -R'dwa.c' codfns.nw > rtm/dwa.c
 
 \subsection{Comments and Whitespace}
 
-<<Unify whitespace and comments>>=
-⍝ Remove comments
-pos msk⌿¨⍨←⊂∧⍀¨(~msk←msk∨¯1⌽¨msk)⍲'⍝'=IN∘I¨pos
+Early in the parsing process,
+we want to unify and simplify whitespace and comments in the code
+so that none of the future code has to worry about it.
+There are a few things to consider.
 
-⍝ Remove leading and trailing whitespace
-WS←⎕UCS 9 32 ⋄ pos msk⌿¨⍨←⊂~(∧⍀∨∧⍀U⌽)∘(WS∊⍨IN∘I)¨pos
+First, comments should be completely eliminated from the tree
+so that we never attempt to parse anything inside of a comment.
+we cannot make this our first step in the parser
+because character vectors may have [[⍝]] characters in them.
+It is okay to have ``string-like'' things  within comments
+because we can safely ignore anything in a comment
+as long as we can reliably and accurately identify
+the semantically meaningful [[⍝]] characters 
+from those in a string.
 
-⍝ Flatten and separate lines and ⋄ with Z type
-t←⊃0⍴⊂pos ⋄ t pos msk(∊,∘⍪⍨)←Z(⊃¨pos)0 ⋄ t[⍸'⋄'=IN[pos]]←Z
+This makes comment parsing and character vector parsing 
+an intertwined process.
+We must identify such strings first,
+which we can do by making a Boolean mask [[msk]] marking out
+the possible strings,
+but we cannot parse these yet
+because some of these may appear
+inside a comment
+and should not be parsed.
+Once we have the potential string regions,
+only all [[⍝]] outside of these regions 
+must be the semantic comment starts.
+A little thought suffices to prove that no semantic comment
+can appear inside a potential string region:
+if a semantic marker was inside a potential string region,
+this would mean that there are no previous markers on the line,
+but that means that the string region must be a real region,
+and that means that the [[⍝]] character is not semantic.
+
+We assume that we are still in our nested line representation
+at this point because strings and comments are line-local,
+so it is much easier to handle them in the nested form.
+Assuming that [[msk]] is the nested Boolean mask of potential regions,
+there are a few representations we could use,
+based on whether we include or exclude the leading or trailing 
+[[']] quote characters.
+Fortunately for us, this does not matter,
+since we are mostly interested in using [[msk]] to find
+the semantic [[⍝]] points.
+After that, we do not need [[msk]].
+Since the start and end [[']] characters will never match [[⍝]],
+the search for semantic [[⍝]] characters is the same regardless.
+This allows us to filter [[pos]] and [[msk]] down
+with the following code.
+We do not need [[end]] yet because we do not care
+about the extra whitespace in our implied regions at the moment.
+
+<<Remove comments>>=
+pos msk⌿¨⍨←⊂∧⍀¨(~msk)⍲'⍝'=IN∘I¨pos
+@
+
+AFter handling comments,
+we must make sure that we have adequately checked our string syntax.
+After this, we still want to do a few more things
+to normalize the whitespace in our source.
+We want to normalize line endings by removing occurrences of [[⋄]]
+and using a single [[Z]] node to wrap all lines.
+We also want to reduce most of the clearly unnecessary whitespace
+so that we do not need to scan useless characters all the time
+during tokenization.
+We plan to eliminate all unneeded character nodes at the end
+of tokenization anyways,
+but there is no reason to make all the tokenization passes 
+traverse so much blank space all the time.
+
+After we have checked the syntax on character vectors,
+we no longer require the nested representation,
+but we find yet another interesting point of design.
+If we choose to handle [[⋄]] nodes before tokenizing strings,
+we are now free to do either,
+we must continue to use [[msk]] to make sure
+we do not match [[⋄]] characters that appear in strings.
+On the other hand, tokenizing strings is much more nicely expressed
+using a flattened representation.
+But when we go to eliminate whitespace,
+it might be nice to do this on a nested representation
+to gain access to the leading and trailing whitespace idioms.
+
+In the end, I find it more objectionable to continue persisting
+the [[msk]] value longer than necessary,
+so my primary concern is to tokenize strings as quickly as I can
+instead of continuing to use the nested representation.
+This means flattening right away and then tokenizing strings
+right away.
+We can also observe that removing leading and trailing whitespace
+is simply a special case of removing duplicate or insignificant
+whitespace anywhere in the source. 
+Once strings are tokenized,
+we are free to eliminate insignificant whitespace from anywhere
+in the source at once.
+This more general approach has a much richer invariant
+at the end of it anyways.
+This makes the case for early flattening a slam dunk.
+
+Flattening takes the nested representations of [[pos]] and [[msk]]
+and converts them into simple arrays.
+When doing this we must retain the line divisions somehow.
+To do this, we introduce the [[t]] field to give a type
+to each character, 
+which we now begin thinking of more like nodes
+in a fully flat and unconnected forest.
+We use type [[0]] for unparsed character data,
+but introduce our first type to represent a line, [[Z]].
+We will continue to think of [[Z]] nodes
+as ``miscellaneous container'' nodes. 
+At this point, we put a [[Z]] node as the start of each line,
+pointing to the first character of the line, given by [[⊃¨pos]].
+
+<<Flatten parser representation>>=
+t←⊃0⍴⊂pos
+t pos msk(∊,∘⍪⍨)←Z (⊃¨pos) 0
+@
+
+After strings have been appropriately tokenized,
+we are free to handle the final main points,
+which are to eliminate insignificant whitespace
+and to make all [[⋄]] characters into [[Z]] nodes.
+The latter is trivial.
+
+<<Convert [[⋄]] to [[Z]] nodes>>=
+t[⍸'⋄'=IN[pos]]←Z
+@
+
+Eliminating insignificant whitespace is not as cut and dry.
+There is the question of how much to remove.
+We think the benefit of knowing that all whitespace
+is isngificant further down the compiler pipeline
+is a nice enough invariant to have
+that it is worth pursuing,
+not to mention the inherent increase in efficiency.
+
+We observe that knowing that a group of spaces
+is insignificant requires knowing 
+what is on the right \emph{and} the left.
+It does not suffice to know only one side.
+It would be possible to compute this all at one go,
+but we can make this much easier by first reducing all 
+contiguous spaces down
+so that there is no contiguous whitespace.
+This will ensure that it is much easier 
+to check the left and right sides.
+
+First, we must define what we consider valid whitespace.
+In this case, all newlines should have already been converted
+into [[Z]] nodes, 
+and as far as I can tell,
+APL does not permit more exotic forms of whitespace in the source.
+That leaves only tabs and spaces.
+
+<<Define character classes>>=
+WS←⎕UCS 9 32
+@ %def WS
+
+Now we should eliminate any contiguous whitespace characters.
+One thing we must remember at this point
+is how we must handle [[Z]] nodes.
+We must make sure not to eliminate any [[Z]] nodes,
+which might happen if we only check the value of [[IN[pos]]]
+because [[pos]] for a [[Z]] node is likely to point
+to a whitespace character.
+Contiguous whitespace is simply whitespace 
+that has whitespace to its left.
+We could also define it as right instead of left,
+but defining it as left will have the nice side effect
+of removing all leading whitespace.
+Since a typical APL source should have more leading whitespace
+than trailing,
+editors often automatically remove trailing whitespace,
+this seems like a nice free win.
+
+At this point, we have to update three fields:
+[[t]], [[pos]], and [[end]].
+
+<<Remove insignificant whitespace>>=
+t pos end⌿⍨←⊂~(t=0)∧(¯1⌽IN[pos])∊WS
+@
+
+White the contiguous whitespace removed,
+we can focus on eliminating insignificant whitespace.
+The only way for a space to be significant is for both
+its left and right neighbors to be non-breaking or merging characters.
+In APL, these are alphabetic characters, digits, [[¯]], [[⍺]], [[⍵]], 
+[[.]], and [[⎕]]. 
+We do not need to get this absolutely perfect
+because tokenization will handle that;
+this is just to remove obvious excess before continuing.
+
+<<Remove insignificant whitespace>>=
+msk←⊃1 ¯1∧.((alp,num,'¯⍺⍵⎕.')∊⍨⌽)⊂x←IN[pos]
+t pos end⌿⍨←⊂msk∨(t≠0)∨~x∊WS
 @
 
 \subsection{Valid source input character set}
@@ -2018,6 +2208,25 @@ We must remember to include [[WS]] in this set.
 }⍬
 @
 
+\subsection{Strings and characters}
+
+<<Mask potential strings>>=
+msk←≠⍀¨''''=IN∘I¨pos
+@
+
+<<Check for balanced strings>>=
+0≠≢lin←⍸⊃∘⌽¨msk:{
+	EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
+	EM,←quotelines ∊(msk⌿¨pos)[lin]
+	EM ⎕SIGNAL 2
+}⍬
+@
+
+<<Tokenize strings>>=
+end←1+pos ⋄ t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←end[⍸2>⌿msk⍪0]
+t pos end⌿⍨←⊂(t≠0)∨~msk
+@
+
 \subsection{Numbers}
 
 <<Tokenize numbers>>=
@@ -2041,21 +2250,6 @@ t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 <<Node $\longleftrightarrow$ Generator mapping>>=
 gck,←⊂N 1
 gcv,←⊂'Na'
-@
-
-\subsection{Strings and characters}
-
-<<Check and mask the strings>>=
-0≠≢lin←⍸⊃∘⌽¨msk←≠⍀¨''''=IN∘I¨pos:{
-	EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
-	EM,←quotelines ∊(msk⌿¨pos)[lin]
-	EM ⎕SIGNAL 2
-}⍬
-@
-
-<<Tokenize strings>>=
-end←1+pos ⋄ t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←end[⍸2>⌿msk⍪0]
-t pos end⌿⍨←⊂(t≠0)∨~msk
 @
 
 \subsection{Variables}
