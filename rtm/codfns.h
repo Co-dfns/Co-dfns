@@ -13,7 +13,9 @@ enum cell_type {
         , CELL_CLOSURE
 };
 enum array_type {
-        ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CHAR, ARR_CMP,
+        ARR_SPAN
+        , ARR_CHAR
+        ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMP,
         ARR_MIXED, ARR_NESTED
 };
 

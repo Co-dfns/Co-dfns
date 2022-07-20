@@ -799,7 +799,7 @@ pos←(⍳≢IN)⊆⍨~IN∊CR LF
 
 <<Mask potential strings>>
 <<Remove comments>>
-<<Check for balanced strings>>
+<<Check for unbalanced strings>>
 <<Flatten parser representation>>
 <<Tokenize strings>>
 <<Convert [[⋄]] to [[Z]] nodes>>
@@ -827,6 +827,7 @@ d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{}:;'
 <<Parse token stream>>=
 ⍝ Now that all compound data is tokenized, reify n field before tree-building
 n←{1↓⍎¨'0',⍵}@{t=N}(⊂'')@{t∊Z F}1 ⎕C@{t∊K S}IN∘I¨pos+⍳¨end-pos
+<<Type-specific processing of the [[n]] field>>
 
 <<Check that all keywords are valid>>
 <<Check that namespaces are at the top level>>
@@ -2210,11 +2211,68 @@ We must remember to include [[WS]] in this set.
 
 \subsection{Strings and characters}
 
+APL has a single string syntax.
+As an atomic unit that exists at much the same level
+as that of a number,
+the main impact of string support occurs in
+the parser, code generator, and runtime primitives.
+It has minimal impact on the main compiler transformations.
+
+Taking a high level view,
+we want to parse, compile, generate, and work in the runtime
+with strings.
+At the compile level, we should make it so
+that strings are handled in the same way
+that any simple array is handled.
+Likewise, handling character arrays should mostly work
+just the same as any other array
+as long as we have an appropriate type tag.
+It is in parsing that the most work is required.
+We must also ensure that we can properly convert the data
+into a good runtime representation during code generation.
+
+Strings must be handled early on in the parser,
+since a character vector may contain all sorts of content,
+making it almost impossible to parse most other content
+without first parsing strings.
+However, comments also have this feature,
+and we must intertwin the parsing of strings
+with the parsing of comments.
+The fundamental issue is that comments may hold things
+that look like strings and strings may enclose things
+that look like comments. 
+In principle, the first marker, either [[']] or [[⍝]],
+takes precedence,
+so we must figure out how to do that.
+Since comments completely block out all the rest of a line,
+the most information comes from checking each line
+for all things that look like strings first.
+Then, we can look for any comment markers 
+that are not inside of strings
+and use that to eliminate any strings
+that are really just inside of comments.
+We can accomplish this on the nested [[pos]] representation
+using the common [[≠⍀]] idiom to produce [[msk]]
+that is used in the previous section.
+We must also remember to mark the double quotes separately
+to handle escaped quotes.
+
 <<Mask potential strings>>=
-msk←≠⍀¨''''=IN∘I¨pos
+msk←(''''''∘⍷¨x)∨≠⍀¨''''=x←IN∘I¨pos
 @
 
-<<Check for balanced strings>>=
+Once that is done, 
+we must eliminate comments
+so that we can continue to parse the strings
+that are ``real.''
+Before tokenizing the strings,
+we must check that they are balanced on a line.
+Since we are still using the nested representation at this point,
+we can do this pretty easily by checking the end of the line
+for any open strings.
+We should report all unbalanced string ranges that we find.
+
+<<Check for unbalanced strings>>=
 0≠≢lin←⍸⊃∘⌽¨msk:{
 	EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
 	EM,←quotelines ∊(msk⌿¨pos)[lin]
@@ -2222,10 +2280,188 @@ msk←≠⍀¨''''=IN∘I¨pos
 }⍬
 @
 
+The [[msk]] value now contains well-formed strings in the source,
+ready for tokenization.
+It is nicer to do the tokenization on a flat representation,
+so we wait to perform this next step
+until we have flattened [[pos]] and [[msk]].
+This means we have [[t]] to worry about, too.
+
+At this point,
+after tokenizing strings,
+it will no longer be the case
+that we can think of each [[pos]] as pointing to a single character
+modulo whitespace.
+That makes this a good time to introduce the [[end]] field.
+To begin with,
+we will assume that all nodes point to a single character.
+
 <<Tokenize strings>>=
-end←1+pos ⋄ t[i←⍸2<⌿0⍪msk]←C ⋄ end[i]←end[⍸2>⌿msk⍪0]
-t pos end⌿⍨←⊂(t≠0)∨~msk
+end←1+pos
 @
+
+We now must consider how we want to handle a string's node type
+in [[t]].
+Thinking to what we want,
+eventually, we want all simple arrays to match in type.
+But at this moment,
+there is no real concept of the array as such,
+and there really will not be until we appropriately handle stranding.
+At that point,
+we can imagine a single array type with sub-kinds.
+At this point,
+we really have tokens and not any specific sub-typed AST structure.
+Thus, we want to avoid needing to introduce the [[k]] field
+for as long as possible within the parser.
+To do this, we will give tokens that are atomic,
+such as numbers, strings, and the [[syna]] class,
+their own node types until we have
+an appropriate conceptual representation
+for unifying them later on.
+In the case of strings,
+we will assign them type [[C]].
+
+We should take a moment to consider a few things:
+what node to convert to type [[C]],
+where to begin the string region for [[pos]],
+and where to end it with [[end]].
+I think it makes the most sense
+to include the opening and closing quote characters 
+in the range of the token,
+for at least two reasons.
+First, if we are using the [[pos]] and [[end]] data
+for something like syntax highlighting or text editing,
+it makes more sense for the whole unit to highlight;
+editing a string, say, to delete it, does not make much sense
+without the quotes, 
+especially if we want to think of this as a single atomic unit.
+Additionally, if [[IN[pos]]] for a string points to [[']]
+instead of an element inside of the string,
+we can know the token by its [[pos]] value as well as by its type [[t]].
+This can make our future calculations simpler.
+Finally, we can avoid the somewhat problematic case 
+of an empty string resulting in [[pos = end]].
+
+The starting point in this case is already pointing in the right spot
+if we choose to use the opening quote node as our new [[C]] node,
+meaning that we need only update [[t]] and [[end]] and not [[pos]],
+so we will use that node.
+Our flattened [[msk]] value defined above will put a [[1]]
+in the opening quote position,
+and a [[0]] in the closing quote position,
+and [[1]]'s in all the string content positions.
+This makes it easy to use the [[2<.⌿]] and [[2>⌿]] idioms
+to select the opening and closing quote positions.
+
+<<Tokenize strings>>=
+t[i←⍸2<⌿0⍪msk]←0
+end[i]←end[⍸2>⌿msk⍪0]
+@
+
+Once the [[end]] field is right,
+we no longer require the rest of the string nodes
+as elements in the forest,
+allowing us to remove them and free up space
+while hiding string data visibility,
+thus completing tokenization.
+We also no longer need the [[msk]] data,
+so we can let it go.
+
+<<Tokenize strings>>=
+t pos end⌿⍨←⊂(t≠0)∨~¯1⌽msk
+@
+
+And this is basically all that must be done to handle strings
+in the parser,
+assuming our array handling adequately unifies 
+all the atomic elements into the appropriate 
+simple and stranded array representations.
+However, our choice to make the [[pos]] and [[end]] fields
+contain the opening and closing quotes in a string
+means that we must process the [[n]] field of [[C]] nodes
+when it is created.
+
+<<Type-specific processing of the [[n]] field>>=
+n←⍎¨@{t=C}n
+@
+
+So much for parsing, and, indeed, compilation.
+Next, we must handle code generation.
+By the time we reach the code generator,
+the [[C]] nodes ought to have disappeared
+and all simple and strand arrays ought to belong to the same [[A]] type.
+Since the common array handling code is the same regardless
+of the element type,
+our only responsibility for our character element type
+is to create a [[wchar_t data[]]] value with the appropriate elements
+and to provide an appropriate [[array_type]].
+This is for the main code generation code,
+which must be ArrayFire agnostic,
+but we also must provide an appropriate equivalent [[af_dtype]] 
+for the array maker function to actually make a device array.
+
+For the main code generator,
+we assume the existence of a ``mae data'' helper function
+that receives the element data to generate as a vector
+and then matches against the appropriate case for generating the data.
+In that case, we can define the following character case
+to define [[data]] and [[type]].
+
+<<Element [[data]] and [[type]] generator cases>>=
+' '=⊃0⍴⍵:{
+	z←⊂'wchar_t data[] = L"',⍵,'";'
+	z,←⊂'enum array_type type = ARR_CHAR;'
+z}⍵
+@
+
+For code generation, that really is all we must do to handle strings.
+Now, we must also add support into the runtime.
+For characters, there is only a single array type 
+that we define, [[ARR_CHAR]], that we map 
+to the [[wchar_t]] C type.
+
+<<Array element types>>=
+, ARR_CHAR
+@ %def ARR_CHAR
+
+We must also handle this [[ARR_CHAR]] type when making an array.
+In this, things are not quite trivial.
+Since we are using the [[wchar_t]] type to represent characters,
+we are not guaranteed to have a specific character width.
+Since ArrayFire does not have an equivalent character type,
+we must instead select a suitable integral type
+of the same size as [[wchar_t]].
+We will use the unsigned variant.
+If we create a character array,
+then we must examine the size of [[wchar_t]]
+to choose an appropriate [[dtype]].
+We only cover the character widths that make sense for APL,
+and assume that any of the other character widths
+will not work and should be investigated.
+
+<<Cases for selecting device [[values]] dtype>>=
+case ARR_CHAR:
+	switch (sizeof(wchar_t)) {
+	case 2:
+		dtype = u16;
+		break;
+	case 4:
+		dtype = u32;
+		break;
+	default:
+		err = 99;
+		goto err_found;
+	}
+	break;
+@
+
+With the character type added to arrays
+and all the appropriate handling in place,
+there is nothing more to worry about with the runtime,
+and, indeed, nothing more to implement for character vector support.
+
+Note: all runtime primitives must make sure
+that they handle the character array type, though.
 
 \subsection{Numbers}
 
@@ -2324,7 +2560,9 @@ z}⍵
 
 <<C runtime enumerations>>=
 enum array_type {
-	ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CHAR, ARR_CMP,
+	ARR_SPAN
+	<<Array element types>>
+	ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMP,
 	ARR_MIXED, ARR_NESTED
 };
 
