@@ -2362,7 +2362,7 @@ This makes it easy to use the [[2<.⌿]] and [[2>⌿]] idioms
 to select the opening and closing quote positions.
 
 <<Tokenize strings>>=
-t[i←⍸2<⌿0⍪msk]←0
+t[i←⍸2<⌿0⍪msk]←C
 end[i]←end[⍸2>⌿msk⍪0]
 @
 
