@@ -806,6 +806,8 @@ pos←(⍳≢IN)⊆⍨~IN∊CR LF
 <<Define character classes>>
 <<Remove insignificant whitespace>>
 <<Verify that all open characters are valid>>
+
+x←IN[pos]
 <<Tokenize numbers>>
 <<Tokenize variables>>
 <<Tokenize primitives and atoms>>
@@ -1107,7 +1109,7 @@ z,←⊂'}'
 z,←⊂''
 @
 
-\subsection{Runtime}
+\subsection{APL Runtime Architecture}
 
 The runtime component of Co-dfns
 handles the code necessary for the output
@@ -1241,7 +1243,7 @@ on the more generic and fundamental elements
 of the kernels,
 such as general organization, interface, and memory management.
 
-\subsubsection{GPU C Runtime Kernel}
+\subsection{GPU C Runtime Kernel}
 
 The main concern of a C runtime is
 managing memory and adequately handling access to the DWA system.
@@ -1256,7 +1258,7 @@ especially if we only want the elements on the GPU.
 
 DWA has a specific array format,
 but we will delay specifying utility code
-for array handling until section \ref{sec:langfeatarrays}.
+for array handling until Section \ref{sec:langfeatarrays}.
 In this section, we handle the following issues:
 
 \begin{itemize}
@@ -1272,7 +1274,9 @@ behavior in this section, but for error signalling
 within functions, as well as arrays, module initialization
 function calls, and so forth, see the appropriate 
 sub-section of Language Features
-(section \ref{sec:langfeats}).
+(Section \ref{sec:langfeats}).
+
+\subsubsection{The C Header}
 
 The first order of business is the main structure
 of the C runtime files and API.
@@ -1341,6 +1345,8 @@ so we will use that for all platforms.
 	#define DECLSPEC __declspec(dllimport)
 #endif
 @ %def EXPORT EXPORTING DECLSPEC
+
+\subsubsection{Memory and Datatype Management}
 
 Our next major concern is handling memory and multiple data types.
 Since the compiler assumes a stack machine model,
@@ -1618,6 +1624,8 @@ The cell handling we put into a file on its own.
 echo "Tangling rtm/cell.c..."
 notangle -R'cell.c' codfns.nw > rtm/cell.c
 @
+
+\subsubsection{DWA Interface and Error Handling}
 
 Finally, we must handle the DWA connection
 between a Co-dfns compiled module and the interpreter.
@@ -2466,7 +2474,6 @@ that they handle the character array type, though.
 \subsection{Numbers}
 
 <<Tokenize numbers>>=
-x←' '@{t≠0}IN[pos] ⍝ The spaces produce nice invariants
 _←{dm[⍵]←∧⍀dm[⍵]}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
 dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
 dm∨←('¯'=x)∧1⌽dm
