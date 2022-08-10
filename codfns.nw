@@ -4776,13 +4776,11 @@ LX="⎕SE.UCMD'Link.Create # src -source=dir -watch=dir'"
 If you do not use the [[LOAD]] shortcut, you can use the above
 command to do the linking manually.
 
-\section{Index}
-
-\subsection{Chunks}
+\section{Chunks}
 
 \nowebchunks
 
-\subsection{Identifiers}
+\section{Index}
 
 \nowebindex
 
