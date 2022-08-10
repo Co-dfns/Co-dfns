@@ -1348,7 +1348,7 @@ so we will use that for all platforms.
 
 \subsubsection{Memory and Datatype Management}
 
-Our next major concern is handling memory and multiple data types.
+Next, we deal with handling memory and multiple data types.
 Since the compiler assumes a stack machine model,
 we have a unified stack that will contain many different objects,
 such as functions and arrays,
