@@ -1884,7 +1884,13 @@ with an eye to making it easy to add in the appropriate code
 in later sections.
 
 <<dwa.c>>=
-<<DWA includes>>
+#include <stddef.h>
+#include <stdint.h>
+#include <string.h>
+#include <arrayfire.h>
+
+#include "codfns.h"
+
 <<DWA macros>>
 <<DWA structures and enumerations>>
 <<DWA definitions>>
@@ -3030,16 +3036,6 @@ done:
 <<C runtime declarations>>=
 DECLSPEC int dwa2array(struct cell_array **, void *);
 DECLSPEC int array2dwa(void **, struct cell_array *, void *);
-@
-
-<<DWA includes>>=
-#include <complex.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <string.h>
-#include <arrayfire.h>
-
-#include "codfns.h"
 @
 
 <<DWA macros>>=
