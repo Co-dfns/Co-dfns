@@ -1,10 +1,10 @@
-#include <complex.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
 #include <arrayfire.h>
 
 #include "codfns.h"
+
 #if defined(_WIN32)
 #define dcomplex _Dcomplex
 #else

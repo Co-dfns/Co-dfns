@@ -15,8 +15,8 @@ enum cell_type {
 enum array_type {
         ARR_SPAN
         , ARR_CHAR
-        ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMP,
-        ARR_MIXED, ARR_NESTED
+        , ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMPX
+        , ARR_MIXED, ARR_NESTED
 };
 
 enum array_storage {
@@ -25,6 +25,10 @@ enum array_storage {
 struct cell_void {
         enum cell_type ctyp;
         unsigned int refc;
+};
+struct apl_cmpx {
+        double real;
+        double imag;
 };
 struct cell_array {
         enum cell_type ctyp;

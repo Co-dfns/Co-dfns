@@ -2478,27 +2478,921 @@ that they handle the character array type, though.
 
 \subsection{Numbers}
 
+Supporting numbers in the compiler
+is a little more complex
+than handling characters
+because there are many more numeric forms
+than there are character forms,
+but the main strategy remains the same:
+we must tokenize and parse them
+into [[N]] nodes,
+ideally ignore them in the compiler transformations,
+and then generate the appropriate data
+and add datatype support for them in the runtime.
+
+Our aim at the moment
+is to support the primary numeric types supported by Dyalog,
+as given in 
+Table \ref{table:numerictypes}.
+
+\begin{table}[htp]
+\centering
+\caption{Supported numeric datatypes and their equivalencies}
+\label{table:numerictypes}
+\begin{tabular}{rlll}
+\toprule
+APL & C & ArrayFire & Convert? \\
+\midrule
+[[11]] & [[char]] & [[b8]] & Yes \\
+[[83]] & [[int16_t]] & [[s16]] & Yes \\
+[[163]] & [[int16_t]] & [[s16]] & No \\
+[[323]] & [[int32_t]] & [[s32]] & No \\
+[[645]] & [[double]] & [[f64]] & No \\
+[[1289]] & [[struct apl_cmpx]] & [[c64]] & No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Notice that we do not support 128-bit decimal floats at the moment
+and that we treat type 83 like type 163 and type 11 as type 83
+when we represent these values on device or in the runtime.
+This is because ArrayFire does not have any internal support
+for bitvectors or signed 8-bit integers.
+This has some performance and space considerations for user code,
+but in my previous experience, 
+it is not even clear how much benefit we may get from using bitvectors
+on GPU acceleration devices.
+At any rate, the juice isn't worth the squeeze at this moment
+in terms of implementation complexity.
+
+APL also has a number of syntaxes for specifying numeric values.
+We want to support the syntaxes in Table \ref{table:numericsyntaxes}.
+
+\begin{table}[htp]
+\centering
+\caption{Numeric APL syntaxes and whether they are C compatible}
+\label{table:numericsyntaxes}
+\begin{tabular}{rll}
+\toprule
+Form & Type & C compatible? \\
+\midrule
+[[123]] & Integer & Yes \\
+[[¯123]] & Signed & No \\
+[[12.3]] & Floating & Yes \\
+[[¯12.3]] & Signed float & No \\
+[[NeN]] & Exponent & Yes \\
+[[NjN]] & Complex & No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+When handling numbers,
+we can imagine a future in which we support more types
+and more syntaxes than Dyalog APL may support,
+and in that case, 
+it is important that we do not depend
+on the numeric parser built into the interpreter.
+Even with the numeric types overlapping entirely, we must ensure
+that we do not somehow lose precision
+that we may want.
+the benefit of using the built-in interpreter at the time of parsing
+is that all the numbers come into a specific reified form
+rather than remaining in their textual form,
+so we can save a lot of effort simply by doing so,
+as long as we maintain precision.
+This also has the advantage of making 
+the runtime generation code simpler,
+since we do not need to support so many numeric forms.
+this has enough advantages to make it worth doing internally,
+but we must still tokenize the numbers ourselves
+and manage the code generation.
+
+The first step is tokenizing the numbers into atomic units.
+here, we must recognize the various numeric forms
+and distinguish numbers from digits used in names.
+By doing this before tokenizing things like variables,
+we can simplify the parsing of those other entities.
+
+When we begin to tokenize,
+[[x]] contains the relevant characters we need to examine.
+The first challenge is to identify the clusters of digits
+that will form the core units of our numeric forms.
+Vitally, we want to distinguish digits that contribute to a number
+from those that are part of some kind of name.
+In APL this is more subtle than you may think,
+because a name may have, 
+but not begin with,
+digits in it,
+which is typical,
+but a digit that is contiguous to a name and before it,
+such as [[5x5]] is \emph{not} an error!
+Rather, it is parsed the same as [[5 x5]],
+meaning a number followed by a name.
+This means we must eliminate digit clusters
+that are contiguous to alphabetic forms only on the right side.
+It gets a little more complex hwen we consider [[e]] and [[j]] forms.
+Our basic rule is that we have a precedence of 
+[[digits → . → ¯ → e → j]].
+Consider [[1e1e1]]. 
+Here, this should be parsed as [[1e1 e1]].
+This is because numeric forms are greedy (left associative)
+and you may only have a single [[e]] or [[j]] per unit at each level.
+This provides an order for handling the creation of [[dm]],
+which should be a mask for all number groups.
+We can begin by initializing [[dm]] to all the possible numeric digits.
+
 <<Tokenize numbers>>=
-_←{dm[⍵]←∧⍀dm[⍵]}¨(dm∨x∊alp)⊆⍳≢dm←x∊num
+dm←x∊num
+@ %def dm
+
+Our plan is to progressively expand [[dm]] to encompass
+all the elements of a valid numeric form while removing or eliminating
+any digits that belong to names.
+
+\begin{table}[htp]
+\centering
+\caption{Precedence of numeric syntax and parse order}
+\label{table:numericprecedence}
+\begin{tabular}{ccl}
+\toprule
+[[dm]] phase & Syntax & Notes \\
+\midrule
+0 & $[0-9]$ & Must appear at least once \\
+1 & [[.]] & Only one per phase 0 group \\
+2 & [[¯]] & Must prefix phase 1 groups, one only \\
+3 & [[e]] & Must connect two phase 2 groups \\
+4 & [[j]] & Must connect two phase 3 groups \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This progressive expansion serves to form a set
+of ``phases'' for parsing the numeric forms.
+The only syntax that must appear in a number are
+the numeric digits themselves; 
+all other forms are optional.
+If we proceed one phase at a time,
+we can check for errors in the simpler forms
+before adding more complexity.
+
+Since [[e]] and [[j]] are both valid variable name components,
+we have a potential conflict between numeric forms and names.
+APL resolves this by requiring the numeric [[e]] and [[j]] forms
+to have two numbers,
+one on each side, contiguous to it and only allowing one [[e]] or [[j]]
+per unit,
+though a single [[j]] unit may contain two [[e]] units.
+When combined with the greedy parsing rule for these forms,
+meaning the leftmost [[e]] or [[j]] is used
+for a number if more than one [[e]]/[[j]] appears contiguous
+to the same phase 2 number group.
+
+All of this means an interesting parsing dependency:
+there may be some sequences that look like numbers,
+but actually are part of a name,
+but we do not know this until we are able to identify
+what [[e]] and [[j]] characters are part of a number or not.
+Fortunately, this issue does not cause problems
+because we can tackle it in much the same way as we handled strings
+and comments.
+Once any character in a sequence of alphanumeric characters definitely 
+is a part of a name and not a number, all the subsequent characters
+in the sequence must be part of the same name and not a number.
+This is much like how a comment works.
+Thus, we can begin by identifying all potentially numeric [[e]] and [[j]]
+characters, 
+eliminate those that are not the first in their units,
+and finally mask off potential numbers that actually form 
+a part of a name.
+
+The first syntax we should add is the dot.
+This is a blessedly simple form 
+because there can be only a single occurrence, 
+it may appear anywhere contiguous to a digit,
+and if we find more than one, 
+we know that we can signal an error.
+We can only have these nice guarantees right now
+because we are not considering [[e]] or [[j]] at this point;
+we are only dealing with the smallest 
+and most tightly bound compound number,
+which is the floating-point value.
+
+We can add any dot we find if it is 
+on either side and contiguous to a digit,
+which is just [[dm]] at the moment.
+
+<<Tokenize numbers>>=
 dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm
-dm∨←('¯'=x)∧1⌽dm
-dm∨←(x∊'EeJj')∧(¯1⌽dm)∧1⌽dm
-∨⌿msk←(dm=0)∧x='¯':2'ORPHANED ¯'SIGNAL pos⌿⍨msk
-∨⌿{1<+⌿⍵='j'}¨dp←⎕C¨dm⊆x:'MULTIPLE J IN NUMBER'⎕SIGNAL 2
-∨⌿{1<+⌿⍵='e'}¨dp←⊃⍪/{⍵⊆⍨⍵≠'j'}¨dp:'MULTIPLE E IN NUMBER'⎕SIGNAL 2
-∨⌿'e'=⊃¨dp:'MISSING MANTISSA'⎕SIGNAL 2
-∨⌿'e'=⊃∘⌽¨dp:'MISSING EXPONENT'⎕SIGNAL 2
-mn ex←↓⍉↑{2↑(⍵⊆⍨⍵≠'e'),⊂''}¨dp
-∨⌿{1<+⌿'.'=⍵}¨mn,ex:'MULTIPLE . IN NUMBER'⎕SIGNAL 2
-∨⌿'.'∊¨ex:'REAL NUMBER IN EXPONENT'⎕SIGNAL 2
-∨⌿{∨⌿1↓⍵∊'¯'}¨mn,ex:'MISPLACED ¯'⎕SIGNAL 2
-t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 @
 
-<<Node $\longleftrightarrow$ Generator mapping>>=
-gck,←⊂N 1
-gcv,←⊂'Na'
+Now [[dm]] contains the digits and any contiguous dots.
+Before proceeding, we should verify
+that we do not have multiple dots in a single group.
+
+<<Tokenize numbers>>=
+∨⌿msk←1<+⌿¨dm⊆'.'=x:{
+	EM←'MULTIPLE . IN FLOAT'
+	2 EM SIGNAL ∊msk/dm⊆pos
+}⍬
 @
+
+Now we can add the high minuses.
+We can only have a single high minus in a numeric group.
+Thankfully, this also means that we do not permit 
+something like [[¯1¯2]],
+as that would greatly complicate things.
+When checking for well formed syntax,
+we must check for duplicates/multiples in the same way as for dots,
+but we must also handle orphaned high minuses,
+since nay high minus that does not attach to a [[dm]] group
+must be a syntax error.
+
+<<Tokenize numbers>>=
+dm∨←('¯'=x)∧1⌽dm
+∨⌿msk←1<+⌿¨dm⊆'¯'=x:{
+	EM←'MULTIPLE ¯ IN NUMBER'
+	2 EM SIGNAL ∊msk⌿dm⊆pos
+}⍬
+∨⌿msk←('¯'=x)∧~dm:{
+	EM←'ORPHANED ¯'
+	2 EM SIGNAL msk⌿pos
+}⍬
+@
+
+So much for the simple phases.
+Now we must handle the more complex compound cases for [[e]] and [[j]].
+It is at this point that the wheels come off a little bit.
+The tokenizer in the Dyalog interpreter does very little lookahead.
+As a result, there were some interesting design decisions made
+to support dot and [[e]]/[[j]] since these are overloaded forms.
+We have already embraced the idea 
+that multiple dots near digits should be treated as an error.
+However, with [[e]], since the exponent to [[e]] must be an integer
+and not a float,
+we have the strange result, in the interpreter, 
+that [[1e0.5j3]] and [[1e.5j3]] parse differently.
+In the first case, [[0.5]] binds to the [[e]]
+and results in a syntax error,
+but the second case parses without error as [[1 e 0.5j3]]!
+This is because, at the time of seeing the dot,
+the tokenizer recognizes that the [[e.]] combination
+can never lead to a valid parse for [[e]] as a number,
+and so it decides that [[e]] must be part of a name instead,
+and parsing then continues with recognizing the complex [[0.5j3]].
+
+This is madness.
+
+I cannot in good conscience replicate this behavior into Co-dfns.
+Thus, I intend to deviate from this behavior,
+and so I will spend sometime justifying my decision for posterity.
+
+The primary problem is that the behavior breaks cognitive predictability,
+which can be seen by how such behavior violates 
+our parsing precedence tower
+(see Table \ref{table:numericprecedence}).
+This makes the parsing code more idiosyncratic,
+mushes all the numeric forms into a much less crisp tower,
+and, perhaps worst of all, reduces or eliminates any human model
+of parsing based on a more chunked or abstract form,
+forcing the human mind to parse at a character-by-character
+operational level,
+which is most certainly \emph{not} what APL is about.
+
+The root of all of this is that Dyalog APL thinks of [[0.5]]
+as a character stream and not as a number.
+Instead, by the time we think about [[e]], 
+we should no longer worry 
+about whether a dot is part of a number or not.
+Given [[e.5]], there is no possible context in which
+we may want [[0.5]] to be anything but a number.
+This is how most people will parse this,
+and they ought to be able to do so.
+Now, given this, I should not expect [[0.5]] to parse differently
+than [[.5]] in my code.
+Anywhere, this should be a number, 
+because the dot binds strongly to numbers.
+Anywhere that this model breaks ought to result in a syntax error
+as an ambiguous piece of code.
+Look at the following scary examples from the interpreter:
+
+\begin{verbatim}
+1e0.5j3 → SYNTAX ERROR
+ e0.5   → e0 0.5
+1e.5j3  → 1 e 0.5j3
+\end{verbatim}
+
+\noindent
+Oh, the horror!
+In my opinion, I have two choices.
+I can take the attitude of attempting to parse these
+any way that I can,
+or, I can introduce a syntax error for all the cases
+that do not make sense to me.
+Given that I want to make the compiler produce more helpful errors
+and be a more congruent and consistent system,
+I am of a mind to treat these as syntax errors.
+In the future, I can imagine supporting floating exponents,
+and that would permit the [[1e0.5]] and [[1e.5]] cases.
+The [[e0.5]] case strikes me as something
+that should always be an error.
+The principle in play here is that [[D.D]] should always parse
+as a number.
+The other stuff comes out of this.
+
+How does this affect our handling of [[e]] and [[j]]?
+The first impact is one of simplification; 
+any time we encounter [[e]] or [[j]] contiguous
+with a set of decimal numbers,
+we can confidently parse this as an exponent or complex form.
+This also has the effect of committing at this point
+to the decimal forms we already see in [[dm]].
+That is, if they have a dot in them,
+we know that they must be a number or a syntax error.
+This makes the reasoning a little simpler,
+but it adds an additional syntax error case
+that we must handle.
+We must check and handle the case 
+where a float appears as an exponent
+and also where a name is contiguous to a number.
+
+Handling these requires
+that we know what [[e]] and [[j]] characters
+map to numeric forms and which do not.
+There remains a question of whether we should handle
+the contiguous name error now or later.
+We can first note that the name error 
+must come from any name contiguous with a number
+and not just [[e]] or [[j]].
+We can also make the observation that the name error
+remains valid even after we theoretically parse [[e]] and [[j]] forms.
+As long as a float is somewhere in a numeric form,
+we have this error possibility.
+The challenge is when we should error on a float exponent 
+vs. an ambiguous name/number situation.
+Given that we must do most of the work to parse 
+[[e]] and [[j]] anyways to handle the name error,
+it makes sense to put it after
+we have mostly parsed those,
+but by that time, we also could error on a float exponent.
+
+I think it would be confusing
+to start a complaint about the contents of a number
+before confirming all number parses are unambiguous.
+Moreover, at least in theory,
+all the numbers are just potential numbers
+until we mask out the numbers
+that are really a part of names.
+So verifying the forms of [[e]] should occur much later.
+Before that, we must complete the rest of the numeric parsing.
+
+Handling [[e]] and [[j]] is the same basic thing.
+We must find and mark potential [[e]]'s and [[j]]'s.
+We must make sure that each [[dm]] group matches 
+against only a single [[e]] or [[j]].
+So, a string of [[e]]'s such as [[1e1e1]] is the same
+as [[1e1 e1]].
+We must do the [[e]]'s separate from and before the [[j]]'s
+are handled.
+This allows us to maintain the invariant
+that a [[dm]] group will only contain a single [[e]]
+at the time we handle [[e]].
+After dealing with [[j]], 
+a [[dm]] group may contain more than one [[e]].
+
+While we must make [[j]] and [[e]] separately,
+we can mask off names as a unit later.
+This is safe to do because both [[e]] and [[j]] forms 
+have numbery things on either side.
+This means that any potential [[j]] we find
+and mark will still be eliminated
+by the later masking,
+so there is no need to attempt to eliminate 
+such false positives earlier on right after marking the [[e]]'s.
+Likewise, we will not miss any [[j]] forms for the same reason.
+By delaying the masking,
+we make it more convenient to handle
+and we can separate our concerns about masking and error handling
+from concerns about handling [[e]] and [[j]].
+All we need concern ourselves with at this point
+is identifying [[e]] forms that would be [[e]] forms unless
+they are part of a name.
+
+The approach is to check for an [[e]] contiguous to
+two [[dm]] groups.
+After this, we must eliminate as candidates
+all but the first [[e]] in any one [[dm]] group.
+
+<<Tokenize numbers>>=
+dm∨←(msk←x∊'Ee')∧(¯1⌽dm)∧1⌽dm
+dm←dm⍀∊{1@(⊃⍸⍵)~⍵}¨dm⊆msk
+@
+
+And we must do the same basic thing to handle the [[j]] forms.
+
+<<Tokenize numbers>>=
+dm∨←(msk←x∊'Jj')∧(¯1⌽dm)∧1⌽dm
+dm←dm⍀∊{1@(⊃⍸⍵)~⍵}¨dm⊆msk
+@
+
+Since we have done the above in meticulous order
+and captured only the [[e]] and [[j]] forms
+that make syntactic sense,
+there are no syntax errors to signal at this point.
+Furthermore,
+[[dm]] now contains the potential numbers
+of our source,
+and all that remains is to figure out 
+which ones are names instead of numbers.
+
+The main syntax error we want to address 
+at this point is the ambiguous parsing 
+that we may get because of a dot.
+If we have a mask of names, it is not hard
+to identify these points;
+they are dots adjacent to a name on the left
+that ends in a digit where there is a digit
+on the right of the dot.
+We do want to figure out how to
+return a meaningful error message,
+and that is more difficult.
+Just highlighting the dot might be enough,
+but we should consider the impact of highlighting other stuff
+around the dot.
+We could highlight the number around the dot
+or even include the name in full as well.
+What will give the most clarity to the end user?
+I think we want to highlight the number,
+since that is the main contention.
+Thus, when we handle masking off names,
+we must ensure that we are not removing 
+the numeric information that we may want.
+
+We have another consideration when 
+we handle the masking off of names.
+A high minus is a legtimate terminator of a name,
+but a dot, as we have seen above, may not be.
+The dot may legitamitely represent a reference to Inner Product,
+or be ambiguous, or be numeric,
+as we are masking off names.
+After masking names, we can tell the class
+of the dots by examining what is on their left and right,
+as seen in Table \ref{table:parsenumericdot}.
+All of this gives us a suitable strategy 
+for handling the final cleanup of [[dm]].
+After masking off the names we can fix up dots
+in [[dm]] and handle ambiguous numeric errors.
+
+\begin{table}
+\centering
+\caption{Parsing cases for dot;
+[[V]] = name, [[N]] = number, [[D]] = digit}
+\label{table:parsenumericdot}
+\begin{tabular}{ll}
+\toprule
+Pattern & Class \\
+\midrule
+[[V.V]] & Inner Product \\
+[[V.N]] & Numeric \\
+[[VD.N]] & Ambiguous \\
+[[N.V]] & Numeric \\
+[[N.N]] & Numeric \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+To mask off the names,
+we must simply recognize what units of digits
+are right of a contiguous unit of alphabetics.
+These are digits that must belong to names.
+We must be sure when we do this
+that we are not breaking [[dm]] units somehow
+and failing to recognize syntax errors.
+If there are only digits,
+then dropping some units will cause no other change,
+but what about dropping in a group with non-digits?
+In the case of dots,
+we already know that we will need to fix these up.
+For a high minus, it will always appear at the beginning
+of any digit unit,
+and so you cannot mask off such a unit,
+and any units masked off past it are fine.
+For [[e]] and [[j]], the masking off of such units
+can only mean that they are not numeric.
+Thus, we can be reasonably sure that this approach 
+cannot mask off digits that it should not.
+It \emph{will} mask off all the digits that should be masked off.
+
+<<Tokenize numbers>>=
+(msk⌿dm)←∊∧⍀¨(msk←x∊alp,num)⊆dm
+@
+
+We can handle the ambiguous errors and the dot cleanup in any order,
+but the handling of the dots first will make it more convenient
+to identify ambiguous cases.
+The dots that are still in [[dm]] but that are isolated and alone
+are not numeric,
+so we should remove them.
+
+<<Tokenize numbers>>=
+dm[⍸dm∧(x='.')∧~(¯1⌽dm)∨1⌽dm]←0
+@
+
+And with that we are free to handle the ambiguous parsing errors,
+which is anywhere a numeric dot is contiguous with a non-numeric digit
+on its left.
+
+<<Tokenize numbers>>=
+∨⌿msk←∨⌿¨dm⊆dm∧(x='.')∧¯1⌽(~dm)∧x∊num:{
+	EM←'AMBIGUOUS PLACEMENT OF NUMERIC FORM'
+	2 EM SIGNAL ∊msk⌿dm⊆pos
+}⍬
+@
+
+With all that handled,
+the [[dm]] mask now contains a full and accurate set of numeric forms
+in the source.
+At this point we have not checked our numbers
+to ensure that they are actually representable in our runtime,
+but we do not care about that during tokenization.
+The numbers at this point are at least theoretically representable
+in some theoretical system.
+
+We will make one concession in this case,
+which is to check to ensure our exponents are integers and not floats.
+This is a simple check that we can make right now
+and is different than the limits on range and representation.
+We mostly just need to examine all the exponent parts of our numbers
+and check for a decimal point.
+This requires that we break apart the numeric parts
+that we want from the groups in [[dm]].
+However, when doing so, we want to keep a good link back
+to the source so that we can highlight the errors that we want.
+In this case, any floating exponents are an error in some real part
+of the code,
+so we will want to highlight the whole real part when we find an error.
+The easy way to do this is to have a mask [[rm]] of the real parts.
+
+<<Tokenize numbers>>=
+∨⌿msk←∨⌿¨'.'={1⊃(⍵⊆⍨~⍵∊'Ee'),⊂''}¨x⊆⍨rm←dm∧~x∊'Jj':{
+	EM←'NON-INTEGER EXPONENT'
+	2 EM SIGNAL ∊msk⌿rm⊆pos
+}⍬
+@
+
+That is all that we want to do at this point in tokenization.
+We are now free to use [[dm]] to handle the final tokenization
+of these values.
+Unlike with comments and strings,
+there is not as much value to removing dead nodes at this point
+since we still have a number of other items to tokenize
+that we may want to deal with using [[dm]],
+and since most numbers are quite small and we are unlikely 
+to gain much advantage by the reduction at the moment.
+Instead, we merely need to update [[t]] and [[end]] 
+for the starting node in each [[dm]] group as appropriate,
+with [[pos]] of course already pointing at the correct position.
+For the [[end]] field we want to use the [[end]] value 
+from the last character in the [[dm]] group. 
+We will use type [[N]] for the type of a number token.
+
+<<Tokenize numbers>>=
+t[i←⍸2<⌿0⍪dm]←N
+end[i]←end⌿⍨2>⌿dm⍪0
+@
+
+Now that the numeric tokens are there,
+what else remains with the parser?
+Eventually, we want these [[N]] nodes removed 
+into their own [[A]] nodes,
+but we will handle that in our handling of arrays.
+Right now, the [[N]] nodes are not processed,
+meaning that their [[n]] field will contain strings
+instead of real numeric values.
+There is an argument to be made that we should keep them
+in character form
+because this will allow us to use more numeric forms
+that may not be supported by Dyalog APL.
+That would shunt off handling of the numeric values to the runtime.
+Such a decision would be short-sighted:
+if we have a self-hosting compiler,
+this will not matter,
+and not evaluating the numeric values in the parser
+would inhibit many potential compilation passes
+that we may want to add.
+
+This means that we must evaluate the [[n]] field of the [[N]] nodes
+into real numeric values.
+To do this, we could attempt to do all of the parsing ourselves,
+but handling that is a remarkably subtle endeavour
+with many pitfalls.
+Instead, we will rely on the [[⎕VFI]] system function
+to do this work for us.
+We will signal a syntax error if we are unable to parse 
+one of the [[n]] fields.
+
+<<Type-specific processing of the [[n]] field>>=
+msk vals←⎕VFI ⍕n⍕(t=N)⌿n
+~∧⌿msk:{
+	EM←'CANNOT REPRESENT NUMBER'
+	2 EM SIGNAL ∊((t=N)⍀~msk)⌿pos+⍳¨end-pos
+}⍬
+n[⍸t=N]←vals
+@
+
+After this, by the end of the parser, 
+the [[N]] nodes should have been converted/merged into [[A]] nodes,
+so there is nothing else I can think of to handle numeric values
+in the parser.
+
+What about in the compiler transformations? 
+As with character vectors,
+we should not need to deal with them at all.
+
+This takes us to the code generator.
+We are in a similar position for code generation
+as we are with character vectors,
+in that we can assume that by the time we are at the code generator,
+we have a simple [[A]] type that we expect 
+to encapsulate most of the generic array generation code.
+Here, it is our responsibility to generate a [[data[]]] array
+with appropriate elements and type,
+and to connect that with the appropriate [[enum array_type]].
+
+Unlike the character element type,
+we have more than one numeric type that we must handle,
+and each one may require a little bit different handling,
+but especially types such as complex numbers.
+To make this more concrete,
+Table \ref{table:numerictypes} shows the Dyalog numeric type
+and the associated C type and [[enum array_type]] 
+that we will use.
+We also indicate the underlying ArrayFire element type.
+Notice that some types will have some conversion,
+while others will not.
+
+We must make a generator case for each numeric type 
+to encode that data.
+For the real numbers, 
+we do not need to do any processing of the data
+because the numbers will be cast automatically and correctly
+in their formatted form directly from APL.
+
+<<Element [[data]] and [[type]] generator cases>>=
+5=i←11 83 163 323 645⍳⎕DR ⍵:{
+	⎕PP←17
+	ct←i⊃(⊂'char'),(2⍴⊂'int16_t'),'int32_t' 'double'
+	at←i⊃'BOOL' 'SINT' 'SINT' 'INT' 'DBL'
+	z←⊂ct,' data[] = {',(⊃{⍺,',',⍵}⌿⍕¨⍵),'};'
+	z,←⊂'enum array_type type = ARR_',at,';'
+z}⍵
+@
+
+The ``ugly duckling'' in the room is the complex number.
+This is because platform support for complex numbers
+varies in how it is handled.
+The main culprit is Microsoft Visual Studio.%
+\footnote{\raggedright
+  \url{docs.microsoft.com/en-us/cpp/c-runtime-library/complex-math-support}}
+Because MSVC uses structs to represent complex numbers 
+instead of the C99 style built-ins,
+Dyalog APL uses a struct-based model
+that matches the MSVC model,
+rather than the C99 [[double complex]] form.%
+\footnote{Actually, I am rather okay with this,
+being something of a C89 traditionalist in aesthetic anyways.}
+We will follow this model and define our own complex number struct.
+
+<<C runtime structures>>=
+struct apl_cmpx {
+	double real;
+	double imag;
+};
+@ %def apl_cmpx
+
+This matches the format used by Dyalog's interpreter,
+allowing us to pull data straight out of a DWA array.
+We are also fortunate in that ArrayFire also
+makes use of the struct-based approach,
+allowing us to do simple initialization without any data conversion.
+This means that we can define [[data[]]] fairly normally
+except that we must initialize it
+as a struct and not as single values.
+
+<<Element [[data]] and [[type]] generator cases>>=
+1289=⎕DR ⍵:{
+	⎕PP←17
+	mk_struct←{'{',(9○⍵),',',(11○⍵),'}'}
+	comma←{⍺,',',⍵}
+	vals←⊃comma⌿mk_struct¨⍵
+	z←⊂'struct apl_cmpx data[] = {',vals,'};'
+	z,←⊂'enum array_type type = ARR_CMPX;'
+z}⍬
+@
+
+The above ensures that the array code generator
+will have the appropriate data to work with.
+All that remains is to add support for numeric types
+into the runtime.
+
+To support numbers in the runtime we must address the following:
+
+\begin{itemize}
+\item Add appropriate [[enum array_type]] values
+\item Map [[enum array_type]] values to ArrayFire representations
+\item Add support for numeric conversion to/from DWA to ArrayFire
+\end{itemize}
+
+We defined the following array types for numerics:
+
+<<Array element types>>=
+, ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMPX
+@ %def ARR_BOOL ARR_SINT ARR_INT ARR_DBL ARR_CMPX
+
+\noindent
+Each of these element types corresponds 
+to the specific ArrayFire type indicated in 
+Table \ref{table:numerictypes}.
+
+<<Cases for selecting device [[values]] dtype>>=
+case ARR_BOOL:
+	dtype = b8;
+	break;
+case ARR_SINT:
+	dtype = s16;
+	break;
+case ARR_INT:
+	dtype = s32;
+	break;
+case ARR_DBL:
+	dtype = f64;
+	break;
+case ARR_CMPX:
+	dtype = c64;
+	break;
+@
+
+When we handle DWA array inputs that come from the interpreter,
+we want to handle the input data
+and possibly pre-process the data
+if we need to.
+We assume that [[data]] is a pointer to the DWA numeric data buffer
+and that [[count]] contains the element count of [[data]].
+We must do any processing to the DWA data
+in the cases where the representation in the DWA buffer
+does not match the runtime representation.
+We assume that we are casing over the DWA element types
+of the [[data]] buffer.
+
+The DWA element type consists of both simple and compound numeric types,
+some of which overlap with the [[enum array_type]] values.
+
+<<Simple DWA numeric element types>>=
+, DWA_BOOL, DWA_TINT, DWA_SINT, DWA_INT, DWA_DBL
+@ %def DWA_BOOL DWA_TINT DWA_SINT DWA_INT DWA_DBL
+
+<<Compound DWA numeric element types>>=
+, DWA_CMPX, DWA_R, DWA_F, DWA_Q
+@ %def DWA_CMPX DWA_R DWA_F DWA_Q
+
+In most cases, there is no pre-processing necessary,
+since the representation matches.
+However, in the cases of Boolean arrays and tiny integers,
+this is not the case.
+
+With a Boolean array, 
+the DWA representation uses a bitvector encoding 
+in which the first element in a byte is the most significant,
+which I am calling big endian.
+We must convert this to the [[b8]] format used
+in ArrayFire,
+which is simply using a single byte per Boolean.
+
+<<Cases for pre-processing DWA [[data]] buffer>>=
+case DWA_BOOL:{
+	char *buf = calloc(count, sizeof(char));
+
+	if (buf == NULL) {
+		err = 1;
+		break;
+	}
+
+	for (size_t i = 0; i < count; i++) {
+		char off = 7 - (i % 8);
+		uint8_t bytes = data;
+		buf[i] = 1 & (bytes[i / 8] >> off);
+	}
+
+	data = buf;
+	break;
+}
+@
+
+In the [[DWA_TINT]] case,
+we do not have an 8-bit signed integer representation 
+that we can use because of a limitation in the underlying ArrayFire
+implementation.
+Instead, we must convert these values to 16-bit values.
+
+<<Cases for pre-processing DWA [[data]] buffer>>=
+case DWA_TINT:{
+	int16_t *buf = calloc(count, sizeof(int16_t));
+
+	if (buf == NULL) {
+		err = 1;
+		break;
+	}
+
+	for (size_t i = 0; i < count; i++)
+		buf[i] = ((int8_t *)data)[i];
+
+	data = buf;
+	break;
+}
+@
+
+Since we have allocated new memory for these data types,
+we must also remember to clean them up at the end,
+which we handle with these cleanup cases.
+
+<<Cases for cleaning up the DWA [[data]] buffer>>=
+case DWA_BOOL:
+case DWA_TINT:
+	free(data);
+	break;
+@
+
+We must also handle getting the right array type
+for a given DWA element types. 
+We assume that when converting from a DWA value
+to a runtime array
+that we will want to calculate a [[type]] value
+from each DWA element type.
+
+<<Cases for selecting [[type]] based on DWA type>>=
+case DWA_BOOL:
+	type = ARR_BOOL;
+	break;
+case DWA_TINT:
+case DWA_SINT:
+	type = ARR_SINT;
+	break;
+case DWA_INT:
+	type = ARR_INT;
+	break;
+case DWA_DBL:
+	type = ARR_DBL;
+	break;
+case DWA_CMPX:
+	type = ARR_CMPX;
+	break;
+@
+
+The previous cases will now allow us to go 
+from a DWA value to a runtime value,
+but we must also go in the other direction.
+We must be able to take a runtime buffer and convert it
+into a DWA value.
+Fortunately, going in the opposite direction is much easier,
+because the runtime numeric types all have a bit-compatible
+analogue in the DWA numeric element types.
+This means that we can do a straight bulk copy
+into the DWA buffer assuming
+that we know the correct DWA type
+for each [[enum array_type]] without any pre-processing.
+We will assume a [[switch]] statement over the runtime array type
+wherein we set [[type]] to the appropriate dwa type.
+
+<<Cases for selecting [[type]] based on array type>>=
+case ARR_BOOL:
+	type = DWA_TINT;
+	break;
+case ARR_SINT:
+	type = DWA_SINT;
+	break;
+case ARR_INT:
+	type = DWA_INT;
+	break;
+case ARR_DBL:
+	type = DWA_DBL;
+	break;
+case ARR_CMPX:
+	type = DWA_CMPX;
+	break;
+@
+
+With the above in place, 
+we now can handle data buffers in literal and DWA form 
+and we can correctly store numeric data
+as the correct ArrayFire type.
+
+Obviously, this is not a complete handling of array values.
+All we have done here is manage the numeric logic.
+The logic for array handling that is common among all elements
+and units,
+such as strings and variables,
+will be discussed in a separate section.
+For now, this completes the handling of numeric values
+across the parser, compiler, code generator, and runtime.
 
 \subsection{Variables}
 
@@ -2574,8 +3468,7 @@ z}⍵
 enum array_type {
 	ARR_SPAN
 	<<Array element types>>
-	ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMP,
-	ARR_MIXED, ARR_NESTED
+	, ARR_MIXED, ARR_NESTED
 };
 
 enum array_storage {
