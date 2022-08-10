@@ -2288,9 +2288,8 @@ We should report all unbalanced string ranges that we find.
 
 <<Check for unbalanced strings>>=
 0≠≢lin←⍸⊃∘⌽¨msk:{
-	EM←'SYNTAX ERROR: UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
-	EM,←quotelines ∊(msk⌿¨pos)[lin]
-	EM ⎕SIGNAL 2
+	EM←'UNBALANCED STRING',('S'⌿⍨2≤≢lin),CR
+	2 EM SIGNAL ∊(msk⌿¨pos)[lin]
 }⍬
 @
 
