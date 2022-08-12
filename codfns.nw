@@ -2403,80 +2403,164 @@ Next, we must handle code generation.
 By the time we reach the code generator,
 the [[C]] nodes ought to have disappeared
 and all simple and strand arrays ought to belong to the same [[A]] type.
-Since the common array handling code is the same regardless
-of the element type,
-our only responsibility for our character element type
-is to create a [[wchar_t data[]]] value with the appropriate elements
-and to provide an appropriate [[array_type]].
-This is for the main code generation code,
-which must be ArrayFire agnostic,
-but we also must provide an appropriate equivalent [[af_dtype]] 
-for the array maker function to actually make a device array.
+Since array handling code is mostly common 
+across all element types,
+we handle those elements in Section \ref{sec:langfeatarrays} on arrays;
+our only responsibility in this section is the unique processing
+necessary to deal with the character element type(s).
+For the generator, we must be able to map literal character arrays
+to a [[data[]]] array with an appropriate C data type.
+We must also map this to an appropriate [[enum array_type]].
+This assumes that we will use this logic in some kind
+of ``make data'' helper that receives element data
+as a vector and generates the appropriate code.
 
-For the main code generator,
-we assume the existence of a ``mae data'' helper function
-that receives the element data to generate as a vector
-and then matches against the appropriate case for generating the data.
-In that case, we can define the following character case
-to define [[data]] and [[type]].
+Handling text in the compiler is an interesting problem
+because almost all Unicode-based text encodings 
+have some sort of variable length aspect to them.
+In most languages that is fine,
+but for APL,
+which has random access indexing built in to its overall paradigm,
+the lack of random access-ness in these encodings 
+is not really acceptable.
+That means we might want to take the UTF-32 model,
+but for most of the common cases, 
+that is massively inefficient just to be able to handle the edges.
+Instead, we will adopt the same scheme that the Dyalog interpreter uses,
+which will have the added benefit of buffer compatibility 
+between the two representations.
+
+The Dyalog interpreter preserves arbitrary indexing
+at the cost of needing 3 data types for characters.
+Table \ref{table:charactertypes} shows the APL types mapped
+to the C type we will use in the runtime.
+Rather than store textual data in one of the UTF encodings,
+this representationstores literal code points from Unicode,
+and it uses the smallest byte size that it can 
+to store all code points in a buffer with the same element size.
+That is, if all the points in an array are 
+in the range [[[0,2*8)]], 
+then we only need to use the 8-bit datatype, and so on.
+
+\begin{table}
+\centering
+\caption{Type associations between APL, C, ArrayFire, and Co-dfns}
+\label{table:charactertypes}
+\begin{tabular}{rlll}
+\toprule
+APL & C & ArrayFire & Co-dfns \\
+\midrule
+[[80]] & [[uint8_t]] & [[u8]] & [[ARR_CHAR8]] \\
+[[160]] & [[uint16_t]] & [[u16]] & [[ARR_CHAR16]] \\
+[[320]] & [[uint32_t]] & [[u32]] & [[ARR_CHAR32]] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We also make a note here that there is another datatype
+in the interpreter used to handle Classic character array types,
+but we are explicitly not going to support 
+any Classic edition features or data types.
+To do the mapping, we will use [[⎕DR]] for testing the data type,
+but [[⎕UCS]] in its monadic form to get the code points.
 
 <<Element [[data]] and [[type]] generator cases>>=
-' '=⊃0⍴⍵:{
-	z←⊂'wchar_t data[] = L"',⍵,'";'
-	z,←⊂'enum array_type type = ARR_CHAR;'
+3>i←80 160 320⍳⎕DR ⍵:{
+	bits←⍕i⊃8 16 32
+	points←⊃{⍺,',',⍵}⌿⍕¨⎕UCS ⍵
+	z←⊂'uint',bits,'_t data[] = {',points,'};'
+	z,←⊂'enum array_type type = ARR_CHAR',bits,';'
 z}⍵
 @
 
-For code generation, that really is all we must do to handle strings.
-Now, we must also add support into the runtime.
-For characters, there is only a single array type 
-that we define, [[ARR_CHAR]], that we map 
-to the [[wchar_t]] C type.
+This ensures that the code generator can produce character data,
+but we must also add support for characters 
+into the runtime proper.
+This means:
+
+\begin{itemize}
+\item Defining appropriate [[enum array_type]] values
+\item Mapping these values to the corresponding ArrayFire types
+\item Supporting conversion to/from DWA arrays
+\end{itemize}
+
+\noindent
+We used the following array types.
 
 <<Array element types>>=
-, ARR_CHAR
-@ %def ARR_CHAR
+, ARR_CHAR8, ARR_CHAR16, ARR_CHAR32
+@ %def ARR_CHAR8 ARR_CHAR16 ARR_CHAR32
 
-We must also handle this [[ARR_CHAR]] type when making an array.
-In this, things are not quite trivial.
-Since we are using the [[wchar_t]] type to represent characters,
-we are not guaranteed to have a specific character width.
-Since ArrayFire does not have an equivalent character type,
-we must instead select a suitable integral type
-of the same size as [[wchar_t]].
-We will use the unsigned variant.
-If we create a character array,
-then we must examine the size of [[wchar_t]]
-to choose an appropriate [[dtype]].
-We only cover the character widths that make sense for APL,
-and assume that any of the other character widths
-will not work and should be investigated.
+These array types must also map to ArrayFire types
+so that we can allocate them appropriate on the GPU.
+ArrayFire does not have any notion of character types,
+so we will use their unsigned types as a useful alternative.
 
 <<Cases for selecting device [[values]] dtype>>=
-case ARR_CHAR:
-	switch (sizeof(wchar_t)) {
-	case 2:
-		dtype = u16;
-		break;
-	case 4:
-		dtype = u32;
-		break;
-	default:
-		err = 99;
-		goto err_found;
-	}
+case ARR_CHAR8:
+	dtype = u8;
+	break;
+case ARR_CHAR16:
+	dtype = u16;
+	break;
+case ARR_CHAR32:
+	dtype = u32;
 	break;
 @
 
-With the character type added to arrays
-and all the appropriate handling in place,
-there is nothing more to worry about with the runtime,
-and, indeed, nothing more to implement for character vector support.
+In addition to getting data into an ArrayFire array,
+we must also be able to get data in and out of DWA arrays.
+Fortunately, this is fairly easy at this level
+because our element types are all the same size
+as the Dyalog interpreter's element types.
+This means that we do not need to do any pre- or post-processing
+of the incoming our outgoing data before we simply copy it over.
+And htat means the only thing we need to do is to map
+between DWA character types and Co-dfns character types.
 
-Note: all runtime primitives must make sure
-that they handle the character array type, though.
+Dyalog has these DWA character types:
+
+<<DWA character types>>=
+, DWA_CHAR8, DWA_CHAR16, DWA_CHAR32
+@ %def DWA_CHAR8 DWA_CHAR16 DWA_CHAR32
+
+All that remains to to map these to and from Co-dfns types.
+
+<<Cases for selecting [[type]] based on DWA type>>=
+case DWA_CHAR8:
+	type = ARR_CHAR8;
+	break;
+case DWA_CHAR16:
+	type = ARR_CHAR16;
+	break;
+case DWA_CHAR32:
+	type = ARR_CHAR32;
+	break;
+@
+
+<<Cases for selecting [[type]] based on array type>>=
+case ARR_CHAR8:
+	type = DWA_CHAR8;
+	break;
+case ARR_CHAR16:
+	type = DWA_CHAR16;
+	break;
+case ARR_CHAR32:
+	type = DWA_CHAR32;
+	break;
+@
+
+And this concludes all the handling necessary 
+to put characters into the system.
+It only deals with characters, 
+and you need to read Section \ref{sec:langfeatarrays} to see
+how it all fits together.
+You can also see the numeric handling 
+in Section \ref{subsec:numbers} for a treatment
+of element types that are not as simple and straightforward.
 
 \subsection{Numbers}
+\label{subsec:numbers}
 
 Supporting numbers in the compiler
 is a little more complex
@@ -2499,16 +2583,16 @@ Table \ref{table:numerictypes}.
 \centering
 \caption{Supported numeric datatypes and their equivalencies}
 \label{table:numerictypes}
-\begin{tabular}{rlll}
+\begin{tabular}{rllll}
 \toprule
-APL & C & ArrayFire & Convert? \\
+APL & Co-dfns & C & ArrayFire & Convert? \\
 \midrule
-[[11]] & [[char]] & [[b8]] & Yes \\
-[[83]] & [[int16_t]] & [[s16]] & Yes \\
-[[163]] & [[int16_t]] & [[s16]] & No \\
-[[323]] & [[int32_t]] & [[s32]] & No \\
-[[645]] & [[double]] & [[f64]] & No \\
-[[1289]] & [[struct apl_cmpx]] & [[c64]] & No \\
+[[11]] & [[ARR_BOOL]] & [[char]] & [[b8]] & Yes \\
+[[83]] & [[ARR_SINT]] & [[int16_t]] & [[s16]] & Yes \\
+[[163]] & [[ARR_SINT]] & [[int16_t]] & [[s16]] & No \\
+[[323]] & [[ARR_INT]] & [[int32_t]] & [[s32]] & No \\
+[[645]] & [[ARR_DBL]] & [[double]] & [[f64]] & No \\
+[[1289]] & [[ARR_CMPX]] & [[struct apl_cmpx]] & [[c64]] & No \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -3138,7 +3222,7 @@ because the numbers will be cast automatically and correctly
 in their formatted form directly from APL.
 
 <<Element [[data]] and [[type]] generator cases>>=
-5=i←11 83 163 323 645⍳⎕DR ⍵:{
+5>i←11 83 163 323 645⍳⎕DR ⍵:{
 	⎕PP←17
 	ct←i⊃(⊂'char'),(2⍴⊂'int16_t'),'int32_t' 'double'
 	at←i⊃'BOOL' 'SINT' 'SINT' 'INT' 'DBL'

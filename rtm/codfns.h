@@ -14,7 +14,7 @@ enum cell_type {
 };
 enum array_type {
         ARR_SPAN
-        , ARR_CHAR
+        , ARR_CHAR8, ARR_CHAR16, ARR_CHAR32
         , ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMPX
         , ARR_MIXED, ARR_NESTED
 };
