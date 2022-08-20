@@ -1610,6 +1610,31 @@ to add a new data type to the runtime:
 		[[cell]].
 \end{enumerate}
 
+\noindent
+When defining new maker and releaser functions for a cell type,
+there are a few behaviors we want to be sure to implement.
+These behaviors help to maximize the reliability of the functions.
+
+\begin{itemize}
+\item In the maker, do not mutate the return slot/pointer
+  until you have verified
+  that the allocation and all other initialization have succeeded.
+  If there is an error,
+  the target pointer should
+  remain untouched.
+\item For the release function, a [[NULL]] input should be a no-op.
+\item Likewise, releasing a cell whose [[refc]] is already [[0]]
+  should be a no-op, since this indicates
+  that the cell is already in the process of being released.
+  This should rarely occur, but it could happen under conditions
+  where a cycle in the dependency graph of cells exists.
+\item A cell should mark its [[refc]] down before recurring
+  on its members for the same concern about cycles.
+\item After calling [[free()]] on a cell, set the cell to [[NULL]].
+  This should not actually matter in the course of execution,
+  but it can help with debugging.
+\end{itemize}
+
 The cell handling we put into a file on its own.
 
 <<cell.c>>=
