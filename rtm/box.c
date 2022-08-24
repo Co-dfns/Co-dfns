@@ -1,33 +1,49 @@
 #include <stdlib.h>
-
 #include "codfns.h"
 
-DECLSPEC int
-mk_box(struct cell_box **box, void *value)
-{
-        *box = malloc(sizeof(struct cell_box));
-
-        if (*box == NULL)
-                return 1;
-
-        (*box)->ctyp    = CELL_BOX;
-        (*box)->refc    = 1;
-        (*box)->value   = value;
-
-        return 0;
+#define DEF_BOX_FNS(type, name) \
+DECLSPEC int \
+mk_##type##_box(struct cell_##type##_box **box,
+    struct cell_##type *value) \
+{\
+        struct cell_##type##_box *tmp;\
+\
+        tmp = malloc(sizeof(struct cell_##type##_box));\
+\
+        if (tmp == NULL)\
+                return 1;\
+\
+        tmp->ctype = CELL_##name##_BOX;\
+        tmp->refc = 1;\
+        tmp->value = value;\
+\
+        *box = tmp;\
+\
+        return 0;\
+}\
+\
+DECLSPEC void\
+release_##type##_box(struct cell_##type##_box *box)\
+{\
+        if (box == NULL)\
+                return;\
+\
+        if (!box->refc)\
+                return;\
+\
+        box->refc--;\
+\
+        if (box->refc)\
+                return;\
+\
+        release_##type(box->value);\
+        free(box);\
+        box = NULL;\
 }
 
-DECLSPEC void
-release_box(struct cell_box *box)
-{
-        if (box == NULL)
-                return;
-
-        box->refc--;
-
-        if (box->refc)
-                return;
-
-        release_cell(box->value);
-        free(box);
-}
+DEF_BOX_FNS(void, VOID);
+DEF_BOX_FNS(array, ARRAY);
+DEF_BOX_FNS(func, FUNC);
+DEF_BOX_FNS(moper, MOPER);
+DEF_BOX_FNS(doper, DOPER);
+DEF_BOX_FNS(env, ENV);

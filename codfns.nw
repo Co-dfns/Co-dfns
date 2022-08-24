@@ -569,6 +569,7 @@ notangle -R'[[TEST]]' codfns.nw > src/TEST.aplf
 \section{Co-dfns Compiler}
 
 \subsection{Parser}
+\label{subsec:parser}
 
 The first, and in many ways, the most complex element of the 
 compiler is the parser.
@@ -681,6 +682,8 @@ different length and type than the other columns.
 d i←P2D p ⋄ d n t k pos end I∘⊢←⊂i
 @
 
+\phantomsection
+\label{topic:symbolizenfield}
 There is an inefficiency in the AST representation at this point,
 where the [[n]] field contains character vectors.
 This inefficiency was necessary while building up the AST because
@@ -910,6 +913,8 @@ TT←{
 	<<Lift and flatten expressions>>
 	<<Compute slots and frames>>
 	<<Record exported top-level bindings>>
+	<<Namify pointer variables>>
+	<<Merge [[V]] nodes into [[n]] fields>>
 	
 	p t k n f s r d xi sym
 }
@@ -969,6 +974,8 @@ GC←{
 	<<Node $\longleftrightarrow$ Generator mapping>>
 
 	<<Prefix code for all generated files>>
+
+	<<Variable utilities>>
 	<<Node-specific code generators>>
 
 	<<Map generators over the linearized AST; return>>
@@ -1435,7 +1442,7 @@ enum cell_type {
 We set the first $0th$ cell type to our void cell.
 
 <<Cell type names>>=
-CELL_VOID
+CELL_VOID,
 @ %def CELL_VOID
 
 We do not make or define any generic way
@@ -2467,7 +2474,7 @@ That is, if all the points in an array are
 in the range [[[0,2*8)]], 
 then we only need to use the 8-bit datatype, and so on.
 
-\begin{table}
+\begin{table}[htp]
 \centering
 \caption{Type associations between APL, C, ArrayFire, and Co-dfns}
 \label{table:charactertypes}
@@ -2513,7 +2520,7 @@ This means:
 We used the following array types.
 
 <<Array element types>>=
-, ARR_CHAR8, ARR_CHAR16, ARR_CHAR32
+ARR_CHAR8, ARR_CHAR16, ARR_CHAR32,
 @ %def ARR_CHAR8 ARR_CHAR16 ARR_CHAR32
 
 These array types must also map to ArrayFire types
@@ -2546,7 +2553,7 @@ between DWA character types and Co-dfns character types.
 Dyalog has these DWA character types:
 
 <<DWA character types>>=
-, DWA_CHAR8, DWA_CHAR16, DWA_CHAR32
+DWA_CHAR8, DWA_CHAR16, DWA_,
 @ %def DWA_CHAR8 DWA_CHAR16 DWA_CHAR32
 
 All that remains to to map these to and from Co-dfns types.
@@ -2849,6 +2856,8 @@ can never lead to a valid parse for [[e]] as a number,
 and so it decides that [[e]] must be part of a name instead,
 and parsing then continues with recognizing the complex [[0.5j3]].
 
+\phantomsection
+\label{topic:compoundnumberparsing}
 This is madness.
 
 I cannot in good conscience replicate this behavior into Co-dfns.
@@ -3051,7 +3060,7 @@ for handling the final cleanup of [[dm]].
 After masking off the names we can fix up dots
 in [[dm]] and handle ambiguous numeric errors.
 
-\begin{table}
+\begin{table}[htp]
 \centering
 \caption{Parsing cases for dot;
 [[V]] = name, [[N]] = number, [[D]] = digit}
@@ -3314,7 +3323,7 @@ To support numbers in the runtime we must address the following:
 We defined the following array types for numerics:
 
 <<Array element types>>=
-, ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMPX
+ARR_BOOL, ARR_SINT, ARR_INT, ARR_DBL, ARR_CMPX,
 @ %def ARR_BOOL ARR_SINT ARR_INT ARR_DBL ARR_CMPX
 
 \noindent
@@ -3356,11 +3365,11 @@ The DWA element type consists of both simple and compound numeric types,
 some of which overlap with the [[enum array_type]] values.
 
 <<Simple DWA numeric element types>>=
-, DWA_BOOL, DWA_TINT, DWA_SINT, DWA_INT, DWA_DBL
+DWA_BOOL, DWA_TINT, DWA_SINT, DWA_INT, DWA_DBL,
 @ %def DWA_BOOL DWA_TINT DWA_SINT DWA_INT DWA_DBL
 
 <<Compound DWA numeric element types>>=
-, DWA_CMPX, DWA_R, DWA_F, DWA_Q
+DWA_CMPX, DWA_R, DWA_F, DWA_Q,
 @ %def DWA_CMPX DWA_R DWA_F DWA_Q
 
 In most cases, there is no pre-processing necessary,
@@ -3505,37 +3514,884 @@ across the parser, compiler, code generator, and runtime.
 
 \subsection{Variables}
 
+Besides character vectors and array literals,
+variables are the next atomic, user-defined unit
+we must handle.
+Variables may be bound to functions, operators, namespaces, and arrays.
+They can be assigned and referenced.
+We must deal with them throughout the lifetime of the compiler pipeline.
+How we choose to handle variables affects our approach 
+to functions and operators.
+
+Since variables are so caught up in so many things that we do
+across many features,
+we must decide how much we will do in this section 
+and how much we will leave to the future sections.
+Here are some things that we will \emph{not} address in this section:
+
+\begin{itemize}
+\item Scoping rules and resolving variable references
+\item Binding and assignment of variables
+\item Computing free references and variable blocks
+\item Functions and their methods of variable declarations
+\item Closure management, creation, \&c.
+\item Variable environments
+\item Runtime lookup of variables
+\end{itemize}
+
+\noindent
+This helps us to minimize the amount of stuff
+we must handle in this section.
+We \emph{will} address the following topics:
+
+\begin{itemize}
+\item Parsing and tokenizing
+\item The variable node type and its interpretation
+\item Variable node code generation and handling
+\item The underlying runtime representation of variables
+\end{itemize}
+
+Let's begin with tokenizing and parsing.
+For the most part, assuming that numbers have been properly masked
+in a [[dm]] Boolean vector, 
+a variable will just consist of all alphanumeric characters
+contiguous to one another and not part of [[dm]].
+We can tokenize this easily by marking 
+the start of each group with type [[V]],
+which is our variable type,
+and extending the [[end]] field to point to the end of the group.
+
 <<Tokenize variables>>=
-t[i←⍸2<⌿0⍪vm←(~dm)∧x∊alp,num]←V ⋄ end[i]←end⌿⍨2>⌿vm⍪0
-
-⍝ Tokenize ⍺, ⍵ formals
-fm←{mm←⌽⊃(>∘⊃,⊢)⌿⌽m←⍺=' ',⍵ ⋄ 1↓¨(mm∧~m1)(mm∧m1←1⌽m)}
-am aam←'⍺'fm x ⋄ wm wwm←'⍵'fm x
-((am∨wm)⌿t)←A ⋄ ((aam∨wwm)⌿t)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
+msk←(~dm)∧x∊alp,num
+t[i←⍸2<⌿0⍪msk]←V
+end[i]←end⌿⍨2>⌿msk⍪0
 @
 
-<<Check for out of context dfns formals>>=
-∨⌿(d=0)∧(t=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
+This handles most variables, 
+but we note that dfns formals are still a type of variable
+in some sense,
+so we must deal with them.
+However, we will discuss handling them 
+and their unqiue quirks in Section \ref{subsubsec:dfns}
+on dealing with dfns.
+
+After tokenization, variables play a primary role
+in the ambiguity inherent in the APL syntax.
+Most notably, in order to fully parse some APL expressions,
+we must know the type of the variables involved
+in that expression.
+We need only refine the variable type in the parser
+to the point of knowing whether the variable
+is an array, function, namespace, monadic operator,
+or dyadic operator.
+However, this may not always be possible,
+so we must also accommodate ambiguous variables.
+
+Parsing variables is mainly concerned with this type inference,
+but because this is a pretty involved subject,
+we will dedicate anentire section to it
+(see Section \ref{subsec:bindingsandtypes}).
+Our main concern here is to make sure 
+that our [[V]] type has the appropriate expressivity.
+
+After parsing, the compiler must arrange the closures
+in the system to that variables are appropriately threaded
+through the system so that assignments
+and references ``do the right thing.''
+This necessitates the handling of mutation,
+particularly at the name level.
+We must also ensure that we are able to reference 
+the appropriate slot even in the presence of 
+mixed dynamically and lexically scoped variables 
+as well as global and namespace references.
+
+If we eliminate the particular issues
+that are unique to the specific uses of variables,
+we find a few things that are common across all uses:
+
+\begin{itemize}
+\item Mutation
+\item Type
+\item Value/Dereferencing
+\item Declaration
+\item Initialization
+\item Release
+\end{itemize}
+
+Let's first consider typing.
+We mainly want to know whether a variable
+is mutable or immutable,
+and its primary nameclass.
+This leads to the types for the [[k]] field 
+given in Table \ref{tab:variablekinds}.
+
+\begin{table}[htp]
+\centering
+\caption{Variable Kinds and their Meanings}
+\label{tab:variablekinds}
+\begin{tabular}{cl}
+\toprule
+Kind & Meaning \\
+\midrule
+[[¯N]] & A mutable variable of type [[N]] \\
+[[0]] & Unresolved (Parser) or Stack (Code Gen.) \\
+[[1]] & Array \\
+[[2]] & Function \\
+[[3]] & Monadic Operator \\
+[[4]] & Dyadic Operator \\
+[[5]] & Namespace \\
+[[6]] & Ambiguous \\
+[[1N]] & Local variable of type [[N]] \\
+[[2N]] & Lexical free variable of type [[N]] \\
+[[3N]] & Dynamic free variable of type [[N]] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Actually assigning types to variable is discussed
+in Section \ref{subsec:bindingsandtypes}.
+Once types are assigned,
+the compiler must also mark the mutable variables
+before code generation 
+so that we can properly thread names and memory locations
+through the system.
+However, not much more needs to be done
+in the compiler itself to handle variables,
+except that we will note 
+that we do not consider a variable itself
+as something that we want remaining in the tree
+after compilation,
+as all the work is handled by other, more operational nodes.
+Variables themselves only serve as a link
+between pieces of data,
+and so they do not \emph{do} very much at the low-level.
+This means that by the time we reach the end of tree transformation
+and make it to the code generator,
+there should be no [[V]] nodes.
+
+Rather than [[V]] nodes
+at the point of code generation,
+we assume that all the main operational nodes,
+such as expression nodes,
+which will be in the tree at code generation time,
+will maintain a set of argument values.
+These argument values will be variables of one kind or another.
+There are three places that may generate variable names.
+The input variables that come from the input source
+are handled in a symbol table created by the parser.
+During compilation, we may want to create links 
+from one node to another,
+such as when we are lifting a function.
+We use the node id/address instead of a variable name
+to mark that name.
+At code generation, since we maintain a stack discipline
+for expression evaluation,
+we must have some way to talk about pulling items off the stack.
+
+To manage these references,
+we have the [[n]] field during parsing and compilation.
+\phantomsection
+We symbolize our [[n]] field at the end of parsing,
+giving a negative value to elements in the symbol table
+(see Section \ref{subsec:parser},
+pg. \pageref{topic:symbolizenfield}).
+By the end of the compilation phase,
+we want to unify the combined [[n]] field values somehow.
+To do this, we can convert all pointer values
+to a reference in the symbol table.
+By doing so, we can guarantee that all of our references
+will fall into a single unified domain.
+By simplifying and unifying the [[n]] field 
+before code generation rolls around,
+we minimize the amount of backend specific code
+we must write,
+which is a major goal of ours.
+We must be careful, however, to not introduce 
+any backend specific code into the compiler and parser.
+
+In addition to the name of the variable and its nameclass,
+we want to know whether or not the variable
+is mutable as well as what scoping rules it is using.
+All of this information shoudl be stored
+in the argument lists of the code generation nodes
+(the [[n]] field data).
+Table \ref{tab:variablekinds} shows how the [[k]] field
+encodes this additional information.
+These prefixes help us to handle 
+the interesting mixed scoping situation
+we have in APL.
+We have four basic ways that a variable may be referenced:
+
+\begin{description}
+\item[Local] A variable defined and refernced in the same function
+\item[Lexical] A free variable referenced using lexical scoping
+\item[Dynamic] A free variable referenced with dynamic scoping
+\item[Global] An unprefixed reference in a global scope
+\end{description}
+
+\noindent
+During compilation, we expect to mark all variables 
+as belonging to one of these ``scope'' domains.
+This is what the work on parsing and lexical analysis should do.
+
+When we make references to other nodes
+in the [[n]] field of a [[V]] node,
+this comes about usually from lifting some node
+or otherwise relocating that node.
+These references are essentially unscoped and unambiguous references
+that are globally unique.
+Thus, these go into the global set.
+See [[<<Adjust AST for output>>]] for the initial [[n]] field 
+symbol table creation.
+By the time we start code generation,
+the [[n]] field should have been unified to contain only 
+symbol table references.
+
+What does this mean we need to do?
+We are assuming that our [[V]] nodes will all be marked
+at type inference with the right nameclass,
+and a mutability analysis will mark the variables 
+as mutable or not.
+Similarly, a resolution pass will mark the free and local values
+and whether or not they are lexical or dynamic.
+We also assume that each operational node 
+will regularize its AST forms to contain only [[V]] nodes
+as arguments.
+This leaves us with the following responsibilities:
+
+\begin{itemize}
+\item Remove [[V]] nodes into the [[n]] field
+\item Unify the [[n]] field of [[V]] nodes to contain only symbols
+\end{itemize}
+
+\noindent
+Assuming the above is handled, we will be ready for code generation.
+
+Notice, at this point, we have used mostly the [[k]] field
+as a means of encoding metadata into our AST,
+especially about things like scope and mutability.
+This is not the only model that we could use.
+Some compilers, such as some Scheme compilers,
+will instead apply a code transformation to the source
+to take one concept, such as mutable variables,
+and express it in terms of another.
+we could convert variable mutation into mutation on the cell 
+of a scallar box array, for instance.
+Likewise, we could convert dynamic scope into parameters 
+and use something akin to [[DYNAMIC-WIND]] in Scheme
+to implement dynamic scope.
+There is much to recommend this approach,
+but in considering it here, 
+I am not convinced that it will minimize the runtime kernel burden,
+and it would certainly make the compiler more complex.
+Thus, in my estimation, it is simpler in this case
+to simply mark variables appropriately
+and then produce the right code from that,
+since that would have been necessary anyways 
+to make things at all performant.
+
+Let's unify the [[n]] field. 
+Since this means taking all of the positive [[n]] field values
+of [[V]] nodes and creating new names for them,
+we must consider the possibility of name clashes.
+If we do not have some way of prefixing our names,
+then we must have the chance of a conflict.
+Fortunately, if we assume all user-given names
+are marked as either one of lexical, dynamic, or local,
+then we can mark all pointer variables as global
+and be sure that they all live in separate ``scope'' domains.
+All we must do is ensure that code generation takes
+these prefixes into account and we are golden.
+
+We must generate names for our pointer variables
+only after we are sure that all the lifting passes
+that might introduce more pointer variables
+are done.
+Then, we simply generate new names and update 
+the [[sym]] table and the appropriate [[n]] fields.
+
+<<Namify pointer variables>>=
+i←⍸(t=V)∧n≥0
+sym∪←x←('ptr',⍕)¨n[i]
+n[i]←-sym⍳x
 @
 
-<<Convert [[⍺]] and [[⍵]] to [[V]] nodes>>=
-t←V@(i←⍸(t=A)∧n∊,¨'⍺⍵')⊢t ⋄ vb[i]←i
+\noindent
+There is no need to mark them with any kind of prefix
+because the global prefix is the default.
+
+Towards the end of the transformations,
+all the operational nodes will have unified and flattened
+their representations
+so that they contain only variables.
+In previous iterations of this compiler,
+we let [[V]] nodes lift into the stack as well.
+This was simpler in some ways,
+but resulted ultimately in a more complex runtime
+that was too dependent on runtime language features
+while also not taking into account that we were working
+in higher level langauges and could thus afford
+to use the name resolution in those languages.
+
+By making the variables arguments to more operational nodes,
+we simplify the runtime semantics while also putting variables
+in a context with more information about their intended use,
+such as whether they are meant as an lvar to be assigned 
+or a value to dereference.
+Moreover, not always pushing things on and off the stack 
+makes things faster as well.
+
+Our concern now is to remove the [[V]] nodes from the AST
+and instead put them into the [[n]] field of their parents.
+We must decide how we would like to encode this.
+We have two main sources of information in a [[V]] node:
+the [[k]] field and the [[n]] field. 
+We could attempt to merge these,
+but any merge would use up more space
+or be too complex to decode.
+Instead, we can simply treat them as independent pairs
+that we want to put into the [[n]] field.
+The result is that we will give each operational node
+with [[V]] node children a [[2 N]] matrix of [[V]] nodes
+where [[N]] is the number of children. 
+Row 0 will be the [[k]] field and row 1 the [[n]] field.
+
+When merging the [[V]] nodes,
+we must be careful to properly delete
+the [[V]] nodes after they have been merged.
+This requires that we use the usual idioms for node deletion,
+but also that we avoid doing a pointer recomputation
+on the newly added data stored in the [[n]] field.
+We do this by filtering out any non-scalar
+[[n]] field data, 
+since this indicates that we are working with non-pointer data.
+
+<<Merge [[V]] nodes into [[n]] fields>>=
+_←p[i]{n[⍺]←⊂⍉k[⍵],⍪n[⍵]}⌸i←⍸t=V
+p←i(⊢-1+⍸)(msk←t≠V)⌿p
+r←i(⊢-1+⍸)msk⌿r
+t k ss se(⌿⍨)←msk
+n←i(⊢-1+⍸)@(0=≡¨)msk⌿n
 @
 
-<<Convert [[⍺⍺]] and [[⍵⍵]] to [[P2]] nodes>>=
-k[⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2
-@
+With that, all the variables are ready for code generation.
+Code generation for variables is different from handling
+the operational nodes since we have moved the [[V]] nodes
+from the AST.
+Instead, we must provide the appropriate utilities
+so that the code generators for the operational nodes
+can generate various uses for variables as needed.
+What functionality do we need and what utility function
+will handle this functionality? 
+Table \ref{tab:variableutilities} summarizes this information.
 
-<<Node $\longleftrightarrow$ Generator mapping>>=
-gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
-gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
-@
+\begin{table}[htp]
+\caption{Utilities for handling variables in code generation}
+\label{tab:variableutilities}
+\centering
+\begin{tabular}{llll}
+\toprule
+Function & Left Arg. & Right Arg. & Intent \\
+\midrule
+[[var_ckinds]] & --- & types & Base C type-prefix \\
+[[decl_vars]] & types & names & Declares variables \\
+[[init_vars]] & types & names & Initializes variables \\
+[[clean_vars]] & --- & name\_strs & Sanitizes APL names \\
+[[var_values]] & types & names & References to value \\
+[[var_refs]] & types & names & References to slot \\
+[[kill_vars]] & types & names & Release statements \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-<<Node-specific code generators>>=
-Va←{id←(|4⊃⍺)⊃'' 'r' 'l' 'aa' 'ww',5↓sym
-	z ←⊂'*stkhd++ = retain_cell(',id,');'
+Let's handle variable declaration first.
+Since we retain the variable type information 
+at code generation time,
+we could produce fairly tight types 
+for our declarations.
+We are bolstered in this thinking
+because we know that the typeclass 
+of such values cannot change
+in our code.
+In some cases, this means that we may definitely need
+to do some type casting for all to be well.
+However, we hope that we will be more typed overall
+than less typed,
+and that would encourage us to use the types.
+Since we will also not be putting variables on the stack
+in most cases,
+the main source of type ambiguity is removed
+and so it makes more sense to use the types than to ignore them.
+
+When we declare a variable,
+we mostly just care about the nameclass and its mutability,
+not its scope,
+since the declaration syntax is the same for all scopes.
+Table \ref{tab:variabletypeequivalence} gives the type
+in C for each variable type.
+
+\begin{table}[htp]
+\caption{Kind and type equivalencies between C and APL}
+\label{tab:variabletypeequivalence}
+\centering
+\begin{tabular}{clll}
+\toprule
+Kind & Prefixed & Prefixed Mutable & Global \\
+\midrule
+1 & [[array]] & [[array_box]] & N/A \\
+2 & [[func]] & [[func_box]] & [[func_ptr]] \\
+3 & [[moper]] & [[moper_box]] & [[moper_ptr]] \\
+4 & [[doper]] & [[doper_box]] & [[doper_ptr]] \\
+5 & [[env]] & [[env_box]] & [[env_ptr]] \\
+6 & [[void]] & [[void_box]] & N/A \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+To help simplify our utilities, 
+we define a utility [[var_ckinds]] that gives the various base types
+in the appropriate order, 
+shifted by one to omit the stack variable type.
+
+<<Variable utilities>>=
+var_ckinds←{
+	0∊⍵:'STACK VARIABLES HAVE NO C KIND'⎕SIGNAL 99
+	types←'' 'array' 'func' 'moper' 'doper'
+	types,←'env' 'void'
+	types[10||⍵]
+}
+@ %def var_ckinds
+
+However, when we declare a variable, it is almost never in isolation.
+We only ever declare variables as part 
+of a function, namespace, or guard block,
+and that means we almost always want to declare mutliple variables 
+at a time.
+
+We could consider all of the structures that we might want
+to make as a part of declaring capture lists for our various types
+in this section,
+but it is better that these feature-specific considerations
+are handled in their own sections.
+We want to focus here on variables alone.
+We also note that the declaration of global pointers 
+is special because they have unique types
+that are not allocated like cells.
+Because of this,
+we will not declare anything particular for those,
+but instead assume that we have an appropriate [[typedef]]
+defined for each such type.
+
+Thus, given a set of types on the left and names on the right,
+[[decl_vars]] will produce the declaration for each type and name
+as a vector of character vectors.
+
+<<Variable utilities>>=
+decl_vars←{
+	0∊⍺:'CANNOT DECLARE STACK VARIABLE'⎕SIGNAL 99
+	1∊|⍺:'CANNOT DECLARE GLOBAL ARRAY'⎕SIGNAL 99
+	6∊|⍺:{
+		EM←'CANNOT DECLARE AMBIGUOUS GLOBAL'
+		EM ⎕SIGNAL 99
+	}⍬
+	z←'' 'struct cell_'[10≤|⍺]
+	z,¨←var_ckinds ⍺
+	z,¨←'' '_ptr'[10≥|⍺]
+	z,¨←' ' '_box '[¯10≥⍺]
+	z,¨←'' '*'[10≤|⍺]
+	z,¨←clean_vars sym[|⍵]
+	z,¨';'
+}
+@ %def decl_vars
+
+The [[decl_vars]] utility and all the other utilities depend 
+on a function [[clean_vars]] that makes sure the name
+that we use in the generated code is valid.
+Among the names and compilers that I tested,
+only the [[∆]] and [[⍙]] were disallowed,
+so we must map these characters to something else in our source.
+For our uses, it seems reasonable to mpa them 
+to [[_del_]] and [[_delubar_]], respectively.
+In addition to normal variables,
+we must also handle the formal arguments used by dfns.
+We will convert them to a fully spelled out variant.
+
+<<Variable utilities>>=
+clean_vars←{
+	cequv←'_del_' '_delubar_' 'alpha' 'omega'
+	(,¨'∆⍙⍺⍵')⎕R cequv⊢⍵
+}
+@ %def clean_vars
+
+Next, we must consider how we want to initialize our variables.
+For our global and immutable variables,
+assigning them to [[NULL]] will suffice,
+but for our mutable values,
+we must allocate them with an appropriate [[_box]] type.
+These boxes are meant to contain the real value so that
+mutations to the cell value will propagate to all references 
+to the variable.
+
+Why do we make a separate box type for each value type in our system?
+This goes back to our discussion above about managing our types.
+Since all the variables should end up with the same nameclass
+throughout their lives,
+we want to leverage the C runtime type system
+as an extra check to ensure that we catch our mistakes
+a little earlier than we might if we had just made
+all mutable variables becomes a [[struct cell_void_box]] type.
+
+Initializing mutable variables means making a call 
+to the corresponding [[mk_type()]] function 
+and handling any errors.
+We follow the same argument conventions as for [[decl_vars]],
+namely, types on the elft and name on the right.
+
+<<Variable utilities>>=
+init_vars←{
+	0∊⍺:{
+		EM←'CANNOT INITIALIZE STACK VARIABLE'
+		EM ⎕SIGNAL 99
+	}⍬
+	(10>|⍺)∧⍺<0:{
+		EM←'GLOBAL VARIABLES CANNOT BE MUTABLE'
+		EM ⎕SIGNAL 99
+	}⍬
+	z←(≢⍵)⍴⊂⊂''
+	i←⍸⍺>0
+	z[i]←⊂¨(⍺[i] var_refs ⍵[i]),¨⊂' = NULL;'
+	init←{
+		z←⊂'err = mk_',⍺,'_box(&',⍵,', NULL);'
+		z,←⊂'if (err)'
+		z,←⊂TB,'goto fail;'
+	z}
+	types←var_ckinds ⍺[i]
+	names←⍺[i] var_refs ⍵[i]
+	z[i]←types init names
+	⊃⍪⌿z
+}
+@ %def init_vars
+
+Now we can declare and initialize variables
+that we want to use,
+but the interesting issues of getting values
+out of a name and refering to a name are up next.
+We need two different functions to encode this functionality, namely,
+[[var_refs]] and [[var_values]]. 
+Why two?
+If we want to mutate, set, or access a variable's value,
+this may be different than the reference to that variable.
+When passing a variable as a free variable to another function
+via closure,
+we want a reference to the variable,
+so that a mutation will propagate to the original variable slot.
+However, if we have a mutable variable,
+that reference will be to the box holding the value
+and not the variable value itself,
+so we must also be able to reference the value 
+for mutation, binding, or use.
+
+Let's start with [[var_refs]], since a variable reference
+is the same regardless of the mutability of a variable.
+we also do not really care about the type at this point, either.
+We do care about the scope. We want to prefix our variable 
+with the appropriate [[struct]] prefix 
+to access the right variable.
+In the case of locals, we assume that there 
+is a structure value name [[loc]] that contains the variables.
+The same holds true for the lexical variables 
+that we expect to be in [[lex]], 
+and the dynamic variables in [[dyn]], 
+with the difference that [[lex]] and [[dyn]] are pointers 
+to structs and not the structs themselves.
+Thus, our only real goal is to produce 
+an appropriately prefixed reference.
+As with variable declarations and initializations,
+we generally want to reference more than one variable at a time,
+since the main use of references are in passing between functions.
+
+The only variables that make sense for reference
+are those that will be passing between functions,
+and that means any stack varaibles need not apply.
+We can thus think of a variable reference
+as matching the following pattern:
+
+\begin{verbatim}
+<scope><deref><name>
+\end{verbatim}
+
+\noindent
+And that gives us the following code.
+
+<<Variable utilities>>=
+var_refs←{
+	0∊⍺:{
+		EM←'CANNOT REFERENCE STACK VARIABLE'
+		EM ⎕SIGNAL 99
+	}⍬
+	z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
+	z,¨clean_vars sym[|⍵]
+}
+@ %def var_refs
+
+Now we can tackle the [[var_values]] function,
+which is used much like the [[var_refs]] function 
+but with the intent to always get the actual value
+of a variable instead of its slot.
+Here, we must support the stack variable type.
+
+The pattern for a value reference is much the same
+as that of [[var_refs]] except that we must dereference
+a mutable box if a variable is mutable
+and we must also handle dereferencing a stack value.
+In the case of a box,
+we assume that all boxes store their contents
+in a [[value]] field.
+This gives us the following patterns
+for non-stack variable values:
+
+\begin{verbatim}
+{loc.,lex->,dyn->,}name[->value]
+\end{verbatim}
+
+\noindent
+When we encounter a stack variable,
+we must treat this as if we were popping something off the stack.
+We assume that a value [[stkhd]] will be a pointer
+to the next unused slot in the stack,
+meaning that we can pop the topmost value off 
+the stack with the following:
+
+\begin{verbatim}
+*--stkhd
+\end{verbatim}
+
+\noindent
+This gives us the following definition for [[var_values]].
+
+<<Variable utilities>>=
+var_values←{
+	z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
+	z,¨←clean_vars sym[|⍵]
+	z,¨←'' '->value'[⍺<0]
+	z[⍸0=⍺]←⊂'*--stkhd'
 z}
+@ %def var_values
+
+Finally, we want to be able to release a variable.
+We could get away without this utility,
+since we already have runtime functions
+of the form [[release_type()]] that serve this purpose,
+but having an explicit [[kill_vars]] function allows us 
+to generate type-specific kill statements 
+without invoking dynamic dispatch
+over the cell type 
+via the [[release_cell()]] function.
+
+<<Variable utilities>>=
+kill_vars←{
+	type←var_ckinds ⍺
+	'release_'∘,¨type,¨'(',¨(⍺ var_refs ⍵),');'
+}
+@ %def kill_vars
+
+With these utilities in place,
+we have a sufficiently expressive vocabulary
+for handling names in the future code sessions.
+However, we are purposefully omitting utilities for name listing.
+With any dynamic code such as an implementation of Execute ([[⍎]])
+or [[⎕NC]],
+there is a need to know what names exist in a given scope.
+In order to do this at runtime,
+we must maintain a name list
+of all variables in a given scope.
+We choose not to provide a utility function
+for this because the exact details of this may change
+between features,
+but also because it is quite easy to generate a name list
+from [[sym[|⍵]]] without the need for a utility function.
+The main consideration is remembering to use wide characters
+for names and string literals.
+
+With all the variable code generation utilities done,
+we turn our attention to handling variables at runtime.
+Fortunately, most of this is already done for us.
+Variables themselves mostly rely on the underlying target language's
+handling of variable names.
+Managing memory and the like is also 
+not a variable-specific consideration.
+
+Variables do introduce one semantic conept 
+that persists into the runtime that belongs uniquely to variables,
+mutability.
+In order to support mutability in the langauge with our present design,
+we must have a unique box type for each of our cell types
+in the system.
+
+We define the following box types:
+
+<<Cell type names>>=
+CELL_VOID_BOX,
+CELL_ARRAY_BOX,
+CELL_FUNC_BOX,
+CELL_MOPER_BOX,
+CELL_DOPER_BOX,
+CELL_ENV_BOX,
+@ %def CELL_VOID_BOX CELL_ARRAY_BOX CELL_FUNC_BOX CELL_MOPER_BOX CELL_DOPER_BOX CELL_ENV_BOX
+
+Each box type follows the same basic construction,
+with a single [[value]] field to hold a pointer to the non-boxed value.
+
+<<C runtime structures>>=
+struct cell_array_box {
+	<<Common cell fields>>
+	struct cell_array *value;
+}
+struct cell_func_box {
+	<<Common cell fields>>
+	struct cell_func *value;
+}
+struct cell_moper_box {
+	<<Common cell fields>>
+	struct cell_moper *value;
+}
+struct cell_doper_box {
+	<<Common cell fields>>
+	struct cell_doper *value;
+}
+struct cell_env_box {
+	<<Common cell fields>>
+	struct cell_env *value;
+}
+struct cell_void_box {
+	<<Common cell fields>>
+	struct cell_void *value;
+}
+@ %def cell_void_box cell_array_box cell_func_box cell_moper_box cell_doper_box cell_env_box
+
+The maker and releaser functions also remain similar among all box types.
+
+<<box.c>>=
+#include <stdlib.h>
+#include "codfns.h"
+
+#define DEF_BOX_FNS(type, name) \
+DECLSPEC int \
+mk_##type##_box(struct cell_##type##_box **box,
+    struct cell_##type *value) \
+{\
+	struct cell_##type##_box *tmp;\
+\
+	tmp = malloc(sizeof(struct cell_##type##_box));\
+\
+	if (tmp == NULL)\
+		return 1;\
+\
+	tmp->ctype = CELL_##name##_BOX;\
+	tmp->refc = 1;\
+	tmp->value = value;\
+\
+	*box = tmp;\
+\
+	return 0;\
+}\
+\
+DECLSPEC void\
+release_##type##_box(struct cell_##type##_box *box)\
+{\
+	if (box == NULL)\
+		return;\
+\
+	if (!box->refc)\
+		return;\
+\
+	box->refc--;\
+\
+	if (box->refc)\
+		return;\
+\
+	release_##type(box->value);\
+	free(box);\
+	box = NULL;\
+}
+
+DEF_BOX_FNS(void, VOID);
+DEF_BOX_FNS(array, ARRAY);
+DEF_BOX_FNS(func, FUNC);
+DEF_BOX_FNS(moper, MOPER);
+DEF_BOX_FNS(doper, DOPER);
+DEF_BOX_FNS(env, ENV);
+@ %def mk_void_box release_void_box mk_array_box release_array_box mk_func_box release_func_box mk_moper_box release_moper_box mk_doper_box release_doper_box mk_env_box release_env_box
+
+<<Tangle Commands>>=
+echo "Tangling rtm/box.c..."
+notangle -R'box.c' codfns.nw > rtm/box.c
+@ %def box.c
+
+<<C runtime declarations>>=
+DECLSPEC int mk_array_box(struct cell_array_box **,
+     struct cell_array *);
+DECLSPEC int mk_func_box(struct cell_func_box **,
+     struct cell_func *);
+DECLSPEC int mk_moper_box(struct cell_moper_box **,
+     struct cell_moper *);
+DECLSPEC int mk_doper_box(struct cell_doper_box **,
+     struct cell_doper *);
+DECLSPEC int mk_env_box(struct cell_env_box **,
+     struct cell_env *);
+DECLSPEC int mk_void_box(struct cell_void_box **,
+     struct cell_void *);
+DECLSPEC void
+release_array_box(struct cell_array_box *);
+DECLSPEC void
+release_func_box(struct cell_func_box *);
+DECLSPEC void
+release_moper_box(struct cell_moper_box *);
+DECLSPEC void
+release_doper_box(struct cell_doper_box *);
+DECLSPEC void
+release_env_box(struct cell_env_box *);
+DECLSPEC void
+release_void_box(struct cell_void_box *);
 @
+
+And, finally, we link all this up in the generic release cases.
+
+<<Cell release cases>>=
+case CELL_ARRAY_BOX:
+	release_array_box(cell);
+	break;
+case CELL_FUNC_BOX:
+	release_func_box(cell);
+	break;
+case CELL_MOPER_BOX:
+	release_moper_box(cell);
+	break;
+case CELL_DOPER_BOX:
+	release_doper_box(cell);
+	break;
+case CELL_ENV_BOX:
+	release_env_box(cell);
+	break;
+case CELL_VOID_BOX:
+	release_void_box(cell);
+	break;
+@
+
+And with that,
+all the box types are defined and the necessary runtime support
+for variable handling is complete.
+
+This concludes the variables section.
+However,
+this section is sensitive to the other sections
+in that if the types that are used throughout the system
+ever change,
+this section must be updated.
+Likewise,
+we must put any new semantics that might affect 
+how we support and handle variables
+in here.
 
 \subsection{Arrays}
 \label{sec:langfeatarrays}
@@ -3570,14 +4426,14 @@ z}⍵
 @
 
 <<Cell type names>>=
-, CELL_ARRAY
+CELL_ARRAY, 
 @ %def CELL_ARRAY
 
 <<C runtime enumerations>>=
 enum array_type {
-	ARR_SPAN
+	ARR_SPAN,
 	<<Array element types>>
-	, ARR_MIXED, ARR_NESTED
+	ARR_MIXED, ARR_NESTED
 };
 
 enum array_storage {
@@ -4185,6 +5041,7 @@ p[j]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
 @
 
 \subsection{Bindings and Types}
+\label{subsec:bindingsandtypes}
 
 <<Parse Binding nodes>>=
 ⍝ Mark bindable nodes
@@ -4281,73 +5138,6 @@ syms,←⊂,'←' ⋄ nams,←⊂'get'
 <<Node $\longleftrightarrow$ Generator mapping>>=
 gck,←⊂E 4
 gcv,←⊂'Eb'
-@
-
-<<Cell type names>>=
-, CELL_BOX
-@ %def CELL_BOX
-
-<<C runtime structures>>=
-struct cell_box {
-	<<Common cell fields>>
-	void *value;
-};
-@ %def box
-
-<<Box definitions>>=
-DECLSPEC int
-mk_box(struct cell_box **box, void *value)
-{
-        *box = malloc(sizeof(struct cell_box));
-
-        if (*box == NULL)
-                return 1;
-
-        (*box)->ctyp    = CELL_BOX;
-        (*box)->refc    = 1;
-        (*box)->value   = value;
-
-        return 0;
-}
-
-DECLSPEC void
-release_box(struct cell_box *box)
-{
-        if (box == NULL)
-                return;
-
-        box->refc--;
-
-        if (box->refc)
-                return;
-
-        release_cell(box->value);
-        free(box);
-}
-@ %def mk_box release_box
-
-<<C runtime declarations>>=
-DECLSPEC int mk_box(struct cell_box **, void *);
-DECLSPEC void release_box(struct cell_box *);
-@
-
-<<Cell release cases>>=
-case CELL_BOX:
-	release_box(cell);
-	break;
-@
-
-<<box.c>>=
-#include <stdlib.h>
-
-#include "codfns.h"
-
-<<Box definitions>>
-@ %def box.c
-
-<<Tangle Commands>>=
-echo "Tangling rtm/box.c..."
-notangle -R'box.c' codfns.nw > rtm/box.c
 @
 
 \subsection{Expressions}
@@ -4472,7 +5262,7 @@ z}⍵
 @
 
 <<Cell type names>>=
-, CELL_CLOSURE
+CELL_CLOSURE,
 @ %def CELL_CLOSURE
 
 <<C runtime structures>>=
@@ -4584,7 +5374,108 @@ notangle -R'closure.c' codfns.nw > rtm/closure.c
 <<C runtime declarations>>=
 @
 
-\subsubsection{D-fns}
+\subsubsection{Dfns}
+\label{subsubsec:dfns}
+
+The formal variables for dfns must be parsed specially.
+One issue with this is that, mostly,
+these formals are \emph{read-only},
+making them not very variable.
+Moreover, they do not compose with other units
+in the same way that normal variables do to create
+things like labels or system bindings.
+This creates a little bit of an issue,
+since choosing to give dfns formals a distinct type
+means we must handle them uniquely when they \emph{do} act
+compatibly with variables;
+but, choosing to treat them like [[V]] types would mean
+excluding them explicitly all the times 
+that they do not act like other variables.
+Between these two options,
+note that there are really only two ways in which dfns formals
+start to behave more like variables.
+First, the optional syntax for [[⍺]] allowing the form [[⍺←x]]
+makes [[⍺]] a bindable thing.
+Additionally, together with [[⍺⍺]] and [[⍵⍵]],
+it means that [[⍺]] may have an ambiguous type that 
+requires special handling at runtime.
+However, when we consider all the way sin which a variable token
+may be used that are incompatible with dfns formals,
+we find it much easier to think of the formals
+as their own unique thing.
+Then, we can handle binding [[⍺]] as a special case
+--- which it is --- and infering types on [[⍺⍺]] and [[⍵⍵]]
+can be manually integrated.
+
+Instead of marking [[⍺]] and [[⍵]] as [[V]], 
+we will mark them as type [[A]], 
+since we \emph{mostly} like to think of them as atomic arrays,
+and we will mark [[⍺⍺]] and [[⍵⍵]] as type [[P]] 
+at the moment for the same reason.
+
+to identify the actual tokens themselves,
+most of the work is adequately done simply by finding
+occurrences of [[⍺]] or [[⍵]] in the source,
+and accounting for the double [[⍺⍺]] and [[⍵⍵]] cases.
+Unfortunately, this is not always the case.
+In normal APL, we coudl have something like [[⍺⍺⍺⍺⍺]],
+which would parse as [[⍺⍺ ⍺⍺ ⍺]].
+We can handle this by observing that [[≠⍀]] applied to a vector
+of [[1]]'s produces an alternating sequence of [[1]]'s 
+and [[0]]'s equivalent to [[1 0⍴⍨≢]]. 
+This gives us a simple way to select the dfns formals.
+
+<<Tokenize potentially contiguous [[⍺]] and [[⍵]] formals>>=
+tkm←msk⍀∊≠⍀¨msk⊆msk←'⍺'=x
+aam←tkm∧1⌽msk
+am←tkm∧~1⌽msk
+tkm←msk⍀∊≠⍀¨msk⊆msk←'⍵'=x
+wwm←tkm∧1⌽msk
+wm←tkm∧~1⌽msk
+t[⍸am∨wm]←A
+t[i←⍸aam∨wwm]←P
+end[i]+←1
+@
+
+Note that the [[end]] field above only needs to be modified
+in the case of the [[⍺⍺]] and [[⍵⍵]] tokens 
+because the [[⍺]] and [[⍵]] tokens will always have length 1
+and are set correctly from the start.
+
+While this does parse the formals well enough,
+I am less than satisfied,
+because the [[⍺⍺⍺⍺⍺]] look is rather poor in my opinion,
+and it encourages an ambiguous style.
+It is a somewhat arbitrary and confusing to simply mandate
+the parser handle things in this manner.%
+\footnote{I understand that there is good reason for doing this
+  from an architectural standpoint of left to right parsing.}
+I consider it less obscene than the issues around
+handling exponents and complex numbers
+(c.f. Section \ref{subsec:numbers}, pg. 
+\pageref{topic:compoundnumberparsing}),
+but I am still bothered enough by it to not let it stand.
+I want to include how to parse it at the very least
+to show how to do it conveniently,
+but I still think the right call is to generate a syntax error
+whenever two formals are contiguous to one another.
+
+<<Tokenize variables>>=
+∨⌿msk←3≤≢¨grp←(pos⊆⍨'⍺'=x),pos⊆⍨'⍵'=x:{
+	EM←'AMBIGUOUS FORMALS'
+	2 EM SIGNAL ∊msk⌿grp
+}⍬
+@
+
+Assuming that we are going to error on contiguous formals,
+we can parse the dfns formal syntax much more simply, like so.
+
+<<Tokenize variables>>=
+msk←('⍺⍺'⍷x)∨'⍵⍵'⍷x
+t[i←⍸msk]←P
+end[i]+←1
+t[⍸(~msk∨¯1⌽msk)∧x∊'⍺⍵']←A
+@
 
 <<Compute dfns regions and type, with [[}]] as a child>>=
 t[⍸'{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
@@ -4597,6 +5488,18 @@ k←2×t∊F ⋄ k[∪p⌿⍨(t=P)∧n∊⊂'⍺⍺']←3 ⋄ k[∪p⌿⍨(t=P)�
 <<Wrap all dfns expression bodies as [[Z]] nodes>>=
 _←p[i]{end[⍺]←end[⊃⌽⍵] ⋄ gz¨⍵⊂⍨1,¯1↓t[⍵]=Z}⌸i←⍸t[p]=F
 'Non-Z dfns body node'assert t[⍸t[p]=F]=Z:
+@
+
+<<Check for out of context dfns formals>>=
+∨⌿(d=0)∧(t=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
+@
+
+<<Convert [[⍺]] and [[⍵]] to [[V]] nodes>>=
+t←V@(i←⍸(t=A)∧n∊,¨'⍺⍵')⊢t ⋄ vb[i]←i
+@
+
+<<Convert [[⍺⍺]] and [[⍵⍵]] to [[P2]] nodes>>=
+k[⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2
 @
 
 <<Anchor variables to earliest binding in the matching frame>>=

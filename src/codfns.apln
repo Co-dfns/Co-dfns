@@ -135,12 +135,17 @@
                 }⍬
                 t[i←⍸2<⌿0⍪dm]←N
                 end[i]←end⌿⍨2>⌿dm⍪0
-                t[i←⍸2<⌿0⍪vm←(~dm)∧x∊alp,num]←V ⋄ end[i]←end⌿⍨2>⌿vm⍪0
-
-                ⍝ Tokenize ⍺, ⍵ formals
-                fm←{mm←⌽⊃(>∘⊃,⊢)⌿⌽m←⍺=' ',⍵ ⋄ 1↓¨(mm∧~m1)(mm∧m1←1⌽m)}
-                am aam←'⍺'fm x ⋄ wm wwm←'⍵'fm x
-                ((am∨wm)⌿t)←A ⋄ ((aam∨wwm)⌿t)←P ⋄ ((aam∨wwm)⌿end)←end⌿⍨¯1⌽aam∨wwm
+                msk←(~dm)∧x∊alp,num
+                t[i←⍸2<⌿0⍪msk]←V
+                end[i]←end⌿⍨2>⌿msk⍪0
+                ∨⌿msk←3≤≢¨grp←(pos⊆⍨'⍺'=x),pos⊆⍨'⍵'=x:{
+                        EM←'AMBIGUOUS FORMALS'
+                        2 EM SIGNAL ∊msk⌿grp
+                }⍬
+                msk←('⍺⍺'⍷x)∨'⍵⍵'⍷x
+                t[i←⍸msk]←P
+                end[i]+←1
+                t[⍸(~msk∨¯1⌽msk)∧x∊'⍺⍵']←A
                 t[⍸(~dm)∧x∊prms]←P ⋄ t[⍸x∊syna]←A
                 t[⍸'{'=x]←F ⋄ 0≠⊃d←¯1⌽+⍀1 ¯1 0['{}'⍳x]:'UNBALANCED DFNS'⎕SIGNAL 2
                 ∨⌿(d=0)∧(t=P)∧IN[pos]∊'⍺⍵':'DFN FORMAL REFERENCED OUTSIDE DFNS'⎕SIGNAL 2
@@ -464,6 +469,14 @@
                 ⍝ Compute frame depths
                 d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1
                 xi←⍸(t=B)∧k[r]=0
+                i←⍸(t=V)∧n≥0
+                sym∪←x←('ptr',⍕)¨n[i]
+                n[i]←-sym⍳x
+                _←p[i]{n[⍺]←⊂⍉k[⍵],⍪n[⍵]}⌸i←⍸t=V
+                p←i(⊢-1+⍸)(msk←t≠V)⌿p
+                r←i(⊢-1+⍸)msk⌿r
+                t k ss se(⌿⍨)←msk
+                n←i(⊢-1+⍸)@(0=≡¨)msk⌿n
                 
                 p t k n f s r d xi sym
         }
@@ -540,8 +553,6 @@
                 syms,←⊂,'⍉' ⋄ nams,←⊂'trn'
                 syms,←⊂,'∪' ⋄ nams,←⊂'unq'
                 gck←0⍴⊂0 0 ⋄ gcv←0⍴⊂''
-                gck,←(V 0)(V 1)(V 2)(V 3)(V 4)
-                gcv,←'Va' 'Va' 'Vf' 'Vo' 'Vo'
                 gck,←(A 1)(A 6)
                 gcv,←'Aa' 'As'
                 gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
@@ -573,6 +584,72 @@
                 pref,←⊂'    return set_dwafns(p);'
                 pref,←⊂'}'
                 pref,←⊂''
+
+                var_ckinds←{
+                        0∊⍵:'STACK VARIABLES HAVE NO C KIND'⎕SIGNAL 99
+                        types←'' 'array' 'func' 'moper' 'doper'
+                        types,←'env' 'void'
+                        types[10||⍵]
+                }
+                decl_vars←{
+                        0∊⍺:'CANNOT DECLARE STACK VARIABLE'⎕SIGNAL 99
+                        1∊|⍺:'CANNOT DECLARE GLOBAL ARRAY'⎕SIGNAL 99
+                        6∊|⍺:{
+                                EM←'CANNOT DECLARE AMBIGUOUS GLOBAL'
+                                EM ⎕SIGNAL 99
+                        }⍬
+                        z←'' 'struct cell_'[10≤|⍺]
+                        z,¨←var_ckinds ⍺
+                        z,¨←'' '_ptr'[10≥|⍺]
+                        z,¨←' ' '_box '[¯10≥⍺]
+                        z,¨←'' '*'[10≤|⍺]
+                        z,¨←clean_vars sym[|⍵]
+                        z,¨';'
+                }
+                clean_vars←{
+                        cequv←'_del_' '_delubar_' 'alpha' 'omega'
+                        (,¨'∆⍙⍺⍵')⎕R cequv⊢⍵
+                }
+                init_vars←{
+                        0∊⍺:{
+                                EM←'CANNOT INITIALIZE STACK VARIABLE'
+                                EM ⎕SIGNAL 99
+                        }⍬
+                        (10>|⍺)∧⍺<0:{
+                                EM←'GLOBAL VARIABLES CANNOT BE MUTABLE'
+                                EM ⎕SIGNAL 99
+                        }⍬
+                        z←(≢⍵)⍴⊂⊂''
+                        i←⍸⍺>0
+                        z[i]←⊂¨(⍺[i] var_refs ⍵[i]),¨⊂' = NULL;'
+                        init←{
+                                z←⊂'err = mk_',⍺,'_box(&',⍵,', NULL);'
+                                z,←⊂'if (err)'
+                                z,←⊂TB,'goto fail;'
+                        z}
+                        types←var_ckinds ⍺[i]
+                        names←⍺[i] var_refs ⍵[i]
+                        z[i]←types init names
+                        ⊃⍪⌿z
+                }
+                var_refs←{
+                        0∊⍺:{
+                                EM←'CANNOT REFERENCE STACK VARIABLE'
+                                EM ⎕SIGNAL 99
+                        }⍬
+                        z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
+                        z,¨clean_vars sym[|⍵]
+                }
+                var_values←{
+                        z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
+                        z,¨←clean_vars sym[|⍵]
+                        z,¨←'' '->value'[⍺<0]
+                        z[⍸0=⍺]←⊂'*--stkhd'
+                z}
+                kill_vars←{
+                        type←var_ckinds ⍺
+                        'release_'∘,¨type,¨'(',¨(⍺ var_refs ⍵),');'
+                }
                 Zp←{
                         n←'fn',⍕⍵
                         k[⍵]∊0 2:{
@@ -638,9 +715,6 @@
                         z}⍵
                         ⍎'''UNKNOWN EXPORT TYPE''⎕SIGNAL 16'
                 }
-                Va←{id←(|4⊃⍺)⊃'' 'r' 'l' 'aa' 'ww',5↓sym
-                        z ←⊂'*stkhd++ = retain_cell(',id,');'
-                z}
                 Pf←{id←(syms⍳sym[|4⊃⍺])⊃nams
                         z ←⊂'*stkhd++ = retain_cell(',id,');'
                 z}
