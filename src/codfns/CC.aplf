@@ -1,0 +1,25 @@
+CC←{
+	vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
+	soext←{opsys'.dll' '.so' '.dylib'}
+	libdir←opsys ''' ' '/lib64'' ' '/lib'' '
+	ccf←{' -o ''',⍵,'.',⍺,''' ''',⍵,'.c'' -laf',AF∆LIB,' > ',⍵,'.log 2>&1'}
+	cci←{'-I''',AF∆PREFIX,'/include'' -L''',AF∆PREFIX,libdir}
+	cco←'-std=c99 -Ofast -g -Wall -fPIC -shared '
+	cco,←'-Wno-parentheses -Wno-misleading-indentation '
+	ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
+	gcc←'gcc'ucc'so'
+	clang←'clang'ucc'dylib'
+	vsco←{z←'/W3 /wd4102 /wd4275 /O2 /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
+		z,←'/WX /MD /EHsc /nologo '
+		z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
+	vslo←{z←'/link /DLL /OPT:REF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS '
+		z,←'/LIBPATH:"%AF_PATH%\lib" /OPT:ICF /ERRORREPORT:PROMPT /TLBID:1 '
+		z,'/DYNAMICBASE "af', AF∆LIB, '.lib" "codfns.lib" '}
+	vsc0←{~⎕NEXISTS vsbat:'VISUAL C?'⎕SIGNAL 99 ⋄ '""',vsbat,'" amd64'}
+	vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),' "',⍵,'.c" '}
+	vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
+	vsc←{⎕CMD ('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
+	_←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣⍵ put ⍺,'.c'⊣1 ⎕NDELETE f←⍺,soext⍬
+	⎕←⍪⊃⎕NGET(⍺,'.log')1
+	⎕NEXISTS f:f ⋄ 'COMPILE ERROR' ⎕SIGNAL 22
+}
