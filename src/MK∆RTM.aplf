@@ -10,8 +10,10 @@ put←{
         s←(¯128+256|128+'UTF-8'⎕UCS ⍵)⎕NAPPEND(t←tie ⍺)83
         1:r←s⊣⎕NUNTIE t
 }
+
 src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
 (path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
+
 vsbat←#.codfns.VS∆PATH
 vsbat,'\VC\Auxiliary\Build\vcvarsall.bat'
 wsd←path,'\'
@@ -30,6 +32,7 @@ vsc,←'    /LIBPATH:"%AF_PATH%\lib"'
 vsc,←'    /DYNAMICBASE "af',codfns.AF∆LIB,'.lib"'
 vsc,←'    /OPT:ICF /ERRORREPORT:PROMPT'
 vsc,←'    /TLBID:1 /OUT:"codfns.dll""'
+
 ⎕CMD ⎕←vsc
 ⎕CMD ⎕←'copy "',wsd,'rtm\codfns.h" "',wsd,'tests\"'
 ⎕CMD ⎕←'copy "',wsd,'rtm\codfns.exp" "',wsd,'tests\"'
