@@ -4,25 +4,41 @@ TT←{
 	⍝ Compute parent vector and reference scope
 	r←I@{t[⍵]≠F}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d
 
+	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n r(⊣,I)←⊂i ⋄ p r I⍨←⊂n[i]@i⊢⍳≢p
 	t[i]←C
+	
+	⍝ Wrap expressions as binding or return statements
 	i←(⍸(~t∊F G)∧t[p]=F),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=G ⋄ p t k n r⌿⍨←⊂m←2@i⊢1⍴⍨≢p
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4 ⋄ t[j]←E
+	
+	⍝ Life guard tests
 	p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
 	n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
+	
+	⍝ Count strand and indexing children
 	n[⍸(t∊A E)∧k=6]←0 ⋄ n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1
+	
+	⍝ Lift and flatten expressions
 	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O P V] ⋄ j←(⌽i)[⍋⌽x]
 	p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
+	
 	⍝ Compute slots for each frame
 	s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=B]
 
 	⍝ Compute frame depths
 	d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1
+	
+	⍝ Record exported top-level bindings
 	xi←⍸(t=B)∧k[r]=0
+	
+	⍝ Namify pointer variables
 	i←⍸(t=V)∧n≥0
 	sym∪←x←('ptr',⍕)¨n[i]
 	n[i]←-sym⍳x
+	
+	⍝ Merge V nodes into n fields
 	_←p[i]{n[⍺]←⊂⍉k[⍵],⍪n[⍵]}⌸i←⍸t=V
 	p←i(⊢-1+⍸)(msk←t≠V)⌿p
 	r←i(⊢-1+⍸)msk⌿r
