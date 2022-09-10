@@ -70,6 +70,7 @@ GC←{
 	syms,←⊂,'↑' ⋄ nams,←⊂'tke'
 	syms,←⊂,'⍉' ⋄ nams,←⊂'trn'
 	syms,←⊂,'∪' ⋄ nams,←⊂'unq'
+	
 	gck←0⍴⊂0 0 ⋄ gcv←0⍴⊂''
 	gck,←(A 1)(A 6)
 	gcv,←'Aa' 'As'
