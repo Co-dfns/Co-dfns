@@ -79,8 +79,8 @@ PS←{
 	t[⍸'⋄'=IN[pos]]←Z
 
 	⍝ Remove insignificant whitespace
-	t pos end⌿⍨←⊂~(t=0)∧(¯1⌽IN[pos])∊WS
 	msk←⊃1 ¯1∧.((alp,num,'¯⍺⍵⎕.')∊⍨⌽)⊂x←IN[pos]
+	t pos end⌿⍨←⊂~(t=0)∧(⊢∧1⌽⊢)IN[pos]∊WS
 	t pos end⌿⍨←⊂msk∨(t≠0)∨~x∊WS
 
 	⍝ Verify all open characters are valid
