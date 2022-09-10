@@ -13,21 +13,13 @@ PS←{
 	0≠10|⎕DR IN:err ⎕SIGNAL 11
 	
 	⍝ Basic character classes and names
-	CR LF←⎕UCS 13 10
-	WS←⎕UCS 9 32
-	alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_
-	alp,←'abcdefghijklmnopqrstuvwxyz'
-	alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝß
-	alp,←'àáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
+	CR LF←⎕UCS 13 10 ⋄ WS←⎕UCS 9 32
+	alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
+	alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
 	alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
-	num←⎕D
-	syna←'⍬⎕⍞#'
-	synb←'¯[]{}()'':⍺⍵⋄;'
-	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠
-	prmfs,←'≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
-	prmmo←'¨⍨&⌶⌸'
-	prmdo←'∘.⍣⍠⌺⍤⍥@'
-	prmfo←'/⌿\⍀'
+	num←⎕D ⋄ syna←'⍬⎕⍞#' ⋄ synb←'¯[]{}()'':⍺⍵⋄;'
+	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
+	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmfo←'/⌿\⍀'
 	prms←prmfs,prmmo,prmdo,prmfo
 	
 	⍝ Error reporting utilities
@@ -97,14 +89,14 @@ PS←{
 	∨⌿msk←1<+⌿¨dm⊆'¯'=x:'MULTIPLE ¯ IN NUMBER'SIGNAL ∊msk⌿dm⊆pos
 	∨⌿msk←('¯'=x)∧~dm:'ORPHANED ¯'SIGNAL msk⌿pos
 	dm∨←(msk←x∊'Ee')∧(¯1⌽dm)∧1⌽dm
-	dm←dm⍀∊{1@(⊃⍸⍵)~⍵}¨dm⊆msk
+	dm←dm⍀∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	dm∨←(msk←x∊'Jj')∧(¯1⌽dm)∧1⌽dm
-	dm←dm⍀∊{1@(⊃⍸⍵)~⍵}¨dm⊆msk
+	dm←dm⍀∊{¯1↓1@(⊃⍸⍵)~⍵⍪0}¨dm⊆msk
 	(msk⌿dm)←∊∧⍀¨(msk←x∊alp,num)⊆dm
 	dm[⍸dm∧(x='.')∧~(¯1⌽dm)∨1⌽dm]←0
 	msk←∨⌿¨dm⊆dm∧(x='.')∧¯1⌽(~dm)∧x∊num
 	∨⌿msk:'AMBIGUOUS PLACEMENT OF NUMERIC FORM'SIGNAL ∊msk⌿dm⊆pos
-	msk←∨⌿¨'.'={1⊃(⍵⊆⍨~⍵∊'Ee'),⊂''}¨x⊆⍨rm←dm∧~x∊'Jj'
+	msk←∨⌿¨'.'={1⊃(⍵⊆⍨~⍵∊'Ee'),2⍴⊂''}¨x⊆⍨rm←dm∧~x∊'Jj'
 	∨⌿msk:'NON-INTEGER EXPONENT'SIGNAL ∊msk⌿rm⊆pos
 	t[i←⍸2<⌿0⍪dm]←N ⋄ end[i]←end⌿⍨2>⌿dm⍪0
 	
@@ -158,7 +150,8 @@ PS←{
 	t[li]←L ⋄ end[li]←end[li+1] ⋄ d tm t pos end(⌿⍨)←⊂t≠L
 	
 	⍝ With tokens created, reify n field before tree-building
-	n←⍎¨@{t=C}(⊂'')@{t∊Z F}1 ⎕C@{t∊K S}IN∘I¨pos+⍳¨end-pos
+	n←IN∘I¨pos+⍳¨end-pos
+	n←{¯1↓⍎¨⍵,⊂''''''}@{t=C}(⊂'')@{t∊Z F}1 ⎕C@{t∊K S}n
 	msk vals←⎕VFI ⍕n[i←⍸t=N]
 	~∧⌿msk:'CANNOT REPRESENT NUMBER'SIGNAL select (t=N)⍀~msk
 	n[i]←vals
@@ -243,7 +236,7 @@ PS←{
 	n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ end[nsi]←end[nei]
 	x←⍸p=⍳≢p ⋄ d←+⍀(t[x]=M)+-t[x]=-M
 	0<⊃⌽d:':NAMESPACE NOT CLOSED'SIGNAL lineof pos[x[⊃⌽⍸(d=⊃⌽d)∧2<⌿0⍪d]]
-	0>d:'EXCESSIVE :ENDNAMESPACE'SIGNAL lineof pos[x[⊃⍸d<0]]
+	∨⌿0>d:'EXCESSIVE :ENDNAMESPACE'SIGNAL lineof pos[x[⊃⍸d<0]]
 	p[x]←x[D2P ¯1⌽d]
 	msk←~nss∨((¯1⌽nss)∧t=V)∨nse∨1⌽nse
 	t k n pos end⌿⍨←⊂msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
@@ -262,7 +255,7 @@ PS←{
 		x←IN[pos[⍵]]
 		pd←+⍀(x∊'[(')+-pc←x∊'])'
 		0<⊃⌽pd:'MISMATCHED PARENS/BRACKETS'SIGNAL pos[⍵⌿⍨⌽∧⍀⌽pd=⊃⌽pd]
-		0>pd:'MISMATCHED PARENS/BRACKETS'SIGNAL pos[⍵⌿⍨∨⍀pd<0]
+		∨⌿0>pd:'MISMATCHED PARENS/BRACKETS'SIGNAL pos[⍵⌿⍨∨⍀pd<0]
 		pcp←pc⌿pp←D2P ¯1⌽pd
 		msk←x[pcp]≠'[('[pt←')'=pc⌿x]
 		∨⌿msk:'OVERLAPPING PAREN/BRACKET'SIGNAL pos[⍵[(⍸,pp⌿⍨)pc⍀msk]]
@@ -272,8 +265,10 @@ PS←{
 	t k n pos end⌿⍨←⊂msk←~IN[pos]∊')' ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 	
 	⍝ Convert ; groups within brackets into Z nodes
-	_←p[i]{k[z←⊃⍪⌿gz¨g←⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]']←1
-	t[z]←Z P[1=≢¨g]}⌸i←⍸t[p]=¯1
+	_←p[i]{
+		k[z←⊃⍪⌿gz¨g←⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]']←1
+		t[z]←Z P[1=≢¨g]
+	0}⌸i←⍸t[p]=¯1
 	
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
