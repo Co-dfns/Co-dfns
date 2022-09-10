@@ -44,7 +44,7 @@ PS←{
 		EN∘←en ⋄ DM∘←en mkdm ⊃⍵
 		dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
 		dmx,←⊂'Message'(msg,CR,quotelines ⍵)
-		⎕SIGNAL⊂dmx
+		⍎'⎕SIGNAL⊂dmx'
 	}
 	
 	⍝ We need assert here to ensure stack visibility on error :-(
