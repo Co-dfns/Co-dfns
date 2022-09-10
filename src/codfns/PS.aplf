@@ -46,6 +46,14 @@ PS←{
 		dmx,←⊂'Message'(msg,CR,quotelines ⍵)
 		⎕SIGNAL⊂dmx
 	}
+	
+	⍝ We need assert here to ensure stack visibility on error :-(
+	assert←{
+		⍺←'assertion failure'
+		0∊⍵:⍎'⍺ ⎕SIGNAL 8'
+		1:shy←0
+	}
+
 
 	⍝ Group input into lines as a nested vector
 	pos←(⍳≢IN)⊆⍨~IN∊CR LF
