@@ -8,7 +8,7 @@
 	##.VS∆PATH,←'\2022\Community'
 
 	##.f∆←'ptknfsrdx'
-	##.N∆←'ABCEFGKLMNOPSVZ'
+	##.N∆←' ABCEFGKLMNOPSVZ'
 	##.(A B C E F G K L M N O P S V Z)←1+⍳15
 
 :EndNamespace
