@@ -1,6 +1,3 @@
 :Namespace prim
 
-        rgt←{⍵}
-        
-
 :EndNamespace

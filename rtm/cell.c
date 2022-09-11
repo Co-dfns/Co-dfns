@@ -45,6 +45,7 @@ release_cell(void *cell)
         case CELL_FUNC_BOX:
                 release_func_box(cell);
                 break;
+	/*
         case CELL_MOPER_BOX:
                 release_moper_box(cell);
                 break;
@@ -54,14 +55,15 @@ release_cell(void *cell)
         case CELL_ENV_BOX:
                 release_env_box(cell);
                 break;
+	*/
         case CELL_VOID_BOX:
                 release_void_box(cell);
                 break;
         case CELL_ARRAY:
                 release_array(cell);
                 break;
-        case CELL_CLOSURE:
-                release_closure(cell);
+        case CELL_FUNC:
+                release_func(cell);
                 break;
         default:
                 dwa_error(99);

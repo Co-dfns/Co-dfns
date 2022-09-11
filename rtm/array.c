@@ -9,7 +9,8 @@
 #endif
 
 int
-fill_device_array(struct array *arr, void *vals, size_t size, enum array_type typ)
+fill_device_array(struct cell_array *arr, 
+    void *vals, size_t size, enum array_type typ)
 {
         af_dtype        aftyp;
 
@@ -32,12 +33,14 @@ fill_device_array(struct array *arr, void *vals, size_t size, enum array_type ty
                 aftyp = f64;
                 break;
 
-        case ARR_CMP:
+        case ARR_CMPX:
                 aftyp = c64;
                 break;
 
         case ARR_NESTED:
-        case ARR_CHAR:
+        case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
         case ARR_MIXED:
         default:
                 return 16;
@@ -53,9 +56,10 @@ fill_device_array(struct array *arr, void *vals, size_t size, enum array_type ty
 }
 
 int
-fill_host_array(struct array *arr, void *vals, size_t size, enum array_type typ)
+fill_host_array(struct cell_array *arr, 
+    void *vals, size_t size, enum array_type typ)
 {
-        struct array **data;
+        struct cell_array **data;
         struct pocket **pkts;
         int     err;
 

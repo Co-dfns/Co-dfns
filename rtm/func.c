@@ -4,23 +4,20 @@
 #include "codfns.h"
 
 DECLSPEC int
-mk_closure(struct cell_closure **k,
-    int (*fn)(struct cell_array **,
-        struct cell_array *, struct cell_array *, void **),
-    unsigned int fs)
+mk_func(struct cell_func **k, func_ptr fn, unsigned int fs)
 {
         size_t sz;
-        struct cell_closure *ptr;
+        struct cell_func *ptr;
 
-        sz = sizeof(struct cell_closure) + fs * sizeof(void *);
+        sz = sizeof(struct cell_func) + fs * sizeof(void *);
         ptr = malloc(sz);
 
         if (ptr == NULL)
                 return 1;
 
-        ptr->ctyp = CELL_CLOSURE;
+        ptr->ctyp = CELL_FUNC;
         ptr->refc = 1;
-        ptr->fn = fn;
+        ptr->fptr = fn;
         ptr->fs = fs;
 
         *k = ptr;
@@ -29,7 +26,7 @@ mk_closure(struct cell_closure **k,
 }
 
 DECLSPEC void
-release_closure(struct cell_closure *k)
+release_func(struct cell_func *k)
 {
         if (k == NULL)
                 return;
@@ -44,13 +41,13 @@ release_closure(struct cell_closure *k)
         
         free(k);
 }
+
 DECLSPEC int
-apply_dop(struct cell_closure **z,
-    struct cell_closure *op, void *l, void *r)
+apply_dop(struct cell_func **z, struct cell_func *op, void *l, void *r)
 {
         int err;
 
-        err = mk_closure(z, op->fn, op->fs+2);
+        err = mk_func(z, op->fptr, op->fs+2);
 
         if (err)
                 return err;

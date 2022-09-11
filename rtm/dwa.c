@@ -5,13 +5,8 @@
 
 #include "codfns.h"
 
-#if defined(_WIN32)
-#define dcomplex _Dcomplex
-#else
-#define dcomplex double complex
-#endif
-
 #define DATA(pp) ((void *)&(pp)->shape[(pp)->rank])
+
 struct dwa_dmx {
         unsigned int flags;
         unsigned int en;
@@ -20,15 +15,15 @@ struct dwa_dmx {
         const wchar_t *message;
         const wchar_t *category;
 };
-struct dwa_wsfns {
-        long long size;
-        void *fns[18];
-};
 
 struct dwa_fns {
         long long size;
-        struct dwa_wsfns *ws;
+	struct {
+		long long size;
+		void *fns[18];
+	} *ws;
 };
+
 enum dwa_type { 
         APLNC=0, APLU8, APLTI, APLSI, APLI, APLD, 
         APLP,    APLU,  APLV,  APLW,  APLZ, APLR, APLF, APLQ
@@ -45,12 +40,23 @@ struct pocket {
         unsigned        int _2          : 16;
         long    long shape[1];
 };
+
+struct localp {
+	struct pocket *pocket;
+	void *i;
+};
+
 struct dwa_dmx dmx;
+void (*dwa_error_ptr)(struct dwa_dmx *);
+struct pocket *(*dwa_getarray_ptr)(enum dwa_type, 
+    unsigned int, long long *, struct localp *);
+
 DECLSPEC void
 set_dmx_message(wchar_t *msg)
 {
         dmx.message = msg;
 }
+
 DECLSPEC void
 dwa_error(unsigned int n)
 {
@@ -62,13 +68,19 @@ dwa_error(unsigned int n)
 
         dwa_error_ptr(&dmx);
 }
-void (*dwa_error_ptr)(struct dwa_dmx *);
 
 DECLSPEC void
 set_codfns_error(void *fn)
 {
         dwa_error_ptr = fn;
 }
+
+DECLSPEC void
+set_codfns_getarray(void *fn)
+{
+	dwa_getarray_ptr = fn;
+}
+
 DECLSPEC int
 set_dwafns(void *p)
 {
@@ -82,14 +94,16 @@ set_dwafns(void *p)
         if (dwa->size < (long long)sizeof(struct dwa_fns))
                 return 16;
 
+	set_codfns_getarray(dwa->ws->fns[0]);
         set_codfns_error(dwa->ws->fns[17]);
 
         return 0;
 }
+
 struct pocket *
 getarray(enum dwa_type type, unsigned rank, long long *shape, struct localp *lp)
 {
-        return (dwa->ws->getarr)(type, rank, shape, lp);
+        return dwa_getarray_ptr(type, rank, shape, lp);
 }
 
 char *
@@ -125,9 +139,9 @@ cnvi8_i16(int8_t *buf, size_t count)
 }
 
 DECLSPEC int
-dwa2array(struct array **tgt, struct pocket *pkt)
+dwa2array(struct cell_array **tgt, struct pocket *pkt)
 {
-        struct  array *arr;
+        struct  cell_array *arr;
         long    long *shape;
         void    *data;
         size_t  count;
@@ -190,7 +204,7 @@ dwa2array(struct array **tgt, struct pocket *pkt)
                         break;
 
                 case APLZ:
-                        err = mk_array(&arr, ARR_CMP, STG_DEVICE, rank, shape, data);
+                        err = mk_array(&arr, ARR_CMPX, STG_DEVICE, rank, shape, data);
                         break;
 
                 default:
@@ -222,7 +236,7 @@ done:
 }
 
 DECLSPEC int
-array2dwa(struct pocket **dst, struct array *arr, struct localp *lp)
+array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 {
         struct  pocket *pkt;
         unsigned        int rank;
@@ -265,9 +279,9 @@ array2dwa(struct pocket **dst, struct array *arr, struct localp *lp)
                 esiz = sizeof(double);
                 break;
 
-        case ARR_CMP:
+        case ARR_CMPX:
                 dtyp = APLZ;
-                esiz = sizeof(dcomplex);
+                esiz = sizeof(struct apl_cmpx);
                 break;
 
         case ARR_NESTED:
@@ -276,7 +290,9 @@ array2dwa(struct pocket **dst, struct array *arr, struct localp *lp)
                 break;
 
         case ARR_MIXED:
-        case ARR_CHAR:
+        case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
         default:
                 return 16;
         }
