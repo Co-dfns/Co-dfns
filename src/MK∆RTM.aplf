@@ -15,7 +15,7 @@ src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
 (path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
 
 vsbat←#.codfns.VS∆PATH
-vsbat,'\VC\Auxiliary\Build\vcvarsall.bat'
+vsbat,←'\VC\Auxiliary\Build\vcvarsall.bat'
 wsd←path,'\'
 
 vsc←'%comspec% /C ""',vsbat,'" amd64'
