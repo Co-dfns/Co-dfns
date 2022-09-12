@@ -1,22 +1,6 @@
 GC←{
 	p t k n fr sl rf fd xi sym←⍵
 
-	⍝ Symbol mapping between primitives and runtime names
-	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
-	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
-	syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'    '⍲'   '⍱'
-	nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor'  'nan' 'nor'
-	syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'    '∊'   '⊃'
-	nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf'  'mem' 'dis'
-	syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'    '⍀'   '?'
-	nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
-	syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
-	nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
-	syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '⊆'   '⎕CONV'
-	nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'nst' 'conv'
-	syms,←,¨'∇'    ';'    '%u'
-	nams,←  'this' 'span' ''
-	
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
 	
@@ -101,39 +85,49 @@ GC←{
 	pref,←⊂'}'
 	pref,←⊂''
 	
+	⍝ Symbol mapping between primitives and runtime names
+	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
+	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
+	syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'    '⍲'   '⍱'
+	nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor'  'nan' 'nor'
+	syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'    '∊'   '⊃'
+	nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf'  'mem' 'dis'
+	syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'    '⍀'   '?'
+	nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
+	syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
+	nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
+	syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '⊆'   '⎕CONV'
+	nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'nst' 'conv'
+	syms,←,¨'∇'    ';'    '%u'
+	nams,←  'this' 'span' ''
+	
+	⍝ Convert all primitives to variables
+	
 	⍝ We have a vector output for each node in the AST
 	z←(≢p)⍴⊂''
 	
+	⍝ B2: Function bindings
+	
+	⍝ C2: Closures for functions
+	
+	⍝ E¯1: Non-returning end of line statement
+	
+	⍝ E0: Returning end of line statement
+	
+	⍝ E1: Monadic expression application
+	
+	⍝ F0: Initialization functions for namespaces
+	
+	⍝ F2: D-fns functions
+	
+	⍝ Warn about nodes that appear which we haven't generated
 	⎕←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←z∊⊂'')⌿N∆[t],∘⍕¨k
 
+	⍝ Assemble all the data together into a single character vector
 	∊(pref,⊃⍪⌿z[1⊃P2D p]),¨⊂⎕UCS 13 10
 	
 	
-⍝ Old Stuff	
-	gck←0⍴⊂0 0 ⋄ gcv←0⍴⊂''
-	gck,←(A 1)(A 6)
-	gcv,←'Aa' 'As'
-	gck,←(P 0)(P 1)(P 2)(P 3)(P 4)
-	gcv,←'Pv' 'Pv' 'Pf' 'Po' 'Po'
-	gck,←⊂E 6
-	gcv,←⊂'Ei'
-	gck,←(B 1)(B 2)(B 3)(B 4)
-	gcv,←'Bv' 'Bf' 'Bo' 'Bo'
-	gck,←⊂E 4
-	gcv,←⊂'Eb'
-	gck,←(E 1)(E 2)
-	gcv,←'Em' 'Ed'
-	gck,←(O 1)(O 2)(O 4) (O 5) (O 7) (O 8)
-	gcv,←'Ov' 'Of' 'Ovv' 'Ofv' 'Ovf' 'Off'
-	gck,←(E ¯1)(E 0)
-	gcv,←'Ek'  'Er' 
-	gck,←(C 1)(C 2)(F 2)(F 3)(F 4)
-	gcv,←'Ca' 'Cf' 'Fn' 'Fm' 'Fd'
-	gck,←⊂G 0
-	gcv,←⊂'Gd'
-	gck,←⊂F 0
-	gcv,←⊂'Fz'
-
+⍝ Old Stuff
 
 	Zp←{
 		n←'fn',⍕⍵
@@ -278,7 +272,5 @@ GC←{
 		z,←⊂''
 	z}
 
-	NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)SIGNAL 16}
-	dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
 	∊,∘(⎕UCS 13 10)¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
 }
