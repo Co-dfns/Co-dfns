@@ -1,76 +1,115 @@
 GC←{
 	p t k n fr sl rf fd xi sym←⍵
 
-	syms←0⍴⊂'' ⋄ nams←0⍴⊂''
-	syms,←⊂,';' ⋄ nams,←⊂'span'
-	syms,←⊂,'←' ⋄ nams,←⊂'get'
-	syms,←⊂,'∇' ⋄ nams,←⊂'this'
-	syms,←⊂,'+' ⋄ nams,←⊂'add'
-	syms,←⊂,'∧' ⋄ nams,←⊂'and'
-	syms,←⊂,'[' ⋄ nams,←⊂'brk'
-	syms,←⊂,',' ⋄ nams,←⊂'cat'
-	syms,←⊂,'⍪' ⋄ nams,←⊂'ctf'
-	syms,←⊂,'○' ⋄ nams,←⊂'cir'
-	syms,←⊂,'⍨' ⋄ nams,←⊂'com'
-	syms,←⊂,'∘' ⋄ nams,←⊂'jot'
-	syms,←⊂,'⎕CONV' ⋄ nams,←⊂'conv'
-	syms,←⊂,'⊥' ⋄ nams,←⊂'dec'
-	syms,←⊂,'⊃' ⋄ nams,←⊂'dis'
-	syms,←⊂,'÷' ⋄ nams,←⊂'div'
-	syms,←⊂,'↓' ⋄ nams,←⊂'drp'
-	syms,←⊂,'¨' ⋄ nams,←⊂'map'
-	syms,←⊂,'⊂' ⋄ nams,←⊂'par'
-	syms,←⊂,'⊤' ⋄ nams,←⊂'enc'
-	syms,←⊂,'=' ⋄ nams,←⊂'eql'
-	syms,←⊂,'*' ⋄ nams,←⊂'exp'
-	syms,←⊂,'!' ⋄ nams,←⊂'fac'
-	syms,←⊂,'⎕FFT' ⋄ nams,←⊂'fft'
-	syms,←⊂,'⎕IFFT' ⋄ nams,←⊂'ift'
-	syms,←⊂,'⍷' ⋄ nams,←⊂'fnd'
-	syms,←⊂,'⍒' ⋄ nams,←⊂'gdd'
-	syms,←⊂,'⍋' ⋄ nams,←⊂'gdu'
-	syms,←⊂,'>' ⋄ nams,←⊂'gth'
-	syms,←⊂,'≥' ⋄ nams,←⊂'gte'
-	syms,←⊂,'⌷' ⋄ nams,←⊂'sqd'
-	syms,←⊂,'⍳' ⋄ nams,←⊂'iot'
-	syms,←⊂,'.' ⋄ nams,←⊂'dot'
-	syms,←⊂,'∩' ⋄ nams,←⊂'int'
-	syms,←⊂,'⊣' ⋄ nams,←⊂'lft'
-	syms,←⊂,'<' ⋄ nams,←⊂'lth'
-	syms,←⊂,'≤' ⋄ nams,←⊂'lte'
-	syms,←⊂,'⍟' ⋄ nams,←⊂'log'
-	syms,←⊂,'≡' ⋄ nams,←⊂'eqv'
-	syms,←⊂,'⌹' ⋄ nams,←⊂'mdv'
-	syms,←⊂,'⌈' ⋄ nams,←⊂'max'
-	syms,←⊂,'∊' ⋄ nams,←⊂'mem'
-	syms,←⊂,'⌊' ⋄ nams,←⊂'min'
-	syms,←⊂,'×' ⋄ nams,←⊂'mul'
-	syms,←⊂,'⊆' ⋄ nams,←⊂'nst'
-	syms,←⊂,'~' ⋄ nams,←⊂'not'
-	syms,←⊂,'⍲' ⋄ nams,←⊂'nan'
-	syms,←⊂,'≠' ⋄ nams,←⊂'neq'
-	syms,←⊂,'≢' ⋄ nams,←⊂'nqv'
-	syms,←⊂,'⍱' ⋄ nams,←⊂'nor'
-	syms,←⊂,'∨' ⋄ nams,←⊂'lor'
-	syms,←⊂,'∘.' ⋄ nams,←⊂'oup'
-	syms,←⊂,'⍣' ⋄ nams,←⊂'pow'
-	syms,←⊂,'⍤' ⋄ nams,←⊂'rnk'
-	syms,←⊂,'/' ⋄ nams,←⊂'red'
-	syms,←⊂,'⌿' ⋄ nams,←⊂'rdf'
-	syms,←⊂,'?' ⋄ nams,←⊂'rol'
-	syms,←⊂,'⌽' ⋄ nams,←⊂'rot'
-	syms,←⊂,'⊖' ⋄ nams,←⊂'rtf'
-	syms,←⊂,'|' ⋄ nams,←⊂'res'
-	syms,←⊂,'⊢' ⋄ nams,←⊂'rgt'
-	syms,←⊂,'%s' ⋄ nams,←⊂'scl'
-	syms,←⊂,'\' ⋄ nams,←⊂'scn'
-	syms,←⊂,'⍀' ⋄ nams,←⊂'scf'
-	syms,←⊂,'⍴' ⋄ nams,←⊂'rho'
-	syms,←⊂,'-' ⋄ nams,←⊂'sub'
-	syms,←⊂,'↑' ⋄ nams,←⊂'tke'
-	syms,←⊂,'⍉' ⋄ nams,←⊂'trn'
-	syms,←⊂,'∪' ⋄ nams,←⊂'unq'
+	⍝ Symbol mapping between primitives and runtime names
+	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
+	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
+	syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'    '⍲'   '⍱'
+	nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor'  'nan' 'nor'
+	syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'    '∊'   '⊃'
+	nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf'  'mem' 'dis'
+	syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'    '⍀'   '?'
+	nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
+	syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
+	nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
+	syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '⊆'   '⎕CONV'
+	nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'nst' 'conv'
+	syms,←,¨'∇'    ';'    '%u'
+	nams,←  'this' 'span' ''
 	
+	⍝ Make sure signal retains the stack
+	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
+	
+	⍝ Variable generation utilities
+	var_ckinds←{d p t k n i←⍵
+		0∊k:'STACK VARIABLES HAVE NO C KIND'SIGNAL 99
+		('' 'array' 'func' 'moper' 'doper' 'env' 'void')[10||⍵]
+	}
+	
+	decl_vars←{
+		0∊⍺:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
+		1∊|⍺:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
+		6∊|⍺:{
+			EM←'CANNOT DECLARE AMBIGUOUS GLOBAL'
+			EM ⎕SIGNAL 99
+		}⍬
+		z←'' 'struct cell_'[10≤|⍺]
+		z,¨←var_ckinds ⍺
+		z,¨←'' '_ptr'[10≥|⍺]
+		z,¨←' ' '_box '[¯10≥⍺]
+		z,¨←'' '*'[10≤|⍺]
+		z,¨←clean_vars sym[|⍵]
+		z,¨';'
+	}
+	
+	clean_vars←{
+		cequv←'_del_' '_delubar_' 'alpha' 'omega'
+		(,¨'∆⍙⍺⍵')⎕R cequv⊢⍵
+	}
+	
+	init_vars←{
+		0∊⍺:{
+			EM←'CANNOT INITIALIZE STACK VARIABLE'
+			EM SIGNAL 99
+		}⍬
+		(10>|⍺)∧⍺<0:{
+			EM←'GLOBAL VARIABLES CANNOT BE MUTABLE'
+			EM SIGNAL 99
+		}⍬
+		z←(≢⍵)⍴⊂⊂''
+		i←⍸⍺>0
+		z[i]←⊂¨(⍺[i] var_refs ⍵[i]),¨⊂' = NULL;'
+		init←{
+			z←⊂'err = mk_',⍺,'_box(&',⍵,', NULL);'
+			z,←⊂'if (err)'
+			z,←⊂TB,'goto fail;'
+		z}
+		types←var_ckinds ⍺[i]
+		names←⍺[i] var_refs ⍵[i]
+		z[i]←types init names
+		⊃⍪⌿z
+	}
+	
+	var_refs←{
+		0∊⍺:{
+			EM←'CANNOT REFERENCE STACK VARIABLE'
+			EM SIGNAL 99
+		}⍬
+		z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
+		z,¨clean_vars sym[|⍵]
+	}
+	
+	var_values←{
+		z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
+		z,¨←clean_vars sym[|⍵]
+		z,¨←'' '->value'[⍺<0]
+		z[⍸0=⍺]←⊂'*--stkhd'
+	z}
+	
+	kill_vars←{
+		type←var_ckinds ⍺
+		'release_'∘,¨type,¨'(',¨(⍺ var_refs ⍵),');'
+	}
+
+	⍝ All code has an initial prefix
+	pref ←⊂'#include "codfns.h"'
+	pref,←⊂''
+	pref,←⊂'EXPORT int'
+	pref,←⊂'DyalogGetInterpreterFunctions(void *p)'
+	pref,←⊂'{'
+	pref,←⊂'    return set_dwafns(p);'
+	pref,←⊂'}'
+	pref,←⊂''
+	
+	⍝ We have a vector output for each node in the AST
+	z←(≢p)⍴⊂''
+	
+	⎕←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←z∊⊂'')⌿N∆[t],∘⍕¨k
+
+	∊(pref,⊃⍪⌿z[1⊃P2D p]),¨⊂⎕UCS 13 10
+	
+	
+⍝ Old Stuff	
 	gck←0⍴⊂0 0 ⋄ gcv←0⍴⊂''
 	gck,←(A 1)(A 6)
 	gcv,←'Aa' 'As'
@@ -95,80 +134,7 @@ GC←{
 	gck,←⊂F 0
 	gcv,←⊂'Fz'
 
-	pref ←⊂'#include "codfns.h"'
-	pref,←⊂''
-	pref,←⊂'EXPORT int'
-	pref,←⊂'DyalogGetInterpreterFunctions(void *p)'
-	pref,←⊂'{'
-	pref,←⊂'    return set_dwafns(p);'
-	pref,←⊂'}'
-	pref,←⊂''
 
-	var_ckinds←{
-		0∊⍵:'STACK VARIABLES HAVE NO C KIND'⎕SIGNAL 99
-		types←'' 'array' 'func' 'moper' 'doper'
-		types,←'env' 'void'
-		types[10||⍵]
-	}
-	decl_vars←{
-		0∊⍺:'CANNOT DECLARE STACK VARIABLE'⎕SIGNAL 99
-		1∊|⍺:'CANNOT DECLARE GLOBAL ARRAY'⎕SIGNAL 99
-		6∊|⍺:{
-			EM←'CANNOT DECLARE AMBIGUOUS GLOBAL'
-			EM ⎕SIGNAL 99
-		}⍬
-		z←'' 'struct cell_'[10≤|⍺]
-		z,¨←var_ckinds ⍺
-		z,¨←'' '_ptr'[10≥|⍺]
-		z,¨←' ' '_box '[¯10≥⍺]
-		z,¨←'' '*'[10≤|⍺]
-		z,¨←clean_vars sym[|⍵]
-		z,¨';'
-	}
-	clean_vars←{
-		cequv←'_del_' '_delubar_' 'alpha' 'omega'
-		(,¨'∆⍙⍺⍵')⎕R cequv⊢⍵
-	}
-	init_vars←{
-		0∊⍺:{
-			EM←'CANNOT INITIALIZE STACK VARIABLE'
-			EM ⎕SIGNAL 99
-		}⍬
-		(10>|⍺)∧⍺<0:{
-			EM←'GLOBAL VARIABLES CANNOT BE MUTABLE'
-			EM ⎕SIGNAL 99
-		}⍬
-		z←(≢⍵)⍴⊂⊂''
-		i←⍸⍺>0
-		z[i]←⊂¨(⍺[i] var_refs ⍵[i]),¨⊂' = NULL;'
-		init←{
-			z←⊂'err = mk_',⍺,'_box(&',⍵,', NULL);'
-			z,←⊂'if (err)'
-			z,←⊂TB,'goto fail;'
-		z}
-		types←var_ckinds ⍺[i]
-		names←⍺[i] var_refs ⍵[i]
-		z[i]←types init names
-		⊃⍪⌿z
-	}
-	var_refs←{
-		0∊⍺:{
-			EM←'CANNOT REFERENCE STACK VARIABLE'
-			EM ⎕SIGNAL 99
-		}⍬
-		z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
-		z,¨clean_vars sym[|⍵]
-	}
-	var_values←{
-		z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
-		z,¨←clean_vars sym[|⍵]
-		z,¨←'' '->value'[⍺<0]
-		z[⍸0=⍺]←⊂'*--stkhd'
-	z}
-	kill_vars←{
-		type←var_ckinds ⍺
-		'release_'∘,¨type,¨'(',¨(⍺ var_refs ⍵),');'
-	}
 	Zp←{
 		n←'fn',⍕⍵
 		k[⍵]∊0 2:{
@@ -312,8 +278,7 @@ GC←{
 		z,←⊂''
 	z}
 
-	d i←P2D p ⋄ ast←(⍉↑d p t k n(⍳≢p)fr sl fd)[i;] ⋄ ks←{⍵⊂[0]⍨(⊃⍵)=⍵[;0]}
-	NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)⎕SIGNAL 16}
+	NOTFOUND←{('[GC] UNSUPPORTED NODE TYPE ',N∆[⊃⍵],⍕⊃⌽⍵)SIGNAL 16}
 	dis←{0=2⊃h←,1↑⍵:'' ⋄ (≢gck)=i←gck⍳⊂h[2 3]:NOTFOUND h[2 3] ⋄ h(⍎i⊃gcv)ks 1↓⍵}
 	∊,∘(⎕UCS 13 10)¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
 }
