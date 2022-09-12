@@ -1,3 +1,0 @@
-TANGLE;opsys
-opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
-⎕CMD opsys '.\TANGLE.bat' './TANGLE.sh' './TANGLE.sh'

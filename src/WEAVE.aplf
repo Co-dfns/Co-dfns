@@ -1,3 +1,0 @@
-WEAVE;opsys
-opsys←{⍵⊃⍨'Win' 'Lin' 'Mac'⍳⊂3↑⊃'.'⎕WG'APLVersion'}
-⎕CMD opsys '.\WEAVE.bat' './WEAVE.sh' './WEAVE.sh'
