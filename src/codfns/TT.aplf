@@ -42,8 +42,10 @@ TT←{
 	nams,←  'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
 	syms,←,¨'←'   '⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⊆'   '∇'
 	nams,←  'get' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'del'
-	syms,←,¨';'   '⎕FFT' '⎕IFFT' '⎕CONV' '%u'
-	nams,←  'spn' 'fft'  'ift'   'cnv'   ''
+	syms,←,¨';'   '⎕FFT' '⎕IFFT' '⎕CONV' 
+	nams,←  'spn' 'fft'  'ift'   'cnv'   
+	syms,←,¨'⍺'     '⍵'     '%u'
+	nams,←  'alpha' 'omega' ''
 	
 	⍝ Convert all primitives to variables; P* → V0
 	i←⍸t=P ⋄ t[i]←V ⋄ k[i]←0 ⋄ sym[i]←nams[syms⍳sym[i←n[i]]]
