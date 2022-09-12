@@ -102,6 +102,7 @@ GC←{
 	nams,←  'this' 'span' ''
 	
 	⍝ Convert all primitives to variables
+	i←⍸t=P ⋄ t[i]←V ⋄ k[i]←0 ⋄ sym[i]←nams[syms⍳sym[i←|n[i]]]
 	
 	⍝ We have a vector output for each node in the AST
 	z←(≢p)⍴⊂''
