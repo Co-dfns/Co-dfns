@@ -21,7 +21,7 @@ TT←{
 	n[⍸(t∊A E)∧k=6]←0 ⋄ n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1
 	
 	⍝ Lift and flatten expressions
-	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O P V] ⋄ j←(⌽i)[⍋⌽x]
+	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O] ⋄ j←(⌽i)[⍋⌽x]
 	p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
 	
 	⍝ Compute slots for each frame
