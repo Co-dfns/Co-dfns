@@ -50,5 +50,5 @@ TT←{
 	⍝ Convert all primitives to variables; P* → V0
 	i←⍸t=P ⋄ t[i]←V ⋄ k[i]←0 ⋄ sym[i]←nams[syms⍳sym[i←n[i]]]
 
-	p t k n f s r d xi sym
+	p t k n r xi sym
 }
