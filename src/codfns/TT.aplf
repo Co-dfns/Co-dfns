@@ -13,7 +13,7 @@ TT←{
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4 ⋄ t[j]←E
 	
-	⍝ Life guard tests
+	⍝ Lift guard tests
 	p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
 	n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
 	
