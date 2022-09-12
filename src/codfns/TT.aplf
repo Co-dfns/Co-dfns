@@ -23,9 +23,9 @@ TT←{
 	
 	⍝ Record exported top-level bindings
 	xi←⍸(t=B)∧k[r]=0
-	
-	⍝ Namify pointer variables; no need for negative n after this
-	i←⍸(t=V)∧n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←sym⍳x ⋄ n←|n
+
+	⍝ Namify pointer variables
+	i←⍸n>0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
 	
 	⍝ Symbol mapping between primitives and runtime names
 	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'  
