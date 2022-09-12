@@ -37,20 +37,22 @@ TT←{
 	i←⍸(t=V)∧n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←sym⍳x ⋄ n←|n
 	
 	⍝ Symbol mapping between primitives and runtime names
-	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'    '○'     '⌊'    '⌈'   '!'
-	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res'  'cir'   'min'  'max' 'fac'
-	syms,←,¨'<'   '≤'   '='   '≥'   '>'   '≠'   '~'    '∧'     '∨'    '⍲'   '⍱'
-	nams,←  'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'  'and'   'lor'  'nan' 'nor'
-	syms,←,¨'⌷'   '['   '⍳'   '⍴'   ','   '⍪'   '⌽'    '⍉'     '⊖'    '∊'   '⊃'
-	nams,←  'sqd' 'brk' 'iot' 'rho' 'cat' 'ctf' 'rot'  'trn'   'rtf'  'mem' 'dis'
-	syms,←,¨'≡'   '≢'   '⊢'   '⊣'   '⊤'   '⊥'   '/'    '⌿'     '\'    '⍀'   '?'
-	nams,←  'eqv' 'nqv' 'rgt' 'lft' 'enc' 'dec' 'red'  'rdf'   'scn'  'scf' 'rol'
-	syms,←,¨'↑'   '↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'    '∘'     '∪'    '∩'   '←'
-	nams,←  'tke' 'drp' 'map' 'com' 'dot' 'rnk' 'pow'  'jot'   'unq'  'int' 'get'
-	syms,←,¨'⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⎕FFT' '⎕IFFT' '%s'   '⊆'   '⎕CONV'
-	nams,←  'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'fft'  'ift'   'scl'  'nst' 'conv'
-	syms,←,¨'∇'    ';'    '%u'
-	nams,←  'this' 'span' ''
+	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'  
+	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min'
+	syms,←,¨'⌈'   '!'   '<'   '≤'   '='   '≥'   '>'   '≠'   '~'
+	nams,←  'max' 'fac' 'lth' 'lte' 'eql' 'gte' 'gth' 'neq' 'not'
+	syms,←,¨'∧'   '∨'   '⍲'   '⍱'   '⌷'   '['   '⍳'   '⍴'   ','  
+	nams,←  'and' 'lor' 'nan' 'nor' 'sqd' 'brk' 'iot' 'rho' 'cat' 
+	syms,←,¨'⍪'   '⌽'   '⍉'   '⊖'   '∊'   '⊃'   '≡'   '≢'   '⊢'
+	nams,←  'ctf' 'rot' 'trn' 'rtf' 'mem' 'dis' 'eqv' 'nqv' 'rgt'
+	syms,←,¨'⊣'   '⊤'   '⊥'   '/'   '⌿'   '\'   '⍀'   '?'   '↑'   
+	nams,←  'lft' 'enc' 'dec' 'red' 'rdf' 'scn' 'scf' 'rol' 'tke' 
+	syms,←,¨'↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'   '∘'   '∪'   '∩'
+	nams,←  'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
+	syms,←,¨'←'   '⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⊆'   '∇'
+	nams,←  'get' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'del'
+	syms,←,¨';'   '⎕FFT' '⎕IFFT' '⎕CONV' '%u'
+	nams,←  'spn' 'fft'  'ift'   'cnv'   ''
 	
 	⍝ Convert all primitives to variables; P* → V0
 	i←⍸t=P ⋄ t[i]←V ⋄ k[i]←0 ⋄ sym[i]←nams[syms⍳sym[i←n[i]]]
