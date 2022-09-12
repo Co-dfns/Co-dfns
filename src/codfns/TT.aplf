@@ -17,18 +17,9 @@ TT←{
 	p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
 	n[x]←n[i] ⋄ p←((x,i)@(i,x)⊢⍳≢p)[p]
 	
-	⍝ Count strand and indexing children
-	n[⍸(t∊A E)∧k=6]←0 ⋄ n[p⌿⍨(t[p]∊A E)∧k[p]=6]+←1
-	
 	⍝ Lift and flatten expressions
 	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O] ⋄ j←(⌽i)[⍋⌽x]
 	p t k n r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
-	
-	⍝ Compute slots for each frame
-	s←¯1,⍨∊⍳¨n[∪x]←⊢∘≢⌸x←0⌷⍉e←∪I∘⍋⍨rn←r[b],⍪n[b←⍸t=B]
-
-	⍝ Compute frame depths
-	d←(≢p)↑d ⋄ d[i←⍸t=F]←0 ⋄ _←{z⊣d[i]+←⍵≠z←r[⍵]}⍣≡i ⋄ f←d[0⌷⍉e],¯1
 	
 	⍝ Record exported top-level bindings
 	xi←⍸(t=B)∧k[r]=0
