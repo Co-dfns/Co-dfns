@@ -5,9 +5,9 @@ GC←{
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
 	
 	⍝ Variable generation utilities
-	var_ckinds←{d p t k n i←⍵
-		0∊k:'STACK VARIABLES HAVE NO C KIND'SIGNAL 99
-		('' 'array' 'func' 'moper' 'doper' 'env' 'void')[10||⍵]
+	var_ckinds←{
+		0∊k←k[⍵]:'STACK VARIABLES HAVE NO C KIND'SIGNAL 99
+		('' 'array' 'func' 'moper' 'doper' 'env' 'void')[10||k]
 	}
 	
 	decl_vars←{
