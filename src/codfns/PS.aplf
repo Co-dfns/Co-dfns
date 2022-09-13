@@ -319,8 +319,8 @@ PS←{
 	⍝ Convert M nodes to F0 nodes
 	t←F@{t=M}t
 
-	⍝ Convert ⍺ and ⍵ nodes to V1 nodes
-	t[i←⍸(t=A)∧n∊,¨'⍺⍵']←V ⋄ vb[i]←i
+	⍝ Convert ⍺ and ⍵ nodes to P1 nodes
+	t[i←⍸(t=A)∧n∊,¨'⍺⍵']←P ⋄ vb[i]←i
 
 	⍝ Convert ⍺⍺ and ⍵⍵ nodes to P2 nodes
 	k[⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2
