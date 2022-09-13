@@ -25,7 +25,7 @@ TT←{
 	xi←⍸(t=B)∧k[r]=0
 
 	⍝ Namify pointer variables
-	i←⍸n>0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
+	i←⍸n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
 	
 	⍝ Symbol mapping between primitives and runtime names
 	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'  
