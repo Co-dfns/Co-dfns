@@ -1,10 +1,10 @@
 #include "codfns.h"
 
 int
-init(void);
+prim_init(void);
 
 EXPORT int
 cdf_init(void)
 {
-        return init();
+        return prim_init();
 }

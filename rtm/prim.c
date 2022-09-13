@@ -6,32 +6,32 @@ DyalogGetInterpreterFunctions(void *p)
     return set_dwafns(p);
 }
 
-int
-fn0(struct array **z, struct array *l, struct array *r, void *fv[]);
+int prim_flag = 0;
 
-
-int init0 = 0;
+struct prim_loc {
+	int __count;
+	wchar_t **__names;
+} prim_env;
 
 EXPORT int
-init(void)
+prim_init(void)
 {
- return fn0(NULL, NULL, NULL, NULL);
+	void *stk[128];
+	void **stkhd;
+
+	struct prim_loc loc;
+
+	if (prim_flag)
+		return 0;
+
+	stkhd = &stk[0];
+	prim_flag = 1;
+	cdf_init();
+
+	loc.__count = 0;
+	loc.__names = NULL;
+
+	prim_env = loc;
+
+	return 0;
 }
-
-int
-fn0(struct array **z, 
-    struct array *l, struct array *r, void *fv[])
-{
-       void    *stk[128];
-       void    **stkhd;
-
-       if (init0)
-               return 0;
-
-       stkhd = &stk[0];
-       init0 = 1;
-       cdf_init();
-
-       return 0;
-}
-
