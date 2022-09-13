@@ -64,10 +64,10 @@ GC←{
 	}
 	
 	var_values←{
-		z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
-		z,¨←clean_vars sym[|⍵]
-		z,¨←'' '->value'[⍺<0]
-		z[⍸0=⍺]←⊂'*--stkhd'
+		z←'' 'loc.' 'lex->' 'dyn->'[⌊10÷⍨|k[⍵]]
+		z,¨←clean_vars sym[|n[⍵]]
+		z,¨←'' '->value'[k[⍵]<0]
+		z[⍸0=k[⍵]]←⊂'*--stkhd'
 	z}
 	
 	kill_vars←{
