@@ -47,8 +47,8 @@ TT←{
 	syms,←,¨'⍺'     '⍵'     '%u'
 	nams,←  'alpha' 'omega' ''
 	
-	⍝ Convert all primitives to variables; P* → V0
-	i←⍸t=P ⋄ t[i]←V ⋄ k[i]←0 ⋄ sym[i]←nams[syms⍳sym[i←|n[i]]]
+	⍝ Convert all primitives to variables; P → V
+	i←⍸t=P ⋄ t[i]←V ⋄ sym[i]←nams[syms⍳sym[i←|n[i]]]
 
 	p t k n xi sym
 }
