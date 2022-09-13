@@ -1,5 +1,5 @@
 GC←{
-	p t k n fr sl rf fd xi sym←⍵
+	p t k n xi sym←⍵
 
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
