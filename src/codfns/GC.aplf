@@ -14,18 +14,16 @@ GC←{
 	}
 	
 	decl_vars←{
-		0∊⍺:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
-		1∊|⍺:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
-		6∊|⍺:{
-			EM←'CANNOT DECLARE AMBIGUOUS GLOBAL'
-			EM ⎕SIGNAL 99
-		}⍬
-		z←'' 'struct cell_'[10≤|⍺]
-		z,¨←var_ckinds ⍺
-		z,¨←'' '_ptr'[10≥|⍺]
-		z,¨←' ' '_box '[¯10≥⍺]
-		z,¨←'' '*'[10≤|⍺]
-		z,¨←clean_vars sym[|⍵]
+		0=≢⍵:⊂''
+		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
+		∨⌿(k[⍵]=1)∧lx[⍵]>2:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
+		∨⌿(k[⍵]=6)∧lx[⍵]>2:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
+		z←'' 'struct cell_'[lx[⍵]<3]
+		z,¨←var_ckinds ⍵
+		z,¨←'' '_ptr'[lx[⍵]≥3]
+		z,¨←' ' '_box '[mu[⍵]]
+		z,¨←'' '*'[lx[⍵]<3]
+		z,¨←var_names ⍵
 		z,¨';'
 	}
 	
