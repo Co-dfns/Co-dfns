@@ -148,6 +148,7 @@ GC←{
 	z[i],←⊂⊂''
 	z[i],←⊂⊂'	return 0;'
 	z[i],←⊂⊂'}'
+	z[i],←⊂⊂''
 
 	⍝ Warn about nodes that appear which we haven't generated
 	⎕←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←(z∊⊂'')∧~t∊V)⌿N∆[t],∘⍕¨k
