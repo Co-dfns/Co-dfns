@@ -27,9 +27,11 @@ GC←{
 		z,¨';'
 	}
 	
-	clean_vars←{
-		cequv←'_del_' '_delubar_' 'alpha' 'omega'
-		(,¨'∆⍙⍺⍵')⎕R cequv⊢⍵
+	var_names←{
+		ceqv←'_del_' '_delubar_' 'alpha' 'omega'
+		asym←'∆'     '⍙'         '⍺'     '⍵'
+		(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
+	}
 	}
 	
 	init_vars←{
@@ -61,12 +63,12 @@ GC←{
 			EM SIGNAL 99
 		}⍬
 		z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
-		z,¨clean_vars sym[|⍵]
+		z,¨var_names ⍵
 	}
 	
 	var_values←{
-		z,¨←clean_vars sym[|n[⍵]]
 		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
+		z,¨←var_names ⍵
 		z,¨←'' '->value'[mu[⍵]]
 		z←'retain_cell('∘,¨z,¨')'
 		z[⍸0=k[⍵]]←⊂'*--stkhd'
