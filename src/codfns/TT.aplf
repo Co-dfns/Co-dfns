@@ -7,26 +7,26 @@ TT←{
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx ss se r(⊣,I)←⊂i
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←C
-	
+
 	⍝ Wrap expressions as binding or return statements
 	i←(⍸(~t∊F G)∧t[p]=F),{⍵⌿⍨2|⍳≢⍵}⍸t[p]=G
 	p t k n lx ss se r⌿⍨←⊂m←2@i⊢1⍴⍨≢p
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
-	
+
 	⍝ Lift guard tests
 	p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
 	n[x]←n[i] ⋄ lx[x,i]←lx[i,x] ⋄ ss[x,i]←ss[i,x] ⋄ se[x,i]←se[i,x]
 	p←((x,i)@(i,x)⊢⍳≢p)[p]
-	
+
 	⍝ Lift and flatten expressions
 	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O] ⋄ j←(⌽i)[⍋⌽x]
 	p t k n lx ss se r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
-	
+
 	⍝ Namify pointer variables
 	i←⍸n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
-	
+
 	⍝ Symbol mapping between primitives and runtime names
 	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'  
 	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min'
