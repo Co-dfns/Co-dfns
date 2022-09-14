@@ -115,13 +115,16 @@ GC←{
 	⍝ F2: D-fns functions
 	
 	⍝ F0: Initialization functions for namespaces
-	i←⍸(t=F)∧k=0 ⋄ id←(|n[i])⊃sym
+	i←⍸(t=F)∧k=0 ⋄ id←⊃var_names i ⋄ xi←⍸(t=B)∧k[p]=0
 	z[i],←⊂⊂'int ',id,'_flag = 0;'
 	z[i],←⊂⊂''
 	z[i],←⊂⊂'struct ',id,'_loc {'
 	z[i],←⊂⊂'	int __count;'
 	z[i],←⊂⊂'	wchar_t **__names;'
+	z[i],←⊂¨'	',¨decl_vars xi
 	z[i],←⊂⊂'} ',id,'_env;'
+	z[i],←⊂⊂''
+	z[i],←⊂⊂(id,'_names')var_nmvec xi
 	z[i],←⊂⊂''
 	z[i],←⊂⊂'EXPORT int'
 	z[i],←⊂⊂id,'_init(void)'
@@ -138,8 +141,8 @@ GC←{
 	z[i],←⊂⊂'	',id,'_flag = 1;'
 	z[i],←⊂⊂'	cdf_init();'
 	z[i],←⊂⊂''
-	z[i],←⊂⊂'	loc.__count = 0;'
-	z[i],←⊂⊂'	loc.__names = NULL;'
+	z[i],←⊂⊂'	loc.__count = ',(⍕≢xi),';'
+	z[i],←⊂⊂'	loc.__names = ',id,'_names;'
 	z[i],←⊂⊂''
 	z[i],←⊂⊂'	',id,'_env = loc;'
 	z[i],←⊂⊂''
