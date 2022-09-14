@@ -113,6 +113,18 @@ GC←{
 	⍝ E1: Monadic expression application
 	
 	⍝ F2: D-fns functions
+	i←⍸(t=F)∧k=2 
+	z[i],←{
+		id←⊃var_names ⍵
+		z ←⊂'int'
+		z,←⊂id,'_func(struct cell_array **z,'
+		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
+		z,←⊂'    void *lex[])'
+		z,←⊂'{'
+		z,←⊂'	return 0;'
+		z,←⊂'}'
+		z,⊂''
+	}¨i
 	
 	⍝ F0: Initialization functions for namespaces
 	i←⍸(t=F)∧k=0 ⋄ id←⊃var_names i ⋄ xi←⍸(t=B)∧k[p]=0
@@ -242,28 +254,6 @@ GC←{
 	z}
 	Ek←{
 		z ←⊂'release_cell(*--stkhd);'
-		z,←⊂''
-	z}
-	Fn←{id←⍕5⊃⍺ ⋄ x←⍉⊃⍪⌿⍵ ⋄ t←2⌷x ⋄ k←3⌷x
-		hsw←(t=O)∨(t=E)∧k∊1 2 ⋄ hsa←((t=E)∧k=2)∨(t=O)∧k∊4 5 7 8
-		z ←⊂'int'
-		z,←⊂'fn',id,'(struct array **z, '
-		z,←⊂'    struct array *l, struct array *r, void *fv[])'
-		z,←⊂'{'
-		z,←⊂'       void    *stk[128];'
-		z,←⊂'       void    **stkhd;'
-		z,←hsw⌿⊂' void    *w;'
-		z,←hsa⌿⊂' void    *a;'
-		z,←hsw⌿⊂' struct  closure *c;'
-		z,←⊂''
-		z,←⊂'       stkhd = &stk[0];'
-		z,←⊂''
-		z,← ' ',¨⊃,⌿dis¨⍵
-		z,←⊂'       *z = NULL;'
-		z,←⊂''
-		z,←⊂'cleanup:'
-		z,←⊂'       return 0;'
-		z,←⊂'}'
 		z,←⊂''
 	z}
 
