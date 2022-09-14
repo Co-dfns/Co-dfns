@@ -32,6 +32,12 @@ GC←{
 		asym←'∆'     '⍙'         '⍺'     '⍵'
 		(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
 	}
+	
+	var_nmvec←{
+		0=≢⍵:'wchar_t **',⍺,' = NULL;'
+		z←'wchar_t *',⍺,'[] = {'
+		z,←⊃{⍺,', ',⍵}⌿'L"'∘,¨sym[|n[⍵]],¨'"'
+		z,'};'
 	}
 	
 	init_vars←{
