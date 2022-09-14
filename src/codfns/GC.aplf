@@ -127,40 +127,43 @@ GC←{
 	}¨i
 	
 	⍝ F0: Initialization functions for namespaces
-	i←⍸(t=F)∧k=0 ⋄ id←⊃var_names i ⋄ xi←⍸(t=B)∧k[p]=0
-	z[i],←⊂⊂'int ',id,'_flag = 0;'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'struct ',id,'_loc {'
-	z[i],←⊂⊂'	int __count;'
-	z[i],←⊂⊂'	wchar_t **__names;'
-	z[i],←⊂¨'	',¨decl_vars xi
-	z[i],←⊂⊂'} ',id,'_env;'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂(id,'_names')var_nmvec xi
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'EXPORT int'
-	z[i],←⊂⊂id,'_init(void)'
-	z[i],←⊂⊂'{'
-	z[i],←⊂⊂'	void *stk[128];'
-	z[i],←⊂⊂'	void **stkhd;'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'	struct ',id,'_loc loc;'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'	if (',id,'_flag)'
-	z[i],←⊂⊂'		return 0;'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'	stkhd = &stk[0];'
-	z[i],←⊂⊂'	',id,'_flag = 1;'
-	z[i],←⊂⊂'	cdf_init();'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'	loc.__count = ',(⍕≢xi),';'
-	z[i],←⊂⊂'	loc.__names = ',id,'_names;'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'	',id,'_env = loc;'
-	z[i],←⊂⊂''
-	z[i],←⊂⊂'	return 0;'
-	z[i],←⊂⊂'}'
-	z[i],←⊂⊂''
+	i←⍸(t=F)∧k=0
+	z[i],←{
+		id←⊃var_names ⍵ ⋄ xi←⍸(t=B)∧p=⍵
+		z ←⊂'int ',id,'_flag = 0;'
+		z,←⊂''
+		z,←⊂'struct ',id,'_loc {'
+		z,←⊂'	int __count;'
+		z,←⊂'	wchar_t **__names;'
+		z,← '	',¨decl_vars xi
+		z,←⊂'} ',id,'_env;'
+		z,←⊂''
+		z,←⊂(id,'_names')var_nmvec xi
+		z,←⊂''
+		z,←⊂'EXPORT int'
+		z,←⊂id,'_init(void)'
+		z,←⊂'{'
+		z,←⊂'	void *stk[128];'
+		z,←⊂'	void **stkhd;'
+		z,←⊂''
+		z,←⊂'	struct ',id,'_loc loc;'
+		z,←⊂''
+		z,←⊂'	if (',id,'_flag)'
+		z,←⊂'		return 0;'
+		z,←⊂''
+		z,←⊂'	stkhd = &stk[0];'
+		z,←⊂'	',id,'_flag = 1;'
+		z,←⊂'	cdf_init();'
+		z,←⊂''
+		z,←⊂'	loc.__count = ',(⍕≢xi),';'
+		z,←⊂'	loc.__names = ',id,'_names;'
+		z,←⊂''
+		z,←⊂'	',id,'_env = loc;'
+		z,←⊂''
+		z,←⊂'	return 0;'
+		z,←⊂'}'
+		z,⊂''
+	}¨i
 
 	⍝ Warn about nodes that appear which we haven't generated
 	⎕←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←(z∊⊂'')∧~t∊V)⌿N∆[t],∘⍕¨k
