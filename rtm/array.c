@@ -56,8 +56,7 @@ fill_host_array(struct cell_array *arr,
 {
         struct cell_array **data;
         struct pocket **pkts;
-        int     err;
-
+	
         if (typ != ARR_NESTED)
                 return 16;
 
@@ -71,15 +70,6 @@ fill_host_array(struct cell_array *arr,
 
         if (data == NULL)
                 return 1;
-
-        for (size_t i = 0; i < size; i++) {
-                err = dwa2array(&data[i], pkts[i]);
-
-                if (err) {
-                        free(data);
-                        return err;
-                }
-        }
 
         arr->values = data;
 
