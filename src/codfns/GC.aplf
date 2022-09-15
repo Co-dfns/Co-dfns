@@ -193,8 +193,7 @@ GC←{
 	exp←⊃⍪⌿{
 		fn ns←var_names ⍵,p[⍵]
 		z ←⊂'EXPORT int'
-		z,←⊂fn,'(struct cell_array **z,'
-		z,←⊂'    struct cell_array *l, struct cell_array *r)'
+		z,←⊂fn,'(struct cell_array **z, struct cell_array *l, struct cell_array *r)'
 		z,←⊂'{'
 		z,←⊂'	struct cell_func *self;'
 		z,←⊂''
