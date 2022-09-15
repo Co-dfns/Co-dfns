@@ -317,7 +317,7 @@ PS←{
 	}⍸msk
 	
 	⍝ Mark bindings and variables with the appropriate scope
-	lx←(≢p)⍴0
+	lx←(≢p)⍴0 ⋄ lx[⍸t=F]←3
 
 	⍝ Convert M nodes to F0 nodes
 	t←F@{t=M}t
