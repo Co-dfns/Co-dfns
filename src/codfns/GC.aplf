@@ -168,6 +168,8 @@ GC←{
 		z,←⊂'	loc.__count = ',(⍕≢xi),';'
 		z,←⊂'	loc.__names = ',id,'_names;'
 		z,←⊂''
+		z,←⊂'	err = 0;'
+		z,←⊂''
 		z,←⊂'	',id,'_env = loc;'
 		z,←⊂''
 		z,←⊂'cleanup:'
