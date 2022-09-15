@@ -18,6 +18,7 @@ mk_void(struct cell_void **cell)
 
         return 0;
 }
+
 DECLSPEC void
 release_void(struct cell_void *cell)
 {
@@ -29,6 +30,7 @@ release_void(struct cell_void *cell)
 
         free(cell);
 }
+
 DECLSPEC void
 release_cell(void *cell)
 {
@@ -69,6 +71,7 @@ release_cell(void *cell)
                 exit(99);
         }
 }
+
 DECLSPEC void *
 retain_cell(void *cell)
 {
