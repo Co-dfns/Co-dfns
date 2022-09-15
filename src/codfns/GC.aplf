@@ -116,7 +116,8 @@ GC←{
 	⍝ E¯1: Non-returning end of line statement
 	i←⍸(t=E)∧k=¯1
 	zz[i],←{
-		⊂'release_cell(*--stkhd);'
+		z ←⊂'release_cell(*--stkhd);'
+		z,⊂''
 	}¨i
 
 	⍝ E0: Returning end of line statement
