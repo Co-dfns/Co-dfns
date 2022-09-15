@@ -6,20 +6,27 @@ DyalogGetInterpreterFunctions(void *p)
     return set_dwafns(p);
 }
 
+int prim(struct cell_array **,
+    struct cell_array *, struct cell_array *,
+    struct cell_func *);
+
 int prim_flag = 0;
 
 struct prim_loc {
 	int __count;
 	wchar_t **__names;
+	
 } prim_env;
+
+wchar_t **prim_names = NULL;
 
 EXPORT int
 prim_init(void)
 {
+	struct prim_loc loc;
 	void *stk[128];
 	void **stkhd;
-
-	struct prim_loc loc;
+	int err;
 
 	if (prim_flag)
 		return 0;
@@ -29,9 +36,14 @@ prim_init(void)
 	cdf_init();
 
 	loc.__count = 0;
-	loc.__names = NULL;
+	loc.__names = prim_names;
+
+	err = 0;
+
 
 	prim_env = loc;
 
-	return 0;
+cleanup:
+	return err;
 }
+
