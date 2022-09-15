@@ -124,8 +124,10 @@ GC←{
 	i←⍸(t=F)∧k=2 
 	z[i],←{
 		id←⊃var_names ⍵
+		pref,←⊂'int ',id,'(struct cell_array **,'
+		pref,←⊂'    struct cell_array *, struct cell_array *, void *);'
 		z ←⊂'int'
-		z,←⊂id,'_func(struct cell_array **z,'
+		z,←⊂id,'(struct cell_array **z,'
 		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
 		z,←⊂'    void *lex[])'
 		z,←⊂'{'
