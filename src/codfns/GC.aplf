@@ -204,7 +204,12 @@ GC←{
 		z,←⊂'	return self->fptr(z, l, r, self);'
 		z,←⊂'}'
 		z,←⊂''
-		z
+		z,←⊂'EXPORT int'
+		z,←⊂fn,'_dwa(void *z, void *l, void *r)'
+		z,←⊂'{'
+		z,←⊂'	return call_dwa(',fn,', z, l, r);'
+		z,←⊂'}'
+		z,⊂''
 	}¨i
 
 	⍝ Warn about nodes that appear which we haven't generated
@@ -216,71 +221,7 @@ GC←{
 	
 ⍝ Old Stuff
 
-	Zp←{
-		n←'fn',⍕⍵
-		k[⍵]∊0 2:{
-			z ←⊂'int'
-			z,←⊂n,'(struct array **z, struct array *l, struct array *r, void *fv[]);'
-			z,←⊂''
-		z}⍵
-		'UNKNOWN FUNCTION TYPE'⎕SIGNAL 16
-	}
-	Zx←{
-		n←sym⊃⍨|n[⍵] ⋄ rid←⍕rf[⍵]
-		k[⍵]=0:⊂''
-		k[⍵]=1:{
-			z ←⊂'struct array *',n,';'
-		z}⍵
-		k[⍵]=2:{
-			z ←⊂'struct closure *',n,';'
-			z,←⊂''
-			z,←⊂'EXPORT int'
-			z,←⊂n,'_dwa(struct localp *zp, struct localp *lp, struct localp *rp)'
-			z,←⊂'{'
-			z,←⊂'       struct array *z, *l, *r;'
-			z,←⊂'       int err;'
-			z,←⊂''
-			z,←⊂'       l = NULL;'
-			z,←⊂'       r = NULL;'
-			z,←⊂''
-			z,←⊂'       fn',rid,'(NULL, NULL, NULL, NULL);'
-			z,←⊂''
-			z,←⊂'       err = 0;'
-			z,←⊂''
-			z,←⊂'       if (lp)'
-			z,←⊂'               err = dwa2array(&l, lp->pocket);'
-			z,←⊂''
-			z,←⊂'       if (err)'
-			z,←⊂'               dwa_error(err);;'
-			z,←⊂''
-			z,←⊂'       if (rp)'
-			z,←⊂'               dwa2array(&r, rp->pocket);'
-			z,←⊂''
-			z,←⊂'       if (err) {'
-			z,←⊂'               release_array(l);'
-			z,←⊂'               dwa_error(err);'
-			z,←⊂'       }'
-			z,←⊂''
-			z,←⊂'       err = (',n,'->fn)(&z, l, r, ',n,'->fv);'
-			z,←⊂''
-			z,←⊂'       release_array(l);'
-			z,←⊂'       release_array(r);'
-			z,←⊂''
-			z,←⊂'       if (err)'
-			z,←⊂'               dwa_error(err);'
-			z,←⊂''
-			z,←⊂'       err = array2dwa(NULL, z, zp);'
-			z,←⊂'       release_array(z);'
-			z,←⊂''
-			z,←⊂'       if (err)'
-			z,←⊂'               dwa_error(err);'
-			z,←⊂''
-			z,←⊂'       return 0;'
-			z,←⊂'}'
-			z,←⊂''
-		z}⍵
-		⍎'''UNKNOWN EXPORT TYPE''⎕SIGNAL 16'
-	}
+
 	Pf←{id←(syms⍳sym[|4⊃⍺])⊃nams
 		z ←⊂'*stkhd++ = retain_cell(',id,');'
 	z}
