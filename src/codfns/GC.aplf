@@ -223,9 +223,6 @@ GC←{
 ⍝ Old Stuff
 
 
-	Pf←{id←(syms⍳sym[|4⊃⍺])⊃nams
-		z ←⊂'*stkhd++ = retain_cell(',id,');'
-	z}
 	Em←{
 		z ←⊂'c = *--stkhd;'
 		z,←⊂'w = *--stkhd;'
