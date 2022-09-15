@@ -271,10 +271,6 @@ GC←{
 		z,←⊂'release_cell(c);'
 		z,←⊂'release_cell(w);'
 	z}
-	Ek←{
-		z ←⊂'release_cell(*--stkhd);'
-		z,←⊂''
-	z}
 
 	∊,∘(⎕UCS 13 10)¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
 }
