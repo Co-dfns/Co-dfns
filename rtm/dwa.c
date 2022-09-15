@@ -111,7 +111,7 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
         size_t  count;
         int     err;
         unsigned        int rank;
-
+	
         rank    = pkt->rank;
         shape   = pkt->shape;
         data    = DATA(pkt);
@@ -136,7 +136,6 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 
                         free(data);
                         break;
-
                 case APLTI:
                         count = 1;
 
@@ -154,23 +153,18 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 
                         free(data);
                         break;
-
                 case APLSI:
                         err = mk_array(&arr, ARR_SINT, STG_DEVICE, rank, shape, data);
                         break;
-
                 case APLI:
                         err = mk_array(&arr, ARR_INT, STG_DEVICE, rank, shape, data);
                         break;
-
                 case APLD:
                         err = mk_array(&arr, ARR_DBL, STG_DEVICE, rank, shape, data);
                         break;
-
                 case APLZ:
                         err = mk_array(&arr, ARR_CMPX, STG_DEVICE, rank, shape, data);
                         break;
-
                 default:
                         err = 16;
                 }
@@ -180,12 +174,10 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
                 case APLP:
                         err = mk_array(&arr, ARR_NESTED, STG_HOST, rank, shape, data);
                         break;
-
                 default:
                         err = 16;
                 }
                 break;
-
         default:
                 err = 16;
         }
@@ -208,7 +200,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
         enum    dwa_type dtyp;
         size_t  count, esiz;
         int     err;
-
+	
         if (arr == NULL) {
                 if (lp)
                         lp->pocket = NULL;
