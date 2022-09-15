@@ -175,7 +175,7 @@ GC←{
 		z,←⊂'	',id,'_env = loc;'
 		z,←⊂''
 		z,←⊂'cleanup:'
-		z,←⊂'	return 0;'
+		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
 	}¨i
