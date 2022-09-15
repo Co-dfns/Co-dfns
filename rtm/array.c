@@ -20,23 +20,18 @@ fill_device_array(struct cell_array *arr,
         case ARR_BOOL:
                 aftyp = b8;
                 break;
-
         case ARR_SINT:
                 aftyp = s16;
                 break;
-
         case ARR_INT:
                 aftyp = s32;
                 break;
-
         case ARR_DBL:
                 aftyp = f64;
                 break;
-
         case ARR_CMPX:
                 aftyp = c64;
                 break;
-
         case ARR_NESTED:
         case ARR_CHAR8:
 	case ARR_CHAR16:
