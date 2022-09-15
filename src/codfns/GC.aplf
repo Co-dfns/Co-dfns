@@ -132,11 +132,12 @@ GC←{
 	zz[i],←{
 		id←⊃var_names ⍵
 		pref,←⊂'int ',id,'(struct cell_array **,'
-		pref,←⊂'    struct cell_array *, struct cell_array *, void *);'
+		pref,←⊂'    struct cell_array *, struct cell_array *,'
+		pref,←⊂'    struct cell_func *);'
 		z ←⊂'int'
 		z,←⊂id,'(struct cell_array **z,'
 		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
-		z,←⊂'    void *lex[])'
+		z,←⊂'    struct cell_func *self)'
 		z,←⊂'{'
 		z,←⊂'	return 0;'
 		z,←⊂'}'
