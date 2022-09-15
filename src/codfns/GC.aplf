@@ -198,6 +198,8 @@ GC←{
 		z,←⊂'{'
 		z,←⊂'	struct cell_func *self;'
 		z,←⊂''
+		z,←⊂'	',ns,'_init();'
+		z,←⊂''
 		z,←⊂'	self = ',ns,'_env.',fn,';'
 		z,←⊂''
 		z,←⊂'	return self->fptr(z, l, r, self);'
