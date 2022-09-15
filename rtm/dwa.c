@@ -172,7 +172,7 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
         case 7: /* Nested */
                 switch (pkt->eltype) {
                 case APLP:
-                        err = mk_array(&arr, ARR_NESTED, STG_HOST, rank, shape, data);
+                        err = 16;
                         break;
                 default:
                         err = 16;
@@ -292,4 +292,47 @@ done:
                 *dst = pkt;
 
         return 0;
+}
+
+DECLSPEC int
+call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
+{
+	struct localp *zp, *lp, *rp;
+	struct cell_array *z, *l, *r;
+	int err;
+	
+	zp = zptr;
+	lp = lptr;
+	rp = rptr;
+	
+	if (lp)
+		err = dwa2array(&l, lp->pocket);
+	
+	if (err)
+		return err;
+	
+	if (rp)
+		err = dwa2array(&r, rp->pocket);
+	
+	if (err) {
+		release_array(l);
+		return err;
+	}
+	
+	z = NULL;
+	err = fn(&z, l, r);
+	
+	release_array(l);
+	release_array(r);
+	
+	if (err)
+		return err;
+	
+	err = array2dwa(NULL, z, zp);
+	release_array(z);
+	
+	if (err)
+		return err;
+	
+	return 0;
 }
