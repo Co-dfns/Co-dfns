@@ -100,7 +100,15 @@ GC←{
 	
 	⍝ B: Function bindings
 	
-	⍝ C2: Closures for functions
+	⍝ C: Closures for functions
+	i←⍸t=C
+	zz[i],←{
+		id←⊃var_names ⍵
+		z ←⊂'err = mk_func((struct cell_func **)stkhd++, ',id,', 0);'
+		z,←⊂'if (err)'
+		z,←⊂'	goto cleanup;'
+		z,⊂''
+	}¨i
 	
 	⍝ E¯1: Non-returning end of line statement
 	
@@ -251,9 +259,6 @@ GC←{
 		z,←⊂'(c->fn)((struct array **)stkhd++, NULL, w, c->fv);'
 		z,←⊂'release_cell(c);'
 		z,←⊂'release_cell(w);'
-	z}
-	Cf←{id←⍕4⊃⍺
-		z ←⊂'mk_closure((struct closure **)stkhd++, fn',id,', 0);'
 	z}
 	Ek←{
 		z ←⊂'release_cell(*--stkhd);'
