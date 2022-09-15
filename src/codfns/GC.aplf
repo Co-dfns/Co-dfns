@@ -75,7 +75,7 @@ GC←{
 		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
 		z,¨←var_names ⍵
 		z,¨←'' '->value'[mu[⍵]]
-		z[⍸0=k[⍵]]←⊂'*stkhd[-1]'
+		z[⍸0=k[⍵]]←⊂'stkhd[-1]'
 	z}
 	
 	kill_vars←{
