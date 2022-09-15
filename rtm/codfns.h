@@ -40,7 +40,7 @@ enum array_storage {
 };
 
 typedef int (*func_ptr)(struct cell_array **,
-    struct cell_array *, struct cell_array *, void **);
+    struct cell_array *, struct cell_array *, struct cell_func *);
 
 struct cell_void {
         enum cell_type ctyp;
