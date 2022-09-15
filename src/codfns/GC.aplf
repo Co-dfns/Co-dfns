@@ -98,7 +98,7 @@ GC←{
 	⍝ We have a vector output for each node in the AST
 	z←(≢p)⍴⊂''
 	
-	⍝ B2: Function bindings
+	⍝ B: Function bindings
 	
 	⍝ C2: Closures for functions
 	
