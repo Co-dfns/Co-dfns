@@ -66,7 +66,7 @@ release_cell(void *cell)
                 release_func(cell);
                 break;
         default:
-                dwa_error(99);
+                exit(99);
         }
 }
 DECLSPEC void *

@@ -85,8 +85,6 @@ DECL_BOX_STRUCT(doper);
 DECL_BOX_STRUCT(env);
 
 /* DWA and Interface */
-DECLSPEC void set_dmx_message(wchar_t *);
-DECLSPEC void dwa_error(unsigned int);
 DECLSPEC void set_codfns_error(void *);
 DECLSPEC int set_dwafns(void *);
 DECLSPEC int dwa2array(struct cell_array **, void *);

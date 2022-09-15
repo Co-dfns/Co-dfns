@@ -7,15 +7,6 @@
 
 #define DATA(pp) ((void *)&(pp)->shape[(pp)->rank])
 
-struct dwa_dmx {
-        unsigned int flags;
-        unsigned int en;
-        unsigned int enx;
-        const wchar_t *vendor;
-        const wchar_t *message;
-        const wchar_t *category;
-};
-
 struct dwa_fns {
         long long size;
 	struct {
@@ -46,34 +37,8 @@ struct localp {
 	void *i;
 };
 
-struct dwa_dmx dmx;
-void (*dwa_error_ptr)(struct dwa_dmx *);
 struct pocket *(*dwa_getarray_ptr)(enum dwa_type, 
     unsigned int, long long *, struct localp *);
-
-DECLSPEC void
-set_dmx_message(wchar_t *msg)
-{
-        dmx.message = msg;
-}
-
-DECLSPEC void
-dwa_error(unsigned int n)
-{
-        dmx.flags = 3;
-        dmx.en = n;
-        dmx.enx = n;
-        dmx.vendor = L"Co-dfns";
-        dmx.category = NULL;
-
-        dwa_error_ptr(&dmx);
-}
-
-DECLSPEC void
-set_codfns_error(void *fn)
-{
-        dwa_error_ptr = fn;
-}
 
 DECLSPEC void
 set_codfns_getarray(void *fn)
@@ -95,7 +60,6 @@ set_dwafns(void *p)
                 return 16;
 
 	set_codfns_getarray(dwa->ws->fns[0]);
-        set_codfns_error(dwa->ws->fns[17]);
 
         return 0;
 }

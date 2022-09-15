@@ -159,7 +159,7 @@ release_array(struct cell_array *arr)
                         af_release_array(arr->values);
                         break;
                 default:
-                        dwa_error(999);
+                        exit(99);
                 }
 
         free(arr);
