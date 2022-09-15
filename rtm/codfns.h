@@ -41,6 +41,9 @@ enum array_storage {
 
 typedef int (*func_ptr)(struct cell_array **,
     struct cell_array *, struct cell_array *, struct cell_func *);
+    
+typedef int (*topfn_ptr)(struct cell_array **, 
+    struct cell_array *, struct cell_array *);
 
 struct cell_void {
         enum cell_type ctyp;
@@ -87,8 +90,7 @@ DECL_BOX_STRUCT(env);
 /* DWA and Interface */
 DECLSPEC void set_codfns_error(void *);
 DECLSPEC int set_dwafns(void *);
-DECLSPEC int dwa2array(struct cell_array **, void *);
-DECLSPEC int array2dwa(void **, struct cell_array *, void *);
+DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *);
 
 /* Generic cell handlers */
 DECLSPEC void release_cell(void *);
