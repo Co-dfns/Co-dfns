@@ -76,7 +76,6 @@ GC←{
 		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
 		z,¨←var_names ⍵
 		z,¨←'' '->value'[mu[⍵]]
-		z←'retain_cell('∘,¨z,¨')'
 		z[⍸0=k[⍵]]←⊂'*--stkhd'
 	z}
 	
@@ -114,7 +113,7 @@ GC←{
 	
 	⍝ E0: Returning end of line statement
 	i←⍸(t[p]=E)∧k[p]=0
-	zz[i],←⊂¨'*z = '∘,¨(var_values i),¨';'
+	zz[i],←⊂¨'*z = retain_cell('∘,¨(var_values i),¨⊂');'
 	zz[i],←⊂⊂'goto cleanup;'
 	zz[i],←⊂⊂''
 	
