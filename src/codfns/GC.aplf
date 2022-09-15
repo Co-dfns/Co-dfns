@@ -187,12 +187,30 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	
+	⍝ Export functions
+	i←⍸(t=B)∧(k=2)∧k[p]=0
+	exp←⊃⍪⌿{
+		fn ns←var_names ⍵,p[⍵]
+		z ←⊂'EXPORT int'
+		z,←⊂fn,'(struct cell_array **z,'
+		z,←⊂'    struct cell_array *l, struct cell_array *r)'
+		z,←⊂'{'
+		z,←⊂'	struct cell_func *self;'
+		z,←⊂''
+		z,←⊂'	self = ',ns,'_env.',fn,';'
+		z,←⊂''
+		z,←⊂'	return self->fptr(z, l, r, self);'
+		z,←⊂'}'
+		z,←⊂''
+		z
+	}¨i
 
 	⍝ Warn about nodes that appear which we haven't generated
 	⎕←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←(zz∊⊂'')∧~t∊V)⌿N∆[t],∘⍕¨k
 
 	⍝ Assemble all the data together into a single character vector
-	∊(pref,(⊂''),⊃⍪⌿zz[⍸p=⍳≢p]),¨⊂⎕UCS 13 10
+	∊(pref,(⊂''),(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
 	
 	
 ⍝ Old Stuff
