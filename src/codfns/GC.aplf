@@ -114,7 +114,11 @@ GC←{
 	}¨i
 	
 	⍝ E¯1: Non-returning end of line statement
-	
+	i←⍸(t=E)∧k=¯1
+	zz[i],←{
+		⊂'release_cell(*--stkhd);'
+	}¨i
+
 	⍝ E0: Returning end of line statement
 	i←⍸(t[p]=E)∧k[p]=0
 	zz[i],←⊂¨'*z = retain_cell('∘,¨(var_values i),¨⊂');'
