@@ -166,6 +166,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'	loc.__count = ',(⍕≢xi),';'
 		z,←⊂'	loc.__names = ',id,'_names;'
+		z,← '	',¨init_vars xi
 		z,←⊂''
 		z,←⊂'	err = 0;'
 		z,←⊂''
