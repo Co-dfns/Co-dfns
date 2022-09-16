@@ -127,4 +127,4 @@ DECLSPEC int mk_env_box(struct cell_env_box **, struct cell_env *);
 DECLSPEC void release_env_box(struct cell_env_box *);
 
 /* Runtime initialization function */
-DECLSPEC int cdf_init(void);
+DECLSPEC int cdf_prim_init(void);

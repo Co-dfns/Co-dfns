@@ -165,7 +165,7 @@ GC←{
 		z,←⊂'	int __count;'
 		z,←⊂'	wchar_t **__names;'
 		z,← '	',¨decl_vars xi
-		z,←⊂'} ',id,'_env;'
+		z,←⊂'} ',id,';'
 		z,←⊂''
 		z,←⊂(id,'_names')var_nmvec xi
 		z,←⊂''
@@ -182,7 +182,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	',id,'_flag = 1;'
-		z,←⊂'	cdf_init();'
+		z,←⊂'	cdf_prim_init();'
 		z,←⊂''
 		z,←⊂'	loc.__count = ',(⍕≢xi),';'
 		z,←⊂'	loc.__names = ',id,'_names;'
@@ -192,7 +192,7 @@ GC←{
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''
-		z,←⊂'	',id,'_env = loc;'
+		z,←⊂'	',id,' = loc;'
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	return err;'
@@ -211,7 +211,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'	',ns,'_init();'
 		z,←⊂''
-		z,←⊂'	self = ',ns,'_env.',fn,';'
+		z,←⊂'	self = ',ns,'.',fn,';'
 		z,←⊂''
 		z,←⊂'	return self->fptr(z, l, r, self);'
 		z,←⊂'}'
