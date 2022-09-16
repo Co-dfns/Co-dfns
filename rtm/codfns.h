@@ -128,3 +128,12 @@ DECLSPEC void release_env_box(struct cell_env_box *);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);
+
+/* Runtime structure */
+#ifndef EXPORTING
+DECLSPEC struct cdf_prim_loc {
+	int __count;
+	wchar_t **__names;
+	struct cell_func *rgt;
+} cdf_prim;
+#endif

@@ -1,3 +1,5 @@
 :Namespace cdf_prim
 
+rgt←{⍵}
+
 :EndNamespace
