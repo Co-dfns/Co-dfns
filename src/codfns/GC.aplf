@@ -138,8 +138,17 @@ GC←{
 		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
 		z,←⊂'    struct cell_func *self)'
 		z,←⊂'{'
+		z,←⊂''
+		z,←⊂'	void *stk[128];'
+		z,←⊂'	void **stkhd;'
+		z,←⊂'	int err;'
+		z,←⊂''
+		z,←⊂'	stkhd = &stk[0];'
+		z,←⊂'	err = 0;'
+		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
-		z,←⊂'	return 0;'
+		z,←⊂'cleanup:'
+		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
 	}¨i
