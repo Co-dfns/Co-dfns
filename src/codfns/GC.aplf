@@ -67,11 +67,6 @@ GC←{
 		z,¨←'' '->value'[mu[⍵]]
 		z[⍸0=k[⍵]]←⊂'stkhd[-1]'
 	z}
-	
-	kill_vars←{
-		type←var_ckinds ⍺
-		'release_'∘,¨type,¨'(',¨(⍺ var_refs ⍵),');'
-	}
 
 	⍝ All code has an initial prefix
 	pref ←⊂'#include "codfns.h"'
