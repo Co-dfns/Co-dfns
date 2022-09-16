@@ -18,6 +18,10 @@ GC←{
 		(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
 	}
 	
+	var_scopes←{
+		'loc.' 'lex->' 'dyn->' 'cdf_prim.' ''[lx[⍵]]
+	}
+	
 	var_nmvec←{
 		0=≢⍵:'wchar_t **',⍺,' = NULL;'
 		z←'wchar_t *',⍺,'[] = {'
@@ -28,13 +32,13 @@ GC←{
 	decl_vars←{
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
-		∨⌿(k[⍵]=1)∧lx[⍵]>2:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
-		∨⌿(k[⍵]=6)∧lx[⍵]>2:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
-		z←'' 'struct cell_'[lx[⍵]<3]
+		∨⌿(k[⍵]=1)∧lx[⍵]>3:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
+		∨⌿(k[⍵]=6)∧lx[⍵]>3:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
+		z←'' 'struct cell_'[lx[⍵]<4]
 		z,¨←var_ckinds ⍵
-		z,¨←'' '_ptr'[lx[⍵]≥3]
+		z,¨←'' '_ptr'[lx[⍵]≥4]
 		z,¨←' ' '_box '[mu[⍵]]
-		z,¨←'' '*'[lx[⍵]<3]
+		z,¨←'' '*'[lx[⍵]<4]
 		z,¨←var_names ⍵
 		z,¨';'
 	}
@@ -56,13 +60,11 @@ GC←{
 	
 	var_refs←{
 		0∊k[⍵]:'CANNOT REFERENCE STACK VARIABLE'SIGNAL 99
-		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
-		z,¨var_names ⍵
+		(var_scopes,¨var_names) ⍵
 	}
 	
 	var_values←{
-		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
-		z,¨←var_names ⍵
+		z←(var_scopes,¨var_names)⍵
 		z,¨←'' '->value'[mu[⍵]]
 		z[⍸0=k[,⍵]]←⊂'*--stkhd'
 	z}
