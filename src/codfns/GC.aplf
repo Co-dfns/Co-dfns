@@ -42,7 +42,6 @@ GC←{
 	init_vars←{
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT INITIALIZE STACK VARIABLE'SIGNAL 99
-		∨⌿mu[⍵]∧lx[⍵]≤3:'GLOBAL VARIABLES CANNOT BE MUTABLE'
 		z←(≢⍵)⍴⊂''
 		i←⍸~mu[⍵] ⋄ z[i],←⊂¨(var_refs ⍵[i]),¨⊂' = NULL;'
 		i←⍸mu[⍵]
