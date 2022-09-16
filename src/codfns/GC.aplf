@@ -12,6 +12,19 @@ GC←{
 		('' 'array' 'func' 'moper' 'doper' 'env' 'void')[k[⍵]]
 	}
 	
+	var_names←{
+		ceqv←'_del_' '_delubar_' 'alpha' 'omega'
+		asym←'∆'     '⍙'         '⍺'     '⍵'
+		(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
+	}
+	
+	var_nmvec←{
+		0=≢⍵:'wchar_t **',⍺,' = NULL;'
+		z←'wchar_t *',⍺,'[] = {'
+		z,←⊃{⍺,', ',⍵}⌿'L"'∘,¨sym[|n[⍵]],¨'"'
+		z,'};'
+	}
+	
 	decl_vars←{
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
@@ -24,19 +37,6 @@ GC←{
 		z,¨←'' '*'[lx[⍵]<3]
 		z,¨←var_names ⍵
 		z,¨';'
-	}
-	
-	var_names←{
-		ceqv←'_del_' '_delubar_' 'alpha' 'omega'
-		asym←'∆'     '⍙'         '⍺'     '⍵'
-		(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
-	}
-	
-	var_nmvec←{
-		0=≢⍵:'wchar_t **',⍺,' = NULL;'
-		z←'wchar_t *',⍺,'[] = {'
-		z,←⊃{⍺,', ',⍵}⌿'L"'∘,¨sym[|n[⍵]],¨'"'
-		z,'};'
 	}
 	
 	init_vars←{
