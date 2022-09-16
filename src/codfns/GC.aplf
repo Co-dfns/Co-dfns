@@ -40,25 +40,18 @@ GC←{
 	}
 	
 	init_vars←{
-		0∊⍺:{
-			EM←'CANNOT INITIALIZE STACK VARIABLE'
-			EM SIGNAL 99
-		}⍬
-		(10>|⍺)∧⍺<0:{
-			EM←'GLOBAL VARIABLES CANNOT BE MUTABLE'
-			EM SIGNAL 99
-		}⍬
-		z←(≢⍵)⍴⊂⊂''
-		i←⍸⍺>0
-		z[i]←⊂¨(⍺[i] var_refs ⍵[i]),¨⊂' = NULL;'
-		init←{
-			z←⊂'err = mk_',⍺,'_box(&',⍵,', NULL);'
+		0=≢⍵:0⍴⊂''
+		0∊k[⍵]:'CANNOT INITIALIZE STACK VARIABLE'SIGNAL 99
+		∨⌿mu[⍵]∧lx[⍵]≤3:'GLOBAL VARIABLES CANNOT BE MUTABLE'
+		z←(≢⍵)⍴⊂''
+		i←⍸~mu[⍵] ⋄ z[i],←⊂¨(var_refs ⍵[i]),¨⊂' = NULL;'
+		i←⍸mu[⍵]
+		z[i],←(var_ckinds ⍵[i]){
+			z ←⊂'err = mk_',⍺,'_box(&',⍵,', NULL);'
 			z,←⊂'if (err)'
-			z,←⊂TB,'goto fail;'
-		z}
-		types←var_ckinds ⍺[i]
-		names←⍺[i] var_refs ⍵[i]
-		z[i]←types init names
+			z,←⊂'	goto cleanup;'
+			z,⊂''
+		}¨var_refs ⍵[i]
 		⊃⍪⌿z
 	}
 	
