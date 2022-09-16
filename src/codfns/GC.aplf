@@ -56,11 +56,8 @@ GC←{
 	}
 	
 	var_refs←{
-		0∊⍺:{
-			EM←'CANNOT REFERENCE STACK VARIABLE'
-			EM SIGNAL 99
-		}⍬
-		z←'' 'loc.' 'lex->' 'dyn->'[⌊10×|⍺]
+		0∊k[⍵]:'CANNOT REFERENCE STACK VARIABLE'SIGNAL 99
+		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
 		z,¨var_names ⍵
 	}
 	
