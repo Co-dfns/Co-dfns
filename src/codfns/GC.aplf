@@ -216,10 +216,4 @@ GC←{
 
 	⍝ Assemble all the data together into a single character vector
 	∊(pref,(⊂''),(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
-	
-	
-⍝ Old Stuff
-
-
-	∊,∘(⎕UCS 13 10)¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
 }
