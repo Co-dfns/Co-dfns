@@ -317,16 +317,14 @@ PS←{
 	}⍸msk
 	
 	⍝ Mark bindings and variables with the appropriate scope
-	lx←(≢p)⍴0 ⋄ lx[⍸t=F]←3
+	lx←(≢p)⍴0 ⋄ lx[⍸t=F]←3 ⋄ lx[⍸t=P]←3
 
 	⍝ Convert M nodes to F0 nodes
 	t←F@{t=M}t
 
-	⍝ Convert ⍺ and ⍵ nodes to P1 nodes
-	t[i←⍸(t=A)∧n∊,¨'⍺⍵']←P ⋄ vb[i]←i
-
-	⍝ Convert ⍺⍺ and ⍵⍵ nodes to P2 nodes
-	k[⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2
+	⍝ Convert formal nodes to P nodes
+	t[i←⍸(t=A)∧n∊,¨'⍺⍵']←P ⋄ vb[i]←i ⋄ lx[i]←4
+	k[i←⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2 ⋄ lx[i]←4
 
 	⍝ Infer the type of bindings, groups, and variables
 	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p
