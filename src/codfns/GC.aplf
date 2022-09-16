@@ -64,7 +64,7 @@ GC←{
 		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
 		z,¨←var_names ⍵
 		z,¨←'' '->value'[mu[⍵]]
-		z[⍸0=k[⍵]]←⊂'*--stkhd'
+		z[⍸0=k[,⍵]]←⊂'*--stkhd'
 	z}
 
 	⍝ All code has an initial prefix
