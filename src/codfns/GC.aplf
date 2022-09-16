@@ -163,7 +163,7 @@ GC←{
 		id←⊃var_names ⍵ ⋄ xi←⍸(t=B)∧p=⍵
 		z ←⊂'int ',id,'_flag = 0;'
 		z,←⊂''
-		z,←⊂'struct ',id,'_loc {'
+		z,←⊂'EXPORT struct ',id,'_loc {'
 		z,←⊂'	int __count;'
 		z,←⊂'	wchar_t **__names;'
 		z,← '	',¨decl_vars xi
