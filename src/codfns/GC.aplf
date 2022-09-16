@@ -115,6 +115,7 @@ GC←{
 	⍝ E1: Monadic expression application
 	i←⍸(t[p]=E)∧k[p]=1
 	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
 		fn arg←var_values ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_func *fn = retain_cell(',fn,');'
@@ -129,6 +130,7 @@ GC←{
 	⍝ F2: D-fns functions
 	i←⍸(t=F)∧k=2 
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		id←⊃var_names ⍵
 		pref,←⊂'int ',id,'(struct cell_array **,'
 		pref,←⊂'    struct cell_array *, struct cell_array *,'
