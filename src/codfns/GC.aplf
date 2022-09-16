@@ -106,9 +106,11 @@ GC←{
 
 	⍝ E0: Returning end of line statement
 	i←⍸(t[p]=E)∧k[p]=0
-	zz[p[i]],←⊂¨'*z = retain_cell('∘,¨(var_values i),¨⊂');'
-	zz[p[i]],←⊂⊂'goto cleanup;'
-	zz[p[i]],←⊂⊂''
+	zz[p[i]],←{
+		z ←⊂'*z = retain_cell(',(⊃var_values ⍵),');'
+		z,←⊂'goto cleanup;'
+		z,⊂''
+	}¨i
 	
 	⍝ E1: Monadic expression application
 	i←⍸(t[p]=E)∧k[p]=1
