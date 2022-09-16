@@ -122,7 +122,7 @@ GC←{
 		z ←⊂'{'
 		z,←⊂'	struct cell_func *fn = retain_cell(',fn,');'
 		z,←⊂'	struct cell_array *arg = retain_cell(',arg,');'
-		z,←⊂'	(fn->fptr)((struct cell_array **)stkhd++, NULL, arg, fn)'
+		z,←⊂'	(fn->fptr)((struct cell_array **)stkhd++, NULL, arg, fn);'
 		z,←⊂'	release_cell(fn);'
 		z,←⊂'	release_cell(arg);'
 		z,←⊂'}'
