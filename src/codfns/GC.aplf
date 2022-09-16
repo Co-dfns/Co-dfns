@@ -136,6 +136,7 @@ GC←{
 		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
 		z,←⊂'    struct cell_func *self)'
 		z,←⊂'{'
+		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'	return 0;'
 		z,←⊂'}'
 		z,⊂''
