@@ -111,7 +111,19 @@ GC←{
 	zz[i],←⊂⊂''
 	
 	⍝ E1: Monadic expression application
-	
+	i←⍸(t[p]=E)∧k[p]=1
+	zz[∪p[i]],←p[i]{
+		fn arg←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_func *fn = retain_cell(',fn,');'
+		z,←⊂'	struct cell_array *arg = retain_cell(',arg,');'
+		z,←⊂'	(fn->fptr)((struct cell_array **)stkhd++, NULL, arg, fn)'
+		z,←⊂'	release_cell(fn);'
+		z,←⊂'	relaase_cell(arg);'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+
 	⍝ F2: D-fns functions
 	i←⍸(t=F)∧k=2 
 	zz[i],←{
@@ -207,14 +219,6 @@ GC←{
 	
 ⍝ Old Stuff
 
-
-	Em←{
-		z ←⊂'c = *--stkhd;'
-		z,←⊂'w = *--stkhd;'
-		z,←⊂'(c->fn)((struct array **)stkhd++, NULL, w, c->fv);'
-		z,←⊂'release_cell(c);'
-		z,←⊂'release_cell(w);'
-	z}
 
 	∊,∘(⎕UCS 13 10)¨pref,⊃,⌿(,⌿Zp¨⍸t=F),(,⌿Zx¨xi),(⊂⊂''),dis¨ks ast
 }
