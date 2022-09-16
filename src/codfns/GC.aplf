@@ -65,7 +65,7 @@ GC←{
 		z←'loc.' 'lex->' 'dyn->' ''[lx[⍵]]
 		z,¨←var_names ⍵
 		z,¨←'' '->value'[mu[⍵]]
-		z[⍸0=k[⍵]]←⊂'stkhd[-1]'
+		z[⍸0=k[⍵]]←⊂'*--stkhd'
 	z}
 
 	⍝ All code has an initial prefix
@@ -85,7 +85,7 @@ GC←{
 	i←⍸t[p]=B
 	zz[p[i]],←{
 		tgt src←var_values p[⍵],⍵
-		z ←⊂tgt,' = retain_cell(',src,');'
+		z ←⊂tgt,' = *stkhd++ = retain_cell(',src,');'
 	z}¨i
 	
 	⍝ C: Closures for functions
