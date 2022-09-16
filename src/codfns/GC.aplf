@@ -13,7 +13,7 @@ GC←{
 	}
 	
 	decl_vars←{
-		0=≢⍵:⊂''
+		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
 		∨⌿(k[⍵]=1)∧lx[⍵]>2:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
 		∨⌿(k[⍵]=6)∧lx[⍵]>2:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
