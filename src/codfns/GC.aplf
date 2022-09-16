@@ -82,7 +82,7 @@ GC←{
 	pref,←⊂'    return set_dwafns(p);'
 	pref,←⊂'}'
 	pref,←⊂''
-	
+
 	⍝ We have a vector output for each node in the AST
 	zz←(≢p)⍴⊂''
 	
