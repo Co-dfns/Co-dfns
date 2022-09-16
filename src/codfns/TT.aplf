@@ -45,7 +45,7 @@ TT←{
 	syms,←,¨'←'   '⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⊆'   '∇'
 	nams,←  'get' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'del'
 	syms,←,¨';'   '⎕FFT' '⎕IFFT' '⎕CONV' 
-	nams,←  'spn' 'fft'  'ift'   'cnv'   
+	nams,←  'spn' 'fft'  'ift'   'cnv'
 	syms,←,¨'⍺'     '⍵'     '%u'
 	nams,←  'alpha' 'omega' ''
 	
