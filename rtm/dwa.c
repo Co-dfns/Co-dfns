@@ -139,192 +139,208 @@ cnvi8_i16(struct pocket *pkt)
 	return res;
 }
 
-DECLSPEC int
-dwa2array(struct cell_array **tgt, struct pocket *pkt)
+enum array_type
+dwa_array_type(enum dwa_type dtype)
 {
-        struct  cell_array *arr;
-        long    long *shape;
-        void    *data;
-        size_t  count;
-        int     err;
-        unsigned        int rank;
-	
-        rank    = pkt->rank;
-        shape   = pkt->shape;
-        data    = DATA(pkt);
-
-        switch (pkt->type) {
-        case 15: /* Simple */
-                switch (pkt->eltype) {
-                case APLU8:
-                        count = 1;
-
-                        for (unsigned int i = 0; i < rank; i++)
-                                count *= shape[i];
-
-                        data = cnvu8_ch(data, count);
-
-                        if (data == NULL) {
-                                err = 1;
-                                goto done;
-                        }
-
-                        err = mk_array(&arr, ARR_BOOL, STG_DEVICE, rank, shape, data);
-
-                        free(data);
-                        break;
-                case APLTI:
-                        count = 1;
-
-                        for (unsigned int i = 0; i < rank; i++)
-                                count *= shape[i];
-
-                        data = cnvi8_i16(data, count);
-
-                        if (data == NULL) {
-                                err = 1;
-                                goto done;
-                        }
-
-                        err = mk_array(&arr, ARR_SINT, STG_DEVICE, rank, shape, data);
-
-                        free(data);
-                        break;
-                case APLSI:
-                        err = mk_array(&arr, ARR_SINT, STG_DEVICE, rank, shape, data);
-                        break;
-                case APLI:
-                        err = mk_array(&arr, ARR_INT, STG_DEVICE, rank, shape, data);
-                        break;
-                case APLD:
-                        err = mk_array(&arr, ARR_DBL, STG_DEVICE, rank, shape, data);
-                        break;
-                case APLZ:
-                        err = mk_array(&arr, ARR_CMPX, STG_DEVICE, rank, shape, data);
-                        break;
-                default:
-                        err = 16;
-                }
-                break;
-        case 7: /* Nested */
-                switch (pkt->eltype) {
-                case APLP:
-                        err = 16;
-                        break;
-                default:
-                        err = 16;
-                }
-                break;
-        default:
-                err = 16;
-        }
-
-done:
-        if (err)
-                return err;
-
-        *tgt = arr;
-
-        return 0;
+	switch (dtype) {
+	case APLU8:
+		return ARR_BOOL;
+	case APLTI:
+		return ARR_SINT;
+	case APLSI:
+		return ARR_SINT;
+	case APLI:
+		return ARR_INT;
+	case APLD:
+		return ARR_DBL;
+	case APLZ:
+		return ARR_CMPX;
+	case APLP:
+		return ARR_NESTED;
+	default:
+		return -1;
+	}
 }
 
-DECLSPEC int
+enum dwa_type
+array_dwa_type(enum array_type type)
+{
+	switch (type) {
+	case ARR_SPAN:
+		return APLNC;
+        case ARR_BOOL:
+		return APLU8;
+	case ARR_SINT:
+		return APLSI;
+	case ARR_INT:
+		return APLI;
+	case ARR_DBL:
+		return APLD;
+	case ARR_CMPX:
+		return APLZ;
+        case ARR_CHAR8:
+		return APLU;
+	case ARR_CHAR16:
+		return APLV;
+	case ARR_CHAR32:
+		return APLW;
+        case ARR_MIXED:
+		return APLNC;
+	case ARR_NESTED:
+		return APLP;
+	default:
+		return APLNC;
+	}
+}
+
+enum array_storage
+dwa_array_storage(unsigned int type)
+{
+	switch (type) {
+	case 15:
+		return STG_DEVICE;
+	case 7:
+		return STG_HOST;
+	default:
+		return -1;
+	}
+}
+
+int dwa2array(struct cell_array **tgt, struct pocket *pkt);
+
+int
+copydat_dwa2arr(struct cell_array *arr, struct pocket *pkt)
+{
+	void	*data;
+	size_t	count;
+	int 	err;
+	struct	cell_array **cells;
+	struct	pocket **pkts;
+	
+	if (arr->storage == STG_DEVICE && pkt->type == 7)
+		return 16;
+	
+	switch (pkt->eltype) {
+	case APLU8:
+		data = cnvu8_ch(pkt);
+		break;
+	case APLTI:
+		data = cnvi8_i16(pkt);
+		break;
+	default:
+		data = DATA(pkt);
+	}
+	
+	if (data == NULL)
+		return 1;
+	
+	if (arr->type != ARR_NESTED) {
+		err = fill_array(arr, data);
+
+		if (pkt->eltype == APLU8 || pkt->eltype == APLTI)
+			free(data);
+		
+		return err;	
+	}
+	
+	count	= array_values_count(arr);
+	cells	= arr->values;
+	pkts	= data;
+	
+	for (size_t i = 0; i < count; i++) {
+		err = dwa2array(&cells[i], pkts[i]);
+		
+		if (err)
+			return err;
+	}
+	
+	return 0;
+}
+
+int
+dwa2array(struct cell_array **tgt, struct pocket *pkt)
+{
+	struct	cell_array *arr;
+	int	err;
+	enum	array_type type;
+	enum	array_storage storage;
+		
+	if (pkt == NULL) {
+		*tgt = NULL;
+
+		return 0;
+	}
+	
+	storage	= dwa_array_storage(pkt->type);
+	type	= dwa_array_type(pkt->eltype);
+	
+	if (type == -1 || storage == -1)
+		return 16;
+	
+	err = mk_array(&arr, type, storage, pkt->rank);
+	
+	if (err)
+		return err;
+	
+	for (unsigned int i = 0; i < pkt->rank; i++)
+		arr->shape[i] = pkt->shape[i];
+	
+	err = copydat_dwa2arr(arr, pkt);
+	
+	if (err) {
+		release_array(arr);
+		return err;
+	}
+	
+	*tgt = arr;
+
+	return 0;
+}
+
+int
 array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 {
-        struct  pocket *pkt;
-        unsigned        int rank;
-        long    long *shape;
-        enum    dwa_type dtyp;
-        size_t  count, esiz;
-        int     err;
+	struct	pocket *pkt;
+	int	err;
 	
-        if (arr == NULL) {
-                if (lp)
-                        lp->pocket = NULL;
+	if (arr == NULL) {
+		if (lp)
+			lp->pocket = NULL;
+		
+		if (dst)
+			*dst = NULL;
 
-                goto done;
-        }
+		return 0;
+	}
 
-        rank = arr->rank;
-        shape = arr->shape;
+	if (arr->rank > 15 || arr->type == ARR_SPAN)
+		return 16;
+	
+	pkt = getarray(array_dwa_type(arr->type), arr->rank, arr->shape, lp);
+	
+	if (arr->storage == STG_DEVICE) {
+		err = af_get_data_ptr(DATA(pkt), arr->values);
+		
+		if (err)
+			return err;
+	} else if (arr->type != ARR_NESTED) {
+		memcpy(DATA(pkt), arr->values,
+		    array_values_count(arr) * array_element_size(arr));
+	} else if (arr->type == ARR_NESTED) {
+		struct pocket **pkts = DATA(pkt);
+		struct cell_array **ptrs = arr->values;
+		size_t count = array_values_count(arr);
 
-        if (rank > 15)
-                return 16;
+		for (size_t i = 0; i < count; i++) {
+			err = array2dwa(&pkts[i], ptrs[i], NULL);
 
-        switch (arr->type) {
-        case ARR_BOOL:
-                dtyp = APLTI;
-                esiz = sizeof(int8_t);
-                break;
+			if (err)
+				return err;
+		}
+	} else {
+		return 99;
+	}
 
-        case ARR_SINT:
-                dtyp = APLSI;
-                esiz = sizeof(int16_t);
-                break;
-
-        case ARR_INT:
-                dtyp = APLI;
-                esiz = sizeof(int32_t);
-                break;
-
-        case ARR_DBL:
-                dtyp = APLD;
-                esiz = sizeof(double);
-                break;
-
-        case ARR_CMPX:
-                dtyp = APLZ;
-                esiz = sizeof(struct apl_cmpx);
-                break;
-
-        case ARR_NESTED:
-                dtyp = APLP;
-                esiz = sizeof(void *);
-                break;
-
-        case ARR_MIXED:
-        case ARR_CHAR8:
-	case ARR_CHAR16:
-	case ARR_CHAR32:
-        default:
-                return 16;
-        }
-
-        pkt = getarray(dtyp, rank, shape, lp);
-
-        count = 1;
-        for (size_t i = 0; i < rank; i++)
-                count *= shape[i];
-
-        switch (arr->storage) {
-        case STG_DEVICE:
-                err = af_get_data_ptr(DATA(pkt), arr->values);
-
-                if (err)
-                        return err;
-
-                break;
-
-        case STG_HOST:
-                memcpy(DATA(pkt), arr->values, esiz * count);
-                break;
-
-        default:
-                return 999;
-        }
-
-        if (arr->type == ARR_NESTED) {
-                void **values = DATA(pkt);
-
-                for (size_t i = 0; i < count; i++) {
-                        err = array2dwa(&(struct pocket *)values[i], values[i], NULL);
-
-                        if (err)
-                                return err;
-                }
-        }
-
-done:
 	if (dst)
 		*dst = pkt;
 
