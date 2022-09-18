@@ -38,8 +38,14 @@ struct localp {
 	void *i;
 };
 
-struct pocket *(*dwa_getarray_ptr)(enum dwa_type, 
-    unsigned int, long long *, struct localp *);
+struct pocket *
+(*dwa_getarray_ptr)(enum dwa_type, unsigned int, long long *, struct localp *);
+
+struct pocket *
+getarray(enum dwa_type type, unsigned rank, long long *shape, struct localp *lp)
+{
+	return dwa_getarray_ptr(type, rank, shape, lp);
+}
 
 DECLSPEC void
 set_codfns_getarray(void *fn)
@@ -65,10 +71,7 @@ set_dwafns(void *p)
 	return 0;
 }
 
-struct pocket *
-getarray(enum dwa_type type, unsigned rank, long long *shape, struct localp *lp)
 {
-        return dwa_getarray_ptr(type, rank, shape, lp);
 }
 
 char *
