@@ -130,13 +130,13 @@ cnvi8_i16(struct pocket *pkt)
 	
 	res	= calloc(count, sizeof(int16_t));
 
-        if (res == NULL) 
-                return res;
+	if (res == NULL) 
+		return res;
 
-        for (size_t i = 0; i < count; i++)
-                res[i] = buf[i];
+	for (size_t i = 0; i < count; i++)
+		res[i] = buf[i];
 
-        return res;
+	return res;
 }
 
 DECLSPEC int
