@@ -45,7 +45,7 @@ NS←{
 	_←∆.⎕FX∘⎕CR¨fns
 	∆.(decls←⍵∘mkna¨names)
 	_←ns.⎕FX¨(⊂''),⍵∘mkf¨∆.names
-	_←'Z←Init'
+	_ ←⊂'Z←Init'
 	_,←⊂'Z←Rtm∆Init ''',⍵,''''
 	_,←⊂'→0⌿⍨0=≢names'
 	_,←⊂'names ##.⍙.⎕NA¨decls'
