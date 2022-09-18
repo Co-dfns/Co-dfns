@@ -98,9 +98,14 @@ dwa_values_count(struct pocket *pkt)
 }
 
 char *
-cnvu8_ch(uint8_t *buf, size_t count)
+cnvu8_ch(struct pocket *pkt)
 {
-        char *res;
+	char	*res;
+	uint8_t	*buf;
+	size_t	count;
+
+	buf	= DATA(pkt);
+	count	= dwa_values_count(pkt);
 
 	res	= calloc(count, sizeof(char));
 
@@ -114,11 +119,16 @@ cnvu8_ch(uint8_t *buf, size_t count)
 }
 
 int16_t *
-cnvi8_i16(int8_t *buf, size_t count)
+cnvi8_i16(struct pocket *pkt)
 {
-        int16_t *res;
+	int16_t *res;
+	int8_t	*buf;
+	size_t	count;
 
-        res = calloc(count, sizeof(int16_t));
+	buf	= DATA(pkt);
+	count	= dwa_values_count(pkt);
+	
+	res	= calloc(count, sizeof(int16_t));
 
         if (res == NULL) 
                 return res;
