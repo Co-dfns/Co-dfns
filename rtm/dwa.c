@@ -1,5 +1,6 @@
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <string.h>
 #include <arrayfire.h>
 
@@ -8,7 +9,7 @@
 #define DATA(pp) ((void *)&(pp)->shape[(pp)->rank])
 
 struct dwa_fns {
-        long long size;
+	long long size;
 	struct {
 		long long size;
 		void *fns[18];
@@ -16,20 +17,20 @@ struct dwa_fns {
 };
 
 enum dwa_type { 
-        APLNC=0, APLU8, APLTI, APLSI, APLI, APLD, 
-        APLP,    APLU,  APLV,  APLW,  APLZ, APLR, APLF, APLQ
+	APLNC=0, APLU8, APLTI, APLSI, APLI, APLD, 
+	APLP,    APLU,  APLV,  APLW,  APLZ, APLR, APLF, APLQ
 };
 
 struct pocket {
-        long    long length;
-        long    long refcount;
-        unsigned        int type        : 4;
-        unsigned        int rank        : 4;
-        unsigned        int eltype      : 4;
-        unsigned        int _0          : 13;
-        unsigned        int _1          : 16;
-        unsigned        int _2          : 16;
-        long    long shape[1];
+	long    long length;
+	long    long refcount;
+	unsigned        int type        : 4;
+	unsigned        int rank        : 4;
+	unsigned        int eltype      : 4;
+	unsigned        int _0          : 13;
+	unsigned        int _1          : 16;
+	unsigned        int _2          : 16;
+	long    long shape[1];
 };
 
 struct localp {
@@ -49,19 +50,19 @@ set_codfns_getarray(void *fn)
 DECLSPEC int
 set_dwafns(void *p)
 {
-        struct dwa_fns *dwa;
+	struct dwa_fns *dwa;
 
-        if (p == NULL)
-                return 0;
+	if (p == NULL)
+		return 0;
 
-        dwa = p;
+	dwa = p;
 
-        if (dwa->size < (long long)sizeof(struct dwa_fns))
-                return 16;
+	if (dwa->size < (long long)sizeof(struct dwa_fns))
+		return 16;
 
 	set_codfns_getarray(dwa->ws->fns[0]);
 
-        return 0;
+	return 0;
 }
 
 struct pocket *
@@ -288,10 +289,10 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
         }
 
 done:
-        if (dst)
-                *dst = pkt;
+	if (dst)
+		*dst = pkt;
 
-        return 0;
+	return 0;
 }
 
 DECLSPEC int
@@ -329,6 +330,7 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 		return err;
 	
 	err = array2dwa(NULL, z, zp);
+	
 	release_array(z);
 	
 	if (err)
