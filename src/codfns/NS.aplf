@@ -21,19 +21,20 @@ NS←{
 		_←'FREA'⎕NA ⍵,'|frea P'
 		_←'Sync'⎕NA ⍵,'|cd_sync'
 		0 0 ⍴ ⍬}
-	mkna←{⍺,'|',('∆'⎕R'__'⊢⍵),'_cdf P P P'}
+	mkna←{'I ',⍺,'|',('∆'⎕R'__'⊢⍵),' P P P'}
 	mkf←{
 		fn←⍺,'|',('∆'⎕R'__'⊢⍵),'_dwa '
-		z←⊂'Z←{A}',⍵,' W'
+		z←⊂'Z←{A}',⍵,' W;err'
 		z,←⊂':If 0=⎕NC''⍙.',⍵,'_mon'''
 		z,←⊂'       ''',⍵,'_mon''⍙.⎕NA''I ',fn,'>PP P <PP'''
 		z,←⊂'       ''',⍵,'_dya''⍙.⎕NA''I ',fn,'>PP <PP <PP'''
 		z,←⊂':EndIf'
 		z,←⊂':If 0=⎕NC''A'''
-		z,←⊂'       Z←⍙.',⍵,'_mon 0 0 W'
+		z,←⊂'       err Z←⍙.',⍵,'_mon 0 0 W'
 		z,←⊂':Else'
-		z,←⊂'       Z←⍙.',⍵,'_dya 0 A W'
+		z,←⊂'       err Z←⍙.',⍵,'_dya 0 A W'
 		z,←⊂':EndIf'
+		z,←⊂'⎕SIGNAL err'
 		z
 	}
 	ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙)
