@@ -102,15 +102,15 @@ cnvu8_ch(uint8_t *buf, size_t count)
 {
         char *res;
 
-        res = calloc(count, sizeof(char));
+	res	= calloc(count, sizeof(char));
 
-        if (res == NULL)
-                return res;
+	if (res == NULL)
+		return res;
 
-        for (size_t i = 0; i < count; i++)
-                res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
+	for (size_t i = 0; i < count; i++)
+		res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
 
-        return res;
+	return res;
 }
 
 int16_t *
