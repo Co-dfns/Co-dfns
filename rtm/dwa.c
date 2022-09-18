@@ -71,7 +71,30 @@ set_dwafns(void *p)
 	return 0;
 }
 
+size_t
+dwa_count(struct pocket *pkt)
 {
+	size_t	count;
+	
+	count	= 1;
+	
+	for (unsigned int i = 0; i < pkt->rank; i++)
+		count *= pkt->shape[i];
+	
+	return count;
+}
+
+size_t
+dwa_values_count(struct pocket *pkt)
+{
+	size_t	count;
+	
+	count	= dwa_count(pkt);
+	
+	if (!count)
+		count = 1;
+	
+	return count;
 }
 
 char *
