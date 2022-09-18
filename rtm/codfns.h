@@ -62,7 +62,7 @@ struct cell_array {
         enum array_type type;
         void *values;
         unsigned int rank;
-        unsigned long long shape[];
+        size_t shape[];
 };
 
 struct cell_func {
