@@ -1,5 +1,59 @@
 :Namespace cdf_prim
 
+ambiv←{0=⎕NC'⍺':⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵}
+
+⍝ Shape utilities
+rnk_eqv←'rnk_eqv'⌶
+shp_eqv←'shp_eqv'⌶
+is_empty←'is_empty'⌶
+count←'count'⌶
+
+⍝ Depth utilities
+is_simple←'is_simple'⌶
+
+⍝ Array Utilities
+elem←'get_elem'⌶
+incr←'incr'⌶
+shaped←'shaped'⌶
+store←'store'⌶
+squeeze←'squeeze'⌶
+
+⍝ Scalar Helpers
+can_ext_by←'can_ext_by'⌶
+
+chk_ext_scl←{
+	⍺ shp_eqv ⍵:⍺ ⍵
+	⍺ can_ext_by ⍵:(⍵ shaped ⍺)⍵
+	⍵ can_ext_by ⍺:⍺(⍺ shaped ⍵)
+	⍺ rnk_eqv ⍵:⎕SIGNAL 5
+	⎕SIGNAL 4
+}
+
+elem_map←{
+	z←⍺ shaped ⊂⍬ ⋄ x←⍺ ⋄ y←⍵ ⋄ fn←⍺⍺ ⋄ cnt←count x
+	_←{incr ⍵⊣(z elem ⍵)store(x elem ⍵)fn y elem ⍵}⍣cnt⊢0
+	squeeze z
+}
+
+scalar←{
+	x y←⍺ chk_ext_scl ⍵
+	is_empty x:x shaped ⍵⍵ ⍬
+	x{is_simple ⍺:is_simple ⍵ ⋄ 0}y:x ⍺⍺ y
+	x(∇ elem_map)y
+}
+
+⍝ +: Conjugate | Addition
+add_vec←'add_vec'⌶
+conjugate_vec←'conjugate_vec'⌶
+
+conjugate←{
+	1289=⎕DR ⍵:conjugate_vec ⍵
+	⍵
+}
+
+add←conjugate ambiv (add_vec scalar {0})
+
+⍝ ⊢: Right
 rgt←{⍵}
 
 :EndNamespace
