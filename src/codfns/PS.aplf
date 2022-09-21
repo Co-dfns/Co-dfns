@@ -87,7 +87,7 @@ PS←{
 	∨⌿msk:'INVALID CHARACTER(S) IN SOURCE'SIGNAL msk⌿pos
 
 	⍝ This simplifies the following expressions
-	x←IN[pos]
+	x←' '@{t≠0}IN[pos]
 
 	⍝ Tokenize numbers
 	dm∨←('.'=x)∧(¯1⌽dm)∨1⌽dm←x∊num
