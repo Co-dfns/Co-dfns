@@ -7,11 +7,6 @@ PS←{
 	err←'PARSER EXPECTS SIMPLE OR VECTOR OF VECTOR INPUT'
 	2<|≡IN:err ⎕SIGNAL 11
 
-	IN←∊(⊆IN),¨⎕UCS 10
-
-	err←'PARSER EXPECTS CHARACTER ARRAY'
-	0≠10|⎕DR IN:err ⎕SIGNAL 11
-
 	⍝ Basic character classes and names
 	CR LF←⎕UCS 13 10 ⋄ WS←⎕UCS 9 32
 	alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
@@ -22,8 +17,14 @@ PS←{
 	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmfo←'/⌿\⍀'
 	prms←prmfs,prmmo,prmdo,prmfo
 
+	⍝ Guarantee everything is LF-terminated
+	IN←LF@{⍵=CR}(~CR LF⍷IN)⌿IN←∊(⊆IN),¨⎕UCS 10
+
+	err←'PARSER EXPECTS CHARACTER ARRAY'
+	0≠10|⎕DR IN:err ⎕SIGNAL 11
+
 	⍝ Error reporting utilities
-	linestarts←(⍸1⍪2>⌿IN∊CR LF)⍪≢IN
+	linestarts←⍸1⍪IN∊CR LF
 	lineof←{∊b+⍳¨linestarts[l+1]-b←linestarts[l←linestarts⍸⍵]}
 	select←{∊pos[i]+⍳¨end[i]-pos[i←⍸⍵]}
 	mkdm←{⍺←2
