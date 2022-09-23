@@ -16,8 +16,9 @@ TT←{
 	t[j]←E
 
 	⍝ Lift guard tests
-	p[i]←p[x←¯1+i←{⍵⌿⍨~2|⍳≢⍵}⍸t[p]=G] ⋄ t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i]
-	n[x]←n[i] ⋄ lx[x,i]←lx[i,x] ⋄ ss[x,i]←ss[i,x] ⋄ se[x,i]←se[i,x]
+	p[i]←p[x←¯1+i←i⌿⍨~2|⍳≢i←i[⍋p[i←⍸t[p]=G]]]
+	t[i,x]←t[x,i] ⋄ k[i,x]←k[x,i] ⋄ n[x]←n[i] ⋄ lx[x,i]←lx[i,x]
+	ss[x,i]←ss[i,x] ⋄ se[x,i]←se[i,x]
 	p←((x,i)@(i,x)⊢⍳≢p)[p]
 
 	⍝ Lift and flatten expressions
