@@ -23,39 +23,6 @@ PS←{
 	err←'PARSER EXPECTS CHARACTER ARRAY'
 	0≠10|⎕DR IN:err ⎕SIGNAL 11
 
-	⍝ Error reporting utilities
-	linestarts←⍸1⍪IN∊CR LF
-	lineof←{∊b+⍳¨linestarts[l+1]-b←linestarts[l←linestarts⍸⍵]}
-	select←{∊pos[⍵]+⍳¨end[⍵]-pos[⍵]}
-	mkdm←{⍺←2
-		line←linestarts⍸⍵
-		no←'[',(⍕1+line),'] '
-		beg←linestarts[line]
-		i←(~IN[i]∊CR LF)⌿i←beg+⍳linestarts[line+1]-beg
-		(⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)
-	}
-	quotelines←{
-		lines←∪linestarts⍸,⍵
-		nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
-		beg←linestarts[lines] ⋄ end←linestarts[lines+1]
-		m←∊∘⍵¨i←beg+⍳¨end-beg
-		¯1↓∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR
-	}
-	SIGNAL←{⍺←2 '' ⋄ en msg←¯2↑2,⊆⍺
-		EN∘←en ⋄ DM∘←en mkdm ⊃⍵
-		dmx←('EN' en)('Category' 'Compiler')('Vendor' 'Co-dfns')
-		dmx,←⊂'Message'(msg,CR,quotelines ⍵)
-		⍎'⎕SIGNAL⊂dmx'
-	}
-
-	⍝ We need assert here to ensure stack visibility on error :-(
-	assert←{
-		⍺←'assertion failure'
-		0∊⍵:⍎'⍺ ⎕SIGNAL 8'
-		1:shy←0
-	}
-
-
 	⍝ Group input into lines as a nested vector
 	pos←(⍳≢IN)⊆⍨~IN∊CR LF
 
@@ -161,7 +128,7 @@ PS←{
 	n←IN∘I¨pos+⍳¨end-pos
 	n←{¯1↓⍎¨⍵,⊂''''''}@{t=C}(⊂'')@{t∊Z F}1 ⎕C@{t∊K S}n
 	msk vals←⎕VFI ⍕n[i←⍸t=N]
-	~∧⌿msk:'CANNOT REPRESENT NUMBER'SIGNAL select ⍸(t=N)⍀~msk
+	~∧⌿msk:'CANNOT REPRESENT NUMBER'SIGNAL SELECT ⍸(t=N)⍀~msk
 	n[i]←vals
 
 	⍝ Check that all keywords are valid
@@ -172,16 +139,16 @@ PS←{
 	KW,←'SECTION' 'ENDSECTION' 'DISPOSABLE' 'ENDDISPOSABLE'
 	KW,¨⍨←':'
 	msk←~KW∊⍨kws←n⌿⍨km←t=K
-	∨⌿msk:2'UNRECOGNIZED KEYWORD(S)'SIGNAL select ⍸km⍀msk
+	∨⌿msk:2'UNRECOGNIZED KEYWORD(S)'SIGNAL SELECT ⍸km⍀msk
 
 	⍝ Check that all namespaces/sections are top level
 	nssec←':NAMESPACE' ':ENDNAMESPACE' ':SECTION' ':ENDSECTION'
 	msk←(kws∊nssec)∧km⌿tm
-	∨⌿msk:2'INVALID NAMESPACE/SECTION CONTEXT'SIGNAL select ⍸km⍀msk
+	∨⌿msk:2'INVALID NAMESPACE/SECTION CONTEXT'SIGNAL SELECT ⍸km⍀msk
 
 	⍝ Verify that all structured statements appear within trad-fns
 	msk←(kws∊KW~nssec)∧~km⌿tm
-	∨⌿msk:2'STRUCTURED STATEMENT OUTSIDE TRAD-FN' SIGNAL select ⍸km⍀msk
+	∨⌿msk:2'STRUCTURED STATEMENT OUTSIDE TRAD-FN' SIGNAL SELECT ⍸km⍀msk
 
 	⍝ Verify system variables used
 	SYSV←,¨'Á' 'A' 'AI' 'AN' 'AV' 'AVU' 'BASE' 'CT' 'D' 'DCT' 'DIV' 'DM'
@@ -204,7 +171,7 @@ PS←{
 	SYSF,←,¨'TREQ' 'TSYNC' 'UCS' 'VR' 'VFI' 'WC' 'WG' 'WN' 'WS' 'XML' 'XT'
 	SYSD←,¨'OPT' 'R' 'S'
 	msk←(t=S)∧~n∊'⎕',¨SYSV,SYSF,SYSD
-	∨⌿msk:'INVALID SYSTEM NAME'SIGNAL select ⍸msk
+	∨⌿msk:'INVALID SYSTEM NAME'SIGNAL SELECT ⍸msk
 
 	⍝ Compute parent vector from d
 	p←D2P d
@@ -234,12 +201,12 @@ PS←{
 	⍝ Parse :Namespace syntax into M nodes
 	nss←n∊⊂':NAMESPACE' ⋄ nse←n∊⊂':ENDNAMESPACE'
 	ERR←':NAMESPACE KEYWORD MAY ONLY APPEAR AT BEGINNING OF A LINE'
-	∨⌿msk←Z≠t⌿⍨1⌽nss:ERR SIGNAL select ⍸msk
+	∨⌿msk←Z≠t⌿⍨1⌽nss:ERR SIGNAL SELECT ⍸msk
 	ERR←'NAMESPACE DECLARATION MAY HAVE ONLY A NAME OR BE EMPTY'
 	msk←(Z≠t⌿⍨¯1⌽nss)∧(V≠t⌿⍨¯1⌽nss)∨Z≠t⌿⍨¯2⌽nss
-	∨⌿msk:ERR SIGNAL select ⍸msk
+	∨⌿msk:ERR SIGNAL SELECT ⍸msk
 	ERR←':ENDNAMESPACE KEYWORD MUST APPEAR ALONE ON A LINE'
-	∨⌿msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR SIGNAL select ⍸msk
+	∨⌿msk←Z≠t⌿⍨⊃1 ¯1∨.⌽⊂nse:ERR SIGNAL SELECT ⍸msk
 	t[nsi←⍸1⌽nss]←M ⋄ t[nei←⍸1⌽nse]←-M
 	n[i]←n[2+i←⍸(t=M)∧V=2⌽t] ⋄ end[nsi]←end[nei]
 	x←⍸p=⍳≢p ⋄ d←+⍀(t[x]=M)+-t[x]=-M
@@ -396,7 +363,7 @@ PS←{
 
 	⍝ Mask and verify dyadic operator right operands
 	∨⌿msk←(dm←¯1⌽(k[i]=4)∧t[i]∊F P V Z)∧(~km)∨k[i]∊0 3 4:{
-		'MISSING RIGHT OPERAND'SIGNAL select msk⌿i
+		'MISSING RIGHT OPERAND'SIGNAL SELECT msk⌿i
 	}⍬
 
 	⍝ Refine schizophrenic types
