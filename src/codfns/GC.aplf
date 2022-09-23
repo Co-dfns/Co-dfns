@@ -1,5 +1,5 @@
 GC←{
-	p t k n lx ss se sym←⍵
+	p t k n lx pos end sym IN←⍵
 	
 	⍝ Placeholder for mutable values
 	mu←(≢p)⍴0
