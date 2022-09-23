@@ -282,16 +282,20 @@ PS←{
 	bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
 
-	⍝ Binding nodes
+	⍝ Wrap bindings/assignments into B(Z, Z) nodes
 	_←p[i]{
 		t[⍵⌿⍨(n[⍵]∊⊂,'←')∧0,¯1↓bm[⍵]]←B
-		b v←{(⊃¨x)(1↓¨x←⍵⌿⍨{t[⊃⍵]=B}¨⍵)}¯1⌽¨⍵⊂⍨1,¯1↓t[⍵]∊P B
-		∨⌿~bm[∊v]:'CANNOT BIND ASSIGNMENT VALUE'⎕SIGNAL 2
-		p[⍵]←(⍺,b)[0,¯1↓+⍀t[⍵]=B]
-		n[b]←n[∊v] ⋄ t[∊v]←¯7 ⋄ pos[b]←pos[∊v] ⋄ end[b]←end[⊃⌽⍵]
+		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓t[⍵]∊P B])
+		∨⌿m←~bm[∊v]:'INVALID ASSIGNMENT TARGET'SIGNAL pos[m⌿∊v]
+		
+		p[∊v]←(≢¨v)⌿vi←(≢p)+⍳≢v ⋄ n[b]←vi
+		p t k n pos end,←(≢v)⍴¨b Z 0 0(pos[⊃¨v])(end[⊃∘⌽¨v])
+		
+		p[m⌿⍵]←(⍺,(≢p)+⍳≢b)[(m←~⍵∊∊v)⌿0,¯1↓+⍀t[⍵]=B]
+		p t k n pos end,←(≢b)⍴¨b Z 0 0(1+pos[b])(end[⊃⌽⍵])
+		pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	t k n pos end⌿⍨←⊂msk←t≠¯7 ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
-
+	
 	⍝ Mark system variables as P nodes with appropriate kinds
 	k[⍸(t=S)∧n∊'⎕',¨SYSV]←1 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSF]←2 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSD]←4
 	t[⍸t=S]←P
@@ -305,30 +309,47 @@ PS←{
 	k[i←⍸msk←(n∊⊂,'∘')∧1⌽n∊⊂,'.']←3 ⋄ end[i]←end[i+1] ⋄ n[i]←⊂,'∘.'
 	t k n pos end⌿⍨←⊂msk←~¯1⌽msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
-	⍝ Anchor variables to earliest binding in the matching frame
-	rf←¯1@{~t[⍵]∊F G M}p[rz←I@{~(t[⍵]=Z)∧(t[p[⍵]]∊F G M)∨p[⍵]=⍵}⍣≡⍨p]
+	⍝ Enclosing frames and lines for all nodes
+	rf←¯1@{~t[⍵]∊F G M}p[rz←I@{(t[⍵]=Z)⍲(t[p[⍵]]∊F G M)∨p[⍵]=⍵}⍣≡⍨p]
 	rf[i]←p[i←⍸t=G] ⋄ rz[i]←i ⋄ rf←rf I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}rf
+	
+	⍝ Compute variables that are binding targets
+	fb←⍸(t=V)∧n[⍸t=B]∊⍨bz←I@{(t[⍵]=Z)⍲t[p[⍵]]∊B F G M}⍣≡⍨p
+	
+	⍝ Link binding targets to enclosing binding and binding to value
+	vb←¯1⍴⍨≢p ⋄ vb[fb]←p[bz][fb] ⋄ vb[⍸t=B]←(0 1⍴⍨≢i)⌿i←⍸t[p]=B
+	
+	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
-	fr←rf mk⊢fb←fb[⍳⍨rf mk⊢fb←fb I∘(⍳⍨)U⊖rz mk⊢fb←⍸t=B] ⋄ fb,←¯1
-	vb←fb[fr⍳rf mk i]@(i←⍸t=V)⊢¯1⍴⍨≢p
+	fr←rf mk⊢fb←fb[⍳⍨rf mk⊢fb←fb[⊖⍳⍨⊖rz mk⊢fb]] ⋄ fb,←¯1
+	
+	⍝ Link local variables with their local bindings
+	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
 	vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b←vb[i←i⌿⍨vb[i]≠¯1]]←¯1
-	_←{z/⍨¯1=vb[1⌷z]←fb[fr⍳⍉n I@1⊢z←rf I@0⊢⍵]}⍣≡⍉{rf[⍵],⍪⍵}⍸(t=V)∧vb=¯1
+	
+	⍝ Introduce lexical scope, mark all local and free variables
+	lx←(≢p)⍴0 ⋄ lx[i←⍸(t=V)∧vb=¯1]←1
+	
+	⍝ Compute free variable bindings
+	_←{z/⍨¯1=vb[1⌷z]←fb[fr⍳⍉n I@1⊢z←rf I@0⊢⍵]}⍣≡⍉{rf[⍵],⍪⍵}i
+	
+	⍝ Check that all variables have a valid binding
 	∨⌿msk←(t=V)∧vb=¯1:{
 		6'ALL VARIABLES MUST REFERENCE A BINDING'SIGNAL∊pos[⍵]{⍺+⍳⍵-⍺}¨end[⍵]
 	}⍸msk
-	
-	⍝ Mark bindings and variables with the appropriate scope
-	lx←(≢p)⍴0 ⋄ lx[⍸t=F]←3 ⋄ lx[⍸t=P]←3
 
 	⍝ Convert M nodes to F0 nodes
 	t←F@{t=M}t
+
+	⍝ Mark functions as global and primitives as runtime scope
+	lx[⍸t=F]←4 ⋄ lx[⍸t=P]←3
 
 	⍝ Convert formal nodes to P nodes
 	t[i←⍸(t=A)∧n∊,¨'⍺⍵']←P ⋄ vb[i]←i ⋄ lx[i]←4
 	k[i←⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2 ⋄ lx[i]←4
 
 	⍝ Infer the type of bindings, groups, and variables
-	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]∊B Z)∧p≠⍳≢p
+	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	x←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x
 	0∨.=≢¨x:'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'⎕SIGNAL 2
 	_←{
@@ -343,13 +364,13 @@ PS←{
 
 		k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1
 		z x⌿⍨←⊂~msk
-
-		k[i]←k[vb[i←⍸t=V]]
+		
+		k[i]←k[vb[i←⍸t∊B V]]
 	≢z}⍣(=∨0=⊣)≢z
 	'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
 
 	⍝ Strand arrays into atoms
-	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]∊B Z
+	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
 	msk←(t[i]∊C N)∨msk∧⊃1 ¯1∨.⌽⊂msk←km∧(t[i]∊A C N V Z)∧k[i]=1
 	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai ⋄ km←2<⌿0⍪msk
 	t k n lx pos end(⊣,I)←⊂ai ⋄ k[ai]←1 6[∨⌿¨msk⊆t[i]≠N]
@@ -365,7 +386,7 @@ PS←{
 	_←p[i]{
 		⊃m←t[⍵]=¯1:'SYNTAX ERROR:NOTHING TO INDEX'⎕SIGNAL 2
 		k[⍵⌿⍨m∧¯1⌽(k[⍵]∊2 3 5)∨¯1⌽k[⍵]=4]←4
-	0}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
+	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
 	i←⍸(t=¯1)∧k=4 ⋄ j←⍸(t[p]=¯1)∧k[p]=4
 	(≢i)≠≢j:{
 		2'AXIS REQUIRES SINGLE AXIS EXPRESSION'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
@@ -376,7 +397,7 @@ PS←{
 	p[j]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
 
 	⍝ Group function and value expressions
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1 2
+	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
 
 	⍝ Mask and verify dyadic operator right operands
 	(dm←¯1⌽(k[i]=4)∧t[i]∊F P V Z)∨.∧(~km)∨k[i]∊0 3 4:{
@@ -410,7 +431,7 @@ PS←{
 	k[oi]←3 3⊥↑or ol
 
 	⍝ Wrap all assignment values as Z nodes
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(p≠⍳≢p)∧k[p]∊1
+	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]=1
 	j←i⌿⍨msk←(t[i]=P)∧n[i]∊⊂,'←' ⋄ nz←(≢p)+⍳zc←+⌿msk
 	p,←nz ⋄ t k n lx,←zc⍴¨Z 1(⊂'')0 ⋄ pos,←1+pos[j] ⋄ end,←end[p[j]]
 	zm←¯1⌽msk ⋄ p[km⌿i]←(zpm⌿(i×~km)+zm⍀nz)[km⌿¯1++⍀zpm←zm∨~km]
@@ -444,13 +465,13 @@ PS←{
 	⍝ SELECTIVE ASSIGNMENT
 
 	⍝ Enclose V[X;...] for expression parsing
-	i←i[⍋p[i←⍸(t[p]∊B Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
+	i←i[⍋p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
 	t[j]←A ⋄ k[j]←¯1 ⋄ p[i⌿⍨1⌽jm]←j
 
 	⍝ TRAINS
 
 	⍝ Parse value expressions
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]∊B Z)∧(k[p]=1)∧p≠⍳≢p
+	i km←⍪⌿p[i]{(⍺⍪⍵)(0,(2≤≢⍵)∧1∨⍵)}⌸i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p
 	msk←m2∨fm∧~¯1⌽m2←km∧(1⌽km)∧~fm←(t[i]=O)∨(t[i]≠A)∧k[i]=2
 	t,←E⍴⍨xc←+⌿msk ⋄ k,←msk⌿msk+m2 ⋄ n,←xc⍴⊂'' ⋄ lx,←xc⍴0
 	pos,←pos[msk⌿i] ⋄ end,←end[p[msk⌿i]]
@@ -465,16 +486,15 @@ PS←{
 	⍝ Sanity check
 	ERR←'INVARIANT ERROR: Z node with multiple children'
 	ERR assert(+⌿(t[p]=Z)∧p≠⍳≢p)=+⌿t=Z:
-
+	
 	⍝ Count parentheses in source information
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
 
 	⍝ VERIFY Z/B NODE TYPES MATCH ACTUAL TYPE
 
 	⍝ Eliminate Z nodes from the tree
-	zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
-	p←(zi@ki⍳≢p)[p] ⋄ t k n lx pos end(⊣@zi⍨)←t k n lx pos end I¨⊂ki
-	t k n lx pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+	p[ki]←p I@{t[⍵]=Z}⍣≡p[ki←⍸(t[p]=Z)∧t≠Z] 
+	t k n lx pos end⌿⍨←⊂msk←t≠Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Compute parser exports
 	msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
