@@ -51,7 +51,9 @@ TT←{
 	nams,←  'alpha' 'omega' ''
 	
 	⍝ Convert all primitives to variables; P → V
-	i←⍸t=P ⋄ t[i]←V ⋄ sym[i]←nams[syms⍳sym[i←|n[i]]]
+	i←⍸t=P ⋄ t[i]←V ⋄ si←syms⍳sym[ni←|n[i]]
+	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
+	sym[ni]←nams[si]
 
 	p t k n lx pos end sym IN
 }
