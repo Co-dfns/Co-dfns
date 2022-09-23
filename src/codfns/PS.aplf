@@ -12,8 +12,8 @@ PS←{
 	alp←'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz'
 	alp,←'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüþ'
 	alp,←'∆⍙ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏ'
-	num←⎕D ⋄ syna←'⍬⎕⍞#' ⋄ synb←'¯[]{}()'':⍺⍵⋄;'
-	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇←→'
+	num←⎕D ⋄ syna←'⍬⎕⍞#' ⋄ synb←'¯[]{}()'':⍺⍵⋄;←'
+	prmfs←'+-×÷|⌈⌊*⍟○!?~∧∨⍲⍱<≤=>≥≠≡≢⍴,⍪⌽⊖⍉↑↓⊂⊆⊃∊⍷∩∪⍳⍸⌷⍋⍒⍎⍕⊥⊤⊣⊢⌹∇→'
 	prmmo←'¨⍨&⌶⌸' ⋄ prmdo←'∘.⍣⍠⌺⍤⍥@' ⋄ prmfo←'/⌿\⍀'
 	prms←prmfs,prmmo,prmdo,prmfo
 
@@ -150,7 +150,7 @@ PS←{
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
 
 	⍝ Delete all characters we no longer need from the tree
-	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{}:;'
+	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{}:;←'
 
 	⍝ Tokenize labels
 	ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
@@ -278,24 +278,6 @@ PS←{
 		t[z]←Z P[1=≢¨g]
 	0}⌸i←⍸t[p]=¯1
 
-	⍝ Mark bindable nodes
-	bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
-	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
-
-	⍝ Wrap bindings/assignments into B(Z, Z) nodes
-	_←p[i]{
-		t[⍵⌿⍨(n[⍵]∊⊂,'←')∧0,¯1↓bm[⍵]]←B
-		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓t[⍵]∊P B])
-		∨⌿m←~bm[∊v]:'INVALID ASSIGNMENT TARGET'SIGNAL pos[m⌿∊v]
-		
-		p[∊v]←(≢¨v)⌿vi←(≢p)+⍳≢v ⋄ n[b]←vi
-		p t k n pos end,←(≢v)⍴¨b Z 0 0(pos[⊃¨v])(end[⊃∘⌽¨v])
-		
-		p[m⌿⍵]←(⍺,(≢p)+⍳≢b)[(m←~⍵∊∊v)⌿0,¯1↓+⍀t[⍵]=B]
-		p t k n pos end,←(≢b)⍴¨b Z 0 0(1+pos[b])(end[⊃⌽⍵])
-		pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
-	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	
 	⍝ Mark system variables as P nodes with appropriate kinds
 	k[⍸(t=S)∧n∊'⎕',¨SYSV]←1 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSF]←2 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSD]←4
 	t[⍸t=S]←P
@@ -309,26 +291,49 @@ PS←{
 	k[i←⍸msk←(n∊⊂,'∘')∧1⌽n∊⊂,'.']←3 ⋄ end[i]←end[i+1] ⋄ n[i]←⊂,'∘.'
 	t k n pos end⌿⍨←⊂msk←~¯1⌽msk ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
+	⍝ Convert formal nodes to P nodes
+	t[i←⍸(t=A)∧n∊,¨'⍺⍵']←P ⋄ k[i←⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2
+
+	⍝ Convert M nodes to F0 nodes
+	t←F@{t=M}t
+
+	⍝ Mark bindable nodes
+	bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
+	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
+	
+	⍝ We use vb to link variables to their binding
+	vb←¯1⍴⍨≢p
+
+	⍝ Wrap bindings/assignments into B(Z, Z) nodes
+	_←p[i]{
+		t[⍵⌿⍨(n[⍵]∊⊂,'←')∧0,¯1↓bm[⍵]]←B
+		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓t[⍵]∊P B])
+		∨⌿m←~bm[∊v]:'INVALID ASSIGNMENT TARGET'SIGNAL pos[m⌿∊v]
+		
+		p[∊v]←(≢¨v)⌿(≢p)+⍳≢v ⋄ vb[m⌿∊v]←(m←t[∊v]=V)⌿(≢¨v)⌿b
+		p t k n vb pos end,←(≢v)⍴¨b Z 0(⊂'')¯1(pos[⊃¨v])(end[⊃∘⌽¨v])
+		
+		p[m⌿⍵]←(⍺,zi←(≢p)+⍳≢b)[(m←~⍵∊∊v)⌿0,¯1↓+⍀t[⍵]=B]
+		p t k n vb pos end,←(≢b)⍴¨b Z 0(⊂'')¯1(1+pos[b])(end[⊃⌽⍵])
+		
+		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
+	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+	
 	⍝ Enclosing frames and lines for all nodes
-	rf←¯1@{~t[⍵]∊F G M}p[rz←I@{(t[⍵]=Z)⍲(t[p[⍵]]∊F G M)∨p[⍵]=⍵}⍣≡⍨p]
+	rf←¯1@{~t[⍵]∊F G}p[rz←I@{(t[⍵]=Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍨p]
 	rf[i]←p[i←⍸t=G] ⋄ rz[i]←i ⋄ rf←rf I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}rf
-	
-	⍝ Compute variables that are binding targets
-	fb←⍸(t=V)∧n[⍸t=B]∊⍨bz←I@{(t[⍵]=Z)⍲t[p[⍵]]∊B F G M}⍣≡⍨p
-	
-	⍝ Link binding targets to enclosing binding and binding to value
-	vb←¯1⍴⍨≢p ⋄ vb[fb]←p[bz][fb] ⋄ vb[⍸t=B]←(0 1⍴⍨≢i)⌿i←⍸t[p]=B
 	
 	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
-	fr←rf mk⊢fb←fb[⍳⍨rf mk⊢fb←fb[⊖⍳⍨⊖rz mk⊢fb]] ⋄ fb,←¯1
+	fb,←¯1⊣fr←rf mk⊢fb←fb[⍳⍨rf mk⊢fb←fb[⊖⍳⍨⊖rz mk⊢fb←⍸t[0⌈vb]=B]]
 	
 	⍝ Link local variables with their local bindings
 	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
 	vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b←vb[i←i⌿⍨vb[i]≠¯1]]←¯1
 	
-	⍝ Introduce lexical scope, mark all local and free variables
-	lx←(≢p)⍴0 ⋄ lx[i←⍸(t=V)∧vb=¯1]←1
+	⍝ Mark lexical scope of values
+	lx←(≢p)⍴0 ⋄ lx[i←⍸(t=V)∧vb=¯1]←1 ⋄ lx[⍸t=F]←4 ⋄ lx[⍸t=P]←3
+	lx[⍸(t=P)∧n∊,¨'⍺' '⍵' '⍺⍺' '⍵⍵']←4
 	
 	⍝ Compute free variable bindings
 	_←{z/⍨¯1=vb[1⌷z]←fb[fr⍳⍉n I@1⊢z←rf I@0⊢⍵]}⍣≡⍉{rf[⍵],⍪⍵}i
@@ -337,16 +342,6 @@ PS←{
 	∨⌿msk←(t=V)∧vb=¯1:{
 		6'VARIABLES MUST BE BOUND'SIGNAL∊pos[⍵]{⍺+⍳⍵-⍺}¨end[⍵]
 	}⍸msk
-
-	⍝ Convert M nodes to F0 nodes
-	t←F@{t=M}t
-
-	⍝ Mark functions as global and primitives as runtime scope
-	lx[⍸t=F]←4 ⋄ lx[⍸t=P]←3
-
-	⍝ Convert formal nodes to P nodes
-	t[i←⍸(t=A)∧n∊,¨'⍺⍵']←P ⋄ vb[i]←i ⋄ lx[i]←4
-	k[i←⍸(t=P)∧n∊'⍺⍺' '⍵⍵']←2 ⋄ lx[i]←4
 
 	⍝ Infer the type of bindings, groups, and variables
 	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
