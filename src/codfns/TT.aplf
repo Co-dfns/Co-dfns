@@ -3,7 +3,7 @@ TT←{
 	
 	⍝ Compute parent vector and reference scope
 	r←I@{t[⍵]≠F}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d
-	
+
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx pos end r(⊣,I)←⊂i
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←C
@@ -49,7 +49,7 @@ TT←{
 	nams,←  'spn' 'q_fft' 'q_ift' 'q_conv' 'q_nc' 'q_signal' 'q_dr'
 	syms,←,¨'⍺'     '⍵'     '⍺⍺'         '⍵⍵'         '%u'
 	nams,←  'alpha' 'omega' 'alphaalpha' 'omegaomega' ''
-	
+
 	⍝ Convert all primitives to variables; P → V
 	i←⍸t=P ⋄ t[i]←V ⋄ si←syms⍳sym[ni←|n[i]]
 	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
