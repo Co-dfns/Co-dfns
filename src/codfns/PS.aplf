@@ -330,17 +330,21 @@ PS←{
 		k[i]←k[vb[i←⍸t∊B V]]
 	≢z}⍣(=∨0=⊣)≢z
 	'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
+	
+	⍝ Parse niladic tokens to A0 nodes
+	i←⍸n∊,¨'⎕⍞' ⋄ p,←i ⋄ t k n lx pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 0(⊂'')
 
-	⍝ Strand arrays into atoms
+	⍝ Unify A1, N, and C tokens to A1 nodes
+	n[⍸(t=A)∧k=1]←⊂'' ⋄ t k(⊣@(⍸t∊N C))⍨←A 1
+	
+	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
-	msk←(t[i]∊C N)∨msk∧⊃1 ¯1∨.⌽⊂msk←km∧(t[i]∊A C N V Z)∧k[i]=1
-	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai ⋄ km←2<⌿0⍪msk
-	t k n lx pos end(⊣,I)←⊂ai ⋄ k[ai]←1 6[∨⌿¨msk⊆t[i]≠N]
-	t n lx pos(⊣@ai⍨)←A(⊂'')0(pos[km⌿i])
-	p[msk⌿i]←ai[(msk←msk∧~am)⌿¯1++⍀km]
-	i←⍸(t[p]=A)∧(k[p]=6)∧t=N
-	p,←i ⋄ t k n lx pos end(⊣,I)←⊂i ⋄ t k n lx(⊣@i⍨)←A 1(⊂'')0
-
+	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊V Z)∧k[i]=1
+	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai
+	t k n lx pos end(⊣,I)←⊂ai
+	t k n lx pos(⊣@ai⍨)←A 7(⊂'')0(pos[i⌿⍨km←2<⌿0⍪msk])
+	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]	
+	
 	⍝ PARSE B←D...
 	⍝ PARSE B←...D
 
@@ -455,8 +459,13 @@ PS←{
 	⍝ VERIFY Z/B NODE TYPES MATCH ACTUAL TYPE
 
 	⍝ Eliminate Z nodes from the tree
-	p[ki]←p I@{t[⍵]=Z}⍣≡p[ki←⍸(t[p]=Z)∧t≠Z] 
+	p[ki]←p I@{t[⍵]=Z}⍣≡p[ki←⍸(t[p]=Z)∧t≠Z] ⋄ p[ki]←ki←ki⌿⍨t[p[ki]]=Z
 	t k n lx pos end⌿⍨←⊂msk←t≠Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+
+	⍝ Merge simple arrays into single A1 nodes
+	msk←((t=A)∧k=7)∨(t=A)∧0=≡¨n ⋄ msk[p]∧←msk ⋄ i←⍸msk←msk∧msk[p]
+	k[p[i]]←1 ⋄ n[p[i]],←n[i]
+	t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)(~msk)⌿p
 
 	⍝ Compute parser exports
 	msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
