@@ -330,7 +330,7 @@ PS←{
 		k[i]←k[vb[i←⍸t∊B V]]
 	≢z}⍣(=∨0=⊣)≢z
 	'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
-	
+
 	⍝ Parse niladic tokens to A0 nodes
 	i←⍸n∊,¨'⎕⍞' ⋄ p,←i ⋄ t k n lx pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 0(⊂'')
 
@@ -344,7 +344,7 @@ PS←{
 	t k n lx pos end(⊣,I)←⊂ai
 	t k n lx pos(⊣@ai⍨)←A 7(⊂'')0(pos[i⌿⍨km←2<⌿0⍪msk])
 	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]	
-	
+
 	⍝ PARSE B←D...
 	⍝ PARSE B←...D
 
