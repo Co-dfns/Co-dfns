@@ -1,6 +1,11 @@
 TT←{
 	((d t k n lx pos end)exp sym IN)←⍵
-	
+
+	⍝ Convert O(''⌶) derived functions to V2(lx[4]) nodes
+	i←⍸msk←(t=P)∧sym[|0⌊n]∊,¨'⌶'
+	pi←i-2 ⋄ t[pi]←V ⋄ k[pi]←2 ⋄ n[pi]←n[i-1] ⋄ lx[pi]←4
+	d t k n lx pos end⌿⍨←⊂~msk∨1⌽msk
+
 	⍝ Compute parent vector and reference scope
 	r←I@{t[⍵]≠F}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d
 
