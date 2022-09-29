@@ -339,7 +339,7 @@ PS←{
 	
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
-	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊V Z)∧k[i]=1
+	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
 	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai
 	t k n lx pos end(⊣,I)←⊂ai
 	t k n lx pos(⊣@ai⍨)←A 7(⊂'')0(pos[i⌿⍨km←2<⌿0⍪msk])
