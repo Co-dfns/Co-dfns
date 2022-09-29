@@ -134,6 +134,28 @@ GC←{
 		⊂z,⊂''
 	}⌸i
 
+	⍝ E2: Dyadic expression application
+	i←⍸(t[p]=E)∧k[p]=2
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		x fn y←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x = retain_cell(',x,');'
+		z,←⊂'	struct cell_func *fn = retain_cell(',fn,');'
+		z,←⊂'	struct cell_array *y = retain_cell(',y,');'
+		z,←⊂''
+		z,←⊂'	err = (fn->ptr)((struct cell_array **)stkhd++, x, y, fn);'
+		z,←⊂''
+		z,←⊂'	release_cell(x);'
+		z,←⊂'	release_cell(fn);'
+		z,←⊂'	release_cell(y);'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+
 	⍝ F2: D-fns functions
 	i←⍸(t=F)∧k=2 
 	zz[i],←{
