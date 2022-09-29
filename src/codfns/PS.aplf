@@ -459,8 +459,9 @@ PS←{
 	⍝ VERIFY Z/B NODE TYPES MATCH ACTUAL TYPE
 
 	⍝ Eliminate Z nodes from the tree
-	p[ki]←p I@{t[⍵]=Z}⍣≡p[ki←⍸(t[p]=Z)∧t≠Z] ⋄ p[ki]←ki←ki⌿⍨t[p[ki]]=Z
-	t k n lx pos end⌿⍨←⊂msk←t≠Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
+	zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
+	p←(zi@ki⍳≢p)[p] ⋄ t k n lx pos end(⊣@zi⍨)←t k n lx pos end I¨⊂ki
+	t k n lx pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧k=7)∨(t=A)∧0=≡¨n ⋄ msk[p]∧←msk ⋄ i←⍸msk←msk∧msk[p]
