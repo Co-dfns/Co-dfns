@@ -156,6 +156,34 @@ GC←{
 		⊂z,⊂''
 	}⌸i
 
+	⍝ G0: Value guards
+	i←i[∪⍳⍨p[i←⍸t[p]=G]]
+	zz[p[i]],←{
+		0=≢i:0⍴⊂''
+		test←⊃var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x = ',test,';'
+		z,←⊂''
+		z,←⊂'	if (array_count(x) != 1) {'
+		z,←⊂'		err = 5;'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'	}'
+		z,←⊂''
+		z,←⊂'	if (!is_simple(x) || !is_bool(x)) {'
+		z,←⊂'		err = 11;'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'	}'
+		z,←⊂''
+		z,←⊂'	int t = is_true(x);'
+		z,←⊂'	release_cell(x);'⌿⍨0=k[⍵]
+		z,←⊂''
+		z,←⊂'	if (t) {'
+		z,← '		'∘,¨⊃⍪⌿1↓(p[⍵]=p)⌿zz
+		z,←⊂'	}'
+		z,←⊂'}'
+		z,⊂''
+	}¨i
+
 	⍝ F2: D-fns functions
 	i←⍸(t=F)∧k=2 
 	zz[i],←{
