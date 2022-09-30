@@ -109,7 +109,9 @@ GC←{
 	⍝ E0: Returning end of line statement
 	i←⍸(t[p]=E)∧k[p]=0
 	zz[p[i]],←{
-		z ←⊂'*z = retain_cell(',(⊃var_values ⍵),');'
+		id←⊃var_values ⍵
+		z ←⊂'*z = ',id,';'
+		z,←(⊂'retain_cell(',id,');')⌿⍨0≠k[⍵]
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
@@ -120,13 +122,14 @@ GC←{
 		0=≢⍵:⊂0⍴⊂''
 		fn arg←var_values ⍵
 		z ←⊂'{'
-		z,←⊂'	struct cell_func *fn = retain_cell(',fn,');'
-		z,←⊂'	struct cell_array *arg = retain_cell(',arg,');'
+		z,←⊂'	struct cell_func *fn = ',fn,';'
+		z,←⊂'	struct cell_array *arg = ',arg,';'
+		z,←⊂'	struct cell_array **dst = stkhd++;'
 		z,←⊂''
-		z,←⊂'	err = (fn->fptr)((struct cell_array **)stkhd++, NULL, arg, fn);'
-		z,←⊂''
-		z,←⊂'	release_cell(fn);'
-		z,←⊂'	release_cell(arg);'
+		z,←⊂'	err = (fn->fptr)(dst, NULL, arg, fn);'
+		z,←(⊂'')⌿⍨0∊k[⍵]
+		z,←(⊂'	release_cell(fn);')⌿⍨0=k[⊃⍵]
+		z,←(⊂'	release_cell(arg);')⌿⍨0=k[1⊃⍵]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -140,15 +143,16 @@ GC←{
 		0=≢⍵:⊂0⍴⊂''
 		x fn y←var_values ⍵
 		z ←⊂'{'
-		z,←⊂'	struct cell_array *x = retain_cell(',x,');'
-		z,←⊂'	struct cell_func *fn = retain_cell(',fn,');'
-		z,←⊂'	struct cell_array *y = retain_cell(',y,');'
+		z,←⊂'	struct cell_array *x = ',x,';'
+		z,←⊂'	struct cell_func *fn = ',fn,';'
+		z,←⊂'	struct cell_array *y = ',y,';'
+		z,←⊂'	struct cell_array **dst = stdhd++;'
 		z,←⊂''
-		z,←⊂'	err = (fn->ptr)((struct cell_array **)stkhd++, x, y, fn);'
-		z,←⊂''
-		z,←⊂'	release_cell(x);'
-		z,←⊂'	release_cell(fn);'
-		z,←⊂'	release_cell(y);'
+		z,←⊂'	err = (fn->ptr)(dst, x, y, fn);'
+		z,←(⊂'')⌿⍨0∊k[⍵]
+		z,←(⊂'	release_cell(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_cell(fn);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_cell(y);')⌿⍨0=k[⍵[2]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -175,7 +179,7 @@ GC←{
 		z,←⊂'	}'
 		z,←⊂''
 		z,←⊂'	int t = is_true(x);'
-		z,←⊂'	release_cell(x);'⌿⍨0=k[⍵]
+		z,←(⊂'	release_cell(x);')⌿⍨0=k[⍵]
 		z,←⊂''
 		z,←⊂'	if (t) {'
 		z,← '		'∘,¨⊃⍪⌿1↓(p[⍵]=p)⌿zz
