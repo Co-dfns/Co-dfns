@@ -19,7 +19,7 @@ TT←{
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
-
+	
 	⍝ Lift guard tests
 	x←¯1+i←⍸(t[p]=G)∧(¯1⌽t=G)∧t≠V
 	p t k n lx r pos end⌿⍨←⊂m←2@x⊢1⍴⍨≢p

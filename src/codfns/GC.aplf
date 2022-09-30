@@ -1,34 +1,34 @@
 GC←{
 	p t k n lx pos end sym IN←⍵
-	
+
 	⍝ Placeholder for mutable values
 	mu←(≢p)⍴0
 
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
-	
+
 	⍝ Variable generation utilities
 	var_ckinds←{
 		('' 'array' 'func' 'moper' 'doper' 'env' 'void')[k[⍵]]
 	}
-	
+
 	var_names←{
 		ceqv←'_del_' '_delubar_' 'alpha' 'omega'
 		asym←'∆'     '⍙'         '⍺'     '⍵'
 		(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
 	}
-	
+
 	var_scopes←{
 		'loc.' 'lex->' 'dyn->' 'cdf_prim.' ''[lx[⍵]]
 	}
-	
+
 	var_nmvec←{
 		0=≢⍵:'wchar_t **',⍺,' = NULL;'
 		z←'wchar_t *',⍺,'[] = {'
 		z,←⊃{⍺,', ',⍵}⌿'L"'∘,¨sym[|n[⍵]],¨'"'
 		z,'};'
 	}
-	
+
 	decl_vars←{
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
@@ -42,7 +42,7 @@ GC←{
 		z,¨←var_names ⍵
 		z,¨';'
 	}
-	
+
 	init_vars←{
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT INITIALIZE STACK VARIABLE'SIGNAL 99
@@ -57,12 +57,12 @@ GC←{
 		}¨var_refs ⍵[i]
 		⊃⍪⌿z
 	}
-	
+
 	var_refs←{
 		0∊k[⍵]:'CANNOT REFERENCE STACK VARIABLE'SIGNAL 99
 		(var_scopes,¨var_names) ⍵
 	}
-	
+
 	var_values←{
 		z←(var_scopes,¨var_names)⍵
 		z,¨←'' '->value'[mu[⍵]]
@@ -81,14 +81,14 @@ GC←{
 
 	⍝ We have a vector output for each node in the AST
 	zz←(≢p)⍴⊂''
-	
+
 	⍝ B: Function bindings
 	i←⍸t[p]=B
 	zz[p[i]],←{
 		tgt src←var_values p[⍵],⍵
 		z ←⊂tgt,' = *stkhd++ = retain_cell(',src,');'
 	z}¨i
-	
+
 	⍝ C: Closures for functions
 	i←⍸t=C
 	zz[i],←{
@@ -98,7 +98,7 @@ GC←{
 		z,←⊂'	goto cleanup;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ E¯1: Non-returning end of line statement
 	i←⍸(t=E)∧k=¯1
 	zz[i],←{
@@ -113,7 +113,7 @@ GC←{
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
-	
+
 	⍝ E1: Monadic expression application
 	i←⍸(t[p]=E)∧k[p]=1
 	zz[∪p[i]],←p[i]{
@@ -185,7 +185,7 @@ GC←{
 	}¨i
 
 	⍝ F2: D-fns functions
-	i←⍸(t=F)∧k=2 
+	i←⍸(t=F)∧k=2
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		id←⊃var_names ⍵
@@ -211,7 +211,7 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
-	
+
 	⍝ F0: Initialization functions for namespaces
 	i←⍸(t=F)∧k=0
 	zz[i],←{
@@ -256,7 +256,7 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
-	
+
 	⍝ Export functions
 	i←⍸(t=B)∧(k=2)∧k[p]=0
 	exp←⊃⍪⌿{
