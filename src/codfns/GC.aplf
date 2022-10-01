@@ -159,6 +159,141 @@ GC←{
 		z,←⊂'}'
 		⊂z,⊂''
 	}⌸i
+	
+	⍝ O1: Monadic Array Operand
+	i←⍸(t[p]=O)∧k[p]=1
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		lop op←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x = ',lop,';'
+		z,←⊂'	struct cell_func *op = ',op,';'
+		z,←⊂'	struct cell_func **dst = stkhd++;'
+		z,←⊂''
+		z,←⊂'	err = apply_mop(dst, op, x);'
+		z,←⊂''
+		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+
+	⍝ O2; Monadic Function Operand
+	i←⍸(t[p]=O)∧k[p]=2
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		lop op←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_func *x = ',lop,';'
+		z,←⊂'	struct cell_func *op = ',op,';'
+		z,←⊂'	struct cell_func **dst = stkhd++;'
+		z,←⊂''
+		z,←⊂'	err = apply_mop(dst, op, x);'
+		z,←⊂''
+		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+
+	⍝ O4: Dyadic Array/Array Operands
+	i←⍸(t[p]=O)∧k[p]=4
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		lop op rop←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x = ',lop,';'
+		z,←⊂'	struct cell_func *op = ',op,';'
+		z,←⊂'	struct cell_array *y = ',rop,';'
+		z,←⊂'	struct cell_func **dst = stkhd++;'
+		z,←⊂''
+		z,←⊂'	err = apply_dop(dst, op, x, y);'
+		z,←⊂''
+		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+
+	⍝ O5: Dyadic Function/Array Operands
+	i←⍸(t[p]=O)∧k[p]=5
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		lop op rop←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_func *x = ',lop,';'
+		z,←⊂'	struct cell_func *op = ',op,';'
+		z,←⊂'	struct cell_array *y = ',rop,';'
+		z,←⊂'	struct cell_func **dst = stkhd++;'
+		z,←⊂''
+		z,←⊂'	err = apply_dop(dst, op, x, y);'
+		z,←⊂''
+		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+
+	
+	⍝ O7: Dyadic Array/Function Operands
+	i←⍸(t[p]=O)∧k[p]=7
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		lop op rop←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x = ',lop,';'
+		z,←⊂'	struct cell_func *op = ',op,';'
+		z,←⊂'	struct cell_func *y = ',rop,';'
+		z,←⊂'	struct cell_func **dst = stkhd++;'
+		z,←⊂''
+		z,←⊂'	err = apply_dop(dst, op, x, y);'
+		z,←⊂''
+		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+
+	⍝ O8: Dyadic Function/Function Operands
+	i←⍸(t[p]=O)∧k[p]=8
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		lop op rop←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_func *x = ',lop,';'
+		z,←⊂'	struct cell_func *op = ',op,';'
+		z,←⊂'	struct cell_func *y = ',rop,';'
+		z,←⊂'	struct cell_func **dst = stkhd++;'
+		z,←⊂''
+		z,←⊂'	err = apply_dop(dst, op, x, y);'
+		z,←⊂''
+		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
 
 	⍝ G0: Value guards
 	i←i[∪⍳⍨p[i←⍸t[p]=G]]
