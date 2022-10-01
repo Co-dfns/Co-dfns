@@ -146,7 +146,7 @@ GC←{
 		z,←⊂'	struct cell_array *x = ',x,';'
 		z,←⊂'	struct cell_func *fn = ',fn,';'
 		z,←⊂'	struct cell_array *y = ',y,';'
-		z,←⊂'	struct cell_array **dst = stdhd++;'
+		z,←⊂'	struct cell_array **dst = stkhd++;'
 		z,←⊂''
 		z,←⊂'	err = (fn->ptr)(dst, x, y, fn);'
 		z,←(⊂'')⌿⍨0∊k[⍵]
