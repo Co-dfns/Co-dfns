@@ -215,6 +215,62 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	
+	⍝ F3: D-fns functions
+	i←⍸(t=F)∧k=3
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		id←⊃var_names ⍵
+		pref,←⊂'int ',id,'(struct cell_array **,'
+		pref,←⊂'    struct cell_array *, struct cell_array *,'
+		pref,←⊂'    struct cell_func *);'
+		z ←⊂'int'
+		z,←⊂id,'(struct cell_array **z,'
+		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
+		z,←⊂'    struct cell_func *self)'
+		z,←⊂'{'
+		z,←⊂''
+		z,←⊂'	void *stk[128];'
+		z,←⊂'	void **stkhd;'
+		z,←⊂'	int err;'
+		z,←⊂''
+		z,←⊂'	stkhd = &stk[0];'
+		z,←⊂'	err = 0;'
+		z,←⊂''
+		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←⊂'cleanup:'
+		z,←⊂'	return err;'
+		z,←⊂'}'
+		z,⊂''
+	}¨i
+	
+	⍝ F4: D-fns functions
+	i←⍸(t=F)∧k=4
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		id←⊃var_names ⍵
+		pref,←⊂'int ',id,'(struct cell_array **,'
+		pref,←⊂'    struct cell_array *, struct cell_array *,'
+		pref,←⊂'    struct cell_func *);'
+		z ←⊂'int'
+		z,←⊂id,'(struct cell_array **z,'
+		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
+		z,←⊂'    struct cell_func *self)'
+		z,←⊂'{'
+		z,←⊂''
+		z,←⊂'	void *stk[128];'
+		z,←⊂'	void **stkhd;'
+		z,←⊂'	int err;'
+		z,←⊂''
+		z,←⊂'	stkhd = &stk[0];'
+		z,←⊂'	err = 0;'
+		z,←⊂''
+		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←⊂'cleanup:'
+		z,←⊂'	return err;'
+		z,←⊂'}'
+		z,⊂''
+	}¨i
 
 	⍝ F0: Initialization functions for namespaces
 	i←⍸(t=F)∧k=0
