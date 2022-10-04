@@ -141,3 +141,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *rgt;
 } cdf_prim;
 #endif
+
+/* Operator utilities */
+int apply_mop(struct cell_func **, struct cell_func *, void *);
+int apply_dop(struct cell_func **, struct cell_func *, void *, void *);
