@@ -153,7 +153,7 @@ GC←{
 		z,←⊂'	struct cell_array *y = ',y,';'
 		z,←⊂'	struct cell_array **dst = (struct cell_array **)stkhd++;'
 		z,←⊂''
-		z,←⊂'	err = (fn->ptr)(dst, x, y, fn);'
+		z,←⊂'	err = (fn->fptr)(dst, x, y, fn);'
 		z,←(⊂'')⌿⍨0∊k[⍵]
 		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
 		z,←(⊂'	release_func(fn);')⌿⍨0=k[⍵[1]]
