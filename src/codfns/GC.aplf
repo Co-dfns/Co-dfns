@@ -310,10 +310,10 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = guard_check(x);'
 		z,←⊂''
+		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵]
+		z,←⊂''
 		z,←⊂'	if (err > 0)'
 		z,←⊂'		goto cleanup;'
-		z,←⊂''
-		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵]
 		z,←⊂''
 		z,←⊂'	if (!err) {'
 		z,← '		'∘,¨⊃⍪⌿1↓(p[⍵]=p)⌿zz
