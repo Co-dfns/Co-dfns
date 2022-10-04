@@ -19,7 +19,7 @@ GC←{
 	}
 
 	var_scopes←{
-		'loc.' 'lex->' 'dyn->' 'cdf_prim.' ''[lx[⍵]]
+		'loc.' 'lex->' 'dyn->' 'cdf_prim.' '' ''[lx[⍵]]
 	}
 
 	var_nmvec←{
@@ -34,11 +34,12 @@ GC←{
 		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
 		∨⌿(k[⍵]=1)∧lx[⍵]>3:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
 		∨⌿(k[⍵]=6)∧lx[⍵]>3:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
-		z←'' 'struct cell_'[lx[⍵]<4]
+		z  ←'' 'extern '[lx[⍵]=5]
+		z,¨←'' 'struct cell_'[lx[⍵]≠4]
 		z,¨←var_ckinds ⍵
-		z,¨←'' '_ptr'[lx[⍵]≥4]
+		z,¨←'' '_ptr'[lx[⍵]=4]
 		z,¨←' ' '_box '[mu[⍵]]
-		z,¨←'' '*'[lx[⍵]<4]
+		z,¨←'' '*'[lx[⍵]≠4]
 		z,¨←var_names ⍵
 		z,¨';'
 	}
@@ -77,6 +78,10 @@ GC←{
 	pref,←⊂'{'
 	pref,←⊂'    return set_dwafns(p);'
 	pref,←⊂'}'
+	pref,←⊂''
+	
+	⍝ We declare all external variables in the prefix
+	pref,←decl_vars ⍸(t=V)∧lx=5
 	pref,←⊂''
 
 	⍝ We have a vector output for each node in the AST
