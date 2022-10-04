@@ -1,28 +1,28 @@
 :Namespace cdf_prim
 
 ⍝ Basic system functions
-q_signal←'q_signal'⌶
-q_dr←'q_dr'⌶
+q_signal←'q_signal_ibeam'⌶
+q_dr←'q_dr_ibeam'⌶
 
 ⍝ Shape utilities
-rnk_eqv←'rnk_eqv'⌶
-shp_eqv←'shp_eqv'⌶
-is_empty←'is_empty'⌶
-count←'count'⌶
+rnk_eqv←'rnk_eqv_ibeam'⌶
+shp_eqv←'shp_eqv_ibeam'⌶
+is_empty←'is_empty_ibeam'⌶
+count←'count_ibeam'⌶
 
 ⍝ Depth utilities
-is_simple←'is_simple'⌶
+is_simple←'is_simple_ibeam'⌶
 
 ⍝ Array Utilities
-elem←'elem'⌶
-incr←'incr'⌶
-shaped←'shaped'⌶
-store←'store'⌶
-squeeze←'squeeze'⌶
-is_bound←'is_bound'⌶
+elem←'elem_ibeam'⌶
+incr←'incr_ibeam'⌶
+shaped←'shaped_ibeam'⌶
+store←'store_ibeam'⌶
+squeeze←'squeeze_ibeam'⌶
+is_bound←'is_bound_ibeam'⌶
 
 ⍝ Scalar Helpers
-can_ext_by←'can_ext_by'⌶
+can_ext_by←'can_ext_by_ibeam'⌶
 
 ambiv←{is_bound ⍺:⍺ ⍵⍵ ⍵ ⋄ ⍺⍺ ⍵}
 
@@ -48,21 +48,17 @@ scalar←{
 }
 
 ⍝ +: Conjugate | Addition
-add_vec←'add_vec'⌶
-conjugate_vec←'conjugate_vec'⌶
-
 conjugate←{
-	1289=⎕DR ⍵:conjugate_vec ⍵
+	1289=⎕DR ⍵:'conjugate_vec'⌶ ⍵
 	⍵
 }
 
-add←conjugate ambiv (add_vec scalar {0})
+add←conjugate ambiv ('add_vec'⌶ scalar {0})
 
 ⍝ ⊢: Right
 rgt←{⍵}
 
 ⍝ =: Equal
-eql_vec←'eql_vec'⌶
-eql←eql_vec scalar {1}
+eql←'eql_vec'⌶ scalar {1}
 
 :EndNamespace
