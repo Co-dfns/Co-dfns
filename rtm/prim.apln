@@ -1,6 +1,9 @@
 :Namespace cdf_prim
 
 ambiv←{0=⎕NC'⍺':⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵}
+⍝ Basic system functions
+q_signal←'q_signal'⌶
+q_dr←'q_dr'⌶
 
 ⍝ Shape utilities
 rnk_eqv←'rnk_eqv'⌶
