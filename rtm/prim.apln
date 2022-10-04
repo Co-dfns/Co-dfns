@@ -14,7 +14,7 @@ count←'count'⌶
 is_simple←'is_simple'⌶
 
 ⍝ Array Utilities
-elem←'get_elem'⌶
+elem←'elem'⌶
 incr←'incr'⌶
 shaped←'shaped'⌶
 store←'store'⌶
