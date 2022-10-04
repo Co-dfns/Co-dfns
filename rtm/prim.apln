@@ -1,6 +1,5 @@
 :Namespace cdf_prim
 
-ambiv←{0=⎕NC'⍺':⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵}
 ⍝ Basic system functions
 q_signal←'q_signal'⌶
 q_dr←'q_dr'⌶
@@ -20,9 +19,12 @@ incr←'incr'⌶
 shaped←'shaped'⌶
 store←'store'⌶
 squeeze←'squeeze'⌶
+is_bound←'is_bound'⌶
 
 ⍝ Scalar Helpers
 can_ext_by←'can_ext_by'⌶
+
+ambiv←{is_bound ⍺:⍺ ⍵⍵ ⍵ ⋄ ⍺⍺ ⍵}
 
 chk_ext_scl←{
 	⍺ shp_eqv ⍵:⍺ ⍵
