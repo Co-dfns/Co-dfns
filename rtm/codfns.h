@@ -120,9 +120,30 @@ DECLSPEC int cdf_prim_init(void);
 /* Runtime structure */
 #ifndef EXPORTING
 DECLSPEC struct cdf_prim_loc {
-	int __count;
+	unsigned int __count;
 	wchar_t **__names;
+	struct cell_func *q_signal;
+	struct cell_func *q_dr;
+	struct cell_func *rnk_eqv;
+	struct cell_func *shp_eqv;
+	struct cell_func *is_empty;
+	struct cell_func *count;
+	struct cell_func *is_simple;
+	struct cell_func *elem;
+	struct cell_func *incr;
+	struct cell_func *shaped;
+	struct cell_func *store;
+	struct cell_func *squeeze;
+	struct cell_func *is_bound;
+	struct cell_func *can_ext_by;
+	struct cell_func *ambiv;
+	struct cell_func *chk_ext_scl;
+	struct cell_func *elem_map;
+	struct cell_func *scalar;
+	struct cell_func *conjugate;
+	struct cell_func *add;
 	struct cell_func *rgt;
+	struct cell_func *eql;
 } cdf_prim;
 #endif
 
