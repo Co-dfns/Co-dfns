@@ -84,10 +84,10 @@ GC←{
 
 	⍝ B: Function bindings
 	i←⍸t[p]=B
-	zz[p[i]],←{
-		tgt src←var_values p[⍵],⍵
-		z ←⊂tgt,' = *stkhd++ = retain_cell(',src,');'
-	z}¨i
+	zz[∪p[i]],←p[i]{
+		tgt src←var_values ⍵
+		⊂⊂tgt,' = *stkhd++ = retain_cell(',src,');'
+	}⌸i
 
 	⍝ C: Closures for functions
 	i←⍸t=C
@@ -410,7 +410,8 @@ GC←{
 	⍝ F0: Initialization functions for namespaces
 	i←⍸(t=F)∧k=0
 	zz[i],←{
-		id←⊃var_names ⍵ ⋄ xi←⍸(t=B)∧p=⍵
+		id←⊃var_names ⍵
+		xi←p[xi]⊢∘⊃⌸xi←⍸(t[p]=B)∧p[p]=⍵
 		z ←⊂'int ',id,'_flag = 0;'
 		z,←⊂''
 		z,←⊂'EXPORT struct ',id,'_loc {'
