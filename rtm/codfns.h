@@ -83,12 +83,8 @@ struct cell_##type##_box {		\
 DECL_BOX_STRUCT(void);
 DECL_BOX_STRUCT(array);
 DECL_BOX_STRUCT(func);
-DECL_BOX_STRUCT(moper);
-DECL_BOX_STRUCT(doper);
-DECL_BOX_STRUCT(env);
 
 /* DWA and Interface */
-DECLSPEC void set_codfns_error(void *);
 DECLSPEC int set_dwafns(void *);
 DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *);
 
@@ -117,18 +113,6 @@ DECLSPEC int mk_func_box(struct cell_func_box **, struct cell_func *);
 DECLSPEC void release_func_box(struct cell_func_box *);
 DECLSPEC int mk_func(struct cell_func **, func_ptr, unsigned int);
 DECLSPEC void release_func(struct cell_func *);
-
-/* MOPER type */
-DECLSPEC int mk_moper_box(struct cell_moper_box **, struct cell_moper *);
-DECLSPEC void release_moper_box(struct cell_moper_box *);
-
-/* DOPER type */
-DECLSPEC int mk_doper_box(struct cell_doper_box **, struct cell_doper *);
-DECLSPEC void release_doper_box(struct cell_doper_box *);
-
-/* ENV type */
-DECLSPEC int mk_env_box(struct cell_env_box **, struct cell_env *);
-DECLSPEC void release_env_box(struct cell_env_box *);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);
