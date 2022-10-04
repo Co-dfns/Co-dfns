@@ -61,4 +61,8 @@ add←conjugate ambiv (add_vec scalar {0})
 ⍝ ⊢: Right
 rgt←{⍵}
 
+⍝ =: Equal
+eql_vec←'eql_vec'⌶
+eql←eql_vec scalar {1}
+
 :EndNamespace
