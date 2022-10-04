@@ -133,8 +133,8 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = (fn->fptr)(dst, NULL, arg, fn);'
 		z,←(⊂'')⌿⍨0∊k[⍵]
-		z,←(⊂'	release_cell(fn);')⌿⍨0=k[⊃⍵]
-		z,←(⊂'	release_cell(arg);')⌿⍨0=k[1⊃⍵]
+		z,←(⊂'	release_func(fn);')⌿⍨0=k[⊃⍵]
+		z,←(⊂'	release_array(arg);')⌿⍨0=k[1⊃⍵]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -155,9 +155,9 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = (fn->ptr)(dst, x, y, fn);'
 		z,←(⊂'')⌿⍨0∊k[⍵]
-		z,←(⊂'	release_cell(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_cell(fn);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release_cell(y);')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_func(fn);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_array(y);')⌿⍨0=k[⍵[2]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -177,8 +177,8 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = apply_mop(dst, op, x);'
 		z,←⊂''
-		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -198,8 +198,8 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = apply_mop(dst, op, x);'
 		z,←⊂''
-		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_func(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -220,9 +220,9 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = apply_dop(dst, op, x, y);'
 		z,←⊂''
-		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_array(y);')⌿⍨0=k[⍵[2]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -243,9 +243,9 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = apply_dop(dst, op, x, y);'
 		z,←⊂''
-		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	release_func(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_array(y);')⌿⍨0=k[⍵[2]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -267,9 +267,9 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = apply_dop(dst, op, x, y);'
 		z,←⊂''
-		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_func(y);')⌿⍨0=k[⍵[2]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -290,9 +290,9 @@ GC←{
 		z,←⊂''
 		z,←⊂'	err = apply_dop(dst, op, x, y);'
 		z,←⊂''
-		z,←(⊂'	release(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release(y);')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	release_func(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_func(y);')⌿⍨0=k[⍵[2]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -319,7 +319,7 @@ GC←{
 		z,←⊂'	}'
 		z,←⊂''
 		z,←⊂'	int t = is_true(x);'
-		z,←(⊂'	release_cell(x);')⌿⍨0=k[⍵]
+		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵]
 		z,←⊂''
 		z,←⊂'	if (t) {'
 		z,← '		'∘,¨⊃⍪⌿1↓(p[⍵]=p)⌿zz
