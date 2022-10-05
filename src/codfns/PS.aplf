@@ -298,7 +298,7 @@ PS←{
 	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
 	vb[i]←fb[fr⍳(rf I@{t[⍵]=G}rf)mk⊢i←⍸(t=V)∧vb=¯1]
 	vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b←vb[i←i⌿⍨vb[i]≠¯1]]←¯1
-	
+
 	⍝ Mark lexical scope of values
 	lx←(≢p)⍴0 ⋄ lx[i←⍸(t=V)∧vb=¯1]←1 ⋄ lx[⍸t=F]←4 ⋄ lx[⍸t=P]←3
 	lx[⍸(t=P)∧n∊,¨'⍺' '⍵' '⍺⍺' '⍵⍵']←4
