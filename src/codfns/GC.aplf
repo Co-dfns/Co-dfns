@@ -1,5 +1,5 @@
 GC←{
-	p t k n lx pos end sym IN←⍵
+	p t k n lx lv fv pos end sym IN←⍵
 
 	⍝ Placeholder for mutable values
 	mu←(≢p)⍴0
@@ -332,7 +332,7 @@ GC←{
 		pref,←⊂'    struct cell_func *);'
 		z ←⊂'struct ',id,'_lex {'
 		z,←⊂'	unsigned int __count;'
-		z,←⊂'	',¨decl_vars ⍬
+		z,← '	',¨decl_vars ⊃fv[⍵]
 		z,←⊂'};'
 		z,←⊂''
 		z,←⊂'int'
@@ -346,6 +346,11 @@ GC←{
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	struct ',id,'_lex *lex = (struct ',id,'_lex *)&self->fs;'
+		z,←⊂''
+		z,←⊂'	struct {'
+		z,←'		'∘,¨decl_vars p[i]⊢∘⊃⌸i←⍸(t[p]=B)∧(k≠0)∧p[p]=⍵
+		z,←⊂'	} loc;'
+		z,←⊂''
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''
@@ -366,7 +371,7 @@ GC←{
 		pref,←⊂'    struct cell_func *);'
 		z ←⊂'struct ',id,'_lex {'
 		z,←⊂'	unsigned int __count;'
-		z,←⊂'	',¨decl_vars ⍬
+		z,← '	',¨decl_vars ⊃fv[⍵]
 		z,←⊂'};'
 		z,←⊂''
 		z,←⊂'int'
@@ -381,6 +386,11 @@ GC←{
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	struct ',id,'_lex *lex = (struct ',id,'_lex *)&self->fs;'
+		z,←⊂''
+		z,←⊂'	struct {'
+		z,←'		'∘,¨decl_vars p[i]⊢∘⊃⌸i←⍸(t[p]=B)∧(k≠0)∧p[p]=⍵
+		z,←⊂'	} loc;'
+		z,←⊂''
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''
@@ -401,7 +411,7 @@ GC←{
 		pref,←⊂'    struct cell_func *);'
 		z ←⊂'struct ',id,'_lex {'
 		z,←⊂'	unsigned int __count;'
-		z,←⊂'	',¨decl_vars ⍬
+		z,← '	',¨decl_vars ⊃fv[⍵]
 		z,←⊂'};'
 		z,←⊂''
 		z,←⊂'int'
@@ -416,6 +426,11 @@ GC←{
 		z,←⊂'	int err;'
 		z,←⊂''
 		z,←⊂'	struct ',id,'_lex *lex = (struct ',id,'_lex *)&self->fs;'
+		z,←⊂''
+		z,←⊂'	struct {'
+		z,←'		'∘,¨decl_vars p[i]⊢∘⊃⌸i←⍸(t[p]=B)∧(k≠0)∧p[p]=⍵
+		z,←⊂'	} loc;'
+		z,←⊂''
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''
@@ -430,16 +445,15 @@ GC←{
 	i←⍸(t=F)∧k=0
 	zz[i],←{
 		id←⊃var_names ⍵
-		xi←p[xi]⊢∘⊃⌸xi←⍸(t[p]=B)∧p[p]=⍵
 		z ←⊂'int ',id,'_flag = 0;'
 		z,←⊂''
 		z,←⊂'EXPORT struct ',id,'_loc {'
 		z,←⊂'	unsigned int __count;'
 		z,←⊂'	wchar_t **__names;'
-		z,← '	',¨decl_vars xi
+		z,← '	',¨decl_vars ⊃lv[⍵]
 		z,←⊂'} ',id,';'
 		z,←⊂''
-		z,←⊂(id,'_names')var_nmvec xi
+		z,←⊂(id,'_names')var_nmvec ⊃lv[⍵]
 		z,←⊂''
 		z,←⊂'EXPORT int'
 		z,←⊂id,'_init(void)'
@@ -456,9 +470,9 @@ GC←{
 		z,←⊂'	',id,'_flag = 1;'
 		z,←⊂'	cdf_prim_init();'
 		z,←⊂''
-		z,←⊂'	loc.__count = ',(⍕≢xi),';'
+		z,←⊂'	loc.__count = ',(⍕≢⊃lv[⍵]),';'
 		z,←⊂'	loc.__names = ',id,'_names;'
-		z,← '	',¨init_vars xi
+		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂''
 		z,←⊂'	err = 0;'
 		z,←⊂''

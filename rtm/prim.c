@@ -277,7 +277,7 @@ cleanup:
 
 struct ptr296_lex {
 	unsigned int __count;
-
+	struct cell_func *is_bound;
 };
 
 int
@@ -292,6 +292,10 @@ ptr296(struct cell_array **z,
 	int err;
 
 	struct ptr296_lex *lex = (struct ptr296_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -311,10 +315,10 @@ ptr296(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			{
@@ -355,7 +359,10 @@ cleanup:
 
 struct ptr297_lex {
 	unsigned int __count;
-
+	struct cell_func *shp_eqv;
+	struct cell_func *can_ext_by;
+	struct cell_func *shaped;
+	struct cell_func *rnk_eqv;
 };
 
 int
@@ -369,6 +376,10 @@ ptr297(struct cell_array **z,
 	int err;
 
 	struct ptr297_lex *lex = (struct ptr297_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -389,10 +400,10 @@ ptr297(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			*z = *--stkhd;
@@ -418,10 +429,10 @@ ptr297(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			{
@@ -459,10 +470,10 @@ ptr297(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			{
@@ -500,10 +511,10 @@ ptr297(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			{
@@ -547,7 +558,12 @@ cleanup:
 
 struct ptr298_lex {
 	unsigned int __count;
-
+	struct cell_func *shaped;
+	struct cell_func *count;
+	struct cell_func *squeeze;
+	struct cell_func *incr;
+	struct cell_func *elem;
+	struct cell_func *store;
 };
 
 int
@@ -562,6 +578,16 @@ ptr298(struct cell_array **z,
 	int err;
 
 	struct ptr298_lex *lex = (struct ptr298_lex *)&self->fs;
+
+	struct {
+		struct cell_array *z;
+		struct cell_array *x;
+		struct cell_array *y;
+		struct cell_func *fn;
+		struct cell_array *cnt;
+		struct cell_array *_;
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -686,7 +712,13 @@ cleanup:
 
 struct ptr299_lex {
 	unsigned int __count;
-
+	struct cell_func *incr;
+	struct cell_array *z;
+	struct cell_func *elem;
+	struct cell_func *store;
+	struct cell_array *x;
+	struct cell_func *fn;
+	struct cell_array *y;
 };
 
 int
@@ -700,6 +732,10 @@ ptr299(struct cell_array **z,
 	int err;
 
 	struct ptr299_lex *lex = (struct ptr299_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -805,7 +841,11 @@ cleanup:
 
 struct ptr300_lex {
 	unsigned int __count;
-
+	struct cell_func *chk_ext_scl;
+	struct cell_func *is_empty;
+	struct cell_func *shaped;
+	struct cell_func *elem_map;
+	struct cell_func *is_simple;
 };
 
 int
@@ -820,6 +860,10 @@ ptr300(struct cell_array **z,
 	int err;
 
 	struct ptr300_lex *lex = (struct ptr300_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -854,10 +898,10 @@ ptr300(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			{
@@ -874,7 +918,7 @@ ptr300(struct cell_array **z,
 			}
 			
 			{
-				struct cell_array *x = lex->x;
+				struct cell_array *x = loc.x;
 				struct cell_func *fn = lex->shaped;
 				struct cell_array *y = *--stkhd;
 				struct cell_array **dst = (struct cell_array **)stkhd++;
@@ -916,16 +960,16 @@ ptr300(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
 	
-		release_array(x);
-	
 		if (!err) {
 			{
-				struct cell_array *x = lex->x;
+				struct cell_array *x = loc.x;
 				struct cell_func *fn = alphaalpha;
-				struct cell_array *y = lex->y;
+				struct cell_array *y = loc.y;
 				struct cell_array **dst = (struct cell_array **)stkhd++;
 			
 				err = (fn->fptr)(dst, x, y, fn);
@@ -975,7 +1019,7 @@ cleanup:
 
 struct ptr301_lex {
 	unsigned int __count;
-
+	struct cell_func *is_simple;
 };
 
 int
@@ -989,6 +1033,10 @@ ptr301(struct cell_array **z,
 	int err;
 
 	struct ptr301_lex *lex = (struct ptr301_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -1008,10 +1056,10 @@ ptr301(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			{
@@ -1040,7 +1088,6 @@ cleanup:
 
 struct ptr302_lex {
 	unsigned int __count;
-
 };
 
 int
@@ -1054,6 +1101,10 @@ ptr302(struct cell_array **z,
 	int err;
 
 	struct ptr302_lex *lex = (struct ptr302_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -1088,10 +1139,10 @@ ptr302(struct cell_array **z,
 	
 		err = guard_check(x);
 	
+		release_array(x);
+	
 		if (err > 0)
 			goto cleanup;
-	
-		release_array(x);
 	
 		if (!err) {
 			{
@@ -1121,7 +1172,6 @@ cleanup:
 
 struct ptr303_lex {
 	unsigned int __count;
-
 };
 
 int
@@ -1135,6 +1185,10 @@ ptr303(struct cell_array **z,
 	int err;
 
 	struct ptr303_lex *lex = (struct ptr303_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -1147,7 +1201,6 @@ cleanup:
 
 struct ptr304_lex {
 	unsigned int __count;
-
 };
 
 int
@@ -1161,6 +1214,10 @@ ptr304(struct cell_array **z,
 	int err;
 
 	struct ptr304_lex *lex = (struct ptr304_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
@@ -1174,7 +1231,6 @@ cleanup:
 
 struct ptr305_lex {
 	unsigned int __count;
-
 };
 
 int
@@ -1188,6 +1244,10 @@ ptr305(struct cell_array **z,
 	int err;
 
 	struct ptr305_lex *lex = (struct ptr305_lex *)&self->fs;
+
+	struct {
+	} loc;
+
 	stkhd = &stk[0];
 	err = 0;
 
