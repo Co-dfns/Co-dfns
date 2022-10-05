@@ -292,7 +292,7 @@ PS←{
 	
 	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
-	fb,←¯1⊣fr←rf mk⊢fb←fb[⍳⍨rf mk⊢fb←fb[⊖⍳⍨⊖rz mk⊢fb←⍸t[0⌈vb]=B]]
+	fb,←¯1⊣fr←rf mk⊢fb←fb[∪⍳⍨rf mk⊢fb←⊖fb[∪⍳⍨rz mk⊢fb←⊖⍸t[0⌈vb]=B]]
 	
 	⍝ Link local variables with their local bindings
 	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
