@@ -296,6 +296,7 @@ PS←{
 	
 	⍝ Link local variables with their local bindings
 	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
+	vb[i]←fb[fr⍳(rf I@{t[⍵]=G}rf)mk⊢i←⍸(t=V)∧vb=¯1]
 	vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b←vb[i←i⌿⍨vb[i]≠¯1]]←¯1
 	
 	⍝ Mark lexical scope of values
