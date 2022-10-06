@@ -170,44 +170,106 @@ cdf_prim_init(void)
 	loc.can_ext_by = *stkhd++ = retain_cell(can_ext_by_ibeam);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr330, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr330, 1);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = loc.is_bound;
+	
+		*stkhd++ = fn;
+	}
 	
 	loc.ambiv = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr331, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr331, 4);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = loc.can_ext_by;
+		fn->fv[1] = loc.shaped;
+		fn->fv[2] = loc.shp_eqv;
+		fn->fv[3] = loc.rnk_eqv;
+	
+		*stkhd++ = fn;
+	}
 	
 	loc.chk_ext_scl = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr332, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr332, 6);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = loc.squeeze;
+		fn->fv[1] = loc.store;
+		fn->fv[2] = loc.shaped;
+		fn->fv[3] = loc.incr;
+		fn->fv[4] = loc.elem;
+		fn->fv[5] = loc.count;
+	
+		*stkhd++ = fn;
+	}
 	
 	loc.elem_map = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr334, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr334, 5);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = loc.elem_map;
+		fn->fv[1] = loc.chk_ext_scl;
+		fn->fv[2] = loc.shaped;
+		fn->fv[3] = loc.is_simple;
+		fn->fv[4] = loc.is_empty;
+	
+		*stkhd++ = fn;
+	}
 	
 	loc.scalar = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr336, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr336, 0);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = fn;
+	}
 	
 	loc.conjugate = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr337, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr337, 0);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = fn;
+	}
 	
 	{
 		struct cell_func *x = add_vec;
@@ -240,16 +302,30 @@ cdf_prim_init(void)
 	loc.add = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr338, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr338, 0);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = fn;
+	}
 	
 	loc.rgt = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr339, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr339, 0);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = fn;
+	}
 	
 	{
 		struct cell_func *x = eql_vec;
@@ -367,9 +443,9 @@ ptr331(struct cell_array **z,
 	int err;
 
 	struct lex_vars {
-		struct cell_func *shp_eqv;
 		struct cell_func *can_ext_by;
 		struct cell_func *shaped;
+		struct cell_func *shp_eqv;
 		struct cell_func *rnk_eqv;
 	} *lex;
 	
@@ -574,12 +650,12 @@ ptr332(struct cell_array **z,
 	} loc;
 	
 	struct lex_vars {
+		struct cell_func *squeeze;
+		struct cell_func *store;
 		struct cell_func *shaped;
-		struct cell_func *count;
 		struct cell_func *incr;
 		struct cell_func *elem;
-		struct cell_func *store;
-		struct cell_func *squeeze;
+		struct cell_func *count;
 	} *lex;
 	
 	lex = (struct lex_vars *)&self->fv[1];
@@ -653,9 +729,24 @@ ptr332(struct cell_array **z,
 			goto cleanup;
 	}
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr333, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr333, 7);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = loc.fn;
+		fn->fv[1] = loc.y;
+		fn->fv[2] = loc.x;
+		fn->fv[3] = loc.z;
+		fn->fv[4] = lex->store;
+		fn->fv[5] = lex->incr;
+		fn->fv[6] = lex->elem;
+	
+		*stkhd++ = fn;
+	}
 	
 	{
 		struct cell_func *x = *--stkhd;
@@ -717,13 +808,13 @@ ptr333(struct cell_array **z,
 	int err;
 
 	struct lex_vars {
-		struct cell_func *incr;
-		struct cell_array *z;
-		struct cell_func *elem;
-		struct cell_func *store;
-		struct cell_array *x;
 		struct cell_func *fn;
 		struct cell_array *y;
+		struct cell_array *x;
+		struct cell_array *z;
+		struct cell_func *store;
+		struct cell_func *incr;
+		struct cell_func *elem;
 	} *lex;
 	
 	lex = (struct lex_vars *)&self->fv[0];
@@ -851,11 +942,11 @@ ptr334(struct cell_array **z,
 	} loc;
 	
 	struct lex_vars {
+		struct cell_func *elem_map;
 		struct cell_func *chk_ext_scl;
-		struct cell_func *is_empty;
 		struct cell_func *shaped;
 		struct cell_func *is_simple;
-		struct cell_func *elem_map;
+		struct cell_func *is_empty;
 	} *lex;
 	
 	lex = (struct lex_vars *)&self->fv[2];
@@ -933,9 +1024,18 @@ ptr334(struct cell_array **z,
 		}
 	}
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr335, 0);
-	if (err)
-		goto cleanup;
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr335, 1);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = lex->is_simple;
+	
+		*stkhd++ = fn;
+	}
 	
 	{
 		struct cell_array *x = loc.x;

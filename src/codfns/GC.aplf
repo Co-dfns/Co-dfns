@@ -97,10 +97,21 @@ GC←{
 	⍝ C: Closures for functions
 	i←⍸t[p]=C
 	zz[∪p[i]],←p[i]{
-		id←⊃var_values ⍵
-		z ←⊂'err = mk_func((struct cell_func **)stkhd++, ',id,', 0);'
-		z,←⊂'if (err)'
-		z,←⊂'	goto cleanup;'
+		id vs←{(⊃⍵)(1↓⍵)}⍵
+		id←⊃var_values id
+		vs←var_values vs[⍋n[vs]]
+		z ←⊂'{'
+		z,←⊂'	struct cell_func *fn;'
+		z,←⊂''
+		z,←⊂'	err = mk_func(&fn, ',id,', ',(⍕≢vs),');'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂''
+		z,← '	fn->fv['∘,¨(⍕¨⍳≢vs),¨'] = '∘,¨vs,¨';'
+		z,←(⊂'')⌿⍨1⌊≢vs
+		z,←⊂'	*stkhd++ = fn;'
+		z,←⊂'}'
 		⊂z,⊂''
 	}⌸i
 
@@ -323,7 +334,7 @@ GC←{
 	}¨i
 	
 	mk_lex←{
-		0=≢v←⊃fv[⍵]:0⍴⊂''
+		0=≢v←{⍵[⍋n[⍵]]}⊃fv[⍵]:0⍴⊂''
 		⍺←0
 		z ←⊂'struct lex_vars {'
 		z,← '	',¨decl_vars v
