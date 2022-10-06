@@ -264,6 +264,12 @@ PS←{
 	⍝ Convert M nodes to F0 nodes
 	t←F@{t=M}t
 
+	⍝ Parse niladic tokens to A0 nodes
+	i←⍸n∊,¨'⎕⍞' ⋄ p,←i ⋄ t k n pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 0(⊂'')
+
+	⍝ Unify A1, N, and C tokens to A1 nodes
+	n[⍸(t=A)∧k=1]←⊂'' ⋄ t k(⊣@(⍸t∊N C))⍨←A 1
+	
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
@@ -286,30 +292,47 @@ PS←{
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	
+	⍝ Wrap all non-module functions in closures
+	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p←(np@i⊢⍳≢p)[p] ⋄ p,←i
+	t k n vb pos end(⊣,I)←⊂i ⋄ t[i]←C
+	
 	⍝ Enclosing frames and lines for all nodes
 	rf←¯1@{~t[⍵]∊F G}p[rz←I@{(t[⍵]=Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍨p]
 	rf[i]←p[i←⍸t=G] ⋄ rz[i]←i ⋄ rf←rf I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}rf
+	rfn←I@{t[⍵]=G}⍨rf	
 	
 	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
 	fb,←¯1⊣fr←rf mk⊢fb←fb[∪⍳⍨rf mk⊢fb←⊖fb[∪⍳⍨rz mk⊢fb←⊖⍸t[0⌈vb]=B]]
 	
-	⍝ Link local variables with their local bindings
-	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
-	vb[i]←fb[fr⍳(rf I@{t[⍵]=G}rf)mk⊢i←⍸(t=V)∧vb=¯1]
-	vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b←vb[i←i⌿⍨vb[i]≠¯1]]←¯1
-
-	⍝ Mark lexical scope of values
-	lx←(≢p)⍴0 ⋄ lx[i←⍸(t=V)∧vb=¯1]←1 ⋄ lx[⍸t=F]←4 ⋄ lx[⍸t=P]←3
-	lx[⍸(t=P)∧n∊,¨'⍺' '⍵' '⍺⍺' '⍵⍵']←4
+	⍝ Mark lexical scope of non-variable primitives
+	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊,¨'⍺' '⍵' '⍺⍺' '⍵⍵']←4
 	
-	⍝ Compute free variable bindings
-	_←{z/⍨¯1=vb[1⌷z]←fb[fr⍳⍉n I@1⊢z←rf I@0⊢⍵]}⍣≡⍉{rf[⍵],⍪⍵}i
+	⍝ Link variables to their bindings
+	_←{
+		⍝ Link local variables with their local bindings
+		vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
+		vb[i]←fb[fr⍳rfn mk⊢i←⍸(t=V)∧vb=¯1]
+		b←vb[i←i⌿⍨vb[i]≠¯1]
+		vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b]←¯1
+
+		⍝ Mark free variables with their scope before binding
+		lx[i←⍸(t=V)∧vb=¯1]←1
+		
+		⍝ Add free variables to closures
+		i←i⌿⍨k[rfn[i]]≠0 ⋄ ci←p[rfn[i]] ⋄ vb[i]←(≢p)+⍳≢i
+		p,←ci ⋄ vb lx,←(≢ci)⍴¨¯1 0 ⋄ rf rfn(⊣,I)←⊂ci
+		t k n pos end(⊣,I)←⊂i
+	i}⍣{0=≢⍺}⍬
 	
 	⍝ Check that all variables have a valid binding
 	∨⌿msk←(t=V)∧vb=¯1:{
 		6'VARIABLES MUST BE BOUND'SIGNAL∊pos[⍵]{⍺+⍳⍵-⍺}¨end[⍵]
 	}⍸msk
+
+	⍝ Remove duplicates in closure variables
+	fi←∊p[i]{⊂⍵[⍳⍨n[⍵]]}⌸i←i[⍋p[i←⍸(t=V)∧t[p]=C]] ⋄ vb←(¯1,fi@i⊢⍳≢vb)[1+vb]
+	t k n lx pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1 ⋄ p vb{(⍸~⍵)(⊢-1+⍸)⍵⌿⍺}←⊂msk
 
 	⍝ Infer the type of bindings, groups, and variables
 	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
@@ -332,12 +355,6 @@ PS←{
 	≢z}⍣(=∨0=⊣)≢z
 	'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
 
-	⍝ Parse niladic tokens to A0 nodes
-	i←⍸n∊,¨'⎕⍞' ⋄ p,←i ⋄ t k n lx pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 0(⊂'')
-
-	⍝ Unify A1, N, and C tokens to A1 nodes
-	n[⍸(t=A)∧k=1]←⊂'' ⋄ t k(⊣@(⍸t∊N C))⍨←A 1
-	
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1

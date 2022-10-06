@@ -95,14 +95,14 @@ GC←{
 	}⌸i
 
 	⍝ C: Closures for functions
-	i←⍸t=C
-	zz[i],←{
-		id←⊃var_names ⍵
+	i←⍸t[p]=C
+	zz[∪p[i]],←p[i]{
+		id←⊃var_values ⍵
 		z ←⊂'err = mk_func((struct cell_func **)stkhd++, ',id,', 0);'
 		z,←⊂'if (err)'
 		z,←⊂'	goto cleanup;'
-		z,⊂''
-	}¨i
+		⊂z,⊂''
+	}⌸i
 
 	⍝ E¯1: Non-returning end of line statement
 	i←⍸(t=E)∧k=¯1
@@ -321,21 +321,35 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	
+	mk_lex←{
+		0=≢v←⊃fv[⍵]:0⍴⊂''
+		⍺←0
+		z ←⊂'struct lex_vars {'
+		z,← '	',¨decl_vars v
+		z,←⊂'} *lex;'
+		z,←⊂''
+		z,←⊂'lex = (struct lex_vars *)&self->fv[',(⍕⍺),'];'
+		z,⊂''
+	}
+	
+	mk_loc←{
+		0=≢v←⊃lv[⍵]:0⍴⊂''
+		z ←⊂'struct {'
+		z,←'	',¨decl_vars v
+		z,←⊂'} loc;'
+		z,⊂''
+	}
 
 	⍝ F2: D-fns functions
 	i←⍸(t=F)∧k=2
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		id←⊃var_names ⍵
+		id←⊃var_values ⍵
 		pref,←⊂'int ',id,'(struct cell_array **,'
 		pref,←⊂'    struct cell_array *, struct cell_array *,'
 		pref,←⊂'    struct cell_func *);'
-		z ←⊂'struct ',id,'_lex {'
-		z,←⊂'	unsigned int __count;'
-		z,← '	',¨decl_vars ⊃fv[⍵]
-		z,←⊂'};'
-		z,←⊂''
-		z,←⊂'int'
+		z ←⊂'int'
 		z,←⊂id,'(struct cell_array **z,'
 		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
 		z,←⊂'    struct cell_func *self)'
@@ -345,12 +359,7 @@ GC←{
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'	struct ',id,'_lex *lex = (struct ',id,'_lex *)&self->fs;'
-		z,←⊂''
-		z,←⊂'	struct {'
-		z,←'		'∘,¨decl_vars p[i]⊢∘⊃⌸i←⍸(t[p]=B)∧(k≠0)∧p[p]=⍵
-		z,←⊂'	} loc;'
-		z,←⊂''
+		z,← '	',¨(mk_loc,mk_lex)⍵
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''
@@ -365,16 +374,11 @@ GC←{
 	i←⍸(t=F)∧k=3
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		id←⊃var_names ⍵
+		id←⊃var_values ⍵
 		pref,←⊂'int ',id,'(struct cell_array **,'
 		pref,←⊂'    struct cell_array *, struct cell_array *,'
 		pref,←⊂'    struct cell_func *);'
-		z ←⊂'struct ',id,'_lex {'
-		z,←⊂'	unsigned int __count;'
-		z,← '	',¨decl_vars ⊃fv[⍵]
-		z,←⊂'};'
-		z,←⊂''
-		z,←⊂'int'
+		z ←⊂'int'
 		z,←⊂id,'(struct cell_array **z,'
 		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
 		z,←⊂'    struct cell_func *self)'
@@ -385,12 +389,9 @@ GC←{
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'	struct ',id,'_lex *lex = (struct ',id,'_lex *)&self->fs;'
+		z,←⊂'	alphaalpha = self->fv[0];'
 		z,←⊂''
-		z,←⊂'	struct {'
-		z,←'		'∘,¨decl_vars p[i]⊢∘⊃⌸i←⍸(t[p]=B)∧(k≠0)∧p[p]=⍵
-		z,←⊂'	} loc;'
-		z,←⊂''
+		z,← '	',¨1(mk_loc,mk_lex)⍵
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''
@@ -405,16 +406,11 @@ GC←{
 	i←⍸(t=F)∧k=4
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		id←⊃var_names ⍵
+		id←⊃var_values ⍵
 		pref,←⊂'int ',id,'(struct cell_array **,'
 		pref,←⊂'    struct cell_array *, struct cell_array *,'
 		pref,←⊂'    struct cell_func *);'
-		z ←⊂'struct ',id,'_lex {'
-		z,←⊂'	unsigned int __count;'
-		z,← '	',¨decl_vars ⊃fv[⍵]
-		z,←⊂'};'
-		z,←⊂''
-		z,←⊂'int'
+		z ←⊂'int'
 		z,←⊂id,'(struct cell_array **z,'
 		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
 		z,←⊂'    struct cell_func *self)'
@@ -425,12 +421,10 @@ GC←{
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'	struct ',id,'_lex *lex = (struct ',id,'_lex *)&self->fs;'
+		z,←⊂'	alphaalpha = self->fv[0];'
+		z,←⊂'	omegaomega = self->fv[1];'
 		z,←⊂''
-		z,←⊂'	struct {'
-		z,←'		'∘,¨decl_vars p[i]⊢∘⊃⌸i←⍸(t[p]=B)∧(k≠0)∧p[p]=⍵
-		z,←⊂'	} loc;'
-		z,←⊂''
+		z,← '	',¨2(mk_loc,mk_lex)⍵
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''

@@ -11,7 +11,7 @@ TT←{
 
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx pos end r(⊣,I)←⊂i
-	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←C
+	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V
 
 	⍝ Wrap expressions as binding or return statements
 	i←(⍸(~t∊F G)∧t[p]=F),i⌿⍨2|⍳≢i←i[⍋p[i←⍸t[p]=G]]
@@ -32,16 +32,9 @@ TT←{
 	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O] ⋄ j←(⌽i)[⍋⌽x]
 	p t k n lx pos end r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
 
-	⍝ Compute a functions local variables
+	⍝ Compute a functions local and free variables
 	lv←(≢p)⍴⊂⍬ ⋄ lv[r[i]],←i←i[∪⍳⍨(r,⍪n)[i←⍸(t=V)∧(lx=0)∧n<0;]]
-
-	⍝ Compute a functions free variables
 	fv←(≢p)⍴⊂⍬ ⋄ fv[r[i]],←i←i[∪⍳⍨(r,⍪n)[i←⍸(t=V)∧(lx=1)∧n<0;]]
-	_←{
-		fv[r[⍵]],←fv[⍵]{⍺[n[⍺]⍳n[⍺]~n[⍵]]}¨lv[r[⍵]]
-		r[⍵]⌿⍨r[⍵]≠r[r[⍵]]
-	}⍣{0=≢⍺}(~i∊r[i])⌿i←⍸t=F
-	fv←{⍵[∪⍳⍨n[⍵]]}¨@(⍸t=F)⊢fv
 
 	⍝ Namify pointer variables
 	i←⍸n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x

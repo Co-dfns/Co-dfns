@@ -24,34 +24,34 @@ extern struct cell_func *conjugate_vec;
 extern struct cell_func *add_vec;
 extern struct cell_func *eql_vec;
 
-int ptr297(struct cell_array **,
+int ptr331(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr299(struct cell_array **,
+int ptr333(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr301(struct cell_array **,
+int ptr335(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr302(struct cell_array **,
+int ptr336(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr303(struct cell_array **,
+int ptr337(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr304(struct cell_array **,
+int ptr338(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr305(struct cell_array **,
+int ptr339(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr298(struct cell_array **,
+int ptr332(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr296(struct cell_array **,
+int ptr330(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr300(struct cell_array **,
+int ptr334(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
 
@@ -170,42 +170,42 @@ cdf_prim_init(void)
 	loc.can_ext_by = *stkhd++ = retain_cell(can_ext_by_ibeam);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr296, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr330, 0);
 	if (err)
 		goto cleanup;
 	
 	loc.ambiv = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr297, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr331, 0);
 	if (err)
 		goto cleanup;
 	
 	loc.chk_ext_scl = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr298, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr332, 0);
 	if (err)
 		goto cleanup;
 	
 	loc.elem_map = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr300, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr334, 0);
 	if (err)
 		goto cleanup;
 	
 	loc.scalar = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr302, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr336, 0);
 	if (err)
 		goto cleanup;
 	
 	loc.conjugate = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr303, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr337, 0);
 	if (err)
 		goto cleanup;
 	
@@ -240,14 +240,14 @@ cdf_prim_init(void)
 	loc.add = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr304, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr338, 0);
 	if (err)
 		goto cleanup;
 	
 	loc.rgt = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr305, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr339, 0);
 	if (err)
 		goto cleanup;
 	
@@ -275,13 +275,8 @@ cleanup:
 	return err;
 }
 
-struct ptr296_lex {
-	unsigned int __count;
-	struct cell_func *is_bound;
-};
-
 int
-ptr296(struct cell_array **z,
+ptr330(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -291,11 +286,15 @@ ptr296(struct cell_array **z,
 	void **stkhd;
 	int err;
 
-	struct ptr296_lex *lex = (struct ptr296_lex *)&self->fs;
+	alphaalpha = self->fv[0];
+	omegaomega = self->fv[1];
 
-	struct {
-	} loc;
-
+	struct lex_vars {
+		struct cell_func *is_bound;
+	} *lex;
+	
+	lex = (struct lex_vars *)&self->fv[2];
+	
 	stkhd = &stk[0];
 	err = 0;
 
@@ -357,16 +356,8 @@ cleanup:
 	return err;
 }
 
-struct ptr297_lex {
-	unsigned int __count;
-	struct cell_func *shp_eqv;
-	struct cell_func *can_ext_by;
-	struct cell_func *shaped;
-	struct cell_func *rnk_eqv;
-};
-
 int
-ptr297(struct cell_array **z,
+ptr331(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -375,11 +366,15 @@ ptr297(struct cell_array **z,
 	void **stkhd;
 	int err;
 
-	struct ptr297_lex *lex = (struct ptr297_lex *)&self->fs;
-
-	struct {
-	} loc;
-
+	struct lex_vars {
+		struct cell_func *shp_eqv;
+		struct cell_func *can_ext_by;
+		struct cell_func *shaped;
+		struct cell_func *rnk_eqv;
+	} *lex;
+	
+	lex = (struct lex_vars *)&self->fv[0];
+	
 	stkhd = &stk[0];
 	err = 0;
 
@@ -556,18 +551,8 @@ cleanup:
 	return err;
 }
 
-struct ptr298_lex {
-	unsigned int __count;
-	struct cell_func *shaped;
-	struct cell_func *count;
-	struct cell_func *squeeze;
-	struct cell_func *incr;
-	struct cell_func *elem;
-	struct cell_func *store;
-};
-
 int
-ptr298(struct cell_array **z,
+ptr332(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -577,7 +562,7 @@ ptr298(struct cell_array **z,
 	void **stkhd;
 	int err;
 
-	struct ptr298_lex *lex = (struct ptr298_lex *)&self->fs;
+	alphaalpha = self->fv[0];
 
 	struct {
 		struct cell_array *z;
@@ -587,7 +572,18 @@ ptr298(struct cell_array **z,
 		struct cell_array *cnt;
 		struct cell_array *_;
 	} loc;
-
+	
+	struct lex_vars {
+		struct cell_func *shaped;
+		struct cell_func *count;
+		struct cell_func *incr;
+		struct cell_func *elem;
+		struct cell_func *store;
+		struct cell_func *squeeze;
+	} *lex;
+	
+	lex = (struct lex_vars *)&self->fv[1];
+	
 	stkhd = &stk[0];
 	err = 0;
 
@@ -657,7 +653,7 @@ ptr298(struct cell_array **z,
 			goto cleanup;
 	}
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr299, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr333, 0);
 	if (err)
 		goto cleanup;
 	
@@ -710,19 +706,8 @@ cleanup:
 	return err;
 }
 
-struct ptr299_lex {
-	unsigned int __count;
-	struct cell_func *incr;
-	struct cell_array *z;
-	struct cell_func *elem;
-	struct cell_func *store;
-	struct cell_array *x;
-	struct cell_func *fn;
-	struct cell_array *y;
-};
-
 int
-ptr299(struct cell_array **z,
+ptr333(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -731,11 +716,18 @@ ptr299(struct cell_array **z,
 	void **stkhd;
 	int err;
 
-	struct ptr299_lex *lex = (struct ptr299_lex *)&self->fs;
-
-	struct {
-	} loc;
-
+	struct lex_vars {
+		struct cell_func *incr;
+		struct cell_array *z;
+		struct cell_func *elem;
+		struct cell_func *store;
+		struct cell_array *x;
+		struct cell_func *fn;
+		struct cell_array *y;
+	} *lex;
+	
+	lex = (struct lex_vars *)&self->fv[0];
+	
 	stkhd = &stk[0];
 	err = 0;
 
@@ -839,17 +831,8 @@ cleanup:
 	return err;
 }
 
-struct ptr300_lex {
-	unsigned int __count;
-	struct cell_func *chk_ext_scl;
-	struct cell_func *is_empty;
-	struct cell_func *shaped;
-	struct cell_func *elem_map;
-	struct cell_func *is_simple;
-};
-
 int
-ptr300(struct cell_array **z,
+ptr334(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -859,11 +842,24 @@ ptr300(struct cell_array **z,
 	void **stkhd;
 	int err;
 
-	struct ptr300_lex *lex = (struct ptr300_lex *)&self->fs;
+	alphaalpha = self->fv[0];
+	omegaomega = self->fv[1];
 
 	struct {
+		struct cell_array *x;
+		struct cell_array *y;
 	} loc;
-
+	
+	struct lex_vars {
+		struct cell_func *chk_ext_scl;
+		struct cell_func *is_empty;
+		struct cell_func *shaped;
+		struct cell_func *is_simple;
+		struct cell_func *elem_map;
+	} *lex;
+	
+	lex = (struct lex_vars *)&self->fv[2];
+	
 	stkhd = &stk[0];
 	err = 0;
 
@@ -937,7 +933,7 @@ ptr300(struct cell_array **z,
 		}
 	}
 	
-	err = mk_func((struct cell_func **)stkhd++, ptr301, 0);
+	err = mk_func((struct cell_func **)stkhd++, ptr335, 0);
 	if (err)
 		goto cleanup;
 	
@@ -1017,13 +1013,8 @@ cleanup:
 	return err;
 }
 
-struct ptr301_lex {
-	unsigned int __count;
-	struct cell_func *is_simple;
-};
-
 int
-ptr301(struct cell_array **z,
+ptr335(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1032,11 +1023,12 @@ ptr301(struct cell_array **z,
 	void **stkhd;
 	int err;
 
-	struct ptr301_lex *lex = (struct ptr301_lex *)&self->fs;
-
-	struct {
-	} loc;
-
+	struct lex_vars {
+		struct cell_func *is_simple;
+	} *lex;
+	
+	lex = (struct lex_vars *)&self->fv[0];
+	
 	stkhd = &stk[0];
 	err = 0;
 
@@ -1086,12 +1078,8 @@ cleanup:
 	return err;
 }
 
-struct ptr302_lex {
-	unsigned int __count;
-};
-
 int
-ptr302(struct cell_array **z,
+ptr336(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1099,11 +1087,6 @@ ptr302(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-
-	struct ptr302_lex *lex = (struct ptr302_lex *)&self->fs;
-
-	struct {
-	} loc;
 
 	stkhd = &stk[0];
 	err = 0;
@@ -1170,12 +1153,8 @@ cleanup:
 	return err;
 }
 
-struct ptr303_lex {
-	unsigned int __count;
-};
-
 int
-ptr303(struct cell_array **z,
+ptr337(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1183,11 +1162,6 @@ ptr303(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-
-	struct ptr303_lex *lex = (struct ptr303_lex *)&self->fs;
-
-	struct {
-	} loc;
 
 	stkhd = &stk[0];
 	err = 0;
@@ -1199,12 +1173,8 @@ cleanup:
 	return err;
 }
 
-struct ptr304_lex {
-	unsigned int __count;
-};
-
 int
-ptr304(struct cell_array **z,
+ptr338(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1212,11 +1182,6 @@ ptr304(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-
-	struct ptr304_lex *lex = (struct ptr304_lex *)&self->fs;
-
-	struct {
-	} loc;
 
 	stkhd = &stk[0];
 	err = 0;
@@ -1229,12 +1194,8 @@ cleanup:
 	return err;
 }
 
-struct ptr305_lex {
-	unsigned int __count;
-};
-
 int
-ptr305(struct cell_array **z,
+ptr339(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1242,11 +1203,6 @@ ptr305(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-
-	struct ptr305_lex *lex = (struct ptr305_lex *)&self->fs;
-
-	struct {
-	} loc;
 
 	stkhd = &stk[0];
 	err = 0;
