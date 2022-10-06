@@ -203,7 +203,7 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = loc.is_bound;
+		fn->fv[0] = retain_cell(loc.is_bound);
 	
 		*stkhd++ = fn;
 	}
@@ -219,10 +219,10 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = loc.can_ext_by;
-		fn->fv[1] = loc.shaped;
-		fn->fv[2] = loc.shp_eqv;
-		fn->fv[3] = loc.rnk_eqv;
+		fn->fv[0] = retain_cell(loc.can_ext_by);
+		fn->fv[1] = retain_cell(loc.shaped);
+		fn->fv[2] = retain_cell(loc.shp_eqv);
+		fn->fv[3] = retain_cell(loc.rnk_eqv);
 	
 		*stkhd++ = fn;
 	}
@@ -238,13 +238,13 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = loc.squeeze;
-		fn->fv[1] = loc.store;
-		fn->fv[2] = loc.shaped;
-		fn->fv[3] = loc.incr;
-		fn->fv[4] = loc.eptr;
-		fn->fv[5] = loc.elem;
-		fn->fv[6] = loc.count;
+		fn->fv[0] = retain_cell(loc.squeeze);
+		fn->fv[1] = retain_cell(loc.store);
+		fn->fv[2] = retain_cell(loc.shaped);
+		fn->fv[3] = retain_cell(loc.incr);
+		fn->fv[4] = retain_cell(loc.eptr);
+		fn->fv[5] = retain_cell(loc.elem);
+		fn->fv[6] = retain_cell(loc.count);
 	
 		*stkhd++ = fn;
 	}
@@ -260,12 +260,12 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = loc.elem_map;
-		fn->fv[1] = loc.chk_ext_scl;
-		fn->fv[2] = loc.shaped;
-		fn->fv[3] = loc.elem;
-		fn->fv[4] = loc.is_simple;
-		fn->fv[5] = loc.is_empty;
+		fn->fv[0] = retain_cell(loc.elem_map);
+		fn->fv[1] = retain_cell(loc.chk_ext_scl);
+		fn->fv[2] = retain_cell(loc.shaped);
+		fn->fv[3] = retain_cell(loc.elem);
+		fn->fv[4] = retain_cell(loc.is_simple);
+		fn->fv[5] = retain_cell(loc.is_empty);
 	
 		*stkhd++ = fn;
 	}
@@ -801,14 +801,14 @@ ptr385(struct cell_array **z,
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = loc.fn;
-		fn->fv[1] = loc.y;
-		fn->fv[2] = loc.x;
-		fn->fv[3] = loc.z;
-		fn->fv[4] = lex->store;
-		fn->fv[5] = lex->incr;
-		fn->fv[6] = lex->eptr;
-		fn->fv[7] = lex->elem;
+		fn->fv[0] = retain_cell(loc.fn);
+		fn->fv[1] = retain_cell(loc.y);
+		fn->fv[2] = retain_cell(loc.x);
+		fn->fv[3] = retain_cell(loc.z);
+		fn->fv[4] = retain_cell(lex->store);
+		fn->fv[5] = retain_cell(lex->incr);
+		fn->fv[6] = retain_cell(lex->eptr);
+		fn->fv[7] = retain_cell(lex->elem);
 	
 		*stkhd++ = fn;
 	}
@@ -1166,7 +1166,7 @@ ptr387(struct cell_array **z,
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = lex->is_simple;
+		fn->fv[0] = retain_cell(lex->is_simple);
 	
 		*stkhd++ = fn;
 	}

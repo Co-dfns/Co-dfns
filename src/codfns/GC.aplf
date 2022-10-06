@@ -108,7 +108,7 @@ GC←{
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
 		z,←⊂''
-		z,← '	fn->fv['∘,¨(⍕¨⍳≢vs),¨'] = '∘,¨vs,¨';'
+		z,← '	fn->fv['∘,¨(⍕¨⍳≢vs),¨'] = retain_cell('∘,¨vs,¨⊂');'
 		z,←(⊂'')⌿⍨1⌊≢vs
 		z,←⊂'	*stkhd++ = fn;'
 		z,←⊂'}'
