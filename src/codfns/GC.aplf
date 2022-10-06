@@ -98,8 +98,8 @@ GC←{
 	i←⍸t[p]=C
 	zz[∪p[i]],←p[i]{
 		id vs←{(⊃⍵)(1↓⍵)}⍵
-		id←⊃var_values id
-		vs←var_values vs[⍋n[vs]]
+		id←⊃var_refs id
+		vs←var_refs vs[⍋n[vs]]
 		z ←⊂'{'
 		z,←⊂'	struct cell_func *fn;'
 		z,←⊂''
