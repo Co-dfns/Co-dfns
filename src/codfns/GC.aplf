@@ -333,18 +333,17 @@ GC←{
 		z,⊂''
 	}¨i
 	
-	mk_lex←{
+	decl_lex←{
 		0=≢v←{⍵[⍋n[⍵]]}⊃fv[⍵]:0⍴⊂''
-		⍺←0
 		z ←⊂'struct lex_vars {'
-		z,← '	',¨decl_vars v
+		z,←'	',¨decl_vars v
 		z,←⊂'} *lex;'
 		z,←⊂''
-		z,←⊂'lex = (struct lex_vars *)&self->fv[',(⍕⍺),'];'
+		z,←⊂'lex = (struct lex_vars *)',⍺,'->fv;'
 		z,⊂''
 	}
 	
-	mk_loc←{
+	decl_loc←{
 		0=≢v←⊃lv[⍵]:0⍴⊂''
 		z ←⊂'struct {'
 		z,←'	',¨decl_vars v
@@ -370,7 +369,7 @@ GC←{
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,← '	',¨(mk_loc,mk_lex)⍵
+		z,← '	',¨(decl_loc,'self'∘decl_lex)⍵
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''
@@ -395,14 +394,16 @@ GC←{
 		z,←⊂'    struct cell_func *self)'
 		z,←⊂'{'
 		z,←⊂''
+		z,←⊂'	struct cell_func *deldel;'
 		z,←⊂'	void *alphaalpha;'
 		z,←⊂'	void *stk[128];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'	alphaalpha = self->fv[0];'
+		z,←⊂'	deldel = self->fv[0];'
+		z,←⊂'	alphaalpha = self->fv[1];'
 		z,←⊂''
-		z,← '	',¨1(mk_loc,mk_lex)⍵
+		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''
@@ -427,15 +428,17 @@ GC←{
 		z,←⊂'    struct cell_func *self)'
 		z,←⊂'{'
 		z,←⊂''
+		z,←⊂'	struct cell_func *deldel;'
 		z,←⊂'	void *alphaalpha, *omegaomega;'
 		z,←⊂'	void *stk[128];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
 		z,←⊂''
-		z,←⊂'	alphaalpha = self->fv[0];'
-		z,←⊂'	omegaomega = self->fv[1];'
+		z,←⊂'	deldel = self->fv[0];'
+		z,←⊂'	alphaalpha = self->fv[1];'
+		z,←⊂'	omegaomega = self->fv[2];'
 		z,←⊂''
-		z,← '	',¨2(mk_loc,mk_lex)⍵
+		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂'	err = 0;'
 		z,←⊂''

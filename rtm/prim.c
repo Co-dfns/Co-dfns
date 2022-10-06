@@ -357,19 +357,21 @@ ptr330(struct cell_array **z,
     struct cell_func *self)
 {
 
+	struct cell_func *deldel;
 	void *alphaalpha, *omegaomega;
 	void *stk[128];
 	void **stkhd;
 	int err;
 
-	alphaalpha = self->fv[0];
-	omegaomega = self->fv[1];
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
 
 	struct lex_vars {
 		struct cell_func *is_bound;
 	} *lex;
 	
-	lex = (struct lex_vars *)&self->fv[2];
+	lex = (struct lex_vars *)deldel->fv;
 	
 	stkhd = &stk[0];
 	err = 0;
@@ -449,7 +451,7 @@ ptr331(struct cell_array **z,
 		struct cell_func *rnk_eqv;
 	} *lex;
 	
-	lex = (struct lex_vars *)&self->fv[0];
+	lex = (struct lex_vars *)self->fv;
 	
 	stkhd = &stk[0];
 	err = 0;
@@ -633,12 +635,14 @@ ptr332(struct cell_array **z,
     struct cell_func *self)
 {
 
+	struct cell_func *deldel;
 	void *alphaalpha;
 	void *stk[128];
 	void **stkhd;
 	int err;
 
-	alphaalpha = self->fv[0];
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
 
 	struct {
 		struct cell_array *z;
@@ -658,7 +662,7 @@ ptr332(struct cell_array **z,
 		struct cell_func *count;
 	} *lex;
 	
-	lex = (struct lex_vars *)&self->fv[1];
+	lex = (struct lex_vars *)deldel->fv;
 	
 	stkhd = &stk[0];
 	err = 0;
@@ -817,7 +821,7 @@ ptr333(struct cell_array **z,
 		struct cell_func *elem;
 	} *lex;
 	
-	lex = (struct lex_vars *)&self->fv[0];
+	lex = (struct lex_vars *)self->fv;
 	
 	stkhd = &stk[0];
 	err = 0;
@@ -928,13 +932,15 @@ ptr334(struct cell_array **z,
     struct cell_func *self)
 {
 
+	struct cell_func *deldel;
 	void *alphaalpha, *omegaomega;
 	void *stk[128];
 	void **stkhd;
 	int err;
 
-	alphaalpha = self->fv[0];
-	omegaomega = self->fv[1];
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
 
 	struct {
 		struct cell_array *x;
@@ -949,7 +955,7 @@ ptr334(struct cell_array **z,
 		struct cell_func *is_empty;
 	} *lex;
 	
-	lex = (struct lex_vars *)&self->fv[2];
+	lex = (struct lex_vars *)deldel->fv;
 	
 	stkhd = &stk[0];
 	err = 0;
@@ -1081,7 +1087,7 @@ ptr334(struct cell_array **z,
 	}
 	
 	{
-		struct cell_func *x = cdf_prim.del;
+		struct cell_func *x = self;
 		struct cell_func *op = lex->elem_map;
 		struct cell_func **dst = (struct cell_func **)stkhd++;
 	
@@ -1127,7 +1133,7 @@ ptr335(struct cell_array **z,
 		struct cell_func *is_simple;
 	} *lex;
 	
-	lex = (struct lex_vars *)&self->fv[0];
+	lex = (struct lex_vars *)self->fv;
 	
 	stkhd = &stk[0];
 	err = 0;

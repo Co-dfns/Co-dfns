@@ -306,7 +306,8 @@ PS←{
 	fb,←¯1⊣fr←rf mk⊢fb←fb[∪⍳⍨rf mk⊢fb←⊖fb[∪⍳⍨rz mk⊢fb←⊖⍸t[0⌈vb]=B]]
 	
 	⍝ Mark lexical scope of non-variable primitives
-	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3 ⋄ lx[⍸(t=F)∨(t=P)∧n∊,¨'⍺' '⍵' '⍺⍺' '⍵⍵']←4
+	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3
+	lx[⍸(t=F)∨(t=P)∧n∊,¨'⍺' '⍵' '⍺⍺' '⍵⍵' '∇' '∇∇']←4
 	
 	⍝ Link variables to their bindings
 	_←{
