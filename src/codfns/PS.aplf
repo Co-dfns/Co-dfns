@@ -337,8 +337,12 @@ PS←{
 
 	⍝ Infer the type of bindings, groups, and variables
 	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	x←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x
-	0∨.=≢¨x:'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'⎕SIGNAL 2
+	y←{⍵⌿⍨~∧⍀t[⍵]=¯1}U⌽¨x
+	∨⌿msk←0=≢¨y:{
+		EM←'BRACKET SYNTAX REQUIRES FUNCTION OR ARRAY TO ITS LEFT'
+		EM SIGNAL SELECT ∊msk⌿x
+	}⍬
+	x←y
 	_←{
 		k[msk⌿z]←k[x⌿⍨msk←(k[⊃¨x]≠0)∧1=≢¨x]
 		z x⌿⍨←⊂~msk
