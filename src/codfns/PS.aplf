@@ -299,7 +299,7 @@ PS←{
 	⍝ Enclosing frames and lines for all nodes
 	rf←¯1@{~t[⍵]∊F G}p[rz←I@{(t[⍵]=Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍨p]
 	rf[i]←p[i←⍸t=G] ⋄ rz[i]←i ⋄ rf←rf I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}rf
-	rfn←I@{t[⍵]=G}⍨rf	
+	rfn←I@{t[0⌈⍵]=G}⍨rf	
 	
 	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
