@@ -260,7 +260,7 @@ syms←_
      cli,←'-Wl,-rpath,/opt/arrayfire/lib '
      cli,←'/opt/arrayfire/lib/libaf',AF∆LIB,'.dylib '
      cli,←'> ''',⍵,'.log'' 2>&1'
-     cli
+     ⎕SH cli
    }
    vsco←{z←'/W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
      z,←'/WX /MD /EHsc /nologo /std:c++latest '
