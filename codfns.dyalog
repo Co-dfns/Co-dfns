@@ -253,7 +253,15 @@ syms←_
    cco,←'-Wno-misleading-indentation '
    ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
    gcc←'g++'ucc'so'
-   clang←'clang++'ucc'dylib'
+   clang←{
+     cli←'clang++ -arch x86_64 -shared -std=c++17 -g -fPIC -Ofast '
+     cli,←'-Wall -Wno-parentheses -Wno-misleading-indentation '
+     cli,←'-isystem /opt/arrayfire/include -o''',⍵,'.dylib'' ''',⍵,'.cpp'' '
+     cli,←'-Wl,-rpath,/opt/arrayfire/lib '
+     cli,←'/opt/arrayfire/lib/libaf',AF∆LIB,'.dylib '
+     cli,←'> ''',⍵,'.log'' 2>&1'
+     cli
+   }
    vsco←{z←'/W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
      z,←'/WX /MD /EHsc /nologo /std:c++latest '
      z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
@@ -266,7 +274,8 @@ syms←_
    vsc←{⎕CMD('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
    name MkNS name Cmp src}
 
- GC←{p t k n fr sl rf fd xn sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
+ GC←{
+   p t k n fr sl rf fd xn sym←⍵ ⋄ A B C E F G K L M N O P S V Z←1+⍳15
      ⍝ Parameters
      ⍝  deps  Dependencies for each symbol in syms
      ⍝  nams  Name codes for each symbol in syms

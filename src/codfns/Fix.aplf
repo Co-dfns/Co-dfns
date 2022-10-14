@@ -1,4 +1,4 @@
-﻿ Fix←{name←⍺ ⋄ src←⍵
+ Fix←{name←⍺ ⋄ src←⍵
    VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
    VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
    VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
@@ -51,7 +51,15 @@
    cco,←'-Wno-misleading-indentation '
    ucc←{⍵⍵(⎕SH ⍺⍺,' ',cco,cci,ccf)⍵}
    gcc←'g++'ucc'so'
-   clang←'clang++'ucc'dylib'
+   clang←{
+    cli←'clang++ -arch x86_64 -shared -std=c++17 -g -fPIC -Ofast '
+    cli,←'-Wall -Wno-parentheses -Wno-misleading-indentation '
+    cli,←'-isystem /opt/arrayfire/include -o''',⍵,'.dylib'' ''',⍵,'.cpp'' '
+    cli,←'-Wl,-rpath,/opt/arrayfire/lib '
+    cli,←'/opt/arrayfire/lib/libaf',AF∆LIB,'.dylib '
+    cli,←'> ''',⍵,'.log'' 2>&1'
+    cli
+   }
    vsco←{z←'/W3 /wd4102 /wd4275 /Od /Zc:inline /Zi /FS /Fd"',⍵,'.pdb" '
     z,←'/WX /MD /EHsc /nologo /std:c++latest '
     z,'/I"%AF_PATH%\include" /D "NOMINMAX" /D "AF_DEBUG" '}
