@@ -152,6 +152,7 @@ The following limitations are known to exist:
 * User-command interface does not work with namespace global variables
 * User-defined operators must use function types for ⍺⍺ and ⍵⍵ only
 * User-defined operators are not exported
+* Trains are not currently supported
 * Binomial is not implemented correctly for some values
 * Only partial support for arrays of rank > 4
 * Only partial support for nested arrays, including some missing nested array primitives
