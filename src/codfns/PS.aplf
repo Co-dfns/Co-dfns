@@ -268,7 +268,7 @@ PS←{
 	i←⍸n∊,¨'⎕⍞' ⋄ p,←i ⋄ t k n pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←A 0(⊂'')
 
 	⍝ Unify A1, N, and C tokens to A1 nodes
-	n[⍸(t=A)∧k=1]←⊂'' ⋄ t k(⊣@(⍸t∊N C))⍨←A 1
+	n[⍸(t=A)∧k=1]←⊂⍬ ⋄ t k(⊣@(⍸t∊N C))⍨←A 1
 	
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
