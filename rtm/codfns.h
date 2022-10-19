@@ -99,7 +99,8 @@ DECLSPEC int mk_void_box(struct cell_void_box **, struct cell_void *);
 DECLSPEC void release_void_box(struct cell_void_box *);
 
 /* ARRAY type */
-DECLSPEC int mk_array(struct cell_array **, ...);
+DECLSPEC int mk_array(struct cell_array **, 
+    enum array_type, enum array_storage, unsigned int, size_t[]);
 DECLSPEC void release_array(struct cell_array *);
 DECLSPEC int mk_array_box(struct cell_array_box **, struct cell_array *);
 DECLSPEC void release_array_box(struct cell_array_box *);
