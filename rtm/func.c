@@ -46,22 +46,40 @@ release_func(struct cell_func *k)
 }
 
 DECLSPEC int
+apply_mop(struct cell_func **z, struct cell_func *op, void *l)
+{
+	struct cell_func *dst;
+	int err;
+	
+	err = mk_func(&dst, op->fptr, 2);
+	
+	if (err)
+		return err;
+	
+	dst->fv[0] = retain_cell(op);
+	dst->fv[1] = retain_cell(l);
+	
+	*z = dst;
+	
+	return 0;
+}
+
+DECLSPEC int
 apply_dop(struct cell_func **z, struct cell_func *op, void *l, void *r)
 {
-        int err;
+	struct cell_func *dst;
+	int err;
 
-        err = mk_func(z, op->fptr, op->fs+2);
+	err = mk_func(&dst, op->fptr, 3);
 
-        if (err)
-                return err;
+	if (err)
+		return err;
 
-        (*z)->fv[0] = l;
-        (*z)->fv[1] = r;
+	dst->fv[0] = retain_cell(op);
+        dst->fv[1] = retain_cell(l);
+        dst->fv[2] = retain_cell(r);
 
-        memcpy(&(*z)->fv[2], op->fv, op->fs * sizeof(op->fv[0]));
-
-        for (unsigned int i = 0; i < (*z)->fs; i++)
-                retain_cell((*z)->fv[i]);
-
-        return 0;
+	*z = dst;
+	
+	return 0;
 }
