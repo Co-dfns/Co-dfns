@@ -551,6 +551,28 @@ ptr384(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
+			{
+				struct cell_array *arr, **dat;
+			
+				unsigned int rnk = 1;
+				size_t shp[] = {2};
+			
+				err = mk_array(&arr, ARR_NESTED, STG_HOST, 1, shp);
+			
+				if (err)
+					goto cleanup;
+			
+				dat = arr->values;
+			
+				dat[0] = alpha;
+				dat[1] = omega;
+			
+				retain_cell(alpha);
+				retain_cell(omega);
+			
+				*stkhd++ = arr;
+			}
+			
 			*z = *--stkhd;
 			goto cleanup;
 			
@@ -592,6 +614,27 @@ ptr384(struct cell_array **z,
 					goto cleanup;
 			}
 			
+			{
+				struct cell_array *arr, **dat;
+			
+				unsigned int rnk = 1;
+				size_t shp[] = {2};
+			
+				err = mk_array(&arr, ARR_NESTED, STG_HOST, 1, shp);
+			
+				if (err)
+					goto cleanup;
+			
+				dat = arr->values;
+			
+				dat[0] = *--stkhd;
+				dat[1] = omega;
+			
+				retain_cell(omega);
+			
+				*stkhd++ = arr;
+			}
+			
 			*z = *--stkhd;
 			goto cleanup;
 			
@@ -631,6 +674,27 @@ ptr384(struct cell_array **z,
 			
 				if (err)
 					goto cleanup;
+			}
+			
+			{
+				struct cell_array *arr, **dat;
+			
+				unsigned int rnk = 1;
+				size_t shp[] = {2};
+			
+				err = mk_array(&arr, ARR_NESTED, STG_HOST, 1, shp);
+			
+				if (err)
+					goto cleanup;
+			
+				dat = arr->values;
+			
+				dat[0] = alpha;
+				dat[1] = *--stkhd;
+			
+				retain_cell(alpha);
+			
+				*stkhd++ = arr;
 			}
 			
 			*z = *--stkhd;

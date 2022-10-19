@@ -124,6 +124,32 @@ GC←{
 		z,←⊂'	*stkhd++ = arr;'
 		z,⊂'}'
 	}¨i
+	
+	⍝ A7: Stranded Arrays
+	i←⍸(t[p]=A)∧k[p]=7
+	zz[∪p[i]],←p[i]{
+		vs←var_values ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *arr, **dat;'
+		z,←⊂''
+		z,←⊂'	unsigned int rnk = 1;'
+		z,←⊂'	size_t shp[] = {',(⍕≢vs),'};'
+		z,←⊂''
+		z,←⊂'	err = mk_array(&arr, ARR_NESTED, STG_HOST, 1, shp);'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂''
+		z,←⊂'	dat = arr->values;'
+		z,←⊂''
+		z,←vs{'	dat[',(⍕⍵),'] = ',⍺,';'}¨⍳≢⍵
+		z,←⊂''
+		z,←{'	retain_cell(',⍵,');'}¨vs⌿⍨k[⍵]≠0
+		z,←⊂''
+		z,←⊂'	*stkhd++ = arr;'
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
 
 	⍝ B: Function bindings
 	i←⍸t[p]=B
