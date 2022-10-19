@@ -663,6 +663,26 @@ ptr384(struct cell_array **z,
 	
 		if (!err) {
 			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				size_t *shp = NULL;
+				int16_t dat[] = {5};
+			
+				err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+			
+				if (err)
+					goto cleanup;
+			
+				err = fill_array(arr, dat);
+			
+				if (err)
+					goto cleanup;
+			
+				*stkhd++ = arr;
+			}
+			{
 				struct cell_func *fn = cdf_prim.q_signal;
 				struct cell_array *arg = *--stkhd;
 				struct cell_array **dst = (struct cell_array **)stkhd++;
@@ -681,6 +701,26 @@ ptr384(struct cell_array **z,
 		}
 	}
 	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {4};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	{
 		struct cell_func *fn = cdf_prim.q_signal;
 		struct cell_array *arg = *--stkhd;
@@ -741,6 +781,26 @@ ptr385(struct cell_array **z,
 	err = 0;
 
 	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		size_t shp[] = {0};
+		int16_t dat[] = {0};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
+	{
 		struct cell_func *fn = cdf_prim.par;
 		struct cell_array *arg = *--stkhd;
 		struct cell_array **dst = (struct cell_array **)stkhd++;
@@ -793,6 +853,26 @@ ptr385(struct cell_array **z,
 	loc.cnt = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {0};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	{
 		struct cell_func *fn;
 	
@@ -898,6 +978,26 @@ ptr386(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				size_t shp[] = {0};
+				int16_t dat[] = {0};
+			
+				err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+			
+				if (err)
+					goto cleanup;
+			
+				err = fill_array(arr, dat);
+			
+				if (err)
+					goto cleanup;
+			
+				*stkhd++ = arr;
+			}
 			*z = *--stkhd;
 			goto cleanup;
 			
@@ -1070,6 +1170,26 @@ ptr387(struct cell_array **z,
 	release_cell(*--stkhd);
 	
 	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {0};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
+	{
 		struct cell_array *x = loc.xy;
 		struct cell_func *fn = lex->elem;
 		struct cell_array *y = *--stkhd;
@@ -1086,6 +1206,26 @@ ptr387(struct cell_array **z,
 	loc.x = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {1};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	{
 		struct cell_array *x = loc.xy;
 		struct cell_func *fn = lex->elem;
@@ -1125,6 +1265,26 @@ ptr387(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				size_t shp[] = {0};
+				int16_t dat[] = {0};
+			
+				err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+			
+				if (err)
+					goto cleanup;
+			
+				err = fill_array(arr, dat);
+			
+				if (err)
+					goto cleanup;
+			
+				*stkhd++ = arr;
+			}
 			{
 				struct cell_func *fn = omegaomega;
 				struct cell_array *arg = *--stkhd;
@@ -1305,6 +1465,26 @@ ptr388(struct cell_array **z,
 		}
 	}
 	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {0};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	*z = *--stkhd;
 	goto cleanup;
 	
@@ -1336,6 +1516,26 @@ ptr389(struct cell_array **z,
 			goto cleanup;
 	}
 	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {1289};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	{
 		struct cell_array *x = *--stkhd;
 		struct cell_func *fn = cdf_prim.eql;
@@ -1400,6 +1600,26 @@ ptr390(struct cell_array **z,
 	stkhd = &stk[0];
 	err = 0;
 
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {0};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	*z = *--stkhd;
 	goto cleanup;
 	
@@ -1462,6 +1682,26 @@ ptr393(struct cell_array **z,
 	stkhd = &stk[0];
 	err = 0;
 
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {1};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	*z = *--stkhd;
 	goto cleanup;
 	
@@ -1482,6 +1722,26 @@ ptr394(struct cell_array **z,
 	stkhd = &stk[0];
 	err = 0;
 
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		size_t *shp = NULL;
+		int16_t dat[] = {16};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);
+	
+		if (err)
+			goto cleanup;
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
 	{
 		struct cell_func *fn = cdf_prim.q_signal;
 		struct cell_array *arg = *--stkhd;

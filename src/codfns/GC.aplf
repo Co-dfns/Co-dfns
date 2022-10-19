@@ -86,6 +86,42 @@ GC←{
 
 	⍝ We have a vector output for each node in the AST
 	zz←(≢p)⍴⊂''
+	
+	⍝ A1: Simple arrays
+	i←⍸(t=A)∧k=1
+	atypes←'BOOL' 'SINT'    'SINT'    'INT'     'DBL'    'CMPX' 
+	ctypes←'char' 'int16_t' 'int16_t' 'int32_t' 'double' 'struct apl_cmpx'
+	drtypes←11     83        163       323       645      1289
+	atypes,←'CHAR8'   'CHAR16'   'CHAR32'
+	ctypes,←'uint8_t' 'uint16_t' 'uint32_t'
+	drtypes,←80        160        320
+	zz[i],←{
+		csep←{¯2↓⊃,⌿(⍕¨⍵),¨⊂', '}
+		rnk←≢shp←⍴dat←(|n[⍵])⊃sym ⋄ dri←drtypes⍳⎕DR dat
+		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes
+		dat←'¯'⎕R'-'∘⍕¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *arr;'
+		z,←⊂''
+		z,←⊂'	enum array_type typ = ARR_',atp,';'
+		z,←⊂'	unsigned int rnk = ',(⍕rnk),';'
+		z,←(rnk≠0)⌿⊂'	size_t shp[] = {',(csep shp),'};'
+		z,←(rnk=0)⌿⊂'	size_t *shp = NULL;'
+		z,←⊂'	',ctp,' dat[] = {',(csep dat),'};'
+		z,←⊂''
+		z,←⊂'	err = mk_array(&arr, typ, STG_DEVICE, rnk, shp);'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂''
+		z,←⊂'	err = fill_array(arr, dat);'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		goto cleanup;'
+		z,←⊂''
+		z,←⊂'	*stkhd++ = arr;'
+		z,⊂'}'
+	}¨i
 
 	⍝ B: Function bindings
 	i←⍸t[p]=B

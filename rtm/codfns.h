@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stddef.h>
+#include <stdint.h>
 
 #define EXPORT __declspec(dllexport)
 #ifdef EXPORTING
