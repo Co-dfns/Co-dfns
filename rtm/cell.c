@@ -44,31 +44,20 @@ release_cell(void *cell)
         case CELL_VOID:
                 release_void(cell);
                 break;
+        case CELL_ARRAY:
+                release_array(cell);
+                break;
+        case CELL_FUNC:
+                release_func(cell);
+                break;
         case CELL_ARRAY_BOX:
                 release_array_box(cell);
                 break;
         case CELL_FUNC_BOX:
                 release_func_box(cell);
                 break;
-	/*
-        case CELL_MOPER_BOX:
-                release_moper_box(cell);
-                break;
-        case CELL_DOPER_BOX:
-                release_doper_box(cell);
-                break;
-        case CELL_ENV_BOX:
-                release_env_box(cell);
-                break;
-	*/
         case CELL_VOID_BOX:
                 release_void_box(cell);
-                break;
-        case CELL_ARRAY:
-                release_array(cell);
-                break;
-        case CELL_FUNC:
-                release_func(cell);
                 break;
         default:
                 exit(99);
