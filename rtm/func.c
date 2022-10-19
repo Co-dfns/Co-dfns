@@ -30,6 +30,9 @@ release_func(struct cell_func *k)
 {
         if (k == NULL)
                 return;
+	
+	if (!k->refc)
+		return;
 
         k->refc--;
 

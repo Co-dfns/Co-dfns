@@ -24,6 +24,9 @@ release_void(struct cell_void *cell)
 {
         if (cell == NULL)
                 return;
+	
+	if (!cell->refc)
+		return;
 
         if (--cell->refc)
                 return;
