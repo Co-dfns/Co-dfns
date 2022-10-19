@@ -6,6 +6,9 @@ GC←{
 
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
+	
+	⍝ Text utilities
+	csep←{¯2↓⊃,⌿(⍕¨⍵),¨⊂', '}
 
 	⍝ Variable generation utilities
 	var_ckinds←{
@@ -96,7 +99,6 @@ GC←{
 	ctypes,←'uint8_t' 'uint16_t' 'uint32_t'
 	drtypes,←80        160        320
 	zz[i],←{
-		csep←{¯2↓⊃,⌿(⍕¨⍵),¨⊂', '}
 		rnk←≢shp←⍴dat←(|n[⍵])⊃sym ⋄ dri←drtypes⍳⎕DR dat
 		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes
 		dat←'¯'⎕R'-'∘⍕¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
