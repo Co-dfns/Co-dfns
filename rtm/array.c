@@ -207,5 +207,4 @@ release_array(struct cell_array *arr)
 		}
 
 	free(arr);
-	arr = NULL;
 }

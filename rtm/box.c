@@ -38,7 +38,6 @@ release_##type##_box(struct cell_##type##_box *box)	\
 							\
         release_##type(box->value);			\
         free(box);					\
-        box = NULL;					\
 }
 
 DEF_BOX_FNS(void, VOID);
