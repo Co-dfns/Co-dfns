@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -14,12 +15,12 @@ DECLSPEC size_t
 array_count(struct cell_array *arr)
 {
 	size_t count;
-	
+
 	count = 1;
-	
+
 	for (unsigned int i = 0; i < arr->rank; i++)
 		count *= arr->shape[i];
-	
+
 	return count;
 }
 
@@ -27,12 +28,12 @@ DECLSPEC size_t
 array_values_count(struct cell_array *arr)
 {
 	size_t count;
-	
+
 	count = array_count(arr);
-	
+
 	if (!count)
 		count = 1;
-	
+
 	return count;
 }
 
@@ -65,6 +66,19 @@ array_element_size(struct cell_array *arr)
 	default:
 		return 0;
 	}
+}
+
+size_t
+array_values_bytes(struct cell_array *arr)
+{
+	size_t count;
+
+	count = array_values_count(arr);
+
+	if (arr->type == ARR_BOOL && arr->storage == STG_HOST)
+		count = (count + 7) / 8;
+
+	return count * array_element_size(arr);
 }
 
 af_dtype
@@ -103,11 +117,11 @@ fill_array(struct cell_array *arr, void *data)
 {
 	size_t	count, size;
 	int	err;
-	
+
 	count	= array_values_count(arr);
 	size	= count * array_element_size(arr);
 	err	= 0;
-	
+
 	switch (arr->storage) {
 	case STG_DEVICE:
 		err = af_write_array(arr->values, data, size, afHost);
@@ -118,7 +132,7 @@ fill_array(struct cell_array *arr, void *data)
 	default:
 		return 99;
 	}
-	
+
 	return err;
 }
 
@@ -131,7 +145,7 @@ mk_array(struct cell_array **dest,
 	size_t	count, size;
 	int	err;
 	af_dtype	dtype;
-	
+
 	size	= sizeof(struct cell_array) + rank * sizeof(size_t);
 	arr	= malloc(size);
 
@@ -143,12 +157,12 @@ mk_array(struct cell_array **dest,
 	arr->type       = type;
 	arr->storage    = storage;
 	arr->rank       = rank;
-	
-	for (unsigned int i = 0; i < rank; i++) 
+
+	for (unsigned int i = 0; i < rank; i++)
 		arr->shape[i] = shape[i];
-	
+
 	count	= array_values_count(arr);
-	
+
 	if (storage == STG_DEVICE) {
 		dtype = array_af_dtype(arr);
 		err = af_create_handle(&arr->values, 1, &count, dtype);
@@ -158,12 +172,12 @@ mk_array(struct cell_array **dest,
 	} else {
 		err = 99;
 	}
-	
+
 	if (err) {
 		free(arr);
 		return err;
 	}
-	
+
 	*dest = arr;
 
 	return 0;
@@ -174,10 +188,10 @@ release_array(struct cell_array *arr)
 {
 	size_t count;
 	struct cell_array **ptrs;
-	
+
 	if (arr == NULL)
 		return;
-	
+
 	if (!arr->refc)
 		return;
 
@@ -189,7 +203,7 @@ release_array(struct cell_array *arr)
 	if (arr->type == ARR_NESTED) {
 		ptrs = arr->values;
 		count = array_count(arr);
-		
+
 		for (size_t i = 0; i < count; i++)
 			release_array(ptrs[i]);
 	}
@@ -207,4 +221,51 @@ release_array(struct cell_array *arr)
 		}
 
 	free(arr);
+}
+
+int
+is_simple(struct cell_array *arr)
+{
+	switch (arr->type) {
+	case ARR_SPAN:
+	case ARR_BOOL:
+	case ARR_SINT:
+	case ARR_INT:
+	case ARR_DBL:
+	case ARR_CMPX:
+	case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
+	case ARR_MIXED:
+		return 1;
+	case ARR_NESTED:
+	default:
+		return 0;
+	}
+}
+
+int
+is_integer(double x)
+{
+	return rint(x) == x;
+}
+
+int
+is_real(struct cell_array *arr)
+{
+	switch (arr->type) {
+	case ARR_BOOL:
+	case ARR_SINT:
+	case ARR_INT:
+	case ARR_DBL:
+		return 1;
+	default:
+		return 0;
+	}
+}
+
+int
+is_numeric(struct cell_array *arr)
+{
+	return is_real(arr) || arr->type == ARR_CMPX;
 }
