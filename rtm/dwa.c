@@ -4,7 +4,7 @@
 #include <string.h>
 #include <arrayfire.h>
 
-#include "codfns.h"
+#include "internal.h"
 
 #define DATA(pp) ((void *)&(pp)->shape[(pp)->rank])
 

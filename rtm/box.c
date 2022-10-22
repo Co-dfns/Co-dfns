@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "codfns.h"
+#include "internal.h"
 
 #define DEF_BOX_FNS(type, name)				\
 DECLSPEC int						\

@@ -4,7 +4,7 @@
 #include <string.h>
 #include <arrayfire.h>
 
-#include "codfns.h"
+#include "internal.h"
 
 #if AF_API_VERSION < 38
 #error "Your ArrayFire version is too old."

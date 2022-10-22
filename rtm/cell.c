@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "codfns.h"
+#include "internal.h"
 
 DECLSPEC int
 mk_void(struct cell_void **cell)

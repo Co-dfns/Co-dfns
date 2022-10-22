@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "codfns.h"
+#include "internal.h"
 
 DECLSPEC int
 mk_func(struct cell_func **k, func_ptr fn, unsigned int fs)
