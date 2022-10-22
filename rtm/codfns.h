@@ -115,6 +115,9 @@ DECLSPEC int mk_func_box(struct cell_func_box **, struct cell_func *);
 DECLSPEC void release_func_box(struct cell_func_box *);
 DECLSPEC int mk_func(struct cell_func **, func_ptr, unsigned int);
 DECLSPEC void release_func(struct cell_func *);
+DECLSPEC int apply_mop(struct cell_func **, struct cell_func *, void *);
+DECLSPEC int apply_dop(struct cell_func **, struct cell_func *, void *, void *);
+DECLSPEC int guard_check(struct cell_array *);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);
@@ -149,7 +152,3 @@ DECLSPEC struct cdf_prim_loc {
 } cdf_prim;
 #endif
 
-/* Utilities */
-DECLSPEC int apply_mop(struct cell_func **, struct cell_func *, void *);
-DECLSPEC int apply_dop(struct cell_func **, struct cell_func *, void *, void *);
-DECLSPEC int guard_check(struct cell_array *);
