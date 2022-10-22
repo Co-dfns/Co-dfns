@@ -83,3 +83,25 @@ apply_dop(struct cell_func **z, struct cell_func *op, void *l, void *r)
 	
 	return 0;
 }
+
+DECLSPEC int
+guard_check(struct cell_array *x)
+{
+	int err, val;
+	
+	if (array_count(x) != 1)
+		return 5;
+	
+	if (err = squeeze_array(x))
+		return err;
+	
+	if (!is_real(x))
+		return 11;
+	
+	val = get_scalar_int(x);
+	
+	if (val != 0 && val != 1)
+		return 11;
+	
+	return val - 1;
+}
