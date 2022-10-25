@@ -1,8 +1,4 @@
  Fix←{name←⍺ ⋄ src←⍵
-   VS∆PS←⊂'\Program Files (x86)\Microsoft Visual Studio\'
-   VS∆PS,¨←,'2019\' '2017\'∘.,'Enterprise' 'Professional' 'Community'
-   VS∆PS,¨←⊂'\VC\Auxiliary\Build\vcvarsall.bat'
-   VS∆PS,←⊂'\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat'
    Cmp←{_←1 ⎕NDELETE f←⍺,soext⍬
     out←GC{⍵⊣⍞←'G'}ir←TT{⍵⊣⍞←'C'}a n s src←PS ⍵⊣⍞←'P'
     _←out put ⍺,'.cpp'
