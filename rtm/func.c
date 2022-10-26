@@ -95,13 +95,11 @@ guard_check(struct cell_array *x)
 	if (err = squeeze_array(x))
 		return err;
 	
-	if (!is_real(x))
+	if (x->type != ARR_BOOL)
 		return 11;
 	
-	val = get_scalar_int(x);
-	
-	if (val != 0 && val != 1)
-		return 11;
+	if (err = get_scalar_int(&val, x))
+		return err;
 	
 	return val - 1;
 }
