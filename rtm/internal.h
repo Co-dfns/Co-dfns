@@ -6,13 +6,18 @@ enum array_type array_max_type(enum array_type, enum array_type);
 
 int squeeze_array(struct cell_array *);
 
-int get_scalar_int(struct cell_array *);
-double get_scalar_dbl(struct cell_array *);
-struct apl_cmpx get_scalar_cmpx(struct cell_array *);
-
 int is_integer(double);
 int is_real(struct cell_array *);
 int is_numeric(struct cell_array *);
+
+int get_scalar_bool(int8_t *, struct cell_array *);
+int get_scalar_sint(int16_t *, struct cell_array *);
+int get_scalar_int(int32_t *, struct cell_array *);
+int get_scalar_dbl(double *, struct cell_array *);
+int get_scalar_cmpx(struct apl_cmpx *, struct cell_array *);
+int get_scalar_char8(uint8_t *, struct cell_array *);
+int get_scalar_char16(uint16_t *, struct cell_array *);
+int get_scalar_char32(uint32_t *, struct cell_array *);
 
 size_t array_count(struct cell_array *);
 size_t array_values_count(struct cell_array *);
