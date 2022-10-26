@@ -33,7 +33,8 @@ enum array_type {
 	ARR_CHAR16, 
 	ARR_CHAR32,
         ARR_MIXED, 
-	ARR_NESTED
+	ARR_NESTED,
+	ARR_MAX
 };
 
 enum array_storage {
