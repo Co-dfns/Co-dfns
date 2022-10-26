@@ -230,13 +230,12 @@ is_integer(double x)
 }
 
 int
-is_real(struct cell_array *arr)
+is_char_type(enum array_type type)
 {
-	switch (arr->type) {
-	case ARR_BOOL:
-	case ARR_SINT:
-	case ARR_INT:
-	case ARR_DBL:
+	switch (type) {
+	case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
 		return 1;
 	default:
 		return 0;
@@ -244,8 +243,389 @@ is_real(struct cell_array *arr)
 }
 
 int
-is_numeric(struct cell_array *arr)
+is_numeric_type(enum array_type type)
 {
-	return is_real(arr) || arr->type == ARR_CMPX;
+	switch (type) {
+	case ARR_SPAN:
+	case ARR_BOOL:
+	case ARR_SINT:
+	case ARR_INT:
+	case ARR_DBL:
+	case ARR_CMPX:
+		return 1;
+	default:
+		return 0;
+	}
+}
+
+int
+is_real_array(struct cell_array *arr)
+{
+	return is_numeric_type(arr->type) && arr->type != ARR_CMPX;
+}
+
+int
+is_numeric_array(struct cell_array *arr)
+{
+	return is_numeric_type(arr->type);
+}
+
+int
+is_char_array(struct cell_array *arr)
+{
+	return is_char_type(arr->type);
+}
+
+enum array_type
+array_max_type(enum array_type a, enum array_type b)
+{
+	if (a == ARR_SPAN)
+		return b;
+	
+	if (b == ARR_SPAN)
+		return a;
+	
+	if (a == ARR_NESTED || b == ARR_NESTED)
+		return ARR_NESTED;
+	
+	if (a == ARR_MIXED || b == ARR_MIXED)
+		return ARR_MIXED;
+	
+	if (is_char_type(a) && is_numeric_type(b))
+		return ARR_MIXED;
+	
+	if (is_numeric_type(a) && is_char_type(b))
+		return ARR_MIXED;
+	
+	if (a < b)
+		return b;
+	
+	return a;
+}
+
+int
+get_scalar_data(void **val, void *buf, struct cell_array *arr)
+{
+	int err;
+	
+	switch (arr->storage) {
+	case STG_DEVICE:
+		if (err = af_get_scalar(buf, arr->values))
+			return err;
+		
+		*val = buf;
+		break;
+	case STG_HOST:
+		*val = arr->values;
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_bool(int8_t *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_BOOL:
+		*dst = *((int8_t *)val);
+		break;
+	case ARR_SINT:
+		*dst = (int8_t)*((int16_t *)val);
+		break;
+	case ARR_INT:
+		*dst = (int8_t)*((int32_t *)val);
+		break;
+	case ARR_DBL:
+		*dst = (int8_t)*((double *)val);
+		break;
+	case ARR_CMPX:
+		*dst = (int8_t)(*(struct apl_cmpx *)val).real;
+		break;
+	case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_sint(int16_t *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_BOOL:
+		*dst = (int16_t)*((int8_t *)val);
+		break;
+	case ARR_SINT:
+		*dst = (int16_t)*((int16_t *)val);
+		break;
+	case ARR_INT:
+		*dst = (int16_t)*((int32_t *)val);
+		break;
+	case ARR_DBL:
+		*dst = (int16_t)*((double *)val);
+		break;
+	case ARR_CMPX:
+		*dst = (int16_t)(*(struct apl_cmpx *)val).real;
+		break;
+	case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_int(int32_t *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_BOOL:
+		*dst = (int32_t)*((int8_t *)val);
+		break;
+	case ARR_SINT:
+		*dst = (int32_t)*((int16_t *)val);
+		break;
+	case ARR_INT:
+		*dst = (int32_t)*((int32_t *)val);
+		break;
+	case ARR_DBL:
+		*dst = (int32_t)*((double *)val);
+		break;
+	case ARR_CMPX:
+		*dst = (int32_t)(*(struct apl_cmpx *)val).real;
+		break;
+	case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_dbl(double *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_BOOL:
+		*dst = (double)*((int8_t *)val);
+		break;
+	case ARR_SINT:
+		*dst = (double)*((int16_t *)val);
+		break;
+	case ARR_INT:
+		*dst = (double)*((int32_t *)val);
+		break;
+	case ARR_DBL:
+		*dst = (double)*((double *)val);
+		break;
+	case ARR_CMPX:
+		*dst = (double)(*(struct apl_cmpx *)val).real;
+		break;
+	case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_cmpx(struct apl_cmpx *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_BOOL:
+		(*dst).real = (double)*((int8_t *)val);
+		(*dst).imag = 0;
+		break;
+	case ARR_SINT:
+		(*dst).real = (double)*((int16_t *)val);
+		(*dst).imag = 0;
+		break;
+	case ARR_INT:
+		(*dst).real = (double)*((int32_t *)val);
+		(*dst).imag = 0;
+		break;
+	case ARR_DBL:
+		(*dst).real = (double)*((double *)val);
+		(*dst).imag = 0;
+		break;
+	case ARR_CMPX:
+		*dst = *((struct apl_cmpx *)val);
+		break;
+	case ARR_CHAR8:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_char8(uint8_t *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_CHAR8:
+		*dst = (uint8_t)*(uint8_t *)val;
+		break;
+	case ARR_CHAR16:
+		*dst = (uint8_t)*(uint16_t *)val;
+		break;
+	case ARR_CHAR32:
+		*dst = (uint8_t)*(uint32_t *)val;
+		break;
+	case ARR_BOOL:
+	case ARR_SINT:
+	case ARR_INT:
+	case ARR_DBL:
+	case ARR_CMPX:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_char16(uint16_t *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_CHAR8:
+		*dst = (uint16_t)*(uint8_t *)val;
+		break;
+	case ARR_CHAR16:
+		*dst = (uint16_t)*(uint16_t *)val;
+		break;
+	case ARR_CHAR32:
+		*dst = (uint16_t)*(uint32_t *)val;
+		break;
+	case ARR_BOOL:
+	case ARR_SINT:
+	case ARR_INT:
+	case ARR_DBL:
+	case ARR_CMPX:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+get_scalar_char32(uint32_t *dst, struct cell_array *arr)
+{
+	char buf[16];
+	void *val;
+	int err;
+	
+	if (err = get_scalar_data(&val, buf, arr))
+		return err;
+	
+	switch (arr->type) {
+	case ARR_CHAR8:
+		*dst = (uint32_t)*(uint8_t *)val;
+		break;
+	case ARR_CHAR16:
+		*dst = (uint32_t)*(uint16_t *)val;
+		break;
+	case ARR_CHAR32:
+		*dst = (uint32_t)*(uint32_t *)val;
+		break;
+	case ARR_BOOL:
+	case ARR_SINT:
+	case ARR_INT:
+	case ARR_DBL:
+	case ARR_CMPX:
+	case ARR_SPAN:
+	case ARR_MIXED:
+	case ARR_NESTED:
+	default:
+		return 99;
+	}
+	
+	return 0;
 }
 

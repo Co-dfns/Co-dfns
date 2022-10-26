@@ -7,8 +7,9 @@ enum array_type array_max_type(enum array_type, enum array_type);
 int squeeze_array(struct cell_array *);
 
 int is_integer(double);
-int is_real(struct cell_array *);
-int is_numeric(struct cell_array *);
+int is_real_array(struct cell_array *);
+int is_numeric_array(struct cell_array *);
+int is_char_array(struct cell_array *);
 
 int get_scalar_bool(int8_t *, struct cell_array *);
 int get_scalar_sint(int16_t *, struct cell_array *);

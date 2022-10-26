@@ -273,7 +273,7 @@ squeeze_array(struct cell_array *arr)
 		for (size_t i = 0; i < count; i++) {
 			struct cell_array *t = vals[i];
 			
-			if (t->rank !=0 || !is_simple(t))
+			if (t->rank !=0 || t->type == ARR_NESTED)
 				return 0;
 			
 			type = array_max_type(type, t->type);
@@ -314,7 +314,7 @@ squeeze_array(struct cell_array *arr)
 	if (!is_int)
 		return squeeze_values(arr, count, ARR_DBL);
 	
-	if (!is_numeric(arr)) {
+	if (is_char_array(arr)) {
 		if (0 <= min_real && max_real <= UINT8_MAX)
 			return squeeze_values(arr, count, ARR_CHAR8);
 		
