@@ -11,7 +11,7 @@
 #error "Your ArrayFire version is too old."
 #endif
 
-DECLSPEC size_t
+size_t
 array_count(struct cell_array *arr)
 {
 	size_t count;
@@ -24,7 +24,7 @@ array_count(struct cell_array *arr)
 	return count;
 }
 
-DECLSPEC size_t
+size_t
 array_values_count(struct cell_array *arr)
 {
 	size_t count;
@@ -37,7 +37,7 @@ array_values_count(struct cell_array *arr)
 	return count;
 }
 
-DECLSPEC size_t
+size_t
 array_element_size(struct cell_array *arr)
 {
 	switch (arr->type) {
@@ -224,27 +224,6 @@ release_array(struct cell_array *arr)
 }
 
 int
-is_simple(struct cell_array *arr)
-{
-	switch (arr->type) {
-	case ARR_SPAN:
-	case ARR_BOOL:
-	case ARR_SINT:
-	case ARR_INT:
-	case ARR_DBL:
-	case ARR_CMPX:
-	case ARR_CHAR8:
-	case ARR_CHAR16:
-	case ARR_CHAR32:
-	case ARR_MIXED:
-		return 1;
-	case ARR_NESTED:
-	default:
-		return 0;
-	}
-}
-
-int
 is_integer(double x)
 {
 	return rint(x) == x;
@@ -269,3 +248,4 @@ is_numeric(struct cell_array *arr)
 {
 	return is_real(arr) || arr->type == ARR_CMPX;
 }
+

@@ -105,9 +105,6 @@ DECLSPEC int mk_array(struct cell_array **,
 DECLSPEC void release_array(struct cell_array *);
 DECLSPEC int mk_array_box(struct cell_array_box **, struct cell_array *);
 DECLSPEC void release_array_box(struct cell_array_box *);
-DECLSPEC size_t array_count(struct cell_array *);
-DECLSPEC size_t array_values_count(struct cell_array *);
-DECLSPEC size_t array_element_size(struct cell_array *);
 DECLSPEC int fill_array(struct cell_array *, void *);
 
 /* FUNC type */

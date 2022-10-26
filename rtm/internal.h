@@ -10,7 +10,6 @@ int get_scalar_int(struct cell_array *);
 double get_scalar_dbl(struct cell_array *);
 struct apl_cmpx get_scalar_cmpx(struct cell_array *);
 
-int is_simple(struct cell_array *);
 int is_integer(double);
 int is_real(struct cell_array *);
 int is_numeric(struct cell_array *);
