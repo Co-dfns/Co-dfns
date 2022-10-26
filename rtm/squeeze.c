@@ -1,3 +1,4 @@
+#include <float.h>
 #include <limits.h>
 #include <stddef.h>
 #include <stdint.h>
@@ -6,381 +7,331 @@
 
 #include "internal.h"
 
-#define SQUEEZE_BOOL_VALS(otype, tx, zero, expr) {		\
-	size_t blocks = count / 8;				\
-	int tail = count % 8;					\
-	uint8_t *buf = arr->values;				\
-								\
-	for (size_t i = 0; i < blocks; i++) {			\
-		for (int j = 0; j < 8; j++) {			\
-			otype t = vals[i * 8 + j];		\
-			vals[i * 8 + j] = zero;			\
-			buf[i] |= ((uint8_t)tx) << (7 - j);	\
-			expr;					\
-		}						\
-	}                                                       \
-								\
-	for (int j = 0; j < tail; j++) {			\
-		otype t = vals[blocks * 8 + j];			\
-		vals[blocks * 8 + j] = zero;			\
-		buf[blocks] |= ((uint8_t)tx) << (7 - j);	\
-		expr;						\
-	}							\
-								\
-	arr->type = ARR_BOOL;					\
-}
-
-#define SQUEEZE_VALS(ctype, atype, otype, tx, expr) {	\
-	ctype *buf = arr->values;			\
+#define CAST_UNIT(vals, count, src_type, dst_type)	\
+	for (size_t i = 0; i < (count); i++) {		\
+		src_type t = ((src_type *)(vals))[i];	\
 							\
-	for (size_t i = 0; i < count; i++) {		\
-		otype t = vals[i];			\
-		buf[i] = (ctype)tx;			\
-		expr;					\
-	}						\
-							\
-	arr->type = atype;				\
-}
-
-#define FIND_MINMAX(MIN, MAX, tx)		\
-	min = MAX;				\
-	max = MIN;				\
-						\
-	for (size_t i = 0; i < count; i++) {	\
-		t = vals[i];			\
-						\
-		if (tx < MIN || MAX < tx)	\
-			return;			\
-						\
-		if (tx > max)			\
-			max = tx;		\
-		else if (tx < min)		\
-			min = tx;		\
+		((dst_type *)(vals))[i] = (dst_type)t;	\
 	}
 
-void
-squeeze_host_sint(struct cell_array *arr, size_t count)
-{
-	int16_t *vals, t, min, max;
-	
-	vals = arr->values;
-
-	FIND_MINMAX(0, 1, t);
-	
-	SQUEEZE_BOOL_VALS(int16_t, t, 0,);
-}
-
-void
-squeeze_host_int(struct cell_array *arr, size_t count)
-{
-	int32_t *vals, t, min, max;
-	
-	vals = arr->values;
-	
-	FIND_MINMAX(INT16_MIN, INT16_MAX, t)
-	
-	if (0 <= min && max <= 1)
-		SQUEEZE_BOOL_VALS(int32_t, t, 0,)
-	else 
-		SQUEEZE_VALS(int16_t, ARR_SINT, int32_t, t,)
-}
-
-void
-squeeze_host_dbl(struct cell_array *arr, size_t count)
-{
-	double *vals, t, min, max;
-	
-	vals = arr->values;
-	
-	for (size_t i = 0; i < count; i++)
-		if (!is_integer(vals[i]))
-			return;
-	
-	FIND_MINMAX(INT32_MIN, INT32_MAX, t)
-	
-	if (0 <= min && max <= 1)
-		SQUEEZE_BOOL_VALS(double, t, 0,)
-	else if (INT16_MIN <= min && max <= INT16_MAX)
-		SQUEEZE_VALS(int16_t, ARR_SINT, double, t,)
-	else
-		SQUEEZE_VALS(int32_t, ARR_INT, double, t,)
-}
-
-void
-squeeze_host_cmpx(struct cell_array *arr, size_t count)
-{
-	struct apl_cmpx *vals, t;
-	double min, max;
-	int is_dbl;
-	
-	vals = arr->values;
-	
-	for (size_t i = 0; i < count; i++)
-		if (vals[i].imag != 0)
-			return;
-		
-	is_dbl = 0;
-
-	for (size_t i = 0; i < count; i++) {
-		if (!is_integer(vals[i].real)) {
-			is_dbl = 1;
-			break;
-		}
-	}
-	
-	if (is_dbl)
-		SQUEEZE_VALS(double, ARR_DBL, struct apl_cmpx, t.real,)
-	
-	FIND_MINMAX(INT32_MIN, INT32_MAX, t.real)
-	
-	if (0 <= min && max <= 1) {
-		struct apl_cmpx zero = {0, 0};
-		
-		SQUEEZE_BOOL_VALS(struct apl_cmpx, t.real, zero,)
-	} else if (INT16_MIN <= min && max <= INT16_MAX)
-		SQUEEZE_VALS(int16_t, ARR_SINT, struct apl_cmpx, t.real,)
-	else
-		SQUEEZE_VALS(int32_t, ARR_INT, struct apl_cmpx, t.real,)
-}
-
-void
-squeeze_host_char16(struct cell_array *arr, size_t count)
-{
-	uint16_t *vals, t, min, max;
-	
-	vals = arr->values;
-	
-	FIND_MINMAX(0, UINT8_MAX, t)
-	
-	SQUEEZE_VALS(uint8_t, ARR_CHAR8, uint16_t, t,)
-}
-
-void
-squeeze_host_char32(struct cell_array *arr, size_t count)
-{
-	uint32_t *vals, t, min, max;
-	
-	vals = arr->values;
-	
-	FIND_MINMAX(0, UINT16_MAX, t)
-	
-	if (max <= UINT8_MAX)
-		SQUEEZE_VALS(uint8_t, ARR_CHAR8, uint32_t, t,)
-	else
-		SQUEEZE_VALS(uint16_t, ARR_CHAR16, uint32_t, t,)
-}
-
-int squeeze_host(struct cell_array *, size_t);
-
-int
-squeeze_host_nested(struct cell_array *arr, size_t count)
-{
-	struct cell_array **vals;
-	enum array_type type;
-	
-	vals = arr->values;
-	type = vals[0]->type;
-	
-	for (size_t i = 0; i < count; i++) {
-		struct cell_array *t = vals[i];
-		
-		if (t->rank != 0 || !is_simple(t))
-			return 0;
-
-		type = array_max_type(type, t->type);
-		
-		if (type == ARR_MIXED || type == ARR_NESTED || type == ARR_SPAN)
-			return 0;
+#define CAST_CMPX(vals, count, dst_type)				\
+	for (size_t i = 0; i < (count); i++) {				\
+		struct apl_cmpx t = ((struct apl_cmpx *)(vals))[i];	\
+									\
+		((dst_type *)(vals))[i] = (dst_type)t.real;		\
 	}
 
-	switch (type) {
-        case ARR_BOOL:
-		SQUEEZE_BOOL_VALS(struct cell_array *, 
-		    get_scalar_int(t), NULL, release_array(t))
-		break;
-	case ARR_SINT:
-		SQUEEZE_VALS(int16_t, ARR_SINT, struct cell_array *,
-		    get_scalar_int(t), release_array(t))
-		squeeze_host_sint(arr, count);
-		break;
-	case ARR_INT:
-		SQUEEZE_VALS(int32_t, ARR_INT, struct cell_array *,
-		    get_scalar_int(t), release_array(t))
-		squeeze_host_int(arr, count);
-		break;
-	case ARR_DBL:
-		SQUEEZE_VALS(double, ARR_DBL, struct cell_array *, 
-		    get_scalar_dbl(t), release_array(t))
-		squeeze_host_dbl(arr, count);
-		break;
-        case ARR_CHAR8:
-		SQUEEZE_VALS(uint8_t, ARR_CHAR8, struct cell_array *,
-		    get_scalar_int(t), release_array(t))
-		break;
-	case ARR_CHAR16:
-		SQUEEZE_VALS(uint16_t, ARR_CHAR16, struct cell_array *,
-		    get_scalar_int(t), release_array(t))
-		squeeze_host_char16(arr, count);
-	case ARR_CHAR32:
-		SQUEEZE_VALS(uint32_t, ARR_CHAR32, struct cell_array *,
-		    get_scalar_int(t), release_array(t))
-		squeeze_host_char32(arr, count);
-		break;
-	case ARR_CMPX:{
-		struct apl_cmpx *buf;
+#define CAST_NESTED(arr, count, suffix, dst_type) {			\
+	dst_type *dst;							\
+	struct cell_array **src;					\
+	int err;							\
+									\
+	src = (arr)->values;						\
+	dst = calloc(count, sizeof(dst_type));				\
+									\
+	if (dst == NULL)						\
+		return 1;						\
+									\
+	for (size_t i = 0; i < (count); i++) {				\
+		if (err = get_scalar_##suffix(&dst[i], src[i])) {	\
+			free(dst);					\
+			return err;					\
+		}							\
+	}								\
+									\
+	for (size_t i = 0; i < (count); i++)				\
+		release_array(src[i]);					\
+									\
+	free(src);							\
+	(arr)->values = dst;						\
+}
+
+#define type_pair(src, dst) ((src * ARR_MAX) + dst)
+
+inline int
+squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
+{
+	void *buf;
+	
+	if (arr->storage == STG_DEVICE) {
+		if (arr->type == ARR_NESTED)
+			return 99;
 		
-		buf = calloc(count, sizeof(struct apl_cmpx));
+		arr->type = type;
 		
-		if (buf == NULL)
-			return 1;
-		
-		for (size_t i = 0; i < count; i ++) {
-			buf[i] = get_scalar_cmpx(vals[i]);
-			
-			release_array(vals[i]);
-		}
-				
-		free(arr->values);
-		
-		arr->values = buf;
-		arr->type = ARR_CMPX;
-		
-		squeeze_host_cmpx(arr, count);
-		break;
+		return af_cast(&arr->values, arr->values, array_af_dtype(arr));
 	}
+	
+	if (arr->storage != STG_HOST)
+		return 99;
+
+	switch (type_pair(arr->type, type)) {
+	case type_pair(ARR_SINT,   ARR_BOOL   ):
+		CAST_UNIT(arr->values, count, int16_t, int8_t);
+		break;
+	case type_pair(ARR_INT,    ARR_SINT   ):
+		CAST_UNIT(arr->values, count, int32_t, int16_t);
+		break;
+	case type_pair(ARR_INT,    ARR_BOOL   ):
+		CAST_UNIT(arr->values, count, int32_t, int8_t);
+		break;
+	case type_pair(ARR_DBL,    ARR_INT    ):
+		CAST_UNIT(arr->values, count, double, int32_t);
+		break;
+	case type_pair(ARR_DBL,    ARR_SINT   ):
+		CAST_UNIT(arr->values, count, double, int16_t);
+		break;
+	case type_pair(ARR_DBL,    ARR_BOOL   ):
+		CAST_UNIT(arr->values, count, double, int8_t);
+		break;
+	case type_pair(ARR_CMPX,   ARR_DBL    ):
+		CAST_CMPX(arr->values, count, double);
+		break;
+	case type_pair(ARR_CMPX,   ARR_INT    ):
+		CAST_CMPX(arr->values, count, int32_t);
+		break;
+	case type_pair(ARR_CMPX,   ARR_SINT   ):
+		CAST_CMPX(arr->values, count, int16_t);
+		break;
+	case type_pair(ARR_CMPX,   ARR_BOOL   ):
+		CAST_CMPX(arr->values, count, int8_t);
+		break;
+	case type_pair(ARR_CHAR16, ARR_CHAR8  ):
+		CAST_UNIT(arr->values, count, uint16_t, uint8_t);
+		break;
+	case type_pair(ARR_CHAR32, ARR_CHAR16 ):
+		CAST_UNIT(arr->values, count, uint32_t, uint16_t);
+		break;
+	case type_pair(ARR_CHAR32, ARR_CHAR8  ):
+		CAST_UNIT(arr->values, count, uint32_t, uint8_t);
+		break;
+	case type_pair(ARR_NESTED, ARR_CHAR32 ):
+		CAST_NESTED(arr, count, char32, uint32_t);
+		break;
+	case type_pair(ARR_NESTED, ARR_CHAR16 ):
+		CAST_NESTED(arr, count, char16, uint16_t);
+		break;
+	case type_pair(ARR_NESTED, ARR_CHAR8  ):
+		CAST_NESTED(arr, count, char8, uint8_t);
+		break;
+	case type_pair(ARR_NESTED, ARR_CMPX   ):
+		CAST_NESTED(arr, count, cmpx, struct apl_cmpx);
+		break;
+	case type_pair(ARR_NESTED, ARR_DBL    ):
+		CAST_NESTED(arr, count, dbl, double);
+		break;
+	case type_pair(ARR_NESTED, ARR_INT    ):
+		CAST_NESTED(arr, count, int, int32_t);
+		break;
+	case type_pair(ARR_NESTED, ARR_SINT   ):
+		CAST_NESTED(arr, count, sint, int16_t);
+		break;
+	case type_pair(ARR_NESTED, ARR_BOOL   ):
+		CAST_NESTED(arr, count, bool, int8_t);
+		break;
 	default:
 		return 0;
 	}
 	
-	return 0;
-}
-
-int
-squeeze_host(struct cell_array *arr, size_t count)
-{
-	void *buf;
-	int err;
-	
-	err = 0;
-	
-	switch (arr->type) {
-	case ARR_SPAN:
-        case ARR_BOOL:
-        case ARR_CHAR8:
-        case ARR_MIXED:
-		break;
-	case ARR_SINT:
-		squeeze_host_sint(arr, count);
-		break;
-	case ARR_INT:
-		squeeze_host_int(arr, count);
-		break;
-	case ARR_DBL:
-		squeeze_host_dbl(arr, count);
-		break;
-	case ARR_CMPX:
-		squeeze_host_cmpx(arr, count);
-		break;
-	case ARR_CHAR16:
-		squeeze_host_char16(arr, count);
-		break;
-	case ARR_CHAR32:
-		squeeze_host_char32(arr, count);
-		break;
-	case ARR_NESTED:
-		err = squeeze_host_nested(arr, count);
-		break;
-	default:
-		err = 99;
-	}
-	
-	if (err)
-		return err;
+	arr->type = type;
 	
 	buf = realloc(arr->values, array_values_bytes(arr));
 	
 	if (buf != NULL)
-		arr->values = buf;
-	
+		arr->values = buf;	
+		
 	return 0;
 }
 
-int
-squeeze_device(struct cell_array *arr)
+inline int
+find_minmax(double *min, double *max, 
+    unsigned char *is_real, unsigned char *is_int,
+    struct cell_array *arr, size_t count)
 {
-	af_dtype type;
-	int err, is_num;
-	double min_real, min_imag, max_real, max_imag;
+	void *vals;
 	
-	switch (arr->type) {
-	case ARR_SPAN:
-	case ARR_BOOL:
-	case ARR_CHAR8:
-	case ARR_MIXED:
-	case ARR_NESTED:
+	vals = arr->values;
+	
+	if (arr->storage == STG_DEVICE) {
+		int err;
+		double real, imag;
+		
+		if (err = af_min_all(&real, &imag, vals))
+			return err;
+		
+		*min = real;
+		*is_real = (imag == 0);
+		
+		if (err = af_max_all(&real, &imag, vals))
+			return err;
+		
+		*max = real;
+		*is_real = (*is_real && (imag == 0));
+		
+		if (!*is_real) {
+			*is_int = 0;
+			return 0;
+		}
+		
+		if (err = af_is_integer(is_int, vals))
+			return err;
+		
+		if (is_int)
+			return 0;
+		
+		af_array t;
+		
+		if (err = af_trunc(&t, vals))
+			return err;
+		
+		if (err = af_eq(&t, t, vals, 0))
+			return err;
+		
+		if (err = af_all_true_all(&real, &imag, t))
+			return err;
+		
+		*is_int = (unsigned char)real;
+		
+		if (err = af_release_array(t))
+			return err;
+		
 		return 0;
 	}
 	
-	if (err = af_min_all(&min_real, &min_imag, arr->values))
-		return err;
+	if (arr->storage != STG_HOST)
+		return 99;
 	
-	if (err = af_max_all(&max_real, &max_imag, arr->values))
-		return err;
+	*is_real = 1;
+	*is_int = 1;
+	*min = DBL_MAX;
+	*max = DBL_MIN;
 	
-	if (min_imag != 0 || max_imag != 0)
-		return 0;
+#define MINMAX_LOOP(type, tx, expr)			\
+	for (size_t i = 0; i < count; i++) {	\
+		type t = ((type *)vals)[i];	\
+						\
+		expr;				\
+						\
+		if (tx < *min)			\
+			*min = tx;		\
+		if (tx > *max)			\
+			*max = tx;		\
+	}
 	
-	is_num = is_numeric(arr);
-	type = arr->type;
+	switch (arr->type) {
+	case ARR_BOOL:
+		MINMAX_LOOP(int8_t,t,)
+		break;
+	case ARR_SINT:
+		MINMAX_LOOP(int16_t,t,)
+		break;
+	case ARR_INT:
+		MINMAX_LOOP(int32_t,t,)
+		break;
+	case ARR_CHAR8:
+		MINMAX_LOOP(uint8_t,t,)
+		break;
+	case ARR_CHAR16:
+		MINMAX_LOOP(uint16_t,t,)
+		break;
+	case ARR_CHAR32:
+		MINMAX_LOOP(uint32_t,t,)
+		break;
+	case ARR_DBL:
+		MINMAX_LOOP(double, t, *is_int = (*is_int && is_integer(t)))
+		break;
+	case ARR_CMPX:
+		MINMAX_LOOP(struct apl_cmpx, t.real, {
+			*is_int = (*is_int && is_integer(t.real));
+			*is_real = (*is_real && (t.imag == 0));
+		})
+	default:
+		return 99;
+	}
 		
-	if (is_num && 0 <= min_real && max_real <= 1)
-		arr->type = ARR_BOOL;
-	else if (type == ARR_SINT)
-		return 0;
-	else if (!is_num && 0 <= min_real && max_real <= UINT8_MAX)
-		arr->type = ARR_CHAR8;
-	else if (type == ARR_CHAR16)
-		return 0;
-	else if (!is_num && 0 <= min_real && max_real <= UINT16_MAX)
-		arr->type = ARR_CHAR16;
-	else if (type == ARR_CHAR32)
-		return 0;
-	else if (INT16_MIN <= min_real && max_real <= INT16_MAX)
-		arr->type = ARR_SINT;
-	else if (type == ARR_INT)
-		return 0;
-	else if (INT32_MIN <= min_real && max_real <= INT32_MAX)
-		arr->type = ARR_INT;
-	else if (type == ARR_DBL)
-		return 0;
-	else
-		arr->type = ARR_DBL;
-	
-	return af_cast(&arr->values, arr->values, array_af_dtype(arr));
+	return 0;
 }
 
 int
 squeeze_array(struct cell_array *arr)
 {
 	size_t count;
+	double min_real, max_real;
 	int err;
-	
+	unsigned char is_real, is_int;
+
 	err = 0;
 	count = array_count(arr);
 	
 	if (!count)
 		return 0;
 	
-	switch (arr->storage) {
-	case STG_HOST:
-		err = squeeze_host(arr, count);
-		break;
-	case STG_DEVICE:
-		err = squeeze_device(arr);
-		break;
-	default:
-		err = 99;
+	if (arr->type == ARR_NESTED) {
+		struct cell_array **vals = arr->values;
+		enum array_type type = vals[0]->type;
+		
+		for (size_t i = 0; i < count; i++) {
+			struct cell_array *t = vals[i];
+			
+			if (t->rank !=0 || !is_simple(t))
+				return 0;
+			
+			type = array_max_type(type, t->type);
+		}
+		
+		if (err = squeeze_values(arr, count, type))
+			return err;
+		
+		if (arr->type == ARR_NESTED)
+			return 0;
 	}
 	
-	return err;
+	switch (arr->type) {
+	case ARR_SPAN:
+	case ARR_BOOL:
+	case ARR_CHAR8:
+	case ARR_MIXED:
+		return 0;
+	case ARR_SINT:
+	case ARR_INT:
+	case ARR_DBL:
+	case ARR_CMPX:
+	case ARR_CHAR16:
+	case ARR_CHAR32:
+		break;
+	default:
+		return 99;
+	}
+	
+	err = find_minmax(&min_real, &max_real, &is_real, &is_int, arr, count);
+	
+	if (err)
+		return err;
+	
+	if (!is_real)
+		return 0;
+	
+	if (!is_int)
+		return squeeze_values(arr, count, ARR_DBL);
+	
+	if (!is_numeric(arr)) {
+		if (0 <= min_real && max_real <= UINT8_MAX)
+			return squeeze_values(arr, count, ARR_CHAR8);
+		
+		if (0 <= min_real && max_real <= UINT16_MAX)
+			return squeeze_values(arr, count, ARR_CHAR16);
+		
+		return 0;
+	}
+	
+	if (0 <= min_real && max_real <= 1)
+		return squeeze_values(arr, count, ARR_BOOL);
+	
+	if (INT16_MIN <= min_real && max_real <= INT16_MAX)
+		return squeeze_values(arr, count, ARR_SINT);
+	
+	if (INT32_MIN <= min_real && max_real <= INT32_MAX)
+		return squeeze_values(arr, count, ARR_INT);
+	
+	return squeeze_values(arr, count, ARR_DBL);
 }
