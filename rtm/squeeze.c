@@ -46,8 +46,6 @@
 	(arr)->values = dst;						\
 }
 
-#define type_pair(src, dst) ((src * ARR_MAX) + dst)
-
 inline int
 squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
 {
@@ -64,6 +62,8 @@ squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
 	
 	if (arr->storage != STG_HOST)
 		return 99;
+
+#define type_pair(src, dst) ((src * ARR_MAX) + dst)
 
 	switch (type_pair(arr->type, type)) {
 	case type_pair(ARR_SINT,   ARR_BOOL   ):
@@ -206,7 +206,7 @@ find_minmax(double *min, double *max,
 	*min = DBL_MAX;
 	*max = DBL_MIN;
 	
-#define MINMAX_LOOP(type, tx, expr)			\
+#define MINMAX_LOOP(type, tx, expr)		\
 	for (size_t i = 0; i < count; i++) {	\
 		type t = ((type *)vals)[i];	\
 						\
