@@ -420,6 +420,7 @@ cdf_prim_init(void)
 	cdf_prim = loc;
 
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -503,6 +504,7 @@ ptr383(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -802,6 +804,7 @@ ptr384(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -841,6 +844,12 @@ ptr385(struct cell_array **z,
 	
 	lex = (struct lex_vars *)deldel->fv;
 	
+	loc.z = NULL;
+	loc.x = NULL;
+	loc.y = NULL;
+	loc.fn = NULL;
+	loc.cnt = NULL;
+	loc._ = NULL;
 	stkhd = &stk[0];
 	err = 0;
 
@@ -990,6 +999,8 @@ ptr385(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)&loc, (void **)(&loc + 1));
 	return err;
 }
 
@@ -1179,6 +1190,7 @@ ptr386(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -1215,6 +1227,9 @@ ptr387(struct cell_array **z,
 	
 	lex = (struct lex_vars *)deldel->fv;
 	
+	loc.xy = NULL;
+	loc.x = NULL;
+	loc.y = NULL;
 	stkhd = &stk[0];
 	err = 0;
 
@@ -1468,6 +1483,8 @@ ptr387(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)&loc, (void **)(&loc + 1));
 	return err;
 }
 
@@ -1553,6 +1570,7 @@ ptr388(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -1648,6 +1666,7 @@ ptr389(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -1688,6 +1707,7 @@ ptr390(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -1709,6 +1729,7 @@ ptr391(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -1730,6 +1751,7 @@ ptr392(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -1770,6 +1792,7 @@ ptr393(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 
@@ -1823,6 +1846,7 @@ ptr394(struct cell_array **z,
 	goto cleanup;
 	
 cleanup:
+	release_env(stk, stkhd);
 	return err;
 }
 

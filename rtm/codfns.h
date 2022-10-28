@@ -116,6 +116,7 @@ DECLSPEC void release_func(struct cell_func *);
 DECLSPEC int apply_mop(struct cell_func **, struct cell_func *, void *);
 DECLSPEC int apply_dop(struct cell_func **, struct cell_func *, void *, void *);
 DECLSPEC int guard_check(struct cell_array *);
+DECLSPEC void release_env(void **, void **);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);
