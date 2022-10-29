@@ -12,24 +12,30 @@
 #endif
 
 size_t
-array_count(struct cell_array *arr)
+array_count_shape(unsigned int rank, size_t shape[])
 {
 	size_t count;
 
 	count = 1;
 
-	for (unsigned int i = 0; i < arr->rank; i++)
-		count *= arr->shape[i];
+	for (unsigned int i = 0; i < rank; i++)
+		count *= shape[i];
 
 	return count;
 }
 
 size_t
-array_values_count(struct cell_array *arr)
+array_count(struct cell_array *arr)
+{
+	return array_count_shape(arr->rank, arr->shape);
+}
+
+size_t
+array_values_count_shape(unsigned int rank, size_t shape[])
 {
 	size_t count;
 
-	count = array_count(arr);
+	count = array_count_shape(rank, shape);
 
 	if (!count)
 		count = 1;
@@ -38,9 +44,15 @@ array_values_count(struct cell_array *arr)
 }
 
 size_t
-array_element_size(struct cell_array *arr)
+array_values_count(struct cell_array *arr)
 {
-	switch (arr->type) {
+	return array_values_count_shape(arr->rank, arr->shape);
+}
+
+size_t
+array_element_size_type(enum array_type type)
+{
+	switch (type) {
 	case ARR_SPAN:
 		return sizeof(af_array *);
 	case ARR_BOOL:
@@ -66,6 +78,12 @@ array_element_size(struct cell_array *arr)
 	default:
 		return 0;
 	}
+}
+
+size_t
+array_element_size(struct cell_array *arr)
+{
+	return array_element_size_type(arr->type);
 }
 
 size_t
@@ -141,13 +159,18 @@ mk_array(struct cell_array **dest,
     enum array_type type, enum array_storage storage, unsigned int rank,
     size_t shape[])
 {
-	struct	cell_array *arr;
-	size_t	count, size;
-	int	err;
+	struct		cell_array *arr;
+	size_t		count, size;
+	int		err;
 	af_dtype	dtype;
-
-	size	= sizeof(struct cell_array) + rank * sizeof(size_t);
-	arr	= malloc(size);
+	
+	count = array_values_count_shape(rank, shape);
+	size = sizeof(struct cell_array) + rank * sizeof(size_t);
+	
+	if (storage == STG_HOST)
+		size += count * array_element_size_type(type);
+	
+	arr = malloc(size);
 
 	if (arr == NULL)
 		return 1;
@@ -161,14 +184,12 @@ mk_array(struct cell_array **dest,
 	for (unsigned int i = 0; i < rank; i++)
 		arr->shape[i] = shape[i];
 
-	count	= array_values_count(arr);
-
 	if (storage == STG_DEVICE) {
 		dtype = array_af_dtype(arr);
 		err = af_create_handle(&arr->values, 1, &count, dtype);
 	} else if (storage == STG_HOST) {
-		arr->values = calloc(count, array_element_size(arr));
-		err = (arr->values == NULL);
+		arr->values = &arr->shape[rank];
+		err = 0;
 	} else {
 		err = 99;
 	}
@@ -202,7 +223,7 @@ release_array(struct cell_array *arr)
 
 	if (arr->type == ARR_NESTED) {
 		ptrs = arr->values;
-		count = array_count(arr);
+		count = array_values_count(arr);
 
 		for (size_t i = 0; i < count; i++)
 			release_array(ptrs[i]);
@@ -214,7 +235,6 @@ release_array(struct cell_array *arr)
 			af_release_array(arr->values);
 			break;
 		case STG_HOST:
-			free(arr->values);
 			break;
 		default:
 			exit(99);
