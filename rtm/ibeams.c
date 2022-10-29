@@ -22,6 +22,14 @@ q_signal_func(struct cell_array **z,
 	if (!is_integer_array(r))
 		return 11;
 	
+	if (l) {
+		if (!is_char_array(l))
+			return 11;
+		
+		if (l->rank > 1)
+			return 4;
+	}
+	
 	if (err = get_scalar_int(&val, r))
 		return err;
 	
