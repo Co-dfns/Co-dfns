@@ -230,6 +230,20 @@ is_integer(double x)
 }
 
 int
+is_integer_type(enum array_type type)
+{
+	switch (type) {
+	case ARR_SPAN:
+	case ARR_BOOL:
+	case ARR_SINT:
+	case ARR_INT:
+		return 1;
+	default:
+		return 0;
+	}
+}
+
+int
 is_char_type(enum array_type type)
 {
 	switch (type) {
@@ -256,6 +270,12 @@ is_numeric_type(enum array_type type)
 	default:
 		return 0;
 	}
+}
+
+int
+is_integer_array(struct cell_array *arr)
+{
+	return is_integer_type(arr->type);
 }
 
 int
