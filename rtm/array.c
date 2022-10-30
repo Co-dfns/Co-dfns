@@ -669,3 +669,18 @@ get_scalar_char32(uint32_t *dst, struct cell_array *arr)
 	return 0;
 }
 
+int
+mk_scalar_sint(struct cell_array **z, int16_t val)
+{
+	struct cell_array *t;
+	int err;
+	
+	if (err = mk_array(&t, ARR_SINT, STG_HOST, 0, NULL))
+		return err;
+	
+	*(int16_t *)t->values = val;
+	
+	*z = t;
+	
+	return 0;
+}
