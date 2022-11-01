@@ -415,7 +415,7 @@ GC←{
 		z,⊂''
 	}
 
-	⍝ F2: D-fns functions
+	⍝ F2: Ambivalent function dfns
 	i←⍸(t=F)∧k=2
 	zz[i],←{
 		0=≢i:0⍴⊂''
@@ -447,7 +447,7 @@ GC←{
 		z,⊂''
 	}¨i
 	
-	⍝ F3: D-fns functions
+	⍝ F3: Monadic operator dfns
 	i←⍸(t=F)∧k=3
 	zz[i],←{
 		0=≢i:0⍴⊂''
@@ -484,7 +484,7 @@ GC←{
 		z,⊂''
 	}¨i
 	
-	⍝ F4: D-fns functions
+	⍝ F4: Dyadic operator dfns
 	i←⍸(t=F)∧k=4
 	zz[i],←{
 		0=≢i:0⍴⊂''
