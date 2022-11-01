@@ -43,11 +43,10 @@ q_dr_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	int16_t val;
-	int err;
 	
 	if (l)
 		return 16;
-	
+		
 	switch (r->type) {
 	case ARR_SPAN:
 		val = 323;
@@ -83,11 +82,49 @@ q_dr_func(struct cell_array **z,
 		return 99;
 	}
 	
-	if (err = mk_scalar_sint(z, val))
-		return err;
-	
-	return 0;
+	return mk_scalar_sint(z, val);
 }
 
 struct cell_func q_dr_closure = {CELL_FUNC, 1, q_dr_func, 0};
 struct cell_func *q_dr_ibeam = &q_dr_closure;
+
+int
+is_simple_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return mk_scalar_bool(z, r->type != ARR_NESTED);
+}
+
+struct cell_func is_simple_closure = {CELL_FUNC, 1, is_simple_func, 0};
+struct cell_func *is_simple_ibeam = &is_simple_closure;
+
+int
+shape_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self);
+    
+struct cell_func shape_closure = {CELL_FUNC, 1, shape_func, 0};
+struct cell_func *shape_ibeam = &shape_closure;
+
+int
+max_shp_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	size_t lc, rc;
+	
+	lc = array_count(l);
+	rc = array_count(r);
+	
+	if (lc != 1)
+		return shape_func(z, NULL, l, shape_ibeam);
+	
+	if (rc != 1)
+		return shape_func(z, NULL, r, shape_ibeam);
+	
+	if (r->rank > l->rank)
+		return shape_func(z, NULL, r, shape_ibeam);
+	
+	return shape_func(z, NULL, l, shape_ibeam);
+}
+
+struct cell_func max_shp_closure = {CELL_FUNC, 1, max_shp_func, 0};
+struct cell_func *max_shp_ibeam = &max_shp_closure;

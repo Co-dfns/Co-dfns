@@ -7,7 +7,6 @@ q_veach←'q_veach_ibeam'⌶
 q_ambiv←'q_ambiv_ibeam'⌶
 
 ⍝ Core base primitives
-rho←'shp_ibeam'⌶
 cat←'cat_ibeam'⌶
 eqv←'eqv_ibeam'⌶
 nqv←'nqv_ibeam'⌶
@@ -34,5 +33,8 @@ rgt←{⍵}
 
 ⍝ ⊣: Left
 lft←{⍺}
+
+⍝ ⍴: Shape / Reshape
+rho←('shape_ibeam'⌶) ⎕AMBIV ('reshape_ibeam'⌶)
 
 :EndNamespace

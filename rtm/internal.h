@@ -27,4 +27,5 @@ size_t array_values_bytes(struct cell_array *);
 size_t array_element_size(struct cell_array *);
 af_dtype array_af_dtype(struct cell_array *);
 
+int mk_scalar_bool(struct cell_array **, int8_t);
 int mk_scalar_sint(struct cell_array **, int16_t);
