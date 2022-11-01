@@ -11,7 +11,7 @@ put←{
         1:r←s⊣⎕NUNTIE t
 }
 
-src←⎕SRC ⎕SE.SALT.Load path,'\rtm\prim.apln'
+src←⊃⎕NGET path,'\rtm\prim.apln'
 (path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
 
 vsbat←#.codfns.VS∆PATH
