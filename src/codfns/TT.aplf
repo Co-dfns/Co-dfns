@@ -56,6 +56,8 @@ TT←{
 	nams,←  'get' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'self'
 	syms,←,¨';'   '⎕FFT'  '⎕IFFT' '⎕CONV'  '⎕NC'  '⎕SIGNAL'  '⎕DR'
 	nams,←  'spn' 'q_fft' 'q_ift' 'q_conv' 'q_nc' 'q_signal' 'q_dr'
+	syms,←  '⎕VEACH'  '⎕AMBIV'
+	nams,←  'q_veach' 'q_ambiv'
 	syms,←,¨'⍺'     '⍵'     '⍺⍺'         '⍵⍵'         '∇∇'     '%u'
 	nams,←  'alpha' 'omega' 'alphaalpha' 'omegaomega' 'deldel' ''
 

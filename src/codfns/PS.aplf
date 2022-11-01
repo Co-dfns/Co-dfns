@@ -169,8 +169,9 @@ PS←{
 	SYSF,←,¨'REFS' 'SAVE' 'SH' 'SHADOW' 'SIGNAL' 'SIZE' 'SR' 'SRC' 'STATE'
 	SYSF,←,¨'STOP' 'SVC' 'SVO' 'SVQ' 'SVR' 'SVS' 'TCNUMS' 'TGET' 'TKILL' 'TPUT'
 	SYSF,←,¨'TREQ' 'TSYNC' 'UCS' 'VR' 'VFI' 'WC' 'WG' 'WN' 'WS' 'XML' 'XT'
-	SYSD←,¨'OPT' 'R' 'S'
-	msk←(t=S)∧~n∊'⎕',¨SYSV,SYSF,SYSD
+	SYSM←,¨,⊂'VEACH'
+	SYSD←,¨'OPT' 'R' 'S' 'AMBIV'
+	msk←(t=S)∧~n∊'⎕',¨SYSV,SYSF,SYSM,SYSD
 	∨⌿msk:'INVALID SYSTEM NAME'SIGNAL SELECT ⍸msk
 
 	⍝ Compute parent vector from d
@@ -246,7 +247,10 @@ PS←{
 	0}⌸i←⍸t[p]=¯1
 
 	⍝ Mark system variables as P nodes with appropriate kinds
-	k[⍸(t=S)∧n∊'⎕',¨SYSV]←1 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSF]←2 ⋄ k[⍸(t=S)∧n∊'⎕',¨SYSD]←4
+	k[⍸(t=S)∧n∊'⎕',¨SYSV]←1
+	k[⍸(t=S)∧n∊'⎕',¨SYSF]←2
+	k[⍸(t=S)∧n∊'⎕',¨SYSM]←3
+	k[⍸(t=S)∧n∊'⎕',¨SYSD]←4
 	t[⍸t=S]←P
 
 	⍝ Mark atoms, characters, and numbers as kind 1
@@ -474,7 +478,7 @@ PS←{
 
 	⍝ Sanity check
 	ERR←'INVARIANT ERROR: Z node with multiple children'
-	ERR assert(+⌿(t[p]=Z)∧p≠⍳≢p)=+⌿t=Z:
+	ERR assert 1≥p[i]⊢∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p:
 	
 	⍝ Count parentheses in source information
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
