@@ -392,6 +392,8 @@ GC←{
 		z,←⊂''
 		z,←⊂'	if (!err) {'
 		z,← '		'∘,¨⊃⍪⌿1↓(p[⍵]=p)⌿zz
+		z,←⊂'		err = -1;'
+		z,←⊂'		goto cleanup;'
 		z,←⊂'	}'
 		z,←⊂'}'
 		z,⊂''
@@ -436,7 +438,7 @@ GC←{
 		z,← '	',¨(decl_loc,'self'∘decl_lex)⍵
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = 0;'
+		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'cleanup:'
@@ -473,7 +475,7 @@ GC←{
 		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = 0;'
+		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'cleanup:'
@@ -511,7 +513,7 @@ GC←{
 		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = 0;'
+		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'cleanup:'
