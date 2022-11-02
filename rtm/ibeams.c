@@ -210,3 +210,45 @@ ravel_func(struct cell_array **z,
 struct cell_func ravel_closure = {CELL_FUNC, 1, ravel_func, 0};
 struct cell_func *ravel_ibeam = &ravel_closure;
 
+int
+disclose_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *t;
+	int err;
+	
+	if (r->type == ARR_NESTED) {
+		struct cell_array **vals = r->values;
+		
+		t = retain_cell(vals[0]);
+		
+		return 0;
+	}
+	
+	if (err = mk_array(&t, r->type, r->storage, 0))
+		return err;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		af_seq idx = {0, 0, 1};
+		err = af_index(&t->values, r->values, 1, &idx);
+		break;
+	case STG_HOST:
+		err = fill_array(t, r->values);
+		break;
+	default:
+		err = 99;
+	}
+	
+	if (err) {
+		release_array(t);
+		return err;
+	}
+	
+	*z = t;
+	
+	return 0;
+}
+
+struct cell_func disclose_closure = {CELL_FUNC, 1, disclose_func, 0};
+struct cell_func *disclose_ibeam = &disclose_closure;
