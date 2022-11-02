@@ -5,40 +5,40 @@
 
 #define EXPORT __declspec(dllexport)
 #ifdef EXPORTING
-        #define DECLSPEC EXPORT
+	#define DECLSPEC EXPORT
 #else
-        #define DECLSPEC __declspec(dllimport)
+	#define DECLSPEC __declspec(dllimport)
 #endif
 
 enum cell_type {
-        CELL_VOID,
-        CELL_VOID_BOX,
-        CELL_ARRAY, 
-        CELL_ARRAY_BOX,
-        CELL_FUNC,
-        CELL_FUNC_BOX,
-        CELL_MOPER_BOX,
-        CELL_DOPER_BOX,
-        CELL_ENV_BOX,
+	CELL_VOID,
+	CELL_VOID_BOX,
+	CELL_ARRAY, 
+	CELL_ARRAY_BOX,
+	CELL_FUNC,
+	CELL_FUNC_BOX,
+	CELL_MOPER_BOX,
+	CELL_DOPER_BOX,
+	CELL_ENV_BOX,
 };
 
 enum array_type {
-        ARR_SPAN,
-        ARR_BOOL, 
+	ARR_SPAN,
+	ARR_BOOL, 
 	ARR_SINT, 
 	ARR_INT, 
 	ARR_DBL, 
 	ARR_CMPX,
-        ARR_CHAR8, 
+	ARR_CHAR8, 
 	ARR_CHAR16, 
 	ARR_CHAR32,
-        ARR_MIXED, 
+	ARR_MIXED, 
 	ARR_NESTED,
 	ARR_MAX
 };
 
 enum array_storage {
-        STG_HOST, STG_DEVICE
+	STG_HOST, STG_DEVICE
 };
 
 typedef int (*func_ptr)(struct cell_array **,
@@ -48,32 +48,32 @@ typedef int (*topfn_ptr)(struct cell_array **,
     struct cell_array *, struct cell_array *);
 
 struct cell_void {
-        enum cell_type ctyp;
-        unsigned int refc;
+	enum cell_type ctyp;
+	unsigned int refc;
 };
 
 struct apl_cmpx {
-        double real;
-        double imag;
+	double real;
+	double imag;
 };
 
 struct cell_array {
-        enum cell_type ctyp;
-        unsigned int refc;
-        enum array_storage storage;
-        enum array_type type;
-        void *values;
+	enum cell_type ctyp;
+	unsigned int refc;
+	enum array_storage storage;
+	enum array_type type;
+	void *values;
 	unsigned int *vrefc;
-        unsigned int rank;
-        size_t shape[];
+	unsigned int rank;
+	size_t shape[];
 };
 
 struct cell_func {
-        enum cell_type ctyp;
-        unsigned int refc;
+	enum cell_type ctyp;
+	unsigned int refc;
 	func_ptr fptr;
-        unsigned int fs;
-        void *fv[];
+	unsigned int fs;
+	void *fv[];
 };
 
 #define DECL_BOX_STRUCT(type)		\
