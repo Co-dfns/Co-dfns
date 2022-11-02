@@ -252,3 +252,21 @@ disclose_func(struct cell_array **z,
 
 struct cell_func disclose_closure = {CELL_FUNC, 1, disclose_func, 0};
 struct cell_func *disclose_ibeam = &disclose_closure;
+
+int
+q_ambiv_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_func *mop, *dop;
+	
+	mop = self->fv[1];
+	dop = self->fv[2];
+	
+	if (l == NULL)
+		return (mop->fptr)(z, l, r, mop);
+	
+	return (dop->fptr)(z, l, r, dop);
+}
+
+struct cell_func q_ambiv_closure = {CELL_FUNC, 1, q_ambiv_func, 0};
+struct cell_func *q_ambiv_ibeam = &q_ambiv_closure;
