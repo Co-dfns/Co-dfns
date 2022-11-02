@@ -1,3 +1,5 @@
+#include <float.h>
+
 #include "internal.h"
 
 int
@@ -100,7 +102,64 @@ struct cell_func *is_simple_ibeam = &is_simple_closure;
 
 int
 shape_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self);
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *t;
+	enum array_type type;
+	int err;
+	
+	type = ARR_BOOL;
+	
+	for (size_t i = 0; i < r->rank; i++) {
+		size_t dim = r->shape[i];
+		
+		if (dim <= 1)
+			continue;
+		
+		if (dim <= INT16_MAX && type < ARR_SINT) {
+			type = ARR_SINT;
+			continue;
+		}
+		
+		if (dim <= INT32_MAX && type < ARR_INT) {
+			type = ARR_INT;
+			continue;
+		}
+		
+		if (dim <= DBL_MAX && type < ARR_DBL) {
+			type = ARR_DBL;
+			continue;
+		}
+		
+		return 10;
+	}
+	
+	if (err = mk_array(&t, type, STG_HOST, 1))
+		return err;
+	
+	t->shape[0] = r->rank;
+
+#define SHAPE_CASE(vt) {			\
+	vt *shp = t->values;			\
+						\
+	for (size_t i = 0; i < r->rank; i++)	\
+		shp[i] = (vt)r->shape[i];	\
+}						\
+	
+	switch (type) {
+	case ARR_BOOL:SHAPE_CASE(int8_t);
+	case ARR_SINT:SHAPE_CASE(int16_t);
+	case ARR_INT:SHAPE_CASE(int32_t);
+	case ARR_DBL:SHAPE_CASE(double);
+	default:
+		release_array(t);
+		return 99;
+	}
+	
+	*z = t;
+	
+	return 0;
+}
     
 struct cell_func shape_closure = {CELL_FUNC, 1, shape_func, 0};
 struct cell_func *shape_ibeam = &shape_closure;
@@ -128,3 +187,25 @@ max_shp_func(struct cell_array **z,
 
 struct cell_func max_shp_closure = {CELL_FUNC, 1, max_shp_func, 0};
 struct cell_func *max_shp_ibeam = &max_shp_closure;
+
+int
+ravel_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *t;
+	int err;
+
+	if (err = mk_array(&t, r->type, r->storage, 1))
+		return err;
+	
+	t->shape[0] = array_count(r);
+	t->values = r->values;
+	t->vrefc = r->vrefc;
+	
+	retain_array_data(t);
+	
+	return 0;
+}
+
+struct cell_func ravel_closure = {CELL_FUNC, 1, ravel_func, 0};
+struct cell_func *ravel_ibeam = &ravel_closure;
