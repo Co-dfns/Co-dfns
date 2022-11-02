@@ -277,10 +277,13 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	if (type == -1 || storage == -1)
 		return 16;
 	
-	err = mk_array(&arr, type, storage, pkt->rank, pkt->shape);
+	err = mk_array(&arr, type, storage, pkt->rank);
 	
 	if (err)
 		return err;
+	
+	for (unsigned int i = 0; i < arr->rank; i++)
+		arr->shape[i] = pkt->shape[i];
 	
 	err = copydat_dwa2arr(arr, pkt);
 	

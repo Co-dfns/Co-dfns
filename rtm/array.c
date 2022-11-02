@@ -130,15 +130,54 @@ array_af_dtype(struct cell_array *arr)
 	}
 }
 
+int
+alloc_array(struct cell_array *arr)
+{
+	size_t count, size;
+	char *buf;
+	af_dtype dtype;
+	int err;
+	
+	count = array_values_count(arr);
+		
+	switch (arr->storage) {
+	case STG_DEVICE:
+		dtype = array_af_dtype(arr);
+		err = af_create_handle(&arr->values, 1, &count, dtype);
+		break;
+	case STG_HOST:
+		size = count * array_element_size(arr);
+		buf = malloc(size + sizeof(int));
+		
+		if (buf == NULL) {
+			err = 1;
+			break;
+		}
+		
+		err = 0;
+		arr->values = buf;
+		arr->vrefc = (unsigned int *)(buf + size);
+		*arr->vrefc = 1;
+		break;
+	default:
+		err = 99;
+	}
+	
+	return err;
+}
+
 DECLSPEC int
 fill_array(struct cell_array *arr, void *data)
 {
-	size_t	count, size;
+	size_t	size;
 	int	err;
+	
+	if (arr->values == NULL) {
+		if (err = alloc_array(arr))
+			return err;
+	}
 
-	count	= array_values_count(arr);
-	size	= count * array_element_size(arr);
-	err	= 0;
+	size	= array_values_count(arr) * array_element_size(arr);
 
 	switch (arr->storage) {
 	case STG_DEVICE:
@@ -146,9 +185,10 @@ fill_array(struct cell_array *arr, void *data)
 		break;
 	case STG_HOST:
 		memcpy(arr->values, data, size);
+		err = 0;
 		break;
 	default:
-		return 99;
+		err = 99;
 	}
 
 	return err;
@@ -156,52 +196,68 @@ fill_array(struct cell_array *arr, void *data)
 
 DECLSPEC int
 mk_array(struct cell_array **dest,
-    enum array_type type, enum array_storage storage, unsigned int rank,
-    size_t shape[])
+    enum array_type type, enum array_storage storage, unsigned int rank)
 {
 	struct		cell_array *arr;
-	size_t		count, size;
-	int		err;
-	af_dtype	dtype;
+	size_t		size;
 	
-	count = array_values_count_shape(rank, shape);
 	size = sizeof(struct cell_array) + rank * sizeof(size_t);
-	
-	if (storage == STG_HOST)
-		size += count * array_element_size_type(type);
-	
+
 	arr = malloc(size);
 
 	if (arr == NULL)
 		return 1;
 
-	arr->ctyp       = CELL_ARRAY;
-	arr->refc       = 1;
-	arr->type       = type;
-	arr->storage    = storage;
-	arr->rank       = rank;
-
-	for (unsigned int i = 0; i < rank; i++)
-		arr->shape[i] = shape[i];
-
-	if (storage == STG_DEVICE) {
-		dtype = array_af_dtype(arr);
-		err = af_create_handle(&arr->values, 1, &count, dtype);
-	} else if (storage == STG_HOST) {
-		arr->values = &arr->shape[rank];
-		err = 0;
-	} else {
-		err = 99;
-	}
-
-	if (err) {
-		free(arr);
-		return err;
-	}
+	arr->ctyp	= CELL_ARRAY;
+	arr->refc	= 1;
+	arr->type	= type;
+	arr->storage	= storage;
+	arr->rank	= rank;
+	arr->values	= NULL;
+	arr->vrefc	= NULL;
 
 	*dest = arr;
 
 	return 0;
+}
+
+void
+retain_array_data(struct cell_array *arr)
+{
+	if (arr == NULL)
+		return;
+	
+	if (arr->values == NULL)
+		return;
+	
+	switch (arr->type) {
+	case STG_DEVICE:
+		af_retain_array(NULL, arr->values);
+		break;
+	case STG_HOST:
+		++*arr->vrefc;
+		break;
+	default:
+		exit(99);
+	}
+}
+
+void
+release_host_data(struct cell_array *arr)
+{
+	unsigned int *refc;
+	
+	refc = arr->vrefc;
+	
+	if (!*refc)
+		return;
+	
+	--*refc;
+	
+	if (*refc)
+		return;
+	
+	free(arr->values);
 }
 
 DECLSPEC void
@@ -235,6 +291,7 @@ release_array(struct cell_array *arr)
 			af_release_array(arr->values);
 			break;
 		case STG_HOST:
+			release_host_data(arr);
 			break;
 		default:
 			exit(99);
@@ -669,18 +726,24 @@ get_scalar_char32(uint32_t *dst, struct cell_array *arr)
 	return 0;
 }
 
-int
-mk_scalar_sint(struct cell_array **z, int16_t val)
-{
-	struct cell_array *t;
-	int err;
-	
-	if (err = mk_array(&t, ARR_SINT, STG_HOST, 0, NULL))
-		return err;
-	
-	*(int16_t *)t->values = val;
-	
-	*z = t;
-	
-	return 0;
+#define DEFN_MKSCALAR(name, atype, ctype)		\
+int							\
+name(struct cell_array **z, ctype val)			\
+{							\
+	struct cell_array *t;				\
+	int err;					\
+							\
+	if (err = mk_array(&t, atype, STG_HOST, 0))	\
+		return err;				\
+							\
+	*(ctype *)t->values = val;			\
+							\
+	*z = t;						\
+							\
+	return 0;					\
 }
+
+DEFN_MKSCALAR(mk_scalar_bool, ARR_BOOL, int8_t)
+DEFN_MKSCALAR(mk_scalar_sint, ARR_SINT, int16_t)
+DEFN_MKSCALAR(mk_scalar_int, ARR_INT, int32_t)
+DEFN_MKSCALAR(mk_scalar_dbl, ARR_DBL, double)

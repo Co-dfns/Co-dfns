@@ -29,3 +29,5 @@ af_dtype array_af_dtype(struct cell_array *);
 
 int mk_scalar_bool(struct cell_array **, int8_t);
 int mk_scalar_sint(struct cell_array **, int16_t);
+
+void retain_array_data(struct cell_array *);
