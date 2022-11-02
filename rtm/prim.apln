@@ -6,11 +6,6 @@ q_dr←'q_dr_ibeam'⌶
 q_veach←'q_veach_ibeam'⌶
 q_ambiv←'q_ambiv_ibeam'⌶
 
-⍝ Core base primitives
-cat←'cat_ibeam'⌶
-eqv←'eqv_ibeam'⌶
-nqv←'nqv_ibeam'⌶
-
 ⍝ Utilities
 is_simple←'is_simple_ibeam'⌶
 max_shp←'max_shp_ibeam'⌶
@@ -36,5 +31,14 @@ lft←{⍺}
 
 ⍝ ⍴: Shape / Reshape
 rho←('shape_ibeam'⌶) ⎕AMBIV ('reshape_ibeam'⌶)
+
+⍝ ,: Ravel / Catenate
+cat←('ravel_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
+
+⍝ ≡: Depth / Same
+eqv←{⎕SIGNAL 16} ⎕AMBIV ('same_ibeam'⌶)
+
+⍝ ≢: Tally / Not Same
+nqv←('tally_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
 
 :EndNamespace
