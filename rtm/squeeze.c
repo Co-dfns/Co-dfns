@@ -173,26 +173,7 @@ find_minmax(double *min, double *max,
 			return 0;
 		}
 		
-		if (err = af_is_integer(is_int, vals))
-			return err;
-		
-		if (is_int)
-			return 0;
-		
-		af_array t;
-		
-		if (err = af_trunc(&t, vals))
-			return err;
-		
-		if (err = af_eq(&t, t, vals, 0))
-			return err;
-		
-		if (err = af_all_true_all(&real, &imag, t))
-			return err;
-		
-		*is_int = (unsigned char)real;
-		
-		if (err = af_release_array(t))
+		if (err = is_integer_device(is_int, vals))
 			return err;
 		
 		return 0;

@@ -301,12 +301,6 @@ release_array(struct cell_array *arr)
 }
 
 int
-is_integer(double x)
-{
-	return rint(x) == x;
-}
-
-int
 is_integer_type(enum array_type type)
 {
 	switch (type) {
@@ -371,6 +365,159 @@ int
 is_char_array(struct cell_array *arr)
 {
 	return is_char_type(arr->type);
+}
+
+int
+is_integer(double x)
+{
+	return rint(x) == x;
+}
+
+int
+is_integer_device(unsigned char *res, af_array vals)
+{
+	af_array t;
+	double real, imag;
+	int err;
+	unsigned char is_int;
+	
+	if (err = af_is_integer(&is_int, vals))
+		return err;
+	
+	if (is_int) {
+		*res = 1;
+		return 0;
+	}
+
+	if (err = af_trunc(&t, vals))
+		return err;
+	
+	if (err = af_eq(&t, t, vals, 0))
+		return err;
+	
+	if (err = af_all_true_all(&real, &imag, t))
+		return err;
+	
+	if (err = af_release_array(t))
+		return err;
+	
+	*res = (int)real;
+	
+	return 0;
+}
+
+int
+has_integer_values(int *res, struct cell_array *arr)
+{
+	size_t count;
+	double *vals;
+	int err;
+	unsigned char is_int;
+	
+	if (!is_numeric_array(arr)) {
+		*res = 0;
+		return 0;
+	}
+	
+	if (arr->type == ARR_CMPX)
+		if (err = squeeze_array(arr))
+			return err;
+
+	if (arr->type == ARR_CMPX) {
+		*res = 0;
+		return 0;
+	}
+
+	if (arr->type < ARR_DBL) {
+		*res = 1;
+		return 0;
+	}
+	
+	if (arr->storage == STG_DEVICE) {
+		if (err = is_integer_device(&is_int, arr->values))
+			return err;
+		
+		*res = is_int;
+		
+		return 0;
+	}
+	
+	if (arr->storage != STG_HOST)
+		return 99;
+	
+	vals = arr->values;
+	count = array_count(arr);
+	
+	for (size_t i = 0; i < count; i++) {
+		if (!is_integer(vals[i])) {
+			*res = 0;
+			return 0;
+		}
+	}
+	
+	*res = 1;
+	
+	return 0;
+}
+
+int
+has_natural_values(int *res, struct cell_array *arr)
+{
+	size_t count;
+	int err, is_int;
+	
+	if (err = has_integer_values(&is_int, arr))
+		return err;
+	
+	if (!is_int) {
+		*res = 0;
+		return 0;
+	}
+	
+	if (arr->storage == STG_DEVICE) {
+		af_array t;
+		double real, imag;
+		
+		if (err = af_sign(&t, arr->values))
+			return err;
+		
+		if (err = af_any_true_all(&real, &imag, t))
+			return err;
+		
+		if (err = af_release_array(t))
+			return err;
+		
+		*res = !real;
+
+		return 0;
+	}
+	
+	count = array_count(arr);
+	
+#define NATURAL_CASE(tp) {			\
+	tp *vals = arr->values;			\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		if (vals[i] < 0) {              \
+			*res = 0;               \
+			return 0;               \
+		}                               \
+	}                                       \
+	break;                                  \
+}
+
+	switch (arr->type) {
+	case ARR_BOOL:NATURAL_CASE(int8_t)
+	case ARR_SINT:NATURAL_CASE(int16_t)
+	case ARR_INT:NATURAL_CASE(int32_t)
+	case ARR_DBL:NATURAL_CASE(double)
+	default:
+		return 99;
+	}
+	
+	*res = 1;
+	
+	return 0;
 }
 
 enum array_type

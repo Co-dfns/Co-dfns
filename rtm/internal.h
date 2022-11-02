@@ -7,6 +7,7 @@ enum array_type array_max_type(enum array_type, enum array_type);
 int squeeze_array(struct cell_array *);
 
 int is_integer(double);
+int is_integer_device(unsigned char *, af_array);
 int is_integer_array(struct cell_array *);
 int is_real_array(struct cell_array *);
 int is_numeric_array(struct cell_array *);
@@ -21,6 +22,9 @@ int get_scalar_char8(uint8_t *, struct cell_array *);
 int get_scalar_char16(uint16_t *, struct cell_array *);
 int get_scalar_char32(uint32_t *, struct cell_array *);
 
+int has_integer_values(int *, struct cell_array *);
+int has_natural_values(int *, struct cell_array *);
+
 size_t array_count(struct cell_array *);
 size_t array_values_count(struct cell_array *);
 size_t array_values_bytes(struct cell_array *);
@@ -31,3 +35,5 @@ int mk_scalar_bool(struct cell_array **, int8_t);
 int mk_scalar_sint(struct cell_array **, int16_t);
 
 void retain_array_data(struct cell_array *);
+int alloc_array(struct cell_array *);
+
