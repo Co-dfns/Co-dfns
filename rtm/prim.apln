@@ -39,6 +39,9 @@ cat←('ravel_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
 eqv←{⎕SIGNAL 16} ⎕AMBIV ('same_ibeam'⌶)
 
 ⍝ ≢: Tally / Not Same
-nqv←('tally_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
+nqv←{⊃⍴⍵} ⎕AMBIV {⎕SIGNAL 16}
+
+⍝ ⊃: First / Pick
+dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
 
 :EndNamespace
