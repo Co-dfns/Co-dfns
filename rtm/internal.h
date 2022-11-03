@@ -38,4 +38,4 @@ int mk_scalar_sint(struct cell_array **, int16_t);
 
 void retain_array_data(struct cell_array *);
 int alloc_array(struct cell_array *);
-
+int array_is_same(int8_t *, struct cell_array *, struct cell_array *);

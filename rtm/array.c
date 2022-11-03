@@ -896,3 +896,237 @@ DEFN_MKSCALAR(mk_scalar_bool, ARR_BOOL, int8_t)
 DEFN_MKSCALAR(mk_scalar_sint, ARR_SINT, int16_t)
 DEFN_MKSCALAR(mk_scalar_int, ARR_INT, int32_t)
 DEFN_MKSCALAR(mk_scalar_dbl, ARR_DBL, double)
+
+int
+cmpx_eq(struct apl_cmpx x, struct apl_cmpx y)
+{
+	return (x.real == y.real) && (x.imag == y.imag);
+}
+
+int
+array_migrate_storage(struct cell_array *arr, enum array_storage stg)
+{
+	af_array t;
+	size_t count;
+	int err;
+	
+	if (arr->storage == stg)
+		return 0;
+	
+	if (arr->type == ARR_NESTED && stg == STG_DEVICE)
+		return 99;
+	
+	if (arr->type == ARR_MIXED)
+		return 16;
+	
+	if (arr->type == ARR_SPAN)
+		return 0;
+	
+	count = array_values_count(arr);
+	
+	if (stg == STG_DEVICE) {
+		af_dtype dtp;
+		
+		dtp = array_af_dtype(arr);
+		
+		if (err = af_create_array(&t, arr->values, 1, &count, dtp))
+			return err;
+		
+		release_host_data(arr);
+		
+		arr->values = t;
+		arr->storage = STG_DEVICE;
+		
+		return 0;
+	}
+	
+	if (stg != STG_HOST)
+		return 99;
+	
+	t = arr->values;
+	arr->storage = STG_HOST;
+	
+	if (err = alloc_array(arr))
+		return err;
+	
+	if (err = af_eval(t))
+		return err;
+	
+	if (err = af_get_data_ptr(arr->values, t))
+		return err;
+	
+	if (err = af_release_array(t))
+		return err;
+	
+	return 0;
+}
+
+int
+array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
+{
+	size_t count;
+	int err;
+	
+	if (l->rank != r->rank) {
+		*is_same = 0;
+		return 0;
+	}
+	
+	for (unsigned int i = 0; i < l->rank; i++) {
+		if (l->shape[i] != r->shape[i]) {
+			*is_same = 0;
+			return 0;
+		}
+	}
+	
+	if (is_char_array(l) != is_char_array(r)) {
+		*is_same = 0;
+		return 0;
+	}
+	
+	if ((l->type == ARR_NESTED) != (r->type == ARR_NESTED)) {
+		*is_same = 0;
+		return 0;
+	}
+	
+	if ((l->type == ARR_SPAN) != (r->type == ARR_SPAN)) {
+		*is_same = 0;
+		return 0;
+	}
+	
+	if (l->type == ARR_SPAN) {
+		*is_same = 1;
+		return 0;
+	}
+	
+	if (l->type == ARR_MIXED || r->type == ARR_MIXED) {
+		return 16;
+	}
+	
+	if (l->storage == STG_DEVICE)
+		if (err = array_migrate_storage(r, STG_DEVICE))
+			return err;
+	
+	if (r->storage == STG_DEVICE)
+		if (err = array_migrate_storage(l, STG_DEVICE))
+			return err;
+
+	if (l->storage == STG_DEVICE) {
+		af_array t;
+		double real, imag;
+		
+		if (err = af_neq(&t, l->values, r->values, 0))
+			return err;
+		
+		if (err = af_any_true_all(&real, &imag, t))
+			return err;
+		
+		if (err = af_release_array(t))
+			return err;
+		
+		*is_same = !real;
+		return 0;
+	}
+	
+	if (l->storage != STG_HOST)
+		return 99;
+
+	count = array_values_count(l);
+
+	if (l->type == ARR_NESTED) {
+		struct cell_array **lvals, **rvals;
+		
+		lvals = l->values;
+		rvals = r->values;
+		
+		for (size_t i = 0; i < count; i++) {
+			int8_t f;
+			
+			if (err = array_is_same(&f, lvals[i], rvals[i]))
+				return err;
+			
+			if (!f) {
+				*is_same = 0;
+				return 0;
+			}
+		}
+		
+		*is_same = 1;
+		return 0;
+	}
+	
+	if (l->type == ARR_CMPX)
+		if (err = squeeze_array(l))
+			return err;
+	
+	if (r->type == ARR_CMPX)
+		if (err = squeeze_array(r))
+			return err;
+	
+	if ((l->type == ARR_CMPX) != (r->type == ARR_CMPX)) {
+		*is_same = 0;
+		return 0;
+	}
+	
+	if (l->type == ARR_CMPX) {
+		struct apl_cmpx *lvals = l->values;
+		struct apl_cmpx *rvals = r->values;
+		
+		for (size_t i = 0; i < count; i++) {
+			if (!cmpx_eq(lvals[i], rvals[i])) {
+				*is_same = 0;
+				return 0;
+			}
+		}
+		
+		*is_same = 1;
+		return 0;
+	}
+	
+#define ARRAY_SAME_LOOP(ltype, rtype) {		\
+	ltype *lvals = l->values;		\
+	rtype *rvals = r->values;		\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		if (lvals[i] != rvals[i]) {	\
+			*is_same = 0;		\
+			return 0;		\
+		}				\
+	}					\
+						\
+	break;					\
+}
+
+	switch (type_pair(l->type, r->type)) {
+	case type_pair(ARR_BOOL, ARR_BOOL):ARRAY_SAME_LOOP(int8_t, int8_t);
+	case type_pair(ARR_BOOL, ARR_SINT):ARRAY_SAME_LOOP(int8_t, int16_t);
+	case type_pair(ARR_BOOL, ARR_INT):ARRAY_SAME_LOOP( int8_t, int32_t);
+	case type_pair(ARR_BOOL, ARR_DBL):ARRAY_SAME_LOOP( int8_t, double);
+	case type_pair(ARR_SINT, ARR_BOOL):ARRAY_SAME_LOOP(int16_t, int8_t);
+	case type_pair(ARR_SINT, ARR_SINT):ARRAY_SAME_LOOP(int16_t, int16_t);
+	case type_pair(ARR_SINT, ARR_INT):ARRAY_SAME_LOOP( int16_t, int32_t);
+	case type_pair(ARR_SINT, ARR_DBL):ARRAY_SAME_LOOP( int16_t, double);
+	case type_pair(ARR_INT, ARR_BOOL):ARRAY_SAME_LOOP(int32_t, int8_t);
+	case type_pair(ARR_INT, ARR_SINT):ARRAY_SAME_LOOP(int32_t, int16_t);
+	case type_pair(ARR_INT, ARR_INT):ARRAY_SAME_LOOP( int32_t, int32_t);
+	case type_pair(ARR_INT, ARR_DBL):ARRAY_SAME_LOOP( int32_t, double);
+	case type_pair(ARR_DBL, ARR_BOOL):ARRAY_SAME_LOOP(double, int8_t);
+	case type_pair(ARR_DBL, ARR_SINT):ARRAY_SAME_LOOP(double, int16_t);
+	case type_pair(ARR_DBL, ARR_INT):ARRAY_SAME_LOOP( double, int32_t);
+	case type_pair(ARR_DBL, ARR_DBL):ARRAY_SAME_LOOP( double, double);
+	case type_pair(ARR_CHAR8, ARR_CHAR8):ARRAY_SAME_LOOP(uint8_t, uint8_t);
+	case type_pair(ARR_CHAR8, ARR_CHAR16):ARRAY_SAME_LOOP(uint8_t, uint16_t);
+	case type_pair(ARR_CHAR8, ARR_CHAR32):ARRAY_SAME_LOOP(uint8_t, uint32_t);
+	case type_pair(ARR_CHAR16, ARR_CHAR8):ARRAY_SAME_LOOP( uint16_t, uint8_t);
+	case type_pair(ARR_CHAR16, ARR_CHAR16):ARRAY_SAME_LOOP(uint16_t, uint16_t);
+	case type_pair(ARR_CHAR16, ARR_CHAR32):ARRAY_SAME_LOOP(uint16_t, uint32_t);
+	case type_pair(ARR_CHAR32, ARR_CHAR8):ARRAY_SAME_LOOP( uint32_t, uint8_t);
+	case type_pair(ARR_CHAR32, ARR_CHAR16):ARRAY_SAME_LOOP(uint32_t, uint16_t);
+	case type_pair(ARR_CHAR32, ARR_CHAR32):ARRAY_SAME_LOOP(uint32_t, uint32_t);
+	default:
+		return 99;
+	}
+	
+	*is_same = 1;
+	return 0;
+}

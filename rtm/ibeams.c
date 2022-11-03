@@ -432,3 +432,19 @@ fail:
 
 struct cell_func reshape_closure = {CELL_FUNC, 1, reshape_func, 0};
 struct cell_func *reshape_ibeam = &reshape_closure;
+
+int
+same_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	int8_t is_same;
+	
+	if (err = array_is_same(&is_same, l, r))
+		return err;
+	
+	return mk_scalar_bool(z, is_same);
+}
+
+struct cell_func same_closure = {CELL_FUNC, 1, same_func, 0};
+struct cell_func *same_ibeam = &same_closure;
