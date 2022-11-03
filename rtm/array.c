@@ -500,12 +500,12 @@ has_natural_values(int *res, struct cell_array *arr)
 	tp *vals = arr->values;			\
 						\
 	for (size_t i = 0; i < count; i++) {	\
-		if (vals[i] < 0) {              \
-			*res = 0;               \
-			return 0;               \
-		}                               \
-	}                                       \
-	break;                                  \
+		if (vals[i] < 0) {		\
+			*res = 0;		\
+			return 0;		\
+		}				\
+	}					\
+	break;					\
 }
 
 	switch (arr->type) {
