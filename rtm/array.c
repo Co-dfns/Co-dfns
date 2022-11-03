@@ -154,10 +154,13 @@ alloc_array(struct cell_array *arr)
 			break;
 		}
 		
+		memset(buf, 0, size + sizeof(int));
+		
 		err = 0;
 		arr->values = buf;
 		arr->vrefc = (unsigned int *)(buf + size);
 		*arr->vrefc = 1;
+		
 		break;
 	default:
 		err = 99;
