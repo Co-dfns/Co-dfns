@@ -258,6 +258,8 @@ release_host_data(struct cell_array *arr)
 		return;
 	
 	free(arr->values);
+	arr->values = NULL;
+	arr->vrefc = NULL;
 }
 
 DECLSPEC void
