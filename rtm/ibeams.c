@@ -448,3 +448,301 @@ same_func(struct cell_array **z,
 
 struct cell_func same_closure = {CELL_FUNC, 1, same_func, 0};
 struct cell_func *same_ibeam = &same_closure;
+
+int
+q_veach_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_func *oper;
+	struct cell_array *t, *x, *y, **tvals;
+	void *lbuf, *rbuf;
+	size_t count, lc, rc;
+	int err, fl, fr, fy, fx;
+	
+	if (l->type == ARR_SPAN || r->type == ARR_SPAN)
+		return 99;
+	
+	oper = self->fv[1];
+
+	t = x = y = NULL;
+	
+	lc = array_values_count(l);
+	rc = array_values_count(r);
+	
+	lbuf = l->values;
+	rbuf = r->values;
+	fl = 0;
+	fr = 0;
+	fy = 0;
+	fx = 0;
+	
+	if (l->storage == STG_DEVICE) {
+		lbuf = malloc(lc * array_element_size(l));
+		
+		if (lbuf == NULL) {
+			err = 1;
+			goto fail;
+		}
+		
+		fl = 1;
+		
+		if (err = af_eval(l))
+			goto fail;
+		
+		if (err = af_get_data_ptr(lbuf, l->values))
+			goto fail;
+	}
+	
+	if (r->storage == STG_DEVICE) {
+		rbuf = malloc(rc * array_element_size(r));
+		
+		if (rbuf == NULL) {
+			err = 1;
+			goto fail;
+		}
+		
+		fr = 1;
+		
+		if (err = af_eval(r))
+			goto fail;
+		
+		if (err = af_get_data_ptr(rbuf, r->values))
+			goto fail;
+	}
+	
+	if (err = mk_array(&t, ARR_NESTED, STG_HOST, 1))
+		return err;
+	
+	t->shape[0] = count = lc > rc ? lc : rc;
+	
+	if (err = alloc_array(t))
+		goto fail;
+	
+	tvals = t->values;
+	
+	if (l->type == ARR_NESTED && r->type == ARR_NESTED) {
+		struct cell_array **lvals = lbuf;
+		struct cell_array **rvals = rbuf;
+		
+		for (size_t i = 0; i < count; i++) {
+			x = lvals[i % lc];
+			y = rvals[i % rc];
+			
+			if (err = (oper->fptr)(tvals + i, x, y, oper))
+				goto fail;
+		}
+		
+		goto done;
+	}
+	
+	if (l->type != ARR_NESTED) {
+		if (err = mk_array(&x, l->type, STG_HOST, 0))
+			goto fail;
+		
+		fx = 1;
+		
+		if (err = alloc_array(x))
+			goto fail;
+	}
+	
+	if (r->type != ARR_NESTED) {
+		if (err = mk_array(&y, r->type, STG_HOST, 0))
+			goto fail;
+		
+		fy = 1;
+		
+		if (err = alloc_array(y))
+			goto fail;
+	}
+	
+	if (l->type == ARR_NESTED) {
+		struct cell_array **lvals = lbuf;
+		
+#define VEACH_LNESTED_LOOP(type) {				\
+	type *rvals, *yvals;					\
+								\
+	rvals = rbuf;						\
+	yvals = y->values;					\
+								\
+	for (size_t i = 0; i < count; i++) {			\
+		x = lvals[i % lc];				\
+		yvals[0] = rvals[i % rc];			\
+								\
+		if (err = (oper->fptr)(tvals + i, x, y, oper))	\
+			goto fail;				\
+	}							\
+								\
+	break;							\
+}
+		
+		switch (r->type) {
+		case ARR_BOOL:VEACH_LNESTED_LOOP(int8_t);
+		case ARR_SINT:VEACH_LNESTED_LOOP(int16_t);
+		case ARR_INT:VEACH_LNESTED_LOOP(int32_t);
+		case ARR_DBL:VEACH_LNESTED_LOOP(double);
+		case ARR_CMPX:VEACH_LNESTED_LOOP(struct apl_cmpx);
+		case ARR_CHAR8:VEACH_LNESTED_LOOP(uint8_t);
+		case ARR_CHAR16:VEACH_LNESTED_LOOP(uint16_t);
+		case ARR_CHAR32:VEACH_LNESTED_LOOP(uint32_t);
+		default:
+			err = 99;
+			goto fail;
+		}
+		
+		goto done;
+	}
+	
+	if (r->type == ARR_NESTED) {
+		struct cell_array **rvals = rbuf;
+		
+#define VEACH_RNESTED_LOOP(type) {				\
+	type *lvals, *xvals;					\
+								\
+	lvals = lbuf;						\
+	xvals = x->values;					\
+								\
+	for (size_t i = 0; i < count; i++) {			\
+		xvals[0] = lvals[i % lc];			\
+		y = rvals[i % rc];				\
+								\
+		if (err = (oper->fptr)(tvals + i, x, y, oper))	\
+			goto fail;				\
+	}							\
+								\
+	break;							\
+}
+		
+		switch (l->type) {
+		case ARR_BOOL:VEACH_RNESTED_LOOP(int8_t);
+		case ARR_SINT:VEACH_RNESTED_LOOP(int16_t);
+		case ARR_INT:VEACH_RNESTED_LOOP(int32_t);
+		case ARR_DBL:VEACH_RNESTED_LOOP(double);
+		case ARR_CMPX:VEACH_RNESTED_LOOP(struct apl_cmpx);
+		case ARR_CHAR8:VEACH_RNESTED_LOOP(uint8_t);
+		case ARR_CHAR16:VEACH_RNESTED_LOOP(uint16_t);
+		case ARR_CHAR32:VEACH_RNESTED_LOOP(uint32_t);
+		default:
+			err = 99;
+			goto fail;
+		}
+		
+		goto done;
+	}
+	
+#define VEACH_LOOP(ltype, rtype) {				\
+	ltype *lvals, *xvals;					\
+	rtype *rvals, *yvals;					\
+								\
+	lvals = lbuf;						\
+	rvals = rbuf;						\
+	xvals = x->values;					\
+	yvals = y->values;					\
+								\
+	for (size_t i = 0; i < count; i++) {			\
+		xvals[0] = lvals[i % lc];			\
+		yvals[0] = rvals[i % rc];			\
+								\
+		if (err = (oper->fptr)(tvals + i, x, y, oper))	\
+			goto fail;				\
+	}							\
+								\
+	break;							\
+}
+
+	switch (type_pair(l->type, r->type)) {
+	case type_pair(ARR_BOOL, ARR_BOOL):VEACH_LOOP(  int8_t, int8_t);
+	case type_pair(ARR_BOOL, ARR_SINT):VEACH_LOOP(  int8_t, int16_t);
+	case type_pair(ARR_BOOL, ARR_INT):VEACH_LOOP(   int8_t, int32_t);
+	case type_pair(ARR_BOOL, ARR_DBL):VEACH_LOOP(   int8_t, double);
+	case type_pair(ARR_BOOL, ARR_CMPX):VEACH_LOOP(  int8_t, struct apl_cmpx);
+	case type_pair(ARR_BOOL, ARR_CHAR8):VEACH_LOOP( int8_t, uint8_t);
+	case type_pair(ARR_BOOL, ARR_CHAR16):VEACH_LOOP(int8_t, uint16_t);
+	case type_pair(ARR_BOOL, ARR_CHAR32):VEACH_LOOP(int8_t, uint32_t);
+	case type_pair(ARR_SINT, ARR_BOOL):VEACH_LOOP(  int16_t, int8_t);
+	case type_pair(ARR_SINT, ARR_SINT):VEACH_LOOP(  int16_t, int16_t);
+	case type_pair(ARR_SINT, ARR_INT):VEACH_LOOP(   int16_t, int32_t);
+	case type_pair(ARR_SINT, ARR_DBL):VEACH_LOOP(   int16_t, double);
+	case type_pair(ARR_SINT, ARR_CMPX):VEACH_LOOP(  int16_t, struct apl_cmpx);
+	case type_pair(ARR_SINT, ARR_CHAR8):VEACH_LOOP( int16_t, uint8_t);
+	case type_pair(ARR_SINT, ARR_CHAR16):VEACH_LOOP(int16_t, uint16_t);
+	case type_pair(ARR_SINT, ARR_CHAR32):VEACH_LOOP(int16_t, uint32_t);
+	case type_pair(ARR_INT, ARR_BOOL):VEACH_LOOP(  int32_t, int8_t);
+	case type_pair(ARR_INT, ARR_SINT):VEACH_LOOP(  int32_t, int16_t);
+	case type_pair(ARR_INT, ARR_INT):VEACH_LOOP(   int32_t, int32_t);
+	case type_pair(ARR_INT, ARR_DBL):VEACH_LOOP(   int32_t, double);
+	case type_pair(ARR_INT, ARR_CMPX):VEACH_LOOP(  int32_t, struct apl_cmpx);
+	case type_pair(ARR_INT, ARR_CHAR8):VEACH_LOOP( int32_t, uint8_t);
+	case type_pair(ARR_INT, ARR_CHAR16):VEACH_LOOP(int32_t, uint16_t);
+	case type_pair(ARR_INT, ARR_CHAR32):VEACH_LOOP(int32_t, uint32_t);
+	case type_pair(ARR_DBL, ARR_BOOL):VEACH_LOOP(  double, int8_t);
+	case type_pair(ARR_DBL, ARR_SINT):VEACH_LOOP(  double, int16_t);
+	case type_pair(ARR_DBL, ARR_INT):VEACH_LOOP(   double, int32_t);
+	case type_pair(ARR_DBL, ARR_DBL):VEACH_LOOP(   double, double);
+	case type_pair(ARR_DBL, ARR_CMPX):VEACH_LOOP(  double, struct apl_cmpx);
+	case type_pair(ARR_DBL, ARR_CHAR8):VEACH_LOOP( double, uint8_t);
+	case type_pair(ARR_DBL, ARR_CHAR16):VEACH_LOOP(double, uint16_t);
+	case type_pair(ARR_DBL, ARR_CHAR32):VEACH_LOOP(double, uint32_t);
+	case type_pair(ARR_CMPX, ARR_BOOL):VEACH_LOOP(  struct apl_cmpx, int8_t);
+	case type_pair(ARR_CMPX, ARR_SINT):VEACH_LOOP(  struct apl_cmpx, int16_t);
+	case type_pair(ARR_CMPX, ARR_INT):VEACH_LOOP(   struct apl_cmpx, int32_t);
+	case type_pair(ARR_CMPX, ARR_DBL):VEACH_LOOP(   struct apl_cmpx, double);
+	case type_pair(ARR_CMPX, ARR_CMPX):VEACH_LOOP(  struct apl_cmpx, struct apl_cmpx);
+	case type_pair(ARR_CMPX, ARR_CHAR8):VEACH_LOOP( struct apl_cmpx, uint8_t);
+	case type_pair(ARR_CMPX, ARR_CHAR16):VEACH_LOOP(struct apl_cmpx, uint16_t);
+	case type_pair(ARR_CMPX, ARR_CHAR32):VEACH_LOOP(struct apl_cmpx, uint32_t);
+	case type_pair(ARR_CHAR8, ARR_BOOL):VEACH_LOOP(  uint8_t, int8_t);
+	case type_pair(ARR_CHAR8, ARR_SINT):VEACH_LOOP(  uint8_t, int16_t);
+	case type_pair(ARR_CHAR8, ARR_INT):VEACH_LOOP(   uint8_t, int32_t);
+	case type_pair(ARR_CHAR8, ARR_DBL):VEACH_LOOP(   uint8_t, double);
+	case type_pair(ARR_CHAR8, ARR_CMPX):VEACH_LOOP(  uint8_t, struct apl_cmpx);
+	case type_pair(ARR_CHAR8, ARR_CHAR8):VEACH_LOOP( uint8_t, uint8_t);
+	case type_pair(ARR_CHAR8, ARR_CHAR16):VEACH_LOOP(uint8_t, uint16_t);
+	case type_pair(ARR_CHAR8, ARR_CHAR32):VEACH_LOOP(uint8_t, uint32_t);
+	case type_pair(ARR_CHAR16, ARR_BOOL):VEACH_LOOP(  uint16_t, int8_t);
+	case type_pair(ARR_CHAR16, ARR_SINT):VEACH_LOOP(  uint16_t, int16_t);
+	case type_pair(ARR_CHAR16, ARR_INT):VEACH_LOOP(   uint16_t, int32_t);
+	case type_pair(ARR_CHAR16, ARR_DBL):VEACH_LOOP(   uint16_t, double);
+	case type_pair(ARR_CHAR16, ARR_CMPX):VEACH_LOOP(  uint16_t, struct apl_cmpx);
+	case type_pair(ARR_CHAR16, ARR_CHAR8):VEACH_LOOP( uint16_t, uint8_t);
+	case type_pair(ARR_CHAR16, ARR_CHAR16):VEACH_LOOP(uint16_t, uint16_t);
+	case type_pair(ARR_CHAR16, ARR_CHAR32):VEACH_LOOP(uint16_t, uint32_t);
+	case type_pair(ARR_CHAR32, ARR_BOOL):VEACH_LOOP(  uint32_t, int8_t);
+	case type_pair(ARR_CHAR32, ARR_SINT):VEACH_LOOP(  uint32_t, int16_t);
+	case type_pair(ARR_CHAR32, ARR_INT):VEACH_LOOP(   uint32_t, int32_t);
+	case type_pair(ARR_CHAR32, ARR_DBL):VEACH_LOOP(   uint32_t, double);
+	case type_pair(ARR_CHAR32, ARR_CMPX):VEACH_LOOP(  uint32_t, struct apl_cmpx);
+	case type_pair(ARR_CHAR32, ARR_CHAR8):VEACH_LOOP( uint32_t, uint8_t);
+	case type_pair(ARR_CHAR32, ARR_CHAR16):VEACH_LOOP(uint32_t, uint16_t);
+	case type_pair(ARR_CHAR32, ARR_CHAR32):VEACH_LOOP(uint32_t, uint32_t);
+	default:
+		err = 99;
+		goto fail;
+	}
+	
+done:
+	if (err = squeeze_array(t))
+		goto fail;
+	
+	*z = t;
+
+fail:
+	if (fl)
+		free(lbuf);
+	
+	if (fr)
+		free(rbuf);
+	
+	if (fy)
+		release_array(y);
+	
+	if (fx)
+		release_array(x);
+	
+	if (err)
+		release_array(t);
+	
+	return err;
+}
+
+struct cell_func q_veach_closure = {CELL_FUNC, 1, q_veach_func, 0};
+struct cell_func *q_veach_ibeam = &q_veach_closure;
