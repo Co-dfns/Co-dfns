@@ -746,3 +746,105 @@ fail:
 
 struct cell_func q_veach_closure = {CELL_FUNC, 1, q_veach_func, 0};
 struct cell_func *q_veach_ibeam = &q_veach_closure;
+
+int
+squeeze_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	
+	if (err = squeeze_array(r))
+		return err;
+	
+	*z = retain_cell(r);
+	
+	return 0;
+}
+
+struct cell_func squeeze_closure = {CELL_FUNC, 1, squeeze_func, 0};
+struct cell_func *squeeze_ibeam = &squeeze_closure;
+
+int
+monadic_scalar_apply(struct cell_array **z, struct cell_array *r,
+    int (*fn)(struct cell_array *, struct cell_array *))
+{
+	struct cell_array *t;
+	int err;
+		
+	if (err = mk_array(&t, ARR_SPAN, r->storage, r->rank))
+		return err;
+	
+	for (unsigned int i = 0; i < r->rank; i++)
+		t->shape[i] = r->shape[i];
+	
+	if (err = fn(t, r))
+		goto fail;
+	
+	if (err = squeeze_array(t))
+		goto fail;
+	
+	*z = t;
+	
+	return 0;
+
+fail:
+	release_array(t);
+	
+	return err;
+}
+
+int
+conjugate_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = ARR_DBL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		if (err = af_conjg(&t->values, r->values))
+			return err;
+		
+		break;
+	case STG_HOST:
+		if (err = alloc_array(t))
+			return err;
+		
+		double *tvals = t->values;
+		struct apl_cmpx *rvals = r->values;
+		size_t count = array_values_count(t);
+		
+		for (size_t i = 0; i < count; i++) {
+			tvals[i] = rvals[i].real;
+		}
+		
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+conjugate_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, conjugate_values);
+}
+
+struct cell_func conjugate_closure = {CELL_FUNC, 1, conjugate_func, 0};
+struct cell_func *conjugate_vec = &conjugate_closure;
+
+int
+is_numeric_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	if (is_numeric_array(r))
+		return mk_scalar_bool(z, 1);
+	
+	return mk_scalar_bool(z, 0);
+}
+
+struct cell_func is_numeric_closure = {CELL_FUNC, 1, is_numeric_func, 0};
+struct cell_func *is_numeric_ibeam = &is_numeric_closure;

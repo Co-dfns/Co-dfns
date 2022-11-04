@@ -10,47 +10,55 @@ extern struct cell_func *q_signal_ibeam;
 extern struct cell_func *q_dr_ibeam;
 extern struct cell_func *q_veach_ibeam;
 extern struct cell_func *q_ambiv_ibeam;
+extern struct cell_func *squeeze_ibeam;
 extern struct cell_func *is_simple_ibeam;
+extern struct cell_func *is_numeric_ibeam;
 extern struct cell_func *max_shp_ibeam;
 extern struct cell_func *conjugate_vec;
-extern struct cell_func *add_vec;
+extern struct cell_func *add_vec_ibeam;
 extern struct cell_func *shape_ibeam;
 extern struct cell_func *reshape_ibeam;
 extern struct cell_func *ravel_ibeam;
 extern struct cell_func *same_ibeam;
 extern struct cell_func *disclose_ibeam;
 
-int ptr254(struct cell_array **,
+int ptr303(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr255(struct cell_array **,
+int ptr304(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr257(struct cell_array **,
+int ptr305(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr258(struct cell_array **,
+int ptr307(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr259(struct cell_array **,
+int ptr308(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr260(struct cell_array **,
+int ptr309(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr261(struct cell_array **,
+int ptr310(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr262(struct cell_array **,
+int ptr311(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr263(struct cell_array **,
+int ptr312(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr264(struct cell_array **,
+int ptr313(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
-int ptr256(struct cell_array **,
+int ptr314(struct cell_array **,
+    struct cell_array *, struct cell_array *,
+    struct cell_func *);
+int ptr315(struct cell_array **,
+    struct cell_array *, struct cell_array *,
+    struct cell_func *);
+int ptr306(struct cell_array **,
     struct cell_array *, struct cell_array *,
     struct cell_func *);
 
@@ -63,12 +71,16 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *q_dr;
 	struct cell_func *q_veach;
 	struct cell_func *q_ambiv;
+	struct cell_func *squeeze;
 	struct cell_func *is_simple;
+	struct cell_func *is_numeric;
 	struct cell_func *max_shp;
 	struct cell_func *chk_scl;
 	struct cell_func *both_simple;
+	struct cell_func *both_numeric;
 	struct cell_func *scalar;
 	struct cell_func *conjugate;
+	struct cell_func *add_vec;
 	struct cell_func *add;
 	struct cell_func *rgt;
 	struct cell_func *lft;
@@ -79,7 +91,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *dis;
 } cdf_prim;
 
-wchar_t *cdf_prim_names[] = {L"q_signal", L"q_dr", L"q_veach", L"q_ambiv", L"is_simple", L"max_shp", L"chk_scl", L"both_simple", L"scalar", L"conjugate", L"add", L"rgt", L"lft", L"rho", L"cat", L"eqv", L"nqv", L"dis"};
+wchar_t *cdf_prim_names[] = {L"q_signal", L"q_dr", L"q_veach", L"q_ambiv", L"squeeze", L"is_simple", L"is_numeric", L"max_shp", L"chk_scl", L"both_simple", L"both_numeric", L"scalar", L"conjugate", L"add_vec", L"add", L"rgt", L"lft", L"rho", L"cat", L"eqv", L"nqv", L"dis"};
 
 EXPORT int
 cdf_prim_init(void)
@@ -96,18 +108,22 @@ cdf_prim_init(void)
 	cdf_prim_flag = 1;
 	cdf_prim_init();
 
-	loc.__count = 18;
+	loc.__count = 22;
 	loc.__names = cdf_prim_names;
 	loc.q_signal = NULL;
 	loc.q_dr = NULL;
 	loc.q_veach = NULL;
 	loc.q_ambiv = NULL;
+	loc.squeeze = NULL;
 	loc.is_simple = NULL;
+	loc.is_numeric = NULL;
 	loc.max_shp = NULL;
 	loc.chk_scl = NULL;
 	loc.both_simple = NULL;
+	loc.both_numeric = NULL;
 	loc.scalar = NULL;
 	loc.conjugate = NULL;
+	loc.add_vec = NULL;
 	loc.add = NULL;
 	loc.rgt = NULL;
 	loc.lft = NULL;
@@ -131,7 +147,13 @@ cdf_prim_init(void)
 	loc.q_ambiv = *stkhd++ = retain_cell(q_ambiv_ibeam);
 	release_cell(*--stkhd);
 	
+	loc.squeeze = *stkhd++ = retain_cell(squeeze_ibeam);
+	release_cell(*--stkhd);
+	
 	loc.is_simple = *stkhd++ = retain_cell(is_simple_ibeam);
+	release_cell(*--stkhd);
+	
+	loc.is_numeric = *stkhd++ = retain_cell(is_numeric_ibeam);
 	release_cell(*--stkhd);
 	
 	loc.max_shp = *stkhd++ = retain_cell(max_shp_ibeam);
@@ -140,7 +162,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr254, 0);
+		err = mk_func(&fn, ptr303, 0);
 	
 		if (err)
 			goto cleanup;
@@ -154,7 +176,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr255, 1);
+		err = mk_func(&fn, ptr304, 1);
 	
 		if (err)
 			goto cleanup;
@@ -170,7 +192,23 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr256, 3);
+		err = mk_func(&fn, ptr305, 1);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = retain_cell(loc.is_numeric);
+	
+		*stkhd++ = fn;
+	}
+	
+	loc.both_numeric = *stkhd++ = retain_cell(*--stkhd);
+	release_cell(*--stkhd);
+	
+	{
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr306, 3);
 	
 		if (err)
 			goto cleanup;
@@ -188,10 +226,12 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr257, 0);
+		err = mk_func(&fn, ptr307, 1);
 	
 		if (err)
 			goto cleanup;
+	
+		fn->fv[0] = retain_cell(loc.squeeze);
 	
 		*stkhd++ = fn;
 	}
@@ -200,7 +240,23 @@ cdf_prim_init(void)
 	release_cell(*--stkhd);
 	
 	{
-		struct cell_func *x = add_vec;
+		struct cell_func *fn;
+	
+		err = mk_func(&fn, ptr308, 1);
+	
+		if (err)
+			goto cleanup;
+	
+		fn->fv[0] = retain_cell(loc.both_numeric);
+	
+		*stkhd++ = fn;
+	}
+	
+	loc.add_vec = *stkhd++ = retain_cell(*--stkhd);
+	release_cell(*--stkhd);
+	
+	{
+		struct cell_func *x = loc.add_vec;
 		struct cell_func *op = loc.scalar;
 		struct cell_func **dst = (struct cell_func **)stkhd++;
 	
@@ -231,7 +287,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr258, 0);
+		err = mk_func(&fn, ptr309, 0);
 	
 		if (err)
 			goto cleanup;
@@ -245,7 +301,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr259, 0);
+		err = mk_func(&fn, ptr310, 0);
 	
 		if (err)
 			goto cleanup;
@@ -275,7 +331,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr260, 0);
+		err = mk_func(&fn, ptr311, 0);
 	
 		if (err)
 			goto cleanup;
@@ -303,7 +359,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr261, 0);
+		err = mk_func(&fn, ptr312, 0);
 	
 		if (err)
 			goto cleanup;
@@ -331,7 +387,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr263, 0);
+		err = mk_func(&fn, ptr314, 0);
 	
 		if (err)
 			goto cleanup;
@@ -342,7 +398,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr262, 0);
+		err = mk_func(&fn, ptr313, 0);
 	
 		if (err)
 			goto cleanup;
@@ -371,7 +427,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *fn;
 	
-		err = mk_func(&fn, ptr264, 0);
+		err = mk_func(&fn, ptr315, 0);
 	
 		if (err)
 			goto cleanup;
@@ -405,7 +461,7 @@ cleanup:
 }
 
 int
-ptr254(struct cell_array **z,
+ptr303(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -846,7 +902,7 @@ cleanup:
 }
 
 int
-ptr255(struct cell_array **z,
+ptr304(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -934,7 +990,95 @@ cleanup:
 }
 
 int
-ptr256(struct cell_array **z,
+ptr305(struct cell_array **z,
+    struct cell_array *alpha, struct cell_array *omega,
+    struct cell_func *self)
+{
+
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+	struct lex_vars {
+		struct cell_func *is_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	stkhd = &stk[0];
+	err = -1;
+
+	{
+		struct cell_func *fn = lex->is_numeric;
+		struct cell_array *arg = alpha;
+		struct cell_array **dst = (struct cell_array **)stkhd++;
+	
+		err = (fn->fptr)(dst, NULL, arg, fn);
+	
+		if (err)
+			goto cleanup;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		err = guard_check(x);
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_func *fn = lex->is_numeric;
+				struct cell_array *arg = omega;
+				struct cell_array **dst = (struct cell_array **)stkhd++;
+			
+				err = (fn->fptr)(dst, NULL, arg, fn);
+			
+				if (err)
+					goto cleanup;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+	
+		if (err)
+			goto cleanup;
+	
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
+	*z = *--stkhd;
+	goto cleanup;
+	
+cleanup:
+	release_env(stk, stkhd);
+	return err;
+}
+
+int
+ptr306(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1114,7 +1258,7 @@ cleanup:
 }
 
 int
-ptr257(struct cell_array **z,
+ptr307(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1123,15 +1267,34 @@ ptr257(struct cell_array **z,
 	void **stkhd;
 	int err;
 
+	struct lex_vars {
+		struct cell_func *squeeze;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	stkhd = &stk[0];
 	err = -1;
 
 	{
-		struct cell_func *fn = cdf_prim.q_dr;
+		struct cell_func *fn = lex->squeeze;
 		struct cell_array *arg = omega;
 		struct cell_array **dst = (struct cell_array **)stkhd++;
 	
 		err = (fn->fptr)(dst, NULL, arg, fn);
+	
+		if (err)
+			goto cleanup;
+	}
+	
+	{
+		struct cell_func *fn = cdf_prim.q_dr;
+		struct cell_array *arg = *--stkhd;
+		struct cell_array **dst = (struct cell_array **)stkhd++;
+	
+		err = (fn->fptr)(dst, NULL, arg, fn);
+	
+		release_array(arg);
 	
 		if (err)
 			goto cleanup;
@@ -1212,7 +1375,110 @@ cleanup:
 }
 
 int
-ptr258(struct cell_array **z,
+ptr308(struct cell_array **z,
+    struct cell_array *alpha, struct cell_array *omega,
+    struct cell_func *self)
+{
+
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+	struct lex_vars {
+		struct cell_func *both_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	stkhd = &stk[0];
+	err = -1;
+
+	{
+		struct cell_array *x = alpha;
+		struct cell_func *fn = lex->both_numeric;
+		struct cell_array *y = omega;
+		struct cell_array **dst = (struct cell_array **)stkhd++;
+	
+		err = (fn->fptr)(dst, x, y, fn);
+	
+		if (err)
+			goto cleanup;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		err = guard_check(x);
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *x = alpha;
+				struct cell_func *fn = add_vec_ibeam;
+				struct cell_array *y = omega;
+				struct cell_array **dst = (struct cell_array **)stkhd++;
+			
+				err = (fn->fptr)(dst, x, y, fn);
+			
+				if (err)
+					goto cleanup;
+			}
+			
+			err = -1;
+			goto cleanup;
+		}
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {11};
+	
+		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+	
+		if (err)
+			goto cleanup;
+	
+	
+		err = fill_array(arr, dat);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = arr;
+	}
+	{
+		struct cell_func *fn = cdf_prim.q_signal;
+		struct cell_array *arg = *--stkhd;
+		struct cell_array **dst = (struct cell_array **)stkhd++;
+	
+		err = (fn->fptr)(dst, NULL, arg, fn);
+	
+		release_array(arg);
+	
+		if (err)
+			goto cleanup;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+cleanup:
+	release_env(stk, stkhd);
+	return err;
+}
+
+int
+ptr309(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1234,7 +1500,7 @@ cleanup:
 }
 
 int
-ptr259(struct cell_array **z,
+ptr310(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1256,7 +1522,7 @@ cleanup:
 }
 
 int
-ptr260(struct cell_array **z,
+ptr311(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1310,7 +1576,7 @@ cleanup:
 }
 
 int
-ptr261(struct cell_array **z,
+ptr312(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1364,7 +1630,7 @@ cleanup:
 }
 
 int
-ptr262(struct cell_array **z,
+ptr313(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1409,7 +1675,7 @@ cleanup:
 }
 
 int
-ptr263(struct cell_array **z,
+ptr314(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1463,7 +1729,7 @@ cleanup:
 }
 
 int
-ptr264(struct cell_array **z,
+ptr315(struct cell_array **z,
     struct cell_array *alpha, struct cell_array *omega,
     struct cell_func *self)
 {
@@ -1589,6 +1855,24 @@ q_ambiv_dwa(void *z, void *l, void *r)
 }
 
 EXPORT int
+squeeze(struct cell_array **z, struct cell_array *l, struct cell_array *r)
+{
+	struct cell_func *self;
+
+	cdf_prim_init();
+
+	self = cdf_prim.squeeze;
+
+	return self->fptr(z, l, r, self);
+}
+
+EXPORT int
+squeeze_dwa(void *z, void *l, void *r)
+{
+	return call_dwa(squeeze, z, l, r);
+}
+
+EXPORT int
 is_simple(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
@@ -1604,6 +1888,24 @@ EXPORT int
 is_simple_dwa(void *z, void *l, void *r)
 {
 	return call_dwa(is_simple, z, l, r);
+}
+
+EXPORT int
+is_numeric(struct cell_array **z, struct cell_array *l, struct cell_array *r)
+{
+	struct cell_func *self;
+
+	cdf_prim_init();
+
+	self = cdf_prim.is_numeric;
+
+	return self->fptr(z, l, r, self);
+}
+
+EXPORT int
+is_numeric_dwa(void *z, void *l, void *r)
+{
+	return call_dwa(is_numeric, z, l, r);
 }
 
 EXPORT int
@@ -1661,6 +1963,24 @@ both_simple_dwa(void *z, void *l, void *r)
 }
 
 EXPORT int
+both_numeric(struct cell_array **z, struct cell_array *l, struct cell_array *r)
+{
+	struct cell_func *self;
+
+	cdf_prim_init();
+
+	self = cdf_prim.both_numeric;
+
+	return self->fptr(z, l, r, self);
+}
+
+EXPORT int
+both_numeric_dwa(void *z, void *l, void *r)
+{
+	return call_dwa(both_numeric, z, l, r);
+}
+
+EXPORT int
 conjugate(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
@@ -1676,6 +1996,24 @@ EXPORT int
 conjugate_dwa(void *z, void *l, void *r)
 {
 	return call_dwa(conjugate, z, l, r);
+}
+
+EXPORT int
+add_vec(struct cell_array **z, struct cell_array *l, struct cell_array *r)
+{
+	struct cell_func *self;
+
+	cdf_prim_init();
+
+	self = cdf_prim.add_vec;
+
+	return self->fptr(z, l, r, self);
+}
+
+EXPORT int
+add_vec_dwa(void *z, void *l, void *r)
+{
+	return call_dwa(add_vec, z, l, r);
 }
 
 EXPORT int

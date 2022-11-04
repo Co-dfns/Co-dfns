@@ -7,15 +7,19 @@ q_veach←'q_veach_ibeam'⌶
 q_ambiv←'q_ambiv_ibeam'⌶
 
 ⍝ Utilities
+squeeze←'squeeze_ibeam'⌶
 is_simple←'is_simple_ibeam'⌶
+is_numeric←'is_numeric_ibeam'⌶
 max_shp←'max_shp_ibeam'⌶
 chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
 both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
+both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}
 
 ⍝ +: Conjugate | Addition
-conjugate←{1289≡⎕DR ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}
-add←conjugate ⎕AMBIV ('add_vec'⌶ scalar)
+conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}
+add_vec←{⍺ both_numeric ⍵:⍺('add_vec_ibeam'⌶)⍵ ⋄ ⎕SIGNAL 11}
+add←conjugate ⎕AMBIV (add_vec scalar)
 
 ⍝ ×: Sign | Multiply
 
