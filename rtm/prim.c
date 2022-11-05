@@ -528,7 +528,7 @@ ptr303(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				err = mk_array(&arr, typ, STG_DEVICE, rnk);
+				err = mk_array(&arr, typ, STG_HOST, rnk);
 			
 				if (err)
 					goto cleanup;
@@ -580,7 +580,7 @@ ptr303(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -626,7 +626,7 @@ ptr303(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				err = mk_array(&arr, typ, STG_DEVICE, rnk);
+				err = mk_array(&arr, typ, STG_HOST, rnk);
 			
 				if (err)
 					goto cleanup;
@@ -678,7 +678,7 @@ ptr303(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -724,7 +724,7 @@ ptr303(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				err = mk_array(&arr, typ, STG_DEVICE, rnk);
+				err = mk_array(&arr, typ, STG_HOST, rnk);
 			
 				if (err)
 					goto cleanup;
@@ -826,7 +826,7 @@ ptr303(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				err = mk_array(&arr, typ, STG_DEVICE, rnk);
+				err = mk_array(&arr, typ, STG_HOST, rnk);
 			
 				if (err)
 					goto cleanup;
@@ -867,7 +867,7 @@ ptr303(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {4};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -968,7 +968,7 @@ ptr304(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -1056,7 +1056,7 @@ ptr305(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -1307,7 +1307,7 @@ ptr307(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1289};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -1443,7 +1443,7 @@ ptr308(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {11};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -1541,7 +1541,7 @@ ptr311(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -1595,7 +1595,7 @@ ptr312(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -1694,7 +1694,7 @@ ptr314(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
@@ -1748,7 +1748,7 @@ ptr315(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		err = mk_array(&arr, typ, STG_DEVICE, rnk);
+		err = mk_array(&arr, typ, STG_HOST, rnk);
 	
 		if (err)
 			goto cleanup;
