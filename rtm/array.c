@@ -965,6 +965,21 @@ array_migrate_storage(struct cell_array *arr, enum array_storage stg)
 }
 
 int
+array_promote_storage(struct cell_array *l, struct cell_array *r)
+{
+	int err;
+	
+	if (l->storage == STG_DEVICE)
+		if (err = array_migrate_storage(r, STG_DEVICE))
+			return err;
+	else if (r->storage == STG_DEVICE)
+		if (err = array_migrate_storage(l, STG_DEVICE))
+			return err;
+	
+	return 0;
+}
+
+int
 array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 {
 	size_t count;
@@ -1006,14 +1021,9 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 		return 16;
 	}
 	
-	if (l->storage == STG_DEVICE)
-		if (err = array_migrate_storage(r, STG_DEVICE))
-			return err;
+	if (err = array_promote_storage(l, r))
+		return err;
 	
-	if (r->storage == STG_DEVICE)
-		if (err = array_migrate_storage(l, STG_DEVICE))
-			return err;
-
 	if (l->storage == STG_DEVICE) {
 		af_array t;
 		double real, imag;
