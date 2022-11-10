@@ -21,9 +21,9 @@ NS←{
 		_←'FREA'⎕NA ⍵,'|frea P'
 		_←'Sync'⎕NA ⍵,'|cd_sync'
 		0 0 ⍴ ⍬}
-	mkna←{'I ',⍺,'|',('∆'⎕R'__'⊢⍵),' P P P'}
+	mkna←{'I ',⍺,'|',((,¨'∆⍙')⎕R'_del_' '_delubar_'⊢⍵),' P P P'}
 	mkf←{
-		fn←⍺,'|',('∆'⎕R'__'⊢⍵),'_dwa '
+		fn←⍺,'|',((,¨'∆⍙')⎕R'_del_' '_delubar_'⊢⍵),'_dwa '
 		z←⊂'Z←{A}',⍵,' W;err'
 		z,←⊂':If 0=⎕NC''⍙.',⍵,'_mon'''
 		z,←⊂'       ''',⍵,'_mon''⍙.⎕NA''I ',fn,'>PP P <PP'''
