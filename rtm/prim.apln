@@ -11,7 +11,13 @@ squeeze←'squeeze_ibeam'⌶
 is_simple←'is_simple_ibeam'⌶
 is_numeric←'is_numeric_ibeam'⌶
 max_shp←'max_shp_ibeam'⌶
+has_nat_vals←'has_nat_vals_ibeam'⌶
 chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
+chk_valid_shape←{
+	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4
+	{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
+	0
+}
 both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
 both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}
@@ -34,7 +40,8 @@ rgt←{⍵}
 lft←{⍺}
 
 ⍝ ⍴: Shape / Reshape
-rho←('shape_ibeam'⌶) ⎕AMBIV ('reshape_ibeam'⌶)
+reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
+rho←('shape_ibeam'⌶) ⎕AMBIV reshape
 
 ⍝ ,: Ravel / Catenate
 cat←('ravel_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}

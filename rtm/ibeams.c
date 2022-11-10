@@ -282,20 +282,10 @@ reshape_func(struct cell_array **z,
 	char *buf;
 	size_t tc, rc, blocks, tail, rsize;
 	af_array rvals;
-	int err, is_nat;
+	int err;
 	unsigned int rank;
 	
-	rvals = NULL;
-	
-	if (l->rank > 1)
-		return 4;
-	
-	if (err = has_natural_values(&is_nat, l))
-		return err;
-	
-	if (!is_nat)
-		return 11;	
-	
+	rvals = NULL;	
 	rank = 1;
 	
 	if (l->rank == 1) {
