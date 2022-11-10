@@ -363,7 +363,11 @@ PS←{
 		k[i]←k[vb[i←⍸t∊B V]]
 	≢z}⍣(=∨0=⊣)≢z
 	'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
-
+	
+	⍝ Compute exports
+	msk←(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
+	xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
+	
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
@@ -494,10 +498,6 @@ PS←{
 	msk←((t=A)∧k=7)∨(t=A)∧0=≡¨n ⋄ msk[p]∧←msk ⋄ i←⍸msk←msk∧msk[p]
 	k[p[i]]←1 ⋄ n[p[i]],←n[i]
 	t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)(~msk)⌿p
-
-	⍝ Compute parser exports
-	msk←(t=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
-	xn←(0⍴⊂''),msk⌿n ⋄ xt←msk⌿k
 
 	⍝ Adjust AST for output
 	d i←P2D p ⋄ d n t k lx pos end I∘⊢←⊂i
