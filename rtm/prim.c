@@ -470,7 +470,7 @@ ptr303(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_func *fn = cdf_prim.rho;
@@ -895,6 +895,8 @@ ptr303(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -917,7 +919,7 @@ ptr304(struct cell_array **z,
 	lex = (struct lex_vars *)self->fv;
 	
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_func *fn = lex->is_simple;
@@ -983,6 +985,8 @@ ptr304(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1005,7 +1009,7 @@ ptr305(struct cell_array **z,
 	lex = (struct lex_vars *)self->fv;
 	
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_func *fn = lex->is_numeric;
@@ -1071,6 +1075,8 @@ ptr305(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1107,7 +1113,7 @@ ptr306(struct cell_array **z,
 	
 	loc->s = NULL;
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_array *x = alpha;
@@ -1252,6 +1258,8 @@ ptr306(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	release_env((void **)&loc, (void **)(&loc + 1));
@@ -1275,7 +1283,7 @@ ptr307(struct cell_array **z,
 	lex = (struct lex_vars *)self->fv;
 	
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_func *fn = lex->squeeze;
@@ -1370,6 +1378,8 @@ ptr307(struct cell_array **z,
 	retain_cell(omega);
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1392,7 +1402,7 @@ ptr308(struct cell_array **z,
 	lex = (struct lex_vars *)self->fv;
 	
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_array *x = alpha;
@@ -1473,6 +1483,8 @@ ptr308(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1489,12 +1501,14 @@ ptr309(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	*z = omega;
 	retain_cell(omega);
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1511,12 +1525,14 @@ ptr310(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	*z = alpha;
 	retain_cell(alpha);
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1533,7 +1549,7 @@ ptr311(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_array *arr;
@@ -1571,6 +1587,8 @@ ptr311(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1587,7 +1605,7 @@ ptr312(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_array *arr;
@@ -1625,6 +1643,8 @@ ptr312(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1641,7 +1661,7 @@ ptr313(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_func *fn = cdf_prim.rho;
@@ -1670,6 +1690,8 @@ ptr313(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1686,7 +1708,7 @@ ptr314(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_array *arr;
@@ -1724,6 +1746,8 @@ ptr314(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;
@@ -1740,7 +1764,7 @@ ptr315(struct cell_array **z,
 	int err;
 
 	stkhd = &stk[0];
-	err = -1;
+	err = 0;
 
 	{
 		struct cell_array *arr;
@@ -1778,6 +1802,8 @@ ptr315(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
+	err = -1;
+
 cleanup:
 	release_env(stk, stkhd);
 	return err;

@@ -444,9 +444,11 @@ GC←{
 		z,← '	',¨(decl_loc,'self'∘decl_lex)⍵
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = -1;'
+		z,←⊂'	err = 0;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←⊂'	err = -1;'
+		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)&loc, (void **)(&loc + 1));')⌿⍨0≠≢⊃lv[⍵]
@@ -481,9 +483,11 @@ GC←{
 		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = -1;'
+		z,←⊂'	err = 0;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←⊂'	err = -1;'
+		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)&loc, (void **)(&loc + 1));')⌿⍨0≠≢⊃lv[⍵]
@@ -519,9 +523,11 @@ GC←{
 		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = -1;'
+		z,←⊂'	err = 0;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←⊂'	err = -1;'
+		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)&loc, (void **)(&loc + 1));')⌿⍨0≠≢⊃lv[⍵]
