@@ -22,7 +22,7 @@ GC←{
 	}
 
 	var_scopes←{
-		'loc.' 'lex->' 'dyn->' 'cdf_prim.' '' ''[lx[⍵]]
+		(0⍴⊂''),'loc.' 'lex->' 'dyn->' 'cdf_prim.' '' ''[lx[⍵]]
 	}
 
 	var_nmvec←{
@@ -156,6 +156,7 @@ GC←{
 	⍝ B: Function bindings
 	i←⍸t[p]=B
 	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
 		tgt src←var_values ⍵
 		⊂⊂tgt,' = *stkhd++ = retain_cell(',src,');'
 	}⌸i
@@ -163,6 +164,7 @@ GC←{
 	⍝ C: Closures for functions
 	i←⍸t[p]=C
 	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
 		id vs←{(⊃⍵)(1↓⍵)}⍵
 		id←⊃var_refs id
 		vs←var_refs vs[⍋n[vs]]
