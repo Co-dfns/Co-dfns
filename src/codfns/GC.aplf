@@ -22,7 +22,7 @@ GC←{
 	}
 
 	var_scopes←{
-		(0⍴⊂''),'loc.' 'lex->' 'dyn->' 'cdf_prim.' '' ''[lx[⍵]]
+		(0⍴⊂''),'loc->' 'lex->' 'dyn->' 'cdf_prim.' '' ''[lx[⍵]]
 	}
 
 	var_nmvec←{
@@ -417,7 +417,9 @@ GC←{
 		0=≢v←⊃lv[⍵]:0⍴⊂''
 		z ←⊂'struct {'
 		z,←'	',¨decl_vars v
-		z,←⊂'} loc;'
+		z,←⊂'} loc_frm, *loc;'
+		z,←⊂''
+		z,←⊂'loc = &loc_frm;'
 		z,⊂''
 	}
 
@@ -545,7 +547,7 @@ GC←{
 		z,←⊂'EXPORT int'
 		z,←⊂id,'_init(void)'
 		z,←⊂'{'
-		z,←⊂'	struct ',id,'_loc loc;'
+		z,←⊂'	struct ',id,'_loc *loc;'
 		z,←⊂'	void *stk[128];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
@@ -557,15 +559,14 @@ GC←{
 		z,←⊂'	',id,'_flag = 1;'
 		z,←⊂'	cdf_prim_init();'
 		z,←⊂''
-		z,←⊂'	loc.__count = ',(⍕≢⊃lv[⍵]),';'
-		z,←⊂'	loc.__names = ',id,'_names;'
+		z,←⊂'	loc = &',id,';'
+		z,←⊂'	loc->__count = ',(⍕≢⊃lv[⍵]),';'
+		z,←⊂'	loc->__names = ',id,'_names;'
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂''
 		z,←⊂'	err = 0;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
-		z,←⊂''
-		z,←⊂'	',id,' = loc;'
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'

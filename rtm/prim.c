@@ -96,7 +96,7 @@ wchar_t *cdf_prim_names[] = {L"q_signal", L"q_dr", L"q_veach", L"q_ambiv", L"squ
 EXPORT int
 cdf_prim_init(void)
 {
-	struct cdf_prim_loc loc;
+	struct cdf_prim_loc *loc;
 	void *stk[128];
 	void **stkhd;
 	int err;
@@ -108,55 +108,56 @@ cdf_prim_init(void)
 	cdf_prim_flag = 1;
 	cdf_prim_init();
 
-	loc.__count = 22;
-	loc.__names = cdf_prim_names;
-	loc.q_signal = NULL;
-	loc.q_dr = NULL;
-	loc.q_veach = NULL;
-	loc.q_ambiv = NULL;
-	loc.squeeze = NULL;
-	loc.is_simple = NULL;
-	loc.is_numeric = NULL;
-	loc.max_shp = NULL;
-	loc.chk_scl = NULL;
-	loc.both_simple = NULL;
-	loc.both_numeric = NULL;
-	loc.scalar = NULL;
-	loc.conjugate = NULL;
-	loc.add_vec = NULL;
-	loc.add = NULL;
-	loc.rgt = NULL;
-	loc.lft = NULL;
-	loc.rho = NULL;
-	loc.cat = NULL;
-	loc.eqv = NULL;
-	loc.nqv = NULL;
-	loc.dis = NULL;
+	loc = &cdf_prim;
+	loc->__count = 22;
+	loc->__names = cdf_prim_names;
+	loc->q_signal = NULL;
+	loc->q_dr = NULL;
+	loc->q_veach = NULL;
+	loc->q_ambiv = NULL;
+	loc->squeeze = NULL;
+	loc->is_simple = NULL;
+	loc->is_numeric = NULL;
+	loc->max_shp = NULL;
+	loc->chk_scl = NULL;
+	loc->both_simple = NULL;
+	loc->both_numeric = NULL;
+	loc->scalar = NULL;
+	loc->conjugate = NULL;
+	loc->add_vec = NULL;
+	loc->add = NULL;
+	loc->rgt = NULL;
+	loc->lft = NULL;
+	loc->rho = NULL;
+	loc->cat = NULL;
+	loc->eqv = NULL;
+	loc->nqv = NULL;
+	loc->dis = NULL;
 
 	err = 0;
 
-	loc.q_signal = *stkhd++ = retain_cell(q_signal_ibeam);
+	loc->q_signal = *stkhd++ = retain_cell(q_signal_ibeam);
 	release_cell(*--stkhd);
 	
-	loc.q_dr = *stkhd++ = retain_cell(q_dr_ibeam);
+	loc->q_dr = *stkhd++ = retain_cell(q_dr_ibeam);
 	release_cell(*--stkhd);
 	
-	loc.q_veach = *stkhd++ = retain_cell(q_veach_ibeam);
+	loc->q_veach = *stkhd++ = retain_cell(q_veach_ibeam);
 	release_cell(*--stkhd);
 	
-	loc.q_ambiv = *stkhd++ = retain_cell(q_ambiv_ibeam);
+	loc->q_ambiv = *stkhd++ = retain_cell(q_ambiv_ibeam);
 	release_cell(*--stkhd);
 	
-	loc.squeeze = *stkhd++ = retain_cell(squeeze_ibeam);
+	loc->squeeze = *stkhd++ = retain_cell(squeeze_ibeam);
 	release_cell(*--stkhd);
 	
-	loc.is_simple = *stkhd++ = retain_cell(is_simple_ibeam);
+	loc->is_simple = *stkhd++ = retain_cell(is_simple_ibeam);
 	release_cell(*--stkhd);
 	
-	loc.is_numeric = *stkhd++ = retain_cell(is_numeric_ibeam);
+	loc->is_numeric = *stkhd++ = retain_cell(is_numeric_ibeam);
 	release_cell(*--stkhd);
 	
-	loc.max_shp = *stkhd++ = retain_cell(max_shp_ibeam);
+	loc->max_shp = *stkhd++ = retain_cell(max_shp_ibeam);
 	release_cell(*--stkhd);
 	
 	{
@@ -170,7 +171,7 @@ cdf_prim_init(void)
 		*stkhd++ = fn;
 	}
 	
-	loc.chk_scl = *stkhd++ = retain_cell(*--stkhd);
+	loc->chk_scl = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -181,12 +182,12 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = retain_cell(loc.is_simple);
+		fn->fv[0] = retain_cell(loc->is_simple);
 	
 		*stkhd++ = fn;
 	}
 	
-	loc.both_simple = *stkhd++ = retain_cell(*--stkhd);
+	loc->both_simple = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -197,12 +198,12 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = retain_cell(loc.is_numeric);
+		fn->fv[0] = retain_cell(loc->is_numeric);
 	
 		*stkhd++ = fn;
 	}
 	
-	loc.both_numeric = *stkhd++ = retain_cell(*--stkhd);
+	loc->both_numeric = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -213,14 +214,14 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = retain_cell(loc.both_simple);
-		fn->fv[1] = retain_cell(loc.chk_scl);
-		fn->fv[2] = retain_cell(loc.max_shp);
+		fn->fv[0] = retain_cell(loc->both_simple);
+		fn->fv[1] = retain_cell(loc->chk_scl);
+		fn->fv[2] = retain_cell(loc->max_shp);
 	
 		*stkhd++ = fn;
 	}
 	
-	loc.scalar = *stkhd++ = retain_cell(*--stkhd);
+	loc->scalar = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -231,12 +232,12 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = retain_cell(loc.squeeze);
+		fn->fv[0] = retain_cell(loc->squeeze);
 	
 		*stkhd++ = fn;
 	}
 	
-	loc.conjugate = *stkhd++ = retain_cell(*--stkhd);
+	loc->conjugate = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -247,17 +248,17 @@ cdf_prim_init(void)
 		if (err)
 			goto cleanup;
 	
-		fn->fv[0] = retain_cell(loc.both_numeric);
+		fn->fv[0] = retain_cell(loc->both_numeric);
 	
 		*stkhd++ = fn;
 	}
 	
-	loc.add_vec = *stkhd++ = retain_cell(*--stkhd);
+	loc->add_vec = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
-		struct cell_func *x = loc.add_vec;
-		struct cell_func *op = loc.scalar;
+		struct cell_func *x = loc->add_vec;
+		struct cell_func *op = loc->scalar;
 		struct cell_func **dst = (struct cell_func **)stkhd++;
 	
 		err = apply_mop(dst, op, x);
@@ -268,7 +269,7 @@ cdf_prim_init(void)
 	}
 	
 	{
-		struct cell_func *x = loc.conjugate;
+		struct cell_func *x = loc->conjugate;
 		struct cell_func *op = cdf_prim.q_ambiv;
 		struct cell_func *y = *--stkhd;
 		struct cell_func **dst = (struct cell_func **)stkhd++;
@@ -281,7 +282,7 @@ cdf_prim_init(void)
 			goto cleanup;
 	}
 	
-	loc.add = *stkhd++ = retain_cell(*--stkhd);
+	loc->add = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -295,7 +296,7 @@ cdf_prim_init(void)
 		*stkhd++ = fn;
 	}
 	
-	loc.rgt = *stkhd++ = retain_cell(*--stkhd);
+	loc->rgt = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -309,7 +310,7 @@ cdf_prim_init(void)
 		*stkhd++ = fn;
 	}
 	
-	loc.lft = *stkhd++ = retain_cell(*--stkhd);
+	loc->lft = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -325,7 +326,7 @@ cdf_prim_init(void)
 			goto cleanup;
 	}
 	
-	loc.rho = *stkhd++ = retain_cell(*--stkhd);
+	loc->rho = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -353,7 +354,7 @@ cdf_prim_init(void)
 			goto cleanup;
 	}
 	
-	loc.cat = *stkhd++ = retain_cell(*--stkhd);
+	loc->cat = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -381,7 +382,7 @@ cdf_prim_init(void)
 			goto cleanup;
 	}
 	
-	loc.eqv = *stkhd++ = retain_cell(*--stkhd);
+	loc->eqv = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -421,7 +422,7 @@ cdf_prim_init(void)
 			goto cleanup;
 	}
 	
-	loc.nqv = *stkhd++ = retain_cell(*--stkhd);
+	loc->nqv = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -449,11 +450,9 @@ cdf_prim_init(void)
 			goto cleanup;
 	}
 	
-	loc.dis = *stkhd++ = retain_cell(*--stkhd);
+	loc->dis = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
-
-	cdf_prim = loc;
 
 cleanup:
 	release_env(stk, stkhd);
@@ -1094,7 +1093,9 @@ ptr306(struct cell_array **z,
 
 	struct {
 		struct cell_array *s;
-	} loc;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
 	
 	struct lex_vars {
 		struct cell_func *both_simple;
@@ -1104,7 +1105,7 @@ ptr306(struct cell_array **z,
 	
 	lex = (struct lex_vars *)deldel->fv;
 	
-	loc.s = NULL;
+	loc->s = NULL;
 	stkhd = &stk[0];
 	err = -1;
 
@@ -1148,7 +1149,7 @@ ptr306(struct cell_array **z,
 			goto cleanup;
 	}
 	
-	loc.s = *stkhd++ = retain_cell(*--stkhd);
+	loc->s = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -1190,7 +1191,7 @@ ptr306(struct cell_array **z,
 			}
 			
 			{
-				struct cell_array *x = loc.s;
+				struct cell_array *x = loc->s;
 				struct cell_func *fn = cdf_prim.rho;
 				struct cell_array *y = *--stkhd;
 				struct cell_array **dst = (struct cell_array **)stkhd++;
@@ -1235,7 +1236,7 @@ ptr306(struct cell_array **z,
 	}
 	
 	{
-		struct cell_array *x = loc.s;
+		struct cell_array *x = loc->s;
 		struct cell_func *fn = cdf_prim.rho;
 		struct cell_array *y = *--stkhd;
 		struct cell_array **dst = (struct cell_array **)stkhd++;
