@@ -36,6 +36,14 @@ recip←{⎕SIGNAL 16}
 div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⍳: Index Generate | Index Of
+index_gen←{
+	chk_valid_shape ⍵: 
+	0≡≢,⍵:⊂⍬
+	1≡≢,⍵:'index_gen_vec'⌶ ⍵
+	⎕SIGNAL 16
+}
+index_of←{⎕SIGNAL 16}
+iot←index_gen ⎕AMBIV index_of
 
 ⍝ ⊢: Right
 rgt←{⍵}
@@ -58,5 +66,8 @@ nqv←{⊃⍴⍵} ⎕AMBIV {⎕SIGNAL 16}
 
 ⍝ ⊃: First / Pick
 dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
+
+⍝ ⊂: Enclose / Partition
+par←{⎕SIGNAL 16} ⎕AMBIV {⎕SIGNAL 16}
 
 :EndNamespace
