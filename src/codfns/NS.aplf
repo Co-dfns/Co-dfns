@@ -24,17 +24,19 @@ NS←{
 	mkna←{'I ',⍺,'|',((,¨'∆⍙')⎕R'_del_' '_delubar_'⊢⍵),' P P P'}
 	mkf←{
 		fn←⍺,'|',((,¨'∆⍙')⎕R'_del_' '_delubar_'⊢⍵),'_dwa '
-		z←⊂'Z←{A}',⍵,' W;err'
+		z←⊂'Z←{A}',⍵,' W;err;res'
 		z,←⊂':If 0=⎕NC''⍙.',⍵,'_mon'''
 		z,←⊂'       ''',⍵,'_mon''⍙.⎕NA''I ',fn,'>PP P <PP'''
 		z,←⊂'       ''',⍵,'_dya''⍙.⎕NA''I ',fn,'>PP <PP <PP'''
 		z,←⊂':EndIf'
 		z,←⊂':If 0=⎕NC''A'''
-		z,←⊂'       err Z←⍙.',⍵,'_mon 0 0 W'
+		z,←⊂'       err res←⍙.',⍵,'_mon 0 0 W'
 		z,←⊂':Else'
-		z,←⊂'       err Z←⍙.',⍵,'_dya 0 A W'
+		z,←⊂'       err res←⍙.',⍵,'_dya 0 A W'
 		z,←⊂':EndIf'
+		z,←⊂'→(err<0)⌿0'
 		z,←⊂'⎕SIGNAL err'
+		z,←⊂'Z←res'
 		z
 	}
 	ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙)

@@ -38,20 +38,8 @@ struct localp {
 	void *i;
 };
 
-struct pocket *
-(*dwa_getarray_ptr)(enum dwa_type, unsigned int, long long *, struct localp *);
-
-struct pocket *
-getarray(enum dwa_type type, unsigned rank, long long *shape, struct localp *lp)
-{
-	return dwa_getarray_ptr(type, rank, shape, lp);
-}
-
-DECLSPEC void
-set_codfns_getarray(void *fn)
-{
-	dwa_getarray_ptr = fn;
-}
+struct pocket *(*getarray)(enum dwa_type, unsigned int, long long *, struct localp *);
+struct pocket *(*scalnum)(int);
 
 DECLSPEC int
 set_dwafns(void *p)
@@ -66,7 +54,8 @@ set_dwafns(void *p)
 	if (dwa->size < (long long)sizeof(struct dwa_fns))
 		return 16;
 
-	set_codfns_getarray(dwa->ws->fns[0]);
+	getarray = dwa->ws->fns[0];
+	scalnum = dwa->ws->fns[12];
 
 	return 0;
 }
@@ -359,18 +348,14 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	rp = rptr;
 	
 	if (lp)
-		err = dwa2array(&l, lp->pocket);
-	
-	if (err)
-		return err;
+		if (err = dwa2array(&l, lp->pocket))
+			return err;
 	
 	if (rp)
-		err = dwa2array(&r, rp->pocket);
-	
-	if (err) {
-		release_array(l);
-		return err;
-	}
+		if (err = dwa2array(&r, rp->pocket)) {
+			release_array(l);
+			return err;
+		}
 	
 	z = NULL;
 	err = fn(&z, l, r);
@@ -378,15 +363,21 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	release_array(l);
 	release_array(r);
 	
+	if (err == -1) {
+		zp->pocket = scalnum(0);
+		return err;
+	}
+		
+	
 	if (err)
 		return err;
 	
 	err = array2dwa(NULL, z, zp);
-	
+
 	release_array(z);
 	
 	if (err)
 		return err;
-	
+		
 	return 0;
 }
