@@ -301,13 +301,20 @@ reshape_func(struct cell_array **z,
 	
 	switch (l->storage) {
 	case STG_DEVICE:
+		af_array l64;
+		
 		buf = (char *)t->shape;
 		
 		if (err = af_eval(l->values))
 			goto fail;
 		
-		if (err = af_get_data_ptr(buf, l->values))
+		if (err = af_cast(&l64, l->values, u64))
 			goto fail;
+		
+		if (err = af_get_data_ptr(buf, l64))
+			goto fail;
+		
+		af_release_array(l64);
 		
 		break;
 	case STG_HOST:
