@@ -446,6 +446,8 @@ same_func(struct cell_array **z,
 struct cell_func same_closure = {CELL_FUNC, 1, same_func, 0};
 struct cell_func *same_ibeam = &same_closure;
 
+#define NOOP(zt, lt, rt)
+
 #define SIMPLE_SWITCH(LOOP, CMPX_LOOP, LCMPX_LOOP, RCMPX_LOOP, zt, lt, rt, def_expr)			\
 	switch (type_pair((lt), (rt))) {								\
 	case type_pair(ARR_SPAN, ARR_BOOL):LOOP(zt,         int, int8_t);break;				\
@@ -973,8 +975,6 @@ add_host(struct cell_array *t, size_t count,
 	}                                                               \
 }
 
-#define NOOP(zt, lt, rt)
-
 	switch (t->type) {
 	case ARR_BOOL:
 		SIMPLE_SWITCH(ADD_LOOP, NOOP, NOOP, NOOP, 
@@ -1062,3 +1062,118 @@ index_gen_func(struct cell_array **z,
 
 struct cell_func index_gen_closure = {CELL_FUNC, 1, index_gen_func, 0};
 struct cell_func *index_gen_vec = &index_gen_closure;
+
+int
+mul_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = l->type > r->type ? l->type : r->type;
+	
+	return 0;
+}
+
+int
+mul_device(struct cell_array *z, struct cell_array *l, struct cell_array *r)
+{
+	af_array x, y;
+	af_dtype type;
+	int err;
+	
+	type = array_af_dtype(z);
+	
+	if (err = af_cast(&x, l->values, type))
+		return err;
+	
+	if (err = af_cast(&y, r->values, type))
+		return err;
+	
+	if (err = af_mul(&z->values, x, y, 0))
+		return err;
+	
+	return 0;
+}
+
+int
+mul_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+#define MUL_LOCALS(ztype, ltype, rtype) \
+	ztype *tvals = t->values;       \
+	ltype *lvals = l->values;       \
+	rtype *rvals = r->values;
+	
+#define MUL_LOOP(ztype, ltype, rtype) {					\
+	MUL_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++)                              \
+		tvals[i] = (ztype)lvals[i % lc] * (ztype)rvals[i % rc];	\
+}
+
+#define MUL_CMPX(ztype, ltype, rtype) {					\
+	MUL_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		struct apl_cmpx lv = lvals[i % lc];			\
+		struct apl_cmpx rv = rvals[i % rc];			\
+									\
+		tvals[i].real  = lv.real * rv.real;			\
+		tvals[i].real += -lv.imag * rv.imag;			\
+		tvals[i].imag  = lv.imag * rv.real;			\
+		tvals[i].imag += lv.real * rv.imag;			\
+	}                                                               \
+}
+		
+#define MUL_LCMPX(ztype, ltype, rtype) {				\
+	MUL_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		tvals[i].real = lvals[i % lc].real + rvals[i % rc];	\
+		tvals[i].imag = lvals[i % lc].imag + rvals[i % rc];     \
+	}                                                               \
+}
+	
+#define MUL_RCMPX(ztype, ltype, rtype) {				\
+	MUL_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		tvals[i].real = lvals[i % lc] + rvals[i % rc].real;	\
+		tvals[i].imag = lvals[i % lc] + rvals[i % rc].imag;     \
+	}                                                               \
+}
+
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(MUL_LOOP, NOOP, NOOP, NOOP, 
+		    int8_t, l->type, r->type, return 99);
+		break;
+	case ARR_SINT:
+		SIMPLE_SWITCH(MUL_LOOP, NOOP, NOOP, NOOP, 
+		     int16_t, l->type, r->type, return 99);
+		break;
+	case ARR_INT:
+		SIMPLE_SWITCH(MUL_LOOP, NOOP, NOOP, NOOP, 
+		     int32_t, l->type, r->type, return 99);
+		break;
+	case ARR_DBL:
+		SIMPLE_SWITCH(MUL_LOOP, NOOP, NOOP, NOOP, 
+		     double, l->type, r->type, return 99);
+		break;
+	case ARR_CMPX:
+		SIMPLE_SWITCH(NOOP, MUL_CMPX, MUL_LCMPX, MUL_RCMPX, 
+		     struct apl_cmpx, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+mul_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, mul_type, mul_device, mul_host);
+}
+
+struct cell_func mul_closure = {CELL_FUNC, 1, mul_func, 0};
+struct cell_func *mul_vec_ibeam = &mul_closure;
