@@ -1177,3 +1177,160 @@ mul_func(struct cell_array **z,
 
 struct cell_func mul_closure = {CELL_FUNC, 1, mul_func, 0};
 struct cell_func *mul_vec_ibeam = &mul_closure;
+
+int
+div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	if (r->type == ARR_BOOL) {
+		*type = l->type;
+		return 0;
+	}
+	
+	if (l->type == ARR_CMPX || r->type == ARR_CMPX) {
+		*type = ARR_CMPX;
+		return 0;
+	}
+	
+	*type = ARR_DBL;
+	
+	return 0;
+}
+
+int
+div_device(struct cell_array *z, struct cell_array *l, struct cell_array *r)
+{
+	af_array x, y;
+	af_dtype type;
+	int err;
+	
+	type = array_af_dtype(z);
+	
+	if (err = af_cast(&x, l->values, type))
+		return err;
+	
+	if (err = af_cast(&y, r->values, type))
+		return err;
+	
+	if (err = af_div(&z->values, x, y, 0))
+		return err;
+	
+	return 0;
+}
+
+int
+div_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+#define DIV_LOCALS(ztype, ltype, rtype) \
+	ztype *tvals = t->values;       \
+	ltype *lvals = l->values;       \
+	rtype *rvals = r->values;
+	
+#define DIV_LOOP(ztype, ltype, rtype) {					\
+	DIV_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {				\
+		if (!rvals[i % rc]) {					\
+			tvals[i] = 0;					\
+			continue;					\
+		}							\
+									\
+		tvals[i] = (ztype)lvals[i % lc] / (ztype)rvals[i % rc];	\
+	}								\
+}
+
+#define DIV_CMPX(ztype, ltype, rtype) {					\
+	DIV_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		struct apl_cmpx lv = lvals[i % lc];			\
+		struct apl_cmpx rv = rvals[i % rc];			\
+		double quot = rv.real * rv.real + rv.imag * rv.imag;	\
+									\
+		if (!quot) {						\
+			tvals[i].real = 0;				\
+			tvals[i].imag = 0;				\
+			continue;					\
+		}							\
+									\
+		tvals[i].real = lv.real * rv.real + lv.imag * rv.imag;	\
+		tvals[i].real /= quot;					\
+		tvals[i].imag = lv.imag * rv.real - lv.real * rv.imag;	\
+		tvals[i].imag /= quot;					\
+	}                                                               \
+}
+		
+#define DIV_LCMPX(ztype, ltype, rtype) {				\
+	DIV_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		struct apl_cmpx lv = lvals[i % lc];			\
+		double rv = rvals[i % rc];				\
+									\
+		if (!rv) {						\
+			tvals[i].real = 0;				\
+			tvals[i].imag = 0;				\
+			continue;					\
+		}							\
+									\
+		tvals[i].real = lv.real / rv;				\
+		tvals[i].imag = lv.imag / rv;				\
+	}                                                               \
+}
+
+#define DIV_RCMPX(ztype, ltype, rtype) {				\
+	DIV_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		double lv = lvals[i % lc];				\
+		struct apl_cmpx rv = rvals[i % rc];			\
+		double quot = rv.real * rv.real + rv.imag * rv.imag;	\
+									\
+		if (!quot) {					\
+			tvals[i].real = 0;				\
+			tvals[i].imag = 0;				\
+			continue;					\
+		}							\
+									\
+		tvals[i].real = lv * rv.real / quot;			\
+		tvals[i].imag = -lv * rv.imag / quot;			\
+	}                                                               \
+}
+
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(DIV_LOOP, NOOP, NOOP, NOOP, 
+		    int8_t, l->type, r->type, return 99);
+		break;
+	case ARR_SINT:
+		SIMPLE_SWITCH(DIV_LOOP, NOOP, NOOP, NOOP, 
+		     int16_t, l->type, r->type, return 99);
+		break;
+	case ARR_INT:
+		SIMPLE_SWITCH(DIV_LOOP, NOOP, NOOP, NOOP, 
+		     int32_t, l->type, r->type, return 99);
+		break;
+	case ARR_DBL:
+		SIMPLE_SWITCH(DIV_LOOP, NOOP, NOOP, NOOP, 
+		     double, l->type, r->type, return 99);
+		break;
+	case ARR_CMPX:
+		SIMPLE_SWITCH(NOOP, DIV_CMPX, DIV_LCMPX, DIV_RCMPX, 
+		     struct apl_cmpx, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+div_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, div_type, div_device, div_host);
+}
+
+struct cell_func div_closure = {CELL_FUNC, 1, div_func, 0};
+struct cell_func *div_vec_ibeam = &div_closure;
