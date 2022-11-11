@@ -1012,3 +1012,18 @@ add_func(struct cell_array **z,
 
 struct cell_func add_closure = {CELL_FUNC, 1, add_func, 0};
 struct cell_func *add_vec_ibeam = &add_closure;
+
+int
+has_nat_vals_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err, is_nat;
+	
+	if (err = has_natural_values(&is_nat, r))
+		return err;
+	
+	return mk_scalar_bool(z, is_nat);
+}
+
+struct cell_func has_nat_vals_closure = {CELL_FUNC, 1, has_nat_vals_func, 0};
+struct cell_func *has_nat_vals_ibeam = &add_closure;
