@@ -7,6 +7,21 @@
 
 #include "internal.h"
 
+enum array_type
+closest_numeric_array_type(double x)
+{
+	if (0 <= x && x <= 1)
+		return ARR_BOOL;
+	
+	if (INT16_MIN <= x && x <= INT16_MAX)
+		return ARR_SINT;
+	
+	if (INT32_MIN <= x && x <= INT32_MAX)
+		return ARR_INT;
+	
+	return ARR_DBL;
+}
+
 #define CAST_UNIT(vals, count, src_type, dst_type)	\
 	for (size_t i = 0; i < (count); i++) {		\
 		src_type t = ((src_type *)(vals))[i];	\
