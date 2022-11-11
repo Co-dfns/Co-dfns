@@ -21,6 +21,7 @@ int get_scalar_sint(int16_t *, struct cell_array *);
 int get_scalar_int(int32_t *, struct cell_array *);
 int get_scalar_dbl(double *, struct cell_array *);
 int get_scalar_cmpx(struct apl_cmpx *, struct cell_array *);
+int get_scalar_u64(size_t *, struct cell_array *);
 int get_scalar_char8(uint8_t *, struct cell_array *);
 int get_scalar_char16(uint16_t *, struct cell_array *);
 int get_scalar_char32(uint32_t *, struct cell_array *);

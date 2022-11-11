@@ -574,161 +574,51 @@ get_scalar_data(void **val, void *buf, struct cell_array *arr)
 	return 0;
 }
 
-int
-get_scalar_bool(int8_t *dst, struct cell_array *arr)
-{
-	char buf[16];
-	void *val;
-	int err;
-	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
-	
-	switch (arr->type) {
-	case ARR_BOOL:
-		*dst = *((int8_t *)val);
-		break;
-	case ARR_SINT:
-		*dst = (int8_t)*((int16_t *)val);
-		break;
-	case ARR_INT:
-		*dst = (int8_t)*((int32_t *)val);
-		break;
-	case ARR_DBL:
-		*dst = (int8_t)*((double *)val);
-		break;
-	case ARR_CMPX:
-		*dst = (int8_t)(*(struct apl_cmpx *)val).real;
-		break;
-	case ARR_CHAR8:
-	case ARR_CHAR16:
-	case ARR_CHAR32:
-	case ARR_SPAN:
-	case ARR_MIXED:
-	case ARR_NESTED:
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
+#define DEFN_GET_SCALAR_NUM(name, ztype)			\
+int                                                             \
+name(ztype *dst, struct cell_array *arr)                         \
+{                                                               \
+	char buf[16];                                           \
+	void *val;                                              \
+	int err;                                                \
+								\
+	if (err = get_scalar_data(&val, buf, arr))              \
+		return err;                                     \
+								\
+	switch (arr->type) {                                    \
+	case ARR_BOOL:                                          \
+		*dst = (ztype)*((int8_t *)val);                 \
+		break;                                          \
+	case ARR_SINT:                                          \
+		*dst = (ztype)*((int16_t *)val);                \
+		break;                                          \
+	case ARR_INT:                                           \
+		*dst = (ztype)*((int32_t *)val);                \
+		break;                                          \
+	case ARR_DBL:                                           \
+		*dst = (ztype)*((double *)val);                 \
+		break;                                          \
+	case ARR_CMPX:                                          \
+		*dst = (ztype)(*(struct apl_cmpx *)val).real;   \
+		break;                                          \
+	case ARR_CHAR8:                                         \
+	case ARR_CHAR16:                                        \
+	case ARR_CHAR32:                                        \
+	case ARR_SPAN:                                          \
+	case ARR_MIXED:                                         \
+	case ARR_NESTED:                                        \
+	default:                                                \
+		return 99;                                      \
+	}                                                       \
+								\
+	return 0;	                                        \
+}                                                               \
 
-int
-get_scalar_sint(int16_t *dst, struct cell_array *arr)
-{
-	char buf[16];
-	void *val;
-	int err;
-	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
-	
-	switch (arr->type) {
-	case ARR_BOOL:
-		*dst = (int16_t)*((int8_t *)val);
-		break;
-	case ARR_SINT:
-		*dst = (int16_t)*((int16_t *)val);
-		break;
-	case ARR_INT:
-		*dst = (int16_t)*((int32_t *)val);
-		break;
-	case ARR_DBL:
-		*dst = (int16_t)*((double *)val);
-		break;
-	case ARR_CMPX:
-		*dst = (int16_t)(*(struct apl_cmpx *)val).real;
-		break;
-	case ARR_CHAR8:
-	case ARR_CHAR16:
-	case ARR_CHAR32:
-	case ARR_SPAN:
-	case ARR_MIXED:
-	case ARR_NESTED:
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
-
-int
-get_scalar_int(int32_t *dst, struct cell_array *arr)
-{
-	char buf[16];
-	void *val;
-	int err;
-	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
-	
-	switch (arr->type) {
-	case ARR_BOOL:
-		*dst = (int32_t)*((int8_t *)val);
-		break;
-	case ARR_SINT:
-		*dst = (int32_t)*((int16_t *)val);
-		break;
-	case ARR_INT:
-		*dst = (int32_t)*((int32_t *)val);
-		break;
-	case ARR_DBL:
-		*dst = (int32_t)*((double *)val);
-		break;
-	case ARR_CMPX:
-		*dst = (int32_t)(*(struct apl_cmpx *)val).real;
-		break;
-	case ARR_CHAR8:
-	case ARR_CHAR16:
-	case ARR_CHAR32:
-	case ARR_SPAN:
-	case ARR_MIXED:
-	case ARR_NESTED:
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
-
-int
-get_scalar_dbl(double *dst, struct cell_array *arr)
-{
-	char buf[16];
-	void *val;
-	int err;
-	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
-	
-	switch (arr->type) {
-	case ARR_BOOL:
-		*dst = (double)*((int8_t *)val);
-		break;
-	case ARR_SINT:
-		*dst = (double)*((int16_t *)val);
-		break;
-	case ARR_INT:
-		*dst = (double)*((int32_t *)val);
-		break;
-	case ARR_DBL:
-		*dst = (double)*((double *)val);
-		break;
-	case ARR_CMPX:
-		*dst = (double)(*(struct apl_cmpx *)val).real;
-		break;
-	case ARR_CHAR8:
-	case ARR_CHAR16:
-	case ARR_CHAR32:
-	case ARR_SPAN:
-	case ARR_MIXED:
-	case ARR_NESTED:
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
+DEFN_GET_SCALAR_NUM(get_scalar_bool, int8_t)
+DEFN_GET_SCALAR_NUM(get_scalar_sint, int16_t)
+DEFN_GET_SCALAR_NUM(get_scalar_int, int32_t)
+DEFN_GET_SCALAR_NUM(get_scalar_dbl, double)
+DEFN_GET_SCALAR_NUM(get_scalar_u64, uint64_t)
 
 int
 get_scalar_cmpx(struct apl_cmpx *dst, struct cell_array *arr)
@@ -773,110 +663,45 @@ get_scalar_cmpx(struct apl_cmpx *dst, struct cell_array *arr)
 	return 0;
 }
 
-int
-get_scalar_char8(uint8_t *dst, struct cell_array *arr)
-{
-	char buf[16];
-	void *val;
-	int err;
-	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
-	
-	switch (arr->type) {
-	case ARR_CHAR8:
-		*dst = (uint8_t)*(uint8_t *)val;
-		break;
-	case ARR_CHAR16:
-		*dst = (uint8_t)*(uint16_t *)val;
-		break;
-	case ARR_CHAR32:
-		*dst = (uint8_t)*(uint32_t *)val;
-		break;
-	case ARR_BOOL:
-	case ARR_SINT:
-	case ARR_INT:
-	case ARR_DBL:
-	case ARR_CMPX:
-	case ARR_SPAN:
-	case ARR_MIXED:
-	case ARR_NESTED:
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
+#define DEFN_GET_SCALAR_CHAR(name, ztype)		\
+int                                                     \
+name(ztype *dst, struct cell_array *arr)	                \
+{                                                       \
+	char buf[16];                                   \
+	void *val;                                      \
+	int err;                                        \
+							\
+	if (err = get_scalar_data(&val, buf, arr))      \
+		return err;                             \
+							\
+	switch (arr->type) {                            \
+	case ARR_CHAR8:                                 \
+		*dst = (ztype)*(uint8_t *)val;           \
+		break;                                  \
+	case ARR_CHAR16:                                \
+		*dst = (ztype)*(uint16_t *)val;          \
+		break;                                  \
+	case ARR_CHAR32:                                \
+		*dst = (ztype)*(uint32_t *)val;          \
+		break;                                  \
+	case ARR_BOOL:                                  \
+	case ARR_SINT:                                  \
+	case ARR_INT:                                   \
+	case ARR_DBL:                                   \
+	case ARR_CMPX:                                  \
+	case ARR_SPAN:                                  \
+	case ARR_MIXED:                                 \
+	case ARR_NESTED:                                \
+	default:                                        \
+		return 99;                              \
+	}                                               \
+							\
+	return 0;                                       \
+}                                                       \
 
-int
-get_scalar_char16(uint16_t *dst, struct cell_array *arr)
-{
-	char buf[16];
-	void *val;
-	int err;
-	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
-	
-	switch (arr->type) {
-	case ARR_CHAR8:
-		*dst = (uint16_t)*(uint8_t *)val;
-		break;
-	case ARR_CHAR16:
-		*dst = (uint16_t)*(uint16_t *)val;
-		break;
-	case ARR_CHAR32:
-		*dst = (uint16_t)*(uint32_t *)val;
-		break;
-	case ARR_BOOL:
-	case ARR_SINT:
-	case ARR_INT:
-	case ARR_DBL:
-	case ARR_CMPX:
-	case ARR_SPAN:
-	case ARR_MIXED:
-	case ARR_NESTED:
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
-
-int
-get_scalar_char32(uint32_t *dst, struct cell_array *arr)
-{
-	char buf[16];
-	void *val;
-	int err;
-	
-	if (err = get_scalar_data(&val, buf, arr))
-		return err;
-	
-	switch (arr->type) {
-	case ARR_CHAR8:
-		*dst = (uint32_t)*(uint8_t *)val;
-		break;
-	case ARR_CHAR16:
-		*dst = (uint32_t)*(uint16_t *)val;
-		break;
-	case ARR_CHAR32:
-		*dst = (uint32_t)*(uint32_t *)val;
-		break;
-	case ARR_BOOL:
-	case ARR_SINT:
-	case ARR_INT:
-	case ARR_DBL:
-	case ARR_CMPX:
-	case ARR_SPAN:
-	case ARR_MIXED:
-	case ARR_NESTED:
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
+DEFN_GET_SCALAR_CHAR(get_scalar_char8, uint8_t)
+DEFN_GET_SCALAR_CHAR(get_scalar_char16, uint16_t)
+DEFN_GET_SCALAR_CHAR(get_scalar_char32, uint32_t)
 
 #define DEFN_MKSCALAR(name, atype, ctype)		\
 int							\
