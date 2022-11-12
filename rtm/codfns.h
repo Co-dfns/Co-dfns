@@ -135,20 +135,31 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *is_simple;
 	struct cell_func *is_numeric;
 	struct cell_func *max_shp;
+	struct cell_func *has_nat_vals;
 	struct cell_func *chk_scl;
+	struct cell_func *chk_valid_shape;
 	struct cell_func *both_simple;
 	struct cell_func *both_numeric;
+	struct cell_func *numeric;
 	struct cell_func *scalar;
 	struct cell_func *conjugate;
-	struct cell_func *add_vec;
 	struct cell_func *add;
+	struct cell_func *sign;
+	struct cell_func *mul;
+	struct cell_func *recip;
+	struct cell_func *div;
+	struct cell_func *index_gen;
+	struct cell_func *index_of;
+	struct cell_func *iot;
 	struct cell_func *rgt;
 	struct cell_func *lft;
+	struct cell_func *reshape;
 	struct cell_func *rho;
 	struct cell_func *cat;
 	struct cell_func *eqv;
 	struct cell_func *nqv;
 	struct cell_func *dis;
+	struct cell_func *par;
 } cdf_prim;
 #endif
 
