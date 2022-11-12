@@ -885,9 +885,12 @@ dyadic_scalar_apply(struct cell_array **z,
 	rc = array_values_count(r);
 	t->shape[0] = lc > rc ? lc : rc;
 	
-	if (t->storage == STG_DEVICE)
+	if (t->storage == STG_DEVICE) {
 		if (err = scl_device(t, l, r))
 			goto fail;
+		
+		goto done;
+	}
 	
 	if (t->storage != STG_HOST)
 		return 99;
@@ -897,7 +900,8 @@ dyadic_scalar_apply(struct cell_array **z,
 	
 	if (err = scl_host(t, t->shape[0], l, lc, r, rc))
 		goto fail;
-	
+
+done:
 	*z = t;
 	
 	return 0;
