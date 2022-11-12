@@ -139,6 +139,11 @@ shape_func(struct cell_array **z,
 		return err;
 	
 	t->shape[0] = r->rank;
+	
+	if (err = alloc_array(t)) {
+		release_array(t);
+		return err;
+	}
 
 #define SHAPE_CASE(vt) {			\
 	vt *shp = t->values;			\

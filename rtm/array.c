@@ -713,6 +713,9 @@ name(struct cell_array **z, ctype val)			\
 	if (err = mk_array(&t, atype, STG_HOST, 0))	\
 		return err;				\
 							\
+	if (err = alloc_array(t))			\
+		return err;				\
+							\
 	*(ctype *)t->values = val;			\
 							\
 	*z = t;						\
