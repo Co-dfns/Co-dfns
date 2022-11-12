@@ -453,7 +453,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
-		z,←(⊂'	release_env((void **)&loc, (void **)(&loc + 1));')⌿⍨0≠≢⊃lv[⍵]
+		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
@@ -492,7 +492,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
-		z,←(⊂'	release_env((void **)&loc, (void **)(&loc + 1));')⌿⍨0≠≢⊃lv[⍵]
+		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
@@ -532,7 +532,7 @@ GC←{
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
-		z,←(⊂'	release_env((void **)&loc, (void **)(&loc + 1));')⌿⍨0≠≢⊃lv[⍵]
+		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
