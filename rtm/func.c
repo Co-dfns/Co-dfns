@@ -108,5 +108,5 @@ DECLSPEC void
 release_env(void *start[], void *end[])
 {
 	for (void **cur = start; start != end; cur++)
-		release_cell(cur);
+		release_cell(*cur);
 }
