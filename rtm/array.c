@@ -233,7 +233,7 @@ retain_array_data(struct cell_array *arr)
 	if (arr->values == NULL)
 		return;
 	
-	switch (arr->type) {
+	switch (arr->storage) {
 	case STG_DEVICE:
 		af_retain_array(&arr->values, arr->values);
 		break;
