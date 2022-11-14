@@ -363,15 +363,11 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	release_array(l);
 	release_array(r);
 	
-	if (err == -1) {
+	if (err) {
 		zp->pocket = scalnum(0);
 		return err;
 	}
 		
-	
-	if (err)
-		return err;
-	
 	err = array2dwa(NULL, z, zp);
 
 	release_array(z);
