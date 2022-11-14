@@ -865,7 +865,7 @@ int
 dyadic_scalar_apply(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, 
     int (*scl_type)(enum array_type *, struct cell_array *, struct cell_array *), 
-    int (*scl_device)(struct cell_array *, struct cell_array *, struct cell_array *),
+    int (*scl_device)(af_array *, af_array, af_array),
     int (*scl_host)(struct cell_array *, size_t, 
         struct cell_array *, size_t, struct cell_array *, size_t))
 {
@@ -888,9 +888,49 @@ dyadic_scalar_apply(struct cell_array **z,
 	t->shape[0] = lc > rc ? lc : rc;
 	
 	if (t->storage == STG_DEVICE) {
-		if (err = scl_device(t, l, r))
-			goto fail;
+		unsigned int ltc, rtc;
+		af_array ltile, rtile, lcast, rcast, za;
+		af_dtype type;
 		
+		ltile = rtile = lcast = rcast = za = NULL;
+		
+		if (rc > UINT_MAX || lc > UINT_MAX) {
+			err = 10;
+			goto fail;
+		}
+		
+		ltc = (unsigned int)(rc > lc ? rc : 1);
+		
+		if (err = af_tile(&ltile, l->values, ltc, 1, 1, 1))
+			goto device_done;
+		
+		rtc = (unsigned int)(lc > rc ? lc : 1);
+		
+		if (err = af_tile(&rtile, r->values, rtc, 1, 1, 1))
+			goto device_done;
+
+		type = array_af_dtype(t);
+		
+		if (err = af_cast(&lcast, ltile, type))
+			goto device_done;
+		
+		if (err = af_cast(&rcast, rtile, type))
+			goto device_done;
+		
+		if (err = scl_device(&za, lcast, rcast))
+			goto device_done;
+		
+		t->values = za;
+
+device_done:
+		af_release_array(rcast);
+		af_release_array(lcast);
+		af_release_array(rtile);
+		af_release_array(ltile);
+		
+		if (err)
+			goto fail;
+
 		goto done;
 	}
 	
@@ -923,21 +963,11 @@ add_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 }
 
 int
-add_device(struct cell_array *z, struct cell_array *l, struct cell_array *r)
+add_device(af_array *z, af_array l, af_array r)
 {
-	af_array x, y;
-	af_dtype type;
 	int err;
-	
-	type = array_af_dtype(z);
-	
-	if (err = af_cast(&x, l->values, type))
-		return err;
-	
-	if (err = af_cast(&y, r->values, type))
-		return err;
-	
-	if (err = af_add(&z->values, x, y, 0))
+		
+	if (err = af_add(z, l, r, 0))
 		return err;
 	
 	return 0;
@@ -1083,21 +1113,11 @@ mul_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 }
 
 int
-mul_device(struct cell_array *z, struct cell_array *l, struct cell_array *r)
+mul_device(af_array *z, af_array l, af_array r)
 {
-	af_array x, y;
-	af_dtype type;
 	int err;
 	
-	type = array_af_dtype(z);
-	
-	if (err = af_cast(&x, l->values, type))
-		return err;
-	
-	if (err = af_cast(&y, r->values, type))
-		return err;
-	
-	if (err = af_mul(&z->values, x, y, 0))
+	if (err = af_mul(z, l, r, 0))
 		return err;
 	
 	return 0;
@@ -1208,21 +1228,11 @@ div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 }
 
 int
-div_device(struct cell_array *z, struct cell_array *l, struct cell_array *r)
+div_device(af_array *z, af_array l, af_array r)
 {
-	af_array x, y;
-	af_dtype type;
 	int err;
-	
-	type = array_af_dtype(z);
-	
-	if (err = af_cast(&x, l->values, type))
-		return err;
-	
-	if (err = af_cast(&y, r->values, type))
-		return err;
-	
-	if (err = af_div(&z->values, x, y, 0))
+
+	if (err = af_div(z, l, r, 0))
 		return err;
 	
 	return 0;
