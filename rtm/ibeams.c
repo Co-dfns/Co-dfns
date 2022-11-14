@@ -212,6 +212,8 @@ ravel_func(struct cell_array **z,
 	
 	retain_array_data(t);
 	
+	*z = t;
+	
 	return 0;
 }
 
