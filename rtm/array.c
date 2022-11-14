@@ -235,7 +235,7 @@ retain_array_data(struct cell_array *arr)
 	
 	switch (arr->type) {
 	case STG_DEVICE:
-		af_retain_array(NULL, arr->values);
+		af_retain_array(&arr->values, arr->values);
 		break;
 	case STG_HOST:
 		++*arr->vrefc;
