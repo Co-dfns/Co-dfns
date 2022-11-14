@@ -797,12 +797,13 @@ array_promote_storage(struct cell_array *l, struct cell_array *r)
 {
 	int err;
 	
-	if (l->storage == STG_DEVICE)
+	if (l->storage == STG_DEVICE) {
 		if (err = array_migrate_storage(r, STG_DEVICE))
 			return err;
-	else if (r->storage == STG_DEVICE)
+	} else if (r->storage == STG_DEVICE) {
 		if (err = array_migrate_storage(l, STG_DEVICE))
 			return err;
+	}
 	
 	return 0;
 }
