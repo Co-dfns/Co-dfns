@@ -325,7 +325,7 @@ PS←{
 		lx[i←⍸(t=V)∧vb=¯1]←1
 		
 		⍝ Add free variables to closures
-		i←i⌿⍨k[rfn[i]]≠0 ⋄ ci←p[rfn[i]] ⋄ vb[i]←(≢p)+⍳≢i
+		i←i⌿⍨k[0⌈rfn[i]]≠0 ⋄ ci←p[rfn[i]] ⋄ vb[i]←(≢p)+⍳≢i
 		p,←ci ⋄ vb lx,←(≢ci)⍴¨¯1 0 ⋄ rf rfn(⊣,I)←⊂ci
 		t k n pos end(⊣,I)←⊂i
 	i}⍣{0=≢⍺}⍬
