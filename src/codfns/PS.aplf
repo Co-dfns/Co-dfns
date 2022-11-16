@@ -277,7 +277,7 @@ PS←{
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
-	
+
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p
 
@@ -295,7 +295,7 @@ PS←{
 		
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-	
+
 	⍝ Wrap all non-module functions in closures
 	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p←(np@i⊢⍳≢p)[p] ⋄ p,←i
 	t k n vb pos end(⊣,I)←⊂i ⋄ t[i]←C
