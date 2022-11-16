@@ -347,6 +347,8 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	lp = lptr;
 	rp = rptr;
 	
+	z = l = r = NULL;
+	
 	if (lp)
 		if (err = dwa2array(&l, lp->pocket))
 			return err;
