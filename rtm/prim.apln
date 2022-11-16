@@ -23,28 +23,6 @@ both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}
 
-⍝ +: Conjugate | Addition
-conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}
-add←conjugate ⎕AMBIV ('add_vec_ibeam'⌶ numeric scalar)
-
-⍝ ×: Sign | Multiply
-sign←{⎕SIGNAL 16}
-mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
-
-⍝ ÷: Reciprocal | Divide
-recip←{⎕SIGNAL 16}
-div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
-
-⍝ ⍳: Index Generate | Index Of
-index_gen←{
-	chk_valid_shape ⍵: 
-	0≡≢,⍵:⊂⍬
-	1≡≢,⍵:'index_gen_vec'⌶ ⍵
-	⎕SIGNAL 16
-}
-index_of←{⎕SIGNAL 16}
-iot←index_gen ⎕AMBIV index_of
-
 ⍝ ⊢: Right
 rgt←{⍵}
 
@@ -64,10 +42,40 @@ eqv←{⎕SIGNAL 16} ⎕AMBIV ('same_ibeam'⌶)
 ⍝ ≢: Tally / Not Same
 nqv←{⊃⍴⍵} ⎕AMBIV {⎕SIGNAL 16}
 
+⍝ ⍳: Index Generate | Index Of
+index_gen←{
+	chk_valid_shape ⍵: 
+	0≡≢,⍵:⊂⍬
+	1≡≢,⍵:'index_gen_vec'⌶ ⍵
+	⎕SIGNAL 16
+}
+index_of←{⎕SIGNAL 16}
+iot←index_gen ⎕AMBIV index_of
+
 ⍝ ⊃: First / Pick
 dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
 
 ⍝ ⊂: Enclose / Partition
 par←{⎕SIGNAL 16} ⎕AMBIV {⎕SIGNAL 16}
+
+⍝ +: Conjugate | Addition
+conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}
+add←conjugate ⎕AMBIV ('add_vec_ibeam'⌶ numeric scalar)
+
+⍝ ×: Sign | Multiply
+sign←{⎕SIGNAL 16}
+mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
+
+⍝ ÷: Reciprocal | Divide
+recip←{⎕SIGNAL 16}
+div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
+
+⍝ ⌿: Reduce First / N-wise Reduce First
+rdf←{op←⍺⍺¨ 
+	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s
+	0≡≢,z:zs⍴⊃0⍴⍵ ⋄ 0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵
+	z←(c-1)⌷⍵ ⋄ (⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵
+	z
+}
 
 :EndNamespace
