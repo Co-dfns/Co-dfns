@@ -965,12 +965,7 @@ add_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 int
 add_device(af_array *z, af_array l, af_array r)
 {
-	int err;
-		
-	if (err = af_add(z, l, r, 0))
-		return err;
-	
-	return 0;
+	return af_add(z, l, r, 0);
 }
 
 int
@@ -1115,12 +1110,7 @@ mul_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 int
 mul_device(af_array *z, af_array l, af_array r)
 {
-	int err;
-	
-	if (err = af_mul(z, l, r, 0))
-		return err;
-	
-	return 0;
+	return af_mul(z, l, r, 0);
 }
 
 int
@@ -1230,12 +1220,7 @@ div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 int
 div_device(af_array *z, af_array l, af_array r)
 {
-	int err;
-
-	if (err = af_div(z, l, r, 0))
-		return err;
-	
-	return 0;
+	return af_div(z, l r, 0);
 }
 
 int
