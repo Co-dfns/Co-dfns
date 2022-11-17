@@ -1220,7 +1220,7 @@ div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 int
 div_device(af_array *z, af_array l, af_array r)
 {
-	return af_div(z, l r, 0);
+	return af_div(z, l, r, 0);
 }
 
 int
