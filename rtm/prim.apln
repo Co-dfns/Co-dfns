@@ -62,6 +62,10 @@ par←{⎕SIGNAL 16} ⎕AMBIV {⎕SIGNAL 16}
 conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}
 add←conjugate ⎕AMBIV ('add_vec_ibeam'⌶ numeric scalar)
 
+⍝ -: Negate | Subtract
+negate←{⎕SIGNAL 16}
+sub←negate ⎕AMBIV ('sub_vec_ibeam'⌶ numeric scalar)
+
 ⍝ ×: Sign | Multiply
 sign←{⎕SIGNAL 16}
 mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)

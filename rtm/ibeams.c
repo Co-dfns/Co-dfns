@@ -1355,3 +1355,99 @@ div_func(struct cell_array **z,
 
 struct cell_func div_closure = {CELL_FUNC, 1, div_func, 0};
 struct cell_func *div_vec_ibeam = &div_closure;
+
+int
+sub_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = l->type > r->type ? l->type : r->type;
+	
+	return 0;
+}
+
+int
+sub_device(af_array *z, af_array l, af_array r)
+{
+	return af_sub(z, l, r, 0);
+}
+
+int
+sub_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+#define SUB_LOCALS(ztype, ltype, rtype) \
+	ztype *tvals = t->values;       \
+	ltype *lvals = l->values;       \
+	rtype *rvals = r->values;
+	
+#define SUB_LOOP(ztype, ltype, rtype) {					\
+	SUB_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++)                              \
+		tvals[i] = (ztype)lvals[i % lc] - (ztype)rvals[i % rc];	\
+}
+
+#define SUB_CMPX(ztype, ltype, rtype) {					\
+	SUB_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		tvals[i].real = lvals[i % lc].real - rvals[i % rc].real;\
+		tvals[i].imag = lvals[i % lc].imag - rvals[i % rc].imag;\
+	}                                                               \
+}
+		
+#define SUB_LCMPX(ztype, ltype, rtype) {				\
+	SUB_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		tvals[i].real = lvals[i % lc].real - rvals[i % rc];	\
+		tvals[i].imag = lvals[i % lc].imag;                     \
+	}                                                               \
+}
+	
+#define SUB_RCMPX(ztype, ltype, rtype) {				\
+	SUB_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {                            \
+		tvals[i].real = lvals[i % lc] - rvals[i % rc].real;	\
+		tvals[i].imag = rvals[i % rc].imag;                     \
+	}                                                               \
+}
+
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
+		    int8_t, l->type, r->type, return 99);
+		break;
+	case ARR_SINT:
+		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
+		     int16_t, l->type, r->type, return 99);
+		break;
+	case ARR_INT:
+		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
+		     int32_t, l->type, r->type, return 99);
+		break;
+	case ARR_DBL:
+		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
+		     double, l->type, r->type, return 99);
+		break;
+	case ARR_CMPX:
+		SIMPLE_SWITCH(NOOP, SUB_CMPX, SUB_LCMPX, SUB_RCMPX, 
+		     struct apl_cmpx, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+sub_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, sub_type, sub_device, sub_host);
+}
+
+struct cell_func sub_closure = {CELL_FUNC, 1, sub_func, 0};
+struct cell_func *sub_vec_ibeam = &sub_closure;
+
