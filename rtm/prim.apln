@@ -42,6 +42,11 @@ eqv←{⎕SIGNAL 16} ⎕AMBIV ('same_ibeam'⌶)
 ⍝ ≢: Tally / Not Same
 nqv←{⊃⍴⍵} ⎕AMBIV {⎕SIGNAL 16}
 
+⍝ ⌷: Materialize | Squad indexing
+materialize←{⎕SIGNAL 16}
+index←{(⊃⍺)('index_ibeam'⌶)⍵}
+sqd←materialize ⎕AMBIV index
+
 ⍝ ⍳: Index Generate | Index Of
 index_gen←{
 	chk_valid_shape ⍵: 
