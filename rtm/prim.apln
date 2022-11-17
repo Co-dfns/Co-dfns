@@ -80,7 +80,7 @@ drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}
 drp←split ⎕AMBIV drop
 
 ⍝ ⌽: Reverse Last | Rotate Last
-reverse_last←{((≢⍵)-1+⍳≢⍵)⌷⍵}
+reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
 rotate_last←{⎕SIGNAL 16}
 rot←reverse_last ⎕AMBIV rotate_last
 
