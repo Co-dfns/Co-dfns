@@ -4303,6 +4303,23 @@ ptr658(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = cdf_prim.rgt;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *x = bx->value;
+	
+		err = (fn->fptr)(&bx->value, x, y, fn);
+	
+		if (err) {
+			goto cleanup;
+		}
+	
+		release_array(x);
+	
+		*stkhd++ = y;
+	}
+	
 	*z = *--stkhd;
 	goto cleanup;
 	

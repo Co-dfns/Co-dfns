@@ -248,6 +248,35 @@ GC←{
 		⊂z,⊂''
 	}⌸i
 	
+	⍝ E4: Modified Assignment
+	i←⍸(t[p]=E)∧k[p]=4
+	zz[∪p[i]],←p[i]{
+		0=≢⍵:⊂0⍴⊂''
+		tgt←⊃var_refs 1↑⍵
+		fn src←var_values ¯2↑⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array_box *bx = ',tgt,';'
+		z,←⊂'	struct cell_func *fn = ',fn,';'
+		z,←⊂'	struct cell_array *y = ',src,';'
+		z,←⊂'	struct cell_array *x = bx->value;'
+		z,←⊂''
+		z,←⊂'	err = (fn->fptr)(&bx->value, x, y, fn);'
+		z,←(⊂'')⌿⍨0=k[⍵[1]]
+		z,←('	release_func(fn);')⌿⍨0=k[⍵[1]]
+		z,←⊂''
+		z,←⊂'	if (err) {'
+		z,←(⊂'		release_array(y);')⌿⍨0=k[⍵[1]]
+		z,←⊂'		goto cleanup;'
+		z,←⊂'	}'
+		z,←⊂''
+		z,←⊂'	release_array(x);'
+		z,←⊂''
+		z,←(⊂'	*stkhd++ = y;')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	*stkhd++ = retain_cell(y);')⌿⍨0≠k[⍵[2]]
+		z,←⊂'}'
+		⊂z,⊂''
+	}⌸i
+	
 	⍝ O1: Monadic Array Operand
 	i←⍸(t[p]=O)∧k[p]=1
 	zz[∪p[i]],←p[i]{
