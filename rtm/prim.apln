@@ -74,7 +74,12 @@ mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
 recip←{⎕SIGNAL 16}
 div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 
-⍝ ⌿: Reduce First / N-wise Reduce First
+⍝ ↓: Split | Drop
+split←{⎕SIGNAL 16}
+drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}
+drp←split ⎕AMBIV drop
+
+⍝ ⌿: Reduce First | N-wise Reduce First
 rdf←{op←⍺⍺¨ 
 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s
 	0≡≢,z:zs⍴⊃0⍴⍵ ⋄ 0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵
