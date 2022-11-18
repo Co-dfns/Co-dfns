@@ -4640,7 +4640,7 @@ ptr845(struct cell_array **z,
 		struct cell_array *s;
 		struct cell_array *c;
 		struct cell_array *zs;
-		struct cell_array *z;
+		struct cell_array_box *z;
 	} loc_frm, *loc;
 	
 	loc = &loc_frm;
@@ -4649,7 +4649,10 @@ ptr845(struct cell_array **z,
 	loc->s = NULL;
 	loc->c = NULL;
 	loc->zs = NULL;
-	loc->z = NULL;
+	err = mk_array_box(&loc->z, NULL);
+	if (err)
+		goto cleanup;
+	
 	stkhd = &stk[0];
 	err = 0;
 
@@ -4857,7 +4860,7 @@ ptr845(struct cell_array **z,
 	
 	{
 		struct cell_func *fn = cdf_prim.cat;
-		struct cell_array *arg = loc->z;
+		struct cell_array *arg = loc->z->value;
 		struct cell_array *dst;
 	
 		err = (fn->fptr)(&dst, NULL, arg, fn);
@@ -5223,7 +5226,7 @@ ptr845(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	loc->z = *stkhd++ = retain_cell(*--stkhd);
+	loc->z->value = *stkhd++ = retain_cell(*--stkhd);
 	release_cell(*--stkhd);
 	
 	{
@@ -5355,8 +5358,8 @@ ptr845(struct cell_array **z,
 	*z = *--stkhd;
 	goto cleanup;
 	
-	*z = loc->z;
-	retain_cell(loc->z);
+	*z = loc->z->value;
+	retain_cell(loc->z->value);
 	goto cleanup;
 	
 	err = -1;
@@ -5378,7 +5381,7 @@ ptr846(struct cell_array **z,
 	int err;
 
 	struct lex_vars {
-		struct cell_array *z;
+		struct cell_array_box *z;
 		struct cell_func *op;
 	} *lex;
 	
@@ -5404,7 +5407,7 @@ ptr846(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 		struct cell_func *fn = lex->op;
-		struct cell_array *y = lex->z;
+		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
 		err = (fn->fptr)(&dst, x, y, fn);

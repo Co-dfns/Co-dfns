@@ -1,8 +1,5 @@
 GC←{
-	p t k n lx lv fv pos end sym IN←⍵
-
-	⍝ Placeholder for mutable values
-	mu←(≢p)⍴0
+	p t k n lx mu lv fv pos end sym IN←⍵
 
 	⍝ Make sure signal retains the stack
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
