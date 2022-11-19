@@ -373,7 +373,7 @@ is_char_array(struct cell_array *arr)
 }
 
 int
-is_integer(double x)
+is_integer_dbl(double x)
 {
 	return rint(x) == x;
 }
@@ -454,7 +454,7 @@ has_integer_values(int *res, struct cell_array *arr)
 	count = array_count(arr);
 	
 	for (size_t i = 0; i < count; i++) {
-		if (!is_integer(vals[i])) {
+		if (!is_integer_dbl(vals[i])) {
 			*res = 0;
 			return 0;
 		}

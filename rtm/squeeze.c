@@ -232,11 +232,11 @@ find_minmax(double *min, double *max,
 		MINMAX_LOOP(uint32_t,t,)
 		break;
 	case ARR_DBL:
-		MINMAX_LOOP(double, t, *is_int = (*is_int && is_integer(t)))
+		MINMAX_LOOP(double, t, *is_int = (*is_int && is_integer_dbl(t)))
 		break;
 	case ARR_CMPX:
 		MINMAX_LOOP(struct apl_cmpx, t.real, {
-			*is_int = (*is_int && is_integer(t.real));
+			*is_int = (*is_int && is_integer_dbl(t.real));
 			*is_real = (*is_real && (t.imag == 0));
 		})
 	default:

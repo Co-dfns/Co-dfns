@@ -9,7 +9,7 @@ enum array_type closest_numeric_array_type(double);
 
 int squeeze_array(struct cell_array *);
 
-int is_integer(double);
+int is_integer_dbl(double);
 int is_integer_device(unsigned char *, af_array);
 int is_integer_array(struct cell_array *);
 int is_real_array(struct cell_array *);

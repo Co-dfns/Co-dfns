@@ -457,46 +457,46 @@ struct cell_func *same_ibeam = &same_closure;
 
 #define SIMPLE_SWITCH(LOOP, CMPX_LOOP, LCMPX_LOOP, RCMPX_LOOP, zt, lt, rt, def_expr)			\
 	switch (type_pair((lt), (rt))) {								\
-	case type_pair(ARR_SPAN, ARR_BOOL):LOOP(zt,         int, int8_t);break;				\
-	case type_pair(ARR_SPAN, ARR_SINT):LOOP(zt,         int, int16_t);break;			\
-	case type_pair(ARR_SPAN, ARR_INT):LOOP(zt,          int, int32_t);break;			\
-	case type_pair(ARR_SPAN, ARR_DBL):LOOP(zt,          int, double);break;				\
+	case type_pair(ARR_SPAN, ARR_BOOL):LOOP(zt,	    int, int8_t);break;				\
+	case type_pair(ARR_SPAN, ARR_SINT):LOOP(zt,	    int, int16_t);break;			\
+	case type_pair(ARR_SPAN, ARR_INT):LOOP(zt,	    int, int32_t);break;			\
+	case type_pair(ARR_SPAN, ARR_DBL):LOOP(zt,	    int, double);break;				\
 	case type_pair(ARR_SPAN, ARR_CMPX):RCMPX_LOOP(zt,   int, struct apl_cmpx);break;		\
-	case type_pair(ARR_SPAN, ARR_CHAR8):LOOP(zt,        int, uint8_t);break;			\
-	case type_pair(ARR_SPAN, ARR_CHAR16):LOOP(zt,       int, uint16_t);break;			\
-	case type_pair(ARR_SPAN, ARR_CHAR32):LOOP(zt,       int, uint32_t);break;			\
-	case type_pair(ARR_BOOL, ARR_BOOL):LOOP(zt,         int8_t, int8_t);break;			\
-	case type_pair(ARR_BOOL, ARR_SINT):LOOP(zt,         int8_t, int16_t);break;			\
-	case type_pair(ARR_BOOL, ARR_INT):LOOP(zt,          int8_t, int32_t);break;			\
-	case type_pair(ARR_BOOL, ARR_DBL):LOOP(zt,          int8_t, double);break;			\
+	case type_pair(ARR_SPAN, ARR_CHAR8):LOOP(zt,	    int, uint8_t);break;			\
+	case type_pair(ARR_SPAN, ARR_CHAR16):LOOP(zt,	    int, uint16_t);break;			\
+	case type_pair(ARR_SPAN, ARR_CHAR32):LOOP(zt,	    int, uint32_t);break;			\
+	case type_pair(ARR_BOOL, ARR_BOOL):LOOP(zt,	    int8_t, int8_t);break;			\
+	case type_pair(ARR_BOOL, ARR_SINT):LOOP(zt,	    int8_t, int16_t);break;			\
+	case type_pair(ARR_BOOL, ARR_INT):LOOP(zt,	    int8_t, int32_t);break;			\
+	case type_pair(ARR_BOOL, ARR_DBL):LOOP(zt,	    int8_t, double);break;			\
 	case type_pair(ARR_BOOL, ARR_CMPX):RCMPX_LOOP(zt,   int8_t, struct apl_cmpx);break;		\
-	case type_pair(ARR_BOOL, ARR_CHAR8):LOOP(zt,        int8_t, uint8_t);break;			\
-	case type_pair(ARR_BOOL, ARR_CHAR16):LOOP(zt,       int8_t, uint16_t);break;			\
-	case type_pair(ARR_BOOL, ARR_CHAR32):LOOP(zt,       int8_t, uint32_t);break;			\
-	case type_pair(ARR_SINT, ARR_BOOL):LOOP(zt,         int16_t, int8_t);break;			\
-	case type_pair(ARR_SINT, ARR_SINT):LOOP(zt,         int16_t, int16_t);break;			\
-	case type_pair(ARR_SINT, ARR_INT):LOOP(zt,          int16_t, int32_t);break;			\
-	case type_pair(ARR_SINT, ARR_DBL):LOOP(zt,          int16_t, double);break;			\
+	case type_pair(ARR_BOOL, ARR_CHAR8):LOOP(zt,	    int8_t, uint8_t);break;			\
+	case type_pair(ARR_BOOL, ARR_CHAR16):LOOP(zt,	    int8_t, uint16_t);break;			\
+	case type_pair(ARR_BOOL, ARR_CHAR32):LOOP(zt,	    int8_t, uint32_t);break;			\
+	case type_pair(ARR_SINT, ARR_BOOL):LOOP(zt,	    int16_t, int8_t);break;			\
+	case type_pair(ARR_SINT, ARR_SINT):LOOP(zt,	    int16_t, int16_t);break;			\
+	case type_pair(ARR_SINT, ARR_INT):LOOP(zt,	    int16_t, int32_t);break;			\
+	case type_pair(ARR_SINT, ARR_DBL):LOOP(zt,	    int16_t, double);break;			\
 	case type_pair(ARR_SINT, ARR_CMPX):RCMPX_LOOP(zt,   int16_t, struct apl_cmpx);break;		\
-	case type_pair(ARR_SINT, ARR_CHAR8):LOOP(zt,        int16_t, uint8_t);break;			\
-	case type_pair(ARR_SINT, ARR_CHAR16):LOOP(zt,       int16_t, uint16_t);break;			\
-	case type_pair(ARR_SINT, ARR_CHAR32):LOOP(zt,       int16_t, uint32_t);break;			\
-	case type_pair(ARR_INT, ARR_BOOL):LOOP(zt,          int32_t, int8_t);break;			\
-	case type_pair(ARR_INT, ARR_SINT):LOOP(zt,          int32_t, int16_t);break;			\
-	case type_pair(ARR_INT, ARR_INT):LOOP(zt,           int32_t, int32_t);break;			\
-	case type_pair(ARR_INT, ARR_DBL):LOOP(zt,           int32_t, double);break;			\
+	case type_pair(ARR_SINT, ARR_CHAR8):LOOP(zt,	    int16_t, uint8_t);break;			\
+	case type_pair(ARR_SINT, ARR_CHAR16):LOOP(zt,	    int16_t, uint16_t);break;			\
+	case type_pair(ARR_SINT, ARR_CHAR32):LOOP(zt,	    int16_t, uint32_t);break;			\
+	case type_pair(ARR_INT, ARR_BOOL):LOOP(zt,	    int32_t, int8_t);break;			\
+	case type_pair(ARR_INT, ARR_SINT):LOOP(zt,	    int32_t, int16_t);break;			\
+	case type_pair(ARR_INT, ARR_INT):LOOP(zt,	    int32_t, int32_t);break;			\
+	case type_pair(ARR_INT, ARR_DBL):LOOP(zt,	    int32_t, double);break;			\
 	case type_pair(ARR_INT, ARR_CMPX):RCMPX_LOOP(zt,    int32_t, struct apl_cmpx);break;		\
-	case type_pair(ARR_INT, ARR_CHAR8):LOOP(zt,         int32_t, uint8_t);break;			\
-	case type_pair(ARR_INT, ARR_CHAR16):LOOP(zt,        int32_t, uint16_t);break;			\
-	case type_pair(ARR_INT, ARR_CHAR32):LOOP(zt,        int32_t, uint32_t);break;			\
-	case type_pair(ARR_DBL, ARR_BOOL):LOOP(zt,          double, int8_t);break;			\
-	case type_pair(ARR_DBL, ARR_SINT):LOOP(zt,          double, int16_t);break;			\
-	case type_pair(ARR_DBL, ARR_INT):LOOP(zt,           double, int32_t);break;			\
-	case type_pair(ARR_DBL, ARR_DBL):LOOP(zt,           double, double);break;			\
+	case type_pair(ARR_INT, ARR_CHAR8):LOOP(zt,	    int32_t, uint8_t);break;			\
+	case type_pair(ARR_INT, ARR_CHAR16):LOOP(zt,	    int32_t, uint16_t);break;			\
+	case type_pair(ARR_INT, ARR_CHAR32):LOOP(zt,	    int32_t, uint32_t);break;			\
+	case type_pair(ARR_DBL, ARR_BOOL):LOOP(zt,	    double, int8_t);break;			\
+	case type_pair(ARR_DBL, ARR_SINT):LOOP(zt,	    double, int16_t);break;			\
+	case type_pair(ARR_DBL, ARR_INT):LOOP(zt,	    double, int32_t);break;			\
+	case type_pair(ARR_DBL, ARR_DBL):LOOP(zt,	    double, double);break;			\
 	case type_pair(ARR_DBL, ARR_CMPX):RCMPX_LOOP(zt,    double, struct apl_cmpx);break;		\
-	case type_pair(ARR_DBL, ARR_CHAR8):LOOP(zt,         double, uint8_t);break;			\
-	case type_pair(ARR_DBL, ARR_CHAR16):LOOP(zt,        double, uint16_t);break;			\
-	case type_pair(ARR_DBL, ARR_CHAR32):LOOP(zt,        double, uint32_t);break;			\
+	case type_pair(ARR_DBL, ARR_CHAR8):LOOP(zt,	    double, uint8_t);break;			\
+	case type_pair(ARR_DBL, ARR_CHAR16):LOOP(zt,	    double, uint16_t);break;			\
+	case type_pair(ARR_DBL, ARR_CHAR32):LOOP(zt,	    double, uint32_t);break;			\
 	case type_pair(ARR_CMPX, ARR_BOOL):LCMPX_LOOP(zt,   struct apl_cmpx, int8_t);break;		\
 	case type_pair(ARR_CMPX, ARR_SINT):LCMPX_LOOP(zt,   struct apl_cmpx, int16_t);break;		\
 	case type_pair(ARR_CMPX, ARR_INT):LCMPX_LOOP(zt,    struct apl_cmpx, int32_t);break;		\
@@ -505,30 +505,30 @@ struct cell_func *same_ibeam = &same_closure;
 	case type_pair(ARR_CMPX, ARR_CHAR8):LCMPX_LOOP(zt,  struct apl_cmpx, uint8_t);break;		\
 	case type_pair(ARR_CMPX, ARR_CHAR16):LCMPX_LOOP(zt, struct apl_cmpx, uint16_t);break;		\
 	case type_pair(ARR_CMPX, ARR_CHAR32):LCMPX_LOOP(zt, struct apl_cmpx, uint32_t);break;		\
-	case type_pair(ARR_CHAR8, ARR_BOOL):LOOP(zt,        uint8_t, int8_t);break;			\
-	case type_pair(ARR_CHAR8, ARR_SINT):LOOP(zt,        uint8_t, int16_t);break;			\
-	case type_pair(ARR_CHAR8, ARR_INT):LOOP(zt,         uint8_t, int32_t);break;			\
-	case type_pair(ARR_CHAR8, ARR_DBL):LOOP(zt,         uint8_t, double);break;			\
+	case type_pair(ARR_CHAR8, ARR_BOOL):LOOP(zt,	    uint8_t, int8_t);break;			\
+	case type_pair(ARR_CHAR8, ARR_SINT):LOOP(zt,	    uint8_t, int16_t);break;			\
+	case type_pair(ARR_CHAR8, ARR_INT):LOOP(zt,	    uint8_t, int32_t);break;			\
+	case type_pair(ARR_CHAR8, ARR_DBL):LOOP(zt,	    uint8_t, double);break;			\
 	case type_pair(ARR_CHAR8, ARR_CMPX):RCMPX_LOOP(zt,  uint8_t, struct apl_cmpx);break;		\
-	case type_pair(ARR_CHAR8, ARR_CHAR8):LOOP(zt,       uint8_t, uint8_t);break;			\
-	case type_pair(ARR_CHAR8, ARR_CHAR16):LOOP(zt,      uint8_t, uint16_t);break;			\
-	case type_pair(ARR_CHAR8, ARR_CHAR32):LOOP(zt,      uint8_t, uint32_t);break;			\
-	case type_pair(ARR_CHAR16, ARR_BOOL):LOOP(zt,       uint16_t, int8_t);break;			\
-	case type_pair(ARR_CHAR16, ARR_SINT):LOOP(zt,       uint16_t, int16_t);break;			\
-	case type_pair(ARR_CHAR16, ARR_INT):LOOP(zt,        uint16_t, int32_t);break;			\
-	case type_pair(ARR_CHAR16, ARR_DBL):LOOP(zt,        uint16_t, double);break;			\
+	case type_pair(ARR_CHAR8, ARR_CHAR8):LOOP(zt,	    uint8_t, uint8_t);break;			\
+	case type_pair(ARR_CHAR8, ARR_CHAR16):LOOP(zt,	    uint8_t, uint16_t);break;			\
+	case type_pair(ARR_CHAR8, ARR_CHAR32):LOOP(zt,	    uint8_t, uint32_t);break;			\
+	case type_pair(ARR_CHAR16, ARR_BOOL):LOOP(zt,	    uint16_t, int8_t);break;			\
+	case type_pair(ARR_CHAR16, ARR_SINT):LOOP(zt,	    uint16_t, int16_t);break;			\
+	case type_pair(ARR_CHAR16, ARR_INT):LOOP(zt,	    uint16_t, int32_t);break;			\
+	case type_pair(ARR_CHAR16, ARR_DBL):LOOP(zt,	    uint16_t, double);break;			\
 	case type_pair(ARR_CHAR16, ARR_CMPX):RCMPX_LOOP(zt, uint16_t, struct apl_cmpx);break;		\
-	case type_pair(ARR_CHAR16, ARR_CHAR8):LOOP(zt,      uint16_t, uint8_t);break;			\
-	case type_pair(ARR_CHAR16, ARR_CHAR16):LOOP(zt,     uint16_t, uint16_t);break;			\
-	case type_pair(ARR_CHAR16, ARR_CHAR32):LOOP(zt,     uint16_t, uint32_t);break;			\
-	case type_pair(ARR_CHAR32, ARR_BOOL):LOOP(zt,       uint32_t, int8_t);break;			\
-	case type_pair(ARR_CHAR32, ARR_SINT):LOOP(zt,       uint32_t, int16_t);break;			\
-	case type_pair(ARR_CHAR32, ARR_INT):LOOP(zt,        uint32_t, int32_t);break;			\
-	case type_pair(ARR_CHAR32, ARR_DBL):LOOP(zt,        uint32_t, double);break;			\
+	case type_pair(ARR_CHAR16, ARR_CHAR8):LOOP(zt,	    uint16_t, uint8_t);break;			\
+	case type_pair(ARR_CHAR16, ARR_CHAR16):LOOP(zt,	    uint16_t, uint16_t);break;			\
+	case type_pair(ARR_CHAR16, ARR_CHAR32):LOOP(zt,	    uint16_t, uint32_t);break;			\
+	case type_pair(ARR_CHAR32, ARR_BOOL):LOOP(zt,	    uint32_t, int8_t);break;			\
+	case type_pair(ARR_CHAR32, ARR_SINT):LOOP(zt,	    uint32_t, int16_t);break;			\
+	case type_pair(ARR_CHAR32, ARR_INT):LOOP(zt,	    uint32_t, int32_t);break;			\
+	case type_pair(ARR_CHAR32, ARR_DBL):LOOP(zt,	    uint32_t, double);break;			\
 	case type_pair(ARR_CHAR32, ARR_CMPX):RCMPX_LOOP(zt, uint32_t, struct apl_cmpx);break;		\
-	case type_pair(ARR_CHAR32, ARR_CHAR8):LOOP(zt,      uint32_t, uint8_t);break;			\
-	case type_pair(ARR_CHAR32, ARR_CHAR16):LOOP(zt,     uint32_t, uint16_t);break;			\
-	case type_pair(ARR_CHAR32, ARR_CHAR32):LOOP(zt,     uint32_t, uint32_t);break;			\
+	case type_pair(ARR_CHAR32, ARR_CHAR8):LOOP(zt,	    uint32_t, uint8_t);break;			\
+	case type_pair(ARR_CHAR32, ARR_CHAR16):LOOP(zt,	    uint32_t, uint16_t);break;			\
+	case type_pair(ARR_CHAR32, ARR_CHAR32):LOOP(zt,	    uint32_t, uint32_t);break;			\
 	default:											\
 		def_expr;										\
 	}
@@ -780,6 +780,131 @@ struct cell_func squeeze_closure = {CELL_FUNC, 1, squeeze_func, 0};
 struct cell_func *squeeze_ibeam = &squeeze_closure;
 
 int
+has_nat_vals_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err, is_nat;
+	
+	if (err = has_natural_values(&is_nat, r))
+		return err;
+	
+	return mk_scalar_bool(z, is_nat);
+}
+
+struct cell_func has_nat_vals_closure = {CELL_FUNC, 1, has_nat_vals_func, 0};
+struct cell_func *has_nat_vals_ibeam = &has_nat_vals_closure;
+
+int
+index_gen_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *t;
+	size_t dim, tile;
+	enum array_type ztype;
+	af_dtype aftype;
+	int err;
+	
+	if (err = get_scalar_u64(&dim, r))
+		return err;
+	
+	ztype = closest_numeric_array_type((double)dim);
+	
+	if (err = mk_array(&t, ztype, STG_DEVICE, 1))
+		return err;
+	
+	t->shape[0] = dim;
+	tile = 1;
+	aftype = array_af_dtype(t);
+	
+	if (err = af_iota(&t->values, 1, &dim, 1, &tile, aftype)) {
+		release_array(t);
+		return err;
+	}
+
+	*z = t;
+	
+	return 0;
+}
+
+struct cell_func index_gen_closure = {CELL_FUNC, 1, index_gen_func, 0};
+struct cell_func *index_gen_vec = &index_gen_closure;
+
+int
+index_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *t;
+	int err;
+
+	if (err = mk_array(&t, r->type, r->storage, 1))
+		return err;
+	
+	t->shape[0] = array_values_count(l);
+	
+	if (err = array_promote_storage(l, r))
+		goto fail;
+
+	if (l->storage == STG_DEVICE) {
+		if (err = af_lookup(&t->values, r->values, l->values, 0))
+			goto fail;
+		
+		goto done;
+	}
+	
+	if (err = alloc_array(t))
+		goto fail;
+	
+#define INDEX_LOOP(ztype, ltype, rtype) {			\
+	ltype *lvals = l->values;			\
+	rtype *rvals = r->values;			\
+	rtype *tvals = t->values;			\
+							\
+	for (size_t i = 0; i < t->shape[0]; i++)	\
+		tvals[i] = rvals[(ztype)lvals[i]];	\
+}
+
+	if (r->type == ARR_NESTED) {
+		struct cell_array **rvals = r->values;
+		
+		switch (l->type) {
+		case ARR_BOOL:
+			INDEX_LOOP(int8_t, int8_t, struct cell_array *);
+			break;
+		case ARR_SINT:
+			INDEX_LOOP(int16_t, int16_t, struct cell_array *);
+			break;
+		case ARR_INT:
+			INDEX_LOOP(int32_t, int32_t, struct cell_array *);
+			break;
+		case ARR_DBL:
+			INDEX_LOOP(size_t, double, struct cell_array *);
+			break;
+		default:
+			err = 99;
+			goto fail;
+		}
+		
+		goto done;
+	}
+
+	SIMPLE_SWITCH(INDEX_LOOP, NOOP, NOOP, INDEX_LOOP,
+	    size_t, l->type, r->type,
+	    {err = 99; goto fail;})
+
+done:
+	*z = t;
+	
+	return 0;
+	
+fail:
+	release_array(t);
+	return err;
+}
+
+struct cell_func index_closure = {CELL_FUNC, 1, index_func, 0};
+struct cell_func *index_ibeam = &index_closure;
+
+int
 monadic_scalar_apply(struct cell_array **z, struct cell_array *r,
     int (*fn)(struct cell_array *, struct cell_array *))
 {
@@ -862,12 +987,25 @@ struct cell_func is_numeric_closure = {CELL_FUNC, 1, is_numeric_func, 0};
 struct cell_func *is_numeric_ibeam = &is_numeric_closure;
 
 int
+is_integer_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	if (is_integer_array(r))
+		return mk_scalar_bool(z, 1);
+	
+	return mk_scalar_bool(z, 0);
+}
+
+struct cell_func is_integer_closure = {CELL_FUNC, 1, is_integer_func, 0};
+struct cell_func *is_integer_ibeam = &is_integer_closure;
+
+int
 dyadic_scalar_apply(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, 
     int (*scl_type)(enum array_type *, struct cell_array *, struct cell_array *), 
     int (*scl_device)(af_array *, af_array, af_array),
     int (*scl_host)(struct cell_array *, size_t, 
-        struct cell_array *, size_t, struct cell_array *, size_t))
+	struct cell_array *, size_t, struct cell_array *, size_t))
 {
 	struct cell_array *t;
 	size_t lc, rc;
@@ -973,42 +1111,42 @@ add_host(struct cell_array *t, size_t count,
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
 #define ADD_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;       \
-	ltype *lvals = l->values;       \
+	ztype *tvals = t->values;	\
+	ltype *lvals = l->values;	\
 	rtype *rvals = r->values;
 	
 #define ADD_LOOP(ztype, ltype, rtype) {					\
 	ADD_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++)                              \
+	for (size_t i = 0; i < count; i++)				\
 		tvals[i] = (ztype)lvals[i % lc] + (ztype)rvals[i % rc];	\
 }
 
 #define ADD_CMPX(ztype, ltype, rtype) {					\
 	ADD_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc].real + rvals[i % rc].real;\
 		tvals[i].imag = lvals[i % lc].imag + rvals[i % rc].imag;\
-	}                                                               \
+	}								\
 }
 		
 #define ADD_LCMPX(ztype, ltype, rtype) {				\
 	ADD_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc].real + rvals[i % rc];	\
-		tvals[i].imag = lvals[i % lc].imag;                     \
-	}                                                               \
+		tvals[i].imag = lvals[i % lc].imag;			\
+	}								\
 }
 	
 #define ADD_RCMPX(ztype, ltype, rtype) {				\
 	ADD_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc] + rvals[i % rc].real;	\
-		tvals[i].imag = rvals[i % rc].imag;                     \
-	}                                                               \
+		tvals[i].imag = rvals[i % rc].imag;			\
+	}								\
 }
 
 	switch (t->type) {
@@ -1050,56 +1188,6 @@ struct cell_func add_closure = {CELL_FUNC, 1, add_func, 0};
 struct cell_func *add_vec_ibeam = &add_closure;
 
 int
-has_nat_vals_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	int err, is_nat;
-	
-	if (err = has_natural_values(&is_nat, r))
-		return err;
-	
-	return mk_scalar_bool(z, is_nat);
-}
-
-struct cell_func has_nat_vals_closure = {CELL_FUNC, 1, has_nat_vals_func, 0};
-struct cell_func *has_nat_vals_ibeam = &has_nat_vals_closure;
-
-int
-index_gen_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	struct cell_array *t;
-	size_t dim, tile;
-	enum array_type ztype;
-	af_dtype aftype;
-	int err;
-	
-	if (err = get_scalar_u64(&dim, r))
-		return err;
-	
-	ztype = closest_numeric_array_type((double)dim);
-	
-	if (err = mk_array(&t, ztype, STG_DEVICE, 1))
-		return err;
-	
-	t->shape[0] = dim;
-	tile = 1;
-	aftype = array_af_dtype(t);
-	
-	if (err = af_iota(&t->values, 1, &dim, 1, &tile, aftype)) {
-		release_array(t);
-		return err;
-	}
-
-	*z = t;
-	
-	return 0;
-}
-
-struct cell_func index_gen_closure = {CELL_FUNC, 1, index_gen_func, 0};
-struct cell_func *index_gen_vec = &index_gen_closure;
-
-int
 mul_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = l->type > r->type ? l->type : r->type;
@@ -1118,21 +1206,21 @@ mul_host(struct cell_array *t, size_t count,
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
 #define MUL_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;       \
-	ltype *lvals = l->values;       \
+	ztype *tvals = t->values;	\
+	ltype *lvals = l->values;	\
 	rtype *rvals = r->values;
 	
 #define MUL_LOOP(ztype, ltype, rtype) {					\
 	MUL_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++)                              \
+	for (size_t i = 0; i < count; i++)				\
 		tvals[i] = (ztype)lvals[i % lc] * (ztype)rvals[i % rc];	\
 }
 
 #define MUL_CMPX(ztype, ltype, rtype) {					\
 	MUL_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		struct apl_cmpx lv = lvals[i % lc];			\
 		struct apl_cmpx rv = rvals[i % rc];			\
 									\
@@ -1140,25 +1228,25 @@ mul_host(struct cell_array *t, size_t count,
 		tvals[i].real += -lv.imag * rv.imag;			\
 		tvals[i].imag  = lv.imag * rv.real;			\
 		tvals[i].imag += lv.real * rv.imag;			\
-	}                                                               \
+	}								\
 }
 		
 #define MUL_LCMPX(ztype, ltype, rtype) {				\
 	MUL_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc].real + rvals[i % rc];	\
-		tvals[i].imag = lvals[i % lc].imag + rvals[i % rc];     \
-	}                                                               \
+		tvals[i].imag = lvals[i % lc].imag + rvals[i % rc];	\
+	}								\
 }
 	
 #define MUL_RCMPX(ztype, ltype, rtype) {				\
 	MUL_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc] + rvals[i % rc].real;	\
-		tvals[i].imag = lvals[i % lc] + rvals[i % rc].imag;     \
-	}                                                               \
+		tvals[i].imag = lvals[i % lc] + rvals[i % rc].imag;	\
+	}								\
 }
 
 	switch (t->type) {
@@ -1228,8 +1316,8 @@ div_host(struct cell_array *t, size_t count,
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
 #define DIV_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;       \
-	ltype *lvals = l->values;       \
+	ztype *tvals = t->values;	\
+	ltype *lvals = l->values;	\
 	rtype *rvals = r->values;
 	
 #define DIV_LOOP(ztype, ltype, rtype) {					\
@@ -1248,7 +1336,7 @@ div_host(struct cell_array *t, size_t count,
 #define DIV_CMPX(ztype, ltype, rtype) {					\
 	DIV_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		struct apl_cmpx lv = lvals[i % lc];			\
 		struct apl_cmpx rv = rvals[i % rc];			\
 		double quot = rv.real * rv.real + rv.imag * rv.imag;	\
@@ -1263,13 +1351,13 @@ div_host(struct cell_array *t, size_t count,
 		tvals[i].real /= quot;					\
 		tvals[i].imag = lv.imag * rv.real - lv.real * rv.imag;	\
 		tvals[i].imag /= quot;					\
-	}                                                               \
+	}								\
 }
 		
 #define DIV_LCMPX(ztype, ltype, rtype) {				\
 	DIV_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		struct apl_cmpx lv = lvals[i % lc];			\
 		double rv = rvals[i % rc];				\
 									\
@@ -1281,13 +1369,13 @@ div_host(struct cell_array *t, size_t count,
 									\
 		tvals[i].real = lv.real / rv;				\
 		tvals[i].imag = lv.imag / rv;				\
-	}                                                               \
+	}								\
 }
 
 #define DIV_RCMPX(ztype, ltype, rtype) {				\
 	DIV_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		double lv = lvals[i % lc];				\
 		struct apl_cmpx rv = rvals[i % rc];			\
 		double quot = rv.real * rv.real + rv.imag * rv.imag;	\
@@ -1300,7 +1388,7 @@ div_host(struct cell_array *t, size_t count,
 									\
 		tvals[i].real = lv * rv.real / quot;			\
 		tvals[i].imag = -lv * rv.imag / quot;			\
-	}                                                               \
+	}								\
 }
 
 	switch (t->type) {
@@ -1360,42 +1448,42 @@ sub_host(struct cell_array *t, size_t count,
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
 #define SUB_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;       \
-	ltype *lvals = l->values;       \
+	ztype *tvals = t->values;	\
+	ltype *lvals = l->values;	\
 	rtype *rvals = r->values;
 	
 #define SUB_LOOP(ztype, ltype, rtype) {					\
 	SUB_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++)                              \
+	for (size_t i = 0; i < count; i++)				\
 		tvals[i] = (ztype)lvals[i % lc] - (ztype)rvals[i % rc];	\
 }
 
 #define SUB_CMPX(ztype, ltype, rtype) {					\
 	SUB_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc].real - rvals[i % rc].real;\
 		tvals[i].imag = lvals[i % lc].imag - rvals[i % rc].imag;\
-	}                                                               \
+	}								\
 }
 		
 #define SUB_LCMPX(ztype, ltype, rtype) {				\
 	SUB_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc].real - rvals[i % rc];	\
-		tvals[i].imag = lvals[i % lc].imag;                     \
-	}                                                               \
+		tvals[i].imag = lvals[i % lc].imag;			\
+	}								\
 }
 	
 #define SUB_RCMPX(ztype, ltype, rtype) {				\
 	SUB_LOCALS(ztype, ltype, rtype)					\
 									\
-	for (size_t i = 0; i < count; i++) {                            \
+	for (size_t i = 0; i < count; i++) {				\
 		tvals[i].real = lvals[i % lc] - rvals[i % rc].real;	\
-		tvals[i].imag = rvals[i % rc].imag;                     \
-	}                                                               \
+		tvals[i].imag = rvals[i % rc].imag;			\
+	}								\
 }
 
 	switch (t->type) {
