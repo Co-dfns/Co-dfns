@@ -110,4 +110,7 @@ rdf←{op←⍺⍺¨
 	z
 }
 
+⍝ .: Inner Product
+dot←{⍺⍺⌿⍺ ⍵⍵¨ ⍵}
+
 :EndNamespace

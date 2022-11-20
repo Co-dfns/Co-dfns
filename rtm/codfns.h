@@ -177,6 +177,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *map_dyadic;
 	struct cell_func *map;
 	struct cell_func *rdf;
+	struct cell_func *dot;
 } cdf_prim;
 #endif
 
