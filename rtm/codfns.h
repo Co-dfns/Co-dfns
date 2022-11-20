@@ -134,6 +134,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *squeeze;
 	struct cell_func *is_simple;
 	struct cell_func *is_numeric;
+	struct cell_func *is_integer;
 	struct cell_func *max_shp;
 	struct cell_func *has_nat_vals;
 	struct cell_func *chk_scl;
@@ -142,15 +143,6 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *both_numeric;
 	struct cell_func *numeric;
 	struct cell_func *scalar;
-	struct cell_func *conjugate;
-	struct cell_func *add;
-	struct cell_func *sign;
-	struct cell_func *mul;
-	struct cell_func *recip;
-	struct cell_func *div;
-	struct cell_func *index_gen;
-	struct cell_func *index_of;
-	struct cell_func *iot;
 	struct cell_func *rgt;
 	struct cell_func *lft;
 	struct cell_func *reshape;
@@ -158,8 +150,33 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *cat;
 	struct cell_func *eqv;
 	struct cell_func *nqv;
+	struct cell_func *materialize;
+	struct cell_func *index;
+	struct cell_func *sqd;
+	struct cell_func *index_gen;
+	struct cell_func *index_of;
+	struct cell_func *iot;
 	struct cell_func *dis;
 	struct cell_func *par;
+	struct cell_func *conjugate;
+	struct cell_func *add;
+	struct cell_func *negate;
+	struct cell_func *sub;
+	struct cell_func *sign;
+	struct cell_func *mul;
+	struct cell_func *recip;
+	struct cell_func *div;
+	struct cell_func *exp;
+	struct cell_func *split;
+	struct cell_func *drop;
+	struct cell_func *drp;
+	struct cell_func *reverse_last;
+	struct cell_func *rotate_last;
+	struct cell_func *rot;
+	struct cell_func *map_monadic;
+	struct cell_func *map_dyadic;
+	struct cell_func *map;
+	struct cell_func *rdf;
 } cdf_prim;
 #endif
 

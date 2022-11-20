@@ -84,6 +84,9 @@ mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
 recip←{⎕SIGNAL 16}
 div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 
+⍝ *: Exponent | Power
+exp←'exp_vec_ibeam'⌶ ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
+
 ⍝ ↓: Split | Drop
 split←{⎕SIGNAL 16}
 drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}

@@ -1,4 +1,6 @@
+#include <complex.h>
 #include <float.h>
+#include <math.h>
 #include <string.h>
 
 #include "internal.h"
@@ -1523,4 +1525,199 @@ sub_func(struct cell_array **z,
 
 struct cell_func sub_closure = {CELL_FUNC, 1, sub_func, 0};
 struct cell_func *sub_vec_ibeam = &sub_closure;
+
+struct apl_cmpx
+pow_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+	
+#ifdef _MSC_VER
+	_Dcomplex tx = {x.real, x.imag};
+	_Dcomplex ty = {y.real, y.imag};
+	_Dcomplex tz;
+#else
+	double complex tx, ty, tz;
+	
+	tx = x.real + x.imag * I;
+	ty = y.real + y.imag * I;
+#endif
+
+	tz = cpow(tx, ty);
+	
+	z.real = creal(tz);
+	z.imag = cimag(tz);
+	
+	return z;
+}
+
+int
+pow_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = ARR_DBL;
+	
+	if (l->type == ARR_CMPX || r->type == ARR_CMPX)
+		*type = ARR_CMPX;
+	
+	return 0;
+}
+
+int
+pow_device(af_array *z, af_array l, af_array r)
+{
+	return af_pow(z, l, r, 0);
+}
+
+int
+pow_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+#define POW_LOCALS(ztype, ltype, rtype) \
+	ztype *tvals = t->values;	\
+	ltype *lvals = l->values;	\
+	rtype *rvals = r->values;
+	
+#define POW_LOOP(ztype, ltype, rtype) {		\
+	POW_LOCALS(ztype, ltype, rtype)		\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		double x = lvals[i % lc];       \
+		double y = rvals[i % rc];       \
+						\
+		tvals[i] = pow(x, y);           \
+	}					\
+}
+
+#define POW_CMPX(ztype, ltype, rtype) {			\
+	POW_LOCALS(ztype, ltype, rtype)			\
+							\
+	for (size_t i = 0; i < count; i++) {		\
+		struct apl_cmpx x = lvals[i % lc];	\
+		struct apl_cmpx y = rvals[i % rc];	\
+							\
+		tvals[i] = pow_cmpx(x, y);		\
+	}						\
+}
+		
+#define POW_LCMPX(ztype, ltype, rtype) {		\
+	POW_LOCALS(ztype, ltype, rtype)			\
+							\
+	for (size_t i = 0; i < count; i++) {		\
+		struct apl_cmpx x = lvals[i % lc];	\
+		struct apl_cmpx y = {rvals[i % rc], 0};	\
+							\
+		tvals[i] = pow_cmpx(x, y);		\
+	}						\
+}
+	
+#define POW_RCMPX(ztype, ltype, rtype) {		\
+	POW_LOCALS(ztype, ltype, rtype)			\
+							\
+	for (size_t i = 0; i < count; i++) {		\
+		struct apl_cmpx x = {lvals[i % lc], 0};	\
+		struct apl_cmpx y = rvals[i % rc];	\
+							\
+		tvals[i] = pow_cmpx(x, y);		\
+	}						\
+}
+
+	switch (t->type) {
+	case ARR_DBL:
+		SIMPLE_SWITCH(POW_LOOP, NOOP, NOOP, NOOP, 
+		     double, l->type, r->type, return 99);
+		break;
+	case ARR_CMPX:
+		SIMPLE_SWITCH(NOOP, POW_CMPX, POW_LCMPX, POW_RCMPX, 
+		     struct apl_cmpx, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+pow_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, pow_type, pow_device, pow_host);
+}
+
+struct cell_func pow_closure = {CELL_FUNC, 1, pow_func, 0};
+struct cell_func *pow_vec_ibeam = &pow_closure;
+
+struct apl_cmpx
+exp_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx z;
+	
+#ifdef _MSC_VER
+	_Dcomplex tx = {x.real, x.imag};	
+	_Dcomplex tz;
+#else
+	double complex tz, tx;
+
+	tx = x.real + x.imag * I;
+#endif
+	
+	tz = cexp(tx);
+	
+	z.real = creal(tz);
+	z.imag = cimag(tz);
+	
+	return z;
+}
+
+int
+exp_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = r->type == ARR_CMPX ? ARR_CMPX : ARR_DBL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		if (err = af_exp(&t->values, r->values))
+			return err;
+
+		break;
+	case STG_HOST:
+		if (err = alloc_array(t))
+			return err;
+		
+		size_t count = array_values_count(t);
+		
+		if (t->type == ARR_CMPX) {
+			struct apl_cmpx *tvals = t->values;
+			struct apl_cmpx *rvals = r->values;
+			
+			for (size_t i = 0; i < count; i++)
+				tvals[i] = exp_cmpx(rvals[i]);
+			
+			break;
+		}
+		
+		double *tvals = t->values;
+		double *rvals = r->values;
+		
+		for (size_t i = 0; i < count; i++)
+			tvals[i] = exp(rvals[i]);
+		
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+exp_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, exp_values);
+}
+
+struct cell_func exp_closure = {CELL_FUNC, 1, exp_func, 0};
+struct cell_func *exp_vec_ibeam = &exp_closure;
 
