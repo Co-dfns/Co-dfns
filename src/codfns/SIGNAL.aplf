@@ -12,12 +12,14 @@
  	(⎕EM ⍺)(no,IN[i])(' ^'[i∊⍵],⍨' '⍴⍨≢no)
  }
  
+ tabify←{1 8[⍺]⌿' '@(⍺⍨)⍵}
+ 
  quotelines←{
  	lines←∪linestarts⍸,⍵
  	nos←(1 0⍴⍨2×≢lines)⍀'[',(⍕⍪1+lines),⍤1⊢'] '
  	beg←linestarts[lines] ⋄ end←linestarts[lines+1]
- 	m←∊∘⍵¨i←beg+⍳¨end-beg
- 	¯1↓∊nos,(~∘CR LF¨⍪,(IN∘I¨i),⍪' ▔'∘I¨m),CR
+ 	m←∊∘⍵¨i←beg+⍳¨end-beg ⋄ t←(⎕UCS 9)=txt←IN∘I¨i
+ 	¯1↓∊nos,(~∘CR LF¨⍪,(t tabify¨txt),⍪t tabify¨' ▔'∘I¨m),CR
  }
  
  →HAS_MSG⌿⍨0≠⎕NC'MSG' ⋄ MSG←2 ''
