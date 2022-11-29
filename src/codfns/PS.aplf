@@ -315,10 +315,6 @@ PS←{
 	p←(zi@ki⍳≢p)[p] ⋄ t k n lx pos end(⊣@zi⍨)←t k n lx pos end I¨⊂ki
 	t k n lx pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
-	∨⌿msk←3≠1⌷⍉e2n←p[i],∘≢⌸i←⍸(t,⍪k)[p;]∧.=E 2:{
-		'BAD'SIGNAL SELECT 0⌷⍉msk⌿e2n
-	}⍬
-
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧k=7)∨(t=A)∧0=≡¨n ⋄ msk[p]∧←msk ⋄ i←⍸msk←msk∧msk[p]
 	k[p[i]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]] 
