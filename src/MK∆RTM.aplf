@@ -12,7 +12,7 @@ put←{
 }
 
 src←⊃⎕NGET path,'\rtm\prim.apln'
-(path,'\rtm\prim.c')put codfns.{GC TT PS ⍵}src
+(path,'\rtm\prim.c')put codfns.{GC TT PS TK ⍵}src
 
 vsbat←#.codfns.VS∆PATH
 vsbat,←'\VC\Auxiliary\Build\vcvarsall.bat'

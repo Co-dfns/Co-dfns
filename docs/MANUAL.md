@@ -4,8 +4,10 @@
 
 	target←<module name> codfns.Fix <namespace script>
 	]codfns.compile <namespace> <target> [-af={cpu,opencl,cuda}]
-	(depth type kind name src_start src_end) exports symbols source←[env] codfns.PS 'line1' 'line2' ...
-        (depth type kind name src_start src_end) exports symbols source←[env] codfns.PS 'source code ...'
+	(depth type kind name src_start src_end) exports symbols source←codfns.TK 'line1' 'line2' ...
+        (depth type kind name src_start src_end) exports symbols source←codfns.TK 'source code ...'
+	(depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
+        (depth type kind name lex src_start src_end) exports symbols source←codfns.PS tokens
 
 ## Description
 
@@ -26,7 +28,8 @@ target    | The name the compiler should give to the compiled Co-dfns module. Up
 Expression | Description
 ---------- | -----------
 Fix        | The Fix function is the primary entry into the Co-dfns compiler. It takes a character vector on the left indicating the desired name of the compiled module and the namespace script to compile as the right argument. The format of the namespace script should correspond to the `⎕FIX` format. `Fix` returns a namespace linked to the compiled object.
-PS         | The Co-dfns parsing function. It takes a vector of character vectors containing a namespace script and parses the code into an AST.
+TK         | The Co-dfns tokenizing function. It takes a vector of character vectors containing a namespace script and tokenizes the code.
+PS         | The Co-dfns parsing function. It takes the output of `TK` and parses the code into an AST.
 AF∆LIB     | The character vector containing the name of the backend to use. Defaults to `''`. See the documentation for `-af` above.
 AF∆PREFIX  | The location of the ArrayFire library installation for Linux/Mac platforms.
 VERSION    | The version of the compiler. Do not modify this value.
@@ -53,6 +56,7 @@ depth | The depth of the node in the AST. Root nodes are depth 0.
 type  | The type of the node, as an index into the `N∆` constant.
 kind  | The sub-type or kind of the node, as an integer.
 name  | A positive integer referencing another node in the table or a negative index into the symbol table.
+lex   | An indicator of the scope of a given variable/node
 start | The starting index into the source corresponding to this node.
 end   | The exclusive ending index into the source corresponding to this node.
 

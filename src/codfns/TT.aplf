@@ -73,6 +73,7 @@ TT←{
 	nams,←  'q_veach' 'q_ambiv'
 	syms,←,¨'⍺'     '⍵'     '⍺⍺'         '⍵⍵'         '∇∇'     '%u'
 	nams,←  'alpha' 'omega' 'alphaalpha' 'omegaomega' 'deldel' ''
+	syms←⎕C syms
 
 	⍝ Convert all primitives to variables; P → V
 	i←⍸t=P ⋄ t[i]←V ⋄ si←syms⍳sym[ni←|n[i]]
