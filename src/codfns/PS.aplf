@@ -301,9 +301,9 @@ PS←{
 	p,←2⌿ip ⋄ t,←nc⍴P E ⋄ k,←nc⍴2 6 ⋄ n,←nc⍴-sym⍳,¨'[' '' ⋄ lx,←nc⍴0
 	pos,←2⌿pos[ip] ⋄ end,←∊(1+pos[ip]),⍪end[ip] ⋄ pos[ip]←pos[i⌿⍨~msk]
 
-	⍝ Sanity check
-	ERR←'INVARIANT ERROR: Z node with multiple children'
-	ERR assert 1≥p[i]⊢∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p:
+	∨⌿msk←1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p:{
+		'FAILED TO PARSE'SIGNAL SELECT msk⌿zs
+	}⍬
 	
 	⍝ Count parentheses in source information
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
