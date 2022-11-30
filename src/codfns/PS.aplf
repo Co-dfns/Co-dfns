@@ -116,7 +116,7 @@ PS←{
 	⍝ Enclosing frames and lines for all nodes
 	rf←¯1@{~t[⍵]∊F G}p[rz←I@{(t[⍵]=Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍨p]
 	rf[i]←p[i←⍸t=G] ⋄ rz[i]←i ⋄ rf←rf I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}rf
-	rfn←I@{t[0⌈⍵]=G}⍨rf	
+	r←I@{t[0⌈⍵]=G}⍨rf	
 
 	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
@@ -130,7 +130,7 @@ PS←{
 	_←{
 		⍝ Link local variables with their local bindings
 		vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
-		vb[i]←fb[fr⍳rfn mk⊢i←⍸(t=V)∧vb=¯1]
+		vb[i]←fb[fr⍳r mk⊢i←⍸(t=V)∧vb=¯1]
 		b←vb[i←i⌿⍨vb[i]≠¯1]
 		vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b]←¯1
 
@@ -138,8 +138,8 @@ PS←{
 		lx[i←⍸(t=V)∧vb=¯1]←1
 		
 		⍝ Add free variables to closures
-		i←i⌿⍨k[0⌈rfn[i]]≠0 ⋄ ci←p[rfn[i]] ⋄ vb[i]←(≢p)+⍳≢i
-		p,←ci ⋄ vb lx,←(≢ci)⍴¨¯1 0 ⋄ rf rfn(⊣,I)←⊂ci
+		i←i⌿⍨k[0⌈r[i]]≠0 ⋄ ci←p[r[i]] ⋄ vb[i]←(≢p)+⍳≢i
+		p,←ci ⋄ vb lx,←(≢ci)⍴¨¯1 0 ⋄ rf r(⊣,I)←⊂ci
 		t k n pos end(⊣,I)←⊂i
 	i}⍣{0=≢⍺}⍬
 	
