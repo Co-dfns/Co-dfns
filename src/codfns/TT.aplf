@@ -1,30 +1,20 @@
 TT←{
-	((d t k n lx pos end)exp sym IN)←⍵
+	(p d t k n lx pos end)exp sym IN←⍵
 
 	⍝ Convert O(''⌶) derived functions to V2(lx[5]) nodes
 	i←⍸msk←(t=P)∧sym[|0⌊n]∊,¨'⌶'
 	pi←i-2 ⋄ t[pi]←V ⋄ k[pi]←2 ⋄ n[pi]←n[i-1] ⋄ lx[pi]←5
-	d t k n lx pos end⌿⍨←⊂~msk∨1⌽msk
-
-	⍝ Compute parent vector and reference scope
-	r←I@{t[⍵]≠F}⍣≡⍨p⊣2{p[⍵]←⍺[⍺⍸⍵]}⌿⊢∘⊂⌸d⊣p←⍳≢d
+	p d t k n lx pos end⌿⍨←⊂msk←~msk∨1⌽msk ⋄ p n(⊣-1+⍸⍨)←⊂⍸~msk
+	
+	⍝ Compute reference scope
+	r←I@{t[⍵]≠F}⍣≡⍨p ⋄ r[i]←r[n[i←⍸(t=F)∧k≠0]]
 
 	⍝ Mark mutated bindings 
-	mu←(≢p)⍴0 ⋄ rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t=V)∧(lx∊0 1)∧n<0;]
+	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t=V)∧(lx∊0 1)∧n<0;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(tk[p;]∧.=E 4)∨(tk[p;]∧.=E 6)∧(tk←t,⍪k)[p[p];]∧.=E 4
-	pfi←p[fi←⍸(t=F)∧t[p]=C]
-	_←{
-		mu[i⌿⍨(≢⍵)>rn[⍵;]⍳rni]←1
-		i[z⌿⍨(≢rni)>z←rni⍳r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]]
-	}⍣≡j
-	_←{
-		j←⍸mu∧(t=V)∧t[p]=C
-		mu[i⌿⍨(≢j)>rni⍳⍨fi[pfi⍳p[j]],⍪n[j]]←1
-	mu}⍣≡mu
-
-	⍝ Lift dfns to the top-level
-	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
-	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V
+	ci←p[n[fi←⍸(t=F)∧k≠0]]
+	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
+	mu←msk⍀1@{rni∊⍥↓fi[ci⍳p[j]],⍪n[j←i⌿⍨⍵∧t[p[i]]=C]}⍣≡mu
 
 	⍝ Wrap expressions as binding or return statements
 	i←(⍸(~t∊F G)∧t[p]=F),¯1~⍨p[i]{⊃⌽2↑⍵,¯1}⌸i←⍸t[p]=G
@@ -50,8 +40,8 @@ TT←{
 	fv←(≢p)⍴⊂⍬ ⋄ fv[r[i]],←i←i[∪⍳⍨(r,⍪n)[i←⍸(t=V)∧(lx=1)∧n<0;]]
 	
 	⍝ Namify pointer variables
-	i←⍸n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
-
+	i←⍸n≥0 ⋄ sym∪←x←('ptr',⍕)¨(j@(j←⍸(t=F)∧k≠0)⊢n)[i] ⋄ n[i]←-sym⍳x
+	
 	⍝ Symbol mapping between primitives and runtime names
 	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'  
 	nams ←  'add' 'sub' 'mul' 'div' 'exp' 'log' 'res' 'cir' 'min'
