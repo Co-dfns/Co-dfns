@@ -151,7 +151,7 @@ PS←{
 	⍝ Remove duplicates in closure variables
 	fi←∊p[i]{⊂⍵[⍳⍨n[⍵]]}⌸i←i[⍋p[i←⍸(t=V)∧t[p]=C]]
 	vb←(¯1,fi@i⊢⍳≢vb)[1+vb]
-	t k n lx rfn pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1
+	t k n lx pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1
 	p vb{(⍸~⍵)(⊢-1+⍸)⍵⌿⍺}←⊂msk
 	
 	⍝ Lift functions to top-level
