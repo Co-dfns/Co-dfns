@@ -86,7 +86,7 @@ PS←{
 
 	⍝ Unify A1, N, and C tokens to A1 nodes
 	t k(⊣@(⍸t∊N C))⍨←A 1
-	
+
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊-sym⍳,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
@@ -99,33 +99,33 @@ PS←{
 		t[⍵⌿⍨(n[⍵]∊-sym⍳⊂,'←')∧0,¯1↓bm[⍵]]←B
 		b v←(⊃¨x)(1↓¨x←x⌿⍨B=t[⊃¨x←¯1⌽¨⍵⊂⍨1,¯1↓t[⍵]∊P B])
 		∨⌿m←~bm[∊v]:'INVALID ASSIGNMENT TARGET'SIGNAL pos[m⌿∊v]
-		
+
 		p[∊v]←(≢¨v)⌿(≢p)+⍳≢v ⋄ vb[m⌿∊v]←(m←t[∊v]=V)⌿(≢¨v)⌿b
 		p t k n vb pos end,←(≢v)⍴¨b Z 0 0 ¯1(pos[⊃¨v])(end[⊃∘⌽¨v])
-		
+
 		p[m⌿⍵]←(⍺,zi←(≢p)+⍳≢b)[(m←~⍵∊∊v)⌿0,¯1↓+⍀t[⍵]=B]
 		p t k n vb pos end,←(≢b)⍴¨b Z 0 0 ¯1(1+pos[b])(end[⊃⌽⍵])
-		
+
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 
 	⍝ Wrap all non-module functions in closures
 	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p←(np@i⊢⍳≢p)[p] ⋄ p,←i
 	t k n vb pos end(⊣,I)←⊂i ⋄ t[i]←C
-	
+
 	⍝ Enclosing frames and lines for all nodes
 	rf←¯1@{~t[⍵]∊F G}p[rz←I@{(t[⍵]=Z)⍲(t[p[⍵]]∊F G)∨p[⍵]=⍵}⍣≡⍨p]
 	rf[i]←p[i←⍸t=G] ⋄ rz[i]←i ⋄ rf←rf I@{rz∊p[i]⊢∘⊃⌸i←⍸t[p]=G}rf
-	r←I@{t[0⌈⍵]=G}⍨rf	
+	r←I@{t[0⌈⍵]=G}⍨rf
 
 	⍝ Compute initial frame bindings for all binding values
 	mk←{⍺[⍵],⍪n[⍵]}
 	fb,←¯1⊣fr←rf mk⊢fb←fb[∪⍳⍨rf mk⊢fb←⊖fb[∪⍳⍨rz mk⊢fb←⊖⍸t[0⌈vb]=B]]
-	
+
 	⍝ Mark lexical scope of non-variable primitives
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3
 	lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
-	
+
 	⍝ Link variables to their bindings
 	_←{
 		⍝ Link local variables with their local bindings
@@ -136,13 +136,13 @@ PS←{
 
 		⍝ Mark free variables with their scope before binding
 		lx[i←⍸(t=V)∧vb=¯1]←1
-		
+
 		⍝ Add free variables to closures
 		i←i⌿⍨k[0⌈r[i]]≠0 ⋄ ci←p[r[i]] ⋄ vb[i]←(≢p)+⍳≢i
 		p,←ci ⋄ vb lx,←(≢ci)⍴¨¯1 0 ⋄ rf r(⊣,I)←⊂ci
 		t k n pos end(⊣,I)←⊂i
 	i}⍣{0=≢⍺}⍬
-	
+
 	⍝ Check that all variables have a valid binding
 	∨⌿msk←(t=V)∧vb=¯1:{
 		6'VARIABLES MUST BE BOUND'SIGNAL∊pos[⍵]{⍺+⍳⍵-⍺}¨end[⍵]
@@ -182,7 +182,7 @@ PS←{
 
 		k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1
 		z x⌿⍨←⊂~msk
-		
+
 		k[i]←k[vb[i←⍸t∊B V]]
 	≢z}⍣(=∨0=⊣)≢z
 	'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
@@ -190,14 +190,14 @@ PS←{
 	⍝ Compute exports
 	msk←(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
 	xn←sym[|msk⌿n] ⋄ xt←msk⌿k
-	
+
 	⍝ Parse plural value sequences to A7 nodes
 	i←|i⊣km←0<i←∊p[i](⊂-⍤⊣,⊢)⌸i←⍸t[p]=Z
 	msk∧←⊃1 ¯1∨.⌽⊂msk←km∧(t[i]=A)∨(t[i]∊P V Z)∧k[i]=1
 	np←(≢p)+⍳≢ai←i⌿⍨am←2>⌿msk⍪0 ⋄ p←(np@ai⍳≢p)[p] ⋄ p,←ai
 	t k n lx pos end(⊣,I)←⊂ai
 	t k n lx pos(⊣@ai⍨)←A 7 0 0(pos[i⌿⍨km←2<⌿0⍪msk])
-	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]	
+	p[msk⌿i]←ai[¯1++⍀km⌿⍨msk←msk∧~am]
 
 	⍝ PARSE B←D...
 	⍝ PARSE B←...D
@@ -209,10 +209,12 @@ PS←{
 	0}⌸i←⍸(t[p]=Z)∧(p≠⍳≢p)∧k[p]∊1 2
 	i←⍸(t=¯1)∧k=4 ⋄ j←⍸(t[p]=¯1)∧k[p]=4
 	(≢i)≠≢j:{
-		2'AXIS REQUIRES SINGLE AXIS EXPRESSION'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
+		msg←'AXIS REQUIRES SINGLE AXIS EXPRESSION'
+		msg SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
 	}⊃⍪⌿{⊂⍺⌿⍨1<≢⍵}⌸p[j]
 	∨⌿msk←t[j]≠Z:{
-		2'AXIS REQUIRES NON-EMPTY AXIS EXPRESSION'SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
+		msg←'AXIS REQUIRES NON-EMPTY AXIS EXPRESSION'
+		msg SIGNAL ∊pos[⍵]+⍳¨end[⍵]-pos[⍵]
 	}msk⌿p[j]
 	p[j]←p[i] ⋄ t[i]←P ⋄ end[i]←1+pos[i]
 
@@ -306,7 +308,7 @@ PS←{
 	∨⌿msk←1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p:{
 		'FAILED TO PARSE'SIGNAL SELECT msk⌿zs
 	}⍬
-	
+
 	⍝ Count parentheses in source information
 	ip←p[i←⍸(t[p]=Z)∧n[p]∊-sym⍳⊂,'('] ⋄ pos[i]←pos[ip] ⋄ end[i]←end[ip]
 
@@ -319,7 +321,7 @@ PS←{
 
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧k=7)∨(t=A)∧0=≡¨n ⋄ msk[p]∧←msk ⋄ i←⍸msk←msk∧msk[p]
-	k[p[i]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]] 
+	k[p[i]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
 	p t k n lx pos end⌿⍨←⊂~msk ⋄ p n(⊣-1+⍸⍨)←⊂⍸msk
 
 	⍝ Sort AST by depth-first pre-order traversal
