@@ -154,10 +154,6 @@ PS←{
 	t k n lx pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1
 	p vb{(⍸~⍵)(⊢-1+⍸)⍵⌿⍺}←⊂msk
 	
-	⍝ Lift functions to top-level
-	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k lx vb pos end(⊣,I)←⊂i ⋄ n,←i
-	p←(n[i]@i⊢⍳≢p)[p] ⋄ t[i]←V ⋄ vb[i]←n[i]
-
 	⍝ Instantiate functions with formal binding types
 	
 	⍝ Mark formals with their appropriate types
@@ -317,15 +313,15 @@ PS←{
 	⍝ Eliminate Z nodes from the tree
 	zi←p I@{t[p[⍵]]=Z}⍣≡ki←⍸msk←(t[p]=Z)∧t≠Z
 	p←(zi@ki⍳≢p)[p] ⋄ t k n lx pos end(⊣@zi⍨)←t k n lx pos end I¨⊂ki
-	p t k n lx pos end⌿⍨←⊂~msk←msk∨t=Z ⋄ p n(⊣-1+⍸⍨)←⊂⍸msk
+	t k n lx pos end⌿⍨←⊂msk←~msk∨t=Z ⋄ p←(⍸~msk)(⊢-1+⍸)msk⌿p
 
 	⍝ Merge simple arrays into single A1 nodes
 	msk←((t=A)∧k=7)∨(t=A)∧0=≡¨n ⋄ msk[p]∧←msk ⋄ i←⍸msk←msk∧msk[p]
 	k[p[i]]←1 ⋄ _←p[i]{0=≢⍵:0 ⋄ n[⍺]←-sym⍳sym∪←⊂⍵}⌸sym[|n[i]]
-	p t k n lx pos end⌿⍨←⊂~msk ⋄ p n(⊣-1+⍸⍨)←⊂⍸msk
+	p t k n lx pos end⌿⍨←⊂~msk ⋄ p←(⍸msk)(⊢-1+⍸)p
 
 	⍝ Sort AST by depth-first pre-order traversal
-	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p ⋄ n←i⍳@{⍵>0}n
+	d i←P2D p ⋄ p d t k n lx pos end I∘⊢←⊂i ⋄ p←i⍳p
 
 	(p d t k n lx pos end)(xn xt)sym IN
 }
