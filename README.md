@@ -42,6 +42,12 @@ technology:
 
 The following publications are either directly related to Co-dfns or talk about Co-dfns in their presentations.
 
+[Implementing the Convolutional Neural Network U-Net in APL, Dyalog User Meeting 2022](https://dyalog.tv/Dyalog22/?v=LQz1b14YYiI)
+
+[Text Processing in APL, Dyalog User Meeting 2022](https://dyalog.tv/Dyalog22/?v=5I4YPkVU7mY)
+
+[Co-dfns Report, Dyalog User Meeting 2022](https://dyalog.tv/Dyalog22/?v=HegGB0ykGlQ)
+
 [DSLs, Architecture, & Structural Design in APL, 3 ways by Aaron W Hsu #FnConf 2022](https://youtu.be/fH4kxG5zR1Y)
 
 [A Taste of GPU Compute, mentions Co-dfns](https://www.youtube.com/watch?v=eqkAaplKBc4)
