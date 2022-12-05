@@ -179,9 +179,9 @@ PS←{
 		k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1
 		z x⌿⍨←⊂~msk
 
-		k[i]←k[vb[i←⍸t∊B V]]
-	≢z}⍣(=∨0=⊣)≢z
-
+		⊢k[i]←k[vb[i←⍸t∊B V]]
+	}⍣≡⍬
+	
 	0≠≢z:{
 		msg←'FAILED TYPE INFERENCE'
 		msg SIGNAL SELECT z
