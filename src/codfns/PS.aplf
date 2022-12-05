@@ -75,7 +75,6 @@ PS←{
 
 	⍝ Convert formal nodes and system variables to P nodes
 	t[⍸(t=S)∨(t=A)∧n∊-sym⍳,¨'⍺⍵']←P
-	k[⍸(t=P)∧n∊¯3 ¯4]←2
 
 	⍝ Convert M nodes to F0 nodes
 	t←F@{t=M}t
@@ -160,7 +159,11 @@ PS←{
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
 	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]	
 	
-	⍝ Mark formals with their appropriate types
+	⍝ Mark formals with their appropriate types	
+	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧n=¯1]]]
+	k[i]←(0 0,14⍴0 1)[k[r[i←⍸(t=P)∧n=¯2]]]
+	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
+	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
 
 	⍝ Infer the type of bindings, groups, and variables
 	z x←↓⍉p[i]{⍺⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
