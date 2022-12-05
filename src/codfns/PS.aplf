@@ -181,7 +181,11 @@ PS←{
 
 		k[i]←k[vb[i←⍸t∊B V]]
 	≢z}⍣(=∨0=⊣)≢z
-	'FAILED TO INFER ALL BINDING TYPES'assert 0=≢z:
+
+	0≠≢z:{
+		msg←'FAILED TYPE INFERENCE'
+		msg SIGNAL SELECT z
+	}⍬
 
 	⍝ Compute exports
 	msk←(t=V)∧(t[0⌈vb]=B)∧k[I@{t[⍵]≠F}⍣≡⍨p]=0
