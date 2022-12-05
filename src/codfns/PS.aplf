@@ -151,10 +151,14 @@ PS←{
 	⍝ Remove duplicates in closure variables
 	fi←∊p[i]{⊂⍵[⍳⍨n[⍵]]}⌸i←i[⍋p[i←⍸(t=V)∧t[p]=C]]
 	vb←(¯1,fi@i⊢⍳≢vb)[1+vb]
-	t k n lx pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1
-	p vb{(⍸~⍵)(⊢-1+⍸)⍵⌿⍺}←⊂msk
-	
-	⍝ Instantiate functions with formal binding types
+	p t k n r lx vb pos end⌿⍨←⊂msk←0@(i~fi)⊢(≢p)⍴1
+	p vb r(⊣-1+⍸⍨)←⊂⍸~msk
+
+	⍝ Specialize function to specific formal binding types
+	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t=F)⊢(≢p)⍴1
+	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r lx vb rc pos end⌿⍨←⊂x
+	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
+	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]	
 	
 	⍝ Mark formals with their appropriate types
 
