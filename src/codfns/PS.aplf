@@ -157,11 +157,10 @@ PS←{
 	_←{r[⍵]⊣x×←rc[⍵]}⍣≡r⊣x←rc←1 1 2 4 8[k[i]]@(i←⍸t=F)⊢(≢p)⍴1
 	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r lx vb rc pos end⌿⍨←⊂x
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
-	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]	
-	
-	⍝ Mark formals with their appropriate types	
-	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧n=¯1]]]
-	k[i]←(0 0,14⍴0 1)[k[r[i←⍸(t=P)∧n=¯2]]]
+	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]
+
+	⍝ Mark formals with their appropriate types
+	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
 	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
 	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
 
@@ -188,7 +187,7 @@ PS←{
 
 		⊢k[i]←k[vb[i←⍸t∊B V]]
 	}⍣≡⍬
-	
+
 	0≠≢z:{
 		msg←'FAILED TYPE INFERENCE'
 		msg SIGNAL SELECT z
