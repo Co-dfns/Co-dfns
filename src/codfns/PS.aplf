@@ -89,6 +89,7 @@ PS←{
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊-sym⍳,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
+	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧1⌽n=-sym⍳⊂,'←']←1
 	
 	⍝ Check for empty bindings
 	i←p[i]{⊃⌽⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
@@ -98,6 +99,9 @@ PS←{
 
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p
+	
+	⍝ Treat bindable ⍺ as V node for assignment parsing
+	t[⍸bm∧n=¯2]←V
 
 	⍝ Wrap bindings/assignments into B(Z, Z) nodes
 	_←p[i]{
@@ -113,6 +117,9 @@ PS←{
 
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
+
+	⍝ Return bindable ⍺ to P node
+	t[⍸(n=¯2)∧(≢n)↑bm]←P
 
 	⍝ Wrap all non-module functions in closures
 	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p←(np@i⊢⍳≢p)[p] ⋄ p,←i
@@ -164,8 +171,13 @@ PS←{
 	j←(+⍀x)-x ⋄ ro←∊⍳¨x ⋄ p t k n r lx vb rc pos end⌿⍨←⊂x
 	p r{j[⍺]+⍵}←⊂⌊ro÷rc ⋄ vb[i]←j[vb[i]]+⌊ro[i]÷(x⌿x)[i]÷x[vb[i←⍸vb>0]]
 	k[i]←0 1 2 4 8[k[i]](⊣+|)ro[i←⍸t=F]
+	
+	⍝ Link monadic dfns ⍺ formals to ⍺← bindings
+	ab←r mk⊢i←⍸(bm←t[0⌈vb]=B)∧msk←(n=¯2)∧k[r]∊2+2×⍳7
+	vb[j]←(i,¯1)[ab⍳r mk⊢j←⍸msk∧~bm]
 
-	⍝ Mark formals with their appropriate types
+	⍝ Mark formals with their appropriate kinds
+	k[⍸(t=P)∧n=¯2]←0
 	k[i]←(0 0,14⍴1)[k[r[i←⍸(t=P)∧(n∊¯1 ¯2)∧vb=¯1]]]
 	k[i]←(¯16↑12⍴2⌿1 2)[k[r[i←⍸(t=P)∧n=¯3]]]
 	k[i]←(¯16↑4⌿1 2)[k[r[i←⍸(t=P)∧n=¯4]]]
@@ -191,7 +203,7 @@ PS←{
 		k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1
 		z x⌿⍨←⊂~msk
 
-		⊢k[i]←k[vb[i←⍸t∊B V]]
+		⊢k[i]←k[vb[i←⍸(t∊B V)∨(t=P)∧vb≥0]]
 	}⍣≡⍬
 
 	0≠≢z:{
