@@ -89,7 +89,7 @@ PS←{
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊-sym⍳,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
-	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧1⌽n=-sym⍳⊂,'←']←1
+	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
 	
 	⍝ Check for empty bindings
 	i←p[i]{⊃⌽⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
@@ -100,8 +100,8 @@ PS←{
 	⍝ We use vb to link variables to their binding
 	vb←¯1⍴⍨≢p
 	
-	⍝ Treat bindable ⍺ as V node for assignment parsing
-	t[⍸bm∧n=¯2]←V
+	⍝ Treat ⍺ as V node for assignment parsing
+	t[⍸n=¯2]←V
 
 	⍝ Wrap bindings/assignments into B(Z, Z) nodes
 	_←p[i]{
@@ -117,9 +117,9 @@ PS←{
 
 		vb[b]←zi ⋄ pos[b]←pos[⊃¨v] ⋄ end[b]←end[⊃⌽⍵]
 	0}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
-
+	
 	⍝ Return bindable ⍺ to P node
-	t[⍸(n=¯2)∧(≢n)↑bm]←P
+	t[⍸n=¯2]←P
 
 	⍝ Wrap all non-module functions in closures
 	i←⍸(t=F)∧k≠0 ⋄ np←(≢p)+⍳≢i ⋄ p←(np@i⊢⍳≢p)[p] ⋄ p,←i
@@ -309,6 +309,11 @@ PS←{
 
 	⍝ SELECTIVE MODIFIED ASSIGNMENT
 	⍝ SELECTIVE ASSIGNMENT
+	
+	∨⌿msk←(t=0)∧n=bn←-sym⍳⊂,'←':{
+		msg←'INVALID ASSIGNMENT TARGET'
+		msg SIGNAL SELECT ∊p[i]{⊂⍵⌿⍨⌽∨⍀⌽n[⍵]=bn}⌸i←⍸p∊p[⍸msk]
+	}⍬
 
 	⍝ Enclose V[X;...] for expression parsing
 	i←i[⍋p[i←⍸(t[p]=Z)∧(k[p]=1)∧p≠⍳≢p]] ⋄ j←i⌿⍨jm←t[i]=¯1
