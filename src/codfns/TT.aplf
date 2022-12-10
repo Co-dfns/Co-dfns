@@ -16,6 +16,11 @@ TT←{
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
 	mu←msk⍀1@{rni∊⍥↓fi[ci⍳p[j]],⍪n[j←i⌿⍨⍵∧t[p[i]]=C]}⍣≡mu
 
+	⍝ Delete ⍺← forms for dyadic specializations
+	msk←0@(p⌿⍨(≠p)∧(t=P)∧(n=¯2)∧(t[p]=B)∧k[r]∊3+2×⍳7)⊢(≢p)⍴1
+	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p
+	p t k n lx mu r pos end⌿⍨←⊂msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸~msk
+	
 	⍝ Lift dfns to the top-level
 	p,←n[i]←(≢p)+⍳≢i←⍸(t=F)∧p≠⍳≢p ⋄ t k n lx mu pos end r(⊣,I)←⊂i
 	p r I⍨←⊂n[i]@i⊢⍳≢p ⋄ t[i]←V
