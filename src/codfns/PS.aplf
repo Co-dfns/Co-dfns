@@ -336,7 +336,7 @@ PS←{
 	
 	⍝ Unparsed Z nodes become Z¯2 syntax error nodes
 	k[zs⌿⍨1<1⊃zs zc←↓⍉p[i],∘≢⌸i←⍸(t[p]=Z)∧p≠⍳≢p]←¯2
-	_←{z⊣msk[⍵]←msk[z←p[⍵]]}@{msk}⍣≡⍨p⊣msk←(t[p]=Z)⍲k[p]=¯2
+	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p⊣msk←(t[p]=Z)⍲k[p]=¯2
 	p t k n lx pos end⌿⍨←⊂msk ⋄ p(⊣-1+⍸⍨)←⍸~msk
 
 	⍝ Count parentheses in source information
