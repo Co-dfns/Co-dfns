@@ -56,6 +56,7 @@ sqd←materialize ⎕AMBIV index
 index_gen←{
 	chk_valid_shape ⍵: 
 	0≡≢,⍵:⊂⍬
+	(,0)≡,⍵:⍬
 	1≡≢,⍵:'index_gen_vec'⌶ ⍵
 	⎕SIGNAL 16
 }
