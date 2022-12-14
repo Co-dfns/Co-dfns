@@ -3,8 +3,8 @@
 ⍝ Basic system functions
 q_signal←'q_signal_ibeam'⌶
 q_dr←'q_dr_ibeam'⌶
-q_veach←'q_veach_ibeam'⌶
-q_ambiv←'q_ambiv_ibeam'⌶
+q_veach←'q_veach_ibeam'⌶⌶
+q_ambiv←'q_ambiv_ibeam'⌶⌶⌶
 
 ⍝ Utilities
 squeeze←'squeeze_ibeam'⌶

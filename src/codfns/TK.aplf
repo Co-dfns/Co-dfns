@@ -86,6 +86,7 @@ TK←{
 
 	⍝ Tokenize primitives and atoms
 	t[⍸(~dm)∧x∊prms]←P ⋄ t[⍸x∊syna]←A
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿(msk←x='⌶')⍪0 ⋄ t[⍸msk∧~m2]←0
 
 	⍝ Mark depths of dfns regions and give F type, with } as a child
 	t[⍸'{'=x]←F ⋄ d←+⍀1 ¯1 0['{}'⍳x]
@@ -191,6 +192,7 @@ TK←{
 	k[⍸n∊,¨prmfs]←2 ⋄ k[⍸n∊,¨prmmo]←3 ⋄ k[⍸n∊,¨prmdo]←4
 	k[⍸n∊,¨prmfo]←5
 	k[i←⍸msk←(n∊⊂,'∘')∧1⌽n∊⊂,'.']←3 ⋄ end[i]←end[i+1] ⋄ n[i]←⊂,'∘.'
+	k[⍸n∊⊂'⌶⌶']←¯3 ⋄ k[⍸n∊⊂'⌶⌶⌶']←¯4
 	d t k n pos end⌿⍨←⊂msk←~¯1⌽msk
 
 	⍝ Convert n field to symbols and add a symbol table

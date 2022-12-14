@@ -8,8 +8,8 @@ DyalogGetInterpreterFunctions(void *p)
 
 extern struct cell_func *q_signal_ibeam;
 extern struct cell_func *q_dr_ibeam;
-extern struct cell_func *q_veach_ibeam;
-extern struct cell_func *q_ambiv_ibeam;
+extern struct cell_moper *q_veach_ibeam;
+extern struct cell_doper *q_ambiv_ibeam;
 extern struct cell_func *squeeze_ibeam;
 extern struct cell_func *is_simple_ibeam;
 extern struct cell_func *is_numeric_ibeam;
@@ -428,8 +428,8 @@ EXPORT struct cdf_prim_loc {
 	wchar_t **__names;
 	struct cell_func *q_signal;
 	struct cell_func *q_dr;
-	struct cell_func *q_veach;
-	struct cell_func *q_ambiv;
+	struct cell_moper *q_veach;
+	struct cell_doper *q_ambiv;
 	struct cell_func *squeeze;
 	struct cell_func *is_simple;
 	struct cell_func *is_numeric;
@@ -17978,48 +17978,6 @@ EXPORT int
 q_dr_dwa(void *z, void *l, void *r)
 {
 	return call_dwa(q_dr, z, l, r);
-}
-
-EXPORT int
-q_veach(struct cell_array **z, struct cell_array *l, struct cell_array *r)
-{
-	struct cell_func *self;
-
-	cdf_prim_init();
-
-	self = cdf_prim.q_veach;
-
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
-}
-
-EXPORT int
-q_veach_dwa(void *z, void *l, void *r)
-{
-	return call_dwa(q_veach, z, l, r);
-}
-
-EXPORT int
-q_ambiv(struct cell_array **z, struct cell_array *l, struct cell_array *r)
-{
-	struct cell_func *self;
-
-	cdf_prim_init();
-
-	self = cdf_prim.q_ambiv;
-
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
-}
-
-EXPORT int
-q_ambiv_dwa(void *z, void *l, void *r)
-{
-	return call_dwa(q_ambiv, z, l, r);
 }
 
 EXPORT int

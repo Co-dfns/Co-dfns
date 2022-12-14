@@ -178,8 +178,8 @@ DECLSPEC struct cdf_prim_loc {
 	wchar_t **__names;
 	struct cell_func *q_signal;
 	struct cell_func *q_dr;
-	struct cell_func *q_veach;
-	struct cell_func *q_ambiv;
+	struct cell_moper *q_veach;
+	struct cell_doper *q_ambiv;
 	struct cell_func *squeeze;
 	struct cell_func *is_simple;
 	struct cell_func *is_numeric;
