@@ -48,6 +48,11 @@ TT←{
 	k[i]←0 1 2 4 5 7 8 10 11 13 14 16 17 19 20 22[k[i←⍸t=F]]
 	k[r[i]]+←2≤k[i←i⌿⍨≠r[i←⍸(≠p)∧(t=P)∧(n=¯2)∧t[p]=B]]
 	
+	⍝ Disambiguate schizophrenic functions
+	i←⍸(t=P)∧(k=2)∧n∊ns←-sym⍳,¨'/⌿\⍀'
+	sym∪←'//' '⌿⌿' '\\' '⍀⍀'[ns⍳∪n[i]]
+	n[i]←(-sym⍳'//' '⌿⌿' '\\' '⍀⍀')[ns⍳n[i]]
+	
 	⍝ Namify pointer variables
 	i←⍸n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
 
@@ -66,6 +71,8 @@ TT←{
 	nams,←  'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
 	syms,←,¨'←'   '⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⊆'   '∇'
 	nams,←  'get' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'self'
+	syms,←,¨'//'  '⌿⌿'  '\\'  '⍀⍀'
+	nams,←  'rep' 'rpf' 'xpd' 'xpf'
 	syms,←,¨';'   '⎕FFT'  '⎕IFFT' '⎕CONV'  '⎕NC'  '⎕SIGNAL'  '⎕DR'
 	nams,←  'spn' 'q_fft' 'q_ift' 'q_conv' 'q_nc' 'q_signal' 'q_dr'
 	syms,←  '⎕VEACH'  '⎕AMBIV'

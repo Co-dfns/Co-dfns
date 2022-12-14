@@ -110,6 +110,9 @@ rdf←{op←⍺⍺¨
 	z
 }
 
+⍝ ⌿⌿: Replicate First
+rpf←{⎕SIGNAL 16}
+
 ⍝ .: Inner Product
 dot←{⍺⍺⌿⍺ ⍵⍵¨ ⍵}
 

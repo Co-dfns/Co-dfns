@@ -226,6 +226,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_moper *map_dyadic;
 	struct cell_moper *map;
 	struct cell_moper *rdf;
+	struct cell_func *rpf;
 	struct cell_doper *dot;
 	struct cell_doper *pow;
 } cdf_prim;
