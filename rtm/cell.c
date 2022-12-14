@@ -50,11 +50,23 @@ release_cell(void *cell)
         case CELL_FUNC:
                 release_func(cell);
                 break;
+        case CELL_MOPER:
+                release_moper(cell);
+                break;
+        case CELL_DOPER:
+                release_doper(cell);
+                break;
         case CELL_ARRAY_BOX:
                 release_array_box(cell);
                 break;
         case CELL_FUNC_BOX:
                 release_func_box(cell);
+                break;
+        case CELL_MOPER_BOX:
+                release_moper_box(cell);
+                break;
+        case CELL_DOPER_BOX:
+                release_doper_box(cell);
                 break;
         case CELL_VOID_BOX:
                 release_void_box(cell);

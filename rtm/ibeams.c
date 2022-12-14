@@ -5,6 +5,13 @@
 
 #include "internal.h"
 
+#define DEF_MON(mf, fn)							\
+int									\
+mf(struct cell_array **z, struct cell_array *r, struct cell_func *self)	\
+{									\
+	return fn(z, NULL, r, self);					\
+}									\
+
 int
 q_signal_func(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
@@ -40,7 +47,11 @@ q_signal_func(struct cell_array **z,
 	return val;
 }
 
-struct cell_func q_signal_closure = {CELL_FUNC, 1, q_signal_func, 0};
+DEF_MON(q_signal_func_mon, q_signal_func)
+
+struct cell_func q_signal_closure = {
+	CELL_FUNC, 1, q_signal_func_mon, q_signal_func, 0
+};
 struct cell_func *q_signal_ibeam = &q_signal_closure;
 
 int
@@ -90,7 +101,9 @@ q_dr_func(struct cell_array **z,
 	return mk_scalar_sint(z, val);
 }
 
-struct cell_func q_dr_closure = {CELL_FUNC, 1, q_dr_func, 0};
+DEF_MON(q_dr_func_mon, q_dr_func)
+
+struct cell_func q_dr_closure = {CELL_FUNC, 1, q_dr_func_mon, q_dr_func, 0};
 struct cell_func *q_dr_ibeam = &q_dr_closure;
 
 int
@@ -100,7 +113,11 @@ is_simple_func(struct cell_array **z,
 	return mk_scalar_bool(z, r->type != ARR_NESTED);
 }
 
-struct cell_func is_simple_closure = {CELL_FUNC, 1, is_simple_func, 0};
+DEF_MON(is_simple_func_mon, is_simple_func)
+
+struct cell_func is_simple_closure = {
+	CELL_FUNC, 1, is_simple_func_mon, is_simple_func, 0
+};
 struct cell_func *is_simple_ibeam = &is_simple_closure;
 
 int
@@ -170,8 +187,10 @@ shape_func(struct cell_array **z,
 	
 	return 0;
 }
+
+DEF_MON(shape_func_mon, shape_func)
     
-struct cell_func shape_closure = {CELL_FUNC, 1, shape_func, 0};
+struct cell_func shape_closure = {CELL_FUNC, 1, shape_func_mon, shape_func, 0};
 struct cell_func *shape_ibeam = &shape_closure;
 
 int
@@ -195,7 +214,11 @@ max_shp_func(struct cell_array **z,
 	return shape_func(z, NULL, l, shape_ibeam);
 }
 
-struct cell_func max_shp_closure = {CELL_FUNC, 1, max_shp_func, 0};
+DEF_MON(max_shp_func_mon, max_shp_func)
+
+struct cell_func max_shp_closure = {
+	CELL_FUNC, 1, max_shp_func_mon, max_shp_func, 0
+};
 struct cell_func *max_shp_ibeam = &max_shp_closure;
 
 int
@@ -219,7 +242,9 @@ ravel_func(struct cell_array **z,
 	return 0;
 }
 
-struct cell_func ravel_closure = {CELL_FUNC, 1, ravel_func, 0};
+DEF_MON(ravel_func_mon, ravel_func)
+
+struct cell_func ravel_closure = {CELL_FUNC, 1, ravel_func_mon, ravel_func, 0};
 struct cell_func *ravel_ibeam = &ravel_closure;
 
 int
@@ -262,7 +287,11 @@ disclose_func(struct cell_array **z,
 	return 0;
 }
 
-struct cell_func disclose_closure = {CELL_FUNC, 1, disclose_func, 0};
+DEF_MON(disclose_func_mon, disclose_func)
+
+struct cell_func disclose_closure = {
+	CELL_FUNC, 1, disclose_func_mon, disclose_func, 0
+};
 struct cell_func *disclose_ibeam = &disclose_closure;
 
 int
@@ -275,12 +304,16 @@ q_ambiv_func(struct cell_array **z,
 	dop = self->fv[2];
 	
 	if (l == NULL)
-		return (mop->fptr)(z, l, r, mop);
+		return (mop->fptr_mon)(z, r, mop);
 	
-	return (dop->fptr)(z, l, r, dop);
+	return (dop->fptr_dya)(z, l, r, dop);
 }
 
-struct cell_func q_ambiv_closure = {CELL_FUNC, 1, q_ambiv_func, 0};
+DEF_MON(q_ambiv_func_mon, q_ambiv_func)
+
+struct cell_func q_ambiv_closure = {
+	CELL_FUNC, 1, q_ambiv_func_mon, q_ambiv_func, 0
+};
 struct cell_func *q_ambiv_ibeam = &q_ambiv_closure;
 
 int
@@ -436,7 +469,11 @@ fail:
 	return err;
 }
 
-struct cell_func reshape_closure = {CELL_FUNC, 1, reshape_func, 0};
+DEF_MON(reshape_func_mon, reshape_func)
+
+struct cell_func reshape_closure = {
+	CELL_FUNC, 1, reshape_func_mon, reshape_func, 0
+};
 struct cell_func *reshape_ibeam = &reshape_closure;
 
 int
@@ -452,7 +489,9 @@ same_func(struct cell_array **z,
 	return mk_scalar_bool(z, is_same);
 }
 
-struct cell_func same_closure = {CELL_FUNC, 1, same_func, 0};
+DEF_MON(same_func_mon, same_func)
+
+struct cell_func same_closure = {CELL_FUNC, 1, same_func_mon, same_func, 0};
 struct cell_func *same_ibeam = &same_closure;
 
 #define NOOP(zt, lt, rt)
@@ -614,7 +653,7 @@ q_veach_func(struct cell_array **z,
 			x = lvals[i % lc];
 			y = rvals[i % rc];
 			
-			if (err = (oper->fptr)(tvals + i, x, y, oper))
+			if (err = (oper->fptr_dya)(tvals + i, x, y, oper))
 				goto fail;
 		}
 		
@@ -644,21 +683,21 @@ q_veach_func(struct cell_array **z,
 	if (l->type == ARR_NESTED) {
 		struct cell_array **lvals = lbuf;
 		
-#define VEACH_LNESTED_LOOP(type) {				\
-	type *rvals, *yvals;					\
-								\
-	rvals = rbuf;						\
-	yvals = y->values;					\
-								\
-	for (size_t i = 0; i < count; i++) {			\
-		x = lvals[i % lc];				\
-		yvals[0] = rvals[i % rc];			\
-								\
-		if (err = (oper->fptr)(tvals + i, x, y, oper))	\
-			goto fail;				\
-	}							\
-								\
-	break;							\
+#define VEACH_LNESTED_LOOP(type) {					\
+	type *rvals, *yvals;						\
+									\
+	rvals = rbuf;							\
+	yvals = y->values;						\
+									\
+	for (size_t i = 0; i < count; i++) {				\
+		x = lvals[i % lc];					\
+		yvals[0] = rvals[i % rc];				\
+									\
+		if (err = (oper->fptr_dya)(tvals + i, x, y, oper))	\
+			goto fail;					\
+	}								\
+									\
+	break;								\
 }
 		
 		switch (r->type) {
@@ -681,21 +720,21 @@ q_veach_func(struct cell_array **z,
 	if (r->type == ARR_NESTED) {
 		struct cell_array **rvals = rbuf;
 		
-#define VEACH_RNESTED_LOOP(type) {				\
-	type *lvals, *xvals;					\
-								\
-	lvals = lbuf;						\
-	xvals = x->values;					\
-								\
-	for (size_t i = 0; i < count; i++) {			\
-		xvals[0] = lvals[i % lc];			\
-		y = rvals[i % rc];				\
-								\
-		if (err = (oper->fptr)(tvals + i, x, y, oper))	\
-			goto fail;				\
-	}							\
-								\
-	break;							\
+#define VEACH_RNESTED_LOOP(type) {					\
+	type *lvals, *xvals;						\
+									\
+	lvals = lbuf;							\
+	xvals = x->values;						\
+									\
+	for (size_t i = 0; i < count; i++) {				\
+		xvals[0] = lvals[i % lc];				\
+		y = rvals[i % rc];					\
+									\
+		if (err = (oper->fptr_dya)(tvals + i, x, y, oper))	\
+			goto fail;					\
+	}								\
+									\
+	break;								\
 }
 		
 		switch (l->type) {
@@ -715,22 +754,22 @@ q_veach_func(struct cell_array **z,
 		goto done;
 	}
 	
-#define VEACH_LOOP(ztype, ltype, rtype) {			\
-	ltype *lvals, *xvals;					\
-	rtype *rvals, *yvals;					\
-								\
-	lvals = lbuf;						\
-	rvals = rbuf;						\
-	xvals = x->values;					\
-	yvals = y->values;					\
-								\
-	for (size_t i = 0; i < count; i++) {			\
-		xvals[0] = lvals[i % lc];			\
-		yvals[0] = rvals[i % rc];			\
-								\
-		if (err = (oper->fptr)(tvals + i, x, y, oper))	\
-			goto fail;				\
-	}							\
+#define VEACH_LOOP(ztype, ltype, rtype) {				\
+	ltype *lvals, *xvals;						\
+	rtype *rvals, *yvals;						\
+									\
+	lvals = lbuf;							\
+	rvals = rbuf;							\
+	xvals = x->values;						\
+	yvals = y->values;						\
+									\
+	for (size_t i = 0; i < count; i++) {				\
+		xvals[0] = lvals[i % lc];				\
+		yvals[0] = rvals[i % rc];				\
+									\
+		if (err = (oper->fptr_dya)(tvals + i, x, y, oper))	\
+			goto fail;					\
+	}								\
 }
 
 	SIMPLE_SWITCH(VEACH_LOOP,VEACH_LOOP,VEACH_LOOP,VEACH_LOOP,,
@@ -761,8 +800,14 @@ fail:
 	return err;
 }
 
-struct cell_func q_veach_closure = {CELL_FUNC, 1, q_veach_func, 0};
-struct cell_func *q_veach_ibeam = &q_veach_closure;
+DEF_MON(q_veach_func_mon, q_veach_func)
+
+struct cell_moper q_veach_closure = {
+	CELL_FUNC, 1, 
+	q_veach_func_mon, q_veach_func, q_veach_func_mon, q_veach_func, 
+	0
+};
+struct cell_moper *q_veach_ibeam = &q_veach_closure;
 
 int
 squeeze_func(struct cell_array **z,
@@ -778,7 +823,11 @@ squeeze_func(struct cell_array **z,
 	return 0;
 }
 
-struct cell_func squeeze_closure = {CELL_FUNC, 1, squeeze_func, 0};
+DEF_MON(squeeze_func_mon, squeeze_func)
+
+struct cell_func squeeze_closure = {
+	CELL_FUNC, 1, squeeze_func_mon, squeeze_func, 0
+};
 struct cell_func *squeeze_ibeam = &squeeze_closure;
 
 int
@@ -793,7 +842,11 @@ has_nat_vals_func(struct cell_array **z,
 	return mk_scalar_bool(z, is_nat);
 }
 
-struct cell_func has_nat_vals_closure = {CELL_FUNC, 1, has_nat_vals_func, 0};
+DEF_MON(has_nat_vals_func_mon, has_nat_vals_func)
+
+struct cell_func has_nat_vals_closure = {
+	CELL_FUNC, 1, has_nat_vals_func_mon, has_nat_vals_func, 0
+};
 struct cell_func *has_nat_vals_ibeam = &has_nat_vals_closure;
 
 int
@@ -828,7 +881,11 @@ index_gen_func(struct cell_array **z,
 	return 0;
 }
 
-struct cell_func index_gen_closure = {CELL_FUNC, 1, index_gen_func, 0};
+DEF_MON(index_gen_func_mon, index_gen_func)
+
+struct cell_func index_gen_closure = {
+	CELL_FUNC, 1, index_gen_func_mon, index_gen_func, 0
+};
 struct cell_func *index_gen_vec = &index_gen_closure;
 
 int
@@ -903,7 +960,11 @@ fail:
 	return err;
 }
 
-struct cell_func index_closure = {CELL_FUNC, 1, index_func, 0};
+DEF_MON(index_func_mon, index_func)
+
+struct cell_func index_closure = {
+	CELL_FUNC, 1, index_func_mon, index_func, 0
+};
 struct cell_func *index_ibeam = &index_closure;
 
 int
@@ -972,7 +1033,11 @@ conjugate_func(struct cell_array **z,
 	return monadic_scalar_apply(z, r, conjugate_values);
 }
 
-struct cell_func conjugate_closure = {CELL_FUNC, 1, conjugate_func, 0};
+DEF_MON(conjugate_func_mon, conjugate_func)
+
+struct cell_func conjugate_closure = {
+	CELL_FUNC, 1, conjugate_func_mon, conjugate_func, 0
+};
 struct cell_func *conjugate_vec = &conjugate_closure;
 
 int
@@ -985,7 +1050,11 @@ is_numeric_func(struct cell_array **z,
 	return mk_scalar_bool(z, 0);
 }
 
-struct cell_func is_numeric_closure = {CELL_FUNC, 1, is_numeric_func, 0};
+DEF_MON(is_numeric_func_mon, is_numeric_func)
+
+struct cell_func is_numeric_closure = {
+	CELL_FUNC, 1, is_numeric_func_mon, is_numeric_func, 0
+};
 struct cell_func *is_numeric_ibeam = &is_numeric_closure;
 
 int
@@ -998,7 +1067,11 @@ is_integer_func(struct cell_array **z,
 	return mk_scalar_bool(z, 0);
 }
 
-struct cell_func is_integer_closure = {CELL_FUNC, 1, is_integer_func, 0};
+DEF_MON(is_integer_func_mon, is_integer_func)
+
+struct cell_func is_integer_closure = {
+	CELL_FUNC, 1, is_integer_func_mon, is_integer_func, 0
+};
 struct cell_func *is_integer_ibeam = &is_integer_closure;
 
 int
@@ -1186,7 +1259,9 @@ add_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, add_type, add_device, add_host);
 }
 
-struct cell_func add_closure = {CELL_FUNC, 1, add_func, 0};
+DEF_MON(add_func_mon, add_func)
+
+struct cell_func add_closure = {CELL_FUNC, 1, add_func_mon, add_func, 0};
 struct cell_func *add_vec_ibeam = &add_closure;
 
 int
@@ -1286,7 +1361,9 @@ mul_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, mul_type, mul_device, mul_host);
 }
 
-struct cell_func mul_closure = {CELL_FUNC, 1, mul_func, 0};
+DEF_MON(mul_func_mon, mul_func)
+
+struct cell_func mul_closure = {CELL_FUNC, 1, mul_func_mon, mul_func, 0};
 struct cell_func *mul_vec_ibeam = &mul_closure;
 
 int
@@ -1428,7 +1505,9 @@ div_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, div_type, div_device, div_host);
 }
 
-struct cell_func div_closure = {CELL_FUNC, 1, div_func, 0};
+DEF_MON(div_func_mon, div_func)
+
+struct cell_func div_closure = {CELL_FUNC, 1, div_func_mon, div_func, 0};
 struct cell_func *div_vec_ibeam = &div_closure;
 
 int
@@ -1523,7 +1602,9 @@ sub_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, sub_type, sub_device, sub_host);
 }
 
-struct cell_func sub_closure = {CELL_FUNC, 1, sub_func, 0};
+DEF_MON(sub_func_mon, sub_func)
+
+struct cell_func sub_closure = {CELL_FUNC, 1, sub_func_mon, sub_func, 0};
 struct cell_func *sub_vec_ibeam = &sub_closure;
 
 struct apl_cmpx
@@ -1643,7 +1724,9 @@ pow_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, pow_type, pow_device, pow_host);
 }
 
-struct cell_func pow_closure = {CELL_FUNC, 1, pow_func, 0};
+DEF_MON(pow_func_mon, pow_func)
+
+struct cell_func pow_closure = {CELL_FUNC, 1, pow_func_mon, pow_func, 0};
 struct cell_func *pow_vec_ibeam = &pow_closure;
 
 struct apl_cmpx
@@ -1718,6 +1801,8 @@ exp_func(struct cell_array **z,
 	return monadic_scalar_apply(z, r, exp_values);
 }
 
-struct cell_func exp_closure = {CELL_FUNC, 1, exp_func, 0};
+DEF_MON(exp_func_mon, exp_func)
+
+struct cell_func exp_closure = {CELL_FUNC, 1, exp_func_mon, exp_func, 0};
 struct cell_func *exp_vec_ibeam = &exp_closure;
 

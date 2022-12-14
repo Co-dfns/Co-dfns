@@ -17,7 +17,9 @@ enum cell_type {
 	CELL_ARRAY_BOX,
 	CELL_FUNC,
 	CELL_FUNC_BOX,
+	CELL_MOPER,
 	CELL_MOPER_BOX,
+	CELL_DOPER,
 	CELL_DOPER_BOX,
 	CELL_ENV_BOX,
 };
@@ -41,7 +43,10 @@ enum array_storage {
 	STG_HOST, STG_DEVICE
 };
 
-typedef int (*func_ptr)(struct cell_array **,
+typedef int (*func_mon)(struct cell_array **,
+    struct cell_array *, struct cell_func *);
+
+typedef int (*func_dya)(struct cell_array **,
     struct cell_array *, struct cell_array *, struct cell_func *);
     
 typedef int (*topfn_ptr)(struct cell_array **, 
@@ -71,7 +76,34 @@ struct cell_array {
 struct cell_func {
 	enum cell_type ctyp;
 	unsigned int refc;
-	func_ptr fptr;
+	func_mon fptr_mon;
+	func_dya fptr_dya;
+	unsigned int fs;
+	void *fv[];
+};
+
+struct cell_moper {
+	enum cell_type ctyp;
+	unsigned int refc;
+	func_mon fptr_am;
+	func_dya fptr_ad;
+	func_mon fptr_fm;
+	func_dya fptr_fd;
+	unsigned int fs;
+	void *fv[];
+};
+
+struct cell_doper {
+	enum cell_type ctyp;
+	unsigned int refc;
+	func_mon fptr_aam;
+	func_dya fptr_aad;
+	func_mon fptr_afm;
+	func_dya fptr_afd;
+	func_mon fptr_fam;
+	func_dya fptr_fad;
+	func_mon fptr_ffm;
+	func_dya fptr_ffd;
 	unsigned int fs;
 	void *fv[];
 };
@@ -86,6 +118,8 @@ struct cell_##type##_box {		\
 DECL_BOX_STRUCT(void);
 DECL_BOX_STRUCT(array);
 DECL_BOX_STRUCT(func);
+DECL_BOX_STRUCT(moper);
+DECL_BOX_STRUCT(doper);
 
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);
@@ -109,15 +143,30 @@ DECLSPEC int mk_array_box(struct cell_array_box **, struct cell_array *);
 DECLSPEC void release_array_box(struct cell_array_box *);
 DECLSPEC int fill_array(struct cell_array *, void *);
 
-/* FUNC type */
+/* FUNC types */
 DECLSPEC int mk_func_box(struct cell_func_box **, struct cell_func *);
 DECLSPEC void release_func_box(struct cell_func_box *);
-DECLSPEC int mk_func(struct cell_func **, func_ptr, unsigned int);
+DECLSPEC int mk_func(struct cell_func **, func_mon, func_dya, unsigned int);
 DECLSPEC void release_func(struct cell_func *);
-DECLSPEC int apply_mop(struct cell_func **, struct cell_func *, void *);
-DECLSPEC int apply_dop(struct cell_func **, struct cell_func *, void *, void *);
 DECLSPEC int guard_check(struct cell_array *);
 DECLSPEC void release_env(void **, void **);
+DECLSPEC int mk_moper(struct cell_moper **, 
+    func_mon, func_dya, func_mon, func_dya,
+    unsigned int);
+DECLSPEC int mk_doper(struct cell_doper **, 
+    func_mon, func_dya, func_mon, func_dya,
+    func_mon, func_dya, func_mon, func_dya,
+    unsigned int);
+DECLSPEC void release_moper(struct cell_moper *);
+DECLSPEC void release_doper(struct cell_doper *);
+DECLSPEC int mk_moper_box(struct cell_moper_box **, struct cell_moper *);
+DECLSPEC void release_moper_box(struct cell_moper_box *);
+DECLSPEC int mk_doper_box(struct cell_doper_box **, struct cell_doper *);
+DECLSPEC void release_doper_box(struct cell_doper_box *);
+DECLSPEC int apply_mop(struct cell_func **, struct cell_moper *, 
+    func_mon, func_dya, void *);
+DECLSPEC int apply_dop(struct cell_func **, struct cell_doper *, 
+    func_mon, func_dya, void *, void *);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);
@@ -141,8 +190,8 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *chk_valid_shape;
 	struct cell_func *both_simple;
 	struct cell_func *both_numeric;
-	struct cell_func *numeric;
-	struct cell_func *scalar;
+	struct cell_moper *numeric;
+	struct cell_moper *scalar;
 	struct cell_func *rgt;
 	struct cell_func *lft;
 	struct cell_func *reshape;
@@ -174,10 +223,11 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *rotate_last;
 	struct cell_func *rot;
 	struct cell_func *map_monadic;
-	struct cell_func *map_dyadic;
-	struct cell_func *map;
-	struct cell_func *rdf;
-	struct cell_func *dot;
+	struct cell_moper *map_dyadic;
+	struct cell_moper *map;
+	struct cell_moper *rdf;
+	struct cell_doper *dot;
+	struct cell_doper *pow;
 } cdf_prim;
 #endif
 

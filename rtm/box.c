@@ -43,3 +43,6 @@ release_##type##_box(struct cell_##type##_box *box)	\
 DEF_BOX_FNS(void, VOID);
 DEF_BOX_FNS(array, ARRAY);
 DEF_BOX_FNS(func, FUNC);
+DEF_BOX_FNS(moper, MOPER);
+DEF_BOX_FNS(doper, DOPER);
+

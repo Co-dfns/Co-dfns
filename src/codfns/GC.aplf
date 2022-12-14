@@ -9,7 +9,7 @@ GC←{
 
 	⍝ Variable generation utilities
 	var_ckinds←{
-		('' 'array' 'func' 'func' 'func' 'env' 'void')[k[⍵]]
+		('' 'array' 'func' 'moper' 'doper' 'env' 'void')[k[⍵]]
 	}
 
 	var_names←{
@@ -170,20 +170,22 @@ GC←{
 	i←⍸t[p]=C
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		id vs←{(⊃⍵)(1↓⍵)}⍵
-		id←⊃var_refs id
-		vs←var_refs vs[⍋n[vs]]
+		ctyp←'func' 'func' 'func' 'moper' 'doper'⊃⍨k[⍺]
+		vc←(≢⍵)-fc←0 1 2 4 8[k[⍺]]
+		fs vs←{(fc↑⍵)(fc↓⍵)}⍵
+		fids←var_refs fs
+		vids←var_refs vs[⍋n[vs]]
 		z ←⊂'{'
-		z,←⊂'	struct cell_func *fn;'
+		z,←⊂'	struct cell_',ctyp,' *k;'
 		z,←⊂''
-		z,←⊂'	err = mk_func(&fn, ',id,', ',(⍕≢vs),');'
+		z,←⊂'	err = mk_',ctyp,'(&k, ',(csep fids),', ',(⍕vc),');'
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
 		z,←⊂''
-		z,← '	fn->fv['∘,¨(⍕¨⍳≢vs),¨'] = retain_cell('∘,¨vs,¨⊂');'
-		z,←(⊂'')⌿⍨1⌊≢vs
-		z,←⊂'	*stkhd++ = fn;'
+		z,← '	k->fv['∘,¨(⍕¨⍳vc),¨'] = retain_cell('∘,¨vids,¨⊂');'
+		z,←(⊂'')⌿⍨1⌊vc
+		z,←⊂'	*stkhd++ = k;'
 		z,←⊂'}'
 		⊂z,⊂''
 	}⌸i
@@ -204,46 +206,24 @@ GC←{
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
-
-	⍝ E1: Monadic expression application
-	i←⍸(t[p]=E)∧k[p]=1
+	
+	⍝ E1/2: Expression application
+	i←⍸(t[p]=E)∧k[p]∊1 2
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		fn arg←var_values ⍵
+		x fn y←var_values⊢xi fi yi←¯3↑⍵
 		z ←⊂'{'
-		z,←⊂'	struct cell_func *fn = ',fn,';'
-		z,←⊂'	struct cell_array *arg = ',arg,';'
-		z,←⊂'	struct cell_array *dst;'
-		z,←⊂''
-		z,←⊂'	err = (fn->fptr)(&dst, NULL, arg, fn);'
-		z,←(⊂'')⌿⍨0∊k[⍵]
-		z,←(⊂'	release_func(fn);')⌿⍨0=k[⊃⍵]
-		z,←(⊂'	release_array(arg);')⌿⍨0=k[1⊃⍵]
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
-
-	⍝ E2: Dyadic expression application
-	i←⍸(t[p]=E)∧k[p]=2
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		x fn y←var_values ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_array *x = ',x,';'
+		z,←(⊂'	struct cell_array *x = ',x,';')⌿⍨k[⍺]=2
 		z,←⊂'	struct cell_func *fn = ',fn,';'
 		z,←⊂'	struct cell_array *y = ',y,';'
 		z,←⊂'	struct cell_array *dst;'
 		z,←⊂''
-		z,←⊂'	err = (fn->fptr)(&dst, x, y, fn);'
+		z,←(⊂'	err = (fn->fptr_mon)(&dst, y, fn);')⌿⍨k[⍺]=1
+		z,←(⊂'	err = (fn->fptr_dya)(&dst, x, y, fn);')⌿⍨k[⍺]=2
 		z,←(⊂'')⌿⍨0∊k[⍵]
-		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_func(fn);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release_array(y);')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	release_array(x);')⌿⍨(0=k[xi])∧k[⍺]=2
+		z,←(⊂'	release_func(fn);')⌿⍨0=k[fi]
+		z,←(⊂'	release_array(y);')⌿⍨0=k[yi]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -265,7 +245,7 @@ GC←{
 		z,←⊂'	struct cell_array *y = ',src,';'
 		z,←⊂'	struct cell_array *x = bx->value;'
 		z,←⊂''
-		z,←⊂'	err = (fn->fptr)(&bx->value, x, y, fn);'
+		z,←⊂'	err = (fn->fptr_dya)(&bx->value, x, y, fn);'
 		z,←(⊂'')⌿⍨0=k[⍵[1]]
 		z,←('	release_func(fn);')⌿⍨0=k[⍵[1]]
 		z,←⊂''
@@ -282,20 +262,22 @@ GC←{
 		⊂z,⊂''
 	}⌸i
 	
-	⍝ O1: Monadic Array Operand
-	i←⍸(t[p]=O)∧k[p]=1
+	⍝ Om: Monadic operands
+	i←⍸(t[p]=O)∧k[p]∊1 2
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
 		lop op←var_values ⍵
+		ltyp←'array' 'func'⊃⍨k[⍺]=2
+		fns←csep 'op->fptr_'∘,¨(⊃ltyp),¨'md'
 		z ←⊂'{'
-		z,←⊂'	struct cell_array *x = ',lop,';'
-		z,←⊂'	struct cell_func *op = ',op,';'
+		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
+		z,←⊂'	struct cell_moper *op = ',op,';'
 		z,←⊂'	struct cell_func *dst;'
 		z,←⊂''
-		z,←⊂'	err = apply_mop(&dst, op, x);'
+		z,←⊂'	err = apply_mop(&dst, op, ',fns,', x);'
 		z,←⊂''
-		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_',ltyp,'(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_moper(op);')⌿⍨0=k[⍵[1]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -304,122 +286,26 @@ GC←{
 		z,←⊂'}'
 		⊂z,⊂''
 	}⌸i
-
-	⍝ O2; Monadic Function Operand
-	i←⍸(t[p]=O)∧k[p]=2
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		lop op←var_values ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_func *x = ',lop,';'
-		z,←⊂'	struct cell_func *op = ',op,';'
-		z,←⊂'	struct cell_func *dst;'
-		z,←⊂''
-		z,←⊂'	err = apply_mop(&dst, op, x);'
-		z,←⊂''
-		z,←(⊂'	release_func(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
-
-	⍝ O4: Dyadic Array/Array Operands
-	i←⍸(t[p]=O)∧k[p]=4
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		lop op rop←var_values ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_array *x = ',lop,';'
-		z,←⊂'	struct cell_func *op = ',op,';'
-		z,←⊂'	struct cell_array *y = ',rop,';'
-		z,←⊂'	struct cell_func *dst;'
-		z,←⊂''
-		z,←⊂'	err = apply_dop(&dst, op, x, y);'
-		z,←⊂''
-		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release_array(y);')⌿⍨0=k[⍵[2]]
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
-
-	⍝ O5: Dyadic Function/Array Operands
-	i←⍸(t[p]=O)∧k[p]=5
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		lop op rop←var_values ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_func *x = ',lop,';'
-		z,←⊂'	struct cell_func *op = ',op,';'
-		z,←⊂'	struct cell_array *y = ',rop,';'
-		z,←⊂'	struct cell_func *dst;'
-		z,←⊂''
-		z,←⊂'	err = apply_dop(&dst, op, x, y);'
-		z,←⊂''
-		z,←(⊂'	release_func(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release_array(y);')⌿⍨0=k[⍵[2]]
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
-
 	
-	⍝ O7: Dyadic Array/Function Operands
-	i←⍸(t[p]=O)∧k[p]=7
+	⍝ Od: Dyadic operands
+	i←⍸(t[p]=O)∧k[p]∊4 5 7 8
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
 		lop op rop←var_values ⍵
+		ltyp←'array' 'func'⊃⍨k[⍺]∊5 8
+		rtyp←'array' 'func'⊃⍨k[⍺]∊7 8
+		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
 		z ←⊂'{'
-		z,←⊂'	struct cell_array *x = ',lop,';'
-		z,←⊂'	struct cell_func *op = ',op,';'
-		z,←⊂'	struct cell_func *y = ',rop,';'
+		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
+		z,←⊂'	struct cell_doper *op = ',op,';'
+		z,←⊂'	struct cell_',rtyp,' *y = ',rop,';'
 		z,←⊂'	struct cell_func *dst;'
 		z,←⊂''
-		z,←⊂'	err = apply_dop(&dst, op, x, y);'
+		z,←⊂'	err = apply_dop(&dst, op, ',fns,', x, y);'
 		z,←⊂''
-		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release_func(y);')⌿⍨0=k[⍵[2]]
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
-		z,←⊂''
-		z,←⊂'	*stkhd++ = dst;'
-		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
-
-	⍝ O8: Dyadic Function/Function Operands
-	i←⍸(t[p]=O)∧k[p]=8
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		lop op rop←var_values ⍵
-		z ←⊂'{'
-		z,←⊂'	struct cell_func *x = ',lop,';'
-		z,←⊂'	struct cell_func *op = ',op,';'
-		z,←⊂'	struct cell_func *y = ',rop,';'
-		z,←⊂'	struct cell_func *dst;'
-		z,←⊂''
-		z,←⊂'	err = apply_dop(&dst, op, x, y);'
-		z,←⊂''
-		z,←(⊂'	release_func(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_func(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release_func(y);')⌿⍨0=k[⍵[2]]
+		z,←(⊂'	release_',ltyp,'(x);')⌿⍨0=k[⍵[0]]
+		z,←(⊂'	release_doper(op);')⌿⍨0=k[⍵[1]]
+		z,←(⊂'	release_',rtyp,'(y);')⌿⍨0=k[⍵[2]]
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		goto cleanup;'
@@ -487,20 +373,24 @@ GC←{
 		isop←k[⍵]≥5
 		isdop←k[⍵]≥11
 		pref,←⊂'int ',id,'(struct cell_array **,'
-		pref,←⊂'    struct cell_',atyp,' *, struct cell_array *,'
+		pref,←(⊂'    struct cell_array *,')⌿⍨~ism
+		pref,←⊂'    struct cell_array *,'
 		pref,←⊂'    struct cell_func *);'
 		z ←⊂'int'
 		z,←⊂id,'(struct cell_array **z,'
-		z,←⊂'    struct cell_',atyp,' *alpha, struct cell_array *omega,'
+		z,←(⊂'    struct cell_array *alpha,')⌿⍨~ism
+		z,←⊂'    struct cell_array *omega,'
 		z,←⊂'    struct cell_func *self)'
 		z,←⊂'{'
 		z,←⊂'	void *stk[128];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
+		z,←(⊂'	struct cell_',atyp,' *alpha;')⌿⍨ism
 		z,←(⊂'	struct cell_func *deldel;')⌿⍨isop
 		z,←(⊂'	struct cell_',aatyp,' *alphaalpha;')⌿⍨isop
 		z,←(⊂'	struct cell_',wwtyp,' *omegaomega;')⌿⍨isdop
 		z,←⊂''
+		z,←(⊂'	alpha = NULL;')⌿⍨ism
 		z,←(⊂'	deldel = self->fv[0];')⌿⍨isop
 		z,←(⊂'	alphaalpha = self->fv[1];')⌿⍨isop
 		z,←(⊂'	omegaomega = self->fv[2];')⌿⍨isdop
@@ -516,7 +406,7 @@ GC←{
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
-		z,←(⊂'	release_cell(alpha);')⌿⍨ism
+		z,←(⊂'	release_',atyp,'(alpha);')⌿⍨ism
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
@@ -581,7 +471,10 @@ GC←{
 		z,←⊂''
 		z,←⊂'	self = ',ns,'.',fn,';'
 		z,←⊂''
-		z,←⊂'	return self->fptr(z, l, r, self);'
+		z,←⊂'	if (l == NULL)'
+		z,←⊂'		return self->fptr_mon(z, r, self);'
+		z,←⊂'	else'
+		z,←⊂'		return self->fptr_dya(z, l, r, self);'
 		z,←⊂'}'
 		z,←⊂''
 		z,←⊂'EXPORT int'
