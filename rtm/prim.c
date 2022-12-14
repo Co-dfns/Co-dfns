@@ -4698,7 +4698,7 @@ ptr2440(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	alpha = NULL;
@@ -4830,7 +4830,7 @@ ptr2441(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	deldel = self->fv[0];
@@ -4960,7 +4960,7 @@ ptr2442(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	alpha = NULL;
@@ -5080,7 +5080,7 @@ ptr2443(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -5198,7 +5198,7 @@ ptr2444(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	alpha = NULL;
@@ -5416,7 +5416,7 @@ ptr2445(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	deldel = self->fv[0];
@@ -5632,7 +5632,7 @@ ptr2446(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	alpha = NULL;
@@ -5838,7 +5838,7 @@ ptr2447(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -10952,7 +10952,7 @@ ptr2498(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	alpha = NULL;
@@ -11116,7 +11116,7 @@ ptr2499(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	deldel = self->fv[0];
@@ -11278,7 +11278,7 @@ ptr2500(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	alpha = NULL;
@@ -11418,7 +11418,7 @@ ptr2501(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -11556,7 +11556,7 @@ ptr2502(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	alpha = NULL;
@@ -11646,7 +11646,7 @@ ptr2503(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	deldel = self->fv[0];
@@ -11734,7 +11734,7 @@ ptr2504(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	alpha = NULL;
@@ -11800,7 +11800,7 @@ ptr2505(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -11864,7 +11864,7 @@ ptr2506(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	alpha = NULL;
@@ -12774,7 +12774,7 @@ ptr2509(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_array *alphaalpha;
 
 	deldel = self->fv[0];
@@ -13682,7 +13682,7 @@ ptr2512(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	alpha = NULL;
@@ -14592,7 +14592,7 @@ ptr2515(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -15620,7 +15620,7 @@ ptr2520(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -15722,7 +15722,7 @@ ptr2521(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -15822,7 +15822,7 @@ ptr2522(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -15938,7 +15938,7 @@ ptr2523(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -16052,7 +16052,7 @@ ptr2524(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -16130,7 +16130,7 @@ ptr2525(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -16206,7 +16206,7 @@ ptr2526(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -16298,7 +16298,7 @@ ptr2527(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -16388,7 +16388,7 @@ ptr2528(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_func *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -16619,7 +16619,7 @@ ptr2529(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -16842,7 +16842,7 @@ ptr2530(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_func *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -17076,7 +17076,7 @@ ptr2531(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -17277,7 +17277,7 @@ ptr2532(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_func *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -17489,7 +17489,7 @@ ptr2533(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_array *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -17693,7 +17693,7 @@ ptr2534(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_func *alpha;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -17908,7 +17908,7 @@ ptr2535(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_func *deldel;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_func *omegaomega;
 
