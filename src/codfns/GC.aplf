@@ -474,68 +474,41 @@ GC←{
 		z,←⊂'loc = &loc_frm;'
 		z,⊂''
 	}
-
-	⍝ F2: Ambivalent function dfns
-	i←⍸(t=F)∧k=2
-	zz[i],←{
-		0=≢i:0⍴⊂''
-		id←⊃var_values ⍵
-		pref,←⊂'int ',id,'(struct cell_array **,'
-		pref,←⊂'    struct cell_array *, struct cell_array *,'
-		pref,←⊂'    struct cell_func *);'
-		z ←⊂'int'
-		z,←⊂id,'(struct cell_array **z,'
-		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
-		z,←⊂'    struct cell_func *self)'
-		z,←⊂'{'
-		z,←⊂''
-		z,←⊂'	void *stk[128];'
-		z,←⊂'	void **stkhd;'
-		z,←⊂'	int err;'
-		z,←⊂''
-		z,← '	',¨(decl_loc,'self'∘decl_lex)⍵
-		z,← '	',¨init_vars ⊃lv[⍵]
-		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = 0;'
-		z,←⊂''
-		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
-		z,←⊂'	err = -1;'
-		z,←⊂''
-		z,←⊂'cleanup:'
-		z,←⊂'	release_env(stk, stkhd);'
-		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
-		z,←⊂'	return err;'
-		z,←⊂'}'
-		z,⊂''
-	}¨i
 	
-	⍝ F3: Monadic operator dfns
-	i←⍸(t=F)∧k=3
+	⍝ FN: Non-zero functions
+	i←⍸(t=F)∧k≠0
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		id←⊃var_values ⍵
+		atyp←'array' 'func'⊃⍨k[⍵]∊3 6 9 12 15 18 21
+		aatyp←'array' 'func'⊃⍨k[⍵]∊8 9 10 14 15 16 20 21 22
+		wwtyp←'array' 'func'⊃⍨k[⍵]∊17 18 19 20 21 22
+		ism←k[⍵]∊2 3 5 6 8 9 11 12 14 15 17 18 20 21
+		isop←k[⍵]≥5
+		isdop←k[⍵]≥11
 		pref,←⊂'int ',id,'(struct cell_array **,'
-		pref,←⊂'    struct cell_array *, struct cell_array *,'
+		pref,←⊂'    struct cell_',atyp,' *, struct cell_array *,'
 		pref,←⊂'    struct cell_func *);'
 		z ←⊂'int'
 		z,←⊂id,'(struct cell_array **z,'
-		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
+		z,←⊂'    struct cell_',atyp,' *alpha, struct cell_array *omega,'
 		z,←⊂'    struct cell_func *self)'
 		z,←⊂'{'
-		z,←⊂''
-		z,←⊂'	struct cell_func *deldel;'
-		z,←⊂'	void *alphaalpha;'
 		z,←⊂'	void *stk[128];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
+		z,←(⊂'	struct cell_func *deldel;')⌿⍨isop
+		z,←(⊂'	struct cell_',aatyp,' *alphaalpha;')⌿⍨isop
+		z,←(⊂'	struct cell_',wwtyp,' *omegaomega;')⌿⍨isdop
 		z,←⊂''
-		z,←⊂'	deldel = self->fv[0];'
-		z,←⊂'	alphaalpha = self->fv[1];'
+		z,←(⊂'	deldel = self->fv[0];')⌿⍨isop
+		z,←(⊂'	alphaalpha = self->fv[1];')⌿⍨isop
+		z,←(⊂'	omegaomega = self->fv[2];')⌿⍨isdop
 		z,←⊂''
-		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
-		z,← '	',¨init_vars ⊃lv[⍵]
-		z,←⊂'	stkhd = &stk[0];'
+		z,←'	',¨(decl_loc,('self' 'deldel'⊃⍨isop)∘decl_lex)⍵
+		z,←'	',¨init_vars ⊃lv[⍵]
 		z,←⊂'	err = 0;'
+		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'	err = -1;'
@@ -543,46 +516,7 @@ GC←{
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
-		z,←⊂'	return err;'
-		z,←⊂'}'
-		z,⊂''
-	}¨i
-	
-	⍝ F4: Dyadic operator dfns
-	i←⍸(t=F)∧k=4
-	zz[i],←{
-		0=≢i:0⍴⊂''
-		id←⊃var_values ⍵
-		pref,←⊂'int ',id,'(struct cell_array **,'
-		pref,←⊂'    struct cell_array *, struct cell_array *,'
-		pref,←⊂'    struct cell_func *);'
-		z ←⊂'int'
-		z,←⊂id,'(struct cell_array **z,'
-		z,←⊂'    struct cell_array *alpha, struct cell_array *omega,'
-		z,←⊂'    struct cell_func *self)'
-		z,←⊂'{'
-		z,←⊂''
-		z,←⊂'	struct cell_func *deldel;'
-		z,←⊂'	void *alphaalpha, *omegaomega;'
-		z,←⊂'	void *stk[128];'
-		z,←⊂'	void **stkhd;'
-		z,←⊂'	int err;'
-		z,←⊂''
-		z,←⊂'	deldel = self->fv[0];'
-		z,←⊂'	alphaalpha = self->fv[1];'
-		z,←⊂'	omegaomega = self->fv[2];'
-		z,←⊂''
-		z,← '	',¨(decl_loc,'deldel'∘decl_lex)⍵
-		z,← '	',¨init_vars ⊃lv[⍵]
-		z,←⊂'	stkhd = &stk[0];'
-		z,←⊂'	err = 0;'
-		z,←⊂''
-		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
-		z,←⊂'	err = -1;'
-		z,←⊂''
-		z,←⊂'cleanup:'
-		z,←⊂'	release_env(stk, stkhd);'
-		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
+		z,←(⊂'	release_cell(alpha);')⌿⍨ism
 		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
