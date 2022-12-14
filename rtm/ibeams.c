@@ -5,6 +5,20 @@
 
 #include "internal.h"
 
+int
+error_syntax_mon(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	return 2;
+}
+
+int
+error_syntax_dya(struct cell_array **z, 
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return 2;
+}
+
 #define DEF_MON(mf, fn)							\
 int									\
 mf(struct cell_array **z, struct cell_array *r, struct cell_func *self)	\
@@ -311,10 +325,13 @@ q_ambiv_func(struct cell_array **z,
 
 DEF_MON(q_ambiv_func_mon, q_ambiv_func)
 
-struct cell_func q_ambiv_closure = {
-	CELL_FUNC, 1, q_ambiv_func_mon, q_ambiv_func, 0
+struct cell_doper q_ambiv_closure = {
+	CELL_DOPER, 1, 
+	error_syntax_mon, error_syntax_dya, error_syntax_mon, error_syntax_dya,
+	error_syntax_mon, error_syntax_dya, q_ambiv_func_mon, q_ambiv_func, 
+	0
 };
-struct cell_func *q_ambiv_ibeam = &q_ambiv_closure;
+struct cell_doper *q_ambiv_ibeam = &q_ambiv_closure;
 
 int
 reshape_func(struct cell_array **z,
@@ -804,7 +821,7 @@ DEF_MON(q_veach_func_mon, q_veach_func)
 
 struct cell_moper q_veach_closure = {
 	CELL_FUNC, 1, 
-	q_veach_func_mon, q_veach_func, q_veach_func_mon, q_veach_func, 
+	error_syntax_mon, error_syntax_dya, q_veach_func_mon, q_veach_func, 
 	0
 };
 struct cell_moper *q_veach_ibeam = &q_veach_closure;
