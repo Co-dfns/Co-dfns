@@ -87,6 +87,14 @@ GC←{
 	⍝ We have a vector output for each node in the AST
 	zz←(≢p)⍴⊂''
 	
+	⍝ Z¯N: Error nodes
+	i←⍸(t=Z)∧k<0
+	zz[i],←{
+		z ←⊂'err = ',(⍕|k[⍵]),';'
+		z,←⊂'goto cleanup;'
+		z,⊂''
+	}¨i
+	
 	⍝ A1: Simple arrays
 	i←⍸(t=A)∧k=1
 	atypes←'BOOL' 'SINT'    'SINT'    'INT'     'DBL'    'CMPX' 
