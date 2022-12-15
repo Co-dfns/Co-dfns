@@ -110,6 +110,11 @@ Compile a namespace for CUDA only using the user-command:
 	_←⎕NS⍬
 	]compile _ ns -af=cuda
 
+Compile a basic function to see the system working:
+
+	ns←'test'codfns.Fix ':Namespace' 'F←{+⌿⍺+⍵}' ':EndNamespace'
+	3 ns.F ⍳5
+
 ## See Also
 
 Reference                                 | Description
