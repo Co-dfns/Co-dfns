@@ -350,13 +350,13 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	z = l = r = NULL;
 	
 	if (lp)
-		CHK(dwa2array(&l, lp->pocket), cleanup);
+		CHK(dwa2array(&l, lp->pocket), cleanup, "");
 	
 	if (rp)
-		CHK(dwa2array(&r, rp->pocket), cleanup);
+		CHK(dwa2array(&r, rp->pocket), cleanup, "");
 
-	CHK(fn(&z, l, r), cleanup);
-	CHK(array2dwa(NULL, z, zp), cleanup);
+	CHK(fn(&z, l, r), cleanup, "");
+	CHK(array2dwa(NULL, z, zp), cleanup, "");
 	
 cleanup:
 	release_array(l);

@@ -125,15 +125,15 @@ DECL_BOX_STRUCT(doper);
 DECLSPEC struct cell_array *debug_info;
 DECLSPEC void debug_trace(int, const char *, int, const char *, const char *);
 
-#define CHK(expr, fail)						\
+#define CHK(expr, fail, msg)					\
 if (0 < (err = (expr))) {                                       \
-	debug_trace(err, __FILE__, __LINE__, __func__, #expr);	\
+	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
 	goto fail;                                              \
 }								\
 
-#define TRC(expr)						\
+#define TRC(expr, msg)						\
 if (0 < (err = (expr))) {					\
-	debug_trace(err, __FILE__, __LINE__, __func__, #expr);	\
+	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
 }								\
 
 /* DWA and Interface */
