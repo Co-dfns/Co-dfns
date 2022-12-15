@@ -38,7 +38,11 @@ rho←('shape_ibeam'⌶) ⎕AMBIV reshape
 cat←('ravel_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
 
 ⍝ ≡: Depth / Same
-eqv←{⎕SIGNAL 16} ⎕AMBIV ('same_ibeam'⌶)
+depth←{
+	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
+	⎕SIGNAL 16
+}
+eqv←depth ⎕AMBIV ('same_ibeam'⌶)
 
 ⍝ ≢: Tally / Not Same
 nqv←{⊃⍴⍵} ⎕AMBIV {⎕SIGNAL 16}
