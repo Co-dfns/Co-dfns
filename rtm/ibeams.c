@@ -267,38 +267,40 @@ disclose_func(struct cell_array **z,
 {
 	struct cell_array *t;
 	int err;
-	
+		
 	if (r->type == ARR_NESTED) {
 		struct cell_array **vals = r->values;
 		
-		t = retain_cell(vals[0]);
+		*z = retain_cell(vals[0]);
 		
 		return 0;
 	}
 	
-	if (err = mk_array(&t, r->type, r->storage, 0))
-		return err;
+	t = NULL
+	
+	CHK(mk_array(&t, r->type, r->storage, 0), fail, L"mk_array");
 	
 	switch (r->storage) {
 	case STG_DEVICE:
 		af_seq idx = {0, 0, 1};
-		err = af_index(&t->values, r->values, 1, &idx);
+		CHK(af_index(&t->values, r->values, 1, &idx), fail,
+		    L"af_index");
 		break;
 	case STG_HOST:
-		err = fill_array(t, r->values);
+		CHK(fill_array(t, r->values), fail, L"fill_array");
 		break;
 	default:
-		err = 99;
-	}
-	
-	if (err) {
-		release_array(t);
-		return err;
+		CHK(99, fail, L"Unknown storage type");
 	}
 	
 	*z = t;
 	
 	return 0;
+	
+fail:
+	release_array(t);
+	
+	return err;
 }
 
 DEF_MON(disclose_func_mon, disclose_func)
