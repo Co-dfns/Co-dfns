@@ -562,8 +562,12 @@ cdf_prim_init(void)
 	loc->dot = NULL;
 	loc->pow = NULL;
 
-	debug_info = NULL;
 	err = 0;
+
+	if (debug_info)
+		release_array(debug_info);
+
+	debug_info = NULL;
 
 	loc->q_signal = *stkhd++ = retain_cell(q_signal_ibeam);
 	release_cell(*--stkhd);

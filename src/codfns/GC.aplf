@@ -447,8 +447,12 @@ GC←{
 		z,←⊂'	loc->__names = ',id,'_names;'
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂''
-		z,←⊂'	debug_info = NULL;'
 		z,←⊂'	err = 0;'
+		z,←⊂''
+		z,←⊂'	if (debug_info)'
+		z,←⊂'		release_array(debug_info);'
+		z,←⊂''
+		z,←⊂'	debug_info = NULL;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂''

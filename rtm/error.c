@@ -2,4 +2,4 @@
 
 #include "internal.h"
 
-DECLSPEC struct cell_array *debug_info;
+DECLSPEC struct cell_array *debug_info = NULL;
