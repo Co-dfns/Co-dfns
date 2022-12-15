@@ -123,12 +123,12 @@ DECL_BOX_STRUCT(doper);
 
 /* Error Handling */
 DECLSPEC struct cell_array *debug_info;
-DECLSPEC void debug_trace(int, const char *, int, const char *, const char *);
+DECLSPEC void debug_trace(int, const char *, int, const char *, const wchar_t *);
 
 #define CHK(expr, fail, msg)					\
-if (0 < (err = (expr))) {                                       \
+if (0 < (err = (expr))) {					\
 	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
-	goto fail;                                              \
+	goto fail;						\
 }								\
 
 #define TRC(expr, msg)						\
@@ -138,7 +138,7 @@ if (0 < (err = (expr))) {					\
 
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);
-DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *);
+DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *, const wchar_t *);
 
 /* Generic cell handlers */
 DECLSPEC void release_cell(void *);

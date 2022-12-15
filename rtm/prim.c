@@ -602,7 +602,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2448, ptr2449, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2448, ptr2449, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -613,7 +613,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2450, ptr2455, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2450, ptr2455, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->has_nat_vals);
 	
@@ -626,7 +626,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2460, ptr2461, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2460, ptr2461, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->is_simple);
 	
@@ -639,7 +639,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2462, ptr2463, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2462, ptr2463, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->is_numeric);
 	
@@ -652,7 +652,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr2464, ptr2465, ptr2466, ptr2467, 1), cleanup, "");
+		CHK(mk_moper(&k, ptr2464, ptr2465, ptr2466, ptr2467, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->both_numeric);
 	
@@ -665,7 +665,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr2468, ptr2469, ptr2470, ptr2471, 3), cleanup, "");
+		CHK(mk_moper(&k, ptr2468, ptr2469, ptr2470, ptr2471, 3), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->both_simple);
 		k->fv[1] = retain_cell(loc->chk_scl);
@@ -680,7 +680,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2472, ptr2473, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2472, ptr2473, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -691,7 +691,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2474, ptr2475, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2474, ptr2475, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -702,7 +702,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2476, ptr2477, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2476, ptr2477, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->chk_valid_shape);
 	
@@ -718,7 +718,7 @@ cdf_prim_init(void)
 		struct cell_func *y = loc->reshape;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 	
 		if (err)
@@ -733,7 +733,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2478, ptr2479, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2478, ptr2479, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -744,7 +744,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(y);
 	
@@ -760,7 +760,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2480, ptr2481, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2480, ptr2481, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -771,7 +771,7 @@ cdf_prim_init(void)
 		struct cell_func *y = same_ibeam;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(x);
 	
@@ -787,7 +787,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2484, ptr2485, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2484, ptr2485, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -795,7 +795,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2482, ptr2483, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2482, ptr2483, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -806,7 +806,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(x);
 		release_func(y);
@@ -823,7 +823,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2486, ptr2487, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2486, ptr2487, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -834,7 +834,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2488, ptr2491, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2488, ptr2491, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->is_integer);
 	
@@ -850,7 +850,7 @@ cdf_prim_init(void)
 		struct cell_func *y = loc->index;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 	
 		if (err)
@@ -865,7 +865,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2494, ptr2495, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2494, ptr2495, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->chk_valid_shape);
 	
@@ -878,7 +878,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2496, ptr2497, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2496, ptr2497, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -892,7 +892,7 @@ cdf_prim_init(void)
 		struct cell_func *y = loc->index_of;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 	
 		if (err)
@@ -907,7 +907,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2498, ptr2499, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2498, ptr2499, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -918,7 +918,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(y);
 	
@@ -934,7 +934,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2502, ptr2503, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2502, ptr2503, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -942,7 +942,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2500, ptr2501, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2500, ptr2501, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -953,7 +953,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(x);
 		release_func(y);
@@ -970,7 +970,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2504, ptr2505, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2504, ptr2505, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->squeeze);
 	
@@ -985,7 +985,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->numeric;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -999,7 +999,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->scalar;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -1015,7 +1015,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(y);
 	
@@ -1031,7 +1031,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2506, ptr2507, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2506, ptr2507, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1044,7 +1044,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->numeric;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -1058,7 +1058,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->scalar;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -1074,7 +1074,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(y);
 	
@@ -1090,7 +1090,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2508, ptr2509, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2508, ptr2509, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1103,7 +1103,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->numeric;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -1117,7 +1117,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->scalar;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -1133,7 +1133,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(y);
 	
@@ -1149,7 +1149,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2510, ptr2511, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2510, ptr2511, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1162,7 +1162,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->numeric;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -1176,7 +1176,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->scalar;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -1192,7 +1192,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(y);
 	
@@ -1210,7 +1210,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->numeric;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -1224,7 +1224,7 @@ cdf_prim_init(void)
 		struct cell_moper *op = loc->scalar;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -1240,7 +1240,7 @@ cdf_prim_init(void)
 		struct cell_func *y = *--stkhd;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 		release_func(y);
 	
@@ -1256,7 +1256,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2512, ptr2513, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2512, ptr2513, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1267,7 +1267,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2514, ptr2515, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2514, ptr2515, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1281,7 +1281,7 @@ cdf_prim_init(void)
 		struct cell_func *y = loc->drop;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 	
 		if (err)
@@ -1296,7 +1296,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2516, ptr2517, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2516, ptr2517, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1307,7 +1307,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2518, ptr2519, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2518, ptr2519, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1321,7 +1321,7 @@ cdf_prim_init(void)
 		struct cell_func *y = loc->rotate_last;
 		struct cell_func *dst;
 	
-		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), "");
+		TRC(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), L"");
 	
 	
 		if (err)
@@ -1336,7 +1336,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2520, ptr2521, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2520, ptr2521, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1347,7 +1347,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr2522, ptr2523, ptr2524, ptr2525, 2), cleanup, "");
+		CHK(mk_moper(&k, ptr2522, ptr2523, ptr2524, ptr2525, 2), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->chk_scl);
 		k->fv[1] = retain_cell(loc->max_shp);
@@ -1361,7 +1361,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr2526, ptr2527, ptr2528, ptr2529, 1), cleanup, "");
+		CHK(mk_moper(&k, ptr2526, ptr2527, ptr2528, ptr2529, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->map_dyadic);
 	
@@ -1374,7 +1374,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr2530, ptr2533, ptr2536, ptr2539, 0), cleanup, "");
+		CHK(mk_moper(&k, ptr2530, ptr2533, ptr2536, ptr2539, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1385,7 +1385,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2542, ptr2543, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2542, ptr2543, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1396,7 +1396,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, ptr2544, ptr2545, ptr2546, ptr2547, ptr2548, ptr2549, ptr2550, ptr2551, 0), cleanup, "");
+		CHK(mk_doper(&k, ptr2544, ptr2545, ptr2546, ptr2547, ptr2548, ptr2549, ptr2550, ptr2551, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1407,7 +1407,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, ptr2552, ptr2553, ptr2554, ptr2555, ptr2556, ptr2557, ptr2558, ptr2559, 0), cleanup, "");
+		CHK(mk_doper(&k, ptr2552, ptr2553, ptr2554, ptr2555, ptr2556, ptr2557, ptr2558, ptr2559, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -1441,7 +1441,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1454,7 +1454,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1468,7 +1468,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -1482,7 +1482,7 @@ ptr2448(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -1497,10 +1497,10 @@ ptr2448(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -1519,7 +1519,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1532,7 +1532,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -1549,10 +1549,10 @@ ptr2448(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -1562,7 +1562,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -1576,7 +1576,7 @@ ptr2448(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -1591,10 +1591,10 @@ ptr2448(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -1613,7 +1613,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1626,7 +1626,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -1643,10 +1643,10 @@ ptr2448(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -1656,7 +1656,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -1670,7 +1670,7 @@ ptr2448(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -1685,10 +1685,10 @@ ptr2448(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -1707,7 +1707,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1720,7 +1720,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -1735,7 +1735,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1748,7 +1748,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -1764,7 +1764,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -1778,7 +1778,7 @@ ptr2448(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -1793,10 +1793,10 @@ ptr2448(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -1805,7 +1805,7 @@ ptr2448(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -1832,10 +1832,10 @@ ptr2448(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {4};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -1844,7 +1844,7 @@ ptr2448(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -1884,7 +1884,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1897,7 +1897,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1911,7 +1911,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -1925,7 +1925,7 @@ ptr2449(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -1940,10 +1940,10 @@ ptr2449(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -1962,7 +1962,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -1975,7 +1975,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -1992,10 +1992,10 @@ ptr2449(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2005,7 +2005,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -2019,7 +2019,7 @@ ptr2449(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2034,10 +2034,10 @@ ptr2449(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2056,7 +2056,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -2069,7 +2069,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -2086,10 +2086,10 @@ ptr2449(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2099,7 +2099,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -2113,7 +2113,7 @@ ptr2449(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2128,10 +2128,10 @@ ptr2449(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2150,7 +2150,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -2163,7 +2163,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -2178,7 +2178,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -2191,7 +2191,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -2207,7 +2207,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -2221,7 +2221,7 @@ ptr2449(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2236,10 +2236,10 @@ ptr2449(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {5};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2248,7 +2248,7 @@ ptr2449(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -2275,10 +2275,10 @@ ptr2449(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {4};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2287,7 +2287,7 @@ ptr2449(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -2331,7 +2331,7 @@ ptr2450(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2451, ptr2452, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2451, ptr2452, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -2341,7 +2341,7 @@ ptr2450(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -2354,7 +2354,7 @@ ptr2450(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2369,10 +2369,10 @@ ptr2450(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {4};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2381,7 +2381,7 @@ ptr2450(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -2404,7 +2404,7 @@ ptr2450(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2453, ptr2454, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2453, ptr2454, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(lex->has_nat_vals);
 	
@@ -2416,7 +2416,7 @@ ptr2450(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -2429,7 +2429,7 @@ ptr2450(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2444,10 +2444,10 @@ ptr2450(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2456,7 +2456,7 @@ ptr2450(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -2483,10 +2483,10 @@ ptr2450(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2528,7 +2528,7 @@ ptr2451(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -2541,7 +2541,7 @@ ptr2451(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -2561,10 +2561,10 @@ ptr2451(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2574,7 +2574,7 @@ ptr2451(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -2587,7 +2587,7 @@ ptr2451(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2602,10 +2602,10 @@ ptr2451(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2626,10 +2626,10 @@ ptr2451(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2639,7 +2639,7 @@ ptr2451(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -2652,7 +2652,7 @@ ptr2451(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2667,10 +2667,10 @@ ptr2451(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2691,10 +2691,10 @@ ptr2451(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2736,7 +2736,7 @@ ptr2452(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -2749,7 +2749,7 @@ ptr2452(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -2769,10 +2769,10 @@ ptr2452(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2782,7 +2782,7 @@ ptr2452(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -2795,7 +2795,7 @@ ptr2452(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2810,10 +2810,10 @@ ptr2452(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2834,10 +2834,10 @@ ptr2452(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2847,7 +2847,7 @@ ptr2452(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -2860,7 +2860,7 @@ ptr2452(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2875,10 +2875,10 @@ ptr2452(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2899,10 +2899,10 @@ ptr2452(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -2943,7 +2943,7 @@ ptr2453(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -2954,7 +2954,7 @@ ptr2453(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -2969,10 +2969,10 @@ ptr2453(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -2993,10 +2993,10 @@ ptr2453(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3036,7 +3036,7 @@ ptr2454(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -3047,7 +3047,7 @@ ptr2454(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3062,10 +3062,10 @@ ptr2454(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3086,10 +3086,10 @@ ptr2454(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3126,7 +3126,7 @@ ptr2455(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2456, ptr2457, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2456, ptr2457, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -3136,7 +3136,7 @@ ptr2455(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -3149,7 +3149,7 @@ ptr2455(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3164,10 +3164,10 @@ ptr2455(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {4};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3176,7 +3176,7 @@ ptr2455(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -3199,7 +3199,7 @@ ptr2455(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2458, ptr2459, 1), cleanup, "");
+		CHK(mk_func(&k, ptr2458, ptr2459, 1), cleanup, L"");
 	
 		k->fv[0] = retain_cell(lex->has_nat_vals);
 	
@@ -3211,7 +3211,7 @@ ptr2455(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -3224,7 +3224,7 @@ ptr2455(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3239,10 +3239,10 @@ ptr2455(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3251,7 +3251,7 @@ ptr2455(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -3278,10 +3278,10 @@ ptr2455(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3322,7 +3322,7 @@ ptr2456(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -3335,7 +3335,7 @@ ptr2456(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -3355,10 +3355,10 @@ ptr2456(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3368,7 +3368,7 @@ ptr2456(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -3381,7 +3381,7 @@ ptr2456(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3396,10 +3396,10 @@ ptr2456(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3420,10 +3420,10 @@ ptr2456(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3433,7 +3433,7 @@ ptr2456(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -3446,7 +3446,7 @@ ptr2456(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3461,10 +3461,10 @@ ptr2456(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3485,10 +3485,10 @@ ptr2456(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3530,7 +3530,7 @@ ptr2457(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -3543,7 +3543,7 @@ ptr2457(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -3563,10 +3563,10 @@ ptr2457(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3576,7 +3576,7 @@ ptr2457(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -3589,7 +3589,7 @@ ptr2457(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3604,10 +3604,10 @@ ptr2457(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3628,10 +3628,10 @@ ptr2457(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3641,7 +3641,7 @@ ptr2457(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -3654,7 +3654,7 @@ ptr2457(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3669,10 +3669,10 @@ ptr2457(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3693,10 +3693,10 @@ ptr2457(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3737,7 +3737,7 @@ ptr2458(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -3748,7 +3748,7 @@ ptr2458(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3763,10 +3763,10 @@ ptr2458(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3787,10 +3787,10 @@ ptr2458(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3830,7 +3830,7 @@ ptr2459(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -3841,7 +3841,7 @@ ptr2459(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3856,10 +3856,10 @@ ptr2459(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -3880,10 +3880,10 @@ ptr2459(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -3923,7 +3923,7 @@ ptr2460(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -3934,7 +3934,7 @@ ptr2460(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -3947,7 +3947,7 @@ ptr2460(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -3972,10 +3972,10 @@ ptr2460(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4015,7 +4015,7 @@ ptr2461(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4026,7 +4026,7 @@ ptr2461(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4039,7 +4039,7 @@ ptr2461(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -4064,10 +4064,10 @@ ptr2461(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4107,7 +4107,7 @@ ptr2462(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4118,7 +4118,7 @@ ptr2462(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4131,7 +4131,7 @@ ptr2462(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -4156,10 +4156,10 @@ ptr2462(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4199,7 +4199,7 @@ ptr2463(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4210,7 +4210,7 @@ ptr2463(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4223,7 +4223,7 @@ ptr2463(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -4248,10 +4248,10 @@ ptr2463(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4296,7 +4296,7 @@ ptr2464(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4307,7 +4307,7 @@ ptr2464(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4321,7 +4321,7 @@ ptr2464(struct cell_array **z,
 				unsigned int rnk = 1;
 				size_t shp[] = {3};
 			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 				arr->shape[0] = 3;
 				dat = arr->values;
 			
@@ -4353,10 +4353,10 @@ ptr2464(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4365,7 +4365,7 @@ ptr2464(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -4416,7 +4416,7 @@ ptr2465(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4427,7 +4427,7 @@ ptr2465(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4441,7 +4441,7 @@ ptr2465(struct cell_array **z,
 				unsigned int rnk = 1;
 				size_t shp[] = {3};
 			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 				arr->shape[0] = 3;
 				dat = arr->values;
 			
@@ -4473,10 +4473,10 @@ ptr2465(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4485,7 +4485,7 @@ ptr2465(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -4536,7 +4536,7 @@ ptr2466(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4547,7 +4547,7 @@ ptr2466(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4561,7 +4561,7 @@ ptr2466(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -4586,10 +4586,10 @@ ptr2466(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4598,7 +4598,7 @@ ptr2466(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -4649,7 +4649,7 @@ ptr2467(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4660,7 +4660,7 @@ ptr2467(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4674,7 +4674,7 @@ ptr2467(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -4699,10 +4699,10 @@ ptr2467(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -4711,7 +4711,7 @@ ptr2467(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -4771,7 +4771,7 @@ ptr2468(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4782,7 +4782,7 @@ ptr2468(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4803,7 +4803,7 @@ ptr2468(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4820,7 +4820,7 @@ ptr2468(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4831,7 +4831,7 @@ ptr2468(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -4845,7 +4845,7 @@ ptr2468(struct cell_array **z,
 				unsigned int rnk = 1;
 				size_t shp[] = {3};
 			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 				arr->shape[0] = 3;
 				dat = arr->values;
 			
@@ -4866,7 +4866,7 @@ ptr2468(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -4891,7 +4891,7 @@ ptr2468(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -4906,7 +4906,7 @@ ptr2468(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -4922,7 +4922,7 @@ ptr2468(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -4983,7 +4983,7 @@ ptr2469(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -4994,7 +4994,7 @@ ptr2469(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5015,7 +5015,7 @@ ptr2469(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5032,7 +5032,7 @@ ptr2469(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5043,7 +5043,7 @@ ptr2469(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5057,7 +5057,7 @@ ptr2469(struct cell_array **z,
 				unsigned int rnk = 1;
 				size_t shp[] = {3};
 			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 				arr->shape[0] = 3;
 				dat = arr->values;
 			
@@ -5078,7 +5078,7 @@ ptr2469(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -5103,7 +5103,7 @@ ptr2469(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -5118,7 +5118,7 @@ ptr2469(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -5134,7 +5134,7 @@ ptr2469(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -5195,7 +5195,7 @@ ptr2470(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5206,7 +5206,7 @@ ptr2470(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5227,7 +5227,7 @@ ptr2470(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5244,7 +5244,7 @@ ptr2470(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5255,7 +5255,7 @@ ptr2470(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5269,7 +5269,7 @@ ptr2470(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -5283,7 +5283,7 @@ ptr2470(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -5308,7 +5308,7 @@ ptr2470(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -5323,7 +5323,7 @@ ptr2470(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -5339,7 +5339,7 @@ ptr2470(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -5400,7 +5400,7 @@ ptr2471(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5411,7 +5411,7 @@ ptr2471(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5432,7 +5432,7 @@ ptr2471(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5449,7 +5449,7 @@ ptr2471(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5460,7 +5460,7 @@ ptr2471(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5474,7 +5474,7 @@ ptr2471(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -5488,7 +5488,7 @@ ptr2471(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -5513,7 +5513,7 @@ ptr2471(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -5528,7 +5528,7 @@ ptr2471(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -5544,7 +5544,7 @@ ptr2471(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -5695,7 +5695,7 @@ ptr2476(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5706,7 +5706,7 @@ ptr2476(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5727,7 +5727,7 @@ ptr2476(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5771,7 +5771,7 @@ ptr2477(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5782,7 +5782,7 @@ ptr2477(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -5803,7 +5803,7 @@ ptr2477(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -5843,10 +5843,10 @@ ptr2478(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -5855,7 +5855,7 @@ ptr2478(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -5897,10 +5897,10 @@ ptr2479(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -5909,7 +5909,7 @@ ptr2479(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -5951,10 +5951,10 @@ ptr2480(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -5963,7 +5963,7 @@ ptr2480(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6005,10 +6005,10 @@ ptr2481(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6017,7 +6017,7 @@ ptr2481(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6057,7 +6057,7 @@ ptr2482(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -6070,7 +6070,7 @@ ptr2482(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6110,7 +6110,7 @@ ptr2483(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -6123,7 +6123,7 @@ ptr2483(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6165,10 +6165,10 @@ ptr2484(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6177,7 +6177,7 @@ ptr2484(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6219,10 +6219,10 @@ ptr2485(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6231,7 +6231,7 @@ ptr2485(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6273,10 +6273,10 @@ ptr2486(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6285,7 +6285,7 @@ ptr2486(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6327,10 +6327,10 @@ ptr2487(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6339,7 +6339,7 @@ ptr2487(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6394,7 +6394,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -6410,7 +6410,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = loc->idx;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -6423,7 +6423,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -6441,7 +6441,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = loc->idx;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -6456,10 +6456,10 @@ ptr2488(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6469,7 +6469,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -6483,7 +6483,7 @@ ptr2488(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -6498,10 +6498,10 @@ ptr2488(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -6510,7 +6510,7 @@ ptr2488(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -6533,7 +6533,7 @@ ptr2488(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2489, ptr2490, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2489, ptr2490, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -6543,7 +6543,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -6556,7 +6556,7 @@ ptr2488(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -6571,10 +6571,10 @@ ptr2488(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {16};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -6583,7 +6583,7 @@ ptr2488(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -6609,7 +6609,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -6622,7 +6622,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = loc->idx;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -6636,7 +6636,7 @@ ptr2488(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -6681,10 +6681,10 @@ ptr2489(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6694,7 +6694,7 @@ ptr2489(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -6707,7 +6707,7 @@ ptr2489(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -6722,10 +6722,10 @@ ptr2489(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -6746,10 +6746,10 @@ ptr2489(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6759,7 +6759,7 @@ ptr2489(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -6772,7 +6772,7 @@ ptr2489(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -6787,10 +6787,10 @@ ptr2489(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -6811,10 +6811,10 @@ ptr2489(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6850,10 +6850,10 @@ ptr2490(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6863,7 +6863,7 @@ ptr2490(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -6876,7 +6876,7 @@ ptr2490(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -6891,10 +6891,10 @@ ptr2490(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -6915,10 +6915,10 @@ ptr2490(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -6928,7 +6928,7 @@ ptr2490(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -6941,7 +6941,7 @@ ptr2490(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -6956,10 +6956,10 @@ ptr2490(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -6980,10 +6980,10 @@ ptr2490(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7031,7 +7031,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7047,7 +7047,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = loc->idx;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7060,7 +7060,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -7078,7 +7078,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = loc->idx;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7093,10 +7093,10 @@ ptr2491(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7106,7 +7106,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -7120,7 +7120,7 @@ ptr2491(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7135,10 +7135,10 @@ ptr2491(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {11};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7147,7 +7147,7 @@ ptr2491(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -7170,7 +7170,7 @@ ptr2491(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2492, ptr2493, 0), cleanup, "");
+		CHK(mk_func(&k, ptr2492, ptr2493, 0), cleanup, L"");
 	
 		*stkhd++ = k;
 	}
@@ -7180,7 +7180,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = loc->rnk;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -7193,7 +7193,7 @@ ptr2491(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7208,10 +7208,10 @@ ptr2491(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {16};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7220,7 +7220,7 @@ ptr2491(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -7246,7 +7246,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7259,7 +7259,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = loc->idx;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7273,7 +7273,7 @@ ptr2491(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -7317,10 +7317,10 @@ ptr2492(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7330,7 +7330,7 @@ ptr2492(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -7343,7 +7343,7 @@ ptr2492(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7358,10 +7358,10 @@ ptr2492(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7382,10 +7382,10 @@ ptr2492(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7395,7 +7395,7 @@ ptr2492(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -7408,7 +7408,7 @@ ptr2492(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7423,10 +7423,10 @@ ptr2492(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7447,10 +7447,10 @@ ptr2492(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7486,10 +7486,10 @@ ptr2493(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7499,7 +7499,7 @@ ptr2493(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -7512,7 +7512,7 @@ ptr2493(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7527,10 +7527,10 @@ ptr2493(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7551,10 +7551,10 @@ ptr2493(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7564,7 +7564,7 @@ ptr2493(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -7577,7 +7577,7 @@ ptr2493(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7592,10 +7592,10 @@ ptr2493(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7616,10 +7616,10 @@ ptr2493(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7659,7 +7659,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7670,7 +7670,7 @@ ptr2494(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7690,7 +7690,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7703,7 +7703,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -7720,10 +7720,10 @@ ptr2494(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7733,7 +7733,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -7747,7 +7747,7 @@ ptr2494(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7762,11 +7762,11 @@ ptr2494(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7775,7 +7775,7 @@ ptr2494(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -7800,7 +7800,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7815,10 +7815,10 @@ ptr2494(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7827,7 +7827,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -7843,7 +7843,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -7857,7 +7857,7 @@ ptr2494(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7872,11 +7872,11 @@ ptr2494(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -7895,7 +7895,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -7908,7 +7908,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -7925,10 +7925,10 @@ ptr2494(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -7938,7 +7938,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -7952,7 +7952,7 @@ ptr2494(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -7965,7 +7965,7 @@ ptr2494(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -7990,10 +7990,10 @@ ptr2494(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8002,7 +8002,7 @@ ptr2494(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8048,7 +8048,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -8059,7 +8059,7 @@ ptr2495(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -8079,7 +8079,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -8092,7 +8092,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8109,10 +8109,10 @@ ptr2495(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8122,7 +8122,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -8136,7 +8136,7 @@ ptr2495(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -8151,11 +8151,11 @@ ptr2495(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -8164,7 +8164,7 @@ ptr2495(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -8189,7 +8189,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -8204,10 +8204,10 @@ ptr2495(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8216,7 +8216,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8232,7 +8232,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -8246,7 +8246,7 @@ ptr2495(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -8261,11 +8261,11 @@ ptr2495(struct cell_array **z,
 				unsigned int rnk = 1;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 				arr->shape[0] = 0;
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -8284,7 +8284,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -8297,7 +8297,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8314,10 +8314,10 @@ ptr2495(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8327,7 +8327,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -8341,7 +8341,7 @@ ptr2495(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -8354,7 +8354,7 @@ ptr2495(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -8379,10 +8379,10 @@ ptr2495(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8391,7 +8391,7 @@ ptr2495(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8433,10 +8433,10 @@ ptr2496(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8445,7 +8445,7 @@ ptr2496(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8487,10 +8487,10 @@ ptr2497(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8499,7 +8499,7 @@ ptr2497(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8541,10 +8541,10 @@ ptr2498(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8553,7 +8553,7 @@ ptr2498(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8595,10 +8595,10 @@ ptr2499(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8607,7 +8607,7 @@ ptr2499(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8649,10 +8649,10 @@ ptr2500(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8661,7 +8661,7 @@ ptr2500(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8703,10 +8703,10 @@ ptr2501(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8715,7 +8715,7 @@ ptr2501(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8757,10 +8757,10 @@ ptr2502(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8769,7 +8769,7 @@ ptr2502(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8811,10 +8811,10 @@ ptr2503(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8823,7 +8823,7 @@ ptr2503(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8869,7 +8869,7 @@ ptr2504(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -8882,7 +8882,7 @@ ptr2504(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -8899,10 +8899,10 @@ ptr2504(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1289};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -8912,7 +8912,7 @@ ptr2504(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -8926,7 +8926,7 @@ ptr2504(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -8939,7 +8939,7 @@ ptr2504(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -8994,7 +8994,7 @@ ptr2505(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -9007,7 +9007,7 @@ ptr2505(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9024,10 +9024,10 @@ ptr2505(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1289};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9037,7 +9037,7 @@ ptr2505(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -9051,7 +9051,7 @@ ptr2505(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -9064,7 +9064,7 @@ ptr2505(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -9115,10 +9115,10 @@ ptr2506(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9127,7 +9127,7 @@ ptr2506(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9169,10 +9169,10 @@ ptr2507(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9181,7 +9181,7 @@ ptr2507(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9223,10 +9223,10 @@ ptr2508(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9235,7 +9235,7 @@ ptr2508(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9277,10 +9277,10 @@ ptr2509(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9289,7 +9289,7 @@ ptr2509(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9331,10 +9331,10 @@ ptr2510(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9343,7 +9343,7 @@ ptr2510(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9385,10 +9385,10 @@ ptr2511(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9397,7 +9397,7 @@ ptr2511(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9439,10 +9439,10 @@ ptr2512(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9451,7 +9451,7 @@ ptr2512(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9493,10 +9493,10 @@ ptr2513(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9505,7 +9505,7 @@ ptr2513(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9545,7 +9545,7 @@ ptr2514(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -9559,7 +9559,7 @@ ptr2514(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -9574,7 +9574,7 @@ ptr2514(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9590,7 +9590,7 @@ ptr2514(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9605,7 +9605,7 @@ ptr2514(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9621,7 +9621,7 @@ ptr2514(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -9661,7 +9661,7 @@ ptr2515(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -9675,7 +9675,7 @@ ptr2515(struct cell_array **z,
 		struct cell_array *y = alpha;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -9690,7 +9690,7 @@ ptr2515(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9706,7 +9706,7 @@ ptr2515(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9721,7 +9721,7 @@ ptr2515(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9737,7 +9737,7 @@ ptr2515(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -9777,7 +9777,7 @@ ptr2516(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -9790,7 +9790,7 @@ ptr2516(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9807,10 +9807,10 @@ ptr2516(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9820,7 +9820,7 @@ ptr2516(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -9836,7 +9836,7 @@ ptr2516(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -9850,7 +9850,7 @@ ptr2516(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -9866,7 +9866,7 @@ ptr2516(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9882,7 +9882,7 @@ ptr2516(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -9922,7 +9922,7 @@ ptr2517(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -9935,7 +9935,7 @@ ptr2517(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -9952,10 +9952,10 @@ ptr2517(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -9965,7 +9965,7 @@ ptr2517(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -9981,7 +9981,7 @@ ptr2517(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -9995,7 +9995,7 @@ ptr2517(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -10011,7 +10011,7 @@ ptr2517(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10027,7 +10027,7 @@ ptr2517(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -10069,10 +10069,10 @@ ptr2518(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -10081,7 +10081,7 @@ ptr2518(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10123,10 +10123,10 @@ ptr2519(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -10135,7 +10135,7 @@ ptr2519(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10177,10 +10177,10 @@ ptr2520(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -10189,7 +10189,7 @@ ptr2520(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10231,10 +10231,10 @@ ptr2521(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -10243,7 +10243,7 @@ ptr2521(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10302,7 +10302,7 @@ ptr2522(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10313,7 +10313,7 @@ ptr2522(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -10334,7 +10334,7 @@ ptr2522(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10351,7 +10351,7 @@ ptr2522(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -10369,7 +10369,7 @@ ptr2522(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -10384,7 +10384,7 @@ ptr2522(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -10400,7 +10400,7 @@ ptr2522(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10460,7 +10460,7 @@ ptr2523(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10471,7 +10471,7 @@ ptr2523(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -10492,7 +10492,7 @@ ptr2523(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10509,7 +10509,7 @@ ptr2523(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -10527,7 +10527,7 @@ ptr2523(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -10542,7 +10542,7 @@ ptr2523(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -10558,7 +10558,7 @@ ptr2523(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10618,7 +10618,7 @@ ptr2524(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10629,7 +10629,7 @@ ptr2524(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -10650,7 +10650,7 @@ ptr2524(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10666,7 +10666,7 @@ ptr2524(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -10681,7 +10681,7 @@ ptr2524(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -10697,7 +10697,7 @@ ptr2524(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10757,7 +10757,7 @@ ptr2525(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10768,7 +10768,7 @@ ptr2525(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -10789,7 +10789,7 @@ ptr2525(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -10805,7 +10805,7 @@ ptr2525(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.q_veach;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -10820,7 +10820,7 @@ ptr2525(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -10836,7 +10836,7 @@ ptr2525(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -10888,7 +10888,7 @@ ptr2526(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -10906,7 +10906,7 @@ ptr2526(struct cell_array **z,
 		struct cell_moper *op = lex->map_dyadic;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -10921,7 +10921,7 @@ ptr2526(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -10972,7 +10972,7 @@ ptr2527(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -10990,7 +10990,7 @@ ptr2527(struct cell_array **z,
 		struct cell_moper *op = lex->map_dyadic;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -11005,7 +11005,7 @@ ptr2527(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -11055,7 +11055,7 @@ ptr2528(struct cell_array **z,
 		struct cell_moper *op = lex->map_dyadic;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -11070,7 +11070,7 @@ ptr2528(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -11120,7 +11120,7 @@ ptr2529(struct cell_array **z,
 		struct cell_moper *op = lex->map_dyadic;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -11135,7 +11135,7 @@ ptr2529(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -11185,7 +11185,7 @@ ptr2530(struct cell_array **z,
 	loc->s = NULL;
 	loc->c = NULL;
 	loc->zs = NULL;
-	CHK(mk_array_box(&loc->z, NULL), cleanup, "");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"");
 	
 	err = 0;
 	stkhd = &stk[0];
@@ -11195,7 +11195,7 @@ ptr2530(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 	
 		if (err)
@@ -11212,7 +11212,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -11225,7 +11225,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -11242,10 +11242,10 @@ ptr2530(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -11255,7 +11255,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -11269,7 +11269,7 @@ ptr2530(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -11282,7 +11282,7 @@ ptr2530(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -11295,7 +11295,7 @@ ptr2530(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -11320,7 +11320,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -11336,7 +11336,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -11354,10 +11354,10 @@ ptr2530(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -11367,7 +11367,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -11385,7 +11385,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = loc->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -11398,7 +11398,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -11415,10 +11415,10 @@ ptr2530(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -11428,7 +11428,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -11442,7 +11442,7 @@ ptr2530(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -11457,10 +11457,10 @@ ptr2530(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -11470,7 +11470,7 @@ ptr2530(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(x);
 			
@@ -11485,7 +11485,7 @@ ptr2530(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -11501,7 +11501,7 @@ ptr2530(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -11528,10 +11528,10 @@ ptr2530(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -11541,7 +11541,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -11554,7 +11554,7 @@ ptr2530(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -11569,10 +11569,10 @@ ptr2530(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {16};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -11581,7 +11581,7 @@ ptr2530(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -11608,10 +11608,10 @@ ptr2530(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -11621,7 +11621,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -11634,7 +11634,7 @@ ptr2530(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -11648,7 +11648,7 @@ ptr2530(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -11673,10 +11673,10 @@ ptr2530(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -11686,7 +11686,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -11702,7 +11702,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -11720,7 +11720,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -11731,7 +11731,7 @@ ptr2530(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2531, ptr2532, 2), cleanup, "");
+		CHK(mk_func(&k, ptr2531, ptr2532, 2), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -11744,7 +11744,7 @@ ptr2530(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -11761,10 +11761,10 @@ ptr2530(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -11774,7 +11774,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -11789,7 +11789,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -11804,7 +11804,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -11820,7 +11820,7 @@ ptr2530(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_func(fn);
@@ -11876,7 +11876,7 @@ ptr2531(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -11890,7 +11890,7 @@ ptr2531(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -11906,7 +11906,7 @@ ptr2531(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -11955,7 +11955,7 @@ ptr2532(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -11969,7 +11969,7 @@ ptr2532(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -11985,7 +11985,7 @@ ptr2532(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -12035,7 +12035,7 @@ ptr2533(struct cell_array **z,
 	loc->s = NULL;
 	loc->c = NULL;
 	loc->zs = NULL;
-	CHK(mk_array_box(&loc->z, NULL), cleanup, "");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"");
 	
 	err = 0;
 	stkhd = &stk[0];
@@ -12045,7 +12045,7 @@ ptr2533(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 	
 		if (err)
@@ -12062,7 +12062,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12075,7 +12075,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -12092,10 +12092,10 @@ ptr2533(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12105,7 +12105,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -12119,7 +12119,7 @@ ptr2533(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -12132,7 +12132,7 @@ ptr2533(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -12145,7 +12145,7 @@ ptr2533(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -12170,7 +12170,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12186,7 +12186,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12204,10 +12204,10 @@ ptr2533(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12217,7 +12217,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -12235,7 +12235,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = loc->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12248,7 +12248,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -12265,10 +12265,10 @@ ptr2533(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12278,7 +12278,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -12292,7 +12292,7 @@ ptr2533(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -12307,10 +12307,10 @@ ptr2533(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -12320,7 +12320,7 @@ ptr2533(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(x);
 			
@@ -12335,7 +12335,7 @@ ptr2533(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -12351,7 +12351,7 @@ ptr2533(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -12378,10 +12378,10 @@ ptr2533(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12391,7 +12391,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -12404,7 +12404,7 @@ ptr2533(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -12419,10 +12419,10 @@ ptr2533(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {16};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -12431,7 +12431,7 @@ ptr2533(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -12458,10 +12458,10 @@ ptr2533(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12471,7 +12471,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -12484,7 +12484,7 @@ ptr2533(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -12498,7 +12498,7 @@ ptr2533(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -12523,10 +12523,10 @@ ptr2533(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12536,7 +12536,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -12552,7 +12552,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -12570,7 +12570,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12581,7 +12581,7 @@ ptr2533(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2534, ptr2535, 2), cleanup, "");
+		CHK(mk_func(&k, ptr2534, ptr2535, 2), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -12594,7 +12594,7 @@ ptr2533(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -12611,10 +12611,10 @@ ptr2533(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12624,7 +12624,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -12639,7 +12639,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -12654,7 +12654,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -12670,7 +12670,7 @@ ptr2533(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_func(fn);
@@ -12725,7 +12725,7 @@ ptr2534(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12739,7 +12739,7 @@ ptr2534(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -12755,7 +12755,7 @@ ptr2534(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -12804,7 +12804,7 @@ ptr2535(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12818,7 +12818,7 @@ ptr2535(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -12834,7 +12834,7 @@ ptr2535(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -12885,7 +12885,7 @@ ptr2536(struct cell_array **z,
 	loc->s = NULL;
 	loc->c = NULL;
 	loc->zs = NULL;
-	CHK(mk_array_box(&loc->z, NULL), cleanup, "");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"");
 	
 	err = 0;
 	stkhd = &stk[0];
@@ -12895,7 +12895,7 @@ ptr2536(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -12912,7 +12912,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -12925,7 +12925,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -12942,10 +12942,10 @@ ptr2536(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -12955,7 +12955,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -12969,7 +12969,7 @@ ptr2536(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -12982,7 +12982,7 @@ ptr2536(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -12995,7 +12995,7 @@ ptr2536(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -13020,7 +13020,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13036,7 +13036,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13054,10 +13054,10 @@ ptr2536(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13067,7 +13067,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -13085,7 +13085,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = loc->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13098,7 +13098,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -13115,10 +13115,10 @@ ptr2536(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13128,7 +13128,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -13142,7 +13142,7 @@ ptr2536(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -13157,10 +13157,10 @@ ptr2536(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -13170,7 +13170,7 @@ ptr2536(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(x);
 			
@@ -13185,7 +13185,7 @@ ptr2536(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -13201,7 +13201,7 @@ ptr2536(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -13228,10 +13228,10 @@ ptr2536(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13241,7 +13241,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -13254,7 +13254,7 @@ ptr2536(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -13269,10 +13269,10 @@ ptr2536(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {16};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -13281,7 +13281,7 @@ ptr2536(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -13308,10 +13308,10 @@ ptr2536(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13321,7 +13321,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -13334,7 +13334,7 @@ ptr2536(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -13348,7 +13348,7 @@ ptr2536(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -13373,10 +13373,10 @@ ptr2536(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13386,7 +13386,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -13402,7 +13402,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -13420,7 +13420,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13431,7 +13431,7 @@ ptr2536(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2537, ptr2538, 2), cleanup, "");
+		CHK(mk_func(&k, ptr2537, ptr2538, 2), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -13444,7 +13444,7 @@ ptr2536(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -13461,10 +13461,10 @@ ptr2536(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13474,7 +13474,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -13489,7 +13489,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -13504,7 +13504,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -13520,7 +13520,7 @@ ptr2536(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_func(fn);
@@ -13576,7 +13576,7 @@ ptr2537(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13590,7 +13590,7 @@ ptr2537(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -13606,7 +13606,7 @@ ptr2537(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -13655,7 +13655,7 @@ ptr2538(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13669,7 +13669,7 @@ ptr2538(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -13685,7 +13685,7 @@ ptr2538(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -13735,7 +13735,7 @@ ptr2539(struct cell_array **z,
 	loc->s = NULL;
 	loc->c = NULL;
 	loc->zs = NULL;
-	CHK(mk_array_box(&loc->z, NULL), cleanup, "");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"");
 	
 	err = 0;
 	stkhd = &stk[0];
@@ -13745,7 +13745,7 @@ ptr2539(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -13762,7 +13762,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13775,7 +13775,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -13792,10 +13792,10 @@ ptr2539(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13805,7 +13805,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -13819,7 +13819,7 @@ ptr2539(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -13832,7 +13832,7 @@ ptr2539(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -13845,7 +13845,7 @@ ptr2539(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -13870,7 +13870,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13886,7 +13886,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13904,10 +13904,10 @@ ptr2539(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13917,7 +13917,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = loc->s;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -13935,7 +13935,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = loc->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -13948,7 +13948,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -13965,10 +13965,10 @@ ptr2539(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -13978,7 +13978,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -13992,7 +13992,7 @@ ptr2539(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -14007,10 +14007,10 @@ ptr2539(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -14020,7 +14020,7 @@ ptr2539(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(x);
 			
@@ -14035,7 +14035,7 @@ ptr2539(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -14051,7 +14051,7 @@ ptr2539(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				release_array(y);
 			
@@ -14078,10 +14078,10 @@ ptr2539(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -14091,7 +14091,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -14104,7 +14104,7 @@ ptr2539(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -14119,10 +14119,10 @@ ptr2539(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {16};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 			
 			
-				CHK(fill_array(arr, dat), cleanup, "");
+				CHK(fill_array(arr, dat), cleanup, L"");
 			
 				*stkhd++ = arr;
 			}
@@ -14131,7 +14131,7 @@ ptr2539(struct cell_array **z,
 				struct cell_array *y = *--stkhd;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_mon)(&dst, y, fn), "");
+				TRC((fn->fptr_mon)(&dst, y, fn), L"");
 			
 				release_array(y);
 			
@@ -14158,10 +14158,10 @@ ptr2539(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -14171,7 +14171,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = loc->c;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -14184,7 +14184,7 @@ ptr2539(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -14198,7 +14198,7 @@ ptr2539(struct cell_array **z,
 				struct cell_array *y = omega;
 				struct cell_array *dst;
 			
-				TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+				TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 			
 				if (err)
 					goto cleanup;
@@ -14223,10 +14223,10 @@ ptr2539(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -14236,7 +14236,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14252,7 +14252,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -14270,7 +14270,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -14281,7 +14281,7 @@ ptr2539(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2540, ptr2541, 2), cleanup, "");
+		CHK(mk_func(&k, ptr2540, ptr2541, 2), cleanup, L"");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -14294,7 +14294,7 @@ ptr2539(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 		release_func(x);
 	
@@ -14311,10 +14311,10 @@ ptr2539(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -14324,7 +14324,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14339,7 +14339,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14354,7 +14354,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14370,7 +14370,7 @@ ptr2539(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_func(fn);
@@ -14425,7 +14425,7 @@ ptr2540(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -14439,7 +14439,7 @@ ptr2540(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -14455,7 +14455,7 @@ ptr2540(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -14504,7 +14504,7 @@ ptr2541(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -14518,7 +14518,7 @@ ptr2541(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -14534,7 +14534,7 @@ ptr2541(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), "");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");
 	
 		if (err) {
 			goto cleanup;
@@ -14577,10 +14577,10 @@ ptr2542(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -14589,7 +14589,7 @@ ptr2542(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14631,10 +14631,10 @@ ptr2543(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -14643,7 +14643,7 @@ ptr2543(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14690,7 +14690,7 @@ ptr2544(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -14708,7 +14708,7 @@ ptr2544(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -14723,7 +14723,7 @@ ptr2544(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -14739,7 +14739,7 @@ ptr2544(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14786,7 +14786,7 @@ ptr2545(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -14804,7 +14804,7 @@ ptr2545(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -14819,7 +14819,7 @@ ptr2545(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -14835,7 +14835,7 @@ ptr2545(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -14882,7 +14882,7 @@ ptr2546(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -14900,7 +14900,7 @@ ptr2546(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -14915,7 +14915,7 @@ ptr2546(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -14930,7 +14930,7 @@ ptr2546(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -14944,7 +14944,7 @@ ptr2546(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 		release_array(y);
@@ -14992,7 +14992,7 @@ ptr2547(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -15010,7 +15010,7 @@ ptr2547(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"");
 	
 		release_array(x);
 	
@@ -15025,7 +15025,7 @@ ptr2547(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -15040,7 +15040,7 @@ ptr2547(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -15054,7 +15054,7 @@ ptr2547(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 		release_array(y);
@@ -15101,7 +15101,7 @@ ptr2548(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -15116,7 +15116,7 @@ ptr2548(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -15132,7 +15132,7 @@ ptr2548(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15178,7 +15178,7 @@ ptr2549(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -15193,7 +15193,7 @@ ptr2549(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -15209,7 +15209,7 @@ ptr2549(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15255,7 +15255,7 @@ ptr2550(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -15270,7 +15270,7 @@ ptr2550(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -15285,7 +15285,7 @@ ptr2550(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -15299,7 +15299,7 @@ ptr2550(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 		release_array(y);
@@ -15346,7 +15346,7 @@ ptr2551(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -15361,7 +15361,7 @@ ptr2551(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_func(fn);
 	
@@ -15376,7 +15376,7 @@ ptr2551(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), "");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"");
 	
 	
 		if (err)
@@ -15390,7 +15390,7 @@ ptr2551(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_func(fn);
 		release_array(y);
@@ -15439,10 +15439,10 @@ ptr2552(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -15452,7 +15452,7 @@ ptr2552(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -15465,7 +15465,7 @@ ptr2552(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -15493,7 +15493,7 @@ ptr2552(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -15511,7 +15511,7 @@ ptr2552(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15528,10 +15528,10 @@ ptr2552(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -15541,7 +15541,7 @@ ptr2552(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15557,7 +15557,7 @@ ptr2552(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -15573,7 +15573,7 @@ ptr2552(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15589,7 +15589,7 @@ ptr2552(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15604,7 +15604,7 @@ ptr2552(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15652,10 +15652,10 @@ ptr2553(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -15665,7 +15665,7 @@ ptr2553(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -15678,7 +15678,7 @@ ptr2553(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -15703,7 +15703,7 @@ ptr2553(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {3};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 3;
 		dat = arr->values;
 	
@@ -15725,10 +15725,10 @@ ptr2553(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -15738,7 +15738,7 @@ ptr2553(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15754,7 +15754,7 @@ ptr2553(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -15770,7 +15770,7 @@ ptr2553(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15786,7 +15786,7 @@ ptr2553(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -15805,7 +15805,7 @@ ptr2553(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -15854,10 +15854,10 @@ ptr2554(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -15867,7 +15867,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -15880,7 +15880,7 @@ ptr2554(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -15907,7 +15907,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -15920,7 +15920,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15937,10 +15937,10 @@ ptr2554(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -15950,7 +15950,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15966,7 +15966,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -15982,7 +15982,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -15997,7 +15997,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16012,7 +16012,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16027,7 +16027,7 @@ ptr2554(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16075,10 +16075,10 @@ ptr2555(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -16088,7 +16088,7 @@ ptr2555(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 	
@@ -16101,7 +16101,7 @@ ptr2555(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -16126,7 +16126,7 @@ ptr2555(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -16141,10 +16141,10 @@ ptr2555(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -16154,7 +16154,7 @@ ptr2555(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16170,7 +16170,7 @@ ptr2555(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -16186,7 +16186,7 @@ ptr2555(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16201,7 +16201,7 @@ ptr2555(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16217,7 +16217,7 @@ ptr2555(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16258,12 +16258,12 @@ ptr2556(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, "");
+	CHK(2, cleanup, L"");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -16291,7 +16291,7 @@ ptr2556(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -16309,7 +16309,7 @@ ptr2556(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16326,10 +16326,10 @@ ptr2556(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -16338,7 +16338,7 @@ ptr2556(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16353,7 +16353,7 @@ ptr2556(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16369,7 +16369,7 @@ ptr2556(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -16385,7 +16385,7 @@ ptr2556(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16401,7 +16401,7 @@ ptr2556(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16416,7 +16416,7 @@ ptr2556(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16457,12 +16457,12 @@ ptr2557(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, "");
+	CHK(2, cleanup, L"");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -16487,7 +16487,7 @@ ptr2557(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {3};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 3;
 		dat = arr->values;
 	
@@ -16509,10 +16509,10 @@ ptr2557(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -16521,7 +16521,7 @@ ptr2557(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16536,7 +16536,7 @@ ptr2557(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16552,7 +16552,7 @@ ptr2557(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -16568,7 +16568,7 @@ ptr2557(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16584,7 +16584,7 @@ ptr2557(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, "");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -16603,7 +16603,7 @@ ptr2557(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -16645,12 +16645,12 @@ ptr2558(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, "");
+	CHK(2, cleanup, L"");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -16677,7 +16677,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -16690,7 +16690,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16707,10 +16707,10 @@ ptr2558(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -16719,7 +16719,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16734,7 +16734,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16750,7 +16750,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -16766,7 +16766,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16781,7 +16781,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16796,7 +16796,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16811,7 +16811,7 @@ ptr2558(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16852,12 +16852,12 @@ ptr2559(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, "");
+	CHK(2, cleanup, L"");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), "");
+		TRC(guard_check(x), L"");
 	
 		release_array(x);
 	
@@ -16882,7 +16882,7 @@ ptr2559(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		if (err)
 			goto cleanup;
@@ -16897,10 +16897,10 @@ ptr2559(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, "");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, "");
+		CHK(fill_array(arr, dat), cleanup, L"");
 	
 		*stkhd++ = arr;
 	}
@@ -16909,7 +16909,7 @@ ptr2559(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16924,7 +16924,7 @@ ptr2559(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16940,7 +16940,7 @@ ptr2559(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(x);
 		release_array(y);
@@ -16956,7 +16956,7 @@ ptr2559(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16971,7 +16971,7 @@ ptr2559(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), "");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"");
 	
 		release_array(y);
 	
@@ -16987,7 +16987,7 @@ ptr2559(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), "");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"");
 	
 		release_array(y);
 	
@@ -17025,7 +17025,7 @@ q_signal(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 q_signal_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(q_signal, z, l, r);
+	return call_dwa(q_signal, z, l, r, L"q_signal");
 }
 
 EXPORT int
@@ -17046,7 +17046,7 @@ q_dr(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 q_dr_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(q_dr, z, l, r);
+	return call_dwa(q_dr, z, l, r, L"q_dr");
 }
 
 EXPORT int
@@ -17067,7 +17067,7 @@ squeeze(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 squeeze_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(squeeze, z, l, r);
+	return call_dwa(squeeze, z, l, r, L"squeeze");
 }
 
 EXPORT int
@@ -17088,7 +17088,7 @@ is_simple(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 is_simple_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(is_simple, z, l, r);
+	return call_dwa(is_simple, z, l, r, L"is_simple");
 }
 
 EXPORT int
@@ -17109,7 +17109,7 @@ is_numeric(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 is_numeric_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(is_numeric, z, l, r);
+	return call_dwa(is_numeric, z, l, r, L"is_numeric");
 }
 
 EXPORT int
@@ -17130,7 +17130,7 @@ is_integer(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 is_integer_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(is_integer, z, l, r);
+	return call_dwa(is_integer, z, l, r, L"is_integer");
 }
 
 EXPORT int
@@ -17151,7 +17151,7 @@ max_shp(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 max_shp_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(max_shp, z, l, r);
+	return call_dwa(max_shp, z, l, r, L"max_shp");
 }
 
 EXPORT int
@@ -17172,7 +17172,7 @@ has_nat_vals(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 has_nat_vals_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(has_nat_vals, z, l, r);
+	return call_dwa(has_nat_vals, z, l, r, L"has_nat_vals");
 }
 
 EXPORT int
@@ -17193,7 +17193,7 @@ chk_scl(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 chk_scl_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(chk_scl, z, l, r);
+	return call_dwa(chk_scl, z, l, r, L"chk_scl");
 }
 
 EXPORT int
@@ -17214,7 +17214,7 @@ chk_valid_shape(struct cell_array **z, struct cell_array *l, struct cell_array *
 EXPORT int
 chk_valid_shape_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(chk_valid_shape, z, l, r);
+	return call_dwa(chk_valid_shape, z, l, r, L"chk_valid_shape");
 }
 
 EXPORT int
@@ -17235,7 +17235,7 @@ both_simple(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 both_simple_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(both_simple, z, l, r);
+	return call_dwa(both_simple, z, l, r, L"both_simple");
 }
 
 EXPORT int
@@ -17256,7 +17256,7 @@ both_numeric(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 both_numeric_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(both_numeric, z, l, r);
+	return call_dwa(both_numeric, z, l, r, L"both_numeric");
 }
 
 EXPORT int
@@ -17277,7 +17277,7 @@ rgt(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 rgt_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(rgt, z, l, r);
+	return call_dwa(rgt, z, l, r, L"rgt");
 }
 
 EXPORT int
@@ -17298,7 +17298,7 @@ lft(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 lft_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(lft, z, l, r);
+	return call_dwa(lft, z, l, r, L"lft");
 }
 
 EXPORT int
@@ -17319,7 +17319,7 @@ reshape(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 reshape_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(reshape, z, l, r);
+	return call_dwa(reshape, z, l, r, L"reshape");
 }
 
 EXPORT int
@@ -17340,7 +17340,7 @@ rho(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 rho_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(rho, z, l, r);
+	return call_dwa(rho, z, l, r, L"rho");
 }
 
 EXPORT int
@@ -17361,7 +17361,7 @@ cat(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 cat_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(cat, z, l, r);
+	return call_dwa(cat, z, l, r, L"cat");
 }
 
 EXPORT int
@@ -17382,7 +17382,7 @@ eqv(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 eqv_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(eqv, z, l, r);
+	return call_dwa(eqv, z, l, r, L"eqv");
 }
 
 EXPORT int
@@ -17403,7 +17403,7 @@ nqv(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 nqv_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(nqv, z, l, r);
+	return call_dwa(nqv, z, l, r, L"nqv");
 }
 
 EXPORT int
@@ -17424,7 +17424,7 @@ materialize(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 materialize_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(materialize, z, l, r);
+	return call_dwa(materialize, z, l, r, L"materialize");
 }
 
 EXPORT int
@@ -17445,7 +17445,7 @@ index(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 index_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(index, z, l, r);
+	return call_dwa(index, z, l, r, L"index");
 }
 
 EXPORT int
@@ -17466,7 +17466,7 @@ sqd(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 sqd_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(sqd, z, l, r);
+	return call_dwa(sqd, z, l, r, L"sqd");
 }
 
 EXPORT int
@@ -17487,7 +17487,7 @@ index_gen(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 index_gen_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(index_gen, z, l, r);
+	return call_dwa(index_gen, z, l, r, L"index_gen");
 }
 
 EXPORT int
@@ -17508,7 +17508,7 @@ index_of(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 index_of_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(index_of, z, l, r);
+	return call_dwa(index_of, z, l, r, L"index_of");
 }
 
 EXPORT int
@@ -17529,7 +17529,7 @@ iot(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 iot_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(iot, z, l, r);
+	return call_dwa(iot, z, l, r, L"iot");
 }
 
 EXPORT int
@@ -17550,7 +17550,7 @@ dis(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 dis_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(dis, z, l, r);
+	return call_dwa(dis, z, l, r, L"dis");
 }
 
 EXPORT int
@@ -17571,7 +17571,7 @@ par(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 par_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(par, z, l, r);
+	return call_dwa(par, z, l, r, L"par");
 }
 
 EXPORT int
@@ -17592,7 +17592,7 @@ conjugate(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 conjugate_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(conjugate, z, l, r);
+	return call_dwa(conjugate, z, l, r, L"conjugate");
 }
 
 EXPORT int
@@ -17613,7 +17613,7 @@ add(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 add_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(add, z, l, r);
+	return call_dwa(add, z, l, r, L"add");
 }
 
 EXPORT int
@@ -17634,7 +17634,7 @@ negate(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 negate_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(negate, z, l, r);
+	return call_dwa(negate, z, l, r, L"negate");
 }
 
 EXPORT int
@@ -17655,7 +17655,7 @@ sub(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 sub_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(sub, z, l, r);
+	return call_dwa(sub, z, l, r, L"sub");
 }
 
 EXPORT int
@@ -17676,7 +17676,7 @@ sign(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 sign_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(sign, z, l, r);
+	return call_dwa(sign, z, l, r, L"sign");
 }
 
 EXPORT int
@@ -17697,7 +17697,7 @@ mul(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 mul_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(mul, z, l, r);
+	return call_dwa(mul, z, l, r, L"mul");
 }
 
 EXPORT int
@@ -17718,7 +17718,7 @@ recip(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 recip_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(recip, z, l, r);
+	return call_dwa(recip, z, l, r, L"recip");
 }
 
 EXPORT int
@@ -17739,7 +17739,7 @@ div(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 div_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(div, z, l, r);
+	return call_dwa(div, z, l, r, L"div");
 }
 
 EXPORT int
@@ -17760,7 +17760,7 @@ exp(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 exp_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(exp, z, l, r);
+	return call_dwa(exp, z, l, r, L"exp");
 }
 
 EXPORT int
@@ -17781,7 +17781,7 @@ split(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 split_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(split, z, l, r);
+	return call_dwa(split, z, l, r, L"split");
 }
 
 EXPORT int
@@ -17802,7 +17802,7 @@ drop(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 drop_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(drop, z, l, r);
+	return call_dwa(drop, z, l, r, L"drop");
 }
 
 EXPORT int
@@ -17823,7 +17823,7 @@ drp(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 drp_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(drp, z, l, r);
+	return call_dwa(drp, z, l, r, L"drp");
 }
 
 EXPORT int
@@ -17844,7 +17844,7 @@ reverse_last(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 reverse_last_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(reverse_last, z, l, r);
+	return call_dwa(reverse_last, z, l, r, L"reverse_last");
 }
 
 EXPORT int
@@ -17865,7 +17865,7 @@ rotate_last(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 rotate_last_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(rotate_last, z, l, r);
+	return call_dwa(rotate_last, z, l, r, L"rotate_last");
 }
 
 EXPORT int
@@ -17886,7 +17886,7 @@ rot(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 rot_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(rot, z, l, r);
+	return call_dwa(rot, z, l, r, L"rot");
 }
 
 EXPORT int
@@ -17907,7 +17907,7 @@ map_monadic(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 map_monadic_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(map_monadic, z, l, r);
+	return call_dwa(map_monadic, z, l, r, L"map_monadic");
 }
 
 EXPORT int
@@ -17928,6 +17928,6 @@ rpf(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 EXPORT int
 rpf_dwa(void *z, void *l, void *r)
 {
-	return call_dwa(rpf, z, l, r);
+	return call_dwa(rpf, z, l, r, L"rpf");
 }
 

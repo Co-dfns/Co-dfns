@@ -337,7 +337,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 }
 
 DECLSPEC int
-call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
+call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr, const wchar_t *name)
 {
 	struct localp *zp, *lp, *rp;
 	struct cell_array *z, *l, *r;
@@ -350,13 +350,13 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	z = l = r = NULL;
 	
 	if (lp)
-		CHK(dwa2array(&l, lp->pocket), cleanup, "");
+		CHK(dwa2array(&l, lp->pocket), cleanup, L"Convert ⍺");
 	
 	if (rp)
-		CHK(dwa2array(&r, rp->pocket), cleanup, "");
+		CHK(dwa2array(&r, rp->pocket), cleanup, L"Convert ⍵");
 
-	CHK(fn(&z, l, r), cleanup, "");
-	CHK(array2dwa(NULL, z, zp), cleanup, "");
+	CHK(fn(&z, l, r), cleanup, name);
+	CHK(array2dwa(NULL, z, zp), cleanup, L"Convert result");
 	
 cleanup:
 	release_array(l);
