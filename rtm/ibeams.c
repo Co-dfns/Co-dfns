@@ -276,7 +276,7 @@ disclose_func(struct cell_array **z,
 		return 0;
 	}
 	
-	t = NULL
+	t = NULL;
 	
 	CHK(mk_array(&t, r->type, r->storage, 0), fail, L"mk_array");
 	
