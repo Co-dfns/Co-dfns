@@ -121,6 +121,9 @@ DECL_BOX_STRUCT(func);
 DECL_BOX_STRUCT(moper);
 DECL_BOX_STRUCT(doper);
 
+/* Error structures */
+DECLSPEC struct cell_array *debug_info;
+
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);
 DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *);

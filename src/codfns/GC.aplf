@@ -447,6 +447,7 @@ GC←{
 		z,←⊂'	loc->__names = ',id,'_names;'
 		z,← '	',¨init_vars ⊃lv[⍵]
 		z,←⊂''
+		z,←⊂'	debug_info = NULL;'
 		z,←⊂'	err = 0;'
 		z,←⊂''
 		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
