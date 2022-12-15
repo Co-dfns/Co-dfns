@@ -6,6 +6,16 @@ GC←{
 	
 	⍝ Text utilities
 	csep←{¯2↓⊃,⌿(⍕¨⍵),¨⊂', '}
+	
+	⍝ Tracing information
+	linestarts←⍸1⍪IN∊CR LF←⎕UCS 13 10
+	highlight←{
+		s←pos[⍵] ⋄ e←end[⍵] ⋄ lineno←linestarts⍸s
+		line←IN[b+⍳te←linestarts[lineno+1]-b←linestarts[lineno]]
+		ls le←s e-b ⋄ line←∊'╠'⊂⍤,@ls⊢'╣'⊂⍤,⍨@(¯1+le⌊te)⊢line
+		'L"[',(⍕1+lineno),'] ',(line~CR LF),'"'
+	}
+
 
 	⍝ Variable generation utilities
 	var_ckinds←{
@@ -51,7 +61,8 @@ GC←{
 		i←⍸~mu[⍵] ⋄ z[i],←⊂¨(var_refs ⍵[i]),¨⊂' = NULL;'
 		i←⍸mu[⍵]
 		z[i],←(var_ckinds ⍵[i]){
-			z ←⊂'CHK(mk_',⍺,'_box(&',⍵,', NULL), cleanup, L"");'
+			msg←'L"Init mutable variable: ',⍵,'"'
+			z ←⊂'CHK(mk_',⍺,'_box(&',⍵,', NULL), cleanup, ',msg,');'
 			z,⊂''
 		}¨var_refs ⍵[i]
 		⊃⍪⌿z
@@ -88,7 +99,8 @@ GC←{
 	⍝ Z¯N: Error nodes
 	i←⍸(t=Z)∧k<0
 	zz[i],←{
-		('CHK(',(⍕|k[⍵]),', cleanup, L"");') ''
+		line←highlight ⍵
+		('CHK(',(⍕|k[⍵]),', cleanup, ',line,');') ''
 	}¨i
 	
 	⍝ A1: Simple arrays
@@ -103,6 +115,7 @@ GC←{
 		rnk←≢shp←⍴dat←(|n[⍵])⊃sym ⋄ dri←drtypes⍳⎕DR dat
 		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes
 		dat←'¯'⎕R'-'∘⍕¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
+		dbg←highlight ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_array *arr;'
 		z,←⊂''
@@ -110,11 +123,11 @@ GC←{
 		z,←⊂'	unsigned int rnk = ',(⍕rnk),';'
 		z,←⊂'	',ctp,' dat[] = {',(csep dat),'};'
 		z,←⊂''
-		z,←⊂'	CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"");'
+		z,←⊂'	CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, ',dbg,');'
 		z,←⊂''
 		z,← '	',¨shp{'arr->shape[',(⍕⍵),'] = ',(⍕⍺),';'}¨⍳≢shp
 		z,←⊂''
-		z,←⊂'	CHK(fill_array(arr, dat), cleanup, L"");'
+		z,←⊂'	CHK(fill_array(arr, dat), cleanup, ',dbg,');'
 		z,←⊂''
 		z,←⊂'	*stkhd++ = arr;'
 		z,⊂'}'
@@ -124,13 +137,14 @@ GC←{
 	i←⍸(t[p]=A)∧k[p]=7
 	zz[∪p[i]],←p[i]{
 		vs←var_values ⍵
+		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←⊂'	struct cell_array *arr, **dat;'
 		z,←⊂''
 		z,←⊂'	unsigned int rnk = 1;'
 		z,←⊂'	size_t shp[] = {',(⍕≢vs),'};'
 		z,←⊂''
-		z,←⊂'	CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"");'
+		z,←⊂'	CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, ',dbg,');'
 		z,←⊂'	arr->shape[0] = ',(⍕≢vs),';'
 		z,←⊂'	dat = arr->values;'
 		z,←⊂''
@@ -160,10 +174,12 @@ GC←{
 		fs vs←{(fc↑⍵)(fc↓⍵)}⍵
 		fids←var_refs fs
 		vids←var_refs vs[⍋n[vs]]
+		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←⊂'	struct cell_',ctyp,' *k;'
 		z,←⊂''
-		z,←⊂'	CHK(mk_',ctyp,'(&k, ',(csep fids),', ',(⍕vc),'), cleanup, L"");'
+		call←'mk_',ctyp,'(&k, ',(csep fids),', ',(⍕vc),')'
+		z,←⊂'	CHK(',call,', cleanup, ',dbg,');'
 		z,←⊂''
 		z,← '	k->fv['∘,¨(⍕¨⍳vc),¨'] = retain_cell('∘,¨vids,¨⊂');'
 		z,←(⊂'')⌿⍨1⌊vc
@@ -194,14 +210,15 @@ GC←{
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
 		x fn y←var_values⊢xi fi yi←¯3↑⍵
+		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←(⊂'	struct cell_array *x = ',x,';')⌿⍨k[⍺]=2
 		z,←⊂'	struct cell_func *fn = ',fn,';'
 		z,←⊂'	struct cell_array *y = ',y,';'
 		z,←⊂'	struct cell_array *dst;'
 		z,←⊂''
-		z,←(⊂'	TRC((fn->fptr_mon)(&dst, y, fn), L"");')⌿⍨k[⍺]=1
-		z,←(⊂'	TRC((fn->fptr_dya)(&dst, x, y, fn), L"");')⌿⍨k[⍺]=2
+		z,←(⊂'	TRC((fn->fptr_mon)(&dst, y, fn), ',dbg,');')⌿⍨k[⍺]=1
+		z,←(⊂'	TRC((fn->fptr_dya)(&dst, x, y, fn), ',dbg,');')⌿⍨k[⍺]=2
 		z,←(⊂'')⌿⍨0∊k[⍵]
 		z,←(⊂'	release_array(x);')⌿⍨(0=k[xi])∧k[⍺]=2
 		z,←(⊂'	release_func(fn);')⌿⍨0=k[fi]
@@ -221,13 +238,14 @@ GC←{
 		0=≢⍵:⊂0⍴⊂''
 		tgt←⊃var_refs 1↑⍵
 		fn src←var_values ¯2↑⍵
+		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←⊂'	struct cell_array_box *bx = ',tgt,';'
 		z,←⊂'	struct cell_func *fn = ',fn,';'
 		z,←⊂'	struct cell_array *y = ',src,';'
 		z,←⊂'	struct cell_array *x = bx->value;'
 		z,←⊂''
-		z,←⊂'	TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"");'
+		z,←⊂'	TRC((fn->fptr_dya)(&bx->value, x, y, fn), ',dbg,');'
 		z,←(⊂'')⌿⍨0=k[⍵[1]]
 		z,←('	release_func(fn);')⌿⍨0=k[⍵[1]]
 		z,←⊂''
@@ -251,12 +269,13 @@ GC←{
 		lop op←var_values ⍵
 		ltyp←'array' 'func'⊃⍨k[⍺]=2
 		fns←csep 'op->fptr_'∘,¨(⊃ltyp),¨'md'
+		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
 		z,←⊂'	struct cell_moper *op = ',op,';'
 		z,←⊂'	struct cell_func *dst;'
 		z,←⊂''
-		z,←⊂'	TRC(apply_mop(&dst, op, ',fns,', x), L"");'
+		z,←⊂'	TRC(apply_mop(&dst, op, ',fns,', x), ',dbg,');'
 		z,←⊂''
 		z,←(⊂'	release_',ltyp,'(x);')⌿⍨0=k[⍵[0]]
 		z,←(⊂'	release_moper(op);')⌿⍨0=k[⍵[1]]
@@ -277,13 +296,14 @@ GC←{
 		ltyp←'array' 'func'⊃⍨k[⍺]∊5 8
 		rtyp←'array' 'func'⊃⍨k[⍺]∊7 8
 		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
+		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
 		z,←⊂'	struct cell_doper *op = ',op,';'
 		z,←⊂'	struct cell_',rtyp,' *y = ',rop,';'
 		z,←⊂'	struct cell_func *dst;'
 		z,←⊂''
-		z,←⊂'	TRC(apply_dop(&dst, op, ',fns,', x, y), L"");'
+		z,←⊂'	TRC(apply_dop(&dst, op, ',fns,', x, y), ',dbg,');'
 		z,←⊂''
 		z,←(⊂'	release_',ltyp,'(x);')⌿⍨0=k[⍵[0]]
 		z,←(⊂'	release_doper(op);')⌿⍨0=k[⍵[1]]
@@ -302,10 +322,11 @@ GC←{
 	zz[p[i]],←{
 		0=≢i:0⍴⊂''
 		test←⊃var_values ⍵
+		dbg←highlight ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_array *x = ',test,';'
 		z,←⊂''
-		z,←⊂'	TRC(guard_check(x), L"");'
+		z,←⊂'	TRC(guard_check(x), ',dbg,');'
 		z,←⊂''
 		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵]
 		z,←⊂''
