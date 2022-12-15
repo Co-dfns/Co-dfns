@@ -222,6 +222,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *index_of;
 	struct cell_func *iot;
 	struct cell_func *dis;
+	struct cell_func *enclose;
 	struct cell_func *par;
 	struct cell_func *conjugate;
 	struct cell_func *add;

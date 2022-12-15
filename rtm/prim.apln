@@ -71,7 +71,11 @@ iot←index_gen ⎕AMBIV index_of
 dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
 
 ⍝ ⊂: Enclose / Partition
-par←{⎕SIGNAL 16} ⎕AMBIV {⎕SIGNAL 16}
+enclose←{
+	0≡≡⍵:⍵
+	'enclose_ibeam'⌶ ⍵
+}
+par←enclose ⎕AMBIV {⎕SIGNAL 16}
 
 ⍝ +: Conjugate | Addition
 conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}

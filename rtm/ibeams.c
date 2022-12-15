@@ -309,6 +309,31 @@ struct cell_func disclose_closure = {
 struct cell_func *disclose_ibeam = &disclose_closure;
 
 int
+enclose_func(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *tmp;
+	int err;
+	
+	CHK(mk_array(&tmp, ARR_NESTED, STG_HOST, 0), done, 
+	    L"Enclose non-simple array");
+	
+	CHK(fill_array(tmp, &r), done, L"Store array to enclose");
+	retain_cell(r);
+	
+	*z = tmp;
+	
+done:
+	return err;
+}
+
+struct cell_func enclose_closure = {
+	CELL_FUNC, 1, enclose_func, error_syntax_dya, 0
+};
+struct cell_func *enclose_ibeam = &enclose_closure;
+
+
+int
 q_ambiv_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
