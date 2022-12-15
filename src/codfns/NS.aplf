@@ -34,9 +34,11 @@ NS←{
 		z,←⊂':Else'
 		z,←⊂'       err res←⍙.',⍵,'_dya 0 A W'
 		z,←⊂':EndIf'
-		z,←⊂'→(err<0)⌿0'
+		z,←⊂'→0⌿⍨err<0'
+		z,←⊂'→ret⌿⍨err=0'
+		z,←⊂'⍎''⎕←res''⌿⍨res≢0'
 		z,←⊂'⎕SIGNAL err'
-		z,←⊂'Z←res'
+		z,←⊂'ret:Z←res'
 		z
 	}
 	ns←#.⎕NS⍬ ⋄ _←'∆⍙'ns.⎕NS¨⊂⍬ ⋄ ∆ ⍙←ns.(∆ ⍙)
