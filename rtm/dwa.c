@@ -341,7 +341,7 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 {
 	struct localp *zp, *lp, *rp;
 	struct cell_array *z, *l, *r;
-	int err;
+	int err, err2;
 	
 	zp = zptr;
 	lp = lptr;
@@ -351,12 +351,12 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	
 	if (lp)
 		if (err = dwa2array(&l, lp->pocket))
-			return err;
+			goto fail;
 	
 	if (rp)
 		if (err = dwa2array(&r, rp->pocket)) {
 			release_array(l);
-			return err;
+			goto fail;
 		}
 	
 	z = NULL;
@@ -365,17 +365,26 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	release_array(l);
 	release_array(r);
 	
-	if (err) {
-		zp->pocket = scalnum(0);
-		return err;
-	}
+	if (err)
+		goto fail;
 		
 	err = array2dwa(NULL, z, zp);
 
 	release_array(z);
 	
 	if (err)
-		return err;
-		
+		goto fail;
+	
 	return 0;
+
+fail:
+	err2 = 0;
+	
+	if (debug_info)
+		err2 = array2dwa(NULL, debug_info, zp);
+	
+	if (debug_info == NULL || err2)
+		zp->pocket = scalnum(0);
+	
+	return err;
 }
