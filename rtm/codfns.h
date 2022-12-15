@@ -121,8 +121,20 @@ DECL_BOX_STRUCT(func);
 DECL_BOX_STRUCT(moper);
 DECL_BOX_STRUCT(doper);
 
-/* Error structures */
+/* Error Handling */
 DECLSPEC struct cell_array *debug_info;
+DECLSPEC void debug_trace(int, const char *, int, const char *, const char *);
+
+#define CHK(expr, fail)						\
+if (0 < (err = (expr))) {                                       \
+	debug_trace(err, __FILE__, __LINE__, __func__, #expr);	\
+	goto fail;                                              \
+}								\
+
+#define TRC(expr)						\
+if (0 < (err = (expr))) {					\
+	debug_trace(err, __FILE__, __LINE__, __func__, #expr);	\
+}								\
 
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);

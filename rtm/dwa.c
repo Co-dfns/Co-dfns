@@ -350,34 +350,22 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr)
 	z = l = r = NULL;
 	
 	if (lp)
-		if (err = dwa2array(&l, lp->pocket))
-			goto fail;
+		CHK(dwa2array(&l, lp->pocket), cleanup);
 	
 	if (rp)
-		if (err = dwa2array(&r, rp->pocket)) {
-			release_array(l);
-			goto fail;
-		}
+		CHK(dwa2array(&r, rp->pocket), cleanup);
+
+	CHK(fn(&z, l, r), cleanup);
+	CHK(array2dwa(NULL, z, zp), cleanup);
 	
-	z = NULL;
-	err = fn(&z, l, r);
-	
+cleanup:
 	release_array(l);
 	release_array(r);
-	
-	if (err)
-		goto fail;
-		
-	err = array2dwa(NULL, z, zp);
-
 	release_array(z);
 	
-	if (err)
-		goto fail;
+	if (!err)
+		return err;
 	
-	return 0;
-
-fail:
 	err2 = 0;
 	
 	if (debug_info)
