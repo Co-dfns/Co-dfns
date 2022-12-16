@@ -4,8 +4,9 @@ PS←{
 	⍝ Compute parent vector from d
 	p←D2P d
 
-	⍝ Compute the nameclass of dfns
+	⍝ Compute the nameclass of dfns and set ∇∇ kind
 	k[∪p⌿⍨(t=P)∧n=¯3]←3 ⋄ k[∪p⌿⍨(t=P)∧n=¯4]←4
+	k[i]←k[p[i←⍸(t=P)∧n=¯6]]
 
 	⍝ We will often wrap a set of nodes as children under a Z node
 	gz←{

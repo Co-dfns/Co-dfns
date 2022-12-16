@@ -87,6 +87,11 @@ TK←{
 	⍝ Tokenize primitives and atoms
 	t[⍸(~dm)∧x∊prms]←P ⋄ t[⍸x∊syna]←A
 	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿(msk←x='⌶')⍪0 ⋄ t[⍸msk∧~m2]←0
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿(msk←x='∇')⍪0 ⋄ t[⍸msk∧~m2]←0
+	∨⌿msk←2<end[i]-pos[i←⍸m2]:{
+		'AMBIGUOUS ∇ CLUSTER'SIGNAL SELECT msk⌿i
+	}⍬
+	
 
 	⍝ Mark depths of dfns regions and give F type, with } as a child
 	t[⍸'{'=x]←F ⋄ d←+⍀1 ¯1 0['{}'⍳x]
