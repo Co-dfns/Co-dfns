@@ -124,7 +124,7 @@ GC←{
 		z,←⊂'	',ctp,' dat[] = {',(csep dat),'};'
 		z,←⊂''
 		z,←⊂'	CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, ',dbg,');'
-		z,←⊂''
+		z,←(⊂'')⌿⍨0≠≢shp
 		z,← '	',¨shp{'arr->shape[',(⍕⍵),'] = ',(⍕⍺),';'}¨⍳≢shp
 		z,←⊂''
 		z,←⊂'	CHK(fill_array(arr, dat), cleanup, ',dbg,');'
