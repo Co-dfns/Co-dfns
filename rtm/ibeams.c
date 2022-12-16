@@ -1838,3 +1838,51 @@ DEF_MON(exp_func_mon, exp_func)
 struct cell_func exp_closure = {CELL_FUNC, 1, exp_func_mon, exp_func, 0};
 struct cell_func *exp_vec_ibeam = &exp_closure;
 
+int
+lth_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = ARR_BOOL;
+	
+	return 0;
+}
+
+int
+lth_device(af_array *z, af_array l, af_array r)
+{
+	return af_lt(z, l, r, 0);
+}
+
+int
+lth_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+#define LTH_LOOP(ztype, ltype, rtype) {					\
+	ztype *tvals = t->values;					\
+	ltype *lvals = l->values;					\
+	rtype *rvals = r->values;					\
+									\
+	for (size_t i = 0; i < count; i++)				\
+		tvals[i] = (ztype)lvals[i % lc] < (ztype)rvals[i % rc];	\
+}									\
+
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(LTH_LOOP, NOOP, NOOP, NOOP,  
+		    int8_t, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+lth_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, lth_type, lth_device, lth_host);
+}
+
+struct cell_func lth_closure = {CELL_FUNC, 1, error_syntax_mon, lth_func, 0};
+struct cell_func *lth_vec_ibeam = &lth_closure;

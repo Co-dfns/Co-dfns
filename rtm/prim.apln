@@ -102,7 +102,10 @@ residue←{⎕SIGNAL 16}
 res←absolute ⎕AMBIV residue
 
 ⍝ <: Less than
-lessthan←{⎕SIGNAL 16}
+lessthan←{
+	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
+	⍺('lth_vec_ibeam'⌶ numeric scalar)⍵
+}
 lth←{⎕SIGNAL 16} ⎕AMBIV lessthan
 
 ⍝ ≠: Not Equal | First Occurrence
