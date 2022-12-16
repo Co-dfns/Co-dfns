@@ -96,6 +96,25 @@ div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 ⍝ *: Exponent | Power
 exp←'exp_vec_ibeam'⌶ ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
 
+⍝ |: Absolute Value | Residue
+absolute←{⎕SIGNAL 16}
+residue←{⎕SIGNAL 16}
+res←absolute ⎕AMBIV residue
+
+⍝ <: Less than
+lessthan←{⎕SIGNAL 16}
+lth←{⎕SIGNAL 16} ⎕AMBIV lessthan
+
+⍝ ≠: Not Equal | First Occurrence
+firstocc←{⎕SIGNAL 16}
+noteq←{⎕SIGNAL 16}
+neq←firstocc ⎕AMBIV noteq
+
+⍝ ~: Not | Without
+notscl←{⎕SIGNAL 16}
+without←{⎕SIGNAL 16}
+not←notscl ⎕AMBIV without
+
 ⍝ ↓: Split | Drop
 split←{⎕SIGNAL 16}
 drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}
@@ -112,10 +131,17 @@ map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEA
 map←{⍺ ⍺⍺ map_dyadic ⍵}
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
-rdf←{op←⍺⍺¨ 
+reduce←{
 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s
-	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵
+	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨
 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
+}
+nwreduce←{
+	~is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
+	⎕SIGNAL 16
+}
+rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≠≢,⍺⊣0:⎕SIGNAL 5
+	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵
 }
 
 ⍝ ⌿⌿: Replicate First

@@ -233,6 +233,17 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *recip;
 	struct cell_func *div;
 	struct cell_func *exp;
+	struct cell_func *absolute;
+	struct cell_func *residue;
+	struct cell_func *res;
+	struct cell_func *lessthan;
+	struct cell_func *lth;
+	struct cell_func *firstocc;
+	struct cell_func *noteq;
+	struct cell_func *neq;
+	struct cell_func *notscl;
+	struct cell_func *without;
+	struct cell_func *not;
 	struct cell_func *split;
 	struct cell_func *drop;
 	struct cell_func *drp;
@@ -242,6 +253,8 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *map_monadic;
 	struct cell_moper *map_dyadic;
 	struct cell_moper *map;
+	struct cell_moper *reduce;
+	struct cell_func *nwreduce;
 	struct cell_moper *rdf;
 	struct cell_func *rpf;
 	struct cell_doper *dot;
