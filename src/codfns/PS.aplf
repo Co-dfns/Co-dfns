@@ -143,8 +143,8 @@ PS←{
 		⍝ Link local variables with their local bindings
 		vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
 		vb[j]←fb[fr⍳r  mk⊢j←⍸(t=V)∧vb=¯1]
-		b←vb[i←i⌿⍨vb[i]≠¯1]
-		vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧i≥b]←¯1
+		b←vb[i←i⌿⍨vb[i]≠¯1] ⋄ rx←{p[⍵]}@{t[p[i]]=C}i
+		vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧rx≥b]←¯1
 
 		⍝ Mark free variables with their scope before binding
 		lx[i←⍸(t=V)∧vb=¯1]←1

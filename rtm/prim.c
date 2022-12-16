@@ -1411,7 +1411,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2581, ptr2582, 0), cleanup, L"[123] rpf←╠{⎕SIGNAL 16}╣");
+		CHK(mk_func(&k, ptr2581, ptr2582, 0), cleanup, L"[122] rpf←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
 	}
@@ -1422,7 +1422,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, ptr2583, ptr2584, ptr2585, ptr2586, ptr2587, ptr2588, ptr2589, ptr2590, 0), cleanup, L"[126] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+		CHK(mk_doper(&k, ptr2583, ptr2584, ptr2585, ptr2586, ptr2587, ptr2588, ptr2589, ptr2590, 0), cleanup, L"[125] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	
 		*stkhd++ = k;
 	}
@@ -1433,7 +1433,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, ptr2591, ptr2592, ptr2593, ptr2594, ptr2595, ptr2596, ptr2597, ptr2598, 0), cleanup, L"[129] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+		CHK(mk_doper(&k, ptr2591, ptr2592, ptr2593, ptr2594, ptr2595, ptr2596, ptr2597, ptr2598, 0), cleanup, L"[128] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	
 		*stkhd++ = k;
 	}
@@ -11961,7 +11961,6 @@ ptr2569(struct cell_array **z,
 		struct cell_array *c;
 		struct cell_array *zs;
 		struct cell_array_box *z;
-		struct cell_array *_;
 	} loc_frm, *loc;
 	
 	loc = &loc_frm;
@@ -11972,7 +11971,6 @@ ptr2569(struct cell_array **z,
 	loc->zs = NULL;
 	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
 	
-	loc->_ = NULL;
 	err = 0;
 	stkhd = &stk[0];
 
@@ -12318,10 +12316,10 @@ ptr2569(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -12331,7 +12329,7 @@ ptr2569(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)╣⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(y);
 	
@@ -12347,7 +12345,7 @@ ptr2569(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)⌷⍵╣ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 	
@@ -12358,14 +12356,30 @@ ptr2569(struct cell_array **z,
 	}
 	
 	loc->z->value = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = omega;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
+	
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
 	
 	{
 		struct cell_func *fn = cdf_prim.par;
-		struct cell_array *y = omega;
+		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵╣");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
 	
 		if (err)
 			goto cleanup;
@@ -12376,7 +12390,7 @@ ptr2569(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2570, ptr2571, 2), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵");
+		CHK(mk_func(&k, ptr2570, ptr2571, 2), cleanup, L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -12389,7 +12403,7 @@ ptr2569(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 	
@@ -12406,10 +12420,10 @@ ptr2569(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -12419,7 +12433,7 @@ ptr2569(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -12434,7 +12448,7 @@ ptr2569(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -12449,7 +12463,7 @@ ptr2569(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -12465,7 +12479,7 @@ ptr2569(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵╣");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -12477,11 +12491,23 @@ ptr2569(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	loc->_ = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = loc->z->value;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
 	
-	*z = loc->z->value;
-	retain_cell(loc->z->value);
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	╠z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
 	goto cleanup;
 	
 	err = -1;
@@ -12521,7 +12547,7 @@ ptr2570(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -12535,7 +12561,7 @@ ptr2570(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -12551,7 +12577,7 @@ ptr2570(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -12600,7 +12626,7 @@ ptr2571(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -12614,7 +12640,7 @@ ptr2571(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -12630,7 +12656,7 @@ ptr2571(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -12672,7 +12698,6 @@ ptr2572(struct cell_array **z,
 		struct cell_array *c;
 		struct cell_array *zs;
 		struct cell_array_box *z;
-		struct cell_array *_;
 	} loc_frm, *loc;
 	
 	loc = &loc_frm;
@@ -12683,7 +12708,6 @@ ptr2572(struct cell_array **z,
 	loc->zs = NULL;
 	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
 	
-	loc->_ = NULL;
 	err = 0;
 	stkhd = &stk[0];
 
@@ -13029,10 +13053,10 @@ ptr2572(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -13042,7 +13066,7 @@ ptr2572(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)╣⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(y);
 	
@@ -13058,7 +13082,7 @@ ptr2572(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)⌷⍵╣ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 	
@@ -13069,14 +13093,30 @@ ptr2572(struct cell_array **z,
 	}
 	
 	loc->z->value = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = omega;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
+	
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
 	
 	{
 		struct cell_func *fn = cdf_prim.par;
-		struct cell_array *y = omega;
+		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵╣");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
 	
 		if (err)
 			goto cleanup;
@@ -13087,7 +13127,7 @@ ptr2572(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2573, ptr2574, 2), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵");
+		CHK(mk_func(&k, ptr2573, ptr2574, 2), cleanup, L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -13100,7 +13140,7 @@ ptr2572(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 	
@@ -13117,10 +13157,10 @@ ptr2572(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -13130,7 +13170,7 @@ ptr2572(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -13145,7 +13185,7 @@ ptr2572(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -13160,7 +13200,7 @@ ptr2572(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -13176,7 +13216,7 @@ ptr2572(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵╣");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -13188,11 +13228,23 @@ ptr2572(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	loc->_ = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = loc->z->value;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
 	
-	*z = loc->z->value;
-	retain_cell(loc->z->value);
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	╠z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
 	goto cleanup;
 	
 	err = -1;
@@ -13231,7 +13283,7 @@ ptr2573(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -13245,7 +13297,7 @@ ptr2573(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -13261,7 +13313,7 @@ ptr2573(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -13310,7 +13362,7 @@ ptr2574(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -13324,7 +13376,7 @@ ptr2574(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -13340,7 +13392,7 @@ ptr2574(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -13383,7 +13435,6 @@ ptr2575(struct cell_array **z,
 		struct cell_array *c;
 		struct cell_array *zs;
 		struct cell_array_box *z;
-		struct cell_array *_;
 	} loc_frm, *loc;
 	
 	loc = &loc_frm;
@@ -13394,7 +13445,6 @@ ptr2575(struct cell_array **z,
 	loc->zs = NULL;
 	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
 	
-	loc->_ = NULL;
 	err = 0;
 	stkhd = &stk[0];
 
@@ -13740,10 +13790,10 @@ ptr2575(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -13753,7 +13803,7 @@ ptr2575(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)╣⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(y);
 	
@@ -13769,7 +13819,7 @@ ptr2575(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)⌷⍵╣ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 	
@@ -13780,14 +13830,30 @@ ptr2575(struct cell_array **z,
 	}
 	
 	loc->z->value = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = omega;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
+	
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
 	
 	{
 		struct cell_func *fn = cdf_prim.par;
-		struct cell_array *y = omega;
+		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵╣");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
 	
 		if (err)
 			goto cleanup;
@@ -13798,7 +13864,7 @@ ptr2575(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2576, ptr2577, 2), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵");
+		CHK(mk_func(&k, ptr2576, ptr2577, 2), cleanup, L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -13811,7 +13877,7 @@ ptr2575(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 	
@@ -13828,10 +13894,10 @@ ptr2575(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -13841,7 +13907,7 @@ ptr2575(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -13856,7 +13922,7 @@ ptr2575(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -13871,7 +13937,7 @@ ptr2575(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -13887,7 +13953,7 @@ ptr2575(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵╣");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -13899,11 +13965,23 @@ ptr2575(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	loc->_ = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = loc->z->value;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
 	
-	*z = loc->z->value;
-	retain_cell(loc->z->value);
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	╠z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
 	goto cleanup;
 	
 	err = -1;
@@ -13943,7 +14021,7 @@ ptr2576(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -13957,7 +14035,7 @@ ptr2576(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -13973,7 +14051,7 @@ ptr2576(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -14022,7 +14100,7 @@ ptr2577(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -14036,7 +14114,7 @@ ptr2577(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -14052,7 +14130,7 @@ ptr2577(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -14094,7 +14172,6 @@ ptr2578(struct cell_array **z,
 		struct cell_array *c;
 		struct cell_array *zs;
 		struct cell_array_box *z;
-		struct cell_array *_;
 	} loc_frm, *loc;
 	
 	loc = &loc_frm;
@@ -14105,7 +14182,6 @@ ptr2578(struct cell_array **z,
 	loc->zs = NULL;
 	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
 	
-	loc->_ = NULL;
 	err = 0;
 	stkhd = &stk[0];
 
@@ -14451,10 +14527,10 @@ ptr2578(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-╠1╣)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -14464,7 +14540,7 @@ ptr2578(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)╣⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
 	
 		release_array(y);
 	
@@ -14480,7 +14556,7 @@ ptr2578(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←╠(c-1)⌷⍵╣ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
 	
 		release_array(x);
 	
@@ -14491,14 +14567,30 @@ ptr2578(struct cell_array **z,
 	}
 	
 	loc->z->value = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = omega;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
+	
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
 	
 	{
 		struct cell_func *fn = cdf_prim.par;
-		struct cell_array *y = omega;
+		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵╣");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
 	
 		if (err)
 			goto cleanup;
@@ -14509,7 +14601,7 @@ ptr2578(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr2579, ptr2580, 2), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵");
+		CHK(mk_func(&k, ptr2579, ptr2580, 2), cleanup, L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->z);
 		k->fv[1] = retain_cell(loc->op);
@@ -14522,7 +14614,7 @@ ptr2578(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[118] 	z⊣(⌽⍳c-1)╠{z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_func(x);
 	
@@ -14539,10 +14631,10 @@ ptr2578(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[118] 	z⊣(⌽⍳c-╠1╣){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		*stkhd++ = arr;
 	}
@@ -14552,7 +14644,7 @@ ptr2578(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳╠c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -14567,7 +14659,7 @@ ptr2578(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣(⌽╠⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -14582,7 +14674,7 @@ ptr2578(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[118] 	z⊣╠(⌽⍳c-1)╣{z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(y);
 	
@@ -14598,7 +14690,7 @@ ptr2578(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵╣");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣╠(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -14610,11 +14702,23 @@ ptr2578(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	loc->_ = *stkhd++ = retain_cell(*--stkhd);
-	release_cell(*--stkhd);
+	{
+		struct cell_array *x = loc->z->value;
+		struct cell_func *fn = cdf_prim.lft;
+		struct cell_array *y = *--stkhd;
+		struct cell_array *dst;
 	
-	*z = loc->z->value;
-	retain_cell(loc->z->value);
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	╠z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(y);
+	
+		if (err)
+			goto cleanup;
+	
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
 	goto cleanup;
 	
 	err = -1;
@@ -14653,7 +14757,7 @@ ptr2579(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -14667,7 +14771,7 @@ ptr2579(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -14683,7 +14787,7 @@ ptr2579(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -14732,7 +14836,7 @@ ptr2580(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err)
 			goto cleanup;
@@ -14746,7 +14850,7 @@ ptr2580(struct cell_array **z,
 		struct cell_array *y = lex->z->value;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		release_array(x);
 	
@@ -14762,7 +14866,7 @@ ptr2580(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *x = bx->value;
 	
-		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z←(c-1)⌷⍵ ⋄ _←(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵");
+		TRC((fn->fptr_dya)(&bx->value, x, y, fn), L"[118] 	z⊣(⌽⍳c-1){╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		if (err) {
 			goto cleanup;
@@ -14805,10 +14909,10 @@ ptr2581(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[123] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[122] rpf←{⎕SIGNAL ╠16╣}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[123] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[122] rpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -14817,7 +14921,7 @@ ptr2581(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[123] rpf←{╠⎕SIGNAL 16╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[122] rpf←{╠⎕SIGNAL 16╣}");
 	
 		release_array(y);
 	
@@ -14859,10 +14963,10 @@ ptr2582(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[123] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[122] rpf←{⎕SIGNAL ╠16╣}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[123] rpf←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[122] rpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -14871,7 +14975,7 @@ ptr2582(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[123] rpf←{╠⎕SIGNAL 16╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[122] rpf←{╠⎕SIGNAL 16╣}");
 	
 		release_array(y);
 	
@@ -14918,7 +15022,7 @@ ptr2583(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -14936,7 +15040,7 @@ ptr2583(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 	
@@ -14951,7 +15055,7 @@ ptr2583(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -14967,7 +15071,7 @@ ptr2583(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15014,7 +15118,7 @@ ptr2584(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -15032,7 +15136,7 @@ ptr2584(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 	
@@ -15047,7 +15151,7 @@ ptr2584(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -15063,7 +15167,7 @@ ptr2584(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15110,7 +15214,7 @@ ptr2585(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -15128,7 +15232,7 @@ ptr2585(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 	
@@ -15143,7 +15247,7 @@ ptr2585(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -15158,7 +15262,7 @@ ptr2585(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	
 		if (err)
@@ -15172,7 +15276,7 @@ ptr2585(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15220,7 +15324,7 @@ ptr2586(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -15238,7 +15342,7 @@ ptr2586(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
 	
 		release_array(x);
 	
@@ -15253,7 +15357,7 @@ ptr2586(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -15268,7 +15372,7 @@ ptr2586(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	
 		if (err)
@@ -15282,7 +15386,7 @@ ptr2586(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15329,7 +15433,7 @@ ptr2587(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 	
 		if (err)
@@ -15344,7 +15448,7 @@ ptr2587(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -15360,7 +15464,7 @@ ptr2587(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15406,7 +15510,7 @@ ptr2588(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 	
 		if (err)
@@ -15421,7 +15525,7 @@ ptr2588(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -15437,7 +15541,7 @@ ptr2588(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15483,7 +15587,7 @@ ptr2589(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 	
 		if (err)
@@ -15498,7 +15602,7 @@ ptr2589(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -15513,7 +15617,7 @@ ptr2589(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	
 		if (err)
@@ -15527,7 +15631,7 @@ ptr2589(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15574,7 +15678,7 @@ ptr2590(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.map;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
 	
 	
 		if (err)
@@ -15589,7 +15693,7 @@ ptr2590(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[126] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[125] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 	
@@ -15604,7 +15708,7 @@ ptr2590(struct cell_array **z,
 		struct cell_moper *op = cdf_prim.rdf;
 		struct cell_func *dst;
 	
-		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[126] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+		TRC(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), L"[125] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
 	
 	
 		if (err)
@@ -15618,7 +15722,7 @@ ptr2590(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[126] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[125] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15667,10 +15771,10 @@ ptr2591(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -15680,7 +15784,7 @@ ptr2591(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -15693,7 +15797,7 @@ ptr2591(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -15721,7 +15825,7 @@ ptr2591(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -15739,7 +15843,7 @@ ptr2591(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15756,10 +15860,10 @@ ptr2591(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -15769,7 +15873,7 @@ ptr2591(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -15785,7 +15889,7 @@ ptr2591(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -15801,7 +15905,7 @@ ptr2591(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15817,7 +15921,7 @@ ptr2591(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15832,7 +15936,7 @@ ptr2591(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -15880,10 +15984,10 @@ ptr2592(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -15893,7 +15997,7 @@ ptr2592(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -15906,7 +16010,7 @@ ptr2592(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -15931,7 +16035,7 @@ ptr2592(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {3};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 		arr->shape[0] = 3;
 		dat = arr->values;
 	
@@ -15953,10 +16057,10 @@ ptr2592(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -15966,7 +16070,7 @@ ptr2592(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -15982,7 +16086,7 @@ ptr2592(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -15998,7 +16102,7 @@ ptr2592(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16014,7 +16118,7 @@ ptr2592(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -16033,7 +16137,7 @@ ptr2592(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -16082,10 +16186,10 @@ ptr2593(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -16095,7 +16199,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -16108,7 +16212,7 @@ ptr2593(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -16135,7 +16239,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 	
 		if (err)
 			goto cleanup;
@@ -16148,7 +16252,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16165,10 +16269,10 @@ ptr2593(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -16178,7 +16282,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16194,7 +16298,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -16210,7 +16314,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16225,7 +16329,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16240,7 +16344,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16255,7 +16359,7 @@ ptr2593(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16303,10 +16407,10 @@ ptr2594(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -16316,7 +16420,7 @@ ptr2594(struct cell_array **z,
 		struct cell_array *y = omegaomega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -16329,7 +16433,7 @@ ptr2594(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -16354,7 +16458,7 @@ ptr2594(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		if (err)
 			goto cleanup;
@@ -16369,10 +16473,10 @@ ptr2594(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -16382,7 +16486,7 @@ ptr2594(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16398,7 +16502,7 @@ ptr2594(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -16414,7 +16518,7 @@ ptr2594(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16429,7 +16533,7 @@ ptr2594(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16445,7 +16549,7 @@ ptr2594(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16486,12 +16590,12 @@ ptr2595(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -16519,7 +16623,7 @@ ptr2595(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -16537,7 +16641,7 @@ ptr2595(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16554,10 +16658,10 @@ ptr2595(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -16566,7 +16670,7 @@ ptr2595(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16581,7 +16685,7 @@ ptr2595(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16597,7 +16701,7 @@ ptr2595(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -16613,7 +16717,7 @@ ptr2595(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16629,7 +16733,7 @@ ptr2595(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16644,7 +16748,7 @@ ptr2595(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16685,12 +16789,12 @@ ptr2596(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -16715,7 +16819,7 @@ ptr2596(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {3};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 		arr->shape[0] = 3;
 		dat = arr->values;
 	
@@ -16737,10 +16841,10 @@ ptr2596(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -16749,7 +16853,7 @@ ptr2596(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16764,7 +16868,7 @@ ptr2596(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16780,7 +16884,7 @@ ptr2596(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -16796,7 +16900,7 @@ ptr2596(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16812,7 +16916,7 @@ ptr2596(struct cell_array **z,
 		unsigned int rnk = 1;
 		size_t shp[] = {2};
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 		arr->shape[0] = 2;
 		dat = arr->values;
 	
@@ -16831,7 +16935,7 @@ ptr2596(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -16873,12 +16977,12 @@ ptr2597(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -16905,7 +17009,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
 	
 		if (err)
 			goto cleanup;
@@ -16918,7 +17022,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -16935,10 +17039,10 @@ ptr2597(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -16947,7 +17051,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16962,7 +17066,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -16978,7 +17082,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -16994,7 +17098,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -17009,7 +17113,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -17024,7 +17128,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -17039,7 +17143,7 @@ ptr2597(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -17080,12 +17184,12 @@ ptr2598(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	CHK(2, cleanup, L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	CHK(2, cleanup, L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[129] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		TRC(guard_check(x), L"[128] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(x);
 	
@@ -17110,7 +17214,7 @@ ptr2598(struct cell_array **z,
 		struct cell_array *y = omega;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
 	
 		if (err)
 			goto cleanup;
@@ -17125,10 +17229,10 @@ ptr2598(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -17137,7 +17241,7 @@ ptr2598(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -17152,7 +17256,7 @@ ptr2598(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
 		release_array(y);
 	
@@ -17168,7 +17272,7 @@ ptr2598(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(x);
 		release_array(y);
@@ -17184,7 +17288,7 @@ ptr2598(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇╠∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -17199,7 +17303,7 @@ ptr2598(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_mon)(&dst, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_mon)(&dst, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
@@ -17215,7 +17319,7 @@ ptr2598(struct cell_array **z,
 		struct cell_array *y = *--stkhd;
 		struct cell_array *dst;
 	
-		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[129] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+		TRC((fn->fptr_dya)(&dst, x, y, fn), L"[128] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
 	
 		release_array(y);
 	
