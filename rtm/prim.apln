@@ -28,7 +28,7 @@ scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴�
 rgt←{⍵}
 
 ⍝ ⊣: Left
-lft←{⍺}
+lft←{⍵} ⎕AMBIV {⍺}
 
 ⍝ ⍴: Shape / Reshape
 reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
