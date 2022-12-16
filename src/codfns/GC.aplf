@@ -77,7 +77,11 @@ GC←{
 		z←(var_scopes,¨var_names)⍵
 		z,¨←'' '->value'[mu[⍵]]
 		z[⍸0=k[,⍵]]←⊂'*--stkhd'
-		z ''
+		dbg←highlight ⊃⍵⌿⍨n[⍵]=¯2
+		chk ←⊂'if (!alpha)'
+		chk,←⊂'	CHK(6, cleanup, ',dbg,');'
+		chk,←⊂''
+		z((0⍴⊂'')chk⊃⍨¯2∊n[⍵])
 	}
 
 	⍝ All code has an initial prefix
@@ -137,9 +141,9 @@ GC←{
 	⍝ A7: Stranded Arrays
 	i←⍸(t[p]=A)∧k[p]=7
 	zz[∪p[i]],←p[i]{
-		vs chk←var_values ⍵
+		vs z←var_values ⍵
 		dbg←highlight ⍺
-		z ←⊂'{'
+		z,←⊂'{'
 		z,←⊂'	struct cell_array *arr, **dat;'
 		z,←⊂''
 		z,←⊂'	unsigned int rnk = 1;'
@@ -162,7 +166,7 @@ GC←{
 	i←⍸t[p]=B
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		(tgt src)chk←var_values ⍵
+		(tgt src)_←var_values ⍵
 		⊂⊂tgt,' = *stkhd++ = retain_cell(',src,');'
 	}⌸i
 
@@ -200,8 +204,8 @@ GC←{
 	⍝ E0: Returning end of line statement
 	i←⍸(t[p]=E)∧k[p]=0
 	zz[p[i]],←{
-		id←⊃⊃_ chk←var_values ⍵
-		z ←⊂'*z = ',id,';'
+		id←⊃⊃_ z←var_values ⍵
+		z,←⊂'*z = ',id,';'
 		z,←(⊂'retain_cell(',id,');')⌿⍨0≠k[⍵]
 		z,←⊂'goto cleanup;'
 		z,⊂''
@@ -211,9 +215,9 @@ GC←{
 	i←⍸(t[p]=E)∧k[p]∊1 2
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		(x fn y)chk←var_values⊢xi fi yi←¯3↑⍵
+		(x fn y)z←var_values⊢xi fi yi←¯3↑⍵
 		dbg←highlight ⍺
-		z ←⊂'{'
+		z,←⊂'{'
 		z,←(⊂'	struct cell_array *x = ',x,';')⌿⍨k[⍺]=2
 		z,←⊂'	struct cell_func *fn = ',fn,';'
 		z,←⊂'	struct cell_array *y = ',y,';'
@@ -239,9 +243,9 @@ GC←{
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
 		tgt←⊃var_refs 1↑⍵
-		(fn src)chk←var_values ¯2↑⍵
+		(fn src)z←var_values ¯2↑⍵
 		dbg←highlight ⍺
-		z ←⊂'{'
+		z,←⊂'{'
 		z,←⊂'	struct cell_array_box *bx = ',tgt,';'
 		z,←⊂'	struct cell_func *fn = ',fn,';'
 		z,←⊂'	struct cell_array *y = ',src,';'
@@ -268,11 +272,11 @@ GC←{
 	i←⍸(t[p]=O)∧k[p]∊1 2
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		(lop op)chk←var_values ⍵
+		(lop op)z←var_values ⍵
 		ltyp←'array' 'func'⊃⍨k[⍺]=2
 		fns←csep 'op->fptr_'∘,¨(⊃ltyp),¨'md'
 		dbg←highlight ⍺
-		z ←⊂'{'
+		z,←⊂'{'
 		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
 		z,←⊂'	struct cell_moper *op = ',op,';'
 		z,←⊂'	struct cell_func *dst;'
@@ -294,12 +298,12 @@ GC←{
 	i←⍸(t[p]=O)∧k[p]∊4 5 7 8
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		(lop op rop)chk←var_values ⍵
+		(lop op rop)z←var_values ⍵
 		ltyp←'array' 'func'⊃⍨k[⍺]∊5 8
 		rtyp←'array' 'func'⊃⍨k[⍺]∊7 8
 		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
 		dbg←highlight ⍺
-		z ←⊂'{'
+		z,←⊂'{'
 		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
 		z,←⊂'	struct cell_doper *op = ',op,';'
 		z,←⊂'	struct cell_',rtyp,' *y = ',rop,';'
@@ -323,9 +327,9 @@ GC←{
 	i←i[∪⍳⍨p[i←⍸t[p]=G]]
 	zz[p[i]],←{
 		0=≢i:0⍴⊂''
-		test←⊃⊃_ chk←var_values ⍵
+		test←⊃⊃_ z←var_values ⍵
 		dbg←highlight ⍵
-		z ←⊂'{'
+		z,←⊂'{'
 		z,←⊂'	struct cell_array *x = ',test,';'
 		z,←⊂''
 		z,←⊂'	TRC(guard_check(x), ',dbg,');'
@@ -370,7 +374,7 @@ GC←{
 	i←⍸(t=F)∧k≠0
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		id←⊃⊃_ chk←var_values ⍵
+		id←⊃⊃var_values ⍵
 		atyp←'array' 'func'⊃⍨k[⍵]∊3 6 9 12 15 18 21
 		ddtyp←'' 'moper' 'doper'⊃⍨0 5 11⍸k[⍵]
 		aatyp←'array' 'func'⊃⍨k[⍵]∊8 9 10 14 15 16 20 21 22
