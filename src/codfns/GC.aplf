@@ -179,7 +179,8 @@ GC←{
 		z,←⊂'	struct cell_',ctyp,' *k;'
 		z,←⊂''
 		call←'mk_',ctyp,'(&k, ',(csep fids),', ',(⍕vc),')'
-		z,←⊂'	CHK(',call,', cleanup, ',dbg,');'
+		z,←⊂'	CHK(',call,', cleanup, '
+		z,←⊂'	    ',dbg,');'
 		z,←⊂''
 		z,← '	k->fv['∘,¨(⍕¨⍳vc),¨'] = retain_cell('∘,¨vids,¨⊂');'
 		z,←(⊂'')⌿⍨1⌊vc
