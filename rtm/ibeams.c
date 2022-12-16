@@ -628,8 +628,10 @@ q_veach_func(struct cell_array **z,
 	size_t count, lc, rc;
 	int err, fl, fr, fy, fx;
 	
-	if (l->type == ARR_SPAN || r->type == ARR_SPAN)
+	if (l->type == ARR_SPAN || r->type == ARR_SPAN) {
+		TRC(99, L"Unexpected SPAN array type");
 		return 99;
+	}
 	
 	oper = self->fv[1];
 
@@ -648,44 +650,33 @@ q_veach_func(struct cell_array **z,
 	if (l->storage == STG_DEVICE) {
 		lbuf = malloc(lc * array_element_size(l));
 		
-		if (lbuf == NULL) {
-			err = 1;
-			goto fail;
-		}
+		CHK(lbuf == NULL, fail, L"Failed to allocate ⍵ buffer");
 		
 		fl = 1;
 		
-		if (err = af_eval(l))
-			goto fail;
-		
-		if (err = af_get_data_ptr(lbuf, l->values))
-			goto fail;
+		CHK(af_eval(l->values), fail, L"af_eval(l->values)");
+		CHK(af_get_data_ptr(lbuf, l->values), fail, 
+		    L"af_get_data_ptr(lbuf, l->values)");
 	}
 	
 	if (r->storage == STG_DEVICE) {
 		rbuf = malloc(rc * array_element_size(r));
 		
-		if (rbuf == NULL) {
-			err = 1;
-			goto fail;
-		}
+		CHK(rbuf == NULL, fail, L"Failed to allocate ⍺ buffer");
 		
 		fr = 1;
 		
-		if (err = af_eval(r))
-			goto fail;
-		
-		if (err = af_get_data_ptr(rbuf, r->values))
-			goto fail;
+		CHK(af_eval(r->values), fail, L"af_eval(r->values)");
+		CHK(af_get_data_ptr(rbuf, r->values), fail, 
+		    L"af_get_data_ptr(rbuf, r->values)");
 	}
 	
-	if (err = mk_array(&t, ARR_NESTED, STG_HOST, 1))
-		return err;
+	CHK(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail,
+	    L"mk_array(&t, ARR_NESTED, STG_HOST, 1)");
 	
 	t->shape[0] = count = lc > rc ? lc : rc;
 	
-	if (err = alloc_array(t))
-		goto fail;
+	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
 	tvals = t->values;
 	
@@ -697,31 +688,29 @@ q_veach_func(struct cell_array **z,
 			x = lvals[i % lc];
 			y = rvals[i % rc];
 			
-			if (err = (oper->fptr_dya)(tvals + i, x, y, oper))
-				goto fail;
+			CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,
+			    L"tvals[i] ← ⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ NST/NST");
 		}
 		
 		goto done;
 	}
 	
 	if (l->type != ARR_NESTED) {
-		if (err = mk_array(&x, l->type, STG_HOST, 0))
-			goto fail;
-		
+		CHK(mk_array(&x, l->type, STG_HOST, 0), fail,
+		    L"mk_array(&x, l->type, STG_HOST, 0)");
+
 		fx = 1;
 		
-		if (err = alloc_array(x))
-			goto fail;
+		CHK(alloc_array(x), fail, L"alloc_array(x)");
 	}
 	
 	if (r->type != ARR_NESTED) {
-		if (err = mk_array(&y, r->type, STG_HOST, 0))
-			goto fail;
+		CHK(mk_array(&y, r->type, STG_HOST, 0), fail,
+		    L"mk_array(&y, r->type, STG_HOST, 0)");
 		
 		fy = 1;
 		
-		if (err = alloc_array(y))
-			goto fail;
+		CHK(alloc_array(y), fail, L"alloc_array(y)");
 	}
 	
 	if (l->type == ARR_NESTED) {
@@ -737,8 +726,8 @@ q_veach_func(struct cell_array **z,
 		x = lvals[i % lc];					\
 		yvals[0] = rvals[i % rc];				\
 									\
-		if (err = (oper->fptr_dya)(tvals + i, x, y, oper))	\
-			goto fail;					\
+		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
+		    L"tvals[i] ← ⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ NST/" L#type);	\
 	}								\
 									\
 	break;								\
@@ -754,8 +743,7 @@ q_veach_func(struct cell_array **z,
 		case ARR_CHAR16:VEACH_LNESTED_LOOP(uint16_t);
 		case ARR_CHAR32:VEACH_LNESTED_LOOP(uint32_t);
 		default:
-			err = 99;
-			goto fail;
+			CHK(99, fail, L"Unknown simple type for ⍵");
 		}
 		
 		goto done;
@@ -774,8 +762,8 @@ q_veach_func(struct cell_array **z,
 		xvals[0] = lvals[i % lc];				\
 		y = rvals[i % rc];					\
 									\
-		if (err = (oper->fptr_dya)(tvals + i, x, y, oper))	\
-			goto fail;					\
+		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
+		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " L#type L"/NST");	\
 	}								\
 									\
 	break;								\
@@ -791,8 +779,7 @@ q_veach_func(struct cell_array **z,
 		case ARR_CHAR16:VEACH_RNESTED_LOOP(uint16_t);
 		case ARR_CHAR32:VEACH_RNESTED_LOOP(uint32_t);
 		default:
-			err = 99;
-			goto fail;
+			CHK(99, fail, L"Unknown simple type for ⍺");
 		}
 		
 		goto done;
@@ -811,17 +798,18 @@ q_veach_func(struct cell_array **z,
 		xvals[0] = lvals[i % lc];				\
 		yvals[0] = rvals[i % rc];				\
 									\
-		if (err = (oper->fptr_dya)(tvals + i, x, y, oper))	\
-			goto fail;					\
+		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
+		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " 			\
+		    L#ltype L"/" L#rtype);				\
 	}								\
 }
 
 	SIMPLE_SWITCH(VEACH_LOOP,VEACH_LOOP,VEACH_LOOP,VEACH_LOOP,,
-	    l->type, r->type, {err = 99; goto fail;})
+	    l->type, r->type, 
+	    CHK(99, fail, L"Unknown simple type combo"))
 	
 done:
-	if (err = squeeze_array(t))
-		goto fail;
+	CHK(squeeze_array(t), fail, L"squeeze_array(t)");
 	
 	*z = t;
 
