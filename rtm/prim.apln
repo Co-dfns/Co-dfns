@@ -114,9 +114,8 @@ map←{⍺ ⍺⍺ map_dyadic ⍵}
 ⍝ ⌿: Reduce First | N-wise Reduce First
 rdf←{op←⍺⍺¨ 
 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s
-	0≡≢,z:zs⍴⊃0⍴⍵ ⋄ 0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵
-	z←(c-1)⌷⍵ ⋄ (⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵
-	z
+	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵
+	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
 }
 
 ⍝ ⌿⌿: Replicate First
