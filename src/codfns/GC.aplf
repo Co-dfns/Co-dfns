@@ -77,7 +77,8 @@ GC←{
 		z←(var_scopes,¨var_names)⍵
 		z,¨←'' '->value'[mu[⍵]]
 		z[⍸0=k[,⍵]]←⊂'*--stkhd'
-	z}
+		z ''
+	}
 
 	⍝ All code has an initial prefix
 	pref ←⊂'#include "codfns.h"'
@@ -136,7 +137,7 @@ GC←{
 	⍝ A7: Stranded Arrays
 	i←⍸(t[p]=A)∧k[p]=7
 	zz[∪p[i]],←p[i]{
-		vs←var_values ⍵
+		vs chk←var_values ⍵
 		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←⊂'	struct cell_array *arr, **dat;'
@@ -161,7 +162,7 @@ GC←{
 	i←⍸t[p]=B
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		tgt src←var_values ⍵
+		(tgt src)chk←var_values ⍵
 		⊂⊂tgt,' = *stkhd++ = retain_cell(',src,');'
 	}⌸i
 
@@ -199,7 +200,7 @@ GC←{
 	⍝ E0: Returning end of line statement
 	i←⍸(t[p]=E)∧k[p]=0
 	zz[p[i]],←{
-		id←⊃var_values ⍵
+		id←⊃⊃_ chk←var_values ⍵
 		z ←⊂'*z = ',id,';'
 		z,←(⊂'retain_cell(',id,');')⌿⍨0≠k[⍵]
 		z,←⊂'goto cleanup;'
@@ -210,7 +211,7 @@ GC←{
 	i←⍸(t[p]=E)∧k[p]∊1 2
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		x fn y←var_values⊢xi fi yi←¯3↑⍵
+		(x fn y)chk←var_values⊢xi fi yi←¯3↑⍵
 		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←(⊂'	struct cell_array *x = ',x,';')⌿⍨k[⍺]=2
@@ -238,7 +239,7 @@ GC←{
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
 		tgt←⊃var_refs 1↑⍵
-		fn src←var_values ¯2↑⍵
+		(fn src)chk←var_values ¯2↑⍵
 		dbg←highlight ⍺
 		z ←⊂'{'
 		z,←⊂'	struct cell_array_box *bx = ',tgt,';'
@@ -267,7 +268,7 @@ GC←{
 	i←⍸(t[p]=O)∧k[p]∊1 2
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		lop op←var_values ⍵
+		(lop op)chk←var_values ⍵
 		ltyp←'array' 'func'⊃⍨k[⍺]=2
 		fns←csep 'op->fptr_'∘,¨(⊃ltyp),¨'md'
 		dbg←highlight ⍺
@@ -293,7 +294,7 @@ GC←{
 	i←⍸(t[p]=O)∧k[p]∊4 5 7 8
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		lop op rop←var_values ⍵
+		(lop op rop)chk←var_values ⍵
 		ltyp←'array' 'func'⊃⍨k[⍺]∊5 8
 		rtyp←'array' 'func'⊃⍨k[⍺]∊7 8
 		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
@@ -322,7 +323,7 @@ GC←{
 	i←i[∪⍳⍨p[i←⍸t[p]=G]]
 	zz[p[i]],←{
 		0=≢i:0⍴⊂''
-		test←⊃var_values ⍵
+		test←⊃⊃_ chk←var_values ⍵
 		dbg←highlight ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_array *x = ',test,';'
@@ -369,7 +370,7 @@ GC←{
 	i←⍸(t=F)∧k≠0
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		id←⊃var_values ⍵
+		id←⊃⊃_ chk←var_values ⍵
 		atyp←'array' 'func'⊃⍨k[⍵]∊3 6 9 12 15 18 21
 		ddtyp←'' 'moper' 'doper'⊃⍨0 5 11⍸k[⍵]
 		aatyp←'array' 'func'⊃⍨k[⍵]∊8 9 10 14 15 16 20 21 22
