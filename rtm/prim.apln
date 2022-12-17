@@ -45,7 +45,7 @@ depth←{
 eqv←depth ⎕AMBIV ('same_ibeam'⌶)
 
 ⍝ ≢: Tally / Not Same
-nqv←{⊃⍴⍵} ⎕AMBIV {⎕SIGNAL 16}
+nqv←{⊃⍴⍵} ⎕AMBIV ('nqv_ibeam'⌶)
 
 ⍝ ⌷: Materialize | Squad indexing
 materialize←{⎕SIGNAL 16}

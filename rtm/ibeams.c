@@ -540,6 +540,26 @@ done:
 struct cell_func same_closure = {CELL_FUNC, 1, error_syntax_mon, same_func, 0};
 struct cell_func *same_ibeam = &same_closure;
 
+int
+nqv_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	int8_t is_same;
+	
+	CHK(array_is_same(&is_same, l, r), done, 
+	    L"array_is_same(&is_same, l, r)");
+	
+	CHK(mk_scalar_bool(z, !is_same), done, 
+	    L"mk_scalar_bool(z, !is_same)");
+	
+done:
+	return err;
+}
+
+struct cell_func nqv_closure = {CELL_FUNC, 1, error_syntax_mon, nqv_func, 0};
+struct cell_func *nqv_ibeam = &nqv_closure;
+
 #define NOOP(zt, lt, rt)
 
 #define SIMPLE_SWITCH(LOOP, CMPX_LOOP, LCMPX_LOOP, RCMPX_LOOP, zt, lt, rt, def_expr)			\
