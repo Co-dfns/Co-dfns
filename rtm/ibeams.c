@@ -904,8 +904,7 @@ struct cell_func has_nat_vals_closure = {
 struct cell_func *has_nat_vals_ibeam = &has_nat_vals_closure;
 
 int
-index_gen_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+index_gen_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *t;
 	size_t dim, tile;
@@ -913,32 +912,35 @@ index_gen_func(struct cell_array **z,
 	af_dtype aftype;
 	int err;
 	
-	if (err = get_scalar_u64(&dim, r))
-		return err;
+	err = 0;
+	t = NULL;
+	
+	CHK(get_scalar_u64(&dim, r), fail,
+	    L"get_scalar_u64(&dim, r)");
 	
 	ztype = closest_numeric_array_type((double)dim);
 	
-	if (err = mk_array(&t, ztype, STG_DEVICE, 1))
-		return err;
+	CHK(mk_array(&t, ztype, STG_DEVICE, 1), fail,
+	    L"mk_array(&t, ztype, STG_DEVICE, 1)");
 	
 	t->shape[0] = dim;
 	tile = 1;
 	aftype = array_af_dtype(t);
 	
-	if (err = af_iota(&t->values, 1, &dim, 1, &tile, aftype)) {
-		release_array(t);
-		return err;
-	}
-
+	CHKAF(af_iota(&t->values, 1, &dim, 1, &tile, aftype), fail);
+	
 	*z = t;
 	
 	return 0;
+
+fail:
+	release_array(t);
+	
+	return err;
 }
 
-DEF_MON(index_gen_func_mon, index_gen_func)
-
 struct cell_func index_gen_closure = {
-	CELL_FUNC, 1, index_gen_func_mon, index_gen_func, 0
+	CELL_FUNC, 1, index_gen_func, error_syntax_dya, 0
 };
 struct cell_func *index_gen_vec = &index_gen_closure;
 
