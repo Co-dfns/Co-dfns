@@ -527,15 +527,17 @@ same_func(struct cell_array **z,
 	int err;
 	int8_t is_same;
 	
-	if (err = array_is_same(&is_same, l, r))
-		return err;
+	CHK(array_is_same(&is_same, l, r), done, 
+	    L"array_is_same(&is_same, l, r)");
 	
-	return mk_scalar_bool(z, is_same);
+	CHK(mk_scalar_bool(z, is_same), done, 
+	    L"mk_scalar_bool(z, is_same)");
+	
+done:
+	return err;
 }
 
-DEF_MON(same_func_mon, same_func)
-
-struct cell_func same_closure = {CELL_FUNC, 1, same_func_mon, same_func, 0};
+struct cell_func same_closure = {CELL_FUNC, 1, error_syntax_mon, same_func, 0};
 struct cell_func *same_ibeam = &same_closure;
 
 #define NOOP(zt, lt, rt)
