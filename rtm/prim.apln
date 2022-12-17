@@ -114,7 +114,7 @@ noteq←'neq_vec_ibeam'⌶ scalar
 neq←firstocc ⎕AMBIV noteq
 
 ⍝ ~: Not | Without
-notscl←{⎕SIGNAL 16}
+notscl←{11≠⎕DR squeeze ⍵:⎕SIGNAL 11 ⋄ 'not_vec_ibeam'⌶ ⍵}
 without←{⎕SIGNAL 16}
 not←notscl ⎕AMBIV without
 
