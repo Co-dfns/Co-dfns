@@ -118,7 +118,7 @@ noteq←'neq_vec_ibeam'⌶ scalar
 neq←firstocc ⎕AMBIV noteq
 
 ⍝ ~: Not | Without
-notscl←{11≠⎕DR squeeze ⍵:⎕SIGNAL 11 ⋄ 'not_vec_ibeam'⌶ ⍵}
+notscl←{11≡⎕DR squeeze ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
 without←{⎕SIGNAL 16}
 not←notscl ⎕AMBIV without
 
@@ -144,10 +144,10 @@ reduce←{
 	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
 }
 nwreduce←{op←⍺⍺¨
-	~is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
+	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
 	⎕SIGNAL 16
 }
-rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≠≢,⍺⊣0:⎕SIGNAL 5
+rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5
 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵
 }
 
