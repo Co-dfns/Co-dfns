@@ -82,7 +82,7 @@ q_dr_func(struct cell_array **z,
 		val = 323;
 		break;
 	case ARR_BOOL:
-		val = 83;
+		val = 11;
 		break;
 	case ARR_SINT:
 		val = 163;
