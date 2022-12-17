@@ -36,3 +36,24 @@ debug_trace(int err, const char *file, int line, const char *func,
 	
 	debug_info = tmp;
 }
+
+wchar_t *
+get_aferr_msg(int err)
+{
+	const char *msg;
+	wchar_t *buf;
+	size_t len;
+	
+	msg = af_err_to_string(err);
+	len = strlen(msg);
+	
+	if (!(buf = calloc(len + 1, sizeof(wchar_t))))
+		return NULL;
+	
+	for (size_t i = 0; i < len; i++)
+		buf[i] = msg[i];
+	
+	buf[len] = L'\0';
+	
+	return buf;
+}

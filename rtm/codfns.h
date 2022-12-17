@@ -131,6 +131,14 @@ if (0 < (err = (expr))) {					\
 	goto fail;						\
 }								\
 
+#define CHKAF(expr, fail)					\
+if (0 < (err = (expr))) {					\
+	wchar_t *msg = get_aferr_msg(err);			\
+	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
+	free(msg);						\
+	goto fail;						\
+}								\
+
 #define TRC(expr, msg)						\
 if (0 < (err = (expr))) {					\
 	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\

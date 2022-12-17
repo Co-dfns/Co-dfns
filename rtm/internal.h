@@ -2,6 +2,8 @@
 
 #include "codfns.h"
 
+wchar_t *get_aferr_msg(int);
+
 #define type_pair(src, dst) ((src * ARR_MAX) + dst)
 
 enum array_type array_max_type(enum array_type, enum array_type);
