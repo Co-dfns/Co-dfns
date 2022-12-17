@@ -2027,3 +2027,62 @@ not_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 
 struct cell_func not_closure = {CELL_FUNC, 1, not_func, error_syntax_dya, 0};
 struct cell_func *not_vec_ibeam = &not_closure;
+
+int
+abs_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = r->type;
+	err = 0;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		CHK(af_abs(&t->values, r->values), done, L"|⍵ ⍝ DEVICE");
+		break;
+	case STG_HOST:
+		CHK(alloc_array(t), done, L"alloc_array(t)");
+		size_t count = array_values_count(t);
+
+#define ABS_LOOP(abs, type) {			\
+	type *tvals = t->values;		\
+	type *rvals = r->values;		\
+						\
+	for (size_t i = 0; i < count; i++)	\
+		tvals[i] = abs(rvals[i]);	\
+}						\
+
+		switch (r->type) {
+		case ARR_BOOL:
+			ABS_LOOP(abs, int8_t);
+			break;
+		case ARR_SINT:
+			ABS_LOOP(abs, int16_t);
+			break;
+		case ARR_INT:
+			ABS_LOOP(abs, int32_t);
+			break;
+		case ARR_DBL:
+			ABS_LOOP(fabs, double);
+			break;
+		default:
+			TRC(99, L"Expected non-complex numeric type");
+		}
+		
+		break;
+	default:
+		TRC(99, L"Unknown storage type");
+	}
+	
+done:
+	return err;
+}
+
+int
+abs_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, abs_values);
+}
+
+struct cell_func abs_closure = {CELL_FUNC, 1, abs_func, error_syntax_dya, 0};
+struct cell_func *abs_ibeam = &abs_closure;

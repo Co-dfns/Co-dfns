@@ -97,7 +97,11 @@ div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 exp←'exp_vec_ibeam'⌶ ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
 
 ⍝ |: Absolute Value | Residue
-absolute←{⎕SIGNAL 16}
+absolute←{
+	0≡is_numeric ⍵:⎕SIGNAL 11
+	1289≡⎕DR ⍵:⎕SIGNAL 11
+	'abs_ibeam'⌶ ⍵
+}
 residue←{⎕SIGNAL 16}
 res←absolute ⎕AMBIV residue
 
