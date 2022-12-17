@@ -920,6 +920,9 @@ index_gen_func(struct cell_array **z, struct cell_array *r, struct cell_func *se
 	
 	ztype = closest_numeric_array_type((double)dim);
 	
+	if (ztype == ARR_BOOL)
+		ztype = ARR_SINT;
+	
 	CHK(mk_array(&t, ztype, STG_DEVICE, 1), fail,
 	    L"mk_array(&t, ztype, STG_DEVICE, 1)");
 	
