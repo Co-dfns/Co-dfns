@@ -1886,3 +1886,82 @@ lth_func(struct cell_array **z,
 
 struct cell_func lth_closure = {CELL_FUNC, 1, error_syntax_mon, lth_func, 0};
 struct cell_func *lth_vec_ibeam = &lth_closure;
+
+int
+neq_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = ARR_BOOL;
+	
+	return 0;
+}
+
+int
+neq_device(af_array *z, af_array l, af_array r)
+{
+	return af_neq(z, l, r, 0);
+}
+
+int
+neq_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+#define NEQ_LOCALS(ztype, ltype, rtype) \
+	ztype *tvals = t->values;	\
+	ltype *lvals = l->values;	\
+	rtype *rvals = r->values;
+	
+#define NEQ_LOOP(ztype, ltype, rtype) {					\
+	NEQ_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++)				\
+		tvals[i] = (ztype)lvals[i % lc] != (ztype)rvals[i % rc];\
+}
+
+#define NEQ_CMPX(ztype, ltype, rtype) {					\
+	NEQ_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {				\
+		tvals[i] = lvals[i % lc].real != rvals[i % rc].real	\
+		    || lvals[i % lc].imag != rvals[i % rc].imag;	\
+	}								\
+}
+		
+#define NEQ_LCMPX(ztype, ltype, rtype) {			\
+	NEQ_LOCALS(ztype, ltype, rtype)				\
+								\
+	for (size_t i = 0; i < count; i++) {			\
+		tvals[i] = lvals[i % lc].real != rvals[i % rc]	\
+		    || lvals[i % lc].imag != 0;			\
+	}							\
+}
+	
+#define NEQ_RCMPX(ztype, ltype, rtype) {			\
+	NEQ_LOCALS(ztype, ltype, rtype)				\
+								\
+	for (size_t i = 0; i < count; i++) {			\
+		tvals[i] = lvals[i % lc] != rvals[i % rc].real	\
+		    || rvals[i % rc].imag != 0;			\
+	}							\
+}
+
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX,
+		    int8_t, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+neq_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, neq_type, neq_device, neq_host);
+}
+
+struct cell_func neq_closure = {CELL_FUNC, 1, error_syntax_mon, neq_func, 0};
+struct cell_func *neq_vec_ibeam = &neq_closure;
