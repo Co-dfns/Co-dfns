@@ -471,8 +471,8 @@ has_natural_values(int *res, struct cell_array *arr)
 	size_t count;
 	int err, is_int;
 	
-	if (err = has_integer_values(&is_int, arr))
-		return err;
+	CHK(has_integer_values(&is_int, arr), done,
+	    L"has_integer_values(&is_int, arr)");
 	
 	if (!is_int) {
 		*res = 0;
@@ -483,14 +483,9 @@ has_natural_values(int *res, struct cell_array *arr)
 		af_array t;
 		double real, imag;
 		
-		if (err = af_sign(&t, arr->values))
-			return err;
-		
-		if (err = af_any_true_all(&real, &imag, t))
-			return err;
-		
-		if (err = af_release_array(t))
-			return err;
+		CHKAF(af_sign(&t, arr->values), done);
+		CHKAF(af_any_true_all(&real, &imag, t), done);
+		CHKAF(af_release_array(t), done);
 		
 		*res = !real;
 
@@ -517,12 +512,13 @@ has_natural_values(int *res, struct cell_array *arr)
 	case ARR_INT:NATURAL_CASE(int32_t)
 	case ARR_DBL:NATURAL_CASE(double)
 	default:
-		return 99;
+		TRC(99, L"Unexpected array type");
 	}
 	
 	*res = 1;
-	
-	return 0;
+
+done:	
+	return err;
 }
 
 enum array_type
