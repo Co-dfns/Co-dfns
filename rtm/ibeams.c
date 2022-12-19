@@ -143,6 +143,7 @@ shape_func(struct cell_array **z,
 	int err;
 	
 	type = ARR_BOOL;
+	t = NULL;
 	
 	for (size_t i = 0; i < r->rank; i++) {
 		size_t dim = r->shape[i];
@@ -165,19 +166,16 @@ shape_func(struct cell_array **z,
 			continue;
 		}
 		
-		return 10;
+		CHK(10, fail, L"Shape exceeds DBL range");
 	}
 	
-	if (err = mk_array(&t, type, STG_HOST, 1))
-		return err;
+	CHK(mk_array(&t, type, STG_HOST, 1), fail,
+	    L"mk_array(&t, type, STG_HOST, 1)");
 	
 	t->shape[0] = r->rank;
 	
-	if (err = alloc_array(t)) {
-		release_array(t);
-		return err;
-	}
-
+	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	
 #define SHAPE_CASE(vt) {			\
 	vt *shp = t->values;			\
 						\
@@ -193,13 +191,16 @@ shape_func(struct cell_array **z,
 	case ARR_INT:SHAPE_CASE(int32_t);
 	case ARR_DBL:SHAPE_CASE(double);
 	default:
-		release_array(t);
-		return 99;
+		CHK(99, fail, L"Unexpected type");
 	}
 	
 	*z = t;
 	
 	return 0;
+
+fail:
+	release_array(t);
+	return err;
 }
 
 DEF_MON(shape_func_mon, shape_func)
