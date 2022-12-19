@@ -167,7 +167,11 @@ GC←{
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
 		(tgt src)_←var_values ⍵
-		⊂⊂tgt,' = *stkhd++ = retain_cell(',src,');'
+		z ←⊂tgt,' = *stkhd++ = ',src,';'
+		z,←(⊂'retain_cell(',src,');')⌿⍨k[1⊃⍵]≠0
+		z,←⊂'retain_cell(',tgt,');'
+		⊂z,⊂''
+		
 	}⌸i
 
 	⍝ C: Closures for functions
