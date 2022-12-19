@@ -5,11 +5,11 @@ TT←{
 	r←I@{t[⍵]≠F}⍣≡⍨p
 
 	⍝ Mark mutated bindings 
-	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t=V)∧(lx∊0 1)∧n<0;] ⋄ mu←(≢i)⍴0
+	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t=V)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(tk[p;]∧.=E 4)∨(tk[p;]∧.=E 6)∧(tk←t,⍪k)[p[p];]∧.=E 4
-	ci←p[fi←⍸(t=F)∧k≠0]
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
-	mu←msk⍀1@{rni∊⍥↓fi[ci⍳p[j]],⍪n[j←i⌿⍨⍵∧t[p[i]]=C]}⍣≡mu
+	ci←p[fi←⍸(t=F)∧k≠0]
+	mu←msk⍀1@{(↓rni)∊⊃⍪⌿{n[⍵],¨⍨fi⌿⍨ci=p[⍵]}¨i⌿⍨⍵∧t[p[i]]=C}⍣≡mu
 
 	⍝ Delete ⍺← forms for dyadic specializations
 	msk←0@(p⌿⍨(≠p)∧(t=P)∧(n=¯2)∧(t[p]=B)∧k[r]∊3+2×⍳7)⊢(≢p)⍴1
