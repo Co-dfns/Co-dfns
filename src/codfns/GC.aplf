@@ -135,59 +135,55 @@ GC←{
 		z,←⊂'	CHK(fill_array(arr, dat), cleanup, ',dbg,');'
 		z,←⊂''
 		z,←⊂'	*stkhd++ = arr;'
-		z,⊂'}'
+		z,←⊂'}'
+		z,⊂''
 	}¨i
 	
 	⍝ A7: Stranded Arrays
-	i←⍸(t[p]=A)∧k[p]=7
-	zz[∪p[i]],←p[i]{
-		vs z←var_values ⍵
-		dbg←highlight ⍺
-		z,←⊂'{'
+	i←⍸(t=A)∧k=7
+	zz[i],←{
+		dbg←highlight ⍵
+		z ←⊂'{'
 		z,←⊂'	struct cell_array *arr, **dat;'
 		z,←⊂''
 		z,←⊂'	unsigned int rnk = 1;'
-		z,←⊂'	size_t shp[] = {',(⍕≢vs),'};'
+		z,←⊂'	size_t shp[',(⍕n[⍵]),'];'
 		z,←⊂''
-		z,←⊂'	CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, ',dbg,');'
-		z,←⊂'	arr->shape[0] = ',(⍕≢vs),';'
+		z,←⊂'	CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, '
+		z,←⊂'	    ',dbg,');'
+		z,←⊂'	arr->shape[0] = ',(⍕n[⍵]),';'
 		z,←⊂'	dat = arr->values;'
 		z,←⊂''
-		z,←vs{'	dat[',(⍕⍵),'] = ',⍺,';'}¨⍳≢⍵
-		z,←⊂''
-		z,←{'	retain_cell(',⍵,');'}¨vs⌿⍨k[⍵]≠0
+		z,←{'	dat[',(⍕⍵),'] = *--stkhd;'}¨⍳n[⍵]
 		z,←⊂''
 		z,←⊂'	*stkhd++ = arr;'
 		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
+		z,⊂''
+	}¨i
 
 	⍝ B: Function bindings
-	i←⍸t[p]=B
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		(tgt src)_←var_values ⍵
-		z ←⊂tgt,' = *stkhd++ = ',src,';'
-		z,←(⊂'retain_cell(',src,');')⌿⍨k[1⊃⍵]≠0
-		z,←⊂'retain_cell(',tgt,');'
-		⊂z,⊂''
+	i←⍸t=B
+	zz[i],←{
+		tgt _←var_values ⍵
+		z ←⊂tgt,' = retain_cell(stkhd[-1]);'
+		z,⊂''
 		
-	}⌸i
+	}¨i
 
 	⍝ C: Closures for functions
 	i←⍸t[p]=C
 	zz[∪p[i]],←p[i]{
 		0=≢⍵:⊂0⍴⊂''
-		ctyp←'func' 'func' 'func' 'moper' 'doper'⊃⍨k[⍺]
+		ctyp←k[⍺]⊃'func' 'func' 'func' 'moper' 'doper'
 		vc←(≢⍵)-fc←0 1 2 4 8[k[⍺]]
 		fs vs←{(fc↑⍵)(fc↓⍵)}⍵
 		fids←var_refs fs
 		vids←var_refs vs[⍋n[vs]]
 		dbg←highlight ⍺
+		call←'mk_',ctyp,'(&k, ',(csep fids),', ',(⍕vc),')'
 		z ←⊂'{'
 		z,←⊂'	struct cell_',ctyp,' *k;'
 		z,←⊂''
-		call←'mk_',ctyp,'(&k, ',(csep fids),', ',(⍕vc),')'
 		z,←⊂'	CHK(',call,', cleanup, '
 		z,←⊂'	    ',dbg,');'
 		z,←⊂''
@@ -206,145 +202,142 @@ GC←{
 	}¨i
 
 	⍝ E0: Returning end of line statement
-	i←⍸(t[p]=E)∧k[p]=0
-	zz[p[i]],←{
-		id←⊃⊃_ z←var_values ⍵
-		z,←⊂'*z = ',id,';'
-		z,←(⊂'retain_cell(',id,');')⌿⍨0≠k[⍵]
+	i←⍸(t=E)∧k=0
+	zz[i],←{
+		z ←⊂'*z = *--stkhd;'
 		z,←⊂'goto cleanup;'
 		z,⊂''
 	}¨i
 	
-	⍝ E1/2: Expression application
-	i←⍸(t[p]=E)∧k[p]∊1 2
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		(x fn y)z←var_values⊢xi fi yi←¯3↑⍵
-		dbg←highlight ⍺
-		z,←⊂'{'
-		z,←(⊂'	struct cell_array *x = ',x,';')⌿⍨k[⍺]=2
-		z,←⊂'	struct cell_func *fn = ',fn,';'
-		z,←⊂'	struct cell_array *y = ',y,';'
+	⍝ E1: Monadic expression application
+	i←⍸(t=E)∧k=1
+	zz[i],←{
+		dbg←highlight ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_func *fn = stkhd[-1];'
+		z,←⊂'	struct cell_array *y = stkhd[-2];'
 		z,←⊂'	struct cell_array *dst;'
 		z,←⊂''
-		z,←(⊂'	TRC((fn->fptr_mon)(&dst, y, fn), ',dbg,');')⌿⍨k[⍺]=1
-		z,←(⊂'	TRC((fn->fptr_dya)(&dst, x, y, fn), ',dbg,');')⌿⍨k[⍺]=2
-		z,←(⊂'')⌿⍨0∊k[⍵]
-		z,←(⊂'	release_array(x);')⌿⍨(0=k[xi])∧k[⍺]=2
-		z,←(⊂'	release_func(fn);')⌿⍨0=k[fi]
-		z,←(⊂'	release_array(y);')⌿⍨0=k[yi]
+		z,←⊂'	CHK((fn->fptr_mon)(&dst, y, fn), cleanup,'
+		z,←⊂'	    ',dbg,');'
 		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
+		z,←⊂'	release_func(fn);'
+		z,←⊂'	release_array(y);'
 		z,←⊂''
+		z,←⊂'	stkhd -= 2;'
 		z,←⊂'	*stkhd++ = dst;'
 		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
+		z,⊂''
+	}¨i
 	
-	⍝ E4: Modified Assignment
-	i←⍸(t[p]=E)∧k[p]=4
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		tgt←⊃var_refs 1↑⍵
-		(fn src)z←var_values ¯2↑⍵
-		dbg←highlight ⍺
-		z,←⊂'{'
-		z,←⊂'	struct cell_array_box *bx = ',tgt,';'
-		z,←⊂'	struct cell_func *fn = ',fn,';'
-		z,←⊂'	struct cell_array *y = ',src,';'
-		z,←⊂'	struct cell_array *x = bx->value;'
+	⍝ E2: Dyadic expression application
+	i←⍸(t=E)∧k=2
+	zz[i],←{
+		dbg←highlight ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x = stkhd[-1];'
+		z,←⊂'	struct cell_func *fn = stkhd[-2];'
+		z,←⊂'	struct cell_array *y = stkhd[-3];'
+		z,←⊂'	struct cell_array *dst;'
 		z,←⊂''
-		z,←⊂'	TRC((fn->fptr_dya)(&bx->value, x, y, fn), ',dbg,');'
-		z,←(⊂'')⌿⍨0=k[⍵[1]]
-		z,←('	release_func(fn);')⌿⍨0=k[⍵[1]]
-		z,←⊂''
-		z,←⊂'	if (err) {'
-		z,←(⊂'		release_array(y);')⌿⍨0=k[⍵[1]]
-		z,←⊂'		goto cleanup;'
-		z,←⊂'	}'
+		z,←⊂'	CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,'
+		z,←⊂'	    ',dbg,');'
 		z,←⊂''
 		z,←⊂'	release_array(x);'
+		z,←⊂'	release_func(fn);'
+		z,←⊂'	release_array(y);'
 		z,←⊂''
-		z,←(⊂'	*stkhd++ = y;')⌿⍨0=k[⍵[2]]
-		z,←(⊂'	*stkhd++ = retain_cell(y);')⌿⍨0≠k[⍵[2]]
+		z,←⊂'	stkhd -= 3;'
+		z,←⊂'	*stkhd++ = dst;'
 		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
+		z,⊂''
+	}¨i
+	
+	⍝ E4: Modified Assignment
+	i←⍸(t=E)∧k=4
+	zz[i],←{
+		dbg←highlight ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_array_box *bx = *--stkhd;'
+		z,←⊂'	struct cell_func *fn = stkhd[-1];'
+		z,←⊂'	struct cell_array *y = stkhd[-2];'
+		z,←⊂'	struct cell_array *x = bx->value;'
+		z,←⊂''
+		z,←⊂'	CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,'
+		z,←⊂'	    ',dbg,');'
+		z,←⊂''
+		z,←⊂'	release_array(*--stkhd);'
+		z,←⊂'	release_array(x);'
+		z,←⊂'}'
+		z,⊂''
+	}¨i
 	
 	⍝ Om: Monadic operands
-	i←⍸(t[p]=O)∧k[p]∊1 2
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		(lop op)z←var_values ⍵
-		ltyp←'array' 'func'⊃⍨k[⍺]=2
+	i←⍸(t=O)∧k∊1 2
+	zz[i],←{
+		ltyp←'array' 'func'⊃⍨k[⍵]=2
 		fns←csep 'op->fptr_'∘,¨(⊃ltyp),¨'md'
-		dbg←highlight ⍺
-		z,←⊂'{'
-		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
-		z,←⊂'	struct cell_moper *op = ',op,';'
+		dbg←highlight ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_',ltyp,' *x = stkhd[-1];'
+		z,←⊂'	struct cell_moper *op = stkhd[-2];'
 		z,←⊂'	struct cell_func *dst;'
 		z,←⊂''
-		z,←⊂'	TRC(apply_mop(&dst, op, ',fns,', x), ',dbg,');'
+		z,←⊂'	CHK(apply_mop(&dst, op, ',fns,', x), cleanup,'
+		z,←⊂'	    ',dbg,');'
 		z,←⊂''
-		z,←(⊂'	release_',ltyp,'(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_moper(op);')⌿⍨0=k[⍵[1]]
-		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
+		z,←⊂'	release_',ltyp,'(x);'
+		z,←⊂'	release_moper(op);'
+		z,←⊂'	stkhd -= 2;'
 		z,←⊂''
 		z,←⊂'	*stkhd++ = dst;'
 		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
+		z,⊂''
+	}¨i
 	
 	⍝ Od: Dyadic operands
-	i←⍸(t[p]=O)∧k[p]∊4 5 7 8
-	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
-		(lop op rop)z←var_values ⍵
-		ltyp←'array' 'func'⊃⍨k[⍺]∊5 8
-		rtyp←'array' 'func'⊃⍨k[⍺]∊7 8
+	i←⍸(t=O)∧k∊4 5 7 8
+	zz[i],←{
+		ltyp←'array' 'func'⊃⍨k[⍵]∊5 8
+		rtyp←'array' 'func'⊃⍨k[⍵]∊7 8
 		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
-		dbg←highlight ⍺
-		z,←⊂'{'
-		z,←⊂'	struct cell_',ltyp,' *x = ',lop,';'
-		z,←⊂'	struct cell_doper *op = ',op,';'
-		z,←⊂'	struct cell_',rtyp,' *y = ',rop,';'
+		dbg←highlight ⍵
+		z ←⊂'{'
+		z,←⊂'	struct cell_',ltyp,' *x = stkhd[-1];'
+		z,←⊂'	struct cell_doper *op = stkhd[-2];'
+		z,←⊂'	struct cell_',rtyp,' *y = stkhd[-3];'
 		z,←⊂'	struct cell_func *dst;'
 		z,←⊂''
-		z,←⊂'	TRC(apply_dop(&dst, op, ',fns,', x, y), ',dbg,');'
+		z,←⊂'	CHK(apply_dop(&dst, op, ',fns,', x, y), cleanup,'
+		z,←⊂'	    ',dbg,');'
 		z,←⊂''
-		z,←(⊂'	release_',ltyp,'(x);')⌿⍨0=k[⍵[0]]
-		z,←(⊂'	release_doper(op);')⌿⍨0=k[⍵[1]]
-		z,←(⊂'	release_',rtyp,'(y);')⌿⍨0=k[⍵[2]]
+		z,←⊂'	release_',ltyp,'(x);'
+		z,←⊂'	release_doper(op);'
+		z,←⊂'	release_',rtyp,'(y);'
 		z,←⊂''
-		z,←⊂'	if (err)'
-		z,←⊂'		goto cleanup;'
-		z,←⊂''
+		z,←⊂'	stkhd -= 3;'
 		z,←⊂'	*stkhd++ = dst;'
 		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
+		z,⊂''
+	}¨i
 
 	⍝ G0: Value guards
-	i←i[∪⍳⍨p[i←⍸t[p]=G]]
-	zz[p[i]],←{
+	i←⍸t=G
+	zz[i],←{
 		0=≢i:0⍴⊂''
-		test←⊃⊃_ z←var_values ⍵
-		dbg←highlight ⍵
-		z,←⊂'{'
-		z,←⊂'	struct cell_array *x = ',test,';'
+		dbg←highlight n[⍵]
+		z ←⊂'{'
+		z,←⊂'	struct cell_array *x = *--stkhd;'
 		z,←⊂''
 		z,←⊂'	TRC(guard_check(x), ',dbg,');'
 		z,←⊂''
-		z,←(⊂'	release_array(x);')⌿⍨0=k[⍵]
+		z,←⊂'	release_array(x);'
 		z,←⊂''
 		z,←⊂'	if (err > 0)'
 		z,←⊂'		goto cleanup;'
 		z,←⊂''
 		z,←⊂'	if (!err) {'
-		z,← '		'∘,¨⊃⍪⌿1↓(p[⍵]=p)⌿zz
+		z,← '		'∘,¨⊃⍪⌿(⍵=p)⌿zz
 		z,←⊂'		err = -1;'
 		z,←⊂'		goto cleanup;'
 		z,←⊂'	}'

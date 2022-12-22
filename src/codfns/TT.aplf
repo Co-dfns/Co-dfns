@@ -26,19 +26,24 @@ TT←{
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
-
+	
+	⍝ Count children for E6, and A7 nodes
+	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=A)∧k[p]=7)∨(t[p]=E)∧k[p]=6
+	
 	⍝ Lift guard tests
-	x←¯1+i←⍸(t[p]=G)∧(¯1⌽t=G)∧t≠V
-	p t k n lx mu r pos end⌿⍨←⊂m←2@x⊢1⍴⍨≢p
-	p r i x I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ j←x-1 ⋄ p←(j@i⊢⍳≢p)[p]
-	t k n lx mu r pos end{⍺[⍵]@j⊢⍺}←⊂i ⋄ t k n(⊣@i⍨)←V 0 j
-
+	p[i]←p[x←p[i←⍸(≠p)∧t[p]=G]] ⋄ ix←i,x ⋄ xi←x,i ⋄ p←(xi@ix⊢⍳≢p)[p]
+	t[ix]←t[xi] ⋄ k[ix]←k[xi] ⋄ n[x]←n[i] ⋄ n[i]←x ⋄ lx[xi]←lx[ix]
+	mu[ix]←mu[xi] ⋄ pos[xi]←pos[ix] ⋄ end[xi]←end[ix]
+	
+	⍝ Merge B node bindings
+	n lx mu{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
+	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂⍸msk
+	
 	⍝ Lift and flatten expressions
-	j←(≢p)+⍳≢i←⍸(~t[p]∊F G)∧t∊A B C E O Z
-	p←(j@i⊢⍳≢p)[p] ⋄ p t k n lx mu r pos end(⊣,I)←⊂i ⋄ t k n(⊣@i⍨)←V 0 j
-	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i←⍸t∊G A B C E O Z] ⋄ j←(⌽i)[⍋⌽x]
-	p t k n lx mu pos end r{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
-
+	i←⍸(t∊A B C E G O P Z)∨(t=V)∧t[p]≠C
+	p[i]←p[x←p I@{~t[p[⍵]]∊F G}⍣≡i] ⋄ j←(⌽i)[⍋⌽x]
+	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
+	
 	⍝ Compute a function's local and free variables
 	lv←(≢p)⍴⊂⍬ ⋄ lv[r[i]],←i←i[∪⍳⍨(r,⍪n)[i←⍸(t=V)∧(lx=0)∧n<0;]]
 	fv←(≢p)⍴⊂⍬ ⋄ fv[r[i]],←i←i[∪⍳⍨(r,⍪n)[i←⍸(t=V)∧(lx=1)∧n<0;]]
@@ -54,7 +59,8 @@ TT←{
 	n[i]←(-sym⍳'//' '⌿⌿' '\\' '⍀⍀')[ns⍳n[i]]
 	
 	⍝ Namify pointer variables
-	i←⍸n≥0 ⋄ sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
+	i←⍸(n≥0)∧t∊B E F O P V Z
+	sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
 
 	⍝ Symbol mapping between primitives and runtime names
 	syms ←,¨'+'   '-'   '×'   '÷'   '*'   '⍟'   '|'   '○'   '⌊'  
