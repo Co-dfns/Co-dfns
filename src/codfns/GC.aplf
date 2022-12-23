@@ -153,6 +153,19 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	
+	⍝ V: Variable reference
+	i←⍸t=V
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		tgt←var_values ⍵
+		dbg←highlight ⍵
+		z ←⊂'if (!',tgt,')'
+		z,←⊂'	CHK(6, cleanup, ',dbg,');'
+		z,←⊂''
+		z,←⊂'*stkhd++ = retain_cell(',tgt,');'
+		z,⊂''
+	}¨i
 
 	⍝ B: Function bindings
 	i←⍸t=B
