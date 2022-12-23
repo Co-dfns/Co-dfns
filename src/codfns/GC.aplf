@@ -77,11 +77,7 @@ GC←{
 		z←(var_scopes,¨var_names)⍵
 		z,¨←'' '->value'[mu[⍵]]
 		z[⍸0=k[,⍵]]←⊂'*--stkhd'
-		dbg←highlight ⊃⍵⌿⍨n[⍵]=¯2
-		chk ←⊂'if (!alpha)'
-		chk,←⊂'	CHK(6, cleanup, ',dbg,');'
-		chk,←⊂''
-		z((0⍴⊂'')chk⊃⍨¯2∊n[⍵])
+		z
 	}
 
 	⍝ All code has an initial prefix
@@ -161,7 +157,7 @@ GC←{
 	⍝ B: Function bindings
 	i←⍸t=B
 	zz[i],←{
-		tgt _←var_values ⍵
+		tgt←var_values ⍵
 		z ←⊂tgt,' = retain_cell(stkhd[-1]);'
 		z,⊂''
 		
@@ -368,7 +364,7 @@ GC←{
 	i←⍸(t=F)∧k≠0
 	zz[i],←{
 		0=≢i:0⍴⊂''
-		id←⊃⊃var_values ⍵
+		id←⊃var_values ⍵
 		atyp←'array' 'func'⊃⍨k[⍵]∊3 6 9 12 15 18 21
 		ddtyp←'' 'moper' 'doper'⊃⍨0 5 11⍸k[⍵]
 		aatyp←'array' 'func'⊃⍨k[⍵]∊8 9 10 14 15 16 20 21 22
@@ -470,7 +466,7 @@ GC←{
 	i←⍸(t[p]=B)∧(k[p]=2)∧k[p[p]]=0
 	exp←⊃⍪⌿p[i]{
 		tgt←⊃⍵
-		fn ns←var_names tgt,p[p[tgt]]
+		fn ns←var_names ⍵,p[⍵]
 		z ←⊂'EXPORT int'
 		z,←⊂fn,'(struct cell_array **z, struct cell_array *l, struct cell_array *r)'
 		z,←⊂'{'
