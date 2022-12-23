@@ -35,8 +35,8 @@ TT←{
 	t[ix]←t[xi] ⋄ k[ix]←k[xi] ⋄ n[x]←n[i] ⋄ n[i]←x ⋄ lx[xi]←lx[ix]
 	mu[ix]←mu[xi] ⋄ pos[xi]←pos[ix] ⋄ end[xi]←end[ix]
 	
-	⍝ Merge B node bindings
-	n lx mu{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
+	⍝ Merge B/E4 node bindings
+	n lx mu{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧(t[p]=B)∨(t[p]=E)∧k[p]=4
 	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂⍸msk
 	
 	⍝ Lift and flatten expressions

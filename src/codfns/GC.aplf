@@ -270,8 +270,9 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
+		tgt←var_refs ⍵
 		z ←⊂'{'
-		z,←⊂'	struct cell_array_box *bx = *--stkhd;'
+		z,←⊂'	struct cell_array_box *bx = ',tgt,';'
 		z,←⊂'	struct cell_func *fn = stkhd[-1];'
 		z,←⊂'	struct cell_array *y = stkhd[-2];'
 		z,←⊂'	struct cell_array *x = bx->value;'
