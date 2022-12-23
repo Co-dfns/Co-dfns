@@ -476,9 +476,8 @@ GC←{
 	}¨i
 
 	⍝ Export functions
-	i←⍸(t[p]=B)∧(k[p]=2)∧k[p[p]]=0
-	exp←⊃⍪⌿p[i]{
-		tgt←⊃⍵
+	i←⍸(t=B)∧(k=2)∧k[p]=0
+	exp←⊃⍪⌿{
 		fn ns←var_names ⍵,p[⍵]
 		z ←⊂'EXPORT int'
 		z,←⊂fn,'(struct cell_array **z, struct cell_array *l, struct cell_array *r)'
@@ -500,8 +499,8 @@ GC←{
 		z,←⊂'{'
 		z,←⊂'	return call_dwa(',fn,', z, l, r, L"',fn,'");'
 		z,←⊂'}'
-		⊂z,⊂''
-	}⌸i
+		z,⊂''
+	}¨i
 
 	⍝ Warn about nodes that appear which we haven't generated
 	⍞←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←(zz∊⊂'')∧~t∊V)⌿N∆[t],∘⍕¨k
