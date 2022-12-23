@@ -138,6 +138,7 @@ GC←{
 	⍝ A7: Stranded Arrays
 	i←⍸(t=A)∧k=7
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_array *arr, **dat;'
@@ -170,6 +171,7 @@ GC←{
 	⍝ B: Function bindings
 	i←⍸t=B
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
 		z ←⊂tgt,' = retain_cell(stkhd[-1]);'
 		z,⊂''
@@ -179,7 +181,7 @@ GC←{
 	⍝ C: Closures for functions
 	i←⍸t[p]=C
 	zz[∪p[i]],←p[i]{
-		0=≢⍵:⊂0⍴⊂''
+		0=≢i:⊂0⍴⊂''
 		ctyp←k[⍺]⊃'func' 'func' 'func' 'moper' 'doper'
 		vc←(≢⍵)-fc←0 1 2 4 8[k[⍺]]
 		fs vs←{(fc↑⍵)(fc↓⍵)}⍵
@@ -203,6 +205,7 @@ GC←{
 	⍝ E¯1: Non-returning end of line statement
 	i←⍸(t=E)∧k=¯1
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		z ←⊂'release_cell(*--stkhd);'
 		z,⊂''
 	}¨i
@@ -210,6 +213,7 @@ GC←{
 	⍝ E0: Returning end of line statement
 	i←⍸(t=E)∧k=0
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		z ←⊂'*z = *--stkhd;'
 		z,←⊂'goto cleanup;'
 		z,⊂''
@@ -218,6 +222,7 @@ GC←{
 	⍝ E1: Monadic expression application
 	i←⍸(t=E)∧k=1
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_func *fn = stkhd[-1];'
@@ -239,6 +244,7 @@ GC←{
 	⍝ E2: Dyadic expression application
 	i←⍸(t=E)∧k=2
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_array *x = stkhd[-1];'
@@ -262,6 +268,7 @@ GC←{
 	⍝ E4: Modified Assignment
 	i←⍸(t=E)∧k=4
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
 		z ←⊂'{'
 		z,←⊂'	struct cell_array_box *bx = *--stkhd;'
@@ -281,6 +288,7 @@ GC←{
 	⍝ Om: Monadic operands
 	i←⍸(t=O)∧k∊1 2
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		ltyp←'array' 'func'⊃⍨k[⍵]=2
 		fns←csep 'op->fptr_'∘,¨(⊃ltyp),¨'md'
 		dbg←highlight ⍵
@@ -304,6 +312,7 @@ GC←{
 	⍝ Od: Dyadic operands
 	i←⍸(t=O)∧k∊4 5 7 8
 	zz[i],←{
+		0=≢i:0⍴⊂''
 		ltyp←'array' 'func'⊃⍨k[⍵]∊5 8
 		rtyp←'array' 'func'⊃⍨k[⍵]∊7 8
 		fns←csep 'op->fptr_'∘,¨(⊃rtyp),¨(⊃ltyp),¨'md'
