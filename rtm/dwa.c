@@ -356,6 +356,12 @@ call_dwa(topfn_ptr fn, void *zptr, void *lptr, void *rptr, const wchar_t *name)
 		CHK(dwa2array(&r, rp->pocket), cleanup, L"Convert ⍵");
 
 	CHK(fn(&z, l, r), cleanup, name);
+	
+	if (err < 0) {
+		zp->pocket = scalnum(0);
+		goto cleanup;
+	}
+	
 	CHK(array2dwa(NULL, z, zp), cleanup, L"Convert result");
 	
 cleanup:
@@ -363,7 +369,7 @@ cleanup:
 	release_array(r);
 	release_array(z);
 	
-	if (!err)
+	if (err <= 0)
 		return err;
 	
 	err2 = 0;
