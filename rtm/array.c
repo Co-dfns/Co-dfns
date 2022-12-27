@@ -307,28 +307,21 @@ release_array(struct cell_array *arr)
 
 int
 chk_array_valid(struct cell_array *arr) {
-	if (!arr)
-		return 99;
+	int err;
 	
-	if (arr->ctyp >= CELL_MAX)
-		return 99;
-	
-	if (arr->refc == 0)
-		return 99;
-	
-	if (arr->storage >= STG_MAX)
-		return 99;
-	
-	if (arr->type >= ARR_MAX)
-		return 99;
-	
-	if (arr->values == NULL)
-		return 99;
-	
-	if (arr->storage == STG_HOST && *arr->vrefc == 0)
-		return 99;
+	CHK(!arr, fail, L"NULL array");
+	CHK(arr->ctyp >= CELL_MAX, fail, L"Invalid cell type");
+	CHK(arr->refc == 0, fail, L"Zero array refcount");
+	CHK(arr->storage >= STG_MAX, fail, L"Invalid storage type");
+	CHK(arr->type >= ARR_MAX, fail, L"Invalid element type");
+	CHK(arr->values == NULL, fail, L"NULL values");
+	CHK(arr->storage == STG_HOST && *arr->vrefc == 0, fail,
+	    L"Zero values refcount");
 	
 	return 0;
+	
+fail:
+	return 99;
 }
 
 int

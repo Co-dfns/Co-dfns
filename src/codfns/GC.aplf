@@ -434,7 +434,8 @@ GC←{
 		z,←⊂'	if (err)'
 		z,←⊂'		return err;'
 		z,←⊂''
-		z,←⊂'	return chk_array_valid(*z);'
+		z,←⊂'	TRC(chk_array_valid(*z), L"Invalid result");'
+		z,←⊂'	return err;'
 		z,←⊂'}'
 		z,⊂''
 	}¨i
