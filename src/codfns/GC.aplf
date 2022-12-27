@@ -430,7 +430,11 @@ GC←{
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
 		z,←(⊂'	release_',atyp,'(alpha);')⌿⍨ism
-		z,←⊂'	return err;'
+		z,←⊂''
+		z,←⊂'	if (err)'
+		z,←⊂'		return err;'
+		z,←⊂''
+		z,←⊂'	return chk_array_valid(*z);'
 		z,←⊂'}'
 		z,⊂''
 	}¨i

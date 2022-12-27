@@ -22,6 +22,7 @@ enum cell_type {
 	CELL_DOPER,
 	CELL_DOPER_BOX,
 	CELL_ENV_BOX,
+	CELL_MAX
 };
 
 enum array_type {
@@ -40,7 +41,7 @@ enum array_type {
 };
 
 enum array_storage {
-	STG_HOST, STG_DEVICE
+	STG_HOST, STG_DEVICE, STG_MAX
 };
 
 typedef int (*func_mon)(struct cell_array **,
@@ -165,6 +166,7 @@ DECLSPEC void release_array(struct cell_array *);
 DECLSPEC int mk_array_box(struct cell_array_box **, struct cell_array *);
 DECLSPEC void release_array_box(struct cell_array_box *);
 DECLSPEC int fill_array(struct cell_array *, void *);
+DECLSPEC int chk_array_valid(struct cell_array *);
 
 /* FUNC types */
 DECLSPEC int mk_func_box(struct cell_func_box **, struct cell_func *);

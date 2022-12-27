@@ -306,6 +306,32 @@ release_array(struct cell_array *arr)
 }
 
 int
+chk_array_valid(struct cell_array *arr) {
+	if (!arr)
+		return 99;
+	
+	if (arr->ctyp >= CELL_MAX)
+		return 99;
+	
+	if (arr->refc == 0)
+		return 99;
+	
+	if (arr->storage >= STG_MAX)
+		return 99;
+	
+	if (arr->type >= ARR_MAX)
+		return 99;
+	
+	if (arr->values == NULL)
+		return 99;
+	
+	if (arr->storage == STG_HOST && *arr->vrefc == 0)
+		return 99;
+	
+	return 0;
+}
+
+int
 is_integer_type(enum array_type type)
 {
 	switch (type) {
