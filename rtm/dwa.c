@@ -380,5 +380,8 @@ cleanup:
 	if (debug_info == NULL || err2)
 		zp->pocket = scalnum(0);
 	
+	release_array(debug_info);
+	debug_info = NULL;
+	
 	return err;
 }
