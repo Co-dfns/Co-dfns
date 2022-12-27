@@ -247,68 +247,81 @@ retain_array_data(struct cell_array *arr)
 	default:
 		CHK(99, done, L"Unknown storage device");		
 	}
+	
 done:
 	return err;
 }
 
-void
+int
 release_host_data(struct cell_array *arr)
 {
 	unsigned int *refc;
+	int err;
 	
 	refc = arr->vrefc;
 	
 	if (!*refc)
-		return;
+		return 0;
 	
 	--*refc;
 	
 	if (*refc)
-		return;
+		return 0;
 	
+	if (arr->type == ARR_NESTED) {
+		size_t count = array_values_count(arr);
+		struct cell_array **ptrs = arr->values;
+
+		for (size_t i = 0; i < count; i++)
+			CHK(release_array(ptrs[i]), done,
+			    L"Failed to release nested value");
+	}
+
 	free(arr->values);
+	
 	arr->values = NULL;
 	arr->vrefc = NULL;
+	
+	err = 0;
+	
+done:
+	return err;
 }
 
-DECLSPEC void
+DECLSPEC int
 release_array(struct cell_array *arr)
 {
-	size_t count;
-	struct cell_array **ptrs;
+	int err;
 
 	if (arr == NULL)
-		return;
+		return 0;
 
 	if (!arr->refc)
-		return;
+		return 0;
 
 	arr->refc--;
 
 	if (arr->refc)
-		return;
-
-	if (arr->type == ARR_NESTED) {
-		ptrs = arr->values;
-		count = array_values_count(arr);
-
-		for (size_t i = 0; i < count; i++)
-			release_array(ptrs[i]);
-	}
+		return 0;
 
 	if (arr->values)
 		switch (arr->storage) {
 		case STG_DEVICE:
-			af_release_array(arr->values);
+			CHKAF(af_release_array(arr->values), fail);
 			break;
 		case STG_HOST:
-			release_host_data(arr);
+			CHK(release_host_data(arr), fail,
+			    L"release_host_data(arr)");
 			break;
 		default:
-			exit(99);
+			err = 99;
+			goto fail;
 		}
 
 	free(arr);
+
+fail:
+	return err;
 }
 
 int
