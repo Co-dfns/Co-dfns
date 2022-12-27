@@ -224,25 +224,31 @@ mk_array(struct cell_array **dest,
 	return 0;
 }
 
-void
+int
 retain_array_data(struct cell_array *arr)
 {
+	int err;
+	
+	err = 0;
+	
 	if (arr == NULL)
-		return;
+		goto done;
 	
 	if (arr->values == NULL)
-		return;
+		goto done;
 	
 	switch (arr->storage) {
 	case STG_DEVICE:
-		af_retain_array(&arr->values, arr->values);
+		CHKAF(af_retain_array(&arr->values, arr->values), done);
 		break;
 	case STG_HOST:
 		++*arr->vrefc;
 		break;
 	default:
-		exit(99);
+		CHK(99, done, L"Unknown storage device");		
 	}
+done:
+	return err;
 }
 
 void

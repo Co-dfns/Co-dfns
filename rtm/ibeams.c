@@ -427,7 +427,8 @@ reshape_func(struct cell_array **z,
 		t->values = r->values;
 		t->vrefc = r->vrefc;
 		
-		retain_array_data(t);
+		CHK(retain_array_data(t), fail, L"retain_array_data(t)");
+		
 		goto done;
 	}
 	
