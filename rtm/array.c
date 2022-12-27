@@ -321,8 +321,11 @@ chk_array_valid(struct cell_array *arr) {
 	CHK(arr->storage >= STG_MAX, fail, L"Invalid storage type");
 	CHK(arr->type >= ARR_MAX, fail, L"Invalid element type");
 	CHK(arr->values == NULL, fail, L"NULL values");
-	CHK(arr->storage == STG_HOST && *arr->vrefc == 0, fail,
-	    L"Zero values refcount");
+	
+	if (arr->storage == STG_HOST) {
+		CHK(arr->vrefc == NULL, fail, L"NULL values refcount");
+		CHK(*arr->vrefc == 0, fail, L"Zero values refcount");
+	}
 	
 	return 0;
 	
