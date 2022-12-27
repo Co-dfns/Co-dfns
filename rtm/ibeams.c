@@ -372,65 +372,52 @@ reshape_func(struct cell_array **z,
 	int err;
 	unsigned int rank;
 	
-	rvals = NULL;	
 	rank = 1;
+	rvals = NULL;	
+	t = NULL;
 	
 	if (l->rank == 1) {
-		if (l->shape[0] > UINT_MAX) {
-			return 10;
-		}
+		if (l->shape[0] > UINT_MAX)
+			CHK(10, fail, L"Rank exceeds UINT range");
 
 		rank = (unsigned int)l->shape[0];
 	}
 	
-	if (err = mk_array(&t, r->type, r->storage, rank))
-		return err;
+	CHK(mk_array(&t, r->type, r->storage, rank), fail,
+	    L"mk_array(&t, r->type, r->storage, rank)");
 	
 	switch (l->storage) {
 	case STG_DEVICE:
 		af_array l64;
 		
-		buf = (char *)t->shape;
-		
-		if (err = af_eval(l->values))
-			goto fail;
-		
-		if (err = af_cast(&l64, l->values, u64))
-			goto fail;
-		
-		if (err = af_get_data_ptr(buf, l64))
-			goto fail;
-		
-		af_release_array(l64);
+		CHKAF(af_eval(l->values), fail);
+		CHKAF(af_cast(&l64, l->values, u64), fail);
+		CHKAF(af_get_data_ptr(t->shape, l64), fail);
+		CHKAF(af_release_array(l64), fail);
 		
 		break;
 	case STG_HOST:
-		buf = l->values;
+	#define RESHAPE_SHAPE_CASE(tp) {			\
+		tp *vals = (tp *)l->values;			\
+								\
+		for (unsigned int i = 0; i < rank; i++)		\
+			t->shape[i] = (size_t)vals[i];		\
+								\
+		break;						\
+	}
+
+		switch (l->type) {
+		case ARR_BOOL:RESHAPE_SHAPE_CASE(int8_t);
+		case ARR_SINT:RESHAPE_SHAPE_CASE(int16_t);
+		case ARR_INT:RESHAPE_SHAPE_CASE(int32_t);
+		case ARR_DBL:RESHAPE_SHAPE_CASE(double);
+		default:
+			CHK(99, fail, L"Unexpected shape type");
+		}
+	
 		break;
 	default:
-		err = 99;
-		goto fail;
-	}
-	
-#define RESHAPE_SHAPE_CASE(tp) {		\
-	tp *vals = (tp *)buf;			\
-						\
-	for (unsigned int i = rank; i != 0;) {	\
-		i--;				\
-		t->shape[i] = (size_t)vals[i];	\
-	}					\
-						\
-	break;					\
-}
-
-	switch (l->type) {
-	case ARR_BOOL:RESHAPE_SHAPE_CASE(int8_t);
-	case ARR_SINT:RESHAPE_SHAPE_CASE(int16_t);
-	case ARR_INT:RESHAPE_SHAPE_CASE(int32_t);
-	case ARR_DBL:RESHAPE_SHAPE_CASE(double);
-	default:
-		err = 99;
-		goto fail;
+		CHK(99, fail, L"Unknown storage type");
 	}
 	
 	tc = array_values_count(t);
@@ -444,42 +431,32 @@ reshape_func(struct cell_array **z,
 		goto done;
 	}
 	
-	if (err = alloc_array(t))
-		goto fail;
+	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
 	if (t->storage == STG_DEVICE) {
-		if (tc > DBL_MAX) {
-			err = 10;
-			goto fail;
-		}
+		if (t->type == ARR_NESTED)
+			CHK(99, fail, L"Unexpected nested array");
+		
+		if (tc > DBL_MAX)
+			CHK(10, fail, L"Count exceeds DBL range");
 		
 		af_seq idx = {0, (double)tc - 1, 1};
 		size_t tiles = (tc + rc - 1) / rc;
 		
-		if (tiles > UINT_MAX) {
-			err = 10;
-			goto fail;
-		}
+		if (tiles > UINT_MAX)
+			CHK(10, fail, L"Tiles exceed UINT range");
 		
-		if (err = af_tile(&rvals, r->values, (unsigned int)tiles, 1, 1, 1))
-			goto fail;
-		
-		if (err = af_index(&t->values, rvals, 1, &idx))
-			goto fail;
-		
-		if (t->type == ARR_NESTED) {
-			err = 99;
-			goto fail;
-		}
-		
-		af_release_array(rvals);
+		CHKAF(
+		    af_tile(&rvals, r->values, (unsigned int)tiles, 1, 1, 1), 
+		    fail);
+		CHKAF(af_index(&t->values, rvals, 1, &idx), fail);
+		CHKAF(af_release_array(rvals), fail);
+
 		goto done;
 	}
 	
-	if (t->storage != STG_HOST) {
-		err = 99;
-		goto fail;
-	}
+	if (t->storage != STG_HOST)
+		CHK(99, fail, L"Unexpected storage type");
 	
 	blocks = tc / rc;
 	tail = tc % rc;
