@@ -89,14 +89,7 @@ array_element_size(struct cell_array *arr)
 size_t
 array_values_bytes(struct cell_array *arr)
 {
-	size_t count;
-
-	count = array_values_count(arr);
-
-	if (arr->type == ARR_BOOL && arr->storage == STG_HOST)
-		count = (count + 7) / 8;
-
-	return count * array_element_size(arr);
+	return array_values_count(arr) * array_element_size(arr);
 }
 
 af_dtype
