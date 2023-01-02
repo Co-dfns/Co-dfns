@@ -267,13 +267,16 @@ release_host_data(struct cell_array *arr)
 	
 	refc = arr->vrefc;
 	
+	if (!refc)
+		goto done;
+	
 	if (!*refc)
-		return 0;
+		goto done;
 	
 	--*refc;
 	
 	if (*refc)
-		return 0;
+		goto done;
 	
 	if (arr->type == ARR_NESTED) {
 		size_t count = array_values_count(arr);
@@ -286,12 +289,12 @@ release_host_data(struct cell_array *arr)
 
 	free(arr->values);
 	
-	arr->values = NULL;
-	arr->vrefc = NULL;
-	
 	err = 0;
 	
 done:
+	arr->values = NULL;
+	arr->vrefc = NULL;
+	
 	return err;
 }
 
