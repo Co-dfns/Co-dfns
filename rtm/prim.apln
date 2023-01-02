@@ -145,7 +145,7 @@ reduce←{
 }
 nwreduce←{op←⍺⍺¨
 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
-	⎕SIGNAL 16
+	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵
 }
 rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5
 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵
