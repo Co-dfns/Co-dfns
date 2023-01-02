@@ -298,6 +298,19 @@ done:
 	return err;
 }
 
+int
+release_array_data(struct cell_array *arr)
+{	
+	switch (arr->storage) {
+	case STG_DEVICE:
+		return release_device_data(arr);
+	case STG_HOST:
+		return release_host_data(arr);
+	default:
+		return 99;
+	}
+}
+
 DECLSPEC int
 release_array(struct cell_array *arr)
 {
