@@ -22,125 +22,131 @@ closest_numeric_array_type(double x)
 	return ARR_DBL;
 }
 
-#define CAST_UNIT(vals, count, src_type, dst_type)	\
-	for (size_t i = 0; i < (count); i++) {		\
-		src_type t = ((src_type *)(vals))[i];	\
-							\
-		((dst_type *)(vals))[i] = (dst_type)t;	\
-	}
+#define CAST_UNIT(count, src_type, dst_type) {	\
+	src_type *src = arr->values;		\
+	dst_type *dst = (dst_type *)buf;	\
+						\
+	for (size_t i = 0; i < (count); i++)	\
+		dst[i] = (dst_type)src[i];	\
+}						\
 
-#define CAST_CMPX(vals, count, dst_type)				\
-	for (size_t i = 0; i < (count); i++) {				\
-		struct apl_cmpx t = ((struct apl_cmpx *)(vals))[i];	\
-									\
-		((dst_type *)(vals))[i] = (dst_type)t.real;		\
-	}
+#define CAST_CMPX(count, dst_type) {		\
+	struct apl_cmpx *src = arr->values;	\
+	dst_type *dst = (dst_type *)buf;	\
+						\
+	for (size_t i = 0; i < (count); i++)	\
+		dst[i] = (dst_type)src[i].real;	\
+}						\
 
-#define CAST_NESTED(arr, count, suffix, dst_type) {			\
-	dst_type *dst;							\
-	struct cell_array **src;					\
-	int err;							\
-									\
-	src = (arr)->values;						\
-	dst = calloc(count, sizeof(dst_type));				\
-									\
-	if (dst == NULL)						\
-		return 1;						\
-									\
-	for (size_t i = 0; i < (count); i++) {				\
-		if (err = get_scalar_##suffix(&dst[i], src[i])) {	\
-			free(dst);					\
-			return err;					\
-		}							\
-	}								\
+#define CAST_NESTED(count, suffix, dst_type) {				\
+	struct cell_array **src = arr->values;				\
+	dst_type *dst = (dst_type *)buf;				\
 									\
 	for (size_t i = 0; i < (count); i++)				\
-		release_array(src[i]);					\
-									\
-	free(src);							\
-	(arr)->values = dst;						\
-}
+		CHK(get_scalar_##suffix(&dst[i], src[i]), fail,		\
+		    L"get_scalar_" L#suffix L"(&dst[i], src[i]");	\
+}									\
 
 inline int
 squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
 {
-	void *buf;
+	size_t size;
+	char *buf;
+	int err, reuse;
+	
+	err = 0;
 	
 	if (arr->storage == STG_DEVICE) {
+		af_dtype dtyp;
+		af_array newv;
+		
 		if (arr->type == ARR_NESTED)
 			return 99;
 		
 		arr->type = type;
+		dtyp = array_af_dtype(arr);
 		
-		return af_cast(&arr->values, arr->values, array_af_dtype(arr));
+		CHKAF(af_cast(&newv, arr->values, dtyp), done);
+		CHK(release_array_data(arr), done,
+		    L"release_array_data(arr)");
+		
+		arr->values = newv;
+		goto done;
 	}
 	
 	if (arr->storage != STG_HOST)
 		return 99;
+	
+	size = array_values_count(arr) * array_element_size_type(type);
+	reuse = *arr->vrefc == 1 && 
+	    (type != ARR_CMPX || arr->type != ARR_NESTED);
+	    
+	buf = reuse ? arr->values : malloc(size + sizeof(int));
+	CHK(buf == NULL, done, L"Failed to alloc squeeze buffer.");
 
 	switch (type_pair(arr->type, type)) {
 	case type_pair(ARR_SINT,   ARR_BOOL   ):
-		CAST_UNIT(arr->values, count, int16_t, int8_t);
+		CAST_UNIT(count, int16_t, int8_t);
 		break;
 	case type_pair(ARR_INT,    ARR_SINT   ):
-		CAST_UNIT(arr->values, count, int32_t, int16_t);
+		CAST_UNIT(count, int32_t, int16_t);
 		break;
 	case type_pair(ARR_INT,    ARR_BOOL   ):
-		CAST_UNIT(arr->values, count, int32_t, int8_t);
+		CAST_UNIT(count, int32_t, int8_t);
 		break;
 	case type_pair(ARR_DBL,    ARR_INT    ):
-		CAST_UNIT(arr->values, count, double, int32_t);
+		CAST_UNIT(count, double, int32_t);
 		break;
 	case type_pair(ARR_DBL,    ARR_SINT   ):
-		CAST_UNIT(arr->values, count, double, int16_t);
+		CAST_UNIT(count, double, int16_t);
 		break;
 	case type_pair(ARR_DBL,    ARR_BOOL   ):
-		CAST_UNIT(arr->values, count, double, int8_t);
+		CAST_UNIT(count, double, int8_t);
 		break;
 	case type_pair(ARR_CMPX,   ARR_DBL    ):
-		CAST_CMPX(arr->values, count, double);
+		CAST_CMPX(count, double);
 		break;
 	case type_pair(ARR_CMPX,   ARR_INT    ):
-		CAST_CMPX(arr->values, count, int32_t);
+		CAST_CMPX(count, int32_t);
 		break;
 	case type_pair(ARR_CMPX,   ARR_SINT   ):
-		CAST_CMPX(arr->values, count, int16_t);
+		CAST_CMPX(count, int16_t);
 		break;
 	case type_pair(ARR_CMPX,   ARR_BOOL   ):
-		CAST_CMPX(arr->values, count, int8_t);
+		CAST_CMPX(count, int8_t);
 		break;
 	case type_pair(ARR_CHAR16, ARR_CHAR8  ):
-		CAST_UNIT(arr->values, count, uint16_t, uint8_t);
+		CAST_UNIT(count, uint16_t, uint8_t);
 		break;
 	case type_pair(ARR_CHAR32, ARR_CHAR16 ):
-		CAST_UNIT(arr->values, count, uint32_t, uint16_t);
+		CAST_UNIT(count, uint32_t, uint16_t);
 		break;
 	case type_pair(ARR_CHAR32, ARR_CHAR8  ):
-		CAST_UNIT(arr->values, count, uint32_t, uint8_t);
+		CAST_UNIT(count, uint32_t, uint8_t);
 		break;
 	case type_pair(ARR_NESTED, ARR_CHAR32 ):
-		CAST_NESTED(arr, count, char32, uint32_t);
+		CAST_NESTED(count, char32, uint32_t);
 		break;
 	case type_pair(ARR_NESTED, ARR_CHAR16 ):
-		CAST_NESTED(arr, count, char16, uint16_t);
+		CAST_NESTED(count, char16, uint16_t);
 		break;
 	case type_pair(ARR_NESTED, ARR_CHAR8  ):
-		CAST_NESTED(arr, count, char8, uint8_t);
+		CAST_NESTED(count, char8, uint8_t);
 		break;
 	case type_pair(ARR_NESTED, ARR_CMPX   ):
-		CAST_NESTED(arr, count, cmpx, struct apl_cmpx);
+		CAST_NESTED(count, cmpx, struct apl_cmpx);
 		break;
 	case type_pair(ARR_NESTED, ARR_DBL    ):
-		CAST_NESTED(arr, count, dbl, double);
+		CAST_NESTED(count, dbl, double);
 		break;
 	case type_pair(ARR_NESTED, ARR_INT    ):
-		CAST_NESTED(arr, count, int, int32_t);
+		CAST_NESTED(count, int, int32_t);
 		break;
 	case type_pair(ARR_NESTED, ARR_SINT   ):
-		CAST_NESTED(arr, count, sint, int16_t);
+		CAST_NESTED(count, sint, int16_t);
 		break;
 	case type_pair(ARR_NESTED, ARR_BOOL   ):
-		CAST_NESTED(arr, count, bool, int8_t);
+		CAST_NESTED(count, bool, int8_t);
 		break;
 	default:
 		return 0;
@@ -148,12 +154,24 @@ squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
 	
 	arr->type = type;
 	
-	buf = realloc(arr->values, array_values_bytes(arr));
+	if (reuse) {
+		buf = realloc(buf, size + sizeof(int));
+		CHK(buf == NULL, done, L"Failed to realloc squeeze.");
+	} else {
+		CHK(release_array_data(arr), fail,
+		    L"release_array_data(arr)");
+	}
 	
-	if (buf != NULL)
-		arr->values = buf;	
-		
-	return 0;
+	arr->values = buf;
+	arr->vrefc = (unsigned int *)(buf + size);
+	*arr->vrefc = 1;
+	
+done:
+	return err;
+	
+fail:
+	free(buf);
+	return err;
 }
 
 inline int
