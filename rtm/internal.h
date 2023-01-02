@@ -35,12 +35,14 @@ size_t array_count(struct cell_array *);
 size_t array_values_count(struct cell_array *);
 size_t array_values_bytes(struct cell_array *);
 size_t array_element_size(struct cell_array *);
+size_t array_element_size_type(enum array_type);
 af_dtype array_af_dtype(struct cell_array *);
 
 int mk_scalar_bool(struct cell_array **, int8_t);
 int mk_scalar_sint(struct cell_array **, int16_t);
 
 int retain_array_data(struct cell_array *);
+int release_array_data(struct cell_array *);
 int alloc_array(struct cell_array *);
 int array_is_same(int8_t *, struct cell_array *, struct cell_array *);
 int array_promote_storage(struct cell_array *, struct cell_array *);
