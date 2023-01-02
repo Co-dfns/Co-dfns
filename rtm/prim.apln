@@ -141,7 +141,7 @@ map←{⍺ ⍺⍺ map_dyadic ⍵}
 reduce←{
 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s
 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨
-	z⊣(⌽⍳c-1){z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
+	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵
 }
 nwreduce←{op←⍺⍺¨
 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺
