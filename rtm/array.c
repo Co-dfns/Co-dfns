@@ -246,6 +246,20 @@ done:
 }
 
 int
+release_device_data(struct cell_array *arr)
+{
+	int err;
+	
+	CHKAF(af_release_array(arr->values), done);
+	
+	arr->values = NULL;
+	arr->vrefc = NULL;
+
+done:
+	return err;
+}
+
+int
 release_host_data(struct cell_array *arr)
 {
 	unsigned int *refc;
