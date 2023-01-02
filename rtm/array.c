@@ -328,18 +328,8 @@ release_array(struct cell_array *arr)
 		return 0;
 
 	if (arr->values)
-		switch (arr->storage) {
-		case STG_DEVICE:
-			CHKAF(af_release_array(arr->values), fail);
-			break;
-		case STG_HOST:
-			CHK(release_host_data(arr), fail,
-			    L"release_host_data(arr)");
-			break;
-		default:
-			err = 99;
-			goto fail;
-		}
+		CHK(release_array_data(arr), fail,
+		    L"release_array_data(arr)");
 
 	free(arr);
 
