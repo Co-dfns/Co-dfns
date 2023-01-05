@@ -1796,52 +1796,65 @@ exp_values(struct cell_array *t, struct cell_array *r)
 	
 	t->type = r->type == ARR_CMPX ? ARR_CMPX : ARR_DBL;
 	
-	switch (r->storage) {
-	case STG_DEVICE:
-		if (err = af_exp(&t->values, r->values))
-			return err;
-
-		break;
-	case STG_HOST:
-		if (err = alloc_array(t))
-			return err;
+	if (r->storage == STG_DEVICE) {
+		af_array tmp;
+		CHKAF(af_cast(&tmp, r->values, f64), done);
+		CHKAF(af_exp(&t->values, tmp), done);
+		CHKAF(af_release_array(tmp), done);
 		
-		size_t count = array_values_count(t);
-		
-		if (t->type == ARR_CMPX) {
-			struct apl_cmpx *tvals = t->values;
-			struct apl_cmpx *rvals = r->values;
-			
-			for (size_t i = 0; i < count; i++)
-				tvals[i] = exp_cmpx(rvals[i]);
-			
-			break;
-		}
-		
-		double *tvals = t->values;
-		double *rvals = r->values;
-		
-		for (size_t i = 0; i < count; i++)
-			tvals[i] = exp(rvals[i]);
-		
-		break;
-	default:
-		return 99;
+		goto done;
 	}
 	
-	return 0;
+	if (r->storage != STG_HOST)
+		CHK(99, done, L"Unknown storage type");
+	
+	CHK(alloc_array(t), done, L"alloc_array(t)");
+	
+	size_t count = array_values_count(t);
+	
+	if (r->type == ARR_CMPX) {
+		struct apl_cmpx *tvals = t->values;
+		struct apl_cmpx *rvals = r->values;
+		
+		for (size_t i = 0; i < count; i++)
+			tvals[i] = exp_cmpx(rvals[i]);
+		
+		goto done;
+	}
+
+	#define EXP_LOOP(rtype) {			\
+		double *tvals = t->values;		\
+		rtype *rvals = r->values;		\
+							\
+		for (size_t i = 0; i < count; i++)	\
+			tvals[i] = exp(rvals[i]);	\
+							\
+		break;					\
+	}						\
+	
+	switch (r->type) {
+	case ARR_BOOL:EXP_LOOP(int8_t);
+	case ARR_SINT:EXP_LOOP(int16_t);
+	case ARR_INT:EXP_LOOP(int32_t);
+	case ARR_DBL:EXP_LOOP(double);
+	default:
+		CHK(99, done, L"Unexpected element type");
+	}
+	
+	err = 0;
+	
+done:
+	return err;
 }
 
 int
 exp_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+    struct cell_array *r, struct cell_func *self)
 {
 	return monadic_scalar_apply(z, r, exp_values);
 }
 
-DEF_MON(exp_func_mon, exp_func)
-
-struct cell_func exp_closure = {CELL_FUNC, 1, exp_func_mon, exp_func, 0};
+struct cell_func exp_closure = {CELL_FUNC, 1, exp_func, error_syntax_dya, 0};
 struct cell_func *exp_vec_ibeam = &exp_closure;
 
 int
