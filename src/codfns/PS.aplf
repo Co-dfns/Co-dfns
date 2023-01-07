@@ -138,23 +138,30 @@ PS←{
 	⍝ Mark lexical scope of non-variable primitives
 	lx←(≢p)⍴0 ⋄ lx[⍸t=P]←3
 	lx[⍸(t=F)∨(t=P)∧n∊-1+⍳6]←4
+	
+	⍝ Link local variables with their local bindings
+	vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
+	vb[j]←fb[fr⍳r  mk⊢j←⍸(t=V)∧vb=¯1]
+	b←vb[i←i⌿⍨vb[i]≠¯1] ⋄ rx←{p[⍵]}@{t[p[i]]=C}i
+	vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧rx≥b]←¯1
 
-	⍝ Link variables to their bindings
+	⍝ Link free variables to their bindings
 	_←{
-		⍝ Link local variables with their local bindings
-		vb[i]←fb[fr⍳rf mk⊢i←⍸(t=V)∧vb=¯1]
-		vb[j]←fb[fr⍳r  mk⊢j←⍸(t=V)∧vb=¯1]
-		b←vb[i←i⌿⍨vb[i]≠¯1] ⋄ rx←{p[⍵]}@{t[p[i]]=C}i
-		vb[i⌿⍨(rz[i]<rz[b])∨(rz[i]=rz[b])∧rx≥b]←¯1
-
 		⍝ Mark free variables with their scope before binding
-		lx[i←⍸(t=V)∧vb=¯1]←1
+		lx[⍵]←1
 
 		⍝ Add free variables to closures
-		i←i⌿⍨k[0⌈r[i]]≠0 ⋄ ci←p[r[i]] ⋄ vb[i]←(≢p)+⍳≢i
+		i←⍵⌿⍨k[0⌈r[⍵]]≠0 ⋄ ci←p[r[i]] ⋄ vb[i]←fv←(≢p)+⍳≢i
 		p,←ci ⋄ vb lx,←(≢ci)⍴¨¯1 0 ⋄ rz rf r(⊣,I)←⊂ci
 		t k n pos end(⊣,I)←⊂i
-	i}⍣{0=≢⍺}⍬
+		
+		⍝ Bind new closure variables
+		vb[fv]←fb[fr⍳rf mk⊢fv]
+		vb[fv]←fb[fr⍳r  mk⊢fv←fv⌿⍨vb[fv]=¯1]
+		
+		⍝ Continue with remaining unlinked free variables
+		fv⌿⍨vb[fv]=¯1
+	}⍣{0=≢⍺}⍸(t=V)∧vb=¯1
 
 	⍝ Check that all variables have a valid binding
 	∨⌿msk←(t=V)∧vb=¯1:{
