@@ -11,6 +11,7 @@ squeeze←'squeeze_ibeam'⌶
 is_simple←'is_simple_ibeam'⌶
 is_numeric←'is_numeric_ibeam'⌶
 is_integer←'is_integer_ibeam'⌶
+is_bool←{11≡⎕DR squeeze ⍵}
 max_shp←'max_shp_ibeam'⌶
 has_nat_vals←'has_nat_vals_ibeam'⌶
 chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
@@ -21,6 +22,7 @@ chk_valid_shape←{
 }
 both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
 both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
+both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}
 
@@ -93,9 +95,6 @@ mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
 recip←{⎕SIGNAL 16}
 div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 
-⍝ *: Exponent | Power
-exp←'exp_vec_ibeam'⌶ ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
-
 ⍝ |: Absolute Value | Residue
 absolute←{
 	0≡is_numeric ⍵:⎕SIGNAL 11
@@ -105,26 +104,77 @@ absolute←{
 residue←{⎕SIGNAL 16}
 res←absolute ⎕AMBIV residue
 
+⍝ ⌊: Floor | Minimum
+min←'floor_vec_ibeam'⌶ ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)
+
+⍝ ⌈: Ceiling | Maximum
+max←'ceil_vec_ibeam'⌶ ⎕AMBIV ('max_vec_ibeam'⌶ numeric scalar)
+
+⍝ *: Exponent | Power
+exp←'exp_vec_ibeam'⌶ ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
+
+⍝ ⍟: Natural Logarithm | Logarithm
+log←'nlg_vec_ibeam'⌶ ⎕AMBIV ('log_vec_ibeam'⌶ numeric scalar)
+
+⍝ ○: Pi Times | Trigonometric Functions
+cir←'pitimes_vec_ibeam'⌶ ⎕AMBIV ('trig_vec_ibeam'⌶ numeric scalar)
+
+⍝ !: Factorial | Binomial
+fac←'factorial_vec_ibeam'⌶ ⎕AMBIV ('binomial_vec_ibeam'⌶ numeric scalar)
+
+⍝ ~: Not | Without
+notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
+without←{⎕SIGNAL 16}
+not←notscl ⎕AMBIV without
+
+⍝ ∧: And
+and←{⎕SIGNAL 2}⎕AMBIV ('and_vec_ibeam'⌶ numeric scalar)
+
+⍝ ∨: Or
+lor←{⎕SIGNAL 2}⎕AMBIV ('lor_vec_ibeam'⌶ numeric scalar)
+
+⍝ ⍲: Not and
+nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}
+
+⍝ ⍱: Not Or
+nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}
+
 ⍝ <: Less than
 lessthan←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('lth_vec_ibeam'⌶ numeric scalar)⍵
 }
-lth←{⎕SIGNAL 16} ⎕AMBIV lessthan
+lth←{⎕SIGNAL 2}⎕AMBIV lessthan
+
+⍝ ≤: Less than or equal
+lesseql←{
+	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
+	⍺('lte_vec_ibeam'⌶ numeric scalar)⍵
+}
+lte←{⎕SIGNAL 2}⎕AMBIV lesseql
 
 ⍝ =: Equal
 equal←'eql_vec_ibeam'⌶ scalar
 eql←{⎕SIGNAL 2}⎕AMBIV equal
 
+⍝ ≥: Greater than or equal
+greatereql←{
+	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
+	⍺('gte_vec_ibeam'⌶ numeric scalar)⍵
+}
+gte←{⎕SIGNAL 2}⎕AMBIV greatereql
+
+⍝ >: Greater than
+greaterthan←{
+	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
+	⍺('gth_vec_ibeam'⌶ numeric scalar)⍵
+}
+gth←{⎕SIGNAL 2}⎕AMBIV greaterthan
+
 ⍝ ≠: Not Equal | First Occurrence
 firstocc←{⎕SIGNAL 16}
 noteq←'neq_vec_ibeam'⌶ scalar
 neq←firstocc ⎕AMBIV noteq
-
-⍝ ~: Not | Without
-notscl←{11≡⎕DR squeeze ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
-without←{⎕SIGNAL 16}
-not←notscl ⎕AMBIV without
 
 ⍝ ↓: Split | Drop
 split←{⎕SIGNAL 16}
