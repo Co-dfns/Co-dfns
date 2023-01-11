@@ -495,14 +495,17 @@ GC←{
 	i←⍸(t=B)∧(k=2)∧k[p]=0
 	exp←⊃⍪⌿{
 		fn ns←var_names ⍵,p[⍵]
+		fnv←⊃var_values ⍵
 		z ←⊂'EXPORT int'
 		z,←⊂fn,'(struct cell_array **z, struct cell_array *l, struct cell_array *r)'
 		z,←⊂'{'
 		z,←⊂'	struct cell_func *self;'
+		z,←⊂'	struct ',ns,'_loc *loc;'
 		z,←⊂''
 		z,←⊂'	',ns,'_init();'
 		z,←⊂''
-		z,←⊂'	self = ',ns,'.',fn,';'
+		z,←⊂'	loc = &',ns,';'
+		z,←⊂'	self = ',fnv,';'
 		z,←⊂''
 		z,←⊂'	if (l == NULL)'
 		z,←⊂'		return self->fptr_mon(z, r, self);'
