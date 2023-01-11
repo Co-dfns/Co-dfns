@@ -4,6 +4,26 @@ TT←{
 	⍝ Compute reference scope
 	r←I@{t[⍵]≠F}⍣≡⍨p
 
+	⍝ Convert ⎕NC calls to static A1 nodes
+	pi←p[i←⍸mi←(t[p]=E)∧(t=P)∧n=-sym⍳⊂'⎕nc'] ⋄ j←⍸mj←(p∊pi)∧~mi ⋄ x←⍸mx←p∊j
+	
+	∨⌿msk←k[pi]≠1:'MUST APPLY ⎕NC MONADICALLY'SIGNAL SELECT msk⌿pi	
+	∨⌿msk←(t[j]≠A)∨~k[j]∊1 7:{
+		ERR←'ONLY LITERAL ARGUMENTS TO ⎕NC ARE SUPPORTED'
+		16 ERR SIGNAL SELECT msk⌿j
+	}⍬
+	∨⌿msk←(t[x]≠A)∨k[x]≠1:{
+		ERR←'ONLY SIMPLE/NESTED CHAR VECTORS TO ⎕NC ARE SUPPORTED'
+		16 ERR SIGNAL SELECT msk⌿x
+	}⍬
+	
+	ncvar←'⍺' '⍺⍺' '⍵⍵'
+	ncmap←(0 0 0)(0 0 0)(0 0 0)(2 0 0),,⍉⊃∘.,⌿(0 2)(2 3)(0 2 3)
+	vx←x,j1←j⌿⍨k[j]=1 ⋄ vp←p[p[x]],p[j1]
+	_←vp{n[⍺]←-sym⍳sym∪←⊂(k[r[⍺]]⊃ncmap)[ncvar⍳sym[|n[⍵]]]}⌸vx
+	t[pi]←A ⋄ k[pi]←1
+	p t k n lx r pos end⌿⍨←⊂~msk←mi∨mj∨mx ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
+
 	⍝ Mark mutated bindings 
 	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t=V)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(tk[p;]∧.=E 4)∨(tk[p;]∧.=E 6)∧(tk←t,⍪k)[p[p];]∧.=E 4
