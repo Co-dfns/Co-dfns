@@ -111,7 +111,7 @@ TK←{
 	∨⌿msk:'TRAD-FNS END LINE MUST CONTAIN ∇ ALONE'SIGNAL lineof msk⌿pos
 
 	⍝ Identify colons belonging to Labels
-	t[⍸tm∧(d=0)∧∊((~⊃)∧(<⍀∨⍀))¨':'=(t=Z)⊂x]←L
+	t[⍸tm∧(d=0)∧∊(<⍀∧∘~⊃)¨':'=(t=Z)⊂x]←L
 
 	⍝ Tokenize Keywords
 	ki←⍸(t=0)∧(d=0)∧(':'=x)∧1⌽t=V
