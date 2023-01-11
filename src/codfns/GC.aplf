@@ -62,8 +62,7 @@ GC←{
 		i←⍸mu[⍵]
 		z[i],←(var_ckinds ⍵[i]){
 			msg←'L"Init mutable variable: ',⍵,'"'
-			z ←⊂'CHK(mk_',⍺,'_box(&',⍵,', NULL), cleanup, ',msg,');'
-			z,⊂''
+			⊂'CHK(mk_',⍺,'_box(&',⍵,', NULL), cleanup, ',msg,');'
 		}¨var_refs ⍵[i]
 		⊃⍪⌿z
 	}
