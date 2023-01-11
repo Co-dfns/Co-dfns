@@ -248,6 +248,8 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *res;
 	struct cell_func *lessthan;
 	struct cell_func *lth;
+	struct cell_func *equal;
+	struct cell_func *eql;
 	struct cell_func *firstocc;
 	struct cell_func *noteq;
 	struct cell_func *neq;
@@ -264,11 +266,12 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_moper *map_dyadic;
 	struct cell_moper *map;
 	struct cell_moper *reduce;
-	struct cell_func *nwreduce;
+	struct cell_moper *nwreduce;
 	struct cell_moper *rdf;
 	struct cell_func *rpf;
 	struct cell_doper *dot;
 	struct cell_doper *pow;
+	struct cell_doper *jot;
 } cdf_prim;
 #endif
 

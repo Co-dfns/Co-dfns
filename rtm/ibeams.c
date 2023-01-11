@@ -1907,6 +1907,85 @@ struct cell_func lth_closure = {CELL_FUNC, 1, error_syntax_mon, lth_func, 0};
 struct cell_func *lth_vec_ibeam = &lth_closure;
 
 int
+eql_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = ARR_BOOL;
+	
+	return 0;
+}
+
+int
+eql_device(af_array *z, af_array l, af_array r)
+{
+	return af_eq(z, l, r, 0);
+}
+
+int
+eql_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+#define EQL_LOCALS(ztype, ltype, rtype) \
+	ztype *tvals = t->values;	\
+	ltype *lvals = l->values;	\
+	rtype *rvals = r->values;
+	
+#define EQL_LOOP(ztype, ltype, rtype) {					\
+	EQL_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++)				\
+		tvals[i] = (ztype)lvals[i % lc] == (ztype)rvals[i % rc];\
+}
+
+#define EQL_CMPX(ztype, ltype, rtype) {					\
+	EQL_LOCALS(ztype, ltype, rtype)					\
+									\
+	for (size_t i = 0; i < count; i++) {				\
+		tvals[i] = lvals[i % lc].real == rvals[i % rc].real	\
+		    && lvals[i % lc].imag == rvals[i % rc].imag;	\
+	}								\
+}
+		
+#define EQL_LCMPX(ztype, ltype, rtype) {			\
+	EQL_LOCALS(ztype, ltype, rtype)				\
+								\
+	for (size_t i = 0; i < count; i++) {			\
+		tvals[i] = lvals[i % lc].real == rvals[i % rc]	\
+		    && lvals[i % lc].imag == 0;			\
+	}							\
+}
+	
+#define EQL_RCMPX(ztype, ltype, rtype) {			\
+	EQL_LOCALS(ztype, ltype, rtype)				\
+								\
+	for (size_t i = 0; i < count; i++) {			\
+		tvals[i] = lvals[i % lc] == rvals[i % rc].real	\
+		    && rvals[i % rc].imag == 0;			\
+	}							\
+}
+
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX,
+		    int8_t, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+eql_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, eql_type, eql_device, eql_host);
+}
+
+struct cell_func eql_closure = {CELL_FUNC, 1, error_syntax_mon, eql_func, 0};
+struct cell_func *eql_vec_ibeam = &eql_closure;
+
+int
 neq_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = ARR_BOOL;

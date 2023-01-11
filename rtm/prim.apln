@@ -112,6 +112,10 @@ lessthan←{
 }
 lth←{⎕SIGNAL 16} ⎕AMBIV lessthan
 
+⍝ =: Equal
+equal←'eql_vec_ibeam'⌶ scalar
+eql←{⎕SIGNAL 2}⎕AMBIV equal
+
 ⍝ ≠: Not Equal | First Occurrence
 firstocc←{⎕SIGNAL 16}
 noteq←'neq_vec_ibeam'⌶ scalar
@@ -159,5 +163,15 @@ dot←{⍺⍺⌿⍺ ⍵⍵¨ ⍵}
 
 ⍝ ⍣: Power Operator
 pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}
+
+⍝ ∘: Compose Operator
+jot←{
+	type←⎕NC'⍺' '⍺⍺' '⍵⍵'
+	type≡2 3 3:⍺ ⍺⍺ ⍵⍵ ⍵
+	type≡0 3 3:⍺⍺ ⍵⍵ ⍵
+	type≡0 2 3:⍺⍺ ⍵⍵ ⍵
+	type≡0 3 2:⍵ ⍺⍺ ⍵⍵
+	⎕SIGNAL 2
+}
 
 :EndNamespace
