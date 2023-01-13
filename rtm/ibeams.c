@@ -1858,211 +1858,79 @@ struct cell_func exp_closure = {CELL_FUNC, 1, exp_func, error_syntax_dya, 0};
 struct cell_func *exp_vec_ibeam = &exp_closure;
 
 int
-lth_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+cmp_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = ARR_BOOL;
 	
 	return 0;
 }
 
-int
-lth_device(af_array *z, af_array l, af_array r)
-{
-	return af_lt(z, l, r, 0);
-}
+#define DEF_CMP_IBEAM(name, cmp_dev, loop, loop_cmpx, loop_lcmpx, loop_rcmpx)		\
+int                                                                                     \
+name##_device(af_array *z, af_array l, af_array r)                                      \
+{                                                                                       \
+	return cmp_dev(z, l, r, 0);                                                     \
+}                                                                                       \
+											\
+int                                                                                     \
+name##_host(struct cell_array *t, size_t count,                                         \
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)                   \
+{                                                                                       \
+											\
+	switch (t->type) {                                                              \
+	case ARR_BOOL:                                                                  \
+		SIMPLE_SWITCH(loop, loop_cmpx, loop_lcmpx, loop_rcmpx,             	\
+		    int8_t, l->type, r->type, return 99);                               \
+		break;                                                                  \
+	default:                                                                        \
+		return 99;                                                              \
+	}                                                                               \
+											\
+	return 0;                                                                       \
+}                                                                                       \
+											\
+int                                                                                     \
+name##_func(struct cell_array **z,                                                      \
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)                 \
+{                                                                                       \
+	return dyadic_scalar_apply(z, l, r, cmp_type, name##_device, name##_host);      \
+}                                                                                       \
+											\
+struct cell_func name##_closure = {CELL_FUNC, 1, error_syntax_mon, name##_func, 0};     \
+struct cell_func *name##_vec_ibeam = &name##_closure;                                   \
 
-int
-lth_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-#define LTH_LOOP(ztype, ltype, rtype) {					\
-	ztype *tvals = t->values;					\
-	ltype *lvals = l->values;					\
-	rtype *rvals = r->values;					\
-									\
-	for (size_t i = 0; i < count; i++)				\
-		tvals[i] = (ztype)lvals[i % lc] < (ztype)rvals[i % rc];	\
-}									\
+#define CMP_LOOP(ztype, ltype, rtype, expr) {	\
+	ztype *tvals = t->values;		\
+	ltype *lvals = l->values;		\
+	rtype *rvals = r->values;		\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		ltype x = lvals[i % lc];	\
+		rtype y = rvals[i % rc];	\
+						\
+		tvals[i] = (expr);		\
+	}					\
+}						\
 
-	switch (t->type) {
-	case ARR_BOOL:
-		SIMPLE_SWITCH(LTH_LOOP, NOOP, NOOP, NOOP,  
-		    int8_t, l->type, r->type, return 99);
-		break;
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
+#define LTH_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x < (double)y)
+#define LTE_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x <= (double)y)
+#define GTH_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x > (double)y)
+#define GTE_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x >= (double)y)
+#define EQL_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, x == y)
+#define EQL_CMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real == y.real && x.imag == y.imag)
+#define EQL_LCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real == y && x.imag == 0)
+#define EQL_RCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x == y.real && 0 == y.imag)
+#define NEQ_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, x != y)
+#define NEQ_CMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real != y.real || x.imag != y.imag)
+#define NEQ_LCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real != y || x.imag != 0)
+#define NEQ_RCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x != y.real || 0 != y.imag)
 
-int
-lth_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, lth_type, lth_device, lth_host);
-}
-
-struct cell_func lth_closure = {CELL_FUNC, 1, error_syntax_mon, lth_func, 0};
-struct cell_func *lth_vec_ibeam = &lth_closure;
-
-int
-eql_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
-{
-	*type = ARR_BOOL;
-	
-	return 0;
-}
-
-int
-eql_device(af_array *z, af_array l, af_array r)
-{
-	return af_eq(z, l, r, 0);
-}
-
-int
-eql_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-#define EQL_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;	\
-	ltype *lvals = l->values;	\
-	rtype *rvals = r->values;
-	
-#define EQL_LOOP(ztype, ltype, rtype) {					\
-	EQL_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++)				\
-		tvals[i] = (ztype)lvals[i % lc] == (ztype)rvals[i % rc];\
-}
-
-#define EQL_CMPX(ztype, ltype, rtype) {					\
-	EQL_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i] = lvals[i % lc].real == rvals[i % rc].real	\
-		    && lvals[i % lc].imag == rvals[i % rc].imag;	\
-	}								\
-}
-		
-#define EQL_LCMPX(ztype, ltype, rtype) {			\
-	EQL_LOCALS(ztype, ltype, rtype)				\
-								\
-	for (size_t i = 0; i < count; i++) {			\
-		tvals[i] = lvals[i % lc].real == rvals[i % rc]	\
-		    && lvals[i % lc].imag == 0;			\
-	}							\
-}
-	
-#define EQL_RCMPX(ztype, ltype, rtype) {			\
-	EQL_LOCALS(ztype, ltype, rtype)				\
-								\
-	for (size_t i = 0; i < count; i++) {			\
-		tvals[i] = lvals[i % lc] == rvals[i % rc].real	\
-		    && rvals[i % rc].imag == 0;			\
-	}							\
-}
-
-	switch (t->type) {
-	case ARR_BOOL:
-		SIMPLE_SWITCH(EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX,
-		    int8_t, l->type, r->type, return 99);
-		break;
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
-
-int
-eql_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, eql_type, eql_device, eql_host);
-}
-
-struct cell_func eql_closure = {CELL_FUNC, 1, error_syntax_mon, eql_func, 0};
-struct cell_func *eql_vec_ibeam = &eql_closure;
-
-int
-neq_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
-{
-	*type = ARR_BOOL;
-	
-	return 0;
-}
-
-int
-neq_device(af_array *z, af_array l, af_array r)
-{
-	return af_neq(z, l, r, 0);
-}
-
-int
-neq_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-#define NEQ_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;	\
-	ltype *lvals = l->values;	\
-	rtype *rvals = r->values;
-	
-#define NEQ_LOOP(ztype, ltype, rtype) {					\
-	NEQ_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++)				\
-		tvals[i] = (ztype)lvals[i % lc] != (ztype)rvals[i % rc];\
-}
-
-#define NEQ_CMPX(ztype, ltype, rtype) {					\
-	NEQ_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i] = lvals[i % lc].real != rvals[i % rc].real	\
-		    || lvals[i % lc].imag != rvals[i % rc].imag;	\
-	}								\
-}
-		
-#define NEQ_LCMPX(ztype, ltype, rtype) {			\
-	NEQ_LOCALS(ztype, ltype, rtype)				\
-								\
-	for (size_t i = 0; i < count; i++) {			\
-		tvals[i] = lvals[i % lc].real != rvals[i % rc]	\
-		    || lvals[i % lc].imag != 0;			\
-	}							\
-}
-	
-#define NEQ_RCMPX(ztype, ltype, rtype) {			\
-	NEQ_LOCALS(ztype, ltype, rtype)				\
-								\
-	for (size_t i = 0; i < count; i++) {			\
-		tvals[i] = lvals[i % lc] != rvals[i % rc].real	\
-		    || rvals[i % rc].imag != 0;			\
-	}							\
-}
-
-	switch (t->type) {
-	case ARR_BOOL:
-		SIMPLE_SWITCH(NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX,
-		    int8_t, l->type, r->type, return 99);
-		break;
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
-
-int
-neq_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, neq_type, neq_device, neq_host);
-}
-
-struct cell_func neq_closure = {CELL_FUNC, 1, error_syntax_mon, neq_func, 0};
-struct cell_func *neq_vec_ibeam = &neq_closure;
+DEF_CMP_IBEAM(lth, af_lt, LTH_LOOP, NOOP, NOOP, NOOP);
+DEF_CMP_IBEAM(lte, af_le, LTE_LOOP, NOOP, NOOP, NOOP);
+DEF_CMP_IBEAM(gth, af_gt, GTH_LOOP, NOOP, NOOP, NOOP);
+DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP, NOOP, NOOP, NOOP);
+DEF_CMP_IBEAM(eql, af_eq, EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX);
+DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX);
 
 int
 not_values(struct cell_array *t, struct cell_array *r)
