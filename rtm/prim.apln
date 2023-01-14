@@ -131,7 +131,11 @@ not←notscl ⎕AMBIV without
 and←{⎕SIGNAL 2}⎕AMBIV ('and_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ∨: Or
-lor←{⎕SIGNAL 2}⎕AMBIV ('lor_vec_ibeam'⌶ numeric scalar)
+logor←{
+	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵
+	⎕SIGNAL 16
+}
+lor←{⎕SIGNAL 2}⎕AMBIV (logor numeric scalar)
 
 ⍝ ⍲: Not and
 nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}

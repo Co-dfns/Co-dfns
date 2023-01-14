@@ -1912,6 +1912,7 @@ struct cell_func *name##_vec_ibeam = &name##_closure;                           
 	}					\
 }						\
 
+#define LOR_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, x || y)
 #define LTH_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x < (double)y)
 #define LTE_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x <= (double)y)
 #define GTH_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x > (double)y)
@@ -1925,6 +1926,7 @@ struct cell_func *name##_vec_ibeam = &name##_closure;                           
 #define NEQ_LCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real != y || x.imag != 0)
 #define NEQ_RCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x != y.real || 0 != y.imag)
 
+DEF_CMP_IBEAM(lor, af_or, LOR_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(lth, af_lt, LTH_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(lte, af_le, LTE_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(gth, af_gt, GTH_LOOP, NOOP, NOOP, NOOP);
