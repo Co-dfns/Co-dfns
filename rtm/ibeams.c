@@ -1223,7 +1223,7 @@ fail:
 }
 
 int
-add_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = l->type > r->type ? l->type : r->type;
 	
@@ -1311,21 +1311,13 @@ int
 add_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	return dyadic_scalar_apply(z, l, r, add_type, add_device, add_host);
+	return dyadic_scalar_apply(z, l, r, max_type, add_device, add_host);
 }
 
 DEF_MON(add_func_mon, add_func)
 
 struct cell_func add_closure = {CELL_FUNC, 1, add_func_mon, add_func, 0};
 struct cell_func *add_vec_ibeam = &add_closure;
-
-int
-mul_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
-{
-	*type = l->type > r->type ? l->type : r->type;
-	
-	return 0;
-}
 
 int
 mul_device(af_array *z, af_array l, af_array r)
@@ -1413,7 +1405,7 @@ int
 mul_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	return dyadic_scalar_apply(z, l, r, mul_type, mul_device, mul_host);
+	return dyadic_scalar_apply(z, l, r, max_type, mul_device, mul_host);
 }
 
 DEF_MON(mul_func_mon, mul_func)
@@ -1566,14 +1558,6 @@ struct cell_func div_closure = {CELL_FUNC, 1, div_func_mon, div_func, 0};
 struct cell_func *div_vec_ibeam = &div_closure;
 
 int
-sub_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
-{
-	*type = l->type > r->type ? l->type : r->type;
-	
-	return 0;
-}
-
-int
 sub_device(af_array *z, af_array l, af_array r)
 {
 	return af_sub(z, l, r, 0);
@@ -1654,7 +1638,7 @@ int
 sub_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	return dyadic_scalar_apply(z, l, r, sub_type, sub_device, sub_host);
+	return dyadic_scalar_apply(z, l, r, max_type, sub_device, sub_host);
 }
 
 DEF_MON(sub_func_mon, sub_func)
