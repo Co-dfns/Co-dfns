@@ -1981,6 +1981,69 @@ min_func(struct cell_array **z,
 struct cell_func min_closure = {CELL_FUNC, 1, error_syntax_mon, min_func, 0};
 struct cell_func *min_vec_ibeam = &min_closure;
 
+struct apl_cmpx
+floor_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx t;
+	
+	t.real = floor(x.real);
+	t.imag = floor(x.imag);
+	
+	return t;
+}
+
+int
+floor_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = r->type;
+	err = 0;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		CHK(af_floor(&t->values, r->values), done, L"⌊⍵ ⍝ DEVICE");
+		break;
+	case STG_HOST:
+		size_t count = array_values_count(t);
+		CHK(alloc_array(t), done, L"alloc_array(t)");
+	
+#define FLOOR_LOOP(floor, type) {		\
+	type *tvals = t->values;		\
+	type *rvals = r->values;		\
+						\
+	for (size_t i = 0; i < count; i++)	\
+		tvals[i] = floor(rvals[i]);	\
+}						\
+
+		switch (r->type) {
+		case ARR_DBL:
+			FLOOR_LOOP(floor, double);
+			break;
+		case ARR_CMPX:
+			FLOOR_LOOP(floor_cmpx, struct apl_cmpx);
+			break;
+		default:
+			TRC(99, L"Expected non-complex numeric type");
+		}
+		
+		break;
+	default:
+		TRC(99, L"Unknown storage type");
+	}
+	
+done:
+	return err;
+}
+
+int
+floor_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, floor_values);
+}
+
+struct cell_func floor_closure = {CELL_FUNC, 1, floor_func, error_syntax_dya, 0};
+struct cell_func *floor_vec_ibeam = &floor_closure;
 
 int
 not_values(struct cell_array *t, struct cell_array *r)
