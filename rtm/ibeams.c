@@ -1935,6 +1935,53 @@ DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(eql, af_eq, EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX);
 DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX);
 
+#define MIN_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x < (double)y ? (zt)x : (zt)y)
+
+int
+min_device(af_array *z, af_array l, af_array r)
+{
+	return af_minof(z, l, r, 0);
+}
+
+int
+min_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		    int8_t, l->type, r->type, return 99);
+		break;
+	case ARR_SINT:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		     int16_t, l->type, r->type, return 99);
+		break;
+	case ARR_INT:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		     int32_t, l->type, r->type, return 99);
+		break;
+	case ARR_DBL:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		     double, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+min_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, max_type, min_device, min_host);
+}
+
+struct cell_func min_closure = {CELL_FUNC, 1, error_syntax_mon, min_func, 0};
+struct cell_func *min_vec_ibeam = &min_closure;
+
+
 int
 not_values(struct cell_array *t, struct cell_array *r)
 {

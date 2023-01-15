@@ -67,13 +67,6 @@ extern struct cell_func *gth_vec_ibeam;
 extern struct cell_func *gth_vec_ibeam;
 extern struct cell_func *neq_vec_ibeam;
 
-int ptr4293(struct cell_array **,
-    struct cell_array *,
-    struct cell_func *);
-int ptr4294(struct cell_array **,
-    struct cell_array *,
-    struct cell_array *,
-    struct cell_func *);
 int ptr4295(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
@@ -86,9 +79,9 @@ int ptr4297(struct cell_array **,
     struct cell_func *);
 int ptr4298(struct cell_array **,
     struct cell_array *,
+    struct cell_array *,
     struct cell_func *);
 int ptr4299(struct cell_array **,
-    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4300(struct cell_array **,
@@ -100,9 +93,9 @@ int ptr4301(struct cell_array **,
     struct cell_func *);
 int ptr4302(struct cell_array **,
     struct cell_array *,
-    struct cell_array *,
     struct cell_func *);
 int ptr4303(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4304(struct cell_array **,
@@ -212,16 +205,16 @@ int ptr4333(struct cell_array **,
     struct cell_func *);
 int ptr4334(struct cell_array **,
     struct cell_array *,
+    struct cell_array *,
     struct cell_func *);
 int ptr4335(struct cell_array **,
-    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4336(struct cell_array **,
     struct cell_array *,
-    struct cell_array *,
     struct cell_func *);
 int ptr4337(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4338(struct cell_array **,
@@ -247,16 +240,16 @@ int ptr4343(struct cell_array **,
     struct cell_func *);
 int ptr4344(struct cell_array **,
     struct cell_array *,
+    struct cell_array *,
     struct cell_func *);
 int ptr4345(struct cell_array **,
-    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4346(struct cell_array **,
     struct cell_array *,
-    struct cell_array *,
     struct cell_func *);
 int ptr4347(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4348(struct cell_array **,
@@ -562,16 +555,16 @@ int ptr4433(struct cell_array **,
     struct cell_func *);
 int ptr4434(struct cell_array **,
     struct cell_array *,
+    struct cell_array *,
     struct cell_func *);
 int ptr4435(struct cell_array **,
-    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4436(struct cell_array **,
     struct cell_array *,
-    struct cell_array *,
     struct cell_func *);
 int ptr4437(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4438(struct cell_array **,
@@ -583,16 +576,16 @@ int ptr4439(struct cell_array **,
     struct cell_func *);
 int ptr4440(struct cell_array **,
     struct cell_array *,
+    struct cell_array *,
     struct cell_func *);
 int ptr4441(struct cell_array **,
-    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4442(struct cell_array **,
     struct cell_array *,
-    struct cell_array *,
     struct cell_func *);
 int ptr4443(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4444(struct cell_array **,
@@ -604,16 +597,16 @@ int ptr4445(struct cell_array **,
     struct cell_func *);
 int ptr4446(struct cell_array **,
     struct cell_array *,
+    struct cell_array *,
     struct cell_func *);
 int ptr4447(struct cell_array **,
-    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4448(struct cell_array **,
     struct cell_array *,
-    struct cell_array *,
     struct cell_func *);
 int ptr4449(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4450(struct cell_array **,
@@ -625,16 +618,16 @@ int ptr4451(struct cell_array **,
     struct cell_func *);
 int ptr4452(struct cell_array **,
     struct cell_array *,
+    struct cell_array *,
     struct cell_func *);
 int ptr4453(struct cell_array **,
-    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4454(struct cell_array **,
     struct cell_array *,
-    struct cell_array *,
     struct cell_func *);
 int ptr4455(struct cell_array **,
+    struct cell_array *,
     struct cell_array *,
     struct cell_func *);
 int ptr4456(struct cell_array **,
@@ -743,6 +736,13 @@ int ptr4485(struct cell_array **,
     struct cell_array *,
     struct cell_func *);
 int ptr4486(struct cell_array **,
+    struct cell_array *,
+    struct cell_array *,
+    struct cell_func *);
+int ptr4487(struct cell_array **,
+    struct cell_array *,
+    struct cell_func *);
+int ptr4488(struct cell_array **,
     struct cell_array *,
     struct cell_array *,
     struct cell_func *);
@@ -1054,7 +1054,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4293, ptr4294, 1), cleanup, 
+		CHK(mk_func(&k, ptr4295, ptr4296, 1), cleanup, 
 		    L"[15] is_bool←╠{11≡⎕DR squeeze ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->squeeze);
@@ -1087,7 +1087,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4295, ptr4296, 0), cleanup, 
+		CHK(mk_func(&k, ptr4297, ptr4298, 0), cleanup, 
 		    L"[18] chk_scl←╠{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}╣");
 	
 		*stkhd++ = k;
@@ -1100,7 +1100,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4297, ptr4302, 1), cleanup, 
+		CHK(mk_func(&k, ptr4299, ptr4304, 1), cleanup, 
 		    L"[19] chk_valid_shape←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->has_nat_vals);
@@ -1115,7 +1115,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4307, ptr4308, 1), cleanup, 
+		CHK(mk_func(&k, ptr4309, ptr4310, 1), cleanup, 
 		    L"[24] both_simple←╠{is_simple ⍺:is_simple ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->is_simple);
@@ -1130,7 +1130,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4309, ptr4310, 1), cleanup, 
+		CHK(mk_func(&k, ptr4311, ptr4312, 1), cleanup, 
 		    L"[25] both_numeric←╠{is_numeric ⍺:is_numeric ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->is_numeric);
@@ -1145,7 +1145,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4311, ptr4312, 1), cleanup, 
+		CHK(mk_func(&k, ptr4313, ptr4314, 1), cleanup, 
 		    L"[26] both_char←╠{is_char ⍺:is_char ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->is_char);
@@ -1160,7 +1160,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4313, ptr4314, 1), cleanup, 
+		CHK(mk_func(&k, ptr4315, ptr4316, 1), cleanup, 
 		    L"[27] both_bool←╠{is_bool ⍺:is_bool ⍵ ⋄ 0}╣");
 	
 		k->fv[0] = retain_cell(loc->is_bool);
@@ -1175,7 +1175,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr4315, ptr4316, ptr4317, ptr4318, 1), cleanup, 
+		CHK(mk_moper(&k, ptr4317, ptr4318, ptr4319, ptr4320, 1), cleanup, 
 		    L"[28] numeric←╠{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->both_numeric);
@@ -1190,7 +1190,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr4319, ptr4320, ptr4321, ptr4322, 3), cleanup, 
+		CHK(mk_moper(&k, ptr4321, ptr4322, ptr4323, ptr4324, 3), cleanup, 
 		    L"[29] scalar←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->both_simple);
@@ -1207,7 +1207,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4323, ptr4324, 0), cleanup, 
+		CHK(mk_func(&k, ptr4325, ptr4326, 0), cleanup, 
 		    L"[32] rgt←╠{⍵}╣");
 	
 		*stkhd++ = k;
@@ -1220,7 +1220,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4327, ptr4328, 0), cleanup, 
+		CHK(mk_func(&k, ptr4329, ptr4330, 0), cleanup, 
 		    L"[35] lft←{⍵} ⎕AMBIV ╠{⍺}╣");
 	
 		*stkhd++ = k;
@@ -1234,7 +1234,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4325, ptr4326, 0), cleanup, 
+		CHK(mk_func(&k, ptr4327, ptr4328, 0), cleanup, 
 		    L"[35] lft←╠{⍵}╣ ⎕AMBIV {⍺}");
 	
 		*stkhd++ = k;
@@ -1264,7 +1264,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4329, ptr4330, 1), cleanup, 
+		CHK(mk_func(&k, ptr4331, ptr4332, 1), cleanup, 
 		    L"[38] reshape←╠{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->chk_valid_shape);
@@ -1315,7 +1315,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4331, ptr4332, 0), cleanup, 
+		CHK(mk_func(&k, ptr4333, ptr4334, 0), cleanup, 
 		    L"[42] cat←('ravel_ibeam'⌶) ⎕AMBIV ╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -1355,7 +1355,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4333, ptr4336, 1), cleanup, 
+		CHK(mk_func(&k, ptr4335, ptr4338, 1), cleanup, 
 		    L"[45] depth←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->is_simple);
@@ -1416,7 +1416,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4339, ptr4340, 0), cleanup, 
+		CHK(mk_func(&k, ptr4341, ptr4342, 0), cleanup, 
 		    L"[52] nqv←╠{⊃⍴⍵}╣ ⎕AMBIV ('nqv_ibeam'⌶)");
 	
 		*stkhd++ = k;
@@ -1446,7 +1446,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4341, ptr4342, 0), cleanup, 
+		CHK(mk_func(&k, ptr4343, ptr4344, 0), cleanup, 
 		    L"[55] materialize←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -1459,7 +1459,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4343, ptr4346, 1), cleanup, 
+		CHK(mk_func(&k, ptr4345, ptr4348, 1), cleanup, 
 		    L"[56] index←╠{idx←⊃⍺ ⋄ rnk←≢⍴idx╣");
 	
 		k->fv[0] = retain_cell(loc->is_integer);
@@ -1510,7 +1510,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4349, ptr4350, 1), cleanup, 
+		CHK(mk_func(&k, ptr4351, ptr4352, 1), cleanup, 
 		    L"[64] index_gen←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->chk_valid_shape);
@@ -1525,7 +1525,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4351, ptr4352, 0), cleanup, 
+		CHK(mk_func(&k, ptr4353, ptr4354, 0), cleanup, 
 		    L"[71] index_of←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -1574,7 +1574,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4353, ptr4354, 0), cleanup, 
+		CHK(mk_func(&k, ptr4355, ptr4356, 0), cleanup, 
 		    L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV ╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -1614,7 +1614,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4355, ptr4356, 0), cleanup, 
+		CHK(mk_func(&k, ptr4357, ptr4358, 0), cleanup, 
 		    L"[78] enclose←╠{╣");
 	
 		*stkhd++ = k;
@@ -1627,7 +1627,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4357, ptr4358, 0), cleanup, 
+		CHK(mk_func(&k, ptr4359, ptr4360, 0), cleanup, 
 		    L"[82] par←enclose ⎕AMBIV ╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -1667,7 +1667,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4359, ptr4360, 1), cleanup, 
+		CHK(mk_func(&k, ptr4361, ptr4362, 1), cleanup, 
 		    L"[85] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->squeeze);
@@ -1758,7 +1758,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4361, ptr4362, 0), cleanup, 
+		CHK(mk_func(&k, ptr4363, ptr4364, 0), cleanup, 
 		    L"[89] negate←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -1847,7 +1847,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4363, ptr4364, 0), cleanup, 
+		CHK(mk_func(&k, ptr4365, ptr4366, 0), cleanup, 
 		    L"[93] sign←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -1936,7 +1936,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4365, ptr4366, 0), cleanup, 
+		CHK(mk_func(&k, ptr4367, ptr4368, 0), cleanup, 
 		    L"[97] recip←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -2025,7 +2025,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4367, ptr4368, 1), cleanup, 
+		CHK(mk_func(&k, ptr4369, ptr4370, 1), cleanup, 
 		    L"[101] absolute←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->is_numeric);
@@ -2040,7 +2040,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4369, ptr4370, 0), cleanup, 
+		CHK(mk_func(&k, ptr4371, ptr4372, 0), cleanup, 
 		    L"[106] residue←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -2087,17 +2087,17 @@ cdf_prim_init(void)
 	release_cell(*--stkhd);
 	
 	if (!loc->scalar)
-		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ ⎕AMBIV ('min_vec_ibeam'⌶ numeric ╠scalar╣)");
+		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ numeric ⎕AMBIV ('min_vec_ibeam'⌶ numeric ╠scalar╣)");
 	
 	*stkhd++ = retain_cell(loc->scalar);
 	
 	if (!loc->numeric)
-		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ ⎕AMBIV ('min_vec_ibeam'⌶ ╠numeric╣ scalar)");
+		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ numeric ⎕AMBIV ('min_vec_ibeam'⌶ ╠numeric╣ scalar)");
 	
 	*stkhd++ = retain_cell(loc->numeric);
 	
 	if (!min_vec_ibeam)
-		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ ⎕AMBIV (╠'min_vec_ibeam'⌶╣ numeric scalar)");
+		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ numeric ⎕AMBIV (╠'min_vec_ibeam'⌶╣ numeric scalar)");
 	
 	*stkhd++ = retain_cell(min_vec_ibeam);
 	
@@ -2107,7 +2107,7 @@ cdf_prim_init(void)
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[110] min←'floor_vec_ibeam'⌶ ⎕AMBIV (╠'min_vec_ibeam'⌶ numeric╣ scalar)");
+		    L"[110] min←'floor_vec_ibeam'⌶ numeric ⎕AMBIV (╠'min_vec_ibeam'⌶ numeric╣ scalar)");
 	
 		release_func(x);
 		release_moper(op);
@@ -2122,7 +2122,7 @@ cdf_prim_init(void)
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[110] min←'floor_vec_ibeam'⌶ ⎕AMBIV ╠('min_vec_ibeam'⌶ numeric scalar)╣");
+		    L"[110] min←'floor_vec_ibeam'⌶ numeric ⎕AMBIV ╠('min_vec_ibeam'⌶ numeric scalar)╣");
 	
 		release_func(x);
 		release_moper(op);
@@ -2132,14 +2132,34 @@ cdf_prim_init(void)
 	}
 	
 	if (!cdf_prim.q_ambiv)
-		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ ╠⎕AMBIV╣ ('min_vec_ibeam'⌶ numeric scalar)");
+		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ numeric ╠⎕AMBIV╣ ('min_vec_ibeam'⌶ numeric scalar)");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_ambiv);
 	
+	if (!loc->numeric)
+		CHK(6, cleanup, L"[110] min←'floor_vec_ibeam'⌶ ╠numeric╣ ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)");
+	
+	*stkhd++ = retain_cell(loc->numeric);
+	
 	if (!floor_vec_ibeam)
-		CHK(6, cleanup, L"[110] min←╠'floor_vec_ibeam'⌶╣ ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)");
+		CHK(6, cleanup, L"[110] min←╠'floor_vec_ibeam'⌶╣ numeric ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)");
 	
 	*stkhd++ = retain_cell(floor_vec_ibeam);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[110] min←╠'floor_vec_ibeam'⌶ numeric╣ ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
 	
 	{
 		struct cell_func *x = stkhd[-1];
@@ -2148,7 +2168,7 @@ cdf_prim_init(void)
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), cleanup,
-		    L"[110] min←╠'floor_vec_ibeam'⌶ ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)╣");
+		    L"[110] min←╠'floor_vec_ibeam'⌶ numeric ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)╣");
 	
 		release_func(x);
 		release_doper(op);
@@ -2545,7 +2565,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4371, ptr4372, 1), cleanup, 
+		CHK(mk_func(&k, ptr4373, ptr4374, 1), cleanup, 
 		    L"[128] notscl←╠{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->is_bool);
@@ -2560,7 +2580,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4373, ptr4374, 0), cleanup, 
+		CHK(mk_func(&k, ptr4375, ptr4376, 0), cleanup, 
 		    L"[129] without←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -2609,7 +2629,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4375, ptr4376, 1), cleanup, 
+		CHK(mk_func(&k, ptr4377, ptr4378, 1), cleanup, 
 		    L"[133] logand←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->both_bool);
@@ -2674,7 +2694,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4377, ptr4378, 0), cleanup, 
+		CHK(mk_func(&k, ptr4379, ptr4380, 0), cleanup, 
 		    L"[137] and←╠{⎕SIGNAL 2}╣⎕AMBIV (logand numeric scalar)");
 	
 		*stkhd++ = k;
@@ -2704,7 +2724,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4379, ptr4380, 1), cleanup, 
+		CHK(mk_func(&k, ptr4381, ptr4382, 1), cleanup, 
 		    L"[140] logor←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->both_bool);
@@ -2769,7 +2789,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4381, ptr4382, 0), cleanup, 
+		CHK(mk_func(&k, ptr4383, ptr4384, 0), cleanup, 
 		    L"[144] lor←╠{⎕SIGNAL 2}╣⎕AMBIV (logor numeric scalar)");
 	
 		*stkhd++ = k;
@@ -2799,7 +2819,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4385, ptr4386, 1), cleanup, 
+		CHK(mk_func(&k, ptr4387, ptr4388, 1), cleanup, 
 		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->both_bool);
@@ -2815,7 +2835,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4383, ptr4384, 0), cleanup, 
+		CHK(mk_func(&k, ptr4385, ptr4386, 0), cleanup, 
 		    L"[147] nan←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
 	
 		*stkhd++ = k;
@@ -2845,7 +2865,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4389, ptr4390, 1), cleanup, 
+		CHK(mk_func(&k, ptr4391, ptr4392, 1), cleanup, 
 		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}╣");
 	
 		k->fv[0] = retain_cell(loc->both_bool);
@@ -2861,7 +2881,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4387, ptr4388, 0), cleanup, 
+		CHK(mk_func(&k, ptr4389, ptr4390, 0), cleanup, 
 		    L"[150] nor←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		*stkhd++ = k;
@@ -2891,7 +2911,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4391, ptr4392, 0), cleanup, 
+		CHK(mk_func(&k, ptr4393, ptr4394, 0), cleanup, 
 		    L"[153] lessthan←╠{╣");
 	
 		*stkhd++ = k;
@@ -2954,7 +2974,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4393, ptr4394, 0), cleanup, 
+		CHK(mk_func(&k, ptr4395, ptr4396, 0), cleanup, 
 		    L"[157] lth←╠{⎕SIGNAL 2}╣ ⎕AMBIV (lessthan numeric scalar)");
 	
 		*stkhd++ = k;
@@ -2984,7 +3004,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4395, ptr4396, 0), cleanup, 
+		CHK(mk_func(&k, ptr4397, ptr4398, 0), cleanup, 
 		    L"[160] lesseql←╠{╣");
 	
 		*stkhd++ = k;
@@ -3047,7 +3067,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4397, ptr4398, 0), cleanup, 
+		CHK(mk_func(&k, ptr4399, ptr4400, 0), cleanup, 
 		    L"[164] lte←╠{⎕SIGNAL 2}╣⎕AMBIV (lesseql numeric scalar)");
 	
 		*stkhd++ = k;
@@ -3086,7 +3106,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4399, ptr4400, 3), cleanup, 
+		CHK(mk_func(&k, ptr4401, ptr4402, 3), cleanup, 
 		    L"[168] equal←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->eql_vec);
@@ -3133,7 +3153,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4401, ptr4402, 0), cleanup, 
+		CHK(mk_func(&k, ptr4403, ptr4404, 0), cleanup, 
 		    L"[173] eql←╠{⎕SIGNAL 2}╣⎕AMBIV (equal scalar)");
 	
 		*stkhd++ = k;
@@ -3163,7 +3183,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4403, ptr4404, 0), cleanup, 
+		CHK(mk_func(&k, ptr4405, ptr4406, 0), cleanup, 
 		    L"[176] greatereql←╠{╣");
 	
 		*stkhd++ = k;
@@ -3226,7 +3246,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4405, ptr4406, 0), cleanup, 
+		CHK(mk_func(&k, ptr4407, ptr4408, 0), cleanup, 
 		    L"[180] gte←╠{⎕SIGNAL 2}╣⎕AMBIV (greatereql numeric scalar)");
 	
 		*stkhd++ = k;
@@ -3256,7 +3276,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4407, ptr4408, 0), cleanup, 
+		CHK(mk_func(&k, ptr4409, ptr4410, 0), cleanup, 
 		    L"[183] greaterthan←╠{╣");
 	
 		*stkhd++ = k;
@@ -3319,7 +3339,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4409, ptr4410, 0), cleanup, 
+		CHK(mk_func(&k, ptr4411, ptr4412, 0), cleanup, 
 		    L"[187] gth←╠{⎕SIGNAL 2}╣⎕AMBIV (greaterthan numeric scalar)");
 	
 		*stkhd++ = k;
@@ -3349,7 +3369,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4411, ptr4412, 0), cleanup, 
+		CHK(mk_func(&k, ptr4413, ptr4414, 0), cleanup, 
 		    L"[190] firstocc←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -3371,7 +3391,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4413, ptr4414, 3), cleanup, 
+		CHK(mk_func(&k, ptr4415, ptr4416, 3), cleanup, 
 		    L"[192] noteq←╠{╣");
 	
 		k->fv[0] = retain_cell(loc->neq_vec);
@@ -3444,7 +3464,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4415, ptr4416, 0), cleanup, 
+		CHK(mk_func(&k, ptr4417, ptr4418, 0), cleanup, 
 		    L"[200] split←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -3457,7 +3477,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4417, ptr4418, 0), cleanup, 
+		CHK(mk_func(&k, ptr4419, ptr4420, 0), cleanup, 
 		    L"[201] drop←╠{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}╣");
 	
 		*stkhd++ = k;
@@ -3506,7 +3526,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4419, ptr4420, 0), cleanup, 
+		CHK(mk_func(&k, ptr4421, ptr4422, 0), cleanup, 
 		    L"[205] reverse_last←╠{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}╣");
 	
 		*stkhd++ = k;
@@ -3519,7 +3539,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4421, ptr4422, 0), cleanup, 
+		CHK(mk_func(&k, ptr4423, ptr4424, 0), cleanup, 
 		    L"[206] rotate_last←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -3568,7 +3588,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4423, ptr4424, 0), cleanup, 
+		CHK(mk_func(&k, ptr4425, ptr4426, 0), cleanup, 
 		    L"[210] map_monadic←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -3581,7 +3601,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr4425, ptr4426, ptr4427, ptr4428, 2), cleanup, 
+		CHK(mk_moper(&k, ptr4427, ptr4428, ptr4429, ptr4430, 2), cleanup, 
 		    L"[211] map_dyadic←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->chk_scl);
@@ -3597,7 +3617,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr4429, ptr4430, ptr4431, ptr4432, 1), cleanup, 
+		CHK(mk_moper(&k, ptr4431, ptr4432, ptr4433, ptr4434, 1), cleanup, 
 		    L"[212] map←╠{⍺ ⍺⍺ map_dyadic ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->map_dyadic);
@@ -3612,7 +3632,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr4433, ptr4436, ptr4439, ptr4442, 0), cleanup, 
+		CHK(mk_moper(&k, ptr4435, ptr4438, ptr4441, ptr4444, 0), cleanup, 
 		    L"[215] reduce←╠{╣");
 	
 		*stkhd++ = k;
@@ -3625,7 +3645,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr4445, ptr4448, ptr4451, ptr4454, 1), cleanup, 
+		CHK(mk_moper(&k, ptr4447, ptr4450, ptr4453, ptr4456, 1), cleanup, 
 		    L"[220] nwreduce←╠{op←⍺⍺¨╣");
 	
 		k->fv[0] = retain_cell(loc->is_integer);
@@ -3640,7 +3660,7 @@ cdf_prim_init(void)
 	{
 		struct cell_moper *k;
 	
-		CHK(mk_moper(&k, ptr4457, ptr4458, ptr4459, ptr4460, 2), cleanup, 
+		CHK(mk_moper(&k, ptr4459, ptr4460, ptr4461, ptr4462, 2), cleanup, 
 		    L"[224] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
 	
 		k->fv[0] = retain_cell(loc->nwreduce);
@@ -3656,7 +3676,7 @@ cdf_prim_init(void)
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4461, ptr4462, 0), cleanup, 
+		CHK(mk_func(&k, ptr4463, ptr4464, 0), cleanup, 
 		    L"[229] rpf←╠{⎕SIGNAL 16}╣");
 	
 		*stkhd++ = k;
@@ -3669,7 +3689,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, ptr4463, ptr4464, ptr4465, ptr4466, ptr4467, ptr4468, ptr4469, ptr4470, 0), cleanup, 
+		CHK(mk_doper(&k, ptr4465, ptr4466, ptr4467, ptr4468, ptr4469, ptr4470, ptr4471, ptr4472, 0), cleanup, 
 		    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
 	
 		*stkhd++ = k;
@@ -3682,7 +3702,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, ptr4471, ptr4472, ptr4473, ptr4474, ptr4475, ptr4476, ptr4477, ptr4478, 0), cleanup, 
+		CHK(mk_doper(&k, ptr4473, ptr4474, ptr4475, ptr4476, ptr4477, ptr4478, ptr4479, ptr4480, 0), cleanup, 
 		    L"[235] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
 	
 		*stkhd++ = k;
@@ -3695,7 +3715,7 @@ cdf_prim_init(void)
 	{
 		struct cell_doper *k;
 	
-		CHK(mk_doper(&k, ptr4479, ptr4480, ptr4481, ptr4482, ptr4483, ptr4484, ptr4485, ptr4486, 0), cleanup, 
+		CHK(mk_doper(&k, ptr4481, ptr4482, ptr4483, ptr4484, ptr4485, ptr4486, ptr4487, ptr4488, 0), cleanup, 
 		    L"[238] jot←╠{╣");
 	
 		*stkhd++ = k;
@@ -3712,242 +3732,6 @@ cleanup:
 }
 
 int
-ptr4293(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_func_box *squeeze;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR squeeze ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->squeeze->value)
-		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR ╠squeeze╣ ⍵}");
-	
-	*stkhd++ = retain_cell(lex->squeeze->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[15] is_bool←{11≡⎕DR ╠squeeze ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[15] is_bool←{11≡╠⎕DR╣ squeeze ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[15] is_bool←{11≡╠⎕DR squeeze ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[15] is_bool←{11╠≡╣⎕DR squeeze ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {11};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[15] is_bool←{╠11≡⎕DR squeeze ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[15] is_bool←╠{11≡⎕DR squeeze ⍵}╣");
-	return err;
-}
-
-int
-ptr4294(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *squeeze;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR squeeze ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->squeeze->value)
-		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR ╠squeeze╣ ⍵}");
-	
-	*stkhd++ = retain_cell(lex->squeeze->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[15] is_bool←{11≡⎕DR ╠squeeze ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[15] is_bool←{11≡╠⎕DR╣ squeeze ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[15] is_bool←{11≡╠⎕DR squeeze ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[15] is_bool←{11╠≡╣⎕DR squeeze ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {11};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[15] is_bool←{╠11≡⎕DR squeeze ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[15] is_bool←╠{11≡⎕DR squeeze ⍵}╣");
-	return err;
-}
-
-int
 ptr4295(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -3959,18 +3743,24 @@ ptr4295(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *squeeze;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR squeeze ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡╠⍴╣⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	if (!lex->squeeze->value)
+		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR ╠squeeze╣ ⍵}");
 	
-	*stkhd++ = retain_cell(cdf_prim.rho);
+	*stkhd++ = retain_cell(lex->squeeze->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -3978,7 +3768,27 @@ ptr4295(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡╠⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		    L"[15] is_bool←{11≡⎕DR ╠squeeze ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[15] is_bool←{11≡╠⎕DR╣ squeeze ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[15] is_bool←{11≡╠⎕DR squeeze ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -3988,134 +3798,7 @@ ptr4295(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)╠≡╣⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴╠⍺╣)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(╠⍴╣⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{╠(⍴⍺)╣≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{╠(⍴⍺)≡⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,╣⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢╣,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1╠≡╣≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(6, cleanup, L"[15] is_bool←{11╠≡╣⎕DR squeeze ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.eqv);
 	
@@ -4124,11 +3807,11 @@ ptr4295(struct cell_array **z,
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {1};
+		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(fill_array(arr, dat), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -4140,365 +3823,13 @@ ptr4295(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1≡≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		    L"[15] is_bool←{╠11≡⎕DR squeeze ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,╣⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢╣,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1╠≡╣≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1≡≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴╣⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢╣⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)╠≡╣≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴╠⍺╣)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴╣⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (╠≢╣⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)≡≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {5};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL╣ 5 ⋄ ⎕SIGNAL 4}");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL 5╣ ⋄ ⎕SIGNAL 4}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {4};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL╣ 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL 4╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
 		*stkhd++ = dst;
 	}
 	
@@ -4515,7 +3846,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[18] chk_scl←╠{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}╣");
+	    L"[15] is_bool←╠{11≡⎕DR squeeze ⍵}╣");
 	return err;
 }
 
@@ -4530,18 +3861,24 @@ ptr4296(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *squeeze;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR squeeze ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡╠⍴╣⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	if (!lex->squeeze->value)
+		CHK(6, cleanup, L"[15] is_bool←{11≡⎕DR ╠squeeze╣ ⍵}");
 	
-	*stkhd++ = retain_cell(cdf_prim.rho);
+	*stkhd++ = retain_cell(lex->squeeze->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -4549,7 +3886,27 @@ ptr4296(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡╠⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		    L"[15] is_bool←{11≡⎕DR ╠squeeze ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[15] is_bool←{11≡╠⎕DR╣ squeeze ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[15] is_bool←{11≡╠⎕DR squeeze ⍵╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -4559,134 +3916,7 @@ ptr4296(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)╠≡╣⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴╠⍺╣)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(╠⍴╣⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{╠(⍴⍺)╣≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{╠(⍴⍺)≡⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,╣⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢╣,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1╠≡╣≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(6, cleanup, L"[15] is_bool←{11╠≡╣⎕DR squeeze ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.eqv);
 	
@@ -4695,11 +3925,11 @@ ptr4296(struct cell_array **z,
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {1};
+		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		CHK(fill_array(arr, dat), cleanup, L"[15] is_bool←{╠11╣≡⎕DR squeeze ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -4711,365 +3941,13 @@ ptr4296(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1≡≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+		    L"[15] is_bool←{╠11≡⎕DR squeeze ⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,╣⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢╣,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1╠≡╣≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1≡≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴╣⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢╣⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)╠≡╣≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴╠⍺╣)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴╣⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (╠≢╣⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)≡≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {5};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL╣ 5 ⋄ ⎕SIGNAL 4}");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL 5╣ ⋄ ⎕SIGNAL 4}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {4};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL╣ 4}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL 4╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
 		*stkhd++ = dst;
 	}
 	
@@ -5085,7 +3963,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[18] chk_scl←╠{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}╣");
+	    L"[15] is_bool←╠{11≡⎕DR squeeze ⍵}╣");
 	return err;
 }
 
@@ -5101,6 +3979,1148 @@ ptr4297(struct cell_array **z,
 
 	alpha = NULL;
 
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡╠⍴╣⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡╠⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)╠≡╣⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴╠⍺╣)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(╠⍴╣⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{╠(⍴⍺)╣≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{╠(⍴⍺)≡⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,╣⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢╣,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1╠≡╣≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1≡≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,╣⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢╣,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1╠≡╣≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1≡≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴╣⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢╣⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)╠≡╣≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴╠⍺╣)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴╣⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (╠≢╣⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)≡≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL╣ 5 ⋄ ⎕SIGNAL 4}");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL 5╣ ⋄ ⎕SIGNAL 4}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {4};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL╣ 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL 4╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[18] chk_scl←╠{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}╣");
+	return err;
+}
+
+int
+ptr4298(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡╠⍴╣⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡╠⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)╠≡╣⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴╠⍺╣)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(╠⍴╣⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{╠(⍴⍺)╣≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{╠(⍴⍺)≡⍴⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴╠⍵╣:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:╠0╣ ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,╣⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢╠,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢╣,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡╠≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1╠≡╣≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1╣≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ ╠1≡≢,⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,╠⍺╣:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:╠0╣ ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,╣⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢╠,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢╣,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡╠≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1╠≡╣≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1╣≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ ╠1≡≢,⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,╠⍵╣:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:╠0╣ ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴╣⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢╠⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢╣⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡╠≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)╠≡╣≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴╠⍺╣)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴╣⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢╠⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (╠≢╣⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)╣≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ ╠(≢⍴⍺)≡≢⍴⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴╠⍵╣:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL ╠5╣ ⋄ ⎕SIGNAL 4}");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL╣ 5 ⋄ ⎕SIGNAL 4}");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:╠⎕SIGNAL 5╣ ⋄ ⎕SIGNAL 4}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {4};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL ╠4╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL╣ 4}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[18] chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ╠⎕SIGNAL 4╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[18] chk_scl←╠{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}╣");
+	return err;
+}
+
+int
+ptr4299(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
 	struct lex_vars {
 		struct cell_func_box *has_nat_vals;
 	} *lex;
@@ -5118,7 +5138,7 @@ ptr4297(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4298, ptr4299, 0), cleanup, 
+		CHK(mk_func(&k, ptr4300, ptr4301, 0), cleanup, 
 		    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
 	
 		*stkhd++ = k;
@@ -5202,7 +5222,7 @@ ptr4297(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4300, ptr4301, 1), cleanup, 
+		CHK(mk_func(&k, ptr4302, ptr4303, 1), cleanup, 
 		    L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
 	
 		k->fv[0] = retain_cell(lex->has_nat_vals);
@@ -5308,514 +5328,6 @@ cleanup:
 
 	TRC(chk_array_valid(*z), 
 	    L"[19] chk_valid_shape←╠{╣");
-	return err;
-}
-
-int
-ptr4298(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct {
-		struct cell_array *rnk;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	loc->rnk = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->rnk = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
-	return err;
-}
-
-int
-ptr4299(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct {
-		struct cell_array *rnk;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	loc->rnk = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->rnk = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
 	return err;
 }
 
@@ -5831,6 +5343,514 @@ ptr4300(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct {
+		struct cell_array *rnk;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	loc->rnk = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->rnk = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
+	return err;
+}
+
+int
+ptr4301(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct {
+		struct cell_array *rnk;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	loc->rnk = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->rnk = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
+	return err;
+}
+
+int
+ptr4302(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
 	struct lex_vars {
 		struct cell_func_box *has_nat_vals;
 	} *lex;
@@ -5932,7 +5952,7 @@ cleanup:
 }
 
 int
-ptr4301(struct cell_array **z,
+ptr4303(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -6042,7 +6062,7 @@ cleanup:
 }
 
 int
-ptr4302(struct cell_array **z,
+ptr4304(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -6069,7 +6089,7 @@ ptr4302(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4303, ptr4304, 0), cleanup, 
+		CHK(mk_func(&k, ptr4305, ptr4306, 0), cleanup, 
 		    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
 	
 		*stkhd++ = k;
@@ -6153,7 +6173,7 @@ ptr4302(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4305, ptr4306, 1), cleanup, 
+		CHK(mk_func(&k, ptr4307, ptr4308, 1), cleanup, 
 		    L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
 	
 		k->fv[0] = retain_cell(lex->has_nat_vals);
@@ -6262,514 +6282,6 @@ cleanup:
 }
 
 int
-ptr4303(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct {
-		struct cell_array *rnk;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	loc->rnk = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->rnk = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
-	return err;
-}
-
-int
-ptr4304(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct {
-		struct cell_array *rnk;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	loc->rnk = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->rnk = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
-	return err;
-}
-
-int
 ptr4305(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -6781,24 +6293,25 @@ ptr4305(struct cell_array **z,
 
 	alpha = NULL;
 
-	struct lex_vars {
-		struct cell_func_box *has_nat_vals;
-	} *lex;
+	struct {
+		struct cell_array *rnk;
+	} loc_frm, *loc;
 	
-	lex = (struct lex_vars *)self->fv;
+	loc = &loc_frm;
 	
+	loc->rnk = NULL;
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[21] 	{has_nat_vals ╠⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!lex->has_nat_vals->value)
-		CHK(6, cleanup, L"[21] 	{╠has_nat_vals╣ ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11");
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
-	*stkhd++ = retain_cell(lex->has_nat_vals->value);
+	*stkhd++ = retain_cell(cdf_prim.rho);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -6806,7 +6319,7 @@ ptr4305(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[21] 	{╠has_nat_vals ⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
+		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
 		release_func(fn);
 		release_array(y);
@@ -6815,10 +6328,75 @@ ptr4305(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->rnk = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11╣");
+		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
 		release_array(x);
 	
@@ -6833,9 +6411,85 @@ ptr4305(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
 			
 				*stkhd++ = arr;
 			}
@@ -6857,9 +6511,9 @@ ptr4305(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
 	
 		*stkhd++ = arr;
 	}
@@ -6871,13 +6525,14 @@ ptr4305(struct cell_array **z,
 
 cleanup:
 	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
 	release_array(alpha);
 
 	if (err)
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
+	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
 	return err;
 }
 
@@ -6892,24 +6547,25 @@ ptr4306(struct cell_array **z,
 	int err;
 
 
-	struct lex_vars {
-		struct cell_func_box *has_nat_vals;
-	} *lex;
+	struct {
+		struct cell_array *rnk;
+	} loc_frm, *loc;
 	
-	lex = (struct lex_vars *)self->fv;
+	loc = &loc_frm;
 	
+	loc->rnk = NULL;
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[21] 	{has_nat_vals ╠⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴╠⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!lex->has_nat_vals->value)
-		CHK(6, cleanup, L"[21] 	{╠has_nat_vals╣ ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11");
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[20] 	{rnk←≢╠⍴╣⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
-	*stkhd++ = retain_cell(lex->has_nat_vals->value);
+	*stkhd++ = retain_cell(cdf_prim.rho);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -6917,7 +6573,7 @@ ptr4306(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[21] 	{╠has_nat_vals ⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
+		    L"[20] 	{rnk←≢╠⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
 		release_func(fn);
 		release_array(y);
@@ -6926,10 +6582,75 @@ ptr4306(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[20] 	{rnk←╠≢╣⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[20] 	{rnk←╠≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->rnk = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡╠rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0╠≡╣rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0╣≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ ╠0≡rnk╣:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
+		TRC(guard_check(x), L"[20] 	{╠rnk←≢⍴⍵╣ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 	
 		release_array(x);
 	
@@ -6944,9 +6665,85 @@ ptr4306(struct cell_array **z,
 				unsigned int rnk = 0;
 				int16_t dat[] = {0};
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
 			
-				CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡╠rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1╠≡╣rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1╣≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ ╠1≡rnk╣:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:╠0╣ ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:╠0╣ ⋄ 1}⍵:⎕SIGNAL 4");
 			
 				*stkhd++ = arr;
 			}
@@ -6968,9 +6765,9 @@ ptr4306(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
+		CHK(fill_array(arr, dat), cleanup, L"[20] 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ ╠1╣}⍵:⎕SIGNAL 4");
 	
 		*stkhd++ = arr;
 	}
@@ -6982,12 +6779,13 @@ ptr4306(struct cell_array **z,
 
 cleanup:
 	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
 
 	if (err)
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
+	    L"[20] 	╠{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}╣⍵:⎕SIGNAL 4");
 	return err;
 }
 
@@ -7004,7 +6802,7 @@ ptr4307(struct cell_array **z,
 	alpha = NULL;
 
 	struct lex_vars {
-		struct cell_func_box *is_simple;
+		struct cell_func_box *has_nat_vals;
 	} *lex;
 	
 	lex = (struct lex_vars *)self->fv;
@@ -7012,15 +6810,15 @@ ptr4307(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!alpha)
-		CHK(6, cleanup, L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
+	if (!omega)
+		CHK(6, cleanup, L"[21] 	{has_nat_vals ╠⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
 	
-	*stkhd++ = retain_cell(alpha);
+	*stkhd++ = retain_cell(omega);
 	
-	if (!lex->is_simple->value)
-		CHK(6, cleanup, L"[24] both_simple←{╠is_simple╣ ⍺:is_simple ⍵ ⋄ 0}");
+	if (!lex->has_nat_vals->value)
+		CHK(6, cleanup, L"[21] 	{╠has_nat_vals╣ ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11");
 	
-	*stkhd++ = retain_cell(lex->is_simple->value);
+	*stkhd++ = retain_cell(lex->has_nat_vals->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -7028,7 +6826,7 @@ ptr4307(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[24] both_simple←{╠is_simple ⍺╣:is_simple ⍵ ⋄ 0}");
+		    L"[21] 	{╠has_nat_vals ⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
@@ -7040,7 +6838,7 @@ ptr4307(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
+		TRC(guard_check(x), L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11╣");
 	
 		release_array(x);
 	
@@ -7048,29 +6846,18 @@ ptr4307(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ╠⍵╣ ⋄ 0}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->is_simple->value)
-				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:╠is_simple╣ ⍵ ⋄ 0}");
-			
-			*stkhd++ = retain_cell(lex->is_simple->value);
-			
 			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
+				struct cell_array *arr;
 			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[24] both_simple←{is_simple ⍺:╠is_simple ⍵╣ ⋄ 0}");
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
 			
-				release_func(fn);
-				release_array(y);
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
 			
-				stkhd -= 2;
-				*stkhd++ = dst;
+				CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
 			}
 			
 			*z = *--stkhd;
@@ -7088,11 +6875,11 @@ ptr4307(struct cell_array **z,
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {0};
+		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
 	
 		*stkhd++ = arr;
 	}
@@ -7110,7 +6897,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[24] both_simple←╠{is_simple ⍺:is_simple ⍵ ⋄ 0}╣");
+	    L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
 	return err;
 }
 
@@ -7126,7 +6913,7 @@ ptr4308(struct cell_array **z,
 
 
 	struct lex_vars {
-		struct cell_func_box *is_simple;
+		struct cell_func_box *has_nat_vals;
 	} *lex;
 	
 	lex = (struct lex_vars *)self->fv;
@@ -7134,15 +6921,15 @@ ptr4308(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!alpha)
-		CHK(6, cleanup, L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
+	if (!omega)
+		CHK(6, cleanup, L"[21] 	{has_nat_vals ╠⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
 	
-	*stkhd++ = retain_cell(alpha);
+	*stkhd++ = retain_cell(omega);
 	
-	if (!lex->is_simple->value)
-		CHK(6, cleanup, L"[24] both_simple←{╠is_simple╣ ⍺:is_simple ⍵ ⋄ 0}");
+	if (!lex->has_nat_vals->value)
+		CHK(6, cleanup, L"[21] 	{╠has_nat_vals╣ ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11");
 	
-	*stkhd++ = retain_cell(lex->is_simple->value);
+	*stkhd++ = retain_cell(lex->has_nat_vals->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -7150,7 +6937,7 @@ ptr4308(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[24] both_simple←{╠is_simple ⍺╣:is_simple ⍵ ⋄ 0}");
+		    L"[21] 	{╠has_nat_vals ⍵╣:0 ⋄ 1}⍵:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
@@ -7162,7 +6949,7 @@ ptr4308(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
+		TRC(guard_check(x), L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
 	
 		release_array(x);
 	
@@ -7170,29 +6957,18 @@ ptr4308(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ╠⍵╣ ⋄ 0}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->is_simple->value)
-				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:╠is_simple╣ ⍵ ⋄ 0}");
-			
-			*stkhd++ = retain_cell(lex->is_simple->value);
-			
 			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
+				struct cell_array *arr;
 			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[24] both_simple←{is_simple ⍺:╠is_simple ⍵╣ ⋄ 0}");
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
 			
-				release_func(fn);
-				release_array(y);
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
 			
-				stkhd -= 2;
-				*stkhd++ = dst;
+				CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:╠0╣ ⋄ 1}⍵:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
 			}
 			
 			*z = *--stkhd;
@@ -7210,11 +6986,11 @@ ptr4308(struct cell_array **z,
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {0};
+		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[21] 	{has_nat_vals ⍵:0 ⋄ ╠1╣}⍵:⎕SIGNAL 11");
 	
 		*stkhd++ = arr;
 	}
@@ -7231,7 +7007,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[24] both_simple←╠{is_simple ⍺:is_simple ⍵ ⋄ 0}╣");
+	    L"[21] 	╠{has_nat_vals ⍵:0 ⋄ 1}╣⍵:⎕SIGNAL 11");
 	return err;
 }
 
@@ -7248,7 +7024,7 @@ ptr4309(struct cell_array **z,
 	alpha = NULL;
 
 	struct lex_vars {
-		struct cell_func_box *is_numeric;
+		struct cell_func_box *is_simple;
 	} *lex;
 	
 	lex = (struct lex_vars *)self->fv;
@@ -7257,14 +7033,14 @@ ptr4309(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!alpha)
-		CHK(6, cleanup, L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
+		CHK(6, cleanup, L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
 	
 	*stkhd++ = retain_cell(alpha);
 	
-	if (!lex->is_numeric->value)
-		CHK(6, cleanup, L"[25] both_numeric←{╠is_numeric╣ ⍺:is_numeric ⍵ ⋄ 0}");
+	if (!lex->is_simple->value)
+		CHK(6, cleanup, L"[24] both_simple←{╠is_simple╣ ⍺:is_simple ⍵ ⋄ 0}");
 	
-	*stkhd++ = retain_cell(lex->is_numeric->value);
+	*stkhd++ = retain_cell(lex->is_simple->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -7272,7 +7048,7 @@ ptr4309(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[25] both_numeric←{╠is_numeric ⍺╣:is_numeric ⍵ ⋄ 0}");
+		    L"[24] both_simple←{╠is_simple ⍺╣:is_simple ⍵ ⋄ 0}");
 	
 		release_func(fn);
 		release_array(y);
@@ -7284,7 +7060,7 @@ ptr4309(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
+		TRC(guard_check(x), L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
 	
 		release_array(x);
 	
@@ -7293,14 +7069,14 @@ ptr4309(struct cell_array **z,
 	
 		if (!err) {
 			if (!omega)
-				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ╠⍵╣ ⋄ 0}");
+				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ╠⍵╣ ⋄ 0}");
 			
 			*stkhd++ = retain_cell(omega);
 			
-			if (!lex->is_numeric->value)
-				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:╠is_numeric╣ ⍵ ⋄ 0}");
+			if (!lex->is_simple->value)
+				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:╠is_simple╣ ⍵ ⋄ 0}");
 			
-			*stkhd++ = retain_cell(lex->is_numeric->value);
+			*stkhd++ = retain_cell(lex->is_simple->value);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -7308,7 +7084,7 @@ ptr4309(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[25] both_numeric←{is_numeric ⍺:╠is_numeric ⍵╣ ⋄ 0}");
+				    L"[24] both_simple←{is_simple ⍺:╠is_simple ⍵╣ ⋄ 0}");
 			
 				release_func(fn);
 				release_array(y);
@@ -7334,9 +7110,9 @@ ptr4309(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -7354,7 +7130,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[25] both_numeric←╠{is_numeric ⍺:is_numeric ⍵ ⋄ 0}╣");
+	    L"[24] both_simple←╠{is_simple ⍺:is_simple ⍵ ⋄ 0}╣");
 	return err;
 }
 
@@ -7370,7 +7146,7 @@ ptr4310(struct cell_array **z,
 
 
 	struct lex_vars {
-		struct cell_func_box *is_numeric;
+		struct cell_func_box *is_simple;
 	} *lex;
 	
 	lex = (struct lex_vars *)self->fv;
@@ -7379,14 +7155,14 @@ ptr4310(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!alpha)
-		CHK(6, cleanup, L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
+		CHK(6, cleanup, L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
 	
 	*stkhd++ = retain_cell(alpha);
 	
-	if (!lex->is_numeric->value)
-		CHK(6, cleanup, L"[25] both_numeric←{╠is_numeric╣ ⍺:is_numeric ⍵ ⋄ 0}");
+	if (!lex->is_simple->value)
+		CHK(6, cleanup, L"[24] both_simple←{╠is_simple╣ ⍺:is_simple ⍵ ⋄ 0}");
 	
-	*stkhd++ = retain_cell(lex->is_numeric->value);
+	*stkhd++ = retain_cell(lex->is_simple->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -7394,7 +7170,7 @@ ptr4310(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[25] both_numeric←{╠is_numeric ⍺╣:is_numeric ⍵ ⋄ 0}");
+		    L"[24] both_simple←{╠is_simple ⍺╣:is_simple ⍵ ⋄ 0}");
 	
 		release_func(fn);
 		release_array(y);
@@ -7406,7 +7182,7 @@ ptr4310(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
+		TRC(guard_check(x), L"[24] both_simple←{is_simple ╠⍺╣:is_simple ⍵ ⋄ 0}");
 	
 		release_array(x);
 	
@@ -7415,14 +7191,14 @@ ptr4310(struct cell_array **z,
 	
 		if (!err) {
 			if (!omega)
-				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ╠⍵╣ ⋄ 0}");
+				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ╠⍵╣ ⋄ 0}");
 			
 			*stkhd++ = retain_cell(omega);
 			
-			if (!lex->is_numeric->value)
-				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:╠is_numeric╣ ⍵ ⋄ 0}");
+			if (!lex->is_simple->value)
+				CHK(6, cleanup, L"[24] both_simple←{is_simple ⍺:╠is_simple╣ ⍵ ⋄ 0}");
 			
-			*stkhd++ = retain_cell(lex->is_numeric->value);
+			*stkhd++ = retain_cell(lex->is_simple->value);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -7430,7 +7206,7 @@ ptr4310(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[25] both_numeric←{is_numeric ⍺:╠is_numeric ⍵╣ ⋄ 0}");
+				    L"[24] both_simple←{is_simple ⍺:╠is_simple ⍵╣ ⋄ 0}");
 			
 				release_func(fn);
 				release_array(y);
@@ -7456,9 +7232,9 @@ ptr4310(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[24] both_simple←{is_simple ⍺:is_simple ⍵ ⋄ ╠0╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -7475,7 +7251,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[25] both_numeric←╠{is_numeric ⍺:is_numeric ⍵ ⋄ 0}╣");
+	    L"[24] both_simple←╠{is_simple ⍺:is_simple ⍵ ⋄ 0}╣");
 	return err;
 }
 
@@ -7492,7 +7268,7 @@ ptr4311(struct cell_array **z,
 	alpha = NULL;
 
 	struct lex_vars {
-		struct cell_func_box *is_char;
+		struct cell_func_box *is_numeric;
 	} *lex;
 	
 	lex = (struct lex_vars *)self->fv;
@@ -7501,14 +7277,14 @@ ptr4311(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!alpha)
-		CHK(6, cleanup, L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
+		CHK(6, cleanup, L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
 	
 	*stkhd++ = retain_cell(alpha);
 	
-	if (!lex->is_char->value)
-		CHK(6, cleanup, L"[26] both_char←{╠is_char╣ ⍺:is_char ⍵ ⋄ 0}");
+	if (!lex->is_numeric->value)
+		CHK(6, cleanup, L"[25] both_numeric←{╠is_numeric╣ ⍺:is_numeric ⍵ ⋄ 0}");
 	
-	*stkhd++ = retain_cell(lex->is_char->value);
+	*stkhd++ = retain_cell(lex->is_numeric->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -7516,7 +7292,7 @@ ptr4311(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[26] both_char←{╠is_char ⍺╣:is_char ⍵ ⋄ 0}");
+		    L"[25] both_numeric←{╠is_numeric ⍺╣:is_numeric ⍵ ⋄ 0}");
 	
 		release_func(fn);
 		release_array(y);
@@ -7528,7 +7304,7 @@ ptr4311(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
+		TRC(guard_check(x), L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
 	
 		release_array(x);
 	
@@ -7537,14 +7313,14 @@ ptr4311(struct cell_array **z,
 	
 		if (!err) {
 			if (!omega)
-				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:is_char ╠⍵╣ ⋄ 0}");
+				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ╠⍵╣ ⋄ 0}");
 			
 			*stkhd++ = retain_cell(omega);
 			
-			if (!lex->is_char->value)
-				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:╠is_char╣ ⍵ ⋄ 0}");
+			if (!lex->is_numeric->value)
+				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:╠is_numeric╣ ⍵ ⋄ 0}");
 			
-			*stkhd++ = retain_cell(lex->is_char->value);
+			*stkhd++ = retain_cell(lex->is_numeric->value);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -7552,7 +7328,7 @@ ptr4311(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[26] both_char←{is_char ⍺:╠is_char ⍵╣ ⋄ 0}");
+				    L"[25] both_numeric←{is_numeric ⍺:╠is_numeric ⍵╣ ⋄ 0}");
 			
 				release_func(fn);
 				release_array(y);
@@ -7578,9 +7354,9 @@ ptr4311(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -7598,7 +7374,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[26] both_char←╠{is_char ⍺:is_char ⍵ ⋄ 0}╣");
+	    L"[25] both_numeric←╠{is_numeric ⍺:is_numeric ⍵ ⋄ 0}╣");
 	return err;
 }
 
@@ -7614,7 +7390,7 @@ ptr4312(struct cell_array **z,
 
 
 	struct lex_vars {
-		struct cell_func_box *is_char;
+		struct cell_func_box *is_numeric;
 	} *lex;
 	
 	lex = (struct lex_vars *)self->fv;
@@ -7623,14 +7399,14 @@ ptr4312(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!alpha)
-		CHK(6, cleanup, L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
+		CHK(6, cleanup, L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
 	
 	*stkhd++ = retain_cell(alpha);
 	
-	if (!lex->is_char->value)
-		CHK(6, cleanup, L"[26] both_char←{╠is_char╣ ⍺:is_char ⍵ ⋄ 0}");
+	if (!lex->is_numeric->value)
+		CHK(6, cleanup, L"[25] both_numeric←{╠is_numeric╣ ⍺:is_numeric ⍵ ⋄ 0}");
 	
-	*stkhd++ = retain_cell(lex->is_char->value);
+	*stkhd++ = retain_cell(lex->is_numeric->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -7638,7 +7414,7 @@ ptr4312(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[26] both_char←{╠is_char ⍺╣:is_char ⍵ ⋄ 0}");
+		    L"[25] both_numeric←{╠is_numeric ⍺╣:is_numeric ⍵ ⋄ 0}");
 	
 		release_func(fn);
 		release_array(y);
@@ -7650,7 +7426,7 @@ ptr4312(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
+		TRC(guard_check(x), L"[25] both_numeric←{is_numeric ╠⍺╣:is_numeric ⍵ ⋄ 0}");
 	
 		release_array(x);
 	
@@ -7659,14 +7435,14 @@ ptr4312(struct cell_array **z,
 	
 		if (!err) {
 			if (!omega)
-				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:is_char ╠⍵╣ ⋄ 0}");
+				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ╠⍵╣ ⋄ 0}");
 			
 			*stkhd++ = retain_cell(omega);
 			
-			if (!lex->is_char->value)
-				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:╠is_char╣ ⍵ ⋄ 0}");
+			if (!lex->is_numeric->value)
+				CHK(6, cleanup, L"[25] both_numeric←{is_numeric ⍺:╠is_numeric╣ ⍵ ⋄ 0}");
 			
-			*stkhd++ = retain_cell(lex->is_char->value);
+			*stkhd++ = retain_cell(lex->is_numeric->value);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -7674,7 +7450,7 @@ ptr4312(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[26] both_char←{is_char ⍺:╠is_char ⍵╣ ⋄ 0}");
+				    L"[25] both_numeric←{is_numeric ⍺:╠is_numeric ⍵╣ ⋄ 0}");
 			
 				release_func(fn);
 				release_array(y);
@@ -7700,9 +7476,9 @@ ptr4312(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[25] both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ ╠0╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -7719,7 +7495,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[26] both_char←╠{is_char ⍺:is_char ⍵ ⋄ 0}╣");
+	    L"[25] both_numeric←╠{is_numeric ⍺:is_numeric ⍵ ⋄ 0}╣");
 	return err;
 }
 
@@ -7736,7 +7512,7 @@ ptr4313(struct cell_array **z,
 	alpha = NULL;
 
 	struct lex_vars {
-		struct cell_func_box *is_bool;
+		struct cell_func_box *is_char;
 	} *lex;
 	
 	lex = (struct lex_vars *)self->fv;
@@ -7745,14 +7521,14 @@ ptr4313(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!alpha)
-		CHK(6, cleanup, L"[27] both_bool←{is_bool ╠⍺╣:is_bool ⍵ ⋄ 0}");
+		CHK(6, cleanup, L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
 	
 	*stkhd++ = retain_cell(alpha);
 	
-	if (!lex->is_bool->value)
-		CHK(6, cleanup, L"[27] both_bool←{╠is_bool╣ ⍺:is_bool ⍵ ⋄ 0}");
+	if (!lex->is_char->value)
+		CHK(6, cleanup, L"[26] both_char←{╠is_char╣ ⍺:is_char ⍵ ⋄ 0}");
 	
-	*stkhd++ = retain_cell(lex->is_bool->value);
+	*stkhd++ = retain_cell(lex->is_char->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -7760,7 +7536,7 @@ ptr4313(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[27] both_bool←{╠is_bool ⍺╣:is_bool ⍵ ⋄ 0}");
+		    L"[26] both_char←{╠is_char ⍺╣:is_char ⍵ ⋄ 0}");
 	
 		release_func(fn);
 		release_array(y);
@@ -7772,7 +7548,7 @@ ptr4313(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[27] both_bool←{is_bool ╠⍺╣:is_bool ⍵ ⋄ 0}");
+		TRC(guard_check(x), L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
 	
 		release_array(x);
 	
@@ -7781,14 +7557,14 @@ ptr4313(struct cell_array **z,
 	
 		if (!err) {
 			if (!omega)
-				CHK(6, cleanup, L"[27] both_bool←{is_bool ⍺:is_bool ╠⍵╣ ⋄ 0}");
+				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:is_char ╠⍵╣ ⋄ 0}");
 			
 			*stkhd++ = retain_cell(omega);
 			
-			if (!lex->is_bool->value)
-				CHK(6, cleanup, L"[27] both_bool←{is_bool ⍺:╠is_bool╣ ⍵ ⋄ 0}");
+			if (!lex->is_char->value)
+				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:╠is_char╣ ⍵ ⋄ 0}");
 			
-			*stkhd++ = retain_cell(lex->is_bool->value);
+			*stkhd++ = retain_cell(lex->is_char->value);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -7796,7 +7572,7 @@ ptr4313(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[27] both_bool←{is_bool ⍺:╠is_bool ⍵╣ ⋄ 0}");
+				    L"[26] both_char←{is_char ⍺:╠is_char ⍵╣ ⋄ 0}");
 			
 				release_func(fn);
 				release_array(y);
@@ -7822,9 +7598,9 @@ ptr4313(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[27] both_bool←{is_bool ⍺:is_bool ⍵ ⋄ ╠0╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[27] both_bool←{is_bool ⍺:is_bool ⍵ ⋄ ╠0╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
 	
 		*stkhd++ = arr;
 	}
@@ -7842,7 +7618,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[27] both_bool←╠{is_bool ⍺:is_bool ⍵ ⋄ 0}╣");
+	    L"[26] both_char←╠{is_char ⍺:is_char ⍵ ⋄ 0}╣");
 	return err;
 }
 
@@ -7858,6 +7634,250 @@ ptr4314(struct cell_array **z,
 
 
 	struct lex_vars {
+		struct cell_func_box *is_char;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!alpha)
+		CHK(6, cleanup, L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!lex->is_char->value)
+		CHK(6, cleanup, L"[26] both_char←{╠is_char╣ ⍺:is_char ⍵ ⋄ 0}");
+	
+	*stkhd++ = retain_cell(lex->is_char->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[26] both_char←{╠is_char ⍺╣:is_char ⍵ ⋄ 0}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[26] both_char←{is_char ╠⍺╣:is_char ⍵ ⋄ 0}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:is_char ╠⍵╣ ⋄ 0}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->is_char->value)
+				CHK(6, cleanup, L"[26] both_char←{is_char ⍺:╠is_char╣ ⍵ ⋄ 0}");
+			
+			*stkhd++ = retain_cell(lex->is_char->value);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[26] both_char←{is_char ⍺:╠is_char ⍵╣ ⋄ 0}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[26] both_char←{is_char ⍺:is_char ⍵ ⋄ ╠0╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[26] both_char←╠{is_char ⍺:is_char ⍵ ⋄ 0}╣");
+	return err;
+}
+
+int
+ptr4315(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	struct lex_vars {
+		struct cell_func_box *is_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!alpha)
+		CHK(6, cleanup, L"[27] both_bool←{is_bool ╠⍺╣:is_bool ⍵ ⋄ 0}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!lex->is_bool->value)
+		CHK(6, cleanup, L"[27] both_bool←{╠is_bool╣ ⍺:is_bool ⍵ ⋄ 0}");
+	
+	*stkhd++ = retain_cell(lex->is_bool->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[27] both_bool←{╠is_bool ⍺╣:is_bool ⍵ ⋄ 0}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[27] both_bool←{is_bool ╠⍺╣:is_bool ⍵ ⋄ 0}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[27] both_bool←{is_bool ⍺:is_bool ╠⍵╣ ⋄ 0}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->is_bool->value)
+				CHK(6, cleanup, L"[27] both_bool←{is_bool ⍺:╠is_bool╣ ⍵ ⋄ 0}");
+			
+			*stkhd++ = retain_cell(lex->is_bool->value);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[27] both_bool←{is_bool ⍺:╠is_bool ⍵╣ ⋄ 0}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[27] both_bool←{is_bool ⍺:is_bool ⍵ ⋄ ╠0╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[27] both_bool←{is_bool ⍺:is_bool ⍵ ⋄ ╠0╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[27] both_bool←╠{is_bool ⍺:is_bool ⍵ ⋄ 0}╣");
+	return err;
+}
+
+int
+ptr4316(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
 		struct cell_func_box *is_bool;
 	} *lex;
 	
@@ -7968,320 +7988,6 @@ cleanup:
 }
 
 int
-ptr4315(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct lex_vars {
-		struct cell_func_box *both_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_numeric->value)
-		CHK(6, cleanup, L"[28] numeric←{⍺ ╠both_numeric╣ ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->both_numeric->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[28] numeric←{╠⍺╣ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[28] numeric←{╠⍺ both_numeric ⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!alphaalpha)
-				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ╠⍺⍺╣ ⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alphaalpha);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:╠⍺╣ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *arr, **dat;
-			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[28] numeric←{⍺ both_numeric ⍵:╠⍺ ⍺⍺ ⍵╣ ⋄ ⎕SIGNAL 11}");
-				arr->shape[0] = 2;
-				dat = arr->values;
-			
-				dat[0] = *--stkhd;
-				dat[1] = *--stkhd;
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {11};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[28] numeric←╠{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}╣");
-	return err;
-}
-
-int
-ptr4316(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct lex_vars {
-		struct cell_func_box *both_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_numeric->value)
-		CHK(6, cleanup, L"[28] numeric←{⍺ ╠both_numeric╣ ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->both_numeric->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[28] numeric←{╠⍺╣ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[28] numeric←{╠⍺ both_numeric ⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!alphaalpha)
-				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ╠⍺⍺╣ ⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alphaalpha);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:╠⍺╣ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *arr, **dat;
-			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[28] numeric←{⍺ both_numeric ⍵:╠⍺ ⍺⍺ ⍵╣ ⋄ ⎕SIGNAL 11}");
-				arr->shape[0] = 2;
-				dat = arr->values;
-			
-				dat[0] = *--stkhd;
-				dat[1] = *--stkhd;
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {11};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[28] numeric←╠{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}╣");
-	return err;
-}
-
-int
 ptr4317(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -8291,7 +7997,7 @@ ptr4317(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_moper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 
 	alpha = NULL;
 	deldel = self->fv[0];
@@ -8365,20 +8071,17 @@ ptr4317(struct cell_array **z,
 			*stkhd++ = retain_cell(alpha);
 			
 			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
+				struct cell_array *arr, **dat;
 			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
 				    L"[28] numeric←{⍺ both_numeric ⍵:╠⍺ ⍺⍺ ⍵╣ ⋄ ⎕SIGNAL 11}");
+				arr->shape[0] = 2;
+				dat = arr->values;
 			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
+				dat[0] = *--stkhd;
+				dat[1] = *--stkhd;
 			
-				stkhd -= 3;
-				*stkhd++ = dst;
+				*stkhd++ = arr;
 			}
 			
 			*z = *--stkhd;
@@ -8452,6 +8155,323 @@ ptr4318(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_moper *deldel;
+	struct cell_array *alphaalpha;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct lex_vars {
+		struct cell_func_box *both_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_numeric->value)
+		CHK(6, cleanup, L"[28] numeric←{⍺ ╠both_numeric╣ ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(lex->both_numeric->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[28] numeric←{╠⍺╣ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[28] numeric←{╠⍺ both_numeric ⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!alphaalpha)
+				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ╠⍺⍺╣ ⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alphaalpha);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:╠⍺╣ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *arr, **dat;
+			
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+				    L"[28] numeric←{⍺ both_numeric ⍵:╠⍺ ⍺⍺ ⍵╣ ⋄ ⎕SIGNAL 11}");
+				arr->shape[0] = 2;
+				dat = arr->values;
+			
+				dat[0] = *--stkhd;
+				dat[1] = *--stkhd;
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {11};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[28] numeric←╠{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}╣");
+	return err;
+}
+
+int
+ptr4319(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_moper *deldel;
+	struct cell_func *alphaalpha;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct lex_vars {
+		struct cell_func_box *both_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_numeric->value)
+		CHK(6, cleanup, L"[28] numeric←{⍺ ╠both_numeric╣ ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(lex->both_numeric->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[28] numeric←{╠⍺╣ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[28] numeric←{╠⍺ both_numeric ⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[28] numeric←{⍺ both_numeric ╠⍵╣:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!alphaalpha)
+				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ╠⍺⍺╣ ⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alphaalpha);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:╠⍺╣ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[28] numeric←{⍺ both_numeric ⍵:╠⍺ ⍺⍺ ⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {11};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[28] numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[28] numeric←╠{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}╣");
+	return err;
+}
+
+int
+ptr4320(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -8602,656 +8622,6 @@ cleanup:
 }
 
 int
-ptr4319(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_array *s;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	struct lex_vars {
-		struct cell_func_box *both_simple;
-		struct cell_func_box *chk_scl;
-		struct cell_func_box *max_shp;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	loc->s = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->chk_scl->value)
-		CHK(6, cleanup, L"[29] scalar←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->chk_scl->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->max_shp->value)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->max_shp->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->s = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_simple->value)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ ╠both_simple╣ ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->both_simple->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺╣ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺ both_simple ⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ╠⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!alphaalpha)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ╠⍺⍺╣ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(alphaalpha);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺╣ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *arr, **dat;
-			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-				arr->shape[0] = 2;
-				dat = arr->values;
-			
-				dat[0] = *--stkhd;
-				dat[1] = *--stkhd;
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.rho)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s╠⍴╣⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(cdf_prim.rho);
-			
-			if (!loc->s)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s╣⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(loc->s);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s⍴⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.q_veach)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ╠⎕VEACH╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_veach);
-	
-	if (!self)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇╣ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(self);
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇ ⎕VEACH╣ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺╣ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺ ∇ ⎕VEACH ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s╠⍴╣⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s╣⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s⍴⍺ ∇ ⎕VEACH ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[29] scalar←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}╣");
-	return err;
-}
-
-int
-ptr4320(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_array *s;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	struct lex_vars {
-		struct cell_func_box *both_simple;
-		struct cell_func_box *chk_scl;
-		struct cell_func_box *max_shp;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	loc->s = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->chk_scl->value)
-		CHK(6, cleanup, L"[29] scalar←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->chk_scl->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->max_shp->value)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->max_shp->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->s = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_simple->value)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ ╠both_simple╣ ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->both_simple->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺╣ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺ both_simple ⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ╠⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!alphaalpha)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ╠⍺⍺╣ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(alphaalpha);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺╣ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *arr, **dat;
-			
-				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-				arr->shape[0] = 2;
-				dat = arr->values;
-			
-				dat[0] = *--stkhd;
-				dat[1] = *--stkhd;
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.rho)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s╠⍴╣⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(cdf_prim.rho);
-			
-			if (!loc->s)
-				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s╣⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-			*stkhd++ = retain_cell(loc->s);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s⍴⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.q_veach)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ╠⎕VEACH╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_veach);
-	
-	if (!self)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇╣ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(self);
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇ ⎕VEACH╣ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺╣ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺ ∇ ⎕VEACH ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s╠⍴╣⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s╣⍴⍺ ∇ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s⍴⍺ ∇ ⎕VEACH ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[29] scalar←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}╣");
-	return err;
-}
-
-int
 ptr4321(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -9261,7 +8631,7 @@ ptr4321(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_moper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 
 	alpha = NULL;
 	deldel = self->fv[0];
@@ -9430,20 +8800,17 @@ ptr4321(struct cell_array **z,
 			*stkhd++ = retain_cell(alpha);
 			
 			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
+				struct cell_array *arr, **dat;
 			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
 				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+				arr->shape[0] = 2;
+				dat = arr->values;
 			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
+				dat[0] = *--stkhd;
+				dat[1] = *--stkhd;
 			
-				stkhd -= 3;
-				*stkhd++ = dst;
+				*stkhd++ = arr;
 			}
 			
 			if (!cdf_prim.rho)
@@ -9590,6 +8957,659 @@ ptr4322(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_moper *deldel;
+	struct cell_array *alphaalpha;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct {
+		struct cell_array *s;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	struct lex_vars {
+		struct cell_func_box *both_simple;
+		struct cell_func_box *chk_scl;
+		struct cell_func_box *max_shp;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	loc->s = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->chk_scl->value)
+		CHK(6, cleanup, L"[29] scalar←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->chk_scl->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->max_shp->value)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->max_shp->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->s = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_simple->value)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ ╠both_simple╣ ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->both_simple->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺╣ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺ both_simple ⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ╠⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!alphaalpha)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ╠⍺⍺╣ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(alphaalpha);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺╣ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *arr, **dat;
+			
+				CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+				arr->shape[0] = 2;
+				dat = arr->values;
+			
+				dat[0] = *--stkhd;
+				dat[1] = *--stkhd;
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.rho)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s╠⍴╣⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(cdf_prim.rho);
+			
+			if (!loc->s)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s╣⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(loc->s);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s⍴⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.q_veach)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ╠⎕VEACH╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_veach);
+	
+	if (!self)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇╣ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(self);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇ ⎕VEACH╣ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺╣ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺ ∇ ⎕VEACH ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s╠⍴╣⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s╣⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s⍴⍺ ∇ ⎕VEACH ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[29] scalar←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}╣");
+	return err;
+}
+
+int
+ptr4323(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_moper *deldel;
+	struct cell_func *alphaalpha;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct {
+		struct cell_array *s;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	struct lex_vars {
+		struct cell_func_box *both_simple;
+		struct cell_func_box *chk_scl;
+		struct cell_func_box *max_shp;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	loc->s = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->chk_scl->value)
+		CHK(6, cleanup, L"[29] scalar←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->chk_scl->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->max_shp->value)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->max_shp->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->s = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_simple->value)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ ╠both_simple╣ ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->both_simple->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺╣ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠⍺ both_simple ⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ╠⍵╣:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ╠⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!alphaalpha)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ╠⍺⍺╣ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(alphaalpha);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺╣ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴╠⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			if (!cdf_prim.rho)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s╠⍴╣⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(cdf_prim.rho);
+			
+			if (!loc->s)
+				CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s╣⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+			*stkhd++ = retain_cell(loc->s);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:╠s⍴⍺ ⍺⍺ ⍵╣ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.q_veach)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ╠⎕VEACH╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_veach);
+	
+	if (!self)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇╣ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(self);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ╠∇ ⎕VEACH╣ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺╣ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴╠⍺ ∇ ⎕VEACH ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s╠⍴╣⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s╣⍴⍺ ∇ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[29] scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ ╠s⍴⍺ ∇ ⎕VEACH ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[29] scalar←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}╣");
+	return err;
+}
+
+int
+ptr4324(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -9908,78 +9928,6 @@ cleanup:
 }
 
 int
-ptr4323(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[32] rgt←{╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[32] rgt←╠{⍵}╣");
-	return err;
-}
-
-int
-ptr4324(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[32] rgt←{╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[32] rgt←╠{⍵}╣");
-	return err;
-}
-
-int
 ptr4325(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -9995,7 +9943,7 @@ ptr4325(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[35] lft←{╠⍵╣} ⎕AMBIV {⍺}");
+		CHK(6, cleanup, L"[32] rgt←{╠⍵╣}");
 	
 	*stkhd++ = retain_cell(omega);
 	
@@ -10012,7 +9960,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[35] lft←╠{⍵}╣ ⎕AMBIV {⍺}");
+	    L"[32] rgt←╠{⍵}╣");
 	return err;
 }
 
@@ -10031,6 +9979,78 @@ ptr4326(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!omega)
+		CHK(6, cleanup, L"[32] rgt←{╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[32] rgt←╠{⍵}╣");
+	return err;
+}
+
+int
+ptr4327(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[35] lft←{╠⍵╣} ⎕AMBIV {⍺}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[35] lft←╠{⍵}╣ ⎕AMBIV {⍺}");
+	return err;
+}
+
+int
+ptr4328(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
 		CHK(6, cleanup, L"[35] lft←{╠⍵╣} ⎕AMBIV {⍺}");
 	
 	*stkhd++ = retain_cell(omega);
@@ -10052,78 +10072,6 @@ cleanup:
 }
 
 int
-ptr4327(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!alpha)
-		CHK(6, cleanup, L"[35] lft←{⍵} ⎕AMBIV {╠⍺╣}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[35] lft←{⍵} ⎕AMBIV ╠{⍺}╣");
-	return err;
-}
-
-int
-ptr4328(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!alpha)
-		CHK(6, cleanup, L"[35] lft←{⍵} ⎕AMBIV {╠⍺╣}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[35] lft←{⍵} ⎕AMBIV ╠{⍺}╣");
-	return err;
-}
-
-int
 ptr4329(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -10135,89 +10083,13 @@ ptr4329(struct cell_array **z,
 
 	alpha = NULL;
 
-	struct lex_vars {
-		struct cell_func_box *chk_valid_shape;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!alpha)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+		CHK(6, cleanup, L"[35] lft←{⍵} ⎕AMBIV {╠⍺╣}");
 	
 	*stkhd++ = retain_cell(alpha);
-	
-	if (!lex->chk_valid_shape->value)
-		CHK(6, cleanup, L"[38] reshape←{╠chk_valid_shape╣ ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
-	
-	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[38] reshape←{╠chk_valid_shape ⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!reshape_ibeam)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺╠('reshape_ibeam'⌶)╣⍵}");
-	
-	*stkhd++ = retain_cell(reshape_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺╣('reshape_ibeam'⌶)⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺('reshape_ibeam'⌶)⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
 	
 	*z = *--stkhd;
 	goto cleanup;
@@ -10232,7 +10104,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[38] reshape←╠{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}╣");
+	    L"[35] lft←{⍵} ⎕AMBIV ╠{⍺}╣");
 	return err;
 }
 
@@ -10247,89 +10119,13 @@ ptr4330(struct cell_array **z,
 	int err;
 
 
-	struct lex_vars {
-		struct cell_func_box *chk_valid_shape;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!alpha)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+		CHK(6, cleanup, L"[35] lft←{⍵} ⎕AMBIV {╠⍺╣}");
 	
 	*stkhd++ = retain_cell(alpha);
-	
-	if (!lex->chk_valid_shape->value)
-		CHK(6, cleanup, L"[38] reshape←{╠chk_valid_shape╣ ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
-	
-	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[38] reshape←{╠chk_valid_shape ⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!reshape_ibeam)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺╠('reshape_ibeam'⌶)╣⍵}");
-	
-	*stkhd++ = retain_cell(reshape_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺╣('reshape_ibeam'⌶)⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺('reshape_ibeam'⌶)⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
 	
 	*z = *--stkhd;
 	goto cleanup;
@@ -10343,7 +10139,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[38] reshape←╠{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}╣");
+	    L"[35] lft←{⍵} ⎕AMBIV ╠{⍺}╣");
 	return err;
 }
 
@@ -10359,6 +10155,230 @@ ptr4331(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *chk_valid_shape;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!alpha)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!lex->chk_valid_shape->value)
+		CHK(6, cleanup, L"[38] reshape←{╠chk_valid_shape╣ ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[38] reshape←{╠chk_valid_shape ⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!reshape_ibeam)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺╠('reshape_ibeam'⌶)╣⍵}");
+	
+	*stkhd++ = retain_cell(reshape_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺╣('reshape_ibeam'⌶)⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺('reshape_ibeam'⌶)⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[38] reshape←╠{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}╣");
+	return err;
+}
+
+int
+ptr4332(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
+		struct cell_func_box *chk_valid_shape;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!alpha)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!lex->chk_valid_shape->value)
+		CHK(6, cleanup, L"[38] reshape←{╠chk_valid_shape╣ ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[38] reshape←{╠chk_valid_shape ⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[38] reshape←{chk_valid_shape ╠⍺╣: ⋄ ⍺('reshape_ibeam'⌶)⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!reshape_ibeam)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ⍺╠('reshape_ibeam'⌶)╣⍵}");
+	
+	*stkhd++ = retain_cell(reshape_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺╣('reshape_ibeam'⌶)⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[38] reshape←{chk_valid_shape ⍺: ⋄ ╠⍺('reshape_ibeam'⌶)⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[38] reshape←╠{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}╣");
+	return err;
+}
+
+int
+ptr4333(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
 	err = 0;
 	stkhd = &stk[0];
 
@@ -10414,7 +10434,7 @@ cleanup:
 }
 
 int
-ptr4332(struct cell_array **z,
+ptr4334(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -10478,7 +10498,7 @@ cleanup:
 }
 
 int
-ptr4333(struct cell_array **z,
+ptr4335(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -10542,7 +10562,7 @@ ptr4333(struct cell_array **z,
 			{
 				struct cell_func *k;
 			
-				CHK(mk_func(&k, ptr4334, ptr4335, 0), cleanup, 
+				CHK(mk_func(&k, ptr4336, ptr4337, 0), cleanup, 
 				    L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}╣⍵");
 			
 				*stkhd++ = k;
@@ -10625,7 +10645,7 @@ cleanup:
 }
 
 int
-ptr4334(struct cell_array **z,
+ptr4336(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -10787,7 +10807,7 @@ cleanup:
 }
 
 int
-ptr4335(struct cell_array **z,
+ptr4337(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -10937,313 +10957,6 @@ ptr4335(struct cell_array **z,
 
 cleanup:
 	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}╣⍵");
-	return err;
-}
-
-int
-ptr4336(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *is_simple;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[46] 	is_simple ╠⍵╣:{0≡≢⍴⍵:0 ⋄ 1}⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->is_simple->value)
-		CHK(6, cleanup, L"[46] 	╠is_simple╣ ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵");
-	
-	*stkhd++ = retain_cell(lex->is_simple->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[46] 	╠is_simple ⍵╣:{0≡≢⍴⍵:0 ⋄ 1}⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[46] 	is_simple ╠⍵╣:{0≡≢⍴⍵:0 ⋄ 1}⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			{
-				struct cell_func *k;
-			
-				CHK(mk_func(&k, ptr4337, ptr4338, 0), cleanup, 
-				    L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}╣⍵");
-			
-				*stkhd++ = k;
-			}
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}⍵╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[47] 	⎕SIGNAL ╠16╣");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[47] 	⎕SIGNAL ╠16╣");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[47] 	╠⎕SIGNAL╣ 16");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[47] 	╠⎕SIGNAL 16╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[45] depth←╠{╣");
-	return err;
-}
-
-int
-ptr4337(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴╠⍵╣:0 ⋄ 1}⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡≢╠⍴╣⍵:0 ⋄ 1}⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[46] 	is_simple ⍵:{0≡≢╠⍴⍵╣:0 ⋄ 1}⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡╠≢╣⍴⍵:0 ⋄ 1}⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[46] 	is_simple ⍵:{0≡╠≢⍴⍵╣:0 ⋄ 1}⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0╠≡╣≢⍴⍵:0 ⋄ 1}⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[46] 	is_simple ⍵:{╠0╣≡≢⍴⍵:0 ⋄ 1}⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[46] 	is_simple ⍵:{╠0╣≡≢⍴⍵:0 ⋄ 1}⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[46] 	is_simple ⍵:{╠0≡≢⍴⍵╣:0 ⋄ 1}⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}⍵╣");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:╠0╣ ⋄ 1}⍵");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:╠0╣ ⋄ 1}⍵");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ ╠1╣}⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ ╠1╣}⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
 
 	if (err)
 		return err;
@@ -11264,6 +10977,313 @@ ptr4338(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *is_simple;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[46] 	is_simple ╠⍵╣:{0≡≢⍴⍵:0 ⋄ 1}⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->is_simple->value)
+		CHK(6, cleanup, L"[46] 	╠is_simple╣ ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵");
+	
+	*stkhd++ = retain_cell(lex->is_simple->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[46] 	╠is_simple ⍵╣:{0≡≢⍴⍵:0 ⋄ 1}⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[46] 	is_simple ╠⍵╣:{0≡≢⍴⍵:0 ⋄ 1}⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			{
+				struct cell_func *k;
+			
+				CHK(mk_func(&k, ptr4339, ptr4340, 0), cleanup, 
+				    L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}╣⍵");
+			
+				*stkhd++ = k;
+			}
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}⍵╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[47] 	⎕SIGNAL ╠16╣");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[47] 	⎕SIGNAL ╠16╣");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[47] 	╠⎕SIGNAL╣ 16");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[47] 	╠⎕SIGNAL 16╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[45] depth←╠{╣");
+	return err;
+}
+
+int
+ptr4339(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴╠⍵╣:0 ⋄ 1}⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡≢╠⍴╣⍵:0 ⋄ 1}⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[46] 	is_simple ⍵:{0≡≢╠⍴⍵╣:0 ⋄ 1}⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0≡╠≢╣⍴⍵:0 ⋄ 1}⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[46] 	is_simple ⍵:{0≡╠≢⍴⍵╣:0 ⋄ 1}⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[46] 	is_simple ⍵:{0╠≡╣≢⍴⍵:0 ⋄ 1}⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[46] 	is_simple ⍵:{╠0╣≡≢⍴⍵:0 ⋄ 1}⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[46] 	is_simple ⍵:{╠0╣≡≢⍴⍵:0 ⋄ 1}⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[46] 	is_simple ⍵:{╠0≡≢⍴⍵╣:0 ⋄ 1}⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}⍵╣");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:╠0╣ ⋄ 1}⍵");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:╠0╣ ⋄ 1}⍵");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ ╠1╣}⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[46] 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ ╠1╣}⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[46] 	is_simple ⍵:╠{0≡≢⍴⍵:0 ⋄ 1}╣⍵");
+	return err;
+}
+
+int
+ptr4340(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
 	err = 0;
 	stkhd = &stk[0];
 
@@ -11414,158 +11434,6 @@ cleanup:
 }
 
 int
-ptr4339(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[52] nqv←{⊃⍴╠⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[52] nqv←{⊃╠⍴╣⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[52] nqv←{⊃╠⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.dis)
-		CHK(6, cleanup, L"[52] nqv←{╠⊃╣⍴⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-	*stkhd++ = retain_cell(cdf_prim.dis);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[52] nqv←{╠⊃⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[52] nqv←╠{⊃⍴⍵}╣ ⎕AMBIV ('nqv_ibeam'⌶)");
-	return err;
-}
-
-int
-ptr4340(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[52] nqv←{⊃⍴╠⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[52] nqv←{⊃╠⍴╣⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[52] nqv←{⊃╠⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.dis)
-		CHK(6, cleanup, L"[52] nqv←{╠⊃╣⍴⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-	*stkhd++ = retain_cell(cdf_prim.dis);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[52] nqv←{╠⊃⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[52] nqv←╠{⊃⍴⍵}╣ ⎕AMBIV ('nqv_ibeam'⌶)");
-	return err;
-}
-
-int
 ptr4341(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -11580,24 +11448,15 @@ ptr4341(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[52] nqv←{⊃⍴╠⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[55] materialize←{⎕SIGNAL ╠16╣}");
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[52] nqv←{⊃╠⍴╣⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[55] materialize←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[55] materialize←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.rho);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -11605,7 +11464,27 @@ ptr4341(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[55] materialize←{╠⎕SIGNAL 16╣}");
+		    L"[52] nqv←{⊃╠⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.dis)
+		CHK(6, cleanup, L"[52] nqv←{╠⊃╣⍴⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
+	
+	*stkhd++ = retain_cell(cdf_prim.dis);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[52] nqv←{╠⊃⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
 	
 		release_func(fn);
 		release_array(y);
@@ -11627,7 +11506,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[55] materialize←╠{⎕SIGNAL 16}╣");
+	    L"[52] nqv←╠{⊃⍴⍵}╣ ⎕AMBIV ('nqv_ibeam'⌶)");
 	return err;
 }
 
@@ -11645,6 +11524,147 @@ ptr4342(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[52] nqv←{⊃⍴╠⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[52] nqv←{⊃╠⍴╣⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[52] nqv←{⊃╠⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.dis)
+		CHK(6, cleanup, L"[52] nqv←{╠⊃╣⍴⍵} ⎕AMBIV ('nqv_ibeam'⌶)");
+	
+	*stkhd++ = retain_cell(cdf_prim.dis);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[52] nqv←{╠⊃⍴⍵╣} ⎕AMBIV ('nqv_ibeam'⌶)");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[52] nqv←╠{⊃⍴⍵}╣ ⎕AMBIV ('nqv_ibeam'⌶)");
+	return err;
+}
+
+int
+ptr4343(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[55] materialize←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[55] materialize←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[55] materialize←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[55] materialize←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[55] materialize←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4344(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
 	{
 		struct cell_array *arr;
 	
@@ -11696,7 +11716,7 @@ cleanup:
 }
 
 int
-ptr4343(struct cell_array **z,
+ptr4345(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -11927,7 +11947,7 @@ ptr4343(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4344, ptr4345, 0), cleanup, 
+		CHK(mk_func(&k, ptr4346, ptr4347, 0), cleanup, 
 		    L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╣rnk:⎕SIGNAL 16");
 	
 		*stkhd++ = k;
@@ -12101,7 +12121,7 @@ cleanup:
 }
 
 int
-ptr4344(struct cell_array **z,
+ptr4346(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -12299,7 +12319,7 @@ cleanup:
 }
 
 int
-ptr4345(struct cell_array **z,
+ptr4347(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -12485,607 +12505,6 @@ ptr4345(struct cell_array **z,
 
 cleanup:
 	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╣rnk:⎕SIGNAL 16");
-	return err;
-}
-
-int
-ptr4346(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct {
-		struct cell_array *idx;
-		struct cell_array *rnk;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	struct lex_vars {
-		struct cell_func_box *is_integer;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	loc->idx = NULL;
-	loc->rnk = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!alpha)
-		CHK(6, cleanup, L"[56] index←{idx←⊃╠⍺╣ ⋄ rnk←≢⍴idx");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.dis)
-		CHK(6, cleanup, L"[56] index←{idx←╠⊃╣⍺ ⋄ rnk←≢⍴idx");
-	
-	*stkhd++ = retain_cell(cdf_prim.dis);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[56] index←{idx←╠⊃⍺╣ ⋄ rnk←≢⍴idx");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->idx = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->idx)
-		CHK(6, cleanup, L"[56] index←{idx←⊃⍺ ⋄ rnk←≢⍴╠idx╣");
-	
-	*stkhd++ = retain_cell(loc->idx);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[56] index←{idx←⊃⍺ ⋄ rnk←≢╠⍴╣idx");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[56] index←{idx←⊃⍺ ⋄ rnk←≢╠⍴idx╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[56] index←{idx←⊃⍺ ⋄ rnk←╠≢╣⍴idx");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[56] index←{idx←⊃⍺ ⋄ rnk←╠≢⍴idx╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->rnk = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->idx)
-		CHK(6, cleanup, L"[57] 	0≡is_integer ╠idx╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(loc->idx);
-	
-	if (!lex->is_integer->value)
-		CHK(6, cleanup, L"[57] 	0≡╠is_integer╣ idx:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(lex->is_integer->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[57] 	0≡╠is_integer idx╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[57] 	0╠≡╣is_integer idx:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[57] 	╠0╣≡is_integer idx:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[57] 	╠0╣≡is_integer idx:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[57] 	╠0≡is_integer idx╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[57] 	0≡is_integer ╠idx╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[57] 	0≡is_integer idx:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[57] 	0≡is_integer idx:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[57] 	0≡is_integer idx:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[57] 	0≡is_integer idx:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!loc->rnk)
-		CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╠rnk╣:⎕SIGNAL 16");
-	
-	*stkhd++ = retain_cell(loc->rnk);
-	
-	{
-		struct cell_func *k;
-	
-		CHK(mk_func(&k, ptr4347, ptr4348, 0), cleanup, 
-		    L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╣rnk:⎕SIGNAL 16");
-	
-		*stkhd++ = k;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk╣:⎕SIGNAL 16");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╠rnk╣:⎕SIGNAL 16");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {16};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL ╠16╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL ╠16╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:╠⎕SIGNAL╣ 16");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:╠⎕SIGNAL 16╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[59] 	(⍴idx)⍴idx('index_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!index_ibeam)
-		CHK(6, cleanup, L"[59] 	(⍴idx)⍴idx╠('index_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(index_ibeam);
-	
-	if (!loc->idx)
-		CHK(6, cleanup, L"[59] 	(⍴idx)⍴╠idx╣('index_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(loc->idx);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[59] 	(⍴idx)⍴╠idx('index_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[59] 	(⍴idx)╠⍴╣idx('index_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	if (!loc->idx)
-		CHK(6, cleanup, L"[59] 	(⍴╠idx╣)⍴idx('index_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(loc->idx);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[59] 	(╠⍴╣idx)⍴idx('index_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[59] 	╠(⍴idx)╣⍴idx('index_ibeam'⌶)⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[59] 	╠(⍴idx)⍴idx('index_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[56] index←╠{idx←⊃⍺ ⋄ rnk←≢⍴idx╣");
-	return err;
-}
-
-int
-ptr4347(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[58] 	{0≡╠⍵╣:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[58] 	{0╠≡╣⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{╠0╣≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[58] 	{╠0╣≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[58] 	{╠0≡⍵╣:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16╣");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:╠0╣ ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:╠0╣ ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡╠⍵╣:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1╠≡╣⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ ╠1╣≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ ╠1╣≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[58] 	{0≡⍵:0 ⋄ ╠1≡⍵╣:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[58] 	{0≡⍵:╠0╣ ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:╠0╣ ⋄ 1}rnk:⎕SIGNAL 16");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:╠0╣ ⋄ 1}rnk:⎕SIGNAL 16");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ ╠1╣}rnk:⎕SIGNAL 16");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ ╠1╣}rnk:⎕SIGNAL 16");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
 
 	if (err)
 		return err;
@@ -13106,6 +12525,607 @@ ptr4348(struct cell_array **z,
 	int err;
 
 
+	struct {
+		struct cell_array *idx;
+		struct cell_array *rnk;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	struct lex_vars {
+		struct cell_func_box *is_integer;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	loc->idx = NULL;
+	loc->rnk = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!alpha)
+		CHK(6, cleanup, L"[56] index←{idx←⊃╠⍺╣ ⋄ rnk←≢⍴idx");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.dis)
+		CHK(6, cleanup, L"[56] index←{idx←╠⊃╣⍺ ⋄ rnk←≢⍴idx");
+	
+	*stkhd++ = retain_cell(cdf_prim.dis);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[56] index←{idx←╠⊃⍺╣ ⋄ rnk←≢⍴idx");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->idx = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->idx)
+		CHK(6, cleanup, L"[56] index←{idx←⊃⍺ ⋄ rnk←≢⍴╠idx╣");
+	
+	*stkhd++ = retain_cell(loc->idx);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[56] index←{idx←⊃⍺ ⋄ rnk←≢╠⍴╣idx");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[56] index←{idx←⊃⍺ ⋄ rnk←≢╠⍴idx╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[56] index←{idx←⊃⍺ ⋄ rnk←╠≢╣⍴idx");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[56] index←{idx←⊃⍺ ⋄ rnk←╠≢⍴idx╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->rnk = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->idx)
+		CHK(6, cleanup, L"[57] 	0≡is_integer ╠idx╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(loc->idx);
+	
+	if (!lex->is_integer->value)
+		CHK(6, cleanup, L"[57] 	0≡╠is_integer╣ idx:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(lex->is_integer->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[57] 	0≡╠is_integer idx╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[57] 	0╠≡╣is_integer idx:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[57] 	╠0╣≡is_integer idx:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[57] 	╠0╣≡is_integer idx:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[57] 	╠0≡is_integer idx╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[57] 	0≡is_integer ╠idx╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[57] 	0≡is_integer idx:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[57] 	0≡is_integer idx:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[57] 	0≡is_integer idx:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[57] 	0≡is_integer idx:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!loc->rnk)
+		CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╠rnk╣:⎕SIGNAL 16");
+	
+	*stkhd++ = retain_cell(loc->rnk);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, ptr4349, ptr4350, 0), cleanup, 
+		    L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╣rnk:⎕SIGNAL 16");
+	
+		*stkhd++ = k;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk╣:⎕SIGNAL 16");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╠rnk╣:⎕SIGNAL 16");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {16};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL ╠16╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL ╠16╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:╠⎕SIGNAL╣ 16");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:╠⎕SIGNAL 16╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[59] 	(⍴idx)⍴idx('index_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!index_ibeam)
+		CHK(6, cleanup, L"[59] 	(⍴idx)⍴idx╠('index_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(index_ibeam);
+	
+	if (!loc->idx)
+		CHK(6, cleanup, L"[59] 	(⍴idx)⍴╠idx╣('index_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(loc->idx);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[59] 	(⍴idx)⍴╠idx('index_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[59] 	(⍴idx)╠⍴╣idx('index_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	if (!loc->idx)
+		CHK(6, cleanup, L"[59] 	(⍴╠idx╣)⍴idx('index_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(loc->idx);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[59] 	(╠⍴╣idx)⍴idx('index_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[59] 	╠(⍴idx)╣⍴idx('index_ibeam'⌶)⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[59] 	╠(⍴idx)⍴idx('index_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[56] index←╠{idx←⊃⍺ ⋄ rnk←≢⍴idx╣");
+	return err;
+}
+
+int
+ptr4349(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[58] 	{0≡╠⍵╣:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[58] 	{0╠≡╣⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{╠0╣≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[58] 	{╠0╣≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[58] 	{╠0≡⍵╣:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16╣");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:╠0╣ ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:╠0╣ ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡╠⍵╣:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[58] 	{0≡⍵:0 ⋄ 1╠≡╣⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ ╠1╣≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ ╠1╣≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[58] 	{0≡⍵:0 ⋄ ╠1≡⍵╣:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[58] 	{0≡⍵:╠0╣ ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:╠0╣ ⋄ 1}rnk:⎕SIGNAL 16");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:╠0╣ ⋄ 1}rnk:⎕SIGNAL 16");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ ╠1╣}rnk:⎕SIGNAL 16");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[58] 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ ╠1╣}rnk:⎕SIGNAL 16");
+	
+		*stkhd++ = arr;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[58] 	╠{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}╣rnk:⎕SIGNAL 16");
+	return err;
+}
+
+int
+ptr4350(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
 	err = 0;
 	stkhd = &stk[0];
 
@@ -13292,1000 +13312,6 @@ cleanup:
 }
 
 int
-ptr4349(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_func_box *chk_valid_shape;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[65] 	chk_valid_shape ╠⍵╣: ");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->chk_valid_shape->value)
-		CHK(6, cleanup, L"[65] 	╠chk_valid_shape╣ ⍵: ");
-	
-	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[65] 	╠chk_valid_shape ⍵╣: ");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[65] 	chk_valid_shape ╠⍵╣: ");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[66] 	0≡≢,╠⍵╣:⊂⍬");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[66] 	0≡≢╠,╣⍵:⊂⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[66] 	0≡≢╠,⍵╣:⊂⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[66] 	0≡╠≢╣,⍵:⊂⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[66] 	0≡╠≢,⍵╣:⊂⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[66] 	0╠≡╣≢,⍵:⊂⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[66] 	╠0≡≢,⍵╣:⊂⍬");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[66] 	0≡≢,╠⍵╣:⊂⍬");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 1;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
-			
-				arr->shape[0] = 0;
-			
-				CHK(fill_array(arr, dat), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.par)
-				CHK(6, cleanup, L"[66] 	0≡≢,⍵:╠⊂╣⍬");
-			
-			*stkhd++ = retain_cell(cdf_prim.par);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[66] 	0≡≢,⍵:╠⊂⍬╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[67] 	(,0)≡,╠⍵╣:⍬");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[67] 	(,0)≡╠,╣⍵:⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[67] 	(,0)≡╠,⍵╣:⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[67] 	(,0)╠≡╣,⍵:⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[67] 	(╠,╣0)≡,⍵:⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[67] 	╠(,0)╣≡,⍵:⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[67] 	╠(,0)≡,⍵╣:⍬");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[67] 	(,0)≡,╠⍵╣:⍬");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 1;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
-			
-				arr->shape[0] = 0;
-			
-				CHK(fill_array(arr, dat), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[68] 	1≡≢╠,╣⍵:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[68] 	1≡≢╠,⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[68] 	1≡╠≢╣,⍵:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[68] 	1≡╠≢,⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[68] 	1╠≡╣≢,⍵:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[68] 	╠1≡≢,⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[68] 	1≡≢,⍵:'index_gen_vec'⌶ ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!index_gen_vec)
-				CHK(6, cleanup, L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶╣ ⍵");
-			
-			*stkhd++ = retain_cell(index_gen_vec);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶ ⍵╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[69] 	╠⎕SIGNAL╣ 16");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[69] 	╠⎕SIGNAL 16╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[64] index_gen←╠{╣");
-	return err;
-}
-
-int
-ptr4350(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *chk_valid_shape;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[65] 	chk_valid_shape ╠⍵╣: ");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->chk_valid_shape->value)
-		CHK(6, cleanup, L"[65] 	╠chk_valid_shape╣ ⍵: ");
-	
-	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[65] 	╠chk_valid_shape ⍵╣: ");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[65] 	chk_valid_shape ╠⍵╣: ");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[66] 	0≡≢,╠⍵╣:⊂⍬");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[66] 	0≡≢╠,╣⍵:⊂⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[66] 	0≡≢╠,⍵╣:⊂⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[66] 	0≡╠≢╣,⍵:⊂⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[66] 	0≡╠≢,⍵╣:⊂⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[66] 	0╠≡╣≢,⍵:⊂⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[66] 	╠0≡≢,⍵╣:⊂⍬");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[66] 	0≡≢,╠⍵╣:⊂⍬");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 1;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
-			
-				arr->shape[0] = 0;
-			
-				CHK(fill_array(arr, dat), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.par)
-				CHK(6, cleanup, L"[66] 	0≡≢,⍵:╠⊂╣⍬");
-			
-			*stkhd++ = retain_cell(cdf_prim.par);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[66] 	0≡≢,⍵:╠⊂⍬╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[67] 	(,0)≡,╠⍵╣:⍬");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[67] 	(,0)≡╠,╣⍵:⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[67] 	(,0)≡╠,⍵╣:⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[67] 	(,0)╠≡╣,⍵:⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[67] 	(╠,╣0)≡,⍵:⍬");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[67] 	╠(,0)╣≡,⍵:⍬");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[67] 	╠(,0)≡,⍵╣:⍬");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[67] 	(,0)≡,╠⍵╣:⍬");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 1;
-				int16_t dat[] = {0};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
-			
-				arr->shape[0] = 0;
-			
-				CHK(fill_array(arr, dat), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[68] 	1≡≢╠,╣⍵:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[68] 	1≡≢╠,⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[68] 	1≡╠≢╣,⍵:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[68] 	1≡╠≢,⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[68] 	1╠≡╣≢,⍵:'index_gen_vec'⌶ ⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[68] 	╠1≡≢,⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[68] 	1≡≢,⍵:'index_gen_vec'⌶ ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!index_gen_vec)
-				CHK(6, cleanup, L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶╣ ⍵");
-			
-			*stkhd++ = retain_cell(index_gen_vec);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶ ⍵╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[69] 	╠⎕SIGNAL╣ 16");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[69] 	╠⎕SIGNAL 16╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[64] index_gen←╠{╣");
-	return err;
-}
-
-int
 ptr4351(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -14297,9 +13323,441 @@ ptr4351(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *chk_valid_shape;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[65] 	chk_valid_shape ╠⍵╣: ");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->chk_valid_shape->value)
+		CHK(6, cleanup, L"[65] 	╠chk_valid_shape╣ ⍵: ");
+	
+	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[65] 	╠chk_valid_shape ⍵╣: ");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[65] 	chk_valid_shape ╠⍵╣: ");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[66] 	0≡≢,╠⍵╣:⊂⍬");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[66] 	0≡≢╠,╣⍵:⊂⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[66] 	0≡≢╠,⍵╣:⊂⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[66] 	0≡╠≢╣,⍵:⊂⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[66] 	0≡╠≢,⍵╣:⊂⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[66] 	0╠≡╣≢,⍵:⊂⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[66] 	╠0≡≢,⍵╣:⊂⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[66] 	0≡≢,╠⍵╣:⊂⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.par)
+				CHK(6, cleanup, L"[66] 	0≡≢,⍵:╠⊂╣⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.par);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[66] 	0≡≢,⍵:╠⊂⍬╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[67] 	(,0)≡,╠⍵╣:⍬");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[67] 	(,0)≡╠,╣⍵:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[67] 	(,0)≡╠,⍵╣:⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[67] 	(,0)╠≡╣,⍵:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[67] 	(╠,╣0)≡,⍵:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[67] 	╠(,0)╣≡,⍵:⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[67] 	╠(,0)≡,⍵╣:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[67] 	(,0)≡,╠⍵╣:⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[68] 	1≡≢╠,╣⍵:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[68] 	1≡≢╠,⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[68] 	1≡╠≢╣,⍵:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[68] 	1≡╠≢,⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[68] 	1╠≡╣≢,⍵:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[68] 	╠1≡≢,⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[68] 	1≡≢,⍵:'index_gen_vec'⌶ ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!index_gen_vec)
+				CHK(6, cleanup, L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶╣ ⍵");
+			
+			*stkhd++ = retain_cell(index_gen_vec);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶ ⍵╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
@@ -14307,15 +13765,15 @@ ptr4351(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[71] index_of←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[69] 	╠⎕SIGNAL╣ 16");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -14325,7 +13783,7 @@ ptr4351(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[71] index_of←{╠⎕SIGNAL 16╣}");
+		    L"[69] 	╠⎕SIGNAL 16╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -14347,7 +13805,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[71] index_of←╠{⎕SIGNAL 16}╣");
+	    L"[64] index_gen←╠{╣");
 	return err;
 }
 
@@ -14362,9 +13820,441 @@ ptr4352(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *chk_valid_shape;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[65] 	chk_valid_shape ╠⍵╣: ");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->chk_valid_shape->value)
+		CHK(6, cleanup, L"[65] 	╠chk_valid_shape╣ ⍵: ");
+	
+	*stkhd++ = retain_cell(lex->chk_valid_shape->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[65] 	╠chk_valid_shape ⍵╣: ");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[65] 	chk_valid_shape ╠⍵╣: ");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[66] 	0≡≢,╠⍵╣:⊂⍬");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[66] 	0≡≢╠,╣⍵:⊂⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[66] 	0≡≢╠,⍵╣:⊂⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[66] 	0≡╠≢╣,⍵:⊂⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[66] 	0≡╠≢,⍵╣:⊂⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[66] 	0╠≡╣≢,⍵:⊂⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[66] 	╠0╣≡≢,⍵:⊂⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[66] 	╠0≡≢,⍵╣:⊂⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[66] 	0≡≢,╠⍵╣:⊂⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[66] 	0≡≢,⍵:⊂╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.par)
+				CHK(6, cleanup, L"[66] 	0≡≢,⍵:╠⊂╣⍬");
+			
+			*stkhd++ = retain_cell(cdf_prim.par);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[66] 	0≡≢,⍵:╠⊂⍬╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[67] 	(,0)≡,╠⍵╣:⍬");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[67] 	(,0)≡╠,╣⍵:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[67] 	(,0)≡╠,⍵╣:⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[67] 	(,0)╠≡╣,⍵:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[67] 	(,╠0╣)≡,⍵:⍬");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[67] 	(╠,╣0)≡,⍵:⍬");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[67] 	╠(,0)╣≡,⍵:⍬");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[67] 	╠(,0)≡,⍵╣:⍬");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[67] 	(,0)≡,╠⍵╣:⍬");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 1;
+				int16_t dat[] = {0};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
+			
+				arr->shape[0] = 0;
+			
+				CHK(fill_array(arr, dat), cleanup, L"[67] 	(,0)≡,⍵:╠⍬╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[68] 	1≡≢╠,╣⍵:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[68] 	1≡≢╠,⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[68] 	1≡╠≢╣,⍵:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[68] 	1≡╠≢,⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[68] 	1╠≡╣≢,⍵:'index_gen_vec'⌶ ⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[68] 	╠1╣≡≢,⍵:'index_gen_vec'⌶ ⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[68] 	╠1≡≢,⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[68] 	1≡≢,╠⍵╣:'index_gen_vec'⌶ ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[68] 	1≡≢,⍵:'index_gen_vec'⌶ ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!index_gen_vec)
+				CHK(6, cleanup, L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶╣ ⍵");
+			
+			*stkhd++ = retain_cell(index_gen_vec);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[68] 	1≡≢,⍵:╠'index_gen_vec'⌶ ⍵╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
@@ -14372,15 +14262,15 @@ ptr4352(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[69] 	⎕SIGNAL ╠16╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[71] index_of←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[69] 	╠⎕SIGNAL╣ 16");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -14390,7 +14280,7 @@ ptr4352(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[71] index_of←{╠⎕SIGNAL 16╣}");
+		    L"[69] 	╠⎕SIGNAL 16╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -14411,7 +14301,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[71] index_of←╠{⎕SIGNAL 16}╣");
+	    L"[64] index_gen←╠{╣");
 	return err;
 }
 
@@ -14437,15 +14327,15 @@ ptr4353(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[71] index_of←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -14455,7 +14345,7 @@ ptr4353(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {╠⎕SIGNAL 16╣}");
+		    L"[71] index_of←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -14477,7 +14367,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV ╠{⎕SIGNAL 16}╣");
+	    L"[71] index_of←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -14502,6 +14392,136 @@ ptr4354(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[71] index_of←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[71] index_of←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[71] index_of←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[71] index_of←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4355(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV ╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4356(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
 		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL ╠16╣}");
 	
 		CHK(fill_array(arr, dat), cleanup, L"[75] dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL ╠16╣}");
@@ -14546,292 +14566,6 @@ cleanup:
 }
 
 int
-ptr4355(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[79] 	0≡≡╠⍵╣:⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[79] 	0≡╠≡╣⍵:⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[79] 	0≡╠≡⍵╣:⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[79] 	0╠≡╣≡⍵:⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[79] 	╠0≡≡⍵╣:⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[79] 	0≡≡╠⍵╣:⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[79] 	0≡≡⍵:╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[80] 	'enclose_ibeam'⌶ ╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!enclose_ibeam)
-		CHK(6, cleanup, L"[80] 	╠'enclose_ibeam'⌶╣ ⍵");
-	
-	*stkhd++ = retain_cell(enclose_ibeam);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[80] 	╠'enclose_ibeam'⌶ ⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[78] enclose←╠{╣");
-	return err;
-}
-
-int
-ptr4356(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[79] 	0≡≡╠⍵╣:⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[79] 	0≡╠≡╣⍵:⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[79] 	0≡╠≡⍵╣:⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[79] 	0╠≡╣≡⍵:⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[79] 	╠0≡≡⍵╣:⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[79] 	0≡≡╠⍵╣:⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[79] 	0≡≡⍵:╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[80] 	'enclose_ibeam'⌶ ╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!enclose_ibeam)
-		CHK(6, cleanup, L"[80] 	╠'enclose_ibeam'⌶╣ ⍵");
-	
-	*stkhd++ = retain_cell(enclose_ibeam);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[80] 	╠'enclose_ibeam'⌶ ⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[78] enclose←╠{╣");
-	return err;
-}
-
-int
 ptr4357(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -14846,24 +14580,15 @@ ptr4357(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[79] 	0≡≡╠⍵╣:⍵");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[82] par←enclose ⎕AMBIV {⎕SIGNAL ╠16╣}");
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[79] 	0≡╠≡╣⍵:⍵");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[82] par←enclose ⎕AMBIV {⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[82] par←enclose ⎕AMBIV {╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.eqv);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -14871,7 +14596,94 @@ ptr4357(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[82] par←enclose ⎕AMBIV {╠⎕SIGNAL 16╣}");
+		    L"[79] 	0≡╠≡⍵╣:⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[79] 	0╠≡╣≡⍵:⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[79] 	╠0≡≡⍵╣:⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[79] 	0≡≡╠⍵╣:⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[79] 	0≡≡⍵:╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[80] 	'enclose_ibeam'⌶ ╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!enclose_ibeam)
+		CHK(6, cleanup, L"[80] 	╠'enclose_ibeam'⌶╣ ⍵");
+	
+	*stkhd++ = retain_cell(enclose_ibeam);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[80] 	╠'enclose_ibeam'⌶ ⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -14893,7 +14705,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[82] par←enclose ⎕AMBIV ╠{⎕SIGNAL 16}╣");
+	    L"[78] enclose←╠{╣");
 	return err;
 }
 
@@ -14911,6 +14723,214 @@ ptr4358(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[79] 	0≡≡╠⍵╣:⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[79] 	0≡╠≡╣⍵:⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[79] 	0≡╠≡⍵╣:⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[79] 	0╠≡╣≡⍵:⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[79] 	╠0╣≡≡⍵:⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[79] 	╠0≡≡⍵╣:⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[79] 	0≡≡╠⍵╣:⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[79] 	0≡≡⍵:╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[80] 	'enclose_ibeam'⌶ ╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!enclose_ibeam)
+		CHK(6, cleanup, L"[80] 	╠'enclose_ibeam'⌶╣ ⍵");
+	
+	*stkhd++ = retain_cell(enclose_ibeam);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[80] 	╠'enclose_ibeam'⌶ ⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[78] enclose←╠{╣");
+	return err;
+}
+
+int
+ptr4359(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[82] par←enclose ⎕AMBIV {⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[82] par←enclose ⎕AMBIV {⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[82] par←enclose ⎕AMBIV {╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[82] par←enclose ⎕AMBIV {╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[82] par←enclose ⎕AMBIV ╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4360(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
 	{
 		struct cell_array *arr;
 	
@@ -14962,344 +14982,6 @@ cleanup:
 }
 
 int
-ptr4359(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_func_box *squeeze;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->squeeze->value)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(lex->squeeze->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[85] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[85] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[85] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[85] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ╠⍵╣ ⋄ ⍵}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!conjugate_vec)
-				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶╣ ⍵ ⋄ ⍵}");
-			
-			*stkhd++ = retain_cell(conjugate_vec);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶ ⍵╣ ⋄ ⍵}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[85] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
-	return err;
-}
-
-int
-ptr4360(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *squeeze;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->squeeze->value)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(lex->squeeze->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[85] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[85] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[85] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[85] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ╠⍵╣ ⋄ ⍵}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!conjugate_vec)
-				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶╣ ⍵ ⋄ ⍵}");
-			
-			*stkhd++ = retain_cell(conjugate_vec);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶ ⍵╣ ⋄ ⍵}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[85] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
-	return err;
-}
-
-int
 ptr4361(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -15311,27 +14993,24 @@ ptr4361(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *squeeze;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
+	if (!lex->squeeze->value)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[89] negate←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(lex->squeeze->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -15339,7 +15018,7 @@ ptr4361(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[89] negate←{╠⎕SIGNAL 16╣}");
+		    L"[85] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15347,6 +15026,113 @@ ptr4361(struct cell_array **z,
 		stkhd -= 2;
 		*stkhd++ = dst;
 	}
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[85] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[85] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[85] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ╠⍵╣ ⋄ ⍵}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!conjugate_vec)
+				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶╣ ⍵ ⋄ ⍵}");
+			
+			*stkhd++ = retain_cell(conjugate_vec);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶ ⍵╣ ⋄ ⍵}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
 	
 	*z = *--stkhd;
 	goto cleanup;
@@ -15361,7 +15147,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[89] negate←╠{⎕SIGNAL 16}╣");
+	    L"[85] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
 	return err;
 }
 
@@ -15376,27 +15162,24 @@ ptr4362(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *squeeze;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
+	if (!lex->squeeze->value)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[89] negate←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(lex->squeeze->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -15404,7 +15187,7 @@ ptr4362(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[89] negate←{╠⎕SIGNAL 16╣}");
+		    L"[85] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15412,6 +15195,113 @@ ptr4362(struct cell_array **z,
 		stkhd -= 2;
 		*stkhd++ = dst;
 	}
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[85] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[85] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[85] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[85] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[85] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ╠⍵╣ ⋄ ⍵}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!conjugate_vec)
+				CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶╣ ⍵ ⋄ ⍵}");
+			
+			*stkhd++ = retain_cell(conjugate_vec);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[85] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶ ⍵╣ ⋄ ⍵}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[85] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
 	
 	*z = *--stkhd;
 	goto cleanup;
@@ -15425,7 +15315,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[89] negate←╠{⎕SIGNAL 16}╣");
+	    L"[85] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
 	return err;
 }
 
@@ -15451,15 +15341,15 @@ ptr4363(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[93] sign←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[89] negate←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -15469,7 +15359,7 @@ ptr4363(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[93] sign←{╠⎕SIGNAL 16╣}");
+		    L"[89] negate←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15491,7 +15381,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[93] sign←╠{⎕SIGNAL 16}╣");
+	    L"[89] negate←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -15516,15 +15406,15 @@ ptr4364(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[89] negate←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[93] sign←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[89] negate←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -15534,7 +15424,7 @@ ptr4364(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[93] sign←{╠⎕SIGNAL 16╣}");
+		    L"[89] negate←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15555,7 +15445,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[93] sign←╠{⎕SIGNAL 16}╣");
+	    L"[89] negate←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -15581,15 +15471,15 @@ ptr4365(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[97] recip←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[97] recip←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[97] recip←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[93] sign←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -15599,7 +15489,7 @@ ptr4365(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[97] recip←{╠⎕SIGNAL 16╣}");
+		    L"[93] sign←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -15621,7 +15511,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[97] recip←╠{⎕SIGNAL 16}╣");
+	    L"[93] sign←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -15646,6 +15536,136 @@ ptr4366(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[93] sign←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[93] sign←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[93] sign←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[93] sign←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4367(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[97] recip←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[97] recip←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[97] recip←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[97] recip←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[97] recip←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4368(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
 		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[97] recip←{⎕SIGNAL ╠16╣}");
 	
 		CHK(fill_array(arr, dat), cleanup, L"[97] recip←{⎕SIGNAL ╠16╣}");
@@ -15690,594 +15710,6 @@ cleanup:
 }
 
 int
-ptr4367(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_func_box *is_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->is_numeric->value)
-		CHK(6, cleanup, L"[102] 	0≡╠is_numeric╣ ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(lex->is_numeric->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[102] 	0≡╠is_numeric ⍵╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[102] 	0╠≡╣is_numeric ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[102] 	╠0≡is_numeric ⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[103] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[103] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[103] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[103] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[104] 	'abs_ibeam'⌶ ╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!abs_ibeam)
-		CHK(6, cleanup, L"[104] 	╠'abs_ibeam'⌶╣ ⍵");
-	
-	*stkhd++ = retain_cell(abs_ibeam);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[104] 	╠'abs_ibeam'⌶ ⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[101] absolute←╠{╣");
-	return err;
-}
-
-int
-ptr4368(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *is_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->is_numeric->value)
-		CHK(6, cleanup, L"[102] 	0≡╠is_numeric╣ ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(lex->is_numeric->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[102] 	0≡╠is_numeric ⍵╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[102] 	0╠≡╣is_numeric ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[102] 	╠0≡is_numeric ⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[103] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[103] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[103] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[103] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[104] 	'abs_ibeam'⌶ ╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!abs_ibeam)
-		CHK(6, cleanup, L"[104] 	╠'abs_ibeam'⌶╣ ⍵");
-	
-	*stkhd++ = retain_cell(abs_ibeam);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[104] 	╠'abs_ibeam'⌶ ⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[101] absolute←╠{╣");
-	return err;
-}
-
-int
 ptr4369(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -16289,27 +15721,24 @@ ptr4369(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *is_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
+	if (!lex->is_numeric->value)
+		CHK(6, cleanup, L"[102] 	0≡╠is_numeric╣ ⍵:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[106] residue←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(lex->is_numeric->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -16317,7 +15746,239 @@ ptr4369(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[106] residue←{╠⎕SIGNAL 16╣}");
+		    L"[102] 	0≡╠is_numeric ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[102] 	0╠≡╣is_numeric ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[102] 	╠0≡is_numeric ⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[103] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[103] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[103] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[103] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[104] 	'abs_ibeam'⌶ ╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!abs_ibeam)
+		CHK(6, cleanup, L"[104] 	╠'abs_ibeam'⌶╣ ⍵");
+	
+	*stkhd++ = retain_cell(abs_ibeam);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[104] 	╠'abs_ibeam'⌶ ⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -16339,7 +16000,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[106] residue←╠{⎕SIGNAL 16}╣");
+	    L"[101] absolute←╠{╣");
 	return err;
 }
 
@@ -16354,27 +16015,24 @@ ptr4370(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *is_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
+	if (!lex->is_numeric->value)
+		CHK(6, cleanup, L"[102] 	0≡╠is_numeric╣ ⍵:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[106] residue←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(lex->is_numeric->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -16382,7 +16040,239 @@ ptr4370(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[106] residue←{╠⎕SIGNAL 16╣}");
+		    L"[102] 	0≡╠is_numeric ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[102] 	0╠≡╣is_numeric ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[102] 	╠0╣≡is_numeric ⍵:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[102] 	╠0≡is_numeric ⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[102] 	0≡is_numeric ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[102] 	0≡is_numeric ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[102] 	0≡is_numeric ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[103] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[103] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[103] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[103] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[103] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[103] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[103] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[103] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[104] 	'abs_ibeam'⌶ ╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!abs_ibeam)
+		CHK(6, cleanup, L"[104] 	╠'abs_ibeam'⌶╣ ⍵");
+	
+	*stkhd++ = retain_cell(abs_ibeam);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[104] 	╠'abs_ibeam'⌶ ⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -16403,7 +16293,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[106] residue←╠{⎕SIGNAL 16}╣");
+	    L"[101] absolute←╠{╣");
 	return err;
 }
 
@@ -16419,102 +16309,25 @@ ptr4371(struct cell_array **z,
 
 	alpha = NULL;
 
-	struct lex_vars {
-		struct cell_func_box *is_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->is_bool->value)
-		CHK(6, cleanup, L"[128] notscl←{╠is_bool╣ ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->is_bool->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[128] notscl←{╠is_bool ⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!not_vec_ibeam)
-				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶╣ ⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(not_vec_ibeam);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶ ⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {11};
+		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+		CHK(6, cleanup, L"[106] residue←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -16524,7 +16337,7 @@ ptr4371(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
+		    L"[106] residue←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -16546,7 +16359,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[128] notscl←╠{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}╣");
+	    L"[106] residue←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -16561,102 +16374,25 @@ ptr4372(struct cell_array **z,
 	int err;
 
 
-	struct lex_vars {
-		struct cell_func_box *is_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->is_bool->value)
-		CHK(6, cleanup, L"[128] notscl←{╠is_bool╣ ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->is_bool->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[128] notscl←{╠is_bool ⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!not_vec_ibeam)
-				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶╣ ⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(not_vec_ibeam);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶ ⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {11};
+		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[106] residue←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+		CHK(6, cleanup, L"[106] residue←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -16666,7 +16402,7 @@ ptr4372(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
+		    L"[106] residue←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -16687,7 +16423,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[128] notscl←╠{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}╣");
+	    L"[106] residue←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -16703,25 +16439,102 @@ ptr4373(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *is_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->is_bool->value)
+		CHK(6, cleanup, L"[128] notscl←{╠is_bool╣ ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(lex->is_bool->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[128] notscl←{╠is_bool ⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!not_vec_ibeam)
+				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶╣ ⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(not_vec_ibeam);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶ ⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[129] without←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -16731,7 +16544,7 @@ ptr4373(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[129] without←{╠⎕SIGNAL 16╣}");
+		    L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -16753,7 +16566,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[129] without←╠{⎕SIGNAL 16}╣");
+	    L"[128] notscl←╠{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}╣");
 	return err;
 }
 
@@ -16768,25 +16581,102 @@ ptr4374(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *is_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->is_bool->value)
+		CHK(6, cleanup, L"[128] notscl←{╠is_bool╣ ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(lex->is_bool->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[128] notscl←{╠is_bool ⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[128] notscl←{is_bool ╠⍵╣:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!not_vec_ibeam)
+				CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶╣ ⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(not_vec_ibeam);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[128] notscl←{is_bool ⍵:╠'not_vec_ibeam'⌶ ⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[129] without←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL╣ 11}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -16796,7 +16686,7 @@ ptr4374(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[129] without←{╠⎕SIGNAL 16╣}");
+		    L"[128] notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ╠⎕SIGNAL 11╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -16817,7 +16707,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[129] without←╠{⎕SIGNAL 16}╣");
+	    L"[128] notscl←╠{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}╣");
 	return err;
 }
 
@@ -16833,100 +16723,9 @@ ptr4375(struct cell_array **z,
 
 	alpha = NULL;
 
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[134] 	⍺ ╠both_bool╣ ⍵:⍺('and_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[134] 	╠⍺╣ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[134] 	╠⍺ both_bool ⍵╣:⍺('and_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!and_vec_ibeam)
-				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺╠('and_vec_ibeam'⌶)╣⍵");
-			
-			*stkhd++ = retain_cell(and_vec_ibeam);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:╠⍺╣('and_vec_ibeam'⌶)⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[134] 	⍺ both_bool ⍵:╠⍺('and_vec_ibeam'⌶)⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
@@ -16934,15 +16733,15 @@ ptr4375(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
+		CHK(fill_array(arr, dat), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[135] 	╠⎕SIGNAL╣ 16");
+		CHK(6, cleanup, L"[129] without←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -16952,7 +16751,7 @@ ptr4375(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[135] 	╠⎕SIGNAL 16╣");
+		    L"[129] without←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -16974,7 +16773,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[133] logand←╠{╣");
+	    L"[129] without←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -16989,100 +16788,9 @@ ptr4376(struct cell_array **z,
 	int err;
 
 
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[134] 	⍺ ╠both_bool╣ ⍵:⍺('and_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[134] 	╠⍺╣ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[134] 	╠⍺ both_bool ⍵╣:⍺('and_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!and_vec_ibeam)
-				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺╠('and_vec_ibeam'⌶)╣⍵");
-			
-			*stkhd++ = retain_cell(and_vec_ibeam);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:╠⍺╣('and_vec_ibeam'⌶)⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[134] 	⍺ both_bool ⍵:╠⍺('and_vec_ibeam'⌶)⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
@@ -17090,15 +16798,15 @@ ptr4376(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
+		CHK(fill_array(arr, dat), cleanup, L"[129] without←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[135] 	╠⎕SIGNAL╣ 16");
+		CHK(6, cleanup, L"[129] without←{╠⎕SIGNAL╣ 16}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17108,7 +16816,7 @@ ptr4376(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[135] 	╠⎕SIGNAL 16╣");
+		    L"[129] without←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -17129,7 +16837,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[133] logand←╠{╣");
+	    L"[129] without←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -17145,25 +16853,116 @@ ptr4377(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[134] 	⍺ ╠both_bool╣ ⍵:⍺('and_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(lex->both_bool->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[134] 	╠⍺╣ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[134] 	╠⍺ both_bool ⍵╣:⍺('and_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!and_vec_ibeam)
+				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺╠('and_vec_ibeam'⌶)╣⍵");
+			
+			*stkhd++ = retain_cell(and_vec_ibeam);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:╠⍺╣('and_vec_ibeam'⌶)⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[134] 	⍺ both_bool ⍵:╠⍺('and_vec_ibeam'⌶)⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
+		CHK(fill_array(arr, dat), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[137] and←{╠⎕SIGNAL╣ 2}⎕AMBIV (logand numeric scalar)");
+		CHK(6, cleanup, L"[135] 	╠⎕SIGNAL╣ 16");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17173,7 +16972,7 @@ ptr4377(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[137] and←{╠⎕SIGNAL 2╣}⎕AMBIV (logand numeric scalar)");
+		    L"[135] 	╠⎕SIGNAL 16╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -17195,7 +16994,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[137] and←╠{⎕SIGNAL 2}╣⎕AMBIV (logand numeric scalar)");
+	    L"[133] logand←╠{╣");
 	return err;
 }
 
@@ -17210,25 +17009,116 @@ ptr4378(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[134] 	⍺ ╠both_bool╣ ⍵:⍺('and_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(lex->both_bool->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[134] 	╠⍺╣ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[134] 	╠⍺ both_bool ⍵╣:⍺('and_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[134] 	⍺ both_bool ╠⍵╣:⍺('and_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!and_vec_ibeam)
+				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:⍺╠('and_vec_ibeam'⌶)╣⍵");
+			
+			*stkhd++ = retain_cell(and_vec_ibeam);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[134] 	⍺ both_bool ⍵:╠⍺╣('and_vec_ibeam'⌶)⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[134] 	⍺ both_bool ⍵:╠⍺('and_vec_ibeam'⌶)⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
+		CHK(fill_array(arr, dat), cleanup, L"[135] 	⎕SIGNAL ╠16╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[137] and←{╠⎕SIGNAL╣ 2}⎕AMBIV (logand numeric scalar)");
+		CHK(6, cleanup, L"[135] 	╠⎕SIGNAL╣ 16");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17238,7 +17128,7 @@ ptr4378(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[137] and←{╠⎕SIGNAL 2╣}⎕AMBIV (logand numeric scalar)");
+		    L"[135] 	╠⎕SIGNAL 16╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -17259,7 +17149,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[137] and←╠{⎕SIGNAL 2}╣⎕AMBIV (logand numeric scalar)");
+	    L"[133] logand←╠{╣");
 	return err;
 }
 
@@ -17275,116 +17165,25 @@ ptr4379(struct cell_array **z,
 
 	alpha = NULL;
 
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[141] 	⍺ ╠both_bool╣ ⍵:⍺('lor_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[141] 	╠⍺╣ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[141] 	╠⍺ both_bool ⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lor_vec_ibeam)
-				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺╠('lor_vec_ibeam'⌶)╣⍵");
-			
-			*stkhd++ = retain_cell(lor_vec_ibeam);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:╠⍺╣('lor_vec_ibeam'⌶)⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[141] 	⍺ both_bool ⍵:╠⍺('lor_vec_ibeam'⌶)⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
+		CHK(fill_array(arr, dat), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[142] 	╠⎕SIGNAL╣ 16");
+		CHK(6, cleanup, L"[137] and←{╠⎕SIGNAL╣ 2}⎕AMBIV (logand numeric scalar)");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17394,7 +17193,7 @@ ptr4379(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[142] 	╠⎕SIGNAL 16╣");
+		    L"[137] and←{╠⎕SIGNAL 2╣}⎕AMBIV (logand numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
@@ -17416,7 +17215,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[140] logor←╠{╣");
+	    L"[137] and←╠{⎕SIGNAL 2}╣⎕AMBIV (logand numeric scalar)");
 	return err;
 }
 
@@ -17431,116 +17230,25 @@ ptr4380(struct cell_array **z,
 	int err;
 
 
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[141] 	⍺ ╠both_bool╣ ⍵:⍺('lor_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[141] 	╠⍺╣ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[141] 	╠⍺ both_bool ⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lor_vec_ibeam)
-				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺╠('lor_vec_ibeam'⌶)╣⍵");
-			
-			*stkhd++ = retain_cell(lor_vec_ibeam);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:╠⍺╣('lor_vec_ibeam'⌶)⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[141] 	⍺ both_bool ⍵:╠⍺('lor_vec_ibeam'⌶)⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
+		CHK(fill_array(arr, dat), cleanup, L"[137] and←{⎕SIGNAL ╠2╣}⎕AMBIV (logand numeric scalar)");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[142] 	╠⎕SIGNAL╣ 16");
+		CHK(6, cleanup, L"[137] and←{╠⎕SIGNAL╣ 2}⎕AMBIV (logand numeric scalar)");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17550,7 +17258,7 @@ ptr4380(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[142] 	╠⎕SIGNAL 16╣");
+		    L"[137] and←{╠⎕SIGNAL 2╣}⎕AMBIV (logand numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
@@ -17571,7 +17279,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[140] logor←╠{╣");
+	    L"[137] and←╠{⎕SIGNAL 2}╣⎕AMBIV (logand numeric scalar)");
 	return err;
 }
 
@@ -17587,25 +17295,116 @@ ptr4381(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[141] 	⍺ ╠both_bool╣ ⍵:⍺('lor_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(lex->both_bool->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[141] 	╠⍺╣ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[141] 	╠⍺ both_bool ⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lor_vec_ibeam)
+				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺╠('lor_vec_ibeam'⌶)╣⍵");
+			
+			*stkhd++ = retain_cell(lor_vec_ibeam);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:╠⍺╣('lor_vec_ibeam'⌶)⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[141] 	⍺ both_bool ⍵:╠⍺('lor_vec_ibeam'⌶)⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
+		CHK(fill_array(arr, dat), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[144] lor←{╠⎕SIGNAL╣ 2}⎕AMBIV (logor numeric scalar)");
+		CHK(6, cleanup, L"[142] 	╠⎕SIGNAL╣ 16");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17615,7 +17414,7 @@ ptr4381(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[144] lor←{╠⎕SIGNAL 2╣}⎕AMBIV (logor numeric scalar)");
+		    L"[142] 	╠⎕SIGNAL 16╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -17637,7 +17436,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[144] lor←╠{⎕SIGNAL 2}╣⎕AMBIV (logor numeric scalar)");
+	    L"[140] logor←╠{╣");
 	return err;
 }
 
@@ -17652,25 +17451,116 @@ ptr4382(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[141] 	⍺ ╠both_bool╣ ⍵:⍺('lor_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(lex->both_bool->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[141] 	╠⍺╣ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[141] 	╠⍺ both_bool ⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[141] 	⍺ both_bool ╠⍵╣:⍺('lor_vec_ibeam'⌶)⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lor_vec_ibeam)
+				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:⍺╠('lor_vec_ibeam'⌶)╣⍵");
+			
+			*stkhd++ = retain_cell(lor_vec_ibeam);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[141] 	⍺ both_bool ⍵:╠⍺╣('lor_vec_ibeam'⌶)⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[141] 	⍺ both_bool ⍵:╠⍺('lor_vec_ibeam'⌶)⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {16};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
+		CHK(fill_array(arr, dat), cleanup, L"[142] 	⎕SIGNAL ╠16╣");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[144] lor←{╠⎕SIGNAL╣ 2}⎕AMBIV (logor numeric scalar)");
+		CHK(6, cleanup, L"[142] 	╠⎕SIGNAL╣ 16");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17680,7 +17570,7 @@ ptr4382(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[144] lor←{╠⎕SIGNAL 2╣}⎕AMBIV (logor numeric scalar)");
+		    L"[142] 	╠⎕SIGNAL 16╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -17701,7 +17591,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[144] lor←╠{⎕SIGNAL 2}╣⎕AMBIV (logor numeric scalar)");
+	    L"[140] logor←╠{╣");
 	return err;
 }
 
@@ -17727,15 +17617,15 @@ ptr4383(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[147] nan←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[147] nan←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(fill_array(arr, dat), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[147] nan←{╠⎕SIGNAL╣ 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(6, cleanup, L"[144] lor←{╠⎕SIGNAL╣ 2}⎕AMBIV (logor numeric scalar)");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -17745,7 +17635,7 @@ ptr4383(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[147] nan←{╠⎕SIGNAL 2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+		    L"[144] lor←{╠⎕SIGNAL 2╣}⎕AMBIV (logor numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
@@ -17767,7 +17657,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[147] nan←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	    L"[144] lor←╠{⎕SIGNAL 2}╣⎕AMBIV (logor numeric scalar)");
 	return err;
 }
 
@@ -17792,6 +17682,136 @@ ptr4384(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {2};
 	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[144] lor←{⎕SIGNAL ╠2╣}⎕AMBIV (logor numeric scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[144] lor←{╠⎕SIGNAL╣ 2}⎕AMBIV (logor numeric scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[144] lor←{╠⎕SIGNAL 2╣}⎕AMBIV (logor numeric scalar)");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[144] lor←╠{⎕SIGNAL 2}╣⎕AMBIV (logor numeric scalar)");
+	return err;
+}
+
+int
+ptr4385(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[147] nan←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[147] nan←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[147] nan←{╠⎕SIGNAL╣ 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[147] nan←{╠⎕SIGNAL 2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[147] nan←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	return err;
+}
+
+int
+ptr4386(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
+	
 		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[147] nan←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
 	
 		CHK(fill_array(arr, dat), cleanup, L"[147] nan←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
@@ -17836,358 +17856,6 @@ cleanup:
 }
 
 int
-ptr4385(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.and)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∧╣⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.and);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∧⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			if (!cdf_prim.not)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.not);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {11};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL╣ 11}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL 11╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}╣");
-	return err;
-}
-
-int
-ptr4386(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.and)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∧╣⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.and);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∧⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			if (!cdf_prim.not)
-				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∧⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.not);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {11};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL╣ 11}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL 11╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}╣");
-	return err;
-}
-
-int
 ptr4387(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -18199,25 +17867,136 @@ ptr4387(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(lex->both_bool->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.and)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∧╣⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(cdf_prim.and);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∧⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			if (!cdf_prim.not)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(cdf_prim.not);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(fill_array(arr, dat), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[150] nor←{╠⎕SIGNAL╣ 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL╣ 11}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -18227,7 +18006,7 @@ ptr4387(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[150] nor←{╠⎕SIGNAL 2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL 11╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -18249,7 +18028,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[150] nor←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+	    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}╣");
 	return err;
 }
 
@@ -18264,25 +18043,136 @@ ptr4388(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(lex->both_bool->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.and)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∧╣⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(cdf_prim.and);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∧⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			if (!cdf_prim.not)
+				CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∧⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(cdf_prim.not);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∧⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {11};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(fill_array(arr, dat), cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[150] nor←{╠⎕SIGNAL╣ 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		CHK(6, cleanup, L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL╣ 11}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -18292,7 +18182,7 @@ ptr4388(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[150] nor←{╠⎕SIGNAL 2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+		    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ╠⎕SIGNAL 11╣}");
 	
 		release_func(fn);
 		release_array(y);
@@ -18313,7 +18203,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[150] nor←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
+	    L"[147] nan←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}╣");
 	return err;
 }
 
@@ -18329,136 +18219,25 @@ ptr4389(struct cell_array **z,
 
 	alpha = NULL;
 
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.lor)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∨╣⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.lor);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∨⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			if (!cdf_prim.not)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.not);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {11};
+		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+		CHK(6, cleanup, L"[150] nor←{╠⎕SIGNAL╣ 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -18468,7 +18247,7 @@ ptr4389(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL 11╣}");
+		    L"[150] nor←{╠⎕SIGNAL 2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		release_func(fn);
 		release_array(y);
@@ -18490,7 +18269,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}╣");
+	    L"[150] nor←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	return err;
 }
 
@@ -18505,136 +18284,25 @@ ptr4390(struct cell_array **z,
 	int err;
 
 
-	struct lex_vars {
-		struct cell_func_box *both_bool;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_bool->value)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(lex->both_bool->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨╠⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.lor)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∨╣⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.lor);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∨⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			if (!cdf_prim.not)
-				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∨⍵ ⋄ ⎕SIGNAL 11}");
-			
-			*stkhd++ = retain_cell(cdf_prim.not);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {11};
+		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL ╠2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+		CHK(6, cleanup, L"[150] nor←{╠⎕SIGNAL╣ 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -18644,7 +18312,7 @@ ptr4390(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL 11╣}");
+		    L"[150] nor←{╠⎕SIGNAL 2╣}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		release_func(fn);
 		release_array(y);
@@ -18665,7 +18333,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}╣");
+	    L"[150] nor←╠{⎕SIGNAL 2}╣⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	return err;
 }
 
@@ -18681,52 +18349,29 @@ ptr4391(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[154] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	*stkhd++ = retain_cell(lex->both_bool->value);
 	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
+	if (!alpha)
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[154] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[154] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
+	*stkhd++ = retain_cell(alpha);
 	
 	{
 		struct cell_array *x = stkhd[-1];
@@ -18735,7 +18380,7 @@ ptr4391(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[154] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		release_array(x);
 		release_func(fn);
@@ -18748,7 +18393,7 @@ ptr4391(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		TRC(guard_check(x), L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		release_array(x);
 	
@@ -18756,24 +18401,42 @@ ptr4391(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.lor)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∨╣⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(cdf_prim.lor);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∨⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
 			{
-				struct cell_array *arr;
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
 			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+				release_array(x);
+				release_func(fn);
+				release_array(y);
 			
-				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
+				stkhd -= 3;
+				*stkhd++ = dst;
 			}
 			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			if (!cdf_prim.not)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			*stkhd++ = retain_cell(cdf_prim.not);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -18781,7 +18444,7 @@ ptr4391(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
 			
 				release_func(fn);
 				release_array(y);
@@ -18800,15 +18463,24 @@ ptr4391(struct cell_array **z,
 		err = 0;
 	}
 	
-	if (!alpha)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(alpha);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {11};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -18816,135 +18488,12 @@ ptr4391(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL 11╣}");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[155] 	⍺('lth_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lth_vec_ibeam)
-		CHK(6, cleanup, L"[155] 	⍺╠('lth_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(lth_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[155] 	╠⍺╣('lth_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[155] 	╠⍺('lth_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -18961,7 +18510,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[153] lessthan←╠{╣");
+	    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}╣");
 	return err;
 }
 
@@ -18976,52 +18525,29 @@ ptr4392(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *both_bool;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[154] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	if (!lex->both_bool->value)
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ ╠both_bool╣ ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	*stkhd++ = retain_cell(lex->both_bool->value);
 	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
+	if (!alpha)
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺╣ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[154] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[154] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
+	*stkhd++ = retain_cell(alpha);
 	
 	{
 		struct cell_array *x = stkhd[-1];
@@ -19030,7 +18556,7 @@ ptr4392(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[154] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{╠⍺ both_bool ⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		release_array(x);
 		release_func(fn);
@@ -19043,7 +18569,7 @@ ptr4392(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		TRC(guard_check(x), L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ╠⍵╣:~⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 	
 		release_array(x);
 	
@@ -19051,24 +18577,42 @@ ptr4392(struct cell_array **z,
 			goto cleanup;
 	
 		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨╠⍵╣ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.lor)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺╠∨╣⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(cdf_prim.lor);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺╣∨⍵ ⋄ ⎕SIGNAL 11}");
+			
+			*stkhd++ = retain_cell(alpha);
+			
 			{
-				struct cell_array *arr;
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
 			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~╠⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
 			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+				release_array(x);
+				release_func(fn);
+				release_array(y);
 			
-				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
+				stkhd -= 3;
+				*stkhd++ = dst;
 			}
 			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			if (!cdf_prim.not)
+				CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~╣⍺∨⍵ ⋄ ⎕SIGNAL 11}");
 			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			*stkhd++ = retain_cell(cdf_prim.not);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -19076,7 +18620,7 @@ ptr4392(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+				    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:╠~⍺∨⍵╣ ⋄ ⎕SIGNAL 11}");
 			
 				release_func(fn);
 				release_array(y);
@@ -19095,15 +18639,24 @@ ptr4392(struct cell_array **z,
 		err = 0;
 	}
 	
-	if (!alpha)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(alpha);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {11};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL ╠11╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL╣ 11}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -19111,135 +18664,12 @@ ptr4392(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+		    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ╠⎕SIGNAL 11╣}");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[155] 	⍺('lth_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lth_vec_ibeam)
-		CHK(6, cleanup, L"[155] 	⍺╠('lth_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(lth_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[155] 	╠⍺╣('lth_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[155] 	╠⍺('lth_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -19255,7 +18685,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[153] lessthan←╠{╣");
+	    L"[150] nor←{⎕SIGNAL 2}⎕AMBIV╠{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}╣");
 	return err;
 }
 
@@ -19274,24 +18704,15 @@ ptr4393(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[154] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[157] lth←{╠⎕SIGNAL╣ 2} ⎕AMBIV (lessthan numeric scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -19299,12 +18720,251 @@ ptr4393(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[157] lth←{╠⎕SIGNAL 2╣} ⎕AMBIV (lessthan numeric scalar)");
+		    L"[154] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[154] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[154] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[155] 	⍺('lth_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lth_vec_ibeam)
+		CHK(6, cleanup, L"[155] 	⍺╠('lth_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(lth_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[155] 	╠⍺╣('lth_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[155] 	╠⍺('lth_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -19321,7 +18981,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[157] lth←╠{⎕SIGNAL 2}╣ ⎕AMBIV (lessthan numeric scalar)");
+	    L"[153] lessthan←╠{╣");
 	return err;
 }
 
@@ -19339,24 +18999,15 @@ ptr4394(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[154] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[157] lth←{╠⎕SIGNAL╣ 2} ⎕AMBIV (lessthan numeric scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -19364,12 +19015,251 @@ ptr4394(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[157] lth←{╠⎕SIGNAL 2╣} ⎕AMBIV (lessthan numeric scalar)");
+		    L"[154] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[154] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[154] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[154] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[154] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[154] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[154] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[155] 	⍺('lth_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lth_vec_ibeam)
+		CHK(6, cleanup, L"[155] 	⍺╠('lth_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(lth_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[155] 	╠⍺╣('lth_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[155] 	╠⍺('lth_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -19385,7 +19275,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[157] lth←╠{⎕SIGNAL 2}╣ ⎕AMBIV (lessthan numeric scalar)");
+	    L"[153] lessthan←╠{╣");
 	return err;
 }
 
@@ -19404,15 +19294,24 @@ ptr4395(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[161] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[157] lth←{╠⎕SIGNAL╣ 2} ⎕AMBIV (lessthan numeric scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -19420,251 +19319,12 @@ ptr4395(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[161] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[157] lth←{╠⎕SIGNAL 2╣} ⎕AMBIV (lessthan numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[161] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[161] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[162] 	⍺('lte_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lte_vec_ibeam)
-		CHK(6, cleanup, L"[162] 	⍺╠('lte_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(lte_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[162] 	╠⍺╣('lte_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[162] 	╠⍺('lte_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -19681,7 +19341,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[160] lesseql←╠{╣");
+	    L"[157] lth←╠{⎕SIGNAL 2}╣ ⎕AMBIV (lessthan numeric scalar)");
 	return err;
 }
 
@@ -19699,15 +19359,24 @@ ptr4396(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[161] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[157] lth←{⎕SIGNAL ╠2╣} ⎕AMBIV (lessthan numeric scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[157] lth←{╠⎕SIGNAL╣ 2} ⎕AMBIV (lessthan numeric scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -19715,251 +19384,12 @@ ptr4396(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[161] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[157] lth←{╠⎕SIGNAL 2╣} ⎕AMBIV (lessthan numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[161] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[161] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[162] 	⍺('lte_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lte_vec_ibeam)
-		CHK(6, cleanup, L"[162] 	⍺╠('lte_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(lte_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[162] 	╠⍺╣('lte_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[162] 	╠⍺('lte_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -19975,7 +19405,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[160] lesseql←╠{╣");
+	    L"[157] lth←╠{⎕SIGNAL 2}╣ ⎕AMBIV (lessthan numeric scalar)");
 	return err;
 }
 
@@ -19994,24 +19424,15 @@ ptr4397(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[164] lte←{⎕SIGNAL ╠2╣}⎕AMBIV (lesseql numeric scalar)");
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[161] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[164] lte←{⎕SIGNAL ╠2╣}⎕AMBIV (lesseql numeric scalar)");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[164] lte←{╠⎕SIGNAL╣ 2}⎕AMBIV (lesseql numeric scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -20019,12 +19440,251 @@ ptr4397(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[164] lte←{╠⎕SIGNAL 2╣}⎕AMBIV (lesseql numeric scalar)");
+		    L"[161] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[161] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[161] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[162] 	⍺('lte_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lte_vec_ibeam)
+		CHK(6, cleanup, L"[162] 	⍺╠('lte_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(lte_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[162] 	╠⍺╣('lte_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[162] 	╠⍺('lte_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -20041,7 +19701,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[164] lte←╠{⎕SIGNAL 2}╣⎕AMBIV (lesseql numeric scalar)");
+	    L"[160] lesseql←╠{╣");
 	return err;
 }
 
@@ -20059,6 +19719,366 @@ ptr4398(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[161] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[161] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[161] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[161] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[161] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[161] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[161] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[161] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[162] 	⍺('lte_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lte_vec_ibeam)
+		CHK(6, cleanup, L"[162] 	⍺╠('lte_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(lte_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[162] 	╠⍺╣('lte_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[162] 	╠⍺('lte_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[160] lesseql←╠{╣");
+	return err;
+}
+
+int
+ptr4399(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[164] lte←{⎕SIGNAL ╠2╣}⎕AMBIV (lesseql numeric scalar)");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[164] lte←{⎕SIGNAL ╠2╣}⎕AMBIV (lesseql numeric scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[164] lte←{╠⎕SIGNAL╣ 2}⎕AMBIV (lesseql numeric scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[164] lte←{╠⎕SIGNAL 2╣}⎕AMBIV (lesseql numeric scalar)");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[164] lte←╠{⎕SIGNAL 2}╣⎕AMBIV (lesseql numeric scalar)");
+	return err;
+}
+
+int
+ptr4400(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
 	{
 		struct cell_array *arr;
 	
@@ -20110,452 +20130,6 @@ cleanup:
 }
 
 int
-ptr4399(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_func_box *eql_vec;
-		struct cell_func_box *both_char;
-		struct cell_func_box *both_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_numeric->value)
-		CHK(6, cleanup, L"[169] 	⍺ ╠both_numeric╣ ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_numeric->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[169] 	╠⍺╣ both_numeric ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[169] 	╠⍺ both_numeric ⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ eql_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->eql_vec->value)
-				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ ╠eql_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->eql_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:╠⍺╣ eql_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[169] 	⍺ both_numeric ⍵:╠⍺ eql_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_char->value)
-		CHK(6, cleanup, L"[170] 	⍺ ╠both_char╣ ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_char->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[170] 	╠⍺╣ both_char ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[170] 	╠⍺ both_char ⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ eql_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->eql_vec->value)
-				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ ╠eql_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->eql_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:╠⍺╣ eql_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[170] 	⍺ both_char ⍵:╠⍺ eql_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[171] 	╠0╣");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[171] 	╠0╣");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[168] equal←╠{╣");
-	return err;
-}
-
-int
-ptr4400(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *eql_vec;
-		struct cell_func_box *both_char;
-		struct cell_func_box *both_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_numeric->value)
-		CHK(6, cleanup, L"[169] 	⍺ ╠both_numeric╣ ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_numeric->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[169] 	╠⍺╣ both_numeric ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[169] 	╠⍺ both_numeric ⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ eql_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->eql_vec->value)
-				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ ╠eql_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->eql_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:╠⍺╣ eql_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[169] 	⍺ both_numeric ⍵:╠⍺ eql_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_char->value)
-		CHK(6, cleanup, L"[170] 	⍺ ╠both_char╣ ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_char->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[170] 	╠⍺╣ both_char ⍵:⍺ eql_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[170] 	╠⍺ both_char ⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ eql_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->eql_vec->value)
-				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ ╠eql_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->eql_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:╠⍺╣ eql_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[170] 	⍺ both_char ⍵:╠⍺ eql_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[171] 	╠0╣");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[171] 	╠0╣");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[168] equal←╠{╣");
-	return err;
-}
-
-int
 ptr4401(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -20567,41 +20141,199 @@ ptr4401(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *eql_vec;
+		struct cell_func_box *both_char;
+		struct cell_func_box *both_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_numeric->value)
+		CHK(6, cleanup, L"[169] 	⍺ ╠both_numeric╣ ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_numeric->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[169] 	╠⍺╣ both_numeric ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[169] 	╠⍺ both_numeric ⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ eql_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->eql_vec->value)
+				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ ╠eql_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->eql_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:╠⍺╣ eql_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[169] 	⍺ both_numeric ⍵:╠⍺ eql_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_char->value)
+		CHK(6, cleanup, L"[170] 	⍺ ╠both_char╣ ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_char->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[170] 	╠⍺╣ both_char ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[170] 	╠⍺ both_char ⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ eql_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->eql_vec->value)
+				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ ╠eql_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->eql_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:╠⍺╣ eql_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[170] 	⍺ both_char ⍵:╠⍺ eql_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[171] 	╠0╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
+		CHK(fill_array(arr, dat), cleanup, L"[171] 	╠0╣");
 	
 		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[173] eql←{╠⎕SIGNAL╣ 2}⎕AMBIV (equal scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[173] eql←{╠⎕SIGNAL 2╣}⎕AMBIV (equal scalar)");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
 	}
 	
 	*z = *--stkhd;
@@ -20617,7 +20349,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[173] eql←╠{⎕SIGNAL 2}╣⎕AMBIV (equal scalar)");
+	    L"[168] equal←╠{╣");
 	return err;
 }
 
@@ -20632,41 +20364,199 @@ ptr4402(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *eql_vec;
+		struct cell_func_box *both_char;
+		struct cell_func_box *both_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_numeric->value)
+		CHK(6, cleanup, L"[169] 	⍺ ╠both_numeric╣ ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_numeric->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[169] 	╠⍺╣ both_numeric ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[169] 	╠⍺ both_numeric ⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[169] 	⍺ both_numeric ╠⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ eql_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->eql_vec->value)
+				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:⍺ ╠eql_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->eql_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[169] 	⍺ both_numeric ⍵:╠⍺╣ eql_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[169] 	⍺ both_numeric ⍵:╠⍺ eql_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_char->value)
+		CHK(6, cleanup, L"[170] 	⍺ ╠both_char╣ ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_char->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[170] 	╠⍺╣ both_char ⍵:⍺ eql_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[170] 	╠⍺ both_char ⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[170] 	⍺ both_char ╠⍵╣:⍺ eql_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ eql_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->eql_vec->value)
+				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:⍺ ╠eql_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->eql_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[170] 	⍺ both_char ⍵:╠⍺╣ eql_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[170] 	⍺ both_char ⍵:╠⍺ eql_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[171] 	╠0╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
+		CHK(fill_array(arr, dat), cleanup, L"[171] 	╠0╣");
 	
 		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[173] eql←{╠⎕SIGNAL╣ 2}⎕AMBIV (equal scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[173] eql←{╠⎕SIGNAL 2╣}⎕AMBIV (equal scalar)");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
 	}
 	
 	*z = *--stkhd;
@@ -20681,7 +20571,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[173] eql←╠{⎕SIGNAL 2}╣⎕AMBIV (equal scalar)");
+	    L"[168] equal←╠{╣");
 	return err;
 }
 
@@ -20700,15 +20590,24 @@ ptr4403(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[177] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[173] eql←{╠⎕SIGNAL╣ 2}⎕AMBIV (equal scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -20716,251 +20615,12 @@ ptr4403(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[177] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[173] eql←{╠⎕SIGNAL 2╣}⎕AMBIV (equal scalar)");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[177] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[177] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[178] 	⍺('gte_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!gte_vec_ibeam)
-		CHK(6, cleanup, L"[178] 	⍺╠('gte_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(gte_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[178] 	╠⍺╣('gte_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[178] 	╠⍺('gte_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -20977,7 +20637,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[176] greatereql←╠{╣");
+	    L"[173] eql←╠{⎕SIGNAL 2}╣⎕AMBIV (equal scalar)");
 	return err;
 }
 
@@ -20995,15 +20655,24 @@ ptr4404(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[177] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[173] eql←{⎕SIGNAL ╠2╣}⎕AMBIV (equal scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[173] eql←{╠⎕SIGNAL╣ 2}⎕AMBIV (equal scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -21011,251 +20680,12 @@ ptr4404(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[177] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[173] eql←{╠⎕SIGNAL 2╣}⎕AMBIV (equal scalar)");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[177] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[177] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[178] 	⍺('gte_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!gte_vec_ibeam)
-		CHK(6, cleanup, L"[178] 	⍺╠('gte_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(gte_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[178] 	╠⍺╣('gte_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[178] 	╠⍺('gte_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -21271,7 +20701,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[176] greatereql←╠{╣");
+	    L"[173] eql←╠{⎕SIGNAL 2}╣⎕AMBIV (equal scalar)");
 	return err;
 }
 
@@ -21290,24 +20720,15 @@ ptr4405(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[177] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[180] gte←{╠⎕SIGNAL╣ 2}⎕AMBIV (greatereql numeric scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -21315,12 +20736,251 @@ ptr4405(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[180] gte←{╠⎕SIGNAL 2╣}⎕AMBIV (greatereql numeric scalar)");
+		    L"[177] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[177] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[177] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[178] 	⍺('gte_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!gte_vec_ibeam)
+		CHK(6, cleanup, L"[178] 	⍺╠('gte_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(gte_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[178] 	╠⍺╣('gte_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[178] 	╠⍺('gte_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -21337,7 +20997,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[180] gte←╠{⎕SIGNAL 2}╣⎕AMBIV (greatereql numeric scalar)");
+	    L"[176] greatereql←╠{╣");
 	return err;
 }
 
@@ -21355,24 +21015,15 @@ ptr4406(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[177] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[180] gte←{╠⎕SIGNAL╣ 2}⎕AMBIV (greatereql numeric scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -21380,12 +21031,251 @@ ptr4406(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[180] gte←{╠⎕SIGNAL 2╣}⎕AMBIV (greatereql numeric scalar)");
+		    L"[177] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[177] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[177] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[177] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[177] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[177] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[177] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[178] 	⍺('gte_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!gte_vec_ibeam)
+		CHK(6, cleanup, L"[178] 	⍺╠('gte_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(gte_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[178] 	╠⍺╣('gte_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[178] 	╠⍺('gte_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -21401,7 +21291,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[180] gte←╠{⎕SIGNAL 2}╣⎕AMBIV (greatereql numeric scalar)");
+	    L"[176] greatereql←╠{╣");
 	return err;
 }
 
@@ -21420,15 +21310,24 @@ ptr4407(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[184] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[180] gte←{╠⎕SIGNAL╣ 2}⎕AMBIV (greatereql numeric scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -21436,251 +21335,12 @@ ptr4407(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[184] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[180] gte←{╠⎕SIGNAL 2╣}⎕AMBIV (greatereql numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[184] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[184] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[185] 	⍺('gth_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!gth_vec_ibeam)
-		CHK(6, cleanup, L"[185] 	⍺╠('gth_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(gth_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[185] 	╠⍺╣('gth_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[185] 	╠⍺('gth_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -21697,7 +21357,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[183] greaterthan←╠{╣");
+	    L"[180] gte←╠{⎕SIGNAL 2}╣⎕AMBIV (greatereql numeric scalar)");
 	return err;
 }
 
@@ -21715,15 +21375,24 @@ ptr4408(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {2};
 	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[184] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
 	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
+		CHK(fill_array(arr, dat), cleanup, L"[180] gte←{⎕SIGNAL ╠2╣}⎕AMBIV (greatereql numeric scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[180] gte←{╠⎕SIGNAL╣ 2}⎕AMBIV (greatereql numeric scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -21731,251 +21400,12 @@ ptr4408(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[184] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+		    L"[180] gte←{╠⎕SIGNAL 2╣}⎕AMBIV (greatereql numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[184] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[184] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_dr);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1289};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[185] 	⍺('gth_vec_ibeam'⌶)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!gth_vec_ibeam)
-		CHK(6, cleanup, L"[185] 	⍺╠('gth_vec_ibeam'⌶)╣⍵");
-	
-	*stkhd++ = retain_cell(gth_vec_ibeam);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[185] 	╠⍺╣('gth_vec_ibeam'⌶)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[185] 	╠⍺('gth_vec_ibeam'⌶)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -21991,7 +21421,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[183] greaterthan←╠{╣");
+	    L"[180] gte←╠{⎕SIGNAL 2}╣⎕AMBIV (greatereql numeric scalar)");
 	return err;
 }
 
@@ -22010,24 +21440,15 @@ ptr4409(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[184] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[187] gth←{╠⎕SIGNAL╣ 2}⎕AMBIV (greaterthan numeric scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -22035,12 +21456,251 @@ ptr4409(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[187] gth←{╠⎕SIGNAL 2╣}⎕AMBIV (greaterthan numeric scalar)");
+		    L"[184] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[184] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[184] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[185] 	⍺('gth_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!gth_vec_ibeam)
+		CHK(6, cleanup, L"[185] 	⍺╠('gth_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(gth_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[185] 	╠⍺╣('gth_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[185] 	╠⍺('gth_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -22057,7 +21717,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[187] gth←╠{⎕SIGNAL 2}╣⎕AMBIV (greaterthan numeric scalar)");
+	    L"[183] greaterthan←╠{╣");
 	return err;
 }
 
@@ -22075,24 +21735,15 @@ ptr4410(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	{
-		struct cell_array *arr;
+	if (!omega)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {2};
+	*stkhd++ = retain_cell(omega);
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[184] 	1289≡╠⎕DR╣ ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[187] gth←{╠⎕SIGNAL╣ 2}⎕AMBIV (greaterthan numeric scalar)");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -22100,12 +21751,251 @@ ptr4410(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[187] gth←{╠⎕SIGNAL 2╣}⎕AMBIV (greaterthan numeric scalar)");
+		    L"[184] 	1289≡╠⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[184] 	1289╠≡╣⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[184] 	╠1289╣≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[184] 	╠1289≡⎕DR ⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[184] 	1289≡⎕DR ╠⍵╣:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL ╠11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL╣ 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[184] 	1289≡⎕DR ⍵:╠⎕SIGNAL 11╣ ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.q_dr)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR╣ ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_dr);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡╠⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289╠≡╣⎕DR ⍺:⎕SIGNAL 11");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1289};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289╣≡⎕DR ⍺:⎕SIGNAL 11");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ ╠1289≡⎕DR ⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ╠⍺╣:⎕SIGNAL 11");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL ╠11╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL╣ 11");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[184] 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:╠⎕SIGNAL 11╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[185] 	⍺('gth_vec_ibeam'⌶)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!gth_vec_ibeam)
+		CHK(6, cleanup, L"[185] 	⍺╠('gth_vec_ibeam'⌶)╣⍵");
+	
+	*stkhd++ = retain_cell(gth_vec_ibeam);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[185] 	╠⍺╣('gth_vec_ibeam'⌶)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[185] 	╠⍺('gth_vec_ibeam'⌶)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -22121,7 +22011,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[187] gth←╠{⎕SIGNAL 2}╣⎕AMBIV (greaterthan numeric scalar)");
+	    L"[183] greaterthan←╠{╣");
 	return err;
 }
 
@@ -22145,17 +22035,17 @@ ptr4411(struct cell_array **z,
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		int16_t dat[] = {2};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[190] firstocc←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[190] firstocc←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
 	
 		*stkhd++ = arr;
 	}
 	
 	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[190] firstocc←{╠⎕SIGNAL╣ 16}");
+		CHK(6, cleanup, L"[187] gth←{╠⎕SIGNAL╣ 2}⎕AMBIV (greaterthan numeric scalar)");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
@@ -22165,7 +22055,7 @@ ptr4411(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[190] firstocc←{╠⎕SIGNAL 16╣}");
+		    L"[187] gth←{╠⎕SIGNAL 2╣}⎕AMBIV (greaterthan numeric scalar)");
 	
 		release_func(fn);
 		release_array(y);
@@ -22187,7 +22077,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[190] firstocc←╠{⎕SIGNAL 16}╣");
+	    L"[187] gth←╠{⎕SIGNAL 2}╣⎕AMBIV (greaterthan numeric scalar)");
 	return err;
 }
 
@@ -22210,6 +22100,136 @@ ptr4412(struct cell_array **z,
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
+		int16_t dat[] = {2};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[187] gth←{⎕SIGNAL ╠2╣}⎕AMBIV (greaterthan numeric scalar)");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[187] gth←{╠⎕SIGNAL╣ 2}⎕AMBIV (greaterthan numeric scalar)");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[187] gth←{╠⎕SIGNAL 2╣}⎕AMBIV (greaterthan numeric scalar)");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[187] gth←╠{⎕SIGNAL 2}╣⎕AMBIV (greaterthan numeric scalar)");
+	return err;
+}
+
+int
+ptr4413(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[190] firstocc←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[190] firstocc←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[190] firstocc←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[190] firstocc←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[190] firstocc←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4414(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
 		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[190] firstocc←{⎕SIGNAL ╠16╣}");
@@ -22256,452 +22276,6 @@ cleanup:
 }
 
 int
-ptr4413(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_func_box *neq_vec;
-		struct cell_func_box *both_char;
-		struct cell_func_box *both_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_numeric->value)
-		CHK(6, cleanup, L"[193] 	⍺ ╠both_numeric╣ ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_numeric->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[193] 	╠⍺╣ both_numeric ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[193] 	╠⍺ both_numeric ⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ neq_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->neq_vec->value)
-				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ ╠neq_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->neq_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:╠⍺╣ neq_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[193] 	⍺ both_numeric ⍵:╠⍺ neq_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_char->value)
-		CHK(6, cleanup, L"[194] 	⍺ ╠both_char╣ ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_char->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[194] 	╠⍺╣ both_char ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[194] 	╠⍺ both_char ⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ neq_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->neq_vec->value)
-				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ ╠neq_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->neq_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:╠⍺╣ neq_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[194] 	⍺ both_char ⍵:╠⍺ neq_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[195] 	╠1╣");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[195] 	╠1╣");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[192] noteq←╠{╣");
-	return err;
-}
-
-int
-ptr4414(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_func_box *neq_vec;
-		struct cell_func_box *both_char;
-		struct cell_func_box *both_numeric;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_numeric->value)
-		CHK(6, cleanup, L"[193] 	⍺ ╠both_numeric╣ ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_numeric->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[193] 	╠⍺╣ both_numeric ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[193] 	╠⍺ both_numeric ⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ neq_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->neq_vec->value)
-				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ ╠neq_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->neq_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:╠⍺╣ neq_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[193] 	⍺ both_numeric ⍵:╠⍺ neq_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->both_char->value)
-		CHK(6, cleanup, L"[194] 	⍺ ╠both_char╣ ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(lex->both_char->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[194] 	╠⍺╣ both_char ⍵:⍺ neq_vec ⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[194] 	╠⍺ both_char ⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ neq_vec ╠⍵╣");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->neq_vec->value)
-				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ ╠neq_vec╣ ⍵");
-			
-			*stkhd++ = retain_cell(lex->neq_vec->value);
-			
-			if (!alpha)
-				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:╠⍺╣ neq_vec ⍵");
-			
-			*stkhd++ = retain_cell(alpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[194] 	⍺ both_char ⍵:╠⍺ neq_vec ⍵╣");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[195] 	╠1╣");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[195] 	╠1╣");
-	
-		*stkhd++ = arr;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[192] noteq←╠{╣");
-	return err;
-}
-
-int
 ptr4415(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -22713,41 +22287,199 @@ ptr4415(struct cell_array **z,
 
 	alpha = NULL;
 
+	struct lex_vars {
+		struct cell_func_box *neq_vec;
+		struct cell_func_box *both_char;
+		struct cell_func_box *both_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_numeric->value)
+		CHK(6, cleanup, L"[193] 	⍺ ╠both_numeric╣ ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_numeric->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[193] 	╠⍺╣ both_numeric ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[193] 	╠⍺ both_numeric ⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ neq_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->neq_vec->value)
+				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ ╠neq_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->neq_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:╠⍺╣ neq_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[193] 	⍺ both_numeric ⍵:╠⍺ neq_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_char->value)
+		CHK(6, cleanup, L"[194] 	⍺ ╠both_char╣ ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_char->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[194] 	╠⍺╣ both_char ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[194] 	╠⍺ both_char ⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ neq_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->neq_vec->value)
+				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ ╠neq_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->neq_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:╠⍺╣ neq_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[194] 	⍺ both_char ⍵:╠⍺ neq_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[195] 	╠1╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[195] 	╠1╣");
 	
 		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[200] split←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[200] split←{╠⎕SIGNAL 16╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
 	}
 	
 	*z = *--stkhd;
@@ -22763,7 +22495,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[200] split←╠{⎕SIGNAL 16}╣");
+	    L"[192] noteq←╠{╣");
 	return err;
 }
 
@@ -22778,41 +22510,199 @@ ptr4416(struct cell_array **z,
 	int err;
 
 
+	struct lex_vars {
+		struct cell_func_box *neq_vec;
+		struct cell_func_box *both_char;
+		struct cell_func_box *both_numeric;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
 	err = 0;
 	stkhd = &stk[0];
 
+	if (!omega)
+		CHK(6, cleanup, L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_numeric->value)
+		CHK(6, cleanup, L"[193] 	⍺ ╠both_numeric╣ ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_numeric->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[193] 	╠⍺╣ both_numeric ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[193] 	╠⍺ both_numeric ⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[193] 	⍺ both_numeric ╠⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ neq_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->neq_vec->value)
+				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:⍺ ╠neq_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->neq_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[193] 	⍺ both_numeric ⍵:╠⍺╣ neq_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[193] 	⍺ both_numeric ⍵:╠⍺ neq_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->both_char->value)
+		CHK(6, cleanup, L"[194] 	⍺ ╠both_char╣ ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(lex->both_char->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[194] 	╠⍺╣ both_char ⍵:⍺ neq_vec ⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[194] 	╠⍺ both_char ⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[194] 	⍺ both_char ╠⍵╣:⍺ neq_vec ⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ neq_vec ╠⍵╣");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->neq_vec->value)
+				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:⍺ ╠neq_vec╣ ⍵");
+			
+			*stkhd++ = retain_cell(lex->neq_vec->value);
+			
+			if (!alpha)
+				CHK(6, cleanup, L"[194] 	⍺ both_char ⍵:╠⍺╣ neq_vec ⍵");
+			
+			*stkhd++ = retain_cell(alpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[194] 	⍺ both_char ⍵:╠⍺ neq_vec ⍵╣");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
 		unsigned int rnk = 0;
-		int16_t dat[] = {16};
+		int16_t dat[] = {1};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[195] 	╠1╣");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
+		CHK(fill_array(arr, dat), cleanup, L"[195] 	╠1╣");
 	
 		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[200] split←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[200] split←{╠⎕SIGNAL 16╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
 	}
 	
 	*z = *--stkhd;
@@ -22827,7 +22717,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[200] split←╠{⎕SIGNAL 16}╣");
+	    L"[192] noteq←╠{╣");
 	return err;
 }
 
@@ -22846,35 +22736,24 @@ ptr4417(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷╠⍵╣}");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
 	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)╠⌷╣⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
 	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
+		CHK(fill_array(arr, dat), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
 	
-	if (!alpha)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-╠⍺╣)⌷⍵}");
+		*stkhd++ = arr;
+	}
 	
-	*stkhd++ = retain_cell(alpha);
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[200] split←{╠⎕SIGNAL╣ 16}");
 	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)╠-╣⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢╠⍵╣)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(╠≢╣⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -22882,113 +22761,12 @@ ptr4417(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)╣-⍺)⌷⍵}");
+		    L"[200] split←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+╠⍳╣(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[201] drop←{(⊂⍺+╠⍳(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺╠+╣⍳(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[201] drop←{(⊂╠⍺╣+⍳(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[201] drop←{(⊂╠⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[201] drop←{(╠⊂╣⍺+⍳(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)⌷⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -23005,7 +22783,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[201] drop←╠{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}╣");
+	    L"[200] split←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -23023,35 +22801,24 @@ ptr4418(struct cell_array **z,
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷╠⍵╣}");
+	{
+		struct cell_array *arr;
 	
-	*stkhd++ = retain_cell(omega);
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
 	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)╠⌷╣⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
 	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
+		CHK(fill_array(arr, dat), cleanup, L"[200] split←{⎕SIGNAL ╠16╣}");
 	
-	if (!alpha)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-╠⍺╣)⌷⍵}");
+		*stkhd++ = arr;
+	}
 	
-	*stkhd++ = retain_cell(alpha);
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[200] split←{╠⎕SIGNAL╣ 16}");
 	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)╠-╣⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢╠⍵╣)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(╠≢╣⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -23059,113 +22826,12 @@ ptr4418(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)╣-⍺)⌷⍵}");
+		    L"[200] split←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺+╠⍳╣(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[201] drop←{(⊂⍺+╠⍳(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[201] drop←{(⊂⍺╠+╣⍳(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[201] drop←{(⊂╠⍺╣+⍳(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[201] drop←{(⊂╠⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[201] drop←{(╠⊂╣⍺+⍳(≢⍵)-⍺)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)⌷⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -23181,7 +22847,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[201] drop←╠{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}╣");
+	    L"[200] split←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -23201,22 +22867,32 @@ ptr4419(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)⌷╠⍵╣}");
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷╠⍵╣}");
 	
 	*stkhd++ = retain_cell(omega);
 	
 	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)╠⌷╣⍵}");
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)╠⌷╣⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.sqd);
 	
+	if (!alpha)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-╠⍺╣)⌷⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)╠-╣⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
 	if (!omega)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳≢╠⍵╣)⌷⍵}");
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢╠⍵╣)-⍺)⌷⍵}");
 	
 	*stkhd++ = retain_cell(omega);
 	
 	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳╠≢╣⍵)⌷⍵}");
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(╠≢╣⍵)-⍺)⌷⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.nqv);
 	
@@ -23226,52 +22902,13 @@ ptr4419(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[205] reverse_last←{(⊂(≢⍵)-1+⍳╠≢⍵)╣⌷⍵}");
+		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)╣-⍺)⌷⍵}");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
 		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+╠⍳╣≢⍵)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[205] reverse_last←{(⊂(≢⍵)-1+╠⍳≢⍵)╣⌷⍵}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1╠+╣⍳≢⍵)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[205] reverse_last←{(⊂(≢⍵)-╠1╣+⍳≢⍵)⌷⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[205] reverse_last←{(⊂(≢⍵)-╠1╣+⍳≢⍵)⌷⍵}");
-	
-		*stkhd++ = arr;
 	}
 	
 	{
@@ -23281,7 +22918,7 @@ ptr4419(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[205] reverse_last←{(⊂(≢⍵)-╠1+⍳≢⍵)╣⌷⍵}");
+		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)-⍺)╣⌷⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -23291,20 +22928,10 @@ ptr4419(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)╠-╣1+⍳≢⍵)⌷⍵}");
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+╠⍳╣(≢⍵)-⍺)⌷⍵}");
 	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢╠⍵╣)-1+⍳≢⍵)⌷⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[205] reverse_last←{(⊂(╠≢╣⍵)-1+⍳≢⍵)⌷⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
+	*stkhd++ = retain_cell(cdf_prim.iot);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -23312,7 +22939,7 @@ ptr4419(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[205] reverse_last←{(⊂╠(≢⍵)╣-1+⍳≢⍵)⌷⍵}");
+		    L"[201] drop←{(⊂⍺+╠⍳(≢⍵)-⍺)╣⌷⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -23321,6 +22948,16 @@ ptr4419(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺╠+╣⍳(≢⍵)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[201] drop←{(⊂╠⍺╣+⍳(≢⍵)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
 	{
 		struct cell_array *x = stkhd[-1];
 		struct cell_func *fn = stkhd[-2];
@@ -23328,7 +22965,7 @@ ptr4419(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[205] reverse_last←{(⊂╠(≢⍵)-1+⍳≢⍵)╣⌷⍵}");
+		    L"[201] drop←{(⊂╠⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -23339,7 +22976,7 @@ ptr4419(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[205] reverse_last←{(╠⊂╣(≢⍵)-1+⍳≢⍵)⌷⍵}");
+		CHK(6, cleanup, L"[201] drop←{(╠⊂╣⍺+⍳(≢⍵)-⍺)⌷⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.par);
 	
@@ -23349,7 +22986,7 @@ ptr4419(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[205] reverse_last←{╠(⊂(≢⍵)-1+⍳≢⍵)╣⌷⍵}");
+		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -23365,7 +23002,7 @@ ptr4419(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[205] reverse_last←{╠(⊂(≢⍵)-1+⍳≢⍵)⌷⍵╣}");
+		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)⌷⍵╣}");
 	
 		release_array(x);
 		release_func(fn);
@@ -23388,7 +23025,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[205] reverse_last←╠{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}╣");
+	    L"[201] drop←╠{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}╣");
 	return err;
 }
 
@@ -23407,6 +23044,389 @@ ptr4420(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!omega)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-⍺)╠⌷╣⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)-╠⍺╣)⌷⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢⍵)╠-╣⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(≢╠⍵╣)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+⍳(╠≢╣⍵)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)╣-⍺)⌷⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[201] drop←{(⊂⍺+⍳╠(≢⍵)-⍺)╣⌷⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺+╠⍳╣(≢⍵)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[201] drop←{(⊂⍺+╠⍳(≢⍵)-⍺)╣⌷⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[201] drop←{(⊂⍺╠+╣⍳(≢⍵)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[201] drop←{(⊂╠⍺╣+⍳(≢⍵)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[201] drop←{(⊂╠⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[201] drop←{(╠⊂╣⍺+⍳(≢⍵)-⍺)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)╣⌷⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[201] drop←{╠(⊂⍺+⍳(≢⍵)-⍺)⌷⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[201] drop←╠{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}╣");
+	return err;
+}
+
+int
+ptr4421(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)⌷╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)╠⌷╣⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳≢╠⍵╣)⌷⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳╠≢╣⍵)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[205] reverse_last←{(⊂(≢⍵)-1+⍳╠≢⍵)╣⌷⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+╠⍳╣≢⍵)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[205] reverse_last←{(⊂(≢⍵)-1+╠⍳≢⍵)╣⌷⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1╠+╣⍳≢⍵)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[205] reverse_last←{(⊂(≢⍵)-╠1╣+⍳≢⍵)⌷⍵}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[205] reverse_last←{(⊂(≢⍵)-╠1╣+⍳≢⍵)⌷⍵}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[205] reverse_last←{(⊂(≢⍵)-╠1+⍳≢⍵)╣⌷⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)╠-╣1+⍳≢⍵)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢╠⍵╣)-1+⍳≢⍵)⌷⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[205] reverse_last←{(⊂(╠≢╣⍵)-1+⍳≢⍵)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[205] reverse_last←{(⊂╠(≢⍵)╣-1+⍳≢⍵)⌷⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[205] reverse_last←{(⊂╠(≢⍵)-1+⍳≢⍵)╣⌷⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[205] reverse_last←{(╠⊂╣(≢⍵)-1+⍳≢⍵)⌷⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[205] reverse_last←{╠(⊂(≢⍵)-1+⍳≢⍵)╣⌷⍵}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[205] reverse_last←{╠(⊂(≢⍵)-1+⍳≢⍵)⌷⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[205] reverse_last←╠{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}╣");
+	return err;
+}
+
+int
+ptr4422(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
 		CHK(6, cleanup, L"[205] reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)⌷╠⍵╣}");
 	
 	*stkhd++ = retain_cell(omega);
@@ -23594,136 +23614,6 @@ cleanup:
 
 	TRC(chk_array_valid(*z), 
 	    L"[205] reverse_last←╠{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}╣");
-	return err;
-}
-
-int
-ptr4421(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[206] rotate_last←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[206] rotate_last←{╠⎕SIGNAL 16╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[206] rotate_last←╠{⎕SIGNAL 16}╣");
-	return err;
-}
-
-int
-ptr4422(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	err = 0;
-	stkhd = &stk[0];
-
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[206] rotate_last←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[206] rotate_last←{╠⎕SIGNAL 16╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[206] rotate_last←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -23749,6 +23639,136 @@ ptr4423(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {16};
 	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[206] rotate_last←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[206] rotate_last←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[206] rotate_last←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4424(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[206] rotate_last←{⎕SIGNAL ╠16╣}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[206] rotate_last←{╠⎕SIGNAL╣ 16}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[206] rotate_last←{╠⎕SIGNAL 16╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[206] rotate_last←╠{⎕SIGNAL 16}╣");
+	return err;
+}
+
+int
+ptr4425(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
+	
 		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[210] map_monadic←{⎕SIGNAL ╠16╣}");
 	
 		CHK(fill_array(arr, dat), cleanup, L"[210] map_monadic←{⎕SIGNAL ╠16╣}");
@@ -23794,7 +23814,7 @@ cleanup:
 }
 
 int
-ptr4424(struct cell_array **z,
+ptr4426(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -23858,460 +23878,6 @@ cleanup:
 }
 
 int
-ptr4425(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_array *s;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	struct lex_vars {
-		struct cell_func_box *chk_scl;
-		struct cell_func_box *max_shp;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	loc->s = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->chk_scl->value)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->chk_scl->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[211] map_dyadic←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->max_shp->value)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->max_shp->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->s = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.q_veach)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ╠⎕VEACH╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_veach);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ╠⍺⍺╣ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺╣ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *arr, **dat;
-	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺╣ ⎕VEACH ⍵}");
-		arr->shape[0] = 2;
-		dat = arr->values;
-	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH╣ ⍵}");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴⍺ ⍺⍺ ⎕VEACH ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[211] map_dyadic←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}╣");
-	return err;
-}
-
-int
-ptr4426(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_array *s;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	struct lex_vars {
-		struct cell_func_box *chk_scl;
-		struct cell_func_box *max_shp;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	loc->s = NULL;
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->chk_scl->value)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->chk_scl->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[211] map_dyadic←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->max_shp->value)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(lex->max_shp->value);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->s = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.q_veach)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ╠⎕VEACH╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_veach);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ╠⍺⍺╣ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺╣ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *arr, **dat;
-	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺╣ ⎕VEACH ⍵}");
-		arr->shape[0] = 2;
-		dat = arr->values;
-	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH╣ ⍵}");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴⍺ ⍺⍺ ⎕VEACH ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[211] map_dyadic←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}╣");
-	return err;
-}
-
-int
 ptr4427(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -24321,7 +23887,7 @@ ptr4427(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_moper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 
 	alpha = NULL;
 	deldel = self->fv[0];
@@ -24445,40 +24011,52 @@ ptr4427(struct cell_array **z,
 	
 	*stkhd++ = retain_cell(alphaalpha);
 	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ╠⍺⍺ ⎕VEACH╣ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
 	if (!alpha)
 		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺╣ ⍺⍺ ⎕VEACH ⍵}");
 	
 	*stkhd++ = retain_cell(alpha);
 	
 	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
+		struct cell_array *arr, **dat;
 	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH ⍵╣}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺╣ ⎕VEACH ⍵}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH╣ ⍵}");
 	
 		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH ⍵╣}");
+	
 		release_func(fn);
 		release_array(y);
 	
-		stkhd -= 3;
+		stkhd -= 2;
 		*stkhd++ = dst;
 	}
 	
@@ -24537,6 +24115,448 @@ ptr4428(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_moper *deldel;
+	struct cell_array *alphaalpha;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct {
+		struct cell_array *s;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	struct lex_vars {
+		struct cell_func_box *chk_scl;
+		struct cell_func_box *max_shp;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	loc->s = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->chk_scl->value)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->chk_scl->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[211] map_dyadic←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->max_shp->value)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->max_shp->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->s = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.q_veach)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ╠⎕VEACH╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_veach);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ╠⍺⍺╣ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺╣ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺╣ ⎕VEACH ⍵}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH╣ ⍵}");
+	
+		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴⍺ ⍺⍺ ⎕VEACH ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[211] map_dyadic←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}╣");
+	return err;
+}
+
+int
+ptr4429(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_moper *deldel;
+	struct cell_func *alphaalpha;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct {
+		struct cell_array *s;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	struct lex_vars {
+		struct cell_func_box *chk_scl;
+		struct cell_func_box *max_shp;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	loc->s = NULL;
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->chk_scl->value)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ ╠chk_scl╣ ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->chk_scl->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{╠⍺╣ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[211] map_dyadic←{╠⍺ chk_scl ⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[211] map_dyadic←{⍺ chk_scl ╠⍵╣: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ╠⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->max_shp->value)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ ╠max_shp╣ ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(lex->max_shp->value);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺╣ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←╠⍺ max_shp ⍵╣ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->s = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.q_veach)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ╠⎕VEACH╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.q_veach);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ╠⍺⍺╣ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ╠⍺⍺ ⎕VEACH╣ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺╣ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴╠⍺ ⍺⍺ ⎕VEACH ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s╠⍴╣⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s╣⍴⍺ ⍺⍺ ⎕VEACH ⍵}");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[211] map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ╠s⍴⍺ ⍺⍺ ⎕VEACH ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[211] map_dyadic←╠{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}╣");
+	return err;
+}
+
+int
+ptr4430(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -24742,216 +24762,6 @@ cleanup:
 }
 
 int
-ptr4429(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct lex_vars {
-		struct cell_moper_box *map_dyadic;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ map_dyadic ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->map_dyadic->value)
-		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ ╠map_dyadic╣ ⍵}");
-	
-	*stkhd++ = retain_cell(lex->map_dyadic->value);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[212] map←{⍺ ╠⍺⍺╣ map_dyadic ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[212] map←{╠⍺╣ ⍺⍺ map_dyadic ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *arr, **dat;
-	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[212] map←{╠⍺ ⍺⍺╣ map_dyadic ⍵}");
-		arr->shape[0] = 2;
-		dat = arr->values;
-	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic╣ ⍵}");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[212] map←╠{⍺ ⍺⍺ map_dyadic ⍵}╣");
-	return err;
-}
-
-int
-ptr4430(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct lex_vars {
-		struct cell_moper_box *map_dyadic;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ map_dyadic ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->map_dyadic->value)
-		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ ╠map_dyadic╣ ⍵}");
-	
-	*stkhd++ = retain_cell(lex->map_dyadic->value);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[212] map←{⍺ ╠⍺⍺╣ map_dyadic ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[212] map←{╠⍺╣ ⍺⍺ map_dyadic ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *arr, **dat;
-	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[212] map←{╠⍺ ⍺⍺╣ map_dyadic ⍵}");
-		arr->shape[0] = 2;
-		dat = arr->values;
-	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic╣ ⍵}");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[212] map←╠{⍺ ⍺⍺ map_dyadic ⍵}╣");
-	return err;
-}
-
-int
 ptr4431(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -24961,7 +24771,7 @@ ptr4431(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_moper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 
 	alpha = NULL;
 	deldel = self->fv[0];
@@ -24991,40 +24801,52 @@ ptr4431(struct cell_array **z,
 	
 	*stkhd++ = retain_cell(alphaalpha);
 	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[212] map←{⍺ ╠⍺⍺ map_dyadic╣ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
 	if (!alpha)
 		CHK(6, cleanup, L"[212] map←{╠⍺╣ ⍺⍺ map_dyadic ⍵}");
 	
 	*stkhd++ = retain_cell(alpha);
 	
 	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
+		struct cell_array *arr, **dat;
 	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic ⍵╣}");
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[212] map←{╠⍺ ⍺⍺╣ map_dyadic ⍵}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic╣ ⍵}");
 	
 		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic ⍵╣}");
+	
 		release_func(fn);
 		release_array(y);
 	
-		stkhd -= 3;
+		stkhd -= 2;
 		*stkhd++ = dst;
 	}
 	
@@ -25055,6 +24877,204 @@ ptr4432(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_moper *deldel;
+	struct cell_array *alphaalpha;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct lex_vars {
+		struct cell_moper_box *map_dyadic;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ map_dyadic ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->map_dyadic->value)
+		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ ╠map_dyadic╣ ⍵}");
+	
+	*stkhd++ = retain_cell(lex->map_dyadic->value);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[212] map←{⍺ ╠⍺⍺╣ map_dyadic ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[212] map←{╠⍺╣ ⍺⍺ map_dyadic ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[212] map←{╠⍺ ⍺⍺╣ map_dyadic ⍵}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic╣ ⍵}");
+	
+		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[212] map←╠{⍺ ⍺⍺ map_dyadic ⍵}╣");
+	return err;
+}
+
+int
+ptr4433(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_moper *deldel;
+	struct cell_func *alphaalpha;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct lex_vars {
+		struct cell_moper_box *map_dyadic;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ map_dyadic ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->map_dyadic->value)
+		CHK(6, cleanup, L"[212] map←{⍺ ⍺⍺ ╠map_dyadic╣ ⍵}");
+	
+	*stkhd++ = retain_cell(lex->map_dyadic->value);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[212] map←{⍺ ╠⍺⍺╣ map_dyadic ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[212] map←{⍺ ╠⍺⍺ map_dyadic╣ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[212] map←{╠⍺╣ ⍺⍺ map_dyadic ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[212] map←{╠⍺ ⍺⍺ map_dyadic ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[212] map←╠{⍺ ⍺⍺ map_dyadic ⍵}╣");
+	return err;
+}
+
+int
+ptr4434(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -25138,7 +25158,7 @@ cleanup:
 }
 
 int
-ptr4433(struct cell_array **z,
+ptr4435(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -25765,7 +25785,7 @@ ptr4433(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4434, ptr4435, 2), cleanup, 
+		CHK(mk_func(&k, ptr4436, ptr4437, 2), cleanup, 
 		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->z);
@@ -25929,1110 +25949,11 @@ cleanup:
 
 	TRC(chk_array_valid(*z), 
 	    L"[215] reduce←╠{╣");
-	return err;
-}
-
-int
-ptr4434(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_array_box *z;
-		struct cell_func_box *op;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->z->value);
-	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->op->value);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
-	return err;
-}
-
-int
-ptr4435(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_array_box *z;
-		struct cell_func_box *op;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->z->value);
-	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->op->value);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	return err;
 }
 
 int
 ptr4436(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_array *s;
-		struct cell_array *c;
-		struct cell_array *zs;
-		struct cell_func_box *op;
-		struct cell_array_box *z;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	loc->s = NULL;
-	loc->c = NULL;
-	loc->zs = NULL;
-	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
-	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[216] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[216] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[216] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[216] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.cat)
-				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-			*stkhd++ = retain_cell(cdf_prim.cat);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[216] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			if (!self)
-				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-			*stkhd++ = retain_cell(self);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[216] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->s = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	if (!cdf_prim.dis)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.dis);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->c = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	if (!cdf_prim.drp)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
-	
-	*stkhd++ = retain_cell(cdf_prim.drp);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->zs = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[217] 	0╠≡╣c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[217] 	╠0≡c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {16};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[217] 	0≡c:╠⎕SIGNAL╣ 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[217] 	0≡c:╠⎕SIGNAL 16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.rho)
-				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(cdf_prim.rho);
-			
-			if (!loc->zs)
-				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(loc->zs);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	loc->op->value = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->z->value = retain_cell(stkhd[-1]);
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	{
-		struct cell_func *k;
-	
-		CHK(mk_func(&k, ptr4437, ptr4438, 2), cleanup, 
-		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		k->fv[0] = retain_cell(loc->z);
-		k->fv[1] = retain_cell(loc->op);
-	
-		*stkhd++ = k;
-	}
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rot)
-		CHK(6, cleanup, L"[218] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[218] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!loc->z->value)
-		CHK(6, cleanup, L"[218] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(loc->z->value);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[215] reduce←╠{╣");
-	return err;
-}
-
-int
-ptr4437(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -27176,6 +26097,158 @@ ptr4437(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	return err;
+}
+
+int
+ptr4437(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
 
 	if (err)
 		return err;
@@ -27194,112 +26267,90 @@ ptr4438(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
+	struct cell_moper *deldel;
+	struct cell_array *alphaalpha;
 
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
 
-	struct lex_vars {
-		struct cell_array_box *z;
+	struct {
+		struct cell_array *s;
+		struct cell_array *c;
+		struct cell_array *zs;
 		struct cell_func_box *op;
-	} *lex;
+		struct cell_array_box *z;
+	} loc_frm, *loc;
 	
-	lex = (struct lex_vars *)self->fv;
+	loc = &loc_frm;
 	
+	loc->s = NULL;
+	loc->c = NULL;
+	loc->zs = NULL;
+	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->z->value);
-	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->op->value);
-	
 	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(6, cleanup, L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[216] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(alpha);
+	*stkhd++ = retain_cell(cdf_prim.rho);
 	
 	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
 		struct cell_func *fn = stkhd[-1];
 		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
+		struct cell_array *dst;
 	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-		release_array(*--stkhd);
-		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
 	}
 	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[216] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-	*stkhd++ = retain_cell(cdf_prim.lft);
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[216] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
 	
 	{
 		struct cell_array *arr;
 	
 		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
+		unsigned int rnk = 0;
 		int16_t dat[] = {0};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+		CHK(fill_array(arr, dat), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
 	
 		*stkhd++ = arr;
 	}
@@ -27311,7 +26362,669 @@ ptr4438(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+		    L"[216] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.cat)
+				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+			*stkhd++ = retain_cell(cdf_prim.cat);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[216] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			if (!self)
+				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+			*stkhd++ = retain_cell(self);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[216] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->s = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	if (!cdf_prim.dis)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.dis);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->c = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	if (!cdf_prim.drp)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
+	
+	*stkhd++ = retain_cell(cdf_prim.drp);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->zs = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[217] 	0╠≡╣c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[217] 	╠0≡c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {16};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[217] 	0≡c:╠⎕SIGNAL╣ 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[217] 	0≡c:╠⎕SIGNAL 16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.rho)
+				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(cdf_prim.rho);
+			
+			if (!loc->zs)
+				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(loc->zs);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
+	
+		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	loc->op->value = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->z->value = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, ptr4439, ptr4440, 2), cleanup, 
+		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		k->fv[0] = retain_cell(loc->z);
+		k->fv[1] = retain_cell(loc->op);
+	
+		*stkhd++ = k;
+	}
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rot)
+		CHK(6, cleanup, L"[218] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[218] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!loc->z->value)
+		CHK(6, cleanup, L"[218] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(loc->z->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -27328,12 +27041,13 @@ ptr4438(struct cell_array **z,
 
 cleanup:
 	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
 
 	if (err)
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	    L"[215] reduce←╠{╣");
 	return err;
 }
 
@@ -27346,801 +27060,6 @@ ptr4439(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_moper *deldel;
-	struct cell_func *alphaalpha;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_array *s;
-		struct cell_array *c;
-		struct cell_array *zs;
-		struct cell_func_box *op;
-		struct cell_array_box *z;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	loc->s = NULL;
-	loc->c = NULL;
-	loc->zs = NULL;
-	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
-	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[216] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[216] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[216] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[216] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.cat)
-				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-			*stkhd++ = retain_cell(cdf_prim.cat);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[216] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			if (!self)
-				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-			*stkhd++ = retain_cell(self);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[216] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->s = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	if (!cdf_prim.dis)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
-	
-	*stkhd++ = retain_cell(cdf_prim.dis);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	loc->c = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->s)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
-	
-	*stkhd++ = retain_cell(loc->s);
-	
-	if (!cdf_prim.drp)
-		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
-	
-	*stkhd++ = retain_cell(cdf_prim.drp);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->zs = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[217] 	0╠≡╣c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[217] 	╠0≡c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {16};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[217] 	0≡c:╠⎕SIGNAL╣ 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[217] 	0≡c:╠⎕SIGNAL 16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!cdf_prim.rho)
-				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(cdf_prim.rho);
-			
-			if (!loc->zs)
-				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
-			
-			*stkhd++ = retain_cell(loc->zs);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_func *fn = stkhd[-2];
-				struct cell_array *y = stkhd[-3];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-				    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
-			
-				release_array(x);
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 3;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	loc->op->value = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->z->value = retain_cell(stkhd[-1]);
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	{
-		struct cell_func *k;
-	
-		CHK(mk_func(&k, ptr4440, ptr4441, 2), cleanup, 
-		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		k->fv[0] = retain_cell(loc->z);
-		k->fv[1] = retain_cell(loc->op);
-	
-		*stkhd++ = k;
-	}
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!loc->c)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(loc->c);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rot)
-		CHK(6, cleanup, L"[218] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[218] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!loc->z->value)
-		CHK(6, cleanup, L"[218] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(loc->z->value);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[215] reduce←╠{╣");
-	return err;
-}
-
-int
-ptr4440(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
 
 	alpha = NULL;
 
@@ -28277,6 +27196,158 @@ ptr4440(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	return err;
+}
+
+int
+ptr4440(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
 
 	if (err)
 		return err;
@@ -28288,168 +27359,17 @@ cleanup:
 
 int
 ptr4441(struct cell_array **z,
-    struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
 {
 	void *stk[128];
 	void **stkhd;
 	int err;
-
-
-	struct lex_vars {
-		struct cell_array_box *z;
-		struct cell_func_box *op;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->z->value);
-	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(lex->op->value);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
-	return err;
-}
-
-int
-ptr4442(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
+	struct cell_array *alpha;
 	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
+	alpha = NULL;
 	deldel = self->fv[0];
 	alphaalpha = self->fv[1];
 
@@ -29065,7 +27985,7 @@ ptr4442(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4443, ptr4444, 2), cleanup, 
+		CHK(mk_func(&k, ptr4442, ptr4443, 2), cleanup, 
 		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
 	
 		k->fv[0] = retain_cell(loc->z);
@@ -29222,6 +28142,7 @@ ptr4442(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_env((void **)loc, (void **)(loc + 1));
+	release_array(alpha);
 
 	if (err)
 		return err;
@@ -29232,7 +28153,7 @@ cleanup:
 }
 
 int
-ptr4443(struct cell_array **z,
+ptr4442(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -29376,6 +28297,158 @@ ptr4443(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	return err;
+}
+
+int
+ptr4443(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
 
 	if (err)
 		return err;
@@ -29394,6 +28467,953 @@ ptr4444(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
+	struct cell_moper *deldel;
+	struct cell_func *alphaalpha;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct {
+		struct cell_array *s;
+		struct cell_array *c;
+		struct cell_array *zs;
+		struct cell_func_box *op;
+		struct cell_array_box *z;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	loc->s = NULL;
+	loc->c = NULL;
+	loc->zs = NULL;
+	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[216] 	0≡≢╠⍴╣⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡≢╠⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[216] 	0≡╠≢╣⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡╠≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[216] 	0╠≡╣≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[216] 	╠0╣≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[216] 	╠0≡≢⍴⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[216] 	0≡≢⍴╠⍵╣:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,╠⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.cat)
+				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇╠,╣⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+			*stkhd++ = retain_cell(cdf_prim.cat);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[216] 	0≡≢⍴⍵:∇╠,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			if (!self)
+				CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:╠∇╣,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+			*stkhd++ = retain_cell(self);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[216] 	0≡≢⍴⍵:╠∇,⍵╣ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴╠⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴╣⍵ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←╠⍴⍵╣ ⋄ c←⊃s ⋄ zs←1↓s");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->s = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃╠s╣ ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	if (!cdf_prim.dis)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃╣s ⋄ zs←1↓s");
+	
+	*stkhd++ = retain_cell(cdf_prim.dis);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←╠⊃s╣ ⋄ zs←1↓s");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	loc->c = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->s)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1↓╠s╣");
+	
+	*stkhd++ = retain_cell(loc->s);
+	
+	if (!cdf_prim.drp)
+		CHK(6, cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←1╠↓╣s");
+	
+	*stkhd++ = retain_cell(cdf_prim.drp);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1╣↓s");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[216] 	0≡≢⍴⍵:∇,⍵ ⋄ s←⍴⍵ ⋄ c←⊃s ⋄ zs←╠1↓s╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->zs = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[217] 	0╠≡╣c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[217] 	╠0╣≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[217] 	╠0≡c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[217] 	0≡╠c╣:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {16};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL ╠16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[217] 	0≡c:╠⎕SIGNAL╣ 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[217] 	0≡c:╠⎕SIGNAL 16╣ ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1╠≡╣c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1╣≡c:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ ╠1≡c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡╠c╣:zs⍴⍵ ⋄ op←⍺⍺¨");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴╠⍵╣ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!cdf_prim.rho)
+				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs╠⍴╣⍵ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(cdf_prim.rho);
+			
+			if (!loc->zs)
+				CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs╣⍴⍵ ⋄ op←⍺⍺¨");
+			
+			*stkhd++ = retain_cell(loc->zs);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_func *fn = stkhd[-2];
+				struct cell_array *y = stkhd[-3];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+				    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:╠zs⍴⍵╣ ⋄ op←⍺⍺¨");
+			
+				release_array(x);
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 3;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←⍺⍺╠¨╣");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺╣¨");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[217] 	0≡c:⎕SIGNAL 16 ⋄ 1≡c:zs⍴⍵ ⋄ op←╠⍺⍺¨╣");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	loc->op->value = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)╠⌷╣⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-╠1╣)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c╠-╣1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(╠c╣-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)╣⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←╠(c-1)⌷⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->z->value = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵╠⊣╣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵╣⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂╠⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂╣⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨╠⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}╠¨╣⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, ptr4445, ptr4446, 2), cleanup, 
+		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		k->fv[0] = retain_cell(loc->z);
+		k->fv[1] = retain_cell(loc->op);
+	
+		*stkhd++ = k;
+	}
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}¨╣⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-╠1╣){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c╠-╣1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!loc->c)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳╠c╣-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(loc->c);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳╠c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽╠⍳╣c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽╠⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rot)
+		CHK(6, cleanup, L"[218] 	z⊣(╠⌽╣⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[218] 	z⊣╠(⌽⍳c-1)╣{⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣╠(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z╠⊣╣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!loc->z->value)
+		CHK(6, cleanup, L"[218] 	╠z╣⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(loc->z->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	╠z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[215] reduce←╠{╣");
+	return err;
+}
+
+int
+ptr4445(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	struct lex_vars {
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)op ╠z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷⍵)╠op╣ z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺⌷╠⍵╣)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(⍺╠⌷╣⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←(╠⍺╣⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)╣op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣z⊢←╠(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬⊣z╠⊢╣←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){⍬⊣╠z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[218] 	z⊣(⌽⍳c-1){⍬╠⊣╣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[218] 	z⊣(⌽⍳c-1){╠⍬╣⊣z⊢←(⍺⌷⍵)op z}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[218] 	z⊣(⌽⍳c-1){╠⍬⊣z⊢←(⍺⌷⍵)op z╣}¨⊂⍵⊣z←(c-1)⌷⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[218] 	z⊣(⌽⍳c-1)╠{⍬⊣z⊢←(⍺⌷⍵)op z}╣¨⊂⍵⊣z←(c-1)⌷⍵");
+	return err;
+}
+
+int
+ptr4446(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
 
 
 	struct lex_vars {
@@ -29538,7 +29558,7 @@ cleanup:
 }
 
 int
-ptr4445(struct cell_array **z,
+ptr4447(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -30040,7 +30060,7 @@ ptr4445(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4446, ptr4447, 3), cleanup, 
+		CHK(mk_func(&k, ptr4448, ptr4449, 3), cleanup, 
 		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		k->fv[0] = retain_cell(loc->rc);
@@ -30205,1046 +30225,11 @@ cleanup:
 
 	TRC(chk_array_valid(*z), 
 	    L"[220] nwreduce←╠{op←⍺⍺¨╣");
-	return err;
-}
-
-int
-ptr4446(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	struct lex_vars {
-		struct cell_array_box *rc;
-		struct cell_array_box *z;
-		struct cell_func_box *op;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->z->value);
-	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->op->value);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	if (!lex->rc->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->rc->value);
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
-	return err;
-}
-
-int
-ptr4447(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	struct lex_vars {
-		struct cell_array_box *rc;
-		struct cell_array_box *z;
-		struct cell_func_box *op;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->z->value);
-	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->op->value);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	if (!lex->rc->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->rc->value);
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	return err;
 }
 
 int
 ptr4448(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_func_box *op;
-		struct cell_array_box *rc;
-		struct cell_array_box *z;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	struct lex_vars {
-		struct cell_func_box *is_integer;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
-	CHK(mk_array_box(&loc->rc, NULL), cleanup, L"Init mutable variable: loc->rc");
-	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[220] nwreduce←{op←⍺⍺╠¨╣");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[220] nwreduce←{op←╠⍺⍺╣¨");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[220] nwreduce←{op←╠⍺⍺¨╣");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	loc->op->value = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!lex->is_integer->value)
-		CHK(6, cleanup, L"[221] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(lex->is_integer->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[221] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[221] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[221] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->rc->value = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.lth)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.lth);
-	
-	if (!loc->rc->value)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(loc->rc->value);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {5};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.res)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.res);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	{
-		struct cell_array_box *bx = loc->rc;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.drp)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.drp);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->z->value = retain_cell(stkhd[-1]);
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	{
-		struct cell_func *k;
-	
-		CHK(mk_func(&k, ptr4449, ptr4450, 3), cleanup, 
-		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		k->fv[0] = retain_cell(loc->rc);
-		k->fv[1] = retain_cell(loc->z);
-		k->fv[2] = retain_cell(loc->op);
-	
-		*stkhd++ = k;
-	}
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rot)
-		CHK(6, cleanup, L"[222] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[222] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!loc->z->value)
-		CHK(6, cleanup, L"[222] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(loc->z->value);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[220] nwreduce←╠{op←⍺⍺¨╣");
-	return err;
-}
-
-int
-ptr4449(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -31418,6 +30403,188 @@ ptr4449(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	return err;
+}
+
+int
+ptr4449(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
+		struct cell_array_box *rc;
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!lex->rc->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->rc->value);
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
 
 	if (err)
 		return err;
@@ -31436,48 +30603,70 @@ ptr4450(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
+	struct cell_moper *deldel;
+	struct cell_array *alphaalpha;
 
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
 
-	struct lex_vars {
+	struct {
+		struct cell_func_box *op;
 		struct cell_array_box *rc;
 		struct cell_array_box *z;
-		struct cell_func_box *op;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	struct lex_vars {
+		struct cell_func_box *is_integer;
 	} *lex;
 	
-	lex = (struct lex_vars *)self->fv;
+	lex = (struct lex_vars *)deldel->fv;
 	
+	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
+	CHK(mk_array_box(&loc->rc, NULL), cleanup, L"Init mutable variable: loc->rc");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[220] nwreduce←{op←⍺⍺╠¨╣");
 	
-	*stkhd++ = retain_cell(lex->z->value);
+	*stkhd++ = retain_cell(cdf_prim.map);
 	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[220] nwreduce←{op←╠⍺⍺╣¨");
 	
-	*stkhd++ = retain_cell(lex->op->value);
+	*stkhd++ = retain_cell(alphaalpha);
 	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
 	
-	*stkhd++ = retain_cell(omega);
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[220] nwreduce←{op←╠⍺⍺¨╣");
 	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
 	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
+		*stkhd++ = dst;
+	}
 	
-	if (!lex->rc->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	loc->op->value = retain_cell(stkhd[-1]);
 	
-	*stkhd++ = retain_cell(lex->rc->value);
+	release_cell(*--stkhd);
 	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	if (!alpha)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
-	*stkhd++ = retain_cell(cdf_prim.iot);
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!lex->is_integer->value)
+		CHK(6, cleanup, L"[221] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(lex->is_integer->value);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -31485,7 +30674,123 @@ ptr4450(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[221] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[221] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[221] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 		release_func(fn);
 		release_array(y);
@@ -31495,12 +30800,208 @@ ptr4450(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
 	
 	*stkhd++ = retain_cell(cdf_prim.add);
 	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->rc->value = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
 	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.lth)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.lth);
+	
+	if (!loc->rc->value)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(loc->rc->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.res)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.res);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	{
+		struct cell_array_box *bx = loc->rc;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.drp)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.drp);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
 	
 	*stkhd++ = retain_cell(alpha);
 	
@@ -31511,7 +31012,53 @@ ptr4450(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->z->value = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -31522,7 +31069,7 @@ ptr4450(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
 	
 	*stkhd++ = retain_cell(cdf_prim.par);
 	
@@ -31532,7 +31079,121 @@ ptr4450(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, ptr4451, ptr4452, 3), cleanup, 
+		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		k->fv[0] = retain_cell(loc->rc);
+		k->fv[1] = retain_cell(loc->z);
+		k->fv[2] = retain_cell(loc->op);
+	
+		*stkhd++ = k;
+	}
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rot)
+		CHK(6, cleanup, L"[222] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		release_func(fn);
 		release_array(y);
@@ -31548,7 +31209,7 @@ ptr4450(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[222] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -31557,6 +31218,16 @@ ptr4450(struct cell_array **z,
 		stkhd -= 3;
 		*stkhd++ = dst;
 	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[222] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!loc->z->value)
+		CHK(6, cleanup, L"[222] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(loc->z->value);
 	
 	{
 		struct cell_array *x = stkhd[-1];
@@ -31565,7 +31236,7 @@ ptr4450(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+		    L"[222] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
 	
 		release_array(x);
 		release_func(fn);
@@ -31573,24 +31244,6 @@ ptr4450(struct cell_array **z,
 	
 		stkhd -= 3;
 		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(*--stkhd);
-		release_array(x);
 	}
 	
 	*z = *--stkhd;
@@ -31600,12 +31253,13 @@ ptr4450(struct cell_array **z,
 
 cleanup:
 	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
 
 	if (err)
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	    L"[220] nwreduce←╠{op←⍺⍺¨╣");
 	return err;
 }
 
@@ -31618,677 +31272,6 @@ ptr4451(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_moper *deldel;
-	struct cell_func *alphaalpha;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct {
-		struct cell_func_box *op;
-		struct cell_array_box *rc;
-		struct cell_array_box *z;
-	} loc_frm, *loc;
-	
-	loc = &loc_frm;
-	
-	struct lex_vars {
-		struct cell_func_box *is_integer;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
-	CHK(mk_array_box(&loc->rc, NULL), cleanup, L"Init mutable variable: loc->rc");
-	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[220] nwreduce←{op←⍺⍺╠¨╣");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[220] nwreduce←{op←╠⍺⍺╣¨");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[220] nwreduce←{op←╠⍺⍺¨╣");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	loc->op->value = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!lex->is_integer->value)
-		CHK(6, cleanup, L"[221] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(lex->is_integer->value);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[221] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[221] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[221] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {11};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->rc->value = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.lth)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.lth);
-	
-	if (!loc->rc->value)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-	*stkhd++ = retain_cell(loc->rc->value);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {5};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	if (!cdf_prim.res)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.res);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	{
-		struct cell_array_box *bx = loc->rc;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.drp)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.drp);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	loc->z->value = retain_cell(stkhd[-1]);
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	{
-		struct cell_func *k;
-	
-		CHK(mk_func(&k, ptr4452, ptr4453, 3), cleanup, 
-		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		k->fv[0] = retain_cell(loc->rc);
-		k->fv[1] = retain_cell(loc->z);
-		k->fv[2] = retain_cell(loc->op);
-	
-		*stkhd++ = k;
-	}
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rot)
-		CHK(6, cleanup, L"[222] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[222] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!loc->z->value)
-		CHK(6, cleanup, L"[222] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(loc->z->value);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_env((void **)loc, (void **)(loc + 1));
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[220] nwreduce←╠{op←⍺⍺¨╣");
-	return err;
-}
-
-int
-ptr4452(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
 
 	alpha = NULL;
 
@@ -32455,6 +31438,188 @@ ptr4452(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	return err;
+}
+
+int
+ptr4452(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
+		struct cell_array_box *rc;
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!lex->rc->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->rc->value);
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
 
 	if (err)
 		return err;
@@ -32466,198 +31631,17 @@ cleanup:
 
 int
 ptr4453(struct cell_array **z,
-    struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
 {
 	void *stk[128];
 	void **stkhd;
 	int err;
-
-
-	struct lex_vars {
-		struct cell_array_box *rc;
-		struct cell_array_box *z;
-		struct cell_func_box *op;
-	} *lex;
-	
-	lex = (struct lex_vars *)self->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!lex->z->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->z->value);
-	
-	if (!lex->op->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->op->value);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.sqd)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.sqd);
-	
-	if (!lex->rc->value)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(lex->rc->value);
-	
-	if (!cdf_prim.iot)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.iot);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.add)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.add);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.par)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.par);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_array_box *bx = lex->z;
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *x = bx->value;
-	
-		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
-		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
-	
-		release_array(*--stkhd);
-		release_array(x);
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
-	return err;
-}
-
-int
-ptr4454(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
+	struct cell_array *alpha;
 	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
+	alpha = NULL;
 	deldel = self->fv[0];
 	alphaalpha = self->fv[1];
 
@@ -33148,7 +32132,7 @@ ptr4454(struct cell_array **z,
 	{
 		struct cell_func *k;
 	
-		CHK(mk_func(&k, ptr4455, ptr4456, 3), cleanup, 
+		CHK(mk_func(&k, ptr4454, ptr4455, 3), cleanup, 
 		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
 	
 		k->fv[0] = retain_cell(loc->rc);
@@ -33306,6 +32290,7 @@ ptr4454(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_env((void **)loc, (void **)(loc + 1));
+	release_array(alpha);
 
 	if (err)
 		return err;
@@ -33316,7 +32301,7 @@ cleanup:
 }
 
 int
-ptr4455(struct cell_array **z,
+ptr4454(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -33490,6 +32475,188 @@ ptr4455(struct cell_array **z,
 cleanup:
 	release_env(stk, stkhd);
 	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	return err;
+}
+
+int
+ptr4455(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+
+
+	struct lex_vars {
+		struct cell_array_box *rc;
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!lex->rc->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->rc->value);
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
 
 	if (err)
 		return err;
@@ -33508,6 +32675,859 @@ ptr4456(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
+	struct cell_moper *deldel;
+	struct cell_func *alphaalpha;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct {
+		struct cell_func_box *op;
+		struct cell_array_box *rc;
+		struct cell_array_box *z;
+	} loc_frm, *loc;
+	
+	loc = &loc_frm;
+	
+	struct lex_vars {
+		struct cell_func_box *is_integer;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	CHK(mk_func_box(&loc->op, NULL), cleanup, L"Init mutable variable: loc->op");
+	CHK(mk_array_box(&loc->rc, NULL), cleanup, L"Init mutable variable: loc->rc");
+	CHK(mk_array_box(&loc->z, NULL), cleanup, L"Init mutable variable: loc->z");
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[220] nwreduce←{op←⍺⍺╠¨╣");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[220] nwreduce←{op←╠⍺⍺╣¨");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[220] nwreduce←{op←╠⍺⍺¨╣");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	loc->op->value = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!lex->is_integer->value)
+		CHK(6, cleanup, L"[221] 	0≡╠is_integer╣ ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(lex->is_integer->value);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[221] 	0≡╠is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[221] 	0╠≡╣is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[221] 	╠0╣≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[221] 	╠0≡is_integer ⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[221] 	0≡is_integer ╠⍺╣:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {11};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL ╠11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL╣ 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[221] 	0≡is_integer ⍺:╠⎕SIGNAL 11╣ ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢╠⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢╣⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+╠≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1╠+╣≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1╣+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←╠1+≢⍵╣ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->rc->value = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.lth)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc╠<╣⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.lth);
+	
+	if (!loc->rc->value)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc╣<⍺:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+	*stkhd++ = retain_cell(loc->rc->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ ╠rc<⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<╠⍺╣:⎕SIGNAL 5 ⋄ rc-←|⍺");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL ╠5╣ ⋄ rc-←|⍺");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL╣ 5 ⋄ rc-←|⍺");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:╠⎕SIGNAL 5╣ ⋄ rc-←|⍺");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←|╠⍺╣");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	if (!cdf_prim.res)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|╣⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.res);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc-←╠|⍺╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ rc╠-╣←|⍺");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	{
+		struct cell_array_box *bx = loc->rc;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[221] 	0≡is_integer ⍺:⎕SIGNAL 11 ⋄ rc←1+≢⍵ ⋄ rc<⍺:⎕SIGNAL 5 ⋄ ╠rc-←|⍺╣");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.drp)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)╠↓╣⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.drp);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-╠1╣)↓⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺╠-╣1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(╠⍺╣-1)↓⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)╣↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←╠(⍺-1)↓⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	loc->z->value = retain_cell(stkhd[-1]);
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵╠⊣╣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵╣⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂╠⍵⊣z←(⍺-1)↓⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂╣⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╠⊂⍵⊣z←(⍺-1)↓⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╠¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	{
+		struct cell_func *k;
+	
+		CHK(mk_func(&k, ptr4457, ptr4458, 3), cleanup, 
+		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		k->fv[0] = retain_cell(loc->rc);
+		k->fv[1] = retain_cell(loc->z);
+		k->fv[2] = retain_cell(loc->op);
+	
+		*stkhd++ = k;
+	}
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨╣⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[222] 	z⊣(⌽⍳⍺-╠1╣){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺╠-╣1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳╠⍺╣-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳╠⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽╠⍳╣⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽╠⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rot)
+		CHK(6, cleanup, L"[222] 	z⊣(╠⌽╣⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣╠(⌽⍳⍺-1)╣{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣╠(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[222] 	z╠⊣╣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!loc->z->value)
+		CHK(6, cleanup, L"[222] 	╠z╣⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(loc->z->value);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	╠z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_env((void **)loc, (void **)(loc + 1));
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[220] nwreduce←╠{op←⍺⍺¨╣");
+	return err;
+}
+
+int
+ptr4457(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+
+	alpha = NULL;
+
+	struct lex_vars {
+		struct cell_array_box *rc;
+		struct cell_array_box *z;
+		struct cell_func_box *op;
+	} *lex;
+	
+	lex = (struct lex_vars *)self->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!lex->z->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op ╠z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->z->value);
+	
+	if (!lex->op->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)╠op╣ z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->op->value);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷╠⍵╣)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.sqd)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)╠⌷╣⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.sqd);
+	
+	if (!lex->rc->value)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳╠rc╣)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(lex->rc->value);
+	
+	if (!cdf_prim.iot)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳╣rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.iot);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+╠⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.add)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺╠+╣⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.add);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺╣+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((⊂╠⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.par)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z⊢←((╠⊂╣⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.par);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←(╠(⊂⍺+⍳rc)╣⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)╣op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){z⊢←╠((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[222] 	z⊣(⌽⍳⍺-1){z╠⊢╣←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_array_box *bx = lex->z;
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = bx->value;
+	
+		CHK((fn->fptr_dya)(&bx->value, x, y, fn), cleanup,
+		    L"[222] 	z⊣(⌽⍳⍺-1){╠z⊢←((⊂⍺+⍳rc)⌷⍵)op z╣}¨⊂⍵⊣z←(⍺-1)↓⍵");
+	
+		release_array(*--stkhd);
+		release_array(x);
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[222] 	z⊣(⌽⍳⍺-1)╠{z⊢←((⊂⍺+⍳rc)⌷⍵)op z}╣¨⊂⍵⊣z←(⍺-1)↓⍵");
+	return err;
+}
+
+int
+ptr4458(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
 
 
 	struct lex_vars {
@@ -33682,1237 +33702,6 @@ cleanup:
 }
 
 int
-ptr4457(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct lex_vars {
-		struct cell_moper_box *nwreduce;
-		struct cell_moper_box *reduce;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[224] rdf←{⍺←╠⊢╣ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	alpha = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.lth)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.lth);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {4};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣0╣:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {5};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺╠⊣╣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[225] 	⍬≡⍺╠⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[225] 	⍬≡╠⍺╣⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[225] 	⍬≡╠⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[225] 	⍬╠≡╣⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[225] 	╠⍬≡⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->reduce->value)
-				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-			*stkhd++ = retain_cell(lex->reduce->value);
-			
-			if (!alphaalpha)
-				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-			*stkhd++ = retain_cell(alphaalpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_moper *op = stkhd[-2];
-				struct cell_func *dst;
-			
-				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-				release_array(x);
-				release_moper(op);
-				stkhd -= 2;
-			
-				*stkhd++ = dst;
-			}
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->nwreduce->value)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
-	
-	*stkhd++ = retain_cell(lex->nwreduce->value);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[224] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
-	return err;
-}
-
-int
-ptr4458(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_moper *deldel;
-	struct cell_array *alphaalpha;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-
-	struct lex_vars {
-		struct cell_moper_box *nwreduce;
-		struct cell_moper_box *reduce;
-	} *lex;
-	
-	lex = (struct lex_vars *)deldel->fv;
-	
-	err = 0;
-	stkhd = &stk[0];
-
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rho)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.rho);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.lth)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.lth);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {4};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.cat)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.cat);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.nqv)
-		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
-	
-	*stkhd++ = retain_cell(cdf_prim.nqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			{
-				struct cell_array *arr;
-			
-				enum array_type typ = ARR_SINT;
-				unsigned int rnk = 0;
-				int16_t dat[] = {5};
-			
-				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
-			
-				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
-			
-				*stkhd++ = arr;
-			}
-			
-			if (!cdf_prim.q_signal)
-				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
-			
-			*stkhd++ = retain_cell(cdf_prim.q_signal);
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.lft)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺╠⊣╣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.lft);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[225] 	⍬≡╠⍺╣⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[225] 	⍬≡╠⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[225] 	⍬╠≡╣⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 1;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		arr->shape[0] = 0;
-	
-		CHK(fill_array(arr, dat), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[225] 	╠⍬≡⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			if (!lex->reduce->value)
-				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-			*stkhd++ = retain_cell(lex->reduce->value);
-			
-			if (!alphaalpha)
-				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-			*stkhd++ = retain_cell(alphaalpha);
-			
-			{
-				struct cell_array *x = stkhd[-1];
-				struct cell_moper *op = stkhd[-2];
-				struct cell_func *dst;
-			
-				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-				release_array(x);
-				release_moper(op);
-				stkhd -= 2;
-			
-				*stkhd++ = dst;
-			}
-			
-			{
-				struct cell_func *fn = stkhd[-1];
-				struct cell_array *y = stkhd[-2];
-				struct cell_array *dst;
-			
-				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
-			
-				release_func(fn);
-				release_array(y);
-			
-				stkhd -= 2;
-				*stkhd++ = dst;
-			}
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!lex->nwreduce->value)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
-	
-	*stkhd++ = retain_cell(lex->nwreduce->value);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[224] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
-	return err;
-}
-
-int
 ptr4459(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -34922,7 +33711,7 @@ ptr4459(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_moper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 
 	alpha = NULL;
 	deldel = self->fv[0];
@@ -35438,14 +34227,14 @@ ptr4459(struct cell_array **z,
 			*stkhd++ = retain_cell(alphaalpha);
 			
 			{
-				struct cell_func *x = stkhd[-1];
+				struct cell_array *x = stkhd[-1];
 				struct cell_moper *op = stkhd[-2];
 				struct cell_func *dst;
 			
-				CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
 				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
 			
-				release_func(x);
+				release_array(x);
 				release_moper(op);
 				stkhd -= 2;
 			
@@ -35493,14 +34282,14 @@ ptr4459(struct cell_array **z,
 	*stkhd++ = retain_cell(alphaalpha);
 	
 	{
-		struct cell_func *x = stkhd[-1];
+		struct cell_array *x = stkhd[-1];
 		struct cell_moper *op = stkhd[-2];
 		struct cell_func *dst;
 	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
 		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
 	
-		release_func(x);
+		release_array(x);
 		release_moper(op);
 		stkhd -= 2;
 	
@@ -35569,6 +34358,1237 @@ ptr4460(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_moper *deldel;
+	struct cell_array *alphaalpha;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct lex_vars {
+		struct cell_moper_box *nwreduce;
+		struct cell_moper_box *reduce;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.lth)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.lth);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {4};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺╠⊣╣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[225] 	⍬≡╠⍺╣⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[225] 	⍬≡╠⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[225] 	⍬╠≡╣⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[225] 	╠⍬≡⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->reduce->value)
+				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+			*stkhd++ = retain_cell(lex->reduce->value);
+			
+			if (!alphaalpha)
+				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+			*stkhd++ = retain_cell(alphaalpha);
+			
+			{
+				struct cell_array *x = stkhd[-1];
+				struct cell_moper *op = stkhd[-2];
+				struct cell_func *dst;
+			
+				CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+				release_array(x);
+				release_moper(op);
+				stkhd -= 2;
+			
+				*stkhd++ = dst;
+			}
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->nwreduce->value)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
+	
+	*stkhd++ = retain_cell(lex->nwreduce->value);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
+	
+		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[224] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
+	return err;
+}
+
+int
+ptr4461(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_moper *deldel;
+	struct cell_func *alphaalpha;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+
+	struct lex_vars {
+		struct cell_moper_box *nwreduce;
+		struct cell_moper_box *reduce;
+	} *lex;
+	
+	lex = (struct lex_vars *)deldel->fv;
+	
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[224] rdf←{⍺←╠⊢╣ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	alpha = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣╣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺╠⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺╣⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴╠⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rho)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴╣⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.rho);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢╠⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢╣⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<╠≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.lth)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1╠<╣≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.lth);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ ╠1╣<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ ╠1<≢⍴⍺⊣0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣╠0╣:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {4};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL ╠4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL╣ 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:╠⎕SIGNAL 4╣ ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣╣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺╠⊣0╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺╣⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,╠⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.cat)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,╣⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.cat);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢╠,⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢╣,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢╠≢,⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.nqv)
+		CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1╠≢╣≢,⍺⊣0:⎕SIGNAL 5");
+	
+	*stkhd++ = retain_cell(cdf_prim.nqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1╣≢≢,⍺⊣0:⎕SIGNAL 5");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ ╠1≢≢,⍺⊣0╣:⎕SIGNAL 5");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣╠0╣:⎕SIGNAL 5");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			{
+				struct cell_array *arr;
+			
+				enum array_type typ = ARR_SINT;
+				unsigned int rnk = 0;
+				int16_t dat[] = {5};
+			
+				CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+			
+				CHK(fill_array(arr, dat), cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL ╠5╣");
+			
+				*stkhd++ = arr;
+			}
+			
+			if (!cdf_prim.q_signal)
+				CHK(6, cleanup, L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL╣ 5");
+			
+			*stkhd++ = retain_cell(cdf_prim.q_signal);
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[224] rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:╠⎕SIGNAL 5╣");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.lft)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺╠⊣╣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.lft);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[225] 	⍬≡⍺╠⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[225] 	⍬≡╠⍺╣⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[225] 	⍬≡╠⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[225] 	⍬╠≡╣⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 1;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		arr->shape[0] = 0;
+	
+		CHK(fill_array(arr, dat), cleanup, L"[225] 	╠⍬╣≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[225] 	╠⍬≡⍺⊣⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[225] 	⍬≡⍺⊣╠⍬╣:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ╠⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			if (!lex->reduce->value)
+				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ ╠reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+			*stkhd++ = retain_cell(lex->reduce->value);
+			
+			if (!alphaalpha)
+				CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺╣ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+			*stkhd++ = retain_cell(alphaalpha);
+			
+			{
+				struct cell_func *x = stkhd[-1];
+				struct cell_moper *op = stkhd[-2];
+				struct cell_func *dst;
+			
+				CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce╣ ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+				release_func(x);
+				release_moper(op);
+				stkhd -= 2;
+			
+				*stkhd++ = dst;
+			}
+			
+			{
+				struct cell_func *fn = stkhd[-1];
+				struct cell_array *y = stkhd[-2];
+				struct cell_array *dst;
+			
+				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+				    L"[225] 	⍬≡⍺⊣⍬:╠⍺⍺ reduce ⍵╣ ⋄ ⍺(⍺⍺ nwreduce)⍵");
+			
+				release_func(fn);
+				release_array(y);
+			
+				stkhd -= 2;
+				*stkhd++ = dst;
+			}
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)╠⍵╣");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!lex->nwreduce->value)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ ╠nwreduce╣)⍵");
+	
+	*stkhd++ = retain_cell(lex->nwreduce->value);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(╠⍺⍺╣ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)╣⍵");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺╠(⍺⍺ nwreduce)⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺╣(⍺⍺ nwreduce)⍵");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[225] 	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ╠⍺(⍺⍺ nwreduce)⍵╣");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[224] rdf←╠{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5╣");
+	return err;
+}
+
+int
+ptr4462(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_moper *deldel;
 	struct cell_func *alphaalpha;
 
 	deldel = self->fv[0];
@@ -36144,136 +36164,6 @@ cleanup:
 }
 
 int
-ptr4461(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-
-	alpha = NULL;
-
-	err = 0;
-	stkhd = &stk[0];
-
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[229] rpf←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[229] rpf←{╠⎕SIGNAL 16╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[229] rpf←╠{⎕SIGNAL 16}╣");
-	return err;
-}
-
-int
-ptr4462(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-
-
-	err = 0;
-	stkhd = &stk[0];
-
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {16};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.q_signal)
-		CHK(6, cleanup, L"[229] rpf←{╠⎕SIGNAL╣ 16}");
-	
-	*stkhd++ = retain_cell(cdf_prim.q_signal);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[229] rpf←{╠⎕SIGNAL 16╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[229] rpf←╠{⎕SIGNAL 16}╣");
-	return err;
-}
-
-int
 ptr4463(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -36282,66 +36172,30 @@ ptr4463(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_array *alpha;
-	struct cell_doper *deldel;
-	struct cell_array *alphaalpha;
-	struct cell_array *omegaomega;
 
 	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-	omegaomega = self->fv[2];
 
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!omegaomega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
 	{
-		struct cell_array *arr, **dat;
+		struct cell_array *arr;
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
-		arr->shape[0] = 2;
-		dat = arr->values;
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
 	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[229] rpf←{╠⎕SIGNAL╣ 16}");
 	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -36349,39 +36203,12 @@ ptr4463(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[229] rpf←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rpf)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rpf);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -36398,7 +36225,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[229] rpf←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -36411,65 +36238,29 @@ ptr4464(struct cell_array **z,
 	void *stk[128];
 	void **stkhd;
 	int err;
-	struct cell_doper *deldel;
-	struct cell_array *alphaalpha;
-	struct cell_array *omegaomega;
 
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-	omegaomega = self->fv[2];
 
 	err = 0;
 	stkhd = &stk[0];
 
-	if (!omega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!omegaomega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
 	{
-		struct cell_array *arr, **dat;
+		struct cell_array *arr;
 	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
-		arr->shape[0] = 2;
-		dat = arr->values;
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {16};
 	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[229] rpf←{⎕SIGNAL ╠16╣}");
 	
 		*stkhd++ = arr;
 	}
 	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
+	if (!cdf_prim.q_signal)
+		CHK(6, cleanup, L"[229] rpf←{╠⎕SIGNAL╣ 16}");
 	
-		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
-	
-		release_array(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
+	*stkhd++ = retain_cell(cdf_prim.q_signal);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -36477,39 +36268,12 @@ ptr4464(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+		    L"[229] rpf←{╠⎕SIGNAL 16╣}");
 	
 		release_func(fn);
 		release_array(y);
 	
 		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rpf)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rpf);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -36525,7 +36289,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	    L"[229] rpf←╠{⎕SIGNAL 16}╣");
 	return err;
 }
 
@@ -36539,7 +36303,7 @@ ptr4465(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_doper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 	struct cell_array *omegaomega;
 
 	alpha = NULL;
@@ -36614,10 +36378,10 @@ ptr4465(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	if (!cdf_prim.rdf)
+	if (!cdf_prim.rpf)
 		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
-	*stkhd++ = retain_cell(cdf_prim.rdf);
+	*stkhd++ = retain_cell(cdf_prim.rpf);
 	
 	if (!alphaalpha)
 		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
@@ -36625,32 +36389,19 @@ ptr4465(struct cell_array **z,
 	*stkhd++ = retain_cell(alphaalpha);
 	
 	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[232] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
 		struct cell_array *dst;
 	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
 		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
+		release_array(x);
 		release_func(fn);
 		release_array(y);
 	
-		stkhd -= 2;
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -36681,6 +36432,275 @@ ptr4466(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_doper *deldel;
+	struct cell_array *alphaalpha;
+	struct cell_array *omegaomega;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	if (!omegaomega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+	
+		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rpf)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rpf);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	return err;
+}
+
+int
+ptr4467(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_doper *deldel;
+	struct cell_func *alphaalpha;
+	struct cell_array *omegaomega;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	if (!omegaomega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵╣¨ ⍵}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_am, op->fptr_ad, x), cleanup,
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨╣ ⍵}");
+	
+		release_array(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rdf)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rdf);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[232] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	return err;
+}
+
+int
+ptr4468(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -36812,238 +36832,6 @@ cleanup:
 }
 
 int
-ptr4467(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-	struct cell_doper *deldel;
-	struct cell_array *alphaalpha;
-	struct cell_func *omegaomega;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-	omegaomega = self->fv[2];
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!omegaomega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rpf)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rpf);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
-	return err;
-}
-
-int
-ptr4468(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_doper *deldel;
-	struct cell_array *alphaalpha;
-	struct cell_func *omegaomega;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-	omegaomega = self->fv[2];
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!cdf_prim.map)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.map);
-	
-	if (!omegaomega)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rpf)
-		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rpf);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
-	return err;
-}
-
-int
 ptr4469(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -37053,7 +36841,7 @@ ptr4469(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_doper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 	struct cell_func *omegaomega;
 
 	alpha = NULL;
@@ -37116,10 +36904,10 @@ ptr4469(struct cell_array **z,
 		*stkhd++ = dst;
 	}
 	
-	if (!cdf_prim.rdf)
+	if (!cdf_prim.rpf)
 		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
 	
-	*stkhd++ = retain_cell(cdf_prim.rdf);
+	*stkhd++ = retain_cell(cdf_prim.rpf);
 	
 	if (!alphaalpha)
 		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
@@ -37127,32 +36915,19 @@ ptr4469(struct cell_array **z,
 	*stkhd++ = retain_cell(alphaalpha);
 	
 	{
-		struct cell_func *x = stkhd[-1];
-		struct cell_moper *op = stkhd[-2];
-		struct cell_func *dst;
-	
-		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[232] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
-	
-		release_func(x);
-		release_moper(op);
-		stkhd -= 2;
-	
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
 		struct cell_array *dst;
 	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
 		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
 	
+		release_array(x);
 		release_func(fn);
 		release_array(y);
 	
-		stkhd -= 2;
+		stkhd -= 3;
 		*stkhd++ = dst;
 	}
 	
@@ -37183,6 +36958,251 @@ ptr4470(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_doper *deldel;
+	struct cell_array *alphaalpha;
+	struct cell_func *omegaomega;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	if (!omegaomega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rpf)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rpf);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	return err;
+}
+
+int
+ptr4471(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_doper *deldel;
+	struct cell_func *alphaalpha;
+	struct cell_func *omegaomega;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵¨ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!cdf_prim.map)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ⍵⍵╠¨╣ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.map);
+	
+	if (!omegaomega)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵╣¨ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[232] dot←{⍺⍺⌿⍺ ╠⍵⍵¨╣ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺⌿╠⍺╣ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[232] dot←{⍺⍺⌿╠⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rdf)
+		CHK(6, cleanup, L"[232] dot←{⍺⍺╠⌿╣⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rdf);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[232] dot←{╠⍺⍺╣⌿⍺ ⍵⍵¨ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_moper *op = stkhd[-2];
+		struct cell_func *dst;
+	
+		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
+		    L"[232] dot←{╠⍺⍺⌿╣⍺ ⍵⍵¨ ⍵}");
+	
+		release_func(x);
+		release_moper(op);
+		stkhd -= 2;
+	
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[232] dot←{╠⍺⍺⌿⍺ ⍵⍵¨ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[232] dot←╠{⍺⍺⌿⍺ ⍵⍵¨ ⍵}╣");
+	return err;
+}
+
+int
+ptr4472(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_func *omegaomega;
 
@@ -37302,541 +37322,6 @@ cleanup:
 }
 
 int
-ptr4471(struct cell_array **z,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_array *alpha;
-	struct cell_doper *deldel;
-	struct cell_array *alphaalpha;
-	struct cell_array *omegaomega;
-
-	alpha = NULL;
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-	omegaomega = self->fv[2];
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omegaomega)
-		CHK(6, cleanup, L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[235] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[235] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	alpha = retain_cell(stkhd[-1]);
-	
-	release_cell(*--stkhd);
-	
-	if (!omega)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *arr, **dat;
-	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
-		arr->shape[0] = 2;
-		dat = arr->values;
-	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!omegaomega)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!deldel)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(deldel);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_doper *op = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_func *dst;
-	
-		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-		release_doper(op);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-	release_array(alpha);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[235] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
-	return err;
-}
-
-int
-ptr4472(struct cell_array **z,
-    struct cell_array *alpha,
-    struct cell_array *omega,
-    struct cell_func *self)
-{
-	void *stk[128];
-	void **stkhd;
-	int err;
-	struct cell_doper *deldel;
-	struct cell_array *alphaalpha;
-	struct cell_array *omegaomega;
-
-	deldel = self->fv[0];
-	alphaalpha = self->fv[1];
-	omegaomega = self->fv[2];
-
-	err = 0;
-	stkhd = &stk[0];
-
-	if (!omegaomega)
-		CHK(6, cleanup, L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[235] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.eqv);
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {0};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[235] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *x = *--stkhd;
-	
-		TRC(guard_check(x), L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-	
-		if (err > 0)
-			goto cleanup;
-	
-		if (!err) {
-			if (!omega)
-				CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-			
-			*stkhd++ = retain_cell(omega);
-			
-			*z = *--stkhd;
-			goto cleanup;
-			
-			err = -1;
-			goto cleanup;
-		}
-	
-		err = 0;
-	}
-	
-	if (!omega)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
-	
-	*stkhd++ = retain_cell(omega);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *arr, **dat;
-	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
-		arr->shape[0] = 2;
-		dat = arr->values;
-	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.rgt)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.rgt);
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_array *arr;
-	
-		enum array_type typ = ARR_SINT;
-		unsigned int rnk = 0;
-		int16_t dat[] = {1};
-	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
-	
-		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
-	
-		*stkhd++ = arr;
-	}
-	
-	if (!cdf_prim.sub)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(cdf_prim.sub);
-	
-	if (!omegaomega)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(omegaomega);
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_func *fn = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	if (!deldel)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(deldel);
-	
-	if (!alphaalpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(alphaalpha);
-	
-	if (!alpha)
-		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-	
-	*stkhd++ = retain_cell(alpha);
-	
-	{
-		struct cell_array *arr, **dat;
-	
-		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
-		arr->shape[0] = 2;
-		dat = arr->values;
-	
-		dat[0] = *--stkhd;
-		dat[1] = *--stkhd;
-	
-		*stkhd++ = arr;
-	}
-	
-	{
-		struct cell_array *x = stkhd[-1];
-		struct cell_doper *op = stkhd[-2];
-		struct cell_array *y = stkhd[-3];
-		struct cell_func *dst;
-	
-		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
-	
-		release_array(x);
-		release_doper(op);
-		release_array(y);
-	
-		stkhd -= 3;
-		*stkhd++ = dst;
-	}
-	
-	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
-	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
-	
-		release_func(fn);
-		release_array(y);
-	
-		stkhd -= 2;
-		*stkhd++ = dst;
-	}
-	
-	*z = *--stkhd;
-	goto cleanup;
-	
-	err = -1;
-
-cleanup:
-	release_env(stk, stkhd);
-
-	if (err)
-		return err;
-
-	TRC(chk_array_valid(*z), 
-	    L"[235] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
-	return err;
-}
-
-int
 ptr4473(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
@@ -37846,7 +37331,7 @@ ptr4473(struct cell_array **z,
 	int err;
 	struct cell_array *alpha;
 	struct cell_doper *deldel;
-	struct cell_func *alphaalpha;
+	struct cell_array *alphaalpha;
 	struct cell_array *omegaomega;
 
 	alpha = NULL;
@@ -37944,18 +37429,17 @@ ptr4473(struct cell_array **z,
 	*stkhd++ = retain_cell(alphaalpha);
 	
 	{
-		struct cell_func *fn = stkhd[-1];
-		struct cell_array *y = stkhd[-2];
-		struct cell_array *dst;
+		struct cell_array *arr, **dat;
 	
-		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
 		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+		arr->shape[0] = 2;
+		dat = arr->values;
 	
-		release_func(fn);
-		release_array(y);
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
 	
-		stkhd -= 2;
-		*stkhd++ = dst;
+		*stkhd++ = arr;
 	}
 	
 	if (!alpha)
@@ -38050,15 +37534,15 @@ ptr4473(struct cell_array **z,
 	*stkhd++ = retain_cell(alphaalpha);
 	
 	{
-		struct cell_func *x = stkhd[-1];
+		struct cell_array *x = stkhd[-1];
 		struct cell_doper *op = stkhd[-2];
 		struct cell_array *y = stkhd[-3];
 		struct cell_func *dst;
 	
-		CHK(apply_dop(&dst, op, op->fptr_afm, op->fptr_afd, x, y), cleanup,
+		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
 		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
 	
-		release_func(x);
+		release_array(x);
 		release_doper(op);
 		release_array(y);
 	
@@ -38128,6 +37612,542 @@ ptr4474(struct cell_array **z,
 	void **stkhd;
 	int err;
 	struct cell_doper *deldel;
+	struct cell_array *alphaalpha;
+	struct cell_array *omegaomega;
+
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omegaomega)
+		CHK(6, cleanup, L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[235] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[235] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!omega)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!omegaomega)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!deldel)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(deldel);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_array *arr, **dat;
+	
+		CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, 
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+		arr->shape[0] = 2;
+		dat = arr->values;
+	
+		dat[0] = *--stkhd;
+		dat[1] = *--stkhd;
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_doper *op = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_func *dst;
+	
+		CHK(apply_dop(&dst, op, op->fptr_aam, op->fptr_aad, x, y), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+	
+		release_array(x);
+		release_doper(op);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[235] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	return err;
+}
+
+int
+ptr4475(struct cell_array **z,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_array *alpha;
+	struct cell_doper *deldel;
+	struct cell_func *alphaalpha;
+	struct cell_array *omegaomega;
+
+	alpha = NULL;
+	deldel = self->fv[0];
+	alphaalpha = self->fv[1];
+	omegaomega = self->fv[2];
+
+	err = 0;
+	stkhd = &stk[0];
+
+	if (!omegaomega)
+		CHK(6, cleanup, L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	if (!cdf_prim.eqv)
+		CHK(6, cleanup, L"[235] pow←{0╠≡╣⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.eqv);
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {0};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{╠0╣≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		*stkhd++ = arr;
+	}
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[235] pow←{╠0≡⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *x = *--stkhd;
+	
+		TRC(guard_check(x), L"[235] pow←{0≡╠⍵⍵╣:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+		release_array(x);
+	
+		if (err > 0)
+			goto cleanup;
+	
+		if (!err) {
+			if (!omega)
+				CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:╠⍵╣ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+			
+			*stkhd++ = retain_cell(omega);
+			
+			*z = *--stkhd;
+			goto cleanup;
+			
+			err = -1;
+			goto cleanup;
+		}
+	
+		err = 0;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←╠⊢╣ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	alpha = retain_cell(stkhd[-1]);
+	
+	release_cell(*--stkhd);
+	
+	if (!omega)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ╠⍵╣}");
+	
+	*stkhd++ = retain_cell(omega);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺╣ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ╠⍺⍺ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺╣ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢╠⍺ ⍺⍺ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!cdf_prim.rgt)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢╣⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.rgt);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)╠⊢⍺ ⍺⍺ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_array *arr;
+	
+		enum array_type typ = ARR_SINT;
+		unsigned int rnk = 0;
+		int16_t dat[] = {1};
+	
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+	
+		CHK(fill_array(arr, dat), cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-╠1╣)⊢⍺ ⍺⍺ ⍵}");
+	
+		*stkhd++ = arr;
+	}
+	
+	if (!cdf_prim.sub)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵╠-╣1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(cdf_prim.sub);
+	
+	if (!omegaomega)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(╠⍵⍵╣-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(omegaomega);
+	
+	{
+		struct cell_array *x = stkhd[-1];
+		struct cell_func *fn = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇╠(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+	
+		release_array(x);
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	if (!deldel)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺╠∇∇╣(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(deldel);
+	
+	if (!alphaalpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺╣∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(alphaalpha);
+	
+	{
+		struct cell_func *x = stkhd[-1];
+		struct cell_doper *op = stkhd[-2];
+		struct cell_array *y = stkhd[-3];
+		struct cell_func *dst;
+	
+		CHK(apply_dop(&dst, op, op->fptr_afm, op->fptr_afd, x, y), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)╣⊢⍺ ⍺⍺ ⍵}");
+	
+		release_func(x);
+		release_doper(op);
+		release_array(y);
+	
+		stkhd -= 3;
+		*stkhd++ = dst;
+	}
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ╠⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	if (!alpha)
+		CHK(6, cleanup, L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺╣ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}");
+	
+	*stkhd++ = retain_cell(alpha);
+	
+	{
+		struct cell_func *fn = stkhd[-1];
+		struct cell_array *y = stkhd[-2];
+		struct cell_array *dst;
+	
+		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
+		    L"[235] pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ╠⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵╣}");
+	
+		release_func(fn);
+		release_array(y);
+	
+		stkhd -= 2;
+		*stkhd++ = dst;
+	}
+	
+	*z = *--stkhd;
+	goto cleanup;
+	
+	err = -1;
+
+cleanup:
+	release_env(stk, stkhd);
+	release_array(alpha);
+
+	if (err)
+		return err;
+
+	TRC(chk_array_valid(*z), 
+	    L"[235] pow←╠{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}╣");
+	return err;
+}
+
+int
+ptr4476(struct cell_array **z,
+    struct cell_array *alpha,
+    struct cell_array *omega,
+    struct cell_func *self)
+{
+	void *stk[128];
+	void **stkhd;
+	int err;
+	struct cell_doper *deldel;
 	struct cell_func *alphaalpha;
 	struct cell_array *omegaomega;
 
@@ -38364,7 +38384,7 @@ cleanup:
 }
 
 int
-ptr4475(struct cell_array **z,
+ptr4477(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -38619,7 +38639,7 @@ cleanup:
 }
 
 int
-ptr4476(struct cell_array **z,
+ptr4478(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -38847,7 +38867,7 @@ cleanup:
 }
 
 int
-ptr4477(struct cell_array **z,
+ptr4479(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -39103,7 +39123,7 @@ cleanup:
 }
 
 int
-ptr4478(struct cell_array **z,
+ptr4480(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -39322,7 +39342,7 @@ cleanup:
 }
 
 int
-ptr4479(struct cell_array **z,
+ptr4481(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -39800,7 +39820,7 @@ cleanup:
 }
 
 int
-ptr4480(struct cell_array **z,
+ptr4482(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -40276,7 +40296,7 @@ cleanup:
 }
 
 int
-ptr4481(struct cell_array **z,
+ptr4483(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -40803,7 +40823,7 @@ cleanup:
 }
 
 int
-ptr4482(struct cell_array **z,
+ptr4484(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -41328,7 +41348,7 @@ cleanup:
 }
 
 int
-ptr4483(struct cell_array **z,
+ptr4485(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -41801,7 +41821,7 @@ cleanup:
 }
 
 int
-ptr4484(struct cell_array **z,
+ptr4486(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
@@ -42272,7 +42292,7 @@ cleanup:
 }
 
 int
-ptr4485(struct cell_array **z,
+ptr4487(struct cell_array **z,
     struct cell_array *omega,
     struct cell_func *self)
 {
@@ -42772,7 +42792,7 @@ cleanup:
 }
 
 int
-ptr4486(struct cell_array **z,
+ptr4488(struct cell_array **z,
     struct cell_array *alpha,
     struct cell_array *omega,
     struct cell_func *self)
