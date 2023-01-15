@@ -208,6 +208,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func_box *squeeze;
 	struct cell_func_box *is_simple;
 	struct cell_func_box *is_numeric;
+	struct cell_func_box *is_char;
 	struct cell_func_box *is_integer;
 	struct cell_func_box *is_bool;
 	struct cell_func_box *max_shp;
@@ -216,9 +217,10 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func_box *chk_valid_shape;
 	struct cell_func_box *both_simple;
 	struct cell_func_box *both_numeric;
+	struct cell_func_box *both_char;
 	struct cell_func_box *both_bool;
-	struct cell_moper_box *numeric;
-	struct cell_moper_box *scalar;
+	struct cell_moper *numeric;
+	struct cell_moper *scalar;
 	struct cell_func *rgt;
 	struct cell_func *lft;
 	struct cell_func *reshape;
@@ -266,6 +268,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *lth;
 	struct cell_func *lesseql;
 	struct cell_func *lte;
+	struct cell_func_box *eql_vec;
 	struct cell_func *equal;
 	struct cell_func *eql;
 	struct cell_func *greatereql;
@@ -273,6 +276,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *greaterthan;
 	struct cell_func *gth;
 	struct cell_func *firstocc;
+	struct cell_func_box *neq_vec;
 	struct cell_func *noteq;
 	struct cell_func *neq;
 	struct cell_func *split;

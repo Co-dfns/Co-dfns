@@ -1096,6 +1096,23 @@ struct cell_func is_numeric_closure = {
 struct cell_func *is_numeric_ibeam = &is_numeric_closure;
 
 int
+is_char_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	if (is_char_array(r))
+		return mk_scalar_bool(z, 1);
+	
+	return mk_scalar_bool(z, 0);
+}
+
+DEF_MON(is_char_func_mon, is_char_func)
+
+struct cell_func is_char_closure = {
+	CELL_FUNC, 1, is_char_func_mon, is_char_func, 0
+};
+struct cell_func *is_char_ibeam = &is_char_closure;
+
+int
 is_integer_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {

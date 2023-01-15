@@ -10,6 +10,7 @@ q_ambiv←'q_ambiv_ibeam'⌶⌶⌶
 squeeze←'squeeze_ibeam'⌶
 is_simple←'is_simple_ibeam'⌶
 is_numeric←'is_numeric_ibeam'⌶
+is_char←'is_char_ibeam'⌶
 is_integer←'is_integer_ibeam'⌶
 is_bool←{11≡⎕DR squeeze ⍵}
 max_shp←'max_shp_ibeam'⌶
@@ -22,6 +23,7 @@ chk_valid_shape←{
 }
 both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
 both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
+both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 numeric←{⍺ both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}
@@ -150,39 +152,49 @@ nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}
 ⍝ <: Less than
 lessthan←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
-	⍺('lth_vec_ibeam'⌶ numeric scalar)⍵
+	⍺('lth_vec_ibeam'⌶)⍵
 }
-lth←{⎕SIGNAL 2}⎕AMBIV lessthan
+lth←{⎕SIGNAL 2} ⎕AMBIV (lessthan numeric scalar)
 
 ⍝ ≤: Less than or equal
 lesseql←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
-	⍺('lte_vec_ibeam'⌶ numeric scalar)⍵
+	⍺('lte_vec_ibeam'⌶)⍵
 }
-lte←{⎕SIGNAL 2}⎕AMBIV lesseql
+lte←{⎕SIGNAL 2}⎕AMBIV (lesseql numeric scalar)
 
 ⍝ =: Equal
-equal←'eql_vec_ibeam'⌶ scalar
-eql←{⎕SIGNAL 2}⎕AMBIV equal
+eql_vec←'eql_vec_ibeam'⌶
+equal←{
+	⍺ both_numeric ⍵:⍺ eql_vec ⍵
+	⍺ both_char ⍵:⍺ eql_vec ⍵
+	0
+}
+eql←{⎕SIGNAL 2}⎕AMBIV (equal scalar)
 
 ⍝ ≥: Greater than or equal
 greatereql←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
-	⍺('gte_vec_ibeam'⌶ numeric scalar)⍵
+	⍺('gte_vec_ibeam'⌶)⍵
 }
-gte←{⎕SIGNAL 2}⎕AMBIV greatereql
+gte←{⎕SIGNAL 2}⎕AMBIV (greatereql numeric scalar)
 
 ⍝ >: Greater than
 greaterthan←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
-	⍺('gth_vec_ibeam'⌶ numeric scalar)⍵
+	⍺('gth_vec_ibeam'⌶)⍵
 }
-gth←{⎕SIGNAL 2}⎕AMBIV greaterthan
+gth←{⎕SIGNAL 2}⎕AMBIV (greaterthan numeric scalar)
 
 ⍝ ≠: Not Equal | First Occurrence
 firstocc←{⎕SIGNAL 16}
-noteq←'neq_vec_ibeam'⌶ scalar
-neq←firstocc ⎕AMBIV noteq
+neq_vec←'neq_vec_ibeam'⌶
+noteq←{
+	⍺ both_numeric ⍵:⍺ neq_vec ⍵
+	⍺ both_char ⍵:⍺ neq_vec ⍵
+	1
+}
+neq←firstocc ⎕AMBIV (noteq scalar)
 
 ⍝ ↓: Split | Drop
 split←{⎕SIGNAL 16}
