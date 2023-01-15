@@ -1641,9 +1641,7 @@ sub_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, max_type, sub_device, sub_host);
 }
 
-DEF_MON(sub_func_mon, sub_func)
-
-struct cell_func sub_closure = {CELL_FUNC, 1, sub_func_mon, sub_func, 0};
+struct cell_func sub_closure = {CELL_FUNC, 1, error_syntax_mon, sub_func, 0};
 struct cell_func *sub_vec_ibeam = &sub_closure;
 
 struct apl_cmpx
