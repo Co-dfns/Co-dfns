@@ -135,6 +135,57 @@ struct cell_func is_simple_closure = {
 struct cell_func *is_simple_ibeam = &is_simple_closure;
 
 int
+is_numeric_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	if (is_numeric_array(r))
+		return mk_scalar_bool(z, 1);
+	
+	return mk_scalar_bool(z, 0);
+}
+
+DEF_MON(is_numeric_func_mon, is_numeric_func)
+
+struct cell_func is_numeric_closure = {
+	CELL_FUNC, 1, is_numeric_func_mon, is_numeric_func, 0
+};
+struct cell_func *is_numeric_ibeam = &is_numeric_closure;
+
+int
+is_char_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	if (is_char_array(r))
+		return mk_scalar_bool(z, 1);
+	
+	return mk_scalar_bool(z, 0);
+}
+
+DEF_MON(is_char_func_mon, is_char_func)
+
+struct cell_func is_char_closure = {
+	CELL_FUNC, 1, is_char_func_mon, is_char_func, 0
+};
+struct cell_func *is_char_ibeam = &is_char_closure;
+
+int
+is_integer_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	if (is_integer_array(r))
+		return mk_scalar_bool(z, 1);
+	
+	return mk_scalar_bool(z, 0);
+}
+
+DEF_MON(is_integer_func_mon, is_integer_func)
+
+struct cell_func is_integer_closure = {
+	CELL_FUNC, 1, is_integer_func_mon, is_integer_func, 0
+};
+struct cell_func *is_integer_ibeam = &is_integer_closure;
+
+int
 shape_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
@@ -1032,104 +1083,6 @@ fail:
 }
 
 int
-conjugate_values(struct cell_array *t, struct cell_array *r)
-{
-	int err;
-	
-	t->type = ARR_DBL;
-	
-	switch (r->storage) {
-	case STG_DEVICE:
-		if (err = af_conjg(&t->values, r->values))
-			return err;
-		
-		break;
-	case STG_HOST:
-		if (err = alloc_array(t))
-			return err;
-		
-		double *tvals = t->values;
-		struct apl_cmpx *rvals = r->values;
-		size_t count = array_values_count(t);
-		
-		for (size_t i = 0; i < count; i++) {
-			tvals[i] = rvals[i].real;
-		}
-		
-		break;
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
-
-int
-conjugate_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, conjugate_values);
-}
-
-DEF_MON(conjugate_func_mon, conjugate_func)
-
-struct cell_func conjugate_closure = {
-	CELL_FUNC, 1, conjugate_func_mon, conjugate_func, 0
-};
-struct cell_func *conjugate_vec = &conjugate_closure;
-
-int
-is_numeric_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	if (is_numeric_array(r))
-		return mk_scalar_bool(z, 1);
-	
-	return mk_scalar_bool(z, 0);
-}
-
-DEF_MON(is_numeric_func_mon, is_numeric_func)
-
-struct cell_func is_numeric_closure = {
-	CELL_FUNC, 1, is_numeric_func_mon, is_numeric_func, 0
-};
-struct cell_func *is_numeric_ibeam = &is_numeric_closure;
-
-int
-is_char_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	if (is_char_array(r))
-		return mk_scalar_bool(z, 1);
-	
-	return mk_scalar_bool(z, 0);
-}
-
-DEF_MON(is_char_func_mon, is_char_func)
-
-struct cell_func is_char_closure = {
-	CELL_FUNC, 1, is_char_func_mon, is_char_func, 0
-};
-struct cell_func *is_char_ibeam = &is_char_closure;
-
-int
-is_integer_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	if (is_integer_array(r))
-		return mk_scalar_bool(z, 1);
-	
-	return mk_scalar_bool(z, 0);
-}
-
-DEF_MON(is_integer_func_mon, is_integer_func)
-
-struct cell_func is_integer_closure = {
-	CELL_FUNC, 1, is_integer_func_mon, is_integer_func, 0
-};
-struct cell_func *is_integer_ibeam = &is_integer_closure;
-
-int
 dyadic_scalar_apply(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, 
     int (*scl_type)(enum array_type *, struct cell_array *, struct cell_array *), 
@@ -1222,6 +1175,96 @@ fail:
 	return err;
 }
 
+#define MON_LOOP(zt, rt, expr) {		\
+	zt *tvals = t->values;			\
+	rt *rvals = r->values;			\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		rt x = rvals[i];		\
+						\
+		tvals[i] = (expr);		\
+	}					\
+}						\
+
+#define LOOP_LOCALS(ztype, ltype, rtype)	\
+	ztype *tvals = t->values;		\
+	ltype *lvals = l->values;		\
+	rtype *rvals = r->values;		\
+	
+#define EXPR_LOOP(ztype, ltype, rtype, expr) {	\
+	LOOP_LOCALS(ztype, ltype, rtype)	\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		ltype x = lvals[i % lc];	\
+		rtype y = rvals[i % rc];	\
+						\
+		tvals[i] = (expr);		\
+	}					\
+}						\
+
+#define RCMPX_LOOP(ztype, ltype, expr) {		\
+	LOOP_LOCALS(ztype, ltype, struct apl_cmpx)	\
+							\
+	for (size_t i = 0; i < count; i++) {		\
+		struct apl_cmpx x = {lvals[i % lc], 0};	\
+		struct apl_cmpx y = rvals[i % rc];	\
+							\
+		tvals[i] = (expr);			\
+	}						\
+}							\
+
+#define LCMPX_LOOP(ztype, rtype, expr) {		\
+	LOOP_LOCALS(ztype, struct apl_cmpx, rtype)	\
+							\
+	for (size_t i = 0; i < count; i++) {		\
+		struct apl_cmpx x = lvals[i % lc];	\
+		struct apl_cmpx y = {rvals[i % rc], 0};	\
+							\
+		tvals[i] = (expr);			\
+	}						\
+}							\
+
+int
+conjugate_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = ARR_DBL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		if (err = af_conjg(&t->values, r->values))
+			return err;
+		
+		break;
+	case STG_HOST:
+		size_t count = array_values_count(t);
+
+		if (err = alloc_array(t))
+			return err;
+		
+		MON_LOOP(double, struct apl_cmpx, x.real);
+		
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+conjugate_func(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, conjugate_values);
+}
+
+struct cell_func conjugate_closure = {
+	CELL_FUNC, 1, conjugate_func, error_syntax_dya, 0
+};
+struct cell_func *conjugate_vec = &conjugate_closure;
+
 int
 max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
@@ -1236,49 +1279,23 @@ add_device(af_array *z, af_array l, af_array r)
 	return af_add(z, l, r, 0);
 }
 
+struct apl_cmpx
+add_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z = {x.real + y.real, x.imag + y.imag};
+	
+	return z;
+}
+
+#define ADD_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (zt)x + (zt)y)
+#define ADD_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, add_cmpx(x, y))
+#define ADD_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, add_cmpx(x, y))
+#define ADD_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, add_cmpx(x, y))
+
 int
 add_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-#define ADD_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;	\
-	ltype *lvals = l->values;	\
-	rtype *rvals = r->values;
-	
-#define ADD_LOOP(ztype, ltype, rtype) {					\
-	ADD_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++)				\
-		tvals[i] = (ztype)lvals[i % lc] + (ztype)rvals[i % rc];	\
-}
-
-#define ADD_CMPX(ztype, ltype, rtype) {					\
-	ADD_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc].real + rvals[i % rc].real;\
-		tvals[i].imag = lvals[i % lc].imag + rvals[i % rc].imag;\
-	}								\
-}
-		
-#define ADD_LCMPX(ztype, ltype, rtype) {				\
-	ADD_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc].real + rvals[i % rc];	\
-		tvals[i].imag = lvals[i % lc].imag;			\
-	}								\
-}
-	
-#define ADD_RCMPX(ztype, ltype, rtype) {				\
-	ADD_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc] + rvals[i % rc].real;	\
-		tvals[i].imag = rvals[i % rc].imag;			\
-	}								\
-}
-
 	switch (t->type) {
 	case ARR_BOOL:
 		SIMPLE_SWITCH(ADD_LOOP, NOOP, NOOP, NOOP, 
@@ -1314,9 +1331,7 @@ add_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, max_type, add_device, add_host);
 }
 
-DEF_MON(add_func_mon, add_func)
-
-struct cell_func add_closure = {CELL_FUNC, 1, add_func_mon, add_func, 0};
+struct cell_func add_closure = {CELL_FUNC, 1, error_syntax_mon, add_func, 0};
 struct cell_func *add_vec_ibeam = &add_closure;
 
 int
@@ -1325,54 +1340,26 @@ mul_device(af_array *z, af_array l, af_array r)
 	return af_mul(z, l, r, 0);
 }
 
+struct apl_cmpx
+mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+	
+	z.real = x.real * y.real - x.imag * y.imag;
+	z.imag = x.imag * y.real + x.real * y.imag;
+	
+	return z;
+}
+
+#define MUL_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (zt)x * (zt)y)
+#define MUL_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, mul_cmpx(x, y))
+#define MUL_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, mul_cmpx(x, y))
+#define MUL_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, mul_cmpx(x, y))
+
 int
 mul_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-#define MUL_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;	\
-	ltype *lvals = l->values;	\
-	rtype *rvals = r->values;
-	
-#define MUL_LOOP(ztype, ltype, rtype) {					\
-	MUL_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++)				\
-		tvals[i] = (ztype)lvals[i % lc] * (ztype)rvals[i % rc];	\
-}
-
-#define MUL_CMPX(ztype, ltype, rtype) {					\
-	MUL_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		struct apl_cmpx lv = lvals[i % lc];			\
-		struct apl_cmpx rv = rvals[i % rc];			\
-									\
-		tvals[i].real  = lv.real * rv.real;			\
-		tvals[i].real += -lv.imag * rv.imag;			\
-		tvals[i].imag  = lv.imag * rv.real;			\
-		tvals[i].imag += lv.real * rv.imag;			\
-	}								\
-}
-		
-#define MUL_LCMPX(ztype, ltype, rtype) {				\
-	MUL_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc].real + rvals[i % rc];	\
-		tvals[i].imag = lvals[i % lc].imag + rvals[i % rc];	\
-	}								\
-}
-	
-#define MUL_RCMPX(ztype, ltype, rtype) {				\
-	MUL_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc] + rvals[i % rc].real;	\
-		tvals[i].imag = lvals[i % lc] + rvals[i % rc].imag;	\
-	}								\
-}
-
 	switch (t->type) {
 	case ARR_BOOL:
 		SIMPLE_SWITCH(MUL_LOOP, NOOP, NOOP, NOOP, 
@@ -1408,9 +1395,7 @@ mul_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, max_type, mul_device, mul_host);
 }
 
-DEF_MON(mul_func_mon, mul_func)
-
-struct cell_func mul_closure = {CELL_FUNC, 1, mul_func_mon, mul_func, 0};
+struct cell_func mul_closure = {CELL_FUNC, 1, error_syntax_mon, mul_func, 0};
 struct cell_func *mul_vec_ibeam = &mul_closure;
 
 int
@@ -1437,86 +1422,35 @@ div_device(af_array *z, af_array l, af_array r)
 	return af_div(z, l, r, 0);
 }
 
+struct apl_cmpx
+div_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+	double quot;
+	
+	quot = y.real * y.real + y.imag * y.imag;
+	
+	if (!quot) {
+		z.real = 0;
+		z.imag = 0;
+		return z;
+	}
+	
+	z.real = (x.real * y.real + x.imag * y.imag) / quot;
+	z.imag = (x.imag * y.real - x.real * y.imag) / quot;
+	
+	return z;
+}
+
+#define DIV_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, y ? (zt)x / (zt)y : 0)
+#define DIV_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, div_cmpx(x, y))
+#define DIV_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, div_cmpx(x, y))
+#define DIV_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, div_cmpx(x, y))
+
 int
 div_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-#define DIV_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;	\
-	ltype *lvals = l->values;	\
-	rtype *rvals = r->values;
-	
-#define DIV_LOOP(ztype, ltype, rtype) {					\
-	DIV_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		if (!rvals[i % rc]) {					\
-			tvals[i] = 0;					\
-			continue;					\
-		}							\
-									\
-		tvals[i] = (ztype)lvals[i % lc] / (ztype)rvals[i % rc];	\
-	}								\
-}
-
-#define DIV_CMPX(ztype, ltype, rtype) {					\
-	DIV_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		struct apl_cmpx lv = lvals[i % lc];			\
-		struct apl_cmpx rv = rvals[i % rc];			\
-		double quot = rv.real * rv.real + rv.imag * rv.imag;	\
-									\
-		if (!quot) {						\
-			tvals[i].real = 0;				\
-			tvals[i].imag = 0;				\
-			continue;					\
-		}							\
-									\
-		tvals[i].real = lv.real * rv.real + lv.imag * rv.imag;	\
-		tvals[i].real /= quot;					\
-		tvals[i].imag = lv.imag * rv.real - lv.real * rv.imag;	\
-		tvals[i].imag /= quot;					\
-	}								\
-}
-		
-#define DIV_LCMPX(ztype, ltype, rtype) {				\
-	DIV_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		struct apl_cmpx lv = lvals[i % lc];			\
-		double rv = rvals[i % rc];				\
-									\
-		if (!rv) {						\
-			tvals[i].real = 0;				\
-			tvals[i].imag = 0;				\
-			continue;					\
-		}							\
-									\
-		tvals[i].real = lv.real / rv;				\
-		tvals[i].imag = lv.imag / rv;				\
-	}								\
-}
-
-#define DIV_RCMPX(ztype, ltype, rtype) {				\
-	DIV_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		double lv = lvals[i % lc];				\
-		struct apl_cmpx rv = rvals[i % rc];			\
-		double quot = rv.real * rv.real + rv.imag * rv.imag;	\
-									\
-		if (!quot) {					\
-			tvals[i].real = 0;				\
-			tvals[i].imag = 0;				\
-			continue;					\
-		}							\
-									\
-		tvals[i].real = lv * rv.real / quot;			\
-		tvals[i].imag = -lv * rv.imag / quot;			\
-	}								\
-}
-
 	switch (t->type) {
 	case ARR_BOOL:
 		SIMPLE_SWITCH(DIV_LOOP, NOOP, NOOP, NOOP, 
@@ -1552,9 +1486,7 @@ div_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, div_type, div_device, div_host);
 }
 
-DEF_MON(div_func_mon, div_func)
-
-struct cell_func div_closure = {CELL_FUNC, 1, div_func_mon, div_func, 0};
+struct cell_func div_closure = {CELL_FUNC, 1, error_syntax_mon, div_func, 0};
 struct cell_func *div_vec_ibeam = &div_closure;
 
 int
@@ -1563,49 +1495,23 @@ sub_device(af_array *z, af_array l, af_array r)
 	return af_sub(z, l, r, 0);
 }
 
+struct apl_cmpx
+sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z = {x.real - y.real, x.imag - y.imag};
+	
+	return z;
+}
+
+#define SUB_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (zt)x - (zt)y)
+#define SUB_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, sub_cmpx(x, y))
+#define SUB_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, sub_cmpx(x, y))
+#define SUB_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, sub_cmpx(x, y))
+
 int
 sub_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-#define SUB_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;	\
-	ltype *lvals = l->values;	\
-	rtype *rvals = r->values;
-	
-#define SUB_LOOP(ztype, ltype, rtype) {					\
-	SUB_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++)				\
-		tvals[i] = (ztype)lvals[i % lc] - (ztype)rvals[i % rc];	\
-}
-
-#define SUB_CMPX(ztype, ltype, rtype) {					\
-	SUB_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc].real - rvals[i % rc].real;\
-		tvals[i].imag = lvals[i % lc].imag - rvals[i % rc].imag;\
-	}								\
-}
-		
-#define SUB_LCMPX(ztype, ltype, rtype) {				\
-	SUB_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc].real - rvals[i % rc];	\
-		tvals[i].imag = lvals[i % lc].imag;			\
-	}								\
-}
-	
-#define SUB_RCMPX(ztype, ltype, rtype) {				\
-	SUB_LOCALS(ztype, ltype, rtype)					\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		tvals[i].real = lvals[i % lc] - rvals[i % rc].real;	\
-		tvals[i].imag = rvals[i % rc].imag;			\
-	}								\
-}
-
 	switch (t->type) {
 	case ARR_BOOL:
 		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
@@ -1644,32 +1550,9 @@ sub_func(struct cell_array **z,
 struct cell_func sub_closure = {CELL_FUNC, 1, error_syntax_mon, sub_func, 0};
 struct cell_func *sub_vec_ibeam = &sub_closure;
 
-struct apl_cmpx
-pow_cmpx(struct apl_cmpx x, struct apl_cmpx y)
-{
-	struct apl_cmpx z;
-	
-#ifdef _MSC_VER
-	_Dcomplex tx = {x.real, x.imag};
-	_Dcomplex ty = {y.real, y.imag};
-	_Dcomplex tz;
-#else
-	double complex tx, ty, tz;
-	
-	tx = x.real + x.imag * I;
-	ty = y.real + y.imag * I;
-#endif
-
-	tz = cpow(tx, ty);
-	
-	z.real = creal(tz);
-	z.imag = cimag(tz);
-	
-	return z;
-}
-
 int
-pow_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+dbl_cmpx_type(enum array_type *type, 
+    struct cell_array *l, struct cell_array *r)
 {
 	*type = ARR_DBL;
 	
@@ -1685,59 +1568,39 @@ pow_device(af_array *z, af_array l, af_array r)
 	return af_pow(z, l, r, 0);
 }
 
+struct apl_cmpx
+pow_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx z;
+
+#ifdef _MSC_VER
+	_Dcomplex tx = {x.real, x.imag};
+	_Dcomplex ty = {y.real, y.imag};
+	_Dcomplex tz;
+#else
+	double complex tx, ty, tz;
+
+	tx = x.real + x.imag * I;
+	ty = y.real + y.imag * I;
+#endif
+
+	tz = cpow(tx, ty);	
+
+	z.real = creal(tz);	
+	z.imag = cimag(tz);	
+
+	return z;		
+}				
+
+#define POW_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, pow(x, y))
+#define POW_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, pow_cmpx(x, y))
+#define POW_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, pow_cmpx(x, y))
+#define POW_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, pow_cmpx(x, y))
+
 int
 pow_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-#define POW_LOCALS(ztype, ltype, rtype) \
-	ztype *tvals = t->values;	\
-	ltype *lvals = l->values;	\
-	rtype *rvals = r->values;
-	
-#define POW_LOOP(ztype, ltype, rtype) {		\
-	POW_LOCALS(ztype, ltype, rtype)		\
-						\
-	for (size_t i = 0; i < count; i++) {	\
-		double x = lvals[i % lc];       \
-		double y = rvals[i % rc];       \
-						\
-		tvals[i] = pow(x, y);           \
-	}					\
-}
-
-#define POW_CMPX(ztype, ltype, rtype) {			\
-	POW_LOCALS(ztype, ltype, rtype)			\
-							\
-	for (size_t i = 0; i < count; i++) {		\
-		struct apl_cmpx x = lvals[i % lc];	\
-		struct apl_cmpx y = rvals[i % rc];	\
-							\
-		tvals[i] = pow_cmpx(x, y);		\
-	}						\
-}
-		
-#define POW_LCMPX(ztype, ltype, rtype) {		\
-	POW_LOCALS(ztype, ltype, rtype)			\
-							\
-	for (size_t i = 0; i < count; i++) {		\
-		struct apl_cmpx x = lvals[i % lc];	\
-		struct apl_cmpx y = {rvals[i % rc], 0};	\
-							\
-		tvals[i] = pow_cmpx(x, y);		\
-	}						\
-}
-	
-#define POW_RCMPX(ztype, ltype, rtype) {		\
-	POW_LOCALS(ztype, ltype, rtype)			\
-							\
-	for (size_t i = 0; i < count; i++) {		\
-		struct apl_cmpx x = {lvals[i % lc], 0};	\
-		struct apl_cmpx y = rvals[i % rc];	\
-							\
-		tvals[i] = pow_cmpx(x, y);		\
-	}						\
-}
-
 	switch (t->type) {
 	case ARR_DBL:
 		SIMPLE_SWITCH(POW_LOOP, NOOP, NOOP, NOOP, 
@@ -1758,13 +1621,103 @@ int
 pow_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	return dyadic_scalar_apply(z, l, r, pow_type, pow_device, pow_host);
+	return dyadic_scalar_apply(z, l, r, dbl_cmpx_type, pow_device, pow_host);
 }
 
-DEF_MON(pow_func_mon, pow_func)
-
-struct cell_func pow_closure = {CELL_FUNC, 1, pow_func_mon, pow_func, 0};
+struct cell_func pow_closure = {CELL_FUNC, 1, error_syntax_mon, pow_func, 0};
 struct cell_func *pow_vec_ibeam = &pow_closure;
+
+int
+log_device(af_array *z, af_array l, af_array r)
+{
+	af_array l64, r64, a, b;
+	int err, code;
+	
+	a = b = l64 = r64 = NULL;
+	
+	CHKAF(af_cast(&r64, r, f64), cleanup);
+	CHKAF(af_cast(&l64, l, f64), cleanup);
+	CHKAF(af_log(&a, r64), cleanup);
+	CHKAF(af_log(&b, l64), cleanup);
+	CHKAF(af_div(z, a, b, 0), cleanup);
+
+	err = 0;
+	
+cleanup:
+	code = err;
+	
+	CHKAF(af_release_array(a), fail);
+	CHKAF(af_release_array(b), fail);
+	CHKAF(af_release_array(r64), fail);
+	CHKAF(af_release_array(l64), fail);
+	
+	return code; 
+	
+fail:
+	return err;
+}
+
+struct apl_cmpx
+log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
+{
+	struct apl_cmpx a, b;
+
+#ifdef _MSC_VER
+	_Dcomplex tx = {x.real, x.imag};
+	_Dcomplex ty = {y.real, y.imag};
+	_Dcomplex tz;
+#else
+	double complex tx, ty, tz;
+
+	tx = x.real + x.imag * I;
+	ty = y.real + y.imag * I;
+#endif
+
+	tz = clog(tx);
+	a.real = creal(tz);
+	a.imag = cimag(tz);
+	
+	tz = clog(ty);
+	b.real = creal(tz);
+	b.imag = cimag(tz);
+	
+	return div_cmpx(a, b);
+}				
+
+#define LOG_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, log(y) / log(x))
+#define LOG_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, log_cmpx(y, x))
+#define LOG_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, log_cmpx(y, x))
+#define LOG_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, log_cmpx(y, x))
+
+int
+log_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+	switch (t->type) {
+	case ARR_DBL:
+		SIMPLE_SWITCH(LOG_LOOP, NOOP, NOOP, NOOP, 
+		     double, l->type, r->type, return 99);
+		break;
+	case ARR_CMPX:
+		SIMPLE_SWITCH(NOOP, LOG_CMPX, LOG_LCMPX, LOG_RCMPX, 
+		     struct apl_cmpx, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+log_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, dbl_cmpx_type, log_device, log_host);
+}
+
+struct cell_func log_closure = {CELL_FUNC, 1, error_syntax_mon, log_func, 0};
+struct cell_func *log_vec_ibeam = &log_closure;
 
 struct apl_cmpx
 exp_cmpx(struct apl_cmpx x)
@@ -1787,6 +1740,8 @@ exp_cmpx(struct apl_cmpx x)
 	
 	return z;
 }
+
+#define EXP_LOOP(rt) MON_LOOP(double, rt, exp(x));
 
 int
 exp_values(struct cell_array *t, struct cell_array *r)
@@ -1811,31 +1766,22 @@ exp_values(struct cell_array *t, struct cell_array *r)
 	
 	size_t count = array_values_count(t);
 	
-	if (r->type == ARR_CMPX) {
-		struct apl_cmpx *tvals = t->values;
-		struct apl_cmpx *rvals = r->values;
-		
-		for (size_t i = 0; i < count; i++)
-			tvals[i] = exp_cmpx(rvals[i]);
-		
-		goto done;
-	}
-
-	#define EXP_LOOP(rtype) {			\
-		double *tvals = t->values;		\
-		rtype *rvals = r->values;		\
-							\
-		for (size_t i = 0; i < count; i++)	\
-			tvals[i] = exp(rvals[i]);	\
-							\
-		break;					\
-	}						\
-	
 	switch (r->type) {
-	case ARR_BOOL:EXP_LOOP(int8_t);
-	case ARR_SINT:EXP_LOOP(int16_t);
-	case ARR_INT:EXP_LOOP(int32_t);
-	case ARR_DBL:EXP_LOOP(double);
+	case ARR_CMPX:
+		MON_LOOP(struct apl_cmpx, struct apl_cmpx, exp_cmpx(x));
+		break;
+	case ARR_BOOL:
+		EXP_LOOP(int8_t);
+		break;
+	case ARR_SINT:
+		EXP_LOOP(int16_t);
+		break;
+	case ARR_INT:
+		EXP_LOOP(int32_t);
+		break;
+	case ARR_DBL:
+		EXP_LOOP(double);
+		break;
 	default:
 		CHK(99, done, L"Unexpected element type");
 	}
@@ -1856,8 +1802,91 @@ exp_func(struct cell_array **z,
 struct cell_func exp_closure = {CELL_FUNC, 1, exp_func, error_syntax_dya, 0};
 struct cell_func *exp_vec_ibeam = &exp_closure;
 
+struct apl_cmpx
+nlg_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx z;
+	
+#ifdef _MSC_VER
+	_Dcomplex tx = {x.real, x.imag};	
+	_Dcomplex tz;
+#else
+	double complex tz, tx;
+
+	tx = x.real + x.imag * I;
+#endif
+	
+	tz = clog(tx);
+	
+	z.real = creal(tz);
+	z.imag = cimag(tz);
+	
+	return z;
+}
+
+#define NLG_LOOP(rt) MON_LOOP(double, rt, log(x));
+
 int
-cmp_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+nlg_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = r->type == ARR_CMPX ? ARR_CMPX : ARR_DBL;
+	
+	if (r->storage == STG_DEVICE) {
+		af_array tmp;
+		CHKAF(af_cast(&tmp, r->values, f64), done);
+		CHKAF(af_log(&t->values, tmp), done);
+		CHKAF(af_release_array(tmp), done);
+		
+		goto done;
+	}
+	
+	if (r->storage != STG_HOST)
+		CHK(99, done, L"Unknown storage type");
+	
+	CHK(alloc_array(t), done, L"alloc_array(t)");
+	
+	size_t count = array_values_count(t);
+	
+	switch (r->type) {
+	case ARR_CMPX:
+		MON_LOOP(struct apl_cmpx, struct apl_cmpx, nlg_cmpx(x));
+		break;
+	case ARR_BOOL:
+		NLG_LOOP(int8_t);
+		break;
+	case ARR_SINT:
+		NLG_LOOP(int16_t);
+		break;
+	case ARR_INT:
+		NLG_LOOP(int32_t);
+		break;
+	case ARR_DBL:
+		NLG_LOOP(double);
+		break;
+	default:
+		CHK(99, done, L"Unexpected element type");
+	}
+	
+	err = 0;
+	
+done:
+	return err;
+}
+
+int
+nlg_func(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, nlg_values);
+}
+
+struct cell_func nlg_closure = {CELL_FUNC, 1, nlg_func, error_syntax_dya, 0};
+struct cell_func *nlg_vec_ibeam = &nlg_closure;
+
+int
+bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = ARR_BOOL;
 	
@@ -1892,39 +1921,26 @@ int                                                                             
 name##_func(struct cell_array **z,                                                      \
     struct cell_array *l, struct cell_array *r, struct cell_func *self)                 \
 {                                                                                       \
-	return dyadic_scalar_apply(z, l, r, cmp_type, name##_device, name##_host);      \
+	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);      \
 }                                                                                       \
 											\
 struct cell_func name##_closure = {CELL_FUNC, 1, error_syntax_mon, name##_func, 0};     \
 struct cell_func *name##_vec_ibeam = &name##_closure;                                   \
 
-#define CMP_LOOP(ztype, ltype, rtype, expr) {	\
-	ztype *tvals = t->values;		\
-	ltype *lvals = l->values;		\
-	rtype *rvals = r->values;		\
-						\
-	for (size_t i = 0; i < count; i++) {	\
-		ltype x = lvals[i % lc];	\
-		rtype y = rvals[i % rc];	\
-						\
-		tvals[i] = (expr);		\
-	}					\
-}						\
-
-#define AND_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, x && y)
-#define LOR_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, x || y)
-#define LTH_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x < (double)y)
-#define LTE_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x <= (double)y)
-#define GTH_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x > (double)y)
-#define GTE_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x >= (double)y)
-#define EQL_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, x == y)
-#define EQL_CMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real == y.real && x.imag == y.imag)
-#define EQL_LCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real == y && x.imag == 0)
-#define EQL_RCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x == y.real && 0 == y.imag)
-#define NEQ_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, x != y)
-#define NEQ_CMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real != y.real || x.imag != y.imag)
-#define NEQ_LCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x.real != y || x.imag != 0)
-#define NEQ_RCMPX(zt, lt, rt) CMP_LOOP(zt, lt, rt, x != y.real || 0 != y.imag)
+#define AND_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x && y)
+#define LOR_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x || y)
+#define LTH_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x < (double)y)
+#define LTE_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x <= (double)y)
+#define GTH_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x > (double)y)
+#define GTE_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x >= (double)y)
+#define EQL_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x == y)
+#define EQL_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real == y.real && x.imag == y.imag)
+#define EQL_LCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real == y && x.imag == 0)
+#define EQL_RCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x == y.real && 0 == y.imag)
+#define NEQ_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x != y)
+#define NEQ_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real != y.real || x.imag != y.imag)
+#define NEQ_LCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real != y || x.imag != 0)
+#define NEQ_RCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x != y.real || 0 != y.imag)
 
 DEF_CMP_IBEAM(and, af_and, AND_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(lor, af_or, LOR_LOOP, NOOP, NOOP, NOOP);
@@ -1935,7 +1951,8 @@ DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(eql, af_eq, EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX);
 DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX);
 
-#define MIN_LOOP(zt, lt, rt) CMP_LOOP(zt, lt, rt, (double)x < (double)y ? (zt)x : (zt)y)
+#define MIN_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x < (double)y ? (zt)x : (zt)y)
+#define MAX_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x > (double)y ? (zt)x : (zt)y)
 
 int
 min_device(af_array *z, af_array l, af_array r)
@@ -1981,6 +1998,50 @@ min_func(struct cell_array **z,
 struct cell_func min_closure = {CELL_FUNC, 1, error_syntax_mon, min_func, 0};
 struct cell_func *min_vec_ibeam = &min_closure;
 
+int
+max_device(af_array *z, af_array l, af_array r)
+{
+	return af_maxof(z, l, r, 0);
+}
+
+int
+max_host(struct cell_array *t, size_t count, 
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
+{
+	switch (t->type) {
+	case ARR_BOOL:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		    int8_t, l->type, r->type, return 99);
+		break;
+	case ARR_SINT:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		     int16_t, l->type, r->type, return 99);
+		break;
+	case ARR_INT:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		     int32_t, l->type, r->type, return 99);
+		break;
+	case ARR_DBL:
+		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		     double, l->type, r->type, return 99);
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+max_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return dyadic_scalar_apply(z, l, r, max_type, max_device, max_host);
+}
+
+struct cell_func max_closure = {CELL_FUNC, 1, error_syntax_mon, max_func, 0};
+struct cell_func *max_vec_ibeam = &max_closure;
+
 struct apl_cmpx
 floor_cmpx(struct apl_cmpx x)
 {
@@ -2008,20 +2069,12 @@ floor_values(struct cell_array *t, struct cell_array *r)
 		size_t count = array_values_count(t);
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 	
-#define FLOOR_LOOP(floor, type) {		\
-	type *tvals = t->values;		\
-	type *rvals = r->values;		\
-						\
-	for (size_t i = 0; i < count; i++)	\
-		tvals[i] = floor(rvals[i]);	\
-}						\
-
 		switch (r->type) {
 		case ARR_DBL:
-			FLOOR_LOOP(floor, double);
+			MON_LOOP(double, double, floor(x));
 			break;
 		case ARR_CMPX:
-			FLOOR_LOOP(floor_cmpx, struct apl_cmpx);
+			MON_LOOP(struct apl_cmpx, struct apl_cmpx, floor_cmpx(x));
 			break;
 		default:
 			TRC(99, L"Expected non-complex numeric type");
@@ -2045,6 +2098,62 @@ floor_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 struct cell_func floor_closure = {CELL_FUNC, 1, floor_func, error_syntax_dya, 0};
 struct cell_func *floor_vec_ibeam = &floor_closure;
 
+struct apl_cmpx
+ceil_cmpx(struct apl_cmpx x)
+{
+	struct apl_cmpx t;
+	
+	t.real = ceil(x.real);
+	t.imag = ceil(x.imag);
+	
+	return t;
+}
+
+int
+ceil_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = r->type;
+	err = 0;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		CHK(af_ceil(&t->values, r->values), done, L"⌊⍵ ⍝ DEVICE");
+		break;
+	case STG_HOST:
+		size_t count = array_values_count(t);
+		CHK(alloc_array(t), done, L"alloc_array(t)");
+	
+		switch (r->type) {
+		case ARR_DBL:
+			MON_LOOP(double, double, ceil(x));
+			break;
+		case ARR_CMPX:
+			MON_LOOP(struct apl_cmpx, struct apl_cmpx, ceil_cmpx(x));
+			break;
+		default:
+			TRC(99, L"Expected non-complex numeric type");
+		}
+		
+		break;
+	default:
+		TRC(99, L"Unknown storage type");
+	}
+	
+done:
+	return err;
+}
+
+int
+ceil_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, ceil_values);
+}
+
+struct cell_func ceil_closure = {CELL_FUNC, 1, ceil_func, error_syntax_dya, 0};
+struct cell_func *ceil_vec_ibeam = &ceil_closure;
+
 int
 not_values(struct cell_array *t, struct cell_array *r)
 {
@@ -2061,11 +2170,8 @@ not_values(struct cell_array *t, struct cell_array *r)
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 
 		size_t count = array_values_count(t);
-		int8_t *tvals = t->values;
-		int8_t *rvals = r->values;
 		
-		for (size_t i = 0; i < count; i++)
-			tvals[i] = !rvals[i];
+		MON_LOOP(int8_t, int8_t, !x);
 		
 		break;
 	default:
@@ -2101,26 +2207,18 @@ abs_values(struct cell_array *t, struct cell_array *r)
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 		size_t count = array_values_count(t);
 
-#define ABS_LOOP(abs, type) {			\
-	type *tvals = t->values;		\
-	type *rvals = r->values;		\
-						\
-	for (size_t i = 0; i < count; i++)	\
-		tvals[i] = abs(rvals[i]);	\
-}						\
-
 		switch (r->type) {
 		case ARR_BOOL:
-			ABS_LOOP(abs, int8_t);
+			MON_LOOP(int8_t, int8_t, abs(x));
 			break;
 		case ARR_SINT:
-			ABS_LOOP(abs, int16_t);
+			MON_LOOP(int16_t, int16_t, abs(x));
 			break;
 		case ARR_INT:
-			ABS_LOOP(abs, int32_t);
+			MON_LOOP(int32_t, int32_t, abs(x));
 			break;
 		case ARR_DBL:
-			ABS_LOOP(fabs, double);
+			MON_LOOP(double, double, fabs(x));
 			break;
 		default:
 			TRC(99, L"Expected non-complex numeric type");
@@ -2143,3 +2241,4 @@ abs_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 
 struct cell_func abs_closure = {CELL_FUNC, 1, abs_func, error_syntax_dya, 0};
 struct cell_func *abs_ibeam = &abs_closure;
+
