@@ -1,4 +1,5 @@
 CC←{
+	data header←⍵
 	vsbat←VS∆PATH,'\VC\Auxiliary\Build\vcvarsall.bat'
 	soext←{opsys'.dll' '.so' '.dylib'}
 	libdir←opsys ''' ' '/lib64'' ' '/lib'' '
@@ -19,7 +20,8 @@ CC←{
 	vsc1←{' && cd "',(⊃⎕CMD'echo %CD%'),'" && cl ',(vsco ⍵),' "',⍵,'.c" '}
 	vsc2←{(vslo ⍵),'/OUT:"',⍵,'.dll" > "',⍵,'.log""'}
 	vsc←{⎕CMD ('%comspec% /C ',vsc0,vsc1,vsc2)⍵}
-	_←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣⍵ ⎕NPUT (⍺,'.c')1
+	_←header ⎕NPUT (⍺,'.h')1
+	_←(⍎opsys'vsc' 'gcc' 'clang')⍺⊣data ⎕NPUT (⍺,'.c')1
 	⎕←⍪⊃⎕NGET(⍺,'.log')1
 	⎕NEXISTS f←⍺,soext⍬:f ⋄ 'COMPILE ERROR' ⎕SIGNAL 22
 }

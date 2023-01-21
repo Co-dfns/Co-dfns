@@ -81,6 +81,7 @@ GC←{
 
 	⍝ All code has an initial prefix
 	pref ←⊂'#include "codfns.h"'
+	pref,←⊂'#include "',⍺,'.h"'
 	pref,←⊂''
 	pref,←⊂'EXPORT int'
 	pref,←⊂'DyalogGetInterpreterFunctions(void *p)'
@@ -446,12 +447,6 @@ GC←{
 		id←⊃var_names ⍵
 		z ←⊂'int ',id,'_flag = 0;'
 		z,←⊂''
-		z,←⊂'EXPORT struct ',id,'_loc {'
-		z,←⊂'	unsigned int __count;'
-		z,←⊂'	wchar_t **__names;'
-		z,← '	',¨decl_vars ⊃lv[⍵]
-		z,←⊂'} ',id,';'
-		z,←⊂''
 		z,←⊂(id,'_names')var_nmvec ⊃lv[⍵]
 		z,←⊂''
 		z,←⊂'EXPORT int'
@@ -489,6 +484,18 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	
+	⍝ Export headers
+	header←{∊(⊃⍪⌿⍵),¨⊂⎕UCS 13 10}{
+		id←⊃var_names ⍵
+		z ←⊂'EXPORT struct ',id,'_loc {'
+		z,←⊂'	unsigned int __count;'
+		z,←⊂'	wchar_t **__names;'
+		z,← '	',¨decl_vars ⊃lv[⍵]
+		z,←⊂'} ',id,';'
+		z,←⊂''
+		z
+	}¨i
 
 	⍝ Export functions
 	i←⍸(t=B)∧(k=2)∧k[p]=0
@@ -524,5 +531,8 @@ GC←{
 	⍞←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
 
 	⍝ Assemble all the data together into a single character vector
-	∊(pref,(⊂''),(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
+	data←∊(pref,(⊂''),(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
+	
+	⍝ Return data+headers
+	data header
 }
