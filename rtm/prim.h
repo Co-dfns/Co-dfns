@@ -54,6 +54,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *max;
 	struct cell_func *exp;
 	struct cell_func *log;
+	struct cell_func *pitimes;
 	struct cell_func *cir;
 	struct cell_func *fac;
 	struct cell_func *notscl;

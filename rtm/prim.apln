@@ -123,7 +123,8 @@ exp←'exp_vec_ibeam'⌶ ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
 log←'nlg_vec_ibeam'⌶ ⎕AMBIV ('log_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ○: Pi Times | Trigonometric Functions
-cir←'pitimes_vec_ibeam'⌶ ⎕AMBIV ('trig_vec_ibeam'⌶ numeric scalar)
+pitimes←{3.14159265358979323846×⍵}
+cir←pitimes ⎕AMBIV ('trig_vec_ibeam'⌶ numeric scalar)
 
 ⍝ !: Factorial | Binomial
 fac←'factorial_vec_ibeam'⌶ ⎕AMBIV ('binomial_vec_ibeam'⌶ numeric scalar)
