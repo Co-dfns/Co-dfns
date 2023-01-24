@@ -145,6 +145,13 @@ if (0 < (err = (expr))) {					\
 	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
 }								\
 
+#define TRCAF(expr)					\
+if (0 < (err = (expr))) {					\
+	wchar_t *msg = get_aferr_msg(err);			\
+	debug_trace(err, __FILE__, __LINE__, __func__, msg);	\
+	free(msg);						\
+}								\
+
 /* DWA and Interface */
 DECLSPEC int set_dwafns(void *);
 DECLSPEC int call_dwa(topfn_ptr, void *, void *, void *, const wchar_t *);
