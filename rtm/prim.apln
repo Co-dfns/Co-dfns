@@ -127,7 +127,11 @@ pitimes←{3.14159265358979323846×⍵}
 cir←pitimes ⎕AMBIV ('trig_vec_ibeam'⌶ numeric scalar)
 
 ⍝ !: Factorial | Binomial
-fac←'factorial_vec_ibeam'⌶ ⎕AMBIV ('binomial_vec_ibeam'⌶ numeric scalar)
+binomial←{
+	(is_integer ⍵)∧(⍵<0)∧~is_integer ⍺:⎕SIGNAL 11
+	(!⍵)÷(!⍺)×!⍵-⍺
+}
+fac←'factorial_vec_ibeam'⌶ ⎕AMBIV binomial
 
 ⍝ ~: Not | Without
 notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
