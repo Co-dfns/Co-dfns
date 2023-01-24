@@ -2242,3 +2242,99 @@ abs_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 struct cell_func abs_closure = {CELL_FUNC, 1, abs_func, error_syntax_dya, 0};
 struct cell_func *abs_ibeam = &abs_closure;
 
+int
+factorial_real_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = ARR_DBL;
+	err = 0;
+	
+	switch (r->storage) {
+	case STG_DEVICE:{
+		af_array t64, t64_1, one;
+		int err2;
+		
+		t64 = t64_1 = one = NULL;
+		
+		CHKAF(af_cast(&t64, r->values, f64), done);
+		
+		if (is_integer_array(r)) {
+			CHKAF(af_factorial(&t->values, t64), af_done);
+		} else {
+			dim_t d;
+			
+			CHKAF(af_get_elements(&d, t64), af_done);
+			CHKAF(af_constant(&one, 1, 1, &d, f64), af_done);
+			CHKAF(af_add(&t64_1, t64, one, 0), af_done);
+			CHKAF(af_tgamma(&t->values, t64_1), af_done);
+		}
+af_done:
+		err2 = err;
+		
+		TRCAF(af_release_array(t64)); err2 = err ? err : err2;
+		TRCAF(af_release_array(t64_1)); err2 = err ? err : err2;
+		TRCAF(af_release_array(one)); err2 = err ? err : err2;
+		
+		err = err2;
+				
+		break;
+	}
+	case STG_HOST:
+		CHK(alloc_array(t), done, L"alloc_array(t)");
+		size_t count = array_values_count(t);
+		
+		switch (r->type) {
+		case ARR_BOOL:
+			MON_LOOP(double, int8_t, tgamma(x+1));
+			break;
+		case ARR_SINT:
+			MON_LOOP(double, int16_t, tgamma(x+1));
+			break;
+		case ARR_INT:
+			MON_LOOP(double, int32_t, tgamma(x+1));
+			break;
+		case ARR_DBL:
+			MON_LOOP(double, double, tgamma(x+1));
+			break;
+		default:
+			TRC(99, L"Expected non-complex numeric type");
+		}
+
+		break;
+	default:
+		TRC(99, L"Unknown storage type");
+	}
+
+done:
+	return err;
+}
+
+int
+factorial_cmpx_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	TRC(16, L"Complex factorial/gamma function not implemented yet");
+	
+	return err;
+}
+
+int
+factorial_values(struct cell_array *t, struct cell_array *r)
+{
+	if (is_real_array(r))
+		return factorial_real_values(t, r);
+	
+	return factorial_cmpx_values(t, r);
+}
+
+int
+factorial_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, factorial_values);
+}
+
+struct cell_func factorial_closure = {CELL_FUNC, 1, factorial_func, error_syntax_dya, 0};
+struct cell_func *factorial_vec_ibeam = &factorial_closure;
+
