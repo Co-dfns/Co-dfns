@@ -2374,3 +2374,39 @@ imagpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *sel
 struct cell_func imagpart_closure = {CELL_FUNC, 1, imagpart_func, error_syntax_dya, 0};
 struct cell_func *imagpart_vec_ibeam = &imagpart_closure;
 
+int
+realpart_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = ARR_DBL;
+	err = 0;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		CHK(af_real(&t->values, r->values), done, L"11○⍵ ⍝ DEVICE");
+		break;
+	case STG_HOST:
+		CHK(alloc_array(t), done, L"alloc_array(t)");
+		size_t count = array_values_count(t);
+		
+		MON_LOOP(double, struct apl_cmpx, x.real);
+
+		break;
+	default:
+		TRC(99, L"Unknown storage type");
+	}
+	
+done:
+	return err;
+}
+
+int
+realpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, realpart_values);
+}
+
+struct cell_func realpart_closure = {CELL_FUNC, 1, realpart_func, error_syntax_dya, 0};
+struct cell_func *realpart_vec_ibeam = &realpart_closure;
+
