@@ -124,6 +124,35 @@ log←'nlg_vec_ibeam'⌶ ⎕AMBIV ('log_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ○: Pi Times | Trigonometric Functions
 pitimes←{3.14159265358979323846×⍵}
+trig←{
+	1≠≢⍺:⍺ ∇¨⍵
+	0=⍺:(1-⍵*2)*.5
+	1=⍺:'sin_vec_ibeam'⌶ ⍵
+	¯1=⍺:'arcsin_vec_ibeam'⌶ ⍵
+	2=⍺:'cos_vec_ibeam'⌶ ⍵
+	¯2=⍺:'arccos_vec_ibeam'⌶ ⍵
+	3=⍺:'tan_vec_ibeam'⌶ ⍵
+	¯3=⍺:'arctan_vec_ibeam'⌶ ⍵
+	4=⍺:(1+⍵*2)*.5
+	¯4=⍺:(⍵+1)×((⍵-1)÷⍵+1)*0.5
+	5=⍺:'sinh_vec_ibeam'⌶ ⍵
+	¯5=⍺:'arcsinh_vec_ibeam'⌶ ⍵
+	6=⍺:'cosh_vec_ibeam'⌶ ⍵
+	¯6=⍺:'arccosh_vec_ibeam'⌶ ⍵
+	7=⍺:'tanh_vec_ibeam'⌶ ⍵
+	¯7=⍺:'arctanh_vec_ibeam'⌶ ⍵
+	8=⍺:(-1+⍵*2)*0.5
+	¯8=⍺:-8○⍵
+	9=⍺:{1289≡⎕DR ⍵:'realpart_vec_ibeam'⌶ ⍵ ⋄ ⍵}⍵
+	¯9=⍺:⍵
+	10=⍺:|⍵
+	¯10=⍺:+⍵
+	11=⍺:{1289≡⎕DR ⍵:'imagpart_vec_ibeam'⌶ ⍵ ⋄ (⍴⍵)⍴0}⍵
+	¯11=⍺:⍵×0J1
+	12=⍺:'PHASE(⍵) NOT IMPLEMENTED'⎕SIGNAL 16
+	¯12=⍺:*⍵×0J1
+	⎕SIGNAL 11
+}
 cir←pitimes ⎕AMBIV ('trig_vec_ibeam'⌶ numeric scalar)
 
 ⍝ !: Factorial | Binomial
