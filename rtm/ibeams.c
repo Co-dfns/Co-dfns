@@ -2410,3 +2410,83 @@ realpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *sel
 struct cell_func realpart_closure = {CELL_FUNC, 1, realpart_func, error_syntax_dya, 0};
 struct cell_func *realpart_vec_ibeam = &realpart_closure;
 
+#define DEF_TRIG(name, af_fun, stdc_fun)				\
+int									\
+name##_values(struct cell_array *t, struct cell_array *r)		\
+{									\
+	int err;							\
+									\
+	t->type = ARR_DBL;						\
+	err = 0;							\
+									\
+	switch (r->storage) {						\
+	case STG_DEVICE:{						\
+		af_array t64;						\
+		int err2;						\
+									\
+		CHKAF(af_cast(&t64, r->values, f64), af_done);		\
+		CHKAF(af_fun(&t->values, t64), af_done);		\
+af_done:								\
+		err2 = err;						\
+									\
+		TRCAF(af_release_array(t64)); err2 = err ? err : err2;	\
+									\
+		err = err2;						\
+									\
+		break;							\
+	}								\
+	case STG_HOST:							\
+		CHK(alloc_array(t), done, L"alloc_array(t)");		\
+		size_t count = array_values_count(t);			\
+									\
+		switch (r->type) {					\
+		case ARR_BOOL:						\
+			MON_LOOP(double, int8_t, stdc_fun(x));		\
+			break;						\
+		case ARR_SINT:						\
+			MON_LOOP(double, int16_t, stdc_fun(x));		\
+			break;						\
+		case ARR_INT:						\
+			MON_LOOP(double, int32_t, stdc_fun(x));		\
+			break;						\
+		case ARR_DBL:						\
+			MON_LOOP(double, double, stdc_fun(x));		\
+			break;						\
+		default:						\
+			TRC(16, L"Complex inputs not supported, yet.");	\
+		}							\
+									\
+		break;							\
+	default:							\
+		TRC(99, L"Unknown storage type");			\
+	}								\
+									\
+done:									\
+	return err;							\
+}									\
+									\
+int									\
+name##_func(struct cell_array **z, struct cell_array *r,		\
+    struct cell_func *self)						\
+{									\
+	return monadic_scalar_apply(z, r, name##_values);		\
+}									\
+									\
+struct cell_func name##_closure = {					\
+	CELL_FUNC, 1, name##_func, error_syntax_dya, 0			\
+};									\
+struct cell_func *name##_vec_ibeam = &name##_closure;			\
+
+DEF_TRIG(arctanh, af_atanh, atanh);
+DEF_TRIG(tanh, af_tanh, tanh);
+DEF_TRIG(arccosh, af_acosh, acosh);
+DEF_TRIG(cosh, af_cosh, cosh);
+DEF_TRIG(arcsinh, af_asinh, asinh);
+DEF_TRIG(sinh, af_sinh, sinh);
+DEF_TRIG(arctan, af_atan, atan);
+DEF_TRIG(tan, af_tan, tan);
+DEF_TRIG(arccos, af_acos, acos);
+DEF_TRIG(cos, af_cos, cos);
+DEF_TRIG(arcsin, af_asin, asin);
+DEF_TRIG(sin, af_sin, sin);
+
