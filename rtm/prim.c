@@ -80,7 +80,6 @@ extern struct cell_func *realpart_vec_ibeam;
 extern struct cell_func *realpart_vec_ibeam;
 extern struct cell_func *imagpart_vec_ibeam;
 extern struct cell_func *imagpart_vec_ibeam;
-extern struct cell_func *trig_vec_ibeam;
 extern struct cell_func *factorial_vec_ibeam;
 extern struct cell_func *not_vec_ibeam;
 extern struct cell_func *not_vec_ibeam;
@@ -2445,19 +2444,19 @@ cdf_prim_init(void)
 	release_cell(*--stkhd);
 	
 	if (!loc->scalar)
-		CHK(6, cleanup, L"[156] cir←pitimes ⎕AMBIV ('trig_vec_ibeam'⌶ numeric ╠scalar╣)");
+		CHK(6, cleanup, L"[156] cir←pitimes ⎕AMBIV (trig numeric ╠scalar╣)");
 	
 	*stkhd++ = retain_cell(loc->scalar);
 	
 	if (!loc->numeric)
-		CHK(6, cleanup, L"[156] cir←pitimes ⎕AMBIV ('trig_vec_ibeam'⌶ ╠numeric╣ scalar)");
+		CHK(6, cleanup, L"[156] cir←pitimes ⎕AMBIV (trig ╠numeric╣ scalar)");
 	
 	*stkhd++ = retain_cell(loc->numeric);
 	
-	if (!trig_vec_ibeam)
-		CHK(6, cleanup, L"[156] cir←pitimes ⎕AMBIV (╠'trig_vec_ibeam'⌶╣ numeric scalar)");
+	if (!loc->trig)
+		CHK(6, cleanup, L"[156] cir←pitimes ⎕AMBIV (╠trig╣ numeric scalar)");
 	
-	*stkhd++ = retain_cell(trig_vec_ibeam);
+	*stkhd++ = retain_cell(loc->trig);
 	
 	{
 		struct cell_func *x = stkhd[-1];
@@ -2465,7 +2464,7 @@ cdf_prim_init(void)
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[156] cir←pitimes ⎕AMBIV (╠'trig_vec_ibeam'⌶ numeric╣ scalar)");
+		    L"[156] cir←pitimes ⎕AMBIV (╠trig numeric╣ scalar)");
 	
 		release_func(x);
 		release_moper(op);
@@ -2480,7 +2479,7 @@ cdf_prim_init(void)
 		struct cell_func *dst;
 	
 		CHK(apply_mop(&dst, op, op->fptr_fm, op->fptr_fd, x), cleanup,
-		    L"[156] cir←pitimes ⎕AMBIV ╠('trig_vec_ibeam'⌶ numeric scalar)╣");
+		    L"[156] cir←pitimes ⎕AMBIV ╠(trig numeric scalar)╣");
 	
 		release_func(x);
 		release_moper(op);
@@ -2490,12 +2489,12 @@ cdf_prim_init(void)
 	}
 	
 	if (!cdf_prim.q_ambiv)
-		CHK(6, cleanup, L"[156] cir←pitimes ╠⎕AMBIV╣ ('trig_vec_ibeam'⌶ numeric scalar)");
+		CHK(6, cleanup, L"[156] cir←pitimes ╠⎕AMBIV╣ (trig numeric scalar)");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_ambiv);
 	
 	if (!loc->pitimes)
-		CHK(6, cleanup, L"[156] cir←╠pitimes╣ ⎕AMBIV ('trig_vec_ibeam'⌶ numeric scalar)");
+		CHK(6, cleanup, L"[156] cir←╠pitimes╣ ⎕AMBIV (trig numeric scalar)");
 	
 	*stkhd++ = retain_cell(loc->pitimes);
 	
@@ -2506,7 +2505,7 @@ cdf_prim_init(void)
 		struct cell_func *dst;
 	
 		CHK(apply_dop(&dst, op, op->fptr_ffm, op->fptr_ffd, x, y), cleanup,
-		    L"[156] cir←╠pitimes ⎕AMBIV ('trig_vec_ibeam'⌶ numeric scalar)╣");
+		    L"[156] cir←╠pitimes ⎕AMBIV (trig numeric scalar)╣");
 	
 		release_func(x);
 		release_doper(op);
