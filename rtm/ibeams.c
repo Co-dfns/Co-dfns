@@ -851,7 +851,7 @@ q_veach_func(struct cell_array **z,
 		yvals[0] = rvals[i % rc];				\
 									\
 		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
-		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " 			\
+		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ "			\
 		    L#ltype L"/" L#rtype);				\
 	}								\
 }
@@ -1894,38 +1894,38 @@ bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 }
 
 #define DEF_CMP_IBEAM(name, cmp_dev, loop, loop_cmpx, loop_lcmpx, loop_rcmpx)		\
-int                                                                                     \
-name##_device(af_array *z, af_array l, af_array r)                                      \
-{                                                                                       \
-	return cmp_dev(z, l, r, 0);                                                     \
-}                                                                                       \
+int											\
+name##_device(af_array *z, af_array l, af_array r)					\
+{											\
+	return cmp_dev(z, l, r, 0);							\
+}											\
 											\
-int                                                                                     \
-name##_host(struct cell_array *t, size_t count,                                         \
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)                   \
-{                                                                                       \
+int											\
+name##_host(struct cell_array *t, size_t count,						\
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)			\
+{											\
 											\
-	switch (t->type) {                                                              \
-	case ARR_BOOL:                                                                  \
-		SIMPLE_SWITCH(loop, loop_cmpx, loop_lcmpx, loop_rcmpx,             	\
-		    int8_t, l->type, r->type, return 99);                               \
-		break;                                                                  \
-	default:                                                                        \
-		return 99;                                                              \
-	}                                                                               \
+	switch (t->type) {								\
+	case ARR_BOOL:									\
+		SIMPLE_SWITCH(loop, loop_cmpx, loop_lcmpx, loop_rcmpx,			\
+		    int8_t, l->type, r->type, return 99);				\
+		break;									\
+	default:									\
+		return 99;								\
+	}										\
 											\
-	return 0;                                                                       \
-}                                                                                       \
+	return 0;									\
+}											\
 											\
-int                                                                                     \
-name##_func(struct cell_array **z,                                                      \
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)                 \
-{                                                                                       \
-	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);      \
-}                                                                                       \
+int											\
+name##_func(struct cell_array **z,							\
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)			\
+{											\
+	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	 \
+}											\
 											\
-struct cell_func name##_closure = {CELL_FUNC, 1, error_syntax_mon, name##_func, 0};     \
-struct cell_func *name##_vec_ibeam = &name##_closure;                                   \
+struct cell_func name##_closure = {CELL_FUNC, 1, error_syntax_mon, name##_func, 0};	\
+struct cell_func *name##_vec_ibeam = &name##_closure;					\
 
 #define AND_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x && y)
 #define LOR_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x || y)
