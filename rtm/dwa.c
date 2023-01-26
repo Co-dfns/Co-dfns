@@ -158,7 +158,7 @@ array_dwa_type(enum array_type type)
 	case ARR_SPAN:
 		return APLNC;
         case ARR_BOOL:
-		return APLU8;
+		return APLTI;
 	case ARR_SINT:
 		return APLSI;
 	case ARR_INT:
