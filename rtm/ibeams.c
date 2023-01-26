@@ -1274,6 +1274,17 @@ max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 }
 
 int
+int16_max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	max_type(type, l, r);
+	
+	if (*type == ARR_BOOL)
+		*type = ARR_SINT;
+	
+	return 0;
+}
+
+int
 add_device(af_array *z, af_array l, af_array r)
 {
 	return af_add(z, l, r, 0);
@@ -1299,7 +1310,7 @@ add_host(struct cell_array *t, size_t count,
 	switch (t->type) {
 	case ARR_BOOL:
 		SIMPLE_SWITCH(ADD_LOOP, NOOP, NOOP, NOOP, 
-		    int8_t, l->type, r->type, return 99);
+		    int16_t, l->type, r->type, return 99);
 		break;
 	case ARR_SINT:
 		SIMPLE_SWITCH(ADD_LOOP, NOOP, NOOP, NOOP, 
@@ -1328,7 +1339,7 @@ int
 add_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	return dyadic_scalar_apply(z, l, r, max_type, add_device, add_host);
+	return dyadic_scalar_apply(z, l, r, int16_max_type, add_device, add_host);
 }
 
 struct cell_func add_closure = {CELL_FUNC, 1, error_syntax_mon, add_func, 0};
@@ -1515,7 +1526,7 @@ sub_host(struct cell_array *t, size_t count,
 	switch (t->type) {
 	case ARR_BOOL:
 		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
-		    int8_t, l->type, r->type, return 99);
+		    int16_t, l->type, r->type, return 99);
 		break;
 	case ARR_SINT:
 		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
@@ -1544,7 +1555,7 @@ int
 sub_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	return dyadic_scalar_apply(z, l, r, max_type, sub_device, sub_host);
+	return dyadic_scalar_apply(z, l, r, int16_max_type, sub_device, sub_host);
 }
 
 struct cell_func sub_closure = {CELL_FUNC, 1, error_syntax_mon, sub_func, 0};
