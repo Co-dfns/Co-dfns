@@ -87,15 +87,15 @@ add←conjugate ⎕AMBIV ('add_vec_ibeam'⌶ numeric scalar)
 
 ⍝ -: Negate | Subtract
 negate←{⎕SIGNAL 16}
-sub←negate ⎕AMBIV ('sub_vec_ibeam'⌶ numeric scalar)
+sub←negate numeric ⎕AMBIV ('sub_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ×: Sign | Multiply
 sign←{⎕SIGNAL 16}
-mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
+mul←sign numeric ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ÷: Reciprocal | Divide
 recip←{⎕SIGNAL 16}
-div←recip ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
+div←recip numeric ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 
 ⍝ |: Absolute Value | Residue
 absolute←{
@@ -104,7 +104,7 @@ absolute←{
 	'abs_ibeam'⌶ ⍵
 }
 residue←{⍵-⍺×⌊⍵÷⍺+0=⍺}
-res←absolute ⎕AMBIV residue
+res←absolute numeric ⎕AMBIV residue
 
 ⍝ ⌊: Floor | Minimum
 floor_array←{
@@ -114,13 +114,13 @@ floor_array←{
 min←floor_array numeric ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⌈: Ceiling | Maximum
-max←'ceil_vec_ibeam'⌶ ⎕AMBIV ('max_vec_ibeam'⌶ numeric scalar)
+max←'ceil_vec_ibeam'⌶ numeric ⎕AMBIV ('max_vec_ibeam'⌶ numeric scalar)
 
 ⍝ *: Exponent | Power
-exp←'exp_vec_ibeam'⌶ ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
+exp←'exp_vec_ibeam'⌶ numeric ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⍟: Natural Logarithm | Logarithm
-log←'nlg_vec_ibeam'⌶ ⎕AMBIV ('log_vec_ibeam'⌶ numeric scalar)
+log←'nlg_vec_ibeam'⌶ numeric ⎕AMBIV ('log_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ○: Pi Times | Trigonometric Functions
 pitimes←{3.14159265358979323846×⍵}
@@ -153,14 +153,14 @@ trig←{
 	¯12=⍺:*⍵×0J1
 	⎕SIGNAL 11
 }
-cir←pitimes ⎕AMBIV (trig numeric scalar)
+cir←pitimes numeric ⎕AMBIV (trig numeric scalar)
 
 ⍝ !: Factorial | Binomial
 binomial←{
 	(is_integer ⍵)∧(⍵<0)∧~is_integer ⍺:⎕SIGNAL 11
 	(!⍵)÷(!⍺)×!⍵-⍺
 }
-fac←'factorial_vec_ibeam'⌶ ⎕AMBIV binomial
+fac←'factorial_vec_ibeam'⌶ numeric ⎕AMBIV binomial
 
 ⍝ ~: Not | Without
 notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
