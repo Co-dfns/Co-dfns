@@ -93,9 +93,9 @@ array_values_bytes(struct cell_array *arr)
 }
 
 af_dtype
-array_af_dtype(struct cell_array *arr)
+array_type_af_dtype(enum array_type type)
 {
-	switch (arr->type) {
+	switch (type) {
 	case ARR_SPAN:
 		return s32;
 	case ARR_BOOL:
@@ -121,6 +121,12 @@ array_af_dtype(struct cell_array *arr)
 	default:
 		return 0;
 	}
+}
+
+af_dtype
+array_af_dtype(struct cell_array *arr)
+{
+	return array_type_af_dtype(arr->type);
 }
 
 int
