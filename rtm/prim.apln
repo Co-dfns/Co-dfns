@@ -103,7 +103,7 @@ absolute←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11
 	'abs_ibeam'⌶ ⍵
 }
-residue←{⎕SIGNAL 16}
+residue←{⍵-⍺×⌊⍵÷⍺+0=⍺}
 res←absolute ⎕AMBIV residue
 
 ⍝ ⌊: Floor | Minimum
