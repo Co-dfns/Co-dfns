@@ -1095,14 +1095,12 @@ dyadic_scalar_apply(struct cell_array **z,
 	enum array_type ztype;
 	int err;
 	
-	if (err = array_promote_storage(l, r))
-		return err;
+	t = NULL;
 	
-	if (err = scl_type(&ztype, l, r))
-		return err;
-	
-	if (err = mk_array(&t, ztype, l->storage, 1))
-		return err;
+	CHK(array_promote_storage(l, r), fail, L"array_promote_storage(l, r)");
+	CHK(scl_type(&ztype, l, r), fail, L"scl_type(&ztype, l, r)");
+	CHK(mk_array(&t, ztype, l->storage, 1), fail, 
+	    L"mk_array(&t, ztype, l->storage, 1)");
 	
 	lc = array_values_count(l);
 	rc = array_values_count(r);
@@ -1114,32 +1112,19 @@ dyadic_scalar_apply(struct cell_array **z,
 		af_dtype type;
 		
 		ltile = rtile = lcast = rcast = za = NULL;
-		
-		if (rc > UINT_MAX || lc > UINT_MAX) {
-			err = 10;
-			goto fail;
-		}
-		
 		ltc = (unsigned int)(rc > lc ? rc : 1);
-		
-		if (err = af_tile(&ltile, l->values, ltc, 1, 1, 1))
-			goto device_done;
-		
 		rtc = (unsigned int)(lc > rc ? lc : 1);
-		
-		if (err = af_tile(&rtile, r->values, rtc, 1, 1, 1))
-			goto device_done;
-
 		type = array_af_dtype(t);
 		
-		if (err = af_cast(&lcast, ltile, type))
-			goto device_done;
+		if (rc > UINT_MAX || lc > UINT_MAX)
+			CHK(10, fail, L"Count out of range for device");
 		
-		if (err = af_cast(&rcast, rtile, type))
-			goto device_done;
-		
-		if (err = scl_device(&za, lcast, rcast))
-			goto device_done;
+		CHKAF(af_tile(&ltile, l->values, ltc, 1, 1, 1), device_done);
+		CHKAF(af_tile(&rtile, r->values, rtc, 1, 1, 1), device_done);
+		CHKAF(af_cast(&lcast, ltile, type), device_done);
+		CHKAF(af_cast(&rcast, rtile, type), device_done);
+		CHK(scl_device(&za, lcast, rcast), device_done,
+		    L"scl_device(&za, lcast, rcast)");
 		
 		t->values = za;
 
@@ -1156,13 +1141,11 @@ device_done:
 	}
 	
 	if (t->storage != STG_HOST)
-		return 99;
+		CHK(99, fail, L"Unknown storage type");
 	
-	if (err = alloc_array(t)) 
-		goto fail;
-	
-	if (err = scl_host(t, t->shape[0], l, lc, r, rc))
-		goto fail;
+	CHK(alloc_array(t), fail, L"alloc_array(t)");
+	CHK(scl_host(t, t->shape[0], l, lc, r, rc), fail,
+	    L"scl_host(t, t->shape[0], l, lc, r, rc)");
 
 done:
 	*z = t;
@@ -1915,7 +1898,6 @@ int											\
 name##_host(struct cell_array *t, size_t count,						\
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)			\
 {											\
-											\
 	switch (t->type) {								\
 	case ARR_BOOL:									\
 		SIMPLE_SWITCH(loop, loop_cmpx, loop_lcmpx, loop_rcmpx,			\
@@ -1932,7 +1914,7 @@ int											\
 name##_func(struct cell_array **z,							\
     struct cell_array *l, struct cell_array *r, struct cell_func *self)			\
 {											\
-	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	 \
+	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	\
 }											\
 											\
 struct cell_func name##_closure = {CELL_FUNC, 1, error_syntax_mon, name##_func, 0};	\
