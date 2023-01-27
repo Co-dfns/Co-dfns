@@ -1109,12 +1109,20 @@ dyadic_scalar_apply(struct cell_array **z,
 	if (t->storage == STG_DEVICE) {
 		unsigned int ltc, rtc;
 		af_array ltile, rtile, lcast, rcast, za;
+		enum array_type etype;
 		af_dtype type;
 		
 		ltile = rtile = lcast = rcast = za = NULL;
+		
 		ltc = (unsigned int)(rc > lc ? rc : 1);
 		rtc = (unsigned int)(lc > rc ? lc : 1);
-		type = array_af_dtype(t);
+		
+		etype = array_max_type(l->type, r->type);
+		
+		if (array_element_size_type(etype) < array_element_size_type(ztype))
+			etype = ztype;
+		
+		type = array_type_af_dtype(etype);
 		
 		if (rc > UINT_MAX || lc > UINT_MAX)
 			CHK(10, fail, L"Count out of range for device");
