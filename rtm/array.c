@@ -271,6 +271,7 @@ release_host_data(struct cell_array *arr)
 	unsigned int *refc;
 	int err;
 	
+	err = 0;	
 	refc = arr->vrefc;
 	
 	if (!refc)
@@ -294,8 +295,6 @@ release_host_data(struct cell_array *arr)
 	}
 
 	free(arr->values);
-	
-	err = 0;
 	
 done:
 	arr->values = NULL;
@@ -338,6 +337,8 @@ release_array(struct cell_array *arr)
 		    L"release_array_data(arr)");
 
 	free(arr);
+	
+	return 0;
 
 fail:
 	return err;
