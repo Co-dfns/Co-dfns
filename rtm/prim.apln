@@ -25,7 +25,7 @@ both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
 both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
-numeric←{⍺←⊢ ⋄ (⍺⊢0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
+numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}
 
 ⍝ ⊢: Right
