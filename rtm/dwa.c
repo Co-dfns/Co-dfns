@@ -292,6 +292,8 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 	struct	pocket *pkt;
 	int	err;
 	
+	err = 0;
+	
 	if (arr == NULL) {
 		if (lp)
 			lp->pocket = NULL;
@@ -303,15 +305,19 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 	}
 
 	if (arr->rank > 15 || arr->type == ARR_SPAN)
-		return 16;
+		CHK(16, done, L"Dyalog does not support rank or type");
 	
 	pkt = getarray(array_dwa_type(arr->type), arr->rank, arr->shape, lp);
 	
 	if (arr->storage == STG_DEVICE) {
-		err = af_get_data_ptr(DATA(pkt), arr->values);
+		af_dtype typ;
 		
-		if (err)
-			return err;
+		CHKAF(af_get_type(&typ, arr->values), done);
+		
+		if (array_af_dtype(arr) != typ)
+			CHK(99, done, L"Inconsistent AF array type");
+		
+		CHKAF(af_get_data_ptr(DATA(pkt), arr->values), done);
 	} else if (arr->type != ARR_NESTED) {
 		memcpy(DATA(pkt), arr->values,
 		    array_values_count(arr) * array_element_size(arr));
@@ -320,12 +326,9 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 		struct cell_array **ptrs = arr->values;
 		size_t count = array_values_count(arr);
 
-		for (size_t i = 0; i < count; i++) {
-			err = array2dwa(&pkts[i], ptrs[i], NULL);
-
-			if (err)
-				return err;
-		}
+		for (size_t i = 0; i < count; i++)
+			CHK(array2dwa(&pkts[i], ptrs[i], NULL), done,
+			    L"array2dwa(&pkts[i], ptrs[i], NULL)");
 	} else {
 		return 99;
 	}
@@ -333,7 +336,8 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 	if (dst)
 		*dst = pkt;
 
-	return 0;
+done:
+	return err;
 }
 
 DECLSPEC int
