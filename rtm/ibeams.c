@@ -1062,15 +1062,16 @@ monadic_scalar_apply(struct cell_array **z, struct cell_array *r,
 {
 	struct cell_array *t;
 	int err;
-		
-	if (err = mk_array(&t, ARR_SPAN, r->storage, r->rank))
-		return err;
 	
+	t = NULL;
+	
+	CHK(mk_array(&t, ARR_SPAN, r->storage, r->rank), fail,
+	     L"mk_array(&t, ARR_SPAN, r->storage, r->rank)");
+		
 	for (unsigned int i = 0; i < r->rank; i++)
 		t->shape[i] = r->shape[i];
 	
-	if (err = fn(t, r))
-		goto fail;
+	CHK(fn(t, r), fail, L"fn(t, r)");
 	
 	*z = t;
 	
