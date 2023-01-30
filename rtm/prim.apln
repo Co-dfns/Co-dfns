@@ -125,7 +125,7 @@ log←'nlg_vec_ibeam'⌶ numeric ⎕AMBIV ('log_vec_ibeam'⌶ numeric scalar)
 ⍝ ○: Pi Times | Trigonometric Functions
 pitimes←{3.14159265358979323846×⍵}
 trig←{
-	1≠≢⍺:⍺ ∇¨⍵
+	0≠≢⍺:⍺ ∇¨⍵
 	0=⍺:(1-⍵*2)*.5
 	1=⍺:'sin_vec_ibeam'⌶ ⍵
 	¯1=⍺:'arcsin_vec_ibeam'⌶ ⍵
