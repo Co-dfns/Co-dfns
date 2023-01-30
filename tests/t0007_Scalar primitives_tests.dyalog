@@ -54,6 +54,20 @@
  Z←0 0⍴⍬
  ∇
 
+ 'conjugate'   SCL∆TST∆MONADIC 'con' I   F   B
+ 'negate'      SCL∆TST∆MONADIC 'neg' I   F   B
+ 'direction'   SCL∆TST∆MONADIC 'dir' I   F   B
+ 'reciprocal'  SCL∆TST∆MONADIC 'rec' INZ FNZ BNZ
+ 'exponential' SCL∆TST∆MONADIC 'exp' I   F   B
+ 'natlog'      SCL∆TST∆MONADIC 'nlg' IPS FPS IPS
+ 'magnitude'   SCL∆TST∆MONADIC 'mag' I   F   B
+ 'pitimes'     SCL∆TST∆MONADIC 'pit' I   F   B
+ 'floor'       SCL∆TST∆MONADIC 'flr' I   F   B
+ 'ceiling'     SCL∆TST∆MONADIC 'cel' I   F   B
+ 'not'         SCL∆TST∆MONADIC 'not' B   B   B
+ 'materialize' SCL∆TST∆MONADIC 'mat' I   F   B
+ 'factorial'   SCL∆TST∆MONADIC 'fac' IPS FPS B
+
  'plus'      SCL∆TST∆DYADIC   'add'  I   I    F          F    B   B
  'minus'     SCL∆TST∆DYADIC   'sub'  I   I    F          F    B   B
  'times'     SCL∆TST∆DYADIC   'mul'  I   I    F          F    B   B
@@ -72,10 +86,10 @@
  'greatereq' SCL∆TST∆DYADIC   'geq'  I   I    F          F    B   B
  'greater'   SCL∆TST∆DYADIC   'get'  I   I    F          F    B   B
  'notequal'  SCL∆TST∆DYADIC   'neq'  I   I    F          F    B   B
- 'andi'      SCL∆TST∆DYADIC   'and'  I   I    I2         I2   B   B
- 'andf'      SCL∆TST∆RELATIVE 'and'  F   F    F2         F2   B   B
  'ori'       SCL∆TST∆DYADIC   'lor'  I   I    I2         I2   B   B
  'orf'       SCL∆TST∆RELATIVE 'lor'  F   F    F2         F2   B   B
+ 'andi'      SCL∆TST∆DYADIC   'and'  I   I    I2         I2   B   B
+ 'andf'      SCL∆TST∆RELATIVE 'and'  F   F    F2         F2   B   B
  'notand'    SCL∆TST∆DYADIC   'nan'  B   B    B          B    B   B
  'notor'     SCL∆TST∆DYADIC   'nor'  B   B    B          B    B   B
  'circular0' SCL∆TST∆DYADIC   'cir'  0   F1LT (0⍴⍨≢F1LT) F1LT 0   B
@@ -93,22 +107,8 @@
  'circneg5'  SCL∆TST∆RELATIVE 'cir' ¯5   I    (¯5⍴⍨≢F)   F   ¯5   B
  'circneg6'  SCL∆TST∆DYADIC   'cir' ¯6   IPS  (¯6⍴⍨≢F)   FPS ¯6   BNZ
  'circneg7'  SCL∆TST∆DYADIC   'cir' ¯7   AFN  (¯7⍴⍨≢F)   AFN ¯7   AFN
- 'binompos'  SCL∆TST∆RELATIVE   'bin'  IPS IPS  FPS        FPS  B    B
- ⍝ 'binomial'  SCL∆TST∆DYADIC   'bin' I    I    F            F     B    B
-
- 'conjugate'   SCL∆TST∆MONADIC 'con' I   F   B
- 'negate'      SCL∆TST∆MONADIC 'neg' I   F   B
- 'direction'   SCL∆TST∆MONADIC 'dir' I   F   B
- 'reciprocal'  SCL∆TST∆MONADIC 'rec' INZ FNZ BNZ
- 'exponential' SCL∆TST∆MONADIC 'exp' I   F   B
- 'natlog'      SCL∆TST∆MONADIC 'nlg' IPS FPS IPS
- 'magnitude'   SCL∆TST∆MONADIC 'mag' I   F   B
- 'pitimes'     SCL∆TST∆MONADIC 'pit' I   F   B
- 'floor'       SCL∆TST∆MONADIC 'flr' I   F   B
- 'ceiling'     SCL∆TST∆MONADIC 'cel' I   F   B
- 'not'         SCL∆TST∆MONADIC 'not' B   B   B
- 'materialize' SCL∆TST∆MONADIC 'mat' I   F   B
- 'factorial'   SCL∆TST∆MONADIC 'fac' IPS FPS B
+ 'binompos'  SCL∆TST∆RELATIVE 'bin'  IPS IPS  FPS        FPS  B    B
+ 'binomial'  SCL∆TST∆DYADIC   'bin' I    I    F            F     B    B
 
  ∆999_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
