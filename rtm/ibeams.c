@@ -2196,14 +2196,17 @@ struct cell_func *not_vec_ibeam = &not_closure;
 int
 abs_values(struct cell_array *t, struct cell_array *r)
 {
+	af_array tmp;
 	int err;
 	
 	t->type = r->type;
+	tmp = NULL;
 	err = 0;
 	
 	switch (r->storage) {
 	case STG_DEVICE:
-		CHK(af_abs(&t->values, r->values), done, L"|⍵ ⍝ DEVICE");
+		CHKAF(af_abs(&tmp, r->values), done);
+		CHKAF(af_cast(&t->values, tmp, array_af_dtype(t)), done);
 		break;
 	case STG_HOST:
 		CHK(alloc_array(t), done, L"alloc_array(t)");
@@ -2232,6 +2235,9 @@ abs_values(struct cell_array *t, struct cell_array *r)
 	}
 	
 done:
+	CHKAF(af_release_array(tmp), fail);
+
+fail:
 	return err;
 }
 

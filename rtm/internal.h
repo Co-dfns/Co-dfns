@@ -8,6 +8,7 @@ wchar_t *get_aferr_msg(int);
 
 enum array_type array_max_type(enum array_type, enum array_type);
 af_dtype array_type_af_dtype(enum array_type);
+af_dtype array_af_dtype(struct cell_array *);
 enum array_type closest_numeric_array_type(double);
 
 int squeeze_array(struct cell_array *);
