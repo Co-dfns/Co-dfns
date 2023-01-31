@@ -86,16 +86,17 @@ conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}
 add←conjugate ⎕AMBIV ('add_vec_ibeam'⌶ numeric scalar)
 
 ⍝ -: Negate | Subtract
-negate←{⎕SIGNAL 16}
-sub←negate numeric ⎕AMBIV ('sub_vec_ibeam'⌶ numeric scalar)
+sub←{0-⍵} ⎕AMBIV ('sub_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ×: Sign | Multiply
-sign←{⎕SIGNAL 16}
-mul←sign numeric ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
+sign←{
+	1289=⎕DR ⍵:⍵÷|⍵
+	(-⍵<0)+0<⍵
+}
+mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ÷: Reciprocal | Divide
-recip←{⎕SIGNAL 16}
-div←recip numeric ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
+div←{1÷⍵} ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
 
 ⍝ |: Absolute Value | Residue
 absolute←{
