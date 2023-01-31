@@ -110,12 +110,18 @@ res←absolute numeric ⎕AMBIV residue
 ⍝ ⌊: Floor | Minimum
 floor_array←{
 	is_integer ⍵:⍵
+	1289=⎕DR ⍵:⎕SIGNAL 16
 	'floor_vec_ibeam'⌶ ⍵
 }
 min←floor_array numeric ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⌈: Ceiling | Maximum
-max←'ceil_vec_ibeam'⌶ numeric ⎕AMBIV ('max_vec_ibeam'⌶ numeric scalar)
+ceil_array←{
+	is_integer ⍵:⍵
+	1289=⎕DR ⍵:-⌊-⍵
+	'ceil_vec_ibeam'⌶ ⍵
+}
+max←ceil_array numeric ⎕AMBIV ('max_vec_ibeam'⌶ numeric scalar)
 
 ⍝ *: Exponent | Power
 exp←'exp_vec_ibeam'⌶ numeric ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)

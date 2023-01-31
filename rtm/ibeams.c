@@ -2044,17 +2044,6 @@ max_func(struct cell_array **z,
 struct cell_func max_closure = {CELL_FUNC, 1, error_syntax_mon, max_func, 0};
 struct cell_func *max_vec_ibeam = &max_closure;
 
-struct apl_cmpx
-floor_cmpx(struct apl_cmpx x)
-{
-	struct apl_cmpx t;
-	
-	t.real = floor(x.real);
-	t.imag = floor(x.imag);
-	
-	return t;
-}
-
 int
 floor_values(struct cell_array *t, struct cell_array *r)
 {
@@ -2065,7 +2054,7 @@ floor_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->storage) {
 	case STG_DEVICE:
-		CHK(af_floor(&t->values, r->values), done, L"⌊⍵ ⍝ DEVICE");
+		CHKAF(af_floor(&t->values, r->values), done);
 		break;
 	case STG_HOST:
 		size_t count = array_values_count(t);
@@ -2075,11 +2064,8 @@ floor_values(struct cell_array *t, struct cell_array *r)
 		case ARR_DBL:
 			MON_LOOP(double, double, floor(x));
 			break;
-		case ARR_CMPX:
-			MON_LOOP(struct apl_cmpx, struct apl_cmpx, floor_cmpx(x));
-			break;
 		default:
-			TRC(99, L"Expected non-complex numeric type");
+			TRC(99, L"Expected double numeric type");
 		}
 		
 		break;
@@ -2100,17 +2086,6 @@ floor_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 struct cell_func floor_closure = {CELL_FUNC, 1, floor_func, error_syntax_dya, 0};
 struct cell_func *floor_vec_ibeam = &floor_closure;
 
-struct apl_cmpx
-ceil_cmpx(struct apl_cmpx x)
-{
-	struct apl_cmpx t;
-	
-	t.real = ceil(x.real);
-	t.imag = ceil(x.imag);
-	
-	return t;
-}
-
 int
 ceil_values(struct cell_array *t, struct cell_array *r)
 {
@@ -2121,7 +2096,7 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->storage) {
 	case STG_DEVICE:
-		CHK(af_ceil(&t->values, r->values), done, L"⌊⍵ ⍝ DEVICE");
+		CHKAF(af_ceil(&t->values, r->values), done);
 		break;
 	case STG_HOST:
 		size_t count = array_values_count(t);
@@ -2131,11 +2106,8 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 		case ARR_DBL:
 			MON_LOOP(double, double, ceil(x));
 			break;
-		case ARR_CMPX:
-			MON_LOOP(struct apl_cmpx, struct apl_cmpx, ceil_cmpx(x));
-			break;
 		default:
-			TRC(99, L"Expected non-complex numeric type");
+			TRC(99, L"Expected double numeric type");
 		}
 		
 		break;

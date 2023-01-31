@@ -256,6 +256,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *res;
 	struct cell_func *floor_array;
 	struct cell_func *min;
+	struct cell_func *ceil_array;
 	struct cell_func *max;
 	struct cell_func *exp;
 	struct cell_func *log;
