@@ -5,7 +5,7 @@ GC←{
 	SIGNAL←{⍎'⍺ ⎕SIGNAL ⍵'}
 	
 	⍝ Text utilities
-	csep←{¯2↓⊃,⌿(⍕¨⍵),¨⊂', '}
+	csep←{⎕PP←34 ⋄ ¯2↓⊃,⌿(⍕¨⍵),¨⊂', '}
 	
 	⍝ Tracing information
 	linestarts←⍸1⍪IN∊CR LF←⎕UCS 13 10
@@ -115,7 +115,7 @@ GC←{
 	zz[i],←{
 		rnk←≢shp←⍴dat←(|n[⍵])⊃sym ⋄ dri←drtypes⍳⎕DR dat
 		atp←dri⊃atypes ⋄ ctp←dri⊃ctypes
-		fmt←{1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
+		fmt←{⎕PP←34 ⋄ 1289=⎕DR ⍵:'{',(csep 9 11○⍵),'}' ⋄ ⍕⍵}
 		dat←'¯'⎕R'-'∘fmt¨⎕UCS⍣(0=10|⎕DR dat)⊃⍣(0=≢,dat)⊢dat
 		dbg←highlight ⍵
 		z ←⊂'{'

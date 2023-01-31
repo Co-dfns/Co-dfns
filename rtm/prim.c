@@ -17769,7 +17769,7 @@ ptr5627(struct cell_array **z,
 	
 		enum array_type typ = ARR_DBL;
 		unsigned int rnk = 0;
-		double dat[] = {3.141592654};
+		double dat[] = {3.141592653589793};
 	
 		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[127] pitimes←{╠3.14159265358979323846╣×⍵}");
 	
@@ -17841,7 +17841,7 @@ ptr5628(struct cell_array **z,
 	
 		enum array_type typ = ARR_DBL;
 		unsigned int rnk = 0;
-		double dat[] = {3.141592654};
+		double dat[] = {3.141592653589793};
 	
 		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[127] pitimes←{╠3.14159265358979323846╣×⍵}");
 	
