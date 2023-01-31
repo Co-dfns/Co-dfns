@@ -171,14 +171,16 @@ not←notscl ⎕AMBIV without
 ⍝ ∧: And
 logand←{
 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵
-	⎕SIGNAL 16
+	⍺×⍵÷z+0=z←⍺∨⍵
 }
 and←{⎕SIGNAL 2}⎕AMBIV (logand numeric scalar)
 
 ⍝ ∨: Or
 logor←{
 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵
-	⎕SIGNAL 16
+	(is_bool ⍺)∧is_integer ⍵:⍺+(~⍺)×|⍵
+	(is_bool ⍵)∧is_integer ⍺:⍵+(~⍵)×|⍺
+	(|⍺){0∧.=⍵:⍺ ⋄ m←⍵≠0 ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
 }
 lor←{⎕SIGNAL 2}⎕AMBIV (logor numeric scalar)
 

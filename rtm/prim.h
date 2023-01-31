@@ -40,11 +40,9 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *par;
 	struct cell_func *conjugate;
 	struct cell_func *add;
-	struct cell_func *negate;
 	struct cell_func *sub;
 	struct cell_func *sign;
 	struct cell_func *mul;
-	struct cell_func *recip;
 	struct cell_func *div;
 	struct cell_func *absolute;
 	struct cell_func *residue;
