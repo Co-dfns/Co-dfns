@@ -52,7 +52,7 @@ eqv←depth ⎕AMBIV ('same_ibeam'⌶)
 nqv←{⊃⍴⍵} ⎕AMBIV ('nqv_ibeam'⌶)
 
 ⍝ ⌷: Materialize | Squad indexing
-materialize←{⎕SIGNAL 16}
+materialize←{⍵}
 index←{idx←⊃⍺ ⋄ rnk←≢⍴idx
 	0≡is_integer idx:⎕SIGNAL 11
 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16
