@@ -23,6 +23,7 @@ chk_valid_shape←{
 }
 both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
 both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
+both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
@@ -186,7 +187,8 @@ logor←{
 	⍺ both_bool ⍵:⍺('lor_vec_ibeam'⌶)⍵
 	(is_bool ⍺)∧is_integer ⍵:⍺+(~⍺)×|⍵
 	(is_bool ⍵)∧is_integer ⍺:⍵+(~⍵)×|⍺
-	(|⍺){0∧.=⍵:⍺ ⋄ m←⍵≠0 ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
+	⍺ both_integer ⍵:(|⍺){~∨⌿m←⍵≠0:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
+	(|⍺){~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
 }
 lor←{⎕SIGNAL 2}⎕AMBIV (logor numeric scalar)
 
