@@ -532,7 +532,7 @@ GC←{
 	}¨i
 
 	⍝ Warn about nodes that appear which we haven't generated
-	⎕←(∨⌿msk)↑⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
+	⍞←(∨⌿msk)↑(⎕UCS 10)(⊣,⍨,)⍉⍪'Ungenerated nodes: ',⍕,∪(msk←zz∊⊂'')⌿N∆[t],∘⍕¨k
 
 	⍝ Assemble all the data together into a single character vector
 	data←∊(pref,(⊂''),(⊃⍪⌿zz[⍸p=⍳≢p]),exp),¨⊂⎕UCS 13 10
