@@ -136,8 +136,8 @@ GC←{
 		z,⊂''
 	}¨i
 	
-	⍝ A7: Stranded Arrays
-	i←⍸(t=A)∧k=7
+	⍝ A7/E6: Stranded Arrays and Indexing
+	i←⍸((t=A)∧k=7)∨(t=E)∧k=6
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		dbg←highlight ⍵
@@ -147,6 +147,8 @@ GC←{
 		z,←⊂'	CHK(mk_array(&arr, ARR_NESTED, STG_HOST, 1), cleanup, '
 		z,←⊂'	    ',dbg,');'
 		z,←⊂'	arr->shape[0] = ',(⍕n[⍵]),';'
+		z,←⊂'	CHK(alloc_array(arr), cleanup,'
+		z,←⊂'	    ',dbg,');'
 		z,←⊂'	dat = arr->values;'
 		z,←⊂''
 		z,←{'	dat[',(⍕⍵),'] = *--stkhd;'}¨⍳n[⍵]

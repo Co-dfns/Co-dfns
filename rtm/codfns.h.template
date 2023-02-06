@@ -172,6 +172,7 @@ DECLSPEC int mk_array(struct cell_array **,
 DECLSPEC int release_array(struct cell_array *);
 DECLSPEC int mk_array_box(struct cell_array_box **, struct cell_array *);
 DECLSPEC void release_array_box(struct cell_array_box *);
+DECLSPEC int alloc_array(struct cell_array *);
 DECLSPEC int fill_array(struct cell_array *, void *);
 DECLSPEC int chk_array_valid(struct cell_array *);
 

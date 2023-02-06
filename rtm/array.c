@@ -129,7 +129,7 @@ array_af_dtype(struct cell_array *arr)
 	return array_type_af_dtype(arr->type);
 }
 
-int
+DECLSPEC int
 alloc_array(struct cell_array *arr)
 {
 	size_t count, size;
