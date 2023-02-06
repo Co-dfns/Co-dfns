@@ -29,6 +29,9 @@ both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 scalar←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ ⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵ ⋄ s⍴⍺ ∇ ⎕VEACH ⍵}
 
+⍝ Assignment
+set←'set_ibeam'⌶
+
 ⍝ ⊢: Right
 rgt←{⍵}
 
