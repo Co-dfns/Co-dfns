@@ -201,7 +201,7 @@ TK←{
 	d t k n pos end⌿⍨←⊂msk←~¯1⌽msk
 
 	⍝ Convert n field to symbols and add a symbol table
-	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇' ⍬,n
+	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇' ⍬(,';'),n
 	n←-sym⍳n
 
 	(d t k n pos end)sym IN

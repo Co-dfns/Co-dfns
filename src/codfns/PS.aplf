@@ -71,7 +71,7 @@ PS←{
 	⍝ Convert ; groups within brackets into Z nodes
 	_←p[i]{
 		k[z←⊃⍪⌿gz¨g←⍵⊂⍨¯1⌽IN[pos[⍵]]∊';]']←1
-		t[z]←Z P[1=≢¨g]
+		t[z]←Z P[m←1=≢¨g] ⋄ n[m⌿z]←-sym⍳⊂,';'
 	0}⌸i←⍸t[p]=¯1
 
 	⍝ Convert formal nodes and system variables to P nodes
