@@ -323,7 +323,7 @@ PS←{
 	j←i⌿⍨m←msk∧(¯1⌽t[i]=¯1)∧¯2⌽(t[i]=V)∧k[i]=1 ⋄ p[zi←nz⌿⍨msk⌿m]←ei←i⌿⍨2⌽m
 	t k lx end(⊣@ei⍨)←E 4 0(end[zi])
 	p t k lx n(⊣@(i⌿⍨1⌽m)⍨)←ei E 6 0 0
-	p t k lx(⊣@j⍨)←ei P 2 0
+	p t k lx(⊣@j⍨)←ei P 2 3
 
 	⍝ Parse modified strand assignment
 	⍝ Parse strand assignment
