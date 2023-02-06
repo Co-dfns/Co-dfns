@@ -9,19 +9,19 @@ EXPORT V w_img(lp*d,Window*w){A a;cpda(a,d);
  std::visit(visitor{
    [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Image requires a flat array.");},
-   [&](carr&v){w->image(v.as(rnk(a)==2?f32:u8));}},
+   [&](carr&v){w->image(unrav(v,a.s).T().as(rnk(a)==2?f32:u8));}},
   a.v);}
 EXPORT V w_plot(lp*d,Window*w){A a;cpda(a,d);
  std::visit(visitor{
    [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Plot requires a flat array.");},
-   [&](carr&v){w->plot(v.as(f32));}},
+   [&](carr&v){w->plot(unrav(v,a.s).T().as(f32));}},
   a.v);}
 EXPORT V w_hist(lp*d,D l,D h,Window*w){A a;cpda(a,d);
  std::visit(visitor{
    [&](NIL&_){err(6);},
    [&](VEC<A>&v){err(16,L"Hist requires a flat array.");},
-   [&](carr&v){w->hist(v.as(u32),l,h);}},
+   [&](carr&v){w->hist(unrav(v,a.s).T().as(u32),l,h);}},
   a.v);}
 EXPORT V loadimg(lp*z,char*p,I c){array a=loadImage(p,c);
  I rk=a.numdims();dim4 s=a.dims();
