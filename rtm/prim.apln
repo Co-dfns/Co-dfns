@@ -165,10 +165,10 @@ cir←pitimes numeric ⎕AMBIV (trig numeric scalar)
 
 ⍝ !: Factorial | Binomial
 binomial←{
-	(is_integer ⍵)∧(⍵<0)∧~is_integer ⍺:⎕SIGNAL 11
+	∨⌿,(⍵=⌊⍵)∧(⍵<0)∧⍺≠⌊⍺:⎕SIGNAL 11
 	(!⍵)÷(!⍺)×!⍵-⍺
 }
-fac←'factorial_vec_ibeam'⌶ numeric ⎕AMBIV binomial
+fac←'factorial_vec_ibeam'⌶ numeric ⎕AMBIV (binomial numeric scalar)
 
 ⍝ ~: Not | Without
 notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
