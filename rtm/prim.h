@@ -22,10 +22,12 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *both_bool;
 	struct cell_moper *numeric;
 	struct cell_moper *scalar;
+	struct cell_func *set;
 	struct cell_func *rgt;
 	struct cell_func *lft;
 	struct cell_func *reshape;
 	struct cell_func *rho;
+	struct cell_func *catenate;
 	struct cell_func *cat;
 	struct cell_func *depth;
 	struct cell_func *eqv;
@@ -83,6 +85,9 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *neq_vec;
 	struct cell_func *noteq;
 	struct cell_func *neq;
+	struct cell_func *mix;
+	struct cell_func *take;
+	struct cell_func *tke;
 	struct cell_func *split;
 	struct cell_func *drop;
 	struct cell_func *drp;

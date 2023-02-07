@@ -287,6 +287,143 @@ struct cell_func max_shp_closure = {
 };
 struct cell_func *max_shp_ibeam = &max_shp_closure;
 
+#define STMT_LOOP(zt, lt, rt, stmts) {		\
+	zt *tv = t->values;			\
+	lt *lv = l->values;			\
+	rt *rv = r->values;			\
+						\
+	for (size_t i = 0; i < count; i++)	\
+		stmts;				\
+}						\
+
+int
+set_host_values(struct cell_array *t,
+    struct cell_array *l, struct cell_array *r)
+{
+	size_t count, rc;
+	int err;
+	
+	err = 0;
+	retain_cell(t);
+	count = array_count(l);
+	rc = array_count(r);
+	
+	if (t->type == ARR_NESTED) {
+		#define SET_LOOP_NESTED(lt) 					\
+		STMT_LOOP(struct cell_array *, lt, struct cell_array *, {	\
+			retain_cell(rv[i]);					\
+			release_array(tv[(int64_t)lv[i]]);			\
+			tv[(int64_t)lv[i]] = rv[i];				\
+		})								\
+
+		switch (l->type) {
+		case ARR_BOOL:SET_LOOP_NESTED(int8_t);break;
+		case ARR_SINT:SET_LOOP_NESTED(int16_t);break;
+		case ARR_INT :SET_LOOP_NESTED(int32_t);break;
+		case ARR_DBL :SET_LOOP_NESTED(double);break;
+		default:
+			CHK(99, done, L"Unexpected index array type");
+		}
+		
+		goto done;
+	}
+	
+	#define SET_LOOP(zt, lt)					\
+	STMT_LOOP(zt, lt, zt, {tv[(int64_t)lv[i]] = rv[i % rc];});	\
+	break;								\
+	
+	switch(type_pair(t->type, l->type)) {
+	case type_pair(ARR_BOOL, ARR_BOOL):SET_LOOP(int8_t, int8_t);
+	case type_pair(ARR_BOOL, ARR_SINT):SET_LOOP(int8_t, int16_t);
+	case type_pair(ARR_BOOL, ARR_INT ):SET_LOOP(int8_t, int32_t);
+	case type_pair(ARR_BOOL, ARR_DBL ):SET_LOOP(int8_t, double);
+	case type_pair(ARR_SINT, ARR_BOOL):SET_LOOP(int16_t, int8_t);
+	case type_pair(ARR_SINT, ARR_SINT):SET_LOOP(int16_t, int16_t);
+	case type_pair(ARR_SINT, ARR_INT ):SET_LOOP(int16_t, int32_t);
+	case type_pair(ARR_SINT, ARR_DBL ):SET_LOOP(int16_t, double);
+	case type_pair(ARR_INT, ARR_BOOL):SET_LOOP(int32_t, int8_t);
+	case type_pair(ARR_INT, ARR_SINT):SET_LOOP(int32_t, int16_t);
+	case type_pair(ARR_INT, ARR_INT ):SET_LOOP(int32_t, int32_t);
+	case type_pair(ARR_INT, ARR_DBL ):SET_LOOP(int32_t, double);
+	case type_pair(ARR_DBL, ARR_BOOL):SET_LOOP(double, int8_t);
+	case type_pair(ARR_DBL, ARR_SINT):SET_LOOP(double, int16_t);
+	case type_pair(ARR_DBL, ARR_INT ):SET_LOOP(double, int32_t);
+	case type_pair(ARR_DBL, ARR_DBL ):SET_LOOP(double, double);
+	case type_pair(ARR_CMPX, ARR_BOOL):SET_LOOP(struct apl_cmpx, int8_t);
+	case type_pair(ARR_CMPX, ARR_SINT):SET_LOOP(struct apl_cmpx, int16_t);
+	case type_pair(ARR_CMPX, ARR_INT ):SET_LOOP(struct apl_cmpx, int32_t);
+	case type_pair(ARR_CMPX, ARR_DBL ):SET_LOOP(struct apl_cmpx, double);
+	case type_pair(ARR_CHAR8, ARR_BOOL):SET_LOOP(uint8_t, int8_t);
+	case type_pair(ARR_CHAR8, ARR_SINT):SET_LOOP(uint8_t, int16_t);
+	case type_pair(ARR_CHAR8, ARR_INT ):SET_LOOP(uint8_t, int32_t);
+	case type_pair(ARR_CHAR8, ARR_DBL ):SET_LOOP(uint8_t, double);
+	case type_pair(ARR_CHAR16, ARR_BOOL):SET_LOOP(uint16_t, int8_t);
+	case type_pair(ARR_CHAR16, ARR_SINT):SET_LOOP(uint16_t, int16_t);
+	case type_pair(ARR_CHAR16, ARR_INT ):SET_LOOP(uint16_t, int32_t);
+	case type_pair(ARR_CHAR16, ARR_DBL ):SET_LOOP(uint16_t, double);
+	case type_pair(ARR_CHAR32, ARR_BOOL):SET_LOOP(uint32_t, int8_t);
+	case type_pair(ARR_CHAR32, ARR_SINT):SET_LOOP(uint32_t, int16_t);
+	case type_pair(ARR_CHAR32, ARR_INT ):SET_LOOP(uint32_t, int32_t);
+	case type_pair(ARR_CHAR32, ARR_DBL ):SET_LOOP(uint32_t, double);
+	default:
+		CHK(99, done, L"Unexpected type combination");
+	}
+
+done:	
+	return err;
+}
+
+int
+set_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *idx, *tgt;
+	size_t idx_count, val_count;
+	int err;
+	
+	err = 0;
+	
+	if (l->type != ARR_NESTED)
+		CHK(99, done, L"Expected nested array type");
+	
+	if (array_count(l) != 1)
+		CHK(99, done, L"Expected single array value");
+
+	idx = *(struct cell_array **)l->values;
+	idx_count = array_count(idx);
+	val_count = array_count(r);
+	
+	if (val_count != 1 && idx_count != val_count)
+		CHK(99, done, L"Mismatched values and indices");
+	
+	tgt = *z;
+	
+	CHK(array_migrate_storage(l, tgt->storage), done,
+	    L"Migrate indices to target storage");
+	CHK(array_migrate_storage(r, tgt->storage), done,
+	    L"Migrate values to target storage");
+	
+	switch (tgt->storage) {
+	case STG_DEVICE:
+		CHK(16, done, L"Device assignment");
+		break;
+	case STG_HOST:
+		CHK(set_host_values(tgt, idx, r), done, 
+		    L"set_host_values(tgt, idx, r)");
+		break;
+	default:
+		CHK(99, done, L"Unknown storage type");
+	}
+	
+done:
+	return err;
+}
+
+struct cell_func set_closure = {
+	CELL_FUNC, 1, error_syntax_mon, set_func, 0
+};
+struct cell_func *set_ibeam = &set_closure;
+
 int
 ravel_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)

@@ -43,7 +43,19 @@ reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
 rho←('shape_ibeam'⌶) ⎕AMBIV reshape
 
 ⍝ ,: Ravel / Catenate
-cat←('ravel_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
+catenate←{
+	(0≡lr←≢⍴⍺)∧(0≡rr←≢⍴⍵):(,⍺)∇,⍵
+	(lr≢0)∧(rr≢0)∧1<|lr-rr:⎕SIGNAL 4
+	fx←lr⌈rr
+	lr≡0:(s⍴⍺⊣s[fx]←1⊣s←⍴⍵)∇⍵
+	rr≡0:⍺∇s⍴⍵⊣s[fx]←1⊣s←⍴⍺
+	(pr↑⍴⍺)∨.≠(pr←(lr⌊rr)-lr=rr)↑⍴⍵:⎕SIGNAL 5
+	lc←≢,⍺ ⋄ rc←≢,⍵ ⋄ s←⍴⍵ ⋄ s[fx]←(fx⌷⍴⍵)+fx⌷⍴⍺ ⋄ z←(c←×⌿s)⍴0
+	z[i+(fx⌷⍴⍵)×⌊(i←⍳lc)÷fx⌷⍴⍺]←,⍺
+	z[i+(fx⌷⍴⍺)×1+⌊(i←⍳rc)÷fx⌷⍴⍵]←,⍵
+	s⍴z
+}
+cat←('ravel_ibeam'⌶) ⎕AMBIV catenate
 
 ⍝ ≡: Depth / Same
 depth←{
@@ -247,6 +259,11 @@ noteq←{
 	1
 }
 neq←firstocc ⎕AMBIV (noteq scalar)
+
+⍝ ↑: Mix | Take
+mix←{⎕SIGNAL 16}
+take←{⎕SIGNAL 16}
+tke←mix ⎕AMBIV take
 
 ⍝ ↓: Split | Drop
 split←{⎕SIGNAL 16}

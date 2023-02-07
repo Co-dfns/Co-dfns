@@ -47,3 +47,4 @@ int retain_array_data(struct cell_array *);
 int release_array_data(struct cell_array *);
 int array_is_same(int8_t *, struct cell_array *, struct cell_array *);
 int array_promote_storage(struct cell_array *, struct cell_array *);
+int array_migrate_storage(struct cell_array *, enum array_storage);
