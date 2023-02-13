@@ -46,10 +46,7 @@ TT←{
 	p r i I⍨←⊂j←(+⍀m)-1 ⋄ n←j I@(0≤⊢)n ⋄ p[i]←j←i-1
 	k[j]←-(k[r[j]]=0)∨0@({⊃⌽⍵}⌸p[j])⊢(t[j]=B)∨(t[j]=E)∧k[j]=4
 	t[j]←E
-	
-	⍝ Count children for E6, and A7 nodes
-	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=A)∧k[p]=7)∨(t[p]=E)∧k[p]=6
-	
+
 	⍝ Lift guard tests
 	p[i]←p[x←p[i←⍸(≠p)∧t[p]=G]] ⋄ ix←i,x ⋄ xi←x,i ⋄ p←(xi@ix⊢⍳≢p)[p]
 	t[ix]←t[xi] ⋄ k[ix]←k[xi] ⋄ n[x]←n[i] ⋄ n[i]←x ⋄ lx[xi]←lx[ix]
@@ -58,6 +55,9 @@ TT←{
 	⍝ Merge B node bindings
 	n lx mu{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
 	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂⍸msk
+	
+	⍝ Count children for E6, and A7 nodes
+	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=A)∧k[p]=7)∨(t[p]=E)∧k[p]=6
 	
 	⍝ Lift and flatten expressions
 	i←⍸(t∊A B C E G O P Z)∨(t=V)∧t[p]≠C
@@ -77,7 +77,7 @@ TT←{
 	i←⍸(t=P)∧(k=2)∧n∊ns←-sym⍳,¨'/⌿\⍀←'
 	sym∪←'//' '⌿⌿' '\\' '⍀⍀' '←←'[ns⍳∪n[i]]
 	n[i]←(-sym⍳'//' '⌿⌿' '\\' '⍀⍀' '←←')[ns⍳n[i]]
-	
+
 	⍝ Namify pointer variables
 	i←⍸(n≥0)∧(t∊B F O P V Z)∨(t=E)∧k≠6
 	sym∪←x←('ptr',⍕)¨n[i] ⋄ n[i]←-sym⍳x
@@ -111,6 +111,6 @@ TT←{
 	i←⍸t=P ⋄ t[i]←V ⋄ si←syms⍳sym[ni←|n[i]]
 	∨⌿msk←(≢syms)=si:6'UNKNOWN PRIMITIVE'SIGNAL SELECT msk⌿i
 	sym[ni]←nams[si]
-	
+
 	p t k n lx mu lv fv pos end sym IN
 }
