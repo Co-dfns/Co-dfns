@@ -262,7 +262,7 @@ neq←firstocc ⎕AMBIV (noteq scalar)
 
 ⍝ ↑: Mix | Take
 mix←{⎕SIGNAL 16}
-take←{⎕SIGNAL 16}
+take←{(⊂⍳⍺)⌷⍵}
 tke←mix ⎕AMBIV take
 
 ⍝ ↓: Split | Drop
