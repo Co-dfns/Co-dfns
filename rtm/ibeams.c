@@ -341,25 +341,13 @@ set_host_values(struct cell_array *t,
 	count = array_count(l);
 	rc = array_count(r);
 	
-	if (t->type == ARR_NESTED) {
-		#define SET_LOOP_NESTED(lt) 					\
-		STMT_LOOP(struct cell_array *, lt, struct cell_array *, {	\
-			retain_cell(rv[i]);					\
-			release_array(tv[(int64_t)lv[i]]);			\
-			tv[(int64_t)lv[i]] = rv[i];				\
-		})								\
-
-		switch (l->type) {
-		case ARR_BOOL:SET_LOOP_NESTED(int8_t);break;
-		case ARR_SINT:SET_LOOP_NESTED(int16_t);break;
-		case ARR_INT :SET_LOOP_NESTED(int32_t);break;
-		case ARR_DBL :SET_LOOP_NESTED(double);break;
-		default:
-			CHK(99, done, L"Unexpected index array type");
-		}
-		
-		goto done;
-	}
+	#define SET_LOOP_NESTED(lt) 					\
+	STMT_LOOP(struct cell_array *, lt, struct cell_array *, {	\
+		retain_cell(rv[i]);					\
+		release_array(tv[(int64_t)lv[i]]);			\
+		tv[(int64_t)lv[i]] = rv[i];				\
+	});								\
+	break;								\
 	
 	#define SET_LOOP(zt, lt)					\
 	STMT_LOOP(zt, lt, zt, {tv[(int64_t)lv[i]] = rv[i % rc];});	\
@@ -398,6 +386,10 @@ set_host_values(struct cell_array *t,
 	case type_pair(ARR_CHAR32, ARR_SINT):SET_LOOP(uint32_t, int16_t);
 	case type_pair(ARR_CHAR32, ARR_INT ):SET_LOOP(uint32_t, int32_t);
 	case type_pair(ARR_CHAR32, ARR_DBL ):SET_LOOP(uint32_t, double);
+	case type_pair(ARR_NESTED, ARR_BOOL):SET_LOOP_NESTED(int8_t);
+	case type_pair(ARR_NESTED, ARR_SINT):SET_LOOP_NESTED(int16_t);
+	case type_pair(ARR_NESTED, ARR_INT ):SET_LOOP_NESTED(int32_t);
+	case type_pair(ARR_NESTED, ARR_DBL ):SET_LOOP_NESTED(double);
 	default:
 		CHK(99, done, L"Unexpected type combination");
 	}
@@ -412,6 +404,7 @@ set_func(struct cell_array **z,
 {
 	struct cell_array *idx, *tgt;
 	size_t idx_count, val_count;
+	enum array_type mtype;
 	int err;
 	
 	err = 0;
@@ -435,6 +428,11 @@ set_func(struct cell_array **z,
 	    L"Migrate indices to target storage");
 	CHK(array_migrate_storage(r, tgt->storage), done,
 	    L"Migrate values to target storage");
+	    
+	mtype = array_max_type(tgt->type, r->type);
+	
+	CHK(cast_values(tgt, mtype), done, L"cast_values(tgt, mtype)");
+	CHK(cast_values(r, mtype), done, L"cast_values(r, mtype)");
 	
 	switch (tgt->storage) {
 	case STG_DEVICE:
