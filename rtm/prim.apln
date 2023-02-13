@@ -46,7 +46,7 @@ rho←('shape_ibeam'⌶) ⎕AMBIV reshape
 catenate←{
 	(0≡lr←≢⍴⍺)∧(0≡rr←≢⍴⍵):(,⍺)∇,⍵
 	(lr≢0)∧(rr≢0)∧1<|lr-rr:⎕SIGNAL 4
-	fx←lr⌈rr
+	fx←(lr⌈rr)-1
 	lr≡0:(s⍴⍺⊣s[fx]←1⊣s←⍴⍵)∇⍵
 	rr≡0:⍺∇s⍴⍵⊣s[fx]←1⊣s←⍴⍺
 	(pr↑⍴⍺)∨.≠(pr←(lr⌊rr)-lr=rr)↑⍴⍵:⎕SIGNAL 5
