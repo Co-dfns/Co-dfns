@@ -1151,33 +1151,31 @@ index_func(struct cell_array **z,
 {
 	struct cell_array *t;
 	int err;
-
-	if (err = mk_array(&t, r->type, r->storage, 1))
-		return err;
 	
+	t = NULL;
+	
+	CHK(array_promote_storage(l, r), fail, L"array_promote_storage(l, r)");
+	
+	CHK(mk_array(&t, r->type, r->storage, 1), fail,
+	    L"mk_array(&t, r->type, r->storage, 1)");
+
 	t->shape[0] = array_values_count(l);
 	
-	if (err = array_promote_storage(l, r))
-		goto fail;
-
 	if (l->storage == STG_DEVICE) {
-		if (err = af_lookup(&t->values, r->values, l->values, 0))
-			goto fail;
-		
+		CHKAF(af_lookup(&t->values, r->values, l->values, 0), fail);
 		goto done;
 	}
 	
-	if (err = alloc_array(t))
-		goto fail;
+	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
-#define INDEX_LOOP(ztype, ltype, rtype) {			\
+#define INDEX_LOOP(ztype, ltype, rtype) {		\
 	ltype *lvals = l->values;			\
 	rtype *rvals = r->values;			\
 	rtype *tvals = t->values;			\
 							\
 	for (size_t i = 0; i < t->shape[0]; i++)	\
 		tvals[i] = rvals[(ztype)lvals[i]];	\
-}
+}							\
 
 	if (r->type == ARR_NESTED) {		
 		switch (l->type) {
@@ -1194,8 +1192,7 @@ index_func(struct cell_array **z,
 			INDEX_LOOP(size_t, double, struct cell_array *);
 			break;
 		default:
-			err = 99;
-			goto fail;
+			CHK(99, fail, L"Unsupported index element type");
 		}
 		
 		goto done;
@@ -1203,7 +1200,7 @@ index_func(struct cell_array **z,
 
 	SIMPLE_SWITCH(INDEX_LOOP, NOOP, NOOP, INDEX_LOOP,
 	    size_t, l->type, r->type,
-	    {err = 99; goto fail;})
+	    CHK(99, fail, L"Unexpected element type"))
 
 done:
 	*z = t;
