@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "internal.h"
+#include "prim.h"
 
 int
 error_syntax_mon(struct cell_array **z, struct cell_array *r, 
@@ -286,6 +287,38 @@ struct cell_func max_shp_closure = {
 	CELL_FUNC, 1, max_shp_func_mon, max_shp_func, 0
 };
 struct cell_func *max_shp_ibeam = &max_shp_closure;
+
+int
+identity_func(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
+{
+	struct cell_func *oper;
+	int err;
+	
+	err = 0;
+	
+	oper = self->fv[1];
+	
+	if (oper == cdf_prim.lor) {
+		CHK(mk_scalar_bool(z, 0), done,
+		    L"mk_scalar_bool(z, 0)");
+		
+		goto done;
+	}
+	
+	CHK(16, done, L"Unknown primitive identity");
+	
+done:
+	return err;
+}
+
+struct cell_moper identity_closure = {
+	CELL_MOPER, 1, 
+	error_syntax_mon, error_syntax_dya, 
+	identity_func, error_syntax_dya, 
+	0
+};
+struct cell_moper *identity_ibeam = &identity_closure;
 
 #define STMT_LOOP(zt, lt, rt, stmts) {		\
 	zt *tv = t->values;			\
