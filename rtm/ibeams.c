@@ -2149,19 +2149,19 @@ max_host(struct cell_array *t, size_t count,
 {
 	switch (t->type) {
 	case ARR_BOOL:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
 		    int8_t, l->type, r->type, return 99);
 		break;
 	case ARR_SINT:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
 		     int16_t, l->type, r->type, return 99);
 		break;
 	case ARR_INT:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
 		     int32_t, l->type, r->type, return 99);
 		break;
 	case ARR_DBL:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
+		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
 		     double, l->type, r->type, return 99);
 		break;
 	default:
