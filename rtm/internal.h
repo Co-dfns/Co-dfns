@@ -11,6 +11,7 @@ af_dtype array_type_af_dtype(enum array_type);
 af_dtype array_af_dtype(struct cell_array *);
 enum array_type closest_numeric_array_type(double);
 
+int cast_values(struct cell_array *, enum array_type);
 int squeeze_array(struct cell_array *);
 
 int is_integer_dbl(double);
