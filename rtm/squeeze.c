@@ -50,7 +50,7 @@ closest_numeric_array_type(double x)
 inline int
 squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
 {
-	size_t size;
+	size_t in_size, out_size, size;
 	char *buf;
 	int err, reuse;
 	
@@ -77,9 +77,15 @@ squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
 	if (arr->storage != STG_HOST)
 		return 99;
 	
-	size = array_values_count(arr) * array_element_size_type(type);
-	reuse = *arr->vrefc == 1 && 
-	    (type != ARR_CMPX || arr->type != ARR_NESTED);
+	count = array_values_count(arr);
+	in_size = count * array_element_size(arr);
+	out_size = count * array_element_size_type(type);
+	reuse = *arr->vrefc == 1 && in_size >= out_size;
+	
+	if (arr->type == ARR_NESTED)
+		reuse = 0;
+	
+	size = out_size;
 	    
 	buf = reuse ? arr->values : malloc(size + sizeof(int));
 	CHK(buf == NULL, done, L"Failed to alloc squeeze buffer.");
