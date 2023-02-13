@@ -784,6 +784,10 @@ DEFN_MKSCALAR(mk_scalar_bool, ARR_BOOL, int8_t)
 DEFN_MKSCALAR(mk_scalar_sint, ARR_SINT, int16_t)
 DEFN_MKSCALAR(mk_scalar_int, ARR_INT, int32_t)
 DEFN_MKSCALAR(mk_scalar_dbl, ARR_DBL, double)
+DEFN_MKSCALAR(mk_scalar_cmpx, ARR_CMPX, struct apl_cmpx)
+DEFN_MKSCALAR(mk_scalar_char8, ARR_CHAR8, uint8_t)
+DEFN_MKSCALAR(mk_scalar_char16, ARR_CHAR16, uint16_t)
+DEFN_MKSCALAR(mk_scalar_char32, ARR_CHAR32, uint32_t)
 
 int
 cmpx_eq(struct apl_cmpx x, struct apl_cmpx y)

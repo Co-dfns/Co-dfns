@@ -30,6 +30,15 @@ int get_scalar_char8(uint8_t *, struct cell_array *);
 int get_scalar_char16(uint16_t *, struct cell_array *);
 int get_scalar_char32(uint32_t *, struct cell_array *);
 
+int mk_scalar_bool(struct cell_array **, int8_t);
+int mk_scalar_sint(struct cell_array **, int16_t);
+int mk_scalar_int(struct cell_array **, int32_t);
+int mk_scalar_dbl(struct cell_array **, double);
+int mk_scalar_cmpx(struct cell_array **, struct apl_cmpx);
+int mk_scalar_char8(struct cell_array **, uint8_t);
+int mk_scalar_char16(struct cell_array **, uint16_t);
+int mk_scalar_char32(struct cell_array **, uint32_t);
+
 int has_integer_values(int *, struct cell_array *);
 int has_natural_values(int *, struct cell_array *);
 
@@ -39,9 +48,6 @@ size_t array_values_bytes(struct cell_array *);
 size_t array_element_size(struct cell_array *);
 size_t array_element_size_type(enum array_type);
 af_dtype array_af_dtype(struct cell_array *);
-
-int mk_scalar_bool(struct cell_array **, int8_t);
-int mk_scalar_sint(struct cell_array **, int16_t);
 
 int retain_array_data(struct cell_array *);
 int release_array_data(struct cell_array *);
