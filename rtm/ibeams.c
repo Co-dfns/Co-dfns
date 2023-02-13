@@ -1179,9 +1179,7 @@ index_func(struct cell_array **z,
 		tvals[i] = rvals[(ztype)lvals[i]];	\
 }
 
-	if (r->type == ARR_NESTED) {
-		struct cell_array **rvals = r->values;
-		
+	if (r->type == ARR_NESTED) {		
 		switch (l->type) {
 		case ARR_BOOL:
 			INDEX_LOOP(int8_t, int8_t, struct cell_array *);
