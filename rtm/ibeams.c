@@ -1024,7 +1024,7 @@ fail:
 DEF_MON(q_veach_func_mon, q_veach_func)
 
 struct cell_moper q_veach_closure = {
-	CELL_FUNC, 1, 
+	CELL_MOPER, 1, 
 	error_syntax_mon, error_syntax_dya, q_veach_func_mon, q_veach_func, 
 	0
 };
