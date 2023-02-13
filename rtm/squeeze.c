@@ -48,9 +48,9 @@ closest_numeric_array_type(double x)
 }									\
 
 inline int
-squeeze_values(struct cell_array *arr, size_t count, enum array_type type)
+cast_values(struct cell_array *arr, enum array_type type)
 {
-	size_t in_size, out_size, size;
+	size_t count, in_size, out_size, size;
 	char *buf;
 	int err, reuse;
 	
@@ -182,11 +182,12 @@ fail:
 
 inline int
 find_minmax(double *min, double *max, 
-    unsigned char *is_real, unsigned char *is_int,
-    struct cell_array *arr, size_t count)
+    unsigned char *is_real, unsigned char *is_int, struct cell_array *arr)
 {
+	size_t count;
 	void *vals;
 	
+	count = array_values_count(arr);
 	vals = arr->values;
 	
 	if (arr->storage == STG_DEVICE) {
@@ -297,7 +298,7 @@ squeeze_array(struct cell_array *arr)
 			type = array_max_type(type, t->type);
 		}
 		
-		if (err = squeeze_values(arr, count, type))
+		if (err = cast_values(arr, type))
 			return err;
 		
 		if (arr->type == ARR_NESTED)
@@ -321,7 +322,7 @@ squeeze_array(struct cell_array *arr)
 		return 99;
 	}
 	
-	err = find_minmax(&min_real, &max_real, &is_real, &is_int, arr, count);
+	err = find_minmax(&min_real, &max_real, &is_real, &is_int, arr);
 	
 	if (err)
 		return err;
@@ -330,26 +331,26 @@ squeeze_array(struct cell_array *arr)
 		return 0;
 	
 	if (!is_int)
-		return squeeze_values(arr, count, ARR_DBL);
+		return cast_values(arr, ARR_DBL);
 	
 	if (is_char_array(arr)) {
 		if (0 <= min_real && max_real <= UINT8_MAX)
-			return squeeze_values(arr, count, ARR_CHAR8);
+			return cast_values(arr, ARR_CHAR8);
 		
 		if (0 <= min_real && max_real <= UINT16_MAX)
-			return squeeze_values(arr, count, ARR_CHAR16);
+			return cast_values(arr, ARR_CHAR16);
 		
 		return 0;
 	}
 	
 	if (0 <= min_real && max_real <= 1)
-		return squeeze_values(arr, count, ARR_BOOL);
+		return cast_values(arr, ARR_BOOL);
 	
 	if (INT16_MIN <= min_real && max_real <= INT16_MAX)
-		return squeeze_values(arr, count, ARR_SINT);
+		return cast_values(arr, ARR_SINT);
 	
 	if (INT32_MIN <= min_real && max_real <= INT32_MAX)
-		return squeeze_values(arr, count, ARR_INT);
+		return cast_values(arr, ARR_INT);
 	
-	return squeeze_values(arr, count, ARR_DBL);
+	return cast_values(arr, ARR_DBL);
 }
