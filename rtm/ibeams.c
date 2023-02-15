@@ -333,13 +333,31 @@ int
 set_host_values(struct cell_array *t,
     struct cell_array *l, struct cell_array *r)
 {
-	size_t count, rc;
+	size_t count, rc, range;
 	int err;
 	
 	err = 0;
 	retain_cell(t);
+	range = array_count(t);
 	count = array_count(l);
 	rc = array_count(r);
+	
+	#define IDX_CHK_LOOP(lt) {					\
+		lt *lv = l->values;					\
+									\
+		for (size_t i = 0; i < count; i++) 			\
+			if (lv[i] >= range)				\
+				CHK(3, done, L"Index out of range");	\
+	}								\
+	
+	switch(l->type) {
+	case ARR_BOOL:IDX_CHK_LOOP(int8_t);break;
+	case ARR_SINT:IDX_CHK_LOOP(int16_t);break;
+	case ARR_INT:IDX_CHK_LOOP(int32_t);break;
+	case ARR_DBL:IDX_CHK_LOOP(double);break;
+	default:
+		CHK(99, done, L"Unexpected index element type");
+	}
 	
 	#define SET_LOOP_NESTED(lt) 					\
 	STMT_LOOP(struct cell_array *, lt, struct cell_array *, {	\
@@ -424,7 +442,7 @@ set_func(struct cell_array **z,
 	
 	tgt = *z;
 	
-	CHK(array_migrate_storage(l, tgt->storage), done,
+	CHK(array_migrate_storage(idx, tgt->storage), done,
 	    L"Migrate indices to target storage");
 	CHK(array_migrate_storage(r, tgt->storage), done,
 	    L"Migrate values to target storage");
