@@ -241,6 +241,9 @@ retain_array_data(struct cell_array *arr)
 		CHKAF(af_retain_array(&arr->values, arr->values), done);
 		break;
 	case STG_HOST:
+		if (arr->vrefc == NULL)
+			CHK(99, done, L"Null value refcount.");
+		
 		++*arr->vrefc;
 		break;
 	default:
