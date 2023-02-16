@@ -299,12 +299,16 @@ identity_func(struct cell_array **z,
 	
 	oper = self->fv[1];
 	
-	if (oper == cdf_prim.lor) {
-		CHK(mk_scalar_bool(z, 0), done,
-		    L"mk_scalar_bool(z, 0)");
-		
-		goto done;
-	}
+	#define ID_CASE(prim, id)			\
+	if (oper == cdf_prim.##prim) {			\
+		CHK(mk_scalar_bool(z, id), done,	\
+		    L"mk_scalar_bool(z, " L#id L")");	\
+							\
+		goto done;				\
+	}						\
+	
+	ID_CASE(lor, 0)
+	ID_CASE(mul, 1)
 	
 	CHK(16, done, L"Unknown primitive identity");
 	
