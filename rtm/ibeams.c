@@ -347,7 +347,7 @@ set_host_values(struct cell_array *t,
 									\
 		for (size_t i = 0; i < count; i++) 			\
 			if (lv[i] >= range)				\
-				CHK(3, done, L"Index out of range");	\
+				CHK(3, fail, L"Index out of range");	\
 	}								\
 	
 	switch(l->type) {
@@ -356,7 +356,7 @@ set_host_values(struct cell_array *t,
 	case ARR_INT:IDX_CHK_LOOP(int32_t);break;
 	case ARR_DBL:IDX_CHK_LOOP(double);break;
 	default:
-		CHK(99, done, L"Unexpected index element type");
+		CHK(99, fail, L"Unexpected index element type");
 	}
 	
 	#define SET_LOOP_NESTED(lt) 					\
@@ -409,10 +409,10 @@ set_host_values(struct cell_array *t,
 	case type_pair(ARR_NESTED, ARR_INT ):SET_LOOP_NESTED(int32_t);
 	case type_pair(ARR_NESTED, ARR_DBL ):SET_LOOP_NESTED(double);
 	default:
-		CHK(99, done, L"Unexpected type combination");
+		CHK(99, fail, L"Unexpected type combination");
 	}
 
-done:	
+fail:	
 	return err;
 }
 
