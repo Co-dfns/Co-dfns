@@ -1168,6 +1168,7 @@ index_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *t;
+	size_t range, count;
 	int err;
 	
 	t = NULL;
@@ -1177,13 +1178,23 @@ index_func(struct cell_array **z,
 	CHK(mk_array(&t, r->type, r->storage, 1), fail,
 	    L"mk_array(&t, r->type, r->storage, 1)");
 
-	t->shape[0] = array_values_count(l);
+	t->shape[0] = count = array_count(l);
+	range = array_count(r);
 	
 	if (l->storage == STG_DEVICE) {
 		CHKAF(af_lookup(&t->values, r->values, l->values, 0), fail);
 		goto done;
 	}
 	
+	switch(l->type) {
+	case ARR_BOOL:IDX_CHK_LOOP(int8_t);break;
+	case ARR_SINT:IDX_CHK_LOOP(int16_t);break;
+	case ARR_INT:IDX_CHK_LOOP(int32_t);break;
+	case ARR_DBL:IDX_CHK_LOOP(double);break;
+	default:
+		CHK(99, fail, L"Unexpected index element type");
+	}
+
 	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
 #define INDEX_LOOP(ztype, ltype, rtype) {		\
