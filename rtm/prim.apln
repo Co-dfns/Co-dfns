@@ -53,13 +53,11 @@ rho←('shape_ibeam'⌶) ⎕AMBIV reshape
 catenate←{
 	(0≡lr←≢⍴⍺)∧(0≡rr←≢⍴⍵):(,⍺)∇,⍵
 	(lr≢0)∧(rr≢0)∧1<|lr-rr:⎕SIGNAL 4
-	fx←(lr⌈rr)-1
-	lr≡0:(s⍴⍺⊣s[fx]←1⊣s←⍴⍵)∇⍵
-	rr≡0:⍺∇s⍴⍵⊣s[fx]←1⊣s←⍴⍺
 	(pr↑⍴⍺)∨.≠(pr←(lr⌊rr)-lr=rr)↑⍴⍵:⎕SIGNAL 5
-	lc←≢,⍺ ⋄ rc←≢,⍵ ⋄ s←⍴⍵ ⋄ s[fx]←(fx⌷⍴⍵)+fx⌷⍴⍺ ⋄ z←(c←×⌿s)⍴0
-	z[i+(fx⌷⍴⍵)×⌊(i←⍳lc)÷fx⌷⍴⍺]←,⍺
-	z[i+(fx⌷⍴⍺)×1+⌊(i←⍳rc)÷fx⌷⍴⍵]←,⍵
+	lx←{fx≥⍺:1 ⋄ fx⌷⍴⍵} ⋄ vc←{⍺≡0:c ⋄ ≢⍵}
+	fx←(lr⌈rr)-1 ⋄ a←,⍺ ⋄ ax←lr lx ⍺ ⋄ w←,⍵ ⋄ wx←rr lx ⍵
+	s←⍴⍺{lr>rr:⍺ ⋄ ⍵}⍵ ⋄ s[fx]←ax+wx ⋄ c←×⌿fx↑s ⋄ ac←lr vc a ⋄ wc←rr vc w 
+	z←(c×fx⌷s)⍴0 ⋄ z[i+wx×⌊(i←⍳ac)÷ax]←a ⋄ z[i+ax×1+⌊(i←⍳wc)÷wx]←w
 	s⍴z
 }
 cat←('ravel_ibeam'⌶) ⎕AMBIV catenate
