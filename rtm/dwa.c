@@ -309,7 +309,9 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 	
 	pkt = getarray(array_dwa_type(arr->type), arr->rank, arr->shape, lp);
 	
-	if (arr->storage == STG_DEVICE) {
+	if (!array_count(arr)) {
+		/* We don't do anything on the empty array case */
+	} else if (arr->storage == STG_DEVICE) {
 		af_dtype typ;
 		
 		CHKAF(af_get_type(&typ, arr->values), done);
