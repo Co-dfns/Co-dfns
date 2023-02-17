@@ -231,6 +231,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_moper *numeric;
 	struct cell_moper *scalar;
 	struct cell_func *set;
+	struct cell_func *brk;
 	struct cell_func *rgt;
 	struct cell_func *lft;
 	struct cell_func *reshape;

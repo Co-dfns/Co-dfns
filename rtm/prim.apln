@@ -39,6 +39,9 @@ scalar←{
 ⍝ Assignment
 set←'set_ibeam'⌶
 
+⍝ Bracket Indexing
+brk←{⍵⌷⍺}
+
 ⍝ ⊢: Right
 rgt←{⍵}
 
