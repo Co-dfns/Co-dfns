@@ -330,7 +330,7 @@ array2dwa(struct pocket **dst, struct cell_array *arr, struct localp *lp)
 			CHK(array2dwa(&pkts[i], ptrs[i], NULL), done,
 			    L"array2dwa(&pkts[i], ptrs[i], NULL)");
 	} else {
-		return 99;
+		CHK(99, done, L"Unexpected array type");
 	}
 
 	if (dst)
