@@ -1186,8 +1186,18 @@ index_func(struct cell_array **z,
 	range = array_count(r);
 	
 	if (l->storage == STG_DEVICE) {
-		CHKAF(af_lookup(&t->values, r->values, l->values, 0), fail);
+		af_array idx;
+		
+		CHKAF(af_cast(&idx, l->values, s64), fail);
+		CHKAF(af_lookup(&t->values, r->values, idx, 0), device_fail);
+		CHKAF(af_release_array(idx), fail);
+		
 		goto done;
+
+device_fail:
+		CHKAF(af_release_array(idx), fail);
+		
+		goto fail;
 	}
 	
 	switch(l->type) {
@@ -1242,6 +1252,7 @@ done:
 	
 fail:
 	release_array(t);
+	
 	return err;
 }
 
