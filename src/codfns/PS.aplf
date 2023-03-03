@@ -74,8 +74,8 @@ PS←{
 		t[z]←Z P[m←1=≢¨g] ⋄ n[m⌿z]←-sym⍳⊂,';'
 	0}⌸i←⍸t[p]=¯1
 
-	⍝ Convert formal nodes and system variables to P nodes
-	t[⍸(t=S)∨(t=A)∧n∊-sym⍳,¨'⍺⍵']←P
+	⍝ Convert formal nodes ⍺/⍵ and system variables to P nodes
+	t[⍸(t=S)∨(t=A)∧n∊¯1 ¯2]←P
 
 	⍝ Convert M nodes to F0 nodes
 	t←F@{t=M}t
