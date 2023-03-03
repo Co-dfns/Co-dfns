@@ -85,13 +85,12 @@ TK←{
 	t[⍸(~msk∨¯1⌽msk)∧x∊'⍺⍵']←A
 
 	⍝ Tokenize primitives and atoms
-	t[⍸(~dm)∧x∊prms]←P ⋄ t[⍸x∊syna]←A
-	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿(msk←x='⌶')⍪0 ⋄ t[⍸msk∧~m2]←0
-	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿(msk←x='∇')⍪0 ⋄ t[⍸msk∧~m2]←0
-	∨⌿msk←2<end[i]-pos[i←⍸m2]:{
+	t[⍸x∊syna]←A ⋄ t[⍸(~dm)∧x∊prms,'←']←P
+	msk←(x∊'⌶∇')∨msk∨¯1⌽msk←(~dm)∧⊃'⍠←' '∘←' '∘.'∨.⍷⊂x
+	end[⍸m2←2<⌿0⍪msk]←end⌿⍨2>⌿msk⍪0 ⋄ t[⍸msk∧~m2]←0
+	∨⌿msk←2<end[i]-pos[i←⍸msk∧x='∇']:{
 		'AMBIGUOUS ∇ CLUSTER'SIGNAL SELECT msk⌿i
 	}⍬
-	
 
 	⍝ Mark depths of dfns regions and give F type, with } as a child
 	t[⍸'{'=x]←F ⋄ d←+⍀1 ¯1 0['{}'⍳x]
@@ -123,7 +122,7 @@ TK←{
 	si←⍸('⎕'=x)∧1⌽t=V ⋄ t[si]←S ⋄ end[si]←end[si+1] ⋄ t[si+1]←0
 
 	⍝ Delete all characters we no longer need from the tree
-	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{}:;←'
+	d tm t pos end(⌿⍨)←⊂(t≠0)∨x∊'()[]{}:;'
 
 	⍝ Tokenize labels
 	ERR←'LABEL MUST CONSIST OF A SINGLE NAME'
@@ -184,21 +183,14 @@ TK←{
 	⍝ Introduce k field
 	k←2×t∊F
 
-	⍝ Mark system variables as P nodes with appropriate kinds
-	k[⍸(t=S)∧n∊SYSV]←1
-	k[⍸(t=S)∧n∊SYSF]←2
-	k[⍸(t=S)∧n∊SYSM]←3
-	k[⍸(t=S)∧n∊SYSD]←4
-
-	⍝ Mark atoms, characters, and numbers as kind 1
-	k[⍸t∊A C N]←1
-
-	⍝ Mark APL primitives with appropriate kinds
-	k[⍸n∊,¨prmfs]←2 ⋄ k[⍸n∊,¨prmmo]←3 ⋄ k[⍸n∊,¨prmdo]←4
+	⍝ Kinds of atoms, characters, numbers, primitives, and system variables
+	k[⍸(t∊A C N)∨(t=S)∧n∊SYSV]←1
+	k[⍸(n∊,¨prmfs)∨(t=S)∧n∊SYSF]←2
+	k[⍸(n∊,¨prmmo,⊂'∘.')∨(t=S)∧n∊SYSM]←3
+	k[⍸(n∊,¨prmdo)∨(t=S)∧n∊SYSD]←4
 	k[⍸n∊,¨prmfo]←5
-	k[i←⍸msk←(n∊⊂,'∘')∧1⌽n∊⊂,'.']←3 ⋄ end[i]←end[i+1] ⋄ n[i]←⊂,'∘.'
-	k[⍸n∊⊂'⌶⌶']←¯3 ⋄ k[⍸n∊⊂'⌶⌶⌶']←¯4
-	d t k n pos end⌿⍨←⊂msk←~¯1⌽msk
+	k[⍸n∊⊂'⌶⌶']←¯3
+	k[⍸n∊⊂'⌶⌶⌶']←¯4
 
 	⍝ Convert n field to symbols and add a symbol table
 	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
