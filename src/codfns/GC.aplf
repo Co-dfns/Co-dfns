@@ -292,7 +292,7 @@ GC←{
 		z,⊂''
 	}¨i
 	
-	⍝ Om: Monadic operands
+	⍝ Om: Monadic operators
 	i←⍸(t=O)∧k∊1 2
 	zz[i],←{
 		0=≢i:0⍴⊂''
@@ -316,7 +316,7 @@ GC←{
 		z,⊂''
 	}¨i
 	
-	⍝ Od: Dyadic operands
+	⍝ Od: Dyadic operators
 	i←⍸(t=O)∧k∊4 5 7 8
 	zz[i],←{
 		0=≢i:0⍴⊂''
