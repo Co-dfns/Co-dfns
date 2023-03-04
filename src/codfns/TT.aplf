@@ -52,6 +52,9 @@ TT←{
 	t[ix]←t[xi] ⋄ k[ix]←k[xi] ⋄ n[x]←n[i] ⋄ n[i]←x ⋄ lx[xi]←lx[ix]
 	mu[ix]←mu[xi] ⋄ pos[xi]←pos[ix] ⋄ end[xi]←end[ix]
 	
+	⍝ Mark ⍠← bindings as kind 7
+	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
+	
 	⍝ Merge B node bindings
 	n lx mu{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
 	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂⍸msk
