@@ -171,12 +171,22 @@ GC←{
 		z,⊂''
 	}¨i
 
-	⍝ B: Function bindings
-	i←⍸t=B
+	⍝ B: Non-option bindings
+	i←⍸(t=B)∧k≠7
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
 		z ←⊂tgt,' = retain_cell(stkhd[-1]);'
+		z,⊂''
+		
+	}¨i
+	
+	⍝ B7: Option bindings
+	i←⍸(t=B)∧k=7
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		tgt←var_values ⍵
+		z ←⊂tgt,' = retain_cell(stkhd[-1]); /* Option! */'
 		z,⊂''
 		
 	}¨i
