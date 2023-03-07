@@ -390,6 +390,7 @@ GC←{
 		wwtyp←'array' 'func'⊃⍨k[⍵]∊17 18 19 20 21 22
 		haslvs←0≠≢lvs←⊃lv[⍵]
 		hasfvs←0≠≢fvs←{⍵[⍋n[⍵]]}⊃fv[⍵]
+		hasopts←0≠≢opts←lvs⌿⍨k[lvs]=7
 		ism←k[⍵]∊2 3 5 6 8 9 11 12 14 15 17 18 20 21
 		isop←k[⍵]≥5
 		isdop←k[⍵]≥11
@@ -429,6 +430,12 @@ GC←{
 		z,←(⊂'')⌿⍨hasfvs
 		z,←(⊂'	lex = (struct lex_vars *)',self,'->fv;')⌿⍨hasfvs
 		z,←(⊂'')⌿⍨hasfvs
+		z,←(⊂'	struct opt_vars {')⌿⍨hasopts
+		z,←'		'∘,¨decl_vars opts
+		z,←(⊂'	} *opts;')⌿⍨hasopts
+		z,←(⊂'')⌿⍨hasopts
+		z,←(⊂'	opts = (struct opt_vars *)self->opts;')⌿⍨hasopts
+		z,←(⊂'')⌿⍨hasopts
 		z,←'	',¨init_vars lvs
 		z,←⊂'	err = 0;'
 		z,←⊂'	stkhd = &stk[0];'
