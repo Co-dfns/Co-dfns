@@ -79,6 +79,7 @@ struct cell_func {
 	unsigned int refc;
 	func_mon fptr_mon;
 	func_dya fptr_dya;
+	void **opts;
 	unsigned int fs;
 	void *fv[];
 };
