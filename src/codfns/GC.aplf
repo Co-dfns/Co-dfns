@@ -176,7 +176,10 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
-		z ←⊂tgt,' = retain_cell(stkhd[-1]);'
+		z ←⊂'if (',tgt,')'
+		z,←⊂'	release_cell(',tgt,');'
+		z,←⊂''
+		z,←⊂tgt,' = retain_cell(stkhd[-1]);'
 		z,⊂''
 		
 	}¨i
@@ -186,7 +189,10 @@ GC←{
 	zz[i],←{
 		0=≢i:0⍴⊂''
 		tgt←var_values ⍵
-		z ←⊂tgt,' = retain_cell(stkhd[-1]); /* Option! */'
+		z ←⊂'if (',tgt,')'
+		z,←⊂'	release_cell(',tgt,');'
+		z,←⊂''
+		z,←⊂tgt,' = retain_cell(stkhd[-1]); /* Option! */'
 		z,⊂''
 		
 	}¨i
