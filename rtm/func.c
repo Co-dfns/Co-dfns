@@ -20,6 +20,9 @@ mk_func(struct cell_func **k, func_mon fm, func_dya fd, unsigned int fs)
         ptr->fptr_mon = fm;
         ptr->fptr_dya = fd;
         ptr->fs = fs;
+	
+	for (unsigned int i = 0; i < fs; i++)
+		ptr->fv[i] = NULL;
 
         *k = ptr;
 
@@ -47,6 +50,9 @@ mk_moper(struct cell_moper **k,
         ptr->fptr_fm = ffm;
         ptr->fptr_fd = ffd;
         ptr->fs = fs;
+
+	for (unsigned int i = 0; i < fs; i++)
+		ptr->fv[i] = NULL;
 
         *k = ptr;
 
@@ -79,6 +85,9 @@ mk_doper(struct cell_doper **k,
         ptr->fptr_ffm = fffm;
         ptr->fptr_ffd = fffd;
         ptr->fs = fs;
+
+	for (unsigned int i = 0; i < fs; i++)
+		ptr->fv[i] = NULL;
 
         *k = ptr;
 
