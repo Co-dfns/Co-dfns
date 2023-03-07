@@ -379,26 +379,6 @@ GC←{
 		z,⊂''
 	}¨i
 	
-	decl_lex←{
-		0=≢v←{⍵[⍋n[⍵]]}⊃fv[⍵]:0⍴⊂''
-		z ←⊂'struct lex_vars {'
-		z,←'	',¨decl_vars v
-		z,←⊂'} *lex;'
-		z,←⊂''
-		z,←⊂'lex = (struct lex_vars *)',⍺,'->fv;'
-		z,⊂''
-	}
-	
-	decl_loc←{
-		0=≢v←⊃lv[⍵]:0⍴⊂''
-		z ←⊂'struct {'
-		z,←'	',¨decl_vars v
-		z,←⊂'} loc_frm, *loc;'
-		z,←⊂''
-		z,←⊂'loc = &loc_frm;'
-		z,⊂''
-	}
-	
 	⍝ FN: Non-zero functions
 	i←⍸(t=F)∧k≠0
 	zz[i],←{
@@ -408,9 +388,12 @@ GC←{
 		ddtyp←'' 'moper' 'doper'⊃⍨0 5 11⍸k[⍵]
 		aatyp←'array' 'func'⊃⍨k[⍵]∊8 9 10 14 15 16 20 21 22
 		wwtyp←'array' 'func'⊃⍨k[⍵]∊17 18 19 20 21 22
+		haslvs←0≠≢lvs←⊃lv[⍵]
+		hasfvs←0≠≢fvs←{⍵[⍋n[⍵]]}⊃fv[⍵]
 		ism←k[⍵]∊2 3 5 6 8 9 11 12 14 15 17 18 20 21
 		isop←k[⍵]≥5
 		isdop←k[⍵]≥11
+		self←'self' 'deldel'⊃⍨isop
 		pref,←⊂'int ',id,'(struct cell_array **,'
 		pref,←(⊂'    struct cell_array *,')⌿⍨~ism
 		pref,←⊂'    struct cell_array *,'
@@ -434,17 +417,28 @@ GC←{
 		z,←(⊂'	alphaalpha = self->fv[1];')⌿⍨isop
 		z,←(⊂'	omegaomega = self->fv[2];')⌿⍨isdop
 		z,←⊂''
-		z,←'	',¨(decl_loc,('self' 'deldel'⊃⍨isop)∘decl_lex)⍵
-		z,←'	',¨init_vars ⊃lv[⍵]
+		z,←(⊂'	struct {')⌿⍨haslvs
+		z,←'		'∘,¨decl_vars lvs
+		z,←(⊂'	} loc_frm, *loc;')⌿⍨haslvs
+		z,←(⊂'')⌿⍨haslvs
+		z,←(⊂'	loc = &loc_frm;')⌿⍨haslvs
+		z,←(⊂'')⌿⍨haslvs
+		z,←(⊂'	struct lex_vars {')⌿⍨hasfvs
+		z,←'		'∘,¨decl_vars fvs
+		z,←(⊂'	} *lex;')⌿⍨hasfvs
+		z,←(⊂'')⌿⍨hasfvs
+		z,←(⊂'	lex = (struct lex_vars *)',self,'->fv;')⌿⍨hasfvs
+		z,←(⊂'')⌿⍨hasfvs
+		z,←'	',¨init_vars lvs
 		z,←⊂'	err = 0;'
 		z,←⊂'	stkhd = &stk[0];'
 		z,←⊂''
-		z,← '	',¨⊃⍪⌿(p=⍵)⌿zz
+		z,←'	',¨⊃⍪⌿(p=⍵)⌿zz
 		z,←⊂'	err = -1;'
 		z,←⊂''
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
-		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨0≠≢⊃lv[⍵]
+		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨haslvs
 		z,←(⊂'	release_',atyp,'(alpha);')⌿⍨ism
 		z,←⊂''
 		z,←⊂'	if (err)'
