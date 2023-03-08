@@ -77,9 +77,9 @@ TT←{
 	k[r[i]]+←2≤k[i←i⌿⍨≠r[i←⍸(≠p)∧(t=P)∧(n=¯2)∧t[p]=B]]
 	
 	⍝ Disambiguate schizophrenic functions
-	i←⍸(t=P)∧(k=2)∧n∊ns←-sym⍳,¨'/⌿\⍀←'
-	sym∪←'//' '⌿⌿' '\\' '⍀⍀' '←←'[ns⍳∪n[i]]
-	n[i]←(-sym⍳'//' '⌿⌿' '\\' '⍀⍀' '←←')[ns⍳n[i]]
+	i←⍸(t=P)∧(k=2)∧n∊ns←-sym⍳,¨'/⌿\⍀'
+	sym∪←'//' '⌿⌿' '\\' '⍀⍀'[ns⍳∪n[i]]
+	n[i]←(-sym⍳'//' '⌿⌿' '\\' '⍀⍀')[ns⍳n[i]]
 
 	⍝ Namify pointer variables
 	i←⍸(n≥0)∧(t∊B F O P V Z)∨(t=E)∧k≠6
@@ -99,9 +99,9 @@ TT←{
 	syms,←,¨'↓'   '¨'   '⍨'   '.'   '⍤'   '⍣'   '∘'   '∪'   '∩'
 	nams,←  'drp' 'map' 'com' 'dot' 'rnk' 'pow' 'jot' 'unq' 'int'
 	syms,←,¨'←'   '⍋'   '⍒'   '∘.'  '⍷'   '⊂'   '⌹'   '⊆'   '∇'
-	nams,←  'get' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'self'
-	syms,←,¨'//'  '⌿⌿'  '\\'  '⍀⍀'  '←←'
-	nams,←  'rep' 'rpf' 'xpd' 'xpf' 'set'
+	nams,←  'set' 'gdu' 'gdd' 'oup' 'fnd' 'par' 'mdv' 'nst' 'self'
+	syms,←,¨'//'  '⌿⌿'  '\\'  '⍀⍀'
+	nams,←  'rep' 'rpf' 'xpd' 'xpf'
 	syms,←,¨';'   '⎕FFT'  '⎕IFFT' '⎕CONV'  '⎕NC'  '⎕SIGNAL'  '⎕DR'
 	nams,←  'spn' 'q_fft' 'q_ift' 'q_conv' 'q_nc' 'q_signal' 'q_dr'
 	syms,←  '⎕VEACH'  '⎕AMBIV'
