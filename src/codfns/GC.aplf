@@ -354,6 +354,13 @@ GC←{
 		z,←⊂'}'
 		z,⊂''
 	}¨i
+	
+	⍝ Ox: Axis Operator and Variant Operator
+	i←⍸(t=O)∧k=¯1
+	zz[i],←{
+		0=≢i:0⍴⊂''
+		'AXIS OPERATOR NOT IMPLEMENTED YET'SIGNAL 16
+	}¨i
 
 	⍝ G0: Value guards
 	i←⍸t=G
