@@ -59,6 +59,14 @@ TT←{
 	n lx mu{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
 	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂⍸msk
 	
+	⍝ Convert O*(F, [, A) to Ox(F, A)
+	i←⍸msk←(t[p]=O)∧n=-sym⍳⊂,'[' ⋄ k[p[i]]←¯1
+	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂i
+	0≠≢i←⍸(≠p)∧(t[p]=O)∧(k[p]=¯1)∧~n∊-sym⍳,¨',':{
+		ERR←2 'FUNCTION DOES NOT SUPPORT AXIS OPERATOR' 
+		ERR SIGNAL SELECT i
+	}⍬
+	
 	⍝ Count children for E6, and A7 nodes
 	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=A)∧k[p]=7)∨(t[p]=E)∧k[p]=6
 	
