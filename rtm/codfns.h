@@ -202,6 +202,7 @@ DECLSPEC int apply_mop(struct cell_func **, struct cell_moper *,
     func_mon, func_dya, void *);
 DECLSPEC int apply_dop(struct cell_func **, struct cell_doper *, 
     func_mon, func_dya, void *, void *);
+DECLSPEC int derive_func_opts(struct cell_func **, struct cell_func *, int);
 
 /* Runtime initialization function */
 DECLSPEC int cdf_prim_init(void);

@@ -194,6 +194,27 @@ apply_dop(struct cell_func **z, struct cell_doper *op,
 }
 
 DECLSPEC int
+derive_func_opts(struct cell_func **dst, struct cell_func *aa, int fs)
+{
+	struct cell_func *fn;
+	int err;
+	
+	CHK(mk_func(&fn, aa->fptr_mon, aa->fptr_dya, fs+1), done,
+	    L"mk_func(&fn, aa->fm, aa->fd, fs+1)");
+	
+	fn->fv = aa->fv;
+	fn->opts = &fn->fv_[1];
+	fn->fv_[0] = retain_cell(aa);
+
+	*dst = fn;
+	
+	err = 0;
+	
+done:
+	return err;
+}
+
+DECLSPEC int
 guard_check(struct cell_array *x)
 {
 	int err, val;
