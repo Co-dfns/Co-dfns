@@ -118,13 +118,37 @@ release_func(struct cell_func *k)
 DECLSPEC void
 release_moper(struct cell_moper *k)
 {
-	release_func((struct cell_func *)k);
+	if (k == NULL)
+		return;
+	
+	if (!k->refc)
+		return;
+	
+	k->refc--;
+	
+	if (k->refc)
+		return;
+	
+	for (unsigned int i = 0; i < k->fs; i++)
+		release_cell(k->fv[i]);
 }
 
 DECLSPEC void
 release_doper(struct cell_doper *k)
 {
-	release_func((struct cell_func *)k);
+	if (k == NULL)
+		return;
+	
+	if (!k->refc)
+		return;
+	
+	k->refc--;
+	
+	if (k->refc)
+		return;
+	
+	for (unsigned int i = 0; i < k->fs; i++)
+		release_cell(k->fv[i]);
 }
 
 DECLSPEC int
