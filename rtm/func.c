@@ -21,6 +21,7 @@ mk_func(struct cell_func **k, func_mon fm, func_dya fd, unsigned int fs)
 	ptr->fptr_dya = fd;
 	ptr->fs = fs;
 	ptr->opts = NULL;
+	ptr->fv = ptr->fv_;
 	
 	for (unsigned int i = 0; i < fs; i++)
 		ptr->fv[i] = NULL;
@@ -110,7 +111,7 @@ release_func(struct cell_func *k)
 		return;
 
 	for (unsigned int i = 0; i < k->fs; i++)
-		release_cell(k->fv[i]);
+		release_cell(k->fv_[i]);
 	
 	free(k);
 }

@@ -80,8 +80,9 @@ struct cell_func {
 	func_mon fptr_mon;
 	func_dya fptr_dya;
 	void **opts;
+	void **fv;
 	unsigned int fs;
-	void *fv[];
+	void *fv_[];
 };
 
 struct cell_moper {
