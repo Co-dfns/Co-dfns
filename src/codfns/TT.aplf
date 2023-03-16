@@ -75,7 +75,7 @@ TT←{
 	p t k n lx mu r pos end{⍺[⍵]@i⊢⍺}←⊂j ⋄ p←(i@j⊢⍳≢p)[p]
 	
 	⍝ Compute a function's local and free variables
-	lv←(≢p)⍴⊂⍬ ⋄ lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t=B)∧(lx=0)∧n<0;]
+	lv←(≢p)⍴⊂⍬ ⋄ lv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t∊B V)∧(lx=0)∧n<0;]
 	fv←(≢p)⍴⊂⍬ ⋄ fv[r[i]],←i←i⌿⍨≠(r,⍪n)[i←⍸(t=V)∧(lx=1)∧n<0;]
 	
 	⍝ Mark functions with their internal ⍺ type
