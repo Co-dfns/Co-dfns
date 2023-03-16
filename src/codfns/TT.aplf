@@ -24,16 +24,30 @@ TT←{
 	t[pi]←A ⋄ k[pi]←1
 	p t k n lx r pos end⌿⍨←⊂~msk←mi∨mj∨mx ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
 
+	⍝ Convert O*(F, [, A) to Ox(F, A)
+	i←⍸msk←(t[p]=O)∧n=-sym⍳⊂,'[' ⋄ k[p[i]]←¯1
+	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂i
+	0≠≢i←⍸(≠p)∧(t[p]=O)∧(k[p]=¯1)∧~n∊-sym⍳,¨',':{
+		ERR←2 'FUNCTION DOES NOT SUPPORT AXIS OPERATOR' 
+		ERR SIGNAL SELECT i
+	}⍬
+	
+	⍝ Mark ⍠← bindings as kind 7
+	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
+	
+	⍝ Merge B node bindings
+	n lx{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
+	p t k n lx r pos end⌿⍨←⊂~msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸msk
+	
 	⍝ Mark mutated bindings 
-	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊E V)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
+	rn←r,⍪n ⋄ rni←rn[i←⍸msk←(t∊B E V)∧(lx∊0 1)∧n<¯6;] ⋄ mu←(≢i)⍴0
 	j←⍸msk∧(t[p]=C)∨(t=E)∧k=4
 	_←{mu[⍸rni∊⍥↓rn[⍵;]]←1 ⋄ i⌿⍨rni∊⍥↓r[r[z]],⍪n[z←⍵⌿⍨lx[⍵]=1]}⍣≡j
 	ci←p[fi←⍸(t=F)∧k≠0]
 	mu←msk⍀1@{(↓rni)∊⊃⍪⌿{n[⍵],¨⍨fi⌿⍨ci=p[⍵]}¨i⌿⍨⍵∧t[p[i]]=C}⍣≡mu
 
 	⍝ Delete ⍺← forms for dyadic specializations
-	msk←0@(p⌿⍨(≠p)∧(t=P)∧(n=¯2)∧(t[p]=B)∧k[r]∊3+2×⍳7)⊢(≢p)⍴1
-	_←{p[⍵]⊣msk∧←msk[⍵]}⍣≡p
+	msk←p(⊢∧I⍨)⍣≡~(t=B)∧(n=¯2)∧k[r]∊3+2×⍳7
 	p t k n lx mu r pos end⌿⍨←⊂msk ⋄ p r(⊣-1+⍸⍨)←⊂⍸~msk
 	
 	⍝ Lift dfns to the top-level
@@ -51,21 +65,6 @@ TT←{
 	p[i]←p[x←p[i←⍸(≠p)∧t[p]=G]] ⋄ ix←i,x ⋄ xi←x,i ⋄ p←(xi@ix⊢⍳≢p)[p]
 	t[ix]←t[xi] ⋄ k[ix]←k[xi] ⋄ n[x]←n[i] ⋄ n[i]←x ⋄ lx[xi]←lx[ix]
 	mu[ix]←mu[xi] ⋄ pos[xi]←pos[ix] ⋄ end[xi]←end[ix]
-	
-	⍝ Mark ⍠← bindings as kind 7
-	k[⍸(t=B)∧n=-sym⍳⊂'⍠←']←7
-	
-	⍝ Merge B node bindings
-	n lx mu{⍺[⍵]@(p[⍵])⊢⍺}←⊂⍸msk←(≠p)∧(t∊V P)∧t[p]=B
-	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂⍸msk
-	
-	⍝ Convert O*(F, [, A) to Ox(F, A)
-	i←⍸msk←(t[p]=O)∧n=-sym⍳⊂,'[' ⋄ k[p[i]]←¯1
-	p t k n lx mu r pos end⌿⍨←⊂~msk ⋄ p n r(⊣-1+⍸⍨)←⊂i
-	0≠≢i←⍸(≠p)∧(t[p]=O)∧(k[p]=¯1)∧~n∊-sym⍳,¨',':{
-		ERR←2 'FUNCTION DOES NOT SUPPORT AXIS OPERATOR' 
-		ERR SIGNAL SELECT i
-	}⍬
 	
 	⍝ Count children for E6, and A7 nodes
 	_←p[i]{n[⍺]←≢⍵}⌸i←⍸((t[p]=A)∧k[p]=7)∨(t[p]=E)∧k[p]=6
