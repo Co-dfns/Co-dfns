@@ -443,7 +443,7 @@ GC←{
 		z,←(⊂'	deldel = self->fv[0];')⌿⍨isop
 		z,←(⊂'	alphaalpha = self->fv[1];')⌿⍨isop
 		z,←(⊂'	omegaomega = self->fv[2];')⌿⍨isdop
-		z,←⊂''
+		z,←(⊂'')⌿⍨ism∨isop
 		z,←(⊂'	struct {')⌿⍨haslvs
 		z,←'		'∘,¨decl_vars lvs
 		z,←(⊂'	} loc_frm, *loc;')⌿⍨haslvs
