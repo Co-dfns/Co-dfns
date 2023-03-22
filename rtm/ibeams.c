@@ -6,9 +6,9 @@
 #include "internal.h"
 #include "prim.h"
 
-#define DECL_FUNC(name, mon, dya)					\
-struct cell_func name##_closure = {CELL_FUNC, 1, mon, dya, NULL, 0};	\
-struct cell_func *name = &name##_closure;				\
+#define DECL_FUNC(name, mon, dya)						\
+struct cell_func name##_closure = {CELL_FUNC, 1, mon, dya, NULL, NULL, 0};	\
+struct cell_func *name = &name##_closure;					\
 
 #define DECL_MOPER(name, am, ad, fm, fd)				\
 struct cell_moper name##_closure = {CELL_MOPER, 1, am, ad, fm, fd, 0};	\
