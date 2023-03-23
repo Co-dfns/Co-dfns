@@ -87,14 +87,14 @@ PS←{
 	⍝ Unify A1, N, and C tokens to A1 nodes
 	t k(⊣@(⍸t∊N C))⍨←A 1
 	
-	⍝ Mark binding primitives
-	bp←n∊-sym⍳,¨'←' '⍠←' '∘←'
-
 	⍝ Mark bindable nodes
 	bm←(t=V)∨(t=A)∧n∊-sym⍳,¨'⎕⍞'
 	bm←{bm⊣p[i]{bm[⍺]←(V ¯1≡t[⍵])∨∧⌿bm[⍵]}⌸i←⍸(~bm[p])∧t[p]=Z}⍣≡bm
 	bm[⍸(≠p)∧(t=P)∧(n=¯2)∧(t[p[p]]=F)∧1⌽n=-sym⍳⊂,'←']←1
 	
+	⍝ Mark binding primitives
+	bp←n∊-sym⍳,¨'←' '⍠←' '∘←'
+
 	⍝ Check for empty bindings
 	i←p[i]{⊃⌽⍵}⌸i←⍸(t[p]=Z)∧p≠⍳≢p
 	∨⌿msk←bp[i]:{
