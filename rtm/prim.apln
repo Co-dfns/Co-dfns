@@ -53,17 +53,30 @@ reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
 rho←('shape_ibeam'⌶) ⎕AMBIV reshape
 
 ⍝ ,: Ravel / Catenate
-catenate←{
-	(0≡lr←≢⍴⍺)∧(0≡rr←≢⍴⍵):(,⍺)∇,⍵
-	(lr≢0)∧(rr≢0)∧1<|lr-rr:⎕SIGNAL 4
+cat←{
+	israv←noax←0 ⋄ ⍺←israv←1 ⋄ lr←≢⍴⍺ ⋄ rr←≢⍴⍵ ⋄ axis⍠←noax←1
+	israv:{
+		noax:'ravel_ibeam'⌶ ⍵
+		1≢≢,axis:⎕SIGNAL 16
+		axis=⌈axis:⍵
+		((pr↑s),1,(pr←⌈axis)↓s←⍴⍵)⍴⍵
+	}⍵
+	rk←lr⌈rr ⋄ axis⍠←¯1+rk
+	(0≡lr)∧(0≡rr):(,⍺),,⍵
+	ar←≢⍴axis:⎕SIGNAL 4 ⋄ 1≢≢,axis:⎕SIGNAL 5 
+	~is_numeric axis:⎕SIGNAL 11 ⋄ axis≤¯1:⎕SIGNAL 11
+	axis≥rk:⎕SIGNAL 4 ⋄ (lr≢0)∧(rr≢0)∧1<|lr-rr:⎕SIGNAL 4
+	axis≠fx←⌈axis:⍺{
+		(lr≢0)∧(rr≢0)∧lr≠rr:⎕SIGNAL 4
+		(,[axis]⍣(lr≢0)⊢⍺),[fx],[axis]⍣(rr≢0)⊢⍵
+	}⍵
 	(pr↑⍴⍺)∨.≠(pr←(lr⌊rr)-lr=rr)↑⍴⍵:⎕SIGNAL 5
 	lx←{fx≥⍺:1 ⋄ fx⌷⍴⍵} ⋄ vc←{⍺≡0:c ⋄ ≢⍵}
 	fx←(lr⌈rr)-1 ⋄ a←,⍺ ⋄ ax←lr lx ⍺ ⋄ w←,⍵ ⋄ wx←rr lx ⍵
 	s←⍴⍺{lr>rr:⍺ ⋄ ⍵}⍵ ⋄ s[fx]←ax+wx ⋄ c←×⌿fx↑s ⋄ ac←lr vc a ⋄ wc←rr vc w 
 	z←(c×fx⌷s)⍴0 ⋄ z[i+wx×⌊(i←⍳ac)÷ax]←a ⋄ z[i+ax×1+⌊(i←⍳wc)÷wx]←w
-	s⍴z
+	s⍴z	
 }
-cat←('ravel_ibeam'⌶) ⎕AMBIV catenate
 
 ⍝ ≡: Depth / Same
 depth←{
