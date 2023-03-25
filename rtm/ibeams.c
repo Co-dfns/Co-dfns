@@ -807,9 +807,21 @@ DECL_FUNC(nqv_ibeam, error_mon, nqv_func)
 	default:											\
 		def_expr;										\
 	}
+	
+int
+veach_monadic(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	
+	CHK(16, done, L"Monadic veach is not ready.");
+	
+done:
+	return err;
+}
 
 int
-veach_func(struct cell_array **z,
+veach_dyadic(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_func *oper;
@@ -828,9 +840,6 @@ veach_func(struct cell_array **z,
 	fr = 0;
 	fy = 0;
 	fx = 0;
-	
-	if (l == NULL)
-		CHK(16, fail, L"Monadic VEACH isn't ready yet");
 	
 	if (l->type == ARR_SPAN || r->type == ARR_SPAN) {
 		TRC(99, L"Unexpected SPAN array type");
@@ -1025,8 +1034,7 @@ fail:
 	return err;
 }
 
-DEF_MON(veach_func_mon, veach_func)
-DECL_MOPER(veach_ibeam, error_mon, error_dya, veach_func_mon, veach_func)
+DECL_MOPER(veach_ibeam, error_mon, error_dya, veach_monadic, veach_dyadic)
 
 int
 squeeze_func(struct cell_array **z,
