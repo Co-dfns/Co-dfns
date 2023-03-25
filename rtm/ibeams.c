@@ -537,7 +537,7 @@ done:
 DECL_FUNC(enclose_ibeam, enclose_func, error_dya)
 
 int
-q_ambiv_func(struct cell_array **z,
+ambiv_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_func *mop, *dop;
@@ -551,10 +551,10 @@ q_ambiv_func(struct cell_array **z,
 	return (dop->fptr_dya)(z, l, r, dop);
 }
 
-DEF_MON(q_ambiv_func_mon, q_ambiv_func)
-DECL_DOPER(q_ambiv_ibeam, 
+DEF_MON(ambiv_func_mon, ambiv_func)
+DECL_DOPER(ambiv_ibeam, 
 	error_mon, error_dya, error_mon, error_dya, error_mon, error_dya,
-	q_ambiv_func_mon, q_ambiv_func
+	ambiv_func_mon, ambiv_func
 )
 
 int
@@ -809,7 +809,7 @@ DECL_FUNC(nqv_ibeam, error_mon, nqv_func)
 	}
 
 int
-q_veach_func(struct cell_array **z,
+veach_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_func *oper;
@@ -1025,8 +1025,8 @@ fail:
 	return err;
 }
 
-DEF_MON(q_veach_func_mon, q_veach_func)
-DECL_MOPER(q_veach_ibeam, error_mon, error_dya, q_veach_func_mon, q_veach_func)
+DEF_MON(veach_func_mon, veach_func)
+DECL_MOPER(veach_ibeam, error_mon, error_dya, veach_func_mon, veach_func)
 
 int
 squeeze_func(struct cell_array **z,

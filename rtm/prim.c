@@ -17,8 +17,8 @@ extern struct cell_func *is_integer_ibeam;
 extern struct cell_func *max_shp_ibeam;
 extern struct cell_func *max_shp_ibeam;
 extern struct cell_func *has_nat_vals_ibeam;
-extern struct cell_doper *q_ambiv_ibeam;
-extern struct cell_moper *q_veach_ibeam;
+extern struct cell_doper *ambiv_ibeam;
+extern struct cell_moper *veach_ibeam;
 extern struct cell_func *set_ibeam;
 extern struct cell_func *reshape_ibeam;
 extern struct cell_func *reshape_ibeam;
@@ -1345,20 +1345,20 @@ cdf_prim_init(void)
 	
 	release_cell(*--stkhd);
 	
-	if (!q_ambiv_ibeam)
-		CHK(6, cleanup, L"[28] ambiv←╠'q_ambiv_ibeam'⌶⌶⌶╣");
+	if (!ambiv_ibeam)
+		CHK(6, cleanup, L"[28] ambiv←╠'ambiv_ibeam'⌶⌶⌶╣");
 	
-	*stkhd++ = retain_cell(q_ambiv_ibeam);
+	*stkhd++ = retain_cell(ambiv_ibeam);
 	
 	release_cell(loc->ambiv);
 	loc->ambiv = retain_cell(stkhd[-1]);
 	
 	release_cell(*--stkhd);
 	
-	if (!q_veach_ibeam)
-		CHK(6, cleanup, L"[29] veach←╠'q_veach_ibeam'⌶⌶╣");
+	if (!veach_ibeam)
+		CHK(6, cleanup, L"[29] veach←╠'veach_ibeam'⌶⌶╣");
 	
-	*stkhd++ = retain_cell(q_veach_ibeam);
+	*stkhd++ = retain_cell(veach_ibeam);
 	
 	release_cell(loc->veach->value);
 	loc->veach->value = retain_cell(stkhd[-1]);

@@ -25,8 +25,8 @@ both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
-ambiv←'q_ambiv_ibeam'⌶⌶⌶
-veach←'q_veach_ibeam'⌶⌶
+ambiv←'ambiv_ibeam'⌶⌶⌶
+veach←'veach_ibeam'⌶⌶
 scalar←{
 	⍺ chk_scl ⍵: 
 	s←⍺ max_shp ⍵
