@@ -818,6 +818,17 @@ veach_func(struct cell_array **z,
 	size_t count, lc, rc;
 	int err, fl, fr, fy, fx;
 	
+	oper = self->fv[1];
+
+	t = x = y = NULL;
+	
+	lbuf = l->values;
+	rbuf = r->values;
+	fl = 0;
+	fr = 0;
+	fy = 0;
+	fx = 0;
+	
 	if (l == NULL)
 		CHK(16, fail, L"Monadic VEACH isn't ready yet");
 	
@@ -826,19 +837,8 @@ veach_func(struct cell_array **z,
 		return 99;
 	}
 	
-	oper = self->fv[1];
-
-	t = x = y = NULL;
-	
 	lc = array_values_count(l);
 	rc = array_values_count(r);
-	
-	lbuf = l->values;
-	rbuf = r->values;
-	fl = 0;
-	fr = 0;
-	fy = 0;
-	fx = 0;
 	
 	if (l->storage == STG_DEVICE) {
 		lbuf = malloc(lc * array_element_size(l));
