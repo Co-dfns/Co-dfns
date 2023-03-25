@@ -296,6 +296,9 @@ reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
 rotate_last←{⎕SIGNAL 16}
 rot←reverse_last ⎕AMBIV rotate_last
 
+⍝ ⍨: Commute
+com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
+
 ⍝ ¨: Each
 map_monadic←{⎕SIGNAL 16}
 map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}
