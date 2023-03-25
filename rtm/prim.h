@@ -95,8 +95,6 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *rotate_last;
 	struct cell_func *rot;
 	struct cell_moper *com;
-	struct cell_func *map_monadic;
-	struct cell_moper_box *map_dyadic;
 	struct cell_moper *map;
 	struct cell_moper_box *reduce;
 	struct cell_moper_box *nwreduce;

@@ -818,6 +818,9 @@ q_veach_func(struct cell_array **z,
 	size_t count, lc, rc;
 	int err, fl, fr, fy, fx;
 	
+	if (l == NULL)
+		CHK(16, fail, L"Monadic VEACH isn't ready yet");
+	
 	if (l->type == ARR_SPAN || r->type == ARR_SPAN) {
 		TRC(99, L"Unexpected SPAN array type");
 		return 99;

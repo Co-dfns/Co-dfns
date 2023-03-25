@@ -11,9 +11,9 @@ is_numeric←'is_numeric_ibeam'⌶
 is_char←'is_char_ibeam'⌶
 is_integer←'is_integer_ibeam'⌶
 is_bool←{11≡⎕DR squeeze ⍵}
-max_shp←'max_shp_ibeam'⌶
+max_shp←{⍺←0 ⋄ ⍺('max_shp_ibeam'⌶)⍵}
 has_nat_vals←'has_nat_vals_ibeam'⌶
-chk_scl←{(⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
+chk_scl←{⍺←0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
 chk_valid_shape←{
 	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4
 	{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
@@ -300,9 +300,7 @@ rot←reverse_last ambiv rotate_last
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 
 ⍝ ¨: Each
-map_monadic←{⎕SIGNAL 16}
-map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ veach ⍵}
-map←{⍺ ⍺⍺ map_dyadic ⍵}
+map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ veach ⍵}
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
 reduce←{
