@@ -3,8 +3,6 @@ EXPORT struct cdf_prim_loc {
 	wchar_t **__names;
 	struct cell_func *q_signal;
 	struct cell_func *q_dr;
-	struct cell_moper *q_veach;
-	struct cell_doper *q_ambiv;
 	struct cell_func_box *squeeze;
 	struct cell_func_box *is_simple;
 	struct cell_func_box *is_numeric;
@@ -21,6 +19,8 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *both_char;
 	struct cell_func_box *both_bool;
 	struct cell_moper *numeric;
+	struct cell_doper *ambiv;
+	struct cell_moper_box *veach;
 	struct cell_moper *scalar;
 	struct cell_func *set;
 	struct cell_func *brk;

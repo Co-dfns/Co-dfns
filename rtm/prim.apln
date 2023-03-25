@@ -3,8 +3,6 @@
 ⍝ Basic system functions
 q_signal←'q_signal_ibeam'⌶
 q_dr←'q_dr_ibeam'⌶
-q_veach←'q_veach_ibeam'⌶⌶
-q_ambiv←'q_ambiv_ibeam'⌶⌶⌶
 
 ⍝ Utilities
 squeeze←'squeeze_ibeam'⌶
@@ -27,13 +25,15 @@ both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
+ambiv←'q_ambiv_ibeam'⌶⌶⌶
+veach←'q_veach_ibeam'⌶⌶
 scalar←{
 	⍺ chk_scl ⍵: 
 	s←⍺ max_shp ⍵
 	0≡≢,⍺:s⍴0
 	0≡≢,⍵:s⍴0
 	⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵
-	s⍴⍺ ∇ ⎕VEACH ⍵
+	s⍴⍺ ∇ veach ⍵
 }
 
 ⍝ Assignment
@@ -46,11 +46,11 @@ brk←{⍵⌷⍺}
 rgt←{⍵}
 
 ⍝ ⊣: Left
-lft←{⍵} ⎕AMBIV {⍺}
+lft←{⍵} ambiv {⍺}
 
 ⍝ ⍴: Shape / Reshape
 reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
-rho←('shape_ibeam'⌶) ⎕AMBIV reshape
+rho←('shape_ibeam'⌶) ambiv reshape
 
 ⍝ ,: Ravel / Catenate
 cat←{
@@ -83,10 +83,10 @@ depth←{
 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
 	⎕SIGNAL 16
 }
-eqv←depth ⎕AMBIV ('same_ibeam'⌶)
+eqv←depth ambiv ('same_ibeam'⌶)
 
 ⍝ ≢: Tally / Not Same
-nqv←{⊃⍴⍵} ⎕AMBIV ('nqv_ibeam'⌶)
+nqv←{⊃⍴⍵} ambiv ('nqv_ibeam'⌶)
 
 ⍝ ⌷: Materialize | Squad indexing
 materialize←{⍵}
@@ -95,7 +95,7 @@ index←{idx←⊃⍺ ⋄ rnk←≢⍴idx
 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16
 	(⍴idx)⍴idx('index_ibeam'⌶)⍵
 }
-sqd←materialize ⎕AMBIV index
+sqd←materialize ambiv index
 
 ⍝ ⍳: Index Generate | Index Of
 index_gen←{
@@ -106,34 +106,34 @@ index_gen←{
 	⎕SIGNAL 16
 }
 index_of←{⎕SIGNAL 16}
-iot←index_gen ⎕AMBIV index_of
+iot←index_gen ambiv index_of
 
 ⍝ ⊃: First / Pick
-dis←('disclose_ibeam'⌶) ⎕AMBIV {⎕SIGNAL 16}
+dis←('disclose_ibeam'⌶) ambiv {⎕SIGNAL 16}
 
 ⍝ ⊂: Enclose / Partition
 enclose←{
 	0≡≡⍵:⍵
 	'enclose_ibeam'⌶ ⍵
 }
-par←enclose ⎕AMBIV {⎕SIGNAL 16}
+par←enclose ambiv {⎕SIGNAL 16}
 
 ⍝ +: Conjugate | Addition
 conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}
-add←conjugate ⎕AMBIV ('add_vec_ibeam'⌶ numeric scalar)
+add←conjugate ambiv ('add_vec_ibeam'⌶ numeric scalar)
 
 ⍝ -: Negate | Subtract
-sub←{0-⍵} ⎕AMBIV ('sub_vec_ibeam'⌶ numeric scalar)
+sub←{0-⍵} ambiv ('sub_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ×: Sign | Multiply
 sign←{
 	1289=⎕DR ⍵:⍵÷|⍵
 	(-⍵<0)+0<⍵
 }
-mul←sign ⎕AMBIV ('mul_vec_ibeam'⌶ numeric scalar)
+mul←sign ambiv ('mul_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ÷: Reciprocal | Divide
-div←{1÷⍵} ⎕AMBIV ('div_vec_ibeam'⌶ numeric scalar)
+div←{1÷⍵} ambiv ('div_vec_ibeam'⌶ numeric scalar)
 
 ⍝ |: Absolute Value | Residue
 absolute←{
@@ -142,7 +142,7 @@ absolute←{
 	'abs_ibeam'⌶ ⍵
 }
 residue←{⍵-⍺×⌊⍵÷⍺+0=⍺}
-res←absolute numeric ⎕AMBIV residue
+res←absolute numeric ambiv residue
 
 ⍝ ⌊: Floor | Minimum
 floor_array←{
@@ -150,7 +150,7 @@ floor_array←{
 	1289=⎕DR ⍵:⎕SIGNAL 16
 	'floor_vec_ibeam'⌶ ⍵
 }
-min←floor_array numeric ⎕AMBIV ('min_vec_ibeam'⌶ numeric scalar)
+min←floor_array numeric ambiv ('min_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⌈: Ceiling | Maximum
 ceil_array←{
@@ -158,13 +158,13 @@ ceil_array←{
 	1289=⎕DR ⍵:-⌊-⍵
 	'ceil_vec_ibeam'⌶ ⍵
 }
-max←ceil_array numeric ⎕AMBIV ('max_vec_ibeam'⌶ numeric scalar)
+max←ceil_array numeric ambiv ('max_vec_ibeam'⌶ numeric scalar)
 
 ⍝ *: Exponent | Power
-exp←'exp_vec_ibeam'⌶ numeric ⎕AMBIV ('pow_vec_ibeam'⌶ numeric scalar)
+exp←'exp_vec_ibeam'⌶ numeric ambiv ('pow_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ⍟: Natural Logarithm | Logarithm
-log←'nlg_vec_ibeam'⌶ numeric ⎕AMBIV ('log_vec_ibeam'⌶ numeric scalar)
+log←'nlg_vec_ibeam'⌶ numeric ambiv ('log_vec_ibeam'⌶ numeric scalar)
 
 ⍝ ○: Pi Times | Trigonometric Functions
 pitimes←{3.14159265358979323846×⍵}
@@ -197,26 +197,26 @@ trig←{
 	¯12=⍺:*⍵×0J1
 	⎕SIGNAL 11
 }
-cir←pitimes numeric ⎕AMBIV (trig numeric scalar)
+cir←pitimes numeric ambiv (trig numeric scalar)
 
 ⍝ !: Factorial | Binomial
 binomial←{
 	∨⌿,(⍵=⌊⍵)∧(⍵<0)∧⍺≠⌊⍺:⎕SIGNAL 11
 	(!⍵)÷(!⍺)×!⍵-⍺
 }
-fac←'factorial_vec_ibeam'⌶ numeric ⎕AMBIV (binomial numeric scalar)
+fac←'factorial_vec_ibeam'⌶ numeric ambiv (binomial numeric scalar)
 
 ⍝ ~: Not | Without
 notscl←{is_bool ⍵:'not_vec_ibeam'⌶ ⍵ ⋄ ⎕SIGNAL 11}
 without←{⎕SIGNAL 16}
-not←notscl ⎕AMBIV without
+not←notscl ambiv without
 
 ⍝ ∧: And
 logand←{
 	⍺ both_bool ⍵:⍺('and_vec_ibeam'⌶)⍵
 	⍺×⍵÷z+0=z←⍺∨⍵
 }
-and←{⎕SIGNAL 2}⎕AMBIV (logand numeric scalar)
+and←{⎕SIGNAL 2}ambiv (logand numeric scalar)
 
 ⍝ ∨: Or
 logor←{
@@ -226,27 +226,27 @@ logor←{
 	⍺ both_integer ⍵:(|⍺){~∨⌿m←⍵≠0:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
 	(|⍺){~∨⌿m←⍵>1e¯12:⍺ ⋄ ((⍺×~m)+m×⍵)∇(⍵×~m)+m×⍵|⍺}|⍵
 }
-lor←{⎕SIGNAL 2}⎕AMBIV (logor numeric scalar)
+lor←{⎕SIGNAL 2}ambiv (logor numeric scalar)
 
 ⍝ ⍲: Not and
-nan←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}
+nan←{⎕SIGNAL 2}ambiv{⍺ both_bool ⍵:~⍺∧⍵ ⋄ ⎕SIGNAL 11}
 
 ⍝ ⍱: Not Or
-nor←{⎕SIGNAL 2}⎕AMBIV{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}
+nor←{⎕SIGNAL 2}ambiv{⍺ both_bool ⍵:~⍺∨⍵ ⋄ ⎕SIGNAL 11}
 
 ⍝ <: Less than
 lessthan←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('lth_vec_ibeam'⌶)⍵
 }
-lth←{⎕SIGNAL 2} ⎕AMBIV (lessthan numeric scalar)
+lth←{⎕SIGNAL 2} ambiv (lessthan numeric scalar)
 
 ⍝ ≤: Less than or equal
 lesseql←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('lte_vec_ibeam'⌶)⍵
 }
-lte←{⎕SIGNAL 2}⎕AMBIV (lesseql numeric scalar)
+lte←{⎕SIGNAL 2}ambiv (lesseql numeric scalar)
 
 ⍝ =: Equal
 eql_vec←'eql_vec_ibeam'⌶
@@ -255,21 +255,21 @@ equal←{
 	⍺ both_char ⍵:⍺ eql_vec ⍵
 	0
 }
-eql←{⎕SIGNAL 2}⎕AMBIV (equal scalar)
+eql←{⎕SIGNAL 2}ambiv (equal scalar)
 
 ⍝ ≥: Greater than or equal
 greatereql←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('gte_vec_ibeam'⌶)⍵
 }
-gte←{⎕SIGNAL 2}⎕AMBIV (greatereql numeric scalar)
+gte←{⎕SIGNAL 2}ambiv (greatereql numeric scalar)
 
 ⍝ >: Greater than
 greaterthan←{
 	1289≡⎕DR ⍵:⎕SIGNAL 11 ⋄ 1289≡⎕DR ⍺:⎕SIGNAL 11
 	⍺('gth_vec_ibeam'⌶)⍵
 }
-gth←{⎕SIGNAL 2}⎕AMBIV (greaterthan numeric scalar)
+gth←{⎕SIGNAL 2}ambiv (greaterthan numeric scalar)
 
 ⍝ ≠: Not Equal | First Occurrence
 firstocc←{⎕SIGNAL 16}
@@ -279,29 +279,29 @@ noteq←{
 	⍺ both_char ⍵:⍺ neq_vec ⍵
 	1
 }
-neq←firstocc ⎕AMBIV (noteq scalar)
+neq←firstocc ambiv (noteq scalar)
 
 ⍝ ↑: Mix | Take
 mix←{⎕SIGNAL 16}
 take←{(⊂⍳⍺)⌷⍵}
-tke←mix ⎕AMBIV take
+tke←mix ambiv take
 
 ⍝ ↓: Split | Drop
 split←{⎕SIGNAL 16}
 drop←{(⊂⍺+⍳(≢⍵)-⍺)⌷⍵}
-drp←split ⎕AMBIV drop
+drp←split ambiv drop
 
 ⍝ ⌽: Reverse Last | Rotate Last
 reverse_last←{(⊂(≢⍵)-1+⍳≢⍵)⌷⍵}
 rotate_last←{⎕SIGNAL 16}
-rot←reverse_last ⎕AMBIV rotate_last
+rot←reverse_last ambiv rotate_last
 
 ⍝ ⍨: Commute
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 
 ⍝ ¨: Each
 map_monadic←{⎕SIGNAL 16}
-map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ ⎕VEACH ⍵}
+map_dyadic←{⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ veach ⍵}
 map←{⍺ ⍺⍺ map_dyadic ⍵}
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
