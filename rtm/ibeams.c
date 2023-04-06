@@ -812,11 +812,100 @@ int
 veach_monadic(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
-	int err;
+	struct cell_func *oper;
+	struct cell_array *t, *x, **tv;
+	void *buf;
+	size_t count;
+	int err, fb, fx;
 	
-	CHK(16, done, L"Monadic veach is not ready.");
+	oper = self->fv[1];
+	fb = fx = 0;
+	t = x = NULL;
+	tv = NULL;
+	
+	CHK(mk_array(&t, ARR_NESTED, STG_HOST, 1), done, 
+	    L"mk_array(&t, ARR_NESTED, STG_HOST, 1)");
+	
+	t->shape[0] = count = array_values_count(r);
+	
+	CHK(alloc_array(t), done, L"alloc_array(t)");
+	
+	tv = t->values;
+	buf = r->values;
+	
+	if (r->storage == STG_DEVICE) {
+		buf = malloc(count * array_element_size(r));
+		
+		CHK(buf == NULL, done, L"Failed to allocate ⍵ buffer");
+		
+		fb = 1;
+		
+		CHK(af_eval(r->values), done, L"af_eval(r->values)");
+		CHK(af_get_data_ptr(buf, r->values), done, 
+		    L"af_get_data_ptr(buf, r->values)");
+	}
+	
+	if (r->type != ARR_NESTED) {
+		CHK(mk_array(&x, r->type, STG_HOST, 0), done,
+		    L"mk_array(&x, r->type, STG_HOST, 0)");
+		    
+		fx = 1;
+		
+		CHK(alloc_array(x), done, L"alloc_array(x)");
+	}
+	
+	#define VEACH_MON_LOOP(tp) {					\
+		tp *rv = buf;						\
+		tp *xv = x->values;					\
+									\
+		for (size_t i = 0; i < count; i++) {			\
+			*xv = rv[i];					\
+									\
+			CHK((oper->fptr_mon)(tv + i, x, oper), done,	\
+			    L"(oper->fptr_mon)(tv + i, x, oper)");	\
+		}							\
+	}								\
+	
+	switch (r->type) {
+	case ARR_BOOL:VEACH_MON_LOOP(int8_t);break;
+	case ARR_SINT:VEACH_MON_LOOP(int16_t);break;
+	case ARR_INT:VEACH_MON_LOOP(int32_t);break;
+	case ARR_DBL:VEACH_MON_LOOP(double);break;
+	case ARR_CMPX:VEACH_MON_LOOP(struct apl_cmpx);break;
+	case ARR_CHAR8:VEACH_MON_LOOP(uint8_t);break;
+	case ARR_CHAR16:VEACH_MON_LOOP(uint16_t);break;
+	case ARR_CHAR32:VEACH_MON_LOOP(uint32_t);break;
+	case ARR_MIXED:
+		CHK(16, done, L"veach does not support mixed arrays");
+		break;
+	case ARR_NESTED:
+		struct cell_array **rv = buf;
+		
+		for (size_t i = 0; i < count; i++) {
+			x = rv[i];
+			
+			CHK((oper->fptr_mon)(tv + i, x, oper), done,
+			    L"(oper->fptr_mon)(tv + i, x, oper)");
+		}
+		
+		break;
+	default:
+		CHK(99, done, L"Bad input array type");
+	}
+	
+	err = 0;
+	*z = t;
 	
 done:
+	if (fb)
+		free(buf);
+	
+	if (fx)
+		release_array(x);
+	
+	if (err)
+		release_array(t);
+	
 	return err;
 }
 
