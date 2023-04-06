@@ -833,13 +833,10 @@ veach_dyadic(struct cell_array **z,
 	oper = self->fv[1];
 
 	t = x = y = NULL;
+	fl = fr = fy = fx = 0;
 	
 	lbuf = l->values;
 	rbuf = r->values;
-	fl = 0;
-	fr = 0;
-	fy = 0;
-	fx = 0;
 	
 	if (l->type == ARR_SPAN || r->type == ARR_SPAN) {
 		TRC(99, L"Unexpected SPAN array type");
