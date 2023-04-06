@@ -2,6 +2,13 @@
 
 r←0.02	⋄ v←0.03
 
+extract_S←{S←0⌷⍵}
+extract_X←{S←0⌷⍵ ⋄ X←1⌷⍵}
+extract_T←{S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺}
+vsqrtT←{S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5}
+get_L←{S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5
+ L←|(((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT)-vsqrtT}
+
 Run←{S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5
  L←|(((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT)-vsqrtT
  (÷(○2)*0.5)×(*(L×L)÷¯2)×÷1+0.2316419×L}

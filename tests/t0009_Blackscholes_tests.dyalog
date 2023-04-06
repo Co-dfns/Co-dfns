@@ -1,34 +1,40 @@
 ﻿:Require file://t0009.dyalog
 :Namespace t0009_tests
 
- tn←'t0009' ⋄ cn←'c0009'
- cd←⎕NS⍬ ⋄ dy←#.⍎tn
- ∆00_TEST←{#.UT.expect←0
-  _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0009←tn #.codfns.Fix ⎕SRC dy}
-
- bindings←{⍵[⍋⍵;]}↑'Run' 'bs' 'CNDP2',('CNDP2∆'∘,∘⍕¨1+⍳5),'bs'∘,∘⍕¨1+⍳9
- ∆01_TEST←{#.UT.expect←bindings ⋄ cd.⎕NL 3}
-
  MK∆T3←{fn tl←⍺⍺ ⋄ nv←⊃(⍎'dy.',fn)/⍵⍵ ⋄ cv←⊃(⍎'cd.',fn)/⍵⍵
   ##.UT.expect←(≢,nv)⍴1 ⋄ ,tl>|nv-cv}
 
- D←{⍉1+?⍵ 3⍴1000}25 ⋄ L←,¯1↑D ⋄ R←2↑D
- ∆03_TEST←'Run' 1e¯10 MK∆T3 L R
-
- GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
- D←⍉GD 7 ⋄ R←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L←,¯1↑D
+ tn←'t0009' ⋄ cn←'c0009'
+ cd←⎕NS⍬ ⋄ dy←#.⍎tn
+ bindings←0⍴⊂''
+ bindings,←'extract_S' 'extract_X' 'extract_T' 'vsqrtT' 'get_L'
+ bindings,←'Run' 'bs' 'CNDP2'
+ bindings,←('CNDP2∆'∘,∘⍕¨1+⍳5),'bs'∘,∘⍕¨1+⍳9
+ bindings←{⍵[⍋⍵;]}↑bindings
  coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442
+ D←{⍉1+?⍵ 3⍴1000}25 ⋄ L1←,¯1↑D ⋄ R1←2↑D
+ GD←{⍉↑(5+?⍵⍴25)(1+?⍵⍴100)(0.25+100÷⍨?⍵⍴1000)}
+ D←⍉GD 7 ⋄ R2←⊃((⎕DR 2↑D)323)⎕DR 2↑D ⋄ L2←,¯1↑D
 
- ∆04_TEST←{#.UT.expect←L dy.bs1 R ⋄ L cd.bs1 R}
- ∆05_TEST←'bs2' 1e¯10 MK∆T3 L R
- ∆06_TEST←'bs3' 1e¯10 MK∆T3 L R
- ∆07_TEST←{#.UT.expect←L dy.bs4 R ⋄ L cd.bs4 R}
- ∆08_TEST←{#.UT.expect←L dy.bs5 R ⋄ L cd.bs5 R}
- ∆09_TEST←{#.UT.expect←dy.bs6 coeff ⋄ L cd.bs6 coeff}
- ∆10_TEST←{#.UT.expect←dy.bs7 coeff ⋄ L cd.bs7 coeff}
- ∆11_TEST←{#.UT.expect←L dy.bs8 R ⋄ L cd.bs8 R}
- ∆12_TEST←'bs9' 1e¯10 MK∆T3 L R
- ∆13_TEST←'bs' 1e¯10 MK∆T3 L R
- ∆14_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
+ ∆00_TEST←{#.UT.expect←0
+  _←#.⎕EX cn ⋄ 0⊣cd∘←#.c0009←tn #.codfns.Fix ⎕SRC dy}
+ ∆01_TEST←{#.UT.expect←bindings ⋄ cd.⎕NL 3}
+ ∆02_TEST←{#.UT.expect←L1 dy.extract_S R1 ⋄ L1 cd.extract_S R1}
+ ∆03_TEST←{#.UT.expect←L1 dy.extract_X R1 ⋄ L1 cd.extract_X R1}
+ ∆04_TEST←{#.UT.expect←L1 dy.extract_T R1 ⋄ L1 cd.extract_T R1}
+ ∆05_TEST←{#.UT.expect←L1 dy.vsqrtT R1 ⋄ L1 cd.vsqrtT R1}
+ ∆06_TEST←{#.UT.expect←L1 dy.get_L R1 ⋄ L1 cd.get_L R1}
+ ∆07_TEST←'Run' 1e¯10 MK∆T3 L1 R1
+ ∆08_TEST←{#.UT.expect←L2 dy.bs1 R2 ⋄ L2 cd.bs1 R2}
+ ∆09_TEST←'bs2' 1e¯10 MK∆T3 L2 R2
+ ∆10_TEST←'bs3' 1e¯10 MK∆T3 L2 R2
+ ∆11_TEST←{#.UT.expect←L2 dy.bs4 R2 ⋄ L2 cd.bs4 R2}
+ ∆12_TEST←{#.UT.expect←L2 dy.bs5 R2 ⋄ L2 cd.bs5 R2}
+ ∆13_TEST←{#.UT.expect←dy.bs6 coeff ⋄ L2 cd.bs6 coeff}
+ ∆14_TEST←{#.UT.expect←dy.bs7 coeff ⋄ L2 cd.bs7 coeff}
+ ∆15_TEST←{#.UT.expect←L2 dy.bs8 R2 ⋄ L2 cd.bs8 R2}
+ ∆16_TEST←'bs9' 1e¯10 MK∆T3 L2 R2
+ ∆17_TEST←'bs' 1e¯10 MK∆T3 L2 R2
+ ∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace
