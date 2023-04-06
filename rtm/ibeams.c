@@ -849,7 +849,7 @@ veach_dyadic(struct cell_array **z,
 	if (l->storage == STG_DEVICE) {
 		lbuf = malloc(lc * array_element_size(l));
 		
-		CHK(lbuf == NULL, fail, L"Failed to allocate ⍵ buffer");
+		CHK(lbuf == NULL, fail, L"Failed to allocate ⍺ buffer");
 		
 		fl = 1;
 		
@@ -861,7 +861,7 @@ veach_dyadic(struct cell_array **z,
 	if (r->storage == STG_DEVICE) {
 		rbuf = malloc(rc * array_element_size(r));
 		
-		CHK(rbuf == NULL, fail, L"Failed to allocate ⍺ buffer");
+		CHK(rbuf == NULL, fail, L"Failed to allocate ⍵ buffer");
 		
 		fr = 1;
 		
