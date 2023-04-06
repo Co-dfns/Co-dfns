@@ -33,7 +33,7 @@ scalar←{
 	0≡≢,⍺:s⍴0
 	0≡≢,⍵:s⍴0
 	⍺ both_simple ⍵:s⍴⍺ ⍺⍺ ⍵
-	s⍴⍺ ∇ veach ⍵
+	s⍴squeeze ⍺ ∇ veach ⍵
 }
 
 ⍝ Assignment
@@ -300,7 +300,7 @@ rot←reverse_last ambiv rotate_last
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 
 ⍝ ¨: Each
-map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴⍺ ⍺⍺ veach ⍵}
+map←{⍺←⊢ ⋄ ⍺ chk_scl ⍵: ⋄ s←⍺ max_shp ⍵ ⋄ s⍴squeeze ⍺ ⍺⍺ veach ⍵}
 
 ⍝ ⌿: Reduce First | N-wise Reduce First
 reduce←{

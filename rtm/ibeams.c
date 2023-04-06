@@ -1011,8 +1011,7 @@ veach_dyadic(struct cell_array **z,
 	    CHK(99, fail, L"Unknown simple type combo"))
 	
 done:
-	CHK(squeeze_array(t), fail, L"squeeze_array(t)");
-	
+	err = 0;
 	*z = t;
 
 fail:
