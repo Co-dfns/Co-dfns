@@ -243,8 +243,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *depth;
 	struct cell_func *eqv;
 	struct cell_func *nqv;
-	struct cell_func *materialize;
-	struct cell_func *index;
+	struct cell_func_box *index;
 	struct cell_func *sqd;
 	struct cell_func *index_gen;
 	struct cell_func *index_of;
@@ -312,6 +311,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_moper *rdf;
 	struct cell_func *rpf;
 	struct cell_doper *dot;
+	struct cell_moper *oup;
 	struct cell_doper *pow;
 	struct cell_doper *jot;
 } cdf_prim;

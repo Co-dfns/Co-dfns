@@ -89,13 +89,16 @@ eqv←depth ambiv ('same_ibeam'⌶)
 nqv←{⊃⍴⍵} ambiv ('nqv_ibeam'⌶)
 
 ⍝ ⌷: Materialize | Squad indexing
-materialize←{⍵}
-index←{idx←⊃⍺ ⋄ rnk←≢⍴idx
+index←'index_ibeam'⌶
+sqd←{⍺←⊢
+	1≡⍺ 1:⍵
+	idx←⊃⍺⊣0 ⋄ rnk←≢⍴idx
 	0≡is_integer idx:⎕SIGNAL 11
 	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16
-	(⍴idx)⍴idx('index_ibeam'⌶)⍵
+	1≡≢⍴⍵:(⍴idx)⍴idx index ⍵
+	i←(idx×csz)∘.+⍳csz←×⌿csp←1↓⍴⍵
+	((⍴idx),csp)⍴i index ⍵
 }
-sqd←materialize ambiv index
 
 ⍝ ⍳: Index Generate | Index Of
 index_gen←{
@@ -313,7 +316,7 @@ nwreduce←{op←⍺⍺¨
 	z⊣(⌽⍳⍺-1){z⊢←((⊂⍺+⍳rc)⌷⍵)op z}¨⊂⍵⊣z←(⍺-1)↓⍵
 }
 rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5
-	⍬≡⍺⊣⍬:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵
+	1≡⍺ 1:⍺⍺ reduce ⍵ ⋄ ⍺(⍺⍺ nwreduce)⍵
 }
 
 ⍝ ⌿⌿: Replicate First
@@ -321,6 +324,9 @@ rpf←{⎕SIGNAL 16}
 
 ⍝ .: Inner Product
 dot←{⍺⍺⌿⍺ ⍵⍵¨ ⍵}
+
+⍝ ∘.: Outer Product
+oup←{op←⍺⍺ ⋄ ((⍴⍺),⍴⍵)⍴⊃,⌿⍺{⊃,⌿⍺∘op¨⍵}¨⊂⍵}
 
 ⍝ ⍣: Power Operator
 pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}
