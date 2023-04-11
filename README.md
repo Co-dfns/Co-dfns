@@ -15,6 +15,8 @@ you can effectively accomplish with APL.
 
 ## Getting Help
 
+Documentation on Co-dfns can be found in the [docs/](docs/) folder. 
+
 APL and Co-dfns can be a little different at first. I encourage you to contact 
 me (arcfide@sacrideo.us) for any questions you may have regarding either APL or Co-dfns. 
 
