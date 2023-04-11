@@ -763,7 +763,7 @@ DEFN_GET_SCALAR_CHAR(get_scalar_char8, uint8_t)
 DEFN_GET_SCALAR_CHAR(get_scalar_char16, uint16_t)
 DEFN_GET_SCALAR_CHAR(get_scalar_char32, uint32_t)
 
-#define DEFN_MKSCALAR(name, atype, ctype)		\
+#define DEFN_MKARRAY(name, atype, ctype)		\
 int							\
 name(struct cell_array **z, ctype val)			\
 {							\
@@ -783,14 +783,52 @@ name(struct cell_array **z, ctype val)			\
 	return 0;					\
 }
 
-DEFN_MKSCALAR(mk_scalar_bool, ARR_BOOL, int8_t)
-DEFN_MKSCALAR(mk_scalar_sint, ARR_SINT, int16_t)
-DEFN_MKSCALAR(mk_scalar_int, ARR_INT, int32_t)
-DEFN_MKSCALAR(mk_scalar_dbl, ARR_DBL, double)
-DEFN_MKSCALAR(mk_scalar_cmpx, ARR_CMPX, struct apl_cmpx)
-DEFN_MKSCALAR(mk_scalar_char8, ARR_CHAR8, uint8_t)
-DEFN_MKSCALAR(mk_scalar_char16, ARR_CHAR16, uint16_t)
-DEFN_MKSCALAR(mk_scalar_char32, ARR_CHAR32, uint32_t)
+DEFN_MKARRAY(mk_array_bool, ARR_BOOL, int8_t)
+DEFN_MKARRAY(mk_array_sint, ARR_SINT, int16_t)
+DEFN_MKARRAY(mk_array_int, ARR_INT, int32_t)
+DEFN_MKARRAY(mk_array_dbl, ARR_DBL, double)
+DEFN_MKARRAY(mk_array_cmpx, ARR_CMPX, struct apl_cmpx)
+DEFN_MKARRAY(mk_array_char8, ARR_CHAR8, uint8_t)
+DEFN_MKARRAY(mk_array_char16, ARR_CHAR16, uint16_t)
+DEFN_MKARRAY(mk_array_char32, ARR_CHAR32, uint32_t)
+
+int
+mk_array_nested(struct cell_array **z, struct cell_array *val)
+{
+	*z = retain_cell(val);
+	
+	return 0;
+}
+
+int
+array_get_host_buffer(void **res, int *flag, struct cell_array *arr)
+{
+	void *buf;
+	int err;
+	
+	if (arr->storage == STG_HOST) {
+		*res = arr->values;
+		*flag = 0;
+		
+		return 0;
+	}
+	
+	buf = malloc(array_values_count(arr) * array_element_size(arr));
+	
+	CHK(buf == NULL, fail, L"Failed to allocate buffer");
+	
+	CHKAF(af_eval(arr->values), fail);
+	CHKAF(af_get_data_ptr(buf, arr->values), fail);
+	
+	*res = buf;
+	*flag = 1;
+	
+fail:
+	if (err)
+		free(buf);
+	
+	return err;
+}
 
 int
 cmpx_eq(struct apl_cmpx x, struct apl_cmpx y)

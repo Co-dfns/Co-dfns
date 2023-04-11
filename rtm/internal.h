@@ -21,6 +21,8 @@ int is_real_array(struct cell_array *);
 int is_numeric_array(struct cell_array *);
 int is_char_array(struct cell_array *);
 
+int array_get_host_buffer(void **, int *, struct cell_array *);
+
 int get_scalar_bool(int8_t *, struct cell_array *);
 int get_scalar_sint(int16_t *, struct cell_array *);
 int get_scalar_int(int32_t *, struct cell_array *);
@@ -31,14 +33,15 @@ int get_scalar_char8(uint8_t *, struct cell_array *);
 int get_scalar_char16(uint16_t *, struct cell_array *);
 int get_scalar_char32(uint32_t *, struct cell_array *);
 
-int mk_scalar_bool(struct cell_array **, int8_t);
-int mk_scalar_sint(struct cell_array **, int16_t);
-int mk_scalar_int(struct cell_array **, int32_t);
-int mk_scalar_dbl(struct cell_array **, double);
-int mk_scalar_cmpx(struct cell_array **, struct apl_cmpx);
-int mk_scalar_char8(struct cell_array **, uint8_t);
-int mk_scalar_char16(struct cell_array **, uint16_t);
-int mk_scalar_char32(struct cell_array **, uint32_t);
+int mk_array_bool(struct cell_array **, int8_t);
+int mk_array_sint(struct cell_array **, int16_t);
+int mk_array_int(struct cell_array **, int32_t);
+int mk_array_dbl(struct cell_array **, double);
+int mk_array_cmpx(struct cell_array **, struct apl_cmpx);
+int mk_array_char8(struct cell_array **, uint8_t);
+int mk_array_char16(struct cell_array **, uint16_t);
+int mk_array_char32(struct cell_array **, uint32_t);
+int mk_array_nested(struct cell_array **, struct cell_array *);
 
 int has_integer_values(int *, struct cell_array *);
 int has_natural_values(int *, struct cell_array *);

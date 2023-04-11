@@ -53,6 +53,8 @@ bs8←{S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5
 
 CNDP2∆5←{L←|⍵ ⋄ B←⍵≥0 ⋄ 5×{coeff+.×⍵*1+⍳5}¨÷1+0.2316419×L}
 bs9←{S←0⌷⍵ ⋄ X←1⌷⍵ ⋄ T←⍺ ⋄ vsqrtT←v×T*0.5
- D1←((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT ⋄ D2←D1-vsqrtT ⋄ CNDP2 D1}
+ D1←((⍟S÷X)+(r+(v*2)÷2)×T)÷vsqrtT ⋄ D2←D1-vsqrtT ⋄ CNDP2∆5 D1}
+
+CNDP2∆6←{⊢¨⍵}
 
 :EndNamespace

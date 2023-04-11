@@ -9,7 +9,7 @@
  bindings←0⍴⊂''
  bindings,←'extract_S' 'extract_X' 'extract_T' 'vsqrtT' 'get_L'
  bindings,←'Run' 'bs' 'CNDP2'
- bindings,←('CNDP2∆'∘,∘⍕¨1+⍳5),'bs'∘,∘⍕¨1+⍳9
+ bindings,←('CNDP2∆'∘,∘⍕¨1+⍳6),'bs'∘,∘⍕¨1+⍳9
  bindings←{⍵[⍋⍵;]}↑bindings
  coeff←0.31938153 ¯0.356563782 1.781477937 ¯1.821255978 1.33027442
  D←{⍉1+?⍵ 3⍴1000}25 ⋄ L1←,¯1↑D ⋄ R1←2↑D
@@ -32,9 +32,10 @@
  ∆12_TEST←{#.UT.expect←L2 dy.bs5 R2 ⋄ L2 cd.bs5 R2}
  ∆13_TEST←{#.UT.expect←dy.bs6 coeff ⋄ L2 cd.bs6 coeff}
  ∆14_TEST←{#.UT.expect←dy.bs7 coeff ⋄ L2 cd.bs7 coeff}
- ∆15_TEST←{#.UT.expect←L2 dy.bs8 R2 ⋄ L2 cd.bs8 R2}
- ∆16_TEST←'bs9' 1e¯10 MK∆T3 L2 R2
- ∆17_TEST←'bs' 1e¯10 MK∆T3 L2 R2
+ ∆15_TEST←{#.UT.expect←dy.CNDP2∆6 R2 ⋄ cd.CNDP2∆6 R2}
+ ∆16_TEST←{#.UT.expect←L2 dy.bs8 R2 ⋄ L2 cd.bs8 R2}
+ ∆17_TEST←{#.UT.expect←L2 dy.bs9 R2 ⋄ L2 cd.bs9 R2}
+ ∆18_TEST←'bs' 1e¯10 MK∆T3 L2 R2
  ∆∆_TEST←{#.UT.expect←,¨0 0 ⋄ _←#.⎕EX¨cn tn ⋄ #.⎕NC¨cn tn}
 
 :EndNamespace

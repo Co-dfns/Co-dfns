@@ -15,7 +15,7 @@ struct cell_moper name##_closure = {CELL_MOPER, 1, am, ad, fm, fd, 0};	\
 struct cell_moper *name = &name##_closure;				\
 
 #define DECL_DOPER(name, aam, aad, afm, afd, fam, fad, ffm, ffd)	\
-struct cell_doper name##_closure = {CELL_DOPER, 1, 			\
+struct cell_doper name##_closure = {CELL_DOPER, 1,			\
 	aam, aad, afm, afd, fam, fad, ffm, ffd, 0			\
 };									\
 struct cell_doper *name = &name##_closure;				\
@@ -123,7 +123,7 @@ q_dr_func(struct cell_array **z,
 		return 99;
 	}
 	
-	return mk_scalar_sint(z, val);
+	return mk_array_sint(z, val);
 }
 
 DEF_MON(q_dr_func_mon, q_dr_func)
@@ -133,7 +133,7 @@ int
 is_simple_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
-	return mk_scalar_bool(z, r->type != ARR_NESTED);
+	return mk_array_bool(z, r->type != ARR_NESTED);
 }
 
 DECL_FUNC(is_simple_ibeam, is_simple_func, error_dya)
@@ -143,9 +143,9 @@ is_numeric_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
 	if (is_numeric_array(r))
-		return mk_scalar_bool(z, 1);
+		return mk_array_bool(z, 1);
 	
-	return mk_scalar_bool(z, 0);
+	return mk_array_bool(z, 0);
 }
 
 DECL_FUNC(is_numeric_ibeam, is_numeric_func, error_dya)
@@ -155,9 +155,9 @@ is_char_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
 	if (is_char_array(r))
-		return mk_scalar_bool(z, 1);
+		return mk_array_bool(z, 1);
 	
-	return mk_scalar_bool(z, 0);
+	return mk_array_bool(z, 0);
 }
 
 DECL_FUNC(is_char_ibeam, is_char_func, error_dya)
@@ -167,9 +167,9 @@ is_integer_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
 	if (is_integer_array(r))
-		return mk_scalar_bool(z, 1);
+		return mk_array_bool(z, 1);
 	
-	return mk_scalar_bool(z, 0);
+	return mk_array_bool(z, 0);
 }
 
 DECL_FUNC(is_integer_ibeam, is_integer_func, error_dya)
@@ -281,8 +281,8 @@ identity_func(struct cell_array **z,
 	
 	#define ID_CASE(prim, id)			\
 	if (oper == cdf_prim.##prim) {			\
-		CHK(mk_scalar_bool(z, id), done,	\
-		    L"mk_scalar_bool(z, " L#id L")");	\
+		CHK(mk_array_bool(z, id), done,	\
+		    L"mk_array_bool(z, " L#id L")");	\
 							\
 		goto done;				\
 	}						\
@@ -323,7 +323,7 @@ set_host_values(struct cell_array *t,
 	#define IDX_CHK_LOOP(lt) {					\
 		lt *lv = l->values;					\
 									\
-		for (size_t i = 0; i < count; i++) 			\
+		for (size_t i = 0; i < count; i++)			\
 			if (lv[i] >= range)				\
 				CHK(3, fail, L"Index out of range");	\
 	}								\
@@ -337,7 +337,7 @@ set_host_values(struct cell_array *t,
 		CHK(99, fail, L"Unexpected index element type");
 	}
 	
-	#define SET_LOOP_NESTED(lt) 					\
+	#define SET_LOOP_NESTED(lt)					\
 	STMT_LOOP(struct cell_array *, lt, struct cell_array *, {	\
 		retain_cell(rv[i]);					\
 		release_array(tv[(int64_t)lv[i]]);			\
@@ -700,8 +700,8 @@ same_func(struct cell_array **z,
 	CHK(array_is_same(&is_same, l, r), done, 
 	    L"array_is_same(&is_same, l, r)");
 	
-	CHK(mk_scalar_bool(z, is_same), done, 
-	    L"mk_scalar_bool(z, is_same)");
+	CHK(mk_array_bool(z, is_same), done, 
+	    L"mk_array_bool(z, is_same)");
 	
 done:
 	return err;
@@ -719,8 +719,8 @@ nqv_func(struct cell_array **z,
 	CHK(array_is_same(&is_same, l, r), done, 
 	    L"array_is_same(&is_same, l, r)");
 	
-	CHK(mk_scalar_bool(z, !is_same), done, 
-	    L"mk_scalar_bool(z, !is_same)");
+	CHK(mk_array_bool(z, !is_same), done, 
+	    L"mk_array_bool(z, !is_same)");
 	
 done:
 	return err;
@@ -808,6 +808,108 @@ DECL_FUNC(nqv_ibeam, error_mon, nqv_func)
 		def_expr;										\
 	}
 	
+#define MONADIC_TYPE_SWITCH(tp, expr, fail)			\
+switch ((tp)) {							\
+case ARR_BOOL:  expr(int8_t,              bool,   fail);break;	\
+case ARR_SINT:  expr(int16_t,             sint,   fail);break;	\
+case ARR_INT:   expr(int32_t,             int,    fail);break;	\
+case ARR_DBL:   expr(double,              dbl,    fail);break;	\
+case ARR_CMPX:  expr(struct apl_cmpx,     cmpx,   fail);break;	\
+case ARR_CHAR8: expr(uint8_t,             char8,  fail);break;	\
+case ARR_CHAR16:expr(uint16_t,            char16, fail);break;	\
+case ARR_CHAR32:expr(uint32_t,            char32, fail);break;	\
+case ARR_NESTED:expr(struct cell_array *, nested, fail);break;	\
+default:							\
+	CHK(99, fail, L"Unknown array type.");			\
+}								\
+
+#define DYADIC_TYPE_SWITCH(lt, rt, expr, fail)										\
+switch (type_pair((lt), (rt))) {											\
+case type_pair(ARR_BOOL,   ARR_BOOL):  expr(int8_t,              bool,   int8_t             , bool  , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_SINT):  expr(int8_t,              bool,   int16_t            , sint  , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_INT):   expr(int8_t,              bool,   int32_t            , int   , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_DBL):   expr(int8_t,              bool,   double             , dbl   , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CMPX):  expr(int8_t,              bool,   struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CHAR8): expr(int8_t,              bool,   uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CHAR16):expr(int8_t,              bool,   uint16_t           , char16, fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CHAR32):expr(int8_t,              bool,   uint32_t           , char32, fail);break;	\
+case type_pair(ARR_BOOL,   ARR_NESTED):expr(int8_t,              bool,   struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_SINT,   ARR_BOOL):  expr(int16_t,             sint,   int8_t             , bool  , fail);break;	\
+case type_pair(ARR_SINT,   ARR_SINT):  expr(int16_t,             sint,   int16_t            , sint  , fail);break;	\
+case type_pair(ARR_SINT,   ARR_INT):   expr(int16_t,             sint,   int32_t            , int   , fail);break;	\
+case type_pair(ARR_SINT,   ARR_DBL):   expr(int16_t,             sint,   double             , dbl   , fail);break;	\
+case type_pair(ARR_SINT,   ARR_CMPX):  expr(int16_t,             sint,   struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_SINT,   ARR_CHAR8): expr(int16_t,             sint,   uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_SINT,   ARR_CHAR16):expr(int16_t,             sint,   uint16_t           , char16, fail);break;	\
+case type_pair(ARR_SINT,   ARR_CHAR32):expr(int16_t,             sint,   uint32_t           , char32, fail);break;	\
+case type_pair(ARR_SINT,   ARR_NESTED):expr(int16_t,             sint,   struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_INT,    ARR_BOOL):  expr(int32_t,             int,    int8_t             , bool  , fail);break;	\
+case type_pair(ARR_INT,    ARR_SINT):  expr(int32_t,             int,    int16_t            , sint  , fail);break;	\
+case type_pair(ARR_INT,    ARR_INT):   expr(int32_t,             int,    int32_t            , int   , fail);break;	\
+case type_pair(ARR_INT,    ARR_DBL):   expr(int32_t,             int,    double             , dbl   , fail);break;	\
+case type_pair(ARR_INT,    ARR_CMPX):  expr(int32_t,             int,    struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_INT,    ARR_CHAR8): expr(int32_t,             int,    uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_INT,    ARR_CHAR16):expr(int32_t,             int,    uint16_t           , char16, fail);break;	\
+case type_pair(ARR_INT,    ARR_CHAR32):expr(int32_t,             int,    uint32_t           , char32, fail);break;	\
+case type_pair(ARR_INT,    ARR_NESTED):expr(int32_t,             int,    struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_DBL,    ARR_BOOL):  expr(double,              dbl,    int8_t             , bool  , fail);break;	\
+case type_pair(ARR_DBL,    ARR_SINT):  expr(double,              dbl,    int16_t            , sint  , fail);break;	\
+case type_pair(ARR_DBL,    ARR_INT):   expr(double,              dbl,    int32_t            , int   , fail);break;	\
+case type_pair(ARR_DBL,    ARR_DBL):   expr(double,              dbl,    double             , dbl   , fail);break;	\
+case type_pair(ARR_DBL,    ARR_CMPX):  expr(double,              dbl,    struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_DBL,    ARR_CHAR8): expr(double,              dbl,    uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_DBL,    ARR_CHAR16):expr(double,              dbl,    uint16_t           , char16, fail);break;	\
+case type_pair(ARR_DBL,    ARR_CHAR32):expr(double,              dbl,    uint32_t           , char32, fail);break;	\
+case type_pair(ARR_DBL,    ARR_NESTED):expr(double,              dbl,    struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CMPX,   ARR_BOOL):  expr(struct apl_cmpx,     cmpx,   int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_SINT):  expr(struct apl_cmpx,     cmpx,   int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_INT):   expr(struct apl_cmpx,     cmpx,   int32_t            , int   , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_DBL):   expr(struct apl_cmpx,     cmpx,   double             , dbl   , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CMPX):  expr(struct apl_cmpx,     cmpx,   struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CHAR8): expr(struct apl_cmpx,     cmpx,   uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CHAR16):expr(struct apl_cmpx,     cmpx,   uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CHAR32):expr(struct apl_cmpx,     cmpx,   uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CMPX,   ARR_NESTED):expr(struct apl_cmpx,     cmpx,   struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_BOOL):  expr(uint8_t,             char8,  int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_SINT):  expr(uint8_t,             char8,  int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_INT):   expr(uint8_t,             char8,  int32_t            , int   , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_DBL):   expr(uint8_t,             char8,  double             , dbl   , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CMPX):  expr(uint8_t,             char8,  struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CHAR8): expr(uint8_t,             char8,  uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CHAR16):expr(uint8_t,             char8,  uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CHAR32):expr(uint8_t,             char8,  uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_NESTED):expr(uint8_t,             char8,  struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CHAR16, ARR_BOOL):  expr(uint16_t,            char16, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_SINT):  expr(uint16_t,            char16, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_INT):   expr(uint16_t,            char16, int32_t            , int   , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_DBL):   expr(uint16_t,            char16, double             , dbl   , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CMPX):  expr(uint16_t,            char16, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CHAR8): expr(uint16_t,            char16, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CHAR16):expr(uint16_t,            char16, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CHAR32):expr(uint16_t,            char16, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CHAR16, ARR_NESTED):expr(uint16_t,            char16, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CHAR32, ARR_BOOL):  expr(uint32_t,            char32, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_SINT):  expr(uint32_t,            char32, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_INT):   expr(uint32_t,            char32, int32_t            , int   , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_DBL):   expr(uint32_t,            char32, double             , dbl   , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CMPX):  expr(uint32_t,            char32, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CHAR8): expr(uint32_t,            char32, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CHAR16):expr(uint32_t,            char32, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CHAR32):expr(uint32_t,            char32, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CHAR32, ARR_NESTED):expr(uint32_t,            char32, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_NESTED, ARR_BOOL):  expr(struct cell_array *, nested, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_NESTED, ARR_SINT):  expr(struct cell_array *, nested, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_NESTED, ARR_INT):   expr(struct cell_array *, nested, int32_t            , int   , fail);break;	\
+case type_pair(ARR_NESTED, ARR_DBL):   expr(struct cell_array *, nested, double             , dbl   , fail);break;	\
+case type_pair(ARR_NESTED, ARR_CMPX):  expr(struct cell_array *, nested, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_NESTED, ARR_CHAR8): expr(struct cell_array *, nested, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_NESTED, ARR_CHAR16):expr(struct cell_array *, nested, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_NESTED, ARR_CHAR32):expr(struct cell_array *, nested, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_NESTED, ARR_NESTED):expr(struct cell_array *, nested, struct cell_array *, nested, fail);break;	\
+default:														\
+	CHK(99, fail, L"Unknown type pair.");										\
+}
+
 int
 veach_monadic(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
@@ -816,92 +918,49 @@ veach_monadic(struct cell_array **z,
 	struct cell_array *t, *x, **tv;
 	void *buf;
 	size_t count;
-	int err, fb, fx;
+	int err, fb;
 	
-	oper = self->fv[1];
-	fb = fx = 0;
-	t = x = NULL;
-	tv = NULL;
+	oper	= self->fv[1];
+	fb	= 0;
+	t	= NULL;
+	tv	= NULL;
 	
-	CHK(mk_array(&t, ARR_NESTED, STG_HOST, 1), done, 
+	if (r->type == ARR_SPAN || r->type == ARR_MIXED)
+		CHK(99, fail, L"Unexpected (SPAN | MIXED) type array");
+	
+	CHK(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail, 
 	    L"mk_array(&t, ARR_NESTED, STG_HOST, 1)");
 	
 	t->shape[0] = count = array_values_count(r);
 	
-	CHK(alloc_array(t), done, L"alloc_array(t)");
+	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
-	tv = t->values;
-	buf = r->values;
+	tv	= t->values;
 	
-	if (r->storage == STG_DEVICE) {
-		buf = malloc(count * array_element_size(r));
-		
-		CHK(buf == NULL, done, L"Failed to allocate ⍵ buffer");
-		
-		fb = 1;
-		
-		CHK(af_eval(r->values), done, L"af_eval(r->values)");
-		CHK(af_get_data_ptr(buf, r->values), done, 
-		    L"af_get_data_ptr(buf, r->values)");
-	}
+	CHK(array_get_host_buffer(&buf, &fb, r), fail,
+	    L"array_get_host_buffer(&buf, &fb, r)");
 	
-	if (r->type != ARR_NESTED) {
-		CHK(mk_array(&x, r->type, STG_HOST, 0), done,
-		    L"mk_array(&x, r->type, STG_HOST, 0)");
-		    
-		fx = 1;
-		
-		CHK(alloc_array(x), done, L"alloc_array(x)");
-	}
-	
-	#define VEACH_MON_LOOP(tp) {					\
+	#define VEACH_MON_LOOP(tp, sfx, fail) {				\
 		tp *rv = buf;						\
-		tp *xv = x->values;					\
 									\
 		for (size_t i = 0; i < count; i++) {			\
-			*xv = rv[i];					\
-									\
-			CHK((oper->fptr_mon)(tv + i, x, oper), done,	\
+			CHK(mk_array_##sfx(&x, rv[i]), fail,		\
+			    L"mk_array_" L#sfx L"(&x, rv[i])");	\
+			CHK((oper->fptr_mon)(tv + i, x, oper), fail,	\
 			    L"(oper->fptr_mon)(tv + i, x, oper)");	\
+			CHK(release_array(x), fail,			\
+			    L"release_array(x)");			\
 		}							\
 	}								\
 	
-	switch (r->type) {
-	case ARR_BOOL:VEACH_MON_LOOP(int8_t);break;
-	case ARR_SINT:VEACH_MON_LOOP(int16_t);break;
-	case ARR_INT:VEACH_MON_LOOP(int32_t);break;
-	case ARR_DBL:VEACH_MON_LOOP(double);break;
-	case ARR_CMPX:VEACH_MON_LOOP(struct apl_cmpx);break;
-	case ARR_CHAR8:VEACH_MON_LOOP(uint8_t);break;
-	case ARR_CHAR16:VEACH_MON_LOOP(uint16_t);break;
-	case ARR_CHAR32:VEACH_MON_LOOP(uint32_t);break;
-	case ARR_MIXED:
-		CHK(16, done, L"veach does not support mixed arrays");
-		break;
-	case ARR_NESTED:
-		struct cell_array **rv = buf;
+	MONADIC_TYPE_SWITCH(r->type, VEACH_MON_LOOP, fail);
 		
-		for (size_t i = 0; i < count; i++) {
-			x = rv[i];
-			
-			CHK((oper->fptr_mon)(tv + i, x, oper), done,
-			    L"(oper->fptr_mon)(tv + i, x, oper)");
-		}
-		
-		break;
-	default:
-		CHK(99, done, L"Bad input array type");
-	}
-	
 	err = 0;
 	*z = t;
 	
-done:
+fail:
 	if (fb)
 		free(buf);
-	
-	if (fx)
-		release_array(x);
 	
 	if (err)
 		release_array(t);
@@ -917,186 +976,50 @@ veach_dyadic(struct cell_array **z,
 	struct cell_array *t, *x, *y, **tvals;
 	void *lbuf, *rbuf;
 	size_t count, lc, rc;
-	int err, fl, fr, fy, fx;
+	int err, fl, fr;
 	
 	oper = self->fv[1];
 
-	t = x = y = NULL;
-	fl = fr = fy = fx = 0;
-	
-	lbuf = l->values;
-	rbuf = r->values;
-	
-	if (l->type == ARR_SPAN || r->type == ARR_SPAN) {
-		TRC(99, L"Unexpected SPAN array type");
-		return 99;
-	}
-	
-	lc = array_values_count(l);
-	rc = array_values_count(r);
-	
-	if (l->storage == STG_DEVICE) {
-		lbuf = malloc(lc * array_element_size(l));
+	t = NULL;
+	fl = fr = 0;
 		
-		CHK(lbuf == NULL, fail, L"Failed to allocate ⍺ buffer");
+	if (l->type == ARR_SPAN || r->type == ARR_SPAN ||
+	    l->type == ARR_MIXED || r->type == ARR_MIXED)
+		CHK(99, fail, L"Unexpected (SPAN | MIXED) type array");
 		
-		fl = 1;
-		
-		CHK(af_eval(l->values), fail, L"af_eval(l->values)");
-		CHK(af_get_data_ptr(lbuf, l->values), fail, 
-		    L"af_get_data_ptr(lbuf, l->values)");
-	}
-	
-	if (r->storage == STG_DEVICE) {
-		rbuf = malloc(rc * array_element_size(r));
-		
-		CHK(rbuf == NULL, fail, L"Failed to allocate ⍵ buffer");
-		
-		fr = 1;
-		
-		CHK(af_eval(r->values), fail, L"af_eval(r->values)");
-		CHK(af_get_data_ptr(rbuf, r->values), fail, 
-		    L"af_get_data_ptr(rbuf, r->values)");
-	}
-	
+	CHK(array_get_host_buffer(&lbuf, &fl, l), fail,
+	    L"array_get_host_buffer(&lbuf, &fl, l)");
+	CHK(array_get_host_buffer(&rbuf, &fr, r), fail,
+	    L"array_get_host_buffer(&rbuf, &fr, r)");
 	CHK(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail,
 	    L"mk_array(&t, ARR_NESTED, STG_HOST, 1)");
 	
+	lc = array_values_count(l);
+	rc = array_values_count(r);
 	t->shape[0] = count = lc > rc ? lc : rc;
 	
 	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
 	tvals = t->values;
 	
-	if (l->type == ARR_NESTED && r->type == ARR_NESTED) {
-		struct cell_array **lvals = lbuf;
-		struct cell_array **rvals = rbuf;
-		
-		for (size_t i = 0; i < count; i++) {
-			x = lvals[i % lc];
-			y = rvals[i % rc];
-			
-			CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,
-			    L"tvals[i] ← ⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ NST/NST");
-		}
-		
-		goto done;
-	}
-	
-	if (l->type != ARR_NESTED) {
-		CHK(mk_array(&x, l->type, STG_HOST, 0), fail,
-		    L"mk_array(&x, l->type, STG_HOST, 0)");
+#define VEACH_DYA_LOOP(ltype, lsfx, rtype, rsfx, fail) {			\
+	ltype *lvals = lbuf;							\
+	rtype *rvals = rbuf;							\
+										\
+	for (size_t i = 0; i < count; i++) {					\
+		CHK(mk_array_##lsfx(&x, lvals[i % lc]), fail,			\
+		    L"mk_array_" L#lsfx L"(&x, lvals[i % lc])");		\
+		CHK(mk_array_##rsfx(&y, rvals[i % rc]), fail,			\
+		    L"mk_array_" L#rsfx L"(&y, rvals[i % rc])");		\
+		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,		\
+		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " L#lsfx L"/" L#rsfx);	\
+		CHK(release_array(x), fail, L"release_array(x)");		\
+		CHK(release_array(y), fail, L"release_array(y)");		\
+	}									\
+}										\
 
-		fx = 1;
-		
-		CHK(alloc_array(x), fail, L"alloc_array(x)");
-	}
-	
-	if (r->type != ARR_NESTED) {
-		CHK(mk_array(&y, r->type, STG_HOST, 0), fail,
-		    L"mk_array(&y, r->type, STG_HOST, 0)");
-		
-		fy = 1;
-		
-		CHK(alloc_array(y), fail, L"alloc_array(y)");
-	}
-	
-	if (l->type == ARR_NESTED) {
-		struct cell_array **lvals = lbuf;
-		
-#define VEACH_LNESTED_LOOP(type) {					\
-	type *rvals, *yvals;						\
-									\
-	rvals = rbuf;							\
-	yvals = y->values;						\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		x = lvals[i % lc];					\
-		yvals[0] = rvals[i % rc];				\
-									\
-		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
-		    L"tvals[i] ← ⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ NST/" L#type);	\
-	}								\
-									\
-	break;								\
-}
-		
-		switch (r->type) {
-		case ARR_BOOL:VEACH_LNESTED_LOOP(int8_t);
-		case ARR_SINT:VEACH_LNESTED_LOOP(int16_t);
-		case ARR_INT:VEACH_LNESTED_LOOP(int32_t);
-		case ARR_DBL:VEACH_LNESTED_LOOP(double);
-		case ARR_CMPX:VEACH_LNESTED_LOOP(struct apl_cmpx);
-		case ARR_CHAR8:VEACH_LNESTED_LOOP(uint8_t);
-		case ARR_CHAR16:VEACH_LNESTED_LOOP(uint16_t);
-		case ARR_CHAR32:VEACH_LNESTED_LOOP(uint32_t);
-		default:
-			CHK(99, fail, L"Unknown simple type for ⍵");
-		}
-		
-		goto done;
-	}
-	
-	if (r->type == ARR_NESTED) {
-		struct cell_array **rvals = rbuf;
-		
-#define VEACH_RNESTED_LOOP(type) {					\
-	type *lvals, *xvals;						\
-									\
-	lvals = lbuf;							\
-	xvals = x->values;						\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		xvals[0] = lvals[i % lc];				\
-		y = rvals[i % rc];					\
-									\
-		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
-		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " L#type L"/NST");	\
-	}								\
-									\
-	break;								\
-}
-		
-		switch (l->type) {
-		case ARR_BOOL:VEACH_RNESTED_LOOP(int8_t);
-		case ARR_SINT:VEACH_RNESTED_LOOP(int16_t);
-		case ARR_INT:VEACH_RNESTED_LOOP(int32_t);
-		case ARR_DBL:VEACH_RNESTED_LOOP(double);
-		case ARR_CMPX:VEACH_RNESTED_LOOP(struct apl_cmpx);
-		case ARR_CHAR8:VEACH_RNESTED_LOOP(uint8_t);
-		case ARR_CHAR16:VEACH_RNESTED_LOOP(uint16_t);
-		case ARR_CHAR32:VEACH_RNESTED_LOOP(uint32_t);
-		default:
-			CHK(99, fail, L"Unknown simple type for ⍺");
-		}
-		
-		goto done;
-	}
-	
-#define VEACH_LOOP(ztype, ltype, rtype) {				\
-	ltype *lvals, *xvals;						\
-	rtype *rvals, *yvals;						\
-									\
-	lvals = lbuf;							\
-	rvals = rbuf;							\
-	xvals = x->values;						\
-	yvals = y->values;						\
-									\
-	for (size_t i = 0; i < count; i++) {				\
-		xvals[0] = lvals[i % lc];				\
-		yvals[0] = rvals[i % rc];				\
-									\
-		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
-		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ "			\
-		    L#ltype L"/" L#rtype);				\
-	}								\
-}
+	DYADIC_TYPE_SWITCH(l->type, r->type, VEACH_DYA_LOOP, fail);
 
-	SIMPLE_SWITCH(VEACH_LOOP,VEACH_LOOP,VEACH_LOOP,VEACH_LOOP,,
-	    l->type, r->type, 
-	    CHK(99, fail, L"Unknown simple type combo"))
-	
-done:
 	err = 0;
 	*z = t;
 
@@ -1106,12 +1029,6 @@ fail:
 	
 	if (fr)
 		free(rbuf);
-	
-	if (fy)
-		release_array(y);
-	
-	if (fx)
-		release_array(x);
 	
 	if (err)
 		release_array(t);
@@ -1146,7 +1063,7 @@ has_nat_vals_func(struct cell_array **z,
 	if (err = has_natural_values(&is_nat, r))
 		return err;
 	
-	return mk_scalar_bool(z, is_nat);
+	return mk_array_bool(z, is_nat);
 }
 
 DECL_FUNC(has_nat_vals_ibeam, has_nat_vals_func, error_dya)

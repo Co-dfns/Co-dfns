@@ -62,8 +62,8 @@ closest_numeric_array_type(double x)
 	struct cell_array **dst = (struct cell_array **)buf;		\
 									\
 	for (size_t i = 0; i < (count); i++)				\
-		CHK(mk_scalar_##suffix(&dst[i], src[i]), fail,		\
-		    L"get_scalar_" L#suffix L"(&dst[i], src[i]");	\
+		CHK(mk_array_##suffix(&dst[i], src[i]), fail,		\
+		    L"mk_array_" L#suffix L"(&dst[i], src[i]");	\
 }									\
 
 int
