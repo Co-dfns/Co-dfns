@@ -6,20 +6,6 @@
 #include "internal.h"
 #include "prim.h"
 
-#define DECL_FUNC(name, mon, dya)						\
-struct cell_func name##_closure = {CELL_FUNC, 1, mon, dya, NULL, NULL, 0};	\
-struct cell_func *name = &name##_closure;					\
-
-#define DECL_MOPER(name, am, ad, fm, fd)				\
-struct cell_moper name##_closure = {CELL_MOPER, 1, am, ad, fm, fd, 0};	\
-struct cell_moper *name = &name##_closure;				\
-
-#define DECL_DOPER(name, aam, aad, afm, afd, fam, fad, ffm, ffd)	\
-struct cell_doper name##_closure = {CELL_DOPER, 1,			\
-	aam, aad, afm, afd, fam, fad, ffm, ffd, 0			\
-};									\
-struct cell_doper *name = &name##_closure;				\
-
 int
 error_mon(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
