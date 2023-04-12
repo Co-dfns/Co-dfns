@@ -975,15 +975,6 @@ device_fail:
 		goto fail;
 	}
 	
-	switch(l->type) {
-	case ARR_BOOL:IDX_CHK_LOOP(int8_t);break;
-	case ARR_SINT:IDX_CHK_LOOP(int16_t);break;
-	case ARR_INT:IDX_CHK_LOOP(int32_t);break;
-	case ARR_DBL:IDX_CHK_LOOP(double);break;
-	default:
-		CHK(99, fail, L"Unexpected index element type");
-	}
-
 	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
 #define INDEX_LOOP(ztype, ltype, rtype) {		\
