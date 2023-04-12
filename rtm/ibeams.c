@@ -293,15 +293,6 @@ done:
 
 DECL_MOPER(identity_ibeam, error_mon, error_dya, identity_func, error_dya)
 
-#define STMT_LOOP(zt, lt, rt, stmts) {		\
-	zt *tv = t->values;			\
-	lt *lv = l->values;			\
-	rt *rv = r->values;			\
-						\
-	for (size_t i = 0; i < count; i++)	\
-		stmts;				\
-}						\
-
 int
 set_host_values(struct cell_array *t,
     struct cell_array *l, struct cell_array *r)

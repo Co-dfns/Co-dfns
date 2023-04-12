@@ -304,3 +304,12 @@ default:														\
 	}						\
 }							\
 
+#define STMT_LOOP(zt, lt, rt, stmts) {		\
+	zt *tv = t->values;			\
+	lt *lv = l->values;			\
+	rt *rv = r->values;			\
+						\
+	for (size_t i = 0; i < count; i++)	\
+		stmts;				\
+}						\
+
