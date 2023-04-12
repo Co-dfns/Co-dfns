@@ -7,17 +7,31 @@
 #include "prim.h"
 
 int
-error_mon(struct cell_array **z, struct cell_array *r, 
+error_mon_syntax(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
 {
 	return 2;
 }
 
 int
-error_dya(struct cell_array **z, 
+error_dya_syntax(struct cell_array **z, 
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	return 2;
+}
+
+int
+error_mon_nonce(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	return 16;
+}
+
+int
+error_dya_nonce(struct cell_array **z, 
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	return 16;
 }
 
 int
@@ -111,18 +125,7 @@ q_dr_mon(struct cell_array **z,
 	return mk_array_sint(z, val);
 }
 
-int
-q_dr_dya(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	int err;
-	
-	TRC(16, L"DYADIC ⎕DR NOT SUPPORTED YET");
-	
-	return err;
-}
-
-DECL_FUNC(q_dr_ibeam, q_dr_mon, q_dr_dya)
+DECL_FUNC(q_dr_ibeam, q_dr_mon, error_dya_nonce)
 
 int
 is_simple_func(struct cell_array **z,
@@ -131,7 +134,7 @@ is_simple_func(struct cell_array **z,
 	return mk_array_bool(z, r->type != ARR_NESTED);
 }
 
-DECL_FUNC(is_simple_ibeam, is_simple_func, error_dya)
+DECL_FUNC(is_simple_ibeam, is_simple_func, error_dya_syntax)
 
 int
 is_numeric_func(struct cell_array **z,
@@ -143,7 +146,7 @@ is_numeric_func(struct cell_array **z,
 	return mk_array_bool(z, 0);
 }
 
-DECL_FUNC(is_numeric_ibeam, is_numeric_func, error_dya)
+DECL_FUNC(is_numeric_ibeam, is_numeric_func, error_dya_syntax)
 
 int
 is_char_func(struct cell_array **z,
@@ -155,7 +158,7 @@ is_char_func(struct cell_array **z,
 	return mk_array_bool(z, 0);
 }
 
-DECL_FUNC(is_char_ibeam, is_char_func, error_dya)
+DECL_FUNC(is_char_ibeam, is_char_func, error_dya_syntax)
 
 int
 is_integer_func(struct cell_array **z,
@@ -167,7 +170,7 @@ is_integer_func(struct cell_array **z,
 	return mk_array_bool(z, 0);
 }
 
-DECL_FUNC(is_integer_ibeam, is_integer_func, error_dya)
+DECL_FUNC(is_integer_ibeam, is_integer_func, error_dya_syntax)
 
 int
 shape_func(struct cell_array **z,
@@ -238,7 +241,7 @@ fail:
 	return err;
 }
 
-DECL_FUNC(shape_ibeam, shape_func, error_dya)
+DECL_FUNC(shape_ibeam, shape_func, error_dya_syntax)
 
 int
 max_shp_func(struct cell_array **z,
@@ -261,7 +264,7 @@ max_shp_func(struct cell_array **z,
 	return shape_func(z, l, shape_ibeam);
 }
 
-DECL_FUNC(max_shp_ibeam, error_mon, max_shp_func)
+DECL_FUNC(max_shp_ibeam, error_mon_syntax, max_shp_func)
 
 int
 identity_func(struct cell_array **z,
@@ -291,7 +294,7 @@ done:
 	return err;
 }
 
-DECL_MOPER(identity_ibeam, error_mon, error_dya, identity_func, error_dya)
+DECL_MOPER(identity_ibeam, error_mon_syntax, error_dya_syntax, identity_func, error_dya_syntax)
 
 int
 set_host_values(struct cell_array *t,
@@ -432,7 +435,7 @@ done:
 	return err;
 }
 
-DECL_FUNC(set_ibeam, error_mon, set_func)
+DECL_FUNC(set_ibeam, error_mon_syntax, set_func)
 
 int
 ravel_func(struct cell_array **z,
@@ -455,7 +458,7 @@ ravel_func(struct cell_array **z,
 	return 0;
 }
 
-DECL_FUNC(ravel_ibeam, ravel_func, error_dya)
+DECL_FUNC(ravel_ibeam, ravel_func, error_dya_syntax)
 
 int
 disclose_func(struct cell_array **z,
@@ -499,7 +502,7 @@ fail:
 	return err;
 }
 
-DECL_FUNC(disclose_ibeam, disclose_func, error_dya)
+DECL_FUNC(disclose_ibeam, disclose_func, error_dya_syntax)
 
 int
 enclose_func(struct cell_array **z,
@@ -520,7 +523,7 @@ done:
 	return err;
 }
 
-DECL_FUNC(enclose_ibeam, enclose_func, error_dya)
+DECL_FUNC(enclose_ibeam, enclose_func, error_dya_syntax)
 
 int
 reshape_func(struct cell_array **z,
@@ -653,7 +656,7 @@ fail:
 	return err;
 }
 
-DECL_FUNC(reshape_ibeam, error_mon, reshape_func)
+DECL_FUNC(reshape_ibeam, error_mon_syntax, reshape_func)
 
 int
 same_func(struct cell_array **z,
@@ -672,7 +675,7 @@ done:
 	return err;
 }
 
-DECL_FUNC(same_ibeam, error_mon, same_func)
+DECL_FUNC(same_ibeam, error_mon_syntax, same_func)
 
 int
 nqv_func(struct cell_array **z,
@@ -691,7 +694,7 @@ done:
 	return err;
 }
 
-DECL_FUNC(nqv_ibeam, error_mon, nqv_func)
+DECL_FUNC(nqv_ibeam, error_mon_syntax, nqv_func)
 
 int
 veach_monadic(struct cell_array **z,
@@ -819,7 +822,7 @@ fail:
 	return err;
 }
 
-DECL_MOPER(veach_ibeam, error_mon, error_dya, veach_monadic, veach_dyadic)
+DECL_MOPER(veach_ibeam, error_mon_syntax, error_dya_syntax, veach_monadic, veach_dyadic)
 
 int
 squeeze_func(struct cell_array **z,
@@ -835,7 +838,7 @@ squeeze_func(struct cell_array **z,
 	return 0;
 }
 
-DECL_FUNC(squeeze_ibeam, squeeze_func, error_dya)
+DECL_FUNC(squeeze_ibeam, squeeze_func, error_dya_syntax)
 
 int
 has_nat_vals_func(struct cell_array **z,
@@ -849,7 +852,7 @@ has_nat_vals_func(struct cell_array **z,
 	return mk_array_bool(z, is_nat);
 }
 
-DECL_FUNC(has_nat_vals_ibeam, has_nat_vals_func, error_dya)
+DECL_FUNC(has_nat_vals_ibeam, has_nat_vals_func, error_dya_syntax)
 
 int
 index_gen_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
@@ -890,7 +893,7 @@ fail:
 	return err;
 }
 
-DECL_FUNC(index_gen_vec, index_gen_func, error_dya)
+DECL_FUNC(index_gen_vec, index_gen_func, error_dya_syntax)
 
 int
 index_func(struct cell_array **z,
@@ -981,7 +984,7 @@ fail:
 	return err;
 }
 
-DECL_FUNC(index_ibeam, error_mon, index_func)
+DECL_FUNC(index_ibeam, error_mon_syntax, index_func)
 
 int
 monadic_scalar_apply(struct cell_array **z, struct cell_array *r,
@@ -1130,7 +1133,7 @@ conjugate_func(struct cell_array **z,
 	return monadic_scalar_apply(z, r, conjugate_values);
 }
 
-DECL_FUNC(conjugate_vec, conjugate_func, error_dya)
+DECL_FUNC(conjugate_vec, conjugate_func, error_dya_syntax)
 
 int
 max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
@@ -1209,7 +1212,7 @@ add_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, int16_max_type, add_device, add_host);
 }
 
-DECL_FUNC(add_vec_ibeam, error_mon, add_func)
+DECL_FUNC(add_vec_ibeam, error_mon_syntax, add_func)
 
 int
 mul_device(af_array *z, af_array l, af_array r)
@@ -1272,7 +1275,7 @@ mul_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, max_type, mul_device, mul_host);
 }
 
-DECL_FUNC(mul_vec_ibeam, error_mon, mul_func)
+DECL_FUNC(mul_vec_ibeam, error_mon_syntax, mul_func)
 
 int
 div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
@@ -1362,7 +1365,7 @@ div_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, div_type, div_device, div_host);
 }
 
-DECL_FUNC(div_vec_ibeam, error_mon, div_func)
+DECL_FUNC(div_vec_ibeam, error_mon_syntax, div_func)
 
 int
 sub_device(af_array *z, af_array l, af_array r)
@@ -1422,7 +1425,7 @@ sub_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, int16_max_type, sub_device, sub_host);
 }
 
-DECL_FUNC(sub_vec_ibeam, error_mon, sub_func)
+DECL_FUNC(sub_vec_ibeam, error_mon_syntax, sub_func)
 
 int
 dbl_cmpx_type(enum array_type *type, 
@@ -1498,7 +1501,7 @@ pow_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, dbl_cmpx_type, pow_device, pow_host);
 }
 
-DECL_FUNC(pow_vec_ibeam, error_mon, pow_func)
+DECL_FUNC(pow_vec_ibeam, error_mon_syntax, pow_func)
 
 int
 log_device(af_array *z, af_array l, af_array r)
@@ -1589,7 +1592,7 @@ log_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, dbl_cmpx_type, log_device, log_host);
 }
 
-DECL_FUNC(log_vec_ibeam, error_mon, log_func)
+DECL_FUNC(log_vec_ibeam, error_mon_syntax, log_func)
 
 struct apl_cmpx
 exp_cmpx(struct apl_cmpx x)
@@ -1671,7 +1674,7 @@ exp_func(struct cell_array **z,
 	return monadic_scalar_apply(z, r, exp_values);
 }
 
-DECL_FUNC(exp_vec_ibeam, exp_func, error_dya)
+DECL_FUNC(exp_vec_ibeam, exp_func, error_dya_syntax)
 
 struct apl_cmpx
 nlg_cmpx(struct apl_cmpx x)
@@ -1753,7 +1756,7 @@ nlg_func(struct cell_array **z,
 	return monadic_scalar_apply(z, r, nlg_values);
 }
 
-DECL_FUNC(nlg_vec_ibeam, nlg_func, error_dya)
+DECL_FUNC(nlg_vec_ibeam, nlg_func, error_dya_syntax)
 
 int
 bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
@@ -1793,7 +1796,7 @@ name##_func(struct cell_array **z,							\
 	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	\
 }											\
 											\
-DECL_FUNC(name##_vec_ibeam, error_mon, name##_func)					\
+DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)					\
 
 #define AND_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x && y)
 #define LOR_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x || y)
@@ -1863,7 +1866,7 @@ min_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, max_type, min_device, min_host);
 }
 
-DECL_FUNC(min_vec_ibeam, error_mon, min_func)
+DECL_FUNC(min_vec_ibeam, error_mon_syntax, min_func)
 
 int
 max_device(af_array *z, af_array l, af_array r)
@@ -1906,7 +1909,7 @@ max_func(struct cell_array **z,
 	return dyadic_scalar_apply(z, l, r, max_type, max_device, max_host);
 }
 
-DECL_FUNC(max_vec_ibeam, error_mon, max_func)
+DECL_FUNC(max_vec_ibeam, error_mon_syntax, max_func)
 
 int
 floor_values(struct cell_array *t, struct cell_array *r)
@@ -1947,7 +1950,7 @@ floor_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	return monadic_scalar_apply(z, r, floor_values);
 }
 
-DECL_FUNC(floor_vec_ibeam, floor_func, error_dya)
+DECL_FUNC(floor_vec_ibeam, floor_func, error_dya_syntax)
 
 int
 ceil_values(struct cell_array *t, struct cell_array *r)
@@ -1988,7 +1991,7 @@ ceil_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	return monadic_scalar_apply(z, r, ceil_values);
 }
 
-DECL_FUNC(ceil_vec_ibeam, ceil_func, error_dya)
+DECL_FUNC(ceil_vec_ibeam, ceil_func, error_dya_syntax)
 
 int
 not_values(struct cell_array *t, struct cell_array *r)
@@ -2024,7 +2027,7 @@ not_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	return monadic_scalar_apply(z, r, not_values);
 }
 
-DECL_FUNC(not_vec_ibeam, not_func, error_dya)
+DECL_FUNC(not_vec_ibeam, not_func, error_dya_syntax)
 
 int
 abs_values(struct cell_array *t, struct cell_array *r)
@@ -2080,7 +2083,7 @@ abs_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
 	return monadic_scalar_apply(z, r, abs_values);
 }
 
-DECL_FUNC(abs_ibeam, abs_func, error_dya)
+DECL_FUNC(abs_ibeam, abs_func, error_dya_syntax)
 
 int
 factorial_real_values(struct cell_array *t, struct cell_array *r)
@@ -2175,7 +2178,7 @@ factorial_func(struct cell_array **z, struct cell_array *r, struct cell_func *se
 	return monadic_scalar_apply(z, r, factorial_values);
 }
 
-DECL_FUNC(factorial_vec_ibeam, factorial_func, error_dya)
+DECL_FUNC(factorial_vec_ibeam, factorial_func, error_dya_syntax)
 
 int
 imagpart_values(struct cell_array *t, struct cell_array *r)
@@ -2210,7 +2213,7 @@ imagpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *sel
 	return monadic_scalar_apply(z, r, imagpart_values);
 }
 
-DECL_FUNC(imagpart_vec_ibeam, imagpart_func, error_dya)
+DECL_FUNC(imagpart_vec_ibeam, imagpart_func, error_dya_syntax)
 
 int
 realpart_values(struct cell_array *t, struct cell_array *r)
@@ -2245,7 +2248,7 @@ realpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *sel
 	return monadic_scalar_apply(z, r, realpart_values);
 }
 
-DECL_FUNC(realpart_vec_ibeam, realpart_func, error_dya)
+DECL_FUNC(realpart_vec_ibeam, realpart_func, error_dya_syntax)
 
 #define DEF_TRIG(name, af_fun, stdc_fun)				\
 int									\
@@ -2309,7 +2312,7 @@ name##_func(struct cell_array **z, struct cell_array *r,		\
 	return monadic_scalar_apply(z, r, name##_values);		\
 }									\
 									\
-DECL_FUNC(name##_vec_ibeam, name##_func, error_dya)			\
+DECL_FUNC(name##_vec_ibeam, name##_func, error_dya_syntax)			\
 
 DEF_TRIG(arctanh, af_atanh, atanh);
 DEF_TRIG(tanh, af_tanh, tanh);
