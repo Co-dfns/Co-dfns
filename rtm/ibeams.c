@@ -20,13 +20,6 @@ struct cell_doper name##_closure = {CELL_DOPER, 1,			\
 };									\
 struct cell_doper *name = &name##_closure;				\
 
-#define DEF_MON(mf, fn)							\
-int									\
-mf(struct cell_array **z, struct cell_array *r, struct cell_func *self)	\
-{									\
-	return fn(z, NULL, r, self);					\
-}									\
-
 int
 error_mon(struct cell_array **z, struct cell_array *r, 
     struct cell_func *self)
@@ -42,8 +35,8 @@ error_dya(struct cell_array **z,
 }
 
 int
-q_signal_func(struct cell_array **z, 
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+q_signal_mon(struct cell_array **z, 
+    struct cell_array *r, struct cell_func *self)
 {
 	int err;
 	int32_t val;
@@ -62,32 +55,38 @@ q_signal_func(struct cell_array **z,
 	if (!is_integer_array(r))
 		return 11;
 	
-	if (l) {
-		if (!is_char_array(l))
-			return 11;
-		
-		if (l->rank > 1)
-			return 4;
-	}
-	
 	if (err = get_scalar_int(&val, r))
 		return err;
 	
 	return val;
 }
 
-DEF_MON(q_signal_func_mon, q_signal_func)
-DECL_FUNC(q_signal_ibeam, q_signal_func_mon, q_signal_func)
+int
+q_signal_dya(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	
+	if (!is_char_array(l))
+		CHK(11, fail, L"EXPECTED CHARACTER LEFT ARGUMENT");
+	
+	if (l->rank > 1)
+		CHK(4, fail, L"EXPECTED VECTOR LEFT ARGUMENT");
+	
+	TRC(16, L"LEFT ARGUMENT NOT SUPPORTED FOR ⎕SIGNAL YET");
+
+fail:
+	return err;
+}
+
+DECL_FUNC(q_signal_ibeam, q_signal_mon, q_signal_dya)
 
 int
-q_dr_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+q_dr_mon(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
 {
 	int16_t val;
 	
-	if (l)
-		return 16;
-		
 	switch (r->type) {
 	case ARR_SPAN:
 		val = 323;
@@ -126,8 +125,18 @@ q_dr_func(struct cell_array **z,
 	return mk_array_sint(z, val);
 }
 
-DEF_MON(q_dr_func_mon, q_dr_func)
-DECL_FUNC(q_dr_ibeam, q_dr_func_mon, q_dr_func)
+int
+q_dr_dya(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	
+	TRC(16, L"DYADIC ⎕DR NOT SUPPORTED YET");
+	
+	return err;
+}
+
+DECL_FUNC(q_dr_ibeam, q_dr_mon, q_dr_dya)
 
 int
 is_simple_func(struct cell_array **z,
