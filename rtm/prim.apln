@@ -25,7 +25,7 @@ both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
-ambiv←'ambiv_ibeam'⌶⌶⌶
+ambiv←{⍺←⊢ ⋄ 1 same ⍺ 1:⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵}
 veach←'veach_ibeam'⌶⌶
 scalar←{
 	⍺ chk_scl ⍵: 
@@ -83,7 +83,8 @@ depth←{
 	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
 	⎕SIGNAL 16
 }
-eqv←depth ambiv ('same_ibeam'⌶)
+same←'same_ibeam'⌶
+eqv←depth ambiv same
 
 ⍝ ≢: Tally / Not Same
 nqv←{⊃⍴⍵} ambiv ('nqv_ibeam'⌶)

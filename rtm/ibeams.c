@@ -537,27 +537,6 @@ done:
 DECL_FUNC(enclose_ibeam, enclose_func, error_dya)
 
 int
-ambiv_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	struct cell_func *mop, *dop;
-	
-	mop = self->fv[1];
-	dop = self->fv[2];
-	
-	if (l == NULL)
-		return (mop->fptr_mon)(z, r, mop);
-	
-	return (dop->fptr_dya)(z, l, r, dop);
-}
-
-DEF_MON(ambiv_func_mon, ambiv_func)
-DECL_DOPER(ambiv_ibeam, 
-	error_mon, error_dya, error_mon, error_dya, error_mon, error_dya,
-	ambiv_func_mon, ambiv_func
-)
-
-int
 reshape_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
