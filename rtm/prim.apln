@@ -24,6 +24,7 @@ both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
 both_char←{is_char ⍺:is_char ⍵ ⋄ 0}
 both_bool←{is_bool ⍺:is_bool ⍵ ⋄ 0}
+any←'any_ibeam'⌶
 numeric←{⍺←⊢ ⋄ (⍺⊣0)both_numeric ⍵:⍺ ⍺⍺ ⍵ ⋄ ⎕SIGNAL 11}
 ambiv←{⍺←⊢ ⋄ 1 same ⍺ 1:⍺⍺ ⍵ ⋄ ⍺ ⍵⍵ ⍵}
 veach←'veach_ibeam'⌶⌶
@@ -90,7 +91,11 @@ eqv←depth ambiv same
 nqv←{⊃⍴⍵} ambiv ('nqv_ibeam'⌶)
 
 ⍝ ⌷: Materialize | Squad indexing
-index←'index_ibeam'⌶
+index←{
+	0≡≢,⍺:0⍴⍵
+	any(⍺<0)∨⍺>≢,⍵:⎕SIGNAL 3
+	⍺('index_ibeam'⌶)⍵
+}
 sqd←{⍺←⊢
 	1≡⍺ 1:⍵
 	idx←⊃⍺⊣0 ⋄ rnk←≢⍴idx

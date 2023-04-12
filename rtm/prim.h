@@ -18,6 +18,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *both_integer;
 	struct cell_func_box *both_char;
 	struct cell_func_box *both_bool;
+	struct cell_func_box *any;
 	struct cell_moper *numeric;
 	struct cell_doper *ambiv;
 	struct cell_func_box *same;

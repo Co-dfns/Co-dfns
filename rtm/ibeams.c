@@ -267,6 +267,53 @@ max_shp_func(struct cell_array **z,
 DECL_FUNC(max_shp_ibeam, error_mon_syntax, max_shp_func)
 
 int
+any_monadic(struct cell_array **z, struct cell_array *r, 
+    struct cell_func *self)
+{
+	size_t count;
+	int err;
+	int8_t *vals;
+	
+	if (r->type != ARR_BOOL) {
+		#define ANY_ERROR(type, sfx, fail)			\
+			CHK(99, fail, 					\
+			    L"Expected Boolean, found " L#sfx " type");
+		MONADIC_TYPE_SWITCH(r->type, ANY_ERROR, done);
+	}
+	
+	if (r->storage == STG_DEVICE) {
+		double real, imag;
+		
+		CHKAF(af_any_true_all(&real, &imag, r->values), done);
+		CHK(mk_array_bool(z, (int8_t)real), done,
+		    L"mk_array_bool(z, (int8_t)real)");
+		    
+		return 0;
+	}
+	
+	if (r->storage != STG_HOST)
+		CHK(99, done, L"Unknown storage type.");
+	
+	count = array_count(r);
+	vals = r->values;
+	
+	for (size_t i = 0; i < count; i++) {
+		if (vals[i]) {
+			CHK(mk_array_bool(z, 1), done, L"mk_array_bool(z, 1)");
+			
+			return 0;
+		}
+	}
+	
+	CHK(mk_array_bool(z, 0), done, L"mk_array_bool(z, 0)");
+	
+done:
+	return err;
+}
+
+DECL_FUNC(any_ibeam, any_monadic, error_dya_nonce)
+
+int
 identity_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
