@@ -38,13 +38,16 @@ scalar←{
 }
 
 ⍝ Assignment
-idx_check←{
+idx_shp_check←{
 	326≢⎕DR ⍺:⎕SIGNAL 99
 	1≢≢,⍺:⎕SIGNAL 16
 	idx←⊃⍺ ⋄ ic←≢,idx ⋄ vc←≢,⍵
 	(1≢vc)∧ic≢vc:⎕SIGNAL 4
-	0≡≢,idx:idx
-	0≡is_integer⊢idx←squeeze idx:⎕SIGNAL 11
+	idx
+}
+idx_rng_check←{
+	0≡≢,⍺:⍺
+	0≡is_integer⊢idx←squeeze ⍺:⎕SIGNAL 11
 	any(idx<0)∨idx>≢,⍵:⎕SIGNAL 3
 	idx
 }

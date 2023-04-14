@@ -421,12 +421,15 @@ set_func(struct cell_array **z,
 	enum array_type mtype;
 	int err;
 	
-	idx = tgt = NULL;
-	
-	EXPORT int idx_check(struct cell_array **, struct cell_array *, struct cell_array *);
-	CHK(idx_check(&idx, l, r), done, L"Invalid index arguments");
-	
+	idx = NULL;
 	tgt = *z;
+	
+	EXPORT int idx_shp_check(struct cell_array **, struct cell_array *, struct cell_array *);
+	EXPORT int idx_rng_check(struct cell_array **, struct cell_array *, struct cell_array *);
+	
+	CHK(idx_shp_check(&idx, l, r), done, L"⍺ idx_shp_check ⍵");
+	CHK(idx_rng_check(&idx, idx, tgt), done, L"idx idx_rng_check tgt");
+	CHK(release_array(idx), done, L"release_array(idx)");
 	
 	CHK(array_migrate_storage(idx, tgt->storage), done,
 	    L"Migrate indices to target storage");
