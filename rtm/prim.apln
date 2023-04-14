@@ -43,7 +43,8 @@ idx_check←{
 	1≢≢,⍺:⎕SIGNAL 16
 	idx←⊃⍺ ⋄ ic←≢,idx ⋄ vc←≢,⍵
 	(1≢vc)∧ic≢vc:⎕SIGNAL 4
-	0≡is_integer idx:⎕SIGNAL 11
+	0≡≢,idx:idx
+	0≡is_integer⊢idx←squeeze idx:⎕SIGNAL 11
 	any(idx<0)∨idx>≢,⍵:⎕SIGNAL 3
 	idx
 }
