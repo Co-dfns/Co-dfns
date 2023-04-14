@@ -356,23 +356,6 @@ set_host_values(struct cell_array *t,
 	count = array_count(l);
 	rc = array_count(r);
 	
-	#define IDX_CHK_LOOP(lt) {					\
-		lt *lv = l->values;					\
-									\
-		for (size_t i = 0; i < count; i++)			\
-			if (lv[i] >= range)				\
-				CHK(3, fail, L"Index out of range");	\
-	}								\
-	
-	switch(l->type) {
-	case ARR_BOOL:IDX_CHK_LOOP(int8_t);break;
-	case ARR_SINT:IDX_CHK_LOOP(int16_t);break;
-	case ARR_INT:IDX_CHK_LOOP(int32_t);break;
-	case ARR_DBL:IDX_CHK_LOOP(double);break;
-	default:
-		CHK(99, fail, L"Unexpected index element type");
-	}
-	
 	#define SET_LOOP_NESTED(lt)					\
 	STMT_LOOP(struct cell_array *, lt, struct cell_array *, {	\
 		retain_cell(rv[i]);					\
@@ -435,24 +418,13 @@ set_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *idx, *tgt;
-	size_t idx_count, val_count;
 	enum array_type mtype;
 	int err;
 	
-	err = 0;
+	idx = tgt = NULL;
 	
-	if (l->type != ARR_NESTED)
-		CHK(99, done, L"Expected nested array type");
-	
-	if (array_count(l) != 1)
-		CHK(99, done, L"Expected single array value");
-
-	idx = *(struct cell_array **)l->values;
-	idx_count = array_count(idx);
-	val_count = array_count(r);
-	
-	if (val_count != 1 && idx_count != val_count)
-		CHK(99, done, L"Mismatched values and indices");
+	EXPORT int idx_check(struct cell_array **, struct cell_array *, struct cell_array *);
+	CHK(idx_check(&idx, l, r), done, L"Invalid index arguments");
 	
 	tgt = *z;
 	
@@ -479,6 +451,8 @@ set_func(struct cell_array **z,
 	}
 	
 done:
+	release_array(idx);
+	
 	return err;
 }
 

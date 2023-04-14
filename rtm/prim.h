@@ -24,6 +24,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func_box *same;
 	struct cell_moper_box *veach;
 	struct cell_moper *scalar;
+	struct cell_func *idx_check;
 	struct cell_func *set;
 	struct cell_func *brk;
 	struct cell_func *rgt;
