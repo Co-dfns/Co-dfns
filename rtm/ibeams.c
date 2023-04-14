@@ -276,7 +276,7 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	
 	if (r->type != ARR_BOOL) {
 		#define ANY_ERROR(type, sfx, fail)			\
-			CHK(99, fail, 					\
+			CHK(99, fail,					\
 			    L"Expected Boolean, found " L#sfx " type");
 		MONADIC_TYPE_SWITCH(r->type, ANY_ERROR, done);
 	}
@@ -347,68 +347,52 @@ int
 set_host_values(struct cell_array *t,
     struct cell_array *l, struct cell_array *r)
 {
-	size_t count, rc, range;
+	size_t count, rc;
 	int err;
 	
 	err = 0;
 	retain_cell(t);
-	range = array_count(t);
 	count = array_count(l);
 	rc = array_count(r);
 	
-	#define SET_LOOP_NESTED(lt)					\
-	STMT_LOOP(struct cell_array *, lt, struct cell_array *, {	\
-		retain_cell(rv[i]);					\
-		release_array(tv[(int64_t)lv[i]]);			\
-		tv[(int64_t)lv[i]] = rv[i];				\
-	});								\
-	break;								\
-	
-	#define SET_LOOP(zt, lt)					\
-	STMT_LOOP(zt, lt, zt, {tv[(int64_t)lv[i]] = rv[i % rc];});	\
-	break;								\
-	
-	switch(type_pair(t->type, l->type)) {
-	case type_pair(ARR_BOOL, ARR_BOOL):SET_LOOP(int8_t, int8_t);
-	case type_pair(ARR_BOOL, ARR_SINT):SET_LOOP(int8_t, int16_t);
-	case type_pair(ARR_BOOL, ARR_INT ):SET_LOOP(int8_t, int32_t);
-	case type_pair(ARR_BOOL, ARR_DBL ):SET_LOOP(int8_t, double);
-	case type_pair(ARR_SINT, ARR_BOOL):SET_LOOP(int16_t, int8_t);
-	case type_pair(ARR_SINT, ARR_SINT):SET_LOOP(int16_t, int16_t);
-	case type_pair(ARR_SINT, ARR_INT ):SET_LOOP(int16_t, int32_t);
-	case type_pair(ARR_SINT, ARR_DBL ):SET_LOOP(int16_t, double);
-	case type_pair(ARR_INT, ARR_BOOL):SET_LOOP(int32_t, int8_t);
-	case type_pair(ARR_INT, ARR_SINT):SET_LOOP(int32_t, int16_t);
-	case type_pair(ARR_INT, ARR_INT ):SET_LOOP(int32_t, int32_t);
-	case type_pair(ARR_INT, ARR_DBL ):SET_LOOP(int32_t, double);
-	case type_pair(ARR_DBL, ARR_BOOL):SET_LOOP(double, int8_t);
-	case type_pair(ARR_DBL, ARR_SINT):SET_LOOP(double, int16_t);
-	case type_pair(ARR_DBL, ARR_INT ):SET_LOOP(double, int32_t);
-	case type_pair(ARR_DBL, ARR_DBL ):SET_LOOP(double, double);
-	case type_pair(ARR_CMPX, ARR_BOOL):SET_LOOP(struct apl_cmpx, int8_t);
-	case type_pair(ARR_CMPX, ARR_SINT):SET_LOOP(struct apl_cmpx, int16_t);
-	case type_pair(ARR_CMPX, ARR_INT ):SET_LOOP(struct apl_cmpx, int32_t);
-	case type_pair(ARR_CMPX, ARR_DBL ):SET_LOOP(struct apl_cmpx, double);
-	case type_pair(ARR_CHAR8, ARR_BOOL):SET_LOOP(uint8_t, int8_t);
-	case type_pair(ARR_CHAR8, ARR_SINT):SET_LOOP(uint8_t, int16_t);
-	case type_pair(ARR_CHAR8, ARR_INT ):SET_LOOP(uint8_t, int32_t);
-	case type_pair(ARR_CHAR8, ARR_DBL ):SET_LOOP(uint8_t, double);
-	case type_pair(ARR_CHAR16, ARR_BOOL):SET_LOOP(uint16_t, int8_t);
-	case type_pair(ARR_CHAR16, ARR_SINT):SET_LOOP(uint16_t, int16_t);
-	case type_pair(ARR_CHAR16, ARR_INT ):SET_LOOP(uint16_t, int32_t);
-	case type_pair(ARR_CHAR16, ARR_DBL ):SET_LOOP(uint16_t, double);
-	case type_pair(ARR_CHAR32, ARR_BOOL):SET_LOOP(uint32_t, int8_t);
-	case type_pair(ARR_CHAR32, ARR_SINT):SET_LOOP(uint32_t, int16_t);
-	case type_pair(ARR_CHAR32, ARR_INT ):SET_LOOP(uint32_t, int32_t);
-	case type_pair(ARR_CHAR32, ARR_DBL ):SET_LOOP(uint32_t, double);
-	case type_pair(ARR_NESTED, ARR_BOOL):SET_LOOP_NESTED(int8_t);
-	case type_pair(ARR_NESTED, ARR_SINT):SET_LOOP_NESTED(int16_t);
-	case type_pair(ARR_NESTED, ARR_INT ):SET_LOOP_NESTED(int32_t);
-	case type_pair(ARR_NESTED, ARR_DBL ):SET_LOOP_NESTED(double);
-	default:
-		CHK(99, fail, L"Unexpected type combination");
-	}
+	#define SET_GETIDX_bool(fail)   idx = lv[i];
+	#define SET_GETIDX_sint(fail)   idx = lv[i];
+	#define SET_GETIDX_int(fail)    idx = lv[i];
+	#define SET_GETIDX_dbl(fail)    idx = (int64_t)lv[i];
+	#define SET_GETIDX_cmpx(fail)   CHK(99, fail, L"Bad index type cmpx");
+	#define SET_GETIDX_char8(fail)  CHK(99, fail, L"Bad index type char8");
+	#define SET_GETIDX_char16(fail) CHK(99, fail, L"Bad index type char16");
+	#define SET_GETIDX_char32(fail) CHK(99, fail, L"Bad index type char32");
+	#define SET_GETIDX_nested(fail) CHK(99, fail, L"Bad index type nested");
 
+	#define SET_ASSIGN_bool(fail)   tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_sint(fail)   tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_int(fail)    tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_dbl(fail)    tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_cmpx(fail)   tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_char8(fail)  tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_char16(fail) tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_char32(fail) tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_nested(fail)						\
+		retain_cell(rv[i % rc]);					\
+		CHK(release_array(tv[idx]), fail, L"release_array(tv[idx])");	\
+		tv[idx] = rv[i % rc];						\
+		
+	#define SET_LOOP(ttyp, tsfx, ltyp, lsfx, fail) {	\
+		ttyp *tv = t->values;				\
+		ltyp *lv = l->values;				\
+		ttyp *rv = r->values;				\
+								\
+		for (size_t i = 0; i < count; i++) {		\
+			int64_t idx = 0;			\
+								\
+			SET_GETIDX_##lsfx(fail);		\
+			SET_ASSIGN_##tsfx(fail);		\
+		}						\
+	}							\
+	
+	DYADIC_TYPE_SWITCH(t->type, l->type, SET_LOOP, fail);
+	
 fail:	
 	return err;
 }
