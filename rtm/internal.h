@@ -369,7 +369,7 @@ default:														\
 	ztype *tvals = t->values;		\
 	ltype *lvals = l->values;		\
 	rtype *rvals = r->values;		\
-	
+
 #define RCMPX_LOOP(ztype, ltype, expr) {		\
 	LOOP_LOCALS(ztype, ltype, struct apl_cmpx)	\
 							\
