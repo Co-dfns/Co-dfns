@@ -54,7 +54,7 @@ closest_numeric_array_type(double x)
 									\
 	for (size_t i = 0; i < (count); i++)				\
 		CHK(get_scalar_##suffix(&dst[i], src[i]), fail,		\
-		    L"get_scalar_" L#suffix L"(&dst[i], src[i]");	\
+		    L"get_scalar_" #suffix L"(&dst[i], src[i]");	\
 }									\
 
 #define CAST_SCL_NESTED(count, suffix, src_type) {			\
@@ -63,7 +63,7 @@ closest_numeric_array_type(double x)
 									\
 	for (size_t i = 0; i < (count); i++)				\
 		CHK(mk_array_##suffix(&dst[i], src[i]), fail,		\
-		    L"mk_array_" L#suffix L"(&dst[i], src[i]");	\
+		    L"mk_array_" #suffix L"(&dst[i], src[i]");	\
 }									\
 
 int

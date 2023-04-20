@@ -31,7 +31,7 @@ wsd←path,'\'
 
 vsc←'%comspec% /C ""',vsbat,'" amd64'
 vsc,←'  && cd "',wsd,'\rtm"'
-vsc,←'  && cl /MP /W3 /wd4102 /wd4275'
+vsc,←'  && cl /Zc:preprocessor /MP /W3 /wd4102 /wd4275'
 vsc,←'    /DEBUG /Od /Zc:inline /Zi /FS'
 vsc,←'    /Fo".\\" /Fd"codfns.pdb"'
 vsc,←'    /WX /MD /EHsc /nologo'

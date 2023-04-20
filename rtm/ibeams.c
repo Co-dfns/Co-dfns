@@ -277,7 +277,7 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	if (r->type != ARR_BOOL) {
 		#define ANY_ERROR(type, sfx, fail)			\
 			CHK(99, fail,					\
-			    L"Expected Boolean, found " L#sfx " type");
+			    L"Expected Boolean, found " #sfx L" type");
 		MONADIC_TYPE_SWITCH(r->type, ANY_ERROR, done);
 	}
 	
@@ -325,9 +325,9 @@ identity_func(struct cell_array **z,
 	oper = self->fv[1];
 	
 	#define ID_CASE(prim, id)			\
-	if (oper == cdf_prim.##prim) {			\
+	if (oper == cdf_prim.prim) {			\
 		CHK(mk_array_bool(z, id), done,	\
-		    L"mk_array_bool(z, " L#id L")");	\
+		    L"mk_array_bool(z, " #id L")");	\
 							\
 		goto done;				\
 	}						\
@@ -739,7 +739,7 @@ veach_monadic(struct cell_array **z,
 									\
 		for (size_t i = 0; i < count; i++) {			\
 			CHK(mk_array_##sfx(&x, rv[i]), fail,		\
-			    L"mk_array_" L#sfx L"(&x, rv[i])");	\
+			    L"mk_array_" #sfx L"(&x, rv[i])");	\
 			CHK((oper->fptr_mon)(tv + i, x, oper), fail,	\
 			    L"(oper->fptr_mon)(tv + i, x, oper)");	\
 			CHK(release_array(x), fail,			\
@@ -802,11 +802,11 @@ veach_dyadic(struct cell_array **z,
 										\
 	for (size_t i = 0; i < count; i++) {					\
 		CHK(mk_array_##lsfx(&x, lvals[i % lc]), fail,			\
-		    L"mk_array_" L#lsfx L"(&x, lvals[i % lc])");		\
+		    L"mk_array_" #lsfx L"(&x, lvals[i % lc])");		\
 		CHK(mk_array_##rsfx(&y, rvals[i % rc]), fail,			\
-		    L"mk_array_" L#rsfx L"(&y, rvals[i % rc])");		\
+		    L"mk_array_" #rsfx L"(&y, rvals[i % rc])");		\
 		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,		\
-		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " L#lsfx L"/" L#rsfx);	\
+		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " #lsfx L"/" #rsfx);	\
 		CHK(release_array(x), fail, L"release_array(x)");		\
 		CHK(release_array(y), fail, L"release_array(y)");		\
 	}									\
