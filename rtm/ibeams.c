@@ -1231,8 +1231,8 @@ mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define MUL_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (zt)x * (zt)y)
-#define MUL_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, mul_cmpx(x, y))
+#define MUL_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (zt)x * (zt)y)
+#define MUL_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, mul_cmpx(x, y))
 #define MUL_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, mul_cmpx(x, y))
 #define MUL_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, mul_cmpx(x, y))
 
@@ -1321,8 +1321,8 @@ div_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define DIV_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, y ? (zt)x / (zt)y : 0)
-#define DIV_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, div_cmpx(x, y))
+#define DIV_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, y ? (zt)x / (zt)y : 0)
+#define DIV_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, div_cmpx(x, y))
 #define DIV_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, div_cmpx(x, y))
 #define DIV_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, div_cmpx(x, y))
 
@@ -1381,8 +1381,8 @@ sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define SUB_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (zt)x - (zt)y)
-#define SUB_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, sub_cmpx(x, y))
+#define SUB_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (zt)x - (zt)y)
+#define SUB_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, sub_cmpx(x, y))
 #define SUB_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, sub_cmpx(x, y))
 #define SUB_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, sub_cmpx(x, y))
 
@@ -1469,8 +1469,8 @@ pow_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;		
 }				
 
-#define POW_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, pow(x, y))
-#define POW_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, pow_cmpx(x, y))
+#define POW_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, pow(x, y))
+#define POW_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, pow_cmpx(x, y))
 #define POW_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, pow_cmpx(x, y))
 #define POW_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, pow_cmpx(x, y))
 
@@ -1560,8 +1560,8 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return div_cmpx(a, b);
 }				
 
-#define LOG_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, log(y) / log(x))
-#define LOG_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, log_cmpx(y, x))
+#define LOG_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, log(y) / log(x))
+#define LOG_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, log_cmpx(y, x))
 #define LOG_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, log_cmpx(y, x))
 #define LOG_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, log_cmpx(y, x))
 
@@ -1798,20 +1798,20 @@ name##_func(struct cell_array **z,							\
 											\
 DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)					\
 
-#define AND_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x && y)
-#define LOR_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x || y)
-#define LTH_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x < (double)y)
-#define LTE_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x <= (double)y)
-#define GTH_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x > (double)y)
-#define GTE_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x >= (double)y)
-#define EQL_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x == y)
-#define EQL_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real == y.real && x.imag == y.imag)
-#define EQL_LCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real == y && x.imag == 0)
-#define EQL_RCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x == y.real && 0 == y.imag)
-#define NEQ_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x != y)
-#define NEQ_CMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real != y.real || x.imag != y.imag)
-#define NEQ_LCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x.real != y || x.imag != 0)
-#define NEQ_RCMPX(zt, lt, rt) EXPR_LOOP(zt, lt, rt, x != y.real || 0 != y.imag)
+#define AND_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x && y)
+#define LOR_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x || y)
+#define LTH_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x < (double)y)
+#define LTE_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x <= (double)y)
+#define GTH_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x > (double)y)
+#define GTE_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x >= (double)y)
+#define EQL_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x == y)
+#define EQL_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real == y.real && x.imag == y.imag)
+#define EQL_LCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real == y && x.imag == 0)
+#define EQL_RCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x == y.real && 0 == y.imag)
+#define NEQ_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x != y)
+#define NEQ_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real != y.real || x.imag != y.imag)
+#define NEQ_LCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real != y || x.imag != 0)
+#define NEQ_RCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x != y.real || 0 != y.imag)
 
 DEF_CMP_IBEAM(and, af_and, AND_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(lor, af_or, LOR_LOOP, NOOP, NOOP, NOOP);
@@ -1822,8 +1822,8 @@ DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(eql, af_eq, EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX);
 DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX);
 
-#define MIN_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x < (double)y ? (zt)x : (zt)y)
-#define MAX_LOOP(zt, lt, rt) EXPR_LOOP(zt, lt, rt, (double)x > (double)y ? (zt)x : (zt)y)
+#define MIN_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x < (double)y ? (zt)x : (zt)y)
+#define MAX_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x > (double)y ? (zt)x : (zt)y)
 
 int
 min_device(af_array *z, af_array l, af_array r)

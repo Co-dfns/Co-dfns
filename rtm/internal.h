@@ -370,17 +370,6 @@ default:														\
 	ltype *lvals = l->values;		\
 	rtype *rvals = r->values;		\
 	
-#define EXPR_LOOP(ztype, ltype, rtype, expr) {	\
-	LOOP_LOCALS(ztype, ltype, rtype)	\
-						\
-	for (size_t i = 0; i < count; i++) {	\
-		ltype x = lvals[i % lc];	\
-		rtype y = rvals[i % rc];	\
-						\
-		tvals[i] = (expr);		\
-	}					\
-}						\
-
 #define RCMPX_LOOP(ztype, ltype, expr) {		\
 	LOOP_LOCALS(ztype, ltype, struct apl_cmpx)	\
 							\
