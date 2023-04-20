@@ -908,7 +908,7 @@ index_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
 	struct cell_array *t;
-	size_t range, count;
+	size_t count;
 	int err;
 	
 	t = NULL;
@@ -919,7 +919,6 @@ index_func(struct cell_array **z,
 	    L"mk_array(&t, r->type, r->storage, 1)");
 
 	t->shape[0] = count = array_count(l);
-	range = array_count(r);
 	
 	if (l->storage == STG_DEVICE) {
 		af_array idx;
@@ -938,39 +937,43 @@ device_fail:
 	
 	CHK(alloc_array(t), fail, L"alloc_array(t)");
 	
-#define INDEX_LOOP(ztype, ltype, rtype) {		\
-	ltype *lvals = l->values;			\
-	rtype *rvals = r->values;			\
-	rtype *tvals = t->values;			\
-							\
-	for (size_t i = 0; i < t->shape[0]; i++)	\
-		tvals[i] = rvals[(ztype)lvals[i]];	\
-}							\
-
-	if (r->type == ARR_NESTED) {		
-		switch (l->type) {
-		case ARR_BOOL:
-			INDEX_LOOP(int8_t, int8_t, struct cell_array *);
-			break;
-		case ARR_SINT:
-			INDEX_LOOP(int16_t, int16_t, struct cell_array *);
-			break;
-		case ARR_INT:
-			INDEX_LOOP(int32_t, int32_t, struct cell_array *);
-			break;
-		case ARR_DBL:
-			INDEX_LOOP(size_t, double, struct cell_array *);
-			break;
-		default:
-			CHK(99, fail, L"Unsupported index element type");
-		}
-		
-		goto done;
-	}
-
-	SIMPLE_SWITCH(INDEX_LOOP, NOOP, NOOP, INDEX_LOOP,
-	    size_t, l->type, r->type,
-	    CHK(99, fail, L"Unexpected element type"))
+	if (l->storage != STG_HOST)
+		CHK(99, fail, L"Unexpected storage type for ⍺");
+	
+	#define INDEX_GETIDX_bool(fail) idx = lv[i]
+	#define INDEX_GETIDX_sint(fail) idx = lv[i]
+	#define INDEX_GETIDX_int(fail) idx = lv[i]
+	#define INDEX_GETIDX_dbl(fail) idx = (int64_t)lv[i]
+	#define INDEX_GETIDX_cmpx(fail) CHK(99, fail, L"Bad index type cmpx")
+	#define INDEX_GETIDX_char8(fail) CHK(99, fail, L"Bad index type char8")
+	#define INDEX_GETIDX_char16(fail) CHK(99, fail, L"Bad index type char16")
+	#define INDEX_GETIDX_char32(fail) CHK(99, fail, L"Bad index type char32")
+	#define INDEX_GETIDX_nested(fail) CHK(99, fail, L"Bad index type nested")
+	
+	#define INDEX_ASSIGN_bool tv[i] = rv[idx]
+	#define INDEX_ASSIGN_sint tv[i] = rv[idx]
+	#define INDEX_ASSIGN_int tv[i] = rv[idx]
+	#define INDEX_ASSIGN_dbl tv[i] = rv[idx]
+	#define INDEX_ASSIGN_cmpx tv[i] = rv[idx]
+	#define INDEX_ASSIGN_char8 tv[i] = rv[idx]
+	#define INDEX_ASSIGN_char16 tv[i] = rv[idx]
+	#define INDEX_ASSIGN_char32 tv[i] = rv[idx]
+	#define INDEX_ASSIGN_nested tv[i] = retain_cell(rv[idx])
+	
+	#define INDEX_LOOP(ltyp, lsfx, rtyp, rsfx, fail) {	\
+		ltyp *lv = l->values;				\
+		rtyp *rv = r->values;				\
+		rtyp *tv = t->values;				\
+								\
+		for (size_t i = 0; i < count; i++) {		\
+			int64_t idx = 0;			\
+								\
+			INDEX_GETIDX_##lsfx(fail);		\
+			INDEX_ASSIGN_##rsfx;			\
+		}						\
+	}							\
+	
+	DYADIC_TYPE_SWITCH(l->type, r->type, INDEX_LOOP, fail);
 
 done:
 	*z = t;
