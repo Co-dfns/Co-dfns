@@ -59,6 +59,90 @@ int array_is_same(int8_t *, struct cell_array *, struct cell_array *);
 int array_promote_storage(struct cell_array *, struct cell_array *);
 int array_migrate_storage(struct cell_array *, enum array_storage);
 
+struct apl_cmpx cast_cmpx(double x);
+
+#define cast_bool_bool(x)	(int8_t)(x)
+#define cast_bool_sint(x)	(int8_t)(x)
+#define cast_bool_int(x)	(int8_t)(x)
+#define cast_bool_dbl(x)	(int8_t)(x)
+#define cast_bool_cmpx(x)	(int8_t)(x).real
+#define cast_bool_char8(x)	(int8_t)(x)
+#define cast_bool_char16(x)	(int8_t)(x)
+#define cast_bool_char32(x)	(int8_t)(x)
+#define cast_bool_nested(x)	(int8_t)0
+#define cast_sint_bool(x)	(int16_t)(x)
+#define cast_sint_sint(x)	(int16_t)(x)
+#define cast_sint_int(x)	(int16_t)(x)
+#define cast_sint_dbl(x)	(int16_t)(x)
+#define cast_sint_cmpx(x)	(int16_t)(x).real
+#define cast_sint_char8(x)	(int16_t)(x)
+#define cast_sint_char16(x)	(int16_t)(x)
+#define cast_sint_char32(x)	(int16_t)(x)
+#define cast_sint_nested(x)	(int16_t)0
+#define cast_int_bool(x)	(int32_t)(x)
+#define cast_int_sint(x)	(int32_t)(x)
+#define cast_int_int(x)		(int32_t)(x)
+#define cast_int_dbl(x)		(int32_t)(x)
+#define cast_int_cmpx(x)	(int32_t)(x).real
+#define cast_int_char8(x)	(int32_t)(x)
+#define cast_int_char16(x)	(int32_t)(x)
+#define cast_int_char32(x)	(int32_t)(x)
+#define cast_int_nested(x)	(int32_t)0
+#define cast_dbl_bool(x)	(double)(x)
+#define cast_dbl_sint(x)	(double)(x)
+#define cast_dbl_int(x)		(double)(x)
+#define cast_dbl_dbl(x)		(double)(x)
+#define cast_dbl_cmpx(x)	(double)(x).real
+#define cast_dbl_char8(x)	(double)(x)
+#define cast_dbl_char16(x)	(double)(x)
+#define cast_dbl_char32(x)	(double)(x)
+#define cast_dbl_nested(x)	(double)0
+#define cast_cmpx_bool(x)	cast_cmpx(x)
+#define cast_cmpx_sint(x)	cast_cmpx(x)
+#define cast_cmpx_int(x)	cast_cmpx(x)
+#define cast_cmpx_dbl(x)	cast_cmpx(x)
+#define cast_cmpx_cmpx(x)	(x)
+#define cast_cmpx_char8(x)	cast_cmpx(x)
+#define cast_cmpx_char16(x)	cast_cmpx(x)
+#define cast_cmpx_char32(x)	cast_cmpx(x)
+#define cast_cmpx_nested(x)	cast_cmpx(0)
+#define cast_char8_bool(x)	(uint8_t)(x)
+#define cast_char8_sint(x)	(uint8_t)(x)
+#define cast_char8_int(x)	(uint8_t)(x)
+#define cast_char8_dbl(x)	(uint8_t)(x)
+#define cast_char8_cmpx(x)	(uint8_t)(x).real
+#define cast_char8_char8(x)	(uint8_t)(x)
+#define cast_char8_char16(x)	(uint8_t)(x)
+#define cast_char8_char32(x)	(uint8_t)(x)
+#define cast_char8_nested(x)	(uint8_t)0
+#define cast_char16_bool(x)	(uint16_t)(x)
+#define cast_char16_sint(x)	(uint16_t)(x)
+#define cast_char16_int(x)	(uint16_t)(x)
+#define cast_char16_dbl(x)	(uint16_t)(x)
+#define cast_char16_cmpx(x)	(uint16_t)(x).real
+#define cast_char16_char8(x)	(uint16_t)(x)
+#define cast_char16_char16(x)	(uint16_t)(x)
+#define cast_char16_char32(x)	(uint16_t)(x)
+#define cast_char16_nested(x)	(uint16_t)0
+#define cast_char32_bool(x)	(uint32_t)(x)
+#define cast_char32_sint(x)	(uint32_t)(x)
+#define cast_char32_int(x)	(uint32_t)(x)
+#define cast_char32_dbl(x)	(uint32_t)(x)
+#define cast_char32_cmpx(x)	(uint32_t)(x).real
+#define cast_char32_char8(x)	(uint32_t)(x)
+#define cast_char32_char16(x)	(uint32_t)(x)
+#define cast_char32_char32(x)	(uint32_t)(x)
+#define cast_char32_nested(x)	(uint32_t)0
+#define cast_nested_bool(x)	NULL
+#define cast_nested_sint(x)	NULL
+#define cast_nested_int(x)	NULL
+#define cast_nested_dbl(x)	NULL
+#define cast_nested_cmpx(x)	NULL
+#define cast_nested_char8(x)	NULL
+#define cast_nested_char16(x)	NULL
+#define cast_nested_char32(x)	NULL
+#define cast_nested_nested(x)	(x)
+
 #define DECL_FUNC(name, mon, dya)						\
 struct cell_func name##_closure = {CELL_FUNC, 1, mon, dya, NULL, NULL, 0};	\
 struct cell_func *name = &name##_closure;					\
@@ -265,6 +349,21 @@ default:														\
 		tvals[i] = (expr);		\
 	}					\
 }						\
+
+#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
+
+#define DYADIC_SCALAR_LOOP(ztyp, ltyp, rtyp, expr) {	\
+	ztyp *tv = t->values;				\
+	ltyp *lv = l->values;				\
+	rtyp *rv = r->values;				\
+							\
+	for (size_t i = 0; i < count; i++) {		\
+		ltyp x = lv[i % lc];			\
+		rtyp y = rv[i % rc];			\
+							\
+		tv[i] = (expr);				\
+	}						\
+}							\
 
 #define LOOP_LOCALS(ztype, ltype, rtype)	\
 	ztype *tvals = t->values;		\

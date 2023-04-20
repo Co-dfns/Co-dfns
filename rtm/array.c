@@ -1074,3 +1074,11 @@ array_is_same(int8_t *is_same, struct cell_array *l, struct cell_array *r)
 	*is_same = 1;
 	return 0;
 }
+
+struct apl_cmpx
+cast_cmpx(double x)
+{
+	struct apl_cmpx z = {x, 0};
+	
+	return z;
+}
