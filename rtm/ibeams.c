@@ -355,22 +355,22 @@ set_host_values(struct cell_array *t,
 	count = array_count(l);
 	rc = array_count(r);
 	
-	#define SET_GETIDX_bool(fail)   idx = lv[i];
-	#define SET_GETIDX_sint(fail)   idx = lv[i];
-	#define SET_GETIDX_int(fail)    idx = lv[i];
-	#define SET_GETIDX_dbl(fail)    idx = (int64_t)lv[i];
-	#define SET_GETIDX_cmpx(fail)   CHK(99, fail, L"Bad index type cmpx");
-	#define SET_GETIDX_char8(fail)  CHK(99, fail, L"Bad index type char8");
+	#define SET_GETIDX_bool(fail)	idx = lv[i];
+	#define SET_GETIDX_sint(fail)	idx = lv[i];
+	#define SET_GETIDX_int(fail)	idx = lv[i];
+	#define SET_GETIDX_dbl(fail)	idx = (int64_t)lv[i];
+	#define SET_GETIDX_cmpx(fail)	CHK(99, fail, L"Bad index type cmpx");
+	#define SET_GETIDX_char8(fail)	CHK(99, fail, L"Bad index type char8");
 	#define SET_GETIDX_char16(fail) CHK(99, fail, L"Bad index type char16");
 	#define SET_GETIDX_char32(fail) CHK(99, fail, L"Bad index type char32");
 	#define SET_GETIDX_nested(fail) CHK(99, fail, L"Bad index type nested");
 
-	#define SET_ASSIGN_bool(fail)   tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_sint(fail)   tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_int(fail)    tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_dbl(fail)    tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_cmpx(fail)   tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_char8(fail)  tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_bool(fail)	tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_sint(fail)	tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_int(fail)	tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_dbl(fail)	tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_cmpx(fail)	tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_char8(fail)	tv[idx] = rv[i % rc];
 	#define SET_ASSIGN_char16(fail) tv[idx] = rv[i % rc];
 	#define SET_ASSIGN_char32(fail) tv[idx] = rv[i % rc];
 	#define SET_ASSIGN_nested(fail)						\
