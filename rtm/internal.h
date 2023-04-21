@@ -364,31 +364,3 @@ default:														\
 		tv[i] = (expr);				\
 	}						\
 }							\
-
-#define LOOP_LOCALS(ztype, ltype, rtype)	\
-	ztype *tvals = t->values;		\
-	ltype *lvals = l->values;		\
-	rtype *rvals = r->values;		\
-
-#define RCMPX_LOOP(ztype, ltype, expr) {		\
-	LOOP_LOCALS(ztype, ltype, struct apl_cmpx)	\
-							\
-	for (size_t i = 0; i < count; i++) {		\
-		struct apl_cmpx x = {lvals[i % lc], 0};	\
-		struct apl_cmpx y = rvals[i % rc];	\
-							\
-		tvals[i] = (expr);			\
-	}						\
-}							\
-
-#define LCMPX_LOOP(ztype, rtype, expr) {		\
-	LOOP_LOCALS(ztype, struct apl_cmpx, rtype)	\
-							\
-	for (size_t i = 0; i < count; i++) {		\
-		struct apl_cmpx x = lvals[i % lc];	\
-		struct apl_cmpx y = {rvals[i % rc], 0};	\
-							\
-		tvals[i] = (expr);			\
-	}						\
-}							\
-
