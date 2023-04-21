@@ -1379,41 +1379,41 @@ sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define SUB_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (zt)x - (zt)y)
-#define SUB_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, sub_cmpx(x, y))
-#define SUB_LCMPX(zt, lt, rt) LCMPX_LOOP(zt, rt, sub_cmpx(x, y))
-#define SUB_RCMPX(zt, lt, rt) RCMPX_LOOP(zt, lt, sub_cmpx(x, y))
+#define sub_simp(x, y) ((x) - (y))
+
+#define SUB_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
+	    sub_simp(cast_bool_##lsfx(x), cast_bool_##rsfx(y)))
+#define SUB_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
+	    sub_simp(cast_sint_##lsfx(x), cast_sint_##rsfx(y)))
+#define SUB_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
+	    sub_simp(cast_int_##lsfx(x), cast_int_##rsfx(y)))
+#define SUB_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
+	    sub_simp(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
+#define SUB_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(struct apl_cmpx, ltyp, rtyp, \
+	    sub_cmpx(cast_cmpx_##lsfx(x), cast_cmpx_##rsfx(y)))
+#define SUB_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
+#define SUB_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
+#define SUB_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
+#define SUB_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+
+#define SUB_SWITCH(ztyp, zsfx, fail) \
+	DYADIC_TYPE_SWITCH(l->type, r->type, SUB_LOOP_##zsfx, fail)
 
 int
 sub_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-	switch (t->type) {
-	case ARR_BOOL:
-		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
-		    int16_t, l->type, r->type, return 99);
-		break;
-	case ARR_SINT:
-		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
-		     int16_t, l->type, r->type, return 99);
-		break;
-	case ARR_INT:
-		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
-		     int32_t, l->type, r->type, return 99);
-		break;
-	case ARR_DBL:
-		SIMPLE_SWITCH(SUB_LOOP, NOOP, NOOP, NOOP, 
-		     double, l->type, r->type, return 99);
-		break;
-	case ARR_CMPX:
-		SIMPLE_SWITCH(NOOP, SUB_CMPX, SUB_LCMPX, SUB_RCMPX, 
-		     struct apl_cmpx, l->type, r->type, return 99);
-		break;
-	default:
-		return 99;
-	}
+	int err = 0;
 	
-	return 0;
+	MONADIC_TYPE_SWITCH(t->type, SUB_SWITCH, fail);
+	
+fail:
+	return err;
 }
 
 int
