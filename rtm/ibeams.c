@@ -1828,42 +1828,47 @@ DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(eql, af_eq, EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX);
 DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX);
 
-#define MIN_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x < (double)y ? (zt)x : (zt)y)
-#define MAX_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x > (double)y ? (zt)x : (zt)y)
-
 int
 min_device(af_array *z, af_array l, af_array r)
 {
 	return af_minof(z, l, r, 0);
 }
 
+#define min_simp(x, y) ((x) < (y) ? (x) : (y))
+
+#define MIN_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
+	    min_simp(cast_bool_##lsfx(x), cast_bool_##rsfx(y)))
+#define MIN_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
+	    min_simp(cast_sint_##lsfx(x), cast_sint_##rsfx(y)))
+#define MIN_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
+	    min_simp(cast_int_##lsfx(x), cast_int_##rsfx(y)))
+#define MIN_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
+	    min_simp(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
+#define MIN_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(cmpx, fail)
+#define MIN_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
+#define MIN_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
+#define MIN_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
+#define MIN_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+
+#define MIN_SWITCH(ztyp, zsfx, fail) \
+	DYADIC_TYPE_SWITCH(l->type, r->type, MIN_LOOP_##zsfx, fail)
+
 int
 min_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-	switch (t->type) {
-	case ARR_BOOL:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
-		    int8_t, l->type, r->type, return 99);
-		break;
-	case ARR_SINT:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
-		     int16_t, l->type, r->type, return 99);
-		break;
-	case ARR_INT:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
-		     int32_t, l->type, r->type, return 99);
-		break;
-	case ARR_DBL:
-		SIMPLE_SWITCH(MIN_LOOP, NOOP, NOOP, NOOP, 
-		     double, l->type, r->type, return 99);
-		break;
-	default:
-		return 99;
-	}
+	int err = 0;
 	
-	return 0;
+	MONADIC_TYPE_SWITCH(t->type, MIN_SWITCH, fail);
+	
+fail:
+	return err;
 }
+
 
 int
 min_func(struct cell_array **z,
@@ -1873,6 +1878,8 @@ min_func(struct cell_array **z,
 }
 
 DECL_FUNC(min_vec_ibeam, error_mon_syntax, min_func)
+
+#define MAX_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x > (double)y ? (zt)x : (zt)y)
 
 int
 max_device(af_array *z, af_array l, af_array r)
