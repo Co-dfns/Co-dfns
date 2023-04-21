@@ -339,6 +339,8 @@ default:														\
 		def_expr;										\
 	}
 	
+#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
+
 #define MONADIC_SCALAR_LOOP(zt, rt, expr) {	\
 	zt *tvals = t->values;			\
 	rt *rvals = r->values;			\
@@ -349,8 +351,6 @@ default:														\
 		tvals[i] = (expr);		\
 	}					\
 }						\
-
-#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
 
 #define DYADIC_SCALAR_LOOP(ztyp, ltyp, rtyp, expr) {	\
 	ztyp *tv = t->values;				\
