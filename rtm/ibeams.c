@@ -1118,7 +1118,7 @@ conjugate_values(struct cell_array *t, struct cell_array *r)
 		if (err = alloc_array(t))
 			return err;
 		
-		MON_LOOP(double, struct apl_cmpx, x.real);
+		MONADIC_SCALAR_LOOP(double, struct apl_cmpx, x.real);
 		
 		break;
 	default:
@@ -1622,7 +1622,7 @@ exp_cmpx(struct apl_cmpx x)
 	return z;
 }
 
-#define EXP_LOOP(rt) MON_LOOP(double, rt, exp(x));
+#define EXP_LOOP(rt) MONADIC_SCALAR_LOOP(double, rt, exp(x));
 
 int
 exp_values(struct cell_array *t, struct cell_array *r)
@@ -1649,7 +1649,7 @@ exp_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->type) {
 	case ARR_CMPX:
-		MON_LOOP(struct apl_cmpx, struct apl_cmpx, exp_cmpx(x));
+		MONADIC_SCALAR_LOOP(struct apl_cmpx, struct apl_cmpx, exp_cmpx(x));
 		break;
 	case ARR_BOOL:
 		EXP_LOOP(int8_t);
@@ -1704,7 +1704,7 @@ nlg_cmpx(struct apl_cmpx x)
 	return z;
 }
 
-#define NLG_LOOP(rt) MON_LOOP(double, rt, log(x));
+#define NLG_LOOP(rt) MONADIC_SCALAR_LOOP(double, rt, log(x));
 
 int
 nlg_values(struct cell_array *t, struct cell_array *r)
@@ -1731,7 +1731,7 @@ nlg_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->type) {
 	case ARR_CMPX:
-		MON_LOOP(struct apl_cmpx, struct apl_cmpx, nlg_cmpx(x));
+		MONADIC_SCALAR_LOOP(struct apl_cmpx, struct apl_cmpx, nlg_cmpx(x));
 		break;
 	case ARR_BOOL:
 		NLG_LOOP(int8_t);
@@ -1935,7 +1935,7 @@ floor_values(struct cell_array *t, struct cell_array *r)
 	
 		switch (r->type) {
 		case ARR_DBL:
-			MON_LOOP(double, double, floor(x));
+			MONADIC_SCALAR_LOOP(double, double, floor(x));
 			break;
 		default:
 			TRC(99, L"Expected double numeric type");
@@ -1976,7 +1976,7 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 	
 		switch (r->type) {
 		case ARR_DBL:
-			MON_LOOP(double, double, ceil(x));
+			MONADIC_SCALAR_LOOP(double, double, ceil(x));
 			break;
 		default:
 			TRC(99, L"Expected double numeric type");
@@ -2016,7 +2016,7 @@ not_values(struct cell_array *t, struct cell_array *r)
 
 		size_t count = array_values_count(t);
 		
-		MON_LOOP(int8_t, int8_t, !x);
+		MONADIC_SCALAR_LOOP(int8_t, int8_t, !x);
 		
 		break;
 	default:
@@ -2056,16 +2056,16 @@ abs_values(struct cell_array *t, struct cell_array *r)
 
 		switch (r->type) {
 		case ARR_BOOL:
-			MON_LOOP(int8_t, int8_t, abs(x));
+			MONADIC_SCALAR_LOOP(int8_t, int8_t, abs(x));
 			break;
 		case ARR_SINT:
-			MON_LOOP(int16_t, int16_t, abs(x));
+			MONADIC_SCALAR_LOOP(int16_t, int16_t, abs(x));
 			break;
 		case ARR_INT:
-			MON_LOOP(int32_t, int32_t, abs(x));
+			MONADIC_SCALAR_LOOP(int32_t, int32_t, abs(x));
 			break;
 		case ARR_DBL:
-			MON_LOOP(double, double, fabs(x));
+			MONADIC_SCALAR_LOOP(double, double, fabs(x));
 			break;
 		default:
 			TRC(99, L"Expected non-complex numeric type");
@@ -2135,16 +2135,16 @@ af_done:
 		
 		switch (r->type) {
 		case ARR_BOOL:
-			MON_LOOP(double, int8_t, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(double, int8_t, tgamma(x+1));
 			break;
 		case ARR_SINT:
-			MON_LOOP(double, int16_t, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(double, int16_t, tgamma(x+1));
 			break;
 		case ARR_INT:
-			MON_LOOP(double, int32_t, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(double, int32_t, tgamma(x+1));
 			break;
 		case ARR_DBL:
-			MON_LOOP(double, double, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(double, double, tgamma(x+1));
 			break;
 		default:
 			TRC(99, L"Expected non-complex numeric type");
@@ -2202,7 +2202,7 @@ imagpart_values(struct cell_array *t, struct cell_array *r)
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 		size_t count = array_values_count(t);
 		
-		MON_LOOP(double, struct apl_cmpx, x.imag);
+		MONADIC_SCALAR_LOOP(double, struct apl_cmpx, x.imag);
 
 		break;
 	default:
@@ -2237,7 +2237,7 @@ realpart_values(struct cell_array *t, struct cell_array *r)
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 		size_t count = array_values_count(t);
 		
-		MON_LOOP(double, struct apl_cmpx, x.real);
+		MONADIC_SCALAR_LOOP(double, struct apl_cmpx, x.real);
 
 		break;
 	default:
@@ -2287,16 +2287,16 @@ af_done:								\
 									\
 		switch (r->type) {					\
 		case ARR_BOOL:						\
-			MON_LOOP(double, int8_t, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(double, int8_t, stdc_fun(x));		\
 			break;						\
 		case ARR_SINT:						\
-			MON_LOOP(double, int16_t, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(double, int16_t, stdc_fun(x));		\
 			break;						\
 		case ARR_INT:						\
-			MON_LOOP(double, int32_t, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(double, int32_t, stdc_fun(x));		\
 			break;						\
 		case ARR_DBL:						\
-			MON_LOOP(double, double, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(double, double, stdc_fun(x));		\
 			break;						\
 		default:						\
 			TRC(16, L"Complex inputs not supported, yet.");	\

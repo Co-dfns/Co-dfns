@@ -339,7 +339,7 @@ default:														\
 		def_expr;										\
 	}
 	
-#define MON_LOOP(zt, rt, expr) {		\
+#define MONADIC_SCALAR_LOOP(zt, rt, expr) {	\
 	zt *tvals = t->values;			\
 	rt *rvals = r->values;			\
 						\
