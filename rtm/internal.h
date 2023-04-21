@@ -259,6 +259,36 @@ default:														\
 	CHK(99, fail, L"Unknown type pair.");										\
 }
 
+#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
+
+#define MONADIC_SCALAR_LOOP(zt, rt, expr) {	\
+	zt *tvals = t->values;			\
+	rt *rvals = r->values;			\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		rt x = rvals[i];		\
+						\
+		tvals[i] = (expr);		\
+	}					\
+}						\
+
+#define DYADIC_SCALAR_LOOP(ztyp, ltyp, rtyp, expr) {	\
+	ztyp *tv = t->values;				\
+	ltyp *lv = l->values;				\
+	rtyp *rv = r->values;				\
+							\
+	for (size_t i = 0; i < count; i++) {		\
+		ltyp x = lv[i % lc];			\
+		rtyp y = rv[i % rc];			\
+							\
+		tv[i] = (expr);				\
+	}						\
+}							\
+
+/***************************************
+ * XXX Get rid of the following macros *
+ ***************************************/
+
 #define NOOP(zt, lt, rt)
 
 #define SIMPLE_SWITCH(LOOP, CMPX_LOOP, LCMPX_LOOP, RCMPX_LOOP, zt, lt, rt, def_expr)			\
@@ -339,28 +369,3 @@ default:														\
 		def_expr;										\
 	}
 	
-#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
-
-#define MONADIC_SCALAR_LOOP(zt, rt, expr) {	\
-	zt *tvals = t->values;			\
-	rt *rvals = r->values;			\
-						\
-	for (size_t i = 0; i < count; i++) {	\
-		rt x = rvals[i];		\
-						\
-		tvals[i] = (expr);		\
-	}					\
-}						\
-
-#define DYADIC_SCALAR_LOOP(ztyp, ltyp, rtyp, expr) {	\
-	ztyp *tv = t->values;				\
-	ltyp *lv = l->values;				\
-	rtyp *rv = r->values;				\
-							\
-	for (size_t i = 0; i < count; i++) {		\
-		ltyp x = lv[i % lc];			\
-		rtyp y = rv[i % rc];			\
-							\
-		tv[i] = (expr);				\
-	}						\
-}							\
