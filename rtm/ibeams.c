@@ -1879,40 +1879,45 @@ min_func(struct cell_array **z,
 
 DECL_FUNC(min_vec_ibeam, error_mon_syntax, min_func)
 
-#define MAX_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x > (double)y ? (zt)x : (zt)y)
-
 int
 max_device(af_array *z, af_array l, af_array r)
 {
 	return af_maxof(z, l, r, 0);
 }
 
+#define max_simp(x, y) ((x) > (y) ? (x) : (y))
+
+#define MAX_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
+	    max_simp(cast_bool_##lsfx(x), cast_bool_##rsfx(y)))
+#define MAX_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
+	    max_simp(cast_sint_##lsfx(x), cast_sint_##rsfx(y)))
+#define MAX_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
+	    max_simp(cast_int_##lsfx(x), cast_int_##rsfx(y)))
+#define MAX_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
+	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
+	    max_simp(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
+#define MAX_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(cmpx, fail)
+#define MAX_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
+#define MAX_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
+#define MAX_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
+#define MAX_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+
+#define MAX_SWITCH(ztyp, zsfx, fail) \
+	DYADIC_TYPE_SWITCH(l->type, r->type, MAX_LOOP_##zsfx, fail)
+
 int
 max_host(struct cell_array *t, size_t count, 
     struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
 {
-	switch (t->type) {
-	case ARR_BOOL:
-		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
-		    int8_t, l->type, r->type, return 99);
-		break;
-	case ARR_SINT:
-		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
-		     int16_t, l->type, r->type, return 99);
-		break;
-	case ARR_INT:
-		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
-		     int32_t, l->type, r->type, return 99);
-		break;
-	case ARR_DBL:
-		SIMPLE_SWITCH(MAX_LOOP, NOOP, NOOP, NOOP, 
-		     double, l->type, r->type, return 99);
-		break;
-	default:
-		return 99;
-	}
+	int err = 0;
 	
-	return 0;
+	MONADIC_TYPE_SWITCH(t->type, MAX_SWITCH, fail);
+	
+fail:
+	return err;
 }
 
 int
