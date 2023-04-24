@@ -1744,60 +1744,9 @@ bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 	return 0;
 }
 
-#define DEF_CMP_IBEAM(name, cmp_dev, loop, loop_cmpx, loop_lcmpx, loop_rcmpx)		\
-int											\
-name##_device(af_array *z, af_array l, af_array r)					\
-{											\
-	return cmp_dev(z, l, r, 0);							\
-}											\
-											\
-int											\
-name##_host(struct cell_array *t, size_t count,						\
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)			\
-{											\
-	switch (t->type) {								\
-	case ARR_BOOL:									\
-		SIMPLE_SWITCH(loop, loop_cmpx, loop_lcmpx, loop_rcmpx,			\
-		    int8_t, l->type, r->type, return 99);				\
-		break;									\
-	default:									\
-		return 99;								\
-	}										\
-											\
-	return 0;									\
-}											\
-											\
-int											\
-name##_func(struct cell_array **z,							\
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)			\
-{											\
-	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	\
-}											\
-											\
-DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)				\
-
-#define AND_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x && y)}
-#define LOR_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x || y)}
-#define LTH_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x < (double)y)}
-#define LTE_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x <= (double)y)}
-#define GTH_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x > (double)y)}
-#define GTE_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x >= (double)y)}
-#define NEQ_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x != y)}
-#define NEQ_CMPX(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x.real != y.real || x.imag != y.imag)}
-#define NEQ_LCMPX(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x.real != y || x.imag != 0)}
-#define NEQ_RCMPX(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x != y.real || 0 != y.imag)}
-
-DEF_CMP_IBEAM(and, af_and, AND_LOOP, NOOP, NOOP, NOOP);
-DEF_CMP_IBEAM(lor, af_or, LOR_LOOP, NOOP, NOOP, NOOP);
-DEF_CMP_IBEAM(lth, af_lt, LTH_LOOP, NOOP, NOOP, NOOP);
-DEF_CMP_IBEAM(lte, af_le, LTE_LOOP, NOOP, NOOP, NOOP);
-DEF_CMP_IBEAM(gth, af_gt, GTH_LOOP, NOOP, NOOP, NOOP);
-DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP, NOOP, NOOP, NOOP);
-DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX);
-
 #define CMP_TYPE_FAIL(zk, zt, zs, fail) CHK(99, fail, L"Unexpected type " #zs)
 
-#define DEF_CMP_IBEAM2(name, cmp_dev, loop)						\
+#define DEF_CMP_IBEAM(name, cmp_dev, loop)						\
 int											\
 name##_device(af_array *z, af_array l, af_array r)					\
 {											\
@@ -1833,26 +1782,48 @@ name##_func(struct cell_array **z,							\
 											\
 DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)				\
 
-#define eql_real_real(x, y) ((x) == (y))
-#define eql_real_char(x, y) ((x) == (y))
-#define eql_real_cmpx(x, y) ((x) == (y).real && 0 == (y).imag)
-#define eql_real_cell(x, y) ((x) == (int64_t)(y))
-#define eql_char_real(x, y) ((x) == (y))
-#define eql_char_char(x, y) ((x) == (y))
-#define eql_char_cmpx(x, y) ((x) == (y).real && 0 == (y).imag)
-#define eql_char_cell(x, y) ((x) == (uint64_t)(y))
-#define eql_cmpx_real(x, y) ((x).real == (y) && (x).imag == 0)
-#define eql_cmpx_char(x, y) ((x).real == (y) && (x).imag == 0)
-#define eql_cmpx_cmpx(x, y) ((x).real == (y).real && (x).imag == (y).imag)
-#define eql_cmpx_cell(x, y) ((x).real == (int64_t)(y) && (x).imag == 0)
-#define eql_cell_real(x, y) ((int64_t)(x) == (y))
-#define eql_cell_char(x, y) ((uint64_t)(x) == (y))
-#define eql_cell_cmpx(x, y) ((int64_t)(x) == (y).real && 0 == (y).imag)
-#define eql_cell_cell(x, y) ((x) == (y))
-#define EQL_LOOP(lk, lt, ls, rk, rt, rs, fail) \
-	DYADIC_SCALAR_LOOP(lt, rt, eql_##lk##_##rk(x, y))
+#define cmp_real_real(cmp, x, y) ((x) cmp (y))
+#define cmp_real_char(cmp, x, y) ((x) cmp (int64_t)(y))
+#define cmp_real_cmpx(cmp, x, y) ((x) cmp (y).real && 0 cmp (y).imag)
+#define cmp_real_cell(cmp, x, y) ((x) cmp (int64_t)(y))
+#define cmp_char_real(cmp, x, y) ((int64_t)(x) cmp (y))
+#define cmp_char_char(cmp, x, y) ((x) cmp (y))
+#define cmp_char_cmpx(cmp, x, y) ((x) cmp (y).real && 0 cmp (y).imag)
+#define cmp_char_cell(cmp, x, y) ((x) cmp (uint64_t)(y))
+#define cmp_cmpx_real(cmp, x, y) ((x).real cmp (y) && (x).imag cmp 0)
+#define cmp_cmpx_char(cmp, x, y) ((x).real cmp (y) && (x).imag cmp 0)
+#define cmp_cmpx_cmpx(cmp, x, y) ((x).real cmp (y).real && (x).imag cmp (y).imag)
+#define cmp_cmpx_cell(cmp, x, y) ((x).real cmp (int64_t)(y) && (x).imag cmp 0)
+#define cmp_cell_real(cmp, x, y) ((int64_t)(x) cmp (y))
+#define cmp_cell_char(cmp, x, y) ((uint64_t)(x) cmp (y))
+#define cmp_cell_cmpx(cmp, x, y) ((int64_t)(x) cmp (y).real && 0 cmp (y).imag)
+#define cmp_cell_cell(cmp, x, y) ((x) cmp (y))
 
-DEF_CMP_IBEAM2(eql, af_eq, EQL_LOOP);
+#define EQL_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(==, x, y))
+#define NEQ_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(!=, x, y))
+#define AND_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(&&, x, y))
+#define LOR_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(||, x, y))
+#define LTH_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(<, x, y))
+#define LTE_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(<=, x, y))
+#define GTH_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(>, x, y))
+#define GTE_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(>=, x, y))
+
+DEF_CMP_IBEAM(eql, af_eq, EQL_LOOP);
+DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP);
+DEF_CMP_IBEAM(and, af_and, AND_LOOP);
+DEF_CMP_IBEAM(lor, af_or, LOR_LOOP);
+DEF_CMP_IBEAM(lth, af_lt, LTH_LOOP);
+DEF_CMP_IBEAM(lte, af_le, LTE_LOOP);
+DEF_CMP_IBEAM(gth, af_gt, GTH_LOOP);
+DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP);
 
 int
 min_device(af_array *z, af_array l, af_array r)
