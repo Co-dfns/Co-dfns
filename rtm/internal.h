@@ -92,20 +92,20 @@ struct cell_doper name##_closure = {CELL_DOPER, 1,			\
 };									\
 struct cell_doper *name = &name##_closure;				\
 
-#define MONADIC_TYPE_SWITCH(tp, expr, fail)				\
-switch ((tp)) {								\
-case ARR_BOOL:  expr(real, int8_t,              bool,   fail);break;	\
-case ARR_SINT:  expr(real, int16_t,             sint,   fail);break;	\
-case ARR_INT:   expr(real, int32_t,             int,    fail);break;	\
-case ARR_DBL:   expr(real, double,              dbl,    fail);break;	\
-case ARR_CMPX:  expr(cmpx, struct apl_cmpx,     cmpx,   fail);break;	\
-case ARR_CHAR8: expr(char, uint8_t,             char8,  fail);break;	\
-case ARR_CHAR16:expr(char, uint16_t,            char16, fail);break;	\
-case ARR_CHAR32:expr(char, uint32_t,            char32, fail);break;	\
-case ARR_NESTED:expr(cell, struct cell_array *, nested, fail);break;	\
-default:								\
-	CHK(99, fail, L"Unknown array type.");				\
-}									\
+#define MONADIC_TYPE_SWITCH(tp, expr, oper, fail)				\
+switch ((tp)) {									\
+case ARR_BOOL:  expr(oper, real, int8_t,              bool,   fail);break;	\
+case ARR_SINT:  expr(oper, real, int16_t,             sint,   fail);break;	\
+case ARR_INT:   expr(oper, real, int32_t,             int,    fail);break;	\
+case ARR_DBL:   expr(oper, real, double,              dbl,    fail);break;	\
+case ARR_CMPX:  expr(oper, cmpx, struct apl_cmpx,     cmpx,   fail);break;	\
+case ARR_CHAR8: expr(oper, char, uint8_t,             char8,  fail);break;	\
+case ARR_CHAR16:expr(oper, char, uint16_t,            char16, fail);break;	\
+case ARR_CHAR32:expr(oper, char, uint32_t,            char32, fail);break;	\
+case ARR_NESTED:expr(oper, cell, struct cell_array *, nested, fail);break;	\
+default:									\
+	CHK(99, fail, L"Unknown array type.");					\
+}										\
 
 #define DYADIC_TYPE_SWITCH(lt, rt, expr, oper, fail)											\
 switch (type_pair((lt), (rt))) {													\
@@ -217,6 +217,8 @@ default:																\
 		tv[i] = (expr);			\
 	}					\
 }						\
+
+#define HOST_SWITCH(oper, zk, zt, zs, fail) oper##_##SWITCH##_##zk(zt, #zs, fail)
 
 #define SCALAR_SWITCH(knd, typ, oper, fail) {					\
 	typ *tv = t->values;							\

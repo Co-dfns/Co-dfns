@@ -275,10 +275,10 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	int8_t *vals;
 	
 	if (r->type != ARR_BOOL) {
-		#define ANY_ERROR(kind, type, sfx, fail)		\
+		#define ANY_ERROR(oper, kind, type, sfx, fail)		\
 			CHK(99, fail,					\
 			    L"Expected Boolean, found " #sfx L" type");
-		MONADIC_TYPE_SWITCH(r->type, ANY_ERROR, done);
+		MONADIC_TYPE_SWITCH(r->type, ANY_ERROR,, done);
 	}
 	
 	if (r->storage == STG_DEVICE) {
@@ -724,7 +724,7 @@ veach_monadic(struct cell_array **z,
 	CHK(array_get_host_buffer(&buf, &fb, r), fail,
 	    L"array_get_host_buffer(&buf, &fb, r)");
 	
-	#define VEACH_MON_LOOP(kd, tp, sfx, fail) {			\
+	#define VEACH_MON_LOOP(op, kd, tp, sfx, fail) {			\
 		tp *rv = buf;						\
 									\
 		for (size_t i = 0; i < count; i++) {			\
@@ -737,7 +737,7 @@ veach_monadic(struct cell_array **z,
 		}							\
 	}								\
 	
-	MONADIC_TYPE_SWITCH(r->type, VEACH_MON_LOOP, fail);
+	MONADIC_TYPE_SWITCH(r->type, VEACH_MON_LOOP,, fail);
 		
 	err = 0;
 	*z = t;
@@ -1158,7 +1158,6 @@ add_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define ADD_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, add_cmpx, fail)
 #define ADD_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define ADD_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define ADD_SWITCH(zknd, ztyp, zsfx, fail) ADD_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 add_host(struct cell_array *t, size_t count, 
@@ -1166,7 +1165,7 @@ add_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, ADD_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, ADD, fail);
 	
 fail:
 	return err;
@@ -1204,7 +1203,6 @@ mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define MUL_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, mul_cmpx, fail)
 #define MUL_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define MUL_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define MUL_SWITCH(zknd, ztyp, zsfx, fail) MUL_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 mul_host(struct cell_array *t, size_t count, 
@@ -1212,7 +1210,7 @@ mul_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, MUL_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, MUL, fail);
 	
 fail:
 	return err;
@@ -1277,7 +1275,6 @@ div_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define DIV_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, div_cmpx, fail)
 #define DIV_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define DIV_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define DIV_SWITCH(zknd, ztyp, zsfx, fail) DIV_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 div_host(struct cell_array *t, size_t count, 
@@ -1285,7 +1282,7 @@ div_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, DIV_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, DIV, fail);
 	
 fail:
 	return err;
@@ -1320,7 +1317,6 @@ sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define SUB_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, sub_cmpx, fail)
 #define SUB_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define SUB_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define SUB_SWITCH(zknd, ztyp, zsfx, fail) SUB_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 sub_host(struct cell_array *t, size_t count, 
@@ -1328,7 +1324,7 @@ sub_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, SUB_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, SUB, fail);
 	
 fail:
 	return err;
@@ -1389,7 +1385,6 @@ pow_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define POW_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, pow_cmpx, fail)
 #define POW_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define POW_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define POW_SWITCH(zknd, ztyp, zsfx, fail) POW_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 pow_host(struct cell_array *t, size_t count, 
@@ -1397,7 +1392,7 @@ pow_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, POW_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, POW, fail);
 	
 fail:
 	return err;
@@ -1475,7 +1470,6 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define LOG_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, log_cmpx, fail)
 #define LOG_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define LOG_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define LOG_SWITCH(zknd, ztyp, zsfx, fail) LOG_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 log_host(struct cell_array *t, size_t count, 
@@ -1483,7 +1477,7 @@ log_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, LOG_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, LOG, fail);
 	
 fail:
 	return err;
@@ -1658,7 +1652,7 @@ bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 	return 0;
 }
 
-#define CMP_TYPE_FAIL(zk, zt, zs, fail) CHK(99, fail, L"Unexpected type " #zs)
+#define CMP_TYPE_FAIL(op, zk, zt, zs, fail) CHK(99, fail, L"Unexpected type " #zs)
 
 #define DEF_CMP_IBEAM(name, cmp_dev, oper)						\
 int											\
@@ -1675,7 +1669,7 @@ name##_host(struct cell_array *t, size_t count,						\
 	int8_t *tv;									\
 											\
 	if (t->type != ARR_BOOL)							\
-		MONADIC_TYPE_SWITCH(t->type, CMP_TYPE_FAIL, fail);			\
+		MONADIC_TYPE_SWITCH(t->type, CMP_TYPE_FAIL,, fail);			\
 											\
 	tv = t->values;									\
 											\
@@ -1737,7 +1731,6 @@ min_device(af_array *z, af_array l, af_array r)
 #define MIN_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define MIN_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define MIN_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define MIN_SWITCH(zknd, ztyp, zsfx, fail) MIN_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 min_host(struct cell_array *t, size_t count, 
@@ -1745,7 +1738,7 @@ min_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, MIN_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, MIN, fail);
 	
 fail:
 	return err;
@@ -1773,7 +1766,6 @@ max_device(af_array *z, af_array l, af_array r)
 #define MAX_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define MAX_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define MAX_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define MAX_SWITCH(zknd, ztyp, zsfx, fail) MAX_SWITCH_##zknd(ztyp, #zsfx, fail)
 
 int
 max_host(struct cell_array *t, size_t count, 
@@ -1781,7 +1773,7 @@ max_host(struct cell_array *t, size_t count,
 {
 	int err = 0;
 	
-	MONADIC_TYPE_SWITCH(t->type, MAX_SWITCH, fail);
+	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, MAX, fail);
 	
 fail:
 	return err;
