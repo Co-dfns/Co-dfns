@@ -61,87 +61,22 @@ int array_migrate_storage(struct cell_array *, enum array_storage);
 
 struct apl_cmpx cast_cmpx(double x);
 
-#define cast_bool_bool(x)	(int8_t)(x)
-#define cast_bool_sint(x)	(int8_t)(x)
-#define cast_bool_int(x)	(int8_t)(x)
-#define cast_bool_dbl(x)	(int8_t)(x)
-#define cast_bool_cmpx(x)	(int8_t)(x).real
-#define cast_bool_char8(x)	(int8_t)(x)
-#define cast_bool_char16(x)	(int8_t)(x)
-#define cast_bool_char32(x)	(int8_t)(x)
-#define cast_bool_nested(x)	(int8_t)0
-#define cast_sint_bool(x)	(int16_t)(x)
-#define cast_sint_sint(x)	(int16_t)(x)
-#define cast_sint_int(x)	(int16_t)(x)
-#define cast_sint_dbl(x)	(int16_t)(x)
-#define cast_sint_cmpx(x)	(int16_t)(x).real
-#define cast_sint_char8(x)	(int16_t)(x)
-#define cast_sint_char16(x)	(int16_t)(x)
-#define cast_sint_char32(x)	(int16_t)(x)
-#define cast_sint_nested(x)	(int16_t)0
-#define cast_int_bool(x)	(int32_t)(x)
-#define cast_int_sint(x)	(int32_t)(x)
-#define cast_int_int(x)		(int32_t)(x)
-#define cast_int_dbl(x)		(int32_t)(x)
-#define cast_int_cmpx(x)	(int32_t)(x).real
-#define cast_int_char8(x)	(int32_t)(x)
-#define cast_int_char16(x)	(int32_t)(x)
-#define cast_int_char32(x)	(int32_t)(x)
-#define cast_int_nested(x)	(int32_t)0
-#define cast_dbl_bool(x)	(double)(x)
-#define cast_dbl_sint(x)	(double)(x)
-#define cast_dbl_int(x)		(double)(x)
-#define cast_dbl_dbl(x)		(double)(x)
-#define cast_dbl_cmpx(x)	(double)(x).real
-#define cast_dbl_char8(x)	(double)(x)
-#define cast_dbl_char16(x)	(double)(x)
-#define cast_dbl_char32(x)	(double)(x)
-#define cast_dbl_nested(x)	(double)0
-#define cast_cmpx_bool(x)	cast_cmpx(x)
-#define cast_cmpx_sint(x)	cast_cmpx(x)
-#define cast_cmpx_int(x)	cast_cmpx(x)
-#define cast_cmpx_dbl(x)	cast_cmpx(x)
+#define cast_real_real(x)	(x)
+#define cast_real_cmpx(x)	(x).real
+#define cast_real_char(x)	((double)(x))
+#define cast_real_cell(x)	0
+#define cast_cmpx_real(x)	cast_cmpx(x)
 #define cast_cmpx_cmpx(x)	(x)
-#define cast_cmpx_char8(x)	cast_cmpx(x)
-#define cast_cmpx_char16(x)	cast_cmpx(x)
-#define cast_cmpx_char32(x)	cast_cmpx(x)
-#define cast_cmpx_nested(x)	cast_cmpx(0)
-#define cast_char8_bool(x)	(uint8_t)(x)
-#define cast_char8_sint(x)	(uint8_t)(x)
-#define cast_char8_int(x)	(uint8_t)(x)
-#define cast_char8_dbl(x)	(uint8_t)(x)
-#define cast_char8_cmpx(x)	(uint8_t)(x).real
-#define cast_char8_char8(x)	(uint8_t)(x)
-#define cast_char8_char16(x)	(uint8_t)(x)
-#define cast_char8_char32(x)	(uint8_t)(x)
-#define cast_char8_nested(x)	(uint8_t)0
-#define cast_char16_bool(x)	(uint16_t)(x)
-#define cast_char16_sint(x)	(uint16_t)(x)
-#define cast_char16_int(x)	(uint16_t)(x)
-#define cast_char16_dbl(x)	(uint16_t)(x)
-#define cast_char16_cmpx(x)	(uint16_t)(x).real
-#define cast_char16_char8(x)	(uint16_t)(x)
-#define cast_char16_char16(x)	(uint16_t)(x)
-#define cast_char16_char32(x)	(uint16_t)(x)
-#define cast_char16_nested(x)	(uint16_t)0
-#define cast_char32_bool(x)	(uint32_t)(x)
-#define cast_char32_sint(x)	(uint32_t)(x)
-#define cast_char32_int(x)	(uint32_t)(x)
-#define cast_char32_dbl(x)	(uint32_t)(x)
-#define cast_char32_cmpx(x)	(uint32_t)(x).real
-#define cast_char32_char8(x)	(uint32_t)(x)
-#define cast_char32_char16(x)	(uint32_t)(x)
-#define cast_char32_char32(x)	(uint32_t)(x)
-#define cast_char32_nested(x)	(uint32_t)0
-#define cast_nested_bool(x)	NULL
-#define cast_nested_sint(x)	NULL
-#define cast_nested_int(x)	NULL
-#define cast_nested_dbl(x)	NULL
-#define cast_nested_cmpx(x)	NULL
-#define cast_nested_char8(x)	NULL
-#define cast_nested_char16(x)	NULL
-#define cast_nested_char32(x)	NULL
-#define cast_nested_nested(x)	(x)
+#define cast_cmpx_char(x)	cast_cmpx(x)
+#define cast_cmpx_cell(x)	cast_cmpx(0)
+#define cast_char_real(x)	(x)
+#define cast_char_cmpx(x)	(x).real
+#define cast_char_char(x)	(x)
+#define cast_char_cell(x)	0
+#define cast_cell_real(x)	NULL
+#define cast_cell_cmpx(x)	NULL
+#define cast_cell_char(x)	NULL
+#define cast_cell_cell(x)	(x)
 
 #define DECL_FUNC(name, mon, dya)						\
 struct cell_func name##_closure = {CELL_FUNC, 1, mon, dya, NULL, NULL, 0};	\
@@ -159,131 +94,135 @@ struct cell_doper *name = &name##_closure;				\
 
 #define MONADIC_TYPE_SWITCH(tp, expr, fail)			\
 switch ((tp)) {							\
-case ARR_BOOL:  expr(int8_t,              bool,   fail);break;	\
-case ARR_SINT:  expr(int16_t,             sint,   fail);break;	\
-case ARR_INT:   expr(int32_t,             int,    fail);break;	\
-case ARR_DBL:   expr(double,              dbl,    fail);break;	\
-case ARR_CMPX:  expr(struct apl_cmpx,     cmpx,   fail);break;	\
-case ARR_CHAR8: expr(uint8_t,             char8,  fail);break;	\
-case ARR_CHAR16:expr(uint16_t,            char16, fail);break;	\
-case ARR_CHAR32:expr(uint32_t,            char32, fail);break;	\
-case ARR_NESTED:expr(struct cell_array *, nested, fail);break;	\
+case ARR_BOOL:  expr(real, int8_t,              bool,   fail);break;	\
+case ARR_SINT:  expr(real, int16_t,             sint,   fail);break;	\
+case ARR_INT:   expr(real, int32_t,             int,    fail);break;	\
+case ARR_DBL:   expr(real, double,              dbl,    fail);break;	\
+case ARR_CMPX:  expr(cmpx, struct apl_cmpx,     cmpx,   fail);break;	\
+case ARR_CHAR8: expr(char, uint8_t,             char8,  fail);break;	\
+case ARR_CHAR16:expr(char, uint16_t,            char16, fail);break;	\
+case ARR_CHAR32:expr(char, uint32_t,            char32, fail);break;	\
+case ARR_NESTED:expr(cell, struct cell_array *, nested, fail);break;	\
 default:							\
 	CHK(99, fail, L"Unknown array type.");			\
 }								\
 
 #define DYADIC_TYPE_SWITCH(lt, rt, expr, fail)										\
 switch (type_pair((lt), (rt))) {											\
-case type_pair(ARR_BOOL,   ARR_BOOL):  expr(int8_t,              bool,   int8_t             , bool  , fail);break;	\
-case type_pair(ARR_BOOL,   ARR_SINT):  expr(int8_t,              bool,   int16_t            , sint  , fail);break;	\
-case type_pair(ARR_BOOL,   ARR_INT):   expr(int8_t,              bool,   int32_t            , int   , fail);break;	\
-case type_pair(ARR_BOOL,   ARR_DBL):   expr(int8_t,              bool,   double             , dbl   , fail);break;	\
-case type_pair(ARR_BOOL,   ARR_CMPX):  expr(int8_t,              bool,   struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_BOOL,   ARR_CHAR8): expr(int8_t,              bool,   uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_BOOL,   ARR_CHAR16):expr(int8_t,              bool,   uint16_t           , char16, fail);break;	\
-case type_pair(ARR_BOOL,   ARR_CHAR32):expr(int8_t,              bool,   uint32_t           , char32, fail);break;	\
-case type_pair(ARR_BOOL,   ARR_NESTED):expr(int8_t,              bool,   struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_SINT,   ARR_BOOL):  expr(int16_t,             sint,   int8_t             , bool  , fail);break;	\
-case type_pair(ARR_SINT,   ARR_SINT):  expr(int16_t,             sint,   int16_t            , sint  , fail);break;	\
-case type_pair(ARR_SINT,   ARR_INT):   expr(int16_t,             sint,   int32_t            , int   , fail);break;	\
-case type_pair(ARR_SINT,   ARR_DBL):   expr(int16_t,             sint,   double             , dbl   , fail);break;	\
-case type_pair(ARR_SINT,   ARR_CMPX):  expr(int16_t,             sint,   struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_SINT,   ARR_CHAR8): expr(int16_t,             sint,   uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_SINT,   ARR_CHAR16):expr(int16_t,             sint,   uint16_t           , char16, fail);break;	\
-case type_pair(ARR_SINT,   ARR_CHAR32):expr(int16_t,             sint,   uint32_t           , char32, fail);break;	\
-case type_pair(ARR_SINT,   ARR_NESTED):expr(int16_t,             sint,   struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_INT,    ARR_BOOL):  expr(int32_t,             int,    int8_t             , bool  , fail);break;	\
-case type_pair(ARR_INT,    ARR_SINT):  expr(int32_t,             int,    int16_t            , sint  , fail);break;	\
-case type_pair(ARR_INT,    ARR_INT):   expr(int32_t,             int,    int32_t            , int   , fail);break;	\
-case type_pair(ARR_INT,    ARR_DBL):   expr(int32_t,             int,    double             , dbl   , fail);break;	\
-case type_pair(ARR_INT,    ARR_CMPX):  expr(int32_t,             int,    struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_INT,    ARR_CHAR8): expr(int32_t,             int,    uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_INT,    ARR_CHAR16):expr(int32_t,             int,    uint16_t           , char16, fail);break;	\
-case type_pair(ARR_INT,    ARR_CHAR32):expr(int32_t,             int,    uint32_t           , char32, fail);break;	\
-case type_pair(ARR_INT,    ARR_NESTED):expr(int32_t,             int,    struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_DBL,    ARR_BOOL):  expr(double,              dbl,    int8_t             , bool  , fail);break;	\
-case type_pair(ARR_DBL,    ARR_SINT):  expr(double,              dbl,    int16_t            , sint  , fail);break;	\
-case type_pair(ARR_DBL,    ARR_INT):   expr(double,              dbl,    int32_t            , int   , fail);break;	\
-case type_pair(ARR_DBL,    ARR_DBL):   expr(double,              dbl,    double             , dbl   , fail);break;	\
-case type_pair(ARR_DBL,    ARR_CMPX):  expr(double,              dbl,    struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_DBL,    ARR_CHAR8): expr(double,              dbl,    uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_DBL,    ARR_CHAR16):expr(double,              dbl,    uint16_t           , char16, fail);break;	\
-case type_pair(ARR_DBL,    ARR_CHAR32):expr(double,              dbl,    uint32_t           , char32, fail);break;	\
-case type_pair(ARR_DBL,    ARR_NESTED):expr(double,              dbl,    struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_CMPX,   ARR_BOOL):  expr(struct apl_cmpx,     cmpx,   int8_t             , bool  , fail);break;	\
-case type_pair(ARR_CMPX,   ARR_SINT):  expr(struct apl_cmpx,     cmpx,   int16_t            , sint  , fail);break;	\
-case type_pair(ARR_CMPX,   ARR_INT):   expr(struct apl_cmpx,     cmpx,   int32_t            , int   , fail);break;	\
-case type_pair(ARR_CMPX,   ARR_DBL):   expr(struct apl_cmpx,     cmpx,   double             , dbl   , fail);break;	\
-case type_pair(ARR_CMPX,   ARR_CMPX):  expr(struct apl_cmpx,     cmpx,   struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_CMPX,   ARR_CHAR8): expr(struct apl_cmpx,     cmpx,   uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_CMPX,   ARR_CHAR16):expr(struct apl_cmpx,     cmpx,   uint16_t           , char16, fail);break;	\
-case type_pair(ARR_CMPX,   ARR_CHAR32):expr(struct apl_cmpx,     cmpx,   uint32_t           , char32, fail);break;	\
-case type_pair(ARR_CMPX,   ARR_NESTED):expr(struct apl_cmpx,     cmpx,   struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_BOOL):  expr(uint8_t,             char8,  int8_t             , bool  , fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_SINT):  expr(uint8_t,             char8,  int16_t            , sint  , fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_INT):   expr(uint8_t,             char8,  int32_t            , int   , fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_DBL):   expr(uint8_t,             char8,  double             , dbl   , fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_CMPX):  expr(uint8_t,             char8,  struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_CHAR8): expr(uint8_t,             char8,  uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_CHAR16):expr(uint8_t,             char8,  uint16_t           , char16, fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_CHAR32):expr(uint8_t,             char8,  uint32_t           , char32, fail);break;	\
-case type_pair(ARR_CHAR8,  ARR_NESTED):expr(uint8_t,             char8,  struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_CHAR16, ARR_BOOL):  expr(uint16_t,            char16, int8_t             , bool  , fail);break;	\
-case type_pair(ARR_CHAR16, ARR_SINT):  expr(uint16_t,            char16, int16_t            , sint  , fail);break;	\
-case type_pair(ARR_CHAR16, ARR_INT):   expr(uint16_t,            char16, int32_t            , int   , fail);break;	\
-case type_pair(ARR_CHAR16, ARR_DBL):   expr(uint16_t,            char16, double             , dbl   , fail);break;	\
-case type_pair(ARR_CHAR16, ARR_CMPX):  expr(uint16_t,            char16, struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_CHAR16, ARR_CHAR8): expr(uint16_t,            char16, uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_CHAR16, ARR_CHAR16):expr(uint16_t,            char16, uint16_t           , char16, fail);break;	\
-case type_pair(ARR_CHAR16, ARR_CHAR32):expr(uint16_t,            char16, uint32_t           , char32, fail);break;	\
-case type_pair(ARR_CHAR16, ARR_NESTED):expr(uint16_t,            char16, struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_CHAR32, ARR_BOOL):  expr(uint32_t,            char32, int8_t             , bool  , fail);break;	\
-case type_pair(ARR_CHAR32, ARR_SINT):  expr(uint32_t,            char32, int16_t            , sint  , fail);break;	\
-case type_pair(ARR_CHAR32, ARR_INT):   expr(uint32_t,            char32, int32_t            , int   , fail);break;	\
-case type_pair(ARR_CHAR32, ARR_DBL):   expr(uint32_t,            char32, double             , dbl   , fail);break;	\
-case type_pair(ARR_CHAR32, ARR_CMPX):  expr(uint32_t,            char32, struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_CHAR32, ARR_CHAR8): expr(uint32_t,            char32, uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_CHAR32, ARR_CHAR16):expr(uint32_t,            char32, uint16_t           , char16, fail);break;	\
-case type_pair(ARR_CHAR32, ARR_CHAR32):expr(uint32_t,            char32, uint32_t           , char32, fail);break;	\
-case type_pair(ARR_CHAR32, ARR_NESTED):expr(uint32_t,            char32, struct cell_array *, nested, fail);break;	\
-case type_pair(ARR_NESTED, ARR_BOOL):  expr(struct cell_array *, nested, int8_t             , bool  , fail);break;	\
-case type_pair(ARR_NESTED, ARR_SINT):  expr(struct cell_array *, nested, int16_t            , sint  , fail);break;	\
-case type_pair(ARR_NESTED, ARR_INT):   expr(struct cell_array *, nested, int32_t            , int   , fail);break;	\
-case type_pair(ARR_NESTED, ARR_DBL):   expr(struct cell_array *, nested, double             , dbl   , fail);break;	\
-case type_pair(ARR_NESTED, ARR_CMPX):  expr(struct cell_array *, nested, struct apl_cmpx    , cmpx  , fail);break;	\
-case type_pair(ARR_NESTED, ARR_CHAR8): expr(struct cell_array *, nested, uint8_t            , char8 , fail);break;	\
-case type_pair(ARR_NESTED, ARR_CHAR16):expr(struct cell_array *, nested, uint16_t           , char16, fail);break;	\
-case type_pair(ARR_NESTED, ARR_CHAR32):expr(struct cell_array *, nested, uint32_t           , char32, fail);break;	\
-case type_pair(ARR_NESTED, ARR_NESTED):expr(struct cell_array *, nested, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_BOOL,   ARR_BOOL):  expr(real, int8_t,              bool,   real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_SINT):  expr(real, int8_t,              bool,   real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_INT):   expr(real, int8_t,              bool,   real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_DBL):   expr(real, int8_t,              bool,   real, double             , dbl   , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CMPX):  expr(real, int8_t,              bool,   cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CHAR8): expr(real, int8_t,              bool,   char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CHAR16):expr(real, int8_t,              bool,   char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_BOOL,   ARR_CHAR32):expr(real, int8_t,              bool,   char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_BOOL,   ARR_NESTED):expr(real, int8_t,              bool,   cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_SINT,   ARR_BOOL):  expr(real, int16_t,             sint,   real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_SINT,   ARR_SINT):  expr(real, int16_t,             sint,   real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_SINT,   ARR_INT):   expr(real, int16_t,             sint,   real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_SINT,   ARR_DBL):   expr(real, int16_t,             sint,   real, double             , dbl   , fail);break;	\
+case type_pair(ARR_SINT,   ARR_CMPX):  expr(real, int16_t,             sint,   cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_SINT,   ARR_CHAR8): expr(real, int16_t,             sint,   char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_SINT,   ARR_CHAR16):expr(real, int16_t,             sint,   char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_SINT,   ARR_CHAR32):expr(real, int16_t,             sint,   char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_SINT,   ARR_NESTED):expr(real, int16_t,             sint,   cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_INT,    ARR_BOOL):  expr(real, int32_t,             int,    real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_INT,    ARR_SINT):  expr(real, int32_t,             int,    real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_INT,    ARR_INT):   expr(real, int32_t,             int,    real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_INT,    ARR_DBL):   expr(real, int32_t,             int,    real, double             , dbl   , fail);break;	\
+case type_pair(ARR_INT,    ARR_CMPX):  expr(real, int32_t,             int,    cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_INT,    ARR_CHAR8): expr(real, int32_t,             int,    char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_INT,    ARR_CHAR16):expr(real, int32_t,             int,    char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_INT,    ARR_CHAR32):expr(real, int32_t,             int,    char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_INT,    ARR_NESTED):expr(real, int32_t,             int,    cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_DBL,    ARR_BOOL):  expr(real, double,              dbl,    real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_DBL,    ARR_SINT):  expr(real, double,              dbl,    real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_DBL,    ARR_INT):   expr(real, double,              dbl,    real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_DBL,    ARR_DBL):   expr(real, double,              dbl,    real, double             , dbl   , fail);break;	\
+case type_pair(ARR_DBL,    ARR_CMPX):  expr(real, double,              dbl,    cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_DBL,    ARR_CHAR8): expr(real, double,              dbl,    char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_DBL,    ARR_CHAR16):expr(real, double,              dbl,    char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_DBL,    ARR_CHAR32):expr(real, double,              dbl,    char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_DBL,    ARR_NESTED):expr(real, double,              dbl,    cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CMPX,   ARR_BOOL):  expr(cmpx, struct apl_cmpx,     cmpx,   real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_SINT):  expr(cmpx, struct apl_cmpx,     cmpx,   real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_INT):   expr(cmpx, struct apl_cmpx,     cmpx,   real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_DBL):   expr(cmpx, struct apl_cmpx,     cmpx,   real, double             , dbl   , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CMPX):  expr(cmpx, struct apl_cmpx,     cmpx,   cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CHAR8): expr(cmpx, struct apl_cmpx,     cmpx,   char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CHAR16):expr(cmpx, struct apl_cmpx,     cmpx,   char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CMPX,   ARR_CHAR32):expr(cmpx, struct apl_cmpx,     cmpx,   char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CMPX,   ARR_NESTED):expr(cmpx, struct apl_cmpx,     cmpx,   cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_BOOL):  expr(char, uint8_t,             char8,  real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_SINT):  expr(char, uint8_t,             char8,  real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_INT):   expr(char, uint8_t,             char8,  real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_DBL):   expr(char, uint8_t,             char8,  real, double             , dbl   , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CMPX):  expr(char, uint8_t,             char8,  cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CHAR8): expr(char, uint8_t,             char8,  char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CHAR16):expr(char, uint8_t,             char8,  char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_CHAR32):expr(char, uint8_t,             char8,  char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CHAR8,  ARR_NESTED):expr(char, uint8_t,             char8,  cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CHAR16, ARR_BOOL):  expr(char, uint16_t,            char16, real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_SINT):  expr(char, uint16_t,            char16, real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_INT):   expr(char, uint16_t,            char16, real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_DBL):   expr(char, uint16_t,            char16, real, double             , dbl   , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CMPX):  expr(char, uint16_t,            char16, cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CHAR8): expr(char, uint16_t,            char16, char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CHAR16):expr(char, uint16_t,            char16, char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CHAR16, ARR_CHAR32):expr(char, uint16_t,            char16, char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CHAR16, ARR_NESTED):expr(char, uint16_t,            char16, cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_CHAR32, ARR_BOOL):  expr(char, uint32_t,            char32, real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_SINT):  expr(char, uint32_t,            char32, real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_INT):   expr(char, uint32_t,            char32, real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_DBL):   expr(char, uint32_t,            char32, real, double             , dbl   , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CMPX):  expr(char, uint32_t,            char32, cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CHAR8): expr(char, uint32_t,            char32, char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CHAR16):expr(char, uint32_t,            char32, char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_CHAR32, ARR_CHAR32):expr(char, uint32_t,            char32, char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_CHAR32, ARR_NESTED):expr(char, uint32_t,            char32, cell, struct cell_array *, nested, fail);break;	\
+case type_pair(ARR_NESTED, ARR_BOOL):  expr(cell, struct cell_array *, nested, real, int8_t             , bool  , fail);break;	\
+case type_pair(ARR_NESTED, ARR_SINT):  expr(cell, struct cell_array *, nested, real, int16_t            , sint  , fail);break;	\
+case type_pair(ARR_NESTED, ARR_INT):   expr(cell, struct cell_array *, nested, real, int32_t            , int   , fail);break;	\
+case type_pair(ARR_NESTED, ARR_DBL):   expr(cell, struct cell_array *, nested, real, double             , dbl   , fail);break;	\
+case type_pair(ARR_NESTED, ARR_CMPX):  expr(cell, struct cell_array *, nested, cmpx, struct apl_cmpx    , cmpx  , fail);break;	\
+case type_pair(ARR_NESTED, ARR_CHAR8): expr(cell, struct cell_array *, nested, char, uint8_t            , char8 , fail);break;	\
+case type_pair(ARR_NESTED, ARR_CHAR16):expr(cell, struct cell_array *, nested, char, uint16_t           , char16, fail);break;	\
+case type_pair(ARR_NESTED, ARR_CHAR32):expr(cell, struct cell_array *, nested, char, uint32_t           , char32, fail);break;	\
+case type_pair(ARR_NESTED, ARR_NESTED):expr(cell, struct cell_array *, nested, cell, struct cell_array *, nested, fail);break;	\
 default:														\
 	CHK(99, fail, L"Unknown type pair.");										\
 }
 
-#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " #sfx)
+#define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " sfx)
 
-#define MONADIC_SCALAR_LOOP(zt, rt, expr) {	\
-	zt *tvals = t->values;			\
-	rt *rvals = r->values;			\
+#define SCALAR_SWITCH(typ, loop, fail) {			\
+	typ *tv = t->values;					\
+								\
+	DYADIC_TYPE_SWITCH(l->type, r->type, loop, fail);	\
+}
+
+#define MONADIC_SCALAR_LOOP(rt, expr) {		\
+	rt *rv = r->values;			\
 						\
 	for (size_t i = 0; i < count; i++) {	\
-		rt x = rvals[i];		\
+		rt x = rv[i];			\
 						\
-		tvals[i] = (expr);		\
+		tv[i] = (expr);			\
 	}					\
 }						\
 
-#define DYADIC_SCALAR_LOOP(ztyp, ltyp, rtyp, expr) {	\
-	ztyp *tv = t->values;				\
-	ltyp *lv = l->values;				\
-	rtyp *rv = r->values;				\
-							\
-	for (size_t i = 0; i < count; i++) {		\
-		ltyp x = lv[i % lc];			\
-		rtyp y = rv[i % rc];			\
-							\
-		tv[i] = (expr);				\
-	}						\
-}							\
+#define DYADIC_SCALAR_LOOP(lt, rt, expr) {	\
+	lt *lv = l->values;			\
+	rt *rv = r->values;			\
+						\
+	for (size_t i = 0; i < count; i++) {	\
+		lt x = lv[i % lc];		\
+		rt y = rv[i % rc];		\
+						\
+		tv[i] = (expr);			\
+	}					\
+}						\
 
 /***************************************
  * XXX Get rid of the following macros *

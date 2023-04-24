@@ -275,7 +275,7 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	int8_t *vals;
 	
 	if (r->type != ARR_BOOL) {
-		#define ANY_ERROR(type, sfx, fail)			\
+		#define ANY_ERROR(kind, type, sfx, fail)		\
 			CHK(99, fail,					\
 			    L"Expected Boolean, found " #sfx L" type");
 		MONADIC_TYPE_SWITCH(r->type, ANY_ERROR, done);
@@ -355,39 +355,29 @@ set_host_values(struct cell_array *t,
 	count = array_count(l);
 	rc = array_count(r);
 	
-	#define SET_GETIDX_bool(fail)	idx = lv[i];
-	#define SET_GETIDX_sint(fail)	idx = lv[i];
-	#define SET_GETIDX_int(fail)	idx = lv[i];
-	#define SET_GETIDX_dbl(fail)	idx = (int64_t)lv[i];
-	#define SET_GETIDX_cmpx(fail)	CHK(99, fail, L"Bad index type cmpx");
-	#define SET_GETIDX_char8(fail)	CHK(99, fail, L"Bad index type char8");
-	#define SET_GETIDX_char16(fail) CHK(99, fail, L"Bad index type char16");
-	#define SET_GETIDX_char32(fail) CHK(99, fail, L"Bad index type char32");
-	#define SET_GETIDX_nested(fail) CHK(99, fail, L"Bad index type nested");
-
-	#define SET_ASSIGN_bool(fail)	tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_sint(fail)	tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_int(fail)	tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_dbl(fail)	tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_cmpx(fail)	tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_char8(fail)	tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_char16(fail) tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_char32(fail) tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_nested(fail)						\
+	#define SET_GETIDX_real(sfx, fail) idx = (int64_t)lv[i];
+	#define SET_GETIDX_char(sfx, fail) BAD_ELEM(sfx, fail)
+	#define SET_GETIDX_cmpx(sfx, fail) BAD_ELEM(sfx, fail)
+	#define SET_GETIDX_cell(sfx, fail) BAD_ELEM(sfx, fail)
+	
+	#define SET_ASSIGN_real(fail) tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_char(fail) tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_cmpx(fail) tv[idx] = rv[i % rc];
+	#define SET_ASSIGN_cell(fail)						\
 		retain_cell(rv[i % rc]);					\
 		CHK(release_array(tv[idx]), fail, L"release_array(tv[idx])");	\
 		tv[idx] = rv[i % rc];						\
 		
-	#define SET_LOOP(ttyp, tsfx, ltyp, lsfx, fail) {	\
-		ttyp *tv = t->values;				\
-		ltyp *lv = l->values;				\
-		ttyp *rv = r->values;				\
+	#define SET_LOOP(tk, tt, ts, lk, lt, ls, fail) {	\
+		tt *tv = t->values;				\
+		lt *lv = l->values;				\
+		tt *rv = r->values;				\
 								\
 		for (size_t i = 0; i < count; i++) {		\
 			int64_t idx = 0;			\
 								\
-			SET_GETIDX_##lsfx(fail);		\
-			SET_ASSIGN_##tsfx(fail);		\
+			SET_GETIDX_##lk(#ls, fail);		\
+			SET_ASSIGN_##tk(fail);			\
 		}						\
 	}							\
 	
@@ -734,7 +724,7 @@ veach_monadic(struct cell_array **z,
 	CHK(array_get_host_buffer(&buf, &fb, r), fail,
 	    L"array_get_host_buffer(&buf, &fb, r)");
 	
-	#define VEACH_MON_LOOP(tp, sfx, fail) {				\
+	#define VEACH_MON_LOOP(kd, tp, sfx, fail) {			\
 		tp *rv = buf;						\
 									\
 		for (size_t i = 0; i < count; i++) {			\
@@ -796,21 +786,21 @@ veach_dyadic(struct cell_array **z,
 	
 	tvals = t->values;
 	
-#define VEACH_DYA_LOOP(ltype, lsfx, rtype, rsfx, fail) {			\
-	ltype *lvals = lbuf;							\
-	rtype *rvals = rbuf;							\
-										\
-	for (size_t i = 0; i < count; i++) {					\
-		CHK(mk_array_##lsfx(&x, lvals[i % lc]), fail,			\
-		    L"mk_array_" #lsfx L"(&x, lvals[i % lc])");		\
-		CHK(mk_array_##rsfx(&y, rvals[i % rc]), fail,			\
-		    L"mk_array_" #rsfx L"(&y, rvals[i % rc])");		\
-		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,		\
-		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " #lsfx L"/" #rsfx);	\
-		CHK(release_array(x), fail, L"release_array(x)");		\
-		CHK(release_array(y), fail, L"release_array(y)");		\
-	}									\
-}										\
+#define VEACH_DYA_LOOP(lk, lt, ls, rk, rt, rs, fail) {			\
+	lt *lvals = lbuf;						\
+	rt *rvals = rbuf;						\
+									\
+	for (size_t i = 0; i < count; i++) {				\
+		CHK(mk_array_##ls(&x, lvals[i % lc]), fail,		\
+		    L"mk_array_" #ls L"(&x, lvals[i % lc])");		\
+		CHK(mk_array_##rs(&y, rvals[i % rc]), fail,		\
+		    L"mk_array_" #rs L"(&y, rvals[i % rc])");		\
+		CHK((oper->fptr_dya)(tvals + i, x, y, oper), fail,	\
+		    L"tvals[i]←⍺[lc|i] ⍺⍺ ⍵[rc|i] ⍝ " #ls L"/" #rs);	\
+		CHK(release_array(x), fail, L"release_array(x)");	\
+		CHK(release_array(y), fail, L"release_array(y)");	\
+	}								\
+}									\
 
 	DYADIC_TYPE_SWITCH(l->type, r->type, VEACH_DYA_LOOP, fail);
 
@@ -940,36 +930,26 @@ device_fail:
 	if (l->storage != STG_HOST)
 		CHK(99, fail, L"Unexpected storage type for ⍺");
 	
-	#define INDEX_GETIDX_bool(fail) idx = lv[i]
-	#define INDEX_GETIDX_sint(fail) idx = lv[i]
-	#define INDEX_GETIDX_int(fail) idx = lv[i]
-	#define INDEX_GETIDX_dbl(fail) idx = (int64_t)lv[i]
-	#define INDEX_GETIDX_cmpx(fail) CHK(99, fail, L"Bad index type cmpx")
-	#define INDEX_GETIDX_char8(fail) CHK(99, fail, L"Bad index type char8")
-	#define INDEX_GETIDX_char16(fail) CHK(99, fail, L"Bad index type char16")
-	#define INDEX_GETIDX_char32(fail) CHK(99, fail, L"Bad index type char32")
-	#define INDEX_GETIDX_nested(fail) CHK(99, fail, L"Bad index type nested")
+	#define INDEX_GETIDX_real(sfx, fail) idx = (int64_t)lv[i]
+	#define INDEX_GETIDX_cmpx(sfx, fail) BAD_ELEM(sfx, fail)
+	#define INDEX_GETIDX_char(sfx, fail) BAD_ELEM(sfx, fail)
+	#define INDEX_GETIDX_cell(sfx, fail) BAD_ELEM(sfx, fail)
 	
-	#define INDEX_ASSIGN_bool tv[i] = rv[idx]
-	#define INDEX_ASSIGN_sint tv[i] = rv[idx]
-	#define INDEX_ASSIGN_int tv[i] = rv[idx]
-	#define INDEX_ASSIGN_dbl tv[i] = rv[idx]
+	#define INDEX_ASSIGN_real tv[i] = rv[idx]
 	#define INDEX_ASSIGN_cmpx tv[i] = rv[idx]
-	#define INDEX_ASSIGN_char8 tv[i] = rv[idx]
-	#define INDEX_ASSIGN_char16 tv[i] = rv[idx]
-	#define INDEX_ASSIGN_char32 tv[i] = rv[idx]
-	#define INDEX_ASSIGN_nested tv[i] = retain_cell(rv[idx])
+	#define INDEX_ASSIGN_char tv[i] = rv[idx]
+	#define INDEX_ASSIGN_cell tv[i] = retain_cell(rv[idx])
 	
-	#define INDEX_LOOP(ltyp, lsfx, rtyp, rsfx, fail) {	\
-		ltyp *lv = l->values;				\
-		rtyp *rv = r->values;				\
-		rtyp *tv = t->values;				\
+	#define INDEX_LOOP(lk, lt, ls, rk, rt, rs, fail) {	\
+		lt *lv = l->values;				\
+		rt *rv = r->values;				\
+		rt *tv = t->values;				\
 								\
 		for (size_t i = 0; i < count; i++) {		\
 			int64_t idx = 0;			\
 								\
-			INDEX_GETIDX_##lsfx(fail);		\
-			INDEX_ASSIGN_##rsfx;			\
+			INDEX_GETIDX_##lk(#ls, fail);		\
+			INDEX_ASSIGN_##rk;			\
 		}						\
 	}							\
 	
@@ -1118,7 +1098,9 @@ conjugate_values(struct cell_array *t, struct cell_array *r)
 		if (err = alloc_array(t))
 			return err;
 		
-		MONADIC_SCALAR_LOOP(double, struct apl_cmpx, x.real);
+		double *tv = t->values;
+		
+		MONADIC_SCALAR_LOOP(struct apl_cmpx, x.real);
 		
 		break;
 	default:
@@ -1170,28 +1152,26 @@ add_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define ADD_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
-	    cast_bool_##lsfx(x) + cast_bool_##rsfx(y))
-#define ADD_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
-	    cast_sint_##lsfx(x) + cast_sint_##rsfx(y))
-#define ADD_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
-	    cast_int_##lsfx(x) + cast_int_##rsfx(y))
-#define ADD_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    cast_dbl_##lsfx(x) + cast_dbl_##rsfx(y))
-#define ADD_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(struct apl_cmpx, ltyp, rtyp, \
-	    add_cmpx(cast_cmpx_##lsfx(x), cast_cmpx_##rsfx(y)))
-#define ADD_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define ADD_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define ADD_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define ADD_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+#define ADD_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int8_t)cast_real_##lk(x) + (int8_t)cast_real_##rk(y))
+#define ADD_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int16_t)cast_real_##lk(x) + (int16_t)cast_real_##rk(y))
+#define ADD_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int32_t)cast_real_##lk(x) + (int32_t)cast_real_##rk(y))
+#define ADD_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (double)cast_real_##lk(x) + (double)cast_real_##rk(y))
+#define ADD_LOOP_cmpx(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, add_cmpx(cast_cmpx_##lk(x), cast_cmpx_##rk(y)))
 
-#define ADD_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, ADD_LOOP_##zsfx, fail)
+#define ADD_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define ADD_SWITCH_cmpx(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define ADD_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define ADD_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define ADD_SWITCH(zknd, ztyp, zsfx, fail) ADD_SWITCH_##zknd(ztyp, #zsfx, ADD_LOOP_##zsfx, fail)
 
 int
 add_host(struct cell_array *t, size_t count, 
@@ -1231,28 +1211,26 @@ mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define MUL_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
-	    cast_bool_##lsfx(x) * cast_bool_##rsfx(y))
-#define MUL_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
-	    cast_sint_##lsfx(x) * cast_sint_##rsfx(y))
-#define MUL_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
-	    cast_int_##lsfx(x) * cast_int_##rsfx(y))
-#define MUL_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    cast_dbl_##lsfx(x) * cast_dbl_##rsfx(y))
-#define MUL_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(struct apl_cmpx, ltyp, rtyp, \
-	    mul_cmpx(cast_cmpx_##lsfx(x), cast_cmpx_##rsfx(y)))
-#define MUL_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define MUL_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define MUL_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define MUL_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+#define MUL_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int8_t)cast_real_##lk(x) * (int8_t)cast_real_##rk(y))
+#define MUL_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int16_t)cast_real_##lk(x) * (int16_t)cast_real_##rk(y))
+#define MUL_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int32_t)cast_real_##lk(x) * (int32_t)cast_real_##rk(y))
+#define MUL_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (double)cast_real_##lk(x) * (double)cast_real_##rk(y))
+#define MUL_LOOP_cmpx(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, mul_cmpx(cast_cmpx_##lk(x), cast_cmpx_##rk(y)))
 
-#define MUL_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, MUL_LOOP_##zsfx, fail)
+#define MUL_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define MUL_SWITCH_cmpx(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define MUL_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MUL_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MUL_SWITCH(zknd, ztyp, zsfx, fail) MUL_SWITCH_##zknd(ztyp, #zsfx, MUL_LOOP_##zsfx, fail)
 
 int
 mul_host(struct cell_array *t, size_t count, 
@@ -1319,30 +1297,28 @@ div_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define div_simp(x, y) ((y) ? (x) / (y) : 0 * (x))
+#define div_real(x, y) ((y) ? (x) / (y) : 0 * (x))
 
-#define DIV_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
-	    div_simp(cast_bool_##lsfx(x), cast_bool_##rsfx(y)))
-#define DIV_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
-	    div_simp(cast_sint_##lsfx(x), cast_sint_##rsfx(y)))
-#define DIV_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
-	    div_simp(cast_int_##lsfx(x), cast_int_##rsfx(y)))
-#define DIV_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    div_simp(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
-#define DIV_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(struct apl_cmpx, ltyp, rtyp, \
-	    div_cmpx(cast_cmpx_##lsfx(x), cast_cmpx_##rsfx(y)))
-#define DIV_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define DIV_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define DIV_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define DIV_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+#define DIV_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    div_real((int8_t)cast_real_##lk(x), (int8_t)cast_real_##rk(y)))
+#define DIV_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    div_real((int16_t)cast_real_##lk(x), (int16_t)cast_real_##rk(y)))
+#define DIV_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    div_real((int32_t)cast_real_##lk(x), (int32_t)cast_real_##rk(y)))
+#define DIV_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    div_real((double)cast_real_##lk(x), (double)cast_real_##rk(y)))
+#define DIV_LOOP_cmpx(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, div_cmpx(cast_cmpx_##lk(x), cast_cmpx_##rk(y)))
 
-#define DIV_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, DIV_LOOP_##zsfx, fail)
+#define DIV_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define DIV_SWITCH_cmpx(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define DIV_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define DIV_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define DIV_SWITCH(zk, zt, zs, fail) DIV_SWITCH_##zk(zt, #zs, DIV_LOOP_##zs, fail)
 
 int
 div_host(struct cell_array *t, size_t count, 
@@ -1379,30 +1355,28 @@ sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;
 }
 
-#define sub_simp(x, y) ((x) - (y))
+#define sub_real(x, y) ((x) - (y))
 
-#define SUB_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
-	    sub_simp(cast_bool_##lsfx(x), cast_bool_##rsfx(y)))
-#define SUB_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
-	    sub_simp(cast_sint_##lsfx(x), cast_sint_##rsfx(y)))
-#define SUB_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
-	    sub_simp(cast_int_##lsfx(x), cast_int_##rsfx(y)))
-#define SUB_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    sub_simp(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
-#define SUB_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(struct apl_cmpx, ltyp, rtyp, \
-	    sub_cmpx(cast_cmpx_##lsfx(x), cast_cmpx_##rsfx(y)))
-#define SUB_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define SUB_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define SUB_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define SUB_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+#define SUB_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    sub_real((int8_t)cast_real_##lk(x), (int8_t)cast_real_##rk(y)))
+#define SUB_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    sub_real((int16_t)cast_real_##lk(x), (int16_t)cast_real_##rk(y)))
+#define SUB_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    sub_real((int32_t)cast_real_##lk(x), (int32_t)cast_real_##rk(y)))
+#define SUB_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    sub_real((double)cast_real_##lk(x), (double)cast_real_##rk(y)))
+#define SUB_LOOP_cmpx(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, sub_cmpx(cast_cmpx_##lk(x), cast_cmpx_##rk(y)))
 
-#define SUB_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, SUB_LOOP_##zsfx, fail)
+#define SUB_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define SUB_SWITCH_cmpx(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define SUB_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define SUB_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define SUB_SWITCH(zk, zt, zs, fail) SUB_SWITCH_##zk(zt, #zs, SUB_LOOP_##zs, fail)
 
 int
 sub_host(struct cell_array *t, size_t count, 
@@ -1467,22 +1441,26 @@ pow_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return z;		
 }				
 
-#define POW_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    pow(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
-#define POW_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(struct apl_cmpx, ltyp, rtyp, \
-	    pow_cmpx(cast_cmpx_##lsfx(x), cast_cmpx_##rsfx(y)))
-#define POW_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(bool, fail)
-#define POW_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(sint, fail)
-#define POW_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(int, fail)
-#define POW_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define POW_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define POW_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define POW_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+#define POW_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int8_t)pow(cast_real_##lk(x), cast_real_##rk(y)))
+#define POW_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int16_t)pow(cast_real_##lk(x), cast_real_##rk(y)))
+#define POW_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int32_t)pow(cast_real_##lk(x), cast_real_##rk(y)))
+#define POW_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    pow(cast_real_##lk(x), cast_real_##rk(y)))
+#define POW_LOOP_cmpx(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, pow_cmpx(cast_cmpx_##lk(x), cast_cmpx_##rk(y)))
 
-#define POW_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, POW_LOOP_##zsfx, fail)
+#define POW_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define POW_SWITCH_cmpx(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define POW_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define POW_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define POW_SWITCH(zk, zt, zs, fail) POW_SWITCH_##zk(zt, #zs, POW_LOOP_##zs, fail)
 
 int
 pow_host(struct cell_array *t, size_t count, 
@@ -1562,22 +1540,28 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	return div_cmpx(a, b);
 }				
 
-#define LOG_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    log(cast_dbl_##lsfx(x)) / log(cast_dbl_##rsfx(y)))
-#define LOG_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(struct apl_cmpx, ltyp, rtyp, \
-	    log_cmpx(cast_cmpx_##lsfx(x), cast_cmpx_##rsfx(y)))
-#define LOG_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(bool, fail)
-#define LOG_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(sint, fail)
-#define LOG_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(int, fail)
-#define LOG_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define LOG_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define LOG_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define LOG_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
+#define log_real(x, y) (log(x) / log(y))
 
-#define LOG_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, LOG_LOOP_##zsfx, fail)
+#define LOG_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int8_t)log_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define LOG_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int16_t)log_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define LOG_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int32_t)log_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define LOG_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    log_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define LOG_LOOP_cmpx(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, log_cmpx(cast_cmpx_##lk(x), cast_cmpx_##rk(y)))
+
+#define LOG_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define LOG_SWITCH_cmpx(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define LOG_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define LOG_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define LOG_SWITCH(zk, zt, zs, fail) LOG_SWITCH_##zk(zt, #zs, LOG_LOOP_##zs, fail)
 
 int
 log_host(struct cell_array *t, size_t count, 
@@ -1622,8 +1606,6 @@ exp_cmpx(struct apl_cmpx x)
 	return z;
 }
 
-#define EXP_LOOP(rt) MONADIC_SCALAR_LOOP(double, rt, exp(x));
-
 int
 exp_values(struct cell_array *t, struct cell_array *r)
 {
@@ -1647,22 +1629,18 @@ exp_values(struct cell_array *t, struct cell_array *r)
 	
 	size_t count = array_values_count(t);
 	
+	#define EXP_LOOP(zt, rt, exp) {			\
+		zt *tv = t->values;			\
+							\
+		MONADIC_SCALAR_LOOP(rt, exp(x));	\
+	}
+	
 	switch (r->type) {
-	case ARR_CMPX:
-		MONADIC_SCALAR_LOOP(struct apl_cmpx, struct apl_cmpx, exp_cmpx(x));
-		break;
-	case ARR_BOOL:
-		EXP_LOOP(int8_t);
-		break;
-	case ARR_SINT:
-		EXP_LOOP(int16_t);
-		break;
-	case ARR_INT:
-		EXP_LOOP(int32_t);
-		break;
-	case ARR_DBL:
-		EXP_LOOP(double);
-		break;
+	case ARR_CMPX:EXP_LOOP(struct apl_cmpx, struct apl_cmpx, exp_cmpx);break;
+	case ARR_BOOL:EXP_LOOP(double, int8_t, exp);break;
+	case ARR_SINT:EXP_LOOP(double, int16_t, exp);break;
+	case ARR_INT:EXP_LOOP(double, int32_t, exp);break;
+	case ARR_DBL:EXP_LOOP(double, double, exp);break;
 	default:
 		CHK(99, done, L"Unexpected element type");
 	}
@@ -1704,8 +1682,6 @@ nlg_cmpx(struct apl_cmpx x)
 	return z;
 }
 
-#define NLG_LOOP(rt) MONADIC_SCALAR_LOOP(double, rt, log(x));
-
 int
 nlg_values(struct cell_array *t, struct cell_array *r)
 {
@@ -1729,22 +1705,18 @@ nlg_values(struct cell_array *t, struct cell_array *r)
 	
 	size_t count = array_values_count(t);
 	
+	#define NLG_LOOP(zt, rt, log) {			\
+		zt *tv = t->values;			\
+							\
+		MONADIC_SCALAR_LOOP(rt, log(x));	\
+	}
+	
 	switch (r->type) {
-	case ARR_CMPX:
-		MONADIC_SCALAR_LOOP(struct apl_cmpx, struct apl_cmpx, nlg_cmpx(x));
-		break;
-	case ARR_BOOL:
-		NLG_LOOP(int8_t);
-		break;
-	case ARR_SINT:
-		NLG_LOOP(int16_t);
-		break;
-	case ARR_INT:
-		NLG_LOOP(int32_t);
-		break;
-	case ARR_DBL:
-		NLG_LOOP(double);
-		break;
+	case ARR_CMPX:EXP_LOOP(struct apl_cmpx, struct apl_cmpx, nlg_cmpx);break;
+	case ARR_BOOL:EXP_LOOP(double, int8_t, log);break;
+	case ARR_SINT:EXP_LOOP(double, int16_t, log);break;
+	case ARR_INT:EXP_LOOP(double, int32_t, log);break;
+	case ARR_DBL:EXP_LOOP(double, double, log);break;
 	default:
 		CHK(99, done, L"Unexpected element type");
 	}
@@ -1802,22 +1774,18 @@ name##_func(struct cell_array **z,							\
 	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	\
 }											\
 											\
-DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)					\
+DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)				\
 
-#define AND_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x && y)
-#define LOR_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x || y)
-#define LTH_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x < (double)y)
-#define LTE_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x <= (double)y)
-#define GTH_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x > (double)y)
-#define GTE_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, (double)x >= (double)y)
-#define EQL_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x == y)
-#define EQL_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real == y.real && x.imag == y.imag)
-#define EQL_LCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real == y && x.imag == 0)
-#define EQL_RCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x == y.real && 0 == y.imag)
-#define NEQ_LOOP(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x != y)
-#define NEQ_CMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real != y.real || x.imag != y.imag)
-#define NEQ_LCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x.real != y || x.imag != 0)
-#define NEQ_RCMPX(zt, lt, rt) DYADIC_SCALAR_LOOP(zt, lt, rt, x != y.real || 0 != y.imag)
+#define AND_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x && y)}
+#define LOR_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x || y)}
+#define LTH_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x < (double)y)}
+#define LTE_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x <= (double)y)}
+#define GTH_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x > (double)y)}
+#define GTE_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, (double)x >= (double)y)}
+#define NEQ_LOOP(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x != y)}
+#define NEQ_CMPX(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x.real != y.real || x.imag != y.imag)}
+#define NEQ_LCMPX(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x.real != y || x.imag != 0)}
+#define NEQ_RCMPX(zt, lt, rt) {zt *tv = t->values; DYADIC_SCALAR_LOOP(lt, rt, x != y.real || 0 != y.imag)}
 
 DEF_CMP_IBEAM(and, af_and, AND_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(lor, af_or, LOR_LOOP, NOOP, NOOP, NOOP);
@@ -1825,8 +1793,66 @@ DEF_CMP_IBEAM(lth, af_lt, LTH_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(lte, af_le, LTE_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(gth, af_gt, GTH_LOOP, NOOP, NOOP, NOOP);
 DEF_CMP_IBEAM(gte, af_ge, GTE_LOOP, NOOP, NOOP, NOOP);
-DEF_CMP_IBEAM(eql, af_eq, EQL_LOOP, EQL_CMPX, EQL_LCMPX, EQL_RCMPX);
 DEF_CMP_IBEAM(neq, af_neq, NEQ_LOOP, NEQ_CMPX, NEQ_LCMPX, NEQ_RCMPX);
+
+#define CMP_TYPE_FAIL(zk, zt, zs, fail) CHK(99, fail, L"Unexpected type " #zs)
+
+#define DEF_CMP_IBEAM2(name, cmp_dev, loop)						\
+int											\
+name##_device(af_array *z, af_array l, af_array r)					\
+{											\
+	return cmp_dev(z, l, r, 0);							\
+}											\
+											\
+int											\
+name##_host(struct cell_array *t, size_t count,						\
+    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)			\
+{											\
+	int err;									\
+	int8_t *tv;									\
+											\
+	if (t->type != ARR_BOOL)							\
+		MONADIC_TYPE_SWITCH(t->type, CMP_TYPE_FAIL, fail);			\
+											\
+	tv = t->values;									\
+											\
+	DYADIC_TYPE_SWITCH(l->type, r->type, loop, fail);				\
+											\
+	err = 0;									\
+											\
+fail:											\
+	return err;									\
+}											\
+											\
+int											\
+name##_func(struct cell_array **z,							\
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)			\
+{											\
+	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	\
+}											\
+											\
+DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)				\
+
+#define eql_real_real(x, y) ((x) == (y))
+#define eql_real_char(x, y) ((x) == (y))
+#define eql_real_cmpx(x, y) ((x) == (y).real && 0 == (y).imag)
+#define eql_real_cell(x, y) ((x) == (int64_t)(y))
+#define eql_char_real(x, y) ((x) == (y))
+#define eql_char_char(x, y) ((x) == (y))
+#define eql_char_cmpx(x, y) ((x) == (y).real && 0 == (y).imag)
+#define eql_char_cell(x, y) ((x) == (uint64_t)(y))
+#define eql_cmpx_real(x, y) ((x).real == (y) && (x).imag == 0)
+#define eql_cmpx_char(x, y) ((x).real == (y) && (x).imag == 0)
+#define eql_cmpx_cmpx(x, y) ((x).real == (y).real && (x).imag == (y).imag)
+#define eql_cmpx_cell(x, y) ((x).real == (int64_t)(y) && (x).imag == 0)
+#define eql_cell_real(x, y) ((int64_t)(x) == (y))
+#define eql_cell_char(x, y) ((uint64_t)(x) == (y))
+#define eql_cell_cmpx(x, y) ((int64_t)(x) == (y).real && 0 == (y).imag)
+#define eql_cell_cell(x, y) ((x) == (y))
+#define EQL_LOOP(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, eql_##lk##_##rk(x, y))
+
+DEF_CMP_IBEAM2(eql, af_eq, EQL_LOOP);
 
 int
 min_device(af_array *z, af_array l, af_array r)
@@ -1834,28 +1860,26 @@ min_device(af_array *z, af_array l, af_array r)
 	return af_minof(z, l, r, 0);
 }
 
-#define min_simp(x, y) ((x) < (y) ? (x) : (y))
+#define min_real(x, y) ((x) < (y) ? (x) : (y))
 
-#define MIN_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
-	    min_simp(cast_bool_##lsfx(x), cast_bool_##rsfx(y)))
-#define MIN_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
-	    min_simp(cast_sint_##lsfx(x), cast_sint_##rsfx(y)))
-#define MIN_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
-	    min_simp(cast_int_##lsfx(x), cast_int_##rsfx(y)))
-#define MIN_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    min_simp(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
-#define MIN_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(cmpx, fail)
-#define MIN_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define MIN_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define MIN_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define MIN_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
-
-#define MIN_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, MIN_LOOP_##zsfx, fail)
+#define MIN_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int8_t)min_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define MIN_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int16_t)min_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define MIN_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int32_t)min_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define MIN_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    min_real(cast_real_##lk(x), cast_real_##rk(y)))
+	    
+#define MIN_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define MIN_SWITCH_cmpx(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MIN_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MIN_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MIN_SWITCH(zk, zt, zs, fail) MIN_SWITCH_##zk(zt, #zs, MIN_LOOP_##zs, fail)
 
 int
 min_host(struct cell_array *t, size_t count, 
@@ -1885,28 +1909,26 @@ max_device(af_array *z, af_array l, af_array r)
 	return af_maxof(z, l, r, 0);
 }
 
-#define max_simp(x, y) ((x) > (y) ? (x) : (y))
+#define max_real(x, y) ((x) > (y) ? (x) : (y))
 
-#define MAX_LOOP_bool(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int8_t, ltyp, rtyp, \
-	    max_simp(cast_bool_##lsfx(x), cast_bool_##rsfx(y)))
-#define MAX_LOOP_sint(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int16_t, ltyp, rtyp, \
-	    max_simp(cast_sint_##lsfx(x), cast_sint_##rsfx(y)))
-#define MAX_LOOP_int(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(int32_t, ltyp, rtyp, \
-	    max_simp(cast_int_##lsfx(x), cast_int_##rsfx(y)))
-#define MAX_LOOP_dbl(ltyp, lsfx, rtyp, rsfx, fail) \
-	DYADIC_SCALAR_LOOP(double, ltyp, rtyp, \
-	    max_simp(cast_dbl_##lsfx(x), cast_dbl_##rsfx(y)))
-#define MAX_LOOP_cmpx(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(cmpx, fail)
-#define MAX_LOOP_char8(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char8, fail)
-#define MAX_LOOP_char16(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char16, fail)
-#define MAX_LOOP_char32(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(char32, fail)
-#define MAX_LOOP_nested(ltyp, lsfx, rtyp, rsfx, fail) BAD_ELEM(nested, fail)
-
-#define MAX_SWITCH(ztyp, zsfx, fail) \
-	DYADIC_TYPE_SWITCH(l->type, r->type, MAX_LOOP_##zsfx, fail)
+#define MAX_LOOP_bool(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int8_t)max_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define MAX_LOOP_sint(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int16_t)max_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define MAX_LOOP_int(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    (int32_t)max_real(cast_real_##lk(x), cast_real_##rk(y)))
+#define MAX_LOOP_dbl(lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, \
+	    max_real(cast_real_##lk(x), cast_real_##rk(y)))
+	    
+#define MAX_SWITCH_real(typ, sfx, loop, fail) SCALAR_SWITCH(typ, loop, fail)
+#define MAX_SWITCH_cmpx(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MAX_SWITCH_char(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MAX_SWITCH_cell(typ, sfx, loop, fail) BAD_ELEM(sfx, fail)
+#define MAX_SWITCH(zk, zt, zs, fail) MAX_SWITCH_##zk(zt, #zs, MAX_LOOP_##zs, fail)
 
 int
 max_host(struct cell_array *t, size_t count, 
@@ -1944,10 +1966,12 @@ floor_values(struct cell_array *t, struct cell_array *r)
 	case STG_HOST:
 		size_t count = array_values_count(t);
 		CHK(alloc_array(t), done, L"alloc_array(t)");
+		
+		double *tv = t->values;
 	
 		switch (r->type) {
 		case ARR_DBL:
-			MONADIC_SCALAR_LOOP(double, double, floor(x));
+			MONADIC_SCALAR_LOOP(double, floor(x));
 			break;
 		default:
 			TRC(99, L"Expected double numeric type");
@@ -1985,10 +2009,12 @@ ceil_values(struct cell_array *t, struct cell_array *r)
 	case STG_HOST:
 		size_t count = array_values_count(t);
 		CHK(alloc_array(t), done, L"alloc_array(t)");
+		
+		double *tv = t->values;
 	
 		switch (r->type) {
 		case ARR_DBL:
-			MONADIC_SCALAR_LOOP(double, double, ceil(x));
+			MONADIC_SCALAR_LOOP(double, ceil(x));
 			break;
 		default:
 			TRC(99, L"Expected double numeric type");
@@ -2028,7 +2054,9 @@ not_values(struct cell_array *t, struct cell_array *r)
 
 		size_t count = array_values_count(t);
 		
-		MONADIC_SCALAR_LOOP(int8_t, int8_t, !x);
+		int8_t *tv = t->values;
+		
+		MONADIC_SCALAR_LOOP(int8_t, !x);
 		
 		break;
 	default:
@@ -2067,18 +2095,26 @@ abs_values(struct cell_array *t, struct cell_array *r)
 		size_t count = array_values_count(t);
 
 		switch (r->type) {
-		case ARR_BOOL:
-			MONADIC_SCALAR_LOOP(int8_t, int8_t, abs(x));
+		case ARR_BOOL:{
+			int8_t *tv = t->values;
+			MONADIC_SCALAR_LOOP(int8_t, abs(x));
 			break;
-		case ARR_SINT:
-			MONADIC_SCALAR_LOOP(int16_t, int16_t, abs(x));
+		}
+		case ARR_SINT:{
+			int16_t *tv = t->values;
+			MONADIC_SCALAR_LOOP(int16_t, abs(x));
 			break;
-		case ARR_INT:
-			MONADIC_SCALAR_LOOP(int32_t, int32_t, abs(x));
+		}
+		case ARR_INT:{
+			int32_t *tv = t->values;
+			MONADIC_SCALAR_LOOP(int32_t, abs(x));
 			break;
-		case ARR_DBL:
-			MONADIC_SCALAR_LOOP(double, double, fabs(x));
+		}
+		case ARR_DBL:{
+			double *tv = t->values;
+			MONADIC_SCALAR_LOOP(double, fabs(x));
 			break;
+		}
 		default:
 			TRC(99, L"Expected non-complex numeric type");
 		}
@@ -2145,18 +2181,20 @@ af_done:
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 		size_t count = array_values_count(t);
 		
+		double *tv = t->values;
+		
 		switch (r->type) {
 		case ARR_BOOL:
-			MONADIC_SCALAR_LOOP(double, int8_t, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(int8_t, tgamma(x+1));
 			break;
 		case ARR_SINT:
-			MONADIC_SCALAR_LOOP(double, int16_t, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(int16_t, tgamma(x+1));
 			break;
 		case ARR_INT:
-			MONADIC_SCALAR_LOOP(double, int32_t, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(int32_t, tgamma(x+1));
 			break;
 		case ARR_DBL:
-			MONADIC_SCALAR_LOOP(double, double, tgamma(x+1));
+			MONADIC_SCALAR_LOOP(double, tgamma(x+1));
 			break;
 		default:
 			TRC(99, L"Expected non-complex numeric type");
@@ -2214,7 +2252,9 @@ imagpart_values(struct cell_array *t, struct cell_array *r)
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 		size_t count = array_values_count(t);
 		
-		MONADIC_SCALAR_LOOP(double, struct apl_cmpx, x.imag);
+		double *tv = t->values;
+		
+		MONADIC_SCALAR_LOOP(struct apl_cmpx, x.imag);
 
 		break;
 	default:
@@ -2249,7 +2289,9 @@ realpart_values(struct cell_array *t, struct cell_array *r)
 		CHK(alloc_array(t), done, L"alloc_array(t)");
 		size_t count = array_values_count(t);
 		
-		MONADIC_SCALAR_LOOP(double, struct apl_cmpx, x.real);
+		double *tv = t->values;
+		
+		MONADIC_SCALAR_LOOP(struct apl_cmpx, x.real);
 
 		break;
 	default:
@@ -2297,18 +2339,20 @@ af_done:								\
 		CHK(alloc_array(t), done, L"alloc_array(t)");		\
 		size_t count = array_values_count(t);			\
 									\
+		double *tv = t->values;					\
+									\
 		switch (r->type) {					\
 		case ARR_BOOL:						\
-			MONADIC_SCALAR_LOOP(double, int8_t, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(int8_t, stdc_fun(x));	\
 			break;						\
 		case ARR_SINT:						\
-			MONADIC_SCALAR_LOOP(double, int16_t, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(int16_t, stdc_fun(x));	\
 			break;						\
 		case ARR_INT:						\
-			MONADIC_SCALAR_LOOP(double, int32_t, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(int32_t, stdc_fun(x));	\
 			break;						\
 		case ARR_DBL:						\
-			MONADIC_SCALAR_LOOP(double, double, stdc_fun(x));		\
+			MONADIC_SCALAR_LOOP(double, stdc_fun(x));	\
 			break;						\
 		default:						\
 			TRC(16, L"Complex inputs not supported, yet.");	\
