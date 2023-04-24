@@ -192,7 +192,7 @@ case type_pair(ARR_NESTED, ARR_CHAR32):expr(oper, cell, struct cell_array *, nes
 case type_pair(ARR_NESTED, ARR_NESTED):expr(oper, cell, struct cell_array *, nested, cell, struct cell_array *, nested, fail);break;	\
 default:																\
 	CHK(99, fail, L"Unknown type pair.");												\
-}
+}																	\
 
 #define BAD_ELEM(sfx, fail) CHK(99, fail, L"Unexpected element type " sfx)
 
@@ -224,7 +224,7 @@ default:																\
 	typ *tv = t->values;							\
 										\
 	DYADIC_TYPE_SWITCH(l->type, r->type, SCALAR_LOOP_##knd, oper, fail);	\
-}
+}										\
 
 #define SCALAR_LOOP_real(oper, lk, lt, ls, rk, rt, rs, fail) \
 	DYADIC_SCALAR_LOOP(lt, rt, oper(cast_real_##lk(x), cast_real_##rk(y)))
