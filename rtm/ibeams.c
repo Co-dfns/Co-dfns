@@ -1138,12 +1138,6 @@ int16_max_type(enum array_type *type, struct cell_array *l, struct cell_array *r
 	return 0;
 }
 
-int
-add_device(af_array *z, af_array l, af_array r)
-{
-	return af_add(z, l, r, 0);
-}
-
 struct apl_cmpx
 add_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 {
@@ -1153,38 +1147,14 @@ add_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 }
 
 #define add_real(x, y) ((x) + (y))
+#define add_af(z, l, r) af_add(z, l, r, 0)
 
 #define ADD_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)add_real, fail)
 #define ADD_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, add_cmpx, fail)
 #define ADD_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define ADD_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-int
-add_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, ADD, fail);
-	
-fail:
-	return err;
-}
-
-int
-add_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, int16_max_type, add_device, add_host);
-}
-
-DECL_FUNC(add_vec_ibeam, error_mon_syntax, add_func)
-
-int
-mul_device(af_array *z, af_array l, af_array r)
-{
-	return af_mul(z, l, r, 0);
-}
+DEFN_DYADIC_SCALAR(add, ADD, int16_max_type)
 
 struct apl_cmpx
 mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
@@ -1198,32 +1168,14 @@ mul_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 }
 
 #define mul_real(x, y) ((x) * (y))
+#define mul_af(z, l, r) af_mul(z, l, r, 0)
 
 #define MUL_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)mul_real, fail)
 #define MUL_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, mul_cmpx, fail)
 #define MUL_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define MUL_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-int
-mul_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, MUL, fail);
-	
-fail:
-	return err;
-}
-
-int
-mul_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, max_type, mul_device, mul_host);
-}
-
-DECL_FUNC(mul_vec_ibeam, error_mon_syntax, mul_func)
+DEFN_DYADIC_SCALAR(mul, MUL, max_type)
 
 int
 div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
@@ -1241,12 +1193,6 @@ div_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 	*type = ARR_DBL;
 	
 	return 0;
-}
-
-int
-div_device(af_array *z, af_array l, af_array r)
-{
-	return af_div(z, l, r, 0);
 }
 
 struct apl_cmpx
@@ -1270,38 +1216,14 @@ div_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 }
 
 #define div_real(x, y) ((y) ? (double)(x) / (double)(y) : 0 * (x))
+#define div_af(z, l, r) af_div(z, l, r, 0)
 
 #define DIV_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)div_real, fail)
 #define DIV_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, div_cmpx, fail)
 #define DIV_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define DIV_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-int
-div_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, DIV, fail);
-	
-fail:
-	return err;
-}
-
-int
-div_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, div_type, div_device, div_host);
-}
-
-DECL_FUNC(div_vec_ibeam, error_mon_syntax, div_func)
-
-int
-sub_device(af_array *z, af_array l, af_array r)
-{
-	return af_sub(z, l, r, 0);
-}
+DEFN_DYADIC_SCALAR(div, DIV, div_type)
 
 struct apl_cmpx
 sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
@@ -1312,32 +1234,14 @@ sub_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 }
 
 #define sub_real(x, y) ((x) - (y))
+#define sub_af(z, l, r) af_sub(z, l, r, 0)
 
 #define SUB_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)sub_real, fail)
 #define SUB_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, sub_cmpx, fail)
 #define SUB_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define SUB_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-int
-sub_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, SUB, fail);
-	
-fail:
-	return err;
-}
-
-int
-sub_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, int16_max_type, sub_device, sub_host);
-}
-
-DECL_FUNC(sub_vec_ibeam, error_mon_syntax, sub_func)
+DEFN_DYADIC_SCALAR(sub, SUB, int16_max_type)
 
 int
 dbl_cmpx_type(enum array_type *type, 
@@ -1349,12 +1253,6 @@ dbl_cmpx_type(enum array_type *type,
 		*type = ARR_CMPX;
 	
 	return 0;
-}
-
-int
-pow_device(af_array *z, af_array l, af_array r)
-{
-	return af_pow(z, l, r, 0);
 }
 
 struct apl_cmpx
@@ -1379,36 +1277,19 @@ pow_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 	z.imag = cimag(tz);	
 
 	return z;		
-}				
+}
+
+#define pow_af(z, l, r) af_pow(z, l, r, 0)
 
 #define POW_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)pow, fail)
 #define POW_SWITCH_cmpx(typ, sfx, fail) SCALAR_SWITCH(cmpx, typ, pow_cmpx, fail)
 #define POW_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define POW_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-int
-pow_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, POW, fail);
-	
-fail:
-	return err;
-}
+DEFN_DYADIC_SCALAR(pow, POW, dbl_cmpx_type)
 
 int
-pow_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, dbl_cmpx_type, pow_device, pow_host);
-}
-
-DECL_FUNC(pow_vec_ibeam, error_mon_syntax, pow_func)
-
-int
-log_device(af_array *z, af_array l, af_array r)
+log_af(af_array *z, af_array l, af_array r)
 {
 	af_array l64, r64, a, b;
 	int err, code;
@@ -1471,26 +1352,27 @@ log_cmpx(struct apl_cmpx x, struct apl_cmpx y)
 #define LOG_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
 #define LOG_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 
-int
-log_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, LOG, fail);
-	
-fail:
-	return err;
-}
+DEFN_DYADIC_SCALAR(log, LOG, dbl_cmpx_type)
 
-int
-log_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, dbl_cmpx_type, log_device, log_host);
-}
+#define min_real(x, y) ((x) < (y) ? (x) : (y))
+#define min_af(z, l, r) af_minof(z, l, r, 0)
 
-DECL_FUNC(log_vec_ibeam, error_mon_syntax, log_func)
+#define MIN_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)min_real, fail)
+#define MIN_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define MIN_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define MIN_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
+
+DEFN_DYADIC_SCALAR(min, MIN, max_type)
+
+#define max_real(x, y) ((x) > (y) ? (x) : (y))
+#define max_af(z, l, r) af_maxof(z, l, r, 0)
+
+#define MAX_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)max_real, fail)
+#define MAX_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define MAX_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define MAX_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
+
+DEFN_DYADIC_SCALAR(max, MAX, max_type)
 
 struct apl_cmpx
 exp_cmpx(struct apl_cmpx x)
@@ -1652,44 +1534,6 @@ bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 	return 0;
 }
 
-#define CMP_TYPE_FAIL(op, zk, zt, zs, fail) CHK(99, fail, L"Unexpected type " #zs)
-
-#define DEF_CMP_IBEAM(name, cmp_dev, oper)						\
-int											\
-name##_device(af_array *z, af_array l, af_array r)					\
-{											\
-	return cmp_dev(z, l, r, 0);							\
-}											\
-											\
-int											\
-name##_host(struct cell_array *t, size_t count,						\
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)			\
-{											\
-	int err;									\
-	int8_t *tv;									\
-											\
-	if (t->type != ARR_BOOL)							\
-		MONADIC_TYPE_SWITCH(t->type, CMP_TYPE_FAIL,, fail);			\
-											\
-	tv = t->values;									\
-											\
-	DYADIC_TYPE_SWITCH(l->type, r->type, CMP_LOOP, oper, fail);			\
-											\
-	err = 0;									\
-											\
-fail:											\
-	return err;									\
-}											\
-											\
-int											\
-name##_func(struct cell_array **z,							\
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)			\
-{											\
-	return dyadic_scalar_apply(z, l, r, bool_type, name##_device, name##_host);	\
-}											\
-											\
-DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)				\
-
 #define cmp_real_real(cmp, x, y) ((x) cmp (y))
 #define cmp_real_char(cmp, x, y) ((x) cmp (int64_t)(y))
 #define cmp_real_cmpx(cmp, x, y) ((x) cmp (y).real && 0 cmp (y).imag)
@@ -1718,75 +1562,6 @@ DEF_CMP_IBEAM(lth, af_lt, <);
 DEF_CMP_IBEAM(lte, af_le, <=);
 DEF_CMP_IBEAM(gth, af_gt, >);
 DEF_CMP_IBEAM(gte, af_ge, >=);
-
-int
-min_device(af_array *z, af_array l, af_array r)
-{
-	return af_minof(z, l, r, 0);
-}
-
-#define min_real(x, y) ((x) < (y) ? (x) : (y))
-
-#define MIN_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)min_real, fail)
-#define MIN_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define MIN_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define MIN_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-
-int
-min_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, MIN, fail);
-	
-fail:
-	return err;
-}
-
-
-int
-min_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, max_type, min_device, min_host);
-}
-
-DECL_FUNC(min_vec_ibeam, error_mon_syntax, min_func)
-
-int
-max_device(af_array *z, af_array l, af_array r)
-{
-	return af_maxof(z, l, r, 0);
-}
-
-#define max_real(x, y) ((x) > (y) ? (x) : (y))
-
-#define MAX_SWITCH_real(typ, sfx, fail) SCALAR_SWITCH(real, typ, (typ)max_real, fail)
-#define MAX_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define MAX_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
-#define MAX_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
-
-int
-max_host(struct cell_array *t, size_t count, 
-    struct cell_array *l, size_t lc, struct cell_array *r, size_t rc)
-{
-	int err = 0;
-	
-	MONADIC_TYPE_SWITCH(t->type, HOST_SWITCH, MAX, fail);
-	
-fail:
-	return err;
-}
-
-int
-max_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
-{
-	return dyadic_scalar_apply(z, l, r, max_type, max_device, max_host);
-}
-
-DECL_FUNC(max_vec_ibeam, error_mon_syntax, max_func)
 
 int
 floor_values(struct cell_array *t, struct cell_array *r)
