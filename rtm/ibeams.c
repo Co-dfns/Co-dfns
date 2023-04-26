@@ -983,7 +983,7 @@ monadic_scalar_apply(struct cell_array **z, struct cell_array *r,
 	for (unsigned int i = 0; i < r->rank; i++)
 		t->shape[i] = r->shape[i];
 	
-	CHK(fn(t, r), fail, L"fn(t, r)");
+	CHKFN(fn(t, r), fail);
 	
 	*z = t;
 	
