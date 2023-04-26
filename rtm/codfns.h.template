@@ -134,6 +134,8 @@ if (0 < (err = (expr))) {					\
 	goto fail;						\
 }								\
 
+#define CHKFN(expr, fail) CHK(expr, fail, L"" #expr)
+
 #define CHKAF(expr, fail)					\
 if (0 < (err = (expr))) {					\
 	wchar_t *msg = get_aferr_msg(err);			\
