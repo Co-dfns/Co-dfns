@@ -1376,25 +1376,24 @@ conjugate_values(struct cell_array *t, struct cell_array *r)
 	
 	switch (r->storage) {
 	case STG_DEVICE:
-		if (err = af_conjg(&t->values, r->values))
-			return err;
-		
+		CHKAF(af_conjg(&t->values, r->values), fail);
 		break;
 	case STG_HOST:
-		size_t count = array_values_count(t);
-
-		if (err = alloc_array(t))
-			return err;
+		size_t count;
+		double *tv;
 		
-		double *tv = t->values;
+		CHKFN(alloc_array(t), fail);
+
+		count = array_values_count(t);
+		tv = t->values;
 		
 		MONADIC_SCALAR_LOOP(struct apl_cmpx, x.real);
-		
 		break;
 	default:
 		return 99;
 	}
-	
+
+fail:
 	return 0;
 }
 
