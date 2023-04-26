@@ -1398,14 +1398,7 @@ conjugate_values(struct cell_array *t, struct cell_array *r)
 	return 0;
 }
 
-int
-conjugate_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, conjugate_values);
-}
-
-DECL_FUNC(conjugate_vec, conjugate_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(conjugate)
 
 struct apl_cmpx
 exp_cmpx(struct apl_cmpx x)
@@ -1474,14 +1467,7 @@ done:
 	return err;
 }
 
-int
-exp_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, exp_values);
-}
-
-DECL_FUNC(exp_vec_ibeam, exp_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(exp)
 
 struct apl_cmpx
 nlg_cmpx(struct apl_cmpx x)
@@ -1550,14 +1536,7 @@ done:
 	return err;
 }
 
-int
-nlg_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, nlg_values);
-}
-
-DECL_FUNC(nlg_vec_ibeam, nlg_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(nlg)
 
 int
 floor_values(struct cell_array *t, struct cell_array *r)
@@ -1594,13 +1573,7 @@ done:
 	return err;
 }
 
-int
-floor_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, floor_values);
-}
-
-DECL_FUNC(floor_vec_ibeam, floor_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(floor)
 
 int
 ceil_values(struct cell_array *t, struct cell_array *r)
@@ -1637,13 +1610,7 @@ done:
 	return err;
 }
 
-int
-ceil_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, ceil_values);
-}
-
-DECL_FUNC(ceil_vec_ibeam, ceil_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(ceil)
 
 int
 not_values(struct cell_array *t, struct cell_array *r)
@@ -1675,13 +1642,7 @@ done:
 	return err;
 }
 
-int
-not_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, not_values);
-}
-
-DECL_FUNC(not_vec_ibeam, not_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(not)
 
 int
 abs_values(struct cell_array *t, struct cell_array *r)
@@ -1739,13 +1700,7 @@ fail:
 	return err;
 }
 
-int
-abs_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, abs_values);
-}
-
-DECL_FUNC(abs_ibeam, abs_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(abs)
 
 int
 factorial_real_values(struct cell_array *t, struct cell_array *r)
@@ -1836,13 +1791,7 @@ factorial_values(struct cell_array *t, struct cell_array *r)
 	return factorial_cmpx_values(t, r);
 }
 
-int
-factorial_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, factorial_values);
-}
-
-DECL_FUNC(factorial_vec_ibeam, factorial_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(factorial)
 
 int
 imagpart_values(struct cell_array *t, struct cell_array *r)
@@ -1873,13 +1822,7 @@ done:
 	return err;
 }
 
-int
-imagpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, imagpart_values);
-}
-
-DECL_FUNC(imagpart_vec_ibeam, imagpart_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(imagpart)
 
 int
 realpart_values(struct cell_array *t, struct cell_array *r)
@@ -1910,13 +1853,7 @@ done:
 	return err;
 }
 
-int
-realpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, realpart_values);
-}
-
-DECL_FUNC(realpart_vec_ibeam, realpart_func, error_dya_syntax)
+DEFN_MONADIC_SCALAR(realpart)
 
 #define TRIG_LOOP_real(oper, typ, sfx, fail) MONADIC_SCALAR_LOOP(typ, oper(x))
 #define TRIG_LOOP_cmpx(oper, typ, sfx, fail) BAD_ELEM(sfx, fail)

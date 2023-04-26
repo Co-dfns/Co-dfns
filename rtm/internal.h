@@ -297,3 +297,13 @@ name##_func(struct cell_array **z,							\
 											\
 DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)				\
 
+#define DEFN_MONADIC_SCALAR(name) 				\
+int								\
+name##_func(struct cell_array **z,				\
+    struct cell_array *r, struct cell_func *self)		\
+{								\
+	return monadic_scalar_apply(z, r, name##_values);	\
+}								\
+								\
+DECL_FUNC(name##_vec_ibeam, name##_func, error_dya_syntax)	\
+
