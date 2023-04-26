@@ -218,6 +218,12 @@ default:																\
 	}					\
 }						\
 
+#define MONADIC_SWITCH(oper, zt, rt) {		\
+	zt *tv = t->values;			\
+						\
+	MONADIC_SCALAR_LOOP(rt, oper(x));	\
+}						\
+
 #define HOST_SWITCH(oper, zk, zt, zs, fail) oper##_##SWITCH##_##zk(zt, #zs, fail)
 
 #define SCALAR_SWITCH(knd, typ, oper, fail) {					\
@@ -297,7 +303,7 @@ name##_func(struct cell_array **z,							\
 											\
 DECL_FUNC(name##_vec_ibeam, error_mon_syntax, name##_func)				\
 
-#define DEFN_MONADIC_SCALAR(name) 				\
+#define DEFN_MONADIC_SCALAR(name)				\
 int								\
 name##_func(struct cell_array **z,				\
     struct cell_array *r, struct cell_func *self)		\

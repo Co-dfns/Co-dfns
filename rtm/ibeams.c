@@ -1444,21 +1444,12 @@ exp_values(struct cell_array *t, struct cell_array *r)
 	
 	size_t count = array_values_count(t);
 	
-	#define EXP_LOOP(zt, rt, exp) {			\
-		zt *tv = t->values;			\
-							\
-		MONADIC_SCALAR_LOOP(rt, exp(x));	\
-	}
+	#define EXP_SWITCH_real(typ, sfx, fail) MONADIC_SWITCH(exp, double, typ)
+	#define EXP_SWITCH_cmpx(typ, sfx, fail) MONADIC_SWITCH(exp_cmpx, typ, typ)
+	#define EXP_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	#define EXP_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 	
-	switch (r->type) {
-	case ARR_CMPX:EXP_LOOP(struct apl_cmpx, struct apl_cmpx, exp_cmpx);break;
-	case ARR_BOOL:EXP_LOOP(double, int8_t, exp);break;
-	case ARR_SINT:EXP_LOOP(double, int16_t, exp);break;
-	case ARR_INT:EXP_LOOP(double, int32_t, exp);break;
-	case ARR_DBL:EXP_LOOP(double, double, exp);break;
-	default:
-		CHK(99, done, L"Unexpected element type");
-	}
+	MONADIC_TYPE_SWITCH(r->type, HOST_SWITCH, EXP, done);
 	
 	err = 0;
 	
@@ -1513,21 +1504,12 @@ nlg_values(struct cell_array *t, struct cell_array *r)
 	
 	size_t count = array_values_count(t);
 	
-	#define NLG_LOOP(zt, rt, log) {			\
-		zt *tv = t->values;			\
-							\
-		MONADIC_SCALAR_LOOP(rt, log(x));	\
-	}
+	#define NLG_SWITCH_real(typ, sfx, fail) MONADIC_SWITCH(log, double, typ)
+	#define NLG_SWITCH_cmpx(typ, sfx, fail) MONADIC_SWITCH(nlg_cmpx, typ, typ)
+	#define NLG_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	#define NLG_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
 	
-	switch (r->type) {
-	case ARR_CMPX:EXP_LOOP(struct apl_cmpx, struct apl_cmpx, nlg_cmpx);break;
-	case ARR_BOOL:EXP_LOOP(double, int8_t, log);break;
-	case ARR_SINT:EXP_LOOP(double, int16_t, log);break;
-	case ARR_INT:EXP_LOOP(double, int32_t, log);break;
-	case ARR_DBL:EXP_LOOP(double, double, log);break;
-	default:
-		CHK(99, done, L"Unexpected element type");
-	}
+	MONADIC_TYPE_SWITCH(r->type, HOST_SWITCH, NLG, done);
 	
 	err = 0;
 	
@@ -1644,150 +1626,146 @@ done:
 DEFN_MONADIC_SCALAR(not)
 
 int
-abs_values(struct cell_array *t, struct cell_array *r)
+abs_values_device(struct cell_array *t, struct cell_array *r)
 {
+	int err;
 	af_array tmp;
+	
+	tmp = NULL;
+	
+	CHKAF(af_abs(&tmp, r->values), fail);
+	CHKAF(af_cast(&t->values, tmp, array_af_dtype(t)), fail);
+	
+fail:
+	af_release_array(tmp);
+	
+	return err;
+}
+
+int
+abs_values_host(struct cell_array *t, struct cell_array *r) 
+{
+	size_t count;
 	int err;
 	
-	t->type = r->type;
-	tmp = NULL;
-	err = 0;
+	CHKFN(alloc_array(t), fail);
 	
-	switch (r->storage) {
-	case STG_DEVICE:
-		CHKAF(af_abs(&tmp, r->values), done);
-		CHKAF(af_cast(&t->values, tmp, array_af_dtype(t)), done);
-		break;
-	case STG_HOST:
-		CHK(alloc_array(t), done, L"alloc_array(t)");
-		size_t count = array_values_count(t);
-
-		switch (r->type) {
-		case ARR_BOOL:{
-			int8_t *tv = t->values;
-			MONADIC_SCALAR_LOOP(int8_t, abs(x));
-			break;
-		}
-		case ARR_SINT:{
-			int16_t *tv = t->values;
-			MONADIC_SCALAR_LOOP(int16_t, abs(x));
-			break;
-		}
-		case ARR_INT:{
-			int32_t *tv = t->values;
-			MONADIC_SCALAR_LOOP(int32_t, abs(x));
-			break;
-		}
-		case ARR_DBL:{
-			double *tv = t->values;
-			MONADIC_SCALAR_LOOP(double, fabs(x));
-			break;
-		}
-		default:
-			TRC(99, L"Expected non-complex numeric type");
-		}
-		
-		break;
-	default:
-		TRC(99, L"Unknown storage type");
-	}
+	count = array_values_count(t);
 	
-done:
-	CHKAF(af_release_array(tmp), fail);
-
+	#define ABS_SWITCH_real(typ, sfx, fail) MONADIC_SWITCH((typ)fabs, typ, typ)
+	#define ABS_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	#define ABS_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	#define ABS_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	
+	MONADIC_TYPE_SWITCH(r->type, HOST_SWITCH, ABS, fail);
+	
 fail:
 	return err;
 }
 
-DEFN_MONADIC_SCALAR(abs)
-
 int
-factorial_real_values(struct cell_array *t, struct cell_array *r)
+abs_values(struct cell_array *t, struct cell_array *r)
 {
 	int err;
 	
-	t->type = ARR_DBL;
+	t->type = r->type;
 	err = 0;
 	
 	switch (r->storage) {
-	case STG_DEVICE:{
-		af_array t64, t64_1, one;
-		int err2;
-		
-		t64 = t64_1 = one = NULL;
-		
-		CHKAF(af_cast(&t64, r->values, f64), done);
-		
-		if (is_integer_array(r)) {
-			CHKAF(af_factorial(&t->values, t64), af_done);
-		} else {
-			dim_t d;
-			
-			CHKAF(af_get_elements(&d, t64), af_done);
-			CHKAF(af_constant(&one, 1, 1, &d, f64), af_done);
-			CHKAF(af_add(&t64_1, t64, one, 0), af_done);
-			CHKAF(af_tgamma(&t->values, t64_1), af_done);
-		}
-af_done:
-		err2 = err;
-		
-		TRCAF(af_release_array(t64)); err2 = err ? err : err2;
-		TRCAF(af_release_array(t64_1)); err2 = err ? err : err2;
-		TRCAF(af_release_array(one)); err2 = err ? err : err2;
-		
-		err = err2;
-				
+	case STG_DEVICE:
+		CHKFN(abs_values_device(t, r), fail);
 		break;
-	}
 	case STG_HOST:
-		CHK(alloc_array(t), done, L"alloc_array(t)");
-		size_t count = array_values_count(t);
-		
-		double *tv = t->values;
-		
-		switch (r->type) {
-		case ARR_BOOL:
-			MONADIC_SCALAR_LOOP(int8_t, tgamma(x+1));
-			break;
-		case ARR_SINT:
-			MONADIC_SCALAR_LOOP(int16_t, tgamma(x+1));
-			break;
-		case ARR_INT:
-			MONADIC_SCALAR_LOOP(int32_t, tgamma(x+1));
-			break;
-		case ARR_DBL:
-			MONADIC_SCALAR_LOOP(double, tgamma(x+1));
-			break;
-		default:
-			TRC(99, L"Expected non-complex numeric type");
-		}
-
+		CHKFN(abs_values_host(t, r), fail);
 		break;
 	default:
-		TRC(99, L"Unknown storage type");
+		CHK(99, fail, L"Unknown storage type");
 	}
 
-done:
+fail:
+	return err;
+}
+	
+DEFN_MONADIC_SCALAR(abs)
+
+int
+factorial_values_device(struct cell_array *t, struct cell_array *r)
+{
+	af_array t64, t64_1, one;
+	int err;
+	
+	t64 = t64_1 = one = NULL;
+	
+	CHKAF(af_cast(&t64, r->values, f64), fail);
+	
+	if (is_integer_array(r)) {
+		CHKAF(af_factorial(&t->values, t64), fail);
+	} else {
+		dim_t d;
+		
+		CHKAF(af_get_elements(&d, t64), fail);
+		CHKAF(af_constant(&one, 1, 1, &d, f64), fail);
+		CHKAF(af_add(&t64_1, t64, one, 0), fail);
+		CHKAF(af_tgamma(&t->values, t64_1), fail);
+	}
+	
+fail:
+	af_release_array(t64);
+	af_release_array(t64_1);
+	af_release_array(one);
+	
 	return err;
 }
 
+
 int
-factorial_cmpx_values(struct cell_array *t, struct cell_array *r)
+factorial_values_host(struct cell_array *t, struct cell_array *r)
 {
+	double *tv;
+	size_t count;
 	int err;
 	
-	TRC(16, L"Complex factorial/gamma function not implemented yet");
+	CHKFN(alloc_array(t), fail);
 	
+	count = array_values_count(t);
+	tv = t->values;
+	
+	#define fac_gamma(x) tgamma(x+1)
+	
+	#define FAC_SWITCH_real(typ, sfx, fail) MONADIC_SWITCH(fac_gamma, double, typ)
+	#define FAC_SWITCH_cmpx(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	#define FAC_SWITCH_char(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	#define FAC_SWITCH_cell(typ, sfx, fail) BAD_ELEM(sfx, fail)
+	
+	MONADIC_TYPE_SWITCH(r->type, HOST_SWITCH, FAC, fail);
+
+fail:
 	return err;
 }
 
 int
 factorial_values(struct cell_array *t, struct cell_array *r)
 {
-	if (is_real_array(r))
-		return factorial_real_values(t, r);
+	int err;
 	
-	return factorial_cmpx_values(t, r);
+	if (!is_real_array(r))
+		CHK(16, fail, L"Complex gamma not implemented yet.");
+	
+	t->type = ARR_DBL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		CHKFN(factorial_values_device(t, r), fail);
+		break;
+	case STG_HOST:
+		CHKFN(factorial_values_host(t, r), fail);
+		break;
+	default:
+		CHK(99, fail, L"Unknown storage type");
+	}
+
+fail:
+	return err;
 }
 
 DEFN_MONADIC_SCALAR(factorial)
