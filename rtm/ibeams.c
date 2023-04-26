@@ -1080,46 +1080,6 @@ fail:
 }
 
 int
-conjugate_values(struct cell_array *t, struct cell_array *r)
-{
-	int err;
-	
-	t->type = ARR_DBL;
-	
-	switch (r->storage) {
-	case STG_DEVICE:
-		if (err = af_conjg(&t->values, r->values))
-			return err;
-		
-		break;
-	case STG_HOST:
-		size_t count = array_values_count(t);
-
-		if (err = alloc_array(t))
-			return err;
-		
-		double *tv = t->values;
-		
-		MONADIC_SCALAR_LOOP(struct apl_cmpx, x.real);
-		
-		break;
-	default:
-		return 99;
-	}
-	
-	return 0;
-}
-
-int
-conjugate_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	return monadic_scalar_apply(z, r, conjugate_values);
-}
-
-DECL_FUNC(conjugate_vec, conjugate_func, error_dya_syntax)
-
-int
 max_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
 {
 	*type = l->type > r->type ? l->type : r->type;
@@ -1374,6 +1334,83 @@ DEFN_DYADIC_SCALAR(min, MIN, max_type)
 
 DEFN_DYADIC_SCALAR(max, MAX, max_type)
 
+int
+bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
+{
+	*type = ARR_BOOL;
+	
+	return 0;
+}
+
+#define cmp_real_real(cmp, x, y) ((x) cmp (y))
+#define cmp_real_char(cmp, x, y) ((x) cmp (int64_t)(y))
+#define cmp_real_cmpx(cmp, x, y) ((x) cmp (y).real && 0 cmp (y).imag)
+#define cmp_real_cell(cmp, x, y) ((x) cmp (int64_t)(y))
+#define cmp_char_real(cmp, x, y) ((int64_t)(x) cmp (y))
+#define cmp_char_char(cmp, x, y) ((x) cmp (y))
+#define cmp_char_cmpx(cmp, x, y) ((x) cmp (y).real && 0 cmp (y).imag)
+#define cmp_char_cell(cmp, x, y) ((x) cmp (uint64_t)(y))
+#define cmp_cmpx_real(cmp, x, y) ((x).real cmp (y) && (x).imag cmp 0)
+#define cmp_cmpx_char(cmp, x, y) ((x).real cmp (y) && (x).imag cmp 0)
+#define cmp_cmpx_cmpx(cmp, x, y) ((x).real cmp (y).real && (x).imag cmp (y).imag)
+#define cmp_cmpx_cell(cmp, x, y) ((x).real cmp (int64_t)(y) && (x).imag cmp 0)
+#define cmp_cell_real(cmp, x, y) ((int64_t)(x) cmp (y))
+#define cmp_cell_char(cmp, x, y) ((uint64_t)(x) cmp (y))
+#define cmp_cell_cmpx(cmp, x, y) ((int64_t)(x) cmp (y).real && 0 cmp (y).imag)
+#define cmp_cell_cell(cmp, x, y) ((x) cmp (y))
+
+#define CMP_LOOP(op, lk, lt, ls, rk, rt, rs, fail) \
+	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(op, x, y))
+
+DEF_CMP_IBEAM(eql, af_eq, ==);
+DEF_CMP_IBEAM(neq, af_neq, !=);
+DEF_CMP_IBEAM(and, af_and, &&);
+DEF_CMP_IBEAM(lor, af_or, ||);
+DEF_CMP_IBEAM(lth, af_lt, <);
+DEF_CMP_IBEAM(lte, af_le, <=);
+DEF_CMP_IBEAM(gth, af_gt, >);
+DEF_CMP_IBEAM(gte, af_ge, >=);
+
+int
+conjugate_values(struct cell_array *t, struct cell_array *r)
+{
+	int err;
+	
+	t->type = ARR_DBL;
+	
+	switch (r->storage) {
+	case STG_DEVICE:
+		if (err = af_conjg(&t->values, r->values))
+			return err;
+		
+		break;
+	case STG_HOST:
+		size_t count = array_values_count(t);
+
+		if (err = alloc_array(t))
+			return err;
+		
+		double *tv = t->values;
+		
+		MONADIC_SCALAR_LOOP(struct apl_cmpx, x.real);
+		
+		break;
+	default:
+		return 99;
+	}
+	
+	return 0;
+}
+
+int
+conjugate_func(struct cell_array **z,
+    struct cell_array *r, struct cell_func *self)
+{
+	return monadic_scalar_apply(z, r, conjugate_values);
+}
+
+DECL_FUNC(conjugate_vec, conjugate_func, error_dya_syntax)
+
 struct apl_cmpx
 exp_cmpx(struct apl_cmpx x)
 {
@@ -1525,43 +1562,6 @@ nlg_func(struct cell_array **z,
 }
 
 DECL_FUNC(nlg_vec_ibeam, nlg_func, error_dya_syntax)
-
-int
-bool_type(enum array_type *type, struct cell_array *l, struct cell_array *r)
-{
-	*type = ARR_BOOL;
-	
-	return 0;
-}
-
-#define cmp_real_real(cmp, x, y) ((x) cmp (y))
-#define cmp_real_char(cmp, x, y) ((x) cmp (int64_t)(y))
-#define cmp_real_cmpx(cmp, x, y) ((x) cmp (y).real && 0 cmp (y).imag)
-#define cmp_real_cell(cmp, x, y) ((x) cmp (int64_t)(y))
-#define cmp_char_real(cmp, x, y) ((int64_t)(x) cmp (y))
-#define cmp_char_char(cmp, x, y) ((x) cmp (y))
-#define cmp_char_cmpx(cmp, x, y) ((x) cmp (y).real && 0 cmp (y).imag)
-#define cmp_char_cell(cmp, x, y) ((x) cmp (uint64_t)(y))
-#define cmp_cmpx_real(cmp, x, y) ((x).real cmp (y) && (x).imag cmp 0)
-#define cmp_cmpx_char(cmp, x, y) ((x).real cmp (y) && (x).imag cmp 0)
-#define cmp_cmpx_cmpx(cmp, x, y) ((x).real cmp (y).real && (x).imag cmp (y).imag)
-#define cmp_cmpx_cell(cmp, x, y) ((x).real cmp (int64_t)(y) && (x).imag cmp 0)
-#define cmp_cell_real(cmp, x, y) ((int64_t)(x) cmp (y))
-#define cmp_cell_char(cmp, x, y) ((uint64_t)(x) cmp (y))
-#define cmp_cell_cmpx(cmp, x, y) ((int64_t)(x) cmp (y).real && 0 cmp (y).imag)
-#define cmp_cell_cell(cmp, x, y) ((x) cmp (y))
-
-#define CMP_LOOP(op, lk, lt, ls, rk, rt, rs, fail) \
-	DYADIC_SCALAR_LOOP(lt, rt, cmp_##lk##_##rk(op, x, y))
-
-DEF_CMP_IBEAM(eql, af_eq, ==);
-DEF_CMP_IBEAM(neq, af_neq, !=);
-DEF_CMP_IBEAM(and, af_and, &&);
-DEF_CMP_IBEAM(lor, af_or, ||);
-DEF_CMP_IBEAM(lth, af_lt, <);
-DEF_CMP_IBEAM(lte, af_le, <=);
-DEF_CMP_IBEAM(gth, af_gt, >);
-DEF_CMP_IBEAM(gte, af_ge, >=);
 
 int
 floor_values(struct cell_array *t, struct cell_array *r)
@@ -1922,6 +1922,12 @@ realpart_func(struct cell_array **z, struct cell_array *r, struct cell_func *sel
 
 DECL_FUNC(realpart_vec_ibeam, realpart_func, error_dya_syntax)
 
+#define TRIG_LOOP_real(oper, typ, sfx, fail) MONADIC_SCALAR_LOOP(typ, oper(x))
+#define TRIG_LOOP_cmpx(oper, typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define TRIG_LOOP_char(oper, typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define TRIG_LOOP_cell(oper, typ, sfx, fail) BAD_ELEM(sfx, fail)
+#define TRIG_LOOP(oper, knd, typ, sfx, fail) TRIG_LOOP_##knd(oper, typ, #sfx, fail)
+
 #define DEF_TRIG(name, af_fun, stdc_fun)				\
 int									\
 name##_values(struct cell_array *t, struct cell_array *r)		\
@@ -1953,23 +1959,7 @@ af_done:								\
 									\
 		double *tv = t->values;					\
 									\
-		switch (r->type) {					\
-		case ARR_BOOL:						\
-			MONADIC_SCALAR_LOOP(int8_t, stdc_fun(x));	\
-			break;						\
-		case ARR_SINT:						\
-			MONADIC_SCALAR_LOOP(int16_t, stdc_fun(x));	\
-			break;						\
-		case ARR_INT:						\
-			MONADIC_SCALAR_LOOP(int32_t, stdc_fun(x));	\
-			break;						\
-		case ARR_DBL:						\
-			MONADIC_SCALAR_LOOP(double, stdc_fun(x));	\
-			break;						\
-		default:						\
-			TRC(16, L"Complex inputs not supported, yet.");	\
-		}							\
-									\
+		MONADIC_TYPE_SWITCH(r->type, TRIG_LOOP, stdc_fun, done);\
 		break;							\
 	default:							\
 		TRC(99, L"Unknown storage type");			\
