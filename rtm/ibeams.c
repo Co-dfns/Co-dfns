@@ -1251,15 +1251,13 @@ DEFN_DYADIC_SCALAR(pow, POW, dbl_cmpx_type)
 int
 log_af(af_array *z, af_array l, af_array r)
 {
-	af_array l64, r64, a, b;
+	af_array a, b;
 	int err, code;
 	
-	a = b = l64 = r64 = NULL;
+	a = b = NULL;
 	
-	CHKAF(af_cast(&r64, r, f64), cleanup);
-	CHKAF(af_cast(&l64, l, f64), cleanup);
-	CHKAF(af_log(&a, r64), cleanup);
-	CHKAF(af_log(&b, l64), cleanup);
+	CHKAF(af_log(&a, r), cleanup);
+	CHKAF(af_log(&b, l), cleanup);
 	CHKAF(af_div(z, a, b, 0), cleanup);
 
 	err = 0;
@@ -1269,8 +1267,6 @@ cleanup:
 	
 	CHKAF(af_release_array(a), fail);
 	CHKAF(af_release_array(b), fail);
-	CHKAF(af_release_array(r64), fail);
-	CHKAF(af_release_array(l64), fail);
 	
 	return code; 
 	
