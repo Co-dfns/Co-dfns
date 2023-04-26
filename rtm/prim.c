@@ -36,14 +36,14 @@ extern struct cell_func *index_gen_vec;
 extern struct cell_func *disclose_ibeam;
 extern struct cell_func *enclose_ibeam;
 extern struct cell_func *enclose_ibeam;
-extern struct cell_func *conjugate_vec;
-extern struct cell_func *conjugate_vec;
+extern struct cell_func *conjugate_vec_ibeam;
+extern struct cell_func *conjugate_vec_ibeam;
 extern struct cell_func *add_vec_ibeam;
 extern struct cell_func *sub_vec_ibeam;
 extern struct cell_func *mul_vec_ibeam;
 extern struct cell_func *div_vec_ibeam;
-extern struct cell_func *abs_ibeam;
-extern struct cell_func *abs_ibeam;
+extern struct cell_func *abs_vec_ibeam;
+extern struct cell_func *abs_vec_ibeam;
 extern struct cell_func *floor_vec_ibeam;
 extern struct cell_func *floor_vec_ibeam;
 extern struct cell_func *min_vec_ibeam;
@@ -1977,7 +1977,7 @@ cdf_prim_init(void)
 		struct cell_func *k;
 	
 		CHK(mk_func(&k, ptr8295, ptr8296, 1), cleanup, 
-		    L"[144] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
+		    L"[144] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}╣");
 	
 		k->fv[0] = retain_cell(loc->squeeze);
 	
@@ -34596,12 +34596,12 @@ ptr8295(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(omega);
 	
 	if (!lex->squeeze->value)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(lex->squeeze->value);
 	
@@ -34611,7 +34611,7 @@ ptr8295(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[144] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		    L"[144] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -34621,7 +34621,7 @@ ptr8295(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
@@ -34631,7 +34631,7 @@ ptr8295(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[144] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		    L"[144] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -34641,7 +34641,7 @@ ptr8295(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[144] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.eqv);
 	
@@ -34652,9 +34652,9 @@ ptr8295(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1289};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -34666,7 +34666,7 @@ ptr8295(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[144] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		    L"[144] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -34679,7 +34679,7 @@ ptr8295(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		TRC(guard_check(x), L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_array(x);
 	
@@ -34688,14 +34688,14 @@ ptr8295(struct cell_array **z,
 	
 		if (!err) {
 			if (!omega)
-				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ╠⍵╣ ⋄ ⍵}");
+				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ╠⍵╣ ⋄ ⍵}");
 			
 			*stkhd++ = retain_cell(omega);
 			
-			if (!conjugate_vec)
-				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶╣ ⍵ ⋄ ⍵}");
+			if (!conjugate_vec_ibeam)
+				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec_ibeam'⌶╣ ⍵ ⋄ ⍵}");
 			
-			*stkhd++ = retain_cell(conjugate_vec);
+			*stkhd++ = retain_cell(conjugate_vec_ibeam);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -34703,7 +34703,7 @@ ptr8295(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶ ⍵╣ ⋄ ⍵}");
+				    L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec_ibeam'⌶ ⍵╣ ⋄ ⍵}");
 			
 				release_func(fn);
 				release_array(y);
@@ -34723,7 +34723,7 @@ ptr8295(struct cell_array **z,
 	}
 	
 	if (!omega)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ╠⍵╣}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(omega);
 	
@@ -34740,7 +34740,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[144] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
+	    L"[144] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}╣");
 	return err;
 }
 
@@ -34764,12 +34764,12 @@ ptr8296(struct cell_array **z,
 	stkhd = &stk[0];
 
 	if (!omega)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(omega);
 	
 	if (!lex->squeeze->value)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR ╠squeeze╣ ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(lex->squeeze->value);
 	
@@ -34779,7 +34779,7 @@ ptr8296(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[144] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		    L"[144] conjugate←{1289≡⎕DR ╠squeeze ⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -34789,7 +34789,7 @@ ptr8296(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.q_dr)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡╠⎕DR╣ squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.q_dr);
 	
@@ -34799,7 +34799,7 @@ ptr8296(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[144] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		    L"[144] conjugate←{1289≡╠⎕DR squeeze ⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_func(fn);
 		release_array(y);
@@ -34809,7 +34809,7 @@ ptr8296(struct cell_array **z,
 	}
 	
 	if (!cdf_prim.eqv)
-		CHK(6, cleanup, L"[144] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(6, cleanup, L"[144] conjugate←{1289╠≡╣⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 	*stkhd++ = retain_cell(cdf_prim.eqv);
 	
@@ -34820,9 +34820,9 @@ ptr8296(struct cell_array **z,
 		unsigned int rnk = 0;
 		int16_t dat[] = {1289};
 	
-		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(mk_array(&arr, typ, STG_HOST, rnk), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
-		CHK(fill_array(arr, dat), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		CHK(fill_array(arr, dat), cleanup, L"[144] conjugate←{╠1289╣≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		*stkhd++ = arr;
 	}
@@ -34834,7 +34834,7 @@ ptr8296(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_dya)(&dst, x, y, fn), cleanup,
-		    L"[144] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		    L"[144] conjugate←{╠1289≡⎕DR squeeze ⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_array(x);
 		release_func(fn);
@@ -34847,7 +34847,7 @@ ptr8296(struct cell_array **z,
 	{
 		struct cell_array *x = *--stkhd;
 	
-		TRC(guard_check(x), L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec'⌶ ⍵ ⋄ ⍵}");
+		TRC(guard_check(x), L"[144] conjugate←{1289≡⎕DR squeeze ╠⍵╣:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}");
 	
 		release_array(x);
 	
@@ -34856,14 +34856,14 @@ ptr8296(struct cell_array **z,
 	
 		if (!err) {
 			if (!omega)
-				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ╠⍵╣ ⋄ ⍵}");
+				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ╠⍵╣ ⋄ ⍵}");
 			
 			*stkhd++ = retain_cell(omega);
 			
-			if (!conjugate_vec)
-				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶╣ ⍵ ⋄ ⍵}");
+			if (!conjugate_vec_ibeam)
+				CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec_ibeam'⌶╣ ⍵ ⋄ ⍵}");
 			
-			*stkhd++ = retain_cell(conjugate_vec);
+			*stkhd++ = retain_cell(conjugate_vec_ibeam);
 			
 			{
 				struct cell_func *fn = stkhd[-1];
@@ -34871,7 +34871,7 @@ ptr8296(struct cell_array **z,
 				struct cell_array *dst;
 			
 				CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-				    L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec'⌶ ⍵╣ ⋄ ⍵}");
+				    L"[144] conjugate←{1289≡⎕DR squeeze ⍵:╠'conjugate_vec_ibeam'⌶ ⍵╣ ⋄ ⍵}");
 			
 				release_func(fn);
 				release_array(y);
@@ -34891,7 +34891,7 @@ ptr8296(struct cell_array **z,
 	}
 	
 	if (!omega)
-		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ╠⍵╣}");
+		CHK(6, cleanup, L"[144] conjugate←{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ╠⍵╣}");
 	
 	*stkhd++ = retain_cell(omega);
 	
@@ -34907,7 +34907,7 @@ cleanup:
 		return err;
 
 	TRC(chk_array_valid(*z), 
-	    L"[144] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec'⌶ ⍵ ⋄ ⍵}╣");
+	    L"[144] conjugate←╠{1289≡⎕DR squeeze ⍵:'conjugate_vec_ibeam'⌶ ⍵ ⋄ ⍵}╣");
 	return err;
 }
 
@@ -36028,14 +36028,14 @@ ptr8303(struct cell_array **z,
 	}
 	
 	if (!omega)
-		CHK(6, cleanup, L"[164] 	'abs_ibeam'⌶ ╠⍵╣");
+		CHK(6, cleanup, L"[164] 	'abs_vec_ibeam'⌶ ╠⍵╣");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!abs_ibeam)
-		CHK(6, cleanup, L"[164] 	╠'abs_ibeam'⌶╣ ⍵");
+	if (!abs_vec_ibeam)
+		CHK(6, cleanup, L"[164] 	╠'abs_vec_ibeam'⌶╣ ⍵");
 	
-	*stkhd++ = retain_cell(abs_ibeam);
+	*stkhd++ = retain_cell(abs_vec_ibeam);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -36043,7 +36043,7 @@ ptr8303(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[164] 	╠'abs_ibeam'⌶ ⍵╣");
+		    L"[164] 	╠'abs_vec_ibeam'⌶ ⍵╣");
 	
 		release_func(fn);
 		release_array(y);
@@ -36321,14 +36321,14 @@ ptr8304(struct cell_array **z,
 	}
 	
 	if (!omega)
-		CHK(6, cleanup, L"[164] 	'abs_ibeam'⌶ ╠⍵╣");
+		CHK(6, cleanup, L"[164] 	'abs_vec_ibeam'⌶ ╠⍵╣");
 	
 	*stkhd++ = retain_cell(omega);
 	
-	if (!abs_ibeam)
-		CHK(6, cleanup, L"[164] 	╠'abs_ibeam'⌶╣ ⍵");
+	if (!abs_vec_ibeam)
+		CHK(6, cleanup, L"[164] 	╠'abs_vec_ibeam'⌶╣ ⍵");
 	
-	*stkhd++ = retain_cell(abs_ibeam);
+	*stkhd++ = retain_cell(abs_vec_ibeam);
 	
 	{
 		struct cell_func *fn = stkhd[-1];
@@ -36336,7 +36336,7 @@ ptr8304(struct cell_array **z,
 		struct cell_array *dst;
 	
 		CHK((fn->fptr_mon)(&dst, y, fn), cleanup,
-		    L"[164] 	╠'abs_ibeam'⌶ ⍵╣");
+		    L"[164] 	╠'abs_vec_ibeam'⌶ ⍵╣");
 	
 		release_func(fn);
 		release_array(y);
