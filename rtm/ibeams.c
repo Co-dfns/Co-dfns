@@ -128,6 +128,20 @@ q_dr_mon(struct cell_array **z,
 DECL_FUNC(q_dr_ibeam, q_dr_mon, error_dya_nonce)
 
 int
+mk_span_array(struct cell_array **z, struct cell_array *r,
+    struct cell_func *self)
+{
+	int err;
+	
+	CHK(16, fail, L"Span arrays not implemented yet.");
+    
+fail:
+	return err;
+}
+
+DECL_FUNC(mk_span_ibeam, mk_span_array, error_dya_syntax)
+
+int
 is_simple_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {

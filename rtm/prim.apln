@@ -4,6 +4,9 @@
 q_signal←'q_signal_ibeam'⌶
 q_dr←'q_dr_ibeam'⌶
 
+⍝ System constants
+spn←'mk_span_ibeam'⌶⍬
+
 ⍝ Utilities
 squeeze←'squeeze_ibeam'⌶
 is_simple←'is_simple_ibeam'⌶

@@ -216,6 +216,7 @@ DECLSPEC struct cdf_prim_loc {
 	wchar_t **__names;
 	struct cell_func *q_signal;
 	struct cell_func *q_dr;
+	struct cell_array *spn;
 	struct cell_func_box *squeeze;
 	struct cell_func_box *is_simple;
 	struct cell_func_box *is_numeric;
