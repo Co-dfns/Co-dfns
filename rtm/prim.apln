@@ -5,7 +5,7 @@ q_signal←'q_signal_ibeam'⌶
 q_dr←'q_dr_ibeam'⌶
 
 ⍝ System constants
-spn←'mk_span_ibeam'⌶⍬
+spn←'span_array'⌶⌶⌶⌶
 
 ⍝ Utilities
 squeeze←'squeeze_ibeam'⌶
