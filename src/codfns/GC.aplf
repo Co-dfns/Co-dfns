@@ -42,7 +42,6 @@ GC←{
 	decl_vars←{
 		0=≢⍵:0⍴⊂''
 		0∊k[⍵]:'CANNOT DECLARE STACK VARIABLE'SIGNAL 99
-		∨⌿(k[⍵]=1)∧lx[⍵]>3:'CANNOT DECLARE GLOBAL ARRAY'SIGNAL 99
 		∨⌿(k[⍵]=6)∧lx[⍵]>3:'CANNOT DECLARE AMBIGUOUS GLOBAL'SIGNAL 99
 		z  ←'' 'extern '[lx[⍵]=5]
 		z,¨←'' 'struct cell_'[lx[⍵]≠4]
