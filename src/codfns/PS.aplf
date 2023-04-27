@@ -214,7 +214,7 @@ PS←{
 		k[z⌿⍨msk←{(2 3 5∊⍨k[⊃⍵])∨4=|(⍵,≢k)[0⍳⍨∧⍀k[⍵]=1]⌷k,0}∘⌽¨x]←2
 		z x⌿⍨←⊂~msk
 		
-		k[z⌿⍨msk←k[⊃∘⌽¨x]=1]←1
+		k[z⌿⍨msk←1=|k[⊃∘⌽¨x]]←1
 		z x⌿⍨←⊂~msk
 
 		⊢k[i]←k[vb[i←⍸(t∊B V)∨(t=P)∧vb≥0]]
@@ -257,13 +257,13 @@ PS←{
 	p[j]←p[i] ⋄ t[i]←P ⋄ lx[i]←3 ⋄ end[i]←1+pos[i]
 	
 	⍝ Parse ⌶* nodes to V nodes
-	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶']
+	i km←⍪⌿p[i]{(⍺⍪⍵)(0,1∨⍵)}⌸i←⍸p∊p[j←⍸pm←(t=P)∧n∊ns←-sym⍳,¨'⌶' '⌶⌶' '⌶⌶⌶' '⌶⌶⌶⌶']
 	∨⌿msk←(i∊j)∧¯1⌽km∧(t[i]=A)⍲k[i]=1:{
 		msg←'INVALID ⌶ SYNTAX'
 		msg SIGNAL SELECT i⌿⍨msk∨¯1⌽msk
 	}⍬
 	vi←i⌿⍨1⌽msk←i∊j ⋄ pi←msk⌿i
-	t[vi]←V ⋄ k[vi]←2 3 4[ns⍳n[pi]] ⋄ lx[vi]←5 ⋄ end[vi]←end[pi]
+	t[vi]←V ⋄ k[vi]←2 3 4 1[ns⍳n[pi]] ⋄ lx[vi]←5 ⋄ end[vi]←end[pi]
 	p t k n lx pos end⌿⍨←⊂~pm ⋄ p(⊣-1+⍸⍨)←⍸pm
 
 	⍝ Group function and value expressions

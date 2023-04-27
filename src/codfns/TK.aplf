@@ -191,6 +191,7 @@ TK←{
 	k[⍸n∊,¨prmfo]←5
 	k[⍸n∊⊂'⌶⌶']←¯3
 	k[⍸n∊⊂'⌶⌶⌶']←¯4
+	k[⍸n∊⊂'⌶⌶⌶⌶']←¯1
 
 	⍝ Convert n field to symbols and add a symbol table
 	sym←∪('')(,'⍵')(,'⍺')'⍺⍺' '⍵⍵'(,'∇')'∇∇'⍬(,';'),n
