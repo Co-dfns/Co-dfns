@@ -1077,13 +1077,20 @@ cdf_prim_init(void)
 	if (cdf_prim_flag)
 		return 0;
 
-	stkhd = &stk[0];
+	err = 0;
 	cdf_prim_flag = 1;
-	cdf_prim_init();
-
+	stkhd = &stk[0];
 	loc = &cdf_prim;
 	loc->__count = 107;
 	loc->__names = cdf_prim_names;
+
+	if (debug_info)
+		release_array(debug_info);
+
+	debug_info = NULL;
+
+	CHKFN(cdf_prim_init(), cleanup);
+
 	loc->q_signal = NULL;
 	loc->q_dr = NULL;
 	loc->spn = NULL;
@@ -1191,13 +1198,6 @@ cdf_prim_init(void)
 	loc->oup = NULL;
 	loc->pow = NULL;
 	loc->jot = NULL;
-
-	err = 0;
-
-	if (debug_info)
-		release_array(debug_info);
-
-	debug_info = NULL;
 
 	if (!q_signal_ibeam)
 		CHK(6, cleanup, L"[4] q_signal←╠'q_signal_ibeam'⌶╣");
@@ -81232,16 +81232,21 @@ q_signal(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->q_signal;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81255,16 +81260,21 @@ q_dr(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->q_dr;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81278,16 +81288,21 @@ squeeze(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->squeeze->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81301,16 +81316,21 @@ is_simple(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->is_simple->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81324,16 +81344,21 @@ is_numeric(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->is_numeric->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81347,16 +81372,21 @@ is_char(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->is_char->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81370,16 +81400,21 @@ is_integer(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->is_integer->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81393,16 +81428,21 @@ is_bool(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->is_bool->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81416,16 +81456,21 @@ max_shp(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->max_shp->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81439,16 +81484,21 @@ has_nat_vals(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->has_nat_vals->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81462,16 +81512,21 @@ chk_scl(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->chk_scl->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81485,16 +81540,21 @@ chk_valid_shape(struct cell_array **z, struct cell_array *l, struct cell_array *
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->chk_valid_shape->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81508,16 +81568,21 @@ both_simple(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->both_simple->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81531,16 +81596,21 @@ both_numeric(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->both_numeric->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81554,16 +81624,21 @@ both_integer(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->both_integer->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81577,16 +81652,21 @@ both_char(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->both_char->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81600,16 +81680,21 @@ both_bool(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->both_bool->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81623,16 +81708,21 @@ any(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->any->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81646,16 +81736,21 @@ idx_shp_check(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->idx_shp_check;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81669,16 +81764,21 @@ idx_rng_check(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->idx_rng_check;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81692,16 +81792,21 @@ set(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->set;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81715,16 +81820,21 @@ brk(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->brk;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81738,16 +81848,21 @@ rgt(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->rgt;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81761,16 +81876,21 @@ lft(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->lft;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81784,16 +81904,21 @@ reshape(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->reshape;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81807,16 +81932,21 @@ rho(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->rho;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81830,16 +81960,21 @@ cat(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->cat;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81853,16 +81988,21 @@ depth(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->depth;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81876,16 +82016,21 @@ same(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->same->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81899,16 +82044,21 @@ eqv(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->eqv;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81922,16 +82072,21 @@ nqv(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->nqv;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81945,16 +82100,21 @@ index(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->index->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81968,16 +82128,21 @@ sqd(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->sqd;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -81991,16 +82156,21 @@ index_gen(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->index_gen;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82014,16 +82184,21 @@ index_of(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->index_of;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82037,16 +82212,21 @@ iot(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->iot;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82060,16 +82240,21 @@ dis(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->dis;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82083,16 +82268,21 @@ enclose(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->enclose;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82106,16 +82296,21 @@ par(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->par;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82129,16 +82324,21 @@ conjugate(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->conjugate;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82152,16 +82352,21 @@ add(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->add;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82175,16 +82380,21 @@ sub(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->sub;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82198,16 +82408,21 @@ sign(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->sign;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82221,16 +82436,21 @@ mul(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->mul;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82244,16 +82464,21 @@ div(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->div;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82267,16 +82492,21 @@ absolute(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->absolute;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82290,16 +82520,21 @@ residue(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->residue;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82313,16 +82548,21 @@ res(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->res;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82336,16 +82576,21 @@ floor_array(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->floor_array;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82359,16 +82604,21 @@ min(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->min;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82382,16 +82632,21 @@ ceil_array(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->ceil_array;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82405,16 +82660,21 @@ max(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->max;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82428,16 +82688,21 @@ exp(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->exp;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82451,16 +82716,21 @@ log(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->log;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82474,16 +82744,21 @@ pitimes(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->pitimes;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82497,16 +82772,21 @@ trig(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->trig;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82520,16 +82800,21 @@ cir(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->cir;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82543,16 +82828,21 @@ binomial(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->binomial;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82566,16 +82856,21 @@ fac(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->fac;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82589,16 +82884,21 @@ notscl(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->notscl;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82612,16 +82912,21 @@ without(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->without;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82635,16 +82940,21 @@ not(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->not;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82658,16 +82968,21 @@ logand(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->logand;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82681,16 +82996,21 @@ and(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->and;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82704,16 +83024,21 @@ logor(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->logor;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82727,16 +83052,21 @@ lor(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->lor;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82750,16 +83080,21 @@ nan(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->nan;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82773,16 +83108,21 @@ nor(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->nor;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82796,16 +83136,21 @@ lessthan(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->lessthan;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82819,16 +83164,21 @@ lth(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->lth;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82842,16 +83192,21 @@ lesseql(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->lesseql;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82865,16 +83220,21 @@ lte(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->lte;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82888,16 +83248,21 @@ eql_vec(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->eql_vec->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82911,16 +83276,21 @@ equal(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->equal;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82934,16 +83304,21 @@ eql(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->eql;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82957,16 +83332,21 @@ greatereql(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->greatereql;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -82980,16 +83360,21 @@ gte(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->gte;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83003,16 +83388,21 @@ greaterthan(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->greaterthan;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83026,16 +83416,21 @@ gth(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->gth;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83049,16 +83444,21 @@ firstocc(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->firstocc;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83072,16 +83472,21 @@ neq_vec(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->neq_vec->value;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83095,16 +83500,21 @@ noteq(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->noteq;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83118,16 +83528,21 @@ neq(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->neq;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83141,16 +83556,21 @@ mix(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->mix;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83164,16 +83584,21 @@ take(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->take;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83187,16 +83612,21 @@ tke(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->tke;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83210,16 +83640,21 @@ split(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->split;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83233,16 +83668,21 @@ drop(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->drop;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83256,16 +83696,21 @@ drp(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->drp;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83279,16 +83724,21 @@ reverse_last(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->reverse_last;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83302,16 +83752,21 @@ rotate_last(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->rotate_last;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83325,16 +83780,21 @@ rot(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->rot;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
@@ -83348,16 +83808,21 @@ rpf(struct cell_array **z, struct cell_array *l, struct cell_array *r)
 {
 	struct cell_func *self;
 	struct cdf_prim_loc *loc;
+	int err;
 
-	cdf_prim_init();
+	CHKFN(cdf_prim_init(), fail);
 
 	loc = &cdf_prim;
 	self = loc->rpf;
 
-	if (l == NULL)
-		return self->fptr_mon(z, r, self);
-	else
-		return self->fptr_dya(z, l, r, self);
+	if (l == NULL) {
+		CHKFN(self->fptr_mon(z, r, self), fail);
+	} else {
+		CHKFN(self->fptr_dya(z, l, r, self), fail);
+	}
+
+fail:
+	return err;
 }
 
 EXPORT int
