@@ -132,50 +132,21 @@ struct cell_array span_array_value = {
 };
 struct cell_array *span_array = &span_array_value;
 
-int
-is_simple_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	return mk_array_bool(z, r->type != ARR_NESTED);
-}
+#define DEFN_PRED_IBEAM(name, expr)				\
+int								\
+name##_func(struct cell_array **z, struct cell_array *r,	\
+    struct cell_func *self)					\
+{								\
+	return mk_array_bool(z, (expr));			\
+}								\
+								\
+DECL_FUNC(name##_ibeam, name##_func, error_dya_syntax)		\
 
-DECL_FUNC(is_simple_ibeam, is_simple_func, error_dya_syntax)
-
-int
-is_numeric_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	if (is_numeric_array(r))
-		return mk_array_bool(z, 1);
-	
-	return mk_array_bool(z, 0);
-}
-
-DECL_FUNC(is_numeric_ibeam, is_numeric_func, error_dya_syntax)
-
-int
-is_char_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	if (is_char_array(r))
-		return mk_array_bool(z, 1);
-	
-	return mk_array_bool(z, 0);
-}
-
-DECL_FUNC(is_char_ibeam, is_char_func, error_dya_syntax)
-
-int
-is_integer_func(struct cell_array **z,
-    struct cell_array *r, struct cell_func *self)
-{
-	if (is_integer_array(r))
-		return mk_array_bool(z, 1);
-	
-	return mk_array_bool(z, 0);
-}
-
-DECL_FUNC(is_integer_ibeam, is_integer_func, error_dya_syntax)
+DEFN_PRED_IBEAM(is_simple, r->type != ARR_NESTED)
+DEFN_PRED_IBEAM(is_numeric, is_numeric_array(r))
+DEFN_PRED_IBEAM(is_char, is_char_array(r))
+DEFN_PRED_IBEAM(is_integer, is_integer_array(r))
+DEFN_PRED_IBEAM(is_span, r->type == ARR_SPAN)
 
 int
 shape_func(struct cell_array **z,
