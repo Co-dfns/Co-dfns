@@ -99,7 +99,7 @@ TK←{
 	d←¯1⌽d
 
 	⍝ Check for out of context dfns formals
-	msk←(d=0)∧(t=P)∧x∊'⍺⍵'
+	msk←(d=0)∧(t∊A P)∧x∊'⍺⍵'
 	∨⌿msk:'DFN FORMAL REFERENCED OUTSIDE DFNS'SIGNAL msk⌿pos
 
 	⍝ Mark trad-fns regions as tm
