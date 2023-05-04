@@ -97,8 +97,11 @@ cat←{
 
 ⍝ ≡: Depth / Same
 depth←{
-	is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
-	⎕SIGNAL 16
+   is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
+   0≡≢,⍵:(×d)+d←∇⊃⍵
+   nd←1+mx←⌈⌿pd←|d←∇¨,⍵
+   ∨⌿(d<0)∨pd≠mx:-nd
+   nd
 }
 same←'same_ibeam'⌶
 eqv←depth ambiv same
