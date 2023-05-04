@@ -228,7 +228,7 @@ guard_check(struct cell_array *x)
 	if (x->type != ARR_BOOL)
 		return 11;
 	
-	if (err = get_scalar_int(&val, x))
+	if (err = get_scalar_int32(&val, x))
 		return err;
 	
 	return val - 1;

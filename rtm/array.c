@@ -674,9 +674,9 @@ name(ztype *dst, struct cell_array *arr)                         \
 	return 0;	                                        \
 }                                                               \
 
-DEFN_GET_SCALAR_NUM(get_scalar_bool, int8_t)
-DEFN_GET_SCALAR_NUM(get_scalar_sint, int16_t)
-DEFN_GET_SCALAR_NUM(get_scalar_int, int32_t)
+DEFN_GET_SCALAR_NUM(get_scalar_int8, int8_t)
+DEFN_GET_SCALAR_NUM(get_scalar_int16, int16_t)
+DEFN_GET_SCALAR_NUM(get_scalar_int32, int32_t)
 DEFN_GET_SCALAR_NUM(get_scalar_dbl, double)
 DEFN_GET_SCALAR_NUM(get_scalar_u64, uint64_t)
 
@@ -783,9 +783,9 @@ name(struct cell_array **z, ctype val)			\
 	return 0;					\
 }
 
-DEFN_MKARRAY(mk_array_bool, ARR_BOOL, int8_t)
-DEFN_MKARRAY(mk_array_sint, ARR_SINT, int16_t)
-DEFN_MKARRAY(mk_array_int, ARR_INT, int32_t)
+DEFN_MKARRAY(mk_array_int8, ARR_BOOL, int8_t)
+DEFN_MKARRAY(mk_array_int16, ARR_SINT, int16_t)
+DEFN_MKARRAY(mk_array_int32, ARR_INT, int32_t)
 DEFN_MKARRAY(mk_array_dbl, ARR_DBL, double)
 DEFN_MKARRAY(mk_array_cmpx, ARR_CMPX, struct apl_cmpx)
 DEFN_MKARRAY(mk_array_char8, ARR_CHAR8, uint8_t)

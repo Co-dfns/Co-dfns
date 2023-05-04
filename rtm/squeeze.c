@@ -22,83 +22,35 @@ closest_numeric_array_type(double x)
 	return ARR_DBL;
 }
 
-#define CAST_UNIT(count, src_type, dst_type) {	\
-	src_type *src = arr->values;		\
-	dst_type *dst = (dst_type *)buf;	\
-						\
-	for (size_t i = 0; i < (count); i++)	\
-		dst[i] = (dst_type)src[i];	\
-}						\
-
-#define CAST_CMPX_REAL(count, dst_type) {	\
-	struct apl_cmpx *src = arr->values;	\
-	dst_type *dst = (dst_type *)buf;	\
-						\
-	for (size_t i = 0; i < (count); i++)	\
-		dst[i] = (dst_type)src[i].real;	\
-}						\
-
-#define CAST_REAL_CMPX(count, src_type) {		\
-	src_type *src = arr->values;			\
-	struct apl_cmpx *dst = (struct apl_cmpx *)buf;	\
-							\
-	for (size_t i = 0; i < (count); i++) {		\
-		dst[i].real = (double)src[i];		\
-		dst[i].imag = 0;			\
-	}						\
-}							\
-
-#define CAST_NESTED_SCL(count, suffix, dst_type) {			\
-	struct cell_array **src = arr->values;				\
-	dst_type *dst = (dst_type *)buf;				\
-									\
-	for (size_t i = 0; i < (count); i++)				\
-		CHK(get_scalar_##suffix(&dst[i], src[i]), fail,		\
-		    L"get_scalar_" #suffix L"(&dst[i], src[i]");	\
-}									\
-
-#define CAST_SCL_NESTED(count, suffix, src_type) {			\
-	src_type *src = arr->values;					\
-	struct cell_array **dst = (struct cell_array **)buf;		\
-									\
-	for (size_t i = 0; i < (count); i++)				\
-		CHK(mk_array_##suffix(&dst[i], src[i]), fail,		\
-		    L"mk_array_" #suffix L"(&dst[i], src[i]");	\
-}									\
+int
+cast_values_device(struct cell_array *arr, enum array_type type)
+{
+	af_array newv;
+	int err;
+	
+	if (arr->type == ARR_NESTED)
+		CHK(99, fail, L"Unexpected nested device array.");
+	
+	CHKAF(af_cast(&newv, arr->values, array_type_af_dtype(type)), fail);
+	CHKFN(release_array_data(arr), fail);
+	
+	arr->type = type;
+	arr->values = newv;
+	
+	err = 0;
+	
+fail:
+	return err;
+}
 
 int
-cast_values(struct cell_array *arr, enum array_type type)
+cast_values_host(struct cell_array *arr, enum array_type type)
 {
 	size_t count, in_size, out_size;
 	char *buf;
 	int err, reuse;
 	
-	if (arr->type == type)
-		return 0;
-	
-	err = 0;
-	
-	if (arr->storage == STG_DEVICE) {
-		af_dtype dtyp;
-		af_array newv;
-		
-		if (arr->type == ARR_NESTED)
-			CHK(99, done, L"Unexpected nested device array");
-		
-		arr->type = type;
-		dtyp = array_af_dtype(arr);
-		
-		CHKAF(af_cast(&newv, arr->values, dtyp), done);
-		CHK(release_array_data(arr), done,
-		    L"release_array_data(arr)");
-		
-		arr->values = newv;
-		goto done;
-	}
-	
-	if (arr->storage != STG_HOST)
-		CHK(99, done, L"Unknown storage type");
-	
+	err = 0;	
 	count = array_values_count(arr);
 	in_size = count * array_element_size(arr);
 	out_size = count * array_element_size_type(type);
@@ -108,168 +60,82 @@ cast_values(struct cell_array *arr, enum array_type type)
 		reuse = 0;
 	
 	buf = reuse ? arr->values : malloc(out_size + sizeof(int));
-	CHK(buf == NULL, done, L"Failed to alloc squeeze buffer.");
-
-	switch (type_pair(arr->type, type)) {
-	case type_pair(ARR_BOOL,   ARR_SINT   ):	/* Boolean */
-		CAST_UNIT(count, int8_t, int16_t);
-		break;
-	case type_pair(ARR_BOOL,   ARR_INT    ):
-		CAST_UNIT(count, int8_t, int32_t);
-		break;
-	case type_pair(ARR_BOOL,   ARR_DBL    ):
-		CAST_UNIT(count, int8_t, double);
-		break;
-	case type_pair(ARR_BOOL,   ARR_CMPX   ):
-		CAST_REAL_CMPX(count, int8_t);
-		break;
-	case type_pair(ARR_BOOL,   ARR_NESTED ):
-		CAST_SCL_NESTED(count, bool, int8_t);
-		break;
+	CHK(buf == NULL, fail, L"Failed to alloc squeeze buffer.");
+	
+	#define CAST_FAIL(ts, as, fail) \
+		CHK(99, fail, L"Cannot cast" as L" to " ts);
+	#define CAST_LOOP(stmt, tt, at) {			\
+		at *rv = arr->values;				\
+		tt *tv = (tt *)buf;				\
+								\
+		for (size_t i = 0; i < count; i++)		\
+			stmt;					\
+	}	
+	#define CAST_SCL(oper, tt, at) CAST_LOOP(tv[i] = oper(rv[i]), tt, at)
+	#define CAST_CELL(oper, tt, at, fail) \
+		CAST_LOOP(CHKFN(oper(&tv[i], rv[i]), fail), tt, at)
+	#define CAST_real_real(ts, tt, as, at, fail) CAST_SCL((tt), tt, at)
+	#define CAST_real_cmpx(ts, tt, as, at, fail) CAST_SCL((tt)cast_real_cmpx, tt, at)
+	#define CAST_real_char(ts, tt, as, at, fail) CAST_FAIL(#ts, #as, fail)
+	#define CAST_real_cell(ts, tt, as, at, fail) CAST_CELL(get_scalar_##ts, tt, at, fail)
+	#define CAST_cmpx_real(ts, tt, as, at, fail) CAST_SCL(cast_cmpx_real, tt, at)
+	#define CAST_cmpx_cmpx(ts, tt, as, at, fail) CAST_SCL(, tt, at)
+	#define CAST_cmpx_char(ts, tt, as, at, fail) CAST_FAIL(#ts, #as, fail)
+	#define CAST_cmpx_cell(ts, tt, as, at, fail) CAST_CELL(get_scalar_##ts, tt, at, fail)
+	#define CAST_char_real(ts, tt, as, at, fail) CAST_FAIL(#ts, #as, fail)
+	#define CAST_char_cmpx(ts, tt, as, at, fail) CAST_FAIL(#ts, #as, fail)
+	#define CAST_char_char(ts, tt, as, at, fail) CAST_SCL((tt), tt, at)
+	#define CAST_char_cell(ts, tt, as, at, fail) CAST_CELL(get_scalar_##ts, tt, at, fail)
+	#define CAST_cell_real(ts, tt, as, at, fail) CAST_CELL(mk_array_##as, tt, at, fail)
+	#define CAST_cell_cmpx(ts, tt, as, at, fail) CAST_CELL(mk_array_##as, tt, at, fail)
+	#define CAST_cell_char(ts, tt, as, at, fail) CAST_CELL(mk_array_##as, tt, at, fail)
+	#define CAST_cell_cell(ts, tt, as, at, fail) CAST_SCL(, tt, at)
+	#define CAST_SWITCH(op, ak, at, as, tk, tt, ts, fail) \
+		CAST_##tk##_##ak(ts, tt, as, at, fail)
+	
+	DYADIC_TYPE_SWITCH(arr->type, type, CAST_SWITCH, , fail);
 		
-	case type_pair(ARR_SINT,   ARR_BOOL   ):	/* Small Ints */
-		CAST_UNIT(count, int16_t, int8_t);
-		break;
-	case type_pair(ARR_SINT,   ARR_INT    ):
-		CAST_UNIT(count, int16_t, int32_t);
-		break;
-	case type_pair(ARR_SINT,   ARR_DBL    ):
-		CAST_UNIT(count, int16_t, double);
-		break;
-	case type_pair(ARR_SINT,   ARR_CMPX   ):
-		CAST_REAL_CMPX(count, int16_t);
-		break;
-	case type_pair(ARR_SINT,   ARR_NESTED ):
-		CAST_SCL_NESTED(count, sint, int16_t);
-		break;
-		
-	case type_pair(ARR_INT,    ARR_BOOL   ):	/* Integers */
-		CAST_UNIT(count, int32_t, int8_t);
-		break;
-	case type_pair(ARR_INT,    ARR_SINT   ):
-		CAST_UNIT(count, int32_t, int16_t);
-		break;
-	case type_pair(ARR_INT,    ARR_DBL    ):
-		CAST_UNIT(count, int32_t, double);
-		break;
-	case type_pair(ARR_INT,    ARR_CMPX   ):
-		CAST_REAL_CMPX(count, int32_t);
-		break;
-	case type_pair(ARR_INT,    ARR_NESTED ):
-		CAST_SCL_NESTED(count, int, int32_t);
-		break;
-		
-	case type_pair(ARR_DBL,    ARR_BOOL   ):	/* Doubles */
-		CAST_UNIT(count, double, int8_t);
-		break;
-	case type_pair(ARR_DBL,    ARR_SINT   ):
-		CAST_UNIT(count, double, int16_t);
-		break;
-	case type_pair(ARR_DBL,    ARR_INT    ):
-		CAST_UNIT(count, double, int32_t);
-		break;
-	case type_pair(ARR_DBL,    ARR_CMPX    ):
-		CAST_REAL_CMPX(count, double);
-		break;
-	case type_pair(ARR_DBL,    ARR_NESTED ):
-		CAST_SCL_NESTED(count, dbl, double);
-		break;
-		
-	case type_pair(ARR_CMPX,   ARR_BOOL   ):	/* Complex */
-		CAST_CMPX_REAL(count, int8_t);
-		break;
-	case type_pair(ARR_CMPX,   ARR_SINT   ):
-		CAST_CMPX_REAL(count, int16_t);
-		break;
-	case type_pair(ARR_CMPX,   ARR_INT    ):
-		CAST_CMPX_REAL(count, int32_t);
-		break;
-	case type_pair(ARR_CMPX,   ARR_DBL    ):
-		CAST_CMPX_REAL(count, double);
-		break;
-	case type_pair(ARR_CMPX,   ARR_NESTED ):
-		CAST_SCL_NESTED(count, cmpx, struct apl_cmpx);
-		break;
-		
-	case type_pair(ARR_CHAR8,  ARR_CHAR16 ):	/* 8-bit Chars */
-		CAST_UNIT(count, uint8_t, uint16_t);
-		break;
-	case type_pair(ARR_CHAR8,  ARR_CHAR32 ):
-		CAST_UNIT(count, uint8_t, uint32_t);
-		break;
-	case type_pair(ARR_CHAR8,  ARR_NESTED ):
-		CAST_SCL_NESTED(count, char8, uint8_t);
-		break;
-		
-	case type_pair(ARR_CHAR16, ARR_CHAR8  ):	/* 16-bit Chars */
-		CAST_UNIT(count, uint16_t, uint8_t);
-		break;
-	case type_pair(ARR_CHAR16, ARR_CHAR32 ):
-		CAST_UNIT(count, uint16_t, uint32_t);
-		break;
-	case type_pair(ARR_CHAR16, ARR_NESTED ):
-		CAST_SCL_NESTED(count, char16, uint16_t);
-		break;
-		
-	case type_pair(ARR_CHAR32, ARR_CHAR8  ):	/* 32-bit Chars */
-		CAST_UNIT(count, uint32_t, uint8_t);
-		break;
-	case type_pair(ARR_CHAR32, ARR_CHAR16 ):
-		CAST_UNIT(count, uint32_t, uint16_t);
-		break;
-	case type_pair(ARR_CHAR32, ARR_NESTED ):
-		CAST_SCL_NESTED(count, char32, uint32_t);
-		break;
-		
-	case type_pair(ARR_NESTED, ARR_CHAR32 ):	/* Nested */
-		CAST_NESTED_SCL(count, char32, uint32_t);
-		break;
-	case type_pair(ARR_NESTED, ARR_CHAR16 ):
-		CAST_NESTED_SCL(count, char16, uint16_t);
-		break;
-	case type_pair(ARR_NESTED, ARR_CHAR8  ):
-		CAST_NESTED_SCL(count, char8, uint8_t);
-		break;
-	case type_pair(ARR_NESTED, ARR_CMPX   ):
-		CAST_NESTED_SCL(count, cmpx, struct apl_cmpx);
-		break;
-	case type_pair(ARR_NESTED, ARR_DBL    ):
-		CAST_NESTED_SCL(count, dbl, double);
-		break;
-	case type_pair(ARR_NESTED, ARR_INT    ):
-		CAST_NESTED_SCL(count, int, int32_t);
-		break;
-	case type_pair(ARR_NESTED, ARR_SINT   ):
-		CAST_NESTED_SCL(count, sint, int16_t);
-		break;
-	case type_pair(ARR_NESTED, ARR_BOOL   ):
-		CAST_NESTED_SCL(count, bool, int8_t);
-		break;
-	default:
-		CHK(99, fail, L"Incompatible cast");
+	if (reuse) {
+		buf = realloc(buf, out_size + sizeof(int));
+		CHK(buf == NULL, fail, L"Failed to realloc squeeze.");
+	} else {
+		CHKFN(release_array_data(arr), fail);
 	}
 	
 	arr->type = type;
-	
-	if (reuse) {
-		buf = realloc(buf, out_size + sizeof(int));
-		CHK(buf == NULL, done, L"Failed to realloc squeeze.");
-	} else {
-		CHK(release_array_data(arr), fail,
-		    L"release_array_data(arr)");
-	}
-	
 	arr->values = buf;
 	arr->vrefc = (unsigned int *)(buf + out_size);
 	*arr->vrefc = 1;
 	
-done:
 	return err;
 	
 fail:
 	if (!reuse)
 		free(buf);
 	
+	return err;
+}
+
+int
+cast_values(struct cell_array *arr, enum array_type type)
+{
+	int err;
+	
+	if (arr->type == type)
+		return 0;
+	
+	switch (arr->storage) {
+	case STG_DEVICE:
+		CHKFN(cast_values_device(arr, type), fail);
+		break;
+	case STG_HOST:
+		CHKFN(cast_values_host(arr, type), fail);
+		break;
+	default:
+		CHK(99, fail, L"Unexpected storage type.");
+	}
+
+fail:
 	return err;
 }
 

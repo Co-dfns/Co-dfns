@@ -55,7 +55,7 @@ q_signal_mon(struct cell_array **z,
 	if (!is_integer_array(r))
 		return 11;
 	
-	if (err = get_scalar_int(&val, r))
+	if (err = get_scalar_int32(&val, r))
 		return err;
 	
 	return val;
@@ -122,7 +122,7 @@ q_dr_mon(struct cell_array **z,
 		return 99;
 	}
 	
-	return mk_array_sint(z, val);
+	return mk_array_int16(z, val);
 }
 
 DECL_FUNC(q_dr_ibeam, q_dr_mon, error_dya_nonce)
@@ -137,7 +137,7 @@ int								\
 name##_func(struct cell_array **z, struct cell_array *r,	\
     struct cell_func *self)					\
 {								\
-	return mk_array_bool(z, (expr));			\
+	return mk_array_int8(z, (expr));			\
 }								\
 								\
 DECL_FUNC(name##_ibeam, name##_func, error_dya_syntax)		\
@@ -261,8 +261,7 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 		double real, imag;
 		
 		CHKAF(af_any_true_all(&real, &imag, r->values), done);
-		CHK(mk_array_bool(z, (int8_t)real), done,
-		    L"mk_array_bool(z, (int8_t)real)");
+		CHKFN(mk_array_int8(z, (int8_t)real), done);
 		    
 		return 0;
 	}
@@ -275,13 +274,13 @@ any_monadic(struct cell_array **z, struct cell_array *r,
 	
 	for (size_t i = 0; i < count; i++) {
 		if (vals[i]) {
-			CHK(mk_array_bool(z, 1), done, L"mk_array_bool(z, 1)");
+			CHKFN(mk_array_int8(z, 1), done);
 			
 			return 0;
 		}
 	}
 	
-	CHK(mk_array_bool(z, 0), done, L"mk_array_bool(z, 0)");
+	CHKFN(mk_array_int8(z, 0), done);
 	
 done:
 	return err;
@@ -302,8 +301,7 @@ identity_func(struct cell_array **z,
 	
 	#define ID_CASE(prim, id)			\
 	if (oper == cdf_prim.prim) {			\
-		CHK(mk_array_bool(z, id), done,	\
-		    L"mk_array_bool(z, " #id L")");	\
+		CHKFN(mk_array_int8(z, id), done);	\
 							\
 		goto done;				\
 	}						\
@@ -639,11 +637,8 @@ same_func(struct cell_array **z,
 	int err;
 	int8_t is_same;
 	
-	CHK(array_is_same(&is_same, l, r), done, 
-	    L"array_is_same(&is_same, l, r)");
-	
-	CHK(mk_array_bool(z, is_same), done, 
-	    L"mk_array_bool(z, is_same)");
+	CHKFN(array_is_same(&is_same, l, r), done);
+	CHKFN(mk_array_int8(z, is_same), done);
 	
 done:
 	return err;
@@ -658,11 +653,8 @@ nqv_func(struct cell_array **z,
 	int err;
 	int8_t is_same;
 	
-	CHK(array_is_same(&is_same, l, r), done, 
-	    L"array_is_same(&is_same, l, r)");
-	
-	CHK(mk_array_bool(z, !is_same), done, 
-	    L"mk_array_bool(z, !is_same)");
+	CHKFN(array_is_same(&is_same, l, r), done);
+	CHKFN(mk_array_int8(z, !is_same), done);
 	
 done:
 	return err;
@@ -747,12 +739,9 @@ veach_dyadic(struct cell_array **z,
 	    l->type == ARR_MIXED || r->type == ARR_MIXED)
 		CHK(99, fail, L"Unexpected (SPAN | MIXED) type array");
 		
-	CHK(array_get_host_buffer(&lbuf, &fl, l), fail,
-	    L"array_get_host_buffer(&lbuf, &fl, l)");
-	CHK(array_get_host_buffer(&rbuf, &fr, r), fail,
-	    L"array_get_host_buffer(&rbuf, &fr, r)");
-	CHK(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail,
-	    L"mk_array(&t, ARR_NESTED, STG_HOST, 1)");
+	CHKFN(array_get_host_buffer(&lbuf, &fl, l), fail);
+	CHKFN(array_get_host_buffer(&rbuf, &fr, r), fail);
+	CHKFN(mk_array(&t, ARR_NESTED, STG_HOST, 1), fail);
 	
 	lc = array_values_count(l);
 	rc = array_values_count(r);
@@ -823,7 +812,7 @@ has_nat_vals_func(struct cell_array **z,
 	if (err = has_natural_values(&is_nat, r))
 		return err;
 	
-	return mk_array_bool(z, is_nat);
+	return mk_array_int8(z, is_nat);
 }
 
 DECL_FUNC(has_nat_vals_ibeam, has_nat_vals_func, error_dya_syntax)
