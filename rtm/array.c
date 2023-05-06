@@ -356,6 +356,10 @@ chk_array_valid(struct cell_array *arr) {
 	CHK(arr->refc == 0, fail, L"Zero array refcount");
 	CHK(arr->storage >= STG_MAX, fail, L"Invalid storage type");
 	CHK(arr->type >= ARR_MAX, fail, L"Invalid element type");
+	
+	if (arr->type == ARR_SPAN)
+		return 0;
+	
 	CHK(arr->values == NULL, fail, L"NULL values");
 	
 	if (arr->storage == STG_HOST) {
