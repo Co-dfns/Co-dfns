@@ -14,6 +14,7 @@ is_numeric←'is_numeric_ibeam'⌶
 is_char←'is_char_ibeam'⌶
 is_integer←'is_integer_ibeam'⌶
 is_bool←{11≡⎕DR squeeze ⍵}
+is_span←'is_span_ibeam'⌶
 max_shp←{⍺←0 ⋄ ⍺('max_shp_ibeam'⌶)⍵}
 has_nat_vals←'has_nat_vals_ibeam'⌶
 chk_scl←{⍺←0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
@@ -57,7 +58,10 @@ idx_rng_check←{
 set←'set_ibeam'⌶
 
 ⍝ Bracket Indexing
-brk←{⍵⌷⍺}
+brk←{
+	(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4
+	⍵⌷⍺
+}
 
 ⍝ ⊢: Right
 rgt←{⍵}
@@ -110,19 +114,21 @@ eqv←depth ambiv same
 nqv←{⍬≡⍴⍵:1 ⋄ ⊃⍴⍵} ambiv ('nqv_ibeam'⌶)
 
 ⍝ ⌷: Materialize | Squad indexing
-index←{
-	0≡≢,⍺:0⍴⍵
+sqd_vec←{
+	is_span ⍺:⍵
+	0≡is_integer squeeze ⍺:⎕SIGNAL 11
+	0≡≢,⍺:(⍴⍺)⍴0⍴⍵
 	any(⍺<0)∨⍺>≢,⍵:⎕SIGNAL 3
-	⍺('index_ibeam'⌶)⍵
+	(⍴⍺)⍴⍺('index_ibeam'⌶)⍵
 }
 sqd←{⍺←⊢
 	1≡⍺ 1:⍵
-	idx←⊃⍺⊣0 ⋄ rnk←≢⍴idx
-	0≡is_integer idx:⎕SIGNAL 11
-	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}rnk:⎕SIGNAL 16
-	1≡≢⍴⍵:(⍴idx)⍴idx index ⍵
-	i←(idx×csz)∘.+⍳csz←×⌿csp←1↓⍴⍵
-	((⍴idx),csp)⍴i index ⍵
+	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}≢⍴i←⍺⊣0:⎕SIGNAL 4
+	(1≡c←≢i){⍺:⍵ ⋄ 0}1≡≢⍴⍵:(⊃i)sqd_vec ⍵
+	c>≢⍴⍵:⎕SIGNAL 5
+	i←i{is_span ⍺:⍳ws[⍵] ⋄ ⍺}¨c↑⍳≢ws←⍴⍵
+	j←⊃∘.+⌿(i×c↑1↓o),⊂(c↓⍴⍵)⍴⍳c⌷o←⌽×⍀1,⌽⍴⍵
+	j sqd_vec ⍵
 }
 
 ⍝ ⍳: Index Generate | Index Of
@@ -347,11 +353,14 @@ rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5
 ⍝ ⌿⌿: Replicate First
 rpf←{⎕SIGNAL 16}
 
+⍝ ⍀: Scan First
+scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}
+
 ⍝ .: Inner Product
 dot←{⍺⍺⌿⍺ ⍵⍵¨ ⍵}
 
 ⍝ ∘.: Outer Product
-oup←{op←⍺⍺ ⋄ ((⍴⍺),⍴⍵)⍴⊃,⌿⍺{⊃,⌿⍺∘op¨⍵}¨⊂⍵}
+oup←{i←⍳(≢,⍺)×y←≢,⍵ ⋄ ((⍴⍺),⍴⍵)⍴(,⍺)[⌊i÷y]⍺⍺¨(,⍵)[y|i]}
 
 ⍝ ⍣: Power Operator
 pow←{0≡⍵⍵:⍵ ⋄ ⍺←⊢ ⋄ ⍺ ⍺⍺∇∇(⍵⍵-1)⊢⍺ ⍺⍺ ⍵}

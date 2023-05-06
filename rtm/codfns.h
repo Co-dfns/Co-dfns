@@ -223,6 +223,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func_box *is_char;
 	struct cell_func_box *is_integer;
 	struct cell_func_box *is_bool;
+	struct cell_func_box *is_span;
 	struct cell_func_box *max_shp;
 	struct cell_func_box *has_nat_vals;
 	struct cell_func_box *chk_scl;
@@ -250,7 +251,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *depth;
 	struct cell_func *eqv;
 	struct cell_func *nqv;
-	struct cell_func_box *index;
+	struct cell_func_box *sqd_vec;
 	struct cell_func *sqd;
 	struct cell_func *index_gen;
 	struct cell_func *index_of;
@@ -317,6 +318,7 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_moper_box *nwreduce;
 	struct cell_moper *rdf;
 	struct cell_func *rpf;
+	struct cell_moper *scf;
 	struct cell_doper *dot;
 	struct cell_moper *oup;
 	struct cell_doper *pow;
