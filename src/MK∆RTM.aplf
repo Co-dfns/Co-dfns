@@ -1,4 +1,4 @@
-MK∆RTM path;put;tie;src;vsbat;vsc;wsd
+MK∆RTM path;put;tie;src;vsbat;vsc;wsd;codfns_h;CR;LF;data;header
 
 tie←{
         0::⎕SIGNAL ⎕EN
