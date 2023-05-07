@@ -353,6 +353,9 @@ rdf←{⍺←⊢ ⋄ 1<≢⍴⍺⊣0:⎕SIGNAL 4 ⋄ 1≢≢,⍺⊣0:⎕SIGNAL 5
 ⍝ ⌿⌿: Replicate First
 rpf←{⎕SIGNAL 16}
 
+⍝ //: Replicate
+rep←{⎕SIGNAL 16}
+
 ⍝ ⍀: Scan First
 scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}
 

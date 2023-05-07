@@ -105,6 +105,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_moper_box *cdf_nwreduce;
 	struct cell_moper *cdf_rdf;
 	struct cell_func *cdf_rpf;
+	struct cell_func *cdf_rep;
 	struct cell_moper *cdf_scf;
 	struct cell_doper *cdf_dot;
 	struct cell_moper *cdf_oup;
