@@ -345,6 +345,9 @@ mem←{⎕SIGNAL 16}
 ⍝ ∪: Unique | Union
 unq←{⎕SIGNAL 16}
 
+⍝ ∩: Intersection
+int←{⎕SIGNAL 16}
+
 ⍝ ?: Roll | Deal
 rol←{⎕SIGNAL 16}
 
