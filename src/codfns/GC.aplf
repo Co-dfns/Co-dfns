@@ -542,12 +542,6 @@ GC←{
 		z,← '	',¨decl_vars ⊃lv[⍵]
 		z,←⊂'} ',id,';'
 		z,←⊂''
-		names←var_names⊃lv[⍵]
-		z,←{
-			z←'EXPORT int ',⍵
-			z,←'(struct cell_array **, struct cell_array *,'
-			z,' struct cell_array *);'
-		}¨names
 		z
 	}¨i
 
