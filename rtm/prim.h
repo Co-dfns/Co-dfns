@@ -101,6 +101,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_reverse_last;
 	struct cell_func *cdf_rotate_last;
 	struct cell_func *cdf_rot;
+	struct cell_func *cdf_trn;
 	struct cell_moper *cdf_com;
 	struct cell_moper *cdf_map;
 	struct cell_moper_box *cdf_reduce;
