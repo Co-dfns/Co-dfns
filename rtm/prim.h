@@ -105,6 +105,7 @@ EXPORT struct cdf_prim_loc {
 	struct cell_func *cdf_gdu;
 	struct cell_func *cdf_gdd;
 	struct cell_func *cdf_mem;
+	struct cell_func *cdf_fnd;
 	struct cell_func *cdf_unq;
 	struct cell_func *cdf_int;
 	struct cell_func *cdf_rol;

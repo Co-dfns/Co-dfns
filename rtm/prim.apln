@@ -348,6 +348,9 @@ gdd←{⎕SIGNAL 16}
 ⍝ ∊: Membership
 mem←{⎕SIGNAL 16}
 
+⍝ ⍷: Find
+fnd←{⎕SIGNAL 16}
+
 ⍝ ∪: Unique | Union
 unq←{⎕SIGNAL 16}
 
