@@ -392,6 +392,12 @@ rep←{⎕SIGNAL 16}
 ⍝ ⍀: Scan First
 scf←{X←,⍵ ⋄ fn←⍺⍺ ⋄ squeeze (⍴⍵)⍴{fn⌿X[⍳⍵]}¨1+⍳≢⍵}
 
+⍝ ⍀⍀: Expand First
+xpf←{⎕SIGNAL 16}
+
+⍝ \\: Expand Last
+xpd←{⎕SIGNAL 16}
+
 ⍝ .: Inner Product
 dot←{⍺⍺⌿⍺ ⍵⍵¨ ⍵}
 
