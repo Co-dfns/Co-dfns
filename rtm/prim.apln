@@ -100,7 +100,7 @@ cat←{
 }
 
 ⍝ Table / Catenate First
-ctf←{⎕SIGNAL 16}
+ctf←{⍺,[0]⍵}
 
 ⍝ ≡: Depth / Same
 depth←{
