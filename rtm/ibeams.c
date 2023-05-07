@@ -372,9 +372,6 @@ set_func(struct cell_array **z,
 	idx = NULL;
 	tgt = *z;
 	
-	EXPORT int cdf_idx_shp_check(struct cell_array **, struct cell_array *, struct cell_array *);
-	EXPORT int cdf_idx_rng_check(struct cell_array **, struct cell_array *, struct cell_array *);
-	
 	CHK(cdf_idx_shp_check(&idx, l, r), done, L"⍺ idx_shp_check ⍵");
 	CHK(cdf_idx_rng_check(&idx, idx, tgt), done, L"idx idx_rng_check tgt");
 	CHK(release_array(idx), done, L"release_array(idx)");
