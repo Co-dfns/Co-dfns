@@ -339,6 +339,9 @@ rot←reverse_last ambiv rotate_last
 ⍝ ⍉: Transpose
 trn←{⎕SIGNAL 16}
 
+⍝ ∊: Membership
+mem←{⎕SIGNAL 16}
+
 ⍝ ∪: Unique | Union
 unq←{⎕SIGNAL 16}
 
