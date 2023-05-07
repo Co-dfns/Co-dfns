@@ -99,6 +99,9 @@ cat←{
 	s⍴z	
 }
 
+⍝ Table / Catenate First
+ctf←{⎕SIGNAL 16}
+
 ⍝ ≡: Depth / Same
 depth←{
    is_simple ⍵:{0≡≢⍴⍵:0 ⋄ 1}⍵
