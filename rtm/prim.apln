@@ -345,6 +345,12 @@ gdu←{⎕SIGNAL 16}
 ⍝ ⍒: Grade Down
 gdd←{⎕SIGNAL 16}
 
+⍝ ⊤: Encode
+enc←{⎕SIGNAL 16}
+
+⍝ ⊥: Decode
+dec←{⎕SIGNAL 16}
+
 ⍝ ∊: Membership
 mem←{⎕SIGNAL 16}
 
