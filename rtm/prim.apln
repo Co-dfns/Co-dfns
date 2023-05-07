@@ -339,6 +339,12 @@ rot←reverse_last ambiv rotate_last
 ⍝ ⍉: Transpose
 trn←{⎕SIGNAL 16}
 
+⍝ ⍋: Grade Up
+gdu←{⎕SIGNAL 16}
+
+⍝ ⍒: Grade Down
+gdd←{⎕SIGNAL 16}
+
 ⍝ ∊: Membership
 mem←{⎕SIGNAL 16}
 

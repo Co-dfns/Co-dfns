@@ -315,6 +315,8 @@ DECLSPEC struct cdf_prim_loc {
 	struct cell_func *cdf_rotate_last;
 	struct cell_func *cdf_rot;
 	struct cell_func *cdf_trn;
+	struct cell_func *cdf_gdu;
+	struct cell_func *cdf_gdd;
 	struct cell_func *cdf_mem;
 	struct cell_func *cdf_unq;
 	struct cell_func *cdf_int;
