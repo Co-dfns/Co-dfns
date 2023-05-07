@@ -348,6 +348,9 @@ unq←{⎕SIGNAL 16}
 ⍝ ?: Roll | Deal
 rol←{⎕SIGNAL 16}
 
+⍝ ⌹: Matrix Division
+mdv←{⎕SIGNAL 16}
+
 ⍝ ⍨: Commute
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 
