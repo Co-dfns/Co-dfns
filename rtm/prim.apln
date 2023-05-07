@@ -339,6 +339,9 @@ rot←reverse_last ambiv rotate_last
 ⍝ ⍉: Transpose
 trn←{⎕SIGNAL 16}
 
+⍝ ∪: Unique | Union
+unq←{⎕SIGNAL 16}
+
 ⍝ ⍨: Commute
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 
