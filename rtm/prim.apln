@@ -1,4 +1,4 @@
-:Namespace cdf_prim
+:Namespace prim
 
 ⍝ Basic system functions
 q_signal←'q_signal_ibeam'⌶

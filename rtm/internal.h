@@ -80,17 +80,17 @@ struct apl_cmpx cast_cmpx(double x);
 
 #define DECL_FUNC(name, mon, dya)						\
 struct cell_func name##_closure = {CELL_FUNC, 1, mon, dya, NULL, NULL, 0};	\
-struct cell_func *name = &name##_closure;					\
+struct cell_func *cdf_##name = &name##_closure;					\
 
 #define DECL_MOPER(name, am, ad, fm, fd)				\
 struct cell_moper name##_closure = {CELL_MOPER, 1, am, ad, fm, fd, 0};	\
-struct cell_moper *name = &name##_closure;				\
+struct cell_moper *cdf_##name = &name##_closure;				\
 
 #define DECL_DOPER(name, aam, aad, afm, afd, fam, fad, ffm, ffd)	\
 struct cell_doper name##_closure = {CELL_DOPER, 1,			\
 	aam, aad, afm, afd, fam, fad, ffm, ffd, 0			\
 };									\
-struct cell_doper *name = &name##_closure;				\
+struct cell_doper *cdf_##name = &name##_closure;				\
 
 #define MONADIC_TYPE_SWITCH(tp, expr, oper, fail)				\
 switch ((tp)) {									\

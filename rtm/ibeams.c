@@ -130,7 +130,7 @@ DECL_FUNC(q_dr_ibeam, q_dr_mon, error_dya_nonce)
 struct cell_array span_array_value = {
 	CELL_ARRAY, 1, STG_HOST, ARR_SPAN, NULL, NULL, 0
 };
-struct cell_array *span_array = &span_array_value;
+struct cell_array *cdf_span_array = &span_array_value;
 
 #define DEFN_PRED_IBEAM(name, expr)				\
 int								\
@@ -229,15 +229,15 @@ max_shp_func(struct cell_array **z,
 	rc = array_count(r);
 	
 	if (lc != 1)
-		return shape_func(z, l, shape_ibeam);
+		return shape_func(z, l, cdf_shape_ibeam);
 	
 	if (rc != 1)
-		return shape_func(z, r, shape_ibeam);
+		return shape_func(z, r, cdf_shape_ibeam);
 	
 	if (r->rank > l->rank)
-		return shape_func(z, r, shape_ibeam);
+		return shape_func(z, r, cdf_shape_ibeam);
 	
-	return shape_func(z, l, shape_ibeam);
+	return shape_func(z, l, cdf_shape_ibeam);
 }
 
 DECL_FUNC(max_shp_ibeam, error_mon_syntax, max_shp_func)
@@ -306,8 +306,8 @@ identity_func(struct cell_array **z,
 		goto done;				\
 	}						\
 	
-	ID_CASE(lor, 0)
-	ID_CASE(mul, 1)
+	ID_CASE(cdf_lor, 0)
+	ID_CASE(cdf_mul, 1)
 	
 	CHK(16, done, L"Unknown primitive identity");
 	
@@ -372,11 +372,11 @@ set_func(struct cell_array **z,
 	idx = NULL;
 	tgt = *z;
 	
-	EXPORT int idx_shp_check(struct cell_array **, struct cell_array *, struct cell_array *);
-	EXPORT int idx_rng_check(struct cell_array **, struct cell_array *, struct cell_array *);
+	EXPORT int cdf_idx_shp_check(struct cell_array **, struct cell_array *, struct cell_array *);
+	EXPORT int cdf_idx_rng_check(struct cell_array **, struct cell_array *, struct cell_array *);
 	
-	CHK(idx_shp_check(&idx, l, r), done, L"⍺ idx_shp_check ⍵");
-	CHK(idx_rng_check(&idx, idx, tgt), done, L"idx idx_rng_check tgt");
+	CHK(cdf_idx_shp_check(&idx, l, r), done, L"⍺ idx_shp_check ⍵");
+	CHK(cdf_idx_rng_check(&idx, idx, tgt), done, L"idx idx_rng_check tgt");
 	CHK(release_array(idx), done, L"release_array(idx)");
 	
 	CHK(array_migrate_storage(idx, tgt->storage), done,

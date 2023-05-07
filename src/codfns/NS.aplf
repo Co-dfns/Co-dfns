@@ -23,7 +23,7 @@ NS←{
 		0 0 ⍴ ⍬}
 	mkna←{'I ',⍺,'|',((,¨'∆⍙')⎕R'_del_' '_delubar_'⊢⍵),' P P P'}
 	mkf←{
-		fn←⍺,'|',((,¨'∆⍙')⎕R'_del_' '_delubar_'⊢⍵),'_dwa '
+		fn←⍺,'|cdf_',((,¨'∆⍙')⎕R'_del_' '_delubar_'⊢⍵),'_dwa '
 		z←⊂'Z←{A}',⍵,' W;err;res'
 		z,←⊂':If 0=⎕NC''⍙.',⍵,'_mon'''
 		z,←⊂'       ''',⍵,'_mon''⍙.⎕NA''I ',fn,'>PP P <PP'''

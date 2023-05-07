@@ -23,9 +23,9 @@ GC←{
 	}
 
 	var_names←{
-		ceqv←'_del_' '_delubar_' 'alpha' 'omega'
-		asym←'∆'     '⍙'         '⍺'     '⍵'
-		(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
+		ceqv←'_del_' '_delubar_'
+		asym←'∆'     '⍙'
+		'cdf_'∘,¨(,¨asym)⎕R ceqv⊢sym[|n[⍵]]
 	}
 
 	var_scopes←{
@@ -425,29 +425,29 @@ GC←{
 		ism←k[⍵]∊2 3 5 6 8 9 11 12 14 15 17 18 20 21
 		isop←k[⍵]≥5
 		isdop←k[⍵]≥11
-		self←'self' 'deldel'⊃⍨isop
+		self←'cdf_self' 'cdf_deldel'⊃⍨isop
 		pref,←⊂'int ',id,'(struct cell_array **,'
 		pref,←(⊂'    struct cell_array *,')⌿⍨~ism
 		pref,←⊂'    struct cell_array *,'
 		pref,←⊂'    struct cell_func *);'
 		z ←⊂'int'
 		z,←⊂id,'(struct cell_array **z,'
-		z,←(⊂'    struct cell_array *alpha,')⌿⍨~ism
-		z,←⊂'    struct cell_array *omega,'
-		z,←⊂'    struct cell_func *self)'
+		z,←(⊂'    struct cell_array *cdf_alpha,')⌿⍨~ism
+		z,←⊂'    struct cell_array *cdf_omega,'
+		z,←⊂'    struct cell_func *cdf_self)'
 		z,←⊂'{'
 		z,←⊂'	void *stk[128];'
 		z,←⊂'	void **stkhd;'
 		z,←⊂'	int err;'
-		z,←(⊂'	struct cell_',atyp,' *alpha;')⌿⍨ism
-		z,←(⊂'	struct cell_',ddtyp,' *deldel;')⌿⍨isop
-		z,←(⊂'	struct cell_',aatyp,' *alphaalpha;')⌿⍨isop
-		z,←(⊂'	struct cell_',wwtyp,' *omegaomega;')⌿⍨isdop
+		z,←(⊂'	struct cell_',atyp,' *cdf_alpha;')⌿⍨ism
+		z,←(⊂'	struct cell_',ddtyp,' *cdf_deldel;')⌿⍨isop
+		z,←(⊂'	struct cell_',aatyp,' *cdf_alphaalpha;')⌿⍨isop
+		z,←(⊂'	struct cell_',wwtyp,' *cdf_omegaomega;')⌿⍨isdop
 		z,←⊂''
-		z,←(⊂'	alpha = NULL;')⌿⍨ism
-		z,←(⊂'	deldel = self->fv[0];')⌿⍨isop
-		z,←(⊂'	alphaalpha = self->fv[1];')⌿⍨isop
-		z,←(⊂'	omegaomega = self->fv[2];')⌿⍨isdop
+		z,←(⊂'	cdf_alpha = NULL;')⌿⍨ism
+		z,←(⊂'	cdf_deldel = cdf_self->fv[0];')⌿⍨isop
+		z,←(⊂'	cdf_alphaalpha = cdf_self->fv[1];')⌿⍨isop
+		z,←(⊂'	cdf_omegaomega = cdf_self->fv[2];')⌿⍨isdop
 		z,←(⊂'')⌿⍨ism∨isop
 		z,←(⊂'	struct {')⌿⍨haslvs
 		z,←'		'∘,¨decl_vars lvs
@@ -465,7 +465,7 @@ GC←{
 		z,←'		'∘,¨decl_vars opts
 		z,←(⊂'	} *opts;')⌿⍨hasopts
 		z,←(⊂'')⌿⍨hasopts
-		z,←(⊂'	opts = (struct opt_vars *)self->opts;')⌿⍨hasopts
+		z,←(⊂'	opts = (struct opt_vars *)cdf_self->opts;')⌿⍨hasopts
 		z,←(⊂'')⌿⍨hasopts
 		z,←'	',¨init_vars lvs
 		z,←⊂'	err = 0;'
@@ -477,7 +477,7 @@ GC←{
 		z,←⊂'cleanup:'
 		z,←⊂'	release_env(stk, stkhd);'
 		z,←(⊂'	release_env((void **)loc, (void **)(loc + 1));')⌿⍨haslvs
-		z,←(⊂'	release_',atyp,'(alpha);')⌿⍨ism
+		z,←(⊂'	release_',atyp,'(cdf_alpha);')⌿⍨ism
 		z,←⊂''
 		z,←⊂'	if (err)'
 		z,←⊂'		return err;'
