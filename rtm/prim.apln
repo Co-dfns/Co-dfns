@@ -342,6 +342,9 @@ trn←{⎕SIGNAL 16}
 ⍝ ∪: Unique | Union
 unq←{⎕SIGNAL 16}
 
+⍝ ?: Roll | Deal
+rol←{⎕SIGNAL 16}
+
 ⍝ ⍨: Commute
 com←{2=⎕NC'⍺⍺':⍺⍺ ⋄ ⍺←⍵ ⋄ ⍵ ⍺⍺ ⍺}
 
