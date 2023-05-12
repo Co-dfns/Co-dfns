@@ -86,48 +86,6 @@ dwa_values_count(struct pocket *pkt)
 	return count;
 }
 
-char *
-cnvu8_ch(struct pocket *pkt)
-{
-	char	*res;
-	uint8_t	*buf;
-	size_t	count;
-
-	buf	= DATA(pkt);
-	count	= dwa_values_count(pkt);
-
-	res	= calloc(count, sizeof(char));
-
-	if (res == NULL)
-		return res;
-
-	for (size_t i = 0; i < count; i++)
-		res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
-
-	return res;
-}
-
-int16_t *
-cnvi8_i16(struct pocket *pkt)
-{
-	int16_t *res;
-	int8_t	*buf;
-	size_t	count;
-
-	buf	= DATA(pkt);
-	count	= dwa_values_count(pkt);
-	
-	res	= calloc(count, sizeof(int16_t));
-
-	if (res == NULL) 
-		return res;
-
-	for (size_t i = 0; i < count; i++)
-		res[i] = buf[i];
-
-	return res;
-}
-
 enum array_type
 dwa_array_type(enum dwa_type dtype)
 {
@@ -198,92 +156,105 @@ dwa_array_storage(unsigned int type)
 int dwa2array(struct cell_array **tgt, struct pocket *pkt);
 
 int
-copydat_dwa2arr(struct cell_array *arr, struct pocket *pkt)
-{
-	void	*data;
-	size_t	count;
-	int 	err;
-	struct	cell_array **cells;
-	struct	pocket **pkts;
-	
-	if (arr->storage == STG_DEVICE && pkt->type == 7)
-		return 16;
-	
-	switch (pkt->eltype) {
-	case APLU8:
-		data = cnvu8_ch(pkt);
-		break;
-	case APLTI:
-		data = cnvi8_i16(pkt);
-		break;
-	default:
-		data = DATA(pkt);
-	}
-	
-	if (data == NULL)
-		return 1;
-	
-	if (arr->type != ARR_NESTED) {
-		err = fill_array(arr, data);
-
-		if (pkt->eltype == APLU8 || pkt->eltype == APLTI)
-			free(data);
-		
-		return err;	
-	}
-	
-	count	= array_values_count(arr);
-	cells	= arr->values;
-	pkts	= data;
-	
-	for (size_t i = 0; i < count; i++) {
-		err = dwa2array(&cells[i], pkts[i]);
-		
-		if (err)
-			return err;
-	}
-	
-	return 0;
-}
-
-int
 dwa2array(struct cell_array **tgt, struct pocket *pkt)
 {
 	struct	cell_array *arr;
-	int	err;
+	void 	*data;
+	struct	cell_array **cells;
+	struct	pocket **pkts;
+	size_t	count;
+	int	err, free_data;
 	enum	array_type type;
 	enum	array_storage storage;
+	
+	arr = NULL;
 		
 	if (pkt == NULL) {
 		*tgt = NULL;
-
+		
 		return 0;
 	}
 	
 	storage	= dwa_array_storage(pkt->type);
 	type	= dwa_array_type(pkt->eltype);
 	
-	if (type == -1 || storage == -1)
-		return 16;
-	
-	err = mk_array(&arr, type, storage, pkt->rank);
-	
-	if (err)
-		return err;
+	CHK(storage == -1, done, L"Unsupported DWA type");
+	CHK(type == -1, done, L"Unsupported DWA element type");
+
+	CHKFN(mk_array(&arr, type, storage, pkt->rank), done);
 	
 	for (unsigned int i = 0; i < arr->rank; i++)
 		arr->shape[i] = pkt->shape[i];
 	
-	err = copydat_dwa2arr(arr, pkt);
+	if (arr->storage == STG_DEVICE && pkt->type == 7)
+		CHK(16, done, L"Cannot store nested data on device");
 	
-	if (err) {
-		release_array(arr);
-		return err;
+	count = array_values_count(arr);
+
+	switch (pkt->eltype) {
+	case APLU8:{
+		char	*res;
+		uint8_t	*buf;
+		
+		buf	= DATA(pkt);
+		res	= calloc(count, sizeof(char));
+		
+		CHK(res == NULL, done, L"Failed to allocate APLU8 buffer");
+
+		for (size_t i = 0; i < count; i++)
+			res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
+		
+		data 		= res;
+		free_data	= 1;
+		
+		break;
 	}
+	case APLTI:{
+		int16_t	*res;
+		int8_t	*buf;
+		
+		buf	= DATA(pkt);
+		res	= calloc(count, sizeof(int16_t));
+		
+		CHK(res == NULL, done, L"Failed to allocate APLTI buffer");
+		
+		for (size_t i = 0; i < count; i++)
+			res[i] = buf[i];
+		
+		data		= res;
+		free_data	= 1;
+		
+		break;
+	}
+	default:
+		data		= DATA(pkt);
+		free_data	= 0;
+	}
+	
+	if (arr->type != ARR_NESTED) {
+		CHKFN(fill_array(arr, data), done);
+		
+		if (free_data)
+			free(data);
+		
+		goto done;
+	}
+	
+	CHKFN(alloc_array(arr), done);
+	
+	cells	= arr->values;
+	pkts	= data;
+	
+	for (size_t i = 0; i < count; i++)
+		CHKFN(dwa2array(&cells[i], pkts[i]), done);
 	
 	*tgt = arr;
 
-	return 0;
+done:
+	if (err)
+		release_array(arr);
+	
+	return err;
 }
 
 int
