@@ -524,38 +524,40 @@ reshape_func(struct cell_array **z,
 	CHK(mk_array(&t, r->type, r->storage, rank), fail,
 	    L"mk_array(&t, r->type, r->storage, rank)");
 	
-	switch (l->storage) {
-	case STG_DEVICE:
-		af_array l64;
-		
-		CHKAF(af_eval(l->values), fail);
-		CHKAF(af_cast(&l64, l->values, u64), fail);
-		CHKAF(af_get_data_ptr(t->shape, l64), fail);
-		CHKAF(af_release_array(l64), fail);
-		
-		break;
-	case STG_HOST:
-	#define RESHAPE_SHAPE_CASE(tp) {			\
-		tp *vals = (tp *)l->values;			\
-								\
-		for (unsigned int i = 0; i < rank; i++)		\
-			t->shape[i] = (size_t)vals[i];		\
-								\
-		break;						\
-	}
+	if (rank) {
+		switch (l->storage) {
+		case STG_DEVICE:
+			af_array l64;
+			
+			CHKAF(af_eval(l->values), fail);
+			CHKAF(af_cast(&l64, l->values, u64), fail);
+			CHKAF(af_get_data_ptr(t->shape, l64), fail);
+			CHKAF(af_release_array(l64), fail);
 
-		switch (l->type) {
-		case ARR_BOOL:RESHAPE_SHAPE_CASE(int8_t);
-		case ARR_SINT:RESHAPE_SHAPE_CASE(int16_t);
-		case ARR_INT:RESHAPE_SHAPE_CASE(int32_t);
-		case ARR_DBL:RESHAPE_SHAPE_CASE(double);
-		default:
-			CHK(99, fail, L"Unexpected shape type");
+			break;
+		case STG_HOST:
+		#define RESHAPE_SHAPE_CASE(tp) {			\
+			tp *vals = (tp *)l->values;			\
+									\
+			for (unsigned int i = 0; i < rank; i++)		\
+				t->shape[i] = (size_t)vals[i];		\
+									\
+			break;						\
 		}
-	
-		break;
-	default:
-		CHK(99, fail, L"Unknown storage type");
+
+			switch (l->type) {
+			case ARR_BOOL:RESHAPE_SHAPE_CASE(int8_t);
+			case ARR_SINT:RESHAPE_SHAPE_CASE(int16_t);
+			case ARR_INT:RESHAPE_SHAPE_CASE(int32_t);
+			case ARR_DBL:RESHAPE_SHAPE_CASE(double);
+			default:
+				CHK(99, fail, L"Unexpected shape type");
+			}
+		
+			break;
+		default:
+			CHK(99, fail, L"Unknown storage type");
+		}
 	}
 	
 	tc = array_values_count(t);
@@ -811,10 +813,11 @@ has_nat_vals_func(struct cell_array **z,
 {
 	int err, is_nat;
 	
-	if (err = has_natural_values(&is_nat, r))
-		return err;
+	CHKFN(has_natural_values(&is_nat, r), fail);
+	CHKFN(mk_array_int8(z, is_nat), fail);
 	
-	return mk_array_int8(z, is_nat);
+fail:
+	return err;
 }
 
 DECL_FUNC(has_nat_vals_ibeam, has_nat_vals_func, error_dya_syntax)
