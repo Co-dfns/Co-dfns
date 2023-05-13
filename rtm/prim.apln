@@ -18,11 +18,6 @@ is_span←'is_span_ibeam'⌶
 max_shp←{⍺←0 ⋄ ⍺('max_shp_ibeam'⌶)⍵}
 has_nat_vals←'has_nat_vals_ibeam'⌶
 chk_scl←{⍺←0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ 1≡≢,⍺:0 ⋄ 1≡≢,⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
-chk_valid_shape←{
-	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4
-	{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
-	0
-}
 both_simple←{is_simple ⍺:is_simple ⍵ ⋄ 0}
 both_numeric←{is_numeric ⍺:is_numeric ⍵ ⋄ 0}
 both_integer←{is_integer ⍺:is_integer ⍵ ⋄ 0}
@@ -41,7 +36,17 @@ scalar←{
 	s⍴squeeze ⍺ ∇ veach ⍵
 }
 
-⍝ Assignment
+⍝ ⍴: Shape / Reshape
+chk_valid_shape←{
+	{rnk←≢⍴⍵ ⋄ 0≡rnk:0 ⋄ 1≡rnk:0 ⋄ 1}⍵:⎕SIGNAL 4
+	0≡≢,⍵:0
+	{has_nat_vals ⍵:0 ⋄ 1}⍵:⎕SIGNAL 11
+	0
+}
+reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
+rho←('shape_ibeam'⌶) ambiv reshape
+
+⍝ X[]←Y: Assignment
 idx_shp_check←{
 	326≢⎕DR ⍺:⎕SIGNAL 99
 	1≢≢,⍺:⎕SIGNAL 16
@@ -55,9 +60,26 @@ idx_rng_check←{
 	any(idx<0)∨idx>≢,⍵:⎕SIGNAL 3
 	idx
 }
+flatten_idx←{
+	i←⍵{is_span ⍺:⍳ws[⍵] ⋄ ⍺}¨(c←≢⍵)↑⍳≢ws←⍺
+	⊃∘.+⌿(i×c↑1↓o),⊂(c↓⍺)⍴⍳c⌷o←⌽×⍀1,⌽⍺
+}
 set←'set_ibeam'⌶
 
-⍝ Bracket Indexing
+⍝ ⌷: Materialize | Squad indexing
+sqd_vec←{
+	is_span ⍺:⍵
+	0≡is_integer squeeze ⍺:⎕SIGNAL 11
+	0≡≢,⍺:(⍴⍺)⍴0⍴⍵
+	any(⍺<0)∨⍺>≢,⍵:⎕SIGNAL 3
+	(⍴⍺)⍴⍺('index_ibeam'⌶)⍵
+}
+sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<c←≢i:⎕SIGNAL 5
+	(1≡c)∧1≡≢⍴⍵:(⊃i)sqd_vec ⍵
+	((⍴⍵)flatten_idx i)sqd_vec ⍵
+}
+
+⍝ X[]: Bracket Indexing
 brk←{
 	(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4
 	⍵⌷⍺
@@ -68,10 +90,6 @@ rgt←{⍵}
 
 ⍝ ⊣: Left
 lft←{⍵} ambiv {⍺}
-
-⍝ ⍴: Shape / Reshape
-reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
-rho←('shape_ibeam'⌶) ambiv reshape
 
 ⍝ ,: Ravel / Catenate
 cat←{
@@ -115,24 +133,6 @@ eqv←depth ambiv same
 
 ⍝ ≢: Tally / Not Same
 nqv←{⍬≡⍴⍵:1 ⋄ ⊃⍴⍵} ambiv ('nqv_ibeam'⌶)
-
-⍝ ⌷: Materialize | Squad indexing
-sqd_vec←{
-	is_span ⍺:⍵
-	0≡is_integer squeeze ⍺:⎕SIGNAL 11
-	0≡≢,⍺:(⍴⍺)⍴0⍴⍵
-	any(⍺<0)∨⍺>≢,⍵:⎕SIGNAL 3
-	(⍴⍺)⍴⍺('index_ibeam'⌶)⍵
-}
-sqd←{⍺←⊢
-	1≡⍺ 1:⍵
-	{0≡⍵:0 ⋄ 1≡⍵:0 ⋄ 1}≢⍴i←⍺⊣0:⎕SIGNAL 4
-	(1≡c←≢i){⍺:⍵ ⋄ 0}1≡≢⍴⍵:(⊃i)sqd_vec ⍵
-	c>≢⍴⍵:⎕SIGNAL 5
-	i←i{is_span ⍺:⍳ws[⍵] ⋄ ⍺}¨c↑⍳≢ws←⍴⍵
-	j←⊃∘.+⌿(i×c↑1↓o),⊂(c↓⍴⍵)⍴⍳c⌷o←⌽×⍀1,⌽⍴⍵
-	j sqd_vec ⍵
-}
 
 ⍝ ⍳: Index Generate | Index Of
 index_gen←{
