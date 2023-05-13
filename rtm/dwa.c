@@ -248,11 +248,11 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	for (size_t i = 0; i < count; i++)
 		CHKFN(dwa2array(&cells[i], pkts[i]), done);
 	
-	*tgt = arr;
-
 done:
 	if (err)
 		release_array(arr);
+	else
+		*tgt = arr;
 	
 	return err;
 }
