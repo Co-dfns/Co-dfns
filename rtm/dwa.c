@@ -207,10 +207,6 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	
 	if (arr->type != ARR_NESTED) {
 		CHKFN(fill_array(arr, data), done);
-		
-		if (free_data)
-			free(data);
-		
 		goto done;
 	}
 	
@@ -223,6 +219,9 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 		CHKFN(dwa2array(&cells[i], pkts[i]), done);
 	
 done:
+	if (free_data)
+		free(data);
+	
 	if (err)
 		release_array(arr);
 	else
