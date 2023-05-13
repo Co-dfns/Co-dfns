@@ -160,8 +160,8 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	for (unsigned int i = 0; i < arr->rank; i++)
 		arr->shape[i] = pkt->shape[i];
 	
-	if (arr->storage == STG_DEVICE && pkt->type == 7)
-		CHK(16, done, L"Cannot store nested data on device");
+	if (arr->storage == STG_DEVICE && arr->type == ARR_NESTED)
+		CHK(10, done, L"Cannot store nested data on device");
 	
 	count = array_values_count(arr);
 
