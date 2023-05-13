@@ -137,11 +137,12 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	struct	cell_array **cells;
 	struct	pocket **pkts;
 	size_t	count;
-	int	err, free_data;
+	int	err, free_data, proto;
 	enum	array_type type;
 	enum	array_storage storage;
 	
-	arr = NULL;
+	arr		= NULL;
+	free_data	= 0;
 		
 	if (pkt == NULL) {
 		*tgt = NULL;
@@ -163,46 +164,51 @@ dwa2array(struct cell_array **tgt, struct pocket *pkt)
 	if (arr->storage == STG_DEVICE && arr->type == ARR_NESTED)
 		CHK(10, done, L"Cannot store nested data on device");
 	
-	count = array_values_count(arr);
+	if (!(count = array_count(arr))) {
+		proto	= is_char_array(arr) ? 32 : 0;
+		data	= arr->type == ARR_NESTED ? DATA(pkt) : &proto;
+		count	= 1;
+	} else {
+		switch (pkt->eltype) {
+		case APLU8:{
+			char	*res;
+			uint8_t	*buf;
+			
+			buf	= DATA(pkt);
+			res	= calloc(count, sizeof(char));
+			
+			CHK(res == NULL, done, 
+			    L"Failed to allocate APLU8 buffer");
 
-	switch (pkt->eltype) {
-	case APLU8:{
-		char	*res;
-		uint8_t	*buf;
-		
-		buf	= DATA(pkt);
-		res	= calloc(count, sizeof(char));
-		
-		CHK(res == NULL, done, L"Failed to allocate APLU8 buffer");
-
-		for (size_t i = 0; i < count; i++)
-			res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
-		
-		data 		= res;
-		free_data	= 1;
-		
-		break;
-	}
-	case APLTI:{
-		int16_t	*res;
-		int8_t	*buf;
-		
-		buf	= DATA(pkt);
-		res	= calloc(count, sizeof(int16_t));
-		
-		CHK(res == NULL, done, L"Failed to allocate APLTI buffer");
-		
-		for (size_t i = 0; i < count; i++)
-			res[i] = buf[i];
-		
-		data		= res;
-		free_data	= 1;
-		
-		break;
-	}
-	default:
-		data		= DATA(pkt);
-		free_data	= 0;
+			for (size_t i = 0; i < count; i++)
+				res[i] = 1 & (buf[i/8] >> (7 - (i % 8)));
+			
+			data 		= res;
+			free_data	= 1;
+			
+			break;
+		}
+		case APLTI:{
+			int16_t	*res;
+			int8_t	*buf;
+			
+			buf	= DATA(pkt);
+			res	= calloc(count, sizeof(int16_t));
+			
+			CHK(res == NULL, done, 
+			    L"Failed to allocate APLTI buffer");
+			
+			for (size_t i = 0; i < count; i++)
+				res[i] = buf[i];
+			
+			data		= res;
+			free_data	= 1;
+			
+			break;
+		}
+		default:
+			data		= DATA(pkt);
+		}
 	}
 	
 	if (arr->type != ARR_NESTED) {
