@@ -318,50 +318,6 @@ done:
 DECL_MOPER(identity_ibeam, error_mon_syntax, error_dya_syntax, identity_func, error_dya_syntax)
 
 int
-set_host_values(struct cell_array *t,
-    struct cell_array *l, struct cell_array *r)
-{
-	size_t count, rc;
-	int err;
-	
-	err = 0;
-	retain_cell(t);
-	count = array_count(l);
-	rc = array_count(r);
-	
-	#define SET_GETIDX_real(sfx, fail) idx = (int64_t)lv[i];
-	#define SET_GETIDX_char(sfx, fail) BAD_ELEM(sfx, fail)
-	#define SET_GETIDX_cmpx(sfx, fail) BAD_ELEM(sfx, fail)
-	#define SET_GETIDX_cell(sfx, fail) BAD_ELEM(sfx, fail)
-	
-	#define SET_ASSIGN_real(fail) tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_char(fail) tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_cmpx(fail) tv[idx] = rv[i % rc];
-	#define SET_ASSIGN_cell(fail)						\
-		retain_cell(rv[i % rc]);					\
-		CHK(release_array(tv[idx]), fail, L"release_array(tv[idx])");	\
-		tv[idx] = rv[i % rc];						\
-		
-	#define SET_LOOP(op, tk, tt, ts, lk, lt, ls, fail) {	\
-		tt *tv = t->values;				\
-		lt *lv = l->values;				\
-		tt *rv = r->values;				\
-								\
-		for (size_t i = 0; i < count; i++) {		\
-			int64_t idx = 0;			\
-								\
-			SET_GETIDX_##lk(#ls, fail);		\
-			SET_ASSIGN_##tk(fail);			\
-		}						\
-	}							\
-	
-	DYADIC_TYPE_SWITCH(t->type, l->type, SET_LOOP,, fail);
-	
-fail:	
-	return err;
-}
-
-int
 set_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
@@ -379,26 +335,74 @@ set_func(struct cell_array **z,
 	
 	CHK(cdf_idx_shp_check(&idx, l, r), done, L"⍺ idx_shp_check ⍵");
 	CHK(cdf_idx_rng_check(&idx, idx, tgt), done, L"idx idx_rng_check tgt");
-	CHK(release_array(idx), done, L"release_array(idx)");
+	CHKFN(release_array(idx), done);
 	
-	CHK(array_migrate_storage(idx, tgt->storage), done,
-	    L"Migrate indices to target storage");
-	CHK(array_migrate_storage(r, tgt->storage), done,
-	    L"Migrate values to target storage");
+	CHKFN(array_promote_storage(idx, tgt), done);
+	CHKFN(array_promote_storage(r, tgt), done);
 	    
 	mtype = array_max_type(tgt->type, r->type);
 	
-	CHK(cast_values(tgt, mtype), done, L"cast_values(tgt, mtype)");
-	CHK(cast_values(r, mtype), done, L"cast_values(r, mtype)");
+	CHKFN(cast_values(tgt, mtype), done);
+	CHKFN(cast_values(r, mtype), done);
+	
+	retain_cell(tgt);
 	
 	switch (tgt->storage) {
-	case STG_DEVICE:
-		CHK(16, done, L"Device assignment");
+	case STG_DEVICE:{
+		af_index_t *idxs;
+		af_array out, tgt_d, val_d, idx_d;
+		
+		tgt_d = tgt->values;
+		idx_d = idx->values;
+		val_d = r->values;
+		
+		CHKAF(af_create_indexers(&idxs), done);
+		CHKAF(af_set_array_indexer(idxs, idx_d, 0), dev_fail);		
+		CHKAF(af_assign_gen(&out, tgt_d, 1, idxs, val_d), dev_fail);
+		CHKAF(af_release_array(tgt_d), dev_fail);
+		
+		tgt->values = out;
+		
+dev_fail:
+		af_release_indexers(idxs);
+		
 		break;
-	case STG_HOST:
-		CHK(set_host_values(tgt, idx, r), done, 
-		    L"set_host_values(tgt, idx, r)");
+	}
+	case STG_HOST:{
+		size_t count, rc;
+		
+		count = array_count(idx);
+		rc = array_count(r);
+		
+		#define SET_GETIDX_real(sfx, fail) idx = (int64_t)lv[i];
+		#define SET_GETIDX_char(sfx, fail) BAD_ELEM(sfx, fail)
+		#define SET_GETIDX_cmpx(sfx, fail) BAD_ELEM(sfx, fail)
+		#define SET_GETIDX_cell(sfx, fail) BAD_ELEM(sfx, fail)
+		
+		#define SET_ASSIGN_real(fail) tv[idx] = rv[i % rc];
+		#define SET_ASSIGN_char(fail) tv[idx] = rv[i % rc];
+		#define SET_ASSIGN_cmpx(fail) tv[idx] = rv[i % rc];
+		#define SET_ASSIGN_cell(fail)				\
+			retain_cell(rv[i % rc]);			\
+			CHKFN(release_array(tv[idx]), fail);		\
+			tv[idx] = rv[i % rc];				\
+		
+		#define SET_LOOP(op, tk, tt, ts, lk, lt, ls, fail) {	\
+			tt *tv = tgt->values;				\
+			lt *lv = idx->values;				\
+			tt *rv = r->values;				\
+									\
+			for (size_t i = 0; i < count; i++) {		\
+				int64_t idx = 0;			\
+									\
+				SET_GETIDX_##lk(#ls, fail);		\
+				SET_ASSIGN_##tk(fail);			\
+			}						\
+		}							\
+	
+		DYADIC_TYPE_SWITCH(tgt->type, idx->type, SET_LOOP,, done);
 		break;
+	}
 	default:
 		CHK(99, done, L"Unknown storage type");
 	}
