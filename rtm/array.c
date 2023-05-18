@@ -922,15 +922,21 @@ array_promote_storage(struct cell_array *l, struct cell_array *r)
 {
 	int err;
 	
-	if (l->storage == STG_DEVICE) {
-		if (err = array_migrate_storage(r, STG_DEVICE))
-			return err;
-	} else if (r->storage == STG_DEVICE) {
-		if (err = array_migrate_storage(l, STG_DEVICE))
-			return err;
-	}
+	CHKFN(squeeze_array(l), fail);
+	CHKFN(squeeze_array(r), fail);
 	
-	return 0;
+	if (r->type == ARR_NESTED) {
+		CHKFN(array_migrate_storage(l, STG_HOST), fail);
+	} else if (l->type == ARR_NESTED) {
+		CHKFN(array_migrate_storage(r, STG_HOST), fail);
+	} else if (l->storage == STG_DEVICE) {
+		CHKFN(array_migrate_storage(r, STG_DEVICE), fail);
+	} else if (r->storage == STG_DEVICE) {
+		CHKFN(array_migrate_storage(l, STG_DEVICE), fail);
+	}
+
+fail:
+	return err;
 }
 
 int
