@@ -321,41 +321,64 @@ int
 set_func(struct cell_array **z,
     struct cell_array *l, struct cell_array *r, struct cell_func *self)
 {
-	struct cell_array *idx, *tgt;
+	struct cell_array *idx, *tgt, *val, *nil;
 	enum array_type mtype;
 	int err;
 	
-	idx = NULL;
 	tgt = *z;
-	
+	idx = NULL;
+	val = r;
+
+	EXPORT int cdf_idx_rnk_check(struct cell_array **,
+	    struct cell_array *, struct cell_array *);
+	EXPORT int cdf_flatten_idx(struct cell_array **,
+	    struct cell_array *, struct cell_array *);
 	EXPORT int cdf_idx_shp_check(struct cell_array **, 
 	    struct cell_array *, struct cell_array *);
-	EXPORT int cdf_idx_rng_check(struct cell_array **,
+	EXPORT int cdf_set_vec_span(struct cell_array **,
 	    struct cell_array *, struct cell_array *);
-	
-	CHK(cdf_idx_shp_check(&idx, l, r), done, L"⍺ idx_shp_check ⍵");
-	CHK(cdf_idx_rng_check(&idx, idx, tgt), done, L"idx idx_rng_check tgt");
-	CHKFN(release_array(idx), done);
-	
-	CHKFN(array_promote_storage(idx, tgt), done);
-	CHKFN(array_promote_storage(r, tgt), done);
 	    
-	mtype = array_max_type(tgt->type, r->type);
+	CHK(cdf_idx_rnk_check(&nil, tgt, l), done, L"tgt idx_rnk_check ⍺");
+	CHKFN(release_array(nil), done);
 	
+	CHK(cdf_flatten_idx(&idx, tgt, l), done, L"tgt flatten_idx ⍺");
+	
+	if (idx->type == ARR_SPAN) {
+		CHK(cdf_set_vec_span(z, tgt, val), done, L"tgt set_vec_span ⍵");
+		
+		goto done;
+	}
+	
+	CHK(cdf_idx_shp_check(&nil, idx, val), done, L"idx idx_shp_check ⍵");
+	CHKFN(release_array(nil), done);
+	
+	if (tgt->refc > 1) {
+		CHKFN(array_shallow_copy(&tgt, tgt), done);
+	} else {
+		retain_cell(tgt);
+	}
+	
+	mtype = array_max_type(tgt->type, val->type);
+	
+	if (val->type != mtype) {
+		CHKFN(array_shallow_copy(&val, val), done);
+	}
+
+	CHKFN(array_promote_storage(idx, tgt), done);
+	CHKFN(array_promote_storage(val, tgt), done);
+
 	CHKFN(cast_values(tgt, mtype), done);
-	CHKFN(cast_values(r, mtype), done);
-	
-	retain_cell(tgt);
-	
+	CHKFN(cast_values(val, mtype), done);
+	    
 	switch (tgt->storage) {
 	case STG_DEVICE:{
 		af_index_t *idxs;
 		af_array out, tgt_d, val_d, idx_d;
-		
 		tgt_d = tgt->values;
 		idx_d = idx->values;
-		val_d = r->values;
+		val_d = val->values;
 		
+		CHKAF(af_cast(&idx_d, idx_d, s64), done);
 		CHKAF(af_create_indexers(&idxs), done);
 		CHKAF(af_set_array_indexer(idxs, idx_d, 0), dev_fail);		
 		CHKAF(af_assign_gen(&out, tgt_d, 1, idxs, val_d), dev_fail);
@@ -364,6 +387,7 @@ set_func(struct cell_array **z,
 		tgt->values = out;
 		
 dev_fail:
+		af_release_array(idx_d);
 		af_release_indexers(idxs);
 		
 		break;
@@ -373,6 +397,14 @@ dev_fail:
 		
 		count = array_count(idx);
 		rc = array_count(r);
+		
+		if (*tgt->vrefc > 1) {
+			void *vals = tgt->values;
+			
+			CHKFN(release_array_data(tgt), done);
+			CHKFN(alloc_array(tgt), done);
+			CHKFN(fill_array(tgt, vals), done);
+		}
 		
 		#define SET_GETIDX_real(sfx, fail) idx = (int64_t)lv[i];
 		#define SET_GETIDX_char(sfx, fail) BAD_ELEM(sfx, fail)
@@ -390,7 +422,7 @@ dev_fail:
 		#define SET_LOOP(op, tk, tt, ts, lk, lt, ls, fail) {	\
 			tt *tv = tgt->values;				\
 			lt *lv = idx->values;				\
-			tt *rv = r->values;				\
+			tt *rv = val->values;				\
 									\
 			for (size_t i = 0; i < count; i++) {		\
 				int64_t idx = 0;			\
@@ -401,14 +433,20 @@ dev_fail:
 		}							\
 	
 		DYADIC_TYPE_SWITCH(tgt->type, idx->type, SET_LOOP,, done);
+
 		break;
 	}
 	default:
 		CHK(99, done, L"Unknown storage type");
 	}
 	
+	*z = tgt;
+	
 done:
 	release_array(idx);
+	
+	if (val != r)
+		release_array(val);
 	
 	return err;
 }

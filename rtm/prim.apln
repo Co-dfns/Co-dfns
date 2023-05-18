@@ -47,43 +47,31 @@ reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
 rho←('shape_ibeam'⌶) ambiv reshape
 
 ⍝ X[]←Y: Assignment
-idx_shp_check←{
-	326≢⎕DR ⍺:⎕SIGNAL 99
-	1≢≢,⍺:⎕SIGNAL 16
-	idx←⊃⍺ ⋄ ic←≢,idx ⋄ vc←≢,⍵
-	(1≢vc)∧ic≢vc:⎕SIGNAL 4
-	idx
-}
+idx_rnk_check←{(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4 ⋄ 0}
 idx_rng_check←{
-	0≡≢,⍺:⍺
-	0≡is_integer⊢idx←squeeze ⍺:⎕SIGNAL 11
-	any(idx<0)∨idx>≢,⍵:⎕SIGNAL 3
-	idx
+	0≡≢,⍵:0
+	0≡is_integer⊢idx←squeeze ⍵:⎕SIGNAL 11
+	any(idx<0)∨⍺<idx:⎕SIGNAL 3
+	0
 }
 flatten_idx←{
-	i←⍵{is_span ⍺:⍳ws[⍵] ⋄ ⍺}¨(c←≢⍵)↑⍳≢ws←⍺
-	⊃∘.+⌿(i×c↑1↓o),⊂(c↓⍺)⍴⍳c⌷o←⌽×⍀1,⌽⍺
+	(1≡≢⍵)∧1≡≢s←⍴⍺:(⊃s){is_span ⍵:⍵ ⋄ ⍺ idx_rng_check ⍵: ⋄ ⍵}⊃⍵
+	i←⍵{is_span ⍺:⍳⍵ ⋄ ⍵ idx_rng_check ⍺: ⋄ ⍺}¨(c←≢⍵)↑s
+	⊃∘.+⌿(i×c↑1↓o),⊂(c↓s)⍴⍳c⌷o←⌽×⍀1,⌽s
 }
+idx_shp_check←{1≡≢,⍵:0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ (≢⍴⍺)≡≢⍴⍵:⎕SIGNAL 5 ⋄ ⎕SIGNAL 4}
+set_vec_span←{⍺ idx_shp_check ⍵: ⋄ (⍴⍺)⍴⍵}
 set←'set_ibeam'⌶
 
 ⍝ ⌷: Materialize | Squad indexing
-sqd_vec←{
-	is_span ⍺:⍵
-	0≡is_integer squeeze ⍺:⎕SIGNAL 11
-	0≡≢,⍺:(⍴⍺)⍴0⍴⍵
-	any(⍺<0)∨⍺>≢,⍵:⎕SIGNAL 3
-	(⍴⍺)⍴⍺('index_ibeam'⌶)⍵
-}
-sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<c←≢i:⎕SIGNAL 5
-	(1≡c)∧1≡≢⍴⍵:(⊃i)sqd_vec ⍵
-	((⍴⍵)flatten_idx i)sqd_vec ⍵
+sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5
+	is_span⊢idx←⍵ flatten_idx i:⍵
+	0≡≢,idx:(⍴idx)⍴⍵
+	(⍴idx)⍴idx('index_ibeam'⌶)⍵
 }
 
 ⍝ X[]: Bracket Indexing
-brk←{
-	(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4
-	⍵⌷⍺
-}
+brk←{⍺ idx_rnk_check ⍵: ⋄ ⍵⌷⍺}
 
 ⍝ ⊢: Right
 rgt←{⍵}
