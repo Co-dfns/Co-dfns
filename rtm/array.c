@@ -878,10 +878,10 @@ array_migrate_storage(struct cell_array *arr, enum array_storage stg)
 		return 0;
 	
 	if (arr->type == ARR_NESTED && stg == STG_DEVICE)
-		return 99;
+		CHK(99, fail, L"Cannot migrate nested array to device.");
 	
 	if (arr->type == ARR_MIXED)
-		return 16;
+		CHK(16, fail, L"Cannot migrate mixed arrays right now.");
 	
 	if (arr->type == ARR_SPAN)
 		return 0;
@@ -893,10 +893,8 @@ array_migrate_storage(struct cell_array *arr, enum array_storage stg)
 		
 		dtp = array_af_dtype(arr);
 		
-		if (err = af_create_array(&t, arr->values, 1, &count, dtp))
-			return err;
-		
-		release_host_data(arr);
+		CHKAF(af_create_array(&t, arr->values, 1, &count, dtp), fail);
+		CHKFN(release_host_data(arr), fail);
 		
 		arr->values = t;
 		arr->storage = STG_DEVICE;
@@ -905,24 +903,18 @@ array_migrate_storage(struct cell_array *arr, enum array_storage stg)
 	}
 	
 	if (stg != STG_HOST)
-		return 99;
+		CHK(99, fail, L"Unexpected storage type.");
 	
 	t = arr->values;
 	arr->storage = STG_HOST;
 	
-	if (err = alloc_array(arr))
-		return err;
+	CHKFN(alloc_array(arr), fail);
+	CHKAF(af_eval(t), fail);
+	CHKAF(af_get_data_ptr(arr->values, t), fail);
+	CHKAF(af_release_array(t), fail);
 	
-	if (err = af_eval(t))
-		return err;
-	
-	if (err = af_get_data_ptr(arr->values, t))
-		return err;
-	
-	if (err = af_release_array(t))
-		return err;
-	
-	return 0;
+fail:
+	return err;
 }
 
 int
