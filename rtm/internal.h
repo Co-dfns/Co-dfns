@@ -53,6 +53,7 @@ size_t array_element_size(struct cell_array *);
 size_t array_element_size_type(enum array_type);
 af_dtype array_af_dtype(struct cell_array *);
 
+int array_shallow_copy(struct cell_array **, struct cell_array *);
 int retain_array_data(struct cell_array *);
 int release_array_data(struct cell_array *);
 int array_is_same(int8_t *, struct cell_array *, struct cell_array *);

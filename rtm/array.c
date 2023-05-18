@@ -348,6 +348,33 @@ fail:
 }
 
 int
+array_shallow_copy(struct cell_array **out, struct cell_array *in)
+{
+	struct cell_array *arr;
+	int err;
+	
+	arr = NULL;
+	
+	CHKFN(mk_array(&arr, in->type, in->storage, in->rank), fail);
+	
+	for (unsigned int i = 0; i < in->rank; i++)
+		arr->shape[i] = in->shape[i];
+	
+	arr->values = in->values;
+	arr->vrefc = in->vrefc;
+	
+	CHKFN(retain_array_data(arr), fail);
+	
+	*out = arr;
+	
+fail:
+	if (err)
+		free(arr);
+	
+	return err;
+}
+
+int
 chk_array_valid(struct cell_array *arr) {
 	int err;
 	
