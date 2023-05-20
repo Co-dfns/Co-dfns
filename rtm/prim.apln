@@ -46,7 +46,7 @@ chk_valid_shape←{
 reshape←{chk_valid_shape ⍺: ⋄ ⍺('reshape_ibeam'⌶)⍵}
 rho←('shape_ibeam'⌶) ambiv reshape
 
-⍝ X[]←Y: Assignment
+⍝ X[]←Y: Bracket Assignment
 idx_rnk_check←{(≢⍴⍺)≢≢,⍵:⎕SIGNAL 4 ⋄ 0}
 idx_rng_check←{
 	0≡≢,⍵:0
