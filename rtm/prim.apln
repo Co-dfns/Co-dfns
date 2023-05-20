@@ -63,6 +63,9 @@ idx_shp_check←{1≡≢,⍵:0 ⋄ (⍴⍺)≡⍴⍵:0 ⋄ (≢⍴⍺)≡≢⍴�
 set_vec_span←{⍺ idx_shp_check ⍵: ⋄ (⍴⍺)⍴⍵}
 set←'set_ibeam'⌶
 
+⍝ X[]f←Y: Modified Bracket Assignment
+mst←'mst_ibeam'⌶⌶
+
 ⍝ ⌷: Materialize | Squad indexing
 sqd←{⍺←⊢ ⋄ 1≡⍺ 1:⍵ ⋄ 1<≢⍴i←⍺⊣0:⎕SIGNAL 4 ⋄ (≢⍴⍵)<≢i:⎕SIGNAL 5
 	is_span⊢idx←⍵ flatten_idx i:⍵

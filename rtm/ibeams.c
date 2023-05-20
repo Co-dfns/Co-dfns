@@ -455,6 +455,21 @@ done:
 DECL_FUNC(set_ibeam, error_mon_syntax, set_func)
 
 int
+mst_oper(struct cell_array **z, 
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	int err;
+	
+	CHK(16, fail, L"Modified bracket assignment unsupported.");
+
+fail:
+	return err;
+}
+
+DECL_MOPER(mst_ibeam, 
+    error_mon_syntax, error_dya_syntax, error_mon_syntax, mst_oper)
+
+int
 ravel_func(struct cell_array **z,
     struct cell_array *r, struct cell_func *self)
 {
