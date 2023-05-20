@@ -250,7 +250,10 @@ squeeze_array(struct cell_array *arr)
 		for (size_t i = 0; i < count; i++) {
 			struct cell_array *t = vals[i];
 			
-			if (t->rank !=0 || t->type == ARR_NESTED)
+			CHKFN(squeeze_array(t), fail);
+			
+			if (t->rank != 0 || t->type == ARR_NESTED ||
+			    t->type == ARR_SPAN)
 				return 0;
 			
 			type = array_max_type(type, t->type);
