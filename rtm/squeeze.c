@@ -230,7 +230,7 @@ find_minmax(double *min, double *max,
 	return 0;
 }
 
-int
+DECLSPEC int
 squeeze_array(struct cell_array *arr)
 {
 	size_t count;

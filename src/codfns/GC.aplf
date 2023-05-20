@@ -152,6 +152,9 @@ GC←{
 		z,←⊂''
 		z,←{'	dat[',(⍕⍵),'] = *--stkhd;'}¨⍳n[⍵]
 		z,←⊂''
+		z,←⊂'	CHK(squeeze_array(arr), cleanup,'
+		z,←⊂'	    ',dbg,');'
+		z,←⊂''
 		z,←⊂'	*stkhd++ = arr;'
 		z,←⊂'}'
 		z,⊂''

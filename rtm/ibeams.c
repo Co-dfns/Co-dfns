@@ -374,6 +374,7 @@ set_func(struct cell_array **z,
 	case STG_DEVICE:{
 		af_index_t *idxs;
 		af_array out, tgt_d, val_d, idx_d;
+
 		tgt_d = tgt->values;
 		idx_d = idx->values;
 		val_d = val->values;
