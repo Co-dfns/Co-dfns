@@ -318,40 +318,67 @@ done:
 DECL_MOPER(identity_ibeam, error_mon_syntax, error_dya_syntax, identity_func, error_dya_syntax)
 
 int
-set_func(struct cell_array **z,
-    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+set_get_idx(struct cell_array **z, struct cell_array *tgt,
+    struct cell_array *iv, struct cell_array *val)
 {
-	struct cell_array *idx, *tgt, *val, *nil;
-	enum array_type mtype;
+	struct cell_array *idx, *nil, *sproto;
 	int err;
 	
-	tgt = *z;
-	idx = NULL;
-	val = r;
-
 	EXPORT int cdf_idx_rnk_check(struct cell_array **,
 	    struct cell_array *, struct cell_array *);
 	EXPORT int cdf_flatten_idx(struct cell_array **,
 	    struct cell_array *, struct cell_array *);
 	EXPORT int cdf_idx_shp_check(struct cell_array **, 
 	    struct cell_array *, struct cell_array *);
-	EXPORT int cdf_set_vec_span(struct cell_array **,
-	    struct cell_array *, struct cell_array *);
 	    
-	CHK(cdf_idx_rnk_check(&nil, tgt, l), done, L"tgt idx_rnk_check ⍺");
-	CHKFN(release_array(nil), done);
+	idx = NULL;
+
+	CHKFN(cdf_idx_rnk_check(&nil, tgt, iv), fail);
+	CHKFN(release_array(nil), fail);
 	
-	CHK(cdf_flatten_idx(&idx, tgt, l), done, L"tgt flatten_idx ⍺");
+	CHKFN(cdf_flatten_idx(&idx, tgt, iv), fail);
+	
+	sproto = idx->type == ARR_SPAN ? tgt : idx;
+	
+	CHKFN(cdf_idx_shp_check(&nil, sproto, val), fail);
+	CHKFN(release_array(nil), fail);
+	
+	*z = idx;
+	
+fail:
+	if (err)
+		release_array(idx);
+	
+	return err;
+}
+
+int
+set_func(struct cell_array **z,
+    struct cell_array *l, struct cell_array *r, struct cell_func *self)
+{
+	struct cell_array *idx, *tgt, *val, *tmp;
+	enum array_type mtype;
+	int err;
+	
+	tgt = *z;
+	idx = NULL;
+	val = r;
+	tmp = NULL;
+
+	CHKFN(set_get_idx(&idx, tgt, l, val), done);
 	
 	if (idx->type == ARR_SPAN) {
-		CHK(cdf_set_vec_span(z, tgt, val), done, L"tgt set_vec_span ⍵");
+		EXPORT int cdf_rho(struct cell_array **,
+		    struct cell_array *, struct cell_array *);
+		    
+		struct cell_array *t = NULL;
+		
+		CHKFN(cdf_rho(&tmp, NULL, tgt), done);
+		CHKFN(cdf_rho(z, tmp, val), done);
 		
 		goto done;
 	}
-	
-	CHK(cdf_idx_shp_check(&nil, idx, val), done, L"idx idx_shp_check ⍵");
-	CHKFN(release_array(nil), done);
-	
+	    
 	if (tgt->refc > 1) {
 		CHKFN(array_shallow_copy(&tgt, tgt), done);
 	} else {
@@ -445,6 +472,7 @@ dev_fail:
 	
 done:
 	release_array(idx);
+	release_array(tmp);
 	
 	if (val != r)
 		release_array(val);
